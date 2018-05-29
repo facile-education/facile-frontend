@@ -1,29 +1,72 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <header class="nero-header theme-background-color">
+      <Banner/>
+    </header>
+    <section>
+      <SideMenu/>
+    </section>
+    <section class="nero-body">
+      <router-view/>
+    </section>
   </div>
 </template>
 
+<script>
+import Banner from '@/components/Banner'
+import SideMenu from '@/components/SideMenu'
+
+export default {
+  name: 'App',
+  components: {
+    Banner,
+    SideMenu
+  }
+}
+</script>
+
 <style lang="scss">
+@import 'src/assets/css/constants';
+
+body {
+  margin: 0;
+  background-color: #f8fafc;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  color: $text-color;
 }
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+
+.theme-background-color {
+  background-color: $theme-color;
+  color: $text-color-light;
 }
+
+.theme-text-color {
+  color: $theme-color;
+}
+
+.nero-header {
+  width: 100%;
+  border: 0;
+  height: 36px;
+  padding: 6px 0;
+  box-shadow: -1px 1px 6px #888;
+  position: fixed;
+  top: 0;
+  z-index: $banner-z-index;
+}
+
+.nero-body {
+  margin-top: 48px; // Banner
+  margin-left: 220px; // Side menu
+  padding: 10px;
+}
+</style>
+
+<style lang="scss" scoped>
+
 </style>

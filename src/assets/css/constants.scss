@@ -1,0 +1,16 @@
+// Nero colors
+$theme-color: #f4901d;
+// Orange: f4901d, Dark blue: 35495e, Vue green: 42b983 / 4dba87
+$text-color: #2c3e50;
+$text-color-light: white;
+
+// Z-indexes
+$modal-z-index: 15;
+$popup-z-index: 12;
+$banner-z-index: 10;
+$side-menu-z-index: 5;
+
+// Global rules
+%nero-shadow {
+  box-shadow: 0 2px 3px rgba(0,0,0,0.19);
+}
