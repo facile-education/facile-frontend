@@ -1,0 +1,377 @@
+{
+  "etabList": [
+    {
+      "schoolName": "CLG-CAMILLE SAINT-SAENS-ac-ROUEN",
+      "schoolId": 317266
+    },
+    {
+      "schoolName": "D.S.D.E.N.-DE L'EURE-ac-ROUEN",
+      "schoolId": 72637534
+    },
+    {
+      "schoolName": "D.S.D.E.N.-DE LA SEINE-MARITIME-ac-ROUEN",
+      "schoolId": 72637622
+    },
+    {
+      "schoolName": "EREA-FRANCOISE DOLTO-ac-ROUEN",
+      "schoolId": 312896
+    },
+    {
+      "schoolName": "EREA-MAURICE GENEVOIX-ac-ROUEN",
+      "schoolId": 76320236
+    },
+    {
+      "schoolName": "Etablissement démo",
+      "schoolId": 18210
+    },
+    {
+      "schoolName": "GRP ACHAT-ETAB. REG.ROUENNAISE - LYCEE A-ac-ROUEN",
+      "schoolId": 72637611
+    },
+    {
+      "schoolName": "Lea Haute Normandie - Parents",
+      "schoolId": 42469120
+    },
+    {
+      "schoolName": "LG-CAMILLE SAINT-SAENS-ac-ROUEN",
+      "schoolId": 319101
+    },
+    {
+      "schoolName": "LG-FRANCOIS 1ER-ac-ROUEN",
+      "schoolId": 118469064
+    },
+    {
+      "schoolName": "LGT-ANDRE MALRAUX-ac-ROUEN",
+      "schoolId": 74077536
+    },
+    {
+      "schoolName": "LGT-ANDRE MAUROIS-ac-ROUEN",
+      "schoolId": 314708
+    },
+    {
+      "schoolName": "LGT-AUGUSTIN FRESNEL-ac-ROUEN",
+      "schoolId": 22936508
+    },
+    {
+      "schoolName": "LGT-CLAUDE MONET-ac-ROUEN",
+      "schoolId": 118469119
+    },
+    {
+      "schoolName": "LGT-DE LA COTE D'ALBATRE-ac-ROUEN",
+      "schoolId": 314771
+    },
+    {
+      "schoolName": "LGT-GEORGES DUMEZIL-ac-ROUEN",
+      "schoolId": 72637677
+    },
+    {
+      "schoolName": "LGT-GUILLAUME LE CONQUERANT-ac-ROUEN",
+      "schoolId": 76320214
+    },
+    {
+      "schoolName": "LGT-GUY DE MAUPASSANT-ac-ROUEN",
+      "schoolId": 313286
+    },
+    {
+      "schoolName": "LGT-JACQUES PREVERT-ac-ROUEN",
+      "schoolId": 118469020
+    },
+    {
+      "schoolName": "LGT-JEAN PREVOST-ac-ROUEN",
+      "schoolId": 317520
+    },
+    {
+      "schoolName": "LGT-JEANNE D'ARC-ac-ROUEN",
+      "schoolId": 311305
+    },
+    {
+      "schoolName": "LGT-JEHAN ANGO-ac-ROUEN",
+      "schoolId": 313633
+    },
+    {
+      "schoolName": "LGT-LEOPOLD SEDAR SENGHOR-ac-ROUEN",
+      "schoolId": 314976
+    },
+    {
+      "schoolName": "LGT-LES BRUYERES-ac-ROUEN",
+      "schoolId": 311478
+    },
+    {
+      "schoolName": "LGT-LOUISE MICHEL-ac-ROUEN",
+      "schoolId": 313208
+    },
+    {
+      "schoolName": "LGT-MARC BLOCH-ac-ROUEN",
+      "schoolId": 313357
+    },
+    {
+      "schoolName": "LGT-MODESTE LEROY-ac-ROUEN",
+      "schoolId": 312842
+    },
+    {
+      "schoolName": "LGT-PABLO NERUDA-ac-ROUEN",
+      "schoolId": 318463
+    },
+    {
+      "schoolName": "LGT-PORTE DE NORMANDIE-ac-ROUEN",
+      "schoolId": 313843
+    },
+    {
+      "schoolName": "LGT-SCHUMAN-PERRET-ac-ROUEN",
+      "schoolId": 118469086
+    },
+    {
+      "schoolName": "LGT-THOMAS CORNEILLE-ac-ROUEN",
+      "schoolId": 76320203
+    },
+    {
+      "schoolName": "LGT-VAL DE SEINE-ac-ROUEN",
+      "schoolId": 315106
+    },
+    {
+      "schoolName": "LGT-VALLEE DU CAILLY-ac-ROUEN",
+      "schoolId": 313791
+    },
+    {
+      "schoolName": "LP LYC METIER-ANTOINE-LAURENT LAVOISIER-ac-ROUEN",
+      "schoolId": 311872
+    },
+    {
+      "schoolName": "LP LYC METIER-AUGUSTIN BOISMARD-ac-ROUEN",
+      "schoolId": 23115516
+    },
+    {
+      "schoolName": "LP LYC METIER-AUGUSTIN HEBERT-ac-ROUEN",
+      "schoolId": 23080259
+    },
+    {
+      "schoolName": "LP LYC METIER-BERNARD PALISSY-ac-ROUEN",
+      "schoolId": 320964
+    },
+    {
+      "schoolName": "LP LYC METIER-COLBERT-ac-ROUEN",
+      "schoolId": 125454251
+    },
+    {
+      "schoolName": "LP LYC METIER-JULES LE CESNE-ac-ROUEN",
+      "schoolId": 318879
+    },
+    {
+      "schoolName": "LP LYC METIER-JULES SIEGFRIED-ac-ROUEN",
+      "schoolId": 118469097
+    },
+    {
+      "schoolName": "LP LYC METIER-MODESTE LEROY-ac-ROUEN",
+      "schoolId": 314240
+    },
+    {
+      "schoolName": "LP LYC METIER-RISLE-SEINE-ac-ROUEN",
+      "schoolId": 127401694
+    },
+    {
+      "schoolName": "LP LYC METIER-SCHUMAN-PERRET-ac-ROUEN",
+      "schoolId": 118469108
+    },
+    {
+      "schoolName": "LP-AUGUSTE BARTHOLDI-ac-ROUEN",
+      "schoolId": 6492341
+    },
+    {
+      "schoolName": "LP-CLAUDE MONET-ac-ROUEN",
+      "schoolId": 118469130
+    },
+    {
+      "schoolName": "LP-DESCARTES-ac-ROUEN",
+      "schoolId": 316303
+    },
+    {
+      "schoolName": "LP-EDMOND LABBE-ac-ROUEN",
+      "schoolId": 318792
+    },
+    {
+      "schoolName": "LP-ELISA LEMONNIER-ac-ROUEN",
+      "schoolId": 120873727
+    },
+    {
+      "schoolName": "LP-EMULATION DIEPPOISE-ac-ROUEN",
+      "schoolId": 118469053
+    },
+    {
+      "schoolName": "LP-FERNAND LEGER-ac-ROUEN",
+      "schoolId": 316095
+    },
+    {
+      "schoolName": "LP-GEORGES DUMEZIL-ac-ROUEN",
+      "schoolId": 72637688
+    },
+    {
+      "schoolName": "LP-LE HURLE-VENT-ac-ROUEN",
+      "schoolId": 74077547
+    },
+    {
+      "schoolName": "LP-LOUIS ARAGON-ac-ROUEN",
+      "schoolId": 347485
+    },
+    {
+      "schoolName": "LP-PORTE DE NORMANDIE-ac-ROUEN",
+      "schoolId": 340056
+    },
+    {
+      "schoolName": "LP-VAL DE SEINE-ac-ROUEN",
+      "schoolId": 322445
+    },
+    {
+      "schoolName": "LPO LYC METIER-ANGUIER-ac-ROUEN",
+      "schoolId": 311357
+    },
+    {
+      "schoolName": "LPO LYC METIER-FERDINAND BUISSON-ac-ROUEN",
+      "schoolId": 75419440
+    },
+    {
+      "schoolName": "LPO LYC METIER-FRANCOISE DE GRACE-ac-ROUEN",
+      "schoolId": 75419462
+    },
+    {
+      "schoolName": "LPO LYC METIER-GALILEE-ac-ROUEN",
+      "schoolId": 311418
+    },
+    {
+      "schoolName": "LPO LYC METIER-GEORGES BAPTISTE-ac-ROUEN",
+      "schoolId": 326614
+    },
+    {
+      "schoolName": "LPO LYC METIER-JEAN-BAPTISTE DECRETOT-ac-ROUEN",
+      "schoolId": 321719
+    },
+    {
+      "schoolName": "LPO LYC METIER-LE CORBUSIER-ac-ROUEN",
+      "schoolId": 22983489
+    },
+    {
+      "schoolName": "LPO LYC METIER-LES FONTENELLES-ac-ROUEN",
+      "schoolId": 311930
+    },
+    {
+      "schoolName": "LPO LYC METIER-PIERRE DE COUBERTIN-ac-ROUEN",
+      "schoolId": 76320247
+    },
+    {
+      "schoolName": "LPO-BLAISE PASCAL-ac-ROUEN",
+      "schoolId": 76320225
+    },
+    {
+      "schoolName": "LPO-CLEMENT ADER-ac-ROUEN",
+      "schoolId": 312748
+    },
+    {
+      "schoolName": "LPO-GEORGES BRASSENS-ac-ROUEN",
+      "schoolId": 74077569
+    },
+    {
+      "schoolName": "LPO-JEAN MOULIN-ac-ROUEN",
+      "schoolId": 118469031
+    },
+    {
+      "schoolName": "LPO-LOUISE MICHEL-ac-ROUEN",
+      "schoolId": 6492613
+    },
+    {
+      "schoolName": "LPO-PORTE OCEANE-ac-ROUEN",
+      "schoolId": 317318
+    },
+    {
+      "schoolName": "LPO-RAYMOND QUENEAU-ac-ROUEN",
+      "schoolId": 118469141
+    },
+    {
+      "schoolName": "LT-JULES SIEGFRIED-ac-ROUEN",
+      "schoolId": 118469075
+    },
+    {
+      "schoolName": "Lycée Agricole et alimentaire d'Yvetot",
+      "schoolId": 2132763
+    },
+    {
+      "schoolName": "LYCÉE DES MÉTIERS DU BOIS ET DE L'ECO-CONSTRUCTION",
+      "schoolId": 72637644
+    },
+    {
+      "schoolName": "Lycée Pablo Picasso",
+      "schoolId": 434190
+    },
+    {
+      "schoolName": "RECTORAT-ACADEMIE DE ROUEN-ac-ROUEN",
+      "schoolId": 72637556
+    },
+    {
+      "schoolName": "SEP-LOUISE MICHEL-ac-ROUEN",
+      "schoolId": 6496675
+    },
+    {
+      "schoolName": "SEP-LPO ANGUIER-ac-ROUEN",
+      "schoolId": 72637545
+    },
+    {
+      "schoolName": "SEP-LPO CLEMENT ADER-ac-ROUEN",
+      "schoolId": 72637501
+    },
+    {
+      "schoolName": "SEP-LPO FERDINAND BUISSON-ac-ROUEN",
+      "schoolId": 75419451
+    },
+    {
+      "schoolName": "SEP-LPO GALILEE-ac-ROUEN",
+      "schoolId": 72637589
+    },
+    {
+      "schoolName": "SEP-LPO GEORGES BAPTISTE-ac-ROUEN",
+      "schoolId": 72637567
+    },
+    {
+      "schoolName": "SEP-LPO GEORGES BRASSENS-ac-ROUEN",
+      "schoolId": 74077558
+    },
+    {
+      "schoolName": "SEP-LPO JEAN MOULIN-ac-ROUEN",
+      "schoolId": 118469042
+    },
+    {
+      "schoolName": "SEP-LPO JEAN-BAPTISTE DECRETOT-ac-ROUEN",
+      "schoolId": 72637523
+    },
+    {
+      "schoolName": "SEP-LPO LE CORBUSIER-ac-ROUEN",
+      "schoolId": 72637633
+    },
+    {
+      "schoolName": "SEP-LPO LES FONTENELLES-ac-ROUEN",
+      "schoolId": 72637512
+    },
+    {
+      "schoolName": "SEP-LPO PORTE OCEANE-ac-ROUEN",
+      "schoolId": 72637578
+    },
+    {
+      "schoolName": "SEP-LPO RAYMOND QUENEAU-ac-ROUEN",
+      "schoolId": 118469152
+    },
+    {
+      "schoolName": "SGT-LP ANTOINE-LAURENT LAVOISIER-ac-ROUEN",
+      "schoolId": 72637600
+    },
+    {
+      "schoolName": "SGT-LP ELISA LEMONNIER-ac-ROUEN",
+      "schoolId": 120873738
+    },
+    {
+      "schoolName": "Site de Merval du LPA du Pays de Bray",
+      "schoolId": 72637655
+    },
+    {
+      "schoolName": "Site de Neufchâtel en Bray du LPA du Pays de Bray",
+      "schoolId": 72637666
+    }
+  ],
+  "success": true
+}

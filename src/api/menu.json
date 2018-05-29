@@ -1,0 +1,818 @@
+[
+  {
+    "id": "li120442623",
+    "templateUrl": "/user/pentila/moteur-de-recherche?p_p_id=moteurDeRecherche_WAR_moteurDeRechercheportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+    "icon": "icon-search",
+    "route": "/moteur-de-recherche",
+    "link": {
+      "id": "nav_entry_moteur-de-recherche",
+      "href": "#moteur-de-recherche"
+    },
+    "isLeaf": true,
+    "label": "Recherche avancée",
+    "$$hashKey": "object:3"
+  },
+  {
+    "id": "li120442624",
+    "templateUrl": "/user/pentila/tableau-de-bord?p_p_id=dashboard_WAR_dashboardportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+    "icon": "icon-dashboard",
+    "isDefault": true,
+    "route": "/tableau-de-bord",
+    "link": {
+      "id": "nav_entry_tableau-de-bord",
+      "href": "#tableau-de-bord"
+    },
+    "isLeaf": true,
+    "label": "Tableau de bord",
+    "$$hashKey": "object:4"
+  },
+  {
+    "menu": [
+      {
+        "id": "li120442626",
+        "templateUrl": "/user/pentila/pronote?p_p_id=pronoteCAS2011_WAR_pronoteCASportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-edit",
+        "route": "/pronote",
+        "link": {
+          "id": "nav_entry_pronote",
+          "href": "#pronote"
+        },
+        "isLeaf": true,
+        "label": "Accueil",
+        "$$hashKey": "object:62"
+      }
+    ],
+    "isLeaf": false,
+    "id_menu": "em_120442625",
+    "label": "Pronote",
+    "$$hashKey": "object:5"
+  },
+  {
+    "menu": [
+      {
+        "id": "li120442628",
+        "templateUrl": "/user/pentila/cahier-de-texte?p_p_id=cdt_WAR_cdtportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-edit",
+        "route": "/cahier-de-texte",
+        "link": {
+          "id": "nav_entry_cahier-de-texte",
+          "href": "#cahier-de-texte"
+        },
+        "isLeaf": true,
+        "label": "Cahier de texte",
+        "$$hashKey": "object:66"
+      },
+      {
+        "id": "li120442630",
+        "templateUrl": "/user/pentila/arena?p_p_id=arenb_WAR_arenbportlet_INSTANCE_vHDMrQ2KtaiT&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-edit",
+        "route": "/arena",
+        "link": {
+          "id": "nav_entry_arena",
+          "href": "#arena"
+        },
+        "isLeaf": true,
+        "label": "Arena",
+        "$$hashKey": "object:67"
+      },
+      {
+        "id": "li120442631",
+        "templateUrl": "/user/pentila/notes-et-absences?p_p_id=Sconet_WAR_sconetportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-edit",
+        "route": "/notes-et-absences",
+        "link": {
+          "id": "nav_entry_notes-et-absences",
+          "href": "#notes-et-absences"
+        },
+        "isLeaf": true,
+        "label": "Notes et absences",
+        "$$hashKey": "object:68"
+      }
+    ],
+    "isLeaf": false,
+    "id_menu": "em_120442627",
+    "label": "Vie scolaire",
+    "$$hashKey": "object:6"
+  },
+  {
+    "menu": [
+      {
+        "id": "li120442633",
+        "templateUrl": "/user/pentila/cartable?p_p_id=cartable_WAR_cartableportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-desktop",
+        "route": "/cartable",
+        "link": {
+          "id": "nav_entry_cartable",
+          "href": "#cartable"
+        },
+        "isLeaf": true,
+        "label": "Espace de travail",
+        "$$hashKey": "object:76"
+      },
+      {
+        "id": "li120442634",
+        "templateUrl": "/user/pentila/ateliers?p_p_id=accesAteliers_WAR_accesAteliersportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-users",
+        "route": "/ateliers",
+        "link": {
+          "id": "nav_entry_ateliers",
+          "href": "#ateliers"
+        },
+        "isLeaf": true,
+        "label": "Groupes",
+        "$$hashKey": "object:77"
+      },
+      {
+        "id": "li120442635",
+        "templateUrl": "/user/pentila/agenda?p_p_id=agenda_WAR_agendaportlet_INSTANCE_b4Np&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-calendar",
+        "route": "/agenda",
+        "link": {
+          "id": "nav_entry_agenda",
+          "href": "#agenda"
+        },
+        "isLeaf": true,
+        "label": "Agenda",
+        "$$hashKey": "object:78"
+      }
+    ],
+    "isLeaf": false,
+    "id_menu": "em_120442632",
+    "label": "Organisation",
+    "$$hashKey": "object:7"
+  },
+  {
+    "menu": [
+      {
+        "id": "li120442638",
+        "templateUrl": "/user/pentila/messagerie-beta?p_p_id=internalMessagingV2_WAR_internalMessagingV2portlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-asterisk",
+        "route": "/messagerie-beta",
+        "link": {
+          "id": "nav_entry_messagerie-beta",
+          "href": "#messagerie-beta"
+        },
+        "isLeaf": true,
+        "label": "Messagerie Beta",
+        "$$hashKey": "object:86"
+      },
+      {
+        "id": "li120442639",
+        "templateUrl": "/user/pentila/messagerie?p_p_id=internalMessaging_WAR_internalMessagingportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-letter",
+        "route": "/messagerie",
+        "link": {
+          "id": "nav_entry_messagerie",
+          "href": "#messagerie"
+        },
+        "isLeaf": true,
+        "label": "Messagerie",
+        "$$hashKey": "object:87"
+      },
+      {
+        "id": "li120442640",
+        "templateUrl": "/user/pentila/casier?p_p_id=casier_WAR_cartableportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-casier",
+        "route": "/casier",
+        "link": {
+          "id": "nav_entry_casier",
+          "href": "#casier"
+        },
+        "isLeaf": true,
+        "label": "Casier",
+        "$$hashKey": "object:88"
+      },
+      {
+        "id": "li120442641",
+        "templateUrl": "/user/pentila/contacts?p_p_id=contact_WAR_contactportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-asterisk",
+        "route": "/contacts",
+        "link": {
+          "id": "nav_entry_contacts",
+          "href": "#contacts"
+        },
+        "isLeaf": true,
+        "label": "Contacts Beta",
+        "$$hashKey": "object:89"
+      },
+      {
+        "id": "li120442642",
+        "templateUrl": "/user/pentila/carnet-d-adresses?p_p_id=carnetDAdresses_WAR_carnetDAdressesportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-book",
+        "route": "/carnet-d-adresses",
+        "link": {
+          "id": "nav_entry_carnet-d-adresses",
+          "href": "#carnet-d-adresses"
+        },
+        "isLeaf": true,
+        "label": "Carnet d'adresses",
+        "$$hashKey": "object:90"
+      },
+      {
+        "id": "li120442643",
+        "templateUrl": "/user/pentila/annuaire?p_p_id=annuaire_WAR_annuaireportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-annuaire",
+        "route": "/annuaire",
+        "link": {
+          "id": "nav_entry_annuaire",
+          "href": "#annuaire"
+        },
+        "isLeaf": true,
+        "label": "Annuaire",
+        "$$hashKey": "object:91"
+      },
+      {
+        "id": "li120442644",
+        "templateUrl": "/user/pentila/forum?p_p_id=forumAggregator_WAR_forumportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-discussion",
+        "route": "/forum",
+        "link": {
+          "id": "nav_entry_forum",
+          "href": "#forum"
+        },
+        "isLeaf": true,
+        "label": "Forums",
+        "$$hashKey": "object:92"
+      },
+      {
+        "id": "li120442645",
+        "templateUrl": "/user/pentila/blog?p_p_id=blog_WAR_blogportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-quote-left",
+        "route": "/blog",
+        "link": {
+          "id": "nav_entry_blog",
+          "href": "#blog"
+        },
+        "isLeaf": true,
+        "label": "Blog",
+        "$$hashKey": "object:93"
+      },
+      {
+        "id": "li120442646",
+        "templateUrl": "/user/pentila/amis?p_p_id=amis_WAR_amisportlet_INSTANCE_k2Kl&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-amis",
+        "route": "/amis",
+        "link": {
+          "id": "nav_entry_amis",
+          "href": "#amis"
+        },
+        "isLeaf": true,
+        "label": "Amis",
+        "$$hashKey": "object:94"
+      },
+      {
+        "id": "li120442647",
+        "templateUrl": "/user/pentila/visio?p_p_id=visio_WAR_visioportlet_INSTANCE_G23k&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-phone",
+        "route": "/visio",
+        "link": {
+          "id": "nav_entry_visio",
+          "href": "#visio"
+        },
+        "isLeaf": true,
+        "label": "Visio",
+        "$$hashKey": "object:95"
+      },
+      {
+        "id": "li120442649",
+        "templateUrl": "/user/pentila/cantineconsultation?p_p_id=cantineConsultation_WAR_cantineportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-asterisk",
+        "route": "/cantineconsultation",
+        "link": {
+          "id": "nav_entry_cantineconsultation",
+          "href": "#cantineconsultation"
+        },
+        "isLeaf": true,
+        "label": "Cantine consultation",
+        "$$hashKey": "object:96"
+      }
+    ],
+    "isLeaf": false,
+    "id_menu": "em_120442636",
+    "label": "Communication",
+    "$$hashKey": "object:8"
+  },
+  {
+    "menu": [
+      {
+        "id": "li120442651",
+        "templateUrl": "/user/pentila/etherpad?p_p_id=etherpad_WAR_etherpadportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-asterisk",
+        "route": "/etherpad",
+        "link": {
+          "id": "nav_entry_etherpad",
+          "href": "#etherpad"
+        },
+        "isLeaf": true,
+        "label": "Etherpad",
+        "$$hashKey": "object:120"
+      },
+      {
+        "id": "li120442652",
+        "templateUrl": "/user/pentila/grr?p_p_id=grr_WAR_grrportlet_INSTANCE_biPMXtQ4a9Lm&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-cog",
+        "route": "/grr",
+        "link": {
+          "id": "nav_entry_grr",
+          "href": "#grr"
+        },
+        "isLeaf": true,
+        "label": "GRR",
+        "$$hashKey": "object:121"
+      },
+      {
+        "id": "li120442653",
+        "templateUrl": "/user/pentila/esidoc?p_p_id=esidoc_WAR_esidocportlet_INSTANCE_wE41wFapcUpZ&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-leanpub",
+        "route": "/esidoc",
+        "link": {
+          "id": "nav_entry_esidoc",
+          "href": "#esidoc"
+        },
+        "isLeaf": true,
+        "label": "E-sidoc",
+        "$$hashKey": "object:122"
+      },
+      {
+        "id": "li120442654",
+        "templateUrl": "/user/pentila/edumedia?p_p_id=edumedia_WAR_edumediaportlet_INSTANCE_SR1x2YObVQCj&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-leanpub",
+        "route": "/edumedia",
+        "link": {
+          "id": "nav_entry_edumedia",
+          "href": "#edumedia"
+        },
+        "isLeaf": true,
+        "label": "Edumedia",
+        "$$hashKey": "object:123"
+      },
+      {
+        "id": "li120442655",
+        "templateUrl": "/user/pentila/cns?p_p_id=cnsmanuels_WAR_cnsmanuelsportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-leanpub",
+        "route": "/cns",
+        "link": {
+          "id": "nav_entry_cns",
+          "href": "#cns"
+        },
+        "isLeaf": true,
+        "label": "CNS",
+        "$$hashKey": "object:124"
+      },
+      {
+        "id": "li120442656",
+        "templateUrl": "/user/pentila/lesitetv?p_p_id=lesiteTV_WAR_lesiteTVportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-leanpub",
+        "route": "/lesitetv",
+        "link": {
+          "id": "nav_entry_lesitetv",
+          "href": "#lesitetv"
+        },
+        "isLeaf": true,
+        "label": "lesiteTV",
+        "$$hashKey": "object:125"
+      },
+      {
+        "id": "li120442657",
+        "templateUrl": "/user/pentila/paraschool?p_p_id=paraschool_WAR_paraschoolportlet_INSTANCE_g0iPUJQ0Cych&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-leanpub",
+        "route": "/paraschool",
+        "link": {
+          "id": "nav_entry_paraschool",
+          "href": "#paraschool"
+        },
+        "isLeaf": true,
+        "label": "Paraschool",
+        "$$hashKey": "object:126"
+      },
+      {
+        "id": "li120442659",
+        "templateUrl": "/user/pentila/teacheredu?p_p_id=teacherEDU_WAR_teacherEDUportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-leanpub",
+        "route": "/teacheredu",
+        "link": {
+          "id": "nav_entry_teacheredu",
+          "href": "#teacheredu"
+        },
+        "isLeaf": true,
+        "label": "teacherEDU",
+        "$$hashKey": "object:127"
+      },
+      {
+        "id": "li120442662",
+        "templateUrl": "/user/pentila/folios?p_p_id=folios_WAR_webclasseurportlet_INSTANCE_gsG6h90tUcBm&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-leanpub",
+        "route": "/folios",
+        "link": {
+          "id": "nav_entry_folios",
+          "href": "#folios"
+        },
+        "isLeaf": true,
+        "label": "Folios",
+        "$$hashKey": "object:128"
+      },
+      {
+        "id": "li120442663",
+        "templateUrl": "/user/pentila/sacoche?p_p_id=sacoche_WAR_sacocheportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-suitcase",
+        "route": "/sacoche",
+        "link": {
+          "id": "nav_entry_sacoche",
+          "href": "#sacoche"
+        },
+        "isLeaf": true,
+        "label": "Sacoche",
+        "$$hashKey": "object:129"
+      },
+      {
+        "id": "li120442664",
+        "templateUrl": "/user/pentila/gepi?p_p_id=gepi_WAR_gepiportlet_INSTANCE_mD4udgdfqrU9&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-graduation-cap",
+        "route": "/gepi",
+        "link": {
+          "id": "nav_entry_gepi",
+          "href": "#gepi"
+        },
+        "isLeaf": true,
+        "label": "Gépi",
+        "$$hashKey": "object:130"
+      },
+      {
+        "id": "li120442665",
+        "templateUrl": "/user/pentila/moodle?p_p_id=moodle_WAR_moodleportlet_INSTANCE_5B5AdF00cGzm&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-leanpub",
+        "route": "/moodle",
+        "link": {
+          "id": "nav_entry_moodle",
+          "href": "#moodle"
+        },
+        "isLeaf": true,
+        "label": "Moodle",
+        "$$hashKey": "object:131"
+      },
+      {
+        "id": "li120442666",
+        "templateUrl": "/user/pentila/snap?p_p_id=snap_WAR_snapportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-asterisk",
+        "route": "/snap",
+        "link": {
+          "id": "nav_entry_snap",
+          "href": "#snap"
+        },
+        "isLeaf": true,
+        "label": "Snap!",
+        "$$hashKey": "object:132"
+      },
+      {
+        "id": "li120442669",
+        "templateUrl": "/user/pentila/edx?p_p_id=edx_WAR_edxportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-asterisk",
+        "route": "/edx",
+        "link": {
+          "id": "nav_entry_edx",
+          "href": "#edx"
+        },
+        "isLeaf": true,
+        "label": "EDX",
+        "$$hashKey": "object:133"
+      },
+      {
+        "id": "li120442670",
+        "templateUrl": "/user/pentila/edxstudio?p_p_id=edxstudio_WAR_edxportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-asterisk",
+        "route": "/edxstudio",
+        "link": {
+          "id": "nav_entry_edxstudio",
+          "href": "#edxstudio"
+        },
+        "isLeaf": true,
+        "label": "EDX Studio",
+        "$$hashKey": "object:134"
+      },
+      {
+        "id": "li120442672",
+        "templateUrl": "/user/pentila/gpo?p_p_id=gpo_WAR_gpoportlet_INSTANCE_pR7WBxY3QSdn&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-asterisk",
+        "route": "/gpo",
+        "link": {
+          "id": "nav_entry_gpo",
+          "href": "#gpo"
+        },
+        "isLeaf": true,
+        "label": "GPO",
+        "$$hashKey": "object:135"
+      },
+      {
+        "id": "li120442675",
+        "templateUrl": "/user/pentila/cerise?p_p_id=cerisePro_WAR_ceriseProportlet_INSTANCE_DfIBIf95vrQv&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-asterisk",
+        "route": "/cerise",
+        "link": {
+          "id": "nav_entry_cerise",
+          "href": "#cerise"
+        },
+        "isLeaf": true,
+        "label": "Cerise Pro",
+        "$$hashKey": "object:136"
+      },
+      {
+        "id": "li120442676",
+        "templateUrl": "/user/pentila/geogebra?p_p_id=geogebra_WAR_geogebraportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-leanpub",
+        "route": "/geogebra",
+        "link": {
+          "id": "nav_entry_geogebra",
+          "href": "#geogebra"
+        },
+        "isLeaf": true,
+        "label": "Geogebra",
+        "$$hashKey": "object:137"
+      }
+    ],
+    "isLeaf": false,
+    "id_menu": "em_120442650",
+    "label": "Ressources",
+    "$$hashKey": "object:9"
+  },
+  {
+    "menu": [
+      {
+        "id": "li120442678",
+        "templateUrl": "/user/pentila/gestionapplications?p_p_id=gestionApps_WAR_gestionApplicationsportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-cogs",
+        "route": "/gestionapplications",
+        "link": {
+          "id": "nav_entry_gestionapplications",
+          "href": "#gestionapplications"
+        },
+        "isLeaf": true,
+        "label": "Applications",
+        "$$hashKey": "object:175"
+      },
+      {
+        "id": "li120442679",
+        "templateUrl": "/user/pentila/gestionviescolaire?p_p_id=gestionVieScolaire_WAR_gestionVieScolaireportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-cogs",
+        "route": "/gestionviescolaire",
+        "link": {
+          "id": "nav_entry_gestionviescolaire",
+          "href": "#gestionviescolaire"
+        },
+        "isLeaf": true,
+        "label": "Vie scolaire",
+        "$$hashKey": "object:176"
+      },
+      {
+        "id": "li120442680",
+        "templateUrl": "/user/pentila/administrationtools?p_p_id=administrationTools_WAR_administrationToolsportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-comments",
+        "route": "/administrationtools",
+        "link": {
+          "id": "nav_entry_administrationtools",
+          "href": "#administrationtools"
+        },
+        "isLeaf": true,
+        "label": "Droits de communication",
+        "$$hashKey": "object:177"
+      },
+      {
+        "id": "li120442681",
+        "templateUrl": "/user/pentila/gestion-user?p_p_id=gestionUtilisateurs_WAR_gestionUtilisateursportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-user-plus",
+        "route": "/gestion-user",
+        "link": {
+          "id": "nav_entry_gestion-user",
+          "href": "#gestion-user"
+        },
+        "isLeaf": true,
+        "label": "Utilisateurs",
+        "$$hashKey": "object:178"
+      },
+      {
+        "id": "li120442683",
+        "templateUrl": "/user/pentila/gestionsites?p_p_id=gestionSite_WAR_gestionSiteportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-globe",
+        "route": "/gestionsites",
+        "link": {
+          "id": "nav_entry_gestionsites",
+          "href": "#gestionsites"
+        },
+        "isLeaf": true,
+        "label": "Site internet",
+        "$$hashKey": "object:179"
+      },
+      {
+        "id": "li120442684",
+        "templateUrl": "/user/pentila/gestionplanssport?p_p_id=planSportGestion_WAR_planSportportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-futbol-o",
+        "route": "/gestionplanssport",
+        "link": {
+          "id": "nav_entry_gestionplanssport",
+          "href": "#gestionplanssport"
+        },
+        "isLeaf": true,
+        "label": "Gestion plans sport",
+        "$$hashKey": "object:180"
+      },
+      {
+        "id": "li120442685",
+        "templateUrl": "/user/pentila/casmanager?p_p_id=casManager_WAR_casManagerportlet_INSTANCE_mA2U&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-asterisk",
+        "route": "/casmanager",
+        "link": {
+          "id": "nav_entry_casmanager",
+          "href": "#casmanager"
+        },
+        "isLeaf": true,
+        "label": "Cas Manager",
+        "$$hashKey": "object:181"
+      },
+      {
+        "id": "li120442687",
+        "templateUrl": "/user/pentila/enttools?p_p_id=entTools_WAR_entToolsportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-cogs",
+        "route": "/enttools",
+        "link": {
+          "id": "nav_entry_enttools",
+          "href": "#enttools"
+        },
+        "isLeaf": true,
+        "label": "ENT tools",
+        "$$hashKey": "object:182"
+      },
+      {
+        "id": "li120442688",
+        "templateUrl": "/user/pentila/gestionlistes?p_p_id=gestionListeInst_WAR_gestionListeInstportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-list-ul",
+        "route": "/gestionlistes",
+        "link": {
+          "id": "nav_entry_gestionlistes",
+          "href": "#gestionlistes"
+        },
+        "isLeaf": true,
+        "label": "Gestion des listes",
+        "$$hashKey": "object:183"
+      },
+      {
+        "id": "li120442689",
+        "templateUrl": "/user/pentila/gestion-menu?p_p_id=gestionMenus_WAR_gestionMenusportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-bars",
+        "route": "/gestion-menu",
+        "link": {
+          "id": "nav_entry_gestion-menu",
+          "href": "#gestion-menu"
+        },
+        "isLeaf": true,
+        "label": "Gestion du menu",
+        "$$hashKey": "object:184"
+      },
+      {
+        "id": "li120442690",
+        "templateUrl": "/user/pentila/applicationmanager?p_p_id=applicationManager_WAR_applicationManagerportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-laptop",
+        "route": "/applicationmanager",
+        "link": {
+          "id": "nav_entry_applicationmanager",
+          "href": "#applicationmanager"
+        },
+        "isLeaf": true,
+        "label": "Application manager",
+        "$$hashKey": "object:185"
+      },
+      {
+        "id": "li120442691",
+        "templateUrl": "/user/pentila/gestioncdt?p_p_id=gestionCahierDeTexte_WAR_cahierDeTexteportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-edit",
+        "route": "/gestioncdt",
+        "link": {
+          "id": "nav_entry_gestioncdt",
+          "href": "#gestioncdt"
+        },
+        "isLeaf": true,
+        "label": "Cahier de textes",
+        "$$hashKey": "object:186"
+      },
+      {
+        "id": "li120442694",
+        "templateUrl": "/user/pentila/planssport?p_p_id=planSportCollege_WAR_planSportportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-dribbble",
+        "route": "/planssport",
+        "link": {
+          "id": "nav_entry_planssport",
+          "href": "#planssport"
+        },
+        "isLeaf": true,
+        "label": "Plans sport",
+        "$$hashKey": "object:187"
+      },
+      {
+        "id": "li120442695",
+        "templateUrl": "/user/pentila/stats?p_p_id=statistics_WAR_statisticsportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-bar-chart",
+        "route": "/stats",
+        "link": {
+          "id": "nav_entry_stats",
+          "href": "#stats"
+        },
+        "isLeaf": true,
+        "label": "Statistiques",
+        "$$hashKey": "object:188"
+      },
+      {
+        "id": "li120442696",
+        "templateUrl": "/user/pentila/statistics?p_p_id=statistics_WAR_statisticsportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-pie-chart",
+        "route": "/statistics",
+        "link": {
+          "id": "nav_entry_statistics",
+          "href": "#statistics"
+        },
+        "isLeaf": true,
+        "label": "Statistics",
+        "$$hashKey": "object:189"
+      },
+      {
+        "id": "li120442697",
+        "templateUrl": "/user/pentila/usermanagement?p_p_id=userManagement_WAR_userManagementportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-user",
+        "route": "/usermanagement",
+        "link": {
+          "id": "nav_entry_usermanagement",
+          "href": "#usermanagement"
+        },
+        "isLeaf": true,
+        "label": "User management",
+        "$$hashKey": "object:190"
+      },
+      {
+        "id": "li120442701",
+        "templateUrl": "/user/pentila/exportservicestiers?p_p_id=exportGIBII_WAR_exportGIBIIportlet_INSTANCE_72fRrSqSfggj&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+        "icon": "icon-cog",
+        "route": "/exportservicestiers",
+        "link": {
+          "id": "nav_entry_exportservicestiers",
+          "href": "#exportservicestiers"
+        },
+        "isLeaf": true,
+        "label": "Export services tiers",
+        "$$hashKey": "object:191"
+      }
+    ],
+    "isLeaf": false,
+    "id_menu": "em_120442677",
+    "label": "Administration",
+    "$$hashKey": "object:10"
+  },
+  {
+    "id": "li120442731",
+    "templateUrl": "/user/pentila/cantinedpt?p_p_id=cantine_WAR_cantineportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+    "icon": "icon-asterisk",
+    "route": "/cantinedpt",
+    "link": {
+      "id": "nav_entry_cantinedpt",
+      "href": "#cantinedpt"
+    },
+    "isLeaf": true,
+    "label": "Cantine Collectivité",
+    "$$hashKey": "object:11"
+  },
+  {
+    "id": "li120442732",
+    "templateUrl": "/user/pentila/cantinecollege?p_p_id=cantineCollege_WAR_cantineportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+    "icon": "icon-asterisk",
+    "route": "/cantinecollege",
+    "link": {
+      "id": "nav_entry_cantinecollege",
+      "href": "#cantinecollege"
+    },
+    "isLeaf": true,
+    "label": "Cantine Lycée",
+    "$$hashKey": "object:12"
+  },
+  {
+    "id": "li120442733",
+    "templateUrl": "/user/pentila/plm?p_p_id=facile_WAR_facileportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+    "icon": "icon-asterisk",
+    "route": "/plm",
+    "link": {
+      "id": "nav_entry_plm",
+      "href": "#plm"
+    },
+    "isLeaf": true,
+    "label": "facil",
+    "$$hashKey": "object:13"
+  },
+  {
+    "id": "li120442738",
+    "templateUrl": "/user/pentila/magz?p_p_id=madmagz_WAR_madmagzportlet_INSTANCE_WqvDmEq1E9T0&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1",
+    "icon": "icon-asterisk",
+    "route": "/magz",
+    "link": {
+      "id": "nav_entry_magz",
+      "href": "#magz"
+    },
+    "isLeaf": true,
+    "label": "magz",
+    "$$hashKey": "object:14"
+  }
+]
