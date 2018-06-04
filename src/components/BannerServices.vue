@@ -1,11 +1,11 @@
 <template>
   <div>
-    <BannerItem/>
-    <BannerItem/>
-    <BannerItem/>
-    <BannerItem/>
-    <BannerItem/>
-    <BannerItem/>
+    <BannerItem icon="fa fa-star"/>
+    <BannerItem icon="fa fa-envelope"/>
+    <BannerItem icon="fa fa-archive"/>
+    <BannerItem icon="fa fa-comments"/>
+    <BannerItem icon="fa fa-question"/>
+    <BannerItem icon="fa fa-utensils"/>
   </div>
 </template>
 

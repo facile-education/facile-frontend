@@ -6,7 +6,7 @@
     <span
       :title="$t('banner.search')"
       class="advanced-search">
-      toto
+      <i class="fa fa-search"/>
     </span>
   </div>
 </template>

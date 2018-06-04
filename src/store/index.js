@@ -9,7 +9,9 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     schools: [{
-      name: 'Lg Elise De La Croix'
+      id: 0,
+      name: 'Lg Elise De La Croix',
+      link: 'https://google.fr'
     }]
   },
   mutations: mutations,
