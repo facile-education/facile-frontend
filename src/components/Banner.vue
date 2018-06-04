@@ -1,6 +1,6 @@
 <template>
   <nav class="banner">
-    <BannerItem/>
+    <BannerItem icon="fa fa-bars"/>
     <BannerSearch/>
     <div class="right-section">
       <BannerServices/>

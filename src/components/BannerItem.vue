@@ -1,8 +1,8 @@
 <template>
   <div
-    :title="label"
+    :title="tooltip"
     class="banner-item">
-    toto
+    <i :class="icon"/>
   </div>
 </template>
 
@@ -10,9 +10,13 @@
 export default {
   name: 'BannerItem',
   props: {
-    label: {
+    icon: {
       type: String,
-      default: 'Toto'
+      default: ''
+    },
+    tooltip: {
+      type: String,
+      default: ''
     }
   }
 }

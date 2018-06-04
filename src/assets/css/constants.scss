@@ -2,7 +2,18 @@
 $theme-color: #f4901d;
 // Orange: f4901d, Dark blue: 35495e, Vue green: 42b983 / 4dba87
 $text-color: #2c3e50;
-$text-color-light: white;
+$text-color-light: #fff;
+
+// Background colors
+$background-white-color: #ffffff;
+$background-light-color: #f8fafc;
+$toolbar-background-color: #f1f1f1;
+$header-background-color: $toolbar-background-color;
+$valid-background-color: #01d801;
+
+// Border
+$border: 1px solid #e2e2e2;
+$border-radius: 5px;
 
 // Z-indexes
 $modal-z-index: 15;
@@ -13,4 +24,18 @@ $side-menu-z-index: 5;
 // Global rules
 %nero-shadow {
   box-shadow: 0 2px 3px rgba(0,0,0,0.19);
+}
+
+%nero-btn-like {
+  border-radius: $border-radius;
+  padding: 6px 12px;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  @extend %nero-shadow;
+
+  &:focus {
+    outline: none;
+  }
 }

@@ -16,7 +16,7 @@
         {{ schoolName }}
       </a>
     </div>
-    <BannerItem/>
+    <BannerItem icon="fa fa-chevron-down"/>
   </div>
 </template>
 

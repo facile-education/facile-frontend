@@ -21,6 +21,9 @@ export default {
   components: {
     Banner,
     SideMenu
+  },
+  beforeCreate () {
+    this.$store.dispatch('INIT_CURRENT_USER')
   }
 }
 </script>
@@ -30,7 +33,7 @@ export default {
 
 body {
   margin: 0;
-  background-color: #f8fafc;
+  background-color: $background-light-color;
 }
 
 #app {
