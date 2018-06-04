@@ -5,6 +5,8 @@ import Router from 'vue-router'
 
 // const About = () => import('./views/About.vue')
 
+var appManager = 'ApplicationManager'
+
 Vue.use(Router)
 
 export default new Router({
@@ -17,6 +19,11 @@ export default new Router({
       path: '/tableau-de-bord',
       name: 'Tableau de bord',
       component: () => import('./views/Dashboard.vue')
+    },
+    {
+      path: '/gestionapplications',
+      name: 'Applications',
+      component: () => import('./views/' + appManager + '.vue')
     }
   ]
 })
