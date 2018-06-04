@@ -1,12 +1,20 @@
 <template>
   <div>
-    toto
+    <ApplicationManagerToolbar/>
+    <ApplicationManagerCategory/>
   </div>
 </template>
 
 <script>
+import ApplicationManagerCategory from '@/components/ApplicationManagerCategory'
+import ApplicationManagerToolbar from '@/components/ApplicationManagerToolbar'
+
 export default {
-  name: 'ApplicationManager'
+  name: 'ApplicationManager',
+  components: {
+    ApplicationManagerCategory,
+    ApplicationManagerToolbar
+  }
 }
 </script>
 
