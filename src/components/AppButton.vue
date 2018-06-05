@@ -1,7 +1,8 @@
 <template>
   <button
     :class="cls"
-    class="button">
+    class="button"
+    @click="dispatchEvent">
     <i
       :ng-if="icon"
       :class="icon"/>
@@ -27,6 +28,11 @@ export default {
       type: String,
       default: undefined
     }
+  },
+  methods: {
+    dispatchEvent () {
+      this.$emit('click')
+    }
   }
 }
 </script>
@@ -36,6 +42,13 @@ export default {
 
 .button {
   @extend %nero-btn-like;
+}
+
+.circle {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  padding: 0;
 }
 
 .cancel {
