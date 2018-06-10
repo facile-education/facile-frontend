@@ -9,11 +9,12 @@
         {{ userName }}
       </p>
       <a
-        :title="schoolName"
-        href="https://google.fr"
+        v-if="homeSchool"
+        :title="homeSchool.name"
+        :href="homeSchool.link"
         class="school-link"
         target="_blank">
-        {{ schoolName }}
+        {{ homeSchool.name }}
       </a>
     </div>
     <BannerItem icon="fa fa-chevron-down"/>
@@ -37,8 +38,8 @@ export default {
     userPicture () {
       return this.$store.state.currentUser.picture
     },
-    schoolName () {
-      return this.$store.state.schools[0].name
+    homeSchool () {
+      return this.$store.getters.homeSchool
     }
   },
   methods: {

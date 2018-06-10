@@ -31,5 +31,7 @@ export default {
   height: 34px;
   width: 34px;
   cursor: pointer;
+  text-align: center;
+  line-height: 34px;
 }
 </style>
