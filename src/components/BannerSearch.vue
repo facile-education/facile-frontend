@@ -2,8 +2,8 @@
   <div class="banner-search">
     <input
       :placeholder="$t('banner.search')"
-      class="search-input">
-    <span
+      class="search-input"><!-- Comment the inline whitespace
+    --><span
       :title="$t('banner.search')"
       class="advanced-search">
       <i class="fa fa-search"/>
@@ -30,6 +30,7 @@ export default {
   width: 34px;
   height: 34px;
   vertical-align: top;
+  text-align: center;
   cursor: pointer;
 }
 
