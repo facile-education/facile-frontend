@@ -3,6 +3,50 @@
     "search": "Recherche"
   },
   "application-manager": {
+    "edition-modal": {
+      "add-modal-title": "Ajouter une nouvelle application",
+      "edit-modal-title": "Modifier une application",
+      "name-placeholder": "Nom du service",
+      "key-placeholder": "Clé du service",
+      "category-placeholder": "Catégorie",
+      "schools-title": "Application disponible pour les établissements :",
+      "schools-placeholder": "Etablissement(s)",
+      "roles-title" : "Profils par défaut pour l'application :",
+      "roles-placeholder": "Profil(s)",
+      "placeholder": "Application",
+      "global-url-combobox": "URL globale",
+      "custom-url-combobox": "URL personnalisée",
+      "global-url-placeholder": "https://...",
+      "export-title": "Exporter un/ou plusieurs types d'utilisateurs pour ce service :",
+      "export-parents-checkbox": "Parents",
+      "export-students-checkbox": "Elèves",
+      "export-teachers-checkbox": "Enseignants",
+      "modal-save-button": "Enregistrer"
+    },
+    "broadcast-modal": {
+      "modal-title": "Règles de diffusion pour l'application",
+      "add-rule-button":"Ajouter une règle de diffusion",
+      "default-label": "L'application n'est pas diffusée",
+      "roles-placeholder": "Liste des profils",
+      "classes-placeholder": "Liste des classes",
+      "update-button": "Enregistrer"
+    },
+    "application-details": {
+      "custom-url-placeholder": "http://...",
+      "no-broadcast-label": "L'application n'est pas diffusée",
+      "broadcast-label": "L'application est diffusée aux profils suivants :",
+      "export-label": "Exports nécessaires pour l'application :",
+      "parents-export-button": "Parents",
+      "students-export-button": "Elèves",
+      "teachers-export-button": "Enseignants",
+      "close-button-tooltip": "Fermer",
+      "broadcast-button-tooltip": "Diffuser",
+      "delete-button-tooltip": "Supprimer",
+      "edit-button-tooltip": "Modifier",
+      "configuration-button-tooltip": "Gérer les règles de diffusion",
+      "save-button-tooltip": "Enregistrer les modifications",
+      "guide-button-tooltip": "Consulter le guide utilisateur"
+    },
     "category": {
 
     },
