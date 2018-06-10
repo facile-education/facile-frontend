@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import App from './App.vue'
+import Nero from './Nero.vue'
 import router from './router'
 import store from './store/index'
 import i18n from './lang/lang.js'
@@ -11,5 +11,5 @@ new Vue({
   router,
   store,
   i18n,
-  render: h => h(App)
+  render: h => h(Nero)
 }).$mount('#app')

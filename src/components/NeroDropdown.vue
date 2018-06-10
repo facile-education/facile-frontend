@@ -14,6 +14,7 @@
         v-if="filtered"
         class="filter">
         <input
+          ref="filter"
           v-model="filter"
           placeholder="TODO placeholder">
       </div>
@@ -32,14 +33,13 @@
 import clickoutside from '@/directives/clickoutside'
 
 export default {
-  name: 'AppDropdown',
+  name: 'NeroDropdown',
   directives: {
     'click-outside': clickoutside
   },
   props: {
     list: {
       type: Array,
-      default: () => [],
       required: true
     },
     displayField: {
@@ -86,6 +86,9 @@ export default {
     },
     toggleMenu () {
       this.show = !this.show
+      if (this.show) {
+        this.$nextTick(() => this.$refs.filter.focus())
+      }
     }
   }
 }
@@ -95,6 +98,7 @@ export default {
 @import 'src/assets/css/constants';
 .dropdown {
   display: inline-block;
+  position: relative;
 }
 
 .button {

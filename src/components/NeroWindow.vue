@@ -7,9 +7,9 @@
 
           <div class="window-header theme-background-color">
             <slot name="header"/>
-            <span
-              class="close"
-              @click="$emit('close')">X</span>
+            <i
+              class="close fa fa-times"
+              @click="$emit('close')"/>
           </div>
 
           <div class="window-body">
@@ -33,7 +33,7 @@
 // import AppDraggable from '@/components/AppDraggable'
 
 export default {
-  name: 'AppWindow',
+  name: 'NeroWindow',
   // components: {AppDraggable},
   props: {
     modal: {
@@ -78,7 +78,7 @@ export default {
 }
 
 .window-container {
-  background-color: $background-light-color;
+  background-color: $background-white-color;
   border-radius: 5px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
   transition: all .3s ease;
@@ -110,6 +110,11 @@ export default {
   padding: 15px;
   max-height: 75vh;
   overflow-y: auto;
+}
+
+.window-footer {
+  padding: 8px;
+  text-align: right;
 }
 
 /*

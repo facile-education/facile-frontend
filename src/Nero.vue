@@ -9,21 +9,24 @@
     <section class="nero-body">
       <router-view/>
     </section>
+    <Hack/>
   </div>
 </template>
 
 <script>
 import Banner from '@/components/Banner'
 import SideMenu from '@/components/SideMenu'
+import Hack from '@/components/Hack'
 
 export default {
-  name: 'App',
+  name: 'Nero',
   components: {
     Banner,
-    SideMenu
+    SideMenu,
+    Hack
   },
   beforeCreate () {
-    this.$store.dispatch('INIT_CURRENT_USER')
+    this.$store.dispatch('initUserInformations')
   }
 }
 </script>
