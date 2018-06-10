@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'AppToolbar'
+  name: 'NeroToolbar'
 }
 </script>
 

@@ -1,7 +1,6 @@
 <template>
   <button
-    :class="cls"
-    class="button"
+    :class="[cls, type]"
     @click="dispatchEvent">
     <i
       :ng-if="icon"
@@ -14,11 +13,15 @@
 
 <script>
 export default {
-  name: 'AppButton',
+  name: 'NeroButton',
   props: {
     cls: {
       type: String,
       default: 'theme-background-color'
+    },
+    type: {
+      type: String,
+      default: 'button'
     },
     label: {
       type: String,
@@ -45,10 +48,12 @@ export default {
 }
 
 .circle {
+  @extend %nero-btn-like;
   border-radius: 50%;
   width: 30px;
   height: 30px;
   padding: 0;
+  line-height: 30px;
 }
 
 .cancel {

@@ -3,6 +3,7 @@ $theme-color: #f4901d;
 // Orange: f4901d, Dark blue: 35495e, Vue green: 42b983 / 4dba87
 $text-color: #2c3e50;
 $text-color-light: #fff;
+$text-fallback: #b7b7b7;
 
 // Background colors
 $background-white-color: #ffffff;
@@ -38,5 +39,22 @@ $dropdown-z-index: 5;
 
   &:focus {
     outline: none;
+  }
+}
+
+%nero-input {
+  background: #f9f9f9;
+  background-image: none;
+  border: 0;
+  box-shadow: none;
+  width: 100%;
+  margin-bottom: 5px;
+  padding: 0;
+  outline: none;
+
+  &.form {
+    border-bottom: 1px solid #c2c2c2;
+    margin-bottom: 5px;
+    padding: 8px
   }
 }
