@@ -5,26 +5,21 @@
       :key="category"
       class="category">
       <h4 class="header">{{ category }}</h4>
-      <ApplicationManagerServiceList :category="category"/>
+      <ApplicationList :category="category"/>
     </div>
 </div></template>
 
 <script>
-import ApplicationManagerServiceList from '@/components/ApplicationManagerServiceList'
+import ApplicationList from '@/components/ApplicationManager/ApplicationList'
 
 export default {
-  name: 'ApplicationManagerCategory',
+  name: 'CategoryList',
   components: {
-    ApplicationManagerServiceList
+    ApplicationList
   },
   computed: {
     categories () {
       return this.$store.getters.categories
-    }
-  },
-  created () {
-    if (this.categories === undefined) {
-      this.$store.dispatch('getSchoolServices')
     }
   }
 }
