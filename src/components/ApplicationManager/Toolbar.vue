@@ -32,7 +32,8 @@ export default {
       return this.$store.state.currentUser.isAdministrator
     },
     show () {
-      return (this.isAdministrator || (this.schools.length > 1))
+      return (this.isAdministrator ||
+        (this.schools !== undefined && this.schools.length > 1))
     }
   },
   created () {
