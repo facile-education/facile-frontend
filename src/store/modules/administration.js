@@ -1,14 +1,12 @@
 import administrationService from '@/api/administration.service'
 
-const GET_ADMIN_SCHOOLS = 'getAdministrationSchools'
-
 export default {
   state: {
     schools: undefined,
     portlets: undefined
   },
   mutations: {
-    [GET_ADMIN_SCHOOLS] (state, payload) {
+    getAdministrationSchools (state, payload) {
       state.schools = payload
     },
     getPortletList (state, payload) {
@@ -16,10 +14,10 @@ export default {
     }
   },
   actions: {
-    [GET_ADMIN_SCHOOLS] ({ commit }) {
+    getAdministrationSchools ({ commit }) {
       administrationService.getAdministrationSchools().then((data) => {
         if (data.success) {
-          commit(GET_ADMIN_SCHOOLS, data.etabList)
+          commit('getAdministrationSchools', data.etabList)
         }
       })
     },

@@ -1,6 +1,7 @@
 <template>
   <div class="dropdown">
     <button
+      v-if="displayDropdown"
       class="button"
       @click="toggleMenu">
       {{ getDisplayValue(selectedItem) }}
@@ -56,6 +57,9 @@ export default {
     }
   },
   computed: {
+    displayDropdown () {
+      return (this.list.length > 0)
+    },
     filteredList () {
       var vm = this
       return this.list.filter(function (item) {
@@ -69,7 +73,9 @@ export default {
     }
   },
   created () {
-    this.onSelect(this.list[0])
+    if (this.list.length > 0) {
+      this.onSelect(this.list[0])
+    }
   },
   methods: {
     getDisplayValue (item) {
@@ -86,7 +92,7 @@ export default {
     },
     toggleMenu () {
       this.show = !this.show
-      if (this.show) {
+      if (this.show && this.filtered) {
         this.$nextTick(() => this.$refs.filter.focus())
       }
     }
