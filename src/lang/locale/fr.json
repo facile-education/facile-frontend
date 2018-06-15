@@ -1,4 +1,13 @@
 {
+  "nero": {
+    "roles": {
+      "National_1": "Elève",
+      "National_2": "Parent",
+      "National_3": "Enseignant",
+      "National_4": "Personnel",
+      "National_7": "Personnel de la collectivité et autres profils"
+    }
+  },
   "banner": {
     "search": "Recherche"
   },
@@ -46,12 +55,48 @@
       "configuration-button-tooltip": "Gérer les règles de diffusion",
       "save-button-tooltip": "Enregistrer les modifications",
       "guide-button-tooltip": "Consulter le guide utilisateur"
-    },
-    "category": {
-
-    },
-    "service-list": {
-      
     }
+  },
+  "CommunicationManager": {
+    "InternalRights": {
+      "title": "Communication interne",
+      "informations": "Ce service permet de définir, par profil d'usagers, les listes de contacts qui seront automatiquement créées dans le carnet des utilisateurs. Vous pouvez ainsi gérer les possibilités de communication pour chaque profil au sein de votre établissement ou cité scolaire.",
+      "hisChildren": "Ses enfants",
+      "studentsOfHisClass": "Les élèves de ses classes",
+      "studentsOfEachClass": "Les élèves des classes",
+      "allStudentsInSchool": "Tous les élèves de l'établissement",
+      "hisParents": "Ses parents",
+      "childrenClassesParents": "Les parents des classes de ses enfants",
+      "parentsOfHisClass": "Les parents des élèves de ses classes",
+      "parentsOfEachClass": "Les parents des classes",
+      "allParentsInSchool": "Tous les parents de l'établissement",
+      "childrenClassesTeachers": "Les enseignants des classes de ses enfants",
+      "teachersOfHisClass": "Les enseignants de ses classes",
+      "teachersOfEachClass": "Les enseignants des classes",
+      "allTeachersInSchool": "Tous les enseignants de l'établissement",
+      "allPersonalsInSchool": "Tous les personnels de l'établissement",
+      "allOthersInSchool": "Tous les personnels de la collectivité de l'établissement",
+      "save": "Enregistrer"
+    },
+    "ExternalRights": {
+      "title": "Communication externe",
+      "informations": "Vous pouvez gérer l'autorisation, par profil d'usagers, d'ajout de comptes mails.",
+      "save": "Enregistrer"
+    },
+    "ExternalRoleItem": {
+      "yes": "oui",
+      "no": "non"
+    }
+  },
+  "ExternalResource": {
+    "clickHereLabel": "cliquez ici",
+    "noConfigLabel": "Aucun de vos établissements ne possède une configuration {resourceName}.",
+    "contactLabel": "Vous pouvez signaler un incident en {link}.",
+
+    "newTabLabel": "<strong>{resourceName}</strong> a été ouvert dans un nouvel onglet.",
+    "openAgainLabel": "Si vous ne le voyez pas, {link} pour l'ouvrir à nouveau.",
+    "popupIssueLabel": "Si le problème persiste, votre navigateur doit certainement bloquer les fenêtres surgissantes (pop-ups) ouvertes depuis l'ENT. Pour les autoriser, veuillez suivre la démarche indiquée dans l'onglet \"Autoriser les pop-ups\" de la fenêtre d'informations (accessible depuis le menu utilisateur sur la droite du bandeau <i class=\"fa fa-chevron-down\"></i>).",
+
+    "openInTabLabel": "Vous pouvez également {link} pour ouvrir le service dans un nouvel onglet."
   }
 }
