@@ -4,11 +4,17 @@
       v-for="entry in menu"
       :key="entry.id">
       <router-link
-        v-if="entry.isLeaf"
+        v-if="isEntryRoute(entry)"
         :to="entry.route"
         class="menu-entry">
         {{ entry.label }}
       </router-link>
+      <div v-else-if="isEntryInternetLink(entry)">
+        <a
+          :href="entry.href"
+          class="category-title"
+          target="_blank">{{ entry.label }}</a>
+      </div>
       <div v-else>
         <h3 class="category-title">{{ entry.label }}</h3>
         <SideMenuCategory :menu="entry.menu"/>
@@ -24,6 +30,14 @@ export default {
     menu: {
       type: Array,
       default: undefined
+    }
+  },
+  methods: {
+    isEntryRoute (entry) {
+      return (entry.isLeaf && entry.route)
+    },
+    isEntryInternetLink (entry) {
+      return (entry.isLeaf && entry.href)
     }
   }
 }
