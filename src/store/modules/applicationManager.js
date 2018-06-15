@@ -28,7 +28,9 @@ export default {
     getSchoolApplications ({ commit }, school) {
       applicationManagerService.getSchoolApplications(school.schoolId).then(
         (data) => {
-          commit('getSchoolApplications', data.serviceList)
+          if (data.success) {
+            commit('getSchoolApplications', data.serviceList)
+          }
         },
         (err) => {
           // TODO toastr
