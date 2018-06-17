@@ -1,22 +1,25 @@
 <template>
-  <div v-if="rightList">
-    <h4 v-t="'CommunicationManager.InternalRights.title'"/>
-    <p v-t="'CommunicationManager.InternalRights.informations'"/>
-    <NeroDropdown
-      v-if="showDropdown"
-      :list="roleList"
-      display-field="label"
-      @dropdown-select="onRoleSelect"/>
-    <div
-      v-for="right in selectedRoleRightList"
-      :key="right">
-      <NeroCheckbox
-        v-model="rightList[right]"
-        :label="$t('CommunicationManager.InternalRights.' + removePrefix(right))"/>
-    </div>
-    <NeroButton
-      :label="$t('CommunicationManager.InternalRights.save')"
-      @click="onSave"/>
+  <div class="internal-rights">
+    <template v-if="rightList">
+      <h4 v-t="'CommunicationManager.InternalRights.title'"/>
+      <p v-t="'CommunicationManager.InternalRights.informations'"/>
+      <NeroDropdown
+        v-if="showDropdown"
+        :list="roleList"
+        display-field="label"
+        @dropdown-select="onRoleSelect"/>
+      <div
+        v-for="right in selectedRoleRightList"
+        :key="right">
+        <NeroCheckbox
+          v-model="rightList[right]"
+          :label="$t('CommunicationManager.InternalRights.' + removePrefix(right))"/>
+      </div>
+      <NeroButton
+        :label="$t('CommunicationManager.InternalRights.save')"
+        @click="onSave"/>
+    </template>
+    <NeroSpinner v-else/>
   </div>
 </template>
 
@@ -24,13 +27,15 @@
 import NeroCheckbox from '@/components/NeroCheckbox'
 import NeroDropdown from '@/components/NeroDropdown'
 import NeroButton from '@/components/NeroButton'
+import NeroSpinner from '@/components/NeroSpinner'
 
 export default {
   name: 'InternalRights',
   components: {
     NeroCheckbox,
     NeroDropdown,
-    NeroButton
+    NeroButton,
+    NeroSpinner
   },
   data () {
     return {
@@ -89,5 +94,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.internal-rights {
+  position: relative;
+  min-height: 100px;
+}
 </style>

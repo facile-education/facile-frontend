@@ -29,19 +29,21 @@ export default {
 
 .spinner {
   position: absolute;
-  top: 45%;
-  left: 45%;
-  right: 0;
-  bottom: 0;
   width: 25px;
   height: 25px;
+
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 
   div {
     width: 36%;
     height: 36%;
     position: absolute;
-    left: 44.5%;
-    top: 37%;
     opacity: 0;
     -webkit-animation: spinner-anim 0.5s linear infinite;
     -moz-animation: spinner-anim 0.5s linear infinite;
@@ -213,17 +215,17 @@ export default {
   }
 }
 
-@-webkit-keyframes spinner-anim{
+@-webkit-keyframes spinner-anim {
   from {opacity: 1;}
   to {opacity: 0.25;}
 }
 
-@-moz-keyframes spinner-anim{
+@-moz-keyframes spinner-anim {
   from {opacity: 1;}
   to {opacity: 0.25;}
 }
 
-@keyframes spinner-anim{
+@keyframes spinner-anim {
   from {opacity: 1;}
   to {opacity: 0.25;}
 }
