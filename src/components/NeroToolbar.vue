@@ -16,6 +16,8 @@ export default {
 .toolbar {
   background-color: $toolbar-background-color;
   padding: 5px;
+  position: relative;
+  z-index: $service-toolbar-z-index;
   @extend %nero-shadow;
 }
 </style>

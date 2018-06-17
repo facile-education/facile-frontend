@@ -1,27 +1,32 @@
 <template>
-  <div v-if="rightList">
-    <h4 v-t="'CommunicationManager.ExternalRights.title'"/>
-    <p v-t="'CommunicationManager.ExternalRights.informations'"/>
-    <ExternalRoleItem
-      v-for="role in roleList"
-      :key="role.roleId"
-      :role="role"
-      :current="rightList[role.roleCode]"
-      @input="onInput"/>
-    <NeroButton
-      :label="$t('CommunicationManager.ExternalRights.save')"
-      @click="onSave"/>
+  <div class="external-rights">
+    <template v-if="rightList">
+      <h4 v-t="'CommunicationManager.ExternalRights.title'"/>
+      <p v-t="'CommunicationManager.ExternalRights.informations'"/>
+      <ExternalRoleItem
+        v-for="role in roleList"
+        :key="role.roleId"
+        :role="role"
+        :current="rightList[role.roleCode]"
+        @input="onInput"/>
+      <NeroButton
+        :label="$t('CommunicationManager.ExternalRights.save')"
+        @click="onSave"/>
+    </template>
+    <NeroSpinner v-else/>
   </div>
 </template>
 
 <script>
 import NeroButton from '@/components/NeroButton'
+import NeroSpinner from '@/components/NeroSpinner'
 import ExternalRoleItem from '@/components/CommunicationManager/ExternalRoleItem'
 
 export default {
   name: 'ExternalRights',
   components: {
     NeroButton,
+    NeroSpinner,
     ExternalRoleItem
   },
   computed: {
@@ -59,5 +64,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.external-rights {
+  position: relative;
+  min-height: 100px;
+}
 </style>

@@ -5,18 +5,21 @@
       :list="schools"
       display-field="schoolName"
       @dropdown-select="onSchoolSelect"/>
+    <NeroSpinner v-else/>
   </NeroToolbar>
 </template>
 
 <script>
 import NeroToolbar from '@/components/NeroToolbar'
 import NeroDropdown from '@/components/NeroDropdown'
+import NeroSpinner from '@/components/NeroSpinner'
 
 export default {
   name: 'CMToolbar',
   components: {
     NeroToolbar,
-    NeroDropdown
+    NeroDropdown,
+    NeroSpinner
   },
   computed: {
     schools () {
