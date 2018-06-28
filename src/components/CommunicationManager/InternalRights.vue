@@ -1,25 +1,29 @@
 <template>
   <div class="internal-rights">
-    <template v-if="rightList">
-      <h4 v-t="'CommunicationManager.InternalRights.title'"/>
-      <p v-t="'CommunicationManager.InternalRights.informations'"/>
-      <NeroDropdown
-        v-if="showDropdown"
-        :list="roleList"
-        display-field="label"
-        @dropdown-select="onRoleSelect"/>
-      <div
-        v-for="right in selectedRoleRightList"
-        :key="right">
-        <NeroCheckbox
-          v-model="rightList[right]"
-          :label="$t('CommunicationManager.InternalRights.' + removePrefix(right))"/>
+    <transition
+      appear
+      name="fade">
+      <div v-if="rightList">
+        <h4 v-t="'CommunicationManager.InternalRights.title'"/>
+        <p v-t="'CommunicationManager.InternalRights.informations'"/>
+        <NeroDropdown
+          v-if="showDropdown"
+          :list="roleList"
+          display-field="label"
+          @dropdown-select="onRoleSelect"/>
+        <div
+          v-for="right in selectedRoleRightList"
+          :key="right">
+          <NeroCheckbox
+            v-model="rightList[right]"
+            :label="$t('CommunicationManager.InternalRights.' + removePrefix(right))"/>
+        </div>
+        <NeroButton
+          :label="$t('CommunicationManager.InternalRights.save')"
+          @click="onSave"/>
       </div>
-      <NeroButton
-        :label="$t('CommunicationManager.InternalRights.save')"
-        @click="onSave"/>
-    </template>
-    <NeroSpinner v-else/>
+      <NeroSpinner v-else/>
+    </transition>
   </div>
 </template>
 

@@ -1,11 +1,15 @@
 <template>
   <NeroToolbar v-if="show">
-    <NeroDropdown
-      v-if="schools"
-      :list="schools"
-      display-field="schoolName"
-      @dropdown-select="onSchoolSelect"/>
-    <NeroSpinner v-else/>
+    <transition
+      appear
+      name="fade">
+      <NeroDropdown
+        v-if="schools"
+        :list="schools"
+        display-field="schoolName"
+        @dropdown-select="onSchoolSelect"/>
+      <NeroSpinner v-else/>
+    </transition>
   </NeroToolbar>
 </template>
 
@@ -23,7 +27,7 @@ export default {
   },
   computed: {
     schools () {
-      return this.$store.state.administration.schools
+      return this.$store.state.administration.schoolList
     },
     show () {
       return (this.schools !== undefined && this.schools.length > 1)

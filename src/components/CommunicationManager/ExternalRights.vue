@@ -1,19 +1,23 @@
 <template>
   <div class="external-rights">
-    <template v-if="rightList">
-      <h4 v-t="'CommunicationManager.ExternalRights.title'"/>
-      <p v-t="'CommunicationManager.ExternalRights.informations'"/>
-      <ExternalRoleItem
-        v-for="role in roleList"
-        :key="role.roleId"
-        :role="role"
-        :current="rightList[role.roleCode]"
-        @input="onInput"/>
-      <NeroButton
-        :label="$t('CommunicationManager.ExternalRights.save')"
-        @click="onSave"/>
-    </template>
-    <NeroSpinner v-else/>
+    <transition
+      appear
+      name="fade">
+      <div v-if="rightList">
+        <h4 v-t="'CommunicationManager.ExternalRights.title'"/>
+        <p v-t="'CommunicationManager.ExternalRights.informations'"/>
+        <ExternalRoleItem
+          v-for="role in roleList"
+          :key="role.roleId"
+          :role="role"
+          :current="rightList[role.roleCode]"
+          @input="onInput"/>
+        <NeroButton
+          :label="$t('CommunicationManager.ExternalRights.save')"
+          @click="onSave"/>
+      </div>
+      <NeroSpinner v-else/>
+    </transition>
   </div>
 </template>
 
