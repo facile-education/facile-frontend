@@ -3,7 +3,7 @@
     :modal="true"
     @close="closeModal">
     <span
-      v-t="'application-manager.edition-modal.edit-modal-title'"
+      v-t="title"
       slot="header"/>
 
     <div slot="body">
@@ -42,21 +42,32 @@
           cls="form"
           type="text"/>
 
-        <NeroInput
-          v-model="application.serviceCategory"
-          :placeholder="$t('application-manager.edition-modal.category-placeholder') + '*'"
-          :max-lenght="75"
-          cls="form"
-          type="text"/>
-        TODO Aucomplete
+        <div class="input-completion">
+          <NeroInput
+            ref="category"
+            v-model="application.serviceCategory"
+            :placeholder="$t('application-manager.edition-modal.category-placeholder') + '*'"
+            :max-lenght="75"
+            cls="form"
+            type="text"
+            @focus="toggleCompletion"/>
+          <NeroAutocomplete
+            :list="categoryList"
+            :display-autocomplete="displayCategoryCompletion"
+            :input="application.serviceCategory"
+            @select="selectCategory"
+            @close="toggleCompletion"/>
+        </div>
       </div>
 
       <div class="broadcast">
         <div>
           <p v-t="'application-manager.edition-modal.schools-title'"/>
           <NeroTagsInput
+            v-if="schoolList"
             v-model="application.etabFilters"
             :placeholder="$t('application-manager.edition-modal.schools-placeholder')"
+            :list="schoolList"
             display-field="schoolName"
             cls="form"/>
         </div>
@@ -64,30 +75,33 @@
         <div>
           <p v-t="'application-manager.edition-modal.roles-title'"/>
           <NeroTagsInput
+            v-if="roleList"
+            v-model="application.roleList"
             :placeholder="$t('application-manager.edition-modal.roles-placeholder')"
+            :list="roleList"
+            display-field="displayText"
             cls="form"/>
         </div>
 
         <div class="default-portlet">
           <NeroDropdown
-            v-if="portlets"
-            :list="portlets"
+            v-if="portletList"
+            :list="portletList"
             display-field="name"
             @dropdown-select="onPortletSelect"/>
         </div>
 
         <div class="urls">
-          <div>
-            <i class="fa fa-check"/>
-            <input type="checkbox">
-            <span>{{ $t('application-manager.edition-modal.global-url-combobox') }}</span>
-          </div>
+          <!-- TODO code model radio button + disable input-->
+          <NeroRadioButton
+            :label="$t('application-manager.edition-modal.global-url-combobox')"
+            name="url"
+            class="radio"/>
 
-          <div>
-            <i class="fa fa-check"/>
-            <input type="checkbox">
-            <span>{{ $t('application-manager.edition-modal.custom-url-combobox') }}</span>
-          </div>
+          <NeroRadioButton
+            :label="$t('application-manager.edition-modal.custom-url-combobox')"
+            name="url"
+            class="radio"/>
 
           <NeroInput
             :placeholder="$t('application-manager.edition-modal.global-url-placeholder')"
@@ -116,7 +130,8 @@
     </div>
     <NeroButton
       slot="footer"
-      :label="$t('application-manager.edition-modal.modal-save-button')"/>
+      :label="$t('application-manager.edition-modal.modal-save-button')"
+      @click="save"/>
   </NeroWindow>
 </template>
 
@@ -125,8 +140,10 @@ import NeroButton from '@/components/NeroButton'
 import NeroDropdown from '@/components/NeroDropdown'
 import NeroInput from '@/components/NeroInput'
 import NeroCheckbox from '@/components/NeroCheckbox'
+import NeroRadioButton from '@/components/NeroRadioButton'
 import NeroTagsInput from '@/components/NeroTagsInput'
 import NeroWindow from '@/components/NeroWindow'
+import NeroAutocomplete from '@/components/NeroAutocomplete'
 
 export default {
   name: 'ApplicationEditionModal',
@@ -135,25 +152,61 @@ export default {
     NeroDropdown,
     NeroInput,
     NeroCheckbox,
+    NeroRadioButton,
     NeroTagsInput,
-    NeroWindow
+    NeroWindow,
+    NeroAutocomplete
+  },
+  data () {
+    return {
+      application: undefined,
+      displayCategoryCompletion: false
+    }
   },
   computed: {
-    application () {
-      return this.$store.state.applicationManager.application
+    title () {
+      var title = 'application-manager.edition-modal.add-modal-title'
+      if (this.application && this.application.serviceId) {
+        title = 'application-manager.edition-modal.edit-modal-title'
+      }
+      return title
     },
-    portlets () {
-      return this.$store.state.administration.portlets
+    portletList () {
+      return this.$store.state.administration.portletList
+    },
+    schoolList () {
+      return this.$store.state.administration.schoolList
+    },
+    roleList () {
+      return this.$store.state.administration.roleList
+    },
+    categoryList () {
+      return this.$store.getters.categories
     }
   },
   created () {
-    if (this.portlets === undefined) {
+    if (this.portletList === undefined) {
       this.$store.dispatch('getPortletList')
     }
+    if (this.roleList === undefined) {
+      this.$store.dispatch('getRoleList')
+    }
+    this.application = this.$store.state.applicationManager.application
   },
   methods: {
+    toggleCompletion () {
+      if (this.$refs.category.$el !== document.activeElement) {
+        this.displayCategoryCompletion = false
+      } else {
+        this.displayCategoryCompletion = true
+      }
+    },
     closeModal () {
       this.$store.dispatch('closeEditionModal')
+    },
+    selectCategory (category) {
+      this.application.serviceCategory = category
+      // Todo remove focus ?
     },
     removeLogo () {
       // TODO code
@@ -163,10 +216,11 @@ export default {
       // TODO code
       console.log('open image picker')
     },
-    onSave () {
+    save () {
       // TODO code
       // if add push app il list
       // if edit commit ? change in list ?
+      console.log(this.application)
     },
     onPortletSelect () {
       // TODO code or dropdown v-model
@@ -211,6 +265,16 @@ export default {
   display: inline-block;
   width: 78%;
   margin-left: 5px;
+}
+
+.input-completion {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.radio {
+  width: 50%;
 }
 
 .export {

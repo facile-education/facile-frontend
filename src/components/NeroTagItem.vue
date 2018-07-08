@@ -1,6 +1,9 @@
 <template>
   <li class="tag-item theme-background-color">
-    {{ tag }} <i class="fa fa-times"/>
+    {{ tag }}
+    <i
+      class="fa fa-times"
+      @click="onRemove"/>
   </li>
 </template>
 
@@ -11,6 +14,11 @@ export default {
     tag: {
       type: String,
       required: true
+    }
+  },
+  methods: {
+    onRemove () {
+      this.$emit('remove', this.tag)
     }
   }
 }
@@ -23,7 +31,11 @@ export default {
   display: inline-block;
   font-size: 10px;
   height: 26px;
-  line-height: 25px;
+  line-height: 26px;
   border-radius: 3px;
+
+  i {
+    cursor: pointer;
+  }
 }
 </style>

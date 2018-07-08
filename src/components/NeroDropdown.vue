@@ -1,5 +1,6 @@
 <template>
-  <div class="dropdown">
+  <div
+    class="dropdown">
     <button
       v-if="displayDropdown"
       class="button"
@@ -7,36 +8,23 @@
       {{ getDisplayValue(selectedItem) }}
       <i class="fa fa-caret-down theme-text-color"/>
     </button>
-    <div
-      v-click-outside="toggleMenu"
-      v-if="show"
-      class="menu">
-      <div
-        v-if="filtered"
-        class="filter">
-        <input
-          ref="filter"
-          v-model="filter"
-          placeholder="TODO placeholder">
-      </div>
-      <span
-        v-for="(item, index) in filteredList"
-        :key="index"
-        class="item"
-        @click="onSelect(item)">
-        {{ getDisplayValue(item) }}
-      </span>
-    </div>
+    <NeroAutocomplete
+      :list="list"
+      :display-field="displayField"
+      :filtered="filtered"
+      :display-autocomplete="show"
+      @select="onSelect"
+      @close="onClose"/>
   </div>
 </template>
 
 <script>
-import clickoutside from '@/directives/clickoutside'
+import NeroAutocomplete from '@/components/NeroAutocomplete'
 
 export default {
   name: 'NeroDropdown',
-  directives: {
-    'click-outside': clickoutside
+  components: {
+    NeroAutocomplete
   },
   props: {
     list: {
@@ -52,24 +40,12 @@ export default {
     return {
       show: false,
       selectedItem: undefined,
-      filtered: this.list.length > 5,
-      filter: ''
+      filtered: this.list.length > 5
     }
   },
   computed: {
     displayDropdown () {
       return (this.list.length > 0)
-    },
-    filteredList () {
-      var vm = this
-      return this.list.filter(function (item) {
-        if (vm.filter.length === 0) {
-          return true
-        }
-        return (vm.getDisplayValue(item)
-          .toLowerCase()
-          .indexOf(vm.filter.toLowerCase()) !== -1)
-      })
     }
   },
   created () {
@@ -78,6 +54,9 @@ export default {
     }
   },
   methods: {
+    toggleMenu () {
+      this.show = !this.show
+    },
     getDisplayValue (item) {
       if (this.displayField === undefined) {
         return item
@@ -86,15 +65,14 @@ export default {
       }
     },
     onSelect (item) {
-      this.$emit('dropdown-select', item)
-      this.selectedItem = item
+      if (item !== undefined) {
+        this.$emit('dropdown-select', item)
+        this.selectedItem = item
+      }
       this.show = false
     },
-    toggleMenu () {
-      this.show = !this.show
-      if (this.show && this.filtered) {
-        this.$nextTick(() => this.$refs.filter.focus())
-      }
+    onClose () {
+      this.show = false
     }
   }
 }
@@ -102,6 +80,7 @@ export default {
 
 <style lang="scss" scoped>
 @import 'src/assets/css/constants';
+
 .dropdown {
   display: inline-block;
   position: relative;
@@ -113,40 +92,6 @@ export default {
 
   &:hover {
     background-color: #e4e4e4;
-  }
-}
-
-.menu {
-  overflow-y: auto;
-  max-height: 300px;
-  position: absolute;
-  background-color: $background-white-color;
-  border: $border;
-  border-radius: $border-radius;
-  z-index: $dropdown-z-index;
-  @extend %nero-shadow;
-
-  .filter {
-    padding: 3px 20px;
-    border-bottom: $border;
-
-    input {
-      width: 99%;
-
-      &:focus {
-        outline: none;
-      }
-    }
-  }
-
-  .item {
-    display: block;
-    padding: 3px 20px;
-    white-space: nowrap;
-
-    &:hover {
-      background-color: #f5f5f5;
-    }
   }
 }
 </style>

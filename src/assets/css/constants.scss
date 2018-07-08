@@ -9,8 +9,12 @@ $text-fallback: #b7b7b7;
 $background-white-color: #ffffff;
 $background-light-color: #f8fafc;
 $toolbar-background-color: #f1f1f1;
+$menu-selected-background-color: #bdbdbd;
 $header-background-color: $toolbar-background-color;
+$notif-background-color: #cd4436;
 $valid-background-color: #01d801;
+
+$body-height-toolbar: 80vh;
 
 // Border
 $border: 1px solid #e2e2e2;
@@ -22,6 +26,8 @@ $popup-z-index: 12;
 $banner-z-index: 10;
 $side-menu-z-index: 7;
 $dropdown-z-index: 5;
+$service-toolbar-z-index: 3;
+$service-menu-z-index: 2;
 
 // Global rules
 %nero-shadow {
@@ -56,5 +62,26 @@ $dropdown-z-index: 5;
     border-bottom: 1px solid #c2c2c2;
     margin-bottom: 5px;
     padding: 8px
+  }
+}
+
+%nero-menu {
+  @extend %nero-shadow;
+  background-color: $toolbar-background-color;
+}
+
+%nero-menu-item {
+  -webkit-transition: all .4s;
+  -moz-transition: all .4s;
+  -o-transition: all .4s;
+  transition: all .4s;
+  position: relative;
+
+  &.selected {
+    background-color: $menu-selected-background-color;
+  }
+
+  &:hover {
+    cursor: pointer;
   }
 }

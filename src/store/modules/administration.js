@@ -2,29 +2,40 @@ import administrationService from '@/api/administration.service'
 
 export default {
   state: {
-    schools: undefined,
-    portlets: undefined
+    schoolList: undefined,
+    portletList: undefined,
+    roleList: undefined
   },
   mutations: {
-    getAdministrationSchools (state, payload) {
-      state.schools = payload
+    initAdministeredSchoolList (state, payload) {
+      state.schoolList = payload
     },
-    getPortletList (state, payload) {
-      state.portlets = payload
+    initPortletList (state, payload) {
+      state.portletList = payload
+    },
+    initRoleList (state, payload) {
+      state.roleList = payload
     }
   },
   actions: {
     getAdministrationSchools ({ commit }) {
-      administrationService.getAdministrationSchools().then((data) => {
+      administrationService.getAdministeredSchoolList().then((data) => {
         if (data.success) {
-          commit('getAdministrationSchools', data.etabList)
+          commit('initAdministeredSchoolList', data.etabList)
         }
       })
     },
     getPortletList ({ commit }) {
-      administrationService.getPortlets().then((data) => {
+      administrationService.getPortletList().then((data) => {
         if (data.success) {
-          commit('getPortletList', data.listPortlet)
+          commit('initPortletList', data.listPortlet)
+        }
+      })
+    },
+    getRoleList ({ commit }) {
+      administrationService.getRoleList().then((data) => {
+        if (data.success) {
+          commit('initRoleList', data.roleList)
         }
       })
     }

@@ -9,6 +9,7 @@
       :list="schools"
       display-field="schoolName"
       @dropdown-select="onSchoolSelect"/>
+    <NeroSpinner v-else/>
   </NeroToolbar>
 </template>
 
@@ -16,17 +17,19 @@
 import NeroToolbar from '@/components/NeroToolbar'
 import NeroButton from '@/components/NeroButton'
 import NeroDropdown from '@/components/NeroDropdown'
+import NeroSpinner from '@/components/NeroSpinner'
 
 export default {
-  name: 'Toolbar',
+  name: 'AMToolbar',
   components: {
     NeroButton,
     NeroToolbar,
-    NeroDropdown
+    NeroDropdown,
+    NeroSpinner
   },
   computed: {
     schools () {
-      return this.$store.state.administration.schools
+      return this.$store.state.administration.schoolList
     },
     isAdministrator () {
       return this.$store.state.currentUser.isAdministrator

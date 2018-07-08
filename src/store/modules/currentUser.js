@@ -9,6 +9,7 @@ export default {
     picture: '',
     isAdministrator: false,
     isLocalAdmin: false,
+    isENTAdmin: false,
     isPersonnel: false,
     isStudent: false,
     isTeacher: false,
