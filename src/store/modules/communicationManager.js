@@ -11,7 +11,7 @@ export default {
     setSelectedSchoolId (state, payload) {
       state.selectedSchoolId = payload
     },
-    initRoleList (state, payload) {
+    initCommunicationManagerRoleList (state, payload) {
       state.roleList = payload
     },
     initInternalRights (state, payload) {
@@ -28,7 +28,8 @@ export default {
     initCommunicationManagerRoleList ({ commit }) {
       communicationManagerService.getCommunicationRoleList().then((data) => {
         if (data.success) {
-          commit('initRoleList', data.roles)
+          commit('initCommunicationManagerRoleList', data.roles)
+          console.log(data.roles)
         }
         // TODO else toastr err
       },
