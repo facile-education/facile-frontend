@@ -4,7 +4,6 @@ import constants from './constants'
 export default {
   getApplicationBroadcastScope,
   getApplicationDefaultTargetRoles,
-  getRoles,
   getSchoolApplications,
   getSchoolClasses
 }
@@ -26,15 +25,6 @@ function getApplicationDefaultTargetRoles (applicationId) {
     params: {
       cmd: 'getDefaultRoles',
       serviceId: applicationId
-    }
-  }).then(response => response.data)
-}
-
-function getRoles () {
-  const url = constants.BASE_URL + '/api/get_roles'
-  return axios.get(url, {
-    params: {
-      cmd: 'getRoleList'
     }
   }).then(response => response.data)
 }

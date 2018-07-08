@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Toolbar/>
+    <AMToolbar/>
     <CategoryList/>
     <BroadcastScopeModal v-if="showBroadcastModal"/>
     <ApplicationEditionModal v-if="showEditionModal"/>
@@ -9,7 +9,7 @@
 
 <script>
 import CategoryList from '@/components/ApplicationManager/CategoryList'
-import Toolbar from '@/components/ApplicationManager/Toolbar'
+import AMToolbar from '@/components/ApplicationManager/AMToolbar'
 import ApplicationEditionModal from '@/components/ApplicationManager/ApplicationEditionModal'
 import BroadcastScopeModal from '@/components/ApplicationManager/BroadcastScopeModal'
 
@@ -17,7 +17,7 @@ export default {
   name: 'ApplicationManager',
   components: {
     CategoryList,
-    Toolbar,
+    AMToolbar,
     ApplicationEditionModal,
     BroadcastScopeModal
   },
