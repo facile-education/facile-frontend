@@ -1,12 +1,18 @@
 <template>
   <div>
     Workspace
+    <DocumentTree/>
   </div>
 </template>
 
 <script>
+import DocumentTree from '@/components/Workspace/DocumentTree'
+
 export default {
-  name: 'Workspace'
+  name: 'Workspace',
+  components: {
+    DocumentTree
+  }
 }
 </script>
 
