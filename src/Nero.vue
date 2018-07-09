@@ -55,7 +55,17 @@ body {
   color: $text-color-light;
 }
 
+.theme-hover-background-color:hover {
+  background-color: $theme-color;
+  color: $text-color-light;
+  cursor: pointer;
+}
+
 .theme-text-color {
+  color: $theme-color;
+}
+
+.theme-hover-text-color:hover {
   color: $theme-color;
 }
 
@@ -71,8 +81,8 @@ body {
 }
 
 .nero-body {
-  margin-top: 48px; // Banner
-  margin-left: 220px; // Side menu
+  margin-top: $banner-height; // Banner
+  margin-left: $side-menu-width; // Side menu
   padding: 10px;
 }
 
