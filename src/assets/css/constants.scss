@@ -4,6 +4,7 @@ $theme-color: #f4901d;
 $text-color: #2c3e50;
 $text-color-light: #fff;
 $text-fallback: #b7b7b7;
+$text-color-menu: #909090;
 
 // Background colors
 $background-white-color: #ffffff;
@@ -11,6 +12,7 @@ $background-light-color: #f8fafc;
 $toolbar-background-color: #f1f1f1;
 $menu-selected-background-color: #bdbdbd;
 $header-background-color: $toolbar-background-color;
+$menu-background-color: $toolbar-background-color;
 $notif-background-color: #cd4436;
 $valid-background-color: #01d801;
 
@@ -28,6 +30,13 @@ $side-menu-z-index: 7;
 $dropdown-z-index: 5;
 $service-toolbar-z-index: 3;
 $service-menu-z-index: 2;
+
+// Banner
+$banner-height: 48px;
+
+// Side menu
+$side-menu-width: 60px;
+$side-menu-icon-size: 25px;
 
 // Global rules
 %nero-shadow {
@@ -84,4 +93,13 @@ $service-menu-z-index: 2;
   &:hover {
     cursor: pointer;
   }
+}
+
+%no-text-highlight {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
 }
