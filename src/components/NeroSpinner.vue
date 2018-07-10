@@ -29,8 +29,8 @@ export default {
 
 .spinner {
   position: absolute;
-  width: 25px;
-  height: 25px;
+  width: 50px;
+  height: 50px;
 
   left: 50%;
   top: 50%;
@@ -41,9 +41,11 @@ export default {
   transform: translate(-50%, -50%);
 
   div {
-    width: 36%;
-    height: 36%;
+    width: 4%;
+    height: 20%;
     position: absolute;
+    left: 24px;
+    top: 20px;
     opacity: 0;
     -webkit-animation: spinner-anim 0.5s linear infinite;
     -moz-animation: spinner-anim 0.5s linear infinite;
@@ -59,11 +61,11 @@ export default {
   }
 
   .bar1 {
-    -webkit-transform: rotate(0deg) translate(0,-142%);
-    -moz-transform: rotate(0deg) translate(0,-142%);
-    -ms-transform: rotate(0deg) translate(0,-142%);
-    -o-transform: rotate(0deg) translate(0,-142%);
-    transform: rotate(0deg) translate(0,-142%);
+    -webkit-transform: rotate(0deg) translate(0,-100%);
+    -moz-transform: rotate(0deg) translate(0,-100%);
+    -ms-transform: rotate(0deg) translate(0,-100%);
+    -o-transform: rotate(0deg) translate(0,-100%);
+    transform: rotate(0deg) translate(0,-100%);
     -webkit-animation-delay: 0s;
     -moz-animation-delay: 0s;
     -ms-animation-delay: 0s;
@@ -72,11 +74,11 @@ export default {
   }
 
   .bar2 {
-    -webkit-transform: rotate(30deg) translate(0,-142%);
-    -moz-transform: rotate(30deg) translate(0,-142%);
-    -ms-transform: rotate(30deg) translate(0,-142%);
-    -o-transform: rotate(30deg) translate(0,-142%);
-    transform: rotate(30deg) translate(0,-142%);
+    -webkit-transform: rotate(30deg) translate(0,-100%);
+    -moz-transform: rotate(30deg) translate(0,-100%);
+    -ms-transform: rotate(30deg) translate(0,-100%);
+    -o-transform: rotate(30deg) translate(0,-100%);
+    transform: rotate(30deg) translate(0,-100%);
     -webkit-animation-delay: -0.9167s;
     -moz-animation-delay: -0.9167s;
     -ms-animation-delay: -0.9167s;
@@ -85,11 +87,11 @@ export default {
   }
 
   .bar3 {
-    -webkit-transform: rotate(90deg) translate(0,-142%);
-    -moz-transform: rotate(90deg) translate(0,-142%);;
-    -ms-transform: rotate(90deg) translate(0,-142%);
-    -o-transform: rotate(90deg) translate(0,-142%);
-    transform: rotate(60deg) translate(0,-142%);
+    -webkit-transform: rotate(90deg) translate(0,-100%);
+    -moz-transform: rotate(90deg) translate(0,-100%);;
+    -ms-transform: rotate(90deg) translate(0,-100%);
+    -o-transform: rotate(90deg) translate(0,-100%);
+    transform: rotate(60deg) translate(0,-100%);
     -webkit-animation-delay: -0.833s;
     -moz-animation-delay: -0.833s;
     -ms-animation-delay: -0.833s;
@@ -98,11 +100,11 @@ export default {
   }
 
   .bar4 {
-    -webkit-transform: rotate(90deg) translate(0,-142%);
-    -moz-transform: rotate(90deg) translate(0,-142%);;
-    -ms-transform: rotate(90deg) translate(0,-142%);
-    -o-transform: rotate(90deg) translate(0,-142%);
-    transform: rotate(90deg) translate(0,-142%);
+    -webkit-transform: rotate(90deg) translate(0,-100%);
+    -moz-transform: rotate(90deg) translate(0,-100%);;
+    -ms-transform: rotate(90deg) translate(0,-100%);
+    -o-transform: rotate(90deg) translate(0,-100%);
+    transform: rotate(90deg) translate(0,-100%);
     -webkit-animation-delay: -0.75s;
     -moz-animation-delay: -0.75s;
     -ms-animation-delay: -0.75s;
@@ -111,11 +113,11 @@ export default {
   }
 
   .bar5 {
-    -webkit-transform: rotate(120deg) translate(0,-142%);
-    -moz-transform: rotate(120deg) translate(0,-142%);
-    -ms-transform: rotate(120deg) translate(0,-142%);
-    -o-transform: rotate(120deg) translate(0,-142%);
-    transform: rotate(120deg) translate(0,-142%);
+    -webkit-transform: rotate(120deg) translate(0,-100%);
+    -moz-transform: rotate(120deg) translate(0,-100%);
+    -ms-transform: rotate(120deg) translate(0,-100%);
+    -o-transform: rotate(120deg) translate(0,-100%);
+    transform: rotate(120deg) translate(0,-100%);
     -webkit-animation-delay: -0.667s;
     -moz-animation-delay: -0.667s;
     -ms-animation-delay: -0.667s;
@@ -124,11 +126,11 @@ export default {
   }
 
   .bar6 {
-    -webkit-transform: rotate(150deg) translate(0,-142%);
-    -moz-transform: rotate(150deg) translate(0,-142%);
-    -ms-transform: rotate(150deg) translate(0,-142%);
-    -o-transform: rotate(150deg) translate(0,-142%);
-    transform: rotate(150deg) translate(0,-142%);
+    -webkit-transform: rotate(150deg) translate(0,-100%);
+    -moz-transform: rotate(150deg) translate(0,-100%);
+    -ms-transform: rotate(150deg) translate(0,-100%);
+    -o-transform: rotate(150deg) translate(0,-100%);
+    transform: rotate(150deg) translate(0,-100%);
     -webkit-animation-delay: -0.5833s;
     -moz-animation-delay: -0.5833s;
     -ms-animation-delay: -0.5833s;
@@ -137,11 +139,11 @@ export default {
   }
 
   .bar7 {
-    -webkit-transform: rotate(180deg) translate(0,-142%);
-    -moz-transform: rotate(180deg) translate(0,-142%);
-    -ms-transform: rotate(180deg) translate(0,-142%);
-    -o-transform: rotate(180deg) translate(0,-142%);
-    transform: rotate(180deg) translate(0,-142%);
+    -webkit-transform: rotate(180deg) translate(0,-100%);
+    -moz-transform: rotate(180deg) translate(0,-100%);
+    -ms-transform: rotate(180deg) translate(0,-100%);
+    -o-transform: rotate(180deg) translate(0,-100%);
+    transform: rotate(180deg) translate(0,-100%);
     -webkit-animation-delay: -0.5s;
     -moz-animation-delay: -0.5s;
     -ms-animation-delay: -0.5s;
@@ -150,11 +152,11 @@ export default {
   }
 
   .bar8 {
-    -webkit-transform: rotate(210deg) translate(0,-142%);
-    -moz-transform: rotate(210deg) translate(0,-142%);
-    -ms-transform: rotate(210deg) translate(0,-142%);
-    -o-transform: rotate(210deg) translate(0,-142%);
-    transform: rotate(210deg) translate(0,-142%);
+    -webkit-transform: rotate(210deg) translate(0,-100%);
+    -moz-transform: rotate(210deg) translate(0,-100%);
+    -ms-transform: rotate(210deg) translate(0,-100%);
+    -o-transform: rotate(210deg) translate(0,-100%);
+    transform: rotate(210deg) translate(0,-100%);
     -webkit-animation-delay: -0.41667s;
     -moz-animation-delay: -0.41667s;
     -ms-animation-delay: -0.41667s;
@@ -163,11 +165,11 @@ export default {
   }
 
   .bar9 {
-    -webkit-transform: rotate(240deg) translate(0,-142%);
-    -moz-transform: rotate(240deg) translate(0,-142%);
-    -ms-transform: rotate(240deg) translate(0,-142%);
-    -o-transform: rotate(240deg) translate(0,-142%);
-    transform: rotate(240deg) translate(0,-142%);
+    -webkit-transform: rotate(240deg) translate(0,-100%);
+    -moz-transform: rotate(240deg) translate(0,-100%);
+    -ms-transform: rotate(240deg) translate(0,-100%);
+    -o-transform: rotate(240deg) translate(0,-100%);
+    transform: rotate(240deg) translate(0,-100%);
     -webkit-animation-delay: -0.333s;
     -moz-animation-delay: -0.333s;
     -ms-animation-delay: -0.333s;
@@ -176,11 +178,11 @@ export default {
   }
 
   .bar10 {
-    -webkit-transform: rotate(270deg) translate(0,-142%);
-    -moz-transform: rotate(270deg) translate(0,-142%);
-    -ms-transform: rotate(270deg) translate(0,-142%);
-    -o-transform: rotate(270deg) translate(0,-142%);
-    transform: rotate(270deg) translate(0,-142%);
+    -webkit-transform: rotate(270deg) translate(0,-100%);
+    -moz-transform: rotate(270deg) translate(0,-100%);
+    -ms-transform: rotate(270deg) translate(0,-100%);
+    -o-transform: rotate(270deg) translate(0,-100%);
+    transform: rotate(270deg) translate(0,-100%);
     -webkit-animation-delay: -0.25s;
     -moz-animation-delay: -0.25s;
     -ms-animation-delay: -0.25s;
@@ -189,11 +191,11 @@ export default {
   }
 
   .bar11 {
-    -webkit-transform: rotate(300deg) translate(0,-142%);
-    -moz-transform: rotate(300deg) translate(0,-142%);
-    -ms-transform: rotate(300deg) translate(0,-142%);
-    -o-transform: rotate(300deg) translate(0,-142%);
-    transform: rotate(300deg) translate(0,-142%);
+    -webkit-transform: rotate(300deg) translate(0,-100%);
+    -moz-transform: rotate(300deg) translate(0,-100%);
+    -ms-transform: rotate(300deg) translate(0,-100%);
+    -o-transform: rotate(300deg) translate(0,-100%);
+    transform: rotate(300deg) translate(0,-100%);
     -webkit-animation-delay: -0.1667s;
     -moz-animation-delay: -0.1667s;
     -ms-animation-delay: -0.1667s;
@@ -202,11 +204,11 @@ export default {
   }
 
   .bar12 {
-    -webkit-transform: rotate(330deg) translate(0,-142%);
-    -moz-transform: rotate(330deg) translate(0,-142%);
-    -ms-transform: rotate(330deg) translate(0,-142%);
-    -o-transform: rotate(330deg) translate(0,-142%);
-    transform: rotate(330deg) translate(0,-142%);
+    -webkit-transform: rotate(330deg) translate(0,-100%);
+    -moz-transform: rotate(330deg) translate(0,-100%);
+    -ms-transform: rotate(330deg) translate(0,-100%);
+    -o-transform: rotate(330deg) translate(0,-100%);
+    transform: rotate(330deg) translate(0,-100%);
     -webkit-animation-delay: -0.0833s;
     -moz-animation-delay: -0.0833s;
     -ms-animation-delay: -0.0833s;
