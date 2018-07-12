@@ -89,12 +89,15 @@ export default {
   text-transform: uppercase;
   padding: 8px;
   position: relative;
-  height: 16px;
   border-radius: 5px 5px 0 0;
+
+  span {
+    margin-right: 20px;
+  }
 
   .close {
     display: inline-block;
-    width: 20px;
+    width: 16px;
     height: 16px;
     position: absolute;
     top: 8px;

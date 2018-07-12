@@ -101,8 +101,8 @@ export default {
 }
 
 .container .checkmark:after {
-  top: 5px;
-  left: 5px;
+  top: 4px;
+  left: 4px;
   width: 8px;
   height: 8px;
   border-radius: 50%;

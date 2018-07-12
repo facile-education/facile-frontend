@@ -18,24 +18,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import 'src/assets/css/constants';
+
 .banner-search {
   border: 1px white solid;
   display: inline-block;
-  border-radius: 5px;
-  height: 34px;
+  border-radius: $border-radius;
+  height: 35px;
 }
 
 .advanced-search {
   display: inline-block;
-  width: 34px;
-  height: 34px;
+  width: 35px;
+  height: 35px;
   vertical-align: top;
   text-align: center;
   cursor: pointer;
 }
 
 .search-input {
-  height: 34px;
+  height: 33px;
   width: 303px;
   padding: 0 0 0 8px;
   margin: 0;

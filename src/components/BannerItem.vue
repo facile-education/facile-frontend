@@ -23,15 +23,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import 'src/assets/css/constants';
+
 .banner-item {
   border: 1px rgba(255,255,255,0.3) solid;
-  border-radius: 5px;
+  border-radius: $border-radius;
   display: inline-block;
   vertical-align: top;
-  height: 34px;
-  width: 34px;
+  height: 35px;
+  width: 35px;
   cursor: pointer;
   text-align: center;
-  line-height: 34px;
+  line-height: 35px;
 }
 </style>
