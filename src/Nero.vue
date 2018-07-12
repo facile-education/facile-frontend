@@ -38,6 +38,14 @@ export default {
 <style lang="scss">
 @import 'src/assets/css/constants';
 
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
 body {
   margin: 0;
   background-color: $background-light-color;
@@ -72,8 +80,8 @@ body {
 .nero-header {
   width: 100%;
   border: 0;
-  height: 36px;
-  padding: 6px 0;
+  height: $banner-height;
+  padding: 6px 10px;
   box-shadow: -1px 1px 6px #888;
   position: fixed;
   top: 0;

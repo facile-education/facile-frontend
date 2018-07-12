@@ -78,8 +78,8 @@ export default {
 }
 
 .container .checkmark:after {
-    left: 5px;
-    top: 1px;
+    left: 6px;
+    top: 2px;
     width: 5px;
     height: 10px;
     border: solid white;

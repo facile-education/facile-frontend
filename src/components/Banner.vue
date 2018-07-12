@@ -28,12 +28,11 @@ export default {
 <style lang="scss" scoped>
 .banner {
   position: relative;
-  padding: 0 10px;
 }
 
 .right-section {
   display: inline-block;
   position: absolute;
-  right: 10px;
+  right: 0;
 }
 </style>
