@@ -1,5 +1,5 @@
 <template>
-  <ul>
+  <ul class="tree">
     <NeroTreeItem
       v-for="(model, index) in model.children"
       :key="index"
@@ -10,12 +10,12 @@
 </template>
 
 <script>
-import NeroTreeItem from '@/components/NeroTreeItem'
+// import NeroTreeItem from '@/components/NeroTreeItem'
 
 export default {
   name: 'NeroTree',
   components: {
-    NeroTreeItem
+    NeroTreeItem: () => import('@/components/NeroTreeItem.vue')
   },
   props: {
     model: {
@@ -31,5 +31,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import 'src/assets/css/constants';
 
+.tree {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  @extend %no-text-highlight;
+}
 </style>
