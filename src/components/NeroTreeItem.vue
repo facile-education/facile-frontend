@@ -8,19 +8,21 @@
     </div>
     <NeroTree
       v-show="open"
-      v-if="isFolder">
-      <NeroTreeItem
-        v-for="(model, index) in model.children"
-        :key="index"
-        :model="model"
-        class="sub-tree"/>
-    </NeroTree>
+      v-if="isFolder"
+      :model="model"
+      :folders-only="foldersOnly"
+      class="sub-tree"/>
   </li>
 </template>
 
 <script>
+import NeroTree from '@/components/NeroTree'
+
 export default {
   name: 'NeroTreeItem',
+  components: {
+    NeroTree
+  },
   props: {
     model: {
       type: Object,

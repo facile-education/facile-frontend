@@ -4,6 +4,7 @@ import mutations from '@/store/mutations'
 import actions from '@/store/actions'
 import nero from '@/store/modules/nero'
 import currentUser from '@/store/modules/currentUser'
+import workspace from '@/store/modules/workspace'
 import administration from '@/store/modules/administration'
 import applicationManager from '@/store/modules/applicationManager'
 import communicationManager from '@/store/modules/communicationManager'
@@ -19,6 +20,7 @@ export default new Vuex.Store({
   modules: {
     nero,
     currentUser,
+    workspace,
     administration,
     applicationManager,
     communicationManager
