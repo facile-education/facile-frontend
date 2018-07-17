@@ -1,18 +1,37 @@
 <template>
-  <nav class="side-menu">
-    <SideMenuCategory :menu="menu"/>
+  <nav
+    :class="{open: expanded}"
+    class="side-menu">
+    <div class="entry-list">
+      <SideMenuRootEntry
+        v-for="entry in menu"
+        :key="entry.id"
+        :entry="entry"
+        :expanded="expanded"
+        @open="toggleMenu"/>
+    </div>
+    <div
+      class="side-menu-caret"
+      @click="toggleMenu">
+      <i
+        :class="{'fa-caret-right': !expanded, 'fa-caret-left': expanded}"
+        class="fa"/>
+    </div>
   </nav>
 </template>
 
 <script>
-import SideMenuCategory from '@/components/SideMenuCategory'
+import SideMenuRootEntry from '@/components/SideMenuRootEntry'
 
 export default {
   name: 'SideMenu',
   components: {
-    SideMenuCategory
+    SideMenuRootEntry
   },
   computed: {
+    expanded () {
+      return this.$store.state.nero.menuExpanded
+    },
     menu () {
       if (this.$store.state.nero.menu !== undefined) {
         var routes = this.addRoutes(this.$store.state.nero.menu)
@@ -27,7 +46,7 @@ export default {
     }
   },
   methods: {
-    getHomeRoute (entry) {
+    setHomeRoute (entry) {
       return {
         path: '/',
         redirect: entry.route
@@ -38,6 +57,7 @@ export default {
         return {
           path: entry.route,
           name: entry.label,
+          meta: {title: entry.label},
           component: () => import('@/views/' + entry.component + '.vue')
         }
       }
@@ -48,7 +68,7 @@ export default {
       for (idx = 0; idx < menu.length; ++idx) {
         if (menu[idx].isLeaf) {
           if (menu[idx].isDefault) {
-            routes.push(this.getHomeRoute(menu[idx]))
+            routes.push(this.setHomeRoute(menu[idx]))
           }
           var route = this.getRoute(menu[idx])
           if (route !== undefined) {
@@ -59,23 +79,64 @@ export default {
         }
       }
       return routes
+    },
+    toggleMenu () {
+      this.$store.dispatch('toggleSideMenu')
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+@import 'src/assets/css/constants';
+@import 'src/assets/css/animations';
+
 .side-menu {
-  position: fixed;
-  top: 48px;
-  bottom: 0;
-  overflow-y: auto;
-  vertical-align: top;
-  width: 205px;
-  padding-left: 10px;
-  padding-right: 3px;
+  height: 100vh;
+  width: $side-menu-width;
+  padding-top: $banner-height;
   box-shadow: 1px 1px 6px #888;
-  background-color: white;
-  padding-bottom: 40px;
+  z-index: $side-menu-z-index;
+  background-color: $menu-background-color;
+  @extend %no-text-highlight;
+
+  @extend %side-menu-transition;
+
+  &.open {
+    width: $open-side-menu-width;
+
+    .entry-list {
+      overflow-y: auto;
+    }
+
+/*
+    .side-menu-caret {
+      $caret-padding: 15px;
+      text-align: right;
+      width: $open-side-menu-width - $caret-padding;
+      padding-right: $caret-padding;
+    }
+*/
+  }
+}
+
+.entry-list {
+  height: 100%;
+  overflow-y: visible;
+  padding-bottom: $side-menu-entry-height;
+}
+
+.side-menu-caret {
+  position: absolute;
+  bottom: 0;
+  height: $side-menu-entry-height;
+  line-height: $side-menu-entry-height;
+  font-size: $side-menu-icon-size;
+  text-align: center;
+  color: $text-color-menu;
+  border-top: $border;
+  cursor: pointer;
+  width: inherit;
+  background-color: $menu-background-color;
 }
 </style>

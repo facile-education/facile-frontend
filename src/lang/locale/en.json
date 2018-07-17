@@ -2,5 +2,17 @@
   "hello": "Hello world",
   "banner": {
     "search": "Search"
+  },
+  "SideMenu": {
+    "category": {
+      "administration": "Administration",
+      "communication": "Communication",
+      "documents": "Documents",
+      "links": "Websites",
+      "others": "Autres",
+      "pronote": "Pronote",
+      "resources": "Resources",
+      "schoolLife": "School life"
+    }
   }
 }

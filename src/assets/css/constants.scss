@@ -1,7 +1,7 @@
 // Nero colors
-$theme-color: #f4901d;
+$theme-color: #e47b00;
 // Orange: f4901d, Dark blue: 35495e, Vue green: 42b983 / 4dba87
-$text-color: #2c3e50;
+$text-color: #494949;
 $text-color-light: #fff;
 $text-fallback: #b7b7b7;
 $text-color-menu: #909090;
@@ -10,7 +10,7 @@ $text-color-menu: #909090;
 $background-white-color: #ffffff;
 $background-light-color: #f8fafc;
 $toolbar-background-color: #f1f1f1;
-$menu-selected-background-color: #bdbdbd;
+$menu-selected-background-color: #e8e8e8;
 $header-background-color: $toolbar-background-color;
 $menu-background-color: $toolbar-background-color;
 $notif-background-color: #cd4436;
@@ -36,6 +36,8 @@ $banner-height: 48px;
 
 // Side menu
 $side-menu-width: 60px;
+$open-side-menu-width: 210px;
+$side-menu-entry-height: 46px;
 $side-menu-icon-size: 25px;
 
 // Global rules
