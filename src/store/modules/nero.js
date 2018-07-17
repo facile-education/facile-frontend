@@ -2,12 +2,23 @@ import neroService from '@/api/nero.service'
 
 export default {
   state: {
-    user: undefined,
-    menu: undefined
+    menu: undefined,
+    menuExpanded: undefined,
+    activeRoute: undefined,
+    contactNotificationNumber: undefined,
+    messagingNotificationNumber: undefined,
+    dropboxNotificationNumber: undefined
   },
   mutations: {
-    initUserMenu (state, payload) {
-      state.menu = payload
+    initSideMenu (state, payload) {
+      state.menu = payload.menu
+      state.menuExpanded = payload.expanded
+    },
+    toggleMenu (state) {
+      state.menuExpanded = !state.menuExpanded
+    },
+    updateActiveRoute (state, payload) {
+      state.activeRoute = payload
     }
   },
   actions: {
@@ -15,7 +26,7 @@ export default {
       return neroService.getUserMenu().then(
         (data) => {
           if (data.success) {
-            commit('initUserMenu', data.menu)
+            commit('initSideMenu', {menu: data.menu, expanded: data.expanded})
           }
           // TODO else toastr
         },
@@ -23,6 +34,12 @@ export default {
           // TODO toastr
           console.log(err)
         })
+    },
+    toggleSideMenu ({ commit }) {
+      commit('toggleMenu')
+    },
+    updateActiveRoute ({ commit }, service) {
+      commit('updateActiveRoute', service)
     }
   },
   getters: {

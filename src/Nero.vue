@@ -3,14 +3,18 @@
     <header class="nero-header theme-background-color">
       <Banner/>
     </header>
-    <section>
+    <section class="nero-menu">
       <SideMenu/>
     </section>
-    <section class="nero-body">
+    <section
+      :class="{large: !menuExpanded}"
+      class="nero-body">
       <transition
         name="fade"
         mode="out-in">
-        <router-view/>
+        <div class="nero-container">
+          <router-view/>
+        </div>
       </transition>
     </section>
     <Hack/>
@@ -29,6 +33,11 @@ export default {
     SideMenu,
     Hack
   },
+  computed: {
+    menuExpanded () {
+      return this.$store.state.nero.menuExpanded
+    }
+  },
   beforeCreate () {
     this.$store.dispatch('initUserInformations')
   }
@@ -37,6 +46,7 @@ export default {
 
 <style lang="scss">
 @import 'src/assets/css/constants';
+@import 'src/assets/css/animations';
 
 html {
   box-sizing: border-box;
@@ -48,6 +58,7 @@ html {
 
 body {
   margin: 0;
+  overflow: hidden;
   background-color: $background-light-color;
 }
 
@@ -88,17 +99,41 @@ body {
   z-index: $banner-z-index;
 }
 
+.nero-menu,
 .nero-body {
-  margin-top: $banner-height; // Banner
-  margin-left: $side-menu-width; // Side menu
-  padding: 10px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.nero-body {
+  height: 100vh;
+  padding-top: $banner-height; // Banner
+  width: -moz-calc(100% - #{$open-side-menu-width});
+  width: -webkit-calc(100% - #{$open-side-menu-width});
+  width: -o-calc(100% - #{$open-side-menu-width});
+  width: calc(100% - #{$open-side-menu-width});
+
+  @extend %side-menu-transition;
+
+  &.large {
+    width: -moz-calc(100% - #{$side-menu-width});
+    width: -webkit-calc(100% - #{$side-menu-width});
+    width: -o-calc(100% - #{$side-menu-width});
+    width: calc(100% - #{$side-menu-width});
+  }
+
+  .nero-container {
+    padding: 10px;
+    height: 100%;
+    overflow: auto;
+  }
 }
 
 // transition
 .fade-enter-active, .fade-leave-active {
-  transition: opacity .1s;
+  transition: opacity .2s;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+.fade-enter, .fade-leave-to {
   opacity: 0;
 }
 </style>

@@ -11,6 +11,65 @@
   "banner": {
     "search": "Recherche"
   },
+  "SideMenu": {
+    "category": {
+      "administration": "Administration",
+      "communication": "Communication",
+      "documents": "Documents",
+      "links": "Liens utiles",
+      "others": "Autres",
+      "pronote": "Pronote",
+      "resources": "Ressources",
+      "schoolLife": "Vie scolaire"
+    },
+    "entry": {
+      "agenda": "Agenda",
+      "applications": "Applications",
+      "arena": "Arena",
+      "arte": "Educ'ARTE",
+      "blog": "Blog",
+      "cas": "CAS Manager",
+      "cerise": "Cerise Pro",
+      "classCheck": "Appel et suivi",
+      "cns": "CNS",
+      "communicationRights": "Droits de communication",
+      "contacts": "Contacts",
+      "dashboard": "Tableau de bord",
+      "dropbox": "Casier",
+      "edumedia": "Edumedia",
+      "edx": "EDX",
+      "edxStudio": "EDX Studio",
+      "entTools": "ENT tools",
+      "esidoc": "E-sidoc",
+      "etherpad": "Etherpad",
+      "folios": "Folios",
+      "forums": "Forums",
+      "geogebra": "Geogebra",
+      "gepi": "Gépi",
+      "gpo": "GPO",
+      "groups": "Espace des groupes",
+      "grr": "GRR",
+      "home": "Accueil",
+      "lesitetv": "lesiteTV",
+      "madmagz": "Madmagz",
+      "marksEdition": "Saisie des notes",
+      "menu": "Menu",
+      "messaging": "Messagerie",
+      "moodle": "Moodle",
+      "pearltrees": "Pearltrees",
+      "sacoche": "Sacoche",
+      "scheduler": "Cahier de texte",
+      "schedulerEdition": "Saisie du cahier de texte",
+      "schoolLife": "Vie scolaire",
+      "snap": "Snap!",
+      "statistics": "Statistiques",
+      "teacherEdu": "Teacher EDU",
+      "universalis": "Universalis",
+      "users": "Utilisateurs",
+      "webSite": "Site internet",
+      "workspace": "Mes documents"
+    }
+  },
   "application-manager": {
     "edition-modal": {
       "add-modal-title": "Ajouter une nouvelle application",
@@ -98,5 +157,16 @@
     "popupIssueLabel": "Si le problème persiste, votre navigateur doit certainement bloquer les fenêtres surgissantes (pop-ups) ouvertes depuis l'ENT. Pour les autoriser, veuillez suivre la démarche indiquée dans l'onglet \"Autoriser les pop-ups\" de la fenêtre d'informations (accessible depuis le menu utilisateur sur la droite du bandeau <i class=\"fa fa-chevron-down\"></i>).",
 
     "openInTabLabel": "Vous pouvez également {link} pour ouvrir le service dans un nouvel onglet."
+  },
+  "Forums": {
+    "ForumList": {
+      "title": "Liste des forums"
+    },
+    "ForumDetails": {
+      "threadsTabLabel": "Forum",
+      "lastPublicationsTabLabel": "Publications Récentes",
+      "statisticsTabLabel": "Statistiques",
+      "managerTabLabel": "Gestion"
+    }
   }
 }
