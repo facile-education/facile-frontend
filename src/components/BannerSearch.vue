@@ -31,6 +31,7 @@ export default {
   display: inline-block;
   width: 35px;
   height: 35px;
+  line-height: 35px;
   vertical-align: top;
   text-align: center;
   cursor: pointer;

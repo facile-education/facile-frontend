@@ -26,6 +26,7 @@ export default {
 @import 'src/assets/css/constants';
 
 .banner-item {
+  margin-left: 3px;
   border: 1px rgba(255,255,255,0.3) solid;
   border-radius: $border-radius;
   display: inline-block;
