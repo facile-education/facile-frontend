@@ -56,8 +56,8 @@ export default {
       if (entry.component) {
         return {
           path: entry.route,
-          name: entry.label,
-          meta: {title: entry.label},
+          name: this.$t('SideMenu.entry.' + entry.key),
+          meta: {title: this.$t('SideMenu.entry.' + entry.key)},
           component: () => import('@/views/' + entry.component + '.vue')
         }
       }
@@ -72,7 +72,7 @@ export default {
           }
           var route = this.getRoute(menu[idx])
           if (route !== undefined) {
-            routes.push(this.getRoute(menu[idx]))
+            routes.push(route)
           }
         } else {
           routes = routes.concat(this.addRoutes(menu[idx].menu))
