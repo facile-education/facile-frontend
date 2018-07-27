@@ -145,6 +145,8 @@ export default {
 
 <style lang="scss" scoped>
 .external-resource {
+  height: 100%;
+  overflow: auto;
   text-align: center;
 }
 

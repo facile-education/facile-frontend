@@ -97,6 +97,7 @@ export default {
   padding-top: $banner-height;
   box-shadow: 1px 1px 6px #888;
   z-index: $side-menu-z-index;
+  position: relative;
   background-color: $menu-background-color;
   @extend %no-text-highlight;
 

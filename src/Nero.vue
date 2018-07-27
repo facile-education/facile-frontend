@@ -59,7 +59,6 @@ html {
 body {
   margin: 0;
   overflow: hidden;
-  background-color: $background-light-color;
 }
 
 #app {
@@ -123,9 +122,7 @@ body {
   }
 
   .nero-container {
-    padding: 10px;
     height: 100%;
-    overflow: auto;
   }
 }
 
