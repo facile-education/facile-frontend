@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="service-container">
     <AMToolbar/>
     <CategoryList/>
     <BroadcastScopeModal v-if="showBroadcastModal"/>
@@ -33,5 +33,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.service-container {
+  height: 100%;
+  overflow: auto;
+}
 </style>

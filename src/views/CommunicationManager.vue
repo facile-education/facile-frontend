@@ -1,8 +1,10 @@
 <template>
-  <div>
+  <div class="service-container">
     <CMToolbar/>
-    <InternalRights/>
-    <ExternalRights/>
+    <div class="service-body">
+      <InternalRights/>
+      <ExternalRights/>
+    </div>
   </div>
 </template>
 
@@ -22,5 +24,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.service-container {
+  height: 100%;
+  overflow: auto;
+}
 
+.service-body {
+  padding: 5px;
+}
 </style>
