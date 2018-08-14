@@ -1,6 +1,7 @@
 <template>
   <div class="banner-search">
     <input
+      v-if="$device.desktop"
       :placeholder="$t('banner.search')"
       class="search-input"><!-- Comment the inline whitespace
     --><span
