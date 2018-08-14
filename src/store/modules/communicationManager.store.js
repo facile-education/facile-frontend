@@ -29,7 +29,6 @@ export default {
       communicationManagerService.getCommunicationRoleList().then((data) => {
         if (data.success) {
           commit('initCommunicationManagerRoleList', data.roles)
-          console.log(data.roles)
         }
         // TODO else toastr err
       },

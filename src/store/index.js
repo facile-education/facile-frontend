@@ -2,12 +2,12 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import mutations from '@/store/mutations'
 import actions from '@/store/actions'
-import nero from '@/store/modules/nero'
-import currentUser from '@/store/modules/currentUser'
-import workspace from '@/store/modules/workspace'
-import administration from '@/store/modules/administration'
-import applicationManager from '@/store/modules/applicationManager'
-import communicationManager from '@/store/modules/communicationManager'
+import nero from '@/store/modules/nero.store'
+import currentUser from '@/store/modules/currentUser.store'
+import workspace from '@/store/modules/workspace.store'
+import administration from '@/store/modules/administration.store'
+import applicationManager from '@/store/modules/applicationManager.store'
+import communicationManager from '@/store/modules/communicationManager.store'
 
 Vue.use(Vuex)
 
