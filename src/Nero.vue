@@ -3,7 +3,9 @@
     <header class="nero-header theme-background-color">
       <Banner/>
     </header>
-    <section class="nero-menu">
+    <section
+      v-if="!$device.phone"
+      class="nero-menu">
       <SideMenu/>
     </section>
     <section

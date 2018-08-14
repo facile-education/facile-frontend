@@ -1,9 +1,12 @@
 <template>
   <nav class="banner">
+    <BannerItem
+      v-if="$device.phone"
+      icon="fa fa-bars"/>
     <BannerSearch/>
     <div class="right-section">
       <BannerServices/>
-      <BannerUserProfile/>
+      <BannerUserProfile v-if="!$device.phone"/>
     </div>
   </nav>
 </template>

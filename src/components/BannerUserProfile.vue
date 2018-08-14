@@ -4,7 +4,9 @@
       class="picture"
       src="../assets/logo.png"
       @click="setLang('en')">
-    <div class="user-infos">
+    <div
+      v-if="$device.desktop"
+      class="user-infos">
       <p class="username">
         {{ userName }}
       </p>
@@ -17,7 +19,9 @@
         {{ homeSchool.name }}
       </a>
     </div>
-    <BannerItem icon="fa fa-chevron-down"/>
+    <BannerItem
+      v-if="$device.desktop"
+      icon="fa fa-chevron-down"/>
   </div>
 </template>
 
