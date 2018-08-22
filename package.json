@@ -16,7 +16,7 @@
     "split.js": "^1.3.5",
     "vue": "^2.5.17",
     "vue-i18n": "^7.6.0",
-    "vue-mq": "/Users/Marc/Documents/Work/Vue/vue-mq/",
+    "vue-mq": "https://marc_salvat@bitbucket.org/marc_salvat/vue-mq.git",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },

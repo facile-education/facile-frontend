@@ -9045,8 +9045,9 @@ vue-loader@^15.3.0:
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
 
-"vue-mq@file:../vue-mq":
+"vue-mq@https://marc_salvat@bitbucket.org/marc_salvat/vue-mq.git":
   version "0.1.0"
+  resolved "https://marc_salvat@bitbucket.org/marc_salvat/vue-mq.git#55cb58990510dc8989e3bcb36e3ce5f0d0919fed"
   dependencies:
     json2mq "^0.2.0"
 
