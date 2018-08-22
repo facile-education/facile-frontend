@@ -1,14 +1,15 @@
 <template>
   <div class="hack">
     <div>
-      <a @click="setAdministrator">Administrator</a>
-      <a @click="setLocalAdmin">Local admin</a>
+      <a @click="setAdministrator">Administrator</a>|
+      <a @click="setLocalAdmin">Local admin</a>|
+      <a @click="setENTAdmin">ENT admin</a>|
       <a @click="setUser">None</a>
     </div>
     <div>
-      <a @click="setStudentRole">Student</a>
-      <a @click="setTeacherRole">Teacher</a>
-      <a @click="setPersonnelRole">Personnel</a>
+      <a @click="setStudentRole">Student</a>|
+      <a @click="setTeacherRole">Teacher</a>|
+      <a @click="setPersonnelRole">Personnel</a>|
       <a @click="setParentRole">Parent</a>
     </div>
   </div>
@@ -23,6 +24,9 @@ export default {
     },
     setLocalAdmin () {
       this.$store.dispatch('hack', {isLocalAdmin: true})
+    },
+    setENTAdmin () {
+      this.$store.dispatch('hack', {isENTAdmin: true})
     },
     setUser () {
       this.$store.dispatch('hack', {isUser: true})
@@ -47,7 +51,7 @@ export default {
 .hack {
   position: fixed;
   bottom: 10px;
-  left: 10px;
+  right: 100px;
   min-height: 20px;
   min-width: 50px;
 
