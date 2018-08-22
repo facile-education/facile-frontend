@@ -45,6 +45,11 @@ export default {
 
 .button {
   @extend %nero-btn-like;
+
+  &:hover {
+    filter: brightness(115%);
+    @include transition(filter, 0.2s, linear);
+  }
 }
 
 .circle {
@@ -54,6 +59,11 @@ export default {
   height: 30px;
   padding: 0;
   line-height: 30px;
+
+  &:hover {
+    filter: brightness(115%);
+    @include transition(filter, 0.2s, linear);
+  }
 }
 
 .cancel {
@@ -62,6 +72,8 @@ export default {
 
   &:hover {
     background-color: #e44410;
+    filter: none;
+    @include transition(background-color, 0.2s, linear);
   }
 }
 </style>

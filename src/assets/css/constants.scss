@@ -39,7 +39,26 @@ $open-side-menu-width: 210px;
 $side-menu-entry-height: 46px;
 $side-menu-icon-size: 25px;
 
-// Global rules
+// Service toolbar
+$toolbar-height: 40px;
+
+// Mixins
+@mixin calc($property, $expression) {
+  #{$property}: -moz-calc(#{$expression});
+  #{$property}: -webkit-calc(#{$expression});
+  #{$property}: -o-calc(#{$expression});
+  #{$property}: calc(#{$expression});
+}
+
+@mixin transition($property: all, $duration: .3s, $ease: linear) {
+  -webkit-transition: $duration $property $ease;
+  -moz-transition: $duration $property $ease;
+  -ms-transition: $duration $property $ease;
+  -o-transition: $duration $property $ease;
+  transition: $duration $property $ease;
+}
+
+// Global classes extends
 %nero-shadow {
   box-shadow: 0 2px 3px rgba(0,0,0,0.19);
 }
