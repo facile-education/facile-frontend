@@ -33,10 +33,11 @@ export default {
       state.schools = payload.schools
     },
     hack (state, payload) {
-      if (payload.isAdministrator ||
-        payload.isLocalAdmin || payload.isUser) {
+      if (payload.isAdministrator || payload.isLocalAdmin ||
+          payload.isENTAdmin || payload.isUser) {
         Vue.set(state, 'isAdministrator', payload.isAdministrator)
         Vue.set(state, 'isLocalAdmin', payload.isLocalAdmin)
+        Vue.set(state, 'isENTAdmin', payload.isENTAdmin)
       } else {
         Vue.set(state, 'isPersonnel', payload.isPersonnel)
         Vue.set(state, 'isStudent', payload.isStudent)
