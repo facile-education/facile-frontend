@@ -15,7 +15,7 @@ router.beforeEach((to, from, next) => {
 })
 
 router.afterEach((to, from) => {
-  store.dispatch('updateActiveRoute', to.path)
+  store.dispatch('nero/updateActiveRoute', to.path)
 })
 
 export default router

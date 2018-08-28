@@ -42,7 +42,7 @@ export default {
   },
   created () {
     if (this.menu === undefined) {
-      this.$store.dispatch('initUserMenu')
+      this.$store.dispatch('nero/initUserMenu')
     }
   },
   methods: {
@@ -81,7 +81,7 @@ export default {
       return routes
     },
     toggleMenu () {
-      this.$store.dispatch('toggleSideMenu')
+      this.$store.dispatch('nero/toggleSideMenu')
     }
   }
 }

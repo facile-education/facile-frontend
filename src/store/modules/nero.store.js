@@ -1,13 +1,16 @@
 import neroService from '@/api/nero.service'
 
 export default {
+  namespaced: true,
   state: {
     menu: undefined,
     menuExpanded: undefined,
     activeRoute: undefined,
-    contactNotificationNumber: undefined,
-    messagingNotificationNumber: undefined,
-    dropboxNotificationNumber: undefined
+    notifications: {
+      contacts: undefined,
+      messaging: undefined,
+      dropbox: undefined
+    }
   },
   mutations: {
     initSideMenu (state, payload) {
