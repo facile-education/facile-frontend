@@ -69,12 +69,14 @@ export default {
 
 .window-wrapper {
   z-index: $modal-z-index;
-  position: fixed;
   max-width: 70vw;
-  /* Place it in the middle */
+  margin: 5vh auto;
+  /* Place it in the middle (translation causes issues
+  with other animations like filter or toggle */
+  /* position: fixed;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); */
 }
 
 .window-container {
