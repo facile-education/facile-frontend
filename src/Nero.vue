@@ -9,15 +9,9 @@
       <SideMenu/>
     </section>
     <section
-      :class="{large: !menuExpanded}"
+      :class="bodyClasses"
       class="nero-body">
-      <transition
-        name="fade"
-        mode="out-in">
-        <div class="nero-container">
-          <router-view/>
-        </div>
-      </transition>
+      <router-view/>
     </section>
     <Hack/>
   </div>
@@ -25,17 +19,28 @@
 
 <script>
 import Banner from '@/components/Banner'
-import SideMenu from '@/components/SideMenu'
 import Hack from '@/components/Hack'
+import SideMenu from '@/components/SideMenu'
 
 export default {
   name: 'Nero',
   components: {
     Banner,
-    SideMenu,
-    Hack
+    Hack,
+    SideMenu
   },
   computed: {
+    bodyClasses () {
+      // TODO replace phone condition by mobile (not only width) test on the last three classes
+      return {
+        'nero-small': (this.$device.phone || (this.menuExpanded && this.$device.tablet)),
+        'nero-medium': (!this.menuExpanded && this.$device.tablet),
+        'nero-large': this.$device.desktop,
+        'nero-mobile': this.$device.phone,
+        'nero-menu-expanded': (this.menuExpanded && !this.$device.phone),
+        'nero-menu-retracted': (!this.menuExpanded && !this.$device.phone)
+      }
+    },
     menuExpanded () {
       return this.$store.state.nero.menuExpanded
     }
@@ -89,6 +94,13 @@ body {
   color: $theme-color;
 }
 
+.nero-separator {
+  width: 30%;
+  margin: 15px auto;
+  border: 0;
+  border-top: 1px solid #b7b7b7;
+}
+
 .nero-header {
   width: 100%;
   border: 0;
@@ -109,22 +121,19 @@ body {
 .nero-body {
   height: 100vh;
   padding-top: $banner-height; // Banner
-  width: -moz-calc(100% - #{$open-side-menu-width});
-  width: -webkit-calc(100% - #{$open-side-menu-width});
-  width: -o-calc(100% - #{$open-side-menu-width});
-  width: calc(100% - #{$open-side-menu-width});
 
   @extend %side-menu-transition;
 
-  &.large {
-    width: -moz-calc(100% - #{$side-menu-width});
-    width: -webkit-calc(100% - #{$side-menu-width});
-    width: -o-calc(100% - #{$side-menu-width});
-    width: calc(100% - #{$side-menu-width});
+  &.nero-menu-expanded {
+    @include calc(width, '100% - #{$open-side-menu-width}');
   }
 
-  .nero-container {
-    height: 100%;
+  &.nero-menu-retracted {
+    @include calc(width, '100% - #{$side-menu-width}');
+  }
+
+  &.nero-mobile {
+    width: 100%;
   }
 }
 
