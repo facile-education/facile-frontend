@@ -59,10 +59,26 @@ export default {
     }
   },
   computed: {
+    sortedList () {
+      var listCopy = this.list.slice()
+
+      var vm = this
+      function compare (a, b) {
+        if (vm.displayField !== undefined) {
+          a = a[vm.displayField]
+          b = b[vm.displayField]
+        }
+        if (a.toLowerCase() < b.toLowerCase()) return -1
+        if (a.toLowerCase() > b.toLowerCase()) return 1
+        return 0
+      }
+
+      return listCopy.sort(compare)
+    },
     filteredList () {
       var vm = this
       var filter = this.input || this.filter
-      return this.list.filter(function (item) {
+      return this.sortedList.filter((item) => {
         if (filter.length === 0) {
           return true
         }
@@ -89,6 +105,7 @@ export default {
     },
     onSelect (item) {
       this.$emit('select', item)
+      this.filter = ''
     },
     close () {
       this.$emit('close')
