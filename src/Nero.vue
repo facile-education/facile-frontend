@@ -14,12 +14,14 @@
       <router-view/>
     </section>
     <Hack/>
+    <NeroConfirmModal v-if="isConfirmModalDisplayed"/>
   </div>
 </template>
 
 <script>
 import Banner from '@/components/Banner'
 import Hack from '@/components/Hack'
+import NeroConfirmModal from '@/components/NeroConfirmModal'
 import SideMenu from '@/components/SideMenu'
 
 export default {
@@ -27,6 +29,7 @@ export default {
   components: {
     Banner,
     Hack,
+    NeroConfirmModal,
     SideMenu
   },
   computed: {
@@ -40,6 +43,9 @@ export default {
         'nero-menu-expanded': (this.menuExpanded && !this.$device.phone),
         'nero-menu-retracted': (!this.menuExpanded && !this.$device.phone)
       }
+    },
+    isConfirmModalDisplayed () {
+      return this.$store.state.nero.confirmModal.isDisplayed
     },
     menuExpanded () {
       return this.$store.state.nero.menuExpanded
