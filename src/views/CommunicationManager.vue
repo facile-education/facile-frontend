@@ -2,23 +2,23 @@
   <div class="service-container">
     <CMToolbar/>
     <div class="service-body">
-      <InternalRights/>
-      <ExternalRights/>
+      <CMInternalRights/>
+      <CMExternalRights/>
     </div>
   </div>
 </template>
 
 <script>
 import CMToolbar from '@/components/CommunicationManager/CMToolbar'
-import InternalRights from '@/components/CommunicationManager/InternalRights'
-import ExternalRights from '@/components/CommunicationManager/ExternalRights'
+import CMInternalRights from '@/components/CommunicationManager/CMInternalRights'
+import CMExternalRights from '@/components/CommunicationManager/CMExternalRights'
 
 export default {
   name: 'CommunicationManager',
   components: {
     CMToolbar,
-    InternalRights,
-    ExternalRights
+    CMInternalRights,
+    CMExternalRights
   }
 }
 </script>
