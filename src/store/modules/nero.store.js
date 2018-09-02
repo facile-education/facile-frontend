@@ -1,11 +1,20 @@
+import Vue from 'vue'
 import neroService from '@/api/nero.service'
 
 export default {
   namespaced: true,
   state: {
+    activeRoute: undefined,
+    confirmModal: {
+      buttonLabel: '',
+      isDisplayed: '',
+      message: '',
+      onConfirm: Function,
+      title: ''
+    },
+    isMobileMenuDisplayed: false,
     menu: undefined,
     menuExpanded: undefined,
-    activeRoute: undefined,
     notifications: {
       contacts: undefined,
       messaging: undefined,
@@ -13,18 +22,33 @@ export default {
     }
   },
   mutations: {
+    closeConfirmModal (state) {
+      Vue.set(state.confirmModal, 'isDisplayed', false)
+    },
     initSideMenu (state, payload) {
       state.menu = payload.menu
       state.menuExpanded = payload.expanded
+    },
+    showConfirmModal (state) {
+      Vue.set(state.confirmModal, 'isDisplayed', true)
     },
     toggleMenu (state) {
       state.menuExpanded = !state.menuExpanded
     },
     updateActiveRoute (state, payload) {
       state.activeRoute = payload
+    },
+    updateConfirmModalParameters (state, payload) {
+      Vue.set(state.confirmModal, 'buttonLabel', payload.buttonLabel)
+      Vue.set(state.confirmModal, 'message', payload.message)
+      Vue.set(state.confirmModal, 'onConfirm', payload.onConfirm)
+      Vue.set(state.confirmModal, 'title', payload.title)
     }
   },
   actions: {
+    closeConfirmModal ({ commit }) {
+      commit('closeConfirmModal')
+    },
     initUserMenu ({ commit }) {
       return neroService.getUserMenu().then(
         (data) => {
@@ -43,6 +67,10 @@ export default {
     },
     updateActiveRoute ({ commit }, service) {
       commit('updateActiveRoute', service)
+    },
+    updateAndShowConfirmModal ({ commit }, payload) {
+      commit('updateConfirmModalParameters', payload)
+      commit('showConfirmModal')
     }
   },
   getters: {
