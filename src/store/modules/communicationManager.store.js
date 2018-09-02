@@ -4,8 +4,8 @@ export default {
   state: {
     selectedSchoolId: undefined,
     roleList: undefined,
-    internalRights: undefined,
-    externalRights: undefined
+    CMInternalRights: undefined,
+    CMExternalRights: undefined
   },
   mutations: {
     setSelectedSchoolId (state, payload) {
@@ -15,10 +15,10 @@ export default {
       state.roleList = payload
     },
     initInternalRights (state, payload) {
-      state.internalRights = {...payload}
+      state.CMInternalRights = {...payload}
     },
     initExternalRights (state, payload) {
-      state.externalRights = {...payload}
+      state.CMExternalRights = {...payload}
     }
   },
   actions: {

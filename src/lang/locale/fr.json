@@ -117,34 +117,37 @@
     }
   },
   "CommunicationManager": {
-    "InternalRights": {
-      "title": "Communication interne",
+    "CMInternalRights": {
       "informations": "Ce service permet de définir, par profil d'usagers, les listes de contacts qui seront automatiquement créées dans le carnet des utilisateurs. Vous pouvez ainsi gérer les possibilités de communication pour chaque profil au sein de votre établissement ou cité scolaire.",
+      "save": "Enregistrer",
+      "title": "Communication interne"
+    },
+    "CMInternalRoleTab": {
+      "allOthersInSchool": "Tous les personnels de la collectivité de l'établissement",
+      "allPersonalsInSchool": "Tous les personnels de l'établissement",
+      "allParentsInSchool": "Tous les parents de l'établissement",
+      "allStudentsInSchool": "Tous les élèves de l'établissement",
+      "allTeachersInSchool": "Tous les enseignants de l'établissement",
+      "childrenClassesParents": "Les parents des classes de ses enfants",
+      "childrenClassesTeachers": "Les enseignants des classes de ses enfants",
       "hisChildren": "Ses enfants",
+      "hisParents": "Ses parents",
+      "parentsOfEachClass": "Les parents des classes",
+      "parentsOfHisClass": "Les parents des élèves de ses classes",
+      "personalLabel": "Ce profil peut communiquer avec tous les utilisateurs de l'établissement",
       "studentsOfHisClass": "Les élèves de ses classes",
       "studentsOfEachClass": "Les élèves des classes",
-      "allStudentsInSchool": "Tous les élèves de l'établissement",
-      "hisParents": "Ses parents",
-      "childrenClassesParents": "Les parents des classes de ses enfants",
-      "parentsOfHisClass": "Les parents des élèves de ses classes",
-      "parentsOfEachClass": "Les parents des classes",
-      "allParentsInSchool": "Tous les parents de l'établissement",
-      "childrenClassesTeachers": "Les enseignants des classes de ses enfants",
-      "teachersOfHisClass": "Les enseignants de ses classes",
       "teachersOfEachClass": "Les enseignants des classes",
-      "allTeachersInSchool": "Tous les enseignants de l'établissement",
-      "allPersonalsInSchool": "Tous les personnels de l'établissement",
-      "allOthersInSchool": "Tous les personnels de la collectivité de l'établissement",
-      "save": "Enregistrer"
+      "teachersOfHisClass": "Les enseignants de ses classes"
     },
-    "ExternalRights": {
-      "title": "Communication externe",
+    "CMExternalRights": {
       "informations": "Vous pouvez gérer l'autorisation, par profil d'usagers, d'ajout de comptes mails.",
-      "save": "Enregistrer"
+      "save": "Enregistrer",
+      "title": "Communication externe"
     },
-    "ExternalRoleItem": {
-      "yes": "oui",
-      "no": "non"
+    "CMExternalRoleItem": {
+      "no": "non",
+      "yes": "oui"
     }
   },
   "ExternalResource": {
