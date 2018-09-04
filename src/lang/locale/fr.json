@@ -205,5 +205,29 @@
   },
   "NeroAutocomplete": {
     "filterPlaceholder": "Filtre"
+  },
+  "Statistics": {
+    "ChartParameters": {
+      "actionsTitle": "Actions",
+      "compareOnLabel": "Comparer sur",
+      "dailyLabel": "Afficher par jour",
+      "datesLabel": "Dates et périodes",
+      "doNotCompareLabel": "Ne pas comparer",
+      "endDate": "Date de fin",
+      "exportButtonLabel": "Exporter",
+      "filtersTitle": "Filtres",
+      "initButtonLabel": "Réinitialiser",
+      "monthlyLabel": "Afficher par mois",
+      "rolesPlaceholder": "Profils",
+      "rolesLabel": "@:Statistics.ChartParameters.rolesPlaceholder",
+      "schoolsPlaceholder": "Établissements",
+      "schoolsLabel": "@:Statistics.ChartParameters.schoolsPlaceholder",
+      "searchButtonLabel": "Rechercher",
+      "servicesPlaceholder": "Services",
+      "servicesLabel": "@:Statistics.ChartParameters.servicesPlaceholder",
+      "startDate": "Date de début",
+      "weeklyLabel": "Afficher par semaine",
+      "yearlyLabel": "Afficher par année"
+    }
   }
 }
