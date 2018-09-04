@@ -31,4 +31,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.stats {
+  padding: 10px;
+  height: 100%;
+  overflow: auto;
+}
 </style>

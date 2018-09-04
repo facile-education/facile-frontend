@@ -1,60 +1,69 @@
 <template>
   <div>
     <div class="filters">
-      <h5>Filters</h5>
+      <h5 v-t="'Statistics.ChartParameters.filtersTitle'"/>
       <NeroTagsInput
+        v-if="schoolList"
         v-model="schoolFilter"
-        :list="[]"
-        placeholder="Schools"
+        :list="schoolList"
+        :placeholder="$t('Statistics.ChartParameters.schoolsPlaceholder')"
+        display-field="schoolName"
         cls="form"/>
       <NeroTagsInput
         v-model="serviceFilter"
         :list="[]"
-        placeholder="Services"
+        :placeholder="$t('Statistics.ChartParameters.servicesPlaceholder')"
         cls="form"/>
       <NeroTagsInput
         v-model="roleFilter"
         :list="[]"
-        placeholder="Roles"
+        :placeholder="$t('Statistics.ChartParameters.rolesPlaceholder')"
         cls="form"/>
         <!-- $t('application-manager.edition-modal.schools-placeholder') -->
         <!-- display-field="schoolName" -->
     </div>
 
     <div class="dates">
-      <h5>Dates / period</h5>
+      <h5 v-t="'Statistics.ChartParameters.datesLabel'"/>
       <!-- https://github.com/charliekassel/vuejs-datepicker -->
       <p>
-        Label
+        {{ $t('Statistics.ChartParameters.startDate') }}
         Picker : Start Date
       </p>
       <p>
-        Label
+        {{ $t('Statistics.ChartParameters.endDate') }}
         Picker : End Date
       </p>
 
       <NeroDropdown
-        :list="['Dayly', 'Weekly', 'Monthly', 'Yearly']"
+        :list="[
+          $t('Statistics.ChartParameters.dailyLabel'),
+          $t('Statistics.ChartParameters.weeklyLabel'),
+          $t('Statistics.ChartParameters.monthlyLabel'),
+          $t('Statistics.ChartParameters.yearlyLabel')]"
         @dropdown-select="periodSelected"/>
     </div>
 
     <div>
-      <h5>Actions</h5>
-      Label
+      <h5 v-t="'Statistics.ChartParameters.actionsTitle'"/>
+      {{ $t('Statistics.ChartParameters.compareOnLabel') }}
       <NeroDropdown
-        :list="['Do not compare', 'Schools', 'Services', 'Roles']"
+        :list="[
+          $t('Statistics.ChartParameters.doNotCompareLabel'),
+          $t('Statistics.ChartParameters.schoolsLabel'),
+          $t('Statistics.ChartParameters.servicesLabel'),
+          $t('Statistics.ChartParameters.rolesLabel')]"
         @dropdown-select="compareSelected"/>
 
       <NeroButton
-        label="Export"
+        :label="$t('Statistics.ChartParameters.exportButtonLabel')"
         @click="exportStats"/>
       <NeroButton
-        label="Search"
+        :label="$t('Statistics.ChartParameters.searchButtonLabel')"
         @click="search"/>
       <NeroButton
-        label="Init"
+        :label="$t('Statistics.ChartParameters.initButtonLabel')"
         @click="initParameterList"/>
-        <!-- :label="$t('CommunicationManager.ExternalRights.save')" -->
     </div>
   </div>
 </template>
@@ -76,6 +85,16 @@ export default {
       schoolFilter: [],
       serviceFilter: [],
       roleFilter: []
+    }
+  },
+  computed: {
+    schoolList () {
+      return this.$store.state.administration.schoolList
+    }
+  },
+  created () {
+    if (this.schoolList === undefined) {
+      this.$store.dispatch('getAdministrationSchools')
     }
   },
   methods: {
