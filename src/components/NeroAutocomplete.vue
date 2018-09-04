@@ -9,7 +9,7 @@
       <input
         ref="filter"
         v-model="filter"
-        placeholder="TODO label placeholder">
+        :placeholder="$t('NeroAutocomplete.filterPlaceholder')">
     </div>
     <ul class="suggestion-list">
       <li

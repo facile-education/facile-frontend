@@ -154,11 +154,9 @@
     "clickHereLabel": "cliquez ici",
     "noConfigLabel": "Aucun de vos établissements ne possède une configuration {resourceName}.",
     "contactLabel": "Vous pouvez signaler un incident en {link}.",
-
     "newTabLabel": "<strong>{resourceName}</strong> a été ouvert dans un nouvel onglet.",
     "openAgainLabel": "Si vous ne le voyez pas, {link} pour l'ouvrir à nouveau.",
     "popupIssueLabel": "Si le problème persiste, votre navigateur doit certainement bloquer les fenêtres surgissantes (pop-ups) ouvertes depuis l'ENT. Pour les autoriser, veuillez suivre la démarche indiquée dans l'onglet \"Autoriser les pop-ups\" de la fenêtre d'informations (accessible depuis le menu utilisateur sur la droite du bandeau <i class=\"fa fa-chevron-down\"></i>).",
-
     "openInTabLabel": "Vous pouvez également {link} pour ouvrir le service dans un nouvel onglet."
   },
   "Forums": {
@@ -171,5 +169,8 @@
       "statisticsTabLabel": "Statistiques",
       "managerTabLabel": "Gestion"
     }
+  },
+  "NeroAutocomplete": {
+    "filterPlaceholder": "Filtre"
   }
 }
