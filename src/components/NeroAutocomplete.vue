@@ -77,14 +77,15 @@ export default {
     },
     filteredList () {
       var vm = this
-      var filter = this.input || this.filter
+      var filter = (this.input || this.filter).toLowerCase()
+
       return this.sortedList.filter((item) => {
         if (filter.length === 0) {
           return true
         }
         return (vm.getDisplayValue(item)
           .toLowerCase()
-          .indexOf(filter.toLowerCase()) !== -1)
+          .indexOf(filter) !== -1)
       })
     }
   },
