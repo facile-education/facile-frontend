@@ -14,6 +14,9 @@
       <router-view/>
     </section>
     <Hack/>
+    <transition name="fade">
+      <MobileMenu v-if="isMobileMenuDisplayed"/>
+    </transition>
     <NeroConfirmModal v-if="isConfirmModalDisplayed"/>
   </div>
 </template>
@@ -21,6 +24,7 @@
 <script>
 import Banner from '@/components/Banner'
 import Hack from '@/components/Hack'
+import MobileMenu from '@/components/MobileMenu'
 import NeroConfirmModal from '@/components/NeroConfirmModal'
 import SideMenu from '@/components/SideMenu'
 
@@ -29,6 +33,7 @@ export default {
   components: {
     Banner,
     Hack,
+    MobileMenu,
     NeroConfirmModal,
     SideMenu
   },
@@ -46,6 +51,9 @@ export default {
     },
     isConfirmModalDisplayed () {
       return this.$store.state.nero.confirmModal.isDisplayed
+    },
+    isMobileMenuDisplayed () {
+      return this.$store.state.nero.isMobileMenuDisplayed
     },
     menuExpanded () {
       return this.$store.state.nero.menuExpanded

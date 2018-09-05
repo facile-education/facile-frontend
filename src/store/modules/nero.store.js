@@ -15,6 +15,7 @@ export default {
     isMobileMenuDisplayed: false,
     menu: undefined,
     menuExpanded: undefined,
+    mobileMenu: undefined,
     notifications: {
       contacts: undefined,
       messaging: undefined,
@@ -25,6 +26,9 @@ export default {
     closeConfirmModal (state) {
       Vue.set(state.confirmModal, 'isDisplayed', false)
     },
+    initMobileMenu (state, payload) {
+      state.mobileMenu = payload
+    },
     initSideMenu (state, payload) {
       state.menu = payload.menu
       state.menuExpanded = payload.expanded
@@ -34,6 +38,9 @@ export default {
     },
     toggleMenu (state) {
       state.menuExpanded = !state.menuExpanded
+    },
+    toggleMobileMenu (state) {
+      state.isMobileMenuDisplayed = !state.isMobileMenuDisplayed
     },
     updateActiveRoute (state, payload) {
       state.activeRoute = payload
@@ -61,6 +68,17 @@ export default {
           // TODO toastr
           console.log(err)
         })
+    },
+    initMobileMenu ({ commit }) {
+      neroService.getMobileMenu().then(
+        (data) => {
+          if (data.success) {
+            commit('initMobileMenu', data.menu)
+          }
+        })
+    },
+    toggleMobileMenu ({ commit }) {
+      commit('toggleMobileMenu')
     },
     toggleSideMenu ({ commit }) {
       commit('toggleMenu')

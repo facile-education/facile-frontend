@@ -2,7 +2,8 @@
   <nav class="banner">
     <BannerItem
       v-if="$device.phone"
-      icon="fa fa-bars"/>
+      icon="fa fa-bars"
+      @click="onShowMobileMenu"/>
     <BannerSearch/>
     <div class="right-section">
       <BannerServices/>
@@ -24,6 +25,11 @@ export default {
     BannerItem,
     BannerServices,
     BannerUserProfile
+  },
+  methods: {
+    onShowMobileMenu () {
+      this.$store.dispatch('nero/toggleMobileMenu')
+    }
   }
 }
 </script>
