@@ -61,6 +61,7 @@ export default {
   },
   beforeCreate () {
     this.$store.dispatch('initUserInformations')
+    this.$store.dispatch('nero/initUserMenu')
   }
 }
 </script>

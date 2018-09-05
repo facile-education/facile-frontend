@@ -33,53 +33,10 @@ export default {
       return this.$store.state.nero.menuExpanded
     },
     menu () {
-      if (this.$store.state.nero.menu !== undefined) {
-        var routes = this.addRoutes(this.$store.state.nero.menu)
-        this.$router.addRoutes(routes)
-      }
       return this.$store.state.nero.menu
     }
   },
-  created () {
-    if (this.menu === undefined) {
-      this.$store.dispatch('nero/initUserMenu')
-    }
-  },
   methods: {
-    setHomeRoute (entry) {
-      return {
-        path: '/',
-        redirect: entry.route
-      }
-    },
-    getRoute (entry) {
-      if (entry.component) {
-        return {
-          path: entry.route,
-          name: this.$t('SideMenu.entry.' + entry.key),
-          meta: {title: this.$t('SideMenu.entry.' + entry.key)},
-          component: () => import('@/views/' + entry.component + '.vue')
-        }
-      }
-    },
-    addRoutes (menu) {
-      var idx
-      var routes = []
-      for (idx = 0; idx < menu.length; ++idx) {
-        if (menu[idx].isLeaf) {
-          if (menu[idx].isDefault) {
-            routes.push(this.setHomeRoute(menu[idx]))
-          }
-          var route = this.getRoute(menu[idx])
-          if (route !== undefined) {
-            routes.push(route)
-          }
-        } else {
-          routes = routes.concat(this.addRoutes(menu[idx].menu))
-        }
-      }
-      return routes
-    },
     toggleMenu () {
       this.$store.dispatch('nero/toggleSideMenu')
     }
