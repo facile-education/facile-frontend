@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Application
+    <AMApplication
       v-for="application in applications"
       :key="application.serviceId"
       :application="application"/>
@@ -8,12 +8,12 @@
 </template>
 
 <script>
-import Application from '@/components/ApplicationManager/Application'
+import AMApplication from '@/components/ApplicationManager/AMApplication'
 
 export default {
-  name: 'ApplicationList',
+  name: 'AMApplicationList',
   components: {
-    Application
+    AMApplication
   },
   props: {
     category: {

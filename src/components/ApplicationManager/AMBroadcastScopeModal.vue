@@ -3,18 +3,18 @@
     :modal="true"
     @close="closeModal">
     <span
-      v-t="'application-manager.broadcast-modal.modal-title'"
+      v-t="'ApplicationManager.AMBroadcastScopeModal.modalTitle'"
       slot="header"/>
     <div
       slot="body">
       <NeroButton
-        :label="$t('application-manager.broadcast-modal.add-rule-button')"
+        :label="$t('ApplicationManager.AMBroadcastScopeModal.addRuleButton')"
         class="add"
         @click="addScope"/>
 
       <div class="current-rules-list">
         <div
-          v-t="'application-manager.broadcast-modal.default-label'"
+          v-t="'ApplicationManager.AMBroadcastScopeModal.defaultLabel'"
           v-if="!hasRules"
           class="fallback"/>
         <ul v-else>
@@ -22,11 +22,11 @@
             v-for="(rule, index) in rules"
             :key="rule.ruleId">
             <NeroTagsInput
-              :placeholder="$t('application-manager.broadcast-modal.roles-placeholder')"/>
+              :placeholder="$t('ApplicationManager.AMBroadcastScopeModal.rolesPlaceholder')"/>
             TODO send tags
-            <p v-t="'application-manager.broadcast-modal'"/>
+            <p v-t="'ApplicationManager.AMBroadcastScopeModal'"/>
             <NeroTagsInput
-              :placeholder="$t('application-manager.broadcast-modal.classes-placeholder')"/>
+              :placeholder="$t('ApplicationManager.AMBroadcastScopeModal.classesPlaceholder')"/>
             <NeroButton
               cls="cancel"
               icon="fa fa-trash"
@@ -37,7 +37,7 @@
     </div>
     <NeroButton
       slot="footer"
-      :label="$t('application-manager.broadcast-modal.update-button')"/>
+      :label="$t('ApplicationManager.AMBroadcastScopeModal.updateButton')"/>
   </NeroWindow>
 </template>
 
@@ -47,7 +47,7 @@ import NeroTagsInput from '@/components/NeroTagsInput'
 import NeroWindow from '@/components/NeroWindow'
 
 export default {
-  name: 'BroadcastScopeModal',
+  name: 'AMBroadcastScopeModal',
   components: {
     NeroButton,
     NeroTagsInput,

@@ -70,50 +70,49 @@
       "workspace": "Mes documents"
     }
   },
-  "application-manager": {
-    "edition-modal": {
-      "add-modal-title": "Ajouter une nouvelle application",
-      "edit-modal-title": "Modifier une application",
-      "name-placeholder": "Nom du service",
-      "key-placeholder": "Clé du service",
-      "category-placeholder": "Catégorie",
-      "schools-title": "Application disponible pour les établissements :",
-      "schools-placeholder": "Etablissement(s)",
-      "roles-title" : "Profils par défaut pour l'application :",
-      "roles-placeholder": "Profil(s)",
-      "placeholder": "Application",
-      "global-url-combobox": "URL globale",
-      "custom-url-combobox": "URL personnalisée",
-      "global-url-placeholder": "https://...",
-      "export-title": "Exporter un/ou plusieurs types d'utilisateurs pour ce service :",
-      "export-parents-checkbox": "Parents",
-      "export-students-checkbox": "Elèves",
-      "export-teachers-checkbox": "Enseignants",
-      "modal-save-button": "Enregistrer"
+  "ApplicationManager": {
+    "AMApplicationDetails": {
+      "broadcastButtonTooltip": "Diffuser",
+      "broadcastLabel": "L'application est diffusée aux profils suivants :",
+      "closeButtonTooltip": "Fermer",
+      "configurationButtonTooltip": "Gérer les règles de diffusion",
+      "customUrlPlaceholder": "http://...",
+      "deleteButtonTooltip": "Supprimer",
+      "editButtonTooltip": "Modifier",
+      "exportLabel": "Exports nécessaires pour l'application :",
+      "guideButtonTooltip": "Consulter le guide utilisateur",
+      "noBroadcastLabel": "L'application n'est pas diffusée",
+      "parentsExportButton": "Parents",
+      "saveButtonTooltip": "Enregistrer les modifications",
+      "studentsExportButton": "Elèves",
+      "teachersExportButton": "Enseignants"
     },
-    "broadcast-modal": {
-      "modal-title": "Règles de diffusion pour l'application",
-      "add-rule-button":"Ajouter une règle de diffusion",
-      "default-label": "L'application n'est pas diffusée",
-      "roles-placeholder": "Liste des profils",
-      "classes-placeholder": "Liste des classes",
-      "update-button": "Enregistrer"
+    "AMApplicationEditionModal": {
+      "addModalTitle": "Ajouter une nouvelle application",
+      "categoryPlaceholder": "Catégorie",
+      "customUrlCombobox": "URL personnalisée",
+      "editModalTitle": "Modifier une application",
+      "exportParentsCheckbox": "Parents",
+      "exportStudentsCheckbox": "Elèves",
+      "exportTeachersCheckbox": "Enseignants",
+      "exportTitle": "Exporter un/ou plusieurs types d'utilisateurs pour ce service :",
+      "globalUrlCombobox": "URL globale",
+      "globalUrlPlaceholder": "https://...",
+      "keyPlaceholder": "Clé du service",
+      "modalSaveButton": "Enregistrer",
+      "namePlaceholder": "Nom du service",
+      "rolesPlaceholder": "Profil(s)",
+      "rolesTitle" : "Profils par défaut pour l'application :",
+      "schoolsPlaceholder": "Etablissement(s)",
+      "schoolsTitle": "Application disponible pour les établissements :"
     },
-    "application-details": {
-      "custom-url-placeholder": "http://...",
-      "no-broadcast-label": "L'application n'est pas diffusée",
-      "broadcast-label": "L'application est diffusée aux profils suivants :",
-      "export-label": "Exports nécessaires pour l'application :",
-      "parents-export-button": "Parents",
-      "students-export-button": "Elèves",
-      "teachers-export-button": "Enseignants",
-      "close-button-tooltip": "Fermer",
-      "broadcast-button-tooltip": "Diffuser",
-      "delete-button-tooltip": "Supprimer",
-      "edit-button-tooltip": "Modifier",
-      "configuration-button-tooltip": "Gérer les règles de diffusion",
-      "save-button-tooltip": "Enregistrer les modifications",
-      "guide-button-tooltip": "Consulter le guide utilisateur"
+    "AMBroadcastScopeModal": {
+      "addRuleButton":"Ajouter une règle de diffusion",
+      "classesPlaceholder": "Liste des classes",
+      "defaultLabel": "L'application n'est pas diffusée",
+      "modalTitle": "Règles de diffusion pour l'application",
+      "rolesPlaceholder": "Liste des profils",
+      "updateButton": "Enregistrer"
     }
   },
   "CommunicationManager": {

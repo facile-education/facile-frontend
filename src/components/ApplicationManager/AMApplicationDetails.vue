@@ -15,17 +15,17 @@
           <input
             v-if="application.hasCustomUrl"
             :model="application.serviceUrl"
-            :placeholder="$t('application-manager.application-details.custom-url-placeholder')"
+            :placeholder="$t('ApplicationManager.AMApplicationDetails.customUrlPlaceholder')"
             type="url">
         </div>
       </div>
 
       <div class="broadcast">
         <p
-          v-t="'application-manager.application-details.broadcast-label'"
+          v-t="'ApplicationManager.AMApplicationDetails.broadcastLabel'"
           v-if="application.isAvailable"/>
         <p
-          v-t="'application-manager.application-details.no-broadcast-label'"
+          v-t="'ApplicationManager.AMApplicationDetails.noBroadcastLabel'"
           v-else/>
         <ul
           v-if="application.isAvailable"
@@ -40,58 +40,58 @@
       </div>
 
       <div v-if="hasExport">
-        <p v-t="'application-manager.application-details.export-label'"/>
+        <p v-t="'ApplicationManager.AMApplicationDetails.exportLabel'"/>
         <div class="app-export-buttons">
           <NeroButton
             v-if="application.exportStudent"
-            :label="$t('application-manager.application-details.parents-export-button')"
+            :label="$t('ApplicationManager.AMApplicationDetails.parentsExportButton')"
             @click="exportUserList('parent')"/>
 
           <NeroButton
             v-if="application.exportStudent"
-            :label="$t('application-manager.application-details.students-export-button')"
+            :label="$t('ApplicationManager.AMApplicationDetails.studentsExportButton')"
             @click="exportUserList('eleve')"/>
 
           <NeroButton
             v-if="application.exportTeacher"
-            :label="$t('application-manager.application-details.teachers-export-button')"
+            :label="$t('ApplicationManager.AMApplicationDetails.teachersExportButton')"
             @click="exportUserList('prof')"/>
         </div>
       </div>
 
       <NeroButton
-        :title="$t('application-manager.application-details.close-button-tooltip')"
+        :title="$t('ApplicationManager.AMApplicationDetails.closeButtonTooltip')"
         type="circle"
         icon="fa fa-times"
         @click="closeDetails"/>
       <NeroButton
-        :title="$t('application-manager.application-details.broadcast-button-tooltip')"
+        :title="$t('ApplicationManager.AMApplicationDetails.broadcastButtonTooltip')"
         type="circle"
         icon="fa fa-wifi"/>
       <NeroButton
         v-if="isAdministrator"
-        :title="$t('application-manager.application-details.edit-button-tooltip')"
+        :title="$t('ApplicationManager.AMApplicationDetails.editButtonTooltip')"
         type="circle"
         icon="fa fa-pencil-alt"
         @click="toggleEditionModal"/>
       <NeroButton
-        :title="$t('application-manager.application-details.configuration-button-tooltip')"
+        :title="$t('ApplicationManager.AMApplicationDetails.configurationButtonTooltip')"
         type="circle"
         icon="fa fa-cog"
         @click="toggleBroadcastModal"/>
       <NeroButton
         v-if="application.hasCustomUrl"
-        :title="$t('application-manager.application-details.guide-button-tooltip')"
+        :title="$t('ApplicationManager.AMApplicationDetails.guideButtonTooltip')"
         type="circle"
         icon="fa fa-book"/>
       <NeroButton
         v-if="application.hasCustomUrl"
-        :title="$t('application-manager.application-details.save-button-tooltip')"
+        :title="$t('ApplicationManager.AMApplicationDetails.saveButtonTooltip')"
         type="circle"
         icon="fa fa-save"/>
       <NeroButton
         v-if="isAdministrator"
-        :title="$t('application-manager.application-details.delete-button-tooltip')"
+        :title="$t('ApplicationManager.AMApplicationDetails.deleteButtonTooltip')"
         type="circle"
         cls="cancel"
         icon="fa fa-trash"/>
@@ -104,7 +104,7 @@ import NeroButton from '@/components/NeroButton'
 import clickoutside from '@/directives/clickoutside'
 
 export default {
-  name: 'ApplicationDetails',
+  name: 'AMApplicationDetails',
   components: {
     NeroButton
   },
