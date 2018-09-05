@@ -1,7 +1,8 @@
 <template>
   <div
     :title="tooltip"
-    class="banner-item">
+    class="banner-item"
+    @click="dispatchEvent">
     <i :class="icon"/>
   </div>
 </template>
@@ -17,6 +18,11 @@ export default {
     tooltip: {
       type: String,
       default: ''
+    }
+  },
+  methods: {
+    dispatchEvent () {
+      this.$emit('click')
     }
   }
 }
