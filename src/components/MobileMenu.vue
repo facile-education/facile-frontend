@@ -33,12 +33,7 @@ export default {
   name: 'MobileMenu',
   computed: {
     menu () {
-      return this.$store.state.nero.mobileMenu
-    }
-  },
-  created () {
-    if (this.menu === undefined) {
-      this.$store.dispatch('nero/initMobileMenu')
+      return this.$store.getters['nero/getMobileMenu']
     }
   },
   methods: {
@@ -69,10 +64,9 @@ export default {
   $white: rgba(255,255,255,0.1);
   $whiteGradient: rgba(250,250,250,0.4);
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+100&0+0,0.34+100 */
-  background: -moz-linear-gradient(-45deg, $white 45%, $whiteGradient 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(-45deg, $white 45%, $whiteGradient 100%); /* Chrome10-25,Safari5.1-6 */
+  background: -moz-linear-gradient(180deg, $white 45%, $whiteGradient 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(180deg, $white 45%, $whiteGradient 100%); /* Chrome10-25,Safari5.1-6 */
   background: linear-gradient(180deg, $white 45%, $whiteGradient 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  // filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#57ffffff',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
 .dark {

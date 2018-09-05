@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import neroService from '@/api/nero.service'
+import router from '@/router'
 
 export default {
   namespaced: true,
@@ -15,7 +16,6 @@ export default {
     isMobileMenuDisplayed: false,
     menu: undefined,
     menuExpanded: undefined,
-    mobileMenu: undefined,
     notifications: {
       contacts: undefined,
       messaging: undefined,
@@ -25,9 +25,6 @@ export default {
   mutations: {
     closeConfirmModal (state) {
       Vue.set(state.confirmModal, 'isDisplayed', false)
-    },
-    initMobileMenu (state, payload) {
-      state.mobileMenu = payload
     },
     initSideMenu (state, payload) {
       state.menu = payload.menu
@@ -60,6 +57,7 @@ export default {
       return neroService.getUserMenu().then(
         (data) => {
           if (data.success) {
+            router.createRoutes(data.menu)
             commit('initSideMenu', {menu: data.menu, expanded: data.expanded})
           }
           // TODO else toastr
@@ -92,6 +90,8 @@ export default {
     }
   },
   getters: {
-
+    getMobileMenu (state) {
+      return router.getMobileMenu(state.menu)
+    }
   }
 }
