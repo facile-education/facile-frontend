@@ -29,7 +29,7 @@
       <div class="informations">
         <NeroInput
           v-model="application.serviceName"
-          :placeholder="$t('application-manager.edition-modal.name-placeholder') + '*'"
+          :placeholder="$t('ApplicationManager.AMApplicationEditionModal.namePlaceholder') + '*'"
           :maxlength="75"
           cls="form"
           type="text"
@@ -37,7 +37,7 @@
 
         <NeroInput
           v-model="application.serviceKey"
-          :placeholder="$t('application-manager.edition-modal.key-placeholder') + '*'"
+          :placeholder="$t('ApplicationManager.AMApplicationEditionModal.keyPlaceholder') + '*'"
           :maxlength="75"
           cls="form"
           type="text"/>
@@ -46,7 +46,7 @@
           <NeroInput
             ref="category"
             v-model="application.serviceCategory"
-            :placeholder="$t('application-manager.edition-modal.category-placeholder') + '*'"
+            :placeholder="$t('ApplicationManager.AMApplicationEditionModal.categoryPlaceholder') + '*'"
             :max-lenght="75"
             cls="form"
             type="text"
@@ -62,22 +62,22 @@
 
       <div class="broadcast">
         <div>
-          <p v-t="'application-manager.edition-modal.schools-title'"/>
+          <p v-t="'ApplicationManager.AMApplicationEditionModal.schoolsTitle'"/>
           <NeroTagsInput
             v-if="schoolList"
             v-model="application.etabFilters"
-            :placeholder="$t('application-manager.edition-modal.schools-placeholder')"
+            :placeholder="$t('ApplicationManager.AMApplicationEditionModal.schoolsPlaceholder')"
             :list="schoolList"
             display-field="schoolName"
             cls="form"/>
         </div>
 
         <div>
-          <p v-t="'application-manager.edition-modal.roles-title'"/>
+          <p v-t="'ApplicationManager.AMApplicationEditionModal.rolesTitle'"/>
           <NeroTagsInput
             v-if="roleList"
             v-model="application.roleList"
-            :placeholder="$t('application-manager.edition-modal.roles-placeholder')"
+            :placeholder="$t('ApplicationManager.AMApplicationEditionModal.rolesPlaceholder')"
             :list="roleList"
             display-field="displayText"
             cls="form"/>
@@ -94,43 +94,43 @@
         <div class="urls">
           <!-- TODO code model radio button + disable input-->
           <NeroRadioButton
-            :label="$t('application-manager.edition-modal.global-url-combobox')"
+            :label="$t('ApplicationManager.AMApplicationEditionModal.globalUrlCombobox')"
             name="url"
             class="radio"/>
 
           <NeroRadioButton
-            :label="$t('application-manager.edition-modal.custom-url-combobox')"
+            :label="$t('ApplicationManager.AMApplicationEditionModal.customUrlCombobox')"
             name="url"
             class="radio"/>
 
           <NeroInput
-            :placeholder="$t('application-manager.edition-modal.global-url-placeholder')"
+            :placeholder="$t('ApplicationManager.AMApplicationEditionModal.globalUrlPlaceholder')"
             cls="form"
             type="text"/>
         </div>
 
         <div class="exports">
-          <p v-t="'application-manager.edition-modal.export-title'"/>
+          <p v-t="'ApplicationManager.AMApplicationEditionModal.exportTitle'"/>
           <NeroCheckbox
             v-model="application.exportParent"
-            :label="$t('application-manager.edition-modal.export-parents-checkbox')"
+            :label="$t('ApplicationManager.AMApplicationEditionModal.exportParentsCheckbox')"
             class="export"/>
 
           <NeroCheckbox
             v-model="application.exportStudent"
-            :label="$t('application-manager.edition-modal.export-students-checkbox')"
+            :label="$t('ApplicationManager.AMApplicationEditionModal.exportStudentsCheckbox')"
             class="export"/>
 
           <NeroCheckbox
             v-model="application.exportTeacher"
-            :label="$t('application-manager.edition-modal.export-teachers-checkbox')"
+            :label="$t('ApplicationManager.AMApplicationEditionModal.exportTeachersCheckbox')"
             class="export"/>
         </div>
       </div>
     </div>
     <NeroButton
       slot="footer"
-      :label="$t('application-manager.edition-modal.modal-save-button')"
+      :label="$t('ApplicationManager.AMApplicationEditionModal.modalSaveButton')"
       @click="save"/>
   </NeroWindow>
 </template>
@@ -146,7 +146,7 @@ import NeroWindow from '@/components/NeroWindow'
 import NeroAutocomplete from '@/components/NeroAutocomplete'
 
 export default {
-  name: 'ApplicationEditionModal',
+  name: 'AMApplicationEditionModal',
   components: {
     NeroButton,
     NeroDropdown,
@@ -165,9 +165,9 @@ export default {
   },
   computed: {
     title () {
-      var title = 'application-manager.edition-modal.add-modal-title'
+      var title = 'ApplicationManager.AMApplicationEditionModal.addModalTitle'
       if (this.application && this.application.serviceId) {
-        title = 'application-manager.edition-modal.edit-modal-title'
+        title = 'ApplicationManager.AMApplicationEditionModal.editModalTitle'
       }
       return title
     },

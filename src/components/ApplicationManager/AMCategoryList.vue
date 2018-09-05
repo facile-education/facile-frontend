@@ -5,17 +5,17 @@
       :key="category"
       class="category">
       <h4 class="header">{{ category }}</h4>
-      <ApplicationList :category="category"/>
+      <AMApplicationList :category="category"/>
     </div>
 </div></template>
 
 <script>
-import ApplicationList from '@/components/ApplicationManager/ApplicationList'
+import AMApplicationList from '@/components/ApplicationManager/AMApplicationList'
 
 export default {
-  name: 'CategoryList',
+  name: 'AMCategoryList',
   components: {
-    ApplicationList
+    AMApplicationList
   },
   computed: {
     categories () {
