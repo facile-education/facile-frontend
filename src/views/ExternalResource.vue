@@ -20,7 +20,7 @@
     <div v-else>
       <div v-if="serviceSchoolUrls.length > 1">
         <form name="selectUrl">
-          <!-- select
+          <!-- TODO dropdown user schools - select
             class="dropdown"
             name="serviceSchoolUrls"
             ng-model="ConnectorCtrl.selectedUrl"
@@ -50,7 +50,7 @@
             class="link"
             @click="openInNewTab"/>
         </i18n>
-        <div class="separator"/>
+        <div class="nero-separator"/>
         <p
           class="content"
           v-html="$t('ExternalResource.popupIssueLabel')"/>
@@ -146,8 +146,14 @@ export default {
 <style lang="scss" scoped>
 .external-resource {
   height: 100%;
+  max-width: 100%;
+  padding: 5px;
   overflow: auto;
   text-align: center;
+}
+
+.icon {
+  max-width: 60%;
 }
 
 .link {
@@ -156,14 +162,9 @@ export default {
   cursor: pointer;
 }
 
-.separator {
-  width: 230px;
-  margin: 25px auto;
-  border: solid 1px rgba(0,0,0,0.3);
-}
-
 .content {
   width: 510px;
+  max-width: 100%;
   margin: auto;
 }
 
