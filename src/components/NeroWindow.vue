@@ -107,6 +107,8 @@ export default {
 
     &:hover {
       cursor: pointer;
+      background-color: rgba(220,220,220,0.2);
+      border-radius: 25%;
     }
   }
 }
