@@ -11,7 +11,8 @@
     <div class="dark">
       <img
         class="picture"
-        src="../assets/logo.png">
+        src="../assets/logo.png"
+        @click="openPreferences">
 
       <div class="wrapper">
         <router-link
@@ -39,6 +40,10 @@ export default {
   methods: {
     closeMenu () {
       this.$store.dispatch('nero/toggleMobileMenu')
+    },
+    openPreferences () {
+      this.$store.dispatch('nero/toggleMobileMenu')
+      this.$store.dispatch('nero/openPreferencesModal')
     }
   }
 }

@@ -14,6 +14,7 @@ export default {
       title: ''
     },
     isMobileMenuDisplayed: false,
+    isPreferencesModalDisplayed: false,
     menu: undefined,
     menuExpanded: undefined,
     notifications: {
@@ -42,6 +43,9 @@ export default {
     updateActiveRoute (state, payload) {
       state.activeRoute = payload
     },
+    updatePreferencesModalState (state, payload) {
+      state.isPreferencesModalDisplayed = payload
+    },
     updateConfirmModalParameters (state, payload) {
       Vue.set(state.confirmModal, 'buttonLabel', payload.buttonLabel)
       Vue.set(state.confirmModal, 'message', payload.message)
@@ -52,6 +56,9 @@ export default {
   actions: {
     closeConfirmModal ({ commit }) {
       commit('closeConfirmModal')
+    },
+    closePreferencesModal ({ commit }) {
+      commit('updatePreferencesModalState', false)
     },
     initUserMenu ({ commit }) {
       return neroService.getUserMenu().then(
@@ -80,6 +87,9 @@ export default {
     },
     toggleSideMenu ({ commit }) {
       commit('toggleMenu')
+    },
+    openPreferencesModal ({ commit }) {
+      commit('updatePreferencesModalState', true)
     },
     updateActiveRoute ({ commit }, service) {
       commit('updateActiveRoute', service)

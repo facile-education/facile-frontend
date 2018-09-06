@@ -21,7 +21,8 @@
     </div>
     <BannerItem
       v-if="$device.desktop"
-      icon="fa fa-chevron-down"/>
+      icon="fa fa-chevron-down"
+      @click="$store.dispatch('nero/openPreferencesModal')"/>
   </div>
 </template>
 
