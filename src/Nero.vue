@@ -18,6 +18,7 @@
       <MobileMenu v-if="isMobileMenuDisplayed"/>
     </transition>
     <NeroConfirmModal v-if="isConfirmModalDisplayed"/>
+    <PWPreferencesModal v-if="isPreferencesModalDisplayed"/>
   </div>
 </template>
 
@@ -26,6 +27,7 @@ import Banner from '@/components/Banner'
 import Hack from '@/components/Hack'
 import MobileMenu from '@/components/MobileMenu'
 import NeroConfirmModal from '@/components/NeroConfirmModal'
+import PWPreferencesModal from '@/components/PreferencesWindow/PWPreferencesModal'
 import SideMenu from '@/components/SideMenu'
 
 export default {
@@ -35,6 +37,7 @@ export default {
     Hack,
     MobileMenu,
     NeroConfirmModal,
+    PWPreferencesModal,
     SideMenu
   },
   computed: {
@@ -54,6 +57,9 @@ export default {
     },
     isMobileMenuDisplayed () {
       return this.$store.state.nero.isMobileMenuDisplayed
+    },
+    isPreferencesModalDisplayed () {
+      return this.$store.state.nero.isPreferencesModalDisplayed
     },
     menuExpanded () {
       return this.$store.state.nero.menuExpanded
