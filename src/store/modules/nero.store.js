@@ -91,7 +91,9 @@ export default {
   },
   getters: {
     getMobileMenu (state) {
-      return router.getMobileMenu(state.menu)
+      return router.getMobileMenu(state.menu).sort((itemA, itemB) => {
+        return (itemA.mobileOrder > itemB.mobileOrder) ? 1 : -1
+      })
     }
   }
 }
