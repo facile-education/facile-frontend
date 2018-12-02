@@ -7,6 +7,7 @@ import nero from '@/store/modules/nero.store'
 import currentUser from '@/store/modules/currentUser.store'
 
 import workspace from '@/store/modules/workspace.store'
+import messaging from '@/store/modules/messaging.store'
 
 import administration from '@/store/modules/administration.store'
 import applicationManager from '@/store/modules/applicationManager.store'
@@ -25,6 +26,7 @@ export default new Vuex.Store({
     nero,
     currentUser,
     workspace,
+    messaging,
     administration,
     applicationManager,
     communicationManager,
