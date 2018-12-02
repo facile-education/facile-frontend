@@ -1,28 +1,30 @@
 <template>
   <div class="widget">
-    <div class="header">
-      Action bar
-    </div>
-    <div class="body">
-      body
-    </div>
+    <slot>
+      spinner loading message
+    </slot>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Widget'
+  name: 'DashboardWidget'
 }
 </script>
 
-<style lang="scss" scoped>
-.header {
-  color: silver;
-  border-bottom: 1px silver solid;
-}
-
+<style lang="scss">
 .widget {
+  background: white;
   border: 1px silver solid;
   border-radius: 5px;
+
+  .header {
+    color: silver;
+    border-bottom: 1px silver solid;
+  }
+
+  .body {
+    padding: 15px;
+  }
 }
 </style>
