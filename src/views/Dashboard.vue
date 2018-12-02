@@ -1,20 +1,18 @@
 <template>
   <div>
-    <h4>Home > Dashboard</h4>
-    <AppButton label="Test"/>
-    <DashboardWidget/>
+    <DashboardNewsWidget/>
   </div>
 </template>
 
 <script>
-import AppButton from '@/components/AppButton.vue'
-import DashboardWidget from '@/components/DashboardWidget.vue'
+import NeroButton from '@/components/NeroButton'
+import DashboardNewsWidget from '@/components/DashboardNewsWidget'
 
 export default {
   name: 'Dashboard',
   components: {
-    AppButton,
-    DashboardWidget
+    NeroButton,
+    DashboardNewsWidget
   }
 }
 </script>
