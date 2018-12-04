@@ -1,12 +1,20 @@
 <template>
   <div>
-    Contacts
+    <ContactsToolbar />
+    <ContactList />
   </div>
 </template>
 
 <script>
+import ContactList from '@/components/Contacts/ContactList'
+import ContactsToolbar from '@/components/Contacts/ContactsToolbar'
+
 export default {
-  name: 'Contacts'
+  name: 'Contacts',
+  components: {
+    ContactList,
+    ContactsToolbar
+  }
 }
 </script>
 
