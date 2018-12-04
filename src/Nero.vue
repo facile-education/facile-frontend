@@ -1,24 +1,27 @@
 <template>
   <div id="app">
     <header class="nero-header theme-background-color">
-      <Banner/>
+      <Banner />
     </header>
     <section
       v-if="!$device.phone"
-      class="nero-menu">
-      <SideMenu/>
+      class="nero-menu"
+    >
+      <SideMenu />
     </section>
     <section
       :class="bodyClasses"
-      class="nero-body">
-      <router-view/>
+      class="nero-body"
+    >
+      <RouterView />
     </section>
-    <Hack/>
-    <transition name="fade">
-      <MobileMenu v-if="isMobileMenuDisplayed"/>
-    </transition>
-    <NeroConfirmModal v-if="isConfirmModalDisplayed"/>
-    <PWPreferencesModal v-if="isPreferencesModalDisplayed"/>
+    <Hack />
+    <Transition name="fade">
+      <MobileMenu v-if="isMobileMenuDisplayed" />
+    </Transition>
+    <NeroConfirmModal v-if="isConfirmModalDisplayed" />
+    <PWPreferencesModal v-if="isPreferencesModalDisplayed" />
+    <!-- SendMessageModal / ContactModal? / InformationModal / SupportModal -->
   </div>
 </template>
 
