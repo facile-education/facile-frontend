@@ -1,10 +1,12 @@
 <template>
   <button
     :class="[cls, type]"
-    @click="dispatchEvent">
+    @click="dispatchEvent"
+  >
     <i
       :ng-if="icon"
-      :class="icon"/>
+      :class="icon"
+    />
     <span :ng-if="label">
       {{ label }}
     </span>

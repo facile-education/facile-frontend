@@ -1,6 +1,6 @@
 <template>
   <div class="menu">
-    <BoxList/>
+    <BoxList />
   </div>
 </template>
 

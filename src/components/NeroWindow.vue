@@ -1,15 +1,15 @@
 <template>
-  <transition name="window">
+  <Transition name="window">
     <div :class="{'modal-mask': modal}">
       <div class="window-wrapper">
         <!-- TODO AppDraggable class="window-container" -->
         <div class="window-container">
-
           <div class="window-header theme-background-color">
-            <slot name="header"/>
+            <slot name="header" />
             <i
               class="close fa fa-times"
-              @click="$emit('close')"/>
+              @click="$emit('close')"
+            />
           </div>
 
           <div class="window-body">
@@ -19,13 +19,13 @@
           </div>
 
           <div class="window-footer">
-            <slot name="footer"/>
+            <slot name="footer" />
           </div>
         </div>
         <!-- /AppDraggable -->
       </div>
     </div>
-  </transition>
+  </Transition>
 </template>
 
 <script>

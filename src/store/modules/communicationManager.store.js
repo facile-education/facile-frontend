@@ -15,10 +15,10 @@ export default {
       state.roleList = payload
     },
     initInternalRights (state, payload) {
-      state.CMInternalRights = {...payload}
+      state.CMInternalRights = { ...payload }
     },
     initExternalRights (state, payload) {
-      state.CMExternalRights = {...payload}
+      state.CMExternalRights = { ...payload }
     }
   },
   actions: {

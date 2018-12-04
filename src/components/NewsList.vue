@@ -3,25 +3,32 @@
     <div
       v-for="aNews in news"
       :key="aNews.blogEntryId"
-      class="news">
+      class="news"
+    >
       <NeroWindow
         v-if="aNews.showDetails"
         :modal="true"
-        @close="hideModal(aNews)">
-        <span slot="header">News content</span>
+        @close="hideModal(aNews)"
+      >
+        <span slot="header">
+          News content
+        </span>
         <div
           slot="body"
-          v-html="aNews.content"/>
+          v-html="aNews.content"
+        />
       </NeroWindow>
       <div
         v-if="hasThumbnail(aNews)"
-        class="thumbnail">
+        class="thumbnail"
+      >
         <img src="../assets/logo.png">
       </div>
       <div class="text">
         <h4
           class="title"
-          @click="showModal(aNews)">
+          @click="showModal(aNews)"
+        >
           {{ aNews.title }}
         </h4>
         <p class="content">

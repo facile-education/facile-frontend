@@ -1,15 +1,17 @@
 <template>
   <NeroToolbar v-if="show">
-    <transition
+    <Transition
       appear
-      name="fade">
+      name="fade"
+    >
       <NeroDropdown
         v-if="schools"
         :list="schools"
         display-field="schoolName"
-        @dropdown-select="onSchoolSelect"/>
-      <NeroSpinner v-else/>
-    </transition>
+        @dropdown-select="onSchoolSelect"
+      />
+      <NeroSpinner v-else />
+    </Transition>
   </NeroToolbar>
 </template>
 

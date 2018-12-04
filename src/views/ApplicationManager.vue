@@ -1,9 +1,9 @@
 <template>
   <div class="service-container">
-    <AMToolbar/>
-    <AMCategoryList/>
-    <AMBroadcastScopeModal v-if="showBroadcastModal"/>
-    <AMApplicationEditionModal v-if="showEditionModal"/>
+    <AMToolbar />
+    <AMCategoryList />
+    <AMBroadcastScopeModal v-if="showBroadcastModal" />
+    <AMApplicationEditionModal v-if="showEditionModal" />
   </div>
 </template>
 

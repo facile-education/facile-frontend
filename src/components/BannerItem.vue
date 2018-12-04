@@ -2,8 +2,9 @@
   <div
     :title="tooltip"
     class="banner-item"
-    @click="dispatchEvent">
-    <i :class="icon"/>
+    @click="dispatchEvent"
+  >
+    <i :class="icon" />
   </div>
 </template>
 

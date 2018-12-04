@@ -1,7 +1,7 @@
 <template>
   <div class="stats">
-    <ChartParameters/>
-    <Chart/>
+    <ChartParameters />
+    <Chart />
   </div>
 </template>
 

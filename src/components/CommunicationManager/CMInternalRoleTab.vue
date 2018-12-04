@@ -1,16 +1,19 @@
 <template>
   <div>
     <div
+      v-if="isPersonal"
       v-t="'CommunicationManager.CMInternalRoleTab.personalLabel'"
-      v-if="isPersonal"/>
+    />
     <div
       v-for="right in sortedRightList"
       v-else
-      :key="right">
+      :key="right"
+    >
       <NeroCheckbox
         :value="getValue(right)"
         :label="$t('CommunicationManager.CMInternalRoleTab.' + removePrefix(right))"
-        @input="onInput(right)"/>
+        @input="onInput(right)"
+      />
     </div>
   </div>
 </template>

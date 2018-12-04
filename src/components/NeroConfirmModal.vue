@@ -1,7 +1,8 @@
 <template>
   <NeroWindow
     :modal="true"
-    @close="onClose">
+    @close="onClose"
+  >
     <span slot="header">
       {{ title }}
     </span>
@@ -13,7 +14,8 @@
     <NeroButton
       slot="footer"
       :label="confirmBtnLabel"
-      @click="onConfirm"/>
+      @click="onConfirm"
+    />
   </NeroWindow>
 </template>
 

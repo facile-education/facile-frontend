@@ -2,17 +2,20 @@
   <div>
     <span
       class="all-boxes-label"
-      @click="toggleAccountListDiplay">
+      @click="toggleAccountListDiplay"
+    >
       <i
         :class="{'fa-caret-down': showAccountList, 'fa-caret-right': !showAccountList}"
-        class="fa"/>
+        class="fa"
+      />
       TODO label
     </span>
     <div v-if="showAccountList">
       <BoxItem
         v-for="box in boxList"
         :key="box.accountId"
-        :box="box"/>
+        :box="box"
+      />
     </div>
   </div>
 </template>

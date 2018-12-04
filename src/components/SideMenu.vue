@@ -1,21 +1,25 @@
 <template>
   <nav
     :class="{open: expanded}"
-    class="side-menu">
+    class="side-menu"
+  >
     <div class="entry-list">
       <SideMenuRootEntry
         v-for="entry in menu"
         :key="entry.id"
         :entry="entry"
         :expanded="expanded"
-        @open="toggleMenu"/>
+        @open="toggleMenu"
+      />
     </div>
     <div
       class="side-menu-caret"
-      @click="toggleMenu">
+      @click="toggleMenu"
+    >
       <i
         :class="{'fa-caret-right': !expanded, 'fa-caret-left': expanded}"
-        class="fa"/>
+        class="fa"
+      />
     </div>
   </nav>
 </template>

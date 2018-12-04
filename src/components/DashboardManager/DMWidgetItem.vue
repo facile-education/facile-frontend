@@ -4,50 +4,60 @@
       <div
         :title="widget.name"
         :class="{'theme-background-color top': hasSmallDisplay, 'left': !hasSmallDisplay}"
-        class="title">
+        class="title"
+      >
         <h5>{{ widget.name }}</h5>
       </div>
 
       <div class="content">
         <div
           :class="{'full-width': !displayConfigButton}"
-          class="description">
-          <p v-t="{path: 'DashboardManager.DMWidgetItem.typeLabel', args: {type: widget.type}}"/>
+          class="description"
+        >
+          <p v-t="{path: 'DashboardManager.DMWidgetItem.typeLabel', args: {type: widget.type}}" />
 
           <p
-            v-t="{path: 'DashboardManager.DMWidgetItem.broadcastedLabel', args: {profiles: broadcastedRoleListLabel}}"
             v-if="broadcastedRoleList.length > 0"
-            :title="broadcastedRoleListLabel"/>
+            v-t="{path: 'DashboardManager.DMWidgetItem.broadcastedLabel', args: {profiles: broadcastedRoleListLabel}}"
+            :title="broadcastedRoleListLabel"
+          />
           <p
+            v-else
             v-t="'DashboardManager.DMWidgetItem.notBroadcastedLabel'"
-            v-else/>
+          />
 
           <p
+            v-if="isWidgetInstance"
             v-t="{path: 'DashboardManager.DMWidgetItem.createdLabel', args: {date: formattedDate, creator: widget.author}}"
-            v-if="isWidgetInstance"/>
+          />
           <p
+            v-if="isWidgetPersonnel"
             v-t="'DashboardManager.DMWidgetItem.personnelWidgetLabel'"
-            v-if="isWidgetPersonnel"/>
+          />
         </div>
 
         <div
           v-if="displayConfigButton"
-          class="actions">
+          class="actions"
+        >
           <NeroButton
             :label="hasSmallDisplay ? '' : $t('DashboardManager.DMWidgetItem.editButtonLabel')"
             :icon="hasSmallDisplay ? 'fa fa-cog' : ''"
-            @click="onEditWidget"/>
+            @click="onEditWidget"
+          />
           <NeroButton
             :label="hasSmallDisplay ? '' : $t('DashboardManager.DMWidgetItem.removeButtonLabel')"
             :icon="hasSmallDisplay ? 'fa fa-trash' : ''"
             cls="cancel"
-            @click="onRemoveWidget"/>
+            @click="onRemoveWidget"
+          />
         </div>
       </div>
     </div>
     <hr
       v-if="displaySeparator"
-      class="nero-separator">
+      class="nero-separator"
+    >
   </div>
 </template>
 

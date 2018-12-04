@@ -1,10 +1,10 @@
 <template>
   <div>
-    <MessagingToolbar/>
+    <MessagingToolbar />
     <div class="messaging-body">
-      <MessagingMenu class="body-height"/>
-      <MessageList class="body-height"/>
-      <MessageDetails class="body-height"/>
+      <MessagingMenu class="body-height" />
+      <MessageList class="body-height" />
+      <MessageDetails class="body-height" />
     </div>
   </div>
 </template>

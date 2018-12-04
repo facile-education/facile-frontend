@@ -1,11 +1,13 @@
 <template>
   <div
     v-if="messageList"
-    class="list">
+    class="list"
+  >
     <MessageItem
       v-for="message in messageList"
       :key="message.messageId"
-      :message="message"/>
+      :message="message"
+    />
   </div>
 </template>
 

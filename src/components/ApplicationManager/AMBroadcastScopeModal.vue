@@ -1,43 +1,53 @@
 <template>
   <NeroWindow
     :modal="true"
-    @close="closeModal">
+    @close="closeModal"
+  >
     <span
+      slot="header"
       v-t="'ApplicationManager.AMBroadcastScopeModal.modalTitle'"
-      slot="header"/>
+    />
     <div
-      slot="body">
+      slot="body"
+    >
       <NeroButton
         :label="$t('ApplicationManager.AMBroadcastScopeModal.addRuleButton')"
         class="add"
-        @click="addScope"/>
+        @click="addScope"
+      />
 
       <div class="current-rules-list">
         <div
-          v-t="'ApplicationManager.AMBroadcastScopeModal.defaultLabel'"
           v-if="!hasRules"
-          class="fallback"/>
+          v-t="'ApplicationManager.AMBroadcastScopeModal.defaultLabel'"
+          class="fallback"
+        />
         <ul v-else>
           <li
             v-for="(rule, index) in rules"
-            :key="rule.ruleId">
+            :key="rule.ruleId"
+          >
             <NeroTagsInput
-              :placeholder="$t('ApplicationManager.AMBroadcastScopeModal.rolesPlaceholder')"/>
+              :placeholder="$t('ApplicationManager.AMBroadcastScopeModal.rolesPlaceholder')"
+            />
             TODO send tags
-            <p v-t="'ApplicationManager.AMBroadcastScopeModal'"/>
+            <p v-t="'ApplicationManager.AMBroadcastScopeModal'" />
             <NeroTagsInput
-              :placeholder="$t('ApplicationManager.AMBroadcastScopeModal.classesPlaceholder')"/>
+              :placeholder="$t('ApplicationManager.AMBroadcastScopeModal.classesPlaceholder')"
+            />
             <NeroButton
               cls="cancel"
               icon="fa fa-trash"
-              @click="removeSope(index)"/>
+              @click="removeSope(index)"
+            />
           </li>
         </ul>
       </div>
     </div>
     <NeroButton
       slot="footer"
-      :label="$t('ApplicationManager.AMBroadcastScopeModal.updateButton')"/>
+      :label="$t('ApplicationManager.AMBroadcastScopeModal.updateButton')"
+    />
   </NeroWindow>
 </template>
 

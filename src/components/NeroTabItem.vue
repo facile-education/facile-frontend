@@ -1,8 +1,9 @@
 <template>
   <div
     v-if="active"
-    class="tab-content">
-    <slot/>
+    class="tab-content"
+  >
+    <slot />
   </div>
 </template>
 

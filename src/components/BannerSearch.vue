@@ -3,11 +3,13 @@
     <input
       v-if="$device.desktop"
       :placeholder="$t('banner.search')"
-      class="search-input"><!-- Comment the inline whitespace
+      class="search-input"
+    ><!-- Comment the inline whitespace
     --><span
       :title="$t('banner.search')"
-      class="advanced-search">
-      <i class="fa fa-search"/>
+      class="advanced-search"
+>
+      <i class="fa fa-search" />
     </span>
   </div>
 </template>

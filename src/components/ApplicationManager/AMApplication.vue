@@ -3,16 +3,20 @@
     <AMApplicationDetails
       v-if="showDetails"
       :application="application"
-      @closeDetails="toggleDetails"/>
+      @closeDetails="toggleDetails"
+    />
     <div
       class="application"
-      @click="toggleDetails">
+      @click="toggleDetails"
+    >
       <i
         v-show="application.isAvailable"
-        class="check fa fa-check"/>
+        class="check fa fa-check"
+      />
       <img
         :src="application.image"
-        class="logo">
+        class="logo"
+      >
       <p class="name">
         {{ application.serviceName }}
       </p>

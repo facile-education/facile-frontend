@@ -1,23 +1,27 @@
 <template>
   <div
-    v-click-outside="close"
     v-if="displayAutocomplete"
-    class="autocomplete">
+    v-click-outside="close"
+    class="autocomplete"
+  >
     <div
       v-if="filtered"
-      class="filter">
+      class="filter"
+    >
       <input
         ref="filter"
         v-model="filter"
-        :placeholder="$t('NeroAutocomplete.filterPlaceholder')">
+        :placeholder="$t('NeroAutocomplete.filterPlaceholder')"
+      >
     </div>
     <ul class="suggestion-list">
       <li
         v-for="(item, index) in filteredList"
         :key="index"
         class="item"
-        @click="onSelect(item)">
-        {{ getDisplayValue(item) }} <slot/>
+        @click="onSelect(item)"
+      >
+        {{ getDisplayValue(item) }} <slot />
       </li>
     </ul>
   </div>

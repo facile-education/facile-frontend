@@ -1,8 +1,8 @@
 <template>
   <div class="service-container">
-    <DMToolbar/>
-    <DMWidgetList/>
-    <DMWidgetEditionModal v-if="isEdtitionModalDisplayed"/>
+    <DMToolbar />
+    <DMWidgetList />
+    <DMWidgetEditionModal v-if="isEdtitionModalDisplayed" />
   </div>
 </template>
 

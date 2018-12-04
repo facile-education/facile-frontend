@@ -1,33 +1,41 @@
 <template>
-  <transition
+  <Transition
     name="unfold"
-    mode="out-in">
+    mode="out-in"
+  >
     <div
       v-if="showSubMenu"
-      :class="{popup}">
+      :class="{popup}"
+    >
       <h4
-        v-t="'SideMenu.category.' + category.key"
         v-if="popup"
-        class="popup-header"/>
+        v-t="'SideMenu.category.' + category.key"
+        class="popup-header"
+      />
       <ul class="sub-menu">
         <li
           v-for="entry in category.menu"
           :key="entry.id"
-          class="entry">
+          class="entry"
+        >
           <a
             v-if="isEntryInternetLink(entry)"
             :href="entry.href"
             class="link"
-            target="_blank">{{ entry.label }}</a>
-          <router-link
-            v-t="'SideMenu.entry.' + entry.key"
+            target="_blank"
+          >
+            {{ entry.label }}
+          </a>
+          <RouterLink
             v-else
+            v-t="'SideMenu.entry.' + entry.key"
             :to="entry.route"
-            class="link"/>
+            class="link"
+          />
         </li>
       </ul>
     </div>
-  </transition>
+  </Transition>
 </template>
 
 <script>

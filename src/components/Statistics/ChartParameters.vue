@@ -1,30 +1,33 @@
 <template>
   <div>
     <div class="filters">
-      <h5 v-t="'Statistics.ChartParameters.filtersTitle'"/>
+      <h5 v-t="'Statistics.ChartParameters.filtersTitle'" />
       <NeroTagsInput
         v-if="schoolList"
         v-model="schoolFilter"
         :list="schoolList"
         :placeholder="$t('Statistics.ChartParameters.schoolsPlaceholder')"
         display-field="schoolName"
-        cls="form"/>
+        cls="form"
+      />
       <NeroTagsInput
         v-model="serviceFilter"
         :list="[]"
         :placeholder="$t('Statistics.ChartParameters.servicesPlaceholder')"
-        cls="form"/>
+        cls="form"
+      />
       <NeroTagsInput
         v-model="roleFilter"
         :list="[]"
         :placeholder="$t('Statistics.ChartParameters.rolesPlaceholder')"
-        cls="form"/>
-        <!-- $t('application-manager.edition-modal.schools-placeholder') -->
-        <!-- display-field="schoolName" -->
+        cls="form"
+      />
+      <!-- $t('application-manager.edition-modal.schools-placeholder') -->
+      <!-- display-field="schoolName" -->
     </div>
 
     <div class="dates">
-      <h5 v-t="'Statistics.ChartParameters.datesLabel'"/>
+      <h5 v-t="'Statistics.ChartParameters.datesLabel'" />
       <!-- https://github.com/charliekassel/vuejs-datepicker -->
       <p>
         {{ $t('Statistics.ChartParameters.startDate') }}
@@ -41,11 +44,12 @@
           $t('Statistics.ChartParameters.weeklyLabel'),
           $t('Statistics.ChartParameters.monthlyLabel'),
           $t('Statistics.ChartParameters.yearlyLabel')]"
-        @dropdown-select="periodSelected"/>
+        @dropdown-select="periodSelected"
+      />
     </div>
 
     <div>
-      <h5 v-t="'Statistics.ChartParameters.actionsTitle'"/>
+      <h5 v-t="'Statistics.ChartParameters.actionsTitle'" />
       {{ $t('Statistics.ChartParameters.compareOnLabel') }}
       <NeroDropdown
         :list="[
@@ -53,17 +57,21 @@
           $t('Statistics.ChartParameters.schoolsLabel'),
           $t('Statistics.ChartParameters.servicesLabel'),
           $t('Statistics.ChartParameters.rolesLabel')]"
-        @dropdown-select="compareSelected"/>
+        @dropdown-select="compareSelected"
+      />
 
       <NeroButton
         :label="$t('Statistics.ChartParameters.exportButtonLabel')"
-        @click="exportStats"/>
+        @click="exportStats"
+      />
       <NeroButton
         :label="$t('Statistics.ChartParameters.searchButtonLabel')"
-        @click="search"/>
+        @click="search"
+      />
       <NeroButton
         :label="$t('Statistics.ChartParameters.initButtonLabel')"
-        @click="initParameterList"/>
+        @click="initParameterList"
+      />
     </div>
   </div>
 </template>

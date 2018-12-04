@@ -3,10 +3,12 @@
     <img
       class="picture"
       src="../assets/logo.png"
-      @click="setLang('en')">
+      @click="setLang('en')"
+    >
     <div
       v-if="$device.desktop"
-      class="user-infos">
+      class="user-infos"
+    >
       <p class="username">
         {{ userName }}
       </p>
@@ -15,14 +17,16 @@
         :title="homeSchool.name"
         :href="homeSchool.link"
         class="school-link"
-        target="_blank">
+        target="_blank"
+      >
         {{ homeSchool.name }}
       </a>
     </div>
     <BannerItem
       v-if="$device.desktop"
       icon="fa fa-chevron-down"
-      @click="$store.dispatch('nero/openPreferencesModal')"/>
+      @click="$store.dispatch('nero/openPreferencesModal')"
+    />
   </div>
 </template>
 

@@ -4,7 +4,8 @@
       v-for="(widget, index) in sortedWidgetList"
       :key="widget.widgetId"
       :widget="widget"
-      :index="index"/>
+      :index="index"
+    />
   </div>
 </template>
 
@@ -35,6 +36,7 @@ export default {
           return a.name.localeCompare(b.name)
         })
       }
+      return ''
     },
     widgetList () {
       return this.$store.state.dashboardManager.widgetList

@@ -1,42 +1,52 @@
 <template>
   <div
     :class="{route: isEntryRoute, expanded: expanded}"
-    class="menu-entry theme-hover-text-color">
+    class="menu-entry theme-hover-text-color"
+  >
     <div v-if="isEntryRoute">
       <div
-        v-t="'SideMenu.entry.' + entry.key"
         v-if="!expanded"
-        class="popover"/>
-      <router-link
+        v-t="'SideMenu.entry.' + entry.key"
+        class="popover"
+      />
+      <RouterLink
         :to="entry.route"
-        class="entry link">
+        class="entry link"
+      >
         <i
           :class="entry.icon"
-          class="menu-icon"/>
+          class="menu-icon"
+        />
         <span
+          v-if="expanded"
           v-t="'SideMenu.entry.' + entry.key"
-          v-if="expanded"/>
-      </router-link>
+        />
+      </RouterLink>
     </div>
     <div
       v-else
       @mouseover="togglePopupSubMenu"
-      @mouseleave="togglePopupSubMenu">
+      @mouseleave="togglePopupSubMenu"
+    >
       <div
         :class="{'is-active theme-text-color': isCategoryActive}"
         class="entry"
-        @click="toggleSubMenu">
+        @click="toggleSubMenu"
+      >
         <i
           :class="entry.icon"
-          class="menu-icon"/>
+          class="menu-icon"
+        />
         <span
+          v-if="expanded"
           v-t="'SideMenu.category.' + entry.key"
-          v-if="expanded"/>
+        />
       </div>
       <SideMenuCategory
         :category="entry"
         :show-sub-menu="showSubMenu"
-        :popup="!expanded"/>
+        :popup="!expanded"
+      />
     </div>
   </div>
 </template>
@@ -74,6 +84,7 @@ export default {
           return true
         }
       }
+      return false
     }
   },
   watch: {

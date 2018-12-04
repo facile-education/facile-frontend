@@ -1,28 +1,32 @@
 <template>
   <div class="internal-rights">
-    <transition
+    <Transition
       appear
-      name="fade">
+      name="fade"
+    >
       <div v-if="roleList">
-        <h4 v-t="'CommunicationManager.CMInternalRights.title'"/>
-        <p v-t="'CommunicationManager.CMInternalRights.informations'"/>
+        <h4 v-t="'CommunicationManager.CMInternalRights.title'" />
+        <p v-t="'CommunicationManager.CMInternalRights.informations'" />
         <NeroTabList>
           <NeroTabItem
             v-for="role in roleList"
             :key="role.roleId"
-            :title="role.label">
+            :title="role.label"
+          >
             <CMInternalRoleTab
               :role="role"
               :right-list="rightList"
-              @input="onInput"/>
+              @input="onInput"
+            />
           </NeroTabItem>
         </NeroTabList>
         <NeroButton
           :label="$t('CommunicationManager.CMInternalRights.save')"
-          @click="onSave"/>
+          @click="onSave"
+        />
       </div>
-      <NeroSpinner v-else/>
-    </transition>
+      <NeroSpinner v-else />
+    </Transition>
   </div>
 </template>
 

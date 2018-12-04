@@ -65,7 +65,7 @@ export default {
         (data) => {
           if (data.success) {
             router.createRoutes(data.menu)
-            commit('initSideMenu', {menu: data.menu, expanded: data.expanded})
+            commit('initSideMenu', { menu: data.menu, expanded: data.expanded })
           }
           // TODO else toastr
         },

@@ -3,7 +3,8 @@
     <AMApplication
       v-for="application in applications"
       :key="application.serviceId"
-      :application="application"/>
+      :application="application"
+    />
   </div>
 </template>
 
