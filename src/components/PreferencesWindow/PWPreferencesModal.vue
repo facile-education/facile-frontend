@@ -1,7 +1,8 @@
 <template>
   <NeroWindow
     :modal="true"
-    @close="onClose">
+    @close="onClose"
+  >
     <span slot="header">
       Prefs
     </span>
@@ -29,7 +30,8 @@
     <NeroButton
       slot="footer"
       :label="'label'"
-      @click="onConfirm"/>
+      @click="onConfirm"
+    />
   </NeroWindow>
 </template>
 

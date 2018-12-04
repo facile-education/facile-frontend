@@ -3,18 +3,21 @@
     <template v-if="message">
       <div>
         <div class="shortcut">
-          <i class="far fa-star"/>
+          <i class="far fa-star" />
         </div>
         <div class="header">
           <p>{{ message.senderName }}</p>
-          <span class="date">{{ message.sendDate }}</span>
+          <span class="date">
+            {{ message.sendDate }}
+          </span>
           <p>TODO label Object : {{ message.subject }}</p>
           <p>TODO label at {{ message.receivers }} {{ message.toName }}</p>
         </div>
       </div>
       <div
         class="content"
-        v-html="message.content"/>
+        v-html="message.content"
+      />
       {{ message.hasAttachFiles }}
       TODO label attachments
     </template>

@@ -1,17 +1,15 @@
 <template>
   <div>
-    <DashboardNewsWidget/>
+    <DashboardNewsWidget />
   </div>
 </template>
 
 <script>
-import NeroButton from '@/components/NeroButton'
 import DashboardNewsWidget from '@/components/DashboardNewsWidget'
 
 export default {
   name: 'Dashboard',
   components: {
-    NeroButton,
     DashboardNewsWidget
   }
 }

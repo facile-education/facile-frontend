@@ -1,12 +1,14 @@
 <template>
   <div
-    class="dropdown">
+    class="dropdown"
+  >
     <button
       v-if="displayDropdown"
       class="button"
-      @click="toggleMenu">
+      @click="toggleMenu"
+    >
       {{ getDisplayValue(selectedItem) }}
-      <i class="fa fa-caret-down theme-text-color"/>
+      <i class="fa fa-caret-down theme-text-color" />
     </button>
     <NeroAutocomplete
       :list="list"
@@ -14,7 +16,8 @@
       :filtered="filtered"
       :display-autocomplete="show"
       @select="onSelect"
-      @close="onClose"/>
+      @close="onClose"
+    />
   </div>
 </template>
 

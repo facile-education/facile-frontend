@@ -3,27 +3,31 @@
     <div class="gradient">
       <i
         class="close fa fa-times"
-        @click="closeMenu"/>
+        @click="closeMenu"
+      />
       <i
         class="logout fa fa-power-off"
-        @click="closeMenu"/>
+        @click="closeMenu"
+      />
     </div>
     <div class="dark">
       <img
         class="picture"
         src="../assets/logo.png"
-        @click="openPreferences">
+        @click="openPreferences"
+      >
 
       <div class="wrapper">
-        <router-link
+        <RouterLink
           v-for="entry in menu"
           :key="entry.route"
           :to="entry.route"
           class="entry"
-          @click.native="closeMenu">
-          <i :class="entry.icon"/>
-          <span v-t="'SideMenu.entry.' + entry.key"/>
-        </router-link>
+          @click.native="closeMenu"
+        >
+          <i :class="entry.icon" />
+          <span v-t="'SideMenu.entry.' + entry.key" />
+        </RouterLink>
       </div>
     </div>
   </div>

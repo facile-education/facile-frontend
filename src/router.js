@@ -51,7 +51,7 @@ var getRouteEntry = (entry) => {
     return {
       path: entry.route,
       name: i18n.getLocaleMessage('fr').SideMenu.entry[entry.key],
-      meta: {title: i18n.getLocaleMessage('fr').SideMenu.entry[entry.key]},
+      meta: { title: i18n.getLocaleMessage('fr').SideMenu.entry[entry.key] },
       component: () => import('@/views/' + entry.component + '.vue')
     }
   }

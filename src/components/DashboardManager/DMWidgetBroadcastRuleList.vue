@@ -1,21 +1,24 @@
 <template>
   <div class="widget-broadcast">
-    <h5 v-t="'DashboardManager.DMWidgetEditionModal.broadcastRulesTitle'"/>
+    <h5 v-t="'DashboardManager.DMWidgetEditionModal.broadcastRulesTitle'" />
 
     <DMWidgetBroadcastRoleItem
       v-for="role in mainRoleList"
       :key="role.roleId"
       :is-broadcasted.sync="role.isBroadcasted"
       :is-mandatory.sync="role.isMandatory"
-      :label="role.roleLabel"/>
+      :label="role.roleLabel"
+    />
 
     <div
       class="personal-header"
-      @click="togglePersonalPanel()">
+      @click="togglePersonalPanel()"
+    >
       <p class="personal-label">
         <i
           :class="{'fa fa-caret-down': isPersonnalPanelDisplayed, 'fa fa-caret-right': !isPersonnalPanelDisplayed}"
-          class="theme-text-color"/>
+          class="theme-text-color"
+        />
         {{ $t('DashboardManager.DMWidgetEditionModal.personalLabel') }}
       </p>
 
@@ -23,11 +26,13 @@
         :value="isBroadcastedToAllPersonal"
         :class="{'partial': isAllPersonalTogglePartial}"
         class="toggle"
-        @input="toggleBroadcastForPersonalRoleList"/>
+        @input="toggleBroadcastForPersonalRoleList"
+      />
 
       <label
         v-if="isCountDisplayed"
-        class="counter">
+        class="counter"
+      >
         {{ personalBroadcastCount }}
       </label>
     </div>
@@ -38,7 +43,8 @@
         :key="personalRole.roleId"
         :is-broadcasted.sync="personalRole.isBroadcasted"
         :is-mandatory.sync="personalRole.isMandatory"
-        :label="personalRole.roleLabel"/>
+        :label="personalRole.roleLabel"
+      />
     </div>
   </div>
 </template>

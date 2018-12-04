@@ -2,13 +2,15 @@
   <NeroToolbar>
     <NeroButton
       icon="fa fa-plus"
-      @click="onAddWidget"/>
+      @click="onAddWidget"
+    />
     <NeroDropdown
       v-if="managedSchoolList"
       :list="managedSchoolList"
       display-field="schoolName"
-      @dropdown-select="onSchoolSelect"/>
-    <NeroSpinner v-else/>
+      @dropdown-select="onSchoolSelect"
+    />
+    <NeroSpinner v-else />
   </NeroToolbar>
 </template>
 
@@ -39,7 +41,7 @@ export default {
   methods: {
     onAddWidget () {
       // TODO widget
-      this.$store.dispatch('dashboardManager/openEditionModal', {config: {schools: []}})
+      this.$store.dispatch('dashboardManager/openEditionModal', { config: { schools: [] } })
     },
     onSchoolSelect (school) {
       this.$store.dispatch('dashboardManager/getSchoolWidgetList', school)

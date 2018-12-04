@@ -1,23 +1,32 @@
 <template>
   <NeroToolbar>
     <NeroButton
-      icon="fa fa-bars"/>
+      icon="fa fa-bars"
+    />
     <NeroButton
-      icon="fa fa-sync-alt"/>
+      icon="fa fa-sync-alt"
+    />
     <NeroButton
-      icon="fa fa-edit"/>
+      icon="fa fa-edit"
+    />
     <NeroButton
-      icon="fa fa-angle-double-left"/>
+      icon="fa fa-angle-double-left"
+    />
     <NeroButton
-      icon="fa fa-angle-left"/>
+      icon="fa fa-angle-left"
+    />
     <NeroButton
-      icon="fa fa-angle-right"/>
+      icon="fa fa-angle-right"
+    />
     <NeroButton
-      icon="fa fa-trash"/>
+      icon="fa fa-trash"
+    />
     <NeroButton
-      icon="fa fa-print"/>
+      icon="fa fa-print"
+    />
     <NeroButton
-      icon="fa fa-cog"/>
+      icon="fa fa-cog"
+    />
   </NeroToolbar>
 </template>
 

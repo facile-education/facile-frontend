@@ -8,7 +8,8 @@
     class="input"
     @input="$emit('input', $event.target.value)"
     @focus="$emit('focus')"
-    @blur="$emit('blur')">
+    @blur="$emit('blur')"
+  >
 </template>
 
 <script>

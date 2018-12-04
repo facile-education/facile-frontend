@@ -1,14 +1,17 @@
 <template>
   <div class="nero-checkbox ">
-    <label class="container">{{ label }}
+    <label class="container">
+      {{ label }}
       <input
         :checked="value"
         type="checkbox"
         class="checkbox"
-        @input="onInput">
+        @input="onInput"
+      >
       <span
         :class="{'theme-background-color': value, 'uncheck': !value}"
-        class="checkmark"/>
+        class="checkmark"
+      />
     </label>
   </div>
 </template>

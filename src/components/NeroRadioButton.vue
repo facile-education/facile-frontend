@@ -1,15 +1,18 @@
 <template>
   <div class="nero-radio">
-    <label class="container">{{ label }}
+    <label class="container">
+      {{ label }}
       <input
         v-model="internalValue"
         :name="name"
         :value="rbValue"
-        type="radio">
+        type="radio"
+      >
       <span
         :checked="value"
         :class="{'theme-background-color': checked, 'uncheck': !checked}"
-        class="checkmark"/>
+        class="checkmark"
+      />
     </label>
   </div>
 </template>

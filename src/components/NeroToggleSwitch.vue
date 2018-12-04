@@ -3,8 +3,9 @@
     <input
       :checked="value"
       type="checkbox"
-      @input="onInput">
-    <span class="slider round"/>
+      @input="onInput"
+    >
+    <span class="slider round" />
   </label>
 </template>
 

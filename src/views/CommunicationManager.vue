@@ -1,9 +1,9 @@
 <template>
   <div class="service-container">
-    <CMToolbar/>
+    <CMToolbar />
     <div class="service-body">
-      <CMInternalRights/>
-      <CMExternalRights/>
+      <CMInternalRights />
+      <CMExternalRights />
     </div>
   </div>
 </template>

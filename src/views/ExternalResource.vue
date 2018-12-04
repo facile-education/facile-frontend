@@ -3,18 +3,21 @@
     <div v-if="serviceSchoolUrls.length == 0">
       <img
         class="icon"
-        src="../assets/images/ExternalResource/icon-external-service.png">
-      <h3 v-t="{path: 'ExternalResource.noConfigLabel', args: {resourceName:serviceName}}"/>
-      <i18n
+        src="../assets/images/ExternalResource/icon-external-service.png"
+      >
+      <h3 v-t="{path: 'ExternalResource.noConfigLabel', args: {resourceName:serviceName}}" />
+      <I18n
         path="ExternalResource.contactLabel"
         tag="p"
-        class="content">
+        class="content"
+      >
         <a
           v-t="'ExternalResource.clickHereLabel'"
           place="link"
           class="link"
-          @click="onClickShowIncidents()"/>
-      </i18n>
+          @click="onClickShowIncidents()"
+        />
+      </I18n>
     </div>
 
     <div v-else>
@@ -38,40 +41,46 @@
       <div v-if="!isHttps">
         <img
           class="icon"
-          src="../assets/images/ExternalResource/icon-external-service.png">
-        <h3 v-html="$t('ExternalResource.newTabLabel', {resourceName: serviceName})"/>
-        <i18n
+          src="../assets/images/ExternalResource/icon-external-service.png"
+        >
+        <h3 v-html="$t('ExternalResource.newTabLabel', {resourceName: serviceName})" />
+        <I18n
           path="ExternalResource.openAgainLabel"
           tag="p"
-          class="description">
+          class="description"
+        >
           <a
             v-t="'ExternalResource.clickHereLabel'"
             place="link"
             class="link"
-            @click="openInNewTab"/>
-        </i18n>
-        <div class="nero-separator"/>
+            @click="openInNewTab"
+          />
+        </I18n>
+        <div class="nero-separator" />
         <p
           class="content"
-          v-html="$t('ExternalResource.popupIssueLabel')"/>
+          v-html="$t('ExternalResource.popupIssueLabel')"
+        />
       </div>
 
       <div v-else>
-        <i18n
+        <I18n
           path="ExternalResource.openInTabLabel"
           tag="p"
-          class="description">
+          class="description"
+        >
           <a
             v-t="'ExternalResource.clickHereLabel'"
             place="link"
             class="link"
-            @click="openInNewTab"/>
-        </i18n>
+            @click="openInNewTab"
+          />
+        </I18n>
         <iframe
           :src="selectedUrl"
-          class="frame"/>
+          class="frame"
+        />
       </div>
-
     </div>
   </div>
 </template>

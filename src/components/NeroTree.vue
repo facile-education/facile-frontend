@@ -1,9 +1,9 @@
 <template>
   <ul class="tree">
     <NeroTreeItem
-      v-for="(model, index) in model.children"
+      v-for="(subModel, index) in model.children"
       :key="index"
-      :model="model"
+      :model="subModel"
       :folders-only="foldersOnly"
       class="item"
     />

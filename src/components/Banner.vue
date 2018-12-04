@@ -3,11 +3,12 @@
     <BannerItem
       v-if="$device.phone"
       icon="fa fa-bars"
-      @click="onShowMobileMenu"/>
-    <BannerSearch/>
+      @click="onShowMobileMenu"
+    />
+    <BannerSearch />
     <div class="right-section">
-      <BannerServices/>
-      <BannerUserProfile v-if="!$device.phone"/>
+      <BannerServices />
+      <BannerUserProfile v-if="!$device.phone" />
     </div>
   </nav>
 </template>

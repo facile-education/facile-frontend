@@ -2,13 +2,16 @@
   <div>
     <div
       class="account-label"
-      @click="selectAccount">
+      @click="selectAccount"
+    >
       <div
         class="caret"
-        @click="toggleBoxListDiplay">
+        @click="toggleBoxListDiplay"
+      >
         <i
           :class="{'fa-caret-down': showBoxList, 'fa-caret-right': !showBoxList}"
-          class="fa"/>
+          class="fa"
+        />
       </div>
       <span>{{ box.emailAddress }}</span>
     </div>

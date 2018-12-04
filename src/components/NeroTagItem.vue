@@ -3,7 +3,8 @@
     {{ tag }}
     <i
       class="fa fa-times"
-      @click="onRemove"/>
+      @click="onRemove"
+    />
   </li>
 </template>
 

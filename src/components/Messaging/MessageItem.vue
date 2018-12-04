@@ -2,17 +2,20 @@
   <div
     :class="classes"
     class="message"
-    @click="selectMessage">
+    @click="selectMessage"
+  >
     <div class="icons">
       <div>
         <i
           v-if="message.isNew"
-          class="theme-text-color fa fa-circle"/>
+          class="theme-text-color fa fa-circle"
+        />
       </div>
       <div>
         <i
           v-if="message.hasAttachFiles"
-          class="fa fa-paperclip"/>
+          class="fa fa-paperclip"
+        />
       </div>
     </div>
     <div class="informations">

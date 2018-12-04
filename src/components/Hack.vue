@@ -1,16 +1,32 @@
 <template>
   <div class="hack">
     <div>
-      <a @click="setAdministrator">Administrator</a>|
-      <a @click="setLocalAdmin">Local admin</a>|
-      <a @click="setENTAdmin">ENT admin</a>|
-      <a @click="setUser">None</a>
+      <a @click="setAdministrator">
+        Administrator
+      </a>|
+      <a @click="setLocalAdmin">
+        Local admin
+      </a>|
+      <a @click="setENTAdmin">
+        ENT admin
+      </a>|
+      <a @click="setUser">
+        None
+      </a>
     </div>
     <div>
-      <a @click="setStudentRole">Student</a>|
-      <a @click="setTeacherRole">Teacher</a>|
-      <a @click="setPersonnelRole">Personnel</a>|
-      <a @click="setParentRole">Parent</a>
+      <a @click="setStudentRole">
+        Student
+      </a>|
+      <a @click="setTeacherRole">
+        Teacher
+      </a>|
+      <a @click="setPersonnelRole">
+        Personnel
+      </a>|
+      <a @click="setParentRole">
+        Parent
+      </a>
     </div>
   </div>
 </template>
@@ -20,28 +36,28 @@ export default {
   name: 'Hack',
   methods: {
     setAdministrator () {
-      this.$store.dispatch('hack', {isAdministrator: true})
+      this.$store.dispatch('hack', { isAdministrator: true })
     },
     setLocalAdmin () {
-      this.$store.dispatch('hack', {isLocalAdmin: true})
+      this.$store.dispatch('hack', { isLocalAdmin: true })
     },
     setENTAdmin () {
-      this.$store.dispatch('hack', {isENTAdmin: true})
+      this.$store.dispatch('hack', { isENTAdmin: true })
     },
     setUser () {
-      this.$store.dispatch('hack', {isUser: true})
+      this.$store.dispatch('hack', { isUser: true })
     },
     setStudentRole () {
-      this.$store.dispatch('hack', {isStudent: true})
+      this.$store.dispatch('hack', { isStudent: true })
     },
     setTeacherRole () {
-      this.$store.dispatch('hack', {isTeacher: true})
+      this.$store.dispatch('hack', { isTeacher: true })
     },
     setPersonnelRole () {
-      this.$store.dispatch('hack', {isPersonnel: true})
+      this.$store.dispatch('hack', { isPersonnel: true })
     },
     setParentRole () {
-      this.$store.dispatch('hack', {isParent: true})
+      this.$store.dispatch('hack', { isParent: true })
     }
   }
 }

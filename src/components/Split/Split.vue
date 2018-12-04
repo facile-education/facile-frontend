@@ -1,6 +1,6 @@
 <template>
   <div class="split">
-    <slot/>
+    <slot />
   </div>
 </template>
 

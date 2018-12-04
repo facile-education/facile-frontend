@@ -5,7 +5,7 @@
         Translate News title + actions buttons
       </div>
       <div class="body">
-        <NewsList/>
+        <NewsList />
       </div>
     </DashboardWidget>
   </div>

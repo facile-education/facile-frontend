@@ -3,13 +3,15 @@
     <NeroButton
       v-if="isAdministrator"
       icon="fa fa-plus"
-      @click="onAddApplication"/>
+      @click="onAddApplication"
+    />
     <NeroDropdown
       v-if="schools"
       :list="schools"
       display-field="schoolName"
-      @dropdown-select="onSchoolSelect"/>
-    <NeroSpinner v-else/>
+      @dropdown-select="onSchoolSelect"
+    />
+    <NeroSpinner v-else />
   </NeroToolbar>
 </template>
 

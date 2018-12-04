@@ -1,18 +1,19 @@
 <template>
   <div
-    class="spinner">
-    <div class="bar1 theme-background-color"/>
-    <div class="bar2 theme-background-color"/>
-    <div class="bar3 theme-background-color"/>
-    <div class="bar4 theme-background-color"/>
-    <div class="bar5 theme-background-color"/>
-    <div class="bar6 theme-background-color"/>
-    <div class="bar7 theme-background-color"/>
-    <div class="bar8 theme-background-color"/>
-    <div class="bar9 theme-background-color"/>
-    <div class="bar10 theme-background-color"/>
-    <div class="bar11 theme-background-color"/>
-    <div class="bar12 theme-background-color"/>
+    class="spinner"
+  >
+    <div class="bar1 theme-background-color" />
+    <div class="bar2 theme-background-color" />
+    <div class="bar3 theme-background-color" />
+    <div class="bar4 theme-background-color" />
+    <div class="bar5 theme-background-color" />
+    <div class="bar6 theme-background-color" />
+    <div class="bar7 theme-background-color" />
+    <div class="bar8 theme-background-color" />
+    <div class="bar9 theme-background-color" />
+    <div class="bar10 theme-background-color" />
+    <div class="bar11 theme-background-color" />
+    <div class="bar12 theme-background-color" />
   </div>
 </template>
 

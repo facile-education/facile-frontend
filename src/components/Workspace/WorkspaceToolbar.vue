@@ -2,22 +2,29 @@
   <NeroToolbar>
     <NeroButton
       icon="fa fa-plus"
-      label="Creation Dropdown"/>
+      label="Creation Dropdown"
+    />
     <NeroButton
-      icon="fa fa-plus-square"/>
+      icon="fa fa-plus-square"
+    />
     <NeroButton
       icon="fa fa-edit"
-      label="Edit Dropdown"/>
+      label="Edit Dropdown"
+    />
     <NeroButton
       icon="fa fa-image"
-      label="View Dropdown"/>
+      label="View Dropdown"
+    />
     <NeroButton
-      icon="fa fa-envelope"/>
+      icon="fa fa-envelope"
+    />
     <NeroButton
       icon="fa fa-sort"
-      label="Sort Dropdown"/>
+      label="Sort Dropdown"
+    />
     <NeroButton
-      icon="fa fa-sync-alt"/>
+      icon="fa fa-sync-alt"
+    />
   </NeroToolbar>
 </template>
 

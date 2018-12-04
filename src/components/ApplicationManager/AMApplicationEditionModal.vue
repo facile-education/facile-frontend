@@ -1,29 +1,35 @@
 <template>
   <NeroWindow
     :modal="true"
-    @close="closeModal">
+    @close="closeModal"
+  >
     <span
+      slot="header"
       v-t="title"
-      slot="header"/>
+    />
 
     <div slot="body">
       <div
         class="logo-panel"
-        @click="openImagePicker">
+        @click="openImagePicker"
+      >
         <NeroButton
           v-if="application.image"
           type="circle"
           icon="fa fa-times"
           class="remove-logo"
-          @click="removeLogo"/>
+          @click="removeLogo"
+        />
 
         <img
           v-if="application.image"
           :src="application.image"
-          class="logo">
+          class="logo"
+        >
         <i
           v-else
-          class="logo-fallback fa fa-plus"/>
+          class="logo-fallback fa fa-plus"
+        />
       </div>
 
       <div class="informations">
@@ -33,14 +39,16 @@
           :maxlength="75"
           cls="form"
           type="text"
-          autofocus/>
+          autofocus
+        />
 
         <NeroInput
           v-model="application.serviceKey"
           :placeholder="$t('ApplicationManager.AMApplicationEditionModal.keyPlaceholder') + '*'"
           :maxlength="75"
           cls="form"
-          type="text"/>
+          type="text"
+        />
 
         <div class="input-completion">
           <NeroInput
@@ -50,37 +58,41 @@
             :max-lenght="75"
             cls="form"
             type="text"
-            @focus="toggleCompletion"/>
+            @focus="toggleCompletion"
+          />
           <NeroAutocomplete
             :list="categoryList"
             :display-autocomplete="displayCategoryCompletion"
             :input="application.serviceCategory"
             @select="selectCategory"
-            @close="toggleCompletion"/>
+            @close="toggleCompletion"
+          />
         </div>
       </div>
 
       <div class="broadcast">
         <div>
-          <p v-t="'ApplicationManager.AMApplicationEditionModal.schoolsTitle'"/>
+          <p v-t="'ApplicationManager.AMApplicationEditionModal.schoolsTitle'" />
           <NeroTagsInput
             v-if="schoolList"
             v-model="application.etabFilters"
             :placeholder="$t('ApplicationManager.AMApplicationEditionModal.schoolsPlaceholder')"
             :list="schoolList"
             display-field="schoolName"
-            cls="form"/>
+            cls="form"
+          />
         </div>
 
         <div>
-          <p v-t="'ApplicationManager.AMApplicationEditionModal.rolesTitle'"/>
+          <p v-t="'ApplicationManager.AMApplicationEditionModal.rolesTitle'" />
           <NeroTagsInput
             v-if="roleList"
             v-model="application.roleList"
             :placeholder="$t('ApplicationManager.AMApplicationEditionModal.rolesPlaceholder')"
             :list="roleList"
             display-field="displayText"
-            cls="form"/>
+            cls="form"
+          />
         </div>
 
         <div class="default-portlet">
@@ -88,7 +100,8 @@
             v-if="portletList"
             :list="portletList"
             display-field="name"
-            @dropdown-select="onPortletSelect"/>
+            @dropdown-select="onPortletSelect"
+          />
         </div>
 
         <div class="urls">
@@ -96,42 +109,49 @@
           <NeroRadioButton
             :label="$t('ApplicationManager.AMApplicationEditionModal.globalUrlCombobox')"
             name="url"
-            class="radio"/>
+            class="radio"
+          />
 
           <NeroRadioButton
             :label="$t('ApplicationManager.AMApplicationEditionModal.customUrlCombobox')"
             name="url"
-            class="radio"/>
+            class="radio"
+          />
 
           <NeroInput
             :placeholder="$t('ApplicationManager.AMApplicationEditionModal.globalUrlPlaceholder')"
             cls="form"
-            type="text"/>
+            type="text"
+          />
         </div>
 
         <div class="exports">
-          <p v-t="'ApplicationManager.AMApplicationEditionModal.exportTitle'"/>
+          <p v-t="'ApplicationManager.AMApplicationEditionModal.exportTitle'" />
           <NeroCheckbox
             v-model="application.exportParent"
             :label="$t('ApplicationManager.AMApplicationEditionModal.exportParentsCheckbox')"
-            class="export"/>
+            class="export"
+          />
 
           <NeroCheckbox
             v-model="application.exportStudent"
             :label="$t('ApplicationManager.AMApplicationEditionModal.exportStudentsCheckbox')"
-            class="export"/>
+            class="export"
+          />
 
           <NeroCheckbox
             v-model="application.exportTeacher"
             :label="$t('ApplicationManager.AMApplicationEditionModal.exportTeachersCheckbox')"
-            class="export"/>
+            class="export"
+          />
         </div>
       </div>
     </div>
     <NeroButton
       slot="footer"
       :label="$t('ApplicationManager.AMApplicationEditionModal.modalSaveButton')"
-      @click="save"/>
+      @click="save"
+    />
   </NeroWindow>
 </template>
 

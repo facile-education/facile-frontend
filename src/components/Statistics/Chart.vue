@@ -1,5 +1,5 @@
 <template>
-  <canvas id="planet-chart"/>
+  <canvas id="planet-chart" />
 </template>
 
 <script>

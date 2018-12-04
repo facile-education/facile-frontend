@@ -1,18 +1,22 @@
 <template>
   <div>
-    <label class="label">{{ label }}</label>
+    <label class="label">
+      {{ label }}
+    </label>
 
     <NeroToggleSwitch
       :value="isBroadcasted"
       class="toggle"
-      @input="onInputBroadcast"/>
+      @input="onInputBroadcast"
+    />
 
     <NeroCheckbox
       v-if="isAdministrator"
       :value="isMandatory"
       :label="$t('DashboardManager.DMWidgetBroadcastRoleItem.mandatoryCheckboxLabel')"
       class="mandatory"
-      @input="onInputMandatory"/>
+      @input="onInputMandatory"
+    />
   </div>
 </template>
 

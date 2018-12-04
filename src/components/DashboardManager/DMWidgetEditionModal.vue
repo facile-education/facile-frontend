@@ -1,34 +1,40 @@
 <template>
   <NeroWindow
     :modal="true"
-    @close="closeModal">
+    @close="closeModal"
+  >
     <span
+      slot="header"
       v-t="title"
-      slot="header"/>
+    />
 
     <div
       slot="body"
-      class="nero-form">
-
+      class="nero-form"
+    >
       <div class="widget-informations">
         <h5
+          v-if="isCreation"
           v-t="'DashboardManager.DMWidgetEditionModal.typeDropdownLabel'"
-          v-if="isCreation"/>
+        />
         <NeroDropdown
           v-if="isCreation"
           :list="typeList"
           class="type-dropdown"
-          @dropdown-select="onTypeSelect"/>
+          @dropdown-select="onTypeSelect"
+        />
         <!-- TODO width dropdown 100% -->
         <div
           :class="{'inline': isCreation}"
-          class="widget-name">
+          class="widget-name"
+        >
           <NeroInput
             v-model="widget.name"
             :placeholder="$t('DashboardManager.DMWidgetEditionModal.namePlaceholder') + '*'"
             :maxlength="75"
             cls="form"
-            type="text"/>
+            type="text"
+          />
         </div>
       </div>
 
@@ -41,38 +47,41 @@
 
       <DMWidgetBroadcastRuleList
         v-if="widget.config && widget.config.roles"
-        :role-list="widget.config.roles"/>
+        :role-list="widget.config.roles"
+      />
 
       <hr class="nero-separator">
 
       <div v-if="showSchooltagsInput">
-        <h5 v-t="'DashboardManager.DMWidgetEditionModal.targetedSchoolsTitle'"/>
+        <h5 v-t="'DashboardManager.DMWidgetEditionModal.targetedSchoolsTitle'" />
 
         <NeroTagsInput
           v-model="widget.config.schools"
           :placeholder="$t('DashboardManager.DMWidgetEditionModal.schoolsPlaceholder')"
           :list="managedSchoolList"
           display-field="schoolName"
-          cls="form"/>
+          cls="form"
+        />
       </div>
       <div>
         <h5
           class="date-title"
-          @click="toggleDatesPanel()">
-          <i :class="{'fa fa-caret-down': isDateDisplayed, 'fa fa-caret-right': !isDateDisplayed}"/>
+          @click="toggleDatesPanel()"
+        >
+          <i :class="{'fa fa-caret-down': isDateDisplayed, 'fa fa-caret-right': !isDateDisplayed}" />
           {{ $t('DashboardManager.DMWidgetEditionModal.broadcastDatesTitle') }}
         </h5>
         <div
           v-if="isDateDisplayed"
-          class="widget-date">
-
+          class="widget-date"
+        >
           <div class="parution-date-widget">
-            <label v-t="'DashboardManager.DMWidgetEditionModal.parutionDateLabel'"/>
+            <label v-t="'DashboardManager.DMWidgetEditionModal.parutionDateLabel'" />
             TODO date picker
           </div>
 
           <div class="expiration-date-widget">
-            <label v-t="'DashboardManager.DMWidgetEditionModal.expirationDateLabel'"/>
+            <label v-t="'DashboardManager.DMWidgetEditionModal.expirationDateLabel'" />
             TODO date picker min date : widget.parutionDate
           </div>
         </div>
@@ -82,7 +91,8 @@
     <NeroButton
       slot="footer"
       :label="$t('DashboardManager.DMWidgetEditionModal.saveButtonLabel')"
-      @click="save"/>
+      @click="save"
+    />
   </NeroWindow>
 </template>
 

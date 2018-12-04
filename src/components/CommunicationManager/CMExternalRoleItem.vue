@@ -2,18 +2,21 @@
   <div class="role">
     <label
       v-t="'nero.roles.' + role.roleCode"
-      class="role-label"/>
+      class="role-label"
+    />
     <NeroRadioButton
       v-model="hasRoleExternalRight"
       :name="role.roleCode"
       :label="$t('CommunicationManager.CMExternalRoleItem.yes')"
       rb-value="yes"
-      class="yes"/>
+      class="yes"
+    />
     <NeroRadioButton
       v-model="hasRoleExternalRight"
       :name="role.roleCode"
       :label="$t('CommunicationManager.CMExternalRoleItem.no')"
-      rb-value="no"/>
+      rb-value="no"
+    />
   </div>
 </template>
 
@@ -38,7 +41,7 @@ export default {
   computed: {
     hasRoleExternalRight: {
       set (newValue) {
-        this.$emit('input', {code: this.role.roleCode, value: (newValue === 'yes')})
+        this.$emit('input', { code: this.role.roleCode, value: (newValue === 'yes') })
       },
       get () {
         return this.current ? 'yes' : 'no'

@@ -3,11 +3,15 @@
     <div
       v-for="category in categories"
       :key="category"
-      class="category">
-      <h4 class="header">{{ category }}</h4>
-      <AMApplicationList :category="category"/>
+      class="category"
+    >
+      <h4 class="header">
+        {{ category }}
+      </h4>
+      <AMApplicationList :category="category" />
     </div>
-</div></template>
+  </div>
+</template>
 
 <script>
 import AMApplicationList from '@/components/ApplicationManager/AMApplicationList'

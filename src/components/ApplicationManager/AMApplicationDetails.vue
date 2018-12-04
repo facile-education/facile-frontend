@@ -2,11 +2,13 @@
   <div>
     <div
       v-click-outside="closeDetails"
-      class="details">
+      class="details"
+    >
       <div class="main">
         <img
           :src="application.image"
-          class="logo">
+          class="logo"
+        >
 
         <div class="name">
           <h5>
@@ -16,46 +18,54 @@
             v-if="application.hasCustomUrl"
             :model="application.serviceUrl"
             :placeholder="$t('ApplicationManager.AMApplicationDetails.customUrlPlaceholder')"
-            type="url">
+            type="url"
+          >
         </div>
       </div>
 
       <div class="broadcast">
         <p
+          v-if="application.isAvailable"
           v-t="'ApplicationManager.AMApplicationDetails.broadcastLabel'"
-          v-if="application.isAvailable"/>
+        />
         <p
+          v-else
           v-t="'ApplicationManager.AMApplicationDetails.noBroadcastLabel'"
-          v-else/>
+        />
         <ul
           v-if="application.isAvailable"
-          class="list-rules">
+          class="list-rules"
+        >
           <li
             v-for="(rule, index) in application.rules"
-            :key="index">
-            <i class="fa fa-circle"/>
+            :key="index"
+          >
+            <i class="fa fa-circle" />
             <p> {{ rule }}</p>
           </li>
         </ul>
       </div>
 
       <div v-if="hasExport">
-        <p v-t="'ApplicationManager.AMApplicationDetails.exportLabel'"/>
+        <p v-t="'ApplicationManager.AMApplicationDetails.exportLabel'" />
         <div class="app-export-buttons">
           <NeroButton
             v-if="application.exportStudent"
             :label="$t('ApplicationManager.AMApplicationDetails.parentsExportButton')"
-            @click="exportUserList('parent')"/>
+            @click="exportUserList('parent')"
+          />
 
           <NeroButton
             v-if="application.exportStudent"
             :label="$t('ApplicationManager.AMApplicationDetails.studentsExportButton')"
-            @click="exportUserList('eleve')"/>
+            @click="exportUserList('eleve')"
+          />
 
           <NeroButton
             v-if="application.exportTeacher"
             :label="$t('ApplicationManager.AMApplicationDetails.teachersExportButton')"
-            @click="exportUserList('prof')"/>
+            @click="exportUserList('prof')"
+          />
         </div>
       </div>
 
@@ -63,38 +73,45 @@
         :title="$t('ApplicationManager.AMApplicationDetails.closeButtonTooltip')"
         type="circle"
         icon="fa fa-times"
-        @click="closeDetails"/>
+        @click="closeDetails"
+      />
       <NeroButton
         :title="$t('ApplicationManager.AMApplicationDetails.broadcastButtonTooltip')"
         type="circle"
-        icon="fa fa-wifi"/>
+        icon="fa fa-wifi"
+      />
       <NeroButton
         v-if="isAdministrator"
         :title="$t('ApplicationManager.AMApplicationDetails.editButtonTooltip')"
         type="circle"
         icon="fa fa-pencil-alt"
-        @click="toggleEditionModal"/>
+        @click="toggleEditionModal"
+      />
       <NeroButton
         :title="$t('ApplicationManager.AMApplicationDetails.configurationButtonTooltip')"
         type="circle"
         icon="fa fa-cog"
-        @click="toggleBroadcastModal"/>
+        @click="toggleBroadcastModal"
+      />
       <NeroButton
         v-if="application.hasCustomUrl"
         :title="$t('ApplicationManager.AMApplicationDetails.guideButtonTooltip')"
         type="circle"
-        icon="fa fa-book"/>
+        icon="fa fa-book"
+      />
       <NeroButton
         v-if="application.hasCustomUrl"
         :title="$t('ApplicationManager.AMApplicationDetails.saveButtonTooltip')"
         type="circle"
-        icon="fa fa-save"/>
+        icon="fa fa-save"
+      />
       <NeroButton
         v-if="isAdministrator"
         :title="$t('ApplicationManager.AMApplicationDetails.deleteButtonTooltip')"
         type="circle"
         cls="cancel"
-        icon="fa fa-trash"/>
+        icon="fa fa-trash"
+      />
     </div>
   </div>
 </template>

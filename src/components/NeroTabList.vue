@@ -6,13 +6,14 @@
         :key="index"
         :class="{'active theme-text-color': tab.active}"
         class="tab theme-hover-text-color"
-        @click="selectTab(index)">
+        @click="selectTab(index)"
+      >
         <div>
           {{ tab.title }}
         </div>
       </li>
     </ul>
-    <slot/>
+    <slot />
   </div>
 </template>
 

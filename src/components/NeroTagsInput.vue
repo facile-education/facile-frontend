@@ -3,13 +3,15 @@
     <div
       :class="cls"
       class="tags-input"
-      @click="onFocus">
+      @click="onFocus"
+    >
       <ul class="tag-list">
         <NeroTagItem
           v-for="(tag, index) in value"
           :key="index"
           :tag="getDisplayValue(tag)"
-          @remove="removeTag"/>
+          @remove="removeTag"
+        />
       </ul>
       <input
         ref="input"
@@ -17,7 +19,8 @@
         :placeholder="placeholder"
         class="input"
         @keyup.enter="onEnter"
-        @keydown.delete="onDelete">
+        @keydown.delete="onDelete"
+      >
     </div>
     <NeroAutocomplete
       :list="filteredList"
@@ -25,7 +28,8 @@
       :display-autocomplete="displayCompletion"
       :input="inputValue"
       @select="addTag"
-      @close="hideCompletion"/>
+      @close="hideCompletion"
+    />
   </div>
 </template>
 
