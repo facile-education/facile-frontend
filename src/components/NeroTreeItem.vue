@@ -1,17 +1,24 @@
 <template>
   <li v-if="displayItem">
     <div
-      :class="{bold: isFolder}"
-      @click="toggle">
-      <i :class="classes"/>
+      :class="{folder: isFolder}"
+      @click="toggle"
+    >
+      <i
+        v-if="isFolder"
+        :class="{'rotate': isOpen}"
+        class="fa fa-caret-right"
+      />
+      <i :class="classes" />
       {{ model.name }}
     </div>
     <NeroTree
-      v-show="open"
+      v-show="isOpen"
       v-if="isFolder"
       :model="model"
       :folders-only="foldersOnly"
-      class="sub-tree"/>
+      class="sub-tree"
+    />
   </li>
 </template>
 
@@ -35,24 +42,24 @@ export default {
   },
   data () {
     return {
-      open: false
+      isOpen: false
     }
   },
   computed: {
     isFolder () {
-      return this.model.children && this.model.children.length
+      return !this.model.isLeaf || (this.model.children && this.model.children.length)
     },
     displayItem () {
       return (!this.foldersOnly || this.isFolder)
     },
     classes () {
-      return !this.isFolder ? 'fa fa-file' : this.open ? 'fa fa-folder-open' : 'fa fa-folder'
+      return !this.isFolder ? 'fa fa-file' : this.isOpen ? 'fa fa-folder-open' : 'fa fa-folder'
     }
   },
   methods: {
     toggle: function () {
       if (this.isFolder) {
-        this.open = !this.open
+        this.isOpen = !this.isOpen
       }
     }
   }
@@ -60,8 +67,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.bold {
-  color: goldenrod
+.fa-folder, .fa-folder-open {
+  color: goldenrod;
+}
+
+.fa-caret-right.rotate {
+  transform: rotate(45deg);
 }
 
 .sub-tree {

@@ -1,6 +1,6 @@
 <template>
   <div class="toolbar">
-    <slot/>
+    <slot />
   </div>
 </template>
 
@@ -17,6 +17,8 @@ export default {
   background-color: $toolbar-background-color;
   padding: 5px;
   position: relative;
+  /* white-space: nowrap;
+  overflow-x: auto; */
   z-index: $service-toolbar-z-index;
   @extend %nero-shadow;
 }
