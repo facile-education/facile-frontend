@@ -1,24 +1,36 @@
 <template>
-  <div>
-    <WorkspaceToolbar/>
-    <div class="workspace-body">
-      <FolderTree class="body-height"/>
-      <FolderContentList class="body-height"/>
-    </div>
-  </div>
+  <Split>
+    <SplitArea
+      :size="25"
+      :min-size="150"
+    >
+      <WorkspaceLeftPanel class="body-height" />
+    </SplitArea>
+    <SplitArea
+      :size="75"
+      class="body-height"
+    >
+      <WorkspaceToolbar />
+      <FolderContentList />
+    </SplitArea>
+  </Split>
 </template>
 
 <script>
 import WorkspaceToolbar from '@/components/Workspace/WorkspaceToolbar'
-import FolderTree from '@/components/Workspace/FolderTree'
+import WorkspaceLeftPanel from '@/components/Workspace/WorkspaceLeftPanel'
 import FolderContentList from '@/components/Workspace/FolderContentList'
+import Split from '@/components/Split/Split'
+import SplitArea from '@/components/Split/SplitArea'
 
 export default {
   name: 'Workspace',
   components: {
     WorkspaceToolbar,
-    FolderTree,
-    FolderContentList
+    WorkspaceLeftPanel,
+    FolderContentList,
+    Split,
+    SplitArea
   }
 }
 </script>
@@ -26,13 +38,8 @@ export default {
 <style lang="scss" scoped>
 @import 'src/assets/css/constants';
 
-.workspace-body {
-  display: flex;
-  height: $body-height-toolbar;
-}
-
 .body-height {
-  height: $body-height-toolbar;
-  overflow-y: auto;
+  height: 100%;
+  width: 100%;
 }
 </style>

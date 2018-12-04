@@ -1,10 +1,18 @@
 <template>
-  <div>
-    <div
-      v-for="entry in contentList"
-      :key="entry.id">
-      <FolderContentItem :entry="entry"/>
-    </div>
+  <div class="content">
+    <table>
+      <tr>
+        <th>Nom (TODO)</th>
+        <th>Taille</th>
+        <th>Date</th>
+        <th>Type</th>
+      </tr>
+      <FolderContentItem
+        v-for="entry in contentList"
+        :key="entry.id"
+        :entry="entry"
+      />
+    </table>
   </div>
 </template>
 
@@ -30,5 +38,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+/* TODO handle height - toolbar */
+.content {
+  height: calc(100% - 37px);
+  overflow: auto;
+}
 </style>

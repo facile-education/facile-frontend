@@ -5,13 +5,12 @@
       :key="index"
       :model="model"
       :folders-only="foldersOnly"
-      class="item"/>
+      class="item"
+    />
   </ul>
 </template>
 
 <script>
-// import NeroTreeItem from '@/components/NeroTreeItem'
-
 export default {
   name: 'NeroTree',
   components: {
