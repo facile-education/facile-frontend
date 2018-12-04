@@ -205,6 +205,35 @@
   "NeroAutocomplete": {
     "filterPlaceholder": "Filtre"
   },
+  "SchoolLifeManager": {
+    "SLMAafInformations": {
+      "aafLabel": "Vous avez choisi AAF comme source de données pour l'alimentation de votre ENT. Un rapport vous sera envoyé quotidiennement, dans la messagerie de l'ENT, pour vous notifier de tout mouvement d'élève, d'enseignant ou de personnel au sein de l'ENT."
+    },
+    "SLMEdtInformations": {
+      "agendaCheckbox": "Synchroniser les ressources Agenda de type salles de cours",
+      "edtLabel": "Les groupes de l’ENT (classes et groupes) sont alimentés à partir de votre EDT.",
+      "filtersLabel": "Filtres pour la synchronisation du cahier de texte",
+      "groupsCheckbox": "Synchroniser le peuplement des classes et des groupes (structure de votre établissement)",
+      "lastReceivedLabel": "Dernières données de vie scolaire reçues : ",
+      "lastDoneLabel": "Dernière synchronisation réalisée : ",
+      "noDataLabel": "aucune donnée reçue à ce jour",
+      "noSynchronizationLabel": "aucune synchronisation réalisée à ce jour",
+      "notebookCheckbox": "Synchroniser le cahier de texte",
+      "pronoteInfoLabel": "Dans Pronote, réalisez un export de vos données vers l'ENT de la façon suivante:</br>- Cliquez sur Fichier -> Socles ENT -> Export manuel de l'emploi du temps</br- Sélectionnez le socle ENT 'Pentila'</br>- Cochez 'Vers URL'</br>- Cliquez sur 'Exporter'.",
+      "synchronizeButton": "Lancer la synchronisation"
+    },
+    "SLMSynchronization": {
+      "title": "Synchronisation des données de l'ENT"
+    },
+    "SLMWizard": {
+      "aafRadioButton": "AAF - Les affectations des usagers dans les groupes de l'ENT seront automatisées à partir des données de vos bases STSWEB et Siècle",
+      "saveButton": "Valider",
+      "edtRadioButton": "EDT - Les affectations des usagers dans les groupes de l'ENT seront automatisées à partir des données d'EDT",
+      "informationsLabel": "L'ENT vous propose deux methodes d'alimentation des structures (classes et groupes).",
+      "supportLabel": "Si vous souhaitez modifier votre choix par la suite, vous devrez faire une demande de support.",
+      "title": "Ouverture de l'année scolaire"
+    }
+  },
   "Statistics": {
     "ChartParameters": {
       "actionsTitle": "Actions",
