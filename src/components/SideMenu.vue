@@ -9,12 +9,13 @@
         :key="entry.id"
         :entry="entry"
         :expanded="expanded"
+        :open-all="openAll"
         @open="toggleMenu"
       />
     </div>
     <div
       class="side-menu-caret"
-      @click="toggleMenu"
+      @click="toggleAllMenu"
     >
       <i
         :class="{'fa-caret-right': !expanded, 'fa-caret-left': expanded}"
@@ -32,6 +33,11 @@ export default {
   components: {
     SideMenuRootEntry
   },
+  data () {
+    return {
+      openAll: false
+    }
+  },
   computed: {
     expanded () {
       return this.$store.state.nero.menuExpanded
@@ -43,6 +49,10 @@ export default {
   methods: {
     toggleMenu () {
       this.$store.dispatch('nero/toggleSideMenu')
+    },
+    toggleAllMenu () {
+      this.openAll = !this.expanded
+      this.toggleMenu()
     }
   }
 }
