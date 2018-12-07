@@ -67,6 +67,10 @@ export default {
     expanded: {
       type: Boolean,
       required: true
+    },
+    openAll: {
+      type: Boolean,
+      required: true
     }
   },
   data () {
@@ -89,7 +93,9 @@ export default {
   },
   watch: {
     expanded (expandedNewValue) {
-      if (!expandedNewValue) {
+      if (expandedNewValue && this.openAll) {
+        this.showSubMenu = true
+      } else if (!expandedNewValue) {
         this.showSubMenu = false
       }
     }
