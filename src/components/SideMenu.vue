@@ -93,9 +93,8 @@ export default {
 }
 
 .entry-list {
-  height: 100%;
+  @include calc(height, '100% - #{$side-menu-entry-height}');
   overflow-y: visible;
-  padding-bottom: $side-menu-entry-height;
 }
 
 .side-menu-caret {
