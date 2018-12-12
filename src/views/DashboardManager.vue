@@ -29,5 +29,6 @@ export default {
 <style lang="scss" scoped>
 .service-container {
   height: 100%;
+  overflow: auto;
 }
 </style>
