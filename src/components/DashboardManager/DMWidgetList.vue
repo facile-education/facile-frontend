@@ -50,7 +50,5 @@ export default {
 
 .list {
   padding: 0 10px;
-  height: calc(100% - #{$toolbar-height});
-  overflow-y: auto;
 }
 </style>

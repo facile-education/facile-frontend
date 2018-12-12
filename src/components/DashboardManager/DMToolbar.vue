@@ -1,9 +1,5 @@
 <template>
   <NeroToolbar>
-    <NeroButton
-      icon="fa fa-plus"
-      @click="onAddWidget"
-    />
     <NeroDropdown
       v-if="managedSchoolList"
       :list="managedSchoolList"
@@ -11,6 +7,11 @@
       @dropdown-select="onSchoolSelect"
     />
     <NeroSpinner v-else />
+    <NeroButton
+      class="add-button"
+      icon="fa fa-plus"
+      @click="onAddWidget"
+    />
   </NeroToolbar>
 </template>
 
@@ -51,5 +52,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.add-button {
+  right: 5px;
+  position: absolute;
+}
 
 </style>
