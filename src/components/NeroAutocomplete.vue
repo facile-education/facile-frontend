@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import NeroUtils from '@/utils/nero.utils'
 import clickoutside from '@/directives/clickoutside'
 
 export default {
@@ -72,8 +73,11 @@ export default {
           a = a[vm.displayField]
           b = b[vm.displayField]
         }
-        if (a.toLowerCase() < b.toLowerCase()) return -1
-        if (a.toLowerCase() > b.toLowerCase()) return 1
+        a = NeroUtils.String.normalize(a)
+        b = NeroUtils.String.normalize(b)
+
+        if (a < b) return -1
+        if (a > b) return 1
         return 0
       }
 
@@ -81,14 +85,13 @@ export default {
     },
     filteredList () {
       var vm = this
-      var filter = (this.input || this.filter).toLowerCase()
+      var filter = NeroUtils.String.normalize(this.input || this.filter)
 
       return this.sortedList.filter((item) => {
         if (filter.length === 0) {
           return true
         }
-        return (vm.getDisplayValue(item)
-          .toLowerCase()
+        return (NeroUtils.String.normalize(vm.getDisplayValue(item))
           .indexOf(filter) !== -1)
       })
     }
@@ -153,9 +156,11 @@ export default {
   }
 
   .item {
+    @extend %no-text-highlight;
     display: block;
     padding: 3px 20px;
     white-space: nowrap;
+    cursor: pointer;
 
     &:hover {
       background-color: #f5f5f5;
