@@ -91,10 +91,11 @@ export default {
 
 .button {
   @extend %nero-btn-like;
-  background-color: #f9f9f9;
+  background-color: $dropdown-background-color;
 
   &:hover {
-    background-color: #e4e4e4;
+    background-color: $menu-selected-background-color;
+    @include transition(background-color, 0.2s, linear);
   }
 }
 </style>
