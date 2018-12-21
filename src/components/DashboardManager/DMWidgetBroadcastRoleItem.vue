@@ -11,7 +11,6 @@
     />
 
     <NeroCheckbox
-      v-if="isAdministrator"
       :value="isMandatory"
       :label="$t('DashboardManager.DMWidgetBroadcastRoleItem.mandatoryCheckboxLabel')"
       class="mandatory"
@@ -37,16 +36,11 @@ export default {
     },
     isMandatory: {
       type: Boolean,
-      required: true
+      default: true
     },
     label: {
       type: String,
       required: true
-    }
-  },
-  computed: {
-    isAdministrator () {
-      return this.$store.state.currentUser.isAdministrator
     }
   },
   methods: {

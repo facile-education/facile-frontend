@@ -104,7 +104,8 @@ export default {
         this.$store.state.currentUser.isAdministrator)
     },
     displaySeparator () {
-      var widgetList = this.$store.state.dashboardManager.widgetList
+      var widgetList = this.$store.getters['dashboardManager/sortedWidgetList']
+      // Display separator if last widget editable for local or ENT admins
       if (this.index < (widgetList.length - 1)) {
         if ((this.isSchoolInstance && this.$store.state.currentUser.isLocalAdmin) ||
           (this.isENTAdminInstance && this.$store.state.currentUser.isENTAdmin)) {
@@ -146,7 +147,6 @@ export default {
       this.$store.dispatch('nero/updateAndShowConfirmModal', confirmModalParams)
     },
     removeWidget () {
-      console.log('Confirm delete : ' + this.widget.name)
       this.$store.dispatch('dashboardManager/deleteWidget', this.widget)
     }
   }
