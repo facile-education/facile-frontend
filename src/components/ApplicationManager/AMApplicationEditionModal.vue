@@ -278,7 +278,7 @@ export default {
 .logo-fallback {
   line-height: 110px;
   font-size: 40px;
-  color: $text-fallback;
+  color: $text-color-fallback;
 }
 
 .informations {
