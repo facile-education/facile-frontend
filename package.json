@@ -18,6 +18,7 @@
     "vue-i18n": "^8.4.0",
     "vue-mq": "https://marc_salvat@bitbucket.org/marc_salvat/vue-mq.git",
     "vue-router": "^3.0.1",
+    "vue-swatches": "^1.0.2",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
