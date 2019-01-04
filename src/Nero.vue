@@ -26,12 +26,14 @@
 </template>
 
 <script>
+import 'vue-swatches/dist/vue-swatches.min.css'
+
 import Banner from '@/components/Banner'
 import Hack from '@/components/Hack'
 import MobileMenu from '@/components/MobileMenu'
 import NeroConfirmModal from '@/components/NeroConfirmModal'
 import PWPreferencesModal from '@/components/PreferencesWindow/PWPreferencesModal'
-import SideMenu from '@/components/SideMenu'
+import SideMenu from '@/components/SideMenu/SideMenu'
 
 export default {
   name: 'Nero',
@@ -69,7 +71,7 @@ export default {
     }
   },
   beforeCreate () {
-    this.$store.dispatch('initUserInformations')
+    this.$store.dispatch('user/initUserInformations')
     this.$store.dispatch('nero/initUserMenu')
   }
 }
