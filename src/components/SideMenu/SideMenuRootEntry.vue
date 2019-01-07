@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import SideMenuCategory from '@/components/SideMenuCategory'
+import SideMenuCategory from '@/components/SideMenu/SideMenuCategory'
 
 export default {
   name: 'SideMenuRootEntry',
@@ -143,7 +143,7 @@ export default {
 }
 
 .menu-entry {
-  position: relative;
+  // position: relative;
   white-space: nowrap;
   color: $text-color-menu;
 

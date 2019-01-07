@@ -149,6 +149,14 @@
       "yes": "oui"
     }
   },
+  "Dashboard": {
+    "DashboardNewsWidget": {
+      "widgetHeader": "Actualités"
+    },
+    "DashboardHMNewsWidget": {
+      "widgetHeader": "Actualités de l'établissement"
+    }
+  },
   "DashboardManager": {
     "DMWidgetItem": {
       "DeleteConfirmModal": {
@@ -204,6 +212,32 @@
   },
   "NeroAutocomplete": {
     "filterPlaceholder": "Filtre"
+  },
+  "PreferencesWindow": {
+    "PWInterfaceDetails": {
+      "hideMenuLabel": "Cacher le menu par défaut",
+      "noLabel": "Non",
+      "themeColorPickerLabel": "Choisir la couleur du thème",
+      "yesLabel": "Oui"
+    },
+    "PWPersonalDetails": {
+      "addressLabel": "Adresse",
+      "emailAddressLabel": "Courriel",
+      "firstNameLabel": "Prénom",
+      "homePhoneNumberLabel": "Téléphone maison",
+      "mobilePhoneNumberLabel": "Téléphone mobile",
+      "lastNameLabel": "Nom",
+      "officePhoneNumberLabel": "Téléphone bureau",
+      "smsPhoneNumberLabel": "Téléphone SMS"
+    },
+    "PWPreferencesModal": {
+      "accountTabLabel": "Mon Compte",
+      "backupTabLabel": "Sauvegarde",
+      "interfaceTabLabel": "Interface",
+      "modalHeaderLabel": "Préférences",
+      "notificationsTabLabel": "Notifications",
+      "webdavTabLabel": "WebDAV"
+    }
   },
   "SchoolLifeManager": {
     "SLMAafInformations": {

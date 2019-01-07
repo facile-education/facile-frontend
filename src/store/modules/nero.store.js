@@ -14,6 +14,7 @@ export default {
       title: ''
     },
     isMobileMenuDisplayed: false,
+    isImagePickerModalDisplayed: false,
     isPreferencesModalDisplayed: false,
     menu: undefined,
     menuExpanded: undefined,
@@ -43,19 +44,25 @@ export default {
     updateActiveRoute (state, payload) {
       state.activeRoute = payload
     },
-    updatePreferencesModalState (state, payload) {
-      state.isPreferencesModalDisplayed = payload
+    updateImagePickerModalState (state, payload) {
+      state.isImagePickerModalDisplayed = payload
     },
     updateConfirmModalParameters (state, payload) {
       Vue.set(state.confirmModal, 'buttonLabel', payload.buttonLabel)
       Vue.set(state.confirmModal, 'message', payload.message)
       Vue.set(state.confirmModal, 'onConfirm', payload.onConfirm)
       Vue.set(state.confirmModal, 'title', payload.title)
+    },
+    updatePreferencesModalState (state, payload) {
+      state.isPreferencesModalDisplayed = payload
     }
   },
   actions: {
     closeConfirmModal ({ commit }) {
       commit('closeConfirmModal')
+    },
+    closeImagePickerModal ({ commit }) {
+      commit('updateImagePickerModalState', false)
     },
     closePreferencesModal ({ commit }) {
       commit('updatePreferencesModalState', false)
@@ -87,6 +94,9 @@ export default {
     },
     toggleSideMenu ({ commit }) {
       commit('toggleMenu')
+    },
+    openImagePickerModal ({ commit }) {
+      commit('updateImagePickerModalState', true)
     },
     openPreferencesModal ({ commit }) {
       commit('updatePreferencesModalState', true)
