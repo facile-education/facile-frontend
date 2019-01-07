@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import BannerItem from '@/components/BannerItem'
+import BannerItem from '@/components/Banner/BannerItem'
 
 export default {
   name: 'BannerServices',

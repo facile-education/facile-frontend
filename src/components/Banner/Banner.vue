@@ -14,10 +14,10 @@
 </template>
 
 <script>
-import BannerSearch from '@/components/BannerSearch'
-import BannerItem from '@/components/BannerItem'
-import BannerServices from '@/components/BannerServices'
-import BannerUserProfile from '@/components/BannerUserProfile'
+import BannerSearch from '@/components/Banner/BannerSearch'
+import BannerItem from '@/components/Banner/BannerItem'
+import BannerServices from '@/components/Banner/BannerServices'
+import BannerUserProfile from '@/components/Banner/BannerUserProfile'
 
 export default {
   name: 'Banner',
