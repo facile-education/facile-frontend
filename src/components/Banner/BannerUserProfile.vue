@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import BannerItem from '@/components/BannerItem'
+import BannerItem from '@/components/Banner/BannerItem'
 import i18n from '@/lang/lang'
 
 export default {
