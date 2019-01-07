@@ -156,14 +156,14 @@
 </template>
 
 <script>
-import NeroButton from '@/components/NeroButton'
-import NeroDropdown from '@/components/NeroDropdown'
-import NeroInput from '@/components/NeroInput'
-import NeroCheckbox from '@/components/NeroCheckbox'
-import NeroRadioButton from '@/components/NeroRadioButton'
-import NeroTagsInput from '@/components/NeroTagsInput'
-import NeroWindow from '@/components/NeroWindow'
-import NeroAutocomplete from '@/components/NeroAutocomplete'
+import NeroButton from '@/components/Nero/NeroButton'
+import NeroDropdown from '@/components/Nero/NeroDropdown'
+import NeroInput from '@/components/Nero/NeroInput'
+import NeroCheckbox from '@/components/Nero/NeroCheckbox'
+import NeroRadioButton from '@/components/Nero/NeroRadioButton'
+import NeroTagsInput from '@/components/Nero/NeroTagsInput'
+import NeroWindow from '@/components/Nero/NeroWindow'
+import NeroAutocomplete from '@/components/Nero/NeroAutocomplete'
 
 export default {
   name: 'AMApplicationEditionModal',

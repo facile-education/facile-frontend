@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import NeroButton from '@/components/NeroButton'
+import NeroButton from '@/components/Nero/NeroButton'
 
 export default {
   name: 'ContactItem',

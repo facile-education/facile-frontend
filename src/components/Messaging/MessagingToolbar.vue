@@ -31,8 +31,8 @@
 </template>
 
 <script>
-import NeroToolbar from '@/components/NeroToolbar'
-import NeroButton from '@/components/NeroButton'
+import NeroToolbar from '@/components/Nero/NeroToolbar'
+import NeroButton from '@/components/Nero/NeroButton'
 
 export default {
   name: 'MessagingToolbar',

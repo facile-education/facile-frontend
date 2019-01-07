@@ -25,8 +25,8 @@
 </template>
 
 <script>
-import NeroButton from '@/components/NeroButton'
-import NeroRadioButton from '@/components/NeroRadioButton'
+import NeroButton from '@/components/Nero/NeroButton'
+import NeroRadioButton from '@/components/Nero/NeroRadioButton'
 
 export default {
   name: 'SLMWizard',

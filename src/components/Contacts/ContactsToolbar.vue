@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import NeroButton from '@/components/NeroButton'
-import NeroToolbar from '@/components/NeroToolbar'
+import NeroButton from '@/components/Nero/NeroButton'
+import NeroToolbar from '@/components/Nero/NeroToolbar'
 
 export default {
   name: 'ContactsToolbar',

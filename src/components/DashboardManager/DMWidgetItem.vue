@@ -63,7 +63,7 @@
 
 <script>
 import moment from 'moment'
-import NeroButton from '@/components/NeroButton'
+import NeroButton from '@/components/Nero/NeroButton'
 
 export default {
   name: 'DMWidgetItem',
@@ -99,16 +99,16 @@ export default {
     },
     displayConfigButton () {
       return (
-        (this.isSchoolInstance && this.$store.state.currentUser.isLocalAdmin) ||
-        (this.isENTAdminInstance && this.$store.state.currentUser.isENTAdmin) ||
-        this.$store.state.currentUser.isAdministrator)
+        (this.isSchoolInstance && this.$store.state.user.isLocalAdmin) ||
+        (this.isENTAdminInstance && this.$store.state.user.isENTAdmin) ||
+        this.$store.state.user.isAdministrator)
     },
     displaySeparator () {
       var widgetList = this.$store.getters['dashboardManager/sortedWidgetList']
       // Display separator if last widget editable for local or ENT admins
       if (this.index < (widgetList.length - 1)) {
-        if ((this.isSchoolInstance && this.$store.state.currentUser.isLocalAdmin) ||
-          (this.isENTAdminInstance && this.$store.state.currentUser.isENTAdmin)) {
+        if ((this.isSchoolInstance && this.$store.state.user.isLocalAdmin) ||
+          (this.isENTAdminInstance && this.$store.state.user.isENTAdmin)) {
           if (this.widget.scope !== widgetList[this.index + 1].scope) {
             return true
           }

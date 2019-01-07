@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import NeroCheckbox from '@/components/NeroCheckbox'
+import NeroCheckbox from '@/components/Nero/NeroCheckbox'
 
 export default {
   name: 'CMInternalRoleTab',

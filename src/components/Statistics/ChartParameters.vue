@@ -77,9 +77,9 @@
 </template>
 
 <script>
-import NeroDropdown from '@/components/NeroDropdown'
-import NeroButton from '@/components/NeroButton'
-import NeroTagsInput from '@/components/NeroTagsInput'
+import NeroDropdown from '@/components/Nero/NeroDropdown'
+import NeroButton from '@/components/Nero/NeroButton'
+import NeroTagsInput from '@/components/Nero/NeroTagsInput'
 
 export default {
   name: 'ChartParameters',

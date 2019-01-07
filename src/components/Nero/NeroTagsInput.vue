@@ -34,8 +34,8 @@
 </template>
 
 <script>
-import NeroTagItem from '@/components/NeroTagItem'
-import NeroAutocomplete from '@/components/NeroAutocomplete'
+import NeroTagItem from '@/components/Nero/NeroTagItem'
+import NeroAutocomplete from '@/components/Nero/NeroAutocomplete'
 
 // TODO display autocomplete / key listeners (return, delete, arrows up down) / contact (group ?) button
 // TODO tabs -> required

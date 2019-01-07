@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import NeroTree from '@/components/NeroTree'
+import NeroTree from '@/components/Nero/NeroTree'
 
 export default {
   name: 'NeroTreeItem',
