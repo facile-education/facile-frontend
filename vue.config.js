@@ -1,6 +1,5 @@
 module.exports = {
   baseUrl: '/nero/'
-  // baseUrl: '/nero/',
   // configureWebpack: {
   //   devServer: {
   //     headers: {
