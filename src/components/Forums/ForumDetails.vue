@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import NeroTabList from '@/components/NeroTabList'
-import NeroTabItem from '@/components/NeroTabItem'
+import NeroTabList from '@/components/Nero/NeroTabList'
+import NeroTabItem from '@/components/Nero/NeroTabItem'
 import ForumThreads from '@/components/Forums/ForumThreads'
 import LastPublications from '@/components/Forums/LastPublications'
 import ForumStatistics from '@/components/Forums/ForumStatistics'

@@ -16,9 +16,9 @@
 </template>
 
 <script>
-import NeroToolbar from '@/components/NeroToolbar'
-import NeroDropdown from '@/components/NeroDropdown'
-import NeroSpinner from '@/components/NeroSpinner'
+import NeroToolbar from '@/components/Nero/NeroToolbar'
+import NeroDropdown from '@/components/Nero/NeroDropdown'
+import NeroSpinner from '@/components/Nero/NeroSpinner'
 
 export default {
   name: 'CMToolbar',

@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import NeroButton from '@/components/NeroButton'
-import NeroWindow from '@/components/NeroWindow'
+import NeroButton from '@/components/Nero/NeroButton'
+import NeroWindow from '@/components/Nero/NeroWindow'
 
 export default {
   name: 'NeroConfirmModal',

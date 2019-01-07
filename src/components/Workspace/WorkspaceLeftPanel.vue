@@ -17,9 +17,9 @@
 </template>
 
 <script>
-import NeroTree from '@/components/NeroTree'
-import NeroTabList from '@/components/NeroTabList'
-import NeroTabItem from '@/components/NeroTabItem'
+import NeroTree from '@/components/Nero/NeroTree'
+import NeroTabList from '@/components/Nero/NeroTabList'
+import NeroTabItem from '@/components/Nero/NeroTabItem'
 
 export default {
   name: 'WorkspaceLeftPanel',

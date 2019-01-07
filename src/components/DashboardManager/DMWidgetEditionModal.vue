@@ -98,11 +98,11 @@
 
 <script>
 import DMWidgetBroadcastRuleList from '@/components/DashboardManager/DMWidgetBroadcastRuleList'
-import NeroButton from '@/components/NeroButton'
-import NeroDropdown from '@/components/NeroDropdown'
-import NeroInput from '@/components/NeroInput'
-import NeroTagsInput from '@/components/NeroTagsInput'
-import NeroWindow from '@/components/NeroWindow'
+import NeroButton from '@/components/Nero/NeroButton'
+import NeroDropdown from '@/components/Nero/NeroDropdown'
+import NeroInput from '@/components/Nero/NeroInput'
+import NeroTagsInput from '@/components/Nero/NeroTagsInput'
+import NeroWindow from '@/components/Nero/NeroWindow'
 
 export default {
   name: 'DMWidgetEditionModal',

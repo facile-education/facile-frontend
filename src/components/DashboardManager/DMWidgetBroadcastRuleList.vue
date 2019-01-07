@@ -51,7 +51,7 @@
 
 <script>
 import DMWidgetBroadcastRoleItem from '@/components/DashboardManager/DMWidgetBroadcastRoleItem'
-import NeroToggleSwitch from '@/components/NeroToggleSwitch'
+import NeroToggleSwitch from '@/components/Nero/NeroToggleSwitch'
 
 export default {
   name: 'DMWidgetBroadcastRuleList',

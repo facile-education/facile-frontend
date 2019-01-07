@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import NeroRadioButton from '@/components/NeroRadioButton'
+import NeroRadioButton from '@/components/Nero/NeroRadioButton'
 
 export default {
   name: 'CMExternalRoleItem',

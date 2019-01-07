@@ -16,10 +16,10 @@
 </template>
 
 <script>
-import NeroToolbar from '@/components/NeroToolbar'
-import NeroButton from '@/components/NeroButton'
-import NeroDropdown from '@/components/NeroDropdown'
-import NeroSpinner from '@/components/NeroSpinner'
+import NeroToolbar from '@/components/Nero/NeroToolbar'
+import NeroButton from '@/components/Nero/NeroButton'
+import NeroDropdown from '@/components/Nero/NeroDropdown'
+import NeroSpinner from '@/components/Nero/NeroSpinner'
 
 export default {
   name: 'DMToolbar',

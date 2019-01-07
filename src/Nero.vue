@@ -21,6 +21,7 @@
     </Transition>
     <NeroConfirmModal v-if="isConfirmModalDisplayed" />
     <PWPreferencesModal v-if="isPreferencesModalDisplayed" />
+    <IPWImagePickerModal v-if="isImagePickerModalDisplayed" />
     <!-- SendMessageModal / ContactModal? / InformationModal / SupportModal -->
   </div>
 </template>
@@ -28,10 +29,11 @@
 <script>
 import 'vue-swatches/dist/vue-swatches.min.css'
 
-import Banner from '@/components/Banner'
+import Banner from '@/components/Banner/Banner'
 import Hack from '@/components/Hack'
+import IPWImagePickerModal from '@/components/ImagePickerWindow/IPWImagePickerModal'
 import MobileMenu from '@/components/MobileMenu'
-import NeroConfirmModal from '@/components/NeroConfirmModal'
+import NeroConfirmModal from '@/components/Nero/NeroConfirmModal'
 import PWPreferencesModal from '@/components/PreferencesWindow/PWPreferencesModal'
 import SideMenu from '@/components/SideMenu/SideMenu'
 
@@ -40,6 +42,7 @@ export default {
   components: {
     Banner,
     Hack,
+    IPWImagePickerModal,
     MobileMenu,
     NeroConfirmModal,
     PWPreferencesModal,
@@ -65,6 +68,9 @@ export default {
     },
     isPreferencesModalDisplayed () {
       return this.$store.state.nero.isPreferencesModalDisplayed
+    },
+    isImagePickerModalDisplayed () {
+      return this.$store.state.nero.isImagePickerModalDisplayed
     },
     menuExpanded () {
       return this.$store.state.nero.menuExpanded
@@ -102,22 +108,12 @@ body {
 }
 
 .theme-background-color {
-  background-color: $theme-color;
   color: $text-color-light;
 }
 
 .theme-hover-background-color:hover {
-  background-color: $theme-color;
   color: $text-color-light;
   cursor: pointer;
-}
-
-.theme-text-color {
-  color: $theme-color;
-}
-
-.theme-hover-text-color:hover {
-  color: $theme-color;
 }
 
 .nero-separator {

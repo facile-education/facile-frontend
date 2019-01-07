@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import NeroCheckbox from '@/components/NeroCheckbox'
-import NeroToggleSwitch from '@/components/NeroToggleSwitch'
+import NeroCheckbox from '@/components/Nero/NeroCheckbox'
+import NeroToggleSwitch from '@/components/Nero/NeroToggleSwitch'
 
 export default {
   name: 'DMWidgetBroadcastRoleItem',

@@ -117,7 +117,7 @@
 </template>
 
 <script>
-import NeroButton from '@/components/NeroButton'
+import NeroButton from '@/components/Nero/NeroButton'
 import clickoutside from '@/directives/clickoutside'
 
 export default {
@@ -141,7 +141,7 @@ export default {
         this.application.exportTeacher)
     },
     isAdministrator () {
-      return this.$store.state.currentUser.isAdministrator
+      return this.$store.state.user.isAdministrator
     }
   },
   created () {

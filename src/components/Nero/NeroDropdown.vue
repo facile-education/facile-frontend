@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import NeroAutocomplete from '@/components/NeroAutocomplete'
+import NeroAutocomplete from '@/components/Nero/NeroAutocomplete'
 
 export default {
   name: 'NeroDropdown',

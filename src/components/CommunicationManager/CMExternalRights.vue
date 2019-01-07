@@ -25,8 +25,8 @@
 </template>
 
 <script>
-import NeroButton from '@/components/NeroButton'
-import NeroSpinner from '@/components/NeroSpinner'
+import NeroButton from '@/components/Nero/NeroButton'
+import NeroSpinner from '@/components/Nero/NeroSpinner'
 import CMExternalRoleItem from '@/components/CommunicationManager/CMExternalRoleItem'
 
 export default {

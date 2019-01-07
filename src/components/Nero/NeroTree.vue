@@ -14,7 +14,7 @@
 export default {
   name: 'NeroTree',
   components: {
-    NeroTreeItem: () => import('@/components/NeroTreeItem.vue')
+    NeroTreeItem: () => import('@/components/Nero/NeroTreeItem.vue')
   },
   props: {
     model: {

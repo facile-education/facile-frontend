@@ -31,10 +31,10 @@
 </template>
 
 <script>
-import NeroButton from '@/components/NeroButton'
-import NeroSpinner from '@/components/NeroSpinner'
-import NeroTabItem from '@/components/NeroTabItem'
-import NeroTabList from '@/components/NeroTabList'
+import NeroButton from '@/components/Nero/NeroButton'
+import NeroSpinner from '@/components/Nero/NeroSpinner'
+import NeroTabItem from '@/components/Nero/NeroTabItem'
+import NeroTabList from '@/components/Nero/NeroTabList'
 import CMInternalRoleTab from '@/components/CommunicationManager/CMInternalRoleTab'
 
 export default {

@@ -36,9 +36,9 @@
 
 <script>
 // TODO Display dates
-import NeroButton from '@/components/NeroButton'
-import NeroCheckbox from '@/components/NeroCheckbox'
-// import NeroDropdown from '@/components/NeroDropdown'
+import NeroButton from '@/components/Nero/NeroButton'
+import NeroCheckbox from '@/components/Nero/NeroCheckbox'
+// import NeroDropdown from '@/components/Nero/NeroDropdown'
 
 export default {
   name: 'SLMEdtInformations',
@@ -49,7 +49,7 @@ export default {
   },
   computed: {
     isAdministrator () {
-      return this.$store.state.currentUser.isAdministrator
+      return this.$store.state.user.isAdministrator
     },
     isAgendaSynchronizationActive () {
       return this.$store.state.schoolLifeManager.isAgendaSynchronizationActive

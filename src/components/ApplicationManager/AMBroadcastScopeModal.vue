@@ -52,9 +52,9 @@
 </template>
 
 <script>
-import NeroButton from '@/components/NeroButton'
-import NeroTagsInput from '@/components/NeroTagsInput'
-import NeroWindow from '@/components/NeroWindow'
+import NeroButton from '@/components/Nero/NeroButton'
+import NeroTagsInput from '@/components/Nero/NeroTagsInput'
+import NeroWindow from '@/components/Nero/NeroWindow'
 
 export default {
   name: 'AMBroadcastScopeModal',
