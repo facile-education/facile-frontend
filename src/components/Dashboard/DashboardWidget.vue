@@ -14,17 +14,27 @@ export default {
 
 <style lang="scss">
 .widget {
+  margin: 5px;
   background: white;
-  border: 1px silver solid;
   border-radius: 5px;
 
   .header {
-    color: silver;
     border-bottom: 1px silver solid;
+    i {
+      font-size: 1.5em;
+      padding-right: 5px;
+    }
+
+    h4 {
+      display: inline-block;
+      margin: 0;
+    }
   }
 
   .body {
-    padding: 15px;
+    padding: 5px 0;
+    max-height: 500px;
+    overflow: auto;
   }
 }
 </style>

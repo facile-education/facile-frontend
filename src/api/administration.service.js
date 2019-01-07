@@ -1,6 +1,8 @@
 import axios from 'axios'
 import constants from './constants'
 
+const applicationManagerURL = '/user/pentila/gestion-applications?p_p_id=gestionApps_WAR_gestionApplicationsportlet&p_p_lifecycle=2&p_p_state=exclusive&p_p_mode=view&p_p_cacheability=cacheLevelPage&controlPanelCategory=portlet_gestionApps_WAR_gestionApplicationsportlet'
+
 export default {
   getAdministeredSchoolList,
   getPortletList,
@@ -8,7 +10,8 @@ export default {
 }
 
 function getAdministeredSchoolList () {
-  const url = constants.BASE_URL + '/api/get_administration_schools'
+  // const url = constants.BASE_URL + '/api/get_administration_schools'
+  const url = applicationManagerURL
   return axios.get(url, {
     params: {
       cmd: 'getSchoolList'

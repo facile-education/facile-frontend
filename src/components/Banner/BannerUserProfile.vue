@@ -2,7 +2,7 @@
   <div class="profile">
     <img
       class="picture"
-      src="../assets/logo.png"
+      :src="userPicture"
       @click="setLang('en')"
     >
     <div
@@ -41,14 +41,14 @@ export default {
   },
   computed: {
     userName () {
-      return (this.$store.state.currentUser.firstName.charAt() + '. ' +
-        this.$store.state.currentUser.lastName).toUpperCase()
+      return (this.$store.state.user.firstName.charAt() + '. ' +
+        this.$store.state.user.lastName)
     },
     userPicture () {
-      return this.$store.state.currentUser.picture
+      return this.$store.state.user.picture
     },
     homeSchool () {
-      return this.$store.getters.homeSchool
+      return this.$store.getters['user/homeSchool']
     }
   },
   methods: {
@@ -76,7 +76,8 @@ export default {
 .user-infos {
   display: inline-block;
   width: 125px;
-  font-size: 11px;
+  font-size: 12px;
+  padding-left: 2px;
   vertical-align: top;
   white-space: nowrap;
   overflow-x: hidden;

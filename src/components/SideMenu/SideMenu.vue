@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import SideMenuRootEntry from '@/components/SideMenuRootEntry'
+import SideMenuRootEntry from '@/components/SideMenu/SideMenuRootEntry'
 
 export default {
   name: 'SideMenu',
@@ -78,6 +78,7 @@ export default {
     width: $open-side-menu-width;
 
     .entry-list {
+      overflow-x: hidden;
       overflow-y: auto;
     }
 

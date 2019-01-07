@@ -3,59 +3,55 @@
     :modal="true"
     @close="onClose"
   >
-    <span slot="header">
-      Prefs
-    </span>
+    <span
+      slot="header"
+      v-t="'PreferencesWindow.PWPreferencesModal.modalHeaderLabel'"
+    />
 
     <div slot="body">
       <NeroTabList>
-        <NeroTabItem title="Account">
-          toto
+        <NeroTabItem :title="$t('PreferencesWindow.PWPreferencesModal.accountTabLabel')">
+          <PWPersonalDetails />
         </NeroTabItem>
-        <NeroTabItem title="Interface">
-          toti
+        <NeroTabItem :title="$t('PreferencesWindow.PWPreferencesModal.interfaceTabLabel')">
+          <PWInterfaceDetails />
         </NeroTabItem>
-        <NeroTabItem title="Notif">
-          totu
+        <NeroTabItem :title="$t('PreferencesWindow.PWPreferencesModal.notificationsTabLabel')">
+          Hidden if no Messaging || (no Dropbox && no News && no Documents & no Forums & no Agenda & no Groups)
+          TODO
         </NeroTabItem>
-        <NeroTabItem title="Save">
-          toty
+        <NeroTabItem :title="$t('PreferencesWindow.PWPreferencesModal.backupTabLabel')">
+          Hidden if no Dropbox && no Documents && no Agenda
+          TODO
         </NeroTabItem>
-        <NeroTabItem title="WebDAV">
-          tota
+        <NeroTabItem :title="$t('PreferencesWindow.PWPreferencesModal.webdavTabLabel')">
+          Hidden if no Documents
+          TODO
         </NeroTabItem>
       </NeroTabList>
     </div>
-
-    <NeroButton
-      slot="footer"
-      :label="'label'"
-      @click="onConfirm"
-    />
   </NeroWindow>
 </template>
 
 <script>
-import NeroButton from '@/components/NeroButton'
-import NeroTabList from '@/components/NeroTabList'
-import NeroTabItem from '@/components/NeroTabItem'
-import NeroWindow from '@/components/NeroWindow'
+import NeroTabList from '@/components/Nero/NeroTabList'
+import NeroTabItem from '@/components/Nero/NeroTabItem'
+import NeroWindow from '@/components/Nero/NeroWindow'
+import PWInterfaceDetails from '@/components/PreferencesWindow/PWInterfaceDetails'
+import PWPersonalDetails from '@/components/PreferencesWindow/PWPersonalDetails'
 
 export default {
   name: 'PWPreferencesModal',
   components: {
-    NeroButton,
     NeroTabList,
     NeroTabItem,
-    NeroWindow
+    NeroWindow,
+    PWInterfaceDetails,
+    PWPersonalDetails
   },
   methods: {
     onClose () {
       this.$store.dispatch('nero/closePreferencesModal')
-    },
-    onConfirm () {
-      // TODO save
-      console.log('save prefs')
     }
   }
 }
