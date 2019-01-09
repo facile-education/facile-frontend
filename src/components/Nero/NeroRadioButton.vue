@@ -60,6 +60,7 @@ export default {
 
 .nero-radio {
   display: inline-block;
+  padding-right: 5px;
 }
 
 .container {
