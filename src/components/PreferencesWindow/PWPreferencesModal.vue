@@ -17,16 +17,13 @@
           <PWInterfaceDetails />
         </NeroTabItem>
         <NeroTabItem :title="$t('PreferencesWindow.PWPreferencesModal.notificationsTabLabel')">
-          Hidden if no Messaging || (no Dropbox && no News && no Documents & no Forums & no Agenda & no Groups)
-          TODO
+          <PWNotificationDetails />
         </NeroTabItem>
         <NeroTabItem :title="$t('PreferencesWindow.PWPreferencesModal.backupTabLabel')">
-          Hidden if no Dropbox && no Documents && no Agenda
-          TODO
+          <PWBackupDetails />
         </NeroTabItem>
         <NeroTabItem :title="$t('PreferencesWindow.PWPreferencesModal.webdavTabLabel')">
-          Hidden if no Documents
-          TODO
+          <PWWebdavDetails />
         </NeroTabItem>
       </NeroTabList>
     </div>
@@ -37,8 +34,11 @@
 import NeroTabList from '@/components/Nero/NeroTabList'
 import NeroTabItem from '@/components/Nero/NeroTabItem'
 import NeroWindow from '@/components/Nero/NeroWindow'
+import PWBackupDetails from '@/components/PreferencesWindow/PWBackupDetails'
 import PWInterfaceDetails from '@/components/PreferencesWindow/PWInterfaceDetails'
+import PWNotificationDetails from '@/components/PreferencesWindow/PWNotificationDetails'
 import PWPersonalDetails from '@/components/PreferencesWindow/PWPersonalDetails'
+import PWWebdavDetails from '@/components/PreferencesWindow/PWWebdavDetails'
 
 export default {
   name: 'PWPreferencesModal',
@@ -46,8 +46,11 @@ export default {
     NeroTabList,
     NeroTabItem,
     NeroWindow,
+    PWBackupDetails,
     PWInterfaceDetails,
-    PWPersonalDetails
+    PWNotificationDetails,
+    PWPersonalDetails,
+    PWWebdavDetails
   },
   methods: {
     onClose () {

@@ -3,14 +3,14 @@
     <div class="menu-default-state">
       <label v-t="'PreferencesWindow.PWInterfaceDetails.hideMenuLabel'" />
       <NeroRadioButton
-        v-model="menu"
+        v-model="menuHidden"
         name="menu"
         :label="$t('PreferencesWindow.PWInterfaceDetails.yesLabel')"
         rb-value="yes"
         class="yes"
       />
       <NeroRadioButton
-        v-model="menu"
+        v-model="menuHidden"
         name="menu"
         :label="$t('PreferencesWindow.PWInterfaceDetails.noLabel')"
         rb-value="no"
@@ -19,7 +19,7 @@
     <div class="color-picker">
       <label v-t="'PreferencesWindow.PWInterfaceDetails.themeColorPickerLabel'" />
       <Swatches
-        :value="color"
+        :value="themeColor"
         :colors="colors"
         :swatch-style="{ width: '32px', height: '32px', margin: '0 1px' }"
         :wrapper-style="{padding: '0'}"
@@ -44,20 +44,30 @@ export default {
   },
   data () {
     return {
-      menu: 'yes',
-      color: '',
+      language: 'fr',
+      menuHidden: 'yes',
+      themeColor: '',
+      // Orange: '#f4901d', Vue greens: '#42b983', '#4dba87', Light blue : '#73B2D9', Pentila : '#379FB7'
       colors: ['#99B9E9', '#E47B00', '#8E44AD', '#27AE60', '#2982B9',
         '#7F8C8D', '#16A085', '#34495E', '#E74C3C', '#F1C40F']
     }
   },
   created () {
-    this.color = this.$store.state.user.themeColor
-    console.log(this.color)
+    this.themeColor = this.$store.state.user.themeColor
+  },
+  beforeDestroy () {
+    // Save preferences
+    var preferences = {
+      language: this.language,
+      isMenuHidden: (this.menuHidden === 'yes'),
+      themeColor: this.themeColor
+    }
+    this.$store.dispatch('user/saveInterfacePreferences', preferences)
   },
   methods: {
     onColorChanged (newColor) {
-      NeroUtils.Theme.updateColor(this.color, newColor)
-      this.color = newColor
+      NeroUtils.Theme.updateColor(this.themeColor, newColor)
+      this.themeColor = newColor
     }
   }
 }
