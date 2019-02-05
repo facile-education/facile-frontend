@@ -20,18 +20,11 @@
           />
         </div>
       </div>
-      <div class="img-preview-wrap">
-        <div>
-          <div class="pre-container">
-            <img
-              id="clip_res_img"
-              :src="img"
-            >
-          </div>
-          <p class="preview-label">
-            Preview
-          </p>
-        </div>
+      <div class="img-preview">
+        <NeroUserPicture :image-url="clipData" />
+        <p class="preview-label">
+          Preview
+        </p>
       </div>
     </div>
     <div>
@@ -47,10 +40,13 @@
 </template>
 
 <script>
+import NeroUserPicture from '@/components/Nero/NeroUserPicture'
 import SelectBox from './SelectBox.vue'
+
 export default {
   components: {
-    SelectBox
+    SelectBox,
+    NeroUserPicture
   },
   props: {
     img: {
@@ -63,47 +59,61 @@ export default {
       $srcImg: null,
       $resImg: null,
       $imgContainer: null,
-      $preContainer: null,
       nw: 0,
       nh: 0,
-      clipData: null,
       ratio: 10 / 10, // equal to SelectBox's width / height
       imgSize: { w: 0, h: 0 },
-      containerTop: 0
+      containerTop: 0,
+      rec: null
+    }
+  },
+  computed: {
+    clipData () {
+      if (!this.rec || !this.rec.w || !this.rec.h) {
+        return ''
+      }
+      const bufferCanvas = document.createElement('canvas')
+      const bfx = bufferCanvas.getContext('2d')
+      bufferCanvas.width = this.computedRec.w
+      bufferCanvas.height = this.computedRec.h
+      bfx.drawImage(this.$srcImg, -this.computedRec.l, -this.computedRec.t, this.nw, this.nh)
+      return bufferCanvas.toDataURL('image/jpeg', 1)
+    },
+    computedRec () {
+      const cw = this.$imgContainer.offsetWidth
+      const ch = this.$imgContainer.offsetHeight
+      const wr = cw / this.nw
+      const hr = ch / this.nh
+      return {
+        l: this.rec.l / wr,
+        t: this.rec.t / hr,
+        w: this.rec.w / wr,
+        h: this.rec.h / hr
+      }
     }
   },
   mounted () {
     this.$srcImg = this.$el.querySelectorAll('#clip_src_img')[0]
-    this.$resImg = this.$el.querySelectorAll('#clip_res_img')[0]
     this.$imgContainer = this.$el.querySelectorAll('.img-container')[0]
-    this.$preContainer = this.$el.querySelectorAll('.pre-container')[0]
     this.$containerBox = this.$el.querySelectorAll('.container-bg')[0]
   },
   methods: {
     selectChange () {
-      const rec = this.$refs.box.rec
-      if (rec.w > 0 && rec.h > 0) {
-        this.updatePreview()
-      }
+      console.log('On select change')
     },
     selectEnd () {
-      const rec = this.$refs.box.rec
-      if (rec.w > 0 && rec.h > 0) {
-        this.clip()
-      }
+      console.log('On select end / Emit event')
     },
     srcImgLoaded () {
       this.nw = this.$srcImg.naturalWidth
       this.nh = this.$srcImg.naturalHeight
       this.clearSelect()
       this.setImgSize()
-      this.updatePreview()
-      this.clip()
+      this.rec = this.$refs.box.rec
     },
     clearSelect () {
       const box = this.$refs.box
       box.clearRec()
-      this.clipData = null
     },
     setImgSize () {
       // image's naturalWidth naturalHeight ratio
@@ -129,44 +139,6 @@ export default {
       this.$imgContainer.setAttribute('style',
         `width:${this.imgSize.w}px;height:${this.imgSize.h}px;top:${this.containerTop}px;`)
       this.$refs.box.rec = { w: rw, h: rh, l: 0, t: 0 }
-    },
-    getComputedRec (r) {
-      const cw = this.$imgContainer.offsetWidth
-      const ch = this.$imgContainer.offsetHeight
-      const wr = cw / this.nw
-      const hr = ch / this.nh
-      return {
-        l: r.l / wr,
-        t: r.t / hr,
-        w: r.w / wr,
-        h: r.h / hr
-      }
-    },
-    updatePreview () {
-      const rec = this.$refs.box.rec
-      const pcw = this.$preContainer.offsetWidth
-      const pch = this.$preContainer.offsetHeight
-      const wr = pcw / rec.w
-      const hr = pch / rec.h
-      const w = wr * this.$imgContainer.offsetWidth
-      const h = hr * this.$imgContainer.offsetHeight
-      const l = -rec.l * wr
-      const t = -rec.t * hr
-      this.$resImg.setAttribute('style',
-        `width:${w}px;height:${h}px;top:${t}px;left:${l}px;`)
-    },
-    clip () {
-      let rec = this.$refs.box.rec
-      if (!rec.w || !rec.h) {
-        return
-      }
-      const bufferCanvas = document.createElement('canvas')
-      const bfx = bufferCanvas.getContext('2d')
-      const computedRec = this.getComputedRec(rec)
-      bufferCanvas.width = computedRec.w
-      bufferCanvas.height = computedRec.h
-      bfx.drawImage(this.$srcImg, -computedRec.l, -computedRec.t, this.nw, this.nh)
-      this.clipData = bufferCanvas.toDataURL('image/jpeg', 1)
     }
   }
 }
@@ -207,26 +179,11 @@ $crop-container-width: 480px;
   z-index: 1;
 }
 
-.img-preview-wrap {
+.img-preview {
   display: inline-block;
   @include calc(width, '100% - #{$crop-container-width}');
   vertical-align: top;
   text-align: center;
-}
-
-.pre-container {
-  margin: auto;
-  width: 106px;
-  height: 106px;
-  overflow: hidden;
-  border-radius: 50%;
-}
-
-.pre-container img {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: 4px;
 }
 
 .modal-btn {

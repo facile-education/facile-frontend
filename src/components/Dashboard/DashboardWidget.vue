@@ -20,7 +20,7 @@ export default {
 
   .header {
     border-bottom: 1px silver solid;
-    i {
+    .widget-icon {
       font-size: 1.5em;
       padding-right: 5px;
     }

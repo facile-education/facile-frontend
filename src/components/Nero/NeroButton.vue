@@ -1,7 +1,7 @@
 <template>
   <button
     :class="[cls, type]"
-    @click="dispatchEvent"
+    @click="dispatchEvent($event)"
   >
     <i
       :ng-if="icon"
@@ -35,8 +35,8 @@ export default {
     }
   },
   methods: {
-    dispatchEvent () {
-      this.$emit('click')
+    dispatchEvent ($event) {
+      this.$emit('click', $event)
     }
   }
 }

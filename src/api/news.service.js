@@ -1,11 +1,16 @@
 import axios from 'axios'
-import constants from './constants'
+import constants from '@/api/constants'
+import NeroUtils from '@/utils/nero.utils'
 
 export default {
-  getNewsList,
   addNews,
   editNews,
-  deleteNews
+  deleteNews,
+  getDelegateList,
+  getDelegationCandidateList,
+  getNewsBroadcastedGroups,
+  getNewsList,
+  updateDelegateList
 }
 const url = constants.DASHBOARD_URL
 
@@ -44,5 +49,52 @@ function deleteNews (widget) {
   return axios.post(url, {
     cmd: 'saveWidget',
     widget: JSON.stringify(widget)
+  }).then(response => response.data)
+}
+
+/**
+ * Get delegate user list
+ */
+function getDelegateList () {
+  return axios.get(url, {
+    params: {
+      cmd: 'getDelegate'
+    }
+  }).then(response => response.data)
+}
+
+/**
+ * Get user list that could be delegate
+ */
+function getDelegationCandidateList () {
+  return axios.get(url, {
+    params: {
+      cmd: 'getUserListAvalaibleForDelegation'
+    }
+  }).then(response => response.data)
+}
+
+/**
+ * Get targeted groups for a newsId
+ * @param {Number} newsId
+ */
+function getNewsBroadcastedGroups (newsId) {
+  return axios.get(url, {
+    params: {
+      cmd: 'getBroadcastedGroups',
+      blogEntryInfosId: newsId
+    }
+  }).then(response => response.data)
+}
+
+function updateDelegateList (delegateList) {
+  return axios.post(url, NeroUtils.URL.params({
+    cmd: 'validateDelegate',
+    usersToDelegate: JSON.stringify(delegateList)
+  }),
+  {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+    }
   }).then(response => response.data)
 }

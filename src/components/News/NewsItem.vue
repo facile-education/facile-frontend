@@ -3,8 +3,13 @@
     class="news"
     @click="onShowDetails()"
   >
+    <div
+      v-if="!news.isActive"
+      v-t="'News.NewsItem.inactiveStampLabel'"
+      class="inactive-stamp"
+    />
     <img
-      v-if="hasThumbnail()"
+      v-if="hasThumbnail"
       class="thumbnail"
       :src="news.thumbnail.url"
     >
@@ -13,29 +18,39 @@
       class="default-image fa fa-image"
     />
     <div class="text">
-      <h5 class="title">
+      <h5
+        :class="{'high-priority': news.isHighPrio}"
+        class="title"
+      >
         {{ news.title }}
       </h5>
       <p class="content">
         {{ news.ellipsise }}
       </p>
-      <div class="author theme-text-color">
+      <p class="author theme-text-color">
         {{ news.author }} {{ news.date }}
-      </div>
+        <i
+          v-if="hasAttachment"
+          class="fa fa-paperclip"
+        />
+      </p>
     </div>
-    <div class="admin-actions">
+    <div
+      v-if="hasEditionRights"
+      class="admin-actions"
+    >
       <NeroButton
-        :title="$t('TODO')"
+        :title="$t('News.NewsItem.editButtonTitle')"
         type="circle"
         icon="fa fa-pencil-alt"
-        @click="onEditNews"
+        @click.stop="onEditNews"
       />
       <NeroButton
-        :title="$t('TODO')"
+        :title="$t('News.NewsItem.deleteButtonTitle')"
         type="circle"
         icon="fa fa-trash"
         cls="cancel"
-        @click="onDeleteNews"
+        @click.stop="onDeleteNews"
       />
     </div>
   </div>
@@ -43,6 +58,7 @@
 
 <script>
 import NeroButton from '@/components/Nero/NeroButton'
+import NeroUtils from '@/utils/nero.utils'
 
 export default {
   name: 'NewsItem',
@@ -55,20 +71,27 @@ export default {
       required: true
     }
   },
-  methods: {
+  computed: {
+    hasAttachment () {
+      return (this.news.attachFiles !== undefined && this.news.attachFiles.length > 0)
+    },
+    hasEditionRights () {
+      return (this.news.isAuthor || this.news.isEditor)
+    },
     hasThumbnail () {
       return (this.news.thumbnail.url !== undefined)
-    },
+    }
+  },
+  methods: {
     onEditNews () {
-      console.log('edit')
-      // TODO Stop propagation
+      this.$store.dispatch('news/openEditionModal', NeroUtils.JSON.deepCopy(this.news))
     },
     onDeleteNews () {
       console.log('delete')
-      // TODO Stop propagation
+      // TODO Confirm + delete action
     },
     onShowDetails () {
-      console.log('showDetails true')
+      this.$store.dispatch('news/openNewsModal', NeroUtils.JSON.deepCopy(this.news))
     }
   }
 }
@@ -98,6 +121,22 @@ $thumbnail-size: 55px;
   }
 }
 
+.inactive-stamp {
+  position: absolute;
+  left: 41%;
+  padding: 0 5px;
+  border: 3px $notif-background-color solid;
+  border-radius: 8px;
+  color: $notif-background-color;
+  background-color: $background-white-color;
+  font-weight: bolder;
+  text-transform: uppercase;
+  z-index: 1;
+  opacity: .9;
+
+  @include rotate(-15deg)
+}
+
 .thumbnail {
   width: auto;
   max-width: $thumbnail-size;
@@ -117,6 +156,7 @@ $thumbnail-size: 55px;
 
 .text {
   padding-left: 10px;
+  padding-right: 5px;
   @include calc(width, '100% - #{$thumbnail-size}');
 }
 
@@ -126,6 +166,10 @@ $thumbnail-size: 55px;
   text-overflow: ellipsis;
   overflow: hidden;
   margin: 0;
+
+  &.high-priority {
+    color: $text-color-priority;
+  }
 }
 
 .content {
@@ -135,7 +179,6 @@ $thumbnail-size: 55px;
   max-height: 24px;
   line-height: 1.4;
   overflow: hidden;
-  word-break: break-all;
   white-space: normal;
 }
 
@@ -148,5 +191,10 @@ $thumbnail-size: 55px;
   position: absolute;
   right: 10px;
   display: none;
+
+  >>> .cancel {
+    margin-top: 5px;
+    display: block;
+  }
 }
 </style>
