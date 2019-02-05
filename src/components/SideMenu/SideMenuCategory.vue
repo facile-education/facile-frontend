@@ -70,7 +70,8 @@ export default {
 .popup {
   position: absolute;
   left: $side-menu-width;
-  bottom: 0px;
+  top: 0px;
+  /* bottom: 0px; */
   background-color: #ffffff;
   border: $border;
   z-index: $side-menu-z-index;
