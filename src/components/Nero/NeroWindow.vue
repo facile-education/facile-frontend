@@ -1,10 +1,16 @@
 <template>
   <Transition name="window">
     <div :class="{'modal-mask': modal}">
-      <div class="window-wrapper">
+      <div
+        class="window-wrapper"
+        :class="{'tablet': $device.tablet, 'mobile': $device.phone}"
+      >
         <!-- TODO AppDraggable class="window-container" -->
         <div class="window-container">
-          <div class="window-header theme-background-color">
+          <div
+            :class="{'important': important}"
+            class="window-header theme-background-color"
+          >
             <slot name="header" />
             <i
               class="close fa fa-times"
@@ -44,6 +50,10 @@ export default {
       type: Boolean,
       default: false
     },
+    important: {
+      type: Boolean,
+      default: false
+    },
     resizable: {
       type: Boolean,
       default: false
@@ -69,7 +79,7 @@ export default {
 
 .window-wrapper {
   z-index: $modal-z-index;
-  max-width: 70vw;
+  max-width: 75%;
   margin: 5vh auto;
   /* Place it in the middle (translation causes issues
   with other animations like filter or toggle */
@@ -77,6 +87,15 @@ export default {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%); */
+
+  &.tablet {
+    max-width: 90%;
+  }
+
+  &.mobile {
+    margin: 3% auto;
+    max-width: 97%;
+  }
 }
 
 .window-container {
@@ -93,14 +112,19 @@ export default {
   position: relative;
   border-radius: 5px 5px 0 0;
 
+  &.important {
+    background-color: $text-color-priority;
+  }
+
   span {
     margin-right: 20px;
   }
 
   .close {
     display: inline-block;
-    width: 16px;
-    height: 16px;
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
     position: absolute;
     top: 8px;
     right: 8px;
@@ -114,7 +138,8 @@ export default {
 }
 
 .window-body {
-  padding: 15px;
+  padding: 8px;
+
   max-height: 75vh;
   overflow-y: auto;
 }

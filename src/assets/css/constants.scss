@@ -3,6 +3,8 @@ $text-color: #494949;
 $text-color-light: #fff;
 $text-color-fallback: #b7b7b7;
 $text-color-menu: #909090;
+$text-color-priority: #ff3344;
+$text-color-stamp: #cd4436;
 
 // Background colors
 $background-white-color: #ffffff;
@@ -56,6 +58,14 @@ $toolbar-height: 40px;
   -ms-transition: $duration $property $ease;
   -o-transition: $duration $property $ease;
   transition: $duration $property $ease;
+}
+
+@mixin rotate($degree: -45deg) {
+  -webkit-transform: rotate($degree);
+  -moz-transform: rotate($degree);
+  -ms-transform: rotate($degree);
+  -o-transform: rotate($degree);
+  transform: rotate($degree);
 }
 
 // Global classes extends

@@ -92,6 +92,8 @@ export default {
 .button {
   @extend %nero-btn-like;
   background-color: $dropdown-background-color;
+  width: 100%;
+  height: 100%;
 
   &:hover {
     background-color: $menu-selected-background-color;
