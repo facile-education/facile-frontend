@@ -18,6 +18,11 @@ var NeroUtils = {
       var regExp = new RegExp(color, 'g')
       themeTag.innerHTML = themeTag.innerHTML.replace(regExp, newColor)
     }
+  },
+  URL: {
+    params (obj) {
+      return Object.keys(obj).map((k) => encodeURIComponent(k) + '=' + encodeURIComponent(obj[k])).join('&')
+    }
   }
 }
 
