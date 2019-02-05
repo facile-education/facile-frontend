@@ -36,28 +36,28 @@ export default {
   name: 'Hack',
   methods: {
     setAdministrator () {
-      this.$store.dispatch('hack', { isAdministrator: true })
+      this.$store.dispatch('user/hack', { isAdministrator: true })
     },
     setLocalAdmin () {
-      this.$store.dispatch('hack', { isLocalAdmin: true })
+      this.$store.dispatch('user/hack', { isLocalAdmin: true })
     },
     setENTAdmin () {
-      this.$store.dispatch('hack', { isENTAdmin: true })
+      this.$store.dispatch('user/hack', { isENTAdmin: true })
     },
     setUser () {
-      this.$store.dispatch('hack', { isUser: true })
+      this.$store.dispatch('user/hack', { isUser: true })
     },
     setStudentRole () {
-      this.$store.dispatch('hack', { isStudent: true })
+      this.$store.dispatch('user/hack', { isStudent: true })
     },
     setTeacherRole () {
-      this.$store.dispatch('hack', { isTeacher: true })
+      this.$store.dispatch('user/hack', { isTeacher: true })
     },
     setPersonnelRole () {
-      this.$store.dispatch('hack', { isPersonnel: true })
+      this.$store.dispatch('user/hack', { isPersonnel: true })
     },
     setParentRole () {
-      this.$store.dispatch('hack', { isParent: true })
+      this.$store.dispatch('user/hack', { isParent: true })
     }
   }
 }
