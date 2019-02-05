@@ -151,9 +151,12 @@
   },
   "Dashboard": {
     "DashboardNewsWidget": {
+      "addNewsButtonTooltip": "Ajouter une actualité",
       "widgetHeader": "Actualités"
     },
     "DashboardHMNewsWidget": {
+      "addNewsButtonTooltip": "Ajouter une actualité",
+      "manageDelegateButtonTooltip": "Gérer les délégués",
       "widgetHeader": "Actualités de l'établissement"
     }
   },
@@ -213,15 +216,56 @@
   "NeroAutocomplete": {
     "filterPlaceholder": "Filtre"
   },
+  "News": {
+    "NewsDelegationModal": {
+      "modalHeaderLabel": "Fenêtre des délégations des actualités",
+      "saveButtonLabel": "Valider",
+      "searchPlaceholder": "Recherche..."
+    },
+    "NewsItem": {
+      "deleteButtonTitle": "Supprimer",
+      "editButtonTitle": "Éditer",
+      "inactiveStampLabel": "Inactive"
+    },
+    "NewsModal": {
+      "modalHeaderLabel": "Contenu de l'actualité",
+      "writtenBy": "Publié par {author}"
+    }
+  },
   "PreferencesWindow": {
+    "PWBackupDetails": {
+      "agendaCheckboxLabel": "Mes agendas",
+      "copyButtonLabel": "Copier mes données",
+      "copyButtonTitle": "@:PreferencesWindow.PWBackupDetails.copyButtonLabel",
+      "dropboxCheckboxLabel": "Casier",
+      "endDateLabel": "Date de fin",
+      "explanationText": "Toutes les données de l'ENT sont sauvegardées quotidiennement par les services techniques.",
+      "selectionLabel": "Sélectionner les données à copier",
+      "schedulerCheckboxLabel": "Mon cahier de texte",
+      "startDateLabel": "Date de début",
+      "warningText": "Ce service vous permet de réaliser une copie de vos données personnelles.",
+      "workspaceCheckboxLabel": "Documents"
+    },
     "PWInterfaceDetails": {
-      "hideMenuLabel": "Cacher le menu par défaut",
+      "hideMenuLabel": "Réduire le menu par défaut",
       "noLabel": "Non",
       "themeColorPickerLabel": "Choisir la couleur du thème",
       "yesLabel": "Oui"
     },
+    "PWNotificationDetails": {
+      "agendaCheckboxLabel": "Agenda",
+      "dropboxCheckboxLabel": "Casier",
+      "forumsCheckboxLabel": "Messages des forums",
+      "frequencyLabel": "Fréquence des notifications",
+      "newsCheckboxLabel": "Actualités des groupes",
+      "panelExplanationText": "Le service de notifications vous permet de rester informé des dernières ressources publiées dans votre ENT, en vous envoyant un récapitulatif dans votre messagerie interne.",
+      "servicesLabel": "Suivre les services",
+      "synchronizationCheckboxLabel": "Synchronisation des utilisateurs et des groupes",
+      "workspaceCheckboxLabel": "Documents des groupes"
+    },
     "PWPersonalDetails": {
       "addressLabel": "Adresse",
+      "deleteButtonTitle": "Supprimer la photo de profil",
       "emailAddressLabel": "Courriel",
       "firstNameLabel": "Prénom",
       "homePhoneNumberLabel": "Téléphone maison",
@@ -237,6 +281,19 @@
       "modalHeaderLabel": "Préférences",
       "notificationsTabLabel": "Notifications",
       "webdavTabLabel": "WebDAV"
+    },
+    "PWWebdavDetails": {
+      "confirmButtonLabel": "Valider",
+      "confirmButtonTitle": "@:PreferencesWindow.PWWebdavDetails.enableButtonLabel",
+      "confirmNewPasswordLabel": "Confirmer votre nouveau mot de passe",
+      "disabledText": "WebDAV n'est pas activé pour votre compte.",
+      "enableButtonLabel": "Activer WebDAV",
+      "enableButtonTitle": "@:PreferencesWindow.PWWebdavDetails.enableButtonLabel",
+      "enabledText": "WebDAV est activé pour votre compte.",
+      "formText": "Le formulaire suivant permet de réinitialiser votre mot de passe WebDAV.",
+      "lostPasswordText": "Mot de passe perdu ? Ouvrez un ticket de support utilisateur.",
+      "newPasswordLabel": "Nouveau mot de passe",
+      "passwordLabel": "Mot de passe actuel"
     }
   },
   "SchoolLifeManager": {

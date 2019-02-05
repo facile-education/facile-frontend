@@ -116,9 +116,9 @@ export default {
 
         return state.widgetList.slice().sort(function (a, b) {
           if (a.scope !== b.scope) {
-            if (rootState.currentUser.isLocalAdmin && (a.scope === localAdminScope || b.scope === localAdminScope)) {
+            if (rootState.user.isLocalAdmin && (a.scope === localAdminScope || b.scope === localAdminScope)) {
               return a.scope === localAdminScope ? -1 : 1
-            } else if (rootState.currentUser.isENTAdmin && (a.scope === entAdminScope || b.scope === entAdminScope)) {
+            } else if (rootState.user.isENTAdmin && (a.scope === entAdminScope || b.scope === entAdminScope)) {
               return a.scope === entAdminScope ? -1 : 1
             }
           }

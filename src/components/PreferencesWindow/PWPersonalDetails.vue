@@ -1,14 +1,12 @@
 <template>
   <div>
     <div class="user-picture">
-      <img
-        class="picture"
-        :src="userPicture"
+      <NeroUserPicture
+        :image-url="userPicture"
         @click="onPictureClick()"
-      >
-      <div class="background theme-background-color" />
+      />
       <NeroButton
-        :title="$t('TODO')"
+        :title="$t('PreferencesWindow.PWPersonalDetails.deleteButtonTitle')"
         type="circle"
         icon="fa fa-trash"
         cls="cancel"
@@ -24,19 +22,19 @@
       <div><label v-t="'PreferencesWindow.PWPersonalDetails.homePhoneNumberLabel'" /> {{ details.homePhoneNumber }}</div>
       <div><label v-t="'PreferencesWindow.PWPersonalDetails.officePhoneNumberLabel'" /> {{ details.officePhoneNumber }}</div>
       <div><label v-t="'PreferencesWindow.PWPersonalDetails.addressLabel'" /> {{ details.address }}</div>
-
-      details.diffusion ?
     </div>
   </div>
 </template>
 
 <script>
 import NeroButton from '@/components/Nero/NeroButton'
+import NeroUserPicture from '@/components/Nero/NeroUserPicture'
 
 export default {
   name: 'PWPersonalDetails',
   components: {
-    NeroButton
+    NeroButton,
+    NeroUserPicture
   },
   computed: {
     details () {
@@ -64,35 +62,14 @@ export default {
 
 <style lang="scss" scoped>
 .user-picture {
-  width: 123px;
-  height: 123px;
+  display: inline-block;
   position: relative;
-}
-
-.picture {
-  height: 106px;
-  width: 106px;
-  border-radius: 50%;
-  position: absolute;
-  z-index: 1;
-  margin: 3px;
-
-  &:hover {
-    cursor: pointer;
-  }
-}
-
-.background {
-  width: 112px;
-  height: 112px;
-  border-radius: 50%;
-  position: absolute;
 }
 
 .cancel {
   position: absolute;
   z-index: 2;
-  right: 10px;
+  right: 5px;
 }
 
 .informations {

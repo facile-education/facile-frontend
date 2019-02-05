@@ -17,6 +17,7 @@ export default {
     isStudent: false,
     isTeacher: false,
     isParent: false,
+    hasWebdavEnabled: false,
     schools: [],
     details: {}
   },
@@ -35,6 +36,8 @@ export default {
       state.isTeacher = payload.isTeacher
       state.isParent = payload.isParent
 
+      state.hasWebdavEnabled = payload.hasWebdavEnabled
+
       state.schools = payload.schools
     },
     hack (state, payload) {
@@ -49,6 +52,9 @@ export default {
         Vue.set(state, 'isTeacher', payload.isTeacher)
         Vue.set(state, 'isParent', payload.isParent)
       }
+    },
+    updateInterfacePreferences (state, payload) {
+      state.themeColor = payload.themeColor
     },
     updateUserDetails (state, payload) {
       Vue.set(state.details, 'address', payload.address)
@@ -65,7 +71,9 @@ export default {
     getPersonalDetails ({ commit }) {
       userService.getPersonalDetails().then(
         (data) => {
-          commit('updateUserDetails', data)
+          if (data.success) {
+            commit('updateUserDetails', data)
+          }
         },
         (err) => {
           // TODO toastr
@@ -75,20 +83,25 @@ export default {
     initUserInformations ({ state, commit }) {
       userService.getUserInformations().then(
         (data) => {
-          // TODO get all from back
-          data.user.isAdministrator = true
-          data.user.isLocalAdmin = false
-          data.user.isPersonnel = true
-          data.user.isStudent = false
-          data.user.isTeacher = false
-          data.user.schools = [{ homeSchool: true, link: 'google.fr', name: 'Lg Elise De La Croix' }]
+          if (data.success) {
+            // TODO get all from back-end
+            data.user.isAdministrator = true
+            data.user.isLocalAdmin = false
+            data.user.isPersonnel = true
+            data.user.isStudent = false
+            data.user.isTeacher = false
+            data.user.hasWebdavEnabled = true
+            data.user.schools = [{ homeSchool: true, link: 'google.fr', name: 'Lg Elise De La Croix' }]
 
-          data.user.themeColor = '#' + data.user.themeColor
-          if (data.user.themeColor !== state.themeColor) {
-            NeroUtils.Theme.updateColor(state.themeColor, data.user.themeColor)
+            if (data.user.themeColor.indexOf('#') === -1) {
+              data.user.themeColor = '#' + data.user.themeColor
+            }
+            if (data.user.themeColor !== state.themeColor) {
+              NeroUtils.Theme.updateColor(state.themeColor, data.user.themeColor)
+            }
+            console.log(data)
+            commit('initUserInformations', data.user)
           }
-          console.log(data)
-          commit('initUserInformations', data.user)
         },
         (err) => {
           // TODO toastr
@@ -97,6 +110,18 @@ export default {
     },
     hack ({ commit }, infos) {
       commit('hack', infos)
+    },
+    saveInterfacePreferences ({ commit }, preferences) {
+      userService.updateInterfacePreferences(preferences).then(
+        (data) => {
+          if (data.success) {
+            commit('updateInterfacePreferences', preferences)
+          }
+        },
+        (err) => {
+          // TODO toastr
+          console.log(err)
+        })
     }
   },
   getters: {
