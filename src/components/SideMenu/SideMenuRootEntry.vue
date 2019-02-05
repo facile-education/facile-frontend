@@ -143,7 +143,7 @@ export default {
 }
 
 .menu-entry {
-  // position: relative;
+  position: relative;
   white-space: nowrap;
   color: $text-color-menu;
 
