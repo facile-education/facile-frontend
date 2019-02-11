@@ -5,20 +5,24 @@ import i18n from './lang/lang.js'
 
 Vue.use(Router)
 
+// Router definition
 var router = new Router({
   routes: [],
   linkActiveClass: 'router-link-active theme-text-color'
 })
 
+// Update browser tab title
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title || 'Nero'
   next()
 })
 
+// Update menu CSS
 router.afterEach((to, from) => {
   store.dispatch('nero/updateActiveRoute', to.path)
 })
 
+// Return mobile menu thanks to "isMobile" property
 router.getMobileMenu = (menu) => {
   if (!menu) return []
 
@@ -34,10 +38,12 @@ router.getMobileMenu = (menu) => {
   return mobileMenu
 }
 
+// Add function allowing to dynamically add routes
 router.createRoutes = (menu) => {
   router.addRoutes(getRoutes(menu))
 }
 
+// Define home route with entry
 var setHomeRoute = (entry) => {
   return {
     path: '/',
@@ -57,13 +63,14 @@ var getRouteEntry = (entry) => {
   }
 }
 
+// Return an array containing all the user routes
 var getRoutes = (menu) => {
   if (!menu) return []
 
   var routes = []
   for (var idx = 0; idx < menu.length; ++idx) {
     if (menu[idx].isLeaf) {
-      if (menu[idx].isDefault) {
+      if (menu[idx].isHomePage) {
         routes.push(setHomeRoute(menu[idx]))
       }
       var route = getRouteEntry(menu[idx])
