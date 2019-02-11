@@ -7,7 +7,7 @@ export default {
   deleteWidget
 
 }
-const url = constants.DASHBOARD_MANAGER_URL // constants.BASE_URL + '/api/get_managed_widget_list'
+const url = constants.DASHBOARD_MANAGER_URL
 
 function getSchoolDMWidgetList (schoolId) {
   return axios.get(url, {
