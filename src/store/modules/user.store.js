@@ -13,12 +13,12 @@ export default {
     isAdministrator: false,
     isLocalAdmin: false,
     isENTAdmin: false,
-    isPersonnel: false,
+    isPersonal: false,
     isStudent: false,
     isTeacher: false,
     isParent: false,
     hasWebdavEnabled: false,
-    schools: [],
+    schoolList: [],
     details: {}
   },
   mutations: {
@@ -31,14 +31,14 @@ export default {
 
       state.isAdministrator = payload.isAdministrator
       state.isLocalAdmin = payload.isLocalAdmin
-      state.isPersonnel = payload.isPersonnel
+      state.isPersonal = payload.isPersonal
       state.isStudent = payload.isStudent
       state.isTeacher = payload.isTeacher
       state.isParent = payload.isParent
 
       state.hasWebdavEnabled = payload.hasWebdavEnabled
 
-      state.schools = payload.schools
+      state.schoolList = payload.schoolList
     },
     hack (state, payload) {
       if (payload.isAdministrator || payload.isLocalAdmin ||
@@ -47,7 +47,7 @@ export default {
         Vue.set(state, 'isLocalAdmin', payload.isLocalAdmin)
         Vue.set(state, 'isENTAdmin', payload.isENTAdmin)
       } else {
-        Vue.set(state, 'isPersonnel', payload.isPersonnel)
+        Vue.set(state, 'isPersonal', payload.isPersonal)
         Vue.set(state, 'isStudent', payload.isStudent)
         Vue.set(state, 'isTeacher', payload.isTeacher)
         Vue.set(state, 'isParent', payload.isParent)
@@ -84,22 +84,16 @@ export default {
       userService.getUserInformations().then(
         (data) => {
           if (data.success) {
-            // TODO get all from back-end
-            data.user.isAdministrator = true
-            data.user.isLocalAdmin = false
-            data.user.isPersonnel = true
-            data.user.isStudent = false
-            data.user.isTeacher = false
-            data.user.hasWebdavEnabled = true
-            data.user.schools = [{ homeSchool: true, link: 'google.fr', name: 'Lg Elise De La Croix' }]
+            // Handle theme color
+            if (data.user.themeColor !== '') {
+              if (data.user.themeColor.indexOf('#') === -1) {
+                data.user.themeColor = '#' + data.user.themeColor
+              }
+              if (data.user.themeColor !== state.themeColor) {
+                NeroUtils.Theme.updateColor(state.themeColor, data.user.themeColor)
+              }
+            }
 
-            if (data.user.themeColor.indexOf('#') === -1) {
-              data.user.themeColor = '#' + data.user.themeColor
-            }
-            if (data.user.themeColor !== state.themeColor) {
-              NeroUtils.Theme.updateColor(state.themeColor, data.user.themeColor)
-            }
-            console.log(data)
             commit('initUserInformations', data.user)
           }
         },
@@ -126,9 +120,9 @@ export default {
   },
   getters: {
     homeSchool (state) {
-      for (var index = 0; index < state.schools.length; ++index) {
-        if (state.schools[index].homeSchool) {
-          return state.schools[index]
+      for (var index = 0; index < state.schoolList.length; ++index) {
+        if (state.schoolList[index].homeSchool) {
+          return state.schoolList[index]
         }
       }
     }

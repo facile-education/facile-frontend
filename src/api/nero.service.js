@@ -1,17 +1,15 @@
 import axios from 'axios'
-import constants from './constants'
+import constants from '@/api/constants'
 
 export default {
-  getUserMenu,
-  getMobileMenu
+  getUserMenu
 }
 
 function getUserMenu () {
-  const url = constants.BASE_URL + '/api/get_menu'
-  return axios.get(url).then(response => response.data)
-}
-
-function getMobileMenu () {
-  const url = constants.BASE_URL + '/api/get_mobile_menu'
-  return axios.get(url).then(response => response.data)
+  const url = constants.MENU_MANAGER_URL
+  return axios.get(url, {
+    params: {
+      cmd: 'getUserMenu'
+    }
+  }).then(response => response.data)
 }

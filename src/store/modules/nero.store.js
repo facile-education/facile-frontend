@@ -81,14 +81,6 @@ export default {
           console.log(err)
         })
     },
-    initMobileMenu ({ commit }) {
-      neroService.getMobileMenu().then(
-        (data) => {
-          if (data.success) {
-            commit('initMobileMenu', data.menu)
-          }
-        })
-    },
     toggleMobileMenu ({ commit }) {
       commit('toggleMobileMenu')
     },
