@@ -38,7 +38,7 @@ export default {
   name: 'MobileMenu',
   computed: {
     menu () {
-      return this.$store.getters['nero/getMobileMenu']
+      return this.$store.state.nero.menu
     }
   },
   methods: {

@@ -2,7 +2,7 @@
   <div class="banner-search">
     <input
       v-if="$device.desktop"
-      :placeholder="$t('banner.search')"
+      :placeholder="$t('Banner.BannerSearch.searchLabel')"
       class="search-input"
     ><!-- Comment the inline whitespace
     --><span

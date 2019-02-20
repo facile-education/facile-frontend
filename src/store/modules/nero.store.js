@@ -16,6 +16,7 @@ export default {
     isMobileMenuDisplayed: false,
     isImagePickerModalDisplayed: false,
     isPreferencesModalDisplayed: false,
+    isMenuExpandedOnLoad: undefined,
     menu: undefined,
     menuExpanded: undefined,
     notifications: {
@@ -31,6 +32,7 @@ export default {
     initSideMenu (state, payload) {
       state.menu = payload.menu
       state.menuExpanded = payload.expanded
+      state.isMenuExpandedOnLoad = payload.expanded
     },
     showConfirmModal (state) {
       Vue.set(state.confirmModal, 'isDisplayed', true)

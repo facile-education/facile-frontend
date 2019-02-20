@@ -56,6 +56,9 @@ export default {
     updateInterfacePreferences (state, payload) {
       state.themeColor = payload.themeColor
     },
+    updatePicture (state, payload) {
+      state.picture = payload
+    },
     updateUserDetails (state, payload) {
       Vue.set(state.details, 'address', payload.address)
       Vue.set(state.details, 'firstName', payload.firstName)
@@ -110,6 +113,18 @@ export default {
         (data) => {
           if (data.success) {
             commit('updateInterfacePreferences', preferences)
+          }
+        },
+        (err) => {
+          // TODO toastr
+          console.log(err)
+        })
+    },
+    saveProfilePicture ({ commit }, formData) {
+      userService.uploadProfilePicture(formData).then(
+        (data) => {
+          if (data.success) {
+            commit('updatePicture', data.urlThumb)
           }
         },
         (err) => {

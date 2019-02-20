@@ -10,28 +10,44 @@
 
     <div slot="body">
       <div class="cropper">
-        <CustomCropper :img="image" />
+        <CustomCropper
+          :img="image"
+          @select-image="onSelect"
+        />
       </div>
       <div class="personal-computer">
-        PC picker
-        <div class="reset-img">
-          <i class="icon-reset" />
-          <span>select image</span>
-          <input
-            id="file_input"
-            type="file"
-            accept="image/png,image/jpg,image/gif"
-            @change="fileChange"
-          >
+        <h4 v-t="'ImagePickerWindow.IPWImagePickerModal.personalComputerHeader'" />
+        <div>
+          <div class="input-button">
+            <i class="icon-reset" />
+            <span v-t="'ImagePickerWindow.IPWImagePickerModal.fileInputLabel'" />
+            <input
+              id="file_input"
+              type="file"
+              accept="image/png,image/jpg,image/gif"
+              @change="fileChange"
+            >
+          </div>
+          <span
+            v-if="fileName === ''"
+            v-t="'ImagePickerWindow.IPWImagePickerModal.noFilePickedLabel'"
+          />
+          <span v-else>
+            {{ fileName }}
+          </span>
         </div>
+        <label class="max-size">
+          {{ $t('ImagePickerWindow.IPWImagePickerModal.maxSizeLabel') }} -
+          {{ $t('ImagePickerWindow.IPWImagePickerModal.extensionsLabel') }}
+        </label>
       </div>
       <div class="nero-documents">
-        Workspace / Dropbox picker
+        <h4 v-t="'ImagePickerWindow.IPWImagePickerModal.neroDocumentsHeader'" />
       </div>
     </div>
     <NeroButton
       slot="footer"
-      :label="$t('TODO')"
+      :label="$t('ImagePickerWindow.IPWImagePickerModal.saveButtonLabel')"
       @click="onConfirm"
     />
   </NeroWindow>
@@ -51,6 +67,8 @@ export default {
   },
   data () {
     return {
+      imageBlob: undefined,
+      fileName: '',
       image: '',
       $input: null
     }
@@ -61,49 +79,70 @@ export default {
   methods: {
     fileChange () {
       var vm = this
-      var fd = new FileReader()
-      fd.onloadend = function () {
-        vm.image = fd.result
+      var fileReader = new FileReader()
+      fileReader.onloadend = function () {
+        vm.image = fileReader.result
       }
       if (this.$input.files && this.$input.files[0]) {
-        fd.readAsDataURL(this.$input.files[0])
+        fileReader.readAsDataURL(this.$input.files[0])
       }
     },
     onClose () {
       this.$store.dispatch('nero/closeImagePickerModal')
     },
     onConfirm () {
-      console.log('save image')
+      if (this.imageBlob !== undefined) {
+        var formData = new FormData()
+        formData.append('files', this.imageBlob, this.fileName + 't.png')
+
+        this.$store.dispatch('user/saveProfilePicture', formData)
+        this.$store.dispatch('nero/closeImagePickerModal')
+      } else {
+        this.$store.dispatch('nero/closeImagePickerModal')
+      }
+    },
+    onSelect (blob) {
+      this.imageBlob = blob
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+@import 'src/assets/css/constants';
 
-.personal-computer {
-  border: 4px solid red;
+.personal-computer h4,
+.nero-documents h4 {
+  margin: 10px 0px;
 }
 
-.reset-img {
-  background: pink;
+.input-button {
+  display: inline-block;
+  border: 1px rgba(0, 0, 0, 0.3) solid;
+  border-radius: 5px;
+  background: $background-light-color;
   position: relative;
-  margin-top: 5px;
-  color: #6d757a;
+  margin: 0 10px;
+  padding: 6px 12px;
   cursor: pointer;
-  width: 100px;
 }
 
-.reset-img input {
+.input-button input {
   position: absolute;
   font-size: 100px;
   right: 0;
   top: 0;
   opacity: 0;
-  cursor: pointer
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
 }
 
-.reset-img:hover {
+.input-button:hover {
   color: #00b5e5;
+}
+
+.max-size {
+  margin-left: 10px;
 }
 </style>

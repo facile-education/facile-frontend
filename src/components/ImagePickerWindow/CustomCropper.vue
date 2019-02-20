@@ -21,20 +21,9 @@
         </div>
       </div>
       <div class="img-preview">
-        <NeroUserPicture :image-url="clipData" />
-        <p class="preview-label">
-          Preview
-        </p>
+        <NeroUserPicture :image-url="dataURL" />
+        <p v-t="'ImagePickerWindow.CustomCropper.previewLabel'" />
       </div>
-    </div>
-    <div>
-      <a
-        class="modal-btn btn-confirm"
-        :href="clipData"
-        download="crop.jpg"
-      >
-        clip
-      </a>
     </div>
   </div>
 </template>
@@ -59,6 +48,7 @@ export default {
       $srcImg: null,
       $resImg: null,
       $imgContainer: null,
+      bufferCanvas: null,
       nw: 0,
       nh: 0,
       ratio: 10 / 10, // equal to SelectBox's width / height
@@ -68,16 +58,11 @@ export default {
     }
   },
   computed: {
-    clipData () {
-      if (!this.rec || !this.rec.w || !this.rec.h) {
+    dataURL () {
+      if (!this.rec || !this.rec.w || !this.rec.h || !this.bufferCanvas) {
         return ''
       }
-      const bufferCanvas = document.createElement('canvas')
-      const bfx = bufferCanvas.getContext('2d')
-      bufferCanvas.width = this.computedRec.w
-      bufferCanvas.height = this.computedRec.h
-      bfx.drawImage(this.$srcImg, -this.computedRec.l, -this.computedRec.t, this.nw, this.nh)
-      return bufferCanvas.toDataURL('image/jpeg', 1)
+      return this.bufferCanvas.toDataURL('image/jpeg', 1)
     },
     computedRec () {
       const cw = this.$imgContainer.offsetWidth
@@ -98,11 +83,27 @@ export default {
     this.$containerBox = this.$el.querySelectorAll('.container-bg')[0]
   },
   methods: {
+    clipData () {
+      if (!this.rec || !this.rec.w || !this.rec.h) {
+        return ''
+      }
+
+      this.bufferCanvas = document.createElement('canvas')
+      this.bufferCanvas.width = this.computedRec.w
+      this.bufferCanvas.height = this.computedRec.h
+      const bfx = this.bufferCanvas.getContext('2d')
+      bfx.drawImage(this.$srcImg, -this.computedRec.l, -this.computedRec.t, this.nw, this.nh)
+    },
     selectChange () {
-      console.log('On select change')
+      this.clipData()
     },
     selectEnd () {
-      console.log('On select end / Emit event')
+      if (this.bufferCanvas !== null) {
+        var vm = this
+        this.bufferCanvas.toBlob(function (blob) {
+          vm.$emit('select-image', blob)
+        })
+      }
     },
     srcImgLoaded () {
       this.nw = this.$srcImg.naturalWidth
@@ -110,6 +111,7 @@ export default {
       this.clearSelect()
       this.setImgSize()
       this.rec = this.$refs.box.rec
+      this.selectChange()
     },
     clearSelect () {
       const box = this.$refs.box

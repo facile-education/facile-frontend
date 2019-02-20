@@ -5,7 +5,8 @@ import NeroUtils from '@/utils/nero.utils'
 export default {
   getPersonalDetails,
   getUserInformations,
-  updateInterfacePreferences
+  updateInterfacePreferences,
+  uploadProfilePicture
 }
 
 /**
@@ -46,4 +47,17 @@ function updateInterfacePreferences (preferences) {
       'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
     }
   }).then(response => response.data)
+}
+
+/**
+ * Update user profile picture
+ * @param {*} formData
+ */
+function uploadProfilePicture (formData) {
+  return axios.post(constants.PREFERENCES_URL + '&cmd=uploadPicture', formData,
+    {
+      headers: {
+        'Content-Type': undefined
+      }
+    }).then(response => response.data)
 }
