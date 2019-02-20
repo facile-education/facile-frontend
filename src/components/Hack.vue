@@ -21,8 +21,8 @@
       <a @click="setTeacherRole">
         Teacher
       </a>|
-      <a @click="setPersonnelRole">
-        Personnel
+      <a @click="setPersonalRole">
+        Personal
       </a>|
       <a @click="setParentRole">
         Parent
@@ -53,8 +53,8 @@ export default {
     setTeacherRole () {
       this.$store.dispatch('user/hack', { isTeacher: true })
     },
-    setPersonnelRole () {
-      this.$store.dispatch('user/hack', { isPersonnel: true })
+    setPersonalRole () {
+      this.$store.dispatch('user/hack', { isPersonal: true })
     },
     setParentRole () {
       this.$store.dispatch('user/hack', { isParent: true })

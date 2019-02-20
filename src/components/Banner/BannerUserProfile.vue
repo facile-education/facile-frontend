@@ -1,5 +1,6 @@
 <template>
   <div class="profile">
+    <!-- TODO remove setLang example -->
     <img
       class="picture"
       :src="userPicture"
@@ -25,19 +26,27 @@
     <BannerItem
       v-if="$device.desktop"
       icon="fa fa-chevron-down"
-      @click="$store.dispatch('nero/openPreferencesModal')"
+      @click="togglePopoverMenu"
     />
+    <BannerPopoverMenu v-if="isPopoverMenuDisplayed" />
   </div>
 </template>
 
 <script>
 import BannerItem from '@/components/Banner/BannerItem'
+import BannerPopoverMenu from '@/components/Banner/BannerPopoverMenu'
 import i18n from '@/lang/lang'
 
 export default {
   name: 'BannerUserProfile',
   components: {
-    BannerItem
+    BannerItem,
+    BannerPopoverMenu
+  },
+  data () {
+    return {
+      isPopoverMenuDisplayed: false
+    }
   },
   computed: {
     userName () {
@@ -54,6 +63,9 @@ export default {
   methods: {
     setLang: function (lang) {
       i18n.setLang(lang)
+    },
+    togglePopoverMenu () {
+      this.isPopoverMenuDisplayed = !this.isPopoverMenuDisplayed
     }
   }
 }
@@ -63,6 +75,7 @@ export default {
 @import 'src/assets/css/constants';
 
 .profile {
+  position: relative;
   display: inline-block;
 }
 

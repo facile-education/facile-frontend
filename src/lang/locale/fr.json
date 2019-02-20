@@ -8,9 +8,6 @@
       "National_7": "Personnel de la collectivité et autres profils"
     }
   },
-  "banner": {
-    "search": "Recherche"
-  },
   "SideMenu": {
     "category": {
       "administration": "Administration",
@@ -115,6 +112,18 @@
       "updateButton": "Enregistrer"
     }
   },
+  "Banner": {
+    "BannerPopoverMenu": {
+      "controlPanelLabel": "Panneau de contrôle",
+      "informationsLabel": "Informations",
+      "logoutButtonLabel": "Fermer la session",
+      "preferencesLabel": "Préférences",
+      "supportLabel": "Support utilisateur"
+    },
+    "BannerSearch": {
+      "searchLabel": "Recherche"
+    }
+  },
   "CommunicationManager": {
     "CMInternalRights": {
       "informations": "Ce service permet de définir, par profil d'usagers, les listes de contacts qui seront automatiquement créées dans le carnet des utilisateurs. Vous pouvez ainsi gérer les possibilités de communication pour chaque profil au sein de votre établissement ou cité scolaire.",
@@ -211,6 +220,20 @@
       "lastPublicationsTabLabel": "Publications Récentes",
       "statisticsTabLabel": "Statistiques",
       "managerTabLabel": "Gestion"
+    }
+  },
+  "ImagePickerWindow": {
+    "CustomCropper" : {
+      "previewLabel": "Résultat"
+    },
+    "IPWImagePickerModal": {
+      "extensionsLabel": "Extensions autorisées : ",
+      "fileInputLabel": "Choisir un fichier",
+      "maxSizeLabel": "Taille autorisée par fichier : Mo",
+      "neroDocumentsHeader": "Depuis mon espace de travail",
+      "noFilePickedLabel": "Aucun fichier selectionné",
+      "personalComputerHeader": "Depuis mon ordinateur",
+      "saveButtonLabel": "Valider"
     }
   },
   "NeroAutocomplete": {

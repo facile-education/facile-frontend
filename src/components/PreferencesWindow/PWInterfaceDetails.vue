@@ -54,6 +54,7 @@ export default {
   },
   created () {
     this.themeColor = this.$store.state.user.themeColor
+    this.menuHidden = this.$store.state.nero.isMenuExpandedOnLoad ? 'no' : 'yes'
   },
   beforeDestroy () {
     // Save preferences
