@@ -37,12 +37,11 @@ export default {
 
 <style lang="scss" scoped>
 .banner {
-  position: relative;
+  display: flex;
 }
 
 .right-section {
-  display: inline-block;
-  position: absolute;
-  right: 0;
+  margin-left: auto;
+  display: flex;
 }
 </style>
