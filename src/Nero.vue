@@ -1,5 +1,8 @@
 <template>
-  <div id="app">
+  <div
+    id="app"
+    :class="bodyClasses"
+  >
     <header class="nero-header theme-background-color">
       <Banner />
     </header>
@@ -10,7 +13,6 @@
       <SideMenu />
     </section>
     <section
-      :class="bodyClasses"
       class="nero-body"
     >
       <RouterView />
@@ -89,6 +91,7 @@ export default {
 
 html {
   box-sizing: border-box;
+  height: 100%;
 }
 
 *, *:before, *:after {
@@ -98,6 +101,7 @@ html {
 body {
   margin: 0;
   overflow: hidden;
+  height: 100%;
 }
 
 p {
@@ -109,6 +113,21 @@ p {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: $text-color;
+  display: grid;
+  grid-template-rows: $banner-height calc(100% - #{$banner-height});
+  height: 100%;
+
+  &.nero-menu-expanded {
+    grid-template-columns: $open-side-menu-width calc(100% - #{$open-side-menu-width});
+  }
+
+  &.nero-menu-retracted {
+    grid-template-columns: $side-menu-width calc(100% - #{$side-menu-width});;
+  }
+
+  &.nero-mobile {
+    grid-template-columns: auto;
+  }
 }
 
 .theme-background-color {
@@ -128,40 +147,20 @@ p {
 }
 
 .nero-header {
-  width: 100%;
+  grid-column: span 2;
   border: 0;
-  height: $banner-height;
   padding: 6px 10px;
   box-shadow: -1px 1px 6px #888;
-  position: fixed;
   top: 0;
   z-index: $banner-z-index;
 }
 
-.nero-menu,
-.nero-body {
-  display: inline-block;
-  vertical-align: top;
-}
-
-.nero-body {
-  height: 100vh;
-  padding-top: $banner-height; // Banner
-
+/* Not working anymore
+.nero-body,
+.nero-menu {
   @extend %side-menu-transition;
-
-  &.nero-menu-expanded {
-    @include calc(width, '100% - #{$open-side-menu-width}');
-  }
-
-  &.nero-menu-retracted {
-    @include calc(width, '100% - #{$side-menu-width}');
-  }
-
-  &.nero-mobile {
-    width: 100%;
-  }
 }
+*/
 
 // transition
 .fade-enter-active, .fade-leave-active {
