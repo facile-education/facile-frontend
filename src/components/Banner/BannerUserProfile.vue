@@ -76,18 +76,16 @@ export default {
 
 .profile {
   position: relative;
-  display: inline-block;
+  display: flex;
 }
 
 .picture {
-  display: inline-block;
   border-radius: 50px;
   width: 36px;
   height: 36px;
 }
 
 .user-infos {
-  display: inline-block;
   width: 125px;
   font-size: 12px;
   padding-left: 2px;

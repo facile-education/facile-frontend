@@ -36,7 +36,6 @@ export default {
   margin-left: 3px;
   border: 1px rgba(255,255,255,0.3) solid;
   border-radius: $border-radius;
-  display: inline-block;
   vertical-align: top;
   height: 35px;
   width: 35px;

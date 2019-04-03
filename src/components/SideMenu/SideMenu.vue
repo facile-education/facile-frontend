@@ -63,9 +63,7 @@ export default {
 @import 'src/assets/css/animations';
 
 .side-menu {
-  height: 100vh;
-  width: $side-menu-width;
-  padding-top: $banner-height;
+  height: 100%;
   box-shadow: 1px 1px 6px #888;
   z-index: $side-menu-z-index;
   position: relative;
@@ -81,15 +79,6 @@ export default {
       overflow-x: hidden;
       overflow-y: auto;
     }
-
-/*
-    .side-menu-caret {
-      $caret-padding: 15px;
-      text-align: right;
-      width: $open-side-menu-width - $caret-padding;
-      padding-right: $caret-padding;
-    }
-*/
   }
 }
 
@@ -108,7 +97,7 @@ export default {
   color: $text-color-menu;
   border-top: $border;
   cursor: pointer;
-  width: inherit;
+  width: 100%;
   background-color: $menu-background-color;
 }
 </style>
