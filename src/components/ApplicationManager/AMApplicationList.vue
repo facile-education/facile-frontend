@@ -1,7 +1,7 @@
 <template>
   <div>
     <AMApplication
-      v-for="application in applications"
+      v-for="application in applicationList"
       :key="application.serviceId"
       :application="application"
     />
@@ -23,7 +23,7 @@ export default {
     }
   },
   computed: {
-    applications () {
+    applicationList () {
       var allApplications = this.$store.state.applicationManager.applicationList
       var applications = []
       for (var index = 0; index < allApplications.length; ++index) {
@@ -38,7 +38,6 @@ export default {
   methods: {
     toggleDetails (application) {
       application.showDetails = !application.showDetails
-      console.log(application.showDetails)
     }
   }
 }

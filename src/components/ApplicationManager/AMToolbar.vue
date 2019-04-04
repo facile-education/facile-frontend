@@ -1,8 +1,8 @@
 <template>
   <NeroToolbar v-if="show">
     <NeroDropdown
-      v-if="schools"
-      :list="schools"
+      v-if="managedSchoolList"
+      :list="managedSchoolList"
       display-field="schoolName"
       @dropdown-select="onSchoolSelect"
     />
@@ -31,7 +31,7 @@ export default {
     NeroSpinner
   },
   computed: {
-    schools () {
+    managedSchoolList () {
       return this.$store.state.administration.schoolList
     },
     isAdministrator () {
@@ -39,21 +39,21 @@ export default {
     },
     show () {
       return (this.isAdministrator ||
-        (this.schools !== undefined && this.schools.length > 1))
+        (this.managedSchoolList !== undefined && this.managedSchoolList.length > 1))
     }
   },
   created () {
-    if (this.schools === undefined) {
+    if (this.managedSchoolList === undefined) {
       this.$store.dispatch('getAdministrationSchools')
     }
   },
   methods: {
     onAddApplication () {
-      this.$store.dispatch('resetApplication')
-      this.$store.dispatch('openEditionModal')
+      this.$store.dispatch('applicationManager/resetApplication')
+      this.$store.dispatch('applicationManager/openEditionModal')
     },
     onSchoolSelect (school) {
-      this.$store.dispatch('getSchoolApplications', { school })
+      this.$store.dispatch('applicationManager/getSchoolApplicationList', school)
     }
   }
 }
@@ -61,7 +61,6 @@ export default {
 
 <style lang="scss" scoped>
 .add-button {
-  right: 5px;
-  position: absolute;
+  margin-left: auto;
 }
 </style>

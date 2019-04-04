@@ -16,7 +16,7 @@ export default {
 .toolbar {
   background-color: $toolbar-background-color;
   padding: 5px;
-  position: relative;
+  display: flex;
   /* white-space: nowrap;
   overflow-x: auto; */
   z-index: $service-toolbar-z-index;

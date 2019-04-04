@@ -76,7 +76,7 @@ export default {
   },
   methods: {
     closeModal () {
-      this.$store.dispatch('closeBroadcastModal')
+      this.$store.dispatch('applicationManager/closeBroadcastModal')
     },
     addScope () {
       // TODO code

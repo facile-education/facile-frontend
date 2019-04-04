@@ -1,6 +1,7 @@
 import applicationManagerService from '@/api/applicationManager.service'
 
 export default {
+  namespaced: true,
   state: {
     applicationList: undefined,
     application: undefined,
@@ -8,7 +9,7 @@ export default {
     showEditionModal: false
   },
   mutations: {
-    getSchoolApplications (state, payload) {
+    getSchoolApplicationList (state, payload) {
       state.applicationList = payload
     },
     getApplicationBroadcastScope (state, payload) {
@@ -25,11 +26,11 @@ export default {
     }
   },
   actions: {
-    getSchoolApplications ({ commit }, school) {
+    getSchoolApplicationList ({ commit }, school) {
       applicationManagerService.getSchoolApplications(school.schoolId).then(
         (data) => {
           if (data.success) {
-            commit('getSchoolApplications', data.serviceList)
+            commit('getSchoolApplicationList', data.serviceList)
           }
         },
         (err) => {
@@ -82,19 +83,19 @@ export default {
     }
   },
   getters: {
-    categories (state) {
+    categoryList (state) {
       if (state.applicationList === undefined) {
         return undefined
       }
 
-      var categories = []
+      var categoryList = []
       for (var index = 0; index < state.applicationList.length; ++index) {
         var app = state.applicationList[index].app
-        if (categories.indexOf(app.serviceCategory) === -1) {
-          categories.push(app.serviceCategory)
+        if (categoryList.indexOf(app.serviceCategory) === -1) {
+          categoryList.push(app.serviceCategory)
         }
       }
-      return categories.sort()
+      return categoryList.sort()
     }
   }
 }
