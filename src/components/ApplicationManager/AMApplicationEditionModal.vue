@@ -222,11 +222,11 @@ export default {
       }
     },
     closeModal () {
-      this.$store.dispatch('closeEditionModal')
+      this.$store.dispatch('applicationManager/closeEditionModal')
     },
     selectCategory (category) {
       this.application.serviceCategory = category
-      // Todo remove focus ?
+      // TODO remove focus ?
     },
     removeLogo () {
       // TODO code

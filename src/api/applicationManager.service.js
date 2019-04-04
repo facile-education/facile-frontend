@@ -8,8 +8,9 @@ export default {
   getSchoolClasses
 }
 
+const url = constants.APPLICATION_MANAGER_URL
+
 function getApplicationBroadcastScope (schoolId, applicationId) {
-  const url = constants.BASE_URL + '/api/get_application_broadcast_scope'
   return axios.get(url, {
     params: {
       cmd: 'getDiffusionPerimeter',
@@ -20,7 +21,6 @@ function getApplicationBroadcastScope (schoolId, applicationId) {
 }
 
 function getApplicationDefaultTargetRoles (applicationId) {
-  const url = constants.BASE_URL + '/api/get_application_default_roles'
   return axios.get(url, {
     params: {
       cmd: 'getDefaultRoles',
@@ -30,7 +30,6 @@ function getApplicationDefaultTargetRoles (applicationId) {
 }
 
 function getSchoolApplications (schoolId) {
-  const url = constants.BASE_URL + '/api/get_schools_services'
   return axios.get(url, {
     params: {
       cmd: 'getSchoolServices',
@@ -40,7 +39,6 @@ function getSchoolApplications (schoolId) {
 }
 
 function getSchoolClasses (schoolId) {
-  const url = constants.BASE_URL + '/api/get_school_classes'
   return axios.get(url, {
     params: {
       cmd: 'getListClasses',

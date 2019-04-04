@@ -146,18 +146,18 @@ export default {
   },
   created () {
     // TODO fetch rules
-    this.$store.dispatch('getApplicationBroadcastScope')
-    this.$store.dispatch('updateApplication', this.application)
+    this.$store.dispatch('applicationManager/getApplicationBroadcastScope')
+    this.$store.dispatch('applicationManager/updateApplication', this.application)
   },
   methods: {
     closeDetails () {
       this.$emit('closeDetails')
     },
     toggleBroadcastModal () {
-      this.$store.dispatch('openBroadcastModal')
+      this.$store.dispatch('applicationManager/openBroadcastModal')
     },
     toggleEditionModal () {
-      this.$store.dispatch('openEditionModal')
+      this.$store.dispatch('applicationManager/openEditionModal')
     },
     exportUserList (type) {
       // TODO
