@@ -4,11 +4,11 @@
       v-if="$device.desktop"
       :placeholder="$t('Banner.BannerSearch.searchLabel')"
       class="search-input"
-    ><!-- Comment the inline whitespace
-    --><span
-      :title="$t('banner.search')"
+    >
+    <span
+      :title="$t('Banner.BannerSearch.searchLabel')"
       class="advanced-search"
->
+    >
       <i class="fa fa-search" />
     </span>
   </div>
@@ -25,13 +25,12 @@ export default {
 
 .banner-search {
   border: 1px white solid;
-  display: inline-block;
+  display: flex;
   border-radius: $border-radius;
   height: 35px;
 }
 
 .advanced-search {
-  display: inline-block;
   width: 35px;
   height: 35px;
   line-height: 35px;
