@@ -28,7 +28,11 @@
       slot="body"
       class="nero-form"
     >
-      Toto
+      TODO
+      <CKEditor
+        v-model="news.content"
+        :editor="editor"
+      />
     </div>
 
     <NeroButton
@@ -40,14 +44,22 @@
 </template>
 
 <script>
+import CKEditor from '@ckeditor/ckeditor5-vue'
+import InlineEditor from '@ckeditor/ckeditor5-build-inline'
 import NeroButton from '@/components/Nero/NeroButton'
 import NeroWindow from '@/components/Nero/NeroWindow'
 
 export default {
   name: 'NewsEditionModal',
   components: {
+    CKEditor: CKEditor.component,
     NeroButton,
     NeroWindow
+  },
+  data () {
+    return {
+      editor: InlineEditor
+    }
   },
   computed: {
     news () {

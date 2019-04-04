@@ -10,6 +10,8 @@
     "test:e2e": "vue-cli-service test:e2e"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-inline": "^12.0.0",
+    "@ckeditor/ckeditor5-vue": "^1.0.0-beta.1",
     "axios": "^0.18.0",
     "chart.js": "^2.7.2",
     "register-service-worker": "^1.5.2",
