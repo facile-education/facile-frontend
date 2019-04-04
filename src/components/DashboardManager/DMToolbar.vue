@@ -53,8 +53,7 @@ export default {
 
 <style lang="scss" scoped>
 .add-button {
-  right: 5px;
-  position: absolute;
+  margin-left: auto;
 }
 
 </style>
