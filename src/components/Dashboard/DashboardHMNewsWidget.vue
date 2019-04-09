@@ -6,18 +6,20 @@
         <h4
           v-t="'Dashboard.DashboardHMNewsWidget.widgetHeader'"
         />
-        <NeroButton
-          :title="$t('Dashboard.DashboardHMNewsWidget.manageDelegateButtonTooltip')"
-          type="circle"
-          icon="fa fa-cogs"
-          @click="openDelegationModal"
-        />
-        <NeroButton
-          :title="$t('Dashboard.DashboardHMNewsWidget.addNewsButtonTooltip')"
-          type="circle"
-          icon="fa fa-plus"
-          @click="openEditionModal"
-        />
+        <div class="actions">
+          <NeroButton
+            :title="$t('Dashboard.DashboardHMNewsWidget.manageDelegateButtonTooltip')"
+            type="circle"
+            icon="fa fa-cogs"
+            @click="openDelegationModal"
+          />
+          <NeroButton
+            :title="$t('Dashboard.DashboardHMNewsWidget.addNewsButtonTooltip')"
+            type="circle"
+            icon="fa fa-plus"
+            @click="openEditionModal"
+          />
+        </div>
       </div>
       <div class="body">
         <NewsList :is-head-master="isHeadMaster" />

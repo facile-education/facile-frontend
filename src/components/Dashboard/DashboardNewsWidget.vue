@@ -6,12 +6,14 @@
         <h4
           v-t="'Dashboard.DashboardNewsWidget.widgetHeader'"
         />
-        <NeroButton
-          :title="$t('Dashboard.DashboardNewsWidget.addNewsButtonTooltip')"
-          type="circle"
-          icon="fa fa-plus"
-          @click="openEditionModal"
-        />
+        <div class="actions">
+          <NeroButton
+            :title="$t('Dashboard.DashboardNewsWidget.addNewsButtonTooltip')"
+            type="circle"
+            icon="fa fa-plus"
+            @click="openEditionModal"
+          />
+        </div>
       </div>
       <div class="body">
         <NewsList />
