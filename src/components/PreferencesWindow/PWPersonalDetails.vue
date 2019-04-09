@@ -54,7 +54,7 @@ export default {
       this.$store.dispatch('nero/openImagePickerModal')
     },
     onDeletePicture () {
-      console.log('delete picture')
+      this.$store.dispatch('user/removePicture')
     }
   }
 }
