@@ -5,6 +5,7 @@ import NeroUtils from '@/utils/nero.utils'
 export default {
   getPersonalDetails,
   getUserInformations,
+  removePicture,
   updateInterfacePreferences,
   uploadProfilePicture
 }
@@ -27,6 +28,17 @@ function getUserInformations () {
   return axios.get(constants.PREFERENCES_URL, {
     params: {
       cmd: 'getUserInformations'
+    }
+  }).then(response => response.data)
+}
+
+/**
+ * Remove user portrait
+ */
+function removePicture () {
+  return axios.get(constants.PREFERENCES_URL, {
+    params: {
+      cmd: 'removePicture'
     }
   }).then(response => response.data)
 }

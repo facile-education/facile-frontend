@@ -108,6 +108,19 @@ export default {
     hack ({ commit }, infos) {
       commit('hack', infos)
     },
+    removePicture ({ commit }) {
+      userService.removePicture().then(
+        (data) => {
+          if (data.success) {
+            console.log('TODO get default img dynamiccaly')
+            commit('updatePicture', '/image/user_male_portrait?img_id=3274117&t=1546588956172')
+          }
+        },
+        (err) => {
+          // TODO toastr
+          console.log(err)
+        })
+    },
     saveInterfacePreferences ({ commit }, preferences) {
       userService.updateInterfacePreferences(preferences).then(
         (data) => {
