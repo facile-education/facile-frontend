@@ -19,6 +19,8 @@ export default {
   border-radius: 5px;
 
   .header {
+    display: flex;
+    align-items: center;
     border-bottom: 1px silver solid;
     .widget-icon {
       font-size: 1.5em;
@@ -26,8 +28,11 @@ export default {
     }
 
     h4 {
-      display: inline-block;
       margin: 0;
+    }
+
+    .actions {
+      margin-left: auto;
     }
   }
 
