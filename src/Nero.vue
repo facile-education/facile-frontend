@@ -29,8 +29,6 @@
 </template>
 
 <script>
-import 'vue-swatches/dist/vue-swatches.min.css'
-
 import Banner from '@/components/Banner/Banner'
 import Hack from '@/components/Hack'
 import IPWImagePickerModal from '@/components/ImagePickerWindow/IPWImagePickerModal'
