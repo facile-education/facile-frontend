@@ -1,6 +1,7 @@
 import forumsService from '@/api/forums.service'
 
 export default {
+  namespaced: true,
   state: {
     forumList: undefined,
     selectedForumIndex: -1,

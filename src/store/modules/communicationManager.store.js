@@ -1,6 +1,7 @@
 import communicationManagerService from '@/api/communicationManager.service'
 
 export default {
+  namespaced: true,
   state: {
     selectedSchoolId: undefined,
     roleList: undefined,

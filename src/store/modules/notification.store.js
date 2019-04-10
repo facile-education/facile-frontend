@@ -1,4 +1,6 @@
+// Toastr store
 export default {
+  namespaced: true,
   state: {
     // Type is 'error', 'success' or 'information'
     type: undefined,
@@ -10,11 +12,7 @@ export default {
       state.message = payload.message
     }
   },
-  actions: {
-    getSchoolServices ({ commit, state }, notification) {
-      commit('updateNotification', notification)
-    }
-  },
+  actions: {},
   getters: {
   }
 }

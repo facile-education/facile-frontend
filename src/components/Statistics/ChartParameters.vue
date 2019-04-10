@@ -102,7 +102,7 @@ export default {
   },
   created () {
     if (this.schoolList === undefined) {
-      this.$store.dispatch('getAdministrationSchools')
+      this.$store.dispatch('administration/getAdministrationSchools')
     }
   },
   methods: {

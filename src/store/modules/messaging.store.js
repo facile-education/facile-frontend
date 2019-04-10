@@ -1,6 +1,7 @@
 import messagingService from '@/api/messaging.service'
 
 export default {
+  namespaced: true,
   state: {
     messageList: undefined,
     boxList: undefined,

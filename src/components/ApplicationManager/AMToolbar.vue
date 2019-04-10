@@ -44,7 +44,7 @@ export default {
   },
   created () {
     if (this.managedSchoolList === undefined) {
-      this.$store.dispatch('getAdministrationSchools')
+      this.$store.dispatch('administration/getAdministrationSchools')
     }
   },
   methods: {

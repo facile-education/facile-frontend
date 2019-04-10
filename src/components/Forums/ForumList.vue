@@ -26,7 +26,7 @@ export default {
   },
   created () {
     if (this.forumList === undefined) {
-      this.$store.dispatch('initForumList')
+      this.$store.dispatch('forums/initForumList')
     }
   }
 }
