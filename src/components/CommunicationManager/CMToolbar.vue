@@ -37,14 +37,14 @@ export default {
   },
   created () {
     if (this.schools === undefined) {
-      this.$store.dispatch('getAdministrationSchools')
+      this.$store.dispatch('administration/getAdministrationSchools')
     }
   },
   methods: {
     onSchoolSelect (school) {
-      this.$store.dispatch('setCommunicationManagerSelectedSchoolId', { schoolId: school.schoolId })
-      this.$store.dispatch('getSchoolInternalCommunicationRights', { schoolId: school.schoolId })
-      this.$store.dispatch('getSchoolExternalCommunicationRights', { schoolId: school.schoolId })
+      this.$store.dispatch('communicationManager/setCommunicationManagerSelectedSchoolId', { schoolId: school.schoolId })
+      this.$store.dispatch('communicationManager/getSchoolInternalCommunicationRights', { schoolId: school.schoolId })
+      this.$store.dispatch('communicationManager/getSchoolExternalCommunicationRights', { schoolId: school.schoolId })
     }
   }
 }

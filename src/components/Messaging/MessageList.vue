@@ -26,7 +26,7 @@ export default {
   },
   created () {
     if (this.messageList === undefined) {
-      this.$store.dispatch('initMessageList')
+      this.$store.dispatch('messaging/initMessageList')
     }
   }
 }

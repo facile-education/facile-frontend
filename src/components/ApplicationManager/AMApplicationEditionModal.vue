@@ -206,10 +206,10 @@ export default {
   },
   created () {
     if (this.portletList === undefined) {
-      this.$store.dispatch('getPortletList')
+      this.$store.dispatch('administration/getPortletList')
     }
     if (this.roleList === undefined) {
-      this.$store.dispatch('getRoleList')
+      this.$store.dispatch('administration/getRoleList')
     }
     this.application = this.$store.state.applicationManager.application
   },

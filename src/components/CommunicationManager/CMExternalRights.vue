@@ -56,7 +56,7 @@ export default {
   },
   created () {
     if (this.roleList === undefined) {
-      this.$store.dispatch('initCommunicationManagerRoleList')
+      this.$store.dispatch('communicationManager/initCommunicationManagerRoleList')
     }
   },
   methods: {
@@ -70,7 +70,7 @@ export default {
         national7ExternalCommunicationActive: this.rightList.National_7
       }
 
-      this.$store.dispatch('updateSchoolExternalCommunicationRights',
+      this.$store.dispatch('communicationManager/updateSchoolExternalCommunicationRights',
         { schoolId, rightList: result })
     },
     onInput (params) {

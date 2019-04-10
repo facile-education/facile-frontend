@@ -66,14 +66,14 @@ export default {
   },
   created () {
     if (this.roleList === undefined) {
-      this.$store.dispatch('initCommunicationManagerRoleList')
+      this.$store.dispatch('communicationManager/initCommunicationManagerRoleList')
     }
   },
   methods: {
     onSave () {
       console.log(this.rightList)
       var schoolId = this.$store.state.communicationManager.selectedSchoolId
-      this.$store.dispatch('updateSchoolInternalCommunicationRights',
+      this.$store.dispatch('communicationManager/updateSchoolInternalCommunicationRights',
         { schoolId, rightList: this.rightList })
     },
     onInput (right) {

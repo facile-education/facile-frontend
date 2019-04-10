@@ -19,7 +19,7 @@ export default {
   methods: {
     selectForum () {
       // Set selected forum
-      this.$store.dispatch('getForumEntryList')
+      this.$store.dispatch('forums/getForumEntryList')
     }
   }
 }

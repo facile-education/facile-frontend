@@ -40,7 +40,7 @@ export default {
   },
   created () {
     if (this.boxeList === undefined) {
-      this.$store.dispatch('initBoxList')
+      this.$store.dispatch('messaging/initBoxList')
     }
   },
   methods: {

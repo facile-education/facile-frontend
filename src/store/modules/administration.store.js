@@ -1,6 +1,7 @@
 import administrationService from '@/api/administration.service'
 
 export default {
+  namespaced: true,
   state: {
     schoolList: undefined,
     portletList: undefined,

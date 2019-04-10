@@ -56,7 +56,7 @@ export default {
   },
   methods: {
     selectMessage () {
-      this.$store.dispatch('selectMessage', this.message)
+      this.$store.dispatch('messaging/selectMessage', this.message)
     }
   }
 }
