@@ -21,6 +21,10 @@
         class="item"
         @click="onSelect(item)"
       >
+        <i
+          v-if="item.icon"
+          :class="item.icon"
+        />
         {{ getDisplayValue(item) }} <slot />
       </li>
     </ul>
@@ -43,7 +47,7 @@ export default {
     },
     list: {
       type: Array,
-      required: true
+      default: () => []
     },
     displayField: {
       type: String,
@@ -56,6 +60,10 @@ export default {
     filtered: {
       type: Boolean,
       default: false
+    },
+    sort: {
+      type: Boolean,
+      default: true
     }
   },
   data () {
@@ -65,6 +73,10 @@ export default {
   },
   computed: {
     sortedList () {
+      if (!this.sort) {
+        return this.list
+      }
+
       var listCopy = this.list.slice()
 
       var vm = this
@@ -84,16 +96,8 @@ export default {
       return listCopy.sort(compare)
     },
     filteredList () {
-      var vm = this
-      var filter = NeroUtils.String.normalize(this.input || this.filter)
-
-      return this.sortedList.filter((item) => {
-        if (filter.length === 0) {
-          return true
-        }
-        return (NeroUtils.String.normalize(vm.getDisplayValue(item))
-          .indexOf(filter) !== -1)
-      })
+      var filter = this.input || this.filter
+      return NeroUtils.Array.filter(filter, this.sortedList, this.displayField)
     }
   },
   watch: {
@@ -165,6 +169,11 @@ export default {
     &:hover {
       background-color: #f5f5f5;
     }
+  }
+
+  .fa,
+  .fas {
+    margin-right: 5px;
   }
 }
 </style>

@@ -60,7 +60,7 @@
         class="content"
         v-html="news.content"
       />
-      <!-- TODO Carousel -->
+      <NeroAttachmentList :attachment-list="news.attachFiles" />
     </div>
     <div slot="footer">
       <NeroButton
@@ -75,12 +75,14 @@
 </template>
 
 <script>
+import NeroAttachmentList from '@/components/NeroAttachment/NeroAttachmentList'
 import NeroButton from '@/components/Nero/NeroButton'
 import NeroWindow from '@/components/Nero/NeroWindow'
 
 export default {
   name: 'NewsDelegationModal',
   components: {
+    NeroAttachmentList,
     NeroButton,
     NeroWindow
   },

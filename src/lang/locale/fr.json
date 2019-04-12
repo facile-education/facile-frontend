@@ -239,6 +239,21 @@
   "NeroAutocomplete": {
     "filterPlaceholder": "Filtre"
   },
+  "NeroAttachment": {
+    "NeroAttachmentList": {
+      "addAttachmentButtonTooltip": "Ajouter une pièce jointe",
+      "addAudioRecordingButtonTooltip": "Ajouter un enregistrement audio",
+      "addEdxAssignmentButtonTooltip": "Ajouter une ressource Edx",
+      "addResourceLabel": "Ajouter",
+      "attachmentTitle": "Ressources"
+    },
+    "NeroAttachmentItem": {
+      "displayActionLabel": "Visualiser",
+      "downloadActionLabel": "Télécharger",
+      "removeActionLabel": "Supprimer",
+      "sendToWorkspaceActionLabel": "Déposer dans mes documents"
+    }
+  },
   "News": {
     "NewsDelegationModal": {
       "modalHeaderLabel": "Fenêtre des délégations des actualités",
