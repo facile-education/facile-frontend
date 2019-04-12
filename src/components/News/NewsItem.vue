@@ -28,7 +28,7 @@
         {{ news.ellipsise }}
       </p>
       <p class="author theme-text-color">
-        {{ news.author }} {{ news.date }}
+        {{ news.author }} - {{ formattedDate }}
         <i
           v-if="hasAttachment"
           class="fa fa-paperclip"
@@ -57,6 +57,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 import NeroButton from '@/components/Nero/NeroButton'
 import NeroUtils from '@/utils/nero.utils'
 
@@ -72,6 +73,9 @@ export default {
     }
   },
   computed: {
+    formattedDate () {
+      return NeroUtils.Date.formatToString(moment(this.news.date, 'DD/MM/YYYY HH:mm'))
+    },
     hasAttachment () {
       return (this.news.attachFiles !== undefined && this.news.attachFiles.length > 0)
     },
@@ -183,8 +187,13 @@ $thumbnail-size: 55px;
 }
 
 .author {
+  display: flex;
   margin-top: 5px;
   margin-bottom: 0;
+}
+
+.fa-paperclip {
+  margin-left: auto;
 }
 
 .admin-actions {
