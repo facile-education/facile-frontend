@@ -1,9 +1,13 @@
-import Vue from 'vue'
-import userService from '@/api/user.service'
+import application from '@/store/modules/user.application.store'
 import NeroUtils from '@/utils/nero.utils'
+import userService from '@/api/user.service'
+import Vue from 'vue'
 
 export default {
   namespaced: true,
+  modules: {
+    application
+  },
   state: {
     userId: 0,
     firstName: '',
