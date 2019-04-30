@@ -1,69 +1,111 @@
-function validate (binding) {
-  if (typeof binding.value !== 'function') {
-    console.warn('[Vue-click-outside:] provided expression', binding.expression, 'is not a function.')
-    return false
-  }
+const HAS_WINDOWS = typeof window !== 'undefined'
+const HAS_NAVIGATOR = typeof navigator !== 'undefined'
+const IS_TOUCH =
+  HAS_WINDOWS && ('ontouchstart' in window || (HAS_NAVIGATOR && navigator.msMaxTouchPoints > 0))
+const EVENTS = IS_TOUCH ? ['touchstart', 'click'] : ['click']
+const IDENTITY = (item) => item
 
-  return true
+const directive = {
+  instances: []
 }
 
-function isPopup (popupItem, elements) {
-  if (!popupItem || !elements) {
-    return false
+function processDirectiveArguments (bindingValue) {
+  const isFunction = typeof bindingValue === 'function'
+  if (!isFunction && typeof bindingValue !== 'object') {
+    throw new Error('v-click-outside: Binding value must be a function or an object')
   }
 
-  for (var i = 0, len = elements.length; i < len; i++) {
-    try {
-      if (popupItem.contains(elements[i])) {
-        return true
-      }
-      if (elements[i].contains(popupItem)) {
-        return false
-      }
-    } catch (e) {
-      return false
-    }
-  }
-
-  return false
-}
-
-function isServer (vNode) {
-  return typeof vNode.componentInstance !== 'undefined' && vNode.componentInstance.$isServer
-}
-
-exports = module.exports = {
-  bind (el, binding, vNode) {
-    if (!validate(binding)) return
-
-    // Define Handler and cache it on the element
-    function handler (e) {
-      if (!vNode.context) return
-
-      // some components may have related popup item, on which we shall prevent the click outside event handler.
-      var elements = e.path || (e.composedPath && e.composedPath())
-      elements && elements.length > 0 && elements.unshift(e.target)
-
-      if (el.contains(e.target) || isPopup(vNode.context.popupItem, elements)) return
-
-      el.__vueClickOutside__.callback(e)
-    }
-
-    // add Event Listeners
-    el.__vueClickOutside__ = {
-      handler: handler,
-      callback: binding.value
-    }
-    !isServer(vNode) && document.addEventListener('click', handler)
-  },
-
-  update (el, binding) {
-    if (validate(binding)) el.__vueClickOutside__.callback = binding.value
-  },
-
-  unbind (el, binding, vNode) {
-    // Remove Event Listeners
-    !isServer(vNode) && document.removeEventListener('click', el.__vueClickOutside__.handler)
-    delete el.__vueClickOutside__
+  return {
+    handler: isFunction ? bindingValue : bindingValue.handler,
+    middleware: bindingValue.middleware || IDENTITY,
+    events: bindingValue.events || EVENTS,
+    isActive: !(bindingValue.isActive === false)
   }
 }
+
+function onEvent ({ el, event, handler, middleware }) {
+  const isClickOutside = event.target !== el && !el.contains(event.target)
+
+  if (!isClickOutside) {
+    return
+  }
+
+  if (middleware(event, el)) {
+    handler(event, el)
+  }
+}
+
+function createInstance ({ el, events, handler, middleware }) {
+  return {
+    el,
+    eventHandlers: events.map((eventName) => ({
+      event: eventName,
+      handler: (event) => onEvent({ event, el, handler, middleware })
+    }))
+  }
+}
+
+function removeInstance (el) {
+  const instanceIndex = directive.instances.findIndex((instance) => instance.el === el)
+  if (instanceIndex === -1) {
+    // Note: This can happen when active status changes from false to false
+    return
+  }
+
+  const instance = directive.instances[instanceIndex]
+
+  instance.eventHandlers.forEach(({ event, handler }) =>
+    document.removeEventListener(event, handler)
+  )
+
+  directive.instances.splice(instanceIndex, 1)
+}
+
+function bind (el, { value }) {
+  const { events, handler, middleware, isActive } = processDirectiveArguments(value)
+
+  if (!isActive) {
+    return
+  }
+
+  const instance = createInstance({ el, events, handler, middleware })
+
+  instance.eventHandlers.forEach(({ event, handler }) =>
+    setTimeout(document.addEventListener, 0, event, handler)
+  )
+  directive.instances.push(instance)
+}
+
+function update (el, { value }) {
+  const { events, handler, middleware, isActive } = processDirectiveArguments(value)
+
+  if (!isActive) {
+    removeInstance(el)
+    return
+  }
+
+  let instance = directive.instances.find((instance) => instance.el === el)
+
+  if (instance) {
+    instance.eventHandlers.forEach(({ event, handler }) =>
+      document.removeEventListener(event, handler)
+    )
+    instance.eventHandlers = events.map((eventName) => ({
+      event: eventName,
+      handler: (event) => onEvent({ event, el, handler, middleware })
+    }))
+  } else {
+    instance = createInstance({ el, events, handler, middleware })
+    directive.instances.push(instance)
+  }
+
+  instance.eventHandlers.forEach(({ event, handler }) =>
+    setTimeout(document.addEventListener, 0, event, handler)
+  )
+}
+
+directive.bind = bind
+directive.update = update
+directive.unbind = removeInstance
+
+export default directive
