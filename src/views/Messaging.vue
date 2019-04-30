@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import messagingStore from '@/store/modules/messaging.store'
+
 import MessagingToolbar from '@/components/Messaging/MessagingToolbar'
 import MessagingMenu from '@/components/Messaging/MessagingMenu'
 import MessageList from '@/components/Messaging/MessageList'
@@ -22,6 +24,12 @@ export default {
     MessagingMenu,
     MessageList,
     MessageDetails
+  },
+  beforeCreate () {
+    this.$store.registerModule('messaging', messagingStore)
+  },
+  destroyed () {
+    this.$store.unregisterModule('messaging')
   }
 }
 </script>

@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import workspaceStore from '@/store/modules/workspace.store'
+
 import WorkspaceToolbar from '@/components/Workspace/WorkspaceToolbar'
 import WorkspaceLeftPanel from '@/components/Workspace/WorkspaceLeftPanel'
 import FolderContentList from '@/components/Workspace/FolderContentList'
@@ -31,6 +33,12 @@ export default {
     FolderContentList,
     Split,
     SplitArea
+  },
+  beforeCreate () {
+    this.$store.registerModule('workspace', workspaceStore)
+  },
+  destroyed () {
+    this.$store.unregisterModule('workspace')
   }
 }
 </script>
