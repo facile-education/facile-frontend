@@ -1,14 +1,14 @@
 <template>
   <input
     :value="value"
-    :class="cls"
+    :class="classes"
     :type="type"
     :maxlength="maxlength"
     :placeholder="placeholder"
     class="input"
     @input="$emit('input', $event.target.value)"
-    @focus="$emit('focus')"
-    @blur="$emit('blur')"
+    @focus="focus"
+    @blur="blur"
   >
 </template>
 
@@ -35,6 +35,26 @@ export default {
     placeholder: {
       type: String,
       default: ''
+    }
+  },
+  data () {
+    return {
+      focused: false
+    }
+  },
+  computed: {
+    classes () {
+      return this.cls + (this.focused ? ' theme-border-color' : '')
+    }
+  },
+  methods: {
+    blur () {
+      this.focused = false
+      this.$emit('blur')
+    },
+    focus () {
+      this.focused = true
+      this.$emit('focus')
     }
   }
 }

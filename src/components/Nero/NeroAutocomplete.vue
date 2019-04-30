@@ -1,6 +1,5 @@
 <template>
   <div
-    v-if="displayAutocomplete"
     v-click-outside="close"
     class="autocomplete"
   >
@@ -41,10 +40,6 @@ export default {
     'click-outside': clickoutside
   },
   props: {
-    displayAutocomplete: {
-      type: Boolean,
-      default: false
-    },
     list: {
       type: Array,
       default: () => []
@@ -76,35 +71,16 @@ export default {
       if (!this.sort) {
         return this.list
       }
-
-      var listCopy = this.list.slice()
-
-      var vm = this
-      function compare (a, b) {
-        if (vm.displayField !== undefined) {
-          a = a[vm.displayField]
-          b = b[vm.displayField]
-        }
-        a = NeroUtils.String.normalize(a)
-        b = NeroUtils.String.normalize(b)
-
-        if (a < b) return -1
-        if (a > b) return 1
-        return 0
-      }
-
-      return listCopy.sort(compare)
+      return NeroUtils.Array.sortWithString(this.list, this.displayField)
     },
     filteredList () {
       var filter = this.input || this.filter
       return NeroUtils.Array.filter(filter, this.sortedList, this.displayField)
     }
   },
-  watch: {
-    displayAutocomplete () {
-      if (this.displayAutocomplete && this.filtered) {
-        this.$nextTick(() => this.$refs.filter.focus())
-      }
+  created () {
+    if (this.filtered) {
+      this.$nextTick(() => this.$refs.filter.focus())
     }
   },
   methods: {

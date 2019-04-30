@@ -10,7 +10,7 @@
         type="circle"
         icon="fa fa-trash"
         cls="cancel"
-        @click="onDeletePicture"
+        @click="removePicture"
       />
     </div>
     <div class="informations">
@@ -51,9 +51,14 @@ export default {
   },
   methods: {
     onPictureClick () {
-      this.$store.dispatch('nero/openImagePickerModal')
+      this.$store.dispatch('nero/openImagePickerModal', { onConfirm: this.onPictureSave })
     },
-    onDeletePicture () {
+    onPictureSave (imageBlob, fileName) {
+      var formData = new FormData()
+      formData.append('files', imageBlob, fileName + 't.png')
+      this.$store.dispatch('user/saveProfilePicture', formData)
+    },
+    removePicture () {
       this.$store.dispatch('user/removePicture')
     }
   }
