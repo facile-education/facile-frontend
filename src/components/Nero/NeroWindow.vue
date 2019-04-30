@@ -139,9 +139,7 @@ export default {
 
 .window-body {
   padding: 8px;
-
   max-height: 75vh;
-  overflow-y: auto;
 }
 
 .window-footer {

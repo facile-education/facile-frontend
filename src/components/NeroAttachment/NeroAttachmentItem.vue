@@ -20,9 +20,9 @@
     </a>
 
     <NeroAutocomplete
+      v-if="displayActionList"
       :list="actionList"
       :sort="false"
-      :display-autocomplete="displayActionList"
       display-field="label"
       class="context-menu"
       @select="runActionCallback"
