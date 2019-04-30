@@ -6,6 +6,8 @@
 </template>
 
 <script>
+import forumsStore from '@/store/modules/forums.store'
+
 import ForumList from '@/components/Forums/ForumList'
 import ForumDetails from '@/components/Forums/ForumDetails'
 
@@ -14,6 +16,12 @@ export default {
   components: {
     ForumList,
     ForumDetails
+  },
+  beforeCreate () {
+    this.$store.registerModule('forums', forumsStore)
+  },
+  destroyed () {
+    this.$store.unregisterModule('forums')
   }
 }
 </script>

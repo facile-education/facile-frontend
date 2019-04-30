@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import communicationManagerStore from '@/store/modules/communicationManager.store'
+
 import CMToolbar from '@/components/CommunicationManager/CMToolbar'
 import CMInternalRights from '@/components/CommunicationManager/CMInternalRights'
 import CMExternalRights from '@/components/CommunicationManager/CMExternalRights'
@@ -19,6 +21,12 @@ export default {
     CMToolbar,
     CMInternalRights,
     CMExternalRights
+  },
+  beforeCreate () {
+    this.$store.registerModule('communicationManager', communicationManagerStore)
+  },
+  destroyed () {
+    this.$store.unregisterModule('communicationManager')
   }
 }
 </script>

@@ -10,6 +10,8 @@
 
 <script>
 // TODO Toolbar ?
+import schoolLifeManagerStore from '@/store/modules/schoolLifeManager.store'
+
 import SLMSynchronization from '@/components/SchoolLifeManager/SLMSynchronization'
 import SLMWizard from '@/components/SchoolLifeManager/SLMWizard'
 
@@ -24,10 +26,16 @@ export default {
       return this.$store.state.schoolLifeManager.synchronizationType
     }
   },
+  beforeCreate () {
+    this.$store.registerModule('schoolLifeManager', schoolLifeManagerStore)
+  },
   created () {
     if (this.synchronizationType === undefined) {
       this.$store.dispatch('schoolLifeManager/getSynchronizationType')
     }
+  },
+  destroyed () {
+    this.$store.unregisterModule('schoolLifeManager')
   }
 }
 </script>

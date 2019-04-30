@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import newsStore from '@/store/modules/news.store'
+
 import DashboardNewsWidget from '@/components/Dashboard/DashboardNewsWidget'
 import DashboardHMNewsWidget from '@/components/Dashboard/DashboardHMNewsWidget'
 import NewsDelegationModal from '@/components/News/NewsDelegationModal'
@@ -34,6 +36,12 @@ export default {
     isNewsModalDisplayed () {
       return this.$store.state.news.isNewsModalDisplayed
     }
+  },
+  beforeCreate () {
+    this.$store.registerModule('news', newsStore)
+  },
+  destroyed () {
+    this.$store.unregisterModule('news')
   }
 }
 </script>

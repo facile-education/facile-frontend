@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import applicationManager from '@/store/modules/applicationManager.store'
+import applicationManagerStore from '@/store/modules/applicationManager.store'
 
 import AMToolbar from '@/components/ApplicationManager/AMToolbar'
 import ApplicationEditionModal from '@/components/ApplicationManager/ApplicationEditionModal'
@@ -32,7 +32,7 @@ export default {
     }
   },
   beforeCreate () {
-    this.$store.registerModule('applicationManager', applicationManager)
+    this.$store.registerModule('applicationManager', applicationManagerStore)
   },
   destroyed () {
     this.$store.unregisterModule('applicationManager')
