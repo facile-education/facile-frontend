@@ -68,10 +68,9 @@
     }
   },
   "ApplicationManager": {
-    "AMApplicationDetails": {
+    "ApplicationDetails": {
       "broadcastButtonTooltip": "Diffuser",
       "broadcastLabel": "L'application est diffusée aux profils suivants :",
-      "closeButtonTooltip": "Fermer",
       "configurationButtonTooltip": "Gérer les règles de diffusion",
       "customUrlPlaceholder": "http://...",
       "deleteButtonTooltip": "Supprimer",
@@ -80,11 +79,14 @@
       "guideButtonTooltip": "Consulter le guide utilisateur",
       "noBroadcastLabel": "L'application n'est pas diffusée",
       "parentsExportButton": "Parents",
+      "removalConfirmButtonLabel": "Supprimer",
+      "removalConfirmMessage": "Souhaitez-vous vraiment supprimer cette application ?",
+      "removalConfirmTitle": "Suppression",
       "saveButtonTooltip": "Enregistrer les modifications",
       "studentsExportButton": "Elèves",
       "teachersExportButton": "Enseignants"
     },
-    "AMApplicationEditionModal": {
+    "ApplicationEditionModal": {
       "addModalTitle": "Ajouter une nouvelle application",
       "categoryPlaceholder": "Catégorie",
       "customUrlCombobox": "URL personnalisée",
@@ -92,24 +94,35 @@
       "exportParentsCheckbox": "Parents",
       "exportStudentsCheckbox": "Elèves",
       "exportTeachersCheckbox": "Enseignants",
-      "exportTitle": "Exporter un/ou plusieurs types d'utilisateurs pour ce service :",
+      "exportLabel": "Exporter un/ou plusieurs types d'utilisateurs pour ce service",
       "globalUrlCombobox": "URL globale",
       "globalUrlPlaceholder": "https://...",
       "keyPlaceholder": "Clé du service",
       "modalSaveButton": "Enregistrer",
       "namePlaceholder": "Nom du service",
+      "noUrlCombobox": "Aucun",
+      "portletLabel": "Portlet :",
       "rolesPlaceholder": "Profil(s)",
-      "rolesTitle" : "Profils par défaut pour l'application :",
+      "rolesLabel" : "Profils par défaut pour l'application",
       "schoolsPlaceholder": "Etablissement(s)",
-      "schoolsTitle": "Application disponible pour les établissements :"
+      "schoolsLabel": "Application disponible pour les établissements",
+      "urlTypeLabel": "Type de lien"
     },
-    "AMBroadcastScopeModal": {
+    "BroadcastScopeModal": {
       "addRuleButton":"Ajouter une règle de diffusion",
-      "classesPlaceholder": "Liste des classes",
       "defaultLabel": "L'application n'est pas diffusée",
       "modalTitle": "Règles de diffusion pour l'application",
-      "rolesPlaceholder": "Liste des profils",
       "updateButton": "Enregistrer"
+    },
+    "RuleLabel": {
+      "allSchoolLabel": "de tout l'établissement",
+      "everyRoleLabel": "Tous les profils",
+      "fromClassesLabel": "des classes"
+    },
+    "RuleItem": {
+      "classesPlaceholder": "Liste des classes",
+      "fromLabel": "de",
+      "rolesPlaceholder": "Liste des profils"
     }
   },
   "Banner": {

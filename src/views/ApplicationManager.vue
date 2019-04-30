@@ -1,25 +1,27 @@
 <template>
   <div class="service-container">
     <AMToolbar />
-    <AMCategoryList />
-    <AMBroadcastScopeModal v-if="showBroadcastModal" />
-    <AMApplicationEditionModal v-if="showEditionModal" />
+    <CategoryList />
+    <BroadcastScopeModal v-if="showBroadcastModal" />
+    <ApplicationEditionModal v-if="showEditionModal" />
   </div>
 </template>
 
 <script>
-import AMCategoryList from '@/components/ApplicationManager/AMCategoryList'
+import applicationManager from '@/store/modules/applicationManager.store'
+
 import AMToolbar from '@/components/ApplicationManager/AMToolbar'
-import AMApplicationEditionModal from '@/components/ApplicationManager/AMApplicationEditionModal'
-import AMBroadcastScopeModal from '@/components/ApplicationManager/AMBroadcastScopeModal'
+import ApplicationEditionModal from '@/components/ApplicationManager/ApplicationEditionModal'
+import BroadcastScopeModal from '@/components/ApplicationManager/BroadcastScopeModal'
+import CategoryList from '@/components/ApplicationManager/CategoryList'
 
 export default {
   name: 'ApplicationManager',
   components: {
-    AMCategoryList,
+    CategoryList,
     AMToolbar,
-    AMApplicationEditionModal,
-    AMBroadcastScopeModal
+    ApplicationEditionModal,
+    BroadcastScopeModal
   },
   computed: {
     showBroadcastModal () {
@@ -28,6 +30,12 @@ export default {
     showEditionModal () {
       return this.$store.state.applicationManager.showEditionModal
     }
+  },
+  beforeCreate () {
+    this.$store.registerModule('applicationManager', applicationManager)
+  },
+  destroyed () {
+    this.$store.unregisterModule('applicationManager')
   }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <AMApplicationDetails
+    <ApplicationDetails
       v-if="showDetails"
       :application="application"
       @closeDetails="toggleDetails"
@@ -25,12 +25,12 @@
 </template>
 
 <script>
-import AMApplicationDetails from '@/components/ApplicationManager/AMApplicationDetails'
+import ApplicationDetails from '@/components/ApplicationManager/ApplicationDetails'
 
 export default {
-  name: 'AMApplication',
+  name: 'Application',
   components: {
-    AMApplicationDetails
+    ApplicationDetails
   },
   props: {
     application: {

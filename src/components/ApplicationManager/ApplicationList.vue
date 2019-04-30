@@ -1,7 +1,7 @@
 <template>
   <div>
-    <AMApplication
-      v-for="application in applicationList"
+    <ApplicationItem
+      v-for="application in sortedApplicationList"
       :key="application.serviceId"
       :application="application"
     />
@@ -9,12 +9,13 @@
 </template>
 
 <script>
-import AMApplication from '@/components/ApplicationManager/AMApplication'
+import ApplicationItem from '@/components/ApplicationManager/ApplicationItem'
+import NeroUtils from '@/utils/nero.utils'
 
 export default {
-  name: 'AMApplicationList',
+  name: 'ApplicationList',
   components: {
-    AMApplication
+    ApplicationItem
   },
   props: {
     category: {
@@ -25,14 +26,17 @@ export default {
   computed: {
     applicationList () {
       var allApplications = this.$store.state.applicationManager.applicationList
-      var applications = []
+      var applicationList = []
       for (var index = 0; index < allApplications.length; ++index) {
         var app = allApplications[index].app
         if (app.serviceCategory === this.category) {
-          applications.push(app)
+          applicationList.push(app)
         }
       }
-      return applications
+      return applicationList
+    },
+    sortedApplicationList () {
+      return NeroUtils.Array.sortWithString(this.applicationList, 'serviceName')
     }
   },
   methods: {
