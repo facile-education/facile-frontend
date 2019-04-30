@@ -15,7 +15,24 @@ var NeroUtils = {
         return NeroUtils.String.normalize(value).includes(filter)
       })
     },
-    sort () {}
+    sortWithString (array, property) {
+      var sortedArray = array.slice()
+
+      function compare (a, b) {
+        if (property !== undefined) {
+          a = a[property]
+          b = b[property]
+        }
+        a = NeroUtils.String.normalize(a)
+        b = NeroUtils.String.normalize(b)
+
+        if (a < b) return -1
+        if (a > b) return 1
+        return 0
+      }
+
+      return sortedArray.sort(compare)
+    }
   },
   Cookies: {
     // Return cookie value
