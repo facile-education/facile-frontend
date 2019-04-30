@@ -13,9 +13,9 @@
       class="thumbnail"
       :src="news.thumbnail.url"
     >
-    <div
+    <NeroFallbackThumbnail
       v-else
-      class="default-image fa fa-image"
+      class="default"
     />
     <div class="text">
       <h5
@@ -59,12 +59,14 @@
 <script>
 import moment from 'moment'
 import NeroButton from '@/components/Nero/NeroButton'
+import NeroFallbackThumbnail from '@/components/Nero/NeroFallbackThumbnail'
 import NeroUtils from '@/utils/nero.utils'
 
 export default {
   name: 'NewsItem',
   components: {
-    NeroButton
+    NeroButton,
+    NeroFallbackThumbnail
   },
   props: {
     news: {
@@ -119,7 +121,7 @@ $thumbnail-size: 55px;
   &:hover {
     cursor: pointer;
 
-    >>> .admin-actions {
+    > .admin-actions {
       display: block;
     }
   }
@@ -148,13 +150,9 @@ $thumbnail-size: 55px;
   border-radius: $border-radius;
 }
 
-.default-image {
+.default {
   width: $thumbnail-size;
   height: $thumbnail-size;
-  color: $text-color-fallback;
-  border: 1px solid $text-color-fallback;
-  padding: 5px;
-  border-radius: 5px;
   font-size: 43px;
 }
 
