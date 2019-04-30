@@ -6,6 +6,7 @@
     >
       <NeroDropdown
         v-if="schools"
+        v-model="selectedSchool"
         :list="schools"
         display-field="schoolName"
         @dropdown-select="onSchoolSelect"
@@ -30,6 +31,14 @@ export default {
   computed: {
     schools () {
       return this.$store.state.administration.schoolList
+    },
+    selectedSchool: {
+      get () {
+        return this.$store.state.administration.selectedSchool
+      },
+      set (school) {
+        this.$store.commit('administration/setSelectedSchool', school)
+      }
     },
     show () {
       return (this.schools !== undefined && this.schools.length > 1)
