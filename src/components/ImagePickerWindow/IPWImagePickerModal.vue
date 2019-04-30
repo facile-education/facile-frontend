@@ -92,13 +92,10 @@ export default {
     },
     onConfirm () {
       if (this.imageBlob !== undefined) {
-        var formData = new FormData()
-        formData.append('files', this.imageBlob, this.fileName + 't.png')
-
-        this.$store.dispatch('user/saveProfilePicture', formData)
-        this.$store.dispatch('nero/closeImagePickerModal')
-      } else {
-        this.$store.dispatch('nero/closeImagePickerModal')
+        // TODO get fileName
+        this.fileName = 't.png'
+        this.$store.state.nero.imagePickerModal.onConfirm(this.imageBlob, this.fileName)
+        this.onClose()
       }
     },
     onSelect (blob) {

@@ -7,14 +7,14 @@
       class="button"
       @click="toggleMenu"
     >
-      {{ getDisplayValue(selectedItem) }}
+      {{ getCurrentDisplayValue() }}
       <i class="fa fa-caret-down theme-text-color" />
     </button>
     <NeroAutocomplete
+      v-if="show"
       :list="list"
       :display-field="displayField"
-      :filtered="filtered"
-      :display-autocomplete="show"
+      :filtered="isFilterDisplayed"
       @select="onSelect"
       @close="onClose"
     />
@@ -30,20 +30,23 @@ export default {
     NeroAutocomplete
   },
   props: {
+    displayField: {
+      type: String,
+      default: undefined
+    },
     list: {
       type: Array,
       required: true
     },
-    displayField: {
-      type: String,
+    value: {
+      type: [String, Object],
       default: undefined
     }
   },
   data () {
     return {
       show: false,
-      selectedItem: undefined,
-      filtered: this.list.length > 5
+      isFilterDisplayed: (this.list.length > 5)
     }
   },
   computed: {
@@ -53,24 +56,31 @@ export default {
   },
   created () {
     if (this.list.length > 0) {
-      this.onSelect(this.list[0])
+      if (this.value === undefined) {
+        this.onSelect(this.list[0])
+      } else {
+        var index = this.list.indexOf(this.value)
+        this.onSelect(this.list[index])
+      }
     }
   },
   methods: {
     toggleMenu () {
       this.show = !this.show
     },
-    getDisplayValue (item) {
-      if (this.displayField === undefined) {
-        return item
+    getCurrentDisplayValue () {
+      if (!this.value) {
+        return ''
+      } else if (this.displayField === undefined) {
+        return this.value
       } else {
-        return item[this.displayField]
+        return this.value[this.displayField]
       }
     },
     onSelect (item) {
       if (item !== undefined) {
         this.$emit('dropdown-select', item)
-        this.selectedItem = item
+        this.$emit('input', item)
       }
       this.show = false
     },

@@ -8,13 +8,16 @@ export default {
     activeRoute: undefined,
     confirmModal: {
       buttonLabel: '',
-      isDisplayed: '',
+      isDisplayed: false,
       message: '',
       onConfirm: Function,
       title: ''
     },
+    imagePickerModal: {
+      isDisplayed: false,
+      onConfirm: Function
+    },
     isMobileMenuDisplayed: false,
-    isImagePickerModalDisplayed: false,
     isPreferencesModalDisplayed: false,
     isMenuExpandedOnLoad: undefined,
     menu: undefined,
@@ -34,7 +37,11 @@ export default {
       state.menuExpanded = payload.expanded
       state.isMenuExpandedOnLoad = payload.expanded
     },
-    showConfirmModal (state) {
+    openConfirmModal (state, payload) {
+      Vue.set(state.confirmModal, 'title', payload.title)
+      Vue.set(state.confirmModal, 'message', payload.message)
+      Vue.set(state.confirmModal, 'buttonLabel', payload.buttonLabel)
+      Vue.set(state.confirmModal, 'onConfirm', payload.onConfirm)
       Vue.set(state.confirmModal, 'isDisplayed', true)
     },
     toggleMenu (state) {
@@ -47,13 +54,8 @@ export default {
       state.activeRoute = payload
     },
     updateImagePickerModalState (state, payload) {
-      state.isImagePickerModalDisplayed = payload
-    },
-    updateConfirmModalParameters (state, payload) {
-      Vue.set(state.confirmModal, 'buttonLabel', payload.buttonLabel)
-      Vue.set(state.confirmModal, 'message', payload.message)
-      Vue.set(state.confirmModal, 'onConfirm', payload.onConfirm)
-      Vue.set(state.confirmModal, 'title', payload.title)
+      Vue.set(state.imagePickerModal, 'onConfirm', payload.onConfirm)
+      Vue.set(state.imagePickerModal, 'isDisplayed', payload.show)
     },
     updatePreferencesModalState (state, payload) {
       state.isPreferencesModalDisplayed = payload
@@ -64,7 +66,7 @@ export default {
       commit('closeConfirmModal')
     },
     closeImagePickerModal ({ commit }) {
-      commit('updateImagePickerModalState', false)
+      commit('updateImagePickerModalState', { show: false })
     },
     closePreferencesModal ({ commit }) {
       commit('updatePreferencesModalState', false)
@@ -83,24 +85,23 @@ export default {
           console.log(err)
         })
     },
+    openConfirmModal ({ commit }, payload) {
+      commit('openConfirmModal', payload)
+    },
+    openImagePickerModal ({ commit }, payload) {
+      commit('updateImagePickerModalState', { show: true, ...payload })
+    },
+    openPreferencesModal ({ commit }) {
+      commit('updatePreferencesModalState', true)
+    },
     toggleMobileMenu ({ commit }) {
       commit('toggleMobileMenu')
     },
     toggleSideMenu ({ commit }) {
       commit('toggleMenu')
     },
-    openImagePickerModal ({ commit }) {
-      commit('updateImagePickerModalState', true)
-    },
-    openPreferencesModal ({ commit }) {
-      commit('updatePreferencesModalState', true)
-    },
     updateActiveRoute ({ commit }, service) {
       commit('updateActiveRoute', service)
-    },
-    updateAndShowConfirmModal ({ commit }, payload) {
-      commit('updateConfirmModalParameters', payload)
-      commit('showConfirmModal')
     }
   },
   getters: {
