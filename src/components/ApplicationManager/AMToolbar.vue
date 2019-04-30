@@ -2,6 +2,7 @@
   <NeroToolbar v-if="show">
     <NeroDropdown
       v-if="managedSchoolList"
+      v-model="selectedSchool"
       :list="managedSchoolList"
       display-field="schoolName"
       @dropdown-select="onSchoolSelect"
@@ -36,6 +37,14 @@ export default {
     },
     isAdministrator () {
       return this.$store.state.user.isAdministrator
+    },
+    selectedSchool: {
+      get () {
+        return this.$store.state.administration.selectedSchool
+      },
+      set (school) {
+        this.$store.commit('administration/setSelectedSchool', school)
+      }
     },
     show () {
       return (this.isAdministrator ||

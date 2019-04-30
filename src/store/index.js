@@ -13,7 +13,6 @@ import messaging from '@/store/modules/messaging.store'
 import news from '@/store/modules/news.store'
 
 import administration from '@/store/modules/administration.store'
-import applicationManager from '@/store/modules/applicationManager.store'
 import communicationManager from '@/store/modules/communicationManager.store'
 import dashboardManager from '@/store/modules/dashboardManager.store'
 import schoolLifeManager from '@/store/modules/schoolLifeManager.store'
@@ -35,7 +34,6 @@ export default new Vuex.Store({
     contacts,
     forums,
     administration,
-    applicationManager,
     communicationManager,
     dashboardManager,
     schoolLifeManager

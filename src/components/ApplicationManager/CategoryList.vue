@@ -8,18 +8,18 @@
       <h4 class="header">
         {{ category }}
       </h4>
-      <AMApplicationList :category="category" />
+      <ApplicationList :category="category" />
     </div>
   </div>
 </template>
 
 <script>
-import AMApplicationList from '@/components/ApplicationManager/AMApplicationList'
+import ApplicationList from '@/components/ApplicationManager/ApplicationList'
 
 export default {
-  name: 'AMCategoryList',
+  name: 'CategoryList',
   components: {
-    AMApplicationList
+    ApplicationList
   },
   computed: {
     categories () {

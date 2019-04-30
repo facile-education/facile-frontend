@@ -10,10 +10,11 @@ $text-color-stamp: #cd4436;
 $background-white-color: #ffffff;
 $background-light-color: #f8fafc;
 $toolbar-background-color: #f1f1f1;
-$menu-selected-background-color: #e8e8e8;
-$dropdown-background-color: #f9f9f9;
 $header-background-color: $toolbar-background-color;
 $menu-background-color: $toolbar-background-color;
+$menu-selected-background-color: #e8e8e8;
+$dropdown-background-color: #f9f9f9;
+$input-background-color: $dropdown-background-color;
 $notif-background-color: #cd4436;
 $valid-background-color: #01d801;
 $selected-blue-background: #4194ca;
@@ -94,20 +95,16 @@ $toolbar-height: 40px;
 
 %nero-input {
   font-family: inherit;
-  background: #f9f9f9;
+  background: $input-background-color;
   background-image: none;
-  border: 0;
   box-shadow: none;
   width: 100%;
   margin-bottom: 5px;
   padding: 0;
   outline: none;
-
-  &.form {
-    border-bottom: 1px solid #c2c2c2;
-    margin-bottom: 5px;
-    padding: 8px
-  }
+  border: 0;
+  border-bottom: 1px solid $text-color-fallback;
+  padding: 8px;
 }
 
 %nero-menu {
@@ -129,6 +126,13 @@ $toolbar-height: 40px;
   &:hover {
     cursor: pointer;
   }
+}
+
+%nero-disable {
+  cursor: not-allowed;
+  box-shadow: none;
+  opacity: .65;
+  filter: sepia(50%);
 }
 
 %no-text-highlight {

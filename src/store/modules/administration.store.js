@@ -3,9 +3,11 @@ import administrationService from '@/api/administration.service'
 export default {
   namespaced: true,
   state: {
-    schoolList: undefined,
+    classList: undefined,
     portletList: undefined,
-    roleList: undefined
+    roleList: undefined,
+    selectedSchool: undefined,
+    schoolList: undefined
   },
   mutations: {
     initAdministeredSchoolList (state, payload) {
@@ -16,6 +18,12 @@ export default {
     },
     initRoleList (state, payload) {
       state.roleList = payload
+    },
+    setClassList (state, payload) {
+      state.classList = payload
+    },
+    setSelectedSchool (state, payload) {
+      state.selectedSchool = payload
     }
   },
   actions: {
@@ -23,6 +31,13 @@ export default {
       administrationService.getAdministeredSchoolList().then((data) => {
         if (data.success) {
           commit('initAdministeredSchoolList', data.etabList)
+        }
+      })
+    },
+    getClassList ({ state, commit }) {
+      administrationService.getClassList(state.selectedSchool.schoolId).then((data) => {
+        if (data.success) {
+          commit('setClassList', data.classList)
         }
       })
     },
@@ -36,9 +51,18 @@ export default {
     getRoleList ({ commit }) {
       administrationService.getRoleList().then((data) => {
         if (data.success) {
+          // TODO move to back-end
+          data.roleList.unshift({
+            displayText: 'Tous les profils',
+            roleId: 0,
+            isForClasse: false
+          })
           commit('initRoleList', data.roleList)
         }
       })
+    },
+    setSelectedSchool ({ commit }, school) {
+      commit('setSelectedSchool', school)
     }
   },
   getters: {
