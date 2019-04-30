@@ -70,7 +70,7 @@ export default {
       return this.$store.state.nero.isPreferencesModalDisplayed
     },
     isImagePickerModalDisplayed () {
-      return this.$store.state.nero.isImagePickerModalDisplayed
+      return this.$store.state.nero.imagePickerModal.isDisplayed
     },
     menuExpanded () {
       return this.$store.state.nero.menuExpanded
@@ -104,6 +104,19 @@ body {
 
 p {
   margin: 0;
+}
+
+ul {
+  padding: 0;
+}
+
+h5 {
+  margin-bottom: 0.8em;
+}
+
+input[disabled],
+button[disabled] {
+  @extend %nero-disable
 }
 
 #app {
