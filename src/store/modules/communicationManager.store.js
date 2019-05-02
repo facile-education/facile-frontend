@@ -3,10 +3,10 @@ import communicationManagerService from '@/api/communicationManager.service'
 export default {
   namespaced: true,
   state: {
-    selectedSchoolId: undefined,
+    externalRightList: undefined,
+    internalRightList: undefined,
     roleList: undefined,
-    CMInternalRights: undefined,
-    CMExternalRights: undefined
+    selectedSchoolId: undefined
   },
   mutations: {
     setSelectedSchoolId (state, payload) {
@@ -16,10 +16,10 @@ export default {
       state.roleList = payload
     },
     initInternalRights (state, payload) {
-      state.CMInternalRights = { ...payload }
+      state.internalRightList = { ...payload }
     },
     initExternalRights (state, payload) {
-      state.CMExternalRights = { ...payload }
+      state.externalRightList = { ...payload }
     }
   },
   actions: {

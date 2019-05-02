@@ -5,15 +5,15 @@
       name="fade"
     >
       <div v-if="roleList">
-        <h4 v-t="'CommunicationManager.CMInternalRights.title'" />
-        <p v-t="'CommunicationManager.CMInternalRights.informations'" />
+        <h4 v-t="'CommunicationManager.InternalRightList.title'" />
+        <p v-t="'CommunicationManager.InternalRightList.informations'" />
         <NeroTabList>
           <NeroTabItem
             v-for="role in roleList"
             :key="role.roleId"
             :title="role.label"
           >
-            <CMInternalRoleTab
+            <InternalRoleTab
               :role="role"
               :right-list="rightList"
               @input="onInput"
@@ -21,7 +21,7 @@
           </NeroTabItem>
         </NeroTabList>
         <NeroButton
-          :label="$t('CommunicationManager.CMInternalRights.save')"
+          :label="$t('CommunicationManager.InternalRightList.save')"
           @click="onSave"
         />
       </div>
@@ -35,12 +35,12 @@ import NeroButton from '@/components/Nero/NeroButton'
 import NeroSpinner from '@/components/Nero/NeroSpinner'
 import NeroTabItem from '@/components/Nero/NeroTabItem'
 import NeroTabList from '@/components/Nero/NeroTabList'
-import CMInternalRoleTab from '@/components/CommunicationManager/CMInternalRoleTab'
+import InternalRoleTab from '@/components/CommunicationManager/InternalRoleTab'
 
 export default {
-  name: 'CMInternalRights',
+  name: 'InternalRightList',
   components: {
-    CMInternalRoleTab,
+    InternalRoleTab,
     NeroButton,
     NeroSpinner,
     NeroTabItem,
@@ -53,7 +53,7 @@ export default {
   },
   computed: {
     savedRightList () {
-      return this.$store.state.communicationManager.CMInternalRights
+      return this.$store.state.communicationManager.internalRightList
     },
     roleList () {
       return this.$store.state.communicationManager.roleList

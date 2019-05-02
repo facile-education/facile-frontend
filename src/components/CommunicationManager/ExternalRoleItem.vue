@@ -7,14 +7,14 @@
     <NeroRadioButton
       v-model="hasRoleExternalRight"
       :name="role.roleCode"
-      :label="$t('CommunicationManager.CMExternalRoleItem.yes')"
+      :label="$t('CommunicationManager.ExternalRoleItem.yes')"
       rb-value="yes"
       class="yes"
     />
     <NeroRadioButton
       v-model="hasRoleExternalRight"
       :name="role.roleCode"
-      :label="$t('CommunicationManager.CMExternalRoleItem.no')"
+      :label="$t('CommunicationManager.ExternalRoleItem.no')"
       rb-value="no"
     />
   </div>
@@ -24,7 +24,7 @@
 import NeroRadioButton from '@/components/Nero/NeroRadioButton'
 
 export default {
-  name: 'CMExternalRoleItem',
+  name: 'ExternalRoleItem',
   components: {
     NeroRadioButton
   },

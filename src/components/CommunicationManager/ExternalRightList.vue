@@ -5,9 +5,9 @@
       name="fade"
     >
       <div v-if="rightList">
-        <h4 v-t="'CommunicationManager.CMExternalRights.title'" />
-        <p v-t="'CommunicationManager.CMExternalRights.informations'" />
-        <CMExternalRoleItem
+        <h4 v-t="'CommunicationManager.ExternalRightList.title'" />
+        <p v-t="'CommunicationManager.ExternalRightList.informations'" />
+        <ExternalRoleItem
           v-for="role in roleList"
           :key="role.roleId"
           :role="role"
@@ -15,7 +15,7 @@
           @input="onInput"
         />
         <NeroButton
-          :label="$t('CommunicationManager.CMExternalRights.save')"
+          :label="$t('CommunicationManager.ExternalRightList.save')"
           @click="onSave"
         />
       </div>
@@ -27,14 +27,14 @@
 <script>
 import NeroButton from '@/components/Nero/NeroButton'
 import NeroSpinner from '@/components/Nero/NeroSpinner'
-import CMExternalRoleItem from '@/components/CommunicationManager/CMExternalRoleItem'
+import ExternalRoleItem from '@/components/CommunicationManager/ExternalRoleItem'
 
 export default {
-  name: 'CMExternalRights',
+  name: 'ExternalRightList',
   components: {
     NeroButton,
     NeroSpinner,
-    CMExternalRoleItem
+    ExternalRoleItem
   },
   data () {
     return {
@@ -46,7 +46,7 @@ export default {
       return this.$store.state.communicationManager.roleList
     },
     savedRightList () {
-      return this.$store.state.communicationManager.CMExternalRights
+      return this.$store.state.communicationManager.externalRightList
     }
   },
   watch: {
