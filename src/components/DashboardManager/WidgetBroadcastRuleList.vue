@@ -1,8 +1,8 @@
 <template>
   <div class="widget-broadcast">
-    <h5 v-t="'DashboardManager.DMWidgetEditionModal.broadcastRulesTitle'" />
+    <h5 v-t="'DashboardManager.WidgetEditionModal.broadcastRulesTitle'" />
 
-    <DMWidgetBroadcastRoleItem
+    <WidgetBroadcastRoleItem
       v-for="role in mainRoleList"
       :key="role.roleId"
       :is-broadcasted.sync="role.isBroadcasted"
@@ -19,7 +19,7 @@
           :class="{'fa fa-caret-down': isPersonnalPanelDisplayed, 'fa fa-caret-right': !isPersonnalPanelDisplayed}"
           class="theme-text-color"
         />
-        {{ $t('DashboardManager.DMWidgetEditionModal.personalLabel') }}
+        {{ $t('DashboardManager.WidgetEditionModal.personalLabel') }}
       </p>
 
       <NeroToggleSwitch
@@ -38,7 +38,7 @@
     </div>
 
     <div v-if="isPersonnalPanelDisplayed">
-      <DMWidgetBroadcastRoleItem
+      <WidgetBroadcastRoleItem
         v-for="personalRole in personalRoleList"
         :key="personalRole.roleId"
         :is-broadcasted.sync="personalRole.isBroadcasted"
@@ -50,13 +50,13 @@
 </template>
 
 <script>
-import DMWidgetBroadcastRoleItem from '@/components/DashboardManager/DMWidgetBroadcastRoleItem'
+import WidgetBroadcastRoleItem from '@/components/DashboardManager/WidgetBroadcastRoleItem'
 import NeroToggleSwitch from '@/components/Nero/NeroToggleSwitch'
 
 export default {
-  name: 'DMWidgetBroadcastRuleList',
+  name: 'WidgetBroadcastRuleList',
   components: {
-    DMWidgetBroadcastRoleItem,
+    WidgetBroadcastRoleItem,
     NeroToggleSwitch
   },
   // TODO copy roleList to update it

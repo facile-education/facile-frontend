@@ -12,7 +12,7 @@
 
     <NeroCheckbox
       :value="isMandatory"
-      :label="$t('DashboardManager.DMWidgetBroadcastRoleItem.mandatoryCheckboxLabel')"
+      :label="$t('DashboardManager.WidgetBroadcastRoleItem.mandatoryCheckboxLabel')"
       class="mandatory"
       @input="onInputMandatory"
     />
@@ -24,7 +24,7 @@ import NeroCheckbox from '@/components/Nero/NeroCheckbox'
 import NeroToggleSwitch from '@/components/Nero/NeroToggleSwitch'
 
 export default {
-  name: 'DMWidgetBroadcastRoleItem',
+  name: 'WidgetBroadcastRoleItem',
   components: {
     NeroCheckbox,
     NeroToggleSwitch

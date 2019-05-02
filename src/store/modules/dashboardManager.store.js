@@ -60,7 +60,7 @@ export default {
         })
     },
     getSchoolWidgetList ({ commit }, school) {
-      dashboardManagerService.getSchoolDMWidgetList(school.schoolId).then(
+      dashboardManagerService.getSchoolWidgetList(school.schoolId).then(
         (data) => {
           if (data.success) {
             commit('initSchoolWidgetList', data.widgets)

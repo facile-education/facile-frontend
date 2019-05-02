@@ -1,8 +1,8 @@
 <template>
   <div class="service-container">
     <DMToolbar />
-    <DMWidgetList />
-    <DMWidgetEditionModal v-if="isEdtitionModalDisplayed" />
+    <WidgetList />
+    <WidgetEditionModal v-if="isEdtitionModalDisplayed" />
   </div>
 </template>
 
@@ -10,15 +10,15 @@
 import dashboardManagerStore from '@/store/modules/dashboardManager.store'
 
 import DMToolbar from '@/components/DashboardManager/DMToolbar'
-import DMWidgetList from '@/components/DashboardManager/DMWidgetList'
-import DMWidgetEditionModal from '@/components/DashboardManager/DMWidgetEditionModal'
+import WidgetList from '@/components/DashboardManager/WidgetList'
+import WidgetEditionModal from '@/components/DashboardManager/WidgetEditionModal'
 
 export default {
   name: 'DashboardManager',
   components: {
     DMToolbar,
-    DMWidgetList,
-    DMWidgetEditionModal
+    WidgetList,
+    WidgetEditionModal
   },
   computed: {
     isEdtitionModalDisplayed () {
