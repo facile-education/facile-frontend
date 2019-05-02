@@ -40,12 +40,16 @@
             v-model="application.serviceName"
             :placeholder="$t('ApplicationManager.ApplicationEditionModal.namePlaceholder') + '*'"
             :maxlength="75"
+            :error-type="formErrorList.serviceName"
+            @blur="$v.application.serviceName.$touch()"
           />
 
           <NeroInput
             v-model="application.serviceKey"
             :placeholder="$t('ApplicationManager.ApplicationEditionModal.keyPlaceholder') + '*'"
             :maxlength="75"
+            :error-type="formErrorList.serviceKey"
+            @blur="$v.application.serviceKey.$touch()"
           />
 
           <div class="input-completion">
@@ -54,6 +58,8 @@
               v-model="application.serviceCategory"
               :placeholder="$t('ApplicationManager.ApplicationEditionModal.categoryPlaceholder') + '*'"
               :max-lenght="75"
+              :error-type="formErrorList.serviceCategory"
+              @blur="$v.application.serviceCategory.$touch()"
               @focus="toggleCompletion"
             />
             <NeroAutocomplete
@@ -175,6 +181,8 @@ import NeroTagsInput from '@/components/Nero/NeroTagsInput'
 import NeroWindow from '@/components/Nero/NeroWindow'
 import NeroAutocomplete from '@/components/Nero/NeroAutocomplete'
 
+import { required } from 'vuelidate/lib/validators'
+
 export default {
   name: 'ApplicationEditionModal',
   components: {
@@ -194,9 +202,24 @@ export default {
       urlType: 'none'
     }
   },
+  validations: {
+    application: {
+      serviceName: { required },
+      serviceKey: { required },
+      serviceCategory: { required }
+    }
+  },
   computed: {
     categoryList () {
       return this.$store.getters['applicationManager/categoryList']
+    },
+    formErrorList () {
+      var form = this.$v.application
+      return {
+        serviceName: (form.serviceName.$invalid && form.serviceName.$dirty) ? 'required' : '',
+        serviceKey: (form.serviceKey.$invalid && form.serviceKey.$dirty) ? 'required' : '',
+        serviceCategory: (form.serviceCategory.$invalid && form.serviceCategory.$dirty) ? 'required' : ''
+      }
     },
     portletList () {
       return this.$store.state.administration.portletList
@@ -269,17 +292,21 @@ export default {
       this.application.image = ''
     },
     save () {
-      this.buildApplicationBeforeSave()
-
-      // Update if serviceId is defined else create new app
-      if (this.application && this.application.serviceId) {
-        this.$store.dispatch('applicationManager/updateApplication', this.application)
+      if (this.$v.$invalid) {
+        this.$v.$touch()
       } else {
-        var params = {
-          application: this.application,
-          school: this.$store.state.administration.selectedSchool
+        this.buildApplicationBeforeSave()
+
+        // Update if serviceId is defined else create new app
+        if (this.application && this.application.serviceId) {
+          this.$store.dispatch('applicationManager/updateApplication', this.application)
+        } else {
+          var params = {
+            application: this.application,
+            school: this.$store.state.administration.selectedSchool
+          }
+          this.$store.dispatch('applicationManager/createApplication', params)
         }
-        this.$store.dispatch('applicationManager/createApplication', params)
       }
     },
     selectCategory (category) {
@@ -291,7 +318,6 @@ export default {
       var vm = this
       reader.onloadend = function () {
         vm.application.image = reader.result
-        console.log(vm.application.image)
       }
     },
     // Completion for category input
