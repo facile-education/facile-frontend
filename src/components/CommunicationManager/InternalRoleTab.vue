@@ -2,7 +2,7 @@
   <div>
     <div
       v-if="isPersonal"
-      v-t="'CommunicationManager.CMInternalRoleTab.personalLabel'"
+      v-t="'CommunicationManager.InternalRoleTab.personalLabel'"
     />
     <div
       v-for="right in sortedRightList"
@@ -11,7 +11,7 @@
     >
       <NeroCheckbox
         :value="getValue(right)"
-        :label="$t('CommunicationManager.CMInternalRoleTab.' + removePrefix(right))"
+        :label="$t('CommunicationManager.InternalRoleTab.' + removePrefix(right))"
         @input="onInput(right)"
       />
     </div>
@@ -22,7 +22,7 @@
 import NeroCheckbox from '@/components/Nero/NeroCheckbox'
 
 export default {
-  name: 'CMInternalRoleTab',
+  name: 'InternalRoleTab',
   components: {
     NeroCheckbox
   },

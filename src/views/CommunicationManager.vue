@@ -2,8 +2,8 @@
   <div class="service-container">
     <CMToolbar />
     <div class="service-body">
-      <CMInternalRights />
-      <CMExternalRights />
+      <InternalRightList />
+      <ExternalRightList />
     </div>
   </div>
 </template>
@@ -12,15 +12,15 @@
 import communicationManagerStore from '@/store/modules/communicationManager.store'
 
 import CMToolbar from '@/components/CommunicationManager/CMToolbar'
-import CMInternalRights from '@/components/CommunicationManager/CMInternalRights'
-import CMExternalRights from '@/components/CommunicationManager/CMExternalRights'
+import InternalRightList from '@/components/CommunicationManager/InternalRightList'
+import ExternalRightList from '@/components/CommunicationManager/ExternalRightList'
 
 export default {
   name: 'CommunicationManager',
   components: {
     CMToolbar,
-    CMInternalRights,
-    CMExternalRights
+    InternalRightList,
+    ExternalRightList
   },
   beforeCreate () {
     this.$store.registerModule('communicationManager', communicationManagerStore)
