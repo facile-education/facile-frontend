@@ -1,7 +1,7 @@
 <template>
   <div class="role">
     <label
-      v-t="'nero.roles.' + role.roleCode"
+      v-t="'Nero.roles.' + role.roleCode"
       class="role-label"
     />
     <NeroRadioButton

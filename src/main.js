@@ -1,11 +1,12 @@
-import Vue from 'vue'
+import './registerServiceWorker'
+import axios from 'axios'
+import i18n from './lang/lang.js'
 import Nero from './Nero.vue'
 import router from './router'
 import store from './store/index'
-import i18n from './lang/lang.js'
+import Vuelidate from 'vuelidate'
+import Vue from 'vue'
 import VueMq from 'vue-mq'
-import './registerServiceWorker'
-import axios from 'axios'
 
 // Catch 401 unauthorized error and redirect user to public home page
 axios.interceptors.response.use(undefined, (error) => {
@@ -21,6 +22,11 @@ axios.interceptors.response.use(undefined, (error) => {
 })
 
 Vue.config.productionTip = false
+
+// Form validation
+Vue.use(Vuelidate)
+
+// Responsive breakpoints
 Vue.use(VueMq, {
   breakpoints: { // default breakpoints - customize this
     phone: 450,

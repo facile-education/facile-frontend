@@ -1,26 +1,41 @@
 <template>
-  <input
-    :value="value"
-    :class="classes"
-    :type="type"
-    :maxlength="maxlength"
-    :placeholder="placeholder"
-    class="input"
-    @input="$emit('input', $event.target.value)"
-    @focus="focus"
-    @blur="blur"
-  >
+  <div class="nero-input">
+    <input
+      :value="value"
+      :class="classes"
+      :type="type"
+      :maxlength="maxlength"
+      :placeholder="placeholder"
+      class="input"
+      @input="$emit('input', $event.target.value)"
+      @focus="focus"
+      @blur="blur"
+    >
+    <p
+      v-if="isErrorDisplayed"
+      v-t="errorKey"
+      class="error-message"
+    />
+  </div>
 </template>
 
 <script>
 export default {
   name: 'NeroInput',
   props: {
-    value: {
+    cls: {
       type: String,
       default: ''
     },
-    cls: {
+    errorType: {
+      type: String,
+      default: ''
+    },
+    maxlength: {
+      type: Number,
+      default: undefined
+    },
+    placeholder: {
       type: String,
       default: ''
     },
@@ -28,11 +43,7 @@ export default {
       type: String,
       default: 'text'
     },
-    maxlength: {
-      type: Number,
-      default: undefined
-    },
-    placeholder: {
+    value: {
       type: String,
       default: ''
     }
@@ -45,6 +56,15 @@ export default {
   computed: {
     classes () {
       return this.cls + (this.focused ? ' theme-border-color' : '')
+    },
+    errorKey () {
+      if (this.errorType !== '') {
+        return 'Nero.formErrorMessage.' + this.errorType
+      }
+      return undefined
+    },
+    isErrorDisplayed () {
+      return (this.errorKey !== undefined)
     }
   },
   methods: {
@@ -63,7 +83,22 @@ export default {
 <style lang="scss" scoped>
 @import 'src/assets/css/constants';
 
+.nero-input {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5px;
+}
+
 .input {
   @extend %nero-input;
+  margin-bottom: 0;
+}
+
+.error-message {
+  // background-color: $notif-background-color;
+  // color: white;
+  color: $text-color-priority;
+  font-size: 0.7em;
+  padding: 0 8px;
 }
 </style>
