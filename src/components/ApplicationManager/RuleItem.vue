@@ -2,7 +2,7 @@
   <li class="rule">
     <NeroTagsInput
       v-model="rule.roles"
-      :placeholder="$t('ApplicationManager.RuleItem.rolesPlaceholder')"
+      :placeholder="$t('ApplicationManager.RuleItem.rolesPlaceholder') + '*'"
       :list="roleList"
       display-field="displayText"
       class="column"
@@ -10,12 +10,13 @@
     <p v-t="'ApplicationManager.RuleItem.fromLabel'" />
     <NeroTagsInput
       v-model="rule.classes"
-      :placeholder="$t('ApplicationManager.RuleItem.classesPlaceholder')"
+      :placeholder="$t('ApplicationManager.RuleItem.classesPlaceholder') + '*'"
       :list="classList"
       display-field="displayText"
       class="column"
     />
     <NeroButton
+      v-if="isRemoveButtonDisplayed"
       cls="cancel"
       icon="fa fa-trash"
       type="circle"
@@ -38,6 +39,10 @@ export default {
     rule: {
       type: Object,
       required: true
+    },
+    isRemoveButtonDisplayed: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {

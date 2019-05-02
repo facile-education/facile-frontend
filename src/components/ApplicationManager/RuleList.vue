@@ -4,6 +4,7 @@
       v-for="(rule, index) in ruleList"
       :key="rule.ruleId"
       :rule="rule"
+      :is-remove-button-displayed="isRemovalAllowed"
       @remove="remove(index)"
     />
   </ul>
@@ -21,6 +22,11 @@ export default {
     ruleList: {
       type: Array,
       required: true
+    }
+  },
+  computed: {
+    isRemovalAllowed () {
+      return this.ruleList.length > 1
     }
   },
   methods: {
