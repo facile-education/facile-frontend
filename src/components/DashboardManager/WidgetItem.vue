@@ -14,25 +14,25 @@
           :class="{'full-width': !displayConfigButton}"
           class="description"
         >
-          <p v-t="{path: 'DashboardManager.DMWidgetItem.typeLabel', args: {type: widget.type}}" />
+          <p v-t="{path: 'DashboardManager.WidgetItem.typeLabel', args: {type: widget.type}}" />
 
           <p
             v-if="broadcastedRoleList.length > 0"
-            v-t="{path: 'DashboardManager.DMWidgetItem.broadcastedLabel', args: {profiles: broadcastedRoleListLabel}}"
+            v-t="{path: 'DashboardManager.WidgetItem.broadcastedLabel', args: {profiles: broadcastedRoleListLabel}}"
             :title="broadcastedRoleListLabel"
           />
           <p
             v-else
-            v-t="'DashboardManager.DMWidgetItem.notBroadcastedLabel'"
+            v-t="'DashboardManager.WidgetItem.notBroadcastedLabel'"
           />
 
           <p
             v-if="isWidgetInstance"
-            v-t="{path: 'DashboardManager.DMWidgetItem.createdLabel', args: {date: formattedDate, creator: widget.author}}"
+            v-t="{path: 'DashboardManager.WidgetItem.createdLabel', args: {date: formattedDate, creator: widget.author}}"
           />
           <p
             v-if="isWidgetPersonnel"
-            v-t="'DashboardManager.DMWidgetItem.personnelWidgetLabel'"
+            v-t="'DashboardManager.WidgetItem.personnelWidgetLabel'"
           />
         </div>
 
@@ -41,12 +41,12 @@
           class="actions"
         >
           <NeroButton
-            :label="hasSmallDisplay ? '' : $t('DashboardManager.DMWidgetItem.editButtonLabel')"
+            :label="hasSmallDisplay ? '' : $t('DashboardManager.WidgetItem.editButtonLabel')"
             :icon="hasSmallDisplay ? 'fa fa-cog' : ''"
             @click="onEditWidget"
           />
           <NeroButton
-            :label="hasSmallDisplay ? '' : $t('DashboardManager.DMWidgetItem.removeButtonLabel')"
+            :label="hasSmallDisplay ? '' : $t('DashboardManager.WidgetItem.removeButtonLabel')"
             :icon="hasSmallDisplay ? 'fa fa-trash' : ''"
             cls="cancel"
             @click="onRemoveWidget"
@@ -66,7 +66,7 @@ import moment from 'moment'
 import NeroButton from '@/components/Nero/NeroButton'
 
 export default {
-  name: 'DMWidgetItem',
+  name: 'WidgetItem',
   components: {
     NeroButton
   },
@@ -139,10 +139,10 @@ export default {
     },
     onRemoveWidget () {
       var confirmModalParams = {
-        buttonLabel: this.$t('DashboardManager.DMWidgetItem.DeleteConfirmModal.buttonLabel'),
-        message: this.$t('DashboardManager.DMWidgetItem.DeleteConfirmModal.message'),
+        buttonLabel: this.$t('DashboardManager.WidgetItem.DeleteConfirmModal.buttonLabel'),
+        message: this.$t('DashboardManager.WidgetItem.DeleteConfirmModal.message'),
         onConfirm: this.removeWidget,
-        title: this.$t('DashboardManager.DMWidgetItem.DeleteConfirmModal.title')
+        title: this.$t('DashboardManager.WidgetItem.DeleteConfirmModal.title')
       }
       this.$store.dispatch('nero/updateAndShowConfirmModal', confirmModalParams)
     },

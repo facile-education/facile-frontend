@@ -2,14 +2,14 @@ import axios from 'axios'
 import constants from './constants'
 
 export default {
-  getSchoolDMWidgetList,
+  getSchoolWidgetList,
   saveWidget,
   deleteWidget
 
 }
 const url = constants.DASHBOARD_MANAGER_URL
 
-function getSchoolDMWidgetList (schoolId) {
+function getSchoolWidgetList (schoolId) {
   return axios.get(url, {
     params: {
       cmd: 'getAdministrationWidgets',

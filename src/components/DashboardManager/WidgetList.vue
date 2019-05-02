@@ -1,6 +1,6 @@
 <template>
   <div class="list">
-    <DMWidgetItem
+    <WidgetItem
       v-for="(widget, index) in widgetList"
       :key="widget.widgetId"
       :widget="widget"
@@ -10,12 +10,12 @@
 </template>
 
 <script>
-import DMWidgetItem from '@/components/DashboardManager/DMWidgetItem'
+import WidgetItem from '@/components/DashboardManager/WidgetItem'
 
 export default {
-  name: 'DMWidgetList',
+  name: 'WidgetList',
   components: {
-    DMWidgetItem
+    WidgetItem
   },
   computed: {
     widgetList () {

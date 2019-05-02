@@ -15,7 +15,7 @@
       <div class="widget-informations">
         <h5
           v-if="isCreation"
-          v-t="'DashboardManager.DMWidgetEditionModal.typeDropdownLabel'"
+          v-t="'DashboardManager.WidgetEditionModal.typeDropdownLabel'"
         />
         <NeroDropdown
           v-if="isCreation"
@@ -23,14 +23,14 @@
           class="type-dropdown"
           @dropdown-select="onTypeSelect"
         />
-        <!-- TODO width dropdown 100% -->
+        <!-- TODO dropdown model -->
         <div
           :class="{'inline': isCreation}"
           class="widget-name"
         >
           <NeroInput
             v-model="widget.name"
-            :placeholder="$t('DashboardManager.DMWidgetEditionModal.namePlaceholder') + '*'"
+            :placeholder="$t('DashboardManager.WidgetEditionModal.namePlaceholder') + '*'"
             :maxlength="75"
             cls="form"
             type="text"
@@ -45,7 +45,7 @@
 
       <hr class="nero-separator">
 
-      <DMWidgetBroadcastRuleList
+      <WidgetBroadcastRuleList
         v-if="widget.config && widget.config.roles"
         :role-list="widget.config.roles"
       />
@@ -53,11 +53,11 @@
       <hr class="nero-separator">
 
       <div v-if="showSchooltagsInput">
-        <h5 v-t="'DashboardManager.DMWidgetEditionModal.targetedSchoolsTitle'" />
+        <h5 v-t="'DashboardManager.WidgetEditionModal.targetedSchoolsTitle'" />
 
         <NeroTagsInput
           v-model="widget.config.schools"
-          :placeholder="$t('DashboardManager.DMWidgetEditionModal.schoolsPlaceholder')"
+          :placeholder="$t('DashboardManager.WidgetEditionModal.schoolsPlaceholder')"
           :list="managedSchoolList"
           display-field="schoolName"
           cls="form"
@@ -69,19 +69,19 @@
           @click="toggleDatesPanel()"
         >
           <i :class="{'fa fa-caret-down': isDateDisplayed, 'fa fa-caret-right': !isDateDisplayed}" />
-          {{ $t('DashboardManager.DMWidgetEditionModal.broadcastDatesTitle') }}
+          {{ $t('DashboardManager.WidgetEditionModal.broadcastDatesTitle') }}
         </h5>
         <div
           v-if="isDateDisplayed"
           class="widget-date"
         >
           <div class="parution-date-widget">
-            <label v-t="'DashboardManager.DMWidgetEditionModal.parutionDateLabel'" />
+            <label v-t="'DashboardManager.WidgetEditionModal.parutionDateLabel'" />
             TODO date picker
           </div>
 
           <div class="expiration-date-widget">
-            <label v-t="'DashboardManager.DMWidgetEditionModal.expirationDateLabel'" />
+            <label v-t="'DashboardManager.WidgetEditionModal.expirationDateLabel'" />
             TODO date picker min date : widget.parutionDate
           </div>
         </div>
@@ -90,14 +90,14 @@
 
     <NeroButton
       slot="footer"
-      :label="$t('DashboardManager.DMWidgetEditionModal.saveButtonLabel')"
+      :label="$t('DashboardManager.WidgetEditionModal.saveButtonLabel')"
       @click="save"
     />
   </NeroWindow>
 </template>
 
 <script>
-import DMWidgetBroadcastRuleList from '@/components/DashboardManager/DMWidgetBroadcastRuleList'
+import WidgetBroadcastRuleList from '@/components/DashboardManager/WidgetBroadcastRuleList'
 import NeroButton from '@/components/Nero/NeroButton'
 import NeroDropdown from '@/components/Nero/NeroDropdown'
 import NeroInput from '@/components/Nero/NeroInput'
@@ -105,9 +105,9 @@ import NeroTagsInput from '@/components/Nero/NeroTagsInput'
 import NeroWindow from '@/components/Nero/NeroWindow'
 
 export default {
-  name: 'DMWidgetEditionModal',
+  name: 'WidgetEditionModal',
   components: {
-    DMWidgetBroadcastRuleList,
+    WidgetBroadcastRuleList,
     NeroButton,
     NeroDropdown,
     NeroInput,
@@ -131,8 +131,8 @@ export default {
       return (this.managedSchoolList.length > 1)
     },
     title () {
-      return this.isCreation ? 'DashboardManager.DMWidgetEditionModal.creationModalTitle'
-        : 'DashboardManager.DMWidgetEditionModal.editionModalTitle'
+      return this.isCreation ? 'DashboardManager.WidgetEditionModal.creationModalTitle'
+        : 'DashboardManager.WidgetEditionModal.editionModalTitle'
     },
     typeList () {
       return this.$store.getters['dashboardManager/typeList']
