@@ -1,13 +1,13 @@
 <template>
   <div class="wrapper">
-    <ApplicationDetails
-      v-if="showDetails"
-      @closeDetails="toggleDetails"
-    />
     <div
       class="application"
       @click="toggleDetails"
     >
+      <ApplicationDetails
+        v-if="showDetails"
+        @closeDetails="toggleDetails"
+      />
       <i
         v-show="application.isAvailable"
         class="check fa fa-check"

@@ -1,6 +1,8 @@
 <template>
   <div
+    ref="popup"
     v-click-outside="closeDetails"
+    :class="isRightOriented ? 'right' : 'left'"
     class="details"
   >
     <div class="content">
@@ -136,6 +138,11 @@ export default {
   directives: {
     'click-outside': clickoutside
   },
+  data () {
+    return {
+      domRect: undefined
+    }
+  },
   computed: {
     application () {
       return this.$store.state.applicationManager.selectedApplication
@@ -147,6 +154,15 @@ export default {
     },
     isAdministrator () {
       return this.$store.state.user.isAdministrator
+    },
+    isRightOriented () {
+      // If there is not enough space at the right change orientation
+      if (this.domRect) {
+        if ((window.innerWidth - this.domRect.x) < this.domRect.width) {
+          return false
+        }
+      }
+      return true
     }
   },
   created () {
@@ -159,6 +175,9 @@ export default {
       this.$store.dispatch('applicationManager/getApplicationDefaultRoleList')
     }
     this.applicationURL = this.application.serviceUrl
+  },
+  mounted () {
+    this.domRect = this.$refs.popup.getBoundingClientRect()
   },
   methods: {
     closeDetails () {
@@ -216,6 +235,10 @@ export default {
   z-index: 3;
   border-radius: $border-radius;
   @extend %nero-shadow;
+}
+
+.left {
+  right: 0;
 }
 
 .logo {
