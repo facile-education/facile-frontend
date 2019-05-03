@@ -108,13 +108,12 @@ export default {
 .autocomplete {
   overflow-y: auto;
   max-height: 300px;
-  position: fixed;
-  // position: absolute;
-  // min-width: 100%;
+  position: absolute;
   background-color: $background-white-color;
   border: $border;
   border-radius: $border-radius;
   z-index: $dropdown-z-index;
+  min-width: 100%;
   @extend %nero-shadow;
 
   .suggestion-list {
