@@ -322,10 +322,10 @@ export default {
     },
     // Completion for category input
     toggleCompletion () {
-      if (this.$refs.category.$el !== document.activeElement) {
-        this.displayCategoryCompletion = false
-      } else {
+      if (this.$refs.category.$el.contains(document.activeElement)) {
         this.displayCategoryCompletion = true
+      } else {
+        this.displayCategoryCompletion = false
       }
     }
   }
