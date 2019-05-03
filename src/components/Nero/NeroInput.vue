@@ -11,17 +11,18 @@
       @focus="focus"
       @blur="blur"
     >
-    <p
-      v-if="isErrorDisplayed"
-      v-t="errorKey"
-      class="error-message"
-    />
+    <NeroErrorMessage :error-type="errorType" />
   </div>
 </template>
 
 <script>
+import NeroErrorMessage from '@/components/Nero/NeroErrorMessage'
+
 export default {
   name: 'NeroInput',
+  components: {
+    NeroErrorMessage
+  },
   props: {
     cls: {
       type: String,
@@ -56,15 +57,6 @@ export default {
   computed: {
     classes () {
       return this.cls + (this.focused ? ' theme-border-color' : '')
-    },
-    errorKey () {
-      if (this.errorType !== '') {
-        return 'Nero.formErrorMessage.' + this.errorType
-      }
-      return undefined
-    },
-    isErrorDisplayed () {
-      return (this.errorKey !== undefined)
     }
   },
   methods: {
@@ -92,13 +84,5 @@ export default {
 .input {
   @extend %nero-input;
   margin-bottom: 0;
-}
-
-.error-message {
-  // background-color: $notif-background-color;
-  // color: white;
-  color: $text-color-priority;
-  font-size: 0.7em;
-  padding: 0 8px;
 }
 </style>

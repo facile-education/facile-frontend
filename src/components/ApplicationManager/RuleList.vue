@@ -4,6 +4,7 @@
       v-for="(rule, index) in ruleList"
       :key="rule.ruleId"
       :rule="rule"
+      :is-error-list-displayed="isErrorListDisplayed"
       :is-remove-button-displayed="isRemovalAllowed"
       @remove="remove(index)"
     />
@@ -19,6 +20,10 @@ export default {
     RuleItem
   },
   props: {
+    isErrorListDisplayed: {
+      type: Boolean,
+      default: false
+    },
     ruleList: {
       type: Array,
       required: true
