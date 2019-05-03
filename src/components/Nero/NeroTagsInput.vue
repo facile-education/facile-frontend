@@ -32,23 +32,27 @@
       @select="addTag"
       @close="hideCompletion"
     />
+    <NeroErrorMessage :error-type="errorType" />
   </div>
 </template>
 
 <script>
-import NeroTagItem from '@/components/Nero/NeroTagItem'
 import NeroAutocomplete from '@/components/Nero/NeroAutocomplete'
+import NeroErrorMessage from '@/components/Nero/NeroErrorMessage'
+import NeroTagItem from '@/components/Nero/NeroTagItem'
 
 export default {
   name: 'NeroTagsInput',
   components: {
-    NeroTagItem,
-    NeroAutocomplete
+    NeroAutocomplete,
+    NeroErrorMessage,
+    NeroTagItem
   },
   props: {
     cls: { type: String, default: '' },
     completionOnly: { type: Boolean, default: false },
     displayField: { type: String, default: undefined },
+    errorType: { type: String, default: '' },
     idField: { type: String, default: undefined },
     list: { type: Array, default: () => [] },
     minLength: { type: Number, default: 0 },
@@ -109,6 +113,7 @@ export default {
     hideCompletion () {
       if (this.$refs.input !== document.activeElement) {
         this.isInputFocused = false
+        this.$emit('blur')
       }
     },
     onBlur () {

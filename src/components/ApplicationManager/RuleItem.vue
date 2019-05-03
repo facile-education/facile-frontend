@@ -5,7 +5,9 @@
       :placeholder="$t('ApplicationManager.RuleItem.rolesPlaceholder') + '*'"
       :list="roleList"
       display-field="displayText"
+      :error-type="formErrorList.roles"
       class="column"
+      @blur="$v.rule.roles.$touch()"
     />
     <p v-t="'ApplicationManager.RuleItem.fromLabel'" />
     <NeroTagsInput
@@ -13,7 +15,9 @@
       :placeholder="$t('ApplicationManager.RuleItem.classesPlaceholder') + '*'"
       :list="classList"
       display-field="displayText"
+      :error-type="formErrorList.classes"
       class="column"
+      @blur="$v.rule.classes.$touch()"
     />
     <NeroButton
       v-if="isRemoveButtonDisplayed"
@@ -26,6 +30,8 @@
 </template>
 
 <script>
+import { required } from 'vuelidate/lib/validators'
+
 import NeroButton from '@/components/Nero/NeroButton'
 import NeroTagsInput from '@/components/Nero/NeroTagsInput'
 
@@ -40,14 +46,31 @@ export default {
       type: Object,
       required: true
     },
+    isErrorListDisplayed: {
+      type: Boolean,
+      default: false
+    },
     isRemoveButtonDisplayed: {
       type: Boolean,
       default: false
     }
   },
+  validations: {
+    rule: {
+      roles: { required },
+      classes: { required }
+    }
+  },
   computed: {
     classList () {
       return this.$store.state.administration.classList
+    },
+    formErrorList () {
+      var form = this.$v.rule
+      return {
+        classes: (form.classes.$invalid && (form.classes.$dirty || this.isErrorListDisplayed)) ? 'required' : '',
+        roles: (form.roles.$invalid && (form.roles.$dirty || this.isErrorListDisplayed)) ? 'required' : ''
+      }
     },
     roleList () {
       return this.$store.state.administration.roleList

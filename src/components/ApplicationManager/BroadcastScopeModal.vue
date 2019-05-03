@@ -24,6 +24,7 @@
       <RuleList
         v-else
         :rule-list="ruleList"
+        :is-error-list-displayed="isErrorListDisplayed"
         @remove="removeScope"
       />
     </div>
@@ -37,10 +38,12 @@
 </template>
 
 <script>
+import { required } from 'vuelidate/lib/validators'
 import NeroUtils from '@/utils/nero.utils'
-import RuleList from '@/components/ApplicationManager/RuleList'
+
 import NeroButton from '@/components/Nero/NeroButton'
 import NeroWindow from '@/components/Nero/NeroWindow'
+import RuleList from '@/components/ApplicationManager/RuleList'
 
 export default {
   name: 'BroadcastScopeModal',
@@ -49,8 +52,21 @@ export default {
     NeroButton,
     NeroWindow
   },
+  validations: {
+    ruleList: {
+      $each: {
+        classes: {
+          required
+        },
+        roles: {
+          required
+        }
+      }
+    }
+  },
   data () {
     return {
+      isErrorListDisplayed: false,
       ruleList: []
     }
   },
@@ -67,11 +83,9 @@ export default {
       this.ruleList.push({ classes: [], roles: [] })
     },
     buildClassIdList (currentRule, currentRuleId) {
-      var currentClass
       var updateClassList = false
 
-      for (var classIdx = 0; classIdx < currentRule.classes.length; ++classIdx) {
-        currentClass = currentRule.classes[classIdx]
+      for (var currentClass of currentRule.classes) {
         if (currentClass.value === 0 && currentRule.classes.length > 1) {
           currentRuleId.classes.length = 0
           currentRuleId.classes.push(currentClass.value)
@@ -81,18 +95,16 @@ export default {
           currentRuleId.classes.push(currentClass.value)
         }
       }
-      // Rewrite class list
+      // Rewrite class list if all school item is selected
       if (updateClassList) {
         currentRule.classes.length = 0
         currentRule.classes.push(currentClass)
       }
     },
     buildRoleIdList (currentRule, currentRuleId) {
-      var currentRole
       var updateRoleList = false
 
-      for (var roleIdx = 0; roleIdx < currentRule.roles.length; ++roleIdx) {
-        currentRole = currentRule.roles[roleIdx]
+      for (var currentRole of currentRule.roles) {
         if (currentRole.roleId === 0 && currentRule.roles.length > 1) {
           currentRuleId.roles.length = 0
           currentRuleId.roles.push(currentRole.roleId)
@@ -102,11 +114,31 @@ export default {
           currentRuleId.roles.push(currentRole.roleId)
         }
       }
-      // Rewrite role list
+      // Rewrite role list if all role item is selected
       if (updateRoleList) {
         currentRule.roles.length = 0
         currentRule.roles.push(currentRole)
       }
+    },
+    removeEmptyRuleList () {
+      var currentRule
+      var indexListToRemove = []
+
+      for (var idx = 0; idx < this.ruleList.length; ++idx) {
+        currentRule = this.ruleList[idx]
+        if (currentRule.classes.length === 0 && currentRule.roles.length === 0) {
+          if (this.ruleList.length > 1) {
+            indexListToRemove.push(idx)
+          }
+        }
+      }
+
+      // Remove all empty rules unless it is the last one
+      indexListToRemove.reverse().forEach((indexToRemove) => {
+        if (this.ruleList.length > 1) {
+          this.ruleList.splice(indexToRemove, 1)
+        }
+      })
     },
     closeModal () {
       this.$store.dispatch('applicationManager/closeBroadcastModal')
@@ -115,29 +147,26 @@ export default {
       this.ruleList.splice(index, 1)
     },
     saveRuleList () {
-      var currentRule
       var ruleIdList = []
+      this.removeEmptyRuleList()
 
       // Build id lists for saving
-      for (var idx = 0; idx < this.ruleList.length; ++idx) {
-        currentRule = this.ruleList[idx]
-        if (currentRule.classes.length === 0 && currentRule.roles.length === 0) {
-        // TODO if rule empty -> remove rule
-        // TODO check incorrect rules : one field is undefined or no rule defined
-        } else {
-          var currentRuleId = { classes: [], roles: [] }
-          this.buildRoleIdList(currentRule, currentRuleId)
-          this.buildClassIdList(currentRule, currentRuleId)
-          ruleIdList.push(currentRuleId)
-        }
-      }
+      this.ruleList.forEach((currentRule) => {
+        var currentRuleId = { classes: [], roles: [] }
+        this.buildRoleIdList(currentRule, currentRuleId)
+        this.buildClassIdList(currentRule, currentRuleId)
+        ruleIdList.push(currentRuleId)
+      })
 
-      var params = {
-        school: this.$store.state.administration.selectedSchool,
-        ruleList: this.ruleList,
-        ruleIdList
+      if (this.$v.$invalid) {
+        this.isErrorListDisplayed = true
+      } else {
+        this.$store.dispatch('applicationManager/updateBroadcastScope', {
+          school: this.$store.state.administration.selectedSchool,
+          ruleList: this.ruleList,
+          ruleIdList
+        })
       }
-      this.$store.dispatch('applicationManager/updateBroadcastScope', params)
     }
   }
 }
