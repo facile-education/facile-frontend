@@ -6,7 +6,7 @@
         @click="onPictureClick()"
       />
       <NeroButton
-        :title="$t('PreferencesWindow.PWPersonalDetails.deleteButtonTitle')"
+        :title="$t('PreferencesWindow.PersonalDetails.deleteButtonTitle')"
         type="circle"
         icon="fa fa-trash"
         cls="cancel"
@@ -14,14 +14,14 @@
       />
     </div>
     <div class="informations">
-      <div><label v-t="'PreferencesWindow.PWPersonalDetails.lastNameLabel'" /> {{ details.lastName }}</div>
-      <div><label v-t="'PreferencesWindow.PWPersonalDetails.firstNameLabel'" /> {{ details.firstName }}</div>
-      <div><label v-t="'PreferencesWindow.PWPersonalDetails.emailAddressLabel'" /> {{ details.emailAddress }}</div>
-      <div><label v-t="'PreferencesWindow.PWPersonalDetails.mobilePhoneNumberLabel'" /> {{ details.mobilePhoneNumber }}</div>
-      <div><label v-t="'PreferencesWindow.PWPersonalDetails.smsPhoneNumberLabel'" /> {{ details.smsPhoneNumber }}</div>
-      <div><label v-t="'PreferencesWindow.PWPersonalDetails.homePhoneNumberLabel'" /> {{ details.homePhoneNumber }}</div>
-      <div><label v-t="'PreferencesWindow.PWPersonalDetails.officePhoneNumberLabel'" /> {{ details.officePhoneNumber }}</div>
-      <div><label v-t="'PreferencesWindow.PWPersonalDetails.addressLabel'" /> {{ details.address }}</div>
+      <div><label v-t="'PreferencesWindow.PersonalDetails.lastNameLabel'" /> {{ details.lastName }}</div>
+      <div><label v-t="'PreferencesWindow.PersonalDetails.firstNameLabel'" /> {{ details.firstName }}</div>
+      <div><label v-t="'PreferencesWindow.PersonalDetails.emailAddressLabel'" /> {{ details.emailAddress }}</div>
+      <div><label v-t="'PreferencesWindow.PersonalDetails.mobilePhoneNumberLabel'" /> {{ details.mobilePhoneNumber }}</div>
+      <div><label v-t="'PreferencesWindow.PersonalDetails.smsPhoneNumberLabel'" /> {{ details.smsPhoneNumber }}</div>
+      <div><label v-t="'PreferencesWindow.PersonalDetails.homePhoneNumberLabel'" /> {{ details.homePhoneNumber }}</div>
+      <div><label v-t="'PreferencesWindow.PersonalDetails.officePhoneNumberLabel'" /> {{ details.officePhoneNumber }}</div>
+      <div><label v-t="'PreferencesWindow.PersonalDetails.addressLabel'" /> {{ details.address }}</div>
     </div>
   </div>
 </template>
@@ -31,7 +31,7 @@ import NeroButton from '@/components/Nero/NeroButton'
 import NeroUserPicture from '@/components/Nero/NeroUserPicture'
 
 export default {
-  name: 'PWPersonalDetails',
+  name: 'PersonalDetails',
   components: {
     NeroButton,
     NeroUserPicture

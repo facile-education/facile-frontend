@@ -22,7 +22,7 @@
       <MobileMenu v-if="isMobileMenuDisplayed" />
     </Transition>
     <NeroConfirmModal v-if="isConfirmModalDisplayed" />
-    <PWPreferencesModal v-if="isPreferencesModalDisplayed" />
+    <PreferencesModal v-if="isPreferencesModalDisplayed" />
     <IPWImagePickerModal v-if="isImagePickerModalDisplayed" />
     <!-- SendMessageModal / ContactModal? / InformationModal / SupportModal -->
   </div>
@@ -34,7 +34,7 @@ import Hack from '@/components/Hack'
 import IPWImagePickerModal from '@/components/ImagePickerWindow/IPWImagePickerModal'
 import MobileMenu from '@/components/MobileMenu'
 import NeroConfirmModal from '@/components/Nero/NeroConfirmModal'
-import PWPreferencesModal from '@/components/PreferencesWindow/PWPreferencesModal'
+import PreferencesModal from '@/components/PreferencesWindow/PreferencesModal'
 import SideMenu from '@/components/SideMenu/SideMenu'
 
 export default {
@@ -45,7 +45,7 @@ export default {
     IPWImagePickerModal,
     MobileMenu,
     NeroConfirmModal,
-    PWPreferencesModal,
+    PreferencesModal,
     SideMenu
   },
   computed: {

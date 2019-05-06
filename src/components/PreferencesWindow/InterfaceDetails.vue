@@ -1,23 +1,23 @@
 <template>
   <div class="interface-preferences">
     <div class="menu-default-state">
-      <label v-t="'PreferencesWindow.PWInterfaceDetails.hideMenuLabel'" />
+      <label v-t="'PreferencesWindow.InterfaceDetails.hideMenuLabel'" />
       <NeroRadioButton
         v-model="menuHidden"
         name="menu"
-        :label="$t('PreferencesWindow.PWInterfaceDetails.yesLabel')"
+        :label="$t('PreferencesWindow.InterfaceDetails.yesLabel')"
         rb-value="yes"
         class="yes"
       />
       <NeroRadioButton
         v-model="menuHidden"
         name="menu"
-        :label="$t('PreferencesWindow.PWInterfaceDetails.noLabel')"
+        :label="$t('PreferencesWindow.InterfaceDetails.noLabel')"
         rb-value="no"
       />
     </div>
     <div class="color-picker">
-      <label v-t="'PreferencesWindow.PWInterfaceDetails.themeColorPickerLabel'" />
+      <label v-t="'PreferencesWindow.InterfaceDetails.themeColorPickerLabel'" />
       <Swatches
         :value="themeColor"
         :colors="colors"
@@ -37,7 +37,7 @@ import NeroRadioButton from '@/components/Nero/NeroRadioButton'
 import NeroUtils from '@/utils/nero.utils'
 
 export default {
-  name: 'PWInterfaceDetails',
+  name: 'InterfaceDetails',
   components: {
     NeroRadioButton,
     Swatches
