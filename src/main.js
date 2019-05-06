@@ -1,6 +1,7 @@
 import './registerServiceWorker'
 import axios from 'axios'
 import i18n from './lang/lang.js'
+import moment from 'moment'
 import Nero from './Nero.vue'
 import router from './router'
 import store from './store/index'
@@ -21,6 +22,10 @@ axios.interceptors.response.use(undefined, (error) => {
   return Promise.reject(error)
 })
 
+// Moment lang
+moment.locale('fr')
+
+// Vue global config
 Vue.config.productionTip = false
 
 // Form validation

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service --modern build",
+    "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e"
@@ -22,6 +22,7 @@
     "vue-mq": "https://marc_salvat@bitbucket.org/marc_salvat/vue-mq.git",
     "vue-router": "^3.0.3",
     "vue-swatches": "^1.0.2",
+    "vuejs-datepicker": "^1.5.4",
     "vuelidate": "^0.7.4",
     "vuex": "^3.0.1"
   },

@@ -90,14 +90,16 @@ export default {
   },
   methods: {
     onEditNews () {
-      this.$store.dispatch('news/openEditionModal', NeroUtils.JSON.deepCopy(this.news))
+      this.$store.commit('news/setSelectedNews', this.news)
+      this.$store.dispatch('news/openEditionModal')
     },
     onDeleteNews () {
       console.log('delete')
       // TODO Confirm + delete action
     },
     onShowDetails () {
-      this.$store.dispatch('news/openNewsModal', NeroUtils.JSON.deepCopy(this.news))
+      this.$store.commit('news/setSelectedNews', this.news)
+      this.$store.dispatch('news/openNewsModal')
     }
   }
 }
