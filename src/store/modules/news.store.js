@@ -1,5 +1,6 @@
 import newsService from '@/api/news.service'
 import Vue from 'vue'
+import moment from 'moment'
 
 export default {
   namespaced: true,
@@ -34,14 +35,13 @@ export default {
     hideNewsModal (state) {
       state.isNewsModalDisplayed = false
     },
-    showNewsEditionModal (state, payload) {
-      if (payload !== undefined) {
-        state.selectedNews = payload
-      }
+    setSelectedNews (state, payload) {
+      state.selectedNews = payload
+    },
+    showNewsEditionModal (state) {
       state.isNewsEditionModalDisplayed = true
     },
     showNewsModal (state, payload) {
-      state.selectedNews = payload
       state.isNewsModalDisplayed = true
     },
     updateDelegationModalStatus (state, payload) {
@@ -130,6 +130,24 @@ export default {
     },
     openNewsModal ({ commit }, selectedNews) {
       commit('showNewsModal', selectedNews)
+    },
+    selectEmptyNews ({ commit }) {
+      commit('setSelectedNews', {
+        author: '',
+        attachFiles: [],
+        date: '',
+        content: '',
+        ellipsise: '',
+        expireDate: moment().add(1, 'months').format('DD/MM/YYYY HH:mm'),
+        isActive: true,
+        isAuthor: true,
+        isEditor: true,
+        isHighPrio: false,
+        isPrio: false,
+        releaseDate: moment().format('DD/MM/YYYY HH:mm'),
+        title: '',
+        thumbnail: {}
+      })
     },
     updateDelegateList ({ commit, state }) {
       newsService.updateDelegateList(state.delegateList).then(

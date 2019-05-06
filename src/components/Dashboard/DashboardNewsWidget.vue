@@ -36,8 +36,8 @@ export default {
   },
   methods: {
     openEditionModal () {
-      // TODO empty news
-      this.$store.dispatch('news/openEditionModal', {})
+      this.$store.dispatch('news/selectEmptyNews')
+      this.$store.dispatch('news/openEditionModal')
     }
   }
 }
