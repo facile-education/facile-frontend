@@ -287,10 +287,10 @@
     }
   },
   "PreferencesWindow": {
-    "PWBackupDetails": {
+    "BackupDetails": {
       "agendaCheckboxLabel": "Mes agendas",
       "copyButtonLabel": "Copier mes données",
-      "copyButtonTitle": "@:PreferencesWindow.PWBackupDetails.copyButtonLabel",
+      "copyButtonTitle": "@:PreferencesWindow.BackupDetails.copyButtonLabel",
       "dropboxCheckboxLabel": "Casier",
       "endDateLabel": "Date de fin",
       "explanationText": "Toutes les données de l'ENT sont sauvegardées quotidiennement par les services techniques.",
@@ -300,13 +300,13 @@
       "warningText": "Ce service vous permet de réaliser une copie de vos données personnelles.",
       "workspaceCheckboxLabel": "Documents"
     },
-    "PWInterfaceDetails": {
+    "InterfaceDetails": {
       "hideMenuLabel": "Réduire le menu par défaut",
       "noLabel": "Non",
       "themeColorPickerLabel": "Choisir la couleur du thème",
       "yesLabel": "Oui"
     },
-    "PWNotificationDetails": {
+    "NotificationDetails": {
       "agendaCheckboxLabel": "Agenda",
       "dropboxCheckboxLabel": "Casier",
       "forumsCheckboxLabel": "Messages des forums",
@@ -317,7 +317,7 @@
       "synchronizationCheckboxLabel": "Synchronisation des utilisateurs et des groupes",
       "workspaceCheckboxLabel": "Documents des groupes"
     },
-    "PWPersonalDetails": {
+    "PersonalDetails": {
       "addressLabel": "Adresse",
       "deleteButtonTitle": "Supprimer la photo de profil",
       "emailAddressLabel": "Courriel",
@@ -328,7 +328,7 @@
       "officePhoneNumberLabel": "Téléphone bureau",
       "smsPhoneNumberLabel": "Téléphone SMS"
     },
-    "PWPreferencesModal": {
+    "PreferencesModal": {
       "accountTabLabel": "Mon Compte",
       "backupTabLabel": "Sauvegarde",
       "interfaceTabLabel": "Interface",
@@ -336,13 +336,13 @@
       "notificationsTabLabel": "Notifications",
       "webdavTabLabel": "WebDAV"
     },
-    "PWWebdavDetails": {
+    "WebdavDetails": {
       "confirmButtonLabel": "Valider",
-      "confirmButtonTitle": "@:PreferencesWindow.PWWebdavDetails.enableButtonLabel",
+      "confirmButtonTitle": "@:PreferencesWindow.WebdavDetails.enableButtonLabel",
       "confirmNewPasswordLabel": "Confirmer votre nouveau mot de passe",
       "disabledText": "WebDAV n'est pas activé pour votre compte.",
       "enableButtonLabel": "Activer WebDAV",
-      "enableButtonTitle": "@:PreferencesWindow.PWWebdavDetails.enableButtonLabel",
+      "enableButtonTitle": "@:PreferencesWindow.WebdavDetails.enableButtonLabel",
       "enabledText": "WebDAV est activé pour votre compte.",
       "formText": "Le formulaire suivant permet de réinitialiser votre mot de passe WebDAV.",
       "lostPasswordText": "Mot de passe perdu ? Ouvrez un ticket de support utilisateur.",
