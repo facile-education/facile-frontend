@@ -23,7 +23,7 @@
     </Transition>
     <NeroConfirmModal v-if="isConfirmModalDisplayed" />
     <PreferencesModal v-if="isPreferencesModalDisplayed" />
-    <IPWImagePickerModal v-if="isImagePickerModalDisplayed" />
+    <ImagePickerModal v-if="isImagePickerModalDisplayed" />
     <!-- SendMessageModal / ContactModal? / InformationModal / SupportModal -->
   </div>
 </template>
@@ -31,7 +31,7 @@
 <script>
 import Banner from '@/components/Banner/Banner'
 import Hack from '@/components/Hack'
-import IPWImagePickerModal from '@/components/ImagePickerWindow/IPWImagePickerModal'
+import ImagePickerModal from '@/components/ImagePickerWindow/ImagePickerModal'
 import MobileMenu from '@/components/MobileMenu'
 import NeroConfirmModal from '@/components/Nero/NeroConfirmModal'
 import PreferencesModal from '@/components/PreferencesWindow/PreferencesModal'
@@ -42,7 +42,7 @@ export default {
   components: {
     Banner,
     Hack,
-    IPWImagePickerModal,
+    ImagePickerModal,
     MobileMenu,
     NeroConfirmModal,
     PreferencesModal,
