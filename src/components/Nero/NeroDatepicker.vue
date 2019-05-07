@@ -52,6 +52,7 @@ export default {
       type: Object,
       default: () => undefined
     },
+    // Expect moment date and return a moment date
     value: {
       type: Object,
       default: () => moment()
