@@ -1,12 +1,12 @@
 <template>
   <div>
-    <p v-t="'SchoolLifeManager.SLMAafInformations.aafLabel'" />
+    <p v-t="'SchoolLifeManager.AAFInformations.aafLabel'" />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'SLMAafInformations'
+  name: 'AAFInformations'
 }
 </script>
 

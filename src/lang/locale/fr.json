@@ -351,10 +351,10 @@
     }
   },
   "SchoolLifeManager": {
-    "SLMAafInformations": {
+    "AAFInformations": {
       "aafLabel": "Vous avez choisi AAF comme source de données pour l'alimentation de votre ENT. Un rapport vous sera envoyé quotidiennement, dans la messagerie de l'ENT, pour vous notifier de tout mouvement d'élève, d'enseignant ou de personnel au sein de l'ENT."
     },
-    "SLMEdtInformations": {
+    "EDTInformations": {
       "agendaCheckbox": "Synchroniser les ressources Agenda de type salles de cours",
       "edtLabel": "Les groupes de l’ENT (classes et groupes) sont alimentés à partir de votre EDT.",
       "filtersLabel": "Filtres pour la synchronisation du cahier de texte",
@@ -367,10 +367,10 @@
       "pronoteInfoLabel": "Dans Pronote, réalisez un export de vos données vers l'ENT de la façon suivante:</br>- Cliquez sur Fichier -> Socles ENT -> Export manuel de l'emploi du temps</br- Sélectionnez le socle ENT 'Pentila'</br>- Cochez 'Vers URL'</br>- Cliquez sur 'Exporter'.",
       "synchronizeButton": "Lancer la synchronisation"
     },
-    "SLMSynchronization": {
+    "SynchronizationManager": {
       "title": "Synchronisation des données de l'ENT"
     },
-    "SLMWizard": {
+    "SynchronizationWizard": {
       "aafRadioButton": "AAF - Les affectations des usagers dans les groupes de l'ENT seront automatisées à partir des données de vos bases STSWEB et Siècle",
       "saveButton": "Valider",
       "edtRadioButton": "EDT - Les affectations des usagers dans les groupes de l'ENT seront automatisées à partir des données d'EDT",
