@@ -230,7 +230,7 @@
     "CustomCropper" : {
       "previewLabel": "Résultat"
     },
-    "IPWImagePickerModal": {
+    "ImagePickerModal": {
       "extensionsLabel": "Extensions autorisées : ",
       "fileInputLabel": "Choisir un fichier",
       "maxSizeLabel": "Taille autorisée par fichier : Mo",
