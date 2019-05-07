@@ -2,11 +2,11 @@
   <div class="wrapper">
     <div
       class="application"
-      @click="toggleDetails"
+      @click="showDetails"
     >
       <ApplicationDetails
-        v-if="showDetails"
-        @closeDetails="toggleDetails"
+        v-if="isDetailsDisplayed"
+        @closeDetails="hideDetails"
       />
       <i
         v-show="application.isAvailable"
@@ -46,13 +46,16 @@ export default {
   },
   data () {
     return {
-      showDetails: false
+      isDetailsDisplayed: false
     }
   },
   methods: {
-    toggleDetails () {
-      this.showDetails = !this.showDetails
-      if (this.showDetails) {
+    hideDetails () {
+      this.isDetailsDisplayed = false
+    },
+    showDetails () {
+      if (!this.isDetailsDisplayed) {
+        this.isDetailsDisplayed = true
         this.$store.commit('applicationManager/setSelectedApplication', this.application)
       }
     }
