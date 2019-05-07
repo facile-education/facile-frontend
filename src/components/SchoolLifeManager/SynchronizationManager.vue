@@ -1,21 +1,21 @@
 <template>
   <div>
-    <h3 v-t="'SchoolLifeManager.SLMSynchronization.title'" />
-    <SLMAafInformations v-if="isAAF" />
-    <SLMEdtInformations v-if="isEDT" />
+    <h3 v-t="'SchoolLifeManager.SynchronizationManager.title'" />
+    <AAFInformations v-if="isAAF" />
+    <EDTInformations v-if="isEDT" />
     <!-- UDT v-if -->
   </div>
 </template>
 
 <script>
-import SLMAafInformations from '@/components/SchoolLifeManager/SLMAafInformations'
-import SLMEdtInformations from '@/components/SchoolLifeManager/SLMEdtInformations'
+import AAFInformations from '@/components/SchoolLifeManager/AAFInformations'
+import EDTInformations from '@/components/SchoolLifeManager/EDTInformations'
 
 export default {
-  name: 'SLMSynchronization',
+  name: 'SynchronizationManager',
   components: {
-    SLMAafInformations,
-    SLMEdtInformations
+    AAFInformations,
+    EDTInformations
   },
   props: {
     synchronization: {

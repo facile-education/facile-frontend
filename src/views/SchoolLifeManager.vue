@@ -1,10 +1,10 @@
 <template>
   <div class="service">
-    <SLMSynchronization
+    <SynchronizationManager
       v-if="synchronizationType"
       :synchronization="synchronizationType"
     />
-    <SLMWizard v-else />
+    <SynchronizationWizard v-else />
   </div>
 </template>
 
@@ -12,14 +12,14 @@
 // TODO Toolbar ?
 import schoolLifeManagerStore from '@/store/modules/schoolLifeManager.store'
 
-import SLMSynchronization from '@/components/SchoolLifeManager/SLMSynchronization'
-import SLMWizard from '@/components/SchoolLifeManager/SLMWizard'
+import SynchronizationManager from '@/components/SchoolLifeManager/SynchronizationManager'
+import SynchronizationWizard from '@/components/SchoolLifeManager/SynchronizationWizard'
 
 export default {
   name: 'SchoolLifeManager',
   components: {
-    SLMSynchronization,
-    SLMWizard
+    SynchronizationManager,
+    SynchronizationWizard
   },
   computed: {
     synchronizationType () {
