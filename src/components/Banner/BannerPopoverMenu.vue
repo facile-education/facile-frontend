@@ -65,11 +65,11 @@ export default {
     }
   },
   methods: {
-    openInformationsModal () {
-      console.log('TODO open info modal')
-    },
     openPreferencesModal () {
       this.$store.dispatch('nero/openPreferencesModal')
+    },
+    openInformationsModal () {
+      this.$store.dispatch('nero/openInformationModal')
     },
     openSupportModal () {
       console.log('TODO open support modal')
