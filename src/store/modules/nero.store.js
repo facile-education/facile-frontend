@@ -20,6 +20,7 @@ export default {
     isMobileMenuDisplayed: false,
     isPreferencesModalDisplayed: false,
     isInformationModalDisplayed: false,
+    isUpdateEditionModalDisplayed: false,
     isMenuExpandedOnLoad: undefined,
     menu: undefined,
     menuExpanded: undefined,
@@ -63,6 +64,9 @@ export default {
     },
     updateInformationModalState (state, payload) {
       state.isInformationModalDisplayed = payload
+    },
+    updateUpdateEditionModalState (state, payload) {
+      state.isUpdateEditionModalDisplayed = payload
     }
   },
   actions: {
@@ -77,6 +81,9 @@ export default {
     },
     closeInformationModal ({ commit }) {
       commit('updateInformationModalState', false)
+    },
+    closeUpdateEditionModal ({ commit }) {
+      commit('updateUpdateEditionModalState', false)
     },
     initUserMenu ({ commit }) {
       return neroService.getUserMenu().then(
@@ -103,6 +110,9 @@ export default {
     },
     openInformationModal ({ commit }) {
       commit('updateInformationModalState', true)
+    },
+    openUpdateEditionModal ({ commit }) {
+      commit('updateUpdateEditionModalState', true)
     },
     toggleMobileMenu ({ commit }) {
       commit('toggleMobileMenu')

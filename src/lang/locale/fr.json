@@ -240,6 +240,29 @@
       "saveButtonLabel": "Valider"
     }
   },
+  "InformationWindow": {
+    "InformationModal":{
+      "modalHeaderLabel": "Informations générales relatives à l'ENT",
+      "updatesTabLabel": "Mises à jour",
+      "userCharterTabLabel": "Charte d'utilisation"
+    },
+    "UpdateDetails": {
+        "addVersionButtonLabel": "Ajouter une version",
+        "addVersionButtonTitle": "@InformationWindow.UpdateDetails.addVersionButtonLabel",
+        "version" : "version"
+    },
+    "UpdateEditionModal": {
+        "buttonSubmitLabel": "Créer",
+        "buttonCancelLabel": "Annuler",
+        "jsonContent": "Contenu JSON",
+        "modalHeaderLabel": "Créer une version",
+        "versionNumber": "Numéro de version"
+    },
+    "UserCharter": {
+        "confidentialityRulesLinkText": "Règles de confidentialité",
+        "charterText": "Charte"
+    }
+  },
   "Nero": {
     "formErrorMessage": {
       "required": "Ce champ est obligatoire"

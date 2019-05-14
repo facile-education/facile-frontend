@@ -25,6 +25,7 @@
     <PreferencesModal v-if="isPreferencesModalDisplayed" />
     <ImagePickerModal v-if="isImagePickerModalDisplayed" />
     <InformationModal v-if="isInformationModalDisplayed" />
+    <UpdateEditionModal v-if="isUpdateEditionModalDisplayed" />
     <!-- SendMessageModal / ContactModal? / SupportModal -->
   </div>
 </template>
@@ -37,6 +38,7 @@ import MobileMenu from '@/components/MobileMenu'
 import NeroConfirmModal from '@/components/Nero/NeroConfirmModal'
 import PreferencesModal from '@/components/PreferencesWindow/PreferencesModal'
 import InformationModal from '@/components/InformationWindow/InformationModal'
+import UpdateEditionModal from '@/components/InformationWindow/UpdateEditionModal'
 import SideMenu from '@/components/SideMenu/SideMenu'
 
 export default {
@@ -49,6 +51,7 @@ export default {
     NeroConfirmModal,
     PreferencesModal,
     InformationModal,
+    UpdateEditionModal,
     SideMenu
   },
   computed: {
@@ -74,6 +77,9 @@ export default {
     },
     isInformationModalDisplayed () {
       return this.$store.state.nero.isInformationModalDisplayed
+    },
+    isUpdateEditionModalDisplayed () {
+      return this.$store.state.nero.isUpdateEditionModalDisplayed
     },
     isImagePickerModalDisplayed () {
       return this.$store.state.nero.imagePickerModal.isDisplayed
