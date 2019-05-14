@@ -4,6 +4,7 @@ import mutations from '@/store/mutations'
 import actions from '@/store/actions'
 
 import nero from '@/store/modules/nero.store'
+import updates from '@/store/modules/updates.store'
 import user from '@/store/modules/user.store'
 
 import administration from '@/store/modules/administration.store'
@@ -19,6 +20,7 @@ export default new Vuex.Store({
   modules: {
     nero,
     user,
-    administration
+    administration,
+    updates
   }
 })

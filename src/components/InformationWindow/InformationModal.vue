@@ -1,32 +1,46 @@
 <template>
   <NeroWindow
     :modal="true"
-    @close="closeModal"
-  />
+    @close="onClose"
+  >
+    <span
+      slot="header"
+      v-t="'InformationWindow.InformationModal.modalHeaderLabel'"
+    />
+
+    <div slot="body">
+      <NeroTabList>
+        <NeroTabItem :title="$t('InformationWindow.InformationModal.updatesTabLabel')">
+          <UpdatesDetails />
+        </NeroTabItem>
+        <NeroTabItem :title="$t('InformationWindow.InformationModal.userCharterTabLabel')">
+          <UserCharter />
+        </NeroTabItem>
+      </NeroTabList>
+    </div>
+  </NeroWindow>
 </template>
 
 <script>
-
 import NeroWindow from '@/components/Nero/NeroWindow'
+import NeroTabList from '@/components/Nero/NeroTabList'
+import NeroTabItem from '@/components/Nero/NeroTabItem'
+import UpdatesDetails from '@/components/InformationWindow/UpdatesDetails'
+import UserCharter from '@/components/InformationWindow/UserCharter'
 
 export default {
   name: 'InformationModal',
   components: {
-    NeroWindow
-  },
-  computed: {
-  },
-  created () {
+    NeroTabList,
+    NeroTabItem,
+    NeroWindow,
+    UpdatesDetails,
+    UserCharter
   },
   methods: {
-    closeModal () {
+    onClose () {
       this.$store.dispatch('nero/closeInformationModal')
     }
   }
 }
 </script>
-
-<style lang="scss" scoped>
-@import 'src/assets/css/constants';
-
-</style>

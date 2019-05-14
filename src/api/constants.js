@@ -9,6 +9,7 @@ const DASHBOARD_MANAGER_URL = USER_PREFIX + '/admin-tableau-de-bord?p_p_id=gesti
 const DASHBOARD_URL = USER_PREFIX + '/tableau-de-bord?p_p_id=dashboard_WAR_dashboardportlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_cacheability=cacheLevelPage'
 const MENU_MANAGER_URL = USER_PREFIX + DEFAULT_APP + '?p_p_id=sideMenu_WAR_gestionMenusportlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_cacheability=cacheLevelPage'
 const PREFERENCES_URL = USER_PREFIX + DEFAULT_APP + '?p_p_id=preferenceHomePage_WAR_preferenceportlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_cacheability=cacheLevelPage'
+const VERSION_MANAGER_URL = USER_PREFIX + '?p_p_id=updateInformation_WAR_updateInformationportlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_cacheability=cacheLevelPage'
 
 // TODO remove NODE server when useless
 const BASE_URL = 'http://193.48.120.116:3333'
@@ -19,5 +20,15 @@ export default {
   DASHBOARD_MANAGER_URL,
   DASHBOARD_URL,
   MENU_MANAGER_URL,
-  PREFERENCES_URL
+  PREFERENCES_URL,
+  VERSION_MANAGER_URL
 }
+
+/*          RESULTATS OBTENUS VIA L'ONGLET NETWORK
+   url obtenue lors d'une requête à getPortletList (application manager)
+http://vdona.nero-dev.com/user/pentila/gestion-applications?p_p_id=gestionApps_WAR_gestionApplicationsportlet&p_p_lifecycle=2&p_p_state=exclusive&p_p_mode=view&p_p_cacheability=cacheLevelPage&controlPanelCategory=portlet_gestionApps_WAR_gestionApplicationsportlet
+   url obtenue lors d'une requête à getVesionList (ancienne version, géré par des jsps)
+https://ent.pentilanero.fr/user/pentila/nero?p_p_id=updateInformation_WAR_updateInformationportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&jspPage=%2Fajax%2Fversions.jsp&_dc=1557750840871
+   url obtenue lors d'une requête à getVersion details (ancienne version, géré par cmd (requêtes ajax?))
+https://ent.pentilanero.fr/user/pentila/nero?p_p_id=updateInformation_WAR_updateInformationportlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_cacheability=cacheLevelPage
+*/
