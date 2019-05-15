@@ -5,6 +5,7 @@
     <NeroDropdown
       v-if="versionList"
       :list="versionList"
+      sorted-type="reversed"
       display-field="versionNumber"
       @dropdown-select="selectedVersion"
     />
@@ -39,10 +40,23 @@ export default {
   },
   computed: {
     versionList () {
+      console.log(' mise à jour de versionList !')
+      // this.selectedVersion(this.latestVersion) // à chaque changement de VersionList, on met à jour la selectedVection
       return this.$store.state.updates.versionList
     },
     versionDetails () {
       return this.$store.state.updates.versionDetails
+    },
+    reversedVersionList () {
+      return this.versionList.slice().reverse()
+    },
+    latestVersion () {
+      for (var idx = 0; idx < this.versionList.length; ++idx) {
+        if (this.versionList[idx].latest === true) {
+          return this.versionList[idx]
+        }
+      }
+      return undefined
     }
   },
   created () {
@@ -56,6 +70,7 @@ export default {
     },
     selectedVersion (version) {
       if (this.versionList) {
+        console.log('selected version = ' + version.versionNumber)
         // On donne à présent l'ordre de récupérer le contenu de la version
         this.$store.dispatch('updates/getVersionDetails', version) // (à encapsuler dans une méthode?)
         return version
