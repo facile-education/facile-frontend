@@ -3,7 +3,8 @@ import constants from './constants'
 
 export default {
   getVersionList,
-  getVersionDetails
+  getVersionDetails,
+  createVersion
 }
 
 const url = constants.VERSION_MANAGER_URL
@@ -21,6 +22,16 @@ function getVersionDetails (id) {
     params: {
       cmd: 'getVersionDetails',
       versionId: id
+    }
+  }).then(response => response.data)
+}
+
+function createVersion (number, details) {
+  return axios.get(url, {
+    params: {
+      cmd: 'createVersion',
+      versionNumber: number,
+      versionDetails: details
     }
   }).then(response => response.data)
 }

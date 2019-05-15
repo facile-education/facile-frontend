@@ -4,7 +4,8 @@ export default {
   namespaced: true,
   state: {
     versionList: undefined,
-    versionDetails: undefined
+    versionDetails: undefined,
+    createVersionMessage: undefined
   },
   mutations: {
     initVersionList (state, payload) {
@@ -12,6 +13,9 @@ export default {
     },
     initVersionDetails (state, payload) {
       state.versionDetails = payload
+    },
+    initCreateVersionMessage (state, payload) {
+      state.createVersionMessage = payload
     }
   },
   actions: {
@@ -26,6 +30,17 @@ export default {
       updatesService.getVersionDetails(version.versionId).then((data) => {
         if (data.success) {
           commit('initVersionDetails', data.versionDetails)
+        }
+      })
+    },
+    createVersion ({ commit }, { number, details }) {
+      updatesService.createVersion(number, details).then((data) => {
+        if (data.success) {
+          commit('initCreateVersionMessage', data.success)
+          // Si l'ajout c'est bien passé, on met à jour la liste des versions
+          this.dispatch('updates/getVersionList')
+        } else {
+          commit('initCreateVersionMessage', data.codeErreur)
         }
       })
     }

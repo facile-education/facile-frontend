@@ -12,28 +12,22 @@
         <div>
           <label for="versionNumber">{{ $t('InformationWindow.UpdateEditionModal.versionNumber') }} : </label>
           <input
-            id="versionNumber"
             v-model="versionNumber"
-            type="text"
-            name="versionNumber"
           >
         </div>
         <div>
           {{ $t('InformationWindow.UpdateEditionModal.jsonContent') }} :
           <NeroInput
-            v-model="versionDescription"
-            cls="required"
+            v-model="versionDetails"
           />
         </div>
       </div>
       <div slot="footer">
         <NeroButton
-          class="submitButton"
-          :type="submit"
           :label="$t('InformationWindow.UpdateEditionModal.buttonSubmitLabel')"
+          @click="addVersion"
         />
         <NeroButton
-          class="cancelButton"
           :label="$t('InformationWindow.UpdateEditionModal.buttonCancelLabel')"
           @click="onClose"
         />
@@ -56,26 +50,21 @@ export default {
   },
   data () {
     return {
-      errors: [],
       versionNumber: null,
-      versionDescription: null
+      versionDetails: null
+    }
+  },
+  computed: {
+    createVersionMessage () {
+      return this.$store.state.updates.createVersionMessage
     }
   },
   methods: {
-    checkForm: function (e) { // TODO: maybe use templates to validate forms
-      this.errors = []
-
-      if (!this.versionNumber) {
-        this.errors.push('versionNumber required.')
-      }
-
-      if (!this.errors.length) {
-        // do something
-        console.log(this.versionNumber)
-        return true
-      }
-
-      e.preventDefault()
+    addVersion () {
+      this.$store.dispatch('updates/createVersion', {
+        number: this.versionNumber,
+        details: this.versionDetails
+      })
     },
     onClose () {
       this.$store.dispatch('nero/closeUpdateEditionModal')
@@ -89,12 +78,6 @@ export default {
 
 .submitPack {
   float: right;
-}
-
-.bodyCharter {
-  /* TODO change that horrible style */
-  background-color: $text-color-menu;
-  margin-top: 30px;
 }
 
 </style>

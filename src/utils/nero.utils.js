@@ -15,7 +15,8 @@ var NeroUtils = {
         return NeroUtils.String.normalize(value).includes(filter)
       })
     },
-    sortWithString (array, property) {
+    sortWithString (array, property, sortedType = undefined) {
+      // sort array based on alphabetic order of property
       var sortedArray = array.slice()
 
       function compare (a, b) {
@@ -26,8 +27,13 @@ var NeroUtils = {
         a = NeroUtils.String.normalize(a)
         b = NeroUtils.String.normalize(b)
 
-        if (a < b) return -1
-        if (a > b) return 1
+        if (sortedType === 'reversed') {
+          if (a < b) return 1
+          if (a > b) return -1
+        } else {
+          if (a < b) return -1
+          if (a > b) return 1
+        }
         return 0
       }
 
