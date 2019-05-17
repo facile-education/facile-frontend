@@ -2,6 +2,7 @@ import axios from 'axios'
 import constants from './constants'
 
 export default {
+  isJsonContentValid,
   getTermsOfUse,
   getVersionList,
   getVersionDetails,
@@ -9,6 +10,18 @@ export default {
 }
 
 const url = constants.VERSION_MANAGER_URL
+
+function isJsonContentValid (str) {
+  try {
+    var json = JSON.parse(str)
+    if (!json.hasOwnProperty('news') || !json.hasOwnProperty('others')) {
+      return false
+    }
+  } catch (e) {
+    return false
+  }
+  return true
+}
 
 function getTermsOfUse () {
   return axios.get(url, {

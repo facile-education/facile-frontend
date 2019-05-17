@@ -12,23 +12,23 @@
         <div>
           <label for="versionNumber">{{ $t('InformationWindow.UpdateEditionModal.versionNumber') }} : </label>
           <input
-            v-model="versionNumber"
-            :error-type="formErrorList.versionDetails"
-            @blur="$v.versionDetails.$touch()"
+            v-model="form.versionNumber"
+            :error-type="formErrorList.versionNumber"
+            @blur="$v.form.versionNumber.$touch()"
           >
           <div
-            v-if="formErrorList.versionDetails"
+            v-if="formErrorList.versionNumber"
             class="error"
           >
-            {{ formErrorList.versionDetails }}
+            {{ formErrorList.versionNumber }}
           </div>
         </div>
         <div>
           {{ $t('InformationWindow.UpdateEditionModal.jsonContent') }} :
           <NeroInput
-            v-model="versionDetails"
+            v-model="form.versionDetails"
             :error-type="formErrorList.versionDetails"
-            @blur="$v.versionDetails.$touch()"
+            @blur="$v.form.versionDetails.$touch()"
           />
         </div>
       </div>
@@ -47,11 +47,14 @@
 </template>
 
 <script>
+import NeroUtils from '@/utils/nero.utils'
 import NeroWindow from '@/components/Nero/NeroWindow'
 import NeroInput from '@/components/Nero/NeroInput'
 import NeroButton from '@/components/Nero/NeroButton'
-
+import informationService from '@/api/information.service'
 import { required } from 'vuelidate/lib/validators'
+const isValidJson = (value) => NeroUtils.JSON.isValidJson(value)
+const isJsonContentValid = (value) => informationService.isJsonContentValid(value)
 
 export default {
   name: 'UpdateEditionModal',
@@ -62,39 +65,52 @@ export default {
   },
   data () {
     return {
-      versionNumber: undefined,
-      versionDetails: undefined
+      form: {
+        versionNumber: '',
+        versionDetails: ''
+      }
     }
   },
+
   validations: {
-    versionNumber: {
-      required
-    },
-    versionDetails: {
-      required
+    form: {
+      versionNumber: {
+        required
+      },
+      versionDetails: {
+        required,
+        isValidJson,
+        isJsonContentValid
+      }
     }
   },
+
   computed: {
     createVersionMessage () {
       return this.$store.state.information.createVersionMessage
     },
     formErrorList () {
-      var form = this.$v
       return {
-        versionNumber: (form.versionNumber.$invalid && form.versionNumber.$dirty) ? 'required' : '',
-        versionDetails: (form.versionDetails.$invalid && form.versionDetails.$dirty) ? 'required' : ''
+        versionNumber: (this.$v.form.versionNumber.$invalid && this.$v.form.versionNumber.$dirty) ? 'required' : '',
+        versionDetails: (this.$v.form.versionDetails.$invalid && this.$v.form.versionDetails.$dirty)
+          ? (!this.$v.form.versionDetails.required
+            ? 'required'
+            : (!this.$v.form.versionDetails.isValidJson
+              ? 'invalidJson'
+              : 'invalidJsonContent'))
+          : ''
       }
     }
   },
+
   methods: {
     addVersion () {
       if (this.$v.$invalid) { // form checking
         this.$v.$touch()
-        console.log('ERROR')
       } else {
         this.$store.dispatch('information/createVersion', {
-          number: this.application.versionNumber,
-          details: this.application.versionDetails
+          number: this.form.versionNumber,
+          details: this.form.versionDetails
         })
       }
     },

@@ -106,7 +106,16 @@ var NeroUtils = {
     // Return a copy of the jsonObject
     deepCopy (jsonObject) {
       return JSON.parse(JSON.stringify(jsonObject))
+    },
+    isValidJson (str) {
+      try {
+        JSON.parse(str)
+      } catch (e) {
+        return false
+      }
+      return true
     }
+
   },
   String: {
     // Strip string from accented characters, uppercase and useless whitespaces
