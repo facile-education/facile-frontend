@@ -13,8 +13,8 @@
         <NeroTabItem :title="$t('InformationWindow.InformationModal.updatesTabLabel')">
           <UpdatesDetails />
         </NeroTabItem>
-        <NeroTabItem :title="$t('InformationWindow.InformationModal.userCharterTabLabel')">
-          <UserCharter />
+        <NeroTabItem :title="$t('InformationWindow.InformationModal.termsOfUseTabLabel')">
+          <TermsOfUse />
         </NeroTabItem>
       </NeroTabList>
     </div>
@@ -26,7 +26,7 @@ import NeroWindow from '@/components/Nero/NeroWindow'
 import NeroTabList from '@/components/Nero/NeroTabList'
 import NeroTabItem from '@/components/Nero/NeroTabItem'
 import UpdatesDetails from '@/components/InformationWindow/UpdatesDetails'
-import UserCharter from '@/components/InformationWindow/UserCharter'
+import TermsOfUse from '@/components/InformationWindow/TermsOfUse'
 
 export default {
   name: 'InformationModal',
@@ -35,7 +35,7 @@ export default {
     NeroTabItem,
     NeroWindow,
     UpdatesDetails,
-    UserCharter
+    TermsOfUse
   },
   methods: {
     onClose () {

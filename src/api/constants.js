@@ -23,12 +23,3 @@ export default {
   PREFERENCES_URL,
   VERSION_MANAGER_URL
 }
-
-/*          RESULTATS OBTENUS VIA L'ONGLET NETWORK
-   url obtenue lors d'une requête à getPortletList (application manager)
-http://vdona.nero-dev.com/user/pentila/gestion-applications?p_p_id=gestionApps_WAR_gestionApplicationsportlet&p_p_lifecycle=2&p_p_state=exclusive&p_p_mode=view&p_p_cacheability=cacheLevelPage&controlPanelCategory=portlet_gestionApps_WAR_gestionApplicationsportlet
-   url obtenue lors d'une requête à getVesionList (ancienne version, géré par des jsps)
-https://ent.pentilanero.fr/user/pentila/nero?p_p_id=updateInformation_WAR_updateInformationportlet&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&jspPage=%2Fajax%2Fversions.jsp&_dc=1557750840871
-   url obtenue lors d'une requête à getVersion details (ancienne version, géré par cmd (requêtes ajax?))
-https://ent.pentilanero.fr/user/pentila/nero?p_p_id=updateInformation_WAR_updateInformationportlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_cacheability=cacheLevelPage
-*/

@@ -15,6 +15,7 @@
       :list="list"
       :display-field="displayField"
       :filtered="isFilterDisplayed"
+      :sort="sort"
       :sorted-type="sortedType"
       @select="onSelect"
       @close="onClose"
@@ -42,6 +43,10 @@ export default {
     value: {
       type: [String, Object],
       default: undefined
+    },
+    sort: {
+      type: Boolean,
+      default: true
     },
     sortedType: {
       type: String,

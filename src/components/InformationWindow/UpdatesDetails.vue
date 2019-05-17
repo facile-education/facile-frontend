@@ -1,15 +1,15 @@
 <template>
   <div>
     {{ $t('InformationWindow.UpdateDetails.version') }} :
-    <!-- TODO afficher les updates dans le bon ordre -->
     <NeroDropdown
       v-if="versionList"
-      :list="versionList"
-      sorted-type="reversed"
+      v-model="selectedVersion"
+      :list="sortedVersionList"
+      :sort="false"
       display-field="versionNumber"
-      @dropdown-select="selectedVersion"
     />
     <NeroButton
+      v-if="isAdministrator"
       class="addVersion"
       :title="$t('InformationWindow.UpdateDetails.addVersionButtonTitle')"
       :label="$t('InformationWindow.UpdateDetails.addVersionButtonLabel')"
@@ -38,45 +38,63 @@ export default {
     NeroDropdown,
     NeroButton
   },
+  data () {
+    return {
+      selected: undefined,
+      selectLatestVersion: false
+    }
+  },
   computed: {
+    isAdministrator () {
+      return this.$store.state.user.isAdministrator
+    },
     versionList () {
       console.log(' mise à jour de versionList !')
-      // this.selectedVersion(this.latestVersion) // à chaque changement de VersionList, on met à jour la selectedVection
-      return this.$store.state.updates.versionList
+      // this.selectedVersion(this.latestVersion) // à chaque changement de VersionList, on aimerait mettre à jour la selectedVection
+      return this.$store.state.information.versionList
     },
     versionDetails () {
-      return this.$store.state.updates.versionDetails
+      return this.$store.state.information.versionDetails
     },
-    reversedVersionList () {
-      return this.versionList.slice().reverse()
+    sortedVersionList () {
+      // TODO sort with other key than versionId
+      function compare (a, b) {
+        if (a.versionId < b.versionId) { return 1 }
+        if (a.versionId > b.versionId) { return -1 }
+        return 0
+      }
+
+      return this.versionList.slice().sort(compare)
     },
     latestVersion () {
-      for (var idx = 0; idx < this.versionList.length; ++idx) {
-        if (this.versionList[idx].latest === true) {
-          return this.versionList[idx]
+      for (var idx = 0; idx < this.sortedVersionList.length; ++idx) {
+        if (this.sortedVersionList[idx].latest === true) {
+          return this.sortedVersionList[idx]
         }
       }
       return undefined
+    },
+    selectedVersion: {
+      get () {
+        return this.selected
+      },
+      set (version) {
+        if (this.versionList) {
+          this.selected = version
+          // Once we've selected a version, we want to get it details
+          this.$store.dispatch('information/getVersionDetails', version)
+        }
+      }
     }
   },
   created () {
     if (this.versionList === undefined) {
-      this.$store.dispatch('updates/getVersionList')
+      this.$store.dispatch('information/getVersionList')
     }
   },
   methods: {
     addVersion () {
       this.$store.dispatch('nero/openUpdateEditionModal')
-    },
-    selectedVersion (version) {
-      if (this.versionList) {
-        console.log('selected version = ' + version.versionNumber)
-        // On donne à présent l'ordre de récupérer le contenu de la version
-        this.$store.dispatch('updates/getVersionDetails', version) // (à encapsuler dans une méthode?)
-        return version
-      } else {
-        return undefined
-      }
     }
   }
 }

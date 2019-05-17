@@ -2,12 +2,21 @@ import axios from 'axios'
 import constants from './constants'
 
 export default {
+  getTermsOfUse,
   getVersionList,
   getVersionDetails,
   createVersion
 }
 
 const url = constants.VERSION_MANAGER_URL
+
+function getTermsOfUse () {
+  return axios.get(url, {
+    params: {
+      cmd: 'getTermsOfUse'
+    }
+  }).then(response => response.data)
+}
 
 function getVersionList () {
   return axios.get(url, {

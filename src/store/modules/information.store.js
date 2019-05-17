@@ -1,13 +1,17 @@
-import updatesService from '@/api/updates.service'
+import informationService from '@/api/information.service'
 
 export default {
   namespaced: true,
   state: {
+    termsOfUse: undefined,
     versionList: undefined,
     versionDetails: undefined,
     createVersionMessage: undefined
   },
   mutations: {
+    initTermsOfUse (state, payload) {
+      state.termsOfUse = payload
+    },
     initVersionList (state, payload) {
       state.versionList = payload
     },
@@ -19,28 +23,38 @@ export default {
     }
   },
   actions: {
+    getTermsOfUse ({ commit }) {
+      informationService.getTermsOfUse().then((data) => {
+        if (data.success) {
+          commit('initTermsOfUse', data.termsOfUse)
+        }
+      })
+    },
     getVersionList ({ commit }) {
-      updatesService.getVersionList().then((data) => {
+      informationService.getVersionList().then((data) => {
         if (data.success) {
           commit('initVersionList', data.versions)
         }
       })
     },
     getVersionDetails ({ commit }, version) {
-      updatesService.getVersionDetails(version.versionId).then((data) => {
+      informationService.getVersionDetails(version.versionId).then((data) => {
         if (data.success) {
           commit('initVersionDetails', data.versionDetails)
         }
       })
     },
     createVersion ({ commit }, { number, details }) {
-      updatesService.createVersion(number, details).then((data) => {
+      informationService.createVersion(number, details).then((data) => {
         if (data.success) {
           commit('initCreateVersionMessage', data.success)
-          // Si l'ajout c'est bien passé, on met à jour la liste des versions
-          this.dispatch('updates/getVersionList')
+          // if success, update versionList
+          this.dispatch('information/getVersionList')
+          this.dispatch('nero/closeUpdateEditionModal')
+          // TODO popup message "success"
         } else {
           commit('initCreateVersionMessage', data.codeErreur)
+          // TODO popup message "fail"
         }
       })
     }
