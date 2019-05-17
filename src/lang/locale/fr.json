@@ -244,7 +244,10 @@
     "InformationModal":{
       "modalHeaderLabel": "Informations générales relatives à l'ENT",
       "updatesTabLabel": "Mises à jour",
-      "userCharterTabLabel": "Charte d'utilisation"
+      "termsOfUseTabLabel": "Charte d'utilisation"
+    },
+    "TermsOfUse": {
+        "confidentialityRulesLinkText": "Règles de confidentialité"
     },
     "UpdateDetails": {
         "addVersionButtonLabel": "Ajouter une version",
@@ -257,10 +260,6 @@
         "jsonContent": "Contenu JSON",
         "modalHeaderLabel": "Créer une version",
         "versionNumber": "Numéro de version"
-    },
-    "UserCharter": {
-        "confidentialityRulesLinkText": "Règles de confidentialité",
-        "charterText": "Charte"
     }
   },
   "Nero": {
