@@ -265,7 +265,7 @@
   "Nero": {
     "formErrorMessage": {
       "invalidJson": "La structure du json spécifié n'est pas valide",
-      "invalidJsonContent": "L'objet Json doit contenir les champs \"news\" et \"others\"",
+      "UpdateEditionInvalidJsonContent": "L'objet Json doit contenir les champs \"news\" et \"others\"",
       "required": "Ce champ est obligatoire"
     },
     "roles": {

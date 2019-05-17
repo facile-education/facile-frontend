@@ -97,7 +97,7 @@ export default {
             ? 'required'
             : (!this.$v.form.versionDetails.isValidJson
               ? 'invalidJson'
-              : 'invalidJsonContent'))
+              : 'UpdateEditionInvalidJsonContent'))
           : ''
       }
     }
