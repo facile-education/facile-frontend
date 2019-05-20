@@ -2,6 +2,7 @@ import axios from 'axios'
 import constants from './constants'
 
 export default {
+  isVersionNameValid,
   isJsonContentValid,
   getTermsOfUse,
   getVersionList,
@@ -10,6 +11,17 @@ export default {
 }
 
 const url = constants.VERSION_MANAGER_URL
+
+function isVersionNameValid (str) {
+  try {
+    var regex = /[0-9]+.[0-9]+.[0-9]+.[0-9]+/gm
+
+    var found = str.match(regex)
+    return (found.length === 1 && str === found[0])
+  } catch (e) {
+    return false
+  }
+}
 
 function isJsonContentValid (str) {
   try {

@@ -60,9 +60,9 @@ export default {
       type: Boolean,
       default: true
     },
-    sortedType: {
-      type: String,
-      default: undefined
+    reversed: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -75,10 +75,7 @@ export default {
       if (!this.sort) {
         return this.list
       }
-      if (!this.sortedType) {
-        return NeroUtils.Array.sortWithString(this.list, this.displayField)
-      }
-      return NeroUtils.Array.sortWithString(this.list, this.displayField, this.sortedType)
+      return NeroUtils.Array.sortWithString(this.list, this.displayField, this.reversed)
     },
     filteredList () {
       var filter = this.input || this.filter
