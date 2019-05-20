@@ -16,7 +16,7 @@
       :display-field="displayField"
       :filtered="isFilterDisplayed"
       :sort="sort"
-      :sorted-type="sortedType"
+      :reversed="reversed"
       @select="onSelect"
       @close="onClose"
     />
@@ -48,9 +48,9 @@ export default {
       type: Boolean,
       default: true
     },
-    sortedType: {
-      type: String,
-      default: undefined
+    reversed: {
+      type: Boolean,
+      default: false
     }
   },
   data () {

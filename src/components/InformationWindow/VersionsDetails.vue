@@ -3,10 +3,11 @@
     {{ $t('InformationWindow.VersionDetails.version') }} :
     <NeroDropdown
       v-if="versionList"
-      v-model="selectedVersion"
+      :value="selected"
       :list="sortedVersionList"
       :sort="false"
       display-field="versionNumber"
+      @input="selectVersion"
     />
     <NeroButton
       v-if="isAdministrator"
@@ -40,8 +41,7 @@ export default {
   },
   data () {
     return {
-      selected: undefined,
-      selectLatestVersion: false
+      selected: undefined
     }
   },
   computed: {
@@ -49,19 +49,24 @@ export default {
       return this.$store.state.user.isAdministrator
     },
     versionList () {
-      console.log(' mise à jour de versionList !')
-      // this.selectedVersion(this.latestVersion) // à chaque changement de VersionList, on aimerait mettre à jour la selectedVection
+      // this.selectedVersion(this.latestVersion) // we would like to update the selected version any times the version list change
       return this.$store.state.information.versionList
     },
     versionDetails () {
       return this.$store.state.information.versionDetails
     },
     sortedVersionList () {
-      // TODO sort with VERSION NAME
+      // TODO unit tests ?
       function compare (a, b) {
-        if (a.versionId < b.versionId) { return 1 }
-        if (a.versionId > b.versionId) { return -1 }
-        return 0
+        // let's supposed that the version format is X.X.X.X
+        var tabA = a.versionNumber.split('.')
+        var tabB = b.versionNumber.split('.')
+
+        for (var idx = 0; idx < tabA.length; ++idx) {
+          if (tabA[idx] < tabB[idx]) { return 1 }
+          if (tabA[idx] > tabB[idx]) { return -1 }
+        }
+        return 1
       }
 
       return this.versionList.slice().sort(compare)
@@ -73,18 +78,6 @@ export default {
         }
       }
       return undefined
-    },
-    selectedVersion: {
-      get () {
-        return this.selected
-      },
-      set (version) {
-        if (this.versionList) {
-          this.selected = version
-          // Once we've selected a version, we want to get it details
-          this.$store.dispatch('information/getVersionDetails', version)
-        }
-      }
     }
   },
   created () {
@@ -95,6 +88,10 @@ export default {
   methods: {
     addVersion () {
       this.$store.dispatch('nero/openVersionEditionModal')
+    },
+    selectVersion (version) {
+      this.selected = version
+      this.$store.dispatch('information/getVersionDetails', this.selected)
     }
   }
 }

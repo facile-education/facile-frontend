@@ -45,6 +45,7 @@ import informationService from '@/api/information.service'
 import { required } from 'vuelidate/lib/validators'
 const isValidJson = (value) => NeroUtils.JSON.isValidJson(value)
 const isJsonContentValid = (value) => informationService.isJsonContentValid(value)
+const isVersionNameValid = (value) => informationService.isVersionNameValid(value)
 
 export default {
   name: 'VersionEditionModal',
@@ -66,7 +67,8 @@ export default {
   validations: {
     form: {
       versionNumber: {
-        required
+        required,
+        isVersionNameValid
       },
       versionDetails: {
         required,
@@ -82,7 +84,14 @@ export default {
     },
     formErrorList () {
       return {
-        versionNumber: (this.$v.form.versionNumber.$invalid && this.$v.form.versionNumber.$dirty) ? 'required' : '',
+        // Ugly
+        versionNumber: (this.$v.form.versionNumber.$invalid && this.$v.form.versionNumber.$dirty)
+          ? (!this.$v.form.versionNumber.required
+            ? 'required'
+            : (!this.$v.form.versionNumber.isVersionNameValid
+              ? 'invalidVersionName'
+              : ''))
+          : '',
         versionDetails: (this.$v.form.versionDetails.$invalid && this.$v.form.versionDetails.$dirty)
           ? (!this.$v.form.versionDetails.required
             ? 'required'
