@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{ $t('InformationWindow.UpdateDetails.version') }} :
+    {{ $t('InformationWindow.VersionDetails.version') }} :
     <NeroDropdown
       v-if="versionList"
       v-model="selectedVersion"
@@ -11,8 +11,8 @@
     <NeroButton
       v-if="isAdministrator"
       class="addVersion"
-      :title="$t('InformationWindow.UpdateDetails.addVersionButtonTitle')"
-      :label="$t('InformationWindow.UpdateDetails.addVersionButtonLabel')"
+      :title="$t('InformationWindow.VersionDetails.addVersionButtonTitle')"
+      :label="$t('InformationWindow.VersionDetails.addVersionButtonLabel')"
       @click="addVersion"
     />
     <br>
@@ -33,7 +33,7 @@ import NeroDropdown from '@/components/Nero/NeroDropdown'
 import NeroButton from '@/components/Nero/NeroButton'
 
 export default {
-  name: 'UpdatesDetails',
+  name: 'VersionsDetails',
   components: {
     NeroDropdown,
     NeroButton
@@ -57,7 +57,7 @@ export default {
       return this.$store.state.information.versionDetails
     },
     sortedVersionList () {
-      // TODO sort with other key than versionId
+      // TODO sort with VERSION NAME
       function compare (a, b) {
         if (a.versionId < b.versionId) { return 1 }
         if (a.versionId > b.versionId) { return -1 }
@@ -94,7 +94,7 @@ export default {
   },
   methods: {
     addVersion () {
-      this.$store.dispatch('nero/openUpdateEditionModal')
+      this.$store.dispatch('nero/openVersionEditionModal')
     }
   }
 }

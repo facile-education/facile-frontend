@@ -243,20 +243,19 @@
   "InformationWindow": {
     "InformationModal":{
       "modalHeaderLabel": "Informations générales relatives à l'ENT",
-      "updatesTabLabel": "Mises à jour",
+      "versionsTabLabel": "Mises à jour",
       "termsOfUseTabLabel": "Charte d'utilisation"
     },
     "TermsOfUse": {
         "confidentialityRulesLinkText": "Règles de confidentialité"
     },
-    "UpdateDetails": {
+    "VersionDetails": {
         "addVersionButtonLabel": "Ajouter une version",
-        "addVersionButtonTitle": "@InformationWindow.UpdateDetails.addVersionButtonLabel",
+        "addVersionButtonTitle": "@InformationWindow.VersionDetails.addVersionButtonLabel",
         "version" : "version"
     },
-    "UpdateEditionModal": {
+    "VersionEditionModal": {
         "buttonSubmitLabel": "Créer",
-        "buttonCancelLabel": "Annuler",
         "jsonContent": "Contenu JSON",
         "modalHeaderLabel": "Créer une version",
         "versionNumber": "Numéro de version"
@@ -265,7 +264,7 @@
   "Nero": {
     "formErrorMessage": {
       "invalidJson": "La structure du json spécifié n'est pas valide",
-      "UpdateEditionInvalidJsonContent": "L'objet Json doit contenir les champs \"news\" et \"others\"",
+      "VersionEditionInvalidJsonContent": "L'objet Json doit contenir les champs \"news\" et \"others\"",
       "required": "Ce champ est obligatoire"
     },
     "roles": {

@@ -6,40 +6,30 @@
     >
       <span
         slot="header"
-        v-t="'InformationWindow.UpdateEditionModal.modalHeaderLabel'"
+        v-t="'InformationWindow.VersionEditionModal.modalHeaderLabel'"
       />
       <div slot="body">
         <div>
-          <label for="versionNumber">{{ $t('InformationWindow.UpdateEditionModal.versionNumber') }} : </label>
-          <input
+          <NeroInput
             v-model="form.versionNumber"
             :error-type="formErrorList.versionNumber"
+            :placeholder="$t('InformationWindow.VersionEditionModal.versionNumber') + '*'"
             @blur="$v.form.versionNumber.$touch()"
-          >
-          <div
-            v-if="formErrorList.versionNumber"
-            class="error"
-          >
-            {{ formErrorList.versionNumber }}
-          </div>
+          />
         </div>
         <div>
-          {{ $t('InformationWindow.UpdateEditionModal.jsonContent') }} :
           <NeroInput
             v-model="form.versionDetails"
             :error-type="formErrorList.versionDetails"
+            :placeholder="$t('InformationWindow.VersionEditionModal.jsonContent') + '*'"
             @blur="$v.form.versionDetails.$touch()"
           />
         </div>
       </div>
       <div slot="footer">
         <NeroButton
-          :label="$t('InformationWindow.UpdateEditionModal.buttonSubmitLabel')"
+          :label="$t('InformationWindow.VersionEditionModal.buttonSubmitLabel')"
           @click="addVersion"
-        />
-        <NeroButton
-          :label="$t('InformationWindow.UpdateEditionModal.buttonCancelLabel')"
-          @click="onClose"
         />
       </div>
     </NeroWindow>
@@ -57,12 +47,13 @@ const isValidJson = (value) => NeroUtils.JSON.isValidJson(value)
 const isJsonContentValid = (value) => informationService.isJsonContentValid(value)
 
 export default {
-  name: 'UpdateEditionModal',
+  name: 'VersionEditionModal',
   components: {
     NeroWindow,
     NeroInput,
     NeroButton
   },
+
   data () {
     return {
       form: {
@@ -97,7 +88,7 @@ export default {
             ? 'required'
             : (!this.$v.form.versionDetails.isValidJson
               ? 'invalidJson'
-              : 'UpdateEditionInvalidJsonContent'))
+              : 'VersionEditionInvalidJsonContent'))
           : ''
       }
     }
@@ -115,7 +106,7 @@ export default {
       }
     },
     onClose () {
-      this.$store.dispatch('nero/closeUpdateEditionModal')
+      this.$store.dispatch('nero/closeVersionEditionModal')
     }
   }
 }
