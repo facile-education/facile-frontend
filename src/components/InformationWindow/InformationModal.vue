@@ -10,8 +10,8 @@
 
     <div slot="body">
       <NeroTabList>
-        <NeroTabItem :title="$t('InformationWindow.InformationModal.updatesTabLabel')">
-          <UpdatesDetails />
+        <NeroTabItem :title="$t('InformationWindow.InformationModal.versionsTabLabel')">
+          <VersionsDetails />
         </NeroTabItem>
         <NeroTabItem :title="$t('InformationWindow.InformationModal.termsOfUseTabLabel')">
           <TermsOfUse />
@@ -25,7 +25,7 @@
 import NeroWindow from '@/components/Nero/NeroWindow'
 import NeroTabList from '@/components/Nero/NeroTabList'
 import NeroTabItem from '@/components/Nero/NeroTabItem'
-import UpdatesDetails from '@/components/InformationWindow/UpdatesDetails'
+import VersionsDetails from '@/components/InformationWindow/VersionsDetails'
 import TermsOfUse from '@/components/InformationWindow/TermsOfUse'
 
 export default {
@@ -34,7 +34,7 @@ export default {
     NeroTabList,
     NeroTabItem,
     NeroWindow,
-    UpdatesDetails,
+    VersionsDetails,
     TermsOfUse
   },
   methods: {

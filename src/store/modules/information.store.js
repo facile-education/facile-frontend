@@ -50,7 +50,7 @@ export default {
           commit('initCreateVersionMessage', data.success)
           // if success, update versionList
           this.dispatch('information/getVersionList')
-          this.dispatch('nero/closeUpdateEditionModal')
+          this.dispatch('nero/closeVersionEditionModal')
           // TODO popup message "success"
         } else {
           commit('initCreateVersionMessage', data.codeErreur)
