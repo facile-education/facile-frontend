@@ -255,7 +255,7 @@
         "version" : "version"
     },
     "VersionEditionModal": {
-        "buttonSubmitLabel": "Créer",
+        "submitButtonLabel": "Créer",
         "jsonContent": "Contenu JSON",
         "modalHeaderLabel": "Créer une version",
         "versionNumber": "Numéro de version"
@@ -425,6 +425,18 @@
       "startDate": "Date de début",
       "weeklyLabel": "Afficher par semaine",
       "yearlyLabel": "Afficher par année"
+    }
+  },    
+  "SupportWindow": {
+    "SupportModal":{
+      "addFilesButtonLabel": "Ajouter un fichier",
+      "submitButtonLabel": "Créer",
+      "derscriptionPlaceholder": "description de l'incident",
+      "modalHeaderLabel": "Demande de support",
+      "mailAddressPlaceholder": "adresse mail",
+      "screenShotButtonLabel": "Capture d'écran",
+      "serviceLabel": "sevice affecté",
+      "thanksToCompleteLabel": "Merci de compléter le formulaire ci-dessous"
     }
   }
 }
