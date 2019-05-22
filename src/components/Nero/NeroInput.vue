@@ -6,6 +6,7 @@
       :type="type"
       :maxlength="maxlength"
       :placeholder="placeholder"
+      :disabled="disabled"
       class="input"
       @input="$emit('input', $event.target.value)"
       @focus="focus"
@@ -43,6 +44,10 @@ export default {
     type: {
       type: String,
       default: 'text'
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     },
     value: {
       type: String,

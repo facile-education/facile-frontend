@@ -429,13 +429,14 @@
   },    
   "SupportWindow": {
     "SupportModal":{
-      "addFilesButtonLabel": "Ajouter un fichier",
+      "eMailAddress": "L'adresse e-Mail qui servira à la communication du ticket de support est",
+      "addFilesButtonLabel": "Ajouter un fichier (facultatif)",
       "submitButtonLabel": "Créer",
-      "derscriptionPlaceholder": "description de l'incident",
+      "issueDescription": "Description de l'incident",
       "modalHeaderLabel": "Demande de support",
-      "mailAddressPlaceholder": "adresse mail",
-      "screenShotButtonLabel": "Capture d'écran",
-      "serviceLabel": "sevice affecté",
+      "screenShotButtonLabel": "Capture d'écran (facultatif)",
+      "screenShotMessage": "La capture d'écran sera déposée dans votre casier",
+      "serviceLabel": "Sevice affecté",
       "thanksToCompleteLabel": "Merci de compléter le formulaire ci-dessous"
     }
   }

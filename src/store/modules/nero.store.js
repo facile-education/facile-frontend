@@ -20,6 +20,7 @@ export default {
     isMobileMenuDisplayed: false,
     isPreferencesModalDisplayed: false,
     isInformationModalDisplayed: false,
+    isSupportModalDisplayed: false,
     isVersionEditionModalDisplayed: false,
     isMenuExpandedOnLoad: undefined,
     menu: undefined,
@@ -65,6 +66,9 @@ export default {
     updateInformationModalState (state, payload) {
       state.isInformationModalDisplayed = payload
     },
+    updateSupportModalState (state, payload) {
+      state.isSupportModalDisplayed = payload
+    },
     updateVersionEditionModalState (state, payload) {
       state.isVersionEditionModalDisplayed = payload
     }
@@ -81,6 +85,9 @@ export default {
     },
     closeInformationModal ({ commit }) {
       commit('updateInformationModalState', false)
+    },
+    closeSupportModal ({ commit }) {
+      commit('updateSupportModalState', false)
     },
     closeVersionEditionModal ({ commit }) {
       commit('updateVersionEditionModalState', false)
@@ -110,6 +117,9 @@ export default {
     },
     openInformationModal ({ commit }) {
       commit('updateInformationModalState', true)
+    },
+    openSupportModal ({ commit }) {
+      commit('updateSupportModalState', true)
     },
     openVersionEditionModal ({ commit }) {
       commit('updateVersionEditionModalState', true)

@@ -25,6 +25,7 @@
     <PreferencesModal v-if="isPreferencesModalDisplayed" />
     <ImagePickerModal v-if="isImagePickerModalDisplayed" />
     <InformationModal v-if="isInformationModalDisplayed" />
+    <SupportModal v-if="isSupportModalDisplayed" />
     <VersionEditionModal v-if="isVersionEditionModalDisplayed" />
     <!-- SendMessageModal / ContactModal? / SupportModal -->
   </div>
@@ -38,6 +39,7 @@ import MobileMenu from '@/components/MobileMenu'
 import NeroConfirmModal from '@/components/Nero/NeroConfirmModal'
 import PreferencesModal from '@/components/PreferencesWindow/PreferencesModal'
 import InformationModal from '@/components/InformationWindow/InformationModal'
+import SupportModal from '@/components/SupportWindow/SupportModal'
 import VersionEditionModal from '@/components/InformationWindow/VersionEditionModal'
 import SideMenu from '@/components/SideMenu/SideMenu'
 
@@ -51,6 +53,7 @@ export default {
     NeroConfirmModal,
     PreferencesModal,
     InformationModal,
+    SupportModal,
     VersionEditionModal,
     SideMenu
   },
@@ -77,6 +80,9 @@ export default {
     },
     isInformationModalDisplayed () {
       return this.$store.state.nero.isInformationModalDisplayed
+    },
+    isSupportModalDisplayed () {
+      return this.$store.state.nero.isSupportModalDisplayed
     },
     isVersionEditionModalDisplayed () {
       return this.$store.state.nero.isVersionEditionModalDisplayed
