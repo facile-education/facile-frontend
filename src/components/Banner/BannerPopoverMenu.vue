@@ -72,7 +72,7 @@ export default {
       this.$store.dispatch('nero/openInformationModal')
     },
     openSupportModal () {
-      console.log('TODO open support modal')
+      this.$store.dispatch('nero/openSupportModal')
     }
   }
 }
