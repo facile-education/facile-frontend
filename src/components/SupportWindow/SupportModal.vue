@@ -9,7 +9,7 @@
     />
 
     <div slot="body">
-      <div class="mailAddress">
+      <div class="mail-address">
         <h5> {{ $t('SupportWindow.SupportModal.eMailAddress') + ": " }} </h5>
         <NeroInput
           v-if="isAdministrator && eMailAddress"
@@ -29,21 +29,22 @@
           @input="selectService"
         />
       </div>
-      <div class="issueDescription">
+      <div class="issue-description">
         <h5> {{ $t('SupportWindow.SupportModal.issueDescription') + '*' }} </h5>
-        <CKEditor
-          v-model="issueDescription"
-          class="editor"
-          :editor="editor"
-        />
+        <div class="ck-editor">
+          <CKEditor
+            v-model="issueDescription"
+            :editor="editor"
+          />
+        </div>
       </div>
-      <div class="addFiles">
+      <div class="add-files">
         <NeroButton
           :label="$t('SupportWindow.SupportModal.addFilesButtonLabel')"
           @click="addFile"
         />
       </div>
-      <div class="addScreenShot">
+      <div class="add-screenshot">
         <NeroButton
           :label="$t('SupportWindow.SupportModal.screenShotButtonLabel')"
           @click="addScreenShot"
@@ -128,13 +129,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import 'src/assets/css/constants';
 
-.editor {
-  @import 'src/assets/css/constants';
-
+.ck-editor{
   border-style: solid;
-  border-width: 2px;
-  color: $text-color-fallback;
+  border-width: 1px;
+  color: $border-radius;
 }
 
 </style>
