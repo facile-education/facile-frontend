@@ -28,7 +28,7 @@
       </div>
       <div slot="footer">
         <NeroButton
-          :label="$t('InformationWindow.VersionEditionModal.buttonSubmitLabel')"
+          :label="$t('InformationWindow.VersionEditionModal.submitButtonLabel')"
           @click="addVersion"
         />
       </div>
