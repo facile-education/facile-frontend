@@ -22,6 +22,7 @@ export default {
     isTeacher: false,
     isParent: false,
     hasWebdavEnabled: false,
+    serviceList: undefined,
     schoolList: [],
     details: {}
   },
@@ -43,6 +44,9 @@ export default {
       state.hasWebdavEnabled = payload.hasWebdavEnabled
 
       state.schoolList = payload.schoolList
+    },
+    initServiceList (state, payload) {
+      state.serviceList = payload
     },
     hack (state, payload) {
       if (payload.isAdministrator || payload.isLocalAdmin ||
@@ -86,6 +90,13 @@ export default {
           // TODO toastr
           console.log(err)
         })
+    },
+    getServiceList ({ commit }) {
+      userService.getServiceList().then((data) => {
+        if (data.success) {
+          commit('initServiceList', data.items)
+        }
+      })
     },
     initUserInformations ({ state, commit }) {
       userService.getUserInformations().then(

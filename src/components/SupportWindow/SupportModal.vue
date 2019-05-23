@@ -9,10 +9,12 @@
     />
 
     <div slot="body">
-      <div class="mail-address">
+      <div
+        v-if="isAdministrator && eMailAddress"
+        class="mail-address"
+      >
         <h5> {{ $t('SupportWindow.SupportModal.eMailAddress') + ": " }} </h5>
         <NeroInput
-          v-if="isAdministrator && eMailAddress"
           v-model="eMailAddress"
           :placeholder="'eMailAddress'"
           :disabled="true"
@@ -25,7 +27,7 @@
           v-if="serviceList"
           :value="selected"
           :list="serviceList"
-          display-field="value"
+          display-field="name"
           @input="selectService"
         />
       </div>
@@ -35,6 +37,7 @@
           <CKEditor
             v-model="issueDescription"
             :editor="editor"
+            :config="editorConfig"
           />
         </div>
       </div>
@@ -64,6 +67,7 @@
 <script>
 import CKEditor from '@ckeditor/ckeditor5-vue'
 import InlineEditor from '@ckeditor/ckeditor5-build-inline'
+import platform from 'platform'
 
 import NeroWindow from '@/components/Nero/NeroWindow'
 import NeroInput from '@/components/Nero/NeroInput'
@@ -82,13 +86,18 @@ export default {
   data () {
     return {
       editor: InlineEditor,
+      editorConfig: {
+        toolbar: {
+          // TODO find a good configuration to prevent issues
+          // items: [ 'bold', 'italic', '|', 'link' ],
+          // viewportTopOffset: 500
+        }
+      },
       selected: undefined,
-      serviceList: [
-        { text: 'Un', value: 'A' },
-        { text: 'Deux', value: 'B' },
-        { text: 'Trois', value: 'C' }
-      ],
-      issueDescription: ''
+      issueDescription: '',
+      attachFiles: '[]', // /!\ here is a string
+      isUsurpationAllowed: false
+
     }
   },
   computed: {
@@ -100,26 +109,45 @@ export default {
     },
     eMailAddress () {
       return this.userDetails.emailAddress
+    },
+    serviceList () {
+      return this.$store.state.user.serviceList
+    },
+    subjectField () {
+      return 'Anomalie ' + this.selected.name
+    },
+    contentField () {
+      return '<p>Service affecté : ' + this.selected.name + '</p>' +
+             '<p>Description : ' + this.issueDescription + '</p>' + // issue description in html format
+             'Type de navigateur : ' + platform.description
     }
   },
   created () {
     if (this.userDetails.lastName === undefined) {
       this.$store.dispatch('user/getPersonalDetails')
     }
+    if (this.serviceList === undefined) {
+      this.$store.dispatch('user/getServiceList')
+    }
   },
   methods: {
     selectService (service) {
       this.selected = service
-      // this.$store.dispatch('information/getVersionDetails', this.selected)
     },
     addFile () {
-      // this.$store.dispatch('nero/openVersionEditionModal')
+      // TODO add files to message
     },
     addScreenShot () {
-      // this.$store.dispatch('nero/openVersionEditionModal')
+      // TODO add screenShot to message
     },
     submitTicket () {
-      // this.$store.dispatch('nero/openVersionEditionModal')
+      this.$store.dispatch('support/createMessage', {
+        subjectField: this.subjectField,
+        contentField: this.contentField,
+        mail: this.eMailAddress,
+        attachFiles: this.attachFiles,
+        isUsurpationAllowed: this.isUsurpationAllowed
+      })
     },
     onClose () {
       this.$store.dispatch('nero/closeSupportModal')
@@ -129,12 +157,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'src/assets/css/constants';
 
 .ck-editor{
-  border-style: solid;
-  border-width: 1px;
-  color: $border-radius;
+  border: 1px solid rgba(0, 0, 0, 0.15);
 }
 
 </style>

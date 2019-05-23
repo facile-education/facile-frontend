@@ -4,6 +4,7 @@ import NeroUtils from '@/utils/nero.utils'
 
 export default {
   getPersonalDetails,
+  getServiceList,
   getUserInformations,
   removePicture,
   updateInterfacePreferences,
@@ -17,6 +18,17 @@ function getPersonalDetails () {
   return axios.get(constants.PREFERENCES_URL, {
     params: {
       cmd: 'getPersonnalDetails'
+    }
+  }).then(response => response.data)
+}
+
+/**
+ * Get User's service list
+ */
+function getServiceList () {
+  return axios.get(constants.INFORMATION_MANAGER_URL, {
+    params: {
+      cmd: 'getServiceList'
     }
   }).then(response => response.data)
 }
