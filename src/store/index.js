@@ -5,6 +5,7 @@ import actions from '@/store/actions'
 
 import nero from '@/store/modules/nero.store'
 import information from '@/store/modules/information.store'
+import support from '@/store/modules/support.store'
 import user from '@/store/modules/user.store'
 
 import administration from '@/store/modules/administration.store'
@@ -21,6 +22,7 @@ export default new Vuex.Store({
     nero,
     user,
     administration,
-    information
+    information,
+    support
   }
 })
