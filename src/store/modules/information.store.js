@@ -53,7 +53,7 @@ export default {
           this.dispatch('nero/closeVersionEditionModal')
           // TODO popup message "success"
         } else {
-          commit('initCreateVersionMessage', data.codeErreur)
+          commit('initCreateVersionMessage', data.success)
           // TODO popup message "fail"
         }
       })
