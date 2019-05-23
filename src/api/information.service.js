@@ -10,7 +10,7 @@ export default {
   createVersion
 }
 
-const url = constants.VERSION_MANAGER_URL
+const url = constants.INFORMATION_MANAGER_URL
 
 function isVersionNameValid (str) {
   try {
