@@ -9,37 +9,32 @@
     />
 
     <div slot="body">
-      <div
-        v-if="isAdministrator && eMailAddress"
-        class="mail-address"
-      >
-        <h5> {{ $t('SupportWindow.SupportModal.eMailAddress') + ": " }} </h5>
-        <NeroInput
-          v-model="eMailAddress"
-          :placeholder="'eMailAddress'"
-          :disabled="true"
-        />
-      </div>
-      <h4> {{ $t('SupportWindow.SupportModal.thanksToCompleteLabel') }} :</h4>
+      <p v-if="isAdministrator">
+        {{ $t('SupportWindow.SupportModal.adminMessage') }}
+      </p>
+      <h4 v-else>
+        {{ $t('SupportWindow.SupportModal.nonAdminMessage') }}
+      </h4>
       <div class="service">
         <h5> {{ $t('SupportWindow.SupportModal.serviceLabel') + '*' }} </h5>
         <NeroDropdown
           v-if="serviceList"
-          :value="selected"
+          v-model="selected"
           :list="serviceList"
           display-field="name"
-          @input="selectService"
         />
       </div>
       <div class="issue-description">
         <h5> {{ $t('SupportWindow.SupportModal.issueDescription') + '*' }} </h5>
         <div class="ck-editor">
           <CKEditor
-            v-model="issueDescription"
+            v-model="form.issueDescription"
             :editor="editor"
             :config="editorConfig"
+            @blur="$v.form.issueDescription.$touch()"
           />
         </div>
+        <NeroErrorMessage :error-type="formErrorList.issueDescription" />
       </div>
       <div class="add-files">
         <NeroButton
@@ -67,24 +62,32 @@
 <script>
 import CKEditor from '@ckeditor/ckeditor5-vue'
 import InlineEditor from '@ckeditor/ckeditor5-build-inline'
+import { required } from 'vuelidate/lib/validators'
 import platform from 'platform'
+import html2canvas from 'html2canvas'
 
 import NeroWindow from '@/components/Nero/NeroWindow'
-import NeroInput from '@/components/Nero/NeroInput'
 import NeroDropdown from '@/components/Nero/NeroDropdown'
 import NeroButton from '@/components/Nero/NeroButton'
+import NeroErrorMessage from '@/components/Nero/NeroErrorMessage'
 
 export default {
   name: 'SupportModal',
+
   components: {
     CKEditor: CKEditor.component,
     NeroWindow,
-    NeroInput,
     NeroDropdown,
-    NeroButton
+    NeroButton,
+    NeroErrorMessage
   },
+
   data () {
     return {
+      form: {
+        issueDescription: ''
+      },
+      selected: undefined,
       editor: InlineEditor,
       editorConfig: {
         toolbar: {
@@ -93,14 +96,26 @@ export default {
           // viewportTopOffset: 500
         }
       },
-      selected: undefined,
-      issueDescription: '',
-      attachFiles: '[]', // /!\ here is a string
       isUsurpationAllowed: false
-
     }
   },
+
+  validations: {
+    form: {
+      issueDescription: {
+        required
+      }
+    }
+  },
+
   computed: {
+    formErrorList () {
+      return {
+        issueDescription: (this.$v.form.issueDescription.$invalid && this.$v.form.issueDescription.$dirty)
+          ? 'required'
+          : ''
+      }
+    },
     userDetails () {
       return this.$store.state.user.details
     },
@@ -110,6 +125,9 @@ export default {
     eMailAddress () {
       return this.userDetails.emailAddress
     },
+    attachFiles () {
+      return this.$store.state.support.fileList
+    },
     serviceList () {
       return this.$store.state.user.serviceList
     },
@@ -118,10 +136,11 @@ export default {
     },
     contentField () {
       return '<p>Service affecté : ' + this.selected.name + '</p>' +
-             '<p>Description : ' + this.issueDescription + '</p>' + // issue description in html format
+             '<p>Description : ' + this.form.issueDescription + '</p>' + // issue description in html format
              'Type de navigateur : ' + platform.description
     }
   },
+
   created () {
     if (this.userDetails.lastName === undefined) {
       this.$store.dispatch('user/getPersonalDetails')
@@ -130,24 +149,30 @@ export default {
       this.$store.dispatch('user/getServiceList')
     }
   },
+
   methods: {
-    selectService (service) {
-      this.selected = service
-    },
     addFile () {
       // TODO add files to message
     },
     addScreenShot () {
       // TODO add screenShot to message
+      let vm = this
+      html2canvas(document.body).then(function (canvas) {
+        vm.$store.dispatch('support/addScreenShot', { image: canvas.toDataURL() })
+      })
     },
     submitTicket () {
-      this.$store.dispatch('support/createMessage', {
-        subjectField: this.subjectField,
-        contentField: this.contentField,
-        mail: this.eMailAddress,
-        attachFiles: this.attachFiles,
-        isUsurpationAllowed: this.isUsurpationAllowed
-      })
+      if (this.$v.$invalid) { // form checking
+        this.$v.$touch()
+      } else {
+        this.$store.dispatch('support/createMessage', {
+          subjectField: this.subjectField,
+          contentField: this.contentField,
+          mail: this.eMailAddress,
+          attachFiles: JSON.stringify(this.attachFiles),
+          isUsurpationAllowed: this.isUsurpationAllowed
+        })
+      }
     },
     onClose () {
       this.$store.dispatch('nero/closeSupportModal')
@@ -158,8 +183,18 @@ export default {
 
 <style lang="scss" scoped>
 
+p{
+  margin-top: 15px;
+  font-style: italic;
+  font-size: 0.9em;
+}
+
 .ck-editor{
   border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.add-files, .add-screenshot{
+  margin-top: 5px
 }
 
 </style>
