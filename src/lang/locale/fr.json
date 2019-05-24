@@ -122,7 +122,7 @@
       "informationsLabel": "Informations",
       "logoutButtonLabel": "Fermer la session",
       "preferencesLabel": "Préférences",
-      "supportLabel": "Support utilisateur"
+      "supportLabel": "Signaler un problème"
     },
     "BannerSearch": {
       "searchLabel": "Recherche"
@@ -426,18 +426,18 @@
       "weeklyLabel": "Afficher par semaine",
       "yearlyLabel": "Afficher par année"
     }
-  },    
+  },
   "SupportWindow": {
     "SupportModal":{
-      "eMailAddress": "L'adresse e-Mail qui servira à la communication du ticket de support est",
       "addFilesButtonLabel": "Ajouter un fichier (facultatif)",
-      "submitButtonLabel": "Créer",
+      "adminMessage": "Votre demande se support sera traitée par les équipes Pentila, vous recevrez une réponce dans votre messagerie académique ",
+      "submitButtonLabel": "Envoyer",
       "issueDescription": "Description de l'incident",
       "modalHeaderLabel": "Demande de support",
+      "nonAdminMessage": "Signaler un problème à un administrateur",
       "screenShotButtonLabel": "Capture d'écran (facultatif)",
       "screenShotMessage": "La capture d'écran sera déposée dans votre casier",
-      "serviceLabel": "Sevice affecté",
-      "thanksToCompleteLabel": "Merci de compléter le formulaire ci-dessous"
+      "serviceLabel": "Sevice affecté"
     }
   }
 }
