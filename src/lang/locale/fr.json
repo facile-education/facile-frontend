@@ -430,7 +430,7 @@
   "SupportWindow": {
     "SupportModal":{
       "addFilesButtonLabel": "Ajouter un fichier (facultatif)",
-      "adminMessage": "Votre demande se support sera traitée par les équipes Pentila, vous recevrez une réponce dans votre messagerie académique ",
+      "adminMessage": "Votre demande se support sera traitée par les équipes Pentila, vous recevrez une réponse dans votre messagerie académique ",
       "submitButtonLabel": "Envoyer",
       "issueDescription": "Description de l'incident",
       "modalHeaderLabel": "Demande de support",
