@@ -430,11 +430,11 @@
   "SupportWindow": {
     "SupportModal":{
       "addFilesButtonLabel": "Ajouter un fichier (facultatif)",
-      "adminMessage": "Votre demande se support sera traitée par les équipes Pentila, vous recevrez une réponse dans votre messagerie académique ",
+      "adminMessage": "Votre demande de support sera traitée par les équipes de Pentila, vous recevrez une réponse dans votre messagerie",
       "submitButtonLabel": "Envoyer",
       "issueDescription": "Description de l'incident",
-      "modalHeaderLabel": "Demande de support",
-      "nonAdminMessage": "Signaler un problème à un administrateur",
+      "modalHeaderLabel": "Signaler un problème",
+      "nonAdminMessage": "Votre demande de support sera transmise à l'administrateur",
       "screenShotButtonLabel": "Capture d'écran (facultatif)",
       "screenShotMessage": "La capture d'écran sera déposée dans votre casier",
       "serviceLabel": "Sevice affecté"

@@ -87,6 +87,7 @@ export default {
       commit('updateInformationModalState', false)
     },
     closeSupportModal ({ commit }) {
+      this.commit('support/deleteAllSelectedFile')
       commit('updateSupportModalState', false)
     },
     closeVersionEditionModal ({ commit }) {
