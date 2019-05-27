@@ -1,6 +1,7 @@
 <template>
   <NeroWindow
     :modal="true"
+    data-html2canvas-ignore="true"
     @close="onClose"
   >
     <span
@@ -9,12 +10,18 @@
     />
 
     <div slot="body">
-      <p v-if="isAdministrator">
+      <p
+        v-if="isAdministrator"
+        class="italic"
+      >
         {{ $t('SupportWindow.SupportModal.adminMessage') }}
       </p>
-      <h4 v-else>
+      <p
+        v-else
+        class="italic"
+      >
         {{ $t('SupportWindow.SupportModal.nonAdminMessage') }}
-      </h4>
+      </p>
       <div class="service">
         <h5> {{ $t('SupportWindow.SupportModal.serviceLabel') + '*' }} </h5>
         <NeroDropdown
@@ -41,8 +48,14 @@
           :label="$t('SupportWindow.SupportModal.addFilesButtonLabel')"
           @click="addFile"
         />
+        <div v-if="attachFiles.length !== 0">
+          {{ attachFiles }}
+        </div>
       </div>
-      <div class="add-screenshot">
+      <div
+        v-if="isScreenShotEnabled"
+        class="add-screenshot"
+      >
         <NeroButton
           :label="$t('SupportWindow.SupportModal.screenShotButtonLabel')"
           @click="addScreenShot"
@@ -90,13 +103,14 @@ export default {
       selected: undefined,
       editor: InlineEditor,
       editorConfig: {
+        // TODO find a good configuration to prevent issues
         toolbar: {
-          // TODO find a good configuration to prevent issues
           // items: [ 'bold', 'italic', '|', 'link' ],
           // viewportTopOffset: 500
         }
       },
-      isUsurpationAllowed: false
+      isUsurpationAllowed: false,
+      isScreenShotEnabled: false
     }
   },
 
@@ -153,6 +167,7 @@ export default {
   methods: {
     addFile () {
       // TODO add files to message
+      console.log('TODO: add file')
     },
     addScreenShot () {
       // TODO add screenShot to message
@@ -183,14 +198,27 @@ export default {
 
 <style lang="scss" scoped>
 
-p{
+p.italic{
   margin-top: 15px;
   font-style: italic;
   font-size: 0.9em;
 }
 
-.ck-editor{
+h5, .NeroDropDown {
+  display: inline;
+}
+
+h5{
+  margin-right: 10px;
+}
+
+.service, .issue-description{
+  margin-top: 15px;
+}
+
+.ck-editor__editable {
   border: 1px solid rgba(0, 0, 0, 0.15);
+  min-height: 150px;  /* TO DEFINE */
 }
 
 .add-files, .add-screenshot{

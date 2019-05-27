@@ -8,6 +8,10 @@ export default {
   mutations: {
     addFile (state, payload) {
       state.fileList.push(payload)
+    },
+    deleteAllSelectedFile (state) {
+      state.fileList = []
+      // TODO delete file stored in base?
     }
   },
   actions: {

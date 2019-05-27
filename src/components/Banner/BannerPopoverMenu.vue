@@ -1,5 +1,8 @@
 <template>
-  <ul class="popover-menu">
+  <ul
+    class="popover-menu"
+    data-html2canvas-ignore="true"
+  >
     <li>
       <i class="fa fa-caret-up" />
       <img
