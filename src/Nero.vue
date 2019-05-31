@@ -27,7 +27,7 @@
     <InformationModal v-if="isInformationModalDisplayed" />
     <SupportModal v-if="isSupportModalDisplayed" />
     <VersionEditionModal v-if="isVersionEditionModalDisplayed" />
-    <!-- SendMessageModal / ContactModal? / SupportModal -->
+    <!-- SendMessageModal / ContactModal? -->
   </div>
 </template>
 
