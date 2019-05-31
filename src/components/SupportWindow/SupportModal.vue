@@ -216,8 +216,11 @@ h5{
   margin-top: 15px;
 }
 
-.ck-editor__editable {
+.ck-editor{
   border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.ck-editor__editable {
   min-height: 150px;  /* TO DEFINE */
 }
 
