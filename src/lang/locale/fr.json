@@ -252,7 +252,7 @@
     "VersionDetails": {
         "addVersionButtonLabel": "Ajouter une version",
         "addVersionButtonTitle": "@InformationWindow.VersionDetails.addVersionButtonLabel",
-        "version" : "version"
+        "version" : "Version"
     },
     "VersionEditionModal": {
         "submitButtonLabel": "Créer",

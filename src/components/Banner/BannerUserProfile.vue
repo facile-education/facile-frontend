@@ -26,6 +26,7 @@
     <BannerItem
       v-if="$device.desktop"
       icon="fa fa-chevron-down"
+      data-test="togglePopoverMenu"
       @click="togglePopoverMenu"
     />
     <BannerPopoverMenu v-if="isPopoverMenuDisplayed" />

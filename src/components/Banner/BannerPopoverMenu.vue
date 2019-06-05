@@ -1,6 +1,7 @@
 <template>
   <ul
     class="popover-menu"
+    data-test="popover-menu"
     data-html2canvas-ignore="true"
   >
     <li>
@@ -10,10 +11,14 @@
         alt=""
         class="picture"
       >
-      <div class="user-name">
+      <div
+        class="user-name"
+        data-test="user-name"
+      >
         <p>{{ userFullName }}</p>
         <a
           v-t="'Banner.BannerPopoverMenu.preferencesLabel'"
+          data-test="openPreferencesModal"
           href="#"
           @click="openPreferencesModal"
         />
@@ -22,12 +27,14 @@
     <li>
       <a
         href="#"
+        data-test="openInformationModal"
         @click="openInformationsModal"
       >
         {{ $t('Banner.BannerPopoverMenu.informationsLabel') }}<i class="fa fa-chevron-right" />
       </a>
       <a
         href="#"
+        data-test="openSupportModal"
         @click="openSupportModal"
       >
         {{ $t('Banner.BannerPopoverMenu.supportLabel') }}<i class="fa fa-chevron-right" />
@@ -35,6 +42,7 @@
       <!-- TODO dynamic url -->
       <a
         v-if="isAdministrator"
+        data-test="openControl_panel"
         href="/group/control_panel?doAsGroupId=11107&refererPlid=4439929"
       >
         {{ $t('Banner.BannerPopoverMenu.controlPanelLabel') }}<i class="fa fa-chevron-right" />
@@ -45,6 +53,7 @@
       <a
         href="/c/portal/logout"
         class="logout"
+        data-test="logout"
         title="Déconnexion"
       >
         <i class="fa fa-sign-out-alt" /> {{ $t('Banner.BannerPopoverMenu.logoutButtonLabel') }}

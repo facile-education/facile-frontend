@@ -1,75 +1,84 @@
 <template>
-  <NeroWindow
-    :modal="true"
-    data-html2canvas-ignore="true"
-    @close="onClose"
-  >
-    <span
-      slot="header"
-      v-t="'SupportWindow.SupportModal.modalHeaderLabel'"
-    />
+  <div data-test="supportModal">
+    <NeroWindow
+      :modal="true"
+      data-html2canvas-ignore="true"
+      @close="onClose"
+    >
+      <span
+        slot="header"
+        v-t="'SupportWindow.SupportModal.modalHeaderLabel'"
+      />
 
-    <div slot="body">
-      <p
-        v-if="isAdministrator"
-        class="italic"
-      >
-        {{ $t('SupportWindow.SupportModal.adminMessage') }}
-      </p>
-      <p
-        v-else
-        class="italic"
-      >
-        {{ $t('SupportWindow.SupportModal.nonAdminMessage') }}
-      </p>
-      <div class="service">
-        <h5> {{ $t('SupportWindow.SupportModal.serviceLabel') + '*' }} </h5>
-        <NeroDropdown
-          v-if="serviceList"
-          v-model="selected"
-          :list="serviceList"
-          display-field="name"
-        />
-      </div>
-      <div class="issue-description">
-        <h5> {{ $t('SupportWindow.SupportModal.issueDescription') + '*' }} </h5>
-        <div class="ck-editor">
-          <CKEditor
-            v-model="form.issueDescription"
-            :editor="editor"
-            :config="editorConfig"
-            @blur="$v.form.issueDescription.$touch()"
+      <div slot="body">
+        <p
+          v-if="isAdministrator"
+          class="italic"
+        >
+          {{ $t('SupportWindow.SupportModal.adminMessage') }}
+        </p>
+        <p
+          v-else
+          class="italic"
+        >
+          {{ $t('SupportWindow.SupportModal.nonAdminMessage') }}
+        </p>
+        <div class="service">
+          <h5> {{ $t('SupportWindow.SupportModal.serviceLabel') + '*' }} </h5>
+          <NeroDropdown
+            v-if="serviceList"
+            v-model="selected"
+            data-test="servicesDropDown"
+            :list="serviceList"
+            display-field="name"
           />
         </div>
-        <NeroErrorMessage :error-type="formErrorList.issueDescription" />
-      </div>
-      <div class="add-files">
-        <NeroButton
-          :label="$t('SupportWindow.SupportModal.addFilesButtonLabel')"
-          @click="addFile"
-        />
-        <div v-if="attachFiles.length !== 0">
-          {{ attachFiles }}
+        <div class="issue-description">
+          <h5> {{ $t('SupportWindow.SupportModal.issueDescription') + '*' }} </h5>
+          <div
+            class="ck-editor"
+            data-test="ck-editor"
+          >
+            <CKEditor
+              v-model="form.issueDescription"
+              :editor="editor"
+              :config="editorConfig"
+              @blur="$v.form.issueDescription.$touch()"
+            />
+          </div>
+          <NeroErrorMessage :error-type="formErrorList.issueDescription" />
+        </div>
+        <div class="add-files">
+          <NeroButton
+            data-test="addFile"
+            :label="$t('SupportWindow.SupportModal.addFilesButtonLabel')"
+            @click="addFile"
+          />
+          <div v-if="attachFiles.length !== 0">
+            {{ attachFiles }}
+          </div>
+        </div>
+        <div
+          v-if="isScreenShotEnabled"
+          class="add-screenshot"
+        >
+          <NeroButton
+            data-test="addScreenShot"
+            :label="$t('SupportWindow.SupportModal.screenShotButtonLabel')"
+            @click="addScreenShot"
+          />
         </div>
       </div>
-      <div
-        v-if="isScreenShotEnabled"
-        class="add-screenshot"
-      >
+
+      <div slot="footer">
         <NeroButton
-          :label="$t('SupportWindow.SupportModal.screenShotButtonLabel')"
-          @click="addScreenShot"
+          data-test="submitTicket"
+          :label="$t('SupportWindow.SupportModal.submitButtonLabel')"
+          @click="submitTicket"
         />
       </div>
-    </div>
-
-    <div slot="footer">
-      <NeroButton
-        :label="$t('SupportWindow.SupportModal.submitButtonLabel')"
-        @click="submitTicket"
-      />
-    </div>
-  </NeroWindow>
+    </NeroWindow>
+  </div>
 </template>
 
 <script>
