@@ -13,6 +13,7 @@
           >
             <slot name="header" />
             <i
+              data-test="closeModal"
               class="close fa fa-times"
               @click="$emit('close')"
             />

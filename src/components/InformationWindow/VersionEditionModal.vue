@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div data-test="editVersion">
     <NeroWindow
       :modal="true"
       @close="onClose"
@@ -12,6 +12,7 @@
         <div>
           <NeroInput
             v-model="form.versionNumber"
+            data-test="versionNumber-input"
             :error-type="formErrorList.versionNumber"
             :placeholder="$t('InformationWindow.VersionEditionModal.versionNumber') + '*'"
             @blur="$v.form.versionNumber.$touch()"
@@ -20,6 +21,7 @@
         <div>
           <NeroInput
             v-model="form.versionDetails"
+            data-test="versionDetails-input"
             :error-type="formErrorList.versionDetails"
             :placeholder="$t('InformationWindow.VersionEditionModal.jsonContent') + '*'"
             @blur="$v.form.versionDetails.$touch()"
@@ -28,6 +30,7 @@
       </div>
       <div slot="footer">
         <NeroButton
+          data-test="addVersion"
           :label="$t('InformationWindow.VersionEditionModal.submitButtonLabel')"
           @click="addVersion"
         />
@@ -73,7 +76,7 @@ export default {
       versionDetails: {
         required,
         isValidJson,
-        isJsonContentValid
+        isJsonContentValid // /!\ doesn't check if "news" field is an array and if "other" is a string
       }
     }
   },

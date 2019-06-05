@@ -1,14 +1,18 @@
 <template>
-  <div>
+  <div data-test="terms-of-use">
     <br>
     <h3 align="center">
       <a
+        data-test="confidentialityRulesLink"
         href="http://www.pentilanero.com/?page_id=533"
         target="_blank"
       >{{ $t('InformationWindow.TermsOfUse.confidentialityRulesLinkText') }}
       </a>
     </h3>
-    <div class="bodyCharter">
+    <div
+      class="bodyCharter"
+      data-test="bodyCharter"
+    >
       <p
         v-if="termsOfUse"
       >

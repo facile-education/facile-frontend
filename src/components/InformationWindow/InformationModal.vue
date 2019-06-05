@@ -1,24 +1,26 @@
 <template>
-  <NeroWindow
-    :modal="true"
-    @close="onClose"
-  >
-    <span
-      slot="header"
-      v-t="'InformationWindow.InformationModal.modalHeaderLabel'"
-    />
+  <div data-test="informationModal">
+    <NeroWindow
+      :modal="true"
+      @close="onClose"
+    >
+      <span
+        slot="header"
+        v-t="'InformationWindow.InformationModal.modalHeaderLabel'"
+      />
 
-    <div slot="body">
-      <NeroTabList>
-        <NeroTabItem :title="$t('InformationWindow.InformationModal.versionsTabLabel')">
-          <VersionsDetails />
-        </NeroTabItem>
-        <NeroTabItem :title="$t('InformationWindow.InformationModal.termsOfUseTabLabel')">
-          <TermsOfUse />
-        </NeroTabItem>
-      </NeroTabList>
-    </div>
-  </NeroWindow>
+      <div slot="body">
+        <NeroTabList>
+          <NeroTabItem :title="$t('InformationWindow.InformationModal.versionsTabLabel')">
+            <VersionsDetails />
+          </NeroTabItem>
+          <NeroTabItem :title="$t('InformationWindow.InformationModal.termsOfUseTabLabel')">
+            <TermsOfUse />
+          </NeroTabItem>
+        </NeroTabList>
+      </div>
+    </NeroWindow>
+  </div>
 </template>
 
 <script>

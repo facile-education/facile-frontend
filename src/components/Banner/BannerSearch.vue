@@ -1,5 +1,8 @@
 <template>
-  <div class="banner-search">
+  <div
+    class="banner-search"
+    data-test="banner-search"
+  >
     <input
       v-if="$device.desktop"
       :placeholder="$t('Banner.BannerSearch.searchLabel')"

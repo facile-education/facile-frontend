@@ -1,8 +1,9 @@
 <template>
-  <div>
+  <div data-test="version-details">
     {{ $t('InformationWindow.VersionDetails.version') }} :
     <NeroDropdown
       v-if="versionList"
+      data-test="versionListDropDown"
       :value="selected"
       :list="sortedVersionList"
       :sort="false"
@@ -11,6 +12,7 @@
     />
     <NeroButton
       v-if="isAdministrator"
+      data-test="createVersion"
       class="addVersion"
       :title="$t('InformationWindow.VersionDetails.addVersionButtonTitle')"
       :label="$t('InformationWindow.VersionDetails.addVersionButtonLabel')"
@@ -19,6 +21,7 @@
     <br>
     <p
       v-if="versionDetails"
+      data-test="versionDetails"
       v-html="versionDetails"
     />
     <p
