@@ -1,5 +1,5 @@
 <template>
-  <NeroWindow
+  <PentilaWindow
     :modal="true"
     :important="news.isHighPrio"
     @close="closeModal"
@@ -33,7 +33,7 @@
           class="logo-panel"
           @click="openImagePicker"
         >
-          <NeroButton
+          <PentilaButton
             v-if="news.thumbnail.url"
             type="circle"
             icon="fa fa-trash"
@@ -53,7 +53,7 @@
         </div>
 
         <div class="informations">
-          <NeroInput
+          <PentilaInput
             v-model="news.title"
             :placeholder="$t('TODO Title') + '*'"
             :maxlength="75"
@@ -61,11 +61,11 @@
             @blur="$v.news.title.$touch()"
           />
 
-          <NeroDatepicker
+          <PentilaDatepicker
             v-model="news.releaseDate"
             label="TODO parution date"
           />
-          <NeroDatepicker
+          <PentilaDatepicker
             v-model="news.expireDate"
             :min-date="news.releaseDate"
             label="TODO expiration date"
@@ -81,12 +81,12 @@
       TODO Groups + attachments
     </div>
 
-    <NeroButton
+    <PentilaButton
       slot="footer"
       :label="$t('TODO')"
       @click="save"
     />
-  </NeroWindow>
+  </PentilaWindow>
 </template>
 
 <script>
@@ -97,19 +97,10 @@ import moment from 'moment'
 
 import NeroUtils from '@/utils/nero.utils'
 
-import NeroButton from '@/components/Nero/NeroButton'
-import NeroDatepicker from '@/components/Nero/NeroDatepicker'
-import NeroInput from '@/components/Nero/NeroInput'
-import NeroWindow from '@/components/Nero/NeroWindow'
-
 export default {
   name: 'NewsEditionModal',
   components: {
-    CKEditor: CKEditor.component,
-    NeroButton,
-    NeroDatepicker,
-    NeroInput,
-    NeroWindow
+    CKEditor: CKEditor.component
   },
   validations: {
     news: {
