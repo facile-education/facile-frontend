@@ -1,5 +1,5 @@
 <template>
-  <NeroWindow
+  <PentilaWindow
     :modal="true"
     @close="closeModal"
   >
@@ -15,7 +15,7 @@
           class="logo-panel"
           @click="openImagePicker"
         >
-          <NeroButton
+          <PentilaButton
             v-if="application.image"
             type="circle"
             icon="fa fa-trash"
@@ -36,7 +36,7 @@
 
         <!-- App name -->
         <div class="informations">
-          <NeroInput
+          <PentilaInput
             v-model="application.serviceName"
             :placeholder="$t('ApplicationManager.ApplicationEditionModal.namePlaceholder') + '*'"
             :maxlength="75"
@@ -44,7 +44,7 @@
             @blur="$v.application.serviceName.$touch()"
           />
 
-          <NeroInput
+          <PentilaInput
             v-model="application.serviceKey"
             :placeholder="$t('ApplicationManager.ApplicationEditionModal.keyPlaceholder') + '*'"
             :maxlength="75"
@@ -53,7 +53,7 @@
           />
 
           <div class="input-completion">
-            <NeroInput
+            <PentilaInput
               ref="category"
               v-model="application.serviceCategory"
               :placeholder="$t('ApplicationManager.ApplicationEditionModal.categoryPlaceholder') + '*'"
@@ -62,7 +62,7 @@
               @blur="$v.application.serviceCategory.$touch()"
               @focus="toggleCompletion"
             />
-            <NeroAutocomplete
+            <PentilaAutocomplete
               v-if="displayCategoryCompletion"
               :list="categoryList"
               :input="application.serviceCategory"
@@ -76,7 +76,7 @@
       <div class="broadcast">
         <div>
           <h5 v-t="'ApplicationManager.ApplicationEditionModal.schoolsLabel'" />
-          <NeroTagsInput
+          <PentilaTagsInput
             v-if="schoolList"
             v-model="application.etabFilters"
             :placeholder="$t('ApplicationManager.ApplicationEditionModal.schoolsPlaceholder')"
@@ -88,7 +88,7 @@
 
         <div>
           <h5 v-t="'ApplicationManager.ApplicationEditionModal.rolesLabel'" />
-          <NeroTagsInput
+          <PentilaTagsInput
             v-if="roleList"
             v-model="application.roleList"
             :placeholder="$t('ApplicationManager.ApplicationEditionModal.rolesPlaceholder')"
@@ -100,7 +100,7 @@
 
         <div class="default-portlet">
           <h5 v-t="'ApplicationManager.ApplicationEditionModal.portletLabel'" />
-          <NeroDropdown
+          <PentilaDropdown
             v-if="selectedPortlet"
             v-model="selectedPortlet"
             :list="portletList"
@@ -110,7 +110,7 @@
 
         <h5 v-t="'ApplicationManager.ApplicationEditionModal.urlTypeLabel'" />
         <div class="urls">
-          <NeroRadioButton
+          <PentilaRadioButton
             v-model="urlType"
             :label="$t('ApplicationManager.ApplicationEditionModal.globalUrlCombobox')"
             name="url"
@@ -118,7 +118,7 @@
             class="radio"
           />
 
-          <NeroRadioButton
+          <PentilaRadioButton
             v-model="urlType"
             :label="$t('ApplicationManager.ApplicationEditionModal.customUrlCombobox')"
             name="url"
@@ -126,7 +126,7 @@
             class="radio"
           />
 
-          <NeroRadioButton
+          <PentilaRadioButton
             v-model="urlType"
             :label="$t('ApplicationManager.ApplicationEditionModal.noUrlCombobox')"
             name="url"
@@ -134,7 +134,7 @@
             class="radio"
           />
         </div>
-        <NeroInput
+        <PentilaInput
           v-model="application.globalUrl"
           :placeholder="$t('ApplicationManager.ApplicationEditionModal.globalUrlPlaceholder')"
           :disabled="urlType !== 'global'"
@@ -142,19 +142,19 @@
 
         <h5 v-t="'ApplicationManager.ApplicationEditionModal.exportLabel'" />
         <div class="exports">
-          <NeroCheckbox
+          <PentilaCheckbox
             v-model="application.exportParent"
             :label="$t('ApplicationManager.ApplicationEditionModal.exportParentsCheckbox')"
             class="export"
           />
 
-          <NeroCheckbox
+          <PentilaCheckbox
             v-model="application.exportStudent"
             :label="$t('ApplicationManager.ApplicationEditionModal.exportStudentsCheckbox')"
             class="export"
           />
 
-          <NeroCheckbox
+          <PentilaCheckbox
             v-model="application.exportTeacher"
             :label="$t('ApplicationManager.ApplicationEditionModal.exportTeachersCheckbox')"
             class="export"
@@ -162,39 +162,21 @@
         </div>
       </div>
     </div>
-    <NeroButton
+    <PentilaButton
       slot="footer"
       :label="$t('ApplicationManager.ApplicationEditionModal.modalSaveButton')"
       @click="save"
     />
-  </NeroWindow>
+  </PentilaWindow>
 </template>
 
 <script>
 import NeroUtils from '@/utils/nero.utils'
-import NeroButton from '@/components/Nero/NeroButton'
-import NeroDropdown from '@/components/Nero/NeroDropdown'
-import NeroInput from '@/components/Nero/NeroInput'
-import NeroCheckbox from '@/components/Nero/NeroCheckbox'
-import NeroRadioButton from '@/components/Nero/NeroRadioButton'
-import NeroTagsInput from '@/components/Nero/NeroTagsInput'
-import NeroWindow from '@/components/Nero/NeroWindow'
-import NeroAutocomplete from '@/components/Nero/NeroAutocomplete'
 
 import { required } from 'vuelidate/lib/validators'
 
 export default {
   name: 'ApplicationEditionModal',
-  components: {
-    NeroButton,
-    NeroDropdown,
-    NeroInput,
-    NeroCheckbox,
-    NeroRadioButton,
-    NeroTagsInput,
-    NeroWindow,
-    NeroAutocomplete
-  },
   data () {
     return {
       application: undefined,

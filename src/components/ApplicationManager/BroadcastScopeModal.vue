@@ -1,5 +1,5 @@
 <template>
-  <NeroWindow
+  <PentilaWindow
     :modal="true"
     @close="closeModal"
   >
@@ -10,7 +10,7 @@
     <div
       slot="body"
     >
-      <NeroButton
+      <PentilaButton
         :label="$t('ApplicationManager.BroadcastScopeModal.addRuleButton')"
         class="add"
         @click="addScope"
@@ -29,28 +29,24 @@
       />
     </div>
 
-    <NeroButton
+    <PentilaButton
       slot="footer"
       :label="$t('ApplicationManager.BroadcastScopeModal.updateButton')"
       @click="saveRuleList"
     />
-  </NeroWindow>
+  </PentilaWindow>
 </template>
 
 <script>
 import { required } from 'vuelidate/lib/validators'
 import NeroUtils from '@/utils/nero.utils'
 
-import NeroButton from '@/components/Nero/NeroButton'
-import NeroWindow from '@/components/Nero/NeroWindow'
 import RuleList from '@/components/ApplicationManager/RuleList'
 
 export default {
   name: 'BroadcastScopeModal',
   components: {
-    RuleList,
-    NeroButton,
-    NeroWindow
+    RuleList
   },
   validations: {
     ruleList: {

@@ -1,14 +1,14 @@
 <template>
   <NeroToolbar v-if="show">
-    <NeroDropdown
+    <PentilaDropdown
       v-if="managedSchoolList"
       v-model="selectedSchool"
       :list="managedSchoolList"
       display-field="schoolName"
       @dropdown-select="onSchoolSelect"
     />
-    <NeroSpinner v-else />
-    <NeroButton
+    <PentilaSpinner v-else />
+    <PentilaButton
       v-if="isAdministrator"
       class="add-button"
       icon="fa fa-plus"
@@ -19,17 +19,11 @@
 
 <script>
 import NeroToolbar from '@/components/Nero/NeroToolbar'
-import NeroButton from '@/components/Nero/NeroButton'
-import NeroDropdown from '@/components/Nero/NeroDropdown'
-import NeroSpinner from '@/components/Nero/NeroSpinner'
 
 export default {
   name: 'AMToolbar',
   components: {
-    NeroButton,
-    NeroToolbar,
-    NeroDropdown,
-    NeroSpinner
+    NeroToolbar
   },
   computed: {
     managedSchoolList () {
