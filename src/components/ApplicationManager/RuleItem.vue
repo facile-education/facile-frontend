@@ -5,7 +5,7 @@
       :placeholder="$t('ApplicationManager.RuleItem.rolesPlaceholder') + '*'"
       :list="roleList"
       display-field="displayText"
-      :error-type="formErrorList.roles"
+      :error-message="formErrorList.roles"
       class="column"
       @blur="$v.rule.roles.$touch()"
     />
@@ -15,7 +15,7 @@
       :placeholder="$t('ApplicationManager.RuleItem.classesPlaceholder') + '*'"
       :list="classList"
       display-field="displayText"
-      :error-type="formErrorList.classes"
+      :error-message="formErrorList.classes"
       class="column"
       @blur="$v.rule.classes.$touch()"
     />
@@ -61,8 +61,8 @@ export default {
     formErrorList () {
       var form = this.$v.rule
       return {
-        classes: (form.classes.$invalid && (form.classes.$dirty || this.isErrorListDisplayed)) ? 'required' : '',
-        roles: (form.roles.$invalid && (form.roles.$dirty || this.isErrorListDisplayed)) ? 'required' : ''
+        classes: (form.classes.$invalid && (form.classes.$dirty || this.isErrorListDisplayed)) ? this.$t('Nero.formErrorMessage.required') : '',
+        roles: (form.roles.$invalid && (form.roles.$dirty || this.isErrorListDisplayed)) ? this.$t('Nero.formErrorMessage.required') : ''
       }
     },
     roleList () {

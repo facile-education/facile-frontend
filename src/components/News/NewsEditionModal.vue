@@ -57,7 +57,7 @@
             v-model="news.title"
             :placeholder="$t('TODO Title') + '*'"
             :maxlength="75"
-            :error-type="formErrorList.title"
+            :error-message="formErrorList.title"
             @blur="$v.news.title.$touch()"
           />
 
@@ -118,7 +118,7 @@ export default {
     formErrorList () {
       var form = this.$v.news
       return {
-        title: (form.title.$invalid && form.title.$dirty) ? 'required' : ''
+        title: (form.title.$invalid && form.title.$dirty) ? this.$t('Nero.formErrorMessage.required') : ''
       }
     },
     title () {

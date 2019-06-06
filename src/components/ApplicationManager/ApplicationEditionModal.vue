@@ -40,7 +40,7 @@
             v-model="application.serviceName"
             :placeholder="$t('ApplicationManager.ApplicationEditionModal.namePlaceholder') + '*'"
             :maxlength="75"
-            :error-type="formErrorList.serviceName"
+            :error-message="formErrorList.serviceName"
             @blur="$v.application.serviceName.$touch()"
           />
 
@@ -48,7 +48,7 @@
             v-model="application.serviceKey"
             :placeholder="$t('ApplicationManager.ApplicationEditionModal.keyPlaceholder') + '*'"
             :maxlength="75"
-            :error-type="formErrorList.serviceKey"
+            :error-message="formErrorList.serviceKey"
             @blur="$v.application.serviceKey.$touch()"
           />
 
@@ -58,7 +58,7 @@
               v-model="application.serviceCategory"
               :placeholder="$t('ApplicationManager.ApplicationEditionModal.categoryPlaceholder') + '*'"
               :max-lenght="75"
-              :error-type="formErrorList.serviceCategory"
+              :error-message="formErrorList.serviceCategory"
               @blur="$v.application.serviceCategory.$touch()"
               @focus="toggleCompletion"
             />
@@ -198,9 +198,9 @@ export default {
     formErrorList () {
       var form = this.$v.application
       return {
-        serviceName: (form.serviceName.$invalid && form.serviceName.$dirty) ? 'required' : '',
-        serviceKey: (form.serviceKey.$invalid && form.serviceKey.$dirty) ? 'required' : '',
-        serviceCategory: (form.serviceCategory.$invalid && form.serviceCategory.$dirty) ? 'required' : ''
+        serviceName: (form.serviceName.$invalid && form.serviceName.$dirty) ? this.$t('Nero.formErrorMessage.required') : '',
+        serviceKey: (form.serviceKey.$invalid && form.serviceKey.$dirty) ? this.$t('Nero.formErrorMessage.required') : '',
+        serviceCategory: (form.serviceCategory.$invalid && form.serviceCategory.$dirty) ? this.$t('Nero.formErrorMessage.required') : ''
       }
     },
     portletList () {

@@ -46,7 +46,7 @@
               @blur="$v.form.issueDescription.$touch()"
             />
           </div>
-          <PentilaErrorMessage :error-type="formErrorList.issueDescription" />
+          <PentilaErrorMessage :error-message="formErrorList.issueDescription" />
         </div>
         <div class="add-files">
           <PentilaButton
@@ -126,7 +126,7 @@ export default {
     formErrorList () {
       return {
         issueDescription: (this.$v.form.issueDescription.$invalid && this.$v.form.issueDescription.$dirty)
-          ? 'required'
+          ? this.$t('Nero.formErrorMessage.required')
           : ''
       }
     },

@@ -17,7 +17,7 @@
     "click-outside": "git+ssh://git@gitlab.pentila.com:vue/click-outside.git#v1.0.0",
     "core-js": "^2.6.5",
     "html2canvas": "^1.0.0-rc.1",
-    "pentila-components": "git+ssh://git@gitlab.pentila.com:vue/pentila-components.git#v0.1.4",
+    "pentila-components": "git+ssh://git@gitlab.pentila.com:vue/pentila-components.git#v0.1.5",
     "pentila-utils": "git+ssh://git@gitlab.pentila.com:vue/pentila-utils.git#v0.1.3",
     "platform": "^1.3.5",
     "register-service-worker": "^1.6.2",
