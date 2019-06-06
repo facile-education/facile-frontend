@@ -4,17 +4,17 @@
     <p v-t="'SchoolLifeManager.EDTInformations.lastReceivedLabel'" />
     <p v-t="'SchoolLifeManager.EDTInformations.lastDoneLabel'" />
     <div v-if="isAdministrator">
-      <NeroCheckbox
+      <PentilaCheckbox
         v-model="isMembershipsSynchronizationActive"
         :label="$t('SchoolLifeManager.EDTInformations.groupsCheckbox')"
       />
-      <NeroCheckbox
+      <PentilaCheckbox
         v-model="isNotebookSynchronizationActive"
         :label="$t('SchoolLifeManager.EDTInformations.notebookCheckbox')"
       />
 
       <div v-if="isNotebookSynchronizationActive">
-        <NeroCheckbox
+        <PentilaCheckbox
           v-model="isAgendaSynchronizationActive"
           :label="$t('SchoolLifeManager.EDTInformations.agendaCheckbox')"
         />
@@ -26,7 +26,7 @@
 
       <p>TODO file input</p>
 
-      <NeroButton
+      <PentilaButton
         :label="$t('SchoolLifeManager.EDTInformations.synchronizeButton')"
         @click="synchronize"
       />
@@ -36,17 +36,9 @@
 
 <script>
 // TODO Display dates
-import NeroButton from '@/components/Nero/NeroButton'
-import NeroCheckbox from '@/components/Nero/NeroCheckbox'
-// import NeroDropdown from '@/components/Nero/NeroDropdown'
 
 export default {
   name: 'EDTInformations',
-  components: {
-    NeroButton,
-    NeroCheckbox
-    // NeroDropdown
-  },
   computed: {
     isAdministrator () {
       return this.$store.state.user.isAdministrator

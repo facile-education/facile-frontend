@@ -3,21 +3,21 @@
     <h3 v-t="'SchoolLifeManager.SynchronizationWizard.title'" />
     <p v-t="'SchoolLifeManager.SynchronizationWizard.informationsLabel'" />
     <p v-t="'SchoolLifeManager.SynchronizationWizard.supportLabel'" />
-    <NeroRadioButton
+    <PentilaRadioButton
       v-model="choosenType"
       :name="'type'"
       :label="$t('SchoolLifeManager.SynchronizationWizard.aafRadioButton')"
       rb-value="AAF"
       class="radio"
     />
-    <NeroRadioButton
+    <PentilaRadioButton
       v-model="choosenType"
       :name="'type'"
       :label="$t('SchoolLifeManager.SynchronizationWizard.edtRadioButton')"
       rb-value="EDT"
       class="radio"
     />
-    <NeroButton
+    <PentilaButton
       :label="$t('SchoolLifeManager.SynchronizationWizard.saveButton')"
       @click="onSave"
     />
@@ -25,15 +25,8 @@
 </template>
 
 <script>
-import NeroButton from '@/components/Nero/NeroButton'
-import NeroRadioButton from '@/components/Nero/NeroRadioButton'
-
 export default {
   name: 'SynchronizationWizard',
-  components: {
-    NeroButton,
-    NeroRadioButton
-  },
   data () {
     return {
       choosenType: ''
