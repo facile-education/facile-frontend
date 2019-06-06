@@ -14,26 +14,22 @@
           :current="rightList[role.roleCode]"
           @input="onInput"
         />
-        <NeroButton
+        <PentilaButton
           :label="$t('CommunicationManager.ExternalRightList.save')"
           @click="onSave"
         />
       </div>
-      <NeroSpinner v-else />
+      <PentilaSpinner v-else />
     </Transition>
   </div>
 </template>
 
 <script>
-import NeroButton from '@/components/Nero/NeroButton'
-import NeroSpinner from '@/components/Nero/NeroSpinner'
 import ExternalRoleItem from '@/components/CommunicationManager/ExternalRoleItem'
 
 export default {
   name: 'ExternalRightList',
   components: {
-    NeroButton,
-    NeroSpinner,
     ExternalRoleItem
   },
   data () {
