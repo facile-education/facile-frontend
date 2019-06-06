@@ -1,6 +1,6 @@
 <template>
   <NeroToolbar>
-    <NeroButton
+    <PentilaButton
       icon="fa fa-bars"
       @click="console.log('TODO')"
     />
@@ -8,13 +8,11 @@
 </template>
 
 <script>
-import NeroButton from '@/components/Nero/NeroButton'
 import NeroToolbar from '@/components/Nero/NeroToolbar'
 
 export default {
   name: 'ContactsToolbar',
   components: {
-    NeroButton,
     NeroToolbar
   }
 }
