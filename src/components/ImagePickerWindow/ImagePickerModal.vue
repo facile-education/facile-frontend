@@ -1,5 +1,5 @@
 <template>
-  <NeroWindow
+  <PentilaWindow
     :modal="true"
     @close="onClose"
   >
@@ -45,25 +45,21 @@
         <h4 v-t="'ImagePickerWindow.ImagePickerModal.neroDocumentsHeader'" />
       </div>
     </div>
-    <NeroButton
+    <PentilaButton
       slot="footer"
       :label="$t('ImagePickerWindow.ImagePickerModal.saveButtonLabel')"
       @click="onConfirm"
     />
-  </NeroWindow>
+  </PentilaWindow>
 </template>
 
 <script>
 import CustomCropper from '@/components/ImagePickerWindow/CustomCropper'
-import NeroButton from '@/components/Nero/NeroButton'
-import NeroWindow from '@/components/Nero/NeroWindow'
 
 export default {
   name: 'ImagePickerModal',
   components: {
-    CustomCropper,
-    NeroButton,
-    NeroWindow
+    CustomCropper
   },
   data () {
     return {
