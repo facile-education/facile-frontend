@@ -10,7 +10,7 @@
       <p v-t="'PreferencesWindow.WebdavDetails.confirmNewPasswordLabel'" />
 
       <p v-t="'PreferencesWindow.WebdavDetails.lostPasswordText'" />
-      <NeroButton
+      <PentilaButton
         :title="$t('PreferencesWindow.WebdavDetails.confirmButtonTitle')"
         :label="$t('PreferencesWindow.WebdavDetails.confirmButtonLabel')"
         @click="onPasswordUpdate"
@@ -18,7 +18,7 @@
     </div>
     <div v-else>
       <p v-t="'PreferencesWindow.WebdavDetails.disabledText'" />
-      <NeroButton
+      <PentilaButton
         :title="$t('PreferencesWindow.WebdavDetails.enableButtonTitle')"
         :label="$t('PreferencesWindow.WebdavDetails.enableButtonLabel')"
         @click="onActivateWebdav"
@@ -28,13 +28,8 @@
 </template>
 
 <script>
-import NeroButton from '@/components/Nero/NeroButton'
-
 export default {
   name: 'WebdavDetails',
-  components: {
-    NeroButton
-  },
   computed: {
     hasWebdavEnabled () {
       return this.$store.state.user.hasWebdavEnabled
