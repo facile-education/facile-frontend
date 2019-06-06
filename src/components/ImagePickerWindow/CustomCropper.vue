@@ -21,7 +21,7 @@
         </div>
       </div>
       <div class="img-preview">
-        <NeroUserPicture :image-url="dataURL" />
+        <PentilaUserPicture :image-url="dataURL" />
         <p v-t="'ImagePickerWindow.CustomCropper.previewLabel'" />
       </div>
     </div>
@@ -29,13 +29,11 @@
 </template>
 
 <script>
-import NeroUserPicture from '@/components/Nero/NeroUserPicture'
 import SelectBox from './SelectBox.vue'
 
 export default {
   components: {
-    SelectBox,
-    NeroUserPicture
+    SelectBox
   },
   props: {
     img: {
