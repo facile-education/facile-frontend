@@ -7,7 +7,7 @@
           v-t="'Dashboard.DashboardNewsWidget.widgetHeader'"
         />
         <div class="actions">
-          <NeroButton
+          <PentilaButton
             :title="$t('Dashboard.DashboardNewsWidget.addNewsButtonTooltip')"
             type="circle"
             icon="fa fa-plus"
@@ -24,14 +24,12 @@
 
 <script>
 import DashboardWidget from '@/components/Dashboard/DashboardWidget'
-import NeroButton from '@/components/Nero/NeroButton'
 import NewsList from '@/components/News/NewsList'
 
 export default {
   name: 'DashboardNewsWidget',
   components: {
     DashboardWidget,
-    NeroButton,
     NewsList
   },
   methods: {

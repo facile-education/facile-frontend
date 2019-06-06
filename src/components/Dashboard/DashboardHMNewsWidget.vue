@@ -7,13 +7,13 @@
           v-t="'Dashboard.DashboardHMNewsWidget.widgetHeader'"
         />
         <div class="actions">
-          <NeroButton
+          <PentilaButton
             :title="$t('Dashboard.DashboardHMNewsWidget.manageDelegateButtonTooltip')"
             type="circle"
             icon="fa fa-cogs"
             @click="openDelegationModal"
           />
-          <NeroButton
+          <PentilaButton
             :title="$t('Dashboard.DashboardHMNewsWidget.addNewsButtonTooltip')"
             type="circle"
             icon="fa fa-plus"
@@ -30,14 +30,12 @@
 
 <script>
 import DashboardWidget from '@/components/Dashboard/DashboardWidget'
-import NeroButton from '@/components/Nero/NeroButton'
 import NewsList from '@/components/News/NewsList'
 
 export default {
   name: 'DashboardHMNewsWidget',
   components: {
     DashboardWidget,
-    NeroButton,
     NewsList
   },
   data () {
