@@ -12,8 +12,8 @@
     </div>
     <div class="dark">
       <img
+        :src="userPicture"
         class="picture"
-        src="../assets/logo.png"
         @click="openPreferences"
       >
 
@@ -39,6 +39,9 @@ export default {
   computed: {
     menu () {
       return this.$store.state.nero.menu
+    },
+    userPicture () {
+      return this.$store.state.user.picture
     }
   },
   methods: {
