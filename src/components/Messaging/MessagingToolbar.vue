@@ -1,30 +1,30 @@
 <template>
   <NeroToolbar>
-    <NeroButton
+    <PentilaButton
       icon="fa fa-bars"
     />
-    <NeroButton
+    <PentilaButton
       icon="fa fa-sync-alt"
     />
-    <NeroButton
+    <PentilaButton
       icon="fa fa-edit"
     />
-    <NeroButton
+    <PentilaButton
       icon="fa fa-angle-double-left"
     />
-    <NeroButton
+    <PentilaButton
       icon="fa fa-angle-left"
     />
-    <NeroButton
+    <PentilaButton
       icon="fa fa-angle-right"
     />
-    <NeroButton
+    <PentilaButton
       icon="fa fa-trash"
     />
-    <NeroButton
+    <PentilaButton
       icon="fa fa-print"
     />
-    <NeroButton
+    <PentilaButton
       icon="fa fa-cog"
     />
   </NeroToolbar>
@@ -32,13 +32,11 @@
 
 <script>
 import NeroToolbar from '@/components/Nero/NeroToolbar'
-import NeroButton from '@/components/Nero/NeroButton'
 
 export default {
   name: 'MessagingToolbar',
   components: {
-    NeroToolbar,
-    NeroButton
+    NeroToolbar
   }
 }
 </script>
