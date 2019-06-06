@@ -13,7 +13,7 @@
           <PentilaInput
             v-model="form.versionNumber"
             data-test="versionNumber-input"
-            :error-type="formErrorList.versionNumber"
+            :error-message="formErrorList.versionNumber"
             :placeholder="$t('InformationWindow.VersionEditionModal.versionNumber') + '*'"
             @blur="$v.form.versionNumber.$touch()"
           />
@@ -22,7 +22,7 @@
           <PentilaInput
             v-model="form.versionDetails"
             data-test="versionDetails-input"
-            :error-type="formErrorList.versionDetails"
+            :error-message="formErrorList.versionDetails"
             :placeholder="$t('InformationWindow.VersionEditionModal.jsonContent') + '*'"
             @blur="$v.form.versionDetails.$touch()"
           />
@@ -82,17 +82,17 @@ export default {
         // Ugly
         versionNumber: (this.$v.form.versionNumber.$invalid && this.$v.form.versionNumber.$dirty)
           ? (!this.$v.form.versionNumber.required
-            ? 'required'
+            ? this.$t('Nero.formErrorMessage.required')
             : (!this.$v.form.versionNumber.isVersionNameValid
-              ? 'invalidVersionName'
+              ? this.$t('Nero.formErrorMessage.invalidVersionName')
               : ''))
           : '',
         versionDetails: (this.$v.form.versionDetails.$invalid && this.$v.form.versionDetails.$dirty)
           ? (!this.$v.form.versionDetails.required
-            ? 'required'
+            ? this.$t('Nero.formErrorMessage.required')
             : (!this.$v.form.versionDetails.isValidJson
-              ? 'invalidJson'
-              : 'VersionEditionInvalidJsonContent'))
+              ? this.$t('Nero.formErrorMessage.invalidJson')
+              : this.$t('Nero.formErrorMessage.VersionEditionInvalidJsonContent')))
           : ''
       }
     }
