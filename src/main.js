@@ -8,6 +8,8 @@ import store from './store/index'
 import Vuelidate from 'vuelidate'
 import Vue from 'vue'
 import VueMq from 'vue-mq'
+import PentilaComponents from 'pentila-components'
+import 'pentila-components/dist/pentila-components.css'
 
 // Catch 401 unauthorized error and redirect user to public home page
 axios.interceptors.response.use(undefined, (error) => {
@@ -32,12 +34,11 @@ Vue.config.productionTip = false
 Vue.use(Vuelidate)
 
 // Responsive breakpoints
-Vue.use(VueMq, {
-  breakpoints: { // default breakpoints - customize this
-    phone: 450,
-    tablet: 800,
-    desktop: Infinity
-  }
+Vue.use(VueMq)
+
+// Register Pentila components globally
+Object.keys(PentilaComponents).forEach(name => {
+  Vue.component(name, PentilaComponents[name])
 })
 
 new Vue({
