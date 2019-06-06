@@ -20,7 +20,7 @@
       >
         <p v-t="'NeroAttachment.NeroAttachmentList.addResourceLabel'" />
 
-        <NeroButton
+        <PentilaButton
           :title="$t('NeroAttachment.NeroAttachmentList.addAttachmentButtonTooltip')"
           type="circle"
           icon="fa fa-paperclip"
@@ -35,7 +35,7 @@
         /-->
 
         <!-- TODO EDX Icon -->
-        <NeroButton
+        <PentilaButton
           v-if="displayEdx"
           :title="$t('NeroAttachment.NeroAttachmentList.addEdxAssignmentButtonTooltip')"
           type="circle"
@@ -65,13 +65,11 @@
 
 <script>
 import NeroAttachmentItem from '@/components/NeroAttachment/NeroAttachmentItem'
-import NeroButton from '@/components/Nero/NeroButton'
 
 export default {
   name: 'NeroAttachmentList',
   components: {
-    NeroAttachmentItem,
-    NeroButton
+    NeroAttachmentItem
   },
   props: {
     allActionsOnEdit: {

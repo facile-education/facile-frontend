@@ -19,7 +19,7 @@
       <i class="fa fa-ellipsis-v" />
     </a>
 
-    <NeroAutocomplete
+    <PentilaAutocomplete
       v-if="displayActionList"
       :list="actionList"
       :sort="false"
@@ -62,14 +62,10 @@
 </template>
 
 <script>
-import NeroAutocomplete from '@/components/Nero/NeroAutocomplete'
 import NeroUtils from '@/utils/nero.utils'
 
 export default {
   name: 'NeroAttachmentItem',
-  components: {
-    NeroAutocomplete
-  },
   props: {
     allActionsOnEdit: {
       type: Boolean,
