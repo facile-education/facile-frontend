@@ -1,6 +1,6 @@
 <template>
   <div data-test="supportModal">
-    <NeroWindow
+    <PentilaWindow
       :modal="true"
       data-html2canvas-ignore="true"
       @close="onClose"
@@ -25,7 +25,7 @@
         </p>
         <div class="service">
           <h5> {{ $t('SupportWindow.SupportModal.serviceLabel') + '*' }} </h5>
-          <NeroDropdown
+          <PentilaDropdown
             v-if="serviceList"
             v-model="selected"
             data-test="servicesDropDown"
@@ -46,10 +46,10 @@
               @blur="$v.form.issueDescription.$touch()"
             />
           </div>
-          <NeroErrorMessage :error-type="formErrorList.issueDescription" />
+          <PentilaErrorMessage :error-type="formErrorList.issueDescription" />
         </div>
         <div class="add-files">
-          <NeroButton
+          <PentilaButton
             data-test="addFile"
             :label="$t('SupportWindow.SupportModal.addFilesButtonLabel')"
             @click="addFile"
@@ -62,7 +62,7 @@
           v-if="isScreenShotEnabled"
           class="add-screenshot"
         >
-          <NeroButton
+          <PentilaButton
             data-test="addScreenShot"
             :label="$t('SupportWindow.SupportModal.screenShotButtonLabel')"
             @click="addScreenShot"
@@ -71,13 +71,13 @@
       </div>
 
       <div slot="footer">
-        <NeroButton
+        <PentilaButton
           data-test="submitTicket"
           :label="$t('SupportWindow.SupportModal.submitButtonLabel')"
           @click="submitTicket"
         />
       </div>
-    </NeroWindow>
+    </PentilaWindow>
   </div>
 </template>
 
@@ -88,20 +88,11 @@ import { required } from 'vuelidate/lib/validators'
 import platform from 'platform'
 import html2canvas from 'html2canvas'
 
-import NeroWindow from '@/components/Nero/NeroWindow'
-import NeroDropdown from '@/components/Nero/NeroDropdown'
-import NeroButton from '@/components/Nero/NeroButton'
-import NeroErrorMessage from '@/components/Nero/NeroErrorMessage'
-
 export default {
   name: 'SupportModal',
 
   components: {
-    CKEditor: CKEditor.component,
-    NeroWindow,
-    NeroDropdown,
-    NeroButton,
-    NeroErrorMessage
+    CKEditor: CKEditor.component
   },
 
   data () {
