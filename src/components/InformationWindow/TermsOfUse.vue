@@ -6,7 +6,8 @@
         data-test="confidentialityRulesLink"
         href="http://www.pentilanero.com/?page_id=533"
         target="_blank"
-      >{{ $t('InformationWindow.TermsOfUse.confidentialityRulesLinkText') }}
+      >
+        {{ $t('InformationWindow.TermsOfUse.confidentialityRulesLinkText') }}
       </a>
     </h3>
     <div
