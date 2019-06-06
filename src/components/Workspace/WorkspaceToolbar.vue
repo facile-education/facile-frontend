@@ -1,28 +1,28 @@
 <template>
   <NeroToolbar>
-    <NeroButton
+    <PentilaButton
       icon="fa fa-plus"
       label="Creation Dropdown"
     />
-    <NeroButton
+    <PentilaButton
       icon="fa fa-plus-square"
     />
-    <NeroButton
+    <PentilaButton
       icon="fa fa-edit"
       label="Edit Dropdown"
     />
-    <NeroButton
+    <PentilaButton
       icon="fa fa-image"
       label="View Dropdown"
     />
-    <NeroButton
+    <PentilaButton
       icon="fa fa-envelope"
     />
-    <NeroButton
+    <PentilaButton
       icon="fa fa-sort"
       label="Sort Dropdown"
     />
-    <NeroButton
+    <PentilaButton
       icon="fa fa-sync-alt"
     />
   </NeroToolbar>
@@ -30,13 +30,11 @@
 
 <script>
 import NeroToolbar from '@/components/Nero/NeroToolbar'
-import NeroButton from '@/components/Nero/NeroButton'
 
 export default {
   name: 'WorkspaceToolbar',
   components: {
-    NeroToolbar,
-    NeroButton
+    NeroToolbar
   }
 }
 </script>
