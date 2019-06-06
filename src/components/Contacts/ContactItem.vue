@@ -10,7 +10,7 @@
       {{ contact.role }}
     </div>
     <!--div class="info">{{ contact.schoolName }}</div-->
-    <NeroButton
+    <PentilaButton
       icon="fa fa-info"
       @click="console.log('TODO')"
     />
@@ -18,13 +18,8 @@
 </template>
 
 <script>
-import NeroButton from '@/components/Nero/NeroButton'
-
 export default {
   name: 'ContactItem',
-  components: {
-    NeroButton
-  },
   props: {
     contact: {
       type: Object,
