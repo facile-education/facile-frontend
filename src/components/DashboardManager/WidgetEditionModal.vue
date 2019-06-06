@@ -1,5 +1,5 @@
 <template>
-  <NeroWindow
+  <PentilaWindow
     :modal="true"
     @close="closeModal"
   >
@@ -17,7 +17,7 @@
           v-if="isCreation"
           v-t="'DashboardManager.WidgetEditionModal.typeDropdownLabel'"
         />
-        <NeroDropdown
+        <PentilaDropdown
           v-if="isCreation"
           :list="typeList"
           class="type-dropdown"
@@ -28,7 +28,7 @@
           :class="{'inline': isCreation}"
           class="widget-name"
         >
-          <NeroInput
+          <PentilaInput
             v-model="widget.name"
             :placeholder="$t('DashboardManager.WidgetEditionModal.namePlaceholder') + '*'"
             :maxlength="75"
@@ -55,7 +55,7 @@
       <div v-if="showSchooltagsInput">
         <h5 v-t="'DashboardManager.WidgetEditionModal.targetedSchoolsTitle'" />
 
-        <NeroTagsInput
+        <PentilaTagsInput
           v-model="widget.config.schools"
           :placeholder="$t('DashboardManager.WidgetEditionModal.schoolsPlaceholder')"
           :list="managedSchoolList"
@@ -88,31 +88,21 @@
       </div>
     </div>
 
-    <NeroButton
+    <PentilaButton
       slot="footer"
       :label="$t('DashboardManager.WidgetEditionModal.saveButtonLabel')"
       @click="save"
     />
-  </NeroWindow>
+  </PentilaWindow>
 </template>
 
 <script>
 import WidgetBroadcastRuleList from '@/components/DashboardManager/WidgetBroadcastRuleList'
-import NeroButton from '@/components/Nero/NeroButton'
-import NeroDropdown from '@/components/Nero/NeroDropdown'
-import NeroInput from '@/components/Nero/NeroInput'
-import NeroTagsInput from '@/components/Nero/NeroTagsInput'
-import NeroWindow from '@/components/Nero/NeroWindow'
 
 export default {
   name: 'WidgetEditionModal',
   components: {
-    WidgetBroadcastRuleList,
-    NeroButton,
-    NeroDropdown,
-    NeroInput,
-    NeroTagsInput,
-    NeroWindow
+    WidgetBroadcastRuleList
   },
   data () {
     return {

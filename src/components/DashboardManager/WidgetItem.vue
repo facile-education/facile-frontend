@@ -40,12 +40,12 @@
           v-if="displayConfigButton"
           class="actions"
         >
-          <NeroButton
+          <PentilaButton
             :label="hasSmallDisplay ? '' : $t('DashboardManager.WidgetItem.editButtonLabel')"
             :icon="hasSmallDisplay ? 'fa fa-cog' : ''"
             @click="onEditWidget"
           />
-          <NeroButton
+          <PentilaButton
             :label="hasSmallDisplay ? '' : $t('DashboardManager.WidgetItem.removeButtonLabel')"
             :icon="hasSmallDisplay ? 'fa fa-trash' : ''"
             cls="cancel"
@@ -63,13 +63,9 @@
 
 <script>
 import moment from 'moment'
-import NeroButton from '@/components/Nero/NeroButton'
 
 export default {
   name: 'WidgetItem',
-  components: {
-    NeroButton
-  },
   props: {
     widget: {
       type: Object,
