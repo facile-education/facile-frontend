@@ -17,7 +17,7 @@
         :src="application.image"
         class="logo"
       >
-      <NeroFallbackThumbnail
+      <PentilaFallbackThumbnail
         v-else
         class="default"
       />
@@ -30,13 +30,11 @@
 
 <script>
 import ApplicationDetails from '@/components/ApplicationManager/ApplicationDetails'
-import NeroFallbackThumbnail from '@/components/Nero/NeroFallbackThumbnail'
 
 export default {
   name: 'ApplicationItem',
   components: {
-    ApplicationDetails,
-    NeroFallbackThumbnail
+    ApplicationDetails
   },
   props: {
     application: {

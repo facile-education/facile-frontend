@@ -4,13 +4,13 @@
       {{ label }}
     </label>
 
-    <NeroToggleSwitch
+    <PentilaToggleSwitch
       :value="isBroadcasted"
       class="toggle"
       @input="onInputBroadcast"
     />
 
-    <NeroCheckbox
+    <PentilaCheckbox
       :value="isMandatory"
       :label="$t('DashboardManager.WidgetBroadcastRoleItem.mandatoryCheckboxLabel')"
       class="mandatory"
@@ -20,15 +20,8 @@
 </template>
 
 <script>
-import NeroCheckbox from '@/components/Nero/NeroCheckbox'
-import NeroToggleSwitch from '@/components/Nero/NeroToggleSwitch'
-
 export default {
   name: 'WidgetBroadcastRoleItem',
-  components: {
-    NeroCheckbox,
-    NeroToggleSwitch
-  },
   props: {
     isBroadcasted: {
       type: Boolean,

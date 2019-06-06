@@ -4,14 +4,14 @@
       v-t="'Nero.roles.' + role.roleCode"
       class="role-label"
     />
-    <NeroRadioButton
+    <PentilaRadioButton
       v-model="hasRoleExternalRight"
       :name="role.roleCode"
       :label="$t('CommunicationManager.ExternalRoleItem.yes')"
       rb-value="yes"
       class="yes"
     />
-    <NeroRadioButton
+    <PentilaRadioButton
       v-model="hasRoleExternalRight"
       :name="role.roleCode"
       :label="$t('CommunicationManager.ExternalRoleItem.no')"
@@ -21,13 +21,8 @@
 </template>
 
 <script>
-import NeroRadioButton from '@/components/Nero/NeroRadioButton'
-
 export default {
   name: 'ExternalRoleItem',
-  components: {
-    NeroRadioButton
-  },
   props: {
     role: {
       type: Object,
