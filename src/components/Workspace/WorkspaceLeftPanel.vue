@@ -1,32 +1,28 @@
 <template>
   <div class="tree-panel">
-    <NeroTabList>
-      <NeroTabItem title="Perso">
+    <PentilaTabList>
+      <PentilaTabItem title="Perso">
         <NeroTree
           :folders-only="true"
           :model="data"
         />
-      </NeroTabItem>
-      <NeroTabItem title="Groups">
+      </PentilaTabItem>
+      <PentilaTabItem title="Groups">
         <NeroTree
           :model="groupList"
         />
-      </NeroTabItem>
-    </NeroTabList>
+      </PentilaTabItem>
+    </PentilaTabList>
   </div>
 </template>
 
 <script>
 import NeroTree from '@/components/Nero/NeroTree'
-import NeroTabList from '@/components/Nero/NeroTabList'
-import NeroTabItem from '@/components/Nero/NeroTabItem'
 
 export default {
   name: 'WorkspaceLeftPanel',
   components: {
-    NeroTree,
-    NeroTabList,
-    NeroTabItem
+    NeroTree
   },
   computed: {
     data () {
