@@ -4,29 +4,25 @@
       appear
       name="fade"
     >
-      <NeroDropdown
+      <PentilaDropdown
         v-if="schools"
         v-model="selectedSchool"
         :list="schools"
         display-field="schoolName"
         @dropdown-select="onSchoolSelect"
       />
-      <NeroSpinner v-else />
+      <PentilaSpinner v-else />
     </Transition>
   </NeroToolbar>
 </template>
 
 <script>
 import NeroToolbar from '@/components/Nero/NeroToolbar'
-import NeroDropdown from '@/components/Nero/NeroDropdown'
-import NeroSpinner from '@/components/Nero/NeroSpinner'
 
 export default {
   name: 'CMToolbar',
   components: {
-    NeroToolbar,
-    NeroDropdown,
-    NeroSpinner
+    NeroToolbar
   },
   computed: {
     schools () {

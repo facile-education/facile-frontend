@@ -22,7 +22,7 @@
         {{ $t('DashboardManager.WidgetEditionModal.personalLabel') }}
       </p>
 
-      <NeroToggleSwitch
+      <PentilaToggleSwitch
         :value="isBroadcastedToAllPersonal"
         :class="{'partial': isAllPersonalTogglePartial}"
         class="toggle"
@@ -51,13 +51,11 @@
 
 <script>
 import WidgetBroadcastRoleItem from '@/components/DashboardManager/WidgetBroadcastRoleItem'
-import NeroToggleSwitch from '@/components/Nero/NeroToggleSwitch'
 
 export default {
   name: 'WidgetBroadcastRuleList',
   components: {
-    WidgetBroadcastRoleItem,
-    NeroToggleSwitch
+    WidgetBroadcastRoleItem
   },
   // TODO copy roleList to update it
   props: {

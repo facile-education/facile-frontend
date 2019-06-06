@@ -9,7 +9,7 @@
       v-else
       :key="right"
     >
-      <NeroCheckbox
+      <PentilaCheckbox
         :value="getValue(right)"
         :label="$t('CommunicationManager.InternalRoleTab.' + removePrefix(right))"
         @input="onInput(right)"
@@ -19,13 +19,8 @@
 </template>
 
 <script>
-import NeroCheckbox from '@/components/Nero/NeroCheckbox'
-
 export default {
   name: 'InternalRoleTab',
-  components: {
-    NeroCheckbox
-  },
   props: {
     role: {
       type: Object,
