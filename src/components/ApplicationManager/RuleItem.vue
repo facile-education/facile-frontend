@@ -1,6 +1,6 @@
 <template>
   <li class="rule">
-    <NeroTagsInput
+    <PentilaTagsInput
       v-model="rule.roles"
       :placeholder="$t('ApplicationManager.RuleItem.rolesPlaceholder') + '*'"
       :list="roleList"
@@ -10,7 +10,7 @@
       @blur="$v.rule.roles.$touch()"
     />
     <p v-t="'ApplicationManager.RuleItem.fromLabel'" />
-    <NeroTagsInput
+    <PentilaTagsInput
       v-model="rule.classes"
       :placeholder="$t('ApplicationManager.RuleItem.classesPlaceholder') + '*'"
       :list="classList"
@@ -19,7 +19,7 @@
       class="column"
       @blur="$v.rule.classes.$touch()"
     />
-    <NeroButton
+    <PentilaButton
       v-if="isRemoveButtonDisplayed"
       cls="cancel"
       icon="fa fa-trash"
@@ -32,15 +32,8 @@
 <script>
 import { required } from 'vuelidate/lib/validators'
 
-import NeroButton from '@/components/Nero/NeroButton'
-import NeroTagsInput from '@/components/Nero/NeroTagsInput'
-
 export default {
   name: 'RuleItem',
-  components: {
-    NeroButton,
-    NeroTagsInput
-  },
   props: {
     rule: {
       type: Object,

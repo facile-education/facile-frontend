@@ -12,7 +12,7 @@
           :src="application.image"
           class="logo"
         >
-        <NeroFallbackThumbnail
+        <PentilaFallbackThumbnail
           v-else
           class="logo"
         />
@@ -21,7 +21,7 @@
           <h5>
             {{ application.serviceName }}
           </h5>
-          <NeroInput
+          <PentilaInput
             v-if="application.hasCustomUrl"
             v-model="applicationURL"
             :placeholder="$t('ApplicationManager.ApplicationDetails.customUrlPlaceholder')"
@@ -54,19 +54,19 @@
       <div v-if="hasExport">
         <p v-t="'ApplicationManager.ApplicationDetails.exportLabel'" />
         <div class="app-export-buttons">
-          <NeroButton
+          <PentilaButton
             v-if="application.exportParent"
             :label="$t('ApplicationManager.ApplicationDetails.parentsExportButton')"
             @click="exportUserList('parent')"
           />
 
-          <NeroButton
+          <PentilaButton
             v-if="application.exportStudent"
             :label="$t('ApplicationManager.ApplicationDetails.studentsExportButton')"
             @click="exportUserList('eleve')"
           />
 
-          <NeroButton
+          <PentilaButton
             v-if="application.exportTeacher"
             :label="$t('ApplicationManager.ApplicationDetails.teachersExportButton')"
             @click="exportUserList('prof')"
@@ -75,38 +75,38 @@
       </div>
     </div>
     <div class="action">
-      <NeroToggleSwitch
+      <PentilaToggleSwitch
         :value="application.isAvailable"
         :title="$t('ApplicationManager.ApplicationDetails.broadcastButtonTooltip')"
         @input="updateBroadcastStatus"
       />
-      <NeroButton
+      <PentilaButton
         v-if="isAdministrator"
         :title="$t('ApplicationManager.ApplicationDetails.editButtonTooltip')"
         type="circle"
         icon="fa fa-pencil-alt"
         @click="toggleEditionModal"
       />
-      <NeroButton
+      <PentilaButton
         :title="$t('ApplicationManager.ApplicationDetails.configurationButtonTooltip')"
         type="circle"
         icon="fa fa-cog"
         @click="toggleBroadcastModal"
       />
-      <NeroButton
+      <PentilaButton
         v-if="application.hasCustomUrl"
         :title="$t('ApplicationManager.ApplicationDetails.guideButtonTooltip')"
         type="circle"
         icon="fa fa-book"
       />
-      <NeroButton
+      <PentilaButton
         v-if="application.hasCustomUrl"
         :title="$t('ApplicationManager.ApplicationDetails.saveButtonTooltip')"
         type="circle"
         icon="fa fa-save"
         @click="updateURL"
       />
-      <NeroButton
+      <PentilaButton
         v-if="isAdministrator"
         :title="$t('ApplicationManager.ApplicationDetails.deleteButtonTooltip')"
         type="circle"
@@ -119,21 +119,13 @@
 </template>
 
 <script>
-import clickoutside from '@/directives/clickoutside'
+import clickoutside from 'click-outside'
 import RuleLabel from '@/components/ApplicationManager/RuleLabel'
-import NeroButton from '@/components/Nero/NeroButton'
-import NeroFallbackThumbnail from '@/components/Nero/NeroFallbackThumbnail'
-import NeroInput from '@/components/Nero/NeroInput'
-import NeroToggleSwitch from '@/components/Nero/NeroToggleSwitch'
 
 export default {
   name: 'ApplicationDetails',
   components: {
-    RuleLabel,
-    NeroButton,
-    NeroFallbackThumbnail,
-    NeroInput,
-    NeroToggleSwitch
+    RuleLabel
   },
   directives: {
     'click-outside': clickoutside
