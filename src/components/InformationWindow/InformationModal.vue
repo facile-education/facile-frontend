@@ -1,6 +1,6 @@
 <template>
   <div data-test="informationModal">
-    <NeroWindow
+    <PentilaWindow
       :modal="true"
       @close="onClose"
     >
@@ -10,32 +10,26 @@
       />
 
       <div slot="body">
-        <NeroTabList>
-          <NeroTabItem :title="$t('InformationWindow.InformationModal.versionsTabLabel')">
+        <PentilaTabList>
+          <PentilaTabItem :title="$t('InformationWindow.InformationModal.versionsTabLabel')">
             <VersionsDetails />
-          </NeroTabItem>
-          <NeroTabItem :title="$t('InformationWindow.InformationModal.termsOfUseTabLabel')">
+          </PentilaTabItem>
+          <PentilaTabItem :title="$t('InformationWindow.InformationModal.termsOfUseTabLabel')">
             <TermsOfUse />
-          </NeroTabItem>
-        </NeroTabList>
+          </PentilaTabItem>
+        </PentilaTabList>
       </div>
-    </NeroWindow>
+    </PentilaWindow>
   </div>
 </template>
 
 <script>
-import NeroWindow from '@/components/Nero/NeroWindow'
-import NeroTabList from '@/components/Nero/NeroTabList'
-import NeroTabItem from '@/components/Nero/NeroTabItem'
 import VersionsDetails from '@/components/InformationWindow/VersionsDetails'
 import TermsOfUse from '@/components/InformationWindow/TermsOfUse'
 
 export default {
   name: 'InformationModal',
   components: {
-    NeroTabList,
-    NeroTabItem,
-    NeroWindow,
     VersionsDetails,
     TermsOfUse
   },

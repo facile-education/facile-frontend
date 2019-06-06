@@ -1,6 +1,6 @@
 <template>
   <div data-test="editVersion">
-    <NeroWindow
+    <PentilaWindow
       :modal="true"
       @close="onClose"
     >
@@ -10,7 +10,7 @@
       />
       <div slot="body">
         <div>
-          <NeroInput
+          <PentilaInput
             v-model="form.versionNumber"
             data-test="versionNumber-input"
             :error-type="formErrorList.versionNumber"
@@ -19,7 +19,7 @@
           />
         </div>
         <div>
-          <NeroInput
+          <PentilaInput
             v-model="form.versionDetails"
             data-test="versionDetails-input"
             :error-type="formErrorList.versionDetails"
@@ -29,35 +29,27 @@
         </div>
       </div>
       <div slot="footer">
-        <NeroButton
+        <PentilaButton
           data-test="addVersion"
           :label="$t('InformationWindow.VersionEditionModal.submitButtonLabel')"
           @click="addVersion"
         />
       </div>
-    </NeroWindow>
+    </PentilaWindow>
   </div>
 </template>
 
 <script>
 import NeroUtils from '@/utils/nero.utils'
-import NeroWindow from '@/components/Nero/NeroWindow'
-import NeroInput from '@/components/Nero/NeroInput'
-import NeroButton from '@/components/Nero/NeroButton'
 import informationService from '@/api/information.service'
 import { required } from 'vuelidate/lib/validators'
+
 const isValidJson = (value) => NeroUtils.JSON.isValidJson(value)
 const isJsonContentValid = (value) => informationService.isJsonContentValid(value)
 const isVersionNameValid = (value) => informationService.isVersionNameValid(value)
 
 export default {
   name: 'VersionEditionModal',
-  components: {
-    NeroWindow,
-    NeroInput,
-    NeroButton
-  },
-
   data () {
     return {
       form: {
