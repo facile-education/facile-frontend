@@ -1,5 +1,5 @@
 <template>
-  <NeroWindow
+  <PentilaWindow
     :modal="true"
     @close="closeModal"
   >
@@ -13,7 +13,7 @@
       class="nero-form"
     >
       <div class="delegationList">
-        <NeroTagItem
+        <PentilaTagItem
           v-for="delegate in delegateList"
           :key="delegate.userId"
           :tag="getUserDisplayValue(delegate)"
@@ -22,14 +22,14 @@
       </div>
       <hr class="nero-separator">
       <div class="delegationList">
-        <NeroDropdown
+        <PentilaDropdown
           v-if="userSchoolList"
           :list="userSchoolList"
           display-field="schoolName"
           class="school-list"
           @dropdown-select="onSelectSchool"
         />
-        <NeroInput
+        <PentilaInput
           v-model="filter"
           :placeholder="$t('News.NewsDelegationModal.searchPlaceholder')"
           class="search-input"
@@ -45,31 +45,21 @@
       </div>
     </div>
 
-    <NeroButton
+    <PentilaButton
       slot="footer"
       :label="$t('News.NewsDelegationModal.saveButtonLabel')"
       @click="onSave"
     />
-  </NeroWindow>
+  </PentilaWindow>
 </template>
 
 <script>
-import NeroButton from '@/components/Nero/NeroButton'
-import NeroDropdown from '@/components/Nero/NeroDropdown'
-import NeroInput from '@/components/Nero/NeroInput'
-import NeroTagItem from '@/components/Nero/NeroTagItem'
 import NeroUtils from '@/utils/nero.utils'
-import NeroWindow from '@/components/Nero/NeroWindow'
 import NewsDelegationCandidate from '@/components/News/NewsDelegationCandidate'
 
 export default {
   name: 'NewsDelegationModal',
   components: {
-    NeroButton,
-    NeroDropdown,
-    NeroInput,
-    NeroTagItem,
-    NeroWindow,
     NewsDelegationCandidate
   },
   data () {

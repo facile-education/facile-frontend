@@ -13,7 +13,7 @@
       class="thumbnail"
       :src="news.thumbnail.url"
     >
-    <NeroFallbackThumbnail
+    <PentilaFallbackThumbnail
       v-else
       class="default"
     />
@@ -39,13 +39,13 @@
       v-if="hasEditionRights"
       class="admin-actions"
     >
-      <NeroButton
+      <PentilaButton
         :title="$t('News.NewsItem.editButtonTitle')"
         type="circle"
         icon="fa fa-pencil-alt"
         @click.stop="onEditNews"
       />
-      <NeroButton
+      <PentilaButton
         :title="$t('News.NewsItem.deleteButtonTitle')"
         type="circle"
         icon="fa fa-trash"
@@ -58,16 +58,10 @@
 
 <script>
 import moment from 'moment'
-import NeroButton from '@/components/Nero/NeroButton'
-import NeroFallbackThumbnail from '@/components/Nero/NeroFallbackThumbnail'
 import NeroUtils from '@/utils/nero.utils'
 
 export default {
   name: 'NewsItem',
-  components: {
-    NeroButton,
-    NeroFallbackThumbnail
-  },
   props: {
     news: {
       type: Object,

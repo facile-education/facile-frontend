@@ -1,5 +1,5 @@
 <template>
-  <NeroWindow
+  <PentilaWindow
     :modal="true"
     :important="news.isHighPrio"
     @close="closeModal"
@@ -34,7 +34,7 @@
           <div class="date">
             {{ news.date }}
           </div>
-          <NeroButton
+          <PentilaButton
             :title="$t('News.NewsItem.editButtonTitle')"
             type="circle"
             icon="fa fa-users"
@@ -63,7 +63,7 @@
       <NeroAttachmentList :attachment-list="news.attachFiles" />
     </div>
     <div slot="footer">
-      <NeroButton
+      <PentilaButton
         v-if="hasEditionRights"
         :title="$t('News.NewsItem.editButtonTitle')"
         type="circle"
@@ -71,20 +71,16 @@
         @click="onEditNews"
       />
     </div>
-  </NeroWindow>
+  </PentilaWindow>
 </template>
 
 <script>
 import NeroAttachmentList from '@/components/NeroAttachment/NeroAttachmentList'
-import NeroButton from '@/components/Nero/NeroButton'
-import NeroWindow from '@/components/Nero/NeroWindow'
 
 export default {
   name: 'NewsDelegationModal',
   components: {
-    NeroAttachmentList,
-    NeroButton,
-    NeroWindow
+    NeroAttachmentList
   },
   data () {
     return {
