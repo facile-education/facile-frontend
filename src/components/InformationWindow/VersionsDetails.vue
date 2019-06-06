@@ -1,7 +1,7 @@
 <template>
   <div data-test="version-details">
     {{ $t('InformationWindow.VersionDetails.version') }} :
-    <NeroDropdown
+    <PentilaDropdown
       v-if="versionList"
       data-test="versionListDropDown"
       :value="selected"
@@ -10,7 +10,7 @@
       display-field="versionNumber"
       @input="selectVersion"
     />
-    <NeroButton
+    <PentilaButton
       v-if="isAdministrator"
       data-test="createVersion"
       class="addVersion"
@@ -33,15 +33,8 @@
 </template>
 
 <script>
-import NeroDropdown from '@/components/Nero/NeroDropdown'
-import NeroButton from '@/components/Nero/NeroButton'
-
 export default {
   name: 'VersionsDetails',
-  components: {
-    NeroDropdown,
-    NeroButton
-  },
   data () {
     return {
       selected: undefined
