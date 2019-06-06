@@ -7,8 +7,8 @@
       <div v-if="roleList">
         <h4 v-t="'CommunicationManager.InternalRightList.title'" />
         <p v-t="'CommunicationManager.InternalRightList.informations'" />
-        <NeroTabList>
-          <NeroTabItem
+        <PentilaTabList>
+          <PentilaTabItem
             v-for="role in roleList"
             :key="role.roleId"
             :title="role.label"
@@ -18,33 +18,25 @@
               :right-list="rightList"
               @input="onInput"
             />
-          </NeroTabItem>
-        </NeroTabList>
-        <NeroButton
+          </PentilaTabItem>
+        </PentilaTabList>
+        <PentilaButton
           :label="$t('CommunicationManager.InternalRightList.save')"
           @click="onSave"
         />
       </div>
-      <NeroSpinner v-else />
+      <PentilaSpinner v-else />
     </Transition>
   </div>
 </template>
 
 <script>
-import NeroButton from '@/components/Nero/NeroButton'
-import NeroSpinner from '@/components/Nero/NeroSpinner'
-import NeroTabItem from '@/components/Nero/NeroTabItem'
-import NeroTabList from '@/components/Nero/NeroTabList'
 import InternalRoleTab from '@/components/CommunicationManager/InternalRoleTab'
 
 export default {
   name: 'InternalRightList',
   components: {
-    InternalRoleTab,
-    NeroButton,
-    NeroSpinner,
-    NeroTabItem,
-    NeroTabList
+    InternalRoleTab
   },
   data () {
     return {
