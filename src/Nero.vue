@@ -21,7 +21,7 @@
     <Transition name="fade">
       <MobileMenu v-if="isMobileMenuDisplayed" />
     </Transition>
-    <NeroConfirmModal v-if="isConfirmModalDisplayed" />
+    <PentilaConfirmModal v-if="isConfirmModalDisplayed" />
     <PreferencesModal v-if="isPreferencesModalDisplayed" />
     <ImagePickerModal v-if="isImagePickerModalDisplayed" />
     <InformationModal v-if="isInformationModalDisplayed" />
@@ -36,7 +36,6 @@ import Banner from '@/components/Banner/Banner'
 import Hack from '@/components/Hack'
 import ImagePickerModal from '@/components/ImagePickerWindow/ImagePickerModal'
 import MobileMenu from '@/components/MobileMenu'
-import NeroConfirmModal from '@/components/Nero/NeroConfirmModal'
 import PreferencesModal from '@/components/PreferencesWindow/PreferencesModal'
 import InformationModal from '@/components/InformationWindow/InformationModal'
 import SupportModal from '@/components/SupportWindow/SupportModal'
@@ -50,7 +49,6 @@ export default {
     Hack,
     ImagePickerModal,
     MobileMenu,
-    NeroConfirmModal,
     PreferencesModal,
     InformationModal,
     SupportModal,
