@@ -1,11 +1,11 @@
 <template>
   <div>
     <div class="user-picture">
-      <NeroUserPicture
+      <PentilaUserPicture
         :image-url="userPicture"
         @click="onPictureClick()"
       />
-      <NeroButton
+      <PentilaButton
         :title="$t('PreferencesWindow.PersonalDetails.deleteButtonTitle')"
         type="circle"
         icon="fa fa-trash"
@@ -27,15 +27,8 @@
 </template>
 
 <script>
-import NeroButton from '@/components/Nero/NeroButton'
-import NeroUserPicture from '@/components/Nero/NeroUserPicture'
-
 export default {
   name: 'PersonalDetails',
-  components: {
-    NeroButton,
-    NeroUserPicture
-  },
   computed: {
     details () {
       return this.$store.state.user.details

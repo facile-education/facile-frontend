@@ -5,30 +5,24 @@
     <div>
       {{ $t('PreferencesWindow.NotificationDetails.servicesLabel') }}
 
-      <NeroCheckbox :label="$t('PreferencesWindow.NotificationDetails.newsCheckboxLabel')" />
-      <NeroCheckbox :label="$t('PreferencesWindow.NotificationDetails.agendaCheckboxLabel')" />
-      <NeroCheckbox :label="$t('PreferencesWindow.NotificationDetails.dropboxCheckboxLabel')" />
-      <NeroCheckbox :label="$t('PreferencesWindow.NotificationDetails.workspaceCheckboxLabel')" />
-      <NeroCheckbox :label="$t('PreferencesWindow.NotificationDetails.forumsCheckboxLabel')" />
-      <NeroCheckbox :label="$t('PreferencesWindow.NotificationDetails.synchronizationCheckboxLabel')" />
+      <PentilaCheckbox :label="$t('PreferencesWindow.NotificationDetails.newsCheckboxLabel')" />
+      <PentilaCheckbox :label="$t('PreferencesWindow.NotificationDetails.agendaCheckboxLabel')" />
+      <PentilaCheckbox :label="$t('PreferencesWindow.NotificationDetails.dropboxCheckboxLabel')" />
+      <PentilaCheckbox :label="$t('PreferencesWindow.NotificationDetails.workspaceCheckboxLabel')" />
+      <PentilaCheckbox :label="$t('PreferencesWindow.NotificationDetails.forumsCheckboxLabel')" />
+      <PentilaCheckbox :label="$t('PreferencesWindow.NotificationDetails.synchronizationCheckboxLabel')" />
     </div>
     <div>
       {{ $t('PreferencesWindow.NotificationDetails.frequencyLabel') }}
-      <NeroDropdown :list="[]" />
+      <PentilaDropdown :list="[]" />
     </div>
   </div>
 </template>
 
 <script>
-import NeroCheckbox from '@/components/Nero/NeroCheckbox'
-import NeroDropdown from '@/components/Nero/NeroDropdown'
 
 export default {
-  name: 'NotificationDetails',
-  components: {
-    NeroCheckbox,
-    NeroDropdown
-  }
+  name: 'NotificationDetails'
 }
 </script>
 

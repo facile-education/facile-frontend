@@ -2,14 +2,14 @@
   <div class="interface-preferences">
     <div class="menu-default-state">
       <label v-t="'PreferencesWindow.InterfaceDetails.hideMenuLabel'" />
-      <NeroRadioButton
+      <PentilaRadioButton
         v-model="menuHidden"
         name="menu"
         :label="$t('PreferencesWindow.InterfaceDetails.yesLabel')"
         rb-value="yes"
         class="yes"
       />
-      <NeroRadioButton
+      <PentilaRadioButton
         v-model="menuHidden"
         name="menu"
         :label="$t('PreferencesWindow.InterfaceDetails.noLabel')"
@@ -33,13 +33,11 @@
 
 <script>
 import Swatches from 'vue-swatches'
-import NeroRadioButton from '@/components/Nero/NeroRadioButton'
 import NeroUtils from '@/utils/nero.utils'
 
 export default {
   name: 'InterfaceDetails',
   components: {
-    NeroRadioButton,
     Swatches
   },
   data () {

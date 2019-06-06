@@ -6,21 +6,21 @@
 
     <div>
       {{ $t('PreferencesWindow.BackupDetails.selectionLabel') }}
-      <NeroCheckbox :label="$t('PreferencesWindow.BackupDetails.dropboxCheckboxLabel')" />
-      <NeroCheckbox :label="$t('PreferencesWindow.BackupDetails.workspaceCheckboxLabel')" />
+      <PentilaCheckbox :label="$t('PreferencesWindow.BackupDetails.dropboxCheckboxLabel')" />
+      <PentilaCheckbox :label="$t('PreferencesWindow.BackupDetails.workspaceCheckboxLabel')" />
       <div>
-        <NeroCheckbox :label="$t('PreferencesWindow.BackupDetails.agendaCheckboxLabel')" />
+        <PentilaCheckbox :label="$t('PreferencesWindow.BackupDetails.agendaCheckboxLabel')" />
         <p v-t="'PreferencesWindow.BackupDetails.startDateLabel'" /> TODO Datepicker
         <p v-t="'PreferencesWindow.BackupDetails.endDateLabel'" /> TODO Datepicker
       </div>
       <div>
-        <NeroCheckbox :label="$t('PreferencesWindow.BackupDetails.schedulerCheckboxLabel')" />
+        <PentilaCheckbox :label="$t('PreferencesWindow.BackupDetails.schedulerCheckboxLabel')" />
         <p v-t="'PreferencesWindow.BackupDetails.startDateLabel'" /> TODO Datepicker
         <p v-t="'PreferencesWindow.BackupDetails.endDateLabel'" /> TODO Datepicker
       </div>
     </div>
 
-    <NeroButton
+    <PentilaButton
       :title="$t('PreferencesWindow.BackupDetails.copyButtonTitle')"
       :label="$t('PreferencesWindow.BackupDetails.copyButtonLabel')"
       @click="onCopy"
@@ -29,15 +29,8 @@
 </template>
 
 <script>
-import NeroButton from '@/components/Nero/NeroButton'
-import NeroCheckbox from '@/components/Nero/NeroCheckbox'
-
 export default {
   name: 'BackupDetails',
-  components: {
-    NeroButton,
-    NeroCheckbox
-  },
   methods: {
     onCopy () {
       console.log('on copy')
