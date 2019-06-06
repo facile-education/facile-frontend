@@ -2,7 +2,7 @@
   <div>
     <div class="filters">
       <h5 v-t="'Statistics.ChartParameters.filtersTitle'" />
-      <NeroTagsInput
+      <PentilaTagsInput
         v-if="schoolList"
         v-model="schoolFilter"
         :list="schoolList"
@@ -10,13 +10,13 @@
         display-field="schoolName"
         cls="form"
       />
-      <NeroTagsInput
+      <PentilaTagsInput
         v-model="serviceFilter"
         :list="[]"
         :placeholder="$t('Statistics.ChartParameters.servicesPlaceholder')"
         cls="form"
       />
-      <NeroTagsInput
+      <PentilaTagsInput
         v-model="roleFilter"
         :list="[]"
         :placeholder="$t('Statistics.ChartParameters.rolesPlaceholder')"
@@ -38,7 +38,7 @@
         Picker : End Date
       </p>
 
-      <NeroDropdown
+      <PentilaDropdown
         :list="[
           $t('Statistics.ChartParameters.dailyLabel'),
           $t('Statistics.ChartParameters.weeklyLabel'),
@@ -51,7 +51,7 @@
     <div>
       <h5 v-t="'Statistics.ChartParameters.actionsTitle'" />
       {{ $t('Statistics.ChartParameters.compareOnLabel') }}
-      <NeroDropdown
+      <PentilaDropdown
         :list="[
           $t('Statistics.ChartParameters.doNotCompareLabel'),
           $t('Statistics.ChartParameters.schoolsLabel'),
@@ -60,15 +60,15 @@
         @dropdown-select="compareSelected"
       />
 
-      <NeroButton
+      <PentilaButton
         :label="$t('Statistics.ChartParameters.exportButtonLabel')"
         @click="exportStats"
       />
-      <NeroButton
+      <PentilaButton
         :label="$t('Statistics.ChartParameters.searchButtonLabel')"
         @click="search"
       />
-      <NeroButton
+      <PentilaButton
         :label="$t('Statistics.ChartParameters.initButtonLabel')"
         @click="initParameterList"
       />
@@ -77,17 +77,8 @@
 </template>
 
 <script>
-import NeroDropdown from '@/components/Nero/NeroDropdown'
-import NeroButton from '@/components/Nero/NeroButton'
-import NeroTagsInput from '@/components/Nero/NeroTagsInput'
-
 export default {
   name: 'ChartParameters',
-  components: {
-    NeroButton,
-    NeroDropdown,
-    NeroTagsInput
-  },
   data () {
     return {
       schoolFilter: [],
