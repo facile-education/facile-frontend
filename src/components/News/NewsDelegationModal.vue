@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import NeroUtils from '@/utils/nero.utils'
+import PentilaUtils from 'pentila-utils'
 import NewsDelegationCandidate from '@/components/News/NewsDelegationCandidate'
 
 export default {
@@ -72,26 +72,22 @@ export default {
     delegateList () {
       if (this.$store.state.news.delegateList === undefined) return undefined
 
-      var listCopy = this.$store.state.news.delegateList.slice()
-
-      return listCopy.sort(this.compare)
+      return PentilaUtils.Array.sortWithString(this.$store.state.news.delegateList, false, 'userLastName')
     },
     filteredDelegationCandidateList () {
       var vm = this
-      var filter = NeroUtils.String.normalize(this.filter)
+      var filter = PentilaUtils.String.normalize(this.filter)
 
       return this.sortedDelegationCandidateList.filter((item) => {
         if (filter.length === 0) {
           return true
         }
-        return (NeroUtils.String.normalize(vm.getUserDisplayValue(item))
+        return (PentilaUtils.String.normalize(vm.getUserDisplayValue(item))
           .indexOf(filter) !== -1)
       })
     },
     sortedDelegationCandidateList () {
-      var listCopy = this.delegationCandidateList.slice()
-
-      return listCopy.sort(this.compare)
+      return PentilaUtils.Array.sortWithString(this.delegationCandidateList, false, 'userLastName')
     },
     userSchoolList () {
       return this.$store.state.news.delegationCandidateList
@@ -104,14 +100,6 @@ export default {
   methods: {
     closeModal () {
       this.$store.dispatch('news/closeDelegationModal')
-    },
-    compare (a, b) {
-      a = NeroUtils.String.normalize(a.userLastName)
-      b = NeroUtils.String.normalize(b.userLastName)
-
-      if (a < b) return -1
-      if (a > b) return 1
-      return 0
     },
     getUserDisplayValue (user) {
       return user.userLastName + ' ' + user.userFirstName

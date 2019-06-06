@@ -39,7 +39,7 @@
 
 <script>
 import { required } from 'vuelidate/lib/validators'
-import NeroUtils from '@/utils/nero.utils'
+import PentilaUtils from 'pentila-utils'
 
 import RuleList from '@/components/ApplicationManager/RuleList'
 
@@ -72,7 +72,7 @@ export default {
     }
   },
   created () {
-    this.ruleList = NeroUtils.JSON.deepCopy(this.$store.state.applicationManager.selectedApplication.rules)
+    this.ruleList = PentilaUtils.JSON.deepCopy(this.$store.state.applicationManager.selectedApplication.rules)
   },
   methods: {
     addScope () {

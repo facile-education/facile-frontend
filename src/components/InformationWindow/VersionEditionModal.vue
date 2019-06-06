@@ -40,11 +40,11 @@
 </template>
 
 <script>
-import NeroUtils from '@/utils/nero.utils'
+import PentilaUtils from 'pentila-utils'
 import informationService from '@/api/information.service'
 import { required } from 'vuelidate/lib/validators'
 
-const isValidJson = (value) => NeroUtils.JSON.isValidJson(value)
+const isValidJson = (value) => PentilaUtils.JSON.isValidJson(value)
 const isJsonContentValid = (value) => informationService.isJsonContentValid(value)
 const isVersionNameValid = (value) => informationService.isVersionNameValid(value)
 

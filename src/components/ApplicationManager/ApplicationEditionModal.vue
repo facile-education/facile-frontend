@@ -171,7 +171,7 @@
 </template>
 
 <script>
-import NeroUtils from '@/utils/nero.utils'
+import PentilaUtils from 'pentila-utils'
 
 import { required } from 'vuelidate/lib/validators'
 
@@ -246,7 +246,7 @@ export default {
       this.$store.dispatch('administration/getRoleList')
     }
     // Copy selected app
-    this.application = NeroUtils.JSON.deepCopy(this.$store.state.applicationManager.selectedApplication)
+    this.application = PentilaUtils.JSON.deepCopy(this.$store.state.applicationManager.selectedApplication)
   },
   mounted () {
     // Initialise urlType

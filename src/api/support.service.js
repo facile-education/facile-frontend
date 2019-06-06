@@ -1,6 +1,6 @@
 import axios from 'axios'
 import constants from './constants'
-import NeroUtils from '@/utils/nero.utils'
+import PentilaUtils from 'pentila-utils'
 
 export default {
   addScreenShot,
@@ -10,7 +10,7 @@ export default {
 const url = constants.INFORMATION_MANAGER_URL
 
 function addScreenShot (image) {
-  return axios.post(url, NeroUtils.URL.params({
+  return axios.post(url, PentilaUtils.URL.params({
     cmd: 'screenshot',
     img: image
   })).then(response => response.data)

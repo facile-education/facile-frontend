@@ -95,7 +95,7 @@ import InlineEditor from '@ckeditor/ckeditor5-build-inline'
 import { required } from 'vuelidate/lib/validators'
 import moment from 'moment'
 
-import NeroUtils from '@/utils/nero.utils'
+import PentilaUtils from 'pentila-utils'
 
 export default {
   name: 'NewsEditionModal',
@@ -130,7 +130,7 @@ export default {
     }
   },
   created () {
-    this.news = NeroUtils.JSON.deepCopy(this.$store.state.news.selectedNews)
+    this.news = PentilaUtils.JSON.deepCopy(this.$store.state.news.selectedNews)
     if (!moment.isMoment(this.news.releaseDate)) {
       this.news.releaseDate = moment(this.news.releaseDate, 'DD/MM/YYYY HH:mm')
     }

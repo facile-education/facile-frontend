@@ -10,7 +10,7 @@
 
 <script>
 import ApplicationItem from '@/components/ApplicationManager/ApplicationItem'
-import NeroUtils from '@/utils/nero.utils'
+import PentilaUtils from 'pentila-utils'
 
 export default {
   name: 'ApplicationList',
@@ -36,7 +36,7 @@ export default {
       return applicationList
     },
     sortedApplicationList () {
-      return NeroUtils.Array.sortWithString(this.applicationList, 'serviceName')
+      return PentilaUtils.Array.sortWithString(this.applicationList, false, 'serviceName')
     }
   },
   methods: {
