@@ -33,7 +33,7 @@
 
 <script>
 import Swatches from 'vue-swatches'
-import NeroUtils from '@/utils/nero.utils'
+import PentilaUtils from 'pentila-utils'
 
 export default {
   name: 'InterfaceDetails',
@@ -65,7 +65,7 @@ export default {
   },
   methods: {
     onColorChanged (newColor) {
-      NeroUtils.Theme.updateColor(this.themeColor, newColor)
+      PentilaUtils.Theme.updateColor(this.themeColor, newColor)
       this.themeColor = newColor
     }
   }

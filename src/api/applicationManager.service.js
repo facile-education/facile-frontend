@@ -1,6 +1,6 @@
 import axios from 'axios'
 import constants from './constants'
-import NeroUtils from '@/utils/nero.utils'
+import PentilaUtils from 'pentila-utils'
 
 export default {
   createApplication,
@@ -19,7 +19,7 @@ export default {
 const url = constants.APPLICATION_MANAGER_URL
 
 function createApplication (application) {
-  return axios.post(url, NeroUtils.URL.params({
+  return axios.post(url, PentilaUtils.URL.params({
     cmd: 'addService',
     newService: JSON.stringify({
       serviceName: application.serviceName,
@@ -98,7 +98,7 @@ function removeApplication (serviceId) {
 }
 
 function updateApplication (application) {
-  return axios.post(url, NeroUtils.URL.params({
+  return axios.post(url, PentilaUtils.URL.params({
     cmd: 'modifyService',
     request: JSON.stringify({
       serviceId: application.serviceId,
@@ -121,7 +121,7 @@ function updateApplication (application) {
 }
 
 function updateBroadcastScope (schoolId, serviceId, ruleIdList) {
-  return axios.post(url, NeroUtils.URL.params({
+  return axios.post(url, PentilaUtils.URL.params({
     cmd: 'modifyDiffusionPerimeter',
     diffusionPerimeter: JSON.stringify({
       etabId: schoolId,
@@ -132,7 +132,7 @@ function updateBroadcastScope (schoolId, serviceId, ruleIdList) {
 }
 
 function updateBroadcastStatus (schoolId, serviceId, isAvailable) {
-  return axios.post(url, NeroUtils.URL.params({
+  return axios.post(url, PentilaUtils.URL.params({
     cmd: 'updateDiffusion',
     diffusion: isAvailable,
     etabId: schoolId,
@@ -141,7 +141,7 @@ function updateBroadcastStatus (schoolId, serviceId, isAvailable) {
 }
 
 function updateURL (schoolId, serviceId, applicationURL) {
-  return axios.post(url, NeroUtils.URL.params({
+  return axios.post(url, PentilaUtils.URL.params({
     cmd: 'updateUrl',
     url: applicationURL,
     etabId: schoolId,

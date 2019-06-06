@@ -1,6 +1,6 @@
-import NeroUtils from '@/utils/nero.utils'
+import PentilaUtils from 'pentila-utils'
 
-const USER_PREFIX = '/user/' + NeroUtils.Cookies.getCookie('SCREEN_NAME')
+const USER_PREFIX = '/user/' + PentilaUtils.Cookies.getCookie('SCREEN_NAME')
 const DEFAULT_APP = '/nero'
 
 // TODO get URL / applications in a dynamic way / understand why dashboard (and others) cannot be called with default app

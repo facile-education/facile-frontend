@@ -1,6 +1,6 @@
 import axios from 'axios'
 import constants from '@/api/constants'
-import NeroUtils from '@/utils/nero.utils'
+import PentilaUtils from 'pentila-utils'
 
 export default {
   addNews,
@@ -88,7 +88,7 @@ function getNewsBroadcastedGroups (newsId) {
 }
 
 function updateDelegateList (delegateList) {
-  return axios.post(url, NeroUtils.URL.params({
+  return axios.post(url, PentilaUtils.URL.params({
     cmd: 'validateDelegate',
     usersToDelegate: JSON.stringify(delegateList)
   }),

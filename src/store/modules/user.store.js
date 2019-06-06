@@ -1,5 +1,5 @@
 import application from '@/store/modules/user.application.store'
-import NeroUtils from '@/utils/nero.utils'
+import PentilaUtils from 'pentila-utils'
 import userService from '@/api/user.service'
 import Vue from 'vue'
 
@@ -108,7 +108,7 @@ export default {
                 data.user.themeColor = '#' + data.user.themeColor
               }
               if (data.user.themeColor !== state.themeColor) {
-                NeroUtils.Theme.updateColor(state.themeColor, data.user.themeColor)
+                PentilaUtils.Theme.updateColor(state.themeColor, data.user.themeColor)
               }
             }
 

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import constants from '@/api/constants'
-import NeroUtils from '@/utils/nero.utils'
+import PentilaUtils from 'pentila-utils'
 
 export default {
   getPersonalDetails,
@@ -60,7 +60,7 @@ function removePicture () {
  * @param {*} preferences
  */
 function updateInterfacePreferences (preferences) {
-  return axios.post(constants.PREFERENCES_URL, NeroUtils.URL.params({
+  return axios.post(constants.PREFERENCES_URL, PentilaUtils.URL.params({
     cmd: 'editInterface',
     lang: preferences.language,
     hideMenu: preferences.isMenuHidden,

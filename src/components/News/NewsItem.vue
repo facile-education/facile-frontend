@@ -58,7 +58,7 @@
 
 <script>
 import moment from 'moment'
-import NeroUtils from '@/utils/nero.utils'
+import PentilaUtils from 'pentila-utils'
 
 export default {
   name: 'NewsItem',
@@ -70,7 +70,9 @@ export default {
   },
   computed: {
     formattedDate () {
-      return NeroUtils.Date.formatToString(moment(this.news.date, 'DD/MM/YYYY HH:mm'))
+      // Need english format to create date
+      let date = new Date(moment(this.news.date, 'DD/MM/YYYY HH:mm').format('MM/DD/YYYY HH:mm'))
+      return PentilaUtils.Date.formatToString(date)
     },
     hasAttachment () {
       return (this.news.attachFiles !== undefined && this.news.attachFiles.length > 0)
