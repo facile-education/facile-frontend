@@ -31,6 +31,7 @@ export default {
       required: true
     }
   },
+  emits: ['input'],
   computed: {
     isPersonal () {
       return (this.rolePrefix === 'n4_')

@@ -6,6 +6,7 @@
       :rule="rule"
       :is-error-list-displayed="isErrorListDisplayed"
       :is-remove-button-displayed="isRemovalAllowed"
+      @update="update($event, index)"
       @remove="remove(index)"
     />
   </ul>
@@ -29,6 +30,7 @@ export default {
       required: true
     }
   },
+  emits: ['remove', 'update'],
   computed: {
     isRemovalAllowed () {
       return this.ruleList.length > 1
@@ -37,6 +39,10 @@ export default {
   methods: {
     remove (index) {
       this.$emit('remove', index)
+    },
+    update (rule, index) {
+      console.log(rule, index)
+      this.$emit('update', { index, rule })
     }
   }
 }

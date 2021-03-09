@@ -5,8 +5,8 @@
     <WidgetBroadcastRoleItem
       v-for="role in mainRoleList"
       :key="role.roleId"
-      :is-broadcasted.sync="role.isBroadcasted"
-      :is-mandatory.sync="role.isMandatory"
+      v-model:is-broadcasted="role.isBroadcasted"
+      v-model:is-mandatory="role.isMandatory"
       :label="role.roleLabel"
     />
 
@@ -41,8 +41,8 @@
       <WidgetBroadcastRoleItem
         v-for="personalRole in personalRoleList"
         :key="personalRole.roleId"
-        :is-broadcasted.sync="personalRole.isBroadcasted"
-        :is-mandatory.sync="personalRole.isMandatory"
+        v-model:is-broadcasted="personalRole.isBroadcasted"
+        v-model:is-mandatory="personalRole.isMandatory"
         :label="personalRole.roleLabel"
       />
     </div>
@@ -126,15 +126,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'src/assets/css/constants';
+@import '@/design';
 
 .personal-header {
   position: relative;
-  background: $toolbar-background-color; // #e4e4e4;
-  border-radius: $border-radius;
+  background: $color-toolbar-bg;
+  border-radius: $light-radius-size;
   padding: 5px;
   cursor: pointer;
-  @extend %nero-shadow;
+  @extend %object-shadow;
 
   .personal-label {
     display: inline-block;

@@ -52,7 +52,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'src/assets/css/constants';
+@import '@/design';
 
 .wrapper {
   position: relative;
@@ -69,8 +69,8 @@ export default {
 }
 
 .check {
-  background-color: $valid-background-color;
-  color: $text-color-light;
+  background-color: $color-valid-bg;
+  color: $color-light-text;
   text-align: center;
   position: absolute;
   right: 0;

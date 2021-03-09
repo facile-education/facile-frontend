@@ -3,12 +3,11 @@
     :modal="true"
     @close="closeModal"
   >
-    <span
-      slot="header"
-      v-t="title"
-    />
+    <template #header>
+      <span v-t="title" />
+    </template>
 
-    <div slot="body">
+    <template #body>
       <div class="first-block">
         <!-- App Image -->
         <div
@@ -41,7 +40,7 @@
             :placeholder="$t('ApplicationManager.ApplicationEditionModal.namePlaceholder') + '*'"
             :maxlength="75"
             :error-message="formErrorList.serviceName"
-            @blur="$v.application.serviceName.$touch()"
+            @blur="v$.application.serviceName.$touch()"
           />
 
           <PentilaInput
@@ -49,7 +48,7 @@
             :placeholder="$t('ApplicationManager.ApplicationEditionModal.keyPlaceholder') + '*'"
             :maxlength="75"
             :error-message="formErrorList.serviceKey"
-            @blur="$v.application.serviceKey.$touch()"
+            @blur="v$.application.serviceKey.$touch()"
           />
 
           <div class="input-completion">
@@ -59,7 +58,7 @@
               :placeholder="$t('ApplicationManager.ApplicationEditionModal.categoryPlaceholder') + '*'"
               :max-lenght="75"
               :error-message="formErrorList.serviceCategory"
-              @blur="$v.application.serviceCategory.$touch()"
+              @blur="v$.application.serviceCategory.$touch()"
               @focus="toggleCompletion"
             />
             <PentilaAutocomplete
@@ -159,24 +158,33 @@
             :label="$t('ApplicationManager.ApplicationEditionModal.exportTeachersCheckbox')"
             class="export"
           />
+
+          <PentilaCheckbox
+            v-model="application.exportOther"
+            :label="$t('ApplicationManager.ApplicationEditionModal.exportOtherCheckbox')"
+            class="export"
+          />
         </div>
       </div>
-    </div>
-    <PentilaButton
-      slot="footer"
-      :label="$t('ApplicationManager.ApplicationEditionModal.modalSaveButton')"
-      @click="save"
-    />
+    </template>
+    <template #footer>
+      <PentilaButton
+        :label="$t('ApplicationManager.ApplicationEditionModal.modalSaveButton')"
+        @click="save"
+      />
+    </template>
   </PentilaWindow>
 </template>
 
 <script>
 import PentilaUtils from 'pentila-utils'
 
-import { required } from 'vuelidate/lib/validators'
+import { required } from '@vuelidate/validators'
+import { useVuelidate } from '@vuelidate/core'
 
 export default {
   name: 'ApplicationEditionModal',
+  setup: () => ({ v$: useVuelidate() }),
   data () {
     return {
       application: undefined,
@@ -196,7 +204,7 @@ export default {
       return this.$store.getters['applicationManager/categoryList']
     },
     formErrorList () {
-      var form = this.$v.application
+      var form = this.v$.application
       return {
         serviceName: (form.serviceName.$invalid && form.serviceName.$dirty) ? this.$t('Nero.formErrorMessage.required') : '',
         serviceKey: (form.serviceKey.$invalid && form.serviceKey.$dirty) ? this.$t('Nero.formErrorMessage.required') : '',
@@ -274,8 +282,8 @@ export default {
       this.application.image = ''
     },
     save () {
-      if (this.$v.$invalid) {
-        this.$v.$touch()
+      if (this.v$.$invalid) {
+        this.v$.$touch()
       } else {
         this.buildApplicationBeforeSave()
 
@@ -315,7 +323,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'src/assets/css/constants';
+@import '@/design';
 
 .first-block {
   display: flex;
@@ -323,7 +331,7 @@ export default {
 
 .logo-panel {
   position: relative;
-  border-radius: $border-radius;
+  border-radius: $light-radius-size;
   overflow: hidden;
   vertical-align: top;
   text-align: center;
@@ -331,7 +339,7 @@ export default {
   flex-shrink: 0;
   width: 110px;
   height: 110px;
-  @extend %nero-shadow;
+  @extend %object-shadow;
 }
 
 .remove-logo {
@@ -348,7 +356,7 @@ export default {
 .logo-fallback {
   line-height: 110px;
   font-size: 40px;
-  color: $text-color-fallback;
+  color: $color-fallback-text;
 }
 
 .informations {
@@ -367,8 +375,11 @@ export default {
   display: flex;
 }
 
-.radio,
-.export {
+.radio {
   flex: 0 0 33%;
+}
+
+.export {
+  flex: 0 0 25%;
 }
 </style>

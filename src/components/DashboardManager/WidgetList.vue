@@ -26,8 +26,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'src/assets/css/constants';
-
 .list {
   padding: 0 10px;
 }

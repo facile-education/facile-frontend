@@ -1,20 +1,19 @@
-import application from '@/store/modules/user.application.store'
+// import application from '@/store/modules/user.application.store'
 import PentilaUtils from 'pentila-utils'
 import userService from '@/api/user.service'
-import Vue from 'vue'
 
 export default {
   namespaced: true,
-  modules: {
-    application
-  },
+  // modules: {
+  //   application
+  // },
   state: {
     userId: 0,
     firstName: '',
     lastName: '',
     picture: '/image/user_male_portrait?img_id=3274117&t=1546588956172',
     themeColor: '#99B9E9',
-    isAdministrator: false,
+    isAdministrator: true,
     isLocalAdmin: false,
     isENTAdmin: false,
     isPersonal: false,
@@ -51,14 +50,14 @@ export default {
     hack (state, payload) {
       if (payload.isAdministrator || payload.isLocalAdmin ||
           payload.isENTAdmin || payload.isUser) {
-        Vue.set(state, 'isAdministrator', payload.isAdministrator)
-        Vue.set(state, 'isLocalAdmin', payload.isLocalAdmin)
-        Vue.set(state, 'isENTAdmin', payload.isENTAdmin)
+        state.isAdministrator = payload.isAdministrator
+        state.isLocalAdmin = payload.isLocalAdmin
+        state.isENTAdmin = payload.isENTAdmin
       } else {
-        Vue.set(state, 'isPersonal', payload.isPersonal)
-        Vue.set(state, 'isStudent', payload.isStudent)
-        Vue.set(state, 'isTeacher', payload.isTeacher)
-        Vue.set(state, 'isParent', payload.isParent)
+        state.isPersonal = payload.isPersonal
+        state.isStudent = payload.isStudent
+        state.isTeacher = payload.isTeacher
+        state.isParent = payload.isParent
       }
     },
     updateInterfacePreferences (state, payload) {
@@ -68,14 +67,14 @@ export default {
       state.picture = payload
     },
     updateUserDetails (state, payload) {
-      Vue.set(state.details, 'address', payload.address)
-      Vue.set(state.details, 'firstName', payload.firstName)
-      Vue.set(state.details, 'homePhoneNumber', payload.homePhone)
-      Vue.set(state.details, 'lastName', payload.lastName)
-      Vue.set(state.details, 'emailAddress', payload.mail)
-      Vue.set(state.details, 'mobilePhoneNumber', payload.mobilePhone)
-      Vue.set(state.details, 'officePhoneNumber', payload.proPhone)
-      Vue.set(state.details, 'smsPhoneNumber', payload.SMSPhone)
+      state.details.address = payload.address
+      state.details.firstName = payload.firstName
+      state.details.homePhoneNumber = payload.homePhone
+      state.details.lastName = payload.lastName
+      state.details.emailAddress = payload.mail
+      state.details.mobilePhoneNumber = payload.mobilePhone
+      state.details.officePhoneNumber = payload.proPhone
+      state.details.smsPhoneNumber = payload.SMSPhone
     }
   },
   actions: {

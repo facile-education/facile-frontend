@@ -1,5 +1,4 @@
 import dashboardManagerService from '@/api/dashboardManager.service'
-import Vue from 'vue'
 
 export default {
   namespaced: true,
@@ -7,13 +6,13 @@ export default {
     isWidgetEditionModalDisplayed: false,
     editedWidget: {},
     scopeList: {
-      'PENTILA': 1,
-      'ENT_ADMIN': 2,
-      'USER_SCHOOL': 3,
-      'SCHOOL': 4,
-      'USER': 5,
-      'SCHOOL_INSTANCE': 6,
-      'ENT_ADMIN_INSTANCE': 7
+      PENTILA: 1,
+      ENT_ADMIN: 2,
+      USER_SCHOOL: 3,
+      SCHOOL: 4,
+      USER: 5,
+      SCHOOL_INSTANCE: 6,
+      ENT_ADMIN_INSTANCE: 7
     },
     widgetList: undefined
   },
@@ -35,7 +34,7 @@ export default {
       var isWidgetCreated = true
       for (var idx = 0; idx < state.widgetList.length; ++idx) {
         if (payload.widgetId === state.widgetList[idx].widgetId) {
-          Vue.set(state.widgetList, idx, payload)
+          state.widgetList[idx] = payload
           isWidgetCreated = false
         }
       }
@@ -100,8 +99,8 @@ export default {
       var typeList = []
       for (var index = 0; index < state.widgetList.length; ++index) {
         var widget = state.widgetList[index]
-        if (widget.scope === state.scopeList['USER_SCHOOL'] ||
-            widget.scope === state.scopeList['SCHOOL']) {
+        if (widget.scope === state.scopeList.USER_SCHOOL ||
+            widget.scope === state.scopeList.SCHOOL) {
           if (typeList.indexOf(widget.type) === -1) {
             typeList.push(widget.type)
           }
@@ -111,8 +110,8 @@ export default {
     },
     sortedWidgetList (state, getters, rootState) {
       if (state.widgetList) {
-        var localAdminScope = state.scopeList['SCHOOL_INSTANCE']
-        var entAdminScope = state.scopeList['ENT_ADMIN_INSTANCE']
+        var localAdminScope = state.scopeList.SCHOOL_INSTANCE
+        var entAdminScope = state.scopeList.ENT_ADMIN_INSTANCE
 
         return state.widgetList.slice().sort(function (a, b) {
           if (a.scope !== b.scope) {
