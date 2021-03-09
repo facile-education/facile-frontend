@@ -3,13 +3,10 @@
     :modal="true"
     @close="closeModal"
   >
-    <span
-      slot="header"
-      v-t="'ApplicationManager.BroadcastScopeModal.modalTitle'"
-    />
-    <div
-      slot="body"
-    >
+    <template #header>
+      <span v-t="'ApplicationManager.BroadcastScopeModal.modalTitle'" />
+    </template>
+    <template #body>
       <PentilaButton
         :label="$t('ApplicationManager.BroadcastScopeModal.addRuleButton')"
         class="add"
@@ -26,19 +23,22 @@
         :rule-list="ruleList"
         :is-error-list-displayed="isErrorListDisplayed"
         @remove="removeScope"
+        @update="updateRule"
       />
-    </div>
+    </template>
 
-    <PentilaButton
-      slot="footer"
-      :label="$t('ApplicationManager.BroadcastScopeModal.updateButton')"
-      @click="saveRuleList"
-    />
+    <template #footer>
+      <PentilaButton
+        :label="$t('ApplicationManager.BroadcastScopeModal.updateButton')"
+        @click="saveRuleList"
+      />
+    </template>
   </PentilaWindow>
 </template>
 
 <script>
-import { required } from 'vuelidate/lib/validators'
+import { required } from '@vuelidate/validators'
+import { useVuelidate } from '@vuelidate/core'
 import PentilaUtils from 'pentila-utils'
 
 import RuleList from '@/components/ApplicationManager/RuleList'
@@ -48,6 +48,7 @@ export default {
   components: {
     RuleList
   },
+  setup: () => ({ v$: useVuelidate() }),
   validations: {
     ruleList: {
       $each: {
@@ -154,7 +155,7 @@ export default {
         ruleIdList.push(currentRuleId)
       })
 
-      if (this.$v.$invalid) {
+      if (this.v$.$invalid) {
         this.isErrorListDisplayed = true
       } else {
         this.$store.dispatch('applicationManager/updateBroadcastScope', {
@@ -163,6 +164,9 @@ export default {
           ruleIdList
         })
       }
+    },
+    updateRule ({ index, rule }) {
+      this.ruleList.splice(index, 1, rule)
     }
   }
 }

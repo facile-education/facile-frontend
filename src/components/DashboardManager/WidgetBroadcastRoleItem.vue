@@ -36,6 +36,7 @@ export default {
       required: true
     }
   },
+  emits: ['update:isBroadcasted', 'update:isMandatory'],
   methods: {
     onInputBroadcast (value) {
       this.$emit('update:isBroadcasted', value)

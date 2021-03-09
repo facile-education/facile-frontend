@@ -1,5 +1,4 @@
 import applicationManagerService from '@/api/applicationManager.service'
-import Vue from 'vue'
 
 export default {
   namespaced: true,
@@ -31,7 +30,7 @@ export default {
     },
     updateApplication (state, payload) {
       if (payload.property !== undefined) {
-        Vue.set(state.selectedApplication, payload.property, payload.value)
+        state.selectedApplication[payload.property] = payload.value
       } else {
         var index = state.applicationList.indexOf(state.selectedApplication)
         state.applicationList.splice(index, 1)
@@ -101,8 +100,8 @@ export default {
           console.error(err)
         })
     },
-    getApplicationBroadcastScope ({ state, commit }, { school }) {
-      applicationManagerService.getApplicationBroadcastScope(school.schoolId, state.selectedApplication.serviceId).then(
+    getApplicationBroadcastScope ({ state, commit }) {
+      applicationManagerService.getApplicationBroadcastScope(state.selectedApplication.serviceId).then(
         (data) => {
           if (data.success) {
             // TODO userFilters property ?
@@ -150,12 +149,18 @@ export default {
         serviceCategory: ''
       })
     },
+    selectApplication ({ commit, dispatch }, application) {
+      commit('setSelectedApplication', application)
+      dispatch('getApplicationBroadcastScope')
+    },
     updateApplication ({ commit, dispatch }, application) {
       applicationManagerService.updateApplication(application).then(
         (data) => {
           if (data.success) {
             commit('updateApplication', application)
-            dispatch('closeEditionModal')
+            if (application.rules === undefined || application.rules.length === 0) {
+              dispatch('closeEditionModal')
+            }
           }
         },
         (err) => {

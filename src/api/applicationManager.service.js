@@ -51,12 +51,13 @@ function exportApplicationUserList (schoolId, applicationId, role) {
   }).then(response => response.data)
 }
 
-function getApplicationBroadcastScope (schoolId, applicationId) {
-  return axios.get(url, {
+function getApplicationBroadcastScope (applicationId) {
+  const test = '/gestionApplications-portlet/api/secure/jsonws/diffusion/priv-get-broadcast-perimeter'
+  return axios.get(test, {
     params: {
-      cmd: 'getDiffusionPerimeter',
-      etabId: schoolId,
-      serviceId: applicationId
+      // cmd: 'getDiffusionPerimeter',
+      serviceId: applicationId,
+      schoolId: 0
     }
   }).then(response => response.data)
 }
@@ -114,6 +115,7 @@ function updateApplication (application) {
       exportParent: application.exportParent,
       exportStudent: application.exportStudent,
       exportTeacher: application.exportTeacher,
+      exportOther: application.exportOther,
       roles: application.rolesId,
       etabFilters: application.etabFilters
     })

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import constants from './constants'
 
-const communicationManagerURL = '/user/pentila/administrationtools?p_p_id=administrationTools_WAR_administrationToolsportlet&p_p_lifecycle=2&p_p_state=exclusive&p_p_mode=view&p_p_cacheability=cacheLevelPage&controlPanelCategory=portlet_administrationTools_WAR_administrationToolsportlet'
+const url = constants.COMMUNICATION_MANAGER_URL
 
 export default {
   getCommunicationRoleList,
@@ -12,7 +12,6 @@ export default {
 }
 
 function getCommunicationRoleList () {
-  const url = constants.BASE_URL + '/api/get_communication_role_list'
   return axios.get(url, {
     params: {
       cmd: 'getRolesToAdministrate'
@@ -21,7 +20,6 @@ function getCommunicationRoleList () {
 }
 
 function getInternalCommunicationRights (schoolId) {
-  const url = constants.BASE_URL + '/api/get_internal_communication_rights'
   return axios.get(url, {
     params: {
       cmd: 'getInternalCommunicationRights',
@@ -31,7 +29,6 @@ function getInternalCommunicationRights (schoolId) {
 }
 
 function setInternalCommunicationRights (schoolId, rightList) {
-  const url = communicationManagerURL
   return axios.get(url, {
     params: {
       cmd: 'setInternalCommunicationRights',
@@ -42,7 +39,6 @@ function setInternalCommunicationRights (schoolId, rightList) {
 }
 
 function getExternalCommunicationRights (schoolId) {
-  const url = constants.BASE_URL + '/api/get_external_communication_rights'
   return axios.get(url, {
     params: {
       cmd: 'getExternalCommunication',
@@ -52,7 +48,6 @@ function getExternalCommunicationRights (schoolId) {
 }
 
 function setExternalCommunicationRights (schoolId, rightList) {
-  const url = constants.BASE_URL + '/api/get_external_communication_rights'
   return axios.get(url, {
     params: {
       cmd: 'setExternalCommunication',

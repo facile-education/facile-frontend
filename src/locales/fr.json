@@ -1,0 +1,129 @@
+{
+  "ApplicationManager": {
+    "ApplicationDetails": {
+      "broadcastButtonTooltip": "Diffuser",
+      "broadcastLabel": "L'application est diffusée aux profils suivants :",
+      "configurationButtonTooltip": "Gérer les règles de diffusion",
+      "customUrlPlaceholder": "http://...",
+      "deleteButtonTooltip": "Supprimer",
+      "editButtonTooltip": "Modifier",
+      "exportLabel": "Exports nécessaires pour l'application :",
+      "guideButtonTooltip": "Consulter le guide utilisateur",
+      "noBroadcastLabel": "L'application n'est pas diffusée",
+      "otherExportButton": "Ressources",
+      "parentsExportButton": "Parents",
+      "removalConfirmButtonLabel": "Supprimer",
+      "removalConfirmMessage": "Souhaitez-vous vraiment supprimer cette application ?",
+      "removalConfirmTitle": "Suppression",
+      "saveButtonTooltip": "Enregistrer les modifications",
+      "studentsExportButton": "Elèves",
+      "teachersExportButton": "Enseignants"
+    },
+    "ApplicationEditionModal": {
+      "addModalTitle": "Ajouter une nouvelle application",
+      "categoryPlaceholder": "Catégorie",
+      "customUrlCombobox": "URL personnalisée",
+      "editModalTitle": "Modifier une application",
+      "exportOtherCheckbox": "Ressources",
+      "exportParentsCheckbox": "Parents",
+      "exportStudentsCheckbox": "Elèves",
+      "exportTeachersCheckbox": "Enseignants",
+      "exportLabel": "Exporter un/ou plusieurs types d'utilisateurs pour ce service",
+      "globalUrlCombobox": "URL globale",
+      "globalUrlPlaceholder": "https://...",
+      "keyPlaceholder": "Clé du service",
+      "modalSaveButton": "Valider",
+      "namePlaceholder": "Nom du service",
+      "noUrlCombobox": "Aucun",
+      "portletLabel": "Portlet :",
+      "rolesPlaceholder": "Profil(s)",
+      "rolesLabel" : "Profils par défaut pour l'application",
+      "schoolsPlaceholder": "Etablissement(s)",
+      "schoolsLabel": "Application disponible pour les établissements",
+      "urlTypeLabel": "Type de lien"
+    },
+    "BroadcastScopeModal": {
+      "addRuleButton":"Ajouter une règle de diffusion",
+      "defaultLabel": "L'application n'est pas diffusée",
+      "modalTitle": "Règles de diffusion pour l'application",
+      "updateButton": "Valider"
+    },
+    "RuleLabel": {
+      "allSchoolLabel": "de tout l'établissement",
+      "everyRoleLabel": "Tous les profils",
+      "fromClassesLabel": "des classes"
+    },
+    "RuleItem": {
+      "classesPlaceholder": "Liste des classes",
+      "fromLabel": "de",
+      "rolesPlaceholder": "Liste des profils"
+    }
+  },
+  "CommunicationManager": {
+    "InternalRightList": {
+      "informations": "Ce service permet de définir, par profil d'usagers, les listes de contacts qui seront automatiquement créées dans le carnet des utilisateurs. Vous pouvez ainsi gérer les possibilités de communication pour chaque profil au sein de votre établissement ou cité scolaire.",
+      "save": "Valider",
+      "title": "Communication interne"
+    },
+    "InternalRoleTab": {
+      "allOthersInSchool": "Tous les personnels de la collectivité de l'établissement",
+      "allPersonalsInSchool": "Tous les personnels de l'établissement",
+      "allParentsInSchool": "Tous les parents de l'établissement",
+      "allStudentsInSchool": "Tous les élèves de l'établissement",
+      "allTeachersInSchool": "Tous les enseignants de l'établissement",
+      "childrenClassesParents": "Les parents des classes de ses enfants",
+      "childrenClassesTeachers": "Les enseignants des classes de ses enfants",
+      "hisChildren": "Ses enfants",
+      "hisParents": "Ses parents",
+      "parentsOfEachClass": "Les parents des classes",
+      "parentsOfHisClass": "Les parents des élèves de ses classes",
+      "personalLabel": "Ce profil peut communiquer avec tous les utilisateurs de l'établissement",
+      "studentsOfHisClass": "Les élèves de ses classes",
+      "studentsOfEachClass": "Les élèves des classes",
+      "teachersOfEachClass": "Les enseignants des classes",
+      "teachersOfHisClass": "Les enseignants de ses classes"
+    },
+    "ExternalRightList": {
+      "informations": "Vous pouvez gérer l'autorisation, par profil d'usagers, d'ajout de comptes mails.",
+      "save": "Valider",
+      "title": "Communication externe"
+    },
+    "ExternalRoleItem": {
+      "no": "non",
+      "yes": "oui"
+    }
+  },
+  "DashboardManager": {
+    "WidgetItem": {
+      "DeleteConfirmModal": {
+        "buttonLabel": "Supprimer",
+        "message": "La suppression de ce widget est irréversible. Souhaitez-vous vraiment continuer ?",
+        "title": "Suppression"
+      },
+      "broadcastedLabel": "Diffusé : {profiles}",
+      "createdLabel": "Créé le {date} par {creator}",
+      "editButtonLabel": "Editer",
+      "notBroadcastedLabel": "Ce widget n'est pas diffusé.",
+      "personnelWidgetLabel": "Les personnes aux profils mentionnés ci-dessus peuvent créer un widget personnel de ce type.",
+      "removeButtonLabel": "Supprimer",
+      "typeLabel": "Type : {type}"
+    },
+    "WidgetEditionModal": {
+      "broadcastRulesTitle": "Règles de diffusion",
+      "broadcastDatesTitle": "Dates de diffusion",
+      "creationModalTitle": "Ajouter un widget",
+      "editionModalTitle": "Editer un widget",
+      "expirationDateLabel": "Date d'expiration",
+      "namePlaceholder": "Nom",
+      "parutionDateLabel": "Date de parution",
+      "personalLabel": "Personnels",
+      "saveButtonLabel": "Valider",
+      "schoolsPlaceholder": "Etablissements",
+      "targetedSchoolsTitle": "Etablissements ciblés (laisser vide pour tous)",
+      "typeDropdownLabel": "Définir le type du widget"
+    },
+    "WidgetBroadcastRoleItem": {
+      "mandatoryCheckboxLabel": "Obligatoire"
+    }
+  }
+}

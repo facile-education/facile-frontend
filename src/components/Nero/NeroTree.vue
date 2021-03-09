@@ -30,13 +30,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'src/assets/css/constants';
+// @import 'src/assets/css/constants';
 
 .tree {
   list-style: none;
   margin: 0;
   padding: 0;
 
-  @extend %no-text-highlight;
+  // @extend %no-text-highlight;
 }
 </style>

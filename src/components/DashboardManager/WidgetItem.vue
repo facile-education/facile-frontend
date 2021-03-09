@@ -113,17 +113,17 @@ export default {
       return false
     },
     isENTAdminInstance () {
-      return this.widget.scope === this.$store.state.dashboardManager.scopeList['ENT_ADMIN_INSTANCE']
+      return this.widget.scope === this.$store.state.dashboardManager.scopeList.ENT_ADMIN_INSTANCE
     },
     isSchoolInstance () {
-      return this.widget.scope === this.$store.state.dashboardManager.scopeList['SCHOOL_INSTANCE']
+      return this.widget.scope === this.$store.state.dashboardManager.scopeList.SCHOOL_INSTANCE
     },
     isWidgetInstance () {
       return (this.isSchoolInstance || this.isENTAdminInstance)
     },
     isWidgetPersonnel () {
-      return (this.widget.scope === this.$store.state.dashboardManager.scopeList['USER'] ||
-        this.widget.scope === this.$store.state.dashboardManager.scopeList['USER_SCHOOL'])
+      return (this.widget.scope === this.$store.state.dashboardManager.scopeList.USER ||
+        this.widget.scope === this.$store.state.dashboardManager.scopeList.USER_SCHOOL)
     },
     hasSmallDisplay () {
       return (this.$device.phone || (this.$device.tablet && this.$store.state.nero.menuExpanded))
@@ -150,7 +150,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'src/assets/css/constants';
+@import '@/design';
 $buttons-panel-width: 80px;
 
 .nero-small {
@@ -184,7 +184,7 @@ $buttons-panel-width: 80px;
   display: block;
   background-color: #f1f1f1;
 
-  @extend %nero-shadow;
+  @extend %object-shadow;
 }
 
 .title {

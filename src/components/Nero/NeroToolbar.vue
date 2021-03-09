@@ -11,15 +11,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'src/assets/css/constants';
+@import '@/design';
 
 .toolbar {
-  background-color: $toolbar-background-color;
+  background-color: $color-toolbar-bg;
   padding: 5px;
   display: flex;
   /* white-space: nowrap;
   overflow-x: auto; */
-  z-index: $service-toolbar-z-index;
-  @extend %nero-shadow;
+  z-index: $toolbar-z-index;
+  @extend %object-shadow;
 }
 </style>

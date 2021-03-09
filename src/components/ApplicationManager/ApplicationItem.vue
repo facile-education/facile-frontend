@@ -5,7 +5,7 @@
       @click="showDetails"
     >
       <ApplicationDetails
-        v-if="isDetailsDisplayed"
+        v-if="isSelected"
         @closeDetails="hideDetails"
       />
       <i
@@ -42,19 +42,18 @@ export default {
       required: true
     }
   },
-  data () {
-    return {
-      isDetailsDisplayed: false
+  computed: {
+    isSelected () {
+      return (this.$store.state.applicationManager.selectedApplication === this.application)
     }
   },
   methods: {
     hideDetails () {
-      this.isDetailsDisplayed = false
+      this.$store.commit('applicationManager/setSelectedApplication', undefined)
     },
     showDetails () {
       if (!this.isDetailsDisplayed) {
-        this.isDetailsDisplayed = true
-        this.$store.commit('applicationManager/setSelectedApplication', this.application)
+        this.$store.dispatch('applicationManager/selectApplication', this.application)
       }
     }
   }
@@ -62,7 +61,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'src/assets/css/constants';
+@import '@/design';
 
 .wrapper {
   position: relative;
@@ -79,11 +78,12 @@ export default {
 }
 
 .check {
-  background-color: $valid-background-color;
-  color: $text-color-light;
+  background-color: $color-valid-bg;
+  color: $color-light-text;
   text-align: center;
   position: absolute;
-  right: 0;
+  top: -10px;
+  right: -10px;
   border-radius: 50%;
   line-height: 30px;
   width: 30px;

@@ -30,7 +30,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'src/assets/css/constants';
+@import '@/design';
 
 .category {
   padding: 10px;
@@ -40,6 +40,6 @@ export default {
   margin-top: 0;
   margin-bottom: 5px;
   padding: 10px;
-  background: $header-background-color;
+  background: $color-header-bg;
 }
 </style>

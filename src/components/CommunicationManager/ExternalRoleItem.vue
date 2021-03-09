@@ -33,6 +33,7 @@ export default {
       required: true
     }
   },
+  emits: ['input'],
   computed: {
     hasRoleExternalRight: {
       set (newValue) {

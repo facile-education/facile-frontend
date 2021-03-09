@@ -71,14 +71,20 @@
             :label="$t('ApplicationManager.ApplicationDetails.teachersExportButton')"
             @click="exportUserList('prof')"
           />
+
+          <PentilaButton
+            v-if="application.exportOther"
+            :label="$t('ApplicationManager.ApplicationDetails.otherExportButton')"
+            @click="exportUserList('other')"
+          />
         </div>
       </div>
     </div>
     <div class="action">
       <PentilaToggleSwitch
-        :value="application.isAvailable"
+        :model-value="application.isAvailable"
         :title="$t('ApplicationManager.ApplicationDetails.broadcastButtonTooltip')"
-        @input="updateBroadcastStatus"
+        @update:modelValue="updateBroadcastStatus"
       />
       <PentilaButton
         v-if="isAdministrator"
@@ -119,7 +125,7 @@
 </template>
 
 <script>
-import clickoutside from 'click-outside'
+import { directive } from 'vue3-click-away'
 import RuleLabel from '@/components/ApplicationManager/RuleLabel'
 
 export default {
@@ -128,8 +134,9 @@ export default {
     RuleLabel
   },
   directives: {
-    'click-outside': clickoutside
+    'click-outside': directive
   },
+  emits: ['closeDetails'],
   data () {
     return {
       domRect: undefined
@@ -142,7 +149,8 @@ export default {
     hasExport () {
       return (this.application.exportParent ||
         this.application.exportStudent ||
-        this.application.exportTeacher)
+        this.application.exportTeacher ||
+        this.application.exportOther)
     },
     isAdministrator () {
       return this.$store.state.user.isAdministrator
@@ -158,14 +166,6 @@ export default {
     }
   },
   created () {
-    if (this.application.rules === undefined || this.application.rules.length === 0) {
-      this.$store.dispatch('applicationManager/getApplicationBroadcastScope', {
-        school: this.$store.state.administration.selectedSchool
-      })
-    }
-    if (this.application.roleList === undefined) {
-      this.$store.dispatch('applicationManager/getApplicationDefaultRoleList')
-    }
     this.applicationURL = this.application.serviceUrl
   },
   mounted () {
@@ -216,17 +216,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'src/assets/css/constants';
+@import '@/design';
 
 .details {
   display: flex;
   padding: 7px;
   width: 345px;
   position: absolute;
-  background: $toolbar-background-color;
+  background: $color-toolbar-bg;
   z-index: 3;
-  border-radius: $border-radius;
-  @extend %nero-shadow;
+  border-radius: $light-radius-size;
+  @extend %object-shadow;
 }
 
 .left {
@@ -255,9 +255,19 @@ export default {
   }
 }
 
+p {
+  margin-top: 10px;
+}
+
+.list-rules {
+  list-style: disc;
+  padding-left: 15px;
+}
+
 .action {
   margin-left: auto;
   display: flex;
   flex-direction: column;
+  gap: 5px;
 }
 </style>
