@@ -19,6 +19,7 @@ export default {
 @import '~normalize.css/normalize.css';
 
 // Pentila components library
+@import '~pentila-components/dist/nero-theme.css';
 @import '~pentila-components/dist/pentila-components.css';
 
 // Design variables and utilities from src/design.

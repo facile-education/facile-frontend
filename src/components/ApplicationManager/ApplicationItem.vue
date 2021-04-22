@@ -17,7 +17,7 @@
         :src="application.image"
         class="logo"
       >
-      <PentilaFallbackThumbnail
+      <div
         v-else
         class="default"
       />
@@ -100,6 +100,7 @@ export default {
   width: 100px;
   height: 100px;
   font-size: 75px;
+  background-color: red;
 }
 
 .name {

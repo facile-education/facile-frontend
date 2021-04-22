@@ -12,7 +12,7 @@
           :src="application.image"
           class="logo"
         >
-        <PentilaFallbackThumbnail
+        <div
           v-else
           class="logo"
         />
@@ -90,36 +90,41 @@
         v-if="isAdministrator"
         :title="$t('ApplicationManager.ApplicationDetails.editButtonTooltip')"
         type="circle"
-        icon="fa fa-pencil-alt"
         @click="toggleEditionModal"
-      />
+      >
+        <i class="fa fa-pencil-alt" />
+      </PentilaButton>
       <PentilaButton
         :title="$t('ApplicationManager.ApplicationDetails.configurationButtonTooltip')"
         type="circle"
-        icon="fa fa-cog"
         @click="toggleBroadcastModal"
-      />
+      >
+        <i class="fa fa-cog" />
+      </PentilaButton>
       <PentilaButton
         v-if="application.hasCustomUrl"
         :title="$t('ApplicationManager.ApplicationDetails.guideButtonTooltip')"
         type="circle"
-        icon="fa fa-book"
-      />
+      >
+        <i class="fa fa-book" />
+      </PentilaButton>
       <PentilaButton
         v-if="application.hasCustomUrl"
         :title="$t('ApplicationManager.ApplicationDetails.saveButtonTooltip')"
         type="circle"
-        icon="fa fa-save"
         @click="updateURL"
-      />
+      >
+        <i class="fa fa-save" />
+      </PentilaButton>
       <PentilaButton
         v-if="isAdministrator"
         :title="$t('ApplicationManager.ApplicationDetails.deleteButtonTooltip')"
         type="circle"
         cls="cancel"
-        icon="fa fa-trash"
         @click="confirmRemoval"
-      />
+      >
+        <i class="fa fa-trash" />
+      </PentilaButton>
     </div>
   </div>
 </template>
@@ -238,6 +243,7 @@ export default {
   height: 70px;
   margin-right: 5px;
   font-size: 53px;
+  background-color: red;
 }
 
 .main {

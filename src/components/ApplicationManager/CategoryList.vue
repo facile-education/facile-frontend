@@ -41,5 +41,6 @@ export default {
   margin-bottom: 5px;
   padding: 10px;
   background: $color-header-bg;
+  text-transform: uppercase;
 }
 </style>

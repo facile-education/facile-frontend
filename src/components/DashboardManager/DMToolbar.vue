@@ -2,17 +2,18 @@
   <NeroToolbar>
     <PentilaDropdown
       v-if="managedSchoolList"
-      v-model="selectedSchool"
+      :model-value="selectedSchool"
       :list="managedSchoolList"
       display-field="schoolName"
-      @dropdown-select="onSchoolSelect"
+      @update:modelValue="onSchoolSelect"
     />
     <PentilaSpinner v-else />
     <PentilaButton
       class="add-button"
-      icon="fa fa-plus"
       @click="onAddWidget"
-    />
+    >
+      <i class="fa fa-plus" />
+    </PentilaButton>
   </NeroToolbar>
 </template>
 
@@ -48,6 +49,7 @@ export default {
       this.$store.dispatch('dashboardManager/openEditionModal', { config: { schools: [] } })
     },
     onSchoolSelect (school) {
+      this.selectedSchool = school
       this.$store.dispatch('dashboardManager/getSchoolWidgetList', school)
     }
   }
