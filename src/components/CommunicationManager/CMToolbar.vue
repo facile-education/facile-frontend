@@ -5,11 +5,11 @@
       name="fade"
     >
       <PentilaDropdown
-        v-if="schools"
-        v-model="selectedSchool"
-        :list="schools"
+        v-if="managedSchoolList"
+        :model-value="selectedSchool"
+        :list="managedSchoolList"
         display-field="schoolName"
-        @dropdown-select="onSchoolSelect"
+        @update:modelValue="onSchoolSelect"
       />
       <PentilaSpinner v-else />
     </Transition>
@@ -25,7 +25,7 @@ export default {
     NeroToolbar
   },
   computed: {
-    schools () {
+    managedSchoolList () {
       return this.$store.state.administration.schoolList
     },
     selectedSchool: {
@@ -37,16 +37,17 @@ export default {
       }
     },
     show () {
-      return (this.schools !== undefined && this.schools.length > 1)
+      return (this.managedSchoolList !== undefined && this.managedSchoolList.length > 1)
     }
   },
   created () {
-    if (this.schools === undefined) {
+    if (this.managedSchoolList === undefined) {
       this.$store.dispatch('administration/getAdministrationSchools')
     }
   },
   methods: {
     onSchoolSelect (school) {
+      this.selectedSchool = school
       this.$store.dispatch('communicationManager/setCommunicationManagerSelectedSchoolId', { schoolId: school.schoolId })
       this.$store.dispatch('communicationManager/getSchoolInternalCommunicationRights', { schoolId: school.schoolId })
       this.$store.dispatch('communicationManager/getSchoolExternalCommunicationRights', { schoolId: school.schoolId })

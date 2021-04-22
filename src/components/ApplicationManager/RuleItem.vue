@@ -24,10 +24,11 @@
     <PentilaButton
       v-if="isRemoveButtonDisplayed"
       cls="cancel"
-      icon="fa fa-trash"
       type="circle"
       @click="remove()"
-    />
+    >
+      <i class="fa fa-trash" />
+    </PentilaButton>
   </li>
 </template>
 

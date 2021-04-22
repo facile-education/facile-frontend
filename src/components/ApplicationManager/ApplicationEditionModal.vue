@@ -17,10 +17,11 @@
           <PentilaButton
             v-if="application.image"
             type="circle"
-            icon="fa fa-trash"
             class="remove-logo cancel"
             @click.stop="removeLogo"
-          />
+          >
+            <i class="fa fa-trash" />
+          </PentilaButton>
 
           <img
             v-if="application.image"
