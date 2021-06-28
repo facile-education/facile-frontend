@@ -1,5 +1,5 @@
 <template>
-  <Layout>
+  <Layout class="menu">
     <RouterLink to="/application-manager">
       App
     </RouterLink>
@@ -8,6 +8,9 @@
     </RouterLink>
     <RouterLink to="/dashboard-manager">
       Dashboard
+    </RouterLink>
+    <RouterLink to="/not-usual-slots">
+      Horaires hors cadre
     </RouterLink>
   </Layout>
 </template>
@@ -24,4 +27,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.menu {
+  display: flex;
+  flex-direction: column;
+}
 </style>

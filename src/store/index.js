@@ -2,6 +2,7 @@ import { createStore } from 'vuex'
 import administration from '@/store/modules/administration.store'
 import theme from '@/store/modules/theme.store'
 import user from '@/store/modules/user.store'
+import notUsualSlots from '@/store/modules/notUsualSlots.store'
 
 export default createStore({
   state: {
@@ -13,6 +14,7 @@ export default createStore({
   modules: {
     administration,
     theme,
-    user
+    user,
+    notUsualSlots
   }
 })
