@@ -20,6 +20,11 @@ const routes = [
     path: '/communication-manager',
     name: 'Communication Manager',
     component: () => import(/* webpackChunkName: "about" */ '@/router/views/CommunicationManager.vue')
+  },
+  {
+    path: '/not-usual-slots',
+    name: 'Not usual slots',
+    component: () => import(/* webpackChunkName: "about" */ '@/router/views/NotUsualSlotsManager')
   }
 ]
 
