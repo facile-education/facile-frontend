@@ -18,7 +18,6 @@ const messages = {}
 messages.fr = fr
 
 // console.log(loadLocaleMessages(), messages)
-console.log(process.env.VUE_APP_I18N_LOCALE)
 
 const i18n = createI18n({
   locale: process.env.VUE_APP_I18N_LOCALE || 'en',

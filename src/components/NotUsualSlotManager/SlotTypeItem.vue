@@ -38,7 +38,7 @@ export default {
 
 .slot-type-item{
   position: relative;
-  margin: 10px 5px;
+  margin: 10px 0;
   width: 165px;
   height: 49px;
   border-radius: 6px;
