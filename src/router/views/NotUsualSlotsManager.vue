@@ -56,11 +56,14 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '@design';
+
 .non-classical-slots {
   width: 100%;
   height: 100%;
   font-family: "Roboto", sans-serif;
+  color: $color-cadyco-dark-text;
   padding: 0 20px;
 }
 

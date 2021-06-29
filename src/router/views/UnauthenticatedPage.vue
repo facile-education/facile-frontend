@@ -10,16 +10,19 @@ export default {
 }
 </script>
 
-<style scoped>
-.unauthenticatedPage {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-h1 {
-  font-family: "Roboto", sans-serif;
-  color: #0B3C5F;
-}
+<style lang="scss" scoped>
+@import '@design';
+
+  .unauthenticatedPage {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  h1 {
+    font-family: "Roboto", sans-serif;
+    color: $color-cadyco-dark-text;
+  }
 </style>
