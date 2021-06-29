@@ -136,10 +136,12 @@
     "replayTest": "Épreuve à repasser",
     "study": "Étude",
     "tutoring": "Soutien scolaire",
+    "studentNamePlaceHolder": "Saisir le nom d'un élève",
     "EditSlotModal": {
       "roomNamePlaceHolder": "Saisir le numéro de salle",
       "slot": "Créneau",
       "teacherNamePlaceHolder": "Saisir le nom d'un maître"
     }
-  }
+  },
+  "Unauthenticated": "Veuillez vous connecter pour accéder à ce service"
 }

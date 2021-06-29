@@ -41,8 +41,6 @@ export default {
       state.isParent = payload.isParent
 
       state.hasWebdavEnabled = payload.hasWebdavEnabled
-
-      state.schoolList = payload.schoolList
     },
     initServiceList (state, payload) {
       state.serviceList = payload
@@ -75,6 +73,7 @@ export default {
       state.details.mobilePhoneNumber = payload.mobilePhone
       state.details.officePhoneNumber = payload.proPhone
       state.details.smsPhoneNumber = payload.SMSPhone
+      state.schoolList = payload.userSchools
     }
   },
   actions: {
@@ -102,16 +101,15 @@ export default {
         (data) => {
           if (data.success) {
             // Handle theme color
-            if (data.user.themeColor !== '') {
-              if (data.user.themeColor.indexOf('#') === -1) {
-                data.user.themeColor = '#' + data.user.themeColor
+            if (data.themeColor && data.themeColor !== '') {
+              if (data.themeColor.indexOf('#') === -1) {
+                data.themeColor = '#' + data.themeColor
               }
-              if (data.user.themeColor !== state.themeColor) {
-                PentilaUtils.Theme.updateColor(state.themeColor, data.user.themeColor)
+              if (data.themeColor !== state.themeColor) {
+                PentilaUtils.Theme.updateColor(state.themeColor, data.themeColor)
               }
             }
-
-            commit('initUserInformations', data.user)
+            commit('initUserInformations', data)
           }
         },
         (err) => {

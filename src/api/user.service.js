@@ -37,9 +37,9 @@ function getServiceList () {
  * Get global user informations
  */
 function getUserInformations () {
-  return axios.get(constants.PREFERENCES_URL, {
+  return axios.get(constants.DASHBOARD_URL, {
     params: {
-      cmd: 'getUserInformations'
+      cmd: 'getUserInfos'
     }
   }).then(response => response.data)
 }
