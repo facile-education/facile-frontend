@@ -79,8 +79,6 @@ export default {
   align-items: center;
   justify-content: center;
   background-color: rgba(128, 128, 128, 0.5);
-  font-family: "Roboto", sans-serif;
-  color: #0B3C5F;
 }
 
 .editSlotModal {

@@ -39,7 +39,6 @@ export default {
 <style scoped>
 h1 {
   font-size: 1.25em;
-  color: #0B3C5F;
 }
 
 .dropdown {
