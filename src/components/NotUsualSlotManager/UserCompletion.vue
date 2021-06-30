@@ -25,6 +25,7 @@
 <script>
 
 import schoolLifeService from '@/api/schoolLife-portlet.service'
+import { nbCharBeforeCompletion } from '@/constants/appConstants'
 let timeout
 export default {
   name: 'UserCompletion',
@@ -52,9 +53,9 @@ export default {
       clearTimeout(timeout)
       // Make a new timeout set to go off in 800ms
       timeout = setTimeout(() => {
-        // if (this.inputText.length >= 3) {
-        this.getCompletion()
-        // }
+        if (this.queriedUser.length >= nbCharBeforeCompletion) {
+          this.getCompletion()
+        }
       }, 500)
     },
     cleanUser () {
