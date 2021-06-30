@@ -1,4 +1,5 @@
 import schoolLifeService from '@/api/schoolLife-portlet.service'
+import moment from 'moment'
 
 export default {
   state: {
@@ -16,11 +17,27 @@ export default {
     },
     setUserSlots (state, slots) {
       state.userSlots = slots
+    },
+    setCurrentNonUsualSlots (state, slots) {
+      state.currentNonUsualSlots = slots
     }
   },
   actions: {
     setCurrentSlotType ({ commit }, slotType) {
       commit('setCurrentSlotType', slotType)
+      schoolLifeService.getWeekSession(slotType.type, moment()).then(
+        (data) => {
+          if (data.success) {
+            commit('setCurrentNonUsualSlots', data.sessions)
+          } else {
+            console.error('Cannot get slots for type ' + slotType.label)
+          }
+        },
+        (err) => {
+          // TODO toastr
+          console.error(err)
+        }
+      )
     },
     setSelectedSchool ({ commit }, selectedSchool) {
       commit('setSelectedSchool', selectedSchool)
@@ -35,7 +52,6 @@ export default {
           }
         },
         (err) => {
-          // TODO toastr
           console.error(err)
         }
       )

@@ -3,7 +3,8 @@ import constants from '@/api/constants'
 
 export default {
   getSchoolStudents,
-  getStudentSessions
+  getStudentSessions,
+  getWeekSession
 }
 
 const SCHOOL_LIFE_PATH = '/schoollife-portlet'
@@ -30,6 +31,18 @@ function getStudentSessions (student, minDate, maxDate) {
       studentId: student.studentId,
       minDateStr: minDate.format('YYYY/MM/DD HH:mm'),
       maxDateStr: maxDate.format('YYYY/MM/DD HH:mm')
+    }
+  }).then(response => response.data)
+}
+
+/**
+ * Get the unusual slots of a week, filtered by type
+ */
+function getWeekSession (slotType, currentDate) {
+  return axios.get(SCHOOL_LIFE_PATH + constants.JSON_WS_URL + '/schoollifesession/get-week-sessions', {
+    params: {
+      type: slotType,
+      currentDateStr: currentDate.format('YYYY/MM/DD HH:mm')
     }
   }).then(response => response.data)
 }
