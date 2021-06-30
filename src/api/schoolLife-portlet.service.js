@@ -2,7 +2,8 @@ import axios from 'axios'
 import constants from '@/api/constants'
 
 export default {
-  getSchoolStudents
+  getSchoolStudents,
+  getStudentSessions
 }
 
 const SCHOOL_LIFE_PATH = '/schoollife-portlet'
@@ -16,6 +17,19 @@ function getSchoolStudents (schoolId, query) {
       // p_auth: getCookie('pauth'),
       schoolId: schoolId,
       search: query
+    }
+  }).then(response => response.data)
+}
+
+/**
+ * Get the student's slots in the specified amount of time
+ */
+function getStudentSessions (student, minDate, maxDate) {
+  return axios.get(SCHOOL_LIFE_PATH + constants.JSON_WS_URL + '/schoollifesessionstudent/get-student-sessions', {
+    params: {
+      studentId: student.studentId,
+      minDateStr: minDate.format('YYYY/MM/DD HH:mm'),
+      maxDateStr: maxDate.format('YYYY/MM/DD HH:mm')
     }
   }).then(response => response.data)
 }

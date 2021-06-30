@@ -1,7 +1,9 @@
+import schoolLifeService from '@/api/schoolLife-portlet.service'
+
 export default {
   state: {
     currentSlotType: undefined,
-    currentNonClassicalSlots: [],
+    currentNonUsualSlots: [],
     userSlots: [],
     selectedSchool: undefined
   },
@@ -11,6 +13,9 @@ export default {
     },
     setSelectedSchool (state, payload) {
       state.selectedSchool = payload
+    },
+    setUserSlots (state, slots) {
+      state.userSlots = slots
     }
   },
   actions: {
@@ -19,6 +24,24 @@ export default {
     },
     setSelectedSchool ({ commit }, selectedSchool) {
       commit('setSelectedSchool', selectedSchool)
+    },
+    getStudentSessions ({ commit }, { user, minDate, maxDate }) {
+      schoolLifeService.getStudentSessions(user, minDate, maxDate).then(
+        (data) => {
+          if (data.success) {
+            commit('setUserSlots', data.sessions)
+          } else {
+            console.error('Cannot get user slots')
+          }
+        },
+        (err) => {
+          // TODO toastr
+          console.error(err)
+        }
+      )
+    },
+    resetUserSlots ({ commit }) {
+      commit('setUserSlots', [])
     }
   }
 }

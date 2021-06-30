@@ -1,14 +1,15 @@
 <template>
-  <h1 v-if="userSchools.length === 1">
-    {{ selectedSchool.schoolName }}
-  </h1>
   <PentilaDropdown
-    v-else
+    v-if="userSchools.length > 1"
     v-model="selectedSchool"
     class="dropdown"
     :list="userSchools"
     display-field="schoolName"
   />
+<!--  In fact, we don't need to display this kind of data when there is only one school -->
+<!--  <h1 v-else>-->
+<!--    {{ selectedSchool.schoolName }}-->
+<!--  </h1>-->
 </template>
 
 <script>
