@@ -12,7 +12,10 @@
         :slot-type="slotType"
       />
     </div>
-    <UserCompletion user-type="student" />
+    <UserCompletion
+      user-type="student"
+      @selectUser="getUserSlots"
+    />
     <div class="calendar-container">
       <Calendar
         v-if="currentSlotType"
@@ -25,9 +28,10 @@
 
 <script>
 
+import notUsualSlotConstants from '@/constants/notUsualSlots'
+import moment from 'moment'
 import SlotTypeItem from '@/components/NotUsualSlotManager/SlotTypeItem'
 import Calendar from '@/components/NotUsualSlotManager/Calendar'
-import notUsualSlotConstants from '@/constants/notUsualSlots'
 import UserCompletion from '@/components/NotUsualSlotManager/UserCompletion'
 import SelectedSchool from '@/components/NotUsualSlotManager/SelectedSchool'
 import UnauthenticatedPage from '@/router/views/UnauthenticatedPage'
@@ -38,7 +42,9 @@ export default {
   data () {
     return {
       slotTypes: notUsualSlotConstants.slotTypes,
-      selectedSchool: undefined
+      selectedSchool: undefined,
+      minDate: undefined,
+      maxDate: undefined
     }
   },
   computed: {
@@ -52,6 +58,14 @@ export default {
   created () {
     this.$store.dispatch('user/initUserInformations')
     this.$store.dispatch('user/getPersonalDetails')
+
+    this.minDate = moment().startOf('week') // setMinDate to week begin
+    this.maxDate = moment().endOf('week') // setMxnDate to week end
+  },
+  methods: {
+    getUserSlots (user) {
+      this.$store.dispatch('getStudentSessions', { user, minDate: this.minDate, maxDate: this.maxDate }) // TODO handle non-students users
+    }
   }
 }
 </script>
@@ -64,7 +78,6 @@ export default {
   height: 100%;
   font-family: "Roboto", sans-serif;
   color: $color-cadyco-dark-text;
-  padding: 0 20px;
 }
 
 .slot-type-selection {
@@ -76,7 +89,7 @@ export default {
 
 .calendar-container {
   height: 75vh;
-  padding: 20px 10px 0 10px;
+  padding-top: 20px;
 }
 
 </style>

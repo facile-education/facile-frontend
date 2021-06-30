@@ -1,14 +1,21 @@
 <template>
-  <PentilaInput
-    v-model="queriedUser"
-    :max-lenght="75"
-    :placeholder="$t('NotUsualSlots.studentNamePlaceHolder')"
-    @input="searchTimeOut"
-  />
+  <div style="display: flex">
+    <PentilaInput
+      id="user-completion-input"
+      v-model="queriedUser"
+      :max-lenght="75"
+      :placeholder="$t('NotUsualSlots.studentNamePlaceHolder')"
+      @input="searchTimeOut"
+      @click="selectInput"
+    />
+    <button @click="cleanUser">
+      x
+    </button>
+  </div>
   <PentilaAutocomplete
     v-if="isCompletionDisplayed"
     :list="autocompleteUserList"
-    display-field="name"
+    display-field="displayName"
     :input="queriedUser"
     @select="selectCompletionItem"
     @close="hideCompletion"
@@ -50,19 +57,35 @@ export default {
         // }
       }, 500)
     },
+    cleanUser () {
+      this.queriedUser = ''
+      this.$store.dispatch('resetUserSlots')
+      this.hideCompletion()
+    },
     getCompletion () {
       schoolLifeService.getSchoolStudents(this.selectedSchool.schoolId, this.queriedUser).then((data) => {
         if (data.success) {
-          this.autocompleteUserList = data.users
-          this.showCompletion()
+          if (data.students.length > 0) {
+            this.autocompleteUserList = data.students
+            this.autocompleteUserList.forEach((user) => { user.displayName = this.getUserDisplayName(user) })
+            this.showCompletion()
+          }
         } else {
           console.error('Error while getting user completion', data.error) // TODO: better error gesture
         }
       })
     },
+    getUserDisplayName (user) {
+      return user.firstName + ' ' + user.lastName + (user.className ? ' (' + user.className + ')' : '')
+    },
     selectCompletionItem (selectedValue) {
+      this.queriedUser = selectedValue.displayName
       this.$emit('selectUser', selectedValue)
       this.hideCompletion()
+    },
+    selectInput () {
+      const input = document.getElementById('user-completion-input')
+      input.select()
     },
     hideCompletion () {
       this.isCompletionDisplayed = false
