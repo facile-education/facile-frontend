@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import { slotLabelList } from '@/utils/constant.util'
+import { slotLabelList } from '@/constants/appConstants'
 
 import AddSlotModal from '@/components/NotUsualSlotManager/EditSlotModal'
 import EventPopover from '@/components/NotUsualSlotManager/EventPopover'
