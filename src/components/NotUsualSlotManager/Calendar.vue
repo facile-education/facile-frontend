@@ -9,6 +9,7 @@
       :options="calendarOptions"
     />
     <EventPopover
+      v-if="selectedEvent"
       :selected-event="selectedEvent"
       @close="unselectEvent"
     />

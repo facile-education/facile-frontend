@@ -68,7 +68,7 @@ export default {
       console.log('should edit', this.selectedEvent)
     },
     unselectEvent () {
-      this.emits('close')
+      this.$emit('close')
     }
   }
 }
