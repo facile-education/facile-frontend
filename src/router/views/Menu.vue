@@ -16,7 +16,6 @@
       Horaires hors cadre
     </RouterLink>
 
-
     <h2>Documents</h2>
     <RouterLink to="/documents">
       Documents (0%)
