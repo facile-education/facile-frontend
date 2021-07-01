@@ -55,6 +55,7 @@ export default {
   },
   methods: {
     deleteSlot () {
+      console.log('TODO: delete slot')
       this.closeModal()
     },
     createSlot () {
