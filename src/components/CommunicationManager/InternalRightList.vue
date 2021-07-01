@@ -63,7 +63,6 @@ export default {
   },
   methods: {
     onSave () {
-      console.log(this.rightList)
       var schoolId = this.$store.state.communicationManager.selectedSchoolId
       this.$store.dispatch('communicationManager/updateSchoolInternalCommunicationRights',
         { schoolId, rightList: this.rightList })

@@ -1,8 +1,16 @@
 <template>
   <div>
     <div
+      v-if="isTeacher"
+      v-t="'CommunicationManager.InternalRoleTab.teacherLabel'"
+    />
+    <div
       v-if="isPersonal"
       v-t="'CommunicationManager.InternalRoleTab.personalLabel'"
+    />
+    <div
+      v-if="isCollectivity"
+      v-t="'CommunicationManager.InternalRoleTab.collectivityLabel'"
     />
     <div
       v-for="right in sortedRightList"
@@ -33,8 +41,14 @@ export default {
   },
   emits: ['input'],
   computed: {
+    isCollectivity () {
+      return (this.rolePrefix === 'n7_')
+    },
     isPersonal () {
       return (this.rolePrefix === 'n4_')
+    },
+    isTeacher () {
+      return (this.rolePrefix === 'n3_')
     },
     rolePrefix () {
       // return role prefix (ex: n7)

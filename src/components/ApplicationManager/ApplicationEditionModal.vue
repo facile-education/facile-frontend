@@ -167,6 +167,9 @@
           />
         </div>
       </div>
+      <teleport to="body">
+        <ImagePicker v-if="show" />
+      </teleport>
     </template>
     <template #footer>
       <PentilaButton
@@ -183,13 +186,17 @@ import PentilaUtils from 'pentila-utils'
 import { required } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
 
+import ImagePicker from '@/components/Nero/ImagePicker'
+
 export default {
   name: 'ApplicationEditionModal',
+  components: { ImagePicker },
   setup: () => ({ v$: useVuelidate() }),
   data () {
     return {
       application: undefined,
       displayCategoryCompletion: false,
+      show: false,
       urlType: 'none'
     }
   },
@@ -277,7 +284,9 @@ export default {
       this.$store.dispatch('applicationManager/closeEditionModal')
     },
     openImagePicker () {
-      this.$store.dispatch('nero/openImagePickerModal', { onConfirm: this.selectImage })
+      console.log('set show')
+      this.show = true
+      // this.$store.dispatch('nero/openImagePickerModal', { onConfirm: this.selectImage })
     },
     removeLogo () {
       this.application.image = ''
