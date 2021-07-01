@@ -20,7 +20,9 @@
       <div
         v-else
         class="default"
-      />
+      >
+        <i class="fa fa-image" />
+      </div>
       <p class="name">
         {{ application.serviceName }}
       </p>
@@ -100,7 +102,12 @@ export default {
   width: 100px;
   height: 100px;
   font-size: 75px;
-  background-color: red;
+  color: lightgray;
+  padding: 5px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .name {

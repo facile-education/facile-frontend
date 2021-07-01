@@ -15,7 +15,9 @@
         <div
           v-else
           class="logo"
-        />
+        >
+          <i class="fa fa-image" />
+        </div>
 
         <div class="name">
           <h5>
@@ -243,7 +245,15 @@ export default {
   height: 70px;
   margin-right: 5px;
   font-size: 53px;
-  background-color: red;
+
+  i {
+    color: lightgray;
+    padding: 5px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
 }
 
 .main {

@@ -77,6 +77,7 @@
       "allTeachersInSchool": "Tous les enseignants de l'établissement",
       "childrenClassesParents": "Les parents des classes de ses enfants",
       "childrenClassesTeachers": "Les enseignants des classes de ses enfants",
+      "collectivityLabel": "Ce profil peut communiquer avec tous les enseignants et personnels de l'établissement",
       "hisChildren": "Ses enfants",
       "hisParents": "Ses parents",
       "parentsOfEachClass": "Les parents des classes",
@@ -84,6 +85,7 @@
       "personalLabel": "Ce profil peut communiquer avec tous les utilisateurs de l'établissement",
       "studentsOfHisClass": "Les élèves de ses classes",
       "studentsOfEachClass": "Les élèves des classes",
+      "teacherLabel": "Ce profil peut communiquer avec les élèves et parents de ses classes ainsi qu'à tous les enseignants et personnels de l'établissement",
       "teachersOfEachClass": "Les enseignants des classes",
       "teachersOfHisClass": "Les enseignants de ses classes"
     },
