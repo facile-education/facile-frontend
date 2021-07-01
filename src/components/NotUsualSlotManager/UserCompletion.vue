@@ -1,24 +1,15 @@
 <template>
-  <div style="display: flex">
-    <PentilaInput
-      id="user-completion-input"
-      v-model="queriedUser"
-      :max-lenght="75"
-      :placeholder="$t('NotUsualSlots.studentNamePlaceHolder')"
-      @input="searchTimeOut"
-      @click="selectInput"
-    />
-    <button @click="cleanUser">
-      x
-    </button>
-  </div>
-  <PentilaAutocomplete
-    v-if="isCompletionDisplayed"
+  <PentilaTagsInput
+    v-model="tagsList"
+    :placeholder="$t('NotUsualSlots.studentNamePlaceHolder')"
+    :close-on-select="true"
+    :max-size="1"
+    :completion-only="true"
     :list="autocompleteUserList"
+    :sort="false"
     display-field="displayName"
-    :input="queriedUser"
-    @select="selectCompletionItem"
-    @close="hideCompletion"
+    id-field="studentId"
+    @inputChange="searchTimeOut"
   />
 </template>
 
@@ -38,38 +29,44 @@ export default {
   emits: ['selectUser'],
   data () {
     return {
-      queriedUser: undefined,
-      isCompletionDisplayed: false,
+      tagsList: [],
       autocompleteUserList: []
     }
   },
   computed: {
     selectedSchool () {
       return this.$store.state.notUsualSlots.selectedSchool
+    },
+    queriedUser () {
+      return this.tagsList[0]
+    }
+  },
+  watch: {
+    'queriedUser' () {
+      if (this.queriedUser === undefined) {
+        this.autocompleteUserList = []
+        this.$store.dispatch('resetUserSlots')
+      } else {
+        this.$emit('selectUser', this.queriedUser)
+      }
     }
   },
   methods: {
-    searchTimeOut () {
+    searchTimeOut (inputValue) {
       clearTimeout(timeout)
       // Make a new timeout set to go off in 800ms
       timeout = setTimeout(() => {
-        if (this.queriedUser.length >= nbCharBeforeCompletion) {
-          this.getCompletion()
+        if (inputValue.length >= nbCharBeforeCompletion) {
+          this.getCompletion(inputValue)
         }
       }, 500)
     },
-    cleanUser () {
-      this.queriedUser = ''
-      this.$store.dispatch('resetUserSlots')
-      this.hideCompletion()
-    },
-    getCompletion () {
-      schoolLifeService.getSchoolStudents(this.selectedSchool.schoolId, this.queriedUser).then((data) => {
+    getCompletion (inputValue) {
+      schoolLifeService.getSchoolStudents(this.selectedSchool.schoolId, inputValue).then((data) => {
         if (data.success) {
           if (data.students.length > 0) {
             this.autocompleteUserList = data.students
             this.autocompleteUserList.forEach((user) => { user.displayName = this.getUserDisplayName(user) })
-            this.showCompletion()
           }
         } else {
           console.error('Error while getting user completion', data.error) // TODO: better error gesture
@@ -78,21 +75,6 @@ export default {
     },
     getUserDisplayName (user) {
       return user.firstName + ' ' + user.lastName + (user.className ? ' (' + user.className + ')' : '')
-    },
-    selectCompletionItem (selectedValue) {
-      this.queriedUser = selectedValue.displayName
-      this.$emit('selectUser', selectedValue)
-      this.hideCompletion()
-    },
-    selectInput () {
-      const input = document.getElementById('user-completion-input')
-      input.select()
-    },
-    hideCompletion () {
-      this.isCompletionDisplayed = false
-    },
-    showCompletion () {
-      this.isCompletionDisplayed = true
     }
   }
 }
