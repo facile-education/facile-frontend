@@ -6,6 +6,7 @@ import store from '@/store'
 import i18n from '@/i18n'
 import VueMq from 'vue-mq'
 import PentilaComponents from 'pentila-components'
+import moment from 'moment'
 // import axios from 'axios'
 
 const app = createApp(App)
@@ -20,3 +21,14 @@ Object.keys(PentilaComponents).forEach(name => {
 })
 
 app.mount('#app')
+
+moment.updateLocale('fr', {
+  calendar: {
+    lastDay: '[' + i18n.global.t('Moment.yesterday') + '] LT',
+    sameDay: 'LT',
+    nextDay: '[' + i18n.global.t('Moment.tomorrow') + '] LT',
+    lastWeek: 'dddd [' + i18n.global.t('Moment.at') + '] LT',
+    nextWeek: 'LT',
+    sameElse: 'L'
+  }
+})

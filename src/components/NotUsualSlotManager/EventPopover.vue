@@ -31,15 +31,37 @@
           />
         </h4>
       </header>
-      <div>
-        <label>Content</label>
-        {{ selectedEvent.event.extendedProps }}
+      <div class="slot-content">
+        <div>
+          <span
+            v-if="selectedEvent.event.extendedProps.teacher"
+            class="teacher"
+          >
+            {{ formattedTeacherName }}
+          </span>
+          <span
+            v-if="selectedEvent.event.extendedProps.subject"
+            class="label"
+          >
+            {{ selectedEvent.event.extendedProps.subject }}
+          </span>
+        </div>
+        <div>
+          {{ formattedHours }}
+        </div>
+        <div
+          v-if="selectedEvent.event.extendedProps.room"
+          class="room"
+        >
+          {{ selectedEvent.event.extendedProps.room }}
+        </div>
       </div>
     </template>
   </div>
 </template>
 
 <script>
+import moment from 'moment'
 export default {
   name: 'EventPopover',
   props: {
@@ -48,7 +70,7 @@ export default {
       required: true
     }
   },
-  emits: ['close'],
+  emits: ['close', 'editEvent'],
   computed: {
     isPopupLeft () {
       return (window.innerWidth - this.selectedEvent.el.getBoundingClientRect().right) < 350
@@ -61,11 +83,21 @@ export default {
         return `top:${this.selectedEvent.el.getBoundingClientRect().top}px; right:${window.innerWidth - this.selectedEvent.el.getBoundingClientRect().left + 7}px;`
       }
       return `top:${this.selectedEvent.el.getBoundingClientRect().top}px; left:${this.selectedEvent.el.getBoundingClientRect().right + 7}px;`
+    },
+    formattedHours () {
+      return moment(this.selectedEvent.event.start, 'YYYY-MM-DDTHH:mm').format('HH:mm') +
+        ' - ' +
+        moment(this.selectedEvent.event.end, 'YYYY-MM-DDTHH:mm').format('HH:mm')
+    },
+    formattedTeacherName () {
+      return this.selectedEvent.event.extendedProps.teacher.firstName + ' ' + this.selectedEvent.event.extendedProps.teacher.lastName +
+        (this.selectedEvent.event.extendedProps.subject ? ' - ' : '')
     }
   },
   methods: {
     openEditModal () {
-      console.log('should edit', this.selectedEvent)
+      this.$emit('editEvent', this.selectedEvent.event)
+      this.$emit('close')
     },
     unselectEvent () {
       this.$emit('close')
@@ -125,9 +157,18 @@ export default {
     }
   }
 
-  div {
-    margin: 0;
-    padding: 5px;
+  .slot-content {
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9em;
+    padding: 10px;
+
+    .room {
+      font-style: italic;
+    }
   }
 }
 

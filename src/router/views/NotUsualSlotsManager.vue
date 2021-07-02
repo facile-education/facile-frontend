@@ -14,6 +14,7 @@
     </div>
     <UserCompletion
       user-type="student"
+      :placeholder="$t('NotUsualSlots.studentNamePlaceHolder')"
       @selectUser="getUserSlots"
     />
     <div class="calendar-container">
