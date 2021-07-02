@@ -1,9 +1,6 @@
 <template>
   <div class="calendar">
     <h3> {{ 'Affichage des créneaux ' + currentSlotType.label }} </h3>
-    <button @click="openAddSlotModal">
-      Ajouter un nouveau créneau
-    </button>
     <FullCalendar
       ref="fullCalendar"
       :options="calendarOptions"
@@ -11,43 +8,25 @@
     <EventPopover
       v-if="selectedEvent"
       :selected-event="selectedEvent"
+      @editEvent="editEvent"
       @close="unselectEvent"
     />
-    <div class="slots-to-display">
-      <div
-        v-for="(slot, index) in allSlotsToDisplay"
-        :key="index"
-        class="slot"
-        :style="'background-color: ' + slot.color + ';'"
-      >
-        <div class="title">
-          {{ slot.subject }}
-        </div>
-        <div class="start">
-          {{ 'Début: ' + slot.sessionStart }}
-        </div>
-        <div class="end">
-          {{ 'Fin: ' + slot.sessionEnd }}
-        </div>
-        <div class="room">
-          {{ slot.room }}
-        </div>
-        <!--        <div class="teacher">{{slot.subject}}</div>-->
-      </div>
-    </div>
   </div>
   <teleport to="body">
-    <AddSlotModal
-      v-if="isAddSlotModalDisplayed"
-      @close="isAddSlotModalDisplayed = false"
+    <EditSlotModal
+      v-if="isEditSlotModalDisplayed"
+      :event-to-edit="eventToEdit"
+      :create-event-method="createEvent"
+      :update-event-method="updateEvent"
+      @close="isEditSlotModalDisplayed = false"
     />
   </teleport>
 </template>
 
 <script>
 import { slotLabelList } from '@/constants/appConstants'
-
-import AddSlotModal from '@/components/NotUsualSlotManager/EditSlotModal'
+import moment from 'moment'
+import EditSlotModal from '@components/NotUsualSlotManager/EditSlotModal/EditSlotModal'
 import EventPopover from '@/components/NotUsualSlotManager/EventPopover'
 import FullCalendar from '@fullcalendar/vue3'
 import frLocale from '@fullcalendar/core/locales/fr'
@@ -57,7 +36,7 @@ import interactionPlugin from '@fullcalendar/interaction' // Needed for event cr
 export default {
   name: 'Calendar',
   components: {
-    AddSlotModal,
+    EditSlotModal,
     EventPopover,
     FullCalendar
   },
@@ -69,8 +48,9 @@ export default {
   },
   data () {
     return {
-      isAddSlotModalDisplayed: false,
-      selectedEvent: undefined
+      isEditSlotModalDisplayed: false,
+      selectedEvent: undefined,
+      eventToEdit: undefined
     }
   },
   computed: {
@@ -108,15 +88,16 @@ export default {
           }
         },
         events:
-          [
-            // classNames attribut could be useful for disabled class
-            { extendedProps: { id: 14854, subject: 'Mathématiques', teacher: 'Louisa Nécib', inscriptionLeft: 'Complet' }, title: 'Soutien scolaire - S 102', start: '2021-06-29T11:00:00+00:00', end: '2021-06-29T12:30:00+00:00', backgroundColor: '#445566', borderColor: '#445566' },
-            { extendedProps: { id: 14855, teacher: 'Lisandro Lopez' }, title: 'Lunch - Cantine', start: '2021-06-29T12:00:00+00:00', backgroundColor: '#DD5522', borderColor: '#DD5522' },
-            { editable: true, title: 'Birthday Party', start: '2021-06-30T10:00:00+00:00', backgroundColor: '#5555DD', borderColor: '#5555DD' },
-            { extendedProps: { id: 14856, teacher: 'Florent Malouda', inscriptionLeft: '7' }, title: 'Barbecue Party', start: '2021-06-29T07:00:00+00:00', backgroundColor: '#55DDDD', borderColor: '#55DDDD' },
-            { extendedProps: { id: 14856, teacher: 'Elise Bussaglia', inscriptionLeft: '12' }, title: 'Killing Party - S 301', start: '2021-07-02T09:00:00+00:00', backgroundColor: '#ED55DD', borderColor: '#ED55DD' },
-            { extendedProps: { id: 14856, teacher: 'Camille Abily', inscriptionLeft: '8' }, title: 'Goodbye Party', start: '2021-07-01T08:00:00+00:00', backgroundColor: '#55EE99', borderColor: '#55EE99' }
-          ]
+          this.allSlotsToDisplay.map(slot => this.formatCalendarSlot(slot))
+          // [
+          //   // classNames attribute could be useful for disabled class
+          //   { extendedProps: { id: 14854, subject: 'Mathématiques', teacher: 'Louisa Nécib', inscriptionLeft: 'Complet' }, title: 'Soutien scolaire - S 102', start: '2021-06-29T11:00:00+00:00', end: '2021-06-29T12:30:00+00:00', backgroundColor: '#445566', borderColor: '#445566' },
+          //   { extendedProps: { id: 14855, teacher: 'Lisandro Lopez' }, title: 'Lunch - Cantine', start: '2021-06-29T12:00:00+00:00', backgroundColor: '#DD5522', borderColor: '#DD5522' },
+          //   { editable: true, title: 'Birthday Party', start: '2021-06-30T10:00:00+00:00', backgroundColor: '#5555DD', borderColor: '#5555DD' },
+          //   { extendedProps: { id: 14856, teacher: 'Florent Malouda', inscriptionLeft: '7' }, title: 'Barbecue Party', start: '2021-06-29T07:00:00+00:00', backgroundColor: '#55DDDD', borderColor: '#55DDDD' },
+          //   { extendedProps: { id: 14856, teacher: 'Elise Bussaglia', inscriptionLeft: '12' }, title: 'Killing Party - S 301', start: '2021-07-02T09:00:00+00:00', backgroundColor: '#ED55DD', borderColor: '#ED55DD' },
+          //   { extendedProps: { id: 14856, teacher: 'Camille Abily', inscriptionLeft: '8' }, title: 'Goodbye Party', start: '2021-07-01T08:00:00+00:00', backgroundColor: '#55EE99', borderColor: '#55EE99' }
+          // ]
       }
     },
     userSlots () {
@@ -130,25 +111,47 @@ export default {
     }
   },
   methods: {
-    openAddSlotModal () {
-      this.isAddSlotModalDisplayed = true
+    formatCalendarSlot (slot) {
+      return {
+        extendedProps: {
+          id: slot.cdtSessionId,
+          subject: slot.title,
+          teacher: slot.teacher,
+          inscriptionLeft: slot.remainingCapacity,
+          room: slot.room
+        },
+        title: slot.subject,
+        start: moment(slot.sessionStart, 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DDTHH:mm'),
+        end: moment(slot.sessionEnd, 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DDTHH:mm'),
+        backgroundColor: slot.color,
+        borderColor: slot.color
+      }
+    },
+    editEvent (event) {
+      this.eventToEdit = event
+      this.isEditSlotModalDisplayed = true
     },
     onDateSelect (selection) {
-      // console.log('Date selected !', selection)
       if (this.selectedEvent) {
         this.unselectEvent()
       }
 
-      // TODO display add modal and add event only on success
-      const calendar = this.$refs.fullCalendar.getApi()
-
-      calendar.addEvent({
-        title: 'New event',
+      this.eventToEdit = {
         start: selection.start,
         end: selection.end
-      })
+      }
+      this.isEditSlotModalDisplayed = true
 
+      // TODO display add modal and add event only on success
+    },
+    createEvent (event) {
+      const calendar = this.$refs.fullCalendar.getApi()
+      calendar.addEvent(event)
       calendar.unselect()
+    },
+    updateEvent (event) {
+      // TODO
+      console.log('update event: ' + event)
     },
     onEventClick (info) {
       // console.log('clicked !', info)
@@ -170,10 +173,17 @@ export default {
       const container = info.el.getElementsByClassName('fc-event-main-frame')[0]
       if (info.event.extendedProps.teacher) {
         const tag = document.createElement('div')
-        let label = info.event.extendedProps.teacher
-        if (info.event.extendedProps.subject) {
-          label += ' - ' + info.event.extendedProps.subject
-        }
+        const label = info.event.extendedProps.teacher.firstName + ' ' + info.event.extendedProps.teacher.lastName
+        // if (info.event.extendedProps.subject) {
+        //   label += ' - ' + info.event.extendedProps.subject
+        // }
+        tag.appendChild(document.createTextNode(label))
+        container.appendChild(tag)
+      }
+      if (info.event.extendedProps.room) {
+        const tag = document.createElement('div')
+        tag.classList.add('fc-event-room')
+        const label = info.event.extendedProps.room
         tag.appendChild(document.createTextNode(label))
         container.appendChild(tag)
       }
@@ -279,6 +289,13 @@ $selected-background-filter-color: #FFFFFF99;
 
   .fc-event-title-container {
     flex-grow: 0;
+    .fc-event-title {
+      font-weight: bold;
+    }
+  }
+
+  .fc-event-room {
+    font-style: italic;
   }
 
   .fc-event-inscription {

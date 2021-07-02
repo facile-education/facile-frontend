@@ -3,6 +3,7 @@ import constants from '@/api/constants'
 
 export default {
   getSchoolStudents,
+  getSchoolTeachers,
   getStudentSessions,
   getWeekSession
 }
@@ -14,6 +15,19 @@ const SCHOOL_LIFE_PATH = '/schoollife-portlet'
  */
 function getSchoolStudents (schoolId, query) {
   return axios.get(SCHOOL_LIFE_PATH + constants.JSON_WS_URL + '/schoollifesessionstudent/get-school-students', {
+    params: {
+      // p_auth: getCookie('pauth'),
+      schoolId: schoolId,
+      search: query
+    }
+  }).then(response => response.data)
+}
+
+/**
+ * Get the specified school's teachers filtered by name
+ */
+function getSchoolTeachers (schoolId, query) {
+  return axios.get(SCHOOL_LIFE_PATH + constants.JSON_WS_URL + '/schoollifeslot/get-teachers', {
     params: {
       // p_auth: getCookie('pauth'),
       schoolId: schoolId,
