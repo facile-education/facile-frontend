@@ -34,6 +34,7 @@
       <PentilaInput
         v-model="newEvent.extendedProps.inscriptionLeft"
         class="input"
+        type="number"
         :placeholder="$t('NotUsualSlots.EditSlotModal.inscriptionLeftPlaceHolder')"
       />
     </template>
@@ -58,6 +59,9 @@
 <script>
 import TimeSelection from '@components/NotUsualSlotManager/EditSlotModal/TimeSelection'
 import UserCompletion from '@components/NotUsualSlotManager/UserCompletion'
+import schoolLifeService from '@/api/schoolLife-portlet.service'
+import moment from 'moment'
+
 export default {
   name: 'EditSlotModal',
   components: { UserCompletion, TimeSelection },
@@ -98,6 +102,9 @@ export default {
     currentSlotType () {
       return this.$store.state.notUsualSlots.currentSlotType
     },
+    selectedSchool () {
+      return this.$store.state.notUsualSlots.selectedSchool
+    },
     isEventCreation () {
       return this.eventToEdit.title === undefined
     }
@@ -125,19 +132,41 @@ export default {
     updateTeacher (selectedUser) {
       this.newEvent.extendedProps.teacher = selectedUser
     },
+    validFields () {
+      // We suppose that time returned by TimeSelection component is already ok
+      return this.newEvent.extendedProps.teacher && this.newEvent.extendedProps.room && this.newEvent.extendedProps.inscriptionLeft
+    },
     confirm () {
-      // TODO fields verification
-
-      if (this.isEventCreation) {
-        // if success = true && add event fields to object
-        this.createEventMethod(this.newEvent)
-        this.closeModal()
-      } else {
-        // if success = true && add event fields to object
-        this.updateEventMethod(this.newEvent)
-        this.closeModal()
-
-        // TODO or maybe refresh calendar
+      if (this.validFields()) {
+        if (this.isEventCreation) {
+          // if success = true && add event fields to object
+          const momentStartTime = moment(this.newEvent.start, 'YYYY-MM-DDTHH:mm')
+          const momentEndTime = moment(this.newEvent.end, 'YYYY-MM-DDTHH:mm')
+          schoolLifeService.createSlot(
+            this.selectedSchool.schoolId,
+            momentStartTime.format('YYYY/MM/DD HH:mm'), // convert from calendar format to back-end format
+            momentStartTime.day(),
+            momentStartTime.format('HH:mm'),
+            momentEndTime.format('HH:mm'),
+            this.newEvent.extendedProps.teacher.teacherId,
+            this.currentSlotType.type,
+            this.newEvent.extendedProps.room,
+            this.newEvent.extendedProps.inscriptionLeft
+          ).then((data) => {
+            if (data.success) {
+              // this.createEventMethod(this.newEvent) // Or reload calendar
+              this.$store.dispatch('refreshCalendar')
+              this.closeModal()
+            } else {
+              console.error('Error while getting user completion', data.error) // TODO: better error gesture
+            }
+          })
+        } else {
+          // if success = true && add event fields to object
+          // this.updateEventMethod(this.newEvent) TODO: instead of reload all calendar
+          this.$store.dispatch('refreshCalendar')
+          this.closeModal()
+        }
       }
     },
     closeModal () {
