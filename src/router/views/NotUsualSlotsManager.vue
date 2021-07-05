@@ -60,12 +60,14 @@ export default {
     this.$store.dispatch('user/initUserInformations')
     this.$store.dispatch('user/getPersonalDetails')
 
-    this.minDate = moment().startOf('week') // setMinDate to week begin
-    this.maxDate = moment().endOf('week') // setMxnDate to week end
+    this.$store.dispatch('setDisplayedDates', {
+      startDate: moment().startOf('week'),
+      endDate: moment().endOf('week')
+    })
   },
   methods: {
     getUserSlots (user) {
-      this.$store.dispatch('getStudentSessions', { user, minDate: this.minDate, maxDate: this.maxDate }) // TODO handle non-students users
+      this.$store.dispatch('setQueriedUser', user)
     }
   }
 }

@@ -1,6 +1,5 @@
 <template>
   <div class="calendar">
-    <h3> {{ 'Affichage des créneaux ' + currentSlotType.label }} </h3>
     <FullCalendar
       ref="fullCalendar"
       :options="calendarOptions"
@@ -26,6 +25,7 @@
 <script>
 import { slotLabelList } from '@/constants/appConstants'
 import moment from 'moment'
+import notUsualSlotsConstants from '@/constants/notUsualSlots'
 import EditSlotModal from '@components/NotUsualSlotManager/EditSlotModal/EditSlotModal'
 import EventPopover from '@/components/NotUsualSlotManager/EventPopover'
 import FullCalendar from '@fullcalendar/vue3'
@@ -55,6 +55,7 @@ export default {
   },
   computed: {
     calendarOptions () {
+      const vm = this
       return {
         locale: frLocale,
         plugins: [timeGridPlugin, interactionPlugin],
@@ -62,9 +63,44 @@ export default {
         height: '100%',
         expandRows: true,
         headerToolbar: {
-          left: 'prev,next today',
+          left: 'customPrevious,customNext customToday',
           center: '',
           right: ''
+        },
+        customButtons: {
+          customPrevious: {
+            text: '<',
+            click: function () {
+              const calendar = vm.$refs.fullCalendar.getApi()
+              calendar.prev()
+              vm.$store.dispatch('setDisplayedDates', {
+                startDate: moment(calendar.currentData.currentDate).startOf('week'),
+                endDate: moment(calendar.currentData.currentDate).endOf('week')
+              })
+            }
+          },
+          customNext: {
+            text: '>',
+            click: function () {
+              const calendar = vm.$refs.fullCalendar.getApi()
+              calendar.next()
+              vm.$store.dispatch('setDisplayedDates', {
+                startDate: moment(calendar.currentData.currentDate).startOf('week'),
+                endDate: moment(calendar.currentData.currentDate).endOf('week')
+              })
+            }
+          },
+          customToday: {
+            text: this.$t('Moment.today'),
+            click: function () {
+              const calendar = vm.$refs.fullCalendar.getApi()
+              calendar.today()
+              vm.$store.dispatch('setDisplayedDates', {
+                startDate: moment(calendar.currentData.currentDate).startOf('week'),
+                endDate: moment(calendar.currentData.currentDate).endOf('week')
+              })
+            }
+          }
         },
         selectable: true,
         select: this.onDateSelect,
@@ -89,15 +125,6 @@ export default {
         },
         events:
           this.allSlotsToDisplay.map(slot => this.formatCalendarSlot(slot))
-          // [
-          //   // classNames attribute could be useful for disabled class
-          //   { extendedProps: { id: 14854, subject: 'Mathématiques', teacher: 'Louisa Nécib', inscriptionLeft: 'Complet' }, title: 'Soutien scolaire - S 102', start: '2021-06-29T11:00:00+00:00', end: '2021-06-29T12:30:00+00:00', backgroundColor: '#445566', borderColor: '#445566' },
-          //   { extendedProps: { id: 14855, teacher: 'Lisandro Lopez' }, title: 'Lunch - Cantine', start: '2021-06-29T12:00:00+00:00', backgroundColor: '#DD5522', borderColor: '#DD5522' },
-          //   { editable: true, title: 'Birthday Party', start: '2021-06-30T10:00:00+00:00', backgroundColor: '#5555DD', borderColor: '#5555DD' },
-          //   { extendedProps: { id: 14856, teacher: 'Florent Malouda', inscriptionLeft: '7' }, title: 'Barbecue Party', start: '2021-06-29T07:00:00+00:00', backgroundColor: '#55DDDD', borderColor: '#55DDDD' },
-          //   { extendedProps: { id: 14856, teacher: 'Elise Bussaglia', inscriptionLeft: '12' }, title: 'Killing Party - S 301', start: '2021-07-02T09:00:00+00:00', backgroundColor: '#ED55DD', borderColor: '#ED55DD' },
-          //   { extendedProps: { id: 14856, teacher: 'Camille Abily', inscriptionLeft: '8' }, title: 'Goodbye Party', start: '2021-07-01T08:00:00+00:00', backgroundColor: '#55EE99', borderColor: '#55EE99' }
-          // ]
       }
     },
     userSlots () {
@@ -112,6 +139,14 @@ export default {
   },
   methods: {
     formatCalendarSlot (slot) {
+      let title = slot.subject
+      let color = slot.color
+      if (title === undefined && slot.type !== undefined) {
+        const slotType = notUsualSlotsConstants.slotTypes.find(obj => obj.type === slot.type)
+        title = slotType.label
+        color = slotType.color
+      }
+
       return {
         extendedProps: {
           id: slot.cdtSessionId,
@@ -120,11 +155,11 @@ export default {
           inscriptionLeft: slot.remainingCapacity,
           room: slot.room
         },
-        title: slot.subject,
+        title: title,
         start: moment(slot.sessionStart, 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DDTHH:mm'),
         end: moment(slot.sessionEnd, 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DDTHH:mm'),
-        backgroundColor: slot.color,
-        borderColor: slot.color
+        backgroundColor: color,
+        borderColor: color
       }
     },
     editEvent (event) {
