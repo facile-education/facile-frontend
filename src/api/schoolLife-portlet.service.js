@@ -4,6 +4,7 @@ import constants from '@/api/constants'
 export default {
   getSchoolStudents,
   getSchoolTeachers,
+  createSlot,
   getStudentSessions,
   getWeekSession
 }
@@ -32,6 +33,26 @@ function getSchoolTeachers (schoolId, query) {
       // p_auth: getCookie('pauth'),
       schoolId: schoolId,
       search: query
+    }
+  }).then(response => response.data)
+}
+
+/**
+ * Get the specified school's teachers filtered by name
+ */
+function createSlot (schoolId, startDateStr, day, startHour, endHour, teacherId, type, room, capacity) {
+  return axios.get(SCHOOL_LIFE_PATH + constants.JSON_WS_URL + '/schoollifeslot/create-slot', {
+    params: {
+      // p_auth: getCookie('pauth'),
+      schoolId: schoolId,
+      startDateStr: startDateStr,
+      day: day,
+      startHour: startHour,
+      endHour: endHour,
+      teacherId: teacherId,
+      type: type,
+      room: room,
+      capacity: capacity
     }
   }).then(response => response.data)
 }

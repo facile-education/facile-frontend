@@ -24,11 +24,11 @@ export default {
   name: 'TimeSelection',
   props: {
     start: {
-      type: String,
+      type: [String, Date],
       required: true
     },
     end: {
-      type: String,
+      type: [String, Date],
       required: true
     }
   },
