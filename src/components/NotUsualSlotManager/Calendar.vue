@@ -105,6 +105,7 @@ export default {
           }
         },
         selectable: true,
+        selectAllow: this.allowSelection,
         select: this.onDateSelect,
         eventTextColor: '#333',
         eventTimeFormat: {
@@ -140,6 +141,9 @@ export default {
     }
   },
   methods: {
+    allowSelection (selectInfo) {
+      return selectInfo.start.getDay() === selectInfo.end.getDay()
+    },
     formatCalendarSlot (slot) {
       let title = slot.subject
       let color = slot.color
