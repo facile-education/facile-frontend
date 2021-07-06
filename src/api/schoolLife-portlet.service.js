@@ -84,7 +84,7 @@ function updateSlot (slotId, startDateStr, day, startHour, endHour, teacherId, t
 function deleteSlot (slotId, startDateStr) {
   return axios.get(SCHOOL_LIFE_PATH + constants.JSON_WS_URL + '/schoollifeslot/delete-slot', {
     params: {
-      schoollifeSlotId: slotId,
+      schoollifeSessionId: slotId,
       startDateStr: startDateStr
     }
   }).then(response => response.data)

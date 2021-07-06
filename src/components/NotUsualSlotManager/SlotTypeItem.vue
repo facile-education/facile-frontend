@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     itemClicked () {
-      this.$store.dispatch('setCurrentSlotType', this.slotType)
+      this.$store.dispatch('notUsualSlots/setCurrentSlotType', this.slotType)
     }
   }
 }

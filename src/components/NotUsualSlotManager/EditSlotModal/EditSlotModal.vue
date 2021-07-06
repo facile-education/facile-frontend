@@ -45,7 +45,7 @@
         <div
           v-t="'Commons.delete'"
           class="button delete-button"
-          @click="deleteSlot"
+          @click="confirmSlotDeletion"
         />
         <div
           v-t="'Commons.submit'"
@@ -120,7 +120,7 @@ export default {
       this.newEvent.borderColor = this.currentSlotType.color
     } else { // Event update
       this.newEvent.extendedProps.id = this.eventToEdit.extendedProps.id
-      this.newEvent.extendedProps.teacher = this.eventToEdit.extendedProps.teacher
+      this.newEvent.extendedProps.teacher = { ...this.eventToEdit.extendedProps.teacher } // create a copy to not trigger store state change out of a mutation
       this.newEvent.extendedProps.inscriptionLeft = this.eventToEdit.extendedProps.inscriptionLeft
       this.newEvent.extendedProps.room = this.eventToEdit.extendedProps.room
       this.newEvent.borderColor = this.eventToEdit.borderColor
@@ -128,9 +128,25 @@ export default {
     }
   },
   methods: {
+    confirmSlotDeletion () {
+      this.$store.dispatch('warningModal/addWarning', {
+        text: this.$t('NotUsualSlots.warning'),
+        lastAction: { fct: this.deleteSlot, params: [] }
+      })
+    },
     deleteSlot () {
-      console.log('TODO: delete slot')
-      this.closeModal()
+      const momentStartTime = moment(this.newEvent.start, 'YYYY-MM-DDTHH:mm')
+      schoolLifeService.deleteSlot(
+        this.newEvent.extendedProps.id,
+        momentStartTime.format('YYYY/MM/DD HH:mm') // convert from calendar format to back-end format
+      ).then((data) => {
+        if (data.success) {
+          this.$store.dispatch('notUsualSlots/refreshCalendar')
+          this.closeModal()
+        } else {
+          console.error(data.error) // TODO: better error gesture
+        }
+      })
     },
     updateTeacher (selectedUser) {
       this.newEvent.extendedProps.teacher = selectedUser
@@ -158,10 +174,10 @@ export default {
           ).then((data) => {
             if (data.success) {
               // this.createEventMethod(this.newEvent) // With returned slot, instead of reload calendar
-              this.$store.dispatch('refreshCalendar')
+              this.$store.dispatch('notUsualSlots/refreshCalendar')
               this.closeModal()
             } else {
-              console.error('Error while getting user completion', data.error) // TODO: better error gesture
+              console.error(data.error) // TODO: better error gesture
             }
           })
         } else {
@@ -177,11 +193,10 @@ export default {
             this.newEvent.extendedProps.inscriptionLeft
           ).then((data) => {
             if (data.success) {
-              // this.createEventMethod(this.newEvent) // With returned slot, instead of reload calendar
-              this.$store.dispatch('refreshCalendar')
+              this.$store.dispatch('notUsualSlots/refreshCalendar')
               this.closeModal()
             } else {
-              console.error('Error while getting user completion', data.error) // TODO: better error gesture
+              console.error(data.error) // TODO: better error gesture
             }
           })
         }
@@ -197,20 +212,6 @@ export default {
 </script>
 
 <style scoped>
-
-.container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(128, 128, 128, 0.5);
-  font-family: "Roboto", sans-serif;
-  color: #0B3C5F;
-}
 
 .edit-slot-modal {
   font-family: "Roboto", sans-serif;

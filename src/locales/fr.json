@@ -146,6 +146,7 @@
     "study": "Étude",
     "tutoring": "Soutien scolaire",
     "studentNamePlaceHolder": "Saisir le nom d'un élève",
+    "warning": "La suppresion de ce créneau sera définitive!",
     "EditSlotModal": {
       "header": "Éditer un créneau",
       "inscriptionLeftPlaceHolder": "Nombre de places restantes",
@@ -154,5 +155,10 @@
       "teacherNamePlaceHolder": "Saisir le nom d'un maître"
     }
   },
-  "Unauthenticated": "Veuillez vous connecter pour accéder à ce service"
+  "Unauthenticated": "Veuillez vous connecter pour accéder à ce service",
+  "WarningModal": {
+    "header": "Continuer ?",
+    "cancelButton": "Annuler",
+    "confirmButton": "Continuer quand même"
+  }
 }

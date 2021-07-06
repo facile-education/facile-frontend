@@ -28,7 +28,7 @@ export default {
   },
   watch: {
     'selectedSchool' () {
-      this.$store.dispatch('setSelectedSchool', this.selectedSchool)
+      this.$store.dispatch('notUsualSlots/setSelectedSchool', this.selectedSchool)
     }
   },
   created () {
