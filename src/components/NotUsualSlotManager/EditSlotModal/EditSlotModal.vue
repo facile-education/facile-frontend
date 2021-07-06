@@ -24,6 +24,7 @@
       <UserCompletion
         user-type="teacher"
         :placeholder="$t('NotUsualSlots.EditSlotModal.teacherNamePlaceHolder')"
+        :initial-user-list="newEvent.extendedProps.teacher? [newEvent.extendedProps.teacher] : undefined"
         @selectUser="updateTeacher"
       />
       <PentilaInput
@@ -118,10 +119,12 @@ export default {
       this.newEvent.backgroundColor = this.currentSlotType.color
       this.newEvent.borderColor = this.currentSlotType.color
     } else { // Event update
-      this.newEvent.backgroundColor = this.eventToEdit.backgroundColor
+      this.newEvent.extendedProps.id = this.eventToEdit.extendedProps.id
+      this.newEvent.extendedProps.teacher = this.eventToEdit.extendedProps.teacher
+      this.newEvent.extendedProps.inscriptionLeft = this.eventToEdit.extendedProps.inscriptionLeft
+      this.newEvent.extendedProps.room = this.eventToEdit.extendedProps.room
       this.newEvent.borderColor = this.eventToEdit.borderColor
-      this.newEvent.extendedProps.inscriptionLeft = this.eventToEdit.inscriptionLeft
-      this.newEvent.extendedProps.room = this.eventToEdit.room
+      this.newEvent.backgroundColor = this.eventToEdit.backgroundColor
     }
   },
   methods: {
@@ -134,14 +137,14 @@ export default {
     },
     validFields () {
       // We suppose that time returned by TimeSelection component is already ok
+      // TODO more accurate verification
       return this.newEvent.extendedProps.teacher && this.newEvent.extendedProps.room && this.newEvent.extendedProps.inscriptionLeft
     },
     confirm () {
       if (this.validFields()) {
+        const momentStartTime = moment(this.newEvent.start, 'YYYY-MM-DDTHH:mm')
+        const momentEndTime = moment(this.newEvent.end, 'YYYY-MM-DDTHH:mm')
         if (this.isEventCreation) {
-          // if success = true && add event fields to object
-          const momentStartTime = moment(this.newEvent.start, 'YYYY-MM-DDTHH:mm')
-          const momentEndTime = moment(this.newEvent.end, 'YYYY-MM-DDTHH:mm')
           schoolLifeService.createSlot(
             this.selectedSchool.schoolId,
             momentStartTime.format('YYYY/MM/DD HH:mm'), // convert from calendar format to back-end format
@@ -154,7 +157,7 @@ export default {
             this.newEvent.extendedProps.inscriptionLeft
           ).then((data) => {
             if (data.success) {
-              // this.createEventMethod(this.newEvent) // Or reload calendar
+              // this.createEventMethod(this.newEvent) // With returned slot, instead of reload calendar
               this.$store.dispatch('refreshCalendar')
               this.closeModal()
             } else {
@@ -162,11 +165,28 @@ export default {
             }
           })
         } else {
-          // if success = true && add event fields to object
-          // this.updateEventMethod(this.newEvent) TODO: instead of reload all calendar
-          this.$store.dispatch('refreshCalendar')
-          this.closeModal()
+          schoolLifeService.updateSlot(
+            this.newEvent.extendedProps.id,
+            momentStartTime.format('YYYY/MM/DD HH:mm'), // convert from calendar format to back-end format
+            momentStartTime.day(),
+            momentStartTime.format('HH:mm'),
+            momentEndTime.format('HH:mm'),
+            this.newEvent.extendedProps.teacher.teacherId,
+            this.currentSlotType.type,
+            this.newEvent.extendedProps.room,
+            this.newEvent.extendedProps.inscriptionLeft
+          ).then((data) => {
+            if (data.success) {
+              // this.createEventMethod(this.newEvent) // With returned slot, instead of reload calendar
+              this.$store.dispatch('refreshCalendar')
+              this.closeModal()
+            } else {
+              console.error('Error while getting user completion', data.error) // TODO: better error gesture
+            }
+          })
         }
+      } else {
+        // TODO display errors in form
       }
     },
     closeModal () {

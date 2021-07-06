@@ -149,7 +149,7 @@ export default {
 
       return {
         extendedProps: {
-          id: slot.cdtSessionId,
+          id: slot.cdtSessionId || slot.schoollifeSessionId,
           subject: slot.title,
           teacher: slot.teacher,
           inscriptionLeft: slot.remainingCapacity,
