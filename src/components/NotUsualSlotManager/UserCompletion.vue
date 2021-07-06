@@ -3,7 +3,7 @@
     v-model="tagsList"
     :placeholder="placeholder"
     :close-on-select="true"
-    :max-size="1"
+    :max-size="maxSize"
     :completion-only="true"
     :list="autocompleteUserList"
     :sort="false"
@@ -28,13 +28,20 @@ export default {
     placeholder: {
       type: String,
       default: ''
+    },
+    initialUserList: {
+      type: Array,
+      default: () => {
+        return []
+      }
     }
   },
   emits: ['selectUser'],
   data () {
     return {
       tagsList: [],
-      autocompleteUserList: []
+      autocompleteUserList: [],
+      maxSize: 1
     }
   },
   computed: {
@@ -54,6 +61,16 @@ export default {
       } else {
         this.$emit('selectUser', this.queriedUser)
       }
+    }
+  },
+  created () {
+    if (this.initialUserList && this.initialUserList.length <= this.maxSize) {
+      this.initialUserList.forEach((user) => {
+        user.displayName = this.getUserDisplayName(user)
+      })
+      this.tagsList = this.initialUserList
+    } else {
+      console.error('initialUserList as too many elements for the tagsInput max size')
     }
   },
   methods: {
