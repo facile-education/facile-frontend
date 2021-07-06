@@ -49,6 +49,7 @@ export default {
     'queriedUser' () {
       if (this.queriedUser === undefined) {
         this.autocompleteUserList = []
+        this.$store.dispatch('setQueriedUser', undefined)
         this.$store.dispatch('resetUserSlots')
       } else {
         this.$emit('selectUser', this.queriedUser)

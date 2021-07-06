@@ -73,7 +73,9 @@ export default {
     },
     setQueriedUser ({ commit }, user) {
       commit('setQueriedUser', user)
-      getStudentSessions(this)
+      if (this.state.notUsualSlots.queriedUser !== undefined) {
+        getStudentSessions(this)
+      }
     },
     setDisplayedDates ({ commit }, { startDate, endDate }) {
       commit('setDisplayedDate', { startDate, endDate })
