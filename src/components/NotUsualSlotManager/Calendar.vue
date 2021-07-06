@@ -11,9 +11,11 @@
       @close="unselectEvent"
     />
   </div>
-  <teleport to="body">
+  <teleport
+    v-if="isEditSlotModalDisplayed"
+    to="body"
+  >
     <EditSlotModal
-      v-if="isEditSlotModalDisplayed"
       :event-to-edit="eventToEdit"
       :create-event-method="createEvent"
       :update-event-method="updateEvent"
@@ -73,7 +75,7 @@ export default {
             click: function () {
               const calendar = vm.$refs.fullCalendar.getApi()
               calendar.prev()
-              vm.$store.dispatch('setDisplayedDates', {
+              vm.$store.dispatch('notUsualSlots/setDisplayedDates', {
                 startDate: moment(calendar.currentData.currentDate).startOf('week'),
                 endDate: moment(calendar.currentData.currentDate).endOf('week')
               })
@@ -84,7 +86,7 @@ export default {
             click: function () {
               const calendar = vm.$refs.fullCalendar.getApi()
               calendar.next()
-              vm.$store.dispatch('setDisplayedDates', {
+              vm.$store.dispatch('notUsualSlots/setDisplayedDates', {
                 startDate: moment(calendar.currentData.currentDate).startOf('week'),
                 endDate: moment(calendar.currentData.currentDate).endOf('week')
               })
@@ -95,7 +97,7 @@ export default {
             click: function () {
               const calendar = vm.$refs.fullCalendar.getApi()
               calendar.today()
-              vm.$store.dispatch('setDisplayedDates', {
+              vm.$store.dispatch('notUsualSlots/setDisplayedDates', {
                 startDate: moment(calendar.currentData.currentDate).startOf('week'),
                 endDate: moment(calendar.currentData.currentDate).endOf('week')
               })

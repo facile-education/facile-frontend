@@ -25,6 +25,13 @@
     </div>
   </div>
   <UnauthenticatedPage v-else />
+  <!-- global modals -->
+  <teleport
+    v-if="isWarningModalDisplayed"
+    to="body"
+  >
+    <WarningModal />
+  </teleport>
 </template>
 
 <script>
@@ -36,10 +43,11 @@ import Calendar from '@/components/NotUsualSlotManager/Calendar'
 import UserCompletion from '@/components/NotUsualSlotManager/UserCompletion'
 import SelectedSchool from '@/components/NotUsualSlotManager/SelectedSchool'
 import UnauthenticatedPage from '@/router/views/UnauthenticatedPage'
+import WarningModal from '@components/Nero/WarningModal'
 
 export default {
   name: 'NotUsualSlotManager',
-  components: { UnauthenticatedPage, SelectedSchool, UserCompletion, Calendar, SlotTypeItem },
+  components: { WarningModal, UnauthenticatedPage, SelectedSchool, UserCompletion, Calendar, SlotTypeItem },
   data () {
     return {
       slotTypes: notUsualSlotConstants.slotTypes,
@@ -54,20 +62,23 @@ export default {
     },
     currentSlotType () {
       return this.$store.state.notUsualSlots.currentSlotType
+    },
+    isWarningModalDisplayed () {
+      return this.$store.getters['warningModal/isWarningModalDisplayed']
     }
   },
   created () {
     this.$store.dispatch('user/initUserInformations')
     this.$store.dispatch('user/getPersonalDetails')
 
-    this.$store.dispatch('setDisplayedDates', {
+    this.$store.dispatch('notUsualSlots/setDisplayedDates', {
       startDate: moment().startOf('week'),
       endDate: moment().endOf('week')
     })
   },
   methods: {
     getUserSlots (user) {
-      this.$store.dispatch('setQueriedUser', user)
+      this.$store.dispatch('notUsualSlots/setQueriedUser', user)
     }
   }
 }

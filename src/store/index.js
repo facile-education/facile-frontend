@@ -1,20 +1,13 @@
 import { createStore } from 'vuex'
-import administration from '@/store/modules/administration.store'
-import theme from '@/store/modules/theme.store'
-import user from '@/store/modules/user.store'
-import notUsualSlots from '@/store/modules/notUsualSlots.store'
+import modules from './modules'
 
 export default createStore({
-  state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-    administration,
-    theme,
-    user,
-    notUsualSlots
-  }
+  state: {},
+  mutations: {},
+  actions: {},
+  modules,
+  // Enable strict mode in development to get a warning
+  // when mutating state outside of a mutation.
+  // https://vuex.vuejs.org/guide/strict.html
+  strict: process.env.NODE_ENV !== 'production'
 })
