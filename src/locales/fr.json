@@ -61,7 +61,10 @@
   },
   "Commons": {
     "delete": "Supprimer",
-    "submit": "Valider"
+    "submit": "Valider",
+    "formDateOrder": "La date de fin doit être supérieure à la date de début",
+    "formInvalidDate": "Format de date invalide",
+    "formRequired": "Champ requis"
   },
   "CommunicationManager": {
     "InternalRightList": {

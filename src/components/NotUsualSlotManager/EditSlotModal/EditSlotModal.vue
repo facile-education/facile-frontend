@@ -21,23 +21,30 @@
         v-model:start="newEvent.start"
         v-model:end="newEvent.end"
       />
+      <PentilaErrorMessage :error-message="formErrorList.hour" />
       <UserCompletion
         user-type="teacher"
         :placeholder="$t('NotUsualSlots.EditSlotModal.teacherNamePlaceHolder')"
         :initial-user-list="newEvent.extendedProps.teacher? [newEvent.extendedProps.teacher] : undefined"
+        @blur="v$.newEvent.extendedProps.teacher.teacherId.$touch()"
         @selectUser="updateTeacher"
       />
+      <PentilaErrorMessage :error-message="formErrorList.teacher" />
       <PentilaInput
         v-model="newEvent.extendedProps.room"
         class="input"
         :placeholder="$t('NotUsualSlots.EditSlotModal.roomNamePlaceHolder')"
+        @blur="v$.newEvent.extendedProps.room.$touch()"
       />
+      <PentilaErrorMessage :error-message="formErrorList.room" />
       <PentilaInput
         v-model="newEvent.extendedProps.inscriptionLeft"
         class="input"
         type="number"
         :placeholder="$t('NotUsualSlots.EditSlotModal.inscriptionLeftPlaceHolder')"
+        @blur="v$.newEvent.extendedProps.inscriptionLeft.$touch()"
       />
+      <PentilaErrorMessage :error-message="formErrorList.inscriptionLeft" />
     </template>
 
     <template #footer>
@@ -51,6 +58,7 @@
         <div
           v-t="'Commons.submit'"
           class="button confirm-button"
+          :class="{'form-valid' : !v$.$invalid}"
           @click="confirm"
         />
       </div>
@@ -63,6 +71,8 @@ import TimeSelection from '@components/NotUsualSlotManager/EditSlotModal/TimeSel
 import UserCompletion from '@components/NotUsualSlotManager/UserCompletion'
 import schoolLifeService from '@/api/schoolLife-portlet.service'
 import moment from 'moment'
+import { useVuelidate } from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
 
 export default {
   name: 'EditSlotModal',
@@ -82,6 +92,34 @@ export default {
     }
   },
   emits: ['close'],
+  setup: () => ({ v$: useVuelidate() }),
+  validations: {
+    newEvent: {
+      extendedProps: {
+        teacher: {
+          teacherId: { required }
+        },
+        inscriptionLeft: { required },
+        room: { required }
+      }
+      // Todo when we will be agree on date form
+      // start: {
+      //   required,
+      //   valid (val) {
+      //     return moment(val, 'YYYY-MM-DDTHH:mm').isValid
+      //   }
+      // },
+      // end: {
+      //   required,
+      //   valid (val) {
+      //     return moment(val, 'YYYY-MM-DDTHH:mm').isValid
+      //   },
+      //   maxValue (val, { start }) {
+      //     return val.localeCompare(start) > 0 // if val < start: is ok
+      //   }
+      // }
+    }
+  },
   data () {
     return {
       newEvent: {
@@ -102,6 +140,21 @@ export default {
     }
   },
   computed: {
+    formErrorList () {
+      const form = this.v$.newEvent
+      return {
+        teacher: (form.extendedProps.teacher.teacherId.$invalid && form.extendedProps.teacher.teacherId.$dirty) ? this.$t('Commons.formRequired') : '',
+        inscriptionLeft: (form.extendedProps.inscriptionLeft.$invalid && form.extendedProps.inscriptionLeft.$dirty) ? this.$t('Commons.formRequired') : '',
+        room: (form.extendedProps.room.$invalid && form.extendedProps.room.$dirty) ? this.$t('Commons.formRequired') : ''
+        // hour: ((form.start.$invalid && form.start.$dirty) || (form.end.$invalid && form.end.$dirty)) // ? 'invalid' : ''
+        // ? (!form.start.required
+        //   ? this.$t('Commons.formRequired')
+        //   : (!form.start.valid
+        //     ? this.$t('Commons.formInvalidDate')
+        //     : this.$t('Commons.formDateOrder')))
+        // : ''
+      }
+    },
     currentSlotType () {
       return this.$store.state.notUsualSlots.currentSlotType
     },
@@ -154,13 +207,10 @@ export default {
     updateTeacher (selectedUser) {
       this.newEvent.extendedProps.teacher = selectedUser
     },
-    validFields () {
-      // We suppose that time returned by TimeSelection component is already ok
-      // TODO more accurate verification
-      return this.newEvent.extendedProps.teacher && this.newEvent.extendedProps.room && this.newEvent.extendedProps.inscriptionLeft
-    },
     confirm () {
-      if (this.validFields()) {
+      if (this.v$.$invalid) {
+        this.v$.$touch()
+      } else {
         const momentStartTime = moment(this.newEvent.start, 'YYYY-MM-DDTHH:mm')
         const momentEndTime = moment(this.newEvent.end, 'YYYY-MM-DDTHH:mm')
         if (this.isEventCreation) {
@@ -203,8 +253,6 @@ export default {
             }
           })
         }
-      } else {
-        // TODO display errors in form
       }
     },
     closeModal () {
@@ -214,7 +262,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 .edit-slot-modal {
   font-family: "Roboto", sans-serif;
@@ -253,6 +301,11 @@ export default {
 
 .confirm-button {
   background-color: #C4C4C4;
+
+  &.form-valid {
+    background-color: green;
+    cursor: pointer;
+  }
 }
 
 </style>
