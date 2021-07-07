@@ -43,7 +43,8 @@
     <template #footer>
       <div class="footer">
         <div
-          v-t="'Commons.delete'"
+          v-if="!isEventCreation"
+          v-t="'NotUsualSlots.EditSlotModal.deleteSlot'"
           class="button delete-button"
           @click="confirmSlotDeletion"
         />
@@ -246,6 +247,7 @@ export default {
 }
 
 .delete-button {
+  width: 250px;
   background-color: red;
 }
 
