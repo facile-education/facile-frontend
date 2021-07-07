@@ -102,7 +102,7 @@ export default {
 }
 
 .calendar-container {
-  height: 75vh;
+  height: 85vh;
   padding-top: 20px;
 }
 
