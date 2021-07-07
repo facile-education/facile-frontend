@@ -89,7 +89,8 @@ export default {
           subject: undefined,
           teacher: undefined,
           inscriptionLeft: undefined,
-          room: undefined
+          room: undefined,
+          type: undefined
         },
         title: undefined,
         start: undefined,
@@ -123,6 +124,7 @@ export default {
       this.newEvent.extendedProps.teacher = { ...this.eventToEdit.extendedProps.teacher } // create a copy to not trigger store state change out of a mutation
       this.newEvent.extendedProps.inscriptionLeft = this.eventToEdit.extendedProps.inscriptionLeft
       this.newEvent.extendedProps.room = this.eventToEdit.extendedProps.room
+      this.newEvent.extendedProps.type = this.eventToEdit.extendedProps.type
       this.newEvent.borderColor = this.eventToEdit.borderColor
       this.newEvent.backgroundColor = this.eventToEdit.backgroundColor
     }

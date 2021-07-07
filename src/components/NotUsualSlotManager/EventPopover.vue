@@ -21,14 +21,17 @@
       >
         <h4>
           {{ selectedEvent.event.title }}
-          <i
-            class="fa fa-pencil-alt"
-            @click="openEditModal"
-          />
-          <i
-            class="fa fa-times"
-            @click="unselectEvent"
-          />
+          <span class="options">
+            <i
+              v-if="isEditableEvent"
+              class="fa fa-pencil-alt"
+              @click="openEditModal"
+            />
+            <i
+              class="fa fa-times"
+              @click="unselectEvent"
+            />
+          </span>
         </h4>
       </header>
       <div class="slot-content">
@@ -62,6 +65,7 @@
 
 <script>
 import moment from 'moment'
+import { isNotUsualSlot } from '@utils/notUsualSlotUtils'
 export default {
   name: 'EventPopover',
   props: {
@@ -72,6 +76,9 @@ export default {
   },
   emits: ['close', 'editEvent'],
   computed: {
+    isEditableEvent () {
+      return isNotUsualSlot(this.selectedEvent.event)
+    },
     isPopupLeft () {
       return (window.innerWidth - this.selectedEvent.el.getBoundingClientRect().right) < 350
     },
@@ -152,7 +159,7 @@ export default {
       cursor: pointer;
     }
 
-    .fa-pencil-alt {
+    .options {
       margin-left: auto;
     }
   }

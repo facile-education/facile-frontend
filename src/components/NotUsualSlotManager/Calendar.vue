@@ -26,6 +26,7 @@
 
 <script>
 import { slotLabelList } from '@/constants/appConstants'
+import { isNotUsualSlot } from '@/utils/notUsualSlotUtils'
 import moment from 'moment'
 import notUsualSlotsConstants from '@/constants/notUsualSlots'
 import EditSlotModal from '@components/NotUsualSlotManager/EditSlotModal/EditSlotModal'
@@ -73,6 +74,9 @@ export default {
           customPrevious: {
             text: '<',
             click: function () {
+              if (vm.selectedEvent) {
+                vm.unselectEvent()
+              }
               const calendar = vm.$refs.fullCalendar.getApi()
               calendar.prev()
               vm.$store.dispatch('notUsualSlots/setDisplayedDates', {
@@ -84,6 +88,9 @@ export default {
           customNext: {
             text: '>',
             click: function () {
+              if (vm.selectedEvent) {
+                vm.unselectEvent()
+              }
               const calendar = vm.$refs.fullCalendar.getApi()
               calendar.next()
               vm.$store.dispatch('notUsualSlots/setDisplayedDates', {
@@ -95,6 +102,9 @@ export default {
           customToday: {
             text: this.$t('Moment.today'),
             click: function () {
+              if (vm.selectedEvent) {
+                vm.unselectEvent()
+              }
               const calendar = vm.$refs.fullCalendar.getApi()
               calendar.today()
               vm.$store.dispatch('notUsualSlots/setDisplayedDates', {
@@ -142,6 +152,7 @@ export default {
   },
   methods: {
     allowSelection (selectInfo) {
+      // TODO disable selection if the current user has not the good role
       return selectInfo.start.getDay() === selectInfo.end.getDay()
     },
     formatCalendarSlot (slot) {
@@ -159,7 +170,8 @@ export default {
           subject: slot.title,
           teacher: slot.teacher,
           inscriptionLeft: slot.remainingCapacity,
-          room: slot.room
+          room: slot.room,
+          type: slot.type
         },
         title: title,
         start: moment(slot.sessionStart, 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DDTHH:mm'),
@@ -169,8 +181,10 @@ export default {
       }
     },
     editEvent (event) {
-      this.eventToEdit = event
-      this.isEditSlotModalDisplayed = true
+      if (isNotUsualSlot(event)) { // Only edit notUsualSlots
+        this.eventToEdit = event
+        this.isEditSlotModalDisplayed = true
+      }
     },
     onDateSelect (selection) {
       if (this.selectedEvent) {
