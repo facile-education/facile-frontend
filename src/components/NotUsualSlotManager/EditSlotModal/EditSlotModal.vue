@@ -185,7 +185,7 @@ export default {
         } else {
           schoolLifeService.updateSlot(
             this.newEvent.extendedProps.id,
-            momentStartTime.format('YYYY/MM/DD HH:mm'), // convert from calendar format to back-end format
+            moment(this.eventToEdit.start, 'YYYY-MM-DDTHH:mm').format('YYYY/MM/DD HH:mm'), // pass the old slot start hour (edit all events of tis slot, beginning from this date)
             momentStartTime.day(),
             momentStartTime.format('HH:mm'),
             momentEndTime.format('HH:mm'),
