@@ -301,6 +301,7 @@ export default {
 
 .confirm-button {
   background-color: #C4C4C4;
+  cursor: default;
 
   &.form-valid {
     background-color: green;
