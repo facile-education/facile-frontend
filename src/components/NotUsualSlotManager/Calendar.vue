@@ -227,8 +227,17 @@ export default {
       // Add infos in timegrid view
       const container = info.el.getElementsByClassName('fc-event-main-frame')[0]
       if (info.event.extendedProps.teacher) {
-        const tag = document.createElement('div')
-        const label = info.event.extendedProps.teacher.firstName + ' ' + info.event.extendedProps.teacher.lastName
+        let tag = document.createElement('div')
+        tag.classList.add('full-text')
+        let label = info.event.extendedProps.teacher.firstName + ' ' + info.event.extendedProps.teacher.lastName
+        // if (info.event.extendedProps.subject) {
+        //   label += ' - ' + info.event.extendedProps.subject
+        // }
+        tag.appendChild(document.createTextNode(label))
+        container.appendChild(tag)
+        tag = document.createElement('div')
+        tag.classList.add('short-text')
+        label = info.event.extendedProps.teacher.firstName[0] + '. ' + info.event.extendedProps.teacher.lastName
         // if (info.event.extendedProps.subject) {
         //   label += ' - ' + info.event.extendedProps.subject
         // }
@@ -336,6 +345,7 @@ $selected-background-filter-color: #FFFFFF99;
   .fc-event-main {
     background-color: $default-background-filter-color;
     padding-left: 4px;
+    position: relative;
   }
 
   .fc-event-time {
@@ -349,14 +359,27 @@ $selected-background-filter-color: #FFFFFF99;
     }
   }
 
+  /* TODO to be based overflow event? */
+  @media (max-width: 1035px) {
+    .full-text {
+      display: none;
+    }
+  }
+
+  @media (min-width: 1036px) {
+    .short-text {
+      display: none;
+    }
+  }
+
   .fc-event-room {
     font-style: italic;
   }
 
   .fc-event-inscription {
-    margin-top: auto;
-    margin-right: 5px;
-    text-align: right;
+    position: absolute;
+    right: 5px;
+    bottom: 0;
   }
 }
 </style>
