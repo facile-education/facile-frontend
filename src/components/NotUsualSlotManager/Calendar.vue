@@ -229,6 +229,9 @@ export default {
     onEventMount (info) {
       // console.log('mounted !', info)
       // Add infos in timegrid view
+      if (!isNotUsualSlot(info.event)) { // Make grey student slots
+        info.el.classList.add('grayed')
+      }
       const container = info.el.getElementsByClassName('fc-event-main-frame')[0]
       if (info.event.extendedProps.teacher) {
         let tag = document.createElement('div')
@@ -339,6 +342,12 @@ $selected-background-filter-color: #FFFFFF99;
   &:hover .fc-timegrid-event .fc-event-main {
       background-color: $selected-background-filter-color;
   }
+}
+
+.grayed {
+  //filter: grayscale(60%);
+  filter: opacity(60%);
+  //filter: grayscale(60%) opacity(60%);
 }
 
 .fc-timegrid-event {
