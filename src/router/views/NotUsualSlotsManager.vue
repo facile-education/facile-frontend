@@ -24,7 +24,11 @@
       />
     </div>
   </div>
-  <UnauthenticatedPage v-else />
+  <div v-else>
+    <PentilaSpinner v-if="areActionsInProgress" />
+    <UnauthenticatedPage v-else />
+  </div>
+
   <!-- global modals -->
   <teleport
     v-if="isWarningModalDisplayed"
@@ -57,6 +61,9 @@ export default {
     }
   },
   computed: {
+    areActionsInProgress () {
+      return this.$store.getters['currentActions/areActionsInProgress']
+    },
     currentUser () {
       return this.$store.state.user
     },

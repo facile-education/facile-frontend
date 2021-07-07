@@ -1,8 +1,10 @@
 import schoolLifeService from '@/api/schoolLife-portlet.service'
 
 function getNonUsualSlots (store) {
+  store.dispatch('currentActions/addAction', { name: 'getNonUsualSlots' })
   schoolLifeService.getWeekSession(store.state.notUsualSlots.currentSlotType.type, store.state.notUsualSlots.displayedDates.startDate).then(
     (data) => {
+      store.dispatch('currentActions/removeAction', { name: 'getNonUsualSlots' })
       if (data.success) {
         store.commit('notUsualSlots/setCurrentNonUsualSlots', data.sessions)
       } else {
@@ -17,8 +19,10 @@ function getNonUsualSlots (store) {
 }
 
 function getStudentSessions (store) {
+  store.dispatch('currentActions/addAction', { name: 'getStudentSessions' })
   schoolLifeService.getStudentSessions(store.state.notUsualSlots.queriedUser, store.state.notUsualSlots.displayedDates.startDate, store.state.notUsualSlots.displayedDates.endDate).then(
     (data) => {
+      store.dispatch('currentActions/removeAction', { name: 'getStudentSessions' })
       if (data.success) {
         store.commit('notUsualSlots/setUserSlots', data.sessions)
       } else {

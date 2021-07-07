@@ -1,5 +1,6 @@
 <template>
   <div class="calendar">
+    <PentilaSpinner v-if="isSpinnerDisplayed" />
     <FullCalendar
       ref="fullCalendar"
       :options="calendarOptions"
@@ -57,6 +58,9 @@ export default {
     }
   },
   computed: {
+    isSpinnerDisplayed () {
+      return this.$store.getters['currentActions/areActionsInProgress']
+    },
     calendarOptions () {
       const vm = this
       return {
