@@ -79,6 +79,8 @@ export const actions = {
     commit('setQueriedUser', user)
     if (this.state.notUsualSlots.queriedUser !== undefined) {
       getStudentSessions(this)
+    } else {
+      this.dispatch('notUsualSlots/resetUserSlots')
     }
   },
   setDisplayedDates ({ commit }, { startDate, endDate }) {
