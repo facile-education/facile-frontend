@@ -152,7 +152,8 @@
       "inscriptionLeftPlaceHolder": "Nombre de places restantes",
       "roomNamePlaceHolder": "Saisir le numéro de salle",
       "slot": "Créneau",
-      "teacherNamePlaceHolder": "Saisir le nom d'un maître"
+      "teacherNamePlaceHolder": "Saisir le nom d'un maître",
+      "deleteSlot": "Supprimer le créneau"
     }
   },
   "Unauthenticated": "Veuillez vous connecter pour accéder à ce service",
