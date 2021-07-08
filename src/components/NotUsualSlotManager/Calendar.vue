@@ -267,20 +267,20 @@ export default {
       if (info.event.extendedProps.teacher) {
         let tag = document.createElement('div')
         tag.classList.add('full-text')
-        // let label = info.event.extendedProps.teacher.firstName + ' ' + info.event.extendedProps.teacher.lastName
+        let label = info.event.extendedProps.teacher.firstName + ' ' + info.event.extendedProps.teacher.lastName
         // if (info.event.extendedProps.subject) {
         //   label += ' - ' + info.event.extendedProps.subject
         // }
-        // tag.appendChild(document.createTextNode(label))
-        // container.appendChild(tag)
+        tag.appendChild(document.createTextNode(label))
+        container.appendChild(tag)
         tag = document.createElement('div')
         tag.classList.add('short-text')
-        // label = info.event.extendedProps.teacher.firstName[0] + '. ' + info.event.extendedProps.teacher.lastName
+        label = info.event.extendedProps.teacher.firstName[0] + '. ' + info.event.extendedProps.teacher.lastName
         // if (info.event.extendedProps.subject) {
         //   label += ' - ' + info.event.extendedProps.subject
         // }
-        // tag.appendChild(document.createTextNode(label))
-        // container.appendChild(tag)
+        tag.appendChild(document.createTextNode(label))
+        container.appendChild(tag)
       }
       if (info.event.extendedProps.room) {
         const tag = document.createElement('div')
