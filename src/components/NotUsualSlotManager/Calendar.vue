@@ -170,7 +170,7 @@ export default {
       return this.$store.state.notUsualSlots.currentNonUsualSlots
     },
     allSlotsToDisplay () {
-      return [...this.userSlots, ...this.currentNonUsualSlots]
+      return this.isSpinnerDisplayed ? [] : [...this.userSlots, ...this.currentNonUsualSlots]
     }
   },
   methods: {
