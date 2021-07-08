@@ -8,7 +8,10 @@ export default {
   updateSlot,
   deleteSlot,
   getStudentSessions,
-  getWeekSession
+  getWeekSession,
+  getSessionMembers,
+  registerStudent,
+  unRegisterStudent
 }
 
 const SCHOOL_LIFE_PATH = '/schoollife-portlet'
@@ -111,6 +114,43 @@ function getWeekSession (slotType, currentDate) {
     params: {
       type: slotType,
       currentDateStr: currentDate.format('YYYY/MM/DD HH:mm')
+    }
+  }).then(response => response.data)
+}
+
+/**
+ * Get the students registered in a slot (fields: success, members)
+ */
+function getSessionMembers (slotId) {
+  return axios.get(SCHOOL_LIFE_PATH + constants.JSON_WS_URL + '/schoollifesessionstudent/get-session-members', {
+    params: {
+      schoollifeSessionId: slotId
+    }
+  }).then(response => response.data)
+}
+
+/**
+ * Register student in a not usual slot (fields: success)
+ */
+function registerStudent (student, slotId, comment, notifyParents) {
+  return axios.get(SCHOOL_LIFE_PATH + constants.JSON_WS_URL + '/schoollifesessionstudent/register-student', {
+    params: {
+      studentId: student.studentId,
+      schoollifeSessionId: slotId,
+      comment: comment,
+      notifyParents: notifyParents
+    }
+  }).then(response => response.data)
+}
+
+/**
+ * UnRegister student from a not usual slot (fields: success)
+ */
+function unRegisterStudent (student, slotId) {
+  return axios.get(SCHOOL_LIFE_PATH + constants.JSON_WS_URL + '/schoollifesessionstudent/register-student', {
+    params: {
+      studentId: student.studentId,
+      schoollifeSessionId: slotId
     }
   }).then(response => response.data)
 }

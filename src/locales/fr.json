@@ -162,7 +162,9 @@
       "header": "Liste des élèves"
     },
     "StudentRegistrationModal": {
-      "header": "Ajouter un élève"
+      "header": "Inscription",
+      "slot": "Créneau: ",
+      "student": "Élève: "
     }
   },
   "Unauthenticated": "Veuillez vous connecter pour accéder à ce service",

@@ -34,11 +34,16 @@ const slotTypes = [
   }
 ]
 
+function getSlotTypeByNumber (typeNumber) {
+  return slotTypes.find(obj => obj.type === typeNumber)
+}
+
 export default {
   firedType,
   detentionType,
   replayTestType,
   tutoringType,
   studyType,
-  slotTypes
+  slotTypes,
+  getSlotTypeByNumber
 }

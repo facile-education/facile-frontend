@@ -24,6 +24,7 @@ function getStudentSessions (store) {
     (data) => {
       store.dispatch('currentActions/removeAction', { name: 'getStudentSessions' })
       if (data.success) {
+        data.sessions.forEach(slot => { slot.isUserSlot = true })
         store.commit('notUsualSlots/setUserSlots', data.sessions)
       } else {
         console.error('Cannot get user slots')

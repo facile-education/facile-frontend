@@ -28,7 +28,7 @@
               @click="showStudentList"
             />
             <i
-              v-if="isEditableEvent && queriedUser"
+              v-if="isEditableEvent && queriedUser && !isAlreadyRegister"
               class="fas fa-user-plus"
               @click="openRegistration"
             />
@@ -75,7 +75,7 @@
 
 <script>
 import moment from 'moment'
-import { isNotUsualSlot } from '@utils/notUsualSlotUtils'
+import { isEditableSlot } from '@utils/notUsualSlotUtils'
 export default {
   name: 'EventPopover',
   props: {
@@ -89,8 +89,12 @@ export default {
     queriedUser () {
       return this.$store.state.notUsualSlots.queriedUser
     },
+    isAlreadyRegister () {
+      // Search if this slot already exist in userSlots
+      return this.$store.state.notUsualSlots.userSlots.find(userSlot => userSlot.schoollifeSessionId === this.selectedEvent.event.extendedProps.id)
+    },
     isEditableEvent () {
-      return isNotUsualSlot(this.selectedEvent.event)
+      return isEditableSlot(this.selectedEvent.event)
     },
     isPopupLeft () {
       return (window.innerWidth - this.selectedEvent.el.getBoundingClientRect().right) < 350
