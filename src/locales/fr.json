@@ -157,6 +157,12 @@
       "slot": "Créneau",
       "teacherNamePlaceHolder": "Saisir le nom d'un maître",
       "deleteSlot": "Supprimer le créneau"
+    },
+    "StudentListModal": {
+      "header": "Liste des élèves"
+    },
+    "StudentRegistrationModal": {
+      "header": "Ajouter un élève"
     }
   },
   "Unauthenticated": "Veuillez vous connecter pour accéder à ce service",
