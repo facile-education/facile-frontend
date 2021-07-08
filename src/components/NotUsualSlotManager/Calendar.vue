@@ -40,7 +40,7 @@
 
 <script>
 import { slotLabelList } from '@/constants/appConstants'
-import { isNotUsualSlot } from '@/utils/notUsualSlotUtils'
+import { isEditableSlot } from '@/utils/notUsualSlotUtils'
 import moment from 'moment'
 import notUsualSlotsConstants from '@/constants/notUsualSlots'
 import EditSlotModal from '@components/NotUsualSlotManager/EditSlotModal/EditSlotModal'
@@ -182,7 +182,7 @@ export default {
       let title = slot.subject
       let color = slot.color
       if (title === undefined && slot.type !== undefined) {
-        const slotType = notUsualSlotsConstants.slotTypes.find(obj => obj.type === slot.type)
+        const slotType = notUsualSlotsConstants.getSlotTypeByNumber(slot.type)
         title = slotType.label
         color = slotType.color
       }
@@ -194,7 +194,8 @@ export default {
           teacher: slot.teacher,
           inscriptionLeft: slot.remainingCapacity,
           room: slot.room,
-          type: slot.type
+          type: slot.type,
+          isUserSlot: slot.isUserSlot
         },
         title: title,
         start: moment(slot.sessionStart, 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DDTHH:mm'),
@@ -204,19 +205,19 @@ export default {
       }
     },
     editEvent (event) {
-      if (isNotUsualSlot(event)) { // Only edit notUsualSlots
+      if (isEditableSlot(event)) { // Only edit notUsualSlots
         this.eventToEdit = event
         this.isEditSlotModalDisplayed = true
       }
     },
     openRegistration (event) {
-      if (isNotUsualSlot(event)) {
+      if (isEditableSlot(event)) {
         this.eventToEdit = event
         this.isRegistrationModalDisplayed = true
       }
     },
     showStudentList (event) {
-      if (isNotUsualSlot(event)) {
+      if (isEditableSlot(event)) {
         this.eventToEdit = event
         this.isListModalDisplayed = true
       }
@@ -260,7 +261,7 @@ export default {
     onEventMount (info) {
       // console.log('mounted !', info)
       // Add infos in timegrid view
-      if (!isNotUsualSlot(info.event)) { // Make grey student slots
+      if (!isEditableSlot(info.event)) { // Make grey student slots
         info.el.classList.add('grayed')
       }
       const container = info.el.getElementsByClassName('fc-event-main-frame')[0]

@@ -1,3 +1,3 @@
-export function isNotUsualSlot (event) {
-  return event.extendedProps.type !== undefined
+export function isEditableSlot (event) {
+  return !event.extendedProps.isUserSlot
 }

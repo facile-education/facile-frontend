@@ -1,7 +1,7 @@
 <template>
   <PentilaWindow
     :modal="true"
-    class="edit-slot-modal"
+    class="student-list-modal"
     @close="closeModal"
     @keydown.exact.enter.stop=""
     @keydown.exact.backspace.stop=""
@@ -13,15 +13,26 @@
       <span v-t="'NotUsualSlots.StudentListModal.header'" />
     </template>
 
-    <template #body />
+    <template #body>
+      <StudentListItem
+        v-for="(student, index) in studentList"
+        :key="index"
+        :student="student"
+      />
+    </template>
 
     <template #footer />
   </PentilaWindow>
 </template>
 
 <script>
+
+import schoolLifeService from '@/api/schoolLife-portlet.service'
+import StudentListItem from '@components/NotUsualSlotManager/StudentListModal/StudentListItem'
+
 export default {
   name: 'StudentListModal',
+  components: { StudentListItem },
   props: {
     event: {
       type: Object,
@@ -29,6 +40,21 @@ export default {
     }
   },
   emits: ['close'],
+  data () {
+    return {
+      studentList: []
+    }
+  },
+  created () {
+    schoolLifeService.getSessionMembers(this.event.extendedProps.id).then((data) => {
+      if (data.success) {
+        this.studentList = data.members
+      }
+    },
+    (err) => {
+      console.log(err)
+    })
+  },
   methods: {
     closeModal () {
       this.$emit('close')
@@ -38,5 +64,10 @@ export default {
 </script>
 
 <style scoped>
+
+.student-list-modal {
+  font-family: "Roboto", sans-serif;
+  color: #0B3C5F;
+}
 
 </style>
