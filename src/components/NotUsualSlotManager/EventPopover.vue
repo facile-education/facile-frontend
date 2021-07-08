@@ -24,6 +24,16 @@
           <span class="options">
             <i
               v-if="isEditableEvent"
+              class="fas fa-list"
+              @click="showStudentList"
+            />
+            <i
+              v-if="isEditableEvent && queriedUser"
+              class="fas fa-user-plus"
+              @click="openRegistration"
+            />
+            <i
+              v-if="isEditableEvent"
               class="fa fa-pencil-alt"
               @click="openEditModal"
             />
@@ -74,8 +84,11 @@ export default {
       required: true
     }
   },
-  emits: ['close', 'editEvent'],
+  emits: ['close', 'editEvent', 'openRegistration', 'showStudentList'],
   computed: {
+    queriedUser () {
+      return this.$store.state.notUsualSlots.queriedUser
+    },
     isEditableEvent () {
       return isNotUsualSlot(this.selectedEvent.event)
     },
@@ -104,6 +117,14 @@ export default {
   methods: {
     openEditModal () {
       this.$emit('editEvent', this.selectedEvent.event)
+      this.$emit('close')
+    },
+    openRegistration () {
+      this.$emit('openRegistration', this.selectedEvent.event)
+      this.$emit('close')
+    },
+    showStudentList () {
+      this.$emit('showStudentList', this.selectedEvent.event)
       this.$emit('close')
     },
     unselectEvent () {

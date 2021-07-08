@@ -9,18 +9,31 @@
       v-if="selectedEvent"
       :selected-event="selectedEvent"
       @editEvent="editEvent"
+      @openRegistration="openRegistration"
+      @showStudentList="showStudentList"
       @close="unselectEvent"
     />
   </div>
   <teleport
-    v-if="isEditSlotModalDisplayed"
+    v-if="isEditSlotModalDisplayed || isRegistrationModalDisplayed || isListModalDisplayed"
     to="body"
   >
     <EditSlotModal
+      v-if="isEditSlotModalDisplayed"
       :event-to-edit="eventToEdit"
       :create-event-method="createEvent"
       :update-event-method="updateEvent"
       @close="isEditSlotModalDisplayed = false"
+    />
+    <StudentRegistrationModal
+      v-if="isRegistrationModalDisplayed"
+      :event="eventToEdit"
+      @close="isRegistrationModalDisplayed = false"
+    />
+    <StudentListModal
+      v-if="isListModalDisplayed"
+      :event="eventToEdit"
+      @close="isListModalDisplayed = false"
     />
   </teleport>
 </template>
@@ -35,11 +48,15 @@ import EventPopover from '@/components/NotUsualSlotManager/EventPopover'
 import FullCalendar from '@fullcalendar/vue3'
 import frLocale from '@fullcalendar/core/locales/fr'
 import timeGridPlugin from '@fullcalendar/timegrid'
-import interactionPlugin from '@fullcalendar/interaction' // Needed for event creation
+import interactionPlugin from '@fullcalendar/interaction'
+import StudentListModal from '@components/NotUsualSlotManager/StudentListModal/StudentListModal'
+import StudentRegistrationModal from '@components/NotUsualSlotManager/StudentRegistrationModal/StudentRegistrationModal' // Needed for event creation
 
 export default {
   name: 'Calendar',
   components: {
+    StudentRegistrationModal,
+    StudentListModal,
     EditSlotModal,
     EventPopover,
     FullCalendar
@@ -52,9 +69,11 @@ export default {
   },
   data () {
     return {
-      isEditSlotModalDisplayed: false,
       selectedEvent: undefined,
-      eventToEdit: undefined
+      eventToEdit: undefined,
+      isEditSlotModalDisplayed: false,
+      isRegistrationModalDisplayed: false,
+      isListModalDisplayed: false
     }
   },
   computed: {
@@ -190,6 +209,18 @@ export default {
         this.isEditSlotModalDisplayed = true
       }
     },
+    openRegistration (event) {
+      if (isNotUsualSlot(event)) {
+        this.eventToEdit = event
+        this.isRegistrationModalDisplayed = true
+      }
+    },
+    showStudentList (event) {
+      if (isNotUsualSlot(event)) {
+        this.eventToEdit = event
+        this.isListModalDisplayed = true
+      }
+    },
     onDateSelect (selection) {
       if (this.selectedEvent) {
         this.unselectEvent()
@@ -236,20 +267,20 @@ export default {
       if (info.event.extendedProps.teacher) {
         let tag = document.createElement('div')
         tag.classList.add('full-text')
-        let label = info.event.extendedProps.teacher.firstName + ' ' + info.event.extendedProps.teacher.lastName
+        // let label = info.event.extendedProps.teacher.firstName + ' ' + info.event.extendedProps.teacher.lastName
         // if (info.event.extendedProps.subject) {
         //   label += ' - ' + info.event.extendedProps.subject
         // }
-        tag.appendChild(document.createTextNode(label))
-        container.appendChild(tag)
+        // tag.appendChild(document.createTextNode(label))
+        // container.appendChild(tag)
         tag = document.createElement('div')
         tag.classList.add('short-text')
-        label = info.event.extendedProps.teacher.firstName[0] + '. ' + info.event.extendedProps.teacher.lastName
+        // label = info.event.extendedProps.teacher.firstName[0] + '. ' + info.event.extendedProps.teacher.lastName
         // if (info.event.extendedProps.subject) {
         //   label += ' - ' + info.event.extendedProps.subject
         // }
-        tag.appendChild(document.createTextNode(label))
-        container.appendChild(tag)
+        // tag.appendChild(document.createTextNode(label))
+        // container.appendChild(tag)
       }
       if (info.event.extendedProps.room) {
         const tag = document.createElement('div')
