@@ -18,7 +18,8 @@ export const state = {
   hasWebdavEnabled: false,
   serviceList: undefined,
   schoolList: [],
-  details: {}
+  details: {},
+  selectedSchool: undefined
 }
 export const mutations = {
   initUserInformations (state, payload) {
@@ -53,6 +54,9 @@ export const mutations = {
       state.isParent = payload.isParent
     }
   },
+  setSelectedSchool (state, payload) {
+    state.selectedSchool = payload
+  },
   updateInterfacePreferences (state, payload) {
     state.themeColor = payload.themeColor
   },
@@ -69,6 +73,7 @@ export const mutations = {
     state.details.officePhoneNumber = payload.proPhone
     state.details.smsPhoneNumber = payload.SMSPhone
     state.schoolList = payload.userSchools
+    state.selectedSchool = payload.userSchools[0]
   }
 }
 export const actions = {
@@ -157,6 +162,7 @@ export const actions = {
       })
   }
 }
+
 export const getters = {
   homeSchool (state) {
     for (var index = 0; index < state.schoolList.length; ++index) {

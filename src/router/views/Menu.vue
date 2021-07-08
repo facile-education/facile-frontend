@@ -12,6 +12,9 @@
     <RouterLink to="/planning">
       Planning (0%)
     </RouterLink>
+    <RouterLink to="/horaires">
+      Horaires
+    </RouterLink>
     <RouterLink to="/not-usual-slots">
       Horaires hors cadre
     </RouterLink>
@@ -66,6 +69,11 @@
     </RouterLink>
     <RouterLink to="/tools">
       ENT Tools (0%)
+    </RouterLink>
+
+    <h2>Calendar Tests</h2>
+    <RouterLink to="/full-calendar">
+      Full Calendar
     </RouterLink>
   </Layout>
 </template>
