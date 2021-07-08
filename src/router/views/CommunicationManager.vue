@@ -9,7 +9,6 @@
 </template>
 
 <script>
-import communicationManagerStore from '@/store/modules/communicationManager.store'
 
 import Layout from '@/router/layouts/EmptyLayout'
 import CMToolbar from '@/components/CommunicationManager/CMToolbar'
@@ -23,12 +22,6 @@ export default {
     ExternalRightList,
     InternalRightList,
     Layout
-  },
-  beforeCreate () {
-    this.$store.registerModule('communicationManager', communicationManagerStore)
-  },
-  unmounted () {
-    this.$store.unregisterModule('communicationManager')
   }
 }
 </script>

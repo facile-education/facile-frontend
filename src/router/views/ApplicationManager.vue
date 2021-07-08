@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import applicationManagerStore from '@/store/modules/applicationManager.store'
 
 import Layout from '@/router/layouts/EmptyLayout'
 import AMToolbar from '@/components/ApplicationManager/AMToolbar'
@@ -32,12 +31,6 @@ export default {
     showEditionModal () {
       return this.$store.state.applicationManager.showEditionModal
     }
-  },
-  beforeCreate () {
-    this.$store.registerModule('applicationManager', applicationManagerStore)
-  },
-  unmounted () {
-    this.$store.unregisterModule('applicationManager')
   }
 }
 </script>
