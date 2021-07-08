@@ -225,15 +225,13 @@ export default {
     onDateSelect (selection) {
       if (this.selectedEvent) {
         this.unselectEvent()
+      } else {
+        this.eventToEdit = {
+          start: selection.start,
+          end: selection.end
+        }
+        this.isEditSlotModalDisplayed = true
       }
-
-      this.eventToEdit = {
-        start: selection.start,
-        end: selection.end
-      }
-      this.isEditSlotModalDisplayed = true
-
-      // TODO display add modal and add event only on success
     },
     createEvent (event) {
       const calendar = this.$refs.fullCalendar.getApi()
