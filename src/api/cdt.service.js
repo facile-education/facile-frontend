@@ -32,11 +32,11 @@ function getSessions (userId, groupId, minDate, maxDate) {
   }).then(response => response.data)
 }
 
-function getGroups () {
+function getGroups (userId) {
   return axios.get(CDT_URL, {
     params: {
       cmd: 'getGroups',
-      // userId
+      userId,
       profile: 5
     }
   }).then(response => response.data)
