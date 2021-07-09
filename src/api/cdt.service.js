@@ -44,8 +44,8 @@ function getSessions (userId, groupId, minDate, maxDate) {
       cmd: 'getHorairesSessions',
       userId,
       groupId,
-      startDate: minDate.format('DD/MM/YYYY HH:MM'),
-      endDate: maxDate.format('DD/MM/YYYY HH:MM')
+      start: minDate.format('YYYY-MM-DD HH:mm'),
+      end: maxDate.format('YYYY-MM-DD HH:mm')
     }
   }).then(response => response.data)
 }

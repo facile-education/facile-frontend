@@ -32,11 +32,7 @@ export const actions = {
     cdtService.getGroups(userId).then(
       (data) => {
         if (data.success) {
-          if (data.schools.length === 2) {
-            commit('setGroupList', [...data.schools[0].groups, ...data.schools[1].groups])
-          } else {
-            commit('setGroupList', data.schools[0].groups)
-          }
+          commit('setGroupList', data.groups)
         } else {
           console.error('Cannot get sessions ')
         }
