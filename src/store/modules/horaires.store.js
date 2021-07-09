@@ -53,7 +53,7 @@ export const actions = {
       cdtService.getSessions(state.selectedUser.userId, state.selectedGroup.groupId, state.startDate, state.endDate).then(
         (data) => {
           if (data.success) {
-            commit('setSessionList', data.sessions)
+            commit('setSessionList', [...data.sessions, ...data.schoollifeSessions])
           } else {
             console.error('Cannot get sessions ')
           }
@@ -72,12 +72,13 @@ export const actions = {
     dispatch('getSessionList')
   },
   selectGroup ({ commit, dispatch }, group) {
+    commit('setSelectedUser', { userId: 0 })
     commit('setSelectedGroup', group)
     dispatch('getSessionList')
   },
   selectUser ({ commit, dispatch }, user) {
+    commit('setSelectedGroup', { groupId: 0 })
     commit('setSelectedUser', user)
-    dispatch('getGroupList', user.userId)
     dispatch('getSessionList')
   }
 }
