@@ -2,11 +2,13 @@
   <Layout>
     <HorairesToolbar class="toolbar" />
     <Timeline
+      v-if="configuration"
       :min-date="minDate"
       :max-date="maxDate"
       @selectWeek="onSelectWeek"
     />
     <FullCalendar
+      v-if="configuration"
       ref="fullCalendar"
       :options="calendarOptions"
     />
@@ -40,12 +42,6 @@ export default {
     }
   },
   computed: {
-    minDate () {
-      return dayjs('2020-09-01', 'YYYY-MM-DD')
-    },
-    maxDate () {
-      return dayjs('2021-07-30', 'YYYY-MM-DD')
-    },
     calendarOptions () {
       return {
         locale: frLocale,
@@ -67,13 +63,15 @@ export default {
         eventClick: this.onEventClick,
         eventDidMount: this.onEventMount,
         views: {
+          // {"configuration":{"startDayTime":"08:00","endDayTime":"17:30","startDateSchool":"12/10/2020 00:00",
+          // "endDateSchool":"09/07/2021 00:00","schoolDays":[1,2,3,4,5]},"success":true}
           timeGrid: {
             allDaySlot: false,
-            hiddenDays: [6, 0], // TODO get from config service
+            hiddenDays: this.hiddenDays,
             nowIndicator: true,
             slotDuration: '01:00:00',
-            slotMinTime: '08:00:00', // TODO get from config service
-            slotMaxTime: '18:00:00', // TODO get from config service
+            slotMinTime: this.configuration.startDayTime,
+            slotMaxTime: this.configuration.endDayTime,
             slotLabelDidMount: this.onSlotMount
           }
         },
@@ -81,13 +79,31 @@ export default {
           this.eventList.map(slot => this.formatCalendarSlot(slot))
       }
     },
+    configuration () {
+      return (this.$store.state.cdt.configuration.schoolDays.length > 0) ? this.$store.state.cdt.configuration : undefined
+    },
     eventList () {
       return this.$store.state.horaires.sessionList
+    },
+    hiddenDays () {
+      const hiddenDays = []
+      let dayNumber
+      for (dayNumber = 0; dayNumber <= 6; ++dayNumber) {
+        if (this.configuration.schoolDays.indexOf(dayNumber) === -1) {
+          hiddenDays.push(dayNumber)
+        }
+      }
+      return hiddenDays
+    },
+    minDate () {
+      return dayjs(this.configuration.startDateSchool, 'DD/MM/YYYY HH:mm')
+    },
+    maxDate () {
+      return dayjs(this.configuration.endDateSchool, 'DD/MM/YYYY HH:mm')
     }
   },
   created () {
-    this.$store.dispatch('user/initUserInformations')
-    this.$store.dispatch('user/getPersonalDetails')
+    this.$store.dispatch('cdt/getConfiguration')
   },
   methods: {
     formatCalendarSlot (slot) {
