@@ -2,6 +2,7 @@ import axios from 'axios'
 // import constants from '@/api/constants'
 
 export default {
+  getConfiguration,
   getGroups,
   getSessions
 }
@@ -12,32 +13,39 @@ const CDT_URL = '/group/314141/cahier-de-texte?p_p_id=cdt_WAR_cdtportlet&p_p_lif
 // '&cmd=getGroups&profile=5&userId=333930'
 
 /**
- * Get the student's slots in the specified amount of time
+ * Get CDT configuration
+ */
+function getConfiguration () {
+  return axios.get(CDT_URL, {
+    params: {
+      cmd: 'getConfiguration'
+    }
+  }).then(response => response.data)
+}
+
+/**
+ * Get group list
+ */
+function getGroups () {
+  return axios.get(CDT_URL, {
+    params: {
+      cmd: 'getAllGroups'
+    }
+  }).then(response => response.data)
+}
+
+/**
+ * Get the user or group session list for specified date range
  */
 function getSessions (userId, groupId, minDate, maxDate) {
   // WS : CDT_PATH + constants.JSON_WS_URL + '/cdtsession/priv-get-sessions'
   return axios.get(CDT_URL, {
     params: {
-      cmd: 'getSessions',
+      cmd: 'getHorairesSessions',
       userId,
       groupId,
-      profile: 5,
       startDate: minDate.format('DD/MM/YYYY HH:MM'),
       endDate: maxDate.format('DD/MM/YYYY HH:MM')
-      // userId,
-      // groupId,
-      // start: minDate.format('YYYY-MM-DD HH:mm'),
-      // end: maxDate.format('YYYY-MM-DD HH:mm')
-    }
-  }).then(response => response.data)
-}
-
-function getGroups (userId) {
-  return axios.get(CDT_URL, {
-    params: {
-      cmd: 'getGroups',
-      userId,
-      profile: 5
     }
   }).then(response => response.data)
 }

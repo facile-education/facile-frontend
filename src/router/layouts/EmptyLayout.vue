@@ -8,7 +8,11 @@
 
 export default {
   components: {},
-  computed: {}
+  computed: {},
+  created () {
+    this.$store.dispatch('user/initUserInformations')
+    this.$store.dispatch('user/getPersonalDetails')
+  }
 }
 </script>
 
