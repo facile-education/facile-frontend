@@ -63,8 +63,6 @@ export default {
         eventClick: this.onEventClick,
         eventDidMount: this.onEventMount,
         views: {
-          // {"configuration":{"startDayTime":"08:00","endDayTime":"17:30","startDateSchool":"12/10/2020 00:00",
-          // "endDateSchool":"09/07/2021 00:00","schoolDays":[1,2,3,4,5]},"success":true}
           timeGrid: {
             allDaySlot: false,
             hiddenDays: this.hiddenDays,
@@ -100,6 +98,9 @@ export default {
     },
     maxDate () {
       return dayjs(this.configuration.endDateSchool, 'DD/MM/YYYY HH:mm')
+    },
+    isTeacherSelected () {
+      return this.$store.state.horaires.selectedUser.teacherId > 0
     }
   },
   created () {
@@ -107,14 +108,15 @@ export default {
   },
   methods: {
     formatCalendarSlot (slot) {
+      const title = this.isTeacherSelected ? slot.className : slot.title
       return {
         extendedProps: {
           id: slot.sessionId,
-          subject: slot.title,
+          subject: slot.subject,
           teachers: slot.teachers,
           room: slot.room
         },
-        title: slot.title,
+        title,
         start: dayjs(slot.startDate, 'DD/MM/YYYY HH:mm').format('YYYY-MM-DDTHH:mm'),
         end: dayjs(slot.endDate, 'DD/MM/YYYY HH:mm').format('YYYY-MM-DDTHH:mm'),
         backgroundColor: slot.color,
@@ -129,7 +131,10 @@ export default {
         const teachers = info.event.extendedProps.teachers
         let label = ''
         for (let index = 0; index < teachers.length; ++index) {
-          label += (index === 0) ? teachers[index].fullName : ', ' + teachers[index].fullName
+          if (!this.isTeacherSelected || teachers[index].userId !== this.$store.state.horaires.selectedUser.teacherId) {
+            const name = teachers[index].firstName.substring(0, 1) + '. ' + teachers[index].lastName
+            label += (label === '') ? name : ', ' + name
+          }
         }
         tag.appendChild(document.createTextNode(label))
         container.appendChild(tag)
