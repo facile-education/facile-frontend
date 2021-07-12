@@ -15,7 +15,13 @@ const app = createApp(App)
   .use(store)
   .use(router)
   .use(i18n)
-  .use(VueMq)
+  .use(VueMq, { // Responsive breakpoints
+    breakpoints: {
+      phone: 450,
+      tablet: 800,
+      desktop: Infinity
+    }
+  })
 
 // Register Pentila components globally
 Object.keys(PentilaComponents).forEach(name => {

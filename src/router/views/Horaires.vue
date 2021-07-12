@@ -1,17 +1,23 @@
 <template>
   <Layout>
     <HorairesToolbar class="toolbar" />
-    <Timeline
-      v-if="configuration"
-      :min-date="minDate"
-      :max-date="maxDate"
-      @selectWeek="onSelectWeek"
-    />
-    <FullCalendar
-      v-if="configuration"
-      ref="fullCalendar"
-      :options="calendarOptions"
-    />
+    <template v-if="configuration">
+      <DatepickerNav
+        v-if="$device.phone"
+        @selectDate="onSelectDate"
+      />
+      <Timeline
+        v-else
+        :min-date="minDate"
+        :max-date="maxDate"
+        @selectWeek="onSelectWeek"
+      />
+      <FullCalendar
+        ref="fullCalendar"
+        :options="calendarOptions"
+      />
+    </template>
+    <!-- else = spinner -->
   </Layout>
 </template>
 
@@ -25,12 +31,14 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import Layout from '@/router/layouts/EmptyLayout'
 import HorairesToolbar from '@/components/Horaires/HorairesToolbar'
 import Timeline from '@/components/Horaires/Timeline'
+import DatepickerNav from '@/components/Horaires/DatepickerNav'
 
 dayjs.extend(customParseFormat)
 
 export default {
   name: 'Horaires',
   components: {
+    DatepickerNav,
     FullCalendar,
     HorairesToolbar,
     Layout,
@@ -46,7 +54,7 @@ export default {
       return {
         locale: frLocale,
         plugins: [timeGridPlugin],
-        initialView: 'timeGridWeek', // TODO Change to timeGridDay on mobile
+        initialView: this.$device.phone ? 'timeGridDay' : 'timeGridWeek',
         height: 'calc(100% - 50px)',
         expandRows: true,
         headerToolbar: {
@@ -159,6 +167,14 @@ export default {
 
       info.el.parentNode.classList.add('selected')
       this.selectedEvent = info
+    },
+    onSelectDate (date) {
+      if (this.$refs.fullCalendar) {
+        const calendar = this.$refs.fullCalendar.getApi()
+        calendar.gotoDate(date)
+      }
+      this.$store.dispatch('horaires/selectDates',
+        { start: dayjs(date), end: dayjs(date).add(1, 'day') })
     },
     onSelectWeek (week) {
       if (this.$refs.fullCalendar) {
