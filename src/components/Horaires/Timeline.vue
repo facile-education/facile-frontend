@@ -96,7 +96,7 @@ export default {
       default: 2
     }
   },
-  emits: ['selectWeek', 'changeWeek'],
+  emits: ['selectWeek'],
   data () {
     return {
       startDate: undefined,
