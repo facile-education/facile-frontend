@@ -30,11 +30,6 @@ const routes = [
     path: '/horaires',
     name: 'Horaires',
     component: () => import(/* webpackChunkName: "about" */ '@/router/views/Horaires')
-  },
-  {
-    path: '/full-calendar',
-    name: 'Full Calendar',
-    component: () => import(/* webpackChunkName: "about" */ '@/router/views/FullCalendarTest.vue')
   }
 ]
 
