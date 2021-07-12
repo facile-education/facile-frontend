@@ -66,7 +66,7 @@
           v-if="selectedEvent.event.extendedProps.room"
           class="room"
         >
-          {{ selectedEvent.event.extendedProps.room }}
+          {{ formattedRoomAndPlaces }}
         </div>
       </div>
     </template>
@@ -116,6 +116,9 @@ export default {
     formattedTeacherName () {
       return this.selectedEvent.event.extendedProps.teacher.firstName + ' ' + this.selectedEvent.event.extendedProps.teacher.lastName +
         (this.selectedEvent.event.extendedProps.subject ? ' - ' : '')
+    },
+    formattedRoomAndPlaces () {
+      return this.selectedEvent.event.extendedProps.room + (this.selectedEvent.event.extendedProps.inscriptionLeft !== undefined ? (' - ' + this.selectedEvent.event.extendedProps.inscriptionLeft + ' ' + this.$t('NotUsualSlots.remainingPlaces') + (this.selectedEvent.event.extendedProps.inscriptionLeft > 1 ? 's' : '')) : '')
     }
   },
   methods: {
