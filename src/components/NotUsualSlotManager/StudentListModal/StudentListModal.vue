@@ -14,20 +14,30 @@
     </template>
 
     <template #body>
-      <h1>{{ slotType.label }}</h1>
-      <div class="slot">
-        <span v-t="'NotUsualSlots.StudentListModal.slot'" />
-        <span>{{ formattedSlot }}</span>
+      <div class="body">
+        <h1>{{ slotType.label }}</h1>
+        <div class="slot">
+          <span v-t="'NotUsualSlots.StudentListModal.slot'" />
+          <span>{{ formattedSlot }}</span>
+        </div>
+        <div class="student-list">
+          <div class="list-header">
+            <div
+              v-t="'NotUsualSlots.StudentListModal.present'"
+              class="present-label"
+            />
+          </div>
+          <StudentListItem
+            v-for="(student, index) in studentList"
+            :key="index"
+            :student="student"
+            :event="event"
+            :is-current-teacher="isCurrentTeacher"
+            @update:isPresent="setPresent"
+            @deregistreStudent="loadStudentList"
+          />
+        </div>
       </div>
-      <StudentListItem
-        v-for="(student, index) in studentList"
-        :key="index"
-        :student="student"
-        :event="event"
-        :is-current-teacher="isCurrentTeacher"
-        @update:isPresent="setPresent"
-        @deregistreStudent="loadStudentList"
-      />
     </template>
 
     <template #footer />
@@ -108,11 +118,45 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss">
+  .student-list-modal .window-body {
+    overflow: auto;
+  }
+</style>
 
-.student-list-modal {
-  font-family: "Roboto", sans-serif;
-  color: #0B3C5F;
-}
+<style lang="scss" scoped>
+  .student-list-modal {
+    font-family: "Roboto", sans-serif;
+    color: #0B3C5F;
+  }
 
+  .body{
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+  }
+
+  h1 {
+    font-size: 1.25em;
+  }
+
+  .slot {
+    font-weight: bold;
+  }
+
+  .student-list {
+    padding-left: 35px;
+    padding-right: 5px;
+
+    .list-header {
+      width: 100%;
+      display: flex;
+
+      .present-label {
+        margin-left: auto;
+        margin-right: 33px;
+        font-size: 0.90em;
+      }
+    }
+  }
 </style>

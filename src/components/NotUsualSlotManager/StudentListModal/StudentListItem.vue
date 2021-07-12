@@ -6,11 +6,13 @@
         v-if="isCurrentTeacher"
         class="is-present-checkbox"
         label=""
+        :title="$t('NotUsualSlots.StudentListModal.present')"
         :model-value="student.isPresent"
         @update:modelValue="handleCheck"
       />
       <i
         class="fas fa-sign-out-alt"
+        :title="$t('NotUsualSlots.StudentListModal.unsubscribe')"
         @click="isStudentDeregistrationModalDisplayed = true"
       />
     </div>
@@ -57,13 +59,17 @@ export default {
   },
   computed: {
     formattedStudent () {
-      return this.student.firstName + ' ' + this.student.lastName + ' ' + this.student.className
+      return this.toPascalCase(this.student.firstName) + ' ' + this.toPascalCase(this.student.lastName) + ' - ' + this.student.className
     }
   },
   created () {
     this.isPresent = this.student.isPresent
   },
   methods: {
+    toPascalCase (string) {
+      return string.replace(/(\w)(\w*)/g,
+        (g0, g1, g2) => { return g1.toUpperCase() + g2.toLowerCase() })
+    },
     deregistreStudent () {
       this.$emit('deregistreStudent')
     },
@@ -74,14 +80,23 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .student {
   display: flex;
+  margin: 10px 0;
 }
 
 .right-section {
   display: flex;
   margin-left: auto;
+}
+
+.is-present-checkbox {
+  margin-right: 30px;
+}
+
+.fa-sign-out-alt {
+  cursor: pointer;
 }
 
 </style>
