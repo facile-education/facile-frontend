@@ -1,15 +1,17 @@
 <template>
   <div class="student">
     <span v-t="formattedStudent" />
-    <PentilaCheckbox
-      class="is-present-checkbox"
-      label=""
-      :model-value="isPresent"
-      @update:modelValue="handleCheck"
-    />
-    <div @click="isStudentDeregistrationModalDisplayed = true">
+    <div class="right-section">
+      <PentilaCheckbox
+        v-if="isCurrentTeacher"
+        class="is-present-checkbox"
+        label=""
+        :model-value="student.isPresent"
+        @update:modelValue="handleCheck"
+      />
       <i
         class="fas fa-sign-out-alt"
+        @click="isStudentDeregistrationModalDisplayed = true"
       />
     </div>
 
@@ -41,12 +43,15 @@ export default {
     event: {
       type: Object,
       required: true
+    },
+    isCurrentTeacher: {
+      type: Boolean,
+      default: true
     }
   },
-  emits: ['deregistreStudent'],
+  emits: ['deregistreStudent', 'update:isPresent'],
   data () {
     return {
-      isPresent: false,
       isStudentDeregistrationModalDisplayed: false
     }
   },
@@ -63,12 +68,7 @@ export default {
       this.$emit('deregistreStudent')
     },
     handleCheck (check) {
-      if (check) {
-        // mark as present
-      } else {
-        // mark as absent
-      }
-      this.notifyParents = check
+      this.$emit('update:isPresent', { student: this.student, isPresent: check })
     }
   }
 }
@@ -79,7 +79,8 @@ export default {
   display: flex;
 }
 
-.is-present-checkbox {
+.right-section {
+  display: flex;
   margin-left: auto;
 }
 
