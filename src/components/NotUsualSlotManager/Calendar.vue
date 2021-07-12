@@ -1,6 +1,12 @@
 <template>
   <div class="calendar">
     <PentilaSpinner v-if="isSpinnerDisplayed" />
+    <Timeline
+      v-if="configuration"
+      :min-date="minDate"
+      :max-date="maxDate"
+      @selectWeek="onSelectWeek"
+    />
     <FullCalendar
       ref="fullCalendar"
       :options="calendarOptions"
@@ -51,11 +57,17 @@ import frLocale from '@fullcalendar/core/locales/fr'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import StudentListModal from '@components/NotUsualSlotManager/StudentListModal/StudentListModal'
-import StudentRegistrationModal from '@components/NotUsualSlotManager/StudentRegistrationModal/StudentRegistrationModal' // Needed for event creation
+import StudentRegistrationModal from '@components/NotUsualSlotManager/StudentRegistrationModal/StudentRegistrationModal'
+import Timeline from '@components/Horaires/Timeline' // Needed for event creation
+import dayjs from 'dayjs'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
+
+dayjs.extend(customParseFormat)
 
 export default {
   name: 'Calendar',
   components: {
+    Timeline,
     StudentRegistrationModal,
     StudentListModal,
     EditSlotModal,
@@ -84,8 +96,17 @@ export default {
     queriedUser () {
       return this.$store.state.notUsualSlots.queriedUser
     },
+    configuration () {
+      return (this.$store.state.cdt.configuration.schoolDays.length > 0) ? this.$store.state.cdt.configuration : undefined
+    },
+    minDate () {
+      return dayjs(this.configuration.startDateSchool, 'DD/MM/YYYY HH:mm')
+    },
+    maxDate () {
+      return dayjs(this.configuration.endDateSchool, 'DD/MM/YYYY HH:mm')
+    },
     calendarOptions () {
-      const vm = this
+      // const vm = this
       return {
         locale: frLocale,
         plugins: [timeGridPlugin, interactionPlugin],
@@ -93,53 +114,9 @@ export default {
         height: '100%',
         expandRows: true,
         headerToolbar: {
-          left: 'customPrevious,customNext customToday',
+          left: '',
           center: '',
           right: ''
-        },
-        customButtons: {
-          customPrevious: {
-            text: '<',
-            click: function () {
-              if (vm.selectedEvent) {
-                vm.unselectEvent()
-              }
-              const calendar = vm.$refs.fullCalendar.getApi()
-              calendar.prev()
-              vm.$store.dispatch('notUsualSlots/setDisplayedDates', {
-                startDate: moment(calendar.currentData.currentDate).startOf('week'),
-                endDate: moment(calendar.currentData.currentDate).endOf('week')
-              })
-            }
-          },
-          customNext: {
-            text: '>',
-            click: function () {
-              if (vm.selectedEvent) {
-                vm.unselectEvent()
-              }
-              const calendar = vm.$refs.fullCalendar.getApi()
-              calendar.next()
-              vm.$store.dispatch('notUsualSlots/setDisplayedDates', {
-                startDate: moment(calendar.currentData.currentDate).startOf('week'),
-                endDate: moment(calendar.currentData.currentDate).endOf('week')
-              })
-            }
-          },
-          customToday: {
-            text: this.$t('Moment.today'),
-            click: function () {
-              if (vm.selectedEvent) {
-                vm.unselectEvent()
-              }
-              const calendar = vm.$refs.fullCalendar.getApi()
-              calendar.today()
-              vm.$store.dispatch('notUsualSlots/setDisplayedDates', {
-                startDate: moment(calendar.currentData.currentDate).startOf('week'),
-                endDate: moment(calendar.currentData.currentDate).endOf('week')
-              })
-            }
-          }
         },
         selectable: true,
         selectAllow: this.allowSelection,
@@ -181,6 +158,14 @@ export default {
     allowSelection (selectInfo) {
       // TODO disable selection if the current user has not the good role
       return selectInfo.start.getDay() === selectInfo.end.getDay()
+    },
+    onSelectWeek (week) {
+      if (this.$refs.fullCalendar) {
+        const calendar = this.$refs.fullCalendar.getApi()
+        calendar.gotoDate(new Date(week.firstDayOfWeek))
+      }
+      this.$store.dispatch('notUsualSlots/setDisplayedDates',
+        { startDate: moment(week.firstDayOfWeek, 'YYYY-MM-DD'), endDate: moment(week.lastDayOfWeek, 'YYYY-MM-DD') })
     },
     formatCalendarSlot (slot) {
       let title = slot.title
