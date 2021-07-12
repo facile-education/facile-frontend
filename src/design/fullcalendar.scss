@@ -25,8 +25,8 @@ $selected-background-filter-color: #FFFFFF99;
 }
 
 .grayed {
-  //filter: grayscale(60%);
-  filter: opacity(60%);
+  filter: grayscale(100%);
+  //filter: opacity(60%);
   //filter: grayscale(60%) opacity(60%);
 }
 
@@ -63,6 +63,12 @@ $selected-background-filter-color: #FFFFFF99;
     .short-text {
       display: none;
     }
+  }
+
+  .full-text, .short-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .fc-event-room {
