@@ -160,6 +160,7 @@
     },
     "StudentListModal": {
       "header": "Liste des élèves",
+      "noStudentPresent": "Actuellement, aucun élève n'est inscrit sur ce créneau",
       "present": "Présence",
       "slot": "Créneau: ",
       "unsubscribe": "Désinscrire"

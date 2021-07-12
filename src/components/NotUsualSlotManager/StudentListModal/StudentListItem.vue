@@ -34,6 +34,8 @@
 
 <script>
 import StudentRegistrationModal from '@components/NotUsualSlotManager/StudentRegistrationModal/StudentRegistrationModal'
+import { toPascalCase } from '@/utils/commons.util'
+
 export default {
   name: 'StudentListItem',
   components: { StudentRegistrationModal },
@@ -59,17 +61,13 @@ export default {
   },
   computed: {
     formattedStudent () {
-      return this.toPascalCase(this.student.firstName) + ' ' + this.toPascalCase(this.student.lastName) + ' - ' + this.student.className
+      return toPascalCase(this.student.firstName) + ' ' + toPascalCase(this.student.lastName) + ' - ' + this.student.className
     }
   },
   created () {
     this.isPresent = this.student.isPresent
   },
   methods: {
-    toPascalCase (string) {
-      return string.replace(/(\w)(\w*)/g,
-        (g0, g1, g2) => { return g1.toUpperCase() + g2.toLowerCase() })
-    },
     deregistreStudent () {
       this.$emit('deregistreStudent')
     },

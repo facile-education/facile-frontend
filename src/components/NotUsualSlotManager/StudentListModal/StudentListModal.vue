@@ -20,9 +20,14 @@
           <span v-t="'NotUsualSlots.StudentListModal.slot'" />
           <span>{{ formattedSlot }}</span>
         </div>
-        <div class="student-list">
+        <PentilaSpinner v-if="isLoading" />
+        <div
+          v-else-if="studentList.length > 0"
+          class="student-list"
+        >
           <div class="list-header">
             <div
+              v-if="isCurrentTeacher"
               v-t="'NotUsualSlots.StudentListModal.present'"
               class="present-label"
             />
@@ -37,6 +42,11 @@
             @deregistreStudent="loadStudentList"
           />
         </div>
+        <div
+          v-else
+          v-t="'NotUsualSlots.StudentListModal.noStudentPresent'"
+          class="no-students-placeholder"
+        />
       </div>
     </template>
 
@@ -63,7 +73,8 @@ export default {
   emits: ['close'],
   data () {
     return {
-      studentList: []
+      studentList: [],
+      isLoading: false
     }
   },
   computed: {
@@ -85,7 +96,9 @@ export default {
   },
   methods: {
     loadStudentList () {
+      this.isLoading = true
       schoolLifeService.getSessionMembers(this.event.extendedProps.id).then((data) => {
+        this.isLoading = false
         if (data.success) {
           this.studentList = data.members
         }
@@ -158,5 +171,14 @@ export default {
         font-size: 0.90em;
       }
     }
+  }
+
+  .no-students-placeholder {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25em;
   }
 </style>
