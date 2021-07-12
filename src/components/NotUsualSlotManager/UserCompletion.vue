@@ -46,7 +46,7 @@ export default {
   },
   computed: {
     selectedSchool () {
-      return this.$store.state.notUsualSlots.selectedSchool
+      return this.$store.state.user.selectedSchool
     },
     queriedUser () {
       return this.tagsList[0]

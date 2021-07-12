@@ -20,6 +20,7 @@
     "axios": "^0.21.1",
     "color-convert": "^2.0.1",
     "core-js": "^3.6.5",
+    "dayjs": "^1.10.6",
     "normalize.css": "^8.0.1",
     "pentila-components": "git+ssh://git@gitlab.pentila.com:vue/pentila-components.git#v0.2.9",
     "pentila-utils": "git+ssh://git@gitlab.pentila.com:vue/pentila-utils.git#v0.1.3",
