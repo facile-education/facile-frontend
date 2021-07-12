@@ -160,7 +160,9 @@
     },
     "StudentListModal": {
       "header": "Liste des élèves",
-      "slot": "Créneau: "
+      "present": "Présence",
+      "slot": "Créneau: ",
+      "unsubscribe": "Désinscrire"
     },
     "StudentRegistrationModal": {
       "commentPlaceholder": "Saisir un motif",
