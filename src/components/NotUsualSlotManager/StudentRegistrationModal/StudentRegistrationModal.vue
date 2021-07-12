@@ -60,6 +60,7 @@
 
 import notUsualSlotsConstants from '@/constants/notUsualSlots'
 import schoolLifeService from '@/api/schoolLife-portlet.service'
+import { toPascalCase } from '@/utils/commons.util'
 import moment from 'moment'
 
 export default {
@@ -82,7 +83,7 @@ export default {
   data () {
     return {
       comment: '',
-      notifyParents: false
+      notifyParents: true
     }
   },
   computed: {
@@ -90,7 +91,7 @@ export default {
       return notUsualSlotsConstants.getSlotTypeByNumber(this.event.extendedProps.type)
     },
     formattedStudent () {
-      return this.student.firstName + ' ' + this.student.lastName
+      return toPascalCase(this.student.firstName) + ' ' + toPascalCase(this.student.lastName) + ' - ' + this.student.className
     },
     formattedSlot () {
       return moment(this.event.start, 'YYYY-MM-DDTHH:mm').format('DD/MM/YYYY ' + this.$t('Moment.at') + ' HH:mm')
@@ -150,6 +151,30 @@ export default {
   color: $color-cadyco-dark-text;
 }
 
+h1 {
+  font-size: 1.25em;
+}
+
+.student, .slot {
+  font-weight: bold;
+}
+
+.slot{
+  margin: 10px 0 15px 0;
+}
+
+textarea {
+  width: 100%;
+  height: 100px;
+  margin-bottom: 15px;
+  padding: 10px 10px;
+  line-height: 10px;
+  resize: none;
+  border: 1px solid $color-cadyco-dark-text;
+  border-radius: 6px;
+  color: $color-cadyco-dark-text;
+}
+
 .footer {
   margin-top: auto;
   width: 100%;
@@ -169,16 +194,6 @@ export default {
   margin: 0 10px;
   color: white;
   cursor: pointer;
-}
-
-textarea {
-  width: 100%;
-  padding: 10px 10px;
-  line-height: 10px;
-  resize: none;
-  border: 1px solid $color-cadyco-dark-text;
-  border-radius: 6px;
-  color: $color-cadyco-dark-text;
 }
 
 .confirm-button {
