@@ -146,11 +146,14 @@ function registerStudent (student, slotId, comment, notifyParents) {
 /**
  * UnRegister student from a not usual slot (fields: success)
  */
-function unRegisterStudent (student, slotId) {
-  return axios.get(SCHOOL_LIFE_PATH + constants.JSON_WS_URL + '/schoollifesessionstudent/register-student', {
+function unRegisterStudent (student, slotId, comment, notifyParents, allSessions) {
+  return axios.get(SCHOOL_LIFE_PATH + constants.JSON_WS_URL + '/schoollifesessionstudent/unregister-student', {
     params: {
       studentId: student.studentId,
-      schoollifeSessionId: slotId
+      schoollifeSessionId: slotId,
+      comment: comment,
+      notifyParents: notifyParents,
+      allSessions: allSessions
     }
   }).then(response => response.data)
 }

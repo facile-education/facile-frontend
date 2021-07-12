@@ -28,6 +28,7 @@
     <StudentRegistrationModal
       v-if="isRegistrationModalDisplayed"
       :event="eventToEdit"
+      :student="queriedUser"
       @close="isRegistrationModalDisplayed = false"
     />
     <StudentListModal
@@ -79,6 +80,9 @@ export default {
   computed: {
     isSpinnerDisplayed () {
       return this.$store.getters['currentActions/areActionsInProgress']
+    },
+    queriedUser () {
+      return this.$store.state.notUsualSlots.queriedUser
     },
     calendarOptions () {
       const vm = this

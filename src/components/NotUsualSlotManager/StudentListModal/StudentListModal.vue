@@ -14,10 +14,17 @@
     </template>
 
     <template #body>
+      <h1>{{ slotType.label }}</h1>
+      <div class="slot">
+        <span v-t="'NotUsualSlots.StudentListModal.slot'" />
+        <span>{{ formattedSlot }}</span>
+      </div>
       <StudentListItem
         v-for="(student, index) in studentList"
         :key="index"
         :student="student"
+        :event="event"
+        @deregistreStudent="loadStudentList"
       />
     </template>
 
@@ -29,6 +36,8 @@
 
 import schoolLifeService from '@/api/schoolLife-portlet.service'
 import StudentListItem from '@components/NotUsualSlotManager/StudentListModal/StudentListItem'
+import notUsualSlotsConstants from '@/constants/notUsualSlots'
+import moment from 'moment'
 
 export default {
   name: 'StudentListModal',
@@ -45,17 +54,28 @@ export default {
       studentList: []
     }
   },
-  created () {
-    schoolLifeService.getSessionMembers(this.event.extendedProps.id).then((data) => {
-      if (data.success) {
-        this.studentList = data.members
-      }
+  computed: {
+    slotType () {
+      return notUsualSlotsConstants.getSlotTypeByNumber(this.event.extendedProps.type)
     },
-    (err) => {
-      console.log(err)
-    })
+    formattedSlot () {
+      return moment(this.event.start, 'YYYY-MM-DDTHH:mm').format('DD/MM/YYYY ' + this.$t('Moment.at') + ' HH:mm')
+    }
+  },
+  created () {
+    this.loadStudentList()
   },
   methods: {
+    loadStudentList () {
+      schoolLifeService.getSessionMembers(this.event.extendedProps.id).then((data) => {
+        if (data.success) {
+          this.studentList = data.members
+        }
+      },
+      (err) => {
+        console.log(err)
+      })
+    },
     closeModal () {
       this.$emit('close')
     }
