@@ -11,7 +11,8 @@ export default {
   getWeekSession,
   getSessionMembers,
   registerStudent,
-  unRegisterStudent
+  unRegisterStudent,
+  markStudentsPresent
 }
 
 const SCHOOL_LIFE_PATH = '/schoollife-portlet'
@@ -154,6 +155,18 @@ function unRegisterStudent (student, slotId, comment, notifyParents, allSessions
       comment: comment,
       notifyParents: notifyParents,
       allSessions: allSessions
+    }
+  }).then(response => response.data)
+}
+
+/**
+ * StudentsPresence is a json containing all the students of a slot with a boolean 'isPresent' (fields: success)
+ */
+function markStudentsPresent (slotId, studentsPresence) {
+  return axios.get(SCHOOL_LIFE_PATH + constants.JSON_WS_URL + '/schoollifesessionstudent/mark-students-present', {
+    params: {
+      schoollifeSessionId: slotId,
+      studentsPresence: studentsPresence
     }
   }).then(response => response.data)
 }

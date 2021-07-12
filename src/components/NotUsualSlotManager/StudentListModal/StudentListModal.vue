@@ -24,6 +24,8 @@
         :key="index"
         :student="student"
         :event="event"
+        :is-current-teacher="isCurrentTeacher"
+        @update:isPresent="setPresent"
         @deregistreStudent="loadStudentList"
       />
     </template>
@@ -60,6 +62,12 @@ export default {
     },
     formattedSlot () {
       return moment(this.event.start, 'YYYY-MM-DDTHH:mm').format('DD/MM/YYYY ' + this.$t('Moment.at') + ' HH:mm')
+    },
+    currentUser () {
+      return this.$store.state.user
+    },
+    isCurrentTeacher () {
+      return this.currentUser.userId === this.event.extendedProps.teacher.teacherId
     }
   },
   created () {
@@ -76,7 +84,24 @@ export default {
         console.log(err)
       })
     },
+    markStudentPresents () {
+      const jsonStudentPresence = JSON.stringify(this.studentList)
+      schoolLifeService.markStudentsPresent(this.event.extendedProps.id, jsonStudentPresence).then((data) => {
+        if (data.success) {
+          this.studentList = data.members
+        }
+      },
+      (err) => {
+        console.log(err)
+      })
+    },
+    setPresent ({ student, isPresent }) { // Todo, not get currentStudent by event but directly from for method
+      student.isPresent = isPresent
+    },
     closeModal () {
+      if (this.isCurrentTeacher) {
+        this.markStudentPresents()
+      }
       this.$emit('close')
     }
   }

@@ -31,11 +31,13 @@
         <span>{{ formattedSlot }}</span>
       </div>
       <textarea
+        v-if="isCommentDisplayed"
         v-model="comment"
         :placeholder="$t('NotUsualSlots.StudentRegistrationModal.commentPlaceholder')"
         @keydown.enter.stop=""
       />
       <PentilaCheckbox
+        v-if="isNotifyParentsDisplayed"
         :label="$t('NotUsualSlots.StudentRegistrationModal.notifyParents')"
         :model-value="notifyParents"
         @update:modelValue="handleCheck"
@@ -92,6 +94,14 @@ export default {
     },
     formattedSlot () {
       return moment(this.event.start, 'YYYY-MM-DDTHH:mm').format('DD/MM/YYYY ' + this.$t('Moment.at') + ' HH:mm')
+    },
+    isCommentDisplayed () {
+      return !this.deregistration && this.slotType.type === notUsualSlotsConstants.detentionType
+    },
+    isNotifyParentsDisplayed () {
+      return (!this.deregistration && this.slotType.type === notUsualSlotsConstants.detentionType) ||
+        this.slotType.type === notUsualSlotsConstants.replayTestType ||
+        this.slotType.type === notUsualSlotsConstants.studyType
     }
   },
   methods: {
