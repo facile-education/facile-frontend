@@ -58,9 +58,7 @@ export default {
   data () {
     return {
       slotTypes: notUsualSlotConstants.slotTypes,
-      selectedSchool: undefined,
-      minDate: undefined,
-      maxDate: undefined
+      selectedSchool: undefined
     }
   },
   computed: {
@@ -78,6 +76,7 @@ export default {
     }
   },
   created () {
+    this.$store.dispatch('cdt/getConfiguration')
     this.$store.dispatch('notUsualSlots/setDisplayedDates', {
       startDate: moment().startOf('week'),
       endDate: moment().endOf('week')
