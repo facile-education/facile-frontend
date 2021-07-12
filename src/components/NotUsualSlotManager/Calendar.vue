@@ -183,9 +183,9 @@ export default {
       return selectInfo.start.getDay() === selectInfo.end.getDay()
     },
     formatCalendarSlot (slot) {
-      let title = slot.subject
+      let title = slot.title
       let color = slot.color
-      if (title === undefined && slot.type !== undefined) {
+      if (slot.subject === undefined && slot.type !== undefined) {
         const slotType = notUsualSlotsConstants.getSlotTypeByNumber(slot.type)
         title = slotType.label
         color = slotType.color
@@ -194,7 +194,7 @@ export default {
       return {
         extendedProps: {
           id: slot.cdtSessionId || slot.schoollifeSessionId,
-          subject: slot.title,
+          subject: slot.subject,
           teacher: slot.teacher,
           inscriptionLeft: slot.remainingCapacity,
           room: slot.room,
@@ -275,29 +275,28 @@ export default {
         //   label += ' - ' + info.event.extendedProps.subject
         // }
         tag.appendChild(document.createTextNode(label))
+        tag.setAttribute('title', label)
         container.appendChild(tag)
         tag = document.createElement('div')
         tag.classList.add('short-text')
-        label = info.event.extendedProps.teacher.firstName[0] + '. ' + info.event.extendedProps.teacher.lastName
+        label = info.event.extendedProps.teacher.teacherId !== -1 ? (info.event.extendedProps.teacher.firstName[0] + '. ' + info.event.extendedProps.teacher.lastName) : ''
         // if (info.event.extendedProps.subject) {
         //   label += ' - ' + info.event.extendedProps.subject
         // }
         tag.appendChild(document.createTextNode(label))
+        tag.setAttribute('title', label)
         container.appendChild(tag)
       }
       if (info.event.extendedProps.room) {
         const tag = document.createElement('div')
         tag.classList.add('fc-event-room')
-        const label = info.event.extendedProps.room
+        const label = this.formattedRoomAndPlacesLabel(info.event)
         tag.appendChild(document.createTextNode(label))
         container.appendChild(tag)
       }
-      if (info.event.extendedProps.inscriptionLeft) {
-        const tag = document.createElement('div')
-        tag.classList.add('fc-event-inscription')
-        tag.appendChild(document.createTextNode(info.event.extendedProps.inscriptionLeft))
-        container.appendChild(tag)
-      }
+    },
+    formattedRoomAndPlacesLabel (event) {
+      return (event.extendedProps.inscriptionLeft !== undefined ? (event.extendedProps.inscriptionLeft + ' ' + this.$t('NotUsualSlots.remainingPlaces') + (event.extendedProps.inscriptionLeft > 1 ? 's' : '')) : '')
     },
     onSlotMount (info) {
       // console.log('mounted slot', info.text)
@@ -393,6 +392,7 @@ $selected-background-filter-color: #FFFFFF99;
     background-color: $default-background-filter-color;
     padding-left: 4px;
     position: relative;
+    line-height: 1rem;
   }
 
   .fc-event-time {
@@ -419,14 +419,14 @@ $selected-background-filter-color: #FFFFFF99;
     }
   }
 
-  .fc-event-room {
-    font-style: italic;
+  .full-text, .short-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
-  .fc-event-inscription {
-    position: absolute;
-    right: 5px;
-    bottom: 0;
+  .fc-event-room {
+    font-style: italic;
   }
 }
 </style>

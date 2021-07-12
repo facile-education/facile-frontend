@@ -145,6 +145,7 @@
   "NotUsualSlots" : {
     "detention": "Retenue",
     "fired": "Renvoi",
+    "remainingPlaces": "place",
     "replayTest": "Épreuve à repasser",
     "study": "Étude",
     "tutoring": "Soutien scolaire",
