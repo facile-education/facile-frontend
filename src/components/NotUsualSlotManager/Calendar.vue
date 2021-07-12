@@ -10,6 +10,7 @@
     <FullCalendar
       ref="fullCalendar"
       :options="calendarOptions"
+      @click.stop
     />
     <EventPopover
       v-if="selectedEvent"

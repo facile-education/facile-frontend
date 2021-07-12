@@ -1,4 +1,4 @@
-<template>
+<template @click.stop="test">
   <div
     class="event-popup"
     :class="{'hide': (selectedEvent === undefined)}"
@@ -121,7 +121,19 @@ export default {
       return this.selectedEvent.event.extendedProps.room + (this.selectedEvent.event.extendedProps.inscriptionLeft !== undefined ? (' - ' + this.selectedEvent.event.extendedProps.inscriptionLeft + ' ' + this.$t('NotUsualSlots.remainingPlaces') + (this.selectedEvent.event.extendedProps.inscriptionLeft > 1 ? 's' : '')) : '')
     }
   },
+  mounted () {
+    window.addEventListener('click', this.clickOutside)
+  },
+  beforeUnmount () {
+    window.removeEventListener('click', this.clickOutside)
+  },
   methods: {
+    clickOutside (e) {
+      const self = this
+      if (self.$el && !self.$el.contains(e.target)) {
+        this.$emit('close')
+      }
+    },
     openEditModal () {
       this.$emit('editEvent', this.selectedEvent.event)
       this.$emit('close')
