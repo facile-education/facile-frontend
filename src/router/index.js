@@ -25,6 +25,16 @@ const routes = [
     path: '/not-usual-slots',
     name: 'Not usual slots',
     component: () => import(/* webpackChunkName: "about" */ '@/router/views/NotUsualSlotsManager')
+  },
+  {
+    path: '/horaires',
+    name: 'Horaires',
+    component: () => import(/* webpackChunkName: "about" */ '@/router/views/Horaires')
+  },
+  {
+    path: '/full-calendar',
+    name: 'Full Calendar',
+    component: () => import(/* webpackChunkName: "about" */ '@/router/views/FullCalendarTest.vue')
   }
 ]
 
