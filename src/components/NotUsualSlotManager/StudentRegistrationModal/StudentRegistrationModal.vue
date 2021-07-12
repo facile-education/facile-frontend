@@ -10,7 +10,14 @@
     @keydown.ctrl.stop=""
   >
     <template #header>
-      <span v-t="'NotUsualSlots.StudentRegistrationModal.header'" />
+      <span
+        v-if="!deregistration"
+        v-t="'NotUsualSlots.StudentRegistrationModal.header'"
+      />
+      <span
+        v-else
+        v-t="'NotUsualSlots.StudentRegistrationModal.deregistrationHeader'"
+      />
     </template>
 
     <template #body>
@@ -23,6 +30,16 @@
         <span v-t="'NotUsualSlots.StudentRegistrationModal.slot'" />
         <span>{{ formattedSlot }}</span>
       </div>
+      <textarea
+        v-model="comment"
+        :placeholder="$t('NotUsualSlots.StudentRegistrationModal.commentPlaceholder')"
+        @keydown.enter.stop=""
+      />
+      <PentilaCheckbox
+        :label="$t('NotUsualSlots.StudentRegistrationModal.notifyParents')"
+        :model-value="notifyParents"
+        @update:modelValue="handleCheck"
+      />
     </template>
 
     <template #footer>
@@ -30,7 +47,7 @@
         <div
           v-t="'Commons.submit'"
           class="button confirm-button"
-          @click="confirmRegistration"
+          @click="submit"
         />
       </div>
     </template>
@@ -46,12 +63,20 @@ import moment from 'moment'
 export default {
   name: 'StudentRegistrationModal',
   props: {
+    student: {
+      type: Object,
+      required: true
+    },
     event: {
       type: Object,
       required: true
+    },
+    deregistration: {
+      type: Boolean,
+      default: false
     }
   },
-  emits: ['close'],
+  emits: ['close', 'deregistre'],
   data () {
     return {
       comment: '',
@@ -62,19 +87,19 @@ export default {
     slotType () {
       return notUsualSlotsConstants.getSlotTypeByNumber(this.event.extendedProps.type)
     },
-    queriedUser () {
-      return this.$store.state.notUsualSlots.queriedUser
-    },
     formattedStudent () {
-      return this.queriedUser.firstName + ' ' + this.queriedUser.lastName
+      return this.student.firstName + ' ' + this.student.lastName
     },
     formattedSlot () {
       return moment(this.event.start, 'YYYY-MM-DDTHH:mm').format('DD/MM/YYYY ' + this.$t('Moment.at') + ' HH:mm')
     }
   },
   methods: {
+    submit () {
+      this.deregistration ? this.confirmDeregistration() : this.confirmRegistration()
+    },
     confirmRegistration () {
-      schoolLifeService.registerStudent(this.queriedUser, this.event.extendedProps.id, this.comment, this.notifyParents).then((data) => {
+      schoolLifeService.registerStudent(this.student, this.event.extendedProps.id, this.comment, this.notifyParents).then((data) => {
         if (data.success) {
           this.$store.dispatch('notUsualSlots/refreshCalendar')
           this.closeModal()
@@ -84,6 +109,22 @@ export default {
         console.log(err)
       })
     },
+    confirmDeregistration () {
+      const allSession = this.slotType.type === notUsualSlotsConstants.studyType
+      schoolLifeService.unRegisterStudent(this.student, this.event.extendedProps.id, this.comment, this.notifyParents, allSession).then((data) => {
+        if (data.success) {
+          this.$store.dispatch('notUsualSlots/refreshCalendar')
+          this.$emit('deregistre')
+          this.closeModal()
+        }
+      },
+      (err) => {
+        console.log(err)
+      })
+    },
+    handleCheck (check) {
+      this.notifyParents = check
+    },
     closeModal () {
       this.$emit('close')
     }
@@ -91,11 +132,12 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '@design';
 
 .student-registration-modal {
   font-family: "Roboto", sans-serif;
-  color: #0B3C5F;
+  color: $color-cadyco-dark-text;
 }
 
 .footer {
@@ -117,6 +159,16 @@ export default {
   margin: 0 10px;
   color: white;
   cursor: pointer;
+}
+
+textarea {
+  width: 100%;
+  padding: 10px 10px;
+  line-height: 10px;
+  resize: none;
+  border: 1px solid $color-cadyco-dark-text;
+  border-radius: 6px;
+  color: $color-cadyco-dark-text;
 }
 
 .confirm-button {

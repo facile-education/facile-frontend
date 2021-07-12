@@ -159,11 +159,15 @@
       "deleteSlot": "Supprimer le créneau"
     },
     "StudentListModal": {
-      "header": "Liste des élèves"
+      "header": "Liste des élèves",
+      "slot": "Créneau: "
     },
     "StudentRegistrationModal": {
+      "commentPlaceholder": "Saisir un motif",
       "header": "Inscription",
-      "slot": "Créneau: ",
+      "deregistrationHeader": "Désinscription",
+      "notifyParents": "Notifier les parents",
+      "slot": "@:NotUsualSlots.StudentListModal.slot",
       "student": "Élève: "
     }
   },
