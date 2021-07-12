@@ -1,41 +1,43 @@
 <template>
-  <div
-    v-if="currentUser.userId !== 0 && currentUser.schoolList.length !== 0"
-    class="non-classical-slots"
-  >
-    <SelectedSchool />
-    <div class="slot-type-selection">
-      <SlotTypeItem
-        v-for="(slotType, index) in slotTypes"
-        :key="index"
-        class="slot-type"
-        :slot-type="slotType"
+  <Layout>
+    <div
+      v-if="currentUser.userId !== 0 && currentUser.schoolList.length !== 0"
+      class="non-classical-slots"
+    >
+      <SelectedSchool />
+      <div class="slot-type-selection">
+        <SlotTypeItem
+          v-for="(slotType, index) in slotTypes"
+          :key="index"
+          class="slot-type"
+          :slot-type="slotType"
+        />
+      </div>
+      <UserCompletion
+        user-type="student"
+        :placeholder="$t('NotUsualSlots.studentNamePlaceHolder')"
+        @selectUser="getUserSlots"
       />
+      <div class="calendar-container">
+        <Calendar
+          v-if="currentSlotType"
+          :current-slot-type="currentSlotType"
+        />
+      </div>
     </div>
-    <UserCompletion
-      user-type="student"
-      :placeholder="$t('NotUsualSlots.studentNamePlaceHolder')"
-      @selectUser="getUserSlots"
-    />
-    <div class="calendar-container">
-      <Calendar
-        v-if="currentSlotType"
-        :current-slot-type="currentSlotType"
-      />
+    <div v-else>
+      <PentilaSpinner v-if="areActionsInProgress" />
+      <UnauthenticatedPage v-else />
     </div>
-  </div>
-  <div v-else>
-    <PentilaSpinner v-if="areActionsInProgress" />
-    <UnauthenticatedPage v-else />
-  </div>
 
-  <!-- global modals -->
-  <teleport
-    v-if="isWarningModalDisplayed"
-    to="body"
-  >
-    <WarningModal />
-  </teleport>
+    <!-- global modals -->
+    <teleport
+      v-if="isWarningModalDisplayed"
+      to="body"
+    >
+      <WarningModal />
+    </teleport>
+  </Layout>
 </template>
 
 <script>
@@ -48,10 +50,11 @@ import UserCompletion from '@/components/NotUsualSlotManager/UserCompletion'
 import SelectedSchool from '@/components/NotUsualSlotManager/SelectedSchool'
 import UnauthenticatedPage from '@/router/views/UnauthenticatedPage'
 import WarningModal from '@components/Nero/WarningModal'
+import Layout from '@layouts/EmptyLayout'
 
 export default {
   name: 'NotUsualSlotManager',
-  components: { WarningModal, UnauthenticatedPage, SelectedSchool, UserCompletion, Calendar, SlotTypeItem },
+  components: { Layout, WarningModal, UnauthenticatedPage, SelectedSchool, UserCompletion, Calendar, SlotTypeItem },
   data () {
     return {
       slotTypes: notUsualSlotConstants.slotTypes,
@@ -75,9 +78,6 @@ export default {
     }
   },
   created () {
-    this.$store.dispatch('user/initUserInformations')
-    this.$store.dispatch('user/getPersonalDetails')
-
     this.$store.dispatch('notUsualSlots/setDisplayedDates', {
       startDate: moment().startOf('week'),
       endDate: moment().endOf('week')
