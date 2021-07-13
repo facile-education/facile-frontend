@@ -175,12 +175,18 @@
       "unsubscribe": "Désinscrire"
     },
     "StudentRegistrationModal": {
+      "arrival": "Arrivée: ",
       "commentPlaceholder": "Saisir un motif",
+      "firedBy": "Renvoyé par: ",
+      "haveToSelectSlot": "Veuillez sélectionnez un cours",
       "header": "Inscription",
       "deregistrationHeader": "Désinscription",
       "notifyParents": "Notifier les parents",
+      "noSlotAvailable": "Aucun cours ne peut être sélectionné pour l'instant",
+      "selectSlot": "Sélectionnez un cours",
       "slot": "@:NotUsualSlots.StudentListModal.slot",
-      "student": "Élève: "
+      "student": "Élève: ",
+      "sourceSlot": "Renvoyé du cours: "
     }
   },
   "Unauthenticated": "Veuillez vous connecter pour accéder à ce service",

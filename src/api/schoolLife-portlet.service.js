@@ -8,10 +8,13 @@ export default {
   updateSlot,
   deleteSlot,
   getStudentSessions,
+  getCandidateSessions,
   getWeekSession,
   getSessionMembers,
   registerStudent,
   unRegisterStudent,
+  registerFiring,
+  unRegisterFiring,
   markStudentsPresent
 }
 
@@ -108,6 +111,19 @@ function getStudentSessions (student, minDate, maxDate) {
 }
 
 /**
+ * Get a student's day slots (based on the day of currentSlot) with more accurate about teachers than getStudentSessions
+ * Fields: success, candidateSessions
+ */
+function getCandidateSessions (student, currentSlotId) {
+  return axios.get(SCHOOL_LIFE_PATH + constants.JSON_WS_URL + '/renvoi/get-candidate-sessions', {
+    params: {
+      studentId: student.studentId,
+      schoollifeSessionId: currentSlotId
+    }
+  }).then(response => response.data)
+}
+
+/**
  * Get the unusual slots of a week, filtered by type
  */
 function getWeekSession (slotType, currentDate) {
@@ -155,6 +171,32 @@ function unRegisterStudent (student, slotId, comment, notifyParents, allSessions
       comment: comment,
       notifyParents: notifyParents,
       allSessions: allSessions
+    }
+  }).then(response => response.data)
+}
+
+/**
+ * Register student firing (fields: success)
+ */
+function registerFiring (slotId, student, sourceSessionId, sourceTeacherId) {
+  return axios.get(SCHOOL_LIFE_PATH + constants.JSON_WS_URL + '/renvoi/register-student-renvoi', {
+    params: {
+      schoollifeSessionId: slotId,
+      studentId: student.studentId,
+      sourceSessionId: sourceSessionId,
+      sourceTeacherId: sourceTeacherId
+    }
+  }).then(response => response.data)
+}
+
+/**
+ * unRegisterFiring student firing (fields: success)
+ */
+function unRegisterFiring (slotId, student) {
+  return axios.get(SCHOOL_LIFE_PATH + constants.JSON_WS_URL + '/renvoi/unregister-student-renvoi', {
+    params: {
+      schoollifeSessionId: slotId,
+      studentId: student.studentId
     }
   }).then(response => response.data)
 }
