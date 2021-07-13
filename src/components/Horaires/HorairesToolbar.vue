@@ -12,29 +12,38 @@
       :list="groupList"
       display-field="groupName"
     />
-    <UserCompletion
-      user-type="teacher"
-      placeholder="Enseignant"
-      @selectUser="onSelectUser"
-    />
-    <UserCompletion
-      v-if="false"
-      user-type="student"
-      placeholder="Elève"
-      @selectUser="onSelectUser"
+    <PentilaTagsInput
+      v-model="tagsList"
+      placeholder="Elève / Maitre"
+      :close-on-select="true"
+      :max-size="maxSize"
+      :completion-only="true"
+      :list="autocompleteUserList"
+      display-field="displayName"
+      id-field="userId"
+      @inputChange="searchTimeOut"
+      @update:modelValue="onSelectUser"
     />
   </NeroToolbar>
 </template>
 
 <script>
+import cdtService from '@/api/cdt.service'
+
 import NeroToolbar from '@/components/Nero/NeroToolbar'
-import UserCompletion from '@/components/NotUsualSlotManager/UserCompletion'
 
 export default {
   name: 'HorairesToolbar',
   components: {
-    NeroToolbar,
-    UserCompletion
+    NeroToolbar
+  },
+  data () {
+    return {
+      autocompleteUserList: [],
+      maxSize: 1,
+      tagsList: [],
+      timeout: undefined
+    }
   },
   computed: {
     groupList () {
@@ -48,6 +57,7 @@ export default {
         return this.$store.state.horaires.selectedGroup
       },
       set (group) {
+        this.tagsList.length = 0
         this.$store.dispatch('horaires/selectGroup', group)
       }
     },
@@ -66,13 +76,40 @@ export default {
     }
   },
   methods: {
-    onSelectUser (user) {
-      if (user) {
-        user.userId = (user.studentId) ? user.studentId : user.teacherId
+    getCompletion (inputValue) {
+      cdtService.getSchoolUsers(this.selectedSchool.schoolId, inputValue).then((data) => {
+        if (data.success) {
+          if (data.users.length > 0) {
+            this.autocompleteUserList = data.users
+            this.autocompleteUserList.forEach((user) => {
+              user.displayName = `${user.firstName} ${user.lastName}` +
+                (user.className ? ` (${user.className})` : '') +
+                (user.isTeacher ? ' (Maitre)' : '')
+            })
+          }
+        } else {
+          console.error('Error while getting user completion', data.error) // TODO: better error gesture
+        }
+      })
+    },
+    onSelectUser (userList) {
+      if (userList.length) {
+        this.$store.dispatch('horaires/selectUser', userList[0])
       } else {
-        user = { userId: 0 }
+        this.$store.dispatch('horaires/selectUser', { userId: 0 })
+        this.autocompleteUserList.length = 0
       }
-      this.$store.dispatch('horaires/selectUser', user)
+    },
+    searchTimeOut (inputValue) {
+      clearTimeout(this.timeout)
+      // Make a new timeout set to go off in 800ms
+      if (inputValue.length >= 2) { // nbCharBeforeCompletion
+        this.timeout = setTimeout(() => {
+          this.getCompletion(inputValue)
+        }, 500)
+      } else {
+        this.autocompleteUserList.length = 0
+      }
     }
   }
 }

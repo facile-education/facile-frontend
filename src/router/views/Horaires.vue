@@ -108,7 +108,7 @@ export default {
       return dayjs(this.configuration.endDateSchool, 'DD/MM/YYYY HH:mm')
     },
     isTeacherSelected () {
-      return this.$store.state.horaires.selectedUser.teacherId > 0
+      return this.$store.state.horaires.selectedUser.isTeacher
     }
   },
   created () {
@@ -139,7 +139,7 @@ export default {
         const teachers = info.event.extendedProps.teachers
         let label = ''
         for (let index = 0; index < teachers.length; ++index) {
-          if (!this.isTeacherSelected || teachers[index].userId !== this.$store.state.horaires.selectedUser.teacherId) {
+          if (!this.isTeacherSelected || teachers[index].userId !== this.$store.state.horaires.selectedUser.userId) {
             const name = teachers[index].firstName.substring(0, 1) + '. ' + teachers[index].lastName
             label += (label === '') ? name : ', ' + name
           }
