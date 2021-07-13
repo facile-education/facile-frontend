@@ -1,9 +1,11 @@
 import cdtService from '@/api/cdt.service'
 
+const defaultGroup = { groupId: 0, groupName: 'Groupes' }
+
 export const state = {
   endDate: undefined,
   groupList: undefined,
-  selectedGroup: { groupId: 0 },
+  selectedGroup: defaultGroup,
   selectedUser: { userId: 0 },
   sessionList: [],
   startDate: undefined
@@ -73,7 +75,7 @@ export const actions = {
     dispatch('getSessionList')
   },
   selectUser ({ commit, dispatch }, user) {
-    commit('setSelectedGroup', { groupId: 0 })
+    commit('setSelectedGroup', defaultGroup)
     commit('setSelectedUser', user)
     dispatch('getSessionList')
   }
