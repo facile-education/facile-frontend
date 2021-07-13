@@ -77,13 +77,16 @@ export const mutations = {
   }
 }
 export const actions = {
-  getPersonalDetails ({ commit }) {
+  getPersonalDetails ({ commit, dispatch }) {
     this.dispatch('currentActions/addAction', { name: 'getPersonalDetails' })
     userService.getPersonalDetails().then(
       (data) => {
         this.dispatch('currentActions/removeAction', { name: 'getPersonalDetails' })
         if (data.success) {
           commit('updateUserDetails', data)
+          if (data.themeColor && data.themeColor !== '') {
+            dispatch('theme/updateMainColor', data.themeColor, { root: true })
+          }
         }
       },
       (err) => {
