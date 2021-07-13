@@ -1,4 +1,4 @@
-import { getFontColorForBackground } from '@/utils/color.util'
+// import { getFontColorForBackground } from '@/utils/color.util'
 
 const mainColor = '#mainColor'
 const fontColor = '#fontColor'
@@ -15,7 +15,8 @@ export function setMainColor (color) {
   color = color.indexOf('#') === -1 ? `#${color}` : color
 
   // Get text color
-  const textColor = getFontColorForBackground(color)
+  // const textColor = getFontColorForBackground(color)
+  const textColor = '#fff'
 
   const themeTag = document.getElementById('theme-color')
   if (themeTag != null) {
