@@ -4,6 +4,7 @@ import axios from 'axios'
 export default {
   getConfiguration,
   getGroups,
+  getSchoolUsers,
   getSessions
 }
 
@@ -30,6 +31,20 @@ function getGroups () {
   return axios.get(CDT_URL, {
     params: {
       cmd: 'getAllGroups'
+    }
+  }).then(response => response.data)
+}
+
+/**
+ * Get the specified school's users filtered by name
+ */
+function getSchoolUsers (schoolId, query) {
+  return axios.get(CDT_URL, {
+    params: {
+      cmd: 'getHorairesUserList',
+      // p_auth: getCookie('pauth'),
+      schoolId: schoolId,
+      search: query
     }
   }).then(response => response.data)
 }
