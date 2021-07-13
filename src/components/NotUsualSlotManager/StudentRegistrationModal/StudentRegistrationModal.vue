@@ -30,6 +30,46 @@
         <span v-t="'NotUsualSlots.StudentRegistrationModal.slot'" />
         <span>{{ formattedSlot }}</span>
       </div>
+      <div
+        v-if="isFired"
+        class="fired-fields"
+      >
+        <div class="arrival">
+          <span v-t="'NotUsualSlots.StudentRegistrationModal.arrival'" />
+          <span>{{ arrivalTime }}</span>
+        </div>
+        <div class="source-slot">
+          <span
+            v-if="studentsDaySessions.length === 0"
+            v-t="'NotUsualSlots.StudentRegistrationModal.noSlotAvailable'"
+          />
+          <div v-else>
+            <span v-t="'NotUsualSlots.StudentRegistrationModal.sourceSlot'" />
+            <PentilaDropdown
+              v-model="selectedSession"
+              :list="studentsDaySessions"
+              display-field="label"
+            />
+            <PentilaErrorMessage
+              v-if="haveToSelectSlot"
+              :error-message="$t('NotUsualSlots.StudentRegistrationModal.haveToSelectSlot')"
+            />
+          </div>
+        </div>
+        <div
+          v-if="selectedSession.sessionId !== -1"
+          class="fired-by"
+        >
+          <span v-t="'NotUsualSlots.StudentRegistrationModal.firedBy'" />
+          <span v-if="selectedSession.teachers.length === 1">{{ selectedSession.teachers[0].name }}</span>
+          <PentilaDropdown
+            v-else-if="selectedSession.teachers.length > 1"
+            v-model="dropdownSelectedTeacher"
+            :list="selectedSession.teachers"
+            display-field="name"
+          />
+        </div>
+      </div>
       <textarea
         v-if="isCommentDisplayed"
         v-model="comment"
@@ -83,7 +123,11 @@ export default {
   data () {
     return {
       comment: '',
-      notifyParents: true
+      notifyParents: true,
+      studentsDaySessions: [],
+      haveToSelectSlot: false,
+      selectedSession: { sessionId: -1, label: this.$t('NotUsualSlots.StudentRegistrationModal.selectSlot') },
+      dropdownSelectedTeacher: undefined
     }
   },
   computed: {
@@ -103,11 +147,45 @@ export default {
       return (!this.deregistration && this.slotType.type === notUsualSlotsConstants.detentionType) ||
         this.slotType.type === notUsualSlotsConstants.replayTestType ||
         this.slotType.type === notUsualSlotsConstants.studyType
+    },
+    isFired () {
+      return !this.deregistration && this.slotType.type === notUsualSlotsConstants.firedType
+    },
+    arrivalTime () {
+      return moment().format('DD/MM/YYYY ' + this.$t('Moment.at') + ' HH:mm')
+    }
+  },
+  created () {
+    if (this.isFired) {
+      schoolLifeService.getCandidateSessions(this.student, this.event.extendedProps.id).then((data) => {
+        if (data.success) {
+          this.studentsDaySessions = data.candidateSessions
+          this.studentsDaySessions.forEach((session) => { this.formatSession(session) })
+        }
+      },
+      (err) => {
+        console.error(err)
+      })
     }
   },
   methods: {
+    formatSession (session) {
+      session.label = moment(session.startDate, 'YYYY/MM/DD HH:mm').format('HH:mm') + ' / ' + moment(session.endDate, 'YYYY/MM/DD HH:mm').format('HH:mm') + ' - ' + session.title
+    },
     submit () {
-      this.deregistration ? this.confirmDeregistration() : this.confirmRegistration()
+      if (this.deregistration) {
+        this.slotType.type === notUsualSlotsConstants.firedType ? this.deregisterFiring() : this.confirmDeregistration()
+      } else {
+        if (this.isFired) {
+          if (this.selectedSession.sessionId === -1) {
+            this.haveToSelectSlot = true
+          } else {
+            this.registerFiring()
+          }
+        } else {
+          this.confirmRegistration()
+        }
+      }
     },
     confirmRegistration () {
       schoolLifeService.registerStudent(this.student, this.event.extendedProps.id, this.comment, this.notifyParents).then((data) => {
@@ -123,6 +201,30 @@ export default {
     confirmDeregistration () {
       const allSession = this.slotType.type === notUsualSlotsConstants.studyType
       schoolLifeService.unRegisterStudent(this.student, this.event.extendedProps.id, this.comment, this.notifyParents, allSession).then((data) => {
+        if (data.success) {
+          this.$store.dispatch('notUsualSlots/refreshCalendar')
+          this.$emit('deregistre')
+          this.closeModal()
+        }
+      },
+      (err) => {
+        console.log(err)
+      })
+    },
+    registerFiring () {
+      const sourceTeacherId = this.selectedSession.teachers.length > 1 ? this.dropdownSelectedTeacher.teacherId : this.selectedSession.teachers[0].teacherId
+      schoolLifeService.registerFiring(this.event.extendedProps.id, this.student, this.selectedSession.sessionId, sourceTeacherId).then((data) => {
+        if (data.success) {
+          this.$store.dispatch('notUsualSlots/refreshCalendar')
+          this.closeModal()
+        }
+      },
+      (err) => {
+        console.log(err)
+      })
+    },
+    deregisterFiring () {
+      schoolLifeService.registerFiring(this.event.extendedProps.id, this.student).then((data) => {
         if (data.success) {
           this.$store.dispatch('notUsualSlots/refreshCalendar')
           this.$emit('deregistre')
