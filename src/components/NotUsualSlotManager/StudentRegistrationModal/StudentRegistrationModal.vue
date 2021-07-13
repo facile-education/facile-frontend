@@ -224,7 +224,7 @@ export default {
       })
     },
     deregisterFiring () {
-      schoolLifeService.registerFiring(this.event.extendedProps.id, this.student).then((data) => {
+      schoolLifeService.unRegisterFiring(this.event.extendedProps.id, this.student).then((data) => {
         if (data.success) {
           this.$store.dispatch('notUsualSlots/refreshCalendar')
           this.$emit('deregistre')
