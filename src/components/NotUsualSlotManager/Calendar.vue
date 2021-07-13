@@ -155,6 +155,18 @@ export default {
       return this.isSpinnerDisplayed ? [] : [...this.userSlots, ...this.currentNonUsualSlots]
     }
   },
+  mounted () {
+    const calendar = this.$refs.fullCalendar.getApi()
+    const currentDate = dayjs(calendar.getDate())
+
+    if (currentDate > this.maxDate.endOf('week')) {
+      calendar.gotoDate(new Date(this.maxDate.startOf('week')))
+      this.$store.dispatch('notUsualSlots/setDisplayedDates', {
+        startDate: moment(this.maxDate.startOf('week').format('YYYY-MM-DD'), 'YYYY-MM-DD'),
+        endDate: moment(this.maxDate.endOf('week').format('YYYY-MM-DD'), 'YYYY-MM-DD')
+      })
+    }
+  },
   methods: {
     allowSelection (selectInfo) {
       // TODO disable selection if the current user has not the good role
