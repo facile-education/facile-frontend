@@ -320,7 +320,7 @@ export default {
 }
 
 .weeknumber-label {
-  padding: 0.5rem 1rem;
+  padding: 0.2rem 1rem;
   text-align: center;
   border-radius: 2px;
   cursor: pointer;
