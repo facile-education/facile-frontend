@@ -14,11 +14,9 @@ export const state = {
 
 export const mutations = {
   endLoading (state) {
-    console.log('stopload')
     state.isLoading = false
   },
   loading (state) {
-    console.log('load')
     state.isLoading = true
   },
   setDates (state, { start, end }) {
