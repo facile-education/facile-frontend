@@ -17,6 +17,7 @@ export default {
   background-color: $color-toolbar-bg;
   padding: 5px;
   display: flex;
+  gap: 1rem;
   /* white-space: nowrap;
   overflow-x: auto; */
   z-index: $toolbar-z-index;

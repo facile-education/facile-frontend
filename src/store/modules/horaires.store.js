@@ -5,6 +5,7 @@ const defaultGroup = { groupId: 0, groupName: 'Groupes' }
 export const state = {
   endDate: undefined,
   groupList: undefined,
+  isLoading: false,
   selectedGroup: defaultGroup,
   selectedUser: { userId: 0 },
   sessionList: [],
@@ -12,6 +13,14 @@ export const state = {
 }
 
 export const mutations = {
+  endLoading (state) {
+    console.log('stopload')
+    state.isLoading = false
+  },
+  loading (state) {
+    console.log('load')
+    state.isLoading = true
+  },
   setDates (state, { start, end }) {
     state.startDate = start
     state.endDate = end
@@ -31,6 +40,7 @@ export const mutations = {
 }
 export const actions = {
   getGroupList ({ commit }, userId) {
+    commit('loading')
     cdtService.getGroups(userId).then(
       (data) => {
         if (data.success) {
@@ -38,8 +48,10 @@ export const actions = {
         } else {
           console.error('Cannot get sessions ')
         }
+        commit('endLoading')
       },
       (err) => {
+        commit('endLoading')
         // TODO toastr
         console.error(err)
       }
@@ -48,6 +60,7 @@ export const actions = {
   getSessionList ({ state, commit }) {
     if (state.startDate && state.endDate &&
         (state.selectedUser.userId !== 0 || state.selectedGroup.groupId !== 0)) {
+      commit('loading')
       cdtService.getSessions(state.selectedUser.userId, state.selectedGroup.groupId, state.startDate, state.endDate).then(
         (data) => {
           if (data.success) {
@@ -55,8 +68,10 @@ export const actions = {
           } else {
             console.error('Cannot get sessions ')
           }
+          commit('endLoading')
         },
         (err) => {
+          commit('endLoading')
           // TODO toastr
           console.error(err)
         }

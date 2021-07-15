@@ -17,7 +17,7 @@
         :options="calendarOptions"
       />
     </template>
-    <!-- else = spinner -->
+    <PentilaSpinner v-if="isLoading" />
   </Layout>
 </template>
 
@@ -55,7 +55,8 @@ export default {
         locale: frLocale,
         plugins: [timeGridPlugin],
         initialView: this.$device.phone ? 'timeGridDay' : 'timeGridWeek',
-        height: 'calc(100% - 50px)',
+        // 125 is toolbar (50) + margin (10) + timeline (65)
+        height: 'max(800px, calc(100% - 125px))',
         expandRows: true,
         headerToolbar: {
           left: '',
@@ -100,6 +101,9 @@ export default {
         }
       }
       return hiddenDays
+    },
+    isLoading () {
+      return this.$store.state.horaires.isLoading || !this.configuration
     },
     minDate () {
       return dayjs(this.configuration.startDateSchool, 'DD/MM/YYYY HH:mm')
