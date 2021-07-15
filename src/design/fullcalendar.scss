@@ -1,6 +1,10 @@
 $default-background-filter-color: #FFFFFFDD;
 $selected-background-filter-color: #FFFFFF99;
 
+.fc .fc-toolbar.fc-header-toolbar {
+  margin-bottom: 0.7em;
+}
+
 .fc-timegrid-slots tr {
   border-top: 1px dotted silver;
   border-bottom: 1px dotted silver;

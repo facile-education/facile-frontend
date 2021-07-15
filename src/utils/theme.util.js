@@ -2,11 +2,13 @@
 
 const mainColor = '#mainColor'
 const fontColor = '#fontColor'
+// --vdp : Vue Date picker color variables
 const style = `.theme-text-color { color: ${mainColor}; }
     .theme-background-color { color: ${fontColor}; background-color: ${mainColor}; }
     .theme-hover-background-color:hover { color: ${fontColor}; background-color: ${mainColor}; }
     .theme-hover-text-color:hover { color: ${mainColor}; }
-    .theme-border-color { border-color: ${mainColor} !important; }`
+    .theme-border-color { border-color: ${mainColor} !important; }
+    body { --vdp-selected-bg-color: ${mainColor}; --vdp-hover-bg-color: ${mainColor}; }`
 
 // Update main theme color
 export function setMainColor (color) {
