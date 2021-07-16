@@ -1,12 +1,24 @@
 <template>
   <div class="unauthenticatedPage">
-    <h1 v-t="'Unauthenticated'" />
+    <h1
+      v-if="hasNotGoodRole"
+      v-t="'UnAuthorised'"
+    />
+    <h1
+      v-else
+      v-t="'Unauthenticated'"
+    />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'UnauthenticatedPage'
+  name: 'UnauthenticatedPage',
+  computed: {
+    hasNotGoodRole () {
+      return this.$store.state.user && !(this.$store.state.user.isTeacher || this.$store.state.user.isPersonal)
+    }
+  }
 }
 </script>
 
