@@ -15,6 +15,8 @@ export default {
   unRegisterStudent,
   registerFiring,
   unRegisterFiring,
+  getPendingFirings,
+  setFiringReason,
   markStudentsPresent
 }
 
@@ -197,6 +199,26 @@ function unRegisterFiring (slotId, student) {
     params: {
       schoollifeSessionId: slotId,
       studentId: student.studentId
+    }
+  }).then(response => response.data)
+}
+
+/**
+ * Get pending firing (fields: success, pendingRenvois)
+ */
+function getPendingFirings () {
+  return axios.get(SCHOOL_LIFE_PATH + constants.JSON_WS_URL + '/renvoi/get-pending-renvois').then(response => response.data)
+}
+
+/**
+ * Set the reason of a firing (fields: success)
+ */
+function setFiringReason (slotId, studentId, reason) {
+  return axios.get(SCHOOL_LIFE_PATH + constants.JSON_WS_URL + '/renvoi/set-renvoi-reason', {
+    params: {
+      schoollifeSessionId: slotId,
+      studentId: studentId,
+      reason: reason
     }
   }).then(response => response.data)
 }

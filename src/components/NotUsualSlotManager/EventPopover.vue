@@ -33,7 +33,7 @@
               @click="openRegistration"
             />
             <i
-              v-if="isEditableEvent"
+              v-if="isEditableEvent && currentUser.isPersonal"
               class="fa fa-pencil-alt"
               @click="openEditModal"
             />
@@ -88,6 +88,9 @@ export default {
   computed: {
     queriedUser () {
       return this.$store.state.notUsualSlots.queriedUser
+    },
+    currentUser () {
+      return this.$store.state.user
     },
     isAlreadyRegister () {
       // Search if this slot already exist in userSlots

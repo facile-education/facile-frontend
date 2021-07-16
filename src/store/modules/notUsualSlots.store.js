@@ -42,6 +42,7 @@ export const state = {
     startDate: undefined,
     endDate: undefined
   },
+  pendingFirings: [],
   queriedUser: undefined,
   currentStartDate: undefined,
   currentEndDate: undefined,
@@ -53,6 +54,13 @@ export const state = {
 export const mutations = {
   setCurrentSlotType (state, slotType) {
     state.currentSlotType = slotType
+  },
+  setPendingFirings (state, payload) {
+    state.pendingFirings = payload
+  },
+  removePendingFirings (state, firingToRemove) {
+    const index = state.pendingFirings.findIndex((firing) => (firing.studentId === firingToRemove.studentId) && (firing.schoollifeSessionId === firingToRemove.schoollifeSessionId)) // 2 primary keys
+    state.pendingFirings.splice(index, 1)
   },
   setDisplayedDate (state, { startDate, endDate }) {
     state.displayedDates.startDate = startDate
@@ -75,6 +83,12 @@ export const actions = {
   setCurrentSlotType ({ commit }, slotType) {
     commit('setCurrentSlotType', slotType)
     getNonUsualSlots(this)
+  },
+  setPendingFirings ({ commit }, pendingFirings) {
+    commit('setPendingFirings', pendingFirings)
+  },
+  removePendingFirings ({ commit }, pendingFiring) {
+    commit('removePendingFirings', pendingFiring)
   },
   setQueriedUser ({ commit }, user) {
     commit('setQueriedUser', user)

@@ -145,6 +145,7 @@
   },
   "Moment": {
     "at": "à",
+    "of": "du",
     "the": "le",
     "today": "aujourd'hui",
     "tomorrow": "Demain à",
@@ -166,6 +167,16 @@
       "slot": "Créneau",
       "teacherNamePlaceHolder": "Saisir le nom d'un maître",
       "deleteSlot": "Supprimer le créneau"
+    },
+    "PendingFiringModal": {
+      "courseOf": "Cours de ",
+      "information": "Un message de notification sera envoyé aux parents et au Doyen avec le motif du renvoi",
+      "firedTimestamp": "Horodatage: ",
+      "haveToWriteJustification": "Veuillez saisir un motif de renvoi",
+      "justificationPlaceholder": "Motif du renvoi",
+      "header": "Motiver le renvoi",
+      "slot": "Renvoi: ",
+      "student": "@:NotUsualSlots.StudentRegistrationModal.student"
     },
     "StudentListModal": {
       "header": "Liste des élèves",
@@ -190,6 +201,7 @@
     }
   },
   "Unauthenticated": "Veuillez vous connecter pour accéder à ce service",
+  "UnAuthorised": "Votre status ne vous permet pas d'accéder à cette page",
   "WarningModal": {
     "header": "Continuer ?",
     "cancelButton": "Annuler",

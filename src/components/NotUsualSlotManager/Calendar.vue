@@ -94,6 +94,9 @@ export default {
     isSpinnerDisplayed () {
       return this.$store.getters['currentActions/areActionsInProgress']
     },
+    currentUser () {
+      return this.$store.state.user
+    },
     queriedUser () {
       return this.$store.state.notUsualSlots.queriedUser
     },
@@ -227,7 +230,7 @@ export default {
     onDateSelect (selection) {
       if (this.selectedEvent) {
         this.unselectEvent()
-      } else {
+      } else if (this.currentUser.isPersonal) {
         this.eventToEdit = {
           start: selection.start,
           end: selection.end
