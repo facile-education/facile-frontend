@@ -161,12 +161,13 @@
     "studentNamePlaceHolder": "Saisir le nom d'un élève",
     "warning": "La suppresion de ce créneau sera définitive!",
     "EditSlotModal": {
+      "deleteSlot": "Supprimer",
       "header": "Éditer un créneau",
       "inscriptionLeftPlaceHolder": "Nombre de places restantes",
+      "longDeleteSlot": "Supprimer le créneau",
       "roomNamePlaceHolder": "Saisir le numéro de salle",
       "slot": "Créneau",
-      "teacherNamePlaceHolder": "Saisir le nom d'un maître",
-      "deleteSlot": "Supprimer le créneau"
+      "teacherNamePlaceHolder": "Saisir le nom d'un maître"
     },
     "PendingFiringModal": {
       "courseOf": "Cours de ",

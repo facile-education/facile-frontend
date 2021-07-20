@@ -82,7 +82,9 @@ export const mutations = {
 export const actions = {
   setCurrentSlotType ({ commit }, slotType) {
     commit('setCurrentSlotType', slotType)
-    getNonUsualSlots(this)
+    if (slotType !== undefined) {
+      getNonUsualSlots(this)
+    }
   },
   setPendingFirings ({ commit }, pendingFirings) {
     commit('setPendingFirings', pendingFirings)

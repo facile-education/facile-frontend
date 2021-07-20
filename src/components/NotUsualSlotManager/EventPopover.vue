@@ -6,7 +6,12 @@
   >
     <template v-if="selectedEvent">
       <i
-        v-if="!isPopupLeft"
+        v-if="isPopupTop"
+        :style="`color:${selectedEvent.event.backgroundColor};`"
+        class="fa fa-caret-down theme-text-color"
+      />
+      <i
+        v-else-if="!isPopupLeft"
         :style="`color:${selectedEvent.event.backgroundColor};`"
         class="fa fa-caret-left theme-text-color"
       />
@@ -99,12 +104,18 @@ export default {
     isEditableEvent () {
       return isEditableSlot(this.selectedEvent.event)
     },
+    isPopupTop () {
+      return this.$device.phone
+    },
     isPopupLeft () {
       return (window.innerWidth - this.selectedEvent.el.getBoundingClientRect().right) < 350
     },
     popupStyle () {
       if (!this.selectedEvent) {
         return ''
+      }
+      if (this.isPopupTop) {
+        return `bottom:${window.innerHeight - this.selectedEvent.el.getBoundingClientRect().top + 9}px; right:${window.innerWidth - this.selectedEvent.el.getBoundingClientRect().right}px;`
       }
       if (this.isPopupLeft) {
         return `top:${this.selectedEvent.el.getBoundingClientRect().top}px; right:${window.innerWidth - this.selectedEvent.el.getBoundingClientRect().left + 7}px;`
@@ -173,6 +184,17 @@ export default {
 
   &.hide {
     opacity: 0;
+  }
+
+  .fa-caret-down {
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    left: 0;
+    right: 0;
+    bottom: -16px;
+    font-size: 1.5rem;
   }
 
   .fa-caret-left {
