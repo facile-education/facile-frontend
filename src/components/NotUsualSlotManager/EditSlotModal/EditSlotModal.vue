@@ -51,8 +51,9 @@
       <div class="footer">
         <div
           v-if="!isEventCreation"
-          v-t="'NotUsualSlots.EditSlotModal.deleteSlot'"
+          v-t="$device.phone ? 'NotUsualSlots.EditSlotModal.deleteSlot' : 'NotUsualSlots.EditSlotModal.longDeleteSlot'"
           class="button delete-button"
+          :class="{'mobile': $device.phone}"
           @click="confirmSlotDeletion"
         />
         <div
@@ -289,6 +290,7 @@ export default {
   border-radius: 6px;
   align-items: center;
   justify-content: center;
+  text-align: center;
   margin: 0 10px;
   color: white;
   cursor: pointer;
@@ -297,6 +299,10 @@ export default {
 .delete-button {
   width: 250px;
   background-color: red;
+
+  &.mobile {
+    width: 125px;
+  }
 }
 
 .confirm-button {

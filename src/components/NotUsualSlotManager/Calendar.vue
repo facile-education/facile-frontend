@@ -1,25 +1,31 @@
 <template>
   <div class="calendar">
     <PentilaSpinner v-if="isSpinnerDisplayed" />
-    <Timeline
-      v-if="configuration"
-      :min-date="minDate"
-      :max-date="maxDate"
-      @selectWeek="onSelectWeek"
-    />
-    <FullCalendar
-      ref="fullCalendar"
-      :options="calendarOptions"
-      @click.stop
-    />
-    <EventPopover
-      v-if="selectedEvent"
-      :selected-event="selectedEvent"
-      @editEvent="editEvent"
-      @openRegistration="openRegistration"
-      @showStudentList="showStudentList"
-      @close="unselectEvent"
-    />
+    <template v-if="configuration">
+      <DatepickerNav
+        v-if="$device.phone"
+        @selectDate="onSelectDate"
+      />
+      <Timeline
+        v-else
+        :min-date="minDate"
+        :max-date="maxDate"
+        @selectWeek="onSelectWeek"
+      />
+      <FullCalendar
+        ref="fullCalendar"
+        :options="calendarOptions"
+        @click.stop
+      />
+      <EventPopover
+        v-if="selectedEvent"
+        :selected-event="selectedEvent"
+        @editEvent="editEvent"
+        @openRegistration="openRegistration"
+        @showStudentList="showStudentList"
+        @close="unselectEvent"
+      />
+    </template>
   </div>
   <teleport
     v-if="isEditSlotModalDisplayed || isRegistrationModalDisplayed || isListModalDisplayed"
@@ -30,17 +36,20 @@
       :event-to-edit="eventToEdit"
       :create-event-method="createEvent"
       :update-event-method="updateEvent"
+      :is-full-screen="$device.phone"
       @close="isEditSlotModalDisplayed = false"
     />
     <StudentRegistrationModal
       v-if="isRegistrationModalDisplayed"
       :event="eventToEdit"
       :student="queriedUser"
+      :is-full-screen="$device.phone"
       @close="isRegistrationModalDisplayed = false"
     />
     <StudentListModal
       v-if="isListModalDisplayed"
       :event="eventToEdit"
+      :is-full-screen="$device.phone"
       @close="isListModalDisplayed = false"
     />
   </teleport>
@@ -62,12 +71,14 @@ import StudentRegistrationModal from '@components/NotUsualSlotManager/StudentReg
 import Timeline from '@components/Horaires/Timeline' // Needed for event creation
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
+import DatepickerNav from '@components/Horaires/DatepickerNav'
 
 dayjs.extend(customParseFormat)
 
 export default {
   name: 'Calendar',
   components: {
+    DatepickerNav,
     Timeline,
     StudentRegistrationModal,
     StudentListModal,
@@ -114,7 +125,7 @@ export default {
       return {
         locale: frLocale,
         plugins: [timeGridPlugin, interactionPlugin],
-        initialView: 'timeGridWeek', // TODO Change to timeGridDay on mobile
+        initialView: this.$device.phone ? 'timeGridDay' : 'timeGridWeek',
         height: '100%',
         expandRows: true,
         headerToolbar: {
@@ -174,6 +185,14 @@ export default {
     allowSelection (selectInfo) {
       // TODO disable selection if the current user has not the good role
       return selectInfo.start.getDay() === selectInfo.end.getDay()
+    },
+    onSelectDate (date) {
+      if (this.$refs.fullCalendar) {
+        const calendar = this.$refs.fullCalendar.getApi()
+        calendar.gotoDate(date)
+      }
+      this.$store.dispatch('notUsualSlots/setDisplayedDates',
+        { startDate: moment(date, 'YYYY-MM-DD'), endDate: moment(date, 'YYYY-MM-DD').endOf('day') })
     },
     onSelectWeek (week) {
       if (this.$refs.fullCalendar) {

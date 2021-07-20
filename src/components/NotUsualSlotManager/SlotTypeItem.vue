@@ -22,13 +22,20 @@ export default {
     }
   },
   computed: {
+    currentSlotType () {
+      return this.$store.state.notUsualSlots.currentSlotType
+    },
     isSelected () {
-      return this.$store.state.notUsualSlots.currentSlotType && this.slotType.type === this.$store.state.notUsualSlots.currentSlotType.type
+      return this.currentSlotType && this.slotType.type === this.currentSlotType.type
     }
   },
   methods: {
     itemClicked () {
-      this.$store.dispatch('notUsualSlots/setCurrentSlotType', this.slotType)
+      if (this.$device.phone && this.currentSlotType) {
+        this.$store.dispatch('notUsualSlots/setCurrentSlotType', undefined) // Unselect slotType to go back in menu
+      } else {
+        this.$store.dispatch('notUsualSlots/setCurrentSlotType', this.slotType)
+      }
     }
   }
 }

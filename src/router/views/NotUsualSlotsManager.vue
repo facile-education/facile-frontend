@@ -5,7 +5,16 @@
       class="non-classical-slots"
     >
       <SelectedSchool />
-      <div class="slot-type-selection">
+      <SlotTypeItem
+        v-if="$device.phone && currentSlotType !== undefined"
+        class="slot-type"
+        :slot-type="currentSlotType"
+      />
+      <div
+        v-else
+        class="slot-type-selection"
+        :class="{'mobile': $device.phone}"
+      >
         <SlotTypeItem
           v-for="(slotType, index) in slotTypes"
           :key="index"
@@ -14,13 +23,17 @@
         />
       </div>
       <UserCompletion
+        v-if="currentSlotType"
         user-type="student"
         :placeholder="$t('NotUsualSlots.studentNamePlaceHolder')"
+        :initial-user-list="queriedUser ? [queriedUser] : []"
         @selectUser="getUserSlots"
       />
-      <div class="calendar-container">
+      <div
+        v-if="currentSlotType"
+        class="calendar-container"
+      >
         <Calendar
-          v-if="currentSlotType"
           :current-slot-type="currentSlotType"
         />
       </div>
@@ -40,6 +53,7 @@
           v-for="(pendingFiring, index) in pendingFirings"
           :key="index"
           :pending-firing="pendingFiring"
+          :is-full-screen="$device.phone"
           :closable="false"
         />
       </teleport>
@@ -79,11 +93,13 @@ export default {
       return this.$store.getters['currentActions/areActionsInProgress']
     },
     pendingFirings () { // TODO check for a sorted version of pendingFirings?
-      console.log(this.$store.state.notUsualSlots.pendingFirings)
       return this.$store.state.notUsualSlots.pendingFirings
     },
     currentUser () {
       return this.$store.state.user
+    },
+    queriedUser () {
+      return this.$store.state.notUsualSlots.queriedUser
     },
     hasGoodRole () {
       return this.currentUser.isTeacher || this.currentUser.isPersonal
@@ -136,6 +152,13 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+
+  &.mobile {
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    justify-content: space-around;
+  }
 }
 
 .calendar-container {

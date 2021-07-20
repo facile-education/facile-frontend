@@ -25,6 +25,7 @@
         :student="student"
         :event="event"
         :deregistration="true"
+        :is-full-screen="$device.phone"
         @deregistre="deregistreStudent"
         @close="isStudentDeregistrationModalDisplayed = false"
       />
