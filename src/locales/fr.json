@@ -172,7 +172,7 @@
     "PendingFiringModal": {
       "courseOf": "Cours de ",
       "information": "Un message de notification sera envoyé aux parents et au Doyen avec le motif du renvoi",
-      "firedTimestamp": "Horodatage: ",
+      "firedTimestamp": "Engeristré: ",
       "haveToWriteJustification": "Veuillez saisir un motif de renvoi",
       "justificationPlaceholder": "Motif du renvoi",
       "header": "Motiver le renvoi",
@@ -187,7 +187,7 @@
       "unsubscribe": "Désinscrire"
     },
     "StudentRegistrationModal": {
-      "arrival": "Arrivée: ",
+      "arrival": "Enregistré: ",
       "commentPlaceholder": "Saisir un motif",
       "firedBy": "Renvoyé par: ",
       "haveToSelectSlot": "Veuillez sélectionnez un cours",
