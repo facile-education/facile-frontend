@@ -9,6 +9,7 @@ import PentilaComponents from 'pentila-components'
 import moment from 'moment'
 import dayjs from 'dayjs'
 import fr from 'dayjs/locale/fr'
+import { VueHammer } from '@/utils/vuehammer'
 // import axios from 'axios'
 
 const app = createApp(App)
@@ -21,6 +22,9 @@ const app = createApp(App)
       tablet: 800,
       desktop: Infinity
     }
+  })
+  .use(VueHammer, {
+    threshold: 200
   })
 
 // Register Pentila components globally

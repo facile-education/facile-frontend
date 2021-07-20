@@ -43,6 +43,7 @@ $selected-background-filter-color: #FFFFFF99;
     background-color: $default-background-filter-color;
     padding-left: 4px;
     position: relative;
+    line-height: 1.1rem;
   }
 
   .fc-event-time {
@@ -51,11 +52,12 @@ $selected-background-filter-color: #FFFFFF99;
 
   .fc-event-title-container {
     flex-grow: 0;
-    .fc-event-title {
-      font-weight: bold;
-    }
   }
 
+  .fc-event-title {
+    font-weight: bold;
+  }
+  
   /* TODO to be based overflow event? */
   @media (max-width: 1035px) {
     .full-text {
