@@ -8,7 +8,7 @@ const style = `.theme-text-color { color: ${mainColor}; }
     .theme-hover-background-color:hover { color: ${fontColor}; background-color: ${mainColor}; }
     .theme-hover-text-color:hover { color: ${mainColor}; }
     .theme-border-color { border-color: ${mainColor} !important; }
-    body { --vdp-selected-bg-color: ${mainColor}; --vdp-hover-bg-color: ${mainColor}; }`
+    body .vc-container { --blue-600: ${mainColor}; }`
 
 // Update main theme color
 export function setMainColor (color) {

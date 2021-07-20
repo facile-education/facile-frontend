@@ -1,18 +1,25 @@
 <template>
   <NeroToolbar>
     <PentilaDropdown
-      v-if="schoolList && schoolList.length > 1"
+      v-if="(schoolList && schoolList.length > 1)"
       v-model="selectedSchool"
       :list="schoolList"
       display-field="schoolName"
     />
+    <i
+      v-if="$device.phone"
+      class="selection fa"
+      :class="{'fa-user': isSingleUser, 'fa-users': !isSingleUser}"
+      @click="toggleSelection"
+    />
     <PentilaDropdown
-      v-if="groupList"
+      v-if="groupList && (!$device.phone || !isSingleUser)"
       v-model="selectedGroup"
       :list="groupList"
       display-field="groupName"
     />
     <PentilaTagsInput
+      v-if="!$device.phone || isSingleUser"
       v-model="tagsList"
       placeholder="Elève / Maitre"
       :close-on-select="true"
@@ -24,22 +31,39 @@
       @inputChange="searchTimeOut"
       @update:modelValue="onSelectUser"
     />
+    <DatepickerNav
+      v-if="$device.phone"
+      class="date-picker"
+      :selected-date="selectedDate"
+      @selectDate="onSelectDate"
+    />
   </NeroToolbar>
 </template>
 
 <script>
+import dayjs from 'dayjs'
 import cdtService from '@/api/cdt.service'
 
 import NeroToolbar from '@/components/Nero/NeroToolbar'
+import DatepickerNav from '@/components/Horaires/DatepickerNav'
 
 export default {
   name: 'HorairesToolbar',
   components: {
+    DatepickerNav,
     NeroToolbar
   },
+  props: {
+    selectedDate: {
+      type: Object,
+      default: dayjs()
+    }
+  },
+  emits: ['selectDate'],
   data () {
     return {
       autocompleteUserList: [],
+      isSingleUser: true,
       maxSize: 1,
       tagsList: [],
       timeout: undefined
@@ -92,6 +116,9 @@ export default {
         }
       })
     },
+    onSelectDate (date) {
+      this.$emit('selectDate', date)
+    },
     onSelectUser (userList) {
       if (userList.length) {
         this.$store.dispatch('horaires/selectUser', userList[0])
@@ -110,10 +137,22 @@ export default {
       } else {
         this.autocompleteUserList.length = 0
       }
+    },
+    toggleSelection () {
+      this.isSingleUser = !this.isSingleUser
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.selection {
+  font-size: 1.2rem;
+  padding: 0 0.5rem;
+  cursor: pointer;
+}
+
+.date-picker {
+  margin-left: auto;
+}
 </style>

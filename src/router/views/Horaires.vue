@@ -1,21 +1,46 @@
 <template>
   <Layout>
-    <HorairesToolbar class="toolbar" />
+    <HorairesToolbar
+      class="toolbar"
+      :selected-date="selectedDate"
+      @selectDate="onSelectDate"
+    />
     <template v-if="configuration">
-      <DatepickerNav
-        v-if="$device.phone"
-        @selectDate="onSelectDate"
-      />
       <Timeline
-        v-else
+        v-if="!$device.phone"
         :min-date="minDate"
         :max-date="maxDate"
         @selectWeek="onSelectWeek"
       />
+      <div
+        v-if="$device.phone"
+        v-hammer:swipe.horizontal="onSwipe"
+        class="swipe-container"
+      >
+        <div
+          class="swipe-wrapper"
+          :style="`transform: translate3d(${pan}px, 0px, 0px);`"
+        >
+          <FullCalendar
+            ref="fullCalendar"
+            class="calendar"
+            :options="calendarOptions"
+          >
+            <template #eventContent="arg">
+              <FCEvent :arg="arg" />
+            </template>
+          </FullCalendar>
+        </div>
+      </div>
       <FullCalendar
+        v-else
         ref="fullCalendar"
         :options="calendarOptions"
-      />
+      >
+        <template #eventContent="arg">
+          <FCEvent :arg="arg" />
+        </template>
+      </FullCalendar>
     </template>
     <PentilaSpinner v-if="isLoading" />
   </Layout>
@@ -31,21 +56,24 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import Layout from '@/router/layouts/EmptyLayout'
 import HorairesToolbar from '@/components/Horaires/HorairesToolbar'
 import Timeline from '@/components/Horaires/Timeline'
-import DatepickerNav from '@/components/Horaires/DatepickerNav'
+import FCEvent from '@/components/Horaires/FCEvent'
 
 dayjs.extend(customParseFormat)
 
 export default {
   name: 'Horaires',
   components: {
-    DatepickerNav,
     FullCalendar,
     HorairesToolbar,
     Layout,
-    Timeline
+    Timeline,
+    FCEvent
   },
   data () {
     return {
+      // pan: -320,
+      pan: 0,
+      selectedDate: dayjs(),
       selectedEvent: undefined
     }
   },
@@ -56,7 +84,7 @@ export default {
         plugins: [timeGridPlugin],
         initialView: this.$device.phone ? 'timeGridDay' : 'timeGridWeek',
         // 125 is toolbar (50) + margin (10) + timeline (65)
-        height: 'max(800px, calc(100% - 125px))',
+        height: this.$device.phone ? '100%' : 'max(800px, calc(100% - 125px))',
         expandRows: true,
         headerToolbar: {
           left: '',
@@ -70,16 +98,17 @@ export default {
           // omitZeroMinute: true
         },
         eventClick: this.onEventClick,
-        eventDidMount: this.onEventMount,
         views: {
+          day: {
+            dayHeaderFormat: { weekday: 'long', month: 'numeric', day: 'numeric' }
+          },
           timeGrid: {
             allDaySlot: false,
             hiddenDays: this.hiddenDays,
             nowIndicator: true,
             slotDuration: '01:00:00',
             slotMinTime: this.configuration.startDayTime,
-            slotMaxTime: this.configuration.endDayTime,
-            slotLabelDidMount: this.onSlotMount
+            slotMaxTime: this.configuration.endDayTime
           }
         },
         events:
@@ -125,7 +154,7 @@ export default {
         extendedProps: {
           id: slot.sessionId,
           subject: slot.subject,
-          teachers: slot.teachers,
+          teachers: this.getTeachersLabel(slot.teachers),
           room: slot.room
         },
         title,
@@ -135,29 +164,15 @@ export default {
         borderColor: slot.color
       }
     },
-    onEventMount (info) {
-      // Add infos in timegrid view
-      const container = info.el.getElementsByClassName('fc-event-main-frame')[0]
-      if (info.event.extendedProps.teachers) {
-        const tag = document.createElement('div')
-        const teachers = info.event.extendedProps.teachers
-        let label = ''
-        for (let index = 0; index < teachers.length; ++index) {
-          if (!this.isTeacherSelected || teachers[index].userId !== this.$store.state.horaires.selectedUser.userId) {
-            const name = teachers[index].firstName.substring(0, 1) + '. ' + teachers[index].lastName
-            label += (label === '') ? name : ', ' + name
-          }
+    getTeachersLabel (teachers) {
+      let label = ''
+      for (let index = 0; index < teachers.length; ++index) {
+        if (!this.isTeacherSelected || teachers[index].userId !== this.$store.state.horaires.selectedUser.userId) {
+          const name = teachers[index].firstName.substring(0, 1) + '. ' + teachers[index].lastName
+          label += (label === '') ? name : ', ' + name
         }
-        tag.appendChild(document.createTextNode(label))
-        container.appendChild(tag)
       }
-      if (info.event.extendedProps.room) {
-        const tag = document.createElement('div')
-        tag.classList.add('fc-event-room')
-        const label = info.event.extendedProps.room
-        tag.appendChild(document.createTextNode(label))
-        container.appendChild(tag)
-      }
+      return label
     },
     onEventClick (info) {
       // Handle event selection display
@@ -173,12 +188,15 @@ export default {
       this.selectedEvent = info
     },
     onSelectDate (date) {
+      this.selectedDate = dayjs(date).startOf('day')
+
       if (this.$refs.fullCalendar) {
         const calendar = this.$refs.fullCalendar.getApi()
         calendar.gotoDate(date)
       }
+      console.log('date', this.selectedDate.toDate())
       this.$store.dispatch('horaires/selectDates',
-        { start: dayjs(date), end: dayjs(date).add(1, 'day') })
+        { start: dayjs(date).subtract(1, 'day'), end: dayjs(date).add(2, 'day') })
     },
     onSelectWeek (week) {
       if (this.$refs.fullCalendar) {
@@ -188,10 +206,37 @@ export default {
       this.$store.dispatch('horaires/selectDates',
         { start: dayjs(week.firstDayOfWeek, 'YYYY-MM-DD'), end: dayjs(week.lastDayOfWeek, 'YYYY-MM-DD') })
     },
-    onSlotMount (info) {
-      // Change hour label to P1, P2...
-      // const label = info.el.getElementsByClassName('fc-timegrid-slot-label-cushion')[0]
-      // label.innerText = slotLabelList[info.text]
+    onSwipe (event) {
+      if (this.$device.phone) {
+        switch (event.type) {
+          case 'swipeleft':
+            // this.pan -= 320
+            if (event.isFinal) this.nextDate()
+            break
+          case 'swiperight':
+            // this.pan += 320
+            if (event.isFinal) this.previousDate()
+            break
+        }
+      }
+    },
+    nextDate () {
+      this.selectedDate = this.selectedDate.add(1, 'day')
+      // Skip hidden days
+      if (this.configuration.schoolDays.indexOf(this.selectedDate.day()) === -1) {
+        this.nextDate()
+      } else {
+        this.onSelectDate(this.selectedDate.toDate())
+      }
+    },
+    previousDate () {
+      this.selectedDate = this.selectedDate.subtract(1, 'day')
+      // Skip hidden days
+      if (this.configuration.schoolDays.indexOf(this.selectedDate.day()) === -1) {
+        this.previousDate()
+      } else {
+        this.onSelectDate(this.selectedDate.startOf().toDate())
+      }
     },
     unselectEvent () {
       this.selectedEvent.el.parentNode.classList.remove('selected')
@@ -201,9 +246,30 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .toolbar {
+  min-height: 50px;
   margin-bottom: 10px;
+}
+
+.swipe-container {
+  overflow-x: hidden;
+  height: max(800px, calc(100% - 125px));
+}
+
+.swipe-wrapper {
+  transition-duration: 320ms;
+  height: 100%;
+  display: flex;
+  transition-property: transform;
+  width: 100%
+}
+
+.calendar {
+  transition-property: transform;
+  position: relative;
+  flex-shrink: 0;
+  width: 100%;
 }
 </style>
 
