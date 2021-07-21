@@ -21,6 +21,7 @@
     <PentilaTagsInput
       v-if="!$device.phone || isSingleUser"
       v-model="tagsList"
+      class="search"
       placeholder="Elève / Maitre"
       :close-on-select="true"
       :max-size="maxSize"
@@ -150,6 +151,10 @@ export default {
   font-size: 1.2rem;
   padding: 0 0.5rem;
   cursor: pointer;
+}
+
+.search {
+  max-width: 70%;
 }
 
 .date-picker {
