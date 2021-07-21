@@ -90,6 +90,7 @@
       </div>
       <textarea
         v-if="isCommentDisplayed"
+        ref="commentTextarea"
         v-model="comment"
         :placeholder="$t('NotUsualSlots.StudentRegistrationModal.commentPlaceholder')"
         @keydown.enter.stop=""
@@ -120,6 +121,7 @@ import notUsualSlotsConstants from '@/constants/notUsualSlots'
 import schoolLifeService from '@/api/schoolLife-portlet.service'
 import userManagementService from '@/api/userManagement.service'
 import { toPascalCase } from '@/utils/commons.util'
+import { nextTick } from 'vue'
 import moment from 'moment'
 
 export default {
@@ -198,6 +200,14 @@ export default {
       },
       (err) => {
         console.error(err)
+      })
+    }
+  },
+  mounted () {
+    if (this.isCommentDisplayed) { // Focus textArea
+      const vm = this
+      nextTick(function () {
+        vm.$refs.commentTextarea.focus()
       })
     }
   },
