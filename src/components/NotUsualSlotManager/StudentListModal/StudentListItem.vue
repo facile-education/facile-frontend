@@ -1,6 +1,11 @@
 <template>
   <div class="student">
     <span v-t="formattedStudent" />
+    <span
+      v-if="student.replayTestType"
+      v-t="formattedReplayTestType"
+      class="replayTestType"
+    />
     <div class="right-section">
       <PentilaCheckbox
         v-if="isCurrentTeacher"
@@ -63,6 +68,9 @@ export default {
   computed: {
     formattedStudent () {
       return toPascalCase(this.student.firstName) + ' ' + toPascalCase(this.student.lastName) + ' - ' + this.student.className
+    },
+    formattedReplayTestType () {
+      return this.student.replayTestType ? toPascalCase(this.student.replayTestType) : ''
     }
   },
   created () {
@@ -83,11 +91,18 @@ export default {
 .student {
   display: flex;
   margin: 10px 0;
+  justify-content: space-between;
+}
+
+.replayTestType {
+  font-size: 0.85rem;
+  font-style: italic;
+  display: flex;
+  align-items: center;
 }
 
 .right-section {
   display: flex;
-  margin-left: auto;
 }
 
 .is-present-checkbox {
@@ -96,6 +111,8 @@ export default {
 
 .fa-sign-out-alt {
   cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
 </style>

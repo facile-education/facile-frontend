@@ -151,8 +151,8 @@ export default {
             nowIndicator: true,
             slotDuration: '01:00:00',
             slotMinTime: '08:00:00', // TODO get from config service
-            slotMaxTime: '18:00:00', // TODO get from config service
-            slotLabelDidMount: this.onSlotMount
+            slotMaxTime: '18:00:00' // TODO get from config service
+            // slotLabelDidMount: this.onSlotMount
           }
         },
         events:
