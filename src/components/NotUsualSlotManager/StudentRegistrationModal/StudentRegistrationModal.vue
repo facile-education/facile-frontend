@@ -61,7 +61,8 @@
           class="fired-by"
         >
           <span v-t="'NotUsualSlots.StudentRegistrationModal.firedBy'" />
-          <span v-if="selectedSession.teachers.length === 1">{{ selectedSession.teachers[0].name }}</span>
+          <span v-if="selectedSession.teacher">{{ selectedSession.teacher.firstName + ' ' + selectedSession.teacher.lastName }}</span>
+          <span v-else-if="selectedSession.teachers.length === 1">{{ selectedSession.teachers[0].name }}</span>
           <PentilaDropdown
             v-else-if="selectedSession.teachers.length > 1"
             v-model="dropdownSelectedTeacher"
@@ -69,6 +70,23 @@
             display-field="name"
           />
         </div>
+      </div>
+      <div v-if="isReplayTest">
+        <span v-t="'NotUsualSlots.StudentRegistrationModal.replayTestType'" />
+        <span
+          v-if="availableSubjects.length === 0"
+          v-t="'NotUsualSlots.StudentRegistrationModal.noSubjectsAvailable'"
+        />
+        <PentilaDropdown
+          v-else
+          v-model="selectedSubject"
+          :list="availableSubjects"
+          display-field="name"
+        />
+        <PentilaErrorMessage
+          v-if="haveToSelectSlot"
+          :error-message="$t('NotUsualSlots.StudentRegistrationModal.haveToSelectSubject')"
+        />
       </div>
       <textarea
         v-if="isCommentDisplayed"
@@ -100,6 +118,7 @@
 
 import notUsualSlotsConstants from '@/constants/notUsualSlots'
 import schoolLifeService from '@/api/schoolLife-portlet.service'
+import userManagementService from '@/api/userManagement.service'
 import { toPascalCase } from '@/utils/commons.util'
 import moment from 'moment'
 
@@ -125,7 +144,9 @@ export default {
       comment: '',
       notifyParents: true,
       studentsDaySessions: [],
+      availableSubjects: [],
       haveToSelectSlot: false,
+      selectedSubject: { subjectId: -1, name: this.$t('NotUsualSlots.StudentRegistrationModal.selectSubject') },
       selectedSession: { sessionId: -1, label: this.$t('NotUsualSlots.StudentRegistrationModal.selectSlot') },
       dropdownSelectedTeacher: undefined
     }
@@ -151,6 +172,9 @@ export default {
     isFired () {
       return !this.deregistration && this.slotType.type === notUsualSlotsConstants.firedType
     },
+    isReplayTest () {
+      return !this.deregistration && this.slotType.type === notUsualSlotsConstants.replayTestType
+    },
     arrivalTime () {
       return moment().format('DD/MM/YYYY ' + this.$t('Moment.at') + ' HH:mm')
     }
@@ -166,10 +190,24 @@ export default {
       (err) => {
         console.error(err)
       })
+    } if (this.isReplayTest) {
+      userManagementService.getSubjects().then((data) => {
+        if (data.success) {
+          this.availableSubjects = data.subjects
+        }
+      },
+      (err) => {
+        console.error(err)
+      })
     }
   },
   methods: {
     formatSession (session) {
+      if (session.schoollifeSessionId) { // Consistent format between cdtSession and schoolLifeSession objects
+        session.sessionId = session.schoollifeSessionId
+        session.startDate = session.sessionStart
+        session.endDate = session.sessionEnd
+      }
       session.label = moment(session.startDate, 'YYYY/MM/DD HH:mm').format('HH:mm') + ' / ' + moment(session.endDate, 'YYYY/MM/DD HH:mm').format('HH:mm') + ' - ' + session.title
     },
     submit () {
@@ -182,13 +220,20 @@ export default {
           } else {
             this.registerFiring()
           }
+        } else if (this.isReplayTest) {
+          if (this.selectedSubject.subjectId === -1) {
+            this.haveToSelectSlot = true
+          } else {
+            this.confirmRegistration()
+          }
         } else {
           this.confirmRegistration()
         }
       }
     },
     confirmRegistration () {
-      schoolLifeService.registerStudent(this.student, this.event.extendedProps.id, this.comment, this.notifyParents).then((data) => {
+      const subjectName = this.selectedSubject.subjectId !== -1 ? this.selectedSubject.name : ''
+      schoolLifeService.registerStudent(this.student, this.event.extendedProps.id, this.comment, this.notifyParents, subjectName).then((data) => {
         if (data.success) {
           this.$store.dispatch('notUsualSlots/refreshCalendar')
           this.closeModal()
@@ -212,7 +257,7 @@ export default {
       })
     },
     registerFiring () {
-      const sourceTeacherId = this.selectedSession.teachers.length > 1 ? this.dropdownSelectedTeacher.teacherId : this.selectedSession.teachers[0].teacherId
+      const sourceTeacherId = this.selectedSession.teacher ? this.selectedSession.teacher.teacherId : this.selectedSession.teachers.length > 1 ? this.dropdownSelectedTeacher.teacherId : this.selectedSession.teachers[0].teacherId
       schoolLifeService.registerFiring(this.event.extendedProps.id, this.student, this.selectedSession.sessionId, sourceTeacherId).then((data) => {
         if (data.success) {
           this.$store.dispatch('notUsualSlots/refreshCalendar')

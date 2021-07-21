@@ -151,13 +151,14 @@ function getSessionMembers (slotId) {
 /**
  * Register student in a not usual slot (fields: success)
  */
-function registerStudent (student, slotId, comment, notifyParents) {
+function registerStudent (student, slotId, comment, notifyParents, replayTestSubject) {
   return axios.get(SCHOOL_LIFE_PATH + constants.JSON_WS_URL + '/schoollifesessionstudent/register-student', {
     params: {
       studentId: student.studentId,
       schoollifeSessionId: slotId,
       comment: comment,
-      notifyParents: notifyParents
+      notifyParents: notifyParents,
+      replayTestSubject: replayTestSubject
     }
   }).then(response => response.data)
 }
