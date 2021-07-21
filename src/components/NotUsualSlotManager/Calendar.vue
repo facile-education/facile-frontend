@@ -336,8 +336,6 @@ export default {
 .calendar {
   height: 100%;
   width: 100%;
-  border: 1px solid #D9E2EA;
-  padding: 5px;
   overflow: auto;
 }
 
