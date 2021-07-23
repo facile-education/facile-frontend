@@ -27,7 +27,7 @@
         >
           <div class="list-header">
             <div
-              v-if="isCurrentTeacher"
+              v-if="isPresentCheckBoxActive"
               v-t="'NotUsualSlots.StudentListModal.present'"
               class="present-label"
             />
@@ -89,6 +89,9 @@ export default {
     },
     isCurrentTeacher () {
       return this.currentUser.userId === this.event.extendedProps.teacher.teacherId
+    },
+    isPresentCheckBoxActive () {
+      return this.isCurrentTeacher && !(this.slotType.type === notUsualSlotsConstants.firedType) && !(this.slotType.type === notUsualSlotsConstants.tutoringType)
     }
   },
   created () {
