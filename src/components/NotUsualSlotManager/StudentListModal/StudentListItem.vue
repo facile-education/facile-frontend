@@ -8,7 +8,7 @@
     />
     <div class="right-section">
       <PentilaCheckbox
-        v-if="isCurrentTeacher"
+        v-if="isPresentCheckBoxActive"
         class="is-present-checkbox"
         label=""
         :title="$t('NotUsualSlots.StudentListModal.present')"
@@ -16,6 +16,7 @@
         @update:modelValue="handleCheck"
       />
       <i
+        v-if="isSignOut"
         class="fas fa-sign-out-alt"
         :title="$t('NotUsualSlots.StudentListModal.unsubscribe')"
         @click="isStudentDeregistrationModalDisplayed = true"
@@ -41,6 +42,7 @@
 <script>
 import StudentRegistrationModal from '@components/NotUsualSlotManager/StudentRegistrationModal/StudentRegistrationModal'
 import { toPascalCase } from '@/utils/commons.util'
+import notUsualSlotsConstants from '@/constants/notUsualSlots'
 
 export default {
   name: 'StudentListItem',
@@ -66,11 +68,27 @@ export default {
     }
   },
   computed: {
+    currentUser () {
+      return this.$store.state.user
+    },
+    slotType () {
+      return notUsualSlotsConstants.getSlotTypeByNumber(this.event.extendedProps.type)
+    },
     formattedStudent () {
       return toPascalCase(this.student.firstName) + ' ' + toPascalCase(this.student.lastName) + ' - ' + this.student.className
     },
     formattedReplayTestType () {
       return this.student.replayTestType ? toPascalCase(this.student.replayTestType) : ''
+    },
+    isPresentCheckBoxActive () {
+      return this.isCurrentTeacher && !(this.slotType.type === notUsualSlotsConstants.firedType) && !(this.slotType.type === notUsualSlotsConstants.tutoringType)
+    },
+    isSignOut () {
+      if (this.slotType.type === notUsualSlotsConstants.tutoringType) {
+        return (this.event.extendedProps.teacher.teacherId === this.currentUser.userId)
+      } else {
+        return true
+      }
     }
   },
   created () {
