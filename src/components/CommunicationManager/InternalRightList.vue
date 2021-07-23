@@ -63,7 +63,7 @@ export default {
   },
   methods: {
     onSave () {
-      var schoolId = this.$store.state.communicationManager.selectedSchoolId
+      const schoolId = this.$store.state.communicationManager.selectedSchoolId
       this.$store.dispatch('communicationManager/updateSchoolInternalCommunicationRights',
         { schoolId, rightList: this.rightList })
     },

@@ -65,7 +65,7 @@ export default {
       return this.$store.state.administration.classList
     },
     formErrorList () {
-      var form = this.v$.rule
+      const form = this.v$.rule
       return {
         classes: (form.classes.$invalid && (form.classes.$dirty || this.isErrorListDisplayed)) ? this.$t('Nero.formErrorMessage.required') : '',
         roles: (form.roles.$invalid && (form.roles.$dirty || this.isErrorListDisplayed)) ? this.$t('Nero.formErrorMessage.required') : ''

@@ -120,7 +120,8 @@ export default {
       return (this.managedSchoolList.length > 1)
     },
     title () {
-      return this.isCreation ? 'DashboardManager.WidgetEditionModal.creationModalTitle'
+      return this.isCreation
+        ? 'DashboardManager.WidgetEditionModal.creationModalTitle'
         : 'DashboardManager.WidgetEditionModal.editionModalTitle'
     },
     typeList () {

@@ -15,14 +15,13 @@ export default {
   },
   computed: {
     label () {
+      let label = ''
       if (this.rule.classes.length !== 0 && this.rule.roles.length !== 0) {
-        var label = ''
-
         if (this.rule.roles.length === 1 && this.rule.roles[0].roleId === 0) {
           label += this.$t('ApplicationManager.RuleLabel.everyRoleLabel')
         } else {
-          for (var k = 0; k < this.rule.roles.length; k++) {
-            var role = this.rule.roles[k]
+          for (let k = 0; k < this.rule.roles.length; k++) {
+            const role = this.rule.roles[k]
             if (k > 0) {
               label += ', '
             }
@@ -33,8 +32,8 @@ export default {
           label += ' ' + this.$t('ApplicationManager.RuleLabel.allSchoolLabel')
         } else {
           label += ' ' + this.$t('ApplicationManager.RuleLabel.fromClassesLabel') + ' '
-          for (var j = 0; j < this.rule.classes.length; j++) {
-            var classe = this.rule.classes[j]
+          for (let j = 0; j < this.rule.classes.length; j++) {
+            const classe = this.rule.classes[j]
             if (j > 0) {
               label += ', '
             }

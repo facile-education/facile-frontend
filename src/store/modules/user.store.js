@@ -168,7 +168,7 @@ export const actions = {
 
 export const getters = {
   homeSchool (state) {
-    for (var index = 0; index < state.schoolList.length; ++index) {
+    for (let index = 0; index < state.schoolList.length; ++index) {
       if (state.schoolList[index].homeSchool) {
         return state.schoolList[index]
       }

@@ -14,7 +14,7 @@ export const mutations = {
     state.applicationList = payload
   },
   removeApplication (state) {
-    var index = state.applicationList.indexOf(state.selectedApplication)
+    const index = state.applicationList.indexOf(state.selectedApplication)
     state.applicationList.splice(index, 1)
   },
   setSelectedApplication (state, payload) {
@@ -30,7 +30,7 @@ export const mutations = {
     if (payload.property !== undefined) {
       state.selectedApplication[payload.property] = payload.value
     } else {
-      var index = state.applicationList.indexOf(state.selectedApplication)
+      const index = state.applicationList.indexOf(state.selectedApplication)
       state.applicationList.splice(index, 1)
       state.applicationList.push({ app: payload })
     }
@@ -51,7 +51,7 @@ export const actions = {
           if (data.service.etabFilters.length === 0) {
             commit('addApplication', data.service)
           } else {
-            for (var idx = 0; idx < data.service.etabFilters.length; ++idx) {
+            for (let idx = 0; idx < data.service.etabFilters.length; ++idx) {
               if (data.service.etabFilters[idx].schoolId === school.schoolId) {
                 commit('addApplication', data.service)
                 break
@@ -213,9 +213,9 @@ export const getters = {
       return undefined
     }
 
-    var categoryList = []
-    for (var index = 0; index < state.applicationList.length; ++index) {
-      var app = state.applicationList[index].app
+    const categoryList = []
+    for (let index = 0; index < state.applicationList.length; ++index) {
+      const app = state.applicationList[index].app
       if (categoryList.indexOf(app.serviceCategory) === -1) {
         categoryList.push(app.serviceCategory)
       }

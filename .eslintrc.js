@@ -10,6 +10,6 @@ module.exports = {
     'vue/no-v-html': 'off' // Ignore but we have to sanitize all of them
   },
   parserOptions: {
-    parser: 'babel-eslint'
+    parser: '@babel/eslint-parser'
   }
 }

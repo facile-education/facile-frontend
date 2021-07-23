@@ -87,8 +87,8 @@ export default {
       })
     },
     broadcastedRoleListLabel () {
-      var roleNameList = []
-      for (var idx = 0; idx < this.broadcastedRoleList.length; ++idx) {
+      const roleNameList = []
+      for (let idx = 0; idx < this.broadcastedRoleList.length; ++idx) {
         roleNameList.push(this.broadcastedRoleList[idx].roleLabel)
       }
       return roleNameList.join(', ')
@@ -100,7 +100,7 @@ export default {
         this.$store.state.user.isAdministrator)
     },
     displaySeparator () {
-      var widgetList = this.$store.getters['dashboardManager/sortedWidgetList']
+      const widgetList = this.$store.getters['dashboardManager/sortedWidgetList']
       // Display separator if last widget editable for local or ENT admins
       if (this.index < (widgetList.length - 1)) {
         if ((this.isSchoolInstance && this.$store.state.user.isLocalAdmin) ||
@@ -134,7 +134,7 @@ export default {
       this.$store.dispatch('dashboardManager/openEditionModal', this.widget)
     },
     onRemoveWidget () {
-      var confirmModalParams = {
+      const confirmModalParams = {
         buttonLabel: this.$t('DashboardManager.WidgetItem.DeleteConfirmModal.buttonLabel'),
         message: this.$t('DashboardManager.WidgetItem.DeleteConfirmModal.message'),
         onConfirm: this.removeWidget,

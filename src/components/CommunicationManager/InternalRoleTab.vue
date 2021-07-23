@@ -83,9 +83,9 @@ export default {
       })
     },
     selectedRoleRightList () {
-      var results = []
+      const results = []
       if (this.rolePrefix && this.rightList) {
-        var item
+        let item
         for (item in this.rightList) {
           if (item.startsWith(this.rolePrefix)) {
             results.push(item)

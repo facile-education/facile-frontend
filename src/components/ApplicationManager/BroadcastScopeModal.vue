@@ -80,9 +80,10 @@ export default {
       this.ruleList.push({ classes: [], roles: [] })
     },
     buildClassIdList (currentRule, currentRuleId) {
-      var updateClassList = false
+      let updateClassList = false
+      let currentClass
 
-      for (var currentClass of currentRule.classes) {
+      for (currentClass of currentRule.classes) {
         if (currentClass.value === 0 && currentRule.classes.length > 1) {
           currentRuleId.classes.length = 0
           currentRuleId.classes.push(currentClass.value)
@@ -99,9 +100,10 @@ export default {
       }
     },
     buildRoleIdList (currentRule, currentRuleId) {
-      var updateRoleList = false
+      let updateRoleList = false
 
-      for (var currentRole of currentRule.roles) {
+      let currentRole
+      for (currentRole of currentRule.roles) {
         if (currentRole.roleId === 0 && currentRule.roles.length > 1) {
           currentRuleId.roles.length = 0
           currentRuleId.roles.push(currentRole.roleId)
@@ -118,10 +120,10 @@ export default {
       }
     },
     removeEmptyRuleList () {
-      var currentRule
-      var indexListToRemove = []
+      let currentRule
+      const indexListToRemove = []
 
-      for (var idx = 0; idx < this.ruleList.length; ++idx) {
+      for (let idx = 0; idx < this.ruleList.length; ++idx) {
         currentRule = this.ruleList[idx]
         if (currentRule.classes.length === 0 && currentRule.roles.length === 0) {
           if (this.ruleList.length > 1) {
@@ -144,12 +146,12 @@ export default {
       this.ruleList.splice(index, 1)
     },
     saveRuleList () {
-      var ruleIdList = []
+      const ruleIdList = []
       this.removeEmptyRuleList()
 
       // Build id lists for saving
       this.ruleList.forEach((currentRule) => {
-        var currentRuleId = { classes: [], roles: [] }
+        const currentRuleId = { classes: [], roles: [] }
         this.buildRoleIdList(currentRule, currentRuleId)
         this.buildClassIdList(currentRule, currentRuleId)
         ruleIdList.push(currentRuleId)
