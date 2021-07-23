@@ -29,6 +29,8 @@
 // - kubic-bezier requires whitespace
 // - kubic-bezier cannot parse negative values
 
+@use 'sass:math';
+
 // stylelint-disable scss/dollar-variable-pattern
 @mixin typography-interpolate(
   $property,
@@ -147,7 +149,7 @@
   $max-screen,
   $max-value
 ) {
-  $a: ($max-value - $min-value) / ($max-screen - $min-screen);
+  $a: math.div($max-value - $min-value, $max-screen - $min-screen);
   $b: $min-value - $a * $min-screen;
 
   $sign: '+';

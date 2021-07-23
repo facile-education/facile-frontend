@@ -121,7 +121,7 @@ export default {
     firstMondayDisplayed () {
       if (this.startDate === undefined) return undefined
 
-      var firstMonday = this.startDate.clone()
+      let firstMonday = this.startDate.clone()
       if (firstMonday.isBefore(dayjs(this.minDate, 'YYYY-MM-DD'))) {
         firstMonday = dayjs(this.minDate, 'YYYY-MM-DD').startOf('week')
       }
@@ -130,7 +130,7 @@ export default {
     lastSundayDisplayed () {
       if (this.endDate === undefined) return undefined
 
-      var lastSunday = this.endDate.clone()
+      let lastSunday = this.endDate.clone()
       if (lastSunday.isAfter(dayjs(this.maxDate, 'YYYY-MM-DD'))) {
         lastSunday = dayjs(this.maxDate, 'YYYY-MM-DD').endOf('week')
       }

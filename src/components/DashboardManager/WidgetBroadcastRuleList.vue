@@ -95,8 +95,8 @@ export default {
       })
     },
     personalBroadcastCount () {
-      var count = 0
-      for (var idx = 0; idx < this.personalRoleList.length; ++idx) {
+      let count = 0
+      for (let idx = 0; idx < this.personalRoleList.length; ++idx) {
         if (this.personalRoleList[idx].isBroadcasted) ++count
       }
       return count
@@ -113,7 +113,7 @@ export default {
   },
   methods: {
     toggleBroadcastForPersonalRoleList (value) {
-      for (var idx = 0; idx < this.personalRoleList.length; ++idx) {
+      for (let idx = 0; idx < this.personalRoleList.length; ++idx) {
         this.personalRoleList[idx].isBroadcasted = value
       }
       this.isBroadcastedToAllPersonal = value

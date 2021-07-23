@@ -57,8 +57,8 @@ export default {
   },
   methods: {
     onSave () {
-      var schoolId = this.$store.state.communicationManager.selectedSchoolId
-      var result = {
+      const schoolId = this.$store.state.communicationManager.selectedSchoolId
+      const result = {
         national1ExternalCommunicationActive: this.rightList.National_1,
         national2ExternalCommunicationActive: this.rightList.National_2,
         national3ExternalCommunicationActive: this.rightList.National_3,

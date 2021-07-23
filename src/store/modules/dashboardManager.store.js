@@ -29,8 +29,8 @@ export const mutations = {
     state.widgetList.splice(state.widgetList.indexOf(payload), 1)
   },
   updateWidgetList (state, payload) {
-    var isWidgetCreated = true
-    for (var idx = 0; idx < state.widgetList.length; ++idx) {
+    let isWidgetCreated = true
+    for (let idx = 0; idx < state.widgetList.length; ++idx) {
       if (payload.widgetId === state.widgetList[idx].widgetId) {
         state.widgetList[idx] = payload
         isWidgetCreated = false
@@ -94,9 +94,9 @@ export const getters = {
       return undefined
     }
 
-    var typeList = []
-    for (var index = 0; index < state.widgetList.length; ++index) {
-      var widget = state.widgetList[index]
+    const typeList = []
+    for (let index = 0; index < state.widgetList.length; ++index) {
+      const widget = state.widgetList[index]
       if (widget.scope === state.scopeList.USER_SCHOOL ||
             widget.scope === state.scopeList.SCHOOL) {
         if (typeList.indexOf(widget.type) === -1) {
@@ -108,8 +108,8 @@ export const getters = {
   },
   sortedWidgetList (state, getters, rootState) {
     if (state.widgetList) {
-      var localAdminScope = state.scopeList.SCHOOL_INSTANCE
-      var entAdminScope = state.scopeList.ENT_ADMIN_INSTANCE
+      const localAdminScope = state.scopeList.SCHOOL_INSTANCE
+      const entAdminScope = state.scopeList.ENT_ADMIN_INSTANCE
 
       return state.widgetList.slice().sort(function (a, b) {
         if (a.scope !== b.scope) {

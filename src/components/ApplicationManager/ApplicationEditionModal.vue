@@ -212,7 +212,7 @@ export default {
       return this.$store.getters['applicationManager/categoryList']
     },
     formErrorList () {
-      var form = this.v$.application
+      const form = this.v$.application
       return {
         serviceName: (form.serviceName.$invalid && form.serviceName.$dirty) ? this.$t('Nero.formErrorMessage.required') : '',
         serviceKey: (form.serviceKey.$invalid && form.serviceKey.$dirty) ? this.$t('Nero.formErrorMessage.required') : '',
@@ -232,7 +232,7 @@ export default {
       get () {
         if (this.portletList) {
           if (this.application.portletId) {
-            for (var idx = 0; idx < this.portletList.length; ++idx) {
+            for (let idx = 0; idx < this.portletList.length; ++idx) {
               if (this.portletList[idx].portletId === this.application.portletId) {
                 return this.portletList[idx]
               }
@@ -247,7 +247,7 @@ export default {
       }
     },
     title () {
-      var title = 'ApplicationManager.ApplicationEditionModal.addModalTitle'
+      let title = 'ApplicationManager.ApplicationEditionModal.addModalTitle'
       if (this.application && this.application.serviceId) {
         title = 'ApplicationManager.ApplicationEditionModal.editModalTitle'
       }
@@ -272,7 +272,7 @@ export default {
     buildApplicationBeforeSave () {
       // Handle roleId array before saving
       this.application.rolesId = []
-      for (var idx = 0; idx < this.application.roleList.length; idx++) {
+      for (let idx = 0; idx < this.application.roleList.length; idx++) {
         this.application.rolesId.push(this.application.roleList[idx].roleId)
       }
 
@@ -301,7 +301,7 @@ export default {
         if (this.application && this.application.serviceId) {
           this.$store.dispatch('applicationManager/updateApplication', this.application)
         } else {
-          var params = {
+          const params = {
             application: this.application,
             school: this.$store.state.administration.selectedSchool
           }
@@ -313,9 +313,9 @@ export default {
       this.application.serviceCategory = category
     },
     selectImage (imageBlob, fileName) {
-      var reader = new FileReader()
+      const reader = new FileReader()
       reader.readAsDataURL(imageBlob)
-      var vm = this
+      const vm = this
       reader.onloadend = function () {
         vm.application.image = reader.result
       }

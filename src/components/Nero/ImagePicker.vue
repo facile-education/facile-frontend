@@ -91,11 +91,11 @@ export default {
     },
     loadImage (event) {
       // Reference to the DOM input element
-      var input = event.target
+      const input = event.target
       // Ensure that you have a file before attempting to read it
       if (input.files && input.files[0]) {
         // create a new FileReader to read this image and convert to base64 format
-        var reader = new FileReader()
+        const reader = new FileReader()
         // Define a callback function to run, when FileReader finishes its job
         reader.onload = (e) => {
           // Note: arrow function used here, so that "this.imageData" refers to the imageData of Vue component

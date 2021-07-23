@@ -183,7 +183,7 @@ export default {
       this.$emit('closeDetails')
     },
     confirmRemoval () {
-      var confirmParams = {
+      const confirmParams = {
         buttonLabel: this.$t('ApplicationManager.ApplicationDetails.removalConfirmButtonLabel'),
         message: this.$t('ApplicationManager.ApplicationDetails.removalConfirmMessage'),
         onConfirm: this.removeApplication,
