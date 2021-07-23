@@ -1,4 +1,5 @@
 <template>
+  <!-- todo check the id-field utility -->
   <PentilaTagsInput
     v-model="tagsList"
     :placeholder="placeholder"

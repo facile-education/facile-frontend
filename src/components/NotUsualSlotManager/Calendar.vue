@@ -2,17 +2,36 @@
   <div class="calendar">
     <PentilaSpinner v-if="isSpinnerDisplayed" />
     <template v-if="configuration">
-      <DatepickerNav
-        v-if="$device.phone"
-        @selectDate="onSelectDate"
-      />
       <Timeline
-        v-else
+        v-if="!$device.phone"
         :min-date="minDate"
         :max-date="maxDate"
         @selectWeek="onSelectWeek"
       />
+      <NotUsualSlotsToolBar
+        v-if="$device.phone"
+        :selected-date="selectedDate"
+        @selectDate="onSelectDate"
+      />
+      <div
+        v-if="$device.phone"
+        v-hammer:swipe.horizontal="onSwipe"
+        class="swipe-container"
+      >
+        <div
+          class="swipe-wrapper"
+          :style="`transform: translate3d(${pan}px, 0px, 0px);`"
+        >
+          <FullCalendar
+            ref="fullCalendar"
+            class="calendar"
+            :options="calendarOptions"
+            @click.stop
+          />
+        </div>
+      </div>
       <FullCalendar
+        v-else
         ref="fullCalendar"
         :options="calendarOptions"
         @click.stop
@@ -71,14 +90,16 @@ import StudentRegistrationModal from '@components/NotUsualSlotManager/StudentReg
 import Timeline from '@components/Horaires/Timeline' // Needed for event creation
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
-import DatepickerNav from '@components/Horaires/DatepickerNav'
+import NotUsualSlotsToolBar from '@components/NotUsualSlotManager/NotUsualSlotsToolBar'
+// import FCEvent from '@components/Horaires/FCEvent'
 
 dayjs.extend(customParseFormat)
 
 export default {
   name: 'Calendar',
   components: {
-    DatepickerNav,
+    NotUsualSlotsToolBar,
+    // FCEvent,
     Timeline,
     StudentRegistrationModal,
     StudentListModal,
@@ -94,6 +115,8 @@ export default {
   },
   data () {
     return {
+      pan: 0,
+      selectedDate: dayjs(),
       selectedEvent: undefined,
       eventToEdit: undefined,
       isEditSlotModalDisplayed: false,
@@ -126,7 +149,7 @@ export default {
         locale: frLocale,
         plugins: [timeGridPlugin, interactionPlugin],
         initialView: this.$device.phone ? 'timeGridDay' : 'timeGridWeek',
-        height: '100%',
+        height: this.$device.phone ? '100%' : 'max(600px, calc(100% - 63px))',
         expandRows: true,
         headerToolbar: {
           left: '',
@@ -145,13 +168,16 @@ export default {
         eventClick: this.onEventClick,
         eventDidMount: this.onEventMount,
         views: {
+          day: {
+            dayHeaderFormat: { weekday: 'long', month: 'numeric', day: 'numeric' }
+          },
           timeGrid: {
             allDaySlot: false,
-            hiddenDays: [6, 0], // TODO get from config service
+            hiddenDays: this.hiddenDays,
             nowIndicator: true,
             slotDuration: '01:00:00',
-            slotMinTime: '08:00:00', // TODO get from config service
-            slotMaxTime: '18:00:00' // TODO get from config service
+            slotMinTime: this.configuration.startDayTime,
+            slotMaxTime: this.configuration.endDayTime
             // slotLabelDidMount: this.onSlotMount
           }
         },
@@ -162,6 +188,16 @@ export default {
     userSlots () {
       return this.$store.state.notUsualSlots.userSlots
     },
+    hiddenDays () {
+      const hiddenDays = []
+      let dayNumber
+      for (dayNumber = 0; dayNumber <= 6; ++dayNumber) {
+        if (this.configuration.schoolDays.indexOf(dayNumber) === -1) {
+          hiddenDays.push(dayNumber)
+        }
+      }
+      return hiddenDays
+    },
     currentNonUsualSlots () {
       return this.$store.state.notUsualSlots.currentNonUsualSlots
     },
@@ -169,24 +205,26 @@ export default {
       return this.isSpinnerDisplayed ? [] : [...this.userSlots, ...this.currentNonUsualSlots]
     }
   },
-  mounted () {
-    const calendar = this.$refs.fullCalendar.getApi()
-    const currentDate = dayjs(calendar.getDate())
-
-    if (currentDate > this.maxDate.endOf('week')) {
-      calendar.gotoDate(new Date(this.maxDate.startOf('week')))
-      this.$store.dispatch('notUsualSlots/setDisplayedDates', {
-        startDate: moment(this.maxDate.startOf('week').format('YYYY-MM-DD'), 'YYYY-MM-DD'),
-        endDate: moment(this.maxDate.endOf('week').format('YYYY-MM-DD'), 'YYYY-MM-DD')
-      })
-    }
-  },
+  // mounted () { // TODO: Avoid calendar to go after limit date, todo when we will consistent with dates
+  //   const calendar = this.$refs.fullCalendar.getApi()
+  //   const currentDate = dayjs(calendar.getDate())
+  //
+  //   if (currentDate > this.maxDate.endOf('week')) {
+  //     calendar.gotoDate(new Date(this.maxDate.startOf('week')))
+  //     this.$store.dispatch('notUsualSlots/setDisplayedDates', {
+  //       startDate: moment(this.maxDate.startOf('week').format('YYYY-MM-DD'), 'YYYY-MM-DD'),
+  //       endDate: moment(this.maxDate.endOf('week').format('YYYY-MM-DD'), 'YYYY-MM-DD')
+  //     })
+  //   }
+  // },
   methods: {
     allowSelection (selectInfo) {
       // TODO disable selection if the current user has not the good role
       return selectInfo.start.getDay() === selectInfo.end.getDay()
     },
     onSelectDate (date) {
+      this.selectedDate = dayjs(date).startOf('day')
+
       if (this.$refs.fullCalendar) {
         const calendar = this.$refs.fullCalendar.getApi()
         calendar.gotoDate(date)
@@ -201,6 +239,38 @@ export default {
       }
       this.$store.dispatch('notUsualSlots/setDisplayedDates',
         { startDate: moment(week.firstDayOfWeek, 'YYYY-MM-DD'), endDate: moment(week.lastDayOfWeek, 'YYYY-MM-DD') })
+    },
+    onSwipe (event) {
+      if (this.$device.phone) {
+        switch (event.type) {
+          case 'swipeleft':
+            // this.pan -= 320
+            if (event.isFinal) this.nextDate()
+            break
+          case 'swiperight':
+            // this.pan += 320
+            if (event.isFinal) this.previousDate()
+            break
+        }
+      }
+    },
+    nextDate () {
+      this.selectedDate = this.selectedDate.add(1, 'day')
+      // Skip hidden days
+      if (this.configuration.schoolDays.indexOf(this.selectedDate.day()) === -1) {
+        this.nextDate()
+      } else {
+        this.onSelectDate(this.selectedDate.toDate())
+      }
+    },
+    previousDate () {
+      this.selectedDate = this.selectedDate.subtract(1, 'day')
+      // Skip hidden days
+      if (this.configuration.schoolDays.indexOf(this.selectedDate.day()) === -1) {
+        this.previousDate()
+      } else {
+        this.onSelectDate(this.selectedDate.startOf().toDate())
+      }
     },
     formatCalendarSlot (slot) {
       let title = slot.title
@@ -267,7 +337,6 @@ export default {
       console.log('update event: ' + event)
     },
     onEventClick (info) {
-      // console.log('clicked !', info)
       // Handle event selection display
       if (this.selectedEvent) {
         const sameEvent = (this.selectedEvent.el === info.el)
@@ -281,7 +350,6 @@ export default {
       this.selectedEvent = info
     },
     onEventMount (info) {
-      // console.log('mounted !', info)
       // Add infos in timegrid view
       if (!isEditableSlot(info.event)) { // Make grey student slots
         info.el.classList.add('grayed')
@@ -291,18 +359,12 @@ export default {
         let tag = document.createElement('div')
         tag.classList.add('full-text')
         let label = info.event.extendedProps.teacher.firstName + ' ' + info.event.extendedProps.teacher.lastName
-        // if (info.event.extendedProps.subject) {
-        //   label += ' - ' + info.event.extendedProps.subject
-        // }
         tag.appendChild(document.createTextNode(label))
         tag.setAttribute('title', label)
         container.appendChild(tag)
         tag = document.createElement('div')
         tag.classList.add('short-text')
         label = info.event.extendedProps.teacher.teacherId !== -1 ? (info.event.extendedProps.teacher.firstName[0] + '. ' + info.event.extendedProps.teacher.lastName) : ''
-        // if (info.event.extendedProps.subject) {
-        //   label += ' - ' + info.event.extendedProps.subject
-        // }
         tag.appendChild(document.createTextNode(label))
         tag.setAttribute('title', label)
         container.appendChild(tag)
@@ -319,7 +381,6 @@ export default {
       return (event.extendedProps.inscriptionLeft !== undefined ? (event.extendedProps.inscriptionLeft + ' ' + this.$t('NotUsualSlots.remainingPlaces') + (event.extendedProps.inscriptionLeft > 1 ? 's' : '')) : '')
     },
     onSlotMount (info) {
-      // console.log('mounted slot', info.text)
       // Change hour label to P1, P2...
       const label = info.el.getElementsByClassName('fc-timegrid-slot-label-cushion')[0]
       label.innerText = slotLabelList[info.text]
@@ -332,11 +393,27 @@ export default {
 }
 </script>
 
+<style scoped>
+.swipe-container {
+  overflow-x: hidden;
+  height: max(600px, calc(100% - 63px));
+}
+</style>
+
 <style lang="scss" scoped>
-.calendar {
+
+.swipe-wrapper {
+  transition-duration: 320ms;
   height: 100%;
+  display: flex;
+  transition-property: transform;
+  width: 100%
+}
+
+.calendar {
   width: 100%;
   overflow: auto;
+  flex: 1;
 }
 
 h3 {

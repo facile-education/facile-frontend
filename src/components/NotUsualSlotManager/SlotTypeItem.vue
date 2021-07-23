@@ -1,12 +1,13 @@
 <template>
   <div
     class="slot-type-item"
+    :class="{'toolbar-display' : $device.phone && currentSlotType}"
     :style="'background-color: ' + slotType.color + ';'"
     @click="itemClicked"
   >
     {{ slotType.label }}
     <div
-      v-if="isSelected"
+      v-if="isSelected && !($device.phone && currentSlotType)"
       class="is-selected"
     />
   </div>
@@ -41,7 +42,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 .slot-type-item{
   position: relative;
@@ -58,6 +59,12 @@ export default {
   font-weight: bold;
   letter-spacing: 0;
   line-height: 24px;
+
+  &.toolbar-display {
+    width: 100%;
+    margin: 10px;
+    height: 33px;
+  }
 }
 
 .is-selected {
