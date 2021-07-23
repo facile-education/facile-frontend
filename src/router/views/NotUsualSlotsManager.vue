@@ -5,13 +5,8 @@
       class="non-classical-slots"
     >
       <SelectedSchool />
-      <SlotTypeItem
-        v-if="$device.phone && currentSlotType !== undefined"
-        class="slot-type"
-        :slot-type="currentSlotType"
-      />
       <div
-        v-else
+        v-if="!$device.phone || currentSlotType === undefined"
         class="slot-type-selection"
         :class="{'mobile': $device.phone}"
       >
@@ -23,20 +18,16 @@
         />
       </div>
       <UserCompletion
-        v-if="currentSlotType"
+        v-if="currentSlotType && !$device.phone"
         user-type="student"
         :placeholder="$t('NotUsualSlots.studentNamePlaceHolder')"
         :initial-user-list="queriedUser ? [queriedUser] : []"
         @selectUser="getUserSlots"
       />
-      <div
+      <Calendar
         v-if="currentSlotType"
-        class="calendar-container"
-      >
-        <Calendar
-          :current-slot-type="currentSlotType"
-        />
-      </div>
+        :current-slot-type="currentSlotType"
+      />
 
       <!-- global modals -->
       <teleport
@@ -145,6 +136,9 @@ export default {
   height: 100%;
   font-family: "Roboto", sans-serif;
   color: $color-cadyco-dark-text;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
 }
 
 .slot-type-selection {
@@ -159,11 +153,6 @@ export default {
     height: 100vh;
     justify-content: space-around;
   }
-}
-
-.calendar-container {
-  height: 85vh;
-  padding-top: 20px;
 }
 
 </style>
