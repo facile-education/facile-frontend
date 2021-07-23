@@ -194,7 +194,7 @@ export default {
         const calendar = this.$refs.fullCalendar.getApi()
         calendar.gotoDate(date)
       }
-      console.log('date', this.selectedDate.toDate())
+
       this.$store.dispatch('horaires/selectDates',
         { start: dayjs(date).subtract(1, 'day'), end: dayjs(date).add(2, 'day') })
     },
