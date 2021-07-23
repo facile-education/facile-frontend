@@ -23,3 +23,48 @@
 //
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+import { HEADMASTER as defaultUser } from '../support/constants'
+
+Cypress.Commands.add('login', (visitUrl = '/', user = defaultUser) => {
+  cy.log('===== LOG IN =====')
+
+  // To always have the same setup
+  cy.clearCookies()
+
+  cy.visit('/')
+
+  const params = {
+    _58_login: user.login,
+    _58_password: user.password,
+    p_auth: ''
+  }
+
+  const loginUrl = Cypress.config().baseUrl + '/web/guest/home?' +
+    'p_p_id=58' +
+    '&p_p_lifecycle=1&' +
+    'p_p_state=normal&' +
+    'p_p_mode=view&' +
+    'saveLastPath=0&' +
+    '_58_struts_action=/login/login'
+
+  cy.request({
+    method: 'POST',
+    url: loginUrl,
+    form: true,
+    body: params
+  }).then((response) => {
+    expect(response.status).to.eq(200) // to test here or not?
+  })
+
+  cy.visit(visitUrl)
+  cy.url().should('eq', Cypress.config().baseUrl + visitUrl)
+  cy.wait(1000) // to be sure
+})
+
+Cypress.Commands.add('logout', () => {
+  cy.log('===== LOG OUT =====')
+
+  cy.visit(Cypress.config().baseUrl + '/c/portal/logout')
+  cy.clearCookies()
+})
