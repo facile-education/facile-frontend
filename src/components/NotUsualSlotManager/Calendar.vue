@@ -319,7 +319,7 @@ export default {
     onDateSelect (selection) {
       if (this.selectedEvent) {
         this.unselectEvent()
-      } else if (this.currentUser.isPersonal) {
+      } else if (this.currentUser.isDoyen || this.currentUser.isDirectionMember || this.currentUser.isSecretariat) {
         this.eventToEdit = {
           start: selection.start,
           end: selection.end
