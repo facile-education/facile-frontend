@@ -1,0 +1,57 @@
+@font-face {
+  font-family: 'pentila-components';
+  src:  url('/webfonts/pentila-components.eot?th7ev0');
+  src:  url('/webfonts/pentila-components.eot?th7ev0#iefix') format('embedded-opentype'),
+    url('/webfonts/pentila-components.ttf?th7ev0') format('truetype'),
+    url('/webfonts/pentila-components.woff?th7ev0') format('woff'),
+    url('/webfonts/pentila-components.svg?th7ev0#pentila-components') format('svg');
+  // src:  url('pentila-components.ttf?th7ev0') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="pc-"], [class*=" pc-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'pentila-components' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.pc-image:before {
+  content: "\f03e";
+}
+.pc-photo:before {
+  content: "\f03e";
+}
+.pc-picture-o:before {
+  content: "\f03e";
+}
+.pc-exclamation-triangle:before {
+  content: "\f071";
+}
+.pc-warning:before {
+  content: "\f071";
+}
+.pc-calendar:before {
+  content: "\f073";
+}
+.pc-caret-down:before {
+  content: "\f0d7";
+}
+.pc-plus:before {
+  content: "\ea0a";
+}
+.pc-minus:before {
+  content: "\ea0b";
+}
+.pc-times:before {
+  content: "\ea0f";
+}
