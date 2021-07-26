@@ -16,7 +16,7 @@ export default {
   name: 'UnauthenticatedPage',
   computed: {
     hasNotGoodRole () {
-      return this.$store.state.user.userId !== 0 && !(this.$store.state.user.isTeacher || this.$store.state.user.isPersonal)
+      return this.$store.state.user.userId !== 0 && !(this.$store.state.user.isTeacher || this.$store.state.user.isDoyen || this.$store.state.user.isSecretariat || this.$store.state.user.isDirectionMember)
     }
   }
 }

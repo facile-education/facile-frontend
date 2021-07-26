@@ -38,7 +38,7 @@
               @click="openRegistration"
             />
             <i
-              v-if="isEditableEvent && currentUser.isPersonal"
+              v-if="isEditableEvent && currentUser.isDoyen || currentUser.isDirectionMember || currentUser.isSecretariat"
               class="fa fa-pencil-alt"
               @click="openEditModal"
             />
