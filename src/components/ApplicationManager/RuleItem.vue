@@ -95,7 +95,6 @@ export default {
     updateRoles (roles) {
       const copy = JSON.parse(JSON.stringify(this.rule))
       copy.roles = roles
-      console.log('copy', copy)
       this.$emit('update', copy)
     }
   }

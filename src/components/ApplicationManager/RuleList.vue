@@ -41,7 +41,6 @@ export default {
       this.$emit('remove', index)
     },
     update (rule, index) {
-      console.log(rule, index)
       this.$emit('update', { index, rule })
     }
   }

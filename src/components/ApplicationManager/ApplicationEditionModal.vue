@@ -284,7 +284,6 @@ export default {
       this.$store.dispatch('applicationManager/closeEditionModal')
     },
     openImagePicker () {
-      console.log('set show')
       this.show = true
       // this.$store.dispatch('nero/openImagePickerModal', { onConfirm: this.selectImage })
     },
