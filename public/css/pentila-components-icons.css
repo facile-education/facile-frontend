@@ -1,11 +1,10 @@
 @font-face {
   font-family: 'pentila-components';
-  src:  url('/webfonts/pentila-components.eot?th7ev0');
-  src:  url('/webfonts/pentila-components.eot?th7ev0#iefix') format('embedded-opentype'),
-    url('/webfonts/pentila-components.ttf?th7ev0') format('truetype'),
-    url('/webfonts/pentila-components.woff?th7ev0') format('woff'),
-    url('/webfonts/pentila-components.svg?th7ev0#pentila-components') format('svg');
-  // src:  url('pentila-components.ttf?th7ev0') format('truetype');
+  src:  url('../webfonts/pentila-components.eot?th7ev0');
+  src:  url('../webfonts/pentila-components.eot?th7ev0#iefix') format('embedded-opentype'),
+    url('../webfonts/pentila-components.ttf?th7ev0') format('truetype'),
+    url('../webfonts/pentila-components.woff?th7ev0') format('woff'),
+    url('../webfonts/pentila-components.svg?th7ev0#pentila-components') format('svg');
   font-weight: normal;
   font-style: normal;
 }
