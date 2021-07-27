@@ -162,6 +162,7 @@
     "warning": "La suppresion de ce créneau sera définitive!",
     "EditSlotModal": {
       "deleteSlot": "Supprimer",
+      "haveToSelectHour": "Veuillez saisir une plage d'horaires valide (hh:mm)",
       "header": "Éditer un créneau",
       "inscriptionLeftPlaceHolder": "Nombre de places restantes",
       "longDeleteSlot": "Supprimer le créneau",
