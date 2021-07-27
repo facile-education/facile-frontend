@@ -93,7 +93,7 @@ export default {
       return this.$store.state.notUsualSlots.queriedUser
     },
     hasGoodRole () {
-      return this.currentUser.isTeacher || this.currentUser.isDoyen|| this.currentUser.isDirectionMember || this.currentUser.isSecretariat
+      return this.currentUser.isTeacher || this.currentUser.isDoyen || this.currentUser.isDirectionMember || this.currentUser.isSecretariat
     },
     currentSlotType () {
       return this.$store.state.notUsualSlots.currentSlotType
