@@ -135,6 +135,14 @@
       "mandatoryCheckboxLabel": "Obligatoire"
     }
   },
+  "Horaires": {
+    "groupFilter": "Groupe",
+    "userInput": "Elève / Maitre"
+  },
+  "Layout": {
+    "authRequired": "Une authentification est requise pour accéder au service.",
+    "notAllowed": "Vous ne possédez pas les droits requis pour accéder à ce service."
+  },
   "Moment": {
     "at": "à",
     "the": "le",

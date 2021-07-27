@@ -1,5 +1,5 @@
 <template>
-  <Layout>
+  <Layout :is-allowed="!($store.state.user.isStudent || $store.state.user.isParent)">
     <HorairesToolbar
       class="toolbar"
       :selected-date="selectedDate"

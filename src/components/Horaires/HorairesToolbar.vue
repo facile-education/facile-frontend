@@ -15,6 +15,7 @@
     <PentilaDropdown
       v-if="groupList && (!$device.phone || !isSingleUser)"
       v-model="selectedGroup"
+      :placeholder="$t('Horaires.groupFilter')"
       :list="groupList"
       display-field="groupName"
     />
@@ -22,7 +23,7 @@
       v-if="!$device.phone || isSingleUser"
       v-model="tagsList"
       class="search"
-      placeholder="Elève / Maitre"
+      :placeholder="$t('Horaires.userInput')"
       :close-on-select="true"
       :max-size="maxSize"
       :completion-only="true"

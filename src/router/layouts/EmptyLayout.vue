@@ -1,6 +1,19 @@
 <template>
   <div class="service-body">
-    <slot />
+    <PentilaSpinner v-if="userId === undefined" />
+    <h2
+      v-else-if="userId === 0"
+      class="msg"
+    >
+      {{ $t('Layout.authRequired') }}
+    </h2>
+    <h2
+      v-else-if="!isAllowed"
+      class="msg"
+    >
+      {{ $t('Layout.notAllowed') }}
+    </h2>
+    <slot v-else />
   </div>
 </template>
 
@@ -8,7 +21,17 @@
 
 export default {
   components: {},
-  computed: {},
+  props: {
+    isAllowed: {
+      type: Boolean,
+      default: true
+    }
+  },
+  computed: {
+    userId () {
+      return this.$store.state.user.userId
+    }
+  },
   created () {
     this.$store.dispatch('user/initUserInformations')
     this.$store.dispatch('user/getPersonalDetails')
@@ -21,5 +44,9 @@ export default {
   width: 100%;
   height: 100%;
   overflow: auto;
+}
+
+.msg {
+  text-align: center;
 }
 </style>

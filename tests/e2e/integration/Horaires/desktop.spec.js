@@ -1,64 +1,102 @@
 // https://docs.cypress.io/api/introduction/api.html
 
 import dayjs from 'dayjs'
+import {
+  url, now,
+  groupName,
+  studentName,
+  studentSearch,
+  teacherName,
+  teacherSearch
+} from './constants'
+import weekday from 'dayjs/plugin/weekday'
+
+dayjs.extend(weekday)
 
 // TODO
-// Use dayJS for date related content
-// Test several roles
 // Mobile navigation (swipe)
-// Timeline navigation
 // Group and user (teacher vs student) events
 // filter swap
-// common Base url
-// Horaires : Placeholder labels
-// Conf test : console errors + pentila component font
 
-// Set current date to Wednesday, may 5th
-const now = dayjs('2021-05-05T16:00:00.000Z')
+const waitForRefresh = () => {
+  cy.wait(500)
+}
 
 describe('Desktop tests', () => {
   beforeEach(() => {
     cy.logout()
     cy.clock(now.toDate().getTime())
-    cy.login('/nero/horaires')
+    cy.login(url)
   })
 
-  it('Check initial view', () => {
-    cy.get('.toolbar .base-dropdown').should('be.visible')
-    cy.get('.toolbar .search .base-input').should('be.visible')
-    cy.get('.weekly-horizontal-timeline').should('be.visible')
-    cy.get('.fc').should('be.visible')
-
-    // cy.get('iframe').should('be.visible')
-  })
-
-  it('Check timeline navigation', () => {
+  it('Navigates in timeline', () => {
     // Current week should be visible and selected
     cy.get('div.weeknumber-label.current-week.theme-border-color.theme-background-color').should('be.visible')
 
-    // Tuesday, may 4th should be visible
-    cy.contains('.fc-day-tue > .fc-scrollgrid-sync-inner > .fc-col-header-cell-cushion', 'mar. 04/05')
+    cy.get('.weeknumber-label').should('have.length', 6)
 
+    // Tuesday of the current week should be visible
+    cy.contains(now.weekday(1).format('ddd DD/MM')).should('exist')
+
+    // Current week is the 3rd one and selected by default (index 2)
+    // The 5th one should be two weeks later (index 4)
     cy.get(':nth-child(4) > .weeknumber-label').click()
+    waitForRefresh()
+    cy.contains(now.add(2, 'week').format('ddd DD/MM')).should('exist')
+
+    // Click on timeline previous button
+    // The 3rd week (index 2) should be 6 weeks before the current
+    cy.get('.horizontal-timeline-left > .nav-btn').click()
+    waitForRefresh()
+    cy.get('.weeknumber-label').then($elements => { cy.wrap($elements[2]).click() })
+    cy.contains(now.subtract(6, 'week').format('ddd DD/MM')).should('exist')
+
+    // Click twice on timeline next button
+    // The 3rd week should be 6 weeks after current one
+    cy.get('.horizontal-timeline-right > .nav-btn').click().click()
+    waitForRefresh()
+    cy.get('.weeknumber-label').then($elements => { cy.wrap($elements[2]).click() })
+    cy.contains(now.add(6, 'week').format('ddd DD/MM')).should('exist')
   })
 
-  it('Check group session display', () => {
+  it('Displays group sessions', () => {
     // Display group sessions
     cy.get('.toolbar .base-dropdown').click()
     cy.get('.base-dropdown > .base-autocomplete').should('be.visible')
 
-    // Select third groupe in dthe list
-    cy.get('.suggestion-list > :nth-child(3)').click()
+    // Select group in the list
+    cy.contains(groupName).click()
+    waitForRefresh()
+
+    // Check events number
+    cy.get('.fc-timegrid-event').should('have.length', 37)
   })
 
-  it('Check user session display', () => {
-    cy.get('.search .base-input').type('dar')
-
+  it('Displays teachers sessions', () => {
+    cy.get('.search .base-input').type(teacherSearch)
     // Tick to throw completion timeout
     cy.tick(500)
 
     cy.get('.search .base-autocomplete').should('be.visible')
+    // Select teacher user
+    cy.contains(teacherName).click()
+    waitForRefresh()
 
-    cy.get('.suggestion-list > :nth-child(4)').click()
+    // Check events number
+    cy.get('.fc-timegrid-event').should('have.length', 10)
+  })
+
+  it('Displays student sessions', () => {
+    cy.get('.search .base-input').type(studentSearch)
+    // Tick to throw completion timeout
+    cy.tick(500)
+
+    cy.get('.search .base-autocomplete').should('be.visible')
+    // Select student user
+    cy.contains(studentName).click()
+    waitForRefresh()
+
+    // Check events number
+    cy.get('.fc-timegrid-event').should('have.length', 31)
   })
 })

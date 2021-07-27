@@ -3,7 +3,7 @@ import PentilaUtils from 'pentila-utils'
 import userService from '@/api/user.service'
 
 export const state = {
-  userId: 0,
+  userId: undefined,
   firstName: '',
   lastName: '',
   picture: '/image/user_male_portrait?img_id=3274117&t=1546588956172',
@@ -117,6 +117,8 @@ export const actions = {
             }
           }
           commit('initUserInformations', data)
+        } else {
+          commit('initUserInformations', { userId: 0 })
         }
       },
       (err) => {
