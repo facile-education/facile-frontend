@@ -13,6 +13,10 @@
       :placeholder="'hh:mm'"
     />
   </div>
+  <PentilaErrorMessage
+    v-if="error !== ''"
+    :error-message="error"
+  />
   <div class="from-date">
     {{ 'À partir du ' + momentStartTime.format('dddd DD MMMM YYYY') }}
   </div>
@@ -36,7 +40,8 @@ export default {
   data () {
     return {
       inputStartHour: '',
-      inputEndHour: ''
+      inputEndHour: '',
+      error: ''
     }
   },
   computed: {
@@ -49,15 +54,25 @@ export default {
   },
   watch: {
     inputStartHour (value) {
+      const hour = moment(value, 'HH:mm', true)
       const newStartHour = moment(this.momentStartTime.format('YYYY-MM-DD') + ' ' + value, 'YYYY-MM-DD HH:mm')
-      if (newStartHour.isValid) {
+      const currentEndHour = moment(this.momentEndTime.format('YYYY-MM-DD') + ' ' + this.inputEndHour, 'YYYY-MM-DD HH:mm')
+      if (hour.isValid() && newStartHour.isBefore(currentEndHour)) {
+        this.error = ''
         this.$emit('update:start', newStartHour.format('YYYY-MM-DDTHH:mm'))
+      } else {
+        this.error = this.$t('NotUsualSlots.EditSlotModal.haveToSelectHour')
       }
     },
     inputEndHour (value) {
+      const hour = moment(value, 'HH:mm', true)
+      const currentStartHour = moment(this.momentStartTime.format('YYYY-MM-DD') + ' ' + this.inputStartHour, 'YYYY-MM-DD HH:mm')
       const newEndHour = moment(this.momentEndTime.format('YYYY-MM-DD') + ' ' + value, 'YYYY-MM-DD HH:mm')
-      if (newEndHour.isValid) {
+      if (hour.isValid() && newEndHour.isAfter(currentStartHour)) {
+        this.error = ''
         this.$emit('update:end', newEndHour.format('YYYY-MM-DDTHH:mm'))
+      } else {
+        this.error = this.$t('NotUsualSlots.EditSlotModal.haveToSelectHour')
       }
     }
   },

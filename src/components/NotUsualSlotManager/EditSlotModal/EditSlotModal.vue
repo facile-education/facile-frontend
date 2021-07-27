@@ -21,7 +21,6 @@
         v-model:start="newEvent.start"
         v-model:end="newEvent.end"
       />
-      <PentilaErrorMessage :error-message="formErrorList.hour" />
       <UserCompletion
         user-type="teacher"
         :placeholder="$t('NotUsualSlots.EditSlotModal.teacherNamePlaceHolder')"
@@ -103,22 +102,6 @@ export default {
         inscriptionLeft: { required },
         room: { required }
       }
-      // Todo when we will be agree on date form
-      // start: {
-      //   required,
-      //   valid (val) {
-      //     return moment(val, 'YYYY-MM-DDTHH:mm').isValid
-      //   }
-      // },
-      // end: {
-      //   required,
-      //   valid (val) {
-      //     return moment(val, 'YYYY-MM-DDTHH:mm').isValid
-      //   },
-      //   maxValue (val, { start }) {
-      //     return val.localeCompare(start) > 0 // if val < start: is ok
-      //   }
-      // }
     }
   },
   data () {
@@ -147,13 +130,6 @@ export default {
         teacher: (form.extendedProps.teacher.teacherId.$invalid && form.extendedProps.teacher.teacherId.$dirty) ? this.$t('Commons.formRequired') : '',
         inscriptionLeft: (form.extendedProps.inscriptionLeft.$invalid && form.extendedProps.inscriptionLeft.$dirty) ? this.$t('Commons.formRequired') : '',
         room: (form.extendedProps.room.$invalid && form.extendedProps.room.$dirty) ? this.$t('Commons.formRequired') : ''
-        // hour: ((form.start.$invalid && form.start.$dirty) || (form.end.$invalid && form.end.$dirty)) // ? 'invalid' : ''
-        // ? (!form.start.required
-        //   ? this.$t('Commons.formRequired')
-        //   : (!form.start.valid
-        //     ? this.$t('Commons.formInvalidDate')
-        //     : this.$t('Commons.formDateOrder')))
-        // : ''
       }
     },
     currentSlotType () {
