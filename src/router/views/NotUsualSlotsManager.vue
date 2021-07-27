@@ -1,7 +1,7 @@
 <template>
-  <Layout>
+  <Layout :is-allowed="hasGoodRole">
     <div
-      v-if="currentUser.userId !== 0 && currentUser.schoolList.length !== 0 && hasGoodRole"
+      v-if="currentUser.userId !== 0 && currentUser.schoolList.length !== 0"
       class="non-classical-slots"
     >
       <SelectedSchool />
@@ -51,7 +51,6 @@
     </div>
     <div v-else>
       <PentilaSpinner v-if="areActionsInProgress" />
-      <UnauthenticatedPage v-else />
     </div>
   </Layout>
 </template>
@@ -65,14 +64,13 @@ import SlotTypeItem from '@/components/NotUsualSlotManager/SlotTypeItem'
 import Calendar from '@/components/NotUsualSlotManager/Calendar'
 import UserCompletion from '@/components/NotUsualSlotManager/UserCompletion'
 import SelectedSchool from '@/components/NotUsualSlotManager/SelectedSchool'
-import UnauthenticatedPage from '@/router/views/UnauthenticatedPage'
 import WarningModal from '@components/Nero/WarningModal'
 import Layout from '@layouts/EmptyLayout'
 import PendingFiringModal from '@components/NotUsualSlotManager/PendingFiringModal/PendingFiringModal'
 
 export default {
   name: 'NotUsualSlotManager',
-  components: { PendingFiringModal, Layout, WarningModal, UnauthenticatedPage, SelectedSchool, UserCompletion, Calendar, SlotTypeItem },
+  components: { PendingFiringModal, Layout, WarningModal, SelectedSchool, UserCompletion, Calendar, SlotTypeItem },
   data () {
     return {
       slotTypes: notUsualSlotConstants.slotTypes,
