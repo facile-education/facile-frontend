@@ -1,7 +1,7 @@
 // https://docs.cypress.io/api/introduction/api.html
 
 import { HEADMASTER, TEACHER, STUDENT, PARENT } from '../../support/constants'
-import { now, url } from './constants'
+import { now, url } from '../../support/constants/horaires'
 
 const allowedUsers = [HEADMASTER, TEACHER]
 const disallowedUsers = [STUDENT, PARENT]

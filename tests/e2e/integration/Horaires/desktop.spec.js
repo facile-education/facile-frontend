@@ -1,6 +1,5 @@
 // https://docs.cypress.io/api/introduction/api.html
 
-import dayjs from 'dayjs'
 import {
   url, now,
   groupName,
@@ -8,15 +7,7 @@ import {
   studentSearch,
   teacherName,
   teacherSearch
-} from './constants'
-import weekday from 'dayjs/plugin/weekday'
-
-dayjs.extend(weekday)
-
-// TODO
-// Mobile navigation (swipe)
-// Group and user (teacher vs student) events
-// filter swap
+} from '../../support/constants/horaires'
 
 const waitForRefresh = () => {
   cy.wait(500)
@@ -84,6 +75,23 @@ describe('Desktop tests', () => {
 
     // Check events number
     cy.get('.fc-timegrid-event').should('have.length', 10)
+
+    // Co teacher is displayed
+    cy.get('.fc-day-tue > .fc-timegrid-col-frame > :nth-child(2) > [style="inset: 57px 0% -114px; z-index: 1;"] > .fc-timegrid-event')
+      .within(() => {
+        cy.contains('FR1111').should('be.visible')
+        cy.contains('A. Chabloz').should('be.visible')
+        cy.contains('J211').should('be.visible')
+        cy.root().should('have.css', 'background-color', 'rgb(60, 181, 125)')
+      })
+
+    // No other teacher
+    cy.get('.fc-day-wed > .fc-timegrid-col-frame > :nth-child(2) > [style="inset: 260px 0% -317px; z-index: 1;"] > .fc-timegrid-event')
+      .within(() => {
+        cy.contains('MC1111').should('be.visible')
+        cy.contains('J209').should('be.visible')
+        cy.root().should('have.css', 'background-color', 'rgb(37, 156, 226)')
+      })
   })
 
   it('Displays student sessions', () => {
@@ -98,5 +106,48 @@ describe('Desktop tests', () => {
 
     // Check events number
     cy.get('.fc-timegrid-event').should('have.length', 31)
+
+    cy.get('.fc-day-mon > .fc-timegrid-col-frame > :nth-child(2) > [style="inset: 57px 0% -114px; z-index: 1;"] > .fc-timegrid-event')
+      .within(() => {
+        cy.contains('MA1051AC').should('be.visible')
+        cy.contains('I. Mendez').should('be.visible')
+        cy.contains('J102').should('be.visible')
+        cy.root().should('have.css', 'background-color', 'rgb(240, 81, 42)')
+      })
+
+    cy.get('.fc-day-wed > .fc-timegrid-col-frame > :nth-child(2) > [style="inset: 197px 0% -254px; z-index: 1;"] > .fc-timegrid-event')
+      .within(() => {
+        cy.contains('AL1051AC').should('be.visible')
+        cy.contains('L. Kronegg De Melo').should('be.visible')
+        cy.contains('J102').should('be.visible')
+        cy.root().should('have.css', 'background-color', 'rgb(123, 135, 201)')
+      })
+  })
+
+  it('Initializes other filter on selection', () => {
+    // User seletion
+    cy.get('.search .base-input').type(studentSearch)
+    // Tick to throw completion timeout
+    cy.tick(500)
+    cy.contains(studentName).click()
+    waitForRefresh()
+
+    // Group selection
+    cy.get('.toolbar .base-dropdown').click()
+    cy.contains(groupName).click()
+    waitForRefresh()
+
+    // User selection should be emptied
+    cy.get('.search .tag-item').should('not.exist')
+
+    // User seletion
+    cy.get('.search .base-input').type(studentSearch)
+    // Tick to throw completion timeout
+    cy.tick(500)
+    cy.contains(studentName).click()
+    waitForRefresh()
+
+    // Group selection should be emptied
+    cy.get('.button').contains('Groupes')
   })
 })
