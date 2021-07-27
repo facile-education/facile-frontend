@@ -8,7 +8,7 @@
       {{ $t('Layout.authRequired') }}
     </h2>
     <h2
-      v-else-if="!isAllowed"
+      v-else-if="!isAllowed && !user.isAdministrator"
       class="msg"
     >
       {{ $t('Layout.notAllowed') }}
@@ -28,8 +28,11 @@ export default {
     }
   },
   computed: {
+    user () {
+      return this.$store.state.user
+    },
     userId () {
-      return this.$store.state.user.userId
+      return this.user.userId
     }
   },
   created () {
