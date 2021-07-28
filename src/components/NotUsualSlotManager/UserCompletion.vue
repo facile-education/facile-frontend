@@ -2,6 +2,7 @@
   <!-- todo check the id-field utility -->
   <PentilaTagsInput
     v-model="tagsList"
+    data-test="user-completion-input"
     :placeholder="placeholder"
     :close-on-select="true"
     :max-size="maxSize"
