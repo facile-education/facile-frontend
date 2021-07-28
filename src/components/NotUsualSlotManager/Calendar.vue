@@ -115,6 +115,7 @@ export default {
   },
   data () {
     return {
+      notComputedSlotsToDisplay: [],
       pan: 0,
       selectedDate: dayjs(),
       selectedEvent: undefined,
@@ -181,8 +182,7 @@ export default {
             // slotLabelDidMount: this.onSlotMount
           }
         },
-        events:
-          this.allSlotsToDisplay.map(slot => this.formatCalendarSlot(slot))
+        events: this.notComputedSlotsToDisplay.map(slot => this.formatCalendarSlot(slot))
       }
     },
     userSlots () {
@@ -203,6 +203,13 @@ export default {
     },
     allSlotsToDisplay () {
       return this.isSpinnerDisplayed ? [] : [...this.userSlots, ...this.currentNonUsualSlots]
+    }
+  },
+  watch: {
+    allSlotsToDisplay (value) {
+      if (JSON.stringify(value) !== JSON.stringify(this.notComputedSlotsToDisplay)) {
+        this.notComputedSlotsToDisplay = [...value]
+      }
     }
   },
   // mounted () { // TODO: Avoid calendar to go after limit date, todo when we will consistent with dates
@@ -355,6 +362,8 @@ export default {
         info.el.classList.add('grayed')
       }
       const container = info.el.getElementsByClassName('fc-event-main-frame')[0]
+      container.setAttribute('data-test', info.event.title)
+
       if (info.event.extendedProps.teacher) {
         let tag = document.createElement('div')
         tag.classList.add('full-text')
