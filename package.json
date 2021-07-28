@@ -7,6 +7,9 @@
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e --mode development",
+    "db:test:e2e": "run-s db:init test:e2e db:revert",
+    "db:init": "./tests/e2e/scripts/initDB.sh",
+    "db:revert": "./tests/e2e/scripts/revertDB.sh",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -60,6 +63,7 @@
     "eslint-plugin-promise": "^4.3.1",
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^7.6.0",
+    "npm-run-all": "^4.1.5",
     "sass": "^1.32.7",
     "sass-loader": "^11.0.1",
     "vue-jest": "^5.0.0-0"
