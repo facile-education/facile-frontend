@@ -146,6 +146,9 @@ export default {
   },
   created () {
     this.$store.dispatch('cdt/getConfiguration')
+    if (this.$device.phone) {
+      this.onSelectDate(new Date())
+    }
   },
   methods: {
     formatCalendarSlot (slot) {
