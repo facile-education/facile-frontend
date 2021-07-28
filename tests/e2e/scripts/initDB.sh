@@ -19,14 +19,14 @@ then
   echo "DUMP_NAME = $DUMP_NAME"
 else
   # cd to script directory
-  cd "$(dirname "$(realpath "$0")")";
+  cd "$(dirname "$(realpath "$0")")" || exit;
 
   echo "Copy dump to virtual machine"
   scp $DUMP_NAME $VM_USER@$VM_IP:/home/$VM_USER
 
   # Warning : Indentation breaks EOF syntax
   echo "SSH as $VM_USER to backup original DB and load the test one."
-  ssh $VM_USER@$VM_IP << EOF
+  ssh $VM_USER@$VM_IP << "EOF"
 mysqldump -u $DB_USER -p$DB_PWD $DB_NAME > dev_db_backup.sql
 mysql -u $DB_USER -p$DB_PWD $DB_NAME < $DUMP_NAME
 rm $DUMP_NAME
