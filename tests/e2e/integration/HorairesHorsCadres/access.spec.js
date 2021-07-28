@@ -1,5 +1,5 @@
 import { HEADMASTER, TEACHER, STUDENT, PARENT, SCHOOL_ADMIN, DOYEN, SECRETARY } from '../../support/constants'
-import { now, url } from './constants'
+import { now, url } from '../../support/constants/horairesHorsCadres'
 
 const allowedUsers = [HEADMASTER, DOYEN, SCHOOL_ADMIN, SECRETARY, TEACHER]
 const disallowedUsers = [STUDENT, PARENT]
