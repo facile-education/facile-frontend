@@ -1,6 +1,9 @@
 <template>
   <!-- <b>{{ arg.timeText }}</b> -->
-  <div class="fc-event-title">
+  <div
+    class="fc-event-title"
+    :data-cy="arg.event.extendedProps.cy"
+  >
     {{ arg.event.title }}
   </div>
   <div v-if="arg.event.extendedProps.teachers">

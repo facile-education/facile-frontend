@@ -77,7 +77,7 @@ describe('Desktop tests', () => {
     cy.get('.fc-timegrid-event').should('have.length', 10)
 
     // Co teacher is displayed
-    cy.get('.fc-day-tue > .fc-timegrid-col-frame > :nth-child(2) > [style="inset: 57px 0% -114px; z-index: 1;"] > .fc-timegrid-event')
+    cy.get('[data-cy="05-04_08:45"]').parents('a.fc-timegrid-event')
       .within(() => {
         cy.contains('FR1111').should('be.visible')
         cy.contains('A. Chabloz').should('be.visible')
@@ -86,7 +86,7 @@ describe('Desktop tests', () => {
       })
 
     // No other teacher
-    cy.get('.fc-day-wed > .fc-timegrid-col-frame > :nth-child(2) > [style="inset: 260px 0% -317px; z-index: 1;"] > .fc-timegrid-event')
+    cy.get('[data-cy="05-05_10:35"]').parents('a.fc-timegrid-event')
       .within(() => {
         cy.contains('MC1111').should('be.visible')
         cy.contains('J209').should('be.visible')
@@ -107,7 +107,7 @@ describe('Desktop tests', () => {
     // Check events number
     cy.get('.fc-timegrid-event').should('have.length', 31)
 
-    cy.get('.fc-day-mon > .fc-timegrid-col-frame > :nth-child(2) > [style="inset: 57px 0% -114px; z-index: 1;"] > .fc-timegrid-event')
+    cy.get('[data-cy="05-03_08:45"]').parents('a.fc-timegrid-event')
       .within(() => {
         cy.contains('MA1051AC').should('be.visible')
         cy.contains('I. Mendez').should('be.visible')
@@ -115,7 +115,7 @@ describe('Desktop tests', () => {
         cy.root().should('have.css', 'background-color', 'rgb(240, 81, 42)')
       })
 
-    cy.get('.fc-day-wed > .fc-timegrid-col-frame > :nth-child(2) > [style="inset: 197px 0% -254px; z-index: 1;"] > .fc-timegrid-event')
+    cy.get('[data-cy="05-05_10:35"]').parents('a.fc-timegrid-event')
       .within(() => {
         cy.contains('AL1051AC').should('be.visible')
         cy.contains('L. Kronegg De Melo').should('be.visible')
