@@ -1,5 +1,6 @@
 <template>
   <div
+    :data-test="'slot-type-item-' + slotType.type"
     class="slot-type-item"
     :class="{'toolbar-display' : $device.phone && currentSlotType}"
     :style="'background-color: ' + slotType.color + ';'"

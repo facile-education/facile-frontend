@@ -14,6 +14,49 @@ const studentName = 'ANYA ALOSTA (1051AC)'
 const studentSearch = 'alo'
 const teacherName = 'Darko Jovanovic (Maitre)'
 const teacherSearch = 'dar'
+const tutoring = {
+  type: 4,
+  label: 'Dépannage',
+  color: '#8763CA',
+  nbSlotsAtWeek35: 4,
+  teacherNameAtWednesdaySlot: 'C. Kummer'
+}
+const study = {
+  type: 5,
+  label: 'Cercle d\'étude',
+  color: '#32AC71',
+  nbSlotsAtWeek35: 4,
+  teacherNameAtWednesdaySlot: 'A. Veluz'
+}
+const replayTest = {
+  type: 3,
+  label: 'Travaux à refaire',
+  color: '#3694B7',
+  nbSlotsAtWeek35: 4,
+  teacherNameAtWednesdaySlot: 'D. Jovanovic'
+}
+const detention = {
+  type: 2,
+  label: 'Retenue',
+  color: '#EDA12A',
+  nbSlotsAtWeek35: 3,
+  teacherNameAtWednesdaySlot: 'A. Regad'
+}
+const fired = {
+  type: 1,
+  label: 'Renvoi',
+  color: '#f00',
+  nbSlotsAtWeek35: 6,
+  teacherNameAtWednesdaySlot: 'F. Vuilleumier Freymond'
+}
+
+const slotTypes = {
+  tutoring,
+  study,
+  replayTest,
+  detention,
+  fired
+}
 
 export {
   groupName,
@@ -22,5 +65,6 @@ export {
   studentSearch,
   teacherName,
   teacherSearch,
-  url
+  url,
+  slotTypes
 }
