@@ -44,10 +44,10 @@
 
 <script>
 import dayjs from 'dayjs'
-import cdtService from '@/api/cdt.service'
 
 import NeroToolbar from '@/components/Nero/NeroToolbar'
 import DatepickerNav from '@/components/Horaires/DatepickerNav'
+import userManagementService from '@/api/userManagement.service'
 
 export default {
   name: 'HorairesToolbar',
@@ -103,7 +103,7 @@ export default {
   },
   methods: {
     getCompletion (inputValue) {
-      cdtService.getSchoolUsers(this.selectedSchool.schoolId, inputValue).then((data) => {
+      userManagementService.getSchoolUsers(this.selectedSchool.schoolId, inputValue).then((data) => {
         if (data.success) {
           if (data.users.length > 0) {
             this.autocompleteUserList = data.users
