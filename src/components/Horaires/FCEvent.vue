@@ -6,7 +6,11 @@
   >
     {{ arg.event.title }}
   </div>
-  <div v-if="arg.event.extendedProps.teachers">
+  <div
+    v-if="arg.event.extendedProps.teachers"
+    class="fc-event-teacher"
+    :title="arg.event.extendedProps.teachers"
+  >
     {{ arg.event.extendedProps.teachers }}
   </div>
   <div class="fc-event-room">

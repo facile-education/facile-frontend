@@ -90,6 +90,7 @@ describe('Desktop tests', () => {
       .within(() => {
         cy.contains('MC1111').should('be.visible')
         cy.contains('J209').should('be.visible')
+        cy.get('.fc-event-teacher').should('not.exist')
         cy.root().should('have.css', 'background-color', 'rgb(37, 156, 226)')
       })
   })
