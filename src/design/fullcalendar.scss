@@ -10,6 +10,10 @@ $selected-background-filter-color: #FFFFFF99;
   border-bottom: 1px dotted silver;
 }
 
+.fc .fc-timegrid-slot-label {
+  vertical-align: top;
+}
+
 .fc-timegrid-event-harness {
   transition: inset .1s;
 
