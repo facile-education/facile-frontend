@@ -146,6 +146,9 @@ export default {
   },
   created () {
     this.$store.dispatch('cdt/getConfiguration')
+    if (this.$device.phone) {
+      this.onSelectDate(new Date())
+    }
   },
   methods: {
     formatCalendarSlot (slot) {
@@ -155,7 +158,8 @@ export default {
           id: slot.sessionId,
           subject: slot.subject,
           teachers: this.getTeachersLabel(slot.teachers),
-          room: slot.room
+          room: slot.room,
+          cy: dayjs(slot.startDate, 'DD/MM/YYYY HH:mm').format('MM-DD_HH:mm')
         },
         title,
         start: dayjs(slot.startDate, 'DD/MM/YYYY HH:mm').format('YYYY-MM-DDTHH:mm'),

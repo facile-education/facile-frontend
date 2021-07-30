@@ -27,7 +27,7 @@ export const actions = {
         if (data.success) {
           commit('setConfiguration', data.configuration)
         } else {
-          console.error('Cannot get sessions ')
+          console.error('Cannot get cdt config')
         }
       },
       (err) => {

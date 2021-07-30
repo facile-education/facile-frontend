@@ -16,7 +16,7 @@ then
   echo "DB_NAME = $DB_NAME"
 else
   echo "SSH as $VM_USER to revert to original database."
-  ssh $VM_USER@$VM_IP << "EOF"
+  ssh $VM_USER@$VM_IP << EOF
 mysql -u $DB_USER -p$DB_PWD $DB_NAME < dev_db_backup.sql
 EOF
     # rm dev_db_backup.sql

@@ -73,5 +73,32 @@ describe('Mobile tests', () => {
 
     // Check events number
     cy.get('.fc-timegrid-event').should('have.length', 4)
+
+    cy.get('[data-cy="05-05_08:45"]').parents('a.fc-timegrid-event')
+      .within(() => {
+        cy.contains('AN1051AC').should('be.visible')
+        cy.contains('S. De Miras').should('be.visible')
+        cy.contains('J102').should('be.visible')
+        cy.root().should('have.css', 'background-color', 'rgb(23, 127, 69)')
+      })
+
+    cy.get('[data-cy="05-05_10:35"]').parents('a.fc-timegrid-event')
+      .within(() => {
+        cy.contains('AL1051AC').should('be.visible')
+        cy.contains('L. Kronegg De Melo').should('be.visible')
+        cy.contains('J102').should('be.visible')
+        cy.root().should('have.css', 'background-color', 'rgb(123, 135, 201)')
+      })
+
+    // Nav to next day
+    cy.get('.toolbar .date-picker').click()
+    cy.tick(500)
+
+    const tomorrow = now.add(1, 'day')
+    cy.get(`.id-${tomorrow.format('YYYY-MM-DD')}`).click()
+    cy.wait(100)
+
+    // Check events number
+    cy.get('.fc-timegrid-event').should('have.length', 7)
   })
 })
