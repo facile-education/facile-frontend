@@ -1,6 +1,7 @@
 <template>
   <PentilaWindow
     :modal="true"
+    width="500"
     class="pending-firing-modal"
     @keydown.exact.enter.stop=""
     @keydown.exact.backspace.stop=""

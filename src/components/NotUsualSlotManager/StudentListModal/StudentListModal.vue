@@ -1,6 +1,7 @@
 <template>
   <PentilaWindow
     :modal="true"
+    width="600px"
     class="student-list-modal"
     @close="closeModal"
     @keydown.exact.enter.stop=""
@@ -15,9 +16,7 @@
 
     <template #body>
       <div class="body">
-        <h1>{{ slotType.label }}</h1>
         <div class="slot">
-          <span v-t="'NotUsualSlots.StudentListModal.slot'" />
           <span>{{ formattedSlot }}</span>
         </div>
         <PentilaSpinner v-if="isLoading" />
@@ -27,7 +26,7 @@
         >
           <div class="list-header">
             <div
-              v-if="isPresentCheckBoxActive"
+              v-if="isRollCallable"
               v-t="'NotUsualSlots.StudentListModal.present'"
               class="present-label"
             />
@@ -50,7 +49,14 @@
       </div>
     </template>
 
-    <template #footer />
+    <template #footer>
+      <PentilaButton
+        v-if="isRollCallable"
+        :label="$t('NotUsualSlots.StudentListModal.callRollButton')"
+        class="call-roll"
+        @click="callRoll()"
+      />
+    </template>
   </PentilaWindow>
 </template>
 
@@ -60,6 +66,7 @@ import schoolLifeService from '@/api/schoolLife-portlet.service'
 import StudentListItem from '@components/NotUsualSlotManager/StudentListModal/StudentListItem'
 import notUsualSlotsConstants from '@/constants/notUsualSlots'
 import moment from 'moment'
+import dayjs from 'dayjs'
 
 export default {
   name: 'StudentListModal',
@@ -82,7 +89,7 @@ export default {
       return notUsualSlotsConstants.getSlotTypeByNumber(this.event.extendedProps.type)
     },
     formattedSlot () {
-      return moment(this.event.start, 'YYYY-MM-DDTHH:mm').format('DD/MM/YYYY ' + this.$t('Moment.at') + ' HH:mm')
+      return this.slotType.label + ' ' + this.$t('Moment.of') + ' ' + moment(this.event.start, 'YYYY-MM-DDTHH:mm').format('DD MMMM YYYY ' + this.$t('Moment.at') + ' HH:mm')
     },
     currentUser () {
       return this.$store.state.user
@@ -90,8 +97,11 @@ export default {
     isCurrentTeacher () {
       return this.currentUser.userId === this.event.extendedProps.teacher.teacherId
     },
-    isPresentCheckBoxActive () {
-      return this.isCurrentTeacher && !(this.slotType.type === notUsualSlotsConstants.firedType) && !(this.slotType.type === notUsualSlotsConstants.tutoringType)
+    isRollCallable () {
+      return this.isCurrentTeacher &&
+        !(this.slotType.type === notUsualSlotsConstants.firedType) &&
+        !(this.slotType.type === notUsualSlotsConstants.tutoringType) &&
+        dayjs().isAfter(dayjs(this.event.start))
     }
   },
   created () {
@@ -110,7 +120,10 @@ export default {
         console.log(err)
       })
     },
-    markStudentPresents () {
+    setPresent ({ student, isPresent }) { // Todo, not get currentStudent by event but directly from for method
+      student.isPresent = isPresent
+    },
+    callRoll () {
       const jsonStudentPresence = JSON.stringify(this.studentList)
       schoolLifeService.markStudentsPresent(this.event.extendedProps.id, jsonStudentPresence).then((data) => {
         if (data.success) {
@@ -120,14 +133,9 @@ export default {
       (err) => {
         console.log(err)
       })
-    },
-    setPresent ({ student, isPresent }) { // Todo, not get currentStudent by event but directly from for method
-      student.isPresent = isPresent
+      this.$emit('close')
     },
     closeModal () {
-      if (this.isCurrentTeacher) {
-        this.markStudentPresents()
-      }
       this.$emit('close')
     }
   }
@@ -158,9 +166,12 @@ export default {
 
   .slot {
     font-weight: bold;
+    margin-top: 10px;
+    margin-left: 20px;
   }
 
   .student-list {
+    margin-top: 20px;
     padding-left: 35px;
     padding-right: 5px;
 
@@ -170,7 +181,7 @@ export default {
 
       .present-label {
         margin-left: auto;
-        margin-right: 33px;
+        margin-right: 63px;
         font-size: 0.90em;
       }
     }
@@ -184,4 +195,9 @@ export default {
     justify-content: center;
     font-size: 1.25em;
   }
+
+  .call-roll {
+    margin-right: 50px;
+  }
+
 </style>

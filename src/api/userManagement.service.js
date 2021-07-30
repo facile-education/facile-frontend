@@ -5,11 +5,11 @@ export default {
   getSubjects
 }
 
-const SCHOOL_LIFE_PATH = '/gestionUtilisateurs-portlet'
+const SUBJECT_PATH = '/gestionUtilisateurs-portlet.subject'
 
 /**
  * Get the specified school's students filtered by name
  */
 function getSubjects () {
-  return axios.get(SCHOOL_LIFE_PATH + constants.JSON_WS_URL + '/subject/get-subjects').then(response => response.data)
+  return axios.get(constants.JSON_WS_URL + SUBJECT_PATH + '/get-subjects').then(response => response.data)
 }
