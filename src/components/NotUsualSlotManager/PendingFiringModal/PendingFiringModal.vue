@@ -1,7 +1,7 @@
 <template>
   <PentilaWindow
     :modal="true"
-    width="500"
+    width="500px"
     class="pending-firing-modal"
     @keydown.exact.enter.stop=""
     @keydown.exact.backspace.stop=""
@@ -42,13 +42,10 @@
     </template>
 
     <template #footer>
-      <div class="footer">
-        <div
-          v-t="'Commons.submit'"
-          class="button confirm-button"
-          @click="submit"
-        />
-      </div>
+      <PentilaButton
+        :label="$t('NotUsualSlots.PendingFiringModal.sendReason')"
+        @click="submit"
+      />
     </template>
   </PentilaWindow>
 </template>
@@ -78,11 +75,16 @@ export default {
       return toPascalCase(this.pendingFiring.student) + ' - ' + this.pendingFiring.className
     },
     formattedSlot () {
-      return this.$t('NotUsualSlots.PendingFiringModal.courseOf') + this.pendingFiring.subject + ' ' +
-        this.$t('Moment.of') + ' ' + dayjs(this.pendingFiring.sessionDate, 'YYYY/MM/DD HH:mm').format('YYYY/MM/DD ' + this.$t('Moment.at') + ' HH:mm')
+      if (this.pendingFiring.sourceSchoollifeSessionId !== 0) {
+        return this.pendingFiring.subject + ' ' +
+          this.$t('Moment.of') + ' ' + dayjs(this.pendingFiring.sessionDate, 'YYYY/MM/DD HH:mm').format('DD MMMM YYYY ' + this.$t('Moment.at') + ' HH:mm')
+      } else {
+        return this.$t('NotUsualSlots.PendingFiringModal.courseOf') + this.pendingFiring.subject + ' ' +
+          this.$t('Moment.of') + ' ' + dayjs(this.pendingFiring.sessionDate, 'YYYY/MM/DD HH:mm').format('DD MMMM YYYY ' + this.$t('Moment.at') + ' HH:mm')
+      }
     },
     formattedTimestamp () {
-      return dayjs(this.pendingFiring.renvoiDate, 'YYYY/MM/DD HH:mm').format('HH:mm')
+      return this.$t('Moment.the') + ' ' + dayjs(this.pendingFiring.renvoiDate, 'YYYY/MM/DD HH:mm').format('DD MMMM YYYY ' + this.$t('Moment.at') + ' HH:mm')
     }
   },
   created () {

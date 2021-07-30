@@ -222,8 +222,8 @@ export default {
   },
   methods: {
     formatSession (session) {
-      if (session.schoollifeSessionId) { // Consistent format between cdtSession and schoolLifeSession objects
-        session.sessionId = session.schoollifeSessionId
+      if (session.schoollifeSessionId) {
+        session.sessionId = 0
         session.startDate = session.sessionStart
         session.endDate = session.sessionEnd
       }
@@ -277,7 +277,8 @@ export default {
     },
     registerFiring () {
       const sourceTeacherId = this.selectedSession.teacher ? this.selectedSession.teacher.teacherId : this.selectedSession.teachers.length > 1 ? this.dropdownSelectedTeacher.teacherId : this.selectedSession.teachers[0].teacherId
-      schoolLifeService.registerFiring(this.event.extendedProps.id, this.student, this.selectedSession.sessionId, sourceTeacherId).then((data) => {
+      const sourceSchoollifeSessionId = (this.selectedSession.schoollifeSessionId === undefined) ? 0 : this.selectedSession.schoollifeSessionId
+      schoolLifeService.registerFiring(this.event.extendedProps.id, this.student, this.selectedSession.sessionId, sourceTeacherId, sourceSchoollifeSessionId).then((data) => {
         if (data.success) {
           this.$store.dispatch('notUsualSlots/refreshCalendar')
           this.closeModal()

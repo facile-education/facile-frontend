@@ -181,13 +181,14 @@ function unRegisterStudent (student, slotId, comment, notifyParents, allSessions
 /**
  * Register student firing (fields: success)
  */
-function registerFiring (slotId, student, sourceSessionId, sourceTeacherId) {
+function registerFiring (slotId, student, sourceSessionId, sourceTeacherId, sourceSchoollifeSessionId) {
   return axios.get(constants.JSON_WS_URL + SCHOOL_LIFE_RENVOI_PATH + '/register-student-renvoi', {
     params: {
       schoollifeSessionId: slotId,
       studentId: student.studentId,
       sourceSessionId: sourceSessionId,
-      sourceTeacherId: sourceTeacherId
+      sourceTeacherId: sourceTeacherId,
+      sourceSchoollifeSessionId: sourceSchoollifeSessionId
     }
   }).then(response => response.data)
 }
@@ -212,7 +213,8 @@ function getPendingFirings () {
 }
 
 /**
- * Set the reason of a firing (fields: success)
+ * Set the reason of a firing
+ * Updates the awareness
  */
 function setFiringReason (slotId, studentId, reason) {
   return axios.get(constants.JSON_WS_URL + SCHOOL_LIFE_RENVOI_PATH + '/set-renvoi-reason', {
