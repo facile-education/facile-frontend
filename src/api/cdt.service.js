@@ -1,25 +1,21 @@
 import axios from 'axios'
-// import constants from '@/api/constants'
+import constants from '@/api/constants'
 
 export default {
   getConfiguration,
   getGroups,
-  getSchoolUsers,
   getSessions
 }
 
-// const CDT_PATH = '/cdt-portlet'
-const CDT_URL = '/group/314141/cahier-de-texte?p_p_id=cdt_WAR_cdtportlet&p_p_lifecycle=2&p_p_state=exclusive&p_p_mode=view&p_p_cacheability=cacheLevelPage&controlPanelCategory=portlet_cdt_WAR_cdtportlet'
-
-// '&cmd=getGroups&profile=5&userId=333930'
+const CDT_PATH = '/cdt-portlet.'
 
 /**
  * Get CDT configuration
  */
 function getConfiguration () {
-  return axios.get(CDT_URL, {
+  return axios.get(constants.JSON_WS_URL + CDT_PATH + 'configuration/get-configuration', {
     params: {
-      cmd: 'getConfiguration'
+      childId: 0
     }
   }).then(response => response.data)
 }
@@ -28,24 +24,8 @@ function getConfiguration () {
  * Get group list
  */
 function getGroups () {
-  return axios.get(CDT_URL, {
-    params: {
-      cmd: 'getAllGroups'
-    }
-  }).then(response => response.data)
-}
-
-/**
- * Get the specified school's users filtered by name
- */
-function getSchoolUsers (schoolId, query) {
-  return axios.get(CDT_URL, {
-    params: {
-      cmd: 'getHorairesUserList',
-      // p_auth: getCookie('pauth'),
-      schoolId: schoolId,
-      search: query
-    }
+  return axios.get(constants.JSON_WS_URL + CDT_PATH + 'configuration/get-all-groups', {
+    params: {}
   }).then(response => response.data)
 }
 
@@ -53,10 +33,8 @@ function getSchoolUsers (schoolId, query) {
  * Get the user or group session list for specified date range
  */
 function getSessions (userId, groupId, minDate, maxDate) {
-  // WS : CDT_PATH + constants.JSON_WS_URL + '/cdtsession/priv-get-sessions'
-  return axios.get(CDT_URL, {
+  return axios.get(constants.JSON_WS_URL + CDT_PATH + 'cdtsession/get-horaires-sessions', {
     params: {
-      cmd: 'getHorairesSessions',
       userId,
       groupId,
       start: minDate.format('YYYY-MM-DD HH:mm'),
