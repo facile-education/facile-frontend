@@ -1,6 +1,7 @@
 <template>
   <PentilaWindow
     :modal="true"
+    width="500px"
     class="student-registration-modal"
     @close="closeModal"
     @keydown.exact.enter.stop=""
@@ -97,6 +98,7 @@
       />
       <PentilaCheckbox
         v-if="isNotifyParentsDisplayed"
+        class="notify-parents"
         :label="$t('NotUsualSlots.StudentRegistrationModal.notifyParents')"
         :model-value="notifyParents"
         @update:modelValue="handleCheck"
@@ -105,9 +107,16 @@
 
     <template #footer>
       <div class="footer">
-        <div
-          v-t="'Commons.submit'"
-          class="button confirm-button"
+        <PentilaButton
+          v-if="deregistration"
+          :label="$t('NotUsualSlots.StudentRegistrationModal.unregister')"
+          class="register"
+          @click="submit"
+        />
+        <PentilaButton
+          v-else
+          :label="$t('NotUsualSlots.StudentRegistrationModal.register')"
+          class="register"
           @click="submit"
         />
       </div>
@@ -308,6 +317,10 @@ export default {
   color: $color-cadyco-dark-text;
 }
 
+.body {
+  margin-left: 20px;
+}
+
 h1 {
   font-size: 1.25em;
 }
@@ -330,6 +343,10 @@ textarea {
   border: 1px solid $color-cadyco-dark-text;
   border-radius: 6px;
   color: $color-cadyco-dark-text;
+}
+
+.notify-parents {
+  margin-top: 10px;
 }
 
 .footer {

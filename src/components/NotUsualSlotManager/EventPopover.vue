@@ -42,10 +42,6 @@
               class="fa fa-pencil-alt"
               @click="openEditModal"
             />
-            <i
-              class="fa fa-times"
-              @click="unselectEvent"
-            />
           </span>
         </h4>
       </header>
@@ -169,9 +165,6 @@ export default {
     },
     showStudentList () {
       this.$emit('showStudentList', this.selectedEvent.event)
-      this.$emit('close')
-    },
-    unselectEvent () {
       this.$emit('close')
     }
   }

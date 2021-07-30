@@ -185,7 +185,8 @@
       "noStudentPresent": "Actuellement, aucun élève n'est inscrit sur ce créneau",
       "present": "Présence",
       "slot": "Créneau: ",
-      "unsubscribe": "Désinscrire"
+      "unsubscribe": "Désinscrire",
+      "callRollButton": "Faire l'appel"
     },
     "StudentRegistrationModal": {
       "arrival": "Enregistré: ",
@@ -203,7 +204,9 @@
       "selectSubject": "Sélectionnez une discipline",
       "slot": "@:NotUsualSlots.StudentListModal.slot",
       "student": "Élève: ",
-      "sourceSlot": "Renvoyé du cours: "
+      "sourceSlot": "Renvoyé du cours: ",
+      "register": "Inscrire",
+      "unregister": "Désinscrire"
     }
   },
   "Unauthenticated": "Veuillez vous connecter pour accéder à ce service",

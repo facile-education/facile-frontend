@@ -43,6 +43,7 @@
 import StudentRegistrationModal from '@components/NotUsualSlotManager/StudentRegistrationModal/StudentRegistrationModal'
 import { toPascalCase } from '@/utils/commons.util'
 import notUsualSlotsConstants from '@/constants/notUsualSlots'
+import dayjs from 'dayjs'
 
 export default {
   name: 'StudentListItem',
@@ -81,7 +82,10 @@ export default {
       return this.student.replayTestType ? toPascalCase(this.student.replayTestType) : ''
     },
     isPresentCheckBoxActive () {
-      return this.isCurrentTeacher && !(this.slotType.type === notUsualSlotsConstants.firedType) && !(this.slotType.type === notUsualSlotsConstants.tutoringType)
+      return this.isCurrentTeacher &&
+        !(this.slotType.type === notUsualSlotsConstants.firedType) &&
+        !(this.slotType.type === notUsualSlotsConstants.tutoringType) &&
+        dayjs().isAfter(dayjs(this.event.start))
     },
     isSignOut () {
       if (this.slotType.type === notUsualSlotsConstants.tutoringType) {
@@ -131,6 +135,7 @@ export default {
   cursor: pointer;
   display: flex;
   align-items: center;
+  margin-right: 30px;
 }
 
 </style>
