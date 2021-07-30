@@ -172,13 +172,14 @@
     },
     "PendingFiringModal": {
       "courseOf": "Cours de ",
-      "information": "Un message de notification sera envoyé aux parents et au Doyen avec le motif du renvoi",
-      "firedTimestamp": "Engeristré: ",
+      "information": "Un message de notification sera envoyé aux parents et au doyen avec le motif du renvoi",
+      "firedTimestamp": "Enregistré: ",
       "haveToWriteJustification": "Veuillez saisir un motif de renvoi",
       "justificationPlaceholder": "Motif du renvoi",
       "header": "Motiver le renvoi",
       "slot": "Renvoi: ",
-      "student": "@:NotUsualSlots.StudentRegistrationModal.student"
+      "student": "@:NotUsualSlots.StudentRegistrationModal.student",
+      "sendReason": "Envoyer"
     },
     "StudentListModal": {
       "header": "Liste des élèves",
