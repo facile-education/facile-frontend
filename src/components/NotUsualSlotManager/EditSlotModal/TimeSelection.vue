@@ -1,24 +1,26 @@
 <template>
-  <div class="input-section">
-    <span>{{ 'Tous les ' + momentStartTime.format('dddd') + ' de ' }}</span>
-    <PentilaInput
-      v-model="inputStartHour"
-      class="input"
-      :placeholder="'hh:mm'"
+  <div data-test="time-selection">
+    <div class="input-section">
+      <span>{{ 'Tous les ' + momentStartTime.format('dddd') + ' de ' }}</span>
+      <PentilaInput
+        v-model="inputStartHour"
+        class="input"
+        :placeholder="'hh:mm'"
+      />
+      à
+      <PentilaInput
+        v-model="inputEndHour"
+        class="input"
+        :placeholder="'hh:mm'"
+      />
+    </div>
+    <PentilaErrorMessage
+      v-if="error !== ''"
+      :error-message="error"
     />
-    à
-    <PentilaInput
-      v-model="inputEndHour"
-      class="input"
-      :placeholder="'hh:mm'"
-    />
-  </div>
-  <PentilaErrorMessage
-    v-if="error !== ''"
-    :error-message="error"
-  />
-  <div class="from-date">
-    {{ 'À partir du ' + momentStartTime.format('dddd DD MMMM YYYY') }}
+    <div class="from-date">
+      {{ 'À partir du ' + momentStartTime.format('dddd DD MMMM YYYY') }}
+    </div>
   </div>
 </template>
 

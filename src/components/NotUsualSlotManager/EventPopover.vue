@@ -1,6 +1,7 @@
 <template @click.stop="test">
   <div
     class="event-popup"
+    data-test="event-popup"
     :class="{'hide': (selectedEvent === undefined)}"
     :style="popupStyle"
   >
