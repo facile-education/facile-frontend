@@ -280,6 +280,7 @@ export default {
       }
     },
     formatCalendarSlot (slot) {
+      console.log('formatCalendarSlot ', slot)
       let title = slot.title
       let color = slot.color
       if (slot.subject === undefined && slot.type !== undefined) {
@@ -299,8 +300,8 @@ export default {
           isUserSlot: slot.isUserSlot
         },
         title: title,
-        start: moment(slot.sessionStart, 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DDTHH:mm'),
-        end: moment(slot.sessionEnd, 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DDTHH:mm'),
+        start: moment(slot.startDate, 'DD/MM/YYYY HH:mm').format('YYYY-MM-DDTHH:mm'),
+        end: moment(slot.endDate, 'DD/MM/YYYY HH:mm').format('YYYY-MM-DDTHH:mm'),
         backgroundColor: color,
         borderColor: color
       }

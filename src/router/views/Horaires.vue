@@ -152,10 +152,11 @@ export default {
   },
   methods: {
     formatCalendarSlot (slot) {
+      console.log('format slot=', slot)
       const title = this.isTeacherSelected ? slot.className : slot.title
-      return {
+      const json = {
         extendedProps: {
-          id: slot.sessionId,
+          id: (slot.sessionId === undefined ? slot.schoollifeSessionId : slot.sessionId),
           subject: slot.subject,
           teachers: this.getTeachersLabel(slot.teachers),
           room: slot.room,
@@ -167,13 +168,17 @@ export default {
         backgroundColor: slot.color,
         borderColor: slot.color
       }
+      console.log('json=', json)
+      return json
     },
     getTeachersLabel (teachers) {
       let label = ''
-      for (let index = 0; index < teachers.length; ++index) {
-        if (!this.isTeacherSelected || teachers[index].userId !== this.$store.state.horaires.selectedUser.userId) {
-          const name = teachers[index].firstName.substring(0, 1) + '. ' + teachers[index].lastName
-          label += (label === '') ? name : ', ' + name
+      if (teachers !== undefined) {
+        for (let index = 0; index < teachers.length; ++index) {
+          if (!this.isTeacherSelected || teachers[index].userId !== this.$store.state.horaires.selectedUser.userId) {
+            const name = teachers[index].firstName.substring(0, 1) + '. ' + teachers[index].lastName
+            label += (label === '') ? name : ', ' + name
+          }
         }
       }
       return label

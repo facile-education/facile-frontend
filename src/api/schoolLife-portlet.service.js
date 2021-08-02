@@ -106,8 +106,8 @@ function getStudentSessions (student, minDate, maxDate) {
   return axios.get(constants.JSON_WS_URL + SCHOOL_LIFE_SESSION_STUDENT_PATH + '/get-student-sessions', {
     params: {
       studentId: student.studentId,
-      minDateStr: minDate.format('YYYY/MM/DD HH:mm'),
-      maxDateStr: maxDate.format('YYYY/MM/DD HH:mm')
+      minDateStr: minDate.format('DD/MM/YYYY HH:mm'),
+      maxDateStr: maxDate.format('DD/MM/YYYY HH:mm')
     }
   }).then(response => response.data)
 }
@@ -132,7 +132,7 @@ function getWeekSession (slotType, currentDate) {
   return axios.get(constants.JSON_WS_URL + SCHOOL_LIFE_SESSION_PATH + '/get-week-sessions', {
     params: {
       type: slotType,
-      currentDateStr: currentDate.format('YYYY/MM/DD HH:mm')
+      currentDateStr: currentDate.format('DD/MM/YYYY HH:mm')
     }
   }).then(response => response.data)
 }
