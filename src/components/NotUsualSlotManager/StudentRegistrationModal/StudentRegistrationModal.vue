@@ -224,8 +224,6 @@ export default {
     formatSession (session) {
       if (session.schoollifeSessionId) {
         session.sessionId = 0
-        session.startDate = session.sessionStart
-        session.endDate = session.sessionEnd
       }
       session.label = moment(session.startDate, 'YYYY/MM/DD HH:mm').format('HH:mm') + ' / ' + moment(session.endDate, 'YYYY/MM/DD HH:mm').format('HH:mm') + ' - ' + session.title
     },
