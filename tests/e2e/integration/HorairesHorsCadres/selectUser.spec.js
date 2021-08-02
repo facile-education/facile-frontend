@@ -18,7 +18,7 @@ describe('Desktop user selection', () => {
     cy.logout()
     cy.clock(now.toDate().getTime())
     cy.login(url)
-    cy.get('[data-test=slot-type-item-' + slotTypes.tutoring.type + ']').click() // Select firing slots
+    cy.get('[data-test=slot-type-item-' + slotTypes.tutoring.type + ']').click() // Select tutoring slots
   })
 
   it('Display student planning beside HHC slots', () => {

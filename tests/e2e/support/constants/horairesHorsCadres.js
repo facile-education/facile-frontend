@@ -1,8 +1,10 @@
 import dayjs from 'dayjs'
 import fr from 'dayjs/locale/fr'
 import LocalizedFormat from 'dayjs/plugin/localizedFormat'
+import weekOfYear from 'dayjs/plugin/weekOfYear'
 
 dayjs.extend(LocalizedFormat)
+dayjs.extend(weekOfYear)
 
 dayjs.locale(fr)
 

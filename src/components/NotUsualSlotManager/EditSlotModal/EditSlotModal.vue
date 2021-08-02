@@ -2,6 +2,7 @@
   <PentilaWindow
     :modal="true"
     class="edit-slot-modal"
+    data-test="edit-slot-modal"
     @close="closeModal"
     @keydown.exact.enter.stop=""
     @keydown.exact.backspace.stop=""
@@ -21,29 +22,38 @@
         v-model:start="newEvent.start"
         v-model:end="newEvent.end"
       />
-      <UserCompletion
-        user-type="teacher"
-        :placeholder="$t('NotUsualSlots.EditSlotModal.teacherNamePlaceHolder')"
-        :initial-user-list="newEvent.extendedProps.teacher? [newEvent.extendedProps.teacher] : undefined"
-        @blur="v$.newEvent.extendedProps.teacher.teacherId.$touch()"
-        @selectUser="updateTeacher"
-      />
-      <PentilaErrorMessage :error-message="formErrorList.teacher" />
-      <PentilaInput
-        v-model="newEvent.extendedProps.room"
-        class="input"
-        :placeholder="$t('NotUsualSlots.EditSlotModal.roomNamePlaceHolder')"
-        @blur="v$.newEvent.extendedProps.room.$touch()"
-      />
-      <PentilaErrorMessage :error-message="formErrorList.room" />
-      <PentilaInput
-        v-model="newEvent.extendedProps.inscriptionLeft"
-        class="input"
-        type="number"
-        :placeholder="$t('NotUsualSlots.EditSlotModal.inscriptionLeftPlaceHolder')"
-        @blur="v$.newEvent.extendedProps.inscriptionLeft.$touch()"
-      />
-      <PentilaErrorMessage :error-message="formErrorList.inscriptionLeft" />
+
+      <div data-test="teacher-part">
+        <UserCompletion
+          user-type="teacher"
+          :placeholder="$t('NotUsualSlots.EditSlotModal.teacherNamePlaceHolder')"
+          :initial-user-list="newEvent.extendedProps.teacher? [newEvent.extendedProps.teacher] : undefined"
+          @blur="v$.newEvent.extendedProps.teacher.teacherId.$touch()"
+          @selectUser="updateTeacher"
+        />
+        <PentilaErrorMessage :error-message="formErrorList.teacher" />
+      </div>
+
+      <div data-test="room-part">
+        <PentilaInput
+          v-model="newEvent.extendedProps.room"
+          class="input"
+          :placeholder="$t('NotUsualSlots.EditSlotModal.roomNamePlaceHolder')"
+          @blur="v$.newEvent.extendedProps.room.$touch()"
+        />
+        <PentilaErrorMessage :error-message="formErrorList.room" />
+      </div>
+
+      <div data-test="capacity-part">
+        <PentilaInput
+          v-model="newEvent.extendedProps.inscriptionLeft"
+          class="input"
+          type="number"
+          :placeholder="$t('NotUsualSlots.EditSlotModal.inscriptionLeftPlaceHolder')"
+          @blur="v$.newEvent.extendedProps.inscriptionLeft.$touch()"
+        />
+        <PentilaErrorMessage :error-message="formErrorList.inscriptionLeft" />
+      </div>
     </template>
 
     <template #footer>

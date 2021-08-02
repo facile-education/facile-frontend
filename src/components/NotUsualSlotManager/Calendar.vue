@@ -304,7 +304,8 @@ export default {
           inscriptionLeft: slot.remainingCapacity,
           room: slot.room,
           type: slot.type,
-          isUserSlot: slot.isUserSlot
+          isUserSlot: slot.isUserSlot,
+          cy: dayjs(slot.startDate, 'DD/MM/YYYY HH:mm').format('MM-DD_HH:mm')
         },
         title: title,
         start: moment(slot.startDate, 'DD/MM/YYYY HH:mm').format('YYYY-MM-DDTHH:mm'),
@@ -370,7 +371,7 @@ export default {
         info.el.classList.add('grayed')
       }
       const container = info.el.getElementsByClassName('fc-event-main-frame')[0]
-      container.setAttribute('data-test', info.event.title)
+      container.setAttribute('data-test', dayjs(info.event.start).format('MM-DD_HH:mm'))
 
       if (info.event.extendedProps.teacher) {
         let tag = document.createElement('div')
