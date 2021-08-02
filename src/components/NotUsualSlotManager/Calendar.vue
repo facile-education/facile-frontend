@@ -231,6 +231,9 @@ export default {
     },
     onSelectDate (date) {
       this.selectedDate = dayjs(date).startOf('day')
+      if (this.selectedEvent) {
+        this.unselectEvent()
+      }
 
       if (this.$refs.fullCalendar) {
         const calendar = this.$refs.fullCalendar.getApi()
@@ -240,6 +243,10 @@ export default {
         { startDate: moment(date, 'YYYY-MM-DD'), endDate: moment(date, 'YYYY-MM-DD').endOf('day') })
     },
     onSelectWeek (week) {
+      if (this.selectedEvent) {
+        this.unselectEvent()
+      }
+
       if (this.$refs.fullCalendar) {
         const calendar = this.$refs.fullCalendar.getApi()
         calendar.gotoDate(new Date(week.firstDayOfWeek))
@@ -396,8 +403,12 @@ export default {
       label.innerText = slotLabelList[info.text]
     },
     unselectEvent () {
-      this.selectedEvent.el.parentNode.classList.remove('selected')
-      this.selectedEvent = undefined
+      if (this.selectedEvent) {
+        if (this.selectedEvent.el.parentNode) {
+          this.selectedEvent.el.parentNode.classList.remove('selected')
+        }
+        this.selectedEvent = undefined
+      }
     }
   }
 }
