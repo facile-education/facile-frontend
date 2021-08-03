@@ -41,6 +41,7 @@
             <i
               v-if="isEditableEvent && currentUser.isDoyen || currentUser.isDirectionMember || currentUser.isSecretariat"
               class="fa fa-pencil-alt"
+              data-test="openEditModal-option"
               @click="openEditModal"
             />
           </span>

@@ -38,7 +38,7 @@ export default {
       required: true
     }
   },
-  emits: ['update:start', 'update:end'],
+  emits: ['update:start', 'update:end', 'error'],
   data () {
     return {
       inputStartHour: '',
@@ -62,8 +62,10 @@ export default {
       if (hour.isValid() && newStartHour.isBefore(currentEndHour)) {
         this.error = ''
         this.$emit('update:start', newStartHour.format('YYYY-MM-DDTHH:mm'))
+        this.$emit('error', false)
       } else {
         this.error = this.$t('NotUsualSlots.EditSlotModal.haveToSelectHour')
+        this.$emit('error', true)
       }
     },
     inputEndHour (value) {
@@ -73,8 +75,10 @@ export default {
       if (hour.isValid() && newEndHour.isAfter(currentStartHour)) {
         this.error = ''
         this.$emit('update:end', newEndHour.format('YYYY-MM-DDTHH:mm'))
+        this.$emit('error', false)
       } else {
         this.error = this.$t('NotUsualSlots.EditSlotModal.haveToSelectHour')
+        this.$emit('error', true)
       }
     }
   },

@@ -25,6 +25,7 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 import { HEADMASTER as defaultUser } from '../support/constants'
+import constants from '../../../src/constants/appConstants'
 
 Cypress.Commands.add('login', (visitUrl = '/', user = defaultUser) => {
   cy.log('===== LOG IN =====')
@@ -67,4 +68,18 @@ Cypress.Commands.add('logout', () => {
 
   cy.visit(Cypress.config().baseUrl + '/c/portal/logout')
   cy.clearCookies()
+})
+
+Cypress.Commands.add('doAuthWSRequest', (method, url, params) => {
+  // cy.getCookie('pauth').then((pauth) => {
+  cy.request({
+    method: method,
+    url: constants.JSON_WS_URL + url/* + '?p_auth=' + pauth.value */,
+    form: method === 'POST',
+    body: params
+  }).then((response) => {
+    expect(response.status).to.be.oneOf([200, 304]) // to test here or not?
+    return response
+  })
+  // })
 })
