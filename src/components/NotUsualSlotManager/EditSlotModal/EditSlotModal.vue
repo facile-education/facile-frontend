@@ -21,6 +21,7 @@
       <TimeSelection
         v-model:start="newEvent.start"
         v-model:end="newEvent.end"
+        @error="updateTimeErrorStatus"
       />
 
       <div data-test="teacher-part">
@@ -68,7 +69,7 @@
         <div
           v-t="'Commons.submit'"
           class="button confirm-button"
-          :class="{'form-valid' : !v$.$invalid}"
+          :class="{'form-valid' : !v$.$invalid && !isTimeError}"
           @click="confirm"
         />
       </div>
@@ -116,6 +117,7 @@ export default {
   },
   data () {
     return {
+      isTimeError: false,
       newEvent: {
         extendedProps: {
           id: undefined,
@@ -171,6 +173,9 @@ export default {
     }
   },
   methods: {
+    updateTimeErrorStatus (status) {
+      this.isTimeError = status
+    },
     confirmSlotDeletion () {
       this.$store.dispatch('warningModal/addWarning', {
         text: this.$t('NotUsualSlots.warning'),
@@ -195,7 +200,7 @@ export default {
       this.newEvent.extendedProps.teacher = selectedUser
     },
     confirm () {
-      if (this.v$.$invalid) {
+      if (this.v$.$invalid || this.isTimeError) {
         this.v$.$touch()
       } else {
         const momentStartTime = moment(this.newEvent.start, 'YYYY-MM-DDTHH:mm')

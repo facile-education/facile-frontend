@@ -1,44 +1,43 @@
 <template>
-  <div data-test="warning-modal">
-    <PentilaWindow
-      :modal="true"
-      class="warning-modal"
-      @close="onClose"
-    >
-      <template #header>
-        <span v-t="'WarningModal.header'" />
-      </template>
+  <PentilaWindow
+    :modal="true"
+    class="warning-modal"
+    data-test="warning-modal"
+    @close="onClose"
+  >
+    <template #header>
+      <span v-t="'WarningModal.header'" />
+    </template>
 
-      <template #body>
-        <div class="body">
-          <!--          <BaseIcon name="exclamation-triangle" />-->
-          <i class="fas fa-exclamation-triangle" />
-          <p
-            class="context-message"
-          >
-            {{ warning.text }}
-          </p>
-        </div>
-      </template>
+    <template #body>
+      <div class="body">
+        <!--          <BaseIcon name="exclamation-triangle" />-->
+        <i class="fas fa-exclamation-triangle" />
+        <p
+          class="context-message"
+        >
+          {{ warning.text }}
+        </p>
+      </div>
+    </template>
 
-      <template #footer>
-        <div class="window-footer">
-          <PentilaButton
-            data-test="cancelButton"
-            class="cancel-button"
-            :label="$t('WarningModal.cancelButton')"
-            @click="onClose"
-          />
-          <PentilaButton
-            data-test="confirmButton"
-            class="confirm-button"
-            :label="$t('WarningModal.confirmButton')"
-            @click="forceLastAction"
-          />
-        </div>
-      </template>
-    </PentilaWindow>
-  </div>
+    <template #footer>
+      <div class="window-footer">
+        <PentilaButton
+          data-test="cancelButton"
+          class="cancel-button"
+          :label="$t('WarningModal.cancelButton')"
+          @click="onClose"
+        />
+        <PentilaButton
+          data-test="confirmButton"
+          class="confirm-button"
+          :label="$t('WarningModal.confirmButton')"
+          @click="forceLastAction"
+        />
+      </div>
+    </template>
+  </PentilaWindow>
 </template>
 
 <script>
