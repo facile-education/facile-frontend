@@ -73,7 +73,7 @@
         </div>
       </div>
       <div v-if="isReplayTest">
-        <span v-t="'NotUsualSlots.StudentRegistrationModal.replayTestType'" />
+        <span v-t="'NotUsualSlots.StudentRegistrationModal.subject'" />
         <span
           v-if="availableSubjects.length === 0"
           v-t="'NotUsualSlots.StudentRegistrationModal.noSubjectsAvailable'"

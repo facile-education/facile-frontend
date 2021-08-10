@@ -1,6 +1,6 @@
 import cdtService from '@/api/cdt.service'
 
-const defaultGroup = { groupId: 0, groupName: 'Groupes' }
+const defaultGroup = { groupId: 0, groupName: 'Groupe' }
 
 export const state = {
   endDate: undefined,

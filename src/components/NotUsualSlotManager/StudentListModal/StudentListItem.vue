@@ -2,9 +2,9 @@
   <div class="student">
     <span v-t="formattedStudent" />
     <span
-      v-if="student.replayTestType"
-      v-t="formattedReplayTestType"
-      class="replayTestType"
+      v-if="student.subject"
+      v-t="formattedSubject"
+      class="subject"
     />
     <div class="right-section">
       <PentilaCheckbox
@@ -78,8 +78,8 @@ export default {
     formattedStudent () {
       return toPascalCase(this.student.firstName) + ' ' + toPascalCase(this.student.lastName) + ' - ' + this.student.className
     },
-    formattedReplayTestType () {
-      return this.student.replayTestType ? toPascalCase(this.student.replayTestType) : ''
+    formattedSubject () {
+      return this.student.subject ? toPascalCase(this.student.subject) : ''
     },
     isPresentCheckBoxActive () {
       return this.isCurrentTeacher &&
@@ -116,7 +116,7 @@ export default {
   justify-content: space-between;
 }
 
-.replayTestType {
+.subject {
   font-size: 0.85rem;
   font-style: italic;
   display: flex;

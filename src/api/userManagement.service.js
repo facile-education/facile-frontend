@@ -20,7 +20,7 @@ function getSubjects () {
  * Get the specified school's users filtered by name
  */
 function getSchoolUsers (schoolId, query) {
-  return axios.get(constants.JSON_WS_URL + USER_SEARCH_PATH + '.usersearch/get-school-student-teacher-list', {
+  return axios.get(constants.JSON_WS_URL + USER_SEARCH_PATH + '/get-school-student-teacher-list', {
     params: {
       // p_auth: getCookie('pauth'),
       schoolId: schoolId,
