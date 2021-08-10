@@ -5,6 +5,7 @@
       v-model="selectedSchool"
       :list="schoolList"
       display-field="schoolName"
+      @update:modelValue="onSelectSchool"
     />
     <i
       v-if="$device.phone"
@@ -108,7 +109,7 @@ export default {
           if (data.users.length > 0) {
             this.autocompleteUserList = data.users
             this.autocompleteUserList.forEach((user) => {
-              user.displayName = `${user.firstName} ${user.lastName}` +
+              user.displayName = `${user.lastName} ${user.firstName}` +
                 (user.className ? ` (${user.className})` : '') +
                 (user.isTeacher ? ' (Maitre)' : '')
             })
@@ -128,6 +129,10 @@ export default {
         this.$store.dispatch('horaires/selectUser', { userId: 0 })
         this.autocompleteUserList.length = 0
       }
+    },
+    onSelectSchool () {
+      // TODO : use global school instead of user's school
+      this.$store.dispatch('horaires/getGroupList')
     },
     searchTimeOut (inputValue) {
       clearTimeout(this.timeout)

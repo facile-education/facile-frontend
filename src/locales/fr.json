@@ -137,7 +137,7 @@
   },
   "Horaires": {
     "groupFilter": "Groupe",
-    "userInput": "Elève / Maitre"
+    "userInput": "Elève / Maître"
   },
   "Layout": {
     "authRequired": "Une authentification est requise pour accéder au service.",
@@ -200,7 +200,7 @@
       "notifyParents": "Notifier les parents",
       "noSlotAvailable": "Aucun cours ne peut être sélectionné pour l'instant",
       "noSubjectsAvailable": "Aucune discipline ne peut être sélectionnée",
-      "replayTestType": "Discipline: ",
+      "subject": "Discipline: ",
       "selectSlot": "Sélectionnez un cours",
       "selectSubject": "Sélectionnez une discipline",
       "slot": "@:NotUsualSlots.StudentListModal.slot",

@@ -90,7 +90,7 @@ export const actions = {
         this.dispatch('currentActions/removeAction', { name: 'getPersonalDetails' })
         if (data.success) {
           commit('updateUserDetails', data)
-          if (data.themeColor && data.themeColor !== '') {
+          if (data.themeColor && data.themeColor !== '' && data.themeColor !== 'FFFFFF') {
             dispatch('theme/updateMainColor', data.themeColor, { root: true })
           }
         }

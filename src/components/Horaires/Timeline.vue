@@ -36,7 +36,7 @@
                   <div
                     class="weeknumber-label"
                     :class="{ 'current-week theme-border-color': week.isCurrent, 'theme-background-color': week.isSelected }"
-                    :title="month.date"
+                    :title="formatWeekNbPopup(month.date)"
                     @click="onClickWeek(week)"
                   >
                     S.{{ week.weekNumber }}
@@ -237,6 +237,9 @@ export default {
       this.selectedWeek.isSelected = false
       week.isSelected = true
       this.selectedWeek = week
+    },
+    formatWeekNbPopup (date) {
+      return dayjs(date).format('MMM YYYY')
     }
   }
 }

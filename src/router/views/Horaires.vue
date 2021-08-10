@@ -135,10 +135,10 @@ export default {
       return this.$store.state.horaires.isLoading || !this.configuration
     },
     minDate () {
-      return dayjs(this.configuration.startDateSchool, 'DD/MM/YYYY HH:mm')
+      return dayjs(this.configuration.startDateSchool, 'YYYY-MM-DD HH:mm')
     },
     maxDate () {
-      return dayjs(this.configuration.endDateSchool, 'DD/MM/YYYY HH:mm')
+      return dayjs(this.configuration.endDateSchool, 'YYYY-MM-DD HH:mm')
     },
     isTeacherSelected () {
       return this.$store.state.horaires.selectedUser.isTeacher
@@ -152,23 +152,20 @@ export default {
   },
   methods: {
     formatCalendarSlot (slot) {
-      console.log('format slot=', slot)
-      const title = this.isTeacherSelected ? slot.className : slot.title
       const json = {
         extendedProps: {
           id: (slot.sessionId === undefined ? slot.schoollifeSessionId : slot.sessionId),
           subject: slot.subject,
           teachers: this.getTeachersLabel(slot.teachers),
           room: slot.room,
-          cy: dayjs(slot.startDate, 'DD/MM/YYYY HH:mm').format('MM-DD_HH:mm')
+          cy: dayjs(slot.startDate, 'YYYY-MM-DD HH:mm').format('MM-DD_HH:mm')
         },
-        title,
-        start: dayjs(slot.startDate, 'DD/MM/YYYY HH:mm').format('YYYY-MM-DDTHH:mm'),
-        end: dayjs(slot.endDate, 'DD/MM/YYYY HH:mm').format('YYYY-MM-DDTHH:mm'),
+        title: slot.title,
+        start: dayjs(slot.startDate, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DDTHH:mm'),
+        end: dayjs(slot.endDate, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DDTHH:mm'),
         backgroundColor: slot.color,
         borderColor: slot.color
       }
-      console.log('json=', json)
       return json
     },
     getTeachersLabel (teachers) {
