@@ -139,10 +139,10 @@ export default {
       return (this.$store.state.cdt.configuration.schoolDays.length > 0) ? this.$store.state.cdt.configuration : undefined
     },
     minDate () {
-      return dayjs(this.configuration.startDateSchool, 'DD/MM/YYYY HH:mm')
+      return dayjs(this.configuration.startDateSchool, 'YYYY-MM-DD HH:mm')
     },
     maxDate () {
-      return dayjs(this.configuration.endDateSchool, 'DD/MM/YYYY HH:mm')
+      return dayjs(this.configuration.endDateSchool, 'YYYY-MM-DD HH:mm')
     },
     calendarOptions () {
       // const vm = this
@@ -287,7 +287,6 @@ export default {
       }
     },
     formatCalendarSlot (slot) {
-      console.log('formatCalendarSlot ', slot)
       let title = slot.title
       let color = slot.color
       if (slot.subject === undefined && slot.type !== undefined) {
@@ -305,11 +304,11 @@ export default {
           room: slot.room,
           type: slot.type,
           isUserSlot: slot.isUserSlot,
-          cy: dayjs(slot.startDate, 'DD/MM/YYYY HH:mm').format('MM-DD_HH:mm')
+          cy: dayjs(slot.startDate, 'YYYY-MM-DD HH:mm').format('MM-DD_HH:mm')
         },
         title: title,
-        start: moment(slot.startDate, 'DD/MM/YYYY HH:mm').format('YYYY-MM-DDTHH:mm'),
-        end: moment(slot.endDate, 'DD/MM/YYYY HH:mm').format('YYYY-MM-DDTHH:mm'),
+        start: moment(slot.startDate, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DDTHH:mm'),
+        end: moment(slot.endDate, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DDTHH:mm'),
         backgroundColor: color,
         borderColor: color
       }

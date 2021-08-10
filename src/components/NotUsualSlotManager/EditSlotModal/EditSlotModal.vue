@@ -186,7 +186,7 @@ export default {
       const momentStartTime = moment(this.newEvent.start, 'YYYY-MM-DDTHH:mm')
       schoolLifeService.deleteSlot(
         this.newEvent.extendedProps.id,
-        momentStartTime.format('YYYY/MM/DD HH:mm') // convert from calendar format to back-end format
+        momentStartTime.format('YYYY-MM-DD HH:mm') // convert from calendar format to back-end format
       ).then((data) => {
         if (data.success) {
           this.$store.dispatch('notUsualSlots/refreshCalendar')
@@ -208,7 +208,7 @@ export default {
         if (this.isEventCreation) {
           schoolLifeService.createSlot(
             this.selectedSchool.schoolId,
-            momentStartTime.format('YYYY/MM/DD HH:mm'), // convert from calendar format to back-end format
+            momentStartTime.format('YYYY-MM-DD HH:mm'), // convert from calendar format to back-end format
             momentStartTime.day(),
             momentStartTime.format('HH:mm'),
             momentEndTime.format('HH:mm'),
@@ -228,7 +228,7 @@ export default {
         } else {
           schoolLifeService.updateSlot(
             this.newEvent.extendedProps.id,
-            moment(this.eventToEdit.start, 'YYYY-MM-DDTHH:mm').format('YYYY/MM/DD HH:mm'), // pass the old slot start hour (edit all events of tis slot, beginning from this date)
+            moment(this.eventToEdit.start, 'YYYY-MM-DDTHH:mm').format('YYYY-MM-DD HH:mm'), // pass the old slot start hour (edit all events of tis slot, beginning from this date)
             momentStartTime.day(),
             momentStartTime.format('HH:mm'),
             momentEndTime.format('HH:mm'),
