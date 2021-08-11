@@ -170,15 +170,13 @@ export default {
       return toPascalCase(this.student.firstName) + ' ' + toPascalCase(this.student.lastName) + ' - ' + this.student.className
     },
     formattedSlot () {
-      return moment(this.event.start, 'YYYY-MM-DDTHH:mm').format('DD MMM YYYY ' + this.$t('Moment.at') + ' HH:mm')
+      return this.$t('Moment.the') + ' ' + moment(this.event.start, 'YYYY-MM-DDTHH:mm').format('DD MMMM YYYY ' + this.$t('Moment.at') + ' HH:mm')
     },
     isCommentDisplayed () {
       return !this.deregistration && this.slotType.type === notUsualSlotsConstants.detentionType
     },
     isNotifyParentsDisplayed () {
-      return (!this.deregistration && this.slotType.type === notUsualSlotsConstants.detentionType) ||
-        this.slotType.type === notUsualSlotsConstants.replayTestType ||
-        this.slotType.type === notUsualSlotsConstants.studyType
+      return !this.deregistration && this.slotType.type === notUsualSlotsConstants.studyType
     },
     isFired () {
       return !this.deregistration && this.slotType.type === notUsualSlotsConstants.firedType
@@ -187,7 +185,7 @@ export default {
       return !this.deregistration && this.slotType.type === notUsualSlotsConstants.replayTestType
     },
     arrivalTime () {
-      return moment().format('DD/MM/YYYY ' + this.$t('Moment.at') + ' HH:mm')
+      return this.$t('Moment.the') + ' ' + moment().format('DD MMMM YYYY ' + this.$t('Moment.at') + ' HH:mm')
     }
   },
   created () {

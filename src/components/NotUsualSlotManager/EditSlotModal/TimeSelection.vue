@@ -1,7 +1,7 @@
 <template>
   <div data-test="time-selection">
     <div class="input-section">
-      <span>{{ 'Tous les ' + momentStartTime.format('dddd') + ' de ' }}</span>
+      <span>{{ 'Tous les ' + momentStartTime.format('dddd') + 's de ' }}</span>
       <PentilaInput
         v-model="inputStartHour"
         class="input"

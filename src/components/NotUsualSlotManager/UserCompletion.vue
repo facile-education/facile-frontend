@@ -113,14 +113,13 @@ export default {
           })
           break
         case 'any':
-          console.log('TODO: get teacher list')
           break
         default:
           console.error('Unknown usertype ' + this.userType)
       }
     },
     getUserDisplayName (user) {
-      return user.firstName + ' ' + user.lastName + (user.className ? ' (' + user.className + ')' : '')
+      return user.lastName + ' ' + user.firstName + (user.className ? ' (' + user.className + ')' : '')
     }
   }
 }

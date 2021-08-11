@@ -136,7 +136,6 @@ textarea {
   width: 100%;
   height: 100px;
   padding: 10px 10px;
-  line-height: 10px;
   resize: none;
   border: 1px solid $color-cadyco-dark-text;
   border-radius: 6px;
