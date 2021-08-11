@@ -14,7 +14,7 @@ const PREFERENCES_URL = '/user/pentila/nero?p_p_id=preferenceHomePage_WAR_prefer
 const APPLICATION_MANAGER_URL = '/group/79867532/gestionapplications?p_p_id=gestionApps_WAR_gestionApplicationsportlet&p_p_lifecycle=2&p_p_state=exclusive&p_p_mode=view&p_p_cacheability=cacheLevelPage&controlPanelCategory=portlet_gestionApps_WAR_gestionApplicationsportlet'
 const DASHBOARD_URL = '/group/311503/tableau-de-bord?p_p_id=dashboard_WAR_dashboardportlet&p_p_lifecycle=2&p_p_state=exclusive&p_p_mode=view&p_p_cacheability=cacheLevelPage&controlPanelCategory=portlet_dashboard_WAR_dashboardportlet'
 // TODO remove NODE server when useless
-const BASE_URL = 'http://193.48.120.116:3333'
+const BASE_URL = 'https://rec-ent.eduge.ch'
 
 export default {
   APPLICATION_MANAGER_URL,

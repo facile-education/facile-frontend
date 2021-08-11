@@ -158,17 +158,17 @@
     "replayTest": "Travaux à refaire",
     "study": "Cercle d'étude",
     "tutoring": "Dépannage",
-    "studentNamePlaceHolder": "Saisir le nom d'un élève",
-    "warning": "La suppresion de ce créneau sera définitive!",
+    "studentNamePlaceHolder": "Nom d'un élève",
+    "warning": "La suppresion de ce créneau sera définitive !",
     "EditSlotModal": {
       "deleteSlot": "Supprimer",
       "haveToSelectHour": "Veuillez saisir une plage d'horaires valide (hh:mm)",
       "header": "Éditer un créneau",
-      "inscriptionLeftPlaceHolder": "Nombre de places restantes",
+      "inscriptionLeftPlaceHolder": "Nombre de places disponibles",
       "longDeleteSlot": "Supprimer le créneau",
-      "roomNamePlaceHolder": "Saisir le numéro de salle",
+      "roomNamePlaceHolder": "Salle",
       "slot": "Créneau",
-      "teacherNamePlaceHolder": "Saisir le nom d'un maître"
+      "teacherNamePlaceHolder": "Maître"
     },
     "PendingFiringModal": {
       "courseOf": "Cours de ",
@@ -193,8 +193,8 @@
       "arrival": "Enregistré: ",
       "commentPlaceholder": "Saisir un motif",
       "firedBy": "Renvoyé par: ",
-      "haveToSelectSlot": "Veuillez sélectionnez un cours",
-      "haveToSelectSubject": "Veuillez sélectionnez une discipline",
+      "haveToSelectSlot": "Veuillez sélectionner un cours",
+      "haveToSelectSubject": "Veuillez sélectionner une discipline",
       "header": "Inscription",
       "deregistrationHeader": "Désinscription",
       "notifyParents": "Notifier les parents",
