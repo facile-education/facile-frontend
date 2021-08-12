@@ -10,6 +10,12 @@ $selected-background-filter-color: #FFFFFF99;
   border-bottom: 1px dotted silver;
 }
 
+// Touch action to allow swipe
+.fc-timegrid-slots td,
+.fc-timegrid-event {
+  touch-action: pan-y;
+}
+
 .fc .fc-timegrid-slot-label {
   vertical-align: top;
 }
