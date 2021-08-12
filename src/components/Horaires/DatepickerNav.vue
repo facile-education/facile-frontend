@@ -56,10 +56,10 @@ export default {
       return hiddenDays
     },
     maxDate () {
-      return dayjs(this.configuration.endDateSchool, 'DD/MM/YYYY HH:mm').toDate()
+      return dayjs(this.configuration.endDateSchool).toDate()
     },
     minDate () {
-      return dayjs(this.configuration.startDateSchool, 'DD/MM/YYYY HH:mm').toDate()
+      return dayjs(this.configuration.startDateSchool).toDate()
     }
   }
 }
