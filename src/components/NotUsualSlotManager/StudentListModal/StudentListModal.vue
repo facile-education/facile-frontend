@@ -139,7 +139,6 @@ export default {
 
 <style lang="scss">
   .student-list-modal .window-wrapper {
-    overflow: auto;
     max-width: 500px;
     &.mobile {
       width: 100%;
