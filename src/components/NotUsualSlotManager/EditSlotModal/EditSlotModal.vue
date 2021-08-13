@@ -2,7 +2,7 @@
   <PentilaWindow
     :modal="true"
     class="edit-slot-modal"
-    :class="{'mobile': $device.phone}"
+    :class="{'mobile': mq.phone}"
     data-test="edit-slot-modal"
     @close="closeModal"
     @keydown.exact.enter.stop=""
@@ -62,9 +62,9 @@
       <div class="footer">
         <PentilaButton
           v-if="!isEventCreation"
-          :label="$device.phone ? $t('NotUsualSlots.EditSlotModal.deleteSlot') : $t('NotUsualSlots.EditSlotModal.longDeleteSlot')"
+          :label="mq.phone ? $t('NotUsualSlots.EditSlotModal.deleteSlot') : $t('NotUsualSlots.EditSlotModal.longDeleteSlot')"
           class="button delete-button"
-          :class="{'mobile': $device.phone}"
+          :class="{'mobile': mq.phone}"
           @click="confirmSlotDeletion"
         />
         <PentilaButton
@@ -89,6 +89,7 @@ import { required } from '@vuelidate/validators'
 export default {
   name: 'EditSlotModal',
   components: { UserCompletion, TimeSelection },
+  inject: ['mq'],
   props: {
     eventToEdit: {
       type: Object,

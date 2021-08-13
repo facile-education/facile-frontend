@@ -2,7 +2,7 @@
   <PentilaWindow
     :modal="true"
     class="student-registration-modal"
-    :class="{'mobile': $device.phone}"
+    :class="{'mobile': mq.phone}"
     @close="closeModal"
     @keydown.exact.enter.stop=""
     @keydown.exact.backspace.stop=""
@@ -135,6 +135,7 @@ import moment from 'moment'
 
 export default {
   name: 'StudentRegistrationModal',
+  inject: ['mq'],
   props: {
     student: {
       type: Object,

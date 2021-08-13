@@ -2,13 +2,13 @@
   <div
     :data-test="'slot-type-item-' + slotType.type"
     class="slot-type-item"
-    :class="{'toolbar-display' : $device.phone && currentSlotType}"
+    :class="{'toolbar-display' : mq.phone && currentSlotType}"
     :style="'background-color: ' + slotType.color + ';'"
     @click="itemClicked"
   >
     {{ slotType.label }}
     <div
-      v-if="isSelected && !($device.phone && currentSlotType)"
+      v-if="isSelected && !(mq.phone && currentSlotType)"
       class="is-selected"
     />
   </div>
@@ -17,6 +17,7 @@
 <script>
 export default {
   name: 'SlotTypeItem',
+  inject: ['mq'],
   props: {
     slotType: {
       type: Object,
@@ -33,7 +34,7 @@ export default {
   },
   methods: {
     itemClicked () {
-      if (this.$device.phone && this.currentSlotType) {
+      if (this.mq.phone && this.currentSlotType) {
         this.$store.dispatch('notUsualSlots/setCurrentSlotType', undefined) // Unselect slotType to go back in menu
       } else {
         this.$store.dispatch('notUsualSlots/setCurrentSlotType', this.slotType)

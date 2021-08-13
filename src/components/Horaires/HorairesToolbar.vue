@@ -8,20 +8,20 @@
       @update:modelValue="onSelectSchool"
     />
     <i
-      v-if="$device.phone"
+      v-if="mq.phone"
       class="selection fa"
       :class="{'fa-user': isSingleUser, 'fa-users': !isSingleUser}"
       @click="toggleSelection"
     />
     <PentilaDropdown
-      v-if="groupList && (!$device.phone || !isSingleUser)"
+      v-if="groupList && (!mq.phone || !isSingleUser)"
       v-model="selectedGroup"
       :placeholder="$t('Horaires.groupFilter')"
       :list="groupList"
       display-field="groupName"
     />
     <PentilaTagsInput
-      v-if="!$device.phone || isSingleUser"
+      v-if="!mq.phone || isSingleUser"
       v-model="tagsList"
       class="search"
       :placeholder="$t('Horaires.userInput')"
@@ -35,7 +35,7 @@
       @update:modelValue="onSelectUser"
     />
     <DatepickerNav
-      v-if="$device.phone"
+      v-if="mq.phone"
       class="date-picker"
       :selected-date="selectedDate"
       @selectDate="onSelectDate"
@@ -56,6 +56,7 @@ export default {
     DatepickerNav,
     NeroToolbar
   },
+  inject: ['mq'],
   props: {
     selectedDate: {
       type: Object,

@@ -6,9 +6,9 @@
     >
       <SelectedSchool />
       <div
-        v-if="!$device.phone || currentSlotType === undefined"
+        v-if="!mq.phone || currentSlotType === undefined"
         class="slot-type-selection"
-        :class="{'mobile': $device.phone}"
+        :class="{'mobile': mq.phone}"
       >
         <SlotTypeItem
           v-for="(slotType, index) in slotTypes"
@@ -18,7 +18,7 @@
         />
       </div>
       <UserCompletion
-        v-if="currentSlotType && !$device.phone"
+        v-if="currentSlotType && !mq.phone"
         user-type="student"
         :placeholder="$t('NotUsualSlots.studentNamePlaceHolder')"
         :initial-user-list="queriedUser ? [queriedUser] : []"
@@ -44,7 +44,7 @@
           v-for="(pendingFiring, index) in pendingFirings"
           :key="index"
           :pending-firing="pendingFiring"
-          :is-full-screen="$device.phone"
+          :is-full-screen="mq.phone"
           :closable="false"
         />
       </teleport>
@@ -71,6 +71,7 @@ import PendingFiringModal from '@components/NotUsualSlotManager/PendingFiringMod
 export default {
   name: 'NotUsualSlotManager',
   components: { PendingFiringModal, Layout, WarningModal, SelectedSchool, UserCompletion, Calendar, SlotTypeItem },
+  inject: ['mq'],
   data () {
     return {
       slotTypes: notUsualSlotConstants.slotTypes,

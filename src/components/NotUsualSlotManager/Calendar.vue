@@ -3,18 +3,18 @@
     <PentilaSpinner v-if="isSpinnerDisplayed" />
     <template v-if="configuration">
       <Timeline
-        v-if="!$device.phone"
+        v-if="!mq.phone"
         :min-date="minDate"
         :max-date="maxDate"
         @selectWeek="onSelectWeek"
       />
       <NotUsualSlotsToolBar
-        v-if="$device.phone"
+        v-if="mq.phone"
         :selected-date="selectedDate"
         @selectDate="onSelectDate"
       />
       <div
-        v-if="$device.phone"
+        v-if="mq.phone"
         v-hammer:swipe.horizontal="onSwipe"
         class="swipe-container"
       >
@@ -55,20 +55,20 @@
       :event-to-edit="eventToEdit"
       :create-event-method="createEvent"
       :update-event-method="updateEvent"
-      :is-full-screen="$device.phone"
+      :is-full-screen="mq.phone"
       @close="isEditSlotModalDisplayed = false"
     />
     <StudentRegistrationModal
       v-if="isRegistrationModalDisplayed"
       :event="eventToEdit"
       :student="queriedUser"
-      :is-full-screen="$device.phone"
+      :is-full-screen="mq.phone"
       @close="isRegistrationModalDisplayed = false"
     />
     <StudentListModal
       v-if="isListModalDisplayed"
       :event="eventToEdit"
-      :is-full-screen="$device.phone"
+      :is-full-screen="mq.phone"
       @close="isListModalDisplayed = false"
     />
   </teleport>
@@ -107,6 +107,7 @@ export default {
     EventPopover,
     FullCalendar
   },
+  inject: ['mq'],
   props: {
     currentSlotType: {
       type: Object,
@@ -149,8 +150,8 @@ export default {
       return {
         locale: frLocale,
         plugins: [timeGridPlugin, interactionPlugin],
-        initialView: this.$device.phone ? 'timeGridDay' : 'timeGridWeek',
-        height: this.$device.phone ? '100%' : 'max(600px, calc(100% - 63px))',
+        initialView: this.mq.phone ? 'timeGridDay' : 'timeGridWeek',
+        height: this.mq.phone ? '100%' : 'max(600px, calc(100% - 63px))',
         expandRows: true,
         headerToolbar: {
           left: '',
@@ -255,7 +256,7 @@ export default {
         { startDate: moment(week.firstDayOfWeek, 'YYYY-MM-DD'), endDate: moment(week.lastDayOfWeek, 'YYYY-MM-DD') })
     },
     onSwipe (event) {
-      if (this.$device.phone) {
+      if (this.mq.phone) {
         switch (event.type) {
           case 'swipeleft':
             // this.pan -= 320

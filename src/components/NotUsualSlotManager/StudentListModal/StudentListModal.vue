@@ -2,7 +2,7 @@
   <PentilaWindow
     :modal="true"
     class="student-list-modal"
-    :class="{'mobile': $device.phone}"
+    :class="{'mobile': mq.phone}"
     @close="closeModal"
     @keydown.exact.enter.stop=""
     @keydown.exact.backspace.stop=""
@@ -71,6 +71,7 @@ import dayjs from 'dayjs'
 export default {
   name: 'StudentListModal',
   components: { StudentListItem },
+  inject: ['mq'],
   props: {
     event: {
       type: Object,
