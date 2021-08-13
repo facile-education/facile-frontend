@@ -12,11 +12,11 @@ dayjs.locale(fr)
 const now = dayjs('2021-05-05T16:00:00.000Z')
 const url = '/nero/not-usual-slots'
 const groupName = '0922R2'
-const studentName = 'MELISSA BARMAN (1021LC)'
+const studentName = 'BARMAN MELISSA (1021LC)'
 const studentSearch = 'mel'
 const studentSlotsNumberAtWeek35 = 40
 const studentSlotsNumberAtTuesday = 4
-const teacherName = 'Darko Jovanovic (Maitre)'
+const teacherName = 'Jovanovic Darko (Maitre)'
 const teacherSearch = 'dar'
 
 const tutoring = {

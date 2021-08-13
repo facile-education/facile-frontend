@@ -74,7 +74,7 @@ describe('Desktop tests', () => {
     waitForRefresh()
 
     // Check events number
-    cy.get('.fc-timegrid-event').should('have.length', 10)
+    cy.get('.fc-timegrid-event').should('have.length', 13) // 10 lessons and 3 HHC
 
     // Co teacher is displayed
     cy.get('[data-cy="05-04_08:45"]').parents('a.fc-timegrid-event')
@@ -149,6 +149,6 @@ describe('Desktop tests', () => {
     waitForRefresh()
 
     // Group selection should be emptied
-    cy.get('.button').contains('Groupes')
+    cy.get('.button').contains('Groupe')
   })
 })

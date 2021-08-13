@@ -11,9 +11,9 @@ dayjs.locale(fr)
 const now = dayjs('2021-05-05T16:00:00.000Z')
 const url = '/nero/horaires'
 const groupName = '0922R2'
-const studentName = 'ANYA ALOSTA (1051AC)'
+const studentName = 'ALOSTA ANYA (1051AC)'
 const studentSearch = 'alo'
-const teacherName = 'Darko Jovanovic (Maitre)'
+const teacherName = 'Jovanovic Darko (Maitre)'
 const teacherSearch = 'dar'
 
 export {
