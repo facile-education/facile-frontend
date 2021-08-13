@@ -259,7 +259,6 @@ export default {
 <style lang="scss">
 
 .edit-slot-modal .window-wrapper {
-  overflow: auto;
   max-width: 500px;
   &.mobile {
     width: 100%;

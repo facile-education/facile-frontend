@@ -297,7 +297,6 @@ export default {
 
 <style lang="scss">
 .student-registration-modal .window-wrapper {
-  overflow: auto;
   max-width: 500px;
   &.mobile {
     width: 100%;
