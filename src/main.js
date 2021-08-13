@@ -4,7 +4,7 @@ import './registerServiceWorker'
 import router from '@/router'
 import store from '@/store'
 import i18n from '@/i18n'
-import VueMq from 'vue-mq'
+import { Vue3Mq } from 'vue3-mq'
 import PentilaComponents from 'pentila-components'
 import moment from 'moment'
 import dayjs from 'dayjs'
@@ -16,11 +16,11 @@ const app = createApp(App)
   .use(store)
   .use(router)
   .use(i18n)
-  .use(VueMq, { // Responsive breakpoints
+  .use(Vue3Mq, { // Responsive breakpoints
     breakpoints: {
-      phone: 450,
-      tablet: 800,
-      desktop: Infinity
+      phone: 0,
+      tablet: 450,
+      desktop: 800
     }
   })
   .use(VueHammer, {

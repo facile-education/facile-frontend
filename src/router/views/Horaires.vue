@@ -7,13 +7,13 @@
     />
     <template v-if="configuration">
       <Timeline
-        v-if="!$device.phone"
+        v-if="!mq.phone"
         :min-date="minDate"
         :max-date="maxDate"
         @selectWeek="onSelectWeek"
       />
       <div
-        v-if="$device.phone"
+        v-if="mq.phone"
         v-hammer:swipe.horizontal="onSwipe"
         class="swipe-container"
       >
@@ -69,6 +69,7 @@ export default {
     Timeline,
     FCEvent
   },
+  inject: ['mq'],
   data () {
     return {
       // pan: -320,
@@ -82,9 +83,9 @@ export default {
       return {
         locale: frLocale,
         plugins: [timeGridPlugin],
-        initialView: this.$device.phone ? 'timeGridDay' : 'timeGridWeek',
+        initialView: this.mq.phone ? 'timeGridDay' : 'timeGridWeek',
         // 125 is toolbar (50) + margin (10) + timeline (65)
-        height: this.$device.phone ? '100%' : 'max(800px, calc(100% - 125px))',
+        height: this.mq.phone ? '100%' : 'max(800px, calc(100% - 125px))',
         expandRows: true,
         headerToolbar: {
           left: '',
@@ -146,7 +147,7 @@ export default {
   },
   created () {
     this.$store.dispatch('cdt/getConfiguration')
-    if (this.$device.phone) {
+    if (this.mq.phone) {
       this.onSelectDate(new Date())
     }
   },
@@ -213,7 +214,7 @@ export default {
         { start: dayjs(week.firstDayOfWeek, 'YYYY-MM-DD'), end: dayjs(week.lastDayOfWeek, 'YYYY-MM-DD') })
     },
     onSwipe (event) {
-      if (this.$device.phone) {
+      if (this.mq.phone) {
         switch (event.type) {
           case 'swipeleft':
             // this.pan -= 320

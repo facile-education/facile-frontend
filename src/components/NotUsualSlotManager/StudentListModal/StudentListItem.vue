@@ -31,7 +31,7 @@
         :student="student"
         :event="event"
         :deregistration="true"
-        :is-full-screen="$device.phone"
+        :is-full-screen="mq.phone"
         @deregistre="deregistreStudent"
         @close="isStudentDeregistrationModalDisplayed = false"
       />
@@ -48,6 +48,7 @@ import dayjs from 'dayjs'
 export default {
   name: 'StudentListItem',
   components: { StudentRegistrationModal },
+  inject: ['mq'],
   props: {
     student: {
       type: Object,

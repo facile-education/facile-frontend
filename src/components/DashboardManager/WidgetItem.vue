@@ -66,6 +66,7 @@ import moment from 'moment'
 
 export default {
   name: 'WidgetItem',
+  inject: ['mq'],
   props: {
     widget: {
       type: Object,
@@ -126,7 +127,7 @@ export default {
         this.widget.scope === this.$store.state.dashboardManager.scopeList.USER_SCHOOL)
     },
     hasSmallDisplay () {
-      return (this.$device.phone || (this.$device.tablet && this.$store.state.nero.menuExpanded))
+      return (this.mq.phone || (this.mq.tablet && this.$store.state.nero.menuExpanded))
     }
   },
   methods: {

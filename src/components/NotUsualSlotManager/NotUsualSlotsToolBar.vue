@@ -7,7 +7,7 @@
           :slot-type="currentSlotType"
         />
         <DatepickerNav
-          v-if="$device.phone"
+          v-if="mq.phone"
           class="date-picker"
           :selected-date="selectedDate"
           @selectDate="onSelectDate"
@@ -35,6 +35,7 @@ import NeroToolbar from '@components/Nero/NeroToolbar'
 export default {
   name: 'NotUsualSlotsToolBar',
   components: { NeroToolbar, UserCompletion, DatepickerNav, SlotTypeItem },
+  inject: ['mq'],
   props: {
     selectedDate: {
       type: Object,

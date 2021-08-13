@@ -82,6 +82,7 @@ import { isEditableSlot } from '@utils/notUsualSlotUtils'
 import notUsualSlotsConstants from '@/constants/notUsualSlots'
 export default {
   name: 'EventPopover',
+  inject: ['mq'],
   props: {
     selectedEvent: {
       type: Object,
@@ -114,7 +115,7 @@ export default {
       return this.isEditableEvent && this.queriedUser && !this.isAlreadyRegister && this.selectedEvent.event.extendedProps.inscriptionLeft > 0 && bool
     },
     isPopupTop () {
-      return this.$device.phone
+      return this.mq.phone
     },
     isPopupLeft () {
       return (window.innerWidth - this.selectedEvent.el.getBoundingClientRect().right) < 350
