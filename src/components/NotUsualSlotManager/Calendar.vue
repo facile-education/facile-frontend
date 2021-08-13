@@ -303,7 +303,7 @@ export default {
           inscriptionLeft: slot.remainingCapacity,
           room: slot.room,
           type: slot.type,
-          isUserSlot: slot.isUserSlot,
+          isUserSlot: slot.remainingCapacity === undefined, // The difference between slots and student's sessions is the remainingCapacity attribute
           cy: dayjs(slot.startDate, 'YYYY-MM-DD HH:mm').format('MM-DD_HH:mm')
         },
         title: title,
@@ -349,7 +349,6 @@ export default {
     },
     updateEvent (event) {
       // TODO
-      console.log('update event: ' + event)
     },
     onEventClick (info) {
       // Handle event selection display

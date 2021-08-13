@@ -2,6 +2,7 @@
   <PentilaWindow
     :modal="true"
     class="edit-slot-modal"
+    :class="{'mobile': $device.phone}"
     data-test="edit-slot-modal"
     @close="closeModal"
     @keydown.exact.enter.stop=""
@@ -59,15 +60,15 @@
 
     <template #footer>
       <div class="footer">
-        <div
+        <PentilaButton
           v-if="!isEventCreation"
-          v-t="$device.phone ? 'NotUsualSlots.EditSlotModal.deleteSlot' : 'NotUsualSlots.EditSlotModal.longDeleteSlot'"
+          :label="$device.phone ? $t('NotUsualSlots.EditSlotModal.deleteSlot') : $t('NotUsualSlots.EditSlotModal.longDeleteSlot')"
           class="button delete-button"
           :class="{'mobile': $device.phone}"
           @click="confirmSlotDeletion"
         />
-        <div
-          v-t="'Commons.submit'"
+        <PentilaButton
+          :label="$t('Commons.submit')"
           class="button confirm-button"
           :class="{'form-valid' : !v$.$invalid && !isTimeError}"
           @click="confirm"
@@ -253,6 +254,17 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+
+.edit-slot-modal .window-wrapper {
+  overflow: auto;
+  max-width: 500px;
+  &.mobile {
+    width: 100%;
+  }
+}
+</style>
 
 <style lang="scss" scoped>
 
