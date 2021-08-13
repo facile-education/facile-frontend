@@ -116,6 +116,17 @@ export default {
 }
 </script>
 
+<style lang="scss">
+
+.pending-firing-modal .window-wrapper {
+  overflow: auto;
+  max-width: 500px;
+  &.mobile {
+    width: 100%;
+  }
+}
+</style>
+
 <style lang="scss" scoped>
 @import '@design';
 

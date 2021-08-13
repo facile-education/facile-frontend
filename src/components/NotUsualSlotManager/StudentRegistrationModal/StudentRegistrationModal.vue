@@ -1,8 +1,8 @@
 <template>
   <PentilaWindow
     :modal="true"
-    width="500px"
     class="student-registration-modal"
+    :class="{'mobile': $device.phone}"
     @close="closeModal"
     @keydown.exact.enter.stop=""
     @keydown.exact.backspace.stop=""
@@ -253,9 +253,6 @@ export default {
           this.$store.dispatch('notUsualSlots/refreshCalendar')
           this.closeModal()
         }
-      },
-      (err) => {
-        console.log(err)
       })
     },
     confirmDeregistration () {
@@ -266,9 +263,6 @@ export default {
           this.$emit('deregistre')
           this.closeModal()
         }
-      },
-      (err) => {
-        console.log(err)
       })
     },
     registerFiring () {
@@ -279,9 +273,6 @@ export default {
           this.$store.dispatch('notUsualSlots/refreshCalendar')
           this.closeModal()
         }
-      },
-      (err) => {
-        console.log(err)
       })
     },
     deregisterFiring () {
@@ -291,9 +282,6 @@ export default {
           this.$emit('deregistre')
           this.closeModal()
         }
-      },
-      (err) => {
-        console.log(err)
       })
     },
     handleCheck (check) {
@@ -305,6 +293,17 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.student-registration-modal .window-wrapper {
+  overflow: auto;
+  max-width: 500px;
+  &.mobile {
+    width: 100%;
+  }
+}
+
+</style>
 
 <style lang="scss" scoped>
 @import '@design';

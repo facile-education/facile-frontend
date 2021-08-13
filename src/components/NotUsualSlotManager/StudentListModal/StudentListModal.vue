@@ -1,8 +1,8 @@
 <template>
   <PentilaWindow
     :modal="true"
-    width="600px"
     class="student-list-modal"
+    :class="{'mobile': $device.phone}"
     @close="closeModal"
     @keydown.exact.enter.stop=""
     @keydown.exact.backspace.stop=""
@@ -115,9 +115,6 @@ export default {
         if (data.success) {
           this.studentList = data.members
         }
-      },
-      (err) => {
-        console.log(err)
       })
     },
     setPresent ({ student, isPresent }) { // Todo, not get currentStudent by event but directly from for method
@@ -129,9 +126,6 @@ export default {
         if (data.success) {
           this.studentList = data.members
         }
-      },
-      (err) => {
-        console.log(err)
       })
       this.$emit('close')
     },
@@ -143,8 +137,12 @@ export default {
 </script>
 
 <style lang="scss">
-  .student-list-modal .window-body {
+  .student-list-modal .window-wrapper {
     overflow: auto;
+    max-width: 500px;
+    &.mobile {
+      width: 100%;
+    }
   }
 </style>
 
@@ -193,7 +191,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.25em;
+    font-size: 1em;
   }
 
   .call-roll {

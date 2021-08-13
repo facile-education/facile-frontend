@@ -39,7 +39,7 @@
               @click="openRegistration"
             />
             <i
-              v-if="isEditableEvent && currentUser.isDoyen || currentUser.isDirectionMember || currentUser.isSecretariat"
+              v-if="isEditableEvent && (currentUser.isDoyen || currentUser.isDirectionMember || currentUser.isSecretariat)"
               class="fa fa-pencil-alt"
               data-test="openEditModal-option"
               @click="openEditModal"
@@ -108,7 +108,7 @@ export default {
     },
     isRegistration () {
       let bool = true
-      if (this.slotType.type === notUsualSlotsConstants.tutoringType) {
+      if (this.slotType !== undefined && this.slotType.type === notUsualSlotsConstants.tutoringType) {
         bool = this.selectedEvent.event.extendedProps.teacher.teacherId === this.currentUser.userId // Only the slot's teacher can register tutoring
       }
       return this.isEditableEvent && this.queriedUser && !this.isAlreadyRegister && this.selectedEvent.event.extendedProps.inscriptionLeft > 0 && bool
