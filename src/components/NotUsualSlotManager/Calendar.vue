@@ -23,15 +23,6 @@
           :style="`transform: translate3d(${pan}px, 0px, 0px);`"
         >
           <FullCalendar
-            v-if="mq.phone"
-            ref="fullCalendar"
-            class="calendar"
-            :options="calendarOptions"
-            @click.stop
-          />
-          <!-- This is for trigger calendar initialisation when we switch from portrait to landscape on mobile (to change day to week view)-->
-          <FullCalendar
-            v-if="mq.tablet"
             ref="fullCalendar"
             class="calendar"
             :options="calendarOptions"
@@ -220,9 +211,22 @@ export default {
       if (JSON.stringify(value) !== JSON.stringify(this.notComputedSlotsToDisplay)) {
         this.notComputedSlotsToDisplay = [...value]
       }
+    },
+    mq: { // To correctly handle date and slots when we move from portrait to landscape
+      deep: true,
+      handler (value) {
+        if (!value.desktop) {
+          this.onSelectDate(this.selectedDate.toDate())
+
+          if (this.$refs.fullCalendar) {
+            const calendar = this.$refs.fullCalendar.getApi()
+            calendar.changeView(value.phone ? 'timeGridDay' : 'timeGridWeek')
+          }
+        }
+      }
     }
   },
-  // mounted () { // TODO: Avoid calendar to go after limit date, todo when we will consistent with dates
+  // mounted () { // TODO: Avoid calendar to go after limit date
   //   const calendar = this.$refs.fullCalendar.getApi()
   //   const currentDate = dayjs(calendar.getDate())
   //
@@ -236,7 +240,6 @@ export default {
   // },
   methods: {
     allowSelection (selectInfo) {
-      // TODO disable selection if the current user has not the good role
       return selectInfo.start.getDay() === selectInfo.end.getDay()
     },
     onSelectDate (date) {
@@ -249,8 +252,11 @@ export default {
         const calendar = this.$refs.fullCalendar.getApi()
         calendar.gotoDate(date)
       }
+      // If swipe provide from tablet, get slot for the entire week and not only the current day
+      const startDate = this.mq.phone ? moment(date, 'YYYY-MM-DD') : moment(date, 'YYYY-MM-DD').startOf('week')
+      const endDate = this.mq.phone ? moment(date, 'YYYY-MM-DD').endOf('day') : moment(date, 'YYYY-MM-DD').endOf('week')
       this.$store.dispatch('notUsualSlots/setDisplayedDates',
-        { startDate: moment(date, 'YYYY-MM-DD'), endDate: moment(date, 'YYYY-MM-DD').endOf('day') })
+        { startDate: startDate, endDate: endDate })
     },
     onSelectWeek (week) {
       if (this.selectedEvent) {
