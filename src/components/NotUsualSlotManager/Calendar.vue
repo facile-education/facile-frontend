@@ -3,18 +3,18 @@
     <PentilaSpinner v-if="isSpinnerDisplayed" />
     <template v-if="configuration">
       <Timeline
-        v-if="!mq.phone"
+        v-if="mq.desktop"
         :min-date="minDate"
         :max-date="maxDate"
         @selectWeek="onSelectWeek"
       />
       <NotUsualSlotsToolBar
-        v-if="mq.phone"
+        v-if="!mq.desktop"
         :selected-date="selectedDate"
         @selectDate="onSelectDate"
       />
       <div
-        v-if="mq.phone"
+        v-if="!mq.desktop"
         v-hammer:swipe.horizontal="onSwipe"
         class="swipe-container"
       >
@@ -23,6 +23,15 @@
           :style="`transform: translate3d(${pan}px, 0px, 0px);`"
         >
           <FullCalendar
+            v-if="mq.phone"
+            ref="fullCalendar"
+            class="calendar"
+            :options="calendarOptions"
+            @click.stop
+          />
+          <!-- This is for trigger calendar initialisation when we switch from portrait to landscape on mobile (to change day to week view)-->
+          <FullCalendar
+            v-if="mq.tablet"
             ref="fullCalendar"
             class="calendar"
             :options="calendarOptions"
@@ -256,7 +265,7 @@ export default {
         { startDate: moment(week.firstDayOfWeek, 'YYYY-MM-DD'), endDate: moment(week.lastDayOfWeek, 'YYYY-MM-DD') })
     },
     onSwipe (event) {
-      if (this.mq.phone) {
+      if (!this.mq.desktop) {
         switch (event.type) {
           case 'swipeleft':
             // this.pan -= 320
@@ -270,7 +279,8 @@ export default {
       }
     },
     nextDate () {
-      this.selectedDate = this.selectedDate.add(1, 'day')
+      const unit = this.mq.phone ? 'day' : 'week'
+      this.selectedDate = this.selectedDate.add(1, unit)
       // Skip hidden days
       if (this.configuration.schoolDays.indexOf(this.selectedDate.day()) === -1) {
         this.nextDate()
@@ -279,7 +289,8 @@ export default {
       }
     },
     previousDate () {
-      this.selectedDate = this.selectedDate.subtract(1, 'day')
+      const unit = this.mq.phone ? 'day' : 'week'
+      this.selectedDate = this.selectedDate.subtract(1, unit)
       // Skip hidden days
       if (this.configuration.schoolDays.indexOf(this.selectedDate.day()) === -1) {
         this.previousDate()

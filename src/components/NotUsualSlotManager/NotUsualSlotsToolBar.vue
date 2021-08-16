@@ -7,7 +7,7 @@
           :slot-type="currentSlotType"
         />
         <DatepickerNav
-          v-if="mq.phone"
+          v-if="!mq.desktop"
           class="date-picker"
           :selected-date="selectedDate"
           @selectDate="onSelectDate"

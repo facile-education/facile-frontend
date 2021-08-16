@@ -6,9 +6,9 @@
     >
       <SelectedSchool />
       <div
-        v-if="!mq.phone || currentSlotType === undefined"
+        v-if="mq.desktop || currentSlotType === undefined"
         class="slot-type-selection"
-        :class="{'mobile': mq.phone}"
+        :class="{'mobile': !mq.desktop}"
       >
         <SlotTypeItem
           v-for="(slotType, index) in slotTypes"
@@ -18,7 +18,7 @@
         />
       </div>
       <UserCompletion
-        v-if="currentSlotType && !mq.phone"
+        v-if="currentSlotType && mq.desktop"
         user-type="student"
         :placeholder="$t('NotUsualSlots.studentNamePlaceHolder')"
         :initial-user-list="queriedUser ? [queriedUser] : []"
@@ -149,9 +149,8 @@ export default {
   padding-right: 30px;
 
   &.mobile {
-    flex-direction: column;
-    align-items: center;
     height: 100vh;
+    align-content: space-around;
     justify-content: space-around;
   }
 }

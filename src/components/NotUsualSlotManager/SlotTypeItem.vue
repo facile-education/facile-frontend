@@ -2,13 +2,13 @@
   <div
     :data-test="'slot-type-item-' + slotType.type"
     class="slot-type-item"
-    :class="{'toolbar-display' : mq.phone && currentSlotType}"
+    :class="{'toolbar-display' : !mq.desktop && currentSlotType}"
     :style="'background-color: ' + slotType.color + ';'"
     @click="itemClicked"
   >
     {{ slotType.label }}
     <div
-      v-if="isSelected && !(mq.phone && currentSlotType)"
+      v-if="isSelected && !(!mq.desktop && currentSlotType)"
       class="is-selected"
     />
   </div>
@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     itemClicked () {
-      if (this.mq.phone && this.currentSlotType) {
+      if (!this.mq.desktop && this.currentSlotType) {
         this.$store.dispatch('notUsualSlots/setCurrentSlotType', undefined) // Unselect slotType to go back in menu
       } else {
         this.$store.dispatch('notUsualSlots/setCurrentSlotType', this.slotType)
