@@ -1,7 +1,7 @@
 import { setMainColor } from '@/utils/theme.util'
 
 export const state = {
-  mainColor: '2E6E95',
+  mainColor: '2982B9',
   fontColor: 'ffffff'
 }
 
