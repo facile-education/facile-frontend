@@ -167,4 +167,8 @@ export default {
 .date-picker {
   margin-left: auto;
 }
+
+.base-dropdown {
+  margin-right: .4rem;
+}
 </style>
