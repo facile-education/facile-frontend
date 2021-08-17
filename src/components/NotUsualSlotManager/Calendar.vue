@@ -318,10 +318,12 @@ export default {
           id: slot.cdtSessionId || slot.schoollifeSessionId,
           subject: slot.subject,
           teacher: slot.teacher,
-          inscriptionLeft: slot.remainingCapacity,
+          inscriptionLeft: slot.capacity - slot.nbRegisteredStudents,
+          capacity: slot.capacity,
+          nbRegisteredStudents: slot.nbRegisteredStudents,
           room: slot.room,
           type: slot.type,
-          isUserSlot: slot.remainingCapacity === undefined, // The difference between slots and student's sessions is the remainingCapacity attribute
+          isUserSlot: slot.nbRegisteredStudents === undefined, // The difference between slots and student's sessions is the nbRegisteredStudents attribute
           cy: dayjs(slot.startDate, 'YYYY-MM-DD HH:mm').format('MM-DD_HH:mm')
         },
         title: title,
@@ -412,7 +414,7 @@ export default {
       }
     },
     formattedRoomAndPlacesLabel (event) {
-      return (event.extendedProps.inscriptionLeft !== undefined ? (event.extendedProps.inscriptionLeft + ' ' + this.$t('NotUsualSlots.remainingPlaces') + (event.extendedProps.inscriptionLeft > 1 ? 's' : '')) : '')
+      return event.extendedProps.capacity !== undefined ? (this.$t('NotUsualSlots.capacity') + (event.extendedProps.capacity - event.extendedProps.nbRegisteredStudents) + '/' + event.extendedProps.capacity) : ''
     },
     onSlotMount (info) {
       // Change hour label to P1, P2...
