@@ -25,7 +25,10 @@
         @error="updateTimeErrorStatus"
       />
 
-      <div data-test="teacher-part">
+      <div
+        class="teacher-part"
+        data-test="teacher-part"
+      >
         <UserCompletion
           user-type="teacher"
           :placeholder="$t('NotUsualSlots.EditSlotModal.teacherNamePlaceHolder')"
@@ -37,6 +40,10 @@
       </div>
 
       <div data-test="room-part">
+        <span
+          v-t="'NotUsualSlots.EditSlotModal.roomNamePlaceHolder'"
+          class="label"
+        />
         <PentilaInput
           v-model="newEvent.extendedProps.room"
           class="input"
@@ -47,14 +54,18 @@
       </div>
 
       <div data-test="capacity-part">
+        <span
+          v-if="!isEventCreation"
+          class="label"
+        >{{ $t('NotUsualSlots.EditSlotModal.remainingPlaces') + newEvent.extendedProps.capacity + ' ('+ $t('NotUsualSlots.EditSlotModal.registered')+ newEvent.extendedProps.nbRegisteredStudents + ')' }}</span>
         <PentilaInput
-          v-model="newEvent.extendedProps.inscriptionLeft"
+          v-model="newEvent.extendedProps.capacity"
           class="input"
           type="number"
           :placeholder="$t('NotUsualSlots.EditSlotModal.inscriptionLeftPlaceHolder')"
-          @blur="v$.newEvent.extendedProps.inscriptionLeft.$touch()"
+          @blur="v$.newEvent.extendedProps.capacity.$touch()"
         />
-        <PentilaErrorMessage :error-message="formErrorList.inscriptionLeft" />
+        <PentilaErrorMessage :error-message="formErrorList.capacity" />
       </div>
     </template>
 
@@ -86,6 +97,13 @@ import moment from 'moment'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 
+const moreThanRegistered = (value, vm) => {
+  if (value < 0) {
+    return false
+  }
+  return vm.eventToEdit.extendedProps ? value >= vm.eventToEdit.extendedProps.nbRegisteredStudents : true
+}
+
 export default {
   name: 'EditSlotModal',
   components: { UserCompletion, TimeSelection },
@@ -112,7 +130,7 @@ export default {
         teacher: {
           teacherId: { required }
         },
-        inscriptionLeft: { required },
+        capacity: { required, moreThanRegistered },
         room: { required }
       }
     }
@@ -125,9 +143,10 @@ export default {
           id: undefined,
           subject: undefined,
           teacher: undefined,
-          inscriptionLeft: undefined,
           room: undefined,
-          type: undefined
+          type: undefined,
+          capacity: undefined,
+          nbRegisteredStudents: undefined
         },
         title: undefined,
         start: undefined,
@@ -142,7 +161,9 @@ export default {
       const form = this.v$.newEvent
       return {
         teacher: (form.extendedProps.teacher.teacherId.$invalid && form.extendedProps.teacher.teacherId.$dirty) ? this.$t('Commons.formRequired') : '',
-        inscriptionLeft: (form.extendedProps.inscriptionLeft.$invalid && form.extendedProps.inscriptionLeft.$dirty) ? this.$t('Commons.formRequired') : '',
+        capacity: (form.extendedProps.capacity.$invalid && form.extendedProps.capacity.$dirty)
+          ? (form.extendedProps.capacity.required.$invalid ? this.$t('Commons.formRequired') : this.$t('Commons.formMoreThanRegistered'))
+          : '',
         room: (form.extendedProps.room.$invalid && form.extendedProps.room.$dirty) ? this.$t('Commons.formRequired') : ''
       }
     },
@@ -167,7 +188,8 @@ export default {
     } else { // Event update
       this.newEvent.extendedProps.id = this.eventToEdit.extendedProps.id
       this.newEvent.extendedProps.teacher = { ...this.eventToEdit.extendedProps.teacher } // create a copy to not trigger store state change out of a mutation
-      this.newEvent.extendedProps.inscriptionLeft = this.eventToEdit.extendedProps.inscriptionLeft
+      this.newEvent.extendedProps.capacity = this.eventToEdit.extendedProps.capacity
+      this.newEvent.extendedProps.nbRegisteredStudents = this.eventToEdit.extendedProps.nbRegisteredStudents
       this.newEvent.extendedProps.room = this.eventToEdit.extendedProps.room
       this.newEvent.extendedProps.type = this.eventToEdit.extendedProps.type
       this.newEvent.borderColor = this.eventToEdit.borderColor
@@ -217,7 +239,7 @@ export default {
             this.newEvent.extendedProps.teacher.teacherId,
             this.currentSlotType.type,
             this.newEvent.extendedProps.room,
-            this.newEvent.extendedProps.inscriptionLeft
+            this.newEvent.extendedProps.capacity
           ).then((data) => {
             if (data.success) {
               // this.createEventMethod(this.newEvent) // With returned slot, instead of reload calendar
@@ -237,7 +259,7 @@ export default {
             this.newEvent.extendedProps.teacher.teacherId,
             this.currentSlotType.type,
             this.newEvent.extendedProps.room,
-            this.newEvent.extendedProps.inscriptionLeft
+            this.newEvent.extendedProps.capacity
           ).then((data) => {
             if (data.success) {
               this.$store.dispatch('notUsualSlots/refreshCalendar')
@@ -273,6 +295,10 @@ export default {
   color: #0B3C5F;
 }
 
+.teacher-part {
+  margin-bottom: 10px;
+}
+
 .input {
   margin: 10px 0;
 }
@@ -283,6 +309,10 @@ export default {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+}
+
+.label {
+  font-size: 0.915rem;
 }
 
 .button {

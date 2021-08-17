@@ -142,7 +142,8 @@ export default {
         (this.selectedEvent.event.extendedProps.subject ? ' - ' : '')
     },
     formattedRoomAndPlaces () {
-      return this.selectedEvent.event.extendedProps.room + (this.selectedEvent.event.extendedProps.inscriptionLeft !== undefined ? (' - ' + this.selectedEvent.event.extendedProps.inscriptionLeft + ' ' + this.$t('NotUsualSlots.remainingPlaces') + (this.selectedEvent.event.extendedProps.inscriptionLeft > 1 ? 's' : '')) : '')
+      const isPlural = this.selectedEvent.event.extendedProps.inscriptionLeft > 1
+      return this.selectedEvent.event.extendedProps.room + (this.selectedEvent.event.extendedProps.inscriptionLeft !== undefined ? (' - ' + this.selectedEvent.event.extendedProps.inscriptionLeft + ' ' + this.$t('NotUsualSlots.remainingPlaces') + (isPlural ? 's' : '') + ' ' + this.$t('NotUsualSlots.free') + (isPlural ? 's' : '')) : '')
     }
   },
   mounted () {

@@ -64,6 +64,7 @@
     "submit": "Valider",
     "formDateOrder": "La date de fin doit être supérieure à la date de début",
     "formInvalidDate": "Format de date invalide",
+    "formMoreThanRegistered": "La capacité de la salle doit être plus grande que le nombre d'inscrits",
     "formRequired": "Champ requis"
   },
   "CommunicationManager": {
@@ -152,8 +153,10 @@
     "yesterday": "Hier à"
   },
   "NotUsualSlots" : {
+    "capacity": "Capacité: ",
     "detention": "Retenue",
     "fired": "Renvoi",
+    "free": "libre",
     "remainingPlaces": "place",
     "replayTest": "Travaux à refaire",
     "study": "Cercle d'étude",
@@ -166,6 +169,8 @@
       "header": "Éditer un créneau",
       "inscriptionLeftPlaceHolder": "Nombre de places disponibles",
       "longDeleteSlot": "Supprimer le créneau",
+      "remainingPlaces": "Capacité de la salle: ",
+      "registered": "inscrits: ",
       "roomNamePlaceHolder": "Salle",
       "slot": "Créneau",
       "teacherNamePlaceHolder": "Maître"
