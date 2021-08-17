@@ -23,7 +23,8 @@
 </template>
 
 <script>
-import NeroTree from '@/components/Nero/NeroTree'
+import { defineAsyncComponent } from 'vue'
+const NeroTree = defineAsyncComponent(() => import('@/components/Nero/NeroTree'))
 
 export default {
   name: 'NeroTreeItem',

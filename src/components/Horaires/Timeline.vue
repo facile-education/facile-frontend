@@ -76,8 +76,6 @@ dayjs.extend(weekOfYear)
 
 export default {
   name: 'Timeline',
-  components: {
-  },
   props: {
     minDate: {
       type: Object,

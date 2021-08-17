@@ -40,10 +40,12 @@
 </template>
 
 <script>
-import StudentRegistrationModal from '@components/NotUsualSlotManager/StudentRegistrationModal/StudentRegistrationModal'
 import { toPascalCase } from '@/utils/commons.util'
 import notUsualSlotsConstants from '@/constants/notUsualSlots'
 import dayjs from 'dayjs'
+
+import { defineAsyncComponent } from 'vue'
+const StudentRegistrationModal = defineAsyncComponent(() => import('@components/NotUsualSlotManager/StudentRegistrationModal/StudentRegistrationModal'))
 
 export default {
   name: 'StudentListItem',

@@ -79,17 +79,20 @@ import { isEditableSlot } from '@/utils/notUsualSlotUtils'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import notUsualSlotsConstants from '@/constants/notUsualSlots'
-import EditSlotModal from '@components/NotUsualSlotManager/EditSlotModal/EditSlotModal'
-import EventPopover from '@/components/NotUsualSlotManager/EventPopover'
 import FullCalendar from '@fullcalendar/vue3'
 import frLocale from '@fullcalendar/core/locales/fr'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
-import StudentListModal from '@components/NotUsualSlotManager/StudentListModal/StudentListModal'
-import StudentRegistrationModal from '@components/NotUsualSlotManager/StudentRegistrationModal/StudentRegistrationModal'
-import Timeline from '@components/Horaires/Timeline' // Needed for event creation
-import NotUsualSlotsToolBar from '@components/NotUsualSlotManager/NotUsualSlotsToolBar'
 // import FCEvent from '@components/Horaires/FCEvent'
+
+import { defineAsyncComponent } from 'vue'
+
+const NotUsualSlotsToolBar = defineAsyncComponent(() => import('@components/NotUsualSlotManager/NotUsualSlotsToolBar'))
+const Timeline = defineAsyncComponent(() => import('@components/Horaires/Timeline')) // Needed for event creation
+const EventPopover = defineAsyncComponent(() => import('@/components/NotUsualSlotManager/EventPopover'))
+const StudentRegistrationModal = defineAsyncComponent(() => import('@components/NotUsualSlotManager/StudentRegistrationModal/StudentRegistrationModal'))
+const StudentListModal = defineAsyncComponent(() => import('@components/NotUsualSlotManager/StudentListModal/StudentListModal'))
+const EditSlotModal = defineAsyncComponent(() => import('@components/NotUsualSlotManager/EditSlotModal/EditSlotModal'))
 
 dayjs.extend(customParseFormat)
 

@@ -55,8 +55,11 @@ import frLocale from '@fullcalendar/core/locales/fr'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import Layout from '@/router/layouts/EmptyLayout'
 import HorairesToolbar from '@/components/Horaires/HorairesToolbar'
-import Timeline from '@/components/Horaires/Timeline'
-import FCEvent from '@/components/Horaires/FCEvent'
+
+// Lazy loading
+import { defineAsyncComponent } from 'vue'
+const Timeline = defineAsyncComponent(() => import('@/components/Horaires/Timeline'))
+const FCEvent = defineAsyncComponent(() => import('@/components/Horaires/FCEvent'))
 
 dayjs.extend(customParseFormat)
 
