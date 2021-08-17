@@ -76,7 +76,8 @@
 <script>
 import { slotLabelList } from '@/constants/appConstants'
 import { isEditableSlot } from '@/utils/notUsualSlotUtils'
-import moment from 'moment'
+import dayjs from 'dayjs'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
 import notUsualSlotsConstants from '@/constants/notUsualSlots'
 import EditSlotModal from '@components/NotUsualSlotManager/EditSlotModal/EditSlotModal'
 import EventPopover from '@/components/NotUsualSlotManager/EventPopover'
@@ -87,8 +88,6 @@ import interactionPlugin from '@fullcalendar/interaction'
 import StudentListModal from '@components/NotUsualSlotManager/StudentListModal/StudentListModal'
 import StudentRegistrationModal from '@components/NotUsualSlotManager/StudentRegistrationModal/StudentRegistrationModal'
 import Timeline from '@components/Horaires/Timeline' // Needed for event creation
-import dayjs from 'dayjs'
-import customParseFormat from 'dayjs/plugin/customParseFormat'
 import NotUsualSlotsToolBar from '@components/NotUsualSlotManager/NotUsualSlotsToolBar'
 // import FCEvent from '@components/Horaires/FCEvent'
 
@@ -229,8 +228,8 @@ export default {
   //   if (currentDate > this.maxDate.endOf('week')) {
   //     calendar.gotoDate(new Date(this.maxDate.startOf('week')))
   //     this.$store.dispatch('notUsualSlots/setDisplayedDates', {
-  //       startDate: moment(this.maxDate.startOf('week').format('YYYY-MM-DD'), 'YYYY-MM-DD'),
-  //       endDate: moment(this.maxDate.endOf('week').format('YYYY-MM-DD'), 'YYYY-MM-DD')
+  //       startDate: dayjs(this.maxDate.startOf('week').format('YYYY-MM-DD'), 'YYYY-MM-DD'),
+  //       endDate: dayjs(this.maxDate.endOf('week').format('YYYY-MM-DD'), 'YYYY-MM-DD')
   //     })
   //   }
   // },
@@ -249,8 +248,8 @@ export default {
         calendar.gotoDate(date)
       }
       // If swipe provide from tablet, get slot for the entire week and not only the current day
-      const startDate = this.mq.phone ? moment(date, 'YYYY-MM-DD') : moment(date, 'YYYY-MM-DD').startOf('week')
-      const endDate = this.mq.phone ? moment(date, 'YYYY-MM-DD').endOf('day') : moment(date, 'YYYY-MM-DD').endOf('week')
+      const startDate = this.mq.phone ? dayjs(date) : dayjs(date).startOf('week')
+      const endDate = this.mq.phone ? dayjs(date).endOf('day') : dayjs(date).endOf('week')
       this.$store.dispatch('notUsualSlots/setDisplayedDates',
         { startDate: startDate, endDate: endDate })
     },
@@ -264,7 +263,7 @@ export default {
         calendar.gotoDate(new Date(week.firstDayOfWeek))
       }
       this.$store.dispatch('notUsualSlots/setDisplayedDates',
-        { startDate: moment(week.firstDayOfWeek, 'YYYY-MM-DD'), endDate: moment(week.lastDayOfWeek, 'YYYY-MM-DD') })
+        { startDate: dayjs(week.firstDayOfWeek, 'YYYY-MM-DD'), endDate: dayjs(week.lastDayOfWeek, 'YYYY-MM-DD') })
     },
     onSwipe (event) {
       if (!this.mq.desktop) {
@@ -323,8 +322,8 @@ export default {
           cy: dayjs(slot.startDate, 'YYYY-MM-DD HH:mm').format('MM-DD_HH:mm')
         },
         title: title,
-        start: moment(slot.startDate, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DDTHH:mm'),
-        end: moment(slot.endDate, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DDTHH:mm'),
+        start: dayjs(slot.startDate, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DDTHH:mm'),
+        end: dayjs(slot.endDate, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DDTHH:mm'),
         backgroundColor: color,
         borderColor: color
       }

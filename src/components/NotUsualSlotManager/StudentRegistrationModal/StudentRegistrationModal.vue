@@ -141,7 +141,7 @@ import schoolLifeService from '@/api/schoolLife-portlet.service'
 import userManagementService from '@/api/userManagement.service'
 import { toPascalCase } from '@/utils/commons.util'
 import { nextTick } from 'vue'
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 export default {
   name: 'StudentRegistrationModal',
@@ -177,7 +177,7 @@ export default {
       return toPascalCase(this.student.firstName) + ' ' + toPascalCase(this.student.lastName) + ' - ' + this.student.className
     },
     formattedSlot () {
-      return this.$t('Moment.the') + ' ' + moment(this.event.start, 'YYYY-MM-DDTHH:mm').format('DD MMMM YYYY ' + this.$t('Moment.at') + ' HH:mm')
+      return this.$t('Moment.the') + ' ' + dayjs(this.event.start).format('DD MMMM YYYY ' + this.$t('Moment.at') + ' HH:mm')
     },
     isCommentDisplayed () {
       return !this.deregistration && this.slotType.type === notUsualSlotsConstants.detentionType
@@ -192,7 +192,7 @@ export default {
       return !this.deregistration && this.slotType.type === notUsualSlotsConstants.replayTestType
     },
     arrivalTime () {
-      return this.$t('Moment.the') + ' ' + moment().format('DD MMMM YYYY ' + this.$t('Moment.at') + ' HH:mm')
+      return this.$t('Moment.the') + ' ' + dayjs().format('DD MMMM YYYY ' + this.$t('Moment.at') + ' HH:mm')
     },
     selectedClass () {
       return this.$store.state.notUsualSlots.selectedClass
@@ -236,7 +236,7 @@ export default {
       if (session.schoollifeSessionId) {
         session.sessionId = 0
       }
-      session.label = moment(session.startDate, 'YYYY/MM/DD HH:mm').format('HH:mm') + ' / ' + moment(session.endDate, 'YYYY/MM/DD HH:mm').format('HH:mm') + ' - ' + session.title
+      session.label = dayjs(session.startDate, 'YYYY/MM/DD HH:mm').format('HH:mm') + ' / ' + dayjs(session.endDate, 'YYYY/MM/DD HH:mm').format('HH:mm') + ' - ' + session.title
     },
     submit () {
       if (this.deregistration) {

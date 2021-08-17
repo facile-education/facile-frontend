@@ -72,7 +72,7 @@
 <script>
 
 import notUsualSlotConstants from '@/constants/notUsualSlots'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import schoolLifeService from '@/api/schoolLife-portlet.service'
 import SlotTypeItem from '@/components/NotUsualSlotManager/SlotTypeItem'
 import Calendar from '@/components/NotUsualSlotManager/Calendar'
@@ -132,8 +132,8 @@ export default {
     this.$store.dispatch('cdt/getConfiguration')
     this.getPendingFirings()
     this.$store.dispatch('notUsualSlots/setDisplayedDates', {
-      startDate: moment().startOf('week'),
-      endDate: moment().endOf('week')
+      startDate: dayjs().startOf('week'),
+      endDate: dayjs().endOf('week')
     })
   },
   methods: {
