@@ -6,7 +6,6 @@ import store from '@/store'
 import i18n from '@/i18n'
 import { Vue3Mq } from 'vue3-mq'
 import PentilaComponents from 'pentila-components'
-import moment from 'moment'
 import dayjs from 'dayjs'
 import fr from 'dayjs/locale/fr'
 import { VueHammer } from '@/utils/vuehammer'
@@ -35,13 +34,3 @@ Object.keys(PentilaComponents).forEach(name => {
 app.mount('#app')
 
 dayjs.locale(fr)
-moment.updateLocale('fr', {
-  calendar: {
-    lastDay: '[' + i18n.global.t('Moment.yesterday') + '] LT',
-    sameDay: 'LT',
-    nextDay: '[' + i18n.global.t('Moment.tomorrow') + '] LT',
-    lastWeek: 'dddd [' + i18n.global.t('Moment.at') + '] LT',
-    nextWeek: 'LT',
-    sameElse: 'L'
-  }
-})

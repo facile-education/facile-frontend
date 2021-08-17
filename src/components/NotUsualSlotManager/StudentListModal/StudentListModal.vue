@@ -65,7 +65,6 @@
 import schoolLifeService from '@/api/schoolLife-portlet.service'
 import StudentListItem from '@components/NotUsualSlotManager/StudentListModal/StudentListItem'
 import notUsualSlotsConstants from '@/constants/notUsualSlots'
-import moment from 'moment'
 import dayjs from 'dayjs'
 
 export default {
@@ -90,7 +89,7 @@ export default {
       return notUsualSlotsConstants.getSlotTypeByNumber(this.event.extendedProps.type)
     },
     formattedSlot () {
-      return this.slotType.label + ' ' + this.$t('Moment.of') + ' ' + moment(this.event.start, 'YYYY-MM-DDTHH:mm').format('DD MMMM YYYY ' + this.$t('Moment.at') + ' HH:mm')
+      return this.slotType.label + ' ' + this.$t('Moment.of') + ' ' + dayjs(this.event.start).format('DD MMMM YYYY ' + this.$t('Moment.at') + ' HH:mm')
     },
     currentUser () {
       return this.$store.state.user

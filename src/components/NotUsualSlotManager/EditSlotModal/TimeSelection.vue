@@ -25,7 +25,8 @@
 </template>
 
 <script>
-import moment from 'moment'
+import dayjs from 'dayjs'
+
 export default {
   name: 'TimeSelection',
   props: {
@@ -48,17 +49,17 @@ export default {
   },
   computed: {
     momentStartTime () {
-      return moment(this.start, 'YYYY-MM-DDTHH:mm')
+      return dayjs(this.start)
     },
     momentEndTime () {
-      return moment(this.end, 'YYYY-MM-DDTHH:mm')
+      return dayjs(this.end)
     }
   },
   watch: {
     inputStartHour (value) {
-      const hour = moment(value, 'HH:mm', true)
-      const newStartHour = moment(this.momentStartTime.format('YYYY-MM-DD') + ' ' + value, 'YYYY-MM-DD HH:mm')
-      const currentEndHour = moment(this.momentEndTime.format('YYYY-MM-DD') + ' ' + this.inputEndHour, 'YYYY-MM-DD HH:mm')
+      const hour = dayjs(value, 'HH:mm')
+      const newStartHour = dayjs(this.momentStartTime.format('YYYY-MM-DD') + ' ' + value, 'YYYY-MM-DD HH:mm')
+      const currentEndHour = dayjs(this.momentEndTime.format('YYYY-MM-DD') + ' ' + this.inputEndHour, 'YYYY-MM-DD HH:mm')
       if (hour.isValid() && newStartHour.isBefore(currentEndHour)) {
         this.error = ''
         this.$emit('update:start', newStartHour.format('YYYY-MM-DDTHH:mm'))
@@ -69,9 +70,9 @@ export default {
       }
     },
     inputEndHour (value) {
-      const hour = moment(value, 'HH:mm', true)
-      const currentStartHour = moment(this.momentStartTime.format('YYYY-MM-DD') + ' ' + this.inputStartHour, 'YYYY-MM-DD HH:mm')
-      const newEndHour = moment(this.momentEndTime.format('YYYY-MM-DD') + ' ' + value, 'YYYY-MM-DD HH:mm')
+      const hour = dayjs(value, 'HH:mm', true)
+      const currentStartHour = dayjs(this.momentStartTime.format('YYYY-MM-DD') + ' ' + this.inputStartHour, 'YYYY-MM-DD HH:mm')
+      const newEndHour = dayjs(this.momentEndTime.format('YYYY-MM-DD') + ' ' + value, 'YYYY-MM-DD HH:mm')
       if (hour.isValid() && newEndHour.isAfter(currentStartHour)) {
         this.error = ''
         this.$emit('update:end', newEndHour.format('YYYY-MM-DDTHH:mm'))

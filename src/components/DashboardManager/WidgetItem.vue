@@ -62,7 +62,10 @@
 </template>
 
 <script>
-import moment from 'moment'
+import dayjs from 'dayjs'
+import localizedFormat from 'dayjs/plugin/localizedFormat'
+
+dayjs.extend(localizedFormat)
 
 export default {
   name: 'WidgetItem',
@@ -80,7 +83,7 @@ export default {
   computed: {
     formattedDate () {
       // TODO use utils
-      return moment(this.widget.creationDate, 'YYYY-MM-DD').format('L')
+      return dayjs(this.widget.creationDate, 'YYYY-MM-DD').format('L')
     },
     broadcastedRoleList () {
       return this.widget.config.roles.filter(function (item) {

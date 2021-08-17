@@ -77,9 +77,10 @@
 </template>
 
 <script>
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { isEditableSlot } from '@utils/notUsualSlotUtils'
 import notUsualSlotsConstants from '@/constants/notUsualSlots'
+
 export default {
   name: 'EventPopover',
   inject: ['mq'],
@@ -137,9 +138,9 @@ export default {
       return `top:${this.selectedEvent.el.getBoundingClientRect().top}px; left:${this.selectedEvent.el.getBoundingClientRect().right + 7}px;`
     },
     formattedHours () {
-      return moment(this.selectedEvent.event.start, 'YYYY-MM-DDTHH:mm').format('HH:mm') +
+      return dayjs(this.selectedEvent.event.start).format('HH:mm') +
         ' - ' +
-        moment(this.selectedEvent.event.end, 'YYYY-MM-DDTHH:mm').format('HH:mm')
+        dayjs(this.selectedEvent.event.end).format('HH:mm')
     },
     formattedTeacherName () {
       return this.selectedEvent.event.extendedProps.teacher.lastName + ' ' + this.selectedEvent.event.extendedProps.teacher.firstName +

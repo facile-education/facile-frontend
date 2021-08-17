@@ -93,7 +93,7 @@
 import TimeSelection from '@components/NotUsualSlotManager/EditSlotModal/TimeSelection'
 import UserCompletion from '@components/NotUsualSlotManager/UserCompletion'
 import schoolLifeService from '@/api/schoolLife-portlet.service'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 
@@ -207,7 +207,7 @@ export default {
       })
     },
     deleteSlot () {
-      const momentStartTime = moment(this.newEvent.start, 'YYYY-MM-DDTHH:mm')
+      const momentStartTime = dayjs(this.newEvent.start)
       schoolLifeService.deleteSlot(
         this.newEvent.extendedProps.id,
         momentStartTime.format('YYYY-MM-DD HH:mm') // convert from calendar format to back-end format
@@ -227,8 +227,8 @@ export default {
       if (this.v$.$invalid || this.isTimeError) {
         this.v$.$touch()
       } else {
-        const momentStartTime = moment(this.newEvent.start, 'YYYY-MM-DDTHH:mm')
-        const momentEndTime = moment(this.newEvent.end, 'YYYY-MM-DDTHH:mm')
+        const momentStartTime = dayjs(this.newEvent.start)
+        const momentEndTime = dayjs(this.newEvent.end)
         if (this.isEventCreation) {
           schoolLifeService.createSlot(
             this.selectedSchool.schoolId,
@@ -252,7 +252,7 @@ export default {
         } else {
           schoolLifeService.updateSlot(
             this.newEvent.extendedProps.id,
-            moment(this.eventToEdit.start, 'YYYY-MM-DDTHH:mm').format('YYYY-MM-DD HH:mm'), // pass the old slot start hour (edit all events of tis slot, beginning from this date)
+            dayjs(this.eventToEdit.start).format('YYYY-MM-DD HH:mm'), // pass the old slot start hour (edit all events of tis slot, beginning from this date)
             momentStartTime.day(),
             momentStartTime.format('HH:mm'),
             momentEndTime.format('HH:mm'),
