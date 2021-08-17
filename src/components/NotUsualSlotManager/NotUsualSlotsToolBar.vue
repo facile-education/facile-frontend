@@ -27,11 +27,14 @@
 </template>
 
 <script>
-import SlotTypeItem from '@components/NotUsualSlotManager/SlotTypeItem'
-import DatepickerNav from '@components/Horaires/DatepickerNav'
 import dayjs from 'dayjs'
-import UserCompletion from '@components/NotUsualSlotManager/UserCompletion'
 import NeroToolbar from '@components/Nero/NeroToolbar'
+
+import { defineAsyncComponent } from 'vue'
+const UserCompletion = defineAsyncComponent(() => import('@components/NotUsualSlotManager/UserCompletion'))
+const DatepickerNav = defineAsyncComponent(() => import('@components/Horaires/DatepickerNav'))
+const SlotTypeItem = defineAsyncComponent(() => import('@components/NotUsualSlotManager/SlotTypeItem'))
+
 export default {
   name: 'NotUsualSlotsToolBar',
   components: { NeroToolbar, UserCompletion, DatepickerNav, SlotTypeItem },

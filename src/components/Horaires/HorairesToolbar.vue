@@ -47,8 +47,10 @@
 import dayjs from 'dayjs'
 
 import NeroToolbar from '@/components/Nero/NeroToolbar'
-import DatepickerNav from '@/components/Horaires/DatepickerNav'
 import userManagementService from '@/api/userManagement.service'
+
+import { defineAsyncComponent } from 'vue'
+const DatepickerNav = defineAsyncComponent(() => import('@/components/Horaires/DatepickerNav'))
 
 export default {
   name: 'HorairesToolbar',

@@ -24,12 +24,12 @@ const routes = [
   {
     path: '/not-usual-slots',
     name: 'Not usual slots',
-    component: () => import('@/router/views/NotUsualSlotsManager')
+    component: () => import(/* webpackChunkName: "hhc" */ '@/router/views/NotUsualSlotsManager')
   },
   {
     path: '/horaires',
     name: 'Horaires',
-    component: () => import('@/router/views/Horaires')
+    component: () => import(/* webpackChunkName: "horaires" */ '@/router/views/Horaires')
   }
 ]
 
