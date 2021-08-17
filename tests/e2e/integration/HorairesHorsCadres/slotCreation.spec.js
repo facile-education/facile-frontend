@@ -7,7 +7,7 @@ import utils from '../../support/utils/horairesHorsCardesUtils'
 const form = {
   startHour: '14:00',
   endHour: '15:00',
-  teacherName: 'Darko Jovanovic',
+  teacherName: 'Jovanovic Darko',
   teacherSearch: 'dar',
   roomNumber: 'A110',
   capacity: 20
@@ -20,7 +20,7 @@ const slotsToModify = { // The created slots designate to be modified
     startHour: '08:00',
     endHour: '14:00',
     teacherSearch: 'jau',
-    teacherName: 'Jérôme Jaunait',
+    teacherName: 'Jaunait Jérôme',
     roomNumber: 'tg',
     capacity: 7
   },
@@ -30,7 +30,7 @@ const slotsToModify = { // The created slots designate to be modified
     startHour: '11:00',
     endHour: '12:00',
     teacherSearch: 'alex',
-    teacherName: 'Alexandre Regad',
+    teacherName: 'Regad Alexandre',
     roomNumber: 'd',
     capacity: 4
   },
@@ -40,7 +40,7 @@ const slotsToModify = { // The created slots designate to be modified
     startHour: '08:00',
     endHour: '10:00',
     teacherSearch: 'dubo',
-    teacherName: 'Lionel Duboule',
+    teacherName: 'Duboule Lionel',
     roomNumber: 'yh',
     capacity: 1
   },
@@ -50,7 +50,7 @@ const slotsToModify = { // The created slots designate to be modified
     startHour: '08:00',
     endHour: '09:00',
     teacherSearch: 'Bonzon',
-    teacherName: 'Francoise Bonzon',
+    teacherName: 'Bonzon Francoise',
     roomNumber: 'rt',
     capacity: 154
   },
@@ -60,7 +60,7 @@ const slotsToModify = { // The created slots designate to be modified
     startHour: '13:00',
     endHour: '14:00',
     teacherSearch: 'dar',
-    teacherName: 'Darko Jovanovic',
+    teacherName: 'Jovanovic Darko',
     roomNumber: '1g5',
     capacity: 1
   }
@@ -70,7 +70,7 @@ const modifiedSlot = {
   startHour: '08:30',
   endHour: '09:45',
   teacherSearch: 'dar',
-  teacherName: 'Darko Jovanovic',
+  teacherName: 'Jovanovic Darko',
   roomNumber: 'A110',
   capacity: 20
 }
@@ -107,7 +107,7 @@ const testEditSlotModalForm = (form) => {
 
     // test room number
     cy.get('[data-test=room-part] > .error-message').should('exist')
-    cy.get('[placeholder="Saisir le numéro de salle"]').type(form.roomNumber)
+    cy.get('[placeholder="Salle"]').type(form.roomNumber)
     cy.get('[data-test=room-part] > .error-message').should('not.exist')
 
     // tests capacity
@@ -124,7 +124,7 @@ const deleteSlot = () => {
     cy.get('.button').contains('Supprimer').click()
   })
   cy.get('[data-test=warning-modal]').within(() => {
-    cy.contains('button', 'Continuer').click()
+    cy.contains('button', 'Supprimer').click()
   })
   cy.get('[data-test=warning-modal]').should('not.exist')
   cy.get('[data-test=edit-slot-modal]').should('not.exist')
@@ -225,7 +225,7 @@ describe('Slots creation', () => {
     cy.get('[data-test=edit-slot-modal]').should('not.exist')
   })
 
-  it.only('Create slot', function () {
+  it('Create slot', function () {
     cy.login(url)
 
     for (const attr in slotTypes) {

@@ -23,7 +23,7 @@ const fillEditSlotModal = (form, isModification) => {
     cy.get('[data-test=user-completion-input]').type(form.teacherSearch)
     cy.tick(500)
     cy.contains(form.teacherName).click()
-    cy.get('[placeholder="Saisir le numéro de salle"]').type(form.roomNumber)
+    cy.get('[placeholder="Salle"]').type(form.roomNumber)
     cy.get('[type="number"]').type(form.capacity)
 
     submit()
@@ -52,6 +52,10 @@ const checkSlotData = (date, expectedSlot, checkTeachersAndStuff = true) => {
       cy.contains(expectedSlot.roomNumber)
       cy.contains(expectedSlot.capacity)
     }
+  })
+  // close popup to not be crowded by it on next clicks
+  cy.get('[data-test="' + date.format('MM-DD') + '_' + expectedSlot.startHour + '"]').within(() => {
+    cy.contains(expectedSlot.label).first().click({ force: true })
   })
 }
 

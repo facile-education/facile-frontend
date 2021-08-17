@@ -41,7 +41,7 @@ describe('Desktop student depannage registration', () => {
     cy.get('.event-popup i.fa-list').click()
 
     // No student registered
-    cy.get('.no-students-placeholder').contains("Actuellement, aucun élève n'est inscrit sur ce créneau")
+    cy.get('.no-students-placeholder').contains("Aucun élève n'est inscrit sur ce créneau")
 
     // Close modal
     cy.get('[data-test="closeModal"]').click()
@@ -85,10 +85,10 @@ describe('Desktop student depannage registration', () => {
     waitForRefresh()
 
     // Check events number
-    cy.get('.fc-timegrid-event').should('have.length', 38)
+    cy.get('.fc-timegrid-event').should('have.length', 41)
 
     // The schoollife session appears in the student's schedule
-    cy.get('.fc-day-thu  .fc-timegrid-col-frame .fc-timegrid-col-events div[title="A. Regad"]').should('be.visible')
+    cy.get('.fc-day-thu  .fc-timegrid-col-frame .fc-timegrid-col-events div[title="A. Regad"]').should('exist')
   })
 
   // it('Unregister student depannage', () => {

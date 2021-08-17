@@ -138,7 +138,7 @@ export default {
         moment(this.selectedEvent.event.end, 'YYYY-MM-DDTHH:mm').format('HH:mm')
     },
     formattedTeacherName () {
-      return this.selectedEvent.event.extendedProps.teacher.firstName + ' ' + this.selectedEvent.event.extendedProps.teacher.lastName +
+      return this.selectedEvent.event.extendedProps.teacher.lastName + ' ' + this.selectedEvent.event.extendedProps.teacher.firstName +
         (this.selectedEvent.event.extendedProps.subject ? ' - ' : '')
     },
     formattedRoomAndPlaces () {
