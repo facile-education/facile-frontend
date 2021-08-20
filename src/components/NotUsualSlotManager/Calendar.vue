@@ -61,7 +61,6 @@
     <StudentRegistrationModal
       v-if="isRegistrationModalDisplayed"
       :event="eventToEdit"
-      :student="queriedUser"
       :is-full-screen="mq.phone"
       @close="isRegistrationModalDisplayed = false"
     />
@@ -132,9 +131,6 @@ export default {
     },
     currentUser () {
       return this.$store.state.user
-    },
-    queriedUser () {
-      return this.$store.state.notUsualSlots.queriedUser
     },
     configuration () {
       return (this.$store.state.cdt.configuration.schoolDays.length > 0) ? this.$store.state.cdt.configuration : undefined

@@ -1,3 +1,5 @@
+import i18n from '@/i18n'
+import organizationService from '@/api/organization.service'
 import schoolLifeService from '@/api/schoolLife-portlet.service'
 
 function getNonUsualSlots (store) {
@@ -18,11 +20,13 @@ function getNonUsualSlots (store) {
   )
 }
 
-function getStudentSessions (store) {
-  store.dispatch('currentActions/addAction', { name: 'getStudentSessions' })
-  schoolLifeService.getStudentSessions(store.state.notUsualSlots.queriedUser, store.state.notUsualSlots.displayedDates.startDate, store.state.notUsualSlots.displayedDates.endDate).then(
+function getSessions (store) {
+  store.dispatch('currentActions/addAction', { name: 'getSessions' })
+  const student = store.state.notUsualSlots.queriedUser || { studentId: 0 }
+  schoolLifeService.getSessions(student.studentId, store.state.notUsualSlots.selectedClass.classId,
+    store.state.notUsualSlots.displayedDates.startDate, store.state.notUsualSlots.displayedDates.endDate).then(
     (data) => {
-      store.dispatch('currentActions/removeAction', { name: 'getStudentSessions' })
+      store.dispatch('currentActions/removeAction', { name: 'getSessions' })
       if (data.success) {
         data.sessions.forEach(slot => { slot.isUserSlot = true })
         store.commit('notUsualSlots/setUserSlots', data.sessions)
@@ -32,26 +36,31 @@ function getStudentSessions (store) {
     },
     (err) => {
       console.error(err)
-    }
-  )
+    })
 }
 
+const defaultClass = { classId: 0, className: i18n.global.t('NotUsualSlots.classPlaceholder') }
+
 export const state = {
+  classList: undefined,
+  currentEndDate: undefined,
+  currentNonUsualSlots: [],
   currentSlotType: undefined,
+  currentStartDate: undefined,
   displayedDates: {
     startDate: undefined,
     endDate: undefined
   },
   pendingFirings: [],
   queriedUser: undefined,
-  currentStartDate: undefined,
-  currentEndDate: undefined,
-  currentNonUsualSlots: [],
-  userSlots: [],
-  selectedSchool: undefined
+  selectedClass: defaultClass,
+  userSlots: []
 }
 
 export const mutations = {
+  setClassList (state, payload) {
+    state.classList = payload
+  },
   setCurrentSlotType (state, slotType) {
     state.currentSlotType = slotType
   },
@@ -69,8 +78,8 @@ export const mutations = {
   setQueriedUser (state, queriedUser) {
     state.queriedUser = queriedUser
   },
-  setSelectedSchool (state, payload) {
-    state.selectedSchool = payload
+  setSelectedClass (state, payload) {
+    state.selectedClass = payload
   },
   setUserSlots (state, slots) {
     state.userSlots = slots
@@ -80,7 +89,27 @@ export const mutations = {
   }
 }
 export const actions = {
-  setCurrentSlotType ({ commit }, slotType) {
+  getClassList ({ commit }, schoolId) {
+    console.log('store get class list', schoolId)
+    organizationService.getSchoolCLassList(schoolId).then(
+      (data) => {
+        if (data.success) {
+          commit('setClassList', data.classes)
+        } else {
+          console.error('Cannot get school classes')
+        }
+      },
+      (err) => {
+        // TODO toastr
+        console.error(err)
+      }
+    )
+  },
+  setCurrentSlotType ({ commit, state }, slotType) {
+    if (state.selectedClass.classId > 0) {
+      commit('setSelectedClass', defaultClass)
+      commit('setUserSlots', [])
+    }
     commit('setCurrentSlotType', slotType)
     if (slotType !== undefined) {
       getNonUsualSlots(this)
@@ -93,9 +122,12 @@ export const actions = {
     commit('removePendingFirings', pendingFiring)
   },
   setQueriedUser ({ commit }, user) {
+    if (state.selectedClass.classId > 0) {
+      commit('setSelectedClass', defaultClass)
+    }
     commit('setQueriedUser', user)
     if (this.state.notUsualSlots.queriedUser !== undefined) {
-      getStudentSessions(this)
+      getSessions(this)
     } else {
       this.dispatch('notUsualSlots/resetUserSlots')
     }
@@ -104,17 +136,23 @@ export const actions = {
     commit('setDisplayedDate', { startDate, endDate })
     this.dispatch('notUsualSlots/refreshCalendar')
   },
-  refreshCalendar () {
-    // Update displayedSlots
-    if (this.state.notUsualSlots.currentSlotType !== undefined) {
-      getNonUsualSlots(this)
-    }
-    if (this.state.notUsualSlots.queriedUser !== undefined) {
-      getStudentSessions(this)
-    }
+  setSelectedClass ({ commit }, classObject) {
+    commit('setQueriedUser', undefined)
+    commit('setSelectedClass', classObject)
+    getSessions(this)
   },
-  setSelectedSchool ({ commit }, selectedSchool) {
-    commit('setSelectedSchool', selectedSchool)
+  refreshCalendar ({ state }) {
+    // Update displayedSlots
+    if (state.currentSlotType !== undefined) {
+      getNonUsualSlots(this)
+
+      if (state.selectedClass.classId > 0 && state.currentSlotType.type === 5) {
+        getSessions(this)
+      }
+    }
+    if (state.queriedUser !== undefined) {
+      getSessions(this)
+    }
   },
   resetUserSlots ({ commit }) {
     commit('setUserSlots', [])

@@ -7,10 +7,11 @@ export default {
   createSlot,
   updateSlot,
   deleteSlot,
-  getStudentSessions,
+  getSessions,
   getCandidateSessions,
   getWeekSession,
   getSessionMembers,
+  registerClass,
   registerStudent,
   unRegisterStudent,
   registerFiring,
@@ -100,12 +101,13 @@ function deleteSlot (slotId, startDateStr) {
 }
 
 /**
- * Get the student's slots in the specified amount of time
+ * Get the student's or class's slots in the specified amount of time
  */
-function getStudentSessions (student, minDate, maxDate) {
-  return axios.get(constants.JSON_WS_URL + SCHOOL_LIFE_SESSION_STUDENT_PATH + '/get-student-sessions', {
+function getSessions (studentId, classId, minDate, maxDate) {
+  return axios.get(constants.JSON_WS_URL + SCHOOL_LIFE_SESSION_STUDENT_PATH + '/get-sessions', {
     params: {
-      studentId: student.studentId,
+      studentId,
+      classId,
       minDateStr: minDate.format('YYYY-MM-DD HH:mm'),
       maxDateStr: maxDate.format('YYYY-MM-DD HH:mm')
     }
@@ -144,6 +146,21 @@ function getSessionMembers (slotId) {
   return axios.get(constants.JSON_WS_URL + SCHOOL_LIFE_SESSION_STUDENT_PATH + '/get-session-members', {
     params: {
       schoollifeSessionId: slotId
+    }
+  }).then(response => response.data)
+}
+
+/**
+ * Register class in a not usual slot (fields: success)
+ */
+function registerClass (classId, slotId, comment, notifyParents, replayTestSubject) {
+  return axios.get(constants.JSON_WS_URL + SCHOOL_LIFE_SESSION_STUDENT_PATH + '/register-class', {
+    params: {
+      classId,
+      schoollifeSessionId: slotId,
+      comment: comment,
+      notifyParents: notifyParents,
+      replayTestSubject: replayTestSubject
     }
   }).then(response => response.data)
 }

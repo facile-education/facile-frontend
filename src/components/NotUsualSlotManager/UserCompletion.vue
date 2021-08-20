@@ -1,5 +1,4 @@
 <template>
-  <!-- todo check the id-field utility -->
   <PentilaTagsInput
     v-model="tagsList"
     data-test="user-completion-input"
@@ -20,6 +19,8 @@
 import schoolLifeService from '@/api/schoolLife-portlet.service'
 import { nbCharBeforeCompletion } from '@/constants/appConstants'
 let timeout
+
+// TODO use modelValue/update instead of initial list and watches -> ugly
 export default {
   name: 'UserCompletion',
   props: {
@@ -60,6 +61,12 @@ export default {
         this.autocompleteUserList = []
       }
       this.$emit('selectUser', this.queriedUser)
+    },
+    'initialUserList' () {
+      console.log('watch', this.initialUserList.length)
+      if (this.initialUserList.length === 0) {
+        this.tagsList = this.initialUserList
+      }
     }
   },
   created () {
