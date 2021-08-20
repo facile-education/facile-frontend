@@ -24,6 +24,7 @@
       v-if="!mq.phone || isSingleUser"
       v-model="tagsList"
       class="search"
+      data-test="user-completion-input"
       :placeholder="$t('Horaires.userInput')"
       :close-on-select="true"
       :max-size="maxSize"

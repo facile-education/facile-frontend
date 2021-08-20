@@ -19,6 +19,7 @@
         v-if="isSignOut"
         name="fa-sign-out-alt"
         class="icon"
+        data-test="unregister"
         :title="$t('NotUsualSlots.StudentListModal.unsubscribe')"
         @click="isStudentDeregistrationModalDisplayed = true"
       />

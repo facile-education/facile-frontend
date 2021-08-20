@@ -2,6 +2,7 @@
   <PentilaWindow
     :modal="true"
     class="student-list-modal"
+    data-test="student-list-modal"
     :class="{'mobile': mq.phone}"
     @close="closeModal"
     @keydown.exact.enter.stop=""

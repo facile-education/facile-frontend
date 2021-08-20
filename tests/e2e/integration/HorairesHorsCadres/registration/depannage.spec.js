@@ -4,16 +4,16 @@ import {
   slotTypes,
   studentSearch,
   studentName
-} from '../../support/constants/horairesHorsCadres'
+} from '../../../support/constants/horairesHorsCadres'
 
-import { TEACHER } from '../../support/constants'
+import { TEACHER } from '../../../support/constants'
 
 const waitForRefresh = () => {
   cy.wait(500)
   cy.get('.spinner').should('not.exist')
 }
 
-describe('Desktop student depannage registration', () => {
+describe('Desktop depannage registration', () => {
   beforeEach(() => {
     cy.logout()
     cy.clock(now.toDate().getTime())

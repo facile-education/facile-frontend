@@ -28,7 +28,7 @@ describe('Desktop user selection', () => {
     // Select student
     cy.get('[data-test=user-completion-input] input').type(studentSearch)
     cy.tick(500)
-    // Select teacher user
+    // Select student user
     cy.contains(studentName).click()
     waitForRefresh()
 
