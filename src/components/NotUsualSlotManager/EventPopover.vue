@@ -6,20 +6,23 @@
     :style="popupStyle"
   >
     <template v-if="selectedEvent">
-      <i
+      <NeroIcon
         v-if="isPopupTop"
+        name="fa-caret-down"
+        class="caret-down theme-text-color"
         :style="`color:${selectedEvent.event.backgroundColor};`"
-        class="fa fa-caret-down theme-text-color"
       />
-      <i
+      <NeroIcon
         v-else-if="!isPopupLeft"
+        name="fa-caret-left"
+        class="caret-left theme-text-color"
         :style="`color:${selectedEvent.event.backgroundColor};`"
-        class="fa fa-caret-left theme-text-color"
       />
-      <i
+      <NeroIcon
         v-else
+        name="fa-caret-right"
+        class="caret-right theme-text-color"
         :style="`color:${selectedEvent.event.backgroundColor};`"
-        class="fa fa-caret-right theme-text-color"
       />
       <header
         :style="`background-color:${selectedEvent.event.backgroundColor};`"
@@ -28,19 +31,19 @@
         <h4>
           {{ selectedEvent.event.title }}
           <span class="options">
-            <i
+            <NeroIcon
               v-if="isEditableEvent"
-              class="fas fa-list"
+              name="fa-list"
               @click="showStudentList"
             />
-            <i
+            <NeroIcon
               v-if="isRegistration"
-              class="fas fa-user-plus"
+              name="fa-user-plus"
               @click="openRegistration"
             />
-            <i
+            <NeroIcon
               v-if="isEditableEvent && (currentUser.isDoyen || currentUser.isDirectionMember || currentUser.isSecretariat)"
-              class="fa fa-pencil-alt"
+              name="fa-pencil-alt"
               data-test="openEditModal-option"
               @click="openEditModal"
             />
@@ -80,9 +83,11 @@
 import dayjs from 'dayjs'
 import { isEditableSlot } from '@utils/notUsualSlotUtils'
 import notUsualSlotsConstants from '@/constants/notUsualSlots'
+import NeroIcon from '@/components/Nero/NeroIcon'
 
 export default {
   name: 'EventPopover',
+  components: { NeroIcon },
   inject: ['mq'],
   props: {
     selectedEvent: {
@@ -199,7 +204,7 @@ export default {
     opacity: 0;
   }
 
-  .fa-caret-down {
+  .caret-down {
     position: absolute;
     margin-left: auto;
     margin-right: auto;
@@ -210,14 +215,14 @@ export default {
     font-size: 1.5rem;
   }
 
-  .fa-caret-left {
+  .caret-left {
     position: absolute;
     top: 5px;
     left: -9px;
     font-size: 1.5rem;
   }
 
-  .fa-caret-right {
+  .caret-right {
     position: absolute;
     top: 5px;
     right: -9px;
@@ -232,7 +237,7 @@ export default {
     padding: 5px;
     display: flex;
 
-    i {
+    .svg-inline--fa {
       margin: 0 5px;
       cursor: pointer;
     }

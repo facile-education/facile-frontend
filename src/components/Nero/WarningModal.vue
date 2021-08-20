@@ -11,8 +11,10 @@
 
     <template #body>
       <div class="body">
-        <!--          <BaseIcon name="exclamation-triangle" />-->
-        <i class="fas fa-exclamation-triangle" />
+        <NeroIcon
+          name="fa-exclamation-triangle"
+          class="icon"
+        />
         <p
           class="context-message"
         >
@@ -41,8 +43,11 @@
 </template>
 
 <script>
+import NeroIcon from '@/components/Nero/NeroIcon'
+
 export default {
   name: 'WarningModal',
+  components: { NeroIcon },
   computed: {
     warning () {
       return this.$store.getters['warningModal/firstWarning']
@@ -70,7 +75,7 @@ export default {
     align-items: center;
   }
 
-  .fa-exclamation-triangle{
+  .icon {
     font-size: 40px;
     color: orange;
   }
