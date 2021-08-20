@@ -7,8 +7,10 @@
     :disabled-dates="{ weekdays: hiddenDays }"
   >
     <template #default="{ togglePopover }">
-      <i
-        class="far fa-calendar-alt"
+      <NeroIcon
+        name="fa-calendar-alt"
+        type="far"
+        class="icon"
         @click="togglePopover()"
       />
     </template>
@@ -18,11 +20,13 @@
 <script>
 import dayjs from 'dayjs'
 import { DatePicker } from 'v-calendar'
+import NeroIcon from '@/components/Nero/NeroIcon'
 
 export default {
   name: 'DatepickerNav',
   components: {
-    DatePicker
+    DatePicker,
+    NeroIcon
   },
   props: {
     selectedDate: {
@@ -66,8 +70,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.fa-calendar-alt {
-  font-size: 1.2rem;
+.icon {
+  font-size: 2.5rem;
   padding: 0 0.5rem;
   cursor: pointer;
 }

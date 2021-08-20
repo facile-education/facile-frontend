@@ -7,10 +7,10 @@
       display-field="schoolName"
       @update:modelValue="onSelectSchool"
     />
-    <i
+    <NeroIcon
       v-if="mq.phone"
-      class="selection fa"
-      :class="{'fa-user': isSingleUser, 'fa-users': !isSingleUser}"
+      :name="iconClass"
+      class="selection"
       @click="toggleSelection"
     />
     <PentilaDropdown
@@ -47,6 +47,7 @@
 import dayjs from 'dayjs'
 
 import NeroToolbar from '@/components/Nero/NeroToolbar'
+import NeroIcon from '@/components/Nero/NeroIcon'
 import userManagementService from '@/api/userManagement.service'
 
 import { defineAsyncComponent } from 'vue'
@@ -56,6 +57,7 @@ export default {
   name: 'HorairesToolbar',
   components: {
     DatepickerNav,
+    NeroIcon,
     NeroToolbar
   },
   inject: ['mq'],
@@ -78,6 +80,9 @@ export default {
   computed: {
     groupList () {
       return this.$store.state.horaires.groupList
+    },
+    iconClass () {
+      return this.isSingleUser ? 'fa-user' : 'fa-users'
     },
     schoolList () {
       return this.$store.state.user.schoolList
@@ -157,7 +162,7 @@ export default {
 
 <style lang="scss" scoped>
 .selection {
-  font-size: 1.2rem;
+  font-size: 2.3rem;
   padding: 0 0.5rem;
   cursor: pointer;
 }

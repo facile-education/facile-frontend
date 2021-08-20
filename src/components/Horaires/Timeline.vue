@@ -8,7 +8,10 @@
           class="nav-btn"
           @click="onClickPrevious()"
         >
-          <i class="fa fa-chevron-circle-left theme-text-color" />
+          <NeroIcon
+            name="fa-chevron-circle-left"
+            class="theme-text-color"
+          />
         </button>
       </div>
       <div class="horizontal-timeline-center">
@@ -61,7 +64,10 @@
           :disabled="disableNext"
           @click="onClickNext()"
         >
-          <i class="fa fa-chevron-circle-right theme-text-color" />
+          <NeroIcon
+            name="fa-chevron-circle-right"
+            class="theme-text-color"
+          />
         </button>
       </div>
     </div>
@@ -71,11 +77,13 @@
 <script>
 import dayjs from 'dayjs'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
+import NeroIcon from '@/components/Nero/NeroIcon'
 
 dayjs.extend(weekOfYear)
 
 export default {
   name: 'Timeline',
+  components: { NeroIcon },
   props: {
     minDate: {
       type: Object,
@@ -272,15 +280,12 @@ export default {
 
   .nav-btn {
     cursor: pointer;
-
-    i {
-      font-size: 1.5rem;
-    }
+    font-size: 1.5rem;
 
     &:disabled {
       cursor: not-allowed;
 
-      i {
+      svg {
         color: grey;
       }
     }
@@ -292,7 +297,7 @@ export default {
   display: flex;
   align-content: center;
 
-  .horizontal-timeline-progress{
+  .horizontal-timeline-progress {
     width: 100%;
 
     ul {

@@ -1,6 +1,6 @@
 <template>
   <div class="student">
-    <span v-t="formattedStudent" />
+    <span> {{ formattedStudent }} </span>
     <span
       v-if="student.subject"
       v-t="formattedSubject"
@@ -15,9 +15,10 @@
         :model-value="student.isPresent"
         @update:modelValue="handleCheck"
       />
-      <i
+      <NeroIcon
         v-if="isSignOut"
-        class="fas fa-sign-out-alt"
+        name="fa-sign-out-alt"
+        class="icon"
         :title="$t('NotUsualSlots.StudentListModal.unsubscribe')"
         @click="isStudentDeregistrationModalDisplayed = true"
       />
@@ -28,7 +29,7 @@
       to="body"
     >
       <StudentRegistrationModal
-        :student="student"
+        :removed-student="student"
         :event="event"
         :deregistration="true"
         :is-full-screen="mq.phone"
@@ -43,13 +44,14 @@
 import { toPascalCase } from '@/utils/commons.util'
 import notUsualSlotsConstants from '@/constants/notUsualSlots'
 import dayjs from 'dayjs'
+import NeroIcon from '@/components/Nero/NeroIcon'
 
 import { defineAsyncComponent } from 'vue'
 const StudentRegistrationModal = defineAsyncComponent(() => import('@components/NotUsualSlotManager/StudentRegistrationModal/StudentRegistrationModal'))
 
 export default {
   name: 'StudentListItem',
-  components: { StudentRegistrationModal },
+  components: { NeroIcon, StudentRegistrationModal },
   inject: ['mq'],
   props: {
     student: {
@@ -134,7 +136,7 @@ export default {
   margin-right: 30px;
 }
 
-.fa-sign-out-alt {
+.icon {
   cursor: pointer;
   display: flex;
   align-items: center;
