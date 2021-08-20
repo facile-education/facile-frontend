@@ -154,6 +154,10 @@ export default {
     deregistration: {
       type: Boolean,
       default: false
+    },
+    removedStudent: {
+      type: Object,
+      default: undefined
     }
   },
   emits: ['close', 'deregistre'],
@@ -198,7 +202,7 @@ export default {
       return this.$store.state.notUsualSlots.selectedClass
     },
     student () {
-      return this.$store.state.notUsualSlots.queriedUser
+      return this.removedStudent || this.$store.state.notUsualSlots.queriedUser
     }
   },
   created () {
