@@ -63,7 +63,6 @@ export default {
       this.$emit('selectUser', this.queriedUser)
     },
     'initialUserList' () {
-      console.log('watch', this.initialUserList.length)
       if (this.initialUserList.length === 0) {
         this.tagsList = this.initialUserList
       }

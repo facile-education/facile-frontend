@@ -171,7 +171,7 @@ export default {
       return this.$store.state.notUsualSlots.currentSlotType
     },
     selectedSchool () {
-      return this.$store.state.notUsualSlots.selectedSchool
+      return this.$store.state.user.selectedSchool
     },
     isEventCreation () {
       return this.eventToEdit.title === undefined
