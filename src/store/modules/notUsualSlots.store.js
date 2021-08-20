@@ -90,7 +90,6 @@ export const mutations = {
 }
 export const actions = {
   getClassList ({ commit }, schoolId) {
-    console.log('store get class list', schoolId)
     organizationService.getSchoolCLassList(schoolId).then(
       (data) => {
         if (data.success) {
