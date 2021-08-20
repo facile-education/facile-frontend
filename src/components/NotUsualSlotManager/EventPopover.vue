@@ -34,11 +34,13 @@
             <NeroIcon
               v-if="isEditableEvent"
               name="fa-list"
+              data-test="showStudentList-option"
               @click="showStudentList"
             />
             <NeroIcon
               v-if="isRegistration"
               name="fa-user-plus"
+              data-test="openRegistration-option"
               @click="openRegistration"
             />
             <NeroIcon
