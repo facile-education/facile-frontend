@@ -6,42 +6,28 @@
     :list="userSchools"
     display-field="schoolName"
   />
-<!--  In fact, we don't need to display this kind of data when there is only one school -->
-<!--  <h1 v-else>-->
-<!--    {{ selectedSchool.schoolName }}-->
-<!--  </h1>-->
 </template>
 
 <script>
 export default {
   name: 'SelectedSchool',
-  data () {
-    return {
-      selectedSchool: undefined
-    }
-  },
   computed: {
+    selectedSchool: {
+      get () {
+        return this.$store.state.user.selectedSchool
+      },
+      set (school) {
+        this.$store.commit('user/setSelectedSchool', school)
+      }
+    },
     userSchools () {
-      // return [...this.$store.state.user.schoolList, ...this.$store.state.user.schoolList, ...this.$store.state.user.schoolList] // to test with many etab
       return this.$store.state.user.schoolList
     }
-  },
-  watch: {
-    'selectedSchool' () {
-      this.$store.dispatch('notUsualSlots/setSelectedSchool', this.selectedSchool)
-    }
-  },
-  created () {
-    this.selectedSchool = this.userSchools[0]
   }
 }
 </script>
 
 <style scoped>
-h1 {
-  font-size: 1.25em;
-}
-
 .dropdown {
   margin: 15px 0;
 }

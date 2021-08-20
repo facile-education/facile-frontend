@@ -17,13 +17,27 @@
           :slot-type="slotType"
         />
       </div>
-      <UserCompletion
-        v-if="currentSlotType && mq.desktop"
-        user-type="student"
-        :placeholder="$t('NotUsualSlots.studentNamePlaceHolder')"
-        :initial-user-list="queriedUser ? [queriedUser] : []"
-        @selectUser="getUserSlots"
-      />
+      <div
+        v-if="mq.desktop"
+        class="filters"
+      >
+        <PentilaDropdown
+          v-if="currentUser.selectedSchool && currentSlotType && currentSlotType.type === 5"
+          v-model="selectedClass"
+          :placeholder="$t('Horaires.groupFilter')"
+          :list="classList"
+          display-field="className"
+          class="class-dropdown"
+        />
+        <UserCompletion
+          v-if="currentSlotType"
+          user-type="student"
+          :placeholder="$t('NotUsualSlots.studentNamePlaceHolder')"
+          :initial-user-list="queriedUser ? [queriedUser] : []"
+          class="user-completion"
+          @selectUser="getUserSlots"
+        />
+      </div>
       <Calendar
         v-if="currentSlotType"
         :current-slot-type="currentSlotType"
@@ -74,13 +88,18 @@ export default {
   inject: ['mq'],
   data () {
     return {
-      slotTypes: notUsualSlotConstants.slotTypes,
-      selectedSchool: undefined
+      slotTypes: notUsualSlotConstants.slotTypes
     }
   },
   computed: {
     areActionsInProgress () {
       return this.$store.getters['currentActions/areActionsInProgress']
+    },
+    classList () {
+      if (this.currentUser.selectedSchool && !this.$store.state.notUsualSlots.classList) {
+        this.$store.dispatch('notUsualSlots/getClassList', this.$store.state.user.selectedSchool.schoolId)
+      }
+      return this.$store.state.notUsualSlots.classList || []
     },
     pendingFirings () { // TODO check for a sorted version of pendingFirings?
       return this.$store.state.notUsualSlots.pendingFirings
@@ -99,6 +118,14 @@ export default {
     },
     isWarningModalDisplayed () {
       return this.$store.getters['warningModal/isWarningModalDisplayed']
+    },
+    selectedClass: {
+      get () {
+        return this.$store.state.notUsualSlots.selectedClass
+      },
+      set (classObject) {
+        this.$store.dispatch('notUsualSlots/setSelectedClass', classObject)
+      }
     }
   },
   created () {
@@ -155,4 +182,16 @@ export default {
   }
 }
 
+.filters {
+  display: flex;
+
+  .class-dropdown {
+    min-width: 120px;
+    margin: 0 1rem;
+  }
+
+  .user-completion {
+    width: 100%;
+  }
+}
 </style>

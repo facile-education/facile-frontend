@@ -23,9 +23,19 @@
 
     <template #body>
       <h1>{{ slotType.label }}</h1>
-      <div class="student">
+      <div
+        v-if="student"
+        class="student"
+      >
         <span v-t="'NotUsualSlots.StudentRegistrationModal.student'" />
         <span>{{ formattedStudent }}</span>
+      </div>
+      <div
+        v-else
+        class="class"
+      >
+        <span v-t="'NotUsualSlots.StudentRegistrationModal.class'" />
+        <span>{{ selectedClass.className }}</span>
       </div>
       <div class="slot">
         <span v-t="'NotUsualSlots.StudentRegistrationModal.slot'" />
@@ -137,10 +147,6 @@ export default {
   name: 'StudentRegistrationModal',
   inject: ['mq'],
   props: {
-    student: {
-      type: Object,
-      required: true
-    },
     event: {
       type: Object,
       required: true
@@ -187,6 +193,12 @@ export default {
     },
     arrivalTime () {
       return this.$t('Moment.the') + ' ' + moment().format('DD MMMM YYYY ' + this.$t('Moment.at') + ' HH:mm')
+    },
+    selectedClass () {
+      return this.$store.state.notUsualSlots.selectedClass
+    },
+    student () {
+      return this.$store.state.notUsualSlots.queriedUser
     }
   },
   created () {
@@ -249,12 +261,22 @@ export default {
     },
     confirmRegistration () {
       const subjectName = this.selectedSubject.subjectId !== -1 ? this.selectedSubject.name : ''
-      schoolLifeService.registerStudent(this.student, this.event.extendedProps.id, this.comment, this.notifyParents, subjectName).then((data) => {
-        if (data.success) {
-          this.$store.dispatch('notUsualSlots/refreshCalendar')
-          this.closeModal()
-        }
-      })
+
+      if (this.student) {
+        schoolLifeService.registerStudent(this.student, this.event.extendedProps.id, this.comment, this.notifyParents, subjectName).then((data) => {
+          if (data.success) {
+            this.$store.dispatch('notUsualSlots/refreshCalendar')
+            this.closeModal()
+          }
+        })
+      } else if (this.selectedClass.classId > 0) {
+        schoolLifeService.registerClass(this.selectedClass.classId, this.event.extendedProps.id, this.comment, this.notifyParents, subjectName).then((data) => {
+          if (data.success) {
+            this.$store.dispatch('notUsualSlots/refreshCalendar')
+            this.closeModal()
+          }
+        })
+      }
     },
     confirmDeregistration () {
       const allSession = this.slotType.type === notUsualSlotsConstants.studyType

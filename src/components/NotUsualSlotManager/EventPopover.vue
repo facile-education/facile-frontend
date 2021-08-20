@@ -101,6 +101,9 @@ export default {
       // Search if this slot already exist in userSlots
       return this.$store.state.notUsualSlots.userSlots.find(userSlot => userSlot.schoollifeSessionId === this.selectedEvent.event.extendedProps.id)
     },
+    selectedClass () {
+      return this.$store.state.notUsualSlots.selectedClass
+    },
     slotType () {
       return notUsualSlotsConstants.getSlotTypeByNumber(this.selectedEvent.event.extendedProps.type)
     },
@@ -112,7 +115,8 @@ export default {
       if (this.slotType !== undefined && this.slotType.type === notUsualSlotsConstants.tutoringType) {
         bool = this.selectedEvent.event.extendedProps.teacher.teacherId === this.currentUser.userId // Only the slot's teacher can register tutoring
       }
-      return this.isEditableEvent && this.queriedUser && !this.isAlreadyRegister && this.selectedEvent.event.extendedProps.inscriptionLeft > 0 && bool
+      return this.isEditableEvent && (this.queriedUser || this.selectedClass.classId > 0) &&
+        !this.isAlreadyRegister && this.selectedEvent.event.extendedProps.inscriptionLeft > 0 && bool
     },
     isPopupTop () {
       return this.mq.phone
