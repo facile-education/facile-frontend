@@ -137,7 +137,7 @@ describe('HHC slots deletion', () => {
     utils.fillEditSlotModal(slotsToDelete[currentSlotType.type])
 
     // Go one week after creation
-    utils.phoneGoToDayOfMonth(slotsToDelete[currentSlotType.type].date.add(1, 'week').format('DD'))
+    utils.phoneGoToDayOfMonth(slotsToDelete[currentSlotType.type].date.add(1, 'week').format('YYYY-MM-DD'))
     utils.getWeeksEventsNumber(false, 1, true)
 
     // Delete slot
@@ -156,12 +156,12 @@ describe('HHC slots deletion', () => {
       cy.get('.fc-timegrid-event').should('have.length', events.nbCurrentWeekEvents - 1)
 
       // Check the week before: the slots isn't deleted
-      utils.phoneGoToDayOfMonth(slotsToDelete[currentSlotType.type].date.format('DD'))
+      utils.phoneGoToDayOfMonth(slotsToDelete[currentSlotType.type].date.format('YYYY-MM-DD'))
       utils.waitCalendarToLoad()
       cy.get('.fc-timegrid-event').should('have.length', events.nbPreviousWeekEvents)
 
       // Check the week after: the slot is modified
-      utils.phoneGoToDayOfMonth(slotsToDelete[currentSlotType.type].date.add(2, 'week').format('DD'))
+      utils.phoneGoToDayOfMonth(slotsToDelete[currentSlotType.type].date.add(2, 'week').format('YYYY-MM-DD'))
       utils.waitCalendarToLoad()
       cy.get('.fc-timegrid-event').should('have.length', events.nbNextWeekEvents - 1)
     })

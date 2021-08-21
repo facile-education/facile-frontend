@@ -40,11 +40,11 @@ const fillEditSlotModal = (form, isModification) => {
   })
 }
 
-const phoneGoToDayOfMonth = (dayNumber) => {
-  cy.get('.toolbar .date-picker i').click()
+const phoneGoToDayOfMonth = (day) => {
+  cy.get('.toolbar .date-picker .svg-inline--fa').click()
   cy.tick(500)
-  cy.get('.vc-popover-content').contains(Number(dayNumber)).click()
-  cy.get('.toolbar .date-picker i').click()
+  cy.get(`.id-${day}`).click()
+  cy.get('.toolbar .date-picker .svg-inline--fa').click()
   cy.tick(500)
   cy.wait(100)
   cy.tick(500)
@@ -77,7 +77,7 @@ const getWeeksEventsNumber = (expectNoEventAtPreviousWeek = false, nbWeekShift =
     const nbCurrentWeekEvents = currentEvents.length
     // console.log('nbCurrentWeekEvents :', nbCurrentWeekEvents)
     if (isMobile) {
-      phoneGoToDayOfMonth(now.add(-1 + nbWeekShift, 'week').format('DD'))
+      phoneGoToDayOfMonth(now.add(-1 + nbWeekShift, 'week').format('YYYY-MM-DD'))
     } else {
       cy.get('.weeknumber-label').eq(1 + nbWeekShift).click() // Select the previous week
     }
@@ -87,7 +87,7 @@ const getWeeksEventsNumber = (expectNoEventAtPreviousWeek = false, nbWeekShift =
         const nbPreviousWeekEvents = previousEvents.length
         // console.log('nbPreviousWeekEvents :', nbPreviousWeekEvents)
         if (isMobile) {
-          phoneGoToDayOfMonth(now.add(1 + nbWeekShift, 'week').format('DD'))
+          phoneGoToDayOfMonth(now.add(1 + nbWeekShift, 'week').format('YYYY-MM-DD'))
         } else {
           cy.get('.weeknumber-label').eq(3 + nbWeekShift).click() // Select the week after
         }
@@ -103,7 +103,7 @@ const getWeeksEventsNumber = (expectNoEventAtPreviousWeek = false, nbWeekShift =
 
           // return in current week
           if (isMobile) {
-            phoneGoToDayOfMonth(now.add(nbWeekShift, 'week').format('DD'))
+            phoneGoToDayOfMonth(now.add(nbWeekShift, 'week').format('YYYY-MM-DD'))
           } else {
             cy.get('.weeknumber-label').eq(2 + nbWeekShift).click()
           }
@@ -114,7 +114,7 @@ const getWeeksEventsNumber = (expectNoEventAtPreviousWeek = false, nbWeekShift =
       cy.get('.fc-timegrid-event').then((previousEvents) => {
         const nbPreviousWeekEvents = previousEvents.length
         if (isMobile) {
-          phoneGoToDayOfMonth(now.add(1 + nbWeekShift, 'week').format('DD'))
+          phoneGoToDayOfMonth(now.add(1 + nbWeekShift, 'week').format('YYYY-MM-DD'))
         } else {
           cy.get('.weeknumber-label').eq(3 + nbWeekShift).click() // Select the week after
         }
@@ -129,7 +129,7 @@ const getWeeksEventsNumber = (expectNoEventAtPreviousWeek = false, nbWeekShift =
 
           // return in current week
           if (isMobile) {
-            phoneGoToDayOfMonth(now.add(nbWeekShift, 'week').format('DD'))
+            phoneGoToDayOfMonth(now.add(nbWeekShift, 'week').format('YYYY-MM-DD'))
           } else {
             cy.get('.weeknumber-label').eq(2 + nbWeekShift).click()
           }

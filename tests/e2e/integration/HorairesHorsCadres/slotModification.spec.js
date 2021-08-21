@@ -131,7 +131,7 @@ describe('HHC slots modidication', () => {
 
     // Modify slot (go the week after the creation)
     cy.log('========= Modify the slot =========')
-    utils.phoneGoToDayOfMonth(slotsToModify[currentSlotType.type].date.add(1, 'week').format('DD'))
+    utils.phoneGoToDayOfMonth(slotsToModify[currentSlotType.type].date.add(1, 'week').format('YYYY-MM-DD'))
     cy.get('[data-test="' + slotsToModify[currentSlotType.type].date.add(1, 'week').format('MM-DD') + '_' + slotsToModify[currentSlotType.type].startHour + '"]').within(() => {
       cy.contains(currentSlotType.label).first().click({ force: true })
     })
@@ -145,12 +145,12 @@ describe('HHC slots modidication', () => {
     utils.checkSlotData(slotsToModify[currentSlotType.type].date.add(1, 'week'), { label: currentSlotType.label, ...modifiedSlot })
 
     // Check the week before: the slots isn't modified
-    utils.phoneGoToDayOfMonth(slotsToModify[currentSlotType.type].date.format('DD'))
+    utils.phoneGoToDayOfMonth(slotsToModify[currentSlotType.type].date.format('YYYY-MM-DD'))
     utils.waitCalendarToLoad()
     utils.checkSlotData(slotsToModify[currentSlotType.type].date, { label: currentSlotType.label, ...slotsToModify[currentSlotType.type] }, false)
 
     // Check the week after: the slot is modified
-    utils.phoneGoToDayOfMonth(slotsToModify[currentSlotType.type].date.add(2, 'week').format('DD'))
+    utils.phoneGoToDayOfMonth(slotsToModify[currentSlotType.type].date.add(2, 'week').format('YYYY-MM-DD'))
     utils.waitCalendarToLoad()
     utils.checkSlotData(slotsToModify[currentSlotType.type].date.add(2, 'week'), { label: currentSlotType.label, ...modifiedSlot })
   })
