@@ -121,7 +121,7 @@ export const actions = {
     commit('removePendingFirings', pendingFiring)
   },
   setQueriedUser ({ commit }, user) {
-    if (state.selectedClass.classId > 0) {
+    if (user && state.selectedClass.classId > 0) {
       commit('setSelectedClass', defaultClass)
     }
     commit('setQueriedUser', user)
