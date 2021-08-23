@@ -23,8 +23,8 @@ const slotToRegisterInside = {
 const slotToDeregister = {
   day: 'wed',
   date: now,
-  startHour: '10:00',
-  endHour: '11:00',
+  startHour: '13:00',
+  endHour: '14:00',
   teacherSearch: 'reg',
   teacherName: 'Regad Alexandre',
   teacherLastName: 'Regad',
