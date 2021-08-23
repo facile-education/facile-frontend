@@ -37,8 +37,8 @@ const STUDENT = {
   role: 'student'
 }
 
-const PARENT = {
-  login: 'drousa',
+const PARENT = { // Student's parent
+  login: 'drousa', // 'hesmat' for the other student's parent
   password: 'pentila',
   role: 'parent'
 }

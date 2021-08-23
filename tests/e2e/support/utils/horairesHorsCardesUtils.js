@@ -4,19 +4,71 @@ const waitCalendarToLoad = () => {
   cy.wait(500)
 }
 
-const selectHours = (startHour, endHour) => {
-  cy.get('[data-test=time-selection] > .input-section > :nth-child(2)').clear()
-  cy.get('[data-test=time-selection] > .input-section > :nth-child(2)').type(startHour)
-  cy.get('[data-test=time-selection] > .input-section > :nth-child(3)').clear()
-  cy.get('[data-test=time-selection] > .input-section > :nth-child(3)').type(endHour)
+const createSlot = (slotToCreate) => {
+  // Create the slot // TODO Not pass by UI
+  cy.log('========= Create slot =========')
+  clickOnEmptySlot(slotToCreate.day, 7)
+  cy.get('[data-test=edit-slot-modal]')
+  fillEditSlotModal(slotToCreate)
+  waitCalendarToLoad()
 }
 
-const clickOnSlot = (day, slotNumber) => {
+const deleteSlot = (slotToDelete, capacity) => {
+  cy.get('.weekly-timeline-container').should('be.visible') // indirectly waits for full load
+  openSlotPopup(slotToDelete, capacity)
+  cy.get('[data-test=openEditModal-option]').click()
+
+  cy.get('[data-test=edit-slot-modal]').within(() => {
+    cy.get('.button').contains('Supprimer').click()
+  })
+  cy.get('[data-test=warning-modal]').within(() => {
+    cy.contains('button', 'Supprimer').click()
+  })
+}
+
+const selectStudent = (student) => {
+  cy.get('[data-test=user-completion-input] input').type(student.search)
+  cy.tick(500)
+  cy.contains(student.name).click()
+  waitCalendarToLoad()
+}
+
+const clearSelectedUser = () => {
+  cy.get('[data-test=user-completion-input]').within(() => {
+    cy.get('.tag-item > .pc-times').click()
+    cy.get('.tag-list').children().should('have.length', 0)
+  })
+}
+
+const clickOnEmptySlot = (day, slotNumber) => {
   cy.get('.fc-day-' + day + ' > .fc-timegrid-col-frame').then((col) => {
     cy.get(':nth-child(' + slotNumber + ') > .fc-timegrid-slot-lane').then((row) => {
       cy.wrap(row).click(row.position().left + row.width() / 2 + col.width(), row.position.top, { force: true }) // not click on the slot's center, but on the slot's right to always select an empty part
     })
   })
+}
+
+const clickOnSlot = (slot, capacity) => {
+  cy.get('[data-test="' + slot.date.format('MM-DD') + '_' + slot.startHour + '"]').within(() => {
+    cy.contains(capacity).first().click({ force: true })
+  })
+}
+
+const openSlotPopup = (slot, capacity) => {
+  clickOnSlot(slot, capacity)
+  cy.get('[data-test=event-popup]').should('be.visible')
+}
+
+const closeSlotPopup = (slot, capacity) => {
+  clickOnSlot(slot, capacity)
+  cy.get('[data-test=event-popup]').should('not.exist')
+}
+
+const selectHours = (startHour, endHour) => {
+  cy.get('[data-test=time-selection] > .input-section > :nth-child(2)').clear()
+  cy.get('[data-test=time-selection] > .input-section > :nth-child(2)').type(startHour)
+  cy.get('[data-test=time-selection] > .input-section > :nth-child(3)').clear()
+  cy.get('[data-test=time-selection] > .input-section > :nth-child(3)').type(endHour)
 }
 
 const submit = () => {
@@ -141,8 +193,15 @@ const getWeeksEventsNumber = (expectNoEventAtPreviousWeek = false, nbWeekShift =
 }
 
 export default {
+  createSlot,
+  deleteSlot,
+  selectStudent,
+  clearSelectedUser,
   checkSlotData,
   clickOnSlot,
+  clickOnEmptySlot,
+  openSlotPopup,
+  closeSlotPopup,
   fillEditSlotModal,
   getWeeksEventsNumber,
   phoneGoToDayOfMonth,

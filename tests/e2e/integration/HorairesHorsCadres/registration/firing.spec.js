@@ -24,33 +24,6 @@ const studentsToRegister = {
   search: 'alo'
 }
 
-const createSlot = (slotToCreate) => {
-  // Create the slot // TODO Not pass by UI
-  cy.log('========= Create slot =========')
-  utils.clickOnSlot(slotToCreate.day, 7)
-  cy.get('[data-test=edit-slot-modal]')
-  utils.fillEditSlotModal(slotToCreate)
-  utils.waitCalendarToLoad()
-}
-
-const selectStudent = (student) => {
-  cy.get('[data-test=user-completion-input] input').type(student.search)
-  cy.tick(500)
-  cy.contains(student.name).click()
-  utils.waitCalendarToLoad()
-}
-
-const clickOnSlot = (slot, capacity) => {
-  cy.get('[data-test="' + slot.date.format('MM-DD') + '_' + slot.startHour + '"]').within(() => {
-    cy.contains(capacity).first().click({ force: true })
-  })
-}
-
-const openSlotPopup = (slot, capacity) => {
-  clickOnSlot(slot, capacity)
-  cy.get('[data-test=event-popup]').should('be.visible')
-}
-
 const testRegistrationModal = (slot, studentToRegister) => {
   cy.get('[data-test=student-registration-modal]').within(() => {
     cy.contains(studentToRegister.formattedName)
@@ -78,13 +51,13 @@ describe('Firing registration', () => {
 
   it('registration behaviour', () => {
     // Create slot
-    createSlot(slotToRegisterInside)
+    utils.createSlot(slotToRegisterInside)
 
     // Select student
-    selectStudent(studentsToRegister)
+    utils.selectStudent(studentsToRegister)
 
     // Open registration modal
-    openSlotPopup(slotToRegisterInside, '2/2')
+    utils.openSlotPopup(slotToRegisterInside, '2/2')
     cy.get('[data-test=openRegistration-option]').click()
 
     // Test registration modal (ends by registering student)
@@ -96,7 +69,7 @@ describe('Firing registration', () => {
     })
 
     // Check the slot's student list
-    openSlotPopup(slotToRegisterInside, '1/2')
+    utils.openSlotPopup(slotToRegisterInside, '1/2')
     cy.get('[data-test=showStudentList-option]').click()
     cy.get('[data-test=student-list-modal]').within(() => {
       cy.contains(studentsToRegister.formattedName)
@@ -107,11 +80,21 @@ describe('Firing registration', () => {
     cy.visit('/nero/horaires')
 
     // Check slots for the first student
-    selectStudent(studentsToRegister)
+    utils.selectStudent(studentsToRegister)
     cy.contains('[data-cy="' + slotToRegisterInside.date.format('MM-DD') + '_' + slotToRegisterInside.startHour + '"]', 'Renvoi').parent().within(() => {
       cy.contains(slotToRegisterInside.teacherLastName).first().should('exist')
     })
 
     // TODO Check notification (parents and students?)
+  })
+
+  // TODO fire from an classical slot (and deregister after for clean)
+
+  after(() => { // TODO to find an other solution
+    // Delete the created slot for next tests (bad practice but yes)
+    cy.visit(url)
+    utils.waitCalendarToLoad()
+    cy.get('[data-test=slot-type-item-' + slotTypes.fired.type + ']').click()
+    utils.deleteSlot(slotToRegisterInside, '1/2')
   })
 })

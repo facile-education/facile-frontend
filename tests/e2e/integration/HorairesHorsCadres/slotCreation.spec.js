@@ -60,7 +60,7 @@ describe('HHC slots creation', () => {
     cy.get('[data-test=slot-type-item-' + slotTypes.tutoring.type + ']').click() // Select tutoring slots
     utils.waitCalendarToLoad()
 
-    utils.clickOnSlot('wed', 7)
+    utils.clickOnEmptySlot('wed', 7)
     cy.get('[data-test=edit-slot-modal]').should('not.exist')
   })
 
@@ -76,7 +76,7 @@ describe('HHC slots creation', () => {
       utils.getWeeksEventsNumber(true)
 
       // Create slot
-      utils.clickOnSlot('wed', 7)
+      utils.clickOnEmptySlot('wed', 7)
       cy.get('[data-test=edit-slot-modal]')
       if (currentSlotType.type === slotTypes.tutoring.type) { // To tests form validation only once
         testEditSlotModalForm(form)

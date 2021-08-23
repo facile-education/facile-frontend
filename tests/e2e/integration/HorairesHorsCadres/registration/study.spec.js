@@ -5,7 +5,7 @@ import {
 } from '../../../support/constants/horairesHorsCadres'
 
 import utils from '../../../support/utils/horairesHorsCardesUtils'
-import { TEACHER } from '../../../support/constants'
+import { HEADMASTER, PARENT, STUDENT, TEACHER } from '../../../support/constants'
 import dayjs from 'dayjs'
 
 const slotToRegisterInside = {
@@ -50,69 +50,9 @@ const studentsToRegister = [
   }
 ]
 
-const waitForRefresh = () => {
-  cy.wait(500)
-  cy.get('.spinner').should('not.exist')
-}
-
-const createSlot = (slotToCreate) => {
-  // Create the slot // TODO Not pass by UI
-  cy.log('========= Create slot =========')
-  utils.clickOnSlot(slotToCreate.day, 7)
-  cy.get('[data-test=edit-slot-modal]')
-  utils.fillEditSlotModal(slotToCreate)
-  utils.waitCalendarToLoad()
-}
-
-const deleteSlot = (slotToDelete, capacity) => {
-  openSlotPopup(slotToDelete, capacity)
-  cy.get('[data-test=openEditModal-option]').click()
-
-  cy.get('[data-test=edit-slot-modal]').within(() => {
-    cy.get('.button').contains('Supprimer').click()
-  })
-  cy.get('[data-test=warning-modal]').within(() => {
-    cy.contains('button', 'Supprimer').click()
-  })
-
-  utils.waitCalendarToLoad()
-  cy.get('[data-test=warning-modal]').should('not.exist')
-  cy.get('[data-test=edit-slot-modal]').should('not.exist')
-}
-
-const selectStudent = (student) => {
-  cy.get('[data-test=user-completion-input] input').type(student.search)
-  cy.tick(500)
-  cy.contains(student.name).click()
-  utils.waitCalendarToLoad()
-}
-
-const clearSelectedUser = () => {
-  cy.get('[data-test=user-completion-input]').within(() => {
-    cy.get('.tag-item > .pc-times').click()
-    cy.get('.tag-list').children().should('have.length', 0)
-  })
-}
-
-const clickOnSlot = (slot, capacity) => {
-  cy.get('[data-test="' + slot.date.format('MM-DD') + '_' + slot.startHour + '"]').within(() => {
-    cy.contains(capacity).first().click({ force: true })
-  })
-}
-
-const openSlotPopup = (slot, capacity) => {
-  clickOnSlot(slot, capacity)
-  cy.get('[data-test=event-popup]').should('be.visible')
-}
-
 const openStudentListModal = (slot, capacity) => {
-  openSlotPopup(slot, capacity)
+  utils.openSlotPopup(slot, capacity)
   cy.get('[data-test=showStudentList-option]').click()
-}
-
-const closeSlotPopup = (slot, capacity) => {
-  clickOnSlot(slot, capacity)
-  cy.get('[data-test=event-popup]').should('not.exist')
 }
 
 const testRegistrationModal = (slot, studentToRegister) => {
@@ -148,10 +88,10 @@ describe('Study registration', () => {
 
   it('check registration option existence', () => {
     // Create slot
-    createSlot(slotToRegisterInside)
+    utils.createSlot(slotToRegisterInside)
 
     // Open slot popup
-    openSlotPopup(slotToRegisterInside, '2/2')
+    utils.openSlotPopup(slotToRegisterInside, '2/2')
     cy.get('[data-test=openRegistration-option]').should('not.exist') // Since no student is selected, registration option should not exist
 
     // Select student
@@ -161,7 +101,7 @@ describe('Study registration', () => {
     cy.contains(studentsToRegister[0].name).click()
 
     // Open slot popup
-    openSlotPopup(slotToRegisterInside, '2/2')
+    utils.openSlotPopup(slotToRegisterInside, '2/2')
     cy.get('[data-test=openRegistration-option]').should('be.visible')
 
     // Set slot Capacity to 0
@@ -173,19 +113,19 @@ describe('Study registration', () => {
     utils.waitCalendarToLoad()
 
     // Open slot popup
-    openSlotPopup(slotToRegisterInside, '0/0')
+    utils.openSlotPopup(slotToRegisterInside, '0/0')
     cy.get('[data-test=openRegistration-option]').should('not.exist') // Cannot register student if not there is no place available
   })
 
   it('registration behaviour', () => {
     // Create slot
-    createSlot(slotToRegisterInside)
+    utils.createSlot(slotToRegisterInside)
 
     // Select student
-    selectStudent(studentsToRegister[0])
+    utils.selectStudent(studentsToRegister[0])
 
     // Open registration modal
-    openSlotPopup(slotToRegisterInside, '2/2')
+    utils.openSlotPopup(slotToRegisterInside, '2/2')
     cy.get('[data-test=openRegistration-option]').click()
 
     // Test registration modal (ends by registering student)
@@ -197,21 +137,21 @@ describe('Study registration', () => {
     })
 
     // Try to register student a second time
-    openSlotPopup(slotToRegisterInside, '1/2')
+    utils.openSlotPopup(slotToRegisterInside, '1/2')
     cy.get('[data-test=openRegistration-option]').should('not.exist')
-    closeSlotPopup(slotToRegisterInside, '1/2')
+    utils.closeSlotPopup(slotToRegisterInside, '1/2')
 
     // Register a second student
-    clearSelectedUser()
-    selectStudent(studentsToRegister[1])
-    openSlotPopup(slotToRegisterInside, '1/2')
+    utils.clearSelectedUser()
+    utils.selectStudent(studentsToRegister[1])
+    utils.openSlotPopup(slotToRegisterInside, '1/2')
     cy.get('[data-test=openRegistration-option]').click()
     registerStudent(false)
 
     // Try to register a third student (but there is no place available)
-    clearSelectedUser()
-    selectStudent(studentsToRegister[2])
-    openSlotPopup(slotToRegisterInside, '0/2')
+    utils.clearSelectedUser()
+    utils.selectStudent(studentsToRegister[2])
+    utils.openSlotPopup(slotToRegisterInside, '0/2')
     cy.get('[data-test=openRegistration-option]').should('not.exist')
 
     // Check the slot's student list
@@ -226,26 +166,41 @@ describe('Study registration', () => {
     cy.visit('/nero/horaires')
 
     // Check slots for the first student
-    selectStudent(studentsToRegister[0])
+    utils.selectStudent(studentsToRegister[0])
     cy.contains('[data-cy="' + slotToRegisterInside.date.format('MM-DD') + '_' + slotToRegisterInside.startHour + '"]', 'Cercle d\'étude').parent().within(() => {
       cy.contains(slotToRegisterInside.teacherLastName).first().should('exist')
     })
 
     // TODO Check notification (parents and students?)
+    cy.logout()
+    cy.login(url, STUDENT)
+
+    cy.visit('/')
+    cy.get('#nav_entry_messagerie').click()
+    cy.contains('.message-container', HEADMASTER.firstName + ' ' + HEADMASTER.lastName)
+    cy.contains('.message-container', 'Retenue le ' + now.format('DD MMM YYYY') + ' à 08h00') // todo: be consistant with slotToRegisterInside.startHour instead oh '08h00'
+
+    cy.logout()
+    cy.login(url, PARENT)
+
+    cy.visit('/')
+    cy.get('#nav_entry_messagerie').click()
+    cy.contains('.message-container', HEADMASTER.firstName + ' ' + HEADMASTER.lastName)
+    cy.contains('.message-container', 'Retenue le ' + now.format('DD MMM YYYY') + ' à 08h00')
   })
 
   it('deregistration', () => {
     // Create slot
-    createSlot(slotToDeregister)
+    utils.createSlot(slotToDeregister)
 
     // Register someone inside
-    selectStudent(studentsToRegister[0])
-    openSlotPopup(slotToDeregister, '1/1')
+    utils.selectStudent(studentsToRegister[0])
+    utils.openSlotPopup(slotToDeregister, '1/1')
     cy.get('[data-test=openRegistration-option]').click()
     registerStudent(false)
 
     // Open the slot's student list
-    openSlotPopup(slotToDeregister, '0/1')
+    utils.openSlotPopup(slotToDeregister, '0/1')
     cy.get('[data-test=showStudentList-option]').click()
 
     // Open the list and unregister student
@@ -269,9 +224,9 @@ describe('Study registration', () => {
     cy.get('[data-test=closeModal]').click()
 
     // The slot have afresh 1/1 free places and can register students
-    openSlotPopup(slotToDeregister, '1/1')
+    utils.openSlotPopup(slotToDeregister, '1/1')
     cy.get('[data-test=showStudentList-option]').should('exist')
-    closeSlotPopup(slotToDeregister, '1/1')
+    utils.closeSlotPopup(slotToDeregister, '1/1')
 
     // The student's schedule no longer have the HHC slot
     cy.get('.grayed >> [data-test="' + slotToDeregister.date.format('MM-DD') + '_' + slotToDeregister.startHour + '"]').should('not.exist')
@@ -280,7 +235,7 @@ describe('Study registration', () => {
     cy.visit('/nero/horaires')
 
     // Check slots for the student
-    selectStudent(studentsToRegister[0])
+    utils.selectStudent(studentsToRegister[0])
     cy.contains('[data-cy="' + slotToDeregister.date.format('MM-DD') + '_' + slotToDeregister.startHour + '"]', 'Cercle d\'étude').should('not.exist')
 
     // TODO Check notification?
@@ -288,16 +243,16 @@ describe('Study registration', () => {
 
   it('delete slot after registration', () => {
     // Create slot
-    createSlot(slotToDeregister)
+    utils.createSlot(slotToDeregister)
 
     // Register someone inside
-    selectStudent(studentsToRegister[0])
-    openSlotPopup(slotToDeregister, '1/1')
+    utils.selectStudent(studentsToRegister[0])
+    utils.openSlotPopup(slotToDeregister, '1/1')
     cy.get('[data-test=openRegistration-option]').click()
     registerStudent(false)
 
     // Delete slot
-    deleteSlot(slotToDeregister, '0/1')
+    utils.deleteSlot(slotToDeregister, '0/1')
 
     // The student's schedule no longer have the HHC slot
     cy.get('.grayed >> [data-test="' + slotToDeregister.date.format('MM-DD') + '_' + slotToDeregister.startHour + '"]').should('not.exist')
@@ -306,7 +261,7 @@ describe('Study registration', () => {
     cy.visit('/nero/horaires')
 
     // Check slots for the student
-    selectStudent(studentsToRegister[0])
+    utils.selectStudent(studentsToRegister[0])
     cy.contains('[data-cy="' + slotToDeregister.date.format('MM-DD') + '_' + slotToDeregister.startHour + '"]', 'Cercle d\'étude').should('not.exist')
 
     // TODO Check notification?
@@ -314,6 +269,18 @@ describe('Study registration', () => {
 
   it('mobile registration', () => {
     // TODO
+  })
+
+  after(() => { // TODO to find an other solution
+    // Delete the created slot for next tests (bad practice but yes)
+    cy.visit(url)
+    utils.waitCalendarToLoad()
+    cy.get('[data-test=slot-type-item-' + slotTypes.study.type + ']').click()
+    utils.deleteSlot(slotToRegisterInside, '0/0')
+    cy.get('[data-test=slot-type-item-' + slotTypes.study.type + ']').click()
+    utils.deleteSlot(slotToRegisterInside, '0/2')
+    cy.get('[data-test=slot-type-item-' + slotTypes.study.type + ']').click()
+    utils.deleteSlot(slotToDeregister, '1/1')
   })
 })
 

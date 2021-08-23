@@ -85,7 +85,7 @@ describe('HHC slots deletion', () => {
 
       // Create the slot to modify // TODO Not pass by UI
       cy.log('========= Create slot to delete =========')
-      utils.clickOnSlot(slotsToDelete[currentSlotType.type].day, 7)
+      utils.clickOnEmptySlot(slotsToDelete[currentSlotType.type].day, 7)
       cy.get('[data-test=edit-slot-modal]')
       utils.fillEditSlotModal(slotsToDelete[currentSlotType.type])
 
@@ -132,7 +132,7 @@ describe('HHC slots deletion', () => {
 
     // Create the slot to modify // TODO Not pass by UI
     cy.log('========= Create slot to delete =========')
-    utils.clickOnSlot(slotsToDelete[currentSlotType.type].day, 7)
+    utils.clickOnEmptySlot(slotsToDelete[currentSlotType.type].day, 7)
     cy.get('[data-test=edit-slot-modal]')
     utils.fillEditSlotModal(slotsToDelete[currentSlotType.type])
 
