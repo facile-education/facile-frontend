@@ -5,6 +5,8 @@ import {
 } from '../../../support/constants/horairesHorsCadres'
 
 import utils from '../../../support/utils/horairesHorsCardesUtils'
+import { TEACHER } from '../../../support/constants'
+import dayjs from 'dayjs'
 
 const slotToRegisterInside = {
   day: 'wed',
@@ -60,6 +62,22 @@ const createSlot = (slotToCreate) => {
   cy.get('[data-test=edit-slot-modal]')
   utils.fillEditSlotModal(slotToCreate)
   utils.waitCalendarToLoad()
+}
+
+const deleteSlot = (slotToDelete, capacity) => {
+  openSlotPopup(slotToDelete, capacity)
+  cy.get('[data-test=openEditModal-option]').click()
+
+  cy.get('[data-test=edit-slot-modal]').within(() => {
+    cy.get('.button').contains('Supprimer').click()
+  })
+  cy.get('[data-test=warning-modal]').within(() => {
+    cy.contains('button', 'Supprimer').click()
+  })
+
+  utils.waitCalendarToLoad()
+  cy.get('[data-test=warning-modal]').should('not.exist')
+  cy.get('[data-test=edit-slot-modal]').should('not.exist')
 }
 
 const selectStudent = (student) => {
@@ -216,7 +234,7 @@ describe('Study registration', () => {
     // TODO Check notification (parents and students?)
   })
 
-  it.only('deregistration', () => {
+  it('deregistration', () => {
     // Create slot
     createSlot(slotToDeregister)
 
@@ -253,6 +271,7 @@ describe('Study registration', () => {
     // The slot have afresh 1/1 free places and can register students
     openSlotPopup(slotToDeregister, '1/1')
     cy.get('[data-test=showStudentList-option]').should('exist')
+    closeSlotPopup(slotToDeregister, '1/1')
 
     // The student's schedule no longer have the HHC slot
     cy.get('.grayed >> [data-test="' + slotToDeregister.date.format('MM-DD') + '_' + slotToDeregister.startHour + '"]').should('not.exist')
@@ -263,135 +282,76 @@ describe('Study registration', () => {
     // Check slots for the student
     selectStudent(studentsToRegister[0])
     cy.contains('[data-cy="' + slotToDeregister.date.format('MM-DD') + '_' + slotToDeregister.startHour + '"]', 'Cercle d\'étude').should('not.exist')
+
+    // TODO Check notification?
   })
 
   it('delete slot after registration', () => {
-    // delete slot after registration
-  })
+    // Create slot
+    createSlot(slotToDeregister)
 
-  it('can check in', () => {
+    // Register someone inside
+    selectStudent(studentsToRegister[0])
+    openSlotPopup(slotToDeregister, '1/1')
+    cy.get('[data-test=openRegistration-option]').click()
+    registerStudent(false)
+
+    // Delete slot
+    deleteSlot(slotToDeregister, '0/1')
+
+    // The student's schedule no longer have the HHC slot
+    cy.get('.grayed >> [data-test="' + slotToDeregister.date.format('MM-DD') + '_' + slotToDeregister.startHour + '"]').should('not.exist')
+
+    // Go in Horaires service
+    cy.visit('/nero/horaires')
+
+    // Check slots for the student
+    selectStudent(studentsToRegister[0])
+    cy.contains('[data-cy="' + slotToDeregister.date.format('MM-DD') + '_' + slotToDeregister.startHour + '"]', 'Cercle d\'étude').should('not.exist')
+
+    // TODO Check notification?
   })
 
   it('mobile registration', () => {
+    // TODO
+  })
+})
+
+describe('Check in study', () => {
+  const nowBis = dayjs('2021-06-23T16:00:00.000Z') // because more convenient to do those tests with DB data
+
+  beforeEach(() => {
+    cy.logout()
+    cy.clock(nowBis.toDate().getTime())
+    cy.login(url, TEACHER)
+    cy.get('[data-test=slot-type-item-' + slotTypes.study.type + ']').click()
   })
 
-  //   // Select student
-  //   cy.get('[data-test=user-completion-input] input').type(studentSearch)
-  //   cy.tick(500)
-  //
-  //   // Select teacher user
-  //   cy.contains(studentName).click()
-  //   waitForRefresh()
-  //
-  //   // Click on Depannage slot - Thu May the 6th
-  //   cy.get('.fc-day-thu  .fc-timegrid-col-frame .fc-timegrid-col-events div[title="A. Regad"]')
-  //     .click()
-  //
-  //   // Depannage modal should have opened
-  //   cy.get('.event-popup').should('be.visible')
-  //
-  //   // Click on student list button
-  //   cy.get('.event-popup i.fa-list').click()
-  //
-  //   // No student registered
-  //   cy.get('.no-students-placeholder').contains("Aucun élève n'est inscrit sur ce créneau")
-  //
-  //   // Close modal
-  //   cy.get('[data-test="closeModal"]').click()
-  //
-  //   // Click on Depannage slot - Wed May the 5th
-  //   cy.get('.fc-day-thu  .fc-timegrid-col-frame .fc-timegrid-col-events div[title="A. Regad"]')
-  //     .click()
-  //
-  //   // Depannage modal should have opened
-  //   cy.get('.event-popup').should('be.visible')
-  //
-  //   // Click on the register button
-  //   cy.get('.event-popup i.fa-user-plus').should('be.visible')
-  //   cy.get('.event-popup i.fa-user-plus').click()
-  //
-  //   // Registration modal should open
-  //   cy.get('.student-registration-modal').should('be.visible')
-  //
-  //   // Register
-  //   cy.get('.student-registration-modal button.register').contains('Inscrire')
-  //   cy.get('.student-registration-modal button.register').click()
-  //
-  //   // Modal should close
-  //   cy.get('.student-registration-modal').should('not.exist')
-  //
-  //   // Remaining capacity decreases
-  //   cy.get('.fc-day-thu  .fc-timegrid-col-frame .fc-timegrid-col-events .fc-event-room').contains('1545')
-  //
-  //   // Visit horaires service
-  //   cy.visit('/nero/horaires')
-  //   waitForRefresh()
-  //   cy.get('.weeknumber-label').then($elements => { cy.wrap($elements[2]).click() })
-  //
-  //   cy.get('.search .base-input').type(studentSearch)
-  //   // Tick to throw completion timeout
-  //   cy.tick(500)
-  //
-  //   cy.get('.search .base-autocomplete').should('be.visible')
-  //   // Select student user
-  //   cy.contains(studentName).click()
-  //   waitForRefresh()
-  //
-  //   // Check events number
-  //   cy.get('.fc-timegrid-event').should('have.length', 41)
-  //
-  //   // The schoollife session appears in the student's schedule
-  //   cy.get('.fc-day-thu  .fc-timegrid-col-frame .fc-timegrid-col-events div[title="A. Regad"]').should('exist')
-  // })
+  it('Check in appear only on teacher\'s course', () => {
+    // Do the check in of a slot with one student registered
+    openStudentListModal({ date: nowBis, startHour: '13:00' }, '14/15')
+    // Check the check in modal
+    cy.get('[data-test=student-list-modal]').within(() => {
+      cy.contains('Melissa Barman - 1021LC').parent().find('[type="checkbox"]').should('not.be.checked').check()
+        .should('be.checked').uncheck()
+        .should('not.be.checked')
+      cy.contains('button', 'Faire l\'appel').should('be.visible').click()
+    })
+    cy.get('[data-test=student-list-modal]').should('not.exist')
 
-  // it('Unregister student depannage', () => {
-  //   // Select student
-  //   cy.get('[data-test=user-completion-input] input').type(studentSearch)
-  //   cy.tick(500)
+    // TODO Test missing student notification at the end of course when scheduler triggers
 
-  //   // Select teacher user
-  //   cy.contains(studentName).click()
-  //   waitForRefresh()
+    // A teacher cannot check-in on others slots
+    openStudentListModal({ date: nowBis.add(1, 'day'), startHour: '10:00' }, '47/48') // This slot is oversee by an other teacher
+    cy.get('[data-test=student-list-modal]').within(() => {
+      cy.contains('Alexia Arsenio - 0921R2').parent().find('[type="checkbox"]').should('not.exist')
+      cy.contains('button', 'Faire l\'appel').should('not.exist')
+    })
 
-  //   // Click on Depannage slot - Wed May the 5th
-  //   cy.get('.fc-day-thu  .fc-timegrid-col-frame .fc-timegrid-col-events .fc-event-room').contains('1545')
-  //     .click()
+    // TODO cannot do the check in before the slot's date
+  })
 
-  //   // Depannage modal should have opened
-  //   cy.get('.event-popup').should('be.visible')
-
-  //   // Register button is not visible because current student is already registered
-  //   cy.get('.event-popup i.fa-user-plus').should('not.exist')
-  //   cy.get('.event-popup i.fa-list').should('be.visible')
-  //   cy.get('.event-popup i.fa-list').click()
-
-  //   // Registration modal should open
-  //   cy.get('.student-list-modal').should('be.visible')
-
-  //   // Student should appear
-  //   cy.get('.student-list-modal .student-list .student').should('have.length', 1)
-  //   cy.get('.student-list-modal .student-list .student').contains('Melissa Barman - 1021LC')
-
-  //   // Click on unregister button
-  //   cy.get('.student-list-modal .student-list .student i.fa-sign-out-alt').click()
-
-  //   // Unregister confirmation modal opens
-  //   cy.get('.student-registration-modal').should('be.visible')
-
-  //   // Confirm unregistation
-  //   cy.get('.student-registration-modal span').contains('Désinscrire').should('be.visible')
-  //   cy.get('.student-registration-modal span').contains('Désinscrire').click()
-
-  //   // Unregistration modal closes
-  //   cy.get('.student-registration-modal').should('not.exist')
-
-  //   // No remaining registered student
-  //   cy.get('.student-list-modal .no-students-placeholder').contains("Actuellement, aucun élève n'est inscrit sur ce créneau")
-
-  //   // Close modal
-  //   cy.get('[data-test="closeModal"]').click()
-
-  //   // Remaining capacity increases
-  //   cy.get('.fc-day-thu  .fc-timegrid-col-frame .fc-timegrid-col-events .fc-event-room').contains('1546')
-  // })
+  it('Check in mobile', () => {
+    // TODO
+  })
 })

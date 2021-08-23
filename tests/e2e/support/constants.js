@@ -1,7 +1,9 @@
 const HEADMASTER = {
   login: 'didiosa',
   password: 'pentila',
-  role: 'headmaster'
+  role: 'headmaster',
+  firstName: 'Salvatore',
+  lastName: 'Di Dio'
 }
 
 const SCHOOL_ADMIN = {

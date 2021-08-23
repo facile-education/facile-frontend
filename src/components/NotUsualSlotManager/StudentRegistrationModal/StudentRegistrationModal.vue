@@ -188,7 +188,7 @@ export default {
       return !this.deregistration && this.slotType.type === notUsualSlotsConstants.detentionType
     },
     isNotifyParentsDisplayed () {
-      return !this.deregistration && this.slotType.type === notUsualSlotsConstants.studyType
+      return !this.deregistration && (this.slotType.type !== notUsualSlotsConstants.firedType && this.slotType.type !== notUsualSlotsConstants.tutoringType)
     },
     isFired () {
       return !this.deregistration && this.slotType.type === notUsualSlotsConstants.firedType
