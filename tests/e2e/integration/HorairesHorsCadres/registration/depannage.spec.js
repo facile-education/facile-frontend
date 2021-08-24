@@ -100,7 +100,8 @@ describe('Depannage registration', () => {
 
   after(() => { // TODO to find an other solution
     // Delete the created slot for next tests (bad practice but yes)
-    cy.visit(url)
+    cy.logout()
+    cy.login(url) // To have the right to delete slot
     utils.waitCalendarToLoad()
     cy.get('[data-test=slot-type-item-' + slotTypes.tutoring.type + ']').click()
     utils.deleteSlot(slotToRegisterInside, '1/2')
