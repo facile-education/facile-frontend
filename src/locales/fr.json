@@ -197,7 +197,7 @@
     },
     "StudentRegistrationModal": {
       "arrival": "Enregistré: ",
-      "class": "Classe:",
+      "class": "Elèves de:",
       "commentPlaceholder": "Saisir un motif",
       "firedBy": "Renvoyé par: ",
       "haveToSelectSlot": "Veuillez sélectionner un cours",
