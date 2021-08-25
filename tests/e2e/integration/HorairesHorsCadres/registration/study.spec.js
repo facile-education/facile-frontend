@@ -5,7 +5,7 @@ import {
 } from '../../../support/constants/horairesHorsCadres'
 
 import utils from '../../../support/utils/horairesHorsCardesUtils'
-import { HEADMASTER, PARENT, STUDENT, TEACHER } from '../../../support/constants'
+import { CLASSTEACHER, DOYEN, HEADMASTER, PARENT, STUDENT, TEACHER } from '../../../support/constants'
 import dayjs from 'dayjs'
 
 const slotToRegisterInside = {
@@ -76,6 +76,14 @@ const registerStudent = (notifyParents) => { // Just fill registration modal and
   })
   utils.waitCalendarToLoad()
   cy.get('[data-test=student-registration-modal]').should('not.exist')
+}
+
+const checkMessage = () => {
+  cy.get('#nav_entry_messagerie').click()
+  cy.get('.message-container').first().within(() => { // have to be the last notification
+    cy.contains(HEADMASTER.firstName + ' ' + HEADMASTER.lastName)
+    cy.contains('Cercle d\'étude le ' + now.format('dddd') + ' à 12h').click()
+  })
 }
 
 describe('Study registration', () => {
@@ -171,22 +179,22 @@ describe('Study registration', () => {
       cy.contains(slotToRegisterInside.teacherLastName).first().should('exist')
     })
 
-    // TODO Check notification (parents and students?)
+    // Check notifications (student, parents, doyen, class teacher)
     cy.logout()
-    cy.login(url, STUDENT)
-
-    cy.visit('/')
-    cy.get('#nav_entry_messagerie').click()
-    cy.contains('.message-container', HEADMASTER.firstName + ' ' + HEADMASTER.lastName)
-    cy.contains('.message-container', 'Retenue le ' + now.format('DD MMM YYYY') + ' à 08h00') // todo: be consistant with slotToRegisterInside.startHour instead oh '08h00'
+    cy.login('/', STUDENT)
+    checkMessage()
 
     cy.logout()
-    cy.login(url, PARENT)
+    cy.login('/', PARENT)
+    checkMessage()
 
-    cy.visit('/')
-    cy.get('#nav_entry_messagerie').click()
-    cy.contains('.message-container', HEADMASTER.firstName + ' ' + HEADMASTER.lastName)
-    cy.contains('.message-container', 'Retenue le ' + now.format('DD MMM YYYY') + ' à 08h00')
+    cy.logout()
+    cy.login('/', CLASSTEACHER)
+    checkMessage()
+
+    cy.logout()
+    cy.login('/', DOYEN)
+    checkMessage()
   })
 
   it('deregistration', () => {

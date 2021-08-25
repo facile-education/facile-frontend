@@ -49,6 +49,7 @@ const clickOnEmptySlot = (day, slotNumber) => {
 }
 
 const clickOnSlot = (slot, capacity) => {
+  cy.get('.weekly-horizontal-timeline').should('be.visible') // Wierd but assert that calendar is fully loaded (/!\ don't works on mobile)
   cy.get('[data-test="' + slot.date.format('MM-DD') + '_' + slot.startHour + '"]').within(() => {
     cy.contains(capacity).first().click({ force: true })
   })

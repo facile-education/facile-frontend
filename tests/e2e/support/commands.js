@@ -59,7 +59,11 @@ Cypress.Commands.add('login', (visitUrl = '/', user = defaultUser) => {
   })
 
   cy.visit(visitUrl)
-  cy.url().should('eq', Cypress.config().baseUrl + visitUrl)
+  if (visitUrl === '/') {
+    cy.url().should('contain', Cypress.config().baseUrl + visitUrl) // because of the '/tableau-de-board' redirection
+  } else {
+    cy.url().should('eq', Cypress.config().baseUrl + visitUrl)
+  }
   cy.wait(1000) // to be sure
 })
 

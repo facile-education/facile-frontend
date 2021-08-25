@@ -13,10 +13,18 @@ const SCHOOL_ADMIN = {
 }
 
 // TODO Replace with doyen who is not school admin
-const DOYEN = {
-  login: 'bocquetnic',
+const DOYEN = { // Doyen for the student's group class
+  login: 'edu-prevostis',
   password: 'pentila',
   role: 'doyen'
+}
+
+const CLASSTEACHER = { // Class teacher for the student's class
+  login: 'edu-mendezi',
+  password: 'pentila',
+  role: 'classTeacher',
+  firstName: 'Isabel',
+  lastName: 'Mendez'
 }
 
 const SECRETARY = {
@@ -28,7 +36,9 @@ const SECRETARY = {
 const TEACHER = {
   login: 'edu-regada',
   password: 'pentila',
-  role: 'teacher'
+  role: 'teacher',
+  firstName: 'Alexandre',
+  lastName: 'Regad'
 }
 
 const STUDENT = {
@@ -48,6 +58,7 @@ export {
   SCHOOL_ADMIN,
   DOYEN,
   TEACHER,
+  CLASSTEACHER,
   STUDENT,
   SECRETARY,
   PARENT
