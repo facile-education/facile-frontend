@@ -20,6 +20,18 @@ const slotToRegisterInside = {
   capacity: 2
 }
 
+const classSlot = {
+  day: 'wed',
+  date: now,
+  startHour: '13:00',
+  endHour: '14:00',
+  teacherSearch: 'reg',
+  teacherName: 'Regad Alexandre',
+  teacherLastName: 'Regad',
+  roomNumber: 'tg',
+  capacity: 25
+}
+
 const slotToDeregister = {
   day: 'wed',
   date: now,
@@ -123,6 +135,48 @@ describe('Study registration', () => {
     // Open slot popup
     utils.openSlotPopup(slotToRegisterInside, '0/0')
     cy.get('[data-test=openRegistration-option]').should('not.exist') // Cannot register student if not there is no place available
+  })
+
+  it('can register a list of student from their class', () => {
+    const classObject = { formattedName: '0932R3', studentCount: 24 }
+    // Create slot
+    utils.createSlot(classSlot)
+
+    // Open slot popup
+    utils.openSlotPopup(classSlot, `${classSlot.capacity}/${classSlot.capacity}`)
+    cy.get('[data-test=openRegistration-option]').should('not.exist')
+
+    // Select class
+    cy.contains('Classe').click()
+    cy.contains(classObject.formattedName).click()
+    cy.tick(500)
+
+    // Open slot popup
+    utils.openSlotPopup(classSlot, `${classSlot.capacity}/${classSlot.capacity}`)
+    cy.get('[data-test=openRegistration-option]').should('be.visible')
+
+    // Register class
+    cy.get('[data-test=openRegistration-option]').click()
+    testRegistrationModal(classSlot, classObject)
+    // check student list
+    cy.contains(`${classSlot.capacity - classObject.studentCount}/${classSlot.capacity}`).should('be.visible')
+
+    // Check inputs reset
+    // Select student
+    cy.get('[data-test=user-completion-input] input').type(studentsToRegister[0].search)
+    cy.tick(500)
+    cy.contains(studentsToRegister[0].name).click()
+    cy.contains('Classe').should('be.visible')
+
+    // Select class
+    cy.contains('Classe').click()
+    cy.contains(classObject.formattedName).click()
+    cy.tick(500)
+    cy.get('.base-input').should('be.empty')
+
+    // TODO remove clean up and init DB before each ?
+    // Clean up
+    utils.deleteSlot(classSlot, `${classSlot.capacity - classObject.studentCount}/${classSlot.capacity}`)
   })
 
   it('registration behaviour', () => {
