@@ -37,7 +37,6 @@ export default {
   },
   created () {
     this.$store.dispatch('user/initUserInformations')
-    this.$store.dispatch('user/getPersonalDetails')
   }
 }
 </script>
