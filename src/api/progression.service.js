@@ -102,12 +102,13 @@ function updateFolder ({ folderId, parentFolderId, name, order }) {
 }
 
 // ProgressionItem object
-// TODO type / isHomework
-function addItem ({ progressionId, folderId, name, content, order }) {
+function addItem ({ progressionId, folderId, name, isHomework, type, content, order }) {
   return axios.post(constants.JSON_WS_URL + PROGRESSION_PATH + ITEM_CTX + 'add-item', PentilaUtils.URL.params({
     progressionId,
     folderId,
     name,
+    isHomework,
+    type,
     content,
     order
   })).then(response => response.data)
@@ -121,12 +122,13 @@ function deleteItem (itemId) {
   }).then(response => response.data)
 }
 
-// TODO type / isHomework
-function updateItem ({ itemId, folderId, name, content, order }) {
+function updateItem ({ itemId, folderId, name, isHomework, type, content, order }) {
   return axios.post(constants.JSON_WS_URL + PROGRESSION_PATH + ITEM_CTX + 'update-item', {
     itemId,
     folderId,
     name,
+    isHomework,
+    type,
     content,
     order
   }).then(response => response.data)
