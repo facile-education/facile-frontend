@@ -18,6 +18,9 @@
     <RouterLink to="/not-usual-slots">
       Horaires hors cadre
     </RouterLink>
+    <RouterLink to="/progression">
+      Progression
+    </RouterLink>
 
     <h2>Documents</h2>
     <RouterLink to="/documents">

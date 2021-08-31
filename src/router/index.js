@@ -30,6 +30,11 @@ const routes = [
     path: '/horaires',
     name: 'Horaires',
     component: () => import(/* webpackChunkName: "horaires" */ '@/router/views/Horaires')
+  },
+  {
+    path: '/progression',
+    name: 'Progression',
+    component: () => import(/* webpackChunkName: "horaires" */ '@/router/views/Progression')
   }
 ]
 
