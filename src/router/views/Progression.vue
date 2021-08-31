@@ -83,6 +83,8 @@ export default {
         progressionId: this.progressionId,
         folderId: 0,
         name: 'My item',
+        isHomework: false,
+        type: 1,
         content: 'My item content',
         order: 0
       }
