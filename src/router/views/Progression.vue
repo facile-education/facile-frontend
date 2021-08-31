@@ -101,7 +101,7 @@ export default {
         name: 'Hello',
         description: 'Progression',
         subjectId: 0,
-        schoolLevel: '9',
+        volee: '9',
         image: null
       }
       // Call WS
