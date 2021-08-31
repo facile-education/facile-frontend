@@ -148,9 +148,8 @@ textarea {
   height: 100px;
   padding: 10px 10px;
   resize: none;
-  border: 1px solid $color-cadyco-dark-text;
+  border: 1px solid $color-text;
   border-radius: 6px;
-  color: $color-cadyco-dark-text;
 }
 
 .information {
