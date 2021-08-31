@@ -256,7 +256,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .toolbar {
   min-height: 50px;
   margin-bottom: 10px;
