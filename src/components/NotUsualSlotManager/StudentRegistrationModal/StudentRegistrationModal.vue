@@ -335,11 +335,6 @@ export default {
 <style lang="scss" scoped>
 @import '@design';
 
-.student-registration-modal {
-  font-family: "Roboto", sans-serif;
-  color: $color-cadyco-dark-text;
-}
-
 .body {
   margin-left: 20px;
 }
@@ -363,9 +358,8 @@ textarea {
   padding: 10px 10px;
   line-height: 10px;
   resize: none;
-  border: 1px solid $color-cadyco-dark-text;
+  border: 1px solid $color-text;
   border-radius: 6px;
-  color: $color-cadyco-dark-text;
 }
 
 .notify-parents {
