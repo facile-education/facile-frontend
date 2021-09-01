@@ -19,6 +19,7 @@ library.add(
   require('@fortawesome/free-solid-svg-icons/faList').definition,
   require('@fortawesome/free-solid-svg-icons/faPencilAlt').definition,
   require('@fortawesome/free-solid-svg-icons/faSignOutAlt').definition,
+  require('@fortawesome/free-solid-svg-icons/faTrash').definition,
   require('@fortawesome/free-solid-svg-icons/faUser').definition,
   require('@fortawesome/free-solid-svg-icons/faUserPlus').definition,
   require('@fortawesome/free-solid-svg-icons/faUsers').definition

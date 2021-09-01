@@ -45,12 +45,6 @@
 
       <!-- global modals -->
       <teleport
-        v-if="isWarningModalDisplayed"
-        to="body"
-      >
-        <WarningModal />
-      </teleport>
-      <teleport
         v-if="pendingFirings.length > 0"
         to="body"
       >
@@ -78,13 +72,12 @@ import SlotTypeItem from '@/components/NotUsualSlotManager/SlotTypeItem'
 import Calendar from '@/components/NotUsualSlotManager/Calendar'
 import UserCompletion from '@/components/NotUsualSlotManager/UserCompletion'
 import SelectedSchool from '@/components/NotUsualSlotManager/SelectedSchool'
-import WarningModal from '@components/Nero/WarningModal'
 import Layout from '@layouts/EmptyLayout'
 import PendingFiringModal from '@components/NotUsualSlotManager/PendingFiringModal/PendingFiringModal'
 
 export default {
   name: 'NotUsualSlotManager',
-  components: { PendingFiringModal, Layout, WarningModal, SelectedSchool, UserCompletion, Calendar, SlotTypeItem },
+  components: { PendingFiringModal, Layout, SelectedSchool, UserCompletion, Calendar, SlotTypeItem },
   inject: ['mq'],
   data () {
     return {
@@ -115,9 +108,6 @@ export default {
     },
     currentSlotType () {
       return this.$store.state.notUsualSlots.currentSlotType
-    },
-    isWarningModalDisplayed () {
-      return this.$store.getters['warningModal/isWarningModalDisplayed']
     },
     selectedClass: {
       get () {
