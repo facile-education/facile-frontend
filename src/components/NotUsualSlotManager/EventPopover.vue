@@ -55,7 +55,7 @@
       <div class="slot-content">
         <div>
           <span
-            v-if="selectedEvent.event.extendedProps.teacher"
+            v-if="selectedEvent.event.extendedProps.teacher || selectedEvent.event.extendedProps.teachers"
             class="teacher"
           >
             {{ formattedTeacherName }}
@@ -150,8 +150,17 @@ export default {
         dayjs(this.selectedEvent.event.end).format('HH:mm')
     },
     formattedTeacherName () {
-      return this.selectedEvent.event.extendedProps.teacher.lastName + ' ' + this.selectedEvent.event.extendedProps.teacher.firstName +
-        (this.selectedEvent.event.extendedProps.subject ? ' - ' : '')
+      let label = ''
+      if (this.selectedEvent.event.extendedProps.teachers) {
+        const teachers = this.selectedEvent.event.extendedProps.teachers
+        for (let index = 0; index < teachers.length; ++index) {
+          const name = teachers[index].firstName + ' ' + teachers[index].lastName
+          label += (label === '') ? name : ', ' + name
+        }
+      } else {
+        label = this.selectedEvent.event.extendedProps.teacher.lastName + ' ' + this.selectedEvent.event.extendedProps.teacher.firstName
+      }
+      return label + (this.selectedEvent.event.extendedProps.subject ? ' - ' : '')
     },
     formattedRoomAndPlaces () {
       const isPlural = this.selectedEvent.event.extendedProps.inscriptionLeft > 1

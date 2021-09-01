@@ -240,6 +240,16 @@ export default {
     allowSelection (selectInfo) {
       return selectInfo.start.getDay() === selectInfo.end.getDay()
     },
+    getTeachersLabel (teachers) {
+      let label = ''
+      if (teachers !== undefined) {
+        for (let index = 0; index < teachers.length; ++index) {
+          const name = teachers[index].firstName.substring(0, 1) + '. ' + teachers[index].lastName
+          label += (label === '') ? name : ', ' + name
+        }
+      }
+      return label
+    },
     onSelectDate (date) {
       this.selectedDate = dayjs(date).startOf('day')
       if (this.selectedEvent) {
@@ -316,6 +326,7 @@ export default {
           id: slot.cdtSessionId || slot.schoollifeSessionId,
           subject: slot.subject,
           teacher: slot.teacher,
+          teachers: slot.teachers,
           inscriptionLeft: slot.capacity - slot.nbRegisteredStudents,
           capacity: slot.capacity,
           nbRegisteredStudents: slot.nbRegisteredStudents,
@@ -389,16 +400,12 @@ export default {
       const container = info.el.getElementsByClassName('fc-event-main-frame')[0]
       container.setAttribute('data-test', dayjs(info.event.start).format('MM-DD_HH:mm'))
 
-      if (info.event.extendedProps.teacher) {
-        let tag = document.createElement('div')
-        tag.classList.add('full-text')
-        let label = info.event.extendedProps.teacher.firstName + ' ' + info.event.extendedProps.teacher.lastName
-        tag.appendChild(document.createTextNode(label))
-        tag.setAttribute('title', label)
-        container.appendChild(tag)
-        tag = document.createElement('div')
-        tag.classList.add('short-text')
-        label = info.event.extendedProps.teacher.teacherId !== -1 ? (info.event.extendedProps.teacher.firstName[0] + '. ' + info.event.extendedProps.teacher.lastName) : ''
+      if (info.event.extendedProps.teacher || info.event.extendedProps.teachers) {
+        const tag = document.createElement('div')
+        tag.classList.add('fc-event-teacher')
+        const label = (info.event.extendedProps.teacher !== undefined)
+          ? this.getTeachersLabel([info.event.extendedProps.teacher])
+          : this.getTeachersLabel(info.event.extendedProps.teachers)
         tag.appendChild(document.createTextNode(label))
         tag.setAttribute('title', label)
         container.appendChild(tag)
