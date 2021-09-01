@@ -14,13 +14,22 @@
       {{ $t('Layout.notAllowed') }}
     </h2>
     <slot v-else />
+
+    <teleport
+      v-if="isWarningModalDisplayed"
+      to="body"
+    >
+      <WarningModal />
+    </teleport>
   </div>
 </template>
 
 <script>
+import { defineAsyncComponent } from 'vue'
+const WarningModal = defineAsyncComponent(() => import('@/components/Nero/WarningModal'))
 
 export default {
-  components: {},
+  components: { WarningModal },
   props: {
     isAllowed: {
       type: Boolean,
@@ -28,6 +37,9 @@ export default {
     }
   },
   computed: {
+    isWarningModalDisplayed () {
+      return this.$store.getters['warningModal/isWarningModalDisplayed']
+    },
     user () {
       return this.$store.state.user
     },

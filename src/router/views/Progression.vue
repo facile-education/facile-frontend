@@ -31,11 +31,14 @@
     </div>
 
     <div>result :<br> {{ result }}</div>
+
+    <ProgressionList />
   </Layout>
 </template>
 
 <script>
 import Layout from '@/router/layouts/EmptyLayout'
+import ProgressionList from '@/components/Progression/ProgressionList'
 
 import { addFolder, addItem, addProgression, getProgressionContent, getProgressionList } from '@/api/progression.service'
 
@@ -46,7 +49,8 @@ import { addFolder, addItem, addProgression, getProgressionContent, getProgressi
 export default {
   name: 'Horaires',
   components: {
-    Layout
+    Layout,
+    ProgressionList
   },
   // inject: ['mq'],
   data () {
