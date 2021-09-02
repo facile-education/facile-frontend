@@ -1,32 +1,21 @@
 <template>
   <!-- TODO Only teachers ? -->
   <Layout :is-allowed="!($store.state.user.isStudent || $store.state.user.isParent)">
-    <div>ProgressionId : {{ progressionId }}</div>
     <div style="display:flex; gap:1rem;">
-      <PentilaButton
-        @click="addProgression"
-      >
-        Add progression
-      </PentilaButton>
-      <PentilaButton
-        @click="getProgressionList"
-      >
-        Get progression list
-      </PentilaButton>
       <PentilaButton
         @click="getProgressionContent"
       >
-        Get progression {{ progressionId }}
+        Get progression 0
       </PentilaButton>
       <PentilaButton
         @click="addFolder"
       >
-        Add folder to Progression {{ progressionId }}
+        Add folder to Progression 0
       </PentilaButton>
       <PentilaButton
         @click="addItem"
       >
-        Add item to Progression {{ progressionId }}
+        Add item to Progression 0
       </PentilaButton>
     </div>
 
@@ -40,7 +29,7 @@
 import Layout from '@/router/layouts/EmptyLayout'
 import ProgressionList from '@/components/Progression/ProgressionList'
 
-import { addFolder, addItem, addProgression, getProgressionContent, getProgressionList } from '@/api/progression.service'
+import { addFolder, addItem, getProgressionContent } from '@/api/progression.service'
 
 // Lazy loading
 // import { defineAsyncComponent } from 'vue'
@@ -55,7 +44,6 @@ export default {
   // inject: ['mq'],
   data () {
     return {
-      progressionId: 0,
       result: {}
     }
   },
@@ -63,11 +51,14 @@ export default {
   },
   created () {
     // this.$store.dispatch('cdt/getConfiguration')
+    // init volee and subject lists
+    this.$store.dispatch('progression/initSubjectList')
+    this.$store.dispatch('progression/initVoleeList')
   },
   methods: {
     addFolder () {
       const folder = {
-        progressionId: this.progressionId,
+        progressionId: 0,
         parentFolderId: 0,
         name: 'My folder',
         order: 0
@@ -84,7 +75,7 @@ export default {
     },
     addItem () {
       const item = {
-        progressionId: this.progressionId,
+        progressionId: 0,
         folderId: 0,
         name: 'My item',
         isHomework: false,
@@ -102,38 +93,9 @@ export default {
           this.result = err
         })
     },
-    addProgression () {
-      const progression = {
-        name: 'Hello',
-        description: 'Progression',
-        subjectId: 0,
-        volee: '9',
-        image: null
-      }
-      // Call WS
-      addProgression(progression).then(
-        (data) => {
-          this.result = data
-        },
-        (err) => {
-          console.error(err)
-          this.result = err
-        })
-    },
     getProgressionContent () {
       // Call WS
-      getProgressionContent(this.progressionId).then(
-        (data) => {
-          this.result = data
-        },
-        (err) => {
-          console.error(err)
-          this.result = err
-        })
-    },
-    getProgressionList () {
-      // Call WS
-      getProgressionList().then(
+      getProgressionContent(0).then(
         (data) => {
           this.result = data
         },
