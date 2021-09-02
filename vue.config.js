@@ -22,13 +22,18 @@ module.exports = {
   chainWebpack: config => {
     config.plugins.delete('pwa')
     config.plugins.delete('workbox')
-    // config.module
-    //   .rule('i18n')
-    //   .test(/\.(json5?|ya?ml)$/)
-    //   .type('javascript/auto')
-    //   .use('@intlify/vue-i18n-loader')
-    //   .loader('@intlify/vue-i18n-loader')
-    //   .end()
+    config.module
+      .rule('i18n')
+      .resourceQuery(/blockType=i18n/)
+      .type('javascript/auto')
+      .use('i18n')
+      .loader('@intlify/vue-i18n-loader')
+      .end()
+      // {
+      //   resourceQuery: /blockType=i18n/,
+      //   type: 'javascript/auto',
+      //   loader: '@intlify/vue-i18n-loader'
+      // }
   },
   css: {
     // Enable CSS source maps.

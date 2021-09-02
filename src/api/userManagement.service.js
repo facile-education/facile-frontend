@@ -1,6 +1,11 @@
 import axios from 'axios'
 import constants from '@/api/constants'
 
+export {
+  getSchoolUsers,
+  getSubjects
+}
+
 export default {
   getSchoolUsers,
   getSubjects
