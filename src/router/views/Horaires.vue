@@ -249,7 +249,9 @@ export default {
       }
     },
     unselectEvent () {
-      this.selectedEvent.el.parentNode.classList.remove('selected')
+      if (this.selectedEvent.el.parentNode != null) {
+        this.selectedEvent.el.parentNode.classList.remove('selected')
+      }
       this.selectedEvent = undefined
     }
   }

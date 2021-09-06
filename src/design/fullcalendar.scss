@@ -67,21 +67,8 @@ $selected-background-filter-color: #FFFFFF99;
   .fc-event-title {
     font-weight: bold;
   }
-  
-  /* TODO to be based overflow event? */
-  @media (max-width: 1035px) {
-    .full-text {
-      display: none;
-    }
-  }
 
-  @media (min-width: 1036px) {
-    .short-text {
-      display: none;
-    }
-  }
-
-  .full-text, .short-text, .fc-event-teacher {
+  .fc-event-teacher {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
