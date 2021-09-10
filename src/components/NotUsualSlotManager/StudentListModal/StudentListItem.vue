@@ -34,7 +34,7 @@
         :event="event"
         :deregistration="true"
         :is-full-screen="mq.phone"
-        @deregistre="deregistreStudent"
+        @deregister="deregisterStudent"
         @close="isStudentDeregistrationModalDisplayed = false"
       />
     </teleport>
@@ -68,7 +68,7 @@ export default {
       default: true
     }
   },
-  emits: ['deregistreStudent', 'update:isPresent'],
+  emits: ['deregisterStudent', 'update:isPresent'],
   data () {
     return {
       isStudentDeregistrationModalDisplayed: false
@@ -105,8 +105,8 @@ export default {
     this.isPresent = this.student.isPresent
   },
   methods: {
-    deregistreStudent () {
-      this.$emit('deregistreStudent')
+    deregisterStudent () {
+      this.$emit('deregisterStudent')
     },
     handleCheck (check) {
       this.$emit('update:isPresent', { student: this.student, isPresent: check })
