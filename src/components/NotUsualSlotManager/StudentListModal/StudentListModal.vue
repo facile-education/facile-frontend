@@ -39,7 +39,7 @@
             :event="event"
             :is-current-teacher="isCurrentTeacher"
             @update:isPresent="setPresent"
-            @deregistreStudent="loadStudentList"
+            @deregisterStudent="loadStudentList"
           />
         </div>
         <div

@@ -161,7 +161,7 @@ export default {
       default: undefined
     }
   },
-  emits: ['close', 'deregistre'],
+  emits: ['close', 'deregister'],
   data () {
     return {
       comment: '',
@@ -288,7 +288,7 @@ export default {
       schoolLifeService.unRegisterStudent(this.student, this.event.extendedProps.id, this.comment, this.notifyParents, allSession).then((data) => {
         if (data.success) {
           this.$store.dispatch('notUsualSlots/refreshCalendar')
-          this.$emit('deregistre')
+          this.$emit('deregister')
           this.closeModal()
         }
       })
@@ -307,7 +307,7 @@ export default {
       schoolLifeService.unRegisterFiring(this.event.extendedProps.id, this.student).then((data) => {
         if (data.success) {
           this.$store.dispatch('notUsualSlots/refreshCalendar')
-          this.$emit('deregistre')
+          this.$emit('deregister')
           this.closeModal()
         }
       })
