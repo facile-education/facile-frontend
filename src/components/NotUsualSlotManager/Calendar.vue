@@ -149,7 +149,7 @@ export default {
         locale: frLocale,
         plugins: [timeGridPlugin, interactionPlugin],
         initialView: this.mq.phone ? 'timeGridDay' : 'timeGridWeek',
-        height: this.mq.phone ? '100%' : 'max(600px, calc(100% - 63px))',
+        height: this.mq.phone ? 'max(800px, 100%)' : 'max(800px, calc(100% - 63px))',
         expandRows: true,
         headerToolbar: {
           left: '',
@@ -457,7 +457,7 @@ export default {
 
 .calendar {
   width: 100%;
-  overflow: auto;
+  //overflow: auto; /* To make only the calendar scroll and not the header */
   flex: 1;
 }
 
