@@ -3,6 +3,7 @@ import userService from '@/api/user.service'
 
 export const state = {
   userId: undefined,
+  // TODO merge fields that are in 'details' object (like firstName, etc...)
   firstName: '',
   lastName: '',
   picture: '/image/user_male_portrait?img_id=3274117&t=1546588956172',

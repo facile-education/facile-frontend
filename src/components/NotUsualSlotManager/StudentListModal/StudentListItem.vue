@@ -97,11 +97,12 @@ export default {
       return this.student.registererId === this.currentUser.userId
     },
     isSignOut () {
+      console.log(this.currentUser)
       switch (this.slotType.type) {
         case notUsualSlotsConstants.studyType:
           return true
         case notUsualSlotsConstants.firedType:
-          return this.currentUser.isDoyen || this.currentUser.isSecretariat || this.currentUser.isDirectionMember
+          return this.currentUser.isDoyen || this.currentUser.isDirectionMember
         default:
           return this.isRegisterer || this.currentUser.isDoyen || this.currentUser.isSecretariat || this.currentUser.isDirectionMember
       }
