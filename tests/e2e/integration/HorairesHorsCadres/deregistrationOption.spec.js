@@ -68,7 +68,6 @@ const haveDeregistrationPermissions = {
 }
 
 const registerStudent = (haveToSelectCourse) => { // Just fill registration modal and submit
-  console.log(haveToSelectCourse)
   if (haveToSelectCourse) {
     cy.get('.base-dropdown').click().within(() => {
       cy.get('li').first().click()
@@ -90,7 +89,6 @@ describe('deregistration option', () => {
 
   for (const attr in slotTypes) {
     const slot = slotTypes[attr]
-    // if (slot.label === 'Travaux à refaire') {
     it('is present for good roles in ' + slot.label, () => {
       // Select slot
       cy.get('[data-test=slot-type-item-' + slot.type + ']').click()
@@ -138,5 +136,4 @@ describe('deregistration option', () => {
       utils.deleteSlot(slotToRegisterInside, '1/2')
     })
   }
-  // }
 })
