@@ -179,6 +179,7 @@
     "PendingFiringModal": {
       "courseOf": "Cours de ",
       "information": "Un message de notification sera envoyé aux parents et au doyen avec le motif du renvoi",
+      "information2": "Merci de contacter un.e Doyen.ne récérent.e de l'élève ou la direction",
       "firedTimestamp": "Enregistré: ",
       "haveToWriteJustification": "Veuillez saisir un motif de renvoi",
       "justificationPlaceholder": "Motif du renvoi",
