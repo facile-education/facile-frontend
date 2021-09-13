@@ -303,32 +303,6 @@ describe('Study registration', () => {
     // TODO Check notification?
   })
 
-  it('deregistration option displayed', () => {
-    // Register student into slot
-    // Create slot
-    utils.createSlot(slotToDeregister)
-
-
-    cy.logout()
-    cy.login(url, TEACHER) // Author of registration is TEACHER
-
-    // Register someone inside
-    utils.selectStudent(studentsToRegister[0])
-    utils.openSlotPopup(slotToDeregister, '1/1')
-    cy.get('[data-test=openRegistration-option]').click()
-    registerStudent(false)
-
-
-    // Open the slot's student list
-    utils.openSlotPopup(slotToDeregister, '0/1')
-    cy.get('[data-test=showStudentList-option]').click()
-
-    // Open the list and unregister student
-    cy.get('[data-test=student-list-modal]').within(() => {
-      cy.contains(studentsToRegister[0].formattedName).parent().find('[data-test=unregister]').should('be.visible')
-    })
-  })
-
   it('delete slot after registration', () => {
     // Create slot
     utils.createSlot(slotToDeregister)
@@ -365,8 +339,6 @@ describe('Study registration', () => {
     utils.waitCalendarToLoad()
     cy.get('[data-test=slot-type-item-' + slotTypes.study.type + ']').click()
     utils.deleteSlot(slotToRegisterInside, '0/0')
-    cy.get('[data-test=slot-type-item-' + slotTypes.study.type + ']').click()
-    utils.deleteSlot(slotToRegisterInside, '1/2')
     cy.get('[data-test=slot-type-item-' + slotTypes.study.type + ']').click()
     utils.deleteSlot(slotToRegisterInside, '0/2')
     cy.get('[data-test=slot-type-item-' + slotTypes.study.type + ']').click()

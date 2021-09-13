@@ -276,8 +276,6 @@ describe('Firing registration', () => {
     cy.get('.message-details-content').should('contain', firingReason)
   })
 
-  // TODO fire from an classical slot (and deregister after for clean)
-
   after(() => { // TODO to find an other solution
     // Delete the created slot for next tests (bad practice but yes)
     cy.login(url)

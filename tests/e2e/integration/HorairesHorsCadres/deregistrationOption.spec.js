@@ -29,16 +29,16 @@ const haveDeregistrationPermissions = {
     [REGISTERER.lastName]: true,
     [TEACHER2.lastName]: false,
     [CLASSTEACHER.lastName]: false,
-    [DOYEN.lastName]: true,
-    [SECRETARY.lastName]: true,
-    [SCHOOL_ADMIN.lastName]: true
+    [DOYEN.lastName]: false,
+    [SECRETARY.lastName]: false,
+    [SCHOOL_ADMIN.lastName]: false
   },
   [slotTypes.fired.label]: {
     [REGISTERER.lastName]: false,
     [TEACHER2.lastName]: false,
     [CLASSTEACHER.lastName]: false,
     [DOYEN.lastName]: true,
-    [SECRETARY.lastName]: true,
+    [SECRETARY.lastName]: false,
     [SCHOOL_ADMIN.lastName]: true
   },
   [slotTypes.study.label]: {
@@ -67,10 +67,13 @@ const haveDeregistrationPermissions = {
   }
 }
 
-const registerStudent = (hasToSelectCourse = false) => { // Just fill registration modal and submit
-  // if (hasToSelectCourse) {
-  //   cy.get()
-  // }
+const registerStudent = (haveToSelectCourse) => { // Just fill registration modal and submit
+  console.log(haveToSelectCourse)
+  if (haveToSelectCourse) {
+    cy.get('.base-dropdown').click().within(() => {
+      cy.get('li').first().click()
+    })
+  }
   cy.get('[data-test=student-registration-modal]').within(() => {
     cy.contains('button', 'Inscrire').click()
   })
@@ -87,53 +90,53 @@ describe('deregistration option', () => {
 
   for (const attr in slotTypes) {
     const slot = slotTypes[attr]
-    if (slot.label === 'Travaux à refaire') {
-      it('is present for good roles in ' + slot.label, () => {
-        // Select slot
-        cy.get('[data-test=slot-type-item-' + slot.type + ']').click()
+    // if (slot.label === 'Travaux à refaire') {
+    it('is present for good roles in ' + slot.label, () => {
+      // Select slot
+      cy.get('[data-test=slot-type-item-' + slot.type + ']').click()
 
-        // Create slot
-        utils.createSlot(slotToRegisterInside)
+      // Create slot
+      utils.createSlot(slotToRegisterInside)
 
-        // Register Student inside
+      // Register Student inside
+      cy.logout()
+      cy.login(url, REGISTERER)
+      cy.get('[data-test=slot-type-item-' + slot.type + ']').click()
+      utils.selectStudent(studentToRegister)
+      utils.openSlotPopup(slotToRegisterInside, '2/2')
+      cy.get('[data-test=openRegistration-option]').click()
+      registerStudent(slot.label === 'Travaux à refaire' || slot.label === 'Renvoi')
+
+      rolesToTestPermission.forEach(role => {
+        // console.log(window)
+        // console.log(window.store.state.user.details.lastName)
+        // Log with the role to test permission
+        cy.log('=============== TEST PERMISSION FOR ROLE ' + role.role + ' =============')
         cy.logout()
-        cy.login(url, REGISTERER)
+        cy.login(url, role)
         cy.get('[data-test=slot-type-item-' + slot.type + ']').click()
-        utils.selectStudent(studentToRegister)
-        utils.openSlotPopup(slotToRegisterInside, '2/2')
-        cy.get('[data-test=openRegistration-option]').click()
-        registerStudent()
 
-        rolesToTestPermission.forEach(role => {
-          // console.log(window)
-          // console.log(window.store.state.user.details.lastName)
-          // Log with the role to test permission
-          cy.log('=============== TEST PERMISSION FOR ROLE ' + role.role + ' =============')
-          cy.logout()
-          cy.login(url, role)
-          cy.get('[data-test=slot-type-item-' + slot.type + ']').click()
+        // Open the slot's student list
+        utils.openSlotPopup(slotToRegisterInside, '1/2')
+        cy.get('[data-test=showStudentList-option]').click()
 
-          // Open the slot's student list
-          utils.openSlotPopup(slotToRegisterInside, '1/2')
-          cy.get('[data-test=showStudentList-option]').click()
-
-          // Open the list and unregister student
-          cy.get('[data-test=student-list-modal]').within(() => {
-            if (haveDeregistrationPermissions[slot.label][role.lastName]) {
-              cy.contains(studentToRegister.formattedName).parent().find('[data-test=unregister]').should('be.visible')
-            } else {
-              cy.contains(studentToRegister.formattedName).parent().find('[data-test=unregister]').should('not.exist')
-            }
-          })
+        // Open the list and unregister student
+        cy.get('[data-test=student-list-modal]').within(() => {
+          if (haveDeregistrationPermissions[slot.label][role.lastName]) {
+            cy.contains(studentToRegister.formattedName).parent().find('[data-test=unregister]').should('be.visible')
+          } else {
+            cy.contains(studentToRegister.formattedName).parent().find('[data-test=unregister]').should('not.exist')
+          }
         })
-
-        // Delete created slot
-        cy.logout()
-        cy.login(url)
-        utils.waitCalendarToLoad()
-        cy.get('[data-test=slot-type-item-' + slot.type + ']').click()
-        utils.deleteSlot(slotToRegisterInside, '1/2')
       })
-    }
+
+      // Delete created slot
+      cy.logout()
+      cy.login(url)
+      utils.waitCalendarToLoad()
+      cy.get('[data-test=slot-type-item-' + slot.type + ']').click()
+      utils.deleteSlot(slotToRegisterInside, '1/2')
+    })
   }
+  // }
 })
