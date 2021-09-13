@@ -303,6 +303,11 @@ describe('Study registration', () => {
     // TODO Check notification?
   })
 
+  it('deregistration option displayed', () => {
+    // Register student into slot
+
+  })
+
   it('delete slot after registration', () => {
     // Create slot
     utils.createSlot(slotToDeregister)

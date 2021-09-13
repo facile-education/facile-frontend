@@ -93,11 +93,17 @@ export default {
         !(this.slotType.type === notUsualSlotsConstants.tutoringType) &&
         dayjs().isAfter(dayjs(this.event.start))
     },
+    isRegisterer () {
+      return this.student.registererId === this.currentUser.userId
+    },
     isSignOut () {
-      if (this.slotType.type === notUsualSlotsConstants.tutoringType) {
-        return (this.event.extendedProps.teacher.teacherId === this.currentUser.userId)
-      } else {
-        return true
+      switch (this.slotType.type) {
+        case notUsualSlotsConstants.studyType:
+          return true
+        case notUsualSlotsConstants.firedType:
+          return this.currentUser.isDoyen || this.currentUser.isSecretariat || this.currentUser.isDirectionMember
+        default:
+          return this.isRegisterer || this.currentUser.isDoyen || this.currentUser.isSecretariat || this.currentUser.isDirectionMember
       }
     }
   },
