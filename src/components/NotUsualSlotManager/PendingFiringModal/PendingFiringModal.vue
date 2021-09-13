@@ -40,6 +40,10 @@
         v-t="'NotUsualSlots.PendingFiringModal.information'"
         class="information"
       />
+      <div
+        v-t="'NotUsualSlots.PendingFiringModal.information2'"
+        class="information"
+      />
     </template>
 
     <template #footer>
