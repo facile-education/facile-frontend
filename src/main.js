@@ -34,3 +34,9 @@ Object.keys(PentilaComponents).forEach(name => {
 app.mount('#app')
 
 dayjs.locale(fr)
+
+if (window.Cypress) {
+  // only available during E2E tests
+  window.store = store
+  window.router = router
+}
