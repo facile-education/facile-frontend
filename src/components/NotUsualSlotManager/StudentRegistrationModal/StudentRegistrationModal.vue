@@ -83,7 +83,10 @@
           />
         </div>
       </div>
-      <div v-if="isReplayTest">
+      <div
+        v-if="isReplayTest"
+        class="select-course"
+      >
         <span v-t="'NotUsualSlots.StudentRegistrationModal.subject'" />
         <span
           v-if="availableSubjects.length === 0"
@@ -349,6 +352,14 @@ h1 {
 
 .slot{
   margin: 10px 0 15px 0;
+}
+
+.select-course {
+  margin-bottom: 15px;
+}
+
+.source-slot {
+  margin-top: 10px;
 }
 
 textarea {
