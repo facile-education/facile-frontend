@@ -7,6 +7,7 @@ const waitCalendarToLoad = () => {
 const createSlot = (slotToCreate) => {
   // Create the slot // TODO Not pass by UI
   cy.log('========= Create slot =========')
+  cy.get('.spinner').should('not.exist')
   clickOnEmptySlot(slotToCreate.day, 7)
   cy.get('[data-test=edit-slot-modal]')
   fillEditSlotModal(slotToCreate)
@@ -43,7 +44,7 @@ const clearSelectedUser = () => {
 const clickOnEmptySlot = (day, slotNumber) => {
   cy.get('.fc-day-' + day + ' > .fc-timegrid-col-frame').then((col) => {
     cy.get(':nth-child(' + slotNumber + ') > .fc-timegrid-slot-lane').then((row) => {
-      cy.wrap(row).click(row.position().left + row.width() / 2 + col.width(), row.position.top, { force: true }) // not click on the slot's center, but on the slot's right to always select an empty part
+      cy.wrap(col).click(row.position().left + row.width() / 2 + col.width(), row.position.top, { force: true }) // not click on the slot's center, but on the slot's right to always select an empty part
     })
   })
 }

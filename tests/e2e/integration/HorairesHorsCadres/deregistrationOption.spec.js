@@ -125,13 +125,14 @@ describe('deregistration option', () => {
     cy.login(url)
   })
 
-  const slotTypeToUncheckParentNotification = getSlotToNotNotifyParent() // For slots that allow us to dio that: choose one to uncheck the parent notification on deregistration
+  const slotTypeToUncheckParentNotification = getSlotToNotNotifyParent() // For slots that allow us to do that: choose one to uncheck the parent notification on deregistration
   for (const attr in slotTypes) {
     const slot = slotTypes[attr]
+
     it('is present for good roles in ' + slot.label, () => {
       // Select slot
       cy.get('[data-test=slot-type-item-' + slot.type + ']').click()
-      // utils.waitCalendarToLoad()
+      utils.waitCalendarToLoad()
 
       // Create slot
       utils.createSlot(slotToRegisterInside)
@@ -147,12 +148,17 @@ describe('deregistration option', () => {
       registerStudent(slot.label === 'Travaux à refaire' || slot.label === 'Renvoi', slot, notifyParents)
 
       rolesToTestPermission.forEach(role => {
-        // console.log(window)
-        // console.log(window.store.state.user.details.lastName)
         // Log with the role to test permission
         cy.log('=============== TEST PERMISSION FOR ROLE ' + role.role + ' =============')
         cy.logout()
         cy.login(url, role)
+
+        // Justify firing to pass the blocking modal)
+        if (slot.label === 'Renvoi' && role.firstName === FIRING_SOURCE_TEACHER.firstName) {
+          cy.get('textarea').type('blablabla')
+          cy.contains('button', 'Envoyer').click()
+        }
+
         cy.get('[data-test=slot-type-item-' + slot.type + ']').click()
 
         // Open the slot's student list
@@ -180,6 +186,7 @@ describe('deregistration option', () => {
     it('check notification for slot ' + slot.label, () => {
       // Select slot
       cy.get('[data-test=slot-type-item-' + slot.type + ']').click()
+      utils.waitCalendarToLoad()
 
       // Create slot
       utils.createSlot(slotToRegisterInside)
