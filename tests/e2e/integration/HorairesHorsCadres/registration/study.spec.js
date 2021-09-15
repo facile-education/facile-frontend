@@ -299,8 +299,6 @@ describe('Study registration', () => {
     // Check slots for the student
     utils.selectStudent(studentsToRegister[0])
     cy.contains('[data-cy="' + slotToDeregister.date.format('MM-DD') + '_' + slotToDeregister.startHour + '"]', 'Cercle d\'étude').should('not.exist')
-
-    // TODO Check notification?
   })
 
   it('delete slot after registration', () => {

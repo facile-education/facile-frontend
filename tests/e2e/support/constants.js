@@ -10,6 +10,7 @@ const SCHOOL_ADMIN = {
   login: 'edu-jovanovicd',
   password: 'pentila',
   role: 'school admin',
+  firstName: 'Darko',
   lastName: 'Jovanovic'
 }
 
@@ -45,11 +46,11 @@ const TEACHER = {
 }
 
 const TEACHER2 = {
-  login: 'edu-carstensenm',
+  login: 'edu-demirass',
   password: 'pentila',
   role: 'teacher',
-  firstName: 'Minna',
-  lastName: 'Carstensen'
+  firstName: 'Serge',
+  lastName: 'De Miras'
 }
 
 const STUDENT = {

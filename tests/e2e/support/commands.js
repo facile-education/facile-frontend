@@ -28,7 +28,7 @@ import { HEADMASTER as defaultUser } from '../support/constants'
 import constants from '../../../src/constants/appConstants'
 
 Cypress.Commands.add('login', (visitUrl = '/', user = defaultUser) => {
-  cy.log('===== LOG IN =====')
+  cy.log('===== LOG IN (' + user.login + ') =====')
 
   // To always have the same setup
   cy.clearCookies()
