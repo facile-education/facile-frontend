@@ -44,7 +44,7 @@ const clearSelectedUser = () => {
 const clickOnEmptySlot = (day, slotNumber) => {
   cy.get('.fc-day-' + day + ' > .fc-timegrid-col-frame').then((col) => {
     cy.get(':nth-child(' + slotNumber + ') > .fc-timegrid-slot-lane').then((row) => {
-      cy.wrap(col).click(row.position().left + row.width() / 2 + col.width(), row.position.top, { force: true }) // not click on the slot's center, but on the slot's right to always select an empty part
+      cy.wrap(col).click(col.width() - 2, row.position().top + row.height() / 2, { force: true }) // not click on the slot's center, but on the slot's right to always select an empty part
     })
   })
 }
