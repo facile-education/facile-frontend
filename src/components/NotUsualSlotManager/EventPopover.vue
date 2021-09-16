@@ -119,12 +119,12 @@ export default {
       return isEditableSlot(this.selectedEvent.event)
     },
     isRegistration () {
-      let bool = true
-      if (this.slotType !== undefined && this.slotType.type === notUsualSlotsConstants.tutoringType) {
-        bool = this.selectedEvent.event.extendedProps.teacher.teacherId === this.currentUser.userId // Only the slot's teacher can register tutoring
+      let isAllowed = true
+      if (this.slotType !== undefined && (this.slotType.type === notUsualSlotsConstants.tutoringType || this.slotType.type === notUsualSlotsConstants.firedType)) {
+        isAllowed = this.selectedEvent.event.extendedProps.teacher.teacherId === this.currentUser.userId // Only the slot's teacher can register tutoring
       }
       return this.isEditableEvent && (this.queriedUser || this.selectedClass.classId > 0) &&
-        !this.isAlreadyRegister && this.selectedEvent.event.extendedProps.inscriptionLeft > 0 && bool
+        !this.isAlreadyRegister && this.selectedEvent.event.extendedProps.inscriptionLeft > 0 && isAllowed
     },
     isPopupTop () {
       return this.mq.phone
