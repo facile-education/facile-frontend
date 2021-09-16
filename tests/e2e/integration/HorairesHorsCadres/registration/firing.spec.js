@@ -5,7 +5,9 @@ import {
 } from '../../../support/constants/horairesHorsCadres'
 
 import utils from '../../../support/utils/horairesHorsCardesUtils'
-import { CLASSTEACHER, DOYEN, HEADMASTER, PARENT, STUDENT, TEACHER } from '../../../support/constants'
+import { CLASSTEACHER, DOYEN, PARENT, TEACHER } from '../../../support/constants'
+
+const FIRING_SUPERVISOR = TEACHER
 
 const slotToRegisterInside = {
   day: 'wed',
@@ -55,7 +57,7 @@ const CLASSICAL_SLOT_TEACHER = {
 
 const firingReason = "Je renvoie qui je veux d'abord!"
 
-const studentsToRegister = {
+const studentToRegister = {
   name: 'ALOSTA ANYA (1051AC)',
   formattedName: 'Anya Alosta - 1051AC',
   search: 'alo'
@@ -101,7 +103,7 @@ describe('Firing registration', () => {
     cy.get('[data-test=slot-type-item-' + slotTypes.study.type + ']').click()
     utils.createSlot(HHCSlotToBeFiredFrom)
     // Register the student inside
-    utils.selectStudent(studentsToRegister)
+    utils.selectStudent(studentToRegister)
     utils.openSlotPopup(HHCSlotToBeFiredFrom, '2/2')
     cy.get('[data-test=openRegistration-option]').click()
     registerStudent(false)
@@ -110,12 +112,21 @@ describe('Firing registration', () => {
     cy.get('[data-test=slot-type-item-' + slotTypes.fired.type + ']').click()
     utils.createSlot(slotToRegisterInside)
 
+    // Try to open registration modal
+    utils.openSlotPopup(slotToRegisterInside, '2/2')
+    cy.get('[data-test=openRegistration-option]').should('not.exist') // Only the supervoisor can register student
+
+    cy.logout()
+    cy.login(url, FIRING_SUPERVISOR)
+    cy.get('[data-test=slot-type-item-' + slotTypes.fired.type + ']').click()
+    utils.selectStudent(studentToRegister)
+
     // Open registration modal
     utils.openSlotPopup(slotToRegisterInside, '2/2')
     cy.get('[data-test=openRegistration-option]').click()
 
     // Test registration modal (ends by registering student)
-    testRegistrationModal(slotToRegisterInside, studentsToRegister, HHCSlotToBeFiredFrom)
+    testRegistrationModal(slotToRegisterInside, studentToRegister, HHCSlotToBeFiredFrom)
 
     // Check the HHC slot is added in grey to the student's schedule
     cy.get('.grayed >> [data-test="' + slotToRegisterInside.date.format('MM-DD') + '_' + slotToRegisterInside.startHour + '"]').within(() => {
@@ -126,7 +137,7 @@ describe('Firing registration', () => {
     utils.openSlotPopup(slotToRegisterInside, '1/2')
     cy.get('[data-test=showStudentList-option]').click()
     cy.get('[data-test=student-list-modal]').within(() => {
-      cy.contains(studentsToRegister.formattedName)
+      cy.contains(studentToRegister.formattedName)
     })
     cy.get('[data-test=closeModal]').click()
 
@@ -134,7 +145,7 @@ describe('Firing registration', () => {
     cy.visit('/nero/horaires')
 
     // Check slots for the first student
-    utils.selectStudent(studentsToRegister)
+    utils.selectStudent(studentToRegister)
     cy.contains('[data-cy="' + slotToRegisterInside.date.format('MM-DD') + '_' + slotToRegisterInside.startHour + '"]', 'Renvoi').parent().within(() => {
       cy.contains(slotToRegisterInside.teacherLastName).first().should('exist')
     })
@@ -145,7 +156,7 @@ describe('Firing registration', () => {
 
     cy.get('[data-test="pending-firing-modal"]').within(() => {
       // Check content
-      cy.contains(studentsToRegister.formattedName).should('be.visible')
+      cy.contains(studentToRegister.formattedName).should('be.visible')
       cy.contains(HHCSlotToBeFiredFrom.formattedType).should('be.visible')
       cy.contains(HHCSlotToBeFiredFrom.date.format('DD MMM YYYY') + ' à ' + HHCSlotToBeFiredFrom.startHour).should('be.visible')
 
@@ -195,14 +206,23 @@ describe('Firing registration', () => {
     utils.createSlot(slotToRegisterInside)
 
     // Select student
-    utils.selectStudent(studentsToRegister)
+    utils.selectStudent(studentToRegister)
+
+    // Try to open registration modal
+    utils.openSlotPopup(slotToRegisterInside, '2/2')
+    cy.get('[data-test=openRegistration-option]').should('not.exist') // Only the supervoisor can register student
+
+    cy.logout()
+    cy.login(url, FIRING_SUPERVISOR)
+    cy.get('[data-test=slot-type-item-' + slotTypes.fired.type + ']').click()
+    utils.selectStudent(studentToRegister)
 
     // Open registration modal
     utils.openSlotPopup(slotToRegisterInside, '2/2')
     cy.get('[data-test=openRegistration-option]').click()
 
     // Test registration modal (ends by registering student)
-    testRegistrationModal(slotToRegisterInside, studentsToRegister, classicalSlotToBeFiredFrom)
+    testRegistrationModal(slotToRegisterInside, studentToRegister, classicalSlotToBeFiredFrom)
 
     // Check the classical slot is added in grey to the student's schedule
     cy.get('.grayed >> [data-test="' + slotToRegisterInside.date.format('MM-DD') + '_' + slotToRegisterInside.startHour + '"]').within(() => {
@@ -213,7 +233,7 @@ describe('Firing registration', () => {
     utils.openSlotPopup(slotToRegisterInside, '1/2')
     cy.get('[data-test=showStudentList-option]').click()
     cy.get('[data-test=student-list-modal]').within(() => {
-      cy.contains(studentsToRegister.formattedName)
+      cy.contains(studentToRegister.formattedName)
     })
     cy.get('[data-test=closeModal]').click()
 
@@ -221,7 +241,7 @@ describe('Firing registration', () => {
     cy.visit('/nero/horaires')
 
     // Check slots for the first student
-    utils.selectStudent(studentsToRegister)
+    utils.selectStudent(studentToRegister)
     cy.contains('[data-cy="' + slotToRegisterInside.date.format('MM-DD') + '_' + slotToRegisterInside.startHour + '"]', 'Renvoi').parent().within(() => {
       cy.contains(slotToRegisterInside.teacherLastName).first().should('exist')
     })
@@ -232,7 +252,7 @@ describe('Firing registration', () => {
 
     cy.get('[data-test="pending-firing-modal"]').within(() => {
       // Check content
-      cy.contains(studentsToRegister.formattedName).should('be.visible')
+      cy.contains(studentToRegister.formattedName).should('be.visible')
       cy.contains(classicalSlotToBeFiredFrom.formattedType).should('be.visible')
       cy.contains(classicalSlotToBeFiredFrom.date.format('DD MMM YYYY') + ' à ' + classicalSlotToBeFiredFrom.startHour).should('be.visible')
 
