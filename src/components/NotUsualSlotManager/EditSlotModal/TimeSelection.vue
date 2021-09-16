@@ -60,9 +60,11 @@ export default {
       const hour = dayjs(value, 'HH:mm')
       const newStartHour = dayjs(this.momentStartTime.format('YYYY-MM-DD') + ' ' + value, 'YYYY-MM-DD HH:mm')
       const currentEndHour = dayjs(this.momentEndTime.format('YYYY-MM-DD') + ' ' + this.inputEndHour, 'YYYY-MM-DD HH:mm')
-      if (hour.isValid() && newStartHour.isBefore(currentEndHour)) {
+
+      if (hour.isValid() && currentEndHour.isValid() && newStartHour.isBefore(currentEndHour)) {
         this.error = ''
         this.$emit('update:start', newStartHour.format('YYYY-MM-DDTHH:mm'))
+        this.$emit('update:end', currentEndHour.format('YYYY-MM-DDTHH:mm'))
         this.$emit('error', false)
       } else {
         this.error = this.$t('NotUsualSlots.EditSlotModal.haveToSelectHour')
@@ -73,8 +75,10 @@ export default {
       const hour = dayjs(value, 'HH:mm', true)
       const currentStartHour = dayjs(this.momentStartTime.format('YYYY-MM-DD') + ' ' + this.inputStartHour, 'YYYY-MM-DD HH:mm')
       const newEndHour = dayjs(this.momentEndTime.format('YYYY-MM-DD') + ' ' + value, 'YYYY-MM-DD HH:mm')
-      if (hour.isValid() && newEndHour.isAfter(currentStartHour)) {
+
+      if (hour.isValid() && currentStartHour.isValid() && newEndHour.isAfter(currentStartHour)) {
         this.error = ''
+        this.$emit('update:start', currentStartHour.format('YYYY-MM-DDTHH:mm'))
         this.$emit('update:end', newEndHour.format('YYYY-MM-DDTHH:mm'))
         this.$emit('error', false)
       } else {
