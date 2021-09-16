@@ -15,7 +15,7 @@ const createSlot = (slotToCreate) => {
 }
 
 const deleteSlot = (slotToDelete, capacity) => {
-  cy.get('.weekly-timeline-container').should('be.visible') // indirectly waits for full load
+  cy.get('.weekly-timeline-container').should('exist') // indirectly waits for full load
   openSlotPopup(slotToDelete, capacity)
   cy.get('[data-test=openEditModal-option]').click()
 
@@ -42,6 +42,9 @@ const clearSelectedUser = () => {
 }
 
 const clickOnEmptySlot = (day, slotNumber) => {
+  // cy.get('.weeknumber-label').eq(2).click() // Click on the current week (don't know why but if not, fails in some cases, even with a long wait)
+
+  cy.get('.fc-timegrid-axis').first().click() // Click on the CALENDAR (don't know why but if not, fails in some cases, even with a long wait)
   cy.get('.fc-day-' + day + ' > .fc-timegrid-col-frame').then((col) => {
     cy.get(':nth-child(' + slotNumber + ') > .fc-timegrid-slot-lane').then((row) => {
       cy.wrap(col).click(col.width() - 2, row.position().top + row.height() / 2, { force: true }) // not click on the slot's center, but on the slot's right to always select an empty part
@@ -50,7 +53,8 @@ const clickOnEmptySlot = (day, slotNumber) => {
 }
 
 const clickOnSlot = (slot, capacity) => {
-  cy.get('.weekly-horizontal-timeline').should('be.visible') // Wierd but assert that calendar is fully loaded (/!\ don't works on mobile)
+  cy.log('#### Click on slot ####')
+  cy.get('.weekly-horizontal-timeline').should('exist') // Wierd but assert that calendar is fully loaded (/!\ don't works on mobile)
   cy.get('[data-test="' + slot.date.format('MM-DD') + '_' + slot.startHour + '"]').within(() => {
     cy.contains(capacity).first().click({ force: true })
   })
