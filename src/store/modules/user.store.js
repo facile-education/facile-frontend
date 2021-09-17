@@ -21,7 +21,9 @@ export const state = {
   hasWebdavEnabled: false,
   schoolList: [],
   details: {},
-  selectedSchool: undefined
+  selectedSchool: undefined,
+  children: [],
+  selectedChild: undefined
 }
 export const mutations = {
   initUserInformations (state, payload) {
@@ -44,9 +46,14 @@ export const mutations = {
 
     state.schoolList = payload.userSchools
     state.selectedSchool = payload.userSchools[0]
+    state.children = payload.children
+    state.selectedChild = payload.children[0]
   },
   setSelectedSchool (state, payload) {
     state.selectedSchool = payload
+  },
+  setSelectedChild (state, payload) {
+    state.selectedChild = payload
   },
   updateInterfacePreferences (state, payload) {
     state.themeColor = payload.themeColor

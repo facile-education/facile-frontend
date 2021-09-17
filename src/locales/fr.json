@@ -138,7 +138,9 @@
   },
   "Horaires": {
     "groupFilter": "Groupe",
-    "userInput": "Elève / Maître"
+    "userInput": "Elève / Maître",
+    "childFilter": "Enfant",
+    "timetableOf": "Horaire de "
   },
   "Layout": {
     "authRequired": "Une authentification est requise pour accéder au service.",

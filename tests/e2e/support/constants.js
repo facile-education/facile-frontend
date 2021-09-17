@@ -65,6 +65,24 @@ const PARENT = { // Student's parent
   role: 'parent'
 }
 
+const MULTI_STUDENT1 = { // Her parent has 2 children
+  login: 'alexia.ln',
+  password: 'pentila',
+  role: 'student'
+}
+
+const MULTI_STUDENT2 = { // Her parent has 2 children
+  login: 'lisa.hnc',
+  password: 'pentila',
+  role: 'student'
+}
+
+const MULTI_PARENT = { // This parent has 2 children : MULTI_STUDENT1 and MULTI_STUDENT2
+  login: 'vleoni',
+  password: 'pentila',
+  role: 'parent'
+}
+
 export {
   HEADMASTER,
   SCHOOL_ADMIN,
@@ -74,5 +92,8 @@ export {
   CLASSTEACHER,
   STUDENT,
   SECRETARY,
-  PARENT
+  PARENT,
+  MULTI_STUDENT1,
+  MULTI_STUDENT2,
+  MULTI_PARENT
 }

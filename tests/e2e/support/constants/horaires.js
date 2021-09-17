@@ -15,6 +15,7 @@ const studentName = 'ALOSTA ANYA (1051AC)'
 const studentSearch = 'alo'
 const teacherName = 'Jovanovic Darko (Maitre)'
 const teacherSearch = 'dar'
+const secondChildName = 'LISA'
 
 export {
   groupName,
@@ -23,5 +24,6 @@ export {
   studentSearch,
   teacherName,
   teacherSearch,
-  url
+  url,
+  secondChildName
 }

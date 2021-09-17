@@ -6,21 +6,85 @@ import {
   studentName,
   studentSearch,
   teacherName,
-  teacherSearch
+  teacherSearch,
+  secondChildName
 } from '../../support/constants/horaires'
+import { STUDENT, PARENT, MULTI_PARENT } from '../../support/constants'
 
 const waitForRefresh = () => {
   cy.wait(500)
 }
 
+const logAsDirection = () => {
+  cy.logout()
+  cy.clock(now.toDate().getTime())
+  cy.login(url)
+}
+
+const logAsStudent = () => {
+  cy.logout()
+  cy.clock(now.toDate().getTime())
+  cy.login(url, STUDENT)
+}
+
+const logAsSingleParent = () => {
+  cy.logout()
+  cy.clock(now.toDate().getTime())
+  cy.login(url, PARENT)
+}
+
+const logAsMultiParent = () => {
+  cy.logout()
+  cy.clock(now.toDate().getTime())
+  cy.login(url, MULTI_PARENT)
+}
+
 describe('Desktop tests', () => {
   beforeEach(() => {
-    cy.logout()
-    cy.clock(now.toDate().getTime())
-    cy.login(url)
+  })
+
+  it('Displays students timetable', () => {
+    logAsStudent()
+    // Toolbar is not visible
+    cy.get('.toolbar .base-dropdown').should('not.exist')
+    cy.get('.toolbar .search .base-input').should('not.exist')
+    cy.get('.weekly-horizontal-timeline').should('be.visible')
+  })
+
+  it('Displays parent child timetable', () => {
+    logAsSingleParent()
+    // Toolbar is visible, but no dropdown inside
+    cy.get('.toolbar').should('exist')
+    cy.get('.toolbar').contains('Horaire de ANYA')
+    cy.get('.toolbar .children').should('not.exist')
+    cy.get('.toolbar .group-list').should('not.exist')
+    cy.get('.toolbar .search .base-input').should('not.exist')
+    cy.get('.weekly-horizontal-timeline').should('be.visible')
+  })
+
+  it('Displays multi-parent children timetable', () => {
+    logAsMultiParent()
+    // Toolbar is visible, with only the child selector
+    cy.get('.toolbar').should('exist')
+    cy.get('.toolbar .children-list').should('exist')
+    cy.get('.toolbar .group-list').should('not.exist')
+    cy.get('.toolbar .search .base-input').should('not.exist')
+    cy.get('.weekly-horizontal-timeline').should('be.visible')
+
+    // Check events number
+    cy.get('.fc-timegrid-event').should('have.length', 32)
+
+    // Select second child in the list
+    cy.get('.toolbar .children-list').click()
+    cy.contains(secondChildName).click()
+    waitForRefresh()
+
+    // Check events number
+    cy.get('.fc-timegrid-event').should('have.length', 31)
   })
 
   it('Navigates in timeline', () => {
+    logAsDirection()
     // Current week should be visible and selected
     cy.get('div.weeknumber-label.current-week.theme-border-color.theme-background-color').should('be.visible')
 
@@ -51,6 +115,7 @@ describe('Desktop tests', () => {
   })
 
   it('Displays group sessions', () => {
+    logAsDirection()
     // Display group sessions
     cy.get('.toolbar .base-dropdown').click()
     cy.get('.base-dropdown > .base-autocomplete').should('be.visible')
@@ -64,6 +129,7 @@ describe('Desktop tests', () => {
   })
 
   it('Displays teachers sessions', () => {
+    logAsDirection()
     cy.get('.search .base-input').type(teacherSearch)
     // Tick to throw completion timeout
     cy.tick(500)
@@ -96,6 +162,7 @@ describe('Desktop tests', () => {
   })
 
   it('Displays student sessions', () => {
+    logAsDirection()
     cy.get('.search .base-input').type(studentSearch)
     // Tick to throw completion timeout
     cy.tick(500)
@@ -126,6 +193,7 @@ describe('Desktop tests', () => {
   })
 
   it('Initializes other filter on selection', () => {
+    logAsDirection()
     // User seletion
     cy.get('.search .base-input').type(studentSearch)
     // Tick to throw completion timeout

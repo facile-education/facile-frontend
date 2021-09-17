@@ -3,8 +3,8 @@
 import { HEADMASTER, TEACHER, STUDENT, PARENT } from '../../support/constants'
 import { now, url } from '../../support/constants/horaires'
 
-const allowedUsers = [HEADMASTER, TEACHER]
-const disallowedUsers = [STUDENT, PARENT]
+const toolbarUsers = [HEADMASTER, TEACHER]
+const noToolbarUsers = [STUDENT, PARENT]
 
 describe('Service access', () => {
   beforeEach(() => {
@@ -12,7 +12,7 @@ describe('Service access', () => {
     cy.clock(now.toDate().getTime())
   })
 
-  allowedUsers.forEach(user => {
+  toolbarUsers.forEach(user => {
     it('Displays service for ' + user.role, () => {
       cy.login(url, user)
 
@@ -23,15 +23,14 @@ describe('Service access', () => {
     })
   })
 
-  disallowedUsers.forEach(user => {
+  noToolbarUsers.forEach(user => {
     it('Displays error for ' + user.role, () => {
       cy.login(url, user)
 
       cy.get('.toolbar .base-dropdown').should('not.exist')
       cy.get('.toolbar .search .base-input').should('not.exist')
-      cy.get('.weekly-horizontal-timeline').should('not.exist')
-      cy.get('.fc').should('not.exist')
-      cy.contains('Vous ne possédez pas les droits requis pour accéder à ce service.').should('exist')
+      cy.get('.weekly-horizontal-timeline').should('be.visible')
+      cy.get('.fc').should('be.visible')
     })
   })
 

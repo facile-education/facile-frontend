@@ -70,7 +70,7 @@ Cypress.Commands.add('login', (visitUrl = '/', user = defaultUser) => {
 Cypress.Commands.add('logout', () => {
   cy.log('===== LOG OUT =====')
 
-  cy.visit(Cypress.config().baseUrl + '/c/portal/logout')
+  // cy.visit(Cypress.config().baseUrl + '/c/portal/logout')
   cy.clearCookies()
 })
 
