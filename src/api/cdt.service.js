@@ -23,9 +23,11 @@ function getConfiguration () {
 /**
  * Get group list
  */
-function getGroups () {
+function getGroups (schoolId) {
   return axios.get(constants.JSON_WS_URL + CDT_PATH + 'configuration/get-all-groups', {
-    params: {}
+    params: {
+      schoolId: schoolId
+    }
   }).then(response => response.data)
 }
 

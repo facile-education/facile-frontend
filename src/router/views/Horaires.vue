@@ -1,6 +1,7 @@
 <template>
-  <Layout :is-allowed="!($store.state.user.isStudent || $store.state.user.isParent)">
+  <Layout>
     <HorairesToolbar
+      v-if="!$store.state.user.isStudent"
       class="toolbar"
       :selected-date="selectedDate"
       @selectDate="onSelectDate"

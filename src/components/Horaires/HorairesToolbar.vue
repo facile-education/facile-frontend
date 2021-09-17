@@ -13,15 +13,45 @@
       class="selection"
       @click="toggleSelection"
     />
+
+    <!-- Parents with 1 child -->
+    <p
+      v-if="children.length === 1"
+      class="child"
+    >
+      {{ $t('Horaires.timetableOf') }} {{ children[0].firstName }}
+    </p>
+
+    <!-- Parents with 2 or more children -->
+    <div
+      v-if="children.length > 1"
+      class="children"
+    >
+      <p class="children-label">
+        {{ $t('Horaires.timetableOf') }}
+      </p>
+      <PentilaDropdown
+        v-model="selectedChild"
+        class="children-list"
+        :placeholder="$t('Horaires.childFilter')"
+        :list="$store.state.user.children"
+        display-field="firstName"
+      />
+    </div>
+
+    <!-- Group selector for agents -->
     <PentilaDropdown
-      v-if="groupList && (!mq.phone || !isSingleUser)"
+      v-if="groupList && (!mq.phone || !isSingleUser) && !$store.state.user.isStudent && !$store.state.user.isParent"
       v-model="selectedGroup"
+      class="group-list"
       :placeholder="$t('Horaires.groupFilter')"
       :list="groupList"
       display-field="groupName"
     />
+
+    <!-- Name selector for agents -->
     <PentilaTagsInput
-      v-if="!mq.phone || isSingleUser"
+      v-if="(!mq.phone || isSingleUser) && !$store.state.user.isStudent && !$store.state.user.isParent"
       v-model="tagsList"
       class="search"
       data-test="user-completion-input"
@@ -88,6 +118,9 @@ export default {
     schoolList () {
       return this.$store.state.user.schoolList
     },
+    children () {
+      return this.$store.state.user.children
+    },
     selectedGroup: {
       get () {
         return this.$store.state.horaires.selectedGroup
@@ -103,6 +136,15 @@ export default {
       },
       set (school) {
         this.$store.commit('user/setSelectedSchool', school)
+      }
+    },
+    selectedChild: {
+      get () {
+        return this.$store.state.user.selectedChild
+      },
+      set (child) {
+        this.$store.commit('user/setSelectedChild', child)
+        this.$store.dispatch('horaires/getSessionList')
       }
     }
   },
@@ -166,6 +208,26 @@ export default {
   font-size: 2.3rem;
   padding: 0 0.5rem;
   cursor: pointer;
+}
+
+.children {
+  display: flex;
+  justify-content: space-between;
+  .children-label {
+    padding-left: 1rem;
+    padding-right: .4rem;
+    margin: auto;
+  }
+  .children-list {
+    height: 30px;
+    margin: auto;
+  }
+}
+
+.child {
+  padding-left: 1rem;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 .search {

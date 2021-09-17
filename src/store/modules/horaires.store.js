@@ -37,14 +37,12 @@ export const mutations = {
   }
 }
 export const actions = {
-  getGroupList ({ commit }, userId) {
+  getGroupList ({ commit, rootState }) {
     commit('loading')
-    cdtService.getGroups(userId).then(
+    cdtService.getGroups(rootState.user.selectedSchool.schoolId).then(
       (data) => {
         if (data.success) {
           commit('setGroupList', data.groups)
-        } else {
-          console.error('Cannot get sessions ')
         }
         commit('endLoading')
       },
@@ -55,16 +53,25 @@ export const actions = {
       }
     )
   },
-  getSessionList ({ state, commit }) {
+  getSessionList ({ state, commit, rootState }) {
     if (state.startDate && state.endDate &&
-        (state.selectedUser.userId !== 0 || state.selectedGroup.groupId !== 0)) {
+        (state.selectedUser.userId !== 0 ||
+          state.selectedGroup.groupId !== 0 ||
+          (rootState.user.selectedChild !== undefined && rootState.user.selectedChild.userId !== 0) ||
+          (rootState.user.isStudent))) {
       commit('loading')
-      cdtService.getSessions(state.selectedUser.userId, state.selectedGroup.groupId, state.startDate, state.endDate).then(
+      let targetUserId = 0
+      if (rootState.user.isStudent) {
+        targetUserId = rootState.user.userId
+      } else if (rootState.user.selectedChild !== undefined && rootState.user.selectedChild.userId !== 0) {
+        targetUserId = rootState.user.selectedChild.userId
+      } else {
+        targetUserId = state.selectedUser.userId
+      }
+      cdtService.getSessions(targetUserId, state.selectedGroup.groupId, state.startDate, state.endDate).then(
         (data) => {
           if (data.success) {
             commit('setSessionList', [...data.sessions, ...data.schoollifeSessions])
-          } else {
-            console.error('Cannot get sessions ')
           }
           commit('endLoading')
         },
