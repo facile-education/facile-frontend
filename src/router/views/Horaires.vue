@@ -149,10 +149,25 @@ export default {
       return this.$store.state.horaires.selectedUser.isTeacher
     }
   },
+  watch: {
+    mq: { // To correctly handle date and slots when we move from portrait to landscape
+      deep: true,
+      handler (value) {
+        if (!value.desktop) {
+          if (this.$refs.fullCalendar) {
+            const calendar = this.$refs.fullCalendar.getApi()
+            calendar.gotoDate(this.selectedDate.toDate())
+          }
+        }
+      }
+    }
+  },
   created () {
-    this.$store.dispatch('cdt/getConfiguration')
-    if (this.mq.phone) {
-      this.onSelectDate(new Date())
+    if (this.configuration === undefined) {
+      this.$store.dispatch('cdt/getConfiguration')
+      if (this.mq.phone) {
+        this.onSelectDate(new Date())
+      }
     }
   },
   methods: {
@@ -210,6 +225,8 @@ export default {
         { start: dayjs(date).subtract(1, 'day'), end: dayjs(date).add(2, 'day') })
     },
     onSelectWeek (week) {
+      this.selectedDate = dayjs(week.firstDayOfWeek).startOf('day')
+
       if (this.$refs.fullCalendar) {
         const calendar = this.$refs.fullCalendar.getApi()
         calendar.gotoDate(new Date(week.firstDayOfWeek))
