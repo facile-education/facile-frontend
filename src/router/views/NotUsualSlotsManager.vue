@@ -70,10 +70,13 @@ import dayjs from 'dayjs'
 import schoolLifeService from '@/api/schoolLife-portlet.service'
 import SlotTypeItem from '@/components/NotUsualSlotManager/SlotTypeItem'
 import Calendar from '@/components/NotUsualSlotManager/Calendar'
-import UserCompletion from '@/components/NotUsualSlotManager/UserCompletion'
 import SelectedSchool from '@/components/NotUsualSlotManager/SelectedSchool'
 import Layout from '@layouts/EmptyLayout'
-import PendingFiringModal from '@components/NotUsualSlotManager/PendingFiringModal/PendingFiringModal'
+
+import { defineAsyncComponent } from 'vue'
+
+const PendingFiringModal = defineAsyncComponent(() => import('@/components/NotUsualSlotManager/PendingFiringModal/PendingFiringModal'))
+const UserCompletion = defineAsyncComponent(() => import('@/components/NotUsualSlotManager/UserCompletion'))
 
 export default {
   name: 'NotUsualSlotManager',
