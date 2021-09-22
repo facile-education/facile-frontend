@@ -279,7 +279,6 @@ export default {
 </script>
 
 <style lang="scss">
-
 .edit-slot-modal .window-wrapper {
   max-width: 500px;
   &.mobile {
@@ -289,12 +288,6 @@ export default {
 </style>
 
 <style lang="scss" scoped>
-
-.edit-slot-modal {
-  font-family: "Roboto", sans-serif;
-  color: #0B3C5F;
-}
-
 .teacher-part {
   margin-bottom: 10px;
 }

@@ -120,8 +120,13 @@ export default {
     },
     isRegistration () {
       let isAllowed = true
-      if (this.slotType !== undefined && (this.slotType.type === notUsualSlotsConstants.tutoringType || this.slotType.type === notUsualSlotsConstants.firedType)) {
+      if (this.slotType !== undefined && this.slotType.type === notUsualSlotsConstants.tutoringType) {
         isAllowed = this.selectedEvent.event.extendedProps.teacher.teacherId === this.currentUser.userId // Only the slot's teacher can register tutoring
+      } else if (this.slotType !== undefined && this.slotType.type === notUsualSlotsConstants.firedType) {
+        // Only direction, secretaires, doyens and slot's teacher can fire student
+        isAllowed = this.currentUser.isDirectionMember ||
+          this.currentUser.isSecretariat || this.currentUser.isDoyen ||
+          (this.selectedEvent.event.extendedProps.teacher.teacherId === this.currentUser.userId)
       }
       return this.isEditableEvent && (this.queriedUser || this.selectedClass.classId > 0) &&
         !this.isAlreadyRegister && this.selectedEvent.event.extendedProps.inscriptionLeft > 0 && isAllowed

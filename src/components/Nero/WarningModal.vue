@@ -82,8 +82,6 @@ export default {
 
   .warning-modal {
     display: flex;
-    font-family: "Roboto", sans-serif;
-    color: #0B3C5F;
   }
 
   .context-message{
