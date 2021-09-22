@@ -147,12 +147,7 @@ export default {
 </style>
 
 <style lang="scss" scoped>
-  .student-list-modal {
-    font-family: "Roboto", sans-serif;
-    color: #0B3C5F;
-  }
-
-  .body{
+  .body {
     width: 100%;
     height: 100%;
     max-height: 75vh;

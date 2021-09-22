@@ -134,11 +134,6 @@ export default {
 <style lang="scss" scoped>
 @import '@design';
 
-.pending-firing-modal {
-  font-family: "Roboto", sans-serif;
-  color: #0B3C5F;
-}
-
 .student, .slot {
   font-weight: bold;
 }
