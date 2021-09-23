@@ -44,10 +44,15 @@ export const mutations = {
     state.isTeacher = payload.isTeacher
     state.isParent = payload.isParent
 
-    state.schoolList = payload.userSchools
-    state.selectedSchool = payload.userSchools[0]
-    state.children = payload.children
-    state.selectedChild = payload.children[0]
+    if (payload.userSchools) {
+      state.schoolList = payload.userSchools
+      state.selectedSchool = payload.userSchools[0]
+    }
+
+    if (payload.children) {
+      state.children = payload.children
+      state.selectedChild = payload.children[0]
+    }
   },
   setSelectedSchool (state, payload) {
     state.selectedSchool = payload
