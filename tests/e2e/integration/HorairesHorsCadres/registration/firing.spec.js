@@ -5,7 +5,7 @@ import {
 } from '../../../support/constants/horairesHorsCadres'
 
 import utils from '../../../support/utils/horairesHorsCardesUtils'
-import { CLASSTEACHER, DOYEN, PARENT, TEACHER } from '../../../support/constants'
+import { CLASSTEACHER, DOYEN, PARENT, TEACHER, SECRETARY } from '../../../support/constants'
 
 const FIRING_SUPERVISOR = TEACHER
 
@@ -56,6 +56,7 @@ const CLASSICAL_SLOT_TEACHER = {
 }
 
 const firingReason = "Je renvoie qui je veux d'abord!"
+const firingTeacherRecipients = 'Sandra Prevosti, Darko Jovanovic, Isabel Mendez'
 
 const studentToRegister = {
   name: 'ALOSTA ANYA (1051AC)',
@@ -114,9 +115,29 @@ describe('Firing registration', () => {
 
     // Try to open registration modal
     utils.openSlotPopup(slotToRegisterInside, '2/2')
-    cy.get('[data-test=openRegistration-option]').should('not.exist') // Only the supervoisor can register student
+    cy.get('[data-test=openRegistration-option]').should('exist') // Directeur, secretery, doyen and supervoisor can register student
 
     cy.logout()
+
+    // Check doyen and secretaire right to register students
+    cy.log('Check doyen rights to register student')
+    cy.login(url, DOYEN)
+    cy.get('[data-test=slot-type-item-' + slotTypes.fired.type + ']').click()
+    utils.selectStudent(studentToRegister)
+    // Open registration modal
+    utils.openSlotPopup(slotToRegisterInside, '2/2')
+    cy.get('[data-test=openRegistration-option]').should('exist')
+    cy.logout()
+
+    cy.log('Check secretary rights to register student')
+    cy.login(url, SECRETARY)
+    cy.get('[data-test=slot-type-item-' + slotTypes.fired.type + ']').click()
+    utils.selectStudent(studentToRegister)
+    // Open registration modal
+    utils.openSlotPopup(slotToRegisterInside, '2/2')
+    cy.get('[data-test=openRegistration-option]').should('exist')
+    cy.logout()
+
     cy.login(url, FIRING_SUPERVISOR)
     cy.get('[data-test=slot-type-item-' + slotTypes.fired.type + ']').click()
     utils.selectStudent(studentToRegister)
@@ -197,6 +218,8 @@ describe('Firing registration', () => {
       cy.contains(TEACHER.firstName + ' ' + TEACHER.lastName)
       cy.contains('Avis de renvoi').click()
     })
+    // Check the message recipients (2 doyens and main teacher) and messag content
+    cy.get('#message-receivers').should('contain', firingTeacherRecipients)
     cy.get('.message-details-content').should('contain', firingReason)
   })
 
@@ -210,9 +233,9 @@ describe('Firing registration', () => {
 
     // Try to open registration modal
     utils.openSlotPopup(slotToRegisterInside, '2/2')
-    cy.get('[data-test=openRegistration-option]').should('not.exist') // Only the supervoisor can register student
-
+    cy.get('[data-test=openRegistration-option]').should('exist') // Directeur, secretaire, doyen and supervoisor can register student
     cy.logout()
+
     cy.login(url, FIRING_SUPERVISOR)
     cy.get('[data-test=slot-type-item-' + slotTypes.fired.type + ']').click()
     utils.selectStudent(studentToRegister)
@@ -293,6 +316,8 @@ describe('Firing registration', () => {
       cy.contains(CLASSICAL_SLOT_TEACHER.firstName + ' ' + CLASSICAL_SLOT_TEACHER.lastName)
       cy.contains('Avis de renvoi').click()
     })
+    // Check the message recipients (2 doyens and main teacher) and messag content
+    cy.get('#message-receivers').should('contain', firingTeacherRecipients)
     cy.get('.message-details-content').should('contain', firingReason)
   })
 
