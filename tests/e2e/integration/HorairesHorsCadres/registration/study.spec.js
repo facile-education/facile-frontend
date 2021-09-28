@@ -166,10 +166,10 @@ describe('Study registration', () => {
     cy.get('[data-test=user-completion-input] input').type(studentsToRegister[0].search)
     cy.tick(500)
     cy.contains(studentsToRegister[0].name).click()
-    cy.contains('Classe').should('be.visible')
+    cy.get('.filters').contains('Classe').should('exist')
 
     // Select class
-    cy.contains('Classe').click()
+    cy.get('.filters').contains('Classe').click()
     cy.contains(classObject.formattedName).click()
     cy.tick(500)
     cy.get('.base-input').should('be.empty')
