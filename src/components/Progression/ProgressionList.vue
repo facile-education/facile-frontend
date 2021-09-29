@@ -1,23 +1,39 @@
 <template>
-  <PentilaButton @click="toggleEditModalDisplay">
-    <NeroIcon
-      name="fa-plus"
-    />
-    {{ $t('add') }}
-  </PentilaButton>
-  <PentilaDropdown
-    v-if="(voleeList && voleeList.length > 1)"
-    v-model="selectedVolee"
-    :sort="false"
-    :list="voleeList"
-  />
-  <PentilaDropdown
-    v-if="(subjectList && subjectList.length > 1)"
-    v-model="selectedSubject"
-    :list="subjectList"
-    :sort="false"
-    display-field="name"
-  />
+  <div
+    class="header"
+  >
+    <PentilaButton
+      class="create-button"
+      @click="toggleEditModalDisplay"
+    >
+      <NeroIcon
+        name="fa-plus"
+      />
+      {{ $t('add') }}
+    </PentilaButton>
+
+    <div
+      class="filters"
+    >
+      <p>{{ $t('filterBy') }}</p>
+      <PentilaDropdown
+        v-if="(subjectList && subjectList.length > 1)"
+        v-model="selectedSubject"
+        class="filter"
+        :list="subjectList"
+        :sort="false"
+        display-field="name"
+      />
+      <PentilaDropdown
+        v-if="(voleeList && voleeList.length > 1)"
+        v-model="selectedVolee"
+        class="filter"
+        :sort="false"
+        :list="voleeList"
+      />
+    </div>
+  </div>
+
   <div class="progression-list">
     <div
       v-for="progression in progressionList"
@@ -35,7 +51,9 @@
           @click="confirmProgressionDeletion(progression)"
         />
       </h4>
-      <div>
+      <div
+        @click="selectProgression(progression)"
+      >
         {{ progression.imageId }}
         {{ progression.volee }}
         {{ progression.description }}
@@ -49,7 +67,8 @@
       v-if="isEditModalDisplayed"
       :updated-progression="selectedProgression"
       @close="toggleEditModalDisplay"
-    />
+    />  "add": "NOUVEAU",
+
   </teleport>
 </template>
 
@@ -120,40 +139,68 @@ export default {
     toggleEditModalDisplay (progression) {
       this.selectedProgression = progression
       this.isEditModalDisplayed = !this.isEditModalDisplayed
+    },
+    selectProgression (progression) {
+      this.$store.dispatch('progression/setCurrentProgression', progression)
+      this.$store.dispatch('progression/setListMode', false)
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.header {
+  display: flex;
+  justify-content: space-between;
+  height: 50px;
+  vertical-align: middle;
+
+  .create-button {
+    margin-left: 30px;
+    height: 30px;
+  }
+  .filters {
+    display: flex;
+    margin-right: 100px;
+    p {
+      margin-right: 10px;
+    }
+    .filter {
+      margin-right: 10px;
+    }
+  }
+}
+
 .progression-list {
   margin: 1rem;
   display: grid;
   grid-template-columns: repeat(auto-fill, 200px);
   grid-gap: 1rem;
-}
+  .progression {
+    border: 1px solid black;
 
-.progression {
-  border: 1px solid black;
+    h4 {
+      margin: 0;
+      color: white;
+      background: darkslategray;
+    }
 
-  h4 {
-    margin: 0;
-    color: white;
-    background: darkslategray;
+    div {
+      padding: 10px;
+    }
   }
 
-  div {
-    padding: 10px;
-  }
 }
 // <i18n src="./myLang.json"></i18n>
 </style>
 
 <i18n locale="fr">
 {
-  "add": "Créer",
+  "add": "NOUVEAU",
+  "filterBy": "Filtrer par :",
   "subject": "Discipline",
   "volee": "Volée",
   "warning": "La suppression de cette progression est définitive."
 }
 </i18n>
+      margin-right: 20px;
