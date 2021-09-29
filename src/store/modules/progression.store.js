@@ -3,6 +3,9 @@ import { getSubjects } from '@/api/userManagement.service'
 import { getSchoolVoleeList } from '@/api/organization.service'
 
 export const state = {
+  isListMode: true,
+  isEditMode: true,
+  currentProgression: undefined,
   progressionList: undefined,
   subjectList: undefined,
   voleeList: undefined
@@ -28,6 +31,15 @@ export const mutations = {
   updateProgression (state, payload) {
     const index = state.progressionList.map(item => item.progressionId).indexOf(payload.progressionId)
     state.progressionList[index] = payload
+  },
+  setCurrentProgression (state, payload) {
+    state.currentProgression = payload
+  },
+  setEditMode (state, payload) {
+    state.isEditMode = payload
+  },
+  setListMode (state, payload) {
+    state.isListMode = payload
   }
 }
 export const actions = {
@@ -101,5 +113,14 @@ export const actions = {
       (err) => {
         console.error(err)
       })
+  },
+  setCurrentProgression ({ commit }, progression) {
+    commit('setCurrentProgression', progression)
+  },
+  setEditMode ({ commit }, isEditMode) {
+    commit('setEditMode', isEditMode)
+  },
+  setListMode ({ commit }, isListMode) {
+    commit('setListMode', isListMode)
   }
 }
