@@ -21,12 +21,12 @@
 
 <script>
 import ProgressionSwitchMode from './ProgressionSwitchMode.vue'
-import ProgressionEditMode from './ProgressionEditMode.vue'
-import ProgressionAssignmentMode from './ProgressionAssignmentMode.vue'
-import ProgressionTree from './ProgressionTree.vue'
+import ProgressionEditMode from './Edit/ProgressionEditMode.vue'
+import ProgressionAssignmentMode from './Assignment/ProgressionAssignmentMode.vue'
+import ProgressionTree from './Tree/ProgressionTree.vue'
 
 export default {
-  name: 'Progression',
+  name: 'ProgressionPanel',
   components: { ProgressionSwitchMode, ProgressionEditMode, ProgressionAssignmentMode, ProgressionTree },
   data () {
     return {

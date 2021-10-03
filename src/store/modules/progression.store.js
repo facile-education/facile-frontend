@@ -1,14 +1,15 @@
-import { addProgression, deleteProgression, getProgressionList, updateProgression } from '@/api/progression.service'
+import { addProgression, deleteProgression, getProgressionList, updateProgression, getProgressionContent, addFolder, addItem, deleteFolder } from '@/api/progression.service'
 import { getSubjects } from '@/api/userManagement.service'
 import { getSchoolVoleeList } from '@/api/organization.service'
 
 export const state = {
+  subjectList: undefined,
+  voleeList: undefined,
+  progressionList: undefined,
   isListMode: true,
   isEditMode: true,
   currentProgression: undefined,
-  progressionList: undefined,
-  subjectList: undefined,
-  voleeList: undefined
+  currentFolder: undefined
 }
 
 export const mutations = {
@@ -34,12 +35,67 @@ export const mutations = {
   },
   setCurrentProgression (state, payload) {
     state.currentProgression = payload
+    console.log('setCurrentProgression for ', payload)
+  },
+  setCurrentProgressionContent (state, payload) {
+    state.currentProgression.sections = payload.sections
+    state.currentProgression.items = payload.items
+  },
+  setCurrentFolder (state, payload) {
+    state.currentFolder = payload
   },
   setEditMode (state, payload) {
     state.isEditMode = payload
   },
   setListMode (state, payload) {
     state.isListMode = payload
+  },
+  addFolder (state, payload) {
+    // Loop over progression to add the created folder
+    if (payload.parentId === 0) {
+      state.currentProgression.sections.push(payload)
+    } else {
+      for (let idx = 0; idx < state.currentProgression.sections.length; ++idx) {
+        const section = state.currentProgression.sections[idx]
+        if (section.folderId === payload.parentId) {
+          if (section.subSections === undefined) {
+            section.subSections = []
+          }
+          section.subSections.push(payload)
+        }
+      }
+    }
+  },
+  addItem (state, payload) {
+    console.log('addItem payload=', payload)
+    // Loop over progression to add the created folder
+    for (let idx = 0; idx < state.currentProgression.sections.length; ++idx) {
+      const section = state.currentProgression.sections[idx]
+      console.log('loop over section ', section)
+      if (section.folderId === payload.parentId) {
+        console.log('foundparent')
+        if (section.items === undefined) {
+          console.log('createitems')
+          section.items = []
+        }
+        section.items.push(payload)
+        return
+      }
+      if (section.subSections !== undefined) {
+        for (let j = 0; j < section.subSections.length; ++j) {
+          const subsection = section.subSections[j]
+          console.log('loop over subsection ', subsection)
+          if (subsection.folderId === payload.parentId) {
+            console.log('foundparent2')
+            if (subsection.items === undefined) {
+              console.log('createitems2')
+              subsection.items = []
+            }
+            subsection.items.push(payload)
+          }
+        }
+      }
+    }
   }
 }
 export const actions = {
@@ -116,11 +172,67 @@ export const actions = {
   },
   setCurrentProgression ({ commit }, progression) {
     commit('setCurrentProgression', progression)
+    commit('setCurrentFolder', undefined) // root folder
+  },
+  setCurrentFolder ({ commit }, folder) {
+    commit('setCurrentFolder', folder)
   },
   setEditMode ({ commit }, isEditMode) {
     commit('setEditMode', isEditMode)
   },
   setListMode ({ commit }, isListMode) {
     commit('setListMode', isListMode)
+  },
+  getProgressionContent ({ commit }, progressionId) {
+    getProgressionContent(progressionId).then(
+      (data) => {
+        if (data.success) {
+          commit('setCurrentProgressionContent', data)
+        }
+      },
+      (err) => {
+        // TODO toastr
+        console.error(err)
+      })
+  },
+  addFolder ({ commit, state }, { folderName, order }) {
+    const currentFolderId = (state.currentFolder !== undefined ? state.currentFolder.folderId : 0)
+    console.log('addFolder with ', state.currentProgression.progressionId, ' and ', currentFolderId, ' and ', folderName, ' and ', order)
+    addFolder(state.currentProgression.progressionId, currentFolderId, folderName, order).then(
+      (data) => {
+        if (data.success) {
+          commit('addFolder', { folderName: folderName, order: order, folderId: data.folderId, parentId: currentFolderId, progressionId: state.currentProgression.progressionId })
+        }
+      },
+      (err) => {
+        // TODO toastr
+        console.error(err)
+      })
+  },
+  addItem ({ commit, state }, { itemName, isHomework, type, order }) {
+    const currentFolderId = (state.currentFolder !== undefined ? state.currentFolder.folderId : 0)
+    console.log('addItem with ', state.currentProgression.progressionId, ' and ', currentFolderId)
+    addItem(state.currentProgression.progressionId, currentFolderId, itemName, isHomework, type, '', order).then(
+      (data) => {
+        if (data.success) {
+          commit('addItem', { itemName: itemName, order: order, itemId: data.itemId, parentId: currentFolderId, progressionId: state.currentProgression.progressionId })
+        }
+      },
+      (err) => {
+        // TODO toastr
+        console.error(err)
+      })
+  },
+  deleteFolder ({ commit }, folder) {
+    deleteFolder(folder.folderId).then(
+      (data) => {
+        if (data.success) {
+          getProgressionContent(folder.progressionId)
+        }
+      },
+      (err) => {
+        // TODO toastr
+        console.error(err)
+      })
   }
 }

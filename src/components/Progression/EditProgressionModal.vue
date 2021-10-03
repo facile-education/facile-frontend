@@ -1,6 +1,7 @@
 <template>
   <PentilaWindow
     :modal="true"
+    class="editWindow"
     :class="{'mobile': mq.phone}"
     @close="closeModal"
   >
@@ -16,19 +17,24 @@
           maxlength="100"
         />
         <!-- <PentilaErrorMessage :error-message="formErrorList.capacity" /> -->
-        <PentilaDropdown
-          v-if="(subjectList && subjectList.length > 1)"
-          v-model="progression.subject"
-          :list="subjectList"
-          display-field="name"
-          @update:modelValue="onSelectSubject"
-        />
-        <PentilaDropdown
-          v-if="(voleeList && voleeList.length > 1)"
-          v-model="progression.volee"
-          :list="voleeList"
-        />
-        Max length ?
+        <div
+          class="subject-volee"
+        >
+          <PentilaDropdown
+            v-if="(subjectList && subjectList.length > 1)"
+            v-model="progression.subject"
+            :list="subjectList"
+            class="subject"
+            display-field="name"
+            @update:modelValue="onSelectSubject"
+          />
+          <PentilaDropdown
+            v-if="(voleeList && voleeList.length > 1)"
+            v-model="progression.volee"
+            class="volee"
+            :list="voleeList"
+          />
+        </div>
         <PentilaInput
           v-model="progression.description"
           :placeholder="$t('description')"
@@ -38,11 +44,20 @@
     </template>
 
     <template #footer>
-      <PentilaButton
-        :label="$t('confirm')"
-        class="button confirm-button"
-        @click="onConfirm"
-      />
+      <div
+        class="footer"
+      >
+        <PentilaButton
+          :label="$t('cancel')"
+          class="button cancel-button"
+          @click="closeModal"
+        />
+        <PentilaButton
+          :label="$t('confirm')"
+          class="button confirm-button"
+          @click="onConfirm"
+        />
+      </div>
       <!-- :class="{'form-valid' : !v$.$invalid && !isTimeError}" -->
     </template>
   </PentilaWindow>
@@ -74,10 +89,23 @@ export default {
   },
   computed: {
     subjectList () {
-      return this.$store.state.progression.subjectList
+      if (this.$store.state.progression.subjectList) {
+        const defaultSubject = {
+          subjectId: 0,
+          name: this.$t('subject')
+        }
+        return [
+          defaultSubject,
+          ...PentilaUtils.Array.sortWithString(this.$store.state.progression.subjectList, false, 'name')
+        ]
+      }
+      return []
     },
     voleeList () {
-      return this.$store.state.progression.voleeList
+      if (this.$store.state.progression.voleeList) {
+        return [this.$t('volee'), ...this.$store.state.progression.voleeList]
+      }
+      return []
     }
   },
   created () {
@@ -107,14 +135,39 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.editWindow {
+  width: 600px;
+}
+.subject-volee {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  .subject {
+    width: 300px;
+  }
+  .volee {
+    width: 200px;
+  }
+}
 
+.footer {
+  display: flex;
+  justify-content: space-around;
+  .button {
+    width: 150px;
+  }
+}
 </style>
 
 <i18n locale="fr">
 {
-  "confirm": "Valider",
+  "cancel": "Annuler",
+  "confirm": "Créer",
   "description": "Description",
   "progression": "Progression",
+  "subject": "Discipline",
+  "volee": "Volée",
   "title": "Titre"
 }
 </i18n>
