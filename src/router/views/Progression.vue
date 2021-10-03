@@ -1,13 +1,13 @@
 <template>
-  <Layout :is-allowed="!$store.state.user.isStudent">
+  <Layout
+    :is-allowed="!$store.state.user.isStudent"
+    class="layout"
+  >
     <ProgressionList
       v-if="isListMode"
-      class="progression-list"
     />
-    <Progression
+    <ProgressionPanel
       v-else
-      :progression="currentProgression"
-      class="progression"
     />
   </Layout>
 </template>
@@ -15,14 +15,14 @@
 <script>
 import Layout from '@/router/layouts/EmptyLayout'
 import ProgressionList from '@/components/Progression/ProgressionList'
-import Progression from '@/components/Progression/Progression'
+import ProgressionPanel from '@/components/Progression/ProgressionPanel'
 
 export default {
-  name: 'Horaires',
+  name: 'Progression',
   components: {
     Layout,
     ProgressionList,
-    Progression
+    ProgressionPanel
   },
   data () {
     return {
@@ -48,5 +48,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.layout {
+  height: 100%;
+  background: rgb(239, 243, 255);
+}
 </style>

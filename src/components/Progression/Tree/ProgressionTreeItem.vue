@@ -1,12 +1,22 @@
 <template>
-  <p>Tree</p>
+  <div
+    class="tree-item"
+  >
+    <p>{{ item.name }}</p>
+  </div>
 </template>
 
 <script>
 
 export default {
-  name: 'ProgressionTree',
+  name: 'ProgressionTreeItem',
   components: { },
+  props: {
+    item: {
+      type: Object,
+      required: true
+    }
+  },
   data () {
     return {
     }
@@ -24,10 +34,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.tree-item {
+  margin-left: 30px;
+}
 </style>
 
 <i18n locale="fr">
 {
-  "add": "Créer",
 }
 </i18n>

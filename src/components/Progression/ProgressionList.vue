@@ -40,25 +40,31 @@
       :key="progression.progressionId"
       class="progression"
     >
-      <h4>
-        {{ progression.name }}
+      <div
+        class="header"
+        @click="selectProgression(progression)"
+      >
+        <p>{{ progression.volee }} {{ progression.subjectName }}</p>
+      </div>
+      <div
+        class="body"
+        @click="selectProgression(progression)"
+      >
+        <p>{{ progression.name }}</p>
+      </div>
+      <div
+        class="buttons"
+      >
         <NeroIcon
           name="fa-pencil-alt"
+          class="button"
           @click="toggleEditModalDisplay(progression)"
         />
         <NeroIcon
           name="fa-trash"
+          class="button"
           @click="confirmProgressionDeletion(progression)"
         />
-      </h4>
-      <div
-        @click="selectProgression(progression)"
-      >
-        {{ progression.imageId }}
-        {{ progression.volee }}
-        {{ progression.description }}
-        {{ progression.subjectId }}
-        {{ progression.modifiedDate }}
       </div>
     </div>
   </div>
@@ -67,8 +73,7 @@
       v-if="isEditModalDisplayed"
       :updated-progression="selectedProgression"
       @close="toggleEditModalDisplay"
-    />  "add": "NOUVEAU",
-
+    />
   </teleport>
 </template>
 
@@ -141,6 +146,7 @@ export default {
       this.isEditModalDisplayed = !this.isEditModalDisplayed
     },
     selectProgression (progression) {
+      this.$store.dispatch('progression/getProgressionContent', progression.progressionId)
       this.$store.dispatch('progression/setCurrentProgression', progression)
       this.$store.dispatch('progression/setListMode', false)
     }
@@ -154,19 +160,26 @@ export default {
   justify-content: space-between;
   height: 50px;
   vertical-align: middle;
+  margin-top: 10px;
 
   .create-button {
     margin-left: 30px;
-    height: 30px;
+    height: 48px;
+    width: 140px;
+    border-radius: 32px;
+    background-color: #306CD3;
   }
   .filters {
     display: flex;
-    margin-right: 100px;
+    margin-right: 10px;
+    height: 70%;
     p {
+      float: left;
       margin-right: 10px;
     }
     .filter {
       margin-right: 10px;
+      min-width: 200px;
     }
   }
 }
@@ -174,24 +187,50 @@ export default {
 .progression-list {
   margin: 1rem;
   display: grid;
-  grid-template-columns: repeat(auto-fill, 200px);
+  grid-template-columns: repeat(auto-fill, 15rem);
   grid-gap: 1rem;
-  .progression {
-    border: 1px solid black;
+  background: rgb(239, 243, 255);
 
-    h4 {
+  .progression {
+    height: 15rem;
+    max-height: 15rem;
+    width: 15rem;
+    background: white;
+
+    .header {
       margin: 0;
       color: white;
-      background: darkslategray;
+      background: rgb(84, 119, 236);
+      p {
+        text-align: center;
+        margin-left: 20px;
+      }
     }
 
-    div {
+    .body {
       padding: 10px;
+      height: 9rem;
+      p {
+        margin-left: 10px;
+      }
+    }
+
+    .buttons {
+      height: 4rem;
+      margin-right: 2rem;
+      float: right;
+      .button {
+        margin: 7px;
+        margin-left: 30px;
+        &:hover {
+          border: 1px solid black;
+          cursor: pointer;
+        }
+      }
     }
   }
 
 }
-// <i18n src="./myLang.json"></i18n>
 </style>
 
 <i18n locale="fr">
@@ -203,4 +242,3 @@ export default {
   "warning": "La suppression de cette progression est définitive."
 }
 </i18n>
-      margin-right: 20px;

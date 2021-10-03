@@ -20,7 +20,7 @@
         <p
           class="progression-subject"
         >
-          {{ progression.subject.name }} - {{ progression.volee }}
+          {{ progression.subjectName }} - {{ progression.volee }}
         </p>
         <p
           class="progression-name"

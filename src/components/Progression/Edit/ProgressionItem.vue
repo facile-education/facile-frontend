@@ -1,22 +1,15 @@
 <template>
-  <div class="items-list">
-    <p>Edit</p>
-    <div
-      v-for="item in itemList"
-      :key="item.itemId"
-      class="item"
-    >
-      <h4>
-        {{ item.name }}
-      </h4>
-    </div>
+  <div
+    class="progression-item"
+  >
+    <p>1 item</p>
   </div>
 </template>
 
 <script>
 
 export default {
-  name: 'ProgressionEditMode',
+  name: 'ProgressionItem',
   components: { },
   data () {
     return {
@@ -35,6 +28,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.progression-item {
+  height: 400px;
+  width: 100%;
+  border: 1px solid black;
+}
 </style>
 
 <i18n locale="fr">
