@@ -2,6 +2,7 @@
   <div
     class="tree-section"
   >
+    <hr>
     <!-- Section name -->
     <p
       @click="selectSection"
@@ -74,6 +75,14 @@ export default {
 <style lang="scss" scoped>
 .tree-section {
   margin-left: 10px;
+  p {
+    color: #000000;
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 16px;
+  }
 }
 </style>
 

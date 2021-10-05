@@ -1,8 +1,9 @@
 <template>
-  <div>
-    <!-- Create button and create menu -->
+  <div
+    class="header"
+  >
     <div
-      class="header"
+      class="create-button-menu"
     >
       <PentilaButton
         class="create-button"
@@ -29,39 +30,26 @@
           </p>
         </div>
       </div>
-      <PentilaButton
-        class="delete-folder-button"
-        @click="deleteFolder"
-      >
-        <NeroIcon
-          name="fa-trash"
-        />
-        {{ $t('delete') }}
-      </PentilaButton>
-      <p>Current folder : {{ currentFolderName }}</p>
     </div>
-
-    <div class="items-list">
-      <ProgressionItem
-        v-for="item in itemList"
-        :key="item.itemId"
-        class="item"
-      >
-        <h4>
-          {{ item.name }}
-        </h4>
-      </ProgressionItem>
-    </div>
+    <p>Current folder : {{ currentFolderName }}</p>
+    <PentilaButton
+      class="delete-folder-button"
+      @click="deleteFolder"
+    >
+      <NeroIcon
+        name="fa-trash"
+      />
+      {{ $t('delete') }}
+    </PentilaButton>
   </div>
 </template>
 
 <script>
-import ProgressionItem from '@/components/Progression/Edit/ProgressionItem'
 import NeroIcon from '@/components/Nero/NeroIcon'
 
 export default {
-  name: 'ProgressionEditMode',
-  components: { ProgressionItem, NeroIcon },
+  name: 'ProgressionEditHeader',
+  components: { NeroIcon },
   data () {
     return {
       isCreateMenuDisplayed: false,
@@ -74,7 +62,12 @@ export default {
   },
   computed: {
     itemList () {
-      return this.$store.state.progression.currentProgression.items
+      console.log('currentFolder = ', this.$store.state.progression.currentFolder)
+      if (this.$store.state.progression.currentFolder === undefined) {
+        return []
+      } else {
+        return this.$store.state.progression.currentFolder.items
+      }
     },
     currentFolderName () {
       if (this.$store.state.progression.currentFolder === undefined) {
@@ -110,9 +103,11 @@ export default {
 <style lang="scss" scoped>
 .header {
   height: 60px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
   .create-button {
     margin-left: 30px;
-    margin-top: 10px;
     width: 140px;
     height: 48px;
   }
@@ -127,6 +122,12 @@ export default {
         cursor: pointer;
       }
     }
+  }
+
+  .delete-folder-button {
+    width: 240px;
+    height: 48px;
+    margin-right: 30px;
   }
 }
 </style>

@@ -2,12 +2,45 @@
   <div
     class="tree-subsection"
   >
-    <!-- Subsection name -->
-    <p
-      @click="selectSubsection"
+    <div
+      class="subsection-header"
     >
-      SUB{{ subSection.name }}
-    </p>
+      <div
+        class="subsection-name"
+        @click="selectSubsection"
+      >
+        <!-- Subsection name -->
+        <span>
+          {{ subSection.name }}
+        </span>
+
+        <!-- Number of items -->
+        <span
+          v-if="!isExpanded"
+        >
+          ({{ nbItems }})
+        </span>
+      </div>
+
+      <!-- Right arrow icon -->
+      <img
+        v-if="!isExpanded"
+        class="arrow"
+        src="@assets/arrow-right.svg"
+        :alt="$t('expand')"
+        :title="$t('expand')"
+        @click="expand()"
+      >
+      <!-- Down arrow icon -->
+      <img
+        v-if="isExpanded"
+        class="arrow"
+        src="@assets/arrow-down.svg"
+        :alt="$t('collapse')"
+        :title="$t('collapse')"
+        @click="collapse()"
+      >
+    </div>
 
     <!-- Sub-section items -->
     <div
@@ -43,6 +76,9 @@ export default {
   computed: {
     progression () {
       return this.$store.state.progression.currentProgression
+    },
+    nbItems () {
+      return this.subSection.items.length
     }
   },
   created () {
@@ -50,7 +86,10 @@ export default {
   },
   methods: {
     expand () {
-      this.isExpanded = !this.isExpanded
+      this.isExpanded = true
+    },
+    collapse () {
+      this.isExpanded = false
     },
     selectSubsection () {
       this.$store.dispatch('progression/setCurrentFolder', this.subSection)
@@ -61,13 +100,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.sub-section {
+.tree-subsection {
   margin-left: 10px;
+  margin-right: 50px;
+  .subsection-header {
+    display: flex;
+    justify-content: space-between;
+    .subsection-name {
+      color: #306CD3;
+      font-family: Roboto;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0;
+      line-height: 16px;
+    }
+  }
 }
 </style>
 
 <i18n locale="fr">
 {
-  "add": "Créer",
+  "expand": "Déplier",
+  "collapse": "Replier"
 }
 </i18n>

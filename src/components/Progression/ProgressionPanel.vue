@@ -9,9 +9,16 @@
     <ProgressionTree
       class="tree"
     />
-    <ProgressionEditMode
-      class="edit"
-    />
+    <div
+      class="header-edit"
+    >
+      <ProgressionEditHeader
+        class="header"
+      />
+      <ProgressionEdit
+        class="edit"
+      />
+    </div>
   </div>
   <ProgressionAssignmentMode
     v-else
@@ -21,13 +28,14 @@
 
 <script>
 import ProgressionSwitchMode from './ProgressionSwitchMode.vue'
-import ProgressionEditMode from './Edit/ProgressionEditMode.vue'
+import ProgressionEditHeader from './Edit/ProgressionEditHeader.vue'
+import ProgressionEdit from './Edit/ProgressionEdit.vue'
 import ProgressionAssignmentMode from './Assignment/ProgressionAssignmentMode.vue'
 import ProgressionTree from './Tree/ProgressionTree.vue'
 
 export default {
   name: 'ProgressionPanel',
-  components: { ProgressionSwitchMode, ProgressionEditMode, ProgressionAssignmentMode, ProgressionTree },
+  components: { ProgressionSwitchMode, ProgressionEditHeader, ProgressionEdit, ProgressionAssignmentMode, ProgressionTree },
   data () {
     return {
       isEditMode: true
@@ -56,7 +64,7 @@ export default {
     height: 100%;
     border: 1px solid black;
   }
-  .edit {
+  .header-edit {
     width: 80%;
     height: 100%;
     border: 1px solid black;
