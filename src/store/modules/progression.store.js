@@ -68,31 +68,17 @@ export const mutations = {
   },
   addItem (state, payload) {
     console.log('addItem payload=', payload)
-    // Loop over progression to add the created folder
-    for (let idx = 0; idx < state.currentProgression.sections.length; ++idx) {
-      const section = state.currentProgression.sections[idx]
-      console.log('loop over section ', section)
-      if (section.folderId === payload.parentId) {
-        console.log('foundparent')
-        if (section.items === undefined) {
-          console.log('createitems')
-          section.items = []
-        }
-        section.items.push(payload)
-        return
-      }
-      if (section.subSections !== undefined) {
-        for (let j = 0; j < section.subSections.length; ++j) {
-          const subsection = section.subSections[j]
-          console.log('loop over subsection ', subsection)
-          if (subsection.folderId === payload.parentId) {
-            console.log('foundparent2')
-            if (subsection.items === undefined) {
-              console.log('createitems2')
-              subsection.items = []
-            }
-            subsection.items.push(payload)
-          }
+    const sectionIndex = state.currentProgression.sections.map(section => section.folderId).indexOf(payload.parentId)
+    if (sectionIndex !== -1) {
+      // This is a section item
+      state.currentProgression.sections[sectionIndex].items.push(payload)
+    } else {
+      // This is a sub-section item
+      for (let idx = 0; idx < state.currentProgression.sections.length; ++idx) {
+        const section = state.currentProgression.sections[idx]
+        const subSectionIndex = section.subSections.map(subSection => subSection.folderId).indexOf(payload.parentId)
+        if (subSectionIndex !== -1) {
+          section.subSections[subSectionIndex].items.push(payload)
         }
       }
     }
@@ -215,7 +201,7 @@ export const actions = {
     addItem(state.currentProgression.progressionId, currentFolderId, itemName, isHomework, type, '', order).then(
       (data) => {
         if (data.success) {
-          commit('addItem', { itemName: itemName, order: order, itemId: data.itemId, parentId: currentFolderId, progressionId: state.currentProgression.progressionId })
+          commit('addItem', { name: itemName, order: order, itemId: data.itemId, parentId: currentFolderId, progressionId: state.currentProgression.progressionId })
         }
       },
       (err) => {
