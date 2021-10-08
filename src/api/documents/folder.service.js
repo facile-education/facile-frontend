@@ -1,6 +1,6 @@
 import axios from 'axios'
-import constants from '@/constants/appConstants'
-import { getCookie } from '@/utils/browser.util'
+import constants from '@/api/constants'
+import { getCookie } from '@utils/browser.util'
 
 export default {
   downloadFolder,
@@ -9,13 +9,13 @@ export default {
   getSpacesFolders
 }
 
-const NAVIGATION_PATH = '/documents.navigation'
+const FOLDER_PATH = '/cartable-portlet.folder'
 
 /**
  * Create a zip containing the folderContent and download it
  */
 function downloadFolder (folderId) {
-  return axios.get(constants.JSON_WS_URL + NAVIGATION_PATH + '/download-folder', {
+  return axios.get(constants.JSON_WS_URL + FOLDER_PATH + '/download-folder', {
     params: {
       p_auth: getCookie('pauth'),
       folderId: folderId
@@ -26,20 +26,21 @@ function downloadFolder (folderId) {
 /**
  * Return all the entities (files and folders) inside a given folder
  */
-function getAllEntities (node) {
-  return axios.get(constants.JSON_WS_URL + NAVIGATION_PATH + '/get-all-entities', {
+function getAllEntities (folderId) {
+  return axios.get(constants.JSON_WS_URL + FOLDER_PATH + '/get-all-entities', {
     params: {
       p_auth: getCookie('pauth'),
-      folderId: node
+      folderId: folderId,
+      casierView: false
     }
   }).then(response => response.data)
 }
 
 /**
- * Ask to backend the source space of a given entity (private, etc...)
+ * Get the breadCrumb of a folder
  */
 function getFolderBreadcrumb (folderId) {
-  return axios.get(constants.JSON_WS_URL + NAVIGATION_PATH + '/get-folder-breadcrumb', {
+  return axios.get(constants.JSON_WS_URL + FOLDER_PATH + '/get-folder-breadcrumb', {
     params: {
       p_auth: getCookie('pauth'),
       folderId: folderId
@@ -51,7 +52,7 @@ function getFolderBreadcrumb (folderId) {
  * Return all the application's root folders (privateFolder, trashFolder, ...)
  */
 function getSpacesFolders () {
-  return axios.get(constants.JSON_WS_URL + NAVIGATION_PATH + '/get-spaces-folders', {
+  return axios.get(constants.JSON_WS_URL + FOLDER_PATH + '/get-spaces-folders', {
     params: {
       p_auth: getCookie('pauth')
     }

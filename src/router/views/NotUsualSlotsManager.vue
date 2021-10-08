@@ -106,7 +106,7 @@ export default {
     queriedUser () {
       return this.$store.state.notUsualSlots.queriedUser
     },
-    hasGoodRole () {
+    hasGoodRole () { // TODO be consistent with application manager?
       return this.currentUser.isTeacher || this.currentUser.isDoyen || this.currentUser.isDirectionMember || this.currentUser.isSecretariat
     },
     currentSlotType () {
