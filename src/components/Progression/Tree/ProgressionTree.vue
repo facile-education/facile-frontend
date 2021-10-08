@@ -2,12 +2,11 @@
   <div
     class="tree"
   >
-    <p
+    <div
       class="expand-all"
-      @click="expandAll"
     >
-      Tout afficher
-    </p>
+      {{ $t('summary') }}
+    </div>
 
     <!-- Sections -->
     <ProgressionTreeSection
@@ -37,23 +36,27 @@ export default {
   created () {
   },
   methods: {
-    expandAll () {
-    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.expand-all {
-  margin-left: 10px;
-}
-.section {
-  margin-left: 10px;
+.tree {
+
+  .expand-all {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .section {
+    margin-left: 10px;
+  }
 }
 </style>
 
 <i18n locale="fr">
 {
   "add": "Créer",
+  "summary": "Sommaire"
 }
 </i18n>

@@ -1,80 +1,84 @@
 <template>
   <div
-    class="header"
+    class="list"
   >
-    <PentilaButton
-      class="create-button"
-      @click="toggleEditModalDisplay"
-    >
-      <NeroIcon
-        name="fa-plus"
-      />
-      {{ $t('add') }}
-    </PentilaButton>
-
     <div
-      class="filters"
+      class="header"
     >
-      <p>{{ $t('filterBy') }}</p>
-      <PentilaDropdown
-        v-if="(subjectList && subjectList.length > 1)"
-        v-model="selectedSubject"
-        class="filter"
-        :list="subjectList"
-        :sort="false"
-        display-field="name"
-      />
-      <PentilaDropdown
-        v-if="(voleeList && voleeList.length > 1)"
-        v-model="selectedVolee"
-        class="filter"
-        :sort="false"
-        :list="voleeList"
-      />
-    </div>
-  </div>
-
-  <div class="progression-list">
-    <div
-      v-for="progression in progressionList"
-      :key="progression.progressionId"
-      class="progression"
-    >
-      <div
-        class="header"
-        @click="selectProgression(progression)"
-      >
-        <p>{{ progression.volee }} {{ progression.subjectName }}</p>
-      </div>
-      <div
-        class="body"
-        @click="selectProgression(progression)"
-      >
-        <p>{{ progression.name }}</p>
-      </div>
-      <div
-        class="buttons"
+      <PentilaButton
+        class="create-button"
+        @click="toggleEditModalDisplay"
       >
         <NeroIcon
-          name="fa-pencil-alt"
-          class="button"
-          @click="toggleEditModalDisplay(progression)"
+          name="fa-plus"
         />
-        <NeroIcon
-          name="fa-trash"
-          class="button"
-          @click="confirmProgressionDeletion(progression)"
+        {{ $t('add') }}
+      </PentilaButton>
+
+      <div
+        class="filters"
+      >
+        <p>{{ $t('filterBy') }}</p>
+        <PentilaDropdown
+          v-if="(subjectList && subjectList.length > 1)"
+          v-model="selectedSubject"
+          class="filter"
+          :list="subjectList"
+          :sort="false"
+          display-field="name"
+        />
+        <PentilaDropdown
+          v-if="(voleeList && voleeList.length > 1)"
+          v-model="selectedVolee"
+          class="filter"
+          :sort="false"
+          :list="voleeList"
         />
       </div>
     </div>
+
+    <div class="progression-list">
+      <div
+        v-for="progression in progressionList"
+        :key="progression.progressionId"
+        class="progression"
+      >
+        <div
+          class="header"
+          @click="selectProgression(progression)"
+        >
+          <p>{{ progression.volee }} {{ progression.subjectName }}</p>
+        </div>
+        <div
+          class="body"
+          @click="selectProgression(progression)"
+        >
+          <p>{{ progression.name }}</p>
+        </div>
+        <div
+          class="buttons"
+        >
+          <NeroIcon
+            name="fa-pencil-alt"
+            class="button"
+            @click="toggleEditModalDisplay(progression)"
+          />
+          <NeroIcon
+            name="fa-trash"
+            class="button"
+            @click="confirmProgressionDeletion(progression)"
+          />
+        </div>
+      </div>
+    </div>
+    <teleport to="body">
+      <EditProgressionModal
+        v-if="isEditModalDisplayed"
+        :updated-progression="selectedProgression"
+        @close="toggleEditModalDisplay"
+      />
+    </teleport>
   </div>
-  <teleport to="body">
-    <EditProgressionModal
-      v-if="isEditModalDisplayed"
-      :updated-progression="selectedProgression"
-      @close="toggleEditModalDisplay"
-    />
-  </teleport>
 </template>
 
 <script>
@@ -155,80 +159,82 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.header {
-  display: flex;
-  justify-content: space-between;
-  height: 50px;
-  vertical-align: middle;
-  margin-top: 10px;
+.list {
 
-  .create-button {
-    margin-left: 30px;
-    height: 48px;
-    width: 140px;
-    border-radius: 32px;
-    background-color: #306CD3;
-  }
-  .filters {
+  .header {
     display: flex;
-    margin-right: 10px;
-    height: 70%;
-    p {
-      float: left;
-      margin-right: 10px;
+    justify-content: space-between;
+    height: 50px;
+    vertical-align: middle;
+    margin-top: 10px;
+    .create-button {
+      margin-left: 30px;
+      height: 48px;
+      width: 140px;
+      border-radius: 32px;
+      background-color: #306CD3;
     }
-    .filter {
+    .filters {
+      display: flex;
       margin-right: 10px;
-      min-width: 200px;
+      height: 70%;
+      p {
+        float: left;
+        margin-right: 10px;
+      }
+      .filter {
+        margin-right: 10px;
+        min-width: 200px;
+      }
     }
   }
-}
 
-.progression-list {
-  margin: 1rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 15rem);
-  grid-gap: 1rem;
-  background: rgb(239, 243, 255);
+  .progression-list {
+    margin: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 15rem);
+    grid-gap: 1rem;
+    background: rgb(239, 243, 255);
 
-  .progression {
-    height: 15rem;
-    max-height: 15rem;
-    width: 15rem;
-    background: white;
+    .progression {
+      height: 15rem;
+      max-height: 15rem;
+      width: 15rem;
+      background: white;
 
-    .header {
-      margin: 0;
-      color: white;
-      background: rgb(84, 119, 236);
-      p {
-        text-align: center;
-        margin-left: 20px;
+      .header {
+        margin: 0;
+        color: white;
+        background: rgb(84, 119, 236);
+        p {
+          text-align: center;
+          margin-left: 20px;
+        }
       }
-    }
 
-    .body {
-      padding: 10px;
-      height: 9rem;
-      p {
-        margin-left: 10px;
+      .body {
+        padding: 10px;
+        height: 9rem;
+        p {
+          margin-left: 10px;
+        }
       }
-    }
 
-    .buttons {
-      height: 4rem;
-      margin-right: 2rem;
-      float: right;
-      .button {
-        margin: 7px;
-        margin-left: 30px;
-        &:hover {
-          border: 1px solid black;
-          cursor: pointer;
+      .buttons {
+        height: 4rem;
+        margin-right: 2rem;
+        float: right;
+        .button {
+          margin: 7px;
+          margin-left: 30px;
+          &:hover {
+            border: 1px solid black;
+            cursor: pointer;
+          }
         }
       }
     }
-  }
+}
 
 }
 </style>

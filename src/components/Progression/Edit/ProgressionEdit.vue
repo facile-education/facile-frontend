@@ -1,6 +1,22 @@
 <template>
   <div>
-    <div class="items-list">
+    <!-- Current folder name input -->
+    <div
+      v-if="isFolderSelected"
+    >
+      <PentilaInput
+        :model-value="currentFolderName"
+        :maxlength="75"
+        class="folder-title"
+        @blur="blurInput($event)"
+      />
+    </div>
+
+    <!-- Item list -->
+    <div
+      v-if="itemList.length > 0"
+      class="items-list"
+    >
       <ProgressionItem
         v-for="item in itemList"
         :key="item.itemId"
@@ -23,29 +39,33 @@ export default {
   components: { ProgressionItem },
   data () {
     return {
-      isCreateMenuDisplayed: false,
-      createItems: [
-        { type: 1, name: 'Contenu de séance' },
-        { type: 2, name: 'Devoir' },
-        { type: 3, name: 'Section' }
-      ]
+      isCreateMenuDisplayed: false
     }
   },
   computed: {
     itemList () {
-      console.log('currentFolder = ', this.$store.state.progression.currentFolder)
-      if (this.$store.state.progression.currentFolder === undefined) {
-        return []
+      if (this.$store.state.progression.currentItem !== undefined) {
+        // 1 item is selected -> display it
+        return [this.$store.state.progression.currentItem]
+      } else if (this.$store.state.progression.currentFolder !== undefined) {
+        // 1 section or sub-section is selected -> display recursively all its items
+        const items = []
+        if (this.$store.state.progression.currentFolder.items !== undefined && this.$store.state.progression.currentFolder.items.length > 0) {
+          items.push(this.$store.state.progression.currentFolder.items)
+        }
+        if (this.$store.state.progression.currentFolder.subSections !== undefined && this.$store.state.progression.currentFolder.subSections.items !== undefined && this.$store.state.progression.currentFolder.subSections.items.length > 0) {
+          items.push(this.$store.state.progression.currentFolder.subSections.items)
+        }
+        return items
       } else {
-        return this.$store.state.progression.currentFolder.items
+        return []
       }
     },
     currentFolderName () {
-      if (this.$store.state.progression.currentFolder === undefined) {
-        return 'root'
-      } else {
-        return this.$store.state.progression.currentFolder.name
-      }
+      return this.$store.state.progression.currentFolder.name
+    },
+    isFolderSelected () {
+      return this.$store.state.progression.currentFolder !== undefined
     }
   },
   created () {
@@ -66,40 +86,20 @@ export default {
     },
     deleteFolder () {
       this.$store.dispatch('progression/deleteFolder', this.$store.state.progression.currentFolder)
+    },
+    blurInput (e) {
+      console.log('update foldername, value=', e)
+      this.$store.dispatch('progression/updateFolderName', { folder: this.$store.state.progression.currentFolder, newFolderName: e.target.value })
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.header {
-  height: 60px;
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
-  .create-button {
-    margin-left: 30px;
-    width: 140px;
-    height: 48px;
-  }
-  .create-menu {
-    border: 1px solid black;
-    margin-left: 30px;
-    width: 200px;
-    .create-menu-item {
-      height: 30px;
-      &:hover {
-        background: rgb(167, 167, 247);
-        cursor: pointer;
-      }
-    }
-  }
-
-  .delete-folder-button {
-    width: 240px;
-    height: 48px;
-    margin-right: 30px;
-  }
+.folder-title {
+  width: 95%;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 </style>
 

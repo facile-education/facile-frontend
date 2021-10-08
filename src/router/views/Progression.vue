@@ -5,9 +5,11 @@
   >
     <ProgressionList
       v-if="isListMode"
+      class="progression-list"
     />
     <ProgressionPanel
       v-else
+      class="progression"
     />
   </Layout>
 </template>
@@ -50,6 +52,11 @@ export default {
 <style lang="scss" scoped>
 .layout {
   height: 100%;
-  background: rgb(239, 243, 255);
+  .progression-list {
+    background: rgb(239, 243, 255);
+  }
+  .progression {
+    background: white;
+  }
 }
 </style>
