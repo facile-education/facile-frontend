@@ -16,7 +16,7 @@
 <script>
 
 export default {
-  name: 'ProgressionAssignmentMode',
+  name: 'ProgressionAssignment',
   components: { },
   data () {
     return {
@@ -25,6 +25,9 @@ export default {
   computed: {
     progression () {
       return this.$store.state.progression.currentProgression
+    },
+    itemList () {
+      return []
     }
   },
   created () {

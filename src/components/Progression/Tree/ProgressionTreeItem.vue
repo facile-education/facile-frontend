@@ -1,8 +1,10 @@
 <template>
   <div
     class="tree-item"
+    :class="{'selected': isSelected }"
+    @click="selectItem"
   >
-    <p>{{ item.name }}</p>
+    <span>{{ item.name }}</span>
   </div>
 </template>
 
@@ -22,20 +24,35 @@ export default {
     }
   },
   computed: {
-    progression () {
-      return this.$store.state.progression.currentProgression
+    isSelected () {
+      return this.$store.state.progression.currentItem !== undefined && this.$store.state.progression.currentItem.itemId === this.item.itemId
     }
   },
   created () {
   },
   methods: {
+    selectItem () {
+      this.$store.dispatch('progression/getItemContents', this.item)
+      this.$store.dispatch('progression/setCurrentItem', this.item)
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
 .tree-item {
-  margin-left: 30px;
+  height: 25px;
+  &:hover {
+    background-color: #EFF3FB;
+  }
+  span {
+    margin-left: 5px;
+    font-family: Roboto;
+    font-size: 12px;
+    &.selected {
+      color: #306CD3;
+    }
+  }
 }
 </style>
 

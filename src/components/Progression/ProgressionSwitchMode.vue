@@ -7,7 +7,7 @@
     >
       <!-- Previous button-->
       <img
-        src="/assets/img/previous.png"
+        src="@assets/arrow-left.svg"
         title="Revenir à la liste des progressions"
         class="previous"
         @click="toggleListMode()"
@@ -17,16 +17,16 @@
       <div
         class="progression-infos"
       >
-        <p
+        <span
           class="progression-subject"
         >
           {{ progression.subjectName }} - {{ progression.volee }}
-        </p>
-        <p
+        </span>
+        <span
           class="progression-name"
         >
           {{ progression.name }}
-        </p>
+        </span>
       </div>
     </div>
 
@@ -36,25 +36,33 @@
     >
       <div
         class="switch-button"
+        @click="toggleEditMode()"
       >
         <img
-          src="@assets/switch-edit.png"
+          src="@assets/icon_edit-progression.svg"
           title="edit"
           class="toggle-button"
-          @click="toggleEditMode()"
         >
         <p>Editer la progression</p>
+        <div
+          v-if="isEditMode"
+          class="active-line"
+        />
       </div>
       <div
         class="switch-button"
+        @click="toggleAssignmentMode()"
       >
         <img
           src="@assets/switch-assignment.png"
           title="assignment"
           class="toggle-button"
-          @click="toggleAssignmentMode()"
         >
         <p>Affecter aux horaires</p>
+        <div
+          v-if="!isEditMode"
+          class="active-line"
+        />
       </div>
     </div>
   </div>
@@ -72,6 +80,9 @@ export default {
   computed: {
     progression () {
       return this.$store.state.progression.currentProgression
+    },
+    isEditMode () {
+      return this.$store.state.progression.isEditMode
     }
   },
   created () {
@@ -108,8 +119,24 @@ export default {
       margin: auto;
     }
     .progression-infos {
+      height: 55px;
+      margin:auto;
       margin-left: 20px;
-      text-align: center;
+      display: grid;
+      .progression-subject {
+        height: 15px;
+        font-weight: light;
+        color: #838383;
+        font-family: Roboto;
+        font-size: 14px;
+      }
+      .progression-name {
+        height: 25px;
+        font-weight: bold;
+        color: #000000;
+        font-family: Roboto;
+        font-size: 22px;
+      }
     }
   }
 
@@ -121,13 +148,24 @@ export default {
       align-content: center;
       text-align: center;
       padding-left: 20px;
+      &:hover {
+        cursor: pointer;
+      }
       .toggle-button {
         width: 50px;
-        height: 50px;
+        height: 43px;
         padding: 5px;
       }
       p {
         margin: 0;
+        padding-bottom: 5px;
+        font-size: 14px;
+      }
+      .active-line {
+        float: bottom;
+        height: 3px;
+        width: 140px;
+        background-color: #306CD3;
       }
     }
   }

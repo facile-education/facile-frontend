@@ -4,11 +4,13 @@
   >
     <hr>
     <!-- Section name -->
-    <p
+    <div
+      class="section-name"
+      :class="{'selected': isSelected }"
       @click="selectSection"
     >
-      {{ section.name }}
-    </p>
+      <span>{{ section.name }}</span>
+    </div>
 
     <!-- Sub-sections -->
     <div
@@ -23,7 +25,7 @@
     </div>
     <div
       v-if="isExpanded"
-      class="items"
+      class="section-items"
     >
       <ProgressionTreeItem
         v-for="item in section.items"
@@ -55,6 +57,15 @@ export default {
   computed: {
     progression () {
       return this.$store.state.progression.currentProgression
+    },
+    currentFolder () {
+      return this.$store.state.progression.currentFolder
+    },
+    isSelected () {
+      // Section is selected when itself is selected or one of its sub-sections
+      return this.currentFolder !== undefined &&
+      (this.currentFolder.folderId === this.section.folderId ||
+      this.section.subSections.map(subSection => subSection.folderId).indexOf(this.currentFolder.folderId) !== -1)
     }
   },
   created () {
@@ -66,7 +77,7 @@ export default {
     },
     selectSection () {
       this.$store.dispatch('progression/setCurrentFolder', this.section)
-      this.expand()
+      // this.expand()
     }
   }
 }
@@ -75,13 +86,41 @@ export default {
 <style lang="scss" scoped>
 .tree-section {
   margin-left: 10px;
-  p {
-    color: #000000;
-    font-family: Roboto;
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 0;
-    line-height: 16px;
+  margin-right: 10px;
+
+  hr {
+    margin: 0;
+    border: 0; border-top: 1px solid #D4D4D4;
+  }
+
+  .section-name {
+    height: 30px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    span {
+      vertical-align: sub;
+      margin-left: 5px;
+      color: #000000;
+      font-family: Roboto;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    &:hover {
+      background-color: #EFF3FB;
+    }
+    &.selected span {
+      color: #306CD3;
+    }
+    span {
+      text-transform: uppercase;
+    }
+  }
+  .sub-sections {
+    margin-left: 0px;
+  }
+  .section-items {
+    margin-left: 20px;
   }
 }
 </style>

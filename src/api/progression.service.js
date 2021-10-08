@@ -8,12 +8,17 @@ export {
   getProgressionContent,
   getProgressionList,
   updateProgression,
+  getFolderContent,
   addFolder,
   deleteFolder,
   updateFolder,
+  getItemContents,
   addItem,
+  addItemContent,
   deleteItem,
+  deleteItemContent,
   updateItem,
+  updateItemContent,
   addAssignment,
   deleteAssignment,
   updateAssignment,
@@ -77,13 +82,19 @@ function updateProgression (progressionId, name, description, subjectId, volee, 
 }
 
 // ProgressionFolder object
-function addFolder (progressionId, parentFolderId, name, order) {
+function getFolderContent (folderId) {
+  return axios.get(constants.JSON_WS_URL + PROGRESSION_PATH + FOLDER_CTX + 'get-folder-content', {
+    params: {
+      folderId
+    }
+  }).then(response => response.data)
+}
+
+function addFolder (progressionId, parentFolderId) {
   return axios.post(constants.JSON_WS_URL + PROGRESSION_PATH + FOLDER_CTX + 'add-folder',
     PentilaUtils.URL.params({
       progressionId,
-      parentFolderId,
-      name,
-      order
+      parentFolderId
     })).then(response => response.data)
 }
 
@@ -106,6 +117,14 @@ function updateFolder (folderId, parentFolderId, name, order) {
 }
 
 // ProgressionItem object
+function getItemContents (itemId) {
+  return axios.get(constants.JSON_WS_URL + PROGRESSION_PATH + ITEM_CTX + 'get-item-contents', {
+    params: {
+      itemId
+    }
+  }).then(response => response.data)
+}
+
 function addItem (progressionId, folderId, name, isHomework, type, content, order) {
   return axios.post(constants.JSON_WS_URL + PROGRESSION_PATH + ITEM_CTX + 'add-item',
     PentilaUtils.URL.params({
@@ -119,10 +138,29 @@ function addItem (progressionId, folderId, name, isHomework, type, content, orde
     })).then(response => response.data)
 }
 
+function addItemContent (itemId, contentType, fileName, fileEntryId, isToBeCompleted) {
+  return axios.post(constants.JSON_WS_URL + PROGRESSION_PATH + ITEM_CTX + 'add-item-content',
+    PentilaUtils.URL.params({
+      itemId,
+      contentType,
+      fileName,
+      fileEntryId,
+      isToBeCompleted
+    })).then(response => response.data)
+}
+
 function deleteItem (itemId) {
   return axios.get(constants.JSON_WS_URL + PROGRESSION_PATH + ITEM_CTX + 'delete-item', {
     params: {
       itemId
+    }
+  }).then(response => response.data)
+}
+
+function deleteItemContent (contentId) {
+  return axios.get(constants.JSON_WS_URL + PROGRESSION_PATH + ITEM_CTX + 'delete-item-content', {
+    params: {
+      contentId
     }
   }).then(response => response.data)
 }
@@ -136,6 +174,17 @@ function updateItem ({ itemId, folderId, name, isHomework, type, content, order 
       isHomework,
       type,
       content,
+      order
+    })).then(response => response.data)
+}
+
+function updateItemContent ({ itemId, contentId, name, contentType, order }) {
+  return axios.post(constants.JSON_WS_URL + PROGRESSION_PATH + ITEM_CTX + 'update-item',
+    PentilaUtils.URL.params({
+      itemId,
+      contentId,
+      name,
+      contentType,
       order
     })).then(response => response.data)
 }
