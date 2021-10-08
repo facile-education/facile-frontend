@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import navigationService from '@/api/navigation.service'
+import navigationService from '@/api/documents/folder.service'
 import FilePickerBreadCrumb from '@components/FilePicker/FilePickerBreadCrumb'
 import FilePickerFolder from '@components/FilePicker/FilePickerFolder'
 import FilePickerFile from '@components/FilePicker/FilePickerFile'

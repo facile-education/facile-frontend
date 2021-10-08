@@ -1,5 +1,5 @@
 import store from '@store/index.js'
-import documentService from '@/api/document.service'
+import documentService from '@/api/documents/document.service'
 
 export default {
   importDocument

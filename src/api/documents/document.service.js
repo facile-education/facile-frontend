@@ -1,10 +1,9 @@
 import axios from 'axios'
-import constants from '@/constants/appConstants'
-import { getCookie } from '@/utils/browser.util'
+import constants from '@/api/constants'
+import { getCookie } from '@utils/browser.util'
 
 export default {
   createFolder,
-  moveEntities,
   uploadFile,
   renameEntity
 }
@@ -20,21 +19,6 @@ function createFolder (parentFolderId, name) {
       p_auth: getCookie('pauth'),
       parentFolderId: parentFolderId,
       name: name
-    }
-  }).then(response => response.data)
-}
-
-/**
- * Move entities into a targetFolder
- */
-function moveEntities (folderIdArray, fileIdArray, destinationFolder) {
-  return axios.get(constants.JSON_WS_URL + EDIT_PATH + '/move-entities', {
-    params: {
-      p_auth: getCookie('pauth'),
-      targetFolderId: destinationFolder.id,
-      folderIdArray: JSON.stringify(folderIdArray),
-      fileIdArray: JSON.stringify(fileIdArray),
-      sendToDropbox: false
     }
   }).then(response => response.data)
 }

@@ -35,6 +35,11 @@ const routes = [
     path: '/progression',
     name: 'Progression',
     component: () => import('@/router/views/Progression')
+  },
+  {
+    path: '/documents',
+    name: 'Documents',
+    component: () => import('@/router/views/Documents')
   }
 ]
 
