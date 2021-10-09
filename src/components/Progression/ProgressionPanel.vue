@@ -68,12 +68,12 @@ export default {
     display: flex;
     height: 100%;
     .tree {
-      width: 20%;
+      width: 15%;
       height: 100%;
       border-right: 1px solid black;
     }
     .header-edit {
-      width: 80%;
+      width: 85%;
       height: 100%;
     }
   }

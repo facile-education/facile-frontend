@@ -9,8 +9,6 @@ import PentilaComponents from 'pentila-components'
 import dayjs from 'dayjs'
 import fr from 'dayjs/locale/fr'
 import { VueHammer } from '@/utils/vuehammer'
-import Window from '@components/Base/Window'
-import Button from '@components/Base/Button'
 // import axios from 'axios'
 
 const app = createApp(App)
@@ -32,8 +30,6 @@ const app = createApp(App)
 Object.keys(PentilaComponents).forEach(name => {
   app.component(name, PentilaComponents[name])
 })
-app.component('Window', Window)
-app.component('Button', Button)
 
 app.mount('#app')
 

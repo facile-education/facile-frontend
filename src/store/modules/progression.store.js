@@ -39,7 +39,7 @@ export const state = {
 
 export const mutations = {
   addProgression (state, payload) {
-    state.progressionList.unshift(payload)
+    state.progressionList.push(payload)
   },
   removeProgression (state, payload) {
     const index = state.progressionList.indexOf(payload)
@@ -200,8 +200,7 @@ export const actions = {
     addProgression(progression).then(
       (data) => {
         if (data.success) {
-          progression.progressionId = data.progressionId
-          commit('addProgression', progression)
+          commit('addProgression', data.progression)
         }
       },
       (err) => {
@@ -326,6 +325,7 @@ export const actions = {
     addFolder(state.currentProgression.progressionId, currentFolderId).then(
       (data) => {
         if (data.success) {
+          data.folder.items = []
           commit('addFolder', { folder: data.folder, parentId: currentFolderId })
           commit('setCurrentFolder', data.folder)
         }
@@ -336,7 +336,6 @@ export const actions = {
       })
   },
   updateFolderName ({ commit }, { folder, newFolderName }) {
-    console.log('newFolderName=', newFolderName)
     updateFolder(folder.folderId, folder.parentId, newFolderName, folder.order).then(
       (data) => {
         if (data.success) {
@@ -362,8 +361,19 @@ export const actions = {
       })
   },
   addItemContent ({ commit }, { itemId, contentType }) {
-    console.log('addItemContent itemId=', itemId, 'contentType=', contentType)
-    addItemContent(itemId, contentType, '', 0, false).then(
+    addItemContent(itemId, contentType, '', '', '', 0, false).then(
+      (data) => {
+        if (data.success) {
+          commit('addItemContent', data.content)
+        }
+      },
+      (err) => {
+        // TODO toastr
+        console.error(err)
+      })
+  },
+  addLink ({ commit }, { itemId, linkName, linkUrl }) {
+    addItemContent(itemId, 3, linkName, linkUrl, '', 0, false).then(
       (data) => {
         if (data.success) {
           commit('addItemContent', data.content)
