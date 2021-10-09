@@ -75,11 +75,13 @@
       class="delete-folder-button"
       @click="deleteFolder"
     >
-      <NeroIcon
-        name="fa-trash"
+      <img
         class="trash-icon"
-      />
-      {{ $t('delete') }}
+        src="@assets/trash.svg"
+        :alt="$t('delete')"
+        :title="$t('delete')"
+      >
+      <span>{{ $t('delete') }}</span>
     </PentilaButton>
   </div>
 </template>
@@ -162,6 +164,7 @@ export default {
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
+  margin-right: 20px;
   .create-button {
     margin: auto;
     margin-left: 30px;
@@ -225,8 +228,15 @@ export default {
     background-color: #F5F5F5;
     margin-right: 30px;
     color: black;
+    display: flex;
     .trash-icon {
+      width: 20px;
+      height: 20px;
+      margin: auto;
       margin-right: 10px;
+    }
+    span {
+      margin: auto;
     }
   }
 }

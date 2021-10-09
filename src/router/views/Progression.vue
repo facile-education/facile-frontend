@@ -53,6 +53,8 @@ export default {
 .layout {
   height: 100%;
   .progression-list {
+    width: 100%;
+    height: 100%;
     background: rgb(239, 243, 255);
   }
   .progression {

@@ -12,7 +12,7 @@
         <NeroIcon
           name="fa-plus"
         />
-        {{ $t('add') }}
+        <span>{{ $t('add') }}</span>
       </PentilaButton>
 
       <div
@@ -58,16 +58,34 @@
         <div
           class="buttons"
         >
-          <NeroIcon
-            name="fa-pencil-alt"
+          <img
             class="button"
+            src="@assets/edit.svg"
+            :alt="$t('edit')"
+            :title="$t('edit')"
             @click="toggleEditModalDisplay(progression)"
-          />
-          <NeroIcon
-            name="fa-trash"
+          >
+          <img
             class="button"
+            src="@assets/duplicate.svg"
+            :alt="$t('duplicate')"
+            :title="$t('duplicate')"
+            @click="duplicate(progression)"
+          >
+          <img
+            class="button"
+            src="@assets/share.svg"
+            :alt="$t('share')"
+            :title="$t('share')"
+            @click="toggleShareModalDisplay(progression)"
+          >
+          <img
+            class="button"
+            src="@assets/trash.svg"
+            :alt="$t('delete')"
+            :title="$t('delete')"
             @click="confirmProgressionDeletion(progression)"
-          />
+          >
         </div>
       </div>
     </div>
@@ -84,6 +102,7 @@
 <script>
 import NeroIcon from '@/components/Nero/NeroIcon'
 import PentilaUtils from 'pentila-utils'
+// import _ from 'lodash'
 
 import { defineAsyncComponent } from 'vue'
 const EditProgressionModal = defineAsyncComponent(() => import('@/components/Progression/EditProgressionModal'))
@@ -109,6 +128,7 @@ export default {
         list = list.filter((el) => el.subjectId === this.selectedSubject.subjectId)
       }
       return list
+      // _.orderBy(list, 'modifiedDate', 'desc')
     },
     subjectList () {
       if (this.$store.state.progression.subjectList) {
@@ -161,30 +181,47 @@ export default {
 <style lang="scss" scoped>
 .list {
 
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   .header {
     display: flex;
     justify-content: space-between;
     height: 50px;
-    vertical-align: middle;
-    margin-top: 10px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
     .create-button {
+      margin: auto;
       margin-left: 30px;
       height: 48px;
       width: 140px;
       border-radius: 32px;
       background-color: #306CD3;
+      span {
+        margin-left: 12px;
+      }
     }
     .filters {
       display: flex;
+      margin: auto;
       margin-right: 10px;
       height: 70%;
       p {
         float: left;
+        margin: auto;
         margin-right: 10px;
+        font-family: Roboto;
+        font-size: 14px;
       }
       .filter {
         margin-right: 10px;
         min-width: 200px;
+        font-family: Roboto;
+        font-size: 14px;
+        button {
+          display: flex;
+          justify-content: space-between;
+        }
       }
     }
   }
@@ -222,13 +259,16 @@ export default {
 
       .buttons {
         height: 4rem;
-        margin-right: 2rem;
+        margin-right: 1rem;
         float: right;
         .button {
-          margin: 7px;
-          margin-left: 30px;
+          margin-left: 1rem;
+          border: 1px solid transparent;
+          border-radius: 5px;
+          padding: 5px;
+          margin: 5px;
           &:hover {
-            border: 1px solid black;
+            border: 1px solid grey;
             cursor: pointer;
           }
         }
@@ -245,6 +285,10 @@ export default {
   "filterBy": "Filtrer par :",
   "subject": "Discipline",
   "volee": "Volée",
-  "warning": "La suppression de cette progression est définitive."
+  "warning": "La suppression de cette progression est définitive.",
+  "edit": "Modifier",
+  "share": "Partager",
+  "duplicate": "Dupliquer",
+  "delete": "Supprimer"
 }
 </i18n>

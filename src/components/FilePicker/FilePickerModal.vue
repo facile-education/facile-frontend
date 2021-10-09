@@ -1,5 +1,5 @@
 <template>
-  <Window
+  <PentilaWindow
     class="filepicker-window"
     :class="{'mobile': mq.phone}"
     data-test="file-picker-modal"
@@ -50,20 +50,20 @@
       </div>
     </template>
     <template #footer>
-      <Button
+      <PentilaButton
         v-if="folderSelection"
         data-test="submitButton"
         :label="selectedFolder ? $t('FilePickerModal.chooseSelectedFolder') + selectedFolder.name : $t('FilePickerModal.chooseCurrentFolder')"
         @click="emitSelectedFolder"
       />
-      <Button
+      <PentilaButton
         v-else
         data-test="submitButton"
         :label="$t('FilePickerModal.submitButton')"
         @click="addNewFiles"
       />
     </template>
-  </Window>
+  </PentilaWindow>
 </template>
 
 <script>

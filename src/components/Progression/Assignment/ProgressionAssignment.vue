@@ -1,14 +1,28 @@
 <template>
-  <div class="items-list">
-    <p>Assignment</p>
+  <div class="assignment">
     <div
-      v-for="item in itemList"
-      :key="item.itemId"
-      class="item"
+      class="filters"
     >
-      <h4>
-        {{ item.name }}
-      </h4>
+      <PentilaDropdown
+        v-model="selectedSection"
+        class="filter"
+        :list="progressionFolders"
+        display-field="name"
+      />
+      <PentilaDropdown
+        v-model="selectedSession"
+        class="filter"
+        :list="sessionList"
+      />
+    </div>
+    <div
+      v-for="section in progression.sections"
+      :key="section.folderId"
+      class="section"
+    >
+      <SectionAssignment
+        :section="section"
+      />
     </div>
   </div>
 </template>
@@ -18,6 +32,8 @@
 export default {
   name: 'ProgressionAssignment',
   components: { },
+  props: {
+  },
   data () {
     return {
     }
@@ -25,9 +41,6 @@ export default {
   computed: {
     progression () {
       return this.$store.state.progression.currentProgression
-    },
-    itemList () {
-      return []
     }
   },
   created () {

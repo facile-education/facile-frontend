@@ -28,6 +28,17 @@
         </h4>
       </ProgressionItem>
     </div>
+    <div
+      v-else-if="isEmptySection"
+      class="no-item"
+    >
+      <div
+        class="no-item-labels"
+      >
+        <span>{{ $t('emptySession') }}</span>
+        <span>{{ $t('insertNewContent') }}</span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -66,6 +77,10 @@ export default {
     },
     isFolderSelected () {
       return this.$store.state.progression.currentFolder !== undefined
+    },
+    isEmptySection () {
+      // A section or sub-section is selected, it has no item and no sub-section
+      return this.isFolderSelected && this.itemList.length === 0 && (this.$store.state.progression.currentFolder.subSections === undefined || this.$store.state.progression.currentFolder.subSections.length === 0)
     }
   },
   created () {
@@ -97,15 +112,40 @@ export default {
 
 <style lang="scss" scoped>
 .folder-title {
-  width: 95%;
+  width: 100%;
   margin-left: 20px;
   margin-right: 20px;
+}
+.no-item {
+  height: 400px;
+  border: 1px solid #D4D4D4;
+  border-radius: 6px;
+  background-color: #FFFFFF;
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  .no-item-labels {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+
+    span {
+      margin-top: 5px;
+      text-align: center;
+      margin: auto;
+    }
+  }
 }
 </style>
 
 <i18n locale="fr">
 {
   "add": "Créer",
-  "delete": "Supprimer cette section"
+  "delete": "Supprimer cette section",
+  "emptySession": "Cette section est vide",
+  "insertNewContent": "Ajoutez du contenu en cliquant sur le bouton NOUVEAU"
 }
 </i18n>

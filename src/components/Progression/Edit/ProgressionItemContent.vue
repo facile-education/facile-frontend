@@ -28,7 +28,17 @@
       v-if="content.contentType === 3"
       class="content-link"
     >
-      <span>lien</span>
+      <div
+        class="link-title"
+      >
+        <img
+          class="content-icon"
+          src="@assets/icon_link.svg"
+        >
+        <span>{{ $t('externalLink') }}</span>
+      </div>
+      <span>{{ content.contentName }}</span>
+      <a :href="content.contentValue">{{ content.contentValue }}</a>
     </div>
 
     <!-- Video -->
@@ -56,21 +66,22 @@
     </div>
 
     <!-- Delete content button -->
-    <NeroIcon
-      name="fa-trash"
+    <img
       class="delete-content-button"
-      @click="confirmContentDeletion()"
-    />
+      src="@assets/trash.svg"
+      :alt="$t('delete')"
+      :title="$t('delete')"
+      @click="confirmContentDeletion(item)"
+    >
   </div>
 </template>
 
 <script>
 import CkEditor from '@/components/Nero/CKEditor'
-import NeroIcon from '@/components/Nero/NeroIcon'
 
 export default {
   name: 'ProgressionItemContent',
-  components: { CkEditor, NeroIcon },
+  components: { CkEditor },
   props: {
     content: {
       type: Object,
@@ -102,7 +113,7 @@ export default {
     },
     confirmContentDeletion () {
       this.$store.dispatch('warningModal/addWarning', {
-        text: this.$t('warning'),
+        text: this.$t('deleteContentWarning'),
         lastAction: { fct: this.deleteContent }
       })
     },
@@ -125,6 +136,29 @@ export default {
     width: 90%;
     margin: auto;
   }
+  .content-link {
+    height: 80px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    .link-title {
+      margin-top: 5px;
+      img {
+        width: 10px;
+        height: 10px;
+        margin: auto;
+        margin-right: 5px;
+      }
+      span {
+        margin: auto;
+        font-size: 12px;
+      }
+    }
+    span {
+      margin-top: 5px;
+    }
+  }
   .delete-content-button {
     margin: auto;
     margin-right: 30px;
@@ -135,5 +169,8 @@ export default {
 <i18n locale="fr">
 {
   "session": "Séance",
+  "delete": "Supprimer cet élément",
+  "deleteContentWarning": "Supprimer ce contenu ?",
+  "externalLink": "Lien externe"
 }
 </i18n>
