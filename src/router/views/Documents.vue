@@ -3,12 +3,17 @@
     <div
       v-if="currentUser.userId !== 0"
       class="documents"
+      :class="{'mobile': mq.phone}"
     >
-      <div
-        v-for="(entity, index) in currentEntities"
-        :key="index"
-      >
-        {{ entity }}
+      <CurrentOptions class="currents-options" />
+
+      <div class="body">
+        <!-- TODO: Add file drop zone component here -->
+        <div class="scroll">
+          <Breadcrumb />
+          <DocumentsDisplay />
+        </div>
+        <DocumentDetails class="documentDetails" />
       </div>
     </div>
     <div v-else>
@@ -20,10 +25,12 @@
 <script>
 
 import Layout from '@layouts/EmptyLayout'
+import CurrentOptions from '@components/Documents/Options'
+import Breadcrumb from '@components/Documents/Breadcrumb'
 
 export default {
   name: 'Documents',
-  components: { Layout },
+  components: { Breadcrumb, CurrentOptions, Layout },
   inject: ['mq'],
   computed: {
     currentUser () {
@@ -45,5 +52,36 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@design';
+
+.documents {
+  height: 100%;
+
+  .currents-options {
+    width: 100%;
+    height: $doc-currents-options-height;
+  }
+
+  .body {
+    position: relative;
+    height: calc(100% - #{$doc-currents-options-height});
+
+    .document-details {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: 300px;
+    }
+  }
+
+  &.mobile {
+    .body {
+      .document-details {
+        width: 100%;
+      }
+    }
+  }
+}
 
 </style>

@@ -65,7 +65,8 @@
     "formDateOrder": "La date de fin doit être supérieure à la date de début",
     "formInvalidDate": "Format de date invalide",
     "formMoreThanRegistered": "La capacité de la salle doit être plus grande que le nombre d'inscrits",
-    "formRequired": "Champ requis"
+    "formRequired": "Champ requis",
+    "new": "Nouveau"
   },
   "CommunicationManager": {
     "InternalRightList": {
@@ -135,6 +136,9 @@
     "WidgetBroadcastRoleItem": {
       "mandatoryCheckboxLabel": "Obligatoire"
     }
+  },
+  "Documents": {
+    "toggleDetailsLabel": "Détails"
   },
   "Horaires": {
     "groupFilter": "Groupe",
