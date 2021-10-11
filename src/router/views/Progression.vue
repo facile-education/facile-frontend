@@ -40,9 +40,11 @@ export default {
     }
   },
   created () {
-    // init volee and subject lists
+    // init volee, subject and session lists
     this.$store.dispatch('progression/initSubjectList')
     this.$store.dispatch('progression/initVoleeList')
+    this.$store.dispatch('progression/initCoursList')
+    this.$store.dispatch('cdt/getConfiguration')
   },
   methods: {
   }

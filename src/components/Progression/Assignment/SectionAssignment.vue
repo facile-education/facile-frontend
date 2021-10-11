@@ -18,10 +18,12 @@
 </template>
 
 <script>
+import SubSectionAssignment from '@/components/Progression/Assignment/SubSectionAssignment'
+import ItemAssignment from '@/components/Progression/Assignment/ItemAssignment'
 
 export default {
   name: 'SectionAssignment',
-  components: { },
+  components: { SubSectionAssignment, ItemAssignment },
   props: {
     section: {
       type: Object,
@@ -48,11 +50,12 @@ export default {
 span {
   margin-top:10px;
   margin-left:10px;
-  margin-bottom:10px;
 }
 hr {
-  margin: 0;
-  border: 0; border-top: 1px solid #D4D4D4;
+  margin-top: 10px;
+  margin-right: 20px;
+  border: 0;
+  border-top: 1px solid #D4D4D4;
 }
 .subSection {
   margin-top:10px;

@@ -12,10 +12,11 @@
 </template>
 
 <script>
+import ItemAssignment from '@/components/Progression/Assignment/ItemAssignment'
 
 export default {
   name: 'SubSectionAssignment',
-  components: { },
+  components: { ItemAssignment },
   props: {
     subSection: {
       type: Object,

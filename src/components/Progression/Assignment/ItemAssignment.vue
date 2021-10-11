@@ -1,9 +1,35 @@
 <template>
   <div
-    class="item-assignment"
+    class="item"
   >
     <div class="item-name">
+      <img
+        v-if="item.isHomework"
+        class="item-type-icon"
+        src="@assets/devoir.svg"
+        :alt="$t('homework')"
+        :title="$t('homework')"
+      >
+      <img
+        v-else
+        class="item-type-icon"
+        src="@assets/seance.svg"
+        :alt="$t('session')"
+        :title="$t('session')"
+      >
       <span>{{ item.name }}</span>
+    </div>
+    <!-- Calendar icon -->
+    <div
+      class="affect"
+      @click="displayCalendarPicker()"
+    >
+      <img
+        class="calendar"
+        src="@assets/calendar.svg"
+        :alt="$t('session')"
+        :title="$t('session')"
+      >
     </div>
     <div
       class="item-sessions"
@@ -29,7 +55,7 @@
 
 export default {
   name: 'ItemAssignment',
-  components: { },
+  components: {},
   props: {
     item: {
       type: Object,
@@ -45,19 +71,53 @@ export default {
   created () {
   },
   methods: {
+    displayCalendarPicker () {
+      this.$store.dispatch('progression/setAffectedItem', this.item)
+      this.$store.dispatch('progression/setCalendarPickerMode', true)
+    },
+    addedSessions () {
+      console.log('addedSessions')
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-span {
-  margin-top:10px;
-  margin-left:10px;
-  margin-bottom:10px;
+.item {
+  display: flex;
+  .item-name {
+    width: 20%;
+    margin: auto;
+    display: flex;
+    justify-content: flex-start;
+    .item-type-icon {
+      margin: auto;
+      width: 20px;
+      height: 20px;
+    }
+    span {
+      margin: auto;
+    }
+    &:hover .affect {
+      display: flex;
+    }
+  }
+  .affect {
+    width: 10%;
+    margin: auto;
+  }
+  .item-sessions {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+  }
 }
 </style>
 
 <i18n locale="fr">
 {
+  "session": "Séance",
+  "homework": "Devoir"
 }
 </i18n>

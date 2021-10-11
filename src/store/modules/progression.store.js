@@ -1,6 +1,7 @@
 import { addProgression, deleteProgression, getProgressionList, updateProgression, getProgressionContent, addFolder, updateFolder, addItem, addItemContent, deleteFolder, deleteItem, getFolderContent, getItemContents, deleteItemContent } from '@/api/progression.service'
 import { getSubjects } from '@/api/userManagement.service'
 import { getSchoolVoleeList } from '@/api/organization.service'
+import { getCoursList, getSessions } from '@/api/cdt.service'
 
 export const helperMethods = {
   getFolderByFolderId (progression, folderId) {
@@ -27,14 +28,22 @@ export const helperMethods = {
 }
 
 export const state = {
+  isLoading: false,
   subjectList: undefined,
   voleeList: undefined,
+  coursList: undefined,
   progressionList: undefined,
-  isListMode: true,
-  isEditMode: true,
   currentProgression: undefined,
   currentFolder: undefined,
-  currentItem: undefined
+  currentItem: undefined,
+  isListMode: true,
+  isEditMode: true,
+  isCalendarPickerMode: false,
+  affectedItem: undefined,
+  selectedSessionIds: [],
+  startDate: undefined,
+  endDate: undefined,
+  sessionList: []
 }
 
 export const mutations = {
@@ -53,6 +62,16 @@ export const mutations = {
   },
   setVoleeList (state, payload) {
     state.voleeList = payload
+  },
+  setCoursList (state, payload) {
+    // Loop over schools to get groups only
+    state.coursList = []
+    for (let idx = 0; idx < payload.length; ++idx) {
+      const school = payload[idx]
+      for (let j = 0; j < school.groups.length; j++) {
+        state.coursList.push(school.groups[j])
+      }
+    }
   },
   updateProgression (state, payload) {
     const index = state.progressionList.map(item => item.progressionId).indexOf(payload.progressionId)
@@ -76,6 +95,21 @@ export const mutations = {
   },
   setListMode (state, payload) {
     state.isListMode = payload
+  },
+  setCalendarPickerMode (state, payload) {
+    state.isCalendarPickerMode = payload
+  },
+  setAffectedItem (state, payload) {
+    state.affectedItem = payload
+  },
+  addSelectedSession (state, payload) {
+    state.selectedSessionIds.push(payload)
+  },
+  removeSelectedSession (state, payload) {
+    state.selectedSessionIds.splice(payload, 1)
+  },
+  resetSelectedSessions (state, payload) {
+    state.selectedSessionIds = []
   },
   setFolderContent (state, payload) {
     const folder = helperMethods.getFolderByFolderId(state.currentProgression, payload.folderId)
@@ -193,6 +227,19 @@ export const mutations = {
         }
       }
     }
+  },
+  endLoading (state) {
+    state.isLoading = false
+  },
+  loading (state) {
+    state.isLoading = true
+  },
+  setDates (state, { start, end }) {
+    state.startDate = start
+    state.endDate = end
+  },
+  setSessionList (state, payload) {
+    state.sessionList = payload
   }
 }
 export const actions = {
@@ -255,6 +302,18 @@ export const actions = {
         console.error(err)
       })
   },
+  initCoursList ({ commit }) {
+    getCoursList().then(
+      (data) => {
+        if (data.success) {
+          commit('setCoursList', data.cours)
+        }
+      },
+      (err) => {
+        // TODO toastr
+        console.error(err)
+      })
+  },
   updateProgression ({ commit }, progression) {
     updateProgression(progression).then(
       (data) => {
@@ -283,6 +342,21 @@ export const actions = {
   },
   setListMode ({ commit }, isListMode) {
     commit('setListMode', isListMode)
+  },
+  setCalendarPickerMode ({ commit }, isCalendarPickerMode) {
+    commit('setCalendarPickerMode', isCalendarPickerMode)
+  },
+  setAffectedItem ({ commit }, affectedItem) {
+    commit('setAffectedItem', affectedItem)
+  },
+  addSelectedSession ({ commit }, sessionId) {
+    commit('addSelectedSession', sessionId)
+  },
+  removeSelectedSession ({ commit }, sessionId) {
+    commit('removeSelectedSession', sessionId)
+  },
+  resetSelectedSession ({ commit }, session) {
+    commit('resetSelectedSession', session)
   },
   getProgressionContent ({ commit }, progressionId) {
     getProgressionContent(progressionId).then(
@@ -421,5 +495,29 @@ export const actions = {
         // TODO toastr
         console.error(err)
       })
+  },
+  selectDates ({ commit, dispatch }, { start, end }) {
+    commit('setDates', { start, end })
+    dispatch('getSessionList')
+  },
+  getSessionList ({ state, commit, rootState }) {
+    if (state.startDate && state.endDate) {
+      commit('loading')
+      getSessions(rootState.user.userId, 0, state.startDate, state.endDate).then(
+        (data) => {
+          if (data.success) {
+            commit('setSessionList', [...data.sessions])
+          }
+          commit('endLoading')
+        },
+        (err) => {
+          commit('endLoading')
+          // TODO toastr
+          console.error(err)
+        }
+      )
+    } else if (state.sessionList.length) {
+      commit('setSessionList', [])
+    }
   }
 }
