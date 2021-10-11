@@ -1,10 +1,16 @@
 import axios from 'axios'
 import constants from '@/api/constants'
 
-export default {
+export {
   getConfiguration,
   getGroups,
-  getSessions
+  getSessions,
+  getCoursList
+}
+
+export default {
+  getConfiguration,
+  getCoursList
 }
 
 const CDT_PATH = '/cdt-portlet.'
@@ -41,6 +47,13 @@ function getSessions (userId, groupId, minDate, maxDate) {
       groupId,
       start: minDate.format('YYYY-MM-DD HH:mm'),
       end: maxDate.format('YYYY-MM-DD HH:mm')
+    }
+  }).then(response => response.data)
+}
+
+function getCoursList () {
+  return axios.get(constants.JSON_WS_URL + CDT_PATH + 'cdtsession/get-teacher-cours', {
+    params: {
     }
   }).then(response => response.data)
 }

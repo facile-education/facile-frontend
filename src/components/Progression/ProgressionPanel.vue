@@ -5,6 +5,8 @@
     <ProgressionSwitchMode
       class="switch"
     />
+
+    <!-- EDIT MODE -->
     <div
       v-if="isEditMode"
       class="tree-edit"
@@ -23,10 +25,19 @@
         />
       </div>
     </div>
-    <ProgressionAssignment
+
+    <!-- ASSIGNMENT MODE -->
+    <div
       v-else
-      class="assignment"
-    />
+    >
+      <ProgressionAssignment
+        v-if="!isCalendarPickerMode"
+        class="assignment"
+      />
+      <CalendarPicker
+        v-else
+      />
+    </div>
   </div>
 </template>
 
@@ -36,10 +47,11 @@ import ProgressionEditHeader from './Edit/ProgressionEditHeader.vue'
 import ProgressionEdit from './Edit/ProgressionEdit.vue'
 import ProgressionAssignment from './Assignment/ProgressionAssignment.vue'
 import ProgressionTree from './Tree/ProgressionTree.vue'
+import CalendarPicker from '@/components/Progression/Assignment/CalendarPicker'
 
 export default {
   name: 'ProgressionPanel',
-  components: { ProgressionSwitchMode, ProgressionEditHeader, ProgressionEdit, ProgressionAssignment, ProgressionTree },
+  components: { ProgressionSwitchMode, ProgressionEditHeader, ProgressionEdit, ProgressionAssignment, ProgressionTree, CalendarPicker },
   data () {
     return {
     }
@@ -47,6 +59,9 @@ export default {
   computed: {
     isEditMode () {
       return this.$store.state.progression.isEditMode
+    },
+    isCalendarPickerMode () {
+      return this.$store.state.progression.isCalendarPickerMode
     }
   },
   created () {

@@ -134,7 +134,7 @@
           src="@assets/icon_record.svg"
           :alt="$t('addSound')"
           :title="$t('addSound')"
-          @click="addSound()"
+          @click="toggleAudioRecordModalDisplay()"
         >
         <img
           class="add-content-button"
@@ -183,6 +183,14 @@
       />
     </teleport>
     <teleport to="body">
+      <AudioRecordModal
+        v-if="isAudioRecordModalDisplayed"
+        height="30em"
+        :item="item"
+        @close="toggleAudioRecordModalDisplay"
+      />
+    </teleport>
+    <teleport to="body">
       <LinkModal
         v-if="isLinkModalDisplayed"
         height="30em"
@@ -197,11 +205,12 @@
 import ProgressionItemContent from '@/components/Progression/Edit/ProgressionItemContent'
 import PreviewModal from '@/components/Progression/Edit/PreviewModal'
 import LinkModal from '@/components/Progression/Edit/LinkModal'
+import AudioRecordModal from '@/components/Progression/Edit/AudioRecordModal'
 import FilePickerModal from '@/components/FilePicker/FilePickerModal'
 
 export default {
   name: 'ProgressionItem',
-  components: { ProgressionItemContent, PreviewModal, LinkModal, FilePickerModal },
+  components: { ProgressionItemContent, PreviewModal, LinkModal, AudioRecordModal, FilePickerModal },
   props: {
     item: {
       type: Object,
@@ -213,6 +222,7 @@ export default {
       editorOptions: {},
       isPreviewModalDisplayed: false,
       isLinkModalDisplayed: false,
+      isAudioRecordModalDisplayed: false,
       isFilePickerDisplayed: false,
       isMultiSelectionAllowed: true,
       isChangeTypeMenuDisplayed: false
@@ -230,12 +240,6 @@ export default {
     addText () {
       this.$store.dispatch('progression/addItemContent', { itemId: this.item.itemId, contentType: 1 })
     },
-    addSound () {
-      this.$store.dispatch('progression/addItemContent', { itemId: this.item.itemId, contentType: 2 })
-    },
-    addLink () {
-      this.$store.dispatch('progression/addItemContent', { itemId: this.item.itemId, contentType: 3 })
-    },
     addVideo () {
       this.$store.dispatch('progression/addItemContent', { itemId: this.item.itemId, contentType: 4 })
     },
@@ -250,6 +254,9 @@ export default {
     },
     togglePreviewModalDisplay () {
       this.isPreviewModalDisplayed = !this.isPreviewModalDisplayed
+    },
+    toggleAudioRecordModalDisplay () {
+      this.isAudioRecordModalDisplayed = !this.isAudioRecordModalDisplayed
     },
     toggleLinkModalDisplay () {
       this.isLinkModalDisplayed = !this.isLinkModalDisplayed
