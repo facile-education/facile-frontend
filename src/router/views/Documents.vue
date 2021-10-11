@@ -11,7 +11,7 @@
         <!-- TODO: Add file drop zone component here -->
         <div class="scroll">
           <Breadcrumb />
-          <DocumentsDisplay />
+          <DocumentList />
         </div>
         <DocumentDetails class="documentDetails" />
       </div>
@@ -27,10 +27,11 @@
 import Layout from '@layouts/EmptyLayout'
 import CurrentOptions from '@components/Documents/Options'
 import Breadcrumb from '@components/Documents/Breadcrumb'
+import DocumentList from '@components/Documents/DocumentList'
 
 export default {
   name: 'Documents',
-  components: { Breadcrumb, CurrentOptions, Layout },
+  components: { DocumentList, Breadcrumb, CurrentOptions, Layout },
   inject: ['mq'],
   computed: {
     currentUser () {
@@ -65,6 +66,11 @@ export default {
   .body {
     position: relative;
     height: calc(100% - #{$doc-currents-options-height});
+
+    .scroll {
+      height: 100%;
+      overflow-y: auto;
+    }
 
     .document-details {
       position: absolute;

@@ -32,7 +32,7 @@ export default {
         img: require('@assets/options/icon_add.svg').default
       },
       toggleDetailsOption: {
-        title: this.$t('Documents.toggleDetailsLabel'),
+        title: this.$t('Documents.options.toggleDetailsLabel'),
         name: 'toggleDetails',
         img: require('@assets/options/icon_toggle_detail_panel.svg').default
       }

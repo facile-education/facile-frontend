@@ -138,7 +138,9 @@
     }
   },
   "Documents": {
-    "toggleDetailsLabel": "Détails"
+    "options": {
+      "toggleDetailsLabel": "Détails"
+    }
   },
   "Horaires": {
     "groupFilter": "Groupe",
