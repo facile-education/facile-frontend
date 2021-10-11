@@ -11,12 +11,14 @@ $color-fallback-text: #f1f1f1;
 $color-border: #ddd;
 
 // Backgrounds
-$color-toolbar-bg: #f1f1f1;
-$color-header-bg: $color-toolbar-bg;
+$color-not-white-bg: #f1f1f1;
+$color-toolbar-bg: $color-not-white-bg;
+$color-header-bg: $color-not-white-bg;
 $color-valid-bg: #01d801;
+$color-active-bg: #0B5FFF;
 
 // Hovers
 $color-hover-bg: #e8e8e8;
 
 // File Picker
-$color-file-picker-selected-file: #0B5FFF;
+$color-file-picker-selected-file: $color-active-bg;
