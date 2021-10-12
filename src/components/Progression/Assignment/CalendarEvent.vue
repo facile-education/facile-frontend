@@ -36,10 +36,17 @@
 </template>
 
 <script>
+import PentilaCheckbox from 'pentila-components'
+
 export default {
   name: 'CalendarEvent',
+  components: { PentilaCheckbox },
   props: {
     event: {
+      type: Object,
+      required: true
+    },
+    store: {
       type: Object,
       required: true
     }
@@ -50,7 +57,8 @@ export default {
     }
   },
   created () {
-    // this.$store.dispatch('progression/resetSelectedSession')
+    console.log('event', this.store)
+    this.store.dispatch('progression/resetSelectedSessions')
   },
   methods: {
     toggleSelection () {

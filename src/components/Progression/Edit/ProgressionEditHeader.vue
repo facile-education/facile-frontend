@@ -174,6 +174,7 @@ export default {
     height: 48px;
   }
   .create-menu {
+    position: relative;
     margin-left: 30px;
     width: 250px;
     z-index: 10;

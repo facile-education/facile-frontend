@@ -66,6 +66,7 @@
         <template #eventContent="arg">
           <CalendarEvent
             :event="arg.event"
+            :store="$store"
             @click="addSession(arg.event)"
           />
         </template>
@@ -179,6 +180,7 @@ export default {
     }
   },
   created () {
+    console.log('picker', this)
     if (this.configuration === undefined) {
       this.$store.dispatch('cdt/getConfiguration')
       if (this.mq.phone) {

@@ -11,13 +11,13 @@
 
     <template #body>
       <PentilaInput
-        :v-model="link.linkName"
+        v-model="link.linkName"
         :maxlength="200"
         :placeholder="$t('namePlaceholder')"
         class="link-name"
       />
       <PentilaInput
-        :v-model="link.linkUrl"
+        v-model="link.linkUrl"
         :maxlength="200"
         :placeholder="$t('urlPlaceholder')"
         class="link-url"
@@ -47,6 +47,7 @@
 
 export default {
   name: 'LinkModal',
+  inject: ['mq'],
   props: {
     item: {
       type: Object,
@@ -71,7 +72,6 @@ export default {
       this.$emit('close')
     },
     addLink () {
-      console.log('this.linkName=', this.link.linkName)
       this.$store.dispatch('progression/addLink', { itemId: this.item.itemId, linkName: this.link.linkName, linkUrl: this.link.linkUrl })
       this.closeModal()
     }
