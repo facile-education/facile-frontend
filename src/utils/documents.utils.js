@@ -3,17 +3,6 @@ import documentService from '@/api/documents/document.service'
 import { mergeContextMenus, removeMenuOptionIfExist } from '@/utils/commons.util'
 import { folderOptions, fileOptions } from '@/constants/options'
 
-export default {
-  importDocument,
-  computeDocumentsOptions
-  // importMessagingAttachFiles
-}
-
-export {
-  importDocument,
-  computeDocumentsOptions
-}
-
 async function importDocument (folderId, documentList) {
   for (const doc of documentList) {
     store.dispatch('currentActions/addAction', { name: 'importDocument' })
@@ -86,3 +75,14 @@ function computeDocumentsOptions (documentList) {
 //   }
 //   return createdFiles
 // }
+
+export default {
+  importDocument,
+  computeDocumentsOptions
+  // importMessagingAttachFiles
+}
+
+export {
+  importDocument,
+  computeDocumentsOptions
+}

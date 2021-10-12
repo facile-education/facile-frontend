@@ -44,7 +44,7 @@ export default {
   emits: ['handleSort'],
   computed: {
     fields () {
-      return this.$store.state.fileFields.privateFields
+      return this.$store.state.fileFields.fields
     },
     fieldsToDisplay () {
       const fieldsToDisplay = []
