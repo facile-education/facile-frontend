@@ -1,9 +1,9 @@
-export function toPascalCase (string) {
+function toPascalCase (string) {
   return string.replace(/(\w)(\w*)/g,
     (g0, g1, g2) => { return g1.toUpperCase() + g2.toLowerCase() })
 }
 
-export function mergeContextMenus (listContextMenu) {
+function mergeContextMenus (listContextMenu) {
   if (listContextMenu.length === 0) return []
   const CMResult = listContextMenu[0]
   for (let i = 1; i < listContextMenu.length; ++i) {
@@ -23,7 +23,7 @@ export function mergeContextMenus (listContextMenu) {
   return CMResult
 }
 
-export function removeMenuOptionIfExist (menuOptions, name) {
+function removeMenuOptionIfExist (menuOptions, name) {
   let indexOption = -1
   for (let i = 0; i < menuOptions.length; ++i) {
     if (menuOptions[i].name === name) {
@@ -39,4 +39,23 @@ export function removeMenuOptionIfExist (menuOptions, name) {
       menuOptions[i].position -= 1
     }
   }
+}
+
+function formatSize (size) {
+  if (Math.trunc(size / 1024) === 0) {
+    return size + ' o'
+  } else if ((Math.trunc(size / (1024 * 1024)) === 0)) {
+    return Math.trunc(size / 1024) + ' ko'
+  } else if ((Math.trunc(size / (1024 * 1024 * 1024)) === 0)) {
+    return Math.trunc(size / (1024 * 1024)) + ' Mo'
+  } else {
+    return Math.trunc(size / (1024 * 1024 * 1024)) + ' Go'
+  }
+}
+
+export {
+  toPascalCase,
+  mergeContextMenus,
+  removeMenuOptionIfExist,
+  formatSize
 }

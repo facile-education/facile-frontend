@@ -17,10 +17,16 @@
           class="scroll"
           @click.right.prevent="rightClickOnSpace"
         >
-          <Breadcrumb />
-          <DocumentList @openContextMenu="openContextMenu" />
+          <Breadcrumb @click.right.prevent.stop />
+          <DocumentList
+            @openContextMenu="openContextMenu"
+            @click.right.prevent.stop
+          />
         </div>
-        <DocumentDetails class="documentDetails" />
+        <DocumentDetails
+          v-if="isDocumentPanelDisplayed"
+          class="document-details"
+        />
       </div>
     </div>
     <div v-else>
@@ -42,12 +48,13 @@ import CurrentOptions from '@components/Documents/Options'
 import Breadcrumb from '@components/Documents/Breadcrumb'
 import DocumentList from '@components/Documents/DocumentList'
 import DocumentDetails from '@components/Documents/DocumentDetails'
+import ContextMenu from '@components/ContextMenu/ContextMenu'
 import { documentSpaceOptions } from '@/constants/options'
 import { computeDocumentsOptions } from '@/utils/documents.utils'
 
 export default {
   name: 'Documents',
-  components: { DocumentDetails, DocumentList, Breadcrumb, CurrentOptions, Layout },
+  components: { ContextMenu, DocumentDetails, DocumentList, Breadcrumb, CurrentOptions, Layout },
   inject: ['mq'],
   data () {
     return {
@@ -66,6 +73,9 @@ export default {
     },
     selectedDocumentsOptions () {
       return computeDocumentsOptions(this.selectedDocuments)
+    },
+    isDocumentPanelDisplayed () {
+      return this.$store.state.documents.isDocumentPanelDisplayed
     },
     isAContextMenuDisplayed () {
       return this.$store.state.contextMenu.isAContextMenuDisplayed

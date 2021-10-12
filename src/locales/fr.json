@@ -138,7 +138,19 @@
     }
   },
   "Documents": {
+    "documentFields": {
+      "name": "Nom",
+      "lastModifiedDate": "Dernière modif."
+    },
     "options": {
+      "delete": "Supprimer",
+      "download": "Télécharger",
+      "duplicate": "Dupliquer vers",
+      "import": "Importer",
+      "move": "Déplacer vers",
+      "newFolder": "Nouveau dossier",
+      "rename": "Renommer",
+      "resetFields": "Valeurs par défaut",
       "toggleDetailsLabel": "Détails"
     }
   },

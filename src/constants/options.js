@@ -4,14 +4,14 @@ import { icons } from '@/constants/icons'
 const documentSpaceOptions = [
   {
     name: 'newFolder',
-    title: i18n.global.t('ContextMenuOptions.newFolder'),
+    title: i18n.global.t('Documents.options.newFolder'),
     icon: icons.options.newFolder,
     position: 1,
     hasSeparator: true
   },
   {
     name: 'import',
-    title: i18n.global.t('ContextMenuOptions.import'),
+    title: i18n.global.t('Documents.options.import'),
     icon: icons.options.import,
     position: 2,
     hasSeparator: false
@@ -22,42 +22,35 @@ const documentSpaceOptions = [
 const fileOptions = [
   {
     name: 'rename',
-    title: i18n.global.t('ContextMenuOptions.rename'),
+    title: i18n.global.t('Documents.options.rename'),
     icon: icons.options.rename,
     position: 3,
     hasSeparator: true
   },
   {
     name: 'duplicate',
-    title: i18n.global.t('ContextMenuOptions.duplicate'),
+    title: i18n.global.t('Documents.options.duplicate'),
     icon: icons.options.duplicate,
     position: 1,
     hasSeparator: true
   },
   {
     name: 'move',
-    title: i18n.global.t('ContextMenuOptions.move'),
+    title: i18n.global.t('Documents.options.move'),
     icon: icons.options.move,
     position: 0,
     hasSeparator: true
   },
   {
     name: 'download',
-    title: i18n.global.t('ContextMenuOptions.download'),
+    title: i18n.global.t('Documents.options.download'),
     icon: icons.options.download,
     position: 5,
     hasSeparator: true
   },
   {
-    name: 'share',
-    title: i18n.global.t('ContextMenuOptions.share'),
-    icon: icons.options.share,
-    position: 2,
-    hasSeparator: true
-  },
-  {
     name: 'delete',
-    title: i18n.global.t('ContextMenuOptions.delete'),
+    title: i18n.global.t('Documents.options.delete'),
     icon: icons.options.delete,
     position: 4,
     hasSeparator: false
@@ -67,35 +60,35 @@ const fileOptions = [
 const folderOptions = [
   {
     name: 'rename',
-    title: i18n.global.t('ContextMenuOptions.rename'),
+    title: i18n.global.t('Documents.options.rename'),
     icon: icons.options.rename,
     position: 2,
     hasSeparator: true
   },
   {
     name: 'duplicate',
-    title: i18n.global.t('ContextMenuOptions.duplicate'),
+    title: i18n.global.t('Documents.options.duplicate'),
     icon: icons.options.duplicate,
     position: 1,
     hasSeparator: true
   },
   {
     name: 'move',
-    title: i18n.global.t('ContextMenuOptions.move'),
+    title: i18n.global.t('Documents.options.move'),
     icon: icons.options.move,
     position: 0,
     hasSeparator: true
   },
   {
     name: 'download',
-    title: i18n.global.t('ContextMenuOptions.download'),
+    title: i18n.global.t('Documents.options.download'),
     icon: icons.options.download,
     position: 5,
     hasSeparator: true
   },
   {
     name: 'delete',
-    title: i18n.global.t('ContextMenuOptions.delete'),
+    title: i18n.global.t('Documents.options.delete'),
     icon: icons.options.delete,
     position: 3,
     hasSeparator: false
