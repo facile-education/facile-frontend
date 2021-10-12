@@ -3,19 +3,20 @@
     <OptionItem
       v-if="isCreateOptionDisplayed"
       :option="createOption"
-      @optionClicked="handleOption(createOption)"
+      @optionClicked="emitOption(createOption)"
     />
     <OptionItem
       v-for="(option, index) in selectedDocumentsOptions"
       :key="index"
       :option="option"
-      @optionClicked="handleOption"
+      @optionClicked="emitOption"
     />
-    <OptionItem
-      v-if="isDetailsOptionsDisplayed"
-      :option="toggleDetailsOption"
-      @optionClicked="handleOption(toggleDetailsOption)"
-    />
+    <!-- TODO handle case when panel is open and we want to close it -->
+    <!--    <OptionItem-->
+    <!--      v-if="isDetailsOptionsDisplayed"-->
+    <!--      :option="toggleDetailsOption"-->
+    <!--      @optionClicked="handleOption(toggleDetailsOption)"-->
+    <!--    />-->
   </div>
 </template>
 
@@ -24,18 +25,25 @@ import OptionItem from '@components/Documents/OptionItem'
 export default {
   name: 'Options',
   components: { OptionItem },
+  props: {
+    selectedDocumentsOptions: {
+      type: Array,
+      required: true
+    }
+  },
+  emits: ['optionClicked'],
   data () {
     return {
       createOption: {
         title: this.$t('Commons.new'),
         name: 'new',
         img: require('@assets/options/icon_add.svg').default
-      },
-      toggleDetailsOption: {
-        title: this.$t('Documents.options.toggleDetailsLabel'),
-        name: 'toggleDetails',
-        img: require('@assets/options/icon_toggle_detail_panel.svg').default
       }
+      // toggleDetailsOption: {
+      //   title: this.$t('Documents.options.toggleDetailsLabel'),
+      //   name: 'toggleDetails',
+      //   img: require('@assets/options/icon_toggle_detail_panel.svg').default
+      // }
     }
   },
   computed: {
@@ -43,20 +51,15 @@ export default {
       return this.$store.state.documents.selectedFiles
     },
     isCreateOptionDisplayed () {
-      return this.selectedDocuments.length === 0
-    },
-    selectedDocumentsOptions () {
-      // TODO compute options
-      return []
-    },
-    isDetailsOptionsDisplayed () {
-      return this.selectedDocuments.length === 1 || this.$store.state.documents.isDocumentPanelDisplayed // Display option if the panel is display to close it
+      return this.selectedDocumentsOptions.length === 0
     }
+    // isDetailsOptionsDisplayed () {
+    //   return this.$store.state.documents.isDocumentPanelDisplayed // Display option if the panel is display to close it
+    // }
   },
   methods: {
-    handleOption (option) {
-      // TODO handle options
-      console.log(option)
+    emitOption (option) {
+      this.$emit('optionClicked', option)
     }
   }
 }

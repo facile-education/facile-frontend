@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- TODO: placeholder when no entities -->
     <FilesFields />
     <div class="entities">
       <FolderDocument

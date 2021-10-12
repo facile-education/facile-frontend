@@ -5,13 +5,20 @@
       class="documents"
       :class="{'mobile': mq.phone}"
     >
-      <CurrentOptions class="currents-options" />
+      <CurrentOptions
+        class="currents-options"
+        :selected-documents-options="[]"
+        @optionClicked="handleOption"
+      />
 
       <div class="body">
         <!-- TODO: Add file drop zone component here -->
-        <div class="scroll">
+        <div
+          class="scroll"
+          @click.right.prevent="rightClickOnSpace"
+        >
           <Breadcrumb />
-          <DocumentList />
+          <DocumentList @openContextMenu="openContextMenu" />
         </div>
         <DocumentDetails class="documentDetails" />
       </div>
@@ -19,6 +26,12 @@
     <div v-else>
       <PentilaSpinner v-if="areActionsInProgress" />
     </div>
+
+    <ContextMenu
+      v-if="isContextMenuDisplayed && isAContextMenuDisplayed"
+      @chooseOption="handleOption"
+      @close="isContextMenuDisplayed=false"
+    />
   </Layout>
 </template>
 
@@ -28,11 +41,19 @@ import Layout from '@layouts/EmptyLayout'
 import CurrentOptions from '@components/Documents/Options'
 import Breadcrumb from '@components/Documents/Breadcrumb'
 import DocumentList from '@components/Documents/DocumentList'
+import DocumentDetails from '@components/Documents/DocumentDetails'
+import { documentSpaceOptions } from '@/constants/options'
+import { computeDocumentsOptions } from '@/utils/documents.utils'
 
 export default {
   name: 'Documents',
-  components: { DocumentList, Breadcrumb, CurrentOptions, Layout },
+  components: { DocumentDetails, DocumentList, Breadcrumb, CurrentOptions, Layout },
   inject: ['mq'],
+  data () {
+    return {
+      isContextMenuDisplayed: false
+    }
+  },
   computed: {
     currentUser () {
       return this.$store.state.user
@@ -40,14 +61,45 @@ export default {
     areActionsInProgress () {
       return this.$store.getters['currentActions/areActionsInProgress']
     },
-    currentEntities () {
-      // Why is this necessary to slice child arrays ?
-      return JSON.parse(JSON.stringify(this.$store.state.documents.folderContent))
+    selectedDocuments () {
+      return this.$store.state.documents.selectedFiles
+    },
+    selectedDocumentsOptions () {
+      return computeDocumentsOptions(this.selectedDocuments)
+    },
+    isAContextMenuDisplayed () {
+      return this.$store.state.contextMenu.isAContextMenuDisplayed
     }
   },
   beforeCreate () {
     this.$store.dispatch('documents/getSpacesFolders')
     // this.$store.dispatch('fileFields/resetPrivateFields')
+  },
+  methods: {
+    rightClickOnSpace (event) {
+      this.$store.dispatch('documents/cleanSelectedFiles') // /!\ be careful with asynchronous order!
+      this.openContextMenu(event)
+    },
+    openContextMenu (event) {
+      if (!this.isAContextMenuDisplayed) {
+        this.isContextMenuDisplayed = true
+        let currentOptions
+        if (this.selectedDocuments.length > 0) { // remove paste option if no documents were copied
+          currentOptions = this.selectedDocumentsOptions
+        } else {
+          currentOptions = [...documentSpaceOptions]
+        }
+        this.$store.dispatch('contextMenu/openContextMenu',
+          {
+            event: event,
+            options: currentOptions
+          })
+      }
+    },
+    handleOption (option) {
+      // TODO
+      console.log(option)
+    }
   }
 }
 </script>
