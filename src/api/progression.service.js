@@ -138,14 +138,13 @@ function addItem (progressionId, folderId, name, isHomework, type, content, orde
     })).then(response => response.data)
 }
 
-function addItemContent (itemId, contentType, contentName, contentValue, fileName, fileEntryId, isToBeCompleted) {
+function addItemContent (itemId, contentType, contentName, contentValue, fileEntryId, isToBeCompleted) {
   return axios.post(constants.JSON_WS_URL + PROGRESSION_PATH + ITEM_CTX + 'add-item-content',
     PentilaUtils.URL.params({
       itemId,
       contentType,
       contentName,
       contentValue,
-      fileName,
       fileEntryId,
       isToBeCompleted
     })).then(response => response.data)

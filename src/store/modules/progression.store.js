@@ -355,8 +355,8 @@ export const actions = {
   removeSelectedSession ({ commit }, sessionId) {
     commit('removeSelectedSession', sessionId)
   },
-  resetSelectedSession ({ commit }, session) {
-    commit('resetSelectedSession', session)
+  resetSelectedSessions ({ commit }, session) {
+    commit('resetSelectedSessions', session)
   },
   getProgressionContent ({ commit }, progressionId) {
     getProgressionContent(progressionId).then(
@@ -435,7 +435,7 @@ export const actions = {
       })
   },
   addItemContent ({ commit }, { itemId, contentType }) {
-    addItemContent(itemId, contentType, '', '', '', 0, false).then(
+    addItemContent(itemId, contentType, '', '', 0, false).then(
       (data) => {
         if (data.success) {
           commit('addItemContent', data.content)
@@ -447,7 +447,7 @@ export const actions = {
       })
   },
   addLink ({ commit }, { itemId, linkName, linkUrl }) {
-    addItemContent(itemId, 3, linkName, linkUrl, '', 0, false).then(
+    addItemContent(itemId, 3, linkName, linkUrl, 0, false).then(
       (data) => {
         if (data.success) {
           commit('addItemContent', data.content)

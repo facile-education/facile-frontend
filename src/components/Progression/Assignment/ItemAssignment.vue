@@ -86,10 +86,9 @@ export default {
 .item {
   display: flex;
   .item-name {
-    width: 20%;
     margin: auto;
     display: flex;
-    justify-content: flex-start;
+
     .item-type-icon {
       margin: auto;
       width: 20px;
@@ -103,11 +102,11 @@ export default {
     }
   }
   .affect {
-    width: 10%;
     margin: auto;
   }
   .item-sessions {
     width: 70%;
+    max-width: 70%;
     display: flex;
     flex-direction: column;
     margin: auto;
