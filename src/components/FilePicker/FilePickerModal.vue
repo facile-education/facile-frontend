@@ -71,7 +71,7 @@ import navigationService from '@/api/documents/folder.service'
 import FilePickerBreadCrumb from '@components/FilePicker/FilePickerBreadCrumb'
 import FilePickerFolder from '@components/FilePicker/FilePickerFolder'
 import FilePickerFile from '@components/FilePicker/FilePickerFile'
-import filesUtil from '@utils/files.utils'
+import documentsUtils from '@utils/documents.utils.js'
 
 export default {
   name: 'FilePickerModal',
@@ -212,7 +212,7 @@ export default {
       }
     },
     importDocument (fileList) {
-      filesUtil.importMessagingAttachFiles(fileList).then((importedFiles) => {
+      documentsUtils.importMessagingAttachFiles(fileList).then((importedFiles) => {
         this.selectedFiles = this.selectedFiles.concat(importedFiles)
       })
     },
