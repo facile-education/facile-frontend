@@ -5,7 +5,8 @@ import { getCookie } from '@utils/browser.util'
 export default {
   createFolder,
   uploadFile,
-  renameEntity
+  renameEntity,
+  deleteEntities
 }
 
 const EDIT_PATH = '/documents.edit'
@@ -55,4 +56,17 @@ function uploadFile (folderId, file) {
     constants.JSON_WS_URL + EDIT_PATH + '/upload-file?',
     formData
   ).then(response => response.data)
+}
+
+/**
+ * Delete definitely the specified entities from the document library (and return a list of the failed entities if some failed)
+ */
+function deleteEntities (folderIdArray, fileIdArray) {
+  return axios.get(constants.JSON_WS_URL + EDIT_PATH + '/delete-documents', {
+    params: {
+      p_auth: getCookie('pauth'),
+      folderIdArray: JSON.stringify(folderIdArray),
+      fileIdArray: JSON.stringify(fileIdArray)
+    }
+  }).then(response => response.data)
 }
