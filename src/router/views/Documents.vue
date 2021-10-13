@@ -50,7 +50,7 @@
       <!--      />-->
       <!--      <DeleteConfirmModal-->
       <!--        v-if="isDeleteDefinitelyModalDisplayed"-->
-      <!--        :entities-to-definitely-delete="selectedFiles"-->
+      <!--        :entities-to-definitely-delete="selectedEntities"-->
       <!--        @confirmDeletion="deleteDefinitely"-->
       <!--        @close="isDeleteDefinitelyModalDisplayed=false"-->
       <!--      />-->
@@ -86,7 +86,7 @@ export default {
       return this.$store.getters['currentActions/areActionsInProgress']
     },
     selectedDocuments () {
-      return this.$store.state.documents.selectedFiles
+      return this.$store.state.documents.selectedEntities
     },
     selectedDocumentsOptions () {
       return computeDocumentsOptions(this.selectedDocuments)

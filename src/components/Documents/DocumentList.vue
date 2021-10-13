@@ -87,8 +87,9 @@ export default {
       return this.allSortedDocuments.map(item => item.id).indexOf(entityId)
     },
     shiftSelect (file) {
-      const listFilesToSelect = selectBetween(this.allSortedDocuments, this.$store.state.documents.lastSelectedFile, file)
-      this.$store.dispatch('documents/selectManyFiles', listFilesToSelect)
+      const firstDocumentOfSelection = this.$store.state.documents.lastSelectedEntity ? this.$store.state.documents.lastSelectedEntity : this.allSortedDocuments[0]
+      const listDocumentsToSelect = selectBetween(this.allSortedDocuments, firstDocumentOfSelection, file)
+      this.$store.dispatch('documents/selectManyDocuments', listDocumentsToSelect)
     }
   }
 }

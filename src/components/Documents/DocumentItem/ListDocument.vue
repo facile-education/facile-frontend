@@ -122,7 +122,7 @@ export default {
       return this.documentIcon.includes('.') || this.documentIcon.includes(':') // if icon contains extension (like folder.svg) it's not a font-awesome
     },
     selectedFiles () {
-      return this.$store.state.documents.selectedFiles
+      return this.$store.state.documents.selectedEntities
     },
     isSelected () {
       return this.selectedFiles.find(e => e.id === this.document.id) !== undefined

@@ -4,9 +4,8 @@ import i18n from '@/i18n'
 
 export const state = {
   breadcrumb: [],
-  lastSelectedFile: {},
-  lastClickDocument: undefined,
-  selectedFiles: [],
+  lastSelectedEntity: undefined,
+  selectedEntities: [],
   currentFolderId: {},
   folderContent: {},
   folderHistory: [],
@@ -20,25 +19,22 @@ export const mutations = {
   updateMultiSelectionStatus (state, payload) {
     state.isMultiSelectionActive = payload
   },
-  updateLastClickDocument (state, payload) {
-    state.lastClickDocument = payload
-  },
-  addSelectedFile (state, file) {
-    state.selectedFiles.push(file)
-  },
   addToHistory (state, folder) {
     state.folderHistory.push({ id: folder.id, name: folder.name })
-  },
-  cleanSelectedFiles (state) {
-    state.selectedFiles = []
   },
   goBackInHistory (state) {
     state.folderHistory.pop()
   },
-  removeSelectedFile (state, file) {
-    for (let i = 0; i < state.selectedFiles.length; ++i) {
-      if (state.selectedFiles[i].id === file.id) {
-        state.selectedFiles.splice(i, 1)
+  setSelectedEntities (state, documents) {
+    state.selectedEntities = documents
+  },
+  addSelectedEntity (state, file) {
+    state.selectedEntities.push(file)
+  },
+  removeSelectedEntity (state, file) {
+    for (let i = 0; i < state.selectedEntities.length; ++i) {
+      if (state.selectedEntities[i].id === file.id) {
+        state.selectedEntities.splice(i, 1)
         break
       }
     }
@@ -75,13 +71,13 @@ export const mutations = {
       }
     }
 
-    // Update selectedFile
-    if (state.selectedFiles[0] && (state.selectedFiles[0].id === entity.id)) { // it's supposed to be the case
-      state.selectedFiles[0].name = name
+    // Update selectedEntity
+    if (state.selectedEntities[0] && (state.selectedEntities[0].id === entity.id)) { // it's supposed to be the case
+      state.selectedEntities[0].name = name
     }
   },
-  updateLastSelectedFile (state, file) {
-    state.lastSelectedFile = file
+  updateLastSelectedEntity (state, file) {
+    state.lastSelectedEntity = file
   },
   updateLoadingStatus (state, payload) {
     state.isCurrentlyLoading = payload
@@ -101,11 +97,8 @@ export const actions = {
   toggleMultiSelection ({ commit }) {
     commit('updateMultiSelectionStatus', !this.state.documents.isMultiSelectionActive)
   },
-  updateLastClickDocument ({ commit }, document) {
-    commit('updateLastClickDocument', document)
-  },
   addEntitiesInTree ({ commit }, { entitiesToAdd }) { // front update only
-    const entities = JSON.parse(JSON.stringify(this.state.files.folderContent))
+    const entities = JSON.parse(JSON.stringify(this.state.documents.folderContent))
     for (let i = 0; i < entitiesToAdd.subFolders.length; ++i) {
       entities.subFolders.push(entitiesToAdd.subFolders[i])
     }
@@ -118,18 +111,19 @@ export const actions = {
     // commit('setDocumentPanelDisplayed', false) // confirm ergonomic
     commit('setCurrentFolderId', folderId)
     this.dispatch('documents/closeMultiSelection')
-    this.dispatch('documents/cleanSelectedFiles', folderId)
-    this.dispatch('documents/getEntities', folderId)
+    this.dispatch('documents/cleanSelectedEntities')
+    commit('updateLastSelectedEntity', undefined)
     this.dispatch('documents/updateBreadcrumb', folderId)
+    this.dispatch('documents/getEntities', folderId)
   },
-  cleanSelectedFiles ({ commit }) {
-    commit('cleanSelectedFiles')
+  cleanSelectedEntities ({ commit }) {
+    commit('setSelectedEntities', [])
   },
   closeDocumentPanel ({ commit }) {
     commit('setDocumentPanelDisplayed', false)
   },
   deleteEntitiesInTree ({ commit }, { entitiesToDelete }) { // front update only
-    const entities = JSON.parse(JSON.stringify(this.state.files.folderContent))
+    const entities = JSON.parse(JSON.stringify(this.state.documents.folderContent))
     for (let i = 0; i < entitiesToDelete.subFolders.length; ++i) {
       for (let j = 0; j < entities.subFolders.length; ++j) {
         if (entities.subFolders[j].id === entitiesToDelete.subFolders[i].id) {
@@ -169,6 +163,7 @@ export const actions = {
     commit('setDocumentPanelDisplayed', true)
   },
   refreshCurrentFolder ({ state }) {
+    this.dispatch('documents/updateBreadcrumb', state.currentFolderId)
     this.dispatch('documents/getEntities', state.currentFolderId)
   },
   goInParentFolder ({ state }) {
@@ -182,31 +177,13 @@ export const actions = {
     return new Promise((resolve) => {
       documentService.renameEntity(entity, name).then((data) => {
         if (data.success) {
-          commit('updateEntityName', { entity, name })
+          this.dispatch('documents/refreshCurrentFolder')
           resolve()
         } else {
           console.error('Error when trying to rename entity ' + name)
         }
         resolve()
       })
-    })
-  },
-  selectAllFiles () {
-    const currentDocuments = [...state.folderContent.subFolders, ...state.folderContent.files]
-    this.dispatch('documents/selectManyFiles', currentDocuments)
-  },
-  selectManyFiles ({ commit }, listFiles) {
-    commit('cleanSelectedFiles')
-    for (let i = 0; i < listFiles.length; ++i) {
-      commit('addSelectedFile', listFiles[i])
-    }
-  },
-  selectOneFile ({ commit }, file) {
-    return new Promise((resolve) => {
-      commit('cleanSelectedFiles')
-      commit('addSelectedFile', file)
-      commit('updateLastSelectedFile', file)
-      resolve()
     })
   },
   updateBreadcrumb ({ commit }, folderId) {
@@ -221,22 +198,33 @@ export const actions = {
       }
     })
   },
-  updateCtrlSelectedFiles ({ commit }, file) {
-    let isSelected = false
-    for (let i = 0; i < this.state.files.selectedFiles.length; ++i) {
-      if (this.state.files.selectedFiles[i].id === file.id) {
-        isSelected = true
-        break
-      }
-    }
-    if (isSelected) {
-      commit('removeSelectedFile', file)
+
+  // Selection
+  selectAll () {
+    const currentDocuments = [...state.folderContent.subFolders, ...state.folderContent.files]
+    this.dispatch('documents/selectManyDocuments', currentDocuments)
+  },
+  selectManyDocuments ({ commit }, listDocuments) {
+    commit('setSelectedEntities', listDocuments)
+  },
+  selectOneDocument ({ commit }, document) {
+    return new Promise((resolve) => {
+      commit('setSelectedEntities', [document])
+      commit('updateLastSelectedEntity', document)
+      resolve()
+    })
+  },
+  updateCtrlSelectedDocument ({ commit }, document) {
+    const isAlreadySelected = this.state.documents.selectedEntities.find(selectedEntity => selectedEntity.id === document.id) !== undefined
+
+    if (isAlreadySelected) {
+      commit('removeSelectedEntity', document)
     } else {
-      commit('addSelectedFile', file)
-      commit('updateLastSelectedFile', file)
+      commit('addSelectedEntity', document)
+      commit('updateLastSelectedEntity', document)
     }
   },
-  updateLastSelectedFile ({ commit }, file) {
-    commit('updateLastSelectedFile', file)
+  updateLastSelectedEntity ({ commit }, document) {
+    commit('updateLastSelectedEntity', document)
   }
 }

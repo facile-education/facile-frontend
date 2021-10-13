@@ -48,7 +48,7 @@ export default {
   },
   computed: {
     selectedDocuments () {
-      return this.$store.state.documents.selectedFiles
+      return this.$store.state.documents.selectedEntities
     },
     isCreateOptionDisplayed () {
       return this.selectedDocumentsOptions.length === 0

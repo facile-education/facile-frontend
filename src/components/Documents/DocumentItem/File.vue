@@ -54,12 +54,7 @@ export default {
   emits: ['shiftSelect', 'openContextMenu'],
   computed: {
     isSelected () {
-      for (let i = 0; i < this.$store.state.documents.selectedFiles.length; ++i) {
-        if (this.file.id === this.$store.state.documents.selectedFiles[i].id) {
-          return true
-        }
-      }
-      return false
+      return this.$store.state.documents.selectedEntities.find(selectedEntity => selectedEntity.id === this.file.id) !== undefined
     },
     isMultiSelectionActive () {
       return this.$store.state.documents.isMultiSelectionActive
@@ -85,9 +80,9 @@ export default {
     handleClick () {
       if (this.mq.phone || this.mq.tablet) {
         if (this.isMultiSelectionActive) {
-          this.$store.dispatch('documents/updateCtrlSelectedFiles', this.file)
+          this.$store.dispatch('documents/updateCtrlSelectedDocument', this.file)
         } else {
-          this.$store.dispatch('documents/selectOneFile', this.file)
+          this.$store.dispatch('documents/selectOneDocument', this.file)
           this.openFile()
         }
       }
