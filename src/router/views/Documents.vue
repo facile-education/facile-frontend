@@ -38,6 +38,23 @@
       @chooseOption="handleOption"
       @close="isContextMenuDisplayed=false"
     />
+
+    <teleport to="body">
+      <!--      <FilePickerModal-->
+      <!--        v-if="isFilePickerModalDisplayed"-->
+      <!--        height="30em"-->
+      <!--        :folder-selection="true"-->
+      <!--        :init-in-current-folder="true"-->
+      <!--        @chosenFolder="doSelectFolderAction"-->
+      <!--        @close="isFilePickerModalDisplayed = false"-->
+      <!--      />-->
+      <!--      <DeleteConfirmModal-->
+      <!--        v-if="isDeleteDefinitelyModalDisplayed"-->
+      <!--        :entities-to-definitely-delete="selectedFiles"-->
+      <!--        @confirmDeletion="deleteDefinitely"-->
+      <!--        @close="isDeleteDefinitelyModalDisplayed=false"-->
+      <!--      />-->
+    </teleport>
   </Layout>
 </template>
 
@@ -50,7 +67,7 @@ import DocumentList from '@components/Documents/DocumentList'
 import DocumentDetails from '@components/Documents/DocumentDetails'
 import ContextMenu from '@components/ContextMenu/ContextMenu'
 import { documentSpaceOptions } from '@/constants/options'
-import { computeDocumentsOptions } from '@/utils/documents.utils'
+import { computeDocumentsOptions, downLoadDocument, deleteEntities } from '@/utils/documents.utils'
 
 export default {
   name: 'Documents',
@@ -107,8 +124,55 @@ export default {
       }
     },
     handleOption (option) {
-      // TODO
-      console.log(option)
+      switch (option) {
+        case 'copy':
+          this.$store.dispatch('clipboard/copy')
+          break
+        case 'cut':
+          this.$store.dispatch('clipboard/cut')
+          break
+        case 'duplicate':
+          this.folderSelectionOption = 'duplicate'
+          this.isFilePickerModalDisplayed = true
+          break
+        case 'move':
+          this.folderSelectionOption = 'move'
+          this.isFilePickerModalDisplayed = true
+          break
+        case 'paste':
+          this.$store.dispatch('clipboard/paste', this.document.id)
+          break
+        case 'delete':
+          this.$store.dispatch('warningModal/addWarning', {
+            text: this.$t('router.views.Documents.Warning.deleteDocument'),
+            lastAction: { fct: deleteEntities, params: [this.selectedFiles] }
+          })
+          break
+        case 'download':
+          downLoadDocument(this.selectedDocuments[0])
+          break
+        case 'rename':
+          this.$store.dispatch('modals/openRenameModal', this.selectedFiles[0])
+          break
+        case 'share':
+          this.$store.dispatch('post/setIndicator', undefined)
+          this.$store.dispatch('post/setFile', this.document)
+          this.$store.dispatch('modals/openCreatePostModal')
+          break
+        default:
+          console.error('unknown action for option', option)
+      }
+      this.isContextMenuDisplayed = false
+      this.$store.dispatch('contextMenu/closeMenus')
+    },
+    doSelectFolderAction (targetFolder) {
+      if (this.folderSelectionOption === 'move') {
+        this.$store.dispatch('clipboard/move', targetFolder)
+      } else if (this.folderSelectionOption === 'duplicate') {
+        this.$store.dispatch('clipboard/duplicate', targetFolder)
+      } else {
+        console.error('Unknown option' + this.folderSelectionOption)
+      }
     }
   }
 }

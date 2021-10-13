@@ -1,5 +1,7 @@
 import store from '@store/index.js'
 import documentService from '@/api/documents/document.service'
+import folderService from '@/api/documents/folder.service'
+import activityService from '@/api/documents/activity.service'
 import { mergeContextMenus, removeMenuOptionIfExist } from '@/utils/commons.util'
 import { folderOptions, fileOptions } from '@/constants/options'
 
@@ -10,7 +12,7 @@ async function importDocument (folderId, documentList) {
       store.dispatch('currentActions/removeAction', { name: 'importDocument' })
       if (data.success) {
         if (data.firstCreatedEntity.parentFolderId === store.state.files.currentFolderId) {
-          store.dispatch('files/refreshCurrentFolder')
+          store.dispatch('documents/refreshCurrentFolder')
         }
       } else {
         console.error('Error when trying upload file')
@@ -22,6 +24,62 @@ async function importDocument (folderId, documentList) {
       }
     })
   }
+}
+
+async function downLoadDocument (entity) {
+  return new Promise((resolve) => {
+    if (entity.type === 'Folder') {
+      store.dispatch('currentActions/addAction', { name: 'download' })
+      folderService.downloadFolder(entity.id).then((data) => {
+        store.dispatch('currentActions/removeAction', { name: 'download' })
+        if (data.success) {
+          const url = data.downloadURL
+
+          const a = document.createElement('a')
+          a.style.display = 'none'
+          a.download = entity.name // don't works on Internet Explorer and IOS' safari
+          a.href = url
+          a.click()
+          resolve()
+        } else {
+          console.error('Error in getting url for folder archive download')
+        }
+      })
+    } else if (entity.type === 'File') {
+      const a = document.createElement('a')
+      a.style.display = 'none'
+      a.download = entity.name // don't works on Internet Explorer and IOS' safari
+      a.href = entity.url
+      a.click()
+
+      activityService.recordDownloadActivity(entity.id, 0)
+      resolve()
+    }
+  })
+}
+
+function deleteEntities (selectedEntities) {
+  const listFoldersToDelete = selectedEntities.filter(entity => entity.type === 'Folder')
+  const listFoldersIdToDelete = listFoldersToDelete.map(folder => folder.id)
+  const listFilesToDelete = selectedEntities.filter(entity => entity.type === 'File')
+  const listFilesIdToDelete = listFilesToDelete.map(file => file.id)
+
+  store.dispatch('currentActions/addAction', { name: 'deleteDefinitely' })
+  documentService.deleteEntities(listFoldersIdToDelete, listFilesIdToDelete).then((data) => {
+    store.dispatch('currentActions/removeAction', { name: 'deleteDefinitely' })
+    if (data.success) {
+      if (data.failedEntitiesList.length !== 0) {
+        console.error('Unable to delete entities from trash:', data.failedEntitiesList)
+        store.dispatch('error/setErrorType', 'deleteEntities')
+        store.dispatch('error/setListFilesConcerns', data.failedEntitiesList)
+      }
+
+      store.commit('documents/cleanSelectedFiles')
+      store.dispatch('documents/refreshCurrentFolder')
+    } else {
+      console.error('cannot empty content of trash folder')
+    }
+  })
 }
 
 function computeDocumentsOptions (documentList) {
@@ -78,11 +136,15 @@ function computeDocumentsOptions (documentList) {
 
 export default {
   importDocument,
-  computeDocumentsOptions
+  computeDocumentsOptions,
+  downLoadDocument,
+  deleteEntities
   // importMessagingAttachFiles
 }
 
 export {
   importDocument,
-  computeDocumentsOptions
+  computeDocumentsOptions,
+  downLoadDocument,
+  deleteEntities
 }

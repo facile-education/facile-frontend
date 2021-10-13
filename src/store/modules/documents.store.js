@@ -13,12 +13,12 @@ export const state = {
   cutSourceFolder: {},
   isCurrentlyLoading: false,
   isDocumentPanelDisplayed: false,
-  isMultiSelectionOptionsDisplayed: false
+  isMultiSelectionActive: false
 }
 
 export const mutations = {
-  updateMultiSelectionOptionsDisplayed (state, payload) {
-    state.isMultiSelectionOptionsDisplayed = payload
+  updateMultiSelectionStatus (state, payload) {
+    state.isMultiSelectionActive = payload
   },
   updateLastClickDocument (state, payload) {
     state.lastClickDocument = payload
@@ -95,11 +95,11 @@ export const mutations = {
 }
 
 export const actions = {
-  closeMultiSelectionOptions ({ commit }) {
-    commit('updateMultiSelectionOptionsDisplayed', false)
+  closeMultiSelection ({ commit }) {
+    commit('updateMultiSelectionStatus', false)
   },
-  toggleMultiSelectionOptions ({ commit }) {
-    commit('updateMultiSelectionOptionsDisplayed', !this.state.files.isMultiSelectionOptionsDisplayed)
+  toggleMultiSelection ({ commit }) {
+    commit('updateMultiSelectionStatus', !this.state.documents.isMultiSelectionActive)
   },
   updateLastClickDocument ({ commit }, document) {
     commit('updateLastClickDocument', document)
@@ -117,7 +117,7 @@ export const actions = {
   changeDirectory ({ commit, state }, folderId) {
     // commit('setDocumentPanelDisplayed', false) // confirm ergonomic
     commit('setCurrentFolderId', folderId)
-    this.dispatch('documents/closeMultiSelectionOptions')
+    this.dispatch('documents/closeMultiSelection')
     this.dispatch('documents/cleanSelectedFiles', folderId)
     this.dispatch('documents/getEntities', folderId)
     this.dispatch('documents/updateBreadcrumb', folderId)

@@ -114,7 +114,7 @@ export default {
       return this.currentBreadcrumb.length > 0 ? this.currentBreadcrumb[this.currentBreadcrumb.length - 1] : undefined
     },
     appSelectedEntities () {
-      return this.$store.state.files.selectedFiles
+      return this.$store.state.documents.selectedFiles
     },
     defaultHeader () {
       return this.folderSelection ? this.$t('FilePickerModal.headerFolder') : this.$t('FilePickerModal.header')
@@ -122,7 +122,7 @@ export default {
   },
   created () {
     if (this.initInCurrentFolder) {
-      this.loadFolderContent(this.$store.state.files.currentFolderId)
+      this.loadFolderContent(this.$store.state.documents.currentFolderId)
     } else {
       navigationService.getSpacesFolders().then((data) => {
         this.loadFolderContent(data.private.id)

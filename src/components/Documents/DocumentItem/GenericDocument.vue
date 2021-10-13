@@ -1,0 +1,195 @@
+<template>
+  <div
+    :draggable="isDraggable"
+    :class="[computeClass, {'dark': dark}]"
+    @dragstart="onDragStart"
+    @dragend="onDragEnd"
+  >
+    <GridDocument
+      v-if="display==='grid'"
+      :document="document"
+      @mouseover="isHovering = true"
+      @mouseleave="isHovering = false"
+      @click.exact="toggleSelection"
+      @click.ctrl.exact="toggleCtrlSelection"
+      @click.meta.exact="toggleCtrlSelection"
+      @click.shift="toggleShiftSelection"
+      @contextmenu.prevent="openContextMenu"
+      @chooseOption="handleChosenOption"
+    />
+    <ListDocument
+      v-else-if="display==='list'"
+      :document="document"
+      :quick-options="quickOptions"
+      @mouseover="isHovering = true"
+      @mouseleave="isHovering = false"
+      @click.exact="toggleSelection"
+      @click.ctrl.exact="toggleCtrlSelection"
+      @click.meta.exact="toggleCtrlSelection"
+      @click.shift="toggleShiftSelection"
+      @contextmenu.prevent="openContextMenu"
+      @chooseOption="handleChosenOption"
+    />
+  </div>
+</template>
+
+<script>
+import GridDocument from '@components/Documents/DocumentItem/GridDocument'
+import ListDocument from '@components/Documents/DocumentItem/ListDocument'
+
+export default {
+  name: 'GenericDocument',
+  components: { ListDocument, GridDocument },
+  inject: ['mq'],
+  props: {
+    document: {
+      type: Object,
+      required: true,
+      validator: function (obj) {
+        return (typeof obj.id === 'string') &&
+          (typeof obj.name === 'string' && obj.name.length > 0) &&
+          (typeof obj.icon === 'string' && obj.icon.length > 0)
+      }
+    },
+    display: {
+      type: String,
+      default: 'list'
+    },
+    isDraggable: {
+      type: Boolean,
+      default: false
+    },
+    quickOptions: {
+      type: Array,
+      default: function () {
+        return []
+      }
+    },
+    dark: {
+      type: Boolean,
+      default: true
+    }
+  },
+  emits: ['open', 'shiftSelect', 'openContextMenu'],
+  data () {
+    return {
+      isHovering: false
+    }
+  },
+  computed: {
+    computeClass () {
+      if (this.isDragged) {
+        return 'is-dragging'
+      } else {
+        if (this.isSelected) {
+          return 'selected'
+        } else {
+          if (this.isHovering) {
+            return 'hovering'
+          } else {
+            return 'document'
+          }
+        }
+      }
+    },
+    selectedFiles () {
+      return this.$store.state.documents.selectedFiles
+    },
+    draggedEntities () {
+      return this.$store.state.misc.draggedEntities
+    },
+    isSelected () {
+      for (let i = 0; i < this.selectedFiles.length; ++i) {
+        if (this.document.id === this.selectedFiles[i].id) {
+          return true
+        }
+      }
+      return false
+    },
+    isDragged () {
+      for (let i = 0; i < this.draggedEntities.length; ++i) {
+        if (this.document.id === this.draggedEntities[i].id) {
+          return true
+        }
+      }
+      return false
+    }
+  },
+  methods: {
+    onDragStart (e) {
+      if (!this.isSelected) {
+        this.toggleSelection()
+      }
+      let entitiesToDrag
+      if (this.selectedFiles.length > 1) {
+        entitiesToDrag = this.selectedFiles
+      } else {
+        entitiesToDrag = [this.document]
+      }
+      e.dataTransfer.setData('entitiesToDrop', JSON.stringify(entitiesToDrag))
+      this.$store.dispatch('misc/addDraggedEntities', entitiesToDrag)
+    },
+    onDragEnd () {
+      this.$store.dispatch('misc/removeDraggedEntities')
+    },
+    openContextMenu (e) {
+      this.toggleSelection() // /!\ be careful about async order
+      this.$emit('openContextMenu', e)
+    },
+    handleChosenOption (option) {
+      // TODO handle quickOptions
+      console.log('quickOptionClicked!', option)
+    },
+    toggleSelection () {
+      return new Promise((resolve) => {
+        this.$store.dispatch('documents/updateLastClickDocument', this.document)
+        if (!this.mq.phone) { // no selection on mobile
+          this.$store.dispatch('documents/selectOneFile', this.document).then(() => {
+            resolve()
+          })
+        } else {
+          resolve()
+        }
+      })
+    },
+    toggleCtrlSelection () {
+      this.$store.dispatch('documents/updateLastClickDocument', this.document)
+      if (!this.mq.phone) { // no selection on mobile
+        this.$store.dispatch('documents/updateCtrlSelectedFiles', this.document)
+      }
+    },
+    toggleShiftSelection () {
+      this.$store.dispatch('documents/updateLastClickDocument', this.document)
+      if (!this.mq.phone) { // no selection on mobile
+        this.$emit('shiftSelect', { id: this.document.id, name: this.document.name })
+      }
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@design';
+
+.document {
+  background-color: white;
+}
+
+.dark {
+  background-color: $color-not-white-bg;
+}
+
+.is-dragging {
+  color: $color-active-bg;
+  background-color : $color-hover-bg;
+}
+
+.hovering {
+  background-color : $color-hover-bg;
+}
+
+.selected {
+  background-color : $color-selected-bg;
+}
+
+</style>
