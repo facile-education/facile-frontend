@@ -16,13 +16,13 @@
         <img
           v-if="fileIconIsImage"
           class="img-icon"
-          :src="document.icon"
+          :src="documentIcon"
           alt="document icon"
         >
         <BaseIcon
           v-else
           class="base-icon"
-          :name="[iconPrefix, document.icon]"
+          :name="[iconPrefix, documentIcon]"
         />
       </div>
       <div class="name-container">
@@ -91,17 +91,15 @@ export default {
       required: true,
       validator: function (obj) {
         return (typeof obj.id === 'string') &&
-          (typeof obj.name === 'string' && obj.name.length > 0) &&
-          (typeof obj.icon === 'string' && obj.icon.length > 0)
+          (typeof obj.name === 'string' && obj.name.length > 0)
       }
+    },
+    documentIcon: {
+      type: String,
+      required: true
     },
     displayDate: {
       type: Boolean,
-      default: true
-    },
-    isHovering: {
-      type: Boolean,
-      required: true,
       default: true
     },
     quickOptions: {
@@ -121,7 +119,7 @@ export default {
   computed: {
     fileIconIsImage () {
       // TODO: find a better way to separate img and font-awesome icons
-      return this.document.icon.includes('.') || this.document.icon.includes(':') // if icon contains extension (like folder.svg) it's not a font-awesome
+      return this.documentIcon.includes('.') || this.documentIcon.includes(':') // if icon contains extension (like folder.svg) it's not a font-awesome
     },
     selectedFiles () {
       return this.$store.state.documents.selectedFiles
@@ -149,7 +147,7 @@ export default {
     },
     iconPrefix () {
       if (this.document.type === 'File') {
-        if (this.document.icon === 'code') {
+        if (this.documentIcon === 'code') {
           return 'fas'
         } else {
           return 'far'

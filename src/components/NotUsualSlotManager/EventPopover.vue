@@ -83,7 +83,7 @@
 
 <script>
 import dayjs from 'dayjs'
-import { isEditableSlot } from '@utils/notUsualSlotUtils'
+import { isEditableSlot } from '@utils/notUsualSlot.util'
 import notUsualSlotsConstants from '@/constants/notUsualSlots'
 import NeroIcon from '@/components/Nero/NeroIcon'
 

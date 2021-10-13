@@ -93,8 +93,8 @@ export default {
     },
     changeDir (folder) {
       if (!this.isCurrentFolder) {
-        this.$store.dispatch('files/changeDirectory', folder.id)
-        // this.$store.dispatch('files/closeDocumentPanel') // TODO: discuss about ergonomics
+        this.$store.dispatch('documents/changeDirectory', folder.id)
+        // this.$store.dispatch('documents/closeDocumentPanel') // TODO: discuss about ergonomics
       }
     }
   }

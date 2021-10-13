@@ -8,6 +8,7 @@
     <GridDocument
       v-if="display==='grid'"
       :document="document"
+      :document-icon="documentIcon"
       @mouseover="isHovering = true"
       @mouseleave="isHovering = false"
       @click.exact="toggleSelection"
@@ -20,6 +21,7 @@
     <ListDocument
       v-else-if="display==='list'"
       :document="document"
+      :document-icon="documentIcon"
       :quick-options="quickOptions"
       @mouseover="isHovering = true"
       @mouseleave="isHovering = false"
@@ -47,9 +49,12 @@ export default {
       required: true,
       validator: function (obj) {
         return (typeof obj.id === 'string') &&
-          (typeof obj.name === 'string' && obj.name.length > 0) &&
-          (typeof obj.icon === 'string' && obj.icon.length > 0)
+          (typeof obj.name === 'string' && obj.name.length > 0)
       }
+    },
+    documentIcon: {
+      type: String,
+      required: true
     },
     display: {
       type: String,

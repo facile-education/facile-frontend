@@ -71,7 +71,7 @@ import navigationService from '@/api/documents/folder.service'
 import FilePickerBreadCrumb from '@components/FilePicker/FilePickerBreadCrumb'
 import FilePickerFolder from '@components/FilePicker/FilePickerFolder'
 import FilePickerFile from '@components/FilePicker/FilePickerFile'
-import documentsUtils from '@utils/documents.utils.js'
+import documentsUtils from '@utils/documents.util.js'
 
 export default {
   name: 'FilePickerModal',

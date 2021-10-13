@@ -67,7 +67,7 @@ import DocumentList from '@components/Documents/DocumentList'
 import DocumentDetails from '@components/Documents/DocumentDetails'
 import ContextMenu from '@components/ContextMenu/ContextMenu'
 import { documentSpaceOptions } from '@/constants/options'
-import { computeDocumentsOptions, downLoadDocument, deleteEntities } from '@/utils/documents.utils'
+import { computeDocumentsOptions, downLoadDocument, deleteEntities } from '@utils/documents.util'
 
 export default {
   name: 'Documents',
@@ -99,7 +99,7 @@ export default {
     }
   },
   beforeCreate () {
-    this.$store.dispatch('documents/getSpacesFolders')
+    this.$store.dispatch('documents/goInDocumentRoot')
     // this.$store.dispatch('fileFields/resetPrivateFields')
   },
   methods: {
