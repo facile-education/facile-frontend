@@ -5,6 +5,65 @@ import activityService from '@/api/documents/activity.service'
 import { mergeContextMenus, removeMenuOptionIfExist } from '@/utils/commons.util'
 import { folderOptions, fileOptions } from '@/constants/options'
 
+function computeDocumentsOptions (documentList) {
+  const listCM = []
+  // for each selected file, get context menu associated and add him to list
+  for (let i = 0; i < documentList.length; ++i) {
+    let documentContextMenu
+    const document = documentList[i]
+
+    if (document.type === 'Folder') {
+      documentContextMenu = [...folderOptions]
+    } else {
+      documentContextMenu = [...fileOptions]
+    }
+
+    listCM.push(documentContextMenu)
+  }
+
+  // Compute the union of context menus
+  const contextMenu = mergeContextMenus(listCM)
+
+  // Remove some options depending of context
+  if (store.state.clipboard.documentList.length === 0) { // remove paste option if no documents were copied
+    removeMenuOptionIfExist(contextMenu, 'paste')
+  }
+
+  // multi selection
+  if (listCM.length > 1) {
+    removeMenuOptionIfExist(contextMenu, 'showData')
+    removeMenuOptionIfExist(contextMenu, 'paste')
+    removeMenuOptionIfExist(contextMenu, 'open')
+    removeMenuOptionIfExist(contextMenu, 'download')
+    removeMenuOptionIfExist(contextMenu, 'rename')
+    removeMenuOptionIfExist(contextMenu, 'comment')
+    removeMenuOptionIfExist(contextMenu, 'share')
+  }
+}
+
+function selectBetween (listSortedFiles, firstFile, secondFile) {
+  let idxLastSelectedFile = -1
+  let idxFile = -1
+  for (let i = 0; i < listSortedFiles.length; ++i) {
+    if (listSortedFiles[i].id === firstFile.id) {
+      idxLastSelectedFile = i
+    }
+    if (listSortedFiles[i].id === secondFile.id) {
+      idxFile = i
+    }
+  }
+  if (idxLastSelectedFile === -1 || idxFile === -1) {
+    console.error('error when trying to get files between ' + firstFile.name + ' and ' + secondFile.name)
+    return []
+  } else {
+    if (idxLastSelectedFile < idxFile) {
+      return listSortedFiles.slice(idxLastSelectedFile, idxFile + 1)
+    } else {
+      return listSortedFiles.slice(idxFile, idxLastSelectedFile + 1)
+    }
+  }
+}
+
 async function importDocument (folderId, documentList) {
   for (const doc of documentList) {
     store.dispatch('currentActions/addAction', { name: 'importDocument' })
@@ -82,42 +141,6 @@ function deleteEntities (selectedEntities) {
   })
 }
 
-function computeDocumentsOptions (documentList) {
-  const listCM = []
-  // for each selected file, get context menu associated and add him to list
-  for (let i = 0; i < documentList.length; ++i) {
-    let documentContextMenu
-    const document = documentList[i]
-
-    if (document.type === 'Folder') {
-      documentContextMenu = [...folderOptions]
-    } else {
-      documentContextMenu = [...fileOptions]
-    }
-
-    listCM.push(documentContextMenu)
-  }
-
-  // Compute the union of context menus
-  const contextMenu = mergeContextMenus(listCM)
-
-  // Remove some options depending of context
-  if (store.state.clipboard.documentList.length === 0) { // remove paste option if no documents were copied
-    removeMenuOptionIfExist(contextMenu, 'paste')
-  }
-
-  // multi selection
-  if (listCM.length > 1) {
-    removeMenuOptionIfExist(contextMenu, 'showData')
-    removeMenuOptionIfExist(contextMenu, 'paste')
-    removeMenuOptionIfExist(contextMenu, 'open')
-    removeMenuOptionIfExist(contextMenu, 'download')
-    removeMenuOptionIfExist(contextMenu, 'rename')
-    removeMenuOptionIfExist(contextMenu, 'comment')
-    removeMenuOptionIfExist(contextMenu, 'share')
-  }
-}
-
 // async function importMessagingAttachFiles (documentList) {
 //   const createdFiles = []
 //   for (const doc of documentList) {
@@ -135,16 +158,18 @@ function computeDocumentsOptions (documentList) {
 // }
 
 export default {
-  importDocument,
   computeDocumentsOptions,
+  selectBetween,
+  importDocument,
   downLoadDocument,
   deleteEntities
   // importMessagingAttachFiles
 }
 
 export {
-  importDocument,
   computeDocumentsOptions,
+  selectBetween,
+  importDocument,
   downLoadDocument,
   deleteEntities
 }

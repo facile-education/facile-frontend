@@ -75,7 +75,7 @@
 
 <script>
 import { slotLabelList } from '@/constants/appConstants'
-import { isEditableSlot } from '@/utils/notUsualSlotUtils'
+import { isEditableSlot } from '@utils/notUsualSlot.util'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import notUsualSlotsConstants from '@/constants/notUsualSlots'

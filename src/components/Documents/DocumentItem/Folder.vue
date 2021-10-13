@@ -2,7 +2,8 @@
   <GenericDocument
     class="folder-document"
     :class="{ 'active': isActive }"
-    :document="document"
+    :document="folder"
+    :document-icon="folderIcon"
     :quick-options="quickOptions"
     :dark="dark"
     :display="display"
@@ -88,10 +89,8 @@ export default {
       }
       return false
     },
-    document () {
-      const obj = this.folder
-      obj.icon = this.isActive ? this.$options.myIcons.folderOpen : this.$options.myIcons.folder
-      return obj
+    folderIcon () {
+      return this.isActive ? this.$options.myIcons.folderOpen : this.$options.myIcons.folder
     }
   },
   methods: {
@@ -125,20 +124,16 @@ export default {
       this.$emit('shiftSelect', { id: file.id, name: file.name })
     },
     changeDir () {
-      this.$store.dispatch('files/changeDirectory', this.folder.id)
+      this.$store.dispatch('documents/changeDirectory', this.folder.id)
       if (!this.mq.phone && !this.mq.tablet) {
-        this.$store.dispatch('files/selectOneFile', this.folder)
+        this.$store.dispatch('documents/selectOneFile', this.folder)
       }
     },
     clickOnFolder () {
-      if (this.mq.phone || this.mq.tablet) {
-        if (this.isMultiSelectionActive) {
-          this.$store.dispatch('files/updateCtrlSelectedFiles', this.folder)
-        } else {
-          this.changeDir()
-        }
+      if (this.isMultiSelectionActive) {
+        this.$store.dispatch('documents/updateCtrlSelectedFiles', this.folder)
       } else {
-        this.$store.dispatch('files/openDocumentPanel')
+        this.changeDir()
       }
     },
     openContextMenu (e) {

@@ -1,6 +1,7 @@
 <template>
   <GenericDocument
-    :document="document"
+    :document="file"
+    :document-icon="fileIcon"
     :quick-options="quickOptions"
     :display="display"
     :is-draggable="isDraggable"
@@ -63,11 +64,6 @@ export default {
     isMultiSelectionActive () {
       return this.$store.state.documents.isMultiSelectionActive
     },
-    document () {
-      const obj = this.file
-      obj.icon = this.fileIcon
-      return obj
-    },
     fileIcon () {
       if (this.$options.myIcons.extensions[this.file.extension] === undefined) {
         return this.$options.myIcons.file
@@ -83,14 +79,15 @@ export default {
       }
     },
     openFile () {
-      this.$store.dispatch('files/openDocumentPanel')
+      // TODO
+      console.log('TODO: open file')
     },
     handleClick () {
       if (this.mq.phone || this.mq.tablet) {
         if (this.isMultiSelectionActive) {
-          this.$store.dispatch('files/updateCtrlSelectedFiles', this.file)
+          this.$store.dispatch('documents/updateCtrlSelectedFiles', this.file)
         } else {
-          this.$store.dispatch('files/selectOneFile', this.file)
+          this.$store.dispatch('documents/selectOneFile', this.file)
           this.openFile()
         }
       }

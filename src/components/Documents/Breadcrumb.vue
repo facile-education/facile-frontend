@@ -34,7 +34,7 @@ export default {
     goInParentFolder (index) {
       if (index > 0) {
         const parentFolder = this.breadcrumb[index - 1]
-        this.$store.dispatch('files/changeDirectory', parentFolder.id)
+        this.$store.dispatch('documents/changeDirectory', parentFolder.id)
       } else {
         console.error('cannot go in parent folder of a folder with index ' + index)
       }

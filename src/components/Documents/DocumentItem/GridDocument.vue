@@ -2,7 +2,7 @@
   <div class="grid-document">
     <i
       class="icon"
-      :class="document.icon"
+      :class="documentIcon"
     />
     <p class="file-name">
       {{ document.name }}
@@ -19,9 +19,12 @@ export default {
       required: true,
       validator: function (obj) {
         return (typeof obj.id === 'number') &&
-          (typeof obj.name === 'string' && obj.name.length > 0) &&
-          (typeof obj.icon === 'string' && obj.icon.length > 0)
+          (typeof obj.name === 'string' && obj.name.length > 0)
       }
+    },
+    documentIcon: {
+      type: String,
+      required: true
     }
   }
 }

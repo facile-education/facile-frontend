@@ -160,7 +160,7 @@ export const actions = {
       })
     })
   },
-  getSpacesFolders ({ commit }) {
+  goInDocumentRoot ({ commit }) {
     navigationService.getSpacesFolders().then((data) => {
       this.dispatch('documents/changeDirectory', data.private.id)
     })
