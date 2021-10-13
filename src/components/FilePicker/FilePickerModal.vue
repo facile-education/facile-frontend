@@ -114,7 +114,7 @@ export default {
       return this.currentBreadcrumb.length > 0 ? this.currentBreadcrumb[this.currentBreadcrumb.length - 1] : undefined
     },
     appSelectedEntities () {
-      return this.$store.state.documents.selectedFiles
+      return this.$store.state.documents.selectedEntities
     },
     defaultHeader () {
       return this.folderSelection ? this.$t('FilePickerModal.headerFolder') : this.$t('FilePickerModal.header')

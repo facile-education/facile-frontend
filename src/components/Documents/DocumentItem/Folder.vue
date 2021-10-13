@@ -71,12 +71,7 @@ export default {
       return this.$store.state.documents.isMultiSelectionActive
     },
     isSelected () {
-      for (let i = 0; i < this.$store.state.documents.selectedFiles.length; ++i) {
-        if (this.folder.id === this.$store.state.documents.selectedFiles[i].id) {
-          return true
-        }
-      }
-      return false
+      return this.$store.state.documents.selectedEntities.find(selectedEntity => selectedEntity.id === this.folder.id) !== undefined
     },
     draggedFiles () {
       return this.$store.state.misc.draggedEntities
@@ -125,13 +120,10 @@ export default {
     },
     changeDir () {
       this.$store.dispatch('documents/changeDirectory', this.folder.id)
-      if (!this.mq.phone && !this.mq.tablet) {
-        this.$store.dispatch('documents/selectOneFile', this.folder)
-      }
     },
     clickOnFolder () {
       if (this.isMultiSelectionActive) {
-        this.$store.dispatch('documents/updateCtrlSelectedFiles', this.folder)
+        this.$store.dispatch('documents/updateCtrlSelectedDocument', this.folder)
       } else {
         this.changeDir()
       }

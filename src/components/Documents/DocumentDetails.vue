@@ -34,7 +34,7 @@ export default {
   name: 'DocumentDetails',
   computed: {
     selectedDocuments () {
-      return this.$store.state.documents.selectedFiles
+      return this.$store.state.documents.selectedEntities
     },
     documentToDisplay () {
       if (this.selectedDocuments.length === 1) {

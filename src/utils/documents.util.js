@@ -70,7 +70,7 @@ async function importDocument (folderId, documentList) {
     await documentService.uploadFile(folderId, doc).then((data) => {
       store.dispatch('currentActions/removeAction', { name: 'importDocument' })
       if (data.success) {
-        if (data.firstCreatedEntity.parentFolderId === store.state.files.currentFolderId) {
+        if (data.firstCreatedEntity.parentFolderId === store.state.documents.currentFolderId) {
           store.dispatch('documents/refreshCurrentFolder')
         }
       } else {

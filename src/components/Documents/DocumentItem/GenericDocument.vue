@@ -98,7 +98,7 @@ export default {
       }
     },
     selectedFiles () {
-      return this.$store.state.documents.selectedFiles
+      return this.$store.state.documents.selectedEntities
     },
     draggedEntities () {
       return this.$store.state.misc.draggedEntities
@@ -147,9 +147,8 @@ export default {
     },
     toggleSelection () {
       return new Promise((resolve) => {
-        this.$store.dispatch('documents/updateLastClickDocument', this.document)
         if (!this.mq.phone) { // no selection on mobile
-          this.$store.dispatch('documents/selectOneFile', this.document).then(() => {
+          this.$store.dispatch('documents/selectOneDocument', this.document).then(() => {
             resolve()
           })
         } else {
@@ -158,13 +157,11 @@ export default {
       })
     },
     toggleCtrlSelection () {
-      this.$store.dispatch('documents/updateLastClickDocument', this.document)
       if (!this.mq.phone) { // no selection on mobile
-        this.$store.dispatch('documents/updateCtrlSelectedFiles', this.document)
+        this.$store.dispatch('documents/updateCtrlSelectedDocument', this.document)
       }
     },
     toggleShiftSelection () {
-      this.$store.dispatch('documents/updateLastClickDocument', this.document)
       if (!this.mq.phone) { // no selection on mobile
         this.$emit('shiftSelect', { id: this.document.id, name: this.document.name })
       }

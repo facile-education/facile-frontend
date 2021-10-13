@@ -22,14 +22,14 @@ export const mutations = {
 
 export const actions = {
   duplicate ({ commit, rootState }, targetFolder) {
-    if (rootState.files.selectedFiles.length > 0) {
+    if (rootState.documents.selectedEntities.length > 0) {
       const folderIds = []
       const fileIds = []
-      for (let i = 0; i < rootState.files.selectedFiles.length; ++i) {
-        if (rootState.files.selectedFiles[i].type === 'Folder') {
-          folderIds.push(rootState.files.selectedFiles[i].id)
+      for (let i = 0; i < rootState.documents.selectedEntities.length; ++i) {
+        if (rootState.documents.selectedEntities[i].type === 'Folder') {
+          folderIds.push(rootState.documents.selectedEntities[i].id)
         } else {
-          fileIds.push(rootState.files.selectedFiles[i].id)
+          fileIds.push(rootState.documents.selectedEntities[i].id)
         }
       }
 
@@ -49,11 +49,11 @@ export const actions = {
     commit('updateDocumentList', [])
   },
   move ({ commit, rootState }, targetFolder) {
-    if (rootState.files.selectedFiles.length !== 0) {
+    if (rootState.documents.selectedEntities.length !== 0) {
       const folderIds = []
       const fileIds = []
-      for (let i = 0; i < rootState.files.selectedFiles.length; ++i) {
-        const entity = rootState.files.selectedFiles[i]
+      for (let i = 0; i < rootState.documents.selectedEntities.length; ++i) {
+        const entity = rootState.documents.selectedEntities[i]
         if (entity.type === 'Folder') {
           folderIds.push(entity.id)
         } else {
@@ -76,24 +76,24 @@ export const actions = {
     }
   },
   copy ({ commit, rootState }) {
-    if (rootState.files.selectedFiles.length !== 0) {
+    if (rootState.documents.selectedEntities.length !== 0) {
       commit('updateAction', 'copy')
-      commit('updateSourceFolderId', rootState.files.currentFolderId)
-      commit('updateDocumentList', rootState.files.selectedFiles)
+      commit('updateSourceFolderId', rootState.documents.currentFolderId)
+      commit('updateDocumentList', rootState.documents.selectedEntities)
 
       // display popup
-      const message = rootState.files.selectedFiles.length === 1 ? rootState.files.selectedFiles[0].name + ' ' + i18n.global.t('Popup.copied') : i18n.global.t('Popup.documentCopied')
+      const message = rootState.documents.selectedEntities.length === 1 ? rootState.documents.selectedEntities[0].name + ' ' + i18n.global.t('Popup.copied') : i18n.global.t('Popup.documentCopied')
       this.dispatch('popups/pushPopup', { message: message })
     }
   },
   cut ({ commit, rootState }) {
-    if (rootState.files.selectedFiles.length !== 0) {
+    if (rootState.documents.selectedEntities.length !== 0) {
       commit('updateAction', 'cut')
-      commit('updateSourceFolderId', rootState.files.currentFolderId)
-      commit('updateDocumentList', rootState.files.selectedFiles)
+      commit('updateSourceFolderId', rootState.documents.currentFolderId)
+      commit('updateDocumentList', rootState.documents.selectedEntities)
 
       // display popup
-      const message = rootState.files.selectedFiles.length === 1 ? rootState.files.selectedFiles[0].name + ' ' + i18n.global.t('Popup.cut') : i18n.global.t('Popup.documentCut')
+      const message = rootState.documents.selectedEntities.length === 1 ? rootState.documents.selectedEntities[0].name + ' ' + i18n.global.t('Popup.cut') : i18n.global.t('Popup.documentCut')
       this.dispatch('popups/pushPopup', { message: message })
     }
   },
