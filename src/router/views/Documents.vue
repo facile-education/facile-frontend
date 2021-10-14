@@ -4,6 +4,7 @@
       v-if="currentUser.userId !== 0"
       class="documents"
       :class="{'mobile': mq.phone}"
+      @click.right.prevent
     >
       <CurrentOptions
         class="currents-options"
@@ -15,11 +16,17 @@
         <!-- TODO: Add file drop zone component here -->
         <div
           class="scroll"
-          @click.right.prevent="rightClickOnSpace"
+          @click="clickOnEmptySpace"
+          @click.right.prevent="rightClickOnEmptySpace"
         >
-          <Breadcrumb @click.right.prevent.stop />
+          <Breadcrumb
+            class="breadCrumb"
+            @click.stop
+            @click.right.prevent.stop
+          />
           <DocumentList
             @openContextMenu="openContextMenu"
+            @click.stop
             @click.right.prevent.stop
           />
         </div>
@@ -106,8 +113,11 @@ export default {
     // this.$store.dispatch('fileFields/resetPrivateFields')
   },
   methods: {
-    rightClickOnSpace (event) {
+    clickOnEmptySpace () {
       this.$store.dispatch('documents/cleanSelectedEntities') // /!\ be careful with asynchronous order!
+    },
+    rightClickOnEmptySpace (event) {
+      this.clickOnEmptySpace()
       this.openContextMenu(event)
     },
     openContextMenu (event) {
@@ -193,6 +203,10 @@ export default {
     .scroll {
       height: 100%;
       overflow-y: auto;
+
+      .breadCrumb {
+        margin-left: 10px;
+      }
     }
 
     .document-details {
