@@ -39,6 +39,8 @@ function computeDocumentsOptions (documentList) {
     removeMenuOptionIfExist(contextMenu, 'comment')
     removeMenuOptionIfExist(contextMenu, 'share')
   }
+
+  return contextMenu
 }
 
 function selectBetween (listSortedFiles, firstFile, secondFile) {
@@ -133,7 +135,7 @@ function deleteEntities (selectedEntities) {
         store.dispatch('error/setListFilesConcerns', data.failedEntitiesList)
       }
 
-      store.commit('documents/cleanSelectedFiles')
+      store.commit('documents/cleanSelectedEntities')
       store.dispatch('documents/refreshCurrentFolder')
     } else {
       console.error('cannot empty content of trash folder')
