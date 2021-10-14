@@ -5,7 +5,7 @@
     @click="optionClicked"
   >
     <img
-      :src="option.img"
+      :src="option.icon"
       alt=""
     >
     <div class="title">
@@ -38,12 +38,16 @@ export default {
   display: flex;
   cursor: pointer;
   align-items: center;
-  padding: 0 2px;
+  margin: 0 5px;
 
   img {
-    width: 33px;
-    height: 33px;
+    width: 28px;
+    height: 28px;
     padding: 5px;
+  }
+
+  .title {
+    font-size: 0.875em;
   }
 }
 </style>

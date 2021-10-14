@@ -7,7 +7,7 @@
     >
       <CurrentOptions
         class="currents-options"
-        :selected-documents-options="[]"
+        :options="currentOptions"
         @optionClicked="handleOption"
       />
 
@@ -91,6 +91,9 @@ export default {
     selectedDocumentsOptions () {
       return computeDocumentsOptions(this.selectedDocuments)
     },
+    currentOptions () {
+      return (this.selectedDocuments.length > 0) ? this.selectedDocumentsOptions : documentSpaceOptions
+    },
     isDocumentPanelDisplayed () {
       return this.$store.state.documents.isDocumentPanelDisplayed
     },
@@ -104,22 +107,16 @@ export default {
   },
   methods: {
     rightClickOnSpace (event) {
-      this.$store.dispatch('documents/cleanSelectedFiles') // /!\ be careful with asynchronous order!
+      this.$store.dispatch('documents/cleanSelectedEntities') // /!\ be careful with asynchronous order!
       this.openContextMenu(event)
     },
     openContextMenu (event) {
       if (!this.isAContextMenuDisplayed) {
         this.isContextMenuDisplayed = true
-        let currentOptions
-        if (this.selectedDocuments.length > 0) { // remove paste option if no documents were copied
-          currentOptions = this.selectedDocumentsOptions
-        } else {
-          currentOptions = [...documentSpaceOptions]
-        }
         this.$store.dispatch('contextMenu/openContextMenu',
           {
             event: event,
-            options: currentOptions
+            options: this.currentOptions
           })
       }
     },
