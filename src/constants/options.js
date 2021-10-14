@@ -3,20 +3,72 @@ import { icons } from '@/constants/icons'
 
 const documentSpaceOptions = [
   {
-    name: 'newFolder',
-    title: i18n.global.t('Documents.options.newFolder'),
-    icon: icons.options.newFolder,
-    position: 1,
-    hasSeparator: true
+    name: 'new',
+    title: i18n.global.t('Commons.new'),
+    icon: icons.options.new,
+    position: 0,
+    hasSeparator: true,
+    subMenu: [
+      {
+        name: 'newFolder',
+        title: i18n.global.t('Documents.options.newFolder'),
+        icon: icons.folder,
+        position: 0,
+        hasSeparator: true
+      },
+      {
+        name: 'newODT',
+        title: i18n.global.t('Documents.options.newODT'),
+        icon: icons.extensions.odt,
+        position: 1,
+        hasSeparator: false
+      },
+      {
+        name: 'newGeogebra',
+        title: i18n.global.t('Documents.options.newGeogebra'),
+        icon: icons.extensions.ggb,
+        position: 0,
+        hasSeparator: false
+      },
+      {
+        name: 'newMindMap',
+        title: i18n.global.t('Documents.options.newMindMap'),
+        icon: icons.extensions.mind,
+        position: 1,
+        hasSeparator: false
+      },
+      {
+        name: 'newScratch',
+        title: i18n.global.t('Documents.options.newScratch'),
+        icon: icons.extensions.sb3,
+        position: 2,
+        hasSeparator: true
+      }
+    ]
   },
   {
     name: 'import',
     title: i18n.global.t('Documents.options.import'),
-    icon: icons.options.import,
-    position: 2,
-    hasSeparator: false
+    icon: icons.options.upload,
+    position: 1,
+    hasSeparator: false,
+    subMenu: [
+      {
+        name: 'uploadFolder',
+        title: i18n.global.t('Documents.options.uploadFolder'),
+        icon: icons.folder,
+        position: 0,
+        hasSeparator: false
+      },
+      {
+        name: 'uploadFiles',
+        title: i18n.global.t('Documents.options.uploadFiles'),
+        icon: icons.file,
+        position: 1,
+        hasSeparator: false
+      }
+    ]
   }
-  // TODO add create files options
 ]
 
 const fileOptions = [
@@ -24,7 +76,7 @@ const fileOptions = [
     name: 'rename',
     title: i18n.global.t('Documents.options.rename'),
     icon: icons.options.rename,
-    position: 3,
+    position: 0,
     hasSeparator: true
   },
   {
@@ -38,14 +90,14 @@ const fileOptions = [
     name: 'move',
     title: i18n.global.t('Documents.options.move'),
     icon: icons.options.move,
-    position: 0,
+    position: 2,
     hasSeparator: true
   },
   {
     name: 'download',
     title: i18n.global.t('Documents.options.download'),
     icon: icons.options.download,
-    position: 5,
+    position: 3,
     hasSeparator: true
   },
   {
@@ -62,7 +114,7 @@ const folderOptions = [
     name: 'rename',
     title: i18n.global.t('Documents.options.rename'),
     icon: icons.options.rename,
-    position: 2,
+    position: 0,
     hasSeparator: true
   },
   {
@@ -76,21 +128,21 @@ const folderOptions = [
     name: 'move',
     title: i18n.global.t('Documents.options.move'),
     icon: icons.options.move,
-    position: 0,
+    position: 2,
     hasSeparator: true
   },
   {
     name: 'download',
     title: i18n.global.t('Documents.options.download'),
     icon: icons.options.download,
-    position: 5,
+    position: 3,
     hasSeparator: true
   },
   {
     name: 'delete',
     title: i18n.global.t('Documents.options.delete'),
     icon: icons.options.delete,
-    position: 3,
+    position: 4,
     hasSeparator: false
   }
 ]

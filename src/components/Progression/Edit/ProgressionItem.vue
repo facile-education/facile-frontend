@@ -168,7 +168,7 @@
         >
         <img
           class="add-content-button"
-          src="@assets/icon_upload.svg"
+          src="@assets/options/icon_upload.svg"
           :alt="$t('addFile')"
           :title="$t('addFile')"
           @click="openFilePicker()"

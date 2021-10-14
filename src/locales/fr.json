@@ -138,6 +138,8 @@
     }
   },
   "Documents": {
+    "folder": "Dossier",
+    "files": "Fichiers",
     "documentFields": {
       "name": "Nom",
       "lastModifiedDate": "Dernière modif."
@@ -148,10 +150,16 @@
       "duplicate": "Dupliquer vers",
       "import": "Importer",
       "move": "Déplacer vers",
-      "newFolder": "Nouveau dossier",
+      "newFolder": "@:Documents.folder",
+      "newGeogebra": "Géogébra",
+      "newMindMap": "Carte Mentale",
+      "newODT": "ODT",
+      "newScratch": "Scratch",
       "rename": "Renommer",
       "resetFields": "Valeurs par défaut",
-      "toggleDetailsLabel": "Détails"
+      "toggleDetailsLabel": "Détails",
+      "uploadFiles": "@:Documents.files",
+      "uploadFolder": "@:Documents.folder"
     }
   },
   "Horaires": {

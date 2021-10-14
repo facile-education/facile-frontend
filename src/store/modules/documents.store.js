@@ -190,7 +190,7 @@ export const actions = {
     navigationService.getFolderBreadcrumb(folderId).then((data) => {
       if (data.breadcrumb) {
         for (let i = 0; i < data.breadcrumb.length; ++i) { // Because all documents in breadcrumb are folders, add folder icon
-          data.breadcrumb[i].icon = require('@assets/icon_dossier_neutre.svg')
+          data.breadcrumb[i].icon = require('@assets/documentIcons/icon_dossier_neutre.svg')
         }
         commit('setBreadcrumb', data.breadcrumb)
       } else {
