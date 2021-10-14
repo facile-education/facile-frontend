@@ -84,7 +84,7 @@ export default {
   cursor: pointer;
   align-items: center;
   height: 100%;
-  margin: 0 5px;
+  margin: 0 15px;
 
   img {
     width: 28px;
@@ -100,7 +100,7 @@ export default {
     width: 15px;
     height: 15px;
     padding: 0;
-    margin-left: 5px;
+    margin-left: 10px;
   }
 
   &:hover {

@@ -6,9 +6,7 @@
     :display="display"
     :is-draggable="isDraggable"
     :dark="dark"
-    @open="openFile"
-    @click="handleClick"
-    @dblclick="openFile"
+    @triggerAction="openFile"
     @shiftSelect="dispatchEvent"
     @openContextMenu="openContextMenu"
   />
@@ -68,24 +66,9 @@ export default {
     }
   },
   methods: {
-    enterAction () {
-      if (this.isSelected) {
-        this.openFile()
-      }
-    },
     openFile () {
       // TODO
       console.log('TODO: open file')
-    },
-    handleClick () {
-      if (this.mq.phone || this.mq.tablet) {
-        if (this.isMultiSelectionActive) {
-          this.$store.dispatch('documents/updateCtrlSelectedDocument', this.file)
-        } else {
-          this.$store.dispatch('documents/selectOneDocument', this.file)
-          this.openFile()
-        }
-      }
     },
     dispatchEvent (file) {
       this.$emit('shiftSelect', { id: file.id, name: file.name })

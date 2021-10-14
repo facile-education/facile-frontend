@@ -77,7 +77,7 @@ export default {
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 0 20px;
+  padding: 0 10px;
   margin-bottom: 7px;
 }
 

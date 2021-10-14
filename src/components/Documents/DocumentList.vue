@@ -56,7 +56,6 @@ export default {
   computed: {
     currentEntities () {
       return this.$store.state.documents.folderContent
-      // return JSON.parse(JSON.stringify(this.$store.state.documents.folderContent))
     },
     sortedFiles () {
       return (this.currentEntities === undefined || this.currentEntities.files === undefined)

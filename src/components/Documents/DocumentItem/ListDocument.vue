@@ -1,6 +1,17 @@
 <template>
-  <div class="list-document">
-    <div class="selected-icon">
+  <div
+    class="list-document"
+    @click.ctrl.exact="ctrlSelect"
+    @click.meta.exact="ctrlSelect"
+    @click.shift="shiftSelect"
+    @dblclick="triggerAction"
+    @click.exact="select"
+  >
+    <div
+      class="selection-icon"
+      @click.shift.stop="shiftSelect"
+      @click.exact.stop="ctrlSelect"
+    >
       <div class="oval">
         <div
           v-if="isSelected"
@@ -8,6 +19,7 @@
         />
       </div>
     </div>
+
     <div
       class="name"
       :class="{'select-mode': true}"
@@ -29,18 +41,16 @@
         <p
           class="name-label"
           :title="document.name"
-          :class="{'cao-name': document.extension === 'cao'}"
+          @click.stop="triggerAction"
         >
           {{ document.name }}
         </p>
-        <p
-          v-if="document.extension !== 'cao'"
-          class="size-label"
-        >
+        <p class="size-label">
           {{ formattedSize }}
         </p>
       </div>
     </div>
+
     <div class="right-section">
       <div
         v-if="displayQuickOptions"
@@ -109,7 +119,7 @@ export default {
       }
     }
   },
-  emits: ['chooseOption'],
+  emits: ['chooseOption', 'triggerAction', 'select', 'ctrlSelect', 'shiftSelect'],
   data () {
     return {
       displayQuickOptions: false,
@@ -158,6 +168,18 @@ export default {
     }
   },
   methods: {
+    triggerAction () {
+      this.$emit('triggerAction')
+    },
+    select () {
+      this.$emit('select')
+    },
+    ctrlSelect () {
+      this.$emit('ctrlSelect')
+    },
+    shiftSelect () {
+      this.$emit('shiftSelect')
+    },
     toggleQuickOptions () {
       this.quickOptionsDisplayed = !this.quickOptionsDisplayed
     },
@@ -178,18 +200,39 @@ export default {
 .list-document {
   display: flex;
   align-items: center;
+  padding-right: 20px;
   height: 74px;
-  padding: 0 20px;
 
-  ///* disable text selection on documents (not convenient when shift-select) */
-  //-ms-user-select: none;
-  //-moz-user-select: none;
-  //-webkit-user-select: none;
-  //user-select: none; /* CSS3 (little to no support) */
+  .selection-icon {
+    cursor: pointer;
+    width: 40px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .oval {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      height: 20px;
+      width: 20px;
+      border-radius: 10px;
+      border: 1px solid #D9E2EA;
+      background-color: #F3F6F8;
+
+      .marked {
+        height: 12px;
+        width: 12px;
+        border-radius: 6px;
+        background-color: #0B3C5F;
+      }
+    }
+  }
 
   .name {
     display: flex;
-    flex: 1;
     min-width: 0;
     align-items: center;
 
@@ -213,23 +256,19 @@ export default {
     .name-container {
       height: 100%;
       width: calc(100% - 40px);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
 
       .name-label {
-        width: 100%;
+        cursor: pointer;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
         font-size: 0.9375em;
-        font-weight: 600;
         letter-spacing: 0;
         line-height: 16px;
         margin-bottom: 2px;
 
-        &.cao-name {
-          margin: 0;
+        &:hover {
+          text-decoration: underline;
         }
       }
 

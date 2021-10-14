@@ -25,10 +25,10 @@
       :quick-options="quickOptions"
       @mouseover="isHovering = true"
       @mouseleave="isHovering = false"
-      @click.exact="toggleSelection"
-      @click.ctrl.exact="toggleCtrlSelection"
-      @click.meta.exact="toggleCtrlSelection"
-      @click.shift="toggleShiftSelection"
+      @triggerAction="triggerAction"
+      @select="toggleSelection"
+      @ctrlSelect="toggleCtrlSelection"
+      @shiftSelect="toggleShiftSelection"
       @contextmenu.prevent="openContextMenu"
       @chooseOption="handleChosenOption"
     />
@@ -75,7 +75,7 @@ export default {
       default: true
     }
   },
-  emits: ['open', 'shiftSelect', 'openContextMenu'],
+  emits: ['shiftSelect', 'openContextMenu', 'triggerAction'],
   data () {
     return {
       isHovering: false
@@ -137,34 +137,25 @@ export default {
     onDragEnd () {
       this.$store.dispatch('misc/removeDraggedEntities')
     },
-    openContextMenu (e) {
-      this.toggleSelection() // /!\ be careful about async order
-      this.$emit('openContextMenu', e)
-    },
     handleChosenOption (option) {
       // TODO handle quickOptions
       console.log('quickOptionClicked!', option)
     },
+    triggerAction () {
+      this.$emit('triggerAction')
+    },
     toggleSelection () {
-      return new Promise((resolve) => {
-        if (!this.mq.phone) { // no selection on mobile
-          this.$store.dispatch('documents/selectOneDocument', this.document).then(() => {
-            resolve()
-          })
-        } else {
-          resolve()
-        }
-      })
+      this.$store.dispatch('documents/selectOneDocument', this.document)
     },
     toggleCtrlSelection () {
-      if (!this.mq.phone) { // no selection on mobile
-        this.$store.dispatch('documents/updateCtrlSelectedDocument', this.document)
-      }
+      this.$store.dispatch('documents/updateCtrlSelectedDocument', this.document)
     },
     toggleShiftSelection () {
-      if (!this.mq.phone) { // no selection on mobile
-        this.$emit('shiftSelect', { id: this.document.id, name: this.document.name })
-      }
+      this.$emit('shiftSelect', { id: this.document.id, name: this.document.name })
+    },
+    openContextMenu (e) {
+      this.toggleSelection() // /!\ be careful about async order
+      this.$emit('openContextMenu', e)
     }
   }
 }
