@@ -1,6 +1,7 @@
 <template>
   <div
     class="list-document"
+    :class="{'selected': isSelected}"
     @click.ctrl.exact="ctrlSelect"
     @click.meta.exact="ctrlSelect"
     @click.shift="shiftSelect"
@@ -206,6 +207,7 @@ export default {
   .selection-icon {
     cursor: pointer;
     width: 40px;
+    min-width: 40px;
     height: 100%;
     display: flex;
     align-items: center;
@@ -327,6 +329,14 @@ export default {
 
       p {
         text-align: end;
+      }
+    }
+  }
+
+  &.selected {
+    .name {
+      .name-label{
+        font-weight: bold;
       }
     }
   }
