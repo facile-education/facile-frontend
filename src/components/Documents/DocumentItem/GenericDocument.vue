@@ -89,7 +89,7 @@ export default {
         if (this.isSelected) {
           return 'selected'
         } else {
-          if (this.isHovering) {
+          if (this.isHovering && !this.mq.phone && !this.mq.tablet) {
             return 'hovering'
           } else {
             return 'document'
