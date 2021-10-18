@@ -65,9 +65,6 @@ export default {
     isThereInternDocumentDrag () {
       return this.$store.state.misc.isThereDocumentDrag
     },
-    isMultiSelectionActive () {
-      return this.$store.state.documents.isMultiSelectionActive
-    },
     isSelected () {
       return this.$store.state.documents.selectedEntities.find(selectedEntity => selectedEntity.id === this.folder.id) !== undefined
     },
@@ -118,13 +115,6 @@ export default {
     },
     changeDir () {
       this.$store.dispatch('documents/changeDirectory', this.folder.id)
-    },
-    clickOnFolder () {
-      if (this.isMultiSelectionActive) {
-        this.$store.dispatch('documents/updateCtrlSelectedDocument', this.folder)
-      } else {
-        this.changeDir()
-      }
     },
     openContextMenu (e) {
       this.$emit('openContextMenu', e)

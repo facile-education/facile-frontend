@@ -54,9 +54,6 @@ export default {
     isSelected () {
       return this.$store.state.documents.selectedEntities.find(selectedEntity => selectedEntity.id === this.file.id) !== undefined
     },
-    isMultiSelectionActive () {
-      return this.$store.state.documents.isMultiSelectionActive
-    },
     fileIcon () {
       if (this.$options.myIcons.extensions[this.file.extension] === undefined) {
         return this.$options.myIcons.file

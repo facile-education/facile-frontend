@@ -11,14 +11,10 @@ export const state = {
   folderHistory: [],
   cutSourceFolder: {},
   isCurrentlyLoading: false,
-  isDocumentPanelDisplayed: false,
-  isMultiSelectionActive: false
+  isDocumentPanelDisplayed: false
 }
 
 export const mutations = {
-  updateMultiSelectionStatus (state, payload) {
-    state.isMultiSelectionActive = payload
-  },
   addToHistory (state, folder) {
     state.folderHistory.push({ id: folder.id, name: folder.name })
   },
@@ -41,7 +37,7 @@ export const mutations = {
   },
   setBreadcrumb (state, payload) {
     if (payload[0].name === '_PRIVATE_') {
-      payload[0].name = i18n.global.t('AppCommonsLabels.Documents.privateFolderName')
+      payload[0].name = i18n.global.t('AppCommonsLabels.Documents.privateFolderName') // TODO change it
     }
     state.breadcrumb = payload
   },
@@ -50,31 +46,6 @@ export const mutations = {
   },
   setFolderContent (state, payload) {
     state.folderContent = payload
-  },
-  updateEntityName (state, { entity, name }) {
-    // Update breadCrumb
-    if (entity.id === state.currentFolderId) {
-      state.breadcrumb[state.breadcrumb.length - 1].name = name
-    } else {
-      // Update folderContent
-      for (let i = 0; i < state.folderContent.subFolders.length; ++i) {
-        if (entity.id === state.folderContent.subFolders[i].id) {
-          state.folderContent.subFolders[i].name = name
-          return
-        }
-      }
-      for (let i = 0; i < state.folderContent.files.length; ++i) {
-        if (entity.id === state.folderContent.files[i].id) {
-          state.folderContent.files[i].name = name
-          break
-        }
-      }
-    }
-
-    // Update selectedEntity
-    if (state.selectedEntities[0] && (state.selectedEntities[0].id === entity.id)) { // it's supposed to be the case
-      state.selectedEntities[0].name = name
-    }
   },
   updateLastSelectedEntity (state, file) {
     state.lastSelectedEntity = file
@@ -91,26 +62,9 @@ export const mutations = {
 }
 
 export const actions = {
-  closeMultiSelection ({ commit }) {
-    commit('updateMultiSelectionStatus', false)
-  },
-  toggleMultiSelection ({ commit }) {
-    commit('updateMultiSelectionStatus', !this.state.documents.isMultiSelectionActive)
-  },
-  addEntitiesInTree ({ commit }, { entitiesToAdd }) { // front update only
-    const entities = JSON.parse(JSON.stringify(this.state.documents.folderContent))
-    for (let i = 0; i < entitiesToAdd.subFolders.length; ++i) {
-      entities.subFolders.push(entitiesToAdd.subFolders[i])
-    }
-    for (let i = 0; i < entitiesToAdd.files.length; ++i) {
-      entities.files.push(entitiesToAdd.files[i])
-    }
-    commit('setFolderContent', entities)
-  },
   changeDirectory ({ commit, state }, folderId) {
     // commit('setDocumentPanelDisplayed', false) // confirm ergonomic
     commit('setCurrentFolderId', folderId)
-    this.dispatch('documents/closeMultiSelection')
     this.dispatch('documents/cleanSelectedEntities')
     commit('updateLastSelectedEntity', undefined)
     this.dispatch('documents/updateBreadcrumb', folderId)
@@ -121,26 +75,6 @@ export const actions = {
   },
   closeDocumentPanel ({ commit }) {
     commit('setDocumentPanelDisplayed', false)
-  },
-  deleteEntitiesInTree ({ commit }, { entitiesToDelete }) { // front update only
-    const entities = JSON.parse(JSON.stringify(this.state.documents.folderContent))
-    for (let i = 0; i < entitiesToDelete.subFolders.length; ++i) {
-      for (let j = 0; j < entities.subFolders.length; ++j) {
-        if (entities.subFolders[j].id === entitiesToDelete.subFolders[i].id) {
-          entities.subFolders.splice(j, 1)
-          break
-        }
-      }
-    }
-    for (let i = 0; i < entitiesToDelete.files.length; ++i) {
-      for (let j = 0; j < entities.files.length; ++j) {
-        if (entities.files[j].id === entitiesToDelete.files[i].id) {
-          entities.files.splice(j, 1)
-          break
-        }
-      }
-    }
-    commit('setFolderContent', entities)
   },
   getEntities ({ commit }, folderId) {
     return new Promise((resolve) => {
