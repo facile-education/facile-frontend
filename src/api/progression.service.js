@@ -13,6 +13,7 @@ export {
   deleteFolder,
   updateFolder,
   getItemContents,
+  getItemPreview,
   addItem,
   addItemContent,
   deleteItem,
@@ -119,6 +120,14 @@ function updateFolder (folderId, parentFolderId, name, order) {
 // ProgressionItem object
 function getItemContents (itemId) {
   return axios.get(constants.JSON_WS_URL + PROGRESSION_PATH + ITEM_CTX + 'get-item-contents', {
+    params: {
+      itemId
+    }
+  }).then(response => response.data)
+}
+
+function getItemPreview (itemId) {
+  return axios.get(constants.JSON_WS_URL + PROGRESSION_PATH + ITEM_CTX + 'get-item-preview', {
     params: {
       itemId
     }
