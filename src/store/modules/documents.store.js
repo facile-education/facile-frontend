@@ -144,7 +144,7 @@ export const actions = {
   },
   getEntities ({ commit }, folderId) {
     return new Promise((resolve) => {
-      navigationService.getAllEntities(folderId).then((data) => {
+      navigationService.getAllEntities(folderId, true).then((data) => {
         if (data.success) {
           commit('setFolderContent', { subFolders: data.subFolders, files: data.files })
           resolve({ subFolders: data.subFolders, files: data.files })
