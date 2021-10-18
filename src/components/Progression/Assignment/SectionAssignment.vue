@@ -47,25 +47,31 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-span {
-  margin-top:10px;
-  margin-left:10px;
-}
-hr {
+.section-assignment {
   margin-top: 10px;
-  margin-right: 20px;
-  border: 0;
-  border-top: 1px solid #D4D4D4;
-}
-.subSection {
-  margin-top:10px;
-  margin-left:10px;
-  margin-bottom:10px;
-}
-.item {
-  margin-top:10px;
-  margin-left:10px;
-  margin-bottom:10px;
+  span {
+    margin-top:10px;
+    margin-left:10px;
+    font-size: 18px;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+  hr {
+    margin-top: 10px;
+    margin-right: 20px;
+    border: 0;
+    border-top: 1px solid #D4D4D4;
+  }
+  .subSection {
+    margin-top:10px;
+    margin-left:10px;
+    margin-bottom:10px;
+  }
+  .item {
+    margin-top:10px;
+    margin-left:10px;
+    margin-bottom:10px;
+  }
 }
 </style>
 

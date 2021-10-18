@@ -77,7 +77,7 @@ export default {
   .switch {
     width: 100%;
     height: 80px;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid rgb(204, 204, 204);
   }
   .tree-edit {
     display: flex;
@@ -85,7 +85,6 @@ export default {
     .tree {
       width: 15%;
       height: 100%;
-      border-right: 1px solid black;
     }
     .header-edit {
       width: 85%;

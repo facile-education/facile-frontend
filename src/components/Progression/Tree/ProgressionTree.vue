@@ -3,7 +3,7 @@
     class="tree"
   >
     <div
-      class="expand-all"
+      class="summary"
     >
       {{ $t('summary') }}
     </div>
@@ -43,9 +43,9 @@ export default {
 <style lang="scss" scoped>
 .tree {
 
-  .expand-all {
+  .summary {
     text-align: center;
-    margin-top: 10px;
+    margin-top: 25px;
     margin-bottom: 10px;
   }
   .section {

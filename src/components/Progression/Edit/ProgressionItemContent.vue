@@ -46,7 +46,17 @@
       v-if="content.contentType === 4"
       class="content-video"
     >
-      <span>video</span>
+      <div
+        class="video-title"
+      >
+        <img
+          class="content-icon"
+          src="@assets/play.svg"
+        >
+        <span>{{ $t('video') }}</span>
+      </div>
+      <span>{{ content.contentName }}</span>
+      <a :href="content.contentValue">{{ content.contentValue }}</a>
     </div>
 
     <!-- File -->
@@ -118,7 +128,7 @@ export default {
       })
     },
     deleteContent () {
-      this.$store.dispatch('progression/deleteItemContent', this.content)
+      this.$store.dispatch('progression/deleteItemContent', this.content.contentId)
     }
   }
 }
@@ -171,6 +181,7 @@ export default {
   "session": "Séance",
   "delete": "Supprimer cet élément",
   "deleteContentWarning": "Supprimer ce contenu ?",
-  "externalLink": "Lien externe"
+  "externalLink": "Lien externe",
+  "video": "Video"
 }
 </i18n>

@@ -2,23 +2,26 @@
   <div
     class="item"
   >
-    <div class="item-name">
-      <img
-        v-if="item.isHomework"
-        class="item-type-icon"
-        src="@assets/devoir.svg"
-        :alt="$t('homework')"
-        :title="$t('homework')"
-      >
-      <img
-        v-else
-        class="item-type-icon"
-        src="@assets/seance.svg"
-        :alt="$t('session')"
-        :title="$t('session')"
-      >
-      <span>{{ item.name }}</span>
+    <div class="item-name-wrapper">
+      <div class="item-name">
+        <img
+          v-if="item.isHomework"
+          class="item-type-icon"
+          src="@assets/devoir.svg"
+          :alt="$t('homework')"
+          :title="$t('homework')"
+        >
+        <img
+          v-else
+          class="item-type-icon"
+          src="@assets/seance.svg"
+          :alt="$t('session')"
+          :title="$t('session')"
+        >
+        <span>{{ item.name }}</span>
+      </div>
     </div>
+
     <!-- Calendar icon -->
     <div
       class="affect"
@@ -31,6 +34,8 @@
         :title="$t('session')"
       >
     </div>
+
+    <!-- Item sessions -->
     <div
       class="item-sessions"
     >
@@ -39,11 +44,22 @@
         :key="assignment.assignmentId"
         class="session"
       >
-        <!-- Color pin -->
         <!-- Session -->
-        <span>{{ assignment.session }}</span>
-        <!-- Session date -->
-        <!-- Session hour from to -->
+        <div
+          class="cours-name"
+          :style="getColor(assignment)"
+        >
+          <span>{{ assignment.coursName }}</span>
+          <img
+            class="remove-cours-assignment"
+            src="@assets/big-cross-black.svg"
+            :alt="$t('session')"
+            :title="$t('session')"
+            @click="deleteAssignment(assignment)"
+          >
+        </div>
+        <!-- Session date and hours -->
+        <span class="assignment-date">{{ getSessionDate(assignment) }}</span>
         <!-- Homework send date -->
         <!-- Modified content -->
       </div>
@@ -52,6 +68,7 @@
 </template>
 
 <script>
+import dayjs from 'dayjs'
 
 export default {
   name: 'ItemAssignment',
@@ -75,8 +92,16 @@ export default {
       this.$store.dispatch('progression/setAffectedItem', this.item)
       this.$store.dispatch('progression/setCalendarPickerMode', true)
     },
-    addedSessions () {
-      console.log('addedSessions')
+    getSessionDate (assignment) {
+      return dayjs(assignment.sessionStartDate, 'YYYY-MM-DD HH:mm').format('DD MMMM') +
+      ' de ' + dayjs(assignment.sessionStartDate, 'YYYY-MM-DD HH:mm').format('HH[h]mm') +
+      ' à ' + dayjs(assignment.sessionEndDate, 'YYYY-MM-DD HH:mm').format('HH[h]mm')
+    },
+    deleteAssignment (assignment) {
+      this.$store.dispatch('progression/deleteAssignment', { itemId: assignment.itemId, sessionId: assignment.sessionId })
+    },
+    getColor (assignment) {
+      return 'background-color: ' + assignment.color
     }
   }
 }
@@ -84,21 +109,28 @@ export default {
 
 <style lang="scss" scoped>
 .item {
-  display: flex;
-  .item-name {
-    margin: auto;
+  display: grid;
+  grid-template-columns: 15% 5% 70%;
+  grid-gap: 10px;
+  justify-items: center;
+  .item-name-wrapper {
+    width: 100%;
     display: flex;
-
-    .item-type-icon {
-      margin: auto;
-      width: 20px;
-      height: 20px;
-    }
-    span {
-      margin: auto;
-    }
-    &:hover .affect {
+    .item-name {
+      margin-left: 20px;
       display: flex;
+
+      .item-type-icon {
+        margin: auto;
+        width: 20px;
+        height: 20px;
+      }
+      span {
+        margin: auto;
+      }
+      &:hover .affect {
+        display: flex;
+      }
     }
   }
   .affect {
@@ -110,6 +142,30 @@ export default {
     display: flex;
     flex-direction: column;
     margin: auto;
+    .session {
+      display: grid;
+      grid-template-columns: 20% 30% 25% 25%;
+      grid-gap: 10px;
+      margin-top: 2px;
+      margin-bottom: 2px;
+      .cours-name {
+        border: 1px solid black;
+        display: flex;
+        padding: 5px;
+        span {
+          margin: auto;
+          margin-right: 10px;
+        }
+        .remove-cours-assignment {
+          margin: auto;
+          width: 10px;
+          height: 10px;
+        }
+      }
+      span {
+        margin: auto;
+      }
+    }
   }
 }
 </style>

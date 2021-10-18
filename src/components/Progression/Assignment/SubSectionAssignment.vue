@@ -1,7 +1,6 @@
 <template>
   <div class="subsection-assignment">
     <span>{{ subSection.name }}</span>
-    <hr>
     <ItemAssignment
       v-for="item in subSection.items"
       :key="item.itemId"
@@ -41,10 +40,8 @@ span {
   margin-top:10px;
   margin-left:10px;
   margin-bottom:10px;
-}
-hr {
-  margin: 0;
-  border: 0; border-top: 1px solid #D4D4D4;
+  font-size: 14px;
+  font-weight: 500;
 }
 .item {
   margin-top:10px;

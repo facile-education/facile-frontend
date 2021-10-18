@@ -170,9 +170,13 @@ export default {
       this.isEditModalDisplayed = !this.isEditModalDisplayed
     },
     selectProgression (progression) {
-      this.$store.dispatch('progression/getProgressionContent', progression.progressionId)
       this.$store.dispatch('progression/setCurrentProgression', progression)
+      // Set default folder
+      if (this.$store.state.progression.currentProgression.sections !== undefined && this.$store.state.progression.currentProgression.sections.length > 0) {
+        this.$store.dispatch('progression/setCurrentFolder', this.$store.state.progression.currentProgression.sections[0])
+      }
       this.$store.dispatch('progression/setListMode', false)
+      this.$store.dispatch('progression/getProgressionContent', progression.progressionId)
     }
   }
 }
@@ -238,7 +242,10 @@ export default {
       max-height: 15rem;
       width: 15rem;
       background: white;
-
+      border: 1px solid transparent;
+      &:hover {
+        border: 1px solid grey;
+      }
       .header {
         margin: 0;
         color: white;

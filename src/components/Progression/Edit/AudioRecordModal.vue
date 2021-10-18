@@ -9,18 +9,30 @@
     </template>
 
     <template #body>
-      <AudioRecorder
-        upload-url="https://test-api.com"
-        :attempts="3"
-        :time="2"
-        :pause-recording="callback"
-        :after-recording="callback"
-        :select-record="callback"
-        :before-upload="callback"
-        :successful-upload="callback"
-        :failed-upload="callback"
+      <h1>Simple Video Recording using RecordRTC</h1>
+      <br>
+      <button
+        id="btn-start-recording"
+        :disabled="disabled"
+        @click="startRec"
+      >
+        Start Recording
+      </button>&nbsp;&nbsp;
+      <button
+        id="btn-stop-recording"
+        :disabled="!disabled"
+        @click="stopRec"
+      >
+        Stop Recording
+      </button>
+      <hr>
+      <!-- <video controls autoplay playsinline ref="video" height="500" width="700"></video>-->
+      <audio
+        ref="audio"
+        autoplay
+        height="500"
+        width="700"
       />
-      <AudioPlayer src="/demo/example.mp3" />
     </template>
 
     <template #footer>
@@ -43,11 +55,11 @@
 </template>
 
 <script>
-import { AudioRecorder, AudioPlayer } from 'vue-audio-recorder'
+import RecordRTC from 'recordrtc'
 
 export default {
   name: 'AudioRecordModal',
-  components: { AudioRecorder, AudioPlayer },
+  components: { },
   props: {
     item: {
       type: Object,
@@ -57,6 +69,8 @@ export default {
   emits: ['close'],
   data () {
     return {
+      recorder: null,
+      disabled: false
     }
   },
   computed: {
@@ -71,8 +85,46 @@ export default {
       this.$store.dispatch('progression/addAudioRecord', { itemId: this.item.itemId, linkName: this.link.linkName, linkUrl: this.link.linkUrl })
       this.closeModal()
     },
-    callback () {
-      console.log('callback')
+    startRec () {
+      this.disabled = true
+      this.captureCamera(camera => {
+        const video = this.$refs.video
+        video.muted = true
+        video.volume = 0
+        video.srcObject = camera
+        this.recorder = RecordRTC(camera, { type: 'video' })
+        this.recorder.startRecording()
+        // release camera on stopRecording
+        this.recorder.camera = camera
+
+        this.disabled = true
+      })
+    },
+    stopRec () {
+      this.disabled = false
+      this.recorder.stopRecording(this.stopRecordingCallback)
+    },
+    captureCamera (callback) {
+      navigator.mediaDevices
+        .getUserMedia({ audio: true, video: true })
+        .then(function (camera) {
+          callback(camera)
+        })
+        .catch(function (error) {
+          alert('Unable to capture your camera. Please check console logs.')
+          console.error(error)
+        })
+    },
+    stopRecordingCallback () {
+      const video = this.$refs.video
+      video.src = video.srcObject = null
+      video.muted = false
+      video.volume = 1
+      video.src = URL.createObjectURL(this.recorder.getBlob())
+
+      this.recorder.camera.stop()
+      this.recorder.destroy()
+      this.recorder = null
     }
   }
 }

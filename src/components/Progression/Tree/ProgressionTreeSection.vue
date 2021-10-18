@@ -62,10 +62,7 @@ export default {
       return this.$store.state.progression.currentFolder
     },
     isSelected () {
-      // Section is selected when itself is selected or one of its sub-sections
-      return this.currentFolder !== undefined &&
-      (this.currentFolder.folderId === this.section.folderId ||
-      this.section.subSections.map(subSection => subSection.folderId).indexOf(this.currentFolder.folderId) !== -1)
+      return this.currentFolder !== undefined && this.currentFolder.folderId === this.section.folderId
     }
   },
   created () {
@@ -120,7 +117,7 @@ export default {
     margin-left: 0px;
   }
   .section-items {
-    margin-left: 20px;
+    margin-left: 0px;
   }
 }
 </style>
