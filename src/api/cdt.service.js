@@ -10,6 +10,8 @@ export {
 
 export default {
   getConfiguration,
+  getGroups,
+  getSessions,
   getCoursList
 }
 

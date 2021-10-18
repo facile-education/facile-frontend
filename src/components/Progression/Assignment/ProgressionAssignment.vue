@@ -4,14 +4,14 @@
       class="filters"
     >
       <PentilaDropdown
-        v-if="(sections && sections.length > 1)"
+        v-if="(sections && sections.length > 0)"
         v-model="selectedFolder"
         class="filter"
         :list="sections"
         display-field="name"
       />
       <PentilaDropdown
-        v-if="(coursList && coursList.length > 1)"
+        v-if="(coursList && coursList.length > 0)"
         v-model="selectedCours"
         class="filter"
         :list="coursList"
@@ -19,7 +19,7 @@
       />
     </div>
     <SectionAssignment
-      v-for="section in progression.sections"
+      v-for="section in filteredSections"
       :key="section.folderId"
       :section="section"
       class="section"
@@ -37,8 +37,8 @@ export default {
   },
   data () {
     return {
-      selectedCours: {},
-      selectedFolder: {}
+      selectedCours: { groupName: this.$t('all-cours'), groupId: 0 },
+      selectedFolder: { name: this.$t('whole-progression') }
     }
   },
   computed: {
@@ -46,11 +46,10 @@ export default {
       return this.$store.state.progression.currentProgression
     },
     sections () {
-      console.log('sections=', this.progression.sections)
-      return this.progression.sections
+      return [{ name: this.$t('whole-progression') }, ...this.progression.sections]
     },
     filteredSections () {
-      if (this.selectedFolder === undefined) {
+      if (this.selectedFolder.folderId === undefined) {
         return this.progression.sections
       } else {
         const sectionIndex = this.progression.sections.map(section => section.folderId).indexOf(this.selectedFolder.folderId)
@@ -62,9 +61,7 @@ export default {
     },
     coursList () {
       if (this.$store.state.progression.coursList !== undefined) {
-        const toto = [{ groupName: this.$t('cours'), groupId: 0 }, ...this.$store.state.progression.coursList]
-        console.log('cours list is ', toto)
-        return toto
+        return [{ groupName: this.$t('all-cours'), groupId: 0 }, ...this.$store.state.progression.coursList]
       }
       return []
     }
@@ -82,8 +79,11 @@ export default {
   flex-direction: column;
   .filters {
     width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
     .filter {
       width: 200px;
+      margin-left: 20px;
     }
   }
   .section {
@@ -95,6 +95,7 @@ export default {
 
 <i18n locale="fr">
 {
-  "cours": "Séance"
+  "all-cours": "Tous les cours",
+  "whole-progression": "Toute la progression"
 }
 </i18n>

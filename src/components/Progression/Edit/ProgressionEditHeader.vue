@@ -62,11 +62,11 @@
 
         <!-- Create sub-section -->
         <div
-          v-if="isSectionSelected"
+          v-if="isFolderSelected"
           class="create-menu-item"
           @click="doCreateSubSection()"
         >
-          <span>{{ $t('subSectionOf') }} {{ selectedFolderName }}</span>
+          <span>{{ $t('subSectionOf') }} {{ sectionName }}</span>
         </div>
       </div>
     </div>
@@ -94,10 +94,12 @@ export default {
   components: { NeroIcon },
   data () {
     return {
-      isCreateMenuDisplayed: false
     }
   },
   computed: {
+    isCreateMenuDisplayed () {
+      return this.$store.state.progression.isCreateMenuDisplayed
+    },
     itemList () {
       if (this.$store.state.progression.currentFolder === undefined) {
         return []
@@ -113,18 +115,25 @@ export default {
       }
     },
     isRootFolderSelected () {
-      console.log('isRootFolderSelected currentFolder=', this.$store.state.progression.currentFolder)
       return this.$store.state.progression.currentFolder === undefined
-    },
-    isSectionSelected () {
-      return this.$store.state.progression.currentFolder !== undefined && this.$store.state.progression.currentFolder.parentId === 0
     },
     isFolderSelected () {
       return this.$store.state.progression.currentFolder !== undefined
     },
-    selectedFolderName () {
+    sectionName () {
+      // If section selected, itself
+      // If sub-section selected, its parent section
       if (this.$store.state.progression.currentFolder !== undefined && this.$store.state.progression.currentFolder.parentId === 0) {
         return this.$store.state.progression.currentFolder.name
+      } else if (this.$store.state.progression.currentFolder !== undefined && this.$store.state.progression.currentFolder.parentId !== 0) {
+        // Parse the current progression to get the parent section
+        for (let idx = 0; idx < this.$store.state.progression.currentProgression.sections.length; ++idx) {
+          const section = this.$store.state.progression.currentProgression.sections[idx]
+          const subSectionIndex = section.subSections.map(subSection => subSection.folderId).indexOf(this.$store.state.progression.currentFolder.folderId)
+          if (subSectionIndex !== -1) {
+            return section.name
+          }
+        }
       }
       return ''
     }
@@ -133,23 +142,24 @@ export default {
   },
   methods: {
     toggleCreateMenu () {
-      this.isCreateMenuDisplayed = !this.isCreateMenuDisplayed
+      this.$store.dispatch('progression/setCreateMenuDisplayed', !this.$store.state.progression.isCreateMenuDisplayed)
     },
     doCreateSession () {
       this.$store.dispatch('progression/addItem', { itemName: 'Contenu', isHomework: false, type: 0, order: 0 })
-      this.toggleCreateMenu()
+      this.$store.dispatch('progression/setCreateMenuDisplayed', false)
     },
     doCreateHomework () {
       this.$store.dispatch('progression/addItem', { itemName: 'Devoir', isHomework: true, type: 0, order: 0 })
-      this.toggleCreateMenu()
+      this.$store.dispatch('progression/setCreateMenuDisplayed', false)
     },
     doCreateSection () {
-      this.$store.dispatch('progression/addFolder')
-      this.toggleCreateMenu()
+      this.$store.dispatch('progression/addFolder', 0)
+      this.$store.dispatch('progression/setCreateMenuDisplayed', false)
     },
     doCreateSubSection () {
-      this.$store.dispatch('progression/addFolder')
-      this.toggleCreateMenu()
+      const parentFolderId = (this.$store.state.progression.currentFolder.parentId === 0 ? this.$store.state.progression.currentFolder.folderId : this.$store.state.progression.currentFolder.parentId)
+      this.$store.dispatch('progression/addFolder', parentFolderId)
+      this.$store.dispatch('progression/setCreateMenuDisplayed', false)
     },
     deleteFolder () {
       this.$store.dispatch('progression/deleteFolder', this.$store.state.progression.currentFolder)
@@ -161,10 +171,11 @@ export default {
 <style lang="scss" scoped>
 .header {
   height: 60px;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
-  margin-right: 20px;
+  margin-right: 10px;
   .create-button {
     margin: auto;
     margin-left: 30px;
@@ -227,7 +238,7 @@ export default {
     width: 249px;
     border-radius: 6px;
     background-color: #F5F5F5;
-    margin-right: 30px;
+    margin-right: 10px;
     color: black;
     display: flex;
     .trash-icon {

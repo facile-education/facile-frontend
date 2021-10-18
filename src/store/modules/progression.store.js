@@ -1,4 +1,4 @@
-import { addProgression, deleteProgression, getProgressionList, updateProgression, getProgressionContent, addFolder, updateFolder, addItem, addItemContent, deleteFolder, deleteItem, getFolderContent, getItemContents, deleteItemContent } from '@/api/progression.service'
+import { addProgression, deleteProgression, getProgressionList, updateProgression, getProgressionContent, addFolder, updateFolder, addItem, updateItem, addItemContent, deleteFolder, deleteItem, getFolderContent, getItemContents, deleteItemContent, addAssignment, deleteAssignment } from '@/api/progression.service'
 import { getSubjects } from '@/api/userManagement.service'
 import { getSchoolVoleeList } from '@/api/organization.service'
 import { getCoursList, getSessions } from '@/api/cdt.service'
@@ -24,6 +24,25 @@ export const helperMethods = {
         }
       }
     }
+  },
+  getItemByItemId (progression, itemId) {
+    // Loop over progression
+    for (let idx = 0; idx < progression.sections.length; ++idx) {
+      const section = progression.sections[idx]
+      // Loop over section items
+      const itemIndex = section.items.map(item => item.itemId).indexOf(itemId)
+      if (itemIndex !== -1) {
+        return section.items[itemIndex]
+      }
+      // Loop over sub-sections
+      for (let subIdx = 0; idx < section.subSections.length; ++subIdx) {
+        const subSection = section.subSections[subIdx]
+        const itemIndex = subSection.items.map(item => item.itemId).indexOf(itemId)
+        if (itemIndex !== -1) {
+          return subSection.items[itemIndex]
+        }
+      }
+    }
   }
 }
 
@@ -38,6 +57,7 @@ export const state = {
   currentItem: undefined,
   isListMode: true,
   isEditMode: true,
+  isCreateMenuDisplayed: false,
   isCalendarPickerMode: false,
   affectedItem: undefined,
   selectedSessionIds: [],
@@ -96,6 +116,9 @@ export const mutations = {
   setListMode (state, payload) {
     state.isListMode = payload
   },
+  setCreateMenuDisplayed (state, payload) {
+    state.isCreateMenuDisplayed = payload
+  },
   setCalendarPickerMode (state, payload) {
     state.isCalendarPickerMode = payload
   },
@@ -104,12 +127,11 @@ export const mutations = {
   },
   addSelectedSession (state, payload) {
     state.selectedSessionIds.push(payload)
+    console.log('new1 selectedSessionIds is ', state.selectedSessionIds)
   },
   removeSelectedSession (state, payload) {
     state.selectedSessionIds.splice(payload, 1)
-  },
-  resetSelectedSessions (state, payload) {
-    state.selectedSessionIds = []
+    console.log('new2 selectedSessionIds is ', state.selectedSessionIds)
   },
   setFolderContent (state, payload) {
     const folder = helperMethods.getFolderByFolderId(state.currentProgression, payload.folderId)
@@ -125,11 +147,11 @@ export const mutations = {
   addFolder (state, payload) {
     // Loop over progression to add the created folder
     if (payload.parentId === 0) {
-      state.currentProgression.sections.push(payload.folder)
+      state.currentProgression.sections.push(payload)
     } else {
       const sectionIndex = state.currentProgression.sections.map(section => section.folderId).indexOf(payload.parentId)
       if (sectionIndex !== -1) {
-        state.currentProgression.sections[sectionIndex].subSections.push(payload.folder)
+        state.currentProgression.sections[sectionIndex].subSections.push(payload)
       }
     }
   },
@@ -168,6 +190,17 @@ export const mutations = {
           section.subSections[subSectionIndex].items.push(payload.item)
         }
       }
+    }
+  },
+  updateItem (state, payload) {
+    const folder = helperMethods.getFolderByFolderId(state.currentProgression, payload.folderId)
+    const itemIndex = folder.items.map(item => item.itemId).indexOf(payload.itemId)
+    if (itemIndex !== -1) {
+      const item = folder.items[itemIndex]
+      item.folderId = payload.folderId
+      item.name = payload.name
+      item.type = payload.type
+      item.order = payload.order
     }
   },
   addItemContent (state, payload) {
@@ -211,19 +244,27 @@ export const mutations = {
     // Loop over section's items
     for (let idx = 0; idx < state.currentProgression.sections.length; ++idx) {
       const section = state.currentProgression.sections[idx]
-      const sectionItemIndex = section.items.map(item => item.itemId).indexOf(payload.itemId)
-      if (sectionItemIndex !== -1) {
-        const contentIndex = section.items[idx].contents.map(content => content.contentId).indexOf(payload.contentId)
-        section.items[idx].contents.splice(contentIndex, 1)
+
+      // Loop over section's items
+      for (let itemIdx = 0; itemIdx < section.items.length; ++itemIdx) {
+        const item = section.items[itemIdx]
+        const contentIndex = item.contents.map(content => content.contentId).indexOf(payload)
+        if (contentIndex !== -1) {
+          item.contents.splice(contentIndex, 1)
+        }
       }
 
-      // Loop over subSection's items
-      for (let idx = 0; idx < section.subSections.length; ++idx) {
-        const subSection = section.subSections[idx]
-        const sectionItemIndex = subSection.items.map(item => item.itemId).indexOf(payload.itemId)
-        if (sectionItemIndex !== -1) {
-          const contentIndex = subSection.items[idx].contents.map(content => content.contentId).indexOf(payload.contentId)
-          subSection.items[idx].contents.splice(contentIndex, 1)
+      // Loop over subSections
+      for (let subIdx = 0; subIdx < section.subSections.length; ++subIdx) {
+        const subSection = section.subSections[subIdx]
+
+        // Loop over subSection's items
+        for (let itemIdx = 0; itemIdx < subSection.items.length; ++itemIdx) {
+          const item = subSection.items[itemIdx]
+          const contentIndex = item.contents.map(content => content.contentId).indexOf(payload)
+          if (contentIndex !== -1) {
+            item.contents.splice(contentIndex, 1)
+          }
         }
       }
     }
@@ -240,6 +281,17 @@ export const mutations = {
   },
   setSessionList (state, payload) {
     state.sessionList = payload
+  },
+  addAssignment (state, payload) {
+    const item = helperMethods.getItemByItemId(state.currentProgression, payload.itemId)
+    item.assignments.push(payload)
+  },
+  deleteAssignment (state, payload) {
+    const item = helperMethods.getItemByItemId(state.currentProgression, payload.itemId)
+    const assignmentIndex = item.assignments.map(assignment => assignment.sessionId).indexOf(payload.sessionId)
+    if (assignmentIndex !== -1) {
+      item.assignments.splice(assignmentIndex, 1)
+    }
   }
 }
 export const actions = {
@@ -274,7 +326,6 @@ export const actions = {
         }
       },
       (err) => {
-        // TODO toastr
         console.error(err)
       })
   },
@@ -286,7 +337,6 @@ export const actions = {
         }
       },
       (err) => {
-        // TODO toastr
         console.error(err)
       })
   },
@@ -346,6 +396,9 @@ export const actions = {
   setCalendarPickerMode ({ commit }, isCalendarPickerMode) {
     commit('setCalendarPickerMode', isCalendarPickerMode)
   },
+  setCreateMenuDisplayed ({ commit }, isCreateMenuDisplayed) {
+    commit('setCreateMenuDisplayed', isCreateMenuDisplayed)
+  },
   setAffectedItem ({ commit }, affectedItem) {
     commit('setAffectedItem', affectedItem)
   },
@@ -355,14 +408,15 @@ export const actions = {
   removeSelectedSession ({ commit }, sessionId) {
     commit('removeSelectedSession', sessionId)
   },
-  resetSelectedSessions ({ commit }, session) {
-    commit('resetSelectedSessions', session)
-  },
   getProgressionContent ({ commit }, progressionId) {
     getProgressionContent(progressionId).then(
       (data) => {
         if (data.success) {
           commit('setCurrentProgressionContent', data)
+          // Set default folder
+          if (data.sections !== undefined && data.sections.length > 0) {
+            commit('setCurrentFolder', data.sections[0])
+          }
         }
       },
       (err) => {
@@ -394,14 +448,14 @@ export const actions = {
         console.error(err)
       })
   },
-  addFolder ({ commit, state }) {
-    const currentFolderId = (state.currentFolder !== undefined ? state.currentFolder.folderId : 0)
-    addFolder(state.currentProgression.progressionId, currentFolderId).then(
+  addFolder ({ commit, state }, parentFolderId) {
+    addFolder(state.currentProgression.progressionId, parentFolderId).then(
       (data) => {
         if (data.success) {
           data.folder.items = []
-          commit('addFolder', { folder: data.folder, parentId: currentFolderId })
+          commit('addFolder', data.folder)
           commit('setCurrentFolder', data.folder)
+          commit('setCurrentItem', undefined)
         }
       },
       (err) => {
@@ -427,6 +481,20 @@ export const actions = {
       (data) => {
         if (data.success) {
           commit('addItem', { item: data.item, parentId: currentFolderId })
+          commit('setCurrentFolder', undefined)
+          commit('setCurrentItem', data.item)
+        }
+      },
+      (err) => {
+        // TODO toastr
+        console.error(err)
+      })
+  },
+  updateItem ({ commit }, { itemId, folderId, name, type, duration, order }) {
+    updateItem(itemId, folderId, name, type, duration, order).then(
+      (data) => {
+        if (data.success) {
+          commit('updateItem', data.item)
         }
       },
       (err) => {
@@ -448,6 +516,18 @@ export const actions = {
   },
   addLink ({ commit }, { itemId, linkName, linkUrl }) {
     addItemContent(itemId, 3, linkName, linkUrl, 0, false).then(
+      (data) => {
+        if (data.success) {
+          commit('addItemContent', data.content)
+        }
+      },
+      (err) => {
+        // TODO toastr
+        console.error(err)
+      })
+  },
+  addVideo ({ commit }, { itemId, videoName, videoUrl }) {
+    addItemContent(itemId, 4, videoName, videoUrl, 0, false).then(
       (data) => {
         if (data.success) {
           commit('addItemContent', data.content)
@@ -484,11 +564,11 @@ export const actions = {
         console.error(err)
       })
   },
-  deleteItemContent ({ commit }, content) {
-    deleteItemContent(content.contentId).then(
+  deleteItemContent ({ commit }, contentId) {
+    deleteItemContent(contentId).then(
       (data) => {
         if (data.success) {
-          commit('removeContent', content)
+          commit('removeContent', contentId)
         }
       },
       (err) => {
@@ -519,5 +599,29 @@ export const actions = {
     } else if (state.sessionList.length) {
       commit('setSessionList', [])
     }
+  },
+  addAssignment ({ commit }, { itemId, sessionId }) {
+    addAssignment(itemId, sessionId, 0).then(
+      (data) => {
+        if (data.success) {
+          commit('addAssignment', data.assignment)
+        }
+      },
+      (err) => {
+        // TODO toastr
+        console.error(err)
+      })
+  },
+  deleteAssignment ({ commit }, { itemId, sessionId }) {
+    deleteAssignment(itemId, sessionId).then(
+      (data) => {
+        if (data.success) {
+          commit('deleteAssignment', { itemId: itemId, sessionId: sessionId })
+        }
+      },
+      (err) => {
+        // TODO toastr
+        console.error(err)
+      })
   }
 }

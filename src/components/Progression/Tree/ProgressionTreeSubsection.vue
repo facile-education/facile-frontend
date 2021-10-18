@@ -5,10 +5,10 @@
     <div
       class="subsection-header"
       :class="{'selected': isSelected }"
+      @click="selectSubsection"
     >
       <div
         class="subsection-name"
-        @click="selectSubsection"
       >
         <!-- Subsection name -->
         <span>
@@ -30,7 +30,6 @@
         src="@assets/arrow-right.svg"
         :alt="$t('expand')"
         :title="$t('expand')"
-        @click="expand()"
       >
       <!-- Down arrow icon -->
       <img
@@ -39,7 +38,6 @@
         src="@assets/arrow-down.svg"
         :alt="$t('collapse')"
         :title="$t('collapse')"
-        @click="collapse()"
       >
     </div>
 
@@ -93,15 +91,9 @@ export default {
     this.isExpanded = false
   },
   methods: {
-    expand () {
-      this.isExpanded = true
-    },
-    collapse () {
-      this.isExpanded = false
-    },
     selectSubsection () {
       this.$store.dispatch('progression/setCurrentFolder', this.subSection)
-      this.expand()
+      this.isExpanded = !this.isExpanded
     }
   }
 }

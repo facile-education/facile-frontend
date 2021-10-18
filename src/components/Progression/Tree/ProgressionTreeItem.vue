@@ -40,7 +40,11 @@ export default {
   },
   computed: {
     isSelected () {
-      return this.$store.state.progression.currentItem !== undefined && this.$store.state.progression.currentItem.itemId === this.item.itemId
+      // Item is selected when itself is selected or its parent section/subsection
+      return (this.$store.state.progression.currentItem !== undefined &&
+              this.$store.state.progression.currentItem.itemId === this.item.itemId) ||
+              (this.$store.state.progression.currentFolder !== undefined &&
+              this.$store.state.progression.currentFolder.folderId === this.item.folderId)
     }
   },
   created () {
@@ -60,6 +64,9 @@ export default {
   &:hover {
     background-color: #EFF3FB;
   }
+  &.selected {
+    color: #306CD3;
+  }
   .item-type-icon {
     width: 20px;
     height: 20px;
@@ -72,9 +79,6 @@ export default {
     font-family: Roboto;
     font-size: 12px;
     float: left;
-    &.selected {
-      color: #306CD3;
-    }
   }
 }
 </style>

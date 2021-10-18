@@ -1,7 +1,7 @@
 <template>
   <div
     class="calendar-event"
-    :class="{'selected': isSelected}"
+    :class="{'selected': isSelected, 'assigned-to-other': isAssignedToOtherItem}"
     @click="toggleSelection"
   >
     <div
@@ -27,20 +27,21 @@
     <div
       class="check"
     >
-      <PentilaCheckbox
-        :value="isSelected"
+      <input
+        v-model="isSelected"
+        type="checkbox"
+        :disabled="isAssignedToOtherItem"
         label=""
-      />
+      >
     </div>
   </div>
 </template>
 
 <script>
-import PentilaCheckbox from 'pentila-components'
 
 export default {
   name: 'CalendarEvent',
-  components: { PentilaCheckbox },
+  components: { },
   props: {
     event: {
       type: Object,
@@ -56,17 +57,29 @@ export default {
       isSelected: false
     }
   },
+  computed: {
+    isAssignedToOtherItem () {
+      console.log('this.event.extendedProps=', this.event.extendedProps)
+      console.log('affectedItem= ', this.store.state.progression.affectedItem)
+      return this.event.extendedProps.assignedItemId !== 0 &&
+        this.event.extendedProps.assignedItemId !== this.store.state.progression.affectedItem.itemId
+    }
+  },
   created () {
-    console.log('event', this.store)
-    this.store.dispatch('progression/resetSelectedSessions')
+    this.isSelected = this.event.extendedProps.assignedItemId === this.store.state.progression.affectedItem.itemId
   },
   methods: {
     toggleSelection () {
+      if (this.isAssignedToOtherItem) {
+        return
+      }
       this.isSelected = !this.isSelected
       if (this.isSelected) {
-        this.$store.dispatch('progression/addSelectedSession', this.event.sessionId)
+        console.log('adding sessionId ', this.event.extendedProps.id)
+        this.store.dispatch('progression/addSelectedSession', this.event.extendedProps.id)
       } else {
-        this.$store.dispatch('progression/removeSelectedSession', this.event.sessionId)
+        console.log('removing sessionId ', this.event.extendedProps.id)
+        this.store.dispatch('progression/removeSelectedSession', this.event.extendedProps.id)
       }
     }
   }
@@ -80,6 +93,9 @@ export default {
   justify-content: space-between;
   &.selected {
     border: 2px solid blue;
+  }
+  &.assigned-to-other {
+    opacity: 50%;
   }
 }
 </style>

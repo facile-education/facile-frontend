@@ -67,7 +67,6 @@
           <CalendarEvent
             :event="arg.event"
             :store="$store"
-            @click="addSession(arg.event)"
           />
         </template>
       </FullCalendar>
@@ -95,7 +94,6 @@ import dayjs from 'dayjs'
 import FullCalendar from '@fullcalendar/vue3'
 import frLocale from '@fullcalendar/core/locales/fr'
 import timeGridPlugin from '@fullcalendar/timegrid'
-import { addAssignment } from '@/api/progression.service'
 
 // Lazy loading
 import { defineAsyncComponent } from 'vue'
@@ -180,7 +178,6 @@ export default {
     }
   },
   created () {
-    console.log('picker', this)
     if (this.configuration === undefined) {
       this.$store.dispatch('cdt/getConfiguration')
       if (this.mq.phone) {
@@ -265,27 +262,22 @@ export default {
       this.selectedEvent = undefined
     },
     registerAssignments () {
-      for (const sessionId in this.$store.state.progression.selectedSessionIds) {
-        addAssignment(this.$store.state.progression.affectedItem.itemId, sessionId, 0).then(
-          (data) => {
-            if (data.success) {
-              console.log('ok')
-            }
-          },
-          (err) => {
-            // TODO toastr
-            console.error(err)
-          }
-        )
+      for (let idx = 0; idx < this.$store.state.progression.selectedSessionIds.length; ++idx) {
+        const sessionId = this.$store.state.progression.selectedSessionIds[idx]
+        console.log('Registering assignment for sessionId ', sessionId)
+        this.$store.dispatch('progression/addAssignment', { itemId: this.$store.state.progression.affectedItem.itemId, sessionId: sessionId })
       }
+      this.closeCalendarPicker()
     },
     formatCalendarSlot (slot) {
+      console.log('format slot ', slot)
       const json = {
         extendedProps: {
           id: (slot.sessionId === undefined ? slot.schoollifeSessionId : slot.sessionId),
           subject: slot.subject,
           teachers: '',
           room: slot.room,
+          assignedItemId: slot.assignedItemId,
           cy: dayjs(slot.startDate, 'YYYY-MM-DD HH:mm').format('MM-DD_HH:mm')
         },
         title: slot.title,
@@ -295,9 +287,6 @@ export default {
         borderColor: slot.color
       }
       return json
-    },
-    addSession (event) {
-      console.log('addEvent ', event)
     }
   }
 }
@@ -344,13 +333,15 @@ export default {
   .calendar {
     height: 500px;
     max-height: 500px;
-    scroll-behavior: auto;
+    overflow-y: scroll;
   }
   .footer {
     display: flex;
     justify-content: space-around;
     width: 500px;
     margin: auto;
+    margin-top: 20px;
+    z-index: 10;
     .button {
       width: 200px;
     }

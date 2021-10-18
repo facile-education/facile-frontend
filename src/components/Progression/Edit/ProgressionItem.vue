@@ -2,6 +2,7 @@
   <div
     class="progression-item"
   >
+    <!-- Left panel -->
     <div
       class="vertical-1"
     >
@@ -9,7 +10,6 @@
       <div
         v-if="item.isHomework"
         class="item-type"
-        @click="toggleChangeTypeMenu()"
       >
         <img
           class="item-type-icon"
@@ -18,32 +18,6 @@
           :title="$t('homework')"
         >
         <span>{{ $t('homework') }}</span>
-        <img
-          src="@assets/arrow-down.svg"
-          class="change-type-icon"
-          :alt="$t('changeItemType')"
-          :title="$t('changeItemType')"
-        >
-        <!-- Homework type menu -->
-        <div
-          v-if="isChangeTypeMenuDisplayed"
-          class="change-type-menu"
-        >
-          <!-- Simple homework -->
-          <div
-            class="change-type-menu-item"
-            @click="doChangeType(1)"
-          >
-            <span>{{ $t('simpleHomeworkType') }}</span>
-          </div>
-          <!-- File to send -->
-          <div
-            class="change-type-menu-item"
-            @click="doChangeType(2)"
-          >
-            <span>{{ $t('fileToSendType') }}</span>
-          </div>
-        </div>
       </div>
 
       <!-- Session case -->
@@ -89,6 +63,8 @@
         <span>{{ $t('delete') }}</span>
       </div>
     </div>
+
+    <!-- Main -->
     <div
       class="vertical-2"
     >
@@ -97,12 +73,33 @@
       >
         <!-- Item title -->
         <PentilaInput
-          :model-value="item.name"
+          ref="itemName"
+          :model-value="updatedItemName"
           :placeholder="$t('title')"
           :maxlength="75"
           class="item-title"
-          @update:modelValue="updateInput"
-          @blur="blurInput"
+          :class="{'fullWidth': !item.isHomework}"
+          @update:modelValue="updateItemName"
+          @blur="saveNewItemName"
+        />
+        <!-- Homework type menu -->
+        <PentilaDropdown
+          v-if="item.isHomework"
+          v-model="selectedHomeworkType"
+          class="homework-type"
+          :list="homeworkTypes"
+          :sort="false"
+          display-field="name"
+          @update:modelValue="changeHomeworkType"
+        />
+        <!-- Homework duration -->
+        <PentilaDropdown
+          v-if="item.isHomework"
+          v-model="selectedHomeworkDuration"
+          class="homework-duration"
+          :list="homeworkDurations"
+          :sort="false"
+          @update:modelValue="changeHomeworkDuration"
         />
       </div>
 
@@ -116,6 +113,25 @@
           :content="content"
           class="item-content"
         />
+      </div>
+
+      <!-- Add document to complete in case of homework -->
+      <div
+        v-if="item.isHomework && item.type == 3"
+        class="add-document"
+        @click="openFilePicker"
+      >
+        <PentilaButton
+          class="round"
+        >
+          <img
+            class="delete-icon"
+            src="@assets/add-white.svg"
+            :alt="$t('add-document')"
+            :title="$t('add-document')"
+          >
+        </PentilaButton>
+        <span>{{ $t('add-document') }}</span>
       </div>
 
       <!-- Add content buttons -->
@@ -148,7 +164,7 @@
           src="@assets/icon_play.svg"
           :alt="$t('addVideo')"
           :title="$t('addVideo')"
-          @click="addVideo()"
+          @click="toggleVideoModalDisplay()"
         >
         <img
           class="add-content-button"
@@ -198,6 +214,14 @@
         @close="toggleLinkModalDisplay"
       />
     </teleport>
+    <teleport to="body">
+      <VideoModal
+        v-if="isVideoModalDisplayed"
+        height="30em"
+        :item="item"
+        @close="toggleVideoModalDisplay"
+      />
+    </teleport>
   </div>
 </template>
 
@@ -205,12 +229,13 @@
 import ProgressionItemContent from '@/components/Progression/Edit/ProgressionItemContent'
 import PreviewModal from '@/components/Progression/Edit/PreviewModal'
 import LinkModal from '@/components/Progression/Edit/LinkModal'
+import VideoModal from '@/components/Progression/Edit/VideoModal'
 import AudioRecordModal from '@/components/Progression/Edit/AudioRecordModal'
 import FilePickerModal from '@/components/FilePicker/FilePickerModal'
 
 export default {
   name: 'ProgressionItem',
-  components: { ProgressionItemContent, PreviewModal, LinkModal, AudioRecordModal, FilePickerModal },
+  components: { ProgressionItemContent, PreviewModal, LinkModal, VideoModal, AudioRecordModal, FilePickerModal },
   props: {
     item: {
       type: Object,
@@ -222,10 +247,19 @@ export default {
       editorOptions: {},
       isPreviewModalDisplayed: false,
       isLinkModalDisplayed: false,
+      isVideoModalDisplayed: false,
       isAudioRecordModalDisplayed: false,
       isFilePickerDisplayed: false,
       isMultiSelectionAllowed: true,
-      isChangeTypeMenuDisplayed: false
+      homeworkTypes: [
+        { type: 1, name: 'Consigne simple' },
+        { type: 2, name: 'Doc. à rendre' },
+        { type: 3, name: 'Doc. à compléter' }
+      ],
+      homeworkDurations: ['15 min', '30 min', '45 min', '1h', '1h15', '1h30'],
+      selectedHomeworkType: undefined,
+      selectedHomeworkDuration: undefined,
+      updatedItemName: ''
     }
   },
   computed: {
@@ -235,22 +269,34 @@ export default {
     }
   },
   created () {
+    this.selectedHomeworkType = this.homeworkTypes[this.item.type - 1]
+    this.selectedHomeworkDuration = 'Durée'
+    // console.log('this.item=', this.item)
+    this.updatedItemName = this.item.name
+  },
+  mounted () {
+    // Set focus on item name input
+    if (this.$store.state.progression.currentItem !== undefined) {
+      this.$nextTick(() => this.$refs.itemName.$el.focus())
+    }
+    // this.$refs.itemName.focus()
   },
   methods: {
     addText () {
       this.$store.dispatch('progression/addItemContent', { itemId: this.item.itemId, contentType: 1 })
     },
-    addVideo () {
-      this.$store.dispatch('progression/addItemContent', { itemId: this.item.itemId, contentType: 4 })
-    },
     addH5p () {
       this.$store.dispatch('progression/addItemContent', { itemId: this.item.itemId, contentType: 6 })
     },
-    updateInput (value) {
-      console.log('updateInput ', value)
+    updateItemName (value) {
+      this.updatedItemName = value
     },
-    blurInput (value) {
-      console.log('blurInput ', value)
+    saveNewItemName () {
+      if (this.updatedItemName !== this.item.name) {
+        this.$store.dispatch('progression/updateItem',
+          { itemId: this.item.itemId, folderId: this.item.folderId, name: this.updatedItemName, type: (this.item.isHomework ? this.selectedHomeworkType.type : 0), order: this.item.order }
+        )
+      }
     },
     togglePreviewModalDisplay () {
       this.isPreviewModalDisplayed = !this.isPreviewModalDisplayed
@@ -260,6 +306,9 @@ export default {
     },
     toggleLinkModalDisplay () {
       this.isLinkModalDisplayed = !this.isLinkModalDisplayed
+    },
+    toggleVideoModalDisplay () {
+      this.isVideoModalDisplayed = !this.isVideoModalDisplayed
     },
     confirmItemDeletion (item) {
       this.$store.dispatch('warningModal/addWarning', {
@@ -282,8 +331,19 @@ export default {
     attachNewFile (selectedFiles) {
       console.log('new files are ', selectedFiles)
     },
-    toggleChangeTypeMenu () {
-      this.isChangeTypeMenuDisplayed = !this.isChangeTypeMenuDisplayed
+    changeHomeworkType () {
+      if (this.selectedHomeworkType.type !== this.item.type) {
+        this.$store.dispatch('progression/updateItem',
+          { itemId: this.item.itemId, folderId: this.item.folderId, name: this.item.name, type: this.selectedHomeworkType.type, order: this.item.order }
+        )
+      }
+    },
+    changeHomeworkDuration () {
+      if (this.selectedHomeworkDuration !== this.item.duration) {
+        this.$store.dispatch('progression/updateItem',
+          { itemId: this.item.itemId, folderId: this.item.folderId, name: this.item.name, type: this.item.type, duration: this.selectedHomeworkDuration, order: this.item.order }
+        )
+      }
     }
   }
 }
@@ -291,7 +351,7 @@ export default {
 
 <style lang="scss" scoped>
 .progression-item {
-  width: 90%;
+  width: 100%;
   border: 1px solid #D4D4D4;
   border-radius: 6px;
   background-color: #FFFFFF;
@@ -299,14 +359,14 @@ export default {
   display: flex;
 
   .vertical-1 {
-    width: 10%;
+    width: 8%;
     display: flex;
     flex-direction: column;
     .item-type {
       display: flex;
       flex-direction: column;
-      margin-top: 10px;
-      margin-bottom: 10px;
+      margin-top: 8px;
+      margin-bottom: 4px;
       .item-type-icon {
         margin: auto;
         width: 30px;
@@ -316,22 +376,6 @@ export default {
         margin: auto;
         font-family: Roboto;
         font-size: 14px;
-      }
-      .change-type-icon {
-        margin: auto;
-        width: 15px;
-        height: 15px;
-      }
-      .change-type-menu {
-        width: 200px;
-        height: 50px;
-        .change-type-menu-item {
-          margin: 5px;
-          &:hover {
-            background-color: #EFF3FB;
-            cursor: pointer;
-          }
-        }
       }
     }
 
@@ -347,7 +391,7 @@ export default {
       flex-direction: column;
       border: 1px solid transparent;
       border-radius: 5px;
-      margin: 15px;
+      margin: 10px;
       .preview-icon {
         margin: auto;
         width: 25px;
@@ -370,7 +414,7 @@ export default {
       flex-direction: column;
       border: 1px solid transparent;
       border-radius: 5px;
-      margin: 15px;
+      margin: 10px;
       .delete-icon {
         margin: auto;
         width: 25px;
@@ -392,7 +436,7 @@ export default {
 
   .vertical-2 {
 
-    width: 90%;
+    width: 92%;
     .item-header {
       height: 50px;
       display: flex;
@@ -403,27 +447,37 @@ export default {
       margin-right: 10px;
       z-index: 0;
       .item-title {
+        width: 70%;
         z-index: 5;
-      }
-      .header-buttons {
-        width: 60px;
-        display: flex;
-        .header-button {
-          width: 25px;
-          height: 25px;
-          margin: auto;
-          border: 1px solid transparent;
-          border-radius: 5px;
-          &:hover {
-            border: 1px solid grey;
-            cursor: pointer;
-          }
+        margin-right: 20px;
+        &.fullWidth {
+          width: 100%;
         }
+      }
+      .homework-type {
+        width: 20%;
+        margin-right: 10px;
+      }
+      .homework-duration {
+        margin-left: 10px;
+        margin-right: 10px;
+        width: 10%;
       }
     }
     .item-contents {
       .item-content {
         margin: 10px;
+      }
+    }
+    .add-document {
+      margin-left: 10px;
+      button {
+        margin-right: 10px;
+        border-radius: 20px;
+      }
+      span {
+        text-decoration: underline;
+        color: blue;
       }
     }
     .add-content-buttons {
@@ -464,6 +518,8 @@ export default {
   "preview": "Aperçu",
   "changeItemType": "Modifier le type de devoir",
   "simpleHomeworkType": "Consigne simple",
-  "fileToSendType": "Fichier à compléter"
+  "fileToSendType": "Fichier à compléter",
+  "duration": "Durée",
+  "add-document": "Ajouter un document à compléter"
 }
 </i18n>
