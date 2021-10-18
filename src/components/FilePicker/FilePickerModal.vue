@@ -131,7 +131,7 @@ export default {
   },
   methods: {
     loadFolderContent (folderId) {
-      navigationService.getAllEntities(folderId).then((data) => {
+      navigationService.getAllEntities(folderId, false).then((data) => {
         if (data.success) {
           this.currentFolders = data.subFolders
           this.currentFiles = data.files

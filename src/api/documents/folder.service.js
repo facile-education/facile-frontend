@@ -26,12 +26,12 @@ function downloadFolder (folderId) {
 /**
  * Return all the entities (files and folders) inside a given folder
  */
-function getAllEntities (folderId) {
+function getAllEntities (folderId, withDetails) {
   return axios.get(constants.JSON_WS_URL + FOLDER_PATH + '/get-all-entities', {
     params: {
       p_auth: getCookie('pauth'),
       folderId: folderId,
-      casierView: false
+      withDetails: withDetails
     }
   }).then(response => response.data)
 }
