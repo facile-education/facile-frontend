@@ -10,7 +10,7 @@
     </template>
 
     <template #body>
-      <span>preview content</span>
+      <div v-html="previewContent" />
     </template>
 
     <template #footer>
@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import { getItemPreview } from '@/api/progression.service'
 
 export default {
   name: 'PreviewModal',
@@ -41,11 +42,22 @@ export default {
   emits: ['close'],
   data () {
     return {
+      previewContent: ''
     }
   },
   computed: {
   },
   created () {
+    getItemPreview(this.item.itemId).then(
+      (data) => {
+        if (data.success) {
+          this.previewContent = data.preview
+        }
+      },
+      (err) => {
+        // TODO toastr
+        console.error(err)
+      })
   },
   methods: {
     closeModal () {
