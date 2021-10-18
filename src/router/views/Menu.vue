@@ -24,7 +24,7 @@
 
     <h2>Documents</h2>
     <RouterLink to="/documents">
-      Documents (0%)
+      Documents (20%)
     </RouterLink>
     <RouterLink to="/dropbox">
       Dropbox (0%)
