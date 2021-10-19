@@ -60,12 +60,11 @@
     </div>
 
     <!-- File -->
-    <div
+    <FileContent
       v-if="content.contentType === 5"
-      class="content-file"
-    >
-      <span>fichier</span>
-    </div>
+      :file-id="content.fileEntryId"
+      :file-name="content.contentName"
+    />
 
     <!-- H5P -->
     <div
@@ -108,10 +107,11 @@
 
 <script>
 import CkEditor from '@/components/Nero/CKEditor'
+import FileContent from '@components/Progression/Edit/Contents/FileContent'
 
 export default {
   name: 'ProgressionItemContent',
-  components: { CkEditor },
+  components: { FileContent, CkEditor },
   props: {
     content: {
       type: Object,

@@ -62,6 +62,11 @@ function fileNameWithoutExtension (name) {
   return name.split('.').slice(0, -1).join('.')
 }
 
+function getExtensionFromName (fileName) {
+  const parts = fileName.split('.')
+  return parts[parts.length - 1]
+}
+
 /**
  * Compare entities on fields 'name', 'size', 'lastModifiedDate', 'creationDate', 'date' or 'deleteDate'
  **/
@@ -104,5 +109,6 @@ export {
   removeMenuOptionIfExist,
   formatSize,
   fileNameWithoutExtension,
+  getExtensionFromName,
   compare
 }
