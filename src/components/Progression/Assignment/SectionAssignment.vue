@@ -2,17 +2,17 @@
   <div class="section-assignment">
     <span>{{ section.name }}</span>
     <hr>
-    <div v-if="section.subSections">
+    <div v-if="filteredSubSections">
       <SubSectionAssignment
-        v-for="subSection in section.subSections"
+        v-for="subSection in filteredSubSections"
         :key="subSection.folderId"
         :sub-section="subSection"
         class="subSection"
       />
     </div>
-    <div v-if="section.items">
+    <div v-if="filteredSectionItems.length > 0">
       <ItemAssignment
-        v-for="item in section.items"
+        v-for="item in filteredSectionItems"
         :key="item.itemId"
         :item="item"
         class="item"
@@ -24,6 +24,7 @@
 <script>
 import SubSectionAssignment from '@/components/Progression/Assignment/SubSectionAssignment'
 import ItemAssignment from '@/components/Progression/Assignment/ItemAssignment'
+import { isCoursNameInItemsList } from '@/utils/progression.util'
 
 export default {
   name: 'SectionAssignment',
@@ -41,6 +42,42 @@ export default {
   computed: {
     progression () {
       return this.$store.state.progression.currentProgression
+    },
+    filteredSubSections () {
+      const filteredSubSections = []
+      const sectionNameMatches = this.$store.state.progression.filterFolder.folderId === 0 || this.section.folderId === this.$store.state.progression.filterFolder.folderId
+      // Loop over sub-sections
+      for (let subIdx = 0; subIdx < this.section.subSections.length; ++subIdx) {
+        const subSection = this.section.subSections[subIdx]
+        const subSectionNameMatches = this.$store.state.progression.filterFolder.folderId === 0 || subSection.folderId === this.$store.state.progression.filterFolder.folderId
+        const subSectionCoursMatches = this.$store.state.progression.filterCours.groupId === 0 || isCoursNameInItemsList(subSection.items, this.$store.state.progression.filterCours.groupName)
+
+        // Sub-section matches if its name (or parent's section name) matches and its cours matches
+        if ((sectionNameMatches || subSectionNameMatches) && subSectionCoursMatches) {
+          filteredSubSections.push(subSection)
+        }
+      }
+      return filteredSubSections
+    },
+    filteredSectionItems () {
+      const sectionNameMatches = this.$store.state.progression.filterFolder.folderId === 0 || this.section.folderId === this.$store.state.progression.filterFolder.folderId
+      if (!sectionNameMatches) {
+        // If section is not selected -> skip all
+        return []
+      } else if (this.$store.state.progression.filterCours.groupId === 0) {
+        // Else if no cours filter -> add all items
+        return this.section.items
+      }
+      const filteredItems = []
+      for (let itemIdx = 0; itemIdx < this.section.items.length; ++itemIdx) {
+        const item = this.section.items[itemIdx]
+        // Loop over assignments to match cours name
+        const assignmentIndex = item.assignments.map(assignment => assignment.groupName).indexOf(this.$store.state.progression.filterCours.groupName)
+        if (assignmentIndex !== -1) {
+          filteredItems.push(item)
+        }
+      }
+      return filteredItems
     }
   },
   created () {
@@ -55,7 +92,6 @@ export default {
   margin-top: 10px;
   span {
     margin-top:10px;
-    margin-left:10px;
     font-size: 18px;
     font-weight: 500;
     text-transform: uppercase;
@@ -68,12 +104,10 @@ export default {
   }
   .subSection {
     margin-top:10px;
-    margin-left:10px;
     margin-bottom:10px;
   }
   .item {
     margin-top:10px;
-    margin-left:10px;
     margin-bottom:10px;
   }
 }

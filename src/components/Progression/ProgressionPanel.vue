@@ -30,12 +30,15 @@
     <div
       v-else
     >
-      <ProgressionAssignment
-        v-if="!isCalendarPickerMode"
-        class="assignment"
-      />
       <CalendarPicker
+        v-if="isCalendarPickerMode"
+      />
+      <HomeworkAssignmentPanel
+        v-else-if="isHomeworkAssignmentMode"
+      />
+      <ProgressionAssignment
         v-else
+        class="assignment"
       />
     </div>
   </div>
@@ -48,10 +51,11 @@ import ProgressionEdit from './Edit/ProgressionEdit.vue'
 import ProgressionAssignment from './Assignment/ProgressionAssignment.vue'
 import ProgressionTree from './Tree/ProgressionTree.vue'
 import CalendarPicker from '@/components/Progression/Assignment/CalendarPicker'
+import HomeworkAssignmentPanel from '@/components/Progression/Assignment/HomeworkAssignmentPanel'
 
 export default {
   name: 'ProgressionPanel',
-  components: { ProgressionSwitchMode, ProgressionEditHeader, ProgressionEdit, ProgressionAssignment, ProgressionTree, CalendarPicker },
+  components: { ProgressionSwitchMode, ProgressionEditHeader, ProgressionEdit, ProgressionAssignment, ProgressionTree, CalendarPicker, HomeworkAssignmentPanel },
   data () {
     return {
     }
@@ -62,6 +66,9 @@ export default {
     },
     isCalendarPickerMode () {
       return this.$store.state.progression.isCalendarPickerMode
+    },
+    isHomeworkAssignmentMode () {
+      return this.$store.state.progression.isHomeworkAssignmentMode
     }
   },
   created () {

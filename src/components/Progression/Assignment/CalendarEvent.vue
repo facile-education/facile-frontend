@@ -59,8 +59,6 @@ export default {
   },
   computed: {
     isAssignedToOtherItem () {
-      console.log('this.event.extendedProps=', this.event.extendedProps)
-      console.log('affectedItem= ', this.store.state.progression.affectedItem)
       return this.event.extendedProps.assignedItemId !== 0 &&
         this.event.extendedProps.assignedItemId !== this.store.state.progression.affectedItem.itemId
     }
@@ -75,11 +73,11 @@ export default {
       }
       this.isSelected = !this.isSelected
       if (this.isSelected) {
-        console.log('adding sessionId ', this.event.extendedProps.id)
-        this.store.dispatch('progression/addSelectedSession', this.event.extendedProps.id)
+        console.log('adding session ', this.event.extendedProps)
+        this.store.dispatch('progression/addSelectedSession', this.event.extendedProps)
       } else {
-        console.log('removing sessionId ', this.event.extendedProps.id)
-        this.store.dispatch('progression/removeSelectedSession', this.event.extendedProps.id)
+        console.log('removing session ', this.event.extendedProps)
+        this.store.dispatch('progression/removeSelectedSession', this.event.extendedProps)
       }
     }
   }
