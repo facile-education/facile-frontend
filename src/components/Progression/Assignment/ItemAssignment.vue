@@ -2,7 +2,10 @@
   <div
     class="item"
   >
-    <div class="item-name-wrapper">
+    <div
+      class="item-name-wrapper"
+      :class="{ 'is-sub-section-item': isSubSectionItem }"
+    >
       <div class="item-name">
         <img
           v-if="item.isHomework"
@@ -37,11 +40,11 @@
 
     <!-- Item sessions -->
     <div
-      v-if="item.assignments"
+      v-if="filteredAssignments && filteredAssignments.length > 0"
       class="item-sessions"
     >
       <div
-        v-for="assignment in item.assignments"
+        v-for="assignment in filteredAssignments"
         :key="assignment.assignmentId"
         class="session"
       >
@@ -50,7 +53,7 @@
           class="cours-name"
           :style="getColor(assignment)"
         >
-          <span>{{ assignment.coursName }}</span>
+          <span>{{ assignment.groupName }}</span>
           <img
             class="remove-cours-assignment"
             src="@assets/big-cross-black.svg"
@@ -64,6 +67,12 @@
         <!-- Homework send date -->
         <!-- Modified content -->
       </div>
+    </div>
+    <div
+      v-else
+      class="no-assignment"
+    >
+      <span>{{ $t('no-assignment') }}</span>
     </div>
   </div>
 </template>
@@ -85,6 +94,21 @@ export default {
     }
   },
   computed: {
+    isSubSectionItem () {
+      return false
+    },
+    filteredAssignments () {
+      if (this.$store.state.progression.filterCours.groupId === 0) {
+        // No cours selected -> all items
+        return this.item.assignments
+      } else {
+        const assignmentIndex = this.item.assignments.map(assignment => assignment.groupName).indexOf(this.$store.state.progression.filterCours.groupName)
+        if (assignmentIndex !== -1) {
+          return [this.item.assignments[assignmentIndex]]
+        }
+      }
+      return []
+    }
   },
   created () {
   },
@@ -111,14 +135,18 @@ export default {
 <style lang="scss" scoped>
 .item {
   display: grid;
-  grid-template-columns: 15% 5% 70%;
+  grid-template-columns: 20% 5% auto;
   grid-gap: 10px;
-  justify-items: center;
   .item-name-wrapper {
     width: 100%;
-    display: flex;
+    width: 300px;
+    min-width: 300px;
+    max-width: 300px;
+    display: block ruby;
+    &.is-sub-section-item {
+      padding-left: 20px;
+    }
     .item-name {
-      margin-left: 20px;
       display: flex;
 
       .item-type-icon {
@@ -128,6 +156,7 @@ export default {
       }
       span {
         margin: auto;
+        font-size: 14px;
       }
       &:hover .affect {
         display: flex;
@@ -135,15 +164,14 @@ export default {
     }
   }
   .affect {
-    margin: auto;
   }
   .item-sessions {
-    width: 70%;
-    max-width: 70%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     margin: auto;
     .session {
+      width: 100%;
       display: grid;
       grid-template-columns: 20% 30% 25% 25%;
       grid-gap: 10px;
@@ -152,20 +180,35 @@ export default {
       .cours-name {
         border: 1px solid black;
         display: flex;
-        padding: 5px;
+        justify-content: space-between;
+        padding: 3px;
         span {
           margin: auto;
-          margin-right: 10px;
+          margin-left: 10px;
+          width: 90%;
         }
         .remove-cours-assignment {
           margin: auto;
+          margin-right: 5px;
           width: 10px;
           height: 10px;
+          &:hover {
+            cursor: pointer;
+          }
         }
       }
       span {
         margin: auto;
+        font-size: 13px;
       }
+    }
+  }
+  .no-assignment {
+    width: 100%;
+    span {
+      float: left;
+      font-size: 12px;
+      font-style: italic;
     }
   }
 }
@@ -174,6 +217,7 @@ export default {
 <i18n locale="fr">
 {
   "session": "Séance",
-  "homework": "Devoir"
+  "homework": "Devoir",
+  "no-assignment" : "Non assigné"
 }
 </i18n>

@@ -9,7 +9,7 @@
       class="header"
     >
       <div
-        class="progression-title"
+        class="item-title"
       >
         <img
           v-if="item.isHomework"
@@ -262,15 +262,18 @@ export default {
       this.selectedEvent = undefined
     },
     registerAssignments () {
-      for (let idx = 0; idx < this.$store.state.progression.selectedSessionIds.length; ++idx) {
-        const sessionId = this.$store.state.progression.selectedSessionIds[idx]
+      for (let idx = 0; idx < this.$store.state.progression.selectedSessions.length; ++idx) {
+        const sessionId = this.$store.state.progression.selectedSessions[idx].id
         console.log('Registering assignment for sessionId ', sessionId)
         this.$store.dispatch('progression/addAssignment', { itemId: this.$store.state.progression.affectedItem.itemId, sessionId: sessionId })
       }
       this.closeCalendarPicker()
+      // Open homework assignment page in case of homework
+      if (this.$store.state.progression.affectedItem.isHomework) {
+        this.$store.dispatch('progression/setHomeworkAssignmentMode', true)
+      }
     },
     formatCalendarSlot (slot) {
-      console.log('format slot ', slot)
       const json = {
         extendedProps: {
           id: (slot.sessionId === undefined ? slot.schoollifeSessionId : slot.sessionId),
@@ -297,7 +300,7 @@ export default {
   .header {
     display: flex;
     justify-content: space-between;
-    .progression-title {
+    .item-title {
       width: 20%;
       margin: auto;
       display: flex;

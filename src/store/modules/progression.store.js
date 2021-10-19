@@ -59,8 +59,9 @@ export const state = {
   isEditMode: true,
   isCreateMenuDisplayed: false,
   isCalendarPickerMode: false,
+  isHomeworkAssignmentMode: false,
   affectedItem: undefined,
-  selectedSessionIds: [],
+  selectedSessions: [],
   startDate: undefined,
   endDate: undefined,
   sessionList: [],
@@ -130,16 +131,17 @@ export const mutations = {
   setCalendarPickerMode (state, payload) {
     state.isCalendarPickerMode = payload
   },
+  setHomeworkAssignmentMode (state, payload) {
+    state.isHomeworkAssignmentMode = payload
+  },
   setAffectedItem (state, payload) {
     state.affectedItem = payload
   },
   addSelectedSession (state, payload) {
-    state.selectedSessionIds.push(payload)
-    console.log('new1 selectedSessionIds is ', state.selectedSessionIds)
+    state.selectedSessions.push(payload)
   },
   removeSelectedSession (state, payload) {
-    state.selectedSessionIds.splice(payload, 1)
-    console.log('new2 selectedSessionIds is ', state.selectedSessionIds)
+    state.selectedSessions.splice(payload, 1)
   },
   setFolderContent (state, payload) {
     const folder = helperMethods.getFolderByFolderId(state.currentProgression, payload.folderId)
@@ -406,6 +408,9 @@ export const actions = {
   setCalendarPickerMode ({ commit }, isCalendarPickerMode) {
     commit('setCalendarPickerMode', isCalendarPickerMode)
   },
+  setHomeworkAssignmentMode ({ commit }, isHomeworkAssignment) {
+    commit('setHomeworkAssignmentMode', isHomeworkAssignment)
+  },
   setCreateMenuDisplayed ({ commit }, isCreateMenuDisplayed) {
     commit('setCreateMenuDisplayed', isCreateMenuDisplayed)
   },
@@ -418,11 +423,11 @@ export const actions = {
   setAffectedItem ({ commit }, affectedItem) {
     commit('setAffectedItem', affectedItem)
   },
-  addSelectedSession ({ commit }, sessionId) {
-    commit('addSelectedSession', sessionId)
+  addSelectedSession ({ commit }, session) {
+    commit('addSelectedSession', session)
   },
-  removeSelectedSession ({ commit }, sessionId) {
-    commit('removeSelectedSession', sessionId)
+  removeSelectedSession ({ commit }, session) {
+    commit('removeSelectedSession', session)
   },
   getProgressionContent ({ commit }, progressionId) {
     getProgressionContent(progressionId).then(
@@ -469,6 +474,9 @@ export const actions = {
       (data) => {
         if (data.success) {
           data.folder.items = []
+          if (parentFolderId === 0) {
+            data.folder.subSections = []
+          }
           commit('addFolder', data.folder)
           commit('setCurrentFolder', data.folder)
           commit('setCurrentItem', undefined)

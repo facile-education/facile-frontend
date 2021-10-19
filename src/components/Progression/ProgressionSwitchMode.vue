@@ -54,7 +54,7 @@
         @click="toggleAssignmentMode()"
       >
         <img
-          src="@assets/switch-assignment.png"
+          src="@assets/calendar.svg"
           title="assignment"
           class="toggle-button"
         >

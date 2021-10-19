@@ -5,14 +5,16 @@ export {
   getConfiguration,
   getGroups,
   getSessions,
-  getCoursList
+  getCoursList,
+  getSessionDetails
 }
 
 export default {
   getConfiguration,
   getGroups,
   getSessions,
-  getCoursList
+  getCoursList,
+  getSessionDetails
 }
 
 const CDT_PATH = '/cdt-portlet.'
@@ -56,6 +58,14 @@ function getSessions (userId, groupId, minDate, maxDate) {
 function getCoursList () {
   return axios.get(constants.JSON_WS_URL + CDT_PATH + 'cdtsession/get-teacher-cours', {
     params: {
+    }
+  }).then(response => response.data)
+}
+
+function getSessionDetails (sessionId) {
+  return axios.get(constants.JSON_WS_URL + CDT_PATH + 'cdtsession/get-session-details', {
+    params: {
+      sessionId
     }
   }).then(response => response.data)
 }
