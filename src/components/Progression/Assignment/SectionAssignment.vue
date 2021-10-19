@@ -2,18 +2,22 @@
   <div class="section-assignment">
     <span>{{ section.name }}</span>
     <hr>
-    <SubSectionAssignment
-      v-for="subSection in section.subSections"
-      :key="subSection.folderId"
-      :sub-section="subSection"
-      class="subSection"
-    />
-    <ItemAssignment
-      v-for="item in section.items"
-      :key="item.itemId"
-      :item="item"
-      class="item"
-    />
+    <div v-if="section.subSections">
+      <SubSectionAssignment
+        v-for="subSection in section.subSections"
+        :key="subSection.folderId"
+        :sub-section="subSection"
+        class="subSection"
+      />
+    </div>
+    <div v-if="section.items">
+      <ItemAssignment
+        v-for="item in section.items"
+        :key="item.itemId"
+        :item="item"
+        class="item"
+      />
+    </div>
   </div>
 </template>
 

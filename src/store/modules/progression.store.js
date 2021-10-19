@@ -63,7 +63,9 @@ export const state = {
   selectedSessionIds: [],
   startDate: undefined,
   endDate: undefined,
-  sessionList: []
+  sessionList: [],
+  filterFolder: { name: 'Toute la progression', folderId: 0 },
+  filterCours: { groupName: 'Tous les cours', groupId: 0 }
 }
 
 export const mutations = {
@@ -115,6 +117,12 @@ export const mutations = {
   },
   setListMode (state, payload) {
     state.isListMode = payload
+  },
+  setFilterFolder (state, payload) {
+    state.filterFolder = payload
+  },
+  setFilterCours (state, payload) {
+    state.filterCours = payload
   },
   setCreateMenuDisplayed (state, payload) {
     state.isCreateMenuDisplayed = payload
@@ -185,9 +193,11 @@ export const mutations = {
       // This is a sub-section item
       for (let idx = 0; idx < state.currentProgression.sections.length; ++idx) {
         const section = state.currentProgression.sections[idx]
-        const subSectionIndex = section.subSections.map(subSection => subSection.folderId).indexOf(payload.parentId)
-        if (subSectionIndex !== -1) {
-          section.subSections[subSectionIndex].items.push(payload.item)
+        if (section.subSections !== undefined) {
+          const subSectionIndex = section.subSections.map(subSection => subSection.folderId).indexOf(payload.parentId)
+          if (subSectionIndex !== -1) {
+            section.subSections[subSectionIndex].items.push(payload.item)
+          }
         }
       }
     }
@@ -398,6 +408,12 @@ export const actions = {
   },
   setCreateMenuDisplayed ({ commit }, isCreateMenuDisplayed) {
     commit('setCreateMenuDisplayed', isCreateMenuDisplayed)
+  },
+  setFilterFolder ({ commit }, folder) {
+    commit('setFilterFolder', folder)
+  },
+  setFilterCours ({ commit }, cours) {
+    commit('setFilterCours', cours)
   },
   setAffectedItem ({ commit }, affectedItem) {
     commit('setAffectedItem', affectedItem)

@@ -1,12 +1,14 @@
 <template>
   <div class="subsection-assignment">
     <span>{{ subSection.name }}</span>
-    <ItemAssignment
-      v-for="item in subSection.items"
-      :key="item.itemId"
-      :item="item"
-      class="item"
-    />
+    <div v-if="subSection.items">
+      <ItemAssignment
+        v-for="item in subSection.items"
+        :key="item.itemId"
+        :item="item"
+        class="item"
+      />
+    </div>
   </div>
 </template>
 
