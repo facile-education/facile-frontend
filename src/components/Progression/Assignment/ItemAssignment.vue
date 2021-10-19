@@ -37,6 +37,7 @@
 
     <!-- Item sessions -->
     <div
+      v-if="item.assignments"
       class="item-sessions"
     >
       <div
