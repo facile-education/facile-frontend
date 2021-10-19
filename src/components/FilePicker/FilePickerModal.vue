@@ -21,7 +21,7 @@
 
     <template #body>
       <!-- My Documents-->
-      <div class="portfolio">
+      <div class="body">
         <FilePickerBreadCrumb
           class="breadcrumb"
           :breadcrumb="currentBreadcrumb"
@@ -59,7 +59,7 @@
       <PentilaButton
         v-else
         data-test="submitButton"
-        :label="$t('FilePickerModal.submitButton')"
+        :label="$t('submitButton')"
         @click="addNewFiles"
       />
     </template>
@@ -117,7 +117,7 @@ export default {
       return this.$store.state.documents.selectedEntities
     },
     defaultHeader () {
-      return this.folderSelection ? this.$t('FilePickerModal.headerFolder') : this.$t('FilePickerModal.header')
+      return this.folderSelection ? this.$t('headerFolder') : this.$t('headerFile')
     }
   },
   created () {
@@ -138,7 +138,7 @@ export default {
           this.selectedFolder = undefined
           navigationService.getFolderBreadcrumb(folderId).then((data) => {
             if (data.success) {
-              data.breadcrumb[0].name = this.$t('router.views.Documents.title') // Translate '_PRIVATE_' folder's name
+              // data.breadcrumb[0].name = this.$t('router.views.Documents.title') // Translate '_PRIVATE_' folder's name // TODO
               this.currentBreadcrumb = data.breadcrumb
             } else {
               console.error('Unable to get breadcrumb from backend for folder id ' + folderId)
@@ -248,7 +248,7 @@ export default {
 .filepicker-window {
   display: flex;
 
-  .portfolio {
+  .body {
     width: 100%;
     min-width: 600px;
 
@@ -279,12 +279,7 @@ export default {
 }
 
 .mobile {
-  button {
-    margin-left: auto;
-    margin-right: 8px;
-  }
-
-  .portfolio {
+  .body {
     min-width: 0;
 
     .breadcrumb{
@@ -292,6 +287,19 @@ export default {
     }
   }
 
+  button {
+    margin-left: auto;
+    margin-right: 8px;
+  }
+
 }
 
 </style>
+
+<i18n locale="fr">
+{
+  "headerFolder": "Sélectionnez un dossier de destination",
+  "headerFile": "Sélectionnez un fichier",
+  "submitButton": "Ajouter"
+}
+</i18n>

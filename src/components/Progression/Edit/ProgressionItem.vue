@@ -195,7 +195,7 @@
         v-if="isFilePickerDisplayed"
         height="30em"
         :multi-selection="isMultiSelectionAllowed"
-        @addedFiles="attachNewFile"
+        @addedFiles="attachNewFiles"
         @close="closeFilePicker"
       />
     </teleport>
@@ -346,8 +346,11 @@ export default {
     closeFilePicker () {
       this.isFilePickerDisplayed = false
     },
-    attachNewFile (selectedFiles) {
+    attachNewFiles (selectedFiles) {
       console.log('new files are ', selectedFiles)
+      selectedFiles.forEach((selectedFile) => {
+        this.$store.dispatch('progression/addFile', { itemId: this.item.itemId, fileName: selectedFile.name, fileId: selectedFile.id })
+      })
     },
     changeHomeworkType () {
       if (this.selectedHomeworkType.type !== this.item.type) {
