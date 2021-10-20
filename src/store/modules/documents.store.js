@@ -89,7 +89,7 @@ export const actions = {
     })
   },
   goInDocumentRoot ({ commit }) {
-    navigationService.getSpacesFolders().then((data) => {
+    navigationService.getGlobalDocumentsProperties().then((data) => {
       this.dispatch('documents/changeDirectory', data.private.id)
     })
   },

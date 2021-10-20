@@ -22,11 +22,24 @@
     <template #body>
       <!-- My Documents-->
       <div class="body">
-        <FilePickerBreadCrumb
-          class="breadcrumb"
-          :breadcrumb="currentBreadcrumb"
-          @itemClicked="loadFolderContent"
-        />
+        <div class="first-line">
+          <FilePickerBreadCrumb
+            class="breadcrumb"
+            :breadcrumb="currentBreadcrumb"
+            @itemClicked="loadFolderContent"
+          />
+          <label for="upload-file-input">
+            <input
+              v-if="allowFilesFromDevice"
+              id="upload-file-input"
+              ref="upload-file-input"
+              type="file"
+              accept="*/*"
+              :multiple="multiSelection"
+              @change="onInputChange"
+            >
+          </label>
+        </div>
 
         <div class="documents-list">
           <div class="scroll">
@@ -71,7 +84,8 @@ import navigationService from '@/api/documents/folder.service'
 import FilePickerBreadCrumb from '@components/FilePicker/FilePickerBreadCrumb'
 import FilePickerFolder from '@components/FilePicker/FilePickerFolder'
 import FilePickerFile from '@components/FilePicker/FilePickerFile'
-import documentsUtils from '@utils/documents.util.js'
+import { returnAddedFiles } from '@utils/upload.util'
+import documentService from '@/api/documents/document.service'
 
 export default {
   name: 'FilePickerModal',
@@ -94,6 +108,10 @@ export default {
       type: Boolean,
       default: false
     },
+    allowFilesFromDevice: {
+      type: Boolean,
+      default: false
+    },
     header: {
       type: String,
       default: ''
@@ -106,7 +124,9 @@ export default {
       currentFolders: [],
       currentFiles: [],
       selectedFiles: [],
-      selectedFolder: undefined
+      selectedFolder: undefined,
+      maxUploadSize: undefined,
+      tmpFolder: undefined
     }
   },
   computed: {
@@ -124,7 +144,9 @@ export default {
     if (this.initInCurrentFolder) {
       this.loadFolderContent(this.$store.state.documents.currentFolderId)
     } else {
-      navigationService.getSpacesFolders().then((data) => {
+      navigationService.getGlobalDocumentsProperties().then((data) => {
+        this.maxUploadSize = data.maxUploadSize
+        this.tmpFolder = data.tmpFolder
         this.loadFolderContent(data.private.id)
       })
     }
@@ -211,13 +233,38 @@ export default {
         }
       }
     },
-    importDocument (fileList) {
-      documentsUtils.importMessagingAttachFiles(fileList).then((importedFiles) => {
-        this.selectedFiles = this.selectedFiles.concat(importedFiles)
-      })
-    },
     emitSelectedFolder () {
       this.$emit('chosenFolder', this.selectedFolder ? this.selectedFolder : this.currentFolder)
+      this.close()
+    },
+    onInputChange (e) {
+      returnAddedFiles(e, this.$store, this.maxUploadSize).then((files) => {
+        if (files.length !== 0) {
+          console.log(files)
+          this.uploadFiles(files)
+        } else {
+          this.$refs['upload-file-input'].value = ''
+          alert(this.$t('errorNoFiles'))
+        }
+      })
+    },
+    async uploadFiles (files) { // Upload device selected files in user temp folder and then, emits them
+      const uploadedFiles = []
+      for (const file of files) {
+        await documentService.uploadFile(this.tmpFolder.id, file).then((data) => {
+          if (data.success) {
+            uploadedFiles.push(data.createdFiles[0])
+          } else {
+            console.error('Error when trying upload file')
+            if (data.error === 'fileSizeException') {
+              this.$store.dispatch('error/setErrorType', 'reachMaxSize')
+              this.$store.dispatch('error/setListFilesConcerns', [file])
+              this.$store.dispatch('monDrive/openErrorModal')
+            }
+          }
+        })
+      }
+      this.$emit('addedFiles', uploadedFiles)
       this.close()
     },
     addNewFiles () {
@@ -251,6 +298,21 @@ export default {
   .body {
     width: 100%;
     min-width: 600px;
+
+    .first-line {
+      display: flex;
+      align-items: center;
+
+      .breadcrumb {
+        flex: 1;
+        padding: 0 15px;
+      }
+
+      input {
+        //display: none;
+        color: blue;
+      }
+    }
 
     .breadcrumb{
       padding: 0 15px;
@@ -298,6 +360,7 @@ export default {
 
 <i18n locale="fr">
 {
+  "errorNoFiles": "Il n'y a aucun fichier valide à téléverser !",
   "headerFolder": "Sélectionnez un dossier de destination",
   "headerFile": "Sélectionnez un fichier",
   "submitButton": "Ajouter"
