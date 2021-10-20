@@ -66,7 +66,7 @@ function selectBetween (listSortedFiles, firstFile, secondFile) {
   }
 }
 
-async function importDocument (folderId, documentList) {
+async function importDocuments (folderId, documentList) {
   for (const doc of documentList) {
     store.dispatch('currentActions/addAction', { name: 'importDocument' })
     await documentService.uploadFile(folderId, doc).then((data) => {
@@ -162,7 +162,7 @@ function deleteEntities (selectedEntities) {
 export default {
   computeDocumentsOptions,
   selectBetween,
-  importDocument,
+  importDocuments,
   downLoadDocument,
   deleteEntities
   // importMessagingAttachFiles
@@ -171,7 +171,7 @@ export default {
 export {
   computeDocumentsOptions,
   selectBetween,
-  importDocument,
+  importDocuments,
   downLoadDocument,
   deleteEntities
 }

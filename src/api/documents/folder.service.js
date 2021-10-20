@@ -6,7 +6,7 @@ export default {
   downloadFolder,
   getAllEntities,
   getFolderBreadcrumb,
-  getSpacesFolders
+  getGlobalDocumentsProperties
 }
 
 const FOLDER_PATH = '/cartable-portlet.folder'
@@ -51,8 +51,8 @@ function getFolderBreadcrumb (folderId) {
 /**
  * Return all the application's root folders (privateFolder, trashFolder, ...)
  */
-function getSpacesFolders () {
-  return axios.get(constants.JSON_WS_URL + FOLDER_PATH + '/get-spaces-folders', {
+function getGlobalDocumentsProperties () {
+  return axios.get(constants.JSON_WS_URL + FOLDER_PATH + '/get-global-documents-properties', {
     params: {
       p_auth: getCookie('pauth')
     }
