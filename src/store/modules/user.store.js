@@ -7,7 +7,6 @@ export const state = {
   firstName: '',
   lastName: '',
   picture: '/image/user_male_portrait?img_id=3274117&t=1546588956172',
-  themeColor: '#99B9E9',
   isAdministrator: true,
   isLocalAdmin: false,
   isENTAdmin: false,
@@ -91,7 +90,7 @@ export const actions = {
         console.error(err)
       })
   },
-  initUserInformations ({ state, commit, dispatch }) {
+  initUserInformations ({ rootState, commit, dispatch }) {
     this.dispatch('currentActions/addAction', { name: 'getUserInformations' })
     userService.getUserInformations().then(
       (data) => {
@@ -102,7 +101,7 @@ export const actions = {
             if (data.themeColor.indexOf('#') === -1) {
               data.themeColor = '#' + data.themeColor
             }
-            if (data.themeColor !== state.themeColor && data.themeColor !== 'FFFFFF') {
+            if (data.themeColor !== rootState.theme.themeColor && data.themeColor !== 'FFFFFF') {
               dispatch('theme/updateMainColor', data.themeColor, { root: true })
             }
           }
