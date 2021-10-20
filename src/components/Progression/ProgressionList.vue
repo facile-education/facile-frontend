@@ -65,7 +65,7 @@
             :title="$t('edit')"
             @click="toggleEditModalDisplay(progression)"
           >
-          <img
+          <!-- <img
             class="button"
             src="@assets/duplicate.svg"
             :alt="$t('duplicate')"
@@ -78,7 +78,7 @@
             :alt="$t('share')"
             :title="$t('share')"
             @click="toggleShareModalDisplay(progression)"
-          >
+          > -->
           <img
             class="button"
             src="@assets/trash.svg"
@@ -184,10 +184,10 @@ export default {
 
 <style lang="scss" scoped>
 .list {
-
   display: flex;
   flex-direction: column;
   height: 100%;
+
   .header {
     display: flex;
     justify-content: space-between;
@@ -205,6 +205,7 @@ export default {
         margin-left: 12px;
       }
     }
+
     .filters {
       display: flex;
       margin: auto;
@@ -214,13 +215,11 @@ export default {
         float: left;
         margin: auto;
         margin-right: 10px;
-        font-family: Roboto;
         font-size: 14px;
       }
       .filter {
         margin-right: 10px;
         min-width: 200px;
-        font-family: Roboto;
         font-size: 14px;
         button {
           display: flex;
@@ -235,14 +234,14 @@ export default {
     display: grid;
     grid-template-columns: repeat(auto-fill, 15rem);
     grid-gap: 1rem;
-    background: rgb(239, 243, 255);
 
     .progression {
       height: 15rem;
       max-height: 15rem;
       width: 15rem;
-      background: white;
-      border: 1px solid transparent;
+      border: 1px solid rgba(0, 0, 0, 0.3);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+
       &:hover {
         border: 1px solid grey;
       }

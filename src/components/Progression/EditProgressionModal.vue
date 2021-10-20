@@ -44,20 +44,11 @@
     </template>
 
     <template #footer>
-      <div
-        class="footer"
-      >
-        <PentilaButton
-          :label="$t('cancel')"
-          class="button cancel-button"
-          @click="closeModal"
-        />
-        <PentilaButton
-          :label="$t('confirm')"
-          class="button confirm-button"
-          @click="onConfirm"
-        />
-      </div>
+      <PentilaButton
+        :label="$t('confirm')"
+        class="button confirm-button"
+        @click="onConfirm"
+      />
       <!-- :class="{'form-valid' : !v$.$invalid && !isTimeError}" -->
     </template>
   </PentilaWindow>
@@ -135,14 +126,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.editWindow {
-  width: 600px;
-}
 .subject-volee {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
   margin-bottom: 20px;
+
   .subject {
     width: 300px;
   }
@@ -150,19 +139,10 @@ export default {
     width: 200px;
   }
 }
-
-.footer {
-  display: flex;
-  justify-content: space-around;
-  .button {
-    width: 150px;
-  }
-}
 </style>
 
 <i18n locale="fr">
 {
-  "cancel": "Annuler",
   "confirm": "Créer",
   "description": "Description",
   "progression": "Progression",
