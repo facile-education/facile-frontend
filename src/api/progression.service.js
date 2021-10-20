@@ -187,13 +187,12 @@ function updateItem (itemId, folderId, name, type, duration, order) {
     })).then(response => response.data)
 }
 
-function updateItemContent ({ itemId, contentId, name, contentType, order }) {
-  return axios.post(constants.JSON_WS_URL + PROGRESSION_PATH + ITEM_CTX + 'update-item',
+function updateItemContent (contentId, contentName, contentValue, order) {
+  return axios.post(constants.JSON_WS_URL + PROGRESSION_PATH + ITEM_CTX + 'update-item-content',
     PentilaUtils.URL.params({
-      itemId,
       contentId,
-      name,
-      contentType,
+      contentName,
+      contentValue,
       order
     })).then(response => response.data)
 }

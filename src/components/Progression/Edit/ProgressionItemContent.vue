@@ -76,13 +76,15 @@
     </div>
 
     <!-- Delete content button -->
-    <img
-      class="delete-content-button"
-      src="@assets/trash.svg"
-      :alt="$t('delete')"
-      :title="$t('delete')"
-      @click="confirmContentDeletion(item)"
-    >
+    <div class="delete-panel">
+      <img
+        class="delete-content-button"
+        src="@assets/trash.svg"
+        :alt="$t('delete')"
+        :title="$t('delete')"
+        @click="confirmContentDeletion(item)"
+      >
+    </div>
   </div>
 </template>
 
@@ -100,7 +102,8 @@ export default {
   },
   data () {
     return {
-      editorOptions: {}
+      editorOptions: {},
+      timeout: undefined
     }
   },
   computed: {
@@ -115,11 +118,15 @@ export default {
     updateInput (value) {
       console.log('updateInput ', value)
     },
-    blurInput (value) {
-      console.log('blurInput ', value)
-    },
-    updateContent () {
+    updateContent (newValue) {
       console.log('update ck content')
+      clearTimeout(this.timeout)
+      // Make a new timeout set to go off in 2s
+      this.timeout = setTimeout(() => {
+        console.log('run content update wit newValue ', newValue)
+        console.log('content=', this.content)
+        this.$store.dispatch('progression/updateItemContent', { contentId: this.content.contentId, contentName: this.content.contentName, contentValue: newValue, order: this.content.order })
+      }, 2000)
     },
     confirmContentDeletion () {
       this.$store.dispatch('warningModal/addWarning', {
@@ -169,9 +176,18 @@ export default {
       margin-top: 5px;
     }
   }
-  .delete-content-button {
+  .delete-panel {
+    width: 40px;
+    height: 40px;
     margin: auto;
-    margin-right: 30px;
+    .delete-content-button {
+      display: none;
+      margin: auto;
+      margin-right: 30px;
+    }
+  }
+  &:hover .delete-content-button {
+    display: block;
   }
 }
 </style>
