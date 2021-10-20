@@ -1,4 +1,4 @@
-import { addProgression, deleteProgression, getProgressionList, updateProgression, getProgressionContent, addFolder, updateFolder, addItem, updateItem, addItemContent, deleteFolder, deleteItem, getFolderContent, getItemContents, deleteItemContent, addAssignment, deleteAssignment } from '@/api/progression.service'
+import { addProgression, deleteProgression, getProgressionList, updateProgression, getProgressionContent, addFolder, updateFolder, addItem, updateItem, addItemContent, updateItemContent, deleteFolder, deleteItem, getFolderContent, getItemContents, deleteItemContent, addAssignment, deleteAssignment } from '@/api/progression.service'
 import { getSubjects } from '@/api/userManagement.service'
 import { getSchoolVoleeList } from '@/api/organization.service'
 import { getCoursList, getSessions } from '@/api/cdt.service'
@@ -531,6 +531,19 @@ export const actions = {
       (data) => {
         if (data.success) {
           commit('addItemContent', data.content)
+        }
+      },
+      (err) => {
+        // TODO toastr
+        console.error(err)
+      })
+  },
+  updateItemContent ({ commit }, { contentId, contentName, contentValue, order }) {
+    updateItemContent(contentId, contentName, contentValue, order).then(
+      (data) => {
+        if (data.success) {
+          // Returned object is the parent item (for re-ordering)
+          commit('updateItem', data.item)
         }
       },
       (err) => {
