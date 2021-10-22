@@ -112,6 +112,7 @@
           :key="content.contentId"
           :content="content"
           class="item-content"
+          @editContent="editContent"
         />
       </div>
 
@@ -178,7 +179,7 @@
           src="@assets/icon_h5p.svg"
           :alt="$t('addH5p')"
           :title="$t('addH5p')"
-          @click="addH5p()"
+          @click="toggleH5PModalDisplay()"
         >
       </div>
     </div>
@@ -211,6 +212,7 @@
         v-if="isLinkModalDisplayed"
         height="30em"
         :item="item"
+        :edited-content="editedContent"
         @close="toggleLinkModalDisplay"
       />
     </teleport>
@@ -219,7 +221,17 @@
         v-if="isVideoModalDisplayed"
         height="30em"
         :item="item"
+        :edited-content="editedContent"
         @close="toggleVideoModalDisplay"
+      />
+    </teleport>
+    <teleport to="body">
+      <H5PModal
+        v-if="isH5PModalDisplayed"
+        height="30em"
+        :item="item"
+        :edited-content="editedContent"
+        @close="toggleH5PModalDisplay"
       />
     </teleport>
   </div>
@@ -231,11 +243,12 @@ import PreviewModal from '@/components/Progression/Edit/PreviewModal'
 import LinkModal from '@/components/Progression/Edit/LinkModal'
 import VideoModal from '@/components/Progression/Edit/VideoModal'
 import AudioRecordModal from '@/components/Progression/Edit/AudioRecordModal'
+import H5PModal from '@/components/Progression/Edit/H5PModal'
 import FilePickerModal from '@/components/FilePicker/FilePickerModal'
 
 export default {
   name: 'ProgressionItem',
-  components: { ProgressionItemContent, PreviewModal, LinkModal, VideoModal, AudioRecordModal, FilePickerModal },
+  components: { ProgressionItemContent, PreviewModal, LinkModal, VideoModal, AudioRecordModal, H5PModal, FilePickerModal },
   props: {
     item: {
       type: Object,
@@ -249,6 +262,7 @@ export default {
       isLinkModalDisplayed: false,
       isVideoModalDisplayed: false,
       isAudioRecordModalDisplayed: false,
+      isH5PModalDisplayed: false,
       isFilePickerDisplayed: false,
       isMultiSelectionAllowed: true,
       homeworkTypes: [
@@ -259,7 +273,8 @@ export default {
       homeworkDurations: ['15 min', '30 min', '45 min', '1h', '1h15', '1h30'],
       selectedHomeworkType: undefined,
       selectedHomeworkDuration: undefined,
-      updatedItemName: ''
+      updatedItemName: '',
+      editedContent: {}
     }
   },
   computed: {
@@ -310,6 +325,9 @@ export default {
     toggleVideoModalDisplay () {
       this.isVideoModalDisplayed = !this.isVideoModalDisplayed
     },
+    toggleH5PModalDisplay () {
+      this.isH5PModalDisplayed = !this.isH5PModalDisplayed
+    },
     confirmItemDeletion (item) {
       this.$store.dispatch('warningModal/addWarning', {
         text: this.$t('deleteItemWarning'),
@@ -343,6 +361,17 @@ export default {
         this.$store.dispatch('progression/updateItem',
           { itemId: this.item.itemId, folderId: this.item.folderId, name: this.item.name, type: this.item.type, duration: this.selectedHomeworkDuration, order: this.item.order }
         )
+      }
+    },
+    editContent (content) {
+      console.log('editContent content=', content)
+      this.editedContent = content
+      if (content.contentType === 3) {
+        this.toggleLinkModalDisplay()
+      } else if (content.contentType === 4) {
+        this.toggleVideoModalDisplay()
+      } else if (content.contentType === 6) {
+        this.toggleH5PModalDisplay()
       }
     }
   }

@@ -6,18 +6,25 @@
     @close="closeModal"
   >
     <template #header>
-      <span v-t="'title'" />
+      <span
+        v-if="isCreation"
+        v-t="'creation-title'"
+      />
+      <span
+        v-else
+        v-t="'edition-title'"
+      />
     </template>
 
     <template #body>
       <PentilaInput
-        v-model="link.linkName"
+        v-model="linkName"
         :maxlength="200"
         :placeholder="$t('namePlaceholder')"
         class="link-name"
       />
       <PentilaInput
-        v-model="link.linkUrl"
+        v-model="linkUrl"
         :maxlength="200"
         :placeholder="$t('urlPlaceholder')"
         class="link-url"
@@ -30,13 +37,20 @@
       >
         <PentilaButton
           :label="$t('cancel')"
-          class="button cancel-button"
+          class="button"
           @click="closeModal"
         />
         <PentilaButton
+          v-if="isCreation"
           :label="$t('add')"
-          class="button create-button"
+          class="button"
           @click="addLink"
+        />
+        <PentilaButton
+          v-else
+          :label="$t('edit')"
+          class="button"
+          @click="editLink"
         />
       </div>
     </template>
@@ -52,27 +66,41 @@ export default {
     item: {
       type: Object,
       required: true
+    },
+    editedContent: {
+      type: Object,
+      required: true
     }
   },
   emits: ['close'],
   data () {
     return {
-      link: {
-        linkName: '',
-        linkUrl: ''
-      }
+      linkName: '',
+      linkUrl: ''
     }
   },
   computed: {
+    isCreation () {
+      return this.editedContent.contentId === undefined
+    }
   },
-  created () {
+  mounted () {
+    if (!this.isCreation) {
+      this.linkName = this.editedContent.contentName
+      this.linkUrl = this.editedContent.contentValue
+    }
   },
   methods: {
     closeModal () {
       this.$emit('close')
     },
     addLink () {
-      this.$store.dispatch('progression/addLink', { itemId: this.item.itemId, linkName: this.link.linkName, linkUrl: this.link.linkUrl })
+      this.$store.dispatch('progression/addItemContent',
+        { itemId: this.item.itemId, contentType: 3, contentName: this.linkName, contentValue: this.linkUrl })
+      this.closeModal()
+    },
+    editLink () {
+      this.$store.dispatch('progression/updateItemContent', { contentId: this.editedContent.contentId, contentName: this.linkName, contentValue: this.linkUrl, order: this.editedContent.order })
       this.closeModal()
     }
   }
@@ -87,6 +115,7 @@ export default {
   }
   .link-url, .link-name {
     margin: 10px;
+    margin-right: 20px;
   }
 }
 
@@ -101,9 +130,11 @@ export default {
 
 <i18n locale="fr">
 {
-  "title": "Ajouter un lien",
+  "creation-title": "Ajouter un lien",
+  "edition-title": "Modifier un lien",
   "cancel": "Annuler",
   "add": "Ajouter",
+  "edit": "Modifier",
   "namePlaceholder": "Mon lien",
   "urlPlaceholder": "https://wwww.monlien.com"
 }
