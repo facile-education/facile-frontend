@@ -8,7 +8,7 @@
       class="content-text"
     >
       <CkEditor
-        :initial-content="content.content"
+        :initial-content="content.contentValue"
         :editor-id="editorId"
         :options="editorOptions"
         @input="updateContent"
@@ -29,7 +29,7 @@
       class="content-link"
     >
       <div
-        class="link-title"
+        class="title"
       >
         <img
           class="content-icon"
@@ -47,7 +47,7 @@
       class="content-video"
     >
       <div
-        class="video-title"
+        class="title"
       >
         <img
           class="content-icon"
@@ -72,17 +72,35 @@
       v-if="content.contentType === 6"
       class="content-h5p"
     >
-      <span>contenu h5p</span>
+      <div
+        class="title"
+      >
+        <img
+          class="content-icon"
+          src="@assets/icon_h5p.svg"
+        >
+        <span>{{ $t('h5p') }}</span>
+      </div>
+      <span>{{ content.contentName }}</span>
+      <a :href="content.contentValue">{{ content.contentValue }}</a>
     </div>
 
     <!-- Delete content button -->
-    <div class="delete-panel">
+    <div class="buttons-panel">
       <img
-        class="delete-content-button"
+        v-if="isEditableContent"
+        class="content-button"
+        src="@assets/edit.svg"
+        :alt="$t('edit')"
+        :title="$t('edit')"
+        @click="editContent()"
+      >
+      <img
+        class="content-button"
         src="@assets/trash.svg"
         :alt="$t('delete')"
         :title="$t('delete')"
-        @click="confirmContentDeletion(item)"
+        @click="confirmContentDeletion()"
       >
     </div>
   </div>
@@ -100,6 +118,7 @@ export default {
       required: true
     }
   },
+  emits: ['editContent'],
   data () {
     return {
       editorOptions: {},
@@ -110,6 +129,10 @@ export default {
     editorId () {
       // Used to manage multiple editors - editorId is based on the (unique) order
       return 'editor' + this.content.order
+    },
+    isEditableContent () {
+      // Link, video and h5p are editable
+      return this.content.contentType === 3 || this.content.contentType === 4 || this.content.contentType === 6
     }
   },
   created () {
@@ -119,12 +142,9 @@ export default {
       console.log('updateInput ', value)
     },
     updateContent (newValue) {
-      console.log('update ck content')
       clearTimeout(this.timeout)
-      // Make a new timeout set to go off in 2s
+      // 2s timeout
       this.timeout = setTimeout(() => {
-        console.log('run content update wit newValue ', newValue)
-        console.log('content=', this.content)
         this.$store.dispatch('progression/updateItemContent', { contentId: this.content.contentId, contentName: this.content.contentName, contentValue: newValue, order: this.content.order })
       }, 2000)
     },
@@ -136,6 +156,9 @@ export default {
     },
     deleteContent () {
       this.$store.dispatch('progression/deleteItemContent', this.content.contentId)
+    },
+    editContent () {
+      this.$emit('editContent', this.content)
     }
   }
 }
@@ -153,13 +176,13 @@ export default {
     width: 90%;
     margin: auto;
   }
-  .content-link {
+  .content-link, .content-video, .content-h5p {
     height: 80px;
     width: 100%;
     display: flex;
     flex-direction: column;
     margin-left: 20px;
-    .link-title {
+    .title {
       margin-top: 5px;
       img {
         width: 10px;
@@ -176,17 +199,25 @@ export default {
       margin-top: 5px;
     }
   }
-  .delete-panel {
+  .buttons-panel {
     width: 40px;
-    height: 40px;
     margin: auto;
-    .delete-content-button {
+    display: flex;
+    flex-direction: column;
+    .content-button {
       display: none;
       margin: auto;
       margin-right: 30px;
+      border: 1px solid transparent;
+      border-radius: 5px;
+      margin: 7px;
+      &:hover {
+        border: 1px solid grey;
+        cursor: pointer;
+      }
     }
   }
-  &:hover .delete-content-button {
+  &:hover .content-button {
     display: block;
   }
 }
@@ -196,8 +227,10 @@ export default {
 {
   "session": "Séance",
   "delete": "Supprimer cet élément",
+  "edit": "Modifier cet élément",
   "deleteContentWarning": "Supprimer ce contenu ?",
   "externalLink": "Lien externe",
-  "video": "Video"
+  "video": "Video",
+  "h5p": "Contenu H5P"
 }
 </i18n>

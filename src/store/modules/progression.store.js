@@ -144,7 +144,9 @@ export const mutations = {
     state.selectedSessions.splice(payload, 1)
   },
   setFolderContent (state, payload) {
+    console.log('setFolderContent payload=', payload)
     const folder = helperMethods.getFolderByFolderId(state.currentProgression, payload.folderId)
+    console.log('setFolderContent folder=', folder)
     folder.folders = payload.folders
     folder.items = payload.items
   },
@@ -213,6 +215,7 @@ export const mutations = {
       item.name = payload.name
       item.type = payload.type
       item.order = payload.order
+      item.contents = payload.contents
     }
   },
   addItemContent (state, payload) {
@@ -429,7 +432,7 @@ export const actions = {
   removeSelectedSession ({ commit }, session) {
     commit('removeSelectedSession', session)
   },
-  getProgressionContent ({ commit }, progressionId) {
+  getProgressionContent ({ commit, dispatch }, progressionId) {
     getProgressionContent(progressionId).then(
       (data) => {
         if (data.success) {
@@ -437,6 +440,7 @@ export const actions = {
           // Set default folder
           if (data.sections !== undefined && data.sections.length > 0) {
             commit('setCurrentFolder', data.sections[0])
+            dispatch('getFolderContent', data.sections[0].folderId)
           }
         }
       },
@@ -448,7 +452,9 @@ export const actions = {
   getFolderContent ({ commit }, folderId) {
     getFolderContent(folderId).then(
       (data) => {
+        console.log('data=', data)
         if (data.success) {
+          data.folderId = folderId
           commit('setFolderContent', data)
         }
       },
@@ -499,6 +505,20 @@ export const actions = {
         console.error(err)
       })
   },
+  deleteFolder ({ commit }, folder) {
+    deleteFolder(folder.folderId).then(
+      (data) => {
+        if (data.success) {
+          commit('removeFolder', folder)
+          getProgressionContent(folder.progressionId)
+          // TODO set new current folder
+        }
+      },
+      (err) => {
+        // TODO toastr
+        console.error(err)
+      })
+  },
   addItem ({ commit, state }, { itemName, isHomework, type, order }) {
     const currentFolderId = (state.currentFolder !== undefined ? state.currentFolder.folderId : 0)
     addItem(state.currentProgression.progressionId, currentFolderId, itemName, isHomework, type, '', order).then(
@@ -526,8 +546,20 @@ export const actions = {
         console.error(err)
       })
   },
-  addItemContent ({ commit }, { itemId, contentType }) {
-    addItemContent(itemId, contentType, '', '', 0, false).then(
+  deleteItem ({ commit }, item) {
+    deleteItem(item.itemId).then(
+      (data) => {
+        if (data.success) {
+          commit('removeItem', item)
+        }
+      },
+      (err) => {
+        // TODO toastr
+        console.error(err)
+      })
+  },
+  addItemContent ({ commit }, { itemId, contentType, contentName, contentValue }) {
+    addItemContent(itemId, contentType, contentName, contentValue, 0, false).then(
       (data) => {
         if (data.success) {
           commit('addItemContent', data.content)
@@ -544,56 +576,6 @@ export const actions = {
         if (data.success) {
           // Returned object is the parent item (for re-ordering)
           commit('updateItem', data.item)
-        }
-      },
-      (err) => {
-        // TODO toastr
-        console.error(err)
-      })
-  },
-  addLink ({ commit }, { itemId, linkName, linkUrl }) {
-    addItemContent(itemId, 3, linkName, linkUrl, 0, false).then(
-      (data) => {
-        if (data.success) {
-          commit('addItemContent', data.content)
-        }
-      },
-      (err) => {
-        // TODO toastr
-        console.error(err)
-      })
-  },
-  addVideo ({ commit }, { itemId, videoName, videoUrl }) {
-    addItemContent(itemId, 4, videoName, videoUrl, 0, false).then(
-      (data) => {
-        if (data.success) {
-          commit('addItemContent', data.content)
-        }
-      },
-      (err) => {
-        // TODO toastr
-        console.error(err)
-      })
-  },
-  deleteFolder ({ commit }, folder) {
-    deleteFolder(folder.folderId).then(
-      (data) => {
-        if (data.success) {
-          commit('removeFolder', folder)
-          getProgressionContent(folder.progressionId)
-          // TODO set new current folder
-        }
-      },
-      (err) => {
-        // TODO toastr
-        console.error(err)
-      })
-  },
-  deleteItem ({ commit }, item) {
-    deleteItem(item.itemId).then(
-      (data) => {
-        if (data.success) {
-          commit('removeItem', item)
         }
       },
       (err) => {

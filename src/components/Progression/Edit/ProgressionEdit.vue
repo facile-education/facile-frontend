@@ -134,7 +134,7 @@ export default {
       // Put its name in the input
       this.updatedFolderName = newName
       // With focus on it
-      if (this.$refs.folderName !== undefined && this.$refs.folderName !== null) {
+      if (this.$store.state.progression.currentFolder !== undefined && this.$refs.folderName !== undefined && this.$refs.folderName !== null) {
         this.$nextTick(() => this.$refs.folderName.$el.focus())
       }
     },

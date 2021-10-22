@@ -1,7 +1,7 @@
 <template>
   <PentilaWindow
     :modal="true"
-    class="videoWindow"
+    class="h5pWindow"
     :class="{'mobile': mq.phone}"
     @close="closeModal"
   >
@@ -18,16 +18,16 @@
 
     <template #body>
       <PentilaInput
-        v-model="videoName"
+        v-model="contentName"
         :maxlength="200"
         :placeholder="$t('namePlaceholder')"
-        class="video-name"
+        class="content-name"
       />
       <PentilaInput
-        v-model="videoUrl"
+        v-model="contentValue"
         :maxlength="200"
         :placeholder="$t('urlPlaceholder')"
-        class="video-url"
+        class="content-url"
       />
     </template>
 
@@ -37,20 +37,20 @@
       >
         <PentilaButton
           :label="$t('cancel')"
-          class="button cancel-button"
+          class="button"
           @click="closeModal"
         />
         <PentilaButton
           v-if="isCreation"
           :label="$t('add')"
-          class="button create-button"
-          @click="addVideo"
+          class="button"
+          @click="addH5P"
         />
         <PentilaButton
           v-else
           :label="$t('edit')"
           class="button"
-          @click="editVideo"
+          @click="editH5P"
         />
       </div>
     </template>
@@ -60,7 +60,7 @@
 <script>
 
 export default {
-  name: 'VideoModal',
+  name: 'H5PModal',
   inject: ['mq'],
   props: {
     item: {
@@ -75,8 +75,8 @@ export default {
   emits: ['close'],
   data () {
     return {
-      videoName: '',
-      videoUrl: ''
+      contentName: '',
+      contentValue: ''
     }
   },
   computed: {
@@ -84,25 +84,23 @@ export default {
       return this.editedContent.contentId === undefined
     }
   },
-  created () {
-  },
   mounted () {
     if (!this.isCreation) {
-      this.videoName = this.editedContent.contentName
-      this.videoUrl = this.editedContent.contentValue
+      this.contentName = this.editedContent.contentName
+      this.contentValue = this.editedContent.contentValue
     }
   },
   methods: {
     closeModal () {
       this.$emit('close')
     },
-    addVideo () {
+    addH5P () {
       this.$store.dispatch('progression/addItemContent',
-        { itemId: this.item.itemId, contentType: 4, contentName: this.videoName, contentValue: this.videoUrl })
+        { itemId: this.item.itemId, contentType: 6, contentName: this.contentName, contentValue: this.contentValue })
       this.closeModal()
     },
-    editVideo () {
-      this.$store.dispatch('progression/updateItemContent', { contentId: this.editedContent.contentId, contentName: this.videoName, contentValue: this.videoUrl, order: this.editedContent.order })
+    editH5P () {
+      this.$store.dispatch('progression/updateItemContent', { contentId: this.editedContent.contentId, contentName: this.contentName, contentValue: this.contentValue, order: this.editedContent.order })
       this.closeModal()
     }
   }
@@ -110,14 +108,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.videoWindow {
+.h5pWindow {
   span {
     text-align: center;
     margin: 10px;
   }
-  .video-url, .video-name {
+  .content-url, .content-name {
     margin: 10px;
-    margin-right: 30px;
+    margin-right: 20px;
   }
 }
 
@@ -132,12 +130,12 @@ export default {
 
 <i18n locale="fr">
 {
-  "creation-title": "Ajouter une video",
-  "edition-title": "Modifier une video",
+  "title": "Ajouter un contenu H5P",
+  "edition-title": "Editer un contenu H5P",
   "cancel": "Annuler",
   "add": "Ajouter",
   "edit": "Modifier",
-  "namePlaceholder": "Ma video",
-  "urlPlaceholder": "https://www.youtube.com/watch?v=C_uNmmgQliM"
+  "namePlaceholder": "Mon lien H5P",
+  "urlPlaceholder": "Coller ici le lien embed H5P"
 }
 </i18n>
