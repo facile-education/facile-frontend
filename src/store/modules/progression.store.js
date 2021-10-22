@@ -1,4 +1,8 @@
-import { addProgression, deleteProgression, getProgressionList, updateProgression, getProgressionContent, addFolder, updateFolder, addItem, updateItem, addItemContent, updateItemContent, deleteFolder, deleteItem, getFolderContent, getItemContents, deleteItemContent, addAssignment, deleteAssignment } from '@/api/progression.service'
+import {
+  addProgression, deleteProgression, getProgressionList, updateProgression, getProgressionContent, addFolder,
+  updateFolder, addItem, updateItem, addItemContent, updateItemContent, deleteFolder, deleteItem, getFolderContent,
+  getItemContents, deleteItemContent, addAssignment, deleteAssignment
+} from '@/api/progression.service'
 import { getSubjects } from '@/api/userManagement.service'
 import { getSchoolVoleeList } from '@/api/organization.service'
 import { getCoursList, getSessions } from '@/api/cdt.service'
@@ -144,9 +148,7 @@ export const mutations = {
     state.selectedSessions.splice(payload, 1)
   },
   setFolderContent (state, payload) {
-    console.log('setFolderContent payload=', payload)
     const folder = helperMethods.getFolderByFolderId(state.currentProgression, payload.folderId)
-    console.log('setFolderContent folder=', folder)
     folder.folders = payload.folders
     folder.items = payload.items
   },
@@ -184,7 +186,6 @@ export const mutations = {
     }
   },
   updateFolderName (state, payload) {
-    console.log('updateFolderName payload=', payload)
     const folder = helperMethods.getFolderByFolderId(state.currentProgression, payload.folderId)
     folder.name = payload.newFolderName
   },
@@ -452,7 +453,6 @@ export const actions = {
   getFolderContent ({ commit }, folderId) {
     getFolderContent(folderId).then(
       (data) => {
-        console.log('data=', data)
         if (data.success) {
           data.folderId = folderId
           commit('setFolderContent', data)
@@ -558,8 +558,20 @@ export const actions = {
         console.error(err)
       })
   },
-  addItemContent ({ commit }, { itemId, contentType, contentName, contentValue }) {
-    addItemContent(itemId, contentType, contentName, contentValue, 0, false).then(
+  addItemContent ({ commit }, { itemId, contentType, contentName, contentValue, fileEntryId = 0, isToBeCompleted = false }) {
+    addItemContent(itemId, contentType, contentName, contentValue, fileEntryId, isToBeCompleted).then(
+      (data) => {
+        if (data.success) {
+          commit('addItemContent', data.content)
+        }
+      },
+      (err) => {
+        // TODO toastr
+        console.error(err)
+      })
+  },
+  addFile ({ commit }, { itemId, fileName, fileId }) {
+    addItemContent(itemId, 5, fileName, '', fileId, false).then(
       (data) => {
         if (data.success) {
           commit('addItemContent', data.content)

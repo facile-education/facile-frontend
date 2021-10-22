@@ -239,7 +239,6 @@ export default {
     onInputChange (e) {
       returnAddedFiles(e, this.$store, this.maxUploadSize).then((files) => {
         if (files.length !== 0) {
-          console.log(files)
           this.uploadFiles(files)
         } else {
           this.$refs['upload-file-input'].value = ''
