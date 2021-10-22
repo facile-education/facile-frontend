@@ -5,11 +5,10 @@ import { getCookie } from '@utils/browser.util'
 export default {
   downloadFolder,
   getAllEntities,
-  getFolderBreadcrumb,
-  getGlobalDocumentsProperties
+  getFolderBreadcrumb
 }
 
-const FOLDER_PATH = '/cartable-portlet.folder'
+const FOLDER_PATH = '/documents-portlet.folderutil'
 
 /**
  * Create a zip containing the folderContent and download it
@@ -44,17 +43,6 @@ function getFolderBreadcrumb (folderId) {
     params: {
       p_auth: getCookie('pauth'),
       folderId: folderId
-    }
-  }).then(response => response.data)
-}
-
-/**
- * Return all the application's root folders (privateFolder, trashFolder, ...)
- */
-function getGlobalDocumentsProperties () {
-  return axios.get(constants.JSON_WS_URL + FOLDER_PATH + '/get-global-documents-properties', {
-    params: {
-      p_auth: getCookie('pauth')
     }
   }).then(response => response.data)
 }
