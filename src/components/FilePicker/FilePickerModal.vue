@@ -81,11 +81,12 @@
 
 <script>
 import navigationService from '@/api/documents/folder.service'
+import documentsService from '@/api/documents/documents.service'
 import FilePickerBreadCrumb from '@components/FilePicker/FilePickerBreadCrumb'
 import FilePickerFolder from '@components/FilePicker/FilePickerFolder'
 import FilePickerFile from '@components/FilePicker/FilePickerFile'
 import { returnAddedFiles } from '@utils/upload.util'
-import documentService from '@/api/documents/document.service'
+import fileService from '@/api/documents/file.service'
 
 export default {
   name: 'FilePickerModal',
@@ -125,8 +126,7 @@ export default {
       currentFiles: [],
       selectedFiles: [],
       selectedFolder: undefined,
-      maxUploadSize: undefined,
-      tmpFolder: undefined
+      maxUploadSize: undefined
     }
   },
   computed: {
@@ -144,9 +144,8 @@ export default {
     if (this.initInCurrentFolder) {
       this.loadFolderContent(this.$store.state.documents.currentFolderId)
     } else {
-      navigationService.getGlobalDocumentsProperties().then((data) => {
+      documentsService.getGlobalDocumentsProperties().then((data) => {
         this.maxUploadSize = data.maxUploadSize
-        this.tmpFolder = data.tmpFolder
         this.loadFolderContent(data.private.id)
       })
     }
@@ -251,9 +250,9 @@ export default {
     async uploadFiles (files) { // Upload device selected files in user temp folder and then, emits them
       const uploadedFiles = []
       for (const file of files) {
-        await documentService.uploadFile(this.tmpFolder.id, file).then((data) => {
+        await fileService.uploadFile(0, file).then((data) => { // id 0 means upload in the temp folder
           if (data.success) {
-            uploadedFiles.push(data.createdFiles[0])
+            uploadedFiles.push(data.uploadedFile)
           } else {
             console.error('Error when trying upload file')
             if (data.error === 'fileSizeException') {

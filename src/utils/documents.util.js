@@ -1,5 +1,6 @@
 import store from '@store/index.js'
-import documentService from '@/api/documents/document.service'
+import documentService from '@/api/documents/edit.service'
+import fileService from '@/api/documents/file.service'
 import folderService from '@/api/documents/folder.service'
 import activityService from '@/api/documents/activity.service'
 import { mergeContextMenus, removeMenuOptionIfExist } from '@/utils/commons.util'
@@ -69,7 +70,7 @@ function selectBetween (listSortedFiles, firstFile, secondFile) {
 async function importDocuments (folderId, documentList) {
   for (const doc of documentList) {
     store.dispatch('currentActions/addAction', { name: 'importDocument' })
-    await documentService.uploadFile(folderId, doc).then((data) => {
+    await fileService.uploadFile(folderId, doc).then((data) => {
       store.dispatch('currentActions/removeAction', { name: 'importDocument' })
       if (data.success) {
         if (data.firstCreatedEntity.parentFolderId === store.state.documents.currentFolderId) {
@@ -146,7 +147,7 @@ function deleteEntities (selectedEntities) {
 // async function importMessagingAttachFiles (documentList) {
 //   const createdFiles = []
 //   for (const doc of documentList) {
-//     await documentService.uploadFile(0, doc).then((data) => {
+//     await fileService.uploadFile(0, doc).then((data) => {
 //       if (data.success) {
 //         for (const createdFile of data.createdFiles) {
 //           createdFile.text = createdFile.name

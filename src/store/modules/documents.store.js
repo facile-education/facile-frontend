@@ -1,5 +1,6 @@
 import navigationService from '@/api/documents/folder.service'
-import documentService from '@/api/documents/document.service'
+import documentsService from '@/api/documents/documents.service'
+import editService from '@/api/documents/edit.service'
 import i18n from '@/i18n'
 
 export const state = {
@@ -89,7 +90,7 @@ export const actions = {
     })
   },
   goInDocumentRoot ({ commit }) {
-    navigationService.getGlobalDocumentsProperties().then((data) => {
+    documentsService.getGlobalDocumentsProperties().then((data) => {
       this.dispatch('documents/changeDirectory', data.private.id)
     })
   },
@@ -109,7 +110,7 @@ export const actions = {
   },
   renameEntity ({ commit, getters }, { entity, name }) {
     return new Promise((resolve) => {
-      documentService.renameEntity(entity, name).then((data) => {
+      editService.renameEntity(entity, name).then((data) => {
         if (data.success) {
           this.dispatch('documents/refreshCurrentFolder')
           resolve()
