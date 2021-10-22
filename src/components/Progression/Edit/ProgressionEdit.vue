@@ -129,7 +129,6 @@ export default {
   },
   watch: {
     currentFolderName (newName, oldName) {
-      console.log('currentFolderName changes from ', oldName, ' to ', newName)
       // When selected folder changes
       // Put its name in the input
       this.updatedFolderName = newName
@@ -139,7 +138,6 @@ export default {
       }
     },
     isFolderSelected (newVal, oldVal) {
-      console.log('isFolderSelected changes from ', oldVal, ' to ', newVal)
       this.displayFolderName = newVal
     }
   },

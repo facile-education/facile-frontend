@@ -88,7 +88,7 @@ export const actions = {
       },
       (err) => {
         // TODO toastr
-        console.log(err)
+        console.error(err)
       })
   },
   initUserInformations ({ state, commit, dispatch }) {
@@ -113,7 +113,7 @@ export const actions = {
       },
       (err) => {
         // TODO toastr
-        console.log(err)
+        console.error(err)
       })
   }
   // removePicture ({ commit }) {

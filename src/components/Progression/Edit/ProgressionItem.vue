@@ -287,7 +287,6 @@ export default {
   created () {
     this.selectedHomeworkType = this.homeworkTypes[this.item.type - 1]
     this.selectedHomeworkDuration = 'Durée'
-    // console.log('this.item=', this.item)
     this.updatedItemName = this.item.name
   },
   mounted () {
@@ -339,7 +338,7 @@ export default {
       this.$store.dispatch('progression/deleteItem', item)
     },
     updateContent () {
-      console.log('update ck content')
+      console.log('TODO: update ck content')
     },
     openFilePicker () {
       this.isFilePickerDisplayed = true
@@ -348,9 +347,8 @@ export default {
       this.isFilePickerDisplayed = false
     },
     attachNewFiles (selectedFiles) {
-      console.log('new files are ', selectedFiles)
       selectedFiles.forEach((selectedFile) => {
-        this.$store.dispatch('progression/addFile', { itemId: this.item.itemId, fileName: selectedFile.name, fileId: selectedFile.id })
+        this.$store.dispatch('progression/addItemContent', { itemId: this.item.itemId, contentType: 5, contentName: selectedFile.name, contentValue: '', fileEntryId: selectedFile.id })
       })
     },
     changeHomeworkType () {
@@ -368,7 +366,6 @@ export default {
       }
     },
     editContent (content) {
-      console.log('editContent content=', content)
       this.editedContent = content
       if (content.contentType === 3) {
         this.toggleLinkModalDisplay()

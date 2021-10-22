@@ -139,7 +139,7 @@ export default {
   },
   methods: {
     updateInput (value) {
-      console.log('updateInput ', value)
+      console.log('TODO: updateInput ', value)
     },
     updateContent (newValue) {
       clearTimeout(this.timeout)
