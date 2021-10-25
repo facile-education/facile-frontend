@@ -5,7 +5,7 @@ import {
 } from '@/api/progression.service'
 import { getSubjects } from '@/api/userManagement.service'
 import { getSchoolVoleeList } from '@/api/organization.service'
-import { getCoursList, getSessions } from '@/api/cdt.service'
+import { getTeacherGroups, getSessions } from '@/api/cdt.service'
 
 export const helperMethods = {
   getFolderByFolderId (progression, folderId) {
@@ -54,7 +54,7 @@ export const state = {
   isLoading: false,
   subjectList: undefined,
   voleeList: undefined,
-  coursList: undefined,
+  teacherGroups: undefined,
   progressionList: undefined,
   currentProgression: undefined,
   currentFolder: undefined,
@@ -90,15 +90,8 @@ export const mutations = {
   setVoleeList (state, payload) {
     state.voleeList = payload
   },
-  setCoursList (state, payload) {
-    // Loop over schools to get groups only
-    state.coursList = []
-    for (let idx = 0; idx < payload.length; ++idx) {
-      const school = payload[idx]
-      for (let j = 0; j < school.groups.length; j++) {
-        state.coursList.push(school.groups[j])
-      }
-    }
+  setTeacherGroups (state, payload) {
+    state.teacherGroups = payload
   },
   updateProgression (state, payload) {
     const index = state.progressionList.map(item => item.progressionId).indexOf(payload.progressionId)
@@ -369,10 +362,10 @@ export const actions = {
       })
   },
   initCoursList ({ commit }) {
-    getCoursList().then(
+    getTeacherGroups().then(
       (data) => {
         if (data.success) {
-          commit('setCoursList', data.cours)
+          commit('setTeacherGroups', data.groups)
         }
       },
       (err) => {

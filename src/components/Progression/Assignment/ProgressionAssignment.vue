@@ -8,6 +8,7 @@
         v-model="selectedFolder"
         class="filter"
         :list="folders"
+        :sort="false"
         display-field="name"
         @dropdown-select="onFolderSelect"
       />
@@ -33,7 +34,7 @@
 
 <script>
 import SectionAssignment from '@/components/Progression/Assignment/SectionAssignment'
-import { isCoursNameInItemsList } from '@/utils/progression.util'
+import _ from 'lodash'
 
 export default {
   name: 'ProgressionAssignment',
@@ -51,16 +52,36 @@ export default {
       return this.$store.state.progression.currentProgression
     },
     folders () {
-      const allFolders = [{ name: this.$t('whole-progression'), folderId: 0 }, ...this.progression.sections]
+      const orderedSections = _.orderBy(this.progression.sections, 'order', 'asc')
+      const allFolders = [{ name: this.$t('whole-progression'), folderId: 0 }]
       // Loop over sections
-      for (let sectionIdx = 0; sectionIdx < this.progression.sections.length; ++sectionIdx) {
-        const section = this.progression.sections[sectionIdx]
+      for (let sectionIdx = 0; sectionIdx < orderedSections.length; ++sectionIdx) {
+        const section = orderedSections[sectionIdx]
+        allFolders.push(section)
         Array.prototype.push.apply(allFolders, section.subSections)
       }
       return allFolders
     },
     coursList () {
-      return [...this.$store.state.progression.coursList, { groupName: this.$t('all-cours'), groupId: 0 }]
+      const cours = [{ groupName: this.$t('all-cours'), groupId: 0 }]
+      // Filter cours with current progression's volee
+      for (let idx = 0; idx < this.$store.state.progression.teacherGroups.length; ++idx) {
+        const school = this.$store.state.progression.teacherGroups[idx]
+
+        // Personal groups -> add all
+        if (school.schoolId === undefined || school.schoolId === 0) {
+          Array.prototype.push.apply(cours, school.groups)
+        } else {
+          // Loop over school's cours and filter by current progression's volee
+          for (let j = 0; j < school.groups.length; j++) {
+            if (school.groups[j].groupName.includes(this.$store.state.progression.currentProgression.volee)) {
+              cours.push(school.groups[j])
+            }
+          }
+        }
+      }
+
+      return cours
     },
     selectedFolder: {
       get () {
@@ -81,23 +102,20 @@ export default {
     filteredSections () {
       const filteredSections = []
       // Loop over sections
-      for (let sectionIdx = 0; sectionIdx < this.progression.sections.length; ++sectionIdx) {
-        const section = this.progression.sections[sectionIdx]
+      if (this.progression.sections !== undefined) {
+        for (let sectionIdx = 0; sectionIdx < this.progression.sections.length; ++sectionIdx) {
+          const section = this.progression.sections[sectionIdx]
 
-        const sectionNameMatches = this.$store.state.progression.filterFolder.folderId === 0 || section.folderId === this.$store.state.progression.filterFolder.folderId
-        const sectionCoursMatches = this.$store.state.progression.filterCours.groupId === 0 || isCoursNameInItemsList(section.items, this.$store.state.progression.filterCours.groupName)
-
-        // Add section if both folder name and cours name match at section level
-        if (sectionNameMatches && sectionCoursMatches) {
-          filteredSections.push(section)
-        } else {
-          // Test at sub-section level -> loop over sub-sections
-          for (let subIdx = 0; subIdx < section.subSections.length; ++subIdx) {
-            const subSection = section.subSections[subIdx]
-            const subSectionNameMatches = this.$store.state.progression.filterFolder.folderId === 0 || subSection.folderId === this.$store.state.progression.filterFolder.folderId
-            const subSectionCoursMatches = this.$store.state.progression.filterCours.groupId === 0 || isCoursNameInItemsList(subSection.items, this.$store.state.progression.filterCours.groupName)
-            if (subSectionNameMatches && subSectionCoursMatches) {
-              filteredSections.push(section)
+          // Add section if both folder name and cours name match at section level
+          if (this.$store.state.progression.filterFolder.folderId === 0 || section.folderId === this.$store.state.progression.filterFolder.folderId) {
+            filteredSections.push(section)
+          } else {
+            // Test at sub-section level -> loop over sub-sections
+            for (let subIdx = 0; subIdx < section.subSections.length; ++subIdx) {
+              const subSection = section.subSections[subIdx]
+              if (this.$store.state.progression.filterFolder.folderId === 0 || subSection.folderId === this.$store.state.progression.filterFolder.folderId) {
+                filteredSections.push(section)
+              }
             }
           }
         }

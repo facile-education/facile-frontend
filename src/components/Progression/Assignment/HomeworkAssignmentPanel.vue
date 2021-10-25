@@ -22,7 +22,7 @@
         >
           <span
             class="label"
-          >Affectation de</span>
+          >{{ $t('precision') }}</span>
           <span
             class="item-name"
           >{{ item.name }}</span>
@@ -42,9 +42,10 @@
     >
       <HomeworkAssignment
         v-for="session in selectedSessions"
-        :key="session.sessionId"
+        :key="session.id"
         :session="session"
         class="session"
+        @editedHomework="addHomework"
       />
     </div>
 
@@ -138,7 +139,9 @@ export default {
     }
   }
   .sessions {
-
+    .session {
+      margin-bottom: 10px;
+    }
   }
   .footer {
     display: flex;
@@ -156,6 +159,7 @@ export default {
 
 <i18n locale="fr">
 {
+  "precision": "Précisions pour l'affectation de ",
   "add": "Donner le devoir",
   "cancel": "Annuler",
   "close": "Fermer",

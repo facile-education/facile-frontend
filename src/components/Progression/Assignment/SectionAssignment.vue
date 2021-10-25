@@ -24,7 +24,6 @@
 <script>
 import SubSectionAssignment from '@/components/Progression/Assignment/SubSectionAssignment'
 import ItemAssignment from '@/components/Progression/Assignment/ItemAssignment'
-import { isCoursNameInItemsList } from '@/utils/progression.util'
 
 export default {
   name: 'SectionAssignment',
@@ -50,34 +49,34 @@ export default {
       for (let subIdx = 0; subIdx < this.section.subSections.length; ++subIdx) {
         const subSection = this.section.subSections[subIdx]
         const subSectionNameMatches = this.$store.state.progression.filterFolder.folderId === 0 || subSection.folderId === this.$store.state.progression.filterFolder.folderId
-        const subSectionCoursMatches = this.$store.state.progression.filterCours.groupId === 0 || isCoursNameInItemsList(subSection.items, this.$store.state.progression.filterCours.groupName)
 
         // Sub-section matches if its name (or parent's section name) matches and its cours matches
-        if ((sectionNameMatches || subSectionNameMatches) && subSectionCoursMatches) {
+        if (sectionNameMatches || subSectionNameMatches) {
           filteredSubSections.push(subSection)
         }
       }
       return filteredSubSections
     },
     filteredSectionItems () {
-      const sectionNameMatches = this.$store.state.progression.filterFolder.folderId === 0 || this.section.folderId === this.$store.state.progression.filterFolder.folderId
-      if (!sectionNameMatches) {
-        // If section is not selected -> skip all
-        return []
-      } else if (this.$store.state.progression.filterCours.groupId === 0) {
-        // Else if no cours filter -> add all items
-        return this.section.items
-      }
-      const filteredItems = []
-      for (let itemIdx = 0; itemIdx < this.section.items.length; ++itemIdx) {
-        const item = this.section.items[itemIdx]
-        // Loop over assignments to match cours name
-        const assignmentIndex = item.assignments.map(assignment => assignment.groupName).indexOf(this.$store.state.progression.filterCours.groupName)
-        if (assignmentIndex !== -1) {
-          filteredItems.push(item)
-        }
-      }
-      return filteredItems
+      return this.section.items
+      // const sectionNameMatches = this.$store.state.progression.filterFolder.folderId === 0 || this.section.folderId === this.$store.state.progression.filterFolder.folderId
+      // if (!sectionNameMatches) {
+      //   // If section is not selected -> skip all
+      //   return []
+      // } else if (this.$store.state.progression.filterCours.groupId === 0) {
+      //   // Else if no cours filter -> add all items
+      //   return this.section.items
+      // }
+      // const filteredItems = []
+      // for (let itemIdx = 0; itemIdx < this.section.items.length; ++itemIdx) {
+      //   const item = this.section.items[itemIdx]
+      //   // Loop over assignments to match cours name
+      //   const assignmentIndex = item.assignments.map(assignment => assignment.groupName).indexOf(this.$store.state.progression.filterCours.groupName)
+      //   if (assignmentIndex !== -1) {
+      //     filteredItems.push(item)
+      //   }
+      // }
+      // return filteredItems
     }
   },
   created () {
