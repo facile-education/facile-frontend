@@ -61,6 +61,7 @@
   },
   "Commons": {
     "delete": "Supprimer",
+    "download": "Télécharger",
     "submit": "Valider",
     "formDateOrder": "La date de fin doit être supérieure à la date de début",
     "formInvalidDate": "Format de date invalide",
@@ -146,7 +147,7 @@
     },
     "options": {
       "delete": "Supprimer",
-      "download": "Télécharger",
+      "download": "@:Commons.download",
       "duplicate": "Dupliquer vers",
       "import": "Importer",
       "move": "Déplacer vers",

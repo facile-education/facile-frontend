@@ -2,6 +2,8 @@
   <div
     class="file"
     @click="displayFile"
+    @mouseover="isHovering = true"
+    @mouseleave="isHovering = false"
   >
     <img
       v-if="fileIconIsImage"
@@ -17,11 +19,19 @@
     <p class="file-name">
       {{ fileName }}
     </p>
+    <BaseIcon
+      v-if="isHovering"
+      class="download"
+      name="download"
+      :title="$t('Commons.download')"
+      @click.stop="download"
+    />
   </div>
 </template>
 
 <script>
 import { getExtensionFromName } from '@/utils/commons.util'
+import documentUtils from '@utils/documents.util'
 import { icons } from '@/constants/icons'
 import BaseIcon from '@components/Base/BaseIcon'
 
@@ -37,7 +47,14 @@ export default {
     fileId: {
       type: String,
       required: true
+    },
+    downloadUrl: {
+      type: String,
+      required: true
     }
+  },
+  data () {
+    return { isHovering: false }
   },
   computed: {
     fileExtension () {
@@ -64,7 +81,11 @@ export default {
   },
   methods: {
     displayFile () {
-      console.log('TODO: display ' + this.fileName)
+      console.log('TODO: dispdlay ' + this.fileName)
+      window.open(this.downloadUrl, '_blank').focus()
+    },
+    download () {
+      documentUtils.downLoadDocument({ id: this.fileId, type: 'File', url: this.downloadUrl })
     }
   }
 }
@@ -73,14 +94,14 @@ export default {
 <style lang="scss" scoped>
 
 .file{
+  flex: 1;
   display: flex;
   align-items: center;
   cursor: pointer;
   padding: 2px 8px;
-  margin: 5px;
   text-align: center;
   background-color: white;
-  border: 1px solid rgba(50, 50, 255, 0.5);
+  //border: 1px solid rgba(50, 50, 255, 0.5);
   border-radius: 6px;
 
   .icon{
@@ -88,6 +109,10 @@ export default {
     width: 30px;
     height: 30px;
     margin-right: 10px;
+  }
+
+  .download {
+    margin-left: auto;
   }
 }
 
