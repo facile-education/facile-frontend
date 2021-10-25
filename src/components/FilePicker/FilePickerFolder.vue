@@ -1,7 +1,7 @@
 <template>
   <div
     class="folder"
-    :class="{'selected': isSelected}"
+    :class="{'selected': isSelected, 'dark': dark}"
     @click="folderClicked"
     @dblclick="folderDblClicked"
   >
@@ -30,6 +30,10 @@ export default {
       required: true
     },
     isSelected: {
+      type: Boolean,
+      default: false
+    },
+    dark: {
       type: Boolean,
       default: false
     }
@@ -64,6 +68,10 @@ export default {
     -moz-user-select: none;
     -webkit-user-select: none;
     user-select: none; /* CSS3 (little to no support) */
+
+    &.dark {
+      background-color: $color-not-white-bg;
+    }
 
     &:hover {
       background-color: $color-hover-bg;

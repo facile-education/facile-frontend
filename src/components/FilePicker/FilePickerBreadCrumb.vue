@@ -1,29 +1,7 @@
 <template>
   <div
-    v-if="!mq.phone"
+    v-if="breadcrumb.length > 0"
     class="file-picker-breadcrumb"
-  >
-    <template
-      v-for="(folder, index) in breadcrumb"
-      :key="folder.id"
-    >
-      <FilePickerBreadCrumbItem
-        :folder="folder"
-        :is-first-element="index === 0"
-        :is-current-folder="index === breadcrumb.length-1"
-        @itemClicked="itemClicked(folder.id)"
-      />
-      <img
-        v-show="index < (breadcrumb.length - 1)"
-        class="chevron"
-        src="@assets/icon_big_arrow.svg"
-        alt=""
-      >
-    </template>
-  </div>
-  <div
-    v-else-if="breadcrumb.length > 0"
-    class="phone-file-picker-breadcrumb"
   >
     <div
       v-if="breadcrumb.length > 1"
@@ -47,10 +25,8 @@
 </template>
 
 <script>
-import FilePickerBreadCrumbItem from '@components/FilePicker/FilePickerBreadCrumbItem'
 export default {
   name: 'FilePickerBreadCrumb',
-  components: { FilePickerBreadCrumbItem },
   inject: ['mq'],
   props: {
     breadcrumb: {
@@ -70,26 +46,13 @@ export default {
 <style lang="scss" scoped>
 @import "@design";
 
-.file-picker-breadcrumb {
-  height: 50px;
-  margin: 10px 0;
-  display: flex;
-  align-items: center;
-
-  /* disable text selection on documents (not convenient when shift-select) */
-  -ms-user-select: none;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  user-select: none; /* CSS3 (little to no support) */
-}
-
 .chevron {
   width: 11px;
   margin: 0 10px;
 }
 
-.phone-file-picker-breadcrumb {
-  height: auto;
+.file-picker-breadcrumb {
+  min-height: 40px;
   width: 100%;
 
   display: flex;
@@ -98,9 +61,16 @@ export default {
   position: relative;
   color: $color-dark-text;
 
+  /* disable text selection on documents (not convenient when shift-select) */
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none; /* CSS3 (little to no support) */
+
   .back-option {
     position: absolute;
-    bottom: 0;
+    cursor: pointer;
+    top: 50%;
     left: 0;
     max-width: 25vw;
     overflow: hidden;
@@ -110,10 +80,17 @@ export default {
     font-weight: 600;
     letter-spacing: 0;
     line-height: 19px;
+    transform: translate(0, -50%);
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      text-decoration: underline;
+    }
 
     img {
       margin-left: 15px;
-      margin-right: 5px;
+      margin-right: 7px;
       height: 12px;
     }
   }

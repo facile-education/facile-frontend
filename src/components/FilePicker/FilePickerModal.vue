@@ -5,8 +5,8 @@
     data-test="file-picker-modal"
     :modal="true"
     :is-full-screen="mq.phone"
-    :width="!mq.phone? '90vw' : ''"
-    :height="!mq.phone? '85vh' : ''"
+    :width="!mq.phone? '50vw' : ''"
+    :height="!mq.phone? '60vh' : ''"
     @close="close"
     @keydown.exact.enter.stop=""
     @keydown.exact.backspace.stop=""
@@ -24,16 +24,41 @@
 
       <!-- My Documents-->
       <div class="body">
-        <div class="first-line">
-          <FilePickerBreadCrumb
-            class="breadcrumb"
-            :breadcrumb="currentBreadcrumb"
-            @itemClicked="loadFolderContent"
+        <FilePickerBreadCrumb
+          class="breadcrumb"
+          :breadcrumb="currentBreadcrumb"
+          @itemClicked="loadFolderContent"
+        />
+
+        <div class="documents-list">
+          <FilePickerFolder
+            v-for="subFolder in currentFolders"
+            :key="subFolder.id"
+            :folder="subFolder"
+            :is-selected="isFolderSelected(subFolder)"
+            :dark="getEntityIndex(subFolder.id) % 2 === 0"
+            @folderClicked="clickOnFolder"
+            @folderDblClicked="dblClickOnFolder"
           />
-          <label for="upload-file-input">
+          <FilePickerFile
+            v-for="file in currentFiles"
+            :key="file.id"
+            :file="file"
+            :is-selected="isSelected(file)"
+            :dark="getEntityIndex(file.id) % 2 === 0"
+            @fileClicked="clickOnFile"
+          />
+        </div>
+        <div class="upload">
+          {{ $t('or') }}
+          <label>
+            <img
+              src="@assets/options/icon_download-doc.svg"
+              alt=""
+            >
+            {{ $t('uploadFile') }}
             <input
               v-if="allowFilesFromDevice"
-              id="upload-file-input"
               ref="upload-file-input"
               type="file"
               accept="*/*"
@@ -41,26 +66,6 @@
               @change="onInputChange"
             >
           </label>
-        </div>
-
-        <div class="documents-list">
-          <div class="scroll">
-            <FilePickerFolder
-              v-for="subFolder in currentFolders"
-              :key="subFolder.id"
-              :folder="subFolder"
-              :is-selected="isFolderSelected(subFolder)"
-              @folderClicked="clickOnFolder"
-              @folderDblClicked="dblClickOnFolder"
-            />
-            <FilePickerFile
-              v-for="file in currentFiles"
-              :key="file.id"
-              :file="file"
-              :is-selected="isSelected(file)"
-              @fileClicked="clickOnFile"
-            />
-          </div>
         </div>
       </div>
     </template>
@@ -141,6 +146,9 @@ export default {
     },
     defaultHeader () {
       return this.folderSelection ? this.$t('headerFolder') : this.$t('headerFile')
+    },
+    allSortedDocuments () {
+      return [...this.currentFolders, ...this.currentFiles]
     }
   },
   created () {
@@ -154,6 +162,9 @@ export default {
     }
   },
   methods: {
+    getEntityIndex (entityId) {
+      return this.allSortedDocuments.map(item => item.id).indexOf(entityId)
+    },
     loadFolderContent (folderId) {
       navigationService.getAllEntities(folderId, false).then((data) => {
         if (data.success) {
@@ -201,6 +212,7 @@ export default {
           }
         }
       } else {
+        this.selectedFiles = []
         this.loadFolderContent(folder.id)
       }
     },
@@ -282,6 +294,13 @@ export default {
 </script>
 
 <style lang="scss">
+.filepicker-window {
+  .window-footer {
+    text-align: center;
+    padding-bottom: 16px;
+  }
+}
+
 .filepicker-window.mobile {
   .window-header {
     padding: 0 8px;
@@ -289,6 +308,10 @@ export default {
 
   .window-body {
     padding: 0;
+  }
+
+  .window-footer {
+    padding-bottom: 8px;
   }
 }
 </style>
@@ -301,45 +324,52 @@ export default {
   .body {
     width: 100%;
     min-width: 600px;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
 
-    .first-line {
-      display: flex;
-      align-items: center;
-
-      .breadcrumb {
-        flex: 1;
-        padding: 0 15px;
-      }
-
-      input {
-        //display: none;
-        color: blue;
-      }
-    }
-
-    .breadcrumb{
+    .breadcrumb {
       padding: 0 15px;
     }
 
     .documents-list {
-      margin-top: 10px;
-      position: relative;
-      display: flex;
       flex: 1;
-      height: 400px;
+      margin-top: 10px;
+      overflow-y: auto;
+    }
 
-      .scroll{
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        flex: 1;
-        /* for Firefox */
-        min-height: 0;
-        overflow-y: auto;
+    .upload {
+      margin-top: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: black;
+
+      label {
+        margin-top: 5px;
+        text-decoration: underline;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        font-size: 0.875rem;
+
+        img {
+          width: 24px;
+          margin-right: 7px;
+        }
+
+        input {
+          display: none;
+          color: blue;
+        }
       }
     }
+  }
+
+  button {
+    height: 67px;
+    width: 191px;
   }
 }
 
@@ -350,11 +380,17 @@ export default {
     .breadcrumb{
       padding: 0;
     }
+
+    .upload {
+      margin-top: 15px;
+    }
   }
 
   button {
     margin-left: auto;
-    margin-right: 8px;
+    margin-right: auto;
+    height: 48px;
+    width: 130px;
   }
 
 }
@@ -365,7 +401,9 @@ export default {
 {
   "errorNoFiles": "Il n'y a aucun fichier valide à téléverser !",
   "headerFolder": "Sélectionnez un dossier de destination",
-  "headerFile": "Sélectionnez un fichier",
-  "submitButton": "Ajouter"
+  "headerFile": "Ajouter un document",
+  "or": "ou",
+  "submitButton": "Ajouter",
+  "uploadFile": "Importer un ou plusieurs documents"
 }
 </i18n>
