@@ -287,7 +287,9 @@ export default {
       this.close()
     },
     close () {
-      this.$emit('close')
+      if (!this.isLoadingFiles) { // Avoid filePicker closure when loading file
+        this.$emit('close')
+      }
     }
   }
 }
