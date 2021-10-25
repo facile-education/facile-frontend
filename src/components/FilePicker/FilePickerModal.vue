@@ -20,6 +20,8 @@
     </template>
 
     <template #body>
+      <PentilaSpinner v-if="isLoadingFiles" />
+
       <!-- My Documents-->
       <div class="body">
         <div class="first-line">
@@ -126,7 +128,8 @@ export default {
       currentFiles: [],
       selectedFiles: [],
       selectedFolder: undefined,
-      maxUploadSize: undefined
+      maxUploadSize: undefined,
+      isLoadingFiles: false
     }
   },
   computed: {
@@ -249,7 +252,9 @@ export default {
     async uploadFiles (files) { // Upload device selected files in user temp folder and then, emits them
       const uploadedFiles = []
       for (const file of files) {
+        this.isLoadingFiles = true
         await fileService.uploadFile(0, file).then((data) => { // id 0 means upload in the temp folder
+          this.isLoadingFiles = false
           if (data.success) {
             uploadedFiles.push(data.uploadedFile)
           } else {

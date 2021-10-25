@@ -3,6 +3,7 @@
     :is-allowed="!$store.state.user.isStudent"
     class="layout"
   >
+    <PentilaSpinner v-if="areActionsInProgress" />
     <ProgressionList
       v-if="isListMode"
       class="progression-list"
@@ -37,6 +38,9 @@ export default {
     },
     currentProgression () {
       return this.$store.state.progression.currentProgression
+    },
+    areActionsInProgress () {
+      return this.$store.getters['currentActions/areActionsInProgress']
     }
   },
   created () {
