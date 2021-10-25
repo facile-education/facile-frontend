@@ -559,20 +559,10 @@ export const actions = {
       })
   },
   addItemContent ({ commit }, { itemId, contentType, contentName, contentValue, fileEntryId = 0, isToBeCompleted = false }) {
+    this.dispatch('currentActions/addAction', { name: 'addItemContent' })
     addItemContent(itemId, contentType, contentName, contentValue, fileEntryId, isToBeCompleted).then(
       (data) => {
-        if (data.success) {
-          commit('addItemContent', data.content)
-        }
-      },
-      (err) => {
-        // TODO toastr
-        console.error(err)
-      })
-  },
-  addFile ({ commit }, { itemId, fileName, fileId }) {
-    addItemContent(itemId, 5, fileName, '', fileId, false).then(
-      (data) => {
+        this.dispatch('currentActions/removeAction', { name: 'addItemContent' })
         if (data.success) {
           commit('addItemContent', data.content)
         }
