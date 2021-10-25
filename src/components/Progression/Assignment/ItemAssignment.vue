@@ -6,7 +6,10 @@
       class="item-name-wrapper"
       :class="{ 'is-sub-section-item': isSubSectionItem }"
     >
-      <div class="item-name">
+      <div
+        class="item-name"
+        @click="togglePreviewModalDisplay"
+      >
         <img
           v-if="item.isHomework"
           class="item-type-icon"
@@ -74,15 +77,24 @@
     >
       <span>{{ $t('no-assignment') }}</span>
     </div>
+    <teleport to="body">
+      <PreviewModal
+        v-if="isItemPreviewDisplayed"
+        height="30em"
+        :item="item"
+        @close="togglePreviewModalDisplay"
+      />
+    </teleport>
   </div>
 </template>
 
 <script>
 import dayjs from 'dayjs'
+import PreviewModal from '@/components/Progression/Edit/PreviewModal'
 
 export default {
   name: 'ItemAssignment',
-  components: {},
+  components: { PreviewModal },
   props: {
     item: {
       type: Object,
@@ -91,6 +103,7 @@ export default {
   },
   data () {
     return {
+      isItemPreviewDisplayed: false
     }
   },
   computed: {
@@ -127,6 +140,9 @@ export default {
     },
     getColor (assignment) {
       return 'background-color: ' + assignment.color
+    },
+    togglePreviewModalDisplay () {
+      this.isItemPreviewDisplayed = !this.isItemPreviewDisplayed
     }
   }
 }
@@ -158,12 +174,17 @@ export default {
         margin: auto;
         font-size: 14px;
       }
-      &:hover .affect {
-        display: flex;
+      &:hover {
+        cursor: pointer;
+        background-color: #EFF3FB;
       }
     }
   }
-  .affect {
+  .affect img {
+    display: none;
+  }
+  &:hover .affect img {
+    display: flex;
   }
   .item-sessions {
     width: 100%;

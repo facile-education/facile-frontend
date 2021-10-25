@@ -8,44 +8,84 @@
       class="cours-name"
       :style="getColor"
     >
-      <span>{{ sessionDetails.name }}</span>
-      <span>{{ sessionDetails.teachers }}</span>
+      <span>{{ sessionDetails.title }}</span>
+      <span>{{ sessionTeachers }}</span>
       <span>{{ sessionDetails.room }}</span>
     </div>
 
-    <!-- Dropdown for student selection -->
-    <div
-      class="student-selection"
-    >
-      <PentilaDropdown
-        v-if="(students && students.length > 0)"
-        v-model="selectedStudents"
-        class="students"
-        :list="students"
-        display-field="studentName"
-      />
-    </div>
+    <div class="homework-details">
+      <div
+        v-if="isCreation"
+        class="is-given"
+      >
+        <span>{{ $t('not-given') }}</span>
+      </div>
+      <div
+        v-else
+        class="is-given"
+      >
+        <span>{{ $t('given-date') }}</span>
+        <span>{{ givenDate }}</span>
+      </div>
 
-    <!-- Dropdown for target session selection -->
-    <div
-      class="target-session"
-    >
-      <span>{{ $t('render-date') }}</span>
-      <PentilaDropdown
-        v-if="(nextSessions && nextSessions.length > 0)"
-        v-model="selectedSession"
-        class="sessions"
-        :list="nextSessions"
-        display-field="sessionName"
-      />
+      <div class="homework-parameters">
+        <!-- Dropdown for student selection -->
+        <div
+          class="student-selection"
+        >
+          <span>{{ $t('for') }}</span>
+          <div class="student-number">
+            <span>{{ nbStudents }}</span>
+            <img
+              class="content-button"
+              src="@assets/edit.svg"
+              :alt="$t('edit')"
+              :title="$t('edit')"
+              @click="displayStudentsList()"
+            >
+          </div>
+          <div
+            v-if="isStudentsListDisplayed"
+            class="students-list"
+          >
+            <div
+              v-for="student in students"
+              :key="student.userId"
+              class="student"
+            >
+              <input
+                v-model="student.isSelected"
+                type="checkbox"
+                label=""
+              >
+              {{ student.fullName }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Dropdown for target session selection -->
+        <div
+          class="target-session"
+        >
+          <span>{{ $t('render-date') }}</span>
+          <PentilaDropdown
+            v-if="(nextSessions && nextSessions.length > 0)"
+            v-model="homework.targetSession"
+            class="sessions"
+            :list="nextSessions"
+            display-field="sessionDescription"
+          />
+        </div>
+      </div>
     </div>
-    <hr>
   </div>
 </template>
 
 <script>
 import dayjs from 'dayjs'
+import _ from 'lodash'
 import { getSessionDetails } from '@/api/cdt.service'
+
 export default {
   name: 'HomeworkAssignment',
   components: {},
@@ -55,41 +95,68 @@ export default {
       required: true
     }
   },
+  emits: ['editedHomework'],
   data () {
     return {
-      sessionDetails: {
-        sessionId: 12345,
-        room: 'B43',
-        color: '#F45678',
-        students: [{ studentId: 123, studentName: 'Jean Bon' }, { studentId: 4565, studentName: 'Coucou Marc' }],
-        nextSessions: [{ sessionId: 345, sessionName: 'AC10B1', sessionDate: '2021-10-23 14:10' }, { sessionId: 345, sessionName: 'AC10B1', sessionDate: '2021-10-25 10:00' }]
-      },
-      selectedStudents: {},
-      selectedSession: {}
+      sessionDetails: {},
+      availableStudents: [],
+      isCreation: true,
+      isStudentsListDisplayed: false,
+      homework: {
+        targetSession: {},
+        selectedStudents: []
+      }
     }
   },
   computed: {
-    formatDate (date) {
-      return dayjs(date, 'DD MMMM YYYY [à] HH[h]MM')
-    },
     getColor () {
       return 'background-color: ' + this.sessionDetails.color
     },
-    students () {
-      const res = [this.$t('all-students')]
-      if (this.sessionDetails !== undefined) {
-        Array.prototype.push.apply(res, this.sessionDetails.students)
+    sessionTeachers () {
+      let teachers = ''
+      if (this.sessionDetails.teachers !== undefined) {
+        for (let idx = 0; idx < this.sessionDetails.teachers.length; ++idx) {
+          teachers += this.sessionDetails.teachers[idx].fullName
+          if (idx !== this.sessionDetails.teachers.length - 1) {
+            teachers += ', '
+          }
+        }
       }
+      return teachers
+    },
+    givenDate () {
+      if (this.homework.startDate !== undefined) {
+        return this.formatDate(this.homework.startDate)
+      }
+      return ''
+    },
+    nbStudents () {
+      if (this.homework.selectedStudents !== undefined && this.homework.selectedStudents.length > 0) {
+        return ' ' + this.homework.selectedStudents.length + ' ' + this.$t('students')
+      } else {
+        return ' ' + this.$t('all-students')
+      }
+    },
+    students () {
+      const res = [{ studentId: 0, studentName: this.$t('all-students') }]
+      Array.prototype.push.apply(res, this.availableStudents)
       console.log('students=', res)
       return res
     },
     nextSessions () {
-      const res = [this.$t('pick-a-session')]
-      if (this.sessionDetails !== undefined) {
-        Array.prototype.push.apply(res, this.sessionDetails.nextSessions)
+      const res = [{ sessionId: 0, sessionDescription: this.$t('pick-a-session') }]
+      if (this.sessionDetails !== undefined && this.sessionDetails.nextSessions !== undefined) {
+        // Build sessionDescription
+        for (let idx = 0; idx < this.sessionDetails.nextSessions.length; ++idx) {
+          const nextSession = this.sessionDetails.nextSessions[idx]
+          if (nextSession.startDate !== undefined) {
+            nextSession.sessionDescription = 'Le ' + this.formatDate(nextSession.startDate)
+          }
+          res.push(nextSession)
+        }
       }
       console.log('nextSessions=', res)
-      return res
+      return _.orderBy(res, 'startDate', 'asc')
     }
   },
   created () {
@@ -98,7 +165,20 @@ export default {
       (data) => {
         if (data.success) {
           this.sessionDetails = data.sessionDetails
-          this.selectedStudents = data.sessionDetails.selectedStudents
+          this.availableStudents = data.sessionDetails.students
+          // Among all homeworks given from the current session, pick the one that may be the current homework
+          if (data.sessionDetails.givenHomework !== undefined && data.sessionDetails.givenHomework.length > 0) {
+            for (let idx = 0; idx < data.sessionDetails.givenHomework.length; ++idx) {
+              const givenHomework = data.sessionDetails.givenHomework[idx]
+              if (givenHomework.assignmentItemId !== undefined && givenHomework.assignmentItemId === this.session.sessionId) {
+                console.log('Found existing homework with assignmentItemId=', givenHomework.assignmentItemId)
+                this.isCreation = false
+                this.homework = givenHomework
+                const targetSession = { sessionId: givenHomework.targetSessionId, sessionDescription: this.formatDate(givenHomework.startDate) }
+                this.homework = targetSession
+              }
+            }
+          }
         }
       },
       (err) => {
@@ -107,6 +187,13 @@ export default {
       })
   },
   methods: {
+    displayStudentsList () {
+      this.isStudentsListDisplayed = !this.isStudentsListDisplayed
+    },
+    formatDate (date) {
+      console.log('formatDate date=', date)
+      return dayjs(date, 'YYYY-MM-DD HH:mm').format('DD MMMM YYYY [à] HH[h]mm')
+    }
   }
 }
 </script>
@@ -115,13 +202,69 @@ export default {
 .session {
   height: 100px;
   display: flex;
-  justify-content: space-between;
+  .cours-name {
+    border : 1px solid black;
+    width: 200px;
+    height: 100px;
+    margin-left: 20px;
+    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+    span {
+      margin: 3px;
+    }
+  }
+  .homework-details {
+    display: flex;
+    flex-direction: column;
+    .is-given {
+      margin-bottom: 10px;
+    }
+    .homework-parameters {
+      display: flex;
+      justify-content: space-between;
+
+      .student-selection {
+        width: 300px;
+        margin-right: 20px;
+        display: flex;
+        margin: auto;
+        .student-number {
+          width: 200px;
+          display: flex;
+          border : 1px solid black;
+          span, img {
+            margin: auto;
+          }
+        }
+        .students-list {
+          display: float;
+        }
+      }
+      .target-session {
+        display: flex;
+        width: 500px;
+        span {
+          margin: auto;
+        }
+        .sessions {
+          width: 300px;
+          margin: auto;
+        }
+      }
+    }
+  }
 }
 </style>
 
 <i18n locale="fr">
 {
-  "all-students" : "Pour tous",
+  "given-date": "Donné le ",
+  "not-given": "Devoir non donné",
+  "all-students" : "tous les élèves",
+  "for": "Pour",
+  "students": "élèves",
+  "edit": "Modifier la liste des élèves",
   "render-date": "Date de rendu",
   "pick-a-session": "Choisir une séance cible"
 }

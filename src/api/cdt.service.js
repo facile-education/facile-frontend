@@ -5,7 +5,7 @@ export {
   getConfiguration,
   getGroups,
   getSessions,
-  getCoursList,
+  getTeacherGroups,
   getSessionDetails
 }
 
@@ -13,7 +13,7 @@ export default {
   getConfiguration,
   getGroups,
   getSessions,
-  getCoursList,
+  getTeacherGroups,
   getSessionDetails
 }
 
@@ -55,8 +55,8 @@ function getSessions (userId, groupId, minDate, maxDate) {
   }).then(response => response.data)
 }
 
-function getCoursList () {
-  return axios.get(constants.JSON_WS_URL + CDT_PATH + 'cdtsession/get-teacher-cours', {
+function getTeacherGroups () {
+  return axios.get(constants.JSON_WS_URL + CDT_PATH + 'cdtsession/get-teacher-groups', {
     params: {
     }
   }).then(response => response.data)

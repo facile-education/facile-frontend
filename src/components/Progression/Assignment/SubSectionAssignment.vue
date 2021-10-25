@@ -30,21 +30,22 @@ export default {
   },
   computed: {
     filteredItems () {
-      if (this.$store.state.progression.filterCours.groupId === 0) {
-        // No cours selected -> all items
-        return this.subSection.items
-      } else {
-        const filteredItems = []
-        for (let itemIdx = 0; itemIdx < this.subSection.items.length; ++itemIdx) {
-          const item = this.subSection.items[itemIdx]
-          // Loop over assignments to match cours name
-          const assignmentIndex = item.assignments.map(assignment => assignment.groupName).indexOf(this.$store.state.progression.filterCours.groupName)
-          if (assignmentIndex !== -1) {
-            filteredItems.push(item)
-          }
-        }
-        return filteredItems
-      }
+      return this.subSection.items
+      // if (this.$store.state.progression.filterCours.groupId === 0) {
+      //   // No cours selected -> all items
+      //   return this.subSection.items
+      // } else {
+      //   const filteredItems = []
+      //   for (let itemIdx = 0; itemIdx < this.subSection.items.length; ++itemIdx) {
+      //     const item = this.subSection.items[itemIdx]
+      //     // Loop over assignments to match cours name
+      //     const assignmentIndex = item.assignments.map(assignment => assignment.groupName).indexOf(this.$store.state.progression.filterCours.groupName)
+      //     if (assignmentIndex !== -1) {
+      //       filteredItems.push(item)
+      //     }
+      //   }
+      //   return filteredItems
+      // }
     }
 
   },
