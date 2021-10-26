@@ -39,7 +39,7 @@
         <span>{{ $t('emptySection') }}</span>
         <span
           class="blue"
-          @click="openCreateMenu"
+          @click.stop="openCreateMenu"
         >{{ $t('insertNewContent') }}</span>
       </div>
     </div>
@@ -54,7 +54,7 @@
       >
         <span
           class="blue"
-          @click="openCreateMenu"
+          @click.stop="openCreateMenu"
         >{{ $t('addFirstContent') }}</span>
         <div
           class="tips"
