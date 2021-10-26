@@ -59,12 +59,20 @@ export default {
   },
   computed: {
     isAssignedToOtherItem () {
+      // Session is greyed if it has been affected to an other item
+      // AND if current affected item is not a homework
       return this.event.extendedProps.assignedItemId !== 0 &&
-        this.event.extendedProps.assignedItemId !== this.store.state.progression.affectedItem.itemId
+        this.event.extendedProps.assignedItemId !== this.store.state.progression.affectedItem.itemId &&
+        !this.store.state.progression.affectedItem.isHomework
     }
   },
   created () {
-    this.isSelected = this.event.extendedProps.assignedItemId === this.store.state.progression.affectedItem.itemId
+    // Session is selected if:
+    // it is initially assigned to the current item or if it has been assigned
+    // AND it has not been removed
+    this.isSelected = (this.event.extendedProps.assignedItemId === this.store.state.progression.affectedItem.itemId ||
+    this.store.state.progression.addedAssignedSessions.map(session => session.sessionId).indexOf(this.event.extendedProps.id) !== -1) &&
+    !this.store.state.progression.removedAssignedSessions.map(session => session.sessionId).indexOf(this.event.extendedProps.id) !== -1
   },
   methods: {
     toggleSelection () {
@@ -73,11 +81,9 @@ export default {
       }
       this.isSelected = !this.isSelected
       if (this.isSelected) {
-        console.log('adding session ', this.event.extendedProps)
-        this.store.dispatch('progression/addSelectedSession', this.event.extendedProps)
+        this.store.dispatch('progression/addAffectedSession', this.event.extendedProps)
       } else {
-        console.log('removing session ', this.event.extendedProps)
-        this.store.dispatch('progression/removeSelectedSession', this.event.extendedProps)
+        this.store.dispatch('progression/removeAffectedSession', this.event.extendedProps)
       }
     }
   }

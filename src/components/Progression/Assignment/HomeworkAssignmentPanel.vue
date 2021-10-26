@@ -41,11 +41,11 @@
       class="sessions"
     >
       <HomeworkAssignment
-        v-for="session in selectedSessions"
+        v-for="session in newSessions"
         :key="session.id"
         :session="session"
         class="session"
-        @editedHomework="addHomework"
+        @edited-homework="updateHomework"
       />
     </div>
 
@@ -77,14 +77,35 @@ export default {
   },
   data () {
     return {
+      homeworks: []
     }
   },
   computed: {
     item () {
       return this.$store.state.progression.affectedItem
     },
-    selectedSessions () {
-      return this.$store.state.progression.selectedSessions
+    newSessions () {
+      // Homework assignment is based on initial sessions minus the remove ones plus the added ones
+      const res = []
+      for (let idx = 0; idx < this.$store.state.progression.affectedItem.assignments.length; ++idx) {
+        const initialSession = this.$store.state.progression.affectedItem.assignments[idx]
+        console.log('homework aff : initial session ', initialSession)
+        res.push(initialSession)
+      }
+      for (let idx = 0; idx < this.$store.state.progression.addedAssignedSessions.length; ++idx) {
+        const addedSession = this.$store.state.progression.addedAssignedSessions[idx]
+        res.push(addedSession)
+        console.log('homework aff : add session ', addedSession)
+      }
+      for (let idx = 0; idx < this.$store.state.progression.removedAssignedSessions.length; ++idx) {
+        const removedSession = this.$store.state.progression.removedAssignedSessions[idx]
+        if (res.includes(removedSession)) {
+          console.log('homework aff : remove session ', removedSession)
+          const index = res.indexOf(removedSession)
+          res.splice(index, 1)
+        }
+      }
+      return res
     }
   },
   created () {
@@ -94,8 +115,17 @@ export default {
       this.$store.dispatch('progression/setHomeworkAssignmentMode', false)
     },
     registerAssignments () {
-      // TODO
+      console.log('About to register new homeworks ', this.homeworks)
       this.closeHomeworkAssignment()
+    },
+    updateHomework (updatedHomework) {
+      console.log('received updated homework ', updatedHomework)
+      const sourceSessionIndex = this.homeworks.map(sourceSession => sourceSession.sessionId).indexOf(updatedHomework.sourceSession.sessionId)
+      if (sourceSessionIndex !== -1) {
+        this.homeworks.splice(sourceSessionIndex, 1)
+      } else {
+        this.homeworks.push(updatedHomework)
+      }
     }
   }
 }
