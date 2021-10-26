@@ -76,8 +76,7 @@ export default {
   span {
     margin: auto;
     margin-left: 5px;
-    font-family: Roboto;
-    font-size: 12px;
+    font-size: 0.75rem;
     float: left;
   }
 }

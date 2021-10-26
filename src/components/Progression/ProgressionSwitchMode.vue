@@ -125,17 +125,15 @@ export default {
       display: grid;
       .progression-subject {
         height: 15px;
-        font-weight: light;
+        font-weight: lighter;
         color: #838383;
-        font-family: Roboto;
-        font-size: 14px;
+        font-size: 0.875rem;
       }
       .progression-name {
         height: 25px;
         font-weight: bold;
         color: #000000;
-        font-family: Roboto;
-        font-size: 22px;
+        font-size: 1.25rem;
       }
     }
   }
@@ -159,7 +157,7 @@ export default {
       p {
         margin: 0;
         padding-bottom: 5px;
-        font-size: 14px;
+        font-size: 0.875rem;
       }
       .active-line {
         float: bottom;

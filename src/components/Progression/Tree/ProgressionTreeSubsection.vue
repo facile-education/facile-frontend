@@ -107,8 +107,7 @@ export default {
     .subsection-name {
       margin-left: 5px;
       height: 25px;
-      font-family: Roboto;
-      font-size: 14px;
+      font-size: 0.875rem;
       font-weight: 500;
       letter-spacing: 0;
       line-height: 16px;
