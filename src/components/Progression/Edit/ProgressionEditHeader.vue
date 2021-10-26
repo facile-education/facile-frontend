@@ -10,6 +10,7 @@
         @click.stop="toggleCreateMenu"
       >
         <NeroIcon
+          class="add-icon"
           name="fa-plus"
         />
         {{ $t('add') }}
@@ -73,66 +74,55 @@
         </div>
       </div>
     </div>
-    <PentilaButton
-      v-if="isFolderSelected"
-      class="delete-folder-button"
-      @click="deleteFolder"
-    >
-      <img
-        class="trash-icon"
-        src="@assets/trash.svg"
-        :alt="$t('delete')"
-        :title="$t('delete')"
-      >
-      <span>{{ $t('delete') }}</span>
-    </PentilaButton>
+
+    <FolderHeader v-if="currentFolder" />
   </div>
 </template>
 
 <script>
 import NeroIcon from '@/components/Nero/NeroIcon'
+import FolderHeader from '@components/Progression/Edit/FolderHeader'
 
 export default {
   name: 'ProgressionEditHeader',
-  components: { NeroIcon },
-  data () {
-    return {
-    }
-  },
+  components: { FolderHeader, NeroIcon },
   computed: {
     isCreateMenuDisplayed () {
       return this.$store.state.progression.isCreateMenuDisplayed
     },
     itemList () {
-      if (this.$store.state.progression.currentFolder === undefined) {
+      if (this.currentFolder === undefined) {
         return []
       } else {
-        return this.$store.state.progression.currentFolder.items
+        return this.currentFolder.items
       }
     },
     currentFolderName () {
-      if (this.$store.state.progression.currentFolder === undefined) {
+      if (this.currentFolder === undefined) {
         return 'root'
       } else {
-        return this.$store.state.progression.currentFolder.name
+        return this.currentFolder.name
       }
     },
     isRootFolderSelected () {
-      return this.$store.state.progression.currentFolder === undefined
+      return this.currentFolder === undefined
+    },
+    currentFolder () {
+      return this.$store.state.progression.currentFolder
     },
     isFolderSelected () {
-      return this.$store.state.progression.currentFolder !== undefined
+      return this.currentFolder !== undefined
     },
     sectionName () {
       // If section selected, itself
       // If sub-section selected, its parent section
-      if (this.$store.state.progression.currentFolder !== undefined && this.$store.state.progression.currentFolder.parentId === 0) {
-        return this.$store.state.progression.currentFolder.name
-      } else if (this.$store.state.progression.currentFolder !== undefined && this.$store.state.progression.currentFolder.parentId !== 0) {
+      if (this.currentFolder !== undefined && this.currentFolder.parentId === 0) {
+        return this.currentFolder.name
+      } else if (this.currentFolder !== undefined && this.currentFolder.parentId !== 0) {
         // Parse the current progression to get the parent section
         for (let idx = 0; idx < this.$store.state.progression.currentProgression.sections.length; ++idx) {
           const section = this.$store.state.progression.currentProgression.sections[idx]
-          const subSectionIndex = section.subSections.map(subSection => subSection.folderId).indexOf(this.$store.state.progression.currentFolder.folderId)
+          const subSectionIndex = section.subSections.map(subSection => subSection.folderId).indexOf(this.currentFolder.folderId)
           if (subSectionIndex !== -1) {
             return section.name
           }
@@ -169,12 +159,9 @@ export default {
       this.$store.dispatch('progression/setCreateMenuDisplayed', false)
     },
     doCreateSubSection () {
-      const parentFolderId = (this.$store.state.progression.currentFolder.parentId === 0 ? this.$store.state.progression.currentFolder.folderId : this.$store.state.progression.currentFolder.parentId)
+      const parentFolderId = (this.currentFolder.parentId === 0 ? this.currentFolder.folderId : this.currentFolder.parentId)
       this.$store.dispatch('progression/addFolder', parentFolderId)
       this.$store.dispatch('progression/setCreateMenuDisplayed', false)
-    },
-    deleteFolder () {
-      this.$store.dispatch('progression/deleteFolder', this.$store.state.progression.currentFolder)
     }
   }
 }
@@ -182,22 +169,21 @@ export default {
 
 <style lang="scss" scoped>
 .header {
-  height: 60px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 10px;
-  margin-right: 10px;
+  margin-top: 24px;
 
   .create-button-menu {
     position: relative;
+    margin-bottom: 11px;
 
     .create-button {
       border-radius: 32px;
       background-color: #306CD3;
       width: 140px;
       height: 48px;
+
+      .add-icon {
+        margin-right: 4px;
+      }
     }
 
     .create-menu {
@@ -250,32 +236,12 @@ export default {
       }
     }
   }
-
-  .delete-folder-button {
-    height: 39px;
-    width: 249px;
-    border-radius: 6px;
-    background-color: #F5F5F5;
-    color: black;
-    display: flex;
-
-    .trash-icon {
-      width: 20px;
-      height: 20px;
-      margin: auto 10px auto auto;
-    }
-
-    span {
-      margin: auto;
-    }
-  }
 }
 </style>
 
 <i18n locale="fr">
 {
   "add": "NOUVEAU",
-  "delete": "Supprimer cette section",
   "sessionContent": "CONTENU DE SEANCE",
   "homework": "DEVOIR",
   "section": "SECTION",
