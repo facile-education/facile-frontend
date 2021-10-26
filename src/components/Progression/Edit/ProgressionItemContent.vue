@@ -193,7 +193,7 @@ export default {
       }
       span {
         margin: auto;
-        font-size: 12px;
+        font-size: 0.75rem;
       }
     }
     span {

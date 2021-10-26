@@ -217,8 +217,7 @@ export default {
         margin-left: 10px;
         height: 100%;
         color: #000000;
-        font-family: Roboto;
-        font-size: 14px;
+        font-size: 0.875rem;
         font-weight: 500;
         letter-spacing: 0;
         line-height: 16px;

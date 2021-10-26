@@ -404,8 +404,7 @@ export default {
       }
       span {
         margin: auto;
-        font-family: Roboto;
-        font-size: 14px;
+        font-size: 0.875rem;
       }
     }
 
@@ -430,8 +429,7 @@ export default {
       span {
         text-align: center;
         margin: auto;
-        font-family: Roboto;
-        font-size: 14px;
+        font-size: 0.875rem;
       }
       &:hover {
         border: 1px solid grey;
@@ -453,8 +451,7 @@ export default {
       span {
         text-align: center;
         margin: auto;
-        font-family: Roboto;
-        font-size: 14px;
+        font-size: 0.875rem;
       }
       &:hover {
         border: 1px solid grey;

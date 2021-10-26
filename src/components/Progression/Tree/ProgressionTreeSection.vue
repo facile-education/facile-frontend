@@ -98,8 +98,7 @@ export default {
       vertical-align: sub;
       margin-left: 5px;
       color: #000000;
-      font-family: Roboto;
-      font-size: 14px;
+      font-size: 0.875rem;
       font-weight: 500;
     }
 
