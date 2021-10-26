@@ -1,15 +1,6 @@
 <template>
   <div>
     <!-- Current folder name input -->
-    <PentilaInput
-      v-if="displayFolderName"
-      ref="folderName"
-      :model-value="updatedFolderName"
-      :maxlength="75"
-      class="folder-title"
-      @update:modelValue="updateFolderName"
-      @blur="saveNewFolderName"
-    />
 
     <!-- Item list -->
     <div
@@ -147,14 +138,6 @@ export default {
     deleteFolder () {
       this.$store.dispatch('progression/deleteFolder', this.$store.state.progression.currentFolder)
     },
-    updateFolderName (value) {
-      this.updatedFolderName = value
-    },
-    saveNewFolderName () {
-      if (this.updatedFolderName !== this.$store.state.progression.currentFolder.name) {
-        this.$store.dispatch('progression/updateFolderName', { folder: this.$store.state.progression.currentFolder, newFolderName: this.updatedFolderName })
-      }
-    },
     openCreateMenu () {
       this.$store.dispatch('progression/setCreateMenuDisplayed', true)
     }
@@ -163,12 +146,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-.folder-title {
-  width: 98%;
-  margin-left: 10px;
-  margin-right: 10px;
-}
 
 .items-list {
   width: 100%;
