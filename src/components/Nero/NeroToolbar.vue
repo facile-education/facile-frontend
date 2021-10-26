@@ -14,7 +14,6 @@ export default {
 @import '@/design';
 
 .toolbar {
-  background-color: $color-toolbar-bg;
   padding: 5px;
   display: flex;
   gap: 0.5rem;
@@ -22,6 +21,6 @@ export default {
   overflow-x: auto; */
   z-index: $toolbar-z-index;
   align-items: center;
-  @extend %object-shadow;
+  // @extend %object-shadow;
 }
 </style>

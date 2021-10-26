@@ -11,15 +11,16 @@
 
     <template #body>
       <form>
-        <PentilaInput
-          v-model="progression.name"
-          :placeholder="$t('title')"
-          maxlength="100"
-        />
-        <!-- <PentilaErrorMessage :error-message="formErrorList.capacity" /> -->
-        <div
-          class="subject-volee"
-        >
+        <div class="title-color">
+          <PentilaInput
+            v-model="progression.name"
+            :placeholder="$t('title')"
+            maxlength="100"
+          />
+          <!-- <PentilaErrorMessage :error-message="formErrorList.capacity" /> -->
+          <ColorPicker v-model="progression.color" />
+        </div>
+        <div class="subject-volee">
           <PentilaDropdown
             v-if="(subjectList && subjectList.length > 1)"
             v-model="progression.subject"
@@ -35,10 +36,12 @@
             :list="voleeList"
           />
         </div>
-        <PentilaInput
+        <PentilaTextArea
           v-model="progression.description"
           :placeholder="$t('description')"
           maxlength="75"
+          style="height: 120px;"
+          class="description"
         />
       </form>
     </template>
@@ -56,9 +59,11 @@
 
 <script>
 import PentilaUtils from 'pentila-utils'
+import ColorPicker from '@/components/Nero/ColorPicker'
 
 export default {
   name: 'EditProgressionModal',
+  components: { ColorPicker },
   inject: ['mq'],
   props: {
     updatedProgression: {
@@ -71,6 +76,7 @@ export default {
     return {
       progression: {
         name: '',
+        color: '',
         subject: undefined,
         subjectId: 0,
         volee: undefined,
@@ -126,6 +132,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.title-color {
+  display: flex;
+  justify-content: space-between;
+
+  .group {
+    flex-grow: 1;
+    margin-right: 10px;
+  }
+}
+
 .subject-volee {
   display: flex;
   justify-content: space-between;
@@ -133,11 +149,19 @@ export default {
   margin-bottom: 20px;
 
   .subject {
-    width: 300px;
+    width: 240px;
   }
   .volee {
-    width: 200px;
+    width: 180px;
   }
+}
+
+.description {
+  width: 100%;
+}
+
+.confirm-button {
+  width: 130px;
 }
 </style>
 

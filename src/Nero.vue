@@ -37,6 +37,11 @@ html, body, #app {
   box-sizing: border-box;
 }
 
+a {
+  color: #6190E0;
+  font-weight: bold;
+}
+
 /*** iPhone and iOS Form Input Zoom Fixes ***/
 /* Fix Input Zoom on devices older than iPhone 5: */
 @media screen and (device-aspect-ratio: 2/3) {
