@@ -57,6 +57,7 @@
                 v-model="student.isSelected"
                 type="checkbox"
                 label=""
+                @change="onStudentChange"
               >
               {{ student.fullName }}
             </div>
@@ -74,6 +75,7 @@
             class="sessions"
             :list="nextSessions"
             display-field="sessionDescription"
+            @dropdown-select="onRenderDateSelect"
           />
         </div>
       </div>
@@ -103,7 +105,9 @@ export default {
       isCreation: true,
       isStudentsListDisplayed: false,
       homework: {
-        targetSession: {},
+        sourceSession: this.session,
+        targetSession: undefined,
+        wholeClass: true,
         selectedStudents: []
       }
     }
@@ -161,7 +165,7 @@ export default {
   },
   created () {
     console.log('session=', this.session)
-    getSessionDetails(this.session.id).then(
+    getSessionDetails(this.session.sessionId).then(
       (data) => {
         if (data.success) {
           this.sessionDetails = data.sessionDetails
@@ -171,14 +175,26 @@ export default {
             for (let idx = 0; idx < data.sessionDetails.givenHomework.length; ++idx) {
               const givenHomework = data.sessionDetails.givenHomework[idx]
               if (givenHomework.assignmentItemId !== undefined && givenHomework.assignmentItemId === this.session.sessionId) {
-                console.log('Found existing homework with assignmentItemId=', givenHomework.assignmentItemId)
+                console.log('Found existing homework ', givenHomework)
                 this.isCreation = false
                 this.homework = givenHomework
-                const targetSession = { sessionId: givenHomework.targetSessionId, sessionDescription: this.formatDate(givenHomework.startDate) }
-                this.homework = targetSession
+                this.homework.targetSession = { sessionId: givenHomework.targetSessionId, sessionDescription: this.formatDate(givenHomework.startDate) }
               }
             }
           }
+          // Default target session is the next session
+          if (this.isCreation) {
+            let defaultSession = data.sessionDetails.nextSessions[0]
+            for (let idx = 0; idx < data.sessionDetails.nextSessions.length; ++idx) {
+              const nextSession = data.sessionDetails.nextSessions[idx]
+              if (dayjs(nextSession.startDate).isBefore(dayjs(defaultSession.startDate))) {
+                defaultSession = nextSession
+              }
+            }
+            this.homework.targetSession = { sessionId: defaultSession.sessionId, sessionDescription: this.formatDate(defaultSession.startDate) }
+          }
+          // Emit default homework if not updated later
+          this.$emit('editedHomework', this.homework)
         }
       },
       (err) => {
@@ -191,8 +207,14 @@ export default {
       this.isStudentsListDisplayed = !this.isStudentsListDisplayed
     },
     formatDate (date) {
-      console.log('formatDate date=', date)
       return dayjs(date, 'YYYY-MM-DD HH:mm').format('DD MMMM YYYY [à] HH[h]mm')
+    },
+    onRenderDateSelect (targetSession) {
+      console.log('updated target session to ', targetSession)
+      this.$emit('editedHomework', this.homework)
+    },
+    onStudentChange () {
+      this.$emit('editedHomework', this.homework)
     }
   }
 }

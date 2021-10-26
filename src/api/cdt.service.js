@@ -65,7 +65,7 @@ function getTeacherGroups () {
 function getSessionDetails (sessionId) {
   return axios.get(constants.JSON_WS_URL + CDT_PATH + 'cdtsession/get-session-details', {
     params: {
-      sessionId
+      sessionId: sessionId
     }
   }).then(response => response.data)
 }

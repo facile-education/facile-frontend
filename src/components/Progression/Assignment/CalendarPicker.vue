@@ -184,6 +184,8 @@ export default {
         this.onSelectDate(new Date())
       }
     }
+    // Reset the added and removed affected session ids lists
+    this.$store.dispatch('progression/resetAffectedSessions')
   },
   methods: {
     closeCalendarPicker () {
@@ -262,21 +264,28 @@ export default {
       this.selectedEvent = undefined
     },
     registerAssignments () {
-      for (let idx = 0; idx < this.$store.state.progression.selectedSessions.length; ++idx) {
-        const sessionId = this.$store.state.progression.selectedSessions[idx].id
-        console.log('Registering assignment for sessionId ', sessionId)
-        this.$store.dispatch('progression/addAssignment', { itemId: this.$store.state.progression.affectedItem.itemId, sessionId: sessionId })
-      }
       this.closeCalendarPicker()
-      // Open homework assignment page in case of homework
       if (this.$store.state.progression.affectedItem.isHomework) {
+        // Case of homework : open homework assignment page
         this.$store.dispatch('progression/setHomeworkAssignmentMode', true)
+      } else {
+        // Case of session -> register
+        for (let idx = 0; idx < this.$store.state.progression.addedAssignedSessions.length; ++idx) {
+          const session = this.$store.state.progression.addedAssignedSessions[idx]
+          this.$store.dispatch('progression/addAssignment', { itemId: this.$store.state.progression.affectedItem.itemId, sessionId: session.sessionId })
+        }
+        for (let idx = 0; idx < this.$store.state.progression.removedAssignedSessions.length; ++idx) {
+          const session = this.$store.state.progression.removedAssignedSessions[idx]
+          this.$store.dispatch('progression/deleteAssignment', { itemId: this.$store.state.progression.affectedItem.itemId, sessionId: session.sessionId })
+        }
+        // Reset the added and removed affected session ids lists
+        this.$store.dispatch('progression/resetAffectedSessions')
       }
     },
     formatCalendarSlot (slot) {
       const json = {
         extendedProps: {
-          id: (slot.sessionId === undefined ? slot.schoollifeSessionId : slot.sessionId),
+          sessionId: (slot.sessionId === undefined ? slot.schoollifeSessionId : slot.sessionId),
           subject: slot.subject,
           teachers: '',
           room: slot.room,

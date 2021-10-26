@@ -65,7 +65,8 @@ export const state = {
   isCalendarPickerMode: false,
   isHomeworkAssignmentMode: false,
   affectedItem: undefined,
-  selectedSessions: [],
+  addedAssignedSessions: [],
+  removedAssignedSessions: [],
   startDate: undefined,
   endDate: undefined,
   sessionList: [],
@@ -134,11 +135,37 @@ export const mutations = {
   setAffectedItem (state, payload) {
     state.affectedItem = payload
   },
-  addSelectedSession (state, payload) {
-    state.selectedSessions.push(payload)
+  resetAffectedSessions (state) {
+    state.addedAssignedSessions = []
+    state.removedAssignedSessions = []
   },
-  removeSelectedSession (state, payload) {
-    state.selectedSessions.splice(payload, 1)
+  addAffectedSession (state, payload) {
+    // Check if new session was initially affected or not
+    const affectedIndex = state.affectedItem.assignments.map(assignment => assignment.sessionId).indexOf(payload.sessionId)
+    if (affectedIndex === -1) {
+      console.log('added session ' + payload.sessionId + ' to the toAdd list')
+      state.addedAssignedSessions.push(payload)
+    }
+    // Remove it from the removed list if needed
+    const removedIndex = state.removedAssignedSessions.map(session => session.sessionId).indexOf(payload.sessionId)
+    if (removedIndex !== -1) {
+      console.log('removed session ' + payload.sessionId + ' from the toRemove list')
+      state.removedAssignedSessions.splice(removedIndex, 1)
+    }
+  },
+  removeAffectedSession (state, payload) {
+    // Check if removed sessionId was initially affected or not
+    const affectedIndex = state.affectedItem.assignments.map(assignment => assignment.sessionId).indexOf(payload.sessionId)
+    if (affectedIndex !== -1) {
+      console.log('added session ' + payload.sessionId + ' to the toRemove list')
+      state.removedAssignedSessions.push(payload)
+    }
+    // Remove it from the added list if needed
+    const addedIndex = state.addedAssignedSessions.map(session => session.sessionId).indexOf(payload.sessionId)
+    if (addedIndex !== -1) {
+      console.log('removed session ' + payload.sessionId + ' from the toAdd list')
+      state.addedAssignedSessions.splice(addedIndex, 1)
+    }
   },
   setFolderContent (state, payload) {
     const folder = helperMethods.getFolderByFolderId(state.currentProgression, payload.folderId)
@@ -420,11 +447,14 @@ export const actions = {
   setAffectedItem ({ commit }, affectedItem) {
     commit('setAffectedItem', affectedItem)
   },
-  addSelectedSession ({ commit }, session) {
-    commit('addSelectedSession', session)
+  addAffectedSession ({ commit }, session) {
+    commit('addAffectedSession', session)
   },
-  removeSelectedSession ({ commit }, session) {
-    commit('removeSelectedSession', session)
+  removeAffectedSession ({ commit }, session) {
+    commit('removeAffectedSession', session)
+  },
+  resetAffectedSessions ({ commit }) {
+    commit('resetAffectedSessions')
   },
   getProgressionContent ({ commit, dispatch }, progressionId) {
     getProgressionContent(progressionId).then(
