@@ -66,9 +66,10 @@
         <div
           v-if="isFolderSelected"
           class="create-menu-item"
+          :title="$t('subSectionOf') + sectionName"
           @click="doCreateSubSection()"
         >
-          <span>{{ $t('subSectionOf') }} {{ sectionName }}</span>
+          <span>{{ $t('subSectionOf') + sectionName }}</span>
         </div>
       </div>
     </div>
@@ -184,65 +185,69 @@ export default {
   height: 60px;
   width: 100%;
   display: flex;
+  align-items: center;
   justify-content: space-between;
   margin-top: 10px;
   margin-right: 10px;
 
-  .create-button {
-    margin: auto auto auto 30px;
-    border-radius: 32px;
-    background-color: #306CD3;
-    width: 140px;
-    height: 48px;
-  }
-
-  .create-menu {
+  .create-button-menu {
     position: relative;
-    margin-left: 30px;
-    width: 250px;
-    z-index: 10;
-    border: 1px solid #F4F4F4;
-    border-radius: 6px;
-    background-color: #FFFFFF;
-    box-shadow: 0 2px 14px 0 rgba(0,0,0,0.08);
 
-    .create-menu-item {
-      height: 30px;
-      width: 90%;
-      margin-left: 10px;
-      margin-right: 10px;
-      padding-top: 5px;
-      padding-bottom: 5px;
-      z-index: 100;
-      background: white;
-      display: inline-block;
-
-      &:hover {
-        background-color: #EFF3FB;
-        cursor: pointer;
-      }
-
-      .create-menu-icon {
-        width: 20px;
-        height: 20px;
-        vertical-align: middle;
-      }
-
-      span {
-        margin-left: 10px;
-        height: 100%;
-        color: #000000;
-        font-size: 0.875rem;
-        font-weight: 500;
-        letter-spacing: 0;
-        line-height: 16px;
-      }
+    .create-button {
+      border-radius: 32px;
+      background-color: #306CD3;
+      width: 140px;
+      height: 48px;
     }
 
-    hr {
-      margin-top: 5px;
-      margin-bottom: 5px;
-      border: 0; border-top: 1px solid #D4D4D4;
+    .create-menu {
+      position: absolute;
+      top: calc(100% + 14px);
+      left: -20px;
+      padding: 0 15px;
+      min-width: 229px;
+      max-width: 500px;
+      z-index: 10;
+      border: 1px solid #F4F4F4;
+      border-radius: 6px;
+      background-color: #FFFFFF;
+      box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.08);
+      color: black;
+      font-size: 0.875rem;
+      font-weight: 500;
+
+      .create-menu-item {
+        height: 35px;
+        padding: 0 8px;
+        z-index: 100;
+        background: white;
+        display: flex;
+        align-items: center;
+
+        &:hover {
+          background-color: #EFF3FB;
+          cursor: pointer;
+        }
+
+        .create-menu-icon {
+          width: 24px;
+          height: 24px;
+        }
+
+        span {
+          margin-left: 11px;
+          white-space: nowrap;
+          overflow-x: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+
+      hr {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #D4D4D4;
+      }
     }
   }
 
@@ -251,7 +256,6 @@ export default {
     width: 249px;
     border-radius: 6px;
     background-color: #F5F5F5;
-    margin: auto 10px auto auto;
     color: black;
     display: flex;
 
