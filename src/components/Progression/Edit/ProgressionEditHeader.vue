@@ -176,14 +176,15 @@ export default {
   justify-content: space-between;
   margin-top: 10px;
   margin-right: 10px;
+
   .create-button {
-    margin: auto;
-    margin-left: 30px;
+    margin: auto auto auto 30px;
     border-radius: 32px;
     background-color: #306CD3;
     width: 140px;
     height: 48px;
   }
+
   .create-menu {
     position: relative;
     margin-left: 30px;
@@ -204,15 +205,18 @@ export default {
       z-index: 100;
       background: white;
       display: inline-block;
+
       &:hover {
         background-color: #EFF3FB;
         cursor: pointer;
       }
+
       .create-menu-icon {
         width: 20px;
         height: 20px;
         vertical-align: middle;
       }
+
       span {
         margin-left: 10px;
         height: 100%;
@@ -223,29 +227,29 @@ export default {
         line-height: 16px;
       }
     }
+
     hr {
       margin-top: 5px;
       margin-bottom: 5px;
       border: 0; border-top: 1px solid #D4D4D4;
     }
-
   }
 
   .delete-folder-button {
-    margin: auto;
     height: 39px;
     width: 249px;
     border-radius: 6px;
     background-color: #F5F5F5;
-    margin-right: 10px;
+    margin: auto 10px auto auto;
     color: black;
     display: flex;
+
     .trash-icon {
       width: 20px;
       height: 20px;
-      margin: auto;
-      margin-right: 10px;
+      margin: auto 10px auto auto;
     }
+
     span {
       margin: auto;
     }

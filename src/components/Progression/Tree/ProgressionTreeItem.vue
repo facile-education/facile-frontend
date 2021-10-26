@@ -74,8 +74,7 @@ export default {
     float: left;
   }
   span {
-    margin: auto;
-    margin-left: 5px;
+    margin: auto auto auto 5px;
     font-size: 0.75rem;
     float: left;
   }

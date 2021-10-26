@@ -81,7 +81,7 @@ export default {
   },
   methods: {
     displayFile () {
-      console.log('TODO: dispdlay ' + this.fileName)
+      console.log('TODO: display ' + this.fileName)
       window.open(this.downloadUrl, '_blank').focus()
     },
     download () {

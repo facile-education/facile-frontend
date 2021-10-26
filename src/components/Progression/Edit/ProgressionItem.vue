@@ -43,6 +43,7 @@
           src="@assets/icon_apercu.svg"
           title="Pré-visualiser ce contenu"
           class="preview-icon"
+          alt=""
           @click="togglePreviewModalDisplay()"
         >
         <span>{{ $t('preview') }}</span>
@@ -118,7 +119,7 @@
 
       <!-- Add document to complete in case of homework -->
       <div
-        v-if="item.isHomework && item.type == 3"
+        v-if="item.isHomework && item.type === 3"
         class="add-document"
         @click="openFilePicker"
       >
@@ -392,16 +393,19 @@ export default {
     width: 8%;
     display: flex;
     flex-direction: column;
+
     .item-type {
       display: flex;
       flex-direction: column;
       margin-top: 8px;
       margin-bottom: 4px;
+
       .item-type-icon {
         margin: auto;
         width: 30px;
         height: 30px;
       }
+
       span {
         margin: auto;
         font-size: 0.875rem;
@@ -421,16 +425,19 @@ export default {
       border: 1px solid transparent;
       border-radius: 5px;
       margin: 10px;
+
       .preview-icon {
         margin: auto;
         width: 25px;
         height: 25px;
       }
+
       span {
         text-align: center;
         margin: auto;
         font-size: 0.875rem;
       }
+
       &:hover {
         border: 1px solid grey;
         cursor: pointer;
@@ -443,82 +450,90 @@ export default {
       border: 1px solid transparent;
       border-radius: 5px;
       margin: 10px;
+
       .delete-icon {
         margin: auto;
         width: 25px;
         height: 25px;
       }
+
       span {
         text-align: center;
         margin: auto;
         font-size: 0.875rem;
       }
+
       &:hover {
         border: 1px solid grey;
         cursor: pointer;
       }
     }
-
 }
 
   .vertical-2 {
-
     width: 92%;
+
     .item-header {
       height: 50px;
       display: flex;
       justify-content: space-around;
-      margin-top: 20px;
-      margin-bottom: 10px;
-      margin-left: 10px;
-      margin-right: 10px;
+      margin: 20px 10px 10px;
       z-index: 0;
+
       .item-title {
         width: 70%;
         z-index: 5;
         margin-right: 20px;
+
         &.fullWidth {
           width: 100%;
         }
       }
+
       .homework-type {
         width: 20%;
         margin-right: 10px;
       }
+
       .homework-duration {
         margin-left: 10px;
         margin-right: 10px;
         width: 10%;
       }
     }
+
     .item-contents {
       .item-content {
         margin: 10px;
       }
     }
+
     .add-document {
       margin-left: 10px;
+
       button {
         margin-right: 10px;
         border-radius: 20px;
       }
+
       span {
         text-decoration: underline;
         color: blue;
       }
     }
+
     .add-content-buttons {
-      margin: auto;
-      margin-top: 20px;
-      margin-bottom: 20px;
+      margin: 20px auto;
       width: 300px;
       display: flex;
       justify-content: space-around;
+
       .add-content-button {
         border: 1px solid transparent;
         border-radius: 5px;
         padding: 5px;
         margin: 5px;
+
         &:hover {
           border: 1px solid grey;
           cursor: pointer;
