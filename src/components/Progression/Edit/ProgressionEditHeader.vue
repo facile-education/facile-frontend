@@ -7,15 +7,17 @@
     >
       <PentilaButton
         class="create-button"
-        @click="toggleCreateMenu"
+        @click.stop="toggleCreateMenu"
       >
         <NeroIcon
           name="fa-plus"
         />
         {{ $t('add') }}
       </PentilaButton>
+
       <div
         v-if="isCreateMenuDisplayed"
+        id="create-menu"
         class="create-menu"
       >
         <!-- Create session content -->
@@ -138,9 +140,18 @@ export default {
       return ''
     }
   },
-  created () {
+  mounted () {
+    window.addEventListener('click', this.clickOutside)
+  },
+  beforeUnmount () {
+    window.removeEventListener('click', this.clickOutside)
   },
   methods: {
+    clickOutside (e) {
+      if (this.$el.querySelector('#create-menu') && !this.$el.querySelector('#create-menu').contains(e.target)) {
+        this.$store.dispatch('progression/setCreateMenuDisplayed', false)
+      }
+    },
     toggleCreateMenu () {
       this.$store.dispatch('progression/setCreateMenuDisplayed', !this.$store.state.progression.isCreateMenuDisplayed)
     },
