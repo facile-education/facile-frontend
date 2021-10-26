@@ -15,7 +15,7 @@
         class="tree"
       />
       <div
-        class="header-edit"
+        class="edit"
       >
         <ProgressionEditHeader
           class="header"
@@ -93,7 +93,7 @@ export default {
       width: 15%;
       height: 100%;
     }
-    .header-edit {
+    .edit {
       width: 85%;
       height: 100%;
     }
