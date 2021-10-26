@@ -34,6 +34,7 @@
         <img
           class="content-icon"
           src="@assets/icon_link.svg"
+          alt=""
         >
         <span>{{ $t('externalLink') }}</span>
       </div>
@@ -52,6 +53,7 @@
         <img
           class="content-icon"
           src="@assets/play.svg"
+          alt=""
         >
         <span>{{ $t('video') }}</span>
       </div>
@@ -78,6 +80,7 @@
         <img
           class="content-icon"
           src="@assets/icon_h5p.svg"
+          alt=""
         >
         <span>{{ $t('h5p') }}</span>
       </div>
@@ -166,6 +169,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .item-content {
   border: 1px solid #D4D4D4;
   background-color: #FFFFFF;
@@ -173,29 +177,34 @@ export default {
   margin-right: 10px;
   display: flex;
   justify-content: space-between;
+
   .content-text {
     width: 90%;
     margin: auto;
   }
+
   .content-link, .content-video, .content-h5p {
     height: 80px;
     width: 100%;
     display: flex;
     flex-direction: column;
     margin-left: 20px;
+
     .title {
       margin-top: 5px;
+
       img {
         width: 10px;
         height: 10px;
-        margin: auto;
-        margin-right: 5px;
+        margin: auto 5px auto auto;
       }
+
       span {
         margin: auto;
         font-size: 0.75rem;
       }
     }
+
     span {
       margin-top: 5px;
     }
@@ -205,13 +214,13 @@ export default {
     margin: auto;
     display: flex;
     flex-direction: column;
+
     .content-button {
       display: none;
-      margin: auto;
-      margin-right: 30px;
       border: 1px solid transparent;
       border-radius: 5px;
       margin: 7px;
+
       &:hover {
         border: 1px solid grey;
         cursor: pointer;

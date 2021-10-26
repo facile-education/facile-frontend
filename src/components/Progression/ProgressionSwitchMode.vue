@@ -10,6 +10,7 @@
         src="@assets/arrow-left.svg"
         title="Revenir à la liste des progressions"
         class="previous"
+        alt=""
         @click="toggleListMode()"
       >
 
@@ -42,6 +43,7 @@
           src="@assets/icon_edit-progression.svg"
           title="edit"
           class="toggle-button"
+          alt=""
         >
         <p>Editer la progression</p>
         <div
@@ -57,6 +59,7 @@
           src="@assets/calendar.svg"
           title="assignment"
           class="toggle-button"
+          alt=""
         >
         <p>Affecter aux horaires</p>
         <div
@@ -120,8 +123,7 @@ export default {
     }
     .progression-infos {
       height: 55px;
-      margin:auto;
-      margin-left: 20px;
+      margin: auto auto auto 20px;
       display: grid;
       .progression-subject {
         height: 15px;

@@ -128,7 +128,7 @@ export default {
     }
   },
   watch: {
-    currentFolderName (newName, oldName) {
+    currentFolderName (newName) {
       // When selected folder changes
       // Put its name in the input
       this.updatedFolderName = newName
@@ -137,7 +137,7 @@ export default {
         this.$nextTick(() => this.$refs.folderName.$el.childNodes[0].focus())
       }
     },
-    isFolderSelected (newVal, oldVal) {
+    isFolderSelected (newVal) {
       this.displayFolderName = newVal
     }
   },
@@ -163,15 +163,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .folder-title {
   width: 98%;
   margin-left: 10px;
   margin-right: 10px;
 }
+
 .items-list {
   width: 100%;
   margin-right: 10px;
-    .item {
+
+  .item {
     width: 100%;
     margin-right: 10px;
   }
@@ -186,28 +189,33 @@ export default {
   margin-left: 10px;
   margin-right: 10px;
   display: flex;
+
   .spans {
     height: 50px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     margin: auto;
+
     .tips {
       display: flex;
     }
+
     .blue {
       color: blue;
       text-decoration: underline;
+
       &:hover {
         cursor: pointer;
       }
     }
+
     .tip-label {
       font-weight: bold;
       margin-right: 5px;
     }
+
     span {
-      margin-top: 5px;
       text-align: center;
       margin: auto;
     }
