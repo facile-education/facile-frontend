@@ -116,6 +116,7 @@ export default {
     }
   },
   created () {
+    this.$store.dispatch('progression/setCurrentProgression', undefined)
     if (this.progressionList === undefined) {
       this.$store.dispatch('progression/initProgressionList')
     }
