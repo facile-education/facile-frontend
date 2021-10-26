@@ -41,7 +41,7 @@
       >
         <img
           src="@assets/icon_apercu.svg"
-          title="Pré-visualiser ce contenu"
+          :title="$t('previewContent')"
           class="preview-icon"
           alt=""
           @click="togglePreviewModalDisplay()"
@@ -546,22 +546,23 @@ export default {
 
 <i18n locale="fr">
 {
-  "session": "Séance",
-  "homework": "Devoir",
-  "title": "Titre",
-  "addText": "Ajouter du texte",
-  "addSound": "S'enregistrer",
-  "addLink": "Ajouter un lien https",
-  "addVideo": "Ajouter une vidéo",
+  "add-document": "Ajouter un document à compléter",
   "addFile": "Ajouter une pièce jointe",
   "addH5p": "Ajouter un élément h5p",
+  "addLink": "Ajouter un lien https",
+  "addSound": "S'enregistrer",
+  "addText": "Ajouter du texte",
+  "addVideo": "Ajouter une vidéo",
+  "changeItemType": "Modifier le type de devoir",
   "delete": "Supprimer",
   "deleteItemWarning": "Supprimer ce contenu ?",
-  "preview": "Aperçu",
-  "changeItemType": "Modifier le type de devoir",
-  "simpleHomeworkType": "Consigne simple",
-  "fileToSendType": "Fichier à compléter",
   "duration": "Durée",
-  "add-document": "Ajouter un document à compléter"
+  "fileToSendType": "Fichier à compléter",
+  "homework": "Devoir",
+  "preview": "Aperçu",
+  "previewContent": "Pré-visualiser ce contenu",
+  "simpleHomeworkType": "Consigne simple",
+  "session": "Séance",
+  "title": "Titre"
 }
 </i18n>
