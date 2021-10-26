@@ -1,10 +1,6 @@
 <template>
-  <div
-    class="list"
-  >
-    <div
-      class="header"
-    >
+  <div class="container">
+    <NeroToolbar>
       <PentilaButton
         class="create-button"
         @click="toggleEditModalDisplay"
@@ -15,84 +11,53 @@
         <span>{{ $t('add') }}</span>
       </PentilaButton>
 
-      <div
-        class="filters"
-      >
-        <p>{{ $t('filterBy') }}</p>
-        <PentilaDropdown
-          v-if="(subjectList && subjectList.length > 1)"
-          v-model="selectedSubject"
-          class="filter"
-          :list="subjectList"
-          :sort="false"
-          display-field="name"
-        />
-        <PentilaDropdown
-          v-if="(voleeList && voleeList.length > 1)"
-          v-model="selectedVolee"
-          class="filter"
-          :sort="false"
-          :list="voleeList"
-        />
-      </div>
-    </div>
+      <span class="filters">{{ $t('filterBy') }}</span>
+      <PentilaDropdown
+        v-if="(subjectList && subjectList.length > 1)"
+        v-model="selectedSubject"
+        :list="subjectList"
+        :sort="false"
+        class="filter"
+        display-field="name"
+      />
+      <PentilaDropdown
+        v-if="(voleeList && voleeList.length > 1)"
+        v-model="selectedVolee"
+        :sort="false"
+        :list="voleeList"
+        class="filter"
+      />
+    </NeroToolbar>
 
-    <div class="progression-list">
-      <div
+    <div
+      v-if="progressionList && progressionList.length > 0"
+      class="list"
+    >
+      <ProgressionItem
         v-for="progression in progressionList"
         :key="progression.progressionId"
+        :progression="progression"
         class="progression"
-      >
-        <div
-          class="header"
-          @click="selectProgression(progression)"
-        >
-          <p>{{ progression.volee }} {{ progression.subjectName }}</p>
-        </div>
-        <div
-          class="body"
-          @click="selectProgression(progression)"
-        >
-          <p>{{ progression.name }}</p>
-        </div>
-        <div
-          class="buttons"
-        >
-          <img
-            class="button"
-            src="@assets/edit.svg"
-            :alt="$t('edit')"
-            :title="$t('edit')"
-            @click="toggleEditModalDisplay(progression)"
-          >
-          <!-- <img
-            class="button"
-            src="@assets/duplicate.svg"
-            :alt="$t('duplicate')"
-            :title="$t('duplicate')"
-            @click="duplicate(progression)"
-          >
-          <img
-            class="button"
-            src="@assets/share.svg"
-            :alt="$t('share')"
-            :title="$t('share')"
-            @click="toggleShareModalDisplay(progression)"
-          > -->
-          <img
-            class="button"
-            src="@assets/trash.svg"
-            :alt="$t('delete')"
-            :title="$t('delete')"
-            @click="confirmProgressionDeletion(progression)"
-          >
-        </div>
-      </div>
+        @edit="toggleEditModalDisplay"
+      />
+    </div>
+    <div
+      v-else
+      class="empty-container"
+    >
+      <span v-t="'noContentFound'" />
+      <a
+        v-t="'addProgression'"
+        href="#"
+        class="link"
+        @click="toggleEditModalDisplay"
+      />
     </div>
     <teleport to="body">
       <EditProgressionModal
         v-if="isEditModalDisplayed"
         :updated-progression="selectedProgression"
+        win-width="500px"
         @close="toggleEditModalDisplay"
       />
     </teleport>
@@ -101,15 +66,16 @@
 
 <script>
 import NeroIcon from '@/components/Nero/NeroIcon'
+import NeroToolbar from '@/components/Nero/NeroToolbar'
 import PentilaUtils from 'pentila-utils'
-// import _ from 'lodash'
 
 import { defineAsyncComponent } from 'vue'
 const EditProgressionModal = defineAsyncComponent(() => import('@/components/Progression/EditProgressionModal'))
+const ProgressionItem = defineAsyncComponent(() => import('@/components/Progression/ProgressionItem'))
 
 export default {
   name: 'ProgressionList',
-  components: { EditProgressionModal, NeroIcon },
+  components: { EditProgressionModal, NeroIcon, NeroToolbar, ProgressionItem },
   data () {
     return {
       isEditModalDisplayed: false,
@@ -128,7 +94,6 @@ export default {
         list = list.filter((el) => el.subjectId === this.selectedSubject.subjectId)
       }
       return list
-      // _.orderBy(list, 'modifiedDate', 'desc')
     },
     subjectList () {
       if (this.$store.state.progression.subjectList) {
@@ -156,132 +121,62 @@ export default {
     }
   },
   methods: {
-    confirmProgressionDeletion (progression) {
-      this.$store.dispatch('warningModal/addWarning', {
-        text: this.$t('warning'),
-        lastAction: { fct: this.deleteProgression, params: [progression] }
-      })
-    },
-    deleteProgression (progression) {
-      this.$store.dispatch('progression/deleteProgression', progression)
-    },
     toggleEditModalDisplay (progression) {
       this.selectedProgression = progression
       this.isEditModalDisplayed = !this.isEditModalDisplayed
-    },
-    selectProgression (progression) {
-      this.$store.dispatch('progression/setCurrentProgression', progression)
-      // Set default folder
-      if (this.$store.state.progression.currentProgression.sections !== undefined && this.$store.state.progression.currentProgression.sections.length > 0) {
-        this.$store.dispatch('progression/setCurrentFolder', this.$store.state.progression.currentProgression.sections[0])
-      }
-      this.$store.dispatch('progression/setListMode', false)
-      this.$store.dispatch('progression/getProgressionContent', progression.progressionId)
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.list {
+@import '@/design';
+
+.container {
   display: flex;
   flex-direction: column;
   height: 100%;
-
-  .header {
-    display: flex;
-    justify-content: space-between;
-    height: 50px;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    .create-button {
-      margin: auto;
-      margin-left: 30px;
-      height: 48px;
-      width: 140px;
-      border-radius: 32px;
-      background-color: #306CD3;
-      span {
-        margin-left: 12px;
-      }
-    }
-
-    .filters {
-      display: flex;
-      margin: auto;
-      margin-right: 10px;
-      height: 70%;
-      p {
-        float: left;
-        margin: auto;
-        margin-right: 10px;
-        font-size: 14px;
-      }
-      .filter {
-        margin-right: 10px;
-        min-width: 200px;
-        font-size: 14px;
-        button {
-          display: flex;
-          justify-content: space-between;
-        }
-      }
-    }
-  }
-
-  .progression-list {
-    margin: 1rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 15rem);
-    grid-gap: 1rem;
-
-    .progression {
-      height: 15rem;
-      max-height: 15rem;
-      width: 15rem;
-      border: 1px solid rgba(0, 0, 0, 0.3);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-
-      &:hover {
-        border: 1px solid grey;
-      }
-      .header {
-        margin: 0;
-        color: white;
-        background: rgb(84, 119, 236);
-        p {
-          text-align: center;
-          margin-left: 20px;
-        }
-      }
-
-      .body {
-        padding: 10px;
-        height: 9rem;
-        p {
-          margin-left: 10px;
-        }
-      }
-
-      .buttons {
-        height: 4rem;
-        margin-right: 1rem;
-        float: right;
-        .button {
-          margin-left: 1rem;
-          border: 1px solid transparent;
-          border-radius: 5px;
-          padding: 5px;
-          margin: 5px;
-          &:hover {
-            border: 1px solid grey;
-            cursor: pointer;
-          }
-        }
-      }
-    }
 }
 
+.create-button {
+  margin-left: 30px;
+  width: 140px;
+  border-radius: 32px;
+
+  span {
+    margin-left: 12px;
+  }
+}
+
+.filters {
+  margin-left: auto;
+}
+
+.filter {
+  margin: 0 5px;
+  min-width: 200px;
+}
+
+.list {
+  margin: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 235px);
+  grid-gap: 1rem;
+}
+
+.empty-container {
+  margin: 1rem;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid $color-border;
+  border-radius: $border-radius;
+}
+
+.link {
+  margin-top: 1rem;
 }
 </style>
 
@@ -291,10 +186,7 @@ export default {
   "filterBy": "Filtrer par :",
   "subject": "Discipline",
   "volee": "Volée",
-  "warning": "La suppression de cette progression est définitive.",
-  "edit": "Modifier",
-  "share": "Partager",
-  "duplicate": "Dupliquer",
-  "delete": "Supprimer"
+  "noContentFound": "Aucun contenu existant.",
+  "addProgression": "Ajouter votre progression !"
 }
 </i18n>
