@@ -21,7 +21,7 @@
 
     <!-- Empty section -->
     <div
-      v-else-if="isEmptySection"
+      v-else-if="currentFolder"
       class="empty-section"
     >
       <div
@@ -30,14 +30,14 @@
         <span>{{ $t('emptySection') }}</span>
         <span
           class="blue"
-          @click.stop="openCreateMenu"
+          @click.stop="toggleCreateMenu"
         >{{ $t('insertNewContent') }}</span>
       </div>
     </div>
 
     <!-- Empty progression -->
     <div
-      v-else-if="isEmptyProgression"
+      v-else
       class="empty-progression"
     >
       <div
@@ -45,7 +45,7 @@
       >
         <span
           class="blue"
-          @click.stop="openCreateMenu"
+          @click.stop="toggleCreateMenu"
         >{{ $t('addFirstContent') }}</span>
         <div
           class="tips"
@@ -78,15 +78,15 @@ export default {
       if (this.$store.state.progression.currentItem !== undefined) {
         // 1 item is selected -> display it
         return [this.$store.state.progression.currentItem]
-      } else if (this.$store.state.progression.currentFolder !== undefined) {
+      } else if (this.currentFolder !== undefined) {
         // 1 section or sub-section is selected -> display recursively all its items
         const items = []
-        if (this.$store.state.progression.currentFolder.items !== undefined && this.$store.state.progression.currentFolder.items.length > 0) {
-          Array.prototype.push.apply(items, this.$store.state.progression.currentFolder.items)
+        if (this.currentFolder.items !== undefined && this.currentFolder.items.length > 0) {
+          Array.prototype.push.apply(items, this.currentFolder.items)
         }
-        if (this.$store.state.progression.currentFolder.subSections !== undefined && this.$store.state.progression.currentFolder.subSections.length > 0) {
-          for (let subIdx = 0; subIdx < this.$store.state.progression.currentFolder.subSections.length; subIdx++) {
-            const subSection = this.$store.state.progression.currentFolder.subSections[subIdx]
+        if (this.currentFolder.subSections !== undefined && this.currentFolder.subSections.length > 0) {
+          for (let subIdx = 0; subIdx < this.currentFolder.subSections.length; subIdx++) {
+            const subSection = this.currentFolder.subSections[subIdx]
             if (subSection.items !== undefined && subSection.items.length > 0) {
               Array.prototype.push.apply(items, subSection.items)
             }
@@ -97,49 +97,13 @@ export default {
         return []
       }
     },
-    isFolderSelected () {
-      return this.$store.state.progression.currentFolder !== undefined
-    },
-    isEmptySection () {
-      // A section or sub-section is selected, it has no item and no sub-section
-      return this.isFolderSelected && this.itemList.length === 0 && (this.$store.state.progression.currentFolder.subSections === undefined || this.$store.state.progression.currentFolder.subSections.length === 0)
-    },
-    isEmptyProgression () {
-      // A progression is empty if no section nor item
-      return (this.$store.state.progression.currentProgression.sections === undefined ||
-            this.$store.state.progression.currentProgression.sections.length === 0) &&
-            (this.$store.state.progression.currentProgression.items === undefined ||
-            this.$store.state.progression.currentProgression.items.length === 0)
-    },
-    currentFolderName () {
-      if (this.$store.state.progression.currentFolder !== undefined) {
-        return this.$store.state.progression.currentFolder.name
-      }
-      return ''
+    currentFolder () {
+      return this.$store.state.progression.currentFolder
     }
-  },
-  watch: {
-    currentFolderName (newName) {
-      // When selected folder changes
-      // Put its name in the input
-      this.updatedFolderName = newName
-      // With focus on it
-      if (this.$store.state.progression.currentFolder !== undefined && this.$refs.folderName !== undefined && this.$refs.folderName !== null) {
-        this.$nextTick(() => this.$refs.folderName.$el.childNodes[0].focus())
-      }
-    },
-    isFolderSelected (newVal) {
-      this.displayFolderName = newVal
-    }
-  },
-  mounted () {
   },
   methods: {
-    deleteFolder () {
-      this.$store.dispatch('progression/deleteFolder', this.$store.state.progression.currentFolder)
-    },
-    openCreateMenu () {
-      this.$store.dispatch('progression/setCreateMenuDisplayed', true)
+    toggleCreateMenu () {
+      this.$store.dispatch('progression/setCreateMenuDisplayed', !this.$store.state.progression.isCreateMenuDisplayed)
     }
   }
 }

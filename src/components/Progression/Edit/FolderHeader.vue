@@ -39,12 +39,11 @@ export default {
       return this.$store.state.progression.currentFolder
     },
     currentFolderName () {
-      return this.currentFolder.name
+      return this.currentFolder ? this.currentFolder.name : undefined
     }
   },
   watch: {
     currentFolderName (newName) {
-      console.log(newName)
       // When selected folder changes
       // Put its name in the input
       this.folderNameInputText = newName

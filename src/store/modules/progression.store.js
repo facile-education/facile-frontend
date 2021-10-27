@@ -535,6 +535,7 @@ export const actions = {
           commit('removeFolder', folder)
           getProgressionContent(folder.progressionId)
           // TODO set new current folder
+          this.dispatch('progression/setCurrentFolder', undefined)
         }
       },
       (err) => {
