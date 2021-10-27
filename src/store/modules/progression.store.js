@@ -534,8 +534,8 @@ export const actions = {
         if (data.success) {
           commit('removeFolder', folder)
           getProgressionContent(folder.progressionId)
-          // TODO set new current folder
-          this.dispatch('progression/setCurrentFolder', undefined)
+          const nextSectionToSelect = this.getters['progression/nextSectionToSelect']
+          this.dispatch('progression/setCurrentFolder', nextSectionToSelect)
         }
       },
       (err) => {
@@ -668,5 +668,25 @@ export const actions = {
         // TODO toastr
         console.error(err)
       })
+  }
+}
+
+export const getters = {
+  sectionIndex: (state) => (folderId) => { // /!\ doesn't works with sub-section
+    return state.currentProgression.sections.map(section => section.folderId).indexOf(folderId)
+  },
+
+  // Return the next section to select after a deletion
+  nextSectionToSelect (state, getters) {
+    if (state.currentFolder && state.currentProgression && state.currentProgression.sections.length > 0) {
+      if (state.currentFolder.parentId !== 0) {
+        const parentSectionIndex = getters.sectionIndex(state.currentFolder.parentId)
+        return state.currentProgression.sections[parentSectionIndex]
+      } else {
+        return state.currentProgression.sections[0] // Return the first section of the progression (specified like that)
+      }
+    } else {
+      return undefined
+    }
   }
 }
