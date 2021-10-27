@@ -89,15 +89,15 @@ export default {
     line-height: 19px;
 
     /** prettier but non-conform **/
-    //background: none;
-    //
-    //&:focus {
-    //  background-color: #F5F5F5;
-    //}
-    //&:not(:hover) {
-    //  border: none;
-    //  margin-bottom: 1px;
-    //}
+    background: none;
+
+    &:focus {
+      background-color: #F5F5F5;
+    }
+    &:not(:hover) {
+      border: none;
+      margin-bottom: 1px;
+    }
   }
 
   .delete-folder-button {
