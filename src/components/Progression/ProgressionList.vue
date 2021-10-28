@@ -3,7 +3,7 @@
     <NeroToolbar>
       <PentilaButton
         class="create-button"
-        @click="toggleEditModalDisplay"
+        @click="toggleEditModalDisplay()"
       >
         <NeroIcon
           name="fa-plus"
@@ -50,7 +50,7 @@
         v-t="'addProgression'"
         href="#"
         class="link"
-        @click="toggleEditModalDisplay"
+        @click="toggleEditModalDisplay()"
       />
     </div>
     <teleport to="body">

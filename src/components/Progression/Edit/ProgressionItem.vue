@@ -292,7 +292,7 @@ export default {
   mounted () {
     // Set focus on item name input
     if (this.$store.state.progression.currentItem !== undefined) {
-      this.$nextTick(() => this.$refs.itemName.$el.focus())
+      this.$nextTick(() => this.$refs.itemName.$el.childNodes[0].focus())
     }
     // this.$refs.itemName.focus()
   },

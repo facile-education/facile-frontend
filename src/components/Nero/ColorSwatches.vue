@@ -5,7 +5,9 @@
       :key="color"
       :style="`background-color:${color};`"
       class="swatch"
+      tabindex="0"
       @click="colorPicked(color)"
+      @keyup.enter="colorPicked(color)"
     >
       <FontAwesomeIcon
         v-if="color === modelValue"
@@ -58,6 +60,11 @@ export default {
   height: 40px;
   border-radius: 50%;
   margin: 0.1rem;
+
+  &:hover {
+    filter: brightness(115%);
+    cursor: pointer;
+  }
 }
 
 .icon {

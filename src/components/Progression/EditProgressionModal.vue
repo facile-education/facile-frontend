@@ -10,14 +10,16 @@
     </template>
 
     <template #body>
-      <form>
+      <form id="progressionform">
         <div class="title-color">
           <PentilaInput
+            ref="title"
             v-model="progression.name"
             :placeholder="$t('title')"
-            maxlength="100"
+            maxlength="75"
+            @blur="v$.progression.name.$touch()"
           />
-          <!-- <PentilaErrorMessage :error-message="formErrorList.capacity" /> -->
+          <PentilaErrorMessage :error-message="formErrorList.name" />
           <ColorPicker v-model="progression.color" />
         </div>
         <div class="subject-volee">
@@ -25,15 +27,22 @@
             v-if="(subjectList && subjectList.length > 1)"
             v-model="progression.subject"
             :list="subjectList"
+            :sort="false"
             class="subject"
             display-field="name"
             @update:modelValue="onSelectSubject"
           />
+          <PentilaErrorMessage :error-message="formErrorList.subject" />
           <PentilaDropdown
             v-if="(voleeList && voleeList.length > 1)"
             v-model="progression.volee"
             class="volee"
             :list="voleeList"
+            :sort="false"
+          />
+          <PentilaErrorMessage
+            class="volee-error"
+            :error-message="formErrorList.volee"
           />
         </div>
         <PentilaTextArea
@@ -48,18 +57,30 @@
 
     <template #footer>
       <PentilaButton
+        form="progressionform"
         :label="$t('confirm')"
-        class="button confirm-button"
+        class="confirm-button"
+        :class="{'disabled' : v$.$invalid}"
         @click="onConfirm"
       />
-      <!-- :class="{'form-valid' : !v$.$invalid && !isTimeError}" -->
     </template>
   </PentilaWindow>
 </template>
 
 <script>
+import { useVuelidate } from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
+
 import PentilaUtils from 'pentila-utils'
 import ColorPicker from '@/components/Nero/ColorPicker'
+
+const subjectRequired = (value, vm) => {
+  return value.subjectId > 0
+}
+
+const voleeRequired = (value, vm) => {
+  return value !== vm.$i18n.t('volee')
+}
 
 export default {
   name: 'EditProgressionModal',
@@ -72,6 +93,14 @@ export default {
     }
   },
   emits: ['close'],
+  setup: () => ({ v$: useVuelidate() }),
+  validations: {
+    progression: {
+      name: { required },
+      subject: { subjectRequired },
+      volee: { voleeRequired }
+    }
+  },
   data () {
     return {
       progression: {
@@ -85,6 +114,14 @@ export default {
     }
   },
   computed: {
+    formErrorList () {
+      const form = this.v$.progression
+      return {
+        name: (form.name.$invalid && form.name.$dirty) ? this.$t('required') : '',
+        subject: (form.subject.$invalid && form.subject.$dirty) ? this.$t('required') : '',
+        volee: (form.volee.$invalid && form.volee.$dirty) ? this.$t('required') : ''
+      }
+    },
     subjectList () {
       if (this.$store.state.progression.subjectList) {
         const defaultSubject = {
@@ -108,13 +145,29 @@ export default {
   created () {
     if (this.updatedProgression !== undefined) {
       this.progression = PentilaUtils.JSON.deepCopy(this.updatedProgression)
+      this.progression.subject = {
+        subjectId: this.updatedProgression.subjectId,
+        name: this.updatedProgression.subjectName
+      }
     }
+    this.$nextTick(() => this.$refs.title.$el.childNodes[0].focus())
   },
   methods: {
     closeModal () {
       this.$emit('close')
     },
-    onConfirm () {
+    onConfirm (e) {
+      e.preventDefault()
+      if (this.v$.$invalid) {
+        this.v$.$touch()
+      } else {
+        this.submitChanges()
+      }
+    },
+    onSelectSubject (subject) {
+      this.progression.subjectId = subject.subjectId
+    },
+    submitChanges () {
       if (this.progression.progressionId > 0) {
         // Update
         this.$store.dispatch('progression/updateProgression', this.progression)
@@ -123,9 +176,6 @@ export default {
         this.$store.dispatch('progression/addProgression', this.progression)
       }
       this.closeModal()
-    },
-    onSelectSubject (subject) {
-      this.progression.subjectId = subject.subjectId
     }
   }
 }
@@ -135,10 +185,16 @@ export default {
 .title-color {
   display: flex;
   justify-content: space-between;
+  position: relative;
 
   .group {
     flex-grow: 1;
     margin-right: 10px;
+  }
+
+  .error-message {
+    position: absolute;
+    top: 46px;
   }
 }
 
@@ -147,12 +203,21 @@ export default {
   justify-content: space-between;
   margin-top: 20px;
   margin-bottom: 20px;
+  position: relative;
 
   .subject {
-    width: 240px;
+    width: 260px;
   }
   .volee {
-    width: 180px;
+    width: 160px;
+  }
+
+  .error-message {
+    position: absolute;
+    top: 46px;
+  }
+  .volee-error {
+    left: 290px;
   }
 }
 
@@ -170,6 +235,7 @@ export default {
   "confirm": "Créer",
   "description": "Description",
   "progression": "Progression",
+  "required": "Champs requis",
   "subject": "Discipline",
   "volee": "Volée",
   "title": "Titre"
