@@ -21,7 +21,7 @@
           class="header"
         />
         <ProgressionEdit
-          class="edit"
+          class="section"
         />
       </div>
     </div>
@@ -79,25 +79,36 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
+
 .progression-panel {
   height: 100%;
+
   .switch {
     width: 100%;
-    height: 80px;
+    height: $switch-mode-banner-height;
     border-bottom: 1px solid rgb(204, 204, 204);
   }
+
   .tree-edit {
     display: flex;
-    height: 100%;
+    height: calc(100% - #{$switch-mode-banner-height});
+
     .tree {
-      width: 15%;
+      width: 20%;
       height: 100%;
+      overflow-y: auto;
     }
+
     .edit {
-      width: 85%;
+      width: 80%;
       height: 100%;
+      padding-right: 20px;
+      padding-left: 25px;
+      overflow-y: auto;
     }
   }
+
   .assignment {
     display: flex;
     height: 100%;
@@ -107,6 +118,6 @@ export default {
 
 <i18n locale="fr">
 {
-  "add": "Créer",
+  "add": "Créer"
 }
 </i18n>

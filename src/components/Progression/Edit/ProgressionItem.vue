@@ -386,7 +386,7 @@ export default {
   border: 1px solid #D4D4D4;
   border-radius: 6px;
   background-color: #FFFFFF;
-  margin: 10px;
+  margin: 5px 0 25px 0;
   display: flex;
 
   .vertical-1 {
