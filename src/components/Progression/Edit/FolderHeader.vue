@@ -85,6 +85,9 @@ export default {
     padding-left: 0;
     /* TODO adapt width (or input size property) with text size */
     flex: 1;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
     font-size: 1.5rem;
     font-weight: 500;
     letter-spacing: 0;

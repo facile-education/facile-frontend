@@ -7,6 +7,7 @@
     <div
       class="section-name"
       :class="{'selected': isSelected }"
+      :title="section.name"
       @click="selectSection"
     >
       <span>{{ section.name }}</span>
@@ -82,8 +83,6 @@ export default {
 
 <style lang="scss" scoped>
 .tree-section {
-  margin-left: 10px;
-  margin-right: 10px;
 
   hr {
     margin: 0;
@@ -91,12 +90,15 @@ export default {
   }
 
   .section-name {
-    height: 30px;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    height: 50px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+
     span {
-      vertical-align: sub;
-      margin-left: 5px;
+      overflow-x: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
       color: #000000;
       font-size: 0.875rem;
       font-weight: 500;
@@ -113,16 +115,16 @@ export default {
     }
   }
   .sub-sections {
-    margin-left: 0px;
+    margin-left: 0;
   }
   .section-items {
-    margin-left: 0px;
+    margin-left: 0;
   }
 }
 </style>
 
 <i18n locale="fr">
 {
-  "add": "Créer",
+  "add": "Créer"
 }
 </i18n>
