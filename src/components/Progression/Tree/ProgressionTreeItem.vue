@@ -2,22 +2,25 @@
   <div
     class="tree-item"
     :class="{'selected': isSelected }"
+    :title="item.name"
     @click="selectItem"
   >
-    <img
-      v-if="item.isHomework"
-      class="item-type-icon"
-      src="@assets/devoir.svg"
-      :alt="$t('homework')"
-      :title="$t('homework')"
-    >
-    <img
-      v-else
-      class="item-type-icon"
-      src="@assets/seance.svg"
-      :alt="$t('session')"
-      :title="$t('session')"
-    >
+    <div class="icon">
+      <img
+        v-if="item.isHomework"
+        class="item-type-icon"
+        src="@assets/devoir.svg"
+        :alt="$t('homework')"
+        :title="$t('homework')"
+      >
+      <img
+        v-else
+        class="item-type-icon"
+        src="@assets/seance.svg"
+        :alt="$t('session')"
+        :title="$t('session')"
+      >
+    </div>
 
     <span>{{ item.name }}</span>
   </div>
@@ -60,23 +63,36 @@ export default {
 
 <style lang="scss" scoped>
 .tree-item {
-  height: 25px;
+  display: flex;
+  align-items: center;
+  height: 30px;
+
   &:hover {
     background-color: #EFF3FB;
   }
   &.selected {
     color: #306CD3;
   }
-  .item-type-icon {
-    width: 20px;
-    height: 20px;
-    margin: auto;
-    float: left;
+
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 3px;
+    margin-left: -3px;
+
+    img {
+      width: 22px;
+      height: 22px;
+    }
   }
+
   span {
-    margin: auto auto auto 5px;
+    flex: 1;
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     font-size: 0.75rem;
-    float: left;
   }
 }
 </style>

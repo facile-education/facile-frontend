@@ -24,39 +24,31 @@ import ProgressionTreeSection from '@/components/Progression/Tree/ProgressionTre
 export default {
   name: 'ProgressionTree',
   components: { ProgressionTreeSection },
-  data () {
-    return {
-    }
-  },
   computed: {
     progression () {
       return this.$store.state.progression.currentProgression
     }
-  },
-  created () {
-  },
-  methods: {
   }
 }
 </script>
 
 <style lang="scss" scoped>
+
 .tree {
+  padding-left: 25px;
 
   .summary {
     text-align: center;
-    margin-top: 25px;
-    margin-bottom: 10px;
-  }
-  .section {
-    margin-left: 10px;
+    margin-top: 24px;
+    height: 48px;
+    display: flex;
+    align-items: center;
   }
 }
 </style>
 
 <i18n locale="fr">
 {
-  "add": "Créer",
   "summary": "Sommaire"
 }
 </i18n>

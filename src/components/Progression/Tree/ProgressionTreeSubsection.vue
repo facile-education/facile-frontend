@@ -9,36 +9,38 @@
     >
       <div
         class="subsection-name"
+        :title="subSection.name"
       >
         <!-- Subsection name -->
         <span>
           {{ subSection.name }}
         </span>
-
-        <!-- Number of items -->
-        <span
-          v-if="!isExpanded"
-        >
-          ({{ nbItems }})
-        </span>
       </div>
 
-      <!-- Right arrow icon -->
-      <img
+      <!-- Number of items -->
+      <span
         v-if="!isExpanded"
-        class="arrow"
-        src="@assets/arrow-right.svg"
-        :alt="$t('expand')"
-        :title="$t('expand')"
+        class="item-number"
       >
-      <!-- Down arrow icon -->
-      <img
-        v-if="isExpanded"
-        class="arrow"
-        src="@assets/arrow-down.svg"
-        :alt="$t('collapse')"
-        :title="$t('collapse')"
-      >
+        ({{ nbItems }})
+      </span>
+
+      <!-- Right arrow icon -->
+      <div class="arrow">
+        <img
+          src="@assets/arrow-right.svg"
+          :class="{'expended': isExpanded}"
+          :alt="$t('expand')"
+          :title="$t('expand')"
+        >
+        <!--        &lt;!&ndash; Down arrow icon &ndash;&gt;-->
+        <!--        <img-->
+        <!--          v-if="isExpanded"-->
+        <!--          src="@assets/arrow-down.svg"-->
+        <!--          :alt="$t('collapse')"-->
+        <!--          :title="$t('collapse')"-->
+        <!--        >-->
+      </div>
     </div>
 
     <!-- Sub-section items -->
@@ -100,33 +102,71 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .tree-subsection {
+
   .subsection-header {
+    height: 40px;
+    width: 100%;
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+
     .subsection-name {
-      margin-left: 5px;
+      color: black;
+      flex: 1;
+      overflow-x: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
       height: 25px;
       font-size: 0.875rem;
       font-weight: 500;
       letter-spacing: 0;
       line-height: 16px;
+      display: flex;
+      align-items: center;
+
       span {
-        vertical-align: sub;
+        width: 100%;
+        overflow-x: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
     }
+
+    .item-number {
+      font-size: 0.75rem;
+      margin-right: 5px;
+      margin-left: 5px;
+    }
+
+    .arrow {
+      width: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      img {
+        transition: all .3s ease;
+      }
+
+      .expended {
+        transform: rotate(90deg);
+      }
+    }
+
     &:hover {
       background-color: #EFF3FB;
     }
+
     &.selected {
-      color: #306CD3;
-    }
-    .arrow {
-      margin-right: 10px;
+      .subsection-name, .item-number{
+        color: #306CD3;
+      }
     }
   }
+
   .tree-items {
-    margin-left: 10px;
+    margin-left: 13px;
   }
 }
 </style>
