@@ -5,30 +5,27 @@
     :class="{'mobile': mq.phone}"
     data-test="edit-slot-modal"
     @close="closeModal"
-    @keydown.exact.enter.stop=""
-    @keydown.exact.backspace.stop=""
-    @keydown.exact.delete.stop=""
-    @keydown.exact.f2.stop=""
-    @keydown.ctrl.stop=""
   >
     <template #header>
       <span v-t="'NotUsualSlots.EditSlotModal.header'" />
     </template>
 
     <template #body>
-      <h3>
-        {{ $t('NotUsualSlots.EditSlotModal.slot') + ' ' + currentSlotType.label }}
-      </h3>
       <TimeSelection
         v-model:start="newEvent.start"
         v-model:end="newEvent.end"
         @error="updateTimeErrorStatus"
-      />
+      >
+        <strong>
+          {{ currentSlotType.label }}
+        </strong>
+      </TimeSelection>
 
       <div
         class="teacher-part"
         data-test="teacher-part"
       >
+        <label v-t="'NotUsualSlots.EditSlotModal.teacherNamePlaceHolder'" />
         <UserCompletion
           user-type="teacher"
           :placeholder="$t('NotUsualSlots.EditSlotModal.teacherNamePlaceHolder')"
@@ -39,14 +36,12 @@
         <PentilaErrorMessage :error-message="formErrorList.teacher" />
       </div>
 
-      <div data-test="room-part">
-        <span
-          v-t="'NotUsualSlots.EditSlotModal.roomNamePlaceHolder'"
-          class="label"
-        />
+      <div
+        class="room-part"
+        data-test="room-part"
+      >
         <PentilaInput
           v-model="newEvent.extendedProps.room"
-          class="input"
           :placeholder="$t('NotUsualSlots.EditSlotModal.roomNamePlaceHolder')"
           @blur="v$.newEvent.extendedProps.room.$touch()"
         />
@@ -54,15 +49,10 @@
       </div>
 
       <div data-test="capacity-part">
-        <span
-          v-if="!isEventCreation"
-          class="label"
-        >{{ $t('NotUsualSlots.EditSlotModal.remainingPlaces') + newEvent.extendedProps.capacity + ' ('+ $t('NotUsualSlots.EditSlotModal.registered')+ newEvent.extendedProps.nbRegisteredStudents + ')' }}</span>
         <PentilaInput
           v-model="newEvent.extendedProps.capacity"
-          class="input"
           type="number"
-          :placeholder="$t('NotUsualSlots.EditSlotModal.inscriptionLeftPlaceHolder')"
+          :placeholder="capacityLabel"
           @blur="v$.newEvent.extendedProps.capacity.$touch()"
         />
         <PentilaErrorMessage :error-message="formErrorList.capacity" />
@@ -74,14 +64,13 @@
         <PentilaButton
           v-if="!isEventCreation"
           :label="mq.phone ? $t('NotUsualSlots.EditSlotModal.deleteSlot') : $t('NotUsualSlots.EditSlotModal.longDeleteSlot')"
-          class="button delete-button"
-          :class="{'mobile': mq.phone}"
+          class="delete"
           @click="confirmSlotDeletion"
         />
         <PentilaButton
           :label="$t('Commons.submit')"
-          class="button confirm-button"
-          :class="{'form-valid' : !v$.$invalid && !isTimeError}"
+          class="confirm"
+          :class="{'disabled' : v$.$invalid || isTimeError}"
           @click="confirm"
         />
       </div>
@@ -166,6 +155,13 @@ export default {
           : '',
         room: (form.extendedProps.room.$invalid && form.extendedProps.room.$dirty) ? this.$t('Commons.formRequired') : ''
       }
+    },
+    capacityLabel () {
+      let label = this.$t('NotUsualSlots.EditSlotModal.remainingPlaces')
+      if (!this.isEventCreation) {
+        label += ' - ' + this.newEvent.extendedProps.nbRegisteredStudents + ' ' + this.$t('NotUsualSlots.EditSlotModal.registered')
+      }
+      return label
     },
     currentSlotType () {
       return this.$store.state.notUsualSlots.currentSlotType
@@ -288,57 +284,17 @@ export default {
 </style>
 
 <style lang="scss" scoped>
-.teacher-part {
-  margin-bottom: 10px;
-}
-
-.input {
-  margin: 10px 0;
+.teacher-part, .room-part {
+  margin-bottom: 20px;
 }
 
 .footer {
-  margin-top: auto;
-  width: 100%;
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 
-.label {
-  font-size: 0.915rem;
+.confirm {
+  width: 130px;
+  margin-left: auto;
 }
-
-.button {
-  display: flex;
-  font-weight: bold;
-  width: 125px;
-  height: 35px;
-  border-radius: 6px;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  margin: 0 10px;
-  color: white;
-  cursor: pointer;
-}
-
-.delete-button {
-  width: 250px;
-  background-color: red;
-
-  &.mobile {
-    width: 125px;
-  }
-}
-
-.confirm-button {
-  background-color: #C4C4C4;
-  cursor: default;
-
-  &.form-valid {
-    background-color: green;
-    cursor: pointer;
-  }
-}
-
 </style>

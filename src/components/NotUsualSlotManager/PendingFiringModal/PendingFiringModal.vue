@@ -4,11 +4,6 @@
     width="500px"
     data-test="pending-firing-modal"
     class="pending-firing-modal"
-    @keydown.exact.enter.stop=""
-    @keydown.exact.backspace.stop=""
-    @keydown.exact.delete.stop=""
-    @keydown.exact.f2.stop=""
-    @keydown.ctrl.stop=""
   >
     <template #header>
       <span v-t="'NotUsualSlots.PendingFiringModal.header'" />
@@ -27,9 +22,11 @@
         <span v-t="'NotUsualSlots.PendingFiringModal.firedTimestamp'" />
         <span>{{ formattedTimestamp }}</span>
       </div>
-      <textarea
+      <PentilaTextArea
+        ref="comment"
         v-model="justification"
         :placeholder="$t('NotUsualSlots.PendingFiringModal.justificationPlaceholder')"
+        style="height:100px;resize:none;"
         @keydown.enter.stop=""
       />
       <PentilaErrorMessage
@@ -93,7 +90,7 @@ export default {
     }
   },
   created () {
-    // TODO: focus textarea
+    this.$nextTick(() => this.$refs.comment.$el.childNodes[0].focus())
   },
   methods: {
     submit () {
@@ -122,12 +119,8 @@ export default {
 </script>
 
 <style lang="scss">
-
 .pending-firing-modal .window-wrapper {
   max-width: 500px;
-  &.mobile {
-    width: 100%;
-  }
 }
 </style>
 
@@ -138,47 +131,13 @@ export default {
   font-weight: bold;
 }
 
-.slot{
+.slot {
   margin: 10px 0 15px 0;
-}
-
-textarea {
-  width: 100%;
-  height: 100px;
-  padding: 10px 10px;
-  resize: none;
-  border: 1px solid $color-text;
-  border-radius: 6px;
 }
 
 .information {
   margin-top: 15px;
   font-weight: bold;
   font-style: italic;
-}
-
-.footer {
-  margin-top: auto;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-.button {
-  display: flex;
-  font-weight: bold;
-  width: 125px;
-  height: 35px;
-  border-radius: 6px;
-  align-items: center;
-  justify-content: center;
-  margin: 0 10px;
-  color: white;
-  cursor: pointer;
-}
-
-.confirm-button {
-  background-color: #C4C4C4;
 }
 </style>

@@ -27,13 +27,13 @@
       <div class="window-footer">
         <PentilaButton
           data-test="cancelButton"
-          class="cancel-button"
+          cls="cancel"
           :label="$t('WarningModal.cancelButton')"
           @click="onClose"
         />
         <PentilaButton
           data-test="confirmButton"
-          class="confirm-button"
+          cls="delete"
           :label="$t('WarningModal.confirmButton')"
           @click="forceLastAction"
         />
@@ -68,52 +68,33 @@ export default {
 }
 </script>
 
-<style scoped>
-  .body{
-    padding: 10px;
-    display: flex;
-    align-items: center;
-  }
+<style lang="scss" scoped>
+.body {
+  display: flex;
+  align-items: center;
+}
 
-  .icon {
-    font-size: 40px;
-    color: orange;
-  }
+.icon {
+  font-size: 40px;
+  color: orange;
+}
 
-  .warning-modal {
-    display: flex;
-  }
+.warning-modal {
+  display: flex;
+}
 
-  .context-message{
-    display: inline;
-    vertical-align: 14px;
-    padding-left: 10px;
-  }
+.context-message{
+  display: inline;
+  vertical-align: 14px;
+  margin-left: 10px;
+}
 
-  .window-footer{
-    display: flex;
-    justify-content: space-evenly;
-  }
+.window-footer{
+  display: flex;
+  justify-content: space-evenly;
+}
 
-  .cancel-button{
-    flex: 1;
-    margin: 0 10px;
-    min-width: 200px;
-    height: 35px;
-    font-weight: bold;
-    font-size: 15px;
-    background-color: gray;
-    color: white;
-  }
-
-  .confirm-button{
-    flex: 1;
-    margin: 0 10px;
-    min-width: 200px;
-    height: 35px;
-    font-weight: bold;
-    font-size: 15px;
-    background-color: red;
-    color: white;
-  }
+.cancel, .delete {
+  width: 130px;
+}
 </style>

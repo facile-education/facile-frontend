@@ -2,7 +2,6 @@
   <PentilaWindow
     :modal="true"
     class="editWindow"
-    :class="{'mobile': mq.phone}"
     @close="closeModal"
   >
     <template #header>
