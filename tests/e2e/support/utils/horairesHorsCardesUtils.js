@@ -36,7 +36,7 @@ const selectStudent = (student) => {
 
 const clearSelectedUser = () => {
   cy.get('[data-test=user-completion-input]').within(() => {
-    cy.get('.tag-item > .pc-times').click()
+    cy.get('.tag-item > .fa-times').click()
     cy.get('.tag-list').children().should('have.length', 0)
   })
 }
@@ -71,10 +71,10 @@ const closeSlotPopup = (slot, capacity) => {
 }
 
 const selectHours = (startHour, endHour) => {
-  cy.get('[data-test=time-selection] > .input-section > :nth-child(2)').clear()
-  cy.get('[data-test=time-selection] > .input-section > :nth-child(2)').type(startHour)
-  cy.get('[data-test=time-selection] > .input-section > :nth-child(3)').clear()
-  cy.get('[data-test=time-selection] > .input-section > :nth-child(3)').type(endHour)
+  cy.get('[data-test=time-selection] > .input-section > .start').clear()
+  cy.get('[data-test=time-selection] > .input-section > .start').type(startHour)
+  cy.get('[data-test=time-selection] > .input-section > .end').clear()
+  cy.get('[data-test=time-selection] > .input-section > .end').type(endHour)
 }
 
 const submit = () => {
@@ -85,14 +85,14 @@ const fillEditSlotModal = (form, isModification) => {
   cy.get('[data-test=edit-slot-modal]').within(() => {
     selectHours(form.startHour, form.endHour)
     if (isModification) {
-      cy.get('.tag-item > .pc-times').click()
+      cy.get('.tag-item > .fa-times').click()
       cy.get('.tag-item').should('not.exist')
     }
     cy.get('[data-test=user-completion-input]').type(form.teacherSearch)
     cy.tick(500)
     cy.contains(form.teacherName).click()
     cy.get('[placeholder="Salle"]').type(form.roomNumber)
-    cy.get('[type="number"]').type(form.capacity)
+    cy.get('input[type="number"]').type(form.capacity, { force: true })
 
     submit()
   })

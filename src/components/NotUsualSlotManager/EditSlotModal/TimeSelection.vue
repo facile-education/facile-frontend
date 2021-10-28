@@ -1,17 +1,20 @@
 <template>
   <div data-test="time-selection">
     <div class="input-section">
-      <span>{{ 'Tous les ' + momentStartTime.format('dddd') + 's de ' }}</span>
+      <slot />
+      <span> {{ ` ${$t('the')} ${startTime.format('dddd')}s ${$t('at')} ` }}</span>
       <PentilaInput
         v-model="inputStartHour"
-        class="input"
+        class="input start"
         :placeholder="'hh:mm'"
+        :labelled="false"
       />
-      à
+      <span v-t="'to'" />
       <PentilaInput
         v-model="inputEndHour"
-        class="input"
+        class="input end"
         :placeholder="'hh:mm'"
+        :labelled="false"
       />
     </div>
     <PentilaErrorMessage
@@ -19,7 +22,7 @@
       :error-message="error"
     />
     <div class="from-date">
-      {{ 'À partir du ' + momentStartTime.format('dddd DD MMMM YYYY') }}
+      {{ $t('fromThe') + startTime.format('DD MMMM YYYY') }}
     </div>
   </div>
 </template>
@@ -48,18 +51,18 @@ export default {
     }
   },
   computed: {
-    momentStartTime () {
+    startTime () {
       return dayjs(this.start)
     },
-    momentEndTime () {
+    endTime () {
       return dayjs(this.end)
     }
   },
   watch: {
     inputStartHour (value) {
       const hour = dayjs(value, 'HH:mm')
-      const newStartHour = dayjs(this.momentStartTime.format('YYYY-MM-DD') + ' ' + value, 'YYYY-MM-DD HH:mm')
-      const currentEndHour = dayjs(this.momentEndTime.format('YYYY-MM-DD') + ' ' + this.inputEndHour, 'YYYY-MM-DD HH:mm')
+      const newStartHour = dayjs(this.startTime.format('YYYY-MM-DD') + ' ' + value, 'YYYY-MM-DD HH:mm')
+      const currentEndHour = dayjs(this.endTime.format('YYYY-MM-DD') + ' ' + this.inputEndHour, 'YYYY-MM-DD HH:mm')
 
       if (hour.isValid() && currentEndHour.isValid() && newStartHour.isBefore(currentEndHour)) {
         this.error = ''
@@ -73,8 +76,8 @@ export default {
     },
     inputEndHour (value) {
       const hour = dayjs(value, 'HH:mm', true)
-      const currentStartHour = dayjs(this.momentStartTime.format('YYYY-MM-DD') + ' ' + this.inputStartHour, 'YYYY-MM-DD HH:mm')
-      const newEndHour = dayjs(this.momentEndTime.format('YYYY-MM-DD') + ' ' + value, 'YYYY-MM-DD HH:mm')
+      const currentStartHour = dayjs(this.startTime.format('YYYY-MM-DD') + ' ' + this.inputStartHour, 'YYYY-MM-DD HH:mm')
+      const newEndHour = dayjs(this.endTime.format('YYYY-MM-DD') + ' ' + value, 'YYYY-MM-DD HH:mm')
 
       if (hour.isValid() && currentStartHour.isValid() && newEndHour.isAfter(currentStartHour)) {
         this.error = ''
@@ -88,29 +91,40 @@ export default {
     }
   },
   created () {
-    this.inputStartHour = this.momentStartTime.format('HH:mm')
-    this.inputEndHour = this.momentEndTime.format('HH:mm')
+    this.inputStartHour = this.startTime.format('HH:mm')
+    this.inputEndHour = this.endTime.format('HH:mm')
   }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .input-section {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+
+  span {
+    margin: 0 6px;
+  }
 }
 
 .input {
-  max-width: 75px;
-  margin: 0 10px;
+  max-width: 62px;
+  padding-left: 8px;
+  padding-right: 8px;
 }
 
 .from-date {
   font-size: 0.85em;
   font-style: italic;
-  margin-bottom: 10px;
-
+  margin-bottom: 20px;
 }
-
 </style>
+
+<i18n locale="fr">
+{
+  "at": "de",
+  "fromThe": "À partir du ",
+  "the": "des",
+  "to": "à"
+}
+</i18n>

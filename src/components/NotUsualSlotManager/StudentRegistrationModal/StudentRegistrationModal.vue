@@ -3,13 +3,7 @@
     :modal="true"
     class="student-registration-modal"
     data-test="student-registration-modal"
-    :class="{'mobile': mq.phone}"
     @close="closeModal"
-    @keydown.exact.enter.stop=""
-    @keydown.exact.backspace.stop=""
-    @keydown.exact.delete.stop=""
-    @keydown.exact.f2.stop=""
-    @keydown.ctrl.stop=""
   >
     <template #header>
       <span
@@ -23,7 +17,7 @@
     </template>
 
     <template #body>
-      <h1>{{ slotType.label }}</h1>
+      <h3>{{ slotType.label }}</h3>
       <div
         v-if="student"
         class="student"
@@ -103,11 +97,13 @@
           :error-message="$t('NotUsualSlots.StudentRegistrationModal.haveToSelectSubject')"
         />
       </div>
-      <textarea
+      <PentilaTextArea
         v-if="isCommentDisplayed"
         ref="commentTextarea"
         v-model="comment"
         :placeholder="$t('NotUsualSlots.StudentRegistrationModal.commentPlaceholder')"
+        class="comment"
+        style="height:100px;resize: none;"
         @keydown.enter.stop=""
       />
       <PentilaCheckbox
@@ -120,20 +116,18 @@
     </template>
 
     <template #footer>
-      <div class="footer">
-        <PentilaButton
-          v-if="deregistration"
-          :label="$t('NotUsualSlots.StudentRegistrationModal.unregister')"
-          class="register"
-          @click="submit"
-        />
-        <PentilaButton
-          v-else
-          :label="$t('NotUsualSlots.StudentRegistrationModal.register')"
-          class="register"
-          @click="submit"
-        />
-      </div>
+      <PentilaButton
+        v-if="deregistration"
+        :label="$t('NotUsualSlots.StudentRegistrationModal.unregister')"
+        class="register"
+        @click="submit"
+      />
+      <PentilaButton
+        v-else
+        :label="$t('NotUsualSlots.StudentRegistrationModal.register')"
+        class="register"
+        @click="submit"
+      />
     </template>
   </PentilaWindow>
 </template>
@@ -235,7 +229,7 @@ export default {
     if (this.isCommentDisplayed) { // Focus textArea
       const vm = this
       nextTick(function () {
-        vm.$refs.commentTextarea.focus()
+        vm.$refs.commentTextarea.$el.childNodes[0].focus()
       })
     }
   },
@@ -328,9 +322,6 @@ export default {
 <style lang="scss">
 .student-registration-modal .window-wrapper {
   max-width: 500px;
-  &.mobile {
-    width: 100%;
-  }
 }
 
 </style>
@@ -338,12 +329,8 @@ export default {
 <style lang="scss" scoped>
 @import '@design';
 
-.body {
-  margin-left: 20px;
-}
-
-h1 {
-  font-size: 1.25em;
+h3 {
+  margin-top: 0;
 }
 
 .student, .slot {
@@ -362,44 +349,16 @@ h1 {
   margin-top: 10px;
 }
 
-textarea {
-  width: 100%;
+.comment {
   height: 100px;
   margin-bottom: 15px;
-  padding: 10px 10px;
-  line-height: 10px;
-  resize: none;
-  border: 1px solid $color-text;
-  border-radius: 6px;
 }
 
 .notify-parents {
   margin-top: 10px;
 }
 
-.footer {
-  margin-top: auto;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
+.register {
+  width: 130px;
 }
-
-.button {
-  display: flex;
-  font-weight: bold;
-  width: 125px;
-  height: 35px;
-  border-radius: 6px;
-  align-items: center;
-  justify-content: center;
-  margin: 0 10px;
-  color: white;
-  cursor: pointer;
-}
-
-.confirm-button {
-  background-color: #C4C4C4;
-}
-
 </style>

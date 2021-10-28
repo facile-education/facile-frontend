@@ -16,8 +16,8 @@ const form = {
 const testEditSlotModalForm = (form) => {
   cy.get('[data-test=edit-slot-modal]').within(() => {
     // test hours section
-    cy.get('[data-test=time-selection] > .input-section > :nth-child(2)').should('have.value', '14:00') // because we have clicked on column n°7
-    cy.get('[data-test=time-selection] > .input-section > :nth-child(3)').should('have.value', '15:00')
+    cy.get('[data-test=time-selection] > .input-section > .start').should('have.value', '14:00') // because we have clicked on column n°7
+    cy.get('[data-test=time-selection] > .input-section > .end').should('have.value', '15:00')
     utils.selectHours(' ', ' ')
     utils.submit()
     cy.get('[data-test=time-selection] > .error-message').should('exist')
@@ -42,7 +42,7 @@ const testEditSlotModalForm = (form) => {
 
     // tests capacity
     cy.get('[data-test=capacity-part] > .error-message').should('exist')
-    cy.get('[type="number"]').type(form.capacity)
+    cy.get('input[type="number"]').type(form.capacity)
     cy.get('[data-test=capacity-part] > .error-message').should('not.exist')
 
     utils.submit()

@@ -3,13 +3,7 @@
     :modal="true"
     class="student-list-modal"
     data-test="student-list-modal"
-    :class="{'mobile': mq.phone}"
     @close="closeModal"
-    @keydown.exact.enter.stop=""
-    @keydown.exact.backspace.stop=""
-    @keydown.exact.delete.stop=""
-    @keydown.exact.f2.stop=""
-    @keydown.ctrl.stop=""
   >
     <template #header>
       <span v-t="'NotUsualSlots.StudentListModal.header'" />
@@ -54,7 +48,6 @@
       <PentilaButton
         v-if="isRollCallable"
         :label="$t('NotUsualSlots.StudentListModal.callRollButton')"
-        class="call-roll"
         @click="callRoll()"
       />
     </template>
@@ -140,9 +133,6 @@ export default {
 <style lang="scss">
   .student-list-modal .window-wrapper {
     max-width: 500px;
-    &.mobile {
-      width: 100%;
-    }
   }
 </style>
 
@@ -154,20 +144,13 @@ export default {
     overflow: auto;
   }
 
-  h1 {
-    font-size: 1.25em;
-  }
-
   .slot {
     font-weight: bold;
-    margin-top: 10px;
-    margin-left: 20px;
   }
 
   .student-list {
     margin-top: 20px;
     padding-left: 35px;
-    padding-right: 5px;
 
     .list-header {
       width: 100%;
@@ -175,7 +158,7 @@ export default {
 
       .present-label {
         margin-left: auto;
-        margin-right: 63px;
+        margin-right: 13px;
         font-size: 0.90em;
       }
     }
@@ -187,11 +170,5 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1em;
   }
-
-  .call-roll {
-    margin-right: 50px;
-  }
-
 </style>

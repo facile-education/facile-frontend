@@ -127,7 +127,7 @@ describe('Study registration', () => {
     // Set slot Capacity to 0
     cy.get('[data-test=openEditModal-option]').click()
     cy.get('[data-test=edit-slot-modal]').within(() => {
-      cy.get('[type="number"]').clear().type(0)
+      cy.get('input[type="number"]').clear().type(0)
       cy.get('.button').contains('Valider').click()
     })
     utils.waitCalendarToLoad()

@@ -197,13 +197,11 @@
       "deleteSlot": "Supprimer",
       "haveToSelectHour": "Veuillez saisir une plage d'horaires valide (hh:mm)",
       "header": "Éditer un créneau",
-      "inscriptionLeftPlaceHolder": "Nombre de places disponibles",
       "longDeleteSlot": "Supprimer le créneau",
-      "remainingPlaces": "Capacité de la salle: ",
-      "registered": "inscrits: ",
+      "remainingPlaces": "Capacité de la salle",
+      "registered": "inscrits",
       "roomNamePlaceHolder": "Salle",
-      "slot": "Créneau",
-      "teacherNamePlaceHolder": "Maître"
+      "teacherNamePlaceHolder": "Maître surveillant"
     },
     "PendingFiringModal": {
       "courseOf": "Cours de ",
@@ -228,7 +226,7 @@
     "StudentRegistrationModal": {
       "arrival": "Enregistré: ",
       "class": "Elèves de:",
-      "commentPlaceholder": "Saisir un motif",
+      "commentPlaceholder": "Motif de la retenue",
       "firedBy": "Renvoyé par: ",
       "haveToSelectSlot": "Veuillez sélectionner un cours",
       "haveToSelectSubject": "Veuillez sélectionner une discipline",

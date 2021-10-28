@@ -147,9 +147,13 @@ export default {
 
 .icon {
   cursor: pointer;
-  display: flex;
-  align-items: center;
   margin-right: 30px;
+  // width: 25px;
+  // height: 25px;
+
+  // &:hover {
+  //   border: 1px solid grey;
+  // }
 }
 
 </style>
