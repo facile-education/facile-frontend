@@ -21,6 +21,7 @@
       <ProgressionTreeSubsection
         v-for="subSection in section.subSections"
         :key="subSection.folderId"
+        :is-parent-section-selected="isSelected"
         :sub-section="subSection"
       />
     </div>
@@ -31,6 +32,7 @@
       <ProgressionTreeItem
         v-for="item in section.items"
         :key="item.itemId"
+        :is-parent-section-selected="isSelected"
         :item="item"
       />
     </div>
@@ -70,12 +72,8 @@ export default {
     this.isExpanded = true
   },
   methods: {
-    expand () {
-      this.isExpanded = !this.isExpanded
-    },
     selectSection () {
       this.$store.dispatch('progression/setCurrentFolder', this.section)
-      // this.expand()
     }
   }
 }

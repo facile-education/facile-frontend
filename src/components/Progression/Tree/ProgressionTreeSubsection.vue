@@ -51,6 +51,7 @@
       <ProgressionTreeItem
         v-for="item in subSection.items"
         :key="item.itemId"
+        :is-parent-section-selected="isSelected"
         :item="item"
       />
     </div>
@@ -67,6 +68,10 @@ export default {
     subSection: {
       type: Object,
       required: true
+    },
+    isParentSectionSelected: {
+      type: Boolean,
+      required: true
     }
   },
   data () {
@@ -78,6 +83,9 @@ export default {
     progression () {
       return this.$store.state.progression.currentProgression
     },
+    currentFolder () {
+      return this.$store.state.progression.currentFolder
+    },
     nbItems () {
       if (this.subSection.items === undefined) {
         return 0
@@ -86,7 +94,8 @@ export default {
     },
     isSelected () {
       // Sub-section is selected when itself is selected or its parent section
-      return this.$store.state.progression.currentFolder !== undefined && (this.$store.state.progression.currentFolder.folderId === this.subSection.folderId || this.$store.state.progression.currentFolder.folderId === this.subSection.parentId)
+      return (this.currentFolder && this.currentFolder.folderId === this.subSection.folderId) ||
+        this.isParentSectionSelected
     }
   },
   created () {
@@ -94,8 +103,10 @@ export default {
   },
   methods: {
     selectSubsection () {
+      if (this.isSelected || !this.isExpanded) {
+        this.isExpanded = !this.isExpanded
+      }
       this.$store.dispatch('progression/setCurrentFolder', this.subSection)
-      this.isExpanded = !this.isExpanded
     }
   }
 }
