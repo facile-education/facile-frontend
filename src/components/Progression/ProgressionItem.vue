@@ -2,6 +2,7 @@
   <div class="progression">
     <div
       class="header"
+      :style="`background-color:${progression.color};`"
       @click="selectProgression()"
     >
       <span>{{ progression.subjectName }} {{ progression.volee }}</span>
@@ -100,7 +101,6 @@ export default {
   margin: 0;
   padding: 20px 15px;
   color: white;
-  background: rgb(84, 119, 236);
 }
 
 .body {

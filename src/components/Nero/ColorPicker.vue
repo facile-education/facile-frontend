@@ -1,23 +1,32 @@
 <template>
-  <div
-    class="swatch"
-    :style="`background-color:${modelValue}`"
-    @click="toggleSwatches(undefined)"
-  >
-    <FontAwesomeIcon
-      icon="chevron-down"
-      class="icon"
-    />
-  </div>
-  <div
-    v-if="areSwatchesDisplayed"
-    class="popover"
-  >
-    <ColorSwatches
-      :model-value="modelValue"
-      :color-list="colorList"
-      @update:modelValue="update"
-    />
+  <div class="picker">
+    <div
+      class="swatch"
+      :style="`background-color:${modelValue}`"
+      tabindex="0"
+      @click="toggleSwatches(undefined)"
+      @keyup.enter="toggleSwatches(undefined)"
+      @keydown.esc="onEscape"
+    >
+      <FontAwesomeIcon
+        icon="chevron-down"
+        class="icon"
+      />
+    </div>
+    <div
+      v-if="areSwatchesDisplayed"
+      class="popover"
+    >
+      <FontAwesomeIcon
+        icon="caret-up"
+        class="caret"
+      />
+      <ColorSwatches
+        :model-value="modelValue"
+        :color-list="colorList"
+        @update:modelValue="update"
+      />
+    </div>
   </div>
 </template>
 
@@ -54,6 +63,12 @@ export default {
     }
   },
   methods: {
+    onEscape (e) {
+      if (this.areSwatchesDisplayed) {
+        this.toggleSwatches(false)
+        e.stopPropagation()
+      }
+    },
     toggleSwatches (value) {
       this.areSwatchesDisplayed = (value === undefined) ? !this.areSwatchesDisplayed : value
     },
@@ -68,15 +83,23 @@ export default {
 <style lang="scss" scoped>
 @import '@/design';
 
+.picker {
+  display: inline-block;
+  position: relative;
+}
+
 .swatch {
   display: inline-flex;
-  position: relative;
   width: 48px;
   height: 48px;
   border-radius: 50%;
   margin: 0.1rem;
   align-items: center;
   justify-content: center;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .icon {
@@ -85,10 +108,22 @@ export default {
 
 .popover {
   position: absolute;
-  width: 260px;
+  top: 49px;
+  right: 0;
+  width: 250px;
   padding: 15px;
   z-index: 1;
   background-color: $color-body-bg;
-  box-shadow: 0 3px 6px rgba(0,0,0,.12),0 3px 6px rgba(0,0,0,.24);
+  border-radius: $border-radius;
+
+  @extend %object-shadow;
+}
+
+.caret {
+  position: absolute;
+  top: -16px;
+  right: 16px;
+  font-size: 30px;
+  color: $color-body-bg;
 }
 </style>

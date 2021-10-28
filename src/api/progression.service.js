@@ -36,15 +36,14 @@ const ASSIGNMENT_CTX = 'progressionitemassignment/'
 const ATTACHED_FILE_CTX = 'progressionitemattachedfile/'
 
 // Progression object
-// TODO image ?
-function addProgression ({ name, description, subjectId, volee, image }) {
+function addProgression ({ name, description, subjectId, volee, color }) {
   return axios.post(constants.JSON_WS_URL + PROGRESSION_PATH + PROGRESSION_CTX + 'add-progression',
     PentilaUtils.URL.params({
       name,
       description,
       subjectId,
       volee,
-      image
+      color
     })).then(response => response.data)
 }
 
@@ -70,7 +69,7 @@ function getProgressionList () {
   }).then(response => response.data)
 }
 
-function updateProgression (progressionId, name, description, subjectId, volee, image) {
+function updateProgression ({ progressionId, name, description, subjectId, volee, color }) {
   return axios.post(constants.JSON_WS_URL + PROGRESSION_PATH + PROGRESSION_CTX + 'update-progression',
     PentilaUtils.URL.params({
       progressionId,
@@ -78,7 +77,7 @@ function updateProgression (progressionId, name, description, subjectId, volee, 
       description,
       subjectId,
       volee,
-      image
+      color
     })).then(response => response.data)
 }
 

@@ -134,7 +134,7 @@ export default {
       this.updatedFolderName = newName
       // With focus on it
       if (this.$store.state.progression.currentFolder !== undefined && this.$refs.folderName !== undefined && this.$refs.folderName !== null) {
-        this.$nextTick(() => this.$refs.folderName.$el.focus())
+        this.$nextTick(() => this.$refs.folderName.$el.childNodes[0].focus())
       }
     },
     isFolderSelected (newVal, oldVal) {
