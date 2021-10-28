@@ -30,27 +30,25 @@
 
 export default {
   name: 'ProgressionTreeItem',
-  components: { },
   props: {
     item: {
       type: Object,
       required: true
-    }
-  },
-  data () {
-    return {
+    },
+    isParentSectionSelected: {
+      type: Boolean,
+      required: true
     }
   },
   computed: {
+    currentItem () {
+      return this.$store.state.progression.currentItem
+    },
     isSelected () {
       // Item is selected when itself is selected or its parent section/subsection
-      return (this.$store.state.progression.currentItem !== undefined &&
-              this.$store.state.progression.currentItem.itemId === this.item.itemId) ||
-              (this.$store.state.progression.currentFolder !== undefined &&
-              this.$store.state.progression.currentFolder.folderId === this.item.folderId)
+      return (this.currentItem && this.currentItem.itemId === this.item.itemId) ||
+              this.isParentSectionSelected
     }
-  },
-  created () {
   },
   methods: {
     selectItem () {
