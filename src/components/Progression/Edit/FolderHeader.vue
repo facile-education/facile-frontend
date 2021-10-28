@@ -82,8 +82,10 @@ export default {
 
   .folder-title {
     margin-right: 15px;
-    width: auto;
-    font-size: 1rem;
+    padding-left: 0;
+    /* TODO adapt width (or input size property) with text size */
+    flex: 1;
+    font-size: 1.5rem;
     font-weight: 500;
     letter-spacing: 0;
     line-height: 19px;

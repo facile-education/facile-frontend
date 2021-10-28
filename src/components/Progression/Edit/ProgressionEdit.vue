@@ -113,22 +113,18 @@ export default {
 
 .items-list {
   width: 100%;
-  margin-right: 10px;
 
   .item {
     width: 100%;
-    margin-right: 10px;
   }
 }
-.empty-section, .empty-progression {
 
+.empty-section, .empty-progression {
   height: 400px;
   border: 1px solid #D4D4D4;
   border-radius: 6px;
   background-color: #FFFFFF;
-  margin-top: 20px;
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-top: 5px;
   display: flex;
 
   .spans {

@@ -4,6 +4,7 @@
   >
     <div
       class="previous-name"
+      @click="toggleListMode"
     >
       <!-- Previous button-->
       <img
@@ -11,7 +12,6 @@
         title="Revenir à la liste des progressions"
         class="previous"
         alt=""
-        @click="toggleListMode()"
       >
 
       <!-- Progression name-->
@@ -114,6 +114,7 @@ export default {
 
   .previous-name {
     display: flex;
+    cursor: pointer;
 
     .previous {
       align-content: center;
