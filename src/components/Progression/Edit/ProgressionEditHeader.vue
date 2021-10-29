@@ -58,17 +58,16 @@
         <!-- Create section -->
         <div
           class="create-menu-item"
-          @click="doCreateSection()"
+          @click="doCreateSection"
         >
           <span>{{ $t('section') }}</span>
         </div>
 
         <!-- Create sub-section -->
         <div
-          v-if="isFolderSelected"
           class="create-menu-item"
           :title="$t('subSectionOf') + sectionName"
-          @click="doCreateSubSection()"
+          @click="doCreateSubSection"
         >
           <span>{{ $t('subSectionOf') + sectionName }}</span>
         </div>
@@ -107,8 +106,14 @@ export default {
     isRootFolderSelected () {
       return this.currentFolder === undefined
     },
+    currentProgressionSections () {
+      return this.$store.state.progression.currentProgression.sections
+    },
     currentFolder () {
       return this.$store.state.progression.currentFolder
+    },
+    currentItem () {
+      return this.$store.state.progression.currentItem
     },
     isFolderSelected () {
       return this.currentFolder !== undefined
@@ -116,13 +121,14 @@ export default {
     sectionName () {
       // If section selected, itself
       // If sub-section selected, its parent section
-      if (this.currentFolder !== undefined && this.currentFolder.parentId === 0) {
-        return this.currentFolder.name
-      } else if (this.currentFolder !== undefined && this.currentFolder.parentId !== 0) {
+      const currentFolder = this.currentItem ? this.$store.getters['progression/getItemFolder'](this.currentItem) : this.currentFolder
+      if (currentFolder !== undefined && currentFolder.parentId === 0) {
+        return currentFolder.name
+      } else if (currentFolder !== undefined && currentFolder.parentId !== 0) {
         // Parse the current progression to get the parent section
-        for (let idx = 0; idx < this.$store.state.progression.currentProgression.sections.length; ++idx) {
-          const section = this.$store.state.progression.currentProgression.sections[idx]
-          const subSectionIndex = section.subSections.map(subSection => subSection.folderId).indexOf(this.currentFolder.folderId)
+        for (let idx = 0; idx < this.currentProgressionSections.length; ++idx) {
+          const section = this.currentProgressionSections[idx]
+          const subSectionIndex = section.subSections.map(subSection => subSection.folderId).indexOf(currentFolder.folderId)
           if (subSectionIndex !== -1) {
             return section.name
           }
@@ -138,6 +144,26 @@ export default {
     window.removeEventListener('click', this.clickOutside)
   },
   methods: {
+    getItemFolder (item) {
+      console.log(item.name)
+      this.currentProgressionSections.forEach((section) => {
+        console.log('section', section.name)
+        // console.log(section.subSections)
+        if (section.folderId === item.folderId) {
+          console.log('return section')
+          return section
+        } else {
+          section.subSections.forEach((subSection) => {
+            console.log('subSection', subSection.name)
+            if (subSection.folderId === item.folderId) {
+              console.log('return subsection')
+              return subSection
+            }
+          })
+        }
+      })
+      return undefined
+    },
     clickOutside (e) {
       if (this.$el.querySelector('#create-menu') && !this.$el.querySelector('#create-menu').contains(e.target)) {
         this.$store.dispatch('progression/setCreateMenuDisplayed', false)
@@ -159,9 +185,18 @@ export default {
       this.$store.dispatch('progression/setCreateMenuDisplayed', false)
     },
     doCreateSubSection () {
-      const parentFolderId = (this.currentFolder.parentId === 0 ? this.currentFolder.folderId : this.currentFolder.parentId)
-      this.$store.dispatch('progression/addFolder', parentFolderId)
-      this.$store.dispatch('progression/setCreateMenuDisplayed', false)
+      let parentFolderId
+      if (this.currentFolder) {
+        parentFolderId = (this.currentFolder.parentId === 0 ? this.currentFolder.folderId : this.currentFolder.parentId)
+      } else if (this.currentItem) {
+        parentFolderId = this.currentItem.folderId
+      }
+      if (parentFolderId) {
+        this.$store.dispatch('progression/addFolder', parentFolderId)
+        this.$store.dispatch('progression/setCreateMenuDisplayed', false)
+      } else {
+        console.error('Can\'t find parentSection')
+      }
     }
   }
 }
