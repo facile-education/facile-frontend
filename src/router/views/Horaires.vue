@@ -28,7 +28,10 @@
             :options="calendarOptions"
           >
             <template #eventContent="arg">
-              <FCEvent :arg="arg" />
+              <FCEvent
+                :arg="arg"
+                @update="toggleEditModalDisplay"
+              />
             </template>
           </FullCalendar>
         </div>
@@ -39,11 +42,22 @@
         :options="calendarOptions"
       >
         <template #eventContent="arg">
-          <FCEvent :arg="arg" />
+          <FCEvent
+            :arg="arg"
+            @update="toggleEditModalDisplay"
+          />
         </template>
       </FullCalendar>
     </template>
     <PentilaSpinner v-if="isLoading" />
+    <teleport to="body">
+      <SessionTeacherModal
+        v-if="isEditModalDisplayed"
+        win-width="500px"
+        :session-event="updatedSession"
+        @close="toggleEditModalDisplay"
+      />
+    </teleport>
   </Layout>
 </template>
 
@@ -61,25 +75,29 @@ import HorairesToolbar from '@/components/Horaires/HorairesToolbar'
 import { defineAsyncComponent } from 'vue'
 const Timeline = defineAsyncComponent(() => import('@/components/Horaires/Timeline'))
 const FCEvent = defineAsyncComponent(() => import('@/components/Horaires/FCEvent'))
+const SessionTeacherModal = defineAsyncComponent(() => import('@/components/Horaires/SessionTeacherModal'))
 
 dayjs.extend(customParseFormat)
 
 export default {
   name: 'Horaires',
   components: {
+    FCEvent,
     FullCalendar,
     HorairesToolbar,
     Layout,
-    Timeline,
-    FCEvent
+    SessionTeacherModal,
+    Timeline
   },
   inject: ['mq'],
   data () {
     return {
+      isEditModalDisplayed: false,
       // pan: -320,
       pan: 0,
       selectedDate: dayjs(),
-      selectedEvent: undefined
+      selectedEvent: undefined,
+      updatedSession: undefined
     }
   },
   computed: {
@@ -266,6 +284,10 @@ export default {
         this.onSelectDate(this.selectedDate.startOf().toDate())
       }
     },
+    toggleEditModalDisplay (sessionEvent) {
+      this.updatedSession = sessionEvent
+      this.isEditModalDisplayed = !this.isEditModalDisplayed
+    },
     unselectEvent () {
       if (this.selectedEvent.el.parentNode != null) {
         this.selectedEvent.el.parentNode.classList.remove('selected')
@@ -300,6 +322,10 @@ export default {
   position: relative;
   flex-shrink: 0;
   width: 100%;
+}
+
+.v-spinner {
+  z-index: 1;
 }
 </style>
 
