@@ -9,6 +9,13 @@ $selected-background-filter-color: #FFFFFF99;
   color: inherit;
 }
 
+.fc-event {
+  &:focus::before, &:focus::after {
+    background: none;
+    position: static;
+  }
+}
+
 .fc-timegrid-slots tr {
   border-top: 1px dotted silver;
   border-bottom: 1px dotted silver;

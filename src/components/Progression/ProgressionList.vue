@@ -176,6 +176,7 @@ export default {
 }
 
 .link {
+  font-weight: bold;
   margin-top: 1rem;
 }
 </style>

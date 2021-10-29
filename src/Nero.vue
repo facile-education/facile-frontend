@@ -39,7 +39,6 @@ html, body, #app {
 
 a {
   color: #6190E0;
-  font-weight: bold;
 }
 
 /*** iPhone and iOS Form Input Zoom Fixes ***/
