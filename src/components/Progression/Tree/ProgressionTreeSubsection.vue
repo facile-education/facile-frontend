@@ -121,6 +121,8 @@ export default {
     width: 100%;
     display: flex;
     align-items: center;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
 
     .subsection-name {
       color: black;

@@ -92,6 +92,8 @@ export default {
     width: 100%;
     display: flex;
     align-items: center;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
 
     span {
       overflow-x: hidden;

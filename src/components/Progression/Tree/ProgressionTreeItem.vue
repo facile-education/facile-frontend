@@ -64,6 +64,8 @@ export default {
   display: flex;
   align-items: center;
   height: 30px;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
 
   &:hover {
     background-color: #EFF3FB;
