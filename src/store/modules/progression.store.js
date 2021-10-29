@@ -672,6 +672,29 @@ export const actions = {
 }
 
 export const getters = {
+  getItemFolder: (state) => (item) => {
+    console.log(item.name)
+    for (let i = 0; i < state.currentProgression.sections.length; ++i) {
+      const section = state.currentProgression.sections[i]
+      console.log('section', section.name)
+      // console.log(section.subSections)
+      if (section.folderId === item.folderId) {
+        console.log('return section')
+        return section
+      } else {
+        for (let j = 0; j < section.subSections.length; ++j) {
+          const subSection = section.subSections[j]
+          console.log('subSection', subSection.name)
+          if (subSection.folderId === item.folderId) {
+            console.log('return subsection')
+            return subSection
+          }
+        }
+      }
+    }
+    return undefined
+  },
+
   sectionIndex: (state) => (folderId) => { // /!\ doesn't works with sub-section
     return state.currentProgression.sections.map(section => section.folderId).indexOf(folderId)
   },
