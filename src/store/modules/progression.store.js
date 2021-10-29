@@ -575,6 +575,9 @@ export const actions = {
       (data) => {
         if (data.success) {
           commit('removeItem', item)
+          commit('setCurrentItem', undefined)
+          const itemFolder = this.getters['progression/getItemFolder'](item)
+          this.dispatch('progression/setCurrentFolder', itemFolder)
         }
       },
       (err) => {
