@@ -16,6 +16,9 @@ const studentSearch = 'alo'
 const teacherName = 'Jovanovic Darko (Maitre)'
 const teacherSearch = 'dar'
 const secondChildName = 'LISA'
+const substituteCalendarName = 'Y. Caillat'
+const substituteName = 'Caillat Yoan'
+const substituteSearch = 'cail'
 
 export {
   groupName,
@@ -25,5 +28,8 @@ export {
   teacherName,
   teacherSearch,
   url,
-  secondChildName
+  secondChildName,
+  substituteCalendarName,
+  substituteName,
+  substituteSearch
 }
