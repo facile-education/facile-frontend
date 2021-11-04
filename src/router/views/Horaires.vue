@@ -30,7 +30,7 @@
             <template #eventContent="arg">
               <FCEvent
                 :arg="arg"
-                @update="toggleEditModalDisplay"
+                @update="openEditModalDisplay"
               />
             </template>
           </FullCalendar>
@@ -44,7 +44,7 @@
         <template #eventContent="arg">
           <FCEvent
             :arg="arg"
-            @update="toggleEditModalDisplay"
+            @update="openEditModalDisplay"
           />
         </template>
       </FullCalendar>
@@ -53,9 +53,9 @@
     <teleport to="body">
       <SessionTeacherModal
         v-if="isEditModalDisplayed"
-        win-width="500px"
+        :win-width="(mq.phone || mq.tablet) ? 'auto' : '650px'"
         :session-event="updatedSession"
-        @close="toggleEditModalDisplay"
+        @close="closeEditModalDisplay"
       />
     </teleport>
   </Layout>
@@ -189,6 +189,14 @@ export default {
     }
   },
   methods: {
+    closeEditModalDisplay (refresh) {
+      this.isEditModalDisplayed = !this.isEditModalDisplayed
+      // force refresh calendar if changes are applied
+      if (refresh) {
+        this.$store.dispatch('horaires/selectDates',
+          { start: this.$store.state.horaires.startDate, end: this.$store.state.horaires.endDate })
+      }
+    },
     formatCalendarSlot (slot) {
       const json = {
         extendedProps: {
@@ -217,6 +225,15 @@ export default {
         }
       }
       return label
+    },
+    nextDate () {
+      this.selectedDate = this.selectedDate.add(1, 'day')
+      // Skip hidden days
+      if (this.configuration.schoolDays.indexOf(this.selectedDate.day()) === -1) {
+        this.nextDate()
+      } else {
+        this.onSelectDate(this.selectedDate.toDate())
+      }
     },
     onEventClick (info) {
       // Handle event selection display
@@ -266,14 +283,9 @@ export default {
         }
       }
     },
-    nextDate () {
-      this.selectedDate = this.selectedDate.add(1, 'day')
-      // Skip hidden days
-      if (this.configuration.schoolDays.indexOf(this.selectedDate.day()) === -1) {
-        this.nextDate()
-      } else {
-        this.onSelectDate(this.selectedDate.toDate())
-      }
+    openEditModalDisplay (sessionEvent) {
+      this.updatedSession = sessionEvent
+      this.isEditModalDisplayed = !this.isEditModalDisplayed
     },
     previousDate () {
       this.selectedDate = this.selectedDate.subtract(1, 'day')
@@ -283,10 +295,6 @@ export default {
       } else {
         this.onSelectDate(this.selectedDate.startOf().toDate())
       }
-    },
-    toggleEditModalDisplay (sessionEvent) {
-      this.updatedSession = sessionEvent
-      this.isEditModalDisplayed = !this.isEditModalDisplayed
     },
     unselectEvent () {
       if (this.selectedEvent.el.parentNode != null) {

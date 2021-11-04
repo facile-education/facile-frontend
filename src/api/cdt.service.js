@@ -1,12 +1,15 @@
 import axios from 'axios'
 import constants from '@/api/constants'
+import PentilaUtils from 'pentila-utils'
 
 export {
   getConfiguration,
   getGroups,
   getSessions,
   getTeacherGroups,
-  getSessionDetails
+  getSessionDetails,
+  getSessionTeachersAndSubstitutes,
+  saveTeacherSubstitutes
 }
 
 export default {
@@ -68,4 +71,20 @@ function getSessionDetails (sessionId) {
       sessionId: sessionId
     }
   }).then(response => response.data)
+}
+
+// SessionTeacher and substitutes management
+function getSessionTeachersAndSubstitutes (sessionId) {
+  return axios.get(constants.JSON_WS_URL + CDT_PATH + 'sessionteacher/get-session-teachers-and-substitutes', {
+    params: {
+      sessionId
+    }
+  }).then(response => response.data)
+}
+
+function saveTeacherSubstitutes (sessionId, teacherArray) {
+  return axios.post(constants.JSON_WS_URL + CDT_PATH + 'sessionteacher/save-teacher-substitutes', PentilaUtils.URL.params({
+    sessionId,
+    teacherArray: JSON.stringify(teacherArray)
+  })).then(response => response.data)
 }

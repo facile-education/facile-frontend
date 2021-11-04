@@ -1,6 +1,7 @@
 <template>
   <PentilaTagsInput
-    v-model="tagsList"
+    v-if="hasDisplayName"
+    :model-value="modelValue"
     data-test="user-completion-input"
     :placeholder="placeholder"
     :close-on-select="true"
@@ -11,19 +12,25 @@
     display-field="displayName"
     id-field="studentId"
     @inputChange="searchTimeOut"
+    @update:modelValue="update"
   />
 </template>
 
 <script>
-
+import PentilaUtils from 'pentila-utils'
 import schoolLifeService from '@/api/schoolLife-portlet.service'
 import { nbCharBeforeCompletion } from '@/constants/appConstants'
 let timeout
 
-// TODO use modelValue/update instead of initial list and watches -> ugly
 export default {
   name: 'UserCompletion',
   props: {
+    modelValue: {
+      type: Array,
+      default: () => {
+        return []
+      }
+    },
     userType: {
       type: String,
       default: 'any'
@@ -31,51 +38,32 @@ export default {
     placeholder: {
       type: String,
       default: ''
-    },
-    initialUserList: {
-      type: Array,
-      default: () => {
-        return []
-      }
     }
   },
-  emits: ['selectUser'],
+  emits: ['update:modelValue'],
   data () {
     return {
-      tagsList: [],
       autocompleteUserList: [],
       maxSize: 1
     }
   },
   computed: {
+    hasDisplayName () {
+      return (this.modelValue.length === 0 || this.modelValue[0].displayName !== undefined)
+    },
     selectedSchool () {
       return this.$store.state.user.selectedSchool
-    },
-    queriedUser () {
-      return this.tagsList[0]
-    }
-  },
-  watch: {
-    'queriedUser' () {
-      if (this.queriedUser === undefined) {
-        this.autocompleteUserList = []
-      }
-      this.$emit('selectUser', this.queriedUser)
-    },
-    'initialUserList' () {
-      if (this.initialUserList.length === 0) {
-        this.tagsList = this.initialUserList
-      }
     }
   },
   created () {
-    if (this.initialUserList && this.initialUserList.length <= this.maxSize) {
-      this.initialUserList.forEach((user) => {
+    if (this.modelValue.length > 0 && this.modelValue.length <= this.maxSize) {
+      const array = PentilaUtils.JSON.deepCopy(this.modelValue)
+      array.forEach((user) => {
         user.displayName = this.getUserDisplayName(user)
       })
-      this.tagsList = this.initialUserList
-    } else {
-      console.error('initialUserList as too many elements for the tagsInput max size')
+      this.update(array)
+    } else if (this.modelValue.length > this.maxSize) {
+      console.error('modelValue as too many elements for the tagsInput max size')
     }
   },
   methods: {
@@ -126,6 +114,9 @@ export default {
     },
     getUserDisplayName (user) {
       return user.lastName + ' ' + user.firstName + (user.className ? ' (' + user.className + ')' : '')
+    },
+    update (value) {
+      this.$emit('update:modelValue', value)
     }
   }
 }

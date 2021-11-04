@@ -33,9 +33,9 @@
           v-if="currentSlotType"
           user-type="student"
           :placeholder="$t('NotUsualSlots.studentNamePlaceHolder')"
-          :initial-user-list="queriedUser ? [queriedUser] : []"
+          :model-value="queriedUser ? [queriedUser] : []"
           class="user-completion"
-          @selectUser="getUserSlots"
+          @update:modelValue="getUserSlots"
         />
       </div>
       <Calendar
@@ -140,8 +140,8 @@ export default {
         console.error(err)
       })
     },
-    getUserSlots (user) {
-      this.$store.dispatch('notUsualSlots/setQueriedUser', user)
+    getUserSlots (value) {
+      this.$store.dispatch('notUsualSlots/setQueriedUser', value[0])
     }
   }
 }

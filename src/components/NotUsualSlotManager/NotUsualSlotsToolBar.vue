@@ -18,8 +18,8 @@
           v-if="currentSlotType"
           user-type="student"
           :placeholder="$t('NotUsualSlots.studentNamePlaceHolder')"
-          :initial-user-list="queriedUser ? [queriedUser] : []"
-          @selectUser="getUserSlots"
+          :model-value="queriedUser ? [queriedUser] : []"
+          @update:modelValue="getUserSlots"
         />
       </div>
     </div>
@@ -58,8 +58,8 @@ export default {
     onSelectDate (date) {
       this.$emit('selectDate', date)
     },
-    getUserSlots (user) {
-      this.$store.dispatch('notUsualSlots/setQueriedUser', user)
+    getUserSlots (value) {
+      this.$store.dispatch('notUsualSlots/setQueriedUser', value[0])
     }
   }
 }
