@@ -29,9 +29,9 @@
         <UserCompletion
           user-type="teacher"
           :placeholder="$t('NotUsualSlots.EditSlotModal.teacherNamePlaceHolder')"
-          :initial-user-list="newEvent.extendedProps.teacher? [newEvent.extendedProps.teacher] : undefined"
+          :model-value="newEvent.extendedProps.teacher? [newEvent.extendedProps.teacher] : []"
           @blur="v$.newEvent.extendedProps.teacher.teacherId.$touch()"
-          @selectUser="updateTeacher"
+          @update:modelValue="updateTeacher"
         />
         <PentilaErrorMessage :error-message="formErrorList.teacher" />
       </div>
@@ -90,7 +90,7 @@ const moreThanRegistered = (value, vm) => {
   if (value < 0) {
     return false
   }
-  return vm.eventToEdit.extendedProps ? value >= vm.eventToEdit.extendedProps.nbRegisteredStudents : true
+  return (vm.eventToEdit && vm.eventToEdit.extendedProps) ? value >= vm.eventToEdit.extendedProps.nbRegisteredStudents : true
 }
 
 export default {
@@ -216,8 +216,8 @@ export default {
         }
       })
     },
-    updateTeacher (selectedUser) {
-      this.newEvent.extendedProps.teacher = selectedUser
+    updateTeacher (value) {
+      this.newEvent.extendedProps.teacher = value[0]
     },
     confirm () {
       if (this.v$.$invalid || this.isTimeError) {
