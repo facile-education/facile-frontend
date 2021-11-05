@@ -77,8 +77,10 @@ const subjectRequired = (value, vm) => {
   return value.subjectId > 0
 }
 
+// vm does not seem to give use access to i18n
+let component
 const voleeRequired = (value, vm) => {
-  return value !== vm.$i18n.t('volee')
+  return value !== component.$t('volee')
 }
 
 export default {
@@ -142,6 +144,7 @@ export default {
     }
   },
   created () {
+    component = this
     if (this.updatedProgression !== undefined) {
       this.progression = PentilaUtils.JSON.deepCopy(this.updatedProgression)
       this.progression.subject = {

@@ -116,7 +116,6 @@ export default {
     }
   },
   created () {
-    this.$store.dispatch('progression/setCurrentProgression', undefined)
     if (this.progressionList === undefined) {
       this.$store.dispatch('progression/initProgressionList')
     }
@@ -159,7 +158,7 @@ export default {
 }
 
 .list {
-  margin: 1rem;
+  padding: 1rem;
   display: grid;
   grid-template-columns: repeat(auto-fill, 235px);
   grid-gap: 1rem;

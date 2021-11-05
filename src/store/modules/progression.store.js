@@ -59,7 +59,6 @@ export const state = {
   currentProgression: undefined,
   currentFolder: undefined,
   currentItem: undefined,
-  isListMode: true,
   isEditMode: true,
   isCreateMenuDisplayed: false,
   isCalendarPickerMode: false,
@@ -100,6 +99,7 @@ export const mutations = {
   },
   setCurrentProgression (state, payload) {
     state.currentProgression = payload
+    state.currentFolder = undefined
   },
   setCurrentProgressionContent (state, payload) {
     state.currentProgression.sections = payload.sections
@@ -113,9 +113,6 @@ export const mutations = {
   },
   setEditMode (state, payload) {
     state.isEditMode = payload
-  },
-  setListMode (state, payload) {
-    state.isListMode = payload
   },
   setFilterFolder (state, payload) {
     state.filterFolder = payload
@@ -411,10 +408,6 @@ export const actions = {
         console.error(err)
       })
   },
-  setCurrentProgression ({ commit }, progression) {
-    commit('setCurrentProgression', progression)
-    commit('setCurrentFolder', undefined)
-  },
   setCurrentFolder ({ commit }, folder) {
     commit('setCurrentFolder', folder)
     commit('setCurrentItem', undefined)
@@ -425,9 +418,6 @@ export const actions = {
   },
   setEditMode ({ commit }, isEditMode) {
     commit('setEditMode', isEditMode)
-  },
-  setListMode ({ commit }, isListMode) {
-    commit('setListMode', isListMode)
   },
   setCalendarPickerMode ({ commit }, isCalendarPickerMode) {
     commit('setCalendarPickerMode', isCalendarPickerMode)
@@ -460,6 +450,7 @@ export const actions = {
     getProgressionContent(progressionId).then(
       (data) => {
         if (data.success) {
+          commit('setCurrentProgression', data.progression)
           commit('setCurrentProgressionContent', data)
           // Set default folder
           if (data.sections !== undefined && data.sections.length > 0) {

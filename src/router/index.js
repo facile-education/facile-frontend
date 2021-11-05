@@ -32,7 +32,7 @@ const routes = [
     component: () => import('@/router/views/Horaires')
   },
   {
-    path: '/progression',
+    path: '/progression/:progressionId(\\d+)?',
     name: 'Progression',
     component: () => import('@/router/views/Progression')
   },
@@ -40,6 +40,11 @@ const routes = [
     path: '/documents',
     name: 'Documents',
     component: () => import('@/router/views/Documents')
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: () => import('@/router/views/NotFound')
   }
 ]
 

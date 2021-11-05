@@ -75,11 +75,6 @@
 
 export default {
   name: 'ProgressionSwitchMode',
-  components: { },
-  data () {
-    return {
-    }
-  },
   computed: {
     progression () {
       return this.$store.state.progression.currentProgression
@@ -92,7 +87,7 @@ export default {
   },
   methods: {
     toggleListMode () {
-      this.$store.dispatch('progression/setListMode', true)
+      this.$router.push({ name: 'Progression' })
     },
     toggleEditMode () {
       this.$store.dispatch('progression/setEditMode', true)
