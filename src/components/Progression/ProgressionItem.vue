@@ -70,13 +70,7 @@ export default {
       this.$emit('edit', this.progression)
     },
     selectProgression () {
-      this.$store.dispatch('progression/setCurrentProgression', this.progression)
-      // Set default folder
-      if (this.$store.state.progression.currentProgression.sections !== undefined && this.$store.state.progression.currentProgression.sections.length > 0) {
-        this.$store.dispatch('progression/setCurrentFolder', this.$store.state.progression.currentProgression.sections[0])
-      }
-      this.$store.dispatch('progression/setListMode', false)
-      this.$store.dispatch('progression/getProgressionContent', this.progression.progressionId)
+      this.$router.push({ name: 'Progression', params: { progressionId: this.progression.progressionId } })
     }
   }
 }
