@@ -1,26 +1,31 @@
 <template>
   <!-- <b>{{ arg.timeText }}</b> -->
   <div
-    class="fc-event-title"
     :data-cy="arg.event.extendedProps.cy"
+    @mouseover="hover = true"
+    @mouseleave="hover = false"
   >
-    <span>{{ arg.event.title }}</span>
-    <NeroIcon
-      v-if="hasEditionRights"
-      name="fa-pencil-alt"
-      class="icon"
-      @click="updateEvent"
-    />
-  </div>
-  <div
-    v-if="arg.event.extendedProps.teachers"
-    class="fc-event-teacher"
-    :title="arg.event.extendedProps.teachers"
-  >
-    {{ arg.event.extendedProps.teachers }}
-  </div>
-  <div class="fc-event-room">
-    {{ arg.event.extendedProps.room }}
+    <div
+      class="fc-event-title"
+    >
+      <span>{{ arg.event.title }}</span>
+      <NeroIcon
+        v-if="hasEditionRights && hover"
+        name="fa-pencil-alt"
+        class="icon"
+        @click="updateEvent"
+      />
+    </div>
+    <div
+      v-if="arg.event.extendedProps.teachers"
+      class="fc-event-teacher"
+      :title="arg.event.extendedProps.teachers"
+    >
+      {{ arg.event.extendedProps.teachers }}
+    </div>
+    <div class="fc-event-room">
+      {{ arg.event.extendedProps.room }}
+    </div>
   </div>
 </template>
 
@@ -39,6 +44,11 @@ export default {
     }
   },
   emits: ['update'],
+  data () {
+    return {
+      hover: false
+    }
+  },
   computed: {
     hasEditionRights () {
       const user = store.state.user
