@@ -248,6 +248,7 @@ describe('Desktop tests', () => {
     })
 
     // Add substitute
+    cy.get(`[data-cy="${substitutedSessionList[0]}"]`).trigger('mouseover')
     cy.get(`[data-cy="${substitutedSessionList[0]}"] .fa-pencil-alt`).click()
 
     cy.get('#teacherform').should('exist')
@@ -286,6 +287,7 @@ describe('Desktop tests', () => {
     })
 
     // Remove substitute one 1 session
+    cy.get(`[data-cy="${substitutedSessionList[2]}"]`).trigger('mouseover')
     cy.get(`[data-cy="${substitutedSessionList[2]}"] .fa-pencil-alt`).click()
     cy.get('.tag-item .fa-times').click()
     // Validate button
@@ -323,12 +325,15 @@ describe('Desktop tests', () => {
     cy.contains(groupName).click()
     waitForRefresh()
 
+    const coteachingSession = "05-03_14:30"
+
     // Check original teacher before substitution
-    cy.get('[data-cy="05-03_14:30"]').parents('a.fc-timegrid-event')
+    cy.get(`[data-cy="${coteachingSession}"]`).parents('a.fc-timegrid-event')
       .contains('B. Nimo Garcia').should('be.visible')
 
     // Check if the two teachers appears in substitute modal
-    cy.get('[data-cy="05-03_14:30"] .fa-pencil-alt').click()
+    cy.get(`[data-cy="${coteachingSession}"]`).trigger('mouseover')
+    cy.get(`[data-cy="${coteachingSession}"] .fa-pencil-alt`).click()
     cy.get('#teacherform').should('exist')
 
     cy.get('#teacherform .teacher').should('have.length', 2)
@@ -353,7 +358,7 @@ describe('Desktop tests', () => {
     waitForRefresh()
 
     // Current session has changed
-    cy.get('[data-cy="05-03_14:30"]').parents('a.fc-timegrid-event')
+    cy.get(`[data-cy="${coteachingSession}"]`).parents('a.fc-timegrid-event')
       .contains(substituteCalendarName).should('be.visible')
     // Next teacher session has not been changed
     cy.get('[data-cy="05-03_15:30"]').parents('a.fc-timegrid-event')

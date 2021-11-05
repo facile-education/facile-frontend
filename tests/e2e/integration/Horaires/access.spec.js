@@ -35,6 +35,7 @@ describe('Service access', () => {
 
       // Edit button should be visible
       cy.get('[data-cy="05-03_08:45"]').should('exist')
+      cy.get('[data-cy="05-03_08:45"]').trigger('mouseover')
       cy.get('[data-cy="05-03_08:45"] .fa-pencil-alt').should('exist')
     })
   })
@@ -57,6 +58,7 @@ describe('Service access', () => {
 
       // Edit button should not be visible
       cy.get('[data-cy="05-03_08:45"]').should('exist')
+      cy.get('[data-cy="05-03_08:45"]').trigger('mouseover')
       cy.get('[data-cy="05-03_08:45"] .fa-pencil-alt').should('not.exist')
     })
   })
@@ -72,6 +74,7 @@ describe('Service access', () => {
 
       // Edit button should not be visible
       cy.get('[data-cy="05-03_08:45"]').should('exist')
+      cy.get('[data-cy="05-03_08:45"]').trigger('mouseover')
       cy.get('[data-cy="05-03_08:45"] .fa-pencil-alt').should('not.exist')
     })
   })
