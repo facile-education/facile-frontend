@@ -48,7 +48,7 @@ const haveDeregistrationPermissions = {
     [TEACHER2.lastName]: false,
     [CLASSTEACHER.lastName]: false,
     [DOYEN.lastName]: true,
-    [SECRETARY.lastName]: false,
+    [SECRETARY.lastName]: true,
     [SCHOOL_ADMIN.lastName]: true
   },
   [slotTypes.study.label]: {

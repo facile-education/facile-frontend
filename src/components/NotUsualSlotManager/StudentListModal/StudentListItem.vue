@@ -101,7 +101,7 @@ export default {
         case notUsualSlotsConstants.studyType:
           return true
         case notUsualSlotsConstants.firedType:
-          return this.currentUser.isDoyen || this.currentUser.isDirectionMember
+          return this.currentUser.isDoyen || this.currentUser.isDirectionMember || this.currentUser.isSecretariat
         case notUsualSlotsConstants.tutoringType:
           return this.isRegisterer
         default:
