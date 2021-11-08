@@ -12,7 +12,7 @@
         class="item-type"
       >
         <img
-          class="item-type-icon"
+          class="item-type-icon homework"
           src="@assets/devoir.svg"
           :alt="$t('homework')"
           :title="$t('homework')"
@@ -26,7 +26,7 @@
         class="item-type"
       >
         <img
-          class="item-type-icon"
+          class="item-type-icon session"
           src="@assets/seance.svg"
           :alt="$t('session')"
           :title="$t('session')"
@@ -402,8 +402,13 @@ export default {
 
       .item-type-icon {
         margin: auto;
-        width: 30px;
-        height: 30px;
+        width: 20px;
+        height: 20px;
+      }
+
+      .homework, .session {
+        width: 40px;
+        height: 40px;
       }
 
       span {
@@ -428,8 +433,8 @@ export default {
 
       .preview-icon {
         margin: auto;
-        width: 25px;
-        height: 25px;
+        width: 20px;
+        height: 20px;
       }
 
       span {
@@ -449,12 +454,12 @@ export default {
       flex-direction: column;
       border: 1px solid transparent;
       border-radius: 5px;
-      margin: 10px;
+      margin: 10px 0;
 
       .delete-icon {
         margin: auto;
-        width: 25px;
-        height: 25px;
+        width: 20px;
+        height: 20px;
       }
 
       span {
@@ -492,12 +497,14 @@ export default {
 
       .homework-type {
         width: 20%;
+        min-width: 180px;
         margin-right: 10px;
       }
 
       .homework-duration {
         margin-left: 10px;
         margin-right: 10px;
+        min-width: 100px;
         width: 10%;
       }
     }
@@ -523,7 +530,7 @@ export default {
     }
 
     .add-content-buttons {
-      margin: 20px auto;
+      margin: 40px auto 20px auto;
       width: 300px;
       display: flex;
       justify-content: space-around;
