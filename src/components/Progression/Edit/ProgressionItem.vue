@@ -310,10 +310,20 @@ export default {
       this.updatedItemName = value
     },
     saveNewItemName () {
-      if (this.updatedItemName !== this.item.name) {
-        this.$store.dispatch('progression/updateItem',
-          { itemId: this.item.itemId, folderId: this.item.folderId, name: this.updatedItemName, type: (this.item.isHomework ? this.selectedHomeworkType.type : 0), order: this.item.order }
-        )
+      if (this.updatedItemName === '') {
+        this.updatedItemName = this.item.name // Reset name to old one
+      } else {
+        if (this.updatedItemName !== this.item.name) {
+          this.$store.dispatch('progression/updateItem',
+            {
+              itemId: this.item.itemId,
+              folderId: this.item.folderId,
+              name: this.updatedItemName,
+              type: (this.item.isHomework ? this.selectedHomeworkType.type : 0),
+              order: this.item.order
+            }
+          )
+        }
       }
     },
     togglePreviewModalDisplay () {
