@@ -65,6 +65,7 @@
 
         <!-- Create sub-section -->
         <div
+          v-if="sectionName !== ''"
           class="create-menu-item"
           :title="$t('subSectionOf') + sectionName"
           @click="doCreateSubSection"
