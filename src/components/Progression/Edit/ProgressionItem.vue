@@ -241,12 +241,14 @@
 
 <script>
 import ProgressionItemContent from '@/components/Progression/Edit/ProgressionItemContent'
-import PreviewModal from '@/components/Progression/Edit/PreviewModal'
-import LinkModal from '@/components/Progression/Edit/LinkModal'
-import VideoModal from '@/components/Progression/Edit/VideoModal'
-import AudioRecordModal from '@/components/Progression/Edit/AudioRecordModal'
-import H5PModal from '@/components/Progression/Edit/H5PModal'
-import FilePickerModal from '@/components/FilePicker/FilePickerModal'
+
+import { defineAsyncComponent } from 'vue'
+const PreviewModal = defineAsyncComponent(() => import('@/components/Progression/Edit/PreviewModal'))
+const LinkModal = defineAsyncComponent(() => import('@/components/Progression/Edit/LinkModal'))
+const VideoModal = defineAsyncComponent(() => import('@/components/Progression/Edit/VideoModal'))
+const AudioRecordModal = defineAsyncComponent(() => import('@/components/Progression/Edit/AudioRecordModal'))
+const H5PModal = defineAsyncComponent(() => import('@/components/Progression/Edit/H5PModal'))
+const FilePickerModal = defineAsyncComponent(() => import('@/components/FilePicker/FilePickerModal'))
 
 export default {
   name: 'ProgressionItem',
