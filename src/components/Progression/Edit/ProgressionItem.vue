@@ -514,7 +514,7 @@ export default {
       .homework-duration {
         margin-left: 10px;
         margin-right: 10px;
-        min-width: 100px;
+        min-width: 110px;
         width: 10%;
       }
     }
