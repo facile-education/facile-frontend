@@ -19,7 +19,9 @@
       v-if="isWarningModalDisplayed"
       to="body"
     >
-      <WarningModal />
+      <WarningModal
+        win-width="500px"
+      />
     </teleport>
   </div>
 </template>
