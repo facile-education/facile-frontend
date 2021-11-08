@@ -58,9 +58,16 @@ export default {
   },
   methods: {
     saveNewFolderName () {
-      if (this.updatedFolderName !== this.$store.state.progression.currentFolder.name) {
-        // TODO: handle WS error to 'unUpdate' folderNameInputText
-        this.$store.dispatch('progression/updateFolderName', { folder: this.currentFolder, newFolderName: this.folderNameInputText })
+      if (this.folderNameInputText === '') {
+        this.folderNameInputText = this.currentFolderName // Reset name to old one
+      } else {
+        if (this.folderNameInputText !== this.$store.state.progression.currentFolder.name) {
+          // TODO: handle WS error to 'unUpdate' folderNameInputText
+          this.$store.dispatch('progression/updateFolderName', {
+            folder: this.currentFolder,
+            newFolderName: this.folderNameInputText
+          })
+        }
       }
     },
     deleteFolder () {
