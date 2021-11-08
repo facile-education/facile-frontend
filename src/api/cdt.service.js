@@ -9,7 +9,8 @@ export {
   getTeacherGroups,
   getSessionDetails,
   getSessionTeachersAndSubstitutes,
-  saveTeacherSubstitutes
+  saveTeacherSubstitutes,
+  saveHomeworks
 }
 
 export default {
@@ -17,7 +18,8 @@ export default {
   getGroups,
   getSessions,
   getTeacherGroups,
-  getSessionDetails
+  getSessionDetails,
+  saveHomeworks
 }
 
 const CDT_PATH = '/cdt-portlet.'
@@ -86,5 +88,11 @@ function saveTeacherSubstitutes (sessionId, teacherArray) {
   return axios.post(constants.JSON_WS_URL + CDT_PATH + 'sessionteacher/save-teacher-substitutes', PentilaUtils.URL.params({
     sessionId,
     teacherArray: JSON.stringify(teacherArray)
+  })).then(response => response.data)
+}
+
+function saveHomeworks (homeworksArray) {
+  return axios.post(constants.JSON_WS_URL + CDT_PATH + 'homework/save-homeworks', PentilaUtils.URL.params({
+    homeworksArray: JSON.stringify(homeworksArray)
   })).then(response => response.data)
 }

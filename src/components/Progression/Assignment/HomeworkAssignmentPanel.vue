@@ -38,17 +38,25 @@
     </div>
 
     <div
+      v-if="newSessions.length > 0"
       class="sessions"
     >
       <HomeworkAssignment
         v-for="session in newSessions"
-        :key="session.id"
+        :key="session.sessionId"
         :session="session"
         class="session"
         @edited-homework="updateHomework"
       />
     </div>
-
+    <div
+      v-else
+      class="sessions"
+    >
+      <span
+        class="no-session"
+      >{{ $t('no-session-selected') }}</span>
+    </div>
     <div
       class="footer"
     >
@@ -59,6 +67,7 @@
       />
       <PentilaButton
         :label="$t('add')"
+        :disabled="newSessions.length == 0"
         class="button create-button"
         @click="registerAssignments()"
       />
@@ -68,6 +77,7 @@
 
 <script>
 import HomeworkAssignment from '@/components/Progression/Assignment/HomeworkAssignment'
+import cdtService from '@/api/cdt.service'
 
 export default {
   name: 'HomeworkAssignmentPanel',
@@ -86,26 +96,26 @@ export default {
     },
     newSessions () {
       // Homework assignment is based on initial sessions minus the remove ones plus the added ones
-      const res = []
+      const sessionsToAssign = []
       for (let idx = 0; idx < this.$store.state.progression.affectedItem.assignments.length; ++idx) {
         const initialSession = this.$store.state.progression.affectedItem.assignments[idx]
         console.log('homework aff : initial session ', initialSession)
-        res.push(initialSession)
+        sessionsToAssign.push(initialSession)
       }
       for (let idx = 0; idx < this.$store.state.progression.addedAssignedSessions.length; ++idx) {
         const addedSession = this.$store.state.progression.addedAssignedSessions[idx]
-        res.push(addedSession)
+        sessionsToAssign.push(addedSession)
         console.log('homework aff : add session ', addedSession)
       }
       for (let idx = 0; idx < this.$store.state.progression.removedAssignedSessions.length; ++idx) {
         const removedSession = this.$store.state.progression.removedAssignedSessions[idx]
-        if (res.includes(removedSession)) {
+        const removedSessionIndex = sessionsToAssign.map(session => session.sessionId).indexOf(removedSession.sessionId)
+        if (removedSessionIndex !== -1) {
           console.log('homework aff : remove session ', removedSession)
-          const index = res.indexOf(removedSession)
-          res.splice(index, 1)
+          sessionsToAssign.splice(removedSessionIndex, 1)
         }
       }
-      return res
+      return sessionsToAssign
     }
   },
   created () {
@@ -116,11 +126,26 @@ export default {
     },
     registerAssignments () {
       console.log('About to register new homeworks ', this.homeworks)
+      // Push content to C&D
+      cdtService.saveHomeworks(this.homeworks)
+
+      // Register assignment on progression side
+      for (let idx = 0; idx < this.$store.state.progression.addedAssignedSessions.length; ++idx) {
+        const session = this.$store.state.progression.addedAssignedSessions[idx]
+        this.$store.dispatch('progression/addAssignment', { itemId: this.$store.state.progression.affectedItem.itemId, sessionId: session.sessionId })
+      }
+      for (let idx = 0; idx < this.$store.state.progression.removedAssignedSessions.length; ++idx) {
+        const session = this.$store.state.progression.removedAssignedSessions[idx]
+        this.$store.dispatch('progression/deleteAssignment', { itemId: this.$store.state.progression.affectedItem.itemId, sessionId: session.sessionId })
+      }
+      // Reset the added and removed affected session ids lists
+      this.$store.dispatch('progression/resetAffectedSessions')
+
       this.closeHomeworkAssignment()
     },
     updateHomework (updatedHomework) {
       console.log('received updated homework ', updatedHomework)
-      const sourceSessionIndex = this.homeworks.map(sourceSession => sourceSession.sessionId).indexOf(updatedHomework.sourceSession.sessionId)
+      const sourceSessionIndex = this.homeworks.map(homework => homework.sourceSessionId).indexOf(updatedHomework.sourceSessionId)
       if (sourceSessionIndex !== -1) {
         this.homeworks.splice(sourceSessionIndex, 1)
       } else {
@@ -172,6 +197,10 @@ export default {
     .session {
       margin-bottom: 10px;
     }
+    .no-session {
+      margin-top: 50px;
+      margin-left: 50px;
+    }
   }
   .footer {
     display: flex;
@@ -194,6 +223,7 @@ export default {
   "cancel": "Annuler",
   "close": "Fermer",
   "homework": "Devoir",
-  "session": "Séance"
+  "session": "Séance",
+  "no-session-selected": "Aucune séance n'est sélectionnée"
 }
 </i18n>

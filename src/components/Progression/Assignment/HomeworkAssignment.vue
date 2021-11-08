@@ -11,6 +11,7 @@
       <span>{{ sessionDetails.title }}</span>
       <span>{{ sessionTeachers }}</span>
       <span>{{ sessionDetails.room }}</span>
+      <span>{{ formatDate(sessionDetails.startDate) }}</span>
     </div>
 
     <div class="homework-details">
@@ -25,7 +26,6 @@
         class="is-given"
       >
         <span>{{ $t('given-date') }}</span>
-        <span>{{ givenDate }}</span>
       </div>
 
       <div class="homework-parameters">
@@ -33,34 +33,24 @@
         <div
           class="student-selection"
         >
-          <span>{{ $t('for') }}</span>
-          <div class="student-number">
-            <span>{{ nbStudents }}</span>
-            <img
-              class="content-button"
-              src="@assets/edit.svg"
-              :alt="$t('edit')"
-              :title="$t('edit')"
-              @click="displayStudentsList()"
-            >
-          </div>
+          <span>{{ nbStudents }}</span>
+          <img
+            class="content-button"
+            src="@assets/edit.svg"
+            :alt="$t('edit')"
+            :title="$t('edit')"
+            @click="displayStudentsList()"
+          >
           <div
             v-if="isStudentsListDisplayed"
-            class="students-list"
           >
-            <div
-              v-for="student in students"
-              :key="student.userId"
-              class="student"
-            >
-              <input
-                v-model="student.isSelected"
-                type="checkbox"
-                label=""
-                @change="onStudentChange"
-              >
-              {{ student.fullName }}
-            </div>
+            <StudentListModal
+              :students="availableStudents"
+              :selected-students="homework.selectedStudents"
+              @update-student="onStudentChange"
+              @whole-class="toggleWholeClass"
+              @close="isStudentsListDisplayed = false"
+            />
           </div>
         </div>
 
@@ -70,12 +60,12 @@
         >
           <span>{{ $t('render-date') }}</span>
           <PentilaDropdown
-            v-if="(nextSessions && nextSessions.length > 0)"
             v-model="homework.targetSession"
             class="sessions"
             :list="nextSessions"
+            :sort="false"
             display-field="sessionDescription"
-            @dropdown-select="onRenderDateSelect"
+            @dropdown-update="onRenderDateSelect"
           />
         </div>
       </div>
@@ -87,10 +77,11 @@
 import dayjs from 'dayjs'
 import _ from 'lodash'
 import { getSessionDetails } from '@/api/cdt.service'
+import StudentListModal from '@/components/Progression/Assignment/StudentListModal.vue'
 
 export default {
   name: 'HomeworkAssignment',
-  components: {},
+  components: { StudentListModal },
   props: {
     session: {
       type: Object,
@@ -105,10 +96,13 @@ export default {
       isCreation: true,
       isStudentsListDisplayed: false,
       homework: {
-        sourceSession: this.session,
+        homeworkId: 0,
+        sourceSessionId: this.session.sessionId,
         targetSession: undefined,
+        toDate: undefined,
         wholeClass: true,
-        selectedStudents: []
+        selectedStudents: [],
+        type: 0
       }
     }
   },
@@ -128,24 +122,12 @@ export default {
       }
       return teachers
     },
-    givenDate () {
-      if (this.homework.startDate !== undefined) {
-        return this.formatDate(this.homework.startDate)
-      }
-      return ''
-    },
     nbStudents () {
       if (this.homework.selectedStudents !== undefined && this.homework.selectedStudents.length > 0) {
-        return ' ' + this.homework.selectedStudents.length + ' ' + this.$t('students')
+        return this.$t('for') + ' ' + this.homework.selectedStudents.length + ' ' + this.$t('students') + this.availableStudents.length
       } else {
-        return ' ' + this.$t('all-students')
+        return this.$t('for') + ' ' + this.$t('all-students')
       }
-    },
-    students () {
-      const res = [{ studentId: 0, studentName: this.$t('all-students') }]
-      Array.prototype.push.apply(res, this.availableStudents)
-      console.log('students=', res)
-      return res
     },
     nextSessions () {
       const res = [{ sessionId: 0, sessionDescription: this.$t('pick-a-session') }]
@@ -174,11 +156,13 @@ export default {
           if (data.sessionDetails.givenHomework !== undefined && data.sessionDetails.givenHomework.length > 0) {
             for (let idx = 0; idx < data.sessionDetails.givenHomework.length; ++idx) {
               const givenHomework = data.sessionDetails.givenHomework[idx]
+              // TODO use homeworkId to match existing homework
               if (givenHomework.assignmentItemId !== undefined && givenHomework.assignmentItemId === this.session.sessionId) {
                 console.log('Found existing homework ', givenHomework)
                 this.isCreation = false
                 this.homework = givenHomework
                 this.homework.targetSession = { sessionId: givenHomework.targetSessionId, sessionDescription: this.formatDate(givenHomework.startDate) }
+                this.homework.toDate = givenHomework.startDate
               }
             }
           }
@@ -192,6 +176,7 @@ export default {
               }
             }
             this.homework.targetSession = { sessionId: defaultSession.sessionId, sessionDescription: this.formatDate(defaultSession.startDate) }
+            this.homework.toDate = defaultSession.startDate
           }
           // Emit default homework if not updated later
           this.$emit('editedHomework', this.homework)
@@ -209,11 +194,19 @@ export default {
     formatDate (date) {
       return dayjs(date, 'YYYY-MM-DD HH:mm').format('DD MMMM YYYY [à] HH[h]mm')
     },
-    onRenderDateSelect (targetSession) {
-      console.log('updated target session to ', targetSession)
+    onRenderDateSelect () {
+      console.log('on render date')
+      this.homework.targetSessionId = this.homework.targetSession.sessionId
+      this.homework.toDate = this.nextSessions()[0].startDate
       this.$emit('editedHomework', this.homework)
     },
-    onStudentChange () {
+    onStudentChange (student) {
+      console.log('on student change')
+      if (student.isSelected) {
+        this.homework.selectedStudents.push(student)
+      } else {
+        this.homework.selectedStudents.splice(student, 1)
+      }
       this.$emit('editedHomework', this.homework)
     }
   }
@@ -222,12 +215,12 @@ export default {
 
 <style lang="scss" scoped>
 .session {
-  height: 100px;
+  height: 150px;
   display: flex;
   .cours-name {
     border : 1px solid black;
-    width: 200px;
-    height: 100px;
+    width: 250px;
+    height: 130px;
     margin-left: 20px;
     margin-right: 20px;
     display: flex;
@@ -240,6 +233,7 @@ export default {
     display: flex;
     flex-direction: column;
     .is-given {
+      margin-top: 10px;
       margin-bottom: 10px;
     }
     .homework-parameters {
@@ -247,25 +241,17 @@ export default {
       justify-content: space-between;
 
       .student-selection {
-        width: 300px;
+        width: 250px;
         margin-right: 20px;
         display: flex;
         margin: auto;
-        .student-number {
-          width: 200px;
-          display: flex;
-          border : 1px solid black;
-          span, img {
-            margin: auto;
-          }
-        }
-        .students-list {
-          display: float;
+        span {
+          margin-right: 10px;
         }
       }
       .target-session {
         display: flex;
-        width: 500px;
+        width: 450px;
         span {
           margin: auto;
         }
@@ -285,7 +271,7 @@ export default {
   "not-given": "Devoir non donné",
   "all-students" : "tous les élèves",
   "for": "Pour",
-  "students": "élèves",
+  "students": "élèves sur ",
   "edit": "Modifier la liste des élèves",
   "render-date": "Date de rendu",
   "pick-a-session": "Choisir une séance cible"
