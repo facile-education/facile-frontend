@@ -1,12 +1,10 @@
 <template>
   <div>
-    <!-- Current folder name input -->
-
-    <!-- Item list -->
     <div
-      v-if="itemList.length > 0"
+      v-if="nbTotalItemDisplay > 0"
       class="items-list"
     >
+      <!-- Section items -->
       <ProgressionItem
         v-for="item in itemList"
         :key="item.itemId"
@@ -17,6 +15,30 @@
           {{ item.name }}
         </h4>
       </ProgressionItem>
+
+      <!-- SubSections items-->
+      <div
+        v-for="(subsection , index) in subSections"
+        :key="index"
+      >
+        <!--      suSection Title-->
+        <div
+          class="sub-section-title"
+          @click="redirectSubSection(subsection)"
+        >
+          {{ subsection.name }}
+        </div>
+        <ProgressionItem
+          v-for="item in subsection.items"
+          :key="item.itemId"
+          :item="item"
+          class="item"
+        >
+          <h4>
+            {{ item.name }}
+          </h4>
+        </ProgressionItem>
+      </div>
     </div>
 
     <!-- Empty section -->
@@ -84,24 +106,31 @@ export default {
         if (this.currentFolder.items !== undefined && this.currentFolder.items.length > 0) {
           Array.prototype.push.apply(items, this.currentFolder.items)
         }
-        if (this.currentFolder.subSections !== undefined && this.currentFolder.subSections.length > 0) {
-          for (let subIdx = 0; subIdx < this.currentFolder.subSections.length; subIdx++) {
-            const subSection = this.currentFolder.subSections[subIdx]
-            if (subSection.items !== undefined && subSection.items.length > 0) {
-              Array.prototype.push.apply(items, subSection.items)
-            }
-          }
-        }
         return items
       } else {
         return []
       }
+    },
+    subSections () {
+      return this.currentFolder ? this.currentFolder.subSections : []
+    },
+    nbTotalItemDisplay () {
+      let subSectionItemsCount = 0
+      if (this.subSections) {
+        this.subSections.forEach((subSection) => {
+          subSectionItemsCount += subSection.items.length
+        })
+      }
+      return subSectionItemsCount + this.itemList.length
     },
     currentFolder () {
       return this.$store.state.progression.currentFolder
     }
   },
   methods: {
+    redirectSubSection (subSection) {
+      this.$store.dispatch('progression/setCurrentFolder', subSection)
+    },
     toggleCreateMenu () {
       this.$store.dispatch('progression/setCreateMenuDisplayed', !this.$store.state.progression.isCreateMenuDisplayed)
     }
@@ -114,8 +143,13 @@ export default {
 .items-list {
   width: 100%;
 
-  .item {
-    width: 100%;
+  .sub-section-title {
+    margin-bottom: 10px;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
 
