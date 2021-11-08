@@ -321,12 +321,21 @@ export default {
       this.isAudioRecordModalDisplayed = !this.isAudioRecordModalDisplayed
     },
     toggleLinkModalDisplay () {
+      if (this.isLinkModalDisplayed) {
+        this.editedContent = {}
+      }
       this.isLinkModalDisplayed = !this.isLinkModalDisplayed
     },
     toggleVideoModalDisplay () {
+      if (this.isLinkModalDisplayed) {
+        this.editedContent = {}
+      }
       this.isVideoModalDisplayed = !this.isVideoModalDisplayed
     },
     toggleH5PModalDisplay () {
+      if (this.isLinkModalDisplayed) {
+        this.editedContent = {}
+      }
       this.isH5PModalDisplayed = !this.isH5PModalDisplayed
     },
     confirmItemDeletion (item) {
