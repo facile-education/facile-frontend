@@ -67,7 +67,8 @@
     "formInvalidDate": "Format de date invalide",
     "formMoreThanRegistered": "La capacité de la salle doit être plus grande que le nombre d'inscrits",
     "formRequired": "Champ requis",
-    "new": "Nouveau"
+    "new": "Nouveau",
+    "required": "Champ requis"
   },
   "CommunicationManager": {
     "InternalRightList": {

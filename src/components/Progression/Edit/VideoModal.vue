@@ -23,11 +23,19 @@
         :placeholder="$t('namePlaceholder')"
         class="video-name"
       />
+      <PentilaErrorMessage
+        class="volee-error"
+        :error-message="formErrorList.videoName"
+      />
       <PentilaInput
         v-model="videoUrl"
         :maxlength="200"
         :placeholder="$t('urlPlaceholder')"
         class="video-url"
+      />
+      <PentilaErrorMessage
+        class="volee-error"
+        :error-message="formErrorList.videoUrl"
       />
     </template>
 
@@ -59,6 +67,9 @@
 
 <script>
 
+import { useVuelidate } from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
+
 export default {
   name: 'VideoModal',
   inject: ['mq'],
@@ -73,6 +84,11 @@ export default {
     }
   },
   emits: ['close'],
+  setup: () => ({ v$: useVuelidate() }),
+  validations: {
+    videoName: { required },
+    videoUrl: { required }
+  },
   data () {
     return {
       videoName: '',
@@ -82,9 +98,13 @@ export default {
   computed: {
     isCreation () {
       return this.editedContent.contentId === undefined
+    },
+    formErrorList () {
+      return {
+        videoName: (this.v$.videoName.$invalid && this.v$.videoName.$dirty) ? this.$t('Commons.required') : '',
+        videoUrl: (this.v$.videoUrl.$invalid && this.v$.videoUrl.$dirty) ? this.$t('Commons.required') : ''
+      }
     }
-  },
-  created () {
   },
   mounted () {
     if (!this.isCreation) {
@@ -96,14 +116,29 @@ export default {
     closeModal () {
       this.$emit('close')
     },
-    addVideo () {
-      this.$store.dispatch('progression/addItemContent',
-        { itemId: this.item.itemId, contentType: 4, contentName: this.videoName, contentValue: this.videoUrl })
-      this.closeModal()
+    addVideo (e) {
+      e.preventDefault()
+      if (this.v$.$invalid) {
+        this.v$.$touch()
+      } else {
+        this.$store.dispatch('progression/addItemContent',
+          { itemId: this.item.itemId, contentType: 4, contentName: this.videoName, contentValue: this.videoUrl })
+        this.closeModal()
+      }
     },
-    editVideo () {
-      this.$store.dispatch('progression/updateItemContent', { contentId: this.editedContent.contentId, contentName: this.videoName, contentValue: this.videoUrl, order: this.editedContent.order })
-      this.closeModal()
+    editVideo (e) {
+      e.preventDefault()
+      if (this.v$.$invalid) {
+        this.v$.$touch()
+      } else {
+        this.$store.dispatch('progression/updateItemContent', {
+          contentId: this.editedContent.contentId,
+          contentName: this.videoName,
+          contentValue: this.videoUrl,
+          order: this.editedContent.order
+        })
+        this.closeModal()
+      }
     }
   }
 }

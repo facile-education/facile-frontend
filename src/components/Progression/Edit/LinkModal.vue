@@ -23,11 +23,19 @@
         :placeholder="$t('namePlaceholder')"
         class="link-name"
       />
+      <PentilaErrorMessage
+        class="volee-error"
+        :error-message="formErrorList.linkName"
+      />
       <PentilaInput
         v-model="linkUrl"
         :maxlength="200"
         :placeholder="$t('urlPlaceholder')"
         class="link-url"
+      />
+      <PentilaErrorMessage
+        class="volee-error"
+        :error-message="formErrorList.linkUrl"
       />
     </template>
 
@@ -58,6 +66,8 @@
 </template>
 
 <script>
+import { useVuelidate } from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
 
 export default {
   name: 'LinkModal',
@@ -73,6 +83,11 @@ export default {
     }
   },
   emits: ['close'],
+  setup: () => ({ v$: useVuelidate() }),
+  validations: {
+    linkName: { required },
+    linkUrl: { required }
+  },
   data () {
     return {
       linkName: '',
@@ -82,6 +97,12 @@ export default {
   computed: {
     isCreation () {
       return this.editedContent.contentId === undefined
+    },
+    formErrorList () {
+      return {
+        linkName: (this.v$.linkName.$invalid && this.v$.linkName.$dirty) ? this.$t('Commons.required') : '',
+        linkUrl: (this.v$.linkUrl.$invalid && this.v$.linkUrl.$dirty) ? this.$t('Commons.required') : ''
+      }
     }
   },
   mounted () {
@@ -94,14 +115,29 @@ export default {
     closeModal () {
       this.$emit('close')
     },
-    addLink () {
-      this.$store.dispatch('progression/addItemContent',
-        { itemId: this.item.itemId, contentType: 3, contentName: this.linkName, contentValue: this.linkUrl })
-      this.closeModal()
+    addLink (e) {
+      e.preventDefault()
+      if (this.v$.$invalid) {
+        this.v$.$touch()
+      } else {
+        this.$store.dispatch('progression/addItemContent',
+          { itemId: this.item.itemId, contentType: 3, contentName: this.linkName, contentValue: this.linkUrl })
+        this.closeModal()
+      }
     },
-    editLink () {
-      this.$store.dispatch('progression/updateItemContent', { contentId: this.editedContent.contentId, contentName: this.linkName, contentValue: this.linkUrl, order: this.editedContent.order })
-      this.closeModal()
+    editLink (e) {
+      e.preventDefault()
+      if (this.v$.$invalid) {
+        this.v$.$touch()
+      } else {
+        this.$store.dispatch('progression/updateItemContent', {
+          contentId: this.editedContent.contentId,
+          contentName: this.linkName,
+          contentValue: this.linkUrl,
+          order: this.editedContent.order
+        })
+        this.closeModal()
+      }
     }
   }
 }
