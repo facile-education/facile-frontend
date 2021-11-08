@@ -39,7 +39,10 @@
         <span>{{ $t('externalLink') }}</span>
       </div>
       <span>{{ content.contentName }}</span>
-      <a :href="content.contentValue">{{ content.contentValue }}</a>
+      <a
+        :href="content.contentValue"
+        target="_blank"
+      >{{ content.contentValue }}</a>
     </div>
 
     <!-- Video -->
@@ -58,7 +61,10 @@
         <span>{{ $t('video') }}</span>
       </div>
       <span>{{ content.contentName }}</span>
-      <a :href="content.contentValue">{{ content.contentValue }}</a>
+      <a
+        :href="content.contentValue"
+        target="_blank"
+      >{{ content.contentValue }}</a>
     </div>
 
     <!-- File -->
@@ -180,7 +186,6 @@ export default {
 
   .content-text {
     width: 90%;
-    margin: auto;
   }
 
   .content-link, .content-video, .content-h5p {
