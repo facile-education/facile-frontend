@@ -118,9 +118,9 @@ export default {
     formErrorList () {
       const form = this.v$.progression
       return {
-        name: (form.name.$invalid && form.name.$dirty) ? this.$t('required') : '',
-        subject: (form.subject.$invalid && form.subject.$dirty) ? this.$t('required') : '',
-        volee: (form.volee.$invalid && form.volee.$dirty) ? this.$t('required') : ''
+        name: (form.name.$invalid && form.name.$dirty) ? this.$t('Commons.required') : '',
+        subject: (form.subject.$invalid && form.subject.$dirty) ? this.$t('Commons.required') : '',
+        volee: (form.volee.$invalid && form.volee.$dirty) ? this.$t('Commons.required') : ''
       }
     },
     subjectList () {
@@ -237,7 +237,6 @@ export default {
   "confirm": "Créer",
   "description": "Description",
   "progression": "Progression",
-  "required": "Champs requis",
   "subject": "Discipline",
   "volee": "Volée",
   "title": "Titre"
