@@ -58,7 +58,8 @@ export default {
       for (let sectionIdx = 0; sectionIdx < orderedSections.length; ++sectionIdx) {
         const section = orderedSections[sectionIdx]
         allFolders.push(section)
-        Array.prototype.push.apply(allFolders, section.subSections)
+        const orderedSubSections = _.orderBy(section.subSections, 'order', 'asc')
+        Array.prototype.push.apply(allFolders, orderedSubSections)
       }
       return allFolders
     },
@@ -149,7 +150,7 @@ export default {
     margin-top: 10px;
     margin-bottom: 10px;
     .filter {
-      width: 200px;
+      width: 300px;
       margin-left: 20px;
     }
   }

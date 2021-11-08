@@ -95,11 +95,14 @@ export default {
   border: 2px solid transparent;
   display: flex;
   justify-content: space-between;
-  &.selected {
-    border: 2px solid blue;
-  }
   &.assigned-to-other {
     opacity: 50%;
+  }
+}
+.fc-timegrid-col-events.fc-timegrid-event-harness {
+  border: 2px solid transparent !important;
+  .calendar-event.selected {
+    border: 2px solid blue !important;
   }
 }
 </style>
