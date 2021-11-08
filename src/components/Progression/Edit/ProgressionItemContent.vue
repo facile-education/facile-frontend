@@ -1,6 +1,8 @@
 <template>
   <div
     class="item-content"
+    @mouseover="isHovering = true"
+    @mouseleave="isHovering = false"
   >
     <!-- Text -->
     <div
@@ -73,6 +75,7 @@
       :file-id="content.fileEntryId"
       :file-name="content.contentName"
       :download-url="content.downloadUrl"
+      :is-hovering="isHovering"
     />
 
     <!-- H5P -->
@@ -132,6 +135,7 @@ export default {
   data () {
     return {
       editorOptions: {},
+      isHovering: false,
       timeout: undefined
     }
   },

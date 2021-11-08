@@ -2,8 +2,6 @@
   <div
     class="file"
     @click="displayFile"
-    @mouseover="isHovering = true"
-    @mouseleave="isHovering = false"
   >
     <img
       v-if="fileIconIsImage"
@@ -51,10 +49,11 @@ export default {
     downloadUrl: {
       type: String,
       required: true
+    },
+    isHovering: {
+      type: Boolean,
+      default: false
     }
-  },
-  data () {
-    return { isHovering: false }
   },
   computed: {
     fileExtension () {
