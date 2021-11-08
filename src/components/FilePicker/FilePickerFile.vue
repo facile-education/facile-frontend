@@ -78,13 +78,11 @@ export default {
 @import '@design';
 
 .file {
-  margin: 3px 0;
+  margin: 0;
   display: flex;
   align-items: center;
   cursor: pointer;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  padding-left: 15px;
+  padding: 10px 0 10px 15px;
   color: $color-dark-text;
 
   /* disable text selection on documents (not convenient when shift-select) */

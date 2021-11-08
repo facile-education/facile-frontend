@@ -8,7 +8,7 @@
     <div class="icon-container">
       <img
         class="icon"
-        :src="$options.myIcons.folder"
+        :src="myIcons.folder"
         alt="document icon"
       >
     </div>
@@ -23,7 +23,6 @@ import { icons } from '@/constants/icons'
 
 export default {
   name: 'FilePickerFolder',
-  myIcons: icons,
   props: {
     folder: {
       type: Object,
@@ -39,6 +38,11 @@ export default {
     }
   },
   emits: ['folderClicked', 'folderDblClicked'],
+  data () {
+    return {
+      myIcons: icons
+    }
+  },
   methods: {
     folderClicked () {
       this.$emit('folderClicked', this.folder)
@@ -54,13 +58,11 @@ export default {
 @import '@design';
 
   .folder {
-    margin: 3px 0;
+    margin: 0;
     display: flex;
     align-items: center;
     cursor: pointer;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 15px;
+    padding: 10px 0 10px 15px;
     color: $color-dark-text;
 
     /* disable text selection on documents (not convenient when shift-select) */
