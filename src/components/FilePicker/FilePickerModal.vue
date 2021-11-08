@@ -326,7 +326,7 @@ export default {
   .body {
     width: 100%;
     min-width: 600px;
-    max-height: 100%;
+    max-height: 600px;
     display: flex;
     flex-direction: column;
 
@@ -377,6 +377,7 @@ export default {
 
 .mobile {
   .body {
+    max-height: 100%;
     min-width: 0;
 
     .breadcrumb{
