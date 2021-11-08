@@ -483,11 +483,9 @@ export default {
       display: flex;
       justify-content: space-around;
       margin: 20px 10px 10px;
-      z-index: 0;
 
       .item-title {
         width: 70%;
-        z-index: 5;
         margin-right: 20px;
 
         &.fullWidth {
