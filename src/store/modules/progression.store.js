@@ -577,31 +577,41 @@ export const actions = {
       })
   },
   addItemContent ({ commit }, { itemId, contentType, contentName, contentValue, fileEntryId = 0, isToBeCompleted = false }) {
-    this.dispatch('currentActions/addAction', { name: 'addItemContent' })
-    addItemContent(itemId, contentType, contentName, contentValue, fileEntryId, isToBeCompleted).then(
-      (data) => {
-        this.dispatch('currentActions/removeAction', { name: 'addItemContent' })
-        if (data.success) {
-          commit('addItemContent', data.content)
-        }
-      },
-      (err) => {
-        // TODO toastr
-        console.error(err)
-      })
+    return new Promise((resolve, reject) => {
+      this.dispatch('currentActions/addAction', { name: 'addItemContent' })
+      addItemContent(itemId, contentType, contentName, contentValue, fileEntryId, isToBeCompleted).then(
+        (data) => {
+          this.dispatch('currentActions/removeAction', { name: 'addItemContent' })
+          if (data.success) {
+            commit('addItemContent', data.content)
+            resolve()
+          } else {
+            reject(data.error)
+          }
+        },
+        (err) => {
+          // TODO toastr
+          console.error(err)
+        })
+    })
   },
   updateItemContent ({ commit }, { contentId, contentName, contentValue, order }) {
-    updateItemContent(contentId, contentName, contentValue, order).then(
-      (data) => {
-        if (data.success) {
+    return new Promise((resolve, reject) => {
+      updateItemContent(contentId, contentName, contentValue, order).then(
+        (data) => {
+          if (data.success) {
           // Returned object is the parent item (for re-ordering)
-          commit('updateItem', data.item)
-        }
-      },
-      (err) => {
+            commit('updateItem', data.item)
+            resolve()
+          } else {
+            reject(data.error)
+          }
+        },
+        (err) => {
         // TODO toastr
-        console.error(err)
-      })
+          console.error(err)
+        })
+    })
   },
   deleteItemContent ({ commit }, contentId) {
     deleteItemContent(contentId).then(
