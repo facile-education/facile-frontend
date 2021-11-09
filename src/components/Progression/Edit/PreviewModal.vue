@@ -11,12 +11,11 @@
 
     <template #body>
       <div v-html="previewContent" />
+      <!-- TODO: handle attached files at the end of html content -->
     </template>
 
     <template #footer>
-      <div
-        class="footer"
-      >
+      <div class="footer">
         <PentilaButton
           :label="$t('cancel')"
           class="button cancel-button"

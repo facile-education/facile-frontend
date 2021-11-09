@@ -38,13 +38,13 @@
       <!-- Preview -->
       <div
         class="preview"
+        @click="togglePreviewModalDisplay"
       >
         <img
           src="@assets/icon_apercu.svg"
           :title="$t('previewContent')"
           class="preview-icon"
           alt=""
-          @click="togglePreviewModalDisplay()"
         >
         <span>{{ $t('preview') }}</span>
       </div>

@@ -87,7 +87,7 @@
 import ProgressionItem from '@/components/Progression/Edit/ProgressionItem'
 
 export default {
-  name: 'ProgressionEditMode',
+  name: 'ProgressionEdit',
   components: { ProgressionItem },
   data () {
     return {
