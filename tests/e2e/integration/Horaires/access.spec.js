@@ -64,7 +64,7 @@ describe('Service access', () => {
   })
 
   noToolbarUsers.forEach(user => {
-    it('Displays error for ' + user.role, () => {
+    it('Displays limited service for ' + user.role, () => {
       cy.login(url, user)
 
       cy.get('.toolbar .base-dropdown').should('not.exist')
