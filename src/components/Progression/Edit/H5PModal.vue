@@ -23,11 +23,17 @@
         :placeholder="$t('namePlaceholder')"
         class="content-name"
       />
+      <PentilaErrorMessage
+        :error-message="formErrorList.contentName"
+      />
       <PentilaInput
         v-model="contentValue"
         :maxlength="200"
         :placeholder="$t('urlPlaceholder')"
         class="content-url"
+      />
+      <PentilaErrorMessage
+        :error-message="formErrorList.contentValue || urlError"
       />
     </template>
 
@@ -59,6 +65,9 @@
 
 <script>
 
+import { useVuelidate } from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
+
 export default {
   name: 'H5PModal',
   inject: ['mq'],
@@ -73,15 +82,27 @@ export default {
     }
   },
   emits: ['close'],
+  setup: () => ({ v$: useVuelidate() }),
+  validations: {
+    contentName: { required },
+    contentValue: { required }
+  },
   data () {
     return {
       contentName: '',
-      contentValue: ''
+      contentValue: '',
+      urlError: ''
     }
   },
   computed: {
     isCreation () {
       return this.editedContent.contentId === undefined
+    },
+    formErrorList () {
+      return {
+        contentName: (this.v$.contentName.$invalid && this.v$.contentName.$dirty) ? this.$t('Commons.required') : '',
+        contentValue: (this.v$.contentValue.$invalid && this.v$.contentValue.$dirty) ? this.$t('Commons.required') : ''
+      }
     }
   },
   mounted () {
@@ -94,14 +115,49 @@ export default {
     closeModal () {
       this.$emit('close')
     },
-    addH5P () {
-      this.$store.dispatch('progression/addItemContent',
-        { itemId: this.item.itemId, contentType: 6, contentName: this.contentName, contentValue: this.contentValue })
-      this.closeModal()
+    addH5P (e) {
+      e.preventDefault()
+      if (this.v$.$invalid) {
+        this.v$.$touch()
+      } else {
+        this.$store.dispatch('progression/addItemContent',
+          { itemId: this.item.itemId, contentType: 6, contentName: this.contentName, contentValue: this.contentValue })
+          .then(() => {
+            this.closeModal()
+          })
+          .catch((error) => {
+            if (error === 'UnauthorizedUrlException') {
+              this.urlError = this.$t('UnauthorizedUrlException')
+            } else {
+              // TODO popup error "Une erreur est survenue lors de l'ajout du contenu"
+              this.closeModal()
+            }
+          })
+      }
     },
-    editH5P () {
-      this.$store.dispatch('progression/updateItemContent', { contentId: this.editedContent.contentId, contentName: this.contentName, contentValue: this.contentValue, order: this.editedContent.order })
-      this.closeModal()
+    editH5P (e) {
+      e.preventDefault()
+      if (this.v$.$invalid) {
+        this.v$.$touch()
+      } else {
+        this.$store.dispatch('progression/updateItemContent', {
+          contentId: this.editedContent.contentId,
+          contentName: this.contentName,
+          contentValue: this.contentValue,
+          order: this.editedContent.order
+        })
+          .then(() => {
+            this.closeModal()
+          })
+          .catch((error) => {
+            if (error === 'UnauthorizedUrlException') {
+              this.urlError = this.$t('UnauthorizedUrlException')
+            } else {
+              // TODO popup error "Une erreur est survenue lors de l'ajout du contenu"
+              this.closeModal()
+            }
+          })
+      }
     }
   }
 }
@@ -114,8 +170,7 @@ export default {
     margin: 10px;
   }
   .content-url, .content-name {
-    margin: 10px;
-    margin-right: 20px;
+    margin: 10px 20px 10px 10px;
   }
 }
 
@@ -130,12 +185,13 @@ export default {
 
 <i18n locale="fr">
 {
-  "title": "Ajouter un contenu H5P",
+  "creation-title": "Ajouter un contenu H5P",
   "edition-title": "Editer un contenu H5P",
   "cancel": "Annuler",
   "add": "Ajouter",
   "edit": "Modifier",
   "namePlaceholder": "Mon lien H5P",
+  "UnauthorizedUrlException": "Ce nom de domaine n'est pas autorisé pour ce type de contenu",
   "urlPlaceholder": "Coller ici le lien embed H5P"
 }
 </i18n>
