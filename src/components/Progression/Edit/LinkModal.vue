@@ -2,6 +2,7 @@
   <PentilaWindow
     :modal="true"
     class="linkWindow"
+    win-width="600px"
     :class="{'mobile': mq.phone}"
     @close="closeModal"
   >
@@ -17,26 +18,28 @@
     </template>
 
     <template #body>
-      <PentilaInput
-        v-model="linkName"
-        :maxlength="200"
-        :placeholder="$t('namePlaceholder')"
-        class="link-name"
-      />
-      <PentilaErrorMessage
-        class="volee-error"
-        :error-message="formErrorList.linkName"
-      />
-      <PentilaInput
-        v-model="linkUrl"
-        :maxlength="200"
-        :placeholder="$t('urlPlaceholder')"
-        class="link-url"
-      />
-      <PentilaErrorMessage
-        class="volee-error"
-        :error-message="formErrorList.linkUrl"
-      />
+      <div class="link-name">
+        <PentilaInput
+          v-model="linkName"
+          :maxlength="200"
+          :placeholder="$t('namePlaceholder')"
+          @keyup.enter="pressEnter"
+        />
+        <PentilaErrorMessage
+          :error-message="formErrorList.linkName"
+        />
+      </div>
+      <div class="link-url">
+        <PentilaInput
+          v-model="linkUrl"
+          :maxlength="200"
+          :placeholder="$t('urlPlaceholder')"
+          @keyup.enter="pressEnter"
+        />
+        <PentilaErrorMessage
+          :error-message="formErrorList.linkUrl"
+        />
+      </div>
     </template>
 
     <template #footer>
@@ -115,6 +118,9 @@ export default {
     closeModal () {
       this.$emit('close')
     },
+    pressEnter (e) {
+      this.isCreation ? this.addLink(e) : this.editLink(e)
+    },
     addLink (e) {
       e.preventDefault()
       if (this.v$.$invalid) {
@@ -149,9 +155,8 @@ export default {
     text-align: center;
     margin: 10px;
   }
-  .link-url, .link-name {
-    margin: 10px;
-    margin-right: 20px;
+  .link-url {
+    margin: 20px 0;
   }
 }
 

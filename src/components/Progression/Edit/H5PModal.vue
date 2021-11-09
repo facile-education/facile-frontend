@@ -2,6 +2,7 @@
   <PentilaWindow
     :modal="true"
     class="h5pWindow"
+    win-width="600px"
     :class="{'mobile': mq.phone}"
     @close="closeModal"
   >
@@ -17,24 +18,28 @@
     </template>
 
     <template #body>
-      <PentilaInput
-        v-model="contentName"
-        :maxlength="200"
-        :placeholder="$t('namePlaceholder')"
-        class="content-name"
-      />
-      <PentilaErrorMessage
-        :error-message="formErrorList.contentName"
-      />
-      <PentilaInput
-        v-model="contentValue"
-        :maxlength="200"
-        :placeholder="$t('urlPlaceholder')"
-        class="content-url"
-      />
-      <PentilaErrorMessage
-        :error-message="formErrorList.embedHTMLElement || formErrorList.embedSrcAttribute || urlError"
-      />
+      <div class="content-name">
+        <PentilaInput
+          v-model="contentName"
+          :maxlength="200"
+          :placeholder="$t('namePlaceholder')"
+          @keyup.enter="pressEnter"
+        />
+        <PentilaErrorMessage
+          :error-message="formErrorList.contentName"
+        />
+      </div>
+      <div class="content-url">
+        <PentilaInput
+          v-model="contentValue"
+          :maxlength="200"
+          :placeholder="$t('urlPlaceholder')"
+          @keyup.enter="pressEnter"
+        />
+        <PentilaErrorMessage
+          :error-message="formErrorList.embedHTMLElement || formErrorList.embedSrcAttribute || urlError"
+        />
+      </div>
     </template>
 
     <template #footer>
@@ -134,6 +139,9 @@ export default {
     closeModal () {
       this.$emit('close')
     },
+    pressEnter (e) {
+      this.isCreation ? this.addH5P(e) : this.editH5P(e)
+    },
     addH5P (e) {
       e.preventDefault()
       if (this.v$.$invalid) {
@@ -188,8 +196,8 @@ export default {
     text-align: center;
     margin: 10px;
   }
-  .content-url, .content-name {
-    margin: 10px 20px 10px 10px;
+  .content-url {
+    margin: 20px 0;
   }
 }
 

@@ -2,6 +2,7 @@
   <PentilaWindow
     :modal="true"
     class="linkWindow"
+    win-width="600px"
     @close="closeModal"
   >
     <template #header>
