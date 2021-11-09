@@ -33,7 +33,7 @@
         class="content-url"
       />
       <PentilaErrorMessage
-        :error-message="formErrorList.contentValue || urlError"
+        :error-message="formErrorList.embedHTMLElement || formErrorList.embedSrcAttribute || urlError"
       />
     </template>
 
@@ -85,7 +85,8 @@ export default {
   setup: () => ({ v$: useVuelidate() }),
   validations: {
     contentName: { required },
-    contentValue: { required }
+    embedHTMLElement: { required },
+    embedSrcAttribute: { required }
   },
   data () {
     return {
@@ -101,8 +102,26 @@ export default {
     formErrorList () {
       return {
         contentName: (this.v$.contentName.$invalid && this.v$.contentName.$dirty) ? this.$t('Commons.required') : '',
-        contentValue: (this.v$.contentValue.$invalid && this.v$.contentValue.$dirty) ? this.$t('Commons.required') : ''
+        embedHTMLElement: (this.v$.embedHTMLElement.$invalid && this.v$.embedHTMLElement.$dirty) ? this.$t('embedElementCheckFailed') : '',
+        embedSrcAttribute: (this.v$.embedSrcAttribute.$invalid && this.v$.embedSrcAttribute.$dirty) ? this.$t('srcRequired') : ''
       }
+    },
+    embedHTMLElement () {
+      const tmp = document.createElement('div')
+      tmp.innerHTML = this.contentValue
+      let embed = tmp.getElementsByTagName('embed')[0]
+      if (!embed) { // embed element can be an <embed/> or an <iframe/> tag
+        embed = tmp.getElementsByTagName('iframe')[0]
+      }
+      return embed
+    },
+    embedSrcAttribute () {
+      return this.embedHTMLElement ? this.embedHTMLElement.getAttribute('src') : undefined
+    }
+  },
+  watch: {
+    embedSrcAttribute () {
+      this.urlError = '' // Reset URL error when url change
     }
   },
   mounted () {
@@ -121,7 +140,7 @@ export default {
         this.v$.$touch()
       } else {
         this.$store.dispatch('progression/addItemContent',
-          { itemId: this.item.itemId, contentType: 6, contentName: this.contentName, contentValue: this.contentValue })
+          { itemId: this.item.itemId, contentType: 6, contentName: this.contentName, contentValue: this.embedSrcAttribute })
           .then(() => {
             this.closeModal()
           })
@@ -143,7 +162,7 @@ export default {
         this.$store.dispatch('progression/updateItemContent', {
           contentId: this.editedContent.contentId,
           contentName: this.contentName,
-          contentValue: this.contentValue,
+          contentValue: this.embedSrcAttribute,
           order: this.editedContent.order
         })
           .then(() => {
@@ -187,6 +206,8 @@ export default {
 {
   "creation-title": "Ajouter un contenu H5P",
   "edition-title": "Editer un contenu H5P",
+  "embedElementCheckFailed": "Ce type de contenu n'est pas un contenu embarqué valide",
+  "srcRequired": "Le contenu embarqué doit comprendre un attribut \"src\" non vide",
   "cancel": "Annuler",
   "add": "Ajouter",
   "edit": "Modifier",
