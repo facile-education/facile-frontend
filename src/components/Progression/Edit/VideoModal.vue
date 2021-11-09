@@ -24,7 +24,6 @@
         class="video-name"
       />
       <PentilaErrorMessage
-        class="volee-error"
         :error-message="formErrorList.videoName"
       />
       <PentilaInput
@@ -34,8 +33,7 @@
         class="video-url"
       />
       <PentilaErrorMessage
-        class="volee-error"
-        :error-message="formErrorList.videoUrl"
+        :error-message="formErrorList.videoUrl || urlError"
       />
     </template>
 
@@ -92,7 +90,8 @@ export default {
   data () {
     return {
       videoName: '',
-      videoUrl: ''
+      videoUrl: '',
+      urlError: ''
     }
   },
   computed: {
@@ -121,9 +120,18 @@ export default {
       if (this.v$.$invalid) {
         this.v$.$touch()
       } else {
-        this.$store.dispatch('progression/addItemContent',
-          { itemId: this.item.itemId, contentType: 4, contentName: this.videoName, contentValue: this.videoUrl })
-        this.closeModal()
+        this.$store.dispatch('progression/addItemContent', { itemId: this.item.itemId, contentType: 4, contentName: this.videoName, contentValue: this.videoUrl })
+          .then(() => {
+            this.closeModal()
+          })
+          .catch((error) => {
+            if (error === 'UnauthorizedUrlException') {
+              this.urlError = this.$t('UnauthorizedUrlException')
+            } else {
+              // TODO popup error "Une erreur est survenue lors de l'ajout du contenu"
+              this.closeModal()
+            }
+          })
       }
     },
     editVideo (e) {
@@ -137,7 +145,17 @@ export default {
           contentValue: this.videoUrl,
           order: this.editedContent.order
         })
-        this.closeModal()
+          .then(() => {
+            this.closeModal()
+          })
+          .catch((error) => {
+            if (error === 'UnauthorizedUrlException') {
+              this.urlError = this.$t('UnauthorizedUrlException')
+            } else {
+              // TODO popup error "Une erreur est survenue lors de la mise à jour du contenu"
+              this.closeModal()
+            }
+          })
       }
     }
   }
@@ -173,6 +191,7 @@ export default {
   "add": "Ajouter",
   "edit": "Modifier",
   "namePlaceholder": "Ma video",
+  "UnauthorizedUrlException": "Ce nom de domaine n'est pas autorisé pour ce type de contenu",
   "urlPlaceholder": "https://www.youtube.com/watch?v=C_uNmmgQliM"
 }
 </i18n>
