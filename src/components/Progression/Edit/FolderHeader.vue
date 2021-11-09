@@ -9,6 +9,7 @@
       :maxlength="75"
       class="folder-title"
       @blur="saveNewFolderName"
+      @keyup.enter="pressEnter"
     />
 
     <PentilaButton
@@ -57,6 +58,9 @@ export default {
     this.folderNameInputText = this.currentFolderName
   },
   methods: {
+    pressEnter () {
+      this.$refs.folderName.$el.blur()
+    },
     saveNewFolderName () {
       if (this.folderNameInputText === '') {
         this.folderNameInputText = this.currentFolderName // Reset name to old one

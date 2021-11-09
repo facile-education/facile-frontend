@@ -82,6 +82,7 @@
           :class="{'fullWidth': !item.isHomework}"
           @update:modelValue="updateItemName"
           @blur="saveNewItemName"
+          @keyup.enter="pressEnter"
         />
         <!-- Homework type menu -->
         <PentilaDropdown
@@ -305,6 +306,9 @@ export default {
     },
     addH5p () {
       this.$store.dispatch('progression/addItemContent', { itemId: this.item.itemId, contentType: 6 })
+    },
+    pressEnter () {
+      this.$refs.itemName.$el.childNodes[0].blur()
     },
     updateItemName (value) {
       this.updatedItemName = value
