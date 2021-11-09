@@ -2,6 +2,7 @@
   <PentilaWindow
     :modal="true"
     class="videoWindow"
+    win-width="600px"
     :class="{'mobile': mq.phone}"
     @close="closeModal"
   >
@@ -17,24 +18,28 @@
     </template>
 
     <template #body>
-      <PentilaInput
-        v-model="videoName"
-        :maxlength="200"
-        :placeholder="$t('namePlaceholder')"
-        class="video-name"
-      />
-      <PentilaErrorMessage
-        :error-message="formErrorList.videoName"
-      />
-      <PentilaInput
-        v-model="videoUrl"
-        :maxlength="200"
-        :placeholder="$t('urlPlaceholder')"
-        class="video-url"
-      />
-      <PentilaErrorMessage
-        :error-message="formErrorList.videoUrl || urlError"
-      />
+      <div class="video-name">
+        <PentilaInput
+          v-model="videoName"
+          :maxlength="200"
+          :placeholder="$t('namePlaceholder')"
+          @keyup.enter="pressEnter"
+        />
+        <PentilaErrorMessage
+          :error-message="formErrorList.videoName"
+        />
+      </div>
+      <div class="video-url">
+        <PentilaInput
+          v-model="videoUrl"
+          :maxlength="200"
+          :placeholder="$t('urlPlaceholder')"
+          @keyup.enter="pressEnter"
+        />
+        <PentilaErrorMessage
+          :error-message="formErrorList.videoUrl || urlError"
+        />
+      </div>
     </template>
 
     <template #footer>
@@ -115,6 +120,9 @@ export default {
     closeModal () {
       this.$emit('close')
     },
+    pressEnter (e) {
+      this.isCreation ? this.addVideo(e) : this.editVideo(e)
+    },
     addVideo (e) {
       e.preventDefault()
       if (this.v$.$invalid) {
@@ -168,9 +176,8 @@ export default {
     text-align: center;
     margin: 10px;
   }
-  .video-url, .video-name {
-    margin: 10px;
-    margin-right: 30px;
+  .video-url {
+    margin: 20px 0;
   }
 }
 
