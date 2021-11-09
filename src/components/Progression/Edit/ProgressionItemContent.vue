@@ -94,7 +94,7 @@
         <span>{{ $t('h5p') }}</span>
       </div>
       <span>{{ content.contentName }}</span>
-      <a :href="content.contentValue">{{ content.contentValue }}</a>
+      <a :href="content.contentValue"         target="_blank" >{{ content.contentValue }}</a>
     </div>
 
     <!-- Delete content button -->
