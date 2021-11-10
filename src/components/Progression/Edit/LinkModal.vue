@@ -159,7 +159,7 @@ export default {
   "cancel": "Annuler",
   "add": "Ajouter",
   "edit": "Modifier",
-  "namePlaceholder": "Mon lien",
+  "namePlaceholder": "Titre",
   "urlPlaceholder": "https://www.monlien.com"
 }
 </i18n>

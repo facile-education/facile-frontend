@@ -202,7 +202,7 @@ export default {
   "cancel": "Annuler",
   "add": "Ajouter",
   "edit": "Modifier",
-  "namePlaceholder": "Mon lien H5P",
+  "namePlaceholder": "Titre",
   "UnauthorizedUrlException": "Ce nom de domaine n'est pas autorisé pour ce type de contenu",
   "urlPlaceholder": "Coller ici le lien embed H5P"
 }
