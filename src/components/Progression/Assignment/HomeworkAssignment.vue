@@ -159,8 +159,7 @@ export default {
                 console.log('Found existing homework ', givenHomework)
                 this.isCreation = false
                 this.homework = givenHomework
-                this.homework.targetSession = { sessionId: givenHomework.targetSessionId, sessionDescription: this.formatDate(givenHomework.startDate) }
-                this.homework.toDate = givenHomework.startDate
+                this.homework.targetSession = { sessionId: givenHomework.targetSessionId, sessionDescription: this.formatDate(givenHomework.toDate) }
 
                 // Mark the selected students
                 if (!givenHomework.isWholeClass) {

@@ -138,7 +138,7 @@ export const mutations = {
   },
   addAffectedSession (state, payload) {
     // Check if new session was initially affected or not
-    const assignedIndex = state.afssignedItem.assignments.map(assignment => assignment.sessionId).indexOf(payload.sessionId)
+    const assignedIndex = state.assignedItem.assignments.map(assignment => assignment.sessionId).indexOf(payload.sessionId)
     if (assignedIndex === -1) {
       console.log('added session ' + payload.sessionId + ' to the toAdd list')
       state.addedAssignedSessions.push(payload)
@@ -665,7 +665,10 @@ export const actions = {
     addHomeworkAssignment(itemId, homeworks).then(
       (data) => {
         if (data.success) {
-          commit('addAssignment', data.assignment)
+          // Add new assignments only
+          for (let i = 0; i < data.createdAssignments.length; i++) {
+            commit('addAssignment', data.createdAssignments[i])
+          }
         }
       },
       (err) => {
