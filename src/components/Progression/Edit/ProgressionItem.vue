@@ -344,13 +344,13 @@ export default {
       this.isLinkModalDisplayed = !this.isLinkModalDisplayed
     },
     toggleVideoModalDisplay () {
-      if (this.isLinkModalDisplayed) {
+      if (this.isVideoModalDisplayed) {
         this.editedContent = {}
       }
       this.isVideoModalDisplayed = !this.isVideoModalDisplayed
     },
     toggleH5PModalDisplay () {
-      if (this.isLinkModalDisplayed) {
+      if (this.isH5PModalDisplayed) {
         this.editedContent = {}
       }
       this.isH5PModalDisplayed = !this.isH5PModalDisplayed
