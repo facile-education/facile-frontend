@@ -188,7 +188,7 @@ export default {
   "cancel": "Annuler",
   "add": "Ajouter",
   "edit": "Modifier",
-  "namePlaceholder": "Ma video",
+  "namePlaceholder": "Titre",
   "UnauthorizedUrlException": "Ce nom de domaine n'est pas autorisé pour ce type de contenu",
   "urlPlaceholder": "https://www.youtube.com/watch?v=C_uNmmgQliM"
 }
