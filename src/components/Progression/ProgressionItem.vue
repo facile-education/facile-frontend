@@ -88,6 +88,7 @@ export default {
 
   &:hover {
     border: 1px solid grey;
+    cursor: pointer;
   }
 }
 

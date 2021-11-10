@@ -1,7 +1,7 @@
 import {
   addProgression, deleteProgression, getProgressionList, updateProgression, getProgressionContent, addFolder,
   updateFolder, addItem, updateItem, addItemContent, updateItemContent, deleteFolder, deleteItem, getFolderContent,
-  getItemContents, deleteItemContent, addAssignment, deleteAssignment
+  getItemContents, deleteItemContent, addSessionAssignment, addHomeworkAssignment, deleteAssignment
 } from '@/api/progression.service'
 import { getSubjects } from '@/api/userManagement.service'
 import { getSchoolVoleeList } from '@/api/organization.service'
@@ -63,7 +63,7 @@ export const state = {
   isCreateMenuDisplayed: false,
   isCalendarPickerMode: false,
   isHomeworkAssignmentMode: false,
-  affectedItem: undefined,
+  assignedItem: undefined,
   addedAssignedSessions: [],
   removedAssignedSessions: [],
   startDate: undefined,
@@ -129,8 +129,8 @@ export const mutations = {
   setHomeworkAssignmentMode (state, payload) {
     state.isHomeworkAssignmentMode = payload
   },
-  setAffectedItem (state, payload) {
-    state.affectedItem = payload
+  setAssignedItem (state, payload) {
+    state.assignedItem = payload
   },
   resetAffectedSessions (state) {
     state.addedAssignedSessions = []
@@ -138,8 +138,8 @@ export const mutations = {
   },
   addAffectedSession (state, payload) {
     // Check if new session was initially affected or not
-    const affectedIndex = state.affectedItem.assignments.map(assignment => assignment.sessionId).indexOf(payload.sessionId)
-    if (affectedIndex === -1) {
+    const assignedIndex = state.afssignedItem.assignments.map(assignment => assignment.sessionId).indexOf(payload.sessionId)
+    if (assignedIndex === -1) {
       console.log('added session ' + payload.sessionId + ' to the toAdd list')
       state.addedAssignedSessions.push(payload)
     }
@@ -152,8 +152,8 @@ export const mutations = {
   },
   removeAffectedSession (state, payload) {
     // Check if removed sessionId was initially affected or not
-    const affectedIndex = state.affectedItem.assignments.map(assignment => assignment.sessionId).indexOf(payload.sessionId)
-    if (affectedIndex !== -1) {
+    const assignedIndex = state.assignedItem.assignments.map(assignment => assignment.sessionId).indexOf(payload.sessionId)
+    if (assignedIndex !== -1) {
       console.log('added session ' + payload.sessionId + ' to the toRemove list')
       state.removedAssignedSessions.push(payload)
     }
@@ -434,8 +434,8 @@ export const actions = {
   setFilterCours ({ commit }, cours) {
     commit('setFilterCours', cours)
   },
-  setAffectedItem ({ commit }, affectedItem) {
-    commit('setAffectedItem', affectedItem)
+  setAssignedItem ({ commit }, assignedItem) {
+    commit('setAssignedItem', assignedItem)
   },
   addAffectedSession ({ commit }, session) {
     commit('addAffectedSession', session)
@@ -649,8 +649,20 @@ export const actions = {
       commit('setSessionList', [])
     }
   },
-  addAssignment ({ commit }, { itemId, sessionId }) {
-    addAssignment(itemId, sessionId, 0).then(
+  addSessionAssignment ({ commit }, { itemId, sessionId }) {
+    addSessionAssignment(itemId, sessionId).then(
+      (data) => {
+        if (data.success) {
+          commit('addAssignment', data.assignment)
+        }
+      },
+      (err) => {
+        // TODO toastr
+        console.error(err)
+      })
+  },
+  addHomeworkAssignment ({ commit }, { itemId, homeworks }) {
+    addHomeworkAssignment(itemId, homeworks).then(
       (data) => {
         if (data.success) {
           commit('addAssignment', data.assignment)

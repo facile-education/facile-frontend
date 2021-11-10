@@ -77,7 +77,6 @@
 
 <script>
 import HomeworkAssignment from '@/components/Progression/Assignment/HomeworkAssignment'
-import cdtService from '@/api/cdt.service'
 
 export default {
   name: 'HomeworkAssignmentPanel',
@@ -92,13 +91,13 @@ export default {
   },
   computed: {
     item () {
-      return this.$store.state.progression.affectedItem
+      return this.$store.state.progression.assignedItem
     },
     newSessions () {
       // Homework assignment is based on initial sessions minus the remove ones plus the added ones
       const sessionsToAssign = []
-      for (let idx = 0; idx < this.$store.state.progression.affectedItem.assignments.length; ++idx) {
-        const initialSession = this.$store.state.progression.affectedItem.assignments[idx]
+      for (let idx = 0; idx < this.item.assignments.length; ++idx) {
+        const initialSession = this.item.assignments[idx]
         console.log('homework aff : initial session ', initialSession)
         sessionsToAssign.push(initialSession)
       }
@@ -126,17 +125,13 @@ export default {
     },
     registerAssignments () {
       console.log('About to register new homeworks ', this.homeworks)
-      // Push content to C&D
-      cdtService.saveHomeworks(this.homeworks)
 
-      // Register assignment on progression side
-      for (let idx = 0; idx < this.$store.state.progression.addedAssignedSessions.length; ++idx) {
-        const session = this.$store.state.progression.addedAssignedSessions[idx]
-        this.$store.dispatch('progression/addAssignment', { itemId: this.$store.state.progression.affectedItem.itemId, sessionId: session.sessionId })
-      }
+      // Register assignments and propagate content
+      this.$store.dispatch('progression/addHomeworkAssignment', { itemId: this.item.itemId, homeworks: this.homeworks })
+
       for (let idx = 0; idx < this.$store.state.progression.removedAssignedSessions.length; ++idx) {
         const session = this.$store.state.progression.removedAssignedSessions[idx]
-        this.$store.dispatch('progression/deleteAssignment', { itemId: this.$store.state.progression.affectedItem.itemId, sessionId: session.sessionId })
+        this.$store.dispatch('progression/deleteAssignment', { itemId: this.item.itemId, sessionId: session.sessionId })
       }
       // Reset the added and removed affected session ids lists
       this.$store.dispatch('progression/resetAffectedSessions')
@@ -148,9 +143,8 @@ export default {
       const sourceSessionIndex = this.homeworks.map(homework => homework.sourceSessionId).indexOf(updatedHomework.sourceSessionId)
       if (sourceSessionIndex !== -1) {
         this.homeworks.splice(sourceSessionIndex, 1)
-      } else {
-        this.homeworks.push(updatedHomework)
       }
+      this.homeworks.push(updatedHomework)
     }
   }
 }
