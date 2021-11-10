@@ -127,7 +127,7 @@ export default {
   },
   methods: {
     displayCalendarPicker () {
-      this.$store.dispatch('progression/setAffectedItem', this.item)
+      this.$store.dispatch('progression/setAssignedItem', this.item)
       this.$store.dispatch('progression/setCalendarPickerMode', true)
     },
     getSessionDate (assignment) {

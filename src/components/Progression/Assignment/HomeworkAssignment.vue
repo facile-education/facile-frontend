@@ -45,11 +45,8 @@
             v-if="isStudentsListDisplayed"
           >
             <StudentListModal
-              :students="availableStudents"
-              :selected-students="homework.selectedStudents"
-              @update-student="onStudentChange"
-              @whole-class="toggleWholeClass"
-              @close="isStudentsListDisplayed = false"
+              :students="studentList"
+              @close="onCloseStudentModal"
             />
           </div>
         </div>
@@ -92,7 +89,7 @@ export default {
   data () {
     return {
       sessionDetails: {},
-      availableStudents: [],
+      studentList: [],
       isCreation: true,
       isStudentsListDisplayed: false,
       homework: {
@@ -100,7 +97,7 @@ export default {
         sourceSessionId: this.session.sessionId,
         targetSession: undefined,
         toDate: undefined,
-        wholeClass: true,
+        isWholeClass: true,
         selectedStudents: [],
         type: 0
       }
@@ -124,7 +121,7 @@ export default {
     },
     nbStudents () {
       if (this.homework.selectedStudents !== undefined && this.homework.selectedStudents.length > 0) {
-        return this.$t('for') + ' ' + this.homework.selectedStudents.length + ' ' + this.$t('students') + this.availableStudents.length
+        return this.$t('for') + ' ' + this.homework.selectedStudents.length + ' ' + this.$t('students') + this.studentList.length
       } else {
         return this.$t('for') + ' ' + this.$t('all-students')
       }
@@ -141,7 +138,6 @@ export default {
           res.push(nextSession)
         }
       }
-      console.log('nextSessions=', res)
       return _.orderBy(res, 'startDate', 'asc')
     }
   },
@@ -151,18 +147,34 @@ export default {
       (data) => {
         if (data.success) {
           this.sessionDetails = data.sessionDetails
-          this.availableStudents = data.sessionDetails.students
+          this.studentList = data.sessionDetails.students
+
           // Among all homeworks given from the current session, pick the one that may be the current homework
           if (data.sessionDetails.givenHomework !== undefined && data.sessionDetails.givenHomework.length > 0) {
             for (let idx = 0; idx < data.sessionDetails.givenHomework.length; ++idx) {
               const givenHomework = data.sessionDetails.givenHomework[idx]
-              // TODO use homeworkId to match existing homework
-              if (givenHomework.assignmentItemId !== undefined && givenHomework.assignmentItemId === this.session.sessionId) {
+              console.log('givenHomework=', givenHomework)
+
+              if (givenHomework.assignedItemId !== undefined && givenHomework.assignedItemId === this.$store.state.progression.assignedItem.itemId) {
                 console.log('Found existing homework ', givenHomework)
                 this.isCreation = false
                 this.homework = givenHomework
                 this.homework.targetSession = { sessionId: givenHomework.targetSessionId, sessionDescription: this.formatDate(givenHomework.startDate) }
                 this.homework.toDate = givenHomework.startDate
+
+                // Mark the selected students
+                if (!givenHomework.isWholeClass) {
+                  for (let idx = 0; idx < givenHomework.selectedStudents.length; ++idx) {
+                    console.log('selectedStudent = ', givenHomework.selectedStudents[idx])
+                    const studentIndex = this.studentList.map(student => student.userId).indexOf(givenHomework.selectedStudents[idx].userId)
+                    if (studentIndex !== -1) {
+                      this.studentList[studentIndex].isSelected = true
+                    }
+                  }
+                } else {
+                  // Reset the student list in case of whole class
+                  this.homework.selectedStudents = []
+                }
               }
             }
           }
@@ -176,6 +188,7 @@ export default {
               }
             }
             this.homework.targetSession = { sessionId: defaultSession.sessionId, sessionDescription: this.formatDate(defaultSession.startDate) }
+            this.homework.targetSessionId = defaultSession.sessionId
             this.homework.toDate = defaultSession.startDate
           }
           // Emit default homework if not updated later
@@ -196,17 +209,23 @@ export default {
     },
     onRenderDateSelect () {
       console.log('on render date')
-      this.homework.targetSessionId = this.homework.targetSession.sessionId
       this.homework.toDate = this.nextSessions()[0].startDate
       this.$emit('editedHomework', this.homework)
     },
-    onStudentChange (student) {
-      console.log('on student change')
-      if (student.isSelected) {
-        this.homework.selectedStudents.push(student)
-      } else {
-        this.homework.selectedStudents.splice(student, 1)
+    onCloseStudentModal (updatedStudents, isWholeClass) {
+      console.log('Closed student modal: isWholeClass=', isWholeClass)
+      console.log('Closed student modal: updatedStudents=', updatedStudents)
+      this.homework.isWholeClass = isWholeClass
+      if (!isWholeClass) {
+        this.homework.selectedStudents = []
+        for (let idx = 0; idx < updatedStudents.length; ++idx) {
+          if (updatedStudents[idx].isSelected) {
+            this.homework.selectedStudents.push(updatedStudents[idx])
+          }
+        }
       }
+      this.isStudentsListDisplayed = false
+
       this.$emit('editedHomework', this.homework)
     }
   }

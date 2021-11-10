@@ -16,9 +16,9 @@
       >
         <input
           id="wholeClass"
-          v-model="targetType"
+          v-model="isWholeClass"
           type="radio"
-          value="wholeClass"
+          :value="true"
         >
         {{ $t('whole-class') }}
       </div>
@@ -28,9 +28,9 @@
       >
         <input
           id="specific"
-          v-model="targetType"
+          v-model="isWholeClass"
           type="radio"
-          value="specific"
+          :value="false"
         >
         {{ $t('specific') }}
       </div>
@@ -77,23 +77,25 @@ export default {
   emits: ['close'],
   data () {
     return {
-      targetType: 'wholeClass'
+      isWholeClass: true
     }
   },
   computed: {
     sortedStudents () {
       return _.orderBy(this.students, 'lastName', 'asc')
-    },
-    isWholeClass () {
-      return this.targetType === 'wholeClass'
     }
   },
   mounted () {
-
+    for (let idx = 0; idx < this.students.length; ++idx) {
+      if (this.students[idx].isSelected) {
+        console.log('mounted modal : 1 stuednt is selected -> not whole class')
+        this.isWholeClass = false
+      }
+    }
   },
   methods: {
     closeModal () {
-      this.$emit('close')
+      this.$emit('close', this.students, this.isWholeClass)
     }
   }
 }

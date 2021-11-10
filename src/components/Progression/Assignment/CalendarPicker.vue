@@ -174,7 +174,7 @@ export default {
       return dayjs(this.configuration.endDateSchool, 'YYYY-MM-DD HH:mm')
     },
     item () {
-      return this.$store.state.progression.affectedItem
+      return this.$store.state.progression.assignedItem
     }
   },
   created () {
@@ -265,18 +265,18 @@ export default {
     },
     registerAssignments () {
       this.closeCalendarPicker()
-      if (this.$store.state.progression.affectedItem.isHomework) {
+      if (this.$store.state.progression.assignedItem.isHomework) {
         // Case of homework : open homework assignment page
         this.$store.dispatch('progression/setHomeworkAssignmentMode', true)
       } else {
         // Case of session -> register
         for (let idx = 0; idx < this.$store.state.progression.addedAssignedSessions.length; ++idx) {
           const session = this.$store.state.progression.addedAssignedSessions[idx]
-          this.$store.dispatch('progression/addAssignment', { itemId: this.$store.state.progression.affectedItem.itemId, sessionId: session.sessionId })
+          this.$store.dispatch('progression/addSessionAssignment', { itemId: this.$store.state.progression.assignedItem.itemId, sessionId: session.sessionId })
         }
         for (let idx = 0; idx < this.$store.state.progression.removedAssignedSessions.length; ++idx) {
           const session = this.$store.state.progression.removedAssignedSessions[idx]
-          this.$store.dispatch('progression/deleteAssignment', { itemId: this.$store.state.progression.affectedItem.itemId, sessionId: session.sessionId })
+          this.$store.dispatch('progression/deleteAssignment', { itemId: this.$store.state.progression.assignedItem.itemId, sessionId: session.sessionId })
         }
         // Reset the added and removed affected session ids lists
         this.$store.dispatch('progression/resetAffectedSessions')

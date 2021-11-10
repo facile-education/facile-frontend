@@ -62,15 +62,15 @@ export default {
       // Session is greyed if it has been affected to an other item
       // AND if current affected item is not a homework
       return this.event.extendedProps.assignedItemId !== 0 &&
-        this.event.extendedProps.assignedItemId !== this.store.state.progression.affectedItem.itemId &&
-        !this.store.state.progression.affectedItem.isHomework
+        this.event.extendedProps.assignedItemId !== this.store.state.progression.assignedItem.itemId &&
+        !this.store.state.progression.assignedItem.isHomework
     }
   },
   created () {
     // Session is selected if:
     // it is initially assigned to the current item or if it has been assigned
     // AND it has not been removed
-    this.isSelected = (this.event.extendedProps.assignedItemId === this.store.state.progression.affectedItem.itemId ||
+    this.isSelected = (this.event.extendedProps.assignedItemId === this.store.state.progression.assignedItem.itemId ||
     this.store.state.progression.addedAssignedSessions.map(session => session.sessionId).indexOf(this.event.extendedProps.id) !== -1) &&
     !this.store.state.progression.removedAssignedSessions.map(session => session.sessionId).indexOf(this.event.extendedProps.id) !== -1
   },

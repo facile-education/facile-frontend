@@ -20,9 +20,9 @@ export {
   deleteItemContent,
   updateItem,
   updateItemContent,
-  addAssignment,
+  addSessionAssignment,
+  addHomeworkAssignment,
   deleteAssignment,
-  updateAssignment,
   addAttachedFile,
   addAudioRecording,
   deleteAttachedFile
@@ -197,12 +197,19 @@ function updateItemContent (contentId, contentName, contentValue, order) {
 }
 
 // ProgressionItemAssignment object
-function addAssignment (itemId, sessionId, groupId) {
-  return axios.post(constants.JSON_WS_URL + PROGRESSION_PATH + ASSIGNMENT_CTX + 'add-assignment',
+function addSessionAssignment (itemId, sessionId) {
+  return axios.post(constants.JSON_WS_URL + PROGRESSION_PATH + ASSIGNMENT_CTX + 'add-session-assignment',
     PentilaUtils.URL.params({
       itemId,
-      sessionId,
-      groupId
+      sessionId
+    })).then(response => response.data)
+}
+
+function addHomeworkAssignment (itemId, homeworks) {
+  return axios.post(constants.JSON_WS_URL + PROGRESSION_PATH + ASSIGNMENT_CTX + 'add-homework-assignment',
+    PentilaUtils.URL.params({
+      itemId: itemId,
+      homeworks: JSON.stringify(homeworks)
     })).then(response => response.data)
 }
 
@@ -213,14 +220,6 @@ function deleteAssignment (itemId, sessionId) {
       sessionId
     }
   }).then(response => response.data)
-}
-
-function updateAssignment (itemId, sessionId) {
-  return axios.post(constants.JSON_WS_URL + PROGRESSION_PATH + ASSIGNMENT_CTX + 'update-assignment',
-    PentilaUtils.URL.params({
-      itemId,
-      sessionId
-    })).then(response => response.data)
 }
 
 // ProgressionItemAttachedFile object
