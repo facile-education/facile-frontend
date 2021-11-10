@@ -123,7 +123,7 @@ export default {
   mounted () {
     if (!this.isCreation) {
       this.contentName = this.editedContent.contentName
-      this.contentValue = this.editedContent.contentValue
+      this.contentValue = '<iframe src="' + this.editedContent.contentValue + '" />'
     }
   },
   methods: {
