@@ -14,6 +14,7 @@
 
     <PentilaButton
       class="delete-folder-button"
+      cls="cancel"
       @click="deleteFolder"
     >
       <img
@@ -22,7 +23,7 @@
         :alt="$t('delete')"
         :title="$t('delete')"
       >
-      <span>{{ $t('delete') }}</span>
+      <span v-t="'delete'" />
     </PentilaButton>
   </div>
 </template>
@@ -119,18 +120,17 @@ export default {
   .delete-folder-button {
     margin-left: auto;
     height: 39px;
-    width: 249px;
-    border-radius: 6px;
-    background-color: #F5F5F5;
-    color: black;
     display: flex;
     justify-content: center;
     align-items: center;
 
+    span {
+      margin-left: 12px;
+    }
+
     .trash-icon {
       width: 20px;
       height: 20px;
-      margin-right: 10px;
     }
   }
 }
