@@ -69,11 +69,15 @@ export const state = {
   startDate: undefined,
   endDate: undefined,
   sessionList: [],
+  draggedItem: undefined,
   filterFolder: { name: 'Toute la progression', folderId: 0 },
   filterCours: { groupName: 'Tous les cours', groupId: 0 }
 }
 
 export const mutations = {
+  setDraggedItem (state, payload) {
+    state.draggedItem = payload
+  },
   addProgression (state, payload) {
     state.progressionList.push(payload)
   },
@@ -227,7 +231,12 @@ export const mutations = {
   updateItem (state, payload) {
     const folder = helperMethods.getFolderByFolderId(state.currentProgression, payload.folderId)
     const itemIndex = folder.items.map(item => item.itemId).indexOf(payload.itemId)
-    if (itemIndex !== -1) {
+    const hasBeenMoved = (itemIndex === -1 || folder.items[itemIndex].order !== payload.order)
+
+    if (hasBeenMoved) {
+      this.commit('progression/removeItem', payload)
+      folder.items.splice((payload.order - 1), 0, payload)
+    } else if (itemIndex !== -1) {
       const item = folder.items[itemIndex]
       item.folderId = payload.folderId
       item.name = payload.name
@@ -258,7 +267,7 @@ export const mutations = {
     // Loop over section's items
     for (let idx = 0; idx < state.currentProgression.sections.length; ++idx) {
       const section = state.currentProgression.sections[idx]
-      const index = section.items.indexOf(payload)
+      const index = section.items.map(item => item.itemId).indexOf(payload.itemId)
       if (index !== -1) {
         section.items.splice(index, 1)
       }
@@ -266,7 +275,7 @@ export const mutations = {
       // Loop over subSection's items
       for (let idx = 0; idx < section.subSections.length; ++idx) {
         const subSection = section.subSections[idx]
-        const subIndex = subSection.items.indexOf(payload)
+        const subIndex = subSection.items.map(item => item.itemId).indexOf(payload.itemId)
         if (subIndex !== -1) {
           subSection.items.splice(subIndex, 1)
         }
