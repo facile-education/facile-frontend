@@ -110,9 +110,10 @@
         class="item-contents"
       >
         <ProgressionItemContent
-          v-for="content in sortedItemContents"
+          v-for="(content, index) in sortedItemContents"
           :key="content.contentId"
           :content="content"
+          :index="index"
           class="item-content"
           @editContent="editContent"
         />
@@ -363,9 +364,6 @@ export default {
     deleteItem (item) {
       this.$store.dispatch('progression/deleteItem', item)
     },
-    updateContent () {
-      console.log('TODO: update ck content')
-    },
     openFilePicker () {
       this.isFilePickerDisplayed = true
     },
@@ -406,11 +404,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@design';
+
 .progression-item {
   width: 100%;
-  border: 1px solid #D4D4D4;
+  border: 1px solid $color-border;
   border-radius: 6px;
-  background-color: #FFFFFF;
   margin: 5px 0 25px 0;
   display: flex;
 
@@ -446,7 +445,7 @@ export default {
       margin-left: 15px;
       margin-right: 15px;
       border: 0;
-      border-top: 1px solid #D4D4D4;
+      border-top: 1px solid $color-border;
     }
 
     .preview {

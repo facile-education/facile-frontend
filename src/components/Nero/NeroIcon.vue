@@ -16,6 +16,7 @@ library.add(
   require('@fortawesome/free-solid-svg-icons/faChevronCircleLeft').definition,
   require('@fortawesome/free-solid-svg-icons/faChevronCircleRight').definition,
   require('@fortawesome/free-solid-svg-icons/faExclamationTriangle').definition,
+  require('@fortawesome/free-solid-svg-icons/faGripLines').definition,
   require('@fortawesome/free-solid-svg-icons/faList').definition,
   require('@fortawesome/free-solid-svg-icons/faPencilAlt').definition,
   require('@fortawesome/free-solid-svg-icons/faPlus').definition,

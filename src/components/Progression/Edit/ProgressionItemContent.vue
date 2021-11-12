@@ -1,18 +1,38 @@
 <template>
   <div
     class="item-content"
+    :class="{'droppable': draggingContent}"
+    :draggable="draggable"
     @mouseover="isHovering = true"
     @mouseleave="isHovering = false"
+    @dragstart.stop="dragStart"
+    @dragend="dragEnd"
+    @dragover.prevent="dragOver"
+    @dragleave="dragLeave"
+    @drop.stop="drop"
   >
+    <hr class="drag-placeholder theme-border-color">
+
+    <!-- Drag and drop handler -->
+    <div
+      class="content-move"
+      @mousedown="enableDrag"
+    >
+      <NeroIcon
+        name="grip-lines"
+        class="icon"
+      />
+    </div>
     <!-- Text -->
     <div
       v-if="content.contentType === 1"
       class="content-text"
     >
-      <CkEditor
-        :initial-content="content.contentValue"
+      <CKEditor
+        :model-value="content.contentValue"
         :editor-id="editorId"
-        :options="editorOptions"
+        :editor="editor"
+        :config="editorOptions"
         @input="updateContent"
       />
     </div>
@@ -94,7 +114,10 @@
         <span>{{ $t('h5p') }}</span>
       </div>
       <span>{{ content.contentName }}</span>
-      <a :href="content.contentValue"         target="_blank" >{{ content.contentValue }}</a>
+      <a
+        :href="content.contentValue"
+        target="_blank"
+      >{{ content.contentValue }}</a>
     </div>
 
     <!-- Delete content button -->
@@ -119,27 +142,42 @@
 </template>
 
 <script>
-import CkEditor from '@/components/Nero/CKEditor'
+import '@ckeditor/ckeditor5-build-inline/build/translations/fr'
+import InlineEditor from '@ckeditor/ckeditor5-build-inline'
+
+import NeroIcon from '@/components/Nero/NeroIcon'
+import { component as CKEditor } from '@ckeditor/ckeditor5-vue'
 import FileContent from '@components/Progression/Edit/Contents/FileContent'
 
 export default {
   name: 'ProgressionItemContent',
-  components: { FileContent, CkEditor },
+  components: { FileContent, CKEditor, NeroIcon },
   props: {
     content: {
       type: Object,
       required: true
+    },
+    index: {
+      type: Number,
+      default: -1
     }
   },
   emits: ['editContent'],
   data () {
     return {
-      editorOptions: {},
+      draggable: false,
+      editor: InlineEditor,
+      editorOptions: {
+        language: 'fr'
+      },
       isHovering: false,
       timeout: undefined
     }
   },
   computed: {
+    draggingContent () {
+      return this.$store.state.progression.draggingContent
+    },
     editorId () {
       // Used to manage multiple editors - editorId is based on the (unique) order
       return 'editor' + this.content.order
@@ -149,17 +187,50 @@ export default {
       return this.content.contentType === 3 || this.content.contentType === 4 || this.content.contentType === 6
     }
   },
-  created () {
-  },
   methods: {
-    updateInput (value) {
-      console.log('TODO: updateInput ', value)
+    dragEnd (e) {
+      this.$store.commit('progression/setDraggingContent', false)
+      this.draggable = false
+    },
+    dragLeave (e) {
+      e.target.classList.remove('top')
+      e.target.classList.remove('bottom')
+    },
+    dragOver (e) {
+      const movedContent = JSON.parse(e.dataTransfer.getData('content'))
+      if (movedContent && movedContent.contentId !== this.content.contentId && movedContent.itemId === this.content.itemId) {
+        if (this.index < movedContent.index) {
+          e.target.classList.add('top')
+        } else {
+          e.target.classList.add('bottom')
+        }
+      }
+    },
+    dragStart (e) {
+      if (this.draggable) {
+        this.$store.commit('progression/setDraggingContent', true)
+        const movedContent = { ...this.content, index: this.index }
+        e.dataTransfer.setData('content', JSON.stringify(movedContent))
+      }
+    },
+    drop (e) {
+      const movedContent = JSON.parse(e.dataTransfer.getData('content'))
+      if (movedContent && movedContent.itemId === this.content.itemId) {
+        const updatedContent = { ...movedContent }
+        updatedContent.order = this.index + 1
+        this.$store.dispatch('progression/updateItemContent', updatedContent)
+      }
+    },
+    enableDrag () {
+      this.draggable = (this.index > -1)
     },
     updateContent (newValue) {
       clearTimeout(this.timeout)
       // 2s timeout
       this.timeout = setTimeout(() => {
-        this.$store.dispatch('progression/updateItemContent', { contentId: this.content.contentId, contentName: this.content.contentName, contentValue: newValue, order: this.content.order })
+        const updatedContent = { ...this.content }
+        updatedContent.contentValue = newValue
+        this.$store.dispatch('progression/updateItemContent', updatedContent)
       }, 2000)
     },
     confirmContentDeletion () {
@@ -179,65 +250,119 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@design';
 
 .item-content {
-  border: 1px solid #D4D4D4;
-  background-color: #FFFFFF;
+  position: relative;
+  border: 1px solid $color-border;
+  background-color: $color-body-bg;
   margin-left: 10px;
   margin-right: 10px;
   display: flex;
   justify-content: space-between;
 
-  .content-text {
-    width: 90%;
+  &:hover {
+    .content-button {
+      display: block;
+    }
+
+    .content-move {
+      opacity: 1;
+      transition: .3s;
+      left: -30px;
+      width: 30px;
+    }
   }
 
-  .content-link, .content-video, .content-h5p {
-    height: 80px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    margin-left: 20px;
+  // When Dnd is active disable pointer events
+  &.droppable * {
+    pointer-events: none;
+  }
 
-    .title {
-      margin-top: 5px;
+  &.top .drag-placeholder {
+    border-top: 2px solid;
+    top: -7px;
+  }
 
-      img {
-        width: 10px;
-        height: 10px;
-        margin: auto 5px auto auto;
-      }
+  &.bottom .drag-placeholder {
+    border-bottom: 2px solid;
+    bottom: -7px;
+  }
+}
 
-      span {
-        margin: auto;
-        font-size: 0.75rem;
-      }
+.drag-placeholder {
+  position: absolute;
+  width: 100%;
+  margin: 0;
+  border: none;
+}
+
+.content-move {
+  position: absolute;
+  height: 100%;
+  width: 0;
+  top: 0;
+  left: 0;
+  background: $color-border;
+  display: flex;
+  cursor: move;
+  opacity: 0;
+
+  .icon {
+    margin: auto
+  }
+}
+
+.content-text {
+  width: 100%;
+}
+
+.content-link, .content-video, .content-h5p {
+  height: 80px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+
+  .title {
+    margin-top: 5px;
+
+    img {
+      width: 10px;
+      height: 10px;
+      margin: auto 5px auto auto;
     }
 
     span {
-      margin-top: 5px;
+      margin: auto;
+      font-size: 0.75rem;
     }
   }
-  .buttons-panel {
-    width: 40px;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
 
-    .content-button {
-      display: none;
-      border: 1px solid transparent;
-      border-radius: 5px;
-      margin: 7px;
-
-      &:hover {
-        border: 1px solid grey;
-        cursor: pointer;
-      }
-    }
+  span {
+    margin-top: 5px;
   }
-  &:hover .content-button {
-    display: block;
+}
+
+.buttons-panel {
+  flex-basis: 40px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+
+  .content-button {
+    display: none;
+    border: 1px solid transparent;
+    border-radius: $border-radius;
+    margin: 3px;
+    padding: 4px;
+
+    &:hover {
+      border: 1px solid grey;
+      cursor: pointer;
+    }
   }
 }
 </style>

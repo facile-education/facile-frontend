@@ -77,6 +77,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@design';
+
 .progression {
   display: flex;
   flex-direction: column;
@@ -95,7 +97,7 @@ export default {
 .header {
   margin: 0;
   padding: 20px 15px;
-  color: white;
+  color: $color-light-text;
 }
 
 .body {

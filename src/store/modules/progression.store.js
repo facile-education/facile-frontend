@@ -70,6 +70,7 @@ export const state = {
   endDate: undefined,
   sessionList: [],
   draggedItem: undefined,
+  draggingContent: false,
   filterFolder: { name: 'Toute la progression', folderId: 0 },
   filterCours: { groupName: 'Tous les cours', groupId: 0 }
 }
@@ -77,6 +78,9 @@ export const state = {
 export const mutations = {
   setDraggedItem (state, payload) {
     state.draggedItem = payload
+  },
+  setDraggingContent (state, payload) {
+    state.draggingContent = payload
   },
   addProgression (state, payload) {
     state.progressionList.push(payload)
