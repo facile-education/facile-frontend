@@ -48,7 +48,7 @@
         <p>Editer la progression</p>
         <div
           v-if="isEditMode"
-          class="active-line"
+          class="active-line theme-background-color"
         />
       </div>
       <div
@@ -64,7 +64,7 @@
         <p>Affecter aux horaires</p>
         <div
           v-if="!isEditMode"
-          class="active-line"
+          class="active-line theme-background-color"
         />
       </div>
     </div>
@@ -158,10 +158,8 @@ export default {
         font-size: 0.875rem;
       }
       .active-line {
-        float: bottom;
         height: 3px;
         width: 140px;
-        background-color: #306CD3;
       }
     }
   }

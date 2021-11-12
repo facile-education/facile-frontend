@@ -13,7 +13,7 @@
           class="add-icon"
           name="fa-plus"
         />
-        {{ $t('add') }}
+        <span v-t="'add'" />
       </PentilaButton>
 
       <div
@@ -212,13 +212,11 @@ export default {
     margin-bottom: 11px;
 
     .create-button {
-      border-radius: 32px;
-      background-color: #306CD3;
       width: 140px;
-      height: 48px;
+      border-radius: 32px;
 
-      .add-icon {
-        margin-right: 4px;
+      span {
+        margin-left: 12px;
       }
     }
 

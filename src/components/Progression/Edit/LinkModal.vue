@@ -160,6 +160,6 @@ export default {
   "add": "Ajouter",
   "edit": "Modifier",
   "namePlaceholder": "Mon lien",
-  "urlPlaceholder": "https://wwww.monlien.com"
+  "urlPlaceholder": "https://www.monlien.com"
 }
 </i18n>
