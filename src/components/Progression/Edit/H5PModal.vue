@@ -43,27 +43,18 @@
     </template>
 
     <template #footer>
-      <div
-        class="footer"
-      >
-        <PentilaButton
-          :label="$t('cancel')"
-          class="button"
-          @click="closeModal"
-        />
-        <PentilaButton
-          v-if="isCreation"
-          :label="$t('add')"
-          class="button"
-          @click="addH5P"
-        />
-        <PentilaButton
-          v-else
-          :label="$t('edit')"
-          class="button"
-          @click="editH5P"
-        />
-      </div>
+      <PentilaButton
+        v-if="isCreation"
+        :label="$t('add')"
+        class="button"
+        @click="addH5P"
+      />
+      <PentilaButton
+        v-else
+        :label="$t('edit')"
+        class="button"
+        @click="editH5P"
+      />
     </template>
   </PentilaWindow>
 </template>
@@ -198,14 +189,6 @@ export default {
   }
   .content-url {
     margin: 20px 0;
-  }
-}
-
-.footer {
-  display: flex;
-  justify-content: space-around;
-  .button {
-    width: 150px;
   }
 }
 </style>
