@@ -37,20 +37,11 @@
     </template>
 
     <template #footer>
-      <div
-        class="footer"
-      >
-        <PentilaButton
-          :label="$t('cancel')"
-          class="button cancel-button"
-          @click="closeModal"
-        />
-        <PentilaButton
-          :label="$t('add')"
-          class="button create-button"
-          @click="addRecord"
-        />
-      </div>
+      <PentilaButton
+        :label="$t('add')"
+        class="button create-button"
+        @click="addRecord"
+      />
     </template>
   </PentilaWindow>
 </template>
@@ -139,14 +130,6 @@ export default {
   }
   .link-url, .link-name {
     margin: 10px;
-  }
-}
-
-.footer {
-  display: flex;
-  justify-content: space-around;
-  .button {
-    width: 150px;
   }
 }
 </style>

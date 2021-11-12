@@ -43,27 +43,18 @@
     </template>
 
     <template #footer>
-      <div
-        class="footer"
-      >
-        <PentilaButton
-          :label="$t('cancel')"
-          class="button cancel-button"
-          @click="closeModal"
-        />
-        <PentilaButton
-          v-if="isCreation"
-          :label="$t('add')"
-          class="button create-button"
-          @click="addVideo"
-        />
-        <PentilaButton
-          v-else
-          :label="$t('edit')"
-          class="button"
-          @click="editVideo"
-        />
-      </div>
+      <PentilaButton
+        v-if="isCreation"
+        :label="$t('add')"
+        class="button create-button"
+        @click="addVideo"
+      />
+      <PentilaButton
+        v-else
+        :label="$t('edit')"
+        class="button"
+        @click="editVideo"
+      />
     </template>
   </PentilaWindow>
 </template>
