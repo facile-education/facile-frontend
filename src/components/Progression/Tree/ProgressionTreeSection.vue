@@ -5,7 +5,7 @@
     <hr>
     <!-- Section name -->
     <div
-      class="section-name"
+      class="section-name theme-hover-light-background-color"
       :class="{'selected': isSelected }"
       :title="section.name"
       @click="selectSection"
@@ -30,10 +30,12 @@
       class="section-items"
     >
       <ProgressionTreeItem
-        v-for="item in section.items"
+        v-for="(item, index) in section.items"
         :key="item.itemId"
+        :index="index"
         :is-parent-section-selected="isSelected"
         :item="item"
+        :is-last="index == (section.items.length - 1)"
       />
     </div>
   </div>
@@ -102,10 +104,6 @@ export default {
       color: #000000;
       font-size: 0.875rem;
       font-weight: 500;
-    }
-
-    &:hover {
-      background-color: #EFF3FB;
     }
     &.selected span {
       color: #306CD3;

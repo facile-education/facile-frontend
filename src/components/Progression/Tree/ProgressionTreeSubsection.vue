@@ -3,7 +3,7 @@
     class="tree-subsection"
   >
     <div
-      class="subsection-header"
+      class="subsection-header theme-hover-light-background-color"
       :class="{'selected': isSelected }"
       @click="selectSubsection"
     >
@@ -49,10 +49,12 @@
       class="tree-items"
     >
       <ProgressionTreeItem
-        v-for="item in subSection.items"
+        v-for="(item, index) in subSection.items"
         :key="item.itemId"
+        :index="index"
         :is-parent-section-selected="isSelected"
         :item="item"
+        :is-last="index == (subSection.items.length - 1)"
       />
     </div>
   </div>
@@ -113,74 +115,66 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.subsection-header {
+  height: 40px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
 
-.tree-subsection {
-
-  .subsection-header {
-    height: 40px;
-    width: 100%;
+  .subsection-name {
+    color: black;
+    flex: 1;
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    height: 25px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 16px;
     display: flex;
     align-items: center;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
 
-    .subsection-name {
-      color: black;
-      flex: 1;
+    span {
+      width: 100%;
       overflow-x: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
-      height: 25px;
-      font-size: 0.875rem;
-      font-weight: 500;
-      letter-spacing: 0;
-      line-height: 16px;
-      display: flex;
-      align-items: center;
-
-      span {
-        width: 100%;
-        overflow-x: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-      }
-    }
-
-    .item-number {
-      font-size: 0.75rem;
-      margin-right: 5px;
-      margin-left: 5px;
-    }
-
-    .arrow {
-      width: 11px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      img {
-        transition: all .3s ease;
-      }
-
-      .expended {
-        transform: rotate(90deg);
-      }
-    }
-
-    &:hover {
-      background-color: #EFF3FB;
-    }
-
-    &.selected {
-      .subsection-name, .item-number{
-        color: #306CD3;
-      }
     }
   }
 
-  .tree-items {
-    margin-left: 13px;
+  .item-number {
+    font-size: 0.75rem;
+    margin-right: 5px;
+    margin-left: 5px;
   }
+
+  .arrow {
+    width: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      transition: all .3s ease;
+    }
+
+    .expended {
+      transform: rotate(90deg);
+    }
+  }
+
+  &.selected {
+    .subsection-name, .item-number{
+      color: #306CD3;
+    }
+  }
+}
+
+.tree-items {
+  margin-left: 13px;
 }
 </style>
 
