@@ -204,7 +204,7 @@ export default {
 
 <i18n locale="fr">
 {
-  "allSessions": "Appliquer le remplacement pour toute les séances du {course}",
+  "allSessions": "Appliquer le remplacement pour toutes les séances du {course}",
   "confirm": "Valider",
   "firstSession": "Première séance affectée : le {date} de {start} à {end}",
   "lastSession": "Dernière séance affectée : ",
