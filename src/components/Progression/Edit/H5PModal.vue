@@ -20,6 +20,7 @@
     <template #body>
       <div class="content-name">
         <PentilaInput
+          ref="nameInput"
           v-model="contentName"
           :maxlength="200"
           :placeholder="$t('namePlaceholder')"
@@ -125,6 +126,11 @@ export default {
       this.contentName = this.editedContent.contentName
       this.contentValue = '<iframe src="' + this.editedContent.contentValue + '" />'
     }
+
+    // Focus form
+    const input = this.$refs.nameInput
+    input.focus()
+    input.select()
   },
   methods: {
     closeModal () {

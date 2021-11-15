@@ -20,6 +20,7 @@
     <template #body>
       <div class="video-name">
         <PentilaInput
+          ref="nameInput"
           v-model="videoName"
           :maxlength="200"
           :placeholder="$t('namePlaceholder')"
@@ -106,6 +107,11 @@ export default {
       this.videoName = this.editedContent.contentName
       this.videoUrl = this.editedContent.contentValue
     }
+
+    // Focus form
+    const input = this.$refs.nameInput
+    input.focus()
+    input.select()
   },
   methods: {
     closeModal () {
