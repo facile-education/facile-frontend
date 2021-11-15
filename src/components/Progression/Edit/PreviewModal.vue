@@ -10,7 +10,11 @@
     </template>
 
     <template #body>
-      <div v-html="previewContent" />
+      <div
+        ref="htmlContent"
+        class="content"
+        v-html="previewContent"
+      />
       <!-- TODO: handle attached files at the end of html content -->
     </template>
 
@@ -46,6 +50,19 @@ export default {
   },
   computed: {
   },
+  watch: {
+    previewContent (val) {
+      if (val) {
+        this.$nextTick(() => {
+          const htmlContent = this.$refs.htmlContent
+          const iframeList = htmlContent.getElementsByTagName('iframe')
+          iframeList.forEach((iframe) => {
+            iframe.onload = this.changeIframeSize
+          })
+        })
+      }
+    }
+  },
   created () {
     getItemPreview(this.item.itemId).then(
       (data) => {
@@ -59,6 +76,12 @@ export default {
       })
   },
   methods: {
+    changeIframeSize (event) {
+      const iframe = event.path[0]
+
+      iframe.style.maxHeight = '350px'
+      iframe.style.height = iframe.contentWindow.document.documentElement.scrollHeight + 'px'
+    },
     closeModal () {
       this.$emit('close')
     }
@@ -67,14 +90,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.previewWindow {
-}
 
-.footer {
-  display: flex;
-  justify-content: space-around;
-  .button {
-    width: 150px;
+.previewWindow {
+
+  .content {
+    height: calc(100% - 55px);
+    overflow-y: auto;
+  }
+
+  .footer {
+    display: flex;
+    justify-content: space-around;
+
+    .button {
+      width: 150px;
+    }
   }
 }
 </style>
