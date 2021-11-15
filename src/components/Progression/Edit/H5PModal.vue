@@ -23,7 +23,7 @@
           v-model="contentName"
           :maxlength="200"
           :placeholder="$t('namePlaceholder')"
-          @keyup.enter="pressEnter"
+          @keyup.enter.stop="pressEnter"
         />
         <PentilaErrorMessage
           :error-message="formErrorList.contentName"
@@ -34,7 +34,7 @@
           v-model="contentValue"
           :maxlength="200"
           :placeholder="$t('urlPlaceholder')"
-          @keyup.enter="pressEnter"
+          @keyup.enter.stop="pressEnter"
         />
         <PentilaErrorMessage
           :error-message="formErrorList.embedHTMLElement || formErrorList.embedSrcAttribute || urlError"

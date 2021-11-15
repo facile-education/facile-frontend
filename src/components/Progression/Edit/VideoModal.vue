@@ -23,7 +23,7 @@
           v-model="videoName"
           :maxlength="200"
           :placeholder="$t('namePlaceholder')"
-          @keyup.enter="pressEnter"
+          @keyup.enter.stop="pressEnter"
         />
         <PentilaErrorMessage
           :error-message="formErrorList.videoName"
@@ -34,7 +34,7 @@
           v-model="videoUrl"
           :maxlength="200"
           :placeholder="$t('urlPlaceholder')"
-          @keyup.enter="pressEnter"
+          @keyup.enter.stop="pressEnter"
         />
         <PentilaErrorMessage
           :error-message="formErrorList.videoUrl || urlError"

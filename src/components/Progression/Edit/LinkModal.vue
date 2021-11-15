@@ -23,7 +23,7 @@
           v-model="linkName"
           :maxlength="200"
           :placeholder="$t('namePlaceholder')"
-          @keyup.enter="pressEnter"
+          @keyup.enter.stop="pressEnter"
         />
         <PentilaErrorMessage
           :error-message="formErrorList.linkName"
@@ -34,7 +34,7 @@
           v-model="linkUrl"
           :maxlength="200"
           :placeholder="$t('urlPlaceholder')"
-          @keyup.enter="pressEnter"
+          @keyup.enter.stop="pressEnter"
         />
         <PentilaErrorMessage
           :error-message="formErrorList.linkUrl"
