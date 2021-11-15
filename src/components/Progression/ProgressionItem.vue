@@ -1,16 +1,15 @@
 <template>
-  <div class="progression">
+  <div
+    class="progression"
+    @click="selectProgression()"
+  >
     <div
       class="header"
       :style="`background-color:${progression.color};`"
-      @click="selectProgression()"
     >
       <span>{{ progression.subjectName }} {{ progression.volee }}</span>
     </div>
-    <div
-      class="body"
-      @click="selectProgression()"
-    >
+    <div class="body">
       <h3>{{ progression.name }}</h3>
     </div>
     <div class="buttons">
@@ -19,7 +18,7 @@
         src="@assets/edit.svg"
         :alt="$t('edit')"
         :title="$t('edit')"
-        @click="editProgression()"
+        @click.stop="editProgression()"
       >
       <!-- <img
         class="button"
@@ -40,7 +39,7 @@
         src="@assets/trash.svg"
         :alt="$t('delete')"
         :title="$t('delete')"
-        @click="confirmProgressionDeletion()"
+        @click.stop="confirmProgressionDeletion()"
       >
     </div>
   </div>
