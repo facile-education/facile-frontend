@@ -20,6 +20,7 @@
     <template #body>
       <div class="link-name">
         <PentilaInput
+          ref="nameInput"
           v-model="linkName"
           :maxlength="200"
           :placeholder="$t('namePlaceholder')"
@@ -104,6 +105,11 @@ export default {
       this.linkName = this.editedContent.contentName
       this.linkUrl = this.editedContent.contentValue
     }
+
+    // Focus form
+    const input = this.$refs.nameInput
+    input.focus()
+    input.select()
   },
   methods: {
     closeModal () {
