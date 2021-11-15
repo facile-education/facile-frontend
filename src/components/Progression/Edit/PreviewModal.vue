@@ -82,6 +82,6 @@ export default {
 <i18n locale="fr">
 {
   "cancel": "Annuler",
-  "title": "Visualisation du contenu ",
+  "title": "Visualisation du contenu"
 }
 </i18n>
