@@ -15,7 +15,7 @@
     <PentilaButton
       class="delete-folder-button"
       cls="cancel"
-      @click="deleteFolder"
+      @click="confirmFolderDeletion"
     >
       <img
         class="trash-icon"
@@ -74,6 +74,12 @@ export default {
           })
         }
       }
+    },
+    confirmFolderDeletion () {
+      this.$store.dispatch('warningModal/addWarning', {
+        text: this.$t('warning'),
+        lastAction: { fct: this.deleteFolder }
+      })
     },
     deleteFolder () {
       this.$store.dispatch('progression/deleteFolder', this.currentFolder)
@@ -138,6 +144,7 @@ export default {
 
 <i18n locale="fr">
 {
-  "delete": "Supprimer cette section"
+  "delete": "Supprimer cette section",
+  "warning": "La suppression de cette section est définitive."
 }
 </i18n>
