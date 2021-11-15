@@ -72,10 +72,14 @@ export const state = {
   draggedItem: undefined,
   draggingContent: false,
   filterFolder: { name: 'Toute la progression', folderId: 0 },
-  filterCours: { groupName: 'Tous les cours', groupId: 0 }
+  filterCours: { groupName: 'Tous les cours', groupId: 0 },
+  haveToFocusFolderNameInput: false
 }
 
 export const mutations = {
+  setHaveToFocusFolderNameInput (state, payload) {
+    state.haveToFocusFolderNameInput = payload
+  },
   setDraggedItem (state, payload) {
     state.draggedItem = payload
   },
@@ -340,6 +344,7 @@ export const mutations = {
     }
   }
 }
+
 export const actions = {
   addProgression ({ commit }, progression) {
     addProgression(progression).then(
@@ -510,6 +515,7 @@ export const actions = {
           if (parentFolderId === 0) {
             data.folder.subSections = []
           }
+          commit('setHaveToFocusFolderNameInput', true)
           commit('addFolder', data.folder)
           commit('setCurrentFolder', data.folder)
           commit('setCurrentItem', undefined)
@@ -519,6 +525,9 @@ export const actions = {
         // TODO toastr
         console.error(err)
       })
+  },
+  haveFocusedFolderNameInput ({ commit }) {
+    commit('setHaveToFocusFolderNameInput', false)
   },
   updateFolderName ({ commit }, { folder, newFolderName }) {
     updateFolder(folder.folderId, folder.parentId, newFolderName, folder.order).then(

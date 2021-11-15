@@ -42,6 +42,9 @@ export default {
     },
     currentFolderName () {
       return this.currentFolder ? this.currentFolder.name : undefined
+    },
+    haveToFocusFolderNameInput () {
+      return this.$store.state.progression.haveToFocusFolderNameInput
     }
   },
   watch: {
@@ -49,14 +52,20 @@ export default {
       // When selected folder changes
       // Put its name in the input
       this.folderNameInputText = newName
-      // With focus on it
-      // if (this.$store.state.progression.currentFolder !== undefined && this.$refs.folderName !== undefined && this.$refs.folderName !== null) {
-      //   this.$nextTick(() => this.$refs.folderName.$el.focus())
-      // }
+    },
+    haveToFocusFolderNameInput (value) {
+      if (value) {
+        this.focusNameInput()
+      }
     }
   },
   created () {
     this.folderNameInputText = this.currentFolderName
+  },
+  mounted () {
+    if (this.haveToFocusFolderNameInput) {
+      this.focusNameInput()
+    }
   },
   methods: {
     pressEnter () {
@@ -85,7 +94,9 @@ export default {
       this.$store.dispatch('progression/deleteFolder', this.currentFolder)
     },
     focusNameInput () { // TODO: focus title when it's a new created folder
-      this.$refs.folderName.$el.focus()
+      this.$refs.folderName.focus()
+      this.$refs.folderName.select()
+      this.$store.dispatch('progression/haveFocusedFolderNameInput')
     }
   }
 }
