@@ -1,7 +1,7 @@
 <template>
   <PentilaWindow
     :modal="true"
-    class="previewWindow"
+    class="preview-window"
     :class="{'mobile': mq.phone}"
     @close="closeModal"
   >
@@ -20,13 +20,11 @@
     </template>
 
     <template #footer>
-      <div class="footer">
-        <PentilaButton
-          :label="$t('cancel')"
-          class="button cancel-button"
-          @click="closeModal"
-        />
-      </div>
+      <PentilaButton
+        :label="$t('cancel')"
+        class="button cancel-button"
+        @click="closeModal"
+      />
     </template>
   </PentilaWindow>
 </template>
@@ -93,23 +91,27 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-
-.previewWindow {
-
-  .content {
-    height: calc(100% - 55px);
+<style lang="scss">
+.preview-window {
+  .window-body {
+    height: 100vh;  // Set to max possible and max-height will restrain it
     overflow-y: auto;
   }
+}
+</style>
 
-  .footer {
-    display: flex;
-    justify-content: space-around;
+<style lang="scss" scoped>
+
+.preview-window {
+
+  .content {
+    height: 100%;
+    overflow-y: auto;
+  }
 
     .button {
       width: 150px;
     }
-  }
 }
 </style>
 
