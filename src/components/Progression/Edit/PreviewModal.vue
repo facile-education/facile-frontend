@@ -16,6 +16,7 @@
         v-html="previewContent"
       />
       <!-- TODO: handle attached files at the end of html content -->
+      <PentilaSpinner v-if="nbIframesToLoad > 0" />
     </template>
 
     <template #footer>
@@ -45,7 +46,8 @@ export default {
   emits: ['close'],
   data () {
     return {
-      previewContent: ''
+      previewContent: '',
+      nbIframesToLoad: 0
     }
   },
   computed: {
@@ -56,6 +58,7 @@ export default {
         this.$nextTick(() => {
           const htmlContent = this.$refs.htmlContent
           const iframeList = htmlContent.getElementsByTagName('iframe')
+          this.nbIframesToLoad = iframeList.length
           iframeList.forEach((iframe) => {
             iframe.onload = this.changeIframeSize
           })
@@ -77,6 +80,7 @@ export default {
   },
   methods: {
     changeIframeSize (event) {
+      this.nbIframesToLoad--
       const iframe = event.path[0]
 
       iframe.style.maxHeight = '350px'
