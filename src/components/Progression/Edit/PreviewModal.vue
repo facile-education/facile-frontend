@@ -18,14 +18,6 @@
       <!-- TODO: handle attached files at the end of html content -->
       <PentilaSpinner v-if="nbIframesToLoad > 0" />
     </template>
-
-    <template #footer>
-      <PentilaButton
-        :label="$t('cancel')"
-        class="button cancel-button"
-        @click="closeModal"
-      />
-    </template>
   </PentilaWindow>
 </template>
 
