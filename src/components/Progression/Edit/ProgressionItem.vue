@@ -298,7 +298,10 @@ export default {
   mounted () {
     // Set focus on item name input
     if (this.$store.state.progression.currentItem !== undefined) {
-      this.$nextTick(() => this.$refs.itemName.$el.childNodes[0].focus())
+      this.$nextTick(() => {
+        this.$refs.itemName.focus()
+        this.$refs.itemName.select()
+      })
     }
     // this.$refs.itemName.focus()
   },
@@ -310,7 +313,7 @@ export default {
       this.$store.dispatch('progression/addItemContent', { itemId: this.item.itemId, contentType: 6 })
     },
     pressEnter () {
-      this.$refs.itemName.$el.childNodes[0].blur()
+      this.$refs.itemName.blur()
     },
     updateItemName (value) {
       this.updatedItemName = value
