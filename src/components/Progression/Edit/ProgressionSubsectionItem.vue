@@ -75,6 +75,7 @@ export default {
     },
     toggleExtension () {
       this.isExtended = !this.isExtended
+      this.$store.dispatch('popups/pushPopup', { message: 'test' })
 
       if (this.isExtended) {
         this.$store.dispatch('progression/getFolderContent', this.subsection.folderId)
