@@ -17,28 +17,11 @@
       </ProgressionItem>
 
       <!-- SubSections items-->
-      <div
+      <ProgressionSubsectionItem
         v-for="(subsection , index) in subSections"
         :key="index"
-      >
-        <!--      suSection Title-->
-        <div
-          class="sub-section-title"
-          @click="redirectSubSection(subsection)"
-        >
-          {{ subsection.name }}
-        </div>
-        <ProgressionItem
-          v-for="item in subsection.items"
-          :key="item.itemId"
-          :item="item"
-          class="item"
-        >
-          <h4>
-            {{ item.name }}
-          </h4>
-        </ProgressionItem>
-      </div>
+        :subsection="subsection"
+      />
     </div>
 
     <!-- Empty section -->
@@ -85,10 +68,11 @@
 
 <script>
 import ProgressionItem from '@/components/Progression/Edit/ProgressionItem'
+import ProgressionSubsectionItem from '@components/Progression/Edit/Contents/ProgressionSubsectionItem'
 
 export default {
   name: 'ProgressionEdit',
-  components: { ProgressionItem },
+  components: { ProgressionSubsectionItem, ProgressionItem },
   data () {
     return {
       updatedFolderName: '',
@@ -128,9 +112,6 @@ export default {
     }
   },
   methods: {
-    redirectSubSection (subSection) {
-      this.$store.dispatch('progression/setCurrentFolder', subSection)
-    },
     toggleCreateMenu () {
       this.$store.dispatch('progression/setCreateMenuDisplayed', !this.$store.state.progression.isCreateMenuDisplayed)
     }
@@ -142,15 +123,6 @@ export default {
 
 .items-list {
   width: 100%;
-
-  .sub-section-title {
-    margin-bottom: 10px;
-    cursor: pointer;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
 }
 
 .empty-section, .empty-progression {
