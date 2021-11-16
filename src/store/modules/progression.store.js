@@ -585,7 +585,7 @@ export const actions = {
       })
   },
   addItem ({ commit, state }, { itemName, isHomework, type, order }) {
-    const currentFolderId = (state.currentFolder !== undefined ? state.currentFolder.folderId : 0)
+    const currentFolderId = (state.currentFolder !== undefined ? state.currentFolder.folderId : (state.currentItem ? state.currentItem.folderId : 0))
     addItem(state.currentProgression.progressionId, currentFolderId, itemName, isHomework, type, '', order).then(
       (data) => {
         if (data.success) {
