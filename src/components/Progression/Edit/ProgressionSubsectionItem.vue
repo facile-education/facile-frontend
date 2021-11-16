@@ -1,55 +1,58 @@
 <template>
-  <div
-    class="sub-section-header"
-    :class="{'extended': isExtended}"
-    @mouseover="isHoverTitle = true"
-    @mouseleave="isHoverTitle = false"
-    @click="toggleExtension"
-  >
-    <h3 class="sub-section-title">
-      {{ subsection.name }}
-    </h3>
+  <div>
     <div
-      class="arrow"
-      :title="isExtended ? $t('extend') : $t('collapse')"
+      class="sub-section-header"
+      :class="{'extended': isExtended}"
+      @mouseover="isHoverTitle = true"
+      @mouseleave="isHoverTitle = false"
+      @click="toggleExtension"
     >
-      <img
-        src="@assets/arrow-right.svg"
-        :class="{'extended': isExtended}"
-        :alt="isExtended ? $t('extend') : $t('collapse')"
+      <h3 class="sub-section-title">
+        {{ subsection.name }}
+      </h3>
+      <div
+        class="arrow"
+        :title="isExtended ? $t('extend') : $t('collapse')"
       >
+        <img
+          src="@assets/arrow-right.svg"
+          :class="{'extended': isExtended}"
+          :alt="isExtended ? $t('extend') : $t('collapse')"
+        >
+      </div>
+      <div
+        v-if="isHoverTitle"
+        class="edit"
+        @click.stop="redirectSubSection"
+      >
+        <img
+          src="@assets/edit.svg"
+          :alt="$t('edit')"
+          :title="$t('edit')"
+        >
+      </div>
     </div>
     <div
-      v-if="isHoverTitle"
-      class="edit"
-      @click.stop="redirectSubSection"
+      v-if="isExtended"
+      class="items"
     >
-      <img
-        src="@assets/edit.svg"
-        :alt="$t('edit')"
-        :title="$t('edit')"
+      <ProgressionItem
+        v-for="item in subsection.items"
+        :key="item.itemId"
+        :item="item"
+        class="item"
       >
+        <h4>
+          {{ item.name }}
+        </h4>
+      </ProgressionItem>
     </div>
-  </div>
-  <div
-    v-if="isExtended"
-    class="items"
-  >
-    <ProgressionItem
-      v-for="item in subsection.items"
-      :key="item.itemId"
-      :item="item"
-      class="item"
-    >
-      <h4>
-        {{ item.name }}
-      </h4>
-    </ProgressionItem>
   </div>
 </template>
 
 <script>
 import ProgressionItem from '@components/Progression/Edit/ProgressionItem'
+import { nextTick } from 'vue'
 
 export default {
   name: 'ProgressionSubsectionItem',
@@ -71,11 +74,14 @@ export default {
       this.$store.dispatch('progression/setCurrentFolder', this.subsection)
     },
     toggleExtension () {
-      if (!this.isExtended) { // TODO maybe call backend only if the content has not already loaded before
-        this.$store.dispatch('progression/getFolderContent', this.subsection.folderId)
-      }
-
       this.isExtended = !this.isExtended
+
+      if (this.isExtended) {
+        this.$store.dispatch('progression/getFolderContent', this.subsection.folderId)
+        nextTick(() => {
+          this.$el.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' })
+        })
+      }
     }
   }
 }
