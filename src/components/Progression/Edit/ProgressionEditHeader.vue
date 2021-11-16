@@ -23,9 +23,8 @@
       >
         <!-- Create session content -->
         <div
-          v-if="!isRootFolderSelected"
           class="create-menu-item"
-          @click="doCreateSession()"
+          @click="doCreateSession"
         >
           <img
             class="create-menu-icon"
@@ -38,9 +37,8 @@
 
         <!-- Create homework -->
         <div
-          v-if="!isRootFolderSelected"
           class="create-menu-item"
-          @click="doCreateHomework()"
+          @click="doCreateHomework"
         >
           <img
             class="create-menu-icon"
@@ -103,9 +101,6 @@ export default {
       } else {
         return this.currentFolder.name
       }
-    },
-    isRootFolderSelected () {
-      return this.currentFolder === undefined
     },
     currentProgressionSections () {
       return this.$store.state.progression.currentProgression.sections
