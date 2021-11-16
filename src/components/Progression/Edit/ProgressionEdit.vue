@@ -1,66 +1,65 @@
 <template>
-  <div>
-    <div
-      v-if="nbTotalItemDisplay > 0"
-      class="items-list"
+  <div
+    v-if="nbTotalItemDisplay > 0"
+    class="items-list"
+  >
+    <!-- Section items -->
+    <ProgressionItem
+      v-for="item in itemList"
+      :key="item.itemId"
+      :item="item"
+      class="item"
     >
-      <!-- Section items -->
-      <ProgressionItem
-        v-for="item in itemList"
-        :key="item.itemId"
-        :item="item"
-        class="item"
-      >
-        <h4>
-          {{ item.name }}
-        </h4>
-      </ProgressionItem>
+      <h4>
+        {{ item.name }}
+      </h4>
+    </ProgressionItem>
 
-      <!-- SubSections items-->
-      <ProgressionSubsectionItem
-        v-for="(subsection , index) in subSections"
-        :key="index"
-        :subsection="subsection"
-      />
+    <!-- SubSections items-->
+    <ProgressionSubsectionItem
+      v-for="(subsection , index) in subSections"
+      :key="index"
+      :subsection="subsection"
+      @scrollToPosition="scrollToPosition(this)"
+    />
+  </div>
+
+  <!-- Empty section -->
+  <div
+    v-else-if="currentFolder"
+    class="empty-section"
+  >
+    <div
+      class="spans"
+    >
+      <span>{{ $t('emptySection') }}</span>
+      <span
+        class="blue"
+        @click.stop="toggleCreateMenu"
+      >{{ $t('insertNewContent') }}</span>
     </div>
+  </div>
 
-    <!-- Empty section -->
+  <!-- Empty progression -->
+  <div
+    v-else
+    class="empty-progression"
+  >
     <div
-      v-else-if="currentFolder"
-      class="empty-section"
+      class="spans"
     >
+      <span
+        class="blue"
+        @click.stop="toggleCreateMenu"
+      >{{ $t('addFirstContent') }}</span>
       <div
-        class="spans"
-      >
-        <span>{{ $t('emptySection') }}</span>
-        <span
-          class="blue"
-          @click.stop="toggleCreateMenu"
-        >{{ $t('insertNewContent') }}</span>
-      </div>
-    </div>
-
-    <!-- Empty progression -->
-    <div
-      v-else
-      class="empty-progression"
-    >
-      <div
-        class="spans"
+        class="tips"
       >
         <span
-          class="blue"
-          @click.stop="toggleCreateMenu"
-        >{{ $t('addFirstContent') }}</span>
-        <div
-          class="tips"
-        >
-          <span
-            class="tip-label"
-          >{{ $t('tip-label') }}
-          </span>
-          <span>{{ $t('tip') }}</span>
-        </div>
+          class="tip-label"
+        >{{ $t('tip-label') }}
+        </span>
+        <span>{{ $t('tip') }}</span>
       </div>
     </div>
   </div>
