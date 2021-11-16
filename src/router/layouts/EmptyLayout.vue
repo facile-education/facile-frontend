@@ -23,7 +23,7 @@
         v-for="(popup, index) in popupList"
         :key="index"
         class="popup"
-        background-color="#0B3C5F"
+        :type="popup.type"
         :message="popup.message"
         :timeout="popupTimeout"
         @close="closePopup"
