@@ -14,9 +14,7 @@
       <ProgressionTree
         class="tree"
       />
-      <div
-        class="edit"
-      >
+      <div class="edit">
         <ProgressionEditHeader
           class="header"
         />
@@ -27,9 +25,7 @@
     </div>
 
     <!-- ASSIGNMENT MODE -->
-    <div
-      v-else
-    >
+    <div v-else>
       <CalendarPicker
         v-if="isCalendarPickerMode"
       />
@@ -70,10 +66,6 @@ export default {
     isHomeworkAssignmentMode () {
       return this.$store.state.progression.isHomeworkAssignmentMode
     }
-  },
-  created () {
-  },
-  methods: {
   }
 }
 </script>

@@ -20,7 +20,6 @@
       v-for="(subsection , index) in subSections"
       :key="index"
       :subsection="subsection"
-      @scrollToPosition="scrollToPosition(this)"
     />
   </div>
 
