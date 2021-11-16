@@ -1,5 +1,5 @@
 export const state = {
-  // current popup format: {message: ""}
+  // current popup format: {message: "", type: "['success', 'info', 'warning', 'error']"}
   currentPopupList: [] // FIFO
 }
 

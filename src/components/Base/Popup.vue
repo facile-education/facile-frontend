@@ -3,7 +3,13 @@
     class="popup"
     :style="'background-color: ' + backgroundColor + ';'"
   >
-    <div class="test">
+    <div class="icon">
+      <BaseIcon
+        class="fa-icon"
+        :name="iconName"
+      />
+    </div>
+    <div class="message">
       {{ message }}
     </div>
     <div
@@ -20,9 +26,11 @@
 
 <script>
 
+import BaseIcon from '@components/Base/BaseIcon'
 export default {
   // TODO: export via pentilaComponents
   name: 'Popup',
+  components: { BaseIcon },
   props: {
     message: {
       type: String,
@@ -32,18 +40,48 @@ export default {
       type: Number,
       required: true
     },
-    backgroundColor: {
+    type: {
       type: String,
-      default: '#f9f9f9'
+      validator: (val) => ['success', 'info', 'warning', 'error'].includes(val),
+      default: 'info'
     }
   },
-  // TODO: add close icon and emit 'close' event
   emits: ['close'],
+  computed: {
+    backgroundColor () {
+      switch (this.type) {
+        case 'success':
+          return 'green'
+        case 'info':
+          return 'blue'
+        case 'warning':
+          return 'orange'
+        case 'error':
+          return 'red'
+        default:
+          return ''
+      }
+    },
+    iconName () {
+      switch (this.type) {
+        case 'success':
+          return 'check'
+        case 'info':
+          return 'info-circle'
+        case 'warning':
+        case 'error':
+          return 'exclamation-triangle'
+        default:
+          return ''
+      }
+    }
+  },
   mounted () {
     this.waitBeforeClosure(this.timeout)
   },
   methods: {
-    waitBeforeClosure (time) { // TODO concat
+    // TODO maybe pause the timer if the popup is hovered (or clicked on mobile) + add progress bar to show timer status?
+    waitBeforeClosure (time) {
       setTimeout(() => {
         this.closePopup()
       }, time)
@@ -66,9 +104,21 @@ export default {
   border-radius: 6px;
   box-shadow: 1px 1px 6px #888;
   margin: 10px;
-  padding-left: 15px;
+  padding-left: 5px;
 
-  .test {
+  .icon {
+    height: 100%;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .fa-icon {
+      font-size: 1.25rem;
+    }
+  }
+
+  .message {
     flex: 1;
   }
 

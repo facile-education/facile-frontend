@@ -14,7 +14,7 @@ const slotLabelList = {
 }
 
 // time in ms
-const popupDurationTime = 400000
+const popupDurationTime = 3500
 
 export {
   nbCharBeforeCompletion,
