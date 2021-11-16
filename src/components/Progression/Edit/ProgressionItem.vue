@@ -204,7 +204,7 @@
       />
     </teleport>
     <teleport to="body">
-      <AudioRecordModal
+      <AudioRecorderModal
         v-if="isAudioRecordModalDisplayed"
         height="30em"
         :item="item"
@@ -248,13 +248,13 @@ import { defineAsyncComponent } from 'vue'
 const PreviewModal = defineAsyncComponent(() => import('@/components/Progression/Edit/PreviewModal'))
 const LinkModal = defineAsyncComponent(() => import('@/components/Progression/Edit/LinkModal'))
 const VideoModal = defineAsyncComponent(() => import('@/components/Progression/Edit/VideoModal'))
-const AudioRecordModal = defineAsyncComponent(() => import('@/components/Progression/Edit/AudioRecordModal'))
+const AudioRecorderModal = defineAsyncComponent(() => import('@/components/Progression/Edit/AudioRecorderModal'))
 const H5PModal = defineAsyncComponent(() => import('@/components/Progression/Edit/H5PModal'))
 const FilePickerModal = defineAsyncComponent(() => import('@/components/FilePicker/FilePickerModal'))
 
 export default {
   name: 'ProgressionItem',
-  components: { ProgressionItemContent, PreviewModal, LinkModal, VideoModal, AudioRecordModal, H5PModal, FilePickerModal },
+  components: { ProgressionItemContent, PreviewModal, LinkModal, VideoModal, AudioRecorderModal, H5PModal, FilePickerModal },
   props: {
     item: {
       type: Object,
