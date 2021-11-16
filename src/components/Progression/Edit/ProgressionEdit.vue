@@ -68,7 +68,7 @@
 
 <script>
 import ProgressionItem from '@/components/Progression/Edit/ProgressionItem'
-import ProgressionSubsectionItem from '@components/Progression/Edit/Contents/ProgressionSubsectionItem'
+import ProgressionSubsectionItem from '@components/Progression/Edit/ProgressionSubsectionItem'
 
 export default {
   name: 'ProgressionEdit',
