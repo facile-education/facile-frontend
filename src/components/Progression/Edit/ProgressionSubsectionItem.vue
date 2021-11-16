@@ -14,7 +14,7 @@
       :title="isExtended ? $t('extend') : $t('collapse')"
     >
       <img
-        src="@assets/arrow-down.svg"
+        src="@assets/arrow-right.svg"
         :class="{'extended': isExtended}"
         :alt="isExtended ? $t('extend') : $t('collapse')"
       >
@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import ProgressionItem from '@/components/Progression/Edit/ProgressionItem'
+import ProgressionItem from '@components/Progression/Edit/ProgressionItem'
 
 export default {
   name: 'ProgressionSubsectionItem',
@@ -100,13 +100,13 @@ export default {
     cursor: pointer;
 
     img {
-      height: 8px;
-      width: 15px;
+      height: 15px;
+      width: 8px;
       transition: all .3s ease;
     }
 
     .extended {
-      transform: rotate(180deg);
+      transform: rotate(90deg);
     }
   }
 
