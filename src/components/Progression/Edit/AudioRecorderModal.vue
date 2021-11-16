@@ -1,0 +1,307 @@
+<template>
+  <PentilaWindow
+    :modal="true"
+    class="linkWindow"
+    win-width="600px"
+    @close="closeModal"
+  >
+    <template #header>
+      <span v-t="'title'" />
+    </template>
+
+    <template #body>
+      <div
+        v-if="!isStopped"
+        class="icon"
+        :class="{'pulse': isRecording}"
+      >
+        <NeroIcon name="microphone" />
+      </div>
+      <p
+        v-t="'recording'"
+        class="state"
+        :class="{'recording': isRecording}"
+      />
+      <div
+        v-if="isStopped"
+        ref="wavesurfer"
+      />
+      <div class="timer">
+        {{ timerLabel }}
+      </div>
+      <div class="actions">
+        <template v-if="isStopped">
+          <PentilaButton @click="toggleAudio">
+            <NeroIcon :name="isAudioPlaying ? 'pause' : 'play'" />
+            <span>{{ isAudioPlaying ? $t('pause') : $t('listen') }}</span>
+          </PentilaButton>
+          <PentilaButton
+            cls="cancel"
+            @click="restartRecording"
+          >
+            <NeroIcon name="undo" />
+            <span>{{ $t('restart') }}</span>
+          </PentilaButton>
+        </template>
+        <template v-else>
+          <PentilaButton @click="toggleRecording">
+            <NeroIcon :name="isRecording ? 'pause' : 'play'" />
+            <span>{{ isPaused ? $t('continue') : isRecording ? $t('pause') : $t('start') }}</span>
+          </PentilaButton>
+          <PentilaButton
+            cls="cancel"
+            :disabled="!isRecording && !isPaused"
+            @click="stopRecording"
+          >
+            <NeroIcon name="stop" />
+            <span>{{ $t('stop') }}</span>
+          </PentilaButton>
+        </template>
+      </div>
+    </template>
+
+    <template #footer>
+      <PentilaButton
+        :label="$t('save')"
+        @click="addRecord"
+      />
+    </template>
+  </PentilaWindow>
+</template>
+
+<script>
+// TODO sauvegarde / Affichage des erreurs
+import RecordRTC from 'recordrtc'
+import WaveSurfer from 'wavesurfer.js'
+
+import NeroIcon from '@/components/Nero/NeroIcon'
+
+export default {
+  name: 'AudioRecorderModal',
+  components: { NeroIcon },
+  props: {
+    duration: {
+      type: Number,
+      // 5 minutes : 300 sec
+      default: 300
+    }
+  },
+  emits: ['close'],
+  data () {
+    return {
+      isAudioPlaying: false,
+      recorder: undefined,
+      state: 'inactive',
+      timer: 0,
+      waveSurfer: undefined
+    }
+  },
+  computed: {
+    isPaused () {
+      return this.state === 'paused'
+    },
+    isRecording () {
+      return this.state === 'recording'
+    },
+    isStopped () {
+      return this.state === 'stopped'
+    },
+    timerLabel () {
+      let minutes = Math.floor(this.timer / 60)
+      minutes = minutes < 10 ? '0' + minutes : minutes
+      let seconds = this.timer % 60
+      seconds = seconds < 10 ? '0' + seconds : seconds
+      return `${minutes}:${seconds}`
+    }
+  },
+  beforeUnmount () {
+    if (this.waveSurfer) {
+      this.waveSurfer.destroy()
+    }
+  },
+  methods: {
+    toggleAudio () {
+      this.waveSurfer.playPause()
+      this.isAudioPlaying = this.waveSurfer.isPlaying()
+    },
+    checkUserMediaAccess () {
+      if (navigator.mediaDevices || navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ audio: true })
+          .then(this.startRecording,
+            () => {
+              console.log('nero.audio-recorder-window.on-media-access-denied.message')
+            })
+      } else {
+        console.log('nero.audio-recorder-window.check-user-media-error.message')
+      }
+    },
+    closeModal () {
+      this.$emit('close')
+    },
+    displayStream () {
+      const options = {
+        container: this.$refs.wavesurfer,
+        waveColor: '#a3a3a3',
+        progressColor: this.$store.state.theme.mainColor
+      }
+
+      this.waveSurfer = WaveSurfer.create(options)
+      this.waveSurfer.on('audioprocess', () => { this.timer = Math.trunc(this.waveSurfer.getCurrentTime()) })
+      this.waveSurfer.on('seek', () => { this.timer = Math.trunc(this.waveSurfer.getCurrentTime()) })
+      this.waveSurfer.on('finish', () => { this.timer = 0; this.isAudioPlaying = false })
+      this.waveSurfer.loadBlob(this.recorder.getBlob())
+    },
+    addRecord () {
+      // this.$store.dispatch('progression/addAudioRecord', { itemId: this.item.itemId, linkName: this.link.linkName, linkUrl: this.link.linkUrl })
+      // const recordedBlob = this.recorder.getBlob()
+
+      // this.formData = new FormData()
+      // TODO fileName input ?
+      // this.formData.append('files', recordedBlob, `consignes_audio_ ${Date.now()} .wav`)
+
+      // TODO Emit save
+      this.closeModal()
+    },
+    pauseRecording () {
+      if (this.isRecording) {
+        this.recorder.pauseRecording()
+      } else {
+        this.recorder.resumeRecording()
+      }
+    },
+    restartRecording () {
+      // Reset recorded data and timer
+      this.recorder.reset()
+      this.timer = 0
+
+      if (this.wavesurfer !== undefined) {
+        this.wavesurfer.destroy()
+        this.wavesurfer = undefined
+      }
+    },
+    startRecording (stream) {
+      if (!this.recorder) {
+        // Initialize recorder
+        this.recorder = RecordRTC(stream, {
+          disableLogs: true,
+          ondataavailable: () => {
+            if (this.isRecording) this.timer += 1
+            if (this.timer >= this.duration) this.stopRecording()
+          },
+          timeSlice: 1000,
+          type: 'audio'
+        })
+        this.recorder.onStateChanged = (state) => { this.state = state }
+      }
+
+      // Start recording
+      this.recorder.startRecording()
+    },
+    stopRecording () {
+      if (!this.isRecording) return
+      this.recorder.stopRecording((recordingURL) => {
+        this.timer = 0
+        this.displayStream()
+      })
+    },
+    toggleRecording () {
+      if (this.isRecording || this.isPaused) {
+        this.pauseRecording()
+      } else {
+        this.checkUserMediaAccess()
+      }
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+$color: #878787;
+$red: rgb(230, 109, 109);
+
+.icon {
+  height: 60px;
+  width: 60px;
+  font-size: 1.7rem;
+  color: $color;
+  border: 1px solid rgba($red, 0.8);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+
+  &.pulse {
+    box-shadow: 0 0 0 0 rgba($red, 1);
+    transform: scale(1);
+    animation: pulse 2s infinite;
+  }
+}
+
+.state {
+  overflow: hidden;
+  height: 0;
+  transition: height 0.3s;
+  margin: 0;
+  background-color: rgba($red, 0.2);
+  color: rgba($red, 1);
+  text-align: center;
+
+  &.recording {
+    height: 36px;
+    padding: 0.5rem 0;
+  }
+}
+
+.timer {
+  font-size: 1.7rem;
+  width: 100px;
+  text-align: center;
+  margin: 20px auto;
+  color: $color;
+}
+
+.actions {
+  text-align: center;
+
+  button {
+    border-radius: 30px;
+    margin: 0 10px;
+
+    span {
+      margin-left: 10px;
+    }
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba($red, 0.7);
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba($red, 0);
+  }
+
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba($red, 0);
+  }
+}
+</style>
+
+<i18n locale="fr">
+{
+  "continue": "Reprendre",
+  "listen": "Ecouter",
+  "title": "Enregistrement audio",
+  "pause": "Interrompre",
+  "recording": "Enregistrement...",
+  "restart": "Recommencer",
+  "save": "Valider",
+  "start": "Démarrer",
+  "stop": "Arrêter"
+}
+</i18n>
