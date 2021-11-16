@@ -103,8 +103,7 @@ export default {
     .edit {
       width: 80%;
       height: 100%;
-      padding-right: 20px;
-      padding-left: 25px;
+      padding: 0 20px 20px 25px;
       overflow-y: auto;
     }
   }
