@@ -3,7 +3,18 @@
     class="popup"
     :style="'background-color: ' + backgroundColor + ';'"
   >
-    {{ message }}
+    <div class="test">
+      {{ message }}
+    </div>
+    <div
+      class="close"
+      @click="closePopup"
+    >
+      <img
+        src="@/assets/options/icon_cross_white.svg"
+        alt="close"
+      >
+    </div>
   </div>
 </template>
 
@@ -34,8 +45,11 @@ export default {
   methods: {
     waitBeforeClosure (time) { // TODO concat
       setTimeout(() => {
-        this.$emit('close')
+        this.closePopup()
       }, time)
+    },
+    closePopup () {
+      this.$emit('close')
     }
   }
 }
@@ -48,12 +62,28 @@ export default {
   height: 75px;
   min-width: 300px;
   display: flex;
-  justify-content: center;
   align-items: center;
   border-radius: 6px;
   box-shadow: 1px 1px 6px #888;
   margin: 10px;
-  padding: 15px;
+  padding-left: 15px;
+
+  .test {
+    flex: 1;
+  }
+
+  .close {
+    height: 100%;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    img {
+      width: 12px;
+    }
+  }
 }
 
 </style>
