@@ -245,7 +245,7 @@
 <script>
 import ProgressionItemContent from '@/components/Progression/Edit/ProgressionItemContent'
 
-import { defineAsyncComponent } from 'vue'
+import { defineAsyncComponent, nextTick } from 'vue'
 const PreviewModal = defineAsyncComponent(() => import('@/components/Progression/Edit/PreviewModal'))
 const LinkModal = defineAsyncComponent(() => import('@/components/Progression/Edit/LinkModal'))
 const VideoModal = defineAsyncComponent(() => import('@/components/Progression/Edit/VideoModal'))
@@ -298,7 +298,7 @@ export default {
   mounted () {
     // Set focus on item name input
     if (this.$store.state.progression.currentItem !== undefined) {
-      this.$nextTick(() => {
+      nextTick(() => {
         this.$refs.itemName.focus()
         this.$refs.itemName.select()
       })

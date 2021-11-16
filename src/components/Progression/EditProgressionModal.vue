@@ -69,7 +69,7 @@
 <script>
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
-
+import { nextTick } from 'vue'
 import PentilaUtils from 'pentila-utils'
 import ColorPicker from '@/components/Nero/ColorPicker'
 
@@ -152,7 +152,7 @@ export default {
         name: this.updatedProgression.subjectName
       }
     }
-    this.$nextTick(() => this.$refs.title.$el.childNodes[0].focus())
+    nextTick(() => this.$refs.title.$el.childNodes[0].focus())
   },
   methods: {
     closeModal () {

@@ -56,6 +56,7 @@
 import { toPascalCase } from '@utils/commons.util'
 import dayjs from 'dayjs'
 import schoolLifeService from '@/api/schoolLife-portlet.service'
+import { nextTick } from 'vue'
 
 export default {
   name: 'PendingFiringModal',
@@ -90,7 +91,7 @@ export default {
     }
   },
   created () {
-    this.$nextTick(() => this.$refs.comment.$el.childNodes[0].focus())
+    nextTick(() => this.$refs.comment.$el.childNodes[0].focus())
   },
   methods: {
     submit () {
