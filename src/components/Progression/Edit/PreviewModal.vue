@@ -23,6 +23,7 @@
 
 <script>
 import { getItemPreview } from '@/api/progression.service'
+import { nextTick } from 'vue'
 
 export default {
   name: 'PreviewModal',
@@ -45,7 +46,7 @@ export default {
   watch: {
     previewContent (val) {
       if (val) {
-        this.$nextTick(() => {
+        nextTick(() => {
           const htmlContent = this.$refs.htmlContent
           const iframeList = htmlContent.getElementsByTagName('iframe')
           this.nbIframesToLoad = iframeList.length
