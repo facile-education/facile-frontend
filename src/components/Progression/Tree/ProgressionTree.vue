@@ -10,9 +10,11 @@
 
     <!-- Sections -->
     <ProgressionTreeSection
-      v-for="section in progression.sections"
+      v-for="(section, index) in progression.sections"
       :key="section.folderId"
+      :index="index"
       :section="section"
+      :is-last="index === (progression.sections.length - 1)"
       class="section"
     />
   </div>
@@ -35,7 +37,7 @@ export default {
 <style lang="scss" scoped>
 
 .tree {
-  padding-left: 25px;
+  padding-left: 20px;
 
   .summary {
     text-align: center;

@@ -1,15 +1,15 @@
 <template>
   <div
     class="item-content"
-    :class="{'droppable': draggingContent}"
+    :class="{'droppable': draggedContent}"
     :draggable="draggable"
     @mouseover="isHovering = true"
     @mouseleave="isHovering = false"
-    @dragstart.stop="dragStart"
+    @dragstart="dragStart"
     @dragend="dragEnd"
     @dragover.prevent="dragOver"
     @dragleave="dragLeave"
-    @drop.stop="drop"
+    @drop="drop"
   >
     <hr class="drag-placeholder theme-border-color">
 
@@ -175,8 +175,8 @@ export default {
     }
   },
   computed: {
-    draggingContent () {
-      return this.$store.state.progression.draggingContent
+    draggedContent () {
+      return this.$store.state.progression.draggedContent
     },
     editorId () {
       // Used to manage multiple editors - editorId is based on the (unique) order
@@ -189,7 +189,7 @@ export default {
   },
   methods: {
     dragEnd (e) {
-      this.$store.commit('progression/setDraggingContent', false)
+      this.$store.commit('progression/setDraggedContent', undefined)
       this.draggable = false
     },
     dragLeave (e) {
@@ -197,7 +197,7 @@ export default {
       e.target.classList.remove('bottom')
     },
     dragOver (e) {
-      const movedContent = JSON.parse(e.dataTransfer.getData('content'))
+      const movedContent = this.draggedContent
       if (movedContent && movedContent.contentId !== this.content.contentId && movedContent.itemId === this.content.itemId) {
         if (this.index < movedContent.index) {
           e.target.classList.add('top')
@@ -208,13 +208,13 @@ export default {
     },
     dragStart (e) {
       if (this.draggable) {
-        this.$store.commit('progression/setDraggingContent', true)
         const movedContent = { ...this.content, index: this.index }
-        e.dataTransfer.setData('content', JSON.stringify(movedContent))
+        // Use timeout to avoid chrome issue triggering dragend on DOM update
+        setTimeout(() => { this.$store.commit('progression/setDraggedContent', movedContent) }, 0)
       }
     },
     drop (e) {
-      const movedContent = JSON.parse(e.dataTransfer.getData('content'))
+      const movedContent = this.draggedContent
       if (movedContent && movedContent.itemId === this.content.itemId) {
         const updatedContent = { ...movedContent }
         updatedContent.order = this.index + 1
