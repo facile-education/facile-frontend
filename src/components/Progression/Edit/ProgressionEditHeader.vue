@@ -49,9 +49,7 @@
           <span>{{ $t('homework') }}</span>
         </div>
 
-        <hr
-          v-if="!isRootFolderSelected"
-        >
+        <hr>
 
         <!-- Create section -->
         <div
