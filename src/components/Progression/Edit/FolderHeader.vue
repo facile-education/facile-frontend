@@ -77,10 +77,9 @@ export default {
       } else {
         if (this.folderNameInputText !== this.$store.state.progression.currentFolder.name) {
           // TODO: handle WS error to 'unUpdate' folderNameInputText
-          this.$store.dispatch('progression/updateFolderName', {
-            folder: this.currentFolder,
-            newFolderName: this.folderNameInputText
-          })
+          const folderCopy = { ...this.currentFolder }
+          folderCopy.name = this.folderNameInputText
+          this.$store.dispatch('progression/updateFolder', folderCopy)
         }
       }
     },

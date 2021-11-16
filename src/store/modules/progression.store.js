@@ -69,8 +69,10 @@ export const state = {
   startDate: undefined,
   endDate: undefined,
   sessionList: [],
+  draggedContent: undefined,
   draggedItem: undefined,
-  draggingContent: false,
+  draggedSection: undefined,
+  draggedSubsection: undefined,
   filterFolder: { name: 'Toute la progression', folderId: 0 },
   filterCours: { groupName: 'Tous les cours', groupId: 0 },
   haveToFocusFolderNameInput: false
@@ -80,11 +82,17 @@ export const mutations = {
   setHaveToFocusFolderNameInput (state, payload) {
     state.haveToFocusFolderNameInput = payload
   },
+  setDraggedContent (state, payload) {
+    state.draggedContent = payload
+  },
   setDraggedItem (state, payload) {
     state.draggedItem = payload
   },
-  setDraggingContent (state, payload) {
-    state.draggingContent = payload
+  setDraggedSection (state, payload) {
+    state.draggedSection = payload
+  },
+  setDraggedSubsection (state, payload) {
+    state.draggedSubsection = payload
   },
   addProgression (state, payload) {
     state.progressionList.push(payload)
@@ -214,9 +222,29 @@ export const mutations = {
       }
     }
   },
-  updateFolderName (state, payload) {
-    const folder = helperMethods.getFolderByFolderId(state.currentProgression, payload.folderId)
-    folder.name = payload.newFolderName
+  updateFolder (state, payload) {
+    let hasBeenMoved = false
+    let folderList = state.currentProgression.sections
+    if (payload.parentId === 0) {
+      const sectionIndex = state.currentProgression.sections.map(section => section.folderId).indexOf(payload.folderId)
+      hasBeenMoved = (sectionIndex === -1 || (sectionIndex + 1) !== payload.order)
+    } else {
+      // This is sub-folder
+      const parentSectionIndex = state.currentProgression.sections.map(section => section.folderId).indexOf(payload.parentId)
+      const section = state.currentProgression.sections[parentSectionIndex]
+      const subSectionIndex = section.subSections.map(subSection => subSection.folderId).indexOf(payload.folderId)
+      folderList = section.subSections
+
+      hasBeenMoved = (subSectionIndex === -1 || (subSectionIndex + 1) !== payload.order)
+    }
+
+    if (hasBeenMoved) {
+      this.commit('progression/removeFolder', payload)
+      folderList.splice((payload.order - 1), 0, payload)
+    } else {
+      const folder = helperMethods.getFolderByFolderId(state.currentProgression, payload.folderId)
+      folder.name = payload.name
+    }
   },
   addItem (state, payload) {
     const sectionIndex = state.currentProgression.sections.map(section => section.folderId).indexOf(payload.parentId)
@@ -239,7 +267,7 @@ export const mutations = {
   updateItem (state, payload) {
     const folder = helperMethods.getFolderByFolderId(state.currentProgression, payload.folderId)
     const itemIndex = folder.items.map(item => item.itemId).indexOf(payload.itemId)
-    const hasBeenMoved = (itemIndex === -1 || folder.items[itemIndex].order !== payload.order)
+    const hasBeenMoved = (itemIndex === -1 || (itemIndex + 1) !== payload.order)
 
     if (hasBeenMoved) {
       this.commit('progression/removeItem', payload)
@@ -529,11 +557,11 @@ export const actions = {
   haveFocusedFolderNameInput ({ commit }) {
     commit('setHaveToFocusFolderNameInput', false)
   },
-  updateFolderName ({ commit }, { folder, newFolderName }) {
-    updateFolder(folder.folderId, folder.parentId, newFolderName, folder.order).then(
+  updateFolder ({ commit }, folder) {
+    updateFolder(folder).then(
       (data) => {
         if (data.success) {
-          commit('updateFolderName', { folderId: folder.folderId, newFolderName: newFolderName })
+          commit('updateFolder', folder)
         }
       },
       (err) => {

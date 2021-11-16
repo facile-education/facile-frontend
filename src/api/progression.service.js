@@ -106,11 +106,11 @@ function deleteFolder (folderId) {
   }).then(response => response.data)
 }
 
-function updateFolder (folderId, parentFolderId, name, order) {
+function updateFolder ({ folderId, parentId, name, order }) {
   return axios.post(constants.JSON_WS_URL + PROGRESSION_PATH + FOLDER_CTX + 'update-folder',
     PentilaUtils.URL.params({
       folderId,
-      parentFolderId,
+      parentFolderId: parentId,
       name,
       order
     })).then(response => response.data)

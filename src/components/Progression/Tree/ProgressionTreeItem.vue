@@ -1,47 +1,53 @@
 <template>
-  <div
-    class="dropzone"
-    :class="{'visible': draggingItem}"
-    @dragleave="cancelActive"
-    @dragover="setActive"
-    @drop="dropFile"
-  />
-  <div
-    class="tree-item theme-hover-light-background-color"
-    :class="{'selected': isSelected, shrinked: draggingItem }"
-    :title="item.name"
-    :draggable="true"
-    @click="selectItem"
-    @dragstart="onDragStart"
-    @dragend="onDragEnd"
-  >
-    <div class="icon">
-      <img
-        v-if="item.isHomework"
-        class="item-type-icon"
-        src="@assets/devoir.svg"
-        :alt="$t('homework')"
-        :title="$t('homework')"
-      >
-      <img
-        v-else
-        class="item-type-icon"
-        src="@assets/seance.svg"
-        :alt="$t('session')"
-        :title="$t('session')"
-      >
+  <div class="dnd-wrapper">
+    <div
+      v-if="draggedItem"
+      class="dropzone"
+      :class="{'first': index === 0}"
+      @dragleave="cancelActive"
+      @dragover.prevent="setActive"
+      @drop="dropFile"
+    >
+      <hr class="theme-border-color">
     </div>
+    <div
+      class="tree-item theme-hover-light-background-color"
+      :class="{'selected': isSelected }"
+      :title="item.name"
+      :draggable="true"
+      @click="selectItem"
+      @dragstart="onDragStart"
+      @dragend="onDragEnd"
+    >
+      <div class="icon">
+        <img
+          v-if="item.isHomework"
+          class="item-type-icon"
+          src="@assets/devoir.svg"
+          :alt="$t('homework')"
+          :title="$t('homework')"
+        >
+        <img
+          v-else
+          class="item-type-icon"
+          src="@assets/seance.svg"
+          :alt="$t('session')"
+          :title="$t('session')"
+        >
+      </div>
 
-    <span>{{ item.name }}</span>
+      <span>{{ item.name }}</span>
+    </div>
+    <div
+      v-if="isLast && draggedItem"
+      class="dropzone last"
+      @dragleave="cancelActive"
+      @dragover.prevent="setActive"
+      @drop="dropFile"
+    >
+      <hr class="theme-border-color">
+    </div>
   </div>
-  <div
-    v-if="isLast"
-    class="dropzone"
-    :class="{'visible': draggingItem }"
-    @dragleave="cancelActive"
-    @dragover="setActive"
-    @drop="dropFile"
-  />
 </template>
 
 <script>
@@ -75,7 +81,7 @@ export default {
     currentItem () {
       return this.$store.state.progression.currentItem
     },
-    draggingItem () {
+    draggedItem () {
       return this.$store.state.progression.draggedItem
     },
     isSelected () {
@@ -90,21 +96,18 @@ export default {
       this.$store.dispatch('progression/setCurrentItem', this.item)
     },
     onDragStart (e) {
-      this.$store.commit('progression/setDraggedItem', this.item)
-      const dragItem = {
+      const draggedItem = {
         index: this.index,
         isSection: false,
         item: this.item
       }
-
-      e.dataTransfer.setData('dragItem', JSON.stringify(dragItem))
+      setTimeout(() => { this.$store.commit('progression/setDraggedItem', draggedItem) }, 0)
     },
     onDragEnd () {
       this.$store.commit('progression/setDraggedItem', undefined)
     },
     setActive (e) {
-      e.preventDefault()
-      const elem = JSON.parse(e.dataTransfer.getData('dragItem'))
+      const elem = this.draggedItem
 
       if (!elem.isSection && elem.item.itemId !== this.item.itemId) {
         e.target.classList.add('drag-over')
@@ -114,12 +117,17 @@ export default {
       e.target.classList.remove('drag-over')
     },
     dropFile (e) {
-      const elem = JSON.parse(e.dataTransfer.getData('dragItem'))
+      const elem = this.draggedItem
+      const isLastIndex = (this.isLast && e.target.classList.contains('last'))
 
-      if (!elem.isSection && elem.item.itemId !== this.item.itemId) {
+      if (elem.item.itemId !== this.item.itemId) {
         const itemCopy = { ...elem.item }
-        itemCopy.order = (!this.isLast) ? this.index + 1 : this.index + 2
-        itemCopy.folderId = this.item.folderId
+        if (elem.item.folderId !== this.item.folderId) {
+          itemCopy.order = (!isLastIndex) ? this.index + 1 : this.index + 2
+          itemCopy.folderId = this.item.folderId
+        } else {
+          itemCopy.order = (elem.index > this.index || isLastIndex) ? this.index + 1 : this.index
+        }
         this.$store.dispatch('progression/updateItem', itemCopy)
       }
     }
@@ -128,20 +136,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@design';
+
+.dnd-wrapper {
+  position: relative;
+}
+
 .tree-item {
   display: flex;
   align-items: center;
-  transition: padding-top .3s;
-  transition: padding-bottom .3s;
   padding-top: 4px;
   padding-bottom: 4px;
+  padding-left: 5px;
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
 
-  &.shrinked {
-    padding-top: 0;
-    padding-bottom: 0;
-  }
+  @extend %no-text-highlight;
 
   &.selected {
     color: #306CD3;
@@ -149,18 +159,33 @@ export default {
 }
 
 .dropzone {
+  position: absolute;
+  top: -15px;
   width: 100%;
-  height: 0;
-  transition: height .3s;
+  height: 30px;
+  display: flex;
 
-  &.visible {
+  &.first {
+    top: 0;
     height: 15px;
+
+    hr {
+      margin: 0;
+    }
   }
 
-  &.drag-over {
-    background-color: lightgrey;
-    border: 2px dashed lightslategrey;
-    height: 30px;
+  &.last {
+    top: 15px;
+  }
+
+  &.drag-over hr {
+      border-top: 2px solid;
+  }
+
+  hr {
+    margin: auto;
+    width: 100%;
+    border: none;
   }
 }
 
