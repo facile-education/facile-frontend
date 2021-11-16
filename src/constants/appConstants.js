@@ -13,12 +13,17 @@ const slotLabelList = {
   '17 h': 'P10'
 }
 
+// time in ms
+const popupDurationTime = 4000
+
 export {
   nbCharBeforeCompletion,
-  slotLabelList
+  slotLabelList,
+  popupDurationTime
 }
 
 export default {
   nbCharBeforeCompletion,
-  slotLabelList
+  slotLabelList,
+  popupDurationTime
 }
