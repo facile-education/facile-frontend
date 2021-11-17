@@ -10,6 +10,7 @@
     "db:test:e2e": "run-s db:init test:e2e db:revert",
     "db:init": "./tests/e2e/scripts/initDB.sh",
     "db:revert": "./tests/e2e/scripts/revertDB.sh",
+    "db:progressionReset": "./tests/e2e/scripts/resetProgression.sh",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
