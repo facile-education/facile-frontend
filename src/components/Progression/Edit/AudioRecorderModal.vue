@@ -57,12 +57,14 @@
             <span>{{ $t('stop') }}</span>
           </PentilaButton>
         </template>
+        <PentilaErrorMessage :error-message="errorMessage" />
       </div>
     </template>
 
     <template #footer>
       <PentilaButton
         :label="$t('save')"
+        :disabled="!isStopped"
         @click="addRecord"
       />
     </template>
@@ -70,7 +72,6 @@
 </template>
 
 <script>
-// TODO sauvegarde / Affichage des erreurs
 import RecordRTC from 'recordrtc'
 import WaveSurfer from 'wavesurfer.js'
 
@@ -86,12 +87,14 @@ export default {
       default: 300
     }
   },
-  emits: ['close'],
+  emits: ['close', 'save'],
   data () {
     return {
+      errorMessage: '',
       isAudioPlaying: false,
       recorder: undefined,
       state: 'inactive',
+      stream: undefined,
       timer: 0,
       waveSurfer: undefined
     }
@@ -115,6 +118,13 @@ export default {
     }
   },
   beforeUnmount () {
+    if (this.stream) {
+      const tracks = this.stream.getTracks()
+      tracks[0].stop()
+    }
+    if (this.recorder) {
+      this.recorder.destroy()
+    }
     if (this.waveSurfer) {
       this.waveSurfer.destroy()
     }
@@ -125,14 +135,16 @@ export default {
       this.isAudioPlaying = this.waveSurfer.isPlaying()
     },
     checkUserMediaAccess () {
-      if (navigator.mediaDevices || navigator.mediaDevices.getUserMedia) {
+      if (this.stream) {
+        this.startRecording(this.stream)
+      } else if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         navigator.mediaDevices.getUserMedia({ audio: true })
           .then(this.startRecording,
             () => {
-              console.log('nero.audio-recorder-window.on-media-access-denied.message')
+              this.errorMessage = this.$t('deniedError')
             })
       } else {
-        console.log('nero.audio-recorder-window.check-user-media-error.message')
+        this.errorMessage = this.$t('browserError')
       }
     },
     closeModal () {
@@ -152,14 +164,16 @@ export default {
       this.waveSurfer.loadBlob(this.recorder.getBlob())
     },
     addRecord () {
-      // this.$store.dispatch('progression/addAudioRecord', { itemId: this.item.itemId, linkName: this.link.linkName, linkUrl: this.link.linkUrl })
-      // const recordedBlob = this.recorder.getBlob()
+      const recordedBlob = this.recorder.getBlob()
+      console.log('addRecord', recordedBlob)
 
-      // this.formData = new FormData()
-      // TODO fileName input ?
-      // this.formData.append('files', recordedBlob, `consignes_audio_ ${Date.now()} .wav`)
+      // TODO File name with input when used in documents
+      const fileName = `enregistrement_${Date.now()}.wav`
+      const formData = new FormData()
+      formData.append('fileName', fileName)
+      formData.append('file', recordedBlob, fileName)
+      this.$emit('save', formData)
 
-      // TODO Emit save
       this.closeModal()
     },
     pauseRecording () {
@@ -181,24 +195,28 @@ export default {
     },
     startRecording (stream) {
       if (!this.recorder) {
+        this.stream = stream
+        this.errorMessage = ''
+
         // Initialize recorder
-        this.recorder = RecordRTC(stream, {
+        this.recorder = RecordRTC(this.stream, {
           disableLogs: true,
           ondataavailable: () => {
+            console.log('on available', this.isRecording)
             if (this.isRecording) this.timer += 1
             if (this.timer >= this.duration) this.stopRecording()
           },
           timeSlice: 1000,
           type: 'audio'
         })
-        this.recorder.onStateChanged = (state) => { this.state = state }
+        this.recorder.onStateChanged = (state) => { this.state = state; console.log('state', state) }
       }
 
       // Start recording
       this.recorder.startRecording()
     },
     stopRecording () {
-      if (!this.isRecording) return
+      if (!this.isRecording && !this.isPaused) return
       this.recorder.stopRecording((recordingURL) => {
         this.timer = 0
         this.displayStream()
@@ -294,7 +312,9 @@ $red: rgb(230, 109, 109);
 
 <i18n locale="fr">
 {
+  "browserError": "Votre navigateur ne permet pas l'enregistrement de contenu media.",
   "continue": "Reprendre",
+  "deniedError": "Une erreur est survenue lors de l'accès aux ressources de l'ordinateur (Accès refusé)",
   "listen": "Ecouter",
   "title": "Enregistrement audio",
   "pause": "Interrompre",
