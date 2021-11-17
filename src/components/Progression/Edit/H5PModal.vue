@@ -30,6 +30,7 @@
           :error-message="formErrorList.contentName"
         />
       </div>
+
       <div class="content-url">
         <PentilaInput
           v-model="contentValue"
@@ -41,6 +42,12 @@
           :error-message="formErrorList.embedHTMLElement || formErrorList.embedSrcAttribute || urlError"
         />
       </div>
+
+      <a
+        v-t="'h5pUrl'"
+        href="https://h5p.eduge.ch/mes-ressources-h5p"
+        target="_blank"
+      />
     </template>
 
     <template #footer>
@@ -201,15 +208,16 @@ export default {
 
 <i18n locale="fr">
 {
+  "add": "Ajouter",
+  "cancel": "Annuler",
   "creation-title": "Ajouter un contenu H5P",
+  "edit": "Modifier",
   "edition-title": "Editer un contenu H5P",
   "embedElementCheckFailed": "Ce type de contenu n'est pas un contenu embarqué valide",
-  "srcRequired": "Le contenu embarqué doit comprendre un attribut \"src\" non vide",
-  "cancel": "Annuler",
-  "add": "Ajouter",
-  "edit": "Modifier",
+  "h5pUrl": "Récupérer une activité depuis h5p.eduge.ch",
   "namePlaceholder": "Titre",
+  "srcRequired": "Le contenu embarqué doit comprendre un attribut \"src\" non vide",
   "UnauthorizedUrlException": "Ce nom de domaine n'est pas autorisé pour ce type de contenu",
-  "urlPlaceholder": "Coller ici le lien embed H5P"
+  "urlPlaceholder": "Coller ici le code d'intégration H5P"
 }
 </i18n>
