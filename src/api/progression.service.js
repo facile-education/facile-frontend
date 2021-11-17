@@ -233,13 +233,11 @@ function addAttachedFile (itemId, fileName, file, isToBeCompleted) {
     })).then(response => response.data)
 }
 
-function addAudioRecording (itemId, fileName, file) {
+function addAudioRecording (itemId, fileFormData) {
+  fileFormData.append('itemId', itemId)
   return axios.post(constants.JSON_WS_URL + PROGRESSION_PATH + ATTACHED_FILE_CTX + 'add-attachment',
-    PentilaUtils.URL.params({
-      itemId,
-      fileName,
-      file
-    })).then(response => response.data)
+    fileFormData
+  ).then(response => response.data)
 }
 
 function deleteAttachedFile (attachmentId) {

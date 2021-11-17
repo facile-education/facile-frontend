@@ -209,6 +209,7 @@
         height="30em"
         :item="item"
         @close="toggleAudioRecordModalDisplay"
+        @save="saveAudioRecording"
       />
     </teleport>
     <teleport to="body">
@@ -313,6 +314,10 @@ export default {
     },
     updateItemName (value) {
       this.updatedItemName = value
+    },
+    saveAudioRecording (formData) {
+      console.log('save', formData)
+      this.$store.dispatch('progression/addAudioRecord', { itemId: this.item.itemId, fileFormData: formData })
     },
     saveNewItemName () {
       if (this.updatedItemName === '') {
