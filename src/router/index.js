@@ -37,6 +37,11 @@ const routes = [
     component: () => import('@/router/views/Progression')
   },
   {
+    path: '/progression/seance/:itemId(\\d+)?',
+    name: 'Seance',
+    component: () => import('@/router/views/ProgressionSeance')
+  },
+  {
     path: '/documents',
     name: 'Documents',
     component: () => import('@/router/views/Documents')
