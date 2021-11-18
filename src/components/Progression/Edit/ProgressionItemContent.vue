@@ -44,7 +44,25 @@
       v-if="content.contentType === 2"
       class="content-audio"
     >
-      <span>record audio</span>
+      <div
+        class="title"
+      >
+        <img
+          class="content-icon"
+          src="@assets/icon_record.svg"
+          alt=""
+        >
+        <span>{{ $t('audio') }}</span>
+      </div>
+      <audio
+        controls=""
+        name="media"
+      >
+        <source
+          :src="content.link"
+          type="audio/mp3"
+        >
+      </audio>
     </div>
 
     <!-- Link -->
@@ -326,8 +344,8 @@ export default {
   width: 100%;
 }
 
-.content-link, .content-video, .content-h5p {
-  height: 80px;
+.content-link, .content-video, .content-h5p, .content-audio {
+  padding-bottom: 10px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -378,6 +396,7 @@ export default {
 
 <i18n locale="fr">
 {
+  "audio": "Contenu audio",
   "session": "Séance",
   "delete": "Supprimer cet élément",
   "edit": "Modifier cet élément",

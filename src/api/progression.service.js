@@ -16,16 +16,14 @@ export {
   getItemPreview,
   addItem,
   addItemContent,
+  addItemFileContent,
   deleteItem,
   deleteItemContent,
   updateItem,
   updateItemContent,
   addSessionAssignment,
   addHomeworkAssignment,
-  deleteAssignment,
-  addAttachedFile,
-  addAudioRecording,
-  deleteAttachedFile
+  deleteAssignment
 }
 
 const PROGRESSION_PATH = '/progression-portlet.'
@@ -33,7 +31,6 @@ const PROGRESSION_CTX = 'progression/'
 const FOLDER_CTX = 'progressionfolder/'
 const ITEM_CTX = 'progressionitem/'
 const ASSIGNMENT_CTX = 'progressionitemassignment/'
-const ATTACHED_FILE_CTX = 'progressionitemattachedfile/'
 
 // Progression object
 function addProgression ({ name, description, subjectId, volee, color }) {
@@ -158,6 +155,15 @@ function addItemContent (itemId, contentType, contentName, contentValue, fileEnt
     })).then(response => response.data)
 }
 
+function addItemFileContent (itemId, contentType, formData) {
+  formData.append('itemId', itemId)
+  formData.append('contentType', contentType)
+
+  return axios.post(constants.JSON_WS_URL + PROGRESSION_PATH + ITEM_CTX + 'add-item-content',
+    formData
+  ).then(response => response.data)
+}
+
 function deleteItem (itemId) {
   return axios.get(constants.JSON_WS_URL + PROGRESSION_PATH + ITEM_CTX + 'delete-item', {
     params: {
@@ -218,32 +224,6 @@ function deleteAssignment (itemId, sessionId) {
     params: {
       itemId,
       sessionId
-    }
-  }).then(response => response.data)
-}
-
-// ProgressionItemAttachedFile object
-function addAttachedFile (itemId, fileName, file, isToBeCompleted) {
-  return axios.post(constants.JSON_WS_URL + PROGRESSION_PATH + ATTACHED_FILE_CTX + 'add-attachment',
-    PentilaUtils.URL.params({
-      itemId,
-      fileName,
-      file,
-      isToBeCompleted
-    })).then(response => response.data)
-}
-
-function addAudioRecording (itemId, fileFormData) {
-  fileFormData.append('itemId', itemId)
-  return axios.post(constants.JSON_WS_URL + PROGRESSION_PATH + ATTACHED_FILE_CTX + 'add-attachment',
-    fileFormData
-  ).then(response => response.data)
-}
-
-function deleteAttachedFile (attachmentId) {
-  return axios.get(constants.JSON_WS_URL + PROGRESSION_PATH + ATTACHED_FILE_CTX + 'delete-attachment', {
-    params: {
-      attachmentId
     }
   }).then(response => response.data)
 }
