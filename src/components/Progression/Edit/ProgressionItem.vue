@@ -52,6 +52,7 @@
       <hr>
       <!-- Delete item button-->
       <div
+        v-if="!isSpecificItem"
         class="delete-item"
         @click="confirmItemDeletion(item)"
       >
@@ -72,8 +73,10 @@
       <div
         class="item-header"
       >
-        <!-- Item title -->
+        <!-- Item title is editable in classic case -->
+        <!-- For specific session/homework content, it is readonly -->
         <PentilaInput
+          v-if="!isSpecificItem"
           ref="itemName"
           :model-value="updatedItemName"
           :placeholder="$t('title')"
@@ -84,6 +87,10 @@
           @blur="saveNewItemName"
           @keyup.enter="pressEnter"
         />
+        <span v-else>
+          {{ item.name }}
+        </span>
+
         <!-- Homework type menu -->
         <PentilaDropdown
           v-if="item.isHomework"
@@ -260,6 +267,11 @@ export default {
     item: {
       type: Object,
       required: true
+    },
+    isSpecificItem: {
+      type: Boolean,
+      required: false,
+      default: true
     }
   },
   data () {
@@ -307,10 +319,10 @@ export default {
   },
   methods: {
     addText () {
-      this.$store.dispatch('progression/addItemContent', { itemId: this.item.itemId, contentType: 1 })
+      this.$store.dispatch('progression/addItemContent', { itemId: this.item.itemId, contentType: 1, contentValue: '' })
     },
     addH5p () {
-      this.$store.dispatch('progression/addItemContent', { itemId: this.item.itemId, contentType: 6 })
+      this.$store.dispatch('progression/addItemContent', { itemId: this.item.itemId, contentType: 6, contentValue: '' })
     },
     pressEnter () {
       this.$refs.itemName.blur()

@@ -32,6 +32,9 @@
       <HomeworkAssignmentPanel
         v-else-if="isHomeworkAssignmentMode"
       />
+      <SessionContentEditPanel
+        v-else-if="isSessionContentEditMode"
+      />
       <ProgressionAssignment
         v-else
         class="assignment"
@@ -48,10 +51,11 @@ import ProgressionAssignment from './Assignment/ProgressionAssignment.vue'
 import ProgressionTree from './Tree/ProgressionTree.vue'
 import CalendarPicker from '@/components/Progression/Assignment/CalendarPicker'
 import HomeworkAssignmentPanel from '@/components/Progression/Assignment/HomeworkAssignmentPanel'
+import SessionContentEditPanel from '@/components/Progression/Assignment/SessionContentEditPanel'
 
 export default {
   name: 'ProgressionPanel',
-  components: { ProgressionSwitchMode, ProgressionEditHeader, ProgressionEdit, ProgressionAssignment, ProgressionTree, CalendarPicker, HomeworkAssignmentPanel },
+  components: { ProgressionSwitchMode, ProgressionEditHeader, ProgressionEdit, ProgressionAssignment, ProgressionTree, CalendarPicker, HomeworkAssignmentPanel, SessionContentEditPanel },
   data () {
     return {
     }
@@ -65,6 +69,9 @@ export default {
     },
     isHomeworkAssignmentMode () {
       return this.$store.state.progression.isHomeworkAssignmentMode
+    },
+    isSessionContentEditMode () {
+      return this.$store.state.progression.isSessionContentEditMode
     }
   }
 }

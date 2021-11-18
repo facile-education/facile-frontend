@@ -88,7 +88,6 @@ export default {
   mounted () {
     for (let idx = 0; idx < this.students.length; ++idx) {
       if (this.students[idx].isSelected) {
-        console.log('mounted modal : 1 stuednt is selected -> not whole class')
         this.isWholeClass = false
       }
     }

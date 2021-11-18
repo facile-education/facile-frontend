@@ -25,7 +25,7 @@
         v-else
         class="is-given"
       >
-        <span>{{ $t('given-date') }}</span>
+        <span>{{ getHomeworkGivenDate() }}</span>
       </div>
 
       <div class="homework-parameters">
@@ -45,7 +45,7 @@
             v-if="isStudentsListDisplayed"
           >
             <StudentListModal
-              :students="studentList"
+              :students="availableStudents"
               @close="onCloseStudentModal"
             />
           </div>
@@ -62,7 +62,7 @@
             :list="nextSessions"
             :sort="false"
             display-field="sessionDescription"
-            @dropdown-update="onRenderDateSelect"
+            @update:modelValue="onTargetSessionSelect"
           />
         </div>
       </div>
@@ -89,7 +89,7 @@ export default {
   data () {
     return {
       sessionDetails: {},
-      studentList: [],
+      availableStudents: [],
       isCreation: true,
       isStudentsListDisplayed: false,
       homework: {
@@ -105,7 +105,7 @@ export default {
   },
   computed: {
     getColor () {
-      return 'background-color: ' + this.sessionDetails.color
+      return 'background-color: ' + this.sessionDetails.color + '50'
     },
     sessionTeachers () {
       let teachers = ''
@@ -120,8 +120,10 @@ export default {
       return teachers
     },
     nbStudents () {
-      if (this.homework.selectedStudents !== undefined && this.homework.selectedStudents.length > 0) {
-        return this.$t('for') + ' ' + this.homework.selectedStudents.length + ' ' + this.$t('students') + this.studentList.length
+      if (!this.homework.isWholeClass && this.homework.selectedStudents.length === 1) {
+        return this.$t('for') + ' ' + this.homework.selectedStudents.length + ' ' + this.$t('student') + this.availableStudents.length
+      } else if (!this.homework.isWholeClass && this.homework.selectedStudents.length > 0) {
+        return this.$t('for') + ' ' + this.homework.selectedStudents.length + ' ' + this.$t('students') + this.availableStudents.length
       } else {
         return this.$t('for') + ' ' + this.$t('all-students')
       }
@@ -142,37 +144,30 @@ export default {
     }
   },
   created () {
-    console.log('session=', this.session)
     getSessionDetails(this.session.sessionId).then(
       (data) => {
         if (data.success) {
           this.sessionDetails = data.sessionDetails
-          this.studentList = data.sessionDetails.students
-
+          this.availableStudents = data.sessionDetails.students
           // Among all homeworks given from the current session, pick the one that may be the current homework
           if (data.sessionDetails.givenHomework !== undefined && data.sessionDetails.givenHomework.length > 0) {
             for (let idx = 0; idx < data.sessionDetails.givenHomework.length; ++idx) {
               const givenHomework = data.sessionDetails.givenHomework[idx]
-              console.log('givenHomework=', givenHomework)
 
               if (givenHomework.assignedItemId !== undefined && givenHomework.assignedItemId === this.$store.state.progression.assignedItem.itemId) {
                 console.log('Found existing homework ', givenHomework)
                 this.isCreation = false
                 this.homework = givenHomework
                 this.homework.targetSession = { sessionId: givenHomework.targetSessionId, sessionDescription: this.formatDate(givenHomework.toDate) }
-
-                // Mark the selected students
                 if (!givenHomework.isWholeClass) {
-                  for (let idx = 0; idx < givenHomework.selectedStudents.length; ++idx) {
-                    console.log('selectedStudent = ', givenHomework.selectedStudents[idx])
-                    const studentIndex = this.studentList.map(student => student.userId).indexOf(givenHomework.selectedStudents[idx].userId)
-                    if (studentIndex !== -1) {
-                      this.studentList[studentIndex].isSelected = true
+                  // Set the selected students
+                  for (let idx = 0; idx < this.availableStudents.length; ++idx) {
+                    for (let idx2 = 0; idx2 < this.homework.selectedStudents.length; ++idx2) {
+                      if (this.availableStudents[idx].userId === this.homework.selectedStudents[idx2].userId) {
+                        this.availableStudents[idx].isSelected = true
+                      }
                     }
                   }
-                } else {
-                  // Reset the student list in case of whole class
-                  this.homework.selectedStudents = []
                 }
               }
             }
@@ -187,7 +182,6 @@ export default {
               }
             }
             this.homework.targetSession = { sessionId: defaultSession.sessionId, sessionDescription: this.formatDate(defaultSession.startDate) }
-            this.homework.targetSessionId = defaultSession.sessionId
             this.homework.toDate = defaultSession.startDate
           }
           // Emit default homework if not updated later
@@ -206,25 +200,27 @@ export default {
     formatDate (date) {
       return dayjs(date, 'YYYY-MM-DD HH:mm').format('DD MMMM YYYY [à] HH[h]mm')
     },
-    onRenderDateSelect () {
-      console.log('on render date')
-      this.homework.toDate = this.nextSessions()[0].startDate
+    getHomeworkGivenDate () {
+      return this.$t('given-date') + dayjs(this.homework.assignedDate, 'YYYY-MM-DD HH:mm').format('DD MMMM YYYY [à] HH[h]mm')
+    },
+    onTargetSessionSelect (selectedSession) {
+      this.homework.targetSession = selectedSession
+      this.homework.targetSessionId = selectedSession.sessionId
       this.$emit('editedHomework', this.homework)
     },
-    onCloseStudentModal (updatedStudents, isWholeClass) {
-      console.log('Closed student modal: isWholeClass=', isWholeClass)
-      console.log('Closed student modal: updatedStudents=', updatedStudents)
+    onCloseStudentModal (students, isWholeClass) {
+      console.log('on student change isWholeClass=', isWholeClass, ', students=', students)
+      this.isStudentsListDisplayed = false
       this.homework.isWholeClass = isWholeClass
+      // If specific students, keep the selected ones
       if (!isWholeClass) {
         this.homework.selectedStudents = []
-        for (let idx = 0; idx < updatedStudents.length; ++idx) {
-          if (updatedStudents[idx].isSelected) {
-            this.homework.selectedStudents.push(updatedStudents[idx])
+        for (let idx = 0; idx < students.length; ++idx) {
+          if (students[idx].isSelected) {
+            this.homework.selectedStudents.push(students[idx])
           }
         }
       }
-      this.isStudentsListDisplayed = false
-
       this.$emit('editedHomework', this.homework)
     }
   }
@@ -266,6 +262,13 @@ export default {
         span {
           margin-right: 10px;
         }
+        .content-button {
+          border : 1px solid transparent;
+          &:hover {
+            border : 1px solid black;
+            cursor: pointer;
+          }
+        }
       }
       .target-session {
         display: flex;
@@ -289,6 +292,7 @@ export default {
   "not-given": "Devoir non donné",
   "all-students" : "tous les élèves",
   "for": "Pour",
+  "student": "élève sur ",
   "students": "élèves sur ",
   "edit": "Modifier la liste des élèves",
   "render-date": "Date de rendu",

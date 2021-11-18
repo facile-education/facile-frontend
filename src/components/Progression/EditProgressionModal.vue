@@ -57,7 +57,7 @@
     <template #footer>
       <PentilaButton
         form="progressionform"
-        :label="$t('confirm')"
+        :label="buttonLabel"
         class="confirm-button"
         :class="{'disabled' : v$.$invalid}"
         @click="onConfirm"
@@ -141,6 +141,13 @@ export default {
         return [this.$t('volee'), ...this.$store.state.progression.voleeList]
       }
       return []
+    },
+    buttonLabel () {
+      if (this.updatedProgression !== undefined) {
+        return this.$t('edit')
+      } else {
+        return this.$t('create')
+      }
     }
   },
   created () {
@@ -234,7 +241,8 @@ export default {
 
 <i18n locale="fr">
 {
-  "confirm": "Créer",
+  "create": "Créer",
+  "edit": "Modifier",
   "description": "Description",
   "progression": "Progression",
   "subject": "Discipline",
