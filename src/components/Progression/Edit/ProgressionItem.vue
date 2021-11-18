@@ -598,7 +598,7 @@ export default {
   "add-document": "Ajouter un document à compléter",
   "addFile": "Ajouter une pièce jointe",
   "addH5p": "Ajouter un élément h5p",
-  "addLink": "Ajouter un lien https",
+  "addLink": "Ajouter un lien",
   "addSound": "S'enregistrer",
   "addText": "Ajouter du texte",
   "addVideo": "Ajouter une vidéo",
