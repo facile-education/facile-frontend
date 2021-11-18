@@ -319,8 +319,7 @@ export default {
       this.updatedItemName = value
     },
     saveAudioRecording (formData) {
-      console.log('save', formData)
-      this.$store.dispatch('progression/addAudioRecord', { itemId: this.item.itemId, fileFormData: formData })
+      this.$store.dispatch('progression/addItemFileContent', { itemId: this.item.itemId, contentType: 2, formData: formData })
     },
     saveNewItemName () {
       if (this.updatedItemName === '') {

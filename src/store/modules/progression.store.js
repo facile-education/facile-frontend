@@ -1,6 +1,6 @@
 import {
   addProgression, deleteProgression, getProgressionList, updateProgression, getProgressionContent, addFolder,
-  updateFolder, addItem, updateItem, addItemContent, updateItemContent, deleteFolder, deleteItem, getFolderContent,
+  updateFolder, addItem, updateItem, addItemContent, addItemFileContent, updateItemContent, deleteFolder, deleteItem, getFolderContent,
   getItemContents, deleteItemContent, addSessionAssignment, addHomeworkAssignment, deleteAssignment
 } from '@/api/progression.service'
 import { getSubjects } from '@/api/userManagement.service'
@@ -630,6 +630,25 @@ export const actions = {
     return new Promise((resolve, reject) => {
       this.dispatch('currentActions/addAction', { name: 'addItemContent' })
       addItemContent(itemId, contentType, contentName, contentValue, fileEntryId, isToBeCompleted).then(
+        (data) => {
+          this.dispatch('currentActions/removeAction', { name: 'addItemContent' })
+          if (data.success) {
+            commit('addItemContent', data.content)
+            resolve()
+          } else {
+            reject(data.error)
+          }
+        },
+        (err) => {
+          // TODO toastr
+          console.error(err)
+        })
+    })
+  },
+  addItemFileContent ({ commit }, { itemId, contentType, formData }) {
+    return new Promise((resolve, reject) => {
+      this.dispatch('currentActions/addAction', { name: 'addItemContent' })
+      addItemFileContent(itemId, contentType, formData).then(
         (data) => {
           this.dispatch('currentActions/removeAction', { name: 'addItemContent' })
           if (data.success) {

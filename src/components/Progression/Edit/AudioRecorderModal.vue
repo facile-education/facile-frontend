@@ -165,7 +165,6 @@ export default {
     },
     addRecord () {
       const recordedBlob = this.recorder.getBlob()
-      console.log('addRecord', recordedBlob)
 
       // TODO File name with input when used in documents
       const fileName = `enregistrement_${Date.now()}.wav`
@@ -202,14 +201,13 @@ export default {
         this.recorder = RecordRTC(this.stream, {
           disableLogs: true,
           ondataavailable: () => {
-            console.log('on available', this.isRecording)
             if (this.isRecording) this.timer += 1
             if (this.timer >= this.duration) this.stopRecording()
           },
           timeSlice: 1000,
           type: 'audio'
         })
-        this.recorder.onStateChanged = (state) => { this.state = state; console.log('state', state) }
+        this.recorder.onStateChanged = (state) => { this.state = state }
       }
 
       // Start recording
