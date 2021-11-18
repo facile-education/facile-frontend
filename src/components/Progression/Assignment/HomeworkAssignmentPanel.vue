@@ -98,19 +98,16 @@ export default {
       const sessionsToAssign = []
       for (let idx = 0; idx < this.item.assignments.length; ++idx) {
         const initialSession = this.item.assignments[idx]
-        console.log('homework aff : initial session ', initialSession)
         sessionsToAssign.push(initialSession)
       }
       for (let idx = 0; idx < this.$store.state.progression.addedAssignedSessions.length; ++idx) {
         const addedSession = this.$store.state.progression.addedAssignedSessions[idx]
         sessionsToAssign.push(addedSession)
-        console.log('homework aff : add session ', addedSession)
       }
       for (let idx = 0; idx < this.$store.state.progression.removedAssignedSessions.length; ++idx) {
         const removedSession = this.$store.state.progression.removedAssignedSessions[idx]
         const removedSessionIndex = sessionsToAssign.map(session => session.sessionId).indexOf(removedSession.sessionId)
         if (removedSessionIndex !== -1) {
-          console.log('homework aff : remove session ', removedSession)
           sessionsToAssign.splice(removedSessionIndex, 1)
         }
       }
@@ -139,12 +136,14 @@ export default {
       this.closeHomeworkAssignment()
     },
     updateHomework (updatedHomework) {
+      updatedHomework.targetSessionId = updatedHomework.targetSession.sessionId
       console.log('received updated homework ', updatedHomework)
       const sourceSessionIndex = this.homeworks.map(homework => homework.sourceSessionId).indexOf(updatedHomework.sourceSessionId)
       if (sourceSessionIndex !== -1) {
         this.homeworks.splice(sourceSessionIndex, 1)
       }
       this.homeworks.push(updatedHomework)
+      console.log('this.homeworks= ', this.homeworks)
     }
   }
 }

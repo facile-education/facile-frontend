@@ -36,8 +36,8 @@
       <img
         class="calendar"
         src="@assets/calendar.svg"
-        :alt="$t('session')"
-        :title="$t('session')"
+        :alt="$t('affect')"
+        :title="$t('affect')"
       >
     </div>
 
@@ -51,10 +51,17 @@
         :key="assignment.assignmentId"
         class="session"
       >
+        <!-- Colored circle -->
+        <div
+          class="colored-circle"
+          :style="getColor(assignment)"
+        />
+
         <!-- Session -->
         <div
           class="cours-name"
           :style="getColor(assignment)"
+          @click="editSessionSpecificContent(assignment)"
         >
           <span>{{ assignment.groupName }}</span>
           <img
@@ -62,12 +69,16 @@
             src="@assets/big-cross-black.svg"
             :alt="$t('session')"
             :title="$t('session')"
-            @click="deleteAssignment(assignment)"
+            @click="confirmAssignmentDeletion(assignment)"
           >
         </div>
         <!-- Session date and hours -->
         <span class="assignment-date">{{ getSessionDate(assignment) }}</span>
         <!-- Homework send date -->
+        <span
+          v-if="item.isHomework"
+          class="todo-date"
+        >{{ getTargetDate(assignment.targetDate) }}</span>
         <!-- Modified content -->
       </div>
     </div>
@@ -135,14 +146,29 @@ export default {
       ' de ' + dayjs(assignment.sessionStartDate, 'YYYY-MM-DD HH:mm').format('HH[h]mm') +
       ' à ' + dayjs(assignment.sessionEndDate, 'YYYY-MM-DD HH:mm').format('HH[h]mm')
     },
+    getTargetDate (targetDate) {
+      return this.$t('to-do-for') + ' ' + dayjs(targetDate, 'YYYY-MM-DD HH:mm').format('DD MMMM')
+    },
+    confirmAssignmentDeletion (assignment) {
+      this.$store.dispatch('warningModal/addWarning', {
+        text: this.$t('deleteAssignmentWarning'),
+        lastAction: { fct: this.deleteAssignment, params: [assignment] }
+      })
+    },
     deleteAssignment (assignment) {
       this.$store.dispatch('progression/deleteAssignment', { itemId: assignment.itemId, sessionId: assignment.sessionId })
     },
     getColor (assignment) {
-      return 'background-color: ' + assignment.color
+      return 'background-color: ' + assignment.color + '50' // 50 is for opacity
     },
     togglePreviewModalDisplay () {
       this.isItemPreviewDisplayed = !this.isItemPreviewDisplayed
+    },
+    editSessionSpecificContent (assignment) {
+      console.log('edit content for assignment=', assignment)
+      this.$store.dispatch('progression/setAssignedItem', this.item)
+      this.$store.dispatch('progression/setEditedAssignment', assignment)
+      this.$store.dispatch('progression/setSessionContentEditMode', true)
     }
   }
 }
@@ -185,6 +211,7 @@ export default {
   }
   &:hover .affect img {
     display: flex;
+    cursor: pointer;
   }
   .item-sessions {
     width: 100%;
@@ -194,15 +221,25 @@ export default {
     .session {
       width: 100%;
       display: grid;
-      grid-template-columns: 20% 30% 25% 25%;
+      grid-template-columns: 3% 20% 25% 25%;
       grid-gap: 10px;
       margin-top: 2px;
       margin-bottom: 2px;
+      .colored-circle {
+        margin: auto;
+        width: 15px;
+        height: 15px;
+        border-radius: 8px;
+      }
       .cours-name {
         border: 1px solid black;
         display: flex;
         justify-content: space-between;
         padding: 3px;
+        &:hover {
+          cursor: pointer;
+        }
+
         span {
           margin: auto;
           margin-left: 10px;
@@ -239,6 +276,9 @@ export default {
 {
   "session": "Séance",
   "homework": "Devoir",
-  "no-assignment" : "Non assigné"
+  "no-assignment" : "Non assigné",
+  "to-do-for": "A rendre le ",
+  "deleteAssignmentWarning": "Supprimer cette affectation ?",
+  "affect": "Affecter ce contenu"
 }
 </i18n>

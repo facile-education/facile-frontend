@@ -21,6 +21,10 @@ export {
   deleteItemContent,
   updateItem,
   updateItemContent,
+  getSessionSpecificContents,
+  getHomeworkSpecificContents,
+  saveSessionSpecificItem,
+  saveHomeworkSpecificItem,
   addSessionAssignment,
   addHomeworkAssignment,
   deleteAssignment
@@ -199,6 +203,37 @@ function updateItemContent (contentId, contentName, contentValue, order) {
       contentName,
       contentValue,
       order
+    })).then(response => response.data)
+}
+
+// Specific session or homework content
+function getSessionSpecificContents (sessionId) {
+  return axios.get(constants.JSON_WS_URL + PROGRESSION_PATH + ITEM_CTX + 'get-session-specific-contents', {
+    params: {
+      sessionId
+    }
+  }).then(response => response.data)
+}
+
+function getHomeworkSpecificContents (homeworkId) {
+  return axios.get(constants.JSON_WS_URL + PROGRESSION_PATH + ITEM_CTX + 'get-homework-specific-contents', {
+    params: {
+      homeworkId
+    }
+  }).then(response => response.data)
+}
+
+function saveSessionSpecificItem (sessionId) {
+  return axios.post(constants.JSON_WS_URL + PROGRESSION_PATH + ITEM_CTX + 'save-session-specific-item',
+    PentilaUtils.URL.params({
+      sessionId: sessionId
+    })).then(response => response.data)
+}
+
+function saveHomeworkSpecificItem (homeworkId) {
+  return axios.post(constants.JSON_WS_URL + PROGRESSION_PATH + ITEM_CTX + 'save-homework-specific-item',
+    PentilaUtils.URL.params({
+      homeworkId: homeworkId
     })).then(response => response.data)
 }
 

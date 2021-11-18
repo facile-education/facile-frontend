@@ -1,7 +1,7 @@
 import {
   addProgression, deleteProgression, getProgressionList, updateProgression, getProgressionContent, addFolder,
   updateFolder, addItem, updateItem, addItemContent, addItemFileContent, updateItemContent, deleteFolder, deleteItem, getFolderContent,
-  getItemContents, deleteItemContent, addSessionAssignment, addHomeworkAssignment, deleteAssignment
+  getItemContents, deleteItemContent, addSessionAssignment, addHomeworkAssignment, deleteAssignment, saveSessionSpecificItem, saveHomeworkSpecificItem
 } from '@/api/progression.service'
 import { getSubjects } from '@/api/userManagement.service'
 import { getSchoolVoleeList } from '@/api/organization.service'
@@ -63,6 +63,9 @@ export const state = {
   isCreateMenuDisplayed: false,
   isCalendarPickerMode: false,
   isHomeworkAssignmentMode: false,
+  isSessionContentEditMode: false,
+  editedAssignment: undefined,
+  editedItem: undefined,
   assignedItem: undefined,
   addedAssignedSessions: [],
   removedAssignedSessions: [],
@@ -148,6 +151,15 @@ export const mutations = {
   },
   setHomeworkAssignmentMode (state, payload) {
     state.isHomeworkAssignmentMode = payload
+  },
+  setSessionContentEditMode (state, payload) {
+    state.isSessionContentEditMode = payload
+  },
+  setEditedAssignment (state, payload) {
+    state.editedAssignment = payload
+  },
+  setEditedItem (state, payload) {
+    state.editedItem = payload
   },
   setAssignedItem (state, payload) {
     state.assignedItem = payload
@@ -265,20 +277,26 @@ export const mutations = {
     }
   },
   updateItem (state, payload) {
-    const folder = helperMethods.getFolderByFolderId(state.currentProgression, payload.folderId)
-    const itemIndex = folder.items.map(item => item.itemId).indexOf(payload.itemId)
-    const hasBeenMoved = (itemIndex === -1 || (itemIndex + 1) !== payload.order)
+    if (state.editedItem !== undefined) {
+      // Specific session or homework content edition
+      state.editedItem = payload
+    } else {
+      // Classic progression item edition
+      const folder = helperMethods.getFolderByFolderId(state.currentProgression, payload.folderId)
+      const itemIndex = folder.items.map(item => item.itemId).indexOf(payload.itemId)
+      const hasBeenMoved = (itemIndex === -1 || (itemIndex + 1) !== payload.order)
 
-    if (hasBeenMoved) {
-      this.commit('progression/removeItem', payload)
-      folder.items.splice((payload.order - 1), 0, payload)
-    } else if (itemIndex !== -1) {
-      const item = folder.items[itemIndex]
-      item.folderId = payload.folderId
-      item.name = payload.name
-      item.type = payload.type
-      item.order = payload.order
-      item.contents = payload.contents
+      if (hasBeenMoved) {
+        this.commit('progression/removeItem', payload)
+        folder.items.splice((payload.order - 1), 0, payload)
+      } else if (itemIndex !== -1) {
+        const item = folder.items[itemIndex]
+        item.folderId = payload.folderId
+        item.name = payload.name
+        item.type = payload.type
+        item.order = payload.order
+        item.contents = payload.contents
+      }
     }
   },
   addItemContent (state, payload) {
@@ -297,6 +315,10 @@ export const mutations = {
           subSection.items[subItemIndex].contents.push(payload)
         }
       }
+    }
+    // Also add it in the editedItem
+    if (state.editedItem !== undefined) {
+      state.editedItem.contents.push(payload)
     }
   },
   removeItem (state, payload) {
@@ -346,6 +368,13 @@ export const mutations = {
         }
       }
     }
+    // Also remove it from the editedItem
+    if (state.editedItem !== undefined) {
+      const contentIndex = state.editedItem.contents.map(content => content.contentId).indexOf(payload)
+      if (contentIndex !== -1) {
+        state.editedItem.contents.splice(contentIndex, 1)
+      }
+    }
   },
   endLoading (state) {
     state.isLoading = false
@@ -363,6 +392,10 @@ export const mutations = {
   addAssignment (state, payload) {
     const item = helperMethods.getItemByItemId(state.currentProgression, payload.itemId)
     item.assignments.push(payload)
+  },
+  setItemAssignments (state, payload) {
+    const item = helperMethods.getItemByItemId(state.currentProgression, payload.itemId)
+    item.assignments = payload.assignments
   },
   deleteAssignment (state, payload) {
     const item = helperMethods.getItemByItemId(state.currentProgression, payload.itemId)
@@ -470,6 +503,15 @@ export const actions = {
   },
   setHomeworkAssignmentMode ({ commit }, isHomeworkAssignment) {
     commit('setHomeworkAssignmentMode', isHomeworkAssignment)
+  },
+  setSessionContentEditMode ({ commit }, isSessionContentEdit) {
+    commit('setSessionContentEditMode', isSessionContentEdit)
+  },
+  setEditedAssignment ({ commit }, assignment) {
+    commit('setEditedAssignment', assignment)
+  },
+  setEditedItem ({ commit }, item) {
+    commit('setEditedItem', item)
   },
   setCreateMenuDisplayed ({ commit }, isCreateMenuDisplayed) {
     commit('setCreateMenuDisplayed', isCreateMenuDisplayed)
@@ -734,10 +776,7 @@ export const actions = {
     addHomeworkAssignment(itemId, homeworks).then(
       (data) => {
         if (data.success) {
-          // Add new assignments only
-          for (let i = 0; i < data.createdAssignments.length; i++) {
-            commit('addAssignment', data.createdAssignments[i])
-          }
+          commit('setItemAssignments', { itemId: itemId, assignments: data.assignments })
         }
       },
       (err) => {
@@ -750,6 +789,30 @@ export const actions = {
       (data) => {
         if (data.success) {
           commit('deleteAssignment', { itemId: itemId, sessionId: sessionId })
+        }
+      },
+      (err) => {
+        // TODO toastr
+        console.error(err)
+      })
+  },
+  saveSessionSpecificItem ({ commit }, { sessionId, item }) {
+    saveSessionSpecificItem(sessionId, item).then(
+      (data) => {
+        if (data.success) {
+          console.log('saved specific session content')
+        }
+      },
+      (err) => {
+        // TODO toastr
+        console.error(err)
+      })
+  },
+  saveHomeworkSpecificItem ({ commit }, { homeworkId, item }) {
+    saveHomeworkSpecificItem(homeworkId, item).then(
+      (data) => {
+        if (data.success) {
+          console.log('saved specific homework content')
         }
       },
       (err) => {
