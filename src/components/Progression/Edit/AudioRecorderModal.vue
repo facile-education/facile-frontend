@@ -112,7 +112,7 @@ export default {
     timerLabel () {
       let minutes = Math.floor(this.timer / 60)
       minutes = minutes < 10 ? '0' + minutes : minutes
-      let seconds = this.timer % 60
+      let seconds = Math.trunc(this.timer) % 60
       seconds = seconds < 10 ? '0' + seconds : seconds
       return `${minutes}:${seconds}`
     }
@@ -130,10 +130,6 @@ export default {
     }
   },
   methods: {
-    toggleAudio () {
-      this.waveSurfer.playPause()
-      this.isAudioPlaying = this.waveSurfer.isPlaying()
-    },
     checkUserMediaAccess () {
       if (this.stream) {
         this.startRecording(this.stream)
@@ -159,7 +155,7 @@ export default {
 
       this.waveSurfer = WaveSurfer.create(options)
       this.waveSurfer.on('audioprocess', () => { this.timer = Math.trunc(this.waveSurfer.getCurrentTime()) })
-      this.waveSurfer.on('seek', () => { this.timer = Math.trunc(this.waveSurfer.getCurrentTime()) })
+      this.waveSurfer.on('seek', () => { this.timer = this.waveSurfer.getCurrentTime() })
       this.waveSurfer.on('finish', () => { this.timer = 0; this.isAudioPlaying = false })
       this.waveSurfer.loadBlob(this.recorder.getBlob())
     },
@@ -180,6 +176,7 @@ export default {
         this.recorder.pauseRecording()
       } else {
         this.recorder.resumeRecording()
+        this.stopWatch()
       }
     },
     restartRecording () {
@@ -200,10 +197,12 @@ export default {
         // Initialize recorder
         this.recorder = RecordRTC(this.stream, {
           disableLogs: true,
-          ondataavailable: () => {
-            if (this.isRecording) this.timer += 1
-            if (this.timer >= this.duration) this.stopRecording()
-          },
+          // Does not work on firefox
+          // ondataavailable: () => {
+          //   console.log('data available')
+          //   if (this.isRecording) this.timer += 1
+          //   if (this.timer >= this.duration) this.stopRecording()
+          // },
           timeSlice: 1000,
           type: 'audio'
         })
@@ -212,6 +211,7 @@ export default {
 
       // Start recording
       this.recorder.startRecording()
+      this.stopWatch()
     },
     stopRecording () {
       if (!this.isRecording && !this.isPaused) return
@@ -219,6 +219,20 @@ export default {
         this.timer = 0
         this.displayStream()
       })
+    },
+    stopWatch () {
+      if (this.isRecording) {
+        setTimeout(() => {
+          this.timer += 0.1
+          // Stop recording if above max duration
+          if (this.timer >= this.duration) this.stopRecording()
+          this.stopWatch()
+        }, 100)
+      }
+    },
+    toggleAudio () {
+      this.waveSurfer.playPause()
+      this.isAudioPlaying = this.waveSurfer.isPlaying()
     },
     toggleRecording () {
       if (this.isRecording || this.isPaused) {
