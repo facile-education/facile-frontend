@@ -15,6 +15,7 @@
 
     <!-- Drag and drop handler -->
     <div
+      v-if="draggable && !readOnly"
       class="content-move"
       @mousedown="enableDrag"
     >
@@ -33,6 +34,7 @@
         :editor-id="editorId"
         :editor="editor"
         :config="editorOptions"
+        :disabled="readOnly"
         @input="updateContent"
       />
     </div>
@@ -121,7 +123,10 @@
     </div>
 
     <!-- Delete content button -->
-    <div class="buttons-panel">
+    <div
+      v-if="!readOnly"
+      class="buttons-panel"
+    >
       <img
         v-if="isEditableContent"
         class="content-button"
@@ -160,6 +165,10 @@ export default {
     index: {
       type: Number,
       default: -1
+    },
+    readOnly: {
+      type: Boolean,
+      default: false
     }
   },
   emits: ['editContent'],
