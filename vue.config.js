@@ -6,6 +6,9 @@ module.exports = {
       // public: '127.0.0.1:8080',
       // public: 'localhost:8080',
       // disableHostCheck: true
+      client: {
+        webSocketURL: 'wss://dev-ent-gve.com/ws'
+      }
     },
     performance: {
       // Only enable performance hints for production builds,
