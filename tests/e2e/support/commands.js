@@ -27,6 +27,37 @@
 import { HEADMASTER as defaultUser } from '../support/constants'
 import constants from '../../../src/constants/appConstants'
 
+Cypress.Commands.add('clearDBCache', () => {
+  const url = Cypress.config().baseUrl + '/group/control_panel/manage/-/server/resources?' +
+    'doAsGroupId=11107' +
+    '&refererPlid=315105&_137_cur=0' +
+    '&_137_delta=0'
+
+  const params = {
+    _137_cmd: 'cacheDb',
+    _137_tabs1: 'server',
+    _137_tabs2: 'resources'
+  }
+
+  cy.request({
+    method: 'POST',
+    url: url,
+    form: true,
+    body: params
+  }).then((response) => {
+    expect(response.status).to.be.oneOf([200, 304])
+    console.log(response)
+  })
+
+  cy.request({
+    method: 'GET',
+    url: 'http://dev-ent-gve.com/group/control_panel/manage/-/server/resources?doAsGroupId=11107&refererPlid=315105&_137_cur=0&_137_delta=0'
+  }).then((response) => {
+    expect(response.status).to.be.oneOf([200, 304])
+    console.log(response)
+  })
+})
+
 Cypress.Commands.add('login', (visitUrl = '/', user = defaultUser) => {
   cy.log('===== LOG IN (' + user.login + ') =====')
 

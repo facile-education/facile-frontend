@@ -1,3 +1,9 @@
+const GLOBAL_ADMIN = {
+  login: 'pentila',
+  password: 'pentila',
+  role: 'admin'
+}
+
 const HEADMASTER = {
   login: 'didiosa',
   password: 'pentila',
@@ -84,6 +90,7 @@ const MULTI_PARENT = { // This parent has 2 children : MULTI_STUDENT1 and MULTI_
 }
 
 export {
+  GLOBAL_ADMIN,
   HEADMASTER,
   SCHOOL_ADMIN,
   DOYEN,
