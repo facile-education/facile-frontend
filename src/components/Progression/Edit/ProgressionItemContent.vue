@@ -70,21 +70,28 @@
       v-if="content.contentType === 3"
       class="content-link"
     >
-      <div
-        class="title"
-      >
+      <div class="preview">
         <img
           class="content-icon"
           src="@assets/icon_link.svg"
           alt=""
         >
-        <span>{{ $t('externalLink') }}</span>
       </div>
-      <span>{{ content.contentName }}</span>
-      <a
-        :href="content.contentValue"
-        target="_blank"
-      >{{ content.contentValue }}</a>
+      <div class="column">
+        <div class="title">
+          <img
+            class="content-icon"
+            src="@assets/icon_link.svg"
+            alt=""
+          >
+          <span>{{ $t('externalLink') }}</span>
+        </div>
+        <span>{{ content.contentName }}</span>
+        <a
+          :href="content.contentValue"
+          target="_blank"
+        >{{ content.contentValue }}</a>
+      </div>
     </div>
 
     <!-- Video -->
@@ -92,21 +99,30 @@
       v-if="content.contentType === 4"
       class="content-video"
     >
-      <div
-        class="title"
-      >
+      <div class="preview">
         <img
           class="content-icon"
           src="@assets/play.svg"
           alt=""
         >
-        <span>{{ $t('video') }}</span>
       </div>
-      <span>{{ content.contentName }}</span>
-      <a
-        :href="content.contentValue"
-        target="_blank"
-      >{{ content.contentValue }}</a>
+      <div class="column">
+        <div
+          class="title"
+        >
+          <img
+            class="content-icon"
+            src="@assets/play.svg"
+            alt=""
+          >
+          <span>{{ $t('video') }}</span>
+        </div>
+        <span>{{ content.contentName }}</span>
+        <a
+          :href="content.contentValue"
+          target="_blank"
+        >{{ content.contentValue }}</a>
+      </div>
     </div>
 
     <!-- File -->
@@ -114,8 +130,6 @@
       v-if="content.contentType === 5"
       :file-id="content.fileEntryId"
       :file-name="content.contentName"
-      :download-url="content.downloadUrl"
-      :is-hovering="isHovering"
     />
 
     <!-- H5P -->
@@ -123,43 +137,67 @@
       v-if="content.contentType === 6"
       class="content-h5p"
     >
-      <div
-        class="title"
-      >
+      <div class="preview">
         <img
           class="content-icon"
           src="@assets/icon_h5p.svg"
           alt=""
         >
-        <span>{{ $t('h5p') }}</span>
       </div>
-      <span>{{ content.contentName }}</span>
-      <a
-        :href="content.contentValue"
-        target="_blank"
-      >{{ content.contentValue }}</a>
+      <div class="column">
+        <div
+          class="title"
+        >
+          <img
+            class="content-icon"
+            src="@assets/icon_h5p.svg"
+            alt=""
+          >
+          <span>{{ $t('h5p') }}</span>
+        </div>
+        <span>{{ content.contentName }}</span>
+        <a
+          :href="content.contentValue"
+          target="_blank"
+        >{{ content.contentValue }}</a>
+      </div>
     </div>
 
     <!-- Delete content button -->
-    <div
-      v-if="!readOnly"
-      class="buttons-panel"
-    >
-      <img
-        v-if="isEditableContent"
+    <div class="buttons-panel">
+      <div
+        v-if="content.contentType === 5"
+        :title="$t('Commons.download')"
         class="content-button"
-        src="@assets/edit.svg"
-        :alt="$t('edit')"
+        @click.stop="download"
+      >
+        <BaseIcon
+          class="icon"
+          name="download"
+        />
+      </div>
+      <div
+        v-if="isEditableContent && !readOnly"
+        class="content-button"
         :title="$t('edit')"
         @click="editContent()"
       >
-      <img
+        <img
+          src="@assets/edit.svg"
+          :alt="$t('edit')"
+        >
+      </div>
+      <div
+        v-if="!readOnly"
         class="content-button"
-        src="@assets/trash.svg"
-        :alt="$t('delete')"
         :title="$t('delete')"
         @click="confirmContentDeletion()"
       >
+        <img
+          src="@assets/trash.svg"
+          :alt="$t('delete')"
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -171,10 +209,12 @@ import InlineEditor from '@ckeditor/ckeditor5-build-inline'
 import NeroIcon from '@/components/Nero/NeroIcon'
 import { component as CKEditor } from '@ckeditor/ckeditor5-vue'
 import FileContent from '@components/Progression/Edit/Contents/FileContent'
+import documentUtils from '@utils/documents.util'
+import BaseIcon from '@components/Base/BaseIcon'
 
 export default {
   name: 'ProgressionItemContent',
-  components: { FileContent, CKEditor, NeroIcon },
+  components: { BaseIcon, FileContent, CKEditor, NeroIcon },
   props: {
     content: {
       type: Object,
@@ -271,6 +311,9 @@ export default {
     },
     editContent () {
       this.$emit('editContent', this.content)
+    },
+    download () {
+      documentUtils.downLoadDocument({ id: this.content.fileEntryId, type: 'File', url: this.content.downloadUrl })
     }
   }
 }
@@ -290,7 +333,7 @@ export default {
 
   &:hover {
     .content-button {
-      display: block;
+      display: flex;
     }
 
     .content-move {
@@ -345,29 +388,44 @@ export default {
 }
 
 .content-link, .content-video, .content-h5p, .content-audio {
-  padding-bottom: 10px;
   width: 100%;
   display: flex;
-  flex-direction: column;
-  margin-left: 20px;
 
-  .title {
-    margin-top: 5px;
+  .preview {
+    height: 100%;
+    width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     img {
-      width: 10px;
-      height: 10px;
-      margin: auto 5px auto auto;
-    }
-
-    span {
-      margin: auto;
-      font-size: 0.75rem;
+      width: 27px;
+      height: 27px;
     }
   }
 
-  span {
-    margin-top: 5px;
+  .column {
+    display: flex;
+    flex-direction: column;
+
+    .title {
+      margin-top: 5px;
+
+      img {
+        width: 10px;
+        height: 10px;
+        margin: auto 5px auto auto;
+      }
+
+      span {
+        margin: auto;
+        font-size: 0.75rem;
+      }
+    }
+
+    span {
+      margin-top: 5px;
+    }
   }
 }
 
@@ -381,10 +439,20 @@ export default {
 
   .content-button {
     display: none;
+    height: 40px;
     border: 1px solid transparent;
     border-radius: $border-radius;
-    margin: 3px;
-    padding: 4px;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 25px;
+      height: 25px;
+    }
+
+    .icon {
+      font-size: 18px;
+    }
 
     &:hover {
       border: 1px solid grey;

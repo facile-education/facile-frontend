@@ -3,22 +3,24 @@
     class="file"
     @click="displayFile"
   >
-    <img
-      v-if="fileIconIsImage"
-      class="icon"
-      :src="fileIcon"
-      alt="document icon"
-    >
-    <BaseIcon
-      v-else
-      class="icon"
-      :name="[iconPrefix, fileIcon]"
-    />
+    <div class="preview">
+      <img
+        v-if="fileIconIsImage"
+        class="icon"
+        :src="fileIcon"
+        alt="document icon"
+      >
+      <BaseIcon
+        v-else
+        class="icon"
+        :name="[iconPrefix, fileIcon]"
+      />
+    </div>
     <p class="file-name">
       {{ fileName }}
     </p>
     <BaseIcon
-      v-if="isHovering"
+      v-if="downloadUrl"
       class="download"
       name="download"
       :title="$t('Commons.download')"
@@ -48,7 +50,7 @@ export default {
     },
     downloadUrl: {
       type: String,
-      required: true
+      default: ''
     },
     isHovering: {
       type: Boolean,
@@ -93,21 +95,28 @@ export default {
 <style lang="scss" scoped>
 
 .file{
+  height: 80px;
   flex: 1;
   display: flex;
   align-items: center;
   cursor: pointer;
-  padding: 2px 8px;
   text-align: center;
   background-color: white;
   //border: 1px solid rgba(50, 50, 255, 0.5);
   border-radius: 6px;
 
-  .icon{
-    font-size: 30px;
-    width: 30px;
-    height: 30px;
-    margin-right: 10px;
+  .preview {
+    height: 100%;
+    width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .icon{
+      font-size: 30px;
+      width: 30px;
+      height: 30px;
+    }
   }
 
   .download {
