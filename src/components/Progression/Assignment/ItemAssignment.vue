@@ -61,9 +61,10 @@
         <div
           class="cours-name"
           :style="getColor(assignment)"
-          @click="editSessionSpecificContent(assignment)"
         >
-          <span>{{ assignment.groupName }}</span>
+          <span
+            @click="editSessionSpecificContent(assignment)"
+          >{{ assignment.groupName }}</span>
           <img
             class="remove-cours-assignment"
             src="@assets/big-cross-black.svg"
@@ -102,6 +103,7 @@
 <script>
 import dayjs from 'dayjs'
 import PreviewModal from '@/components/Progression/Edit/PreviewModal'
+import _ from 'lodash'
 
 export default {
   name: 'ItemAssignment',
@@ -124,7 +126,7 @@ export default {
     filteredAssignments () {
       if (this.$store.state.progression.filterCours.groupId === 0) {
         // No cours selected -> all items
-        return this.item.assignments
+        return _.orderBy(this.item.assignments, 'sessionStartDate', 'asc')
       } else {
         const assignmentIndex = this.item.assignments.map(assignment => assignment.groupName).indexOf(this.$store.state.progression.filterCours.groupName)
         if (assignmentIndex !== -1) {

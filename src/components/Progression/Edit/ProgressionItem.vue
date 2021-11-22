@@ -87,7 +87,10 @@
           @blur="saveNewItemName"
           @keyup.enter="pressEnter"
         />
-        <span v-else>
+        <span
+          v-if="isSpecificItem && item !== undefined"
+          class="item-title"
+        >
           {{ item.name }}
         </span>
 
@@ -271,7 +274,7 @@ export default {
     isSpecificItem: {
       type: Boolean,
       required: false,
-      default: true
+      default: false
     }
   },
   data () {
@@ -535,6 +538,10 @@ export default {
           width: 100%;
           margin-right: 0;
         }
+      }
+      span.item-title {
+        width: 100%;
+        margin: auto;
       }
 
       .homework-type {
