@@ -4,7 +4,7 @@ describe('Sub-section', () => {
   beforeEach(() => {
     cy.clock(now.toDate().getTime())
 
-    cy.exec('npm run db:progressionReset')
+    cy.exec('npm run db:loadTables progression_tables.sql')
     cy.clearDBCache()
     cy.login(url)
   })

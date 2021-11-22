@@ -4,7 +4,7 @@ describe('Items', () => { // TODO Mind how to handle differences between devoirs
   beforeEach(() => {
     cy.clock(now.toDate().getTime())
 
-    cy.exec('npm run db:progressionReset')
+    cy.exec('npm run db:loadTables progression_tables.sql')
     cy.clearDBCache()
     cy.login(url)
   })

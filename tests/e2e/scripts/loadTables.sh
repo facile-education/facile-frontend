@@ -6,7 +6,12 @@ DB_USER=$(grep DB_USER .env.local | cut -d '=' -f2)
 DB_PWD=$(grep DB_PWD .env.local | cut -d '=' -f2)
 DB_NAME=$(grep DB_NAME .env.local | cut -d '=' -f2)
 
-DUMP_NAME=progression_tables.sql
+if [[ $1 ]];
+then
+  DUMP_NAME=$1
+else
+  DUMP_NAME=progression_tables.sql
+fi
 
 if [[ -z $VM_USER || -z $VM_IP || -z $DB_USER || -z $DB_PWD || -z $DB_NAME || -z $DUMP_NAME ]];
 then

@@ -1,11 +1,10 @@
 import { now, url } from '../../../support/constants/progression'
 
 describe('Progression creation', () => {
-
   beforeEach(() => {
     cy.clock(now.toDate().getTime())
 
-    cy.exec('npm run db:progressionReset') // TODO pass arg to script to load a particular .db file (to load an empty progression dump)
+    cy.exec('npm run db:loadTables progression_tables_empty.sql')
     cy.clearDBCache()
     cy.login(url)
   })
