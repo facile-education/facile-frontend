@@ -31,6 +31,8 @@ Cypress.Commands.add('clearDBCache', () => {
   // Login as global admin to execute request to clear DB cache
   cy.clearCookies()
 
+  cy.visit('/')
+
   const loginParams = {
     _58_login: GLOBAL_ADMIN.login,
     _58_password: GLOBAL_ADMIN.password,
@@ -54,27 +56,46 @@ Cypress.Commands.add('clearDBCache', () => {
     expect(response.status).to.eq(200) // to test here or not?
   })
 
-  // Do request
-  const url = Cypress.config().baseUrl + '/group/control_panel/manage/-/server/resources?' +
-    'doAsGroupId=11107' +
-    '&refererPlid=315105&_137_cur=0' +
-    '&_137_delta=0'
+  // Manual UI method => TODO: To remove in favor of request method (like above)
+  cy.visit('/group/control_panel/manage/')
+  cy.contains('Administration du serveur').click()
+  cy.get(':nth-child(4) > :nth-child(2) > input').click()
 
-  const params = {
-    _137_cmd: 'cacheDb',
-    _137_tabs1: 'server',
-    _137_tabs2: 'resources'
-  }
-
-  cy.request({
-    method: 'POST',
-    url: url,
-    form: true,
-    body: params
-  }).then((response) => {
-    expect(response.status).to.be.oneOf([200, 304])
-    console.log(response)
-  })
+  // // Do request
+  // const url = Cypress.config().baseUrl + '/group/control_panel/manage/-/server/resources?' +
+  //   'doAsGroupId=11107' +
+  //   '&refererPlid=315105&_137_cur=0' +
+  //   '&_137_delta=0'
+  //
+  // const params = {
+  //   _137_formDate: Date.now(),
+  //   _137_cmd: 'cacheDb',
+  //   _137_tabs1: 'server',
+  //   _137_tabs2: 'resources',
+  //   _137_tabs3: '',
+  //   _137_redirect: '',
+  //   _137_portletId: '',
+  //   _137_tabs2TabsScroll: ''
+  // }
+  //
+  // cy.request({
+  //   method: 'POST',
+  //   url: url,
+  //   form: true,
+  //   body: params
+  // }).then((response) => {
+  //   expect(response.status).to.be.oneOf([200, 304])
+  //   console.log(response)
+  // })
+  //
+  // // // Test the 2nd call
+  // // cy.request({
+  // //   method: 'GET',
+  // //   url: Cypress.config().baseUrl + '/group/control_panel/manage/-/server/resources?doAsGroupId=11107&refererPlid=315105&_137_cur=0&_137_delta=0'
+  // // }).then((response) => {
+  // //   expect(response.status).to.be.oneOf([200, 304])
+  // //   console.log(response)
+  // // })
 })
 
 Cypress.Commands.add('login', (visitUrl = '/', user = defaultUser) => {
