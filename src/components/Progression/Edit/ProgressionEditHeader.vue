@@ -23,6 +23,7 @@
       >
         <!-- Create session content -->
         <div
+          v-if="isItemCreationAllowed"
           class="create-menu-item"
           @click="doCreateSession"
         >
@@ -37,6 +38,7 @@
 
         <!-- Create homework -->
         <div
+          v-if="isItemCreationAllowed"
           class="create-menu-item"
           @click="doCreateHomework"
         >
@@ -49,7 +51,7 @@
           <span>{{ $t('homework') }}</span>
         </div>
 
-        <hr>
+        <hr v-if="isItemCreationAllowed">
 
         <!-- Create section -->
         <div
@@ -83,6 +85,9 @@ export default {
   name: 'ProgressionEditHeader',
   components: { FolderHeader, NeroIcon },
   computed: {
+    isItemCreationAllowed () {
+      return this.currentFolder || this.currentItem
+    },
     isCreateMenuDisplayed () {
       return this.$store.state.progression.isCreateMenuDisplayed
     },
