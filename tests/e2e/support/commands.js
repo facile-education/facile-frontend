@@ -48,14 +48,6 @@ Cypress.Commands.add('clearDBCache', () => {
     expect(response.status).to.be.oneOf([200, 304])
     console.log(response)
   })
-
-  cy.request({
-    method: 'GET',
-    url: 'http://dev-ent-gve.com/group/control_panel/manage/-/server/resources?doAsGroupId=11107&refererPlid=315105&_137_cur=0&_137_delta=0'
-  }).then((response) => {
-    expect(response.status).to.be.oneOf([200, 304])
-    console.log(response)
-  })
 })
 
 Cypress.Commands.add('login', (visitUrl = '/', user = defaultUser) => {
