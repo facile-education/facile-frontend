@@ -58,6 +58,7 @@
         @click="closeSessionContentEdit"
       />
       <PentilaButton
+        :disabled="isWaiting"
         :label="$t('save')"
         class="button create-button"
         @click="saveContent()"
@@ -87,6 +88,9 @@ export default {
     },
     item () {
       return this.$store.state.progression.editedItem
+    },
+    isWaiting () {
+      return this.$store.state.progression.isWaiting
     }
   },
   created () {

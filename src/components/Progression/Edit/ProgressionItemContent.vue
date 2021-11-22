@@ -293,6 +293,7 @@ export default {
     },
     updateContent (newValue) {
       clearTimeout(this.timeout)
+      this.$store.dispatch('progression/setIsWaiting', true)
       // 2s timeout
       this.timeout = setTimeout(() => {
         const updatedContent = { ...this.content }
@@ -408,25 +409,25 @@ export default {
     display: flex;
     flex-direction: column;
 
-    .title {
-      margin-top: 5px;
+  .title {
+    margin-top: 5px;
 
-      img {
-        width: 10px;
-        height: 10px;
-        margin: auto 5px auto auto;
-      }
-
-      span {
-        margin: auto;
-        font-size: 0.75rem;
-      }
+    img {
+      width: 10px;
+      height: 10px;
+      margin: auto 5px auto auto;
     }
 
     span {
-      margin-top: 5px;
+      margin: auto;
+      font-size: 0.75rem;
     }
   }
+
+  span {
+    margin-top: 5px;
+  }
+}
 }
 
 .buttons-panel {

@@ -78,7 +78,8 @@ export const state = {
   draggedSubsection: undefined,
   filterFolder: { name: 'Toute la progression', folderId: 0 },
   filterCours: { groupName: 'Tous les cours', groupId: 0 },
-  haveToFocusFolderNameInput: false
+  haveToFocusFolderNameInput: false,
+  isWaiting: false
 }
 
 export const mutations = {
@@ -167,6 +168,9 @@ export const mutations = {
   resetAffectedSessions (state) {
     state.addedAssignedSessions = []
     state.removedAssignedSessions = []
+  },
+  setIsWaiting (state, payload) {
+    state.isWaiting = payload
   },
   addAffectedSession (state, payload) {
     // Check if new session was initially affected or not
@@ -534,6 +538,9 @@ export const actions = {
   resetAffectedSessions ({ commit }) {
     commit('resetAffectedSessions')
   },
+  setIsWaiting ({ commit }, isWaiting) {
+    commit('setIsWaiting', isWaiting)
+  },
   getProgressionContent ({ commit, dispatch }, progressionId) {
     getProgressionContent(progressionId).then(
       (data) => {
@@ -713,6 +720,7 @@ export const actions = {
           if (data.success) {
           // Returned object is the parent item (for re-ordering)
             commit('updateItem', data.item)
+            commit('setIsWaiting', false)
             resolve()
           } else {
             reject(data.error)
@@ -743,7 +751,7 @@ export const actions = {
   getSessionList ({ state, commit, rootState }) {
     if (state.startDate && state.endDate) {
       commit('loading')
-      getSessions(rootState.user.userId, 0, state.startDate, state.endDate).then(
+      getSessions(rootState.user.userId, 0, state.startDate, state.endDate, state.currentProgression.volee).then(
         (data) => {
           if (data.success) {
             commit('setSessionList', [...data.sessions])

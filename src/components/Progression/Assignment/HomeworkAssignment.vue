@@ -65,6 +65,13 @@
             @update:modelValue="onTargetSessionSelect"
           />
         </div>
+        <NeroDatePicker
+          v-if="homework.isCustomDate"
+          v-model="homework.targetDate"
+          :min-date="minDate.toDate()"
+          :max-date="maxDate.toDate()"
+          @update:modelValue="onUpdateCustomDate"
+        />
       </div>
     </div>
   </div>
@@ -75,10 +82,11 @@ import dayjs from 'dayjs'
 import _ from 'lodash'
 import { getSessionDetails } from '@/api/cdt.service'
 import StudentListModal from '@/components/Progression/Assignment/StudentListModal.vue'
+import NeroDatePicker from '@/components/Progression/Assignment/NeroDatePicker.vue'
 
 export default {
   name: 'HomeworkAssignment',
-  components: { StudentListModal },
+  components: { StudentListModal, NeroDatePicker },
   props: {
     session: {
       type: Object,
@@ -97,10 +105,14 @@ export default {
         sourceSessionId: this.session.sessionId,
         targetSession: undefined,
         toDate: undefined,
+        targetDate: undefined,
         isWholeClass: true,
         selectedStudents: [],
-        type: 0
-      }
+        type: 0,
+        isCustomDate: false
+      },
+      minDate: dayjs(this.session.startDate),
+      maxDate: dayjs('2031-07-01')
     }
   },
   computed: {
@@ -140,6 +152,7 @@ export default {
           res.push(nextSession)
         }
       }
+      res.push({ sessionId: 0, sessionDescription: this.$t('custom-date'), isCustomDate: true })
       return _.orderBy(res, 'startDate', 'asc')
     }
   },
@@ -159,6 +172,7 @@ export default {
                 this.isCreation = false
                 this.homework = givenHomework
                 this.homework.targetSession = { sessionId: givenHomework.targetSessionId, sessionDescription: this.formatDate(givenHomework.toDate) }
+                this.homework.targetDate = dayjs(this.homework.toDate)
                 if (!givenHomework.isWholeClass) {
                   // Set the selected students
                   for (let idx = 0; idx < this.availableStudents.length; ++idx) {
@@ -183,6 +197,7 @@ export default {
             }
             this.homework.targetSession = { sessionId: defaultSession.sessionId, sessionDescription: this.formatDate(defaultSession.startDate) }
             this.homework.toDate = defaultSession.startDate
+            this.homework.targetDate = dayjs(this.homework.toDate)
           }
           // Emit default homework if not updated later
           this.$emit('editedHomework', this.homework)
@@ -204,8 +219,20 @@ export default {
       return this.$t('given-date') + dayjs(this.homework.assignedDate, 'YYYY-MM-DD HH:mm').format('DD MMMM YYYY [à] HH[h]mm')
     },
     onTargetSessionSelect (selectedSession) {
-      this.homework.targetSession = selectedSession
-      this.homework.targetSessionId = selectedSession.sessionId
+      if (selectedSession.isCustomDate) {
+        // Display date picker
+        this.homework.isCustomDate = true
+      } else {
+        this.homework.isCustomDate = false
+        this.homework.targetSession = selectedSession
+        this.homework.targetSessionId = selectedSession.sessionId
+        this.$emit('editedHomework', this.homework)
+      }
+    },
+    onUpdateCustomDate (targetDate) {
+      this.homework.toDate = this.homework.targetDate.format('YYYY-MM-DD HH:mm')
+      this.homework.targetSession = {}
+      this.homework.targetSessionId = 0
       this.$emit('editedHomework', this.homework)
     },
     onCloseStudentModal (students, isWholeClass) {
@@ -296,6 +323,7 @@ export default {
   "students": "élèves sur ",
   "edit": "Modifier la liste des élèves",
   "render-date": "Date de rendu",
-  "pick-a-session": "Choisir une séance cible"
+  "pick-a-session": "Choisir une séance cible",
+  "custom-date": "Date libre"
 }
 </i18n>

@@ -66,8 +66,7 @@
         @click="closeHomeworkAssignment"
       />
       <PentilaButton
-        :label="$t('add')"
-        :disabled="newSessions.length == 0"
+        :label="getButtonLabel()"
         class="button create-button"
         @click="registerAssignments()"
       />
@@ -124,7 +123,9 @@ export default {
       console.log('About to register new homeworks ', this.homeworks)
 
       // Register assignments and propagate content
-      this.$store.dispatch('progression/addHomeworkAssignment', { itemId: this.item.itemId, homeworks: this.homeworks })
+      if (this.homeworks.length > 0) {
+        this.$store.dispatch('progression/addHomeworkAssignment', { itemId: this.item.itemId, homeworks: this.homeworks })
+      }
 
       for (let idx = 0; idx < this.$store.state.progression.removedAssignedSessions.length; ++idx) {
         const session = this.$store.state.progression.removedAssignedSessions[idx]
@@ -144,6 +145,13 @@ export default {
       }
       this.homeworks.push(updatedHomework)
       console.log('this.homeworks= ', this.homeworks)
+    },
+    getButtonLabel () {
+      if (this.newSessions.length === 0) {
+        return this.$t('save')
+      } else {
+        return this.$t('add')
+      }
     }
   }
 }
@@ -213,6 +221,7 @@ export default {
 {
   "precision": "Précisions pour l'affectation de ",
   "add": "Donner le devoir",
+  "save": "Enregistrer",
   "cancel": "Annuler",
   "close": "Fermer",
   "homework": "Devoir",

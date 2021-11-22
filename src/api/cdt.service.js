@@ -47,13 +47,14 @@ function getGroups (schoolId) {
 /**
  * Get the user or group session list for specified date range
  */
-function getSessions (userId, groupId, minDate, maxDate) {
+function getSessions (userId, groupId, minDate, maxDate, volee = '') {
   return axios.get(constants.JSON_WS_URL + CDT_PATH + 'cdtsession/get-horaires-sessions', {
     params: {
       userId,
       groupId,
       start: minDate.format('YYYY-MM-DD HH:mm'),
-      end: maxDate.format('YYYY-MM-DD HH:mm')
+      end: maxDate.format('YYYY-MM-DD HH:mm'),
+      volee: volee
     }
   }).then(response => response.data)
 }
