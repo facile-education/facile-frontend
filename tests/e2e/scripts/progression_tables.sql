@@ -91,11 +91,15 @@ CREATE TABLE `progression_progressionitem` (
   `isHomework` tinyint(4) DEFAULT NULL,
   `type_` int(11) DEFAULT NULL,
   `order_` int(11) DEFAULT NULL,
+  `homeworkId` bigint(20) DEFAULT NULL,
+  `sessionId` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`progressionItemId`),
   KEY `IX_15BBC124` (`progressionFolderId`),
   KEY `IX_71366C2` (`progressionFolderId`,`progressionId`),
   KEY `IX_C1941256` (`progressionId`),
-  KEY `IX_91A0B389` (`progressionItemId`)
+  KEY `IX_91A0B389` (`progressionItemId`),
+  KEY `progression_progressionitem_homeworkId_index` (`homeworkId`),
+  KEY `progression_progressionitem_sessionId_index` (`sessionId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -105,7 +109,7 @@ CREATE TABLE `progression_progressionitem` (
 
 LOCK TABLES `progression_progressionitem` WRITE;
 /*!40000 ALTER TABLE `progression_progressionitem` DISABLE KEYS */;
-INSERT INTO `progression_progressionitem` (`progressionItemId`, `progressionId`, `progressionFolderId`, `modifiedDate`, `itemName`, `duration`, `isHomework`, `type_`, `order_`) VALUES (15401401,15401321,15401323,'2021-11-17 11:58:59','Introduction','undefined',0,0,1),(15401403,15401321,15401323,'2021-11-17 11:59:15','Les verbes irréguliers','undefined',0,0,2),(15401404,15401321,15401323,'2021-11-17 11:59:26','Devoir 1','',1,1,3);
+INSERT INTO `progression_progressionitem` (`progressionItemId`, `progressionId`, `progressionFolderId`, `modifiedDate`, `itemName`, `duration`, `isHomework`, `type_`, `order_`, `homeworkId`, `sessionId`) VALUES (15401401,15401321,15401323,'2021-11-17 11:58:59','Introduction','undefined',0,0,1,NULL,NULL),(15401403,15401321,15401323,'2021-11-17 11:59:15','Les verbes irréguliers','undefined',0,0,2,NULL,NULL),(15401404,15401321,15401323,'2021-11-17 11:59:26','Devoir 1','',1,1,3,NULL,NULL);
 /*!40000 ALTER TABLE `progression_progressionitem` ENABLE KEYS */;
 UNLOCK TABLES;
 
