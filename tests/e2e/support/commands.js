@@ -31,8 +31,9 @@ Cypress.Commands.add('clearDBCache', () => {
   // Login as global admin to execute request to clear DB cache
   cy.clearCookies()
 
-  cy.visit('/')
+  cy.visit('/') // mandatory to access control panel by UI
 
+  // Login
   const loginParams = {
     _58_login: GLOBAL_ADMIN.login,
     _58_password: GLOBAL_ADMIN.password,
@@ -56,7 +57,7 @@ Cypress.Commands.add('clearDBCache', () => {
     expect(response.status).to.eq(200) // to test here or not?
   })
 
-  // Manual UI method => TODO: To remove in favor of request method (like above)
+  // Manual UI method => TODO: To remove in favor of request method (see above)
   cy.visit('/group/control_panel/manage/')
   cy.contains('Administration du serveur').click()
   cy.get(':nth-child(4) > :nth-child(2) > input').click()
