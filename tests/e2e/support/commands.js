@@ -24,10 +24,37 @@
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
-import { HEADMASTER as defaultUser } from '../support/constants'
+import { GLOBAL_ADMIN, HEADMASTER as defaultUser } from '../support/constants'
 import constants from '../../../src/constants/appConstants'
 
 Cypress.Commands.add('clearDBCache', () => {
+  // Login as global admin to execute request to clear DB cache
+  cy.clearCookies()
+
+  const loginParams = {
+    _58_login: GLOBAL_ADMIN.login,
+    _58_password: GLOBAL_ADMIN.password,
+    p_auth: ''
+  }
+
+  const loginUrl = Cypress.config().baseUrl + '/web/guest/home?' +
+    'p_p_id=58' +
+    '&p_p_lifecycle=1&' +
+    'p_p_state=normal&' +
+    'p_p_mode=view&' +
+    'saveLastPath=0&' +
+    '_58_struts_action=/login/login'
+
+  cy.request({
+    method: 'POST',
+    url: loginUrl,
+    form: true,
+    body: loginParams
+  }).then((response) => {
+    expect(response.status).to.eq(200) // to test here or not?
+  })
+
+  // Do request
   const url = Cypress.config().baseUrl + '/group/control_panel/manage/-/server/resources?' +
     'doAsGroupId=11107' +
     '&refererPlid=315105&_137_cur=0' +

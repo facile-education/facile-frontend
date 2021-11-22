@@ -1,15 +1,11 @@
 import { now, url } from '../../../support/constants/progression'
-import { GLOBAL_ADMIN } from '../../../support/constants'
 
 describe('Drag & drop', () => { // See D&D tests in MonDrive to see how to trigger D&D event on cypress
   beforeEach(() => {
-    cy.logout()
     cy.clock(now.toDate().getTime())
-    cy.login('/', GLOBAL_ADMIN)
 
     cy.exec('npm run db:progressionReset')
     cy.clearDBCache()
-
     cy.login(url)
   })
 

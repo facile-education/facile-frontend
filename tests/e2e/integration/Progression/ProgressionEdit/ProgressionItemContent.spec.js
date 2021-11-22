@@ -1,15 +1,11 @@
 import { now, url } from '../../../support/constants/progression'
-import { GLOBAL_ADMIN } from '../../../support/constants'
 
 describe('Progression item contents', () => {
   beforeEach(() => {
-    cy.logout()
     cy.clock(now.toDate().getTime())
-    cy.login('/', GLOBAL_ADMIN)
 
     cy.exec('npm run db:progressionReset')
     cy.clearDBCache()
-
     cy.login(url)
   })
 
@@ -70,13 +66,10 @@ describe('Progression item contents', () => {
 
 describe('Progression item contents computed view', () => {
   beforeEach(() => {
-    cy.logout()
     cy.clock(now.toDate().getTime())
-    cy.login('/', GLOBAL_ADMIN)
 
-    cy.exec('npm run db:progressionReset') // TODO load dump with one item of each type, and two iframes next to each others
+    cy.exec('npm run db:progressionReset')
     cy.clearDBCache()
-
     cy.login(url)
   })
 
