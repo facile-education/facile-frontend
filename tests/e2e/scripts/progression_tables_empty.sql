@@ -38,6 +38,12 @@ CREATE TABLE `progression_progression` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+LOCK TABLES `progression_progression` WRITE;
+/*!40000 ALTER TABLE `progression_progression` DISABLE KEYS */;
+INSERT INTO `progression_progression` (`progressionId`, `teacherId`, `createDate`, `modifiedDate`, `name`, `description`, `volee`, `subjectId`, `color`) VALUES (15401321,4696749,'2021-11-17 11:37:26','2021-11-17 11:59:26','Ma progression d\'allemand','Ma descrition','09',15382702,'#99B9E9');
+/*!40000 ALTER TABLE `progression_progression` ENABLE KEYS */;
+UNLOCK TABLES;
+
 
 DROP TABLE IF EXISTS `progression_progressionfolder`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
