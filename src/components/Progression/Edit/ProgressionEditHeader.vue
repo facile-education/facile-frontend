@@ -19,6 +19,7 @@
       <div
         v-if="isCreateMenuDisplayed"
         id="create-menu"
+        data-test="create-menu"
         class="create-menu"
       >
         <!-- Create session content -->
