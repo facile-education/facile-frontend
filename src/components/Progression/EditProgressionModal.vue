@@ -175,6 +175,7 @@ export default {
     },
     onSelectSubject (subject) {
       this.progression.subjectId = subject.subjectId
+      this.progression.subjectName = subject.name
     },
     submitChanges () {
       if (this.progression.progressionId > 0) {
