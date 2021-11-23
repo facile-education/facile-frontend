@@ -1,6 +1,7 @@
 <template>
   <PentilaWindow
     :modal="true"
+    data-test="edit-progression-modal"
     class="editWindow"
     @close="closeModal"
   >

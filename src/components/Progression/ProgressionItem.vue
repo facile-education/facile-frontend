@@ -1,5 +1,6 @@
 <template>
   <div
+    data-test="progression-item"
     class="progression"
     @click="selectProgression()"
   >
@@ -16,6 +17,7 @@
       <img
         class="button"
         src="@assets/edit.svg"
+        data-test="edit-progression-icon"
         :alt="$t('edit')"
         :title="$t('edit')"
         @click.stop="editProgression()"
@@ -37,6 +39,7 @@
       <img
         class="button"
         src="@assets/trash.svg"
+        data-test="delete-progression-icon"
         :alt="$t('delete')"
         :title="$t('delete')"
         @click.stop="confirmProgressionDeletion()"
