@@ -546,7 +546,7 @@ export default {
 
       .homework-type {
         width: 20%;
-        min-width: 180px;
+        min-width: 190px;
         margin-right: 10px;
       }
 
