@@ -2,9 +2,7 @@
   <div
     class="header"
   >
-    <div
-      class="create-button-menu"
-    >
+    <div class="create-button-menu">
       <PentilaButton
         class="create-button"
         @click.stop="toggleCreateMenu"
@@ -81,6 +79,7 @@
 <script>
 import NeroIcon from '@/components/Nero/NeroIcon'
 import FolderHeader from '@components/Progression/Edit/FolderHeader'
+import { helperMethods } from '@/store/modules/progression.store'
 
 export default {
   name: 'ProgressionEditHeader',
@@ -190,6 +189,10 @@ export default {
         parentFolderId = (this.currentFolder.parentId === 0 ? this.currentFolder.folderId : this.currentFolder.parentId)
       } else if (this.currentItem) {
         parentFolderId = this.currentItem.folderId
+        const parentFolder = helperMethods.getFolderByFolderId(this.$store.state.progression.currentProgression, parentFolderId)
+        if (parentFolder.parentId !== 0) { // cannot create subSection of a subSection, so return the sub-section's parent folder id
+          parentFolderId = parentFolder.parentId
+        }
       }
       if (parentFolderId) {
         this.$store.dispatch('progression/addFolder', parentFolderId)
