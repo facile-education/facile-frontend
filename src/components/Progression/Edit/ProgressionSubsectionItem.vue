@@ -130,7 +130,7 @@ export default {
   }
 
   &:hover {
-    text-decoration: underline;
+    //text-decoration: underline;
   }
 }
 </style>
