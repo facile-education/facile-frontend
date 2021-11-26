@@ -120,8 +120,6 @@ export default {
       this.$store.dispatch('progression/setHomeworkAssignmentMode', false)
     },
     registerAssignments () {
-      console.log('About to register new homeworks ', this.homeworks)
-
       // Register assignments and propagate content
       if (this.homeworks.length > 0) {
         this.$store.dispatch('progression/addHomeworkAssignment', { itemId: this.item.itemId, homeworks: this.homeworks })
@@ -138,13 +136,11 @@ export default {
     },
     updateHomework (updatedHomework) {
       updatedHomework.targetSessionId = updatedHomework.targetSession.sessionId
-      console.log('received updated homework ', updatedHomework)
       const sourceSessionIndex = this.homeworks.map(homework => homework.sourceSessionId).indexOf(updatedHomework.sourceSessionId)
       if (sourceSessionIndex !== -1) {
         this.homeworks.splice(sourceSessionIndex, 1)
       }
       this.homeworks.push(updatedHomework)
-      console.log('this.homeworks= ', this.homeworks)
     },
     getButtonLabel () {
       if (this.newSessions.length === 0) {

@@ -289,8 +289,8 @@ export default {
       isMultiSelectionAllowed: true,
       homeworkTypes: [
         { type: 1, name: 'Consigne simple' },
-        { type: 2, name: 'Doc. à rendre' },
-        { type: 3, name: 'Doc. à compléter' }
+        { type: 2, name: 'Doc. à compléter' },
+        { type: 3, name: 'Doc. à rendre' }
       ],
       homeworkDurations: ['15 min', '30 min', '45 min', '1h', '1h15', '1h30'],
       selectedHomeworkType: undefined,

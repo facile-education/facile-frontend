@@ -186,20 +186,19 @@ export default {
     width: 300px;
     min-width: 300px;
     max-width: 300px;
-    display: block ruby;
+    display: flex;
     &.is-sub-section-item {
       padding-left: 20px;
     }
     .item-name {
       display: flex;
+      margin-top: 5px;
 
       .item-type-icon {
-        margin: auto;
         width: 20px;
         height: 20px;
       }
       span {
-        margin: auto;
         font-size: 14px;
       }
       &:hover {
@@ -264,6 +263,7 @@ export default {
     }
   }
   .no-assignment {
+    margin-top: 5px;
     width: 100%;
     span {
       float: left;
