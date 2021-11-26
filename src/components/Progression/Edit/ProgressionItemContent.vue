@@ -78,14 +78,6 @@
         >
       </div>
       <div class="column">
-        <div class="title">
-          <img
-            class="content-icon"
-            src="@assets/icon_link.svg"
-            alt=""
-          >
-          <span>{{ $t('externalLink') }}</span>
-        </div>
         <span>{{ content.contentName }}</span>
         <a
           :href="content.contentValue"
@@ -107,16 +99,6 @@
         >
       </div>
       <div class="column">
-        <div
-          class="title"
-        >
-          <img
-            class="content-icon"
-            src="@assets/play.svg"
-            alt=""
-          >
-          <span>{{ $t('video') }}</span>
-        </div>
         <span>{{ content.contentName }}</span>
         <a
           :href="content.contentValue"
@@ -146,16 +128,6 @@
         >
       </div>
       <div class="column">
-        <div
-          class="title"
-        >
-          <img
-            class="content-icon"
-            src="@assets/icon_h5p.svg"
-            alt=""
-          >
-          <span>{{ $t('h5p') }}</span>
-        </div>
         <span>{{ content.contentName }}</span>
         <a
           :href="content.contentValue"
@@ -391,7 +363,7 @@ export default {
 }
 
 .content-link, .content-video, .content-h5p, .content-audio {
-  width: 100%;
+  width: calc(100% - 40px);
   display: flex;
 
   .preview {
@@ -408,23 +380,26 @@ export default {
   }
 
   .column {
+    flex: 1;
     display: flex;
     flex-direction: column;
-
-  .title {
-    margin-top: 5px;
-
-    img {
-      width: 10px;
-      height: 10px;
-      margin: auto 5px auto auto;
-    }
+    justify-content: center;
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 
     span {
-      margin: auto;
-      font-size: 0.75rem;
+      overflow-x: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      margin-bottom: 5px;
     }
-  }
+
+    a {
+      overflow-x: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
 
   span {
     margin-top: 5px;

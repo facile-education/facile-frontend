@@ -84,7 +84,7 @@ export default {
 <style lang="scss" scoped>
 
 .file{
-  height: 80px;
+  height: 100%;
   flex: 1;
   display: flex;
   align-items: center;
