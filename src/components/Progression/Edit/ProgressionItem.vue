@@ -475,7 +475,7 @@ export default {
       flex-direction: column;
       border: 1px solid transparent;
       border-radius: 5px;
-      margin: 10px;
+      margin: 10px 0;
 
       .preview-icon {
         margin: auto;
@@ -528,7 +528,7 @@ export default {
       height: 50px;
       display: flex;
       justify-content: space-around;
-      margin: 20px 10px 10px;
+      margin: 20px 10px 10px 0;
 
       .item-title {
         width: 70%;
@@ -560,7 +560,7 @@ export default {
 
     .item-contents {
       .item-content {
-        margin: 10px;
+        margin: 10px 10px 10px 0;
       }
     }
 
