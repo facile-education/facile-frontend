@@ -205,7 +205,7 @@ export default {
   emits: ['editContent'],
   data () {
     return {
-      draggable: false,
+      draggable: true,
       editor: InlineEditor,
       editorOptions: {
         language: 'fr'
