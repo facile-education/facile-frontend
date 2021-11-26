@@ -19,19 +19,11 @@
     <p class="file-name">
       {{ fileName }}
     </p>
-    <BaseIcon
-      v-if="downloadUrl"
-      class="download"
-      name="download"
-      :title="$t('Commons.download')"
-      @click.stop="download"
-    />
   </div>
 </template>
 
 <script>
 import { getExtensionFromName } from '@/utils/commons.util'
-import documentUtils from '@utils/documents.util'
 import { icons } from '@/constants/icons'
 import BaseIcon from '@components/Base/BaseIcon'
 
@@ -82,11 +74,8 @@ export default {
   },
   methods: {
     displayFile () {
-      console.log('TODO: display ' + this.fileName)
+      // TODO only open in a new tab browser-supported extensions
       window.open(this.downloadUrl, '_blank').focus()
-    },
-    download () {
-      documentUtils.downLoadDocument({ id: this.fileId, type: 'File', url: this.downloadUrl })
     }
   }
 }

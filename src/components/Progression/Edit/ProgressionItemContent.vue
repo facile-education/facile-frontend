@@ -130,6 +130,7 @@
       v-if="content.contentType === 5"
       :file-id="content.fileEntryId"
       :file-name="content.contentName"
+      :download-url="content.downloadUrl"
     />
 
     <!-- H5P -->
