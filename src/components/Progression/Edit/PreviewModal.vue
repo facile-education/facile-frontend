@@ -50,9 +50,11 @@ export default {
           const htmlContent = this.$refs.htmlContent
           const iframeList = htmlContent.getElementsByTagName('iframe')
           this.nbIframesToLoad = iframeList.length
-          iframeList.forEach((iframe) => {
+
+          for (let i = 0; i < iframeList.length; i++) {
+            const iframe = iframeList[i]
             iframe.onload = this.changeIframeSize
-          })
+          }
         })
       }
     }
@@ -75,7 +77,8 @@ export default {
       const iframe = event.path[0]
 
       iframe.style.maxHeight = '350px'
-      iframe.style.height = iframe.contentWindow.document.documentElement.scrollHeight + 'px'
+      iframe.style.height = '350px'
+      // iframe.style.height = iframe.contentWindow.document.documentElement.scrollHeight + 'px' // doesn't works with cross-origin frame
     },
     closeModal () {
       this.$emit('close')
