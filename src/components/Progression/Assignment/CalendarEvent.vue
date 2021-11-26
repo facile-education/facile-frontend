@@ -70,8 +70,6 @@ export default {
     // Session is selected if:
     // it is initially assigned to the current item OR it belongs to the assignments OR if it has been assigned
     // AND it has not been removed
-    console.log('extended props =', this.event.extendedProps)
-    console.log('assignments=', this.store.state.progression.assignedItem.assignments)
     this.isSelected = (this.event.extendedProps.assignedItemId === this.store.state.progression.assignedItem.itemId ||
     this.store.state.progression.assignedItem.assignments.map(assignment => assignment.sessionId).indexOf(this.event.extendedProps.sessionId) !== -1 ||
     this.store.state.progression.addedAssignedSessions.map(session => session.sessionId).indexOf(this.event.extendedProps.sessionId) !== -1) &&

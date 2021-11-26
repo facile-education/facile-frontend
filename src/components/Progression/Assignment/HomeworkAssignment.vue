@@ -105,10 +105,11 @@ export default {
         sourceSessionId: this.session.sessionId,
         targetSession: undefined,
         toDate: undefined,
-        targetDate: undefined,
+        targetDate: dayjs(),
         isWholeClass: true,
         selectedStudents: [],
-        type: 0,
+        type: this.$store.state.progression.assignedItem.type,
+        estimatedTime: this.$store.state.progression.assignedItem.duration,
         isCustomDate: false
       },
       minDate: dayjs(this.session.startDate),
@@ -141,7 +142,7 @@ export default {
       }
     },
     nextSessions () {
-      const res = [{ sessionId: 0, sessionDescription: this.$t('pick-a-session') }]
+      const res = [{ sessionId: 0, sessionDescription: this.$t('custom-date'), isCustomDate: true }]
       if (this.sessionDetails !== undefined && this.sessionDetails.nextSessions !== undefined) {
         // Build sessionDescription
         for (let idx = 0; idx < this.sessionDetails.nextSessions.length; ++idx) {
@@ -152,7 +153,6 @@ export default {
           res.push(nextSession)
         }
       }
-      res.push({ sessionId: 0, sessionDescription: this.$t('custom-date'), isCustomDate: true })
       return _.orderBy(res, 'startDate', 'asc')
     }
   },
@@ -168,7 +168,6 @@ export default {
               const givenHomework = data.sessionDetails.givenHomework[idx]
 
               if (givenHomework.assignedItemId !== undefined && givenHomework.assignedItemId === this.$store.state.progression.assignedItem.itemId) {
-                console.log('Found existing homework ', givenHomework)
                 this.isCreation = false
                 this.homework = givenHomework
                 this.homework.targetSession = { sessionId: givenHomework.targetSessionId, sessionDescription: this.formatDate(givenHomework.toDate) }
@@ -231,7 +230,6 @@ export default {
     },
     onUpdateCustomDate (targetDate) {
       this.homework.toDate = this.homework.targetDate.format('YYYY-MM-DD HH:mm')
-      this.homework.targetSession = {}
       this.homework.targetSessionId = 0
       this.$emit('editedHomework', this.homework)
     },
@@ -323,7 +321,6 @@ export default {
   "students": "élèves sur ",
   "edit": "Modifier la liste des élèves",
   "render-date": "Date de rendu",
-  "pick-a-session": "Choisir une séance cible",
   "custom-date": "Date libre"
 }
 </i18n>
