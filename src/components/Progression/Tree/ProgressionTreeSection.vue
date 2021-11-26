@@ -165,6 +165,7 @@ export default {
     },
     selectSection () {
       this.$store.dispatch('progression/setCurrentFolder', this.section)
+      this.$store.dispatch('progression/getFolderContent', this.section.folderId)
     }
   }
 }

@@ -200,10 +200,17 @@ export default {
       }
     },
     selectSubsection () {
+      let haveToLoadContent = true
       if (this.isSelected || !this.isExpanded) {
         this.isExpanded = !this.isExpanded
+        if (!this.isExpanded) { // little optimisation to avoid WS call when user fold the sub-section
+          haveToLoadContent = false
+        }
       }
       this.$store.dispatch('progression/setCurrentFolder', this.subSection)
+      if (haveToLoadContent) {
+        this.$store.dispatch('progression/getFolderContent', this.subSection.folderId)
+      }
     }
   }
 }
