@@ -342,11 +342,13 @@ export default {
 
 .content-move {
   position: absolute;
-  height: 100%;
+  height: calc(100% + 2px);
   width: 0;
-  top: 0;
+  top: -1px;
   left: 0;
-  background: $color-border;
+  background: $color-not-white-bg;
+  border: 1px solid $color-border;
+  border-right: none;
   display: flex;
   cursor: move;
   opacity: 0;
