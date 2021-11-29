@@ -208,6 +208,20 @@ export default {
       draggable: true,
       editor: InlineEditor,
       editorOptions: {
+        removePlugins: [
+          'CKFinder',
+          'CKFinderUploadAdapter',
+          'CloudServicesUploadAdapter',
+          'CloudServices',
+          'EasyImage',
+          'Image',
+          'ImageCaption',
+          'ImageStyle',
+          'ImageToolbar',
+          'ImageUpload',
+          'MediaEmbed'
+        ],
+        toolbar: ['heading', '|', 'bold', 'italic', 'link', 'numberedList', 'bulletedList', '|', 'outdent', 'indent', '|', 'blockQuote', 'insertTable', 'undo', 'redo'],
         language: 'fr'
       },
       isHovering: false,
