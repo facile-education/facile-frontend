@@ -125,6 +125,7 @@ export default {
       if (this.v$.$invalid) {
         this.v$.$touch()
       } else {
+        this.videoUrl = this.videoUrl.replace('watch?v=', 'embed/') // Generate embed url in case of youtube brut url
         this.$store.dispatch('progression/addItemContent', { itemId: this.item.itemId, contentType: 4, contentName: this.videoName, contentValue: this.videoUrl })
           .then(() => {
             this.closeModal()
