@@ -436,7 +436,7 @@ export default {
   display: flex;
 
   .vertical-1 {
-    width: 8%;
+    width: 12%;
     display: flex;
     flex-direction: column;
 
@@ -520,7 +520,7 @@ export default {
 }
 
   .vertical-2 {
-    width: 92%;
+    width: 88%;
 
     .item-header {
       height: 50px;
