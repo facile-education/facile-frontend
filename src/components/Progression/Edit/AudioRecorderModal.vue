@@ -10,6 +10,18 @@
     </template>
 
     <template #body>
+      <div class="audio-name">
+        <PentilaInput
+          ref="nameInput"
+          v-model="audioName"
+          :maxlength="200"
+          :placeholder="$t('namePlaceholder')"
+          @keyup.enter.stop="addRecord"
+        />
+        <PentilaErrorMessage
+          :error-message="formErrorList.audioName"
+        />
+      </div>
       <div
         v-if="!isStopped"
         class="icon"
@@ -64,7 +76,7 @@
     <template #footer>
       <PentilaButton
         :label="$t('save')"
-        :disabled="!isStopped"
+        :disabled="!isStopped || !formErrorList"
         @click="addRecord"
       />
     </template>
@@ -74,6 +86,8 @@
 <script>
 import RecordRTC from 'recordrtc'
 import WaveSurfer from 'wavesurfer.js'
+import { useVuelidate } from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
 
 import NeroIcon from '@/components/Nero/NeroIcon'
 
@@ -88,8 +102,13 @@ export default {
     }
   },
   emits: ['close', 'save'],
+  setup: () => ({ v$: useVuelidate() }),
+  validations: {
+    audioName: { required }
+  },
   data () {
     return {
+      audioName: '',
       errorMessage: '',
       isAudioPlaying: false,
       recorder: undefined,
@@ -100,6 +119,11 @@ export default {
     }
   },
   computed: {
+    formErrorList () {
+      return {
+        audioName: (this.v$.audioName.$invalid && this.v$.audioName.$dirty) ? this.$t('Commons.required') : ''
+      }
+    },
     isPaused () {
       return this.state === 'paused'
     },
@@ -116,6 +140,12 @@ export default {
       seconds = seconds < 10 ? '0' + seconds : seconds
       return `${minutes}:${seconds}`
     }
+  },
+  mounted () {
+    // Focus form
+    const input = this.$refs.nameInput
+    input.focus()
+    input.select()
   },
   beforeUnmount () {
     if (this.stream) {
@@ -159,17 +189,23 @@ export default {
       this.waveSurfer.on('finish', () => { this.timer = 0; this.isAudioPlaying = false })
       this.waveSurfer.loadBlob(this.recorder.getBlob())
     },
-    addRecord () {
-      const recordedBlob = this.recorder.getBlob()
+    addRecord (e) {
+      e.preventDefault()
+      if (this.v$.$invalid) {
+        this.v$.$touch()
+      } else if (this.isStopped) {
+        const recordedBlob = this.recorder.getBlob()
 
-      // TODO File name with input when used in documents
-      const fileName = `enregistrement_${Date.now()}.wav`
-      const formData = new FormData()
-      formData.append('fileName', fileName)
-      formData.append('file', recordedBlob, fileName)
-      this.$emit('save', formData)
+        // TODO File name with input when used in documents
+        const fileName = `enregistrement_${Date.now()}.wav`
+        const formData = new FormData()
+        formData.append('fileName', fileName)
+        formData.append('file', recordedBlob, fileName)
+        formData.append('contentName', this.audioName)
+        this.$emit('save', formData)
 
-      this.closeModal()
+        this.closeModal()
+      }
     },
     pauseRecording () {
       if (this.isRecording) {
@@ -248,6 +284,10 @@ export default {
 <style lang="scss" scoped>
 $color: #878787;
 $red: rgb(230, 109, 109);
+
+.audio-name {
+  margin-bottom: 20px
+}
 
 .icon {
   height: 60px;
@@ -328,6 +368,7 @@ $red: rgb(230, 109, 109);
   "continue": "Reprendre",
   "deniedError": "Une erreur est survenue lors de l'accès aux ressources de l'ordinateur (Accès refusé)",
   "listen": "Ecouter",
+  "namePlaceholder": "Titre",
   "title": "Enregistrement audio",
   "pause": "Interrompre",
   "recording": "Enregistrement...",
