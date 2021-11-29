@@ -1,7 +1,7 @@
 <template>
   <div
     class="item-content"
-    :class="{'droppable': draggedContent}"
+    :class="{'droppable': draggedContent, 'ck-item': content.contentType === 1}"
     :draggable="draggable"
     @mouseover="isHovering = true"
     @mouseleave="isHovering = false"
@@ -314,6 +314,10 @@ export default {
       left: -30px;
       width: 30px;
     }
+  }
+
+  &.ck-item {
+    height: auto;
   }
 
   // When Dnd is active disable pointer events
