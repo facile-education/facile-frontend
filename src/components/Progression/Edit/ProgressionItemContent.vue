@@ -228,9 +228,8 @@ export default {
     }
   },
   methods: {
-    dragEnd (e) {
+    dragEnd () {
       this.$store.commit('progression/setDraggedContent', undefined)
-      this.draggable = false
     },
     dragLeave (e) {
       e.target.classList.remove('top')
