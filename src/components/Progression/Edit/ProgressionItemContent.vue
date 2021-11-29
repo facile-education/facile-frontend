@@ -44,25 +44,25 @@
       v-if="content.contentType === 2"
       class="content-audio"
     >
-      <div
-        class="title"
-      >
+      <div class="preview">
         <img
           class="content-icon"
           src="@assets/icon_record.svg"
           alt=""
         >
-        <span>{{ $t('audio') }}</span>
       </div>
-      <audio
-        controls=""
-        name="media"
-      >
-        <source
-          :src="content.link"
-          type="audio/mp3"
+      <div class="column">
+        <span>{{ $t('audio') }}</span>
+        <audio
+          controls=""
+          name="media"
         >
-      </audio>
+          <source
+            :src="content.link"
+            type="audio/mp3"
+          >
+        </audio>
+      </div>
     </div>
 
     <!-- Link -->
@@ -399,6 +399,11 @@ export default {
       overflow-x: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
+    }
+
+    audio {
+      width: 100%;
+      height: 40px;
     }
 
   span {
