@@ -418,7 +418,6 @@ export default {
   .content-button {
     display: none;
     height: 40px;
-    border: 1px solid transparent;
     border-radius: $border-radius;
     align-items: center;
     justify-content: center;
@@ -433,7 +432,7 @@ export default {
     }
 
     &:hover {
-      border: 1px solid grey;
+      background-color: $color-hover-bg;
       cursor: pointer;
     }
   }
