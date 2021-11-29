@@ -20,17 +20,6 @@
           :alt="isExtended ? $t('extend') : $t('collapse')"
         >
       </div>
-      <div
-        v-if="isHoverTitle"
-        class="edit"
-        @click.stop="redirectSubSection"
-      >
-        <img
-          src="@assets/edit.svg"
-          :alt="$t('edit')"
-          :title="$t('edit')"
-        >
-      </div>
     </div>
     <div
       v-if="isExtended"
