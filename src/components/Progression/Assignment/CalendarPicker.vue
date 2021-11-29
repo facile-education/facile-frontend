@@ -78,6 +78,7 @@
       <PentilaButton
         :label="$t('cancel')"
         class="button cancel-button"
+        cls="cancel"
         @click="closeCalendarPicker"
       />
       <PentilaButton

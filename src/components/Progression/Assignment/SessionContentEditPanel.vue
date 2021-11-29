@@ -54,6 +54,7 @@
     >
       <PentilaButton
         :label="$t('cancel')"
+        cls="cancel"
         class="button cancel-button"
         @click="closeSessionContentEdit"
       />
