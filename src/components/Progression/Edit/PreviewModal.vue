@@ -74,11 +74,14 @@ export default {
   methods: {
     changeIframeSize (event) {
       this.nbIframesToLoad--
-      const iframe = event.path[0]
+      const path = event.path || (event.composedPath && event.composedPath())
+      if (path) {
+        const iframe = path[0]
+        iframe.style.maxHeight = '350px'
+        iframe.style.height = '350px'
 
-      iframe.style.maxHeight = '350px'
-      iframe.style.height = '350px'
-      // iframe.style.height = iframe.contentWindow.document.documentElement.scrollHeight + 'px' // doesn't works with cross-origin frame
+        // iframe.style.height = iframe.contentWindow.document.documentElement.scrollHeight + 'px' // doesn't works with cross-origin frame
+      }
     },
     closeModal () {
       this.$emit('close')
@@ -92,6 +95,11 @@ export default {
   .window-body {
     height: 100vh;  // Set to max possible and max-height will restrain it
     overflow-y: auto;
+
+    iframe {
+      max-height: 350px;
+      height: 350px;
+    }
   }
 }
 </style>
