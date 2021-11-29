@@ -52,7 +52,7 @@
         >
       </div>
       <div class="column">
-        <span>{{ $t('audio') }}</span>
+        <span>{{ content.contentName }}</span>
         <audio
           controls=""
           name="media"
