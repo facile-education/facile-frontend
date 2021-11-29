@@ -3,16 +3,19 @@
     <div
       class="sub-section-header"
       :class="{'extended': isExtended}"
-      @mouseover="isHoverTitle = true"
-      @mouseleave="isHoverTitle = false"
-      @click="toggleExtension"
     >
-      <h3 class="sub-section-title">
-        {{ subsection.name }}
-      </h3>
+      <PentilaInput
+        ref="folderName"
+        v-model="subSectionNameInputText"
+        :maxlength="75"
+        class="sub-section-title"
+        @blur="saveNewFolderName"
+        @keyup.enter="pressEnter"
+      />
       <div
         class="arrow"
         :title="isExtended ? $t('extend') : $t('collapse')"
+        @click="toggleExtension"
       >
         <img
           src="@assets/arrow-right.svg"
@@ -54,13 +57,16 @@ export default {
   },
   data () {
     return {
-      isHoverTitle: false,
-      isExtended: false
+      isExtended: false,
+      subSectionNameInputText: ''
     }
   },
+  created () {
+    this.subSectionNameInputText = this.subsection.name
+  },
   methods: {
-    redirectSubSection () {
-      this.$store.dispatch('progression/setCurrentFolder', this.subsection)
+    pressEnter () {
+      this.$refs.folderName.$el.blur()
     },
     toggleExtension () {
       this.isExtended = !this.isExtended
@@ -70,6 +76,18 @@ export default {
         nextTick(() => {
           this.$el.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' })
         })
+      }
+    },
+    saveNewFolderName () {
+      if (this.subSectionNameInputText === '') {
+        this.subSectionNameInputText = this.currentFolderName // Reset name to old one
+      } else {
+        if (this.subSectionNameInputText !== this.subsection.name) {
+          // TODO: handle WS error to 'unUpdate' folderNameInputText
+          const folderCopy = { ...this.subsection }
+          folderCopy.name = this.subSectionNameInputText
+          this.$store.dispatch('progression/updateFolder', folderCopy)
+        }
       }
     }
   }
@@ -85,18 +103,38 @@ export default {
 
   .sub-section-title {
     color: black;
+    margin-right: 15px;
+    padding-left: 0;
+    /* TODO adapt width (or input size property) with text size */
+    flex: 1;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    font-size: 1.125rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 19px;
+    background: none;
+
+    &:focus {
+      background-color: #F5F5F5;
+    }
+    &:not(:hover) {
+      border: none;
+      margin-bottom: 1px;
+    }
   }
 
   .arrow {
-    margin-left: 15px;
+    width: 235px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
 
     img {
-      height: 15px;
-      width: 8px;
+      height: 24px;
+      width: 13px;
       transition: all .3s ease;
     }
 
