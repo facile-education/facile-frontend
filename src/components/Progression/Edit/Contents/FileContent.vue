@@ -102,9 +102,9 @@ export default {
     justify-content: center;
 
     .icon{
-      font-size: 30px;
-      width: 30px;
-      height: 30px;
+      font-size: 35px;
+      width: 37px;
+      height: 37px;
     }
   }
 
