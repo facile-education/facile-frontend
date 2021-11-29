@@ -490,7 +490,6 @@ export default {
       }
 
       &:hover {
-        border: 1px solid grey;
         cursor: pointer;
       }
     }
@@ -515,7 +514,6 @@ export default {
       }
 
       &:hover {
-        border: 1px solid grey;
         cursor: pointer;
       }
     }
@@ -587,11 +585,11 @@ export default {
       .add-content-button {
         border: 1px solid transparent;
         border-radius: 5px;
-        padding: 5px;
+        padding: 7px;
         margin: 5px;
 
         &:hover {
-          border: 1px solid grey;
+          background-color: $color-hover-bg;
           cursor: pointer;
         }
       }
