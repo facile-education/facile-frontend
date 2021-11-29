@@ -374,8 +374,8 @@ export default {
     justify-content: center;
 
     img {
-      width: 27px;
-      height: 27px;
+      width: 60px;
+      height: 40px;
     }
   }
 
@@ -428,12 +428,12 @@ export default {
     justify-content: center;
 
     img {
-      width: 25px;
-      height: 25px;
+      width: 20px;
+      height: 20px;
     }
 
     .icon {
-      font-size: 18px;
+      font-size: 15px;
     }
 
     &:hover {
