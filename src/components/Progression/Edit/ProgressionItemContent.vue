@@ -36,6 +36,8 @@
         :config="editorOptions"
         :disabled="readOnly"
         @input="updateContent"
+        @focus="onEditorFocus"
+        @blur="onEditorBlur"
       />
     </div>
 
@@ -205,7 +207,6 @@ export default {
   emits: ['editContent'],
   data () {
     return {
-      draggable: true,
       editor: InlineEditor,
       editorOptions: {
         removePlugins: [
@@ -224,11 +225,15 @@ export default {
         toolbar: ['heading', '|', 'bold', 'italic', 'link', 'numberedList', 'bulletedList', '|', 'outdent', 'indent', '|', 'blockQuote', 'insertTable', 'undo', 'redo'],
         language: 'fr'
       },
+      isCKEditorFocused: false,
       isHovering: false,
       timeout: undefined
     }
   },
   computed: {
+    draggable () {
+      return !this.isCKEditorFocused
+    },
     draggedContent () {
       return this.$store.state.progression.draggedContent
     },
@@ -242,6 +247,12 @@ export default {
     }
   },
   methods: {
+    onEditorFocus () {
+      this.isCKEditorFocused = true
+    },
+    onEditorBlur () {
+      this.isCKEditorFocused = false
+    },
     dragEnd () {
       this.$store.commit('progression/setDraggedContent', undefined)
     },
