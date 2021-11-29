@@ -104,7 +104,7 @@ export default {
   .sub-section-title {
     color: black;
     margin-right: 15px;
-    padding-left: 0;
+    padding-left: 10px;
     /* TODO adapt width (or input size property) with text size */
     flex: 1;
     white-space: nowrap;
