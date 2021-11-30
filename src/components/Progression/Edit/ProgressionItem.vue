@@ -131,7 +131,7 @@
 
       <!-- Add document to complete in case of homework -->
       <div
-        v-if="item.isHomework && item.type === 3"
+        v-if="item.isHomework && item.type === 2"
         class="add-document"
         @click="openFilePicker"
       >
