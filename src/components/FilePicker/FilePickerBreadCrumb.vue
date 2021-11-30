@@ -13,13 +13,13 @@
         class="image"
         alt="go back"
       >
-      {{ breadcrumb[breadcrumb.length - 2].name }}
+      {{ previousFolderDisplayedName }}
     </div>
     <div
       class="current-folder"
       :class="{'root' : breadcrumb.length === 1 }"
     >
-      {{ breadcrumb[breadcrumb.length - 1].name }}
+      {{ currentFolderDisplayedName }}
     </div>
   </div>
 </template>
@@ -35,6 +35,26 @@ export default {
     }
   },
   emits: ['itemClicked'],
+  computed: {
+    currentFolderDisplayedName () {
+      if (this.breadcrumb.length === 1) {
+        return this.$t('rootFolderName')
+      } else if (this.breadcrumb.length > 1) {
+        return this.breadcrumb[this.breadcrumb.length - 1].name
+      } else {
+        return ''
+      }
+    },
+    previousFolderDisplayedName () {
+      if (this.breadcrumb.length === 2) {
+        return this.$t('rootFolderName')
+      } else if (this.breadcrumb.length > 2) {
+        return this.breadcrumb[this.breadcrumb.length - 2].name
+      } else {
+        return ''
+      }
+    }
+  },
   methods: {
     itemClicked (folderId) {
       this.$emit('itemClicked', folderId)
@@ -112,3 +132,9 @@ export default {
 }
 
 </style>
+
+<i18n locale="fr">
+{
+  "rootFolderName": "Mes documents",
+}
+</i18n>
