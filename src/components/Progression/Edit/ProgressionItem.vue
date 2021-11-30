@@ -563,11 +563,14 @@ export default {
     }
 
     .add-document {
-      margin-left: 10px;
+      cursor: pointer;
 
       button {
         margin-right: 10px;
         border-radius: 20px;
+        width: 40px;
+        height: 40px;
+        padding: 0;
       }
 
       span {
