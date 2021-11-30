@@ -32,15 +32,22 @@
       </div>
       <div class="video-url">
         <PentilaInput
-          v-model="videoUrl"
-          :maxlength="200"
+          v-model="contentValue"
           :placeholder="$t('urlPlaceholder')"
+          :maxlength="2000"
+          :error-message="formErrorList.embedHTMLElement || formErrorList.embedSrcAttribute || urlError"
           @keyup.enter.stop="pressEnter"
         />
         <PentilaErrorMessage
-          :error-message="formErrorList.videoUrl || urlError"
+          :error-message="formErrorList.embedHTMLElement || formErrorList.embedSrcAttribute || urlError"
         />
       </div>
+
+      <iframe
+        v-if="embedSrcAttribute"
+        :src="embedSrcAttribute"
+        class="video-preview"
+      />
     </template>
 
     <template #footer>
@@ -82,12 +89,13 @@ export default {
   setup: () => ({ v$: useVuelidate() }),
   validations: {
     videoName: { required },
-    videoUrl: { required }
+    embedHTMLElement: { required },
+    embedSrcAttribute: { required }
   },
   data () {
     return {
       videoName: '',
-      videoUrl: '',
+      contentValue: '',
       urlError: ''
     }
   },
@@ -98,14 +106,32 @@ export default {
     formErrorList () {
       return {
         videoName: (this.v$.videoName.$invalid && this.v$.videoName.$dirty) ? this.$t('Commons.required') : '',
-        videoUrl: (this.v$.videoUrl.$invalid && this.v$.videoUrl.$dirty) ? this.$t('Commons.required') : ''
+        embedHTMLElement: (this.v$.embedHTMLElement.$invalid && this.v$.embedHTMLElement.$dirty) ? this.$t('embedElementCheckFailed') : '',
+        embedSrcAttribute: (this.v$.embedSrcAttribute.$invalid && this.v$.embedSrcAttribute.$dirty) ? this.$t('srcRequired') : ''
       }
+    },
+    embedHTMLElement () {
+      const tmp = document.createElement('div')
+      tmp.innerHTML = this.contentValue
+      let embed = tmp.getElementsByTagName('embed')[0]
+      if (!embed) { // embed element can be an <embed/> or an <iframe/> tag
+        embed = tmp.getElementsByTagName('iframe')[0]
+      }
+      return embed
+    },
+    embedSrcAttribute () {
+      return this.embedHTMLElement ? this.embedHTMLElement.getAttribute('src') : undefined
+    }
+  },
+  watch: {
+    embedSrcAttribute () {
+      this.urlError = '' // Reset URL error when url change
     }
   },
   mounted () {
     if (!this.isCreation) {
       this.videoName = this.editedContent.contentName
-      this.videoUrl = this.editedContent.contentValue
+      this.contentValue = '<iframe src="' + this.editedContent.contentValue + '" />'
     }
 
     // Focus form
@@ -125,8 +151,7 @@ export default {
       if (this.v$.$invalid) {
         this.v$.$touch()
       } else {
-        this.videoUrl = this.videoUrl.replace('watch?v=', 'embed/') // Generate embed url in case of youtube brut url
-        this.$store.dispatch('progression/addItemContent', { itemId: this.item.itemId, contentType: 4, contentName: this.videoName, contentValue: this.videoUrl })
+        this.$store.dispatch('progression/addItemContent', { itemId: this.item.itemId, contentType: 4, contentName: this.videoName, contentValue: this.embedSrcAttribute })
           .then(() => {
             this.closeModal()
           })
@@ -148,7 +173,7 @@ export default {
         this.$store.dispatch('progression/updateItemContent', {
           contentId: this.editedContent.contentId,
           contentName: this.videoName,
-          contentValue: this.videoUrl,
+          contentValue: this.embedSrcAttribute,
           order: this.editedContent.order
         })
           .then(() => {
@@ -177,6 +202,11 @@ export default {
   .video-url {
     margin: 20px 0;
   }
+  .video-preview {
+    border: none;
+    width: 100%;
+    height: 300px
+  }
 }
 
 .footer {
@@ -197,6 +227,8 @@ export default {
   "edit": "Modifier",
   "namePlaceholder": "Titre",
   "UnauthorizedUrlException": "Ce nom de domaine n'est pas autorisé pour ce type de contenu",
-  "urlPlaceholder": "https://www.youtube.com/embed/C_uNmmgQliM"
+  "urlPlaceholder": "Coller ici le code d'intégration de la vidéo",
+  "srcRequired": "Le contenu embarqué doit comprendre un attribut \"src\" non vide",
+  "embedElementCheckFailed": "Ce type de contenu n'est pas un contenu embarqué valide",
 }
 </i18n>

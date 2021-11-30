@@ -34,7 +34,7 @@
       <div class="content-url">
         <PentilaInput
           v-model="contentValue"
-          :maxlength="200"
+          :maxlength="2000"
           :placeholder="$t('urlPlaceholder')"
           @keyup.enter.stop="pressEnter"
         />
@@ -47,6 +47,12 @@
         v-t="'h5pUrl'"
         href="https://h5p.eduge.ch/mes-ressources-h5p"
         target="_blank"
+      />
+
+      <iframe
+        v-if="embedSrcAttribute"
+        :src="embedSrcAttribute"
+        class="h5p-preview"
       />
     </template>
 
@@ -202,6 +208,12 @@ export default {
   }
   .content-url {
     margin: 20px 0;
+  }
+  .h5p-preview {
+    margin-top: 20px;
+    border: none;
+    width: 100%;
+    height: 300px
   }
 }
 </style>
