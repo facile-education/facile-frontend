@@ -197,6 +197,7 @@ export default {
             this.homework.targetSession = { sessionId: defaultSession.sessionId, sessionDescription: this.formatDate(defaultSession.startDate) }
             this.homework.toDate = defaultSession.startDate
             this.homework.targetDate = dayjs(this.homework.toDate)
+            this.homework.isCustomDate = false
           }
           // Emit default homework if not updated later
           this.$emit('editedHomework', this.homework)

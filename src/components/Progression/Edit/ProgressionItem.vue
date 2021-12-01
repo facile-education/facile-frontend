@@ -132,9 +132,9 @@
 
       <!-- Add document to complete in case of homework -->
       <div
-        v-if="item.isHomework && item.type === 2"
+        v-if="item.isHomework && item.type === 2 && !hasToCompleteDocs"
         class="add-document"
-        @click="openFilePicker"
+        @click="openFilePickerForDocToComplete"
       >
         <PentilaButton
           class="round"
@@ -301,13 +301,23 @@ export default {
       selectedHomeworkType: undefined,
       selectedHomeworkDuration: undefined,
       updatedItemName: '',
-      editedContent: {}
+      editedContent: {},
+      isToCompleteDoc: false
     }
   },
   computed: {
     sortedItemContents () {
       // TODO order by 'order'
       return this.item.contents
+    },
+    hasToCompleteDocs () {
+      let res = false
+      this.item.contents.forEach((content) => {
+        if (content.isToBeCompleted) {
+          res = true
+        }
+      })
+      return res
     }
   },
   created () {
@@ -391,15 +401,20 @@ export default {
     deleteItem (item) {
       this.$store.dispatch('progression/deleteItem', item)
     },
+    openFilePickerForDocToComplete () {
+      this.isToCompleteDoc = true
+      this.openFilePicker()
+    },
     openFilePicker () {
       this.isFilePickerDisplayed = true
     },
     closeFilePicker () {
       this.isFilePickerDisplayed = false
+      this.isToCompleteDoc = false
     },
     attachNewFiles (selectedFiles) {
       selectedFiles.forEach((selectedFile) => {
-        this.$store.dispatch('progression/addItemContent', { itemId: this.item.itemId, contentType: 5, contentName: selectedFile.name, contentValue: '', fileEntryId: selectedFile.id })
+        this.$store.dispatch('progression/addItemContent', { itemId: this.item.itemId, contentType: 5, contentName: selectedFile.name, contentValue: '', fileEntryId: selectedFile.id, isToBeCompleted: this.isToCompleteDoc })
       })
     },
     changeHomeworkType () {
