@@ -432,7 +432,7 @@ export default {
   width: 100%;
   border: 1px solid $color-border;
   border-radius: 6px;
-  margin: 5px 0 25px 0;
+  margin-bottom: 25px;
   display: flex;
 
   .vertical-1 {

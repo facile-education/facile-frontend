@@ -2,6 +2,8 @@
   <div
     class="tree"
   >
+    <ProgressionCreateButton class="create-button" />
+
     <div
       class="summary"
     >
@@ -22,10 +24,11 @@
 
 <script>
 import ProgressionTreeSection from '@/components/Progression/Tree/ProgressionTreeSection'
+import ProgressionCreateButton from '@components/Progression/Tree/ProgressionCreateButton'
 
 export default {
   name: 'ProgressionTree',
-  components: { ProgressionTreeSection },
+  components: { ProgressionCreateButton, ProgressionTreeSection },
   computed: {
     progression () {
       return this.$store.state.progression.currentProgression
@@ -39,10 +42,16 @@ export default {
 .tree {
   padding-left: 20px;
 
+  .create-button {
+    height: 62px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+  }
+
   .summary {
     text-align: center;
-    margin-top: 24px;
-    height: 48px;
     display: flex;
     align-items: center;
   }

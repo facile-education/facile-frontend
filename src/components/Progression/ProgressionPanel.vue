@@ -15,7 +15,8 @@
         class="tree"
       />
       <div class="edit">
-        <ProgressionEditHeader
+        <FolderHeader
+          v-if="currentFolder"
           class="header"
         />
         <ProgressionEdit
@@ -45,22 +46,25 @@
 
 <script>
 import ProgressionSwitchMode from './ProgressionSwitchMode.vue'
-import ProgressionEditHeader from './Edit/ProgressionEditHeader.vue'
 import ProgressionEdit from './Edit/ProgressionEdit.vue'
 import ProgressionAssignment from './Assignment/ProgressionAssignment.vue'
 import ProgressionTree from './Tree/ProgressionTree.vue'
 import CalendarPicker from '@/components/Progression/Assignment/CalendarPicker'
 import HomeworkAssignmentPanel from '@/components/Progression/Assignment/HomeworkAssignmentPanel'
 import SessionContentEditPanel from '@/components/Progression/Assignment/SessionContentEditPanel'
+import FolderHeader from '@components/Progression/Edit/FolderHeader'
 
 export default {
   name: 'ProgressionPanel',
-  components: { ProgressionSwitchMode, ProgressionEditHeader, ProgressionEdit, ProgressionAssignment, ProgressionTree, CalendarPicker, HomeworkAssignmentPanel, SessionContentEditPanel },
+  components: { FolderHeader, ProgressionSwitchMode, ProgressionEdit, ProgressionAssignment, ProgressionTree, CalendarPicker, HomeworkAssignmentPanel, SessionContentEditPanel },
   data () {
     return {
     }
   },
   computed: {
+    currentFolder () {
+      return this.$store.state.progression.currentFolder
+    },
     isEditMode () {
       return this.$store.state.progression.isEditMode
     },
@@ -104,6 +108,11 @@ export default {
       height: 100%;
       padding: 0 20px 20px 25px;
       overflow-y: auto;
+
+      .header {
+        margin-top: 25px;
+        margin-bottom: 5px;
+      }
     }
   }
 

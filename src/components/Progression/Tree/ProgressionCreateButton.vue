@@ -1,89 +1,82 @@
 <template>
-  <div
-    class="header"
-  >
-    <div class="create-button-menu">
-      <PentilaButton
-        class="create-button"
-        @click.stop="toggleCreateMenu"
-      >
-        <NeroIcon
-          class="add-icon"
-          name="fa-plus"
-        />
-        <span v-t="'add'" />
-      </PentilaButton>
+  <div class="create-button-menu">
+    <PentilaButton
+      class="create-button"
+      @click.stop="toggleCreateMenu"
+    >
+      <NeroIcon
+        class="add-icon"
+        name="fa-plus"
+      />
+      <span v-t="'add'" />
+    </PentilaButton>
 
+    <div
+      v-if="isCreateMenuDisplayed"
+      id="create-menu"
+      data-test="create-menu"
+      class="create-menu"
+    >
+      <!-- Create session content -->
       <div
-        v-if="isCreateMenuDisplayed"
-        id="create-menu"
-        data-test="create-menu"
-        class="create-menu"
+        v-if="isItemCreationAllowed"
+        class="create-menu-item"
+        @click="doCreateSession"
       >
-        <!-- Create session content -->
-        <div
-          v-if="isItemCreationAllowed"
-          class="create-menu-item"
-          @click="doCreateSession"
+        <img
+          class="create-menu-icon"
+          src="@assets/seance.svg"
+          :alt="$t('sessionContent')"
+          :title="$t('sessionContent')"
         >
-          <img
-            class="create-menu-icon"
-            src="@assets/seance.svg"
-            :alt="$t('sessionContent')"
-            :title="$t('sessionContent')"
-          >
-          <span>{{ $t('sessionContent') }}</span>
-        </div>
+        <span>{{ $t('sessionContent') }}</span>
+      </div>
 
-        <!-- Create homework -->
-        <div
-          v-if="isItemCreationAllowed"
-          class="create-menu-item"
-          @click="doCreateHomework"
+      <!-- Create homework -->
+      <div
+        v-if="isItemCreationAllowed"
+        class="create-menu-item"
+        @click="doCreateHomework"
+      >
+        <img
+          class="create-menu-icon"
+          src="@assets/devoir.svg"
+          :alt="$t('homework')"
+          :title="$t('homework')"
         >
-          <img
-            class="create-menu-icon"
-            src="@assets/devoir.svg"
-            :alt="$t('homework')"
-            :title="$t('homework')"
-          >
-          <span>{{ $t('homework') }}</span>
-        </div>
+        <span>{{ $t('homework') }}</span>
+      </div>
 
-        <hr v-if="isItemCreationAllowed">
+      <hr v-if="isItemCreationAllowed">
 
-        <!-- Create section -->
-        <div
-          class="create-menu-item"
-          @click="doCreateSection"
-        >
-          <span>{{ $t('section') }}</span>
-        </div>
+      <!-- Create section -->
+      <div
+        class="create-menu-item"
+        @click="doCreateSection"
+      >
+        <span>{{ $t('section') }}</span>
+      </div>
 
-        <!-- Create sub-section -->
-        <div
-          v-if="sectionName !== ''"
-          class="create-menu-item"
-          :title="$t('subSectionOf') + sectionName"
-          @click="doCreateSubSection"
-        >
-          <span>{{ $t('subSectionOf') + sectionName }}</span>
-        </div>
+      <!-- Create sub-section -->
+      <div
+        v-if="sectionName !== ''"
+        class="create-menu-item"
+        :title="$t('subSectionOf') + sectionName"
+        @click="doCreateSubSection"
+      >
+        <span>{{ $t('subSectionOf') + sectionName }}</span>
       </div>
     </div>
-
-    <FolderHeader v-if="currentFolder" />
   </div>
 </template>
 
 <script>
-import NeroIcon from '@/components/Nero/NeroIcon'
-import FolderHeader from '@components/Progression/Edit/FolderHeader'
-import { helperMethods } from '@/store/modules/progression.store'
+import NeroIcon from '@components/Nero/NeroIcon'
+import { helperMethods } from '@store/modules/progression.store'
 
 export default {
-  name: 'ProgressionEditHeader',
-  components: { FolderHeader, NeroIcon },
+  name: 'ProgressionCreateButton',
+  components: { NeroIcon },
   computed: {
     isItemCreationAllowed () {
       return this.currentFolder || this.currentItem
@@ -206,70 +199,67 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.header {
-  margin-top: 24px;
 
-  .create-button-menu {
-    position: relative;
-    margin-bottom: 11px;
+.create-button-menu {
+  margin-bottom: 11px;
+  position: relative;
 
-    .create-button {
-      width: 140px;
-      border-radius: 32px;
+  .create-button {
+    width: 140px;
+    border-radius: 32px;
+
+    span {
+      margin-left: 12px;
+    }
+  }
+
+  .create-menu {
+    position: absolute;
+    top: calc(100% + 7px);
+    left: -15px;
+    padding: 0 15px;
+    min-width: 229px;
+    max-width: 500px;
+    z-index: 10;
+    border: 1px solid #F4F4F4;
+    border-radius: 6px;
+    background-color: #FFFFFF;
+    box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.08);
+    color: black;
+    font-size: 0.875rem;
+    font-weight: 500;
+
+    .create-menu-item {
+      height: 35px;
+      padding: 0 8px;
+      z-index: 100;
+      background: white;
+      display: flex;
+      align-items: center;
+
+      &:hover {
+        background-color: #EFF3FB;
+        cursor: pointer;
+      }
+
+      .create-menu-icon {
+        width: 24px;
+        height: 24px;
+      }
 
       span {
-        margin-left: 12px;
+        margin-left: 11px;
+        white-space: nowrap;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
       }
     }
 
-    .create-menu {
-      position: absolute;
-      top: calc(100% + 14px);
-      left: -20px;
-      padding: 0 15px;
-      min-width: 229px;
-      max-width: 500px;
-      z-index: 10;
-      border: 1px solid #F4F4F4;
-      border-radius: 6px;
-      background-color: #FFFFFF;
-      box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.08);
-      color: black;
-      font-size: 0.875rem;
-      font-weight: 500;
-
-      .create-menu-item {
-        height: 35px;
-        padding: 0 8px;
-        z-index: 100;
-        background: white;
-        display: flex;
-        align-items: center;
-
-        &:hover {
-          background-color: #EFF3FB;
-          cursor: pointer;
-        }
-
-        .create-menu-icon {
-          width: 24px;
-          height: 24px;
-        }
-
-        span {
-          margin-left: 11px;
-          white-space: nowrap;
-          overflow-x: hidden;
-          text-overflow: ellipsis;
-        }
-      }
-
-      hr {
-        margin-top: 5px;
-        margin-bottom: 5px;
-        border: 0;
-        border-top: 1px solid #D4D4D4;
-      }
+    hr {
+      margin-top: 5px;
+      margin-bottom: 5px;
+      border: 0;
+      border-top: 1px solid #D4D4D4;
     }
   }
 }
