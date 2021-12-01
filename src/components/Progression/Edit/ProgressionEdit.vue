@@ -9,6 +9,7 @@
       :key="item.itemId"
       :item="item"
       class="item"
+      :scroll-top-position="scrollTopPosition"
     >
       <h4>
         {{ item.name }}
@@ -20,6 +21,7 @@
       v-for="(subsection , index) in subSections"
       :key="index"
       :subsection="subsection"
+      :scroll-top-position="scrollTopPosition"
     />
   </div>
 
@@ -71,6 +73,12 @@ import ProgressionSubsectionItem from '@components/Progression/Edit/ProgressionS
 export default {
   name: 'ProgressionEdit',
   components: { ProgressionSubsectionItem, ProgressionItem },
+  props: {
+    scrollTopPosition: {
+      type: Number,
+      default: 0
+    }
+  },
   data () {
     return {
       updatedFolderName: '',

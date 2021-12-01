@@ -5,6 +5,16 @@ function toPascalCase (string) {
     (g0, g1, g2) => { return g1.toUpperCase() + g2.toLowerCase() })
 }
 
+function isInViewport (HTMLElement) {
+  const rect = HTMLElement.getBoundingClientRect()
+  return (
+    rect.top >= 0 &&
+    rect.left >= 0 &&
+    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+  )
+}
+
 function mergeContextMenus (listContextMenu) {
   if (listContextMenu.length === 0) return []
   const CMResult = listContextMenu[0]
@@ -104,6 +114,7 @@ function compare (sortType, isOrderAsc) {
 }
 
 export {
+  isInViewport,
   toPascalCase,
   mergeContextMenus,
   removeMenuOptionIfExist,
