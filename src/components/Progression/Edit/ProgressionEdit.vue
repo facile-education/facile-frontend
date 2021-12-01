@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="nbTotalItemDisplay > 0"
+    v-if="nbTotalItemDisplay > 0 || subSections.length > 0"
     class="items-list"
   >
     <!-- Section items -->
