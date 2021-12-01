@@ -33,6 +33,7 @@
         :key="item.itemId"
         :item="item"
         class="item"
+        :scroll-top-position="scrollTopPosition"
       >
         <h4>
           {{ item.name }}
@@ -53,6 +54,10 @@ export default {
     subsection: {
       type: Object,
       required: true
+    },
+    scrollTopPosition: {
+      type: Number,
+      default: 0
     }
   },
   data () {

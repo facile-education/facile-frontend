@@ -24,22 +24,15 @@
         class="icon"
       />
     </div>
+
     <!-- Text -->
-    <div
-      v-if="content.contentType === 1"
-      class="content-text"
-    >
-      <CKEditor
-        :model-value="content.contentValue"
-        :editor-id="editorId"
-        :editor="editor"
-        :config="editorOptions"
-        :disabled="readOnly"
-        @input="updateContent"
-        @focus="onEditorFocus"
-        @blur="onEditorBlur"
-      />
-    </div>
+    <TextContent
+      v-if="content.contentType === 1 && hasBeenInViewport"
+      :content="content"
+      :disabled="readOnly"
+      @focus="onEditorFocus"
+      @blur="onEditorBlur"
+    />
 
     <!-- Audio -->
     <div
@@ -178,18 +171,17 @@
 </template>
 
 <script>
-import '@ckeditor/ckeditor5-build-inline/build/translations/fr'
-import InlineEditor from '@ckeditor/ckeditor5-build-inline'
-
 import NeroIcon from '@/components/Nero/NeroIcon'
-import { component as CKEditor } from '@ckeditor/ckeditor5-vue'
+import { isInViewport } from '@utils/commons.util'
 import FileContent from '@components/Progression/Edit/Contents/FileContent'
 import documentUtils from '@utils/documents.util'
 import BaseIcon from '@components/Base/BaseIcon'
+import TextContent from '@components/Progression/Edit/Contents/TextContent'
+import { nextTick } from 'vue'
 
 export default {
   name: 'ProgressionItemContent',
-  components: { BaseIcon, FileContent, CKEditor, NeroIcon },
+  components: { TextContent, BaseIcon, FileContent, NeroIcon },
   props: {
     content: {
       type: Object,
@@ -202,35 +194,25 @@ export default {
     readOnly: {
       type: Boolean,
       default: false
+    },
+    scrollTopPosition: {
+      type: Number,
+      default: 0
     }
   },
   emits: ['editContent'],
   data () {
     return {
-      editor: InlineEditor,
-      editorOptions: {
-        removePlugins: [
-          'CKFinder',
-          'CKFinderUploadAdapter',
-          'CloudServicesUploadAdapter',
-          'CloudServices',
-          'EasyImage',
-          'Image',
-          'ImageCaption',
-          'ImageStyle',
-          'ImageToolbar',
-          'ImageUpload',
-          'MediaEmbed'
-        ],
-        toolbar: ['heading', '|', 'bold', 'italic', 'link', 'numberedList', 'bulletedList', '|', 'outdent', 'indent', '|', 'blockQuote', 'insertTable', 'undo', 'redo'],
-        language: 'fr'
-      },
+      isItemInViewport: false,
       isCKEditorFocused: false,
       isHovering: false,
       timeout: undefined
     }
   },
   computed: {
+    hasBeenInViewport () {
+      return this.hasBeenInViewport || this.isItemInViewport
+    },
     draggable () {
       return !this.isCKEditorFocused
     },
@@ -245,6 +227,18 @@ export default {
       // Link, video and h5p are editable
       return this.content.contentType === 3 || this.content.contentType === 4 || this.content.contentType === 6
     }
+  },
+  watch: {
+    scrollTopPosition () {
+      if (this.content.contentType === 1) {
+        this.isItemInViewport = isInViewport(this.$el)
+      }
+    }
+  },
+  mounted () {
+    nextTick(() => {
+      this.isItemInViewport = isInViewport(this.$el)
+    })
   },
   methods: {
     onEditorFocus () {
@@ -288,16 +282,6 @@ export default {
     enableDrag () {
       this.draggable = (this.index > -1)
     },
-    updateContent (newValue) {
-      clearTimeout(this.timeout)
-      this.$store.dispatch('progression/setIsWaiting', true)
-      // 2s timeout
-      this.timeout = setTimeout(() => {
-        const updatedContent = { ...this.content }
-        updatedContent.contentValue = newValue
-        this.$store.dispatch('progression/updateItemContent', updatedContent)
-      }, 2000)
-    },
     confirmContentDeletion () {
       this.$store.dispatch('warningModal/addWarning', {
         text: this.$t('deleteContentWarning'),
@@ -325,6 +309,7 @@ export default {
   border: 1px solid $color-border;
   background-color: $color-body-bg;
   height: 80px;
+  min-height: 51px;
   display: flex;
   justify-content: space-between;
 
@@ -384,10 +369,6 @@ export default {
   .icon {
     margin: auto
   }
-}
-
-.content-text {
-  width: 100%;
 }
 
 .content-link, .content-video, .content-h5p, .content-audio {

@@ -14,13 +14,18 @@
       <ProgressionTree
         class="tree"
       />
-      <div class="edit">
+      <div
+        ref="scrollView"
+        class="edit"
+        @scroll="updateScrollPosition"
+      >
         <FolderHeader
           v-if="currentFolder"
           class="header"
         />
         <ProgressionEdit
           class="section"
+          :scroll-top-position="editScrollTop"
         />
       </div>
     </div>
@@ -59,6 +64,7 @@ export default {
   components: { FolderHeader, ProgressionSwitchMode, ProgressionEdit, ProgressionAssignment, ProgressionTree, CalendarPicker, HomeworkAssignmentPanel, SessionContentEditPanel },
   data () {
     return {
+      editScrollTop: 0
     }
   },
   computed: {
@@ -76,6 +82,11 @@ export default {
     },
     isSessionContentEditMode () {
       return this.$store.state.progression.isSessionContentEditMode
+    }
+  },
+  methods: {
+    updateScrollPosition () {
+      this.editScrollTop = this.$refs.scrollView.scrollTop
     }
   }
 }

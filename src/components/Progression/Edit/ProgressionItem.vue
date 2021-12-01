@@ -124,6 +124,7 @@
           :key="content.contentId"
           :content="content"
           :index="index"
+          :scroll-top-position="scrollTopPosition"
           class="item-content"
           @editContent="editContent"
         />
@@ -275,6 +276,10 @@ export default {
       type: Boolean,
       required: false,
       default: false
+    },
+    scrollTopPosition: {
+      type: Number,
+      default: 0
     }
   },
   data () {
