@@ -174,7 +174,6 @@ export default {
 <style lang="scss" scoped>
 .tree-section {
   position: relative;
-  margin-top: 15px;
 
   hr {
     margin: 0;

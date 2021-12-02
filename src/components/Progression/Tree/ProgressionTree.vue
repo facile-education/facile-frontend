@@ -54,6 +54,7 @@ export default {
     text-align: center;
     display: flex;
     align-items: center;
+    margin-bottom: 15px;
   }
 }
 </style>
