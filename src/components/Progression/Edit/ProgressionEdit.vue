@@ -102,7 +102,7 @@ export default {
       }
     },
     subSections () {
-      return this.currentFolder ? this.currentFolder.subSections : []
+      return this.currentFolder ? (this.currentFolder.subSections ? this.currentFolder.subSections : []) : []
     },
     nbTotalItemDisplay () {
       let subSectionItemsCount = 0
