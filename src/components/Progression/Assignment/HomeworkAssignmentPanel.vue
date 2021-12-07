@@ -156,7 +156,7 @@ export default {
 <style lang="scss" scoped>
 .homework-assignment {
   .header {
-    display: block ruby;
+    display: flex;
     justify-content: space-between;
     margin-top: 10px;
     margin-bottom: 10px;
