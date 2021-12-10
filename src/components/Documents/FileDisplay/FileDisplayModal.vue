@@ -1,10 +1,16 @@
 <template>
   <PentilaWindow
+    class="file-display-modal"
     :modal="true"
     :is-full-screen="true"
     @close="closeModal"
   >
-    <template #header />
+    <template #header>
+      <span
+        class="file-name"
+        :title="file.name"
+      > {{ file.name }} </span>
+    </template>
 
     <template #body>
       <FileDisplay
@@ -40,6 +46,26 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.file-display-modal {
+  .window-wrapper.full-screen {
+    .window-container {
+      height: 100%;
+      .window-body {
+        // 100% - header size
+        height: calc(100% - 35px);
+        max-height: calc(100% - 35px);
+      }
+    }
+  }
+}
+</style>
 
+<style lang="scss" scoped>
+  .file-name {
+    max-width: calc(100% - 20px);
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 </style>
