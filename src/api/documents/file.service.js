@@ -3,7 +3,8 @@ import constants from '@/api/constants'
 import { getCookie } from '@utils/browser.util'
 
 export default {
-  uploadFile
+  uploadFile,
+  getResource
 }
 
 const FILE_PATH = '/documents-portlet.fileutil'
@@ -25,4 +26,17 @@ function uploadFile (folderId, file) {
     constants.JSON_WS_URL + FILE_PATH + '/upload-file?',
     formData
   ).then(response => response.data)
+}
+
+/**
+ * Get the url to see the resource
+ */
+function getResource (fileId, versionId) {
+  return axios.get(constants.JSON_WS_URL + FILE_PATH + '/get-resource', {
+    params: {
+      p_auth: getCookie('pauth'),
+      fileId: fileId,
+      versionId: versionId
+    }
+  }).then(response => response.data)
 }

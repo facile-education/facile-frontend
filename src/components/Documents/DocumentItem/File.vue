@@ -10,15 +10,25 @@
     @shiftSelect="dispatchEvent"
     @openContextMenu="openContextMenu"
   />
+  <teleport
+    v-if="isDisplayed"
+    to="body"
+  >
+    <FileDisplayModal
+      :file="file"
+      @close="isDisplayed = false"
+    />
+  </teleport>
 </template>
 
 <script>
 import { icons } from '@/constants/icons'
 import GenericDocument from '@components/Documents/DocumentItem/GenericDocument'
+import FileDisplayModal from '@components/Documents/FileDisplay/FileDisplayModal'
 
 export default {
   name: 'File',
-  components: { GenericDocument },
+  components: { FileDisplayModal, GenericDocument },
   inject: ['mq'],
   myIcons: icons,
   props: {
@@ -50,6 +60,11 @@ export default {
     }
   },
   emits: ['shiftSelect', 'openContextMenu'],
+  data () {
+    return {
+      isDisplayed: false
+    }
+  },
   computed: {
     isSelected () {
       return this.$store.state.documents.selectedEntities.find(selectedEntity => selectedEntity.id === this.file.id) !== undefined
@@ -64,8 +79,7 @@ export default {
   },
   methods: {
     openFile () {
-      // TODO
-      console.log('TODO: open file')
+      this.isDisplayed = true
     },
     dispatchEvent (file) {
       this.$emit('shiftSelect', { id: file.id, name: file.name })
