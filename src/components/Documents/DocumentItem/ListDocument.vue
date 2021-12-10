@@ -157,15 +157,7 @@ export default {
       return formatSize(this.document.size)
     },
     iconPrefix () {
-      if (this.document.type === 'File') {
-        if (this.documentIcon === 'code') {
-          return 'fas'
-        } else {
-          return 'far'
-        }
-      } else {
-        return 'fas'
-      }
+      return 'fas'
     }
   },
   methods: {

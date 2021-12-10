@@ -65,11 +65,7 @@ export default {
       return this.fileIcon.includes('.') || this.fileIcon.includes(':') // if icon contains extension (like folder.svg) it's not a font-awesome
     },
     iconPrefix () {
-      if (this.fileIcon === 'code') {
-        return 'fas'
-      } else {
-        return 'far'
-      }
+      return 'fas'
     }
   },
   methods: {

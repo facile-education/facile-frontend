@@ -13,6 +13,7 @@ const icons = {
     mp3: 'music',
     mp4: 'film',
     mpg: 'film',
+    mov: 'film',
     odt: require('@assets/documentIcons/doc.png'),
     pdf: require('@assets/documentIcons/pdf.png'),
     png: 'file-image',
