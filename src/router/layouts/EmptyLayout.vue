@@ -31,6 +31,17 @@
     </div>
 
     <teleport
+      v-for="(file, index) in openFiles"
+      :key="index"
+      to="body"
+    >
+      <FileDisplayModal
+        :file="file"
+        @close="closeFile(file)"
+      />
+    </teleport>
+
+    <teleport
       v-if="isWarningModalDisplayed"
       to="body"
     >
@@ -46,9 +57,10 @@ import { defineAsyncComponent } from 'vue'
 import Popup from '@components/Base/Popup'
 import { popupDurationTime } from '@/constants/appConstants'
 const WarningModal = defineAsyncComponent(() => import('@/components/Nero/WarningModal'))
+const FileDisplayModal = defineAsyncComponent(() => import('@/components/Documents/FileDisplay/FileDisplayModal'))
 
 export default {
-  components: { Popup, WarningModal },
+  components: { Popup, WarningModal, FileDisplayModal },
   inject: ['mq'],
   props: {
     isAllowed: {
@@ -57,6 +69,9 @@ export default {
     }
   },
   computed: {
+    openFiles () {
+      return this.$store.state.documents.openFiles
+    },
     isWarningModalDisplayed () {
       return this.$store.getters['warningModal/isWarningModalDisplayed']
     },
@@ -77,6 +92,9 @@ export default {
     this.$store.dispatch('user/initUserInformations')
   },
   methods: {
+    closeFile (file) {
+      this.$store.dispatch('documents/closeFile', file)
+    },
     closePopup () {
       this.$store.dispatch('popups/popPopup')
     }

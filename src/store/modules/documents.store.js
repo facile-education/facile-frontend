@@ -12,10 +12,22 @@ export const state = {
   folderHistory: [],
   cutSourceFolder: {},
   isCurrentlyLoading: false,
-  isDocumentPanelDisplayed: false
+  isDocumentPanelDisplayed: false,
+  openFiles: []
 }
 
 export const mutations = {
+  openFile (state, file) {
+    state.openFiles.push(file)
+  },
+  closeFile (state, file) {
+    const index = state.openFiles.map(openFile => openFile.id).indexOf(file.id)
+    if (index !== -1) {
+      state.openFiles.splice(index, 1)
+    } else {
+      console.error('cannot close file ', file)
+    }
+  },
   addToHistory (state, folder) {
     state.folderHistory.push({ id: folder.id, name: folder.name })
   },
@@ -63,6 +75,12 @@ export const mutations = {
 }
 
 export const actions = {
+  openFile ({ commit }, file) {
+    commit('openFile', file)
+  },
+  closeFile ({ commit }, file) {
+    commit('closeFile', file)
+  },
   changeDirectory ({ commit, state }, folderId) {
     // commit('setDocumentPanelDisplayed', false) // confirm ergonomic
     commit('setCurrentFolderId', folderId)
