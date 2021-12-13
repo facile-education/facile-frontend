@@ -31,12 +31,13 @@ function uploadFile (folderId, file) {
 /**
  * Get the url to see the resource
  */
-function getResource (fileId, versionId) {
+function getResource (fileId, versionId, readOnly) {
   return axios.get(constants.JSON_WS_URL + FILE_PATH + '/get-resource', {
     params: {
       p_auth: getCookie('pauth'),
       fileId: fileId,
-      versionId: versionId
+      versionId: versionId,
+      readOnly: readOnly
     }
   }).then(response => response.data)
 }

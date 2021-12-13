@@ -78,7 +78,8 @@ export default {
   methods: {
     loadMedia () {
       const versionId = (this.file.versionId === undefined || this.file.versionId === 'latest') ? 0 : this.file.versionId // for the backend type consistency
-      fileService.getResource(this.file.id, versionId).then((data) => {
+      const readOnly = !!this.file.readOnly // To force to have boolean
+      fileService.getResource(this.file.id, versionId, readOnly).then((data) => {
         if (data.success) {
           this.typeOfView = data.typeOfView
           this.fileUrl = data.fileUrl
