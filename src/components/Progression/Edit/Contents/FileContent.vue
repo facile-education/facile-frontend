@@ -70,8 +70,7 @@ export default {
   },
   methods: {
     displayFile () {
-      // TODO only open in a new tab browser-supported extensions
-      window.open(this.downloadUrl, '_blank').focus()
+      this.$store.dispatch('documents/openFile', { id: this.fileId, name: this.fileName })
     }
   }
 }
