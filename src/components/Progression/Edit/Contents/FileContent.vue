@@ -70,7 +70,7 @@ export default {
   },
   methods: {
     displayFile () {
-      this.$store.dispatch('documents/openFile', { id: this.fileId, name: this.fileName })
+      this.$store.dispatch('documents/openFile', { id: this.fileId, name: this.fileName, readOnly: true })
     }
   }
 }
