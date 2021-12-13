@@ -7,6 +7,11 @@ const routes = [
     component: () => import('@/router/views/Menu.vue')
   },
   {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: () => import('@/router/views/Dashboard.vue')
+  },
+  {
     path: '/application-manager',
     name: 'Application Manager',
     component: () => import('@/router/views/ApplicationManager.vue')
