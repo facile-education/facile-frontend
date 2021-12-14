@@ -21,6 +21,10 @@
       v-else-if="typeOfView === 'PDF'"
       :src="fileUrl"
     />
+    <Office
+      v-else-if="typeOfView === 'Office'"
+      :src="fileUrl"
+    />
     <Geogebra
       v-else-if="typeOfView === 'Geogebra'"
       :src="fileUrl"
@@ -34,7 +38,7 @@
       :src="fileUrl"
     />
     <OtherDocument
-      v-else-if="typeOfView === 'Other' || typeOfView === 'Office'"
+      v-else-if="typeOfView === 'Other'"
       :src="fileUrl"
     />
     <div
@@ -56,10 +60,11 @@ import PDF from '@components/Documents/FileDisplay/PDF'
 import Geogebra from '@components/Documents/FileDisplay/Geogebra'
 import MindMap from '@components/Documents/FileDisplay/MindMap'
 import Scratch from '@components/Documents/FileDisplay/Scratch'
+import Office from '@components/Documents/FileDisplay/Office'
 
 export default {
   name: 'FileDisplay',
-  components: { Scratch, MindMap, Geogebra, PDF, Audio, Image, Video, OtherDocument },
+  components: { Office, Scratch, MindMap, Geogebra, PDF, Audio, Image, Video, OtherDocument },
   props: {
     file: {
       type: Object,
