@@ -34,8 +34,13 @@
       :src="fileUrl"
     />
     <OtherDocument
-      v-else-if="typeOfView === 'Other'"
+      v-else-if="typeOfView === 'Other' || typeOfView === 'Office'"
       :src="fileUrl"
+    />
+    <div
+      v-else-if="typeOfView === 'Unsupported'"
+      v-t="('Unsupported')"
+      class="placeHolder"
     />
   </div>
   <PentilaSpinner v-else />
@@ -85,8 +90,13 @@ export default {
           this.fileUrl = data.fileUrl
           this.isLoaded = true
         } else {
-          // TODO: Display placeholder
-          console.error('Error when loading file')
+          if (data.error === 'UnsupportedFileExtension') {
+            this.typeOfView = 'Unsupported'
+            this.isLoaded = true
+          } else {
+            // TODO: Display placeholder
+            console.error('Error when loading file')
+          }
         }
       })
     }
@@ -102,3 +112,9 @@ export default {
     align-items: center;
   }
 </style>
+
+<i18n locale="fr">
+{
+  "Unsupported": "Type de fichier non affichable"
+}
+</i18n>
