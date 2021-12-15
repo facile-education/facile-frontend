@@ -1,6 +1,5 @@
 <template>
   <div
-    :id="id"
     class="file-picker-area"
     @dragover="setActive"
   >
@@ -13,7 +12,7 @@
       <div class="message">
         <span class="text">
           <BaseIcon name="folder-open" />
-          {{ $t('DropZone.dropZoneLabel') }}
+          {{ $t('dropZoneLabel') }}
         </span>
       </div>
     </div>
@@ -24,17 +23,12 @@
 </template>
 
 <script>
-import utils from '@/utils/utils'
+import { returnAddedFiles } from '@/utils/upload.util'
 import BaseIcon from '@components/Base/BaseIcon'
 export default {
   name: 'FilePickerArea',
   components: { BaseIcon },
   props: {
-    id: {
-      type: String,
-      required: true,
-      default: 'filePicker'
-    },
     accept: {
       type: String,
       default: '*/*'
@@ -84,11 +78,11 @@ export default {
     fileAdded (e) {
       if (!this.isThereInternDocumentDrag) {
         this.cancelActive(e)
-        utils.returnAddedFiles(e, this.$store).then((files) => {
+        returnAddedFiles(e, this.$store).then((files) => {
           if (files.length !== 0) {
             this.$emit('fileAdded', files)
           } else {
-            utils.alertNoFile()
+            this.dispatch('popups/pushPopup', { message: 'failed to upload document', type: 'error' })
           }
         })
       }
@@ -148,3 +142,9 @@ export default {
     pointer-events: none;
   }
 </style>
+
+<i18n locale="fr">
+{
+  "dropZoneLabel": "Déposer un document"
+}
+</i18n>

@@ -47,7 +47,7 @@ export default {
 @import '@design';
 
 .breadcrumb {
-  height: 70px;
+  height: $doc-breadcrumb-size;
   display: flex;
   align-items: center;
 }

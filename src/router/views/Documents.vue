@@ -13,31 +13,39 @@
       />
 
       <div class="body">
-        <!-- TODO: Add file drop zone component here -->
-        <div
-          class="scroll"
-          @click="clickOnEmptySpace"
-          @click.right.prevent="rightClickOnEmptySpace"
-        >
-          <Breadcrumb
-            class="breadCrumb"
-            @click.stop
-            @click.right.prevent.stop
-          />
-          <DocumentList
-            @openContextMenu="openContextMenu"
-            @click.stop
-            @click.right.prevent.stop
-          />
-        </div>
-        <DocumentDetails
-          v-if="isDocumentPanelDisplayed"
-          class="document-details"
+        <PentilaSpinner
+          v-if="areActionsInProgress"
+          class="spinner"
         />
+        <FilePickerArea
+          class="file-picker-area"
+          @fileAdded="importDocument"
+        >
+          <div
+            class="scroll"
+            @click="clickOnEmptySpace"
+            @click.right.prevent="rightClickOnEmptySpace"
+          >
+            <Breadcrumb
+              class="breadCrumb"
+              @click.stop
+              @click.right.prevent.stop
+            />
+            <DocumentList
+              @openContextMenu="openContextMenu"
+              @click.stop
+              @click.right.prevent.stop
+            />
+          </div>
+          <DocumentDetails
+            v-if="isDocumentPanelDisplayed"
+            class="document-details"
+          />
+        </FilePickerArea>
       </div>
     </div>
     <div v-else>
-      <PentilaSpinner v-if="areActionsInProgress" />
+      <PentilaSpinner />
     </div>
 
     <ContextMenu
@@ -74,11 +82,12 @@ import DocumentList from '@components/Documents/DocumentList'
 import DocumentDetails from '@components/Documents/DocumentDetails'
 import ContextMenu from '@components/ContextMenu/ContextMenu'
 import { documentSpaceOptions } from '@/constants/options'
-import { computeDocumentsOptions, downLoadDocument, deleteEntities } from '@utils/documents.util'
+import { computeDocumentsOptions, downLoadDocument, deleteEntities, importDocuments } from '@utils/documents.util'
+import FilePickerArea from '@components/FilePicker/FilePickerArea'
 
 export default {
   name: 'Documents',
-  components: { ContextMenu, DocumentDetails, DocumentList, Breadcrumb, CurrentOptions, Layout },
+  components: { FilePickerArea, ContextMenu, DocumentDetails, DocumentList, Breadcrumb, CurrentOptions, Layout },
   inject: ['mq'],
   data () {
     return {
@@ -94,6 +103,9 @@ export default {
     },
     selectedDocuments () {
       return this.$store.state.documents.selectedEntities
+    },
+    currentFolderId () {
+      return this.$store.state.documents.currentFolderId
     },
     selectedDocumentsOptions () {
       return computeDocumentsOptions(this.selectedDocuments)
@@ -172,15 +184,18 @@ export default {
       this.isContextMenuDisplayed = false
       this.$store.dispatch('contextMenu/closeMenus')
     },
-    doSelectFolderAction (targetFolder) {
-      if (this.folderSelectionOption === 'move') {
-        this.$store.dispatch('clipboard/move', targetFolder)
-      } else if (this.folderSelectionOption === 'duplicate') {
-        this.$store.dispatch('clipboard/duplicate', targetFolder)
-      } else {
-        console.error('Unknown option' + this.folderSelectionOption)
-      }
+    importDocument (fileList) {
+      importDocuments(this.currentFolderId, fileList)
     }
+    // doSelectFolderAction (targetFolder) {
+    //   if (this.folderSelectionOption === 'move') {
+    //     this.$store.dispatch('clipboard/move', targetFolder)
+    //   } else if (this.folderSelectionOption === 'duplicate') {
+    //     this.$store.dispatch('clipboard/duplicate', targetFolder)
+    //   } else {
+    //     console.error('Unknown option' + this.folderSelectionOption)
+    //   }
+    // }
   }
 }
 </script>
@@ -200,12 +215,20 @@ export default {
     position: relative;
     height: calc(100% - #{$doc-currents-options-height});
 
-    .scroll {
-      height: 100%;
-      overflow-y: auto;
+    .spinner {
+      z-index: 1;
+    }
 
-      .breadCrumb {
-        margin-left: 10px;
+    .file-picker-area {
+      height: 100%;
+
+      .scroll {
+        height: 100%;
+        overflow-y: auto;
+
+        .breadCrumb {
+          margin-left: 10px;
+        }
       }
     }
 
