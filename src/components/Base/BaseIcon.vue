@@ -35,6 +35,7 @@ fontAwesomeIconLibrary.add(
   require('@fortawesome/free-solid-svg-icons/faEye').definition,
   require('@fortawesome/free-solid-svg-icons/faFile').definition,
   require('@fortawesome/free-solid-svg-icons/faFileAlt').definition,
+  require('@fortawesome/free-solid-svg-icons/faFileArchive').definition,
   require('@fortawesome/free-solid-svg-icons/faFileImage').definition,
   require('@fortawesome/free-solid-svg-icons/faFilm').definition,
   require('@fortawesome/free-solid-svg-icons/faFolder').definition,
