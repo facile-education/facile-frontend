@@ -11,7 +11,8 @@
         class="event-title"
         :data-cy="event.extendedProps.cy"
       >
-        {{ event.title }}
+        <span>{{ event.title }}</span>
+        <span class="hours"> {{ formattedStartHour }} - {{ formattedEndHour }}</span>
       </div>
       <div
         v-if="event.extendedProps.teachers"
@@ -38,7 +39,7 @@
 </template>
 
 <script>
-
+import dayjs from 'dayjs'
 export default {
   name: 'CalendarEvent',
   components: { },
@@ -64,6 +65,12 @@ export default {
       return this.event.extendedProps.assignedItemId !== 0 &&
         this.event.extendedProps.assignedItemId !== this.store.state.progression.assignedItem.itemId &&
         !this.store.state.progression.assignedItem.isHomework
+    },
+    formattedStartHour () {
+      return dayjs(this.event.start).format('HH:mm')
+    },
+    formattedEndHour () {
+      return dayjs(this.event.end).format('HH:mm')
     }
   },
   created () {
@@ -98,6 +105,21 @@ export default {
   justify-content: space-between;
   &.assigned-to-other {
     opacity: 50%;
+  }
+
+  .event-title {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+
+    .hours {
+      margin-left: 5px;
+      white-space: nowrap;
+      overflow-x: hidden;
+      text-overflow: ellipsis;
+      font-weight: normal;
+      font-size: 0.75rem;
+    }
   }
 }
 .fc-timegrid-col-events.fc-timegrid-event-harness {
