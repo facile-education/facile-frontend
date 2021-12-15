@@ -73,16 +73,10 @@ async function importDocuments (folderId, documentList) {
     await fileService.uploadFile(folderId, doc).then((data) => {
       store.dispatch('currentActions/removeAction', { name: 'importDocument' })
       if (data.success) {
-        if (data.firstCreatedEntity.parentFolderId === store.state.documents.currentFolderId) {
-          store.dispatch('documents/refreshCurrentFolder')
-        }
+        store.dispatch('documents/refreshCurrentFolder')
       } else {
-        console.error('Error when trying upload file')
-        if (data.error === 'fileSizeException') {
-          // this.$store.dispatch('error/setErrorType', 'reachMaxSize')
-          // this.$store.dispatch('error/setListFilesConcerns', [doc])
-          // this.$store.dispatch('monDrive/openErrorModal')
-        }
+        const reason = (data.error === ': fileSizeException') ? 'fileSizeException' : ''
+        this.dispatch('popups/pushPopup', { message: 'failed to upload document' + reason, type: 'error' })
       }
     })
   }
