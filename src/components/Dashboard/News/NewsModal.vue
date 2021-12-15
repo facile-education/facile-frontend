@@ -31,7 +31,6 @@
       <CKEditor
         class="ck-editor"
         :model-value="content"
-        :editor-id="1"
         :editor="editor"
         :config="editorOptions"
       />
@@ -232,7 +231,8 @@ export default {
   },
   computed: {
     isCreation () {
-      return this.$store.state.dashboard.blogEntryId === undefined
+      const isCrea = this.$store.state.dashboard.editedNews === undefined
+      return isCrea
     },
     formErrorList () {
       return {
@@ -252,13 +252,13 @@ export default {
   },
   mounted () {
     if (!this.isCreation) {
-      console.log('edition news ', this.news)
       this.title = this.news.title
       this.content = this.news.content
       this.parutionDate = this.news.parutionDate
       this.expirationDate = this.news.expirationDate
       this.groups = this.news.groups
       this.attachFiles = this.news.attachFiles
+      console.log('editedNews is ', this.news)
     } else {
       this.parutionDate = dayjs()
       this.expirationDate = dayjs().add(1, 'month')

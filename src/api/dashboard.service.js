@@ -3,7 +3,9 @@ import constants from '@/api/constants'
 
 export {
   initDashboard,
-  getGroupActivities
+  getGroupActivities,
+  getUserSchedule,
+  getStudentHomeworks
 }
 
 const DASHBOARD_PATH = '/dashboard-portlet.'
@@ -21,6 +23,24 @@ function getGroupActivities (startIndex, endIndex) {
     params: {
       startIndex: startIndex,
       endIndex: endIndex
+    }
+  }).then(response => response.data)
+}
+
+function getUserSchedule (userId, targetDate, goForward) {
+  return axios.get(constants.JSON_WS_URL + DASHBOARD_PATH + DASHBOARD_CTX + 'get-user-schedule', {
+    params: {
+      userId: userId,
+      dateStr: targetDate,
+      goForward: goForward
+    }
+  }).then(response => response.data)
+}
+
+function getStudentHomeworks (userId) {
+  return axios.get(constants.JSON_WS_URL + DASHBOARD_PATH + DASHBOARD_CTX + 'get-student-homeworks', {
+    params: {
+      userId: userId
     }
   }).then(response => response.data)
 }

@@ -18,6 +18,10 @@
         v-if="hasSchoolNewsWidget"
         class="widget"
       />
+      <HomeworkWidget
+        v-if="hasHomeworkWidget"
+        class="widget"
+      />
     </div>
 
     <!-- Right column contains EDT widget -->
@@ -35,11 +39,12 @@
 <script>
 import GroupNewsWidget from '@/components/Dashboard/News/GroupNewsWidget.vue'
 import SchoolNewsWidget from '@/components/Dashboard/News/SchoolNewsWidget.vue'
+import HomeworkWidget from '@/components/Dashboard/HomeworkWidget.vue'
 import EDTWidget from '@/components/Dashboard/EDTWidget.vue'
 
 export default {
   name: 'ProgressionList',
-  components: { GroupNewsWidget, SchoolNewsWidget, EDTWidget },
+  components: { GroupNewsWidget, SchoolNewsWidget, HomeworkWidget, EDTWidget },
   data () {
     return {
     }
@@ -53,6 +58,9 @@ export default {
     },
     hasEDTWidget () {
       return this.$store.state.dashboard.hasEDTWidget
+    },
+    hasHomeworkWidget () {
+      return this.$store.state.dashboard.hasHomeworkWidget
     }
   },
   created () {

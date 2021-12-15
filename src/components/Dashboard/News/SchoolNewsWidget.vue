@@ -27,6 +27,7 @@
       >
         <News
           :news="news"
+          :is-group-news="false"
         />
       </div>
     </div>

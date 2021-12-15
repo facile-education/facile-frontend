@@ -29,12 +29,12 @@
       />
 
       <!-- User -->
-      <em ng-if="activity.type == 9 || activity.type == 10">
+      <em v-if="activity.type == 9 || activity.type == 10">
         {{ activity.actionUserName }} -
       </em>
 
       <!-- Date -->
-      <span
+      <p
         class="date nero-text theme-color"
         title="activity.modificationDate"
         v-html="convertDateStr(activity.modificationDate)"
@@ -200,6 +200,12 @@ export default {
   display: flex;
   border: 1px solid rgba(0, 0, 0, 0.2);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  .activity-description, .date {
+    font-size: 0.8em;
+  }
+}
+p {
+  margin: 5px;
 }
 </style>
 
