@@ -1,10 +1,12 @@
 import axios from 'axios'
 import constants from '@/api/constants'
 import { getCookie } from '@utils/browser.util'
+import PentilaUtils from 'pentila-utils'
 
 export default {
   uploadFile,
-  getResource
+  getResource,
+  removeLoolToken
 }
 
 const FILE_PATH = '/documents-portlet.fileutil'
@@ -40,4 +42,13 @@ function getResource (fileId, versionId, readOnly) {
       readOnly: readOnly
     }
   }).then(response => response.data)
+}
+
+/**
+ * Get the url to see the resource
+ */
+function removeLoolToken (token) {
+  return axios.post(constants.JSON_WS_URL + FILE_PATH + '/remove-lool-token', PentilaUtils.URL.params({
+    token: token
+  })).then(response => response.data)
 }

@@ -6,6 +6,9 @@
 </template>
 
 <script>
+
+import fileService from '@/api/documents/file.service'
+
 export default {
   name: 'Office',
   props: {
@@ -14,11 +17,18 @@ export default {
       required: true
     }
   },
+  computed: {
+    accessToken () {
+      const url = new URL('https:/' + this.src) // To have a valid url
+      return url.searchParams.get('access_token')
+    }
+  },
   beforeUnmount () {
-    // TODO
-    // DocumentService.removeLoolToken(this.token).then(() => {
-    //
-    // })
+    fileService.removeLoolToken(this.accessToken).then((data) => {
+      if (!data.success) {
+        console.error('Error on removing lool token')
+      }
+    })
   }
 }
 </script>
