@@ -6,10 +6,9 @@
     @close="closeModal"
   >
     <template #header>
-      <span
-        class="file-name"
-        :title="file.name"
-      > {{ file.name }} </span>
+      <h1 :title="file.name">
+        {{ file.name }}
+      </h1>
     </template>
 
     <template #body>
@@ -51,6 +50,11 @@ export default {
   .window-wrapper.full-screen {
     .window-container {
       height: 100%;
+      width: 100vw;
+      .window-header {
+        width: 100%;
+      }
+
       .window-body {
         // 100% - header size
         height: calc(100% - 35px);
@@ -62,7 +66,10 @@ export default {
 </style>
 
 <style lang="scss" scoped>
-  .file-name {
+  h1 {
+    font-size: 1.25rem;
+    margin: 0;
+    line-height: 1.5rem;
     max-width: calc(100% - 20px);
     overflow-x: hidden;
     white-space: nowrap;
