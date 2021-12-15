@@ -9,6 +9,7 @@
       class="fc-event-title"
     >
       <span>{{ arg.event.title }}</span>
+      <span class="hours"> {{ formattedStartHour }} - {{ formattedEndHour }}</span>
       <NeroIcon
         v-if="hasEditionRights && hover"
         name="fa-pencil-alt"
@@ -33,6 +34,7 @@
 // Store does not seem to be accessible from this context
 import store from '@/store'
 import NeroIcon from '@/components/Nero/NeroIcon'
+import dayjs from 'dayjs'
 
 export default {
   name: 'FCEvent',
@@ -53,6 +55,12 @@ export default {
     hasEditionRights () {
       const user = store.state.user
       return (user.isDoyen || user.isDirectionMember || user.isSecretariat)
+    },
+    formattedStartHour () {
+      return dayjs(this.arg.event.start).format('HH:mm')
+    },
+    formattedEndHour () {
+      return dayjs(this.arg.event.end).format('HH:mm')
     }
   },
   methods: {
@@ -67,6 +75,15 @@ export default {
 .fc-event-title {
   display: flex;
   align-items: center;
+
+  .hours {
+    margin-left: 5px;
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    font-weight: normal;
+    font-size: 0.75rem;
+  }
 }
 
 .icon {

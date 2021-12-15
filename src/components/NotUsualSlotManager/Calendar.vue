@@ -400,6 +400,19 @@ export default {
       const container = info.el.getElementsByClassName('fc-event-main-frame')[0]
       container.setAttribute('data-test', dayjs(info.event.start).format('MM-DD_HH:mm'))
 
+      // Add time to title
+      const title = container.getElementsByClassName('fc-event-title')[0]
+      const tag = document.createElement('span')
+      tag.appendChild(document.createTextNode(dayjs(info.event.start).format('HH:mm') + ' - ' + dayjs(info.event.end).format('HH:mm')))
+      tag.style.fontSize = '0.75rem'
+      tag.style.fontWeight = 'normal'
+      tag.style.marginLeft = '5px'
+      tag.style.whiteSpace = 'nowrap'
+      tag.style.overflowX = 'hidden'
+      tag.style.textOverflow = 'ellipsis'
+
+      title.appendChild(tag)
+
       if (info.event.extendedProps.teacher || info.event.extendedProps.teachers) {
         const tag = document.createElement('div')
         tag.classList.add('fc-event-teacher')
