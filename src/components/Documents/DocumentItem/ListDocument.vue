@@ -6,7 +6,7 @@
     @click.meta.exact="ctrlSelect"
     @click.shift="shiftSelect"
     @dblclick="triggerAction"
-    @click.exact="select"
+    @click.exact="mq.phone ? triggerAction() : select()"
   >
     <div
       class="selection-icon"
