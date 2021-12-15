@@ -53,10 +53,11 @@ export default {
       width: 100vw;
       .window-header {
         width: 100%;
+        border-bottom: none;
       }
 
       .window-body {
-        // 100% - header size
+        padding: 0;
         height: calc(100% - 35px);
         max-height: calc(100% - 35px);
       }
