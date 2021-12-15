@@ -29,6 +29,8 @@
         <News
           v-if="activity.isNews"
           :news="activity"
+          :is-group-news="true"
+          @edit-news="isNewsModalDisplayed = true"
         />
         <DocActivity
           v-else-if="activity.type <= 8"

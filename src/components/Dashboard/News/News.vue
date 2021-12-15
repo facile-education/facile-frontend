@@ -1,6 +1,8 @@
 <template>
   <div
     class="news"
+    @mouseover="isHovering = true"
+    @mouseleave="isHovering = false"
   >
     <!-- Image -->
     <div class="news-thumbnail-wrapper">
@@ -28,21 +30,57 @@
         />
       </div>
     </div>
+
+    <div
+      v-if="isHovering"
+      class="edit-buttons"
+    >
+      <div
+        v-if="news.isEditor || news.isAuthor"
+        class="content-button"
+        :title="$t('edit')"
+        @click="editContent()"
+      >
+        <img
+          src="@assets/edit.svg"
+          :alt="$t('edit')"
+        >
+      </div>
+      <div
+        v-if="news.isAuthor"
+        class="content-button"
+        :title="$t('delete')"
+        @click="confirmNewsDeletion()"
+      >
+        <img
+          src="@assets/trash.svg"
+          :alt="$t('delete')"
+        >
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import dayjs from 'dayjs'
+import { getNewsDetails } from '@/api/news.service'
+
 export default {
   name: 'News',
   props: {
     news: {
       type: Object,
       required: true
+    },
+    isGroupNews: {
+      type: Boolean,
+      required: true
     }
   },
+  emits: ['editNews'],
   data () {
     return {
+      isHovering: false
     }
   },
   computed: {
@@ -52,6 +90,28 @@ export default {
   methods: {
     convertDateStr (dateStr) {
       return dayjs(dateStr, 'YYYY-MM-DD HH:mm').format('DD MMM YYYY HH:mm')
+    },
+    editContent () {
+      getNewsDetails(this.news.blogEntryInfosId).then(
+        (data) => {
+          if (data.success) {
+            this.$store.dispatch('dashboard/setNewsDetails', { news: this.news, groups: data.broadcastedGroups, attachFiles: data.attachedFiles, doSetEditedNews: true }).then(
+              () => {
+                console.log('start emit')
+                this.$emit('editNews')
+              }
+            )
+          }
+        })
+    },
+    confirmNewsDeletion () {
+      this.$store.dispatch('warningModal/addWarning', {
+        text: this.$t('deleteNewsWarning'),
+        lastAction: { fct: this.deleteNews }
+      })
+    },
+    deleteNews () {
+      this.$store.dispatch('dashboard/deleteNews', { blogEntryId: this.news.blogEntryId, isGroupNews: this.isGroupNews })
     }
   }
 }
@@ -92,6 +152,9 @@ export default {
 
 <i18n locale="fr">
 {
-  "groups-activity": "Fil d'activité de mes groupes"
+  "groups-activity": "Fil d'activité de mes groupes",
+  "edit": "Modifier cette actualité",
+  "delete": "Supprimer cette actualité",
+  "deleteContentWarning": "Supprimer cette actualité ?"
 }
 </i18n>

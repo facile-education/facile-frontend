@@ -6,7 +6,9 @@ export {
   getSchoolNews,
   getBroadcastGroups,
   addNews,
-  editNews
+  editNews,
+  deleteNews,
+  getNewsDetails
 }
 
 const NEWS_PATH = '/actualites-portlet.'
@@ -60,4 +62,20 @@ function editNews (blogEntryInfoId, title, content, isSchoolNews, isHighPriority
       existingAttachFilesStr,
       newAttachFilesStr
     })).then(response => response.data)
+}
+
+function deleteNews (blogEntryId) {
+  return axios.get(constants.JSON_WS_URL + NEWS_PATH + NEWS_CTX + 'delete-news', {
+    params: {
+      blogEntryId: blogEntryId
+    }
+  }).then(response => response.data)
+}
+
+function getNewsDetails (blogEntryInfosId) {
+  return axios.get(constants.JSON_WS_URL + NEWS_PATH + NEWS_CTX + 'get-news-details', {
+    params: {
+      blogEntryInfosId: blogEntryInfosId
+    }
+  }).then(response => response.data)
 }
