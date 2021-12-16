@@ -14,7 +14,7 @@
         :key="homework.homeworkId"
         class="homework"
       >
-        <p>1 homework</p>
+        <p>coucou devoir</p>
       </div>
     </div>
   </div>
@@ -78,8 +78,6 @@ export default {
 
 <i18n locale="fr">
 {
-  "edt": "EDT",
-  "goBefore": "Jour précédent",
-  "goAfter": "Jour suivant"
+  "homeworks": "Devoirs"
 }
 </i18n>

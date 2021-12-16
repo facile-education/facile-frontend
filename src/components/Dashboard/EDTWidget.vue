@@ -8,7 +8,6 @@
       <span>{{ $t('edt') }}</span>
     </div>
     <div class="body">
-      <h3>EDT widget</h3>
       <div class="arrows">
         <div
           class="arrow"
@@ -20,6 +19,7 @@
             :title="$t('goBefore')"
           >
         </div>
+        <span>{{ formatCurrentDate(currentDate) }}</span>
         <div
           class="arrow"
           @click="goAfter"
@@ -37,7 +37,54 @@
         :key="session.sessionId"
         class="session"
       >
-        <p>1 session</p>
+        <div
+          v-if="isTeacher"
+          class="session-infos"
+          :class="{'pointer': (session.sessionUrl != undefined)}"
+          title="session.title"
+          @click="redirectToUrl(session.sessionUrl)"
+        >
+          <p class="start-session">
+            {{ getHour(session.startDate) }} - {{ getHour(session.endDate) }}
+          </p>
+
+          <!-- group name OR subject -->
+          <p
+            v-if="isTeacher"
+            class="session-subject nero-text theme-color"
+          >
+            {{ session.groupName }}
+          </p>
+          <p
+            v-else
+            class="session-subject"
+          >
+            {{ getSubject(session) }}
+          </p>
+
+          <!-- title OR teachers -->
+          <p
+            v-if="isTeacher"
+            class="subject"
+          >
+            {{ session.subject }}
+          </p>
+          <p
+            v-else
+            class="teacher-name"
+          >
+            {{ session.teachers }}
+          </p>
+          <p class="room-number">
+            {{ $t('room') }}:{{ session.room }}
+          </p>
+          <div
+            v-if="session.isCancelled"
+            class="cancelled-session"
+          >
+            <i class="icon-cancelled-session" />
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -65,10 +112,15 @@ export default {
     formatDate (date) {
       return date.format('YYYY-MM-DD HH:mm')
     },
+    formatCurrentDate (date) {
+      return date.format('ddd DD MMM YY')
+    },
     goBefore () {
+      this.currentDate = this.currentDate.add(-1, 'day')
       this.getUserSchedule(false)
     },
     goAfter () {
+      this.currentDate = this.currentDate.add(1, 'day')
       this.getUserSchedule(true)
     },
     getUserSchedule (goForward) {
@@ -81,6 +133,27 @@ export default {
           }
         }
       )
+    },
+    redirectToUrl (targetUrl) {
+      if (targetUrl !== undefined && targetUrl !== '') {
+        this.$window.location.href = targetUrl
+      }
+    },
+    getHour (sessionDate) {
+      return dayjs(sessionDate, 'YYYY-MM-DD HH:mm').format('HH:mm')
+    },
+    isPassed (session) {
+      return dayjs(session.endDate, 'YYYY-MM-DD HH:mm').isBefore(dayjs())
+    },
+    getSubject (session) {
+      if (session.cdtSessionId !== undefined) {
+        return session.subject
+      } else {
+        return session.title
+      }
+    },
+    isTeacher () {
+      return this.$store.state.user.isTeacher
     }
   }
 }
@@ -92,8 +165,8 @@ export default {
 .edt-widget {
   display: flex;
   flex-direction: column;
-  height: 600px;
-  max-height: 600px;
+  height: 800px;
+  max-height: 800px;
   width: 100%;
   border: 1px solid rgba(0, 0, 0, 0.2);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -113,6 +186,19 @@ export default {
         height: 30px;
       }
     }
+
+    .session {
+      border-left: 3px solid black;
+      margin-bottom: 5px;
+      &:hover.pointer {
+        cursor: pointer
+      }
+      p {
+        margin: 0;
+        margin-left: 3px;
+        font-size: 0.7em;
+      }
+    }
   }
 }
 </style>
@@ -121,6 +207,7 @@ export default {
 {
   "edt": "EDT",
   "goBefore": "Jour précédent",
-  "goAfter": "Jour suivant"
+  "goAfter": "Jour suivant",
+  "room": "Salle"
 }
 </i18n>

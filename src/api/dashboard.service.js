@@ -37,10 +37,10 @@ function getUserSchedule (userId, targetDate, goForward) {
   }).then(response => response.data)
 }
 
-function getStudentHomeworks (userId) {
+function getStudentHomeworks (studentId) {
   return axios.get(constants.JSON_WS_URL + DASHBOARD_PATH + DASHBOARD_CTX + 'get-student-homeworks', {
     params: {
-      userId: userId
+      studentId: studentId
     }
   }).then(response => response.data)
 }
