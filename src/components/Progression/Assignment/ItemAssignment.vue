@@ -84,7 +84,18 @@
           v-if="item.isHomework"
           class="todo-date"
         >{{ getTargetDate(assignment.targetDate) }}</span>
+        <span v-else-if="assignment.modifiedDate" />
         <!-- Modified content -->
+        <span
+          v-if="assignment.modifiedDate"
+          class="modified-date"
+        >
+          <NeroIcon
+            name="fa-exclamation-triangle"
+            class="icon"
+          />
+          {{ $t('modifiedContent') + formattedModifiedDate(assignment.modifiedDate) }}
+        </span>
       </div>
     </div>
     <div
@@ -108,10 +119,11 @@
 import dayjs from 'dayjs'
 import PreviewModal from '@/components/Progression/Edit/PreviewModal'
 import _ from 'lodash'
+import NeroIcon from '@components/Nero/NeroIcon'
 
 export default {
   name: 'ItemAssignment',
-  components: { PreviewModal },
+  components: { NeroIcon, PreviewModal },
   props: {
     item: {
       type: Object,
@@ -140,9 +152,10 @@ export default {
       return []
     }
   },
-  created () {
-  },
   methods: {
+    formattedModifiedDate (date) {
+      return dayjs(date, 'YYYY-MM-DD HH:mm').format('DD/MM')
+    },
     setColor (e, color) {
       e.target.style.backgroundColor = color
     },
@@ -238,7 +251,7 @@ export default {
     .session {
       width: 100%;
       display: grid;
-      grid-template-columns: 3% 20% 25% 25%;
+      grid-template-columns: 3% 20% 25% 20% 32%;
       grid-gap: 10px;
       margin-top: 3px;
       margin-bottom: 3px;
@@ -290,6 +303,15 @@ export default {
           text-transform: capitalize;
         }
       }
+
+      .modified-date {
+        .icon {
+          margin-right: 5px;
+          vertical-align: text-bottom;
+          font-size: 0.75rem;
+          color: orange;
+        }
+      }
     }
   }
   .no-assignment {
@@ -314,6 +336,7 @@ export default {
   "affect": "Affecter ce contenu",
   "display": "Visualiser ce contenu",
   "edit": "Modifier le contenu pour cette affectation",
-  "remove": "Supprimer"
+  "remove": "Supprimer",
+  "modifiedContent": "Contenu modifié le "
 }
 </i18n>
