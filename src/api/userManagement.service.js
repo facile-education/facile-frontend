@@ -13,7 +13,10 @@ export {
   getSchoolOrgs,
   addUserToOrg,
   removeUserFromOrg,
-  getManuallyAddedOrgs
+  getManuallyAddedOrgs,
+  addSchoolAdmin,
+  removeSchoolAdmin,
+  getSchoolAdmins
 }
 
 export default {
@@ -25,6 +28,7 @@ const SUBJECT_PATH = '/gestionUtilisateurs-portlet.subject'
 const USER_SEARCH_PATH = '/gestionUtilisateurs-portlet.usersearch'
 const USER_MANAGEMENT_PATH = '/gestionUtilisateurs-portlet.usermanagement'
 const MANUAL_AFFECTATION_PATH = '/gestionUtilisateurs-portlet.manualaffectation'
+const SCHOOL_ADMIN_PATH = '/gestionUtilisateurs-portlet.schooladmin'
 
 /**
  * Get the specified school's students filtered by name
@@ -121,6 +125,34 @@ function getManuallyAddedOrgs (userId) {
   return axios.get(constants.JSON_WS_URL + MANUAL_AFFECTATION_PATH + '/get-manually-added-orgs', {
     params: {
       userId: userId
+    }
+  }).then(response => response.data)
+}
+
+function addSchoolAdmin (schoolId, userId) {
+  return axios.get(constants.JSON_WS_URL + SCHOOL_ADMIN_PATH + '/add-school-admin', {
+    params: {
+      schoolId: schoolId,
+      userId: userId,
+      applyToSchoolComplex: true
+    }
+  }).then(response => response.data)
+}
+
+function removeSchoolAdmin (schoolId, userId) {
+  return axios.get(constants.JSON_WS_URL + SCHOOL_ADMIN_PATH + '/remove-school-admin', {
+    params: {
+      schoolId: schoolId,
+      userId: userId,
+      applyToSchoolComplex: true
+    }
+  }).then(response => response.data)
+}
+
+function getSchoolAdmins (schoolId, userId) {
+  return axios.get(constants.JSON_WS_URL + SCHOOL_ADMIN_PATH + '/get-school-admins', {
+    params: {
+      schoolId: schoolId
     }
   }).then(response => response.data)
 }

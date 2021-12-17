@@ -55,7 +55,7 @@
         />
       </div>
       <PentilaDropdown
-        v-if="(schools && schools.length > 1)"
+        v-if="schools"
         v-model="selectedSchool"
         class="schools"
         :list="schools"
@@ -119,8 +119,8 @@ export default {
       lastName: '',
       firstName: '',
       email: '',
-      selectedSchool: {},
-      selectedRole: {}
+      selectedSchool: undefined,
+      selectedRole: undefined
     }
   },
   computed: {
@@ -148,6 +148,7 @@ export default {
       this.firstName = this.editedUser.firstName
       this.email = this.editedUser.email
     }
+    this.selectedSchool = this.schools[0]
 
     // Focus form
     const input = this.$refs.lastNameInput

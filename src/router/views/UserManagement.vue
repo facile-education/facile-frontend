@@ -9,7 +9,7 @@
         class="tab"
         @click="toggleManualUsers"
       >
-        <p>Utilisateurs manuels</p>
+        <p>{{ $t('manual-users') }}</p>
         <div
           v-if="isManualUsersMode"
           class="active-line theme-background-color"
@@ -19,7 +19,7 @@
         class="tab"
         @click="toggleManualAffectation"
       >
-        <p>Affectation classes</p>
+        <p>{{ $t('manual-affectation') }}</p>
         <div
           v-if="isManualAffectationMode"
           class="active-line theme-background-color"
@@ -27,9 +27,19 @@
       </div>
       <div
         class="tab"
+        @click="toggleSchoolAdmin"
+      >
+        <p>{{ $t('school-admins') }}</p>
+        <div
+          v-if="isSchoolAdminMode"
+          class="active-line theme-background-color"
+        />
+      </div>
+      <div
+        class="tab"
         @click="toggleChangePassword"
       >
-        <p>Mots de passe</p>
+        <p>{{ $t('passwords') }}</p>
         <div
           v-if="isPasswordMode"
           class="active-line theme-background-color"
@@ -38,6 +48,7 @@
     </div>
     <ManualUsers v-if="isManualUsersMode" />
     <ManualAffectation v-if="isManualAffectationMode" />
+    <SchoolAdmin v-if="isSchoolAdminMode" />
     <ChangePassword v-if="isPasswordMode" />
   </Layout>
 </template>
@@ -46,6 +57,7 @@
 import Layout from '@/router/layouts/EmptyLayout'
 import ManualUsers from '@/components/UserManagement/ManualUsers.vue'
 import ChangePassword from '@/components/UserManagement/ChangePassword.vue'
+import SchoolAdmin from '@/components/UserManagement/SchoolAdmin.vue'
 import ManualAffectation from '@/components/UserManagement/ManualAffectation.vue'
 
 export default {
@@ -54,6 +66,7 @@ export default {
     Layout,
     ManualUsers,
     ChangePassword,
+    SchoolAdmin,
     ManualAffectation
   },
   computed: {
@@ -65,6 +78,9 @@ export default {
     },
     isManualAffectationMode () {
       return this.$store.state.userManagement.isManualAffectationMode
+    },
+    isSchoolAdminMode () {
+      return this.$store.state.userManagement.isSchoolAdminMode
     }
   },
   created () {
@@ -78,6 +94,9 @@ export default {
     },
     toggleManualAffectation () {
       this.$store.dispatch('userManagement/setManualAffectationMode')
+    },
+    toggleSchoolAdmin () {
+      this.$store.dispatch('userManagement/setSchoolAdminMode')
     }
   }
 }
@@ -111,3 +130,12 @@ export default {
 
 }
 </style>
+
+<i18n locale="fr">
+{
+  "manual-users": "Utilisateurs manuels",
+  "manual-affectation": "Affectations classes",
+  "school-admins": "Administrateurs",
+  "passwords": "Mots de passe"
+}
+</i18n>
