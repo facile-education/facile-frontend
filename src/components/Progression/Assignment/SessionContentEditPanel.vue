@@ -126,6 +126,7 @@ export default {
       } else {
         this.$store.dispatch('progression/saveSessionSpecificItem', { sessionId: this.assignment.sessionId })
       }
+      this.$store.dispatch('progression/getProgressionContent', this.$route.params.progressionId)
       this.closeSessionContentEdit()
     },
     getTitle () {
