@@ -10,7 +10,7 @@
         class="input-search"
       />
       <PentilaDropdown
-        v-if="(schools && schools.length > 1)"
+        v-if="(schools)"
         v-model="selectedSchool"
         class="schools"
         :list="schools"
@@ -26,11 +26,20 @@
     <div
       class="results"
     >
-      <table>
+      <p v-if="noResult">
+        {{ $t('no-result') }}
+      </p>
+      <table v-else>
         <tr>
-          <th>{{ $t('lastName') }}</th>
-          <th>{{ $t('firstName') }}</th>
-          <th>{{ $t('email') }}</th>
+          <th class="result-lastname">
+            {{ $t('lastName') }}
+          </th>
+          <th class="result-firstname">
+            {{ $t('firstName') }}
+          </th>
+          <th class="result-email">
+            {{ $t('email') }}
+          </th>
         </tr>
         <tr
           v-for="user in resultUsers"
@@ -73,10 +82,15 @@ export default {
     },
     resultUsers () {
       return _.orderBy(this.$store.state.userManagement.resultUsers, 'lastName', 'asc')
+    },
+    noResult () {
+      return this.resultUsers === undefined || this.resultUsers.length === 0
     }
   },
   created () {
-    this.$store.dispatch('userManagement/getSchools')
+    this.$store.dispatch('userManagement/getSchools').then(() => {
+      this.selectedSchool = this.schools[0]
+    })
   },
   methods: {
     runSearch () {
@@ -115,9 +129,14 @@ export default {
   }
   .results {
     margin-left: 20px;
+    margin-top: 20px;
     margin-bottom: 20px;
-    width: 80%;
-    .result {
+    width: 100%;
+    .result-lastname,.result-firstname {
+      width: 40%;
+    }
+    .result-email {
+      width: 20%;
     }
   }
 }
@@ -126,10 +145,11 @@ export default {
 <i18n locale="fr">
 {
   "search": "Recherche",
-  "searchPlaceHolder": "Taper le nom et/ou le prénom",
+  "searchPlaceHolder": "Saisir le nom et/ou le prénom",
   "lastName": "Nom",
   "firstName": "Prénom",
   "email": "Courriel",
-  "create": "Créer un nouvel utilisateur"
+  "create": "Créer un nouvel utilisateur",
+  "no-result": "Aucun résultat"
 }
 </i18n>

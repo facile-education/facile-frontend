@@ -6,6 +6,7 @@ export const state = {
   isManualUsersMode: true,
   isPasswordMode: false,
   isManualAffectationMode: false,
+  isSchoolAdminMode: false,
   resultUsers: [],
   schools: [],
   roles: []
@@ -16,16 +17,25 @@ export const mutations = {
     state.isManualUsersMode = isManualUsers
     state.isPasswordMode = false
     state.isManualAffectationMode = false
+    state.isSchoolAdminMode = false
   },
   setChangePasswordMode (state, isChangePassword) {
     state.isPasswordMode = isChangePassword
     state.isManualUsersMode = false
     state.isManualAffectationMode = false
+    state.isSchoolAdminMode = false
   },
   setManualAffectationMode (state, isManualAffectation) {
     state.isManualAffectationMode = isManualAffectation
     state.isPasswordMode = false
     state.isManualUsersMode = false
+    state.isSchoolAdminMode = false
+  },
+  setSchoolAdminMode (state, isSchoolAdmin) {
+    state.isSchoolAdminMode = isSchoolAdmin
+    state.isPasswordMode = false
+    state.isManualUsersMode = false
+    state.isManualAffectationMode = false
   },
   setResultUsers (state, users) {
     state.resultUsers = users
@@ -37,12 +47,12 @@ export const mutations = {
     state.roles = roles
   },
   addUser (state, user) {
-    state.manualUsers.push(user)
+    state.resultUsers.push(user)
   },
   editUser (state, user) {
-    const userIndex = state.manualUsers.map(user => user.userId).indexOf(user.userId)
+    const userIndex = state.resultUsers.map(user => user.userId).indexOf(user.userId)
     if (userIndex !== -1) {
-      state.manualUsers[userIndex] = user
+      state.resultUsers[userIndex] = user
     }
   },
   setSchoolOrgs (state, payload) {
@@ -104,6 +114,9 @@ export const actions = {
   },
   setManualAffectationMode ({ commit }) {
     commit('setManualAffectationMode', true)
+  },
+  setSchoolAdminMode ({ commit }) {
+    commit('setSchoolAdminMode', true)
   },
   createManualUser ({ commit }, { lastName, firstName, email, roleId, schoolId }) {
     createManualUser(lastName, firstName, email, roleId, schoolId).then(

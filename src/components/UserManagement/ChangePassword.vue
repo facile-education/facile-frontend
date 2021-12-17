@@ -2,7 +2,7 @@
   <div
     class="change-password"
   >
-    <p>change password</p>
+    <p>TODO</p>
   </div>
 </template>
 
