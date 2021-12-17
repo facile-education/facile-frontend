@@ -5,10 +5,11 @@
     <div
       class="item-name-wrapper"
       :class="{ 'is-sub-section-item': isSubSectionItem }"
+      :title="$t('display')"
+      @click="togglePreviewModalDisplay"
     >
       <div
         class="item-name"
-        @click="togglePreviewModalDisplay"
       >
         <img
           v-if="item.isHomework"
@@ -31,13 +32,13 @@
     <!-- Calendar icon -->
     <div
       class="affect"
+      :title="$t('affect')"
       @click="displayCalendarPicker()"
     >
       <img
         class="calendar"
         src="@assets/calendar.svg"
         :alt="$t('affect')"
-        :title="$t('affect')"
       >
     </div>
 
@@ -60,21 +61,24 @@
         <!-- Session -->
         <div
           class="cours-name"
-          :style="getColor(assignment)"
+          :style="getColor(assignment) + '19'"
+          @mouseenter="setColor($event, assignment.color + '40') "
+          @mouseleave="setColor($event, assignment.color + '19') "
         >
           <span
+            :title="$t('edit')"
             @click="editSessionSpecificContent(assignment)"
           >{{ assignment.groupName }}</span>
           <img
             class="remove-cours-assignment"
             src="@assets/big-cross-black.svg"
-            :alt="$t('session')"
-            :title="$t('session')"
+            :alt="$t('remove')"
+            :title="$t('remove')"
             @click="confirmAssignmentDeletion(assignment)"
           >
         </div>
         <!-- Session date and hours -->
-        <span class="assignment-date">{{ getSessionDate(assignment) }}</span>
+        <span class="assignment-date"><span class="day">{{ getSessionDate(assignment) }}</span> <span style="white-space: nowrap">{{ getSessionHour(assignment) }}</span></span>
         <!-- Homework send date -->
         <span
           v-if="item.isHomework"
@@ -139,17 +143,22 @@ export default {
   created () {
   },
   methods: {
+    setColor (e, color) {
+      e.target.style.backgroundColor = color
+    },
     displayCalendarPicker () {
       this.$store.dispatch('progression/setAssignedItem', this.item)
       this.$store.dispatch('progression/setCalendarPickerMode', true)
     },
     getSessionDate (assignment) {
-      return dayjs(assignment.sessionStartDate, 'YYYY-MM-DD HH:mm').format('DD MMMM') +
-      ' de ' + dayjs(assignment.sessionStartDate, 'YYYY-MM-DD HH:mm').format('HH[h]mm') +
-      ' à ' + dayjs(assignment.sessionEndDate, 'YYYY-MM-DD HH:mm').format('HH[h]mm')
+      return dayjs(assignment.sessionStartDate, 'YYYY-MM-DD HH:mm').format('dddd DD/MM')
+    },
+    getSessionHour (assignment) {
+      return dayjs(assignment.sessionStartDate, 'YYYY-MM-DD HH:mm').format('HH[h]mm') +
+        ' à ' + dayjs(assignment.sessionEndDate, 'YYYY-MM-DD HH:mm').format('HH[h]mm')
     },
     getTargetDate (targetDate) {
-      return this.$t('to-do-for') + ' ' + dayjs(targetDate, 'YYYY-MM-DD HH:mm').format('DD MMMM')
+      return this.$t('to-do-for') + ' ' + dayjs(targetDate, 'YYYY-MM-DD HH:mm').format('DD/MM')
     },
     confirmAssignmentDeletion (assignment) {
       this.$store.dispatch('warningModal/addWarning', {
@@ -161,7 +170,7 @@ export default {
       this.$store.dispatch('progression/deleteAssignment', { itemId: assignment.itemId, sessionId: assignment.sessionId })
     },
     getColor (assignment) {
-      return 'background-color: ' + assignment.color + '50' // 50 is for opacity
+      return 'background-color: ' + assignment.color
     },
     togglePreviewModalDisplay () {
       this.isItemPreviewDisplayed = !this.isItemPreviewDisplayed
@@ -183,16 +192,18 @@ export default {
   grid-gap: 10px;
   .item-name-wrapper {
     width: 100%;
-    width: 300px;
-    min-width: 300px;
-    max-width: 300px;
     display: flex;
     &.is-sub-section-item {
       padding-left: 20px;
     }
+    &:hover {
+      cursor: pointer;
+      background-color: #EFF3FB;
+    }
     .item-name {
       display: flex;
-      margin-top: 5px;
+      padding: 5px 0;
+      color: black;
 
       .item-type-icon {
         width: 20px;
@@ -201,18 +212,23 @@ export default {
       span {
         font-size: 14px;
       }
-      &:hover {
-        cursor: pointer;
-        background-color: #EFF3FB;
-      }
     }
   }
-  .affect img {
-    display: none;
-  }
-  &:hover .affect img {
-    display: flex;
+  .affect {
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    margin-top: 3px;
+
+    img {
+      height: 23px;
+    }
+
+    &:hover {
+      img {
+        height: 26px;
+      }
+    }
   }
   .item-sessions {
     width: 100%;
@@ -224,22 +240,25 @@ export default {
       display: grid;
       grid-template-columns: 3% 20% 25% 25%;
       grid-gap: 10px;
-      margin-top: 2px;
-      margin-bottom: 2px;
+      margin-top: 3px;
+      margin-bottom: 3px;
       .colored-circle {
         margin: auto;
-        width: 15px;
-        height: 15px;
-        border-radius: 8px;
+        width: 12px;
+        height: 12px;
+        border-radius: 6px;
       }
       .cours-name {
-        border: 1px solid black;
+        //border: 1px solid black;
         display: flex;
         justify-content: space-between;
         padding: 3px;
-        &:hover {
-          cursor: pointer;
-        }
+        cursor: pointer;
+        background-color: #ffffffdd;
+        font-weight: bold;
+        height: 28px;
+        margin-top: auto;
+        margin-bottom: auto;
 
         span {
           margin: auto;
@@ -260,6 +279,17 @@ export default {
         margin: auto;
         font-size: 13px;
       }
+
+      .assignment-date {
+        //color: black;
+        //font-weight: bold;
+
+        .day {
+          display:inline-block;
+          width: 105px;
+          text-transform: capitalize;
+        }
+      }
     }
   }
   .no-assignment {
@@ -278,9 +308,12 @@ export default {
 {
   "session": "Séance",
   "homework": "Devoir",
-  "no-assignment" : "Non assigné",
+  "no-assignment": "Non assigné",
   "to-do-for": "A rendre le ",
   "deleteAssignmentWarning": "Supprimer cette affectation ?",
-  "affect": "Affecter ce contenu"
+  "affect": "Affecter ce contenu",
+  "display": "Visualiser ce contenu",
+  "edit": "Modifier le contenu pour cette affectation",
+  "remove": "Supprimer"
 }
 </i18n>
