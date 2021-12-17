@@ -52,6 +52,11 @@ const routes = [
     component: () => import('@/router/views/Documents')
   },
   {
+    path: '/user-management',
+    name: 'UserManagement',
+    component: () => import('@/router/views/UserManagement')
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: () => import('@/router/views/NotFound')
