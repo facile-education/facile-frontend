@@ -70,6 +70,9 @@
     </RouterLink>
 
     <h2>Super Administration</h2>
+    <RouterLink to="/user-management">
+      User Management (0%)
+    </RouterLink>
     <RouterLink to="/cas-manager">
       Cas Manager (0%)
     </RouterLink>
