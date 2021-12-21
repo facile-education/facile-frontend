@@ -1,30 +1,35 @@
 <template>
-  <div
-    class="homework-widget"
-  >
-    <div
-      class="header"
-    >
-      <span>{{ $t('homeworks') }}</span>
-    </div>
-    <div class="body">
-      <h3>Homework widget</h3>
+  <Widget>
+    <template #header>
+      <span class="widget-header">
+        <BaseIcon
+          class="header-icon"
+          name="newspaper"
+        />
+        {{ $t('homeworks') }}
+      </span>
+    </template>
+
+    <template #default>
       <div
         v-for="homework in homeworks"
         :key="homework.homeworkId"
         class="homework"
       >
-        <p>coucou devoir</p>
+        <p>TODO: display homworks</p>
       </div>
-    </div>
-  </div>
+    </template>
+  </Widget>
 </template>
 
 <script>
 import dayjs from 'dayjs'
 import { getStudentHomeworks } from '@/api/dashboard.service'
+import BaseIcon from '@components/Base/BaseIcon'
+import Widget from '@components/Dashboard/Widget'
 export default {
   name: 'HomeworkWidget',
+  components: { Widget, BaseIcon },
   props: {
   },
   data () {
@@ -44,34 +49,19 @@ export default {
         }
       }
     )
-  },
-  methods: {
-    formatDate (date) {
-      return date.format('YYYY-MM-DD HH:mm')
-    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
 @import '@design';
-
-.homework-widget {
+.widget-header {
   display: flex;
-  flex-direction: column;
-  height: 600px;
-  max-height: 600px;
-  width: 100%;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  align-items: center;
 
-  .header {
-    margin: 0;
-    padding: 10px 10px;
-  }
-
-  .body {
-    padding: 10px 15px;
+  .header-icon {
+    font-size: 1.5rem;
+    margin-right: 10px;
   }
 }
 </style>

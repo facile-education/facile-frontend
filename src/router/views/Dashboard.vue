@@ -1,43 +1,10 @@
 <template>
   <Layout>
     <div class="dashboard-panel">
-      <!-- Left column contains 1 widget : the group's activity -->
-      <div
-        class="dashboard-column-1"
-      >
-        <GroupNewsWidget
-          v-if="hasGroupNewsWidget"
-          class="widget"
-        />
-        <GroupNewsWidget2
-          v-if="hasGroupNewsWidget"
-          class="widget"
-        />
-      </div>
-
-      <!-- Middle column contains all other widgets : school news, homeworks -->
-      <div
-        class="dashboard-column-2"
-      >
-        <SchoolNewsWidget
-          v-if="hasSchoolNewsWidget"
-          class="widget"
-        />
-        <HomeworkWidget
-          v-if="hasHomeworkWidget"
-          class="widget"
-        />
-      </div>
-
-      <!-- Right column contains EDT widget -->
-      <div
-        class="dashboard-column-3"
-      >
-        <EDTWidget
-          v-if="hasEDTWidget"
-          class="widget"
-        />
-      </div>
+      <GroupNewsWidget v-if="hasGroupNewsWidget" />
+      <SchoolNewsWidget v-if="hasSchoolNewsWidget" />
+      <HomeworkWidget v-if="hasHomeworkWidget" />
+      <EDTWidget v-if="hasEDTWidget" />
     </div>
   </Layout>
 </template>
@@ -45,14 +12,13 @@
 <script>
 import Layout from '@/router/layouts/EmptyLayout'
 import GroupNewsWidget from '@components/Dashboard/News/GroupNewsWidget.vue'
-import GroupNewsWidget2 from '@components/Dashboard/News/GroupNewsWidget2.vue'
 import SchoolNewsWidget from '@/components/Dashboard/News/SchoolNewsWidget.vue'
 import HomeworkWidget from '@/components/Dashboard/HomeworkWidget.vue'
 import EDTWidget from '@/components/Dashboard/EDTWidget.vue'
 
 export default {
-  name: 'Progression',
-  components: { Layout, GroupNewsWidget2, GroupNewsWidget, SchoolNewsWidget, HomeworkWidget, EDTWidget },
+  name: 'Dashboard',
+  components: { Layout, GroupNewsWidget, SchoolNewsWidget, HomeworkWidget, EDTWidget },
   computed: {
     hasGroupNewsWidget () {
       return this.$store.state.dashboard.hasGroupNewsWidget
@@ -68,8 +34,7 @@ export default {
     }
   },
   created () {
-    // Get user's widget list
-    this.$store.dispatch('dashboard/initDashboard')
+    this.$store.dispatch('dashboard/initDashboard') // Get user's widget list
   }
 }
 </script>
@@ -77,20 +42,6 @@ export default {
 <style lang="scss" scoped>
 .dashboard-panel {
   display: flex;
-
-  .dashboard-column-1, .dashboard-column-2, .dashboard-column-3 {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    margin-right: 10px;
-  }
-
-  .dashboard-column-1, .dashboard-column-2 {
-    width: 42%;
-  }
-
-  .dashboard-column-3 {
-    width: 15%;
-  }
+  flex-wrap: wrap;
 }
 </style>

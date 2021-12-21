@@ -1,7 +1,7 @@
 <template>
   <div class="widget">
     <header>
-      <div>
+      <div class="theme-text-color">
         <slot name="header" />
       </div>
       <PentilaButton
@@ -54,6 +54,7 @@ export default {
     min-height: 50px;
     align-items: center;
     display: flex;
+    font-size: 1.25rem;
 
     .add-content {
       margin-left: auto;

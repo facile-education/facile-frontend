@@ -1,25 +1,19 @@
 <template>
-  <div
-    class="group-widget"
+  <Widget
+    :can-add-content="canAddSchoolNews"
+    @addContent="openNewsModal"
   >
-    <div
-      class="header"
-    >
-      <span>{{ $t('school-news') }}</span>
-      <PentilaButton
-        v-if="canAddSchoolNews"
-        class="round"
-        @click="openNewsModal"
-      >
-        <img
-          class="delete-icon"
-          src="@assets/add-white.svg"
-          :alt="$t('add-group-news')"
-          :title="$t('add-group-news')"
-        >
-      </PentilaButton>
-    </div>
-    <div class="body">
+    <template #header>
+      <span class="widget-header">
+        <BaseIcon
+          class="header-icon"
+          name="newspaper"
+        />
+        {{ $t('school-news') }}
+      </span>
+    </template>
+
+    <template #default>
       <div
         v-for="news in schoolNews"
         :key="news.blogEntryId"
@@ -30,25 +24,28 @@
           :is-group-news="false"
         />
       </div>
-    </div>
-    <teleport to="body">
-      <NewsModal
-        v-if="isNewsModalDisplayed"
-        :is-school-news="true"
-        height="30em"
-        @close="isNewsModalDisplayed = false"
-      />
-    </teleport>
-  </div>
+    </template>
+  </Widget>
+
+  <teleport to="body">
+    <NewsModal
+      v-if="isNewsModalDisplayed"
+      :is-school-news="true"
+      height="30em"
+      @close="isNewsModalDisplayed = false"
+    />
+  </teleport>
 </template>
 
 <script>
 import News from '@/components/Dashboard/News/News.vue'
 import NewsModal from '@/components/Dashboard/News/NewsModal.vue'
+import Widget from '@components/Dashboard/Widget'
+import BaseIcon from '@components/Base/BaseIcon'
 
 export default {
   name: 'SchoolNewsWidget',
-  components: { News, NewsModal },
+  components: { BaseIcon, Widget, News, NewsModal },
   props: {
   },
   data () {
@@ -63,7 +60,7 @@ export default {
       return this.$store.state.dashboard.schoolNews
     },
     canAddSchoolNews () {
-      return this.$store.state.dashboard.canAddSchoolNews
+      return !!this.$store.state.dashboard.canAddSchoolNews
     }
   },
   created () {
@@ -81,23 +78,18 @@ export default {
 <style lang="scss" scoped>
 @import '@design';
 
-.group-widget {
+.widget-header {
   display: flex;
-  flex-direction: column;
-  height: 400px;
-  max-height: 400px;
-  width: 100%;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  align-items: center;
 
-  .header {
-    margin: 0;
-    padding: 10px 10px;
+  .header-icon {
+    font-size: 1.5rem;
+    margin-right: 10px;
   }
+}
 
-.body {
-    padding: 10px 15px;
-  }
+.news {
+  margin: 5px 0;
 }
 </style>
 
