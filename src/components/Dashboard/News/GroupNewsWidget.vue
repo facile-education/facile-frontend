@@ -1,26 +1,19 @@
 <template>
-  <div
-    class="group-news-widget"
+  <Widget
+    :can-add-content="canAddGroupNews"
+    @addContent="openNewsModal"
   >
-    <div
-      class="header"
-    >
-      <span>{{ $t('groups-activity') }}</span>
-      <PentilaButton
-        v-if="canAddGroupNews"
-        class="round"
-        type="circle"
-        @click="openNewsModal"
-      >
-        <img
-          class="delete-icon"
-          src="@assets/add-white.svg"
-          :alt="$t('add-group-news')"
-          :title="$t('add-group-news')"
-        >
-      </PentilaButton>
-    </div>
-    <div class="body">
+    <template #header>
+      <span class="widget-header">
+        <BaseIcon
+          class="news-icon"
+          name="newspaper"
+        />
+        {{ $t('groups-activity') }}
+      </span>
+    </template>
+
+    <template #default>
       <div
         v-for="activity in groupActivities"
         :key="activity.activityId"
@@ -45,30 +38,30 @@
           :activity="activity"
         />
       </div>
-    </div>
-    <teleport to="body">
-      <NewsModal
-        v-if="isNewsModalDisplayed"
-        :is-school-news="false"
-        height="30em"
-        @close="isNewsModalDisplayed = false"
-      />
-    </teleport>
-  </div>
+    </template>
+  </Widget>
+
+  <teleport to="body">
+    <NewsModal
+      v-if="isNewsModalDisplayed"
+      :is-school-news="false"
+      height="30em"
+      @close="isNewsModalDisplayed = false"
+    />
+  </teleport>
 </template>
 
 <script>
-import News from '@/components/Dashboard/News/News.vue'
-import DocActivity from '@/components/Dashboard/Activities/DocActivity.vue'
-import MembershipActivity from '@/components/Dashboard/Activities/MembershipActivity.vue'
-import RenvoiActivity from '@/components/Dashboard/Activities/RenvoiActivity.vue'
-import NewsModal from '@/components/Dashboard/News/NewsModal.vue'
-
+import Widget from '@components/Dashboard/Widget'
+import NewsModal from '@components/Dashboard/News/NewsModal'
+import News from '@components/Dashboard/News/News'
+import DocActivity from '@components/Dashboard/Activities/DocActivity'
+import MembershipActivity from '@components/Dashboard/Activities/MembershipActivity'
+import RenvoiActivity from '@components/Dashboard/Activities/RenvoiActivity'
+import BaseIcon from '@components/Base/BaseIcon'
 export default {
   name: 'GroupNewsWidget',
-  components: { News, DocActivity, MembershipActivity, RenvoiActivity, NewsModal },
-  props: {
-  },
+  components: { BaseIcon, RenvoiActivity, MembershipActivity, DocActivity, News, NewsModal, Widget },
   data () {
     return {
       startIndex: 0,
@@ -81,7 +74,7 @@ export default {
       return this.$store.state.dashboard.groupActivities
     },
     canAddGroupNews () {
-      return this.$store.state.dashboard.canAddGroupNews
+      return !!this.$store.state.dashboard.canAddGroupNews // '!!' to assure Boolean
     }
   },
   created () {
@@ -97,37 +90,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@design';
 
-.group-news-widget {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  .widget-header {
+    display: flex;
+    align-items: center;
 
-  .header {
-    margin: 0;
-    padding: 10px 10px;
-    border-bottom: 1px grey;
-    span {
+    .news-icon {
+      font-size: 1.5rem;
       margin-right: 10px;
     }
   }
 
-  .body {
-    padding: 10px 15px;
-    .news {
-      padding: 5px;
-    }
+  .news {
+    margin: 5px 0;
   }
-}
 </style>
 
 <i18n locale="fr">
 {
-  "groups-activity": "Fil d'activité de mes groupes",
-  "add-group-news": "Créer une actualité"
+  "groups-activity": "Fil d'activité de mes groupes"
 }
 </i18n>

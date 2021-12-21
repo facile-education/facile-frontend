@@ -45,6 +45,7 @@ fontAwesomeIconLibrary.add(
   require('@fortawesome/free-solid-svg-icons/faHome').definition,
   require('@fortawesome/free-solid-svg-icons/faInfoCircle').definition,
   require('@fortawesome/free-solid-svg-icons/faMusic').definition,
+  require('@fortawesome/free-solid-svg-icons/faNewspaper').definition,
   require('@fortawesome/free-solid-svg-icons/faPaperPlane').definition,
   require('@fortawesome/free-solid-svg-icons/faPlus').definition,
   require('@fortawesome/free-solid-svg-icons/faPowerOff').definition,
