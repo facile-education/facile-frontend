@@ -1,13 +1,16 @@
 <template>
-  <div
-    class="edt-widget"
-  >
-    <div
-      class="header"
-    >
-      <span>{{ $t('edt') }}</span>
-    </div>
-    <div class="body">
+  <Widget>
+    <template #header>
+      <span class="widget-header">
+        <BaseIcon
+          class="header-icon"
+          name="newspaper"
+        />
+        {{ $t('edt') }}
+      </span>
+    </template>
+
+    <template #default>
       <div class="arrows">
         <div
           class="arrow"
@@ -86,15 +89,18 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
+    </template>
+  </Widget>
 </template>
 
 <script>
 import dayjs from 'dayjs'
 import { getUserSchedule } from '@/api/dashboard.service'
+import Widget from '@components/Dashboard/Widget'
+import BaseIcon from '@components/Base/BaseIcon'
 export default {
   name: 'EDTWidget',
+  components: { BaseIcon, Widget },
   props: {
   },
   data () {
@@ -162,45 +168,28 @@ export default {
 <style lang="scss" scoped>
 @import '@design';
 
-.edt-widget {
-  display: flex;
-  flex-direction: column;
-  height: 800px;
-  max-height: 800px;
-  width: 100%;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-
-  .header {
-    margin: 0;
-    padding: 10px 10px;
-  }
-
-.body {
-    padding: 10px 15px;
-    .arrows {
-      display: flex;
-      justify-content: space-evenly;
-      .arrow {
-        width: 30px;
-        height: 30px;
-      }
-    }
-
-    .session {
-      border-left: 3px solid black;
-      margin-bottom: 5px;
-      &:hover.pointer {
-        cursor: pointer
-      }
-      p {
-        margin: 0;
-        margin-left: 3px;
-        font-size: 0.7em;
-      }
+  .arrows {
+    display: flex;
+    justify-content: space-evenly;
+    .arrow {
+      width: 30px;
+      height: 30px;
     }
   }
-}
+
+  .session {
+    border-left: 3px solid black;
+    margin-bottom: 5px;
+    &:hover.pointer {
+      cursor: pointer
+    }
+    p {
+      margin: 0;
+      margin-left: 3px;
+      font-size: 0.7em;
+    }
+  }
+
 </style>
 
 <i18n locale="fr">

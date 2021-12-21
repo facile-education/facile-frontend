@@ -6,7 +6,7 @@
     <template #header>
       <span class="widget-header">
         <BaseIcon
-          class="news-icon"
+          class="header-icon"
           name="newspaper"
         />
         {{ $t('groups-activity') }}
@@ -95,7 +95,7 @@ export default {
     display: flex;
     align-items: center;
 
-    .news-icon {
+    .header-icon {
       font-size: 1.5rem;
       margin-right: 10px;
     }
