@@ -57,6 +57,16 @@ const routes = [
     component: () => import('@/router/views/UserManagement')
   },
   {
+    path: '/mediacenter',
+    name: 'Mediacenter',
+    component: () => import('@/router/views/Mediacenter')
+  },
+  {
+    path: '/mediacenter-manager',
+    name: 'MediacenterManager',
+    component: () => import('@/router/views/MediacenterManager')
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: () => import('@/router/views/NotFound')
