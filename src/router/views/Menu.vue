@@ -45,6 +45,12 @@
     <RouterLink to="/resource">
       Resource (0%)
     </RouterLink>
+    <RouterLink to="/mediacenter">
+      Mediacenter (0%)
+    </RouterLink>
+    <RouterLink to="/mediacenter-manager">
+      Mediacenter Manager (0%)
+    </RouterLink>
 
     <h2>Administration</h2>
     <RouterLink to="/application-manager">
