@@ -74,8 +74,8 @@ import DocumentList from '@components/Documents/DocumentList'
 import DocumentDetails from '@components/Documents/DocumentDetails'
 import ContextMenu from '@components/ContextMenu/ContextMenu'
 import { documentSpaceOptions } from '@/constants/options'
-import { computeDocumentsOptions, downLoadDocument, deleteEntities, importDocuments } from '@utils/documents.util'
 import FilePickerArea from '@components/FilePicker/FilePickerArea'
+import { computeDocumentsOptions, downLoadDocument, deleteEntities, importDocuments } from '@utils/documents.util'
 
 export default {
   name: 'Documents',
@@ -129,6 +129,12 @@ export default {
       // already being observed
       { immediate: true }
     )
+  },
+  mounted () {
+    window.addEventListener('keydown', this.keyMonitor)
+  },
+  beforeUnmount () {
+    window.removeEventListener('keydown', this.keyMonitor)
   },
   methods: {
     clearSelectedEntities () {
@@ -198,6 +204,27 @@ export default {
       }
       this.isContextMenuDisplayed = false
       this.$store.dispatch('contextMenu/closeMenus')
+    },
+    // keyboard shortcuts management
+    keyMonitor: function (event) {
+      // F2 for renaming
+      if ((event.key === 'F2') && this.selectedDocuments.length === 1) {
+        this.handleOption('rename')
+        // 'Suppr' for deletion
+      } else if (event.key === 'Delete') {
+        this.handleOption('delete')
+      } else if (event.ctrlKey && ((event.key === 'c') || (event.key === 'C'))) {
+        this.handleOption('copy')
+        // ctrl-X to cut
+      } else if (event.ctrlKey && ((event.key === 'x') || (event.key === 'X'))) {
+        this.handleOption('cut')
+        // ctrl-V to paste
+      } else if (event.ctrlKey && ((event.key === 'v') || (event.key === 'V'))) {
+        this.handleOption('paste')
+        // ctrl-D to duplicate
+      } else if (event.ctrlKey && ((event.key === 'd') || (event.key === 'D'))) {
+        this.handleOption('duplicate')
+      }
     },
     importDocument (fileList) {
       importDocuments(this.currentFolderId, fileList)
