@@ -47,7 +47,7 @@ const routes = [
     component: () => import('@/router/views/ProgressionSeance')
   },
   {
-    path: '/documents',
+    path: '/documents/:folderId(\\d+)?',
     name: 'Documents',
     component: () => import('@/router/views/Documents')
   },

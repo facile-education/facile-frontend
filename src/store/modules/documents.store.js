@@ -13,7 +13,8 @@ export const state = {
   cutSourceFolder: {},
   isCurrentlyLoading: false,
   isDocumentPanelDisplayed: false,
-  openFiles: []
+  openFiles: [],
+  documentsProperties: {}
 }
 
 export const mutations = {
@@ -36,6 +37,9 @@ export const mutations = {
   },
   setSelectedEntities (state, documents) {
     state.selectedEntities = documents
+  },
+  setDocumentsProperties (state, payload) {
+    state.documentsProperties = payload
   },
   addSelectedEntity (state, file) {
     state.selectedEntities.push(file)
@@ -95,6 +99,11 @@ export const actions = {
   closeDocumentPanel ({ commit }) {
     commit('setDocumentPanelDisplayed', false)
   },
+  getGlobalDocumentsProperties ({ commit }) {
+    documentsService.getGlobalDocumentsProperties().then((data) => {
+      commit('setDocumentsProperties', data)
+    })
+  },
   getEntities ({ commit }, folderId) {
     return new Promise((resolve) => {
       navigationService.getAllEntities(folderId, true).then((data) => {
@@ -107,10 +116,15 @@ export const actions = {
       })
     })
   },
-  goInDocumentRoot ({ commit }) {
-    documentsService.getGlobalDocumentsProperties().then((data) => {
-      this.dispatch('documents/changeDirectory', data.private.id)
-    })
+  goInDocumentRoot ({ state, commit }) {
+    if (state.documentsProperties.private) {
+      this.dispatch('documents/changeDirectory', state.documentsProperties.private.id)
+    } else {
+      documentsService.getGlobalDocumentsProperties().then((data) => {
+        commit('setDocumentsProperties', data)
+        this.dispatch('documents/changeDirectory', data.private.id)
+      })
+    }
   },
   openDocumentPanel ({ commit }) {
     commit('setDocumentPanelDisplayed', true)
@@ -118,13 +132,6 @@ export const actions = {
   refreshCurrentFolder ({ state }) {
     this.dispatch('documents/updateBreadcrumb', state.currentFolderId)
     this.dispatch('documents/getEntities', state.currentFolderId)
-  },
-  goInParentFolder ({ state }) {
-    if (state.breadcrumb.length < 2) {
-      console.error('Cannot go backer in tree')
-    } else {
-      this.dispatch('documents/changeDirectory', state.breadcrumb[state.breadcrumb.length - 2].id)
-    }
   },
   renameEntity ({ commit, getters }, { entity, name }) {
     return new Promise((resolve) => {

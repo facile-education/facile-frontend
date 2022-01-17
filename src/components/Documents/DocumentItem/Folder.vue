@@ -114,7 +114,7 @@ export default {
       this.$emit('shiftSelect', { id: file.id, name: file.name })
     },
     changeDir () {
-      this.$store.dispatch('documents/changeDirectory', this.folder.id)
+      this.$router.push({ name: 'Documents', params: { folderId: this.folder.id } })
     },
     openContextMenu (e) {
       this.$emit('openContextMenu', e)
