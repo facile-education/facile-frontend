@@ -202,7 +202,7 @@ export default {
 
   &:hover {
     .title {
-      color: $color-hover-bg;
+      color: black;
     }
 
     .icon {
