@@ -93,7 +93,7 @@ export default {
     },
     changeDir (folder) {
       if (!this.isCurrentFolder) {
-        this.$store.dispatch('documents/changeDirectory', folder.id)
+        this.$router.push({ name: 'Documents', params: { folderId: this.folder.id } })
         // this.$store.dispatch('documents/closeDocumentPanel') // TODO: discuss about ergonomics
       }
     }

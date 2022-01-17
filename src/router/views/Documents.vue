@@ -120,9 +120,23 @@ export default {
       return this.$store.state.contextMenu.isAContextMenuDisplayed
     }
   },
-  beforeCreate () {
-    this.$store.dispatch('documents/goInDocumentRoot')
-    // this.$store.dispatch('fileFields/resetPrivateFields')
+  created () {
+    this.$store.dispatch('documents/getGlobalDocumentsProperties')
+
+    // Watch route changes to react on progressionId change
+    this.$watch(
+      () => this.$route.params,
+      () => {
+        if (this.$route.params.folderId) {
+          this.$store.dispatch('documents/changeDirectory', this.$route.params.folderId)
+        } else {
+          this.$store.dispatch('documents/goInDocumentRoot')
+        }
+      },
+      // fetch the data when the view is created and the data is
+      // already being observed
+      { immediate: true }
+    )
   },
   methods: {
     clickOnEmptySpace () {
