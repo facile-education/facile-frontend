@@ -97,27 +97,17 @@ export default {
         }
       }
     },
-    selectedFiles () {
+    selectedEntities () {
       return this.$store.state.documents.selectedEntities
     },
     draggedEntities () {
       return this.$store.state.misc.draggedEntities
     },
     isSelected () {
-      for (let i = 0; i < this.selectedFiles.length; ++i) {
-        if (this.document.id === this.selectedFiles[i].id) {
-          return true
-        }
-      }
-      return false
+      return this.selectedEntities.map(entity => entity.id).indexOf(this.document.id) !== -1
     },
     isDragged () {
-      for (let i = 0; i < this.draggedEntities.length; ++i) {
-        if (this.document.id === this.draggedEntities[i].id) {
-          return true
-        }
-      }
-      return false
+      return this.draggedEntities.map(entity => entity.id).indexOf(this.document.id) !== -1
     }
   },
   methods: {
@@ -126,8 +116,8 @@ export default {
         this.toggleSelection()
       }
       let entitiesToDrag
-      if (this.selectedFiles.length > 1) {
-        entitiesToDrag = this.selectedFiles
+      if (this.selectedEntities.length > 1) {
+        entitiesToDrag = this.selectedEntities
       } else {
         entitiesToDrag = [this.document]
       }

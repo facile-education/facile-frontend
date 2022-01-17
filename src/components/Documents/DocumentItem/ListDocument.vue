@@ -132,11 +132,11 @@ export default {
       // TODO: find a better way to separate img and font-awesome icons
       return this.documentIcon.includes('.') || this.documentIcon.includes(':') // if icon contains extension (like folder.svg) it's not a font-awesome
     },
-    selectedFiles () {
+    selectedEntities () {
       return this.$store.state.documents.selectedEntities
     },
     isSelected () {
-      return this.selectedFiles.find(e => e.id === this.document.id) !== undefined
+      return this.selectedEntities.find(e => e.id === this.document.id) !== undefined
     },
     fields () {
       return this.$store.state.fileFields.fields
@@ -163,7 +163,7 @@ export default {
   // TODO: Scroll element into view for the up and down arrow navigation case
   // watch: {
   //   isSelected () {
-  //     if (this.selectedFiles.length === 1 && this.isSelected) {
+  //     if (this.selectedEntities.length === 1 && this.isSelected) {
   //       this.$el.scrollIntoView({ behavior: 'smooth', block: 'end' })
   //     }
   //   }
@@ -177,7 +177,7 @@ export default {
   methods: {
     keyMonitor (e) { // TODO find a better way to handle enter key event (@keyup.enter ?)
       if (e.key === 'Enter') {
-        if (this.isSelected && this.selectedFiles.length === 1) {
+        if (this.isSelected && this.selectedEntities.length === 1) {
           this.$emit('triggerAction')
         }
       }
