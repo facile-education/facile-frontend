@@ -23,19 +23,11 @@
         >
           <div
             class="scroll"
-            @click="clickOnEmptySpace"
-            @click.right.prevent="rightClickOnEmptySpace"
+            @click="clickOnScrollDiv"
+            @click.right.prevent="rightClickOnScrollDiv"
           >
-            <Breadcrumb
-              class="breadCrumb"
-              @click.stop
-              @click.right.prevent.stop
-            />
-            <DocumentList
-              @openContextMenu="openContextMenu"
-              @click.stop
-              @click.right.prevent.stop
-            />
+            <Breadcrumb class="breadCrumb" />
+            <DocumentList @openContextMenu="openContextMenu" />
           </div>
           <DocumentDetails
             v-if="isDocumentPanelDisplayed"
@@ -139,12 +131,21 @@ export default {
     )
   },
   methods: {
-    clickOnEmptySpace () {
+    clearSelectedEntities () {
       this.$store.dispatch('documents/cleanSelectedEntities') // /!\ be careful with asynchronous order!
     },
-    rightClickOnEmptySpace (event) {
-      this.clickOnEmptySpace()
-      this.openContextMenu(event)
+    clickOnScrollDiv (event) {
+      // Clear selected entities ONLY if the click is on those elements, and continue propagation
+      if (event.target.classList.contains('scroll') || event.target.classList.contains('breadCrumb')) {
+        this.clearSelectedEntities()
+      }
+    },
+    rightClickOnScrollDiv (event) {
+      // Open documents space options (and unselect entities) ONLY if the click is on those elements, and continue propagation
+      if (event.target.classList.contains('scroll') || event.target.classList.contains('breadCrumb') || event.target.classList.contains('fields')) {
+        this.clearSelectedEntities()
+        this.openContextMenu(event)
+      }
     },
     openContextMenu (event) {
       if (!this.isAContextMenuDisplayed) {

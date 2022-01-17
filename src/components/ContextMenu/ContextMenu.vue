@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @click.right.prevent>
     <ul
       id="context-menu"
       data-test="context-menu"
