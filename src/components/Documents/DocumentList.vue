@@ -34,7 +34,7 @@
 import FilesFields from '@components/Documents/FilesFields'
 import Folder from '@components/Documents/DocumentItem/Folder'
 import File from '@components/Documents/DocumentItem/File'
-import { selectBetween } from '@utils/documents.util'
+import { ctrlSelectNextEntity, ctrlSelectPreviousEntity, selectBetween, selectNextEntity, selectPreviousEntity } from '@utils/documents.util'
 import { compare } from '@utils/commons.util'
 
 export default {
@@ -57,6 +57,9 @@ export default {
     currentEntities () {
       return this.$store.state.documents.folderContent
     },
+    selectedDocuments () {
+      return this.$store.state.documents.selectedEntities
+    },
     sortedFiles () {
       return (this.currentEntities === undefined || this.currentEntities.files === undefined)
         ? []
@@ -71,6 +74,12 @@ export default {
       return this.sortedFolders.concat(this.sortedFiles)
     }
   },
+  mounted () {
+    window.addEventListener('keydown', this.keyMonitor)
+  },
+  beforeUnmount () {
+    window.removeEventListener('keydown', this.keyMonitor)
+  },
   methods: {
     handleSort (type) {
       if (type === this.sort.type) {
@@ -84,6 +93,24 @@ export default {
     },
     getEntityIndex (entityId) {
       return this.allSortedDocuments.map(item => item.id).indexOf(entityId)
+    },
+    // keyboard shortcuts management
+    keyMonitor: function (event) {
+      // ctrl-arrow for multi-selection
+      if (event.ctrlKey && event.key === 'ArrowDown') {
+        ctrlSelectNextEntity(this.allSortedDocuments, this.$store.state.documents.lastSelectedEntity)
+      } else if (event.ctrlKey && event.key === 'ArrowUp') {
+        ctrlSelectPreviousEntity(this.allSortedDocuments, this.$store.state.documents.lastSelectedEntity)
+        // ctrl-A for 'All' selection
+      } else if (event.ctrlKey && ((event.key === 'a') || (event.key === 'A'))) {
+        event.preventDefault()
+        this.$store.dispatch('documents/selectAll')
+        // Simple arrows
+      } else if ((event.key === 'ArrowDown')) {
+        selectNextEntity(this.allSortedDocuments, this.selectedDocuments[0])
+      } else if ((event.key === 'ArrowUp')) {
+        selectPreviousEntity(this.allSortedDocuments, this.selectedDocuments[0])
+      }
     },
     shiftSelect (file) {
       const firstDocumentOfSelection = this.$store.state.documents.lastSelectedEntity ? this.$store.state.documents.lastSelectedEntity : this.allSortedDocuments[0]

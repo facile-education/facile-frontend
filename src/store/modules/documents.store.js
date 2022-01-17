@@ -181,8 +181,8 @@ export const actions = {
       commit('removeSelectedEntity', document)
     } else {
       commit('addSelectedEntity', document)
-      commit('updateLastSelectedEntity', document)
     }
+    commit('updateLastSelectedEntity', document)
   },
   updateLastSelectedEntity ({ commit }, document) {
     commit('updateLastSelectedEntity', document)

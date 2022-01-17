@@ -44,6 +44,42 @@ function computeDocumentsOptions (documentList) {
   return contextMenu
 }
 
+function selectNextEntity (sortedEntities, selectedEntity) {
+  if (selectedEntity === undefined) { // if no document selected, trigger the selection on the first document
+    store.dispatch('documents/selectOneDocument', sortedEntities[0])
+  } else {
+    const index = sortedEntities.map(entity => entity.id).indexOf(selectedEntity.id)
+    store.dispatch('documents/selectOneDocument', sortedEntities[(index + 1) % sortedEntities.length])
+  }
+}
+
+function selectPreviousEntity (sortedEntities, selectedEntity) {
+  if (selectedEntity === undefined) { // if no document selected, trigger the selection on the last document
+    store.dispatch('documents/selectOneDocument', sortedEntities[sortedEntities.length - 1])
+  } else {
+    const index = sortedEntities.map(entity => entity.id).indexOf(selectedEntity.id)
+    store.dispatch('documents/selectOneDocument', sortedEntities[(index + sortedEntities.length - 1) % sortedEntities.length])
+  }
+}
+
+function ctrlSelectNextEntity (sortedEntities, selectedEntity) {
+  if (selectedEntity === undefined) { // if no document selected, trigger the selection on the first document
+    store.dispatch('documents/selectOneDocument', sortedEntities[0])
+  } else {
+    const index = sortedEntities.map(entity => entity.id).indexOf(selectedEntity.id)
+    store.dispatch('documents/updateCtrlSelectedDocument', sortedEntities[(index + 1) % sortedEntities.length])
+  }
+}
+
+function ctrlSelectPreviousEntity (sortedEntities, selectedEntity) {
+  if (selectedEntity === undefined) { // if no document selected, trigger the selection on the last document
+    store.dispatch('documents/selectOneDocument', sortedEntities[sortedEntities.length - 1])
+  } else {
+    const index = sortedEntities.map(entity => entity.id).indexOf(selectedEntity.id)
+    store.dispatch('documents/updateCtrlSelectedDocument', sortedEntities[(index + sortedEntities.length - 1) % sortedEntities.length])
+  }
+}
+
 function selectBetween (listSortedFiles, firstFile, secondFile) {
   let idxLastSelectedFile = -1
   let idxFile = -1
@@ -157,6 +193,10 @@ function deleteEntities (selectedEntities) {
 export default {
   computeDocumentsOptions,
   selectBetween,
+  ctrlSelectPreviousEntity,
+  ctrlSelectNextEntity,
+  selectPreviousEntity,
+  selectNextEntity,
   importDocuments,
   downLoadDocument,
   deleteEntities
@@ -166,6 +206,10 @@ export default {
 export {
   computeDocumentsOptions,
   selectBetween,
+  selectPreviousEntity,
+  selectNextEntity,
+  ctrlSelectPreviousEntity,
+  ctrlSelectNextEntity,
   importDocuments,
   downLoadDocument,
   deleteEntities

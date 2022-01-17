@@ -160,7 +160,28 @@ export default {
       return 'fas'
     }
   },
+  // TODO: Scroll element into view for the up and down arrow navigation case
+  // watch: {
+  //   isSelected () {
+  //     if (this.selectedFiles.length === 1 && this.isSelected) {
+  //       this.$el.scrollIntoView({ behavior: 'smooth', block: 'end' })
+  //     }
+  //   }
+  // },
+  mounted () {
+    window.addEventListener('keyup', this.keyMonitor)
+  },
+  beforeUnmount () {
+    window.removeEventListener('keyup', this.keyMonitor)
+  },
   methods: {
+    keyMonitor (e) { // TODO find a better way to handle enter key event (@keyup.enter ?)
+      if (e.key === 'Enter') {
+        if (this.isSelected && this.selectedFiles.length === 1) {
+          this.$emit('triggerAction')
+        }
+      }
+    },
     triggerAction () {
       this.$emit('triggerAction')
     },
