@@ -154,7 +154,9 @@ export default {
       this.$emit('shiftSelect', { id: this.document.id, name: this.document.name })
     },
     openContextMenu (e) {
-      this.toggleSelection() // /!\ be careful about async order
+      if (!this.isSelected) {
+        this.toggleSelection() // /!\ be careful about async order
+      }
       this.$emit('openContextMenu', e)
     }
   }
