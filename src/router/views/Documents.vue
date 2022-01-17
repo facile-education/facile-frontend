@@ -185,14 +185,14 @@ export default {
         case 'delete':
           this.$store.dispatch('warningModal/addWarning', {
             text: this.$t('router.views.Documents.Warning.deleteDocument'),
-            lastAction: { fct: deleteEntities, params: [this.selectedFiles] }
+            lastAction: { fct: deleteEntities, params: [this.selectedDocuments] }
           })
           break
         case 'download':
           downLoadDocument(this.selectedDocuments[0])
           break
         case 'rename':
-          this.$store.dispatch('modals/openRenameModal', this.selectedFiles[0])
+          this.$store.dispatch('modals/openRenameModal', this.selectedDocuments[0])
           break
         case 'share':
           this.$store.dispatch('post/setIndicator', undefined)
