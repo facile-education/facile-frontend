@@ -1,5 +1,8 @@
 <template>
-  <div class="current-options">
+  <div
+    class="current-options"
+    data-test="current-options"
+  >
     <OptionItem
       v-for="(option, index) in options"
       :key="index"

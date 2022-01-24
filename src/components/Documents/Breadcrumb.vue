@@ -1,5 +1,8 @@
 <template>
-  <div class="breadcrumb">
+  <div
+    class="breadcrumb"
+    data-test="breadcrumb"
+  >
     <template
       v-for="(folder, index) in breadcrumb"
       :key="folder.id"

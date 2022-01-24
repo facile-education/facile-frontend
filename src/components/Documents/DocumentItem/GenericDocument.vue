@@ -2,6 +2,7 @@
   <div
     :draggable="isDraggable"
     :class="[computeClass, {'dark': dark}]"
+    data-cy="document"
     @dragstart="onDragStart"
     @dragend="onDragEnd"
   >
