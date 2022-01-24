@@ -52,8 +52,8 @@ const routes = [
     component: () => import('@/router/views/Documents')
   },
   {
-    path: '/user-management',
-    name: 'UserManagement',
+    path: '/user-manager',
+    name: 'UserManager',
     component: () => import('@/router/views/UserManagement')
   },
   {

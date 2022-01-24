@@ -10,7 +10,7 @@
     :list="autocompleteUserList"
     :sort="false"
     display-field="displayName"
-    id-field="studentId"
+    id-field="userId"
     @inputChange="searchTimeOut"
     @update:modelValue="update"
   />
@@ -25,6 +25,10 @@ let timeout
 export default {
   name: 'UserCompletion',
   props: {
+    maxSize: {
+      type: Number,
+      default: 1
+    },
     modelValue: {
       type: Array,
       default: () => {
@@ -43,8 +47,7 @@ export default {
   emits: ['update:modelValue'],
   data () {
     return {
-      autocompleteUserList: [],
-      maxSize: 1
+      autocompleteUserList: []
     }
   },
   computed: {
@@ -62,7 +65,7 @@ export default {
         user.displayName = this.getUserDisplayName(user)
       })
       this.update(array)
-    } else if (this.modelValue.length > this.maxSize) {
+    } else if (this.maxSize !== -1 && this.modelValue.length > this.maxSize) {
       console.error('modelValue as too many elements for the tagsInput max size')
     }
   },

@@ -55,29 +55,19 @@
         />
       </div>
       <PentilaDropdown
-        v-if="schools"
-        v-model="selectedSchool"
-        class="schools"
-        :list="schools"
-        :sort="true"
-        display-field="schoolName"
-      />
-      <PentilaDropdown
         v-if="(roles && roles.length > 1)"
         v-model="selectedRole"
         class="roles"
         :list="roles"
-        :sort="true"
         display-field="roleName"
+      />
+      <p
+        v-if="isCreation"
+        v-t="'email-warning'"
       />
     </template>
 
     <template #footer>
-      <PentilaButton
-        :label="$t('cancel')"
-        class="button"
-        @click="closeModal"
-      />
       <PentilaButton
         v-if="isCreation"
         :label="$t('add')"
@@ -96,7 +86,7 @@
 
 <script>
 import { useVuelidate } from '@vuelidate/core'
-import { required } from '@vuelidate/validators'
+import { required, email } from '@vuelidate/validators'
 
 export default {
   name: 'EditUserModal',
@@ -112,14 +102,13 @@ export default {
   validations: {
     lastName: { required },
     firstName: { required },
-    email: { required }
+    email: { required, email }
   },
   data () {
     return {
       lastName: '',
       firstName: '',
       email: '',
-      selectedSchool: undefined,
       selectedRole: undefined
     }
   },
@@ -127,8 +116,8 @@ export default {
     isCreation () {
       return this.editedUser.userId === undefined
     },
-    schools () {
-      return this.$store.state.userManagement.schools
+    selectedSchool () {
+      return this.$store.state.user.selectedSchool
     },
     roles () {
       return this.$store.state.userManagement.roles
@@ -137,7 +126,7 @@ export default {
       return {
         lastName: (this.v$.lastName.$invalid && this.v$.lastName.$dirty) ? this.$t('Commons.required') : '',
         firstName: (this.v$.firstName.$invalid && this.v$.firstName.$dirty) ? this.$t('Commons.required') : '',
-        email: (this.v$.email.$invalid && this.v$.email.$dirty) ? this.$t('Commons.required') : ''
+        email: (this.v$.email.$invalid && this.v$.email.$dirty) ? this.$t('Commons.formInvalidEmail') : ''
       }
     }
   },
@@ -147,8 +136,9 @@ export default {
       this.lastName = this.editedUser.lastName
       this.firstName = this.editedUser.firstName
       this.email = this.editedUser.email
+      const selectedIndex = this.roles.map(role => role.roleId).indexOf(this.editedUser.roleId)
+      this.selectedRole = this.roles[selectedIndex]
     }
-    this.selectedSchool = this.schools[0]
 
     // Focus form
     const input = this.$refs.lastNameInput
@@ -167,8 +157,6 @@ export default {
       if (this.v$.$invalid) {
         this.v$.$touch()
       } else {
-        console.log('this.selectedRole=', this.selectedRole)
-        console.log('this.selectedSchool=', this.selectedSchool)
         this.$store.dispatch('userManagement/createManualUser',
           { lastName: this.lastName, firstName: this.firstName, email: this.email, roleId: this.selectedRole.roleId, schoolId: this.selectedSchool.schoolId })
         this.closeModal()
@@ -204,11 +192,11 @@ export default {
 {
   "creation-title": "Créer un utilisateur",
   "edition-title": "Modifier un utilisateur",
-  "cancel": "Annuler",
   "add": "Créer",
   "edit": "Modifier",
   "lastNamePlaceholder": "Nom",
   "firstNamePlaceholder": "Prénom",
-  "emailPlaceholder": "Mail"
+  "emailPlaceholder": "Mail",
+  "email-warning": "NB: Un e-mail contenant les informations d'authentification sera envoyé à l'utilisateur créé."
 }
 </i18n>

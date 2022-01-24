@@ -9,14 +9,6 @@
         :placeholder="$t('searchPlaceHolder')"
         class="input-search"
       />
-      <PentilaDropdown
-        v-if="(schools)"
-        v-model="selectedSchool"
-        class="schools"
-        :list="schools"
-        :sort="true"
-        display-field="schoolName"
-      />
       <PentilaButton
         class="run-search"
         label="Rechercher"
@@ -71,14 +63,13 @@ export default {
   data () {
     return {
       searchText: '',
-      selectedSchool: {},
       selectedUser: undefined,
       isEditUserModalDisplayed: false
     }
   },
   computed: {
-    schools () {
-      return this.$store.state.userManagement.schools
+    selectedSchool () {
+      return this.$store.state.user.selectedSchool
     },
     resultUsers () {
       return _.orderBy(this.$store.state.userManagement.resultUsers, 'lastName', 'asc')
@@ -86,11 +77,6 @@ export default {
     noResult () {
       return this.resultUsers === undefined || this.resultUsers.length === 0
     }
-  },
-  created () {
-    this.$store.dispatch('userManagement/getSchools').then(() => {
-      this.selectedSchool = this.schools[0]
-    })
   },
   methods: {
     runSearch () {

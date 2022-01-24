@@ -1,5 +1,6 @@
 import axios from 'axios'
 import constants from '@/api/constants'
+import PentilaUtils from 'pentila-utils'
 
 export {
   addGARAdminList,
@@ -48,22 +49,24 @@ function getGARManagerUIUrl () {
   }).then(response => response.data)
 }
 
-// TODO axis.post
 /**
  * Add GAR admins in school
  */
-function addGARAdminList (schoolId, applyToSchoolComplex, adminIdsStr) {
-  return axios.get(constants.JSON_WS_URL + MEDIACENTER_PATH + '/save-gar-admins', {
-    params: { schoolId, applyToSchoolComplex, adminIdsStr }
-  }).then(response => response.data)
+function addGARAdminList (schoolId, applyToSchoolComplex, adminId) {
+  return axios.post(constants.JSON_WS_URL + MEDIACENTER_PATH + '/save-gar-admin', PentilaUtils.URL.params({
+    schoolId,
+    applyToSchoolComplex,
+    adminId
+  })).then(response => response.data)
 }
 
-// TODO axios.post
 /**
  * Remove GAR admins in school
  */
-function deleteGARAdminList (schoolId, applyToSchoolComplex, adminIdsStr) {
-  return axios.get(constants.JSON_WS_URL + MEDIACENTER_PATH + '/remove-gar-admins', {
-    params: { schoolId, applyToSchoolComplex, adminIdsStr }
-  }).then(response => response.data)
+function deleteGARAdminList (schoolId, applyToSchoolComplex, adminId) {
+  return axios.post(constants.JSON_WS_URL + MEDIACENTER_PATH + '/remove-gar-admin', PentilaUtils.URL.params({
+    schoolId,
+    applyToSchoolComplex,
+    adminId
+  })).then(response => response.data)
 }

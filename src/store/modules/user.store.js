@@ -161,5 +161,14 @@ export const getters = {
         return state.schoolList[index]
       }
     }
+  },
+  adminSchoolList (state) {
+    const adminSchoolList = []
+    state.schoolList.forEach(school => {
+      if (school.isAdmin) {
+        adminSchoolList.push(school)
+      }
+    })
+    return adminSchoolList
   }
 }

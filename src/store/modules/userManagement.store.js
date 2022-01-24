@@ -1,58 +1,41 @@
+import store from '@/store'
 import {
-  getManualUsers, getSchoolUsers, getSchools, getRoles, createManualUser, editManualUser, getSchoolOrgs
+  getManualUsers, getRoles, createManualUser, editManualUser, removeManualUser, getSchoolOrgs
 } from '@/api/userManagement.service'
 
 export const state = {
-  isManualUsersMode: true,
-  isPasswordMode: false,
-  isManualAffectationMode: false,
-  isSchoolAdminMode: false,
-  resultUsers: [],
-  schools: [],
+  isSearchLocked: false,
+  manualUserList: [],
   roles: []
 }
 
 export const mutations = {
-  setManualUsersMode (state, isManualUsers) {
-    state.isManualUsersMode = isManualUsers
-    state.isPasswordMode = false
-    state.isManualAffectationMode = false
-    state.isSchoolAdminMode = false
+  setManualUserList (state, users) {
+    Array.prototype.push.apply(state.manualUserList, users)
   },
-  setChangePasswordMode (state, isChangePassword) {
-    state.isPasswordMode = isChangePassword
-    state.isManualUsersMode = false
-    state.isManualAffectationMode = false
-    state.isSchoolAdminMode = false
+  emptyManualUserList (state) {
+    state.isSearchLocked = false
+    state.manualUserList.length = 0
   },
-  setManualAffectationMode (state, isManualAffectation) {
-    state.isManualAffectationMode = isManualAffectation
-    state.isPasswordMode = false
-    state.isManualUsersMode = false
-    state.isSchoolAdminMode = false
-  },
-  setSchoolAdminMode (state, isSchoolAdmin) {
-    state.isSchoolAdminMode = isSchoolAdmin
-    state.isPasswordMode = false
-    state.isManualUsersMode = false
-    state.isManualAffectationMode = false
-  },
-  setResultUsers (state, users) {
-    state.resultUsers = users
-  },
-  setSchools (state, schools) {
-    state.schools = schools
+  setSearchLock (state, payload) {
+    state.isSearchLocked = payload
   },
   setRoles (state, roles) {
     state.roles = roles
   },
   addUser (state, user) {
-    state.resultUsers.push(user)
+    state.manualUserList.push(user)
   },
   editUser (state, user) {
-    const userIndex = state.resultUsers.map(user => user.userId).indexOf(user.userId)
+    const userIndex = state.manualUserList.map(user => user.userId).indexOf(user.userId)
     if (userIndex !== -1) {
-      state.resultUsers[userIndex] = user
+      state.manualUserList[userIndex] = user
+    }
+  },
+  removeUser (state, user) {
+    const index = state.manualUserList.map(u => u.userId).indexOf(user.userId)
+    if (index !== -1) {
+      state.manualUserList.splice(index, 1)
     }
   },
   setSchoolOrgs (state, payload) {
@@ -70,29 +53,14 @@ export const mutations = {
 }
 
 export const actions = {
-  getManualUsers ({ commit }, { schoolId, query }) {
-    getManualUsers(schoolId, query).then(
+  getManualUsers ({ commit }, { schoolId, query, pageNb }) {
+    getManualUsers(schoolId, query, pageNb).then(
       (data) => {
         if (data.success) {
-          commit('setResultUsers', data.users)
-        }
-      }
-    )
-  },
-  getSchoolUsers ({ commit }, { schoolId, query }) {
-    getSchoolUsers(schoolId, query).then(
-      (data) => {
-        if (data.success) {
-          commit('setResultUsers', data.users)
-        }
-      }
-    )
-  },
-  getSchools ({ commit }) {
-    getSchools().then(
-      (data) => {
-        if (data.success) {
-          commit('setSchools', data.schools)
+          commit('setManualUserList', data.users)
+          if (data.users.length < 50) {
+            commit('setSearchLock', true)
+          }
         }
       }
     )
@@ -106,23 +74,13 @@ export const actions = {
       }
     )
   },
-  setManualUsersMode ({ commit }) {
-    commit('setManualUsersMode', true)
-  },
-  setChangePasswordMode ({ commit }) {
-    commit('setChangePasswordMode', true)
-  },
-  setManualAffectationMode ({ commit }) {
-    commit('setManualAffectationMode', true)
-  },
-  setSchoolAdminMode ({ commit }) {
-    commit('setSchoolAdminMode', true)
-  },
   createManualUser ({ commit }, { lastName, firstName, email, roleId, schoolId }) {
     createManualUser(lastName, firstName, email, roleId, schoolId).then(
       (data) => {
         if (data.success) {
           commit('addUser', data.user)
+        } else {
+          store.dispatch('popups/pushPopup', { type: 'error', message: 'L\'e-mail de cet utilisateur existe déjà dans l\'ENT.' })
         }
       }
     )
@@ -132,6 +90,15 @@ export const actions = {
       (data) => {
         if (data.success) {
           commit('editUser', data.user)
+        }
+      }
+    )
+  },
+  removeManualUser ({ commit }, user) {
+    removeManualUser(user.userId).then(
+      (data) => {
+        if (data.success) {
+          commit('removeUser', user)
         }
       }
     )

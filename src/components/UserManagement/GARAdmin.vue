@@ -1,21 +1,21 @@
 <template>
-  <div class="school-admin">
+  <div class="gar-admin">
+    <!-- TODO Check if school has GAR and display error when over max admin number allowed-->
     <div class="search">
       <UserCompletion
-        :model-value="schoolAdmins"
-        :max-size="-1"
-        style="display: inline-block;"
+        :model-value="garAdminList"
+        :max-size="maxSize"
         user-type="teacher"
         :placeholder="$t('agent')"
         @update:modelValue="selectUser"
       />
     </div>
-    <div class="school-admins">
+    <div class="gar-admins">
       <div v-if="selectedSchool === undefined">
         <p>{{ $t('please-select-school') }}</p>
       </div>
       <div v-else>
-        <div v-if="schoolAdmins.length === 0">
+        <div v-if="garAdminList.length === 0">
           <p>{{ $t('no-admin') }}</p>
         </div>
         <div
@@ -28,20 +28,22 @@
               <th
                 v-t="'lastName'"
                 style="width:30%"
-              /><th
+              />
+              <th
                 v-t="'firstName'"
                 style="width:30%"
-              /><th />
+              />
+              <th />
             </tr>
             <tr
-              v-for="admin in sortedSchoolAdminList"
+              v-for="admin in sortedGarAdminList"
               :key="admin.userId"
             >
               <td>{{ admin.lastName }}</td>
               <td>{{ admin.firstName }}</td>
               <td>
                 <PentilaButton
-                  v-if="!admin.isDirectionMember"
+                  v-if="!admin.isDirectionMember && !admin.isENTAdmin"
                   cls="delete"
                   @click="confirmAdminRemoval(admin)"
                 >
@@ -58,27 +60,28 @@
 
 <script>
 import PentilaUtils from 'pentila-utils'
-import { addSchoolAdmin, removeSchoolAdmin, getSchoolAdmins } from '@/api/userManagement.service'
+import { addGARAdminList, deleteGARAdminList, getSchoolAdminList } from '@/api/mediacenter.service'
 import NeroIcon from '@/components/Nero/NeroIcon'
 import UserCompletion from '@/components/NotUsualSlotManager/UserCompletion'
 
 export default {
-  name: 'SchoolAdmin',
+  name: 'GARAdmin',
   components: {
     NeroIcon,
     UserCompletion
   },
   data () {
     return {
-      schoolAdmins: []
+      garAdminList: [],
+      maxSize: -1
     }
   },
   computed: {
     selectedSchool () {
       return this.$store.state.user.selectedSchool
     },
-    sortedSchoolAdminList () {
-      return PentilaUtils.Array.sortWithString(this.schoolAdmins, false, 'lastName')
+    sortedGarAdminList () {
+      return PentilaUtils.Array.sortWithString(this.garAdminList, false, 'lastName')
     }
   },
   watch: {
@@ -93,38 +96,39 @@ export default {
     confirmAdminRemoval (user) {
       this.$store.dispatch('warningModal/addWarning', {
         text: this.$t('warning'),
-        lastAction: { fct: this.removeSchoolAdmin, params: [user] }
+        lastAction: { fct: this.removeGARAdmin, params: [user] }
       })
     },
     refreshAdminList () {
-      getSchoolAdmins(this.selectedSchool.schoolId).then(
+      getSchoolAdminList(this.selectedSchool.schoolId).then(
         (data) => {
           if (data.success) {
-            this.schoolAdmins = data.admins
+            this.maxSize = data.maxAdminNb
+            this.garAdminList = data.admins
           }
         }
       )
     },
     selectUser (users) {
       // if action is triggered by delete key do nothing
-      if (this.selectedSchool.length > users.length) return
+      if (this.garAdminList.length > users.length) return
 
       const lastUser = users[users.length - 1]
-      addSchoolAdmin(this.selectedSchool.schoolId, lastUser.userId).then(
+      addGARAdminList(this.selectedSchool.schoolId, false, lastUser.userId).then(
         (data) => {
           if (data.success) {
-            this.schoolAdmins.push(data.admin)
+            this.garAdminList.push(data.admin)
           }
         }
       )
     },
-    removeSchoolAdmin (user) {
-      removeSchoolAdmin(this.selectedSchool.schoolId, user.userId).then(
+    removeGARAdmin (user) {
+      deleteGARAdminList(this.selectedSchool.schoolId, false, user.userId).then(
         (data) => {
           if (data.success) {
-            const adminIndex = this.schoolAdmins.map(admin => admin.userId).indexOf(user.userId)
+            const adminIndex = this.garAdminList.map(admin => admin.userId).indexOf(user.userId)
             if (adminIndex !== -1) {
-              this.schoolAdmins.splice(adminIndex, 1)
+              this.garAdminList.splice(adminIndex, 1)
             }
           }
         }
@@ -137,13 +141,13 @@ export default {
 <style lang="scss" scoped>
 @import '@design';
 
-.school-admin {
+.gar-admin {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
 
-.school-admins {
+.gar-admins {
   height: 100%;
 }
 
@@ -153,7 +157,7 @@ th {
 </style>
 
 <style lang="scss">
-.school-admin .tag-list {
+.gar-admin .tag-list {
   display: none;
 }
 </style>
