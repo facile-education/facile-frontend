@@ -10,6 +10,8 @@ export {
   getRoles,
   createManualUser,
   editManualUser,
+  removeManualUser,
+  importUserList,
   getSchoolOrgs,
   addUserToOrg,
   removeUserFromOrg,
@@ -40,20 +42,27 @@ function getSubjects () {
 /**
  * Get the specified school's users filtered by name
  */
-function getSchoolUsers (schoolId, query) {
+function getSchoolUsers (schoolId, search) {
   return axios.get(constants.JSON_WS_URL + USER_SEARCH_PATH + '/get-school-student-teacher-list', {
     params: {
-      schoolId: schoolId,
-      search: query
+      schoolId,
+      search
     }
   }).then(response => response.data)
 }
 
-function getManualUsers (schoolId, query) {
+function getManualUsers (schoolId, search, pageNb, sort = 'lastName', asc = true, itemPerPage = 50) {
+  const start = pageNb * itemPerPage
+  const limit = start + itemPerPage
+
   return axios.get(constants.JSON_WS_URL + USER_MANAGEMENT_PATH + '/get-manual-users', {
     params: {
-      schoolId: schoolId,
-      search: query
+      schoolId,
+      search,
+      start,
+      limit,
+      sort,
+      asc
     }
   }).then(response => response.data)
 }
@@ -93,6 +102,24 @@ function editManualUser (userId, lastName, firstName, email, roleId, schoolId) {
       roleId,
       schoolId
     })).then(response => response.data)
+}
+
+function removeManualUser (userId) {
+  return axios.get(constants.JSON_WS_URL + USER_MANAGEMENT_PATH + '/delete-manual-user', {
+    params: {
+      userId
+    }
+  }).then(response => response.data)
+}
+
+function importUserList (file, schoolId) {
+  const formData = new FormData()
+  formData.append('file', file)
+  formData.append('schoolId', schoolId)
+
+  return axios.post(constants.JSON_WS_URL + USER_MANAGEMENT_PATH + '/user-list-import',
+    formData
+  ).then(response => response.data)
 }
 
 function getSchoolOrgs (schoolId) {

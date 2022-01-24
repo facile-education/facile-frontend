@@ -102,7 +102,7 @@ export default {
   },
   computed: {
     schools () {
-      return this.$store.state.userManagement.schools
+      return this.$store.state.user.schoolList
     },
     isUserSelected () {
       return this.selectedUser !== undefined && this.selectedUser.userId !== undefined

@@ -45,13 +45,10 @@ export default {
       return this.$store.state.mediacenter.managerUIUrl
     }
   },
-  beforeCreate () {
-    this.$store.dispatch('mediacenter/getManagerUIUrl')
-  },
-  mounted () {
-    if (this.managerUrl) {
+  created () {
+    this.$store.dispatch('mediacenter/getManagerUIUrl').then(() => {
       window.open(this.managerUrl)
-    }
+    })
   }
 }
 </script>
