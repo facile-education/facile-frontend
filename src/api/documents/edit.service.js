@@ -4,8 +4,7 @@ import { getCookie } from '@utils/browser.util'
 
 export default {
   createFolder,
-  renameEntity,
-  deleteEntities
+  renameEntity
 }
 
 const EDIT_PATH = '/documents.edit'
@@ -34,19 +33,6 @@ function renameEntity (entity, name) {
     params: {
       p_auth: getCookie('pauth'),
       recordsList: JSON.stringify(listRecToRename)
-    }
-  }).then(response => response.data)
-}
-
-/**
- * Delete definitely the specified entities from the document library (and return a list of the failed entities if some failed)
- */
-function deleteEntities (folderIdArray, fileIdArray) {
-  return axios.get(constants.JSON_WS_URL + EDIT_PATH + '/delete-documents', {
-    params: {
-      p_auth: getCookie('pauth'),
-      folderIdArray: JSON.stringify(folderIdArray),
-      fileIdArray: JSON.stringify(fileIdArray)
     }
   }).then(response => response.data)
 }

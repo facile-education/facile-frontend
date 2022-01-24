@@ -1,5 +1,5 @@
 import store from '@store/index.js'
-import documentService from '@/api/documents/edit.service'
+import trashService from '@/api/documents/trash.service'
 import fileService from '@/api/documents/file.service'
 import folderService from '@/api/documents/folder.service'
 import activityService from '@/api/documents/activity.service'
@@ -157,7 +157,7 @@ function deleteEntities (selectedEntities) {
   const listFilesIdToDelete = listFilesToDelete.map(file => file.id)
 
   store.dispatch('currentActions/addAction', { name: 'deleteDefinitely' })
-  documentService.deleteEntities(listFoldersIdToDelete, listFilesIdToDelete).then((data) => {
+  trashService.deleteEntities(listFoldersIdToDelete, listFilesIdToDelete).then((data) => {
     store.dispatch('currentActions/removeAction', { name: 'deleteDefinitely' })
     if (data.success) {
       if (data.failedEntitiesList.length !== 0) {
