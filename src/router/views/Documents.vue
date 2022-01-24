@@ -184,7 +184,7 @@ export default {
           break
         case 'delete':
           this.$store.dispatch('warningModal/addWarning', {
-            text: this.$t('router.views.Documents.Warning.deleteDocument'),
+            text: this.$t('deletionWarning'),
             lastAction: { fct: deleteEntities, params: [this.selectedDocuments] }
           })
           break
@@ -293,3 +293,9 @@ export default {
 }
 
 </style>
+
+<i18n locale="fr">
+{
+  "deletionWarning": "Ce document sera définitivement perdu"
+}
+</i18n>
