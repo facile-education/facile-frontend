@@ -24,7 +24,7 @@
         :has-separator="option.hasSeparator"
         :sub-menu="option.subMenu"
         :position="{x: position.x, y: position.y + option.position*54}"
-        @selectOption="emitOption(option.name)"
+        @selectOption="emitOption(option)"
         @isContextMenuMobileExtended="subMenuMobileManagement"
         @emitSubOption="emitOption"
         @close="closeMenu"
@@ -145,19 +145,19 @@ export default {
       if (top > largestHeight) top = largestHeight
       return top
     },
-    emitOption (optionName) {
+    emitOption (option) {
       let isSubOption = true
       for (let i = 0; i < this.options.length; ++i) { // if the option selected are not grayed
-        if (this.options[i].name === optionName) {
+        if (this.options[i].name === option) {
           isSubOption = false
           if (!this.options[i].isGrayed) {
-            this.$emit('chooseOption', optionName)
+            this.$emit('chooseOption', option)
           }
           break
         }
       }
       if (isSubOption) { // it's not my role to check if the option is grayed
-        this.$emit('chooseOption', optionName)
+        this.$emit('chooseOption', option)
       }
     },
     subMenuMobileManagement (isContextMenuMobileExtended) {
