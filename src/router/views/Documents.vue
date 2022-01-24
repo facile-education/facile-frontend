@@ -164,7 +164,7 @@ export default {
       }
     },
     handleOption (option) {
-      switch (option) {
+      switch (option.name) {
         case 'copy':
           this.$store.dispatch('clipboard/copy')
           break
@@ -209,21 +209,21 @@ export default {
     keyMonitor: function (event) {
       // F2 for renaming
       if ((event.key === 'F2') && this.selectedDocuments.length === 1) {
-        this.handleOption('rename')
+        this.handleOption({ name: 'rename' })
         // 'Suppr' for deletion
       } else if (event.key === 'Delete') {
-        this.handleOption('delete')
+        this.handleOption({ name: 'delete' })
       } else if (event.ctrlKey && ((event.key === 'c') || (event.key === 'C'))) {
-        this.handleOption('copy')
+        this.handleOption({ name: 'copy' })
         // ctrl-X to cut
       } else if (event.ctrlKey && ((event.key === 'x') || (event.key === 'X'))) {
-        this.handleOption('cut')
+        this.handleOption({ name: 'cut' })
         // ctrl-V to paste
       } else if (event.ctrlKey && ((event.key === 'v') || (event.key === 'V'))) {
-        this.handleOption('paste')
+        this.handleOption({ name: 'paste' })
         // ctrl-D to duplicate
       } else if (event.ctrlKey && ((event.key === 'd') || (event.key === 'D'))) {
-        this.handleOption('duplicate')
+        this.handleOption({ name: 'duplicate' })
       }
     },
     importDocument (fileList) {
