@@ -1,6 +1,7 @@
 <template>
   <GenericDocument
     class="folder-document"
+    data-test="folder"
     :class="{ 'active': isActive }"
     :document="folder"
     :document-icon="folderIcon"

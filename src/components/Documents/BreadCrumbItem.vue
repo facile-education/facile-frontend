@@ -11,6 +11,7 @@
     <div
       v-if="(mq.phone || mq.tablet) && !isFirstElement"
       class="return-back"
+      data-test="back"
       @click="clickBack"
     >
       <img

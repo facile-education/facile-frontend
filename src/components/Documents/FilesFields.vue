@@ -1,6 +1,7 @@
 <template>
   <div
     class="fields"
+    data-test="fields"
     :class="mq.phone ? 'phone-fields' : ''"
   >
     <div

@@ -1,5 +1,6 @@
 <template>
   <GenericDocument
+    data-test="file"
     :document="file"
     :document-icon="fileIcon"
     :quick-options="quickOptions"
