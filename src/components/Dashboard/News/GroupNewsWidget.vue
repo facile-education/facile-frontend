@@ -1,6 +1,7 @@
 <template>
   <Widget
     :can-add-content="canAddGroupNews"
+    @scrollReachBottom="loadGroupNews"
     @addContent="openNewsModal"
   >
     <template #header>
@@ -64,8 +65,7 @@ export default {
   components: { BaseIcon, RenvoiActivity, MembershipActivity, DocActivity, News, NewsModal, Widget },
   data () {
     return {
-      startIndex: 0,
-      endIndex: 10,
+      nbGroupNewsPerPage: 10,
       isNewsModalDisplayed: false
     }
   },
@@ -78,9 +78,12 @@ export default {
     }
   },
   created () {
-    this.$store.dispatch('dashboard/getGroupActivities', { startIndex: this.startIndex, endIndex: this.endIndex })
+    this.loadGroupNews()
   },
   methods: {
+    loadGroupNews () {
+      this.$store.dispatch('dashboard/getGroupActivities', { startIndex: this.groupActivities.length, endIndex: this.groupActivities.length + this.nbGroupNewsPerPage })
+    },
     openNewsModal () {
       this.$store.dispatch('dashboard/setEditedNews', {})
       this.isNewsModalDisplayed = true

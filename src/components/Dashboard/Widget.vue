@@ -17,13 +17,19 @@
         >
       </PentilaButton>
     </header>
-    <section class="content">
+    <section
+      ref="scroll"
+      class="content"
+      @scroll="handleScroll"
+    >
       <slot />
     </section>
   </div>
 </template>
 
 <script>
+let oldScrollTop = 0
+
 export default {
   name: 'Widget',
   props: {
@@ -32,10 +38,23 @@ export default {
       default: false
     }
   },
-  emits: ['addContent'],
+  emits: ['addContent', 'scrollReachBottom'],
   methods: {
     addContent () {
       this.$emit('addContent')
+    },
+    handleScroll () {
+      const scroll = this.$refs.scroll
+      if (scroll.scrollTop > oldScrollTop) { // if we go down
+        const nbPixelsBeforeBottom = scroll.scrollHeight - (scroll.scrollTop + scroll.clientHeight)
+
+        if (nbPixelsBeforeBottom === 0) {
+          if (!this.$store.getters['currentActions/isInProgress']('loadThreads')) {
+            this.$emit('scrollReachBottom')
+          }
+        }
+      }
+      oldScrollTop = scroll.scrollTop
     }
   }
 }
