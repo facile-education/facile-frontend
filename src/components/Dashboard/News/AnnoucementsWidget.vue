@@ -44,7 +44,7 @@ import Widget from '@components/Dashboard/Widget'
 import BaseIcon from '@components/Base/BaseIcon'
 
 export default {
-  name: 'SchoolNewsWidget',
+  name: 'AnnouncementsWidget',
   components: { BaseIcon, Widget, News, NewsModal },
   props: {
   },

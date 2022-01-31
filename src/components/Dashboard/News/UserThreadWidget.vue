@@ -61,7 +61,7 @@ import MembershipActivity from '@components/Dashboard/Activities/MembershipActiv
 import RenvoiActivity from '@components/Dashboard/Activities/RenvoiActivity'
 import BaseIcon from '@components/Base/BaseIcon'
 export default {
-  name: 'GroupNewsWidget',
+  name: 'UserThreadWidget',
   components: { BaseIcon, RenvoiActivity, MembershipActivity, DocActivity, News, NewsModal, Widget },
   data () {
     return {
