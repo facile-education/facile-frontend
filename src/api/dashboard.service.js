@@ -18,11 +18,13 @@ function initDashboard () {
   }).then(response => response.data)
 }
 
-function getGroupActivities (startIndex, endIndex) {
+function getGroupActivities (startIndex, endIndex, nbActivities, fromDate) {
   return axios.get(constants.JSON_WS_URL + DASHBOARD_PATH + DASHBOARD_CTX + 'get-group-activities', {
     params: {
       startIndex: startIndex,
-      endIndex: endIndex
+      endIndex: endIndex,
+      nbActivities: nbActivities,
+      fromDate: fromDate
     }
   }).then(response => response.data)
 }

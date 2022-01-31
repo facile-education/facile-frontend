@@ -60,12 +60,13 @@ import DocActivity from '@components/Dashboard/Activities/DocActivity'
 import MembershipActivity from '@components/Dashboard/Activities/MembershipActivity'
 import RenvoiActivity from '@components/Dashboard/Activities/RenvoiActivity'
 import BaseIcon from '@components/Base/BaseIcon'
+import { nbActivityPerPage } from '@/constants/dashboardConstants'
+
 export default {
   name: 'UserThreadWidget',
   components: { BaseIcon, RenvoiActivity, MembershipActivity, DocActivity, News, NewsModal, Widget },
   data () {
     return {
-      nbGroupNewsPerPage: 10,
       isNewsModalDisplayed: false
     }
   },
@@ -82,7 +83,12 @@ export default {
   },
   methods: {
     loadGroupNews () {
-      this.$store.dispatch('dashboard/getGroupActivities', { startIndex: this.groupActivities.length, endIndex: this.groupActivities.length + this.nbGroupNewsPerPage })
+      this.$store.dispatch('dashboard/getGroupActivities', {
+        startIndex: this.groupActivities.length,
+        endIndex: this.groupActivities.length + nbActivityPerPage,
+        nbActivities: nbActivityPerPage,
+        fromDate: this.groupActivities.length > 0 ? this.groupActivities[this.groupActivities.length - 1].modificationDate : '-1'
+      })
     },
     openNewsModal () {
       this.$store.dispatch('dashboard/setEditedNews', {})
