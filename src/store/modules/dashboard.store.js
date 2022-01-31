@@ -104,8 +104,8 @@ export const actions = {
         console.error(err)
       })
   },
-  getGroupActivities ({ commit }, { startIndex, endIndex }) {
-    getGroupActivities(startIndex, endIndex).then(
+  getGroupActivities ({ commit }, { startIndex, endIndex, nbActivities, fromDate }) {
+    getGroupActivities(startIndex, endIndex, nbActivities, fromDate).then(
       (data) => {
         if (data.success) {
           commit('addGroupNews', data.activities)
