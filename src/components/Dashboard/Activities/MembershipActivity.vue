@@ -2,12 +2,20 @@
   <div
     class="activity"
   >
-    <p>a membership activity</p>
-    <span>{{ activity.title }}</span>
+    <div>
+      <span>{{ activity.actionUserName }}</span>
+      <span v-t="activity.type === activityTypes.TYPE_ADD_MEMBERSHIP ? 'add' : 'remove' " />
+      <span>{{ activity.shortTargetUserNames !== "" ? activity.shortTargetUserNames : activity.targetUserNames }}</span>
+      <span v-t="'toTheGroup' " />
+      <span> {{ activity.groupName }}</span>
+    </div>
+    <div> {{ activity.modificationDate }}</div>
   </div>
 </template>
 
 <script>
+import { activityTypes } from '@/constants/dashboardConstants'
+
 export default {
   name: 'MembershipActivity',
   props: {
@@ -18,6 +26,7 @@ export default {
   },
   data () {
     return {
+      activityTypes: activityTypes
     }
   },
   computed: {
@@ -33,7 +42,6 @@ export default {
 @import '@design';
 
 .activity {
-  display: flex;
   border: 1px solid rgba(0, 0, 0, 0.2);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
@@ -41,6 +49,8 @@ export default {
 
 <i18n locale="fr">
 {
-  "groups-activity": "Fil d'activité de mes groupes"
+  "add": "a ajouté ",
+  "toTheGroup": " au groupe",
+  "remove": "a retiré "
 }
 </i18n>

@@ -27,11 +27,11 @@
           @edit-news="isNewsModalDisplayed = true"
         />
         <DocActivity
-          v-else-if="activity.type <= 8"
+          v-else-if="activity.type <= activityTypes.TYPE_FOLDER_DELETION"
           :activity="activity"
         />
         <MembershipActivity
-          v-else-if="activity.type <= 10"
+          v-else-if="activity.type <= activityTypes.TYPE_REMOVE_MEMBERSHIP"
           :activity="activity"
         />
         <RenvoiActivity
@@ -60,14 +60,15 @@ import DocActivity from '@components/Dashboard/Activities/DocActivity'
 import MembershipActivity from '@components/Dashboard/Activities/MembershipActivity'
 import RenvoiActivity from '@components/Dashboard/Activities/RenvoiActivity'
 import BaseIcon from '@components/Base/BaseIcon'
-import { nbActivityPerPage } from '@/constants/dashboardConstants'
+import { nbActivityPerPage, activityTypes } from '@/constants/dashboardConstants'
 
 export default {
   name: 'UserThreadWidget',
   components: { BaseIcon, RenvoiActivity, MembershipActivity, DocActivity, News, NewsModal, Widget },
   data () {
     return {
-      isNewsModalDisplayed: false
+      isNewsModalDisplayed: false,
+      activityTypes: activityTypes
     }
   },
   computed: {
