@@ -112,7 +112,7 @@ export default {
   beforeUnmount () {
     window.removeEventListener('click', this.clickOutside)
     window.removeEventListener('contextmenu', this.clickOutside)
-    // To by sure that it will close
+    // To be sure that it will close
     if (!this.isSubMenu) {
       this.closeMenu()
     }
