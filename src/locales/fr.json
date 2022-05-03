@@ -226,12 +226,13 @@
       "callRollButton": "Faire l'appel"
     },
     "StudentRegistrationModal": {
-      "arrival": "Enregistré: ",
+      "arrival": "Heure d'arrivée en salle de renvoi: ",
       "class": "Elèves de:",
       "commentPlaceholder": "Motif de la retenue",
       "firedBy": "Renvoyé par: ",
       "haveToSelectSlot": "Veuillez sélectionner un cours",
       "haveToSelectSubject": "Veuillez sélectionner une discipline",
+      "haveToSelectValidTime": "Veuillez saisir un horaire valide (hh:mm)",
       "header": "Inscription",
       "deregistrationHeader": "Désinscription",
       "notifyParents": "Notifier les parents",

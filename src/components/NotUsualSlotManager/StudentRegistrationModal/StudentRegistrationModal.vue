@@ -42,7 +42,16 @@
       >
         <div class="arrival">
           <span v-t="'NotUsualSlots.StudentRegistrationModal.arrival'" />
-          <span>{{ arrivalTime }}</span>
+          <PentilaInput
+            v-model="inputStartHour"
+            class="input"
+            :placeholder="'hh:mm'"
+            :labelled="false"
+          />
+          <PentilaErrorMessage
+            v-if="error"
+            :error-message="error"
+          />
         </div>
         <div class="source-slot">
           <span
@@ -166,6 +175,9 @@ export default {
       studentsDaySessions: [],
       availableSubjects: [],
       haveToSelectSlot: false,
+      registrationDate: dayjs(),
+      error: '',
+      inputStartHour: dayjs().format('HH:mm'),
       selectedSubject: { subjectId: -1, name: this.$t('NotUsualSlots.StudentRegistrationModal.selectSubject') },
       selectedSession: { sessionId: -1, label: this.$t('NotUsualSlots.StudentRegistrationModal.selectSlot') },
       dropdownSelectedTeacher: undefined
@@ -201,6 +213,21 @@ export default {
     },
     student () {
       return this.removedStudent || this.$store.state.notUsualSlots.queriedUser
+    }
+  },
+  watch: {
+    inputStartHour (value) {
+      const hour = dayjs(value, 'HH:mm', true)
+
+      if (hour.isValid()) {
+        this.error = ''
+        this.registrationDate = dayjs(dayjs(this.event.start).format('YYYY-MM-DD') + ' ' + value, 'YYYY-MM-DD HH:mm')
+      } else {
+        this.error = this.$t('NotUsualSlots.StudentRegistrationModal.haveToSelectValidTime')
+      }
+    },
+    selectedSession () {
+      this.haveToSelectSlot = false
     }
   },
   created () {
@@ -293,7 +320,7 @@ export default {
     registerFiring () {
       const sourceTeacherId = this.selectedSession.teacher ? this.selectedSession.teacher.teacherId : this.selectedSession.teachers.length > 1 ? this.dropdownSelectedTeacher.teacherId : this.selectedSession.teachers[0].teacherId
       const sourceSchoollifeSessionId = (this.selectedSession.schoollifeSessionId === undefined) ? 0 : this.selectedSession.schoollifeSessionId
-      schoolLifeService.registerFiring(this.event.extendedProps.id, this.student, this.selectedSession.sessionId, sourceTeacherId, sourceSchoollifeSessionId).then((data) => {
+      schoolLifeService.registerFiring(this.event.extendedProps.id, this.student, this.selectedSession.sessionId, sourceTeacherId, sourceSchoollifeSessionId, this.registrationDate.format('YYYY-MM-DD HH:mm')).then((data) => {
         if (data.success) {
           this.$store.dispatch('notUsualSlots/refreshCalendar')
           this.closeModal()
@@ -352,6 +379,13 @@ h3 {
 .comment {
   height: 100px;
   margin-bottom: 15px;
+}
+
+.input {
+  max-width: 62px;
+  padding-left: 8px;
+  padding-right: 8px;
+  border-bottom: none;
 }
 
 .notify-parents {

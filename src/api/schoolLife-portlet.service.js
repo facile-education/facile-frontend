@@ -198,14 +198,15 @@ function unRegisterStudent (student, slotId, comment, notifyParents, allSessions
 /**
  * Register student firing (fields: success)
  */
-function registerFiring (slotId, student, sourceSessionId, sourceTeacherId, sourceSchoollifeSessionId) {
+function registerFiring (slotId, student, sourceSessionId, sourceTeacherId, sourceSchoollifeSessionId, registrationDate) {
   return axios.get(constants.JSON_WS_URL + SCHOOL_LIFE_RENVOI_PATH + '/register-student-renvoi', {
     params: {
       schoollifeSessionId: slotId,
       studentId: student.studentId,
       sourceSessionId: sourceSessionId,
       sourceTeacherId: sourceTeacherId,
-      sourceSchoollifeSessionId: sourceSchoollifeSessionId
+      sourceSchoollifeSessionId: sourceSchoollifeSessionId,
+      registrationDate: registrationDate
     }
   }).then(response => response.data)
 }
