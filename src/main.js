@@ -35,16 +35,31 @@ app.mount('#app')
 
 const calendar = require('dayjs/plugin/calendar')
 dayjs.extend(calendar)
+
+const updateLocale = require('dayjs/plugin/updateLocale')
+dayjs.extend(updateLocale)
 dayjs.locale(fr)
 
-// TODO: to translate
-dayjs().calendar(null, {
-  sameDay: '[Today at] h:mm A', // The same day ( Today at 2:30 AM )
-  nextDay: '[Tomorrow]', // The next day ( Tomorrow at 2:30 AM )
-  nextWeek: 'dddd', // The next week ( Sunday at 2:30 AM )
-  lastDay: '[Yesterday]', // The day before ( Yesterday at 2:30 AM )
-  lastWeek: '[Last] dddd', // Last week ( Last Monday at 2:30 AM )
-  sameElse: 'DD/MM/YYYY' // Everything else ( 7/10/2011 )
+dayjs.updateLocale('en', {
+  calendar: {
+    lastDay: '[Yesterday at] h:mm A',
+    sameDay: '[Today at] h:mm A',
+    nextDay: '[Tomorrow at] LT',
+    lastWeek: '[last] dddd [at] LT',
+    nextWeek: 'dddd [at] LT',
+    sameElse: 'L'
+  }
+})
+
+dayjs.updateLocale('fr', {
+  calendar: {
+    sameDay: '[Aujourd\'hui à] HH:mm', // The same day ( Today at 2:30 AM )
+    nextDay: '[Demain]', // The next day ( Tomorrow at 2:30 AM )
+    nextWeek: 'dddd', // The next week ( Sunday at 2:30 AM )
+    lastDay: '[Hier]', // The day before ( Yesterday at 2:30 AM )
+    lastWeek: 'dddd [dernier]', // Last week ( Last Monday at 2:30 AM )
+    sameElse: 'DD/MM/YYYY' // Everything else ( 7/10/2011 )
+  }
 })
 
 if (window.Cypress) {
