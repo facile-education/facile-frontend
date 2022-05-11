@@ -124,7 +124,12 @@ function returnAddedFiles (e, store, allowMultiple = true, requiresTypeCheck = f
     } else {
       const filesObj = e.target.files
       for (let i = 0; i < filesObj.length; ++i) { // Necessary to have a array of object
-        listFiles.push(filesObj[i])
+        if (filesObj[i].webkitRelativePath) {
+          const newFile = new File([filesObj[i]], filesObj[i].webkitRelativePath, { type: filesObj[i].type })
+          listFiles.push(newFile)
+        } else {
+          listFiles.push(filesObj[i])
+        }
       }
       checkFilesType(allowMultiple, requiresTypeCheck, acceptedTypes)
       checkFilesSize(listFiles, store)
