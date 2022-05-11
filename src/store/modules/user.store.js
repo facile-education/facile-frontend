@@ -17,7 +17,6 @@ export const state = {
   isStudent: false,
   isTeacher: false,
   isParent: false,
-  maxUploadSize: 9,
   hasWebdavEnabled: false,
   schoolList: [],
   details: {},

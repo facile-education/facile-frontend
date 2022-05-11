@@ -1,3 +1,5 @@
+import i18n from '@/i18n'
+
 let listFiles = []
 
 function checkFilesType (allowMultiple, requiresTypeCheck, acceptedTypes) {
@@ -13,11 +15,13 @@ function checkFilesType (allowMultiple, requiresTypeCheck, acceptedTypes) {
   }
 }
 
-function checkFilesSize (currentListFiles, store, maxUploadSize) {
+function checkFilesSize (currentListFiles, store) {
   const invalidFilesList = []
+  const maxUploadSize = store.state.documents.documentsProperties.maxUploadSize
 
   for (let i = 0; i < currentListFiles.length; ++i) {
     if (currentListFiles[i].size >= maxUploadSize) {
+      console.error('invalid size: ' + currentListFiles[i].size + ' max is: ' + maxUploadSize)
       invalidFilesList.push(currentListFiles[i])
       // remove file from list
       currentListFiles.splice(i, 1)
@@ -26,10 +30,15 @@ function checkFilesSize (currentListFiles, store, maxUploadSize) {
   }
 
   if (invalidFilesList.length !== 0) {
-    store.dispatch('error/setErrorType', 'reachMaxSize')
-    store.dispatch('error/setListFilesConcerns', invalidFilesList)
-    store.dispatch('monDrive/openErrorModal')
+    // TODO Handle error
+    // store.dispatch('error/setErrorType', 'reachMaxSize')
+    // store.dispatch('error/setListFilesConcerns', invalidFilesList)
+    // store.dispatch('monDrive/openErrorModal')
   }
+}
+
+function alertNoFile () {
+  alert(i18n.global.t('Documents.errorNoFiles'))
 }
 
 // Browse directory recursively and update listFiles
@@ -81,7 +90,7 @@ function addFilesFromDirectory (directory, path) {
   })
 }
 
-function returnAddedFiles (e, store, maxUploadSize, allowMultiple = true, requiresTypeCheck = false, acceptedTypes = []) {
+function returnAddedFiles (e, store, allowMultiple = true, requiresTypeCheck = false, acceptedTypes = []) {
   return new Promise((resolve) => {
     listFiles = []
     const wasDropped = e.dataTransfer
@@ -94,7 +103,7 @@ function returnAddedFiles (e, store, maxUploadSize, allowMultiple = true, requir
         if ((item.webkitGetAsEntry != null) && (entry = item.webkitGetAsEntry()) && entry.isDirectory) {
           addFilesFromDirectory(entry, entry.name).then(() => {
             checkFilesType(allowMultiple, requiresTypeCheck, acceptedTypes)
-            checkFilesSize(listFiles, store, maxUploadSize)
+            checkFilesSize(listFiles, store)
             resolve(listFiles)
           })
         } else {
@@ -108,7 +117,7 @@ function returnAddedFiles (e, store, maxUploadSize, allowMultiple = true, requir
             listFiles.push(undefined)
           }
           checkFilesType(allowMultiple, requiresTypeCheck, acceptedTypes)
-          checkFilesSize(listFiles, store, maxUploadSize)
+          checkFilesSize(listFiles, store)
           resolve(listFiles)
         }
       }
@@ -118,12 +127,13 @@ function returnAddedFiles (e, store, maxUploadSize, allowMultiple = true, requir
         listFiles.push(filesObj[i])
       }
       checkFilesType(allowMultiple, requiresTypeCheck, acceptedTypes)
-      checkFilesSize(listFiles, store, maxUploadSize)
+      checkFilesSize(listFiles, store)
       resolve(listFiles)
     }
   })
 }
 
 export {
-  returnAddedFiles
+  returnAddedFiles,
+  alertNoFile
 }

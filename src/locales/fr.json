@@ -143,6 +143,7 @@
   "Documents": {
     "folder": "Dossier",
     "files": "Fichiers",
+    "errorNoFiles": "Il n'y a aucun fichier valide à téléverser !",
     "documentFields": {
       "name": "Nom",
       "lastModifiedDate": "Dernière modif."
