@@ -25,6 +25,7 @@ fontAwesomeIconLibrary.add(
   require('@fortawesome/free-solid-svg-icons/faCheckDouble').definition,
   require('@fortawesome/free-solid-svg-icons/faChevronDown').definition,
   require('@fortawesome/free-solid-svg-icons/faChevronUp').definition,
+  require('@fortawesome/free-solid-svg-icons/faChevronRight').definition,
   require('@fortawesome/free-solid-svg-icons/faCircle').definition,
   require('@fortawesome/free-solid-svg-icons/faCode').definition,
   require('@fortawesome/free-solid-svg-icons/faCog').definition,
