@@ -58,11 +58,14 @@
 <script>
 
 import BaseIcon from '@components/Base/BaseIcon'
+import { defineAsyncComponent } from 'vue'
+const ContextMenu = defineAsyncComponent(() => import('@components/ContextMenu/ContextMenu'))
+
 export default {
   name: 'ContextMenuItem',
   components: {
     BaseIcon,
-    ContextMenu: () => import('@/components/ContextMenu/ContextMenu')
+    ContextMenu
   },
   inject: ['mq'],
   props: {
