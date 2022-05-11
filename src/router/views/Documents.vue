@@ -76,6 +76,7 @@ import ContextMenu from '@components/ContextMenu/ContextMenu'
 import { documentSpaceOptions } from '@/constants/options'
 import FilePickerArea from '@components/FilePicker/FilePickerArea'
 import { computeDocumentsOptions, downLoadDocument, deleteEntities, importDocuments } from '@utils/documents.util'
+import { returnAddedFiles, alertNoFile } from '@utils/upload.util'
 
 export default {
   name: 'Documents',
@@ -199,6 +200,12 @@ export default {
           this.$store.dispatch('post/setFile', this.document)
           this.$store.dispatch('modals/openCreatePostModal')
           break
+        case 'uploadFolder':
+          this.importDocumentFromWorkSpace(true)
+          break
+        case 'uploadFiles':
+          this.importDocumentFromWorkSpace(false)
+          break
         default:
           console.error('unknown action for option', option)
       }
@@ -225,6 +232,36 @@ export default {
       } else if (event.ctrlKey && ((event.key === 'd') || (event.key === 'D'))) {
         this.handleOption({ name: 'duplicate' })
       }
+    },
+    importDocumentFromWorkSpace (isFolder) {
+      // Create hidden inputFile
+      const input = document.createElement('input')
+      input.id = 'generated-file-input'
+      input.style.display = 'none'
+      input.type = 'file'
+      if (isFolder) {
+        input.webkitdirectory = true
+        input.directory = true
+        input.multiple = false
+      } else {
+        input.accept = '*/*'
+        input.multiple = true
+      }
+      input.onchange = e => {
+        returnAddedFiles(e, this.$store).then((files) => {
+          if (files.length !== 0) {
+            this.importDocument(files)
+          } else {
+            alertNoFile()
+          }
+
+          // Delete input
+          document.getElementById('generated-file-input').remove()
+        })
+      }
+
+      // Click it
+      input.click()
     },
     importDocument (fileList) {
       importDocuments(this.currentFolderId, fileList)
