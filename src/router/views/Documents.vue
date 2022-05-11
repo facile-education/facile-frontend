@@ -236,7 +236,6 @@ export default {
     importDocumentFromWorkSpace (isFolder) {
       // Create hidden inputFile
       const input = document.createElement('input')
-      input.id = 'generated-file-input'
       input.style.display = 'none'
       input.type = 'file'
       if (isFolder) {
@@ -254,9 +253,6 @@ export default {
           } else {
             alertNoFile()
           }
-
-          // Delete input
-          document.getElementById('generated-file-input').remove()
         })
       }
 
