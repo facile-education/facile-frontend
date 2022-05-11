@@ -37,9 +37,10 @@
           :alt="title"
         >
       </div>
-      <i
+      <BaseIcon
         v-if="hasSubMenu"
-        class="sub-menu-caret fas fa-caret-right"
+        class="sub-menu-chevron"
+        name="chevron-right"
       />
     </div>
     <ContextMenu
@@ -208,6 +209,10 @@ export default {
     .icon {
       background-color: $color-hover-bg;
     }
+
+    .sub-menu-chevron{
+      color: black;
+    }
   }
 }
 
@@ -224,8 +229,8 @@ export default {
     text-align: center;
   }
 
-  .sub-menu-caret{
-    margin-left: auto;
+  .sub-menu-chevron{
+    margin-left: 10px;
   }
 
 </style>
