@@ -35,7 +35,7 @@
 
 <script>
 import ContextMenuItem from '@/components/ContextMenu/ContextMenuItem'
-import _ from 'lodash'
+// import _ from 'lodash'
 
 export default {
   name: 'ContextMenu',
@@ -76,7 +76,8 @@ export default {
   computed: {
     position () {
       if (this.isSubMenu) {
-        return _.orderBy(this.MenuPosition, 'position', 'asc')
+        // return _.orderBy(this.menuPosition, 'position', 'asc')
+        return this.menuPosition
       } else {
         return this.$store.state.contextMenu.contextMenuPosition
       }
