@@ -1,0 +1,143 @@
+<template>
+  <PentilaWindow
+    class="folder-name-modal"
+    :class="mq.phone ? 'mobile': ''"
+    :modal="true"
+    @close="onClose"
+    @keydown.exact.enter.stop="createFolder"
+    @keydown.exact.backspace.stop=""
+    @keydown.exact.delete.stop=""
+    @keydown.exact.f2.stop=""
+    @keydown.ctrl.stop=""
+  >
+    <template #header>
+      <span v-t="'createHeader'" />
+    </template>
+
+    <template #body>
+      <PentilaInput
+        ref="folderNameInput"
+        v-model="form.folderName"
+        class="name-input"
+        data-test="folderName-input"
+        :error-type="formErrorList"
+        @blur="v$.form.folderName.$touch()"
+      />
+    </template>
+
+    <template #footer>
+      <PentilaButton
+        data-test="submitButton"
+        :label="$t('createSubmit')"
+        @click="createFolder"
+      />
+    </template>
+  </PentilaWindow>
+</template>
+
+<script>
+import { required } from '@vuelidate/validators'
+import { useVuelidate } from '@vuelidate/core'
+import folderServices from '@/api/documents/folder.service'
+
+const isFolderNameValid = (str) => {
+  return !(str.trim() === '') // test if folder name is not only spaces
+}
+// TODO
+// const notBeginByDot = (value) => validators.notBeginByDot(value)
+// const containsNoCotes = (value) => validators.containsNoCotes(value)
+// const isUnderMaxSize = (value) => validators.isUnderMaxSize(value)
+
+export default {
+  name: 'FolderNameModal',
+  inject: ['mq'],
+  emits: ['close'],
+  setup: () => ({ v$: useVuelidate() }),
+  data () {
+    return {
+      form: {
+        folderName: ''
+      }
+    }
+  },
+  validations: {
+    form: {
+      folderName: {
+        required,
+        isFolderNameValid
+      }
+    }
+  },
+  computed: {
+    currentFolderId () {
+      return this.$store.state.documents.currentFolderId
+    }
+  },
+  mounted () {
+    const input = this.$refs.folderNameInput
+    input.focus()
+    input.select()
+  },
+  methods: {
+    formErrorList () {
+      return (this.v$.form.folderName.$invalid && this.v$.form.folderName.$dirty)
+        ? (!this.v$.form.folderName.required
+            ? 'required'
+            : (!this.v$.form.folderName.isFolderNameValid
+                ? 'invalidVersionName'
+                : ''))
+        : ''
+    },
+    createFolder () {
+      if (this.v$.$invalid) { // form checking
+        this.v$.$touch()
+      } else {
+        folderServices.createFolder(this.currentFolderId, this.form.folderName).then((data) => {
+          if (data.success) {
+            this.$store.dispatch('documents/refreshCurrentFolder')
+            this.onClose()
+          } else {
+            console.error('An error was occured')
+          }
+        })
+      }
+    },
+    onClose () {
+      this.$emit('close')
+    }
+  }
+}
+</script>
+
+<style lang="scss">
+.folder-name-modal.mobile {
+  .window-wrapper {
+    max-width: 95vw;
+    width: 100%;
+  }
+}
+</style>
+
+<style lang="scss" scoped>
+.folder-name-modal {
+  display: flex;
+}
+
+.name-input {
+  min-width: 500px;
+}
+
+.mobile {
+  .name-input {
+    width: 100%;
+    min-width: 0;
+  }
+}
+</style>
+
+<i18n locale="fr">
+{
+  "createHeader": "Nouveau dossier",
+  "createSubmit": "Créer"
+}
+</i18n>
