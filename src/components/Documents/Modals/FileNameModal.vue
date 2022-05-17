@@ -16,21 +16,22 @@
 
     <template #body>
       <PentilaInput
-        ref="folderNameInput"
-        v-model="form.folderName"
+        ref="fileNameInput"
+        v-model="inputText"
         class="name-input"
         data-test="folderName-input"
         :error-type="formErrorList"
-        @blur="v$.form.folderName.$touch()"
+        @blur="v$.inputText.$touch()"
       />
-      <p
-        v-if="entityToRename.type==='File'"
-        class="extension"
-      >
+      <p class="extension">
         .{{ entityExtension }}
       </p>
       <PentilaErrorMessage
         :error-message="formErrorList"
+      />
+
+      <AudioRecorderModal
+        v-if="submitAction==='createAudio'"
       />
     </template>
 
@@ -51,6 +52,7 @@ import { required } from '@vuelidate/validators'
 import constants from '@/constants/appConstants'
 import apiConstants from '@/api/constant'
 import fileServices from '@/api/documents/file.service'
+import AudioRecorderModal from '@components/Progression/Edit/AudioRecorderModal'
 
 // const notBeginByDot = (value) => validators.notBeginByDot(value)
 // const containsNoCotes = (value) => validators.containsNoCotes(value)
@@ -59,6 +61,7 @@ import fileServices from '@/api/documents/file.service'
 
 export default {
   name: 'FileNameModal',
+  components: { AudioRecorderModal },
   inject: ['mq'],
   props: {
     initFile: {
@@ -77,7 +80,7 @@ export default {
     }
   },
   validations: {
-    newName: {
+    inputText: {
       required
       // notBeginByDot,
       // containsNoCotes,
@@ -86,48 +89,59 @@ export default {
     }
   },
   computed: {
-    entityToRename () {
-      return this.$store.state.modals.renameModal.entityToRename
-    },
     // siblingEntities () {
     //   const parentFolder = filesService.getParentFolder(
     //     this.$store.state.privateFilesManager.privateLoadedTree,
-    //     this.entityToRename
+    //     this.initFile
     //   )
     //   let entities = this.$store.getters['privateFilesManager/entitiesInNode'](parentFolder.id)
     //   entities = entities.subFolders.concat(entities.files)
-    //   utils.removeEntitiesFromArray(entities, [this.entityToRename])
+    //   utils.removeEntitiesFromArray(entities, [this.initFile])
     //   return entities
     // },
     entityExtension () {
-      const parts = this.entityToRename.name.split('.')
-      return parts[parts.length - 1]
-    },
-    fileNameWithoutExtension () {
-      return this.entityToRename.name.split('.').slice(0, -1).join('.')
-    },
-    newName () {
-      if (this.entityToRename.type === 'File') {
-        return this.inputText.trim().concat('.' + this.entityExtension)
-      } else {
-        return this.inputText.trim()
+      const parts = this.initFile.name.split('.')
+      switch (this.submitAction) {
+        case 'rename':
+          return parts[parts.length - 1]
+        case 'createODT': // TODO: put all that logic in ONE objet to avoid multiple conditions
+          return apiConstants.ODT_TYPE
+        case 'createODS':
+          return apiConstants.ODS_TYPE
+        case 'createOTP':
+          return apiConstants.ODP_TYPE
+        case 'createAudio':
+          return apiConstants.AUDIO_TYPE
+        case 'createHTML':
+          return apiConstants.HTML_TYPE
+        case 'createMindMap':
+          return apiConstants.MINDMAP_TYPE
+        case 'createGeogebra':
+          return apiConstants.GEOGEBRA_TYPE
+        case 'createScratch':
+          return apiConstants.SCRATCH_TYPE
+        default:
+          console.error('Cannot compute extension for option ' + this.submitAction)
+          return ''
       }
     },
+    fileNameWithoutExtension () {
+      return this.initFile.name.split('.').slice(0, -1).join('.')
+    },
     formErrorList () {
-      if (this.v$.newName.$invalid && this.v$.newName.$dirty) {
-        if (this.v$.newName.$errors[0].$validator === 'required') {
-          return this.$t('AppCommonsLabels.formErrors.required')
-        } else if (this.v$.newName.$errors[0].$validator === 'notBeginByDot') {
-          return this.$t('AppCommonsLabels.formErrors.notBeginByDot')
-        } else if (this.v$.newName.$errors[0].$validator === 'containsNoCotes') {
-          return this.$t('AppCommonsLabels.formErrors.containsNoCotes')
-          // } else if (!this.v$.newName.hasNoSiblingWithSameName) {
-          //   return 'a document with the same name already exist in the current folder'
-        } else {
+      if (this.v$.inputText.$invalid && this.v$.inputText.$dirty) {
+        if (this.v$.inputText.$errors[0].$validator === 'required') {
+          return this.$t('Commons.required')
+        }
+        // else if (this.v$.inputText.$errors[0].$validator === 'notBeginByDot') {
+        //   return this.$t('AppCommonsLabels.formErrors.notBeginByDot')
+        // } else if (this.v$.inputText.$errors[0].$validator === 'containsNoCotes') {
+        //   return this.$t('AppCommonsLabels.formErrors.containsNoCotes')
+        // } else if (!this.v$.inputText.hasNoSiblingWithSameName) {
+        //   return 'a document with the same name already exist in the current folder'
+        else {
           return this.$t('AppCommonsLabels.formErrors.sizeLimit1') + // it only could be that
-            ((this.entityToRename.type === 'Folder')
-              ? constants.entityNameMaxSize.folder
-              : constants.entityNameMaxSize.file) +
+            (constants.entityNameMaxSize.file) +
             this.$t('AppCommonsLabels.formErrors.sizeLimit2')
         }
       } else {
@@ -136,15 +150,12 @@ export default {
     }
   },
   created () {
-    // be careful if this.entityToRename could be undefined at this point
-    if (this.entityToRename.type === 'File') {
+    if (this.submitAction === 'rename') {
       this.inputText = this.fileNameWithoutExtension
-    } else {
-      this.inputText = this.entityToRename.name
     }
   },
   mounted () {
-    const input = document.getElementById('pentila-rename-input')
+    const input = this.$refs.fileNameInput
     input.focus()
     input.select()
   },
@@ -197,7 +208,7 @@ export default {
         if (data.success) {
           this.$store.dispatch('documents/refreshCurrentFolder')
           this.onClose()
-          // TODO open the craeated file
+          // TODO open the created file in edition
         } else {
           console.error('An error was occurred')
         }
@@ -206,7 +217,7 @@ export default {
     rename () {
       console.log('todo')
       // this.$store.dispatch('files/renameEntity', {
-      //   entity: this.entityToRename,
+      //   entity: this.initFile,
       //   name: this.newName,
       //   currentSpace: this.$route.name
       // })
