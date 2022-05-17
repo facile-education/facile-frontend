@@ -6,6 +6,10 @@ import PentilaUtils from 'pentila-utils'
 export default {
   uploadFile,
   getResource,
+  createMindMapFile,
+  createGeogebraFile,
+  createScratchFile,
+  createLoolFile,
   removeLoolToken
 }
 
@@ -27,6 +31,55 @@ function uploadFile (folderId, file) {
   return axios.post(
     constants.JSON_WS_URL + FILE_PATH + '/upload-file?',
     formData
+  ).then(response => response.data)
+}
+
+/**
+ * Create MindMap file
+ */
+function createMindMapFile (targetFolderId, fileName) {
+  return axios.post(constants.JSON_WS_URL + FILE_PATH + '/create-mindmap-file',
+    PentilaUtils.URL.params({
+      targetFolderId,
+      fileName
+    })
+  ).then(response => response.data)
+}
+
+/**
+ * Create Geogebra file
+ */
+function createGeogebraFile (targetFolderId, fileName) {
+  return axios.post(constants.JSON_WS_URL + FILE_PATH + '/create-geogebra-file',
+    PentilaUtils.URL.params({
+      targetFolderId,
+      fileName
+    })
+  ).then(response => response.data)
+}
+
+/**
+ * Create Scratch file
+ */
+function createScratchFile (targetFolderId, fileName) {
+  return axios.post(constants.JSON_WS_URL + FILE_PATH + '/create-scratch-file',
+    PentilaUtils.URL.params({
+      targetFolderId,
+      fileName
+    })
+  ).then(response => response.data)
+}
+
+/**
+ * Create Lool file
+ */
+function createLoolFile (targetFolderId, fileName, type) {
+  return axios.post(constants.JSON_WS_URL + FILE_PATH + '/create-lool-file',
+    PentilaUtils.URL.params({
+      targetFolderId,
+      fileName,
+      type
+    })
   ).then(response => response.data)
 }
 
