@@ -4,7 +4,7 @@
     :class="mq.phone ? 'mobile': ''"
     :modal="true"
     @close="onClose"
-    @keydown.exact.enter.stop="createFolder"
+    @keydown.exact.enter.stop="submit"
     @keydown.exact.backspace.stop=""
     @keydown.exact.delete.stop=""
     @keydown.exact.f2.stop=""
@@ -29,7 +29,7 @@
       <PentilaButton
         data-test="submitButton"
         :label="$t('createSubmit')"
-        @click="createFolder"
+        @click="submit"
       />
     </template>
   </PentilaWindow>
@@ -51,6 +51,16 @@ const isFolderNameValid = (str) => {
 export default {
   name: 'FolderNameModal',
   inject: ['mq'],
+  props: {
+    initFolder: {
+      type: Object,
+      default: undefined
+    },
+    submitAction: {
+      type: String,
+      required: true
+    }
+  },
   emits: ['close'],
   setup: () => ({ v$: useVuelidate() }),
   data () {
@@ -88,19 +98,31 @@ export default {
                 : ''))
         : ''
     },
-    createFolder () {
+    submit () {
       if (this.v$.$invalid) { // form checking
         this.v$.$touch()
       } else {
-        folderServices.createFolder(this.currentFolderId, this.form.folderName).then((data) => {
-          if (data.success) {
-            this.$store.dispatch('documents/refreshCurrentFolder')
-            this.onClose()
-          } else {
-            console.error('An error was occured')
-          }
-        })
+        switch (this.submitAction) {
+          case 'createFolder':
+            this.createFolder()
+            break
+          case 'rename':
+            console.log('todo')
+            break
+          default:
+            console.error('Unknown submit action: ' + this.submitAction)
+        }
       }
+    },
+    createFolder () {
+      folderServices.createFolder(this.currentFolderId, this.form.folderName).then((data) => {
+        if (data.success) {
+          this.$store.dispatch('documents/refreshCurrentFolder')
+          this.onClose()
+        } else {
+          console.error('An error was occurred')
+        }
+      })
     },
     onClose () {
       this.$emit('close')

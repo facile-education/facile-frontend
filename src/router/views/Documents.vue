@@ -63,7 +63,15 @@
       <!--      />-->
       <FolderNameModal
         v-if="isFolderNameModalDisplayed"
+        :submit-action="modalSubmitAction"
+        :init-folder="documentToRename"
         @close="isFolderNameModalDisplayed=false"
+      />
+      <FileNameModal
+        v-if="isFileNameModalDisplayed"
+        :submit-action="modalSubmitAction"
+        :init-file="documentToRename"
+        @close="isFileNameModalDisplayed=false"
       />
     </teleport>
   </Layout>
@@ -82,15 +90,19 @@ import FilePickerArea from '@components/FilePicker/FilePickerArea'
 import { computeDocumentsOptions, downLoadDocument, deleteEntities, importDocuments } from '@utils/documents.util'
 import { returnAddedFiles, alertNoFile } from '@utils/upload.util'
 import FolderNameModal from '@components/Documents/Modals/FolderNameModal'
+import FileNameModal from '@components/Documents/Modals/FileNameModal'
 
 export default {
   name: 'Documents',
-  components: { FolderNameModal, FilePickerArea, ContextMenu, DocumentDetails, DocumentList, Breadcrumb, CurrentOptions, Layout },
+  components: { FileNameModal, FolderNameModal, FilePickerArea, ContextMenu, DocumentDetails, DocumentList, Breadcrumb, CurrentOptions, Layout },
   inject: ['mq'],
   data () {
     return {
       isFolderNameModalDisplayed: false,
-      isContextMenuDisplayed: false
+      isFileNameModalDisplayed: false,
+      isContextMenuDisplayed: false,
+      modalSubmitAction: undefined,
+      documentToRename: undefined
     }
   },
   computed: {
@@ -198,9 +210,6 @@ export default {
         case 'download':
           downLoadDocument(this.selectedDocuments[0])
           break
-        case 'rename':
-          this.$store.dispatch('modals/openRenameModal', this.selectedDocuments[0])
-          break
         case 'share':
           this.$store.dispatch('post/setIndicator', undefined)
           this.$store.dispatch('post/setFile', this.document)
@@ -212,9 +221,36 @@ export default {
         case 'uploadFiles':
           this.importDocumentFromWorkSpace(false)
           break
+        case 'rename':
+          this.modalSubmitAction = 'rename'
+          this.documentToRename = this.selectedDocuments[0]
+          if (this.documentToRename.type === 'Folder') {
+            this.isFolderNameModalDisplayed = true
+          } else {
+            this.isFileNameModalDisplayed = true
+          }
+          break
         case 'newFolder':
+          this.modalSubmitAction = 'createFolder'
           this.isFolderNameModalDisplayed = true
           break
+        case 'newODT':
+          this.modalSubmitAction = 'createODT'
+          this.isFileNameModalDisplayed = true
+          break
+        case 'newGeogebra':
+          this.modalSubmitAction = 'createGeogebra'
+          this.isFileNameModalDisplayed = true
+          break
+        case 'newMindMap':
+          this.modalSubmitAction = 'createMindMap'
+          this.isFileNameModalDisplayed = true
+          break
+        case 'newScratch':
+          this.modalSubmitAction = 'createScratch'
+          this.isFileNameModalDisplayed = true
+          break
+
         default:
           console.error('unknown action for option', option)
       }

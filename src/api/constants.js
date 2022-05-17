@@ -1,3 +1,5 @@
+const ODT_TYPE = 'odt'
+
 const JSON_WS_URL = '/api/jsonws'
 
 const APPLICATION_MANAGER_URL = '/group/313701/applications?p_p_id=gestionApps_WAR_gestionApplicationsportlet&p_p_lifecycle=2&p_p_state=exclusive&p_p_mode=view&p_p_cacheability=cacheLevelPage&controlPanelCategory=portlet_gestionApps_WAR_gestionApplicationsportlet'
@@ -8,5 +10,6 @@ export default {
   APPLICATION_MANAGER_URL,
   COMMUNICATION_MANAGER_URL,
   DASHBOARD_MANAGER_URL,
-  JSON_WS_URL
+  JSON_WS_URL,
+  ODT_TYPE
 }
