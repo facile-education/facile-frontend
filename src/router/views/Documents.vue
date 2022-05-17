@@ -230,6 +230,7 @@ export default {
             this.isFileNameModalDisplayed = true
           }
           break
+        // TODO HTML, ODS, ODP
         case 'newFolder':
           this.modalSubmitAction = 'createFolder'
           this.isFolderNameModalDisplayed = true
@@ -248,6 +249,10 @@ export default {
           break
         case 'newScratch':
           this.modalSubmitAction = 'createScratch'
+          this.isFileNameModalDisplayed = true
+          break
+        case 'newAudio':
+          this.modalSubmitAction = 'createAudio'
           this.isFileNameModalDisplayed = true
           break
 
