@@ -61,6 +61,10 @@
       <!--        @confirmDeletion="deleteDefinitely"-->
       <!--        @close="isDeleteDefinitelyModalDisplayed=false"-->
       <!--      />-->
+      <FolderNameModal
+        v-if="isFolderNameModalDisplayed"
+        @close="isFolderNameModalDisplayed=false"
+      />
     </teleport>
   </Layout>
 </template>
@@ -77,13 +81,15 @@ import { documentSpaceOptions } from '@/constants/options'
 import FilePickerArea from '@components/FilePicker/FilePickerArea'
 import { computeDocumentsOptions, downLoadDocument, deleteEntities, importDocuments } from '@utils/documents.util'
 import { returnAddedFiles, alertNoFile } from '@utils/upload.util'
+import FolderNameModal from '@components/Documents/Modals/FolderNameModal'
 
 export default {
   name: 'Documents',
-  components: { FilePickerArea, ContextMenu, DocumentDetails, DocumentList, Breadcrumb, CurrentOptions, Layout },
+  components: { FolderNameModal, FilePickerArea, ContextMenu, DocumentDetails, DocumentList, Breadcrumb, CurrentOptions, Layout },
   inject: ['mq'],
   data () {
     return {
+      isFolderNameModalDisplayed: false,
       isContextMenuDisplayed: false
     }
   },
@@ -205,6 +211,9 @@ export default {
           break
         case 'uploadFiles':
           this.importDocumentFromWorkSpace(false)
+          break
+        case 'newFolder':
+          this.isFolderNameModalDisplayed = true
           break
         default:
           console.error('unknown action for option', option)

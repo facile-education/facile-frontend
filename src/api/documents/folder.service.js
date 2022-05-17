@@ -1,9 +1,11 @@
 import axios from 'axios'
 import constants from '@/api/constants'
 import { getCookie } from '@utils/browser.util'
+import PentilaUtils from 'pentila-utils'
 
 export default {
   downloadFolder,
+  createFolder,
   getAllEntities,
   getFolderBreadcrumb
 }
@@ -20,6 +22,18 @@ function downloadFolder (folderId) {
       folderId: folderId
     }
   }).then(response => response.data)
+}
+
+/**
+ * Create a folder
+ */
+function createFolder (targetFolderId, folderName) {
+  return axios.post(constants.JSON_WS_URL + FOLDER_PATH + '/create-folder',
+    PentilaUtils.URL.params({
+      targetFolderId,
+      folderName
+    })
+  ).then(response => response.data)
 }
 
 /**
