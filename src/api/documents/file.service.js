@@ -5,6 +5,7 @@ import PentilaUtils from 'pentila-utils'
 
 export default {
   uploadFile,
+  renameFile,
   getResource,
   createMindMapFile,
   createGeogebraFile,
@@ -35,13 +36,25 @@ function uploadFile (folderId, file) {
 }
 
 /**
+ * Rename a file
+ */
+function renameFile (fileId, fileName) {
+  return axios.post(constants.JSON_WS_URL + FILE_PATH + '/rename-file',
+    PentilaUtils.URL.params({
+      fileId,
+      fileName
+    })
+  ).then(response => response.data)
+}
+
+/**
  * Create MindMap file
  */
-function createMindMapFile (targetFolderId, fileName) {
+function createMindMapFile (folderId, name) {
   return axios.post(constants.JSON_WS_URL + FILE_PATH + '/create-mindmap-file',
     PentilaUtils.URL.params({
-      targetFolderId,
-      fileName
+      folderId,
+      name
     })
   ).then(response => response.data)
 }
@@ -49,11 +62,11 @@ function createMindMapFile (targetFolderId, fileName) {
 /**
  * Create Geogebra file
  */
-function createGeogebraFile (targetFolderId, fileName) {
+function createGeogebraFile (folderId, name) {
   return axios.post(constants.JSON_WS_URL + FILE_PATH + '/create-geogebra-file',
     PentilaUtils.URL.params({
-      targetFolderId,
-      fileName
+      folderId,
+      name
     })
   ).then(response => response.data)
 }
@@ -61,11 +74,11 @@ function createGeogebraFile (targetFolderId, fileName) {
 /**
  * Create Scratch file
  */
-function createScratchFile (targetFolderId, fileName) {
+function createScratchFile (folderId, name) {
   return axios.post(constants.JSON_WS_URL + FILE_PATH + '/create-scratch-file',
     PentilaUtils.URL.params({
-      targetFolderId,
-      fileName
+      folderId,
+      name
     })
   ).then(response => response.data)
 }
@@ -73,11 +86,11 @@ function createScratchFile (targetFolderId, fileName) {
 /**
  * Create Lool file
  */
-function createLoolFile (targetFolderId, fileName, type) {
+function createLoolFile (folderId, name, type) {
   return axios.post(constants.JSON_WS_URL + FILE_PATH + '/create-lool-file',
     PentilaUtils.URL.params({
-      targetFolderId,
-      fileName,
+      folderId,
+      name,
       type
     })
   ).then(response => response.data)
