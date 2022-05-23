@@ -6,6 +6,7 @@ import PentilaUtils from 'pentila-utils'
 export default {
   downloadFolder,
   createFolder,
+  renameFolder,
   getAllEntities,
   getFolderBreadcrumb
 }
@@ -32,6 +33,18 @@ function createFolder (targetFolderId, folderName) {
     PentilaUtils.URL.params({
       targetFolderId,
       folderName
+    })
+  ).then(response => response.data)
+}
+
+/**
+ * Rename a folder
+ */
+function renameFolder (folderId, fileName) {
+  return axios.post(constants.JSON_WS_URL + FOLDER_PATH + '/rename-folder',
+    PentilaUtils.URL.params({
+      folderId,
+      fileName
     })
   ).then(response => response.data)
 }

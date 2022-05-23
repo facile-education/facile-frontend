@@ -22,55 +22,11 @@
           :error-message="formErrorList.audioName"
         />
       </div>
-      <div
-        v-if="!isStopped"
-        class="icon"
-        :class="{'pulse': isRecording}"
-      >
-        <NeroIcon name="microphone" />
-      </div>
-      <p
-        v-t="'recording'"
-        class="state"
-        :class="{'recording': isRecording}"
+
+      <AudioRecorder
+        @audioFile="setAudioFile"
+        @stoppedState="setStoppedState"
       />
-      <div
-        v-if="isStopped"
-        ref="wavesurfer"
-      />
-      <div class="timer">
-        {{ timerLabel }}
-      </div>
-      <div class="actions">
-        <template v-if="isStopped">
-          <PentilaButton @click="toggleAudio">
-            <NeroIcon :name="isAudioPlaying ? 'pause' : 'play'" />
-            <span>{{ isAudioPlaying ? $t('pause') : $t('listen') }}</span>
-          </PentilaButton>
-          <PentilaButton
-            cls="cancel"
-            @click="restartRecording"
-          >
-            <NeroIcon name="undo" />
-            <span>{{ $t('restart') }}</span>
-          </PentilaButton>
-        </template>
-        <template v-else>
-          <PentilaButton @click="toggleRecording">
-            <NeroIcon :name="isRecording ? 'pause' : 'play'" />
-            <span>{{ isPaused ? $t('continue') : isRecording ? $t('pause') : $t('start') }}</span>
-          </PentilaButton>
-          <PentilaButton
-            cls="cancel"
-            :disabled="!isRecording && !isPaused"
-            @click="stopRecording"
-          >
-            <NeroIcon name="stop" />
-            <span>{{ $t('stop') }}</span>
-          </PentilaButton>
-        </template>
-        <PentilaErrorMessage :error-message="errorMessage" />
-      </div>
     </template>
 
     <template #footer>
@@ -84,16 +40,13 @@
 </template>
 
 <script>
-import RecordRTC from 'recordrtc'
-import WaveSurfer from 'wavesurfer.js'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
-
-import NeroIcon from '@/components/Nero/NeroIcon'
+import AudioRecorder from '@components/Nero/AudioRecorder'
 
 export default {
   name: 'AudioRecorderModal',
-  components: { NeroIcon },
+  components: { AudioRecorder },
   props: {
     duration: {
       type: Number,
@@ -108,14 +61,10 @@ export default {
   },
   data () {
     return {
+      audioFile: undefined,
+      isStopped: false,
       audioName: '',
-      errorMessage: '',
-      isAudioPlaying: false,
-      recorder: undefined,
-      state: 'inactive',
-      stream: undefined,
-      timer: 0,
-      waveSurfer: undefined
+      errorMessage: ''
     }
   },
   computed: {
@@ -123,22 +72,6 @@ export default {
       return {
         audioName: (this.v$.audioName.$invalid && this.v$.audioName.$dirty) ? this.$t('Commons.required') : ''
       }
-    },
-    isPaused () {
-      return this.state === 'paused'
-    },
-    isRecording () {
-      return this.state === 'recording'
-    },
-    isStopped () {
-      return this.state === 'stopped'
-    },
-    timerLabel () {
-      let minutes = Math.floor(this.timer / 60)
-      minutes = minutes < 10 ? '0' + minutes : minutes
-      let seconds = Math.trunc(this.timer) % 60
-      seconds = seconds < 10 ? '0' + seconds : seconds
-      return `${minutes}:${seconds}`
     }
   },
   mounted () {
@@ -147,134 +80,28 @@ export default {
     input.focus()
     input.select()
   },
-  beforeUnmount () {
-    if (this.stream) {
-      const tracks = this.stream.getTracks()
-      tracks[0].stop()
-    }
-    if (this.recorder) {
-      this.recorder.destroy()
-    }
-    if (this.waveSurfer) {
-      this.waveSurfer.destroy()
-    }
-  },
   methods: {
-    checkUserMediaAccess () {
-      if (this.stream) {
-        this.startRecording(this.stream)
-      } else if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        navigator.mediaDevices.getUserMedia({ audio: true })
-          .then(this.startRecording,
-            () => {
-              this.errorMessage = this.$t('deniedError')
-            })
-      } else {
-        this.errorMessage = this.$t('browserError')
-      }
+    setStoppedState (state) {
+      this.isStopped = state
+    },
+    setAudioFile (file) {
+      this.audioFile = file
     },
     closeModal () {
       this.$emit('close')
-    },
-    displayStream () {
-      const options = {
-        container: this.$refs.wavesurfer,
-        waveColor: '#a3a3a3',
-        progressColor: this.$store.state.theme.mainColor
-      }
-
-      this.waveSurfer = WaveSurfer.create(options)
-      this.waveSurfer.on('audioprocess', () => { this.timer = Math.trunc(this.waveSurfer.getCurrentTime()) })
-      this.waveSurfer.on('seek', () => { this.timer = this.waveSurfer.getCurrentTime() })
-      this.waveSurfer.on('finish', () => { this.timer = 0; this.isAudioPlaying = false })
-      this.waveSurfer.loadBlob(this.recorder.getBlob())
     },
     addRecord (e) {
       e.preventDefault()
       if (this.v$.$invalid) {
         this.v$.$touch()
       } else if (this.isStopped) {
-        const recordedBlob = this.recorder.getBlob()
-
-        // TODO File name with input when used in documents
-        const fileName = `enregistrement_${Date.now()}.wav`
         const formData = new FormData()
-        formData.append('fileName', fileName)
-        formData.append('file', recordedBlob, fileName)
+        formData.append('fileName', this.audioFile.name)
+        formData.append('file', this.audioFile)
         formData.append('contentName', this.audioName)
         this.$emit('save', formData)
 
         this.closeModal()
-      }
-    },
-    pauseRecording () {
-      if (this.isRecording) {
-        this.recorder.pauseRecording()
-      } else {
-        this.recorder.resumeRecording()
-        this.stopWatch()
-      }
-    },
-    restartRecording () {
-      // Reset recorded data and timer
-      this.recorder.reset()
-      this.timer = 0
-
-      if (this.wavesurfer !== undefined) {
-        this.wavesurfer.destroy()
-        this.wavesurfer = undefined
-      }
-    },
-    startRecording (stream) {
-      if (!this.recorder) {
-        this.stream = stream
-        this.errorMessage = ''
-
-        // Initialize recorder
-        this.recorder = RecordRTC(this.stream, {
-          disableLogs: true,
-          // Does not work on firefox
-          // ondataavailable: () => {
-          //   console.log('data available')
-          //   if (this.isRecording) this.timer += 1
-          //   if (this.timer >= this.duration) this.stopRecording()
-          // },
-          timeSlice: 1000,
-          type: 'audio'
-        })
-        this.recorder.onStateChanged = (state) => { this.state = state }
-      }
-
-      // Start recording
-      this.recorder.startRecording()
-      this.stopWatch()
-    },
-    stopRecording () {
-      if (!this.isRecording && !this.isPaused) return
-      this.recorder.stopRecording((recordingURL) => {
-        this.timer = 0
-        this.displayStream()
-      })
-    },
-    stopWatch () {
-      if (this.isRecording) {
-        setTimeout(() => {
-          this.timer += 0.1
-          // Stop recording if above max duration
-          if (this.timer >= this.duration) this.stopRecording()
-          this.stopWatch()
-        }, 100)
-      }
-    },
-    toggleAudio () {
-      this.waveSurfer.playPause()
-      this.isAudioPlaying = this.waveSurfer.isPlaying()
-    },
-    toggleRecording () {
-      if (this.isRecording || this.isPaused) {
-        this.pauseRecording()
-      } else {
-        this.checkUserMediaAccess()
       }
     }
   }

@@ -107,7 +107,7 @@ export default {
             this.createFolder()
             break
           case 'rename':
-            console.log('todo')
+            this.renameFolder()
             break
           default:
             console.error('Unknown submit action: ' + this.submitAction)
@@ -116,6 +116,16 @@ export default {
     },
     createFolder () {
       folderServices.createFolder(this.currentFolderId, this.form.folderName).then((data) => {
+        if (data.success) {
+          this.$store.dispatch('documents/refreshCurrentFolder')
+          this.onClose()
+        } else {
+          console.error('An error was occurred')
+        }
+      })
+    },
+    renameFolder () {
+      folderServices.renameFolder(this.initFolder.folderId, this.form.folderName).then((data) => {
         if (data.success) {
           this.$store.dispatch('documents/refreshCurrentFolder')
           this.onClose()

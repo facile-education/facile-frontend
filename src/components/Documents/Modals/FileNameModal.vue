@@ -30,13 +30,16 @@
         :error-message="formErrorList"
       />
 
-      <AudioRecorderModal
+      <AudioRecorder
         v-if="submitAction==='createAudio'"
+        @audioFile="setAudioFile"
+        @stoppedState="setStoppedState"
       />
     </template>
 
     <template #footer>
       <PentilaButton
+        v-if="!(submitAction==='createAudio' && !stoppedState)"
         data-test="submitButton"
         :label="$t('createSubmit')"
         @click="submit"
@@ -50,9 +53,9 @@ import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 // import validators from '@/utils/validators'
 import constants from '@/constants/appConstants'
-import apiConstants from '@/api/constant'
+import apiConstants from '@/api/constants'
 import fileServices from '@/api/documents/file.service'
-import AudioRecorderModal from '@components/Progression/Edit/AudioRecorderModal'
+import AudioRecorder from '@components/Nero/AudioRecorder'
 
 // const notBeginByDot = (value) => validators.notBeginByDot(value)
 // const containsNoCotes = (value) => validators.containsNoCotes(value)
@@ -61,7 +64,7 @@ import AudioRecorderModal from '@components/Progression/Edit/AudioRecorderModal'
 
 export default {
   name: 'FileNameModal',
-  components: { AudioRecorderModal },
+  components: { AudioRecorder },
   inject: ['mq'],
   props: {
     initFile: {
@@ -73,10 +76,14 @@ export default {
       required: true
     }
   },
+  emits: ['close', 'openFile'],
   setup: () => ({ v$: useVuelidate() }),
   data () {
     return {
-      inputText: ''
+      inputText: '',
+      // AudioRecorder data
+      stoppedState: false,
+      audioFile: undefined
     }
   },
   validations: {
@@ -99,10 +106,14 @@ export default {
     //   utils.removeEntitiesFromArray(entities, [this.initFile])
     //   return entities
     // },
+    currentFolderId () {
+      return this.$store.state.documents.currentFolderId
+    },
     entityExtension () {
-      const parts = this.initFile.name.split('.')
       switch (this.submitAction) {
         case 'rename':
+          // eslint-disable-next-line no-case-declarations
+          const parts = this.initFile.name.split('.')
           return parts[parts.length - 1]
         case 'createODT': // TODO: put all that logic in ONE objet to avoid multiple conditions
           return apiConstants.ODT_TYPE
@@ -132,6 +143,10 @@ export default {
       if (this.v$.inputText.$invalid && this.v$.inputText.$dirty) {
         if (this.v$.inputText.$errors[0].$validator === 'required') {
           return this.$t('Commons.required')
+        } else {
+          return this.$t('AppCommonsLabels.formErrors.sizeLimit1') + // it only could be that
+            (constants.entityNameMaxSize.file) +
+            this.$t('AppCommonsLabels.formErrors.sizeLimit2')
         }
         // else if (this.v$.inputText.$errors[0].$validator === 'notBeginByDot') {
         //   return this.$t('AppCommonsLabels.formErrors.notBeginByDot')
@@ -139,11 +154,6 @@ export default {
         //   return this.$t('AppCommonsLabels.formErrors.containsNoCotes')
         // } else if (!this.v$.inputText.hasNoSiblingWithSameName) {
         //   return 'a document with the same name already exist in the current folder'
-        else {
-          return this.$t('AppCommonsLabels.formErrors.sizeLimit1') + // it only could be that
-            (constants.entityNameMaxSize.file) +
-            this.$t('AppCommonsLabels.formErrors.sizeLimit2')
-        }
       } else {
         return ''
       }
@@ -160,6 +170,12 @@ export default {
     input.select()
   },
   methods: {
+    setStoppedState (state) {
+      this.stoppedState = state
+    },
+    setAudioFile (file) {
+      this.audioFile = file
+    },
     submit () {
       if (this.v$.$invalid) { // form checking
         this.v$.$touch()
@@ -168,7 +184,8 @@ export default {
       }
     },
     createMindMap () {
-      fileServices.createMindMapFile(this.currentFolderId, this.newName).then((data) => {
+      fileServices.createMindMapFile(this.currentFolderId, this.inputText).then((data) => {
+        console.log(data)
         if (data.success) {
           this.$store.dispatch('documents/refreshCurrentFolder')
           this.onClose()
@@ -179,7 +196,7 @@ export default {
       })
     },
     createGeogebra () {
-      fileServices.createGeogebraFile(this.currentFolderId, this.newName).then((data) => {
+      fileServices.createGeogebraFile(this.currentFolderId, this.inputText).then((data) => {
         if (data.success) {
           this.$store.dispatch('documents/refreshCurrentFolder')
           this.onClose()
@@ -190,7 +207,7 @@ export default {
       })
     },
     createScratch () {
-      fileServices.createScratchFile(this.currentFolderId, this.newName).then((data) => {
+      fileServices.createScratchFile(this.currentFolderId, this.inputText).then((data) => {
         if (data.success) {
           this.$store.dispatch('documents/refreshCurrentFolder')
           this.onClose()
@@ -204,7 +221,18 @@ export default {
       this.createLoolFile(apiConstants.ODT_TYPE)
     },
     createLoolFile (type) {
-      fileServices.createLoolFile(this.currentFolderId, this.newName, type).then((data) => {
+      fileServices.createLoolFile(this.currentFolderId, this.inputText, type).then((data) => {
+        if (data.success) {
+          this.$store.dispatch('documents/refreshCurrentFolder')
+          this.onClose()
+          // TODO open the created file in edition
+        } else {
+          console.error('An error was occurred')
+        }
+      })
+    },
+    createAudio () {
+      fileServices.createAudioFile(this.currentFolderId, this.inputText, this.audioFile).then((data) => {
         if (data.success) {
           this.$store.dispatch('documents/refreshCurrentFolder')
           this.onClose()
@@ -215,16 +243,17 @@ export default {
       })
     },
     rename () {
-      console.log('todo')
-      // this.$store.dispatch('files/renameEntity', {
-      //   entity: this.initFile,
-      //   name: this.newName,
-      //   currentSpace: this.$route.name
-      // })
-      this.onClose()
+      fileServices.renameFile(this.initFile.fileId, this.inputText).then((data) => {
+        if (data.success) {
+          this.$store.dispatch('documents/refreshCurrentFolder')
+          this.onClose()
+        } else {
+          console.error('An error was occurred')
+        }
+      })
     },
     onClose () {
-      this.$store.dispatch('modals/closeRenameModal')
+      this.$emit('close')
     }
   }
 }

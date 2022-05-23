@@ -42,6 +42,13 @@ const documentSpaceOptions = [
         title: i18n.global.t('Documents.options.newScratch'),
         icon: icons.extensions.sb3,
         position: 2,
+        hasSeparator: false
+      },
+      {
+        name: 'newAudio',
+        title: i18n.global.t('Documents.options.newAudio'),
+        icon: icons.extensions.mp3,
+        position: 3,
         hasSeparator: true
       }
     ]
