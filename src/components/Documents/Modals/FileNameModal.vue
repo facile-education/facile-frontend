@@ -11,7 +11,7 @@
     @keydown.ctrl.stop=""
   >
     <template #header>
-      <span v-t="'createHeader'" />
+      <span v-t="submitAction==='rename' ? 'renameHeader' : 'createHeader'" />
     </template>
 
     <template #body>
@@ -41,7 +41,7 @@
       <PentilaButton
         v-if="!(submitAction==='createAudio' && !stoppedState)"
         data-test="submitButton"
-        :label="$t('createSubmit')"
+        :label="submitAction==='rename' ? $t('rename') : $t('createSubmit')"
         @click="submit"
       />
     </template>
@@ -184,34 +184,39 @@ export default {
       }
     },
     createMindMap () {
+      this.$store.dispatch('currentActions/addAction', { name: 'createFile' })
       fileServices.createMindMapFile(this.currentFolderId, this.inputText).then((data) => {
-        console.log(data)
+        this.$store.dispatch('currentActions/removeAction', { name: 'createFile' })
         if (data.success) {
           this.$store.dispatch('documents/refreshCurrentFolder')
+          this.$emit('openFile', data.file) // Open the created file to edit it
           this.onClose()
-          // TODO open the created file
         } else {
           console.error('An error was occurred')
         }
       })
     },
     createGeogebra () {
+      this.$store.dispatch('currentActions/addAction', { name: 'createFile' })
       fileServices.createGeogebraFile(this.currentFolderId, this.inputText).then((data) => {
+        this.$store.dispatch('currentActions/removeAction', { name: 'createFile' })
         if (data.success) {
           this.$store.dispatch('documents/refreshCurrentFolder')
+          this.$emit('openFile', data.file)
           this.onClose()
-          // TODO open the created file
         } else {
           console.error('An error was occurred')
         }
       })
     },
     createScratch () {
+      this.$store.dispatch('currentActions/addAction', { name: 'createFile' })
       fileServices.createScratchFile(this.currentFolderId, this.inputText).then((data) => {
+        this.$store.dispatch('currentActions/removeAction', { name: 'createFile' })
         if (data.success) {
           this.$store.dispatch('documents/refreshCurrentFolder')
+          this.$emit('openFile', data.file)
           this.onClose()
-          // TODO open the created file
         } else {
           console.error('An error was occurred')
         }
@@ -221,29 +226,34 @@ export default {
       this.createLoolFile(apiConstants.ODT_TYPE)
     },
     createLoolFile (type) {
+      this.$store.dispatch('currentActions/addAction', { name: 'createFile' })
       fileServices.createLoolFile(this.currentFolderId, this.inputText, type).then((data) => {
+        this.$store.dispatch('currentActions/removeAction', { name: 'createFile' })
         if (data.success) {
           this.$store.dispatch('documents/refreshCurrentFolder')
+          this.$emit('openFile', data.file)
           this.onClose()
-          // TODO open the created file in edition
         } else {
           console.error('An error was occurred')
         }
       })
     },
     createAudio () {
+      this.$store.dispatch('currentActions/addAction', { name: 'createFile' })
       fileServices.createAudioFile(this.currentFolderId, this.inputText, this.audioFile).then((data) => {
+        this.$store.dispatch('currentActions/removeAction', { name: 'createFile' })
         if (data.success) {
           this.$store.dispatch('documents/refreshCurrentFolder')
           this.onClose()
-          // TODO open the created file in edition
         } else {
           console.error('An error was occurred')
         }
       })
     },
     rename () {
-      fileServices.renameFile(this.initFile.fileId, this.inputText).then((data) => {
+      this.$store.dispatch('currentActions/addAction', { name: 'renameFile' })
+      fileServices.renameFile(this.initFile.id, this.inputText).then((data) => {
+        this.$store.dispatch('currentActions/removeAction', { name: 'renameFile' })
         if (data.success) {
           this.$store.dispatch('documents/refreshCurrentFolder')
           this.onClose()
@@ -309,3 +319,12 @@ p {
   }
 }
 </style>
+
+<i18n locale="fr">
+{
+  "createHeader": "Nouveau",
+  "createSubmit": "Créer",
+  "renameHeader": "Renommer",
+  "rename": "Renommer"
+}
+</i18n>

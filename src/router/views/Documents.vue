@@ -71,6 +71,7 @@
         v-if="isFileNameModalDisplayed"
         :submit-action="modalSubmitAction"
         :init-file="documentToRename"
+        @openFile="openFile"
         @close="isFileNameModalDisplayed=false"
       />
     </teleport>
@@ -181,6 +182,12 @@ export default {
             options: this.currentOptions
           })
       }
+    },
+    openFile (file) {
+      // Select file (not mandatory but more user-Friendly)
+      this.$store.dispatch('documents/selectOneDocument', file)
+      // Open it
+      this.$store.dispatch('documents/openFile', file)
     },
     handleOption (option) {
       switch (option.name) {
