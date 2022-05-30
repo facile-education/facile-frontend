@@ -10,7 +10,7 @@ const icons = {
     jpg: 'file-image',
     jpeg: 'file-image',
     mind: require('@assets/documentIcons/mind-map.png'),
-    mp3: 'music',
+    mp3: require('@assets/documentIcons/audio.svg'),
     mp4: 'film',
     mpg: 'film',
     mov: 'film',
