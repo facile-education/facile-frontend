@@ -127,6 +127,20 @@ const fileOptions = [
     icon: icons.options.delete,
     position: 4,
     hasSeparator: false
+  },
+  {
+    name: 'copyWebdavUrl',
+    title: i18n.global.t('Documents.options.copyWebdavUrl'),
+    icon: icons.options.copyWebdavUrl,
+    position: 5,
+    hasSeparator: false
+  },
+  {
+    name: 'details',
+    title: i18n.global.t('Documents.options.details'),
+    icon: icons.options.details,
+    position: 6,
+    hasSeparator: false
   }
 ]
 
@@ -164,6 +178,20 @@ const folderOptions = [
     title: i18n.global.t('Documents.options.delete'),
     icon: icons.options.delete,
     position: 4,
+    hasSeparator: false
+  },
+  {
+    name: 'copyWebdavUrl',
+    title: i18n.global.t('Documents.options.copyWebdavUrl'),
+    icon: icons.options.copyWebdavUrl,
+    position: 5,
+    hasSeparator: false
+  },
+  {
+    name: 'details',
+    title: i18n.global.t('Documents.options.details'),
+    icon: icons.options.details,
+    position: 6,
     hasSeparator: false
   }
 ]
