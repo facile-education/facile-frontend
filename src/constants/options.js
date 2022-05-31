@@ -70,7 +70,7 @@ const documentSpaceOptions = [
         title: i18n.global.t('Documents.options.newHTML'),
         icon: icons.extensions.html,
         position: 4,
-        hasSeparator: true
+        hasSeparator: false
       }
     ]
   },
@@ -133,14 +133,14 @@ const fileOptions = [
     title: i18n.global.t('Documents.options.delete'),
     icon: icons.options.delete,
     position: 4,
-    hasSeparator: false
+    hasSeparator: true
   },
   {
     name: 'copyWebdavUrl',
     title: i18n.global.t('Documents.options.copyWebdavUrl'),
     icon: icons.options.copyWebdavUrl,
     position: 5,
-    hasSeparator: false
+    hasSeparator: true
   },
   {
     name: 'details',

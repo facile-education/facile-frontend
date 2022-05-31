@@ -1,6 +1,8 @@
 
 export const state = {
   isAContextMenuDisplayed: false,
+  isSubMenuDisplay: false,
+  askForDeploySubMenu: false,
   contextMenuPosition: {
     x: 0,
     y: 0
@@ -11,6 +13,8 @@ export const state = {
 export const mutations = {
   closeMenus (state) {
     state.isAContextMenuDisplayed = false
+    state.isSubMenuDisplay = false
+    state.askForDeploySubMenu = false
   },
   updateContextMenuPosition (state, payload) {
     state.isAContextMenuDisplayed = true
@@ -19,6 +23,12 @@ export const mutations = {
   },
   updateContextMenuOptions (state, payload) {
     state.contextMenuOptions = payload
+  },
+  updateIsSubMenuDisplayStatus (state, payload) {
+    state.isSubMenuDisplay = payload
+  },
+  updateAskForDeploySubMenuStatus (state, payload) {
+    state.askForDeploySubMenu = payload
   }
 }
 
@@ -38,5 +48,11 @@ export const actions = {
   },
   setContextMenuOptions ({ commit }, options) {
     commit('updateContextMenuOptions', options)
+  },
+  setIsSubMenuDisplay ({ commit }, value) {
+    commit('updateIsSubMenuDisplayStatus', value)
+  },
+  setAskForDeploySubMenu ({ commit }, value) {
+    commit('updateAskForDeploySubMenuStatus', value)
   }
 }

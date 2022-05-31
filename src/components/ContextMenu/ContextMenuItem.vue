@@ -118,30 +118,61 @@ export default {
   emits: ['isContextMenuMobileExtended', 'selectOption', 'close', 'emitSubOption'],
   data () {
     return {
+      wantsToDeploy: false,
       isSubMenuDisplay: false,
       isHovering: false,
       subMenuPosition: { x: 0, y: 0 }
     }
   },
   computed: {
+    isaSubMenuDisplayed () {
+      return this.$store.state.contextMenu.isSubMenuDisplay
+    },
+    isAskingForDeploySubMenu () {
+      return this.$store.state.contextMenu.askForDeploySubMenu
+    },
     hasSubMenu () {
       return this.subMenu.length !== 0
+    }
+  },
+  watch: {
+    isaSubMenuDisplayed (value, oldValue) {
+      if (!value && this.wantsToDeploy) {
+        this.wantsToDeploy = false
+        this.$store.dispatch('contextMenu/setAskForDeploySubMenu', false)
+        this.deploySubMenu()
+      }
+    },
+    isAskingForDeploySubMenu (value, oldValue) {
+      if (value && this.isSubMenuDisplay) {
+        this.isSubMenuDisplay = false
+        this.$store.dispatch('contextMenu/setIsSubMenuDisplay', false)
+      }
     }
   },
   methods: {
     emitOption () {
       if (this.hasSubMenu) {
-        this.isSubMenuDisplay = !this.isSubMenuDisplay
-        if (this.isSubMenuDisplay && this.mq.phone) { // To be able to know in context menu if there is a subMenuMobile
-          this.$emit('isContextMenuMobileExtended', true)
+        if (!this.isaSubMenuDisplayed) {
+          this.deploySubMenu()
         } else {
-          this.$emit('isContextMenuMobileExtended', false)
-        }
-        if (this.isSubMenuDisplay) {
-          this.subMenuPosition = { x: this.computeXPosition(), y: this.computeYPosition() }
+          this.wantsToDeploy = true
+          this.$store.dispatch('contextMenu/setAskForDeploySubMenu', true)
         }
       } else {
         this.$emit('selectOption')
+      }
+    },
+    deploySubMenu () {
+      this.isSubMenuDisplay = !this.isSubMenuDisplay
+      if (this.isSubMenuDisplay && this.mq.phone) { // To be able to know in context menu if there is a subMenuMobile
+        this.$emit('isContextMenuMobileExtended', true)
+      } else {
+        this.$emit('isContextMenuMobileExtended', false)
+      }
+      if (this.isSubMenuDisplay) {
+        this.$store.dispatch('contextMenu/setIsSubMenuDisplay', true)
+        this.subMenuPosition = { x: this.computeXPosition(), y: this.computeYPosition() }
       }
     },
     emitCloseOrder () {
