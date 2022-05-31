@@ -47,20 +47,14 @@
     />
 
     <teleport to="body">
-      <!--      <FilePickerModal-->
-      <!--        v-if="isFilePickerModalDisplayed"-->
-      <!--        height="30em"-->
-      <!--        :folder-selection="true"-->
-      <!--        :init-in-current-folder="true"-->
-      <!--        @chosenFolder="doSelectFolderAction"-->
-      <!--        @close="isFilePickerModalDisplayed = false"-->
-      <!--      />-->
-      <!--      <DeleteConfirmModal-->
-      <!--        v-if="isDeleteDefinitelyModalDisplayed"-->
-      <!--        :entities-to-definitely-delete="selectedEntities"-->
-      <!--        @confirmDeletion="deleteDefinitely"-->
-      <!--        @close="isDeleteDefinitelyModalDisplayed=false"-->
-      <!--      />-->
+      <FilePickerModal
+        v-if="isFilePickerModalDisplayed"
+        height="30em"
+        :folder-selection="true"
+        :init-in-current-folder="false"
+        @chosenFolder="doSelectFolderAction"
+        @close="isFilePickerModalDisplayed = false"
+      />
       <FolderNameModal
         v-if="isFolderNameModalDisplayed"
         :submit-action="modalSubmitAction"
@@ -92,16 +86,19 @@ import { computeDocumentsOptions, downLoadDocument, deleteEntities, importDocume
 import { returnAddedFiles, alertNoFile } from '@utils/upload.util'
 import FolderNameModal from '@components/Documents/Modals/FolderNameModal'
 import FileNameModal from '@components/Documents/Modals/FileNameModal'
+import FilePickerModal from '@components/FilePicker/FilePickerModal'
 
 export default {
   name: 'Documents',
-  components: { FileNameModal, FolderNameModal, FilePickerArea, ContextMenu, DocumentDetails, DocumentList, Breadcrumb, CurrentOptions, Layout },
+  components: { FilePickerModal, FileNameModal, FolderNameModal, FilePickerArea, ContextMenu, DocumentDetails, DocumentList, Breadcrumb, CurrentOptions, Layout },
   inject: ['mq'],
   data () {
     return {
       isFolderNameModalDisplayed: false,
       isFileNameModalDisplayed: false,
+      isFilePickerModalDisplayed: false,
       isContextMenuDisplayed: false,
+      folderSelectionOption: undefined,
       modalSubmitAction: undefined,
       documentToRename: undefined
     }
@@ -268,6 +265,15 @@ export default {
       }
       this.isContextMenuDisplayed = false
       this.$store.dispatch('contextMenu/closeMenus')
+    },
+    doSelectFolderAction (targetFolder) {
+      if (this.folderSelectionOption === 'move') {
+        this.$store.dispatch('clipboard/move', targetFolder)
+      } else if (this.folderSelectionOption === 'duplicate') {
+        this.$store.dispatch('clipboard/duplicate', targetFolder)
+      } else {
+        console.error('Unknown option' + this.folderSelectionOption)
+      }
     },
     // keyboard shortcuts management
     keyMonitor: function (event) {
