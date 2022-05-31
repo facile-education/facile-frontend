@@ -11,6 +11,9 @@ export default {
   createGeogebraFile,
   createScratchFile,
   createLoolFile,
+  createHtmlFile,
+  getHtmlContent,
+  saveHtmlContent,
   removeLoolToken
 }
 
@@ -92,6 +95,41 @@ function createLoolFile (folderId, name, type) {
       folderId,
       name,
       type
+    })
+  ).then(response => response.data)
+}
+
+/**
+ * Create HTML file
+ */
+function createHtmlFile (folderId, name) {
+  return axios.post(constants.JSON_WS_URL + FILE_PATH + '/create-html-file',
+    PentilaUtils.URL.params({
+      folderId,
+      name
+    })
+  ).then(response => response.data)
+}
+
+/**
+ * Get HTML content
+ */
+function getHtmlContent (fileVersionId) {
+  return axios.post(constants.JSON_WS_URL + FILE_PATH + '/get-html-content',
+    PentilaUtils.URL.params({
+      fileVersionId: fileVersionId
+    })
+  ).then(response => response.data)
+}
+
+/**
+ * Save HTML content
+ */
+function saveHtmlContent (fileVersionId, content) {
+  return axios.post(constants.JSON_WS_URL + FILE_PATH + '/save-html-content',
+    PentilaUtils.URL.params({
+      fileVersionId: fileVersionId,
+      content: content
     })
   ).then(response => response.data)
 }
