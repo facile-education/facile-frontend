@@ -26,6 +26,11 @@
       :document="documentToDisplay"
     />
 
+    <DocumentVersionsList
+      v-if="selectedDocuments.length === 1 && documentToDisplay.type === 'File'"
+      :document="documentToDisplay"
+    />
+
     <h3
       v-if="selectedDocuments.length === 0"
       v-t="('noDocumentSelected')"
@@ -35,9 +40,10 @@
 
 <script>
 import DocumentMetaData from '@components/Documents/DocumentDetails/DocumentMetaData'
+import DocumentVersionsList from '@components/Documents/DocumentDetails/DocumentVersionsList'
 export default {
   name: 'DocumentDetails',
-  components: { DocumentMetaData },
+  components: { DocumentVersionsList, DocumentMetaData },
   computed: {
     selectedDocuments () {
       return this.$store.state.documents.selectedEntities
@@ -64,6 +70,10 @@ export default {
 .details-panel {
   background-color: $color-not-white-bg;
   box-shadow: -2px 0 4px rgba(0, 0, 0, 0.2);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 20px;
 
   .header {
     display: flex;
@@ -94,10 +104,6 @@ export default {
         height: 16px;
       }
     }
-  }
-
-  h3 {
-
   }
 }
 </style>

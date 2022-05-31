@@ -1,38 +1,40 @@
 <template>
-  <!-- Size -->
-  <div class="field">
-    <span
-      v-t="'Commons.size'"
-      class="content-label"
-    />
-    <span class="content-description"> {{ formattedSize }} </span>
-  </div>
+  <div class="meta-data">
+    <!-- Size -->
+    <div class="field">
+      <span
+        v-t="'Commons.size'"
+        class="content-label"
+      />
+      <span class="content-description"> {{ formattedSize }} </span>
+    </div>
 
-  <!-- Type -->
-  <div class="field">
-    <span
-      v-t="'Commons.type'"
-      class="content-label"
-    />
-    <span class="content-description"> {{ formattingType }} </span>
-  </div>
+    <!-- Type -->
+    <div class="field">
+      <span
+        v-t="'Commons.type'"
+        class="content-label"
+      />
+      <span class="content-description"> {{ formattingType }} </span>
+    </div>
 
-  <!-- Last modification -->
-  <div class="field">
-    <span
-      v-t="'Documents.documentFields.lastModifiedDate'"
-      class="content-label"
-    />
-    <span class="content-description"> {{ formattedModificationDate }} </span>
-  </div>
+    <!-- Last modification -->
+    <div class="field">
+      <span
+        v-t="'Documents.documentFields.lastModifiedDate'"
+        class="content-label"
+      />
+      <span class="content-description"> {{ formattedModificationDate }} </span>
+    </div>
 
-  <!-- Creation -->
-  <div class="field">
-    <span
-      v-t="'Documents.documentFields.creationDate'"
-      class="content-label"
-    />
-    <span class="content-description"> {{ formattedCreationDate }} </span>
+    <!-- Creation -->
+    <div class="field">
+      <span
+        v-t="'Documents.documentFields.creationDate'"
+        class="content-label"
+      />
+      <span class="content-description"> {{ formattedCreationDate }} </span>
+    </div>
   </div>
 </template>
 
@@ -74,16 +76,21 @@ export default {
 
 <style lang="scss" scoped>
 
-.field{
-  padding: 10px 0 10px 10px;
-  display: flex;
+.meta-data {
+  flex: 1;
+
+  .field{
+    padding: 10px 0 10px 10px;
+    display: flex;
+  }
+
+  .content-label{
+    flex: 1;
+  }
+
+  .content-description{
+    flex: 1;
+  }
 }
 
-.content-label{
-  flex: 1;
-}
-
-.content-description{
-  flex: 1;
-}
 </style>
