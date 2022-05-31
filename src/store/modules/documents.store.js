@@ -75,10 +75,16 @@ export const mutations = {
   },
   setDocumentPanelDisplayed (state, payload) {
     state.isDocumentPanelDisplayed = payload
+  },
+  toggleDetails (state) {
+    state.isDocumentPanelDisplayed = !state.isDocumentPanelDisplayed
   }
 }
 
 export const actions = {
+  toggleDetails ({ commit }) {
+    commit('toggleDetails')
+  },
   openFile ({ commit }, file) {
     commit('openFile', file)
   },

@@ -78,7 +78,7 @@ import Layout from '@layouts/EmptyLayout'
 import CurrentOptions from '@components/Documents/Options'
 import Breadcrumb from '@components/Documents/Breadcrumb'
 import DocumentList from '@components/Documents/DocumentList'
-import DocumentDetails from '@components/Documents/DocumentDetails'
+import DocumentDetails from '@components/Documents/DocumentDetails/DocumentDetails'
 import ContextMenu from '@components/ContextMenu/ContextMenu'
 import { documentSpaceOptions } from '@/constants/options'
 import FilePickerArea from '@components/FilePicker/FilePickerArea'
@@ -193,6 +193,9 @@ export default {
           break
         case 'cut':
           this.$store.dispatch('clipboard/cut')
+          break
+        case 'details':
+          this.$store.dispatch('documents/toggleDetails')
           break
         case 'duplicate':
           this.folderSelectionOption = 'duplicate'
@@ -372,6 +375,7 @@ export default {
       height: 100%;
 
       .scroll {
+        flex: 3;
         height: 100%;
         overflow-y: auto;
 
@@ -379,14 +383,11 @@ export default {
           margin-left: 10px;
         }
       }
-    }
 
-    .document-details {
-      position: absolute;
-      top: 0;
-      right: 0;
-      height: 100%;
-      width: 300px;
+      .document-details {
+        flex: 1;
+        min-width: 300px;
+      }
     }
   }
 
