@@ -231,6 +231,19 @@ export default {
     createODP () {
       this.createLoolFile(apiConstants.ODP_TYPE)
     },
+    createHTML () {
+      this.$store.dispatch('currentActions/addAction', { name: 'createFile' })
+      fileServices.createHtmlFile(this.currentFolderId, this.inputText).then((data) => {
+        this.$store.dispatch('currentActions/removeAction', { name: 'createFile' })
+        if (data.success) {
+          this.$store.dispatch('documents/refreshCurrentFolder')
+          this.$emit('openFile', data.file)
+          this.onClose()
+        } else {
+          console.error('An error was occurred')
+        }
+      })
+    },
     createLoolFile (type) {
       this.$store.dispatch('currentActions/addAction', { name: 'createFile' })
       fileServices.createLoolFile(this.currentFolderId, this.inputText, type).then((data) => {

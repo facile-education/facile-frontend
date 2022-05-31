@@ -37,6 +37,10 @@
       v-else-if="typeOfView === 'Scratch'"
       :src="fileUrl"
     />
+    <WISIWIG
+      v-else-if="typeOfView === 'WISIWIG'"
+      :file="file"
+    />
     <OtherDocument
       v-else-if="typeOfView === 'Other'"
       :src="fileUrl"
@@ -61,10 +65,11 @@ import Geogebra from '@components/Documents/FileDisplay/Geogebra'
 import MindMap from '@components/Documents/FileDisplay/MindMap'
 import Scratch from '@components/Documents/FileDisplay/Scratch'
 import Office from '@components/Documents/FileDisplay/Office'
+import WISIWIG from '@components/Documents/FileDisplay/WISIWIG'
 
 export default {
   name: 'FileDisplay',
-  components: { Office, Scratch, MindMap, Geogebra, PDF, Audio, Image, Video, OtherDocument },
+  components: { WISIWIG, Office, Scratch, MindMap, Geogebra, PDF, Audio, Image, Video, OtherDocument },
   props: {
     file: {
       type: Object,

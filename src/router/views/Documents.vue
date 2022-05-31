@@ -273,7 +273,10 @@ export default {
           this.modalSubmitAction = 'createAudio'
           this.isFileNameModalDisplayed = true
           break
-
+        case 'newHTML':
+          this.modalSubmitAction = 'createHTML'
+          this.isFileNameModalDisplayed = true
+          break
         default:
           console.error('unknown action for option', option)
       }
