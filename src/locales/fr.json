@@ -69,7 +69,9 @@
     "formMoreThanRegistered": "La capacité de la salle doit être plus grande que le nombre d'inscrits",
     "formRequired": "Champ requis",
     "new": "Nouveau",
-    "required": "Champ requis"
+    "required": "Champ requis",
+    "size": "Taille",
+    "type": "Type"
   },
   "CommunicationManager": {
     "InternalRightList": {
@@ -142,10 +144,12 @@
   },
   "Documents": {
     "folder": "Dossier",
+    "file": "Fichier",
     "files": "Fichiers",
     "errorNoFiles": "Il n'y a aucun fichier valide à téléverser !",
     "documentFields": {
       "name": "Nom",
+      "creationDate": "Création",
       "lastModifiedDate": "Dernière modif."
     },
     "options": {

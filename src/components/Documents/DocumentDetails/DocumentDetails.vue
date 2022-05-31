@@ -4,8 +4,11 @@
       <div
         v-if="selectedDocuments.length === 1"
         class="document-name"
+        :title="documentToDisplay.name"
       >
-        {{ documentToDisplay.name }}
+        <h2>
+          {{ documentToDisplay.name }}
+        </h2>
       </div>
       <div
         class="close-option"
@@ -17,21 +20,24 @@
         >
       </div>
     </div>
+
+    <DocumentMetaData
+      v-if="selectedDocuments.length === 1"
+      :document="documentToDisplay"
+    />
+
     <h3
       v-if="selectedDocuments.length === 0"
       v-t="('noDocumentSelected')"
     />
-    <h3
-      v-else-if="selectedDocuments.length === 1"
-      v-t="('noDocumentSelected')"
-    />
-    <h3> {{ selectedDocuments.length + $t('selectedDocuments') }}</h3>
   </div>
 </template>
 
 <script>
+import DocumentMetaData from '@components/Documents/DocumentDetails/DocumentMetaData'
 export default {
   name: 'DocumentDetails',
+  components: { DocumentMetaData },
   computed: {
     selectedDocuments () {
       return this.$store.state.documents.selectedEntities
@@ -53,23 +59,39 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
+
 .details-panel {
+  background-color: $color-not-white-bg;
+  box-shadow: -2px 0 4px rgba(0, 0, 0, 0.2);
+
   .header {
     display: flex;
     align-items: center;
-    height: 50px;
+    height: 60px;
 
     .document-name {
       flex: 1;
+      padding-left: 10px;
+
+      h2 {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
     }
 
     .close-option {
+      height: 100%;
+      width: 40px;
+      display: flex;
       cursor: pointer;
       align-items: center;
+      justify-content: center;
 
       img {
-        width: 33px;
-        height: 33px;
+        width: 16px;
+        height: 16px;
       }
     }
   }

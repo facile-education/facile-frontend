@@ -30,7 +30,7 @@ const icons = {
     delete: require('@/assets/options/icon_trash.svg'),
     delete_white: require('@/assets/options/icon_trash_white.svg'),
     deleteDefinitely: ['far', 'trash-alt'],
-    details: ['far', 'info'],
+    details: require('@/assets/options/icon_details.svg'),
     duplicate: require('@/assets/options/icon_duplicate.svg'),
     import: require('@assets/options/icon_fichier_ajout.svg'),
     forward: require('@/assets/options/icon_share.svg'),

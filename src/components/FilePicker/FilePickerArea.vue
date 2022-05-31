@@ -107,6 +107,7 @@ export default {
     height: 100%;
     position: absolute;
     z-index: $body-z-index+1;
+    display: flex;
     top: 0;
     left: 0;
   }

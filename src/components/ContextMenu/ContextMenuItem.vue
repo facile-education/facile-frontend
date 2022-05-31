@@ -201,6 +201,7 @@ export default {
 
     img {
       width: 15px;
+      height: 18px;
     }
   }
 
