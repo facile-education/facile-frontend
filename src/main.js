@@ -53,7 +53,7 @@ dayjs.updateLocale('en', {
 
 dayjs.updateLocale('fr', {
   calendar: {
-    sameDay: '[Aujourd\'hui à] HH:mm', // The same day ( Today at 2:30 AM )
+    sameDay: 'HH:mm', // The same day ( 2:30 AM )
     nextDay: '[Demain]', // The next day ( Tomorrow at 2:30 AM )
     nextWeek: 'dddd', // The next week ( Sunday at 2:30 AM )
     lastDay: '[Hier]', // The day before ( Yesterday at 2:30 AM )
