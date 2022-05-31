@@ -149,8 +149,10 @@
       "lastModifiedDate": "Dernière modif."
     },
     "options": {
-      "delete": "Supprimer",
+      "copyWebdavUrl": "Copier l'URL Webdav",
       "download": "@:Commons.download",
+      "details": "Détails",
+      "delete": "Supprimer",
       "duplicate": "Dupliquer vers",
       "import": "Importer",
       "move": "Déplacer vers",
