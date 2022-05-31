@@ -243,6 +243,14 @@ export default {
           this.modalSubmitAction = 'createODT'
           this.isFileNameModalDisplayed = true
           break
+        case 'newODS':
+          this.modalSubmitAction = 'createODS'
+          this.isFileNameModalDisplayed = true
+          break
+        case 'newODP':
+          this.modalSubmitAction = 'createODP'
+          this.isFileNameModalDisplayed = true
+          break
         case 'newGeogebra':
           this.modalSubmitAction = 'createGeogebra'
           this.isFileNameModalDisplayed = true

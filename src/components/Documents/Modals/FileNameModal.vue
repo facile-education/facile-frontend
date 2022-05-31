@@ -225,6 +225,12 @@ export default {
     createODT () {
       this.createLoolFile(apiConstants.ODT_TYPE)
     },
+    createODS () {
+      this.createLoolFile(apiConstants.ODS_TYPE)
+    },
+    createODP () {
+      this.createLoolFile(apiConstants.ODP_TYPE)
+    },
     createLoolFile (type) {
       this.$store.dispatch('currentActions/addAction', { name: 'createFile' })
       fileServices.createLoolFile(this.currentFolderId, this.inputText, type).then((data) => {

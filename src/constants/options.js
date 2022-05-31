@@ -24,6 +24,20 @@ const documentSpaceOptions = [
         hasSeparator: false
       },
       {
+        name: 'newODS',
+        title: i18n.global.t('Documents.options.newODS'),
+        icon: icons.extensions.ods,
+        position: 1,
+        hasSeparator: false
+      },
+      {
+        name: 'newODP',
+        title: i18n.global.t('Documents.options.newODP'),
+        icon: icons.extensions.odp,
+        position: 1,
+        hasSeparator: false
+      },
+      {
         name: 'newGeogebra',
         title: i18n.global.t('Documents.options.newGeogebra'),
         icon: icons.extensions.ggb,
