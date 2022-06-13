@@ -6,6 +6,7 @@
       :key="index"
       :version="version"
       @refreshVersions="getListVersions"
+      @openVersion="openVersion"
     />
   </div>
 </template>
@@ -44,6 +45,9 @@ export default {
       versionsService.getFileVersions(this.document.id).then((data) => {
         this.fileVersions = data.fileVersions
       })
+    },
+    openVersion (fileVersionId) {
+      this.$store.dispatch('documents/openFile', { ...this.document, versionId: fileVersionId })
     }
   }
 }
