@@ -45,7 +45,7 @@ export default {
       required: true
     }
   },
-  emits: ['refreshVersions'],
+  emits: ['refreshVersions', 'openVersion'],
   computed: {
     formattedDate () {
       return dayjs(this.version.date, 'YYYY-MM-DD HH:mm:ss').calendar()
