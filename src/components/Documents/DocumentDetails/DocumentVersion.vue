@@ -53,7 +53,9 @@ export default {
   },
   methods: {
     restoreVersion () {
+      this.$store.dispatch('currentActions/addAction', { name: 'restoreVersion' })
       versionsService.restoreVersion(this.version.id).then((data) => {
+        this.$store.dispatch('currentActions/removeAction', { name: 'restoreVersion' })
         if (data.success) {
           // Update the version list
           this.$emit('refreshVersions')
