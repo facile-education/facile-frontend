@@ -1,23 +1,12 @@
 <template>
   <div
-    ref="root"
-    class="option-item"
-    :title="option.title"
+    ref="hiddenItems"
+    class="container"
     @click="handleClick"
   >
-    <img
-      :src="option.icon"
-      alt=""
-    >
-    <div class="title">
-      {{ option.title }}
+    <div class="dots">
+      ...
     </div>
-    <img
-      v-if="option.subMenu"
-      class="arrow-down"
-      src="@assets/arrow-down.svg"
-      alt=""
-    >
   </div>
 
   <ContextMenu
@@ -28,18 +17,18 @@
 </template>
 
 <script>
-
 import ContextMenu from '@components/ContextMenu/ContextMenu'
+
 export default {
-  name: 'OptionItem',
+  name: 'HiddenItems',
   components: { ContextMenu },
   props: {
-    option: {
-      type: Object,
+    items: {
+      type: Array,
       required: true
     }
   },
-  emits: ['optionClicked', 'addSize'],
+  emits: ['optionClicked'],
   data () {
     return {
       isContextMenuDisplayed: false
@@ -50,16 +39,9 @@ export default {
       return this.$store.state.contextMenu.isAContextMenuDisplayed
     }
   },
-  mounted () {
-    this.$emit('addSize', this.$refs.root.clientWidth)
-  },
   methods: {
     handleClick (event) {
-      if (this.option.subMenu) {
-        this.openSubMenu(event)
-      } else {
-        this.$emit('optionClicked', this.option)
-      }
+      this.openSubMenu(event)
     },
     subMenuOptionClicked (option) {
       this.isContextMenuDisplayed = false
@@ -72,7 +54,7 @@ export default {
         this.$store.dispatch('contextMenu/openContextMenu',
           {
             event: event,
-            options: this.option.subMenu
+            options: this.items
           })
       }
     }
@@ -81,34 +63,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@design";
 
-.option-item {
+.container {
+  width: 50px;
   display: flex;
-  cursor: pointer;
   align-items: center;
-  height: 100%;
-  margin: 0 15px;
+  justify-content: center;
+  cursor: pointer;
 
-  img {
-    width: 28px;
-    height: 28px;
-    padding: 5px;
-  }
+  .dots {
 
-  .title {
-    font-size: 0.875em;
-  }
-
-  .arrow-down {
-    width: 15px;
-    height: 15px;
-    padding: 0;
-    margin-left: 10px;
-  }
-
-  &:hover {
-    background-color: $color-hover-bg;
+    font-size: 20px;
   }
 }
+
 </style>
