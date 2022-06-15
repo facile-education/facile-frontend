@@ -343,7 +343,7 @@ p {
 {
   "createHeader": "Nouveau",
   "createSubmit": "Créer",
-  "renameHeader": "Renommer",
-  "rename": "Renommer"
+  "rename": "Renommer",
+  "renameHeader": "Renommer"
 }
 </i18n>
