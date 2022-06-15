@@ -3,6 +3,7 @@
     <!-- TODO: placeholder when no entities -->
     <FilesFields
       :current-sort="sort"
+      :are-all-selected="areAllSelected"
       @handleSort="handleSort"
     />
     <div class="entities">
@@ -59,6 +60,9 @@ export default {
     },
     selectedDocuments () {
       return this.$store.state.documents.selectedEntities
+    },
+    areAllSelected () {
+      return this.selectedDocuments.length === this.allSortedDocuments.length
     },
     sortedFiles () {
       return (this.currentEntities === undefined || this.currentEntities.files === undefined)
