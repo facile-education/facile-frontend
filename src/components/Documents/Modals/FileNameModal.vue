@@ -112,9 +112,7 @@ export default {
     entityExtension () {
       switch (this.submitAction) {
         case 'rename':
-          // eslint-disable-next-line no-case-declarations
-          const parts = this.initFile.name.split('.')
-          return parts[parts.length - 1]
+          return this.initFile.extension
         case 'createODT': // TODO: put all that logic in ONE objet to avoid multiple conditions
           return apiConstants.ODT_TYPE
         case 'createODS':
@@ -137,7 +135,12 @@ export default {
       }
     },
     fileNameWithoutExtension () {
-      return this.initFile.name.split('.').slice(0, -1).join('.')
+      const parts = this.initFile.name.split('.')
+      if (parts.length > 1) {
+        return parts.slice(0, -1).join('.')
+      } else {
+        return parts[0] // To handle case where file doesn't have extension
+      }
     },
     formErrorList () {
       if (this.v$.inputText.$invalid && this.v$.inputText.$dirty) {
@@ -271,7 +274,7 @@ export default {
     },
     rename () {
       this.$store.dispatch('currentActions/addAction', { name: 'renameFile' })
-      fileServices.renameFile(this.initFile.id, this.inputText).then((data) => {
+      fileServices.renameFile(this.initFile.id, this.inputText + '.' + this.initFile.extension).then((data) => {
         this.$store.dispatch('currentActions/removeAction', { name: 'renameFile' })
         if (data.success) {
           this.$store.dispatch('documents/refreshCurrentFolder')
