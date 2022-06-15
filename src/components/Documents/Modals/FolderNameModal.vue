@@ -11,7 +11,7 @@
     @keydown.ctrl.stop=""
   >
     <template #header>
-      <span v-t="'createHeader'" />
+      <span v-t="submitAction==='rename' ? 'renameHeader' : 'createHeader'" />
     </template>
 
     <template #body>
@@ -28,7 +28,7 @@
     <template #footer>
       <PentilaButton
         data-test="submitButton"
-        :label="$t('createSubmit')"
+        :label="submitAction==='rename' ? $t('rename') : $t('createSubmit')"
         @click="submit"
       />
     </template>
@@ -87,6 +87,11 @@ export default {
     const input = this.$refs.folderNameInput
     input.focus()
     input.select()
+  },
+  created () {
+    if (this.initFolder !== undefined) {
+      this.form.folderName = this.initFolder.name
+    }
   },
   methods: {
     formErrorList () {
@@ -170,6 +175,8 @@ export default {
 <i18n locale="fr">
 {
   "createHeader": "Nouveau dossier",
-  "createSubmit": "Créer"
+  "createSubmit": "Créer",
+  "rename": "Renommer",
+  "renameHeader": "Renommer"
 }
 </i18n>
