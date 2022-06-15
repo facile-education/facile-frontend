@@ -40,11 +40,11 @@ function createFolder (targetFolderId, folderName) {
 /**
  * Rename a folder
  */
-function renameFolder (folderId, fileName) {
+function renameFolder (folderId, folderName) {
   return axios.post(constants.JSON_WS_URL + FOLDER_PATH + '/rename-folder',
     PentilaUtils.URL.params({
       folderId,
-      fileName
+      folderName
     })
   ).then(response => response.data)
 }

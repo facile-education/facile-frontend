@@ -130,7 +130,7 @@ export default {
       })
     },
     renameFolder () {
-      folderServices.renameFolder(this.initFolder.folderId, this.form.folderName).then((data) => {
+      folderServices.renameFolder(this.initFolder.id, this.form.folderName).then((data) => {
         if (data.success) {
           this.$store.dispatch('documents/refreshCurrentFolder')
           this.onClose()
