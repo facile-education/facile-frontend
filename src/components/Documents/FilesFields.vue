@@ -5,6 +5,18 @@
     :class="mq.phone ? 'phone-fields' : ''"
   >
     <div
+      class="selection-icon"
+      @click="toggleGlobalSelection"
+    >
+      <div class="oval">
+        <div
+          v-if="areAllSelected"
+          class="marked"
+        />
+      </div>
+    </div>
+
+    <div
       v-for="field in fieldsToDisplay"
       :key="field.position"
       class="field"
@@ -40,6 +52,10 @@ export default {
     currentSort: {
       type: Object,
       default: undefined
+    },
+    areAllSelected: {
+      type: Boolean,
+      required: true
     }
   },
   emits: ['handleSort'],
@@ -62,6 +78,13 @@ export default {
     this.$store.dispatch('fileFields/initFields')
   },
   methods: {
+    toggleGlobalSelection () {
+      if (this.areAllSelected) {
+        this.$store.dispatch('documents/cleanSelectedEntities')
+      } else {
+        this.$store.dispatch('documents/selectAll')
+      }
+    },
     dispatchEvent (sortType) {
       if (sortType !== 'none') {
         this.$emit('handleSort', sortType)
@@ -78,12 +101,41 @@ export default {
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 0 10px;
+  padding: 0 10px 0 0;
   margin-bottom: 7px;
+
+  .selection-icon {
+    cursor: pointer;
+    width: 40px;
+    min-width: 40px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .oval {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      height: 20px;
+      width: 20px;
+      border-radius: 10px;
+      border: 1px solid #D9E2EA;
+      background-color: #F3F6F8;
+
+      .marked {
+        height: 12px;
+        width: 12px;
+        border-radius: 6px;
+        background-color: #0B3C5F;
+      }
+    }
+  }
 }
 
 .phone-fields {
-  padding: 0 10px;
+  padding: 0 10px 0 0;
 
   p {
     margin: 3px 0;
