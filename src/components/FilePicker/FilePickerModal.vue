@@ -73,7 +73,7 @@
       <PentilaButton
         v-if="folderSelection"
         data-test="submitButton"
-        :label="selectedFolder ? $t('FilePickerModal.chooseSelectedFolder') + selectedFolder.name : $t('FilePickerModal.chooseCurrentFolder')"
+        :label="selectedFolder ? $t('chooseSelectedFolder') + selectedFolder.name : $t('chooseCurrentFolder')"
         @click="emitSelectedFolder"
       />
       <PentilaButton
@@ -407,6 +407,8 @@ export default {
   "headerFile": "Ajouter un document",
   "or": "ou",
   "submitButton": "Ajouter",
-  "uploadFile": "Importer un ou plusieurs documents"
+  "uploadFile": "Importer un ou plusieurs documents",
+  "chooseCurrentFolder": "Choisir ce dossier",
+  "chooseSelectedFolder": "Choisir  "
 }
 </i18n>
