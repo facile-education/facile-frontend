@@ -63,6 +63,18 @@ export const mutations = {
   },
   setFolderContent (state, payload) {
     state.folderContent = payload
+
+    // Update selectedEntities (reselect the new entities based on the old selected ids)
+    const oldSelectedEntitiesIds = state.selectedEntities.map(entity => entity.id)
+    const newSelectedEntities = []
+    oldSelectedEntitiesIds.forEach((oldSelectedEntityId) => {
+      [...payload.files, ...payload.subFolders].forEach((newEntity) => {
+        if (newEntity.id === oldSelectedEntityId) {
+          newSelectedEntities.push(newEntity)
+        }
+      })
+    })
+    state.selectedEntities = newSelectedEntities
   },
   updateLastSelectedEntity (state, file) {
     state.lastSelectedEntity = file
