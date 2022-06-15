@@ -1,5 +1,5 @@
 import axios from 'axios'
-import constants from '@/constants/appConstants'
+import constants from '@/api/constants'
 import { getCookie } from '@/utils/browser.util'
 
 export default {
@@ -7,7 +7,7 @@ export default {
   move
 }
 
-const CLIPBOARD_PATH = '/documents.clipboard'
+const CLIPBOARD_PATH = '/documents-portlet.clipboard'
 
 /**
  * Put in the clipboard all the entities specified
