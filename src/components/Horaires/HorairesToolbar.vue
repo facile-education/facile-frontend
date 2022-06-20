@@ -184,6 +184,8 @@ export default {
     onSelectSchool () {
       // TODO : use global school instead of user's school
       this.$store.dispatch('horaires/getGroupList')
+      this.tagsList.length = 0
+      this.$store.dispatch('horaires/selectGroup', {})
     },
     searchTimeOut (inputValue) {
       clearTimeout(this.timeout)

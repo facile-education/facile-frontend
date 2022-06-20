@@ -91,8 +91,13 @@ export const actions = {
   },
   selectGroup ({ commit, dispatch }, group) {
     commit('setSelectedUser', { userId: 0 })
-    commit('setSelectedGroup', group)
-    dispatch('getSessionList')
+    if (group.groupId !== undefined) {
+      commit('setSelectedGroup', group)
+      dispatch('getSessionList')
+    } else {
+      // Happens when new school is selected
+      commit('setSelectedGroup', defaultGroup)
+    }
   },
   selectUser ({ commit, dispatch }, user) {
     commit('setSelectedGroup', defaultGroup)
