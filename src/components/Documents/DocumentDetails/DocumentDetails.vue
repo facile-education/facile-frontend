@@ -10,6 +10,17 @@
           {{ documentToDisplay.name }}
         </h2>
       </div>
+      <h3
+        v-else-if="selectedDocuments.length === 0"
+        v-t="('noDocumentSelected')"
+        class="document-name"
+      />
+      <h3
+        v-else
+        class="document-name"
+      >
+        {{ selectedDocuments.length + '  ' + $t('selectedDocuments') }}
+      </h3>
       <div
         class="close-option"
         @click="closePanel"
@@ -31,9 +42,15 @@
       :document="documentToDisplay"
     />
 
-    <h3
+    <p
       v-if="selectedDocuments.length === 0"
-      v-t="('noDocumentSelected')"
+      v-t="('noData')"
+      class="placeholder"
+    />
+    <p
+      v-else-if="selectedDocuments.length > 1"
+      v-t="('tooManyData')"
+      class="placeholder"
     />
   </div>
 </template>
@@ -83,6 +100,7 @@ export default {
     .document-name {
       flex: 1;
       padding-left: 10px;
+      max-width: 290px;
 
       h2 {
         overflow: hidden;
@@ -92,6 +110,7 @@ export default {
     }
 
     .close-option {
+      margin-left: auto;
       height: 100%;
       width: 40px;
       display: flex;
@@ -105,12 +124,18 @@ export default {
       }
     }
   }
+
+  .placeholder {
+    margin-left: 10px;
+  }
 }
 </style>
 
 <i18n locale="fr">
 {
+  "noData": "Il n'y a aucune information à afficher",
   "noDocumentSelected": "Aucun document sélectionné",
-  "selectedDocuments": " documents sélectionnés"
+  "selectedDocuments": " documents sélectionnés",
+  "tooManyData": "Il y a trop de documents sélectionnés"
 }
 </i18n>
