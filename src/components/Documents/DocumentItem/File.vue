@@ -55,6 +55,9 @@ export default {
     isSelected () {
       return this.$store.state.documents.selectedEntities.find(selectedEntity => selectedEntity.id === this.file.id) !== undefined
     },
+    isThereAnOpenFile () {
+      return this.$store.state.documents.openFiles.length > 0
+    },
     fileIcon () {
       if (this.$options.myIcons.extensions[this.file.extension] === undefined) {
         return this.$options.myIcons.file
@@ -65,10 +68,14 @@ export default {
   },
   methods: {
     openFile () {
-      // Select file (not mandatory but more user-Friendly)
-      this.$store.dispatch('documents/selectOneDocument', this.file)
-      // Open it
-      this.$store.dispatch('documents/openFile', this.file)
+      if (!this.isThereAnOpenFile) {
+        // Select file (not mandatory but more user-Friendly)
+        this.$store.dispatch('documents/selectOneDocument', this.file)
+        // Open it
+        this.$store.dispatch('documents/openFile', this.file)
+      } else {
+        console.log('there is already an open file!')
+      }
     },
     dispatchEvent (file) {
       this.$emit('shiftSelect', { id: file.id, name: file.name })
