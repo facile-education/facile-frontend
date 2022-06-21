@@ -103,6 +103,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
+
 .service-body {
   width: 100%;
   height: 100%;
@@ -110,6 +112,7 @@ export default {
 }
 
 .popups-container {
+  z-index: $popup-z-index;
   position: fixed;
   top: 30px;
   right: 15px;
