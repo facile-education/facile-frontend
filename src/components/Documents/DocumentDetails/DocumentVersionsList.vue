@@ -32,7 +32,6 @@ export default {
   watch: {
     document: {
       handler () {
-        console.log('dfrbyf')
         this.getListVersions()
       }
     }
