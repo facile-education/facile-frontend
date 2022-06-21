@@ -18,6 +18,7 @@ export default {
 }
 
 const FILE_PATH = '/documents-portlet.fileutil'
+const WISIWIG_PATH = '/documents-portlet.wisiwig'
 
 /**
  * Upload a file in a folder
@@ -115,18 +116,19 @@ function createHtmlFile (folderId, name) {
  * Get HTML content
  */
 function getHtmlContent (fileVersionId) {
-  return axios.post(constants.JSON_WS_URL + FILE_PATH + '/get-html-content',
-    PentilaUtils.URL.params({
+  return axios.get(constants.JSON_WS_URL + WISIWIG_PATH + '/get-html-content', {
+    params: {
+      p_auth: getCookie('pauth'),
       fileVersionId: fileVersionId
-    })
-  ).then(response => response.data)
+    }
+  }).then(response => response.data)
 }
 
 /**
  * Save HTML content
  */
 function saveHtmlContent (fileVersionId, content) {
-  return axios.post(constants.JSON_WS_URL + FILE_PATH + '/save-html-content',
+  return axios.post(constants.JSON_WS_URL + WISIWIG_PATH + '/save-html-content',
     PentilaUtils.URL.params({
       fileVersionId: fileVersionId,
       content: content

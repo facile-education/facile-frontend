@@ -25,12 +25,16 @@ export default {
       type: Object,
       required: true
     },
+    isInProgression: {
+      type: Boolean,
+      default: true
+    },
     disabled: {
       type: Boolean,
       default: false
     }
   },
-  emits: ['focus', 'blur'],
+  emits: ['focus', 'blur', 'save'],
   data () {
     return {
       timeout: undefined,
@@ -69,12 +73,18 @@ export default {
     },
     updateContent (newValue) {
       clearTimeout(this.timeout)
-      this.$store.dispatch('progression/setIsWaiting', true)
+      if (this.isInProgression) {
+        this.$store.dispatch('progression/setIsWaiting', true)
+      }
       // 2s timeout
       this.timeout = setTimeout(() => {
         const updatedContent = { ...this.content }
         updatedContent.contentValue = newValue
-        this.$store.dispatch('progression/updateItemContent', updatedContent)
+        if (this.isInProgression) {
+          this.$store.dispatch('progression/updateItemContent', updatedContent)
+        } else {
+          this.$emit('save', updatedContent)
+        }
       }, 2000)
     }
   }
