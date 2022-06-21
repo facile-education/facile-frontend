@@ -2,6 +2,7 @@
   <PentilaWindow
     class="folder-name-modal"
     :class="mq.phone ? 'mobile': ''"
+    :is-full-screen="mq.phone"
     :modal="true"
     @close="onClose"
     @keydown.exact.enter.stop="submit"
@@ -145,15 +146,6 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-.folder-name-modal.mobile {
-  .window-wrapper {
-    max-width: 95vw;
-    width: 100%;
-  }
-}
-</style>
 
 <style lang="scss" scoped>
 .folder-name-modal {
