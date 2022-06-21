@@ -2,7 +2,6 @@ import store from '@store/index.js'
 import trashService from '@/api/documents/trash.service'
 import fileService from '@/api/documents/file.service'
 import folderService from '@/api/documents/folder.service'
-import activityService from '@/api/documents/activity.service'
 import { mergeContextMenus, removeMenuOptionIfExist } from '@/utils/commons.util'
 import { folderOptions, fileOptions } from '@/constants/options'
 
@@ -145,7 +144,7 @@ async function downLoadDocument (entity) {
       a.href = entity.url
       a.click()
 
-      activityService.recordDownloadActivity(entity.id, 0)
+      // activityService.recordDownloadActivity(entity.id, 0) // Not necessary because we don't use collaborative space yet
       resolve()
     }
   })
