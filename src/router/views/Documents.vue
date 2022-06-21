@@ -30,8 +30,11 @@
             <DocumentList @openContextMenu="openContextMenu" />
           </div>
           <DocumentDetails
-            v-if="isDocumentPanelDisplayed"
+            v-if="isDocumentPanelDisplayed && !mq.phone"
             class="document-details"
+          />
+          <DocumentDetailsModal
+            v-if="isDocumentPanelDisplayed && mq.phone"
           />
         </FilePickerArea>
       </div>
@@ -87,10 +90,11 @@ import { returnAddedFiles, alertNoFile } from '@utils/upload.util'
 import FolderNameModal from '@components/Documents/Modals/FolderNameModal'
 import FileNameModal from '@components/Documents/Modals/FileNameModal'
 import FilePickerModal from '@components/FilePicker/FilePickerModal'
+import DocumentDetailsModal from '@components/Documents/DocumentDetails/DocumentDetailsModal'
 
 export default {
   name: 'Documents',
-  components: { FilePickerModal, FileNameModal, FolderNameModal, FilePickerArea, ContextMenu, DocumentDetails, DocumentList, Breadcrumb, CurrentOptions, Layout },
+  components: { DocumentDetailsModal, FilePickerModal, FileNameModal, FolderNameModal, FilePickerArea, ContextMenu, DocumentDetails, DocumentList, Breadcrumb, CurrentOptions, Layout },
   inject: ['mq'],
   data () {
     return {
