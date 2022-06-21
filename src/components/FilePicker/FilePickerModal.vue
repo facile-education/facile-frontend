@@ -49,24 +49,6 @@
             @fileClicked="clickOnFile"
           />
         </div>
-        <div class="upload">
-          {{ $t('or') }}
-          <label>
-            <img
-              src="@assets/options/icon_download-doc.svg"
-              alt=""
-            >
-            {{ $t('uploadFile') }}
-            <input
-              v-if="allowFilesFromDevice"
-              ref="upload-file-input"
-              type="file"
-              accept="*/*"
-              :multiple="multiSelection"
-              @change="onInputChange"
-            >
-          </label>
-        </div>
       </div>
     </template>
     <template #footer>
