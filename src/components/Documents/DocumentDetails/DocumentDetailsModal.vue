@@ -15,26 +15,28 @@
     </template>
 
     <template #body>
-      <DocumentMetaData
-        v-if="selectedDocuments.length === 1"
-        :document="documentToDisplay"
-      />
+      <div class="body">
+        <DocumentMetaData
+          v-if="selectedDocuments.length === 1"
+          :document="documentToDisplay"
+        />
 
-      <DocumentVersionsList
-        v-if="selectedDocuments.length === 1 && documentToDisplay.type === 'File'"
-        :document="documentToDisplay"
-      />
+        <DocumentVersionsList
+          v-if="selectedDocuments.length === 1 && documentToDisplay.type === 'File'"
+          :document="documentToDisplay"
+        />
 
-      <p
-        v-if="selectedDocuments.length === 0"
-        v-t="('noData')"
-        class="placeholder"
-      />
-      <p
-        v-else-if="selectedDocuments.length > 1"
-        v-t="('tooManyData')"
-        class="placeholder"
-      />
+        <p
+          v-if="selectedDocuments.length === 0"
+          v-t="('noData')"
+          class="placeholder"
+        />
+        <p
+          v-else-if="selectedDocuments.length > 1"
+          v-t="('tooManyData')"
+          class="placeholder"
+        />
+      </div>
     </template>
 
     <template #footer />
@@ -104,6 +106,12 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  .body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
   }
 }
 
