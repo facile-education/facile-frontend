@@ -14,9 +14,9 @@ const icons = {
     mp4: 'film',
     mpg: 'film',
     mov: 'film',
-    odp: require('@assets/documentIcons/doc.png'),
-    ods: require('@assets/documentIcons/doc.png'),
-    odt: require('@assets/documentIcons/doc.png'),
+    odp: require('@assets/documentIcons/odp.png'),
+    ods: require('@assets/documentIcons/ods.png'),
+    odt: require('@assets/documentIcons/odt.png'),
     pdf: require('@assets/documentIcons/pdf.png'),
     png: 'file-image',
     sb3: require('@assets/documentIcons/scratch.png'), // scratch
