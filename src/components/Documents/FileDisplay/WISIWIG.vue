@@ -1,8 +1,14 @@
 <template>
-  <TextContent
-    :content="content"
-    :disabled="readonly"
-  />
+  <div class="container">
+    <TextContent
+      v-if="content.contentValue !== undefined"
+      class="ck"
+      :content="content"
+      :disabled="file.readonly"
+      :is-in-progression="false"
+      @save="saveContent"
+    />
+  </div>
 </template>
 
 <script>
@@ -19,8 +25,7 @@ export default {
   },
   data () {
     return {
-      content: undefined,
-      readonly: false
+      content: { }
     }
   },
   created () {
@@ -28,19 +33,37 @@ export default {
   },
   methods: {
     getContent () {
-      fileServices.getHtmlContent(this.file.version).then((data) => {
-        this.content = data.content
+      fileServices.getHtmlContent(this.file.fileVersionId).then((data) => {
+        if (data.content === '') {
+          data.content = '<p>texte</p>'
+        }
+        this.content.contentValue = data.content
+        this.content.order = 1 // display only one editor at time with this component
       })
     },
-    saveContent () {
-      fileServices.saveHtmlContent(this.file.version, this.content).then((data) => {
-        alert('document saved!')
-      })
+    saveContent (content) {
+      if (!this.file.readonly) {
+        fileServices.saveHtmlContent(this.file.fileVersionId, content.contentValue).then((data) => {
+          if (data.success) {
+            this.$store.dispatch('popups/pushPopup', { message: 'document sauvegardé!', type: 'info' })
+          }
+        })
+      }
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+@import '@design';
 
+.container{
+  border: 1px solid $color-border;
+  height: 100%;
+  width: 100%;
+
+  .ck {
+    height: 100%;
+  }
+}
 </style>

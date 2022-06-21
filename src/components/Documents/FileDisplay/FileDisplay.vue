@@ -38,8 +38,8 @@
       :src="fileUrl"
     />
     <WISIWIG
-      v-else-if="typeOfView === 'WISIWIG'"
-      :file="file"
+      v-else-if="typeOfView === 'WISIWIG' && loadedFile"
+      :file="loadedFile"
     />
     <OtherDocument
       v-else-if="typeOfView === 'Other'"
@@ -82,6 +82,7 @@ export default {
   },
   data () {
     return {
+      loadedFile: undefined,
       typeOfView: undefined,
       fileUrl: undefined,
       isLoaded: false
@@ -98,6 +99,9 @@ export default {
         if (data.success) {
           this.typeOfView = data.typeOfView
           this.fileUrl = data.fileUrl
+          this.loadedFile = { ...this.file }
+          this.loadedFile.fileVersionId = data.fileVersionId
+          this.loadedFile.readOnly = data.readOnly
           this.isLoaded = true
         } else {
           if (data.error === 'UnsupportedFileExtension') {
