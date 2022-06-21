@@ -3,6 +3,7 @@
     class="file-name-modal"
     :class="mq.phone ? 'mobile': ''"
     :modal="true"
+    :is-full-screen="mq.phone"
     @close="onClose"
     @keydown.exact.enter.stop="submit"
     @keydown.exact.backspace.stop=""
@@ -292,12 +293,6 @@ export default {
 </script>
 
 <style lang="scss">
-.file-name-modal.mobile {
-  .window-wrapper {
-    max-width: 95vw;
-    width: 100%;
-  }
-}
 .file-name-modal.tablet {
   z-index: 1001;
 }
