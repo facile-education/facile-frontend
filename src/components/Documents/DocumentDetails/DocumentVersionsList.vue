@@ -47,7 +47,7 @@ export default {
       })
     },
     openVersion (fileVersionId) {
-      this.$store.dispatch('documents/openFile', { ...this.document, versionId: fileVersionId })
+      this.$store.dispatch('documents/openFile', { ...this.document, versionId: fileVersionId, readOnly: true })
     }
   }
 }

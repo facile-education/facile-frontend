@@ -1,10 +1,10 @@
 <template>
   <div class="container">
     <TextContent
-      v-if="content.contentValue !== undefined"
+      v-if="loaded && content.contentValue !== undefined"
       class="ck"
       :content="content"
-      :disabled="file.readonly"
+      :disabled="readOnly"
       :is-in-progression="false"
       @save="saveContent"
     />
@@ -25,6 +25,8 @@ export default {
   },
   data () {
     return {
+      loaded: false,
+      readOnly: false,
       content: { }
     }
   },
@@ -39,6 +41,8 @@ export default {
         }
         this.content.contentValue = data.content
         this.content.order = 1 // display only one editor at time with this component
+        this.readOnly = this.file.readOnly
+        this.loaded = true
       })
     },
     saveContent (content) {
