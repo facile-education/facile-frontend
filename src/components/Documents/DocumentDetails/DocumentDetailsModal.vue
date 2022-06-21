@@ -6,26 +6,12 @@
     @close="onClose"
   >
     <template #header>
-      <div
-        v-if="selectedDocuments.length === 1"
-        class="document-name"
-        :title="documentToDisplay.name"
+      <span
+        :title="computedHeader"
+        class="title"
       >
-        <h2>
-          {{ documentToDisplay.name }}
-        </h2>
-      </div>
-      <h3
-        v-else-if="selectedDocuments.length === 0"
-        v-t="('noDocumentSelected')"
-        class="document-name"
-      />
-      <h3
-        v-else
-        class="document-name"
-      >
-        {{ selectedDocuments.length + '  ' + $t('selectedDocuments') }}
-      </h3>
+        {{ computedHeader }}
+      </span>
     </template>
 
     <template #body>
@@ -62,6 +48,15 @@ export default {
   name: 'DocumentDetailsModal',
   components: { DocumentVersionsList, DocumentMetaData },
   computed: {
+    computedHeader () {
+      if (this.selectedDocuments.length === 1) {
+        return this.documentToDisplay.name
+      } else if (this.selectedDocuments.length === 0) {
+        return this.$t('noDocumentSelected')
+      } else {
+        return this.selectedDocuments.length + '  ' + this.$t('selectedDocuments')
+      }
+    },
     selectedDocuments () {
       return this.$store.state.documents.selectedEntities
     },
@@ -100,19 +95,15 @@ export default {
 </style>
 
 <style lang="scss" scoped>
-.modal {
+.details-display-modal {
   height: 100%;
 
-  .document-name {
-    flex: 1;
-    padding-left: 10px;
-    max-width: 290px;
-
-    h2 {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
+  .title {
+    display: block;
+    max-width: calc(100% - 50px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 

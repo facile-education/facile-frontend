@@ -86,7 +86,7 @@ const documentSpaceOptions = [
         title: i18n.global.t('Documents.options.uploadFolder'),
         icon: icons.folder,
         position: 0,
-        hasSeparator: false
+        hasSeparator: true
       },
       {
         name: 'uploadFiles',
@@ -185,14 +185,14 @@ const folderOptions = [
     title: i18n.global.t('Documents.options.delete'),
     icon: icons.options.delete,
     position: 4,
-    hasSeparator: false
+    hasSeparator: true
   },
   {
     name: 'copyWebdavUrl',
     title: i18n.global.t('Documents.options.copyWebdavUrl'),
     icon: icons.options.copyWebdavUrl,
     position: 5,
-    hasSeparator: false
+    hasSeparator: true
   },
   {
     name: 'details',
