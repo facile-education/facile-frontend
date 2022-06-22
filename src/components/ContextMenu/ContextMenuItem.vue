@@ -218,12 +218,16 @@ export default {
     font-weight: 600;
     letter-spacing: 0;
     line-height: 23px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .icon {
     margin-left: auto;
     height: 33px;
     width: 33px;
+    min-width: 33px;
     border-radius: 17px;
     display: flex;
     align-items: center;
