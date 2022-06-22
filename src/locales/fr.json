@@ -265,6 +265,12 @@
       "unregister": "Désinscrire"
     }
   },
+  "Popup": {
+    "copied": "Copié",
+    "cut": "Coupé",
+    "duplicated": "Duplication réussie!",
+    "moved": "Déplacement réussi!"
+  },
   "Unauthenticated": "Veuillez vous connecter pour accéder à ce service",
   "UnAuthorised": "Votre statut ne vous permet pas d'accéder à cette page",
   "WarningModal": {

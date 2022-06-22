@@ -38,6 +38,7 @@ export const actions = {
         this.dispatch('currentActions/removeAction', { name: 'duplicate' })
         if (data.success) {
           this.dispatch('documents/refreshCurrentFolder')
+          this.dispatch('popups/pushPopup', { message: i18n.global.t('Popup.duplicated'), type: 'success' })
         } else {
           // Print error messages if any
           if (data.errorMessages !== undefined && data.errorMessages.length > 0) {
@@ -66,6 +67,7 @@ export const actions = {
         this.dispatch('currentActions/removeAction', { name: 'move' })
         if (data.success) {
           this.dispatch('documents/refreshCurrentFolder')
+          this.dispatch('popups/pushPopup', { message: i18n.global.t('Popup.moved'), type: 'success' })
         } else {
           // Print error messages if any
           if (data.errorMessages !== undefined && data.errorMessages.length > 0) {
