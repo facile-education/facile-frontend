@@ -118,7 +118,7 @@ export default {
           return apiConstants.ODT_TYPE
         case 'createODS':
           return apiConstants.ODS_TYPE
-        case 'createOTP':
+        case 'createODP':
           return apiConstants.ODP_TYPE
         case 'createAudio':
           return apiConstants.AUDIO_TYPE
