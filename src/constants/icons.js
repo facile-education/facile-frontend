@@ -6,7 +6,7 @@ const icons = {
   extensions: {
     ggb: require('@assets/documentIcons/geogebra.png'),
     gif: 'file-image',
-    html: require('@assets/documentIcons/wisiwig.svg'),
+    html: require('@assets/options/icon_edit_texte.svg'),
     jpg: 'file-image',
     jpeg: 'file-image',
     mind: require('@assets/documentIcons/mind-map.png'),
