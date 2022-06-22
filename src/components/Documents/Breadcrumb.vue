@@ -37,7 +37,12 @@ export default {
   inject: ['mq'],
   computed: {
     breadcrumb () {
-      return this.$store.state.documents.breadcrumb
+      const breadCrumb = JSON.parse(JSON.stringify(this.$store.state.documents.breadcrumb)) // deep copy vuex state to avoid mutate it from here
+      // Add dropMethod on each folder to avoid code duplication
+      breadCrumb.forEach((folder) => {
+        folder.dropMethod = this.dropMethod
+      })
+      return breadCrumb
     },
     displayableBreadcrumb () {
       return this.breadcrumb.slice(-4) // Only display the fourth elements of the breadcrumb
@@ -52,7 +57,7 @@ export default {
           }
         })
         if (!find) {
-          hiddenElements.push({ ...originalElem, title: originalElem.name })
+          hiddenElements.push({ ...originalElem, title: originalElem.name, isHoverable: true })
         }
       })
       return hiddenElements
@@ -72,6 +77,12 @@ export default {
         this.$router.push({ name: 'Documents', params: { folderId: item.id } })
         // this.$store.dispatch('documents/closeDocumentPanel') // TODO: discuss about ergonomics
       }
+    },
+    dropMethod (event, folder) {
+      this.$store.dispatch('clipboard/drop', {
+        entities: JSON.parse(event.dataTransfer.getData('entitiesToDrop')),
+        folder: folder
+      })
     }
   }
 }
