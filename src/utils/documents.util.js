@@ -28,6 +28,9 @@ function computeDocumentsOptions (documentList) {
   if (store.state.clipboard.documentList.length === 0) { // remove paste option if no documents were copied
     removeMenuOptionIfExist(contextMenu, 'paste')
   }
+  if (!store.state.user.hasWebdavEnabled) {
+    removeMenuOptionIfExist(contextMenu, 'copyWebdavUrl')
+  }
 
   // multi selection
   if (listCM.length > 1) {

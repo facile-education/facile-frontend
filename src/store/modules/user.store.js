@@ -31,7 +31,7 @@ export const mutations = {
     state.firstName = payload.firstName
     state.picture = payload.picture
     state.themeColor = payload.themeColor
-    // state.hasWebdavEnabled = payload.hasWebdavEnabled
+    state.hasWebdavEnabled = payload.hasWebdavEnabled
 
     state.isAdministrator = payload.isAdministrator
     state.isLocalAdmin = payload.isLocalAdmin
