@@ -24,9 +24,6 @@
         :error-type="formErrorList"
         @blur="v$.inputText.$touch()"
       />
-      <p class="extension">
-        .{{ entityExtension }}
-      </p>
       <PentilaErrorMessage
         :error-message="formErrorList"
       />
@@ -323,10 +320,6 @@ export default {
 
 p {
   padding-top: 10px;
-}
-
-.extension {
-  margin: 0;
 }
 
 .mobile {
