@@ -210,7 +210,7 @@ export default {
           this.isFilePickerModalDisplayed = true
           break
         case 'paste':
-          this.$store.dispatch('clipboard/paste', this.document.id)
+          this.$store.dispatch('clipboard/paste', this.currentFolderId)
           break
         case 'delete':
           this.$store.dispatch('warningModal/addWarning', {
