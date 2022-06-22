@@ -6,6 +6,7 @@
     <HiddenItems
       v-if="hiddenElements.length > 0 && (!mq.phone && !mq.tablet)"
       :items="hiddenElements"
+      :is-hoverable="true"
       @optionClicked="changeDir"
     />
     <template
