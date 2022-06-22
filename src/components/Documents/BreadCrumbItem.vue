@@ -2,7 +2,7 @@
   <div
     v-if="(!mq.phone && !mq.tablet) || isCurrentFolder"
     class="breadcrumb-item"
-    :class="{ 'active': isActive, 'first-element': isFirstElement, 'phone-breadcrumb-item': mq.phone || mq.tablet }"
+    :class="{ 'active': isActive, 'first-element': isFirstElement, 'phone-breadcrumb-item': mq.phone || mq.tablet, 'current-folder': isCurrentFolder }"
     :title="folder.name"
     @dragover="setActive"
     @dragleave="cancelActive"
@@ -117,7 +117,11 @@ export default {
   margin-right: 3px;
   padding: 3px;
 
-  &:not(.phone-breadcrumb-item) {
+  &.current-folder:not(.phone-breadcrumb-item){
+    font-weight: bold;
+  }
+
+  &:not(.phone-breadcrumb-item):not(.current-folder) {
     max-width: 150px;
   }
 
