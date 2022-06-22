@@ -84,10 +84,7 @@ export default {
       if (this.isThereInternDocumentDrag) {
         this.cancelActive(e)
         // dropFileAction
-        this.$store.dispatch('clipboard/drop', {
-          entities: JSON.parse(e.dataTransfer.getData('entitiesToDrop')),
-          folder: this.folder
-        })
+        this.folder.dropMethod(e, this.folder)
       }
     },
     clickBack () {

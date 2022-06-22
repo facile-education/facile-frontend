@@ -15,14 +15,7 @@
         v-for="option in options"
         :key="option.position"
         :data-test="option.name"
-        :title="option.title"
-        :icon="option.icon"
-        :icon-white="option.iconWhite"
-        :is-selected="option.isSelected"
-        :is-grayed="option.isGrayed"
-        :has-checkbox="option.hasCheckbox"
-        :has-separator="option.hasSeparator"
-        :sub-menu="option.subMenu"
+        :option="option"
         :position="{x: position.x, y: position.y + option.position*54}"
         @selectOption="emitOption(option)"
         @isContextMenuMobileExtended="subMenuMobileManagement"
@@ -67,7 +60,7 @@ export default {
       }
     }
   },
-  emits: ['close', 'chooseOption'],
+  emits: ['close', 'chooseOption', 'dropFile'],
   data () {
     return {
       isContextMenuMobileExtended: false
@@ -132,6 +125,11 @@ export default {
     closeMenu () {
       this.$store.dispatch('contextMenu/closeMenus')
       this.$emit('close')
+    },
+    drop (e, item) {
+      if (this.isThereInternDocumentDrag && this.isHoverable) {
+        this.$emit('dropFile', e, item)
+      }
     },
     computeXPosition (left) {
       const largestWidth = window.innerWidth - 300 - 10

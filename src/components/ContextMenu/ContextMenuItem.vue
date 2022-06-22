@@ -2,39 +2,43 @@
   <li>
     <div
       class="context-menu-item"
-      :class="{'has-separator': hasSeparator,
-               'is-grayed': isGrayed,
-               'hoverable': !isGrayed}"
+      :class="{'has-separator': option.hasSeparator,
+               'is-grayed': option.isGrayed,
+               'hoverable': !option.isGrayed,
+               'active': isActive}"
       @mouseover="isHovering = true"
       @mouseleave="isHovering = false"
       @click.stop="emitOption"
       @dblclick.stop=""
+      @dragover="setActive"
+      @dragleave="cancelActive"
+      @drop="dropFile"
     >
       <div
-        v-if="hasCheckbox"
+        v-if="option.hasCheckbox"
         class="checkbox"
       >
         <BaseIcon
-          v-if="isSelected"
+          v-if="option.isSelected"
           name="check"
         />
       </div>
       <div class="title">
-        {{ title }}
+        {{ option.title }}
       </div>
       <div
-        v-if="icon !== ''"
+        v-if="option.icon !== ''"
         class="icon"
       >
         <img
-          v-if="iconWhite === undefined || !isHovering"
-          :src="icon"
-          :alt="title"
+          v-if="option.iconWhite === undefined || !isHovering"
+          :src="option.icon"
+          :alt="option.title"
         >
         <img
-          v-show="iconWhite !== undefined && isHovering"
-          :src="iconWhite"
-          :alt="title"
+          v-show="option.iconWhite !== undefined && isHovering"
+          :src="option.iconWhite"
+          :alt="option.title"
         >
       </div>
       <BaseIcon
@@ -47,7 +51,7 @@
       v-if="isSubMenuDisplay"
       :sub-menu-mobile="mq.phone"
       :is-sub-menu="true"
-      :list-options="subMenu"
+      :list-options="option.subMenu"
       :menu-position="subMenuPosition"
       @chooseOption="emitSubOption"
       @close="emitCloseOrder"
@@ -69,40 +73,13 @@ export default {
   },
   inject: ['mq'],
   props: {
-    title: {
-      type: String,
-      required: true,
-      default: ''
+    option: {
+      type: Object,
+      required: true
     },
-    icon: {
-      type: String,
-      default: ''
-    },
-    iconWhite: {
-      type: String,
-      default: undefined
-    },
-    isSelected: {
+    isHoverable: {
       type: Boolean,
       default: false
-    },
-    isGrayed: {
-      type: Boolean,
-      default: false
-    },
-    hasCheckbox: {
-      type: Boolean,
-      default: false
-    },
-    hasSeparator: {
-      type: Boolean,
-      default: false
-    },
-    subMenu: {
-      type: Array,
-      default: function () {
-        return []
-      }
     },
     position: {
       type: Object,
@@ -121,6 +98,7 @@ export default {
       wantsToDeploy: false,
       isSubMenuDisplay: false,
       isHovering: false,
+      isActive: false,
       subMenuPosition: { x: 0, y: 0 }
     }
   },
@@ -132,7 +110,10 @@ export default {
       return this.$store.state.contextMenu.askForDeploySubMenu
     },
     hasSubMenu () {
-      return this.subMenu.length !== 0
+      return this.option.subMenu && this.option.subMenu.length !== 0
+    },
+    isThereInternDocumentDrag () {
+      return this.$store.state.misc.isThereDocumentDrag
     }
   },
   watch: {
@@ -190,11 +171,34 @@ export default {
       }
     },
     computeYPosition () {
-      const subMenuHeight = this.subMenu.length * 54 - 2
+      const subMenuHeight = this.option.subMenu.length * 54 - 2
       if (this.position.y + subMenuHeight > window.innerHeight - 10) {
         return this.position.y - subMenuHeight + 54
       } else {
         return this.position.y
+      }
+    },
+    cancelHandlers (e) {
+      e.preventDefault()
+      // e.stopPropagation()
+    },
+    setActive (e) {
+      if (this.option.isHoverable && this.isThereInternDocumentDrag) {
+        this.isActive = true
+        this.cancelHandlers(e)
+      }
+    },
+    cancelActive (e) {
+      if (this.option.isHoverable && this.isThereInternDocumentDrag) {
+        this.isActive = false
+        this.cancelHandlers(e)
+      }
+    },
+    dropFile (e) {
+      if (this.option.isHoverable && this.isThereInternDocumentDrag) {
+        this.cancelActive(e)
+        // dropFileAction
+        this.option.dropMethod(e, this.option)
       }
     }
   }
@@ -209,6 +213,7 @@ export default {
   align-items: center;
   cursor: pointer;
   height: 54px;
+  border-radius: 6px;
 
   .title {
     margin-top: 5px;
@@ -251,6 +256,14 @@ export default {
 
     .sub-menu-chevron{
       color: black;
+    }
+  }
+
+  &.active {
+    background-color: $color-active-bg;
+
+    .title {
+      color: white;
     }
   }
 }
