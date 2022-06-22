@@ -37,5 +37,6 @@ export default {
 .media {
   height: 100%;
   width: 100%;
+  border: none;
 }
 </style>
