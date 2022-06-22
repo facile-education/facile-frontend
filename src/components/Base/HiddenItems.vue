@@ -92,6 +92,15 @@ export default {
     openSubMenu (event) {
       if (!this.isAContextMenuDisplayed) {
         this.isContextMenuDisplayed = true
+
+        Object.defineProperty(event, 'x', {
+          writable: true
+        })
+        Object.defineProperty(event, 'y', {
+          writable: true
+        })
+        event.x = this.$refs.hiddenItems.getBoundingClientRect().left
+        event.y = this.$refs.hiddenItems.getBoundingClientRect().top + this.$refs.hiddenItems.clientHeight
         this.$store.dispatch('contextMenu/openContextMenu',
           {
             event: event,
@@ -121,6 +130,10 @@ export default {
 
   &.active {
     background-color: $color-active-bg;
+
+    .dots{
+      color: white;
+    }
   }
 }
 
