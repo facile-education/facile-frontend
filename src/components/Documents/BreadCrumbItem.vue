@@ -3,6 +3,7 @@
     v-if="(!mq.phone && !mq.tablet) || isCurrentFolder"
     class="breadcrumb-item"
     :class="{ 'active': isActive, 'first-element': isFirstElement, 'phone-breadcrumb-item': mq.phone || mq.tablet }"
+    :title="folder.name"
     @dragover="setActive"
     @dragleave="cancelActive"
     @drop="dropFile"
@@ -116,6 +117,10 @@ export default {
   margin-right: 3px;
   padding: 3px;
 
+  &:not(.phone-breadcrumb-item) {
+    max-width: 150px;
+  }
+
   &:hover:not(.phone-breadcrumb-item) {
     background-color: $color-hover-bg;
   }
@@ -149,6 +154,14 @@ export default {
   .name {
     display: flex;
     align-items: center;
+    max-width: 100%;
+
+    span{
+      max-width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
   }
 
   .current-folder-options {
