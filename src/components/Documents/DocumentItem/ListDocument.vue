@@ -1,7 +1,7 @@
 <template>
   <div
     class="list-document"
-    :class="{'selected': isSelected}"
+    :class="{'selected': isSelected, 'phone-list-document': mq.phone || mq.tablet}"
     @click.ctrl.exact="ctrlSelect"
     @click.meta.exact="ctrlSelect"
     @click.shift="shiftSelect"
@@ -46,7 +46,10 @@
         >
           {{ document.name }}
         </p>
-        <p class="size-label">
+        <p
+          v-if="mq.phone || mq.tablet"
+          class="size-label"
+        >
           {{ formattedSize }}
         </p>
       </div>
@@ -215,7 +218,7 @@ export default {
   display: flex;
   align-items: center;
   padding-right: 20px;
-  height: 74px;
+  height: 50px;
 
   .selection-icon {
     cursor: pointer;
@@ -224,7 +227,7 @@ export default {
     height: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
 
     .oval {
       display: flex;
@@ -252,8 +255,7 @@ export default {
     align-items: center;
 
     .icon-container {
-      width: 30px;
-      margin-right: 10px;
+      min-width: 60px;
       display: flex;
       justify-content: center;
 
@@ -280,7 +282,7 @@ export default {
         font-size: 0.9375em;
         letter-spacing: 0;
         line-height: 16px;
-        margin-bottom: 2px;
+        margin: 2px 0 0 0;
 
         &:hover {
           text-decoration: underline;
@@ -336,7 +338,7 @@ export default {
 
     .date {
       font-size: 0.75em;
-      width: 75px;
+      width: 100px;
       letter-spacing: 0;
       line-height: 16px;
 
@@ -349,8 +351,41 @@ export default {
   &.selected {
     .name {
       .name-label{
-        font-weight: bold;
+        font-weight: 500;
       }
+    }
+  }
+}
+
+.phone-list-document {
+  height: 74px;
+
+  .selection-icon {
+    justify-content: center;
+  }
+
+  .name {
+    .icon-container {
+      width: 30px;
+      min-width: 30px;
+      margin-right: 10px;
+    }
+
+    p{
+      margin-block-start: 1em;
+      margin-block-end: 1em;
+      margin-inline-start: 0;
+      margin-inline-end: 0;
+    }
+
+    .size-label {
+      margin: 0;
+    }
+  }
+
+  .right-section {
+    .date {
+      width: 75px;
     }
   }
 }
