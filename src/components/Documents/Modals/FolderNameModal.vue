@@ -153,7 +153,8 @@ export default {
 }
 
 .name-input {
-  min-width: 500px;
+  width: 500px;
+  max-width: 100%;
 }
 
 .mobile {
