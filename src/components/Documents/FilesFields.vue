@@ -3,12 +3,17 @@
     class="fields"
     data-test="fields"
     :class="mq.phone ? 'phone-fields' : ''"
+    @mouseover="hoverSelection = true"
+    @mouseleave="hoverSelection = false"
   >
     <div
       class="selection-icon"
       @click="toggleGlobalSelection"
     >
-      <div class="oval">
+      <div
+        v-if="hoverSelection || areAllSelected || mq.phone || mq.tablet"
+        class="oval"
+      >
         <div
           v-if="areAllSelected"
           class="marked"
@@ -59,6 +64,11 @@ export default {
     }
   },
   emits: ['handleSort'],
+  data () {
+    return {
+      hoverSelection: false
+    }
+  },
   computed: {
     fields () {
       return this.$store.state.fileFields.fields
