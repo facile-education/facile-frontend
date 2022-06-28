@@ -101,7 +101,6 @@ export default {
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 0 10px 0 0;
   margin-bottom: 7px;
 
   .selection-icon {
@@ -111,7 +110,8 @@ export default {
     height: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
+    margin-right: 18px;
 
     .oval {
       display: flex;
@@ -131,18 +131,6 @@ export default {
         background-color: #0B3C5F;
       }
     }
-  }
-}
-
-.phone-fields {
-  padding: 0 10px 0 0;
-
-  p {
-    margin: 3px 0;
-  }
-
-  .field{
-    font-size: 1em;
   }
 }
 
@@ -178,6 +166,20 @@ export default {
   margin-left: auto;
   padding-left: 10%;
   justify-content: flex-end;
+}
+
+.phone-fields {
+  .selection-icon {
+    justify-content: center;
+  }
+
+  p {
+    margin: 3px 0;
+  }
+
+  .field{
+    font-size: 1em;
+  }
 }
 
 </style>
