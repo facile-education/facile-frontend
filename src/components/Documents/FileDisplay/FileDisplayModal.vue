@@ -49,7 +49,7 @@ export default {
 .file-display-modal {
   .window-wrapper.full-screen {
     .window-container {
-      height: 100%;
+      height: 100vh;
       width: 100vw;
       .window-header {
         width: 100%;
