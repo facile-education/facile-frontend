@@ -7,13 +7,18 @@
     @click.shift="shiftSelect"
     @dblclick="triggerAction"
     @click.exact="mq.phone ? triggerAction() : select()"
+    @mouseover="hoverSelection = true"
+    @mouseleave="hoverSelection = false"
   >
     <div
       class="selection-icon"
       @click.shift.stop="shiftSelect"
       @click.exact.stop="ctrlSelect"
     >
-      <div class="oval">
+      <div
+        v-if="hoverSelection || isSelected || mq.phone || mq.tablet"
+        class="oval"
+      >
         <div
           v-if="isSelected"
           class="marked"
@@ -127,7 +132,8 @@ export default {
   data () {
     return {
       displayQuickOptions: false,
-      quickOptionsDisplayed: false
+      quickOptionsDisplayed: false,
+      hoverSelection: false
     }
   },
   computed: {
