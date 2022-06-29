@@ -87,6 +87,8 @@ export default {
   display: flex;
   cursor: pointer;
   align-items: center;
+  border-radius: 6px;
+  padding: 0 5px;
   height: 100%;
   margin: 0 15px;
 

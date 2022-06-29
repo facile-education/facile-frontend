@@ -99,7 +99,7 @@ export default {
 
 .chevron {
   width: 11px;
-  margin: 0 15px;
+  margin: 0 10px;
 }
 
 </style>
