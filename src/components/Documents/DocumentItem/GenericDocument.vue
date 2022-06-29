@@ -24,6 +24,7 @@
       :document="document"
       :document-icon="documentIcon"
       :quick-options="quickOptions"
+      :is-last="isLast"
       @mouseover="isHovering = true"
       @mouseleave="isHovering = false"
       @triggerAction="triggerAction"
@@ -60,6 +61,10 @@ export default {
     display: {
       type: String,
       default: 'list'
+    },
+    isLast: {
+      type: Boolean,
+      default: false
     },
     isDraggable: {
       type: Boolean,
@@ -162,7 +167,7 @@ export default {
 }
 
 .dark {
-  background-color: $color-not-white-bg;
+  //background-color: $color-not-white-bg;
 }
 
 .is-dragging {

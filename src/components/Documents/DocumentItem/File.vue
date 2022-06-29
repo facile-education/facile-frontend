@@ -7,6 +7,7 @@
     :display="display"
     :is-draggable="isDraggable"
     :dark="dark"
+    :is-last="isLast"
     @triggerAction="openFile"
     @shiftSelect="dispatchEvent"
     @openContextMenu="openContextMenu"
@@ -36,6 +37,10 @@ export default {
       default: 'list'
     },
     isDraggable: {
+      type: Boolean,
+      default: false
+    },
+    isLast: {
       type: Boolean,
       default: false
     },

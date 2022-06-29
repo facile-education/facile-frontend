@@ -8,9 +8,10 @@
     />
     <div class="entities">
       <Folder
-        v-for="folder in sortedFolders"
+        v-for="(folder, index) in sortedFolders"
         :key="folder.id"
         :folder="folder"
+        :is-last="index === allSortedDocuments.length - 1"
         :quick-options="[]"
         :dark="getEntityIndex(folder.id) % 2 === 0"
         :is-draggable="true"
@@ -18,9 +19,10 @@
         @openContextMenu="openContextMenu"
       />
       <File
-        v-for="file in sortedFiles"
+        v-for="(file, index) in sortedFiles"
         :key="file.id"
         :file="file"
+        :is-last="index === sortedFiles.length - 1"
         :quick-options="[]"
         :dark="getEntityIndex(file.id) % 2 === 0"
         :is-draggable="true"

@@ -6,6 +6,7 @@
     :document="folder"
     :document-icon="folderIcon"
     :quick-options="quickOptions"
+    :is-last="isLast"
     :dark="dark"
     :display="display"
     :is-draggable="isDraggable"
@@ -41,6 +42,10 @@ export default {
       default: 'list'
     },
     isDraggable: {
+      type: Boolean,
+      default: false
+    },
+    isLast: {
       type: Boolean,
       default: false
     },
