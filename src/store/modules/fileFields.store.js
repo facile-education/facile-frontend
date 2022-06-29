@@ -1,29 +1,4 @@
 import { defaultFields } from '@/constants/documents'
-import i18n from '@/i18n'
-
-function formatOptions (fields) {
-  const contextMenuOptions = []
-  let i
-  for (i = 0; i < fields.length; ++i) {
-    const option = {
-      name: fields[i].name,
-      title: fields[i].label,
-      isGrayed: fields[i].isPermanent,
-      position: i,
-      hasCheckbox: true,
-      isSelected: fields[i].isSelected,
-      hasSeparator: (i === fields.length - 1)
-    }
-    contextMenuOptions.push(option)
-  }
-  contextMenuOptions.push({
-    name: 'resetFields',
-    title: i18n.global.t('Documents.options.resetFields'),
-    position: i,
-    hasSeparator: false
-  })
-  return contextMenuOptions
-}
 
 export const state = {
   fields: []
@@ -32,8 +7,6 @@ export const state = {
 export const mutations = {
   updateFields (state, payload) {
     state.fields = [...payload]
-    const contextMenuOptions = formatOptions(payload)
-    this.dispatch('contextMenu/setContextMenuOptions', contextMenuOptions)
   }
 }
 
@@ -44,6 +17,12 @@ export const actions = {
   },
   resetFields ({ commit }) {
     const fields = [...defaultFields]
+    for (let i = 0; i < fields.length; ++i) {
+      fields[i].isSelected = fields[i].defaultDisplay
+    }
+    commit('updateFields', fields)
+  },
+  updateFields ({ commit }, fields) {
     for (let i = 0; i < fields.length; ++i) {
       fields[i].isSelected = fields[i].defaultDisplay
     }
