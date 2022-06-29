@@ -11,6 +11,7 @@ export default {
   createGeogebraFile,
   createScratchFile,
   createLoolFile,
+  createAudioFile,
   createHtmlFile,
   getHtmlContent,
   saveHtmlContent,
@@ -35,6 +36,21 @@ function uploadFile (folderId, file) {
 
   return axios.post(
     constants.JSON_WS_URL + FILE_PATH + '/upload-file?',
+    formData
+  ).then(response => response.data)
+}
+
+/**
+ * Create HTML file
+ */
+function createAudioFile (folderId, name, audioFile) {
+  const formData = new FormData()
+  formData.append('p_auth', getCookie('pauth'))
+  formData.append('folderId', folderId)
+  formData.append('fileName', name)
+  formData.append('file', audioFile)
+
+  return axios.post(constants.JSON_WS_URL + FILE_PATH + '/create-audio-file',
     formData
   ).then(response => response.data)
 }
