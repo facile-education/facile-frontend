@@ -1,7 +1,7 @@
 <template>
   <div
     class="list-document"
-    :class="{'selected': isSelected, 'phone-list-document': mq.phone || mq.tablet}"
+    :class="{'selected': isSelected, 'phone-list-document': mq.phone || mq.tablet, 'last': isLast}"
     @click.ctrl.exact="ctrlSelect"
     @click.meta.exact="ctrlSelect"
     @click.shift="shiftSelect"
@@ -125,9 +125,9 @@ export default {
       type: String,
       required: true
     },
-    displayDate: {
+    isLast: {
       type: Boolean,
-      default: true
+      default: false
     },
     quickOptions: {
       type: Array,
@@ -233,6 +233,7 @@ export default {
   align-items: center;
   padding-right: 20px;
   height: 50px;
+  border-top: 1px solid $color-border;
 
   .selection-icon {
     cursor: pointer;
@@ -369,6 +370,10 @@ export default {
       }
     }
   }
+}
+
+.last {
+  border-bottom: 1px solid $color-border;;
 }
 
 .phone-list-document {
