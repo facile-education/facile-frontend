@@ -131,6 +131,9 @@ export default {
     },
     isAContextMenuDisplayed () {
       return this.$store.state.contextMenu.isAContextMenuDisplayed
+    },
+    openFiles () {
+      return this.$store.state.documents.openFiles
     }
   },
   created () {
@@ -303,7 +306,9 @@ export default {
         this.handleOption({ name: 'rename' })
         // 'Suppr' for deletion
       } else if (event.key === 'Delete') {
-        this.handleOption({ name: 'delete' })
+        if (this.openFiles.length === 0) {
+          this.handleOption({ name: 'delete' })
+        }
       } else if (event.ctrlKey && ((event.key === 'c') || (event.key === 'C'))) {
         this.handleOption({ name: 'copy' })
         // ctrl-X to cut
