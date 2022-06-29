@@ -29,7 +29,10 @@
       @click="dispatchEvent(field.sort.type)"
     >
       <p> {{ field.label }} </p>
-      <div class="icon-container">
+      <div
+        v-if="field.sort.type !== 'lastModifiedDate' || currentSort.type === 'lastModifiedDate'"
+        class="icon-container"
+      >
         <BaseIcon
           v-if="currentSort.type === field.sort.type && currentSort.isOrderAsc"
           class="icon"
@@ -112,7 +115,6 @@ export default {
   display: flex;
   align-items: center;
   margin-bottom: 7px;
-  padding: 0 10px 0 0;
 
   .selection-icon {
     cursor: pointer;
@@ -132,8 +134,8 @@ export default {
       height: 20px;
       width: 20px;
       border-radius: 10px;
-      border: 1px solid #D9E2EA;
-      background-color: #F3F6F8;
+      border: 1px solid black;
+      background-color: white;
 
       .marked {
         height: 12px;
@@ -175,7 +177,8 @@ export default {
 }
 
 .date {
-  width: 140px;
+  width: 150px;
+  padding-right: 20px;
   justify-content: flex-end;
 }
 

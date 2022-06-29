@@ -252,8 +252,8 @@ export default {
       height: 20px;
       width: 20px;
       border-radius: 10px;
-      border: 1px solid #D9E2EA;
-      background-color: #F3F6F8;
+      border: 1px solid black;
+      background-color: white;
 
       .marked {
         height: 12px;
