@@ -150,7 +150,8 @@
     "documentFields": {
       "name": "Nom",
       "creationDate": "Création",
-      "lastModifiedDate": "Dernière modif."
+      "lastModifiedDate": "Dernière modif.",
+      "size": "Taille"
     },
     "documentDetails": {
       "lastVersion": "Version actuelle",
