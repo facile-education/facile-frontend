@@ -86,10 +86,6 @@ export default {
       return fieldsToDisplay
     }
   },
-  created () {
-    // Maybe only when it's on root folder
-    this.$store.dispatch('fileFields/initFields')
-  },
   methods: {
     toggleGlobalSelection () {
       if (this.areAllSelected) {

@@ -2,6 +2,7 @@
   <Layout :is-allowed="true">
     <div
       v-if="currentUser.userId !== 0"
+      ref="documents"
       class="documents"
       :class="{'mobile': mq.phone}"
       @click.right.prevent
@@ -84,6 +85,7 @@ import DocumentList from '@components/Documents/DocumentList'
 import DocumentDetails from '@components/Documents/DocumentDetails/DocumentDetails'
 import ContextMenu from '@components/ContextMenu/ContextMenu'
 import { documentSpaceOptions } from '@/constants/options'
+import { defaultFields, fieldsWithoutSize } from '@/constants/documents'
 import FilePickerArea from '@components/FilePicker/FilePickerArea'
 import { computeDocumentsOptions, downLoadDocument, deleteEntities, importDocuments, copyWebdavUrl } from '@utils/documents.util'
 import { returnAddedFiles, alertNoFile } from '@utils/upload.util'
@@ -98,6 +100,7 @@ export default {
   inject: ['mq'],
   data () {
     return {
+      isUnderTabletSize: false,
       isFolderNameModalDisplayed: false,
       isFileNameModalDisplayed: false,
       isFilePickerModalDisplayed: false,
@@ -137,6 +140,7 @@ export default {
     }
   },
   created () {
+    this.$store.dispatch('fileFields/initFields')
     this.$store.dispatch('documents/getGlobalDocumentsProperties')
 
     // Watch route changes to react on progressionId change
@@ -155,12 +159,24 @@ export default {
     )
   },
   mounted () {
+    this.getWidth()
+    window.addEventListener('resize', this.getWidth)
     window.addEventListener('keydown', this.keyMonitor)
   },
   beforeUnmount () {
+    window.removeEventListener('resize', this.getWidth)
     window.removeEventListener('keydown', this.keyMonitor)
   },
   methods: {
+    getWidth () {
+      if (!this.isUnderTabletSize && (this.mq.tablet || this.mq.phone)) {
+        this.isUnderTabletSize = true
+        this.$store.dispatch('fileFields/updateFields', [...fieldsWithoutSize])
+      } else if (this.isUnderTabletSize && (!this.mq.tablet && !this.mq.phone)) {
+        this.isUnderTabletSize = false
+        this.$store.dispatch('fileFields/updateFields', [...defaultFields])
+      }
+    },
     clearSelectedEntities () {
       this.$store.dispatch('documents/cleanSelectedEntities') // /!\ be careful with asynchronous order!
     },
