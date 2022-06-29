@@ -13,6 +13,15 @@ const defaultFields = [
   },
   {
     position: 1,
+    name: 'size',
+    label: i18n.global.t('Documents.documentFields.size'),
+    defaultDisplay: true,
+    sort: {
+      type: 'size'
+    }
+  },
+  {
+    position: 2,
     name: 'date',
     label: i18n.global.t('Documents.documentFields.lastModifiedDate'),
     defaultDisplay: true,

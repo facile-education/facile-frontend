@@ -112,6 +112,7 @@ export default {
   display: flex;
   align-items: center;
   margin-bottom: 7px;
+  padding: 0 10px 0 0;
 
   .selection-icon {
     cursor: pointer;
@@ -170,11 +171,11 @@ export default {
 .name {
   justify-content: flex-start;
   padding-right: 10%;
+  margin-right: auto;
 }
 
 .date {
-  margin-left: auto;
-  padding-left: 10%;
+  width: 140px;
   justify-content: flex-end;
 }
 

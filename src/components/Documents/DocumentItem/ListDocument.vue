@@ -83,6 +83,14 @@
         class="separator"
       />
       <div
+        v-if="isInCurrentsFields('size')"
+        class="date"
+      >
+        <p>
+          {{ formattedSize }}
+        </p>
+      </div>
+      <div
         v-if="isInCurrentsFields('date')"
         class="date"
       >
@@ -344,7 +352,7 @@ export default {
 
     .date {
       font-size: 0.75em;
-      width: 100px;
+      width: 150px;
       letter-spacing: 0;
       line-height: 16px;
 
