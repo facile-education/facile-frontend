@@ -104,7 +104,7 @@ export default {
 @import '@design';
 
 .breadcrumb-item{
-  height: 100%;
+  height: 40px;
   display: flex;
   align-items: center;
   cursor: pointer;
