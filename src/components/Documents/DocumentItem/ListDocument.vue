@@ -84,7 +84,7 @@
       />
       <div
         v-if="isInCurrentsFields('size')"
-        class="date"
+        class="size"
       >
         <p>
           {{ formattedSize }}
@@ -351,15 +351,18 @@ export default {
       margin: 0 20px;
     }
 
-    .date {
+    .date, .size{
       font-size: 0.75em;
-      width: 150px;
       letter-spacing: 0;
       line-height: 16px;
 
       p {
         text-align: end;
       }
+    }
+
+    .date {
+      width: 150px;
     }
   }
 
