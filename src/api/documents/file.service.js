@@ -47,7 +47,7 @@ function createAudioFile (folderId, name, audioFile) {
   const formData = new FormData()
   formData.append('p_auth', getCookie('pauth'))
   formData.append('folderId', folderId)
-  formData.append('fileName', name)
+  formData.append('name', name)
   formData.append('file', audioFile)
 
   return axios.post(constants.JSON_WS_URL + FILE_PATH + '/create-audio-file',
