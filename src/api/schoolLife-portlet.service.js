@@ -130,9 +130,10 @@ function getCandidateSessions (student, currentSlotId) {
 /**
  * Get the unusual slots of a week, filtered by type
  */
-function getWeekSession (slotType, currentDate) {
+function getWeekSession (schoolId, slotType, currentDate) {
   return axios.get(constants.JSON_WS_URL + SCHOOL_LIFE_SESSION_PATH + '/get-week-sessions', {
     params: {
+      schoolId,
       type: slotType,
       currentDateStr: currentDate.format('YYYY-MM-DD HH:mm')
     }
