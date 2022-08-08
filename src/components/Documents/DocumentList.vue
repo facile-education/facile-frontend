@@ -31,6 +31,7 @@
       />
     </div>
   </div>
+  <DocumentPlaceHolder v-else />
 </template>
 
 <script>
@@ -39,10 +40,11 @@ import Folder from '@components/Documents/DocumentItem/Folder'
 import File from '@components/Documents/DocumentItem/File'
 import { ctrlSelectNextEntity, ctrlSelectPreviousEntity, selectBetween, selectNextEntity, selectPreviousEntity } from '@utils/documents.util'
 import { compare } from '@utils/commons.util'
+import DocumentPlaceHolder from '@components/Documents/DocumentPlaceHolder'
 
 export default {
   name: 'DocumentList',
-  components: { File, Folder, FilesFields },
+  components: { DocumentPlaceHolder, File, Folder, FilesFields },
   emits: ['openContextMenu'],
   data () {
     return {
