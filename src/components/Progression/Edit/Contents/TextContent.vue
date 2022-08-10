@@ -34,7 +34,7 @@ export default {
       default: false
     }
   },
-  emits: ['focus', 'blur', 'save'],
+  emits: ['focus', 'blur', 'input', 'save'],
   data () {
     return {
       timeout: undefined,
@@ -72,6 +72,7 @@ export default {
       this.$emit('blur')
     },
     updateContent (newValue) {
+      this.$emit('input', newValue)
       clearTimeout(this.timeout)
       if (this.isInProgression) {
         this.$store.dispatch('progression/setIsWaiting', true)

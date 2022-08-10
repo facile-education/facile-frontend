@@ -143,11 +143,12 @@ function getHtmlContent (fileVersionId) {
 /**
  * Save HTML content
  */
-function saveHtmlContent (fileVersionId, content) {
+function saveHtmlContent (fileVersionId, content, majorVersion) {
   return axios.post(constants.JSON_WS_URL + WISIWIG_PATH + '/save-html-content',
     PentilaUtils.URL.params({
       fileVersionId: fileVersionId,
-      content: content
+      content: content,
+      majorVersion: majorVersion
     })
   ).then(response => response.data)
 }

@@ -40,6 +40,8 @@
     <WISIWIG
       v-else-if="typeOfView === 'WISIWIG' && loadedFile"
       :file="loadedFile"
+      :have-to-save="haveToSaveFile"
+      @saved="fileSaved"
     />
     <OtherDocument
       v-else-if="typeOfView === 'Other'"
@@ -78,14 +80,31 @@ export default {
         return (typeof obj.id === 'string') &&
                (typeof obj.name === 'string' && obj.name.length > 0)
       }
+    },
+    wantsToCloseFile: {
+      type: Boolean,
+      default: false
     }
   },
+  emits: ['close'],
   data () {
     return {
       loadedFile: undefined,
       typeOfView: undefined,
       fileUrl: undefined,
-      isLoaded: false
+      isLoaded: false,
+      haveToSaveFile: false
+    }
+  },
+  watch: {
+    wantsToCloseFile () {
+      if (this.wantsToCloseFile) {
+        if (this.typeOfView === 'WISIWIG' && this.loadedFile && !this.loadedFile.readOnly) { // Only WISIWIG can auto-save for the moment...
+          this.haveToSaveFile = true
+        } else {
+          this.$emit('close')
+        }
+      }
     }
   },
   created () {
@@ -113,6 +132,11 @@ export default {
           }
         }
       })
+    },
+    fileSaved () {
+      if (this.wantsToCloseFile) {
+        this.$emit('close')
+      }
     }
   }
 }

@@ -15,15 +15,18 @@ const slotLabelList = {
 
 // time in ms
 const popupDurationTime = 3500
+const fileAutoSaveTime = 60000
 
 export {
   nbCharBeforeCompletion,
   slotLabelList,
-  popupDurationTime
+  popupDurationTime,
+  fileAutoSaveTime
 }
 
 export default {
   nbCharBeforeCompletion,
   slotLabelList,
-  popupDurationTime
+  popupDurationTime,
+  fileAutoSaveTime
 }
