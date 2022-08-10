@@ -128,7 +128,7 @@ async function downLoadDocument (entity) {
       folderService.downloadFolder(entity.id).then((data) => {
         store.dispatch('currentActions/removeAction', { name: 'download' })
         if (data.success) {
-          const url = data.downloadURL
+          const url = data.zipUrl
 
           const a = document.createElement('a')
           a.style.display = 'none'
