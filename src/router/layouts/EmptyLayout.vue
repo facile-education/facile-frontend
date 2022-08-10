@@ -93,6 +93,7 @@ export default {
   },
   methods: {
     closeFile (file) {
+      this.$store.dispatch('documents/refreshCurrentFolder') // To update the displayed closed document properties (last modified date, etc...)
       this.$store.dispatch('documents/closeFile', file)
     },
     closePopup () {
