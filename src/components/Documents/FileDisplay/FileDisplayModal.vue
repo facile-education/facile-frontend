@@ -3,7 +3,7 @@
     class="file-display-modal"
     :modal="true"
     :is-full-screen="true"
-    @close="closeModal"
+    @close="wantsToCloseFile = true"
   >
     <template #header>
       <h1 :title="file.name">
@@ -14,6 +14,8 @@
     <template #body>
       <FileDisplay
         :file="file"
+        :wants-to-close-file="wantsToCloseFile"
+        @close="closeModal"
       />
     </template>
 
@@ -37,6 +39,11 @@ export default {
     }
   },
   emits: ['close'],
+  data () {
+    return {
+      wantsToCloseFile: false
+    }
+  },
   methods: {
     closeModal () {
       this.$emit('close')
