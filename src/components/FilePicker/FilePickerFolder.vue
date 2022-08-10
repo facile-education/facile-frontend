@@ -38,9 +38,9 @@ export default {
     }
   },
   emits: ['folderClicked', 'folderDblClicked'],
-  data () {
-    return {
-      myIcons: icons
+  computed: {
+    myIcons () {
+      return icons
     }
   },
   methods: {

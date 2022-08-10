@@ -30,7 +30,6 @@ import BaseIcon from '@components/Base/BaseIcon'
 export default {
   name: 'FileContent',
   components: { BaseIcon },
-  myIcons: icons,
   props: {
     fileName: {
       type: String,
@@ -54,10 +53,10 @@ export default {
       return getExtensionFromName(this.fileName)
     },
     fileIcon () {
-      if (this.$options.myIcons.extensions[this.fileExtension] === undefined) {
-        return this.$options.myIcons.file
+      if (icons.extensions[this.fileExtension] === undefined) {
+        return icons.file
       } else {
-        return this.$options.myIcons.extensions[this.fileExtension]
+        return icons.extensions[this.fileExtension]
       }
     },
     fileIconIsImage () {
