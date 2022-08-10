@@ -73,7 +73,7 @@
             v-for="option in quickOptions"
             :key="option"
             class="option"
-            :name="$options.myIcons.options[option]"
+            :name="option.name"
             @click.stop="quickOptionClick(option)"
           />
         </div>

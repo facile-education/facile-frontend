@@ -22,7 +22,6 @@ export default {
   name: 'File',
   components: { GenericDocument },
   inject: ['mq'],
-  myIcons: icons,
   props: {
     file: {
       type: Object,
@@ -64,10 +63,10 @@ export default {
       return this.$store.state.documents.openFiles.length > 0
     },
     fileIcon () {
-      if (this.$options.myIcons.extensions[this.file.extension] === undefined) {
-        return this.$options.myIcons.file
+      if (icons.extensions[this.file.extension] === undefined) {
+        return icons.file
       } else {
-        return this.$options.myIcons.extensions[this.file.extension]
+        return icons.extensions[this.file.extension]
       }
     }
   },

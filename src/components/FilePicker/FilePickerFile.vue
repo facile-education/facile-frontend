@@ -31,7 +31,6 @@ import { icons } from '@/constants/icons'
 export default {
   name: 'FilePickerFile',
   components: { BaseIcon },
-  myIcons: icons,
   props: {
     file: {
       type: Object,
@@ -49,10 +48,10 @@ export default {
   emits: ['fileClicked'],
   computed: {
     icon () {
-      if (this.$options.myIcons.extensions[this.file.extension] === undefined) {
-        return this.$options.myIcons.file
+      if (icons.extensions[this.file.extension] === undefined) {
+        return icons.file
       } else {
-        return this.$options.myIcons.extensions[this.file.extension]
+        return icons.extensions[this.file.extension]
       }
     },
     fileIconIsImage () {

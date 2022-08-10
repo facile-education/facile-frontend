@@ -27,7 +27,6 @@ export default {
   name: 'Folder',
   components: { GenericDocument },
   inject: ['mq'],
-  myIcons: icons,
   props: {
     folder: {
       type: Object,
@@ -86,7 +85,7 @@ export default {
       return false
     },
     folderIcon () {
-      return this.isActive ? this.$options.myIcons.folderOpen : this.$options.myIcons.folder
+      return this.isActive ? icons.folderOpen : icons.folder
     }
   },
   methods: {
