@@ -279,10 +279,21 @@ export default {
 
 <style lang="scss">
 .filepicker-window {
+
+  .window-wrapper.tablet {
+    .body {
+      min-width: 0;
+    }
+  }
+
   .window-footer {
     text-align: center;
     padding-bottom: 16px;
   }
+}
+
+.filepicker-window.tablet {
+  z-index: 1001;
 }
 
 .filepicker-window.mobile {
@@ -307,7 +318,7 @@ export default {
 
   .body {
     width: 100%;
-    min-width: 600px;
+    min-width: 550px;
     max-height: 600px;
     display: flex;
     flex-direction: column;
