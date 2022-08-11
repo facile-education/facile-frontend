@@ -38,7 +38,7 @@ export default {
   computed: {
     currentFolderDisplayedName () {
       if (this.breadcrumb.length === 1) {
-        return this.$t('rootFolderName')
+        return this.$t(this.breadcrumb[0].name) // Handle root folder name
       } else if (this.breadcrumb.length > 1) {
         return this.breadcrumb[this.breadcrumb.length - 1].name
       } else {
@@ -47,7 +47,7 @@ export default {
     },
     previousFolderDisplayedName () {
       if (this.breadcrumb.length === 2) {
-        return this.$t('rootFolderName')
+        return this.$t(this.breadcrumb[0].name)
       } else if (this.breadcrumb.length > 2) {
         return this.breadcrumb[this.breadcrumb.length - 2].name
       } else {
@@ -135,6 +135,7 @@ export default {
 
 <i18n locale="fr">
 {
-  "rootFolderName": "Mes documents",
+  "Mon cartable": "Mes documents",
+  "Mes groupes": "Mes groupes"
 }
 </i18n>
