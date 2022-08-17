@@ -7,7 +7,7 @@
     @dragover="setActive"
     @dragleave="cancelActive"
     @drop="dropFile"
-    @click.stop="changeDir(folder)"
+    @click.stop="changeDir"
   >
     <div
       v-if="(mq.phone || mq.tablet) && !isFirstElement"
@@ -26,13 +26,44 @@
         {{ folder.name }}
       </span>
     </div>
+    <div
+      v-if="(!mq.phone && !mq.tablet) && isCurrentFolder && !isFirstElement"
+      class="current-folder-options"
+    >
+      <BaseIcon
+        class="icon"
+        name="chevron-down"
+      />
+    </div>
+
+    <ContextMenu
+      v-if="isContextMenuDisplayed && isAContextMenuDisplayed"
+      @chooseOption="handleOption"
+      @close="isContextMenuDisplayed=false"
+    />
   </div>
+
+  <teleport to="body">
+    <FolderNameModal
+      v-if="isFolderNameModalDisplayed"
+      submit-action="rename"
+      :init-folder="folder"
+      @close="isFolderNameModalDisplayed=false"
+    />
+  </teleport>
 </template>
 
 <script>
 
+import BaseIcon from '@components/Base/BaseIcon'
+import ContextMenu from '@components/ContextMenu/ContextMenu'
+import { currentFolderOptions } from '@/constants/options'
+import { removeMenuOptionIfExist } from '@utils/commons.util'
+import { copyWebdavUrl, downLoadDocument } from '@utils/documents.util'
+import FolderNameModal from '@components/Documents/Modals/FolderNameModal'
 export default {
   name: 'BreadCrumbItem',
+  components: { FolderNameModal, ContextMenu, BaseIcon },
   inject: ['mq'],
   props: {
     folder: {
@@ -55,15 +86,37 @@ export default {
   emits: ['clickBack'],
   data () {
     return {
+      isFolderNameModalDisplayed: false,
+      isContextMenuDisplayed: false,
       isActive: false
     }
   },
   computed: {
     isThereInternDocumentDrag () {
       return this.$store.state.misc.isThereDocumentDrag
+    },
+    isAContextMenuDisplayed () {
+      return this.$store.state.contextMenu.isAContextMenuDisplayed
+    },
+    currentOptions () {
+      const options = [...currentFolderOptions]
+      if (!this.$store.state.user.hasWebdavEnabled) {
+        removeMenuOptionIfExist(options, 'copyWebdavUrl')
+      }
+      return options
     }
   },
   methods: {
+    openContextMenu (event) {
+      if (!this.isAContextMenuDisplayed) {
+        this.isContextMenuDisplayed = true
+        this.$store.dispatch('contextMenu/openContextMenu',
+          {
+            event: event,
+            options: this.currentOptions
+          })
+      }
+    },
     cancelHandlers (e) {
       e.preventDefault()
       e.stopPropagation()
@@ -90,11 +143,38 @@ export default {
     clickBack () {
       this.$emit('clickBack')
     },
-    changeDir (folder) {
+    changeDir (event) {
       if (!this.isCurrentFolder) {
         this.$router.push({ name: 'Documents', params: { folderId: this.folder.id } })
         // this.$store.dispatch('documents/closeDocumentPanel') // TODO: discuss about ergonomics
+      } else if (!this.mq.phone && !this.mq.tablet) {
+        this.toggleContextMenu(event)
       }
+    },
+    toggleContextMenu (event) {
+      if (!this.isContextMenuDisplayed && !this.isAContextMenuDisplayed) {
+        this.openContextMenu(event)
+      } else {
+        this.isContextMenuDisplayed = false
+        this.$store.dispatch('contextMenu/closeMenus')
+      }
+    },
+    handleOption (option) {
+      switch (option.name) {
+        case 'rename':
+          this.isFolderNameModalDisplayed = true
+          break
+        case 'download':
+          downLoadDocument(this.folder)
+          break
+        case 'copyWebdavUrl':
+          copyWebdavUrl(this.folder)
+          break
+        default:
+          console.error('no option with name ' + option.name + ' exists')
+      }
+      this.isContextMenuDisplayed = false
+      this.$store.dispatch('contextMenu/closeMenus')
     }
   }
 }

@@ -203,8 +203,33 @@ const folderOptions = [
   }
 ]
 
+const currentFolderOptions = [
+  {
+    name: 'rename',
+    title: i18n.global.t('Documents.options.rename'),
+    icon: icons.options.rename,
+    position: 0,
+    hasSeparator: true
+  },
+  {
+    name: 'download',
+    title: i18n.global.t('Documents.options.download'),
+    icon: icons.options.download,
+    position: 3,
+    hasSeparator: true
+  },
+  {
+    name: 'copyWebdavUrl',
+    title: i18n.global.t('Documents.options.copyWebdavUrl'),
+    icon: icons.options.copyWebdavUrl,
+    position: 5,
+    hasSeparator: true
+  }
+]
+
 export {
   documentSpaceOptions,
   fileOptions,
-  folderOptions
+  folderOptions,
+  currentFolderOptions
 }
