@@ -4,6 +4,7 @@
     :class="{'mobile': mq.phone}"
     data-test="file-picker-modal"
     :modal="true"
+    :draggable="true"
     :is-full-screen="mq.phone"
     :width="!mq.phone? '50vw' : ''"
     :height="!mq.phone? '60vh' : ''"

@@ -1,6 +1,7 @@
 <template>
   <PentilaWindow
     :modal="true"
+    :draggable="true"
     class="edit-slot-modal"
     :class="{'mobile': mq.phone}"
     data-test="edit-slot-modal"

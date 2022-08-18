@@ -3,6 +3,7 @@
     class="file-name-modal"
     :class="mq.phone ? 'mobile': ''"
     :modal="true"
+    :draggable="true"
     :is-full-screen="mq.phone"
     @close="onClose"
     @keydown.exact.enter.stop="submit"

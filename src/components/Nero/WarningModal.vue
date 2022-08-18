@@ -1,6 +1,7 @@
 <template>
   <PentilaWindow
     :modal="true"
+    :draggable="true"
     class="warning-modal"
     data-test="warning-modal"
     @close="onClose"
