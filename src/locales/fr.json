@@ -147,6 +147,7 @@
     "file": "Fichier",
     "files": "Fichiers",
     "errorNoFiles": "Il n'y a aucun fichier valide à téléverser !",
+    "uploadSuccess": " importé avec succès!",
     "documentFields": {
       "name": "Nom",
       "creationDate": "Création",
