@@ -1,6 +1,7 @@
 <template>
   <PentilaWindow
     :modal="true"
+    :draggable="true"
     :class="{'session-teacher': mq.phone}"
     @close="closeModal"
   >

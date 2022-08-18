@@ -1,6 +1,7 @@
 <template>
   <PentilaWindow
     :modal="true"
+    :draggable="true"
     win-width="400px"
     class="studentListWindow"
     :class="{ mobile: mq.phone }"

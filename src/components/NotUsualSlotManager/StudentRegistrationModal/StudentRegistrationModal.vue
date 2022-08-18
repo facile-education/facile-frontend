@@ -1,6 +1,7 @@
 <template>
   <PentilaWindow
     :modal="true"
+    :draggable="true"
     class="student-registration-modal"
     data-test="student-registration-modal"
     @close="closeModal"

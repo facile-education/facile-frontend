@@ -1,6 +1,7 @@
 <template>
   <PentilaWindow
     :modal="true"
+    :draggable="true"
     class="student-list-modal"
     data-test="student-list-modal"
     @close="closeModal"
