@@ -1,4 +1,5 @@
 import store from '@store/index.js'
+import i18n from '@/i18n.js'
 import trashService from '@/api/documents/trash.service'
 import fileService from '@/api/documents/file.service'
 import folderService from '@/api/documents/folder.service'
@@ -113,9 +114,10 @@ async function importDocuments (folderId, documentList) {
       store.dispatch('currentActions/removeAction', { name: 'importDocument' })
       if (data.success) {
         store.dispatch('documents/refreshCurrentFolder')
+        store.dispatch('popups/pushPopup', { message: doc.name + i18n.global.t('Documents.uploadSuccess'), type: 'success' })
       } else {
         const reason = (data.error === ': fileSizeException') ? 'fileSizeException' : ''
-        this.dispatch('popups/pushPopup', { message: 'failed to upload document' + reason, type: 'error' })
+        store.dispatch('popups/pushPopup', { message: 'failed to upload document' + reason, type: 'error' })
       }
     })
   }
