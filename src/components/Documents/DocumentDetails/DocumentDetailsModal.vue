@@ -2,7 +2,7 @@
   <PentilaWindow
     class="details-display-modal"
     :modal="true"
-    :is-full-screen="true"
+    :full-screen="true"
     @close="onClose"
   >
     <template #header>

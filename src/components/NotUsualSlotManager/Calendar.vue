@@ -55,19 +55,19 @@
       :event-to-edit="eventToEdit"
       :create-event-method="createEvent"
       :update-event-method="updateEvent"
-      :is-full-screen="mq.phone"
+      :full-screen="mq.phone"
       @close="isEditSlotModalDisplayed = false"
     />
     <StudentRegistrationModal
       v-if="isRegistrationModalDisplayed"
       :event="eventToEdit"
-      :is-full-screen="mq.phone"
+      :full-screen="mq.phone"
       @close="isRegistrationModalDisplayed = false"
     />
     <StudentListModal
       v-if="isListModalDisplayed"
       :event="eventToEdit"
-      :is-full-screen="mq.phone"
+      :full-screen="mq.phone"
       @close="isListModalDisplayed = false"
     />
   </teleport>

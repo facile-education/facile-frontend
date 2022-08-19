@@ -5,7 +5,7 @@
     data-test="file-picker-modal"
     :modal="true"
     :draggable="true"
-    :is-full-screen="mq.phone"
+    :full-screen="mq.phone"
     :width="!mq.phone? '50vw' : ''"
     :height="!mq.phone? '60vh' : ''"
     @close="close"

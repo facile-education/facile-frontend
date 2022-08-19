@@ -4,7 +4,7 @@
     :class="mq.phone ? 'mobile': ''"
     :modal="true"
     :draggable="true"
-    :is-full-screen="mq.phone"
+    :full-screen="mq.phone"
     @close="onClose"
     @keydown.exact.enter.stop="submit"
     @keydown.exact.backspace.stop=""

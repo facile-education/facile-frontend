@@ -52,7 +52,7 @@
           v-for="(pendingFiring, index) in pendingFirings"
           :key="index"
           :pending-firing="pendingFiring"
-          :is-full-screen="mq.phone"
+          :full-screen="mq.phone"
           :closable="false"
         />
       </teleport>

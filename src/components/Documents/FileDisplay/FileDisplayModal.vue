@@ -2,7 +2,9 @@
   <PentilaWindow
     class="file-display-modal"
     :modal="true"
-    :is-full-screen="true"
+    :full-screen="true"
+    :resizable="true"
+    :draggable="true"
     @close="wantsToCloseFile = true"
   >
     <template #header>

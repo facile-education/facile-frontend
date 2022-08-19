@@ -33,7 +33,7 @@
         :removed-student="student"
         :event="event"
         :deregistration="true"
-        :is-full-screen="mq.phone"
+        :full-screen="mq.phone"
         @deregister="deregisterStudent"
         @close="isStudentDeregistrationModalDisplayed = false"
       />
