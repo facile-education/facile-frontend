@@ -2,7 +2,7 @@
   <PentilaWindow
     class="folder-name-modal"
     :class="mq.phone ? 'mobile': ''"
-    :is-full-screen="mq.phone"
+    :full-screen="mq.phone"
     :modal="true"
     :draggable="true"
     @close="onClose"
