@@ -103,6 +103,7 @@ export default {
       max-width: 290px;
 
       h2 {
+        line-height: 1.5em;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;

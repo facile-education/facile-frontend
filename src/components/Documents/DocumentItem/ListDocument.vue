@@ -296,7 +296,7 @@ export default {
         text-overflow: ellipsis;
         font-size: 0.9375em;
         letter-spacing: 0;
-        line-height: 16px;
+        line-height:  0.9375em;
         margin: 2px 0 0 0;
 
         &:hover {
