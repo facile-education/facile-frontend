@@ -162,6 +162,21 @@ export default {
     }
   }
 
+  // Shit to make the thing works (inherit max-height minus elements paddings)
+  .window-body {
+    --body-max-height: calc(90vh - 133px);
+    max-height: var(--body-max-height);
+
+    .tab-content {
+      --tab-content-max-height: calc(var(--body-max-height) - 87px);
+      max-height: var(--tab-content-max-height);
+
+      .body {
+        max-height: calc(var(--tab-content-max-height) - 10px);
+      }
+    }
+  }
+
   .window-footer {
     text-align: center;
     padding-bottom: 16px;
