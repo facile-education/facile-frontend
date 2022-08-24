@@ -67,14 +67,22 @@ export default {
     goInParentFolder (index) {
       if (index > 0) {
         const parentFolder = this.breadcrumb[index - 1]
-        this.$router.push({ name: 'Documents', params: { folderId: parentFolder.id } })
+        if (this.folder.isGroupDirectory) {
+          this.$router.push({ name: 'Groups', params: { folderId: this.folder.id } })
+        } else {
+          this.$router.push({ name: 'Documents', params: { folderId: parentFolder.id } })
+        }
       } else {
         console.error('cannot go in parent folder of a folder with index ' + index)
       }
     },
     changeDir (item) {
       if (!this.isCurrentFolder) {
-        this.$router.push({ name: 'Documents', params: { folderId: item.id } })
+        if (this.folder.isGroupDirectory) {
+          this.$router.push({ name: 'Groups', params: { folderId: this.folder.id } })
+        } else {
+          this.$router.push({ name: 'Documents', params: { folderId: item.id } })
+        }
         // this.$store.dispatch('documents/closeDocumentPanel') // TODO: discuss about ergonomics
       }
     },

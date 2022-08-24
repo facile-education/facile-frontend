@@ -119,7 +119,11 @@ export default {
       this.$emit('shiftSelect', { id: file.id, name: file.name })
     },
     changeDir () {
-      this.$router.push({ name: 'Documents', params: { folderId: this.folder.id } })
+      if (this.folder.isGroupDirectory) {
+        this.$router.push({ name: 'Groups', params: { folderId: this.folder.id } })
+      } else {
+        this.$router.push({ name: 'Documents', params: { folderId: this.folder.id } })
+      }
     },
     openContextMenu (e) {
       this.$emit('openContextMenu', e)
