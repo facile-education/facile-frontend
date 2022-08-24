@@ -18,6 +18,7 @@
           v-if="areActionsInProgress"
           class="spinner"
         />
+        <RootSelector />
         <FilePickerArea
           class="file-picker-area"
           @fileAdded="importDocument"
@@ -93,10 +94,11 @@ import FolderNameModal from '@components/Documents/Modals/FolderNameModal'
 import FileNameModal from '@components/Documents/Modals/FileNameModal'
 import FilePickerModal from '@components/FilePicker/FilePickerModal'
 import DocumentDetailsModal from '@components/Documents/DocumentDetails/DocumentDetailsModal'
+import RootSelector from '@components/Documents/RootSelector'
 
 export default {
   name: 'Documents',
-  components: { DocumentDetailsModal, FilePickerModal, FileNameModal, FolderNameModal, FilePickerArea, ContextMenu, DocumentDetails, DocumentList, Breadcrumb, CurrentOptions, Layout },
+  components: { RootSelector, DocumentDetailsModal, FilePickerModal, FileNameModal, FolderNameModal, FilePickerArea, ContextMenu, DocumentDetails, DocumentList, Breadcrumb, CurrentOptions, Layout },
   inject: ['mq'],
   data () {
     return {
@@ -147,10 +149,18 @@ export default {
     this.$watch(
       () => this.$route.params,
       () => {
-        if (this.$route.params.folderId) {
-          this.$store.dispatch('documents/changeDirectory', this.$route.params.folderId)
-        } else {
-          this.$store.dispatch('documents/goInDocumentRoot')
+        if (this.$route.name === 'Documents') {
+          if (this.$route.params.folderId) {
+            this.$store.dispatch('documents/changeDirectory', { id: this.$route.params.folderId })
+          } else {
+            this.$store.dispatch('documents/goInDocumentRoot')
+          }
+        } else if (this.$route.name === 'Groups') {
+          if (this.$route.params.folderId) {
+            this.$store.dispatch('documents/changeDirectory', { id: this.$route.params.folderId, isGroupDirectory: true })
+          } else {
+            this.$store.dispatch('documents/goInGroupRoot')
+          }
         }
       },
       // fetch the data when the view is created and the data is

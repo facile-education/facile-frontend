@@ -52,6 +52,16 @@ const routes = [
     component: () => import('@/router/views/Documents')
   },
   {
+    path: '/documents/groups/:folderId(.*)?',
+    name: 'Groups',
+    component: () => import('@/router/views/Documents')
+  },
+  {
+    path: '/documents/recent',
+    name: 'Recent',
+    component: () => import('@/router/views/Documents')
+  },
+  {
     path: '/user-manager',
     name: 'UserManager',
     component: () => import('@/router/views/UserManagement')

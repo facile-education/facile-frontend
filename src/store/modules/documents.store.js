@@ -2,6 +2,7 @@ import navigationService from '@/api/documents/folder.service'
 import documentsService from '@/api/documents/documents.service'
 import editService from '@/api/documents/edit.service'
 import i18n from '@/i18n'
+import groupService from '@/api/documents/group.service'
 
 export const state = {
   breadcrumb: [],
@@ -103,13 +104,18 @@ export const actions = {
   closeFile ({ commit }, file) {
     commit('closeFile', file)
   },
-  changeDirectory ({ commit, state }, folderId) {
+  changeDirectory ({ commit, state }, directory) {
     // commit('setDocumentPanelDisplayed', false) // confirm ergonomic
-    commit('setCurrentFolderId', folderId)
+    commit('setCurrentFolderId', directory.id)
     this.dispatch('documents/cleanSelectedEntities')
     commit('updateLastSelectedEntity', undefined)
-    this.dispatch('documents/updateBreadcrumb', folderId)
-    this.dispatch('documents/getEntities', folderId)
+    if (directory.isGroupDirectory) {
+      this.dispatch('documents/updateGroupBreadcrumb', directory.id)
+      this.dispatch('documents/getGroupEntities', directory.id)
+    } else {
+      this.dispatch('documents/updateBreadcrumb', directory.id)
+      this.dispatch('documents/getEntities', directory.id)
+    }
   },
   cleanSelectedEntities ({ commit }) {
     commit('setSelectedEntities', [])
@@ -134,22 +140,43 @@ export const actions = {
       })
     })
   },
+  getGroupEntities ({ commit }, groupFolderId) {
+    return new Promise((resolve) => {
+      groupService.getGroupEntities(groupFolderId).then((data) => {
+        if (data.success) {
+          data.folders.forEach(folder => { folder.isGroupDirectory = true })
+          commit('setFolderContent', { subFolders: data.folders, files: data.files })
+          resolve({ subFolders: data.folders, files: data.files })
+        } else {
+          console.error('Unable to get entities from backend for folder id ' + groupFolderId)
+        }
+      })
+    })
+  },
   goInDocumentRoot ({ state, commit }) {
     if (state.documentsProperties.private) {
-      this.dispatch('documents/changeDirectory', state.documentsProperties.private.id)
+      this.dispatch('documents/changeDirectory', { id: state.documentsProperties.private.id })
     } else {
       documentsService.getGlobalDocumentsProperties().then((data) => {
         commit('setDocumentsProperties', data)
-        this.dispatch('documents/changeDirectory', data.private.id)
+        this.dispatch('documents/changeDirectory', { id: data.private.id })
       })
     }
+  },
+  goInGroupRoot ({ state, commit }) {
+    this.dispatch('documents/changeDirectory', { id: 'groupEntities', isGroupDirectory: true }) // TODO get those key from documentsProperties
   },
   openDocumentPanel ({ commit }) {
     commit('setDocumentPanelDisplayed', true)
   },
   refreshCurrentFolder ({ state }) {
-    this.dispatch('documents/updateBreadcrumb', state.currentFolderId)
-    this.dispatch('documents/getEntities', state.currentFolderId)
+    if (state.currentFolderId.isGroupDirectory) {
+      this.dispatch('documents/updateGroupBreadcrumb', state.currentFolderId)
+      this.dispatch('documents/getGroupEntities', state.currentFolderId)
+    } else {
+      this.dispatch('documents/updateBreadcrumb', state.currentFolderId)
+      this.dispatch('documents/getEntities', state.currentFolderId)
+    }
   },
   renameEntity ({ commit, getters }, { entity, name }) {
     return new Promise((resolve) => {
@@ -173,6 +200,19 @@ export const actions = {
         commit('setBreadcrumb', data.breadcrumb)
       } else {
         console.error('Unable to get breadcrumb for folder id ' + folderId)
+      }
+    })
+  },
+  updateGroupBreadcrumb ({ commit }, groupFolderId) {
+    groupService.getGroupFolderBreadcrumb(groupFolderId).then((data) => {
+      if (data.breadCrumb) {
+        for (let i = 0; i < data.breadCrumb.length; ++i) { // Because all documents in breadcrumb are folders, add folder icon
+          data.breadCrumb[i].icon = require('@assets/documentIcons/icon_dossier_neutre.svg')
+          data.breadCrumb[i].isGroupDirectory = true
+        }
+        commit('setBreadcrumb', data.breadCrumb)
+      } else {
+        console.error('Unable to get breadcrumb for folder id ' + groupFolderId)
       }
     })
   },
