@@ -3,7 +3,7 @@
     :modal="true"
     :draggable="true"
     class="linkWindow"
-    win-width="600px"
+    :width="600"
     @close="closeModal"
   >
     <template #header>

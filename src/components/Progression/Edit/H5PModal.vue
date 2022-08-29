@@ -2,7 +2,7 @@
   <PentilaWindow
     :modal="true"
     class="h5pWindow"
-    win-width="600px"
+    :width="600"
     :class="{'mobile': mq.phone}"
     @close="closeModal"
   >

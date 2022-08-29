@@ -53,7 +53,6 @@
     <teleport to="body">
       <FilePickerModal
         v-if="isFilePickerModalDisplayed"
-        height="30em"
         :folder-selection="true"
         :init-in-current-folder="false"
         @chosenFolder="doSelectFolderAction"

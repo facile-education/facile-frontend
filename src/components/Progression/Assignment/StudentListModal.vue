@@ -2,7 +2,7 @@
   <PentilaWindow
     :modal="true"
     :draggable="true"
-    win-width="400px"
+    :width="400"
     class="studentListWindow"
     :class="{ mobile: mq.phone }"
     @close="closeModal"

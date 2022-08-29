@@ -4,6 +4,7 @@
     :draggable="true"
     class="warning-modal"
     data-test="warning-modal"
+    :width="600"
     @close="onClose"
   >
     <template #header>
