@@ -6,8 +6,8 @@
     :modal="true"
     :draggable="true"
     :full-screen="mq.phone"
-    :width="!mq.phone? '50vw' : ''"
-    :height="!mq.phone? '60vh' : ''"
+    :width="width"
+    :heigth="height"
     @close="close"
     @keydown.exact.enter.stop=""
     @keydown.exact.backspace.stop=""
@@ -78,10 +78,6 @@ export default {
   components: { FilePickerModalGroupTab, FilePickerModalDocumentTab },
   inject: ['mq'],
   props: {
-    height: {
-      type: String,
-      default: '100%'
-    },
     folderSelection: {
       type: Boolean,
       default: false
@@ -108,7 +104,9 @@ export default {
     return {
       inputText: undefined,
       currentFolder: undefined,
-      selectedFolder: undefined
+      selectedFolder: undefined,
+      height: undefined,
+      width: undefined
     }
   },
   computed: {
@@ -125,6 +123,10 @@ export default {
       }
       // return this.selectedFolder ? this.$t('chooseSelectedFolder') + this.selectedFolder.name : this.$t('chooseCurrentFolder')
     }
+  },
+  created () {
+    this.width = !this.mq.phone ? Math.max(600, document.documentElement.clientWidth / 2) : ''
+    this.height = document.documentElement.clientHeight * 9 / 10
   },
   methods: {
     submit () {
@@ -156,30 +158,35 @@ export default {
 <style lang="scss">
 .filepicker-window {
 
-  .window-wrapper.tablet {
-    .body {
-      min-width: 0;
-    }
-  }
-
-  // Shit to make the thing works (inherit max-height minus elements paddings)
-  .window-body {
-    --body-max-height: calc(90vh - 133px);
-    max-height: var(--body-max-height);
-
-    .tab-content {
-      --tab-content-max-height: calc(var(--body-max-height) - 87px);
-      max-height: var(--tab-content-max-height);
-
-      .body {
-        max-height: calc(var(--tab-content-max-height) - 10px);
+  &.mobile {
+    .resizable-component {
+      .window-container {
+        .window-body {
+          --body-max-height: calc(100vh - 133px);
+        }
       }
     }
   }
 
-  .window-footer {
-    text-align: center;
-    padding-bottom: 16px;
+  // Shit to make the thing works (inherit max-height minus elements paddings)
+  .resizable-component {
+    .window-container {
+      height: fit-content;
+
+      .window-body {
+        --body-max-height: calc(90vh - 133px);
+        max-height: var(--body-max-height);
+
+        .tab-content {
+          --tab-content-max-height: calc(var(--body-max-height) - 87px);
+          max-height: var(--tab-content-max-height);
+
+          .body {
+            max-height: calc(var(--tab-content-max-height) - 10px);
+          }
+        }
+      }
+    }
   }
 }
 

@@ -1,7 +1,7 @@
 <template>
   <PentilaWindow
     :modal="true"
-    width="500px"
+    :width="600"
     data-test="pending-firing-modal"
     class="pending-firing-modal"
   >

@@ -207,7 +207,6 @@
     <teleport to="body">
       <FilePickerModal
         v-if="isFilePickerDisplayed"
-        height="30em"
         :multi-selection="isMultiSelectionAllowed"
         :allow-files-from-device="true"
         @addedFiles="attachNewFiles"

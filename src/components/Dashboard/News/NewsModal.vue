@@ -3,7 +3,7 @@
     :modal="true"
     :draggable="true"
     class="newsWindow"
-    win-width="600px"
+    :width="600"
     :class="{'mobile': mq.phone}"
     @close="closeModal"
   >
@@ -147,7 +147,6 @@
       <teleport to="body">
         <FilePickerModal
           v-if="isFilePickerDisplayed"
-          height="30em"
           :multi-selection="true"
           :allow-files-from-device="true"
           @addedFiles="attachNewFiles"

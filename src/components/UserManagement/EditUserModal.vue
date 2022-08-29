@@ -3,7 +3,7 @@
     :modal="true"
     :draggable="true"
     class="editUserWindow"
-    win-width="600px"
+    :width="600"
     :class="{'mobile': mq.phone}"
     @close="closeModal"
   >

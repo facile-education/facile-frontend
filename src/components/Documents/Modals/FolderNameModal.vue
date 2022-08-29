@@ -5,6 +5,7 @@
     :full-screen="mq.phone"
     :modal="true"
     :draggable="true"
+    :width="600"
     @close="onClose"
     @keydown.exact.enter.stop="submit"
     @keydown.exact.backspace.stop=""

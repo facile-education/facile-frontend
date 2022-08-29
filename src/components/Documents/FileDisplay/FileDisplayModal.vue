@@ -5,7 +5,7 @@
     :full-screen="true"
     :resizable="true"
     :draggable="true"
-    win-height="500px"
+    :height="500"
     @close="wantsToCloseFile = true"
   >
     <template #header>
