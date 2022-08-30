@@ -21,6 +21,7 @@
       />
       <FilePickerFile
         v-for="file in currentFiles"
+        :grayed="folderSelection"
         :key="file.id"
         :file="file"
         :is-selected="isSelected(file)"

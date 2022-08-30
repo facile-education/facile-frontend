@@ -81,7 +81,7 @@ export default {
 
     &.selected {
       background-color: $color-file-picker-selected-file;
-      color: $color-light-text;
+      font-weight: 500;
     }
 
     .icon-container {
