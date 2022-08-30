@@ -147,7 +147,7 @@ export default {
       if (!this.isCurrentFolder) {
         this.$router.push({ name: 'Documents', params: { folderId: this.folder.id } })
         // this.$store.dispatch('documents/closeDocumentPanel') // TODO: discuss about ergonomics
-      } else if (!this.mq.phone && !this.mq.tablet) {
+      } else if (!this.mq.phone && !this.mq.tablet && !this.isFirstElement) {
         this.toggleContextMenu(event)
       }
     },
