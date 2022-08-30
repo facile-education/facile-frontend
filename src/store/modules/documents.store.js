@@ -130,7 +130,9 @@ export const actions = {
   },
   getEntities ({ commit }, folderId) {
     return new Promise((resolve) => {
+      this.dispatch('currentActions/addAction', { name: 'getEntities' })
       navigationService.getAllEntities(folderId, true).then((data) => {
+        this.dispatch('currentActions/removeAction', { name: 'getEntities' })
         if (data.success) {
           commit('setFolderContent', { subFolders: data.subFolders, files: data.files })
           resolve({ subFolders: data.subFolders, files: data.files })
@@ -142,7 +144,9 @@ export const actions = {
   },
   getGroupEntities ({ commit }, groupFolderId) {
     return new Promise((resolve) => {
+      this.dispatch('currentActions/addAction', { name: 'getEntities' })
       groupService.getGroupEntities(groupFolderId).then((data) => {
+        this.dispatch('currentActions/removeAction', { name: 'getEntities' })
         if (data.success) {
           data.folders.forEach(folder => { folder.isGroupDirectory = true })
           commit('setFolderContent', { subFolders: data.folders, files: data.files })
