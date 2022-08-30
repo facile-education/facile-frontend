@@ -125,11 +125,17 @@ export default {
     currentFolderId () {
       return this.$store.state.documents.currentFolderId
     },
+    breadcrumb () {
+      return this.$store.state.documents.breadcrumb
+    },
+    currentFolder () {
+      return (this.breadcrumb && this.breadcrumb.length) > 0 ? this.breadcrumb[this.breadcrumb.length - 1] : undefined
+    },
     selectedDocumentsOptions () {
       return computeDocumentsOptions(this.selectedDocuments)
     },
     currentOptions () {
-      return (this.selectedDocuments.length > 0) ? this.selectedDocumentsOptions : documentSpaceOptions
+      return (this.selectedDocuments.length > 0) ? this.selectedDocumentsOptions : (this.currentFolder && this.currentFolder.type !== 'Group' ? documentSpaceOptions : [])
     },
     isDocumentPanelDisplayed () {
       return this.$store.state.documents.isDocumentPanelDisplayed
@@ -204,7 +210,7 @@ export default {
       }
     },
     openContextMenu (event) {
-      if (!this.isAContextMenuDisplayed) {
+      if (!this.isAContextMenuDisplayed && this.currentOptions.length > 0) {
         this.isContextMenuDisplayed = true
         this.$store.dispatch('contextMenu/openContextMenu',
           {
