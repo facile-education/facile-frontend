@@ -171,7 +171,7 @@ export default {
       return dayjs(this.document.lastModifiedDate, 'YYYY-MM-DD HH:mm:ss').calendar()
     },
     formattedSize () {
-      return formatSize(this.document.size)
+      return this.document.size !== undefined ? formatSize(this.document.size) : '-'
     },
     iconPrefix () {
       return 'fas'
@@ -348,6 +348,12 @@ export default {
       width: 1px;
       border-right: 1px solid $color-border;
       margin: 0 20px;
+    }
+
+    .size {
+      min-width: 20px;
+      display: flex;
+      justify-content: center;
     }
 
     .date, .size{
