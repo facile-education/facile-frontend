@@ -1,7 +1,7 @@
 <template>
   <div
     class="file"
-    :class="{'selected': isSelected, 'dark': dark}"
+    :class="{'selected': isSelected, 'dark': dark, 'grayed': grayed}"
     @click="fileClicked"
   >
     <div class="icon-container">
@@ -37,6 +37,10 @@ export default {
       required: true
     },
     isSelected: {
+      type: Boolean,
+      default: false
+    },
+    grayed: {
       type: Boolean,
       default: false
     },
@@ -90,13 +94,18 @@ export default {
     background-color: $color-not-white-bg;
   }
 
-  &:hover {
+  &.grayed {
+    color: gray;
+    cursor: default;
+  }
+
+  &:hover:not(.grayed) {
     background-color: $color-hover-bg;
   }
 
   &.selected {
     background-color: $color-file-picker-selected-file;
-    color: $color-light-text;
+    font-weight: 500;
   }
 
   .icon-container {
@@ -109,7 +118,7 @@ export default {
       font-size: 23px;
       color: #777777;
       &.selected {
-        color: $color-light-text;
+        //color: $color-light-text;
       }
     }
 
