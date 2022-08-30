@@ -181,7 +181,7 @@ export default {
     },
     clickOnScrollDiv (event) {
       // Clear selected entities ONLY if the click is on those elements, and continue propagation
-      if (event.target.classList.contains('scroll') || event.target.classList.contains('breadCrumb')) {
+      if (event.target.classList.contains('scroll') || event.target.classList.contains('fields') || event.target.classList.contains('breadCrumb')) {
         this.clearSelectedEntities()
       }
     },
