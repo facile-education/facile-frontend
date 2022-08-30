@@ -117,7 +117,7 @@ export default {
   position: fixed;
   top: 30px;
   right: 15px;
-  flex-direction: column;
+  flex-direction: column-reverse;
 
   .popup {
     color: white;
