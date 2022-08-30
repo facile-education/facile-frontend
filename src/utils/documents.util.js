@@ -4,7 +4,7 @@ import trashService from '@/api/documents/trash.service'
 import fileService from '@/api/documents/file.service'
 import folderService from '@/api/documents/folder.service'
 import { mergeContextMenus, removeMenuOptionIfExist } from '@/utils/commons.util'
-import { folderOptions, fileOptions } from '@/constants/options'
+import { folderOptions, fileOptions, groupOptions } from '@/constants/options'
 
 function computeDocumentsOptions (documentList) {
   const listCM = []
@@ -13,7 +13,9 @@ function computeDocumentsOptions (documentList) {
     let documentContextMenu
     const document = documentList[i]
 
-    if (document.type === 'Folder') {
+    if (document.type === 'Group' || document.isGroupRootFolder) {
+      documentContextMenu = [...groupOptions]
+    } else if (document.type === 'Folder') {
       documentContextMenu = [...folderOptions]
     } else {
       documentContextMenu = [...fileOptions]

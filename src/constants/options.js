@@ -227,9 +227,12 @@ const currentFolderOptions = [
   }
 ]
 
+const groupOptions = []
+
 export {
   documentSpaceOptions,
   fileOptions,
   folderOptions,
+  groupOptions,
   currentFolderOptions
 }

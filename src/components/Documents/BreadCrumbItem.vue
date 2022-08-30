@@ -27,7 +27,7 @@
       </span>
     </div>
     <div
-      v-if="(!mq.phone && !mq.tablet) && isCurrentFolder && !isFirstElement"
+      v-if="currentOptions.length > 0"
       class="current-folder-options"
     >
       <BaseIcon
@@ -98,12 +98,19 @@ export default {
     isAContextMenuDisplayed () {
       return this.$store.state.contextMenu.isAContextMenuDisplayed
     },
+    isGroupFolder () {
+      return this.folder.type === 'Group' || this.folder.isGroupRootFolder
+    },
     currentOptions () {
-      const options = [...currentFolderOptions]
-      if (!this.$store.state.user.hasWebdavEnabled) {
-        removeMenuOptionIfExist(options, 'copyWebdavUrl')
+      if ((!this.mq.phone && !this.mq.tablet) && this.isCurrentFolder && !this.isFirstElement && !this.isGroupFolder) {
+        const options = [...currentFolderOptions]
+        if (!this.$store.state.user.hasWebdavEnabled) {
+          removeMenuOptionIfExist(options, 'copyWebdavUrl')
+        }
+        return options
+      } else {
+        return []
       }
-      return options
     }
   },
   methods: {
@@ -151,7 +158,7 @@ export default {
           this.$router.push({ name: 'Documents', params: { folderId: this.folder.id } })
         }
         // this.$store.dispatch('documents/closeDocumentPanel') // TODO: discuss about ergonomics
-      } else if (!this.mq.phone && !this.mq.tablet && !this.isFirstElement) {
+      } else if (this.currentOptions.length > 0) {
         this.toggleContextMenu(event)
       }
     },
