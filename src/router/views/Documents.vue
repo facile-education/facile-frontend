@@ -21,6 +21,7 @@
         <FilePickerArea
           class="file-picker-area"
           @fileAdded="importDocument"
+          @click.right.prevent="openContextMenu"
         >
           <div
             class="scroll"
