@@ -125,11 +125,8 @@ export default {
     currentFolderId () {
       return this.$store.state.documents.currentFolderId
     },
-    breadcrumb () {
-      return this.$store.state.documents.breadcrumb
-    },
     currentFolder () {
-      return (this.breadcrumb && this.breadcrumb.length) > 0 ? this.breadcrumb[this.breadcrumb.length - 1] : undefined
+      return this.$store.getters['documents/currentFolder']
     },
     selectedDocumentsOptions () {
       return computeDocumentsOptions(this.selectedDocuments)

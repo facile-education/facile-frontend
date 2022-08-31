@@ -174,7 +174,7 @@ export const actions = {
     commit('setDocumentPanelDisplayed', true)
   },
   refreshCurrentFolder ({ state }) {
-    if (state.currentFolderId.isGroupDirectory) {
+    if (getters.currentFolder(state).isGroupDirectory) {
       this.dispatch('documents/updateGroupBreadcrumb', state.currentFolderId)
       this.dispatch('documents/getGroupEntities', state.currentFolderId)
     } else {
@@ -248,5 +248,11 @@ export const actions = {
   },
   updateLastSelectedEntity ({ commit }, document) {
     commit('updateLastSelectedEntity', document)
+  }
+}
+
+export const getters = {
+  currentFolder (state) {
+    return state.breadcrumb.length > 0 ? state.breadcrumb[state.breadcrumb.length - 1] : undefined
   }
 }
