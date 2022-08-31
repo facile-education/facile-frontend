@@ -14,7 +14,7 @@
         :is-last="index === allSortedDocuments.length - 1"
         :quick-options="[]"
         :dark="getEntityIndex(folder.id) % 2 === 0"
-        :is-draggable="true"
+        :is-draggable="folder.type !== 'Group' && !folder.isGroupRootFolder"
         @shiftSelect="shiftSelect"
         @openContextMenu="openContextMenu"
       />
