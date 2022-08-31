@@ -74,10 +74,10 @@ export default {
   },
   computed: {
     formattedCreationDate () {
-      return dayjs(this.document.creationDate, 'YYYY-MM-DD HH:mm:ss').calendar()
+      return this.document.creationDate !== undefined ? dayjs(this.document.creationDate, 'YYYY-MM-DD HH:mm:ss').calendar() : '-'
     },
     formattedModificationDate () {
-      return dayjs(this.document.lastModifiedDate, 'YYYY-MM-DD HH:mm:ss').calendar()
+      return this.document.lastModifiedDate !== undefined ? dayjs(this.document.lastModifiedDate, 'YYYY-MM-DD HH:mm:ss').calendar() : '-'
     },
     formattedSize () {
       return this.document.size !== undefined ? formatSize(this.document.size) : '-'
