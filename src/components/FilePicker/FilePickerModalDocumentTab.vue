@@ -108,14 +108,14 @@ export default {
       navigationService.getAllEntities(folderId, false).then((data) => {
         this.isLoadingFiles = false
         if (data.success) {
-          data.subFolders.forEach(subFolder => { subFolder.hasPermission = true }) // Add hasPermission = true property to all document folder for compliance with group objects
+          data.subFolders.forEach(subFolder => { subFolder.hasAddPermission = true }) // Add hasAddPermission = true property to all document folder for compliance with group objects
           this.currentFolders = data.subFolders ? data.subFolders : []
           this.currentFiles = data.files ? data.files : []
           this.selectedFolder = undefined
           this.$emit('selectedFolder', undefined)
           navigationService.getFolderBreadcrumb(folderId).then((data) => {
             if (data.success) {
-              data.breadcrumb.forEach(folder => { folder.hasPermission = true }) // Add hasPermission = true property to all document folder for compliance with group objects
+              data.breadcrumb.forEach(folder => { folder.hasAddPermission = true }) // Add hasAddPermission = true property to all document folder for compliance with group objects
               this.currentBreadcrumb = data.breadcrumb
               this.$emit('currentFolder', this.currentFolder)
             } else {
