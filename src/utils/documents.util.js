@@ -18,8 +18,14 @@ function computeDocumentsOptions (documentList) {
       documentContextMenu = [...groupOptions]
     } else if (document.type === 'Folder') {
       documentContextMenu = [...folderOptions]
+      if (!document.isGroupDirectory) {
+        removeMenuOptionIfExist(documentContextMenu, 'managePermissions')
+      }
     } else {
       documentContextMenu = [...fileOptions]
+      if (!document.isGroupFile) {
+        removeMenuOptionIfExist(documentContextMenu, 'managePermissions')
+      }
     }
 
     listCM.push(documentContextMenu)
@@ -28,7 +34,7 @@ function computeDocumentsOptions (documentList) {
   // Compute the union of context menus
   const contextMenu = mergeContextMenus(listCM)
 
-  // Remove some options depending of context
+  // Remove some options depending on context
   if (store.state.clipboard.documentList.length === 0) { // remove paste option if no documents were copied
     removeMenuOptionIfExist(contextMenu, 'paste')
   }
@@ -39,6 +45,7 @@ function computeDocumentsOptions (documentList) {
   // multi selection
   if (listCM.length > 1) {
     removeMenuOptionIfExist(contextMenu, 'details')
+    removeMenuOptionIfExist(contextMenu, 'managePermissions')
     removeMenuOptionIfExist(contextMenu, 'copyWebdavUrl')
     removeMenuOptionIfExist(contextMenu, 'paste')
     removeMenuOptionIfExist(contextMenu, 'open')

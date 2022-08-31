@@ -147,6 +147,13 @@ const fileOptions = [
     title: i18n.global.t('Documents.options.details'),
     icon: icons.options.details,
     position: 6,
+    hasSeparator: true
+  },
+  {
+    name: 'managePermissions',
+    title: i18n.global.t('Documents.options.managePermissions'),
+    icon: icons.options.permissions,
+    position: 7,
     hasSeparator: false
   }
 ]
@@ -199,6 +206,13 @@ const folderOptions = [
     title: i18n.global.t('Documents.options.details'),
     icon: icons.options.details,
     position: 6,
+    hasSeparator: true
+  },
+  {
+    name: 'managePermissions',
+    title: i18n.global.t('Documents.options.managePermissions'),
+    icon: icons.options.permissions,
+    position: 7,
     hasSeparator: false
   }
 ]

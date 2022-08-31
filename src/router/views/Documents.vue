@@ -73,6 +73,11 @@
         @openFile="openFile"
         @close="isFileNameModalDisplayed=false"
       />
+      <PermissionsModal
+        v-if="isPermissionModalDisplayed"
+        :document="selectedDocuments[0]"
+        @close="isPermissionModalDisplayed=false"
+      />
     </teleport>
   </Layout>
 </template>
@@ -95,10 +100,11 @@ import FileNameModal from '@components/Documents/Modals/FileNameModal'
 import FilePickerModal from '@components/FilePicker/FilePickerModal'
 import DocumentDetailsModal from '@components/Documents/DocumentDetails/DocumentDetailsModal'
 import RootSelector from '@components/Documents/RootSelector'
+import PermissionsModal from '@components/Documents/Modals/PermissionsModal'
 
 export default {
   name: 'Documents',
-  components: { RootSelector, DocumentDetailsModal, FilePickerModal, FileNameModal, FolderNameModal, FilePickerArea, ContextMenu, DocumentDetails, DocumentList, Breadcrumb, CurrentOptions, Layout },
+  components: { PermissionsModal, RootSelector, DocumentDetailsModal, FilePickerModal, FileNameModal, FolderNameModal, FilePickerArea, ContextMenu, DocumentDetails, DocumentList, Breadcrumb, CurrentOptions, Layout },
   inject: ['mq'],
   data () {
     return {
@@ -106,6 +112,7 @@ export default {
       isFolderNameModalDisplayed: false,
       isFileNameModalDisplayed: false,
       isFilePickerModalDisplayed: false,
+      isPermissionModalDisplayed: false,
       isContextMenuDisplayed: false,
       folderSelectionOption: undefined,
       modalSubmitAction: undefined,
@@ -275,6 +282,9 @@ export default {
           } else {
             this.isFileNameModalDisplayed = true
           }
+          break
+        case 'managePermissions':
+          this.isPermissionModalDisplayed = true
           break
         // TODO HTML, ODS, ODP
         case 'newFolder':

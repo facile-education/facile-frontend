@@ -44,6 +44,7 @@ const icons = {
     new: require('@assets/options/icon_add.svg'),
     newFolder: require('@assets/options/icon_dossier_ajout.svg'),
     paste: require('@/assets/options/icon_duplicate.svg'),
+    permissions: require('@/assets/options/icon_permissions.svg'),
     share: require('@/assets/options/icon_share.svg'),
     rename: require('@/assets/options/icon_edit_texte.svg'),
     refresh: require('@/assets/options/icon_refresh.svg'),
