@@ -1,10 +1,13 @@
 import axios from 'axios'
 import constants from '@/api/constants'
 import { getCookie } from '@utils/browser.util'
+import PentilaUtils from 'pentila-utils'
 
 export default {
   getGroupEntities,
-  getGroupFolderBreadcrumb
+  getGroupFolderBreadcrumb,
+  recordDownloadActivity,
+  recordViewActivity
 }
 
 const GROUP_PATH = '/documents-portlet.groups'
@@ -28,4 +31,22 @@ function getGroupFolderBreadcrumb (node) {
       nodePath: node
     }
   }).then(response => response.data)
+}
+
+function recordDownloadActivity (fileEntryId, versionId) {
+  return axios.post(constants.JSON_WS_URL + GROUP_PATH + '/record-download-activity',
+    PentilaUtils.URL.params({
+      fileEntryId,
+      versionId
+    })
+  ).then(response => response.data)
+}
+
+function recordViewActivity (fileEntryId, versionId) {
+  return axios.post(constants.JSON_WS_URL + GROUP_PATH + '/record-view-activity',
+    PentilaUtils.URL.params({
+      fileEntryId,
+      versionId
+    })
+  ).then(response => response.data)
 }

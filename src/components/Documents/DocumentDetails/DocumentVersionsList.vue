@@ -24,6 +24,7 @@ export default {
       required: true
     }
   },
+  emits: ['viewCount', 'downloadCount'],
   data () {
     return {
       fileVersions: []
@@ -43,6 +44,22 @@ export default {
     getListVersions () {
       versionsService.getFileVersions(this.document.id).then((data) => {
         this.fileVersions = data.fileVersions
+
+        let viewCount = 0
+        let downloadCount = 0
+        data.fileVersions.forEach(version => {
+          if (version.viewCount) {
+            viewCount += version.viewCount
+          }
+          if (version.downloadCount) {
+            downloadCount += version.downloadCount
+          }
+        })
+
+        if (this.document.isGroupFile) {
+          this.$emit('viewCount', viewCount)
+          this.$emit('downloadCount', downloadCount)
+        }
       })
     },
     openVersion (fileVersionId) {

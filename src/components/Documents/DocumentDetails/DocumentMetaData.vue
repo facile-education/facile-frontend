@@ -35,6 +35,28 @@
       />
       <span class="content-description"> {{ formattedCreationDate }} </span>
     </div>
+
+    <!-- Groups -->
+    <div
+      v-if="document.isGroupFile && document.viewCount !== undefined"
+      class="field"
+    >
+      <span
+        v-t="'Documents.documentFields.viewCount'"
+        class="content-label"
+      />
+      <span class="content-description"> {{ document.viewCount }} </span>
+    </div>
+    <div
+      v-if="document.isGroupFile && document.downloadCount !== undefined"
+      class="field"
+    >
+      <span
+        v-t="'Documents.documentFields.downloadCount'"
+        class="content-label"
+      />
+      <span class="content-description"> {{ document.downloadCount }} </span>
+    </div>
   </div>
 </template>
 

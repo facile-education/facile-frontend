@@ -68,6 +68,7 @@ import MindMap from '@components/Documents/FileDisplay/MindMap'
 import Scratch from '@components/Documents/FileDisplay/Scratch'
 import Office from '@components/Documents/FileDisplay/Office'
 import WISIWIG from '@components/Documents/FileDisplay/WISIWIG'
+import groupService from '@/api/documents/group.service'
 
 export default {
   name: 'FileDisplay',
@@ -116,6 +117,9 @@ export default {
       const readOnly = !!this.file.readOnly // To force to have boolean
       fileService.getResource(this.file.id, versionId, readOnly).then((data) => {
         if (data.success) {
+          if (this.file.isGroupFile) {
+            groupService.recordViewActivity(this.file.id, versionId)
+          }
           this.typeOfView = data.typeOfView
           this.fileUrl = data.fileUrl
           this.loadedFile = { ...this.file }
