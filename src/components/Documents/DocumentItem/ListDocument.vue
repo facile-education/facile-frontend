@@ -52,7 +52,7 @@
           {{ document.name }}
         </p>
         <p
-          v-if="mq.phone || mq.tablet"
+          v-if="(mq.phone || mq.tablet) && formattedSize !== '-'"
           class="size-label"
         >
           {{ formattedSize }}
