@@ -146,6 +146,7 @@
     "folder": "Dossier",
     "file": "Fichier",
     "files": "Fichiers",
+    "group": "Groupe",
     "errorNoFiles": "Il n'y a aucun fichier valide à téléverser !",
     "uploadSuccess": " importé avec succès!",
     "documentFields": {
