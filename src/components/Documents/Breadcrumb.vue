@@ -67,8 +67,8 @@ export default {
     goInParentFolder (index) {
       if (index > 0) {
         const parentFolder = this.breadcrumb[index - 1]
-        if (this.folder.isGroupDirectory) {
-          this.$router.push({ name: 'Groups', params: { folderId: this.folder.id } })
+        if (parentFolder.isGroupDirectory) {
+          this.$router.push({ name: 'Groups', params: { folderId: parentFolder.id } })
         } else {
           this.$router.push({ name: 'Documents', params: { folderId: parentFolder.id } })
         }
