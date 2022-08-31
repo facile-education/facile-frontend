@@ -56,6 +56,7 @@ fontAwesomeIconLibrary.add(
   require('@fortawesome/free-solid-svg-icons/faThumbsUp').definition,
   require('@fortawesome/free-solid-svg-icons/faTimes').definition,
   require('@fortawesome/free-solid-svg-icons/faPaperclip').definition,
+  require('@fortawesome/free-solid-svg-icons/faUnlock').definition,
   require('@fortawesome/free-solid-svg-icons/faUser').definition,
   require('@fortawesome/free-solid-svg-icons/faUsers').definition
 )

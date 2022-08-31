@@ -170,6 +170,7 @@
       "delete": "Supprimer",
       "duplicate": "Dupliquer vers",
       "import": "Importer",
+      "managePermissions": "Permissions",
       "move": "Déplacer vers",
       "newAudio": "Fichier audio",
       "newFolder": "@:Documents.folder",
