@@ -80,13 +80,15 @@ export default {
       return dayjs(this.document.lastModifiedDate, 'YYYY-MM-DD HH:mm:ss').calendar()
     },
     formattedSize () {
-      return formatSize(this.document.size)
+      return this.document.size !== undefined ? formatSize(this.document.size) : '-'
     },
     formattingType () {
       if (this.document.type === 'Folder') {
         return this.$t('Documents.folder')
       } else if (this.document.type === 'File') {
         return this.$t('Documents.file') + ' ' + this.document.extension
+      } else if (this.document.type === 'Group') {
+        return this.$t('Documents.group')
       } else {
         console.error('Unknown document type')
         return ''
