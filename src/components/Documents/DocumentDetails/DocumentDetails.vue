@@ -40,6 +40,8 @@
     <DocumentVersionsList
       v-if="selectedDocuments.length === 1 && documentToDisplay.type === 'File'"
       :document="documentToDisplay"
+      @viewCount="updateDocumentViewCount"
+      @downloadCount="updateDocumentDownloadCount"
     />
 
     <p
@@ -67,13 +69,19 @@ export default {
     },
     documentToDisplay () {
       if (this.selectedDocuments.length === 1) {
-        return this.selectedDocuments[0]
+        return { ...this.selectedDocuments[0] }
       } else {
         return undefined
       }
     }
   },
   methods: {
+    updateDocumentViewCount (viewCount) {
+      this.documentToDisplay.viewCount = viewCount
+    },
+    updateDocumentDownloadCount (downloadCount) {
+      this.documentToDisplay.downloadCount = downloadCount
+    },
     closePanel () {
       this.$store.dispatch('documents/closeDocumentPanel')
     }

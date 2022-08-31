@@ -149,10 +149,12 @@
     "errorNoFiles": "Il n'y a aucun fichier valide à téléverser !",
     "uploadSuccess": " importé avec succès!",
     "documentFields": {
-      "name": "Nom",
       "creationDate": "Création",
+      "downloadCount": "Téléchargements",
       "lastModifiedDate": "Dernière modif.",
-      "size": "Taille"
+      "name": "Nom",
+      "size": "Taille",
+      "viewCount": "Vues"
     },
     "documentDetails": {
       "lastVersion": "Version actuelle",

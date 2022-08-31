@@ -5,6 +5,7 @@ import fileService from '@/api/documents/file.service'
 import folderService from '@/api/documents/folder.service'
 import { mergeContextMenus, removeMenuOptionIfExist } from '@/utils/commons.util'
 import { folderOptions, fileOptions, groupOptions } from '@/constants/options'
+import groupService from '@/api/documents/group.service'
 
 function computeDocumentsOptions (documentList) {
   const listCM = []
@@ -145,6 +146,9 @@ async function downLoadDocument (entity) {
         }
       })
     } else if (entity.type === 'File') {
+      if (entity.isGroupFile) {
+        groupService.recordDownloadActivity(entity.id, 0)
+      }
       const a = document.createElement('a')
       a.style.display = 'none'
       a.download = entity.name // don't works on Internet Explorer and IOS' safari

@@ -2,6 +2,32 @@
   <div class="version">
     <div class="header">
       <h4>{{ version.name }}</h4>
+      <div
+        v-if="version.viewCount !== undefined || version.downloadCount !== undefined"
+        class="group-data"
+      >
+        <div
+          class="view-count"
+          :title="$t('Documents.documentFields.viewCount')"
+        >
+          <div>{{ version.viewCount }}</div>
+          <BaseIcon
+            class="icon"
+            name="eye"
+          />
+        </div>
+
+        <div
+          class="download-count"
+          :title="$t('Documents.documentFields.downloadCount')"
+        >
+          <div>{{ version.downloadCount }}</div>
+          <BaseIcon
+            class="icon"
+            name="download"
+          />
+        </div>
+      </div>
       <div class="date">
         {{ formattedDate }}
       </div>
@@ -36,9 +62,11 @@
 <script>
 import dayjs from 'dayjs'
 import versionsService from '@/api/documents/version.service'
+import BaseIcon from '@components/Base/BaseIcon'
 
 export default {
   name: 'DocumentVersion',
+  components: { BaseIcon },
   props: {
     version: {
       type: Object,
@@ -83,13 +111,27 @@ export default {
     height: 40px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 
     h4{
       padding-left: 5px;
     }
 
+    .group-data {
+      width: 50px;
+      display: flex;
+      justify-content: space-between;
+
+      .view-count, .download-count {
+        display: flex;
+        margin: 0 5px;
+        .icon {
+          margin-left: 5px;
+        }
+      }
+    }
+
     .date{
-      margin-left: auto;
       padding-right: 10px;
     }
   }
