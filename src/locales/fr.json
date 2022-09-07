@@ -155,7 +155,9 @@
       "lastModifiedDate": "Dernière modif.",
       "name": "Nom",
       "size": "Taille",
-      "viewCount": "Vues"
+      "viewCount": "Vues",
+      "totalViewCount": "Nb de vues totales",
+      "totalDownloadCount": "Nb de téléchargements totals"
     },
     "documentDetails": {
       "lastVersion": "Version actuelle",
