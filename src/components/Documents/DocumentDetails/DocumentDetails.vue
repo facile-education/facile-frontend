@@ -93,7 +93,9 @@ export default {
 @import "@design";
 
 .details-panel {
-  box-shadow: -2px 0 4px rgba(0, 0, 0, 0.2);
+  //box-shadow: -1px 0 1px rgba(0, 0, 0, 0.2);
+  box-shadow: -1px 0 2px $color-border;
+  border-left: 1px solid $color-border;
   height: 100%;
   display: flex;
   flex-direction: column;
