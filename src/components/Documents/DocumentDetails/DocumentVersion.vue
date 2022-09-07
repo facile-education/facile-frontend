@@ -11,10 +11,10 @@
           :title="$t('Documents.documentFields.viewCount')"
         >
           <div>{{ version.viewCount }}</div>
-          <BaseIcon
-            class="icon"
-            name="eye"
-          />
+          <img
+            src="@/assets/options/icon_see.svg"
+            alt=""
+          >
         </div>
 
         <div
@@ -44,11 +44,17 @@
       class="options"
     >
       <span
-        v-t="('Documents.documentDetails.viewVersion')"
         class="bottom-option"
         data-test="view-button"
         @click="viewVersion"
-      />
+      >
+        <img
+          src="@/assets/options/icon_see.svg"
+          alt=""
+        >
+        {{ $t('Documents.documentDetails.viewVersion') }}
+
+      </span>
       <span
         v-t="('Documents.documentDetails.restoreVersion')"
         class="bottom-option"
@@ -150,18 +156,23 @@ export default {
     height: 40px;
     display: flex;
     align-items: center;
-    justify-content: right;
+    justify-content: space-between;
     padding-right: 10px;
 
-    .bottom-options{
+    .bottom-options {
       text-align: right;
       padding-right: 5px;
     }
 
-    .bottom-option{
-      color: blue;
+    .bottom-option {
       cursor: pointer;
+      font-size: 14px;
       margin-left: 10px;
+      font-weight: 500;
+
+      &:hover {
+        color: black;
+      }
     }
   }
 

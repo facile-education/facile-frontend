@@ -1,8 +1,8 @@
 // TODO not export all in one time to improve performances
 const icons = {
-  file: require('@assets/documentIcons/icon_fichier_neutre.svg'),
-  folder: require('@assets/documentIcons/icon_dossier_neutre.svg'),
-  folderOpen: require('@assets/documentIcons/icon_dossier_neutre.svg'),
+  file: require('@assets/documentIcons/icon-file.svg'),
+  folder: require('@assets/documentIcons/icon-folder.svg'),
+  folderOpen: require('@assets/documentIcons/icon-folder.svg'),
   extensions: {
     ggb: require('@assets/documentIcons/geogebra.png'),
     gif: 'file-image',
@@ -14,9 +14,9 @@ const icons = {
     mp4: 'film',
     mpg: 'film',
     mov: 'film',
-    odp: require('@assets/documentIcons/odp.png'),
-    ods: require('@assets/documentIcons/ods.png'),
-    odt: require('@assets/documentIcons/odt.png'),
+    odp: require('@assets/documentIcons/odp.svg'),
+    ods: require('@assets/documentIcons/ods.svg'),
+    odt: require('@assets/documentIcons/odt.svg'),
     pdf: require('@assets/documentIcons/pdf.png'),
     png: 'file-image',
     sb3: require('@assets/documentIcons/scratch.png'), // scratch
@@ -25,7 +25,7 @@ const icons = {
   },
   options: {
     addToFavorites: 'star',
-    copyWebdavUrl: require('@/assets/options/icon_webdav.png'),
+    copyWebdavUrl: require('@/assets/options/icon_webdav.svg'),
     download: require('@/assets/options/icon_download.svg'),
     delete: require('@/assets/options/icon_trash.svg'),
     delete_white: require('@/assets/options/icon_trash_white.svg'),
