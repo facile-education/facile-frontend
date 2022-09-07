@@ -100,7 +100,7 @@ import FileNameModal from '@components/Documents/Modals/FileNameModal'
 import FilePickerModal from '@components/FilePicker/FilePickerModal'
 import DocumentDetailsModal from '@components/Documents/DocumentDetails/DocumentDetailsModal'
 import RootSelector from '@components/Documents/RootSelector'
-import PermissionsModal from '@components/Documents/Modals/PermissionsModal'
+import PermissionsModal from '@components/Documents/Modals/PermissionModal/PermissionsModal'
 
 export default {
   name: 'Documents',
