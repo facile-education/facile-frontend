@@ -243,8 +243,33 @@ const currentFolderOptions = [
 
 const groupOptions = []
 
+const spaceSelectionOptions = [
+  {
+    name: 'documents',
+    title: i18n.global.t('Documents.options.documents'),
+    icon: '',
+    position: 0,
+    hasSeparator: true
+  },
+  {
+    name: 'groups',
+    title: i18n.global.t('Documents.options.groups'),
+    icon: '',
+    position: 1,
+    hasSeparator: true
+  },
+  {
+    name: 'recent',
+    title: i18n.global.t('Documents.options.recent'),
+    icon: '',
+    position: 2,
+    hasSeparator: false
+  }
+]
+
 export {
   documentSpaceOptions,
+  spaceSelectionOptions,
   fileOptions,
   folderOptions,
   groupOptions,

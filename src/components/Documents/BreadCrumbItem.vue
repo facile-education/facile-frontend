@@ -27,7 +27,17 @@
       </span>
     </div>
     <div
-      v-if="currentOptions.length > 0"
+      v-if="currentOptions.length > 0 && isFirstElement"
+      class="first-folder-options"
+      @click.stop="toggleContextMenu"
+    >
+      <BaseIcon
+        class="icon"
+        name="chevron-down"
+      />
+    </div>
+    <div
+      v-else-if="currentOptions.length > 0"
       class="current-folder-options"
     >
       <BaseIcon
@@ -57,7 +67,7 @@
 
 import BaseIcon from '@components/Base/BaseIcon'
 import ContextMenu from '@components/ContextMenu/ContextMenu'
-import { currentFolderOptions } from '@/constants/options'
+import { currentFolderOptions, spaceSelectionOptions } from '@/constants/options'
 import { removeMenuOptionIfExist } from '@utils/commons.util'
 import { copyWebdavUrl, downLoadDocument } from '@utils/documents.util'
 import FolderNameModal from '@components/Documents/Modals/FolderNameModal'
@@ -108,6 +118,8 @@ export default {
           removeMenuOptionIfExist(options, 'copyWebdavUrl')
         }
         return options
+      } else if (this.isFirstElement) {
+        return [...spaceSelectionOptions]
       } else {
         return []
       }
@@ -152,12 +164,15 @@ export default {
     },
     changeDir (event) {
       if (!this.isCurrentFolder) {
-        if (this.folder.isGroupDirectory) {
-          this.$router.push({ name: 'Groups', params: { folderId: this.folder.id } })
+        if (this.isContextMenuDisplayed) {
+          this.toggleContextMenu()
         } else {
-          this.$router.push({ name: 'Documents', params: { folderId: this.folder.id } })
+          if (this.folder.isGroupDirectory) {
+            this.$router.push({ name: 'Groups', params: { folderId: this.folder.id } })
+          } else {
+            this.$router.push({ name: 'Documents', params: { folderId: this.folder.id } })
+          }
         }
-        // this.$store.dispatch('documents/closeDocumentPanel') // TODO: discuss about ergonomics
       } else if (this.currentOptions.length > 0) {
         this.toggleContextMenu(event)
       }
@@ -180,6 +195,15 @@ export default {
           break
         case 'copyWebdavUrl':
           copyWebdavUrl(this.folder)
+          break
+        case 'documents':
+          this.$router.push('/documents')
+          break
+        case 'groups':
+          this.$router.push('/documents/groups')
+          break
+        case 'recent':
+          this.$router.push('/documents/recent')
           break
         default:
           console.error('no option with name ' + option.name + ' exists')
@@ -253,6 +277,23 @@ export default {
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
+    }
+  }
+
+  .first-folder-options {
+    margin: 0 5px;
+    position: relative;
+    height: 16px;
+    width: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    border: 1px solid $color-border;
+    background-color: white;
+
+    .icon {
+      font-size: 10px;
     }
   }
 

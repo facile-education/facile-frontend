@@ -18,7 +18,6 @@
           v-if="areActionsInProgress"
           class="spinner"
         />
-        <RootSelector />
         <FilePickerArea
           class="file-picker-area"
           @fileAdded="importDocument"
@@ -99,12 +98,11 @@ import FolderNameModal from '@components/Documents/Modals/FolderNameModal'
 import FileNameModal from '@components/Documents/Modals/FileNameModal'
 import FilePickerModal from '@components/FilePicker/FilePickerModal'
 import DocumentDetailsModal from '@components/Documents/DocumentDetails/DocumentDetailsModal'
-import RootSelector from '@components/Documents/RootSelector'
 import PermissionsModal from '@components/Documents/Modals/PermissionModal/PermissionsModal'
 
 export default {
   name: 'Documents',
-  components: { PermissionsModal, RootSelector, DocumentDetailsModal, FilePickerModal, FileNameModal, FolderNameModal, FilePickerArea, ContextMenu, DocumentDetails, DocumentList, Breadcrumb, CurrentOptions, Layout },
+  components: { PermissionsModal, DocumentDetailsModal, FilePickerModal, FileNameModal, FolderNameModal, FilePickerArea, ContextMenu, DocumentDetails, DocumentList, Breadcrumb, CurrentOptions, Layout },
   inject: ['mq'],
   data () {
     return {
