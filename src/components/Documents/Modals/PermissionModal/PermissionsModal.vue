@@ -4,7 +4,7 @@
     :modal="true"
     :draggable="true"
     :width="700"
-    :height="600"
+    :height="625"
     @close="onClose"
     @keydown.exact.enter.stop=""
     @keydown.exact.backspace.stop=""
@@ -133,15 +133,36 @@ export default {
     reset () {
       this.permissionMatrix = [...this.initialPermissionMatrix]
     },
+    formatPermissionMatrix () { // ADD missing fields
+      for (let i = 0; i < this.permissionMatrix.length; i++) {
+        const row = this.permissionMatrix[i]
+        if (row.VIEW === undefined) {
+          row.VIEW = 'false'
+        }
+        if (row.UPDATE === undefined) {
+          row.UPDATE = 'false'
+        }
+        if (row.ADD_OBJECT === undefined) {
+          row.ADD_OBJECT = 'false'
+        }
+        if (row.DELETE === undefined) {
+          row.DELETE = 'false'
+        }
+        if (row.PERMISSIONS === undefined) {
+          row.PERMISSIONS = 'false'
+        }
+      }
+    },
     submit () {
+      this.formatPermissionMatrix(this.permissionMatrix)
       if (this.document.type === 'File') {
-        permissionsService.saveFilePermissionMatrix(this.document.id, this.permissionMatrix, this.isRecursive).then((data) => {
+        permissionsService.saveFilePermissionMatrix(this.document.id, this.permissionMatrix).then((data) => {
           if (data.success) {
             this.onClose()
           }
         })
       } else if (this.document.type === 'Folder') {
-        permissionsService.saveFolderPermissionMatrix(this.document.id, this.permissionMatrix).then((data) => {
+        permissionsService.saveFolderPermissionMatrix(this.document.id, this.permissionMatrix, this.isRecursive).then((data) => {
           if (data.success) {
             this.onClose()
           }
