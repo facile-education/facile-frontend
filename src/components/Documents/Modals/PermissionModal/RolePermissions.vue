@@ -1,7 +1,7 @@
 <template>
   <div class="role">
     <div class="role-name">
-      {{ role.roleName }}
+      {{ $t(role.roleName.split(' ').join('')) }}
     </div>
 
     <div class="permission view">
@@ -105,3 +105,24 @@ export default {
   }
 }
 </style>
+
+<i18n locale="fr">
+{
+  "National_1": "Élève",
+  "National_2": "Responsable légal",
+  "National_3": "Enseignant·e",
+  "National_4": "Direction",
+  "Group_admin": "Administrateur de groupe",
+  "Assistanttechnique": "Assistant.e technique",
+  "Caissiercomptable": "Caissier.ère comptable",
+  "Conseillersocial": "Conseiller·ère social·e",
+  "Conseillerd\'orientation": "Conseiller·ère d'orientation",
+  "Doyen": "Doyen·ne",
+  "Infirmiere": "Infirmier·ère",
+  "Bibliothecaire": "Bibliothécaire",
+  "Psychologue": "Psychologue",
+  "Secretaire": "Secrétaire",
+  "SiteAdministrator": "Administrateur.trice de site",
+  "SiteOwner": "Créateur.trice de site"
+}
+</i18n>

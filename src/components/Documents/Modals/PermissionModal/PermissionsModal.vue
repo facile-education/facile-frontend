@@ -69,7 +69,7 @@
       />
       <PentilaButton
         data-test="submitButton"
-        :label="$t('Commons.submit')"
+        :label="$t('submit')"
         @click="submit"
       />
     </template>
@@ -156,11 +156,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
 
 .fields {
   display: flex;
   height: 25px;
   font-weight: 500;
+  border-bottom: 1px solid $color-border;
+  margin-bottom: 10px;
 
   .name {
     width: 250px;
@@ -189,6 +192,7 @@ export default {
   "delete": "Supprimer",
   "permissions": "Permissions",
   "recursiveLabel": "Appliquer ces permissions à tous les éléments contenus dans le dossier",
-  "name": "Role"
+  "name": "Role",
+  "submit": "Valider"
 }
 </i18n>
