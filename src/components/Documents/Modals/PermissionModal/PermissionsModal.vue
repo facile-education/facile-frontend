@@ -102,14 +102,14 @@ export default {
     if (this.document.type === 'File') {
       permissionsService.getFilePermissionMatrix(this.document.id).then((data) => {
         if (data.success) {
-          this.initialPermissionMatrix = [...data.permissionMatrix]
+          this.initialPermissionMatrix = JSON.stringify(data.permissionMatrix)
           this.permissionMatrix = data.permissionMatrix
         }
       })
     } else if (this.document.type === 'Folder') {
       permissionsService.getFolderPermissionMatrix(this.document.id).then((data) => {
         if (data.success) {
-          this.initialPermissionMatrix = [...data.permissionMatrix]
+          this.initialPermissionMatrix = JSON.stringify(data.permissionMatrix)
           this.permissionMatrix = data.permissionMatrix
         }
       })
@@ -123,7 +123,7 @@ export default {
         // console.log(role)
         const row = this.permissionMatrix[i]
         if (row.roleId === role.roleId) {
-          row[action.actionName] = action.value ? 'true' : 'false'
+          row[action.actionName] = action.value
         }
       }
     },
@@ -131,30 +131,9 @@ export default {
       this.isRecursive = value
     },
     reset () {
-      this.permissionMatrix = [...this.initialPermissionMatrix]
-    },
-    formatPermissionMatrix () { // ADD missing fields
-      for (let i = 0; i < this.permissionMatrix.length; i++) {
-        const row = this.permissionMatrix[i]
-        if (row.VIEW === undefined) {
-          row.VIEW = 'false'
-        }
-        if (row.UPDATE === undefined) {
-          row.UPDATE = 'false'
-        }
-        if (row.ADD_OBJECT === undefined) {
-          row.ADD_OBJECT = 'false'
-        }
-        if (row.DELETE === undefined) {
-          row.DELETE = 'false'
-        }
-        if (row.PERMISSIONS === undefined) {
-          row.PERMISSIONS = 'false'
-        }
-      }
+      this.permissionMatrix = JSON.parse(this.initialPermissionMatrix)
     },
     submit () {
-      this.formatPermissionMatrix(this.permissionMatrix)
       if (this.document.type === 'File') {
         permissionsService.saveFilePermissionMatrix(this.document.id, this.permissionMatrix).then((data) => {
           if (data.success) {
