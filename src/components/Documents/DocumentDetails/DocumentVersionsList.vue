@@ -74,6 +74,10 @@ export default {
   margin-top: auto;
   max-height: 50%;
   overflow: auto;
-  padding: 0 10px;
+
+  h4 {
+    margin-left: 10px;
+    font-size: 14px;
+  }
 }
 </style>

@@ -105,7 +105,8 @@ export default {
 
 .version{
   background-color: white;
-  margin-top: 7px;
+  border-top: 1px solid $color-border;
+  min-height: 80px;
 
   .header {
     height: 40px;
@@ -114,7 +115,8 @@ export default {
     justify-content: space-between;
 
     h4{
-      padding-left: 5px;
+      margin-left: 10px;
+      font-size: 20px;
     }
 
     .group-data {
@@ -132,8 +134,16 @@ export default {
     }
 
     .date{
+      font-size: 14px;
+      color: #646464;
       padding-right: 10px;
     }
+  }
+
+  .current-version{
+    font-size: 14px;
+    color: #646464;
+    margin-left: 10px;
   }
 
   .options {
@@ -152,10 +162,6 @@ export default {
       color: blue;
       cursor: pointer;
       margin-left: 10px;
-    }
-
-    .current-version{
-      font-style: italic;
     }
   }
 

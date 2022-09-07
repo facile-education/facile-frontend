@@ -93,12 +93,10 @@ export default {
 @import "@design";
 
 .details-panel {
-  background-color: $color-not-white-bg;
   box-shadow: -2px 0 4px rgba(0, 0, 0, 0.2);
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding-bottom: 20px;
 
   .header {
     display: flex;
@@ -109,9 +107,13 @@ export default {
       flex: 1;
       padding-left: 10px;
       max-width: 290px;
+      font-family: Roboto-Medium, sans-serif;
+      font-size: 19px;
+      color: #000000;
 
       h2 {
         line-height: 1.5em;
+        font-size: 19px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;

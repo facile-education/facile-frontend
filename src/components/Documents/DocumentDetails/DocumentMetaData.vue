@@ -42,7 +42,7 @@
       class="field"
     >
       <span
-        v-t="'Documents.documentFields.viewCount'"
+        v-t="'Documents.documentFields.totalViewCount'"
         class="content-label"
       />
       <span class="content-description"> {{ document.viewCount }} </span>
@@ -52,7 +52,7 @@
       class="field"
     >
       <span
-        v-t="'Documents.documentFields.downloadCount'"
+        v-t="'Documents.documentFields.totalDownloadCount'"
         class="content-label"
       />
       <span class="content-description"> {{ document.downloadCount }} </span>
@@ -102,6 +102,7 @@ export default {
 
 .meta-data {
   flex: 1;
+  color: #646464;
 
   .field{
     padding: 10px 0 10px 10px;
