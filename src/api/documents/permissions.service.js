@@ -31,16 +31,16 @@ function getFolderPermissionMatrix (folderId) {
 }
 
 function saveFilePermissionMatrix (documentId, permissionMatrix) {
-  return axios.post(constants.JSON_WS_URL + PERMISSIONS_PATH + '/save-permission-matrix', PentilaUtils.URL.params({
+  return axios.post(constants.JSON_WS_URL + PERMISSIONS_PATH + '/save-file-permission-matrix', PentilaUtils.URL.params({
     fileEntryId: documentId,
-    permissionMatrix: permissionMatrix
+    JSONPermissionMatrix: JSON.stringify(permissionMatrix)
   })).then(response => response.data)
 }
 
 function saveFolderPermissionMatrix (documentId, permissionMatrix, isRecursive) {
-  return axios.post(constants.JSON_WS_URL + PERMISSIONS_PATH + '/save-permission-matrix', PentilaUtils.URL.params({
+  return axios.post(constants.JSON_WS_URL + PERMISSIONS_PATH + '/save-folder-permission-matrix', PentilaUtils.URL.params({
     folderId: documentId,
-    permissionMatrix: permissionMatrix,
+    JSONPermissionMatrix: JSON.stringify(permissionMatrix),
     isRecursive: isRecursive
   })).then(response => response.data)
 }
