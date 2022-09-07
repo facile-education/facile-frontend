@@ -281,7 +281,7 @@ export default {
   }
 
   .first-folder-options {
-    margin: 0 5px;
+    margin: 0 5px 0 8px;
     position: relative;
     height: 16px;
     width: 16px;
