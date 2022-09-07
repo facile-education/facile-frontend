@@ -155,7 +155,6 @@ export default {
 }
 
 .name-input {
-  width: 500px;
   max-width: 100%;
 }
 

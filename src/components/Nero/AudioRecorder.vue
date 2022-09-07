@@ -250,7 +250,7 @@ $red: rgb(230, 109, 109);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 1.5rem;
+  margin: 1rem auto 0.5rem;
 
   &.pulse {
     box-shadow: 0 0 0 0 rgba($red, 1);

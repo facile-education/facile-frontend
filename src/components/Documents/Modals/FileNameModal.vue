@@ -317,7 +317,6 @@ export default {
 
 .name-input {
   flex: auto;
-  width: 500px;
   max-width: 100%;
 }
 
