@@ -7,7 +7,7 @@
     <div class="permission view">
       <PentilaCheckbox
         v-if="role.VIEW !== undefined"
-        :model-value="role.VIEW === 'true'"
+        :model-value="role.VIEW"
         :disabled="!role.editable"
         :label="''"
         @update:modelValue="updateMatrix($event, 'VIEW')"
@@ -20,7 +20,7 @@
     >
       <PentilaCheckbox
         v-if="role.ADD_OBJECT !== undefined"
-        :model-value="role.ADD_OBJECT === 'true'"
+        :model-value="role.ADD_OBJECT"
         :disabled="!role.editable"
         :label="''"
         @update:modelValue="updateMatrix($event, 'ADD_OBJECT')"
@@ -33,7 +33,7 @@
     >
       <PentilaCheckbox
         v-if="role.UPDATE !== undefined"
-        :model-value="role.UPDATE === 'true'"
+        :model-value="role.UPDATE"
         :disabled="!role.editable"
         :label="''"
         @update:modelValue="updateMatrix($event, 'UPDATE')"
@@ -43,7 +43,7 @@
     <div class="permission delete">
       <PentilaCheckbox
         v-if="role.DELETE !== undefined"
-        :model-value="role.DELETE === 'true'"
+        :model-value="role.DELETE"
         :disabled="!role.editable"
         :label="''"
         @update:modelValue="updateMatrix($event, 'DELETE')"
@@ -53,7 +53,7 @@
     <div class="permission permissions">
       <PentilaCheckbox
         v-if="role.PERMISSIONS !== undefined"
-        :model-value="role.PERMISSIONS === 'true'"
+        :model-value="role.PERMISSIONS"
         :disabled="!role.editable"
         :label="''"
         @update:modelValue="updateMatrix($event, 'PERMISSIONS')"
