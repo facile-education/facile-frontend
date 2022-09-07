@@ -354,6 +354,7 @@ export default {
       min-width: 20px;
       display: flex;
       justify-content: center;
+      white-space: nowrap;
     }
 
     .date, .size{
