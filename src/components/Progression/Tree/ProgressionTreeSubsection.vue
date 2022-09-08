@@ -275,7 +275,6 @@ export default {
   font-size: 0.875rem;
   font-weight: 500;
   letter-spacing: 0;
-  line-height: 16px;
   display: flex;
   align-items: center;
 
@@ -283,7 +282,7 @@ export default {
 
   span {
     width: 100%;
-    overflow-x: hidden;
+    overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
   }
