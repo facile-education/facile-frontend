@@ -43,8 +43,6 @@ export default {
   padding-left: 20px;
 
   .create-button {
-    height: 62px;
-    margin-top: 15px;
     margin-bottom: 15px;
     display: flex;
     align-items: center;
