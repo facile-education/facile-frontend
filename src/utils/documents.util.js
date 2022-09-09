@@ -28,10 +28,22 @@ function computeDocumentsOptions (documentList) {
       }
     }
 
+    // Permissions
+    if (!document.permissions.UPDATE && !document.permissions.ADD_OBJECT) {
+      removeMenuOptionIfExist(documentContextMenu, 'rename')
+      removeMenuOptionIfExist(documentContextMenu, 'move')
+    }
+    if (document.permissions.DELETE !== undefined && !document.permissions.DELETE) {
+      removeMenuOptionIfExist(documentContextMenu, 'delete')
+    }
+    if (!document.permissions.PERMISSIONS) {
+      removeMenuOptionIfExist(documentContextMenu, 'managePermissions')
+    }
+
     listCM.push(documentContextMenu)
   }
 
-  // Compute the union of context menus
+  // Compute the intersection of context menus
   const contextMenu = mergeContextMenus(listCM)
 
   // Remove some options depending on context
