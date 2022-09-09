@@ -229,6 +229,9 @@ export default {
     },
     handleOption (option) {
       switch (option.name) {
+        case 'open':
+          this.openFile(this.selectedDocuments[0])
+          break
         case 'copy':
           this.$store.dispatch('clipboard/copy')
           break

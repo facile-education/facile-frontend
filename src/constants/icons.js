@@ -43,6 +43,7 @@ const icons = {
     modify_white: require('@/assets/options/icon_edit_texte_white.svg'),
     new: require('@assets/options/icon_add.svg'),
     newFolder: require('@assets/options/icon_dossier_ajout.svg'),
+    openFile: require('@assets/documentIcons/icon-file.svg'),
     paste: require('@/assets/options/icon_duplicate.svg'),
     permissions: require('@/assets/options/icon_permissions.svg'),
     share: require('@/assets/options/icon_share.svg'),

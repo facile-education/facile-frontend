@@ -101,59 +101,66 @@ const documentSpaceOptions = [
 
 const fileOptions = [
   {
+    name: 'open',
+    title: i18n.global.t('Documents.options.open'),
+    icon: icons.options.openFile,
+    position: 0,
+    hasSeparator: true
+  },
+  {
     name: 'rename',
     title: i18n.global.t('Documents.options.rename'),
     icon: icons.options.rename,
-    position: 0,
+    position: 1,
     hasSeparator: true
   },
   {
     name: 'duplicate',
     title: i18n.global.t('Documents.options.duplicate'),
     icon: icons.options.duplicate,
-    position: 1,
+    position: 2,
     hasSeparator: true
   },
   {
     name: 'move',
     title: i18n.global.t('Documents.options.move'),
     icon: icons.options.move,
-    position: 2,
+    position: 3,
     hasSeparator: true
   },
   {
     name: 'download',
     title: i18n.global.t('Documents.options.download'),
     icon: icons.options.download,
-    position: 3,
+    position: 4,
     hasSeparator: true
   },
   {
     name: 'delete',
     title: i18n.global.t('Documents.options.delete'),
     icon: icons.options.delete,
-    position: 4,
+    position: 5,
     hasSeparator: true
   },
   {
     name: 'copyWebdavUrl',
     title: i18n.global.t('Documents.options.copyWebdavUrl'),
     icon: icons.options.copyWebdavUrl,
-    position: 5,
+    position: 6,
     hasSeparator: true
   },
   {
     name: 'details',
     title: i18n.global.t('Documents.options.details'),
     icon: icons.options.details,
-    position: 6,
+    position: 7,
     hasSeparator: true
   },
   {
     name: 'managePermissions',
     title: i18n.global.t('Documents.options.managePermissions'),
     icon: icons.options.permissions,
-    position: 7,
+    position: 8,
     hasSeparator: false
   }
 ]
