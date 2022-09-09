@@ -23,12 +23,12 @@
           @fileAdded="importDocument"
           @click.right.prevent="openContextMenu"
         >
+          <Breadcrumb class="breadCrumb" />
           <div
             class="scroll"
             @click="clickOnScrollDiv"
             @click.right.prevent="rightClickOnScrollDiv"
           >
-            <Breadcrumb class="breadCrumb" />
             <DocumentList @openContextMenu="openContextMenu" />
           </div>
           <DocumentDetails
@@ -428,7 +428,7 @@ export default {
 
       .scroll {
         flex: 3;
-        height: 100%;
+        height: calc(100% - #{$doc-breadcrumb-size});
         overflow-y: auto;
 
         .breadCrumb {
