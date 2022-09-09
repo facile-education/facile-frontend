@@ -310,6 +310,15 @@ export default {
       // TODO order by 'order'
       return this.item.contents
     },
+    hasDLContent () {
+      let res = false
+      this.item.contents.forEach((content) => {
+        if (content.contentType === 2 || content.contentType === 5) {
+          res = true
+        }
+      })
+      return res
+    },
     hasToCompleteDocs () {
       let res = false
       this.item.contents.forEach((content) => {
@@ -413,8 +422,13 @@ export default {
       this.isToCompleteDoc = false
     },
     attachNewFiles (selectedFiles) {
-      selectedFiles.forEach((selectedFile) => {
-        this.$store.dispatch('progression/addItemContent', { itemId: this.item.itemId, contentType: 5, contentName: selectedFile.name, contentValue: '', fileEntryId: selectedFile.id, isToBeCompleted: this.isToCompleteDoc })
+      selectedFiles.forEach((selectedFile, i) => {
+        // Wait for folder to be created if no DL content has been registered yet
+        const delay = (this.hasDLContent || i === 0) ? 0 : 350
+
+        setTimeout(() => {
+          this.$store.dispatch('progression/addItemContent', { itemId: this.item.itemId, contentType: 5, contentName: selectedFile.name, contentValue: '', fileEntryId: selectedFile.id, isToBeCompleted: this.isToCompleteDoc })
+        }, delay)
       })
     },
     changeHomeworkType () {
