@@ -137,7 +137,7 @@ export default {
       return computeDocumentsOptions(this.selectedDocuments)
     },
     currentOptions () {
-      return (this.selectedDocuments.length > 0) ? this.selectedDocumentsOptions : (this.currentFolder && this.currentFolder.type !== 'Group' ? documentSpaceOptions : [])
+      return (this.selectedDocuments.length > 0) ? this.selectedDocumentsOptions : (this.currentFolder && this.currentFolder.type !== 'Group' && (this.currentFolder.permissions && this.currentFolder.permissions.ADD_OBJECT) ? documentSpaceOptions : [])
     },
     isDocumentPanelDisplayed () {
       return this.$store.state.documents.isDocumentPanelDisplayed
