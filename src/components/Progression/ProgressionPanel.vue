@@ -105,6 +105,7 @@ export default {
   }
 
   .tree-edit {
+    padding-top: 20px;
     display: flex;
     height: calc(100% - #{$switch-mode-banner-height});
 
@@ -121,7 +122,7 @@ export default {
       overflow-y: auto;
 
       .header {
-        margin-top: 25px;
+        margin-top: 5px;
         margin-bottom: 5px;
       }
     }
