@@ -114,9 +114,9 @@ export default {
       return this.folderSelection ? this.$t('headerFolder') : this.$t('headerFile')
     },
     submitLabel () {
-      if (this.selectedFolder && this.selectedFolder.hasAddPermission) {
+      if (this.selectedFolder && this.selectedFolder.permissions.ADD_OBJECT) {
         return this.$t('chooseSelectedFolder') + this.selectedFolder.name
-      } else if (this.currentFolder && this.currentFolder.hasAddPermission) {
+      } else if (this.currentFolder && this.currentFolder.permissions.ADD_OBJECT) {
         return this.$t('chooseCurrentFolder')
       } else {
         return 'noSelectedFolder'

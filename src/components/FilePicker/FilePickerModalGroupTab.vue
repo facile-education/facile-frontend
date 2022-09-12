@@ -144,7 +144,7 @@ export default {
           this.selectedFolder = undefined
           this.$emit('selectedFolder', undefined)
         } else {
-          if (!this.belongsToAppSelectedEntities(folder)) { // Cannot select itself
+          if (!this.belongsToAppSelectedEntities(folder) && folder.permissions.ADD_OBJECT) { // Cannot select itself
             this.selectedFolder = folder
             this.$emit('selectedFolder', folder)
           }

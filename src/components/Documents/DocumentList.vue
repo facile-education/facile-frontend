@@ -14,7 +14,7 @@
         :is-last="index === allSortedDocuments.length - 1"
         :quick-options="[]"
         :dark="getEntityIndex(folder.id) % 2 === 0"
-        :is-draggable="folder.type !== 'Group' && !folder.isGroupRootFolder"
+        :is-draggable="isDraggable(folder)"
         @shiftSelect="shiftSelect"
         @openContextMenu="openContextMenu"
       />
@@ -25,7 +25,7 @@
         :is-last="index === sortedFiles.length - 1"
         :quick-options="[]"
         :dark="getEntityIndex(file.id) % 2 === 0"
-        :is-draggable="true"
+        :is-draggable="isDraggable(file)"
         @shiftSelect="shiftSelect"
         @openContextMenu="openContextMenu"
       />
@@ -65,6 +65,15 @@ export default {
     selectedDocuments () {
       return this.$store.state.documents.selectedEntities
     },
+    draggablePermissionOnSelectedDocuments () {
+      let isDraggable = true
+      this.selectedDocuments.forEach((entity) => { // All selected documents need the delete permission to be drag
+        if (!entity.permissions.DELETE) {
+          isDraggable = false
+        }
+      })
+      return isDraggable
+    },
     areAllSelected () {
       return this.selectedDocuments.length === this.allSortedDocuments.length
     },
@@ -89,6 +98,12 @@ export default {
     window.removeEventListener('keydown', this.keyMonitor)
   },
   methods: {
+    isDraggable (document) {
+      return document.permissions.DELETE && this.draggablePermissionOnSelectedDocuments
+    },
+    isSelected (document) {
+      return this.selectedEntities.map(entity => entity.id).indexOf(document.id) !== -1
+    },
     handleSort (type) {
       if (type === this.sort.type) {
         this.sort.isOrderAsc = !this.sort.isOrderAsc
