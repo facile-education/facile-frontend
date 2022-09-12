@@ -33,7 +33,7 @@ function computeDocumentsOptions (documentList) {
       removeMenuOptionIfExist(documentContextMenu, 'rename')
       removeMenuOptionIfExist(documentContextMenu, 'move')
     }
-    if (document.permissions.DELETE !== undefined && !document.permissions.DELETE) {
+    if (document.permissions.DELETE && !document.permissions.DELETE) {
       removeMenuOptionIfExist(documentContextMenu, 'delete')
     }
     if (!document.permissions.PERMISSIONS) {

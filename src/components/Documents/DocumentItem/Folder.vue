@@ -94,7 +94,7 @@ export default {
       e.stopPropagation()
     },
     setActive (e) {
-      if (this.isThereInternDocumentDrag && !this.isDragged) {
+      if (this.isThereInternDocumentDrag && !this.isDragged && this.folder.permissions.ADD_OBJECT) {
         this.isActive = true
         this.cancelHandlers(e)
       }
@@ -109,10 +109,12 @@ export default {
       if (this.isThereInternDocumentDrag && !this.isDragged) {
         this.cancelActive(e)
         // dropFileAction
-        this.$store.dispatch('clipboard/drop', {
-          entities: JSON.parse(e.dataTransfer.getData('entitiesToDrop')),
-          folder: this.folder
-        })
+        if (this.folder.permissions.ADD_OBJECT) {
+          this.$store.dispatch('clipboard/drop', {
+            entities: JSON.parse(e.dataTransfer.getData('entitiesToDrop')),
+            folder: this.folder
+          })
+        }
       }
     },
     dispatchEvent (file) {
