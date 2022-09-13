@@ -1,5 +1,6 @@
 import axios from 'axios'
 import constants from '@/api/constants'
+import { conflicts } from '@/constants/documentsConstants'
 import { getCookie } from '@utils/browser.util'
 import PentilaUtils from 'pentila-utils'
 
@@ -27,12 +28,13 @@ const WISIWIG_PATH = '/documents-portlet.wisiwig'
  * ideally, we will pass in argument something like this: parentFolderId, listFolders[], listFiles[]
  * -> it will be more easily to update current loaded tree, and it will allow the creation of empty folder
  */
-function uploadFile (folderId, file) {
+function uploadFile (folderId, file, mode = conflicts.MODE_NORMAL) {
   const formData = new FormData()
   formData.append('p_auth', getCookie('pauth'))
   formData.append('folderId', folderId)
   formData.append('fileName', file.name)
   formData.append('file', file, file.name)
+  formData.append('mode', mode)
 
   return axios.post(
     constants.JSON_WS_URL + FILE_PATH + '/upload-file?',

@@ -6,6 +6,7 @@ import folderService from '@/api/documents/folder.service'
 import { mergeContextMenus, removeMenuOptionIfExist } from '@/utils/commons.util'
 import { folderOptions, fileOptions, groupOptions } from '@/constants/options'
 import groupService from '@/api/documents/group.service'
+import { conflicts } from '@/constants/documentsConstants'
 
 function computeDocumentsOptions (documentList) {
   const listCM = []
@@ -129,17 +130,36 @@ function selectBetween (listSortedFiles, firstFile, secondFile) {
   }
 }
 
-async function importDocuments (folderId, documentList) {
-  for (const doc of documentList) {
+async function importDocuments (folderId, documentList, mode) {
+  let stop = false
+  for (let i = 0; i < documentList.length && !stop; i++) {
+    const doc = documentList[i]
     store.dispatch('currentActions/addAction', { name: 'importDocument' })
-    await fileService.uploadFile(folderId, doc).then((data) => {
+    await fileService.uploadFile(folderId, doc, i === 0 ? mode : conflicts.MODE_MERGE).then((data) => {
       store.dispatch('currentActions/removeAction', { name: 'importDocument' })
       if (data.success) {
         store.dispatch('documents/refreshCurrentFolder')
         store.dispatch('popups/pushPopup', { message: doc.name + i18n.global.t('Documents.uploadSuccess'), type: 'success' })
+        if (data.firstCreatedFolder && mode === conflicts.MODE_RENAME) { // If we previously have created a new folder, change the followings file paths to place it in th new folder
+          for (let j = i + 1; j < documentList.length; j++) {
+            const fileToUpload = documentList[j]
+            const parts = fileToUpload.name.split('/')
+            if (parts.length > 1) { // rename the root folder part of the name
+              parts[0] = data.firstCreatedFolder.name
+              documentList[j] = new File([fileToUpload], parts.join('/'))
+            }
+          }
+        }
       } else {
-        const reason = (data.error === ': fileSizeException') ? 'fileSizeException' : ''
-        store.dispatch('popups/pushPopup', { message: 'failed to upload document' + reason, type: 'error' })
+        if (data.error === 'fileSizeException') {
+          store.dispatch('popups/pushPopup', { message: 'failed to upload document: fileSizeException', type: 'error' })
+        } else if (data.error === 'DuplicateFileException') {
+          stop = true
+          store.dispatch('conflictModal/addConflict', {
+            entityInConflict: doc,
+            lastAction: { fct: importDocuments, params: [folderId, documentList.slice(i)] }
+          })
+        }
       }
     })
   }
@@ -196,7 +216,7 @@ function deleteEntities (selectedEntities) {
         store.dispatch('error/setListFilesConcerns', data.failedEntitiesList)
       }
 
-      store.commit('documents/cleanSelectedEntities')
+      store.dispatch('documents/cleanSelectedEntities')
       store.dispatch('documents/refreshCurrentFolder')
     } else {
       console.error('cannot empty content of trash folder')

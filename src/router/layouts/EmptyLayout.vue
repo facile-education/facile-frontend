@@ -49,6 +49,15 @@
         win-width="500px"
       />
     </teleport>
+
+    <teleport
+      v-if="isConflictModalDisplayed"
+      to="body"
+    >
+      <ConflictModal
+        win-width="500px"
+      />
+    </teleport>
   </div>
 </template>
 
@@ -57,10 +66,11 @@ import { defineAsyncComponent } from 'vue'
 import Popup from '@components/Base/Popup'
 import { popupDurationTime } from '@/constants/appConstants'
 const WarningModal = defineAsyncComponent(() => import('@/components/Nero/WarningModal'))
+const ConflictModal = defineAsyncComponent(() => import('@/components/Documents/Modals/ConflictModal'))
 const FileDisplayModal = defineAsyncComponent(() => import('@/components/Documents/FileDisplay/FileDisplayModal'))
 
 export default {
-  components: { Popup, WarningModal, FileDisplayModal },
+  components: { ConflictModal, Popup, WarningModal, FileDisplayModal },
   inject: ['mq'],
   props: {
     isAllowed: {
@@ -74,6 +84,9 @@ export default {
     },
     isWarningModalDisplayed () {
       return this.$store.getters['warningModal/isWarningModalDisplayed']
+    },
+    isConflictModalDisplayed () {
+      return this.$store.getters['conflictModal/isConflictModalDisplayed']
     },
     popupTimeout () {
       return popupDurationTime

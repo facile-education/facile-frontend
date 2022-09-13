@@ -53,4 +53,12 @@ const fieldsWithoutSize = [
   }
 ]
 
-export { defaultFields, fieldsWithoutSize }
+const conflicts = {
+  // File activity
+  MODE_NORMAL: 0,
+  MODE_RENAME: 1,
+  MODE_REPLACE: 2,
+  MODE_MERGE: 3
+}
+
+export { defaultFields, fieldsWithoutSize, conflicts }
