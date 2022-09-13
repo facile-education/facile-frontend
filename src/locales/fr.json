@@ -285,6 +285,13 @@
   },
   "Unauthenticated": "Veuillez vous connecter pour accéder à ce service",
   "UnAuthorised": "Votre statut ne vous permet pas d'accéder à cette page",
+  "ConflictModal": {
+    "header": "Conflit en cours",
+    "cancelButton": "Annuler",
+    "renameButton": "Conserver",
+    "replaceButton": "Remplacer",
+    "text": " existe déjà à cet emplacement. Voulez-vous remplacer l'existant par une nouvelle version ou conserver les deux ? "
+  },
   "WarningModal": {
     "header": "Continuer ?",
     "cancelButton": "Annuler",

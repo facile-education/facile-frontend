@@ -1,4 +1,4 @@
-import { defaultFields } from '@/constants/documents'
+import { defaultFields } from '@/constants/documentsConstants'
 
 export const state = {
   fields: []
