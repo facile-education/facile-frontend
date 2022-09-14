@@ -141,7 +141,7 @@ export default {
       e.stopPropagation()
     },
     setActive (e) {
-      if (this.isThereInternDocumentDrag && !this.isCurrentFolder) {
+      if (this.isThereInternDocumentDrag && !this.isCurrentFolder && this.folder.permissions.ADD_OBJECT) {
         this.isActive = true
         this.cancelHandlers(e)
       }
