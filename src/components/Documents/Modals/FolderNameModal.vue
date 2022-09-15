@@ -20,11 +20,13 @@
     <template #body>
       <PentilaInput
         ref="folderNameInput"
-        v-model="form.folderName"
+        v-model="folderName"
         class="name-input"
         data-test="folderName-input"
-        :error-type="formErrorList"
-        @blur="v$.form.folderName.$touch()"
+        @blur="v$.folderName.$touch()"
+      />
+      <PentilaErrorMessage
+        :error-message="formErrorList"
       />
     </template>
 
@@ -68,22 +70,34 @@ export default {
   setup: () => ({ v$: useVuelidate() }),
   data () {
     return {
-      form: {
-        folderName: ''
-      }
+      folderName: '',
+      backError: ''
     }
   },
   validations: {
-    form: {
-      folderName: {
-        required,
-        isFolderNameValid
-      }
+    folderName: {
+      required,
+      isFolderNameValid
     }
   },
   computed: {
     currentFolderId () {
       return this.$store.state.documents.currentFolderId
+    },
+    formErrorList () {
+      if (this.v$.folderName.$invalid && this.v$.folderName.$dirty) {
+        if (this.v$.folderName.$errors[0].$validator === 'required') {
+          return this.$t('Commons.required')
+        } else {
+          return 'invalidVersionName'
+        }
+      } else {
+        if (this.backError) {
+          return this.$t('backError')
+        } else {
+          return ''
+        }
+      }
     }
   },
   mounted () {
@@ -93,19 +107,10 @@ export default {
   },
   created () {
     if (this.initFolder !== undefined) {
-      this.form.folderName = this.initFolder.name
+      this.folderName = this.initFolder.name
     }
   },
   methods: {
-    formErrorList () {
-      return (this.v$.form.folderName.$invalid && this.v$.form.folderName.$dirty)
-        ? (!this.v$.form.folderName.required
-            ? 'required'
-            : (!this.v$.form.folderName.isFolderNameValid
-                ? 'invalidVersionName'
-                : ''))
-        : ''
-    },
     submit () {
       if (this.v$.$invalid) { // form checking
         this.v$.$touch()
@@ -123,21 +128,23 @@ export default {
       }
     },
     createFolder () {
-      folderServices.createFolder(this.currentFolderId, this.form.folderName).then((data) => {
+      folderServices.createFolder(this.currentFolderId, this.folderName).then((data) => {
         if (data.success) {
           this.$store.dispatch('documents/refreshCurrentFolder')
           this.onClose()
         } else {
+          this.backError = 'createFolderError'
           console.error('An error was occurred')
         }
       })
     },
     renameFolder () {
-      folderServices.renameFolder(this.initFolder.id, this.form.folderName).then((data) => {
+      folderServices.renameFolder(this.initFolder.id, this.folderName).then((data) => {
         if (data.success) {
           this.$store.dispatch('documents/refreshCurrentFolder')
           this.onClose()
         } else {
+          this.backError = 'renameFolderError'
           console.error('An error was occurred')
         }
       })
@@ -168,6 +175,7 @@ export default {
 
 <i18n locale="fr">
 {
+  "backError": "Une erreur est survenue",
   "createHeader": "Nouveau dossier",
   "createSubmit": "Créer",
   "rename": "Renommer",
