@@ -36,6 +36,10 @@ export default {
     allowMultiple: {
       type: Boolean,
       default: false
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   emits: ['fileAdded'],
@@ -61,7 +65,7 @@ export default {
       e.stopPropagation()
     },
     setActive (e) {
-      if (!this.isThereInternDocumentDrag) {
+      if (!this.isThereInternDocumentDrag && !this.disabled) {
         const dt = e.dataTransfer
         if (dt.types && (dt.types.indexOf ? dt.types.indexOf('Files') !== -1 : dt.types.contains('Files'))) { // Prevent to be active on any draggable element (only on files)
           this.isActive = true

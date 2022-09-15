@@ -20,6 +20,7 @@
         />
         <FilePickerArea
           class="file-picker-area"
+          :disabled="isLoadDocumentsError"
           @fileAdded="importDocument"
           @click.right.prevent="openContextMenu"
         >
@@ -123,6 +124,9 @@ export default {
     },
     areActionsInProgress () {
       return this.$store.getters['currentActions/areActionsInProgress']
+    },
+    isLoadDocumentsError () {
+      return this.$store.state.documents.loadDocumentsError
     },
     selectedDocuments () {
       return this.$store.state.documents.selectedEntities

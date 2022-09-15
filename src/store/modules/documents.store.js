@@ -15,7 +15,8 @@ export const state = {
   isCurrentlyLoading: false,
   isDocumentPanelDisplayed: false,
   openFiles: [],
-  documentsProperties: {}
+  documentsProperties: {},
+  loadDocumentsError: false
 }
 
 export const mutations = {
@@ -77,6 +78,9 @@ export const mutations = {
     })
     state.selectedEntities = newSelectedEntities
   },
+  setLoadDocumentsError (state, payload) {
+    state.loadDocumentsError = payload
+  },
   updateLastSelectedEntity (state, file) {
     state.lastSelectedEntity = file
   },
@@ -134,9 +138,11 @@ export const actions = {
       navigationService.getAllEntities(folderId, true).then((data) => {
         this.dispatch('currentActions/removeAction', { name: 'getEntities' })
         if (data.success) {
+          commit('setLoadDocumentsError', false)
           commit('setFolderContent', { subFolders: data.subFolders, files: data.files })
           resolve({ subFolders: data.subFolders, files: data.files })
         } else {
+          commit('setLoadDocumentsError', true)
           console.error('Unable to get entities from backend for folder id ' + folderId)
         }
       })
@@ -148,10 +154,12 @@ export const actions = {
       groupService.getGroupEntities(groupFolderId).then((data) => {
         this.dispatch('currentActions/removeAction', { name: 'getEntities' })
         if (data.success) {
+          commit('setLoadDocumentsError', true)
           data.folders.forEach(folder => { folder.isGroupDirectory = true })
           commit('setFolderContent', { subFolders: data.folders, files: data.files })
           resolve({ subFolders: data.folders, files: data.files })
         } else {
+          commit('setLoadDocumentsError', true)
           console.error('Unable to get entities from backend for folder id ' + groupFolderId)
         }
       })
