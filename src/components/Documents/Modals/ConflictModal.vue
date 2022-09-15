@@ -19,7 +19,7 @@
         <p
           class="context-message"
         >
-          {{ '"' + entityInConflict.name.split('/')[0] + '"' + $t('ConflictModal.text') }}
+          {{ entityNamesToDisplay + $t('ConflictModal.text') }}
         </p>
       </div>
     </template>
@@ -64,17 +64,46 @@ export default {
     lastAction () {
       return this.conflict.lastAction
     },
-    entityInConflict () {
-      return this.conflict.entityInConflict
+    entitiesInConflict () {
+      return this.conflict.entitiesInConflict
+    },
+    entityNamesToDisplay () {
+      let namesToDisplay = ''
+      let nbConflictRemaining = this.entitiesInConflict.length
+      for (let i = 0; i < this.entitiesInConflict.length && i < 3; i++) {
+        namesToDisplay = namesToDisplay + '"' + this.entitiesInConflict[i].name.split('/')[0] + '" '
+        nbConflictRemaining--
+      }
+      if (nbConflictRemaining === 1) {
+        namesToDisplay = namesToDisplay + '"' + this.entitiesInConflict[this.entitiesInConflict.length - 1].name.split('/')[0] + '" '
+      } else if (nbConflictRemaining > 2) {
+        // TODO: translation
+        namesToDisplay = namesToDisplay + 'et ' + nbConflictRemaining + ' autres'
+      }
+      return namesToDisplay
     }
   },
   methods: {
     replace () {
-      this.lastAction.fct.apply(this, [...this.lastAction.params, conflicts.MODE_REPLACE])
+      let parameters
+      if (this.lastAction.params.storePath) { // Handle case that last action is a store action and not a 'normal' parametrized method
+        parameters = [this.lastAction.params.storePath, { ...this.lastAction.params.storeParams, mode: conflicts.MODE_REPLACE }]
+      } else {
+        parameters = [...this.lastAction.params, conflicts.MODE_REPLACE]
+      }
+
+      this.lastAction.fct.apply(this, parameters)
       this.onClose()
     },
     rename () {
-      this.lastAction.fct.apply(this, [...this.lastAction.params, conflicts.MODE_RENAME])
+      let parameters
+      if (this.lastAction.params.storePath) { // Handle case that last action is a store action and not a 'normal' parametrized method
+        parameters = [this.lastAction.params.storePath, { ...this.lastAction.params.storeParams, mode: conflicts.MODE_RENAME }]
+      } else {
+        parameters = [...this.lastAction.params, conflicts.MODE_RENAME]
+      }
+
+      this.lastAction.fct.apply(this, parameters)
       this.onClose()
     },
     onClose () {

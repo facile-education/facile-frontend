@@ -87,9 +87,9 @@ export default {
       }
     },
     dropMethod (event, folder) {
-      this.$store.dispatch('clipboard/drop', {
-        entities: JSON.parse(event.dataTransfer.getData('entitiesToDrop')),
-        folder: folder
+      this.$store.dispatch('clipboard/move', {
+        targetFolder: folder,
+        entities: JSON.parse(event.dataTransfer.getData('entitiesToDrop'))
       })
     }
   }
