@@ -110,9 +110,9 @@ export default {
         this.cancelActive(e)
         // dropFileAction
         if (this.folder.permissions.ADD_OBJECT) {
-          this.$store.dispatch('clipboard/drop', {
-            entities: JSON.parse(e.dataTransfer.getData('entitiesToDrop')),
-            folder: this.folder
+          this.$store.dispatch('clipboard/move', {
+            targetFolder: this.folder,
+            entities: JSON.parse(e.dataTransfer.getData('entitiesToDrop'))
           })
         }
       }

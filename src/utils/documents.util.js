@@ -156,7 +156,7 @@ async function importDocuments (folderId, documentList, mode) {
         } else if (data.error === 'DuplicateFileException') {
           stop = true
           store.dispatch('conflictModal/addConflict', {
-            entityInConflict: doc,
+            entitiesInConflict: [doc],
             lastAction: { fct: importDocuments, params: [folderId, documentList.slice(i)] }
           })
         }

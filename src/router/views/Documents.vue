@@ -250,7 +250,11 @@ export default {
           this.isFilePickerModalDisplayed = true
           break
         case 'paste':
-          this.$store.dispatch('clipboard/paste', this.currentFolderId)
+          if (this.$store.state.clipboard.action === 'copy') {
+            this.$store.dispatch('clipboard/duplicate', { targetFolder: this.currentFolder, entities: this.$store.state.clipboard.documentList })
+          } else if (this.$store.state.clipboard.action === 'cut') {
+            this.$store.dispatch('clipboard/move', { targetFolder: this.currentFolder, entities: this.$store.state.clipboard.documentList })
+          }
           break
         case 'delete':
           this.$store.dispatch('warningModal/addWarning', {
@@ -332,9 +336,9 @@ export default {
     },
     doSelectFolderAction (targetFolder) {
       if (this.folderSelectionOption === 'move') {
-        this.$store.dispatch('clipboard/move', targetFolder)
+        this.$store.dispatch('clipboard/move', { targetFolder, entities: this.selectedDocuments })
       } else if (this.folderSelectionOption === 'duplicate') {
-        this.$store.dispatch('clipboard/duplicate', targetFolder)
+        this.$store.dispatch('clipboard/duplicate', { targetFolder, entities: this.selectedDocuments })
       } else {
         console.error('Unknown option' + this.folderSelectionOption)
       }
