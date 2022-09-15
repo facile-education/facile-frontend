@@ -2,7 +2,13 @@
   <div class="placeholder">
     <div class="message">
       <div class="icon-container">
+        <NeroIcon
+          v-if="isLoadDocumentsError"
+          name="fa-exclamation-triangle"
+          class="fa-icon"
+        />
         <img
+          v-else
           class="icon"
           src="@/assets/options/icon_fichier_ajout.svg"
           alt=""
@@ -14,12 +20,19 @@
 </template>
 
 <script>
+import NeroIcon from '@components/Nero/NeroIcon'
 export default {
   name: 'DocumentPlaceHolder',
+  components: { NeroIcon },
   inject: ['mq'],
   computed: {
+    isLoadDocumentsError () {
+      return this.$store.state.documents.loadDocumentsError
+    },
     text () {
-      if (this.mq.phone || this.mq.tablet) {
+      if (this.isLoadDocumentsError) {
+        return this.$t('isLoadDocumentsError')
+      } else if (this.mq.phone || this.mq.tablet) {
         return this.$t('noDocumentToDisplayMobile')
       } else {
         return this.$t('noDocumentToDisplay')
@@ -59,6 +72,10 @@ export default {
     .icon {
       margin-left: 9px;
     }
+
+    .fa-icon {
+      font-size: 1.5em;
+    }
   }
 
   p{
@@ -71,6 +88,7 @@ export default {
 
 <i18n locale="fr">
 {
+  "isLoadDocumentsError": "Nous avons rencontré une erreur lors du chargement des fichiers",
   "noDocumentToDisplay": "Glisser / déposer un document",
   "noDocumentToDisplayMobile": "Ajouter un document avec le bouton +"
 }
