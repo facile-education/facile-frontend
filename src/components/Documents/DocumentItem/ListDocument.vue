@@ -149,6 +149,9 @@ export default {
       // TODO: find a better way to separate img and font-awesome icons
       return this.documentIcon.includes('.') || this.documentIcon.includes(':') // if icon contains extension (like folder.svg) it's not a font-awesome
     },
+    isModalOpen () {
+      return this.$store.state.misc.nbOpenModals > 0
+    },
     selectedEntities () {
       return this.$store.state.documents.selectedEntities
     },
@@ -193,7 +196,7 @@ export default {
   },
   methods: {
     keyMonitor (e) { // TODO find a better way to handle enter key event (@keyup.enter ?)
-      if (e.key === 'Enter') {
+      if (e.key === 'Enter' && !this.isModalOpen) {
         if (this.isSelected && this.selectedEntities.length === 1) {
           this.$emit('triggerAction')
         }

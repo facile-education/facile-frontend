@@ -64,7 +64,7 @@
         v-if="isFolderNameModalDisplayed"
         :submit-action="modalSubmitAction"
         :init-folder="documentToRename"
-        @close="isFolderNameModalDisplayed=false"
+        @close="closeFolderNameModal"
       />
       <FileNameModal
         v-if="isFileNameModalDisplayed"
@@ -127,6 +127,9 @@ export default {
     },
     isLoadDocumentsError () {
       return this.$store.state.documents.loadDocumentsError
+    },
+    isModalOpen () {
+      return this.$store.state.misc.nbOpenModals > 0
     },
     selectedDocuments () {
       return this.$store.state.documents.selectedEntities
@@ -287,7 +290,7 @@ export default {
           this.modalSubmitAction = 'rename'
           this.documentToRename = this.selectedDocuments[0]
           if (this.documentToRename.type === 'Folder') {
-            this.isFolderNameModalDisplayed = true
+            this.openFolderNameModal()
           } else {
             this.isFileNameModalDisplayed = true
           }
@@ -298,6 +301,7 @@ export default {
         // TODO HTML, ODS, ODP
         case 'newFolder':
           this.modalSubmitAction = 'createFolder'
+          this.openFolderNameModal()
           this.isFolderNameModalDisplayed = true
           break
         case 'newODT':
@@ -349,25 +353,27 @@ export default {
     },
     // keyboard shortcuts management
     keyMonitor: function (event) {
-      // F2 for renaming
-      if ((event.key === 'F2') && this.selectedDocuments.length === 1) {
-        this.handleOption({ name: 'rename' })
-        // 'Suppr' for deletion
-      } else if (event.key === 'Delete') {
-        if (this.openFiles.length === 0) {
-          this.handleOption({ name: 'delete' })
+      if (!this.isModalOpen) {
+        // F2 for renaming
+        if ((event.key === 'F2') && this.selectedDocuments.length === 1) {
+          this.handleOption({ name: 'rename' })
+          // 'Suppr' for deletion
+        } else if (event.key === 'Delete') {
+          if (this.openFiles.length === 0) {
+            this.handleOption({ name: 'delete' })
+          }
+        } else if (event.ctrlKey && ((event.key === 'c') || (event.key === 'C'))) {
+          this.handleOption({ name: 'copy' })
+          // ctrl-X to cut
+        } else if (event.ctrlKey && ((event.key === 'x') || (event.key === 'X'))) {
+          this.handleOption({ name: 'cut' })
+          // ctrl-V to paste
+        } else if (event.ctrlKey && ((event.key === 'v') || (event.key === 'V'))) {
+          this.handleOption({ name: 'paste' })
+          // ctrl-D to duplicate
+        } else if (event.ctrlKey && ((event.key === 'd') || (event.key === 'D'))) {
+          this.handleOption({ name: 'duplicate' })
         }
-      } else if (event.ctrlKey && ((event.key === 'c') || (event.key === 'C'))) {
-        this.handleOption({ name: 'copy' })
-        // ctrl-X to cut
-      } else if (event.ctrlKey && ((event.key === 'x') || (event.key === 'X'))) {
-        this.handleOption({ name: 'cut' })
-        // ctrl-V to paste
-      } else if (event.ctrlKey && ((event.key === 'v') || (event.key === 'V'))) {
-        this.handleOption({ name: 'paste' })
-        // ctrl-D to duplicate
-      } else if (event.ctrlKey && ((event.key === 'd') || (event.key === 'D'))) {
-        this.handleOption({ name: 'duplicate' })
       }
     },
     importDocumentFromWorkSpace (isFolder) {
@@ -398,7 +404,7 @@ export default {
     },
     importDocument (fileList) {
       importDocuments(this.currentFolderId, fileList)
-    }
+    },
     // doSelectFolderAction (targetFolder) {
     //   if (this.folderSelectionOption === 'move') {
     //     this.$store.dispatch('clipboard/move', targetFolder)
@@ -408,6 +414,14 @@ export default {
     //     console.error('Unknown option' + this.folderSelectionOption)
     //   }
     // }
+    openFolderNameModal () {
+      this.$store.dispatch('misc/incrementModalCount')
+      this.isFolderNameModalDisplayed = true
+    },
+    closeFolderNameModal () {
+      this.$store.dispatch('misc/decreaseModalCount')
+      this.isFolderNameModalDisplayed = false
+    }
   }
 }
 </script>
