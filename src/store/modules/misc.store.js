@@ -2,7 +2,8 @@
 
 export const state = {
   draggedEntities: [],
-  isThereDocumentDrag: false
+  isThereDocumentDrag: false,
+  nbOpenModals: 0
 }
 
 export const mutations = {
@@ -14,6 +15,12 @@ export const mutations = {
   },
   toggleDraggedEntity (state, payload) {
     state.isThereDocumentDrag = payload
+  },
+  incrementModalCount (state) {
+    state.nbOpenModals++
+  },
+  decreaseModalCount (state) {
+    state.nbOpenModals--
   }
 }
 
@@ -25,5 +32,11 @@ export const actions = {
   removeDraggedEntities ({ commit }) {
     commit('toggleDraggedEntity', false)
     commit('removeDraggedEntities')
+  },
+  incrementModalCount ({ commit }) {
+    commit('incrementModalCount')
+  },
+  decreaseModalCount ({ commit }) {
+    commit('decreaseModalCount')
   }
 }
