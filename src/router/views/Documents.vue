@@ -403,6 +403,8 @@ export default {
       input.click()
     },
     importDocument (fileList) {
+      this.$store.dispatch('currentActions/setImportFileList', fileList)
+      this.$store.dispatch('currentActions/displayUploadProgression')
       importDocuments(this.currentFolderId, fileList)
     },
     // doSelectFolderAction (targetFolder) {
