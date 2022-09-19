@@ -30,6 +30,14 @@
       />
     </div>
 
+    <div
+      v-if="isLoadingProgressionDisplayed"
+      class="background-actions-container"
+      :class="{'phone': mq.phone}"
+    >
+      <UploadProgression />
+    </div>
+
     <teleport
       v-for="(file, index) in openFiles"
       :key="index"
@@ -65,12 +73,13 @@
 import { defineAsyncComponent } from 'vue'
 import Popup from '@components/Base/Popup'
 import { popupDurationTime } from '@/constants/appConstants'
+import UploadProgression from '@components/Documents/UploadProgression'
 const WarningModal = defineAsyncComponent(() => import('@/components/Nero/WarningModal'))
 const ConflictModal = defineAsyncComponent(() => import('@/components/Documents/Modals/ConflictModal'))
 const FileDisplayModal = defineAsyncComponent(() => import('@/components/Documents/FileDisplay/FileDisplayModal'))
 
 export default {
-  components: { ConflictModal, Popup, WarningModal, FileDisplayModal },
+  components: { UploadProgression, ConflictModal, Popup, WarningModal, FileDisplayModal },
   inject: ['mq'],
   props: {
     isAllowed: {
@@ -81,6 +90,9 @@ export default {
   computed: {
     openFiles () {
       return this.$store.state.documents.openFiles
+    },
+    isLoadingProgressionDisplayed () {
+      return this.$store.state.currentActions.isLoadingProgressionDisplayed
     },
     isWarningModalDisplayed () {
       return this.$store.getters['warningModal/isWarningModalDisplayed']
@@ -93,6 +105,9 @@ export default {
     },
     popupList () {
       return this.$store.state.popups.currentPopupList
+    },
+    backgroundActionList () {
+      return this.$store.state.currentActions.currentBackgroundActionList
     },
     user () {
       return this.$store.state.user
@@ -142,6 +157,29 @@ export default {
     transform: translate(50%, 0);
 
     .popup {
+      width: 90vw;
+      height: 50px;
+    }
+  }
+}
+
+.background-actions-container {
+  z-index: $popup-z-index;
+  position: fixed;
+  bottom: 30px;
+  right: 0px;
+  flex-direction: column;
+
+  .action {
+    color: white;
+  }
+
+  &.phone {
+    top: 16px;
+    right: 50%;
+    transform: translate(50%, 0);
+
+    .action {
       width: 90vw;
       height: 50px;
     }

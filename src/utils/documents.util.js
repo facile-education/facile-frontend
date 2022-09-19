@@ -134,10 +134,11 @@ async function importDocuments (folderId, documentList, mode) {
   let stop = false
   for (let i = 0; i < documentList.length && !stop; i++) {
     const doc = documentList[i]
-    store.dispatch('currentActions/addAction', { name: 'importDocument' })
+    store.dispatch('currentActions/setCurrentUploadFile', doc)
     await fileService.uploadFile(folderId, doc, i === 0 ? mode : conflicts.MODE_MERGE).then((data) => {
-      store.dispatch('currentActions/removeAction', { name: 'importDocument' })
+      store.dispatch('currentActions/removeCurrentUploadFile', doc)
       if (data.success) {
+        store.dispatch('currentActions/addUploadedFile', doc)
         store.dispatch('documents/refreshCurrentFolder')
         store.dispatch('popups/pushPopup', { message: doc.name + i18n.global.t('Documents.uploadSuccess'), type: 'success' })
         if (data.firstCreatedFolder && mode === conflicts.MODE_RENAME) { // If we previously have created a new folder, change the followings file paths to place it in th new folder
