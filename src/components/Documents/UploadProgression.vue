@@ -41,8 +41,8 @@ export default {
     },
     headerText () {
       let text = ''
-      if (!this.isUploadFinished) {
-        text = this.listUploadedFiles.length + this.$t('uploadOn') + this.listFilesToUpload.length
+      if (!this.cancelStatus) {
+        text = this.listUploadedFiles.length + this.$t('uploadOn') + this.listFilesToUpload.length + ' ...'
       } else if (this.listUploadedFiles.length === 1) {
         text = this.listUploadedFiles.length + this.$t('uploadfinished')
       } else {
