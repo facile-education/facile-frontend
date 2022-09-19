@@ -43,6 +43,9 @@ export const mutations = {
   },
   addUploadedFile (state, file) {
     state.listUploadedFiles.push(file)
+  },
+  setUploadedFiles (state, payload) {
+    state.listUploadedFiles = payload
   }
 }
 
@@ -65,6 +68,9 @@ export const actions = {
   removeCurrentUploadFile ({ commit }) {
     commit('setCurrentUploadFile', undefined)
   },
+  removeFileToUpload ({ commit }, file) {
+    commit('removeFileToUpload', file)
+  },
   addUploadedFile ({ commit }, file) {
     // commit('removeFileToUpload', file)
     commit('addUploadedFile', file)
@@ -72,6 +78,7 @@ export const actions = {
   setImportFileList ({ commit }, fileList) {
     commit('setCancelUpload', false)
     commit('setImportFileList', fileList)
+    commit('setUploadedFiles', [])
   },
   cancelUpload ({ commit }) {
     commit('setCancelUpload', true)

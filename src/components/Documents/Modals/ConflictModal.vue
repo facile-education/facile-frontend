@@ -30,7 +30,7 @@
           data-test="cancelButton"
           cls="cancel"
           :label="$t('ConflictModal.cancelButton')"
-          @click="onClose"
+          @click="cancel"
         />
         <!-- TODO check permission? >-->
         <PentilaButton
@@ -104,6 +104,27 @@ export default {
       }
 
       this.lastAction.fct.apply(this, parameters)
+      this.onClose()
+    },
+    cancel () {
+      let parameters
+      if (!this.lastAction.params.storePath) { // (Upload only) Remove entities in conflicts for the next call
+        const listRemainingFiles = [...this.lastAction.params[1]]
+
+        for (let i = 0; i < listRemainingFiles.length; i++) {
+          const remainingFileParts = listRemainingFiles[i].name.split('/')
+          const conflictFileParts = this.entitiesInConflict[0].name.split('/')
+          if (remainingFileParts[0] === conflictFileParts[0]) {
+            this.$store.dispatch('currentActions/removeFileToUpload', listRemainingFiles[i])
+            listRemainingFiles.splice(i, 1)
+          }
+        }
+
+        // Call method
+        parameters = [this.lastAction.params[0], listRemainingFiles, conflicts.MODE_NORMAL]
+        this.lastAction.fct.apply(this, parameters)
+      }
+
       this.onClose()
     },
     onClose () {

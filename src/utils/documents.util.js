@@ -134,35 +134,43 @@ async function importDocuments (folderId, documentList, mode) {
   let stop = false
   for (let i = 0; i < documentList.length && !stop; i++) {
     const doc = documentList[i]
-    store.dispatch('currentActions/setCurrentUploadFile', doc)
-    await fileService.uploadFile(folderId, doc, i === 0 ? mode : conflicts.MODE_MERGE).then((data) => {
-      store.dispatch('currentActions/removeCurrentUploadFile', doc)
-      if (data.success) {
-        store.dispatch('currentActions/addUploadedFile', doc)
-        store.dispatch('documents/refreshCurrentFolder')
-        store.dispatch('popups/pushPopup', { message: doc.name + i18n.global.t('Documents.uploadSuccess'), type: 'success' })
-        if (data.firstCreatedFolder && mode === conflicts.MODE_RENAME) { // If we previously have created a new folder, change the followings file paths to place it in th new folder
-          for (let j = i + 1; j < documentList.length; j++) {
-            const fileToUpload = documentList[j]
-            const parts = fileToUpload.name.split('/')
-            if (parts.length > 1) { // rename the root folder part of the name
-              parts[0] = data.firstCreatedFolder.name
-              documentList[j] = new File([fileToUpload], parts.join('/'))
+    if (!store.state.currentActions.cancelUpload) {
+      store.dispatch('currentActions/setCurrentUploadFile', doc)
+      await fileService.uploadFile(folderId, doc, i === 0 ? mode : conflicts.MODE_MERGE).then((data) => {
+        store.dispatch('currentActions/removeCurrentUploadFile', doc)
+        if (data.success) {
+          store.dispatch('currentActions/addUploadedFile', doc)
+          store.dispatch('documents/refreshCurrentFolder')
+          store.dispatch('popups/pushPopup', {
+            message: doc.name + i18n.global.t('Documents.uploadSuccess'),
+            type: 'success'
+          })
+          if (data.firstCreatedFolder && mode === conflicts.MODE_RENAME) { // If we previously have created a new folder, change the followings file paths to place it in th new folder
+            for (let j = i + 1; j < documentList.length; j++) {
+              const fileToUpload = documentList[j]
+              const parts = fileToUpload.name.split('/')
+              if (parts.length > 1) { // rename the root folder part of the name
+                parts[0] = data.firstCreatedFolder.name
+                documentList[j] = new File([fileToUpload], parts.join('/'))
+              }
             }
           }
+        } else {
+          if (data.error === 'fileSizeException') {
+            store.dispatch('popups/pushPopup', {
+              message: 'failed to upload document: fileSizeException',
+              type: 'error'
+            })
+          } else if (data.error === 'DuplicateFileException') {
+            stop = true
+            store.dispatch('conflictModal/addConflict', {
+              entitiesInConflict: [doc],
+              lastAction: { fct: importDocuments, params: [folderId, documentList.slice(i)] }
+            })
+          }
         }
-      } else {
-        if (data.error === 'fileSizeException') {
-          store.dispatch('popups/pushPopup', { message: 'failed to upload document: fileSizeException', type: 'error' })
-        } else if (data.error === 'DuplicateFileException') {
-          stop = true
-          store.dispatch('conflictModal/addConflict', {
-            entitiesInConflict: [doc],
-            lastAction: { fct: importDocuments, params: [folderId, documentList.slice(i)] }
-          })
-        }
-      }
-    })
+      })
+    }
   }
 }
 
