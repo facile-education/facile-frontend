@@ -131,6 +131,9 @@ export default {
     currentUploadingFile () {
       return this.$store.state.currentActions.currentUploadingFile
     },
+    listFilesToUpload () {
+      return this.$store.state.currentActions.listFilesToUpload
+    },
     isModalOpen () {
       return this.$store.state.misc.nbOpenModals > 0
     },
@@ -406,9 +409,16 @@ export default {
       input.click()
     },
     importDocument (fileList) {
-      if (this.currentUploadingFile === undefined) {
+      if (this.currentUploadingFile === undefined) { // Reset file upload list
         this.$store.dispatch('currentActions/setImportFileList', fileList)
-      } else {
+      } else { // Add files to upload list
+        // Remove files that are already in list
+        this.listFilesToUpload.forEach((fileToUpload) => {
+          const index = fileList.find(element => element.name === fileToUpload.name)
+          if (index !== -1) {
+            fileList.splice(index, 1)
+          }
+        })
         this.$store.dispatch('currentActions/addImportFileList', fileList)
       }
       this.$store.dispatch('currentActions/displayUploadProgression')
