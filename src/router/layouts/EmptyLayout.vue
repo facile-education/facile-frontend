@@ -166,16 +166,17 @@ export default {
 .background-actions-container {
   z-index: $popup-z-index;
   position: fixed;
-  bottom: 30px;
-  right: 0px;
+  bottom: 0;
+  right: 0;
   flex-direction: column;
+  max-width: 100%;
 
   .action {
     color: white;
   }
 
   &.phone {
-    top: 16px;
+    bottom: 0;
     right: 50%;
     transform: translate(50%, 0);
 

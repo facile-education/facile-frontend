@@ -128,6 +128,9 @@ export default {
     isLoadDocumentsError () {
       return this.$store.state.documents.loadDocumentsError
     },
+    currentUploadingFile () {
+      return this.$store.state.currentActions.currentUploadingFile
+    },
     isModalOpen () {
       return this.$store.state.misc.nbOpenModals > 0
     },
@@ -403,7 +406,11 @@ export default {
       input.click()
     },
     importDocument (fileList) {
-      this.$store.dispatch('currentActions/setImportFileList', fileList)
+      if (this.currentUploadingFile === undefined) {
+        this.$store.dispatch('currentActions/setImportFileList', fileList)
+      } else {
+        this.$store.dispatch('currentActions/addImportFileList', fileList)
+      }
       this.$store.dispatch('currentActions/displayUploadProgression')
       importDocuments(this.currentFolderId, fileList)
     },

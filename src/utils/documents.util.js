@@ -137,7 +137,7 @@ async function importDocuments (folderId, documentList, mode) {
     if (!store.state.currentActions.cancelUpload) {
       store.dispatch('currentActions/setCurrentUploadFile', doc)
       await fileService.uploadFile(folderId, doc, i === 0 ? mode : conflicts.MODE_MERGE).then((data) => {
-        store.dispatch('currentActions/removeCurrentUploadFile', doc)
+        store.dispatch('currentActions/removeCurrentUploadFile')
         if (data.success) {
           store.dispatch('currentActions/addUploadedFile', doc)
           store.dispatch('documents/refreshCurrentFolder')
