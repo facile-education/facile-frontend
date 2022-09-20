@@ -50,7 +50,7 @@ export default {
   width: 100%;
   margin-right: auto;
   margin-left: auto;
-  padding-top: 5em;
+  padding-top: 6em;
   font-size: 1.25em;
 }
 
@@ -64,17 +64,18 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 97px;
-    height: 97px;
-    border-radius: 48px;
+    width: 30vw;
+    height: 30vw;
+    border-radius: 15vw;
     background-color: #F3F6F8;
 
     .icon {
-      margin-left: 9px;
+      margin-left: 3vw;
+      width: 10vw;
     }
 
     .fa-icon {
-      font-size: 1.5em;
+      font-size: 10vw;
     }
   }
 
