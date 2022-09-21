@@ -65,17 +65,21 @@ export default {
     align-items: center;
     justify-content: center;
     width: 30vw;
+    max-width: 300px;
     height: 30vw;
+    max-height: 300px;
     border-radius: 15vw;
     background-color: #F3F6F8;
 
     .icon {
       margin-left: 3vw;
       width: 10vw;
+      max-width: 100px;
     }
 
     .fa-icon {
       font-size: 10vw;
+      max-width: 100px;
     }
   }
 
