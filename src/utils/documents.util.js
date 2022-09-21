@@ -1,5 +1,4 @@
 import store from '@store/index.js'
-import i18n from '@/i18n.js'
 import trashService from '@/api/documents/trash.service'
 import fileService from '@/api/documents/file.service'
 import folderService from '@/api/documents/folder.service'
@@ -141,10 +140,6 @@ async function importDocuments (folderId, documentList, mode) {
         if (data.success) {
           store.dispatch('currentActions/addUploadedFile', doc)
           store.dispatch('documents/refreshCurrentFolder')
-          store.dispatch('popups/pushPopup', {
-            message: doc.name + i18n.global.t('Documents.uploadSuccess'),
-            type: 'success'
-          })
           if (data.firstCreatedFolder && mode === conflicts.MODE_RENAME) { // If we previously have created a new folder, change the followings file paths to place it in th new folder
             for (let j = i + 1; j < documentList.length; j++) {
               const fileToUpload = documentList[j]
