@@ -9,6 +9,8 @@
 // /* eslint-disable import/no-extraneous-dependencies, global-require */
 // const webpack = require('@cypress/webpack-preprocessor')
 
+// **** NO LONGER USE IN CYPRESS 10, please remove it when all developers have fully made the upgrade *****
+
 module.exports = (on, config) => {
   // on('file:preprocessor', webpack({
   //  webpackOptions: require('@vue/cli-service/webpack.config'),
