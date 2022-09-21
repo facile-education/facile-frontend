@@ -32,14 +32,14 @@
           >
             <DocumentList @openContextMenu="openContextMenu" />
           </div>
-          <DocumentDetails
-            v-if="isDocumentPanelDisplayed && !mq.phone"
-            class="document-details"
-          />
-          <DocumentDetailsModal
-            v-if="isDocumentPanelDisplayed && mq.phone"
-          />
         </FilePickerArea>
+        <DocumentDetails
+          v-if="isDocumentPanelDisplayed && !mq.phone"
+          class="document-details"
+        />
+        <DocumentDetailsModal
+          v-if="isDocumentPanelDisplayed && mq.phone"
+        />
       </div>
     </div>
     <div v-else>
@@ -459,6 +459,7 @@ export default {
   .body {
     position: relative;
     height: calc(100% - #{$doc-currents-options-height});
+    display: flex;
 
     .spinner {
       z-index: 1;
@@ -466,9 +467,9 @@ export default {
 
     .file-picker-area {
       height: 100%;
+      flex: 3;
 
       .scroll {
-        flex: 3;
         height: calc(100% - #{$doc-breadcrumb-size});
         overflow-y: auto;
 
@@ -476,11 +477,11 @@ export default {
           margin-left: 10px;
         }
       }
+    }
 
-      .document-details {
-        flex: 1;
-        min-width: 300px;
-      }
+    .document-details {
+      flex: 1;
+      min-width: 300px;
     }
   }
 
