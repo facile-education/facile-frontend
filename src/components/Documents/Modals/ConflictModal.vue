@@ -111,12 +111,14 @@ export default {
       if (!this.lastAction.params.storePath) { // (Upload only) Remove entities in conflicts for the next call
         const listRemainingFiles = [...this.lastAction.params[1]]
 
+        // Remove entities concern by the conflict
         for (let i = 0; i < listRemainingFiles.length; i++) {
           const remainingFileParts = listRemainingFiles[i].name.split('/')
           const conflictFileParts = this.entitiesInConflict[0].name.split('/')
           if (remainingFileParts[0] === conflictFileParts[0]) {
             this.$store.dispatch('currentActions/removeFileToUpload', listRemainingFiles[i])
             listRemainingFiles.splice(i, 1)
+            i--
           }
         }
 
