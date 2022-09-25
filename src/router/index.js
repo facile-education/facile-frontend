@@ -77,6 +77,11 @@ const routes = [
     component: () => import('@/router/views/MediacenterManager')
   },
   {
+    path: '/messaging',
+    name: 'Messagerie',
+    component: () => import('@/router/views/Messaging')
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: () => import('@/router/views/NotFound')

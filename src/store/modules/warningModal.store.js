@@ -13,6 +13,7 @@ export const mutations = {
 
 export const actions = {
   addWarning ({ commit }, warning) {
+    console.log('add warning store, warning=', warning)
     commit('addWarning', warning)
   },
   removeFirstWarning ({ commit }) {
