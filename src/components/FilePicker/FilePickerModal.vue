@@ -31,7 +31,7 @@
             @selectedFolder="updateSelectedFolder"
             @currentFolder="updateCurrentFolder"
             @chosenFolder="emitSelectedFolder"
-            @addedFiles="addNewFiles"
+            @updateSelectedFiles="updateSelectedFiles"
           />
         </PentilaTabItem>
 
@@ -44,7 +44,7 @@
             @selectedFolder="updateSelectedFolder"
             @currentFolder="updateCurrentFolder"
             @chosenFolder="emitSelectedFolder"
-            @addedFiles="addNewFiles"
+            @updateSelectedFiles="updateSelectedFiles"
           />
         </PentilaTabItem>
       </Pentilatablist>
@@ -105,6 +105,7 @@ export default {
       inputText: undefined,
       currentFolder: undefined,
       selectedFolder: undefined,
+      selectedFiles: undefined,
       height: undefined,
       width: undefined
     }
@@ -137,6 +138,9 @@ export default {
     updateSelectedFolder (folder) {
       this.selectedFolder = folder
     },
+    updateSelectedFiles (files) {
+      this.selectedFiles = files
+    },
     updateCurrentFolder (folder) {
       this.currentFolder = folder
     },
@@ -144,8 +148,8 @@ export default {
       this.$emit('chosenFolder', this.selectedFolder ? this.selectedFolder : this.currentFolder)
       this.close()
     },
-    addNewFiles (files) {
-      this.$emit('addedFiles', files)
+    addNewFiles () {
+      this.$emit('addedFiles', this.selectedFiles)
       this.close()
     },
     close () {
