@@ -64,7 +64,7 @@ export default {
       default: ''
     }
   },
-  emits: ['addedFiles', 'chosenFolder', 'close', 'selectedFolder', 'currentFolder'],
+  emits: ['addedFiles', 'chosenFolder', 'close', 'selectedFolder', 'currentFolder', 'updateSelectedFiles'],
   data () {
     return {
       inputText: undefined,
@@ -137,6 +137,7 @@ export default {
           }
         }
       }
+      this.$emit('updateSelectedFiles', this.selectedFiles)
     },
     clickOnFolder (folder) {
       if (this.folderSelection && !this.mq.phone && !this.mq.tablet) { // On phone and tablet, we need to navigate on simple click
