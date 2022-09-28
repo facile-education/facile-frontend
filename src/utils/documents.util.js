@@ -169,7 +169,7 @@ async function importDocuments (folderId, documentList, mode) {
   }
 }
 
-async function downLoadDocument (entity) {
+async function downloadDocument (entity) {
   return new Promise((resolve) => {
     if (entity.type === 'Folder') {
       store.dispatch('currentActions/addAction', { name: 'download' })
@@ -188,10 +188,11 @@ async function downLoadDocument (entity) {
           console.error('Error in getting url for folder archive download')
         }
       })
-    } else if (entity.type === 'File') {
+    } else { // No type analysis because default is 'file'
       if (entity.isGroupFile) {
         groupService.recordDownloadActivity(entity.id, 0)
       }
+      console.log('down entity ', entity)
       const a = document.createElement('a')
       a.style.display = 'none'
       a.download = entity.name // don't works on Internet Explorer and IOS' safari
@@ -260,7 +261,7 @@ export default {
   selectPreviousEntity,
   selectNextEntity,
   importDocuments,
-  downLoadDocument,
+  downloadDocument,
   deleteEntities,
   copyWebdavUrl
   // importMessagingAttachFiles
@@ -275,6 +276,6 @@ export {
   ctrlSelectPreviousEntity,
   ctrlSelectNextEntity,
   importDocuments,
-  downLoadDocument,
+  downloadDocument,
   deleteEntities
 }

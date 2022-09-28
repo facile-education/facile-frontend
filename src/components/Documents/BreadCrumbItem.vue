@@ -69,7 +69,7 @@ import BaseIcon from '@components/Base/BaseIcon'
 import ContextMenu from '@components/ContextMenu/ContextMenu'
 import { currentFolderOptions, spaceSelectionOptions } from '@/constants/options'
 import { removeMenuOptionIfExist } from '@utils/commons.util'
-import { copyWebdavUrl, downLoadDocument } from '@utils/documents.util'
+import { copyWebdavUrl, downloadDocument } from '@utils/documents.util'
 import FolderNameModal from '@components/Documents/Modals/FolderNameModal'
 export default {
   name: 'BreadCrumbItem',
@@ -191,7 +191,7 @@ export default {
           this.isFolderNameModalDisplayed = true
           break
         case 'download':
-          downLoadDocument(this.folder)
+          downloadDocument(this.folder)
           break
         case 'copyWebdavUrl':
           copyWebdavUrl(this.folder)

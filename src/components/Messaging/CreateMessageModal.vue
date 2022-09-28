@@ -306,7 +306,7 @@ export default {
       }
     },
     sendMessage () {
-      const successMessage = this.$t('CreateFolderModal.success')
+      const successMessage = this.$t('Messaging.CreateMessageModal.success')
       // In case of reply, replyAll or forward
       // previous content is added in case of forward OR (reply or replyAll AND no recipient added)
       messageService.sendMessage(
@@ -390,7 +390,6 @@ export default {
       this.isFilePickerModalDisplayed = false
     },
     addNewFiles (newFiles) {
-      console.log('addNewFiles, files=', newFiles)
       this.attachedFiles = [...newFiles]
     },
     removeAttachedFile (fileToRemove) {

@@ -9,7 +9,8 @@ export const state = {
   selectedGroup: defaultGroup,
   selectedUser: { userId: 0 },
   sessionList: [],
-  startDate: undefined
+  startDate: undefined,
+  isCreateSessionModalDisplayed: false
 }
 
 export const mutations = {
@@ -34,6 +35,9 @@ export const mutations = {
   },
   setSessionList (state, payload) {
     state.sessionList = payload
+  },
+  setCreateSessionModalDisplayed (state, payload) {
+    state.isCreateSessionModalDisplayed = payload
   }
 }
 export const actions = {
@@ -103,5 +107,8 @@ export const actions = {
     commit('setSelectedGroup', defaultGroup)
     commit('setSelectedUser', user)
     dispatch('getSessionList')
+  },
+  setCreateSessionModalDisplayed ({ commit }, isDisplayed) {
+    commit('setCreateSessionModalDisplayed', isDisplayed)
   }
 }

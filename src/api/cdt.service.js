@@ -9,7 +9,9 @@ export {
   getTeacherGroups,
   getSessionDetails,
   getSessionTeachersAndSubstitutes,
-  saveTeacherSubstitutes
+  saveTeacherSubstitutes,
+  getSchoolTeachers,
+  createSession
 }
 
 export default {
@@ -17,7 +19,9 @@ export default {
   getGroups,
   getSessions,
   getTeacherGroups,
-  getSessionDetails
+  getSessionDetails,
+  getSchoolTeachers,
+  createSession
 }
 
 const CDT_PATH = '/cdt-portlet.'
@@ -87,5 +91,25 @@ function saveTeacherSubstitutes (sessionId, teacherArray) {
   return axios.post(constants.JSON_WS_URL + CDT_PATH + 'sessionteacher/save-teacher-substitutes', PentilaUtils.URL.params({
     sessionId,
     teacherArray: JSON.stringify(teacherArray)
+  })).then(response => response.data)
+}
+
+function getSchoolTeachers (schoolId) {
+  return axios.get(constants.JSON_WS_URL + CDT_PATH + 'cdtsession/get-school-teachers', {
+    params: {
+      schoolId
+    }
+  }).then(response => response.data)
+}
+
+function createSession (groupId, subject, room, startDate, endDate, teacherIds, isRecurrent) {
+  return axios.post(constants.JSON_WS_URL + CDT_PATH + 'cdtsession/create-session', PentilaUtils.URL.params({
+    groupId,
+    subject,
+    room,
+    startDate: startDate.format('YYYY-MM-DD HH:mm'),
+    endDate: endDate.format('YYYY-MM-DD HH:mm'),
+    teacherIds: JSON.stringify(teacherIds),
+    isRecurrent
   })).then(response => response.data)
 }

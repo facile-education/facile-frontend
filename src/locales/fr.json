@@ -59,6 +59,11 @@
       "rolesPlaceholder": "Liste des profils"
     }
   },
+  "AttachedFiles": {
+    "view": "Visualiser",
+    "download": "Télécharger",
+    "remove": "Supprimer"
+  },
   "Commons": {
     "delete": "Supprimer",
     "download": "Télécharger",
@@ -198,7 +203,8 @@
     "groupFilter": "Groupe",
     "userInput": "Elève / Maître",
     "childFilter": "Enfant",
-    "timetableOf": "Horaire de "
+    "timetableOf": "Horaire de ",
+    "createSession": "Créer un cours"
   },
   "Layout": {
     "authRequired": "Une authentification est requise pour accéder au service.",
@@ -257,7 +263,8 @@
       "subjectPlaceHolder": "Object",
       "contentPlaceHolder": "Contenu",
       "addAttachFileButton": "Ajouter une pièce jointe",
-      "draftButton": "Enregistrer en brouillon"
+      "draftButton": "Enregistrer en brouillon",
+      "success": "Message envoyé"
     },
     "formErrors": {
       "required": "Champ requis",
