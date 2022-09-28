@@ -18,6 +18,7 @@
       <FileDisplay
         :file="file"
         :wants-to-close-file="wantsToCloseFile"
+        @keepOpen="wantsToCloseFile = false"
         @close="closeModal"
       />
     </template>

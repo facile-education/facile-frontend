@@ -87,7 +87,7 @@ export default {
       default: false
     }
   },
-  emits: ['close'],
+  emits: ['close', 'keepOpen'],
   data () {
     return {
       loadedFile: undefined,
@@ -102,6 +102,12 @@ export default {
       if (this.wantsToCloseFile) {
         if (this.typeOfView === 'WISIWIG' && this.loadedFile && !this.loadedFile.readOnly) { // Only WISIWIG can auto-save for the moment...
           this.haveToSaveFile = true
+        } else if (this.typeOfView === 'Office' || this.typeOfView === 'MindMap' || this.typeOfView === 'Geogebra' || this.typeOfView === 'Scratch') {
+          this.$store.dispatch('warningModal/addWarning', {
+            text: this.$t('quitWithoutSaving'),
+            lastAction: { fct: this.emitCloseEvent }
+          })
+          this.$emit('keepOpen') // In case of canceling the closure
         } else {
           this.$emit('close')
         }
@@ -137,6 +143,9 @@ export default {
         }
       })
     },
+    emitCloseEvent () {
+      this.$emit('close')
+    },
     fileSaved () {
       if (this.wantsToCloseFile) {
         this.$emit('close')
@@ -157,6 +166,7 @@ export default {
 
 <i18n locale="fr">
 {
-  "Unsupported": "Type de fichier non affichable"
+  "quitWithoutSaving": "Toute modification non sauvegardée sera perdue",
+  "Unsupported": "Type de fichier non affichable",
 }
 </i18n>
