@@ -93,7 +93,7 @@ import ContextMenu from '@components/ContextMenu/ContextMenu'
 import { documentSpaceOptions } from '@/constants/options'
 import { defaultFields, fieldsWithoutSize } from '@/constants/documentsConstants'
 import FilePickerArea from '@components/FilePicker/FilePickerArea'
-import { computeDocumentsOptions, downLoadDocument, deleteEntities, importDocuments, copyWebdavUrl } from '@utils/documents.util'
+import { computeDocumentsOptions, downloadDocument, deleteEntities, importDocuments, copyWebdavUrl } from '@utils/documents.util'
 import { returnAddedFiles, alertNoFile } from '@utils/upload.util'
 import FolderNameModal from '@components/Documents/Modals/FolderNameModal'
 import FileNameModal from '@components/Documents/Modals/FileNameModal'
@@ -276,7 +276,7 @@ export default {
           })
           break
         case 'download':
-          downLoadDocument(this.selectedDocuments[0])
+          downloadDocument(this.selectedDocuments[0])
           break
         case 'copyWebdavUrl':
           copyWebdavUrl(this.selectedDocuments[0])

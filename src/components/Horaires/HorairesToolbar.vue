@@ -71,6 +71,13 @@
       :selected-date="selectedDate"
       @selectDate="onSelectDate"
     />
+
+    <!-- Create session button -->
+    <PentilaButton
+      v-if="$store.state.user.isDirectionMember"
+      :label="$t('Horaires.createSession')"
+      @click="openCreateSessionModal"
+    />
   </NeroToolbar>
 </template>
 
@@ -200,6 +207,9 @@ export default {
     },
     toggleSelection () {
       this.isSingleUser = !this.isSingleUser
+    },
+    openCreateSessionModal () {
+      this.$store.dispatch('horaires/setCreateSessionModalDisplayed', true)
     }
   }
 }

@@ -57,6 +57,11 @@
         :session-event="updatedSession"
         @close="closeEditModalDisplay"
       />
+      <CreateSessionModal
+        v-if="isCreateSessionModalDisplayed"
+        :win-width="(mq.phone || mq.tablet) ? 'auto' : '650px'"
+        @close="closeCreateSessionModal"
+      />
     </teleport>
   </Layout>
 </template>
@@ -76,6 +81,7 @@ import { defineAsyncComponent } from 'vue'
 const Timeline = defineAsyncComponent(() => import('@/components/Horaires/Timeline'))
 const FCEvent = defineAsyncComponent(() => import('@/components/Horaires/FCEvent'))
 const SessionTeacherModal = defineAsyncComponent(() => import('@/components/Horaires/SessionTeacherModal'))
+const CreateSessionModal = defineAsyncComponent(() => import('@/components/Horaires/CreateSessionModal'))
 
 dayjs.extend(customParseFormat)
 
@@ -87,6 +93,7 @@ export default {
     HorairesToolbar,
     Layout,
     SessionTeacherModal,
+    CreateSessionModal,
     Timeline
   },
   inject: ['mq'],
@@ -144,6 +151,9 @@ export default {
     eventList () {
       return this.$store.state.horaires.sessionList
     },
+    isCreateSessionModalDisplayed () {
+      return this.$store.state.horaires.isCreateSessionModalDisplayed
+    },
     hiddenDays () {
       const hiddenDays = []
       let dayNumber
@@ -191,6 +201,14 @@ export default {
   methods: {
     closeEditModalDisplay (refresh) {
       this.isEditModalDisplayed = !this.isEditModalDisplayed
+      // force refresh calendar if changes are applied
+      if (refresh) {
+        this.$store.dispatch('horaires/selectDates',
+          { start: this.$store.state.horaires.startDate, end: this.$store.state.horaires.endDate })
+      }
+    },
+    closeCreateSessionModal (refresh) {
+      this.isCreateSessionModalDisplayed = !this.isCreateSessionModalDisplayed
       // force refresh calendar if changes are applied
       if (refresh) {
         this.$store.dispatch('horaires/selectDates',

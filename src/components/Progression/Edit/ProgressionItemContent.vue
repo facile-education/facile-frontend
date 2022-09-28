@@ -295,7 +295,7 @@ export default {
       this.$emit('editContent', this.content)
     },
     download () {
-      documentUtils.downLoadDocument({ id: this.content.fileEntryId, type: 'File', url: this.content.downloadUrl })
+      documentUtils.downloadDocument({ id: this.content.fileEntryId, type: 'File', url: this.content.downloadUrl })
     }
   }
 }

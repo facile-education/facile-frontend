@@ -204,7 +204,7 @@ export default {
       this.$store.dispatch('contextMenu/openContextMenu', { event: e, options: contextMenu })
     },
     handleChosenOption (option) {
-      switch (option) {
+      switch (option.name) {
         case 'markAsRead':
           this.markSelectionAsRead(true)
           break

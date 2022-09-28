@@ -176,8 +176,13 @@ export default {
 </style>
 
 <style lang="scss" scoped>
+#teacherform {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
 #teacherform p {
-  margin-top: 0
+  margin-top: 0;
 }
 
 #teacherform ul {
