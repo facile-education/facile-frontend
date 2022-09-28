@@ -17,6 +17,7 @@
         :folder="folder"
         :is-first-element="index === 0"
         :is-current-folder="index === displayableBreadcrumb.length-1"
+        :previous-folder-name="index >= 1 ? displayableBreadcrumb[index - 1].name : ''"
         @click-back="goInParentFolder(index)"
       />
       <img

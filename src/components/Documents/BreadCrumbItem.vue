@@ -2,6 +2,7 @@
   <div
     v-if="(!mq.phone && !mq.tablet) || isCurrentFolder"
     class="breadcrumb-item"
+    data-test="breadcrumb-item"
     :class="{ 'active': isActive, 'first-element': isFirstElement, 'phone-breadcrumb-item': mq.phone || mq.tablet, 'current-folder': isCurrentFolder }"
     :title="folder.name"
     @dragover="setActive"
@@ -20,6 +21,7 @@
         class="image"
         alt="go back"
       >
+      <span class="previous-name">{{ (previousFolderName.length > 12) ? $t('Commons.back') : previousFolderName }}</span>
     </div>
     <div class="name">
       <span>
@@ -83,6 +85,10 @@ export default {
         return (typeof obj.id === 'string') &&
           (typeof obj.name === 'string' && obj.name.length > 0)
       }
+    },
+    previousFolderName: {
+      type: String,
+      default: ''
     },
     isFirstElement: {
       type: Boolean,
@@ -254,13 +260,19 @@ export default {
   }
 
   .return-back {
-    width: 35px;
     height: 35px;
+    padding: 0 5px;
     border: 1px solid $color-border;
     border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
+
+    .previous-name {
+      white-space: nowrap;
+      margin-left: 5px;
+      line-height: 100%;
+    }
 
     .image {
       height: 12px;
