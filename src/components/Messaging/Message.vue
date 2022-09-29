@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import moment from 'moment'
+import dayjs from 'dayjs'
 import AttachedFiles from '@components/Base/AttachedFiles'
 import messagingUtils from '@/utils/messaging.utils'
 import MessageRecipients from '@components/Messaging/MessageRecipients'
@@ -88,7 +88,7 @@ export default {
   },
   methods: {
     formatSentDate () {
-      return moment(this.message.sendDate, 'YYYY/MM/DD HH:mm:ss SSS').format('DD/MM/YYYY HH:mm')
+      return dayjs(this.message.sendDate, 'YYYY/MM/DD HH:mm:ss').format('DD/MM/YYYY HH:mm')
     }
   }
 }
