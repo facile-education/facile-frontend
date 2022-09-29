@@ -310,7 +310,13 @@ export default {
 </style>
 
 <style lang="scss" scoped>
+@import "@design";
+
 .calendar-picker {
+  height: calc(100vh - #{$switch-mode-banner-height});
+  display: flex;
+  flex-direction: column;
+
   .header {
     display: flex;
     justify-content: space-between;
@@ -348,16 +354,15 @@ export default {
     }
   }
   .calendar {
-    height: 500px;
-    max-height: 500px;
+    flex: 1;
     overflow-y: scroll;
   }
+
   .footer {
     display: flex;
     justify-content: space-around;
-    width: 500px;
-    margin: auto;
-    margin-top: 20px;
+    align-items: center;
+    height: 110px;
     z-index: 10;
     .button {
       width: 200px;
