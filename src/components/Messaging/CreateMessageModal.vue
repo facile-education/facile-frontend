@@ -3,6 +3,7 @@
     <PentilaWindow
       :modal="true"
       :is-full-screen="mq.phone"
+      :height="650"
       data-test="createMessageModal"
       class="create-message-modal"
       :class="{'phone': mq.phone}"
