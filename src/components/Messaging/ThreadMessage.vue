@@ -63,7 +63,7 @@
 <script>
 
 import messagingUtils from '@/utils/messaging.utils'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import BaseIcon from '@components/Base/BaseIcon'
 
 export default {
@@ -102,9 +102,9 @@ export default {
       }
     },
     formatSentDate () {
-      const sendDate = moment(this.message.sendDate, 'YYYY/MM/DD HH:mm:ss SSS')
-      const today = moment().startOf('day')
-      const yesterday = moment().subtract(1, 'days').startOf('day')
+      const sendDate = dayjs(this.message.sendDate, 'YYYY/MM/DD HH:mm:ss')
+      const today = dayjs().startOf('day')
+      const yesterday = dayjs().subtract(1, 'days').startOf('day')
 
       if (sendDate.isSame(yesterday, 'd')) {
         return 'hier'

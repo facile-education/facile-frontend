@@ -149,7 +149,7 @@ import ErrorMessage from '@components/Base/ErrorMessage.vue'
 import AttachedFiles from '@components/Base/AttachedFiles'
 import FilePickerModal from '@components/FilePicker/FilePickerModal'
 import CKEditor from '@components/Base/CKEditor'
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 const isRecipientsValid = (str) => {
   return !(str.length > 0) // A recipient at least
@@ -353,7 +353,7 @@ export default {
     buildPreviousContent (previousContent) {
       this.previousContent = '</br><details><summary>Afficher les détails</summary>' +
         '</br> ' + "<div style='border-left:1px solid #000; padding-left:20px'>" +
-        'Le ' + moment(this.originMessage.sendDate, 'YYYY/MM/DD HH:mm:ss SSS').format('DD/MM/YYYY HH:mm') +
+        'Le ' + dayjs(this.originMessage.sendDate, 'YYYY/MM/DD HH:mm:ss').format('DD/MM/YYYY HH:mm') +
         ' ' + this.originMessage.senderName + ' a écrit :</br> ' +
         previousContent +
         '</div>' +

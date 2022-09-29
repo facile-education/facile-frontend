@@ -44,7 +44,7 @@
 
 <script>
 import BaseIcon from '@components/Base/BaseIcon'
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 export default {
   name: 'MessageRecipients',
@@ -87,7 +87,7 @@ export default {
       if (readDate === undefined) {
         return ''
       }
-      return moment(readDate, 'YYYY/MM/DD HH:mm:ss SSS')
+      return dayjs(readDate, 'YYYY/MM/DD HH:mm:ss')
         .format('[ ' + this.$t('Moment.the') + '] DD/MM/YYYY [' + this.$t('Moment.at') + '] HH:mm') // TODO call a suitable calendar ?
     }
   }

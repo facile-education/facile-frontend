@@ -119,7 +119,7 @@
 <script>
 
 import messagingUtils from '@/utils/messaging.utils'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import constants from '@/constants/messagingConstants'
 import BaseIcon from '@components/Base/BaseIcon'
 import ThreadMessage from '@components/Messaging/ThreadMessage'
@@ -246,9 +246,9 @@ export default {
     },
 
     formatSentDate (message) {
-      const sendDate = moment(message.sendDate, 'YYYY/MM/DD HH:mm:ss SSS')
-      const today = moment().startOf('day')
-      const yesterday = moment().subtract(1, 'days').startOf('day')
+      const sendDate = dayjs(message.sendDate, 'YYYY/MM/DD HH:mm:ss')
+      const today = dayjs().startOf('day')
+      const yesterday = dayjs().subtract(1, 'days').startOf('day')
 
       if (sendDate.isSame(yesterday, 'd')) {
         return 'hier'
