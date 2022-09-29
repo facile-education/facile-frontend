@@ -99,6 +99,88 @@ const documentSpaceOptions = [
   }
 ]
 
+const mobileDocumentSpaceOptions = [
+  {
+    name: 'new',
+    title: i18n.global.t('Commons.new'),
+    icon: icons.options.new,
+    position: 0,
+    hasSeparator: true,
+    subMenu: [
+      {
+        name: 'newFolder',
+        title: i18n.global.t('Documents.options.newFolder'),
+        icon: icons.folder,
+        position: 0,
+        hasSeparator: true
+      },
+      {
+        name: 'newODT',
+        title: i18n.global.t('Documents.options.newODT'),
+        icon: icons.extensions.odt,
+        position: 1,
+        hasSeparator: false
+      },
+      {
+        name: 'newODS',
+        title: i18n.global.t('Documents.options.newODS'),
+        icon: icons.extensions.ods,
+        position: 1,
+        hasSeparator: false
+      },
+      {
+        name: 'newODP',
+        title: i18n.global.t('Documents.options.newODP'),
+        icon: icons.extensions.odp,
+        position: 1,
+        hasSeparator: false
+      },
+      {
+        name: 'newGeogebra',
+        title: i18n.global.t('Documents.options.newGeogebra'),
+        icon: icons.extensions.ggb,
+        position: 0,
+        hasSeparator: false
+      },
+      {
+        name: 'newMindMap',
+        title: i18n.global.t('Documents.options.newMindMap'),
+        icon: icons.extensions.mind,
+        position: 1,
+        hasSeparator: false
+      },
+      {
+        name: 'newScratch',
+        title: i18n.global.t('Documents.options.newScratch'),
+        icon: icons.extensions.sb3,
+        position: 2,
+        hasSeparator: false
+      },
+      {
+        name: 'newAudio',
+        title: i18n.global.t('Documents.options.newAudio'),
+        icon: icons.extensions.mp3,
+        position: 3,
+        hasSeparator: false
+      },
+      {
+        name: 'newHTML',
+        title: i18n.global.t('Documents.options.newHTML'),
+        icon: icons.extensions.html,
+        position: 4,
+        hasSeparator: false
+      }
+    ]
+  },
+  {
+    name: 'uploadFiles',
+    title: i18n.global.t('Documents.options.mobileUploadFiles'),
+    icon: icons.file,
+    position: 1,
+    hasSeparator: false
+  }
+]
+
 const fileOptions = [
   {
     name: 'open',
@@ -276,6 +358,7 @@ const spaceSelectionOptions = [
 
 export {
   documentSpaceOptions,
+  mobileDocumentSpaceOptions,
   spaceSelectionOptions,
   fileOptions,
   folderOptions,

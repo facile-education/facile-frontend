@@ -90,7 +90,7 @@ import Breadcrumb from '@components/Documents/Breadcrumb'
 import DocumentList from '@components/Documents/DocumentList'
 import DocumentDetails from '@components/Documents/DocumentDetails/DocumentDetails'
 import ContextMenu from '@components/ContextMenu/ContextMenu'
-import { documentSpaceOptions } from '@/constants/options'
+import { documentSpaceOptions, mobileDocumentSpaceOptions } from '@/constants/options'
 import { defaultFields, fieldsWithoutSize } from '@/constants/documentsConstants'
 import FilePickerArea from '@components/FilePicker/FilePickerArea'
 import { computeDocumentsOptions, downloadDocument, deleteEntities, importDocuments, copyWebdavUrl } from '@utils/documents.util'
@@ -150,7 +150,7 @@ export default {
       return computeDocumentsOptions(this.selectedDocuments)
     },
     currentOptions () {
-      return (this.selectedDocuments.length > 0) ? this.selectedDocumentsOptions : (this.currentFolder && this.currentFolder.type !== 'Group' && (this.currentFolder.permissions && this.currentFolder.permissions.ADD_OBJECT) ? documentSpaceOptions : [])
+      return (this.selectedDocuments.length > 0) ? this.selectedDocumentsOptions : (this.currentFolder && this.currentFolder.type !== 'Group' && (this.currentFolder.permissions && this.currentFolder.permissions.ADD_OBJECT) ? (this.mq.phone || this.mq.tablet ? mobileDocumentSpaceOptions : documentSpaceOptions) : [])
     },
     isDocumentPanelDisplayed () {
       return this.$store.state.documents.isDocumentPanelDisplayed
