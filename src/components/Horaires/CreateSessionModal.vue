@@ -53,6 +53,16 @@
           class="datetime-input"
         />
       </div>
+      <PentilaErrorMessage
+        :error-message="formErrorList.day"
+      />
+      <PentilaErrorMessage
+        :error-message="formErrorList.hour"
+      />
+      <PentilaErrorMessage
+        :error-message="formErrorList.minute"
+      />
+
       <!-- Groupe -->
       <div
         class="group"
@@ -66,6 +76,9 @@
           display-field="groupName"
         />
       </div>
+      <PentilaErrorMessage
+        :error-message="formErrorList.group"
+      />
 
       <div
         class="teachers"
@@ -84,7 +97,6 @@
         />
       </div>
       <PentilaErrorMessage
-        class="teachers-error"
         :error-message="formErrorList.selectedTeachers"
       />
 
@@ -99,7 +111,6 @@
         />
       </div>
       <PentilaErrorMessage
-        class="subject-error"
         :error-message="formErrorList.subject"
       />
 
@@ -136,18 +147,21 @@
 </template>
 
 <script>
+import { required } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
 import { getSchoolTeachers, getGroups, createSession } from '@/api/cdt.service'
 import dayjs from 'dayjs'
 
 const teachersRequired = (value, vm) => {
-  console.log('validating teachers', value)
   return value !== undefined && value.length > 0
 }
 
-const subjectRequired = (value, vm) => {
-  console.log('validating subject', value)
-  return value !== undefined && value !== ''
+const hourRequired = (value, vm) => {
+  return value !== undefined && value >= 0 && value < 24
+}
+
+const minuteRequired = (value, vm) => {
+  return value !== undefined && value >= 0 && value < 59
 }
 
 export default {
@@ -159,8 +173,14 @@ export default {
   emits: ['close'],
   setup: () => ({ v$: useVuelidate() }),
   validations: {
+    selectedGroup: { required },
+    selectedDay: { required },
+    startHour: { hourRequired },
+    startMinute: { minuteRequired },
+    endHour: { hourRequired },
+    endMinute: { minuteRequired },
     selectedTeachers: { teachersRequired },
-    subject: { subjectRequired }
+    subject: { required }
   },
   data () {
     return {
@@ -181,8 +201,12 @@ export default {
   computed: {
     formErrorList () {
       return {
-        selectedTeachers: this.$t('Commons.required'),
-        subject: (this.subject.$invalid && this.subject.$dirty) ? this.$t('Commons.required') : ''
+        day: (this.v$.selectedDay.$invalid && this.v$.selectedDay.$dirty) ? this.$t('Validation.day') : '',
+        hour: ((this.v$.startHour.$invalid && this.v$.startHour.$dirty) || (this.v$.endHour.$invalid && this.v$.endHour.$dirty)) ? this.$t('Validation.hour') : '',
+        minute: ((this.v$.startMinute.$invalid && this.v$.startMinute.$dirty) || (this.v$.endMinute.$invalid && this.v$.endMinute.$dirty)) ? this.$t('Validation.minute') : '',
+        group: (this.v$.selectedGroup.$invalid && this.v$.selectedGroup.$dirty) ? this.$t('Validation.group') : '',
+        selectedTeachers: (this.v$.selectedTeachers.$invalid && this.v$.selectedTeachers.$dirty) ? this.$t('Validation.teachers') : '',
+        subject: (this.v$.subject.$invalid && this.v$.subject.$dirty) ? this.$t('Validation.required') : ''
       }
     }
   },
@@ -224,7 +248,6 @@ export default {
     onCreate (e) {
       e.preventDefault()
       if (this.v$.$invalid) {
-        console.log('form is invalid')
         this.v$.$touch()
       } else {
         // Build startDate and endDate
@@ -289,6 +312,14 @@ export default {
   "teachersPlaceHolder" : "Enseignants",
   "roomPlaceHolder": "Salle",
   "recurrence": "Chaque semaine jusqu'à la fin de l'année",
-  "Create": "Créer"
+  "Create": "Créer",
+  "Validation": {
+    "day": "Veuillez sélectionner le jour",
+    "hour": "L'heure doit être comprise entre 0 et 23",
+    "minute": "Les minutes doivent être comprises entre 0 et 59",
+    "group": "Veuillez sélectionner un groupe",
+    "teachers" : "Veuillez sélectionner au moins un enseignant",
+    "required": "Champ requis"
+  }
 }
 </i18n>
