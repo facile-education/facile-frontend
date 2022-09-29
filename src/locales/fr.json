@@ -197,6 +197,7 @@
       "resetFields": "Valeurs par défaut",
       "toggleDetailsLabel": "Détails",
       "uploadFiles": "@:Documents.files",
+      "mobileUploadFiles": "Importer",
       "uploadFolder": "@:Documents.folder"
     }
   },
