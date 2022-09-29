@@ -3,6 +3,7 @@
     <PentilaWindow
       :modal="true"
       class="modal"
+      :height="550"
       @close="onClose"
       @keydown.exact.enter.stop=""
       @keydown.exact.backspace.stop=""
