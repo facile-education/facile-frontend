@@ -65,7 +65,7 @@
       ref="folderNameInput"
       v-model="currentFolder.folderName"
       class="folder-name-input"
-      @keyup.enter="editFolderName"
+      @keyup.enter.stop="editFolderName"
       @keyup.escape="displayFolderNameInput = false"
     />
 
@@ -76,7 +76,7 @@
       v-model="newFolderName"
       class="new-folder-input"
       placeholder="Nouveau dossier"
-      @keyup.enter="createSubFolder"
+      @keyup.enter.stop="createSubFolder"
       @keyup.escape="displayNewFolderInput = false"
     />
 
@@ -172,7 +172,6 @@ export default {
       this.$store.dispatch('messaging/selectFolder', this.folder)
     },
     createSubFolder () {
-      console.log('createSubFolder')
       this.displayNewFolderInput = false
       folderService.addFolder(this.folder.folderId, this.newFolderName).then((data) => {
         if (data.success) {
