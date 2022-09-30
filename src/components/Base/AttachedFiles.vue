@@ -3,6 +3,7 @@
     <div
       v-for="attachedFile in attachedFiles"
       :key="attachedFile.fileId"
+      :title="attachedFile.name"
       class="attached-file"
     >
       <FileIcon
