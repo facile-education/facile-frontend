@@ -190,5 +190,8 @@ export default {
       margin: 0;
     }
   }
+  .files {
+    padding-left: 13px;
+  }
 }
 </style>
