@@ -88,7 +88,7 @@
         v-model="newFolderName"
         class="new-folder-input"
         placeholder="Nouveau dossier"
-        @keyup.enter="createPersonalRootFolder"
+        @keyup.enter.stop="createPersonalRootFolder"
         @keyup.escape="displayNewFolderInput = false"
       />
 
