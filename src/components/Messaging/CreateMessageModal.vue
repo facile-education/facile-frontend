@@ -307,7 +307,7 @@ export default {
       }
     },
     sendMessage () {
-      const successMessage = this.$t('Messaging.CreateMessageModal.success')
+      const successMessage = this.$t('successMessage')
       // In case of reply, replyAll or forward
       // previous content is added in case of forward OR (reply or replyAll AND no recipient added)
       messageService.sendMessage(
@@ -321,7 +321,7 @@ export default {
         this.messageParameters.isForward,
         false).then((data) => {
         if (data.success) {
-          this.$store.dispatch('popups/pushPopup', { message: successMessage })
+          this.$store.dispatch('popups/pushPopup', { message: successMessage, type: 'success' })
           if (this.$store.state.messaging.selectedMessages.length > 0) {
             // Message is selected -> reload parent thread
             for (const thread of this.$store.state.messaging.threads) {
@@ -370,8 +370,10 @@ export default {
       return false
     },
     saveDraft () {
+      const successMessage = this.$t('draftSaved')
       messageService.saveDraft(this.recipients, this.subject, this.content, this.attachedFiles, this.messageParameters.draftMessageId, false).then((data) => {
         if (data.success) {
+          this.$store.dispatch('popups/pushPopup', { message: successMessage, type: 'info' })
           messagingUtils.refresh() // Useless because of the running thread in backend
         }
       })
@@ -499,3 +501,10 @@ export default {
   }
 }
 </style>
+
+<i18n locale="fr">
+{
+  "draftSaved": "Brouillon enregistré!",
+  "successMessage": "Message envoyé"
+}
+</i18n>
