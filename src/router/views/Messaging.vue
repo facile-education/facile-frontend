@@ -1,42 +1,45 @@
 <template>
-  <div class="messaging-body">
-    <Menu
-      v-show="isMenuPanelDisplayed"
-      data-test="messaging-menu"
-      class="menu-panel"
-    />
-    <Split
-      ref="split"
-      class="split"
-    >
-      <SplitArea
-        data-test="threads-panel"
-        :size="44.7"
-        :min-size="475"
+  <Layout :is-allowed="true">
+    <div class="messaging-body">
+      <Menu
+        v-show="isMenuPanelDisplayed"
+        data-test="messaging-menu"
+        class="menu-panel"
+      />
+      <Split
+        ref="split"
+        class="split"
       >
-        <ThreadList />
-      </SplitArea>
-      <SplitArea
-        data-test="messages-panel"
-        :size="55.3"
-        :min-size="350"
-      >
-        <ThreadDetails />
-      </SplitArea>
-    </Split>
+        <SplitArea
+          data-test="threads-panel"
+          :size="44.7"
+          :min-size="475"
+        >
+          <ThreadList />
+        </SplitArea>
+        <SplitArea
+          data-test="messages-panel"
+          :size="55.3"
+          :min-size="350"
+        >
+          <ThreadDetails />
+        </SplitArea>
+      </Split>
 
-    <teleport to="body">
-      <!-- Parameters -->
-      <ParametersModal v-if="isParametersModalDisplayed" />
-      <!-- Create message modal -->
-      <CreateMessageModal v-if="isCreateMessageModalDisplayed" />
-      <WarningModal v-if="isWarningModalDisplayed" />
-    </teleport>
-  </div>
+      <teleport to="body">
+        <!-- Parameters -->
+        <ParametersModal v-if="isParametersModalDisplayed" />
+        <!-- Create message modal -->
+        <CreateMessageModal v-if="isCreateMessageModalDisplayed" />
+        <WarningModal v-if="isWarningModalDisplayed" />
+      </teleport>
+    </div>
+  </Layout>
 </template>
 
 <script>
 
+import Layout from '@/router/layouts/EmptyLayout'
 import Split from '@components/Split/Split'
 import SplitArea from '@components/Split/SplitArea'
 import Menu from '@components/Messaging/Menu'
@@ -53,6 +56,7 @@ export default {
   components: {
     Split,
     SplitArea,
+    Layout,
     Menu,
     ThreadList,
     ThreadDetails,

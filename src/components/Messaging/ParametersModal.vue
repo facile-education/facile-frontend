@@ -118,6 +118,7 @@ export default {
     updateConfiguration () {
       configurationService.updateMessagingConfiguration(this.configuration).then((data) => {
         if (data.success) {
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('successMessage'), type: 'success' })
           this.$store.dispatch('messaging/setSignature', this.configuration.signature.content)
           this.onClose()
         }
@@ -143,3 +144,9 @@ export default {
   }
 }
 </style>
+
+<i18n locale="fr">
+{
+  "successMessage": "paramètres sauvegardés"
+}
+</i18n>
