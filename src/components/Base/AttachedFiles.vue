@@ -43,7 +43,7 @@
 import FileIcon from '@components/Base/FileIcon'
 import BaseIcon from '@components/Base/BaseIcon'
 import mediaService from '@/api/documents/media.service'
-import documentutils from '@utils/documents.util'
+import documentUtils from '@utils/documents.util'
 
 export default {
   name: 'AttachedFiles',
@@ -90,7 +90,7 @@ export default {
       }
     },
     downloadAttachedFile (attachedFile) {
-      documentutils.downloadDocument(attachedFile)
+      documentUtils.downLoadDocument(attachedFile)
     },
     viewAttachedFile (attachedFile) {
       mediaService.getMediaUrl(attachedFile.id, 0).then(async (data) => {
