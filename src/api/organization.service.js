@@ -5,11 +5,13 @@ import constants from '@/api/constants'
 
 export {
   getSchoolCLassList,
-  getSchoolVoleeList
+  getSchoolVoleeList,
+  getSchoolsTeachers
 }
 
 export default {
-  getSchoolCLassList
+  getSchoolCLassList,
+  getSchoolsTeachers
 }
 
 const ORG_PATH = '/accesAteliers-portlet.'
@@ -32,6 +34,13 @@ function getSchoolVoleeList (schoolId = 0) {
   return axios.get(constants.JSON_WS_URL + ORG_PATH + 'orgutils/get-school-volees', {
     params: {
       schoolId
+    }
+  }).then(response => response.data)
+}
+
+function getSchoolsTeachers () {
+  return axios.get(constants.JSON_WS_URL + ORG_PATH + 'orgutils/get-schools-teachers', {
+    params: {
     }
   }).then(response => response.data)
 }

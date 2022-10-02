@@ -30,12 +30,7 @@
           {{ $t('from') }}
         </p>
         <PentilaInput
-          v-model="startHour"
-          class="datetime-input"
-        />
-        {{ $t('hour') }}
-        <PentilaInput
-          v-model="startMinute"
+          v-model="startTime"
           class="datetime-input"
         />
         <p
@@ -44,12 +39,7 @@
           {{ $t('to') }}
         </p>
         <PentilaInput
-          v-model="endHour"
-          class="datetime-input"
-        />
-        {{ $t('hour') }}
-        <PentilaInput
-          v-model="endMinute"
+          v-model="endTime"
           class="datetime-input"
         />
       </div>
@@ -57,10 +47,7 @@
         :error-message="formErrorList.day"
       />
       <PentilaErrorMessage
-        :error-message="formErrorList.hour"
-      />
-      <PentilaErrorMessage
-        :error-message="formErrorList.minute"
+        :error-message="formErrorList.time"
       />
 
       <!-- Groupe -->
@@ -90,7 +77,7 @@
           :completion-only="false"
           :min-length="1"
           :placeholder="$t('teachersPlaceHolder')"
-          display-field="lastName"
+          display-field="fullName"
           id-field="userId"
           :list="teacherList"
           class="tags"
@@ -149,19 +136,18 @@
 <script>
 import { required } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
-import { getSchoolTeachers, getGroups, createSession } from '@/api/cdt.service'
+import { createSession } from '@/api/cdt.service'
+import { getSchoolsTeachers } from '@/api/organization.service'
+import { getUserGroups } from '@/api/groups.service'
 import dayjs from 'dayjs'
 
-const teachersRequired = (value, vm) => {
+const teachersRequired = (value) => {
   return value !== undefined && value.length > 0
 }
 
-const hourRequired = (value, vm) => {
-  return value !== undefined && value >= 0 && value < 24
-}
-
-const minuteRequired = (value, vm) => {
-  return value !== undefined && value >= 0 && value < 59
+const timeRequired = (value) => {
+  const time = dayjs(value, 'HH:mm')
+  return !time.$invalid
 }
 
 export default {
@@ -175,10 +161,8 @@ export default {
   validations: {
     selectedGroup: { required },
     selectedDay: { required },
-    startHour: { hourRequired },
-    startMinute: { minuteRequired },
-    endHour: { hourRequired },
-    endMinute: { minuteRequired },
+    startTime: { timeRequired },
+    endTime: { timeRequired },
     selectedTeachers: { teachersRequired },
     subject: { required }
   },
@@ -191,10 +175,8 @@ export default {
       room: '',
       subject: '',
       selectedDay: {},
-      startHour: 8,
-      startMinute: 0,
-      endHour: 10,
-      endMinute: 0,
+      startTime: '8:00',
+      endTime: '10:00',
       isRecurrent: false
     }
   },
@@ -202,12 +184,16 @@ export default {
     formErrorList () {
       return {
         day: (this.v$.selectedDay.$invalid && this.v$.selectedDay.$dirty) ? this.$t('Validation.day') : '',
-        hour: ((this.v$.startHour.$invalid && this.v$.startHour.$dirty) || (this.v$.endHour.$invalid && this.v$.endHour.$dirty)) ? this.$t('Validation.hour') : '',
-        minute: ((this.v$.startMinute.$invalid && this.v$.startMinute.$dirty) || (this.v$.endMinute.$invalid && this.v$.endMinute.$dirty)) ? this.$t('Validation.minute') : '',
+        time: ((this.v$.startTime.$invalid && this.v$.startTime.$dirty) || (this.v$.endTime.$invalid && this.v$.endTime.$dirty)) ? this.$t('Validation.time') : (this.isStartBeforeAfter ? '' : this.$t('Validation.startBeforeAfter')),
         group: (this.v$.selectedGroup.$invalid && this.v$.selectedGroup.$dirty) ? this.$t('Validation.group') : '',
         selectedTeachers: (this.v$.selectedTeachers.$invalid && this.v$.selectedTeachers.$dirty) ? this.$t('Validation.teachers') : '',
         subject: (this.v$.subject.$invalid && this.v$.subject.$dirty) ? this.$t('Validation.required') : ''
       }
+    },
+    isStartBeforeAfter () {
+      const start = dayjs(dayjs().format('YYYY-MM-DD') + ' ' + this.startTime, 'YYYY-MM-DD HH:mm')
+      const end = dayjs(dayjs().format('YYYY-MM-DD') + ' ' + this.endTime, 'YYYY-MM-DD HH:mm')
+      return start.isBefore(end)
     }
   },
   created () {
@@ -224,16 +210,15 @@ export default {
 
     // Get teacher list from backend
     this.teacherList.length = 0
-    getSchoolTeachers(this.$store.state.user.selectedSchool.schoolId).then((data) => {
+    getSchoolsTeachers().then((data) => {
       if (data.success) {
         this.teacherList = data.teachers
       }
     })
 
-    // Get group list from backend
-    getGroups(this.$store.state.user.selectedSchool.schoolId).then((data) => {
+    getUserGroups(0, true, true, true).then((data) => {
       if (data.success) {
-        this.groupList = data.groups
+        this.groupList = this.groupList.concat(data.groups)
         // Pre-select current group if any
         if (this.$store.state.horaires.selectedGroup.groupId !== 0) {
           this.selectedGroup = this.$store.state.horaires.selectedGroup
@@ -251,8 +236,8 @@ export default {
         this.v$.$touch()
       } else {
         // Build startDate and endDate
-        const startDate = dayjs().day(this.selectedDay.dayNb).hour(this.startHour).minute(this.startMinute)
-        const endDate = dayjs().day(this.selectedDay.dayNb).hour(this.endHour).minute(this.endMinute)
+        const startDate = dayjs(dayjs().format('YYYY-MM-DD') + ' ' + this.startTime, 'YYYY-MM-DD HH:mm')
+        const endDate = dayjs(dayjs().format('YYYY-MM-DD') + ' ' + this.endTime, 'YYYY-MM-DD HH:mm')
 
         createSession(this.selectedGroup.groupId, this.subject, this.room, startDate, endDate, this.selectedTeachers, this.isRecurrent).then((data) => {
           if (data.success) {
@@ -286,7 +271,7 @@ export default {
     margin-right: 15px;
   }
   .datetime-input {
-    width: 60px;
+    width: 80px;
     margin-left: 5px;
     margin-right: 5px;
   }
@@ -311,12 +296,12 @@ export default {
   "subjectPlaceHolder": "Discipline",
   "teachersPlaceHolder" : "Enseignants",
   "roomPlaceHolder": "Salle",
-  "recurrence": "Chaque semaine jusqu'à la fin de l'année",
+  "recurrence": "Chaque semaine jusqu'à la fin de l'année scolaire",
   "Create": "Créer",
   "Validation": {
     "day": "Veuillez sélectionner le jour",
-    "hour": "L'heure doit être comprise entre 0 et 23",
-    "minute": "Les minutes doivent être comprises entre 0 et 59",
+    "time": "Veuillez saisir une plage d'horaires valide (hh:mm)",
+    "startBeforeAfter": "L'heure de début doit être antérieure à l'heure de fin",
     "group": "Veuillez sélectionner un groupe",
     "teachers" : "Veuillez sélectionner au moins un enseignant",
     "required": "Champ requis"

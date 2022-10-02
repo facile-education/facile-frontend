@@ -74,7 +74,7 @@
 
     <!-- Create session button -->
     <PentilaButton
-      v-if="$store.state.user.isDirectionMember"
+      v-if="$store.state.user.isDirectionMember || $store.state.user.isLocalAdmin || $store.state.user.isENTAdmin"
       :label="$t('Horaires.createSession')"
       @click="openCreateSessionModal"
     />
