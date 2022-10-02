@@ -1,4 +1,5 @@
 import cdtService from '@/api/cdt.service'
+import groupService from '@/api/groups.service'
 
 const defaultGroup = { groupId: 0, groupName: 'Groupe' }
 
@@ -43,7 +44,7 @@ export const mutations = {
 export const actions = {
   getGroupList ({ commit, rootState }) {
     commit('loading')
-    cdtService.getGroups(rootState.user.selectedSchool.schoolId).then(
+    groupService.getUserGroups((rootState.user.selectedSchool.schoolId !== undefined) ? rootState.user.selectedSchool.schoolId : 0, true, false, false).then(
       (data) => {
         if (data.success) {
           commit('setGroupList', data.groups)

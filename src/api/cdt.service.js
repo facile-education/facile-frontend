@@ -4,23 +4,19 @@ import PentilaUtils from 'pentila-utils'
 
 export {
   getConfiguration,
-  getGroups,
   getSessions,
   getTeacherGroups,
   getSessionDetails,
   getSessionTeachersAndSubstitutes,
   saveTeacherSubstitutes,
-  getSchoolTeachers,
   createSession
 }
 
 export default {
   getConfiguration,
-  getGroups,
   getSessions,
   getTeacherGroups,
   getSessionDetails,
-  getSchoolTeachers,
   createSession
 }
 
@@ -33,17 +29,6 @@ function getConfiguration () {
   return axios.get(constants.JSON_WS_URL + CDT_PATH + 'configuration/get-configuration', {
     params: {
       childId: 0
-    }
-  }).then(response => response.data)
-}
-
-/**
- * Get group list
- */
-function getGroups (schoolId) {
-  return axios.get(constants.JSON_WS_URL + CDT_PATH + 'configuration/get-all-groups', {
-    params: {
-      schoolId: schoolId
     }
   }).then(response => response.data)
 }
@@ -92,14 +77,6 @@ function saveTeacherSubstitutes (sessionId, teacherArray) {
     sessionId,
     teacherArray: JSON.stringify(teacherArray)
   })).then(response => response.data)
-}
-
-function getSchoolTeachers (schoolId) {
-  return axios.get(constants.JSON_WS_URL + CDT_PATH + 'cdtsession/get-school-teachers', {
-    params: {
-      schoolId
-    }
-  }).then(response => response.data)
 }
 
 function createSession (groupId, subject, room, startDate, endDate, teacherIds, isRecurrent) {
