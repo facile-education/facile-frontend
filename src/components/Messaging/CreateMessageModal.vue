@@ -17,15 +17,15 @@
       <template #header>
         <span
           v-if="messageParameters.isForward"
-          v-t="'Messaging.CreateMessageModal.headerForward'"
+          v-t="'headerForward'"
         />
         <span
           v-else-if="messageParameters.isReply || messageParameters.isReplyAll"
-          v-t="'Messaging.CreateMessageModal.headerReply'"
+          v-t="'headerReply'"
         />
         <span
           v-else
-          v-t="'Messaging.CreateMessageModal.header'"
+          v-t="'header'"
         />
       </template>
 
@@ -70,7 +70,7 @@
             :class="device"
             class="subject-input"
             data-test="subject-input"
-            :placeholder="$t('Messaging.CreateMessageModal.subjectPlaceHolder')"
+            :placeholder="$t('subjectPlaceHolder')"
           />
         </div>
 
@@ -95,7 +95,7 @@
         >
           <p>Pièces jointes</p>
           <PentilaButton
-            :label="$t('Messaging.CreateMessageModal.addAttachFileButton')"
+            :label="$t('addAttachFileButton')"
             @click="displayFilePicker"
           />
           <AttachedFiles
@@ -115,13 +115,13 @@
           <PentilaButton
             data-test="draftButton"
             class="draftButton"
-            :label="$t('Messaging.CreateMessageModal.draftButton')"
+            :label="$t('draftButton')"
             @click="saveDraft"
           />
           <PentilaButton
             data-test="submitButton"
             class="dark"
-            :label="$t('Messaging.CreateMessageModal.submitButton')"
+            :label="$t('submitButton')"
             @click="checkFields"
           />
         </div>
@@ -504,6 +504,15 @@ export default {
 
 <i18n locale="fr">
 {
+  "header": "Nouveau message",
+  "headerForward": "Transférer",
+  "headerReply": "Répondre",
+  "submitButton": "Envoyer",
+  "recipientsPlaceHolder": "Destinataires",
+  "subjectPlaceHolder": "Object",
+  "contentPlaceHolder": "Contenu",
+  "addAttachFileButton": "Ajouter une pièce jointe",
+  "draftButton": "Enregistrer en brouillon",
   "draftSaved": "Brouillon enregistré!",
   "successMessage": "Message envoyé"
 }

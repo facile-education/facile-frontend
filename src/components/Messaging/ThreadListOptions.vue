@@ -59,7 +59,7 @@
       v-if="(!mq.tablet && !mq.phone)"
       class="unread"
     >
-      <PenilaCheckbox
+      <PentilaCheckbox
         v-model="unreadOnly"
         :label="$t('Messaging.unreadOnly')"
         @update:modelValue="toggleUnreadOnly()"
