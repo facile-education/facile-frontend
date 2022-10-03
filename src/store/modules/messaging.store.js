@@ -1,7 +1,7 @@
 import messagingService from '@/api/messaging/message.service'
 import messagingUtils from '@utils/messaging.utils'
 import folderService from '@/api/messaging/folder.service'
-import constants from '@/constants/appConstants'
+// import constants from '@/constants/appConstants'
 import _ from 'lodash'
 
 export const state = {
@@ -292,8 +292,7 @@ export const actions = {
       if (data.success) {
         commit('setMessagingFolders', data.folders)
         if (!noSelection) {
-          const inboxFolder = data.folders.find(folder => folder.type === constants.messagingInboxFolderType)
-          console.log(inboxFolder)
+          const inboxFolder = data.folders.find((folder) => { return folder.type === 1 })
           this.dispatch('messaging/selectFolder', inboxFolder)
         } else {
           this.dispatch('messaging/selectFolder', {})

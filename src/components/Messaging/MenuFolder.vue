@@ -108,6 +108,7 @@ export default {
   components: {
     BaseIcon
   },
+  inject: ['mq'],
   props: {
     folder: {
       type: Object,

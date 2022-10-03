@@ -199,7 +199,9 @@ export default {
     height: 1px;
     background-color: $color-border-menu;
   }
+
   .message-content {
+    font-style: italic;
     padding: 10px 10px 10px 20px;
     p {
       margin: 0;

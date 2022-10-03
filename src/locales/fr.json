@@ -267,8 +267,7 @@
       "subjectPlaceHolder": "Object",
       "contentPlaceHolder": "Contenu",
       "addAttachFileButton": "Ajouter une pièce jointe",
-      "draftButton": "Enregistrer en brouillon",
-      "success": "Message envoyé"
+      "draftButton": "Enregistrer en brouillon"
     },
     "formErrors": {
       "required": "Champ requis",

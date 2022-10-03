@@ -155,7 +155,7 @@ export default {
     }
 
     .unread {
-      color: blue;
+      color: $color-messaging-bg;
 
       &.selected {
         color: white;
