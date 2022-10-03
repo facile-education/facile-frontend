@@ -92,6 +92,13 @@ export default {
 }
 </script>
 
+<!-- not scoped to target ckeditor tags -->
+<style>
+.ck-editor__editable {
+  max-height: 15rem;
+}
+</style>
+
 <style lang="scss" scoped>
 .ck-editor {
   width: 100%

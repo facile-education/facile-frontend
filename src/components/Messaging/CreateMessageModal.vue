@@ -42,7 +42,7 @@
             :close-on-select="true"
             :completion-only="true"
             :min-length="1"
-            :placeholder="$t('Messaging.CreateMessageModal.recipientsPlaceHolder')"
+            :placeholder="$t('recipientsPlaceHolder')"
             display-field="text"
             id-field="id"
             :list="autocompleteItems"
@@ -54,7 +54,7 @@
           <ErrorMessage
             v-if="error==='missingRecipient'"
             class="error-message"
-            :error-message="$t('Messaging.formErrors.missingRecipient')"
+            :error-message="$t('missingRecipient')"
           />
         </div>
 
@@ -77,13 +77,13 @@
         <!-- Content -->
         <div
           v-if="isInitialized"
-          class="ck-content"
+          class="content"
           data-test="content-section"
           :class="device"
         >
-          <CKEditor
-            :initial-content="content"
-            :options="editorOptions"
+          <TextContent
+            :content="initialContent"
+            :is-in-progression="false"
             @input="updateContent"
           />
         </div>
@@ -149,7 +149,7 @@ import messagingUtils from '@/utils/messaging.utils'
 import ErrorMessage from '@components/Base/ErrorMessage.vue'
 import AttachedFiles from '@components/Base/AttachedFiles'
 import FilePickerModal from '@components/FilePicker/FilePickerModal'
-import CKEditor from '@components/Base/CKEditor'
+import TextContent from '@components/Progression/Edit/Contents/TextContent'
 import dayjs from 'dayjs'
 
 const isRecipientsValid = (str) => {
@@ -163,10 +163,10 @@ const isSubjectValid = (str) => {
 export default {
   name: 'CreateMessageModal',
   components: {
+    TextContent,
     FilePickerModal,
     ErrorMessage,
-    AttachedFiles,
-    CKEditor
+    AttachedFiles
   },
   inject: ['mq'],
   props: {
@@ -176,7 +176,9 @@ export default {
     return {
       recipients: [],
       subject: '',
-      content: '',
+      initialContent: { contentValue: '' },
+      currentContent: { contentValue: '' },
+      previousContent: {},
       isInitialized: false,
       attachedFiles: [],
       search: '',
@@ -184,9 +186,6 @@ export default {
       autocompleteItems: [],
       isFilePickerModalDisplayed: false,
       originMessage: {},
-      editorConfig: {},
-      editorOptions: {},
-      previousContent: '',
       initialRecipients: []
     }
   },
@@ -201,9 +200,6 @@ export default {
     }
   },
   computed: {
-    editor () {
-      return this.$refs.myQuillEditor.quill
-    },
     device () {
       if (this.mq.phone) {
         return 'phone'
@@ -213,6 +209,15 @@ export default {
     },
     messageParameters () {
       return this.$store.state.messaging.createMessageParameters
+    },
+    areNewRecipientsAdded () {
+      // Returns true if, in case of reply, replyAll or forward, any new recipient is added
+      for (const newRecipient of this.recipients) {
+        if (!this.initialRecipients.includes(newRecipient)) {
+          return true
+        }
+      }
+      return false
     }
   },
   created () {
@@ -252,10 +257,10 @@ export default {
           this.messageParameters.isDraft).then((data) => {
           if (data.success) {
             if (this.messageParameters.isDraft || this.messageParameters.isForward) {
-              this.content = data.content
+              this.initialContent.contentValue = data.content
             } else {
               // Reply, replyAll, forward
-              this.content = ''
+              this.initialContent.contentValue = ''
               this.buildPreviousContent(data.content)
             }
             this.subject = data.subject
@@ -265,7 +270,7 @@ export default {
 
             // Prefix content with signature except for draft edition
             if (!this.messageParameters.isDraft && this.$store.state.messaging.signature !== '') {
-              this.content = this.$store.state.messaging.signature + '</br></br>' + this.content
+              this.initialContent.contentValue = this.initialContent.contentValue + '</br></br>' + this.$store.state.messaging.signature
             }
             this.isInitialized = true
           }
@@ -280,10 +285,15 @@ export default {
         }
         // Prefix content with signature except for draft edition
         if (!this.messageParameters.isDraft && this.$store.state.messaging.signature !== '') {
-          this.content = this.$store.state.messaging.signature + '</br></br>' + this.content
+          this.initialContent.contentValue = '</br></br>' + this.$store.state.messaging.signature
         }
         this.isInitialized = true
       }
+
+      this.currentContent.contentValue = this.initialContent.contentValue
+    },
+    updateContent (value) {
+      this.currentContent.contentValue = value
     },
     initItems () {
       messageService.getUsersCompletion(this.search).then((data) => {
@@ -313,7 +323,7 @@ export default {
       messageService.sendMessage(
         this.recipients,
         this.subject,
-        this.areNewRecipientsAdded() ? this.content + this.previousContent : this.content,
+        (this.areNewRecipientsAdded && this.previousContent.contentValue) ? this.currentContent.contentValue + this.previousContent.contentValue : this.currentContent.contentValue,
         this.attachedFiles,
         this.messageParameters.draftMessageId,
         this.originMessage.messageId === undefined ? '0' : this.originMessage.messageId,
@@ -348,11 +358,8 @@ export default {
       })
       this.onClose()
     },
-    updateContent (newContent) {
-      this.content = newContent
-    },
     buildPreviousContent (previousContent) {
-      this.previousContent = '</br><details><summary>Afficher les détails</summary>' +
+      this.previousContent.contentValue = '</br><details><summary>Afficher les détails</summary>' +
         '</br> ' + "<div style='border-left:1px solid #000; padding-left:20px'>" +
         'Le ' + dayjs(this.originMessage.sendDate, 'YYYY/MM/DD HH:mm:ss').format('DD/MM/YYYY HH:mm') +
         ' ' + this.originMessage.senderName + ' a écrit :</br> ' +
@@ -360,18 +367,9 @@ export default {
         '</div>' +
         '</details>'
     },
-    areNewRecipientsAdded () {
-      // Returns true if, in case of reply, replyAll or forward, any new recipient is added
-      for (const newRecipient of this.recipients) {
-        if (!this.initialRecipients.includes(newRecipient)) {
-          return true
-        }
-      }
-      return false
-    },
     saveDraft () {
       const successMessage = this.$t('draftSaved')
-      messageService.saveDraft(this.recipients, this.subject, this.content, this.attachedFiles, this.messageParameters.draftMessageId, false).then((data) => {
+      messageService.saveDraft(this.recipients, this.subject, this.currentContent.contentValue, this.attachedFiles, this.messageParameters.draftMessageId, false).then((data) => {
         if (data.success) {
           this.$store.dispatch('popups/pushPopup', { message: successMessage, type: 'info' })
           messagingUtils.refresh() // Useless because of the running thread in backend
@@ -382,7 +380,8 @@ export default {
     onClose () {
       this.recipients = []
       this.subject = ''
-      this.content = ''
+      this.initialContent = {}
+      this.currentContent = {}
       this.closeFilePicker()
       this.$store.dispatch('messaging/closeCreateMessageModal')
     },
@@ -406,13 +405,19 @@ export default {
 .phone {
   .window-container {
     .window-body.full-screen {
-      max-height: 80vh
+      max-height: 80vh;
+
+      .ck-editor__editable {
+        min-height: 10rem;
+      }
     }
   }
 }
 </style>
 
 <style lang="scss" scoped>
+@import "@design";
+
 #create-message-subject-input, .tags {
   min-width: 65vw;
 
@@ -463,7 +468,8 @@ export default {
     }
   }
 
-  .ck-content {
+  .content {
+    border: 1px solid $color-border;
     width: 100%;
     min-width: 30rem;
 
@@ -514,6 +520,12 @@ export default {
   "addAttachFileButton": "Ajouter une pièce jointe",
   "draftButton": "Enregistrer en brouillon",
   "draftSaved": "Brouillon enregistré!",
-  "successMessage": "Message envoyé"
+  "successMessage": "Message envoyé",
+  "required": "Champ requis",
+  "notBeginByDot": "Ne doit pas commencer par un '.'",
+  "containsNoCotes": "Ne doit pas contenir de caractères spéciaux",
+  "missingRecipient": "Sélectionnez au moins un destinataire",
+  "sizeLimit1": "Ne doit pas dépasser ",
+  "sizeLimit2": " caractères"
 }
 </i18n>
