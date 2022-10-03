@@ -59,11 +59,6 @@
       "rolesPlaceholder": "Liste des profils"
     }
   },
-  "AttachedFiles": {
-    "view": "Visualiser",
-    "download": "Télécharger",
-    "remove": "Supprimer"
-  },
   "Commons": {
     "back": "Retour",
     "delete": "Supprimer",
@@ -205,8 +200,7 @@
     "groupFilter": "Groupe",
     "userInput": "Elève / Maître",
     "childFilter": "Enfant",
-    "timetableOf": "Horaire de ",
-    "createSession": "Créer un cours"
+    "timetableOf": "Horaire de "
   },
   "Layout": {
     "authRequired": "Une authentification est requise pour accéder au service.",
@@ -257,25 +251,6 @@
       "signaturePlaceHolder": "Signature",
       "autoReply": "Réponse automatique",
       "autoReplyPlaceHolder": "Message d'absence"
-    },
-    "CreateMessageModal": {
-      "header": "Nouveau message",
-      "headerForward": "Transférer",
-      "headerReply": "Répondre",
-      "submitButton": "Envoyer",
-      "recipientsPlaceHolder": "Destinataires",
-      "subjectPlaceHolder": "Object",
-      "contentPlaceHolder": "Contenu",
-      "addAttachFileButton": "Ajouter une pièce jointe",
-      "draftButton": "Enregistrer en brouillon"
-    },
-    "formErrors": {
-      "required": "Champ requis",
-      "notBeginByDot": "Ne doit pas commencer par un '.'",
-      "containsNoCotes": "Ne doit pas contenir de caractères spéciaux",
-      "missingRecipient": "Sélectionnez au moins un destinataire",
-      "sizeLimit1": "Ne doit pas dépasser ",
-      "sizeLimit2": " caractères"
     }
   },
   "ContextMenuOptions": {
