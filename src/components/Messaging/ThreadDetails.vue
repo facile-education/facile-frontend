@@ -1,19 +1,47 @@
 <template>
-  <div class="container">
+  <div
+    class="container"
+    data-test="messages-panel"
+  >
     <!-- Contextual actions -->
     <div class="splitarea-header">
       <IconOption
-        v-if="isActionEnabled"
-        class="header-icon trash-icon"
-        :icon="require('@assets/options/icon_trash.svg')"
-        :icon-white="require('@assets/options/icon_trash_white.svg')"
-        :title="$t('Messaging.deleteMessage')"
+        v-if="mq.phone || mq.tablet"
+        class="header-icon back-arrow"
+        :icon="require('@assets/arrow_right.svg')"
+        :icon-white="require('@assets/arrow_right_white.svg')"
         :gray-background-color="true"
-        name="trash"
+        name="back"
         icon-height="14px"
-        alt="delete item"
-        @click="deleteItem"
+        alt="back"
+        @click="hideDetails"
       />
+      <div class="icons">
+        <IconOption
+          v-if="isActionEnabled"
+          class="header-icon trash-icon"
+          :icon="require('@assets/options/icon_trash.svg')"
+          :icon-white="require('@assets/options/icon_trash_white.svg')"
+          :title="$t('Messaging.deleteMessage')"
+          :gray-background-color="true"
+          name="trash"
+          icon-height="14px"
+          alt="delete item"
+          @click="deleteItem"
+        />
+        <IconOption
+          v-if="isActionEnabled && (mq.phone || mq.tablet)"
+          class="header-icon read-icon"
+          :icon="require('@/assets/options/icon_mark_as_read.svg')"
+          :icon-white="require('@/assets/options/icon_mark_as_read_white.svg')"
+          :title="$t('Messaging.markAsRead')"
+          :gray-background-color="true"
+          name="mark-as-read"
+          icon-height="14px"
+          alt="mark-as-read item"
+          @click="markAsRead"
+        />
+      </div>
       <div
         v-if="isActionEnabled"
         class="icons"
@@ -114,7 +142,10 @@
           :class="{'selected': (isSelected(message))}"
           @click="selectMessage(message)"
         >
-          <Message :message="message" />
+          <Message
+            :message="message"
+            :is-oldest-unread="oldestUnreadMessage && oldestUnreadMessage.messageId === message.messageId"
+          />
         </div>
       </div>
     </div>
@@ -128,7 +159,7 @@ import messagingUtils from '@/utils/messaging.utils'
 import Message from '@components/Messaging/Message'
 import _ from 'lodash'
 import IconOption from '@components/Base/IconOption'
-import constants from '@/constants/messagingConstants'
+import constants from '@/constants/appConstants'
 
 export default {
   name: 'ThreadDetails',
@@ -136,9 +167,8 @@ export default {
     IconOption,
     Message
   },
-  props: {
-  },
-  data: function () {
+  inject: ['mq'],
+  data () {
     return {
       isLoadingMessages: false,
       search: ''
@@ -196,6 +226,15 @@ export default {
 
       return listWithoutSelfMessages
     },
+    oldestUnreadMessage () {
+      let oldestUnreadMessage
+      this.messageListWithoutSelfMessages.forEach((message) => { // Assume we browse messages from newest to oldest
+        if (message.isNew) {
+          oldestUnreadMessage = message
+        }
+      })
+      return oldestUnreadMessage
+    },
     originMessageId () {
       if (this.$store.state.messaging.isThreadSelected) {
         // Thread is selected -> pick last message
@@ -209,11 +248,36 @@ export default {
       return (this.$store.state.messaging.selectedThreads.length + this.$store.state.messaging.selectedMessages.length) > 0
     }
   },
-  created () {
-  },
   methods: {
+    hideDetails () {
+      this.$store.dispatch('messaging/hideDetailPanel')
+    },
     editDraft () {
       messagingUtils.editDraft(this.$store.state.messaging.selectedThreads[0].mainMessageId)
+    },
+    markAsRead () {
+      const messageIds = []
+      let markAsRead = false
+
+      // Add all selected messages
+      for (const selectedMessage of this.selectedMessages) {
+        if (selectedMessage.isNew) {
+          markAsRead = true
+        }
+        messageIds.push(selectedMessage.messageId)
+      }
+
+      if (messageIds.length === 0) { // No messages selected
+        // Pick all messages from selected thread
+        for (const message of this.messageListWithoutSelfMessages) {
+          if (message.isNew) {
+            markAsRead = true
+          }
+          messageIds.push(message.messageId)
+        }
+      }
+
+      messagingUtils.markMessagesAsReadUnread(messageIds, markAsRead)
     },
     selectMessage (message) {
       this.$store.dispatch('messaging/setIsSelectedMessageFromRightPanel', true)
@@ -262,11 +326,15 @@ export default {
 }
 
 .splitarea-header {
-  height: 74px;
+  height: $messaging-header-height;
   padding: 0 10px 0 21px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  .back-arrow {
+    transform: rotate(180deg);
+  }
 
   .icons {
     display: flex;
@@ -302,13 +370,13 @@ export default {
 
 hr {
   margin: 0;
-  border: 0; border-top: 1px solid #D9E2EA;
+  border: 0; border-top: 1px solid $color-border-menu;
 }
 
 .details {
-  height: calc(100% - (74px + 2px));
+  height: calc(100% - (#{$messaging-header-height} + 2px));
   overflow: auto;
-  background-color: #F3F6F8;
+  background-color: $color-messaging-dark-white-bg;
 
   .multi-threads {
     p {
@@ -322,7 +390,7 @@ hr {
     width: 100%;
     height: 100%;
     padding-top: 20%;
-    color: #0B3C5F;
+    color: $color-messaging-dark-text;
     text-align: center;
     font-weight: bold;
     font-size: 1.5em;
@@ -341,8 +409,8 @@ hr {
       border: 2px solid white;
 
       &.selected {
-        border: 2px solid #27AAE1;
-        box-shadow: 0 0 6px #27AAE1;
+        border: 2px solid $color-selected-message;
+        box-shadow: 0 0 6px $color-selected-message;
       }
 
       .message-header {

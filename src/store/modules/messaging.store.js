@@ -1,7 +1,8 @@
 import messagingService from '@/api/messaging/message.service'
 import messagingUtils from '@utils/messaging.utils'
 import folderService from '@/api/messaging/folder.service'
-import constants from '@/constants/messagingConstants'
+import constants from '@/constants/appConstants'
+import _ from 'lodash'
 
 export const state = {
   messagingFolders: [],
@@ -18,6 +19,8 @@ export const state = {
   isParametersModalDisplayed: false,
   isSelectedMessageFromRightPanel: false,
   isMenuPanelDisplayed: false,
+  isMobileDetailsPanelDisplayed: false,
+  isMultiSelectionActive: false,
   isCreateMessageModalDisplayed: false,
   nbNewMessages: 0,
   search: '',
@@ -52,7 +55,6 @@ const doActionInPersonalFolder = (action, folderList, personalFolder, subFolder 
 
 export const mutations = {
   setMessagingFolders (state, folders) {
-    console.log('set messaging folders to ', folders)
     state.messagingFolders = folders
   },
   addPersonalRootFolder (state, folder) {
@@ -66,6 +68,9 @@ export const mutations = {
   },
   addSubFolder (state, { personalFolder, subFolder }) {
     doActionInPersonalFolder('addSubFolder', state.messagingFolders, personalFolder, subFolder)
+  },
+  updateStartIndex (state, payload) {
+    state.startIndex = payload
   },
   setCurrentFolder (state, folder) {
     state.currentFolder = folder
@@ -108,6 +113,9 @@ export const mutations = {
   setThreadList (state, threads) {
     state.threads = threads
   },
+  addToThreadList (state, nextThreads) {
+    state.threads = [...state.threads, ...nextThreads]
+  },
   setCurrentThreadMessages (state, messages) {
     state.currentThreadMessages = messages
   },
@@ -127,15 +135,43 @@ export const mutations = {
   setShowMenuPanel (state, payload) {
     state.isMenuPanelDisplayed = payload
   },
+  toggleSideMenuPanel (state) {
+    state.isMenuPanelDisplayed = !state.isMenuPanelDisplayed
+  },
+  setDetailPanelDisplayed (state, payload) {
+    state.isMobileDetailsPanelDisplayed = payload
+  },
+  toggleDetailPanelDisplayed (state) {
+    state.isMobileDetailsPanelDisplayed = !state.isMobileDetailsPanelDisplayed
+  },
+  setMultiSelection (state, payload) {
+    if (!payload) { // Unselect threads if when closing the multi-selection mode
+      state.selectedThreads = []
+    }
+    state.isMultiSelectionActive = payload
+  },
+  toggleMultiSelection (state) {
+    if (state.isMultiSelectionActive) { // Unselect threads if when closing the multi-selection mode
+      state.selectedThreads = []
+    }
+    state.isMultiSelectionActive = !state.isMultiSelectionActive
+  },
   setNbNewMessages (state, nbNewMessages) {
     state.nbNewMessages = nbNewMessages
   },
   markMessagesAsRead (state, messageIds) {
+    // Change status of both messages which belongs to threads[] and currentThreadMessages[] arrays
     for (const thread of state.threads) {
       for (const message of thread.messages) {
         if (messageIds.includes(message.messageId)) {
           message.isNew = false
         }
+      }
+    }
+
+    for (const message of state.currentThreadMessages) {
+      if (messageIds.includes(message.messageId)) {
+        message.isNew = false
       }
     }
     state.nbNewMessages -= 1
@@ -146,6 +182,12 @@ export const mutations = {
         if (unreadMessageIds.includes(message.messageId)) {
           message.isNew = true
         }
+      }
+    }
+
+    for (const message of state.currentThreadMessages) {
+      if (unreadMessageIds.includes(message.messageId)) {
+        message.isNew = true
       }
     }
     state.nbNewMessages += 1
@@ -207,6 +249,27 @@ export const actions = {
   hideMenuPanel ({ commit }) {
     commit('setShowMenuPanel', false)
   },
+  toggleSideMenuPanel ({ commit }) {
+    commit('toggleSideMenuPanel')
+  },
+  showDetailPanel ({ commit }) {
+    commit('setDetailPanelDisplayed', true)
+  },
+  hideDetailPanel ({ commit }) {
+    commit('setDetailPanelDisplayed', false)
+  },
+  toggleDetailPanelDisplayed ({ commit }) {
+    commit('toggleDetailPanelDisplayed')
+  },
+  activeMultiSelection ({ commit }) {
+    commit('setMultiSelection', true)
+  },
+  cancelMultiSelection ({ commit }) {
+    commit('setMultiSelection', false)
+  },
+  toggleMultiSelection ({ commit }) {
+    commit('toggleMultiSelection')
+  },
   setIsSelectedMessageFromRightPanel ({ commit }, payload) {
     commit('setIsSelectedMessageFromRightPanel', payload)
   },
@@ -220,14 +283,21 @@ export const actions = {
       commit('setCurrentThreadMessages', [])
       commit('setSelectedMessages', [])
     }
-    this.dispatch('messaging/getThreads', folder.folderId)
+    if (folder.folderId) {
+      this.dispatch('messaging/getThreads', { folderId: folder.folderId })
+    }
   },
-  loadMessagingFolders ({ commit }) {
+  loadMessagingFolders ({ commit }, noSelection) {
     folderService.getAllUserFolders().then((data) => {
       if (data.success) {
         commit('setMessagingFolders', data.folders)
-        const inboxFolder = data.folders.find(folder => folder.type === constants.messagingInboxFolderType)
-        this.dispatch('messaging/selectFolder', inboxFolder)
+        if (!noSelection) {
+          const inboxFolder = data.folders.find(folder => folder.type === constants.messagingInboxFolderType)
+          console.log(inboxFolder)
+          this.dispatch('messaging/selectFolder', inboxFolder)
+        } else {
+          this.dispatch('messaging/selectFolder', {})
+        }
       } else {
         console.error('Error while getting folders')
       }
@@ -275,15 +345,23 @@ export const actions = {
   deletePersonalFolder ({ commit }, folder) {
     commit('deletePersonalFolder', folder)
   },
-  getThreads ({ commit }, folderId) {
+  getThreads ({ commit }, { folderId, lastDate = '-1' }) {
     return new Promise((resolve) => {
-      commit('setThreadList', []) // Force trigger component re-render (to fold unfolded threads)
+      if (lastDate === '-1') { // it means we are in a new messaging folder
+        commit('setThreadList', []) // Force trigger component re-render (to fold unfolded threads)
+      }
       this.dispatch('currentActions/addAction', { name: 'loadThreads' })
-      messagingService.getThreads(folderId, state.startIndex, state.nbDisplayed, state.unreadOnly).then((data) => {
+
+      messagingService.getThreads(folderId, lastDate, state.nbDisplayed, state.unreadOnly).then((data) => {
         this.dispatch('currentActions/removeAction', { name: 'loadThreads' })
 
         if (data.success) {
-          commit('setThreadList', data.threads)
+          commit('updateStartIndex', state.startIndex + state.nbDisplayed)
+          if (lastDate === '-1') {
+            commit('setThreadList', data.threads)
+          } else {
+            commit('addToThreadList', data.threads)
+          }
           resolve({ threads: data.threads })
         }
       })
@@ -330,5 +408,14 @@ export const actions = {
   setSignature ({ commit }, signature) {
     commit('setSignature', signature)
   }
+}
 
+export const getters = {
+  oldestThread (state) {
+    if (state.threads.length > 0) {
+      return _.orderBy(state.threads, 'lastSendDate', 'asc')[0]
+    } else {
+      return undefined
+    }
+  }
 }

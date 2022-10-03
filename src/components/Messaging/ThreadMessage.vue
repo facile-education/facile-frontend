@@ -2,7 +2,8 @@
   <div
     class="thread-message"
     :class="{'selected': isMessageSelected,
-             'last' : isLast}"
+             'last' : isLast,
+             'shifted': isMultiSelectionActive}"
     @click.exact="selectMessage"
   >
     <div class="icons">
@@ -87,6 +88,9 @@ export default {
   computed: {
     isMessageSelected () {
       return messagingUtils.isMessageSelected(this.message)
+    },
+    isMultiSelectionActive () {
+      return this.$store.state.messaging.isMultiSelectionActive
     }
   },
   methods: {
@@ -98,6 +102,8 @@ export default {
           // Set message
           this.$store.dispatch('messaging/setIsSelectedMessageFromRightPanel', false)
           messagingUtils.selectMessage(this.message)
+          this.$store.dispatch('messaging/showDetailPanel')
+          break
         }
       }
     },
@@ -129,6 +135,9 @@ export default {
   }
   &.last {
     border-bottom: none;
+  }
+  &.shifted {
+    margin-left: 30px;
   }
 
   .icons {
@@ -165,7 +174,7 @@ export default {
   .body {
     flex-grow: 1;
     padding: 10px 10px 10px 0;
-    border-top: 1px solid black;
+    border-top: 1px solid $color-border-menu;
     &.first {
       //border-top: none;
     }

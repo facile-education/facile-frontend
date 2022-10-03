@@ -29,6 +29,7 @@ import messageService from '@/api/messaging/message.service'
 
 export default {
   name: 'MenuRootFolder',
+  inject: ['mq'],
   props: {
     folder: {
       type: Object,
@@ -68,6 +69,9 @@ export default {
   methods: {
     selectFolder (folder) {
       this.$store.dispatch('messaging/selectFolder', folder)
+      if (this.mq.phone || this.mq.tablet) {
+        this.$store.dispatch('messaging/hideMenuPanel')
+      }
     },
     cancelHandlers (e) {
       e.preventDefault()
@@ -113,7 +117,7 @@ export default {
   cursor: pointer;
   margin-right: 10px;
   width: 100%;
-  color: black;
+  color: $color-messaging-dark-text;
   display: flex;
   align-items: center;
   font-size: 1em;
@@ -161,7 +165,7 @@ export default {
   &.selected {
     font-weight: bold;
     //color: white;
-    //background-color: $public-bg;
+    //background-color: $color-messaging-bg;
     //border-radius: 0 20px 20px 0;
   }
 }

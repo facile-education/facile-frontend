@@ -1,7 +1,9 @@
 <template>
   <div
     v-if="message!==undefined"
+    ref="message"
     class="message"
+    data-test="message"
   >
     <!-- Source folder -->
     <div
@@ -14,6 +16,10 @@
     <!-- Header -->
     <div class="message-header">
       <div class="sender-icon">
+        <div
+          v-if="message.isNew"
+          class="is-read"
+        />
         <div class="icon-container">
           {{ senderAcronym }}
         </div>
@@ -76,6 +82,10 @@ export default {
     message: {
       type: Object,
       required: true
+    },
+    isOldestUnread: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -84,6 +94,12 @@ export default {
     },
     senderAcronym () {
       return this.message.senderName ? this.message.senderName.split(' ').map((n) => n[0].toUpperCase()).join(' ') : ''
+    }
+  },
+  mounted () {
+    if (this.isOldestUnread) {
+      // this.$refs.message.scrollIntoView(true)
+      this.$refs.message.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' }) // To test in safari, do like above if it's not working
     }
   },
   methods: {
@@ -98,7 +114,7 @@ export default {
 @import "@design";
 
 .message {
-  color: #0B3C5F;
+  color: $color-messaging-dark-text;
   border-radius: 6px;
   background-color: white;
   box-shadow: 0 2px 14px 0 rgba(0,0,0,0.1);
@@ -109,7 +125,7 @@ export default {
 
   .message-sourcefolder {
     padding: 3px 0;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid $color-border-menu;
     font-style: italic;
     text-align: center;
   }
@@ -119,9 +135,20 @@ export default {
     padding-top: 5px;
 
     .sender-icon {
-      min-width: 55px;
+      position: relative;
+      min-width: 60px;
       display: flex;
       justify-content: center;
+
+      .is-read {
+        position: absolute;
+        top: 0;
+        left: 5px;
+        width: 10px;
+        height: 10px;
+        border-radius: 5px;
+        background-color: $color-messaging-bg;
+      }
 
       .icon-container {
         margin-top : 8px;
@@ -137,7 +164,6 @@ export default {
         white-space: nowrap;
         word-spacing: -2px;
       }
-
     }
     .header-main {
       margin-left: 1%;
@@ -171,7 +197,7 @@ export default {
     width: 95%;
     border: none;
     height: 1px;
-    background-color: #D9E2EA;
+    background-color: $color-border-menu;
   }
   .message-content {
     padding: 10px 10px 10px 20px;

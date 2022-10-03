@@ -144,6 +144,7 @@ export default {
   methods: {
     handleClick () {
       this.selectFolder() // Invert following instructions to change extend behaviour
+      this.$router.push({ name: 'messaging' })
       if (this.isSelected) {
         this.isExpanded = !this.isExpanded
       }
@@ -170,6 +171,9 @@ export default {
     },
     selectFolder () {
       this.$store.dispatch('messaging/selectFolder', this.folder)
+      if (this.mq.phone || this.mq.tablet) {
+        this.$store.dispatch('messaging/hideMenuPanel')
+      }
     },
     createSubFolder () {
       this.displayNewFolderInput = false

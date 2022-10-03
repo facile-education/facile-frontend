@@ -1,13 +1,14 @@
 <template>
   <div class="menu-panel">
-    <div class="menu-header">
+    <div
+      v-if="mq.phone || mq.tablet"
+      class="menu-header"
+    >
       <img
-        src="@assets/icon_engrenage.svg"
-        class="header-icon"
-        alt="icon file"
-        :title="$t('Messaging.Parameters.header')"
-        @click="openParametersModal()"
+        src="@assets/menu/menu_messaging_black.svg"
+        alt=""
       >
+      <h3 v-t="'Messaging.boxes'" />
     </div>
 
     <nav
@@ -123,6 +124,7 @@ export default {
     BaseIcon,
     MenuFolder
   },
+  inject: ['mq'],
   props: {
   },
   data: function () {
@@ -161,6 +163,9 @@ export default {
     }
   },
   methods: {
+    toggleSideMenuPanel () {
+      this.$store.dispatch('messaging/toggleSideMenuPanel')
+    },
     togglePersonalFolders () {
       this.isPersonalFoldersExpanded = !this.isPersonalFoldersExpanded
     },
@@ -230,12 +235,19 @@ export default {
   background-color: #F3F6F8;
   height: 100%;
   overflow: auto;
+
+  &.phone {
+    .menu {
+      padding-top: 0;
+    }
+  }
 }
 
 .menu-header {
-  height: 50px;
+  height: 75px;
+  width: 100%;
   display: flex;
-  justify-content: space-between;
+  align-items: center;
 
   .header-icon {
     margin: auto;
@@ -249,6 +261,11 @@ export default {
       border: 1px solid black;
       cursor: pointer;
     }
+  }
+
+  img {
+    margin-right: 15px;
+    margin-left: 20px;
   }
 }
 hr {
