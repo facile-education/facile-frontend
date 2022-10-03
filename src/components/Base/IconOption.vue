@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="iconOption"
     :data-test="'option_' + name"
     class="container"
     :class="{'hover': isHovering || forceHovering, 'gray': grayBackgroundColor}"

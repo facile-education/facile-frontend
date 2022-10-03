@@ -1,134 +1,110 @@
 <template>
-  <div class="panel">
-    <div
-      class="splitarea-header"
-      data-test="header"
-    >
-      <div class="header-label">
-        <img
-          src="@assets/menu_messaging_black.svg"
-          alt=""
-        >
-        <div
-          class="current-folder"
-          :title="currentFolder && currentFolder.type === 5 ? currentFolderName : ''"
-        >
-          <p>{{ formattedCurrentFolderName }}</p>
-        </div>
-      </div>
-      <div class="buttons">
-        <IconOption
-          class="button"
-          :icon="require('@/assets/icon_menu_lateral.svg')"
-          :icon-white="require('@/assets/icon_menu_lateral_white.svg')"
-          :title="$t('Messaging.hideMenuPanel')"
-          :gray-background-color="true"
-          name="toggleMessagingMenu"
-          icon-height="16px"
-          alt="toggle menu"
-          @click="toggleSideMenuPanel"
-        />
-        <IconOption
-          class="button"
-          :icon="require('@/assets/icon_refresh.svg')"
-          :icon-white="require('@assets/icon_refresh_white.svg')"
-          :title="$t('Messaging.refresh')"
-          :gray-background-color="true"
-          name="refresh"
-          icon-height="16px"
-          alt="refresh"
-          @click="refresh"
-        />
-        <IconOption
-          class="button"
-          :icon="require('@/assets/icon_edit_texte.svg')"
-          :icon-white="require('@assets/icon_edit_texte_white.svg')"
-          :title="$t('Messaging.new')"
-          :gray-background-color="true"
-          name="createNewMessage"
-          icon-height="16px"
-          alt="new message"
-          @click="createNewMessage"
-        />
-      </div>
-
-      <!-- Display unread messages only toggle -->
-      <div class="unread">
-        <PentilaCheckbox
-          v-model="unreadOnly"
-          :label="$t('Messaging.unreadOnly')"
-          @update:modelValue="toggleUnreadOnly()"
-        />
-      </div>
-    </div>
+  <div
+    class="panel"
+    data-test="threads-panel"
+    :class="{'phone': mq.phone || mq.tablet}"
+  >
+    <ThreadListHeader class="thread-list-header" />
     <hr>
 
     <div class="thread-list">
+      <IconOption
+        v-if="mq.phone || mq.tablet"
+        ref="PTRIcon"
+        class="pull-to-refresh-icon"
+        :class="{'is-waiting': isWaiting}"
+        :icon="require('@/assets/options/icon_refresh.svg')"
+        :title="$t('Messaging.refresh')"
+        :gray-background-color="true"
+        name="refresh"
+        icon-height="16px"
+        alt=""
+      />
       <div
-        v-for="thread in threads"
-        :key="thread.threadId"
+        ref="scroll"
+        class="scroll"
+        @touchstart="pointerDown"
+        @touchend="pointerUp"
+        @scroll="handleScroll"
       >
-        <Thread
-          :thread="thread"
-          class="thread-list-item"
-          @contextmenu.prevent="openContextMenu($event, thread)"
+        <div
+          v-for="thread in threads"
+          :key="thread.threadId"
+        >
+          <Thread
+            :thread="thread"
+            class="thread-list-item"
+            @contextmenu.prevent="openContextMenu($event, thread)"
+          />
+          <hr class="hr-thread-list">
+        </div>
+        <div
+          v-if="threads.length === 0"
+          v-t="'Messaging.emptyBox'"
+          class="placeholder"
         />
-        <hr class="hr-thread-list">
+        <ContextMenu
+          v-if="isContextMenuDisplayed"
+          @chooseOption="handleChosenOption"
+          @close="isContextMenuDisplayed=false"
+        />
+        <PentilaSpinner
+          v-if="isLoadingThreads"
+          data-test="spinner"
+        />
       </div>
-      <ContextMenu
-        v-if="isContextMenuDisplayed"
-        @chooseOption="handleChosenOption"
-        @close="isContextMenuDisplayed=false"
-      />
-      <PentilaSpinner
-        v-if="isLoadingThreads"
-        data-test="spinner"
-      />
     </div>
+
+    <ThreadListOptions v-if="mq.phone || mq.tablet" />
   </div>
 </template>
 
 <script>
 
 import contextMenus from '@/utils/contextMenus'
-import constants from '@/constants/messagingConstants'
+import constants from '@/constants/appConstants'
 import Thread from '@components/Messaging/Thread'
 import messagingUtils from '@/utils/messaging.utils'
 import ContextMenu from '@/components/ContextMenu/ContextMenu'
 import _ from 'lodash'
 import utils from '@utils/utils'
+import ThreadListHeader from '@components/Messaging/ThreadListHeader'
 import IconOption from '@components/Base/IconOption'
+import ThreadListOptions from '@components/Messaging/ThreadListOptions'
+import messageService from '@/api/messaging/message.service'
+
+let mouseY = 0
+let startMouseY = 0
+let oldScrollTop = 0
+let refrechTimeout
 
 export default {
   name: 'ThreadList',
   components: {
+    ThreadListOptions,
     IconOption,
+    ThreadListHeader,
     Thread,
     ContextMenu
   },
-  props: {
-  },
-  data: function () {
+  inject: ['mq'],
+  data () {
     return {
-      unreadOnly: false,
-      isContextMenuDisplayed: false
+      searchResultThreads: [],
+      isContextMenuDisplayed: false,
+      isWaiting: false
     }
   },
   computed: {
     threads () {
-      return _.orderBy(this.$store.state.messaging.threads, 'lastSendDate', 'desc')
-    },
-    isMenuPanelDisplayed () {
-      return this.$store.state.messaging.isMenuPanelDisplayed
-    },
-    currentFolderName () {
-      return this.$store.state.messaging.currentFolder.folderName
+      if (this.$route.params.messageId) {
+        return this.searchResultThreads
+      } else {
+        return _.orderBy(this.$store.state.messaging.threads, 'lastSendDate', 'desc')
+      }
     },
     currentFolder () {
       return this.$store.state.messaging.currentFolder
-    },
-    formattedCurrentFolderName () {
-      return this.currentFolderName ? this.currentFolderName.toUpperCase() : ''
     },
     nbNewMessages () {
       return this.$store.state.messaging.nbNewMessages
@@ -137,23 +113,58 @@ export default {
       return this.$store.getters['currentActions/isInProgress']('loadThreads')
     }
   },
+  created () {
+    if (this.$route.params.messageId) {
+      this.getMessageThread()
+    }
+  },
   methods: {
-    createNewMessage () {
-      messagingUtils.newMessage()
+    getMessageThread () {
+      messageService.getMessageThread(this.$route.params.messageId).then((data) => {
+        this.searchResultThreads = [data.thread]
+      })
     },
-    toggleSideMenuPanel () {
-      if (this.isMenuPanelDisplayed) {
-        this.$store.dispatch('messaging/hideMenuPanel')
-      } else {
-        this.$store.dispatch('messaging/showMenuPanel')
+    pointerDown (e) {
+      if (this.$refs.scroll.scrollTop <= 50) {
+        startMouseY = mouseY = e.touches[0].clientY
+        window.addEventListener('touchmove', this.pointerMove)
       }
+    },
+    pointerUp () {
+      if (!this.isWaiting) {
+        this.$refs.scroll.style.marginTop = '0'
+        this.$refs.PTRIcon.$refs.iconOption.style.transform = 'translate(-50%, -50%) rotate(0deg)'
+        this.$refs.PTRIcon.$refs.iconOption.style.opacity = 0
+      }
+      window.removeEventListener('touchmove', this.pointerMove)
+    },
+    pointerMove (e) {
+      const newY = e.touches[0].clientY
+      if (newY > mouseY && this.$refs.scroll.scrollTop === 0) {
+        const d = newY - startMouseY
+        if (d < 200) {
+          this.$refs.scroll.style.marginTop = d / 4 + 'px'
+          this.$refs.PTRIcon.$refs.iconOption.style.transform = 'translate(-50%, -50%) rotate(' + d + 'deg)'
+          this.$refs.PTRIcon.$refs.iconOption.style.opacity = d / 200
+        } else {
+          this.waitBeforeRefresh()
+        }
+      } else {
+        window.removeEventListener('mousemove', this.pointerMove)
+      }
+    },
+    waitBeforeRefresh () {
+      clearTimeout(refrechTimeout)
+      // Make a new timeout set to go off in 800ms
+      this.isWaiting = true
+      refrechTimeout = setTimeout(() => {
+        this.isWaiting = false
+        this.refresh()
+        this.pointerUp()
+      }, 500)
     },
     refresh () {
       messagingUtils.refresh()
-    },
-    toggleUnreadOnly () {
-      this.$store.dispatch('messaging/toggleUnreadOnly')
-      this.refresh()
     },
     openContextMenu (e, thread) {
       // Add thread if not already selected
@@ -254,6 +265,28 @@ export default {
         }
       }
       return false
+    },
+    handleScroll () {
+      const scroll = this.$refs.scroll
+      if (scroll.scrollTop > oldScrollTop) { // if we go down
+        const nbPixelsBeforeBottom = scroll.scrollHeight - (scroll.scrollTop + scroll.clientHeight)
+
+        if (nbPixelsBeforeBottom === 0) {
+          if (!this.$store.getters['currentActions/isInProgress']('loadThreads')) {
+            this.getNextThreads()
+          }
+        }
+      }
+      oldScrollTop = scroll.scrollTop
+    },
+    getNextThreads () {
+      let lastThreadDate = '-1'
+      const lastThread = this.$store.getters['messaging/oldestThread']
+      if (lastThread) {
+        lastThreadDate = lastThread.lastSendDate
+      }
+
+      this.$store.dispatch('messaging/getThreads', { folderId: this.currentFolder.folderId, lastDate: lastThreadDate })
     }
   }
 }
@@ -264,72 +297,45 @@ export default {
 
 .panel {
   height: 100%;
-  color: #0B3C5F;
-}
+  color: $color-messaging-dark-text;
 
-.splitarea-header {
-  padding: 0 20px;
-  height: 74px;
-  display: flex;
-  justify-content: space-between;
-
-  .header-label {
-    display: flex;
-    align-items: center;
-
-    img {
-      width: 33px;
+  &.phone {
+    .thread-list-header {
+      position: relative;
     }
-    .current-folder {
-      margin-left: 15px;
-      font-weight: bold;
 
-      p {
-        max-width: 170px; /* TODO find solution to mix that with flex: justify-content:space-between */
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+    .thread-list {
+      position: relative;
+      height: calc(100% - (#{$messaging-mobile-header-height} + #{$messaging-mobile-footer-height} + 2px));
+    }
+
+    .pull-to-refresh-icon {
+      position: absolute;
+      top: -18px;
+      left: 50%;
+      opacity: 0;
+      transform-origin: center;
+      transform: translate(-50%, -50%);
+
+      &.is-waiting {
+        transform: translate(-50%, -50%);
+        -webkit-animation: rotating 1s linear infinite;
+        -moz-animation: rotating 1s linear infinite;
+        -ms-animation: rotating 1s linear infinite;
+        -o-animation: rotating 1s linear infinite;
+        animation: rotating 1s linear infinite;
       }
     }
-  }
 
-  .header-icon {
-    margin: 3px;
-    padding: 5px;
-    width: 30px;
-    height: 30px;
-    border: 1px solid transparent;
-
-    &:hover {
-      border-radius: 5px;
-      border: 1px solid black;
-      cursor: pointer;
-    }
-  }
-
-  .buttons {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    .button {
-      margin: 0 5px;
-    }
-
-  }
-  .unread {
-    display: flex;
-    align-items: center;
-
-    label {
-      white-space: nowrap;
+    .scroll {
+      height: 100%;  /* 100% - (banner-height + hr-height) */
     }
   }
 }
 
 hr {
   margin: 0;
-  border: 0; border-top: 1px solid #D9E2EA;
+  border: 0; border-top: 1px solid $color-border-menu;
 }
 
 hr.hr-thread-list {
@@ -338,11 +344,54 @@ hr.hr-thread-list {
 }
 
 .thread-list {
-  height: calc(100% - (74px + 2px));  /* 100% - (banner-height + hr-height) */
-  overflow: auto;
   position: relative;
+  height: calc(100% - (#{$messaging-header-height} + 2px)); /* 100% - (banner-height + hr-height) */
+}
+
+.scroll {
+  height: 100%;
+  overflow: auto;
   .thread-list-item {
     overflow: hidden;
+  }
+}
+
+.placeholder {
+  width: 100%;
+  height: 100%;
+  padding-top: 20%;
+  color: $color-messaging-dark-text;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.5em;
+}
+
+@-webkit-keyframes rotating /* Safari and Chrome */ {
+  from {
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+@keyframes rotating {
+  from {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: translate(-50%, -50%) rotate(360deg);
   }
 }
 

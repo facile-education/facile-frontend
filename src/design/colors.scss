@@ -9,6 +9,7 @@ $color-fallback-text: #f5f5f5;
 
 // Border
 $color-border: #d4d4d4;
+$color-border-menu: #D9E2EA;
 
 // Backgrounds
 $color-not-white-bg: #f5f5f5;
@@ -24,3 +25,13 @@ $color-hover-bg: #e8e8e8;
 
 // File Picker
 $color-file-picker-selected-file: $color-selected-bg;
+
+// Messaging
+//$color-messaging-dark-text: black;
+$color-messaging-dark-text: #0B3C5F;
+$color-messaging-bg: #27AAE1;
+$color-messaging-dark-white-bg: #F3F6F8;
+$color-messaging-link-text: #0048ff;
+$color-selected-message: $color-messaging-bg;
+$color-sub-message: rgba(39, 170, 255, 0.15);
+$color-selected-sub-message: $color-border-menu;

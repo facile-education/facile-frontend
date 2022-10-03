@@ -1,118 +1,135 @@
 <template>
   <div
+    data-test="thread-list-item"
     :draggable="true"
     @dragstart="onDragStart"
     @dragend="onDragEnd"
   >
-    <!-- Thread with 1 single message AND thread multi-message collapsed -->
-    <div
-      class="main"
-      :class="{'selected': isThreadSelected,
-               'subMessageSelected': isSubMessageSelected,
-               'expanded': isThreadExpanded,
-               'dragged': isDragged}"
-      @click.exact="handleClick()"
-      @dblclick="editDraft()"
-      @click.ctrl.exact="ctrlSelectThread()"
-      @click.meta.exact="ctrlSelectThread()"
-      @click.shift="shiftSelectThread()"
-    >
-      <div class="icons">
-        <BaseIcon
-          v-if="isUnread"
-          name="circle"
-          class="fa-xs unread icon"
-          data-test="unread-icon"
-          :class="{'selected' : isThreadSelected && !isSubMessageSelected}"
-          :title="$t('Messaging.new')"
-        />
-        <img
-          v-if="mainMessage.hasAttachFiles"
-          class="icon attached-file-icon"
-          :src="isThreadSelected && !isSubMessageSelected ? require('@assets/icon_pj_white.svg') : require('@assets/icon_pj.svg')"
-          alt="has attached files"
-          :title="$t('Messaging.hasAttachedFiles')"
-        >
-        <img
-          v-if="mainMessage.isAnswered"
-          class="icon answered-icon"
-          :src="isThreadSelected && !isSubMessageSelected ? require('@assets/options/icon_answer_white.svg') : require('@assets/options/icon_answer.svg')"
-          alt="is answered"
-          :title="$t('Messaging.answered')"
-        >
-        <img
-          v-if="mainMessage.isForwarded"
-          class="icon forwarded-icon"
-          :src="isThreadSelected && !isSubMessageSelected ? require('@assets/options/icon_share_white.svg') : require('@assets/options/icon_share.svg')"
-          alt="is forwarded"
-          :title="$t('Messaging.forwarded')"
-        >
-      </div>
-      <div class="body">
-        <!-- Line 1 : sender + date -->
-        <div class="line1">
-          <div class="sender">
-            {{ displayedName }}
-          </div>
-          <div
-            class="sendDate"
-            data-test="sent-date"
-          >
-            {{ formatSentDate(mainMessage) }}
-          </div>
-        </div>
-
-        <!-- Line 2 : subject + thread toggle -->
-        <div class="line2">
-          <p>{{ mainMessage.subject }}</p>
-          <div
-            v-if="thread.messages.length > 1"
-            class="thread-toggle"
-            @click.stop="toggleThreadExtension"
-          >
-            <p>{{ thread.messages.length }}</p>
-            <img
-              v-if="!isThreadSelected || isSubMessageSelected"
-              :class="isThreadExpanded ? 'collapse-thread': 'extend-thread'"
-              src="@assets/icon_arrow_down_double.svg"
-              alt="toggle thread"
-            >
-            <img
-              v-show="isThreadSelected && !isSubMessageSelected"
-              :class="isThreadExpanded ? 'collapse-thread': 'extend-thread'"
-              src="@assets/icon_arrow_down_double_white.svg"
-              alt="toggle thread"
-            >
-          </div>
-        </div>
-
-        <!-- Line 3 : content -->
-        <div class="line3">
-          <p>{{ mainMessage.previewContent }}</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Expanded thread : contains all thread's messages -->
-    <Transition name="slide-fade">
+    <div>
+      <!-- Thread with 1 single message AND thread multi-message collapsed -->
       <div
-        v-if="isThreadExpanded"
-        class="expanded"
-        data-test="threadExpansion"
+        class="main"
+        :class="{'selected': isThreadSelected,
+                 'subMessageSelected': isSubMessageSelected,
+                 'expanded': isThreadExpanded}"
+        @click.exact="handleClick()"
+        @dblclick="editDraft()"
+        @click.ctrl.exact="ctrlSelectThread()"
+        @click.meta.exact="ctrlSelectThread()"
+        @click.shift="shiftSelectThread()"
       >
         <div
-          v-for="message in sortedMessages"
-          :key="message.messageId"
+          v-if="isMultiSelectionActive"
+          class="selected-icon"
         >
-          <ThreadMessage
-            :message="message"
-            :is-first="isFirstMessage(message)"
-            :is-last="isLastMessage(message)"
-            @contextmenu.prevent="openContextMenu($event, message)"
+          <div class="oval">
+            <div
+              v-if="isThreadSelected"
+              class="marked"
+            />
+          </div>
+        </div>
+
+        <div
+          class="icons"
+          :class="{'shrink': isMultiSelectionActive}"
+        >
+          <BaseIcon
+            v-if="isUnread"
+            name="circle"
+            class="fa-xs unread icon"
+            data-test="unread-icon"
+            :class="{'selected' : isThreadSelected && !isSubMessageSelected}"
+            :title="$t('Messaging.new')"
           />
+          <img
+            v-if="mainMessage.hasAttachFiles"
+            class="icon attached-file-icon"
+            :src="isThreadSelected && !isSubMessageSelected ? require('@assets/icon_pj_white.svg') : require('@assets/icon_pj.svg')"
+            alt="has attached files"
+            :title="$t('Messaging.hasAttachedFiles')"
+          >
+          <img
+            v-if="mainMessage.isAnswered"
+            class="icon answered-icon"
+            :src="isThreadSelected && !isSubMessageSelected ? require('@assets/options/icon_answer_white.svg') : require('@assets/options/icon_answer.svg')"
+            alt="is answered"
+            :title="$t('Messaging.answered')"
+          >
+          <img
+            v-if="mainMessage.isForwarded"
+            class="icon forwarded-icon"
+            :src="isThreadSelected && !isSubMessageSelected ? require('@assets/options/icon_share_white.svg') : require('@assets/options/icon_share.svg')"
+            alt="is forwarded"
+            :title="$t('Messaging.forwarded')"
+          >
+        </div>
+        <div class="body">
+          <!-- Line 1 : sender + date -->
+          <div class="line1">
+            <div class="sender">
+              {{ displayedName }}
+            </div>
+            <div
+              class="sendDate"
+              data-test="sent-date"
+            >
+              {{ formatSentDate(mainMessage) }}
+            </div>
+          </div>
+
+          <!-- Line 2 : subject + thread toggle -->
+          <div class="line2">
+            <p>{{ mainMessage.subject }}</p>
+            <div
+              v-if="thread.messages.length > 1"
+              class="thread-toggle"
+              @click.stop="toggleThreadExtension"
+            >
+              <p>{{ thread.messages.length }}</p>
+              <img
+                v-if="!isThreadSelected || isSubMessageSelected"
+                :class="isThreadExpanded ? 'collapse-thread': 'extend-thread'"
+                src="@assets/icon_arrow_down_double.svg"
+                alt="toggle thread"
+              >
+              <img
+                v-show="isThreadSelected && !isSubMessageSelected"
+                :class="isThreadExpanded ? 'collapse-thread': 'extend-thread'"
+                src="@assets/icon_arrow_down_double_white.svg"
+                alt="toggle thread"
+              >
+            </div>
+          </div>
+
+          <!-- Line 3 : content -->
+          <div class="line3">
+            <p>{{ mainMessage.previewContent }}</p>
+          </div>
         </div>
       </div>
-    </Transition>
+
+      <!-- Expanded thread : contains all thread's messages -->
+      <Transition name="slide-fade">
+        <div
+          v-if="isThreadExpanded"
+          class="expanded"
+          data-test="threadExpansion"
+        >
+          <div
+            v-for="message in sortedMessages"
+            :key="message.messageId"
+          >
+            <ThreadMessage
+              :message="message"
+              :is-first="isFirstMessage(message)"
+              :is-last="isLastMessage(message)"
+              @contextmenu.prevent="openContextMenu($event, message)"
+            />
+          </div>
+        </div>
+      </Transition>
+    </div>
   </div>
 </template>
 
@@ -120,7 +137,7 @@
 
 import messagingUtils from '@/utils/messaging.utils'
 import dayjs from 'dayjs'
-import constants from '@/constants/messagingConstants'
+import constants from '@/constants/appConstants'
 import BaseIcon from '@components/Base/BaseIcon'
 import ThreadMessage from '@components/Messaging/ThreadMessage'
 import _ from 'lodash'
@@ -141,11 +158,13 @@ export default {
   emits: ['openContextMenu'],
   data: function () {
     return {
-      isThreadExpanded: false,
-      isDragged: false
+      isThreadExpanded: false
     }
   },
   computed: {
+    isMultiSelectionActive () {
+      return this.$store.state.messaging.isMultiSelectionActive
+    },
     sortedMessages () {
       return _.orderBy(this.thread.messages, 'sendDate', 'desc')
     },
@@ -203,39 +222,47 @@ export default {
   },
   mounted () {
     this.isThreadExpanded = false
-    this.isDragged = false
   },
   methods: {
     handleClick () {
-      if (!this.isThreadSelected || this.$store.state.messaging.selectedMessages.length !== 0) {
-        this.selectThread()
-      } else if (this.thread.messages.length > 1) {
-        this.toggleThreadExtension()
+      if (this.isMultiSelectionActive) {
+        this.ctrlSelectThread()
+      } else {
+        if (this.thread.messages.length > 1 && this.isThreadSelected && this.$store.state.messaging.selectedMessages.length === 0) {
+          this.toggleThreadExtension()
+        } else {
+          this.selectThread()
+        }
+        if (this.mq.phone || this.mq.tablet) {
+          this.$store.dispatch('messaging/showDetailPanel')
+        }
       }
     },
     selectThread () {
-      messagingUtils.selectThread(this.thread, this.mainMessage)
+      if (this.$route.params.messageId) {
+        messagingUtils.selectThread(this.thread, this.thread.messages)
+      } else {
+        messagingUtils.selectThread(this.thread)
+      }
     },
     toggleThreadExtension () {
-      if (!this.isThreadSelected) {
+      if (!this.isThreadSelected && (!this.mq.phone && !this.mq.tablet)) {
         this.selectThread()
       }
       this.isThreadExpanded = !this.isThreadExpanded
     },
     ctrlSelectThread () {
-      if (!this.mq.phone) { // no selection on mobile
-        // If thread is already selected, remove it from the list
-        let isRemoved = false
-        for (const selectedThread of this.$store.state.messaging.selectedThreads) {
-          if (selectedThread.threadId === this.thread.threadId) {
-            this.$store.dispatch('messaging/removeSelectedThread', this.thread)
-            isRemoved = true
-          }
+      // If thread is already selected, remove it from the list
+      let isRemoved = false
+      for (const selectedThread of this.$store.state.messaging.selectedThreads) {
+        if (selectedThread.threadId === this.thread.threadId) {
+          this.$store.dispatch('messaging/removeSelectedThread', this.thread)
+          isRemoved = true
         }
-        if (!isRemoved) {
-          this.$store.dispatch('messaging/addSelectedThreads', [this.thread])
-          this.$store.dispatch('messaging/setLastSelectedThread', this.thread)
-        }
+      }
+      if (!isRemoved) {
+        this.$store.dispatch('messaging/addSelectedThreads', [this.thread])
+        this.$store.dispatch('messaging/setLastSelectedThread', this.thread)
       }
     },
     shiftSelectThread () {
@@ -263,7 +290,6 @@ export default {
       let isSelected = false
       for (const selectedThread of this.selectedThreads) {
         if (selectedThread.threadId === this.thread.threadId) {
-          this.isDragged = true
           isSelected = true
         }
       }
@@ -333,10 +359,31 @@ export default {
   &.subMessageSelected {
     background-color: #D9E2EA;
   }
-  &.dragged {
-    z-index:100;
-    opacity:0.5;
-    background: none;
+
+  .selected-icon {
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    .oval {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      height: 20px;
+      width: 20px;
+      border-radius: 10px;
+      border: 1px solid #D9E2EA;
+      background-color: #F3F6F8;
+
+      .marked {
+        height: 12px;
+        width: 12px;
+        border-radius: 6px;
+        background-color: #0B3C5F;
+      }
+    }
   }
 
   .icons {
@@ -347,6 +394,11 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    &.shrink {
+      width: 30px;
+      min-width: 30px;
+    }
 
     .icon {
       margin-bottom: 7px;

@@ -1,12 +1,17 @@
 <template>
   <Layout :is-allowed="true">
-    <div class="messaging-body">
+    <div
+      class="messaging-body"
+      :class="{'mobile': mq.phone || mq.tablet, 'tablet': mq.tablet}"
+    >
       <Menu
+        v-if="!mq.phone && !mq.tablet"
         v-show="isMenuPanelDisplayed"
         data-test="messaging-menu"
         class="menu-panel"
       />
       <Split
+        v-if="(!mq.phone && ! mq.tablet)"
         ref="split"
         class="split"
       >
@@ -26,12 +31,28 @@
         </SplitArea>
       </Split>
 
+      <div v-else>
+        <ThreadList />
+        <Transition name="slide-details">
+          <ThreadDetails
+            v-if="isMobileDetailsPanelDisplayed"
+            class="thread-display"
+          />
+        </Transition>
+        <Transition name="slide-menu">
+          <Menu
+            v-show="isMenuPanelDisplayed"
+            data-test="messaging-menu"
+            class="menu-panel"
+          />
+        </Transition>
+      </div>
+
       <teleport to="body">
         <!-- Parameters -->
         <ParametersModal v-if="isParametersModalDisplayed" />
         <!-- Create message modal -->
         <CreateMessageModal v-if="isCreateMessageModalDisplayed" />
-        <WarningModal v-if="isWarningModalDisplayed" />
       </teleport>
     </div>
   </Layout>
@@ -47,7 +68,6 @@ import ThreadList from '@components/Messaging/ThreadList'
 import ThreadDetails from '@components/Messaging/ThreadDetails'
 import ParametersModal from '@components/Messaging/ParametersModal'
 import CreateMessageModal from '@components/Messaging/CreateMessageModal'
-import WarningModal from '@components/Nero/WarningModal'
 import configurationService from '@/api/messaging/configuration.service'
 import messagingUtils from '@/utils/messaging.utils'
 
@@ -61,10 +81,15 @@ export default {
     ThreadList,
     ThreadDetails,
     ParametersModal,
-    CreateMessageModal,
-    WarningModal
+    CreateMessageModal
   },
+  inject: ['mq'],
   computed: {
+    isMobileDetailsPanelDisplayed () {
+      return this.$store.state.messaging.isMobileDetailsPanelDisplayed &&
+        !this.$store.state.messaging.isMultiSelectionActive &&
+        this.$store.state.messaging.selectedThreads.length === 1
+    },
     isMenuPanelDisplayed () {
       return this.$store.state.messaging.isMenuPanelDisplayed
     },
@@ -73,9 +98,6 @@ export default {
     },
     isCreateMessageModalDisplayed () {
       return this.$store.state.messaging.isCreateMessageModalDisplayed
-    },
-    isWarningModalDisplayed () {
-      return this.$store.getters['warningModal/isWarningModalDisplayed']
     }
   },
   mounted () {
@@ -127,16 +149,71 @@ export default {
 @import "@design";
 
 .messaging-body {
-    height: calc(100% - 64px);
-    display: flex;
+  height: 100%;
+  display: flex;
+
+  .menu-panel {
+    width: 240px;
+  }
+
+  .split {
+    height: 100%;
+    flex: 1;
+  }
+
+  &.mobile {
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+
+    .panel {
+      width: 100vw;
+    }
+
+    .thread-display {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+    }
 
     .menu-panel {
-        width: 240px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100%;
     }
 
-    .split {
-        height: 100%;
-        flex: 1;
+    .slide-menu-enter-active {
+      transition: all .3s ease-in;
     }
+    .slide-menu-leave-active {
+      transition: all .3s ease-in;
+    }
+    .slide-menu-enter-from, .slide-menu-leave-to
+      /* .slide-fade-leave-active below version 2.1.8 */ {
+      transform: translateX(-100%);
+    }
+
+    .slide-details-enter-active {
+      transition: all .3s ease-in;
+    }
+    .slide-details-leave-active {
+      transition: all .3s ease-in;
+    }
+    .slide-details-enter-from, .slide-details-leave-to {
+      transform: translateX(100%);
+    }
+  }
+
+  &.tablet {
+    height: 100%;
+    .panel {
+      height: 100%;
+    }
+  }
 }
 </style>

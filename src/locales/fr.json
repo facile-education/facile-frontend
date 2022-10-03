@@ -215,7 +215,9 @@
   "Messaging": {
     "answered": "Répondu",
     "addFolder": "Nouveau dossier",
+    "boxes": "Boîtes",
     "deleteFolder": "@:ContextMenuOptions.delete",
+    "emptyBox": "Boîte vide",
     "forwarded": "Transféré",
     "hasAttachedFiles": "Contient des pièces jointes",
     "title": "Messagerie",
@@ -233,8 +235,8 @@
     "forward": "Transférer",
     "unreadOnly": "Non lus",
     "multiThreads": " fils de discussion sélectionnés",
-    "markAsRead": "Marquer comme lus",
-    "markAsUnread": "Marquer comme non lus",
+    "markAsRead": "@:ContextMenuOptions.markAsRead",
+    "markAsUnread": "@:ContextMenuOptions.markAsUnread",
     "noSelectedMessage": "Aucun message sélectionné",
     "OtherRecipient": "et un autre",
     "OtherRecipient1": "et ",
@@ -276,6 +278,11 @@
       "sizeLimit1": "Ne doit pas dépasser ",
       "sizeLimit2": " caractères"
     }
+  },
+  "ContextMenuOptions": {
+    "delete": "Supprimer",
+    "markAsRead": "Marquer comme lu",
+    "markAsUnread": "Marquer comme non lu"
   },
   "Moment": {
     "at": "à",

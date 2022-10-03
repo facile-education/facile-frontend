@@ -1,5 +1,5 @@
 import messageService from '@/api/messaging/message.service'
-import constants from '@/constants/messagingConstants'
+import constants from '@/constants/appConstants'
 import store from '@store/index.js'
 import _ from 'lodash'
 
@@ -58,16 +58,19 @@ const MessagingUtils = {
     store.dispatch('messaging/openCreateMessageModal', createMessageParameters)
   },
   deleteSelectedThreads () {
-    const messageIdsToDelete = []
-    for (const thread of store.state.messaging.selectedThreads) {
-      for (const message of thread.messages) {
-        messageIdsToDelete.push(message.messageId)
+    return new Promise((resolve) => {
+      const messageIdsToDelete = []
+      for (const thread of store.state.messaging.selectedThreads) {
+        for (const message of thread.messages) {
+          messageIdsToDelete.push(message.messageId)
+        }
       }
-    }
-    messageService.deleteMessages(messageIdsToDelete).then((data) => {
-      if (data.success) {
-        store.dispatch('messaging/deleteSelectedThreads')
-      }
+      messageService.deleteMessages(messageIdsToDelete).then((data) => {
+        if (data.success) {
+          store.dispatch('messaging/deleteSelectedThreads')
+          resolve()
+        }
+      })
     })
   },
   deleteSelectedMessage () {
@@ -118,16 +121,21 @@ const MessagingUtils = {
       this.markMessagesAsReadUnread([message.messageId], true)
     }
   },
-  selectThread (thread) {
+  selectThread (thread, messages) {
     store.dispatch('messaging/setLastSelectedThread', thread)
     store.dispatch('messaging/setSelectedThreads', [thread])
-    store.dispatch('messaging/setSelectedMessages', [])
+    if (!messages) {
+      store.dispatch('messaging/setSelectedMessages', [])
 
-    messageService.getThreadMessages(thread.threadId, store.state.messaging.currentFolder.folderId).then((data) => {
-      if (data.success) {
-        store.dispatch('messaging/setCurrentThreadMessages', data.messages)
-      }
-    })
+      messageService.getThreadMessages(thread.threadId, store.state.messaging.currentFolder.folderId).then((data) => {
+        if (data.success) {
+          store.dispatch('messaging/setCurrentThreadMessages', data.messages)
+        }
+      })
+    } else {
+      store.dispatch('messaging/setSelectedMessages', messages)
+    }
+
     // Mark as read if unread
     for (const message of thread.messages) {
       if (message.messageId === thread.mainMessageId && message.isNew) {
