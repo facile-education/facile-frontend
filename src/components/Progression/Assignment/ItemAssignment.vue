@@ -277,6 +277,9 @@ export default {
           margin: auto;
           margin-left: 10px;
           width: 90%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
         .remove-cours-assignment {
           margin: auto;
