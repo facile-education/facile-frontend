@@ -1,6 +1,6 @@
 <template>
   <iframe
-    :src="src"
+    :src="pdfjsSrc"
     class="media"
   />
 </template>
@@ -12,6 +12,11 @@ export default {
     src: {
       type: String,
       required: true
+    }
+  },
+  computed: {
+    pdfjsSrc () {
+      return '/PDFjs/web/viewer.html?file=' + encodeURIComponent(this.src)
     }
   }
 }
