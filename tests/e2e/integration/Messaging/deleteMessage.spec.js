@@ -31,8 +31,8 @@ describe('Delete message', () => {
     cy.get('[data-test=messages-panel]').get('.message-list').children().eq(2).as('messageToDelete').click()
       .should('have.class', 'selected')
     cy.globalKeyPress('{del}')
-    cy.get('@messageToDelete').should('not.exist')
     cy.get('[data-test=spinner]').should('not.exist')
+    cy.get('@messageToDelete').should('not.exist')
     cy.log('test finished test!')
 
     cy.log('delete message in thread by trash icon')
