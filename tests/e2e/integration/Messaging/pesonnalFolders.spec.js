@@ -31,6 +31,8 @@ describe('Personal folders', () => {
 
     cy.get('[data-test=messaging-menu]').within(() => {
       cy.get('.personal-sub-folder').contains('My first personal folder').parent().as('firstFolderItem')
+      cy.get('.personal-sub-folder').contains('sous-dossier').parent().as('thirdFolderItem')
+      cy.get('.personal-sub-folder').contains('test').parent().as('fourthFolderItem')
       cy.get('.personal-sub-folder').contains('My second personal folder').parent().as('secondFolderItem').trigger('mouseover')
 
       cy.log('Create personal subFolder')
@@ -76,6 +78,14 @@ describe('Personal folders', () => {
     cy.get('[data-test=warning-modal]').find('[data-test=confirmButton]').click()
     cy.get('.personal-sub-folder').should('not.contain', 'My first personal folder (modified)')
     cy.get('@secondFolderItem').trigger('mouseover').within(() => {
+      cy.get('.delete').click()
+    })
+    cy.get('[data-test=warning-modal]').find('[data-test=confirmButton]').click()
+    cy.get('@thirdFolderItem').trigger('mouseover').within(() => {
+      cy.get('.delete').click()
+    })
+    cy.get('[data-test=warning-modal]').find('[data-test=confirmButton]').click()
+    cy.get('@fourthFolderItem').trigger('mouseover').within(() => {
       cy.get('.delete').click()
     })
     cy.get('[data-test=warning-modal]').find('[data-test=confirmButton]').click()
