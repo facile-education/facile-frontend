@@ -146,6 +146,10 @@ Cypress.Commands.add('logout', () => {
   cy.clearCookies()
 })
 
+Cypress.Commands.add('globalKeyPress', (keyName) => {
+  cy.get('body').type(keyName)
+})
+
 Cypress.Commands.add('doAuthWSRequest', (method, url, params) => {
   // cy.getCookie('pauth').then((pauth) => {
   cy.request({

@@ -28,7 +28,7 @@ function getThreads (folderId, start, nbDisplayed, unreadOnly) {
     params: {
       p_auth: getCookie('pauth'),
       folderId: folderId,
-      start: start,
+      fromDate: start,
       nbDisplayed: nbDisplayed,
       unreadOnly: unreadOnly
     }
