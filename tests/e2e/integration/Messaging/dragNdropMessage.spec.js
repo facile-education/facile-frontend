@@ -34,11 +34,14 @@ describe('Drag and drop messages', () => {
     const dataTransfer = new DataTransfer()
 
     cy.get('[data-test=threads-panel]').get('.thread-list-item').as('threads')
+    cy.log('Open messaging menu')
+    cy.get('[data-test=option_toggleMessagingMenu]').click()
     cy.get('[data-test=messaging-menu]').within(() => {
       cy.contains('Boîte de réception').as('inBoxFolder')
       cy.contains('Brouillons').as('draftFolder')
       cy.contains('Envoyés').as('sentFolder')
       cy.contains('Corbeille').as('trashFolder')
+      cy.contains('Mes dossiers').click()
       cy.contains('sous-dossier').as('personalFolder')
     })
 
@@ -117,7 +120,7 @@ describe('Drag and drop messages', () => {
 
     // Personal
     cy.get('@personalFolder').click()
-    cy.get('.header-label').should('contain', 'sous-dossier')
+    cy.get('.header-label').should('contain', 'SOUS-DOSSIER')
     cy.get('@threads').eq(0).trigger('dragstart', { dataTransfer: dataTransfer })
     currentDataTransfer = dataTransfer
     cy.get('@inBoxFolder').trigger('dragover').should('have.class', 'active')
