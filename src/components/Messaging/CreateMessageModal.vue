@@ -273,6 +273,7 @@ export default {
               this.initialContent.contentValue = this.initialContent.contentValue + '</br></br>' + this.$store.state.messaging.signature
             }
             this.isInitialized = true
+            this.currentContent.contentValue = this.initialContent.contentValue
           }
         })
       } else if (!this.messageParameters.isNew) {
@@ -307,7 +308,6 @@ export default {
         this.error = 'missingRecipient'
       } else if ((this.subject.trim() === '')) {
         this.error = ''
-        console.log('open warn modal')
         this.$store.dispatch('warningModal/addWarning', {
           text: this.$t('Messaging.noObjectWarning'),
           lastAction: { fct: this.sendMessage, params: [] }

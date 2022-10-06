@@ -145,7 +145,7 @@ export default {
   methods: {
     handleClick () {
       this.selectFolder() // Invert following instructions to change extend behaviour
-      this.$router.push({ name: 'messaging' })
+      this.$router.push({ name: 'Messaging' })
       if (this.isSelected) {
         this.isExpanded = !this.isExpanded
       }

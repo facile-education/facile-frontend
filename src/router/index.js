@@ -78,7 +78,7 @@ const routes = [
   },
   {
     path: '/messaging',
-    name: 'Messagerie',
+    name: 'Messaging',
     component: () => import('@/router/views/Messaging')
   },
   {
