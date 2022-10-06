@@ -214,11 +214,11 @@ export default {
       for (let i = 0; i < this.messageList.length; ++i) {
         const message = this.messageList[i]
         if (this.currentFolder.type !== messagingConstants.messagingSentFolderType) {
-          if (message.recipients.map(recipient => recipient.id).indexOf(this.currentUser.id) === -1 || message.folderName !== 'Envoyés') { // TODO based on folder type and not label
+          if (message.recipients.map(recipient => recipient.userId).indexOf(this.currentUser.userId) === -1 || message.folderName !== 'Envoyés') { // TODO based on folder type and not label
             listWithoutSelfMessages.push(message)
           }
         } else {
-          if (message.senderId !== this.currentUser.id || message.folderName === undefined) {
+          if (message.senderId !== this.currentUser.userId || message.folderName === undefined) {
             listWithoutSelfMessages.push(message)
           }
         }
