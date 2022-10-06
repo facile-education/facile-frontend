@@ -163,3 +163,11 @@ Cypress.Commands.add('doAuthWSRequest', (method, url, params) => {
   })
   // })
 })
+
+Cypress.Commands.add('type_ckeditor', (content) => {
+  cy.window()
+    .then(win => {
+      cy.log('Type in CKEditor')
+      win.ckeditor.setData(content) // Assume the window.ckeditor is set and correspond to the wanted ckEditor
+    })
+})

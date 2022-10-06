@@ -2,7 +2,8 @@
 import '../login.spec'
 
 // Documents
-import '../Documents/DocumentsNavigation.spec'
+import '../Documents/DocumentsInternDragNDrop.spec.spec'
+import '../Documents/DocumentsSelection.spec'
 import '../Documents/DocumentsSelection.spec'
 
 // Horaires

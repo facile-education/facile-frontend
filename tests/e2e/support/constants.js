@@ -62,7 +62,9 @@ const TEACHER2 = {
 const STUDENT = {
   login: 'anya.alst',
   password: 'pentila',
-  role: 'student'
+  role: 'student',
+  firstName: 'ANYA',
+  lastName: 'ALOSTA'
 }
 
 const PARENT = { // Student's parent

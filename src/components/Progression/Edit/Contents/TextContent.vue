@@ -6,6 +6,7 @@
     :editor="editor"
     :config="editorOptions"
     :disabled="disabled"
+    @ready="onEditorReady"
     @input="updateContent"
     @focus="onEditorFocus"
     @blur="onEditorBlur"
@@ -70,6 +71,12 @@ export default {
     },
     onEditorBlur () {
       this.$emit('blur')
+    },
+    onEditorReady (e) {
+      // Make CKEditor available for tests
+      if (window.Cypress) {
+        window.ckeditor = e
+      }
     },
     updateContent (newValue) {
       this.$emit('input', newValue)

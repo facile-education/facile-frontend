@@ -4,6 +4,26 @@ const waitMessagingToBeLoaded = () => {
   cy.get('[data-test=spinner]').should('not.exist')
 }
 
+const reloadThreadsAndFolders = () => {
+  cy.intercept(
+    { method: 'GET', url: '**/get-threads*' }
+  ).as('reloadThreads')
+  cy.intercept(
+    { method: 'GET', url: '**/get-all-user-folders*' }
+  ).as('reloadFolders')
+
+  cy.get('[data-test=option_refresh]').click()
+
+  cy.wait('@reloadThreads').its('response.body.success').should('be.equals', true)
+
+  cy.window().then(win => {
+    win.store.dispatch('messaging/loadMessagingFolders')
+  })
+
+  cy.wait('@reloadFolders').its('response.body.success').should('be.equals', true)
+  cy.wait('@reloadThreads').its('response.body.success').should('be.equals', true)
+}
+
 // message list of dump (+ two reply of the last message)
 // const messageList = [
 //   {
@@ -57,5 +77,6 @@ const waitMessagingToBeLoaded = () => {
 // ]
 
 export {
-  waitMessagingToBeLoaded
+  waitMessagingToBeLoaded,
+  reloadThreadsAndFolders
 }

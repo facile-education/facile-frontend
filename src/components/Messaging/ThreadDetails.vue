@@ -159,7 +159,7 @@ import messagingUtils from '@/utils/messaging.utils'
 import Message from '@components/Messaging/Message'
 import _ from 'lodash'
 import IconOption from '@components/Base/IconOption'
-import constants from '@/constants/appConstants'
+import messagingConstants from '@/constants/messagingConstants'
 
 export default {
   name: 'ThreadDetails',
@@ -203,7 +203,7 @@ export default {
       return this.$store.state.messaging.currentFolder
     },
     isDraft () {
-      return this.currentFolder.type === constants.messagingDraftFolderType
+      return this.currentFolder.type === messagingConstants.messagingDraftFolderType
     },
     messageList () {
       return _.orderBy(this.$store.state.messaging.currentThreadMessages, 'sendDate', 'desc')
@@ -213,7 +213,7 @@ export default {
 
       for (let i = 0; i < this.messageList.length; ++i) {
         const message = this.messageList[i]
-        if (this.currentFolder.type !== constants.messagingSentFolderType) {
+        if (this.currentFolder.type !== messagingConstants.messagingSentFolderType) {
           if (message.recipients.map(recipient => recipient.id).indexOf(this.currentUser.id) === -1 || message.folderName !== 'Envoyés') { // TODO based on folder type and not label
             listWithoutSelfMessages.push(message)
           }
