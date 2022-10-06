@@ -51,6 +51,7 @@ describe('Messaging navigation and structure', () => {
   context('mobile', function () {
     beforeEach(function () {
       cy.viewport('iphone-5')
+      cy.login(url, HEADMASTER)
     })
 
     it('Check navigation', () => {
