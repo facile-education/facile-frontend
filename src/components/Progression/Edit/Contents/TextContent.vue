@@ -1,6 +1,7 @@
 <template>
   <CKEditor
     class="ck-editor"
+    :class="{'maximised' : maximised }"
     :model-value="content.contentValue"
     :editor-id="editorId"
     :editor="editor"
@@ -31,6 +32,10 @@ export default {
       default: true
     },
     disabled: {
+      type: Boolean,
+      default: false
+    },
+    maximised: {
       type: Boolean,
       default: false
     }
@@ -100,9 +105,11 @@ export default {
 </script>
 
 <!-- not scoped to target ckeditor tags -->
-<style>
+<style lang="scss">
 .ck-editor__editable {
-  max-height: 15rem;
+  &:not(.maximised) {
+    max-height: 15rem;
+  }
 }
 </style>
 

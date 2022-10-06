@@ -3,6 +3,7 @@
     <TextContent
       v-if="loaded && initialContent.contentValue !== undefined"
       class="ck"
+      :maximised="true"
       :content="initialContent"
       :disabled="readOnly"
       :is-in-progression="false"
