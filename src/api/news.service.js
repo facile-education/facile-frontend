@@ -8,11 +8,14 @@ export {
   addNews,
   editNews,
   deleteNews,
-  getNewsDetails
+  getNewsDetails,
+  addNewsDelegate,
+  removeNewsDelegate
 }
 
 const NEWS_PATH = '/actualites-portlet.'
 const NEWS_CTX = 'news/'
+const DELEGATION_CTX = 'blogentrydelegate/'
 
 function getSchoolNews (startLimit, endLimit) {
   return axios.get(constants.JSON_WS_URL + NEWS_PATH + NEWS_CTX + 'get-school-news', {
@@ -76,6 +79,24 @@ function getNewsDetails (blogEntryInfosId) {
   return axios.get(constants.JSON_WS_URL + NEWS_PATH + NEWS_CTX + 'get-news-details', {
     params: {
       blogEntryInfosId: blogEntryInfosId
+    }
+  }).then(response => response.data)
+}
+
+function addNewsDelegate (userId, schoolId) {
+  return axios.get(constants.JSON_WS_URL + NEWS_PATH + DELEGATION_CTX + '/add-news-delegate', {
+    params: {
+      userId: userId,
+      schoolId: schoolId
+    }
+  }).then(response => response.data)
+}
+
+function removeNewsDelegate (userId, schoolId) {
+  return axios.get(constants.JSON_WS_URL + NEWS_PATH + DELEGATION_CTX + '/remove-news-delegate', {
+    params: {
+      userId: userId,
+      schoolId: schoolId
     }
   }).then(response => response.data)
 }

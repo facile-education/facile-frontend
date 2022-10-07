@@ -1,17 +1,52 @@
-import store from '@/store'
 import {
-  getManualUsers, getRoles, createManualUser, editManualUser, removeManualUser, getSchoolOrgs
+  getManualUsers, getRoles, removeManualUser, getAffectedUsers
 } from '@/api/userManagement.service'
 
 export const state = {
   isSearchLocked: false,
   manualUserList: [],
-  roles: []
+  roles: [],
+  nbItemsPerPage: 20,
+  nbTotalResults: 0,
+  affectedUsers: []
 }
 
 export const mutations = {
+  addAffectedUsers (state, users) {
+    users.forEach(user => {
+      if (user.affectations === undefined) {
+        user.affectations = []
+      }
+    })
+    state.affectedUsers = state.affectedUsers.concat(users)
+  },
+  emptyAffectedUserList (state) {
+    state.affectedUsers.length = 0
+  },
+  addUserAffectation (state, payload) {
+    console.log('add payload=', payload)
+    const affectation = { orgId: payload.orgId, orgName: payload.orgName }
+    // Search user in affectedUsers
+    const user = state.affectedUsers.find(affectedUser => affectedUser.userId === payload.userId)
+    if (user !== undefined) {
+      user.affectations = user.affectations.concat(affectation)
+    }
+  },
+  removeUserAffectation (state, payload) {
+    // Search user in affectedUsers
+    const user = state.affectedUsers.find(affectedUser => affectedUser.userId === payload.userId)
+    if (user !== undefined) {
+      const affectationIndex = user.affectations.findIndex(affectation => affectation.orgId === payload.orgId)
+      if (affectationIndex !== -1) {
+        user.affectations.splice(affectationIndex, 1)
+      }
+    }
+  },
   setManualUserList (state, users) {
     Array.prototype.push.apply(state.manualUserList, users)
+  },
+  setNbTotalResults (state, nbTotalResults) {
+    state.nbTotalResults = nbTotalResults
   },
   emptyManualUserList (state) {
     state.isSearchLocked = false
@@ -38,12 +73,6 @@ export const mutations = {
       state.manualUserList.splice(index, 1)
     }
   },
-  setSchoolOrgs (state, payload) {
-    const schoolIndex = state.schools.map(school => school.schoolId).indexOf(payload.schoolId)
-    if (schoolIndex !== -1) {
-      state.schools[schoolIndex].orgs = payload.orgs
-    }
-  },
   toggleExpandedSchool (state, payload) {
     const schoolIndex = state.schools.map(school => school.schoolId).indexOf(payload.schoolId)
     if (schoolIndex !== -1) {
@@ -53,14 +82,26 @@ export const mutations = {
 }
 
 export const actions = {
-  getManualUsers ({ commit }, { schoolId, query, pageNb }) {
-    getManualUsers(schoolId, query, pageNb).then(
+  getManualUsers ({ commit }, { schoolId, query, pageNb, nbItemsPerPage }) {
+    getManualUsers(schoolId, query, pageNb, nbItemsPerPage).then(
       (data) => {
         if (data.success) {
           commit('setManualUserList', data.users)
-          if (data.users.length < 50) {
+          if (pageNb === 0) {
+            commit('setNbTotalResults', data.nbTotalUsers)
+          }
+          if (data.users.length < data.nbItemsPerPage) {
             commit('setSearchLock', true)
           }
+        }
+      }
+    )
+  },
+  getAffectedUsers ({ commit }, { schoolId, query }) {
+    getAffectedUsers(schoolId, query).then(
+      (data) => {
+        if (data.success) {
+          commit('addAffectedUsers', data.users)
         }
       }
     )
@@ -74,25 +115,11 @@ export const actions = {
       }
     )
   },
-  createManualUser ({ commit }, { lastName, firstName, email, roleId, schoolId }) {
-    createManualUser(lastName, firstName, email, roleId, schoolId).then(
-      (data) => {
-        if (data.success) {
-          commit('addUser', data.user)
-        } else {
-          store.dispatch('popups/pushPopup', { type: 'error', message: 'L\'e-mail de cet utilisateur existe déjà dans l\'ENT.' })
-        }
-      }
-    )
+  addManualUser ({ commit }, user) {
+    commit('addUser', user)
   },
-  editManualUser ({ commit }, { userId, lastName, firstName, email, roleId, schoolId }) {
-    editManualUser(userId, lastName, firstName, email, roleId, schoolId).then(
-      (data) => {
-        if (data.success) {
-          commit('editUser', data.user)
-        }
-      }
-    )
+  editManualUser ({ commit }, user) {
+    commit('editUser', user)
   },
   removeManualUser ({ commit }, user) {
     removeManualUser(user.userId).then(
@@ -103,14 +130,14 @@ export const actions = {
       }
     )
   },
-  getSchoolOrgs ({ commit }, { schoolId }) {
-    getSchoolOrgs(schoolId).then(
-      (data) => {
-        if (data.success) {
-          commit('setSchoolOrgs', { schoolId: schoolId, orgs: data.orgs })
-        }
-      }
-    )
+  addAffectedUsers ({ commit }, users) {
+    commit('addAffectedUsers', users)
+  },
+  addUserAffectation ({ commit }, { userId, orgId, orgName }) {
+    commit('addUserAffectation', { userId: userId, orgId: orgId, orgName: orgName })
+  },
+  removeUserAffectation ({ commit }, { userId, orgId }) {
+    commit('removeUserAffectation', { userId: userId, orgId: orgId })
   },
   toggleExpandedSchool ({ commit }, { schoolId }) {
     commit('toggleExpandedSchool', schoolId)

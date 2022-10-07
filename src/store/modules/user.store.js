@@ -35,6 +35,7 @@ export const mutations = {
 
     state.isAdministrator = payload.isAdministrator
     state.isLocalAdmin = payload.isLocalAdmin
+    state.isSchoolAdmin = payload.isSchoolAdmin
     state.isPersonal = payload.isPersonal
     state.isDoyen = payload.isDoyen
     state.isDirectionMember = payload.isDirectionMember

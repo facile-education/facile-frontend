@@ -19,10 +19,11 @@ const ORG_PATH = '/accesAteliers-portlet.'
 /**
  * Get school classes
  */
-function getSchoolCLassList (schoolId) {
+function getSchoolCLassList (schoolId, includeCours) {
   return axios.get(constants.JSON_WS_URL + ORG_PATH + 'orgutils/get-school-classes', {
     params: {
-      schoolId
+      schoolId: schoolId,
+      includeCours: includeCours
     }
   }).then(response => response.data)
 }
