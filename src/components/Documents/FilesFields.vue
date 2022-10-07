@@ -80,7 +80,13 @@ export default {
       const fieldsToDisplay = []
       for (let i = 0; i < this.fields.length; ++i) {
         if (this.fields[i].isSelected) {
-          fieldsToDisplay.push(this.fields[i])
+          if (this.mq.phone || this.mq.tablet) {
+            if (this.fields[i].name === 'name') {
+              fieldsToDisplay.push(this.fields[i])
+            }
+          } else {
+            fieldsToDisplay.push(this.fields[i])
+          }
         }
       }
       return fieldsToDisplay

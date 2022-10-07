@@ -51,12 +51,23 @@
         >
           {{ document.name }}
         </p>
-        <p
-          v-if="(mq.phone || mq.tablet) && formattedSize !== '-'"
-          class="size-label"
+        <div
+          v-if="mq.phone || mq.tablet"
+          class="phone-labels"
         >
-          {{ formattedSize }}
-        </p>
+          <p
+            v-if="formattedSize !== '-'"
+            class="size-label"
+          >
+            {{ formattedSize }}
+          </p>
+          <p
+            v-if="isInCurrentsFields('date')"
+            class="date-label"
+          >
+            {{ formattedDate }}
+          </p>
+        </div>
       </div>
     </div>
 
@@ -83,7 +94,7 @@
         class="separator"
       />
       <div
-        v-if="isInCurrentsFields('size')"
+        v-if="isInCurrentsFields('size') && !(mq.phone || mq.tablet)"
         class="size"
       >
         <p>
@@ -91,7 +102,7 @@
         </p>
       </div>
       <div
-        v-if="isInCurrentsFields('date')"
+        v-if="isInCurrentsFields('date') && !(mq.phone || mq.tablet)"
         class="date"
       >
         <p>
@@ -306,10 +317,16 @@ export default {
         }
       }
 
-      .size-label {
+      .phone-labels {
         font-size: 0.6875em;
-        letter-spacing: 0;
-        line-height: 16px;
+        display: flex;
+        align-items: center;
+
+        .size-label, .date-label{
+          letter-spacing: 0;
+          line-height: 16px;
+          margin-right: 10px;
+        }
       }
     }
   }
@@ -407,6 +424,7 @@ export default {
       margin-block-end: 1em;
       margin-inline-start: 0;
       margin-inline-end: 0;
+      font-size: 1em;
     }
 
     .size-label {
