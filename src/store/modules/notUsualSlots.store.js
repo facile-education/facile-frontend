@@ -90,12 +90,12 @@ export const mutations = {
 }
 export const actions = {
   getClassList ({ commit }, schoolId) {
-    organizationService.getSchoolCLassList(schoolId).then(
+    organizationService.getSchoolCLassList(schoolId, false).then(
       (data) => {
         if (data.success) {
-          commit('setClassList', data.classes)
+          commit('setClassList', data.orgs)
         } else {
-          console.error('Cannot get school classes')
+          console.error('Cannot get school orgs')
         }
       },
       (err) => {

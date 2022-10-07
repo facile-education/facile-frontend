@@ -55,13 +55,31 @@
           :error-message="formErrorList.email"
         />
       </div>
-      <PentilaDropdown
-        v-if="(roles && roles.length > 1)"
-        v-model="selectedRole"
-        class="roles"
-        :list="roles"
-        display-field="roleName"
-      />
+
+      <!-- School -->
+      <div class="school">
+        <p>Etablissement</p>
+        <PentilaDropdown
+          v-if="(schoolList && schoolList.length > 1)"
+          v-model="school"
+          :list="schoolList"
+          display-field="schoolName"
+        />
+        <p v-else>
+          {{ schoolList[0].schoolName }}
+        </p>
+      </div>
+
+      <!-- Role -->
+      <div class="role">
+        <p>Profil</p>
+        <PentilaDropdown
+          v-if="(roles && roles.length > 1)"
+          v-model="selectedRole"
+          :list="roles"
+          display-field="label"
+        />
+      </div>
       <p
         v-if="isCreation"
         v-t="'email-warning'"
@@ -81,6 +99,12 @@
         class="button"
         @click="editUser"
       />
+      <PentilaButton
+        v-if="!isCreation"
+        :label="$t('delete')"
+        class="button"
+        @click="confirmUserRemoval"
+      />
     </template>
   </PentilaWindow>
 </template>
@@ -88,6 +112,9 @@
 <script>
 import { useVuelidate } from '@vuelidate/core'
 import { required, email } from '@vuelidate/validators'
+import PentilaUtils from 'pentila-utils'
+import { createManualUser, editManualUser } from '@/api/userManagement.service'
+import store from '@/store'
 
 export default {
   name: 'EditUserModal',
@@ -110,10 +137,14 @@ export default {
       lastName: '',
       firstName: '',
       email: '',
-      selectedRole: undefined
+      selectedRole: undefined,
+      school: undefined
     }
   },
   computed: {
+    schoolList () {
+      return this.$store.getters['user/adminSchoolList']
+    },
     isCreation () {
       return this.editedUser.userId === undefined
     },
@@ -121,7 +152,7 @@ export default {
       return this.$store.state.user.selectedSchool
     },
     roles () {
-      return this.$store.state.userManagement.roles
+      return PentilaUtils.Array.sortWithString(this.$store.state.userManagement.roles, true, 'roleCode')
     },
     formErrorList () {
       return {
@@ -137,8 +168,12 @@ export default {
       this.lastName = this.editedUser.lastName
       this.firstName = this.editedUser.firstName
       this.email = this.editedUser.email
-      const selectedIndex = this.roles.map(role => role.roleId).indexOf(this.editedUser.roleId)
-      this.selectedRole = this.roles[selectedIndex]
+      const roleIndex = this.roles.map(role => role.roleId).indexOf(this.editedUser.roleId)
+      this.selectedRole = this.roles[roleIndex]
+      const schoolIndex = this.schoolList.map(school => school.schoolId).indexOf(this.editedUser.schoolId)
+      this.school = this.schoolList[schoolIndex]
+    } else {
+      this.school = this.selectedSchool
     }
 
     // Focus form
@@ -158,9 +193,18 @@ export default {
       if (this.v$.$invalid) {
         this.v$.$touch()
       } else {
-        this.$store.dispatch('userManagement/createManualUser',
-          { lastName: this.lastName, firstName: this.firstName, email: this.email, roleId: this.selectedRole.roleId, schoolId: this.selectedSchool.schoolId })
-        this.closeModal()
+        createManualUser(this.lastName, this.firstName, this.email, this.selectedRole.roleId, this.selectedSchool.schoolId).then(
+          (data) => {
+            if (data.success) {
+              this.$store.dispatch('userManagement/addManualUser', data.user)
+              this.closeModal()
+            } else if (data.errorCode === 'email') {
+              store.dispatch('popups/pushPopup', { type: 'error', message: 'L\'e-mail de cet utilisateur existe déjà dans l\'ENT.' })
+            } else {
+              store.dispatch('popups/pushPopup', { type: 'error', message: 'Une erreur est survenue.' })
+            }
+          }
+        )
       }
     },
     editUser (e) {
@@ -168,10 +212,25 @@ export default {
       if (this.v$.$invalid) {
         this.v$.$touch()
       } else {
-        this.$store.dispatch('userManagement/editManualUser',
-          { userId: this.editedUser.userId, lastName: this.lastName, firstName: this.firstName, email: this.email, roleId: this.selectedRole.roleId, schoolId: this.selectedSchool.schoolId })
-        this.closeModal()
+        editManualUser(this.editedUser.userId, this.lastName, this.firstName, this.email, this.selectedRole.roleId, this.selectedSchool.schoolId).then(
+          (data) => {
+            if (data.success) {
+              this.$store.dispatch('userManagement/editManualUser', data.user)
+              this.closeModal()
+            } else if (data.errorCode === 'email') {
+              store.dispatch('popups/pushPopup', { type: 'error', message: 'L\'e-mail de cet utilisateur existe déjà dans l\'ENT.' })
+            } else {
+              store.dispatch('popups/pushPopup', { type: 'error', message: 'Une erreur est survenue.' })
+            }
+          }
+        )
       }
+    },
+    confirmUserRemoval (user) {
+      this.$store.dispatch('warningModal/addWarning', {
+        text: this.$t('delete-warning'),
+        lastAction: { fct: this.removeUser, params: [user] }
+      })
     }
   }
 }
@@ -186,6 +245,15 @@ export default {
   .lastName,.firstName,.email {
     margin-bottom: 5px;
   }
+  .school, .role {
+    display: flex;
+    p {
+      margin-right: 1em;
+    }
+  }
+  .button {
+    margin-right: 1em;
+  }
 }
 </style>
 
@@ -195,9 +263,11 @@ export default {
   "edition-title": "Modifier un utilisateur",
   "add": "Créer",
   "edit": "Modifier",
+  "delete": "Supprimer",
   "lastNamePlaceholder": "Nom",
   "firstNamePlaceholder": "Prénom",
   "emailPlaceholder": "Mail",
-  "email-warning": "NB: Un e-mail contenant les informations d'authentification sera envoyé à l'utilisateur créé."
+  "email-warning": "NB: Un e-mail contenant les informations d'authentification sera envoyé à l'utilisateur créé.",
+  "delete-warning": "La suppression de cet utilisateur est définitive."
 }
 </i18n>

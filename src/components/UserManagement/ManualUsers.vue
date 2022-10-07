@@ -1,71 +1,80 @@
 <template>
   <div class="manual-users">
-    <PentilaButton
-      class="create-user"
-      :label="$t('create')"
-      @click="createUser"
-    />
-    <PentilaButton
-      class="create-user"
-      :label="$t('import')"
-      @click="importUser"
-    />
-    <table
-      ref="scroll"
-      class="user-table"
-      @scroll="handleScroll"
+    <!-- Header -->
+    <div class="header">
+      <PentilaInput
+        ref="nameInput"
+        v-model="filter"
+        :maxlength="200"
+        :placeholder="$t('nameFilterPlaceholder')"
+        @keyup.enter.stop="cleanAndRunSearch"
+      />
+      <div
+        v-if="nbTotalResults > 0"
+        class="pagination"
+      >
+        <span>{{ $t('display') }}</span>
+        <span>{{ $t('to') }}</span>
+        <span>{{ maxIndex }}</span>
+        <span>{{ $t('over') }}</span>
+        <span>{{ nbTotalResults }}</span>
+      </div>
+      <PentilaButton
+        class="create-user"
+        :label="$t('create')"
+        @click="createUser"
+      />
+    </div>
+
+    <!-- Results -->
+    <div
+      v-if="selectedSchool === undefined"
+      class="main-label"
     >
-      <thead>
-        <tr>
-          <th
-            v-t="'lastName'"
-            style="width:25%"
-          />
-          <th
-            v-t="'firstName'"
-            style="width:25%"
-          />
-          <th
-            v-t="'login'"
-            style="width:10%"
-          />
-          <th
-            v-t="'email'"
-            style="width:20%"
-          />
-          <th
-            v-t="'role'"
-            style="width:10%"
-          />
-          <th style="width:10%" />
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="user in userList"
-          :key="user.userId"
-        >
-          <td>{{ user.lastName }}</td>
-          <td>{{ user.firstName }}</td>
-          <td>{{ user.screenName }}</td>
-          <td>{{ user.email }}</td>
-          <td>{{ user.roleName }}</td>
-          <td>
-            <PentilaButton
-              @click="editUser(user)"
-            >
-              <NeroIcon name="pencil-alt" />
-            </PentilaButton>
-            <PentilaButton
-              cls="delete"
-              @click="confirmUserRemoval(user)"
-            >
-              <NeroIcon name="trash" />
-            </PentilaButton>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+      <p>{{ $t('please-select-school') }}</p>
+    </div>
+    <div
+      v-else-if="userList.length === 0"
+      class="main-label"
+    >
+      <p>{{ $t('no-users') }}</p>
+    </div>
+    <div v-else>
+      <table
+        ref="scroll"
+        class="user-table"
+        @scroll="handleScroll"
+      >
+        <thead>
+          <tr>
+            <th
+              v-t="'lastName'"
+              style="width:40%"
+            />
+            <th
+              v-t="'firstName'"
+              style="width:30%"
+            />
+            <th
+              v-t="'role'"
+              style="width:30%"
+            />
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="user in userList"
+            :key="user.userId"
+            class="manual-user"
+            @click="editUser(user)"
+          >
+            <td>{{ user.lastName }}</td>
+            <td>{{ user.firstName }}</td>
+            <td>{{ user.roleName }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <teleport to="body">
       <EditUserModal
         v-if="isEditUserModalDisplayed"
@@ -73,67 +82,69 @@
         :edited-user="selectedUser"
         @close="isEditUserModalDisplayed = false"
       />
-      <ImportUserListModal
-        v-if="isImportUserModalDisplayed"
-        @close="isImportUserModalDisplayed = false"
-      />
     </teleport>
   </div>
 </template>
 
 <script>
+import PentilaUtils from 'pentila-utils'
 import EditUserModal from '@/components/UserManagement/EditUserModal'
-import ImportUserListModal from '@/components/UserManagement/ImportUserListModal'
-import NeroIcon from '@/components/Nero/NeroIcon'
 
 export default {
   name: 'ManualUsers',
   components: {
-    EditUserModal,
-    ImportUserListModal,
-    NeroIcon
+    EditUserModal
   },
   data () {
     return {
       isEditUserModalDisplayed: false,
-      isImportUserModalDisplayed: false,
       pageNb: 0,
-      searchText: ''
+      filter: ''
     }
   },
   computed: {
-    isLocked () {
-      return this.$store.state.userManagement.isSearchLocked
-    },
     selectedSchool () {
       return this.$store.state.user.selectedSchool
     },
+    isLocked () {
+      return this.$store.state.userManagement.isSearchLocked
+    },
     userList () {
-      return this.$store.state.userManagement.manualUserList
+      return PentilaUtils.Array.sortWithString(this.$store.state.userManagement.manualUserList, false, 'lastName')
+    },
+    maxIndex () {
+      if (this.$store.state.userManagement.nbTotalResults < this.$store.state.userManagement.nbItemsPerPage) {
+        return this.$store.state.userManagement.nbTotalResults
+      } else {
+        return this.$store.state.userManagement.nbItemsPerPage * (this.pageNb + 1)
+      }
+    },
+    nbTotalResults () {
+      return this.$store.state.userManagement.nbTotalResults
     }
   },
   watch: {
-    selectedSchool (value, oldValue) {
-      this.pageNb = 0
-      this.$store.commit('userManagement/emptyManualUserList')
-      this.runSearch()
+    selectedSchool () {
+      this.cleanAndRunSearch()
+    },
+    filter (value) {
+      this.cleanAndRunSearch()
     }
   },
   created () {
-    this.runSearch()
+    this.cleanAndRunSearch()
   },
   unmounted () {
     this.$store.commit('userManagement/emptyManualUserList')
   },
   methods: {
-    runSearch () {
-      this.$store.dispatch('userManagement/getManualUsers', { schoolId: this.selectedSchool.schoolId, query: this.searchText, pageNb: this.pageNb })
+    cleanAndRunSearch () {
+      this.pageNb = 0
+      this.$store.commit('userManagement/emptyManualUserList')
+      this.runSearch()
     },
-    confirmUserRemoval (user) {
-      this.$store.dispatch('warningModal/addWarning', {
-        text: this.$t('warning'),
-        lastAction: { fct: this.removeUser, params: [user] }
-      })
+    runSearch () {
+      this.$store.dispatch('userManagement/getManualUsers', { schoolId: this.selectedSchool.schoolId, query: this.filter, pageNb: this.pageNb, nbItemsPerPage: this.$store.state.userManagement.nbItemsPerPage })
     },
     createUser () {
       this.selectedUser = {}
@@ -143,14 +154,12 @@ export default {
       this.selectedUser = user
       this.isEditUserModalDisplayed = true
     },
-    importUser () {
-      this.isImportUserModalDisplayed = true
-    },
     removeUser (user) {
       this.$store.dispatch('userManagement/removeManualUser', user)
     },
     handleScroll (e) {
       const scroll = e.target
+      console.log('scroll', scroll)
       this.isScrollTopDisplayed = (scroll.scrollTop > 1000)
 
       if (scroll.scrollTop > this.currentScrollTop) { // if we go down
@@ -176,6 +185,25 @@ export default {
   height: 100%;
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-left: 5px;
+  margin-bottom: 20px;
+  .pagination {
+    margin: auto;
+  }
+  span {
+    margin-right: 4px;
+  }
+}
+
+.main-label {
+  margin-top: 10em;
+  text-align: center;
+}
+
 .create-user {
   margin-right: 10px;
 }
@@ -194,21 +222,33 @@ export default {
   th {
     text-align: left;
   }
+  tr {
+    height: 2em;
+  }
+  .manual-user {
+    &:hover {
+      background-color: lightblue;
+      cursor: pointer;
+    }
+  }
 }
 </style>
 
 <i18n locale="fr">
 {
   "action": "Editer",
-  "create": "Créer un nouvel utilisateur",
+  "display": "Résultats 1",
+  "to": "à",
+  "over": "sur un total de",
+  "create": "Ajouter un utilisateur",
+  "no-users" : "Aucun compte manuel pour cet établissement",
+  "please-select-school": "Veuillez sélectionner un établissement",
   "email": "E-mail",
   "firstName": "Prénom",
-  "import": "Import par lot",
   "lastName": "Nom",
   "login": "Identifiant",
   "role": "Profil",
   "search": "Recherche",
-  "searchPlaceHolder": "Taper le nom et/ou le prénom",
-  "warning": "La suppression de cet utilisateur est définitive."
+  "nameFilterPlaceholder": "Filtrer par nom / prénom"
 }
 </i18n>

@@ -1,34 +1,52 @@
 <template>
   <Layout
-    :is-allowed="$store.state.user.isSchoolAdmin || $store.state.user.isAdministrator"
+    :is-allowed="$store.state.user.isSchoolAdmin || $store.state.user.isDirectionMember || $store.state.user.isAdministrator"
     class="layout"
   >
-    <NeroToolbar v-if="(schoolList && schoolList.length > 1)">
-      <PentilaDropdown
-        v-model="selectedSchool"
-        :list="schoolList"
-        display-field="schoolName"
-      />
-    </NeroToolbar>
+    <div class="header">
+      <div class="header-title">
+        <p>{{ $t('title') }}</p>
+        <PentilaDropdown
+          v-if="schoolList.length > 1"
+          v-model="selectedSchool"
+          :list="schoolList"
+          display-field="schoolName"
+        />
+        <p
+          v-else
+          class="school-name"
+        >
+          {{ selectedSchool.schoolName }}
+        </p>
+      </div>
+    </div>
+
     <Transition
       appear
       name="fade"
     >
-      <PentilaTabList style="height: calc(100% - 60px);">
+      <PentilaTabList
+        style="height: calc(100% - 60px);"
+        class="tablist"
+      >
         <PentilaTabItem
           :title="$t('manual-users')"
+          class="tab"
           style="height: calc(100% - 30px);"
         >
           <ManualUsers />
         </PentilaTabItem>
-        <!-- <PentilaTabItem :title="$t('manual-affectation')">
-          <ManualAffectation />
-        </PentilaTabItem> -->
-        <PentilaTabItem :title="$t('school-admins')">
-          <SchoolAdmin />
+        <PentilaTabItem
+          :title="$t('delegations')"
+          class="tab"
+        >
+          <Delegations />
         </PentilaTabItem>
-        <PentilaTabItem :title="$t('gar-admins')">
-          <GARAdmin />
+        <PentilaTabItem
+          :title="$t('affectations')"
+          class="tab"
+        >
+          <Affectations />
         </PentilaTabItem>
       </PentilaTabList>
     </Transition>
@@ -37,21 +55,17 @@
 
 <script>
 import Layout from '@/router/layouts/EmptyLayout'
-import NeroToolbar from '@/components/Nero/NeroToolbar.vue'
 import ManualUsers from '@/components/UserManagement/ManualUsers'
-import SchoolAdmin from '@/components/UserManagement/SchoolAdmin'
-import GARAdmin from '@/components/UserManagement/GARAdmin'
-// import ManualAffectation from '@/components/UserManagement/ManualAffectation'
+import Delegations from '@/components/UserManagement/Delegations'
+import Affectations from '@/components/UserManagement/Affectations.vue'
 
 export default {
   name: 'UserManagement',
   components: {
-    GARAdmin,
     Layout,
     ManualUsers,
-    // ManualAffectation,
-    NeroToolbar,
-    SchoolAdmin
+    Delegations,
+    Affectations
   },
   computed: {
     schoolList () {
@@ -65,8 +79,6 @@ export default {
         this.$store.commit('user/setSelectedSchool', school)
       }
     }
-  },
-  created () {
   }
 }
 </script>
@@ -74,14 +86,35 @@ export default {
 <style lang="scss" scoped>
 .layout {
   height: 100%;
+  background-color: rgb(233, 233, 233);
+}
+.header {
+  width: 100%;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  .header-title {
+    display: flex;
+    margin: auto;
+    width: 50%;
+    p {
+      margin-right: 1em;
+      font-weight: bold;;
+    }
+    .school-name {
+      font-weight: normal;
+    }
+  }
+}
+.tablist {
+  background-color: white;
 }
 </style>
 
 <i18n locale="fr">
 {
-  "gar-admins": "Administrateurs GAR",
-  "manual-users": "Utilisateurs manuels",
-  "manual-affectation": "Affectations classes",
-  "school-admins": "Administrateurs"
+  "title": "Gestion des utilisateurs de ",
+  "manual-users": "Comptes manuels",
+  "delegations": "Délégations",
+  "affectations": "Affectations"
 }
 </i18n>
