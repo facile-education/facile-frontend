@@ -34,13 +34,13 @@
                   v-for="(week, index) in month.weekList"
                   :key="week"
                   class="horizontal-timeline-week"
+                  :class="{ 'current-week theme-border-color': week.isCurrent, 'theme-background-color': week.isSelected }"
                   :style="'left: ' + (index * (100/month.weekList.length)) + '%, width: ' + (100/month.weekList.length) + '%'"
+                  @click="onClickWeek(week)"
                 >
                   <div
                     class="weeknumber-label"
-                    :class="{ 'current-week theme-border-color': week.isCurrent, 'theme-background-color': week.isSelected }"
                     :title="formatWeekNbPopup(month.date)"
-                    @click="onClickWeek(week)"
                   >
                     S.{{ week.weekNumber }}
                   </div>
@@ -280,7 +280,7 @@ export default {
 
   .nav-btn {
     cursor: pointer;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
 
     &:disabled {
       cursor: not-allowed;
@@ -306,6 +306,8 @@ export default {
       justify-content: space-around;
       padding: 0;
       margin-bottom: 0;
+      margin-block-start: 0;
+      margin-block-end: 0;
     }
   }
 }
@@ -315,22 +317,22 @@ export default {
 }
 
 .timeline-label {
-  text-align: right;
+  text-align: center;
   font-size: 0.8rem;
 }
 
 .horizontal-timeline-week {
   display: flex;
   flex-direction: column;
+  border-radius: 6px;
+  cursor: pointer;
   margin: 0;
 }
 
 .weeknumber-label {
   padding: 0.2rem 1rem;
   text-align: center;
-  border-radius: 2px;
-  cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  font-weight: 600;
 
   @extend %no-text-highlight;
 }
