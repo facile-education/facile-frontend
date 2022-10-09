@@ -43,11 +43,12 @@
             :completion-only="true"
             :min-length="1"
             :placeholder="$t('recipientsPlaceHolder')"
-            display-field="text"
+            display-field="name"
             id-field="id"
             :list="autocompleteItems"
             class="tags"
             :class="device"
+            @input="searchTimeOut"
           />
         </div>
         <div class="error-container">
@@ -160,6 +161,8 @@ const isSubjectValid = (str) => {
   return !(str.trim() === '') // Subject must not contain only spaces
 }
 
+let timeout
+
 export default {
   name: 'CreateMessageModal',
   components: {
@@ -222,7 +225,6 @@ export default {
   },
   created () {
     this.init()
-    this.initItems()
   },
   mounted () {
     if (this.messageParameters.isNew && !this.mq.phone && !this.mq.tablet) {
@@ -296,10 +298,23 @@ export default {
     updateContent (value) {
       this.currentContent.contentValue = value
     },
-    initItems () {
-      messageService.getUsersCompletion(this.search).then((data) => {
+    searchTimeOut () {
+      clearTimeout(timeout)
+      // Make a new timeout set to go off in 800ms
+      timeout = setTimeout(() => {
+        if (this.$refs.tagsinput.inputValue.length >= 2) {
+          this.getCompletion(this.$refs.tagsinput.inputValue)
+        }
+      }, 500)
+    },
+    getCompletion (query) {
+      console.log('get completion with query: ' + query)
+      messageService.getUsersCompletion(query).then((data) => {
         if (data.success) {
-          this.autocompleteItems = data.users
+          this.autocompleteItems = data.results
+          this.autocompleteItems.forEach((item) => { item.type = 1 }) // Override generic getUserCompletion results to have the good type
+        } else {
+          console.error('Error while getting users', data.error)
         }
       })
     },
