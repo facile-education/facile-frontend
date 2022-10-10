@@ -1,36 +1,38 @@
 <template>
   <PentilaWindow
     :modal="true"
-    :draggable="true"
+    :class="{ 'app-broadcast-modal': mq.phone }"
     @close="closeModal"
   >
     <template #header>
-      <span v-t="'ApplicationManager.BroadcastScopeModal.modalTitle'" />
+      <span v-t="'modalTitle'" />
     </template>
     <template #body>
-      <PentilaButton
-        :label="$t('ApplicationManager.BroadcastScopeModal.addRuleButton')"
-        class="add"
-        @click="addScope"
-      />
-
       <div
         v-if="!hasRules"
-        v-t="'ApplicationManager.BroadcastScopeModal.defaultLabel'"
+        v-t="'defaultLabel'"
         class="fallback"
       />
-      <RuleList
-        v-else
-        :rule-list="ruleList"
-        :is-error-list-displayed="isErrorListDisplayed"
-        @remove="removeScope"
-        @update="updateRule"
-      />
+      <template v-else>
+        <RuleList
+          :rule-list="ruleList"
+          :is-error-list-displayed="isErrorListDisplayed"
+          @remove="removeScope"
+          @update="updateRule"
+        />
+        <RuleItem
+          :rule="emptyRule"
+          :is-default="true"
+          :is-error-list-displayed="false"
+          @blur="addScope"
+          @update="updateEmptyRule"
+        />
+      </template>
     </template>
 
     <template #footer>
       <PentilaButton
-        :label="$t('ApplicationManager.BroadcastScopeModal.updateButton')"
+        :label="$t('updateButton')"
         @click="saveRuleList"
       />
     </template>
@@ -42,13 +44,16 @@ import { required } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
 import PentilaUtils from 'pentila-utils'
 
+import RuleItem from '@/components/ApplicationManager/RuleItem'
 import RuleList from '@/components/ApplicationManager/RuleList'
 
 export default {
   name: 'BroadcastScopeModal',
   components: {
+    RuleItem,
     RuleList
   },
+  inject: ['mq'],
   setup: () => ({ v$: useVuelidate() }),
   validations: {
     ruleList: {
@@ -64,6 +69,7 @@ export default {
   },
   data () {
     return {
+      emptyRule: { classes: [], roles: [] },
       isErrorListDisplayed: false,
       ruleList: []
     }
@@ -77,8 +83,12 @@ export default {
     this.ruleList = PentilaUtils.JSON.deepCopy(this.$store.state.applicationManager.selectedApplication.rules)
   },
   methods: {
-    addScope () {
-      this.ruleList.push({ classes: [], roles: [] })
+    addScope (rule) {
+      if (rule.classes.length && rule.roles.length) {
+        this.ruleList.push(PentilaUtils.JSON.deepCopy(rule))
+        this.emptyRule.classes.length = 0
+        this.emptyRule.roles.length = 0
+      }
     },
     buildClassIdList (currentRule, currentRuleId) {
       let updateClassList = false
@@ -168,12 +178,21 @@ export default {
         })
       }
     },
+    updateEmptyRule (rule) {
+      this.emptyRule = rule
+    },
     updateRule ({ index, rule }) {
       this.ruleList.splice(index, 1, rule)
     }
   }
 }
 </script>
+
+<style lang="scss">
+.app-broadcast-modal .window-body {
+  overflow: auto;
+}
+</style>
 
 <style lang="scss" scoped>
 .add {
@@ -185,3 +204,12 @@ export default {
   text-align: center;
 }
 </style>
+
+<i18n locale="fr">
+{
+  "addRuleButton":"Ajouter une règle de diffusion",
+  "defaultLabel": "L'application n'est pas diffusée",
+  "modalTitle": "Règles de diffusion",
+  "updateButton": "Valider"
+}
+</i18n>

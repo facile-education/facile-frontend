@@ -5,9 +5,15 @@
       :key="category"
       class="category"
     >
-      <h4 class="header">
+      <h3 class="header">
         {{ category }}
-      </h4>
+        <!-- span v-if / v-t / class -->
+        <span
+          v-if="category === 'Création de contenu'"
+          v-t="'documents-info'"
+          class="info"
+        />
+      </h3>
       <ApplicationList :category="category" />
     </div>
   </div>
@@ -39,8 +45,20 @@ export default {
 .header {
   margin-top: 0;
   margin-bottom: 5px;
-  padding: 10px;
-  background: $color-header-bg;
+  margin-left: 15px;
+  padding: 10px 0;
   text-transform: uppercase;
+  border-bottom: 1px solid $color-border;
+}
+
+.info {
+  text-transform: initial;
+  font-style: italic;
 }
 </style>
+
+<i18n locale="fr">
+{
+  "documents-info": " - Disponibles directement au sein du service \"Mes documents\""
+}
+</i18n>

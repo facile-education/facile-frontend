@@ -54,7 +54,7 @@
 
     <h2>Administration</h2>
     <RouterLink to="/application-manager">
-      Application Manager (80% -> image picker, css, animations, loading)
+      Application Manager
     </RouterLink>
     <RouterLink to="/communication-manager">
       Communication Manager (50% -> date picker, widget types, tests, css, animations)

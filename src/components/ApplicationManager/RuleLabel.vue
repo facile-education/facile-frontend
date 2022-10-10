@@ -18,7 +18,7 @@ export default {
       let label = ''
       if (this.rule.classes.length !== 0 && this.rule.roles.length !== 0) {
         if (this.rule.roles.length === 1 && this.rule.roles[0].roleId === 0) {
-          label += this.$t('ApplicationManager.RuleLabel.everyRoleLabel')
+          label += this.$t('everyRoleLabel')
         } else {
           for (let k = 0; k < this.rule.roles.length; k++) {
             const role = this.rule.roles[k]
@@ -29,9 +29,9 @@ export default {
           };
         }
         if (this.rule.classes.length === 1 && this.rule.classes[0].value === 0) {
-          label += ' ' + this.$t('ApplicationManager.RuleLabel.allSchoolLabel')
+          label += ' ' + this.$t('allSchoolLabel')
         } else {
-          label += ' ' + this.$t('ApplicationManager.RuleLabel.fromClassesLabel') + ' '
+          label += ' ' + this.$t('fromClassesLabel') + ' '
           for (let j = 0; j < this.rule.classes.length; j++) {
             const classe = this.rule.classes[j]
             if (j > 0) {
@@ -51,3 +51,11 @@ export default {
 <style lang="scss" scoped>
 
 </style>
+
+<i18n locale="fr">
+{
+  "allSchoolLabel": "de tout l'établissement",
+  "everyRoleLabel": "Tous les profils",
+  "fromClassesLabel": "des classes"
+}
+</i18n>

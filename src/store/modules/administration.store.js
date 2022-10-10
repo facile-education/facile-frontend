@@ -25,10 +25,13 @@ export const mutations = {
   }
 }
 export const actions = {
-  getAdministrationSchools ({ commit }) {
-    administrationService.getAdministeredSchoolList().then((data) => {
+  async getAdministrationSchools ({ commit }) {
+    await administrationService.getAdministeredSchoolList().then((data) => {
       if (data.success) {
         commit('initAdministeredSchoolList', data.etabList)
+        if (data.etabList.length > 0) {
+          commit('setSelectedSchool', data.etabList[0])
+        }
       }
     })
   },
