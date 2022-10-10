@@ -346,13 +346,6 @@ const spaceSelectionOptions = [
     icon: '',
     position: 1,
     hasSeparator: true
-  },
-  {
-    name: 'recent',
-    title: i18n.global.t('Documents.options.recent'),
-    icon: '',
-    position: 2,
-    hasSeparator: false
   }
 ]
 
