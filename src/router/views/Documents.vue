@@ -13,6 +13,8 @@
         @optionClicked="handleOption"
       />
 
+      <Breadcrumb class="breadCrumb" />
+
       <div class="body">
         <PentilaSpinner
           v-if="areActionsInProgress"
@@ -24,7 +26,6 @@
           @fileAdded="importDocument"
           @click.right.prevent="openContextMenu"
         >
-          <Breadcrumb class="breadCrumb" />
           <div
             class="scroll"
             @click="clickOnScrollDiv"
@@ -458,7 +459,7 @@ export default {
 
   .body {
     position: relative;
-    height: calc(100% - #{$doc-currents-options-height});
+    height: calc(100% - #{$doc-currents-options-height} - #{$doc-breadcrumb-size});
     display: flex;
 
     .spinner {
@@ -470,8 +471,9 @@ export default {
       flex: 3;
 
       .scroll {
-        height: calc(100% - #{$doc-breadcrumb-size});
+        height: 100%;
         overflow-y: auto;
+        padding-top: 20px;
 
         .breadCrumb {
           margin-left: 10px;

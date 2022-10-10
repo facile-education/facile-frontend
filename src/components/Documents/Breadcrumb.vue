@@ -104,6 +104,7 @@ export default {
   height: $doc-breadcrumb-size;
   display: flex;
   align-items: center;
+  border-bottom: 1px solid $color-border;
 }
 
 .chevron {
