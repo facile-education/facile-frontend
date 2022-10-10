@@ -185,6 +185,8 @@ export default {
 }
 
 .phone-fields {
+  margin-bottom: 15px;
+
   .selection-icon {
     justify-content: center;
   }

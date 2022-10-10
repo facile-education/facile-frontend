@@ -94,7 +94,6 @@ export default {
 @import "@design";
 
 .current-options {
-  border-bottom: 1px solid $color-border;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
