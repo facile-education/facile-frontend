@@ -327,6 +327,10 @@ export default {
   border-radius: 6px;
   cursor: pointer;
   margin: 0;
+
+  &:hover:not(.theme-background-color) {
+    background-color: $color-hover-bg;
+  }
 }
 
 .weeknumber-label {

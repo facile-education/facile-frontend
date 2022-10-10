@@ -321,7 +321,7 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 60px;
+    height: 70px;
     .item-title {
       width: 20%;
       margin: auto;
