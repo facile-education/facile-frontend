@@ -1,5 +1,5 @@
 import {
-  getManualUsers, getRoles, removeManualUser, getAffectedUsers
+  getManualUsers, getRoles, getAffectedUsers
 } from '@/api/userManagement.service'
 
 export const state = {
@@ -122,13 +122,7 @@ export const actions = {
     commit('editUser', user)
   },
   removeManualUser ({ commit }, user) {
-    removeManualUser(user.userId).then(
-      (data) => {
-        if (data.success) {
-          commit('removeUser', user)
-        }
-      }
-    )
+    commit('removeUser', user)
   },
   addAffectedUsers ({ commit }, users) {
     commit('addAffectedUsers', users)

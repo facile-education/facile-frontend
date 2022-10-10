@@ -113,7 +113,7 @@
 import { useVuelidate } from '@vuelidate/core'
 import { required, email } from '@vuelidate/validators'
 import PentilaUtils from 'pentila-utils'
-import { createManualUser, editManualUser } from '@/api/userManagement.service'
+import { createManualUser, editManualUser, removeManualUser } from '@/api/userManagement.service'
 import store from '@/store'
 
 export default {
@@ -228,11 +228,22 @@ export default {
         )
       }
     },
-    confirmUserRemoval (user) {
+    confirmUserRemoval () {
       this.$store.dispatch('warningModal/addWarning', {
         text: this.$t('delete-warning'),
-        lastAction: { fct: this.removeUser, params: [user] }
+        lastAction: { fct: this.removeUser, params: [this.editedUser] }
       })
+    },
+    removeUser (user) {
+      removeManualUser(user.userId).then(
+        (data) => {
+          if (data.success) {
+            this.$store.dispatch('userManagement/removeManualUser', user)
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.userRemoved'), type: 'success' })
+            this.closeModal()
+          }
+        }
+      )
     }
   }
 }
@@ -273,7 +284,8 @@ export default {
   "delete-warning": "La suppression de cet utilisateur est définitive.",
   "Popup": {
     "userAdded": "Utilisateur créé",
-    "userEdited": "Utilisateur modifié"
+    "userEdited": "Utilisateur modifié",
+    "userRemoved": "Utilisateur supprimé"
   }
 }
 </i18n>
