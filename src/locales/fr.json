@@ -59,6 +59,11 @@
       "rolesPlaceholder": "Liste des profils"
     }
   },
+  "AttachedFiles": {
+    "view": "Visualiser",
+    "download": "Télécharger",
+    "remove": "Supprimer"
+  },
   "Commons": {
     "back": "Retour",
     "delete": "Supprimer",
@@ -200,7 +205,8 @@
     "groupFilter": "Groupe",
     "userInput": "Elève / Maître",
     "childFilter": "Enfant",
-    "timetableOf": "Horaire de "
+    "timetableOf": "Horaire de ",
+    "createSession": "Créer un cours"
   },
   "Layout": {
     "authRequired": "Une authentification est requise pour accéder au service.",
