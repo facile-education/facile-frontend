@@ -1,29 +1,31 @@
 <template>
   <div class="placeholder">
-    <div class="message">
-      <div class="icon-container">
-        <NeroIcon
-          v-if="isLoadDocumentsError"
-          name="fa-exclamation-triangle"
-          class="fa-icon"
-        />
-        <img
-          v-else
-          class="icon"
-          src="@/assets/options/icon_fichier_ajout.svg"
-          alt=""
-        >
-      </div>
-      <p> {{ text }}</p>
+    <div class="icon-container">
+      <img
+        v-if="isLoadDocumentsError"
+        class="icon"
+        src="@/assets/options/loadingErrorPlaceholder.svg"
+        alt=""
+      >
+      <img
+        v-else
+        class="icon"
+        src="@/assets/options/emptyFolderPlaceholder.svg"
+        alt=""
+      >
+      <p v-if="!mq.phone && !mq.tablet">
+        {{ text }}
+      </p>
     </div>
+    <p v-if="mq.phone || mq.tablet">
+      {{ text }}
+    </p>
   </div>
 </template>
 
 <script>
-import NeroIcon from '@components/Nero/NeroIcon'
 export default {
   name: 'DocumentPlaceHolder',
-  components: { NeroIcon },
   inject: ['mq'],
   computed: {
     isLoadDocumentsError () {
@@ -48,52 +50,50 @@ export default {
 .placeholder{
   height: calc(100% - #{$doc-breadcrumb-size});
   width: 100%;
-  margin-right: auto;
-  margin-left: auto;
+  display: flex;
   padding-top: 6em;
+  flex-direction: column;
+  align-items: center;
   font-size: 1.25em;
 }
 
-.message {
+.icon-container {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
+  width: 30vw;
+  max-width: 300px;
+  height: 30vw;
+  max-height: 300px;
+  border-radius: 15vw;
+  background-color: #F5F5F5;
 
-  .icon-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 30vw;
-    max-width: 300px;
-    height: 30vw;
-    max-height: 300px;
-    border-radius: 15vw;
-    background-color: #F3F6F8;
-
-    .icon {
-      margin-left: 3vw;
-      width: 10vw;
-      max-width: 100px;
-    }
-
-    .fa-icon {
-      font-size: 10vw;
-      max-width: 100px;
-    }
+  .icon {
+    margin-left: 3vw;
+    width: 10vw;
+    max-width: 100px;
   }
 
-  p{
-    font-size: 14px;
-    font-weight: 600;
+  .fa-icon {
+    font-size: 10vw;
+    max-width: 100px;
   }
+}
+
+p{
+  font-family: Roboto-Regular,sans-serif;
+  font-size: 18px;
+  color: #898989;
+  letter-spacing: 0;
+  text-align: center;
 }
 
 </style>
 
 <i18n locale="fr">
 {
-  "isLoadDocumentsError": "Nous avons rencontré une erreur lors du chargement des fichiers",
+  "isLoadDocumentsError": "Problème rencontré lors du chargement des fichiers",
   "noDocumentToDisplay": "Glisser / déposer un document",
   "noDocumentToDisplayMobile": "Ajouter un document avec le bouton +"
 }
