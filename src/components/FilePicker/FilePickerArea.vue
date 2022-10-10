@@ -19,15 +19,25 @@
     <div class="slot">
       <slot />
     </div>
+
+    <div
+      v-if="isLoadingProgressionDisplayed"
+      class="background-actions-container"
+      :class="{'phone': mq.phone}"
+    >
+      <UploadProgression />
+    </div>
   </div>
 </template>
 
 <script>
 import { returnAddedFiles } from '@/utils/upload.util'
 import BaseIcon from '@components/Base/BaseIcon'
+import UploadProgression from '@components/Documents/UploadProgression'
 export default {
   name: 'FilePickerArea',
-  components: { BaseIcon },
+  components: { UploadProgression, BaseIcon },
+  inject: ['mq'],
   props: {
     accept: {
       type: String,
@@ -57,6 +67,9 @@ export default {
     },
     isThereInternDocumentDrag () {
       return this.$store.state.misc.isThereDocumentDrag
+    },
+    isLoadingProgressionDisplayed () {
+      return this.$store.state.currentActions.isLoadingProgressionDisplayed
     }
   },
   methods: {
@@ -98,55 +111,79 @@ export default {
 <style scoped lang="scss">
 @import "@design";
 
-  .file-picker-area {
-    width: 100%;
-    height: 100%;
-    transition: 0.3s;
-    position: relative;
-    z-index: $body-z-index;
+.file-picker-area {
+  width: 100%;
+  height: 100%;
+  transition: 0.3s;
+  position: relative;
+  z-index: $body-z-index;
+}
+
+.slot {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: $body-z-index+1;
+  display: flex;
+  flex-direction: column;
+  top: 0;
+  left: 0;
+}
+
+.deposit-zone {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: $body-z-index + 2;
+  background-color: $drop-zone-area-bg;
+  opacity: 0.7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.message {
+  width: 30em;
+  height: 15em;
+  border: 5px dashed blue;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.text {
+  font-size: 30px;
+  color: black;
+  pointer-events: none;
+}
+
+.background-actions-container {
+  z-index: $popup-z-index;
+  position: absolute;
+  bottom: 0;
+  right: 20px;
+  flex-direction: column;
+  max-width: 100%;
+
+  .action {
+    color: white;
   }
 
-  .slot {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    z-index: $body-z-index+1;
-    display: flex;
-    flex-direction: column;
-    top: 0;
-    left: 0;
-  }
+  &.phone {
+    bottom: 0;
+    right: 50%;
+    transform: translate(50%, 0);
 
-  .deposit-zone {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: $body-z-index + 2;
-    background-color: $drop-zone-area-bg;
-    opacity: 0.7;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    .action {
+      width: 90vw;
+      height: 50px;
+    }
   }
-
-  .message {
-    width: 30em;
-    height: 15em;
-    border: 5px dashed blue;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none;
-  }
-
-  .text {
-    font-size: 30px;
-    color: black;
-    pointer-events: none;
-  }
+}
 </style>
 
 <i18n locale="fr">
