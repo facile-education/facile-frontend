@@ -197,6 +197,7 @@ export default {
           (data) => {
             if (data.success) {
               this.$store.dispatch('userManagement/addManualUser', data.user)
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.userAdded'), type: 'success' })
               this.closeModal()
             } else if (data.errorCode === 'email') {
               store.dispatch('popups/pushPopup', { type: 'error', message: 'L\'e-mail de cet utilisateur existe déjà dans l\'ENT.' })
@@ -216,6 +217,7 @@ export default {
           (data) => {
             if (data.success) {
               this.$store.dispatch('userManagement/editManualUser', data.user)
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.userEdited'), type: 'success' })
               this.closeModal()
             } else if (data.errorCode === 'email') {
               store.dispatch('popups/pushPopup', { type: 'error', message: 'L\'e-mail de cet utilisateur existe déjà dans l\'ENT.' })
@@ -268,6 +270,10 @@ export default {
   "firstNamePlaceholder": "Prénom",
   "emailPlaceholder": "Mail",
   "email-warning": "NB: Un e-mail contenant les informations d'authentification sera envoyé à l'utilisateur créé.",
-  "delete-warning": "La suppression de cet utilisateur est définitive."
+  "delete-warning": "La suppression de cet utilisateur est définitive.",
+  "Popup": {
+    "userAdded": "Utilisateur créé",
+    "userEdited": "Utilisateur modifié"
+  }
 }
 </i18n>

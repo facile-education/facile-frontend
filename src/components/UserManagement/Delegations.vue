@@ -137,7 +137,7 @@ export default {
         addSchoolAdmin(user.userId, this.selectedSchool.schoolId).then(
           (data) => {
             if (data.success) {
-              // TODO toaster
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.adminAdded'), type: 'success' })
             }
           }
         )
@@ -145,7 +145,7 @@ export default {
         removeSchoolAdmin(user.userId, this.selectedSchool.schoolId).then(
           (data) => {
             if (data.success) {
-              // TODO toaster
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.adminRemoved'), type: 'success' })
             }
           }
         )
@@ -156,7 +156,7 @@ export default {
         addNewsDelegate(user.userId, this.selectedSchool.schoolId).then(
           (data) => {
             if (data.success) {
-              // TODO toaster
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.newsAdded'), type: 'success' })
             }
           }
         )
@@ -164,7 +164,7 @@ export default {
         removeNewsDelegate(user.userId, this.selectedSchool.schoolId).then(
           (data) => {
             if (data.success) {
-              // TODO toaster
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.newsRemoved'), type: 'success' })
             }
           }
         )
@@ -220,6 +220,12 @@ tr {
   "news-delegation": "Rédacteur annonces",
   "no-delegation" : "Aucune délégation pour cet établissement",
   "please-select-school": "Veuillez sélectionner un établissement",
-  "warning": "La suppression de cet administrateur est définitive."
+  "warning": "La suppression de cet administrateur est définitive.",
+  "Popup": {
+    "adminAdded": "Délégation d'administration ajoutée",
+    "adminRemoved": "Délégation d'administration supprimée",
+    "newsAdded": "Délégation de rédaction d'actualités ajoutée",
+    "newsRemoved": "Délégation de rédaction d'actualités supprimée"
+  }
 }
 </i18n>
