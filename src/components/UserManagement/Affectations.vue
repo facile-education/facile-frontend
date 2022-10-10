@@ -64,7 +64,11 @@
           <td><span>{{ affectedUser.lastName }}</span></td>
           <td><span>{{ affectedUser.firstName }}</span></td>
           <td><span>{{ affectedUser.roles }}</span></td>
-          <td><div class="center">{{ nbAffectations(affectedUser) }}</div></td>
+          <td>
+            <div class="center">
+              {{ nbAffectations(affectedUser) }}
+            </div>
+          </td>
           <td>
             <div>
               <img

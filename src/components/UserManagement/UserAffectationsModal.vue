@@ -14,7 +14,6 @@
 
     <template #body>
       <div class="main">
-
         <!-- Left panel : school tree -->
         <div class="school-classes">
           <PentilaInput
@@ -25,58 +24,33 @@
             :placeholder="$t('classnameFilterPlaceholder')"
           />
           <div
-            v-for="school in schools"
-            :key="school.schoolId"
-            class="school"
+            class="school-header"
+          >
+            <span
+              :class="{ 'is-affected': isAffected(selectedSchool.schoolId) }"
+              @click="addAffectation(selectedSchool.schoolId, selectedSchool.schoolName)"
+            >{{ selectedSchool.schoolName }}</span>
+          </div>
+          <div
+            v-for="org in filteredOrgs"
+            :key="org.orgId"
           >
             <div
-              class="school-header"
+              class="org"
+              @click="addAffectation(org.orgId, org.orgName)"
             >
-              <img
-                v-if="!school.isExpanded"
-                src="@assets/arrow-right.svg"
-                :alt="$t('expand')"
-                :title="$t('expand')"
-                @click="toggleSchool(school)"
-              >
-              <img
-                v-else
-                src="@assets/arrow-down.svg"
-                :alt="$t('collapse')"
-                :title="$t('collapse')"
-                @click="toggleSchool(school)"
-              >
-              <div class="school-name">
-                <span
-                  :class="{ 'is-affected': isAffected(school.schoolId) }"
-                  @click="addAffectation(school.schoolId, school.schoolName)"
-                >{{ school.schoolName }}</span>
-              </div>
-            </div>
-            <div
-              v-if="school.isExpanded"
-              class="org-list"
-            >
-              <div
-                v-for="org in filteredOrgs(school.orgs)"
-                :key="org.orgId"
-              >
-                <div
-                  class="org"
-                  @click="addAffectation(org.orgId, org.orgName)"
-                >
-                  <span
-                    :class="{ 'is-affected': isAffected(org.orgId) }"
-                  >{{ org.orgName }}</span>
-                </div>
-              </div>
+              <span
+                :class="{ 'is-affected': isAffected(org.orgId) }"
+              >{{ org.orgName }}</span>
             </div>
           </div>
         </div>
 
         <!-- Right panel : user affectations -->
         <div class="user-affectations">
-          <p v-if="noAffectation">{{ $t('no-affectation') }}</p>
+          <p v-if="noAffectation">
+            {{ $t('no-affectation') }}
+          </p>
           <div
             v-for="affectation in editedUser.affectations"
             :key="affectation.orgId"
@@ -108,8 +82,6 @@
 </template>
 
 <script>
-import { useVuelidate } from '@vuelidate/core'
-import { required } from '@vuelidate/validators'
 import { addUserAffectation, removeUserAffectation } from '@/api/userManagement.service'
 import { getSchoolCLassList } from '@/api/organization.service'
 import dayjs from 'dayjs'
@@ -127,72 +99,41 @@ export default {
     }
   },
   emits: ['close'],
-  setup: () => ({ v$: useVuelidate() }),
-  validations: {
-    selectedDelegates: { required }
-  },
   data () {
     return {
-      schools: [],
-      filter: ''
+      filter: '',
+      schoolOrgs: []
     }
   },
   computed: {
-    formErrorList () {
-      return {
-        selectedDelegates: (this.v$.selectedDelegates.$invalid && this.v$.selectedDelegates.$dirty) ? this.$t('Commons.required') : ''
-      }
+    selectedSchool () {
+      return this.$store.state.user.selectedSchool
+    },
+    filteredOrgs () {
+      return this.schoolOrgs.filter(org => this.filter === '' || org.orgName.toLowerCase().indexOf(this.filter.toLowerCase()) !== -1)
     },
     noAffectation () {
       return this.editedUser.affectations === undefined || this.editedUser.affectations.length === 0
     }
   },
   mounted () {
-    this.schools = JSON.parse(JSON.stringify(this.$store.getters['user/adminSchoolList']))
-    console.log('schools length=', this.schools.length)
-    // If 1 school, it is expanded, else not
-    if (this.schools.length === 1) {
-      this.schools[0].isExpanded = true
-      this.fetchOrgs(this.schools[0])
-    } else {
-      console.log('schools=', this.schools)
-      this.schools.forEach((school) => {
-        school.isExpanded = false
-      })
-    }
+    getSchoolCLassList(this.selectedSchool.schoolId, true).then(
+      (data) => {
+        if (data.success) {
+          this.schoolOrgs = data.orgs
+        }
+      }
+    )
   },
   methods: {
     isAffected (orgId) {
       return this.editedUser.affectations === undefined ? false : this.editedUser.affectations.find(affectation => affectation.orgId === orgId) !== undefined
-    },
-    filteredOrgs (orgs) {
-      if (orgs !== undefined) {
-        return orgs.filter(org => this.filter === '' || org.orgName.toLowerCase().indexOf(this.filter.toLowerCase()) !== -1)
-      }
-      return []
     },
     buildTooltip (affectation) {
       return this.$t('affected-by') + ' ' + affectation.adminName + this.$t('the') + dayjs(affectation.expirationDate, 'yyyy-MM-dd').format('L')
     },
     closeModal () {
       this.$emit('close')
-    },
-    fetchOrgs (school) {
-      if (school.orgs === undefined) {
-        // Fetch classes, groups and cours
-        getSchoolCLassList(school.schoolId, true).then(
-          (data) => {
-            if (data.success) {
-              const schoolIndex = this.schools.map(school => school.schoolId).indexOf(school.schoolId)
-              this.schools[schoolIndex].orgs = data.orgs
-            }
-          }
-        )
-      }
-    },
-    toggleSchool (school) {
-      school.isExpanded = !school.isExpanded
-      this.fetchOrgs(school)
     },
     addAffectations () {
       this.closeModal()
@@ -202,7 +143,7 @@ export default {
         addUserAffectation(this.editedUser.userId, orgId).then(
           (data) => {
             if (data.success) {
-              console.log('add ok')
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.added'), type: 'success' })
               this.$store.dispatch('userManagement/addUserAffectation', { userId: this.editedUser.userId, orgId: orgId, orgName: orgName })
             }
           }
@@ -210,11 +151,10 @@ export default {
       }
     },
     removeAffectation (removedAffectation) {
-      console.log('removing affectation ', removedAffectation)
       removeUserAffectation(this.editedUser.userId, removedAffectation.orgId).then(
         (data) => {
           if (data.success) {
-            console.log('remove ok')
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.removed'), type: 'success' })
             this.$store.dispatch('userManagement/removeUserAffectation', { userId: this.editedUser.userId, orgId: removedAffectation.orgId })
           }
         }
@@ -234,40 +174,32 @@ export default {
       width: 50%;
       border-right: solid black 1px;
       overflow: auto;
+      margin-left: 20px;
       .class-filter {
         margin-bottom: 20px;
         width: 90%;
       }
-      .school {
-        margin-left: 20px;
-        .school-header {
-          display: flex;
-          height: 20px;
-          margin-bottom: 10px;
-          img {
-            width: 10px;
-            margin-right: 10px;
-          }
-          .school-name {
-            :hover:not(.is-affected) {
-              background-color: rgb(226, 226, 226);
-              cursor: pointer;
-            }
-            .is-affected {
-              font-weight: bold;
-            }
-          }
+      .school-header {
+        display: flex;
+        height: 20px;
+        margin-bottom: 10px;
+        :hover:not(.is-affected) {
+          background-color: rgb(226, 226, 226);
+          cursor: pointer;
         }
-        .org {
-          margin-left: 30px;
-          margin-bottom: 5px;
-          :hover:not(.is-affected) {
-            background-color: rgb(226, 226, 226);
-            cursor: pointer;
-          }
-          .is-affected {
-            font-weight: bold;
-          }
+        .is-affected {
+          font-weight: bold;
+        }
+      }
+      .org {
+        margin-left: 30px;
+        margin-bottom: 5px;
+        :hover:not(.is-affected) {
+          background-color: rgb(226, 226, 226);
+          cursor: pointer;
+        }
+        .is-affected {
+          font-weight: bold;
         }
       }
     }
@@ -314,6 +246,10 @@ export default {
   "add": "Fermer",
   "classnameFilterPlaceholder": "Filtrer",
   "affected-by": "Affectation ajoutée par ",
-  "the": " le "
+  "the": " le ",
+  "Popup": {
+    "added": "Affectation enregistrée",
+    "removed": "Affectation supprimée"
+  }
 }
 </i18n>

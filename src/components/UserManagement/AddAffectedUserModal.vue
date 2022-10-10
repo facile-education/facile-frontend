@@ -97,6 +97,7 @@ export default {
       )
     },
     addUsers () {
+      this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.added'), type: 'success' })
       this.$emit('newUsers', this.selectedUsers)
       this.closeModal()
     }
@@ -117,6 +118,9 @@ export default {
 {
   "add-affected-user-title": "Ajouter un utilisateur pour affectation",
   "completionPlaceholder": "Saisir le nom ou prénom",
-  "add": "Ajouter"
+  "add": "Ajouter",
+  "Popup": {
+    "added": "Utilisateur(s) ajouté(s)"
+  }
 }
 </i18n>
