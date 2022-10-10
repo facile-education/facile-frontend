@@ -4,7 +4,7 @@
     @close="onClose"
   >
     <template #header>
-      <span v-t="'ImagePickerWindow.ImagePickerModal.header'" />
+      <span v-t="'header'" />
     </template>
 
     <template #body>
@@ -40,7 +40,7 @@
                 accept="image/*"
                 @change="loadImage($event)"
               >
-              Sélectionner une image
+              {{ $t('selectButton') }}
             </span>
           </div>
         </div>
@@ -49,7 +49,7 @@
 
     <template #footer>
       <PentilaButton
-        :label="$t('ImagePickerWindow.ImagePickerModal.saveButtonLabel')"
+        :label="$t('saveButton')"
         @click="onConfirm"
       />
     </template>
@@ -66,6 +66,7 @@ export default {
     Cropper,
     Preview
   },
+  emits: ['close', 'save'],
   data () {
     return {
       result: {
@@ -117,14 +118,14 @@ export default {
       if (canvas) {
         canvas.toBlob(blob => {
           this.fileName = 't.png'
-          this.$store.state.modals.imagePickerModal.onConfirm(blob, this.fileName)
+          this.$emit('save', { blob, fileName: this.fileName })
 
           this.onClose()
         }, 'image/jpeg')
       }
     },
     onClose () {
-      this.$store.dispatch('modals/closeImagePickerModal')
+      this.$emit('close')
     }
   }
 }
@@ -140,7 +141,7 @@ export default {
   .content {
     position: relative;
     width: 500px;
-    height: 500px;
+    height: 300px;
     display: flex;
     justify-content: center;
 
@@ -182,3 +183,11 @@ export default {
 }
 
 </style>
+
+<i18n locale="fr">
+{
+  "header": "Image",
+  "saveButton": "Valider",
+  "selectButton": "Sélectionner une image"
+}
+</i18n>
