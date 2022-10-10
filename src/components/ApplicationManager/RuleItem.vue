@@ -1,47 +1,63 @@
 <template>
-  <li class="rule">
-    <PentilaTagsInput
-      :model-value="rule.roles"
-      :placeholder="$t('ApplicationManager.RuleItem.rolesPlaceholder') + '*'"
-      :list="roleList"
-      display-field="displayText"
-      :error-message="formErrorList.roles"
-      class="column"
-      @blur="v$.rule.roles.$touch()"
-      @update:modelValue="updateRoles"
-    />
-    <p v-t="'ApplicationManager.RuleItem.fromLabel'" />
-    <PentilaTagsInput
-      :model-value="rule.classes"
-      :placeholder="$t('ApplicationManager.RuleItem.classesPlaceholder') + '*'"
-      :list="classList"
-      display-field="displayText"
-      :error-message="formErrorList.classes"
-      class="column"
-      @blur="v$.rule.classes.$touch()"
-      @update:modelValue="updateClasses"
-    />
+  <li
+    class="rule"
+    :class="{ phone: mq.phone }"
+  >
+    <div class="column">
+      <PentilaTagsInput
+        :model-value="rule.roles"
+        :placeholder="$t('rolesPlaceholder') + '*'"
+        :list="roleList"
+        display-field="displayText"
+        :error-message="formErrorList.roles"
+        @blur="onBlurRoles"
+        @update:modelValue="updateRoles"
+      />
+      <PentilaErrorMessage :error-message="formErrorList.roles" />
+    </div>
+    &nbsp;
+    <p v-t="'fromLabel'" />
+    &nbsp;
+    <div class="column">
+      <PentilaTagsInput
+        :model-value="rule.classes"
+        :placeholder="$t('classesPlaceholder') + '*'"
+        :list="classList"
+        display-field="displayText"
+        @blur="onBlurClasses"
+        @update:modelValue="updateClasses"
+      />
+      <PentilaErrorMessage :error-message="formErrorList.classes" />
+    </div>
     <PentilaButton
       v-if="isRemoveButtonDisplayed"
-      cls="cancel"
       type="circle"
-      @click="remove()"
+      cls="delete"
+      @click="remove"
     >
-      <i class="fa fa-trash" />
+      <NeroIcon name="trash" />
     </PentilaButton>
   </li>
 </template>
 
 <script>
-import { required } from '@vuelidate/validators'
+import { requiredIf } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
+
+import NeroIcon from '@/components/Nero/NeroIcon'
 
 export default {
   name: 'RuleItem',
+  components: { NeroIcon },
+  inject: ['mq'],
   props: {
     rule: {
       type: Object,
       required: true
+    },
+    isDefault: {
+      type: Boolean,
+      default: false
     },
     isErrorListDisplayed: {
       type: Boolean,
@@ -52,12 +68,20 @@ export default {
       default: false
     }
   },
-  emits: ['remove', 'update'],
+  emits: ['blur', 'remove', 'update'],
   setup: () => ({ v$: useVuelidate() }),
   validations: {
     rule: {
-      roles: { required },
-      classes: { required }
+      roles: {
+        required: requiredIf(function (form) {
+          return !this.isDefault
+        })
+      },
+      classes: {
+        required: requiredIf(function (form) {
+          return !this.isDefault
+        })
+      }
     }
   },
   computed: {
@@ -67,8 +91,8 @@ export default {
     formErrorList () {
       const form = this.v$.rule
       return {
-        classes: (form.classes.$invalid && (form.classes.$dirty || this.isErrorListDisplayed)) ? this.$t('Nero.formErrorMessage.required') : '',
-        roles: (form.roles.$invalid && (form.roles.$dirty || this.isErrorListDisplayed)) ? this.$t('Nero.formErrorMessage.required') : ''
+        classes: (form.classes.$invalid && (form.classes.$dirty || this.isErrorListDisplayed)) ? this.$t('Commons.formRequired') : '',
+        roles: (form.roles.$invalid && (form.roles.$dirty || this.isErrorListDisplayed)) ? this.$t('Commons.formRequired') : ''
       }
     },
     roleList () {
@@ -84,6 +108,17 @@ export default {
     }
   },
   methods: {
+    blur () {
+      this.$emit('blur', JSON.parse(JSON.stringify(this.rule)))
+    },
+    onBlurClasses () {
+      this.v$.rule.classes.$touch()
+      this.blur()
+    },
+    onBlurRoles () {
+      this.v$.rule.roles.$touch()
+      this.blur()
+    },
     remove () {
       this.$emit('remove')
     },
@@ -102,9 +137,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/design';
+
 .rule {
   display: flex;
-  margin-top: 10px;
+  align-items: center;
+  min-height: 70px;
 }
 
 .column {
@@ -112,7 +150,36 @@ export default {
   height: 100%;
 }
 
-.cancel {
-  margin-left: auto;
+.delete {
+  margin: auto;
+}
+
+.phone {
+  &.rule {
+    flex-direction: column;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid $color-border;
+  }
+
+  .column {
+    width: 100%;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .delete {
+    margin-top: 10px;
+  }
 }
 </style>
+
+<i18n locale="fr">
+{
+  "classesPlaceholder": "Liste des classes",
+  "fromLabel": "de",
+  "rolesPlaceholder": "Liste des profils"
+}
+</i18n>

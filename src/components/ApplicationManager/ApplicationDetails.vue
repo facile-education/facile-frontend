@@ -1,200 +1,150 @@
 <template>
   <div
-    ref="popup"
-    v-click-outside="closeDetails"
-    :class="isRightOriented ? 'right' : 'left'"
-    class="details"
+    class="content"
+    :class="{ phone: mq.phone }"
   >
-    <div class="content">
-      <div class="main">
-        <img
-          v-if="application.image"
-          :src="application.image"
-          class="logo"
-        >
-        <div
-          v-else
-          class="logo"
-        >
-          <i class="fa fa-image" />
-        </div>
+    <PentilaInput
+      v-if="application.hasCustomUrl"
+      v-model="applicationURL"
+      :placeholder="$t('customUrlPlaceholder')"
+      type="url"
+      class="input"
+      @blur="updateURL"
+      @keyup.enter="updateURL"
+    />
 
-        <div class="name">
-          <h5>
-            {{ application.serviceName }}
-          </h5>
-          <PentilaInput
-            v-if="application.hasCustomUrl"
-            v-model="applicationURL"
-            :placeholder="$t('ApplicationManager.ApplicationDetails.customUrlPlaceholder')"
-            type="url"
-          />
-        </div>
-      </div>
-
-      <div class="broadcast">
-        <p
-          v-if="application.isAvailable"
-          v-t="'ApplicationManager.ApplicationDetails.broadcastLabel'"
-        />
-        <p
-          v-else
-          v-t="'ApplicationManager.ApplicationDetails.noBroadcastLabel'"
-        />
-        <ul
-          v-if="application.isAvailable"
-          class="list-rules"
-        >
-          <RuleLabel
-            v-for="(rule, index) in application.rules"
-            :key="index"
-            :rule="rule"
-          />
-        </ul>
-      </div>
-
-      <div v-if="hasExport">
-        <p v-t="'ApplicationManager.ApplicationDetails.exportLabel'" />
-        <div class="app-export-buttons">
-          <PentilaButton
-            v-if="application.exportParent"
-            :label="$t('ApplicationManager.ApplicationDetails.parentsExportButton')"
-            @click="exportUserList('parent')"
-          />
-
-          <PentilaButton
-            v-if="application.exportStudent"
-            :label="$t('ApplicationManager.ApplicationDetails.studentsExportButton')"
-            @click="exportUserList('eleve')"
-          />
-
-          <PentilaButton
-            v-if="application.exportTeacher"
-            :label="$t('ApplicationManager.ApplicationDetails.teachersExportButton')"
-            @click="exportUserList('prof')"
-          />
-
-          <PentilaButton
-            v-if="application.exportOther"
-            :label="$t('ApplicationManager.ApplicationDetails.otherExportButton')"
-            @click="exportUserList('other')"
-          />
-        </div>
-      </div>
-    </div>
-    <div class="action">
-      <PentilaToggleSwitch
-        :model-value="application.isAvailable"
-        :title="$t('ApplicationManager.ApplicationDetails.broadcastButtonTooltip')"
-        @update:modelValue="updateBroadcastStatus"
+    <div class="broadcast">
+      <p
+        v-if="application.isAvailable"
+        v-t="'broadcastLabel'"
       />
-      <PentilaButton
-        v-if="isAdministrator"
-        :title="$t('ApplicationManager.ApplicationDetails.editButtonTooltip')"
-        type="circle"
-        @click="toggleEditionModal"
+      <p
+        v-else
+        v-t="'noBroadcastLabel'"
+      />
+      <ul
+        v-if="application.isAvailable"
+        class="list-rules"
       >
-        <i class="fa fa-pencil-alt" />
-      </PentilaButton>
-      <PentilaButton
-        :title="$t('ApplicationManager.ApplicationDetails.configurationButtonTooltip')"
-        type="circle"
-        @click="toggleBroadcastModal"
-      >
-        <i class="fa fa-cog" />
-      </PentilaButton>
-      <PentilaButton
-        v-if="application.hasCustomUrl"
-        :title="$t('ApplicationManager.ApplicationDetails.guideButtonTooltip')"
-        type="circle"
-      >
-        <i class="fa fa-book" />
-      </PentilaButton>
-      <PentilaButton
-        v-if="application.hasCustomUrl"
-        :title="$t('ApplicationManager.ApplicationDetails.saveButtonTooltip')"
-        type="circle"
-        @click="updateURL"
-      >
-        <i class="fa fa-save" />
-      </PentilaButton>
-      <PentilaButton
-        v-if="isAdministrator"
-        :title="$t('ApplicationManager.ApplicationDetails.deleteButtonTooltip')"
-        type="circle"
-        cls="cancel"
-        @click="confirmRemoval"
-      >
-        <i class="fa fa-trash" />
-      </PentilaButton>
+        <RuleLabel
+          v-for="(rule, index) in application.rules"
+          :key="index"
+          :rule="rule"
+        />
+      </ul>
     </div>
+
+    <div v-if="hasExport">
+      <p v-t="'exportLabel'" />
+      <PentilaDropdown
+        v-model="selectedExport"
+        :list="exportList"
+        display-field="label"
+        class="export-list"
+        @update:modelValue="exportUserList"
+      />
+      <p v-html="exportMessage" />
+    </div>
+  </div>
+  <div
+    class="action"
+    :class="{ phone: mq.phone }"
+  >
+    <PentilaToggleSwitch
+      :model-value="application.isAvailable"
+      :title="$t('broadcastButtonTooltip')"
+      @update:modelValue="updateBroadcastStatus"
+    />
+    <PentilaButton
+      v-if="isAdministrator"
+      :title="$t('editButtonTooltip')"
+      type="circle"
+      @click="toggleEditionModal"
+    >
+      <NeroIcon name="pencil-alt" />
+    </PentilaButton>
+    <PentilaButton
+      :title="$t('configurationButtonTooltip')"
+      type="circle"
+      @click="toggleBroadcastModal"
+    >
+      <NeroIcon name="cog" />
+    </PentilaButton>
+    <PentilaButton
+      v-if="isAdministrator"
+      :title="$t('deleteButtonTooltip')"
+      type="circle"
+      cls="delete"
+      @click="confirmRemoval"
+    >
+      <NeroIcon name="trash" />
+    </PentilaButton>
   </div>
 </template>
 
 <script>
-import { directive } from 'vue3-click-away'
+import NeroIcon from '@/components/Nero/NeroIcon'
 import RuleLabel from '@/components/ApplicationManager/RuleLabel'
 
 export default {
   name: 'ApplicationDetails',
   components: {
+    NeroIcon,
     RuleLabel
   },
-  directives: {
-    'click-outside': directive
-  },
-  emits: ['closeDetails'],
+  inject: ['mq'],
   data () {
     return {
-      domRect: undefined
+      applicationURL: '',
+      exportMessage: '',
+      domRect: undefined,
+      selectedExport: undefined
     }
   },
   computed: {
     application () {
       return this.$store.state.applicationManager.selectedApplication
     },
+    exportList () {
+      const list = []
+      if (this.application.exportStudent) {
+        list.push({ label: this.$t('studentsExportButton'), key: 'eleve' })
+      }
+      if (this.application.exportParent) {
+        list.push({ label: this.$t('parentsExportButton'), key: 'parent' })
+      }
+      if (this.application.exportTeacher) {
+        list.push({ label: this.$t('teachersExportButton'), key: 'prof' })
+      }
+      if (this.application.exportOther) {
+        list.push({ label: this.$t('otherExportButton'), key: 'other' })
+      }
+      return list
+    },
     hasExport () {
-      return (this.application.exportParent ||
-        this.application.exportStudent ||
-        this.application.exportTeacher ||
-        this.application.exportOther)
+      return (this.exportList.length > 0)
     },
     isAdministrator () {
       return this.$store.state.user.isAdministrator
-    },
-    isRightOriented () {
-      // If there is not enough space at the right change orientation
-      if (this.domRect) {
-        if ((window.innerWidth - this.domRect.x) < this.domRect.width) {
-          return false
-        }
-      }
-      return true
     }
   },
   created () {
     this.applicationURL = this.application.serviceUrl
-  },
-  mounted () {
-    this.domRect = this.$refs.popup.getBoundingClientRect()
+    this.selectedExport = this.exportList[0]
   },
   methods: {
-    closeDetails () {
-      this.$emit('closeDetails')
-    },
     confirmRemoval () {
-      const confirmParams = {
-        buttonLabel: this.$t('ApplicationManager.ApplicationDetails.removalConfirmButtonLabel'),
-        message: this.$t('ApplicationManager.ApplicationDetails.removalConfirmMessage'),
-        onConfirm: this.removeApplication,
-        title: this.$t('ApplicationManager.ApplicationDetails.removalConfirmTitle')
-      }
-      this.$store.dispatch('nero/openConfirmModal', confirmParams)
+      this.$store.dispatch('warningModal/addWarning', {
+        text: this.$t('removalConfirmMessage'),
+        lastAction: { fct: this.removeApplication, params: [] }
+      })
     },
     exportUserList (type) {
       this.$store.dispatch('applicationManager/exportApplicationUserList', {
         school: this.$store.state.administration.selectedSchool,
-        type
+        type: type.key
+      }).then((msg) => {
+        this.exportMessage = msg
       })
     },
     toggleBroadcastModal () {
@@ -213,10 +163,12 @@ export default {
       })
     },
     updateURL () {
-      this.$store.dispatch('applicationManager/updateURL', {
-        school: this.$store.state.administration.selectedSchool,
-        applicationURL: this.applicationURL
-      })
+      if (this.applicationURL !== this.application.serviceUrl) {
+        this.$store.dispatch('applicationManager/updateURL', {
+          school: this.$store.state.administration.selectedSchool,
+          applicationURL: this.applicationURL
+        })
+      }
     }
   }
 }
@@ -225,54 +177,40 @@ export default {
 <style lang="scss" scoped>
 @import '@/design';
 
-.details {
-  display: flex;
-  padding: 7px;
-  width: 345px;
-  position: absolute;
-  background: $color-toolbar-bg;
-  z-index: 3;
-  border-radius: $light-radius-size;
-  @extend %object-shadow;
-}
-
 .left {
-  right: 0;
-}
+  .content {
+    margin-left: 0;
+    border-left: none;
+    border-radius: $light-radius-size;
+  }
 
-.logo {
-  width: 70px;
-  height: 70px;
-  margin-right: 5px;
-  font-size: 53px;
-
-  i {
-    color: lightgray;
-    padding: 5px;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
+  .action {
+    margin-right: 150px;
+    border-right: 1px solid $color-border;
+    border-radius: 0;
   }
 }
 
-.main {
-  display: flex;
+.content {
+  height: 100%;
+  min-width: 285px;
+  margin-left: 150px;
+  padding: 10px;
+  background-color: white;
+  overflow: auto;
+  border-left: 1px solid $color-border;
 }
 
-.name {
-  margin-top: 6px;
-  vertical-align: top;
-  width: 100%;
-  padding-right: 5px;
-
-  h5 {
-    margin: 0;
-  }
+.input {
+  margin-bottom: 10px;
 }
 
 p {
-  margin-top: 10px;
+  margin: 0;
+}
+
+.broadcast {
+  margin-bottom: 10px;
 }
 
 .list-rules {
@@ -280,10 +218,48 @@ p {
   padding-left: 15px;
 }
 
+.export-list {
+  margin-bottom: 10px 0;
+}
+
 .action {
-  margin-left: auto;
+  padding: 10px 5px;
   display: flex;
   flex-direction: column;
   gap: 5px;
+  background-color: white;
+  border-radius: $light-radius-size;
+}
+
+.phone {
+  &.action {
+    flex-direction: row;
+  }
+
+  &.content {
+    margin-left: 0;
+    /*overflow: ;*/
+    border: none;
+  }
 }
 </style>
+
+<i18n locale="fr">
+{
+  "broadcastButtonTooltip": "Diffuser",
+  "broadcastLabel": "Diffusée aux profils suivants :",
+  "configurationButtonTooltip": "Gérer les règles de diffusion",
+  "customUrlPlaceholder": "http(s)://...",
+  "deleteButtonTooltip": "Supprimer",
+  "editButtonTooltip": "Modifier",
+  "exportLabel": "Exports nécessaires :",
+  "noBroadcastLabel": "L'application n'est pas diffusée",
+  "otherExportButton": "Ressources",
+  "parentsExportButton": "Parents",
+  "removalConfirmButtonLabel": "Supprimer",
+  "removalConfirmMessage": "Souhaitez-vous vraiment supprimer cette application ?",
+  "removalConfirmTitle": "Suppression",
+  "studentsExportButton": "Elèves",
+  "teachersExportButton": "Enseignants"
+}
+</i18n>

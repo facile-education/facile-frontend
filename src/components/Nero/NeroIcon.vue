@@ -10,11 +10,14 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 
 library.add(
   require('@fortawesome/free-regular-svg-icons/faCalendarAlt').definition,
+  require('@fortawesome/free-regular-svg-icons/faImage').definition,
   require('@fortawesome/free-solid-svg-icons/faCaretDown').definition,
   require('@fortawesome/free-solid-svg-icons/faCaretLeft').definition,
   require('@fortawesome/free-solid-svg-icons/faCaretRight').definition,
+  require('@fortawesome/free-solid-svg-icons/faCheck').definition,
   require('@fortawesome/free-solid-svg-icons/faChevronCircleLeft').definition,
   require('@fortawesome/free-solid-svg-icons/faChevronCircleRight').definition,
+  require('@fortawesome/free-solid-svg-icons/faCog').definition,
   require('@fortawesome/free-solid-svg-icons/faExclamationTriangle').definition,
   require('@fortawesome/free-solid-svg-icons/faGripLines').definition,
   require('@fortawesome/free-solid-svg-icons/faList').definition,
@@ -25,6 +28,7 @@ library.add(
   require('@fortawesome/free-solid-svg-icons/faPlus').definition,
   require('@fortawesome/free-solid-svg-icons/faSignOutAlt').definition,
   require('@fortawesome/free-solid-svg-icons/faStop').definition,
+  require('@fortawesome/free-solid-svg-icons/faTimes').definition,
   require('@fortawesome/free-solid-svg-icons/faTrash').definition,
   require('@fortawesome/free-solid-svg-icons/faUndo').definition,
   require('@fortawesome/free-solid-svg-icons/faUser').definition,

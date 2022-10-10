@@ -1,5 +1,5 @@
 <template>
-  <ul>
+  <ul class="rules">
     <RuleItem
       v-for="(rule, index) in ruleList"
       :key="rule.ruleId"
@@ -30,7 +30,7 @@ export default {
       required: true
     }
   },
-  emits: ['remove', 'update'],
+  emits: ['blur', 'remove', 'update'],
   computed: {
     isRemovalAllowed () {
       return this.ruleList.length > 1
@@ -48,5 +48,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.rules {
+  padding: 0;
+}
 </style>

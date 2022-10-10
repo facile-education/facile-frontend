@@ -1,4 +1,5 @@
 import applicationManagerService from '@/api/applicationManager.service'
+import PentilaUtils from 'pentila-utils'
 
 export const state = {
   applicationList: undefined,
@@ -13,8 +14,8 @@ export const mutations = {
   getSchoolApplicationList (state, payload) {
     state.applicationList = payload
   },
-  removeApplication (state) {
-    const index = state.applicationList.indexOf(state.selectedApplication)
+  removeApplication (state, payload) {
+    const index = state.applicationList.map(item => item.app.serviceId).indexOf(payload.serviceId)
     state.applicationList.splice(index, 1)
   },
   setSelectedApplication (state, payload) {
@@ -30,9 +31,8 @@ export const mutations = {
     if (payload.property !== undefined) {
       state.selectedApplication[payload.property] = payload.value
     } else {
-      const index = state.applicationList.indexOf(state.selectedApplication)
-      state.applicationList.splice(index, 1)
-      state.applicationList.push({ app: payload })
+      const index = state.applicationList.map(item => item.app.serviceId).indexOf(payload.serviceId)
+      state.applicationList[index] = { app: payload }
     }
   }
 }
@@ -67,15 +67,15 @@ export const actions = {
       })
   },
   exportApplicationUserList ({ state }, { school, role }) {
-    applicationManagerService.exportApplicationUserList(school.schoolId,
+    return applicationManagerService.exportApplicationUserList(school.schoolId,
       state.selectedApplication.serviceId, role).then((data) => {
       if (data.success) {
-        console.log(data)
+        return data.message
       }
     })
   },
   getApplicationDefaultRoleList ({ state, commit }) {
-    applicationManagerService.getApplicationDefaultRoleList(state.selectedApplication.serviceId).then(
+    return applicationManagerService.getApplicationDefaultRoleList(state.selectedApplication.serviceId).then(
       (data) => {
         if (data.success) {
           commit('updateApplication', { property: 'roleList', value: data.defaultRoles })
@@ -98,8 +98,8 @@ export const actions = {
         console.error(err)
       })
   },
-  getApplicationBroadcastScope ({ state, commit }) {
-    applicationManagerService.getApplicationBroadcastScope(state.selectedApplication.serviceId).then(
+  getApplicationBroadcastScope ({ state, commit }, school) {
+    applicationManagerService.getApplicationBroadcastScope(state.selectedApplication.serviceId, school.schoolId).then(
       (data) => {
         if (data.success) {
           // TODO userFilters property ?
@@ -118,10 +118,11 @@ export const actions = {
     commit('toggleEditionModal', true)
   },
   removeApplication ({ state, commit }) {
+    const app = PentilaUtils.JSON.deepCopy(state.selectedApplication)
     applicationManagerService.removeApplication(state.selectedApplication.serviceId).then(
       (data) => {
         if (data.success) {
-          commit('removeApplication')
+          commit('removeApplication', app)
         }
       },
       (err) => {
@@ -147,18 +148,18 @@ export const actions = {
       serviceCategory: ''
     })
   },
-  selectApplication ({ commit, dispatch }, application) {
+  selectApplication ({ commit, dispatch }, { application, school }) {
     commit('setSelectedApplication', application)
-    dispatch('getApplicationBroadcastScope')
+    dispatch('getApplicationBroadcastScope', school)
   },
   updateApplication ({ commit, dispatch }, application) {
     applicationManagerService.updateApplication(application).then(
       (data) => {
         if (data.success) {
           commit('updateApplication', application)
-          if (application.rules === undefined || application.rules.length === 0) {
-            dispatch('closeEditionModal')
-          }
+          // if (application.rules === undefined || application.rules.length === 0) {
+          dispatch('closeEditionModal')
+          // }
         }
       },
       (err) => {

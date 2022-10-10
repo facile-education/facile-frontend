@@ -1,27 +1,30 @@
 <template>
   <PentilaWindow
     :modal="true"
-    :draggable="true"
+    class="app-edition-modal"
     @close="closeModal"
   >
     <template #header>
       <span v-t="title" />
     </template>
 
-    <template #body>
+    <template
+      v-if="application"
+      #body
+    >
       <div class="first-block">
         <!-- App Image -->
         <div
           class="logo-panel"
-          @click="openImagePicker"
+          @click="toggleImagePicker"
         >
           <PentilaButton
             v-if="application.image"
             type="circle"
-            class="remove-logo cancel"
+            class="remove-logo delete"
             @click.stop="removeLogo"
           >
-            <i class="fa fa-trash" />
+            <NeroIcon name="trash" />
           </PentilaButton>
 
           <img
@@ -29,9 +32,10 @@
             :src="application.image"
             class="logo"
           >
-          <i
+          <NeroIcon
             v-else
-            class="logo-fallback fa fa-plus"
+            name="plus"
+            class="logo-fallback"
           />
         </div>
 
@@ -39,81 +43,78 @@
         <div class="informations">
           <PentilaInput
             v-model="application.serviceName"
-            :placeholder="$t('ApplicationManager.ApplicationEditionModal.namePlaceholder') + '*'"
+            :placeholder="$t('namePlaceholder') + '*'"
             :maxlength="75"
-            :error-message="formErrorList.serviceName"
+            class="name"
             @blur="v$.application.serviceName.$touch()"
           />
+          <PentilaErrorMessage :error-message="formErrorList.serviceName" />
 
           <PentilaInput
             v-model="application.serviceKey"
-            :placeholder="$t('ApplicationManager.ApplicationEditionModal.keyPlaceholder') + '*'"
+            :placeholder="$t('keyPlaceholder') + '*'"
             :maxlength="75"
-            :error-message="formErrorList.serviceKey"
             @blur="v$.application.serviceKey.$touch()"
           />
-
-          <div class="input-completion">
-            <PentilaInput
-              ref="category"
-              v-model="application.serviceCategory"
-              :placeholder="$t('ApplicationManager.ApplicationEditionModal.categoryPlaceholder') + '*'"
-              :max-lenght="75"
-              :error-message="formErrorList.serviceCategory"
-              @blur="v$.application.serviceCategory.$touch()"
-              @focus="toggleCompletion"
-            />
-            <PentilaAutocomplete
-              v-if="displayCategoryCompletion"
-              :list="categoryList"
-              :input="application.serviceCategory"
-              @select="selectCategory"
-              @close="toggleCompletion"
-            />
-          </div>
+          <PentilaErrorMessage :error-message="formErrorList.serviceKey" />
         </div>
       </div>
 
       <div class="broadcast">
-        <div>
-          <h5 v-t="'ApplicationManager.ApplicationEditionModal.schoolsLabel'" />
-          <PentilaTagsInput
-            v-if="schoolList"
-            v-model="application.etabFilters"
-            :placeholder="$t('ApplicationManager.ApplicationEditionModal.schoolsPlaceholder')"
-            :list="schoolList"
-            display-field="schoolName"
-            id-field="schoolId"
+        <div class="input-completion">
+          <PentilaInput
+            ref="category"
+            v-model="application.serviceCategory"
+            :placeholder="$t('categoryPlaceholder') + '*'"
+            :max-lenght="75"
+            @blur="v$.application.serviceCategory.$touch()"
+            @focus="toggleCompletion"
+          />
+          <PentilaErrorMessage :error-message="formErrorList.serviceCategory" />
+          <PentilaAutocomplete
+            v-if="displayCategoryCompletion"
+            :list="categoryList"
+            :input="application.serviceCategory"
+            @select="selectCategory"
+            @close="toggleCompletion"
           />
         </div>
+        <PentilaTagsInput
+          v-if="schoolList"
+          v-model="application.etabFilters"
+          :placeholder="$t('schoolsPlaceholder')"
+          :list="schoolList"
+          display-field="schoolName"
+          id-field="schoolId"
+        />
 
         <div>
-          <h5 v-t="'ApplicationManager.ApplicationEditionModal.rolesLabel'" />
           <PentilaTagsInput
             v-if="roleList"
             v-model="application.roleList"
-            :placeholder="$t('ApplicationManager.ApplicationEditionModal.rolesPlaceholder')"
+            :placeholder="$t('rolesPlaceholder') + '*'"
             :list="roleList"
             display-field="displayText"
             id-field="roleId"
           />
+          <PentilaErrorMessage :error-message="formErrorList.roleList" />
         </div>
 
         <div class="default-portlet">
-          <h5 v-t="'ApplicationManager.ApplicationEditionModal.portletLabel'" />
+          <h5 v-t="'portletLabel'" />
           <PentilaDropdown
-            v-if="selectedPortlet"
+            v-if="portletList"
             v-model="selectedPortlet"
             :list="portletList"
             display-field="name"
           />
         </div>
 
-        <h5 v-t="'ApplicationManager.ApplicationEditionModal.urlTypeLabel'" />
+        <h5 v-t="'urlTypeLabel'" />
         <div class="urls">
           <PentilaRadioButton
             v-model="urlType"
-            :label="$t('ApplicationManager.ApplicationEditionModal.globalUrlCombobox')"
+            :label="$t('globalUrlCombobox')"
             name="url"
             rb-value="global"
             class="radio"
@@ -121,7 +122,7 @@
 
           <PentilaRadioButton
             v-model="urlType"
-            :label="$t('ApplicationManager.ApplicationEditionModal.customUrlCombobox')"
+            :label="$t('customUrlCombobox')"
             name="url"
             rb-value="custom"
             class="radio"
@@ -129,7 +130,7 @@
 
           <PentilaRadioButton
             v-model="urlType"
-            :label="$t('ApplicationManager.ApplicationEditionModal.noUrlCombobox')"
+            :label="$t('noUrlCombobox')"
             name="url"
             rb-value="none"
             class="radio"
@@ -137,44 +138,48 @@
         </div>
         <PentilaInput
           v-model="application.globalUrl"
-          :placeholder="$t('ApplicationManager.ApplicationEditionModal.globalUrlPlaceholder')"
+          :placeholder="$t('globalUrlPlaceholder')"
           :disabled="urlType !== 'global'"
         />
 
-        <h5 v-t="'ApplicationManager.ApplicationEditionModal.exportLabel'" />
+        <h5 v-t="'exportLabel'" />
         <div class="exports">
           <PentilaCheckbox
             v-model="application.exportParent"
-            :label="$t('ApplicationManager.ApplicationEditionModal.exportParentsCheckbox')"
+            :label="$t('exportParentsCheckbox')"
             class="export"
           />
 
           <PentilaCheckbox
             v-model="application.exportStudent"
-            :label="$t('ApplicationManager.ApplicationEditionModal.exportStudentsCheckbox')"
+            :label="$t('exportStudentsCheckbox')"
             class="export"
           />
 
           <PentilaCheckbox
             v-model="application.exportTeacher"
-            :label="$t('ApplicationManager.ApplicationEditionModal.exportTeachersCheckbox')"
+            :label="$t('exportTeachersCheckbox')"
             class="export"
           />
 
           <PentilaCheckbox
             v-model="application.exportOther"
-            :label="$t('ApplicationManager.ApplicationEditionModal.exportOtherCheckbox')"
+            :label="$t('exportOtherCheckbox')"
             class="export"
           />
         </div>
       </div>
       <teleport to="body">
-        <ImagePicker v-if="show" />
+        <ImagePicker
+          v-if="show"
+          @save="selectImage"
+          @close="toggleImagePicker"
+        />
       </teleport>
     </template>
     <template #footer>
       <PentilaButton
-        :label="$t('ApplicationManager.ApplicationEditionModal.modalSaveButton')"
+        :label="$t('modalSaveButton')"
         @click="save"
       />
     </template>
@@ -188,21 +193,22 @@ import { required } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
 
 import ImagePicker from '@/components/Nero/ImagePicker'
+import NeroIcon from '@/components/Nero/NeroIcon'
 
 export default {
   name: 'ApplicationEditionModal',
-  components: { ImagePicker },
+  components: { ImagePicker, NeroIcon },
   setup: () => ({ v$: useVuelidate() }),
   data () {
     return {
       application: undefined,
       displayCategoryCompletion: false,
-      show: false,
-      urlType: 'none'
+      show: false
     }
   },
   validations: {
     application: {
+      roleList: { required },
       serviceName: { required },
       serviceKey: { required },
       serviceCategory: { required }
@@ -215,9 +221,10 @@ export default {
     formErrorList () {
       const form = this.v$.application
       return {
-        serviceName: (form.serviceName.$invalid && form.serviceName.$dirty) ? this.$t('Nero.formErrorMessage.required') : '',
-        serviceKey: (form.serviceKey.$invalid && form.serviceKey.$dirty) ? this.$t('Nero.formErrorMessage.required') : '',
-        serviceCategory: (form.serviceCategory.$invalid && form.serviceCategory.$dirty) ? this.$t('Nero.formErrorMessage.required') : ''
+        roleList: (form.roleList.$invalid && form.roleList.$dirty) ? this.$t('Commons.formRequired') : '',
+        serviceName: (form.serviceName.$invalid && form.serviceName.$dirty) ? this.$t('Commons.formRequired') : '',
+        serviceKey: (form.serviceKey.$invalid && form.serviceKey.$dirty) ? this.$t('Commons.formRequired') : '',
+        serviceCategory: (form.serviceCategory.$invalid && form.serviceCategory.$dirty) ? this.$t('Commons.formRequired') : ''
       }
     },
     portletList () {
@@ -231,15 +238,12 @@ export default {
     },
     selectedPortlet: {
       get () {
-        if (this.portletList) {
-          if (this.application.portletId) {
-            for (let idx = 0; idx < this.portletList.length; ++idx) {
-              if (this.portletList[idx].portletId === this.application.portletId) {
-                return this.portletList[idx]
-              }
+        if (this.portletList && this.application.portletId) {
+          for (let idx = 0; idx < this.portletList.length; ++idx) {
+            if (this.portletList[idx].portletId === this.application.portletId) {
+              return this.portletList[idx]
             }
           }
-          return this.portletList[0]
         }
         return undefined
       },
@@ -248,11 +252,20 @@ export default {
       }
     },
     title () {
-      let title = 'ApplicationManager.ApplicationEditionModal.addModalTitle'
+      let title = 'addModalTitle'
       if (this.application && this.application.serviceId) {
-        title = 'ApplicationManager.ApplicationEditionModal.editModalTitle'
+        title = 'editModalTitle'
       }
       return title
+    },
+    urlType: {
+      get () {
+        return this.application.hasGlobalUrl ? 'global' : this.application.hasCustomUrl ? 'custom' : 'none'
+      },
+      set (value) {
+        this.application.hasGlobalUrl = (value === 'global')
+        this.application.hasCustomUrl = (value === 'custom')
+      }
     }
   },
   created () {
@@ -263,11 +276,12 @@ export default {
       this.$store.dispatch('administration/getRoleList')
     }
     // Copy selected app
+    if (this.$store.state.applicationManager.selectedApplication.roleList === undefined) {
+      this.$store.dispatch('applicationManager/getApplicationDefaultRoleList').then(() => {
+        this.application = PentilaUtils.JSON.deepCopy(this.$store.state.applicationManager.selectedApplication)
+      })
+    }
     this.application = PentilaUtils.JSON.deepCopy(this.$store.state.applicationManager.selectedApplication)
-  },
-  mounted () {
-    // Initialise urlType
-    this.urlType = this.application.hasGlobalUrl ? 'global' : this.application.hasCustomUrl ? 'custom' : 'none'
   },
   methods: {
     buildApplicationBeforeSave () {
@@ -284,9 +298,8 @@ export default {
     closeModal () {
       this.$store.dispatch('applicationManager/closeEditionModal')
     },
-    openImagePicker () {
-      this.show = true
-      // this.$store.dispatch('nero/openImagePickerModal', { onConfirm: this.selectImage })
+    toggleImagePicker () {
+      this.show = !this.show
     },
     removeLogo () {
       this.application.image = ''
@@ -312,9 +325,9 @@ export default {
     selectCategory (category) {
       this.application.serviceCategory = category
     },
-    selectImage (imageBlob, fileName) {
+    selectImage ({ blob, fileName }) {
       const reader = new FileReader()
-      reader.readAsDataURL(imageBlob)
+      reader.readAsDataURL(blob)
       const vm = this
       reader.onloadend = function () {
         vm.application.image = reader.result
@@ -332,11 +345,22 @@ export default {
 }
 </script>
 
+<style lang="scss">
+.app-edition-modal .window-body {
+  overflow: auto;
+}
+</style>
+
 <style lang="scss" scoped>
 @import '@/design';
 
 .first-block {
   display: flex;
+  margin-bottom: 10px;
+
+  .name {
+    margin-top: 0;
+  }
 }
 
 .logo-panel {
@@ -364,9 +388,24 @@ export default {
 }
 
 .logo-fallback {
+  height: 100%;
+  margin: auto;
   line-height: 110px;
-  font-size: 40px;
+  font-size: 50px;
   color: $color-fallback-text;
+}
+
+.group,
+.component {
+  margin-top: 10px;
+}
+
+.error-message {
+  height: 8px;
+}
+
+h5 {
+  margin: 10px 0 5px 0;
 }
 
 .informations {
@@ -393,3 +432,27 @@ export default {
   flex: 0 0 25%;
 }
 </style>
+
+<i18n locale="fr">
+{
+  "addModalTitle": "Ajouter une nouvelle application",
+  "categoryPlaceholder": "Catégorie",
+  "customUrlCombobox": "URL personnalisée",
+  "editModalTitle": "Modifier une application",
+  "exportOtherCheckbox": "Ressources",
+  "exportParentsCheckbox": "Parents",
+  "exportStudentsCheckbox": "Elèves",
+  "exportTeachersCheckbox": "Enseignants",
+  "exportLabel": "Exporter un/ou plusieurs types d'utilisateurs",
+  "globalUrlCombobox": "URL globale",
+  "globalUrlPlaceholder": "https://...",
+  "keyPlaceholder": "Clé",
+  "modalSaveButton": "Valider",
+  "namePlaceholder": "Nom",
+  "noUrlCombobox": "Aucun",
+  "portletLabel": "Portlet",
+  "rolesPlaceholder": "Profil(s) par défaut",
+  "schoolsPlaceholder": "Filtre d'établissements",
+  "urlTypeLabel": "Type de lien"
+}
+</i18n>

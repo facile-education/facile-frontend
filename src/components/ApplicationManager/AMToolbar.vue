@@ -13,7 +13,7 @@
       class="add-button"
       @click="onAddApplication"
     >
-      <i class="fa fa-plus" />
+      <NeroIcon name="plus" />
     </PentilaButton>
   </NeroToolbar>
 </template>
@@ -21,9 +21,13 @@
 <script>
 import NeroToolbar from '@/components/Nero/NeroToolbar'
 
+import { defineAsyncComponent } from 'vue'
+const NeroIcon = defineAsyncComponent(() => import('@/components/Nero/NeroIcon'))
+
 export default {
   name: 'AMToolbar',
   components: {
+    NeroIcon,
     NeroToolbar
   },
   computed: {
@@ -44,11 +48,6 @@ export default {
     show () {
       return (this.isAdministrator ||
         (this.managedSchoolList !== undefined && this.managedSchoolList.length > 1))
-    }
-  },
-  created () {
-    if (this.managedSchoolList === undefined) {
-      this.$store.dispatch('administration/getAdministrationSchools')
     }
   },
   methods: {
