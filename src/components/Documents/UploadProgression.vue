@@ -104,17 +104,20 @@ export default {
   max-height: var(--container-max-height);
   width: 400px;
   max-width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+  padding: 0 30px 10px 30px;
 
   .header{
     --header-height: 60px;
     height: var(--header-height);
-    padding: 5px 10px;
-    background-color: #777777;
     display: flex;
     justify-content: space-between;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 
     .text {
-      line-height: 50px;
+      line-height: 60px;
+      font-weight: 600;
     }
 
     .right-section {
@@ -128,7 +131,7 @@ export default {
 
       .cancel {
         cursor: pointer;
-        color: blue;
+        color: #E74B3B;
       }
 
       .close-button {
@@ -141,10 +144,8 @@ export default {
   }
 
   .document-list {
-    padding: 0 10px;
     max-height: calc(var(--container-max-height) - 60px);
     overflow: auto;
-    background-color: #aaaaaa;
   }
 }
 
