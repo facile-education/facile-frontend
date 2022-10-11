@@ -97,7 +97,7 @@ export default {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  overflow: hidden;
+  overflow: visible;
 }
 
 </style>

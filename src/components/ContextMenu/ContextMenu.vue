@@ -4,11 +4,17 @@
       id="context-menu"
       data-test="context-menu"
       :class="{
+        'absolute': isAbsolute,
         'context-menu': !subMenuMobile,
         'sub-menu-mobile': subMenuMobile,
         'desktop-menu': !mq.phone,
         'context-menu-mobile-extended': isContextMenuMobileExtended
       }"
+      tabindex="-1"
+      @keydown.stop.up="onUpKey"
+      @keydown.stop.down="onDownKey"
+      @keydown.stop.esc="closeMenu"
+      @keydown.stop.enter="emitOption(options[selectedIndex])"
     >
       <!-- TODO pass only one argument as an object-->
       <ContextMenuItem
@@ -17,6 +23,7 @@
         :data-test="option.name"
         :option="option"
         :position="{x: position.x, y: position.y + option.position*54}"
+        :is-selected="selectedIndex !== undefined ? options[selectedIndex] === option : false"
         @selectOption="emitOption(option)"
         @isContextMenuMobileExtended="subMenuMobileManagement"
         @emitSubOption="emitOption"
@@ -28,13 +35,16 @@
 
 <script>
 import ContextMenuItem from '@/components/ContextMenu/ContextMenuItem'
-// import _ from 'lodash'
 
 export default {
   name: 'ContextMenu',
   components: { ContextMenuItem },
   inject: ['mq'],
   props: {
+    isAbsolute: {
+      type: Boolean,
+      default: false
+    },
     isSubMenu: {
       type: Boolean,
       default: false
@@ -63,13 +73,13 @@ export default {
   emits: ['close', 'chooseOption', 'dropFile'],
   data () {
     return {
-      isContextMenuMobileExtended: false
+      isContextMenuMobileExtended: false,
+      selectedIndex: undefined
     }
   },
   computed: {
     position () {
       if (this.isSubMenu) {
-        // return _.orderBy(this.menuPosition, 'position', 'asc')
         return this.menuPosition
       } else {
         return this.$store.state.contextMenu.contextMenuPosition
@@ -94,14 +104,17 @@ export default {
   },
   mounted () {
     const menu = this.$el.querySelector('#context-menu')
-    const computedPosition = { x: this.computeXPosition(this.position.x), y: this.computeYPosition(this.position.y) }
-    menu.style.left = computedPosition.x.toString() + 'px'
-    menu.style.top = computedPosition.y.toString() + 'px'
-    // update computed position in store
-    if (!this.isSubMenu) { this.$store.dispatch('contextMenu/setContextMenuPosition', computedPosition) }
+    if (!this.isAbsolute) {
+      const computedPosition = { x: this.computeXPosition(this.position.x), y: this.computeYPosition(this.position.y) }
+      menu.style.left = computedPosition.x.toString() + 'px'
+      menu.style.top = computedPosition.y.toString() + 'px'
+      // update computed position in store
+      if (!this.isSubMenu) { this.$store.dispatch('contextMenu/setContextMenuPosition', computedPosition) }
+    }
 
     window.addEventListener('click', this.clickOutside)
     window.addEventListener('contextmenu', this.clickOutside) // right click
+    menu.focus()
   },
   beforeUnmount () {
     window.removeEventListener('click', this.clickOutside)
@@ -159,6 +172,20 @@ export default {
         this.$emit('chooseOption', option)
       }
     },
+    onDownKey () {
+      if (this.selectedIndex === undefined) {
+        this.selectedIndex = 0
+      } else {
+        this.selectedIndex = (this.selectedIndex !== this.options.length - 1) ? this.selectedIndex + 1 : 0
+      }
+    },
+    onUpKey () {
+      if (this.selectedIndex === undefined) {
+        this.selectedIndex = 0
+      } else {
+        this.selectedIndex = (this.selectedIndex !== 0) ? this.selectedIndex - 1 : this.options.length - 1
+      }
+    },
     subMenuMobileManagement (isContextMenuMobileExtended) {
       this.isContextMenuMobileExtended = isContextMenuMobileExtended
       const menu = this.$el.querySelector('#context-menu')
@@ -175,39 +202,46 @@ export default {
 <style lang="scss" scoped>
 @import "@design";
 
-   .context-menu {
-     position: fixed;
-     z-index: $context-menu-z-index;
-     display: flex;
-     flex-direction: column;
-     width: 300px;
-     padding: 0 20px;
-     margin: 0;
-     list-style: none;
-     background: white;
-     box-shadow: 0 2px 14px 0 rgba(0,0,0,0.1);
+ .context-menu {
+   position: fixed;
+   z-index: $context-menu-z-index;
+   display: flex;
+   flex-direction: column;
+   width: 300px;
+   padding: 0 20px;
+   margin: 0;
+   list-style: none;
+   background: white;
+   box-shadow: 0 2px 14px 0 rgba(0,0,0,0.1);
 
-     /* disable text selection on documents (not convenient when shift-select) */
-     -ms-user-select: none;
-     -moz-user-select: none;
-     -webkit-user-select: none;
-     user-select: none; /* CSS3 (little to no support) */
+   /* disable text selection on documents (not convenient when shift-select) */
+   user-select: none; /* CSS3 (little to no support) */
+
+   &.absolute {
+     position: absolute;
+     left: 0;
+     top: 100%;
    }
 
-   .sub-menu-mobile{
-     z-index: $context-menu-z-index;
-     display: block;
-     width: 100%;
-     padding-left: 15px;
-     margin: 0;
-     color: #555;
-     list-style: none;
-     background: #FAFAFA;
+   &:focus {
+     border: none;
    }
+ }
 
-   .context-menu-mobile-extended {
-     overflow-x: hidden;
-     overflow-y: scroll;
-   }
+ .sub-menu-mobile{
+   z-index: $context-menu-z-index;
+   display: block;
+   width: 100%;
+   padding-left: 15px;
+   margin: 0;
+   color: #555;
+   list-style: none;
+   background: #FAFAFA;
+ }
+
+ .context-menu-mobile-extended {
+   overflow-x: hidden;
+   overflow-y: scroll;
+ }
 
 </style>

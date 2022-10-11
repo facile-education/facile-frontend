@@ -3,17 +3,14 @@
     class="fields"
     data-test="fields"
     :class="mq.phone ? 'phone-fields' : ''"
-    @mouseover="hoverSelection = true"
-    @mouseleave="hoverSelection = false"
   >
     <div
       class="selection-icon"
+      tabindex="0"
+      @keypress.enter="toggleGlobalSelection"
       @click="toggleGlobalSelection"
     >
-      <div
-        v-if="hoverSelection || areAllSelected || mq.phone || mq.tablet"
-        class="oval"
-      >
+      <div class="oval">
         <div
           v-if="areAllSelected"
           class="marked"
@@ -26,6 +23,8 @@
       :key="field.position"
       class="field"
       :class="field.name"
+      tabindex="0"
+      @keypress.enter="dispatchEvent(field.sort.type)"
       @click="dispatchEvent(field.sort.type)"
     >
       <p> {{ field.label }} </p>
@@ -67,11 +66,6 @@ export default {
     }
   },
   emits: ['handleSort'],
-  data () {
-    return {
-      hoverSelection: false
-    }
-  },
   computed: {
     fields () {
       return this.$store.state.fileFields.fields

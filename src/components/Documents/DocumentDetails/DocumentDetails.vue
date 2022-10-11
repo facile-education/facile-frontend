@@ -21,7 +21,7 @@
       >
         {{ selectedDocuments.length + '  ' + $t('selectedDocuments') }}
       </h3>
-      <div
+      <button
         class="close-option"
         @click="closePanel"
       >
@@ -29,7 +29,7 @@
           src="@assets/options/icon_cross_black.svg"
           alt="close"
         >
-      </div>
+      </button>
     </div>
 
     <DocumentMetaData
@@ -128,6 +128,8 @@ export default {
       cursor: pointer;
       align-items: center;
       justify-content: center;
+      background: none;
+      border: none;
 
       img {
         width: 16px;
