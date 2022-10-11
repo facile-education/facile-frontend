@@ -3,6 +3,7 @@
     :is-allowed="$store.state.user.isSchoolAdmin || $store.state.user.isDirectionMember || $store.state.user.isAdministrator"
     class="layout"
   >
+    <h1 :aria-label="$t('serviceTitle')" />
     <div class="header">
       <div class="header-title">
         <p>{{ $t('title') }}</p>
@@ -112,6 +113,7 @@ export default {
 
 <i18n locale="fr">
 {
+  "serviceTitle": "Administration des utilisateurs",
   "title": "Gestion des utilisateurs de ",
   "manual-users": "Comptes manuels",
   "delegations": "Délégations",

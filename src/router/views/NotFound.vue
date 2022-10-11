@@ -1,5 +1,6 @@
 <template>
   <Layout>
+    <h1 :aria-label="$t('serviceTitle')" />
     Not found
   </Layout>
 </template>
@@ -18,3 +19,9 @@ export default {
 <style lang="scss" scoped>
 
 </style>
+
+<i18n locale="fr">
+{
+  "serviceTitle": "Erreur 404 : ressource introuvable"
+}
+</i18n>

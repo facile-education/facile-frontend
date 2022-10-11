@@ -1,7 +1,6 @@
 <template>
-  <Layout
-    class="layout"
-  >
+  <Layout class="layout">
+    <h1 :aria-label="$t('serviceTitle')" />
     <img
       class="icon"
       src="@/assets/images/gar.png"
@@ -97,6 +96,7 @@ export default {
 
 <i18n locale="fr">
 {
+  "serviceTitle": "Administration du médiacentre",
   "has-been-open-in-new-tab-label": "a été ouvert dans un nouvel onglet",
   "if-not-here-label": "Si vous ne le voyez pas",
   "issue-found-label": "Si le problème persiste, votre navigateur doit certainement bloquer les fenêtres surgissantes (pop-ups) ouvertes depuis l'ENT. Pour les autoriser, veuillez suivre la démarche indiquée dans l'onglet \"Autoriser les pop-ups\" de la fenêtre d'informations (accessible depuis le menu utilisateur sur la droite du bandeau",

@@ -1,5 +1,6 @@
 <template>
   <Layout>
+    <h1 :aria-label="$t('serviceTitle')" />
     <AMToolbar />
     <CategoryList />
     <div class="filler" />
@@ -55,3 +56,9 @@ export default {
   padding: 40px;
 }
 </style>
+
+<i18n locale="fr">
+{
+  "serviceTitle": "Administration des applications"
+}
+</i18n>

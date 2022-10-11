@@ -1,5 +1,6 @@
 <template>
   <Layout>
+    <h1 :aria-label="$t('serviceTitle')" />
     <div class="dashboard-panel">
       <AnnouncementsWidget v-if="hasSchoolNewsWidget" />
       <HomeworkWidget v-if="hasHomeworkWidget" />
@@ -46,3 +47,9 @@ export default {
   flex-wrap: wrap;
 }
 </style>
+
+<i18n locale="fr">
+{
+  "serviceTitle": "Tableau de bord"
+}
+</i18n>
