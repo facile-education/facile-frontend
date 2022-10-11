@@ -1,6 +1,7 @@
 <template>
   <PentilaWindow
     class="file-display-modal"
+    data-test="file-display-modal"
     :modal="true"
     :full-screen="true"
     :resizable="true"
