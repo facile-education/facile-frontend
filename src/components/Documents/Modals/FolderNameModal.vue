@@ -1,6 +1,7 @@
 <template>
   <PentilaWindow
     class="folder-name-modal"
+    data-test="folder-name-modal"
     :class="mq.phone ? 'mobile': ''"
     :full-screen="mq.phone"
     :modal="true"

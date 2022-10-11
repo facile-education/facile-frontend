@@ -2,9 +2,14 @@
 import '../login.spec'
 
 // Documents
-import '../Documents/DocumentsInternDragNDrop.spec.spec'
+import '../Documents/breadCrumb.spec'
+import '../Documents/Deletion.spec'
+import '../Documents/DocumentsInternDragNDrop.spec'
+import '../Documents/DocumentsNavigation.spec'
 import '../Documents/DocumentsSelection.spec'
-import '../Documents/DocumentsSelection.spec'
+import '../Documents/FileAndFolderCreation.spec'
+import '../Documents/moveAndDuplicate.spec'
+import '../Documents/rename.spec'
 
 // Horaires
 import '../Horaires/access.spec'

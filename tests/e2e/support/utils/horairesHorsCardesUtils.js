@@ -23,7 +23,7 @@ const deleteSlot = (slotToDelete, capacity) => {
     cy.get('.button').contains('Supprimer').click()
   })
   cy.get('[data-test=warning-modal]').within(() => {
-    cy.contains('button', 'Supprimer').click()
+    cy.contains('button', 'Continuer').click()
   })
 }
 

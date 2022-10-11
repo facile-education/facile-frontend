@@ -61,7 +61,7 @@ const deleteSlot = () => {
     cy.get('.button').contains('Supprimer').click()
   })
   cy.get('[data-test=warning-modal]').within(() => {
-    cy.contains('button', 'Supprimer').click()
+    cy.contains('button', 'Continuer').click()
   })
   cy.get('[data-test=warning-modal]').should('not.exist')
   cy.get('[data-test=edit-slot-modal]').should('not.exist')

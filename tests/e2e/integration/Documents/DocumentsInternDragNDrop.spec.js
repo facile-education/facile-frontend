@@ -49,44 +49,15 @@ function dragOverAnOtherDocument (oldDoc, newDoc) { // correspond to over other 
   dragOverOnDocument(newDoc)
 }
 
-const createFiles = () => {
-  const filesToCreate = [
-    {
-      name: 'fichier1_1',
-      folderPath: '/15401808',
-      content: 'content'
-    },
-    {
-      name: 'fichier1_2',
-      folderPath: '/15401808'
-    }
-  ]
-
-  filesToCreate.forEach((file) => {
-    cy.visit(url + file.folderPath)
-    cy.get('[title="Nouveau"]').click()
-    cy.get('[data-test="context-menu"]').contains('Note').click()
-    cy.get('.file-name-modal').get('input').type(file.name)
-    cy.get('[data-test="submitButton"]').click()
-    if (file.content) {
-      cy.get('.file-display-modal').get('.ck-editor').click()
-      cy.get('body').type('{ctrl}A', { release: true }).type(file.content)
-    }
-    cy.get('.file-display-modal').get('[data-test="closeModal"]').click()
-    cy.contains('[data-test=file]', file.name + '.html').should('exist')
-  })
-}
-
 describe('Documents DragNDrop', () => {
   beforeEach(() => {
     cy.exec('npm run db:loadTables documents_tables_basic.sql')
     cy.clearDBCache()
     cy.login(url + '/15401808', HEADMASTER) // land in 'dossier1'
-    // createFiles()
   })
 
   it('File drop', () => {
-    dragStartOnDocument(cy.contains('[data-test=file]', 'fichier1_1.html'))
+    dragStartOnDocument(cy.contains('[data-test=file]', 'fichier1_2.html'))
 
     // Drag file over folders
     dragOverOnDocument(cy.contains('[data-test=folder]', 'dossier1_1'))
@@ -97,23 +68,34 @@ describe('Documents DragNDrop', () => {
 
     // Drop file in folder
     dropOnDocument(cy.contains('[data-test=folder]', 'dossier1_2'))
-    // cy.contains('[data-test=file]', 'fichier1_1.html').should('not.exist')
-    // cy.visit(url + '/15401814')
-    // cy.contains('[data-test=file]', 'fichier1_1.html').should('exist')
-    // dragEndOnDocument(cy.contains('[data-test=file]', 'fichier1_1.html'))
+    cy.contains('[data-test=file]', 'fichier1_2.html').should('not.exist')
+    cy.visit(url + '/15401814')
+    cy.contains('[data-test=file]', 'fichier1_2.html').should('exist')
+    dragEndOnDocument(cy.contains('[data-test=file]', 'fichier1_2.html'))
 
     // Drag file over breadCrumb item // TODO: collapsed breadcrumb
-    // dragStartOnDocument(cy.contains('[data-test=file]', 'fichier1_1.html'))
-    // dragOverOnDocument(cy.contains('[data-test="breadcrumb-item"]', 'dossier1'))
-    // cy.contains('[data-test="breadcrumb-item"]', 'dossier1').should('have.class', 'active')
-    // dragOverAnOtherDocument(cy.contains('[data-test="breadcrumb-item"]', 'dossier1'), cy.contains('[data-test="breadcrumb-item"]', 'Mon cartable'))
-    // cy.contains('[data-test="breadcrumb-item"]', 'dossier1').should('not.have.class', 'active')
-    // cy.contains('[data-test="breadcrumb-item"]', 'Mon cartable').should('have.class', 'active')
+    dragStartOnDocument(cy.contains('[data-test=file]', 'fichier1_2.html'))
+    dragOverOnDocument(cy.contains('[data-test="breadcrumb-item"]', 'dossier1'))
+    cy.contains('[data-test="breadcrumb-item"]', 'dossier1').should('have.class', 'active')
+    dragOverAnOtherDocument(cy.contains('[data-test="breadcrumb-item"]', 'dossier1'), cy.contains('[data-test="breadcrumb-item"]', 'Mon cartable'))
+    cy.contains('[data-test="breadcrumb-item"]', 'dossier1').should('not.have.class', 'active')
+    cy.contains('[data-test="breadcrumb-item"]', 'Mon cartable').should('have.class', 'active')
 
     // Drop file over breadCrumb item
-    // dropOnDocument(cy.contains('[data-test=folder]', 'Mon cartable'))
-    // cy.contains('[data-test=file]', 'fichier1_1.html').should('not.exist')
-    // cy.visit(url + '/8040788')
-    // cy.contains('[data-test=file]', 'fichier1_1.html').should('exist')
+    dropOnDocument(cy.contains('[data-test="breadcrumb-item"]', 'Mon cartable'))
+    cy.contains('[data-test=file]', 'fichier1_2.html').should('not.exist')
+    cy.visit(url + '/8040788')
+    cy.contains('[data-test=file]', 'fichier1_2.html').should('exist')
+
+    // Drop file with conflicts
+    dragStartOnDocument(cy.contains('[data-test=file]', 'fichier1_2.html'))
+    dragOverOnDocument(cy.contains('[data-test=folder]', 'dossier2'))
+    dropOnDocument(cy.contains('[data-test=folder]', 'dossier2'))
+    cy.get('[data-test=conflict-modal]').within(() => {
+      cy.contains('button', 'Remplacer').click()
+    })
+    cy.contains('[data-test=file]', 'fichier1_2.html').should('not.exist')
+    cy.visit(url + '/15401810')
+    cy.contains('[data-test=file]', 'fichier1_2.html').should('exist')
   })
 })

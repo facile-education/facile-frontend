@@ -3,6 +3,7 @@
     :modal="true"
     :draggable="true"
     class="conflict-modal"
+    data-test="conflict-modal"
     :width="600"
     @close="onClose"
   >

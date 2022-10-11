@@ -7,6 +7,7 @@
       v-if="hiddenElements.length > 0 && (!mq.phone && !mq.tablet)"
       :items="hiddenElements"
       :is-hoverable="true"
+      data-test="hidden-items"
       @optionClicked="changeDir"
     />
     <template
@@ -79,8 +80,8 @@ export default {
     },
     changeDir (item) {
       if (!this.isCurrentFolder) {
-        if (this.folder.isGroupDirectory) {
-          this.$router.push({ name: 'GroupDocuments', params: { folderId: this.folder.id } })
+        if (item.isGroupDirectory) {
+          this.$router.push({ name: 'GroupDocuments', params: { folderId: item.id } })
         } else {
           this.$router.push({ name: 'Documents', params: { folderId: item.id } })
         }
