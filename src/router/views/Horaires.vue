@@ -1,5 +1,6 @@
 <template>
   <Layout>
+    <h1 :aria-label="$t('serviceTitle')" />
     <HorairesToolbar
       v-if="!$store.state.user.isStudent"
       class="toolbar"
@@ -358,3 +359,9 @@ export default {
 <style lang="scss">
 @import 'src/design/fullcalendar';
 </style>
+
+<i18n locale="fr">
+{
+  "serviceTitle": "Horaires"
+}
+</i18n>

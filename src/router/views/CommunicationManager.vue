@@ -1,5 +1,6 @@
 <template>
   <Layout>
+    <h1 :aria-label="$t('serviceTitle')" />
     <CMToolbar />
     <div class="rules">
       <InternalRightList />
@@ -31,3 +32,9 @@ export default {
   padding: 5px;
 }
 </style>
+
+<i18n locale="fr">
+{
+  "serviceTitle": "Administration des communications"
+}
+</i18n>

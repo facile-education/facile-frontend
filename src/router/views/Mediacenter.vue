@@ -2,6 +2,7 @@
   <Layout
     class="layout"
   >
+    <h1 :aria-label="$t('serviceTitle')" />
     <NeroToolbar v-if="(schoolList && schoolList.length > 1)">
       <PentilaDropdown
         v-model="selectedSchool"
@@ -53,3 +54,9 @@ export default {
   height: 100%;
 }
 </style>
+
+<i18n locale="fr">
+{
+  "serviceTitle": "Médiacentre"
+}
+</i18n>

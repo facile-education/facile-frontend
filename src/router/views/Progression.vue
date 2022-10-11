@@ -3,6 +3,7 @@
     :is-allowed="!$store.state.user.isStudent && !$store.state.user.isParent"
     class="layout"
   >
+    <h1 :aria-label="$t('serviceTitle')" />
     <PentilaSpinner v-if="areActionsInProgress" />
     <ProgressionPanel
       v-if="progressionSelected"
@@ -88,3 +89,9 @@ export default {
   }
 }
 </style>
+
+<i18n locale="fr">
+{
+  "serviceTitle": "Progressions"
+}
+</i18n>

@@ -2,6 +2,7 @@
   <Layout
     class="layout"
   >
+    <h1 :aria-label="$t('serviceTitle')" />
     <PentilaSpinner v-if="areActionsInProgress" />
     <template v-if="contentList">
       <ProgressionItemContent
@@ -74,3 +75,9 @@ export default {
   margin: 10px;
 }
 </style>
+
+<i18n locale="fr">
+{
+  "serviceTitle": "Détail de la progression"
+}
+</i18n>

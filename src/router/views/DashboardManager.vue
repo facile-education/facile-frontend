@@ -1,5 +1,6 @@
 <template>
   <Layout>
+    <h1 :aria-label="$t('serviceTitle')" />
     <DMToolbar />
     <WidgetList />
     <WidgetEditionModal v-if="isEdtitionModalDisplayed" />
@@ -31,3 +32,9 @@ export default {
 
 <style lang="scss" scoped>
 </style>
+
+<i18n locale="fr">
+{
+  "serviceTitle": "Administration des tableau de bords"
+}
+</i18n>

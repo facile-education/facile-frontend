@@ -1,5 +1,6 @@
 <template>
   <Layout :is-allowed="true">
+    <h1 :aria-label="$t('serviceTitle')" />
     <div
       v-if="currentUser.userId !== 0"
       ref="documents"
@@ -500,6 +501,7 @@ export default {
 
 <i18n locale="fr">
 {
-  "deletionWarning": "Ce document sera définitivement perdu"
+  "deletionWarning": "Ce document sera définitivement perdu",
+  "serviceTitle": "Mes documents"
 }
 </i18n>

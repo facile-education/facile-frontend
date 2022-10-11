@@ -1,5 +1,6 @@
 <template>
   <Layout :is-allowed="hasGoodRole">
+    <h1 :aria-label="$t('serviceTitle')" />
     <div
       v-if="currentUser.userId !== 0 && currentUser.schoolList.length !== 0"
       class="non-classical-slots"
@@ -186,3 +187,9 @@ export default {
   }
 }
 </style>
+
+<i18n locale="fr">
+{
+  "serviceTitle": "Horaires hors cadre"
+}
+</i18n>
