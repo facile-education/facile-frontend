@@ -36,6 +36,8 @@
                   class="horizontal-timeline-week"
                   :class="{ 'current-week theme-border-color': week.isCurrent, 'theme-background-color': week.isSelected }"
                   :style="'left: ' + (index * (100/month.weekList.length)) + '%, width: ' + (100/month.weekList.length) + '%'"
+                  tabindex="0"
+                  @keypress.enter="onClickWeek(week)"
                   @click="onClickWeek(week)"
                 >
                   <div
