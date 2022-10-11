@@ -38,8 +38,9 @@
 </template>
 
 <script>
-import GridDocument from '@components/Documents/DocumentItem/GridDocument'
-import ListDocument from '@components/Documents/DocumentItem/ListDocument'
+import { defineAsyncComponent } from 'vue'
+const GridDocument = defineAsyncComponent(() => import('@components/Documents/DocumentItem/GridDocument'))
+const ListDocument = defineAsyncComponent(() => import('@components/Documents/DocumentItem/ListDocument'))
 
 export default {
   name: 'GenericDocument',

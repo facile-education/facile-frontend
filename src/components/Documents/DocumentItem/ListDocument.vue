@@ -1,7 +1,10 @@
 <template>
   <div
+    ref="document"
     class="list-document"
     :class="{'selected': isSelected, 'phone-list-document': mq.phone || mq.tablet, 'last': isLast}"
+    tabindex="-1"
+    @keypress.enter="triggerAction"
     @click.ctrl.exact="ctrlSelect"
     @click.meta.exact="ctrlSelect"
     @click.shift="shiftSelect"
@@ -12,6 +15,8 @@
   >
     <div
       class="selection-icon"
+      tabindex="0"
+      @keypress.stop.prevent.enter="ctrlSelect"
       @click.shift.stop="shiftSelect"
       @click.exact.stop="ctrlSelect"
     >
@@ -47,6 +52,8 @@
         <p
           class="name-label"
           :title="document.name"
+          tabindex="0"
+          @keypress.stop.enter="triggerAction"
           @click.stop="triggerAction"
         >
           {{ document.name }}
@@ -167,7 +174,7 @@ export default {
       return this.$store.state.documents.selectedEntities
     },
     isSelected () {
-      return this.selectedEntities.find(e => e.id === this.document.id) !== undefined
+      return this.selectedEntities.indexOf(this.document) !== -1
     },
     fields () {
       return this.$store.state.fileFields.fields
@@ -191,28 +198,18 @@ export default {
       return 'fas'
     }
   },
-  // TODO: Scroll element into view for the up and down arrow navigation case
-  // watch: {
-  //   isSelected () {
-  //     if (this.selectedEntities.length === 1 && this.isSelected) {
-  //       this.$el.scrollIntoView({ behavior: 'smooth', block: 'end' })
-  //     }
-  //   }
-  // },
-  mounted () {
-    window.addEventListener('keyup', this.keyMonitor)
-  },
-  beforeUnmount () {
-    window.removeEventListener('keyup', this.keyMonitor)
+  watch: {
+    isSelected (newValue, oldValue) {
+      if (newValue && !oldValue) {
+        this.$refs.document.focus()
+      }
+      // TODO: Scroll element into view for the up and down arrow navigation case
+      /* if (this.selectedEntities.length === 1 && this.isSelected) {
+        this.$el.scrollIntoView({ behavior: 'smooth', block: 'end' })
+      } */
+    }
   },
   methods: {
-    keyMonitor (e) { // TODO find a better way to handle enter key event (@keyup.enter ?)
-      if (e.key === 'Enter' && !this.isModalOpen) {
-        if (this.isSelected && this.selectedEntities.length === 1) {
-          this.$emit('triggerAction')
-        }
-      }
-    },
     triggerAction () {
       this.$emit('triggerAction')
     },

@@ -1,5 +1,5 @@
 <template>
-  <div
+  <button
     ref="root"
     class="option-item"
     :title="option.title"
@@ -18,13 +18,14 @@
       src="@assets/arrow-down.svg"
       alt=""
     >
-  </div>
 
-  <ContextMenu
-    v-if="isContextMenuDisplayed && isAContextMenuDisplayed"
-    @chooseOption="subMenuOptionClicked"
-    @close="isContextMenuDisplayed=false"
-  />
+    <ContextMenu
+      v-if="isContextMenuDisplayed && isAContextMenuDisplayed"
+      :is-absolute="true"
+      @chooseOption="subMenuOptionClicked"
+      @close="isContextMenuDisplayed=false"
+    />
+  </button>
 </template>
 
 <script>
@@ -85,12 +86,15 @@ export default {
 
 .option-item {
   display: flex;
+  position: relative;
   cursor: pointer;
   align-items: center;
   border-radius: 6px;
   padding: 0 5px;
   height: 100%;
   margin: 0 15px;
+  background: none;
+  border: none;
 
   img {
     width: 28px;

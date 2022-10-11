@@ -1,5 +1,5 @@
 <template>
-  <div
+  <button
     v-if="(!mq.phone && !mq.tablet) || isCurrentFolder"
     class="breadcrumb-item"
     data-test="breadcrumb-item"
@@ -28,7 +28,7 @@
         {{ folder.name }}
       </span>
     </div>
-    <div
+    <button
       v-if="currentOptions.length > 0 && isFirstElement"
       class="first-folder-options"
       @click.stop="toggleContextMenu"
@@ -37,7 +37,7 @@
         class="icon"
         name="chevron-down"
       />
-    </div>
+    </button>
     <div
       v-else-if="currentOptions.length > 0"
       class="current-folder-options"
@@ -50,10 +50,11 @@
 
     <ContextMenu
       v-if="isContextMenuDisplayed && isAContextMenuDisplayed"
+      :is-absolute="true"
       @chooseOption="handleOption"
       @close="isContextMenuDisplayed=false"
     />
-  </div>
+  </button>
 
   <teleport to="body">
     <FolderNameModal
@@ -227,6 +228,7 @@ export default {
 .breadcrumb-item{
   height: 40px;
   display: flex;
+  position: relative;
   align-items: center;
   cursor: pointer;
   font-size: 1em;
@@ -234,6 +236,8 @@ export default {
   border-radius: 6px;
   margin-right: 3px;
   padding: 3px;
+  background: none;
+  border: none;
 
   &.current-folder:not(.phone-breadcrumb-item){
     font-weight: bold;
@@ -295,8 +299,9 @@ export default {
   .first-folder-options {
     margin: 0 5px 0 8px;
     position: relative;
-    height: 16px;
-    width: 16px;
+    cursor: pointer;
+    height: 20px;
+    width: 20px;
     display: flex;
     align-items: center;
     justify-content: center;

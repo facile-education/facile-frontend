@@ -217,11 +217,6 @@ export default {
 
 .filepicker-window {
   display: flex;
-
-  button {
-    height: 67px;
-    width: 191px;
-  }
 }
 
 .mobile {

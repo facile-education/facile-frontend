@@ -5,7 +5,8 @@
       :class="{'has-separator': option.hasSeparator,
                'is-grayed': option.isGrayed,
                'hoverable': !option.isGrayed,
-               'active': isActive}"
+               'active': isActive,
+               'is-selected theme-light-background-color': isSelected}"
       @mouseover="isHovering = true"
       @mouseleave="isHovering = false"
       @click.stop="emitOption"
@@ -26,17 +27,18 @@
       <div class="title">
         {{ option.title }}
       </div>
+      {{ option.iconWhite }}
       <div
         v-if="option.icon !== ''"
         class="icon"
       >
         <img
-          v-if="option.iconWhite === undefined || !isHovering"
+          v-if="option.iconWhite === undefined || (!isHovering && !isSelected)"
           :src="option.icon"
           :alt="option.title"
         >
         <img
-          v-show="option.iconWhite !== undefined && isHovering"
+          v-show="option.iconWhite !== undefined && (isHovering || isSelected)"
           :src="option.iconWhite"
           :alt="option.title"
         >
@@ -78,6 +80,10 @@ export default {
       required: true
     },
     isHoverable: {
+      type: Boolean,
+      default: false
+    },
+    isSelected: {
       type: Boolean,
       default: false
     },
@@ -213,7 +219,6 @@ export default {
   align-items: center;
   cursor: pointer;
   height: 54px;
-  border-radius: 6px;
 
   .title {
     margin-top: 5px;
@@ -245,7 +250,7 @@ export default {
     }
   }
 
-  &:hover {
+  &:hover, &.is-selected {
     .title {
       color: black;
     }
