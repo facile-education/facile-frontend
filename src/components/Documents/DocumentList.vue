@@ -1,5 +1,5 @@
 <template>
-  <div v-if="allSortedDocuments.length > 0">
+  <div v-if="allSortedDocuments.length > 0 || areActionsInProgress">
     <!-- TODO: placeholder when no entities -->
     <FilesFields
       :current-sort="sort"
@@ -64,6 +64,9 @@ export default {
     },
     selectedDocuments () {
       return this.$store.state.documents.selectedEntities
+    },
+    areActionsInProgress () {
+      return this.$store.getters['currentActions/areActionsInProgress']
     },
     draggablePermissionOnSelectedDocuments () {
       let isDraggable = true
