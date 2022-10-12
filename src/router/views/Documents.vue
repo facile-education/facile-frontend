@@ -66,7 +66,7 @@
         v-if="isFolderNameModalDisplayed"
         :submit-action="modalSubmitAction"
         :init-folder="documentToRename"
-        @close="closeFolderNameModal"
+        @close="isFolderNameModalDisplayed = false"
       />
       <FileNameModal
         v-if="isFileNameModalDisplayed"
@@ -298,7 +298,7 @@ export default {
           this.modalSubmitAction = 'rename'
           this.documentToRename = this.selectedDocuments[0]
           if (this.documentToRename.type === 'Folder') {
-            this.openFolderNameModal()
+            this.isFolderNameModalDisplayed = true
           } else {
             this.isFileNameModalDisplayed = true
           }
@@ -309,7 +309,6 @@ export default {
         // TODO HTML, ODS, ODP
         case 'newFolder':
           this.modalSubmitAction = 'createFolder'
-          this.openFolderNameModal()
           this.isFolderNameModalDisplayed = true
           break
         case 'newODT':
@@ -425,7 +424,7 @@ export default {
       }
       this.$store.dispatch('currentActions/displayUploadProgression')
       importDocuments(this.currentFolderId, fileList)
-    },
+    }
     // doSelectFolderAction (targetFolder) {
     //   if (this.folderSelectionOption === 'move') {
     //     this.$store.dispatch('clipboard/move', targetFolder)
@@ -435,14 +434,6 @@ export default {
     //     console.error('Unknown option' + this.folderSelectionOption)
     //   }
     // }
-    openFolderNameModal () {
-      this.$store.dispatch('misc/incrementModalCount')
-      this.isFolderNameModalDisplayed = true
-    },
-    closeFolderNameModal () {
-      this.$store.dispatch('misc/decreaseModalCount')
-      this.isFolderNameModalDisplayed = false
-    }
   }
 }
 </script>

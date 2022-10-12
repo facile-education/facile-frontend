@@ -99,6 +99,7 @@ export default {
     }
   },
   created () {
+    this.$store.dispatch('misc/incrementModalCount')
     if (this.document.type === 'File') {
       permissionsService.getFilePermissionMatrix(this.document.id).then((data) => {
         if (data.success) {
@@ -149,6 +150,7 @@ export default {
       }
     },
     onClose () {
+      this.$store.dispatch('misc/decreaseModalCount')
       this.$emit('close')
     }
   }
