@@ -164,6 +164,7 @@ export default {
     }
   },
   created () {
+    this.$store.dispatch('misc/incrementModalCount')
     if (this.submitAction === 'rename') {
       this.inputText = this.fileNameWithoutExtension
     }
@@ -286,6 +287,7 @@ export default {
       })
     },
     onClose () {
+      this.$store.dispatch('misc/decreaseModalCount')
       this.$emit('close')
     }
   }

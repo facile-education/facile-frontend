@@ -126,6 +126,7 @@ export default {
     }
   },
   created () {
+    this.$store.dispatch('misc/incrementModalCount')
     this.width = !this.mq.phone ? Math.max(600, document.documentElement.clientWidth / 2) : ''
     this.height = document.documentElement.clientHeight * 9 / 10
   },
@@ -153,6 +154,7 @@ export default {
       this.close()
     },
     close () {
+      this.$store.dispatch('misc/decreaseModalCount')
       this.$emit('close')
     }
   }
