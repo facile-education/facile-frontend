@@ -52,8 +52,8 @@ const routes = [
     component: () => import('@/router/views/Documents')
   },
   {
-    path: '/documents/groups/:folderId(.*)?',
-    name: 'Groups',
+    path: '/documents/groups/:folderId(\\d+)?',
+    name: 'GroupDocuments',
     component: () => import('@/router/views/Documents')
   },
   {
@@ -80,11 +80,6 @@ const routes = [
     path: '/messaging',
     name: 'Messaging',
     component: () => import('@/router/views/Messaging')
-  },
-  {
-    path: '/groups',
-    name: 'Groups',
-    component: () => import('@/router/views/Groups')
   },
   {
     path: '/:pathMatch(.*)*',

@@ -8,7 +8,7 @@ export default {
   createFolder,
   renameFolder,
   getAllEntities,
-  getFolderBreadcrumb
+  getBreadcrumb
 }
 
 const FOLDER_PATH = '/documents-portlet.folderutil'
@@ -65,8 +65,8 @@ function getAllEntities (folderId, withDetails) {
 /**
  * Get the breadCrumb of a folder
  */
-function getFolderBreadcrumb (folderId) {
-  return axios.get(constants.JSON_WS_URL + FOLDER_PATH + '/get-folder-breadcrumb', {
+function getBreadcrumb (folderId) {
+  return axios.get(constants.JSON_WS_URL + FOLDER_PATH + '/get-breadcrumb', {
     params: {
       p_auth: getCookie('pauth'),
       folderId: folderId

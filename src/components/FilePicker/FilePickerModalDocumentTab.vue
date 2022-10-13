@@ -113,7 +113,7 @@ export default {
           this.currentFiles = data.files ? data.files : []
           this.selectedFolder = undefined
           this.$emit('selectedFolder', undefined)
-          navigationService.getFolderBreadcrumb(folderId).then((data) => {
+          navigationService.getBreadcrumb(folderId).then((data) => {
             if (data.success) {
               data.breadcrumb.forEach(folder => { folder.hasAddPermission = true }) // Add hasAddPermission = true property to all document folder for compliance with group objects
               this.currentBreadcrumb = data.breadcrumb

@@ -91,7 +91,7 @@ export default {
   created () {
     documentsService.getGlobalDocumentsProperties().then((data) => {
       this.maxUploadSize = data.maxUploadSize
-      this.loadFolderContent('groupEntities') // TODO get those key from data
+      this.loadFolderContent('collaborative') // TODO get those key from data
     })
   },
   methods: {
@@ -107,7 +107,7 @@ export default {
           this.currentFiles = data.files ? data.files : []
           this.selectedFolder = undefined
           this.$emit('selectedFolder', undefined)
-          groupService.getGroupFolderBreadcrumb(groupFolderId).then((data) => {
+          groupService.getGroupBreadcrumb(groupFolderId).then((data) => {
             if (data.success) {
               this.currentBreadcrumb = data.breadCrumb
               this.$emit('currentFolder', this.currentFolder)
