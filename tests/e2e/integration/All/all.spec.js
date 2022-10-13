@@ -9,6 +9,7 @@ import '../Documents/DocumentsNavigation.spec'
 import '../Documents/DocumentsSelection.spec'
 import '../Documents/FileAndFolderCreation.spec'
 import '../Documents/moveAndDuplicate.spec'
+import '../Documents/options.spec'
 import '../Documents/rename.spec'
 
 // Horaires
