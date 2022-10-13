@@ -154,7 +154,7 @@ export const actions = {
       groupService.getGroupEntities(groupFolderId).then((data) => {
         this.dispatch('currentActions/removeAction', { name: 'getEntities' })
         if (data.success) {
-          commit('setLoadDocumentsError', true)
+          commit('setLoadDocumentsError', false)
           data.folders.forEach(folder => { folder.isGroupDirectory = true })
           commit('setFolderContent', { subFolders: data.folders, files: data.files })
           resolve({ subFolders: data.folders, files: data.files })
@@ -176,7 +176,7 @@ export const actions = {
     }
   },
   goInGroupRoot ({ state, commit }) {
-    this.dispatch('documents/changeDirectory', { id: 'groupEntities', isGroupDirectory: true }) // TODO get those key from documentsProperties
+    this.dispatch('documents/changeDirectory', { id: 'collaborative', isGroupDirectory: true }) // TODO get those key from documentsProperties
   },
   openDocumentPanel ({ commit }) {
     commit('setDocumentPanelDisplayed', true)
@@ -204,7 +204,7 @@ export const actions = {
     })
   },
   updateBreadcrumb ({ commit }, folderId) {
-    navigationService.getFolderBreadcrumb(folderId).then((data) => {
+    navigationService.getBreadcrumb(folderId).then((data) => {
       if (data.breadcrumb) {
         for (let i = 0; i < data.breadcrumb.length; ++i) { // Because all documents in breadcrumb are folders, add folder icon
           data.breadcrumb[i].icon = require('@assets/documentIcons/icon-folder.svg')
@@ -216,7 +216,7 @@ export const actions = {
     })
   },
   updateGroupBreadcrumb ({ commit }, groupFolderId) {
-    groupService.getGroupFolderBreadcrumb(groupFolderId).then((data) => {
+    groupService.getGroupBreadcrumb(groupFolderId).then((data) => {
       if (data.breadCrumb) {
         for (let i = 0; i < data.breadCrumb.length; ++i) { // Because all documents in breadcrumb are folders, add folder icon
           data.breadCrumb[i].icon = require('@assets/documentIcons/icon-folder.svg')

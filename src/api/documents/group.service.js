@@ -5,7 +5,7 @@ import PentilaUtils from 'pentila-utils'
 
 export default {
   getGroupEntities,
-  getGroupFolderBreadcrumb,
+  getGroupBreadcrumb,
   recordDownloadActivity,
   recordViewActivity
 }
@@ -24,8 +24,8 @@ function getGroupEntities (node) {
   }).then(response => response.data)
 }
 
-function getGroupFolderBreadcrumb (node) {
-  return axios.get(constants.JSON_WS_URL + GROUP_PATH + '/get-group-folder-path', {
+function getGroupBreadcrumb (node) {
+  return axios.get(constants.JSON_WS_URL + GROUP_PATH + '/get-group-breadcrumb', {
     params: {
       p_auth: getCookie('pauth'),
       nodePath: node

@@ -69,7 +69,7 @@ export default {
       if (index > 0) {
         const parentFolder = this.breadcrumb[index - 1]
         if (parentFolder.isGroupDirectory) {
-          this.$router.push({ name: 'Groups', params: { folderId: parentFolder.id } })
+          this.$router.push({ name: 'GroupDocuments', params: { folderId: parentFolder.id } })
         } else {
           this.$router.push({ name: 'Documents', params: { folderId: parentFolder.id } })
         }
@@ -80,7 +80,7 @@ export default {
     changeDir (item) {
       if (!this.isCurrentFolder) {
         if (this.folder.isGroupDirectory) {
-          this.$router.push({ name: 'Groups', params: { folderId: this.folder.id } })
+          this.$router.push({ name: 'GroupDocuments', params: { folderId: this.folder.id } })
         } else {
           this.$router.push({ name: 'Documents', params: { folderId: item.id } })
         }

@@ -178,7 +178,7 @@ export default {
           } else {
             this.$store.dispatch('documents/goInDocumentRoot')
           }
-        } else if (this.$route.name === 'Groups') {
+        } else if (this.$route.name === 'GroupDocuments') {
           if (this.$route.params.folderId) {
             this.$store.dispatch('documents/changeDirectory', { id: this.$route.params.folderId, isGroupDirectory: true })
           } else {
