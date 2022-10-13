@@ -13,13 +13,35 @@
         src="@/assets/options/emptyFolderPlaceholder.svg"
         alt=""
       >
-      <p v-if="!mq.phone && !mq.tablet">
-        {{ text }}
+      <div
+        v-if="!mq.phone && !mq.tablet"
+        class="text"
+      >
+        <p class="p1">
+          {{ text1 }}
+        </p>
+        <p
+          v-if="text2"
+          class="p2"
+        >
+          {{ text2 }}
+        </p>
+      </div>
+    </div>
+    <div
+      v-if="mq.phone || mq.tablet"
+      class="text"
+    >
+      <p class="p1">
+        {{ text1 }}
+      </p>
+      <p
+        v-if="text2"
+        class="p2"
+      >
+        {{ text2 }}
       </p>
     </div>
-    <p v-if="mq.phone || mq.tablet">
-      {{ text }}
-    </p>
   </div>
 </template>
 
@@ -31,13 +53,22 @@ export default {
     isLoadDocumentsError () {
       return this.$store.state.documents.loadDocumentsError
     },
-    text () {
+    text1 () {
       if (this.isLoadDocumentsError) {
         return this.$t('isLoadDocumentsError')
       } else if (this.mq.phone || this.mq.tablet) {
         return this.$t('noDocumentToDisplayMobile')
       } else {
         return this.$t('noDocumentToDisplay')
+      }
+    },
+    text2 () {
+      if (this.isLoadDocumentsError) {
+        return this.$t('isLoadDocumentsError2')
+      } else if (this.mq.phone || this.mq.tablet) {
+        return undefined
+      } else {
+        return this.$t('noDocumentToDisplay2')
       }
     }
   }
@@ -73,6 +104,7 @@ export default {
     margin-left: 3vw;
     width: 10vw;
     max-width: 100px;
+    margin-block-start: 1em;
   }
 
   .fa-icon {
@@ -81,20 +113,35 @@ export default {
   }
 }
 
-p{
-  font-family: Roboto-Regular,sans-serif;
-  font-size: 18px;
-  color: #898989;
-  letter-spacing: 0;
-  text-align: center;
+.text {
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+
+  p{
+    font-family: Roboto-Regular,sans-serif;
+    font-size: 18px;
+    color: #898989;
+    letter-spacing: 0;
+    text-align: center;
+    margin: 0;
+    margin-block-end: 0.3em;
+    font-weight: 400;
+  }
+
+  .p2{
+    font-weight: normal;
+    font-size: 14px;
+  }
 }
 
 </style>
 
 <i18n locale="fr">
 {
-  "isLoadDocumentsError": "Problème rencontré lors du chargement des fichiers",
-  "noDocumentToDisplay": "Glisser / déposer un document",
+  "isLoadDocumentsError": "Problème rencontré lors du",
+  "isLoadDocumentsError2": "chargement des fichiers",
+  "noDocumentToDisplay": "Déposer vos fichiers ici",
+  "noDocumentToDisplay2": "ou utilisez le bouton +",
   "noDocumentToDisplayMobile": "Ajouter un document avec le bouton +"
 }
 </i18n>
