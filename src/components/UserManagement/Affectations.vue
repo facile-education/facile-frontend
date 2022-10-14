@@ -166,18 +166,15 @@ export default {
 @import '@design';
 
 .affectations {
-  padding: 10px;
   height: 100%;
 }
+
 .header {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin-left: 5px;
   margin-bottom: 20px;
-  .add-affected-user {
-    margin-right: 10px;
-  }
+  padding: 0 10px;
 }
 
 .main-label {

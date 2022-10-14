@@ -78,7 +78,6 @@
     <teleport to="body">
       <EditUserModal
         v-if="isEditUserModalDisplayed"
-        height="30em"
         :edited-user="selectedUser"
         @close="isEditUserModalDisplayed = false"
       />
@@ -181,7 +180,6 @@ export default {
 @import '@design';
 
 .manual-users {
-  padding: 10px;
   height: 100%;
 }
 
@@ -189,11 +187,13 @@ export default {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin-left: 5px;
   margin-bottom: 20px;
+  padding: 0 10px;
+
   .pagination {
     margin: auto;
   }
+
   span {
     margin-right: 4px;
   }
@@ -202,10 +202,6 @@ export default {
 .main-label {
   margin-top: 10em;
   text-align: center;
-}
-
-.create-user {
-  margin-right: 10px;
 }
 
 .user-table {
