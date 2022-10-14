@@ -112,7 +112,6 @@
 <script>
 import { useVuelidate } from '@vuelidate/core'
 import { required, email } from '@vuelidate/validators'
-import PentilaUtils from 'pentila-utils'
 import { createManualUser, editManualUser, removeManualUser } from '@/api/userManagement.service'
 import store from '@/store'
 
@@ -152,7 +151,7 @@ export default {
       return this.$store.state.user.selectedSchool
     },
     roles () {
-      return PentilaUtils.Array.sortWithString(this.$store.state.userManagement.roles, true, 'roleCode')
+      return this.$store.state.userManagement.roles
     },
     formErrorList () {
       return {

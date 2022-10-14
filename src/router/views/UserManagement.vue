@@ -4,36 +4,26 @@
     class="layout"
   >
     <h1 :aria-label="$t('serviceTitle')" />
+
     <div class="header">
-      <div class="header-title">
-        <p>{{ $t('title') }}</p>
-        <PentilaDropdown
-          v-if="schoolList.length > 1"
-          v-model="selectedSchool"
-          :list="schoolList"
-          display-field="schoolName"
-        />
-        <p
-          v-else
-          class="school-name"
-        >
-          {{ selectedSchool.schoolName }}
-        </p>
-      </div>
+      <p>{{ $t('serviceTitle') }}</p>
+      <PentilaDropdown
+        v-if="schoolList.length > 1"
+        v-model="selectedSchool"
+        class="dropdown"
+        :list="schoolList"
+        display-field="schoolName"
+      />
     </div>
 
     <Transition
       appear
       name="fade"
     >
-      <PentilaTabList
-        style="height: calc(100% - 60px);"
-        class="tablist"
-      >
+      <PentilaTabList>
         <PentilaTabItem
           :title="$t('manual-users')"
           class="tab"
-          style="height: calc(100% - 30px);"
         >
           <ManualUsers />
         </PentilaTabItem>
@@ -85,36 +75,40 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
+
 .layout {
-  height: 100%;
-  background-color: rgb(233, 233, 233);
-}
-.header {
-  width: 100%;
-  margin-top: 1em;
-  margin-bottom: 1em;
-  .header-title {
+  display: flex;
+  flex-direction: column;
+
+  .header {
+    width: 100%;
+    height: $um-ĥeader-height;
     display: flex;
-    margin: auto;
-    width: 50%;
+    align-items: center;
+    justify-content: center;
+
     p {
-      margin-right: 1em;
-      font-weight: bold;;
+      font-weight: 600;
+      font-size: 1.125em;
     }
-    .school-name {
-      font-weight: normal;
+
+    .dropdown {
+      margin-left: 1em;
     }
   }
+
+  .tab {
+    flex: 1;
+  }
 }
-.tablist {
-  background-color: white;
-}
+
 </style>
 
 <i18n locale="fr">
 {
   "serviceTitle": "Administration des utilisateurs",
-  "title": "Gestion des utilisateurs de ",
+  "title": "Gestion des utilisateurs ",
   "manual-users": "Comptes manuels",
   "delegations": "Délégations",
   "affectations": "Affectations"

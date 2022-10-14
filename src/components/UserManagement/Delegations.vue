@@ -181,17 +181,15 @@ export default {
 @import '@design';
 
 .delegations {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+  height: 100%;
 }
 
 .header {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
   margin-bottom: 20px;
-  .add-delegation {
-    margin-right: 2em;
-    float: right;
-  }
+  padding: 0 10px;
 }
 
 .main-label {
