@@ -99,7 +99,7 @@ export default {
           if (files.length !== 0) {
             this.$emit('fileAdded', files)
           } else {
-            this.dispatch('popups/pushPopup', { message: 'failed to upload document', type: 'error' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('errorNoFiles'), type: 'error' })
           }
         })
       }
@@ -162,6 +162,7 @@ export default {
 }
 
 .background-actions-container {
+  background-color: white;
   z-index: $popup-z-index;
   position: absolute;
   bottom: 0;
@@ -188,6 +189,7 @@ export default {
 
 <i18n locale="fr">
 {
+  "errorNoFiles": "Il n'y a aucun fichier valide à téléverser !",
   "dropZoneLabel": "Déposer un document"
 }
 </i18n>
