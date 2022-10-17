@@ -114,7 +114,6 @@
       "viewVersion": "Voir"
     },
     "options": {
-      "copyWebdavUrl": "Copier l'URL Webdav",
       "download": "@:Commons.download",
       "details": "Détails",
       "delete": "Supprimer",

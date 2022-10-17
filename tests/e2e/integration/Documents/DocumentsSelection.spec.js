@@ -1,8 +1,8 @@
 import { url } from '../../support/constants/documents'
 import { HEADMASTER } from '../../support/constants'
 
-const folderOptions = ['Renommer', 'Déplacer vers', 'Dupliquer vers', 'Télécharger', 'Supprimer', 'Copier l\'URL Webdav', 'Détails']
-const fileOptions = ['Ouvrir', 'Renommer', 'Déplacer vers', 'Dupliquer vers', 'Télécharger', 'Copier l\'URL Webdav', 'Supprimer', 'Détails']
+const folderOptions = ['Renommer', 'Déplacer vers', 'Dupliquer vers', 'Télécharger', 'Supprimer', 'Détails']
+const fileOptions = ['Ouvrir', 'Renommer', 'Déplacer vers', 'Dupliquer vers', 'Télécharger', 'Supprimer', 'Détails']
 const multiSelectionOptions = ['Déplacer vers', 'Dupliquer vers', 'Supprimer']
 
 const checkCurrentOptions = (optionsNames) => {

@@ -225,13 +225,6 @@ const fileOptions = [
     hasSeparator: true
   },
   {
-    name: 'copyWebdavUrl',
-    title: i18n.global.t('Documents.options.copyWebdavUrl'),
-    icon: icons.options.copyWebdavUrl,
-    position: 6,
-    hasSeparator: true
-  },
-  {
     name: 'details',
     title: i18n.global.t('Documents.options.details'),
     icon: icons.options.details,
@@ -284,13 +277,6 @@ const folderOptions = [
     hasSeparator: true
   },
   {
-    name: 'copyWebdavUrl',
-    title: i18n.global.t('Documents.options.copyWebdavUrl'),
-    icon: icons.options.copyWebdavUrl,
-    position: 5,
-    hasSeparator: true
-  },
-  {
     name: 'details',
     title: i18n.global.t('Documents.options.details'),
     icon: icons.options.details,
@@ -319,13 +305,6 @@ const currentFolderOptions = [
     title: i18n.global.t('Documents.options.download'),
     icon: icons.options.download,
     position: 3,
-    hasSeparator: true
-  },
-  {
-    name: 'copyWebdavUrl',
-    title: i18n.global.t('Documents.options.copyWebdavUrl'),
-    icon: icons.options.copyWebdavUrl,
-    position: 5,
     hasSeparator: true
   }
 ]

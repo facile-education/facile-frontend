@@ -71,9 +71,9 @@
 import BaseIcon from '@components/Base/BaseIcon'
 import ContextMenu from '@components/ContextMenu/ContextMenu'
 import { currentFolderOptions, spaceSelectionOptions } from '@/constants/options'
-import { removeMenuOptionIfExist } from '@utils/commons.util'
-import { copyWebdavUrl, downloadDocument } from '@utils/documents.util'
+import { downloadDocument } from '@utils/documents.util'
 import FolderNameModal from '@components/Documents/Modals/FolderNameModal'
+
 export default {
   name: 'BreadCrumbItem',
   components: { FolderNameModal, ContextMenu, BaseIcon },
@@ -120,11 +120,7 @@ export default {
     },
     currentOptions () {
       if ((!this.mq.phone && !this.mq.tablet) && this.isCurrentFolder && !this.isFirstElement && !this.isGroupFolder) {
-        const options = [...currentFolderOptions]
-        if (!this.$store.state.user.hasWebdavEnabled) {
-          removeMenuOptionIfExist(options, 'copyWebdavUrl')
-        }
-        return options
+        return [...currentFolderOptions]
       } else if (this.isFirstElement) {
         return [...spaceSelectionOptions]
       } else {
@@ -199,9 +195,6 @@ export default {
           break
         case 'download':
           downloadDocument(this.folder)
-          break
-        case 'copyWebdavUrl':
-          copyWebdavUrl(this.folder)
           break
         case 'documents':
           this.$router.push('/documents')

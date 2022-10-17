@@ -58,31 +58,17 @@ describe('Other options', () => {
     })
   })
 
-  it('Copy webdavURL', () => {
-    cy.contains('[data-test=folder]', 'createdFolder').rightclick()
-    cy.get('[data-test="context-menu"]').contains('Copier l\'URL Webdav').should('exist') // Can't test the clipboard content because of the tests running environment witch doesn't allowing clipboard
-    // cy.get('[data-test="context-menu"]').contains('Dupliquer vers').click()
-    // cy.window().then((win) => {
-    //   win.navigator.clipboard.readText().then((text) => {
-    //     console.log(text)
-    //     expect(text).to.eq('your copied text')
-    //   })
-    // })
-
     cy.contains('[data-test=file]', 'createdNote.html').click('right')
     cy.get('[data-test="context-menu"]').should('not.exist')
     cy.contains('[data-test=file]', 'createdNote.html').should('have.class', 'selected').rightclick()
-    cy.get('[data-test="context-menu"]').contains('Copier l\'URL Webdav').should('exist')
 
     // Test the absence of option on mobile
     cy.viewport('iphone-5')
     cy.reload()
     cy.contains('[data-test=folder]', 'createdFolder').find('.selection-icon').click()
     cy.get('[data-test="hidden-items"]').click()
-    // cy.contains('Copier l\'URL Webdav').should('exist')
     // cy.contains('[data-test=folder]', 'createdFolder').find('.selection-icon').click()
     // cy.contains('[data-test=file]', 'createdFile.html').find('.selection-icon').click()
     // cy.get('[data-test="hidden-items"]').click()
-    // cy.contains('Copier l\'URL Webdav').should('exist')
   })
 })

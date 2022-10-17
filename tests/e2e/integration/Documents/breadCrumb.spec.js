@@ -28,10 +28,9 @@ describe('BreadCrumb', () => {
     cy.visit(url + '/15401812')
     cy.get('[data-test="breadcrumb"]').within(() => {
       cy.contains('.current-folder', 'dossier1_1').click()
-      cy.get('[data-test=context-menu]').children().should('have.length', 3)
+      cy.get('[data-test=context-menu]').children().should('have.length', 2)
         .should('contain', 'Renommer')
         .should('contain', 'Télécharger')
-        .should('contain', 'Copier l\'URL Webdav')
       cy.contains('.current-folder', 'dossier1_1').click()
       cy.get('[data-test=context-menu]').should('not.exist')
     })
