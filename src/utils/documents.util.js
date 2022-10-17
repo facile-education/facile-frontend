@@ -1,4 +1,5 @@
 import store from '@store/index.js'
+import i18n from '@/i18n'
 import trashService from '@/api/documents/trash.service'
 import fileService from '@/api/documents/file.service'
 import folderService from '@/api/documents/folder.service'
@@ -153,7 +154,7 @@ async function importDocuments (folderId, documentList, mode) {
         } else {
           if (data.error === 'fileSizeException') {
             store.dispatch('popups/pushPopup', {
-              message: 'failed to upload document: fileSizeException',
+              message: i18n.global.t('Documents.fileSizeException'),
               type: 'error'
             })
           } else if (data.error === 'DuplicateFileException') {
@@ -161,6 +162,11 @@ async function importDocuments (folderId, documentList, mode) {
             store.dispatch('conflictModal/addConflict', {
               entitiesInConflict: [doc],
               lastAction: { fct: importDocuments, params: [folderId, documentList.slice(i)] }
+            })
+          } else if (data.error === 'PermissionException') {
+            store.dispatch('popups/pushPopup', {
+              message: i18n.global.t('Documents.permissionException'),
+              type: 'error'
             })
           }
         }

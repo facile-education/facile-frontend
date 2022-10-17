@@ -94,6 +94,8 @@
     "files": "Fichiers",
     "group": "Groupe",
     "errorNoFiles": "Il n'y a aucun fichier valide à téléverser !",
+    "fileSizeException": "Le fichier importé dépasse la taille limite autorisée",
+    "permissionException": "Vous n'avez pas la permission d'effectuer cette action",
     "uploadSuccess": " importé avec succès!",
     "documentFields": {
       "creationDate": "Création",
