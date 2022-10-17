@@ -29,7 +29,6 @@ describe('File and Folder creation', () => {
       cy.get('h1').should('contain', 'createdODT.odt')
       cy.get('[data-test="closeModal"]').click()
     })
-    cy.get('[data-test=warning-modal]').find('[data-test=confirmButton]').click()
     cy.contains('[data-test=file]', 'createdODT.odt').should('exist').find('.selection-icon').click() // Unselect it
 
     // Create ODS
@@ -43,7 +42,6 @@ describe('File and Folder creation', () => {
       cy.get('h1').should('contain', 'createdODS.ods')
       cy.get('[data-test="closeModal"]').click()
     })
-    cy.get('[data-test=warning-modal]').find('[data-test=confirmButton]').click()
     cy.contains('[data-test=file]', 'createdODS').should('exist').find('.selection-icon').click() // Unselect it
 
     // Create ODP
@@ -57,7 +55,6 @@ describe('File and Folder creation', () => {
       cy.get('h1').should('contain', 'createdODP.odp')
       cy.get('[data-test="closeModal"]').click()
     })
-    // cy.get('[data-test=warning-modal]').find('[data-test=confirmButton]').click()
     cy.contains('[data-test=file]', 'createdODP').should('exist').find('.selection-icon').click() // Unselect it
 
     // Create Géogébra

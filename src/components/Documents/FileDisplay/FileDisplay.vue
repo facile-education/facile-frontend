@@ -102,7 +102,7 @@ export default {
       if (this.wantsToCloseFile) {
         if (this.typeOfView === 'WISIWIG' && this.loadedFile && !this.loadedFile.readOnly) { // Only WISIWIG can auto-save for the moment...
           this.haveToSaveFile = true
-        } else if (this.typeOfView === 'Office' || this.typeOfView === 'MindMap' || this.typeOfView === 'Geogebra' || this.typeOfView === 'Scratch') {
+        } else if (this.typeOfView === 'MindMap' || this.typeOfView === 'Geogebra' || this.typeOfView === 'Scratch') {
           this.$store.dispatch('warningModal/addWarning', {
             text: this.$t('quitWithoutSaving'),
             lastAction: { fct: this.emitCloseEvent }
