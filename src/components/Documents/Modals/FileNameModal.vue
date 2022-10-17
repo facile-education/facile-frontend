@@ -26,6 +26,7 @@
         data-test="folderName-input"
         :error-type="formErrorList"
         @blur="v$.inputText.$touch()"
+        @input="backError=''"
       />
       <PentilaErrorMessage
         :error-message="formErrorList"
@@ -52,16 +53,15 @@
 <script>
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
-// import validators from '@/utils/validators'
-import constants from '@/constants/appConstants'
+import { entityNameMaxSize } from '@/constants/appConstants'
+import validators from '@/utils/validators'
 import apiConstants from '@/api/constants'
 import fileServices from '@/api/documents/file.service'
 import AudioRecorder from '@components/Nero/AudioRecorder'
 
-// const notBeginByDot = (value) => validators.notBeginByDot(value)
-// const containsNoCotes = (value) => validators.containsNoCotes(value)
-// const isUnderMaxSize = (value) => validators.isUnderMaxSize(value)
-// const hasNoSiblingWithSameName = (value, vm) => validators.hasNoSiblingWithSameName(value, vm.siblingEntities)
+const notBeginByDot = (value) => validators.notBeginByDot(value)
+const containsNoCotes = (value) => validators.containsNoCotes(value)
+const isUnderMaxSize = (value) => validators.isUnderMaxSize(value)
 
 export default {
   name: 'FileNameModal',
@@ -82,6 +82,7 @@ export default {
   data () {
     return {
       inputText: '',
+      backError: '',
       // AudioRecorder data
       stoppedState: false,
       audioFile: undefined
@@ -89,24 +90,13 @@ export default {
   },
   validations: {
     inputText: {
-      required
-      // notBeginByDot,
-      // containsNoCotes,
-      // isUnderMaxSize
-      // hasNoSiblingWithSameName
+      required,
+      notBeginByDot,
+      containsNoCotes,
+      isUnderMaxSize
     }
   },
   computed: {
-    // siblingEntities () {
-    //   const parentFolder = filesService.getParentFolder(
-    //     this.$store.state.privateFilesManager.privateLoadedTree,
-    //     this.initFile
-    //   )
-    //   let entities = this.$store.getters['privateFilesManager/entitiesInNode'](parentFolder.id)
-    //   entities = entities.subFolders.concat(entities.files)
-    //   utils.removeEntitiesFromArray(entities, [this.initFile])
-    //   return entities
-    // },
     currentFolderId () {
       return this.$store.state.documents.currentFolderId
     },
@@ -147,19 +137,22 @@ export default {
       if (this.v$.inputText.$invalid && this.v$.inputText.$dirty) {
         if (this.v$.inputText.$errors[0].$validator === 'required') {
           return this.$t('Commons.required')
+        } else if (this.v$.inputText.$errors[0].$validator === 'isUnderMaxSize') {
+          return this.$t('sizeLimit1') + entityNameMaxSize + this.$t('sizeLimit2')
+        } else if (this.v$.inputText.$errors[0].$validator === 'notBeginByDot') {
+          return this.$t('notBeginByDot')
+        } else if (this.v$.inputText.$errors[0].$validator === 'containsNoCotes') {
+          return this.$t('containsNoCotes')
         } else {
-          return this.$t('AppCommonsLabels.formErrors.sizeLimit1') + // it only could be that
-            (constants.entityNameMaxSize.file) +
-            this.$t('AppCommonsLabels.formErrors.sizeLimit2')
+          console.error('Unknown validation error')
+          return ''
         }
-        // else if (this.v$.inputText.$errors[0].$validator === 'notBeginByDot') {
-        //   return this.$t('AppCommonsLabels.formErrors.notBeginByDot')
-        // } else if (this.v$.inputText.$errors[0].$validator === 'containsNoCotes') {
-        //   return this.$t('AppCommonsLabels.formErrors.containsNoCotes')
-        // } else if (!this.v$.inputText.hasNoSiblingWithSameName) {
-        //   return 'a document with the same name already exist in the current folder'
       } else {
-        return ''
+        if (this.backError) {
+          return this.$t('backError')
+        } else {
+          return ''
+        }
       }
     }
   },
@@ -197,6 +190,7 @@ export default {
           this.$emit('openFile', data.file) // Open the created file to edit it
           this.onClose()
         } else {
+          this.backError = 'renameFolderError'
           console.error('An error was occurred')
         }
       })
@@ -210,6 +204,7 @@ export default {
           this.$emit('openFile', data.file)
           this.onClose()
         } else {
+          this.backError = 'renameFolderError'
           console.error('An error was occurred')
         }
       })
@@ -223,6 +218,7 @@ export default {
           this.$emit('openFile', data.file)
           this.onClose()
         } else {
+          this.backError = 'renameFolderError'
           console.error('An error was occurred')
         }
       })
@@ -245,6 +241,7 @@ export default {
           this.$emit('openFile', data.file)
           this.onClose()
         } else {
+          this.backError = 'renameFolderError'
           console.error('An error was occurred')
         }
       })
@@ -258,6 +255,7 @@ export default {
           this.$emit('openFile', data.file)
           this.onClose()
         } else {
+          this.backError = 'renameFolderError'
           console.error('An error was occurred')
         }
       })
@@ -270,18 +268,18 @@ export default {
           this.$store.dispatch('documents/refreshCurrentFolder')
           this.onClose()
         } else {
+          this.backError = 'renameFolderError'
           console.error('An error was occurred')
         }
       })
     },
     rename () {
-      this.$store.dispatch('currentActions/addAction', { name: 'renameFile' })
       fileServices.renameFile(this.initFile.id, this.inputText + '.' + this.initFile.extension).then((data) => {
-        this.$store.dispatch('currentActions/removeAction', { name: 'renameFile' })
         if (data.success) {
           this.$store.dispatch('documents/refreshCurrentFolder')
           this.onClose()
         } else {
+          this.backError = 'renameFolderError'
           console.error('An error was occurred')
         }
       })
@@ -337,9 +335,14 @@ p {
 
 <i18n locale="fr">
 {
+  "backError": "Une erreur est survenue",
+  "containsNoCotes": "Ne doit pas contenir de caractères spéciaux",
   "createHeader": "Nouveau",
   "createSubmit": "Créer",
+  "notBeginByDot": "Ne doit pas commencer par un '.'",
   "rename": "Renommer",
-  "renameHeader": "Renommer"
+  "renameHeader": "Renommer",
+  "sizeLimit1": "Ne doit pas dépasser ",
+  "sizeLimit2": " caractères"
 }
 </i18n>

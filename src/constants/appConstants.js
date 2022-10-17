@@ -17,16 +17,20 @@ const slotLabelList = {
 const popupDurationTime = 3500
 const fileAutoSaveTime = 60000
 
+const entityNameMaxSize = 255
+
 export {
   nbCharBeforeCompletion,
   slotLabelList,
   popupDurationTime,
-  fileAutoSaveTime
+  fileAutoSaveTime,
+  entityNameMaxSize
 }
 
 export default {
   nbCharBeforeCompletion,
   slotLabelList,
   popupDurationTime,
-  fileAutoSaveTime
+  fileAutoSaveTime,
+  entityNameMaxSize
 }

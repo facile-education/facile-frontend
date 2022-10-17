@@ -48,9 +48,19 @@ describe('Rename', () => {
     cy.get('[data-test=folder-name-modal]').within(() => {
       // Form validations
       cy.get('input').clear()
+      // Should not be empty
       cy.contains('button', 'Renommer').click()
       cy.get('.error-message').should('exist')
-      cy.get('input').type('renamedFolder')
+      // Should not begin by a dot
+      cy.get('input').clear().type('.something')
+      cy.get('.error-message').should('exist')
+      // Should not contains cotes
+      cy.get('input').clear().type('"something"')
+      cy.get('.error-message').should('exist')
+      // Should be under 255 characters
+      cy.get('input').clear().type('aaaaaaaaaavvvvvvvvvvtttttaaaaaaaaaavvvvvvvvvvtttttaaaaaaaaaavvvvvvvvvvtttttaaaaaaaaaavvvvvvvvvvtttttaaaaaaaaaavvvvvvvvvvtttttaaaaaaaaaavvvvvvvvvvtttttaaaaaaaaaavvvvvvvvvvtttttaaaaaaaaaavvvvvvvvvvtttttaaaaaaaaaavvvvvvvvvvtttttaaaaaaaaaavvvvvvvvvvtttttrrrrrr')
+      cy.get('.error-message').should('exist')
+      cy.get('input').clear().type('renamedFolder')
       cy.contains('button', 'Renommer').click()
     })
     cy.contains('[data-test=folder]', 'renamedFolder').should('exist')
@@ -60,7 +70,7 @@ describe('Rename', () => {
       cy.contains('button', 'Renommer').click()
     })
     cy.contains('[data-test=folder]', 'renamedFolder2').should('exist')
-    // // TODO By f2 press
+    // // TODO By F2 press
     // cy.globalKeyPress('{F2}')
     // cy.get('[data-test=folder-name-modal]').within(() => {
     //   cy.get('input').type('renamedFolder3')
@@ -76,9 +86,19 @@ describe('Rename', () => {
     cy.get('[data-test="context-menu"]').contains('Renommer').click() // by context menu
     cy.get('[data-test=file-name-modal]').within(() => {
       cy.get('input').clear()
+      // Should not be empty
       cy.contains('button', 'Renommer').click()
       cy.get('.error-message').should('exist')
-      cy.get('input').type('renamedfile')
+      // Should not begin by a dot
+      cy.get('input').clear().type('.something')
+      cy.get('.error-message').should('exist')
+      // Should not contains cotes
+      cy.get('input').clear().type('"something"')
+      cy.get('.error-message').should('exist')
+      // Should be under 255 characters
+      cy.get('input').clear().type('aaaaaaaaaavvvvvvvvvvtttttaaaaaaaaaavvvvvvvvvvtttttaaaaaaaaaavvvvvvvvvvtttttaaaaaaaaaavvvvvvvvvvtttttaaaaaaaaaavvvvvvvvvvtttttaaaaaaaaaavvvvvvvvvvtttttaaaaaaaaaavvvvvvvvvvtttttaaaaaaaaaavvvvvvvvvvtttttaaaaaaaaaavvvvvvvvvvtttttaaaaaaaaaavvvvvvvvvvtttttrrrrrr')
+      cy.get('.error-message').should('exist')
+      cy.get('input').clear().type('renamedfile')
       cy.contains('button', 'Renommer').click()
     })
     cy.contains('[data-test=file]', 'renamedfile.html').should('exist')
