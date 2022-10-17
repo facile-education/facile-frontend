@@ -25,6 +25,7 @@
         class="name-input"
         data-test="folderName-input"
         @blur="v$.folderName.$touch()"
+        @input="backError=''"
       />
       <PentilaErrorMessage
         :error-message="formErrorList"
@@ -42,17 +43,15 @@
 </template>
 
 <script>
-import { required } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
+import { entityNameMaxSize } from '@/constants/appConstants'
+import validators from '@/utils/validators'
 import folderServices from '@/api/documents/folder.service'
 
-const isFolderNameValid = (str) => {
-  return !(str.trim() === '') // test if folder name is not only spaces
-}
-// TODO
-// const notBeginByDot = (value) => validators.notBeginByDot(value)
-// const containsNoCotes = (value) => validators.containsNoCotes(value)
-// const isUnderMaxSize = (value) => validators.isUnderMaxSize(value)
+const notBeginByDot = (value) => validators.notBeginByDot(value)
+const containsNoCotes = (value) => validators.containsNoCotes(value)
+const isUnderMaxSize = (value) => validators.isUnderMaxSize(value)
 
 export default {
   name: 'FolderNameModal',
@@ -78,7 +77,9 @@ export default {
   validations: {
     folderName: {
       required,
-      isFolderNameValid
+      notBeginByDot,
+      containsNoCotes,
+      isUnderMaxSize
     }
   },
   computed: {
@@ -89,8 +90,15 @@ export default {
       if (this.v$.folderName.$invalid && this.v$.folderName.$dirty) {
         if (this.v$.folderName.$errors[0].$validator === 'required') {
           return this.$t('Commons.required')
+        } else if (this.v$.folderName.$errors[0].$validator === 'isUnderMaxSize') {
+          return this.$t('sizeLimit1') + entityNameMaxSize + this.$t('sizeLimit2')
+        } else if (this.v$.folderName.$errors[0].$validator === 'notBeginByDot') {
+          return this.$t('notBeginByDot')
+        } else if (this.v$.folderName.$errors[0].$validator === 'containsNoCotes') {
+          return this.$t('containsNoCotes')
         } else {
-          return 'invalidVersionName'
+          console.error('Unknown validation error')
+          return ''
         }
       } else {
         if (this.backError) {
@@ -179,9 +187,13 @@ export default {
 <i18n locale="fr">
 {
   "backError": "Une erreur est survenue",
+  "containsNoCotes": "Ne doit pas contenir de caractères spéciaux",
   "createHeader": "Nouveau dossier",
   "createSubmit": "Créer",
+  "notBeginByDot": "Ne doit pas commencer par un '.'",
   "rename": "Renommer",
-  "renameHeader": "Renommer"
+  "renameHeader": "Renommer",
+  "sizeLimit1": "Ne doit pas dépasser ",
+  "sizeLimit2": " caractères"
 }
 </i18n>
