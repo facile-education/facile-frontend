@@ -45,34 +45,16 @@
         class="user-table"
         @scroll="handleScroll"
       >
-        <thead>
-          <tr>
-            <th
-              v-t="'lastName'"
-              style="width:40%"
-            />
-            <th
-              v-t="'firstName'"
-              style="width:30%"
-            />
-            <th
-              v-t="'role'"
-              style="width:30%"
-            />
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            v-for="user in userList"
-            :key="user.userId"
-            class="manual-user"
-            @click="editUser(user)"
-          >
-            <td>{{ user.lastName }}</td>
-            <td>{{ user.firstName }}</td>
-            <td>{{ user.roleName }}</td>
-          </tr>
-        </tbody>
+        <UserFields
+          :fields="fields"
+        />
+        <UserRow
+          v-for="user in userList"
+          :key="user.userId"
+          :fields="fields"
+          :user="user"
+          @click="editUser(user)"
+        />
       </table>
     </div>
     <teleport to="body">
@@ -88,17 +70,27 @@
 <script>
 import PentilaUtils from 'pentila-utils'
 import EditUserModal from '@/components/UserManagement/EditUserModal'
+import UserFields from '@components/UserManagement/UserFields'
+import UserRow from '@components/UserManagement/UserRow'
 
 export default {
   name: 'ManualUsers',
   components: {
+    UserRow,
+    UserFields,
     EditUserModal
   },
   data () {
     return {
       isEditUserModalDisplayed: false,
       pageNb: 0,
-      filter: ''
+      filter: '',
+      selectedUser: undefined,
+      fields: [
+        'firstName',
+        'lastName',
+        'roles'
+      ]
     }
   },
   computed: {
@@ -208,25 +200,6 @@ export default {
   width:100%;
   display: block;
   overflow: auto;height: calc(100% - 38px);
-
-  thead {
-    position: sticky;
-    top: 0;
-    background-color: white;
-  }
-
-  th {
-    text-align: left;
-  }
-  tr {
-    height: 2em;
-  }
-  .manual-user {
-    &:hover {
-      background-color: lightblue;
-      cursor: pointer;
-    }
-  }
 }
 </style>
 

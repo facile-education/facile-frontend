@@ -33,55 +33,16 @@
       v-else
       class="affected-users"
     >
-      <table style="width:100%">
-        <tr>
-          <th
-            v-t="'lastName'"
-            style="width:25%"
-          />
-          <th
-            v-t="'firstName'"
-            style="width:25%"
-          />
-          <th
-            v-t="'role'"
-            style="width:25%"
-          />
-          <th
-            v-t="'nbAffectations'"
-            style="width:15%"
-          />
-          <th
-            v-t="'edit-affectations'"
-            style="width:10%"
-          />
-        </tr>
-        <tr
-          v-for="affectedUser in sortedAffectedUsers"
-          :key="affectedUser.userId"
-          class="affected-user"
-        >
-          <td><span>{{ affectedUser.lastName }}</span></td>
-          <td><span>{{ affectedUser.firstName }}</span></td>
-          <td><span>{{ affectedUser.roles }}</span></td>
-          <td>
-            <div class="center">
-              {{ nbAffectations(affectedUser) }}
-            </div>
-          </td>
-          <td>
-            <div>
-              <img
-                class="button"
-                src="@assets/edit.svg"
-                :alt="$t('edit-affectations')"
-                :title="$t('edit-affectations')"
-                @click.stop="editUserAffectations(affectedUser)"
-              >
-            </div>
-          </td>
-        </tr>
-      </table>
+      <UserFields
+        :fields="fields"
+      />
+      <UserRow
+        v-for="user in sortedAffectedUsers"
+        :key="user.userId"
+        :fields="fields"
+        :user="user"
+        @click="editUserAffectations(user)"
+      />
     </div>
     <teleport to="body">
       <AddAffectedUserModal
@@ -105,10 +66,14 @@
 import PentilaUtils from 'pentila-utils'
 import UserAffectationsModal from '@/components/UserManagement/UserAffectationsModal.vue'
 import AddAffectedUserModal from '@/components/UserManagement/AddAffectedUserModal.vue'
+import UserFields from '@components/UserManagement/UserFields'
+import UserRow from '@components/UserManagement/UserRow'
 
 export default {
   name: 'Affectations',
   components: {
+    UserRow,
+    UserFields,
     UserAffectationsModal,
     AddAffectedUserModal
   },
@@ -117,7 +82,13 @@ export default {
       filter: '',
       selectedUser: undefined,
       isAddAffectedUserModalDisplayed: false,
-      isUserAffectationsModalDisplayed: false
+      isUserAffectationsModalDisplayed: false,
+      fields: [
+        'firstName',
+        'lastName',
+        'roles',
+        'affectations'
+      ]
     }
   },
   computed: {

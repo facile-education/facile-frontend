@@ -167,8 +167,6 @@ export default {
 <style lang="scss" scoped>
 .affectations-modal {
   .main {
-    height: 400px;
-    max-height: 400px;
     display: flex;
     .school-classes {
       width: 50%;
