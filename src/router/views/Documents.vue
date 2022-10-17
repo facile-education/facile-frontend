@@ -351,7 +351,11 @@ export default {
     },
     doSelectFolderAction (targetFolder) {
       if (this.folderSelectionOption === 'move') {
-        this.$store.dispatch('clipboard/move', { targetFolder, entities: this.selectedDocuments })
+        if (targetFolder.id === this.currentFolderId) {
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('moveInCurrentFolder'), type: 'warning' })
+        } else {
+          this.$store.dispatch('clipboard/move', { targetFolder, entities: this.selectedDocuments })
+        }
       } else if (this.folderSelectionOption === 'duplicate') {
         this.$store.dispatch('clipboard/duplicate', { targetFolder, entities: this.selectedDocuments })
       } else {
@@ -493,6 +497,7 @@ export default {
 <i18n locale="fr">
 {
   "deletionWarning": "Ce document sera définitivement perdu",
+  "moveInCurrentFolder": "Le dossier de destination est le même que celui de départ!",
   "serviceTitle": "Mes documents"
 }
 </i18n>
