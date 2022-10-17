@@ -26,51 +26,18 @@
       v-else
       class="admin-list"
     >
-      <table style="width:100%">
-        <tr>
-          <th
-            v-t="'lastName'"
-            style="width:30%"
-          />
-          <th
-            v-t="'firstName'"
-            style="width:30%"
-          />
-          <th
-            v-t="'local-admin'"
-            style="width:20%"
-          />
-          <th
-            v-t="'news-delegation'"
-            style="width:20%"
-          />
-        </tr>
-        <tr
-          v-for="admin in sortedSchoolAdminList"
-          :key="admin.userId"
-        >
-          <td>{{ admin.lastName }}</td>
-          <td>{{ admin.firstName }}</td>
-          <td>
-            <PentilaCheckbox
-              v-model="admin.isSchoolAdmin"
-              class="checkbox"
-              :disabled="admin.isDirection || admin.userId === currentUser.userId"
-              label=""
-              @update:modelValue="toggleSchoolAdmin(admin)"
-            />
-          </td>
-          <td>
-            <PentilaCheckbox
-              v-model="admin.isNewsDelegate"
-              class="checkbox"
-              :disabled="admin.isDirection"
-              label=""
-              @update:modelValue="toggleNewsDelegate(admin)"
-            />
-          </td>
-        </tr>
-      </table>
+      <UserFields
+        :fields="fields"
+      />
+      <UserRow
+        v-for="user in sortedSchoolAdminList"
+        :key="user.userId"
+        :fields="fields"
+        :is-hoverable="false"
+        :user="user"
+        @toggleSchoolAdmin="toggleSchoolAdmin(user)"
+        @toggleNewsDelegate="toggleNewsDelegate(user)"
+      />
     </div>
     <teleport to="body">
       <AddDelegationModal
@@ -88,16 +55,26 @@ import PentilaUtils from 'pentila-utils'
 import { addSchoolAdmin, removeSchoolAdmin, getSchoolDelegates } from '@/api/userManagement.service'
 import { addNewsDelegate, removeNewsDelegate } from '@/api/news.service'
 import AddDelegationModal from '@/components/UserManagement/AddDelegationModal'
+import UserFields from '@components/UserManagement/UserFields'
+import UserRow from '@components/UserManagement/UserRow'
 
 export default {
   name: 'Delegations',
   components: {
+    UserRow,
+    UserFields,
     AddDelegationModal
   },
   data () {
     return {
       schoolAdmins: [],
-      isAddDelegationModalDisplayed: false
+      isAddDelegationModalDisplayed: false,
+      fields: [
+        'firstName',
+        'lastName',
+        'isSchoolAdmin',
+        'isNewsDelegate'
+      ]
     }
   },
   computed: {
@@ -133,11 +110,13 @@ export default {
       this.isAddDelegationModalDisplayed = true
     },
     toggleSchoolAdmin (user) {
-      if (user.isSchoolAdmin) {
+      if (!user.isSchoolAdmin) {
         addSchoolAdmin(user.userId, this.selectedSchool.schoolId).then(
           (data) => {
             if (data.success) {
-              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.adminAdded'), type: 'success' })
+              user.isSchoolAdmin = !user.isSchoolAdmin
+            } else {
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
             }
           }
         )
@@ -145,18 +124,22 @@ export default {
         removeSchoolAdmin(user.userId, this.selectedSchool.schoolId).then(
           (data) => {
             if (data.success) {
-              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.adminRemoved'), type: 'success' })
+              user.isSchoolAdmin = !user.isSchoolAdmin
+            } else {
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
             }
           }
         )
       }
     },
     toggleNewsDelegate (user) {
-      if (user.isNewsDelegate) {
+      if (!user.isNewsDelegate) {
         addNewsDelegate(user.userId, this.selectedSchool.schoolId).then(
           (data) => {
             if (data.success) {
-              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.newsAdded'), type: 'success' })
+              user.isNewsDelegate = !user.isNewsDelegate
+            } else {
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
             }
           }
         )
@@ -164,7 +147,9 @@ export default {
         removeNewsDelegate(user.userId, this.selectedSchool.schoolId).then(
           (data) => {
             if (data.success) {
-              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.newsRemoved'), type: 'success' })
+              user.isNewsDelegate = !user.isNewsDelegate
+            } else {
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
             }
           }
         )
@@ -212,18 +197,11 @@ tr {
 <i18n locale="fr">
 {
   "add-delegation": "Ajouter une délégation",
-  "firstName": "Prénom",
-  "lastName": "Nom",
-  "local-admin" : "Administrateur local",
-  "news-delegation": "Rédacteur annonces",
-  "no-delegation" : "Aucune délégation pour cet établissement",
+  "no-delegation": "Aucune délégation pour cet établissement",
   "please-select-school": "Veuillez sélectionner un établissement",
   "warning": "La suppression de cet administrateur est définitive.",
   "Popup": {
-    "adminAdded": "Délégation d'administration ajoutée",
-    "adminRemoved": "Délégation d'administration supprimée",
-    "newsAdded": "Délégation de rédaction d'actualités ajoutée",
-    "newsRemoved": "Délégation de rédaction d'actualités supprimée"
+    "error": "Une erreur est survenue"
   }
 }
 </i18n>
