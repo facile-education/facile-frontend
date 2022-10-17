@@ -51,15 +51,11 @@ function computeDocumentsOptions (documentList) {
   if (store.state.clipboard.documentList.length === 0) { // remove paste option if no documents were copied
     removeMenuOptionIfExist(contextMenu, 'paste')
   }
-  if (!store.state.user.hasWebdavEnabled) {
-    removeMenuOptionIfExist(contextMenu, 'copyWebdavUrl')
-  }
 
   // multi selection
   if (listCM.length > 1) {
     removeMenuOptionIfExist(contextMenu, 'details')
     removeMenuOptionIfExist(contextMenu, 'managePermissions')
-    removeMenuOptionIfExist(contextMenu, 'copyWebdavUrl')
     removeMenuOptionIfExist(contextMenu, 'paste')
     removeMenuOptionIfExist(contextMenu, 'open')
     removeMenuOptionIfExist(contextMenu, 'download')
@@ -235,14 +231,6 @@ function deleteEntities (selectedEntities) {
   })
 }
 
-function copyWebdavUrl (selectedEntity) {
-  navigator.permissions.query({ name: 'clipboard-write' }).then(result => {
-    if (result.state === 'granted' || result.state === 'prompt') {
-      navigator.clipboard.writeText('https://' + window.location.hostname + selectedEntity.urlWebdav) // TODO: make the 'https://hostname' returned by the backend in the webdavUrl
-    }
-  })
-}
-
 // async function importMessagingAttachFiles (documentList) {
 //   const createdFiles = []
 //   for (const doc of documentList) {
@@ -268,14 +256,12 @@ export default {
   selectNextEntity,
   importDocuments,
   downloadDocument,
-  deleteEntities,
-  copyWebdavUrl
+  deleteEntities
   // importMessagingAttachFiles
 }
 
 export {
   computeDocumentsOptions,
-  copyWebdavUrl,
   selectBetween,
   selectPreviousEntity,
   selectNextEntity,
