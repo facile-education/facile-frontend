@@ -449,6 +449,10 @@ export default {
     height: $doc-currents-options-height;
   }
 
+  .breadCrumb {
+    margin-left: 20px;
+  }
+
   .body {
     position: relative;
     height: calc(100% - #{$doc-currents-options-height} - #{$doc-breadcrumb-size});
@@ -466,10 +470,6 @@ export default {
         height: 100%;
         overflow-y: auto;
         padding-top: 20px;
-
-        .breadCrumb {
-          margin-left: 10px;
-        }
       }
     }
 
