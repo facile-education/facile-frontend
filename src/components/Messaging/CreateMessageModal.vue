@@ -35,7 +35,6 @@
           class="recipients"
           data-test="recipients-section"
         >
-          <p>A:</p>
           <PentilaTagsInput
             ref="tagsinput"
             v-model="recipients"
@@ -64,7 +63,6 @@
           class="subject"
           data-test="subject-section"
         >
-          <p>Objet:</p>
           <PentilaInput
             id="create-message-subject-input"
             v-model="subject"
@@ -94,7 +92,7 @@
           class="attached-files"
           data-test="attached-files-section"
         >
-          <p>Pièces jointes</p>
+          <p v-t="'attachedFiles'" />
           <PentilaButton
             :label="$t('addAttachFileButton')"
             @click="displayFilePicker"
@@ -525,12 +523,13 @@ export default {
 
 <i18n locale="fr">
 {
+  "attachedFiles": "Pièces jointes",
   "header": "Nouveau message",
   "headerForward": "Transférer",
   "headerReply": "Répondre",
   "submitButton": "Envoyer",
   "recipientsPlaceHolder": "Destinataires",
-  "subjectPlaceHolder": "Object",
+  "subjectPlaceHolder": "Objet",
   "contentPlaceHolder": "Contenu",
   "addAttachFileButton": "Ajouter une pièce jointe",
   "draftButton": "Enregistrer en brouillon",
