@@ -1,4 +1,5 @@
 import i18n from '@/i18n'
+import store from '@/store'
 
 let listFiles = []
 
@@ -38,7 +39,7 @@ function checkFilesSize (currentListFiles, store) {
 }
 
 function alertNoFile () {
-  alert(i18n.global.t('Documents.errorNoFiles'))
+  store.dispatch('popups/pushPopup', { message: i18n.global.t('Documents.errorNoFiles'), type: 'error' })
 }
 
 // Browse directory recursively and update listFiles
