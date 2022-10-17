@@ -39,23 +39,22 @@
     >
       <p>{{ $t('no-users') }}</p>
     </div>
-    <div v-else>
-      <table
-        ref="scroll"
-        class="user-table"
-        @scroll="handleScroll"
-      >
-        <UserFields
-          :fields="fields"
-        />
-        <UserRow
-          v-for="user in userList"
-          :key="user.userId"
-          :fields="fields"
-          :user="user"
-          @click="editUser(user)"
-        />
-      </table>
+    <div
+      v-else
+      ref="scroll"
+      class="user-table"
+      @scroll="handleScroll"
+    >
+      <UserFields
+        :fields="fields"
+      />
+      <UserRow
+        v-for="user in userList"
+        :key="user.userId"
+        :fields="fields"
+        :user="user"
+        @click="editUser(user)"
+      />
     </div>
     <teleport to="body">
       <EditUserModal
@@ -173,34 +172,39 @@ export default {
 
 .manual-users {
   height: 100%;
-}
-
-.header {
   display: flex;
-  justify-content: space-between;
-  width: 100%;
-  margin-bottom: 20px;
-  padding: 0 10px;
+  flex-direction: column;
 
-  .pagination {
-    margin: auto;
+  .header {
+    height: $um-user-header-height;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .pagination {
+      margin: auto;
+    }
+
+    span {
+      margin-right: 4px;
+    }
   }
 
-  span {
-    margin-right: 4px;
+  .main-label {
+    margin-top: 10em;
+    text-align: center;
   }
+
+  .user-table {
+    height: calc(100% - #{$um-user-header-height});
+    width: 100%;
+    display: block;
+    overflow: auto;
+  }
+
 }
 
-.main-label {
-  margin-top: 10em;
-  text-align: center;
-}
-
-.user-table {
-  width:100%;
-  display: block;
-  overflow: auto;height: calc(100% - 38px);
-}
 </style>
 
 <i18n locale="fr">

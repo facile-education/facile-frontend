@@ -170,11 +170,11 @@ export default {
 }
 
 .header {
+  height: $um-user-header-height;
+  width: 100%;
   display: flex;
   justify-content: flex-end;
-  width: 100%;
-  margin-bottom: 20px;
-  padding: 0 10px;
+  align-items: center;
 }
 
 .main-label {

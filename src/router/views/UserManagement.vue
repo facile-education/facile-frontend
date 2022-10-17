@@ -16,31 +16,26 @@
       />
     </div>
 
-    <Transition
-      appear
-      name="fade"
-    >
-      <PentilaTabList>
-        <PentilaTabItem
-          :title="$t('manual-users')"
-          class="tab"
-        >
-          <ManualUsers />
-        </PentilaTabItem>
-        <PentilaTabItem
-          :title="$t('delegations')"
-          class="tab"
-        >
-          <Delegations />
-        </PentilaTabItem>
-        <PentilaTabItem
-          :title="$t('affectations')"
-          class="tab"
-        >
-          <Affectations />
-        </PentilaTabItem>
-      </PentilaTabList>
-    </Transition>
+    <PentilaTabList>
+      <PentilaTabItem
+        :title="$t('manual-users')"
+        class="tab"
+      >
+        <ManualUsers />
+      </PentilaTabItem>
+      <PentilaTabItem
+        :title="$t('delegations')"
+        class="tab"
+      >
+        <Delegations />
+      </PentilaTabItem>
+      <PentilaTabItem
+        :title="$t('affectations')"
+        class="tab"
+      >
+        <Affectations />
+      </PentilaTabItem>
+    </PentilaTabList>
   </Layout>
 </template>
 
@@ -80,6 +75,7 @@ export default {
 .layout {
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 
   .header {
     width: 100%;
@@ -98,8 +94,16 @@ export default {
     }
   }
 
+  .tabs {
+    height: 32px;
+  }
+
+  .tab-content {
+    padding: 0;
+  }
+
   .tab {
-    flex: 1;
+    height: calc(100% - #{$um-ĥeader-height} - 32px);
   }
 }
 
@@ -107,8 +111,7 @@ export default {
 
 <i18n locale="fr">
 {
-  "serviceTitle": "Administration des utilisateurs",
-  "title": "Gestion des utilisateurs ",
+  "serviceTitle": "Gestion des utilisateurs",
   "manual-users": "Comptes manuels",
   "delegations": "Délégations",
   "affectations": "Affectations"

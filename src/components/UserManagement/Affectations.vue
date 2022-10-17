@@ -141,11 +141,11 @@ export default {
 }
 
 .header {
-  display: flex;
-  justify-content: space-between;
+  height: $um-user-header-height;
   width: 100%;
-  margin-bottom: 20px;
-  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .main-label {
