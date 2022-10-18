@@ -49,11 +49,6 @@
       v-t="('noData')"
       class="placeholder"
     />
-    <p
-      v-else-if="selectedDocuments.length > 1"
-      v-t="('tooManyData')"
-      class="placeholder"
-    />
   </div>
 </template>
 
@@ -149,6 +144,5 @@ export default {
   "noData": "Il n'y a aucune information à afficher",
   "noDocumentSelected": "Aucun document sélectionné",
   "selectedDocuments": " documents sélectionnés",
-  "tooManyData": "Il y a trop de documents sélectionnés"
 }
 </i18n>
