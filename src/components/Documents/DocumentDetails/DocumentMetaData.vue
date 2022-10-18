@@ -10,7 +10,10 @@
     </div>
 
     <!-- Type -->
-    <div class="field">
+    <div
+      v-if="formattingType !== ''"
+      class="field"
+    >
       <span
         v-t="'Commons.type'"
         class="content-label"
@@ -86,7 +89,54 @@ export default {
       if (this.document.type === 'Folder') {
         return this.$t('Documents.folder')
       } else if (this.document.type === 'File') {
-        return this.$t('Documents.file') + ' ' + this.document.extension
+        if (this.document.extension === 'odp' ||
+          this.document.extension === 'ppt' ||
+          this.document.extension === 'sxi' ||
+          this.document.extension === 'pptx' ||
+          this.document.extension === 'csv' ||
+          this.document.extension === 'ods' ||
+          this.document.extension === 'sxc' ||
+          this.document.extension === 'tsv' ||
+          this.document.extension === 'xls' ||
+          this.document.extension === 'xlsx' ||
+          this.document.extension === 'odt' ||
+          this.document.extension === 'doc' ||
+          this.document.extension === 'sxw' ||
+          this.document.extension === 'docx'
+        ) {
+          return 'Office'
+        } else if (this.document.extension === 'gif' ||
+          this.document.extension === 'jpg' ||
+          this.document.extension === 'jpeg' ||
+          this.document.extension === 'png'
+        ) {
+          return 'Image'
+        } else if (this.document.extension === 'mp4' ||
+        this.document.extension === 'mpg' ||
+        this.document.extension === 'mov'
+        ) {
+          return 'Film'
+        } else if (this.document.extension === 'mp3'
+        ) {
+          return 'Audio'
+        } else if (this.document.extension === 'mind'
+        ) {
+          return 'Mindmap'
+        } else if (this.document.extension === 'ggb'
+        ) {
+          return 'Géogébra'
+        } else if (this.document.extension === 'sb3'
+        ) {
+          return 'Scratch'
+        } else if (this.document.extension === 'html'
+        ) {
+          return 'Note'
+        } else if (this.document.extension === 'pdf'
+        ) {
+          return 'PDF'
+        } else {
+          return ''
+        }
       } else if (this.document.type === 'Group') {
         return this.$t('Documents.group')
       } else {
