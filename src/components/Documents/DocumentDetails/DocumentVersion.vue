@@ -92,6 +92,7 @@ export default {
         this.$store.dispatch('currentActions/removeAction', { name: 'restoreVersion' })
         if (data.success) {
           // Update the version list
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('restoredVersion'), type: 'success' })
           this.$emit('refreshVersions')
         } else {
           console.error('Error when restoring version', this.version.version)
@@ -179,3 +180,9 @@ export default {
 }
 
 </style>
+
+<i18n locale="fr">
+{
+  "restoredVersion": "Version restaurée"
+}
+</i18n>
