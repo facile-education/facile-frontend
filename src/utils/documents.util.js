@@ -221,6 +221,8 @@ function deleteEntities (selectedEntities) {
         console.error('Unable to delete entities from trash:', data.failedEntitiesList)
         store.dispatch('error/setErrorType', 'deleteEntities')
         store.dispatch('error/setListFilesConcerns', data.failedEntitiesList)
+      } else {
+        this.$store.dispatch('popups/pushPopup', { message: i18n.global.t('Documents.documentDeleted'), type: 'success' })
       }
 
       store.dispatch('documents/cleanSelectedEntities')
