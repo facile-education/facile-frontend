@@ -94,7 +94,7 @@
     "files": "Fichiers",
     "group": "Groupe",
     "errorNoFiles": "Il n'y a aucun fichier valide à téléverser !",
-    "documentDeleted": "Élément supprimé",
+    "documentDeleted": "Suppression réussie",
     "fileSizeException": "Le fichier importé dépasse la taille limite autorisée",
     "permissionException": "Vous n'avez pas la permission d'effectuer cette action",
     "uploadSuccess": " importé avec succès!",
@@ -282,7 +282,9 @@
   "Popup": {
     "copied": "Copié",
     "cut": "Coupé",
-    "duplicated": "Duplication réussie!",
+    "documentCopied": "Documents copiés",
+    "documentCut": "Documents coupés",
+    "duplicated": "Duplication réussie",
     "moved": "Déplacement réussi!"
   },
   "Unauthenticated": "Veuillez vous connecter pour accéder à ce service",

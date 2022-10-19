@@ -181,7 +181,7 @@ export default {
 <i18n locale="fr">
 {
   "nameFilterPlaceholder": "Filtrer par nom/prénom",
-  "add-affected-user": "Ajouter un utilisateur",
+  "add-affected-user": "Ajouter une affectation",
   "please-select-school": "Veuillez sélectionner un établissement",
   "no-affectation": "Aucune affectation pour cet établissement",
   "lastName": "Nom",
