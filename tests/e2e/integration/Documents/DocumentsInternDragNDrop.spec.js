@@ -77,12 +77,12 @@ describe('Documents DragNDrop', () => {
     dragStartOnDocument(cy.contains('[data-test=file]', 'fichier1_2.html'))
     dragOverOnDocument(cy.contains('[data-test="breadcrumb-item"]', 'dossier1'))
     cy.contains('[data-test="breadcrumb-item"]', 'dossier1').should('have.class', 'active')
-    dragOverAnOtherDocument(cy.contains('[data-test="breadcrumb-item"]', 'dossier1'), cy.contains('[data-test="breadcrumb-item"]', 'Mon cartable'))
+    dragOverAnOtherDocument(cy.contains('[data-test="breadcrumb-item"]', 'dossier1'), cy.contains('[data-test="breadcrumb-item"]', 'Personnels'))
     cy.contains('[data-test="breadcrumb-item"]', 'dossier1').should('not.have.class', 'active')
-    cy.contains('[data-test="breadcrumb-item"]', 'Mon cartable').should('have.class', 'active')
+    cy.contains('[data-test="breadcrumb-item"]', 'Personnels').should('have.class', 'active')
 
     // Drop file over breadCrumb item
-    dropOnDocument(cy.contains('[data-test="breadcrumb-item"]', 'Mon cartable'))
+    dropOnDocument(cy.contains('[data-test="breadcrumb-item"]', 'Personnels'))
     cy.contains('[data-test=file]', 'fichier1_2.html').should('not.exist')
     cy.visit(url + '/8040788')
     cy.contains('[data-test=file]', 'fichier1_2.html').should('exist')

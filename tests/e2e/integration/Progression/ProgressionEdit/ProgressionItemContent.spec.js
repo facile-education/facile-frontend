@@ -46,7 +46,7 @@ describe('Progression item contents', () => {
   })
 
   it('File', () => {
-    // Add File bloc  => call ws uploadFile() with js file In parameters (and get the file from fixture, see upload tests in monDrive...), then, select the uploaded file from the modal from "mon cartable"
+    // Add File bloc  => call ws uploadFile() with js file In parameters (and get the file from fixture, see upload tests in monDrive...), then, select the uploaded file from the modal from "Personnels"
 
     // Update File bloc -> not available atm, test download file instead
 

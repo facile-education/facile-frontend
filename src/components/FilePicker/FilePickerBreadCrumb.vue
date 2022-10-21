@@ -135,7 +135,7 @@ export default {
 
 <i18n locale="fr">
 {
-  "Mon cartable": "Personnels",
+  "Personnels": "Personnels",
   "Mes groupes": "Collaboratifs"
 }
 </i18n>

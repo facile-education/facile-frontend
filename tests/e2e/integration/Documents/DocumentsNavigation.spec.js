@@ -27,7 +27,7 @@ describe('Documents space', () => {
     // No folderId means droot folder
     cy.url().should('eq', Cypress.config().baseUrl + url)
     // Check root folder content
-    cy.get('[data-test="breadcrumb"]').find('.current-folder', 'Mon Cartable')
+    cy.get('[data-test="breadcrumb"]').find('.current-folder', 'Personnels')
     cy.visit(url + '/15401808') // Assure to start in headmaster's root folder
     cy.get('[data-test="breadcrumb"]').find('.current-folder', 'dossier1')
     cy.visit(url + '/15401812') // Assure to start in headmaster's root folder
@@ -66,11 +66,11 @@ describe('Documents space', () => {
 
   it('Can navigate through folders', () => {
     // Check root folder content
-    cy.get('[data-test="breadcrumb"]').find('.current-folder', 'Mon Cartable')
+    cy.get('[data-test="breadcrumb"]').find('.current-folder', 'Personnels')
 
     // Go in 'dossier1'
     cy.contains('[data-test=folder]', 'dossier1').click() // Simple click should not enter in folder
-    cy.get('[data-test="breadcrumb"]').find('.current-folder', 'Mon Cartable') // We are already in root folder
+    cy.get('[data-test="breadcrumb"]').find('.current-folder', 'Personnels') // We are already in root folder
     cy.contains('[data-test=folder]', 'dossier1').dblclick()
     cy.get('[data-test="breadcrumb"]').find('.current-folder', 'dossier1')
 
@@ -89,14 +89,14 @@ describe('Documents space', () => {
         .eq(0).click() // click on root folder
       cy.get('.breadcrumb-item').should('have.length', 1)
     })
-    cy.get('[data-test="breadcrumb"]').find('.current-folder', 'Mon Cartable') // We are in root folder
+    cy.get('[data-test="breadcrumb"]').find('.current-folder', 'Personnels') // We are in root folder
   })
 
   it('Can navigate through folders, mobile mode', () => {
     cy.viewport('iphone-5')
 
     // Check root folder content
-    cy.get('[data-test="breadcrumb"]').find('.current-folder', 'Mon Cartable')
+    cy.get('[data-test="breadcrumb"]').find('.current-folder', 'Personnels')
 
     // Go in 'Icônes'
     cy.contains('[data-test=folder]', 'dossier1').click() // Simple click should not enter in folder
@@ -115,6 +115,6 @@ describe('Documents space', () => {
       cy.get('[data-test=back]').click()
         .should('not.exist')
     })
-    cy.get('[data-test="breadcrumb"]').find('.current-folder', 'Mon Cartable') // We are in root folder
+    cy.get('[data-test="breadcrumb"]').find('.current-folder', 'Personnels') // We are in root folder
   })
 })

@@ -15,8 +15,8 @@ describe('BreadCrumb', () => {
       // Go in parent folder
       cy.contains('[data-test="breadcrumb-item"]', 'dossier1').click()
       cy.contains('.current-folder', 'dossier1')
-      cy.contains('[data-test="breadcrumb-item"]', 'Mon cartable').click()
-      cy.contains('.current-folder', 'Mon cartable').click()
+      cy.contains('[data-test="breadcrumb-item"]', 'Personnels').click()
+      cy.contains('.current-folder', 'Personnels').click()
 
       // Current folder options (root)
       cy.get('[data-test=context-menu]').children().should('have.length', 2)
@@ -40,8 +40,8 @@ describe('BreadCrumb', () => {
     cy.get('[data-test="breadcrumb"]').within(() => {
       cy.get('[data-test="hidden-items"]').click()
       cy.get('[data-test=context-menu]').children().should('have.length', 1)
-        .should('contain', 'Mon cartable').click()
-      cy.contains('.current-folder', 'Mon cartable')
+        .should('contain', 'Personnels').click()
+      cy.contains('.current-folder', 'Personnels')
     })
   })
 
@@ -54,12 +54,12 @@ describe('BreadCrumb', () => {
       cy.get('[data-test=context-menu]').should('not.exist') // Test currentOption (no context menu on mobile)
       cy.contains('[data-test=back]', 'dossier1').click()
       cy.contains('.current-folder > .name', 'dossier1')
-      cy.contains('[data-test=back]', 'Mon cartable').click()
+      cy.contains('[data-test=back]', 'Personnels').click()
       cy.contains('.current-folder > .name', 'dossier1')
       cy.get('[data-test=back]').should('not.exist')
 
       // Test root options
-      cy.contains('.current-folder > .name', 'Mon cartable').click()
+      cy.contains('.current-folder > .name', 'Personnels').click()
       cy.get('[data-test=context-menu]').children().should('have.length', 2)
         .should('contain', 'Personnels')
         .should('contain', 'Collaboratif')
