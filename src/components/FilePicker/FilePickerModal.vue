@@ -236,9 +236,9 @@ export default {
 
 <i18n locale="fr">
 {
-  "documents": "Documents",
+  "documents": "Personnels",
   "errorNoFiles": "Il n'y a aucun fichier valide à téléverser !",
-  "groups": "Groupes",
+  "groups": "Collaboratifs",
   "headerFolder": "Sélectionnez un dossier de destination",
   "headerFile": "Ajouter un document",
   "noSelectedFolder": "Dépose impossible",
