@@ -38,7 +38,7 @@ const goInFolder = (folderName) => {
 }
 
 describe('Move and duplicate', () => {
-  before(() => {
+  beforeEach(() => {
     cy.exec('npm run db:loadTables documents_tables_basic.sql')
     cy.clearDBCache()
     cy.login(url, HEADMASTER)
