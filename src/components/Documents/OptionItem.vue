@@ -90,9 +90,9 @@ export default {
   cursor: pointer;
   align-items: center;
   border-radius: 6px;
-  padding: 0;
+  padding: 0 5px;
   height: 100%;
-  margin: 0 15px;
+  margin: 0 10px;
   background: none;
   border: none;
 
