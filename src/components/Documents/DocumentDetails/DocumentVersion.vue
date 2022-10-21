@@ -12,6 +12,7 @@
         >
           <div>{{ version.viewCount }}</div>
           <img
+            class="icon"
             src="@/assets/options/icon_see.svg"
             alt=""
           >
