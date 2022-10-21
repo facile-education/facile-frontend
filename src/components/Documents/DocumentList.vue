@@ -92,6 +92,9 @@ export default {
     },
     allSortedDocuments () {
       return this.sortedFolders.concat(this.sortedFiles)
+    },
+    isModalOpen () {
+      return this.$store.state.misc.nbOpenModals > 0
     }
   },
   mounted () {
@@ -122,20 +125,22 @@ export default {
     },
     // keyboard shortcuts management
     keyMonitor: function (event) {
-      // ctrl-arrow for multi-selection
-      if (event.ctrlKey && event.key === 'ArrowDown') {
-        ctrlSelectNextEntity(this.allSortedDocuments, this.$store.state.documents.lastSelectedEntity)
-      } else if (event.ctrlKey && event.key === 'ArrowUp') {
-        ctrlSelectPreviousEntity(this.allSortedDocuments, this.$store.state.documents.lastSelectedEntity)
-        // ctrl-A for 'All' selection
-      } else if (event.ctrlKey && ((event.key === 'a') || (event.key === 'A'))) {
-        event.preventDefault()
-        this.$store.dispatch('documents/selectAll')
-        // Simple arrows
-      } else if ((event.key === 'ArrowDown')) {
-        selectNextEntity(this.allSortedDocuments, this.selectedDocuments[0])
-      } else if ((event.key === 'ArrowUp')) {
-        selectPreviousEntity(this.allSortedDocuments, this.selectedDocuments[0])
+      if (!this.isModalOpen) {
+        // ctrl-arrow for multi-selection
+        if (event.ctrlKey && event.key === 'ArrowDown') {
+          ctrlSelectNextEntity(this.allSortedDocuments, this.$store.state.documents.lastSelectedEntity)
+        } else if (event.ctrlKey && event.key === 'ArrowUp') {
+          ctrlSelectPreviousEntity(this.allSortedDocuments, this.$store.state.documents.lastSelectedEntity)
+          // ctrl-A for 'All' selection
+        } else if (event.ctrlKey && ((event.key === 'a') || (event.key === 'A'))) {
+          event.preventDefault()
+          this.$store.dispatch('documents/selectAll')
+          // Simple arrows
+        } else if ((event.key === 'ArrowDown')) {
+          selectNextEntity(this.allSortedDocuments, this.selectedDocuments[0])
+        } else if ((event.key === 'ArrowUp')) {
+          selectPreviousEntity(this.allSortedDocuments, this.selectedDocuments[0])
+        }
       }
     },
     shiftSelect (file) {

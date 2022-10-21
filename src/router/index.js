@@ -87,6 +87,11 @@ const routes = [
     component: () => import('@/router/views/Maintenance')
   },
   {
+    path: '/groups',
+    name: 'Groups',
+    component: () => import('@/router/views/Groups')
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: () => import('@/router/views/NotFound')

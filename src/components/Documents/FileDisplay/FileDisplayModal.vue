@@ -49,8 +49,12 @@ export default {
       wantsToCloseFile: false
     }
   },
+  created () {
+    this.$store.dispatch('misc/incrementModalCount')
+  },
   methods: {
     closeModal () {
+      this.$store.dispatch('misc/decreaseModalCount')
       this.$emit('close')
     }
   }
