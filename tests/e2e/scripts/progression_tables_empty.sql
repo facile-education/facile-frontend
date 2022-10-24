@@ -98,6 +98,7 @@ CREATE TABLE `progression_progressionitemassignment` (
   `groupId` bigint(20) DEFAULT NULL,
   `homeworkId` bigint(20) DEFAULT NULL,
   `assignedDate` datetime DEFAULT NULL,
+  `modifiedDate` datetime DEFAULT NULL,
   `isContentOverriden` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`progressionItemId`,`sessionId`),
   KEY `IX_1126FB3C` (`progressionItemId`),
