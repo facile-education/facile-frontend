@@ -164,8 +164,6 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding-left: 30px;
-  padding-right: 30px;
 
   &.mobile {
     height: 100vh;
