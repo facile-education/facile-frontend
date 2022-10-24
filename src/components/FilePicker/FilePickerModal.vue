@@ -177,8 +177,6 @@ export default {
   // Shit to make the thing works (inherit max-height minus elements paddings)
   .resizable-component {
     .window-container {
-      height: fit-content;
-
       .window-body {
         --body-max-height: calc(90vh - 133px);
         max-height: var(--body-max-height);
@@ -221,15 +219,11 @@ export default {
   display: flex;
 }
 
-.mobile {
-
-  button {
+.mobile button {
     margin-left: auto;
     margin-right: auto;
     height: 48px;
     width: 130px;
-  }
-
 }
 
 </style>

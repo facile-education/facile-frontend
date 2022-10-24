@@ -216,7 +216,6 @@
     <teleport to="body">
       <AudioRecorderModal
         v-if="isAudioRecordModalDisplayed"
-        height="30em"
         :item="item"
         @close="toggleAudioRecordModalDisplay"
         @save="saveAudioRecording"
@@ -225,7 +224,6 @@
     <teleport to="body">
       <LinkModal
         v-if="isLinkModalDisplayed"
-        height="30em"
         :item="item"
         :edited-content="editedContent"
         @close="toggleLinkModalDisplay"
@@ -234,7 +232,6 @@
     <teleport to="body">
       <VideoModal
         v-if="isVideoModalDisplayed"
-        height="30em"
         :item="item"
         :edited-content="editedContent"
         @close="toggleVideoModalDisplay"
@@ -243,7 +240,6 @@
     <teleport to="body">
       <H5PModal
         v-if="isH5PModalDisplayed"
-        height="30em"
         :item="item"
         :edited-content="editedContent"
         @close="toggleH5PModalDisplay"
