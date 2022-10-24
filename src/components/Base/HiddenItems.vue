@@ -1,6 +1,7 @@
 <template>
   <div
     ref="hiddenItems"
+    data-test="hidden-items"
     class="container"
     :class="{ 'active': isActive}"
     @click="handleClick"

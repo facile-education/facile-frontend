@@ -43,7 +43,7 @@ describe('Other options', () => {
     createManualEntities()
   })
 
-  it('Open', () => { // On file only
+  it.only('Open', () => { // On file only
     cy.contains('[data-test=folder]', 'createdFolder').rightclick()
     cy.get('[data-test="context-menu"]').contains('Ouvrir').should('not.exist')
 
@@ -56,7 +56,6 @@ describe('Other options', () => {
       cy.get('h1').should('contain', 'createdNote.html') // TODO test WISIWIG editor
       cy.get('[data-test="closeModal"]').click()
     })
-  })
 
     cy.contains('[data-test=file]', 'createdNote.html').click('right')
     cy.get('[data-test="context-menu"]').should('not.exist')

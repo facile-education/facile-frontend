@@ -7,7 +7,7 @@ const multiSelectionOptions = ['Déplacer vers', 'Dupliquer vers', 'Supprimer']
 
 const checkCurrentOptions = (optionsNames) => {
   cy.get('[data-test=current-options]').children().should('have.length', optionsNames.length)
-  cy.get('[data-test=context-menu]').children().should('have.length', optionsNames.length)
+  cy.get('[data-test=context-menu] >').children().should('have.length', optionsNames.length)
 
   optionsNames.forEach((name) => {
     cy.get('[data-test=current-options]').should('contain', name)

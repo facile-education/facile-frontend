@@ -89,7 +89,7 @@ describe('Desktop tests', () => {
   it('Navigates in timeline', () => {
     logAsDirection()
     // Current week should be visible and selected
-    cy.get('div.weeknumber-label.current-week.theme-border-color.theme-background-color').should('be.visible')
+    cy.get('.horizontal-timeline-week.current-week.theme-border-color.theme-background-color').should('be.visible')
 
     cy.get('.weeknumber-label').should('have.length', 6)
 
@@ -325,7 +325,7 @@ describe('Desktop tests', () => {
     cy.contains(groupName).click()
     waitForRefresh()
 
-    const coteachingSession = "05-03_14:30"
+    const coteachingSession = '05-03_14:30'
 
     // Check original teacher before substitution
     cy.get(`[data-cy="${coteachingSession}"]`).parents('a.fc-timegrid-event')
@@ -363,6 +363,5 @@ describe('Desktop tests', () => {
     // Next teacher session has not been changed
     cy.get('[data-cy="05-03_15:30"]').parents('a.fc-timegrid-event')
       .contains('B. Nimo Garcia').should('be.visible')
-    
   })
 })

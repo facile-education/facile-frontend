@@ -25,7 +25,7 @@ describe('Progression list', () => {
     // Test placeholder
     cy.contains('Aucun contenu existant.')
     cy.contains('a', 'Ajouter votre progression').click()
-    cy.get('[data-test=edit-progression-modal]').find('.close').click()
+    cy.get('[data-test=edit-progression-modal]').find('[data-test="closeModal"]').click()
     cy.get('[data-test=edit-progression-modal]').should('not.exist')
 
     // Progression creation
