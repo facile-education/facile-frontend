@@ -29,11 +29,25 @@
       >
     </div>
   </div>
+
+  <teleport to="body">
+    <EditGroupModal
+      v-if="isEditGroupModalDisplayed"
+      :edited-group="group"
+      win-width="500px"
+      @close="isEditGroupModalDisplayed=false"
+    />
+  </teleport>
 </template>
 
 <script>
+
+import { defineAsyncComponent } from 'vue'
+const EditGroupModal = defineAsyncComponent(() => import('@/components/Groups/EditGroupModal'))
+
 export default {
   name: 'GroupItem',
+  components: { EditGroupModal },
   props: {
     group: {
       type: Object,
@@ -41,6 +55,11 @@ export default {
     }
   },
   emits: ['edit'],
+  data () {
+    return {
+      isEditGroupModalDisplayed: false
+    }
+  },
   methods: {
     confirmGroupDeletion () {
       this.$store.dispatch('warningModal/addWarning', {
@@ -52,7 +71,7 @@ export default {
       this.$store.dispatch('groups/deleteGroup', this.group)
     },
     editGroup () {
-      this.$emit('edit', this.groupœ)
+      this.isEditGroupModalDisplayed = true
     },
     selectGroup () {
       this.$router.push({ name: 'Group', params: { groupId: this.group.groupId } })

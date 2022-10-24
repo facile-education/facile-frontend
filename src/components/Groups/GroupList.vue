@@ -1,17 +1,5 @@
 <template>
   <div class="container">
-    <NeroToolbar>
-      <PentilaButton
-        class="create-button"
-        @click="toggleEditModalDisplay()"
-      >
-        <NeroIcon
-          name="fa-plus"
-        />
-        <span>{{ $t('add') }}</span>
-      </PentilaButton>
-    </NeroToolbar>
-
     <div
       v-if="groupList && groupList.length > 0"
       class="list"
@@ -35,28 +23,15 @@
         @click="toggleEditModalDisplay()"
       />
     </div>
-    <teleport to="body">
-      <EditGroupModal
-        v-if="isEditModalDisplayed"
-        :edited-group="selectedGroup"
-        win-width="500px"
-        @close="toggleEditModalDisplay"
-      />
-    </teleport>
   </div>
 </template>
 
 <script>
-import NeroIcon from '@/components/Nero/NeroIcon'
-import NeroToolbar from '@/components/Nero/NeroToolbar'
 
-import { defineAsyncComponent } from 'vue'
-const EditGroupModal = defineAsyncComponent(() => import('@/components/Groups/EditGroupModal'))
-const GroupItem = defineAsyncComponent(() => import('@/components/Groups/GroupItem'))
-
+import GroupItem from '@components/Groups/GroupItem'
 export default {
   name: 'GroupList',
-  components: { EditGroupModal, NeroIcon, NeroToolbar, GroupItem },
+  components: { GroupItem },
   data () {
     return {
       isEditModalDisplayed: false,
@@ -65,14 +40,13 @@ export default {
   },
   computed: {
     groupList () {
-      return this.$store.state.group.groupList
+      return this.$store.state.groups.groupList
     }
   },
   created () {
-    if (this.groupList === undefined) {
-      this.$store.dispatch('group/initGroupList')
-    }
+    this.$store.dispatch('group/getGroupList')
   },
+
   methods: {
     toggleEditModalDisplay (group) {
       this.selectedGroup = group

@@ -96,15 +96,14 @@ export default {
     }
   },
   created () {
+    this.$store.dispatch('misc/incrementModalCount')
+
     if (this.editedGroup !== undefined) {
       this.group = PentilaUtils.JSON.deepCopy(this.editedGroup)
     }
     nextTick(() => this.$refs.title.$el.childNodes[0].focus())
   },
   methods: {
-    closeModal () {
-      this.$emit('close')
-    },
     onConfirm (e) {
       e.preventDefault()
       if (this.v$.$invalid) {
@@ -122,6 +121,10 @@ export default {
         this.$store.dispatch('groups/createGroup', this.group)
       }
       this.closeModal()
+    },
+    closeModal () {
+      this.$store.dispatch('misc/decreaseModalCount')
+      this.$emit('close')
     }
   }
 }
