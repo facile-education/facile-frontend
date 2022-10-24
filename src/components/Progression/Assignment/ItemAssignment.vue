@@ -107,7 +107,6 @@
     <teleport to="body">
       <PreviewModal
         v-if="isItemPreviewDisplayed"
-        height="30em"
         :item="item"
         @close="togglePreviewModalDisplay"
       />

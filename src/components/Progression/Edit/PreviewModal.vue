@@ -3,7 +3,6 @@
     :modal="true"
     class="preview-window"
     :class="{'mobile': mq.phone}"
-    :full-screen="true"
     @close="closeModal"
   >
     <template #header>
