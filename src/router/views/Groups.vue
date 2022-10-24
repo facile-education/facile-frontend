@@ -5,24 +5,37 @@
     <PentilaSpinner
       v-if="areActionsInProgress"
     />
-    <GroupList
-      v-else
-      class="group-list"
-    />
+
+    <div v-else>
+      <GroupToolbar />
+
+      <Group
+        v-if="selectedGroupId"
+        :group-id="selectedGroupId"
+      />
+      <GroupList v-else />
+    </div>
   </Layout>
 </template>
 
 <script>
 import Layout from '@/router/layouts/EmptyLayout'
 import GroupList from '@/components/Groups/GroupList'
+import GroupToolbar from '@components/Groups/GroupToolbar'
+import Group from '@components/Groups/Group'
 
 export default {
   name: 'Groups',
   components: {
+    Group,
+    GroupToolbar,
     Layout,
     GroupList
   },
   computed: {
+    selectedGroupId () {
+      return this.$route.params.groupId
+    },
     areActionsInProgress () {
       return this.$store.getters['currentActions/areActionsInProgress']
     }
