@@ -147,6 +147,6 @@ export default {
 
 <i18n locale="fr">
 {
-  "successMessage": "paramètres sauvegardés"
+  "successMessage": "Paramètres sauvegardés"
 }
 </i18n>

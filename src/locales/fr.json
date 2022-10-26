@@ -93,10 +93,10 @@
     "file": "Fichier",
     "files": "Fichiers",
     "group": "Groupe",
-    "errorNoFiles": "Il n'y a aucun fichier valide à téléverser !",
-    "documentDeleted": "Suppression réussie",
-    "fileSizeException": "Le fichier importé dépasse la taille limite autorisée",
-    "permissionException": "Vous n'avez pas la permission d'effectuer cette action",
+    "errorNoFiles": "Le chargement n'est pas autorisé",
+    "documentDeleted": "Elément(s) supprimé(s)",
+    "fileSizeException": "Le fichier à charger dépasse la taille limite autorisée",
+    "permissionException": "Vous ne disposez pas de la permission pour effectuer cette action",
     "uploadSuccess": " importé avec succès!",
     "documentFields": {
       "creationDate": "Création",
@@ -280,12 +280,12 @@
     }
   },
   "Popup": {
-    "copied": "Copié",
-    "cut": "Coupé",
-    "documentCopied": "Documents copiés",
-    "documentCut": "Documents coupés",
-    "duplicated": "Duplication réussie",
-    "moved": "Déplacement réussi!"
+    "copied": "copié",
+    "cut": "coupé",
+    "documentCopied": "Eléments copiés",
+    "documentCut": "Eléments coupés",
+    "duplicated": "Elément(s) dupliqué(s)",
+    "moved": "Elément(s) déplacé(s)"
   },
   "Unauthenticated": "Veuillez vous connecter pour accéder à ce service",
   "UnAuthorised": "Votre statut ne vous permet pas d'accéder à cette page",
