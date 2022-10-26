@@ -13,6 +13,11 @@ h1 {
   margin: 0;
 }
 
+%side-menu-transition {
+  -webkit-transition: width .3s;
+  transition: width .3s;
+}
+
 // Mixins
 @mixin calc($property, $expression) {
   #{$property}: -moz-calc(#{$expression});

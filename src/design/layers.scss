@@ -1,11 +1,15 @@
 // Z-indexes
 
 // main layers
+$banner-z-index: 10;
 $body-z-index: 0;
+$mobile-menu-z-index: 16;
+$side-menu-z-index: 7;
 $toolbar-z-index: 3;
 
 // context-menus
 $context-menu-z-index: 10;
 
 // popups
-$popup-z-index: 1000;
+// $popup-z-index: 1000;
+$popup-z-index: 12;
