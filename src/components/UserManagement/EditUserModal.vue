@@ -199,9 +199,9 @@ export default {
               this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.userAdded'), type: 'success' })
               this.closeModal()
             } else if (data.errorCode === 'email') {
-              store.dispatch('popups/pushPopup', { type: 'error', message: 'L\'e-mail de cet utilisateur existe déjà dans l\'ENT.' })
+              store.dispatch('popups/pushPopup', { type: 'error', message: this.$t('Popup.existingEmail') })
             } else {
-              store.dispatch('popups/pushPopup', { type: 'error', message: 'Une erreur est survenue.' })
+              store.dispatch('popups/pushPopup', { type: 'error', message: this.$t('Popup.error') })
             }
           }
         )
@@ -219,9 +219,9 @@ export default {
               this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.userEdited'), type: 'success' })
               this.closeModal()
             } else if (data.errorCode === 'email') {
-              store.dispatch('popups/pushPopup', { type: 'error', message: 'L\'e-mail de cet utilisateur existe déjà dans l\'ENT.' })
+              store.dispatch('popups/pushPopup', { type: 'error', message: this.$t('Popup.existingEmail') })
             } else {
-              store.dispatch('popups/pushPopup', { type: 'error', message: 'Une erreur est survenue.' })
+              store.dispatch('popups/pushPopup', { type: 'error', message: this.$t('Popup.error') })
             }
           }
         )
@@ -284,7 +284,9 @@ export default {
   "Popup": {
     "userAdded": "Utilisateur créé",
     "userEdited": "Utilisateur modifié",
-    "userRemoved": "Utilisateur supprimé"
+    "userRemoved": "Utilisateur supprimé",
+    "error": "Une erreur est survenue. Merci de réessayer",
+    "existingEmail": "L'adresse e-mail existe déjà. Vous pouvez utiliser le service affectation pour affecter l'utilisateur à votre établissement."
   }
 }
 </i18n>

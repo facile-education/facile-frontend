@@ -201,7 +201,7 @@ tr {
   "please-select-school": "Veuillez sélectionner un établissement",
   "warning": "La suppression de cet administrateur est définitive.",
   "Popup": {
-    "error": "Une erreur est survenue"
+    "error": "Erreur lors de l'enregistrement de la délégation"
   }
 }
 </i18n>

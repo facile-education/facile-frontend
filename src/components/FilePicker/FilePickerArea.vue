@@ -189,7 +189,7 @@ export default {
 
 <i18n locale="fr">
 {
-  "errorNoFiles": "Il n'y a aucun fichier valide à téléverser !",
+  "errorNoFiles": "Le chargement n'est pas autorisé",
   "dropZoneLabel": "Déposer un document"
 }
 </i18n>
