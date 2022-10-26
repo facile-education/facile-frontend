@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import Layout from '@/router/layouts/EmptyLayout'
+import Layout from '@/router/layouts/BannerLayout'
 
 export default {
   name: 'Menu',

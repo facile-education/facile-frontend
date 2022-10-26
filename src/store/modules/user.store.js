@@ -21,10 +21,14 @@ export const state = {
   schoolList: [],
   details: {},
   selectedSchool: undefined,
+  serviceList: undefined,
   children: [],
   selectedChild: undefined
 }
 export const mutations = {
+  initServiceList (state, payload) {
+    state.serviceList = payload
+  },
   initUserInformations (state, payload) {
     state.userId = payload.userId
     state.lastName = payload.lastName
@@ -90,6 +94,13 @@ export const actions = {
         console.error(err)
       })
   },
+  getServiceList ({ commit }) {
+    userService.getServiceList().then((data) => {
+      if (data.success) {
+        commit('initServiceList', data.items)
+      }
+    })
+  },
   initUserInformations ({ rootState, commit, dispatch }) {
     this.dispatch('currentActions/addAction', { name: 'getUserInformations' })
     userService.getUserInformations().then(
@@ -114,44 +125,44 @@ export const actions = {
         // TODO toastr
         console.error(err)
       })
+  },
+  removePicture ({ commit }) {
+    userService.removePicture().then(
+      (data) => {
+        if (data.success) {
+          console.log('TODO get default img dynamiccaly')
+          commit('updatePicture', '/image/user_male_portrait?img_id=3274117&t=1546588956172')
+        }
+      },
+      (err) => {
+        // TODO toastr
+        console.log(err)
+      })
+  },
+  saveInterfacePreferences ({ commit }, preferences) {
+    userService.updateInterfacePreferences(preferences).then(
+      (data) => {
+        if (data.success) {
+          commit('updateInterfacePreferences', preferences)
+        }
+      },
+      (err) => {
+        // TODO toastr
+        console.log(err)
+      })
+  },
+  saveProfilePicture ({ commit }, formData) {
+    userService.uploadProfilePicture(formData).then(
+      (data) => {
+        if (data.success) {
+          commit('updatePicture', data.urlThumb)
+        }
+      },
+      (err) => {
+        // TODO toastr
+        console.log(err)
+      })
   }
-  // removePicture ({ commit }) {
-  //   userService.removePicture().then(
-  //     (data) => {
-  //       if (data.success) {
-  //         console.log('TODO get default img dynamiccaly')
-  //         commit('updatePicture', '/image/user_male_portrait?img_id=3274117&t=1546588956172')
-  //       }
-  //     },
-  //     (err) => {
-  //       // TODO toastr
-  //       console.log(err)
-  //     })
-  // },
-  // saveInterfacePreferences ({ commit }, preferences) {
-  //   userService.updateInterfacePreferences(preferences).then(
-  //     (data) => {
-  //       if (data.success) {
-  //         commit('updateInterfacePreferences', preferences)
-  //       }
-  //     },
-  //     (err) => {
-  //       // TODO toastr
-  //       console.log(err)
-  //     })
-  // },
-  // saveProfilePicture ({ commit }, formData) {
-  //   userService.uploadProfilePicture(formData).then(
-  //     (data) => {
-  //       if (data.success) {
-  //         commit('updatePicture', data.urlThumb)
-  //       }
-  //     },
-  //     (err) => {
-  //       // TODO toastr
-  //       console.log(err)
-  //     })
-  // }
 }
 
 export const getters = {
