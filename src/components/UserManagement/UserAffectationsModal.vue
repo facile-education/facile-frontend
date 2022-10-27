@@ -4,7 +4,6 @@
     :draggable="true"
     class="affectations-modal"
     :width="600"
-    :class="{'mobile': mq.phone}"
     @close="closeModal"
   >
     <template #header>
@@ -166,62 +165,79 @@ export default {
 
 <style lang="scss" scoped>
 .affectations-modal {
+
   .main {
     display: flex;
+    height: 100%;
+
     .school-classes {
       width: 50%;
       border-right: solid black 1px;
       overflow: auto;
       margin-left: 20px;
+
       .class-filter {
         margin-bottom: 20px;
         width: 90%;
       }
+
       .school-header {
         display: flex;
         height: 20px;
         margin-bottom: 10px;
+
         :hover:not(.is-affected) {
           background-color: rgb(226, 226, 226);
           cursor: pointer;
         }
+
         .is-affected {
           font-weight: bold;
         }
       }
+
       .org {
         margin-left: 30px;
         margin-bottom: 5px;
+
         :hover:not(.is-affected) {
           background-color: rgb(226, 226, 226);
           cursor: pointer;
         }
+
         .is-affected {
           font-weight: bold;
         }
       }
     }
+
     .user-affectations {
       width: 50%;
       overflow: auto;
+
       p {
         text-align: center;
       }
+
       .affectation-line {
         margin-left: 20px;
         margin-bottom: 5px;
         display: flex;
+
         .affectation {
           display: flex;
           border: solid black 1px;
           border-radius: 5px 5px 5px 5px;
+
           span {
             text-align: center;
             margin: 10px;
           }
+
           img {
             width: 15px;
             margin-right: 10px;
+
             &:hover {
               cursor: pointer;
             }
