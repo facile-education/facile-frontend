@@ -31,25 +31,20 @@
 
       <template #body>
         <!-- Recipients -->
-        <div
+        <PentilaTagsInput
+          ref="tagsinput"
+          v-model="recipients"
+          :close-on-select="true"
+          :completion-only="true"
+          :min-length="1"
+          :placeholder="$t('recipientsPlaceHolder')"
+          display-field="name"
+          id-field="id"
+          :list="autocompleteItems"
           class="recipients"
-          data-test="recipients-section"
-        >
-          <PentilaTagsInput
-            ref="tagsinput"
-            v-model="recipients"
-            :close-on-select="true"
-            :completion-only="true"
-            :min-length="1"
-            :placeholder="$t('recipientsPlaceHolder')"
-            display-field="name"
-            id-field="id"
-            :list="autocompleteItems"
-            class="tags"
-            :class="device"
-            @input="searchTimeOut"
-          />
-        </div>
+          :class="device"
+          @input="searchTimeOut"
+        />
         <div class="error-container">
           <ErrorMessage
             v-if="error==='missingRecipient'"
@@ -59,19 +54,14 @@
         </div>
 
         <!-- Subject -->
-        <div
+        <PentilaInput
+          id="create-message-subject-input"
+          v-model="subject"
+          :class="device"
           class="subject"
-          data-test="subject-section"
-        >
-          <PentilaInput
-            id="create-message-subject-input"
-            v-model="subject"
-            :class="device"
-            class="subject-input"
-            data-test="subject-input"
-            :placeholder="$t('subjectPlaceHolder')"
-          />
-        </div>
+          data-test="subject-input"
+          :placeholder="$t('subjectPlaceHolder')"
+        />
 
         <!-- Content -->
         <div
@@ -415,16 +405,12 @@ export default {
 </script>
 
 <style lang="scss">
-.phone {
-  .window-container {
-    .window-body.full-screen {
-      max-height: 80vh;
+.phone .window-container .window-body.full-screen {
+  max-height: 80vh;
+}
 
-      .ck-editor__editable {
-        min-height: 10rem;
-      }
-    }
-  }
+.ck-editor__editable {
+  min-height: 15rem;
 }
 </style>
 
@@ -443,42 +429,14 @@ export default {
     padding: 20px;
     display: flex;
 
-  .recipients {
-    display: flex;
-    margin: auto;
-    width: 100%;
-
-    p {
-      margin: auto;
-      width: 50px;
-    }
-    .tags {
-      width: 100%;
-      max-width: 650px;
-    }
+  .recipients, .subject {
+    padding-bottom: 10px;
   }
 
   .error-container {
     width: 100%;
     display: flex;
     justify-content: flex-end;
-  }
-
-  .subject {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    display: flex;
-    margin: auto;
-    width: 100%;
-
-    p {
-      margin: auto;
-      width: 50px;
-    }
-    .subject-input {
-      width: 100%;
-      max-width: 650px;
-    }
   }
 
   .content {
