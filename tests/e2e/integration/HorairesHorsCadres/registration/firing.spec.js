@@ -94,8 +94,10 @@ const registerStudent = (notifyParents) => { // Just fill registration modal and
 // NB: Some of registration main features are already tested in study type, so here is juste a basic registration test for replayTest slots
 describe('Firing registration', () => {
   beforeEach(() => {
-    cy.logout()
     cy.clock(now.toDate().getTime())
+    cy.exec('npm run db:loadTables schoollife_tables.sql')
+    cy.clearDBCache()
+    cy.logout()
     cy.login(url)
   })
 
@@ -319,20 +321,5 @@ describe('Firing registration', () => {
     // Check the message recipients (2 doyens and main teacher) and messag content
     cy.get('#message-receivers').should('contain', firingTeacherRecipients)
     cy.get('.message-details-content').should('contain', firingReason)
-  })
-
-  after(() => { // TODO to find an other solution
-    // Delete the created slot for next tests (bad practice but yes)
-    cy.login(url)
-    utils.waitCalendarToLoad()
-    cy.get('[data-test=slot-type-item-' + slotTypes.fired.type + ']').click()
-    utils.deleteSlot(slotToRegisterInside, '1/2')
-    cy.get('[data-test=edit-slot-modal]').should('not.exist')
-    utils.waitCalendarToLoad()
-    utils.deleteSlot(slotToRegisterInside, '1/2') // One for each 'it'
-    cy.get('[data-test=edit-slot-modal]').should('not.exist')
-    utils.waitCalendarToLoad()
-    cy.get('[data-test=slot-type-item-' + slotTypes.study.type + ']').click()
-    utils.deleteSlot(HHCSlotToBeFiredFrom, '1/2')
   })
 })

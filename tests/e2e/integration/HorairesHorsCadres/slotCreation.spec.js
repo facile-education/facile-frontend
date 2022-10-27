@@ -51,8 +51,10 @@ const testEditSlotModalForm = (form) => {
 
 describe('HHC slots creation', () => {
   beforeEach(() => {
-    cy.logout()
     cy.clock(now.toDate().getTime())
+    cy.exec('npm run db:loadTables schoollife_tables.sql')
+    cy.clearDBCache()
+    cy.logout()
   })
 
   it('Teachers not allowed to create slots', () => {

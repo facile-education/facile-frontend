@@ -43,8 +43,10 @@ const testRegistrationModal = (slot, studentToRegister) => {
 // NB: Some of registration main features are already tested in study type, so here is juste a basic registration test for replayTest slots
 describe('Replay test registration', () => {
   beforeEach(() => {
-    cy.logout()
     cy.clock(now.toDate().getTime())
+    cy.exec('npm run db:loadTables schoollife_tables.sql')
+    cy.clearDBCache()
+    cy.logout()
     cy.login(url)
     cy.get('[data-test=slot-type-item-' + slotTypes.replayTest.type + ']').click()
   })
@@ -86,13 +88,5 @@ describe('Replay test registration', () => {
     })
 
     // TODO Check notification (parents and students?)
-  })
-
-  after(() => { // TODO to find an other solution
-    // Delete the created slot for next tests (bad practice but yes)
-    cy.visit(url)
-    utils.waitCalendarToLoad()
-    cy.get('[data-test=slot-type-item-' + slotTypes.replayTest.type + ']').click()
-    utils.deleteSlot(slotToRegisterInside, '1/2')
   })
 })

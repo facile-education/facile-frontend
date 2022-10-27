@@ -15,8 +15,10 @@ const waitForRefresh = () => {
 
 describe('Desktop user selection', () => {
   beforeEach(() => {
-    cy.logout()
     cy.clock(now.toDate().getTime())
+    cy.exec('npm run db:loadTables schoollife_tables.sql')
+    cy.clearDBCache()
+    cy.logout()
     cy.login(url)
     cy.get('[data-test=slot-type-item-' + slotTypes.tutoring.type + ']').click() // Select tutoring slots
   })

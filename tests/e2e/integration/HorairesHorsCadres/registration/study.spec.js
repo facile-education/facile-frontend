@@ -100,8 +100,10 @@ const checkMessage = () => {
 
 describe('Study registration', () => {
   beforeEach(() => {
-    cy.logout()
     cy.clock(now.toDate().getTime())
+    cy.exec('npm run db:loadTables schoollife_tables.sql')
+    cy.clearDBCache()
+    cy.logout()
     cy.login(url)
     cy.get('[data-test=slot-type-item-' + slotTypes.study.type + ']').click()
   })
@@ -329,18 +331,6 @@ describe('Study registration', () => {
 
   it('mobile registration', () => {
     // TODO
-  })
-
-  after(() => { // TODO to find an other solution
-    // Delete the created slot for next tests (bad practice but yes)
-    cy.visit(url)
-    utils.waitCalendarToLoad()
-    cy.get('[data-test=slot-type-item-' + slotTypes.study.type + ']').click()
-    utils.deleteSlot(slotToRegisterInside, '0/0')
-    cy.get('[data-test=slot-type-item-' + slotTypes.study.type + ']').click()
-    utils.deleteSlot(slotToRegisterInside, '0/2')
-    cy.get('[data-test=slot-type-item-' + slotTypes.study.type + ']').click()
-    utils.deleteSlot(slotToDeregister, '1/1')
   })
 })
 
