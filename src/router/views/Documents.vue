@@ -166,7 +166,6 @@ export default {
   },
   created () {
     this.$store.dispatch('fileFields/initFields')
-    this.$store.dispatch('documents/getGlobalDocumentsProperties')
 
     // Watch route changes to react on progressionId change
     this.$watch(
