@@ -1,6 +1,6 @@
 <template>
   <div
-    class="container"
+    class="thread-details"
     data-test="messages-panel"
   >
     <!-- Contextual actions -->
@@ -17,6 +17,17 @@
         @click="hideDetails"
       />
       <div class="icons">
+        <IconOption
+          class="button"
+          :icon="require('@/assets/options/icon_edit_texte.svg')"
+          :icon-white="require('@assets/options/icon_edit_texte_white.svg')"
+          :title="$t('Messaging.new')"
+          :gray-background-color="!mq.tablet && !mq.phone"
+          name="createNewMessage"
+          icon-height="16px"
+          alt="new message"
+          @click="createNewMessage"
+        />
         <IconOption
           v-if="isActionEnabled"
           class="header-icon trash-icon"
@@ -41,13 +52,8 @@
           alt="mark-as-read item"
           @click="markAsRead"
         />
-      </div>
-      <div
-        v-if="isActionEnabled"
-        class="icons"
-      >
         <IconOption
-          v-if="!isDraft"
+          v-if="isActionEnabled && !isDraft"
           class="header-icon"
           :icon="require('@assets/options/icon_answer.svg')"
           :icon-white="require('@assets/options/icon_answer_white.svg')"
@@ -59,7 +65,7 @@
           @click="reply"
         />
         <IconOption
-          v-if="!isDraft"
+          v-if="isActionEnabled && !isDraft"
           class="header-icon"
           :icon="require('@assets/options/icon_answer_all.svg')"
           :icon-white="require('@assets/options/icon_answer_all_white.svg')"
@@ -71,7 +77,7 @@
           @click="replyAll"
         />
         <IconOption
-          v-if="!isDraft"
+          v-if="isActionEnabled && !isDraft"
           class="header-icon"
           :icon="require('@assets/options/icon_share.svg')"
           :icon-white="require('@assets/options/icon_share_white.svg')"
@@ -83,7 +89,7 @@
           @click="forward"
         />
         <IconOption
-          v-if="isDraft"
+          v-if="isActionEnabled && isDraft"
           class="header-icon"
           :icon="require('@assets/options/icon_edit_texte.svg')"
           :icon-white="require('@assets/options/icon_edit_texte_white.svg')"
@@ -95,14 +101,6 @@
           @click="editDraft"
         />
       </div>
-      <!--      <input-->
-      <!--        v-model="search"-->
-      <!--        class="search"-->
-      <!--        :style="{ backgroundImage: 'url(\'' + require('@/assets/icon_search.svg') + '\')' }"-->
-      <!--        :placeholder="$t('Messaging.search')"-->
-      <!--        @keyup.enter="runSearch"-->
-      <!--        @keyup.escape="search = ''"-->
-      <!--      >-->
     </div>
     <hr>
 
@@ -255,6 +253,9 @@ export default {
     editDraft () {
       messagingUtils.editDraft(this.$store.state.messaging.selectedThreads[0].mainMessageId)
     },
+    createNewMessage () {
+      messagingUtils.newMessage()
+    },
     markAsRead () {
       const messageIds = []
       let markAsRead = false
@@ -321,7 +322,7 @@ export default {
 <style lang="scss" scoped>
 @import '@design';
 
-.container {
+.thread-details {
   height: 100%;
 }
 
