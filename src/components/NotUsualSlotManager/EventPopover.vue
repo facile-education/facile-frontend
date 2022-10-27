@@ -128,7 +128,7 @@ export default {
           this.currentUser.isSecretariat || this.currentUser.isDoyen ||
           (this.selectedEvent.event.extendedProps.teacher.teacherId === this.currentUser.userId)
       }
-      return this.isEditableEvent && (this.queriedUser || this.selectedClass.classId > 0) &&
+      return this.isEditableEvent && (this.queriedUser || this.selectedClass.orgId > 0) &&
         !this.isAlreadyRegister && this.selectedEvent.event.extendedProps.inscriptionLeft > 0 && isAllowed
     },
     isPopupTop () {
