@@ -20,30 +20,30 @@ const waitForRefresh = () => {
 
 const logAsDirection = () => {
   cy.logout()
-  cy.clock(now.toDate().getTime())
   cy.login(url)
 }
 
 const logAsStudent = () => {
   cy.logout()
-  cy.clock(now.toDate().getTime())
   cy.login(url, STUDENT)
 }
 
 const logAsSingleParent = () => {
   cy.logout()
-  cy.clock(now.toDate().getTime())
   cy.login(url, PARENT)
 }
 
 const logAsMultiParent = () => {
   cy.logout()
-  cy.clock(now.toDate().getTime())
   cy.login(url, MULTI_PARENT)
 }
 
 describe('Desktop tests', () => {
   beforeEach(() => {
+    cy.clock(now.toDate().getTime())
+    cy.exec('npm run db:loadTables cdt_tables.sql')
+    cy.clearDBCache()
+    // cy.login(url + '/15401321')
   })
 
   it('Displays students timetable', () => {

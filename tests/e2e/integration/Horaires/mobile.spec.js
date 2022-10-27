@@ -7,6 +7,8 @@ import {
 
 describe('Mobile tests', () => {
   beforeEach(() => {
+    cy.exec('npm run db:loadTables cdt_tables.sql')
+    cy.clearDBCache()
     cy.clock(now.toDate().getTime())
     cy.viewport('iphone-5')
     cy.login(url)

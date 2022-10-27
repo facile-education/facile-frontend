@@ -13,8 +13,10 @@ const waitForRefresh = () => {
 
 describe('Service access', () => {
   beforeEach(() => {
-    cy.logout()
     cy.clock(now.toDate().getTime())
+    cy.exec('npm run db:loadTables cdt_tables.sql')
+    cy.clearDBCache()
+    cy.logout()
   })
 
   toolbarManagerUsers.forEach(user => {
