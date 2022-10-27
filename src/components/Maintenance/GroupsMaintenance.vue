@@ -14,7 +14,7 @@
 import runArchiving from '@/api/maintenance.service'
 
 export default {
-  name: 'Groups',
+  name: 'GroupsMaintenance',
   data () {
     return {
     }

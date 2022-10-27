@@ -2,19 +2,11 @@
   <Layout
     class="layout"
   >
-    <PentilaSpinner
-      v-if="areActionsInProgress"
-    />
+    <PentilaSpinner v-if="areActionsInProgress" />
 
-    <div v-else>
-      <GroupToolbar />
+    <GroupToolbar />
 
-      <Group
-        v-if="selectedGroupId"
-        :group-id="selectedGroupId"
-      />
-      <GroupList v-else />
-    </div>
+    <GroupList />
   </Layout>
 </template>
 
@@ -22,12 +14,10 @@
 import Layout from '@/router/layouts/EmptyLayout'
 import GroupList from '@/components/Groups/GroupList'
 import GroupToolbar from '@components/Groups/GroupToolbar'
-import Group from '@components/Groups/Group'
 
 export default {
   name: 'Groups',
   components: {
-    Group,
     GroupToolbar,
     Layout,
     GroupList
@@ -62,9 +52,5 @@ export default {
 <style lang="scss" scoped>
 .layout {
   height: 100%;
-
-  .group-list {
-    height: 100%;
-  }
 }
 </style>

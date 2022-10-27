@@ -1,5 +1,5 @@
 <template>
-  <NeroToolbar>
+  <NeroToolbar class="toolbar">
     <PentilaButton
       class="create-button"
       @click="toggleEditGroupModal"
@@ -44,5 +44,34 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
+.toolbar {
+  height: $groups-header-height;
 
+  .create-button {
+    margin-left: 30px;
+    width: 140px;
+    border-radius: 32px;
+
+    span {
+      margin-left: 12px;
+    }
+  }
+
+  .filters {
+    margin-left: auto;
+  }
+
+  .filter {
+    margin: 0 5px;
+    min-width: 200px;
+  }
+}
 </style>
+
+<i18n locale="fr">
+{
+  "add": "NOUVEAU",
+  "filterBy": "Filtrer par :"
+}
+</i18n>

@@ -1,6 +1,7 @@
 <template>
   <PentilaWindow
     :modal="true"
+    :is-full-screen="mq.phone"
     data-test="edit-group-modal"
     class="editWindow"
     @close="closeModal"
@@ -10,26 +11,34 @@
     </template>
 
     <template #body>
-      <form id="groupform">
-        <div class="group-name">
-          <PentilaInput
-            ref="name"
-            v-model="group.name"
-            :placeholder="$t('title')"
-            maxlength="75"
-            @blur="v$.group.name.$touch()"
-          />
-          <PentilaErrorMessage :error-message="formErrorList.groupName" />
-          <ColorPicker v-model="progression.color" />
-        </div>
-        <PentilaTextArea
-          v-model="group.description"
-          :placeholder="$t('description')"
-          maxlength="75"
-          style="height: 120px;"
-          class="description"
+      <div class="group-name">
+        <PentilaInput
+          ref="name"
+          v-model="group.groupName"
+          :placeholder="$t('name')"
+          :maxlength="75"
+          @blur="v$.group.groupName.$touch()"
         />
-      </form>
+        <PentilaErrorMessage :error-message="formErrorList.formErrorList" />
+      </div>
+
+      <PentilaTextArea
+        v-model="group.description"
+        :placeholder="$t('description')"
+        maxlength="75"
+        style="height: 120px;"
+        class="description"
+      />
+
+      <!--      <div class="group-is-educationnal">-->
+      <!--        <span v-t="'isPedagogical'" />-->
+      <!--        <PentilaToggleSwitch-->
+      <!--          v-model="group.isPedagogical"-->
+      <!--          class="partial"-->
+      <!--          :title="$t('isPedagogical')"-->
+      <!--        />-->
+      <!--        <span>{{ $t(group.isPedagogical) }}</span>-->
+      <!--      </div>-->
     </template>
 
     <template #footer>
@@ -37,7 +46,7 @@
         form="groupform"
         :label="buttonLabel"
         class="confirm-button"
-        :class="{'disabled' : v$.$invalid}"
+        :disabled="v$.$invalid"
         @click="onConfirm"
       />
     </template>
@@ -48,12 +57,11 @@
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import { nextTick } from 'vue'
-import PentilaUtils from 'pentila-utils'
-import ColorPicker from '@/components/Nero/ColorPicker'
+// import ColorPicker from '@/components/Nero/ColorPicker'
 
 export default {
   name: 'EditGroupModal',
-  components: { ColorPicker },
+  // components: { ColorPicker },
   inject: ['mq'],
   props: {
     editedGroup: {
@@ -65,43 +73,47 @@ export default {
   setup: () => ({ v$: useVuelidate() }),
   validations: {
     group: {
-      name: { required }
+      groupName: { required }
     }
   },
   data () {
     return {
       group: {
-        name: '',
+        groupName: '',
         color: '',
         subject: undefined,
         subjectId: 0,
         volee: undefined,
-        description: ''
+        description: '',
+        isPedagogical: false
       }
     }
   },
   computed: {
     formErrorList () {
-      const form = this.v$.progression
-      return {
-        name: (form.name.$invalid && form.name.$dirty) ? this.$t('Commons.required') : ''
+      const form = this.v$.group.groupName
+      if (form.$invalid && form.$dirty) {
+        if (form.$errors[0].$validator === 'required') {
+          return this.$t('Commons.required')
+        } else {
+          console.error('Unknown validation error')
+          return ''
+        }
+      } else {
+        return ''
       }
     },
     buttonLabel () {
-      if (this.editedGroup !== undefined) {
-        return this.$t('edit')
-      } else {
-        return this.$t('create')
-      }
+      return this.editedGroup ? this.$t('edit') : this.$t('create')
     }
   },
   created () {
     this.$store.dispatch('misc/incrementModalCount')
 
     if (this.editedGroup !== undefined) {
-      this.group = PentilaUtils.JSON.deepCopy(this.editedGroup)
+      this.group = { ...this.editedGroup }
     }
-    nextTick(() => this.$refs.title.$el.childNodes[0].focus())
+    nextTick(() => this.$refs.name.$el.childNodes[0].focus())
   },
   methods: {
     onConfirm (e) {
@@ -159,8 +171,12 @@ export default {
 <i18n locale="fr">
 {
   "create": "Créer",
-  "edit": "Modifier",
   "description": "Description",
-  "name": "Nom du groupe"
+  "edit": "Modifier",
+  "false": "Non",
+  "group": "Groupe",
+  "isPedagogical": "Espace à vocation pédagogique",
+  "name": "Nom du groupe",
+  "true": "Oui"
 }
 </i18n>
