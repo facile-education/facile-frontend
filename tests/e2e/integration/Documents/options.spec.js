@@ -43,7 +43,7 @@ describe('Other options', () => {
     createManualEntities()
   })
 
-  it.only('Open', () => { // On file only
+  it('Open', () => { // On file only
     cy.contains('[data-test=folder]', 'createdFolder').rightclick()
     cy.get('[data-test="context-menu"]').contains('Ouvrir').should('not.exist')
 

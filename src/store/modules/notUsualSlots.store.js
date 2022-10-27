@@ -23,7 +23,7 @@ function getNonUsualSlots (store) {
 function getSessions (store) {
   store.dispatch('currentActions/addAction', { name: 'getSessions' })
   const student = store.state.notUsualSlots.queriedUser || { studentId: 0 }
-  schoolLifeService.getSessions(student.studentId, store.state.notUsualSlots.selectedClass.classId,
+  schoolLifeService.getSessions(student.studentId, store.state.notUsualSlots.selectedClass.orgId,
     store.state.notUsualSlots.displayedDates.startDate, store.state.notUsualSlots.displayedDates.endDate).then(
     (data) => {
       store.dispatch('currentActions/removeAction', { name: 'getSessions' })
@@ -39,7 +39,7 @@ function getSessions (store) {
     })
 }
 
-const defaultClass = { classId: 0, className: i18n.global.t('NotUsualSlots.classPlaceholder') }
+const defaultClass = { orgId: 0, orgName: i18n.global.t('NotUsualSlots.classPlaceholder') }
 
 export const state = {
   classList: undefined,
@@ -105,7 +105,7 @@ export const actions = {
     )
   },
   setCurrentSlotType ({ commit, state }, slotType) {
-    if (state.selectedClass.classId > 0) {
+    if (state.selectedClass.orgId > 0) {
       commit('setSelectedClass', defaultClass)
       commit('setUserSlots', [])
     }
@@ -121,7 +121,7 @@ export const actions = {
     commit('removePendingFirings', pendingFiring)
   },
   setQueriedUser ({ commit }, user) {
-    if (user && state.selectedClass.classId > 0) {
+    if (user && state.selectedClass.orgId > 0) {
       commit('setSelectedClass', defaultClass)
     }
     commit('setQueriedUser', user)
@@ -145,7 +145,7 @@ export const actions = {
     if (state.currentSlotType !== undefined) {
       getNonUsualSlots(this)
 
-      if (state.selectedClass.classId > 0 && state.currentSlotType.type === 5) {
+      if (state.selectedClass.orgId > 0 && state.currentSlotType.type === 5) {
         getSessions(this)
       }
     }

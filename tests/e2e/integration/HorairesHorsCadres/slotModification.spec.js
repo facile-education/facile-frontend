@@ -67,8 +67,10 @@ const modifiedSlot = {
 
 describe('HHC slots modidication', () => {
   beforeEach(() => {
-    cy.logout()
     cy.clock(now.toDate().getTime())
+    cy.exec('npm run db:loadTables schoollife_tables.sql')
+    cy.clearDBCache()
+    cy.logout()
   })
 
   it('Modify slot desktop', function () {

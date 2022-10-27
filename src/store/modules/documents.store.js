@@ -176,6 +176,12 @@ export const actions = {
     }
   },
   goInGroupRoot ({ state, commit }) {
+    if (!state.documentsProperties.maxUploadSize) {
+      documentsService.getGlobalDocumentsProperties().then((data) => {
+        commit('setDocumentsProperties', data)
+        this.dispatch('documents/changeDirectory', { id: data.private.id })
+      })
+    }
     this.dispatch('documents/changeDirectory', { id: 'collaborative', isGroupDirectory: true }) // TODO get those key from documentsProperties
   },
   openDocumentPanel ({ commit }) {

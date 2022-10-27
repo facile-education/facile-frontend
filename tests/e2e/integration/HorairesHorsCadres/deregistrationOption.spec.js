@@ -120,8 +120,10 @@ const checkMessage = (unregisterer, slotType) => {
 
 describe('deregistration option', () => {
   beforeEach(() => {
-    cy.logout()
     cy.clock(now.toDate().getTime())
+    cy.exec('npm run db:loadTables schoollife_tables.sql')
+    cy.clearDBCache()
+    cy.logout()
     cy.login(url)
   })
 

@@ -69,8 +69,10 @@ const deleteSlot = () => {
 
 describe('HHC slots deletion', () => {
   beforeEach(() => {
-    cy.logout()
     cy.clock(now.toDate().getTime())
+    cy.exec('npm run db:loadTables schoollife_tables.sql')
+    cy.clearDBCache()
+    cy.logout()
   })
 
   it('Delete slot desktop', function () {

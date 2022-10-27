@@ -27,7 +27,7 @@
           v-model="selectedClass"
           :placeholder="$t('Horaires.groupFilter')"
           :list="classList"
-          display-field="className"
+          display-field="orgName"
           class="class-dropdown"
         />
         <UserCompletion

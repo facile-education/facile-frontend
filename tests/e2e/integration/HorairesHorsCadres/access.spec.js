@@ -6,8 +6,10 @@ const disallowedUsers = [STUDENT, PARENT]
 
 describe('Service access', () => {
   beforeEach(() => {
-    cy.logout()
     cy.clock(now.toDate().getTime())
+    cy.exec('npm run db:loadTables schoollife_tables.sql')
+    cy.clearDBCache()
+    cy.logout()
   })
 
   allowedUsers.forEach(user => {
