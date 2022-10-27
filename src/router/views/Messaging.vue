@@ -14,6 +14,7 @@
         v-if="(!mq.phone && ! mq.tablet)"
         ref="split"
         class="split"
+        :gutter-size="1"
       >
         <SplitArea
           data-test="threads-panel"
