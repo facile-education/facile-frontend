@@ -11,7 +11,7 @@
         :title="$t('groups')"
         class="tab"
       >
-        <Groups />
+        <GroupsMaintenance />
       </PentilaTabItem>
     </PentilaTabList>
   </Layout>
@@ -21,14 +21,14 @@
 
 import Layout from '@/router/layouts/EmptyLayout'
 import Administration from '@/components/Maintenance/Administration.vue'
-import Groups from '@/components/Maintenance/Groups.vue'
+import GroupsMaintenance from '@components/Maintenance/GroupsMaintenance.vue'
 
 export default {
   name: 'Maintenance',
   components: {
     Layout,
     Administration,
-    Groups
+    GroupsMaintenance
   },
   inject: ['mq'],
   computed: {

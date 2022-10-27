@@ -8,7 +8,7 @@
       class="header"
       :style="`background-color:${group.color};`"
     >
-      <h3>{{ group.name }}</h3>
+      <h3>{{ group.groupName }}</h3>
     </div>
     <div class="buttons">
       <img
@@ -87,14 +87,23 @@ export default {
   display: flex;
   flex-direction: column;
   height: 235px;
-  max-height: 235px;
   width: 235px;
+  border-radius: 6px;
   border: 1px solid rgba(0, 0, 0, 0.2);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin: 20px;
 
   &:hover {
     border: 1px solid grey;
     cursor: pointer;
+  }
+
+  .header {
+    padding: 10px 15px;
+  }
+
+  .body {
+    padding: 10px 15px;
   }
 }
 
