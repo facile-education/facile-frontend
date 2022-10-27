@@ -31,7 +31,7 @@
         class="class"
       >
         <span v-t="'NotUsualSlots.StudentRegistrationModal.class'" />
-        <span>{{ selectedClass.className }}</span>
+        <span>{{ selectedClass.orgName }}</span>
       </div>
       <div class="slot">
         <span v-t="'NotUsualSlots.StudentRegistrationModal.slot'" />
@@ -299,8 +299,8 @@ export default {
             this.closeModal()
           }
         })
-      } else if (this.selectedClass.classId > 0) {
-        schoolLifeService.registerClass(this.selectedClass.classId, this.event.extendedProps.id, this.comment, this.notifyParents, subjectName).then((data) => {
+      } else if (this.selectedClass.orgId > 0) {
+        schoolLifeService.registerClass(this.selectedClass.orgId, this.event.extendedProps.id, this.comment, this.notifyParents, subjectName).then((data) => {
           if (data.success) {
             this.$store.dispatch('notUsualSlots/refreshCalendar')
             this.closeModal()
