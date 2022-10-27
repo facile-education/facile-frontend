@@ -16,11 +16,6 @@
         >
         <div v-t="'Messaging.boxes'" />
       </div>
-      <img
-        v-if="!mq.phone && !mq.tablet"
-        src="@assets/menu/menu_messaging_black.svg"
-        alt=""
-      >
       <div
         class="current-folder"
         :title="currentFolder && currentFolder.type === 5 ? currentFolderName : ''"

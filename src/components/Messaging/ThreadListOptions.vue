@@ -9,10 +9,16 @@
       v-if="mq.phone || mq.tablet"
       class="unread"
     >
-      <PentilaCheckbox
-        v-model="unreadOnly"
-        :label="$t('Messaging.unreadOnly')"
-        @update:modelValue="toggleUnreadOnly()"
+      <IconOption
+        class="button"
+        :icon="require('@/assets/options/icon_mark_as_read.svg')"
+        :icon-white="require('@assets/options/icon_mark_as_read_white.svg')"
+        :title="$t('Messaging.unreadOnly')"
+        :gray-background-color="!mq.tablet && !mq.phone"
+        name="toggleUnreadOnly"
+        icon-height="16px"
+        :alt="$t('unreadOnly')"
+        @click="toggleUnreadOnly"
       />
     </div>
 
@@ -42,6 +48,7 @@
         @click="refresh"
       />
       <IconOption
+        v-if="mq.tablet || mq.phone"
         class="button"
         :icon="require('@/assets/options/icon_edit_texte.svg')"
         :icon-white="require('@assets/options/icon_edit_texte_white.svg')"
@@ -52,17 +59,17 @@
         alt="new message"
         @click="createNewMessage"
       />
-    </div>
-
-    <!-- Display unread messages only toggle -->
-    <div
-      v-if="(!mq.tablet && !mq.phone)"
-      class="unread"
-    >
-      <PentilaCheckbox
-        v-model="unreadOnly"
-        :label="$t('Messaging.unreadOnly')"
-        @update:modelValue="toggleUnreadOnly()"
+      <IconOption
+        v-if="(!mq.tablet && !mq.phone)"
+        class="button"
+        :icon="require('@/assets/options/icon_mark_as_read.svg')"
+        :icon-white="require('@assets/options/icon_mark_as_read_white.svg')"
+        :title="$t('Messaging.unreadOnly')"
+        :gray-background-color="!mq.tablet && !mq.phone"
+        name="toggleUnreadOnly"
+        icon-height="16px"
+        :alt="$t('unreadOnly')"
+        @click="toggleUnreadOnly"
       />
     </div>
   </div>
@@ -205,7 +212,6 @@ export default {
   }
 
   .unread {
-    margin-left: 20px;
     display: flex;
     align-items: center;
     color: $color-messaging-dark-text;
