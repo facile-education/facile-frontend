@@ -40,9 +40,14 @@
         </div>
         <div
           v-if="threads.length === 0"
-          v-t="'Messaging.emptyBox'"
           class="placeholder"
-        />
+        >
+          <div v-t="'emptyBox'" />
+          <img
+            src="@assets/messaging_placeholder.svg"
+            alt=""
+          >
+        </div>
         <ContextMenu
           v-if="isContextMenuDisplayed"
           @chooseOption="handleChosenOption"
@@ -359,11 +364,15 @@ hr.hr-thread-list {
 .placeholder {
   width: 100%;
   height: 100%;
-  padding-top: 20%;
+  padding-top: 40px;
   color: $color-messaging-dark-text;
   text-align: center;
   font-weight: bold;
-  font-size: 1.5em;
+  font-size: 1em;
+
+  img {
+    margin-top: 40px;
+  }
 }
 
 @-webkit-keyframes rotating /* Safari and Chrome */ {
@@ -396,3 +405,9 @@ hr.hr-thread-list {
 }
 
 </style>
+
+<i18n locale="fr">
+{
+  "emptyBox": "Cette boîte est vide"
+}
+</i18n>
