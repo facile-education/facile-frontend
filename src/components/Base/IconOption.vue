@@ -13,15 +13,8 @@
     @mouseup="emitMouseUp"
   >
     <img
-      v-if="(!isHovering && !forceHovering) || iconWhite === ''"
       :style="`height: ${iconHeight};`"
       :src="icon"
-      :alt="alt"
-    >
-    <img
-      v-show="(isHovering || forceHovering) && iconWhite!==''"
-      :style="`height: ${iconHeight};`"
-      :src="iconWhite"
       :alt="alt"
     >
     <div
@@ -94,14 +87,14 @@ export default {
 }
 </script>
 
-  <style lang="scss" scoped>
+<style lang="scss" scoped>
   @import "@design";
 
   .container {
     position: relative;
     height: 33px;
     width: 33px;
-    border-radius: 17px;
+    border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -118,7 +111,7 @@ export default {
     }
 
     &.hover {
-      background-color: #27AAE1;
+      border: 1px solid $color-border;
      }
   }
 

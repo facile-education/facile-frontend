@@ -62,7 +62,7 @@
       <MenuRootFolder
         class="base-folder"
         :folder="trashFolder"
-        :icon="require('@assets/icon_trash.svg')"
+        :icon="require('@assets/options/icon_trash.svg')"
         :drop-allowed="true"
         icon-width="15px"
         alt="icon trash"
@@ -77,7 +77,7 @@
       >
         <div class="icon-container">
           <img
-            src="@assets/icon_dossier_neutre.svg"
+            src="@assets/icon_messaging_folder.svg"
             alt=""
             class="folder-icon"
           >
