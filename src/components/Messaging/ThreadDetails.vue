@@ -116,9 +116,14 @@
       <!-- PlaceHolder when no messages selected -->
       <div
         v-if="!messageToDisplay"
-        v-t="'Messaging.noSelectedMessage'"
         class="placeholder"
-      />
+      >
+        <div v-t="'noSelectedMessage'" />
+        <img
+          src="@assets/messaging_placeholder.svg"
+          alt=""
+        >
+      </div>
 
       <!-- Thread with 1 message -->
       <div
@@ -390,11 +395,15 @@ hr {
   .placeholder {
     width: 100%;
     height: 100%;
-    padding-top: 20%;
+    padding-top: 40px;
     color: $color-messaging-dark-text;
     text-align: center;
     font-weight: bold;
-    font-size: 1.5em;
+    font-size: 1em;
+
+    img {
+      margin-top: 40px;
+    }
   }
 
   .single-message {
@@ -442,3 +451,9 @@ hr {
   }
 }
 </style>
+
+<i18n locale="fr">
+{
+  "noSelectedMessage": "Sélectionnez un fil de discussion ou un message"
+}
+</i18n>
