@@ -17,21 +17,21 @@
       <img
         v-if="message.hasAttachFiles"
         class="icon attached-file-icon"
-        :src="isMessageSelected ? require('@assets/icon_pj_white.svg') : require('@assets/icon_pj.svg')"
+        :src="require('@assets/icon_pj.svg')"
         alt="has attached files"
         :title="$t('Messaging.hasAttachedFiles')"
       >
       <img
         v-if="message.isAnswered"
         class="icon answered-icon"
-        :src="isMessageSelected ? require('@assets/options/icon_answer_white.svg') : require('@assets/options/icon_answer.svg')"
+        :src="require('@assets/options/icon_answer.svg')"
         alt="is answered"
         :title="$t('Messaging.answered')"
       >
       <img
         v-if="message.isForwarded"
         class="icon forwarded-icon"
-        :src="isMessageSelected ? require('@assets/options/icon_share_white.svg') : require('@assets/options/icon_share.svg')"
+        :src="require('@assets/options/icon_share.svg')"
         alt="is forwarded"
         :title="$t('Messaging.forwarded')"
       >
@@ -130,8 +130,7 @@ export default {
 .thread-message {
   display: flex;
   &.selected {
-    background-color: #27AAE1;
-    color: white;
+    background-color: #AAB4BD;
   }
   &.last {
     border-bottom: none;
@@ -156,10 +155,6 @@ export default {
 
     .unread {
       color: $color-messaging-bg;
-
-      &.selected {
-        color: white;
-      }
     }
 
     .attached-file-icon {

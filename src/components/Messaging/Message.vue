@@ -117,6 +117,7 @@ export default {
   color: $color-messaging-dark-text;
   border-radius: 6px;
   background-color: white;
+  border: 1px solid $color-border;
   box-shadow: 0 2px 14px 0 rgba(0,0,0,0.1);
 
   p{
