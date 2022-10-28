@@ -21,6 +21,7 @@
         :title="currentFolder && currentFolder.type === 5 ? currentFolderName : ''"
       >
         <p>{{ formattedCurrentFolderName }}</p>
+        <p>{{ nbNewMessages + $t('unRead') }}</p>
       </div>
 
       <img
@@ -108,16 +109,18 @@ export default {
       margin-right: 15px;
     }
     .current-folder {
-      height: 55px;
+      height: $messaging-header-height;
       display: flex;
-      align-items: center;
+      flex-direction: column;
       font-weight: bold;
+      justify-content: center;
 
       p {
         max-width: 170px; /* TODO find solution to mix that with flex: justify-content:space-between */
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        margin: 0;
       }
     }
   }
@@ -162,3 +165,9 @@ export default {
 }
 
 </style>
+
+<i18n locale="fr">
+{
+  "unRead": " non lus"
+}
+</i18n>

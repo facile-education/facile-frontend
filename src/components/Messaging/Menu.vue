@@ -256,7 +256,7 @@ export default {
 }
 
 .menu-header {
-  height: 75px;
+  height: calc(#{$messaging-header-height + 1px});
   width: 100%;
   display: flex;
   align-items: center;
@@ -264,8 +264,8 @@ export default {
   .header-icon {
     margin: auto;
     padding: 5px;
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     border: 1px solid transparent;
 
     &:hover {
@@ -285,7 +285,6 @@ hr {
 }
 .menu {
   width: 100%;
-  padding-top: 17px;
 
   .base-folder {
     padding-left: 20px;
