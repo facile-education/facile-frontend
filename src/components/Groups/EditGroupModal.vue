@@ -30,15 +30,60 @@
         class="description"
       />
 
+      <div class="group-is-educationnal">
+        <div v-t="'isPedagogical'" />
+        <PentilaToggleSwitch
+          v-model="test"
+          :title="$t('isPedagogical')"
+        />
+        <span>Non</span>
+      </div>
+
+      <PentilaInput
+        v-model="searchInput"
+        :placeholder="$t('Rechercher par nom')"
+        :maxlength="75"
+      />
+
       <!--      <div class="group-is-educationnal">-->
-      <!--        <span v-t="'isPedagogical'" />-->
-      <!--        <PentilaToggleSwitch-->
-      <!--          v-model="group.isPedagogical"-->
-      <!--          class="partial"-->
-      <!--          :title="$t('isPedagogical')"-->
+      <!--        <div v-t="'isPedagogical'" />-->
+      <!--        <PentilaCheckbox-->
+      <!--          v-model="test"-->
+      <!--          class="checkbox"-->
       <!--        />-->
-      <!--        <span>{{ $t(group.isPedagogical) }}</span>-->
+      <!--        <span>Oui</span>-->
       <!--      </div>-->
+
+      <div class="members">
+        <div class="list-members">
+          <div class="header">
+            <PentilaCheckbox v-model="test" />
+            <div v-t="'Identité'" />
+            <div v-t="'Profil'" />
+            <div v-t="'Établissement'" />
+          </div>
+
+          <GroupMemberItem
+            v-for="(member, index) in members"
+            :key="index"
+            :member="member"
+            :is-selected="isSelected(member)"
+            @toggleMemberSelection="toggleSelectedMember(member)"
+          />
+        </div>
+
+        <div class="selected-members">
+          <div class="header">
+            <div v-t="'Administrateur'" />
+          </div>
+
+          <SelectedGroupMemberItem
+            v-for="(member, index) in selectedMembers"
+            :key="index"
+            :member="member"
+          />
+        </div>
+      </div>
     </template>
 
     <template #footer>
@@ -57,10 +102,14 @@
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import { nextTick } from 'vue'
+import { getCommunityMembers } from '@/api/groups.service'
+import GroupMemberItem from '@components/Groups/GroupMemberItem'
+import SelectedGroupMemberItem from '@components/Groups/SelectedGroupMemberItem'
 // import ColorPicker from '@/components/Nero/ColorPicker'
 
 export default {
   name: 'EditGroupModal',
+  components: { SelectedGroupMemberItem, GroupMemberItem },
   // components: { ColorPicker },
   inject: ['mq'],
   props: {
@@ -78,6 +127,7 @@ export default {
   },
   data () {
     return {
+      test: false,
       group: {
         groupName: '',
         color: '',
@@ -86,7 +136,10 @@ export default {
         volee: undefined,
         description: '',
         isPedagogical: false
-      }
+      },
+      members: [],
+      selectedMembers: [],
+      searchInput: ''
     }
   },
   computed: {
@@ -109,6 +162,7 @@ export default {
   },
   created () {
     this.$store.dispatch('misc/incrementModalCount')
+    this.getUsers()
 
     if (this.editedGroup !== undefined) {
       this.group = { ...this.editedGroup }
@@ -116,6 +170,17 @@ export default {
     nextTick(() => this.$refs.name.$el.childNodes[0].focus())
   },
   methods: {
+    toggleSelectedMember (member) {
+      this.selectedMembers.push(member)
+    },
+    isSelected (member) {
+      this.selectedMembers.forEach((selectedMember) => {
+        if (member.userId === selectedMember.userId) {
+          return true
+        }
+      })
+      return false
+    },
     onConfirm (e) {
       e.preventDefault()
       if (this.v$.$invalid) {
@@ -124,8 +189,18 @@ export default {
         this.submitChanges()
       }
     },
+    getUsers () {
+      console.log(this.editedGroup)
+      if (this.editedGroup.groupId > 0) {
+        getCommunityMembers(this.editedGroup.groupId).then((data) => {
+          if (data.success) {
+            this.members = data.members
+          }
+        })
+      }
+    },
     submitChanges () {
-      if (this.group.groupId > 0) {
+      if (this.editedGroup.groupId > 0) {
         // Update
         this.$store.dispatch('groups/updateGroup', this.group)
       } else {
@@ -143,6 +218,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
+
 .title-color {
   display: flex;
   justify-content: space-between;
@@ -161,6 +238,46 @@ export default {
 
 .description {
   width: 100%;
+  margin-top: 20px;
+}
+
+.members {
+  display: flex;
+  width: 100%;
+
+  .list-members {
+    flex: 1;
+    margin-top: 20px;
+    max-height: 350px;
+    overflow: auto;
+    border-right: 1px solid #d4d4d4;
+
+    .header {
+      display: flex;
+      color: blue;
+      font-weight: 600;
+      height: 50px;
+
+      div {
+        width: 100px;
+      }
+    }
+  }
+
+  .selected-members {
+    flex: 1;
+    //margin-top: 20px;
+    max-height: 450px;
+    overflow: auto;
+
+    .header {
+      display: flex;
+      justify-content: flex-end;
+      color: blue;
+      font-size: 12px;
+      height: 50px;
+    }
+  }
 }
 
 .confirm-button {

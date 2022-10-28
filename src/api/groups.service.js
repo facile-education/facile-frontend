@@ -3,7 +3,8 @@ import constants from '@/api/constants'
 
 export {
   getUserGroups,
-  getUserCommunities
+  getUserCommunities,
+  getCommunityMembers
 }
 
 export default {
@@ -37,6 +38,17 @@ function getUserCommunities (userId, filter) {
     params: {
       userId: userId,
       filter: filter
+    }
+  }).then(response => response.data)
+}
+
+/**
+ * Get current user communities (personals groups?)
+ */
+function getCommunityMembers (groupId) {
+  return axios.get(constants.JSON_WS_URL + GROUP_PATH + COMMUNITY_CTX + 'get-community-members', {
+    params: {
+      groupId: groupId
     }
   }).then(response => response.data)
 }
