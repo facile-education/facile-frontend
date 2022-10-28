@@ -244,7 +244,8 @@ export default {
 @import '@design';
 
 .menu-panel {
-  background-color: #F3F6F8;
+  background-color: white;
+  border-right: 1px solid $color-border;
   height: 100%;
   overflow: auto;
 

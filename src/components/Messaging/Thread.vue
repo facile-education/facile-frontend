@@ -45,21 +45,21 @@
           <img
             v-if="mainMessage.hasAttachFiles"
             class="icon attached-file-icon"
-            :src="isThreadSelected && !isSubMessageSelected ? require('@assets/icon_pj_white.svg') : require('@assets/icon_pj.svg')"
+            :src="require('@assets/icon_pj.svg')"
             alt="has attached files"
             :title="$t('Messaging.hasAttachedFiles')"
           >
           <img
             v-if="mainMessage.isAnswered"
             class="icon answered-icon"
-            :src="isThreadSelected && !isSubMessageSelected ? require('@assets/options/icon_answer_white.svg') : require('@assets/options/icon_answer.svg')"
+            :src="require('@assets/options/icon_answer.svg')"
             alt="is answered"
             :title="$t('Messaging.answered')"
           >
           <img
             v-if="mainMessage.isForwarded"
             class="icon forwarded-icon"
-            :src="isThreadSelected && !isSubMessageSelected ? require('@assets/options/icon_share_white.svg') : require('@assets/options/icon_share.svg')"
+            :src="require('@assets/options/icon_share.svg')"
             alt="is forwarded"
             :title="$t('Messaging.forwarded')"
           >
@@ -88,15 +88,8 @@
             >
               <p>{{ thread.messages.length }}</p>
               <img
-                v-if="!isThreadSelected || isSubMessageSelected"
                 :class="isThreadExpanded ? 'collapse-thread': 'extend-thread'"
                 src="@assets/icon_arrow_down_double.svg"
-                alt="toggle thread"
-              >
-              <img
-                v-show="isThreadSelected && !isSubMessageSelected"
-                :class="isThreadExpanded ? 'collapse-thread': 'extend-thread'"
-                src="@assets/icon_arrow_down_double_white.svg"
                 alt="toggle thread"
               >
             </div>
@@ -341,23 +334,15 @@ export default {
 .main {
   display: flex;
   width: 100%;
+  cursor: pointer;
   transition-property: border-bottom-right-radius, border-bottom-left-radius;
   transition-duration: .3s;
 
   &.selected:not(.subMessageSelected) {
-    background-color: #27AAE1;
-    color: white;
-
-    .body {
-      .line3 {
-        p {
-          color: white
-        }
-      }
-    }
+    background-color: #AAB4BD
   }
   &.subMessageSelected {
-    background-color: #D9E2EA;
+    background-color: #F3F6F8;
   }
 
   .selected-icon {
@@ -406,10 +391,6 @@ export default {
 
     .unread {
       color: $color-messaging-bg;
-
-      &.selected {
-        color: white;
-      }
     }
 
     .attached-file-icon {
@@ -491,7 +472,6 @@ export default {
     }
     .line3 {
       p {
-        color: rgba(11, 60, 95, 0.7);
         font-weight: lighter;
         font-size: 12px;
         display: -webkit-box;
@@ -504,7 +484,7 @@ export default {
   }
 }
 .expanded {
-  background-color: rgba(39, 170, 255, 0.15);
+  background-color: #F3F6F8;
   border-bottom: none;
 }
 

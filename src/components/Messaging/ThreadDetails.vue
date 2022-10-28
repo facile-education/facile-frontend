@@ -18,7 +18,7 @@
       />
       <div class="icons">
         <IconOption
-          class="button"
+          class="header-icon new-icon"
           :icon="require('@/assets/options/icon_edit_texte.svg')"
           :icon-white="require('@assets/options/icon_edit_texte_white.svg')"
           :title="$t('Messaging.new')"
@@ -328,7 +328,7 @@ export default {
 
 .splitarea-header {
   height: $messaging-header-height;
-  padding: 0 10px 0 21px;
+  padding: 0 10px 0 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -375,9 +375,9 @@ hr {
 }
 
 .details {
+  background-color: white;
   height: calc(100% - (#{$messaging-header-height} + 2px));
   overflow: auto;
-  background-color: $color-messaging-dark-white-bg;
 
   .multi-threads {
     p {
