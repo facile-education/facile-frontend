@@ -9,8 +9,6 @@
         v-if="mq.phone || mq.tablet"
         class="header-icon back-arrow"
         :icon="require('@assets/arrow_right.svg')"
-        :icon-white="require('@assets/arrow_right_white.svg')"
-        :gray-background-color="true"
         name="back"
         icon-height="14px"
         alt="back"
@@ -20,69 +18,77 @@
         <IconOption
           class="header-icon new-icon"
           :icon="require('@/assets/options/icon_edit_texte.svg')"
-          :icon-white="require('@assets/options/icon_edit_texte_white.svg')"
           :title="$t('Messaging.new')"
-          :gray-background-color="!mq.tablet && !mq.phone"
           name="createNewMessage"
           icon-height="16px"
           alt="new message"
           @click="createNewMessage"
         />
+        <div
+          v-if="isActionEnabled"
+          class="separator"
+        />
         <IconOption
           v-if="isActionEnabled"
           class="header-icon trash-icon"
           :icon="require('@assets/options/icon_trash.svg')"
-          :icon-white="require('@assets/options/icon_trash_white.svg')"
           :title="$t('Messaging.deleteMessage')"
-          :gray-background-color="true"
           name="trash"
           icon-height="14px"
           alt="delete item"
           @click="deleteItem"
         />
+        <div
+          v-if="isActionEnabled && (mq.phone || mq.tablet)"
+          class="separator"
+        />
         <IconOption
           v-if="isActionEnabled && (mq.phone || mq.tablet)"
           class="header-icon read-icon"
           :icon="require('@/assets/options/icon_mark_as_read.svg')"
-          :icon-white="require('@/assets/options/icon_mark_as_read_white.svg')"
           :title="$t('Messaging.markAsRead')"
-          :gray-background-color="true"
           name="mark-as-read"
           icon-height="14px"
           alt="mark-as-read item"
           @click="markAsRead"
         />
+        <div
+          v-if="isActionEnabled"
+          class="separator"
+        />
         <IconOption
           v-if="isActionEnabled && !isDraft"
           class="header-icon"
           :icon="require('@assets/options/icon_answer.svg')"
-          :icon-white="require('@assets/options/icon_answer_white.svg')"
           :title="$t('Messaging.reply')"
-          :gray-background-color="true"
           name="reply"
           icon-height="14px"
           alt="reply"
           @click="reply"
         />
+        <div
+          v-if="isActionEnabled"
+          class="separator"
+        />
         <IconOption
           v-if="isActionEnabled && !isDraft"
           class="header-icon"
           :icon="require('@assets/options/icon_answer_all.svg')"
-          :icon-white="require('@assets/options/icon_answer_all_white.svg')"
           :title="$t('Messaging.replyAll')"
-          :gray-background-color="true"
           name="replyAll"
           icon-height="14px"
           alt="reply All"
           @click="replyAll"
         />
+        <div
+          v-if="isActionEnabled"
+          class="separator"
+        />
         <IconOption
           v-if="isActionEnabled && !isDraft"
           class="header-icon"
           :icon="require('@assets/options/icon_share.svg')"
-          :icon-white="require('@assets/options/icon_share_white.svg')"
           :title="$t('Messaging.forward')"
-          :gray-background-color="true"
           name="forward"
           icon-height="14px"
           alt="forward"
@@ -92,9 +98,7 @@
           v-if="isActionEnabled && isDraft"
           class="header-icon"
           :icon="require('@assets/options/icon_edit_texte.svg')"
-          :icon-white="require('@assets/options/icon_edit_texte_white.svg')"
           :title="$t('Messaging.editDraft')"
-          :gray-background-color="true"
           name="editDraft"
           icon-height="16px"
           alt="edit draft"
@@ -352,11 +356,15 @@ export default {
     padding: 5px;
     width: 30px;
     height: 30px;
-    border: 1px solid transparent;
 
     &.disabled {
       color: grey;
     }
+  }
+
+  .separator {
+    height: 30px;
+    border-right: 1px solid $color-border;
   }
 
   .search {

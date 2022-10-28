@@ -2,7 +2,7 @@
 <svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <title>C14220F3-02FD-4DFC-B6E7-4B494339921B</title>
     <g id="Plateforme" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="3-Messagerie" transform="translate(-654.000000, -102.000000)" fill="#0B3C5F" fill-rule="nonzero">
+        <g id="3-Messagerie" transform="translate(-654.000000, -102.000000)" fill="#000000" fill-rule="nonzero">
             <g id="refresh" transform="translate(645.000000, 93.000000)">
                 <path d="M25,17 C25,21.418278 21.418278,25 17,25 C13.2724501,25 10.1403373,22.4506308 9.25212715,19.0003581 L10.2901893,19.0010432 C11.1510722,21.8919961 13.8293607,24 17,24 C20.8659932,24 24,20.8659932 24,17 L25,17 L25,17 Z M17,9 C20.7279108,9 23.8602692,11.5498628 24.7481308,15.000644 L23.7101075,14.9999537 C22.8495435,12.1084885 20.1710037,10 17,10 C13.1340068,10 10,13.1340068 10,17 L9,17 C9,12.581722 12.581722,9 17,9 Z M9,19 L13,19 L13,20 L9,20 L9,19 Z M10,19 L10,23 L9,23 L9,19 L10,19 Z M21,15 L21,14 L24,14 L24,11 L25,11 L25,15 L21,15 Z" id="icon/refresh"></path>
             </g>
