@@ -4,6 +4,8 @@ import {
 import {
   getSchoolNews, addNews, editNews, deleteNews
 } from '@/api/news.service'
+import { nbActivityPerPage } from '@/constants/dashboardConstants'
+import dayjs from 'dayjs'
 
 export const state = {
   hasGroupNewsWidget: false,
@@ -104,8 +106,8 @@ export const actions = {
         console.error(err)
       })
   },
-  getGroupActivities ({ commit }, { startIndex, endIndex, nbActivities, fromDate }) {
-    getGroupActivities(startIndex, endIndex, nbActivities, fromDate).then(
+  getGroupActivities ({ commit }, { maxDate, nbActivities }) {
+    getGroupActivities(maxDate, nbActivities).then(
       (data) => {
         if (data.success) {
           commit('addGroupNews', data.activities)
@@ -137,7 +139,7 @@ export const actions = {
       (data) => {
         if (data.success) {
           commit('addGroupNews', [data.newsCreated])
-          dispatch('getGroupActivities', 0, 10)
+          dispatch('getGroupActivities', dayjs(), nbActivityPerPage)
         }
       },
       (err) => {

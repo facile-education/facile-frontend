@@ -61,6 +61,7 @@ import MembershipActivity from '@components/Dashboard/Activities/MembershipActiv
 import RenvoiActivity from '@components/Dashboard/Activities/RenvoiActivity'
 import BaseIcon from '@components/Base/BaseIcon'
 import { nbActivityPerPage, activityTypes } from '@/constants/dashboardConstants'
+import PentilaUtils from 'pentila-utils'
 
 export default {
   name: 'UserThreadWidget',
@@ -73,7 +74,7 @@ export default {
   },
   computed: {
     groupActivities () {
-      return this.$store.state.dashboard.groupActivities
+      return PentilaUtils.Array.sortWithString(this.$store.state.dashboard.groupActivities, true, 'modificationDate')
     },
     canAddGroupNews () {
       return !!this.$store.state.dashboard.canAddGroupNews // '!!' to assure Boolean
@@ -85,10 +86,8 @@ export default {
   methods: {
     loadGroupNews () {
       this.$store.dispatch('dashboard/getGroupActivities', {
-        startIndex: this.groupActivities.length,
-        endIndex: this.groupActivities.length + nbActivityPerPage,
-        nbActivities: nbActivityPerPage,
-        fromDate: this.groupActivities.length > 0 ? this.groupActivities[this.groupActivities.length - 1].modificationDate : '-1'
+        maxDate: this.groupActivities.length > 0 ? this.groupActivities[this.groupActivities.length - 1].modificationDate : '-1',
+        nbActivities: nbActivityPerPage
       })
     },
     openNewsModal () {
