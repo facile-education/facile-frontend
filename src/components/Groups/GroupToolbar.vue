@@ -10,6 +10,12 @@
       <span>{{ $t('add') }}</span>
     </PentilaButton>
 
+    <PentilaInput
+      v-model="searchInput"
+      :placeholder="$t('SearchPlaceholder')"
+      :maxlength="75"
+    />
+
     <teleport to="body">
       <EditGroupModal
         v-if="isEditGroupModalDisplayed"
@@ -32,7 +38,8 @@ export default {
   components: { NeroIcon, NeroToolbar, EditGroupModal },
   data () {
     return {
-      isEditGroupModalDisplayed: false
+      isEditGroupModalDisplayed: false,
+      searchInput: ''
     }
   },
   methods: {
@@ -47,11 +54,13 @@ export default {
 @import "@design";
 .toolbar {
   height: $groups-header-height;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 30px;
 
   .create-button {
-    margin-left: 30px;
     width: 140px;
-    border-radius: 32px;
+    border-radius: 6px;
 
     span {
       margin-left: 12px;
@@ -72,6 +81,6 @@ export default {
 <i18n locale="fr">
 {
   "add": "NOUVEAU",
-  "filterBy": "Filtrer par :"
+  "SearchPlaceholder": "Filtrer par nom"
 }
 </i18n>

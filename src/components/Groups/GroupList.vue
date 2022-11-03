@@ -56,6 +56,7 @@ export default {
 @import '@/design';
 
 .group-list {
+  flex: 1;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
