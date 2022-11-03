@@ -22,6 +22,16 @@
 
     <div class="buttons">
       <IconOption
+        class="button"
+        :icon="require('@assets/icon_engrenage.svg')"
+        :title="$t('Messaging.Parameters.header')"
+        name="toggleMessagingMenu"
+        icon-height="16px"
+        alt="parameters"
+        @click="openParametersModal"
+      />
+
+      <IconOption
         v-if="!mq.tablet && !mq.phone"
         class="button"
         :icon="require('@/assets/options/icon_menu_lateral.svg')"
@@ -129,6 +139,9 @@ export default {
     }
   },
   methods: {
+    openParametersModal () {
+      this.$store.dispatch('messaging/openParametersModal')
+    },
     toggleSideMenuPanel () {
       this.$store.dispatch('messaging/toggleSideMenuPanel')
     },
