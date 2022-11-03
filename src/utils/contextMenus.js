@@ -51,6 +51,20 @@ const contextMenus = {
       hasSeparator: false
     }
   ],
+  messagingMarkerMenu: [
+    {
+      name: 'markAsRead',
+      title: i18n.global.t('Messaging.markAsRead'),
+      position: 0,
+      hasSeparator: true
+    },
+    {
+      name: 'markAsUnread',
+      title: i18n.global.t('Messaging.markAsUnread'),
+      position: 1,
+      hasSeparator: false
+    }
+  ],
   messagingEditDraftMenu: [
     {
       name: 'editDraft',

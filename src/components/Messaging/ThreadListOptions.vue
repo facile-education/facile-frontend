@@ -70,11 +70,11 @@
     :class="{'phone': mq.phone || mq.tablet}"
   >
     <span
-      v-t="'Messaging.mark'"
+      v-t="'mark'"
       @click="displayMarkerSelection"
     />
     <span
-      v-t="'Messaging.trash'"
+      v-t="'trash'"
       @click="deleteSelectedThreads"
     />
   </div>
@@ -222,3 +222,11 @@ export default {
   }
 }
 </style>
+
+<i18n locale="fr">
+{
+  "mark": "Marquer",
+  "trash": "Supprimer"
+}
+
+</i18n>
