@@ -33,7 +33,7 @@
         class="icon"
       >
         <img
-          v-if="option.iconWhite === undefined || (!isHovering && !isSelected)"
+          v-if="option.icon !== undefined && (option.iconWhite === undefined || (!isHovering && !isSelected))"
           :src="option.icon"
           :alt="option.title"
         >
