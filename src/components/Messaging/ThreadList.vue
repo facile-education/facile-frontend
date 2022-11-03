@@ -312,6 +312,7 @@ export default {
     .thread-list {
       position: relative;
       height: calc(100% - (#{$messaging-mobile-header-height} + #{$messaging-mobile-footer-height} + 2px));
+      padding: 0;
     }
 
     .pull-to-refresh-icon {
@@ -344,19 +345,22 @@ hr {
 }
 
 hr.hr-thread-list {
-  margin: 0;
   border: 0; border-top: 1px solid #e0e0e0;
+  margin-left: 40px;
+  margin-right: 10px;
 }
 
 .thread-list {
   position: relative;
   height: calc(100% - (#{$messaging-header-height} + 2px)); /* 100% - (banner-height + hr-height) */
+  padding: 0 10px;
 }
 
 .scroll {
   height: 100%;
   overflow: auto;
   .thread-list-item {
+    border-radius: 6px;
     overflow: hidden;
   }
 }

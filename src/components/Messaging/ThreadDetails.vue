@@ -31,7 +31,7 @@
         <IconOption
           v-if="isActionEnabled"
           class="header-icon trash-icon"
-          :icon="require('@assets/options/icon_trash.svg')"
+          :icon="require('@assets/icon_trash.svg')"
           :title="$t('Messaging.deleteMessage')"
           name="trash"
           icon-height="14px"
@@ -416,7 +416,13 @@ hr {
 
   .single-message {
     padding: 10px;
-    border: 2px solid white;
+
+    .message {
+      border-radius: 0;
+      background-color: white;
+      border: none;
+      box-shadow: none;
+    }
   }
 
   .message-list {

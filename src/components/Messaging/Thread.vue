@@ -89,7 +89,7 @@
               <p>{{ thread.messages.length }}</p>
               <img
                 :class="isThreadExpanded ? 'collapse-thread': 'extend-thread'"
-                src="@assets/icon_arrow_down_double.svg"
+                src="@assets/arrow_down.svg"
                 alt="toggle thread"
               >
             </div>
@@ -421,7 +421,7 @@ export default {
         font-weight: bold;
       }
       .sendDate {
-        font-weight: 600;
+        font-weight: normal;
         font-size: 0.75em;
         letter-spacing: 0;
         line-height: 19px;
@@ -457,7 +457,7 @@ export default {
         }
 
         .collapse-thread, .extend-thread {
-          width: 6px;
+          width: 10px;
           transition:  transform .3s;
         }
 
