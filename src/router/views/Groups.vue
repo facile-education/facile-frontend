@@ -6,7 +6,12 @@
 
     <GroupToolbar />
 
-    <GroupList />
+    <div class="body">
+      <GroupList />
+      <GroupDetails
+        v-if="isPanelDisplayed"
+      />
+    </div>
   </Layout>
 </template>
 
@@ -14,10 +19,12 @@
 import Layout from '@/router/layouts/EmptyLayout'
 import GroupList from '@/components/Groups/GroupList'
 import GroupToolbar from '@components/Groups/GroupToolbar'
+import GroupDetails from '@components/Groups/GroupDetails'
 
 export default {
   name: 'Groups',
   components: {
+    GroupDetails,
     GroupToolbar,
     Layout,
     GroupList
@@ -26,25 +33,12 @@ export default {
     selectedGroupId () {
       return this.$route.params.groupId
     },
+    isPanelDisplayed () {
+      return this.$store.state.groups.isPanelDisplayed
+    },
     areActionsInProgress () {
       return this.$store.getters['currentActions/areActionsInProgress']
     }
-  },
-  created () {
-    // Watch route changes to react on groupId change
-    this.$watch(
-      () => this.$route.params,
-      () => {
-        if (this.$route.params.groupId) {
-          // TODO
-        } else {
-          // TODO
-        }
-      },
-      // fetch the data when the view is created and the data is
-      // already being observed
-      { immediate: true }
-    )
   }
 }
 </script>
@@ -52,5 +46,9 @@ export default {
 <style lang="scss" scoped>
 .layout {
   height: 100%;
+
+  .body {
+    display: flex;
+  }
 }
 </style>
