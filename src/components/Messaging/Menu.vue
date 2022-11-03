@@ -10,18 +10,6 @@
       >
       <h3 v-t="'Messaging.boxes'" />
     </div>
-    <div
-      v-else
-      class="menu-header"
-    >
-      <img
-        src="@assets/icon_engrenage.svg"
-        class="header-icon"
-        alt="icon file"
-        :title="$t('Messaging.Parameters.header')"
-        @click="openParametersModal()"
-      >
-    </div>
 
     <nav
       v-if="folderList.length > 0"
@@ -193,9 +181,6 @@ export default {
     },
     selectFolder (folder) {
       this.$store.dispatch('messaging/selectFolder', folder)
-    },
-    openParametersModal () {
-      this.$store.dispatch('messaging/openParametersModal')
     },
     createPersonalRootFolder () {
       this.displayNewFolderInput = false
