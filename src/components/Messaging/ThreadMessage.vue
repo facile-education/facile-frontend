@@ -186,7 +186,7 @@ export default {
         font-weight: bold;
       }
       .sendDate {
-        font-weight: 600;
+        font-weight: normal;
         font-size: 0.75em;
         letter-spacing: 0;
         line-height: 19px;
