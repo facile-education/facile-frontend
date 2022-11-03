@@ -61,4 +61,9 @@ a {
 @media screen and (device-aspect-ratio: 9/16) {
     select, textarea, input { font-size: 16px; }
 }
+
+@font-face {
+  font-family: "Roboto Sans";
+  src: url(./assets/fonts/Roboto-Regular.ttf) format("truetype");
+}
 </style>
