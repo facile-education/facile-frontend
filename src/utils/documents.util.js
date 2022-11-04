@@ -194,7 +194,6 @@ async function downloadDocument (entity) {
       if (entity.isGroupFile) {
         groupService.recordDownloadActivity(entity.id, 0)
       }
-      console.log('down entity ', entity)
       const a = document.createElement('a')
       a.style.display = 'none'
       a.download = entity.name // don't works on Internet Explorer and IOS' safari

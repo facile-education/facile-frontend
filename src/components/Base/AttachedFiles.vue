@@ -1,39 +1,38 @@
 <template>
   <div class="attached-files">
     <div
-      v-for="attachedFile in attachedFiles"
-      :key="attachedFile.fileId"
-      :title="attachedFile.name"
-      class="attached-file"
+      v-if="readOnly"
+      class="header"
     >
-      <FileIcon
-        class="file-icon"
-        :file-name="attachedFile.name"
-      />
-      <p class="file-name">
-        {{ attachedFile.name }}
-      </p>
-      <div class="file-actions">
-        <!--BaseIcon
-          class="file-action"
-          name="eye"
-          :title="$t('AttachedFiles.view')"
-          @click="viewAttachedFile(attachedFile)"
-        /-->
-        <BaseIcon
-          class="file-action"
-          name="download"
-          :title="$t('AttachedFiles.download')"
-          @click="downloadAttachedFile(attachedFile)"
+      {{ attachedFiles.length + (attachedFiles.length > 1 ? $t('attachedFiles') : $t('attachedFile')) }}
+    </div>
+    <div class="file-list">
+      <div
+        v-for="attachedFile in attachedFiles"
+        :key="attachedFile.fileId"
+        :title="attachedFile.name"
+        class="attached-file"
+        @click="downloadAttachedFile(attachedFile)"
+      >
+        <FileIcon
+          class="file-icon"
+          :file="attachedFile"
         />
-        <img
+        <p class="file-name">
+          {{ attachedFile.name }}
+        </p>
+        <div
           v-if="!readOnly"
-          class="file-action"
-          src="@assets/options/icon_trash.svg"
-          alt="delete"
-          :title="$t('AttachedFiles.remove')"
-          @click="removeAttachedFile(attachedFile)"
+          class="file-actions"
         >
+          <img
+            class="file-action"
+            src="@assets/big-cross-black.svg"
+            :alt="$t('AttachedFiles.remove')"
+            :title="$t('AttachedFiles.remove')"
+            @click="removeAttachedFile(attachedFile)"
+          >
+        </div>
       </div>
     </div>
   </div>
@@ -41,14 +40,12 @@
 
 <script>
 import FileIcon from '@components/Base/FileIcon'
-import BaseIcon from '@components/Base/BaseIcon'
 import mediaService from '@/api/documents/media.service'
-import documentUtils from '@utils/documents.util'
+import { downloadDocument } from '@utils/documents.util'
 
 export default {
   name: 'AttachedFiles',
   components: {
-    BaseIcon,
     FileIcon
   },
   props: {
@@ -90,7 +87,9 @@ export default {
       }
     },
     downloadAttachedFile (attachedFile) {
-      documentUtils.downLoadDocument(attachedFile)
+      if (this.readOnly) {
+        downloadDocument(attachedFile)
+      }
     },
     viewAttachedFile (attachedFile) {
       mediaService.getMediaUrl(attachedFile.id, 0).then(async (data) => {
@@ -105,10 +104,22 @@ export default {
 }
 </script>
 
-  <style lang="scss" scoped>
-  @import '@design';
+<style lang="scss" scoped>
+@import '@design';
 
-  .attached-files {
+.attached-files {
+  margin-bottom: 10px;
+
+  .header {
+    border-top: 1px solid $color-border;
+    padding-top: 20px;
+    font-weight: 600;
+    width: 100%;
+    padding-left: 10px;
+  }
+
+  .file-list {
+    padding-left: 10px;
     display: flex;
     justify-content: flex-start;
     width: 100%;
@@ -117,43 +128,43 @@ export default {
     overflow-y: auto;
 
     .attached-file {
-      border: 1px solid;
+      height: 50px;
       border-radius: 8px 8px 8px 8px;
-      margin: 5px;
-      height: 30px;
+      margin: 10px 10px 10px 0;
+      padding-right: 10px;
       display: flex;
       align-items: center;
+      cursor: pointer;
+      border: 1px solid transparent;
 
-      .file-icon {
-        margin: auto;
-        margin-left: 10px;
-        margin-right: 10px;
+      &:hover {
+        border: 1px solid $color-border;
       }
+
       p {
-        max-width: 300px;
-        margin: auto;
         margin-left: 10px;
-        font-size: 12pt;
+        max-width: 300px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        float: left;
       }
-      .file-actions {
-        margin: auto;
-        margin-left: 10px;
-        margin-right: 10px;
-        display: flex;
 
-        .file-action {
-          margin-left: 5px;
-          margin-right: 5px;
-          padding: 2px;
-          &:hover {
-            cursor: pointer;
-          }
+      .file-actions {
+        margin-left: 10px;
+
+        img {
+          height: 13px;
+          width: 13px;
         }
       }
     }
   }
-  </style>
+}
+</style>
+
+<i18n locale="fr">
+{
+  "attachedFile": " pièce jointe",
+  "attachedFiles": " pièces jointes"
+}
+</i18n>

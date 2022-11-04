@@ -3,7 +3,7 @@
     <PentilaWindow
       :modal="true"
       :is-full-screen="mq.phone"
-      :height="650"
+      :draggable="true"
       data-test="createMessageModal"
       class="create-message-modal"
       :class="{'phone': mq.phone}"
@@ -447,10 +447,6 @@ export default {
     &.phone {
       min-width: 0;
     }
-  }
-
-  .attached-files {
-    padding-top: 30px;
   }
 
   .footer {

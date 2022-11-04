@@ -1,30 +1,15 @@
 <template>
   <div class="file-icon">
-    <BaseIcon
-      v-if="isImage"
-      name="file-image"
-      class="fa-lg"
-    />
-    <BaseIcon
-      v-else-if="isVideo"
-      name="film"
-      class="fa-lg"
-    />
-    <BaseIcon
-      v-else-if="isSound"
-      name="music"
-      class="fa-lg"
-    />
     <img
-      v-else-if="isPdf"
+      v-if="fileIconIsImage"
       class="img-icon"
-      :src="$options.myIcons.extensions.pdf"
+      :src="fileIcon"
       alt="document icon"
     >
     <BaseIcon
       v-else
-      name="file"
-      class="fa-lg"
+      class="base-icon"
+      :name="['fas', fileIcon]"
     />
   </div>
 </template>
@@ -39,34 +24,25 @@ export default {
   },
   myIcons: icons,
   props: {
-    fileName: {
-      type: String,
-      default: ''
-    }
-  },
-  data () {
-    return {
-      imageExtensions: ['jpg', 'jpeg', 'png', 'gif', 'bmp'],
-      videoExtensions: ['mov', 'avi', 'mp4', 'ogv'],
-      soundExtensions: ['wav', 'mp3', 'm4a', 'ogg'],
-      pdfExtensions: ['pdf']
+    file: {
+      type: Object,
+      required: true
     }
   },
   computed: {
     extension () {
-      return this.fileName.split('.').pop()
+      return this.file.extension
     },
-    isImage () {
-      return this.imageExtensions.includes(this.extension)
+    fileIcon () {
+      if (icons.extensions[this.file.extension] === undefined) {
+        return icons.file
+      } else {
+        return icons.extensions[this.file.extension]
+      }
     },
-    isVideo () {
-      return this.videoExtensions.includes(this.extension)
-    },
-    isSound () {
-      return this.soundExtensions.includes(this.extension)
-    },
-    isPdf () {
-      return this.pdfExtensions.includes(this.extension)
+    fileIconIsImage () {
+      // TODO: find a better way to separate img and font-awesome icons
+      return this.fileIcon.includes('.') || this.fileIcon.includes(':') // if icon contains extension (like folder.svg) it's not a font-awesome
     }
   }
 }
