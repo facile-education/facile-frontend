@@ -49,6 +49,13 @@
     </div>
     <hr>
 
+    <!-- Body -->
+    <div class="message-content">
+      <!-- TODO: sanitize content -->
+      <!-- eslint-disable-next-line vue/no-v-html -->
+      <p v-html="message.fullContent" />
+    </div>
+
     <!-- Attached files-->
     <AttachedFiles
       v-if="message.hasAttachFiles"
@@ -56,13 +63,6 @@
       :read-only="true"
       class="files"
     />
-
-    <!-- Body -->
-    <div class="message-content">
-      <!-- TODO: sanitize content -->
-      <!-- eslint-disable-next-line vue/no-v-html -->
-      <p v-html="message.fullContent" />
-    </div>
   </div>
 </template>
 
@@ -119,6 +119,7 @@ export default {
   background-color: white;
   border: 1px solid $color-border;
   box-shadow: 0 2px 14px 0 rgba(0,0,0,0.1);
+  padding: 0 20px;
 
   p{
     margin: 3px 0;
@@ -137,9 +138,9 @@ export default {
 
     .sender-icon {
       position: relative;
-      min-width: 60px;
+      min-width: 50px;
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
 
       .is-read {
         position: absolute;
@@ -174,7 +175,6 @@ export default {
         margin-top: 3px;
         display: flex;
         justify-content: space-between;
-        padding-right: 10px;
 
         .sender {
           font-weight: bold;
@@ -195,14 +195,14 @@ export default {
   }
 
   hr {
-    width: 95%;
+    width: 100%;
     border: none;
     height: 1px;
     background-color: $color-border-menu;
   }
 
   .message-content {
-    padding: 10px 10px 10px 20px;
+    padding: 10px 10px 10px 10px;
     p {
       margin: 0;
       width: 100%;
@@ -217,9 +217,6 @@ export default {
     p ::v-deep figure {
       margin: 0;
     }
-  }
-  .files {
-    padding-left: 13px;
   }
 }
 </style>
