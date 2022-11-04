@@ -10,11 +10,32 @@
       <span>{{ $t('add') }}</span>
     </PentilaButton>
 
-    <PentilaInput
-      v-model="searchInput"
-      :placeholder="$t('SearchPlaceholder')"
-      :maxlength="75"
-    />
+    <div class="right-section">
+      <PentilaInput
+        v-model="filter.label"
+        :placeholder="$t('SearchPlaceholder')"
+        :maxlength="75"
+        @input="updateFilter"
+      />
+
+      <button
+        v-t="'community'"
+        :class="{'theme-background-color': filter.isCommunityActive}"
+        @click="toggleCommunityFilter"
+      />
+
+      <button
+        v-t="'institutional'"
+        :class="{'theme-background-color': filter.isInstitutionalActive}"
+        @click="toggleInstitutionalFilter"
+      />
+
+      <button
+        v-t="'pedagogical'"
+        :class="{'theme-background-color': filter.isPedagogicalActive}"
+        @click="togglePedagogicalFilter"
+      />
+    </div>
 
     <teleport to="body">
       <EditGroupModal
@@ -38,13 +59,37 @@ export default {
   components: { NeroIcon, NeroToolbar, EditGroupModal },
   data () {
     return {
+      timeout: 0,
       isEditGroupModalDisplayed: false,
-      searchInput: ''
+      filter: {
+        label: '',
+        isCommunityActive: false,
+        isInstitutionalActive: false,
+        isPedagogicalActive: false
+      }
     }
   },
   methods: {
     toggleEditGroupModal () {
       this.isEditGroupModalDisplayed = !this.isEditGroupModalDisplayed
+    },
+    updateFilter () {
+      clearTimeout(this.timeout)
+      this.timeout = setTimeout(() => {
+        this.$store.dispatch('groups/updateFilter', { ...this.filter })
+      }, 1000)
+    },
+    toggleCommunityFilter () {
+      this.filter.isCommunityActive = !this.filter.isCommunityActive
+      this.$store.dispatch('groups/updateFilter', { ...this.filter })
+    },
+    toggleInstitutionalFilter () {
+      this.filter.isInstitutionalActive = !this.filter.isInstitutionalActive
+      this.$store.dispatch('groups/updateFilter', { ...this.filter })
+    },
+    togglePedagogicalFilter () {
+      this.filter.isPedagogicalActive = !this.filter.isPedagogicalActive
+      this.$store.dispatch('groups/updateFilter', { ...this.filter })
     }
   }
 }
@@ -67,13 +112,18 @@ export default {
     }
   }
 
-  .filters {
-    margin-left: auto;
-  }
-
-  .filter {
-    margin: 0 5px;
-    min-width: 200px;
+  .right-section {
+    display: flex;
+    button {
+      margin-left: 25px;
+      height: 50px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    &:not(.theme-background-color) {
+      background-color: #cccccc;
+    }
   }
 }
 </style>
@@ -81,6 +131,9 @@ export default {
 <i18n locale="fr">
 {
   "add": "NOUVEAU",
-  "SearchPlaceholder": "Filtrer par nom"
+  "SearchPlaceholder": "Filtrer par nom",
+  "community": "Communautaire",
+  "institutional": "Institutionnel",
+  "pedagogical": "Pédagogique"
 }
 </i18n>
