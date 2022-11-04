@@ -42,7 +42,20 @@
       </div>
     </section>
 
-    <section class="body" />
+    <section class="body">
+      <PentilaTabList>
+        <PentilaTabItem
+          :title="$t('details')"
+        >
+          <GroupDetailsTab :group="selectedGroup" />
+        </PentilaTabItem>
+        <PentilaTabItem
+          :title="$t('activities')"
+        >
+          <GroupActivityTab :group="selectedGroup" />
+        </PentilaTabItem>
+      </PentilaTabList>
+    </section>
   </div>
 
   <teleport to="body">
@@ -57,9 +70,11 @@
 
 <script>
 import EditGroupModal from '@components/Groups/EditGroupModal'
+import GroupDetailsTab from '@components/Groups/GroupDetailsTab'
+import GroupActivityTab from '@components/Groups/GroupActivityTab'
 export default {
   name: 'GroupDetails',
-  components: { EditGroupModal },
+  components: { GroupActivityTab, GroupDetailsTab, EditGroupModal },
   data () {
     return {
       isEditGroupModalDisplayed: false
@@ -110,7 +125,7 @@ export default {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 
   .header {
-    height: 100px;
+    height: $groups-details-header-height;
     padding: 15px 15px;
     border-radius: 6px 6px 0 0;
     display: flex;
@@ -178,6 +193,11 @@ export default {
       }
     }
   }
+
+  .body {
+    height: calc(100% - #{$groups-details-header-height});
+    padding: 5px 10px;
+  }
 }
 
 </style>
@@ -188,6 +208,8 @@ export default {
   "edit": "Modifier",
   "institutionnal": "Institutionnel",
   "pedagogical": "Pédagogique",
-  "warning": "La suppression de ce groupe est définitive."
+  "warning": "La suppression de ce groupe est définitive.",
+  "details": "Détails",
+  "activities": "Activités"
 }
 </i18n>
