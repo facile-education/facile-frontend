@@ -423,6 +423,9 @@ hr {
       border: none;
       box-shadow: none;
     }
+    .phone-message {
+      padding: 0;
+    }
   }
 
   .message-list {

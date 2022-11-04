@@ -3,6 +3,7 @@
     v-if="message!==undefined"
     ref="message"
     class="message"
+    :class="{'phone-message': mq.phone || mq.tablet}"
     data-test="message"
   >
     <!-- Source folder -->
@@ -78,6 +79,7 @@ export default {
     MessageRecipients,
     AttachedFiles
   },
+  inject: ['mq'],
   props: {
     message: {
       type: Object,
