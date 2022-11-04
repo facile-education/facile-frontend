@@ -152,7 +152,6 @@ export default {
 .messaging-body {
   height: 100%;
   display: flex;
-  font-family: Roboto Sans;
 
   .menu-panel {
     width: 240px;
