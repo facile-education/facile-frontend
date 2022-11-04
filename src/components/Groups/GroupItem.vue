@@ -130,6 +130,7 @@ export default {
     padding: 10px 15px;
     border-radius: 6px 6px 0 0;
     display: flex;
+    height: 62px;
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
@@ -151,9 +152,12 @@ export default {
     font-weight: 600;
     font-size: 0.875rem;
     color: black;
+    overflow: auto;
+    max-height: calc(235px - 62px - 10px - 32px);
   }
 
   .buttons {
+    height: 32px;
     margin-top: auto;
     padding: 0 15px;
     display: flex;
