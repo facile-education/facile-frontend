@@ -60,7 +60,6 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  height: calc(100% - $groups-header-height);
   overflow: auto;
 }
 

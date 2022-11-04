@@ -44,11 +44,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/design';
+
 .layout {
   height: 100%;
 
   .body {
     display: flex;
+    height: calc(100% - $groups-header-height);
   }
 }
 </style>
