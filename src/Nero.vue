@@ -28,6 +28,7 @@ export default {
 html, body, #app {
   height: 100%;
 
+  font-family: Roboto Sans;
   @extend %typography-small;
 }
 
