@@ -60,7 +60,7 @@ import DocActivity from '@components/Dashboard/Activities/DocActivity'
 import MembershipActivity from '@components/Dashboard/Activities/MembershipActivity'
 import RenvoiActivity from '@components/Dashboard/Activities/RenvoiActivity'
 import BaseIcon from '@components/Base/BaseIcon'
-import { nbActivityPerPage, activityTypes } from '@/constants/dashboardConstants'
+import { nbActivityPerPage, activityTypes } from '@/constants/activityConstants'
 import PentilaUtils from 'pentila-utils'
 
 export default {

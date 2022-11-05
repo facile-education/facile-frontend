@@ -40,10 +40,13 @@ export default {
     }
   },
   created () {
-    this.$store.dispatch('groups/getGroupList', this.$store.state.groups.currentFilter)
+    this.getGroupList()
   },
 
   methods: {
+    getGroupList () {
+      this.$store.dispatch('groups/getGroupList', this.$store.state.groups.currentFilter)
+    },
     toggleEditModalDisplay (group) {
       this.selectedGroup = group
       this.isEditModalDisplayed = !this.isEditModalDisplayed

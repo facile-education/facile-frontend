@@ -57,7 +57,7 @@ export const actions = {
     removeCommunity(group.groupId).then((data) => {
       if (data.success) {
         // Refresh interface
-        commit('getGroupList', this.state.groups.currentFilter)
+        this.dispatch('groups/getGroupList', this.state.groups.currentFilter)
       } else {
         console.error('error in group deletion')
       }

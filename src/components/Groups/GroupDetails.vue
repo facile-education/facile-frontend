@@ -1,6 +1,9 @@
 <template>
   <div class="group-details">
-    <section class="header theme-background-color">
+    <section
+      class="header theme-background-color"
+      :style="`background-color:${selectedGroup.color};`"
+    >
       <div class="left-section">
         <h2>{{ selectedGroup.groupName }}</h2>
         <span v-if="groupCategory !== ''"> {{ groupCategory }}</span>
@@ -45,11 +48,13 @@
     <section class="body">
       <PentilaTabList>
         <PentilaTabItem
+          style="height: calc(100% - 32px)"
           :title="$t('details')"
         >
           <GroupDetailsTab :group="selectedGroup" />
         </PentilaTabItem>
         <PentilaTabItem
+          style="height: calc(100% - 32px)"
           :title="$t('activities')"
         >
           <GroupActivityTab :group="selectedGroup" />
@@ -98,11 +103,11 @@ export default {
     confirmGroupDeletion () {
       this.$store.dispatch('warningModal/addWarning', {
         text: this.$t('warning'),
-        lastAction: { fct: this.deleteGroup, params: [this.group] }
+        lastAction: { fct: this.deleteGroup }
       })
     },
     deleteGroup () {
-      this.$store.dispatch('groups/deleteGroup', this.group)
+      this.$store.dispatch('groups/deleteGroup', this.selectedGroup)
     },
     editGroup () {
       this.isEditGroupModalDisplayed = true
@@ -123,6 +128,7 @@ export default {
   border-radius: 6px;
   border-left: 1px solid $color-border;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  color: black;
 
   .header {
     height: $groups-details-header-height;
@@ -135,6 +141,7 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      color: white;
 
       h2 {
         margin: 0;
