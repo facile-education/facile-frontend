@@ -91,7 +91,7 @@ export default {
     confirmGroupDeletion () {
       this.$store.dispatch('warningModal/addWarning', {
         text: this.$t('warning'),
-        lastAction: { fct: this.deleteGroup, params: [this.group] }
+        lastAction: { fct: this.deleteGroup }
       })
     },
     deleteGroup () {
@@ -134,6 +134,7 @@ export default {
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
+    color: white;
 
     h3 {
       margin: 0;
@@ -176,6 +177,8 @@ export default {
 
       img {
         margin-left: 5px;
+        height: 30px;
+        width: 30px;
       }
     }
 
@@ -191,7 +194,7 @@ export default {
     }
 
     .separator {
-      height: 30px;
+      height: 25px;
       border-right: 1px solid $color-border;
     }
   }

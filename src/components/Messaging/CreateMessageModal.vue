@@ -190,6 +190,7 @@ export default {
       isSubjectValid
     }
   },
+  emits: ['close'],
   computed: {
     device () {
       if (this.mq.phone) {
@@ -381,6 +382,7 @@ export default {
       this.onClose()
     },
     onClose () {
+      this.$emit('close')
       this.recipients = []
       this.subject = ''
       this.initialContent = {}

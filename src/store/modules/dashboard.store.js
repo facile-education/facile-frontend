@@ -4,7 +4,7 @@ import {
 import {
   getSchoolNews, addNews, editNews, deleteNews
 } from '@/api/news.service'
-import { nbActivityPerPage } from '@/constants/dashboardConstants'
+import { nbActivityPerPage } from '@/constants/activityConstants'
 import dayjs from 'dayjs'
 
 export const state = {

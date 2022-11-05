@@ -33,7 +33,7 @@
       <div class="group-is-educationnal">
         <div v-t="'isPedagogical'" />
         <PentilaToggleSwitch
-          v-model="test"
+          v-model="group.isPedagogical"
           :title="$t('isPedagogical')"
         />
         <span>Non</span>
@@ -41,46 +41,41 @@
 
       <PentilaInput
         v-model="searchInput"
-        :placeholder="$t('Rechercher par nom')"
+        :placeholder="$t('searchPlaceholder')"
         :maxlength="75"
+        @input="searchTimeOut"
       />
 
-      <!--      <div class="group-is-educationnal">-->
-      <!--        <div v-t="'isPedagogical'" />-->
-      <!--        <PentilaCheckbox-->
-      <!--          v-model="test"-->
-      <!--          class="checkbox"-->
-      <!--        />-->
-      <!--        <span>Oui</span>-->
-      <!--      </div>-->
-
       <div class="members">
-        <div class="list-members">
+        <div class="user-list">
           <div class="header">
             <PentilaCheckbox v-model="test" />
-            <div v-t="'Identité'" />
-            <div v-t="'Profil'" />
-            <div v-t="'Établissement'" />
+            <div v-t="'identity'" />
+            <div v-t="'profile'" />
+            <div v-t="'school'" />
           </div>
 
-          <GroupMemberItem
-            v-for="(member, index) in members"
+          <PentilaSpinner v-if="isLoadingCompletion" />
+          <GroupUserItem
+            v-for="(user, index) in completionUsers"
             :key="index"
-            :member="member"
-            :is-selected="isSelected(member)"
-            @toggleMemberSelection="toggleSelectedMember(member)"
+            :user="user"
+            :is-selected="isGroupMember(user)"
+            @toggleUserSelection="toggleGroupMember(user)"
           />
         </div>
 
-        <div class="selected-members">
+        <div class="group-members">
           <div class="header">
-            <div v-t="'Administrateur'" />
+            <div v-t="'admin'" />
           </div>
 
           <SelectedGroupMemberItem
-            v-for="(member, index) in selectedMembers"
+            v-for="(member, index) in groupMembers"
             :key="index"
             :member="member"
+            @toggleAdmin="toggleAdmin(member)"
+            @remove="toggleGroupMember(member)"
           />
         </div>
       </div>
@@ -102,14 +97,15 @@
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import { nextTick } from 'vue'
-import { getCommunityMembers } from '@/api/groups.service'
-import GroupMemberItem from '@components/Groups/GroupMemberItem'
+import { getCommunityMembers, editCommunity, createCommunity } from '@/api/groups.service'
+import GroupUserItem from '@components/Groups/GroupUserItem'
 import SelectedGroupMemberItem from '@components/Groups/SelectedGroupMemberItem'
+import messageService from '@/api/messaging/message.service'
 // import ColorPicker from '@/components/Nero/ColorPicker'
 
 export default {
   name: 'EditGroupModal',
-  components: { SelectedGroupMemberItem, GroupMemberItem },
+  components: { SelectedGroupMemberItem, GroupUserItem },
   // components: { ColorPicker },
   inject: ['mq'],
   props: {
@@ -127,7 +123,9 @@ export default {
   },
   data () {
     return {
+      timeout: 0,
       test: false,
+      isLoadingCompletion: false,
       group: {
         groupName: '',
         color: '',
@@ -137,8 +135,8 @@ export default {
         description: '',
         isPedagogical: false
       },
-      members: [],
-      selectedMembers: [],
+      completionUsers: [],
+      groupMembers: [],
       searchInput: ''
     }
   },
@@ -162,7 +160,9 @@ export default {
   },
   created () {
     this.$store.dispatch('misc/incrementModalCount')
-    this.getUsers()
+    if (this.editedGroup && this.editedGroup.groupId > 0) {
+      this.getMembers()
+    }
 
     if (this.editedGroup !== undefined) {
       this.group = { ...this.editedGroup }
@@ -170,16 +170,47 @@ export default {
     nextTick(() => this.$refs.name.$el.childNodes[0].focus())
   },
   methods: {
-    toggleSelectedMember (member) {
-      this.selectedMembers.push(member)
+    searchTimeOut () {
+      clearTimeout(this.timeout)
+      this.timeout = setTimeout(() => {
+        if (this.searchInput.length >= 2) {
+          this.getCompletion(this.searchInput)
+        }
+      }, 1000)
     },
-    isSelected (member) {
-      this.selectedMembers.forEach((selectedMember) => {
-        if (member.userId === selectedMember.userId) {
+    getCompletion (query) {
+      this.isLoadingCompletion = true
+      messageService.getUsersCompletion(query).then((data) => {
+        this.isLoadingCompletion = false
+        if (data.success) {
+          this.completionUsers = data.results
+        } else {
+          console.error('Error while getting users', data.error)
+        }
+      })
+    },
+    toggleGroupMember (member) {
+      let find = false
+      for (let i = 0; i < this.groupMembers.length; ++i) {
+        if (member.userId === this.groupMembers[i].userId) {
+          find = true
+          this.groupMembers.splice(i, 1)
+        }
+      }
+      if (!find) {
+        this.groupMembers.push({ ...member, isNew: true })
+      }
+    },
+    isGroupMember (member) {
+      this.groupMembers.forEach((groupMember) => {
+        if (member.userId === groupMember.userId) {
           return true
         }
       })
       return false
+    },
+    toggleAdmin (member) {
+      member.isAdmin = !member.isAdmin
     },
     onConfirm (e) {
       e.preventDefault()
@@ -189,23 +220,31 @@ export default {
         this.submitChanges()
       }
     },
-    getUsers () {
-      console.log(this.editedGroup)
-      if (this.editedGroup.groupId > 0) {
-        getCommunityMembers(this.editedGroup.groupId).then((data) => {
-          if (data.success) {
-            this.members = data.members
-          }
-        })
-      }
+    getMembers () {
+      getCommunityMembers(this.editedGroup.groupId).then((data) => {
+        if (data.success) {
+          this.groupMembers = data.members
+        }
+      })
     },
     submitChanges () {
-      if (this.editedGroup.groupId > 0) {
+      if (this.editedGroup && this.editedGroup.groupId > 0) {
         // Update
-        this.$store.dispatch('groups/updateGroup', this.group)
+        editCommunity(this.group.groupId, this.group.groupName, this.group.description, this.group.isPedagogical, this.groupMembers).then((data) => {
+          if (data.success) {
+            this.$store.dispatch('groups/getGroupList', this.$store.state.groups.currentFilter)
+            this.closeModal()
+          }
+        })
       } else {
         // Creation
         this.$store.dispatch('groups/createGroup', this.group)
+        createCommunity(this.group.groupName, this.group.description, this.group.isPedagogical, this.groupMembers).then((data) => {
+          if (data.success) {
+            this.$store.dispatch('groups/getGroupList', this.$store.state.groups.currentFilter)
+            this.closeModal()
+          }
+        })
       }
       this.closeModal()
     },
@@ -245,7 +284,8 @@ export default {
   display: flex;
   width: 100%;
 
-  .list-members {
+  .user-list {
+    position: relative;
     flex: 1;
     margin-top: 20px;
     max-height: 350px;
@@ -264,7 +304,7 @@ export default {
     }
   }
 
-  .selected-members {
+  .group-members {
     flex: 1;
     //margin-top: 20px;
     max-height: 450px;
@@ -294,6 +334,11 @@ export default {
   "group": "Groupe",
   "isPedagogical": "Espace à vocation pédagogique",
   "name": "Nom du groupe",
-  "true": "Oui"
+  "true": "Oui",
+  "identity": "Identité",
+  "profile": "Profil",
+  "school": "Établissement",
+  "searchPlaceholder": "Rechercher par nom",
+  "admin": "Administrateur"
 }
 </i18n>

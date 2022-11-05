@@ -8,7 +8,10 @@ export {
   getCommunityMembers,
   createCommunity,
   editCommunity,
-  removeCommunity
+  removeCommunity,
+  getGroupActivity,
+  addCommunityAdmin,
+  removeCommunityAdmin
 }
 
 export default {
@@ -56,26 +59,52 @@ function getCommunityMembers (groupId) {
   }).then(response => response.data)
 }
 
-function createCommunity (groupName, description, isPedagogical, expirationDate, members) {
+function addCommunityAdmin (groupId, userId) {
+  return axios.get(constants.JSON_WS_URL + GROUP_PATH + COMMUNITY_CTX + 'add-community-admin', {
+    params: {
+      groupId: groupId,
+      adminId: userId
+    }
+  }).then(response => response.data)
+}
+
+function removeCommunityAdmin (groupId, userId) {
+  return axios.get(constants.JSON_WS_URL + GROUP_PATH + COMMUNITY_CTX + 'remove-community-admin', {
+    params: {
+      groupId: groupId,
+      adminId: userId
+    }
+  }).then(response => response.data)
+}
+
+function getGroupActivity (groupId, maxDate, nbResults) {
+  return axios.get(constants.JSON_WS_URL + GROUP_PATH + GROUP_CTX + 'get-group-activity', {
+    params: {
+      groupId: groupId,
+      maxDate: maxDate,
+      nbResults: nbResults
+    }
+  }).then(response => response.data)
+}
+
+function createCommunity (groupName, description, isPedagogical, members) {
   return axios.post(constants.JSON_WS_URL + GROUP_PATH + COMMUNITY_CTX + 'create-community',
     PentilaUtils.URL.params({
       groupName: groupName,
       description: description,
       isPedagogical: isPedagogical,
-      expirationDate: expirationDate,
       members: JSON.stringify(members)
     })
   ).then(response => response.data)
 }
 
-function editCommunity (groupId, groupName, description, isPedagogical, expirationDate) {
+function editCommunity (groupId, groupName, description, isPedagogical) {
   return axios.post(constants.JSON_WS_URL + GROUP_PATH + COMMUNITY_CTX + 'edit-community',
     PentilaUtils.URL.params({
       groupId: groupId,
       groupName: groupName,
       description: description,
-      isPedagogical: isPedagogical,
-      expirationDate: expirationDate
+      isPedagogical: isPedagogical
     })
   ).then(response => response.data)
 }

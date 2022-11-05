@@ -3,18 +3,19 @@
     class="selected-group-member-item"
   >
     <div class="name">
-      <div> {{ member.userName }}</div>
+      <div> {{ member.userName ? member.userName : member.nom }}</div>
       <img
         class="close-button"
         src="@assets/big-cross-black.svg"
         :alt="$t('close')"
         :title="$t('close')"
-        @click="removeUser()"
+        @click="removeUser"
       >
     </div>
     <PentilaCheckbox
-      v-model="test"
+      :value="member.isAdmin"
       class="checkbox"
+      @input="toggleAdminStatus"
     />
   </div>
 </template>
@@ -28,15 +29,19 @@ export default {
       required: true
     }
   },
-  emits: ['toggleMemberSelection'],
+  emits: ['toogleAdmin', 'remove'],
   data () {
     return {
-      test: false
     }
   },
   methods: {
+    toggleAdminStatus () {
+      // todo
+      this.$emit('toogleAdmin')
+    },
     removeUser () {
       // todo
+      this.$emit('remove')
     }
   }
 }

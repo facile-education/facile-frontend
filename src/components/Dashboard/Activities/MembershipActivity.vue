@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { activityTypes } from '@/constants/dashboardConstants'
+import { activityTypes } from '@/constants/activityConstants'
 
 export default {
   name: 'MembershipActivity',

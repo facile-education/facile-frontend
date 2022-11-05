@@ -1,5 +1,5 @@
 
-const nbActivityPerPage = 10
+const nbActivityPerPage = 20
 
 const activityTypes = {
   // File activity
