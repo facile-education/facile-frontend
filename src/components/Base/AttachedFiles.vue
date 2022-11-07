@@ -12,7 +12,7 @@
         :key="attachedFile.fileId"
         :title="attachedFile.name"
         class="attached-file"
-        @click="downloadAttachedFile(attachedFile)"
+        @click="viewAttachedFile(attachedFile)"
       >
         <FileIcon
           class="file-icon"
@@ -26,26 +26,58 @@
           class="file-actions"
         >
           <img
-            class="file-action"
+            class="file-action cross"
             src="@assets/big-cross-black.svg"
             :alt="$t('AttachedFiles.remove')"
             :title="$t('AttachedFiles.remove')"
-            @click="removeAttachedFile(attachedFile)"
+            @click.stop="removeAttachedFile(attachedFile)"
+          >
+        </div>
+        <div
+          v-else
+          class="file-actions"
+        >
+          <img
+            class="file-action add-to-folder"
+            src="@assets/add_to_folder.svg"
+            :alt="$t('addToFolder')"
+            :title="$t('addToFolder')"
+            @click.stop="addToMyDocs(attachedFile)"
+          >
+          <img
+            class="file-action"
+            src="@assets/attached_file_download.svg"
+            :alt="$t('download')"
+            :title="$t('download')"
+            @click.stop="downloadAttachedFile(attachedFile)"
           >
         </div>
       </div>
     </div>
   </div>
+
+  <teleport to="body">
+    <FilePickerModal
+      v-if="isFilePickerModalDisplayed"
+      :folder-selection="true"
+      :init-in-current-folder="false"
+      @chosenFolder="doSelectFolderAction"
+      @close="isFilePickerModalDisplayed = false"
+    />
+  </teleport>
 </template>
 
 <script>
 import FileIcon from '@components/Base/FileIcon'
 import mediaService from '@/api/documents/media.service'
 import { downloadDocument } from '@utils/documents.util'
+import { defineAsyncComponent } from 'vue'
+const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal'))
 
 export default {
   name: 'AttachedFiles',
   components: {
+    FilePickerModal,
     FileIcon
   },
   props: {
@@ -62,6 +94,8 @@ export default {
   emits: ['removeAttachedFile'],
   data () {
     return {
+      isFilePickerModalDisplayed: false,
+      selectedFileForAction: undefined
     }
   },
   computed: {
@@ -92,6 +126,7 @@ export default {
       }
     },
     viewAttachedFile (attachedFile) {
+      console.log('TODO: open visionneuse')
       mediaService.getMediaUrl(attachedFile.id, 0).then(async (data) => {
         if (data.success) {
           // const typeOfView = data.typeOfView
@@ -99,6 +134,13 @@ export default {
           // TODO open viewer
         }
       })
+    },
+    addToMyDocs (attachedFile) {
+      this.selectedFileForAction = attachedFile
+      this.isFilePickerModalDisplayed = true
+    },
+    doSelectFolderAction (targetFolder) {
+      this.$store.dispatch('clipboard/duplicate', { targetFolder, entities: [this.selectedFileForAction] })
     }
   }
 }
@@ -131,18 +173,17 @@ export default {
       height: 50px;
       border-radius: 8px 8px 8px 8px;
       margin: 10px 10px 10px 0;
-      padding-right: 10px;
       display: flex;
       align-items: center;
-      cursor: pointer;
-      border: 1px solid transparent;
+      border: 1px solid $color-border;
 
       &:hover {
-        border: 1px solid $color-border;
+        border: 1px solid black;
       }
 
       p {
         margin-left: 10px;
+        margin-right: 10px;
         max-width: 300px;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -150,11 +191,19 @@ export default {
       }
 
       .file-actions {
-        margin-left: 10px;
-
         img {
+          cursor: pointer;
+          margin-right: 10px;
+          height: 16px;
+          width: 16px;
+        }
+        .cross {
           height: 13px;
           width: 13px;
+        }
+        .add-to-folder {
+          height: 19px;
+          width: 19px;
         }
       }
     }
@@ -165,6 +214,8 @@ export default {
 <i18n locale="fr">
 {
   "attachedFile": " pièce jointe",
-  "attachedFiles": " pièces jointes"
+  "attachedFiles": " pièces jointes",
+  "addToFolder": "Enregistrer dans mes documents",
+  "download": "Télécharger"
 }
 </i18n>

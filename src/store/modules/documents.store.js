@@ -188,12 +188,14 @@ export const actions = {
     commit('setDocumentPanelDisplayed', true)
   },
   refreshCurrentFolder ({ state }) {
-    if (getters.currentFolder(state).isGroupDirectory) {
-      this.dispatch('documents/updateGroupBreadcrumb', state.currentFolderId)
-      this.dispatch('documents/getGroupEntities', state.currentFolderId)
-    } else {
-      this.dispatch('documents/updateBreadcrumb', state.currentFolderId)
-      this.dispatch('documents/getEntities', state.currentFolderId)
+    if (state.currentFolderId && getters.currentFolder(state)) {
+      if (getters.currentFolder(state).isGroupDirectory) {
+        this.dispatch('documents/updateGroupBreadcrumb', state.currentFolderId)
+        this.dispatch('documents/getGroupEntities', state.currentFolderId)
+      } else {
+        this.dispatch('documents/updateBreadcrumb', state.currentFolderId)
+        this.dispatch('documents/getEntities', state.currentFolderId)
+      }
     }
   },
   renameEntity ({ commit, getters }, { entity, name }) {
