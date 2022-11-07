@@ -2,11 +2,13 @@
   <div
     class="group-user-item"
     :class="{'selected' : isSelected}"
-    @click="toggleUserSelection"
+    @click.stop="toggleUserSelection"
   >
     <PentilaCheckbox
-      v-model="test"
+      :model-value="isSelected"
+      label=""
       class="checkbox"
+      @click.stop
       @update:modelValue="toggleUserSelection"
     />
     <div> {{ user.nom }}</div>
@@ -29,11 +31,6 @@ export default {
     }
   },
   emits: ['toggleUserSelection'],
-  data () {
-    return {
-      test: false
-    }
-  },
   isSelected: {
     handler () {
       this.test = this.isSelected
@@ -67,9 +64,11 @@ export default {
   align-items: center;
   border-top: 1px solid #d4d4d4;
   height: 50px;
+  min-height: 50px;
+  cursor: pointer;
 
   &.selected {
-    background-color: #0B5FFF;
+    background-color: $color-selected-sub-message;
   }
 
   .checkbox {

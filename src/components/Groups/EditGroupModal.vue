@@ -26,30 +26,39 @@
         v-model="group.description"
         :placeholder="$t('description')"
         maxlength="75"
-        style="height: 120px;"
         class="description"
       />
 
-      <div class="group-is-educationnal">
-        <div v-t="'isPedagogical'" />
-        <PentilaToggleSwitch
-          v-model="group.isPedagogical"
-          :title="$t('isPedagogical')"
+      <div class="group-is-educational">
+        <div
+          v-t="'isPedagogical'"
+          class="is-educational-label"
         />
-        <span>Non</span>
+        <div class="toggle-section">
+          <PentilaToggleSwitch
+            v-model="group.isPedagogical"
+            :title="$t('isPedagogical')"
+          />
+          <span>{{ $t(group.isPedagogical.toString()) }}</span>
+        </div>
       </div>
-
-      <PentilaInput
-        v-model="searchInput"
-        :placeholder="$t('searchPlaceholder')"
-        :maxlength="75"
-        @input="searchTimeOut"
-      />
 
       <div class="members">
         <div class="user-list">
+          <div class="search">
+            <PentilaInput
+              v-model="searchInput"
+              :placeholder="$t('searchPlaceholder')"
+              :maxlength="75"
+              @input="searchTimeOut"
+            />
+          </div>
+
           <div class="header">
-            <PentilaCheckbox v-model="test" />
+            <!--            <PentilaCheckbox-->
+            <!--              v-model="test"-->
+            <!--              label=""-->
+            <!--            />-->
             <div v-t="'identity'" />
             <div v-t="'profile'" />
             <div v-t="'school'" />
@@ -61,12 +70,15 @@
             :key="index"
             :user="user"
             :is-selected="isGroupMember(user)"
-            @toggleUserSelection="toggleGroupMember(user)"
+            @toggleUserSelection="editedGroup ? backToggleGroupMember(user) : toggleGroupMember(user)"
           />
         </div>
 
         <div class="group-members">
-          <div class="header">
+          <div
+            v-if="groupMembers.length > 0"
+            class="header"
+          >
             <div v-t="'admin'" />
           </div>
 
@@ -74,8 +86,10 @@
             v-for="(member, index) in groupMembers"
             :key="index"
             :member="member"
+            :is-current-member="member.userId === currentUser.userId"
+            :is-current-group-admin="isCurrentGroupAdmin"
             @toggleAdmin="toggleAdmin(member)"
-            @remove="toggleGroupMember(member)"
+            @remove="deleteGroupMember(member)"
           />
         </div>
       </div>
@@ -97,7 +111,15 @@
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import { nextTick } from 'vue'
-import { getCommunityMembers, editCommunity, createCommunity } from '@/api/groups.service'
+import {
+  getCommunityMembers,
+  editCommunity,
+  createCommunity,
+  addCommunityAdmin,
+  removeCommunityAdmin,
+  addCommunityMembers,
+  removeCommunityMember
+} from '@/api/groups.service'
 import GroupUserItem from '@components/Groups/GroupUserItem'
 import SelectedGroupMemberItem from '@components/Groups/SelectedGroupMemberItem'
 import messageService from '@/api/messaging/message.service'
@@ -124,7 +146,6 @@ export default {
   data () {
     return {
       timeout: 0,
-      test: false,
       isLoadingCompletion: false,
       group: {
         groupName: '',
@@ -156,6 +177,20 @@ export default {
     },
     buttonLabel () {
       return this.editedGroup ? this.$t('edit') : this.$t('create')
+    },
+    currentUser () {
+      return this.$store.state.user
+    },
+    isCurrentGroupAdmin () {
+      if (!this.editedGroup) { return true } else { // considered as admin if groupCreation
+        let returnedValue = false
+        this.groupMembers.forEach((groupMember) => {
+          if ((this.currentUser.userId === groupMember.userId) && groupMember.isAdmin) {
+            returnedValue = true
+          }
+        })
+        return returnedValue
+      }
     }
   },
   created () {
@@ -198,19 +233,80 @@ export default {
         }
       }
       if (!find) {
-        this.groupMembers.push({ ...member, isNew: true })
+        this.groupMembers.push({ ...member, isAdmin: false })
+      }
+    },
+    backToggleGroupMember (member) {
+      console.log(this.isCurrentGroupAdmin)
+      if (this.isCurrentGroupAdmin) {
+        if (this.isGroupMember(member)) {
+          removeCommunityMember(this.editedGroup.groupId, member.userId).then((data) => {
+            if (data.success) {
+              this.$store.dispatch('popups/pushPopup', { message: 'succes', type: 'success' })
+              this.toggleGroupMember(member)
+            } else {
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+            }
+          })
+        } else {
+          addCommunityMembers(this.editedGroup.groupId, [member]).then((data) => {
+            if (data.success) {
+              this.$store.dispatch('popups/pushPopup', { message: 'succes', type: 'success' })
+              this.toggleGroupMember(member)
+            } else {
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+            }
+          })
+        }
       }
     },
     isGroupMember (member) {
+      let returnedValue = false
       this.groupMembers.forEach((groupMember) => {
         if (member.userId === groupMember.userId) {
-          return true
+          returnedValue = true
         }
       })
-      return false
+      return returnedValue
     },
     toggleAdmin (member) {
-      member.isAdmin = !member.isAdmin
+      if (this.editedGroup) {
+        if (member.isAdmin) {
+          removeCommunityAdmin(this.editedGroup.groupId, member.userId).then((data) => {
+            if (data.success) {
+              this.$store.dispatch('popups/pushPopup', { message: 'Succès', type: 'success' })
+              member.isAdmin = false
+            } else {
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+            }
+          })
+        } else {
+          addCommunityAdmin(this.editedGroup.groupId, member.userId).then((data) => {
+            if (data.success) {
+              this.$store.dispatch('popups/pushPopup', { message: 'Succès', type: 'success' })
+              member.isAdmin = true
+            } else {
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+            }
+          })
+        }
+      } else {
+        member.isAdmin = !member.isAdmin
+      }
+    },
+    deleteGroupMember (member) {
+      if (this.editedGroup) {
+        removeCommunityMember(this.editedGroup.groupId, member.userId).then((data) => {
+          if (data.success) {
+            this.$store.dispatch('popups/pushPopup', { message: 'Succès', type: 'success' })
+            this.toggleGroupMember(member)
+          } else {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+          }
+        })
+      } else {
+        this.toggleGroupMember(member)
+      }
     },
     onConfirm (e) {
       e.preventDefault()
@@ -280,23 +376,48 @@ export default {
   margin-top: 20px;
 }
 
+.group-is-educational {
+  margin-top: 20px;
+
+  .is-educational-label {
+    margin-bottom: 5px;
+  }
+  .toggle-section {
+    display: flex;
+    align-items: center;
+
+    span {
+      margin-left: 10px;
+    }
+  }
+}
+
 .members {
   display: flex;
   width: 100%;
+  margin-top: 15px;
 
   .user-list {
     position: relative;
     flex: 1;
-    margin-top: 20px;
+    padding: 0 10px;
     max-height: 350px;
     overflow: auto;
     border-right: 1px solid #d4d4d4;
+    display: flex;
+    flex-direction: column;
+
+    .search {
+    }
 
     .header {
+      margin-top: 10px;
+      margin-left: 26px;
       display: flex;
       color: blue;
       font-weight: 600;
-      height: 50px;
+      height: 30px;
+      min-height: 30px;
 
       div {
         width: 100px;
@@ -306,16 +427,16 @@ export default {
 
   .group-members {
     flex: 1;
-    //margin-top: 20px;
-    max-height: 450px;
+    max-height: 350px;
     overflow: auto;
 
     .header {
       display: flex;
       justify-content: flex-end;
+      align-items: center;
       color: blue;
       font-size: 12px;
-      height: 50px;
+      height: 30px;
     }
   }
 }

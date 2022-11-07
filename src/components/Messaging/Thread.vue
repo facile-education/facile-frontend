@@ -339,10 +339,10 @@ export default {
   transition-duration: .3s;
 
   &.selected:not(.subMessageSelected) {
-    background-color: #AAB4BD
+    background-color: $color-selected-thread;
   }
   &.subMessageSelected {
-    background-color: #F3F6F8;
+    background-color: $color-selected-sub-message;
   }
 
   .selected-icon {
