@@ -12,11 +12,14 @@
         @click="removeUser"
       >
     </div>
-    <PentilaCheckbox
-      :value="member.isAdmin"
-      class="checkbox"
-      @input="toggleAdminStatus"
-    />
+    <div class="is-admin">
+      <PentilaToggleSwitch
+        v-model="adminValue"
+        :title="$t('isPedagogical')"
+        @update:modelValue="toggleAdminStatus"
+      />
+      <span>{{ $t(adminValue.toString()) }}</span>
+    </div>
   </div>
 </template>
 
@@ -29,15 +32,15 @@ export default {
       required: true
     }
   },
-  emits: ['toogleAdmin', 'remove'],
+  emits: ['toggleAdmin', 'remove'],
   data () {
     return {
+      adminValue: this.member.isAdmin
     }
   },
   methods: {
     toggleAdminStatus () {
-      // todo
-      this.$emit('toogleAdmin')
+      this.$emit('toggleAdmin')
     },
     removeUser () {
       // todo
@@ -55,10 +58,6 @@ export default {
   justify-content: space-between;
   height: 50px;
   padding-left: 10px;
-
-  .checkbox {
-    margin-top: -20px;
-  }
 
   .name {
     display: flex;
@@ -81,5 +80,21 @@ export default {
     }
   }
 
+  .is-admin {
+    display: flex;
+    align-items: center;
+
+    span {
+      width: 30px;
+      margin-left: 10px;
+    }
+  }
+
 }
 </style>
+<i18n locale="fr">
+{
+  "false": "Non",
+  "true": "Oui"
+}
+</i18n>
