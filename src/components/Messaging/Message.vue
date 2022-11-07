@@ -132,6 +132,7 @@ export default {
     border-bottom: 1px solid $color-border-menu;
     font-style: italic;
     text-align: center;
+    font-size: 0.915rem;
   }
 
   .message-header {
@@ -146,10 +147,10 @@ export default {
 
       .is-read {
         position: absolute;
-        top: 0;
-        left: 5px;
-        width: 10px;
-        height: 10px;
+        top: 2px;
+        left: -5px;
+        width: 12px;
+        height: 12px;
         border-radius: 5px;
         background-color: $color-messaging-bg;
       }
