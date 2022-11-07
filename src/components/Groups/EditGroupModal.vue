@@ -55,10 +55,15 @@
           </div>
 
           <div class="header">
-            <!--            <PentilaCheckbox-->
-            <!--              v-model="test"-->
-            <!--              label=""-->
-            <!--            />-->
+            <div class="checkbox-container">
+              <PentilaCheckbox
+                v-if="!editedGroup"
+                :model-value="isAllSelected"
+                label=""
+                class="checkbox"
+                @update:modelValue="toggleAll"
+              />
+            </div>
             <div v-t="'identity'" />
             <div v-t="'profile'" />
             <div v-t="'school'" />
@@ -191,6 +196,15 @@ export default {
         })
         return returnedValue
       }
+    },
+    isAllSelected () {
+      let returnedValue = this.completionUsers.length > 0
+      this.completionUsers.forEach((user) => {
+        if (!this.isGroupMember(user)) {
+          returnedValue = false
+        }
+      })
+      return returnedValue
     }
   },
   created () {
@@ -223,6 +237,21 @@ export default {
           console.error('Error while getting users', data.error)
         }
       })
+    },
+    toggleAll () {
+      if (!this.isAllSelected) {
+        this.completionUsers.forEach((user) => {
+          if (!this.isGroupMember(user)) {
+            this.toggleGroupMember(user)
+          }
+        })
+      } else {
+        this.completionUsers.forEach((user) => {
+          if (this.isGroupMember(user)) {
+            this.toggleGroupMember(user)
+          }
+        })
+      }
     },
     toggleGroupMember (member) {
       let find = false
@@ -412,12 +441,15 @@ export default {
 
     .header {
       margin-top: 10px;
-      margin-left: 26px;
       display: flex;
       color: blue;
       font-weight: 600;
       height: 30px;
       min-height: 30px;
+
+      .checkbox-container{
+        width: 26px;
+      }
 
       div {
         width: 100px;
