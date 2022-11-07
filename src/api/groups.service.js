@@ -10,6 +10,8 @@ export {
   editCommunity,
   removeCommunity,
   getGroupActivity,
+  addCommunityMembers,
+  removeCommunityMember,
   addCommunityAdmin,
   removeCommunityAdmin
 }
@@ -75,6 +77,24 @@ function removeCommunityAdmin (groupId, userId) {
       adminId: userId
     }
   }).then(response => response.data)
+}
+
+function removeCommunityMember (groupId, memberId) {
+  return axios.get(constants.JSON_WS_URL + GROUP_PATH + COMMUNITY_CTX + 'remove-community-members', {
+    params: {
+      groupId: groupId,
+      memberId: memberId
+    }
+  }).then(response => response.data)
+}
+
+function addCommunityMembers (groupId, members) {
+  return axios.post(constants.JSON_WS_URL + GROUP_PATH + COMMUNITY_CTX + 'add-community-members',
+    PentilaUtils.URL.params({
+      groupId: groupId,
+      members: JSON.stringify(members)
+    })
+  ).then(response => response.data)
 }
 
 function getGroupActivity (groupId, maxDate, nbResults) {

@@ -5,17 +5,19 @@
     <div class="name">
       <div> {{ member.userName ? member.userName : member.nom }}</div>
       <img
+        v-if="!isCurrentMember && isCurrentGroupAdmin"
         class="close-button"
         src="@assets/big-cross-black.svg"
-        :alt="$t('close')"
-        :title="$t('close')"
+        :alt="$t('delete')"
+        :title="$t('delete')"
         @click="removeUser"
       >
     </div>
     <div class="is-admin">
       <PentilaToggleSwitch
         v-model="adminValue"
-        :title="$t('isPedagogical')"
+        :title="$t('admin')"
+        :disabled="isCurrentMember || !isCurrentGroupAdmin"
         @update:modelValue="toggleAdminStatus"
       />
       <span>{{ $t(adminValue.toString()) }}</span>
@@ -30,12 +32,28 @@ export default {
     member: {
       type: Object,
       required: true
+    },
+    isCurrentMember: {
+      type: Boolean,
+      required: true
+    },
+    isCurrentGroupAdmin: {
+      type: Boolean,
+      required: true
     }
   },
   emits: ['toggleAdmin', 'remove'],
   data () {
     return {
       adminValue: this.member.isAdmin
+    }
+  },
+  watch: {
+    member: {
+      deep: true,
+      handler (value) {
+        this.adminValue = value.isAdmin
+      }
     }
   },
   methods: {
@@ -75,8 +93,9 @@ export default {
     }
 
     img {
-      height: 16px;
-      width: 16px;
+      height: 14px;
+      width: 14px;
+      cursor: pointer;
     }
   }
 
@@ -95,6 +114,8 @@ export default {
 <i18n locale="fr">
 {
   "false": "Non",
-  "true": "Oui"
+  "true": "Oui",
+  "admin": "Administrateur",
+  "delete": "Supprimer l'utilisateur"
 }
 </i18n>
