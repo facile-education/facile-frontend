@@ -127,12 +127,12 @@ export default {
   }
 
   .header {
-    padding: 10px 15px;
+    padding: 0 15px;
     border-radius: 6px 6px 0 0;
     display: flex;
     height: 62px;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: flex-start;
     color: white;
 
@@ -140,6 +140,7 @@ export default {
       margin: 0;
     }
     span {
+      margin-top: 5px;
       border-radius: 6px;
       border: 1px solid white;
       padding: 0 5px;
