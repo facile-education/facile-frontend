@@ -188,13 +188,7 @@ export default {
     },
     isCurrentGroupAdmin () {
       if (!this.editedGroup) { return true } else { // considered as admin if groupCreation
-        let returnedValue = false
-        this.groupMembers.forEach((groupMember) => {
-          if ((this.currentUser.userId === groupMember.userId) && groupMember.isAdmin) {
-            returnedValue = true
-          }
-        })
-        return returnedValue
+        return this.editedGroup.isAdmin
       }
     },
     isAllSelected () {

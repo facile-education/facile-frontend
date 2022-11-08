@@ -27,8 +27,12 @@
           alt=""
         >
       </div>
-      <div class="separator" />
+      <div
+        v-if="group.isAdmin"
+        class="separator"
+      />
       <img
+        v-if="group.isAdmin"
         class="button"
         src="@assets/edit.svg"
         data-test="edit-group-icon"
@@ -36,8 +40,12 @@
         :title="$t('edit')"
         @click.stop="editGroup()"
       >
-      <div class="separator" />
+      <div
+        v-if="group.isAdmin"
+        class="separator"
+      />
       <img
+        v-if="group.isAdmin"
         class="button"
         src="@assets/trash.svg"
         data-test="delete-group-icon"
@@ -52,7 +60,10 @@
       class="expired"
     >
       <p v-t="'desactivedSpace'" />
-      <button @click.stop="extendGroup">
+      <button
+        v-if="group.isAdmin"
+        @click.stop="extendGroup"
+      >
         {{ $t('reactivate') + group.groupName }}
       </button>
     </div>
