@@ -31,7 +31,10 @@
       </button>
     </div>
 
-    <div class="member-list">
+    <div
+      class="member-list"
+      :class="{'phone': mq.phone}"
+    >
       <PentilaSpinner v-if="memberLoading" />
       <div v-else>
         <div class="member-list-header">
@@ -70,6 +73,7 @@ import MemberPack from '@components/Groups/MemberPack'
 export default {
   name: 'GroupDetailsTab',
   components: { MemberPack },
+  inject: ['mq'],
   props: {
     group: {
       type: Object,
@@ -179,6 +183,15 @@ export default {
     margin-top: 20px;
     overflow: auto;
     flex: 1;
+
+    &.phone {
+      .member-list-header {
+        img {
+          height: 35px;
+          width: 35px;
+        }
+      }
+    }
 
     .member-list-header {
       display: flex;
