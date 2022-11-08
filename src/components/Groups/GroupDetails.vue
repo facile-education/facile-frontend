@@ -22,7 +22,10 @@
             alt="close"
           >
         </button>
-        <div class="group-options">
+        <div
+          v-if="selectedGroup.isAdmin"
+          class="group-options"
+        >
           <button
             v-if="!selectedGroup.isExpired"
             class="option"
