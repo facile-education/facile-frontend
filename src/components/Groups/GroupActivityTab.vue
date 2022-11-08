@@ -2,7 +2,7 @@
   <div class="activity-tab">
     <div class="header">
       <img
-        src="@/assets/icon_commu-black.svg"
+        src="@/assets/icon_news.svg"
         alt="icon_commu"
       >
       <span v-t="'activity-feed'" />
@@ -105,6 +105,8 @@ export default {
 
     img {
       margin-right: 10px;
+      height: 40px;
+      width: 40px;
     }
   }
 
