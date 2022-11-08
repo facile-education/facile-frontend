@@ -43,7 +43,10 @@
         </div>
       </div>
 
-      <div class="members">
+      <div
+        v-if="!mq.phone"
+        class="members"
+      >
         <div class="user-list">
           <div class="search">
             <PentilaInput

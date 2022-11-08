@@ -1,6 +1,7 @@
 <template>
   <NeroToolbar class="toolbar">
     <PentilaButton
+      v-if="!mq.phone"
       class="create-button"
       @click="toggleEditGroupModal"
     >
@@ -10,31 +11,40 @@
       <span>{{ $t('add') }}</span>
     </PentilaButton>
 
-    <div class="right-section">
+    <div
+      class="right-section"
+      :class="{'phone': mq.phone}"
+    >
       <PentilaInput
         v-model="filter.label"
+        class="input"
         :placeholder="$t('SearchPlaceholder')"
         :maxlength="75"
         @input="updateFilter"
       />
 
-      <button
-        v-t="'community'"
-        :class="{'theme-background-color': filter.isCommunityActive}"
-        @click="toggleCommunityFilter"
-      />
+      <div
+        v-if="!mq.phone"
+        class="filters"
+      >
+        <button
+          v-t="'community'"
+          :class="{'theme-background-color': filter.isCommunityActive}"
+          @click="toggleCommunityFilter"
+        />
 
-      <button
-        v-t="'institutional'"
-        :class="{'theme-background-color': filter.isInstitutionalActive}"
-        @click="toggleInstitutionalFilter"
-      />
+        <button
+          v-t="'institutional'"
+          :class="{'theme-background-color': filter.isInstitutionalActive}"
+          @click="toggleInstitutionalFilter"
+        />
 
-      <button
-        v-t="'pedagogical'"
-        :class="{'theme-background-color': filter.isPedagogicalActive}"
-        @click="togglePedagogicalFilter"
-      />
+        <button
+          v-t="'pedagogical'"
+          :class="{'theme-background-color': filter.isPedagogicalActive}"
+          @click="togglePedagogicalFilter"
+        />
+      </div>
     </div>
 
     <teleport to="body">
@@ -57,6 +67,7 @@ const EditGroupModal = defineAsyncComponent(() => import('@/components/Groups/Ed
 export default {
   name: 'GroupToolbar',
   components: { NeroIcon, NeroToolbar, EditGroupModal },
+  inject: ['mq'],
   data () {
     return {
       timeout: 0,
@@ -99,6 +110,7 @@ export default {
 @import "@design";
 .toolbar {
   height: $groups-header-height;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   padding: 0 30px;
@@ -114,15 +126,20 @@ export default {
 
   .right-section {
     display: flex;
+
+    &.phone {
+      width: 100%;
+      .input {
+        width: 100%;
+      }
+    }
+
     button {
       margin-left: 25px;
       height: 50px;
       border: none;
       border-radius: 6px;
       cursor: pointer;
-    }
-    &:not(.theme-background-color) {
-      background-color: #cccccc;
     }
   }
 }
