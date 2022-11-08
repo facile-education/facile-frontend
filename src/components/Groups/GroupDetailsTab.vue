@@ -11,7 +11,10 @@
       {{ group.description }}
     </div>
 
-    <div class="actions">
+    <div
+      v-if="!group.isExpired"
+      class="actions"
+    >
       <button @click="publishNews">
         <img
           src="@assets/publish_news.svg"

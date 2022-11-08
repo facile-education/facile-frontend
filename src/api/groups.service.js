@@ -13,7 +13,8 @@ export {
   addCommunityMembers,
   removeCommunityMember,
   addCommunityAdmin,
-  removeCommunityAdmin
+  removeCommunityAdmin,
+  extendCommunity
 }
 
 export default {
@@ -135,4 +136,12 @@ function removeCommunity (groupId) {
       groupId: groupId
     }
   }).then(response => response.data)
+}
+
+function extendCommunity (groupId) {
+  return axios.post(constants.JSON_WS_URL + GROUP_PATH + COMMUNITY_CTX + 'extend-community',
+    PentilaUtils.URL.params({
+      groupId: groupId
+    })
+  ).then(response => response.data)
 }
