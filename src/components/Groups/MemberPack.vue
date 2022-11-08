@@ -59,6 +59,7 @@ export default {
 <style lang="scss" scoped>
 .title {
   width: 300px;
+  max-width: 95%;
   height: 30px;
   display: flex;
   align-items: center;

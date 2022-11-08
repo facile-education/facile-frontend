@@ -9,9 +9,13 @@
     <div class="body">
       <GroupList />
       <GroupDetails
-        v-if="isPanelDisplayed"
+        v-if="isPanelDisplayed && !mq.phone"
       />
     </div>
+
+    <teleport to="body">
+      <GroupDetailsModal v-if="isPanelDisplayed && mq.phone" />
+    </teleport>
   </Layout>
 </template>
 
@@ -20,6 +24,8 @@ import Layout from '@/router/layouts/EmptyLayout'
 import GroupList from '@/components/Groups/GroupList'
 import GroupToolbar from '@components/Groups/GroupToolbar'
 import GroupDetails from '@components/Groups/GroupDetails'
+import { defineAsyncComponent } from 'vue'
+const GroupDetailsModal = defineAsyncComponent(() => import('@/components/Groups/GroupDetailsModal'))
 
 export default {
   name: 'Groups',
@@ -27,12 +33,11 @@ export default {
     GroupDetails,
     GroupToolbar,
     Layout,
-    GroupList
+    GroupList,
+    GroupDetailsModal
   },
+  inject: ['mq'],
   computed: {
-    selectedGroupId () {
-      return this.$route.params.groupId
-    },
     isPanelDisplayed () {
       return this.$store.state.groups.isPanelDisplayed
     },

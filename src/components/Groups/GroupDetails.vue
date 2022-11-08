@@ -1,6 +1,10 @@
 <template>
-  <div class="group-details">
+  <div
+    class="group-details"
+    :class="{phone: mq.phone}"
+  >
     <section
+      v-if="!mq.phone"
       class="header theme-background-color"
       :style="`background-color:${selectedGroup.color};`"
     >
@@ -46,7 +50,10 @@
       </div>
     </section>
 
-    <section class="body">
+    <section
+      class="body"
+      :class="{phone: mq.phone}"
+    >
       <PentilaTabList>
         <PentilaTabItem
           style="height: calc(100% - 32px)"
@@ -75,12 +82,15 @@
 </template>
 
 <script>
-import EditGroupModal from '@components/Groups/EditGroupModal'
 import GroupDetailsTab from '@components/Groups/GroupDetailsTab'
 import GroupActivityTab from '@components/Groups/GroupActivityTab'
+import { defineAsyncComponent } from 'vue'
+const EditGroupModal = defineAsyncComponent(() => import('@/components/Groups/EditGroupModal'))
+
 export default {
   name: 'GroupDetails',
   components: { GroupActivityTab, GroupDetailsTab, EditGroupModal },
+  inject: ['mq'],
   data () {
     return {
       isEditGroupModalDisplayed: false
@@ -130,6 +140,12 @@ export default {
   border-left: 1px solid $color-border;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   color: black;
+
+  &.phone {
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+  }
 
   .header {
     height: $groups-details-header-height;
@@ -205,6 +221,11 @@ export default {
   .body {
     height: calc(100% - #{$groups-details-header-height});
     padding: 5px 10px;
+
+    &.phone {
+      height: 100%;
+      padding: 0;
+    }
   }
 }
 
