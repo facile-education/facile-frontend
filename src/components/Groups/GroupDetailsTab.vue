@@ -14,7 +14,7 @@
     <div class="actions">
       <button @click="publishNews">
         <img
-          src="@assets/fichier_bis.svg"
+          src="@assets/publish_news.svg"
           alt=""
         >
         <span v-t="'publishNew'" />
@@ -165,6 +165,8 @@ export default {
 
       img {
         margin-right: 20px;
+        height: 30px;
+        width: 30px;
       }
     }
   }

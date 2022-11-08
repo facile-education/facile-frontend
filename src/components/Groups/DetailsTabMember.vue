@@ -7,7 +7,7 @@
     <span class="member-name"> {{ member.userName }}</span>
     <img
       v-if="isHovering"
-      src="@/assets/messaging_placeholder.svg"
+      src="@/assets/send_message.svg"
       alt="send-message"
       @click="openCreateMessageModal"
     >
@@ -72,7 +72,7 @@ export default {
     background-color: $color-hover-bg;
   }
   img {
-    height: 20px;
+    height: 30px;
     cursor: pointer;
     margin-right: 10px;
   }
