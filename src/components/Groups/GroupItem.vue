@@ -4,6 +4,8 @@
     class="group"
     @click="selectGroup"
   >
+    <PentilaSpinner v-if="isLoading" />
+
     <div
       class="header theme-background-color"
       :style="`background-color:${group.color};`"
@@ -44,6 +46,16 @@
         @click.stop="confirmGroupDeletion()"
       >
     </div>
+
+    <div
+      v-if="group.isExpired"
+      class="expired"
+    >
+      <p v-t="'desactivedSpace'" />
+      <button @click.stop="extendGroup">
+        {{ $t('reactivate') + group.groupName }}
+      </button>
+    </div>
   </div>
 
   <teleport to="body">
@@ -59,6 +71,7 @@
 <script>
 
 import { defineAsyncComponent } from 'vue'
+import { extendCommunity } from '@/api/groups.service'
 const EditGroupModal = defineAsyncComponent(() => import('@/components/Groups/EditGroupModal'))
 
 export default {
@@ -73,13 +86,14 @@ export default {
   emits: ['edit'],
   data () {
     return {
+      isLoading: false,
       isEditGroupModalDisplayed: false
     }
   },
   computed: {
     groupCategory () {
       if (this.group.isContactList) {
-        return this.$t('institutionnal')
+        return this.$t('institutional')
       } else if (this.group.isPedagogical) {
         return this.$t('pedagogical')
       } else {
@@ -101,8 +115,18 @@ export default {
       this.isEditGroupModalDisplayed = true
     },
     selectGroup () {
-      // this.$router.push({ name: 'Group', params: { groupId: this.group.groupId } })
       this.$store.dispatch('groups/setSelectedGroup', this.group)
+    },
+    extendGroup () {
+      this.isLoading = true
+      extendCommunity(this.group.groupId).then((data) => {
+        this.isLoading = false
+        if (data.success) {
+          this.$store.dispatch('groups/getGroupList', this.$store.state.groups.currentFilter)
+        } else {
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+        }
+      })
     }
   }
 }
@@ -112,6 +136,7 @@ export default {
 @import '@design';
 
 .group {
+  position: relative;
   display: flex;
   flex-direction: column;
   height: 235px;
@@ -199,6 +224,33 @@ export default {
       border-right: 1px solid $color-border;
     }
   }
+
+  .expired {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: rgba(225,225,225  ,.8);
+    cursor: default;
+
+    p {
+      color: red;
+    }
+
+    button {
+      cursor: pointer;
+      background-color: transparent;
+      border: none;
+      &:hover {
+        font-weight: 600;
+      }
+    }
+  }
 }
 
 </style>
@@ -207,8 +259,10 @@ export default {
 {
   "delete": "Supprimer",
   "edit": "Modifier",
-  "institutionnal": "Institutionnel",
+  "institutional": "Institutionnel",
   "pedagogical": "Pédagogique",
-  "warning": "La suppression de ce groupe est définitive."
+  "warning": "La suppression de ce groupe est définitive.",
+  "desactivedSpace": "Espace désactivé avant suppression",
+  "reactivate": "Je souhaite réactiver "
 }
 </i18n>

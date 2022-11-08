@@ -20,6 +20,7 @@
         </button>
         <div class="group-options">
           <button
+            v-if="!selectedGroup.isExpired"
             class="option"
             @click="editGroup"
           >
