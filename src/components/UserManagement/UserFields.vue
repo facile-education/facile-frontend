@@ -22,8 +22,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
+
 .user-fields {
-  height: 50px;
+  height: $um-fields-height;
   width: 100%;
   display: flex;
   align-items: center;
