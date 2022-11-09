@@ -39,7 +39,7 @@ html, body, #app {
 }
 
 a {
-  color: #6190E0;
+  color: $color-link;
 }
 
 /*** iPhone and iOS Form Input Zoom Fixes ***/
