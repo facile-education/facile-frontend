@@ -66,7 +66,7 @@
           display-field="schoolName"
         />
         <p v-else>
-          {{ schoolList[0].schoolName }}
+          {{ editedUser.schoolName }}
         </p>
       </div>
 
@@ -74,9 +74,9 @@
       <div class="role">
         <p v-t="'role'" />
         <PentilaDropdown
-          v-if="(roles && roles.length > 1)"
+          v-if="(roleList && roleList.length > 1)"
           v-model="selectedRole"
-          :list="roles"
+          :list="roleList"
           display-field="label"
         />
       </div>
@@ -112,7 +112,7 @@
 <script>
 import { useVuelidate } from '@vuelidate/core'
 import { required, email } from '@vuelidate/validators'
-import { createManualUser, editManualUser, removeManualUser } from '@/api/userManagement.service'
+import { createManualUser, editManualUser, getRoles, removeManualUser } from '@/api/userManagement.service'
 import store from '@/store'
 
 export default {
@@ -137,7 +137,8 @@ export default {
       firstName: '',
       email: '',
       selectedRole: undefined,
-      school: undefined
+      school: undefined,
+      roleList: []
     }
   },
   computed: {
@@ -162,18 +163,23 @@ export default {
     }
   },
   mounted () {
-    this.$store.dispatch('userManagement/getRoles')
-    if (!this.isCreation) {
-      this.lastName = this.editedUser.lastName
-      this.firstName = this.editedUser.firstName
-      this.email = this.editedUser.email
-      const roleIndex = this.roles.map(role => role.roleId).indexOf(this.editedUser.roleId)
-      this.selectedRole = this.roles[roleIndex]
-      const schoolIndex = this.schoolList.map(school => school.schoolId).indexOf(this.editedUser.schoolId)
-      this.school = this.schoolList[schoolIndex]
-    } else {
-      this.school = this.selectedSchool
-    }
+    getRoles().then((data) => {
+      if (data.success) {
+        this.roleList = data.roles
+
+        if (!this.isCreation) {
+          this.lastName = this.editedUser.lastName
+          this.firstName = this.editedUser.firstName
+          this.email = this.editedUser.email
+          const roleIndex = this.roleList.map(role => role.roleId).indexOf(this.editedUser.roleId)
+          this.selectedRole = this.roleList[roleIndex]
+          const schoolIndex = this.schoolList.map(school => school.schoolId).indexOf(this.editedUser.schoolId)
+          this.school = this.schoolList[schoolIndex]
+        } else {
+          this.school = this.selectedSchool
+        }
+      }
+    })
 
     // Focus form
     const input = this.$refs.lastNameInput
