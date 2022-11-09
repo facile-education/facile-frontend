@@ -2,12 +2,10 @@
   <div class="manual-users">
     <!-- Header -->
     <div class="header">
-      <PentilaInput
-        ref="nameInput"
-        v-model="filter"
-        :maxlength="200"
-        :placeholder="$t('nameFilterPlaceholder')"
-        @keyup.enter.stop="cleanAndRunSearch"
+      <PentilaButton
+        class="create-user"
+        :label="$t('create')"
+        @click="createUser"
       />
       <div
         v-if="nbTotalResults > 0"
@@ -19,10 +17,12 @@
         <span>{{ $t('over') }}</span>
         <span>{{ nbTotalResults }}</span>
       </div>
-      <PentilaButton
-        class="create-user"
-        :label="$t('create')"
-        @click="createUser"
+      <PentilaInput
+        ref="nameInput"
+        v-model="filter"
+        :maxlength="200"
+        :placeholder="$t('nameFilterPlaceholder')"
+        @keyup.enter.stop="cleanAndRunSearch"
       />
     </div>
 

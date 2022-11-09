@@ -4,17 +4,17 @@
   >
     <!-- Header -->
     <div class="header">
+      <PentilaButton
+        class="add-affected-user"
+        :label="$t('add-affected-user')"
+        @click="openAddAffectedUserModal()"
+      />
       <PentilaInput
         ref="nameInput"
         v-model="filter"
         :maxlength="200"
         :placeholder="$t('nameFilterPlaceholder')"
         @keyup.enter.stop="cleanAndRunSearch"
-      />
-      <PentilaButton
-        class="add-affected-user"
-        :label="$t('add-affected-user')"
-        @click="openAddAffectedUserModal()"
       />
     </div>
     <div
