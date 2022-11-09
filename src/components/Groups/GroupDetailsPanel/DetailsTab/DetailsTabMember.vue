@@ -7,7 +7,7 @@
     <span class="member-name"> {{ member.userName }}</span>
     <img
       v-if="isHovering"
-      src="@/assets/send_message.svg"
+      src="@assets/send_message.svg"
       alt="send-message"
       @click="openCreateMessageModal"
     >
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import messagingUtils from '@/utils/messaging.utils'
+import messagingUtils from '@utils/messaging.utils'
 import { defineAsyncComponent } from 'vue'
 const CreateMessageModal = defineAsyncComponent(() => import('@components/Messaging/CreateMessageModal'))
 

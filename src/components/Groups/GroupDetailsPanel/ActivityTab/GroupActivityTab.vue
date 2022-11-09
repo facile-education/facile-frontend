@@ -2,7 +2,7 @@
   <div class="activity-tab">
     <div class="header">
       <img
-        src="@/assets/icon_news.svg"
+        src="@assets/icon_news.svg"
         alt="icon_commu"
       >
       <span v-t="'activity-feed'" />
@@ -28,7 +28,7 @@ import { getGroupActivity } from '@/api/groups.service'
 import { nbActivityPerPage } from '@/constants/activityConstants'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
-const GroupActivityItem = defineAsyncComponent(() => import('@components/Groups/GroupActivityItem'))
+const GroupActivityItem = defineAsyncComponent(() => import('@components/Groups/GroupDetailsPanel/ActivityTab/GroupActivityItem'))
 let oldScrollTop = 0
 
 export default {

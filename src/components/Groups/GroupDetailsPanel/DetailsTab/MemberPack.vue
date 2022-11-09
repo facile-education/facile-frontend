@@ -28,7 +28,7 @@
 
 <script>
 import { defineAsyncComponent } from 'vue'
-const DetailsTabMember = defineAsyncComponent(() => import('@components/Groups/DetailsTabMember'))
+const DetailsTabMember = defineAsyncComponent(() => import('@components/Groups/GroupDetailsPanel/DetailsTab/DetailsTabMember'))
 
 export default {
   name: 'MemberPack',

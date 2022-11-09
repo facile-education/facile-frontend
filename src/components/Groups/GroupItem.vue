@@ -83,7 +83,7 @@
 
 import { defineAsyncComponent } from 'vue'
 import { extendCommunity } from '@/api/groups.service'
-const EditGroupModal = defineAsyncComponent(() => import('@/components/Groups/EditGroupModal'))
+const EditGroupModal = defineAsyncComponent(() => import('@components/Groups/EditGroupModal/EditGroupModal'))
 
 export default {
   name: 'GroupItem',

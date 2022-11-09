@@ -62,7 +62,7 @@
 import { defineAsyncComponent } from 'vue'
 import NeroToolbar from '@components/Nero/NeroToolbar'
 import NeroIcon from '@components/Nero/NeroIcon'
-const EditGroupModal = defineAsyncComponent(() => import('@/components/Groups/EditGroupModal'))
+const EditGroupModal = defineAsyncComponent(() => import('@components/Groups/EditGroupModal/EditGroupModal'))
 
 export default {
   name: 'GroupToolbar',

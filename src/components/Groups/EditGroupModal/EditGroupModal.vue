@@ -128,8 +128,8 @@ import {
   addCommunityMembers,
   removeCommunityMember
 } from '@/api/groups.service'
-import GroupUserItem from '@components/Groups/GroupUserItem'
-import SelectedGroupMemberItem from '@components/Groups/SelectedGroupMemberItem'
+import GroupUserItem from '@components/Groups/EditGroupModal/GroupUserItem'
+import SelectedGroupMemberItem from '@components/Groups/EditGroupModal/SelectedGroupMemberItem'
 import messageService from '@/api/messaging/message.service'
 // import ColorPicker from '@/components/Nero/ColorPicker'
 
