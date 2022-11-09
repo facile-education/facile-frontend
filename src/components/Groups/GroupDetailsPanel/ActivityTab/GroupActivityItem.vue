@@ -13,15 +13,13 @@
           <span>
             {{ formattedActivityType }}
           </span>
-          <a
-            v-if="link"
-            href=""
-            class="link"
-            target="_blank"
-            @click="clickAttached(link)"
+          <button
+            v-if="attached"
+            class="attached"
+            @click="clickAttached"
           >
-            {{ link.label }}
-          </a>
+            {{ attached.label }}
+          </button>
         </div>
       </div>
     </div>
@@ -100,7 +98,7 @@ export default {
 
       return formattedText
     },
-    link () {
+    attached () {
       if (this.activityType === 'documents') {
         if (this.activity.fileName !== '') {
           return { label: this.activity.fileName }
@@ -138,9 +136,9 @@ export default {
   methods: {
     clickAttached () {
       if (this.activityType === 'documents') {
-        if (this.activity.fileName !== '' && !activityTypes.TYPE_FILE_DELETION) {
+        if (this.activity.fileName !== '' && this.activity.type !== activityTypes.TYPE_FILE_DELETION) {
           this.$store.dispatch('documents/openFile', { ...this.activity.fileId, readOnly: true })
-        } else if (this.activity.folderId !== '' && !activityTypes.TYPE_FOLDER_DELETION) {
+        } else if (this.activity.folderId !== '' && this.activity.type !== activityTypes.TYPE_FOLDER_DELETION) {
           this.$router.push('documents/groups/' + this.activity.folderId)
         }
       }
@@ -179,8 +177,14 @@ export default {
       }
 
       .activity-type {
-        a {
+        .attached {
+          padding: 0;
           font-weight: 600;
+          color: $color-link;
+          cursor: pointer;
+          text-decoration: underline;
+          background-color: transparent;
+          border: none;
         }
       }
     }
