@@ -318,7 +318,9 @@
     "documentCopied": "Eléments copiés",
     "documentCut": "Eléments coupés",
     "duplicated": "Elément(s) dupliqué(s)",
-    "moved": "Elément(s) déplacé(s)"
+    "error": "Une erreur est survenue",
+    "moved": "Elément(s) déplacé(s)",
+    "success": "Succès"
   },
   "Unauthenticated": "Veuillez vous connecter pour accéder à ce service",
   "UnAuthorised": "Votre statut ne vous permet pas d'accéder à cette page",
