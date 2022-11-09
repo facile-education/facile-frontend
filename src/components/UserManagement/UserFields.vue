@@ -42,6 +42,7 @@ export default {
   "firstName": "Prénom",
   "lastName": "Nom",
   "roles": "Profil",
+  "affectations": "Affectations",
   "isSchoolAdmin": "Administrateur local",
   "isNewsDelegate": "Rédacteur annonces"
 }
