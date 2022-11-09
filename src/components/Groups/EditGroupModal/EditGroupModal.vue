@@ -268,7 +268,7 @@ export default {
         if (this.isGroupMember(member)) {
           removeCommunityMember(this.editedGroup.groupId, member.userId).then((data) => {
             if (data.success) {
-              this.$store.dispatch('popups/pushPopup', { message: 'succes', type: 'success' })
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.success'), type: 'success' })
               this.toggleGroupMember(member)
             } else {
               this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
@@ -277,7 +277,7 @@ export default {
         } else {
           addCommunityMembers(this.editedGroup.groupId, [member]).then((data) => {
             if (data.success) {
-              this.$store.dispatch('popups/pushPopup', { message: 'succes', type: 'success' })
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.success'), type: 'success' })
               this.toggleGroupMember(member)
             } else {
               this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
@@ -300,7 +300,7 @@ export default {
         if (member.isAdmin) {
           removeCommunityAdmin(this.editedGroup.groupId, member.userId).then((data) => {
             if (data.success) {
-              this.$store.dispatch('popups/pushPopup', { message: 'Succès', type: 'success' })
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.success'), type: 'success' })
               member.isAdmin = false
             } else {
               this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
@@ -309,7 +309,7 @@ export default {
         } else {
           addCommunityAdmin(this.editedGroup.groupId, member.userId).then((data) => {
             if (data.success) {
-              this.$store.dispatch('popups/pushPopup', { message: 'Succès', type: 'success' })
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.success'), type: 'success' })
               member.isAdmin = true
             } else {
               this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
@@ -324,7 +324,7 @@ export default {
       if (this.editedGroup) {
         removeCommunityMember(this.editedGroup.groupId, member.userId).then((data) => {
           if (data.success) {
-            this.$store.dispatch('popups/pushPopup', { message: 'Succès', type: 'success' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.success'), type: 'success' })
             this.toggleGroupMember(member)
           } else {
             this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
