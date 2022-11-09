@@ -58,7 +58,7 @@
 
       <!-- School -->
       <div class="school">
-        <p>Etablissement</p>
+        <p v-t="'school'" />
         <PentilaDropdown
           v-if="(schoolList && schoolList.length > 1)"
           v-model="school"
@@ -72,7 +72,7 @@
 
       <!-- Role -->
       <div class="role">
-        <p>Profil</p>
+        <p v-t="'role'" />
         <PentilaDropdown
           v-if="(roles && roles.length > 1)"
           v-model="selectedRole"
@@ -254,13 +254,14 @@ export default {
     text-align: center;
     margin: 10px;
   }
-  .lastName,.firstName,.email {
+  .lastName,.firstName,.email, .school, .role {
     margin-bottom: 5px;
   }
   .school, .role {
     display: flex;
     p {
       margin-right: 1em;
+      width: 20%;
     }
   }
   .button {
@@ -279,6 +280,8 @@ export default {
   "lastNamePlaceholder": "Nom",
   "firstNamePlaceholder": "Prénom",
   "emailPlaceholder": "Mail",
+  "school": "Établissement",
+  "role": "Profil",
   "email-warning": "NB: Un e-mail contenant les informations d'authentification sera envoyé à l'utilisateur créé.",
   "delete-warning": "La suppression de cet utilisateur est définitive.",
   "Popup": {
