@@ -162,6 +162,7 @@ export default {
   inject: ['mq'],
   props: {
   },
+  emits: ['close'],
   setup: () => ({ v$: useVuelidate() }),
   data () {
     return {
@@ -190,7 +191,6 @@ export default {
       isSubjectValid
     }
   },
-  emits: ['close'],
   computed: {
     device () {
       if (this.mq.phone) {
