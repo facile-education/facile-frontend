@@ -67,7 +67,9 @@ export default {
         if (data.success) {
           this.activityList = this.activityList.concat(data.activities)
           // Update maxDate
-          this.maxDate = dayjs(this.activityList[this.activityList.length - 1].modificationDate) // /!\ Assume the returned list is already sorted by date
+          if (this.activityList.length > 1) {
+            this.maxDate = dayjs(this.activityList[this.activityList.length - 1].modificationDate) // /!\ Assume the returned list is already sorted by date
+          }
         }
       })
     },
