@@ -1,11 +1,10 @@
 import {
-  getManualUsers, getRoles, getAffectedUsers
+  getManualUsers, getAffectedUsers
 } from '@/api/userManagement.service'
 
 export const state = {
   isSearchLocked: false,
   manualUserList: [],
-  roles: [],
   nbItemsPerPage: 20,
   nbTotalResults: 0,
   affectedUsers: []
@@ -55,9 +54,6 @@ export const mutations = {
   setSearchLock (state, payload) {
     state.isSearchLocked = payload
   },
-  setRoles (state, roles) {
-    state.roles = roles
-  },
   addUser (state, user) {
     state.manualUserList.push(user)
   },
@@ -102,15 +98,6 @@ export const actions = {
       (data) => {
         if (data.success) {
           commit('addAffectedUsers', data.users)
-        }
-      }
-    )
-  },
-  getRoles ({ commit }) {
-    getRoles().then(
-      (data) => {
-        if (data.success) {
-          commit('setRoles', data.roles)
         }
       }
     )
