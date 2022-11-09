@@ -69,7 +69,6 @@
 
 <script>
 import FileIcon from '@components/Base/FileIcon'
-import mediaService from '@/api/documents/media.service'
 import { downloadDocument } from '@utils/documents.util'
 import { defineAsyncComponent } from 'vue'
 const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal'))
@@ -126,14 +125,7 @@ export default {
       }
     },
     viewAttachedFile (attachedFile) {
-      console.log('TODO: open visionneuse')
-      mediaService.getMediaUrl(attachedFile.id, 0).then(async (data) => {
-        if (data.success) {
-          // const typeOfView = data.typeOfView
-          // const fileUrl = data.fileUrl
-          // TODO open viewer
-        }
-      })
+      this.$store.dispatch('documents/openFile', { ...attachedFile, readOnly: true })
     },
     addToMyDocs (attachedFile) {
       this.selectedFileForAction = attachedFile
