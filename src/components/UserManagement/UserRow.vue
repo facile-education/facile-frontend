@@ -92,7 +92,6 @@ export default {
   .field {
     flex: 1;
     margin: auto;
-    text-align: center;
   }
 }
 </style>

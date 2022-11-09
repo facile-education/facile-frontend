@@ -31,7 +31,7 @@ export default {
   .field {
     flex: 1;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     font-weight: bold;
   }
 }
