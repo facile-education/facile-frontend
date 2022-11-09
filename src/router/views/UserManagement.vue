@@ -5,10 +5,11 @@
   >
     <h1 :aria-label="$t('serviceTitle')" />
 
-    <div class="header">
-      <p>{{ $t('serviceTitle') }}</p>
+    <div
+      v-if="schoolList.length > 1"
+      class="header"
+    >
       <PentilaDropdown
-        v-if="schoolList.length > 1"
         v-model="selectedSchool"
         class="dropdown"
         :list="schoolList"
@@ -75,14 +76,13 @@ export default {
 .layout {
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 
   .header {
     width: 100%;
     height: $um-ĥeader-height;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
 
     p {
       font-weight: 600;

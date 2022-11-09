@@ -29,15 +29,17 @@
       <UserFields
         :fields="fields"
       />
-      <UserRow
-        v-for="user in sortedSchoolAdminList"
-        :key="user.userId"
-        :fields="fields"
-        :is-hoverable="false"
-        :user="user"
-        @toggleSchoolAdmin="toggleSchoolAdmin(user)"
-        @toggleNewsDelegate="toggleNewsDelegate(user)"
-      />
+      <div class="user-list">
+        <UserRow
+          v-for="user in sortedSchoolAdminList"
+          :key="user.userId"
+          :fields="fields"
+          :is-hoverable="false"
+          :user="user"
+          @toggleSchoolAdmin="toggleSchoolAdmin(user)"
+          @toggleNewsDelegate="toggleNewsDelegate(user)"
+        />
+      </div>
     </div>
     <teleport to="body">
       <AddDelegationModal
@@ -182,14 +184,12 @@ export default {
   text-align: center;
 }
 
-th {
-  text-align: left;
-}
-tr {
-  height: 2em;
-  border-bottom: 1pt;
-  .checkbox {
-    margin: auto;
+.admin-list {
+  height: calc(100% - #{$um-user-header-height});
+
+  .user-list {
+    height: calc(100% - #{$um-fields-height});
+    overflow: auto;
   }
 }
 </style>

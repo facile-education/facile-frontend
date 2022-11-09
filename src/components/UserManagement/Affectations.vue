@@ -36,13 +36,15 @@
       <UserFields
         :fields="fields"
       />
-      <UserRow
-        v-for="user in sortedAffectedUsers"
-        :key="user.userId"
-        :fields="fields"
-        :user="user"
-        @click="editUserAffectations(user)"
-      />
+      <div class="user-list">
+        <UserRow
+          v-for="user in sortedAffectedUsers"
+          :key="user.userId"
+          :fields="fields"
+          :user="user"
+          @click="editUserAffectations(user)"
+        />
+      </div>
     </div>
     <teleport to="body">
       <AddAffectedUserModal
@@ -152,27 +154,13 @@ export default {
   margin-top: 10em;
   text-align: center;
 }
+
 .affected-users {
-  table tr:nth-child(odd){
-    background-color:rgb(223, 223, 223)
-  }
-  .affected-user {
-    height: 2em;
-    td {
-      span {
-        margin-left: 5px;
-      }
-      .center {
-        margin: auto;
-        text-align: center;
-      }
-      .button {
-        margin: auto;
-        text-align: center;
-        display: table-cell;
-        vertical-align: middle;
-      }
-    }
+  height: calc(100% - #{$um-user-header-height});
+
+  .user-list {
+    height: calc(100% - #{$um-fields-height});
+    overflow: auto;
   }
 }
 
