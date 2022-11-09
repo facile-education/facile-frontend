@@ -20,7 +20,7 @@
           :completion-only="true"
           :min-length="3"
           :placeholder="$t('completionPlaceholder')"
-          display-field="fullName"
+          display-field="nameAndRole"
           id-field="userId"
           :list="schoolMembers"
           class="tags"
@@ -92,6 +92,9 @@ export default {
         (data) => {
           if (data.success) {
             this.schoolMembers = data.users
+            this.schoolMembers.forEach((member) => {
+              member.nameAndRole = member.fullName + ' (' + member.roles + ')'
+            })
           }
         }
       )
