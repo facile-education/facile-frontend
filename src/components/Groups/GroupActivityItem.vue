@@ -15,9 +15,10 @@
           </span>
           <a
             v-if="link"
-            :href="link.href"
+            href=""
             class="link"
             target="_blank"
+            @click="clickAttached(link)"
           >
             {{ link.label }}
           </a>
@@ -102,9 +103,9 @@ export default {
     link () {
       if (this.activityType === 'documents') {
         if (this.activity.fileName !== '') {
-          return { href: '/documents/' + this.activity.folderId, label: this.activity.fileName }
+          return { label: this.activity.fileName }
         } else {
-          return { href: '/documents/' + this.activity.folderId, label: this.activity.folderName }
+          return { label: this.activity.folderName }
         }
       } else {
         return undefined
@@ -131,6 +132,17 @@ export default {
         return require('@/assets/icon_commu-black.svg')
       } else {
         return require('@/assets/devoir.svg')
+      }
+    }
+  },
+  methods: {
+    clickAttached () {
+      if (this.activityType === 'documents') {
+        if (this.activity.fileName !== '' && !activityTypes.TYPE_FILE_DELETION) {
+          this.$store.dispatch('documents/openFile', { ...this.activity.fileId, readOnly: true })
+        } else if (this.activity.folderId !== '' && !activityTypes.TYPE_FOLDER_DELETION) {
+          this.$router.push('documents/groups/' + this.activity.folderId)
+        }
       }
     }
   }
