@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import GroupDetails from '@components/Groups/GroupDetails'
+import GroupDetails from '@components/Groups/GroupDetailsPanel/GroupDetails'
 export default {
   name: 'GroupDetailsModal',
   components: { GroupDetails },

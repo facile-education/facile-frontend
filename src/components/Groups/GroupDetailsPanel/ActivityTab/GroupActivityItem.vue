@@ -129,9 +129,9 @@ export default {
           return icons.folder
         }
       } else if (this.activityType === 'membership') {
-        return require('@/assets/icon_commu-black.svg')
+        return require('@assets/icon_commu-black.svg')
       } else {
-        return require('@/assets/devoir.svg')
+        return require('@assets/devoir.svg')
       }
     }
   },

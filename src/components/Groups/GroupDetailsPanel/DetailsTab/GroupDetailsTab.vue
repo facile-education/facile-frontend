@@ -39,7 +39,7 @@
       <div v-else>
         <div class="member-list-header">
           <img
-            src="@/assets/icon_commu-black.svg"
+            src="@assets/icon_commu-black.svg"
             alt="icon_commu"
           >
           <span>
@@ -68,7 +68,7 @@
 <script>
 import dayjs from 'dayjs'
 import { getCommunityMembers } from '@/api/groups.service'
-import MemberPack from '@components/Groups/MemberPack'
+import MemberPack from '@components/Groups/GroupDetailsPanel/DetailsTab/MemberPack'
 
 export default {
   name: 'GroupDetailsTab',

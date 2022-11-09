@@ -85,10 +85,10 @@
 </template>
 
 <script>
-import GroupDetailsTab from '@components/Groups/GroupDetailsTab'
-import GroupActivityTab from '@components/Groups/GroupActivityTab'
+import GroupDetailsTab from '@components/Groups/GroupDetailsPanel/DetailsTab/GroupDetailsTab'
+import GroupActivityTab from '@components/Groups/GroupDetailsPanel/ActivityTab/GroupActivityTab'
 import { defineAsyncComponent } from 'vue'
-const EditGroupModal = defineAsyncComponent(() => import('@/components/Groups/EditGroupModal'))
+const EditGroupModal = defineAsyncComponent(() => import('@components/Groups/EditGroupModal/EditGroupModal'))
 
 export default {
   name: 'GroupDetails',

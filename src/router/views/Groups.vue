@@ -23,9 +23,9 @@
 import Layout from '@/router/layouts/EmptyLayout'
 import GroupList from '@/components/Groups/GroupList'
 import GroupToolbar from '@components/Groups/GroupToolbar'
-import GroupDetails from '@components/Groups/GroupDetails'
+import GroupDetails from '@components/Groups/GroupDetailsPanel/GroupDetails'
 import { defineAsyncComponent } from 'vue'
-const GroupDetailsModal = defineAsyncComponent(() => import('@/components/Groups/GroupDetailsModal'))
+const GroupDetailsModal = defineAsyncComponent(() => import('@components/Groups/GroupDetailsPanel/GroupDetailsModal'))
 
 export default {
   name: 'Groups',
