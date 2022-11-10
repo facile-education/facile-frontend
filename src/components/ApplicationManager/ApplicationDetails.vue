@@ -51,12 +51,13 @@
     :class="{ phone: mq.phone }"
   >
     <PentilaToggleSwitch
+      v-if="!isAdministratorMode"
       :model-value="application.isAvailable"
       :title="$t('broadcastButtonTooltip')"
-      @update:modelValue="updateBroadcastStatus"
+      @update:modelValue="updateBroadcast"
     />
     <PentilaButton
-      v-if="isAdministrator"
+      v-if="isAdministrator && isAdministratorMode"
       :title="$t('editButtonTooltip')"
       type="circle"
       @click="toggleEditionModal"
@@ -64,6 +65,7 @@
       <NeroIcon name="pencil-alt" />
     </PentilaButton>
     <PentilaButton
+      v-if="!isAdministratorMode"
       :title="$t('configurationButtonTooltip')"
       type="circle"
       @click="toggleBroadcastModal"
@@ -71,7 +73,7 @@
       <NeroIcon name="cog" />
     </PentilaButton>
     <PentilaButton
-      v-if="isAdministrator"
+      v-if="isAdministrator && isAdministratorMode"
       :title="$t('deleteButtonTooltip')"
       type="circle"
       cls="delete"
@@ -126,6 +128,9 @@ export default {
     },
     isAdministrator () {
       return this.$store.state.user.isAdministrator
+    },
+    isAdministratorMode () {
+      return this.$store.state.applicationManager.isAdministratorMode
     }
   },
   created () {
@@ -156,10 +161,10 @@ export default {
     removeApplication () {
       this.$store.dispatch('applicationManager/removeApplication')
     },
-    updateBroadcastStatus (isAvailable) {
-      this.$store.dispatch('applicationManager/updateBroadcastStatus', {
+    updateBroadcast (isBroadcasted) {
+      this.$store.dispatch('applicationManager/updateBroadcast', {
         school: this.$store.state.administration.selectedSchool,
-        isAvailable
+        isBroadcasted
       })
     },
     updateURL () {

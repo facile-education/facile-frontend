@@ -6,146 +6,121 @@ export default {
   createApplication,
   exportApplicationUserList,
   getApplicationBroadcastScope,
-  getApplicationDefaultRoleList,
   getSchoolApplications,
-  getSchoolClasses,
+  getAllApplications,
   removeApplication,
   updateApplication,
   updateBroadcastScope,
-  updateBroadcastStatus,
-  updateURL
+  updateBroadcast
 }
 
-const url = constants.APPLICATION_MANAGER_URL
+const SERVICEMANAGER_PATH = '/gestionApplications-portlet.'
+const SERVICE_CTX = '/'
+const SERVICEBROADCAST_CTX = 'broadcast/'
+const SERVICEBROADCASTRULE_CTX = 'broadcastrule/'
 
 function createApplication (application) {
-  return axios.post(url, PentilaUtils.URL.params({
-    cmd: 'addService',
-    newService: JSON.stringify({
+  return axios.post(constants.JSON_WS_URL + SERVICEMANAGER_PATH + SERVICE_CTX + 'add-service',
+    PentilaUtils.URL.params({
       serviceName: application.serviceName,
       serviceKey: application.serviceKey,
+      category: application.category,
       portletId: application.portletId,
-      serviceCategory: application.serviceCategory,
       image: application.image,
       hasCustomUrl: application.hasCustomUrl,
-      hasGlobalUrl: application.hasGlobalUrl,
       globalUrl: application.globalUrl,
       exportUser: application.exportUser,
-      exportParent: application.exportParent,
       exportStudent: application.exportStudent,
+      exportParent: application.exportParent,
       exportTeacher: application.exportTeacher,
-      roles: application.rolesId,
-      etabFilters: application.etabFilters
+      exportOther: application.exportOther,
+      defaultRoles: application.rolesId,
+      authorizedSchools: application.authorizedSchools
     })
-  })).then(response => response.data)
-}
-
-function exportApplicationUserList (schoolId, applicationId, role) {
-  return axios.get(url, {
-    params: {
-      cmd: 'exportFichier',
-      etabId: schoolId,
-      userRole: role,
-      serviceId: applicationId
-    }
-  }).then(response => response.data)
-}
-
-function getApplicationBroadcastScope (applicationId, schoolId) {
-  return axios.get(url, {
-    params: {
-      cmd: 'getDiffusionPerimeter',
-      serviceId: applicationId,
-      etabId: schoolId
-    }
-  }).then(response => response.data)
-}
-
-function getApplicationDefaultRoleList (applicationId) {
-  return axios.get(url, {
-    params: {
-      cmd: 'getDefaultRoles',
-      serviceId: applicationId
-    }
-  }).then(response => response.data)
-}
-
-function getSchoolApplications (schoolId) {
-  return axios.get(url, {
-    params: {
-      cmd: 'getSchoolServices',
-      schoolId: schoolId
-    }
-  }).then(response => response.data)
-}
-
-function getSchoolClasses (schoolId) {
-  return axios.get(url, {
-    params: {
-      cmd: 'getListClasses',
-      etabId: schoolId
-    }
-  }).then(response => response.data)
-}
-
-function removeApplication (serviceId) {
-  return axios.get(url, {
-    params: {
-      cmd: 'deleteService',
-      serviceId: serviceId
-    }
-  }).then(response => response.data)
+  ).then(response => response.data)
 }
 
 function updateApplication (application) {
-  return axios.post(url, PentilaUtils.URL.params({
-    cmd: 'modifyService',
-    request: JSON.stringify({
+  return axios.post(constants.JSON_WS_URL + SERVICEMANAGER_PATH + SERVICE_CTX + 'edit-service',
+    PentilaUtils.URL.params({
       serviceId: application.serviceId,
       serviceName: application.serviceName,
       serviceKey: application.serviceKey,
+      category: application.category,
       portletId: application.portletId,
-      serviceCategory: application.serviceCategory,
       image: application.image,
       hasCustomUrl: application.hasCustomUrl,
-      hasGlobalUrl: application.hasGlobalUrl,
       globalUrl: application.globalUrl,
       exportUser: application.exportUser,
       exportParent: application.exportParent,
       exportStudent: application.exportStudent,
       exportTeacher: application.exportTeacher,
       exportOther: application.exportOther,
-      roles: application.rolesId,
-      etabFilters: application.etabFilters
+      defaultRoles: application.rolesId,
+      authorizedSchools: application.authorizedSchools
     })
-  })).then(response => response.data)
+  ).then(response => response.data)
 }
 
-function updateBroadcastScope (schoolId, serviceId, ruleIdList) {
-  return axios.post(url, PentilaUtils.URL.params({
-    cmd: 'modifyDiffusionPerimeter',
-    diffusionPerimeter: JSON.stringify({
-      etabId: schoolId,
+function removeApplication (serviceId) {
+  return axios.get(constants.JSON_WS_URL + SERVICEMANAGER_PATH + SERVICE_CTX + 'remove-service', {
+    params: {
+      serviceId: serviceId
+    }
+  }).then(response => response.data)
+}
+
+function getSchoolApplications (schoolId) {
+  return axios.get(constants.JSON_WS_URL + SERVICEMANAGER_PATH + SERVICE_CTX + 'get-school-services', {
+    params: {
+      schoolId: schoolId
+    }
+  }).then(response => response.data)
+}
+
+function getAllApplications () {
+  return axios.get(constants.JSON_WS_URL + SERVICEMANAGER_PATH + SERVICE_CTX + 'get-all-services', {
+    params: {
+    }
+  }).then(response => response.data)
+}
+
+function getApplicationBroadcastScope (applicationId, schoolId) {
+  return axios.get(constants.JSON_WS_URL + SERVICEMANAGER_PATH + SERVICEBROADCASTRULE_CTX + 'get-service-rules', {
+    params: {
+      serviceId: applicationId,
+      schoolId: schoolId
+    }
+  }).then(response => response.data)
+}
+
+function updateBroadcastScope (serviceId, schoolId, rules) {
+  return axios.post(constants.JSON_WS_URL + SERVICEMANAGER_PATH + SERVICEBROADCASTRULE_CTX + 'update-broadcast-rules',
+    PentilaUtils.URL.params({
       serviceId: serviceId,
-      rules: ruleIdList
+      schoolId: schoolId,
+      rules: JSON.stringify(rules)
     })
-  })).then(response => response.data)
+  ).then(response => response.data)
 }
 
-function updateBroadcastStatus (schoolId, serviceId, isAvailable) {
-  return axios.post(url, PentilaUtils.URL.params({
-    cmd: 'updateDiffusion',
-    diffusion: isAvailable,
-    etabId: schoolId,
-    serviceId: serviceId
-  })).then(response => response.data)
+function updateBroadcast (serviceId, schoolId, isAvailable, serviceUrl) {
+  return axios.post(constants.JSON_WS_URL + SERVICEMANAGER_PATH + SERVICEBROADCAST_CTX + 'update-broadcast',
+    PentilaUtils.URL.params({
+      serviceId: serviceId,
+      schoolId: schoolId,
+      isBroadcasted: isAvailable,
+      serviceUrl: serviceUrl
+    })
+  ).then(response => response.data)
 }
 
-function updateURL (schoolId, serviceId, applicationURL) {
-  return axios.post(url, PentilaUtils.URL.params({
-    cmd: 'updateUrl',
-    url: applicationURL,
-    etabId: schoolId,
-    serviceId: serviceId
-  })).then(response => response.data)
+function exportApplicationUserList (schoolId, applicationId, role) {
+  return axios.get(constants.JSON_WS_URL + SERVICEMANAGER_PATH + SERVICE_CTX + 'export', {
+    params: {
+      serviceId: applicationId,
+      schoolId: schoolId,
+      roleName: role
+    }
+  }).then(response => response.data)
 }

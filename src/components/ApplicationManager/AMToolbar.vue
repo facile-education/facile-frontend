@@ -42,7 +42,7 @@ export default {
         return this.$store.state.administration.selectedSchool
       },
       set (school) {
-        this.$store.commit('administration/setSelectedSchool', school)
+        this.$store.dispatch('administration/setSelectedSchool', school)
       }
     },
     show () {

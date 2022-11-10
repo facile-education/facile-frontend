@@ -64,24 +64,24 @@
         <div class="input-completion">
           <PentilaInput
             ref="category"
-            v-model="application.serviceCategory"
+            v-model="application.category"
             :placeholder="$t('categoryPlaceholder') + '*'"
             :max-lenght="75"
-            @blur="v$.application.serviceCategory.$touch()"
+            @blur="v$.application.category.$touch()"
             @focus="toggleCompletion"
           />
-          <PentilaErrorMessage :error-message="formErrorList.serviceCategory" />
+          <PentilaErrorMessage :error-message="formErrorList.category" />
           <PentilaAutocomplete
             v-if="displayCategoryCompletion"
             :list="categoryList"
-            :input="application.serviceCategory"
+            :input="application.category"
             @select="selectCategory"
             @close="toggleCompletion"
           />
         </div>
         <PentilaTagsInput
           v-if="schoolList"
-          v-model="application.etabFilters"
+          v-model="application.authorizedSchools"
           :placeholder="$t('schoolsPlaceholder')"
           :list="schoolList"
           display-field="schoolName"
@@ -97,7 +97,6 @@
             display-field="displayText"
             id-field="roleId"
           />
-          <PentilaErrorMessage :error-message="formErrorList.roleList" />
         </div>
 
         <div class="default-portlet">
@@ -208,10 +207,9 @@ export default {
   },
   validations: {
     application: {
-      roleList: { required },
       serviceName: { required },
       serviceKey: { required },
-      serviceCategory: { required }
+      category: { required }
     }
   },
   computed: {
@@ -221,10 +219,9 @@ export default {
     formErrorList () {
       const form = this.v$.application
       return {
-        roleList: (form.roleList.$invalid && form.roleList.$dirty) ? this.$t('Commons.formRequired') : '',
         serviceName: (form.serviceName.$invalid && form.serviceName.$dirty) ? this.$t('Commons.formRequired') : '',
         serviceKey: (form.serviceKey.$invalid && form.serviceKey.$dirty) ? this.$t('Commons.formRequired') : '',
-        serviceCategory: (form.serviceCategory.$invalid && form.serviceCategory.$dirty) ? this.$t('Commons.formRequired') : ''
+        category: (form.category.$invalid && form.category.$dirty) ? this.$t('Commons.formRequired') : ''
       }
     },
     portletList () {
@@ -275,12 +272,6 @@ export default {
     if (this.roleList === undefined) {
       this.$store.dispatch('administration/getRoleList')
     }
-    // Copy selected app
-    if (this.$store.state.applicationManager.selectedApplication.roleList === undefined) {
-      this.$store.dispatch('applicationManager/getApplicationDefaultRoleList').then(() => {
-        this.application = PentilaUtils.JSON.deepCopy(this.$store.state.applicationManager.selectedApplication)
-      })
-    }
     this.application = PentilaUtils.JSON.deepCopy(this.$store.state.applicationManager.selectedApplication)
   },
   methods: {
@@ -320,10 +311,11 @@ export default {
           }
           this.$store.dispatch('applicationManager/createApplication', params)
         }
+        this.closeModal()
       }
     },
     selectCategory (category) {
-      this.application.serviceCategory = category
+      this.application.category = category
     },
     selectImage ({ blob, fileName }) {
       const reader = new FileReader()

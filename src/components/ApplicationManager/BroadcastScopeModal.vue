@@ -20,14 +20,14 @@
           @remove="removeScope"
           @update="updateRule"
         />
-        <RuleItem
-          :rule="emptyRule"
-          :is-default="true"
-          :is-error-list-displayed="false"
-          @blur="addScope"
-          @update="updateEmptyRule"
-        />
       </template>
+      <RuleItem
+        :rule="emptyRule"
+        :is-default="true"
+        :is-error-list-displayed="false"
+        @blur="addScope"
+        @update="updateEmptyRule"
+      />
     </template>
 
     <template #footer>
@@ -95,19 +95,19 @@ export default {
       let currentClass
 
       for (currentClass of currentRule.classes) {
-        if (currentClass.value === 0 && currentRule.classes.length > 1) {
-          currentRuleId.classes.length = 0
-          currentRuleId.classes.push(currentClass.value)
+        if (currentClass.orgId === 0 && currentRule.classes.length > 1) {
+          currentRuleId.classIds.length = 0
+          currentRuleId.classIds.push(currentClass.orgId)
           updateClassList = true
           break
         } else {
-          currentRuleId.classes.push(currentClass.value)
+          currentRuleId.classIds.push(currentClass.orgId)
         }
       }
       // Rewrite class list if all school item is selected
       if (updateClassList) {
-        currentRule.classes.length = 0
-        currentRule.classes.push(currentClass)
+        currentRule.classIds.length = 0
+        currentRule.classIds.push(currentClass.orgId)
       }
     },
     buildRoleIdList (currentRule, currentRuleId) {
@@ -116,18 +116,18 @@ export default {
       let currentRole
       for (currentRole of currentRule.roles) {
         if (currentRole.roleId === 0 && currentRule.roles.length > 1) {
-          currentRuleId.roles.length = 0
-          currentRuleId.roles.push(currentRole.roleId)
+          currentRuleId.roleIds.length = 0
+          currentRuleId.roleIds.push(currentRole.roleId)
           updateRoleList = true
           break
         } else {
-          currentRuleId.roles.push(currentRole.roleId)
+          currentRuleId.roleIds.push(currentRole.roleId)
         }
       }
       // Rewrite role list if all role item is selected
       if (updateRoleList) {
-        currentRule.roles.length = 0
-        currentRule.roles.push(currentRole)
+        currentRule.roleIds.length = 0
+        currentRule.roleIds.push(currentRole.roleId)
       }
     },
     removeEmptyRuleList () {
@@ -162,7 +162,7 @@ export default {
 
       // Build id lists for saving
       this.ruleList.forEach((currentRule) => {
-        const currentRuleId = { classes: [], roles: [] }
+        const currentRuleId = { roleIds: [], classIds: [] }
         this.buildRoleIdList(currentRule, currentRuleId)
         this.buildClassIdList(currentRule, currentRuleId)
         ruleIdList.push(currentRuleId)

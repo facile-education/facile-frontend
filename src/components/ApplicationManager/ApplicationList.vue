@@ -28,8 +28,8 @@ export default {
       const allApplications = this.$store.state.applicationManager.applicationList
       const applicationList = []
       for (let index = 0; index < allApplications.length; ++index) {
-        const app = allApplications[index].app
-        if (app.serviceCategory === this.category) {
+        const app = allApplications[index]
+        if (app.category === this.category) {
           applicationList.push(app)
         }
       }

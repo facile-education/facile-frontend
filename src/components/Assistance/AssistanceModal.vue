@@ -126,7 +126,7 @@ export default {
   //    roleList: { required },
   //    serviceName: { required },
   //    serviceKey: { required },
-  //    serviceCategory: { required }
+  //    category: { required }
   //  }
   // },
   computed: {
