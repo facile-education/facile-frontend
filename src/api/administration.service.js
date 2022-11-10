@@ -8,37 +8,35 @@ export default {
   getRoleList
 }
 
-const url = constants.APPLICATION_MANAGER_URL
+const SERVICEMANAGER_PATH = '/gestionApplications-portlet.'
+const SERVICE_CTX = '/'
+const SERVICEBROADCASTRULE_CTX = 'broadcastrule/'
 
 function getAdministeredSchoolList () {
-  return axios.get(url, {
+  return axios.get(constants.JSON_WS_URL + SERVICEMANAGER_PATH + SERVICE_CTX + 'get-schools', {
     params: {
-      cmd: 'getSchoolList'
     }
   }).then(response => response.data)
 }
 
 function getClassList (schoolId) {
-  return axios.get(url, {
+  return axios.get(constants.JSON_WS_URL + SERVICEMANAGER_PATH + SERVICEBROADCASTRULE_CTX + 'get-classes', {
     params: {
-      cmd: 'getListClasses',
-      etabId: schoolId
+      schoolId: schoolId
     }
   }).then(response => response.data)
 }
 
 function getPortletList () {
-  return axios.get(url, {
+  return axios.get(constants.JSON_WS_URL + SERVICEMANAGER_PATH + SERVICE_CTX + 'get-portlets', {
     params: {
-      cmd: 'getListPortlet'
     }
   }).then(response => response.data)
 }
 
 function getRoleList () {
-  return axios.get(url, {
+  return axios.get(constants.JSON_WS_URL + SERVICEMANAGER_PATH + SERVICE_CTX + 'get-roles', {
     params: {
-      cmd: 'getRoleList'
     }
   }).then(response => response.data)
 }

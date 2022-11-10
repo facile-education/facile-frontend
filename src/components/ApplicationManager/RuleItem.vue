@@ -23,7 +23,7 @@
         :model-value="rule.classes"
         :placeholder="$t('classesPlaceholder') + '*'"
         :list="classList"
-        display-field="displayText"
+        display-field="name"
         @blur="onBlurClasses"
         @update:modelValue="updateClasses"
       />

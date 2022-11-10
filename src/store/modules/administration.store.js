@@ -28,9 +28,17 @@ export const actions = {
   async getAdministrationSchools ({ commit }) {
     await administrationService.getAdministeredSchoolList().then((data) => {
       if (data.success) {
-        commit('initAdministeredSchoolList', data.etabList)
-        if (data.etabList.length > 0) {
-          commit('setSelectedSchool', data.etabList[0])
+        commit('initAdministeredSchoolList', data.schools)
+        if (data.schools.length > 0) {
+          // If schoolId 0 is present , choose it
+          const adminSchool = data.schools.find(school => school.schoolId === 0)
+          if (adminSchool !== undefined) {
+            commit('setSelectedSchool', adminSchool)
+            commit('applicationManager/setAdministratorMode', true, { root: true })
+          } else {
+            commit('setSelectedSchool', data.schools[0])
+            commit('applicationManager/setAdministratorMode', false, { root: true })
+          }
         }
       }
     })
@@ -38,14 +46,14 @@ export const actions = {
   getClassList ({ state, commit }) {
     administrationService.getClassList(state.selectedSchool.schoolId).then((data) => {
       if (data.success) {
-        commit('setClassList', data.classList)
+        commit('setClassList', data.classes)
       }
     })
   },
   getPortletList ({ commit }) {
     administrationService.getPortletList().then((data) => {
       if (data.success) {
-        commit('initPortletList', data.listPortlet)
+        commit('initPortletList', data.portlets)
       }
     })
   },
@@ -53,16 +61,21 @@ export const actions = {
     administrationService.getRoleList().then((data) => {
       if (data.success) {
         // TODO move to back-end
-        data.roleList.unshift({
+        data.roles.unshift({
           displayText: 'Tous les profils',
           roleId: 0,
           isForClasse: false
         })
-        commit('initRoleList', data.roleList)
+        commit('initRoleList', data.roles)
       }
     })
   },
   setSelectedSchool ({ commit }, school) {
     commit('setSelectedSchool', school)
+    if (school.schoolId === 0) {
+      commit('applicationManager/setAdministratorMode', true, { root: true })
+    } else {
+      commit('applicationManager/setAdministratorMode', false, { root: true })
+    }
   }
 }
