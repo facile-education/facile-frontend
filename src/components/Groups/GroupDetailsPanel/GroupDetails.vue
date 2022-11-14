@@ -76,7 +76,7 @@
 
   <teleport to="body">
     <EditGroupModal
-      v-if="isEditGroupModalDisplayed"
+      v-if="isEditGroupModalDisplayed && selectedGroup"
       :edited-group="selectedGroup"
       win-width="500px"
       @close="isEditGroupModalDisplayed=false"
@@ -104,10 +104,14 @@ export default {
       return this.$store.state.groups.selectedGroup
     },
     groupCategory () {
-      if (this.selectedGroup.isContactList) {
-        return this.$t('institutionnal')
-      } else if (this.selectedGroup.isPedagogical) {
-        return this.$t('pedagogical')
+      if (this.selectedGroup) {
+        if (this.selectedGroup.isContactList) {
+          return this.$t('institutionnal')
+        } else if (this.selectedGroup.isPedagogical) {
+          return this.$t('pedagogical')
+        } else {
+          return ''
+        }
       } else {
         return ''
       }
