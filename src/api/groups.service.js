@@ -9,7 +9,7 @@ export {
   createCommunity,
   editCommunity,
   removeCommunity,
-  getGroupActivity,
+  getGroupHistory,
   addCommunityMembers,
   removeCommunityMember,
   addCommunityAdmin,
@@ -98,8 +98,8 @@ function addCommunityMembers (groupId, members) {
   ).then(response => response.data)
 }
 
-function getGroupActivity (groupId, maxDate, nbResults) {
-  return axios.get(constants.JSON_WS_URL + GROUP_PATH + GROUP_CTX + 'get-group-activity', {
+function getGroupHistory (groupId, maxDate, nbResults) {
+  return axios.get(constants.JSON_WS_URL + GROUP_PATH + GROUP_CTX + 'get-group-history', {
     params: {
       groupId: groupId,
       maxDate: maxDate,

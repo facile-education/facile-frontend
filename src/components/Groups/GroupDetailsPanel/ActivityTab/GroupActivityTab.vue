@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { getGroupActivity } from '@/api/groups.service'
+import { getGroupHistory } from '@/api/groups.service'
 import { nbActivityPerPage } from '@/constants/activityConstants'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
@@ -56,13 +56,13 @@ export default {
     }
   },
   created () {
-    this.maxDate = dayjs()
+    this.maxDate = dayjs().add(1, 'day')
     this.getActivities()
   },
   methods: {
     getActivities () {
       this.activitiesLoading = true
-      getGroupActivity(this.group.groupId, this.maxDate.format('YYYY-MM-DD'), nbActivityPerPage).then((data) => {
+      getGroupHistory(this.group.groupId, this.maxDate.format('YYYY-MM-DD'), nbActivityPerPage).then((data) => {
         this.activitiesLoading = false
         if (data.success) {
           this.activityList = this.activityList.concat(data.activities)
