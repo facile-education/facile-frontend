@@ -7,7 +7,7 @@
       >
       <div class="activity-description">
         <div class="author">
-          {{ activity.userName }}
+          {{ formattedAuthor }}
         </div>
         <div class="activity-type">
           <span>
@@ -45,6 +45,15 @@ export default {
     }
   },
   computed: {
+    formattedAuthor () {
+      if (this.activityType === 'documents') {
+        return this.activity.userName
+      } else if (this.activityType === 'membership') {
+        return this.activity.actionUserName
+      } else {
+        return this.activity.userName
+      }
+    },
     formattedDate () {
       return dayjs(this.activity.modificationDate).format('DD MMM YYYY')
     },
@@ -86,10 +95,10 @@ export default {
           formattedText = this.$t('TYPE_FOLDER_DELETION')
           break
         case activityTypes.TYPE_ADD_MEMBERSHIP:
-          formattedText = this.$t('TYPE_ADD_MEMBERSHIP')
+          formattedText = this.$t('TYPE_ADD_MEMBERSHIP') + this.activity.targetUserNames
           break
         case activityTypes.TYPE_REMOVE_MEMBERSHIP:
-          formattedText = this.$t('TYPE_REMOVE_MEMBERSHIP')
+          formattedText = this.$t('TYPE_REMOVE_MEMBERSHIP') + this.activity.targetUserNames
           break
         // TODO: others types
         default:
