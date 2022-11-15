@@ -51,7 +51,11 @@
 
       <teleport to="body">
         <!-- Parameters -->
-        <ParametersModal v-if="isParametersModalDisplayed" />
+        <!--        <ParametersModal v-if="isParametersModalDisplayed" />-->
+        <PreferencesModal
+          v-if="isParametersModalDisplayed"
+          tab="messaging"
+        />
         <!-- Create message modal -->
         <CreateMessageModal v-if="isCreateMessageModalDisplayed" />
       </teleport>
@@ -67,10 +71,11 @@ import SplitArea from '@components/Split/SplitArea'
 import Menu from '@components/Messaging/Menu'
 import ThreadList from '@components/Messaging/ThreadList'
 import ThreadDetails from '@components/Messaging/ThreadDetails'
-import ParametersModal from '@components/Messaging/ParametersModal'
-import CreateMessageModal from '@components/Messaging/CreateMessageModal'
 import configurationService from '@/api/messaging/configuration.service'
 import messagingUtils from '@/utils/messaging.utils'
+import { defineAsyncComponent } from 'vue'
+const CreateMessageModal = defineAsyncComponent(() => import('@components/Messaging/CreateMessageModal'))
+const PreferencesModal = defineAsyncComponent(() => import('@components/Preferences/PreferencesModal'))
 
 export default {
   name: 'Messaging',
@@ -81,7 +86,8 @@ export default {
     Menu,
     ThreadList,
     ThreadDetails,
-    ParametersModal,
+    PreferencesModal,
+    // ParametersModal,
     CreateMessageModal
   },
   inject: ['mq'],

@@ -77,6 +77,9 @@ export const mutations = {
     state.details.mobilePhoneNumber = payload.mobilePhone
     state.details.officePhoneNumber = payload.proPhone
     state.details.smsPhoneNumber = payload.SMSPhone
+    state.details.isLocalUser = payload.isLocalUser
+    state.details.reportFrequency = payload.reportFrequency
+    state.details.webdavUrl = payload.webdavUrl
   }
 }
 export const actions = {
@@ -93,6 +96,9 @@ export const actions = {
         // TODO toastr
         console.error(err)
       })
+  },
+  updatePersonalDetails ({ commit }, data) {
+    commit('updateUserDetails', data)
   },
   getServiceList ({ commit }) {
     userService.getServiceList().then((data) => {

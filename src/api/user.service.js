@@ -8,7 +8,11 @@ export default {
   getUserInformations,
   removePicture,
   updateInterfacePreferences,
-  uploadProfilePicture
+  uploadProfilePicture,
+  updateThemeColor,
+  updateReportFrequency,
+  updateWebdavState,
+  updateWebdavPassword
 }
 
 const PREF_PATH = '/preference-portlet.'
@@ -58,6 +62,40 @@ function updateInterfacePreferences (preferences) {
       'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
     }
   }).then(response => response.data)
+}
+
+function updateThemeColor (newColor) {
+  const formattedColor = newColor.replace('#', '').toLowerCase()
+  return axios.post(constants.JSON_WS_URL + PREF_PATH + 'userproperties/update-theme-color',
+    PentilaUtils.URL.params({
+      color: formattedColor
+    })
+  ).then(response => response.data)
+}
+
+function updateReportFrequency (frequency) {
+  return axios.post(constants.JSON_WS_URL + PREF_PATH + 'userproperties/update-report-frequency',
+    PentilaUtils.URL.params({
+      frequency: frequency
+    })
+  ).then(response => response.data)
+}
+
+function updateWebdavState (isEnabled) {
+  return axios.post(constants.JSON_WS_URL + PREF_PATH + 'userproperties/update-webdav-state',
+    PentilaUtils.URL.params({
+      isEnabled: isEnabled
+    })
+  ).then(response => response.data)
+}
+
+function updateWebdavPassword (password, confirmPassword) {
+  return axios.post(constants.JSON_WS_URL + PREF_PATH + 'userproperties/update-webdav-password',
+    PentilaUtils.URL.params({
+      password: password,
+      confirmPassword: confirmPassword
+    })
+  ).then(response => response.data)
 }
 
 /**
