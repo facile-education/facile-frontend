@@ -7,7 +7,11 @@
         class="checkbox"
         label=""
       />
-      {{ $t('Messaging.Parameters.forward') }}
+      {{ $t('forward') }}
+      <InformationIcon
+        class="info"
+        :text="$t('forwardInfo')"
+      />
     </div>
     <PentilaTagsInput
       v-model="configuration.forward.addresses"
@@ -58,9 +62,11 @@
 
 <script>
 import configurationService from '@/api/messaging/configuration.service'
+import InformationIcon from '@components/Base/InformationIcon'
 
 export default {
   name: 'MessagingTab',
+  components: { InformationIcon },
   data () {
     return {
       configuration: {}
@@ -102,9 +108,20 @@ export default {
     display: flex;
     margin-top: 40px;
     margin-bottom: 10px;
+
+    .info {
+      margin-left: 10px;
+    }
   }
   .param-value {
     padding-left: 20px;
   }
 }
 </style>
+
+<i18n locale="fr">
+{
+  "forward": "Être averti par courriel",
+  "forwardInfo": "Renseignez une adresse de courriel pour être averti de l’arrivé d’un nouveau message."
+}
+</i18n>
