@@ -139,18 +139,24 @@
       @save="selectImage"
       @close="toggleImagePicker"
     />
+    <AssistanceModal
+      v-if="isSupportModalDisplayed"
+      @close="isSupportModalDisplayed = false"
+    />
   </teleport>
 </template>
 
 <script>
-import ImagePickerModal from '@components/Nero/ImagePicker'
 import ColorPicker from '@components/Nero/ColorPicker'
 import PentilaUtils from 'pentila-utils'
 import userService from '@/api/user.service'
+import { defineAsyncComponent } from 'vue'
+const ImagePickerModal = defineAsyncComponent(() => import('@/components/Nero/ImagePicker'))
+const AssistanceModal = defineAsyncComponent(() => import('@/components/Assistance/AssistanceModal'))
 
 export default {
   name: 'AccountTab',
-  components: { ColorPicker, ImagePickerModal },
+  components: { AssistanceModal, ColorPicker, ImagePickerModal },
   data () {
     return {
       show: false,
@@ -169,7 +175,8 @@ export default {
       isCollapsed: true,
       password: '',
       confirmedPassword: '',
-      confirmationError: ''
+      confirmationError: '',
+      isSupportModalDisplayed: false
     }
   },
   computed: {
@@ -258,8 +265,7 @@ export default {
       }
     },
     reportChange () {
-      // TODO
-      console.log('Todo: Open support modal')
+      this.isSupportModalDisplayed = true
     },
     copyWebdavUrl () {
       navigator.permissions.query({ name: 'clipboard-write' }).then(result => {
