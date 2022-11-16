@@ -15,7 +15,7 @@
     </div>
     <PentilaTagsInput
       v-model="configuration.forward.addresses"
-      placeholder="Adresses"
+      :placeholder="$t('addRedirection')"
       display-field="text"
       id-field="id"
       :disabled="!configuration.forward.isActive"
@@ -29,7 +29,7 @@
         class="checkbox"
         label=""
       />
-      {{ $t('Messaging.Parameters.signature') }}
+      {{ $t('signature') }}
     </div>
     <PentilaInput
       id="signature-input"
@@ -47,7 +47,7 @@
         class="checkbox"
         label=""
       />
-      {{ $t('Messaging.Parameters.autoReply') }}
+      {{ $t('autoReply') }}
     </div>
     <PentilaInput
       id="autoReply-input"
@@ -58,6 +58,8 @@
       :placeholder="$t('Messaging.Parameters.autoReplyPlaceHolder')"
     />
   </div>
+
+  <PentilaButton :label="$t('save')" />
 </template>
 
 <script>
@@ -121,6 +123,10 @@ export default {
 
 <i18n locale="fr">
 {
+  "addRedirection": "Ajouter une adresse de couriel",
+  "signature": "Signature",
+  "autoReply": "Réponse automatique",
+  "save": "Enregistrer",
   "forward": "Être averti par courriel",
   "forwardInfo": "Renseignez une adresse de courriel pour être averti de l’arrivé d’un nouveau message."
 }
