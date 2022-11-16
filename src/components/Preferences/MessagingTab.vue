@@ -1,11 +1,15 @@
 <template>
-  <div class="messaging-tab">
+  <div
+    v-if="configuration"
+    class="messaging-tab"
+  >
     <!-- Forward -->
     <div class="param-header">
       <PentilaCheckbox
         v-model="configuration.forward.isActive"
         class="checkbox"
         label=""
+        @update:modelValue="updateConfiguration"
       />
       {{ $t('forward') }}
       <InformationIcon
@@ -20,6 +24,7 @@
       id-field="id"
       :disabled="!configuration.forward.isActive"
       class="param-value"
+      @update:modelValue="updateConfiguration"
     />
 
     <!-- Signature -->
@@ -28,6 +33,7 @@
         v-model="configuration.signature.isActive"
         class="checkbox"
         label=""
+        @update:modelValue="updateConfiguration"
       />
       {{ $t('signature') }}
     </div>
@@ -38,6 +44,7 @@
       data-test="signature-input"
       :disabled="!configuration.signature.isActive"
       :placeholder="$t('Messaging.Parameters.signaturePlaceHolder')"
+      @blur="updateConfiguration"
     />
 
     <!-- Auto-reply -->
@@ -46,6 +53,7 @@
         v-model="configuration.autoReply.isActive"
         class="checkbox"
         label=""
+        @update:modelValue="updateConfiguration"
       />
       {{ $t('autoReply') }}
     </div>
@@ -56,10 +64,10 @@
       data-test="autoReply-input"
       :disabled="!configuration.autoReply.isActive"
       :placeholder="$t('Messaging.Parameters.autoReplyPlaceHolder')"
+      @blur="updateConfiguration"
     />
   </div>
-
-  <PentilaButton :label="$t('save')" />
+  <PentilaSpinner v-else />
 </template>
 
 <script>
@@ -71,7 +79,7 @@ export default {
   components: { InformationIcon },
   data () {
     return {
-      configuration: {}
+      configuration: undefined
       // validation: [{
       //   classes: 'email',
       //   rule: /^(.+)@(.+)\.(.+)$/,
@@ -96,6 +104,10 @@ export default {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('successMessage'), type: 'success' })
           this.$store.dispatch('messaging/setSignature', this.configuration.signature.content)
           this.onClose()
+        } else {
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+          // Rewrite from with back-end config
+          this.getConfiguration()
         }
       })
     }
