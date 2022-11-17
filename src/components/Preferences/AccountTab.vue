@@ -70,7 +70,7 @@
         :model-value="selectedFrequency"
         :list="frequency"
         display-field="label"
-        @update:modelValue="onFrequencySelect(value)"
+        @update:modelValue="onFrequencySelect"
       />
     </section>
     <section class="webdav">
@@ -214,7 +214,6 @@ export default {
         })
     },
     onColorChange (newColor) {
-      console.log('tyvgfeforefvree')
       userService.updateThemeColor(newColor).then((data) => {
         if (data.success) {
           PentilaUtils.Theme.updateColor(this.themeColor, newColor)
@@ -224,14 +223,15 @@ export default {
         }
       })
     },
-    onFrequencySelect () {
+    onFrequencySelect (newfrequency) {
       if (this.selectedFrequency) {
-        userService.updateReportFrequency(this.selectedFrequency.value).then((data) => {
+        userService.updateReportFrequency(newfrequency.value).then((data) => {
           if (data.success) {
             this.$store.dispatch('user/updatePersonalDetails', {
               ...this.details,
-              reportFrequency: this.selectedFrequency.value
+              reportFrequency: newfrequency.value
             })
+            this.selectedFrequency = this.frequency[newfrequency.value]
           } else {
             this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
           }
