@@ -6,7 +6,8 @@ export default {
   getPersonalDetails,
   getServiceList,
   getUserInformations,
-  removePicture,
+  updateUserPicture,
+  removeUserPicture,
   updateInterfacePreferences,
   uploadProfilePicture,
   updateThemeColor,
@@ -32,17 +33,6 @@ function getPersonalDetails () {
 function getUserInformations () {
   return axios.get(constants.JSON_WS_URL + PREF_PATH + 'userproperties/get-user-infos', {
     params: {}
-  }).then(response => response.data)
-}
-
-/**
- * Remove user portrait
- */
-function removePicture () {
-  return axios.get(constants.PREFERENCES_URL, {
-    params: {
-      cmd: 'removePicture'
-    }
   }).then(response => response.data)
 }
 
@@ -86,6 +76,24 @@ function updateWebdavState (isEnabled) {
     PentilaUtils.URL.params({
       isEnabled: isEnabled
     })
+  ).then(response => response.data)
+}
+
+function updateUserPicture (formData) {
+  return axios.post(constants.JSON_WS_URL + PREF_PATH + 'userproperties/update-user-picture',
+    formData
+  ).then(response => response.data)
+}
+
+/**
+ * Remove user portrait
+ */
+function removeUserPicture () {
+  const formData = new FormData()
+  formData.append('picture', new Blob([]), '')
+
+  return axios.post(constants.JSON_WS_URL + PREF_PATH + 'userproperties/update-user-picture',
+    formData
   ).then(response => response.data)
 }
 

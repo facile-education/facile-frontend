@@ -133,7 +133,7 @@ export const actions = {
       })
   },
   removePicture ({ commit }) {
-    userService.removePicture().then(
+    userService.removeUserPicture().then(
       (data) => {
         if (data.success) {
           console.log('TODO get default img dynamiccaly')
@@ -158,10 +158,10 @@ export const actions = {
       })
   },
   saveProfilePicture ({ commit }, formData) {
-    userService.uploadProfilePicture(formData).then(
+    userService.updateUserPicture(formData).then(
       (data) => {
         if (data.success) {
-          commit('updatePicture', data.urlThumb)
+          commit('updatePicture', data.imageUrl)
         }
       },
       (err) => {

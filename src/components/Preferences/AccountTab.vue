@@ -279,7 +279,7 @@ export default {
     },
     selectImage ({ blob, fileName }) {
       const formData = new FormData()
-      formData.append('files', blob, fileName)
+      formData.append('picture', blob, fileName)
       this.$store.dispatch('user/saveProfilePicture', formData)
     },
     removePicture () {
