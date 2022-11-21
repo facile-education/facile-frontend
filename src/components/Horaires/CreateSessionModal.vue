@@ -23,6 +23,8 @@
           class="days-list"
           :list="daysList"
           display-field="dayName"
+          :sort="false"
+          :filtered="false"
         />
         <p
           class="datetime-label"
@@ -54,7 +56,7 @@
       <div
         class="group"
       >
-        {{ $t('group') }}
+        <span class="label">{{ $t('group') }}</span>
         <PentilaDropdown
           v-model="selectedGroup"
           class="group-list"
@@ -65,6 +67,22 @@
       </div>
       <PentilaErrorMessage
         :error-message="formErrorList.group"
+      />
+
+      <!-- Subject -->
+      <div
+        class="subject"
+      >
+        <span class="label">{{ $t('subject') }}</span>
+        <PentilaDropdown
+          v-model="subject"
+          class="subject-list"
+          :list="subjectList"
+          display-field="name"
+        />
+      </div>
+      <PentilaErrorMessage
+        :error-message="formErrorList.subject"
       />
 
       <div
@@ -85,20 +103,6 @@
       </div>
       <PentilaErrorMessage
         :error-message="formErrorList.selectedTeachers"
-      />
-
-      <!-- Subject -->
-      <div
-        class="subject"
-      >
-        <PentilaInput
-          v-model="subject"
-          class="subject-input"
-          :placeholder="$t('subjectPlaceHolder')"
-        />
-      </div>
-      <PentilaErrorMessage
-        :error-message="formErrorList.subject"
       />
 
       <!-- Room -->
@@ -137,7 +141,8 @@
 import { required } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
 import { createSession } from '@/api/cdt.service'
-import { getSchoolsTeachers } from '@/api/organization.service'
+import { getSchoolTeachers } from '@/api/organization.service'
+import { getSubjects } from '@/api/userManagement.service'
 import { getUserGroups } from '@/api/groups.service'
 import dayjs from 'dayjs'
 
@@ -173,6 +178,7 @@ export default {
       groupList: [],
       selectedGroup: undefined,
       room: '',
+      subjectList: [],
       subject: '',
       selectedDay: {},
       startTime: '8:00',
@@ -203,25 +209,40 @@ export default {
       { dayNb: 3, dayName: 'Mercredi' },
       { dayNb: 4, dayName: 'Jeudi' },
       { dayNb: 5, dayName: 'Vendredi' },
-      { dayNb: 6, dayName: 'Samedi' },
-      { dayNb: 7, dayName: 'Dimanche' }
+      { dayNb: 6, dayName: 'Samedi' }
     ]
     this.selectedDay = this.daysList[0]
 
     // Get teacher list from backend
     this.teacherList.length = 0
-    getSchoolsTeachers().then((data) => {
+    getSchoolTeachers(this.$store.state.user.selectedSchool.schoolId).then((data) => {
       if (data.success) {
         this.teacherList = data.teachers
+        // Pre-select if teacher is selected in main panel
+        if (this.$store.state.horaires.selectedUser.userId !== 0 && this.$store.state.horaires.selectedUser.isTeacher) {
+          this.selectedTeachers.push(this.$store.state.horaires.selectedUser)
+        }
       }
     })
 
-    getUserGroups(0, true, true, true).then((data) => {
+    // Get subject list from backend
+    this.subjectList.length = 0
+    getSubjects().then((data) => {
+      if (data.success) {
+        this.subjectList = data.subjects
+        // Pre-select first subject
+        this.subject = this.subjectList[0]
+      }
+    })
+
+    getUserGroups(this.$store.state.user.selectedSchool.schoolId, true, true, true).then((data) => {
       if (data.success) {
         this.groupList = this.groupList.concat(data.groups)
         // Pre-select current group if any
         if (this.$store.state.horaires.selectedGroup.groupId !== 0) {
           this.selectedGroup = this.$store.state.horaires.selectedGroup
+        } else {
+          this.selectedGroup = data.groups[0]
         }
       }
     })
@@ -236,10 +257,10 @@ export default {
         this.v$.$touch()
       } else {
         // Build startDate and endDate
-        const startDate = dayjs(dayjs().format('YYYY-MM-DD') + ' ' + this.startTime, 'YYYY-MM-DD HH:mm')
-        const endDate = dayjs(dayjs().format('YYYY-MM-DD') + ' ' + this.endTime, 'YYYY-MM-DD HH:mm')
+        const startDate = dayjs(dayjs().add((this.selectedDay.dayNb - 1), 'day').format('YYYY-MM-DD') + ' ' + this.startTime, 'YYYY-MM-DD HH:mm')
+        const endDate = dayjs(dayjs().add((this.selectedDay.dayNb - 1), 'day').format('YYYY-MM-DD') + ' ' + this.endTime, 'YYYY-MM-DD HH:mm')
 
-        createSession(this.selectedGroup.groupId, this.subject, this.room, startDate, endDate, this.selectedTeachers, this.isRecurrent).then((data) => {
+        createSession(this.selectedGroup.groupId, this.subject.name, this.room, startDate, endDate, this.selectedTeachers, this.isRecurrent).then((data) => {
           if (data.success) {
             this.teacherList = data.teachers
           }
@@ -279,8 +300,12 @@ export default {
 
 .group, .teachers, .subject, .room, .recurrence {
   margin-top: 10px;
-  .group-list {
+  .group-list, .subject-list {
     margin-left: 10px;
+  }
+  .label {
+    display: inline-block;
+    width: 130px;
   }
 }
 </style>
@@ -292,8 +317,8 @@ export default {
   "from": "de",
   "to": "à",
   "hour": "h",
-  "group": "Groupe",
-  "subjectPlaceHolder": "Discipline",
+  "group": "Classe / Groupe",
+  "subject": "Discipline",
   "teachersPlaceHolder" : "Enseignants",
   "roomPlaceHolder": "Salle",
   "recurrence": "Chaque semaine jusqu'à la fin de l'année scolaire",
