@@ -1,83 +1,93 @@
 <template>
-  <NeroToolbar>
-    <PentilaDropdown
-      v-if="(schoolList && schoolList.length > 1)"
-      v-model="selectedSchool"
-      :list="schoolList"
-      display-field="schoolName"
-      @update:modelValue="onSelectSchool"
-    />
-    <NeroIcon
-      v-if="mq.phone"
-      :name="iconClass"
-      class="selection"
-      @click="toggleSelection"
-    />
+  <NeroToolbar class="toolbar">
+    <div class="left-toolbar">
+      <!-- Create session button -->
+      <PentilaButton
+        v-if="displayCreateButton"
+        class="create-button"
+        @click="openCreateSessionModal"
+      >
+        <NeroIcon
+          name="fa-plus"
+        />
+        <span>{{ $t('add') }}</span>
+      </PentilaButton>
 
-    <!-- Parents with 1 child -->
-    <p
-      v-if="children.length === 1"
-      class="child"
-    >
-      {{ $t('Horaires.timetableOf') }} {{ children[0].firstName }}
-    </p>
-
-    <!-- Parents with 2 or more children -->
-    <div
-      v-if="children.length > 1"
-      class="children"
-    >
-      <p class="children-label">
-        {{ $t('Horaires.timetableOf') }}
-      </p>
-      <PentilaDropdown
-        v-model="selectedChild"
-        class="children-list"
-        :placeholder="$t('Horaires.childFilter')"
-        :list="$store.state.user.children"
-        display-field="firstName"
+      <NeroIcon
+        v-if="mq.phone"
+        :name="iconClass"
+        class="selection"
+        @click="toggleSelection"
       />
+
+      <!-- Parents with 1 child -->
+      <p
+        v-if="children.length === 1"
+        class="child"
+      >
+        {{ $t('Horaires.timetableOf') }} {{ children[0].firstName }}
+      </p>
+
+      <!-- Group selector for agents -->
+      <PentilaDropdown
+        v-if="groupList && (!mq.phone || !isSingleUser) && !$store.state.user.isStudent && !$store.state.user.isParent"
+        v-model="selectedGroup"
+        class="group-list"
+        :placeholder="$t('Horaires.groupFilter')"
+        :list="groupList"
+        display-field="groupName"
+      />
+
+      <!-- Name selector for agents -->
+      <PentilaTagsInput
+        v-if="(!mq.phone || isSingleUser) && !$store.state.user.isStudent && !$store.state.user.isParent"
+        v-model="tagsList"
+        class="search"
+        data-test="user-completion-input"
+        :placeholder="$t('Horaires.userInput')"
+        :close-on-select="true"
+        :max-size="maxSize"
+        :completion-only="true"
+        :list="autocompleteUserList"
+        display-field="displayName"
+        id-field="userId"
+        @inputChange="searchTimeOut"
+        @update:modelValue="onSelectUser"
+      />
+      <DatepickerNav
+        v-if="mq.phone"
+        class="date-picker"
+        :selected-date="selectedDate"
+        @selectDate="onSelectDate"
+      />
+
+      <!-- Parents with 2 or more children -->
+      <div
+        v-if="children.length > 1"
+        class="children"
+      >
+        <p class="children-label">
+          {{ $t('Horaires.timetableOf') }}
+        </p>
+        <PentilaDropdown
+          v-model="selectedChild"
+          class="children-list"
+          :placeholder="$t('Horaires.childFilter')"
+          :list="$store.state.user.children"
+          display-field="firstName"
+        />
+      </div>
     </div>
 
-    <!-- Group selector for agents -->
-    <PentilaDropdown
-      v-if="groupList && (!mq.phone || !isSingleUser) && !$store.state.user.isStudent && !$store.state.user.isParent"
-      v-model="selectedGroup"
-      class="group-list"
-      :placeholder="$t('Horaires.groupFilter')"
-      :list="groupList"
-      display-field="groupName"
-    />
-
-    <!-- Name selector for agents -->
-    <PentilaTagsInput
-      v-if="(!mq.phone || isSingleUser) && !$store.state.user.isStudent && !$store.state.user.isParent"
-      v-model="tagsList"
-      class="search"
-      data-test="user-completion-input"
-      :placeholder="$t('Horaires.userInput')"
-      :close-on-select="true"
-      :max-size="maxSize"
-      :completion-only="true"
-      :list="autocompleteUserList"
-      display-field="displayName"
-      id-field="userId"
-      @inputChange="searchTimeOut"
-      @update:modelValue="onSelectUser"
-    />
-    <DatepickerNav
-      v-if="mq.phone"
-      class="date-picker"
-      :selected-date="selectedDate"
-      @selectDate="onSelectDate"
-    />
-
-    <!-- Create session button -->
-    <PentilaButton
-      v-if="$store.state.user.isDirectionMember || $store.state.user.isLocalAdmin || $store.state.user.isENTAdmin"
-      :label="$t('Horaires.createSession')"
-      @click="openCreateSessionModal"
-    />
+    <div class="right-toolbar">
+      <PentilaDropdown
+        v-if="(schoolList && schoolList.length > 1)"
+        v-model="selectedSchool"
+        :list="schoolList"
+        display-field="schoolName"
+        @update:modelValue="onSelectSchool"
+      />
+    </div>
   </NeroToolbar>
 </template>
 
@@ -153,12 +163,26 @@ export default {
         this.$store.commit('user/setSelectedChild', child)
         this.$store.dispatch('horaires/getSessionList')
       }
+    },
+    displayCreateButton () {
+      for (let index = 0; index < this.$store.state.user.schoolList.length; ++index) {
+        if (this.$store.state.user.schoolList[index].schoolId === this.$store.state.user.selectedSchool.schoolId && this.$store.state.user.schoolList[index].isAdmin) {
+          return true
+        }
+      }
+      return this.$store.state.user.isAdministrator || this.$store.state.user.isENTAdmin
     }
   },
   created () {
     if (this.groupList === undefined) {
       this.$store.dispatch('horaires/getGroupList')
     }
+
+    // Pre-select him and display sessions if user is a teacher
+    if (this.$store.state.user.isTeacher) {
+      this.$store.dispatch('horaires/selectUser', this.$store.state.user)
+    }
+    this.$store.dispatch('horaires/getSessionList')
   },
   methods: {
     getCompletion (inputValue) {
@@ -216,6 +240,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  .left-toolbar, .right-toolbar {
+    display: flex;
+  }
+}
+.create-button {
+  margin-left: .4rem;
+  margin-right: .8rem;
+  width: 120px;
+  border-radius: 32px;
+
+  span {
+    margin-left: 12px;
+  }
+}
+
 .selection {
   font-size: 2.3rem;
   padding: 0 0.5rem;
@@ -231,7 +273,6 @@ export default {
     margin: auto;
   }
   .children-list {
-    height: 30px;
     margin: auto;
   }
 }
@@ -251,6 +292,12 @@ export default {
 }
 
 .base-dropdown {
-  margin-right: .4rem;
+  margin-right: .8rem;
 }
 </style>
+
+<i18n locale="fr">
+  {
+    "add": "COURS"
+  }
+</i18n>
