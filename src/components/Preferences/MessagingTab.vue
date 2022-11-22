@@ -37,19 +37,10 @@
       />
       {{ $t('signature') }}
     </div>
-    <!--    <PentilaInput-->
-    <!--      id="signature-input"-->
-    <!--      v-model="configuration.signature.content"-->
-    <!--      class="param-value"-->
-    <!--      data-test="signature-input"-->
-    <!--      :disabled="!configuration.signature.isActive"-->
-    <!--      :placeholder="$t('Messaging.Parameters.signaturePlaceHolder')"-->
-    <!--      @blur="updateConfiguration"-->
-    <!--    />-->
     <TextContent
       class="ck"
       data-test="signature-input"
-      :content="{contentValue: configuration.signature.content}"
+      :content="{contentValue: signatureContent}"
       :disabled="!configuration.signature.isActive"
       :is-in-progression="false"
       @input="updateSignature"
@@ -66,13 +57,13 @@
       />
       {{ $t('autoReply') }}
     </div>
-    <PentilaInput
-      id="autoReply-input"
-      v-model="configuration.autoReply.content"
-      class="param-value"
-      data-test="autoReply-input"
+    <TextContent
+      class="ck"
+      data-test="signature-input"
+      :content="{contentValue: autoReplyContent}"
       :disabled="!configuration.autoReply.isActive"
-      :placeholder="$t('Messaging.Parameters.autoReplyPlaceHolder')"
+      :is-in-progression="false"
+      @input="updateAutoReply"
       @blur="updateConfiguration"
     />
   </div>
@@ -89,7 +80,10 @@ export default {
   components: { TextContent, InformationIcon },
   data () {
     return {
-      configuration: undefined
+      configuration: undefined,
+      isLoading: false,
+      signatureContent: undefined,
+      autoReplyContent: undefined
       // validation: [{
       //   classes: 'email',
       //   rule: /^(.+)@(.+)\.(.+)$/,
@@ -104,24 +98,35 @@ export default {
     updateSignature (value) {
       this.configuration.signature.content = value
     },
+    updateAutoReply (value) {
+      this.configuration.autoReply.content = value
+    },
     getConfiguration () {
       configurationService.getMessagingConfiguration().then((data) => {
         if (data.success) {
           this.configuration = data.configuration
+          // necessary to duplicate to avoid errors in ckEditor
+          this.signatureContent = data.configuration.signature.content
+          this.autoReplyContent = data.configuration.autoReply.content
         }
       })
     },
     updateConfiguration () {
       // TODO: form validation (mails, required...)
-      configurationService.updateMessagingConfiguration(this.configuration).then((data) => {
-        if (data.success) {
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('successMessage'), type: 'success' })
-        } else {
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
-          // Rewrite from with back-end config
-          this.getConfiguration()
-        }
-      })
+      if (!this.isLoading) { // because sometimes, the blur event is triggered twice (with CKEditor)
+        this.isLoading = true
+        configurationService.updateMessagingConfiguration(this.configuration).then((data) => {
+          this.isLoading = false
+          if (data.success) {
+            console.log('sucess')
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('successMessage'), type: 'success' })
+          } else {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+            // Rewrite from with back-end config
+            this.getConfiguration()
+          }
+        })
+      }
     }
   }
 }
