@@ -81,6 +81,7 @@ export default {
   data () {
     return {
       configuration: undefined,
+      oldConfiguration: undefined,
       isLoading: false,
       signatureContent: undefined,
       autoReplyContent: undefined
@@ -105,7 +106,9 @@ export default {
       configurationService.getMessagingConfiguration().then((data) => {
         if (data.success) {
           this.configuration = data.configuration
-          // necessary to duplicate to avoid errors in ckEditor
+          this.oldConfiguration = JSON.stringify(data.configuration)
+
+          // Necessary to duplicate to avoid errors in ckEditor
           this.signatureContent = data.configuration.signature.content
           this.autoReplyContent = data.configuration.autoReply.content
         }
@@ -114,18 +117,19 @@ export default {
     updateConfiguration () {
       // TODO: form validation (mails, required...)
       if (!this.isLoading) { // because sometimes, the blur event is triggered twice (with CKEditor)
-        this.isLoading = true
-        configurationService.updateMessagingConfiguration(this.configuration).then((data) => {
-          this.isLoading = false
-          if (data.success) {
-            console.log('sucess')
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('successMessage'), type: 'success' })
-          } else {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
-            // Rewrite from with back-end config
-            this.getConfiguration()
-          }
-        })
+        if (JSON.stringify(this.configuration) !== this.oldConfiguration) { // Only update if there is changes (blur event can be triggered without content modification)
+          this.isLoading = true
+          configurationService.updateMessagingConfiguration(this.configuration).then((data) => {
+            this.isLoading = false
+            if (data.success) {
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('successMessage'), type: 'success' })
+            } else {
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+              // Rewrite from with back-end config
+              this.getConfiguration()
+            }
+          })
+        }
       }
     }
   }
