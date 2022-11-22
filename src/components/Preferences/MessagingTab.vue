@@ -153,7 +153,7 @@ export default {
 
 <i18n locale="fr">
 {
-  "addRedirection": "Ajouter une adresse de couriel",
+  "addRedirection": "Ajouter un couriel",
   "signature": "Signature",
   "autoReply": "Réponse automatique",
   "save": "Enregistrer",
