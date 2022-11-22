@@ -37,13 +37,22 @@
       />
       {{ $t('signature') }}
     </div>
-    <PentilaInput
-      id="signature-input"
-      v-model="configuration.signature.content"
-      class="param-value"
+    <!--    <PentilaInput-->
+    <!--      id="signature-input"-->
+    <!--      v-model="configuration.signature.content"-->
+    <!--      class="param-value"-->
+    <!--      data-test="signature-input"-->
+    <!--      :disabled="!configuration.signature.isActive"-->
+    <!--      :placeholder="$t('Messaging.Parameters.signaturePlaceHolder')"-->
+    <!--      @blur="updateConfiguration"-->
+    <!--    />-->
+    <TextContent
+      class="ck"
       data-test="signature-input"
+      :content="{contentValue: configuration.signature.content}"
       :disabled="!configuration.signature.isActive"
-      :placeholder="$t('Messaging.Parameters.signaturePlaceHolder')"
+      :is-in-progression="false"
+      @input="updateSignature"
       @blur="updateConfiguration"
     />
 
@@ -73,10 +82,11 @@
 <script>
 import configurationService from '@/api/messaging/configuration.service'
 import InformationIcon from '@components/Base/InformationIcon'
+import TextContent from '@components/Progression/Edit/Contents/TextContent'
 
 export default {
   name: 'MessagingTab',
-  components: { InformationIcon },
+  components: { TextContent, InformationIcon },
   data () {
     return {
       configuration: undefined
@@ -91,6 +101,9 @@ export default {
     this.getConfiguration()
   },
   methods: {
+    updateSignature (value) {
+      this.configuration.signature.content = value
+    },
     getConfiguration () {
       configurationService.getMessagingConfiguration().then((data) => {
         if (data.success) {
@@ -103,8 +116,6 @@ export default {
       configurationService.updateMessagingConfiguration(this.configuration).then((data) => {
         if (data.success) {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('successMessage'), type: 'success' })
-          this.$store.dispatch('messaging/setSignature', this.configuration.signature.content)
-          this.onClose()
         } else {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
           // Rewrite from with back-end config
@@ -117,9 +128,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
+
 .messaging-tab {
   .param-header {
-    padding-left: 20px;
     display: flex;
     margin-top: 40px;
     margin-bottom: 10px;
@@ -128,8 +140,8 @@ export default {
       margin-left: 10px;
     }
   }
-  .param-value {
-    padding-left: 20px;
+  .ck {
+    border: 1px solid $color-border;
   }
 }
 </style>
