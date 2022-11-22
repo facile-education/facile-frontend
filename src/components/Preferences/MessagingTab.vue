@@ -99,6 +99,7 @@ export default {
       })
     },
     updateConfiguration () {
+      // TODO: form validation (mails, required...)
       configurationService.updateMessagingConfiguration(this.configuration).then((data) => {
         if (data.success) {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('successMessage'), type: 'success' })
@@ -140,6 +141,7 @@ export default {
   "autoReply": "Réponse automatique",
   "save": "Enregistrer",
   "forward": "Être averti par courriel",
-  "forwardInfo": "Renseignez une adresse de courriel pour être averti de l’arrivé d’un nouveau message."
+  "forwardInfo": "Renseignez une adresse de courriel pour être averti de l’arrivé d’un nouveau message.",
+  "successMessage": "Paramètres sauvegardés"
 }
 </i18n>
