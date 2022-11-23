@@ -107,6 +107,7 @@ import FileNameModal from '@components/Documents/Modals/FileNameModal'
 import FilePickerModal from '@components/FilePicker/FilePickerModal'
 import DocumentDetailsModal from '@components/Documents/DocumentDetails/DocumentDetailsModal'
 import PermissionsModal from '@components/Documents/Modals/PermissionModal/PermissionsModal'
+import { removeMenuOptionIfExist } from '@/utils/commons.util'
 
 export default {
   name: 'Documents',
@@ -165,7 +166,18 @@ export default {
       return computeDocumentsOptions(this.selectedDocuments)
     },
     currentOptions () {
-      return (this.selectedDocuments.length > 0) ? this.selectedDocumentsOptions : (this.currentFolder && this.currentFolder.type !== 'Group' && (this.currentFolder.permissions && this.currentFolder.permissions.ADD_OBJECT) ? (this.mq.phone || this.mq.tablet ? mobileDocumentSpaceOptions : documentSpaceOptions) : [])
+      const options = (this.selectedDocuments.length > 0) ? this.selectedDocumentsOptions : (this.currentFolder && this.currentFolder.type !== 'Group' && (this.currentFolder.permissions && this.currentFolder.permissions.ADD_OBJECT) ? (this.mq.phone || this.mq.tablet ? mobileDocumentSpaceOptions : documentSpaceOptions) : [])
+      // Remove Mindmap, Geogebra and Scratch if not broadcasted to user
+      if (options !== undefined && options.length >= 1 && options[0].subMenu !== undefined && !this.$store.state.documents.documentsProperties.hasMindmapBroadcasted) {
+        removeMenuOptionIfExist(options[0].subMenu, 'newMindMap')
+      }
+      if (options !== undefined && options.length >= 1 && options[0].subMenu !== undefined && !this.$store.state.documents.documentsProperties.hasGeogebraBroadcasted) {
+        removeMenuOptionIfExist(options[0].subMenu, 'newGeogebra')
+      }
+      if (options !== undefined && options.length >= 1 && options[0].subMenu !== undefined && !this.$store.state.documents.documentsProperties.hasScratchBroadcasted) {
+        removeMenuOptionIfExist(options[0].subMenu, 'newScratch')
+      }
+      return options
     },
     isDocumentPanelDisplayed () {
       return this.$store.state.documents.isDocumentPanelDisplayed
