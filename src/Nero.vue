@@ -28,7 +28,6 @@ export default {
 html, body, #app {
   height: 100%;
 
-  font-family: Roboto Sans;
   @extend %typography-small;
 }
 
@@ -61,10 +60,5 @@ a {
 /* Fix Input Zoom on iPhone 6 Plus, iPhone 6s Plus, iPhone 7 Plus, iPhone 8, iPhone X, XS, XS Max  */
 @media screen and (device-aspect-ratio: 9/16) {
     select, textarea, input { font-size: 16px; }
-}
-
-@font-face {
-  font-family: "Roboto Sans";
-  src: url(./assets/fonts/Roboto-Regular.ttf) format("truetype");
 }
 </style>
