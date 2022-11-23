@@ -26,15 +26,15 @@
       :src="fileUrl"
     />
     <Geogebra
-      v-else-if="typeOfView === 'Geogebra'"
+      v-else-if="typeOfView === 'Geogebra' && hasGeogebraBroadcasted"
       :src="fileUrl"
     />
     <MindMap
-      v-else-if="typeOfView === 'MindMap'"
+      v-else-if="typeOfView === 'MindMap' && hasMindmapBroadcasted"
       :src="fileUrl"
     />
     <Scratch
-      v-else-if="typeOfView === 'Scratch'"
+      v-else-if="typeOfView === 'Scratch' && hasScratchBroadcasted"
       :src="fileUrl"
     />
     <WISIWIG
@@ -48,7 +48,7 @@
       :src="fileUrl"
     />
     <div
-      v-else-if="typeOfView === 'Unsupported'"
+      v-else
       v-t="('Unsupported')"
       class="placeHolder"
     />
@@ -97,6 +97,17 @@ export default {
       haveToSaveFile: false
     }
   },
+  computed: {
+    hasGeogebraBroadcasted () {
+      return this.$store.state.documents.documentsProperties.hasGeogebraBroadcasted
+    },
+    hasMindmapBroadcasted () {
+      return this.$store.state.documents.documentsProperties.hasMindmapBroadcasted
+    },
+    hasScratchBroadcasted () {
+      return this.$store.state.documents.documentsProperties.hasScratchBroadcasted
+    }
+  },
   watch: {
     wantsToCloseFile () {
       if (this.wantsToCloseFile) {
@@ -126,6 +137,7 @@ export default {
           if (this.file.isGroupFile) {
             groupService.recordViewActivity(this.file.id, versionId)
           }
+          console.log('typeOfView = ', data.typeOfView)
           this.typeOfView = data.typeOfView
           this.fileUrl = data.fileUrl
           this.loadedFile = { ...this.file }
