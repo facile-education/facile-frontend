@@ -9,6 +9,7 @@
         :placeholder="$t('rolesPlaceholder') + '*'"
         :list="roleList"
         display-field="displayText"
+        :sort="false"
         :error-message="formErrorList.roles"
         @blur="onBlurRoles"
         @update:modelValue="updateRoles"
@@ -20,14 +21,15 @@
     &nbsp;
     <div class="column">
       <PentilaTagsInput
-        :model-value="rule.classes"
-        :placeholder="$t('classesPlaceholder') + '*'"
+        :model-value="rule.orgs"
+        :placeholder="$t('orgsPlaceholder') + '*'"
         :list="classList"
+        :sort="false"
         display-field="name"
-        @blur="onBlurClasses"
-        @update:modelValue="updateClasses"
+        @blur="onBlurOrgs"
+        @update:modelValue="updateOrgs"
       />
-      <PentilaErrorMessage :error-message="formErrorList.classes" />
+      <PentilaErrorMessage :error-message="formErrorList.orgs" />
     </div>
     <PentilaButton
       v-if="isRemoveButtonDisplayed"
@@ -77,7 +79,7 @@ export default {
           return !this.isDefault
         })
       },
-      classes: {
+      orgs: {
         required: requiredIf(function (form) {
           return !this.isDefault
         })
@@ -91,7 +93,7 @@ export default {
     formErrorList () {
       const form = this.v$.rule
       return {
-        classes: (form.classes.$invalid && (form.classes.$dirty || this.isErrorListDisplayed)) ? this.$t('Commons.formRequired') : '',
+        orgs: (form.orgs.$invalid && (form.orgs.$dirty || this.isErrorListDisplayed)) ? this.$t('Commons.formRequired') : '',
         roles: (form.roles.$invalid && (form.roles.$dirty || this.isErrorListDisplayed)) ? this.$t('Commons.formRequired') : ''
       }
     },
@@ -111,8 +113,8 @@ export default {
     blur () {
       this.$emit('blur', JSON.parse(JSON.stringify(this.rule)))
     },
-    onBlurClasses () {
-      this.v$.rule.classes.$touch()
+    onBlurOrgs () {
+      this.v$.rule.orgs.$touch()
       this.blur()
     },
     onBlurRoles () {
@@ -122,9 +124,9 @@ export default {
     remove () {
       this.$emit('remove')
     },
-    updateClasses (classes) {
+    updateOrgs (orgs) {
       const copy = JSON.parse(JSON.stringify(this.rule))
-      copy.classes = classes
+      copy.orgs = orgs
       this.$emit('update', copy)
     },
     updateRoles (roles) {
@@ -178,7 +180,7 @@ export default {
 
 <i18n locale="fr">
 {
-  "classesPlaceholder": "Liste des classes",
+  "orgsPlaceholder": "Liste des classes",
   "fromLabel": "de",
   "rolesPlaceholder": "Liste des profils"
 }

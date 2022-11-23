@@ -16,7 +16,7 @@ export const mutations = {
     state.applicationList = payload
   },
   removeApplication (state, payload) {
-    const index = state.applicationList.map(item => item.app.serviceId).indexOf(payload.serviceId)
+    const index = state.applicationList.map(item => item.serviceId).indexOf(payload.serviceId)
     state.applicationList.splice(index, 1)
   },
   setSelectedApplication (state, payload) {
@@ -35,8 +35,8 @@ export const mutations = {
     if (payload.property !== undefined) {
       state.selectedApplication[payload.property] = payload.value
     } else {
-      const index = state.applicationList.map(item => item.app.serviceId).indexOf(payload.serviceId)
-      state.applicationList[index] = { app: payload }
+      const index = state.applicationList.map(item => item.serviceId).indexOf(payload.serviceId)
+      state.applicationList[index] = payload
     }
   }
 }
@@ -150,9 +150,7 @@ export const actions = {
       (data) => {
         if (data.success) {
           commit('updateApplication', application)
-          // if (application.rules === undefined || application.rules.length === 0) {
           dispatch('closeEditionModal')
-          // }
         }
       },
       (err) => {
@@ -174,7 +172,7 @@ export const actions = {
       })
   },
   updateBroadcast ({ state, commit }, { school, isBroadcasted }) {
-    applicationManagerService.updateBroadcast(state.selectedApplication.serviceId, school.schoolId, isBroadcasted, state.selectedApplication.applicationURL).then(
+    applicationManagerService.updateBroadcast(state.selectedApplication.serviceId, school.schoolId, isBroadcasted, state.selectedApplication.applicationURL === undefined ? '' : state.selectedApplication.applicationURL).then(
       (data) => {
         if (data.success) {
           commit('updateApplication', { property: 'isBroadcasted', value: isBroadcasted })

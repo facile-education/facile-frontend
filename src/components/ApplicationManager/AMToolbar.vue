@@ -19,8 +19,9 @@
 </template>
 
 <script>
-import NeroToolbar from '@/components/Nero/NeroToolbar'
 
+import PentilaUtils from 'pentila-utils'
+import NeroToolbar from '@/components/Nero/NeroToolbar'
 import { defineAsyncComponent } from 'vue'
 const NeroIcon = defineAsyncComponent(() => import('@/components/Nero/NeroIcon'))
 
@@ -32,7 +33,11 @@ export default {
   },
   computed: {
     managedSchoolList () {
-      return this.$store.state.administration.schoolList
+      const schoolList = PentilaUtils.JSON.deepCopy(this.$store.state.administration.schoolList)
+      if (this.isAdministrator) {
+        schoolList.push({ schoolId: 0, schoolName: this.$t('allENT') })
+      }
+      return schoolList
     },
     isAdministrator () {
       return this.$store.state.user.isAdministrator
@@ -43,6 +48,7 @@ export default {
       },
       set (school) {
         this.$store.dispatch('administration/setSelectedSchool', school)
+        this.$store.dispatch('administration/getClassList')
       }
     },
     show () {
@@ -68,3 +74,9 @@ export default {
   margin-left: auto;
 }
 </style>
+
+<i18n locale="fr">
+  {
+    "allENT": "Tout l'ENT"
+  }
+</i18n>

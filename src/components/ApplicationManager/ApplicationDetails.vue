@@ -13,17 +13,24 @@
       @keyup.enter="updateURL"
     />
 
-    <div class="broadcast">
+    <div
+      v-if="!isAdministratorMode"
+      class="broadcast"
+    >
       <p
-        v-if="application.isAvailable"
+        v-if="application.isBroadcasted"
         v-t="'broadcastLabel'"
       />
       <p
         v-else
         v-t="'noBroadcastLabel'"
       />
+      <p
+        v-if="!hasRules"
+        v-t="'addRule'"
+      />
       <ul
-        v-if="application.isAvailable"
+        v-if="application.isBroadcasted"
         class="list-rules"
       >
         <RuleLabel
@@ -37,6 +44,7 @@
     <div v-if="hasExport">
       <p v-t="'exportLabel'" />
       <PentilaDropdown
+        v-if="!isAdministratorMode"
         v-model="selectedExport"
         :list="exportList"
         display-field="label"
@@ -52,8 +60,9 @@
   >
     <PentilaToggleSwitch
       v-if="!isAdministratorMode"
-      :model-value="application.isAvailable"
+      :model-value="application.isBroadcasted"
       :title="$t('broadcastButtonTooltip')"
+      :disabled="!hasRules"
       @update:modelValue="updateBroadcast"
     />
     <PentilaButton
@@ -106,6 +115,9 @@ export default {
   computed: {
     application () {
       return this.$store.state.applicationManager.selectedApplication
+    },
+    hasRules () {
+      return (this.application.rules !== undefined && this.application.rules.length > 0)
     },
     exportList () {
       const list = []
@@ -258,7 +270,8 @@ p {
   "deleteButtonTooltip": "Supprimer",
   "editButtonTooltip": "Modifier",
   "exportLabel": "Exports nécessaires :",
-  "noBroadcastLabel": "L'application n'est pas diffusée",
+  "noBroadcastLabel": "L'application n'est pas diffusée.",
+  "addRule": "Veuillez au préalable ajouter une règle de diffusion.",
   "otherExportButton": "Ressources",
   "parentsExportButton": "Parents",
   "removalConfirmButtonLabel": "Supprimer",

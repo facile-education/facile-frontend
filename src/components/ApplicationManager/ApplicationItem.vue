@@ -17,7 +17,7 @@
     >
       <div
         class="check"
-        :class="{ hidden: !application.isAvailable }"
+        :class="{ hidden: !application.isBroadcasted }"
       >
         <NeroIcon name="check" />
       </div>
