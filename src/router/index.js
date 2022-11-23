@@ -93,6 +93,11 @@ const routes = [
     component: () => import('@/router/views/Groups')
   },
   {
+    path: '/statistics',
+    name: 'Statistics',
+    component: () => import('@/router/views/Statistics')
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: () => import('@/router/views/NotFound')
