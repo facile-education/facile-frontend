@@ -87,6 +87,10 @@ export default {
           (typeof obj.name === 'string' && obj.name.length > 0)
       }
     },
+    hiddenActions: {
+      type: Boolean,
+      default: false
+    },
     previousFolderName: {
       type: String,
       default: ''
@@ -100,7 +104,7 @@ export default {
       default: false
     }
   },
-  emits: ['clickBack'],
+  emits: ['changeDir', 'changeSpace', 'clickBack'],
   data () {
     return {
       isFolderNameModalDisplayed: false,
@@ -119,7 +123,7 @@ export default {
       return this.folder.type === 'Group' || this.folder.isGroupRootFolder
     },
     currentOptions () {
-      if ((!this.mq.phone && !this.mq.tablet) && this.isCurrentFolder && !this.isFirstElement && !this.isGroupFolder) {
+      if (!this.hiddenActions && (!this.mq.phone && !this.mq.tablet) && this.isCurrentFolder && !this.isFirstElement && !this.isGroupFolder) {
         return [...currentFolderOptions]
       } else if (this.isFirstElement) {
         return [...spaceSelectionOptions]
@@ -170,11 +174,7 @@ export default {
         if (this.isContextMenuDisplayed) {
           this.toggleContextMenu()
         } else {
-          if (this.folder.isGroupDirectory) {
-            this.$router.push({ name: 'GroupDocuments', params: { folderId: this.folder.id } })
-          } else {
-            this.$router.push({ name: 'Documents', params: { folderId: this.folder.id } })
-          }
+          this.$emit('changeDir', this.folder)
         }
       } else if (this.currentOptions.length > 0) {
         this.toggleContextMenu(event)
@@ -197,13 +197,13 @@ export default {
           downloadDocument(this.folder)
           break
         case 'documents':
-          this.$router.push('/documents')
+          this.$emit('changeSpace', '/documents')
           break
         case 'groups':
-          this.$router.push('/documents/groups')
+          this.$emit('changeSpace', '/documents/groups')
           break
         case 'recent':
-          this.$router.push('/documents/recent')
+          this.$emit('changeSpace', '/documents/recent')
           break
         default:
           console.error('no option with name ' + option.name + ' exists')

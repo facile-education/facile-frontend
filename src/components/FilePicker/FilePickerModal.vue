@@ -21,33 +21,16 @@
     </template>
 
     <template #body>
-      <PentilaTabList>
-        <PentilaTabItem :title="$t('documents')">
-          <FilePickerModalDocumentTab
-            :folder-selection="folderSelection"
-            :init-in-current-folder="initInCurrentFolder"
-            :multi-selection="multiSelection"
-            :allow-files-from-device="allowFilesFromDevice"
-            @selectedFolder="updateSelectedFolder"
-            @currentFolder="updateCurrentFolder"
-            @chosenFolder="emitSelectedFolder"
-            @updateSelectedFiles="updateSelectedFiles"
-          />
-        </PentilaTabItem>
-
-        <PentilaTabItem :title="$t('groups')">
-          <FilePickerModalGroupTab
-            :folder-selection="folderSelection"
-            :init-in-current-folder="initInCurrentFolder"
-            :multi-selection="multiSelection"
-            :allow-files-from-device="allowFilesFromDevice"
-            @selectedFolder="updateSelectedFolder"
-            @currentFolder="updateCurrentFolder"
-            @chosenFolder="emitSelectedFolder"
-            @updateSelectedFiles="updateSelectedFiles"
-          />
-        </PentilaTabItem>
-      </Pentilatablist>
+      <FilePickerModalDocuments
+        :folder-selection="folderSelection"
+        :init-in-current-folder="initInCurrentFolder"
+        :multi-selection="multiSelection"
+        :allow-files-from-device="allowFilesFromDevice"
+        @selectedFolder="updateSelectedFolder"
+        @currentFolder="updateCurrentFolder"
+        @chosenFolder="emitSelectedFolder"
+        @updateSelectedFiles="updateSelectedFiles"
+      />
     </template>
 
     <template #footer>
@@ -70,12 +53,11 @@
 
 <script>
 import groupService from '@/api/documents/group.service'
-import FilePickerModalDocumentTab from '@components/FilePicker/FilePickerModalDocumentTab'
-import FilePickerModalGroupTab from '@components/FilePicker/FilePickerModalGroupTab'
+import FilePickerModalDocuments from '@components/FilePicker/FilePickerModalDocuments'
 
 export default {
   name: 'FilePickerModal',
-  components: { FilePickerModalGroupTab, FilePickerModalDocumentTab },
+  components: { FilePickerModalDocuments },
   inject: ['mq'],
   props: {
     folderSelection: {
@@ -181,13 +163,9 @@ export default {
         --body-max-height: calc(90vh - 133px);
         max-height: var(--body-max-height);
 
-        .tab-content {
+        .body {
           --tab-content-max-height: calc(var(--body-max-height) - 87px);
-          max-height: var(--tab-content-max-height);
-
-          .body {
-            max-height: calc(var(--tab-content-max-height) - 10px);
-          }
+          max-height: calc(var(--tab-content-max-height) - 10px);
         }
       }
     }
