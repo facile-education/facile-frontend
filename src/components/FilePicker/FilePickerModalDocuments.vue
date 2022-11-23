@@ -1,10 +1,11 @@
 <template>
-  <!-- My Documents-->
   <div class="body">
-    <FilePickerBreadCrumb
+    <Breadcrumb
       class="breadcrumb"
       :breadcrumb="currentBreadcrumb"
-      @itemClicked="loadFolderContent"
+      :hidden-actions="true"
+      @change-dir="loadFolderContent"
+      @change-space="changeSpace"
     />
 
     <div class="documents-list">
@@ -22,6 +23,7 @@
       <FilePickerFile
         v-for="file in currentFiles"
         :key="file.id"
+        :grayed="folderSelection"
         :file="file"
         :is-selected="isSelected(file)"
         :dark="getEntityIndex(file.id) % 2 === 0"
@@ -32,15 +34,16 @@
 </template>
 
 <script>
-import FilePickerBreadCrumb from '@components/FilePicker/FilePickerBreadCrumb'
-import FilePickerFile from '@components/FilePicker/FilePickerFile'
 import documentsService from '@/api/documents/documents.service'
 import groupService from '@/api/documents/group.service'
+import navigationService from '@/api/documents/folder.service'
+import Breadcrumb from '@components/Documents/Breadcrumb'
 import FilePickerFolder from '@components/FilePicker/FilePickerFolder'
+import FilePickerFile from '@components/FilePicker/FilePickerFile'
 
 export default {
-  name: 'FilePickerModalGroupTab',
-  components: { FilePickerFolder, FilePickerFile, FilePickerBreadCrumb },
+  name: 'FilePickerModalDocumentTab',
+  components: { Breadcrumb, FilePickerFile, FilePickerFolder },
   inject: ['mq'],
   props: {
     folderSelection: {
@@ -71,6 +74,8 @@ export default {
       currentBreadcrumb: [],
       currentFolders: [],
       currentFiles: [],
+      currentSpace: 'User',
+      userFolderId: undefined,
       selectedFiles: [],
       selectedFolder: undefined,
       maxUploadSize: undefined,
@@ -89,34 +94,85 @@ export default {
     }
   },
   created () {
-    documentsService.getGlobalDocumentsProperties().then((data) => {
-      this.maxUploadSize = data.maxUploadSize
-      this.loadFolderContent('collaborative') // TODO get those key from data
-    })
+    if (this.initInCurrentFolder) {
+      this.loadUserFolderContent(this.$store.state.documents.currentFolderId)
+    } else {
+      documentsService.getGlobalDocumentsProperties().then((data) => {
+        this.maxUploadSize = data.maxUploadSize
+        this.userFolderId = data.private.id
+        this.loadUserFolderContent(this.userFolderId)
+      })
+    }
   },
   methods: {
+    changeSpace (space) {
+      switch (space) {
+        case '/documents':
+          this.currentSpace = 'User'
+          this.loadUserFolderContent(this.userFolderId)
+          break
+        case '/documents/groups':
+          this.currentSpace = 'Group'
+          this.loadGroupFolderContent('collaborative') // TODO get those key from data
+          break
+        case '/documents/recent':
+          // this.loadFolderContent(recent)
+          break
+      }
+    },
     getEntityIndex (entityId) {
       return this.allSortedDocuments.map(item => item.id).indexOf(entityId)
     },
-    loadFolderContent (groupFolderId) {
+    loadGroupFolderContent (folderId) {
       this.isLoadingFiles = true
-      groupService.getGroupEntities(groupFolderId).then((data) => {
+      groupService.getGroupEntities(folderId).then((data) => {
         this.isLoadingFiles = false
         if (data.success) {
           this.currentFolders = data.folders ? data.folders : []
           this.currentFiles = data.files ? data.files : []
           this.selectedFolder = undefined
           this.$emit('selectedFolder', undefined)
-          groupService.getGroupBreadcrumb(groupFolderId).then((data) => {
+          groupService.getGroupBreadcrumb(folderId).then((data) => {
             if (data.success) {
               this.currentBreadcrumb = data.breadCrumb
               this.$emit('currentFolder', this.currentFolder)
             } else {
-              console.error('Unable to get breadcrumb from backend for folder id ' + groupFolderId)
+              console.error('Unable to get breadcrumb from backend for folder id ' + folderId)
             }
           })
         } else {
-          console.error('Unable to get entities from backend for folder id ' + groupFolderId)
+          console.error('Unable to get entities from backend for folder id ' + folderId)
+        }
+      })
+    },
+    loadFolderContent (folder) {
+      if (this.currentSpace === 'Group') {
+        this.loadGroupFolderContent(folder.id)
+      } else {
+        this.loadUserFolderContent(folder.id)
+      }
+    },
+    loadUserFolderContent (folderId) {
+      this.isLoadingFiles = true
+      navigationService.getAllEntities(folderId, false).then((data) => {
+        this.isLoadingFiles = false
+        if (data.success) {
+          data.subFolders.forEach(subFolder => { subFolder.hasAddPermission = true }) // Add hasAddPermission = true property to all document folder for compliance with group objects
+          this.currentFolders = data.subFolders ? data.subFolders : []
+          this.currentFiles = data.files ? data.files : []
+          this.selectedFolder = undefined
+          this.$emit('selectedFolder', undefined)
+          navigationService.getBreadcrumb(folderId).then((data) => {
+            if (data.success) {
+              data.breadcrumb.forEach(folder => { folder.hasAddPermission = true }) // Add hasAddPermission = true property to all document folder for compliance with group objects
+              this.currentBreadcrumb = data.breadcrumb
+              this.$emit('currentFolder', this.currentFolder)
+            } else {
+              console.error('Unable to get breadcrumb from backend for folder id ' + folderId)
+            }
+          })
+        } else {
+          console.error('Unable to get entities from backend for folder id ' + folderId)
         }
       })
     },
@@ -152,12 +208,12 @@ export default {
         }
       } else {
         this.selectedFiles = []
-        this.loadFolderContent(folder.id)
+        this.loadFolderContent(folder)
       }
     },
     dblClickOnFolder (folder) {
       if (this.folderSelection && !this.belongsToAppSelectedEntities(folder)) { // Prevent to select folders's children
-        this.loadFolderContent(folder.id)
+        this.loadFolderContent(folder)
       }
     },
     isSelected (file) {
@@ -197,6 +253,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .body {
   width: 100%;
   min-width: 550px;

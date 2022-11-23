@@ -14,7 +14,12 @@
         @optionClicked="handleOption"
       />
 
-      <Breadcrumb class="breadCrumb" />
+      <Breadcrumb
+        class="breadCrumb"
+        :breadcrumb="breadcrumb"
+        @change-dir="changeDir"
+        @change-space="changeSpace"
+      />
 
       <div class="body">
         <PentilaSpinner
@@ -127,6 +132,14 @@ export default {
     areActionsInProgress () {
       return this.$store.getters['currentActions/areActionsInProgress']
     },
+    breadcrumb () {
+      const breadCrumb = JSON.parse(JSON.stringify(this.$store.state.documents.breadcrumb)) // deep copy vuex state to avoid mutate it from here
+      // Add dropMethod on each folder to avoid code duplication
+      breadCrumb.forEach((folder) => {
+        folder.dropMethod = this.dropMethod
+      })
+      return breadCrumb
+    },
     isLoadDocumentsError () {
       return this.$store.state.documents.loadDocumentsError
     },
@@ -209,6 +222,17 @@ export default {
         this.$store.dispatch('fileFields/updateFields', [...defaultFields])
       }
     },
+    changeDir (folder) {
+      if (folder.isGroupDirectory) {
+        this.$router.push({ name: 'GroupDocuments', params: { folderId: folder.id } })
+      } else {
+        this.$router.push({ name: 'Documents', params: { folderId: folder.id } })
+      }
+      // this.$store.dispatch('documents/closeDocumentPanel') // TODO: discuss about ergonomics
+    },
+    changeSpace (space) {
+      this.$router.push(space)
+    },
     clearSelectedEntities () {
       this.$store.dispatch('documents/cleanSelectedEntities') // /!\ be careful with asynchronous order!
     },
@@ -217,6 +241,12 @@ export default {
       if (event.target.classList.contains('scroll') || event.target.classList.contains('fields') || event.target.classList.contains('breadCrumb')) {
         this.clearSelectedEntities()
       }
+    },
+    dropMethod (event, folder) {
+      this.$store.dispatch('clipboard/move', {
+        targetFolder: folder,
+        entities: JSON.parse(event.dataTransfer.getData('entitiesToDrop'))
+      })
     },
     rightClickOnScrollDiv (event) {
       // Open documents space options (and unselect entities) ONLY if the click is on those elements, and continue propagation

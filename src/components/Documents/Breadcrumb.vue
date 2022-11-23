@@ -15,16 +15,19 @@
     >
       <BreadCrumbItem
         :folder="folder"
+        :hidden-actions="hiddenActions"
         :is-first-element="index === 0"
         :is-current-folder="index === displayableBreadcrumb.length-1"
         :previous-folder-name="index >= 1 ? displayableBreadcrumb[index - 1].name : ''"
         @click-back="goInParentFolder(index)"
+        @change-dir="changeDir"
+        @change-space="changeSpace"
       />
       <img
         v-show="(!mq.phone && !mq.tablet) && index < (displayableBreadcrumb.length - 1)"
         class="chevron"
         src="@assets/icon_big_arrow.svg"
-        alt=""
+        alt="right arrow"
       >
     </template>
   </div>
@@ -33,18 +36,22 @@
 <script>
 import BreadCrumbItem from '@components/Documents/BreadCrumbItem'
 import HiddenItems from '@components/Base/HiddenItems'
+
 export default {
   components: { HiddenItems, BreadCrumbItem },
   inject: ['mq'],
-  computed: {
-    breadcrumb () {
-      const breadCrumb = JSON.parse(JSON.stringify(this.$store.state.documents.breadcrumb)) // deep copy vuex state to avoid mutate it from here
-      // Add dropMethod on each folder to avoid code duplication
-      breadCrumb.forEach((folder) => {
-        folder.dropMethod = this.dropMethod
-      })
-      return breadCrumb
+  props: {
+    breadcrumb: {
+      type: Array,
+      required: true
     },
+    hiddenActions: {
+      type: Boolean,
+      default: false
+    }
+  },
+  emits: ['changeDir', 'changeSpace'],
+  computed: {
     displayableBreadcrumb () {
       return this.breadcrumb.slice(-4) // Only display the fourth elements of the breadcrumb
     },
@@ -68,30 +75,18 @@ export default {
     goInParentFolder (index) {
       if (index > 0) {
         const parentFolder = this.breadcrumb[index - 1]
-        if (parentFolder.isGroupDirectory) {
-          this.$router.push({ name: 'GroupDocuments', params: { folderId: parentFolder.id } })
-        } else {
-          this.$router.push({ name: 'Documents', params: { folderId: parentFolder.id } })
-        }
+        this.$emit('changeDir', parentFolder)
       } else {
         console.error('cannot go in parent folder of a folder with index ' + index)
       }
     },
-    changeDir (item) {
+    changeDir (folder) {
       if (!this.isCurrentFolder) {
-        if (item.isGroupDirectory) {
-          this.$router.push({ name: 'GroupDocuments', params: { folderId: item.id } })
-        } else {
-          this.$router.push({ name: 'Documents', params: { folderId: item.id } })
-        }
-        // this.$store.dispatch('documents/closeDocumentPanel') // TODO: discuss about ergonomics
+        this.$emit('changeDir', folder)
       }
     },
-    dropMethod (event, folder) {
-      this.$store.dispatch('clipboard/move', {
-        targetFolder: folder,
-        entities: JSON.parse(event.dataTransfer.getData('entitiesToDrop'))
-      })
+    changeSpace (space) {
+      this.$emit('changeSpace', space)
     }
   }
 }
