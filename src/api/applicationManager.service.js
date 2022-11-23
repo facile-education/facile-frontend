@@ -34,8 +34,8 @@ function createApplication (application) {
       exportParent: application.exportParent,
       exportTeacher: application.exportTeacher,
       exportOther: application.exportOther,
-      defaultRoles: application.rolesId,
-      authorizedSchools: application.authorizedSchools
+      defaultRoles: JSON.stringify(application.roleIds),
+      authorizedSchools: JSON.stringify(application.schoolIds)
     })
   ).then(response => response.data)
 }
@@ -56,8 +56,8 @@ function updateApplication (application) {
       exportStudent: application.exportStudent,
       exportTeacher: application.exportTeacher,
       exportOther: application.exportOther,
-      defaultRoles: application.rolesId,
-      authorizedSchools: application.authorizedSchools
+      defaultRoles: JSON.stringify(application.roleIds),
+      authorizedSchools: JSON.stringify(application.schoolIds)
     })
   ).then(response => response.data)
 }
@@ -104,12 +104,12 @@ function updateBroadcastScope (serviceId, schoolId, rules) {
   ).then(response => response.data)
 }
 
-function updateBroadcast (serviceId, schoolId, isAvailable, serviceUrl) {
+function updateBroadcast (serviceId, schoolId, isBroadcasted, serviceUrl) {
   return axios.post(constants.JSON_WS_URL + SERVICEMANAGER_PATH + SERVICEBROADCAST_CTX + 'update-broadcast',
     PentilaUtils.URL.params({
       serviceId: serviceId,
       schoolId: schoolId,
-      isBroadcasted: isAvailable,
+      isBroadcasted: isBroadcasted,
       serviceUrl: serviceUrl
     })
   ).then(response => response.data)

@@ -91,7 +91,7 @@
         <div>
           <PentilaTagsInput
             v-if="roleList"
-            v-model="application.roleList"
+            v-model="application.defaultRoles"
             :placeholder="$t('rolesPlaceholder') + '*'"
             :list="roleList"
             display-field="displayText"
@@ -277,14 +277,21 @@ export default {
   methods: {
     buildApplicationBeforeSave () {
       // Handle roleId array before saving
-      this.application.rolesId = []
-      for (let idx = 0; idx < this.application.roleList.length; idx++) {
-        this.application.rolesId.push(this.application.roleList[idx].roleId)
+      this.application.roleIds = []
+      for (let idx = 0; idx < this.application.defaultRoles.length; idx++) {
+        this.application.roleIds.push(this.application.defaultRoles[idx].roleId)
+      }
+      this.application.schoolIds = []
+      for (let idx = 0; idx < this.application.authorizedSchools.length; idx++) {
+        this.application.schoolIds.push(this.application.authorizedSchools[idx].schoolId)
       }
 
       // URL type
       this.application.hasGlobalUrl = (this.urlType === 'global')
       this.application.hasCustomUrl = (this.urlType === 'custom')
+      if (this.application.authorizedSchools === undefined) {
+        this.application.authorizedSchools = []
+      }
     },
     closeModal () {
       this.$store.dispatch('applicationManager/closeEditionModal')

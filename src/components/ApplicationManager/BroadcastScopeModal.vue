@@ -58,7 +58,7 @@ export default {
   validations: {
     ruleList: {
       $each: {
-        classes: {
+        orgs: {
           required
         },
         roles: {
@@ -69,7 +69,7 @@ export default {
   },
   data () {
     return {
-      emptyRule: { classes: [], roles: [] },
+      emptyRule: { orgs: [], roles: [] },
       isErrorListDisplayed: false,
       ruleList: []
     }
@@ -84,9 +84,9 @@ export default {
   },
   methods: {
     addScope (rule) {
-      if (rule.classes.length && rule.roles.length) {
+      if (rule.orgs.length && rule.roles.length) {
         this.ruleList.push(PentilaUtils.JSON.deepCopy(rule))
-        this.emptyRule.classes.length = 0
+        this.emptyRule.orgs.length = 0
         this.emptyRule.roles.length = 0
       }
     },
@@ -94,20 +94,20 @@ export default {
       let updateClassList = false
       let currentClass
 
-      for (currentClass of currentRule.classes) {
-        if (currentClass.orgId === 0 && currentRule.classes.length > 1) {
-          currentRuleId.classIds.length = 0
-          currentRuleId.classIds.push(currentClass.orgId)
+      for (currentClass of currentRule.orgs) {
+        if (currentClass.orgId === 0 && currentRule.orgs.length > 1) {
+          currentRuleId.orgIds.length = 0
+          currentRuleId.orgIds.push(currentClass.orgId)
           updateClassList = true
           break
         } else {
-          currentRuleId.classIds.push(currentClass.orgId)
+          currentRuleId.orgIds.push(currentClass.orgId)
         }
       }
       // Rewrite class list if all school item is selected
       if (updateClassList) {
-        currentRule.classIds.length = 0
-        currentRule.classIds.push(currentClass.orgId)
+        currentRule.orgIds.length = 0
+        currentRule.orgIds.push(currentClass.orgId)
       }
     },
     buildRoleIdList (currentRule, currentRuleId) {
@@ -136,7 +136,7 @@ export default {
 
       for (let idx = 0; idx < this.ruleList.length; ++idx) {
         currentRule = this.ruleList[idx]
-        if (currentRule.classes.length === 0 && currentRule.roles.length === 0) {
+        if (currentRule.orgs.length === 0 && currentRule.roles.length === 0) {
           if (this.ruleList.length > 1) {
             indexListToRemove.push(idx)
           }
@@ -162,7 +162,7 @@ export default {
 
       // Build id lists for saving
       this.ruleList.forEach((currentRule) => {
-        const currentRuleId = { roleIds: [], classIds: [] }
+        const currentRuleId = { roleIds: [], orgIds: [] }
         this.buildRoleIdList(currentRule, currentRuleId)
         this.buildClassIdList(currentRule, currentRuleId)
         ruleIdList.push(currentRuleId)

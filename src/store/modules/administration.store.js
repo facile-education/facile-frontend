@@ -46,7 +46,7 @@ export const actions = {
   getClassList ({ state, commit }) {
     administrationService.getClassList(state.selectedSchool.schoolId).then((data) => {
       if (data.success) {
-        commit('setClassList', data.classes)
+        commit('setClassList', data.orgs)
       }
     })
   },

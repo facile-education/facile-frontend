@@ -16,7 +16,7 @@ export default {
   computed: {
     label () {
       let label = ''
-      if (this.rule.classes.length !== 0 && this.rule.roles.length !== 0) {
+      if (this.rule.orgs.length !== 0 && this.rule.roles.length !== 0) {
         if (this.rule.roles.length === 1 && this.rule.roles[0].roleId === 0) {
           label += this.$t('everyRoleLabel')
         } else {
@@ -28,16 +28,16 @@ export default {
             label += role.displayText
           };
         }
-        if (this.rule.classes.length === 1 && this.rule.classes[0].value === 0) {
+        if (this.rule.orgs.length === 1 && this.rule.orgs[0].orgId === 0) {
           label += ' ' + this.$t('allSchoolLabel')
         } else {
-          label += ' ' + this.$t('fromClassesLabel') + ' '
-          for (let j = 0; j < this.rule.classes.length; j++) {
-            const classe = this.rule.classes[j]
+          label += ' ' + this.$t('fromOrgsLabel') + ' '
+          for (let j = 0; j < this.rule.orgs.length; j++) {
+            const org = this.rule.orgs[j]
             if (j > 0) {
               label += ', '
             }
-            label += classe.displayText
+            label += org.name
           }
         }
       }
@@ -56,6 +56,6 @@ export default {
 {
   "allSchoolLabel": "de tout l'établissement",
   "everyRoleLabel": "Tous les profils",
-  "fromClassesLabel": "des classes"
+  "fromOrgsLabel": "des classes"
 }
 </i18n>
