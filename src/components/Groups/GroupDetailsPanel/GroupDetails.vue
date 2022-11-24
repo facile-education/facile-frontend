@@ -2,6 +2,7 @@
   <div
     class="group-details"
     :class="{phone: mq.phone}"
+    data-test="group-details-panel"
   >
     <section
       v-if="!mq.phone"
@@ -15,6 +16,7 @@
       <div class="right-section">
         <button
           class="close-option"
+          data-test="close-panel"
           @click="closePanel"
         >
           <img
@@ -29,23 +31,23 @@
           <button
             v-if="!selectedGroup.isExpired"
             class="option"
+            data-test="edit-group-option"
             @click="editGroup"
           >
             <img
               class="button"
               src="@assets/edit_white.svg"
-              data-test="edit-group-icon"
               :alt="$t('edit')"
             >
           </button>
           <button
             class="option"
+            data-test="delete-group-option"
             @click="confirmGroupDeletion"
           >
             <img
               class="button"
               src="@assets/trash_white.svg"
-              data-test="delete-group-icon"
               :alt="$t('delete')"
             >
           </button>

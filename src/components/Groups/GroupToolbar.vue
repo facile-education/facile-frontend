@@ -1,7 +1,8 @@
 <template>
   <NeroToolbar class="toolbar">
     <PentilaButton
-      v-if="!mq.phone"
+      v-if="!mq.phone && canCreateGroup"
+      data-test="createGroupButton"
       class="create-button"
       @click="toggleEditGroupModal"
     >
@@ -78,6 +79,11 @@ export default {
         isInstitutionalActive: false,
         isPedagogicalActive: false
       }
+    }
+  },
+  computed: {
+    canCreateGroup () {
+      return !this.$store.state.user.isStudent
     }
   },
   methods: {

@@ -7,6 +7,7 @@
     <span class="member-name"> {{ member.userName }}</span>
     <img
       v-if="isHovering"
+      data-test="send-message"
       src="@assets/send_message.svg"
       alt="send-message"
       @click="openCreateMessageModal"
