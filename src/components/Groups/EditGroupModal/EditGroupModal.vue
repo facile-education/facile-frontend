@@ -190,7 +190,7 @@ export default {
       return this.$store.state.user
     },
     isCurrentGroupAdmin () {
-      if (!this.editedGroup) { return true } else { // considered as admin if groupCreation
+      if (!this.editedGroup) { return true } else { // considered as admin if groupCreation.spec.js
         return this.editedGroup.isAdmin
       }
     },
