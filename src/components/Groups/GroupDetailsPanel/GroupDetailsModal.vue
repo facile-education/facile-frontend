@@ -6,7 +6,7 @@
     @close="onClose"
   >
     <template #header>
-      {{ selectedGroup.groupName }}
+      {{ selectedGroup.groupName ? selectedGroup.groupName : selectedGroup.name }}
     </template>
 
     <template #body>
@@ -30,6 +30,7 @@ export default {
   methods: {
     onClose () {
       this.$store.dispatch('groups/closePanel')
+      this.$store.dispatch('documents/closeDocumentPanel')
     }
   }
 }

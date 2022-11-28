@@ -130,6 +130,7 @@ export default {
     toggleSelection () {
       if (this.document.isGroupRootFolder) {
         this.$store.dispatch('groups/setSelectedGroup', this.document)
+        this.$store.dispatch('documents/openDocumentPanel')
       }
       this.$store.dispatch('documents/selectOneDocument', this.document)
     },

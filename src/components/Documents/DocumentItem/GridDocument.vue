@@ -9,7 +9,7 @@
     @click.meta.exact="ctrlSelect"
     @click.shift="shiftSelect"
     @dblclick="triggerAction"
-    @click.exact="mq.phone ? triggerAction() : select()"
+    @click.exact="mq.phone || mq.tablet ? triggerAction() : select()"
     @mouseover="hoverSelection = true"
     @mouseleave="hoverSelection = false"
   >
@@ -40,12 +40,13 @@
           >
         </div>
         <img
+          v-if="mq.phone || mq.tablet"
           class="button"
           src="@assets/options/icon_details.svg"
           data-test="edit-group-icon"
           :alt="$t('details')"
           :title="$t('details')"
-          @click="openDetailsPanel"
+          @click.stop="openDetailsPanel"
         >
       </div>
     </div>
@@ -114,7 +115,7 @@ export default {
   },
   methods: {
     openDetailsPanel () {
-      this.$store.dispatch('documents/openDocumentPanel')
+      this.$emit('select')
     },
     triggerAction () {
       this.$emit('triggerAction')

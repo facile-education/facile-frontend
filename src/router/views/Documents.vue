@@ -239,6 +239,9 @@ export default {
     changeDir (folder) {
       if (folder.isGroupDirectory) {
         this.$router.push({ name: 'GroupDocuments', params: { folderId: folder.id } })
+        if (folder.isGroupRootFolder || folder.id === 'collaborative') {
+          this.$store.dispatch('documents/closeDocumentPanel')
+        }
       } else {
         this.$router.push({ name: 'Documents', params: { folderId: folder.id } })
       }

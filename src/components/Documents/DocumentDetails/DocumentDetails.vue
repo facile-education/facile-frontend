@@ -59,7 +59,9 @@
 <script>
 import DocumentMetaData from '@components/Documents/DocumentDetails/DocumentMetaData'
 import DocumentVersionsList from '@components/Documents/DocumentDetails/DocumentVersionsList'
-import GroupDetails from '@components/Groups/GroupDetailsPanel/GroupDetails'
+import { defineAsyncComponent } from 'vue'
+const GroupDetails = defineAsyncComponent(() => import('@components/Groups/GroupDetailsPanel/GroupDetails'))
+
 export default {
   name: 'DocumentDetails',
   components: { GroupDetails, DocumentVersionsList, DocumentMetaData },
@@ -151,6 +153,6 @@ export default {
 {
   "noData": "Il n'y a aucune information à afficher",
   "noDocumentSelected": "Aucun document sélectionné",
-  "selectedDocuments": " documents sélectionnés",
+  "selectedDocuments": " documents sélectionnés"
 }
 </i18n>
