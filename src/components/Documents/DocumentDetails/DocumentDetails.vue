@@ -1,5 +1,8 @@
 <template>
-  <div class="details-panel">
+  <div
+    v-if="!displayGroupDetails"
+    class="details-panel"
+  >
     <div class="header">
       <div
         v-if="selectedDocuments.length === 1"
@@ -50,14 +53,16 @@
       class="placeholder"
     />
   </div>
+  <GroupDetails v-else />
 </template>
 
 <script>
 import DocumentMetaData from '@components/Documents/DocumentDetails/DocumentMetaData'
 import DocumentVersionsList from '@components/Documents/DocumentDetails/DocumentVersionsList'
+import GroupDetails from '@components/Groups/GroupDetailsPanel/GroupDetails'
 export default {
   name: 'DocumentDetails',
-  components: { DocumentVersionsList, DocumentMetaData },
+  components: { GroupDetails, DocumentVersionsList, DocumentMetaData },
   computed: {
     selectedDocuments () {
       return this.$store.state.documents.selectedEntities
@@ -68,6 +73,9 @@ export default {
       } else {
         return undefined
       }
+    },
+    displayGroupDetails () {
+      return !!(this.documentToDisplay && this.documentToDisplay.isGroupRootFolder)
     }
   },
   methods: {

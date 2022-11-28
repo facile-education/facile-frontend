@@ -10,7 +10,7 @@
       :style="`background-color:${selectedGroup.color};`"
     >
       <div class="left-section">
-        <h2>{{ selectedGroup.groupName }}</h2>
+        <h2>{{ selectedGroup.groupName ? selectedGroup.groupName : selectedGroup.name }}</h2>
         <span v-if="groupCategory !== ''"> {{ groupCategory }}</span>
       </div>
       <div class="right-section">
@@ -145,6 +145,7 @@ export default {
 .group-details {
   height: 100%;
   flex: 1;
+  min-width: 30%;
   border-radius: 6px;
   border-left: 1px solid $color-border;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);

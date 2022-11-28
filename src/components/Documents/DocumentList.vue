@@ -2,11 +2,15 @@
   <div v-if="allSortedDocuments.length > 0 || areActionsInProgress">
     <!-- TODO: placeholder when no entities -->
     <FilesFields
+      v-if="display === 'list'"
       :current-sort="sort"
       :are-all-selected="areAllSelected"
       @handleSort="handleSort"
     />
-    <div class="entities">
+    <div
+      class="entities"
+      :class="{'display-grid': display === 'grid'}"
+    >
       <Folder
         v-for="(folder, index) in sortedFolders"
         :key="folder.id"
@@ -59,6 +63,9 @@ export default {
     }
   },
   computed: {
+    display () {
+      return this.$store.state.documents.currentDisplay
+    },
     currentEntities () {
       return this.$store.state.documents.folderContent
     },
@@ -153,5 +160,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.display-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
 </style>

@@ -1,6 +1,9 @@
 <template>
   <div class="details-tab">
-    <div class="expiration-date">
+    <div
+      v-if="group.expirationDate"
+      class="expiration-date"
+    >
       {{ $t('expire') + formattedDate }}
     </div>
 
@@ -12,7 +15,7 @@
     </div>
 
     <div
-      v-if="!group.isExpired"
+      v-if="!group.isExpired && !group.isGroupRootFolder"
       class="actions"
     >
       <button @click="publishNews">
