@@ -123,6 +123,7 @@ export default {
             this.isLoading = false
             if (data.success) {
               this.$store.dispatch('popups/pushPopup', { message: this.$t('successMessage'), type: 'success' })
+              this.oldConfiguration = JSON.stringify(this.configuration)
             } else {
               this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
               // Rewrite from with back-end config
