@@ -70,7 +70,9 @@ const STUDENT = {
 const PARENT = { // Student's parent
   login: 'drousa', // 'hesmat' for the other student's parent
   password: 'pentila',
-  role: 'parent'
+  role: 'parent',
+  firstName: 'DYALA',
+  lastName: 'ROUSAN'
 }
 
 const MULTI_STUDENT1 = { // Her parent has 2 children

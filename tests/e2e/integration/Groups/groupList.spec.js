@@ -7,9 +7,11 @@ describe('Group list', () => {
   })
 
   it('Test group List interface (desktop)', () => {
-    // TODO test group list length when we finish to add groups for tests
-    cy.contains('[data-test=group-item]', 'groupTest').should('exist')
+    cy.get('[data-test=group-item]').should('have.length', 11)
 
-    // TODO test filter
+    // Test filter
+    cy.get('.toolbar').find('input').type('reten', { force: true })
+    cy.get('[data-test=group-item]').should('have.length', 1)
+    cy.contains('[data-test=group-item]', 'Retenues').should('exist')
   })
 })

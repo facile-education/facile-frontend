@@ -53,7 +53,7 @@
         v-if="isEditGroupModalDisplayed"
         :edited-group="undefined"
         win-width="500px"
-        @close="toggleEditGroupModal"
+        @close="isEditGroupModalDisplayed=false"
       />
     </teleport>
   </NeroToolbar>
@@ -83,7 +83,7 @@ export default {
   },
   computed: {
     canCreateGroup () {
-      return !this.$store.state.user.isStudent
+      return !this.$store.state.user.isStudent && !this.$store.state.user.isParent
     }
   },
   methods: {

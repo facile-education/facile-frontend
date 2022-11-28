@@ -47,12 +47,12 @@ describe('Group Details', () => {
       cy.contains('1 Administrateur').click()
       cy.contains('Salvatore Di Dio').should('not.exist')
 
-      cy.contains('2 Enseignants').click()
-      cy.contains('Alexandre Regad')
+      cy.contains('1 Enseignant').click()
       cy.contains('Isabel Mendez')
 
-      cy.contains('2 Autres').click()
+      cy.contains('3 Autres').click()
       cy.contains('ANYA ALOSTA')
+      cy.contains('DYALA ROUSAN').should('exist')
       cy.contains('Erona Berisha').click() // test Messaging Modal
       cy.get('[data-test=send-message]').click()
     })
@@ -67,7 +67,7 @@ describe('Group Details', () => {
       cy.contains('button', 'Accéder aux documents').click()
     })
 
-    cy.url().should('eq', Cypress.config().baseUrl + 'nero/documents' + '/groups') // TODO: replace 'nero/documents' by the appropriated constant
+    cy.url().should('contain', Cypress.config().baseUrl + '/nero/documents/groups/') // TODO: replace 'nero/documents' by the appropriated constant
     cy.get('[data-test="breadcrumb"]').within(() => {
       cy.contains('.current-folder', 'groupTest')
     })
@@ -89,23 +89,23 @@ describe('Group Details', () => {
       // Test activities
       cy.get('.activity').eq(0)
         .should('contain', 'Salvatore Di Dio')
-        .should('contain', 'a supprimé le fichier')
+        .should('contain', 'a partagé le fichier')
         .should('contain', 'document de groupe.html')
 
       cy.get('.activity').eq(1)
         .should('contain', 'Salvatore Di Dio')
-        .should('contain', 'a supprimé')
-        .should('contain', 'MANON FREY')
+        .should('contain', 'a supprimé le fichier')
+        .should('contain', 'document de groupe.html')
 
       cy.get('.activity').eq(2)
         .should('contain', 'Salvatore Di Dio')
         .should('contain', 'a inscrit')
-        .should('contain', 'MANON FREY')
+        .should('contain', 'DYALA ROUSAN')
 
       cy.get('.activity').eq(3)
         .should('contain', 'Salvatore Di Dio')
-        .should('contain', 'a partagé le fichier')
-        .should('contain', 'document de groupe.html')
+        .should('contain', 'a supprimé')
+        .should('contain', 'Alexandre Regad')
     })
   })
 })

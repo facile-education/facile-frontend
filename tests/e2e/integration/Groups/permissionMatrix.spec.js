@@ -7,7 +7,7 @@ const rolesList = [
     canCreateGroup: true,
     canUpdateGroup: true,
     canDeleteGroup: true,
-    hasCourses: true,
+    hasCourses: false,
     hasPersonal: true,
     hasSchool: true,
     hasClass: true,
@@ -67,7 +67,7 @@ const rolesList = [
     hasPersonal: true,
     hasSchool: true,
     hasClass: true,
-    hasDiscipline: true,
+    hasDiscipline: false,
     hasAllClasses: true,
     hasAllDisciplines: false,
     hasAllPersonal: false
@@ -109,10 +109,12 @@ describe('Permission matrix', () => {
 
       // Group visibility // TODO match with good groups
       if (role.hasCourses) {
-        cy.contains('[data-test=group-item]', 'groupTest').should('exist')
+        cy.get('.filters > :nth-child(2)').click()
+        cy.contains('[data-test=group-item]', 'MA1051').should('exist') // The common course of the student and the teacher
       }
 
       if (role.hasPersonal) {
+        cy.get('.filters > :nth-child(1)').click()
         cy.contains('[data-test=group-item]', 'groupTest').should('exist')
       }
 
@@ -121,23 +123,28 @@ describe('Permission matrix', () => {
       }
 
       if (role.hasClass) {
-        cy.contains('[data-test=group-item]', 'groupTest').should('exist')
+        cy.get('.filters > :nth-child(2)').click()
+        cy.contains('[data-test=group-item]', '1051AC').should('exist') // The common class of the student and the teacher
       }
 
       if (role.hasDiscipline) {
-        cy.contains('[data-test=group-item]', 'groupTest').should('exist')
+        cy.contains('[data-test=group-item]', 'Enseignants Mathématiques').should('exist')
       }
 
       if (role.hasAllClasses) {
-        cy.contains('[data-test=group-item]', 'groupTest').should('exist')
+        cy.get('.filters > :nth-child(2)').click()
+        cy.contains('[data-test=group-item]', '1051AC').should('exist')
+        cy.contains('[data-test=group-item]', '0911R1').should('exist')
       }
 
       if (role.hasAllDisciplines) {
-        cy.contains('[data-test=group-item]', 'groupTest').should('exist')
+        cy.contains('[data-test=group-item]', 'Enseignants Mathématiques').should('exist')
+        cy.contains('[data-test=group-item]', 'Enseignants Anglais').should('exist')
       }
 
       if (role.hasAllPersonal) {
-        cy.contains('[data-test=group-item]', 'groupTest').should('exist')
+        cy.get('.filters > :nth-child(1)').click()
+        // TODO
       }
     })
   })
