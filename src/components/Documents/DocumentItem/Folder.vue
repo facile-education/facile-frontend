@@ -8,7 +8,6 @@
     :quick-options="quickOptions"
     :is-last="isLast"
     :dark="dark"
-    :display="display"
     :is-draggable="isDraggable"
     @triggerAction="changeDir"
     @shiftSelect="dispatchEvent"
@@ -35,10 +34,6 @@ export default {
         return (typeof obj.id === 'string') &&
           (typeof obj.name === 'string' && obj.name.length > 0)
       }
-    },
-    display: {
-      type: String,
-      default: 'list'
     },
     isDraggable: {
       type: Boolean,

@@ -208,6 +208,8 @@ export default {
           } else {
             this.$store.dispatch('documents/goInGroupRoot')
           }
+        } else {
+          console.error('unknown route')
         }
       },
       // fetch the data when the view is created and the data is

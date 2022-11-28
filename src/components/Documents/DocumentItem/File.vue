@@ -4,7 +4,6 @@
     :document="file"
     :document-icon="fileIcon"
     :quick-options="quickOptions"
-    :display="display"
     :is-draggable="isDraggable"
     :dark="dark"
     :is-last="isLast"
@@ -30,10 +29,6 @@ export default {
         return (typeof obj.id === 'string') &&
           (typeof obj.name === 'string' && obj.name.length > 0)
       }
-    },
-    display: {
-      type: String,
-      default: 'list'
     },
     isDraggable: {
       type: Boolean,

@@ -53,7 +53,7 @@ const routes = [
     component: () => import('@/router/views/Documents')
   },
   {
-    path: '/documents/groups/:folderId(\\d+)?',
+    path: '/documents/groups/:folderId(.*)?',
     name: 'GroupDocuments',
     component: () => import('@/router/views/Documents')
   },

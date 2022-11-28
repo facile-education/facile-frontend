@@ -10,12 +10,10 @@
       v-if="display==='grid'"
       :document="document"
       :document-icon="documentIcon"
-      @mouseover="isHovering = true"
-      @mouseleave="isHovering = false"
-      @click.exact="toggleSelection"
-      @click.ctrl.exact="toggleCtrlSelection"
-      @click.meta.exact="toggleCtrlSelection"
-      @click.shift="toggleShiftSelection"
+      @triggerAction="triggerAction"
+      @select="toggleSelection"
+      @ctrlSelect="toggleCtrlSelection"
+      @shiftSelect="toggleShiftSelection"
       @contextmenu.prevent="openContextMenu"
       @chooseOption="handleChosenOption"
     />
@@ -25,8 +23,6 @@
       :document-icon="documentIcon"
       :quick-options="quickOptions"
       :is-last="isLast"
-      @mouseover="isHovering = true"
-      @mouseleave="isHovering = false"
       @triggerAction="triggerAction"
       @select="toggleSelection"
       @ctrlSelect="toggleCtrlSelection"
@@ -59,10 +55,6 @@ export default {
       type: String,
       required: true
     },
-    display: {
-      type: String,
-      default: 'list'
-    },
     isLast: {
       type: Boolean,
       default: false
@@ -83,12 +75,10 @@ export default {
     }
   },
   emits: ['shiftSelect', 'openContextMenu', 'triggerAction'],
-  data () {
-    return {
-      isHovering: false
-    }
-  },
   computed: {
+    display () {
+      return this.$store.state.documents.currentDisplay
+    },
     computeClass () {
       if (this.isDragged) {
         return 'is-dragging'
@@ -96,11 +86,7 @@ export default {
         if (this.isSelected) {
           return 'selected'
         } else {
-          if (this.isHovering && !this.mq.phone && !this.mq.tablet) {
-            return 'hovering'
-          } else {
-            return 'document'
-          }
+          return 'document'
         }
       }
     },
@@ -142,6 +128,9 @@ export default {
       this.$emit('triggerAction')
     },
     toggleSelection () {
+      if (this.document.isGroupRootFolder) {
+        this.$store.dispatch('groups/setSelectedGroup', this.document)
+      }
       this.$store.dispatch('documents/selectOneDocument', this.document)
     },
     toggleCtrlSelection () {
@@ -175,13 +164,4 @@ export default {
   color: $color-active-bg;
   background-color : $color-hover-bg;
 }
-
-.hovering {
-  background-color : $color-hover-bg;
-}
-
-.selected {
-  background-color : $color-selected-bg;
-}
-
 </style>

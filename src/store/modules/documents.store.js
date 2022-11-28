@@ -5,6 +5,7 @@ import i18n from '@/i18n'
 import groupService from '@/api/documents/group.service'
 
 export const state = {
+  currentDisplay: 'list',
   breadcrumb: [],
   lastSelectedEntity: undefined,
   selectedEntities: [],
@@ -20,6 +21,9 @@ export const state = {
 }
 
 export const mutations = {
+  updateDisplay (state, payload) {
+    state.currentDisplay = payload
+  },
   openFile (state, file) {
     state.openFiles.push(file)
   },
@@ -57,6 +61,11 @@ export const mutations = {
   setBreadcrumb (state, payload) {
     if (payload[0].name === '_PRIVATE_') {
       payload[0].name = i18n.global.t('AppCommonsLabels.Documents.privateFolderName') // TODO change it
+    }
+    if (payload[payload.length - 1].id === 'collaborative') { // if current folder is the collaborative folder
+      state.currentDisplay = 'grid'
+    } else {
+      state.currentDisplay = 'list'
     }
     state.breadcrumb = payload
   },
@@ -179,7 +188,6 @@ export const actions = {
     if (!state.documentsProperties.maxUploadSize) {
       documentsService.getGlobalDocumentsProperties().then((data) => {
         commit('setDocumentsProperties', data)
-        this.dispatch('documents/changeDirectory', { id: data.private.id })
       })
     }
     this.dispatch('documents/changeDirectory', { id: 'collaborative', isGroupDirectory: true }) // TODO get those key from documentsProperties

@@ -2,7 +2,7 @@
   <div
     ref="document"
     class="list-document"
-    :class="{'selected': isSelected, 'phone-list-document': mq.phone || mq.tablet, 'last': isLast}"
+    :class="{'selected': isSelected, 'hovering': hoverSelection, 'phone-list-document': mq.phone || mq.tablet, 'last': isLast}"
     tabindex="-1"
     @keypress.enter="triggerAction"
     @click.ctrl.exact="ctrlSelect"
@@ -398,10 +398,6 @@ export default {
   }
 }
 
-.last {
-  border-bottom: 1px solid $color-border;;
-}
-
 .phone-list-document {
   height: 74px;
 
@@ -434,6 +430,18 @@ export default {
       width: 75px;
     }
   }
+}
+
+.last {
+  border-bottom: 1px solid $color-border;;
+}
+
+.hovering {
+  background-color : $color-hover-bg;
+}
+
+.selected {
+  background-color : $color-selected-bg;
 }
 
 </style>
