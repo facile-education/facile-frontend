@@ -134,6 +134,7 @@ export default {
     },
     closePanel () {
       this.$store.dispatch('groups/closePanel')
+      this.$store.dispatch('documents/closeDocumentPanel')
     }
   }
 }

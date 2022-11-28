@@ -1,5 +1,6 @@
 <template>
   <PentilaWindow
+    v-if="!displayGroupDetails"
     class="details-display-modal"
     :modal="true"
     :full-screen="true"
@@ -41,14 +42,18 @@
 
     <template #footer />
   </PentilaWindow>
+  <GroupDetailsModal v-else />
 </template>
 
 <script>
 import DocumentMetaData from '@components/Documents/DocumentDetails/DocumentMetaData'
 import DocumentVersionsList from '@components/Documents/DocumentDetails/DocumentVersionsList'
+import { defineAsyncComponent } from 'vue'
+const GroupDetailsModal = defineAsyncComponent(() => import('@components/Groups/GroupDetailsPanel/GroupDetailsModal'))
+
 export default {
   name: 'DocumentDetailsModal',
-  components: { DocumentVersionsList, DocumentMetaData },
+  components: { GroupDetailsModal, DocumentVersionsList, DocumentMetaData },
   computed: {
     computedHeader () {
       if (this.selectedDocuments.length === 1) {
@@ -68,6 +73,9 @@ export default {
       } else {
         return undefined
       }
+    },
+    displayGroupDetails () {
+      return !!(this.documentToDisplay && this.documentToDisplay.isGroupRootFolder)
     }
   },
   methods: {

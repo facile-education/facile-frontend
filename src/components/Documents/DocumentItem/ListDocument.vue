@@ -9,7 +9,7 @@
     @click.meta.exact="ctrlSelect"
     @click.shift="shiftSelect"
     @dblclick="triggerAction"
-    @click.exact="mq.phone ? triggerAction() : select()"
+    @click.exact="mq.phone || mq.tablet ? triggerAction() : select()"
     @mouseover="hoverSelection = true"
     @mouseleave="hoverSelection = false"
   >
