@@ -257,12 +257,15 @@ export default {
         this.v$.$touch()
       } else {
         // Build startDate and endDate
-        const startDate = dayjs(dayjs().add((this.selectedDay.dayNb - 1), 'day').format('YYYY-MM-DD') + ' ' + this.startTime, 'YYYY-MM-DD HH:mm')
-        const endDate = dayjs(dayjs().add((this.selectedDay.dayNb - 1), 'day').format('YYYY-MM-DD') + ' ' + this.endTime, 'YYYY-MM-DD HH:mm')
+        const startDate = dayjs(dayjs().day(1).add((this.selectedDay.dayNb - 1), 'day').format('YYYY-MM-DD') + ' ' + this.startTime, 'YYYY-MM-DD HH:mm')
+        const endDate = dayjs(dayjs().day(1).add((this.selectedDay.dayNb - 1), 'day').format('YYYY-MM-DD') + ' ' + this.endTime, 'YYYY-MM-DD HH:mm')
 
         createSession(this.selectedGroup.groupId, this.subject.name, this.room, startDate, endDate, this.selectedTeachers, this.isRecurrent).then((data) => {
           if (data.success) {
             this.teacherList = data.teachers
+            // Select the group of the created session, in the main panel
+            console.log('selected group = ', this.selectedGroup)
+            this.$store.dispatch('horaires/selectGroup', this.selectedGroup)
           }
         })
         this.closeModal()
