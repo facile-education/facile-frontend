@@ -123,6 +123,7 @@
       "groups": "Collaboratifs",
       "import": "Importer",
       "managePermissions": "Permissions",
+      "copyUrl": "Copier l'URL",
       "move": "Déplacer vers",
       "newAudio": "Fichier audio",
       "newFolder": "@:Documents.folder",

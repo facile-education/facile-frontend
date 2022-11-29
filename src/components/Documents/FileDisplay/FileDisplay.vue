@@ -48,6 +48,11 @@
       :src="fileUrl"
     />
     <div
+      v-else-if="typeOfView === 'Forbidden'"
+      v-t="('Forbidden')"
+      class="placeHolder"
+    />
+    <div
       v-else
       v-t="('Unsupported')"
       class="placeHolder"
@@ -130,6 +135,7 @@ export default {
   },
   methods: {
     loadMedia () {
+      console.log('load media')
       const versionId = (this.file.versionId === undefined || this.file.versionId === 'latest') ? 0 : this.file.versionId // for the backend type consistency
       const readOnly = !!this.file.readOnly // To force to have boolean
       fileService.getResource(this.file.id, versionId, readOnly).then((data) => {
@@ -147,6 +153,9 @@ export default {
         } else {
           if (data.error === 'UnsupportedFileExtension') {
             this.typeOfView = 'Unsupported'
+            this.isLoaded = true
+          } else if (data.error === 'PermissionException') {
+            this.typeOfView = 'Forbidden'
             this.isLoaded = true
           } else {
             // TODO: Display placeholder
@@ -180,5 +189,6 @@ export default {
 {
   "quitWithoutSaving": "Toute modification non sauvegardée sera perdue",
   "Unsupported": "Type de fichier non affichable",
+  "Forbidden": "Vous n'avez pas la permission de voir ce fichier"
 }
 </i18n>

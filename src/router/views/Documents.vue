@@ -177,6 +177,10 @@ export default {
       if (options !== undefined && options.length >= 1 && options[0].subMenu !== undefined && !this.$store.state.documents.documentsProperties.hasScratchBroadcasted) {
         removeMenuOptionIfExist(options[0].subMenu, 'newScratch')
       }
+      // Remove CopyUrl option if local documents
+      if (options !== undefined && options.length >= 1 && !this.currentFolder.isGroupDirectory) {
+        removeMenuOptionIfExist(options, 'copyUrl')
+      }
       return options
     },
     isDocumentPanelDisplayed () {
@@ -346,6 +350,13 @@ export default {
             this.isFileNameModalDisplayed = true
           }
           break
+        case 'copyUrl':
+          if (this.selectedDocuments[0].type === 'File') {
+            this.copyToClipboard(window.location.host + '/nero/viewer/' + this.selectedDocuments[0].id)
+          } else {
+            this.copyToClipboard(window.location.host + '/user//nero#/documents?folderId=' + this.selectedDocuments[0].id)
+          }
+          break
         case 'managePermissions':
           this.isPermissionModalDisplayed = true
           break
@@ -391,6 +402,29 @@ export default {
       }
       this.isContextMenuDisplayed = false
       this.$store.dispatch('contextMenu/closeMenus')
+    },
+    copyToClipboard (textToCopy) {
+      // navigator clipboard api needs a secure context (https)
+      if (navigator.clipboard && window.isSecureContext) {
+        // navigator clipboard api method'
+        return navigator.clipboard.writeText(textToCopy)
+      } else {
+        // text area method
+        const textArea = document.createElement('textarea')
+        textArea.value = textToCopy
+        // make the textarea out of viewport
+        textArea.style.position = 'fixed'
+        textArea.style.left = '-999999px'
+        textArea.style.top = '-999999px'
+        document.body.appendChild(textArea)
+        textArea.focus()
+        textArea.select()
+        return new Promise((resolve, reject) => {
+          // here the magic happens
+          document.execCommand('copy')
+          textArea.remove()
+        })
+      }
     },
     doSelectFolderAction (targetFolder) {
       if (this.folderSelectionOption === 'move') {
