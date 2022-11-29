@@ -98,6 +98,11 @@ const routes = [
     component: () => import('@/router/views/Statistics')
   },
   {
+    path: '/viewer/:fileEntryId(\\d+)?',
+    name: 'Viewer',
+    component: () => import('@/router/views/Viewer')
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: () => import('@/router/views/NotFound')

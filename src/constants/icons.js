@@ -37,6 +37,7 @@ const icons = {
   options: {
     addToFavorites: 'star',
     copyWebdavUrl: require('@/assets/options/icon_webdav.svg'),
+    copyUrl: require('@/assets/options/icon_duplicate.svg'),
     download: require('@/assets/options/icon_download.svg'),
     delete: require('@/assets/options/icon_trash.svg'),
     delete_white: require('@/assets/options/icon_trash_white.svg'),

@@ -236,6 +236,13 @@ const fileOptions = [
     title: i18n.global.t('Documents.options.managePermissions'),
     icon: icons.options.permissions,
     position: 8,
+    hasSeparator: true
+  },
+  {
+    name: 'copyUrl',
+    title: i18n.global.t('Documents.options.copyUrl'),
+    icon: icons.options.copyUrl,
+    position: 9,
     hasSeparator: false
   }
 ]
@@ -288,6 +295,13 @@ const folderOptions = [
     title: i18n.global.t('Documents.options.managePermissions'),
     icon: icons.options.permissions,
     position: 7,
+    hasSeparator: true
+  },
+  {
+    name: 'copyUrl',
+    title: i18n.global.t('Documents.options.copyUrl'),
+    icon: icons.options.copyUrl,
+    position: 8,
     hasSeparator: false
   }
 ]
