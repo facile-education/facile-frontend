@@ -14,8 +14,18 @@
     @mouseleave="hoverSelection = false"
   >
     <div class="icon-container">
+      <!-- Mandatory to dynamically change color >-->
+      <object
+        v-if="displayFolderRootIcon"
+        ref="docIcon"
+        class="img-icon"
+        :data="require('@assets/documentIcons/icon-folder.svg')"
+        type="image/svg+xml"
+      />
+
       <img
-        v-if="fileIconIsImage"
+        v-else-if="fileIconIsImage"
+        ref="docIcon"
         class="img-icon"
         :src="documentIcon"
         alt="document icon"
@@ -69,8 +79,12 @@
 </template>
 
 <script>
-import BaseIcon from '@components/Base/BaseIcon'
+
+import { defineAsyncComponent } from 'vue'
+
 import dayjs from 'dayjs'
+const BaseIcon = defineAsyncComponent(() => import('@components/Base/BaseIcon'))
+
 export default {
   name: 'GridDocument',
   components: { BaseIcon },
@@ -96,6 +110,9 @@ export default {
     }
   },
   computed: {
+    displayFolderRootIcon () {
+      return this.document.isGroupRootFolder
+    },
     fileIconIsImage () {
       // TODO: find a better way to separate img and font-awesome icons
       return this.documentIcon.includes('.') || this.documentIcon.includes(':') // if icon contains extension (like folder.svg) it's not a font-awesome
@@ -111,6 +128,47 @@ export default {
     },
     formattedDate () {
       return this.document.lastModifiedDate !== undefined ? dayjs(this.document.lastModifiedDate, 'YYYY-MM-DD HH:mm:ss').calendar() : '-'
+    }
+  },
+  mounted () {
+    if (this.displayFolderRootIcon) {
+      const vm = this
+      const a = this.$refs.docIcon
+
+      let color
+      if (this.document.color) {
+        color = this.document.color
+      } else if (this.$store.state.user.themeColor) {
+        color = this.$store.state.user.themeColor
+      }
+
+      a.setAttribute('style', 'cursor: pointer;')
+
+      // It's important to add an load event listener to the object,
+      // as it will load the svg doc asynchronously
+      a.addEventListener('load', function () {
+        // get the inner DOM of alpha.svg
+        const svgDoc = a.contentDocument
+        // get the inner element by id
+        const colorPolygon = svgDoc.getElementById('color-polygon')
+        if (color) {
+          colorPolygon.setAttribute('fill', color)
+        }
+
+        // Add the behaviour we lost by the process
+        const img = svgDoc.getElementById('svg-img')
+        img.setAttribute('style', 'cursor: pointer;')
+
+        img.addEventListener('mouseup', function () {
+          if (vm.mq.phone || vm.mq.tablet) {
+            vm.triggerAction()
+          } else {
+            vm.select()
+          }
+        }, false)
+
+        img.addEventListener('dblclick', function () { vm.triggerAction() }, false)
+      }, false)
     }
   },
   methods: {
