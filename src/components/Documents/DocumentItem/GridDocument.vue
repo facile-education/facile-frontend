@@ -43,7 +43,7 @@
           v-if="mq.phone || mq.tablet"
           class="button"
           src="@assets/options/icon_details.svg"
-          data-test="edit-group-icon"
+          data-test="open-details-icon"
           :alt="$t('details')"
           :title="$t('details')"
           @click.stop="openDetailsPanel"

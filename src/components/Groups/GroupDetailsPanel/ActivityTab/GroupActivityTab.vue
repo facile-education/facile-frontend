@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { getGroupHistory } from '@/api/groups.service'
+import { getGroupHistory, getSpecificGroupActivities } from '@/api/groups.service'
 import { nbActivityPerPage } from '@/constants/activityConstants'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
@@ -61,6 +61,26 @@ export default {
   },
   methods: {
     getActivities () {
+      if (this.group.isGroupRootFolder) {
+        this.getGroupDocumentHistory()
+      } else {
+        this.getGroupHistory()
+      }
+    },
+    getGroupDocumentHistory () {
+      this.activitiesLoading = true
+      getSpecificGroupActivities(this.group.groupId, this.maxDate.format('YYYY-MM-DD'), nbActivityPerPage, true, false, true, false, false, false, false).then((data) => {
+        this.activitiesLoading = false
+        if (data.success) {
+          this.activityList = this.activityList.concat(data.activities)
+          // Update maxDate
+          if (this.activityList.length > 1) {
+            this.maxDate = dayjs(this.activityList[this.activityList.length - 1].modificationDate) // /!\ Assume the returned list is already sorted by date
+          }
+        }
+      })
+    },
+    getGroupHistory () {
       this.activitiesLoading = true
       getGroupHistory(this.group.groupId, this.maxDate.format('YYYY-MM-DD'), nbActivityPerPage).then((data) => {
         this.activitiesLoading = false

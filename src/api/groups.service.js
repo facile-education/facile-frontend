@@ -10,6 +10,7 @@ export {
   editCommunity,
   removeCommunity,
   getGroupHistory,
+  getSpecificGroupActivities,
   addCommunityMembers,
   removeCommunityMember,
   addCommunityAdmin,
@@ -104,6 +105,23 @@ function getGroupHistory (groupId, maxDate, nbResults) {
       groupId: groupId,
       maxDate: maxDate,
       nbResults: nbResults
+    }
+  }).then(response => response.data)
+}
+
+function getSpecificGroupActivities (groupId, maxDate, nbResults, allHistory, containNews, containDocs, containMembership, containPendingFirings, containFirings, containHomework) {
+  return axios.get(constants.JSON_WS_URL + GROUP_PATH + GROUP_CTX + 'get-specific-group-activities', {
+    params: {
+      groupId: groupId,
+      maxDate: maxDate,
+      nbResults: nbResults,
+      allHistory: allHistory,
+      containNews: containNews,
+      containDocs: containDocs,
+      containMembership: containMembership,
+      containPendingFirings: containPendingFirings,
+      containFirings: containFirings,
+      containHomework: containHomework
     }
   }).then(response => response.data)
 }
