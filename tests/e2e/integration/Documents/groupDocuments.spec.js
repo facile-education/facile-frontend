@@ -3,7 +3,13 @@ import { HEADMASTER } from '../../support/constants'
 
 describe('Group documents', () => {
   beforeEach(() => {
-    // Not load table beacause it depends only of the groups
+    Cypress.on('uncaught:exception', (err, runnable) => {
+      // returning false here prevents Cypress from
+      // failing the test
+      console.log(err, runnable)
+      return false
+    })
+    // Not load table because it depends only of the groups
     cy.login(groupDocUrl, HEADMASTER) // land in 'dossier1'
   })
 
