@@ -146,7 +146,7 @@ export default {
 .group-details {
   height: 100%;
   flex: 1;
-  min-width: 30%;
+  min-width: 300px;
   border-radius: 6px;
   border-left: 1px solid $color-border;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
