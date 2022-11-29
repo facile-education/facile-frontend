@@ -11,6 +11,13 @@
 // import '../Documents/moveAndDuplicate.spec'
 // import '../Documents/options.spec'
 // import '../Documents/rename.spec'
+// import '../Documents/groupDocuments.spec'
+
+// Groups
+// import '../Groups/editGroupModal.spec'
+// import '../Groups/groupDetailsPanel.spec'
+// import '../Groups/groupList'
+// import '../Groups/permissionMatrix.spec'
 
 // Horaires
 // import '../Horaires/access.spec'

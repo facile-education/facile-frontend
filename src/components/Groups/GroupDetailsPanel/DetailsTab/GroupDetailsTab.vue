@@ -8,7 +8,7 @@
     </div>
 
     <div
-      v-if="group.description !== ''"
+      v-if="group.description !== '' && !group.isGroupRootFolder"
       class="description"
     >
       {{ group.description }}
