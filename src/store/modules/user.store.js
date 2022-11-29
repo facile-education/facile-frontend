@@ -28,6 +28,7 @@ export const mutations = {
   initUserInformations (state, payload) {
     state.userId = payload.userId
     state.lastName = payload.lastName
+    state.displayName = payload.displayName
     state.firstName = payload.firstName
     state.picture = payload.picture
     state.themeColor = payload.themeColor
