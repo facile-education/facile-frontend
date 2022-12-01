@@ -96,7 +96,7 @@
       <!-- Sub folders -->
       <div v-if="isPersonalFoldersExpanded">
         <MenuFolder
-          v-for="folder in sortedPersonalFolders"
+          v-for="folder in personalFolders"
           :key="folder.folderId"
           class="personal-sub-folder"
           :folder="folder"
@@ -113,7 +113,6 @@ import constants from '@/constants/messagingConstants'
 import BaseIcon from '@components/Base/BaseIcon'
 import messageService from '@/api/messaging/message.service'
 import MenuFolder from '@components/Messaging/MenuFolder'
-import _ from 'lodash'
 import MenuRootFolder from '@components/Messaging/MenuRootFolder'
 import { nextTick } from 'vue'
 
@@ -157,9 +156,6 @@ export default {
     },
     nbNewMessages () {
       return this.$store.state.messaging.nbNewMessages
-    },
-    sortedPersonalFolders () {
-      return _.orderBy(this.personalFolders, 'folderName', 'asc')
     }
   },
   methods: {

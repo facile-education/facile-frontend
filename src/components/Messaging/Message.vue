@@ -157,9 +157,9 @@ export default {
 
       .icon-container {
         margin-top : 8px;
-        height: 40px;
-        width: 40px;
-        border-radius: 20px;
+        height: 50px;
+        width: 50px;
+        border-radius: 25px;
         display: flex;
         align-items: center;
         justify-content: center;
