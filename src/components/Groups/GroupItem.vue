@@ -7,32 +7,36 @@
     <PentilaSpinner v-if="isLoading" />
 
     <div
-      class="header theme-background-color"
-      :style="`background-color:${group.color};`"
+      class="header theme-background-color theme-border-color"
+      :style="`background-color:${group.color};border-color:${group.color} !important;`"
+      :title="group.groupName"
     >
-      <h3>{{ group.groupName }}</h3>
-      <span v-if="groupCategory !== ''"> {{ groupCategory }}</span>
+      <div class="overlay">
+        <h3>{{ group.groupName }}</h3>
+        <span v-if="groupCategory !== ''"> {{ groupCategory }}</span>
+      </div>
     </div>
 
-    <div class="body">
-      {{ group.description }}
-    </div>
+    <div
+      class="body"
+      v-html="group.description"
+    />
 
     <div class="buttons">
       <div class="members">
         <span>{{ group.nbMembers }}</span>
         <img
           src="@assets/icon_commu-black.svg"
-          :title="$t('edit')"
-          alt=""
+          :title="$tc('members', group.nbMembers)"
+          alt="$tc('members', group.nbMembers)"
         >
       </div>
       <div
-        v-if="group.isAdmin"
+        v-if="hasEditionRights"
         class="separator"
       />
       <img
-        v-if="group.isAdmin"
+        v-if="hasEditionRights"
         class="button"
         src="@assets/edit.svg"
         data-test="edit-group-icon"
@@ -41,11 +45,11 @@
         @click.stop="editGroup()"
       >
       <div
-        v-if="group.isAdmin"
+        v-if="hasEditionRights"
         class="separator"
       />
       <img
-        v-if="group.isAdmin"
+        v-if="hasEditionRights"
         class="button"
         src="@assets/trash.svg"
         data-test="delete-group-icon"
@@ -59,9 +63,9 @@
       v-if="group.isExpired"
       class="expired"
     >
-      <p v-t="'desactivedSpace'" />
+      <p v-t="'disabledSpace'" />
       <button
-        v-if="group.isAdmin"
+        v-if="hasEditionRights"
         @click.stop="extendGroup"
       >
         {{ $t('reactivate') + group.groupName }}
@@ -103,13 +107,22 @@ export default {
   },
   computed: {
     groupCategory () {
-      if (this.group.isContactList) {
-        return this.$t('institutional')
+      if (this.group.isClass) {
+        return this.$t('class')
       } else if (this.group.isPedagogical) {
         return this.$t('pedagogical')
+      } else if (this.group.isSubject) {
+        return this.$t('subject')
+      } else if (this.group.isSchool) {
+        return this.$t('school')
+      } else if (this.group.isInstitutional) {
+        return this.$t('institutional')
       } else {
-        return ''
+        return this.$t('community')
       }
+    },
+    hasEditionRights () {
+      return (this.group.isAdmin && !this.group.isInstitutional)
     }
   },
   methods: {
@@ -152,128 +165,138 @@ export default {
   flex-direction: column;
   height: 235px;
   width: 285px;
-  border-radius: 6px;
   border: 1px solid rgba(0, 0, 0, 0.2);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  margin: 0 20px 40px 20px;
 
   &:hover {
     border: 1px solid grey;
     cursor: pointer;
   }
+}
 
-  .header {
-    padding: 0 15px;
-    border-radius: 6px 6px 0 0;
-    display: flex;
-    height: 62px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    color: white;
+.header {
+  border-left: 10px solid;
+  height: 62px;
+  color: inherit;
+}
 
-    h3 {
-      margin: 0;
-    }
-    span {
-      margin-top: 5px;
-      border-radius: 6px;
-      border: 1px solid white;
-      padding: 0 5px;
-      font-size: 0.875rem;
-      font-weight: 600;
-    }
-  }
+.overlay {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0 5px;
+  background-color: #ffffff99;
+  overflow: hidden;
 
-  .body {
-    padding: 10px 15px;
-    font-weight: 600;
-    font-size: 0.875rem;
-    color: black;
-    overflow: auto;
-    max-height: calc(235px - 62px - 10px - 32px);
-  }
-
-  .buttons {
-    height: 32px;
-    margin-top: auto;
-    padding: 0 15px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-
-    .members {
-      display: flex;
-      align-items: center;
-      padding: 0 5px;
-
-      span {
-        font-weight: 600;
-        font-size: 0.875rem;
-      }
-
-      img {
-        margin-left: 5px;
-        height: 30px;
-        width: 30px;
-      }
-    }
-
-    .button {
-      border: 1px solid transparent;
-      border-radius: 5px;
-      padding: 5px;
-      cursor: pointer;
-
-      &:hover {
-        border: 1px solid grey;
-      }
-    }
-
-    .separator {
-      height: 25px;
-      border-right: 1px solid $color-border;
-    }
-  }
-
-  .expired {
-    position: absolute;
-    height: 100%;
+  h3 {
     width: 100%;
-    top: 0;
-    left: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    background-color: rgba(225,225,225  ,.8);
-    cursor: default;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
-    p {
-      color: red;
-    }
-
-    button {
-      cursor: pointer;
-      background-color: transparent;
-      border: none;
-      &:hover {
-        font-weight: 600;
-      }
-    }
+  span {
+    margin-top: 5px;
+    border-radius: 6px;
+    border: 1px solid $color-dark-text;
+    padding: 0 5px;
+    font-size: 0.875rem;
+    font-weight: 600;
   }
 }
 
+.body {
+  padding: 10px 15px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  overflow: auto;
+  max-height: calc(235px - 62px - 10px - 32px);
+}
+
+.buttons {
+  height: 32px;
+  margin-top: auto;
+  padding: 0 15px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  .members {
+    display: flex;
+    align-items: center;
+
+    span {
+      font-weight: 600;
+      font-size: 0.875rem;
+    }
+
+    img {
+      margin: 0 4px;
+    }
+  }
+
+  .button {
+    border: 1px solid transparent;
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
+
+    &:hover {
+      border: 1px solid grey;
+    }
+  }
+
+  .separator {
+    height: 25px;
+    margin: 0 2px;
+    border-right: 1px solid $color-border;
+  }
+}
+
+.expired {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: rgba(225,225,225  ,.8);
+  cursor: default;
+
+  p {
+    color: red;
+  }
+
+  button {
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    &:hover {
+      font-weight: 600;
+    }
+  }
+}
 </style>
 
 <i18n locale="fr">
 {
+  "class": "Classe",
+  "community": "Communautaire",
   "delete": "Supprimer",
+  "disabledSpace": "Espace désactivé avant suppression",
   "edit": "Modifier",
   "institutional": "Institutionnel",
+  "members": "Aucun membre | {count} membre | {count} membres",
   "pedagogical": "Pédagogique",
-  "warning": "La suppression de ce groupe est définitive.",
-  "desactivedSpace": "Espace désactivé avant suppression",
-  "reactivate": "Je souhaite réactiver "
+  "reactivate": "Je souhaite réactiver",
+  "school": "Établissement",
+  "subject": "Discipline",
+  "warning": "La suppression de ce groupe est définitive."
 }
 </i18n>

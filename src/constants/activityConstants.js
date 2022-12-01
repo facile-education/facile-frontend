@@ -1,27 +1,26 @@
 
 const nbActivityPerPage = 20
 
-const activityTypes = {
+const activityTypes = [
   // File activity
-  TYPE_FILE_CREATION: 1,
-  TYPE_FILE_MODIFICATION: 2,
-  TYPE_FILE_MOVE: 3,
-  TYPE_FILE_DELETION: 4,
-
+  { key: 'TYPE_FILE_CREATION', value: 1 },
+  { key: 'TYPE_FILE_MODIFICATION', value: 2 },
+  { key: 'TYPE_FILE_MOVE', value: 3 },
+  { key: 'TYPE_FILE_DELETION', value: 4 },
   // Folder activity
-  TYPE_FOLDER_CREATION: 5,
-  TYPE_FOLDER_MODIFICATION: 6,
-  TYPE_FOLDER_MOVE: 7,
-  TYPE_FOLDER_DELETION: 8,
-
+  { key: 'TYPE_FOLDER_CREATION', value: 5 },
+  { key: 'TYPE_FOLDER_MODIFICATION', value: 6 },
+  { key: 'TYPE_FOLDER_MOVE', value: 7 },
+  { key: 'TYPE_FOLDER_DELETION', value: 8 },
   // Membership activity
-  TYPE_ADD_MEMBERSHIP: 9,
-  TYPE_REMOVE_MEMBERSHIP: 10,
-
+  { key: 'TYPE_ADD_MEMBERSHIP', value: 9 },
+  { key: 'TYPE_REMOVE_MEMBERSHIP', value: 10 },
   // Schoollife activity
-  TYPE_PENDING_RENVOI: 11,
-  TYPE_SCHOOL_RENVOI: 12
-}
+  { key: 'TYPE_PENDING_RENVOI', value: 11 },
+  { key: 'TYPE_SCHOOL_RENVOI', value: 12 },
+  // News activity
+  { key: 'TYPE_NEWS', value: 13 }
+]
 
 export {
   nbActivityPerPage,

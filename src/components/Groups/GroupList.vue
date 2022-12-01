@@ -4,7 +4,7 @@
     class="group-list"
   >
     <GroupItem
-      v-for="group in groupList"
+      v-for="group in sortedGroupList"
       :key="group.groupId"
       :group="group"
     />
@@ -15,6 +15,7 @@
   >
     <span v-t="'noContentFound'" />
     <a
+      v-if="canCreateGroup"
       v-t="'addGroup'"
       href="#"
       @click="toggleEditModalDisplay"
@@ -23,8 +24,9 @@
 </template>
 
 <script>
-
+import PentilaUtils from 'pentila-utils'
 import GroupItem from '@components/Groups/GroupItem'
+
 export default {
   name: 'GroupList',
   components: { GroupItem },
@@ -35,14 +37,19 @@ export default {
     }
   },
   computed: {
+    canCreateGroup () {
+      return !this.$store.state.user.isStudent && !this.$store.state.user.isParent
+    },
     groupList () {
       return this.$store.state.groups.groupList
+    },
+    sortedGroupList () {
+      return PentilaUtils.Array.sortWithString(this.groupList, false, 'groupName')
     }
   },
   created () {
     this.getGroupList()
   },
-
   methods: {
     getGroupList () {
       this.$store.dispatch('groups/getGroupList', this.$store.state.groups.currentFilter)
@@ -59,27 +66,19 @@ export default {
 @import '@/design';
 
 .group-list {
-  flex: 1;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
+  width: 100%;
   overflow: auto;
+  flex: 1;
+  display: grid;
+  grid-template-columns: 326px auto;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fill, 285px);
+  justify-content: space-between;
 }
 
 .empty-container {
-  height: calc(100% - $groups-header-height);
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 50%;
-
-  a {
-    font-weight: bold;
-    margin-top: 1rem;
-  }
+  @extend %empty-container ;
 }
-
 </style>
 
 <i18n locale="fr">

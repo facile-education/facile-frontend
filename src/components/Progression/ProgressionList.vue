@@ -49,7 +49,6 @@
       <a
         v-t="'addProgression'"
         href="#"
-        class="link"
         @click="toggleEditModalDisplay()"
       />
     </div>
@@ -139,13 +138,7 @@ export default {
 }
 
 .create-button {
-  margin-left: 30px;
-  width: 140px;
-  border-radius: 32px;
-
-  span {
-    margin-left: 12px;
-  }
+  @extend %create-button;
 }
 
 .filters {
@@ -153,31 +146,17 @@ export default {
 }
 
 .filter {
-  margin: 0 5px;
   min-width: 200px;
 }
 
 .list {
-  padding: 1rem;
   display: grid;
   grid-template-columns: repeat(auto-fill, 235px);
   grid-gap: 1rem;
 }
 
 .empty-container {
-  margin: 1rem;
-  height: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid $color-border;
-  border-radius: $border-radius;
-}
-
-.link {
-  font-weight: bold;
-  margin-top: 1rem;
+  @extend %empty-container;
 }
 </style>
 

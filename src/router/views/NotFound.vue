@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <h1 :aria-label="$t('serviceTitle')" />
-    Not found
+    <h2 v-t="'message'" />
   </Layout>
 </template>
 
@@ -22,6 +22,7 @@ export default {
 
 <i18n locale="fr">
 {
+  "message": "Oups, cette page n'existe pas",
   "serviceTitle": "Erreur 404 : ressource introuvable"
 }
 </i18n>

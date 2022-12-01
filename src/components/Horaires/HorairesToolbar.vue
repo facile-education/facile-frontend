@@ -1,93 +1,90 @@
 <template>
   <NeroToolbar class="toolbar">
-    <div class="left-toolbar">
-      <!-- Create session button -->
-      <PentilaButton
-        v-if="displayCreateButton"
-        class="create-button"
-        @click="openCreateSessionModal"
-      >
-        <NeroIcon
-          name="fa-plus"
-        />
-        <span>{{ $t('add') }}</span>
-      </PentilaButton>
-
+    <!-- Create session button -->
+    <PentilaButton
+      v-if="displayCreateButton"
+      class="create-button"
+      @click="openCreateSessionModal"
+    >
       <NeroIcon
-        v-if="mq.phone"
-        :name="iconClass"
-        class="selection"
-        @click="toggleSelection"
+        name="fa-plus"
       />
+      <span>{{ $t('add') }}</span>
+    </PentilaButton>
 
-      <!-- Parents with 1 child -->
-      <p
-        v-if="children.length === 1"
-        class="child"
-      >
-        {{ $t('Horaires.timetableOf') }} {{ children[0].firstName }}
+    <NeroIcon
+      v-if="mq.phone"
+      :name="iconClass"
+      class="selection"
+      @click="toggleSelection"
+    />
+
+    <!-- Parents with 1 child -->
+    <p
+      v-if="children.length === 1"
+      class="child"
+    >
+      {{ $t('Horaires.timetableOf') }} {{ children[0].firstName }}
+    </p>
+
+    <!-- Group selector for agents -->
+    <PentilaDropdown
+      v-if="groupList && (!mq.phone || !isSingleUser) && !$store.state.user.isStudent && !$store.state.user.isParent"
+      v-model="selectedGroup"
+      class="group-list"
+      :placeholder="$t('Horaires.groupFilter')"
+      :list="groupList"
+      display-field="groupName"
+    />
+
+    <!-- Name selector for agents -->
+    <PentilaTagsInput
+      v-if="(!mq.phone || isSingleUser) && !$store.state.user.isStudent && !$store.state.user.isParent"
+      v-model="tagsList"
+      class="search"
+      data-test="user-completion-input"
+      :placeholder="$t('Horaires.userInput')"
+      :close-on-select="true"
+      :max-size="maxSize"
+      :completion-only="true"
+      :list="autocompleteUserList"
+      display-field="displayName"
+      id-field="userId"
+      @inputChange="searchTimeOut"
+      @update:modelValue="onSelectUser"
+    />
+    <DatepickerNav
+      v-if="mq.phone"
+      class="date-picker"
+      :selected-date="selectedDate"
+      @selectDate="onSelectDate"
+    />
+
+    <!-- Parents with 2 or more children -->
+    <div
+      v-if="children.length > 1"
+      class="children"
+    >
+      <p class="children-label">
+        {{ $t('Horaires.timetableOf') }}
       </p>
-
-      <!-- Group selector for agents -->
       <PentilaDropdown
-        v-if="groupList && (!mq.phone || !isSingleUser) && !$store.state.user.isStudent && !$store.state.user.isParent"
-        v-model="selectedGroup"
-        class="group-list"
-        :placeholder="$t('Horaires.groupFilter')"
-        :list="groupList"
-        display-field="groupName"
+        v-model="selectedChild"
+        class="children-list"
+        :placeholder="$t('Horaires.childFilter')"
+        :list="$store.state.user.children"
+        display-field="firstName"
       />
-
-      <!-- Name selector for agents -->
-      <PentilaTagsInput
-        v-if="(!mq.phone || isSingleUser) && !$store.state.user.isStudent && !$store.state.user.isParent"
-        v-model="tagsList"
-        class="search"
-        data-test="user-completion-input"
-        :placeholder="$t('Horaires.userInput')"
-        :close-on-select="true"
-        :max-size="maxSize"
-        :completion-only="true"
-        :list="autocompleteUserList"
-        display-field="displayName"
-        id-field="userId"
-        @inputChange="searchTimeOut"
-        @update:modelValue="onSelectUser"
-      />
-      <DatepickerNav
-        v-if="mq.phone"
-        class="date-picker"
-        :selected-date="selectedDate"
-        @selectDate="onSelectDate"
-      />
-
-      <!-- Parents with 2 or more children -->
-      <div
-        v-if="children.length > 1"
-        class="children"
-      >
-        <p class="children-label">
-          {{ $t('Horaires.timetableOf') }}
-        </p>
-        <PentilaDropdown
-          v-model="selectedChild"
-          class="children-list"
-          :placeholder="$t('Horaires.childFilter')"
-          :list="$store.state.user.children"
-          display-field="firstName"
-        />
-      </div>
     </div>
 
-    <div class="right-toolbar">
-      <PentilaDropdown
-        v-if="(schoolList && schoolList.length > 1)"
-        v-model="selectedSchool"
-        :list="schoolList"
-        display-field="schoolName"
-        @update:modelValue="onSelectSchool"
-      />
-    </div>
+    <PentilaDropdown
+      v-if="(schoolList && schoolList.length > 1)"
+      v-model="selectedSchool"
+      :list="schoolList"
+      display-field="schoolName"
+      class="filter"
+      @update:modelValue="onSelectSchool"
+    />
   </NeroToolbar>
 </template>
 
@@ -242,22 +239,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.toolbar {
-  display: flex;
-  justify-content: space-between;
-  .left-toolbar, .right-toolbar {
-    display: flex;
-  }
-}
-.create-button {
-  margin-left: .4rem;
-  margin-right: .8rem;
-  width: 120px;
-  border-radius: 32px;
+@import "@design";
 
-  span {
-    margin-left: 12px;
-  }
+.create-button {
+  @extend %create-button;
 }
 
 .selection {
@@ -269,6 +254,7 @@ export default {
 .children {
   display: flex;
   justify-content: space-between;
+
   .children-label {
     padding-left: 1rem;
     padding-right: .4rem;
@@ -293,13 +279,13 @@ export default {
   margin-left: auto;
 }
 
-.base-dropdown {
-  margin-right: .8rem;
+.filter {
+  margin-left: auto;
 }
 </style>
 
 <i18n locale="fr">
   {
-    "add": "COURS"
+    "add": "NOUVEAU"
   }
 </i18n>

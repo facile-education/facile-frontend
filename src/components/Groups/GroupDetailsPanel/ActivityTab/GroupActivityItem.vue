@@ -6,7 +6,16 @@
         alt=""
       >
       <div class="activity-description">
-        <div class="author">
+        <span v-html="content" />
+        <a
+          href="javascript:void(0);"
+          v-if="activityType === 'file' || activityType === 'folder'"
+          @click="clickAttached"
+        >
+          {{ activity.target }}
+        </a>
+      </div>
+        <!--div class="author">
           {{ formattedAuthor }}
         </div>
         <div class="activity-type">
@@ -20,8 +29,7 @@
           >
             {{ attached.label }}
           </button>
-        </div>
-      </div>
+        </div-->
     </div>
 
     <div class="date">
@@ -45,96 +53,47 @@ export default {
     }
   },
   computed: {
-    formattedAuthor () {
-      if (this.activityType === 'documents') {
-        return this.activity.userName
-      } else if (this.activityType === 'membership') {
-        return this.activity.actionUserName
+    activityType () { // See activityConstant.js for details
+      if (this.activity.type < 5) {
+        return 'file'
+      } else if (this.activity.type < 9) {
+        return 'folder'
+      } else if (this.activity.type < 11) {
+        return 'membership'
+      } else if (this.activity.type < 13) {
+        return 'schoollife'
       } else {
-        return this.activity.userName
+        return 'news'
       }
+    },
+    content () {
+      let content = this.$t('Unknown')
+
+      activityTypes.forEach(activityType => {
+        if (this.activity.type === activityType.value) {
+          content = this.$t(activityType.key, { author: this.activity.author, target: this.activity.target })
+        }
+      })
+      return content
     },
     formattedDate () {
       return dayjs(this.activity.modificationDate).format('DD MMM YYYY')
     },
-    activityType () { // See activityConstant.js for details
-      if (this.activity.type < 9) {
-        return 'documents'
-      } else if (this.activity.type < 11) {
-        return 'membership'
-      } else {
-        return 'schoollife'
-      }
-    },
-    formattedActivityType () {
-      let formattedText = ''
-
-      switch (this.activity.type) {
-        case activityTypes.TYPE_FILE_CREATION:
-          formattedText = this.$t('TYPE_FILE_CREATION')
-          break
-        case activityTypes.TYPE_FILE_MODIFICATION:
-          formattedText = this.$t('TYPE_FILE_MODIFICATION')
-          break
-        case activityTypes.TYPE_FILE_MOVE:
-          formattedText = this.$t('TYPE_FILE_MOVE')
-          break
-        case activityTypes.TYPE_FILE_DELETION:
-          formattedText = this.$t('TYPE_FILE_DELETION')
-          break
-        case activityTypes.TYPE_FOLDER_CREATION:
-          formattedText = this.$t('TYPE_FOLDER_CREATION')
-          break
-        case activityTypes.TYPE_FOLDER_MODIFICATION:
-          formattedText = this.$t('TYPE_FOLDER_MODIFICATION')
-          break
-        case activityTypes.TYPE_FOLDER_MOVE:
-          formattedText = this.$t('TYPE_FOLDER_MOVE')
-          break
-        case activityTypes.TYPE_FOLDER_DELETION:
-          formattedText = this.$t('TYPE_FOLDER_DELETION')
-          break
-        case activityTypes.TYPE_ADD_MEMBERSHIP:
-          formattedText = this.$t('TYPE_ADD_MEMBERSHIP') + this.activity.targetUserNames
-          break
-        case activityTypes.TYPE_REMOVE_MEMBERSHIP:
-          formattedText = this.$t('TYPE_REMOVE_MEMBERSHIP') + this.activity.targetUserNames
-          break
-        // TODO: others types
-        default:
-          formattedText = 'Unknown activity type: ' + this.activity.type + ' '
-      }
-
-      return formattedText
-    },
-    attached () {
-      if (this.activityType === 'documents') {
-        if (this.activity.fileName !== '') {
-          return { label: this.activity.fileName }
-        } else {
-          return { label: this.activity.folderName }
-        }
-      } else {
-        return undefined
-      }
-    },
     computedIcon () {
-      if (this.activityType === 'documents') {
-        if (this.activity.fileName !== '') {
-          const extension = getExtensionFromName(this.activity.fileName)
-          if (icons.extensions[extension] === undefined) {
-            return icons.file
-          } else {
-            const img = icons.extensions[extension]
-            if (img.includes('.') || img.includes(':')) { // if icon contains extension (like folder.svg) it's not a font-awesome)
-              return img
-            } else {
-              return icons.file
-            }
-          }
+      if (this.activityType === 'file') {
+        const extension = getExtensionFromName(this.activity.fileName)
+        if (icons.extensions[extension] === undefined) {
+          return icons.file
         } else {
-          return icons.folder
+          const img = icons.extensions[extension]
+          if (img.includes('.') || img.includes(':')) { // if icon contains extension (like folder.svg) it's not a font-awesome)
+            return img
+          } else {
+            return icons.file
+          }
         }
+      } else if (this.activityType === 'folder') {
+        return icons.folder
       } else if (this.activityType === 'membership') {
         return require('@assets/icon_commu-black.svg')
       } else {
@@ -144,12 +103,12 @@ export default {
   },
   methods: {
     clickAttached () {
-      if (this.activityType === 'documents') {
-        if (this.activity.fileName !== '' && this.activity.type !== activityTypes.TYPE_FILE_DELETION) {
-          this.$store.dispatch('documents/openFile', { ...this.activity.fileId, readOnly: true })
-        } else if (this.activity.folderId !== '' && this.activity.type !== activityTypes.TYPE_FOLDER_DELETION) {
-          this.$router.push('documents/groups/' + this.activity.folderId)
-        }
+      console.log('click attached', this.activityType, this.activity.fileId, this.activity.folderId)
+      if (this.activityType === 'file' && this.activity.type !== activityTypes.TYPE_FILE_DELETION) {
+        console.log('open file')
+        this.$store.dispatch('documents/openFile', { ...this.activity.fileId, readOnly: true })
+      } else if (this.activityType === 'folder' && this.activity.type !== activityTypes.TYPE_FOLDER_DELETION) {
+        this.$router.push('documents/groups/' + this.activity.folderId)
       }
     }
   }
@@ -161,63 +120,55 @@ export default {
 
 .activity {
   margin-top: 15px;
-  padding: 10px 15px;
+  padding: 10px;
   height: 75px;
   width: 100%;
   border-radius: 6px;
   border: 1px solid $color-border;
   display: flex;
   justify-content: space-between;
+}
 
-  .left-part {
-    display: flex;
-    align-items: center;
+.left-part {
+  display: flex;
+  align-items: center;
+  width: 77%;
 
-    img {
-      margin-right: 20px;
-    }
-
-    .activity-description {
-      display: flex;
-      flex-direction: column;
-
-      .author {
-
-      }
-
-      .activity-type {
-        .attached {
-          padding: 0;
-          font-weight: 600;
-          color: $color-link;
-          cursor: pointer;
-          text-decoration: underline;
-          background-color: transparent;
-          border: none;
-        }
-      }
-    }
-
-  }
-
-  .date {
-    font-size: 0.925rem;
+  img {
+    margin-right: 10px;
   }
 }
 
+.activity-description a {
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.date {
+  font-size: 0.925rem;
+  width: 23%;
+  text-align: right;
+}
 </style>
 
 <i18n locale="fr">
 {
-  "TYPE_FILE_CREATION": "a partagé le fichier ",
-  "TYPE_FILE_MODIFICATION": "a modifié le fichier ",
-  "TYPE_FILE_MOVE": "a déplacé le fichier ",
-  "TYPE_FILE_DELETION": "a supprimé le fichier ",
-  "TYPE_FOLDER_CREATION": "a partagé le dossier ",
-  "TYPE_FOLDER_MODIFICATION": "a modifié le dossier ",
-  "TYPE_FOLDER_MOVE": "a déplacé le dossier ",
-  "TYPE_FOLDER_DELETION": "a supprimé le dossier ",
-  "TYPE_ADD_MEMBERSHIP": "a inscrit ",
-  "TYPE_REMOVE_MEMBERSHIP": "a supprimé "
+  "TYPE_FILE_CREATION": "<b>{author}</b> a partagé le fichier ",
+  "TYPE_FILE_MODIFICATION": "<b>{author}</b> a modifié le fichier ",
+  "TYPE_FILE_MOVE": "<b>{author}</b> a déplacé le fichier ",
+  "TYPE_FILE_DELETION": "<b>{author}</b> a supprimé le fichier {target}",
+  "TYPE_FOLDER_CREATION": "<b>{auhtor}</b> a partagé le dossier ",
+  "TYPE_FOLDER_MODIFICATION": "<b>{author}</b> a modifié le dossier ",
+  "TYPE_FOLDER_MOVE": "<b>{author}</b> a déplacé le dossier ",
+  "TYPE_FOLDER_DELETION": "<b>{author}</b> a supprimé le dossier {target}",
+  "TYPE_ADD_MEMBERSHIP": "<b>{author}</b> a inscrit <b>{target}</b> dans l'espace",
+  "TYPE_REMOVE_MEMBERSHIP": "<b>{author}</b> a supprimé <b>{target}</b> de l'espace",
+  "TYPE_PENDING_RENVOI": "<b>{author}</b> a renvoyé (pending) <b>{target}</b>",
+  "TYPE_SCHOOL_RENVOI": "<b>{author}</b> a renvoyé <b>{target}</b>",
+  "TYPE_NEWS": "<b>{author}</b> a diffusé {target}",
+  "Unknown" : "Activité inconnue"
 }
 </i18n>

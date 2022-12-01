@@ -89,7 +89,6 @@ export default {
     div {
       width: 200px;
       font-weight: 600;
-      color: blue;
     }
 
     img {
