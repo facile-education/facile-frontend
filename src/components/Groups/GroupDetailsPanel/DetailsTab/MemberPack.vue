@@ -18,7 +18,7 @@
       class="member-list"
     >
       <DetailsTabMember
-        v-for="(member, index) in memberList"
+        v-for="(member, index) in sortedMemberList"
         :key="index"
         :member="member"
       />
@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import PentilaUtils from 'pentila-utils'
 import { defineAsyncComponent } from 'vue'
 const DetailsTabMember = defineAsyncComponent(() => import('@components/Groups/GroupDetailsPanel/DetailsTab/DetailsTabMember'))
 
@@ -46,6 +47,11 @@ export default {
   data () {
     return {
       isCollapsed: true
+    }
+  },
+  computed: {
+    sortedMemberList () {
+      return PentilaUtils.Array.sortWithString(this.memberList, false, 'userName')
     }
   },
   methods: {

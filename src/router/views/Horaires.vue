@@ -3,7 +3,6 @@
     <h1 :aria-label="$t('serviceTitle')" />
     <HorairesToolbar
       v-if="!$store.state.user.isStudent"
-      class="toolbar"
       :selected-date="selectedDate"
       @selectDate="onSelectDate"
     />
@@ -114,8 +113,8 @@ export default {
         locale: frLocale,
         plugins: [timeGridPlugin],
         initialView: this.mq.phone ? 'timeGridDay' : 'timeGridWeek',
-        // 125 is toolbar (50) + margin (10) + timeline (65)
-        height: this.mq.phone ? '100%' : 'max(800px, calc(100% - 125px))',
+        // 110 is toolbar (50) + margin (15) + timeline (45)
+        height: this.mq.phone ? '100%' : 'max(800px, calc(100% - 110px))',
         expandRows: true,
         headerToolbar: {
           left: '',
@@ -326,11 +325,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.toolbar {
-  min-height: 50px;
-  margin-bottom: 10px;
-}
-
 .swipe-container {
   overflow-x: hidden;
   height: max(800px, calc(100% - 125px));

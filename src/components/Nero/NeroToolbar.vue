@@ -14,9 +14,9 @@ export default {
 @import '@/design';
 
 .toolbar {
-  padding: 5px;
+  margin-bottom: 20px;
   display: flex;
-  gap: 0.5rem;
+  gap: 0.8rem;
   /* white-space: nowrap;
   overflow-x: auto; */
   z-index: $toolbar-z-index;

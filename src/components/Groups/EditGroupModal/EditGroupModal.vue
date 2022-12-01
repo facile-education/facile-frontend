@@ -20,6 +20,7 @@
           @blur="v$.group.groupName.$touch()"
         />
         <PentilaErrorMessage :error-message="formErrorList.formErrorList" />
+        <ColorPicker v-model="group.color" />
       </div>
 
       <PentilaTextArea
@@ -42,6 +43,8 @@
           <span>{{ $t(group.isPedagogical.toString()) }}</span>
         </div>
       </div>
+
+      <hr class="theme-border-color">
 
       <div
         v-if="!mq.phone"
@@ -91,7 +94,7 @@
           </div>
 
           <SelectedGroupMemberItem
-            v-for="(member, index) in groupMembers"
+            v-for="(member, index) in sortedGroupMembers"
             :key="index"
             :member="member"
             :is-current-member="member.userId === currentUser.userId"
@@ -119,6 +122,8 @@
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import { nextTick } from 'vue'
+import PentilaUtils from 'pentila-utils'
+
 import {
   getCommunityMembers,
   editCommunity,
@@ -128,15 +133,15 @@ import {
   addCommunityMembers,
   removeCommunityMember
 } from '@/api/groups.service'
+import messageService from '@/api/messaging/message.service'
+
+import ColorPicker from '@/components/Nero/ColorPicker'
 import GroupUserItem from '@components/Groups/EditGroupModal/GroupUserItem'
 import SelectedGroupMemberItem from '@components/Groups/EditGroupModal/SelectedGroupMemberItem'
-import messageService from '@/api/messaging/message.service'
-// import ColorPicker from '@/components/Nero/ColorPicker'
 
 export default {
   name: 'EditGroupModal',
-  components: { SelectedGroupMemberItem, GroupUserItem },
-  // components: { ColorPicker },
+  components: { ColorPicker, GroupUserItem, SelectedGroupMemberItem },
   inject: ['mq'],
   props: {
     editedGroup: {
@@ -170,6 +175,12 @@ export default {
     }
   },
   computed: {
+    buttonLabel () {
+      return this.editedGroup ? this.$t('edit') : this.$t('create')
+    },
+    currentUser () {
+      return this.$store.state.user
+    },
     formErrorList () {
       const form = this.v$.group.groupName
       if (form.$invalid && form.$dirty) {
@@ -183,17 +194,6 @@ export default {
         return ''
       }
     },
-    buttonLabel () {
-      return this.editedGroup ? this.$t('edit') : this.$t('create')
-    },
-    currentUser () {
-      return this.$store.state.user
-    },
-    isCurrentGroupAdmin () {
-      if (!this.editedGroup) { return true } else { // considered as admin if groupCreation.spec.js
-        return this.editedGroup.isAdmin
-      }
-    },
     isAllSelected () {
       let returnedValue = this.completionUsers.length > 0
       this.completionUsers.forEach((user) => {
@@ -202,6 +202,14 @@ export default {
         }
       })
       return returnedValue
+    },
+    isCurrentGroupAdmin () {
+      if (!this.editedGroup) { return true } else { // considered as admin if groupCreation.spec.js
+        return this.editedGroup.isAdmin
+      }
+    },
+    sortedGroupMembers () {
+      return PentilaUtils.Array.sortWithString(this.groupMembers, false, 'userName')
     }
   },
   created () {
@@ -361,7 +369,7 @@ export default {
       } else {
         // Creation
         this.$store.dispatch('groups/createGroup', this.group)
-        createCommunity(this.group.groupName, this.group.description, this.group.isPedagogical, this.groupMembers).then((data) => {
+        createCommunity(this.group.groupName, this.group.description, this.group.isPedagogical, this.groupMembers, this.group.color).then((data) => {
           if (data.success) {
             this.$store.dispatch('groups/getGroupList', this.$store.state.groups.currentFilter)
             this.closeModal()
@@ -381,7 +389,7 @@ export default {
 <style lang="scss" scoped>
 @import "@design";
 
-.title-color {
+.group-name {
   display: flex;
   justify-content: space-between;
   position: relative;
@@ -418,6 +426,12 @@ export default {
   }
 }
 
+hr {
+  border-top: 1px solid;
+  border-bottom: none;
+  margin: 20px 0;
+}
+
 .members {
   display: flex;
   width: 100%;
@@ -439,7 +453,6 @@ export default {
     .header {
       margin-top: 10px;
       display: flex;
-      color: blue;
       font-weight: 600;
       height: 30px;
       min-height: 30px;
@@ -463,7 +476,6 @@ export default {
       display: flex;
       justify-content: flex-end;
       align-items: center;
-      color: blue;
       font-size: 12px;
       height: 30px;
     }

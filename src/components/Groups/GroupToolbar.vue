@@ -12,41 +12,22 @@
       <span>{{ $t('add') }}</span>
     </PentilaButton>
 
-    <div
-      class="right-section"
-      :class="{'phone': mq.phone}"
-    >
-      <PentilaInput
-        v-model="filter.label"
-        class="input"
-        :placeholder="$t('SearchPlaceholder')"
-        :maxlength="75"
-        @input="updateFilter"
-      />
+    <PentilaInput
+      v-model="filter"
+      class="filter-input"
+      :placeholder="$t('SearchPlaceholder')"
+      :maxlength="75"
+      @input="updateFilter"
+    />
 
-      <div
-        v-if="!mq.phone"
-        class="filters"
-      >
-        <button
-          v-t="'community'"
-          :class="{'theme-background-color': filter.isCommunityActive}"
-          @click="toggleCommunityFilter"
-        />
-
-        <button
-          v-t="'institutional'"
-          :class="{'theme-background-color': filter.isInstitutionalActive}"
-          @click="toggleInstitutionalFilter"
-        />
-
-        <button
-          v-t="'pedagogical'"
-          :class="{'theme-background-color': filter.isPedagogicalActive}"
-          @click="togglePedagogicalFilter"
-        />
-      </div>
-    </div>
+    <PentilaDropdown
+      v-if="!mq.phone && hasScopeList"
+      v-model="selectedScope"
+      :list="scopeList"
+      :sort="false"
+      display-field="name"
+      @update:modelValue="onScopeChange"
+    />
 
     <teleport to="body">
       <EditGroupModal
@@ -73,40 +54,45 @@ export default {
     return {
       timeout: 0,
       isEditGroupModalDisplayed: false,
-      filter: {
-        label: '',
-        isCommunityActive: false,
-        isInstitutionalActive: false,
-        isPedagogicalActive: false
-      }
+      filter: '',
+      selectedScope: undefined,
+      scopeList: [
+        { name: this.$t('spaces') },
+        { name: this.$t('community'), isCommunity: true },
+        { name: this.$t('institutional'), isInstitutional: true },
+        { name: this.$t('pedagogical'), isPedagogical: true }
+      ]
     }
   },
   computed: {
     canCreateGroup () {
       return !this.$store.state.user.isStudent && !this.$store.state.user.isParent
+    },
+    hasScopeList () {
+      return (this.$store.state.user.isDirectionMember || this.$store.state.user.isPat || this.$store.state.user.isMPS)
+    },
+    params () {
+      return {
+        label: this.filter,
+        isCommunityActive: this.selectedScope.isCommunity || false,
+        isInstitutionalActive: this.selectedScope.isInstitutional || false,
+        isPedagogicalActive: this.selectedScope.isPedagogical || false
+      }
     }
   },
   methods: {
+    onScopeChange (scope) {
+      this.$store.dispatch('groups/closePanel')
+      this.$store.dispatch('groups/updateFilter', this.params)
+    },
     toggleEditGroupModal () {
       this.isEditGroupModalDisplayed = !this.isEditGroupModalDisplayed
     },
     updateFilter () {
       clearTimeout(this.timeout)
       this.timeout = setTimeout(() => {
-        this.$store.dispatch('groups/updateFilter', { ...this.filter })
+        this.$store.dispatch('groups/updateFilter', this.params)
       }, 1000)
-    },
-    toggleCommunityFilter () {
-      this.filter.isCommunityActive = !this.filter.isCommunityActive
-      this.$store.dispatch('groups/updateFilter', { ...this.filter })
-    },
-    toggleInstitutionalFilter () {
-      this.filter.isInstitutionalActive = !this.filter.isInstitutionalActive
-      this.$store.dispatch('groups/updateFilter', { ...this.filter })
-    },
-    togglePedagogicalFilter () {
-      this.filter.isPedagogicalActive = !this.filter.isPedagogicalActive
-      this.$store.dispatch('groups/updateFilter', { ...this.filter })
     }
   }
 }
@@ -114,39 +100,20 @@ export default {
 
 <style lang="scss" scoped>
 @import "@design";
-.toolbar {
-  height: $groups-header-height;
+
+.create-button {
+  @extend %create-button;
+}
+
+.filter-input {
+  margin-left: auto;
+}
+
+.phone {
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 30px;
 
-  .create-button {
-    width: 140px;
-    border-radius: 6px;
-
-    span {
-      margin-left: 12px;
-    }
-  }
-
-  .right-section {
-    display: flex;
-
-    &.phone {
-      width: 100%;
-      .input {
-        width: 100%;
-      }
-    }
-
-    button {
-      margin-left: 25px;
-      height: 50px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
+  .filter-input {
+    width: 100%;
   }
 }
 </style>
@@ -154,9 +121,10 @@ export default {
 <i18n locale="fr">
 {
   "add": "NOUVEAU",
-  "SearchPlaceholder": "Filtrer par nom",
   "community": "Communautaire",
   "institutional": "Institutionnel",
-  "pedagogical": "Pédagogique"
+  "pedagogical": "Pédagogique",
+  "SearchPlaceholder": "Filtrer par nom",
+  "spaces": "Mes espaces"
 }
 </i18n>

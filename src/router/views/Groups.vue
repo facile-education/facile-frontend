@@ -1,7 +1,5 @@
 <template>
-  <Layout
-    class="layout"
-  >
+  <Layout>
     <PentilaSpinner v-if="areActionsInProgress" />
 
     <GroupToolbar />
@@ -20,11 +18,13 @@
 </template>
 
 <script>
+import { defineAsyncComponent } from 'vue'
+
 import Layout from '@/router/layouts/EmptyLayout'
 import GroupList from '@/components/Groups/GroupList'
 import GroupToolbar from '@components/Groups/GroupToolbar'
-import GroupDetails from '@components/Groups/GroupDetailsPanel/GroupDetails'
-import { defineAsyncComponent } from 'vue'
+
+const GroupDetails = defineAsyncComponent(() => import('@components/Groups/GroupDetailsPanel/GroupDetails'))
 const GroupDetailsModal = defineAsyncComponent(() => import('@components/Groups/GroupDetailsPanel/GroupDetailsModal'))
 
 export default {
@@ -44,6 +44,9 @@ export default {
     areActionsInProgress () {
       return this.$store.getters['currentActions/areActionsInProgress']
     }
+  },
+  created () {
+    this.$store.dispatch('groups/closePanel')
   }
 }
 </script>
@@ -51,12 +54,8 @@ export default {
 <style lang="scss" scoped>
 @import '@/design';
 
-.layout {
-  height: 100%;
-
-  .body {
-    display: flex;
-    height: calc(100% - $groups-header-height);
-  }
+.body {
+  display: flex;
+  height: calc(100% - $groups-header-height);
 }
 </style>

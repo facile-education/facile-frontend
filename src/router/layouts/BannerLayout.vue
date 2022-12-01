@@ -155,7 +155,8 @@ export default {
   height: 100%;
   overflow: none;
   display: grid;
-  grid-template-rows: $banner-height calc(100% - #{$banner-height});
+  /* + 1 because of useless scroll appearing */
+  grid-template-rows: $banner-height calc(100% - #{$banner-height + 1});
   height: 100%;
   transition: grid-template-columns 0.3s;
 

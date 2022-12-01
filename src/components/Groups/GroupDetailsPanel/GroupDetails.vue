@@ -6,51 +6,57 @@
   >
     <section
       v-if="!mq.phone"
-      class="header theme-background-color"
-      :style="`background-color:${selectedGroup.color};`"
+      class="header theme-background-color theme-border-color"
+      :style="`background-color:${selectedGroup.color};border-color:${selectedGroup.color} !important;`"
     >
-      <div class="left-section">
-        <h2>{{ selectedGroup.groupName ? selectedGroup.groupName : selectedGroup.name }}</h2>
-        <span v-if="groupCategory !== ''"> {{ groupCategory }}</span>
-      </div>
-      <div class="right-section">
-        <button
-          class="close-option"
-          data-test="close-panel"
-          @click="closePanel"
-        >
-          <img
-            src="@assets/options/icon_cross_white.svg"
-            alt="close"
-          >
-        </button>
-        <div
-          v-if="selectedGroup.isAdmin"
-          class="group-options"
-        >
+      <div class="overlay">
+        <div class="left-section">
+          <h2>{{ selectedGroup.groupName ? selectedGroup.groupName : selectedGroup.name }}</h2>
+          <span v-if="groupCategory !== ''"> {{ groupCategory }}</span>
+        </div>
+
+        <div class="right-section">
           <button
-            v-if="!selectedGroup.isExpired"
-            class="option"
-            data-test="edit-group-option"
-            @click="editGroup"
+            class="close-option"
+            data-test="close-panel"
+            :title="$t('close')"
+            @click="closePanel"
           >
             <img
-              class="button"
-              src="@assets/edit_white.svg"
-              :alt="$t('edit')"
+              src="@assets/options/icon_cross_black.svg"
+              :alt="$t('close')"
             >
           </button>
-          <button
-            class="option"
-            data-test="delete-group-option"
-            @click="confirmGroupDeletion"
+          <div
+            v-if="selectedGroup.isAdmin"
+            class="group-options"
           >
-            <img
-              class="button"
-              src="@assets/trash_white.svg"
-              :alt="$t('delete')"
+            <button
+              v-if="!selectedGroup.isExpired"
+              class="option"
+              data-test="edit-group-option"
+              :title="$t('edit')"
+              @click="editGroup"
             >
-          </button>
+              <img
+                class="button"
+                src="@assets/edit.svg"
+                :alt="$t('edit')"
+              >
+            </button>
+            <button
+              class="option"
+              data-test="delete-group-option"
+              :title="$t('delete')"
+              @click="confirmGroupDeletion"
+            >
+              <img
+                class="button"
+                src="@assets/trash.svg"
+                :alt="$t('delete')"
+              >
+            </button>
+          </div>
         </div>
       </div>
     </section>
@@ -107,12 +113,18 @@ export default {
     },
     groupCategory () {
       if (this.selectedGroup) {
-        if (this.selectedGroup.isContactList) {
-          return this.$t('institutionnal')
+        if (this.selectedGroup.isClass) {
+          return this.$t('class')
         } else if (this.selectedGroup.isPedagogical) {
           return this.$t('pedagogical')
+        } else if (this.selectedGroup.isSubject) {
+          return this.$t('subject')
+        } else if (this.selectedGroup.isSchool) {
+          return this.$t('school')
+        } else if (this.selectedGroup.isInstitutional) {
+          return this.$t('institutionnal')
         } else {
-          return ''
+          return this.$t('community')
         }
       } else {
         return ''
@@ -146,110 +158,118 @@ export default {
 .group-details {
   height: 100%;
   flex: 1;
-  min-width: 300px;
-  border-radius: 6px;
   border-left: 1px solid $color-border;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  color: black;
+  max-width: 500px;
+  margin-left: 20px;
 
   &.phone {
-    border-radius: 0;
     border: none;
     box-shadow: none;
   }
+}
 
-  .header {
-    height: $groups-details-header-height;
-    padding: 15px 15px;
-    border-radius: 6px 6px 0 0;
+.header {
+  height: $groups-details-header-height;
+  border-left: 10px solid;
+}
+
+.overlay {
+  height: 100%;
+  padding: 15px;
+  display: flex;
+  background-color: #ffffff99;
+}
+
+.left-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  color: initial;
+
+  h2 {
+    margin: 0;
+  }
+
+  span {
+    margin-bottom: 10px;
+    border-radius: 6px;
+    border: 1px solid $color-dark-text;
+    padding: 0 5px;
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+}
+
+.right-section {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .close-option {
+    margin-left: auto;
+    width: 40px;
+    height: 28px;
     display: flex;
-    justify-content: space-between;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
 
-    .left-section {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      color: white;
-
-      h2 {
-        margin: 0;
-      }
-
-      span {
-        margin-bottom: 10px;
-        border-radius: 6px;
-        border: 1px solid white;
-        padding: 0 5px;
-        font-size: 0.875rem;
-        font-weight: 600;
-      }
-    }
-
-    .right-section {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-
-      .close-option {
-        margin-left: auto;
-        width: 40px;
-        height: 28px;
-        display: flex;
-        cursor: pointer;
-        align-items: center;
-        justify-content: center;
-        background: none;
-        border: none;
-
-        img {
-          width: 16px;
-          height: 16px;
-        }
-      }
-
-      .group-options {
-        display: flex;
-
-        .option {
-          border: 1px solid transparent;
-          border-radius: 5px;
-          padding: 5px;
-          cursor: pointer;
-          background-color: transparent;
-
-          img {
-            border: 1px solid transparent;
-          }
-
-          &:hover {
-            border: 1px solid grey;
-          }
-        }
-      }
+    img {
+      width: 16px;
+      height: 16px;
     }
   }
 
-  .body {
-    height: calc(100% - #{$groups-details-header-height});
-    padding: 5px 10px;
+  .group-options {
+    display: flex;
 
-    &.phone {
-      height: 100%;
-      padding: 0;
+    .option {
+      border: 1px solid transparent;
+      border-radius: 5px;
+      padding: 5px;
+      cursor: pointer;
+      background-color: transparent;
+
+      img {
+        border: 1px solid transparent;
+      }
+
+      &:hover {
+        border: 1px solid grey;
+      }
     }
   }
 }
 
+.body {
+  height: calc(100% - #{$groups-details-header-height});
+  padding: 5px 10px;
+
+  &.phone {
+    height: 100%;
+    padding: 0;
+  }
+}
 </style>
 
 <i18n locale="fr">
 {
+  "activities": "Activités",
+  "class": "Classe",
+  "close": "Fermer les détails",
+  "community": "Communautaire",
   "delete": "Supprimer",
+  "details": "Détails",
   "edit": "Modifier",
   "institutionnal": "Institutionnel",
   "pedagogical": "Pédagogique",
-  "warning": "La suppression de ce groupe est définitive.",
-  "details": "Détails",
-  "activities": "Activités"
+  "school": "Établissement",
+  "subject": "Discipline",
+  "warning": "La suppression de ce groupe est définitive."
 }
 </i18n>
