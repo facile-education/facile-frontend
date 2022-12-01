@@ -28,7 +28,7 @@
 
 <script>
 export default {
-  name: 'CadycoIconOption',
+  name: 'IconOption',
   props: {
     icon: {
       type: String,
@@ -92,8 +92,8 @@ export default {
 
   .container {
     position: relative;
-    height: 33px;
-    width: 33px;
+    height: 40px;
+    width: 40px;
     border-radius: 6px;
     display: flex;
     align-items: center;

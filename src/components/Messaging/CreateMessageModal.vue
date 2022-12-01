@@ -20,8 +20,12 @@
           v-t="'headerForward'"
         />
         <span
-          v-else-if="messageParameters.isReply || messageParameters.isReplyAll"
+          v-else-if="messageParameters.isReply"
           v-t="'headerReply'"
+        />
+        <span
+          v-else-if="messageParameters.isReplyAll"
+          v-t="'headerReplyAll'"
         />
         <span
           v-else
@@ -483,6 +487,7 @@ export default {
   "header": "Nouveau message",
   "headerForward": "Transférer",
   "headerReply": "Répondre",
+  "headerReplyAll": "Répondre à tous",
   "submitButton": "Envoyer",
   "recipientsPlaceHolder": "Destinataires",
   "subjectPlaceHolder": "Objet",
