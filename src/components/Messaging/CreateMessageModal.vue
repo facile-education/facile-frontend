@@ -294,7 +294,7 @@ export default {
         if (this.$refs.tagsinput.inputValue.length >= 2) {
           this.getCompletion(this.$refs.tagsinput.inputValue)
         }
-      }, 500)
+      }, 300)
     },
     getCompletion (query) {
       console.log('get completion with query: ' + query)

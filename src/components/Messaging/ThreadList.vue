@@ -42,7 +42,7 @@
           v-if="threads.length === 0"
           class="placeholder"
         >
-          <div v-t="'emptyBox'" />
+          <div v-t="currentFolder.type === 1 ? 'emptyBox' : 'emptyFolder'" />
           <img
             src="@assets/messaging_placeholder.svg"
             alt=""
@@ -412,6 +412,7 @@ hr.hr-thread-list {
 
 <i18n locale="fr">
 {
-  "emptyBox": "Cette boîte est vide"
+  "emptyBox": "Cette boîte est vide",
+  "emptyFolder": "Ce dossier est vide"
 }
 </i18n>
