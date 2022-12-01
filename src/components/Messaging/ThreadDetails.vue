@@ -10,7 +10,7 @@
         class="header-icon back-arrow"
         :icon="require('@assets/arrow_right.svg')"
         name="back"
-        icon-height="14px"
+        icon-height="20px"
         alt="back"
         @click="hideDetails"
       />
@@ -20,7 +20,7 @@
           :icon="require('@/assets/options/icon_edit_texte.svg')"
           :title="$t('Messaging.new')"
           name="createNewMessage"
-          icon-height="16px"
+          icon-height="20px"
           alt="new message"
           @click="createNewMessage"
         />
@@ -34,7 +34,7 @@
           :icon="require('@assets/icon_trash.svg')"
           :title="$t('Messaging.deleteMessage')"
           name="trash"
-          icon-height="14px"
+          icon-height="20px"
           alt="delete item"
           @click="deleteItem"
         />
@@ -48,7 +48,7 @@
           :icon="require('@/assets/options/icon_mark_as_read.svg')"
           :title="$t('Messaging.markAsRead')"
           name="mark-as-read"
-          icon-height="14px"
+          icon-height="20px"
           alt="mark-as-read item"
           @click="markAsRead"
         />
@@ -62,7 +62,7 @@
           :icon="require('@assets/options/icon_answer.svg')"
           :title="$t('Messaging.reply')"
           name="reply"
-          icon-height="14px"
+          icon-height="20px"
           alt="reply"
           @click="reply"
         />
@@ -76,7 +76,7 @@
           :icon="require('@assets/options/icon_answer_all.svg')"
           :title="$t('Messaging.replyAll')"
           name="replyAll"
-          icon-height="14px"
+          icon-height="20px"
           alt="reply All"
           @click="replyAll"
         />
@@ -90,7 +90,7 @@
           :icon="require('@assets/options/icon_share.svg')"
           :title="$t('Messaging.forward')"
           name="forward"
-          icon-height="14px"
+          icon-height="20px"
           alt="forward"
           @click="forward"
         />
@@ -100,7 +100,7 @@
           :icon="require('@assets/options/icon_edit_texte.svg')"
           :title="$t('Messaging.editDraft')"
           name="editDraft"
-          icon-height="16px"
+          icon-height="20px"
           alt="edit draft"
           @click="editDraft"
         />
@@ -354,8 +354,6 @@ export default {
   .header-icon {
     margin: 0 5px;
     padding: 5px;
-    width: 30px;
-    height: 30px;
 
     &.disabled {
       color: grey;

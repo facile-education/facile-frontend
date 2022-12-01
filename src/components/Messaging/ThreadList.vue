@@ -17,7 +17,7 @@
         :title="$t('Messaging.refresh')"
         :gray-background-color="true"
         name="refresh"
-        icon-height="16px"
+        icon-height="20px"
         alt=""
       />
       <div
