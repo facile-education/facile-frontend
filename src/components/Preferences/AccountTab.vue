@@ -18,7 +18,7 @@
               @click="removePicture"
             >
               <img
-                src="@/assets/options/icon_trash_white.svg"
+                src="@/assets/icon_trash_white.svg"
                 alt="trash"
               >
             </PentilaButton>
