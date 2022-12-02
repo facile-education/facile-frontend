@@ -11,8 +11,8 @@
     >
       <IconOption
         class="button"
-        :icon="require('@/assets/options/icon_unread_filter.svg')"
-        :title="$t('Messaging.unreadOnly')"
+        :icon="unreadOnly ? require('@/assets/options/icon_unread_filter_active.svg') : require('@/assets/options/icon_unread_filter.svg')"
+        :title="unreadOnly ? $t('all') : $t('Messaging.unreadOnly')"
         name="toggleUnreadOnly"
         icon-height="20px"
         :alt="$t('unreadOnly')"
@@ -35,7 +35,7 @@
         v-if="!mq.tablet && !mq.phone"
         class="button"
         :icon="require('@/assets/options/icon_menu_lateral.svg')"
-        :title="$t('Messaging.hideMenuPanel')"
+        :title="isMenuPanelDisplayed ? $t('Messaging.hideMenuPanel') : $t('displayMenuPanel')"
         name="toggleMessagingMenu"
         icon-height="20px"
         alt="toggle menu"
@@ -64,8 +64,8 @@
       <IconOption
         v-if="(!mq.tablet && !mq.phone)"
         class="button"
-        :icon="require('@/assets/options/icon_unread_filter.svg')"
-        :title="$t('Messaging.unreadOnly')"
+        :icon="unreadOnly ? require('@/assets/options/icon_unread_filter_active.svg') : require('@/assets/options/icon_unread_filter.svg')"
+        :title="unreadOnly ? $t('all') : $t('Messaging.unreadOnly')"
         name="toggleUnreadOnly"
         icon-height="20px"
         :alt="$t('unreadOnly')"
@@ -108,7 +108,6 @@ export default {
   inject: ['mq'],
   data () {
     return {
-      unreadOnly: false,
       isMarkerSelectionDisplayed: false
     }
   },
@@ -136,6 +135,9 @@ export default {
     },
     nbNewMessages () {
       return this.$store.state.messaging.nbNewMessages
+    },
+    unreadOnly () {
+      return this.$store.state.messaging.unreadOnly
     }
   },
   methods: {
@@ -239,7 +241,9 @@ export default {
 <i18n locale="fr">
 {
   "mark": "Marquer",
-  "trash": "Supprimer"
+  "trash": "Supprimer",
+  "displayMenuPanel": "Afficher le menu",
+  "all": "Tous"
 }
 
 </i18n>
