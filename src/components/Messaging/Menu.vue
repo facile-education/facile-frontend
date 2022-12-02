@@ -50,7 +50,7 @@
       <MenuRootFolder
         class="base-folder"
         :folder="trashFolder"
-        :icon="require('@assets/options/icon_trash.svg')"
+        :icon="require('@assets/icon_trash.svg')"
         :drop-allowed="true"
         icon-width="15px"
         alt="icon trash"

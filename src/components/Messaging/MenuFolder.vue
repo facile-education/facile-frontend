@@ -50,7 +50,7 @@
           @click.stop="toggleNewFolderInput"
         />
         <img
-          src="@/assets/options/icon_trash.svg"
+          src="@/assets/icon_trash.svg"
           alt="delete folder"
           class="folder-action delete"
           :title="$t('Messaging.deleteFolder')"
