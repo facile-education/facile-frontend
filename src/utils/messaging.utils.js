@@ -1,5 +1,5 @@
 import messageService from '@/api/messaging/message.service'
-import constants from '@/constants/appConstants'
+import messagingConstants from '@/constants/messagingConstants'
 import store from '@store/index.js'
 import _ from 'lodash'
 
@@ -155,16 +155,16 @@ const MessagingUtils = {
     })
   },
   isDraftFolder () {
-    return store.state.messaging.currentFolder.type === constants.messagingDraftFolderType
+    return store.state.messaging.currentFolder.type === messagingConstants.messagingDraftFolderType
   },
   isSentFolder () {
-    return store.state.messaging.currentFolder.type === constants.messagingSentFolderType
+    return store.state.messaging.currentFolder.type === messagingConstants.messagingSentFolderType
   },
   shortRecipientList (message) {
     if (message.recipients.length === 0) {
       return ''
     }
-    let shortRecipients = message.recipients[0].text
+    let shortRecipients = 'À: ' + message.recipients[0].text
     if (message.recipients.length === 1) {
       // nothing
     } else if (message.recipients.length === 2) {
