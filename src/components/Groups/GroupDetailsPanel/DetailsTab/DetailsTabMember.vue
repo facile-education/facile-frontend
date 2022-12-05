@@ -51,7 +51,7 @@ export default {
   methods: {
     openCreateMessageModal () {
       this.isMessagingModalDisplayed = true
-      messagingUtils.newMessage([{ type: 1, name: this.member.userName, userId: this.member.userId }])
+      messagingUtils.newMessage([{ type: 1, text: this.member.userName, userId: this.member.userId }])
     },
     closeModal () {
       this.isMessagingModalDisplayed = false
