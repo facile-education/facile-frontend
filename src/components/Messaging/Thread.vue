@@ -157,6 +157,9 @@ export default {
     }
   },
   computed: {
+    currentFolder () {
+      return this.$store.messaging.currentFolder
+    },
     isMultiSelectionActive () {
       return this.$store.state.messaging.isMultiSelectionActive
     },
