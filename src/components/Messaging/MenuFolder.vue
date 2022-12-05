@@ -15,13 +15,13 @@
     >
       <div class="icon-container">
         <BaseIcon
-          v-if="!isExpanded"
+          v-if="!isExpanded && folder.subFolders.length > 0"
           name="caret-right"
           class="fa-lg folder-icon"
           @click.stop="isExpanded = true"
         />
         <BaseIcon
-          v-if="isExpanded"
+          v-if="isExpanded && folder.subFolders.length > 0"
           name="caret-down"
           class="fa-lg folder-icon"
           @click.stop="isExpanded = false"
