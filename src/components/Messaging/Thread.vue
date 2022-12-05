@@ -80,7 +80,9 @@
 
           <!-- Line 2 : subject + thread toggle -->
           <div class="line2">
-            <p>{{ mainMessage.subject }}</p>
+            <p :title="mainMessage.subject">
+              {{ mainMessage.subject }}
+            </p>
             <div
               v-if="thread.messages.length > 1"
               class="thread-toggle"
@@ -428,10 +430,21 @@ export default {
       }
     }
     .line2 {
+      //width: 100%;
+      min-width: 0;
+      //overflow: hidden;
+      //white-space: nowrap;
+      //text-overflow: ellipsis;
       height: 20px;
       display: flex;
       margin-bottom: 5px;
       justify-content: space-between;
+
+      p{
+        overflow: hidden;
+        //white-space: nowrap;
+        text-overflow: ellipsis;
+      }
 
       .thread-toggle {
         display: flex;
