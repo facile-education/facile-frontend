@@ -42,7 +42,7 @@
           :completion-only="true"
           :min-length="1"
           :placeholder="$t('recipientsPlaceHolder')"
-          display-field="name"
+          display-field="text"
           id-field="id"
           :list="autocompleteItems"
           class="recipients"
