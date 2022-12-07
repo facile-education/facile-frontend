@@ -25,7 +25,7 @@ function createMessage (isSuggestion, service, contentField, mail, attachFiles, 
       content: contentField,
       mail: mail,
       attachFiles: attachFiles,
-      isUsurpastionAllowed: isUsurpationAllowed
+      isUsurpationAllowed: isUsurpationAllowed
     }
   }).then(response => response.data)
 }
