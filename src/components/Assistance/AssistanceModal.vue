@@ -8,7 +8,7 @@
       @close="onClose"
     >
       <template #header>
-        <span v-t="'modalHeaderLabel'" />
+        <span v-t="modalType==='Assistance' ? 'assistanceHeaderLabel' : 'suggestionHeaderLabel'" />
       </template>
 
       <template #body>
@@ -25,7 +25,12 @@
           {{ $t('nonAdminMessage') }}
         </p>
         <div class="service">
-          <h5> {{ $t('serviceLabel') + '*' }} </h5>
+          <p
+            v-if="modalType==='Assistance'"
+            v-t="'applyContextText'"
+            class="italic"
+          />
+          <h5> {{ (modalType==='Assistance' ? $t('serviceLabel') : $t('serviceConcernLabel')) + '*' }} </h5>
           <PentilaDropdown
             v-if="serviceList"
             v-model="selected"
@@ -101,6 +106,12 @@ export default {
     CKEditor: CKEditor.component
   },
   inject: ['mq'],
+  props: {
+    modalType: {
+      type: String,
+      default: 'Assistance'
+    }
+  },
   emits: ['close'],
   setup: () => ({ v$: useVuelidate() }),
   data () {
@@ -251,15 +262,18 @@ h5 {
 
 <i18n locale="fr">
 {
+  "applyContextText": "Penser à expliquer le contexte de votre erreur, si besoin nous communiquer une copie d'écran et tout autre élément que vous jugez utile pour nous permettre de reproduire votre problème.",
   "addFilesButtonLabel": "Ajouter un fichier (facultatif)",
   "adminMessage": "Votre demande de support sera traitée par les équipes de Pentila, vous recevrez une réponse dans votre messagerie",
   "submitButtonLabel": "Envoyer",
   "issueDescription": "Description de l'incident",
-  "modalHeaderLabel": "Signaler un problème",
+  "assistanceHeaderLabel": "Signaler un problème",
+  "suggestionHeaderLabel": "Proposer une amélioration",
   "nonAdminMessage": "Votre demande de support sera transmise à l'administrateur",
   "screenShotButtonLabel": "Capture d'écran (facultatif)",
   "screenShotMessage": "La capture d'écran sera déposée dans votre casier",
-  "serviceLabel": "Sevice affecté",
+  "serviceLabel": "Service affecté",
+  "serviceConcernLabel": "Service concerné",
   "success": "Demande envoyé"
 }
 
