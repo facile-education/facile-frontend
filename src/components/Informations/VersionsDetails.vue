@@ -1,18 +1,26 @@
 <template>
-  <div data-test="version-details">
-    {{ $t('version') }} :
-    <PentilaDropdown
-      v-if="versionList"
-      data-test="versionListDropDown"
-      :model-value="selected"
-      :list="sortedVersionList"
-      :sort="false"
-      display-field="versionNumber"
-      @update:model-value="selectVersion"
-    />
-    <br>
+  <div
+    data-test="version-details"
+    class="version-details"
+    :class="{'phone': mq.phone}"
+  >
+    <div class="version-selection">
+      <span>
+        {{ $t('version') }} :
+      </span>
+      <PentilaDropdown
+        v-if="versionList"
+        data-test="versionListDropDown"
+        :model-value="selected"
+        :list="sortedVersionList"
+        :sort="false"
+        display-field="versionNumber"
+        @update:model-value="selectVersion"
+      />
+    </div>
     <p
       v-if="versionDetails"
+      class="content"
       data-test="versionDetails"
       v-html="versionDetails"
     />
@@ -33,6 +41,7 @@ const VersionEditionForm = defineAsyncComponent(() => import('@/components/Infor
 export default {
   name: 'VersionsDetails',
   components: { VersionEditionForm },
+  inject: ['mq'],
   data () {
     return {
       selected: undefined
@@ -89,15 +98,35 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.addVersion {
-  float: right;
+.version-details {
+
+  .version-selection {
+    display: flex;
+    align-items: center;
+
+    span {
+      margin-right: 20px;
+    }
+  }
+
+  .content {
+    max-height: 50vh;
+    overflow: auto;
+  }
+
+  p {
+    margin: 10px 0;
+    padding: 25px;
+    border: 1px solid #999;
+  }
 }
 
-p {
-  margin: 10px 0;
-  padding: 25px;
-  border: 1px solid #999;
+.phone {
+  .content {
+    max-height: 65vh;
+  }
 }
+
 </style>
 
 <i18n locale="fr">

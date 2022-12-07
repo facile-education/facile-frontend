@@ -41,7 +41,7 @@
       </a>
       <a
         href="#"
-        data-test="openSupportModal"
+        data-test="openSuggestionModal"
         @click="toggleSupportModal"
       >
         {{ $t('suggestion') }}<NeroIcon name="chevron-right" />
