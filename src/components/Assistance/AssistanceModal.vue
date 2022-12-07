@@ -61,11 +61,14 @@
           <PentilaButton
             data-test="addFile"
             :label="$t('addFilesButtonLabel')"
-            @click="addFile"
+            @click="isFilePickerDisplayed=true"
           />
-          <div v-if="attachFiles.length !== 0">
-            {{ attachFiles }}
-          </div>
+
+          <AttachedFiles
+            :initial-attached-files="attachFiles"
+            :read-only="false"
+            @removeAttachedFile="removeAttachedFile"
+          />
         </div>
         <div
           v-if="isScreenShotEnabled"
@@ -88,6 +91,16 @@
       </template>
     </PentilaWindow>
   </div>
+
+  <teleport to="body">
+    <FilePickerModal
+      v-if="isFilePickerDisplayed"
+      :multi-selection="true"
+      :allow-files-from-device="true"
+      @addedFiles="attachNewFiles"
+      @close="isFilePickerDisplayed=false"
+    />
+  </teleport>
 </template>
 
 <script>
@@ -96,6 +109,8 @@ import InlineEditor from '@ckeditor/ckeditor5-build-inline'
 import { required } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
 import supportService from '@/api/support.service'
+import FilePickerModal from '@components/FilePicker/FilePickerModal'
+import AttachedFiles from '@components/Base/AttachedFiles'
 
 // import platform from 'platform'
 // import html2canvas from 'html2canvas'
@@ -103,6 +118,8 @@ import supportService from '@/api/support.service'
 export default {
   name: 'AssistanceModal',
   components: {
+    AttachedFiles,
+    FilePickerModal,
     CKEditor: CKEditor.component
   },
   inject: ['mq'],
@@ -130,7 +147,9 @@ export default {
       },
       isUsurpationAllowed: false,
       isScreenShotEnabled: false,
-      isFilesEnabled: false
+      isFilesEnabled: true,
+      attachFiles: [],
+      isFilePickerDisplayed: false
     }
   },
   validations: {
@@ -165,9 +184,6 @@ export default {
     eMailAddress () {
       return this.userDetails.emailAddress
     },
-    attachFiles () {
-      return this.$store.state.support.fileList
-    },
     serviceList () {
       return this.$store.state.user.serviceList
     },
@@ -189,9 +205,11 @@ export default {
     }
   },
   methods: {
-    addFile () {
-      // TODO add files to message
-      console.log('TODO: add file')
+    attachNewFiles (selectedFiles) {
+      this.attachFiles = [...this.attachFiles, ...selectedFiles]
+    },
+    removeAttachedFile (fileToRemove) {
+      this.attachFiles.splice(this.attachFiles.indexOf(fileToRemove), 1)
     },
     addScreenShot () {
       // TODO add screenShot to message
