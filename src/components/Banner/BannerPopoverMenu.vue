@@ -42,7 +42,7 @@
       <a
         href="#"
         data-test="openSuggestionModal"
-        @click="toggleSupportModal"
+        @click="toggleSuggestionModal"
       >
         {{ $t('suggestion') }}<NeroIcon name="chevron-right" />
       </a>
@@ -78,6 +78,7 @@
     />
     <AssistanceModal
       v-if="isSupportModalDisplayed"
+      :modal-type="supportModalType"
       @close="toggleSupportModal"
     />
   </teleport>
@@ -101,6 +102,7 @@ export default {
   },
   data () {
     return {
+      supportModalType: '',
       isInformationsModalDisplayed: false,
       isPreferencesDisplayed: false,
       isSupportModalDisplayed: false
@@ -125,6 +127,11 @@ export default {
       this.isPreferencesDisplayed = !this.isPreferencesDisplayed
     },
     toggleSupportModal () {
+      this.supportModalType = 'Assistance'
+      this.isSupportModalDisplayed = !this.isSupportModalDisplayed
+    },
+    toggleSuggestionModal () {
+      this.supportModalType = 'Suggestion'
       this.isSupportModalDisplayed = !this.isSupportModalDisplayed
     }
   }
