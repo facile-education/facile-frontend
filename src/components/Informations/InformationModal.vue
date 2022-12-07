@@ -3,6 +3,7 @@
     <PentilaWindow
       :modal="true"
       :draggable="true"
+      :resizable="true"
       :full-screen="mq.phone"
       @close="onClose"
     >
@@ -18,6 +19,12 @@
           <PentilaTabItem :title="$t('termsOfUseTabLabel')">
             <TermsOfUse />
           </PentilaTabItem>
+          <PentilaTabItem :title="$t('privacyLabel')">
+            <Privacy />
+          </PentilaTabItem>
+          <PentilaTabItem :title="$t('accessibilityLabel')">
+            <Accessibility />
+          </PentilaTabItem>
         </PentilaTabList>
       </template>
     </PentilaWindow>
@@ -27,10 +34,14 @@
 <script>
 import VersionsDetails from '@/components/Informations/VersionsDetails'
 import TermsOfUse from '@/components/Informations/TermsOfUse'
+import Privacy from '@components/Informations/Privacy'
+import Accessibility from '@components/Informations/Accessibility'
 
 export default {
   name: 'InformationModal',
   components: {
+    Accessibility,
+    Privacy,
     VersionsDetails,
     TermsOfUse
   },
@@ -48,6 +59,8 @@ export default {
 {
   "modalHeaderLabel": "Informations générales relatives à l'ENT",
   "versionsTabLabel": "Mises à jour",
+  "accessibilityLabel": "Accessibilité",
+  "privacyLabel": "Confidentialité",
   "termsOfUseTabLabel": "Charte d'utilisation"
 }
 </i18n>

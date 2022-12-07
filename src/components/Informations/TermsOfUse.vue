@@ -1,49 +1,41 @@
 <template>
-  <div data-test="terms-of-use">
-    <br>
-    <h3 align="center">
-      <a
-        data-test="confidentialityRulesLink"
-        href="https://www.pentilanero.com/?page_id=533"
-        target="_blank"
-      >
-        {{ $t('confidentialityRulesLinkText') }}
-      </a>
-    </h3>
-    <div
-      class="bodyCharter"
-      data-test="bodyCharter"
-    >
-      <p
-        v-if="termsOfUse"
-      >
-        {{ termsOfUse }}
-      </p>
-    </div>
-  </div>
+  <div
+    data-test="terms-of-use"
+    class="chart"
+    v-html="template"
+  />
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'TermsOfUse',
+  data () {
+    return {
+      template: ''
+    }
+  },
   computed: {
     termsOfUse () {
       return this.$store.state.information.termsOfUse
     }
   },
   created () {
-    if (this.termsOfUse === undefined) {
-      this.$store.dispatch('information/getTermsOfUse')
-    }
+    axios.get('chart.html').then(response => {
+      this.template = response.data
+    })
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.bodyCharter {
-  /* TODO change that horrible style */
-  background-color: #dddddd ;
-  margin-top: 30px;
+.chart {
+  max-height: 65vh;
+  overflow: auto;
+  h1 {
+    margin: 0.67em;
+  }
 }
 </style>
 

@@ -1,7 +1,6 @@
 import informationService from '@/api/information.service'
 
 export const state = {
-  termsOfUse: undefined,
   versionList: undefined,
   versionDetails: undefined,
   createVersionMessage: undefined
@@ -23,13 +22,6 @@ export const mutations = {
 }
 
 export const actions = {
-  getTermsOfUse ({ commit }) {
-    informationService.getTermsOfUse().then((data) => {
-      if (data.success) {
-        commit('initTermsOfUse', data.termsOfUse)
-      }
-    })
-  },
   getVersionList ({ commit }) {
     informationService.getVersionList().then((data) => {
       if (data.success) {
