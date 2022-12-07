@@ -2,6 +2,8 @@
   <div data-test="supportModal">
     <PentilaWindow
       :modal="true"
+      :draggable="true"
+      :full-screen="mq.phone"
       data-html2canvas-ignore="true"
       @close="onClose"
     >
@@ -29,7 +31,7 @@
             v-model="selected"
             data-test="servicesDropDown"
             :list="serviceList"
-            display-field="name"
+            display-field="serviceName"
           />
         </div>
         <div class="issue-description">
@@ -47,7 +49,10 @@
           </div>
           <PentilaErrorMessage :error-message="formErrorList.issueDescription" />
         </div>
-        <div class="add-files">
+        <div
+          v-if="isFilesEnabled"
+          class="add-files"
+        >
           <PentilaButton
             data-test="addFile"
             :label="$t('addFilesButtonLabel')"
@@ -85,6 +90,7 @@ import CKEditor from '@ckeditor/ckeditor5-vue'
 import InlineEditor from '@ckeditor/ckeditor5-build-inline'
 import { required } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
+import supportService from '@/api/support.service'
 
 // import platform from 'platform'
 // import html2canvas from 'html2canvas'
@@ -94,6 +100,7 @@ export default {
   components: {
     CKEditor: CKEditor.component
   },
+  inject: ['mq'],
   emits: ['close'],
   setup: () => ({ v$: useVuelidate() }),
   data () {
@@ -111,7 +118,8 @@ export default {
         }
       },
       isUsurpationAllowed: false,
-      isScreenShotEnabled: false
+      isScreenShotEnabled: false,
+      isFilesEnabled: false
     }
   },
   validations: {
@@ -153,10 +161,10 @@ export default {
       return this.$store.state.user.serviceList
     },
     subjectField () {
-      return 'Anomalie ' + this.selected.name
+      return 'Anomalie ' + this.selected.serviceName
     },
     contentField () {
-      return '<p>Service affecté : ' + this.selected.name + '</p>' +
+      return '<p>Service affecté : ' + this.selected.serviceName + '</p>' +
              '<p>Description : ' + this.form.issueDescription + '</p>' // + // issue description in html format
       //        'Type de navigateur : ' + platform.description
     }
@@ -185,12 +193,19 @@ export default {
       if (this.v$.$invalid) { // form checking
         this.v$.$touch()
       } else {
-        this.$store.dispatch('support/createMessage', {
-          subjectField: this.subjectField,
-          contentField: this.contentField,
-          mail: this.eMailAddress,
-          attachFiles: JSON.stringify(this.attachFiles),
-          isUsurpationAllowed: this.isUsurpationAllowed
+        supportService.createMessage(
+          this.subjectField,
+          this.contentField,
+          this.eMailAddress,
+          JSON.stringify(this.attachFiles),
+          this.isUsurpationAllowed
+        ).then((data) => {
+          if (data.success) {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
+            this.onClose()
+          } else {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+          }
         })
       }
     },
@@ -244,7 +259,8 @@ h5 {
   "nonAdminMessage": "Votre demande de support sera transmise à l'administrateur",
   "screenShotButtonLabel": "Capture d'écran (facultatif)",
   "screenShotMessage": "La capture d'écran sera déposée dans votre casier",
-  "serviceLabel": "Sevice affecté"
+  "serviceLabel": "Sevice affecté",
+  "success": "Demande envoyé"
 }
 
 </i18n>

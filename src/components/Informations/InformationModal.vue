@@ -2,6 +2,8 @@
   <div data-test="informationModal">
     <PentilaWindow
       :modal="true"
+      :draggable="true"
+      :full-screen="mq.phone"
       @close="onClose"
     >
       <template #header>
@@ -32,6 +34,7 @@ export default {
     VersionsDetails,
     TermsOfUse
   },
+  inject: ['mq'],
   emits: ['close'],
   methods: {
     onClose () {

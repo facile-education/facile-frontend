@@ -4,7 +4,7 @@
     <h3 align="center">
       <a
         data-test="confidentialityRulesLink"
-        href="http://www.pentilanero.com/?page_id=533"
+        href="https://www.pentilanero.com/?page_id=533"
         target="_blank"
       >
         {{ $t('confidentialityRulesLinkText') }}
