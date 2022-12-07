@@ -19,7 +19,10 @@ const activityTypes = [
   { key: 'TYPE_PENDING_RENVOI', value: 11 },
   { key: 'TYPE_SCHOOL_RENVOI', value: 12 },
   // News activity
-  { key: 'TYPE_NEWS', value: 13 }
+  { key: 'TYPE_NEWS', value: 13 },
+  // Homework and session activity
+  { key: 'TYPE_HOMEWORK', value: 14 },
+  { key: 'TYPE_SESSION', value: 15 }
 ]
 
 export {
