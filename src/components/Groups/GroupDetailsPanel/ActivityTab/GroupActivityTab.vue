@@ -50,7 +50,8 @@ export default {
   watch: {
     group: {
       handler () {
-        this.activityList = []
+        this.activityList.length = 0
+        this.maxDate = dayjs().add(1, 'day')
         this.getActivities()
       }
     }

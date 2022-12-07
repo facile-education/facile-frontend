@@ -8,28 +8,13 @@
       <div class="activity-description">
         <span v-html="content" />
         <a
+          v-if="(activityType === 'file' || activityType === 'folder') && activity.type != 4 && activity.type != 8"
           href="javascript:void(0);"
-          v-if="activityType === 'file' || activityType === 'folder'"
           @click="clickAttached"
         >
           {{ activity.target }}
         </a>
       </div>
-        <!--div class="author">
-          {{ formattedAuthor }}
-        </div>
-        <div class="activity-type">
-          <span>
-            {{ formattedActivityType }}
-          </span>
-          <button
-            v-if="attached"
-            class="attached"
-            @click="clickAttached"
-          >
-            {{ attached.label }}
-          </button>
-        </div-->
     </div>
 
     <div class="date">
@@ -96,6 +81,12 @@ export default {
         return icons.folder
       } else if (this.activityType === 'membership') {
         return require('@assets/icon_commu-black.svg')
+      } else if (this.activityType === 'schoollife') {
+        // TODO
+        return require('@assets/calendar.svg')
+      } else if (this.activityType === 'news') {
+        // TODO
+        return require('@assets/icon_news.svg')
       } else {
         return require('@assets/devoir.svg')
       }
@@ -105,10 +96,10 @@ export default {
     clickAttached () {
       console.log('click attached', this.activityType, this.activity.fileId, this.activity.folderId)
       if (this.activityType === 'file' && this.activity.type !== activityTypes.TYPE_FILE_DELETION) {
-        console.log('open file')
-        this.$store.dispatch('documents/openFile', { ...this.activity.fileId, readOnly: true })
+        // Properties id (as string) and name are needed by FileDisplay component
+        this.$store.dispatch('documents/openFile', { ...this.activity, id: this.activity.fileId + '', name: this.activity.fileName, readOnly: true })
       } else if (this.activityType === 'folder' && this.activity.type !== activityTypes.TYPE_FOLDER_DELETION) {
-        this.$router.push('documents/groups/' + this.activity.folderId)
+        this.$router.push('/documents/groups/' + this.activity.folderId)
       }
     }
   }
@@ -136,6 +127,7 @@ export default {
 
   img {
     margin-right: 10px;
+    width: 25px;
   }
 }
 
@@ -160,8 +152,8 @@ export default {
   "TYPE_FILE_MODIFICATION": "<b>{author}</b> a modifié le fichier ",
   "TYPE_FILE_MOVE": "<b>{author}</b> a déplacé le fichier ",
   "TYPE_FILE_DELETION": "<b>{author}</b> a supprimé le fichier {target}",
-  "TYPE_FOLDER_CREATION": "<b>{auhtor}</b> a partagé le dossier ",
-  "TYPE_FOLDER_MODIFICATION": "<b>{author}</b> a modifié le dossier ",
+  "TYPE_FOLDER_CREATION": "<b>{author}</b> a partagé le dossier ",
+  "TYPE_FOLDER_MODIFICATION": "<b>{author}</b> a renommé le dossier ",
   "TYPE_FOLDER_MOVE": "<b>{author}</b> a déplacé le dossier ",
   "TYPE_FOLDER_DELETION": "<b>{author}</b> a supprimé le dossier {target}",
   "TYPE_ADD_MEMBERSHIP": "<b>{author}</b> a inscrit <b>{target}</b> dans l'espace",
@@ -169,6 +161,8 @@ export default {
   "TYPE_PENDING_RENVOI": "<b>{author}</b> a renvoyé (pending) <b>{target}</b>",
   "TYPE_SCHOOL_RENVOI": "<b>{author}</b> a renvoyé <b>{target}</b>",
   "TYPE_NEWS": "<b>{author}</b> a diffusé {target}",
+  "TYPE_HOMEWORK": "<b>{author}</b> a donné un devoir à <b>{target}</b>",
+  "TYPE_SESSION": "<b>{author}</b> TODO <b>{target}</b>",
   "Unknown" : "Activité inconnue"
 }
 </i18n>
