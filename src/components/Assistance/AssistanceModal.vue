@@ -205,7 +205,8 @@ export default {
         this.v$.$touch()
       } else {
         supportService.createMessage(
-          this.subjectField,
+          this.modalType === 'Suggestion',
+          this.selected.serviceName,
           this.contentField,
           this.eMailAddress,
           JSON.stringify(this.attachFiles),

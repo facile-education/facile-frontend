@@ -16,12 +16,13 @@ function addScreenShot (image) {
   })).then(response => response.data)
 }
 
-function createMessage (subjectField, contentField, mail, attachFiles, isUsurpationAllowed) {
+function createMessage (isSuggestion, service, contentField, mail, attachFiles, isUsurpationAllowed) {
   return axios.get(url, {
     params: {
       cmd: 'createMessage',
-      subjectField: subjectField,
-      contentField: contentField,
+      isSuggestion: isSuggestion,
+      service: service,
+      content: contentField,
       mail: mail,
       attachFiles: attachFiles,
       isUsurpastionAllowed: isUsurpationAllowed
