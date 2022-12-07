@@ -40,7 +40,7 @@
           />
         </div>
         <div class="issue-description">
-          <h5> {{ $t('issueDescription') + '*' }} </h5>
+          <h5> {{ (modalType==='Assistance' ? $t('issueDescription') : $t('suggestionDescription')) + '*' }} </h5>
           <div
             class="ck-editor"
             data-test="ck-editor"
@@ -268,6 +268,7 @@ h5 {
   "adminMessage": "Votre demande de support sera traitée par les équipes de Pentila, vous recevrez une réponse dans votre messagerie",
   "submitButtonLabel": "Envoyer",
   "issueDescription": "Description de l'incident",
+  "suggestionDescription": "Description de la suggestion",
   "assistanceHeaderLabel": "Signaler un problème",
   "suggestionHeaderLabel": "Proposer une amélioration",
   "nonAdminMessage": "Votre demande de support sera transmise à l'administrateur",
