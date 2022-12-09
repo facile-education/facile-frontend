@@ -25,7 +25,7 @@ export default {
 
 <style lang="scss" scoped>
 .accessibility {
-  max-height: 65vh;
+  max-height: 100%;
   overflow: auto;
 }
 </style>

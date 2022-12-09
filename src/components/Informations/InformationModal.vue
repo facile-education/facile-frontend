@@ -1,5 +1,8 @@
 <template>
-  <div data-test="informationModal">
+  <div
+    data-test="informationModal"
+    class="information-modal"
+  >
     <PentilaWindow
       :modal="true"
       :draggable="true"
@@ -54,6 +57,17 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" >
+.information-modal {
+  .window-body {
+    .tab-content {
+      height: calc(100% - 55px);
+    }
+  }
+}
+
+</style>
 
 <i18n locale="fr">
 {
