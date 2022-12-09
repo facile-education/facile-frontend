@@ -360,7 +360,7 @@ export default {
     submitChanges () {
       if (this.editedGroup && this.editedGroup.groupId > 0) {
         // Update
-        editCommunity(this.group.groupId, this.group.groupName, this.group.description, this.group.isPedagogical, this.groupMembers).then((data) => {
+        editCommunity(this.group.groupId, this.group.groupName, this.group.description, this.group.isPedagogical, this.groupMembers, this.group.color).then((data) => {
           if (data.success) {
             this.$store.dispatch('groups/getGroupList', this.$store.state.groups.currentFilter)
             this.closeModal()
