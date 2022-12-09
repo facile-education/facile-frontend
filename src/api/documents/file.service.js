@@ -16,7 +16,8 @@ export default {
   createHtmlFile,
   getHtmlContent,
   saveHtmlContent,
-  removeLoolToken
+  removeLoolToken,
+  getFileInfos
 }
 
 const FILE_PATH = '/documents-portlet.fileutil'
@@ -176,4 +177,12 @@ function removeLoolToken (token) {
   return axios.post(constants.JSON_WS_URL + FILE_PATH + '/remove-lool-token', PentilaUtils.URL.params({
     token: token
   })).then(response => response.data)
+}
+
+function getFileInfos (fileId) {
+  return axios.get(constants.JSON_WS_URL + FILE_PATH + '/get-file-infos', {
+    params: {
+      fileId: fileId
+    }
+  }).then(response => response.data)
 }

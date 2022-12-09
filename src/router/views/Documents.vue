@@ -108,6 +108,7 @@ import FilePickerModal from '@components/FilePicker/FilePickerModal'
 import DocumentDetailsModal from '@components/Documents/DocumentDetails/DocumentDetailsModal'
 import PermissionsModal from '@components/Documents/Modals/PermissionModal/PermissionsModal'
 import { removeMenuOptionIfExist } from '@/utils/commons.util'
+import fileService from '@/api/documents/file.service'
 
 export default {
   name: 'Documents',
@@ -207,8 +208,15 @@ export default {
             this.$store.dispatch('documents/goInDocumentRoot')
           }
         } else if (this.$route.name === 'GroupDocuments') {
+          console.log('group doc params=', this.$route.params)
           if (this.$route.params.folderId) {
             this.$store.dispatch('documents/changeDirectory', { id: this.$route.params.folderId, isGroupDirectory: true })
+          } else if (this.$route.params.fileId) {
+            fileService.getFileInfos(this.$route.params.fileId).then((data) => {
+              if (data.success) {
+                this.$store.dispatch('documents/changeDirectory', { id: data.folderId, isGroupDirectory: true })
+              }
+            })
           } else {
             this.$store.dispatch('documents/goInGroupRoot')
           }

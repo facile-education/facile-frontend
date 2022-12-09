@@ -3,6 +3,7 @@ import documentsService from '@/api/documents/documents.service'
 import editService from '@/api/documents/edit.service'
 import i18n from '@/i18n'
 import groupService from '@/api/documents/group.service'
+import store from '@store/index.js'
 
 export const state = {
   currentDisplay: 'list',
@@ -123,6 +124,7 @@ export const actions = {
     this.dispatch('documents/cleanSelectedEntities')
     commit('updateLastSelectedEntity', undefined)
     if (directory.isGroupDirectory) {
+      console.log('change directory to ', directory)
       this.dispatch('documents/updateGroupBreadcrumb', directory.id)
       this.dispatch('documents/getGroupEntities', directory.id)
     } else {
@@ -167,6 +169,12 @@ export const actions = {
           data.folders.forEach(folder => { folder.isGroupDirectory = true })
           commit('setFolderContent', { subFolders: data.folders, files: data.files })
           resolve({ subFolders: data.folders, files: data.files })
+        } else if (data.error === 'PermissionException') {
+          store.dispatch('popups/pushPopup', {
+            message: i18n.global.t('Documents.permissionException'),
+            type: 'error'
+          })
+          this.dispatch('documents/goInGroupRoot')
         } else {
           commit('setLoadDocumentsError', true)
           console.error('Unable to get entities from backend for folder id ' + groupFolderId)
@@ -233,7 +241,7 @@ export const actions = {
   },
   updateGroupBreadcrumb ({ commit }, groupFolderId) {
     groupService.getGroupBreadcrumb(groupFolderId).then((data) => {
-      if (data.breadCrumb) {
+      if (data.success && data.breadCrumb) {
         for (let i = 0; i < data.breadCrumb.length; ++i) { // Because all documents in breadcrumb are folders, add folder icon
           data.breadCrumb[i].icon = require('@assets/documentIcons/icon-folder.svg')
           data.breadCrumb[i].isGroupDirectory = true
