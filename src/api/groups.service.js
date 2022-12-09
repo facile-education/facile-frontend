@@ -138,13 +138,14 @@ function createCommunity (groupName, description, isPedagogical, members, color)
   ).then(response => response.data)
 }
 
-function editCommunity (groupId, groupName, description, isPedagogical) {
+function editCommunity (groupId, groupName, description, isPedagogical, members, color) {
   return axios.post(constants.JSON_WS_URL + GROUP_PATH + COMMUNITY_CTX + 'edit-community',
     PentilaUtils.URL.params({
       groupId,
       groupName,
       description,
-      isPedagogical
+      isPedagogical,
+      color: color
     })
   ).then(response => response.data)
 }

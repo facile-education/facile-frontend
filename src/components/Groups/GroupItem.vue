@@ -294,7 +294,7 @@ export default {
   "institutional": "Institutionnel",
   "members": "Aucun membre | {count} membre | {count} membres",
   "pedagogical": "Pédagogique",
-  "reactivate": "Je souhaite réactiver",
+  "reactivate": "Je souhaite réactiver ",
   "school": "Établissement",
   "subject": "Discipline",
   "warning": "La suppression de ce groupe est définitive."
