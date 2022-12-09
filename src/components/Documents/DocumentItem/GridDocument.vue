@@ -127,7 +127,7 @@ export default {
       return this.selectedEntities.indexOf(this.document) !== -1
     },
     formattedDate () {
-      return this.document.lastModifiedDate !== undefined ? dayjs(this.document.lastModifiedDate, 'YYYY-MM-DD HH:mm:ss').calendar() : '-'
+      return this.document.lastModifiedDate !== undefined ? dayjs(this.document.lastModifiedDate, 'YYYY-MM-DD HH:mm').calendar() : '-'
     }
   },
   mounted () {
