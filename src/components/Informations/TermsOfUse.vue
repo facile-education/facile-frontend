@@ -31,7 +31,7 @@ export default {
 
 <style lang="scss" scoped>
 .chart {
-  max-height: 65vh;
+  max-height: 100%;
   overflow: auto;
   h1 {
     margin: 0.67em;
