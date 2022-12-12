@@ -243,7 +243,7 @@ export default {
   display: flex;
   align-items: center;
   padding-right: 20px;
-  height: 50px;
+  height: 40px;
   border-top: 1px solid $color-border;
 
   .selection-icon {
@@ -305,7 +305,7 @@ export default {
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
-        font-size: 0.9375em;
+        font-size: 0.85em;
         letter-spacing: 0;
         margin: 2px 0 0 0;
 

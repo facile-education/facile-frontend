@@ -135,7 +135,6 @@ export default {
   },
   methods: {
     loadMedia () {
-      console.log('load media')
       const versionId = (this.file.versionId === undefined || this.file.versionId === 'latest') ? 0 : this.file.versionId // for the backend type consistency
       const readOnly = !!this.file.readOnly // To force to have boolean
       fileService.getResource(this.file.id, versionId, readOnly).then((data) => {
@@ -143,7 +142,6 @@ export default {
           if (this.file.isGroupFile) {
             groupService.recordViewActivity(this.file.id, versionId)
           }
-          console.log('typeOfView = ', data.typeOfView)
           this.typeOfView = data.typeOfView
           this.fileUrl = data.fileUrl
           this.loadedFile = { ...this.file }

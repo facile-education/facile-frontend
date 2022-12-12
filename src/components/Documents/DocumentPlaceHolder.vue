@@ -140,7 +140,7 @@ export default {
 {
   "isLoadDocumentsError": "Problème rencontré lors du",
   "isLoadDocumentsError2": "chargement des fichiers",
-  "noDocumentToDisplay": "Déposer vos fichiers ici",
+  "noDocumentToDisplay": "Déposez vos fichiers ici",
   "noDocumentToDisplay2": "ou utilisez le bouton +",
   "noDocumentToDisplayMobile": "Ajouter un document avec le bouton +"
 }
