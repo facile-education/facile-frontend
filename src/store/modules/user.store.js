@@ -7,7 +7,7 @@ export const state = {
   firstName: '',
   lastName: '',
   picture: '/image/user_male_portrait?img_id=3274117&t=1546588956172',
-  isAdministrator: true,
+  isAdministrator: false,
   isLocalAdmin: false,
   isENTAdmin: false,
   isPersonal: false,
@@ -32,7 +32,6 @@ export const mutations = {
   initUserInformations (state, payload) {
     state.userId = payload.userId
     state.lastName = payload.lastName
-    state.displayName = payload.displayName
     state.firstName = payload.firstName
     state.picture = payload.picture
     state.themeColor = payload.themeColor
@@ -40,7 +39,6 @@ export const mutations = {
 
     state.isAdministrator = payload.isAdministrator
     state.isLocalAdmin = payload.isLocalAdmin
-    state.isSchoolAdmin = payload.isSchoolAdmin
     state.isPersonal = payload.isPersonal
     state.isDoyen = payload.isDoyen
     state.isDirectionMember = payload.isDirectionMember

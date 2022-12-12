@@ -1,9 +1,9 @@
 <template>
   <PentilaWindow
     :modal="true"
-    :is-full-screen="mq.phone"
+    :full-screen="true"
     data-test="edit-group-modal"
-    class="editWindow"
+    class="group-edit-window"
     @close="closeModal"
   >
     <template #header>
@@ -58,31 +58,45 @@
               :maxlength="75"
               @input="searchTimeOut"
             />
+            <PentilaDropdown
+              v-model="selectedRole"
+              :list="roleList"
+              display-field="label"
+              @update:modelValue="getCompletion"
+            />
+            <PentilaDropdown
+              v-model="selectedSchool"
+              :list="schoolList"
+              display-field="schoolName"
+              @update:modelValue="getCompletion"
+            />
           </div>
 
-          <div class="header">
-            <div class="checkbox-container">
-              <PentilaCheckbox
-                v-if="!editedGroup"
-                :model-value="isAllSelected"
-                label=""
-                class="checkbox"
-                @update:modelValue="toggleAll"
-              />
-            </div>
-            <div v-t="'identity'" />
-            <div v-t="'profile'" />
-            <div v-t="'school'" />
-          </div>
+          <table class="table">
+            <tr>
+              <th>
+                <PentilaCheckbox
+                  v-if="!editedGroup"
+                  :model-value="isAllSelected"
+                  label=""
+                  class="checkbox"
+                  @update:modelValue="toggleAll"
+                />
+              </th>
+              <th v-t="'identity'" />
+              <th v-t="'profile'" />
+              <th v-t="'school'" />
+            </tr>
+            <GroupUserItem
+              v-for="(user, index) in completionUsers"
+              :key="index"
+              :user="user"
+              :is-selected="isGroupMember(user)"
+              @toggleUserSelection="toggleGroupMember(user)"
+            />
+          </table>
 
           <PentilaSpinner v-if="isLoadingCompletion" />
-          <GroupUserItem
-            v-for="(user, index) in completionUsers"
-            :key="index"
-            :user="user"
-            :is-selected="isGroupMember(user)"
-            @toggleUserSelection="editedGroup ? backToggleGroupMember(user) : toggleGroupMember(user)"
-          />
         </div>
 
         <div class="group-members">
@@ -125,15 +139,13 @@ import { nextTick } from 'vue'
 import PentilaUtils from 'pentila-utils'
 
 import {
-  getCommunityMembers,
-  editCommunity,
   createCommunity,
-  addCommunityAdmin,
-  removeCommunityAdmin,
-  addCommunityMembers,
-  removeCommunityMember
+  editCommunity,
+  getCommunityMembers,
+  getRoles,
+  getSchools,
+  getUsersCompletion
 } from '@/api/groups.service'
-import messageService from '@/api/messaging/message.service'
 
 import ColorPicker from '@/components/Nero/ColorPicker'
 import GroupUserItem from '@components/Groups/EditGroupModal/GroupUserItem'
@@ -170,8 +182,14 @@ export default {
         isPedagogical: false
       },
       completionUsers: [],
+      emptyRole: { label: 'Profil', roleId: 0 },
+      emptySchool: { schoolName: 'Etablissement', schoolId: 0 },
       groupMembers: [],
-      searchInput: ''
+      searchInput: '',
+      selectedRole: undefined,
+      selectedSchool: undefined,
+      roleList: [],
+      schoolList: []
     }
   },
   computed: {
@@ -209,7 +227,7 @@ export default {
       }
     },
     sortedGroupMembers () {
-      return PentilaUtils.Array.sortWithString(this.groupMembers, false, 'userName')
+      return PentilaUtils.Array.sortWithString(this.groupMembers, false, 'lastName')
     }
   },
   created () {
@@ -222,26 +240,40 @@ export default {
       this.group = { ...this.editedGroup }
     }
     nextTick(() => this.$refs.name.$el.childNodes[0].focus())
+
+    getRoles().then((data) => {
+      if (data.success) {
+        this.selectedRole = this.emptyRole
+        this.roleList = [this.emptyRole, ...data.roles]
+      }
+    })
+
+    getSchools().then((data) => {
+      if (data.success) {
+        this.selectedSchool = this.emptySchool
+        this.schoolList = [this.emptySchool, ...data.schools]
+      }
+    })
   },
   methods: {
     searchTimeOut () {
       clearTimeout(this.timeout)
       this.timeout = setTimeout(() => {
-        if (this.searchInput.length >= 2) {
-          this.getCompletion(this.searchInput)
-        }
+        this.getCompletion()
       }, 1000)
     },
-    getCompletion (query) {
-      this.isLoadingCompletion = true
-      messageService.getUsersCompletion(query).then((data) => {
-        this.isLoadingCompletion = false
-        if (data.success) {
-          this.completionUsers = data.results
-        } else {
-          console.error('Error while getting users', data.error)
-        }
-      })
+    getCompletion () {
+      if (this.searchInput.length >= 2) {
+        this.isLoadingCompletion = true
+        getUsersCompletion(this.searchInput, this.selectedSchool.schoolId, this.selectedRole.roleId).then((data) => {
+          this.isLoadingCompletion = false
+          if (data.success) {
+            this.completionUsers = data.results
+          } else {
+            console.error('Error while getting users', data.error)
+          }
+        })
+      }
     },
     toggleAll () {
       if (!this.isAllSelected) {
@@ -270,30 +302,6 @@ export default {
         this.groupMembers.push({ ...member, isAdmin: false })
       }
     },
-    backToggleGroupMember (member) {
-      console.log(this.isCurrentGroupAdmin)
-      if (this.isCurrentGroupAdmin) {
-        if (this.isGroupMember(member)) {
-          removeCommunityMember(this.editedGroup.groupId, member.userId).then((data) => {
-            if (data.success) {
-              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.success'), type: 'success' })
-              this.toggleGroupMember(member)
-            } else {
-              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
-            }
-          })
-        } else {
-          addCommunityMembers(this.editedGroup.groupId, [member]).then((data) => {
-            if (data.success) {
-              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.success'), type: 'success' })
-              this.toggleGroupMember(member)
-            } else {
-              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
-            }
-          })
-        }
-      }
-    },
     isGroupMember (member) {
       let returnedValue = false
       this.groupMembers.forEach((groupMember) => {
@@ -304,43 +312,10 @@ export default {
       return returnedValue
     },
     toggleAdmin (member) {
-      if (this.editedGroup) {
-        if (member.isAdmin) {
-          removeCommunityAdmin(this.editedGroup.groupId, member.userId).then((data) => {
-            if (data.success) {
-              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.success'), type: 'success' })
-              member.isAdmin = false
-            } else {
-              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
-            }
-          })
-        } else {
-          addCommunityAdmin(this.editedGroup.groupId, member.userId).then((data) => {
-            if (data.success) {
-              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.success'), type: 'success' })
-              member.isAdmin = true
-            } else {
-              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
-            }
-          })
-        }
-      } else {
-        member.isAdmin = !member.isAdmin
-      }
+      member.isAdmin = !member.isAdmin
     },
     deleteGroupMember (member) {
-      if (this.editedGroup) {
-        removeCommunityMember(this.editedGroup.groupId, member.userId).then((data) => {
-          if (data.success) {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.success'), type: 'success' })
-            this.toggleGroupMember(member)
-          } else {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
-          }
-        })
-      } else {
-        this.toggleGroupMember(member)
-      }
+      this.toggleGroupMember(member)
     },
     onConfirm (e) {
       e.preventDefault()
@@ -368,7 +343,6 @@ export default {
         })
       } else {
         // Creation
-        this.$store.dispatch('groups/createGroup', this.group)
         createCommunity(this.group.groupName, this.group.description, this.group.isPedagogical, this.groupMembers, this.group.color).then((data) => {
           if (data.success) {
             this.$store.dispatch('groups/getGroupList', this.$store.state.groups.currentFilter)
@@ -385,6 +359,12 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.group-edit-window .window-body {
+  overflow: auto;
+}
+</style>
 
 <style lang="scss" scoped>
 @import "@design";
@@ -434,42 +414,30 @@ hr {
 
 .members {
   display: flex;
-  width: 100%;
   margin-top: 15px;
+  height: calc(100% - 245px);
 
   .user-list {
     position: relative;
-    flex: 1;
+    flex: 1.5;
     padding: 0 10px;
-    max-height: 350px;
-    overflow: auto;
     border-right: 1px solid #d4d4d4;
-    display: flex;
-    flex-direction: column;
+    overflow: auto;
 
     .search {
+      display: flex;
+      gap: 20px;
     }
 
-    .header {
-      margin-top: 10px;
-      display: flex;
-      font-weight: 600;
-      height: 30px;
-      min-height: 30px;
-
-      .checkbox-container{
-        width: 26px;
-      }
-
-      div {
-        width: 100px;
-      }
+    .table {
+      width: 100%;
+      text-align: left;
+      margin-top: 20px;
     }
   }
 
   .group-members {
     flex: 1;
-    max-height: 350px;
     overflow: auto;
 
     .header {

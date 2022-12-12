@@ -1,6 +1,6 @@
 <template>
   <Layout
-    :is-allowed="$store.state.user.isSchoolAdmin || $store.state.user.isDirectionMember || $store.state.user.isAdministrator"
+    :is-allowed="$store.state.user.isLocalAdmin || $store.state.user.isDirectionMember || $store.state.user.isAdministrator"
     class="layout"
   >
     <h1 :aria-label="$t('serviceTitle')" />

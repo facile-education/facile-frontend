@@ -81,7 +81,7 @@ export default {
     }
   },
   methods: {
-    onScopeChange (scope) {
+    onScopeChange () {
       this.$store.dispatch('groups/closePanel')
       this.$store.dispatch('groups/updateFilter', this.params)
     },
