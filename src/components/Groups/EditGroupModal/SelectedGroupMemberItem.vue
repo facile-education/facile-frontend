@@ -3,7 +3,7 @@
     class="selected-group-member-item"
   >
     <div class="name">
-      <div> {{ member.userName ? member.userName : member.nom }}</div>
+      <div> {{ fullName }}</div>
       <img
         v-if="!isCurrentMember && isCurrentGroupAdmin"
         class="close-button"
@@ -46,6 +46,11 @@ export default {
   data () {
     return {
       adminValue: this.member.isAdmin
+    }
+  },
+  computed: {
+    fullName () {
+      return `${this.member.lastName} ${this.member.firstName}`
     }
   },
   watch: {

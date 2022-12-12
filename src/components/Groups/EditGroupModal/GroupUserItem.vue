@@ -1,20 +1,22 @@
 <template>
-  <div
+  <tr
     class="group-user-item"
     :class="{'selected' : isSelected}"
     @click.stop="toggleUserSelection"
   >
-    <PentilaCheckbox
-      :model-value="isSelected"
-      label=""
-      class="checkbox"
-      @click.stop
-      @update:modelValue="toggleUserSelection"
-    />
-    <div> {{ user.nom }}</div>
-    <div> {{ user.roles }} </div>
-    <div> {{ user.schoolName }} </div>
-  </div>
+    <td>
+      <PentilaCheckbox
+        :model-value="isSelected"
+        label=""
+        class="checkbox"
+        @click.stop
+        @update:modelValue="toggleUserSelection"
+      />
+    </td>
+    <td>{{ fullName }}</td>
+    <td>{{ user.roles }}</td>
+    <td>{{ user.schoolName }}</td>
+  </tr>
 </template>
 
 <script>
@@ -31,25 +33,13 @@ export default {
     }
   },
   emits: ['toggleUserSelection'],
-  isSelected: {
-    handler () {
-      this.test = this.isSelected
-    }
-  },
   computed: {
-    // formattedSchoolLabel () {
-    //   let label = ''
-    //   if (this.user.schools) {
-    //     this.user.schools.forEach((school) => {
-    //       label += school.schoolName + ' '
-    //     })
-    //   }
-    //   return label
-    // }
+    fullName () {
+      return `${this.user.lastName} ${this.user.firstName}`
+    }
   },
   methods: {
     toggleUserSelection () {
-      console.log('toggleUserSelection')
       this.$emit('toggleUserSelection')
     }
   }
@@ -60,8 +50,6 @@ export default {
 @import "@design";
 
 .group-user-item {
-  display: flex;
-  align-items: center;
   border-top: 1px solid #d4d4d4;
   height: 50px;
   min-height: 50px;
@@ -74,11 +62,5 @@ export default {
   .checkbox {
     margin-top: -20px;
   }
-
-  div {
-    width: 100px;
-    font-size: 12px;
-  }
 }
-
 </style>

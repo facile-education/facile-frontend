@@ -5,16 +5,15 @@ import PentilaUtils from 'pentila-utils'
 export {
   getUserGroups,
   getUserCommunities,
+  getUsersCompletion,
   getCommunityMembers,
   createCommunity,
   editCommunity,
   removeCommunity,
   getGroupHistory,
+  getRoles,
+  getSchools,
   getSpecificGroupActivities,
-  addCommunityMembers,
-  removeCommunityMember,
-  addCommunityAdmin,
-  removeCommunityAdmin,
   extendCommunity
 }
 
@@ -55,6 +54,19 @@ function getUserCommunities (userId, filter) {
   }).then(response => response.data)
 }
 
+/**
+ * Get auto completion in search members
+ */
+function getUsersCompletion (query, schoolId = 0, roleId = 0) {
+  return axios.get(constants.JSON_WS_URL + GROUP_PATH + GROUP_CTX + 'get-users-completion', {
+    params: {
+      query,
+      schoolId,
+      roleId
+    }
+  }).then(response => response.data)
+}
+
 function getCommunityMembers (groupId) {
   return axios.get(constants.JSON_WS_URL + GROUP_PATH + GROUP_CTX + 'get-group-members', {
     params: {
@@ -63,40 +75,16 @@ function getCommunityMembers (groupId) {
   }).then(response => response.data)
 }
 
-function addCommunityAdmin (groupId, userId) {
-  return axios.get(constants.JSON_WS_URL + GROUP_PATH + COMMUNITY_CTX + 'add-community-admin', {
-    params: {
-      groupId,
-      adminId: userId
-    }
+function getRoles () {
+  return axios.get(constants.JSON_WS_URL + GROUP_PATH + GROUP_CTX + 'get-roles', {
+    params: {}
   }).then(response => response.data)
 }
 
-function removeCommunityAdmin (groupId, userId) {
-  return axios.get(constants.JSON_WS_URL + GROUP_PATH + COMMUNITY_CTX + 'remove-community-admin', {
-    params: {
-      groupId,
-      adminId: userId
-    }
+function getSchools () {
+  return axios.get(constants.JSON_WS_URL + GROUP_PATH + GROUP_CTX + 'get-schools', {
+    params: {}
   }).then(response => response.data)
-}
-
-function removeCommunityMember (groupId, memberId) {
-  return axios.get(constants.JSON_WS_URL + GROUP_PATH + COMMUNITY_CTX + 'remove-community-members', {
-    params: {
-      groupId,
-      memberId
-    }
-  }).then(response => response.data)
-}
-
-function addCommunityMembers (groupId, members) {
-  return axios.post(constants.JSON_WS_URL + GROUP_PATH + COMMUNITY_CTX + 'add-community-members',
-    PentilaUtils.URL.params({
-      groupId,
-      members: JSON.stringify(members)
-    })
-  ).then(response => response.data)
 }
 
 function getGroupHistory (groupId, maxDate, nbResults) {
@@ -145,7 +133,8 @@ function editCommunity (groupId, groupName, description, isPedagogical, members,
       groupName,
       description,
       isPedagogical,
-      color: color
+      members: JSON.stringify(members),
+      color
     })
   ).then(response => response.data)
 }

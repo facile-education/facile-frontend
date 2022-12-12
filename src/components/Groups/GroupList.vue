@@ -10,7 +10,7 @@
     />
   </div>
   <div
-    v-else
+    v-else-if="groupList !== undefined"
     class="empty-container"
   >
     <span v-t="'noContentFound'" />

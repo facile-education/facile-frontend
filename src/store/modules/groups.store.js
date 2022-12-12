@@ -13,6 +13,9 @@ export const state = {
 }
 
 export const mutations = {
+  emptyGroupList (state) {
+    state.groupList = undefined
+  },
   setGroupList (state, payload) {
     state.groupList = payload
   },
@@ -29,6 +32,7 @@ export const mutations = {
 
 export const actions = {
   getGroupList ({ commit }, filter) {
+    commit('emptyGroupList')
     getUserCommunities(this.state.user.userId, filter).then((data) => {
       if (data.success) {
         commit('setSelectedGroup', undefined)
