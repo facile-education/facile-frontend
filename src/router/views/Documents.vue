@@ -352,9 +352,9 @@ export default {
         case 'rename':
           this.modalSubmitAction = 'rename'
           this.documentToRename = this.selectedDocuments[0]
-          if (this.documentToRename.type === 'Folder') {
+          if (this.documentToRename.type === 'Folder' && (!this.documentToRename.isGroupFolder || this.documentToRename.permissions.UPDATE)) {
             this.isFolderNameModalDisplayed = true
-          } else {
+          } else if (this.documentToRename.type === 'File' && (!this.documentToRename.isGroupFile || this.documentToRename.permissions.UPDATE)) {
             this.isFileNameModalDisplayed = true
           }
           break

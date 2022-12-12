@@ -161,8 +161,10 @@ export default {
 
 <style lang="scss" scoped>
 .display-grid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 200px auto;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fill, 180px);
   justify-content: space-between;
 }
 </style>

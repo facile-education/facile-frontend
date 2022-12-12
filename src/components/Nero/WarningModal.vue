@@ -59,6 +59,11 @@ export default {
     }
   },
   methods: {
+    pressEnter (e) {
+      console.log('press enter')
+      e.preventDefault()
+      this.forceLastAction()
+    },
     forceLastAction () {
       this.lastAction.fct.apply(this, this.lastAction.params)
       this.onClose()

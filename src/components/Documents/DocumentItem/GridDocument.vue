@@ -9,7 +9,7 @@
     @click.meta.exact="ctrlSelect"
     @click.shift="shiftSelect"
     @dblclick="triggerAction"
-    @click.exact="mq.phone || mq.tablet ? triggerAction() : select()"
+    @click.exact="triggerAction"
     @mouseover="hoverSelection = true"
     @mouseleave="hoverSelection = false"
   >
@@ -50,7 +50,7 @@
           >
         </div>
         <img
-          v-if="mq.phone || mq.tablet"
+          v-if="mq.phone || mq.tablet || hoverSelection"
           class="button"
           src="@assets/options/icon_details.svg"
           data-test="open-details-icon"
@@ -62,9 +62,6 @@
     </div>
     <p class="name">
       {{ document.name }}
-    </p>
-    <p class="date">
-      {{ formattedDate }}
     </p>
     <div
       v-if="isSelected || hoverSelection"
@@ -160,11 +157,7 @@ export default {
         img.setAttribute('style', 'cursor: pointer;')
 
         img.addEventListener('mouseup', function () {
-          if (vm.mq.phone || vm.mq.tablet) {
-            vm.triggerAction()
-          } else {
-            vm.select()
-          }
+          vm.triggerAction()
         }, false)
 
         img.addEventListener('dblclick', function () { vm.triggerAction() }, false)
@@ -176,15 +169,19 @@ export default {
       this.$emit('select')
     },
     triggerAction () {
+      console.log('grid trigger action')
       this.$emit('triggerAction')
     },
     select () {
+      console.log('select')
       this.$emit('select')
     },
     ctrlSelect () {
+      console.log('ctrl select')
       this.$emit('ctrlSelect')
     },
     shiftSelect () {
+      console.log('shift select')
       this.$emit('shiftSelect')
     }
   }
@@ -208,6 +205,7 @@ export default {
     position: relative;
     flex: 1;
     margin-bottom: 10px;
+    width: 85%;
 
     .img-icon, .base-icon {
       height: 100%;

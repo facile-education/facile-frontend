@@ -139,9 +139,9 @@
       "rename": "Renommer",
       "resetFields": "Valeurs par défaut",
       "toggleDetailsLabel": "Détails",
-      "uploadFiles": "@:Documents.files",
+      "uploadFiles": "Importer un fichier",
       "mobileUploadFiles": "Importer",
-      "uploadFolder": "@:Documents.folder"
+      "uploadFolder": "Importer un dossier"
     }
   },
   "Horaires": {

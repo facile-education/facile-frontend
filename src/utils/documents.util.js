@@ -34,7 +34,7 @@ function computeDocumentsOptions (documentList) {
       removeMenuOptionIfExist(documentContextMenu, 'rename')
       removeMenuOptionIfExist(documentContextMenu, 'move')
     }
-    if (document.permissions.DELETE && !document.permissions.DELETE) {
+    if (!document.permissions.DELETE) {
       removeMenuOptionIfExist(documentContextMenu, 'delete')
     }
     if (!document.permissions.PERMISSIONS) {
@@ -62,6 +62,7 @@ function computeDocumentsOptions (documentList) {
     removeMenuOptionIfExist(contextMenu, 'rename')
     removeMenuOptionIfExist(contextMenu, 'comment')
     removeMenuOptionIfExist(contextMenu, 'share')
+    removeMenuOptionIfExist(contextMenu, 'copyUrl')
   }
 
   return contextMenu

@@ -5,19 +5,33 @@
     :title="option.title"
     @click="handleClick"
   >
-    <img
-      :src="option.icon"
-      alt=""
+    <div
+      v-if="isNew"
     >
-    <div class="title">
-      {{ option.title }}
+      <PentilaButton
+        class="create-button"
+      >
+        <NeroIcon
+          name="fa-plus"
+        />
+        <span>{{ $t('new') }}</span>
+      </PentilaButton>
     </div>
-    <img
-      v-if="option.subMenu"
-      class="arrow-down"
-      src="@assets/arrow-down.svg"
-      alt=""
-    >
+    <div v-else>
+      <img
+        :src="option.icon"
+        alt=""
+      >
+      <div class="title">
+        {{ option.title }}
+      </div>
+      <img
+        v-if="option.subMenu"
+        class="arrow-down"
+        src="@assets/arrow-down.svg"
+        alt=""
+      >
+    </div>
 
     <ContextMenu
       v-if="isContextMenuDisplayed && isAContextMenuDisplayed"
@@ -30,10 +44,11 @@
 
 <script>
 
+import NeroIcon from '@/components/Nero/NeroIcon'
 import ContextMenu from '@components/ContextMenu/ContextMenu'
 export default {
   name: 'OptionItem',
-  components: { ContextMenu },
+  components: { NeroIcon, ContextMenu },
   props: {
     option: {
       type: Object,
@@ -49,6 +64,9 @@ export default {
   computed: {
     isAContextMenuDisplayed () {
       return this.$store.state.contextMenu.isAContextMenuDisplayed
+    },
+    isNew () {
+      return this.option.name === 'new'
     }
   },
   mounted () {
@@ -96,6 +114,10 @@ export default {
   background: none;
   border: none;
 
+  .create-button {
+    @extend %create-button;
+  }
+
   img {
     width: 28px;
     height: 28px;
@@ -113,8 +135,14 @@ export default {
     margin-left: 10px;
   }
 
-  &:hover {
+  &:hover:not(.create-button) {
     background-color: $color-hover-bg;
   }
 }
 </style>
+
+<i18n locale="fr">
+  {
+    "new": "NOUVEAU"
+  }
+</i18n>

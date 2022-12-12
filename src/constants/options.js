@@ -17,82 +17,73 @@ const documentSpaceOptions = [
         hasSeparator: true
       },
       {
+        name: 'uploadFolder',
+        title: i18n.global.t('Documents.options.uploadFolder'),
+        icon: icons.folder,
+        position: 1,
+        hasSeparator: false
+      },
+      {
+        name: 'uploadFiles',
+        title: i18n.global.t('Documents.options.uploadFiles'),
+        icon: icons.file,
+        position: 2,
+        hasSeparator: true
+      },
+      {
         name: 'newODT',
         title: i18n.global.t('Documents.options.newODT'),
         icon: icons.extensions.odt,
-        position: 1,
+        position: 3,
         hasSeparator: false
       },
       {
         name: 'newODS',
         title: i18n.global.t('Documents.options.newODS'),
         icon: icons.extensions.ods,
-        position: 1,
+        position: 4,
         hasSeparator: false
       },
       {
         name: 'newODP',
         title: i18n.global.t('Documents.options.newODP'),
         icon: icons.extensions.odp,
-        position: 1,
+        position: 5,
         hasSeparator: false
       },
       {
         name: 'newGeogebra',
         title: i18n.global.t('Documents.options.newGeogebra'),
         icon: icons.extensions.ggb,
-        position: 0,
+        position: 6,
         hasSeparator: false
       },
       {
         name: 'newMindMap',
         title: i18n.global.t('Documents.options.newMindMap'),
         icon: icons.extensions.mind,
-        position: 1,
+        position: 7,
         hasSeparator: false
       },
       {
         name: 'newScratch',
         title: i18n.global.t('Documents.options.newScratch'),
         icon: icons.extensions.sb3,
-        position: 2,
+        position: 8,
         hasSeparator: false
       },
       {
         name: 'newAudio',
         title: i18n.global.t('Documents.options.newAudio'),
         icon: icons.extensions.mp3,
-        position: 3,
+        position: 9,
         hasSeparator: false
       },
       {
         name: 'newHTML',
         title: i18n.global.t('Documents.options.newHTML'),
         icon: icons.extensions.html,
-        position: 4,
-        hasSeparator: false
-      }
-    ]
-  },
-  {
-    name: 'import',
-    title: i18n.global.t('Documents.options.import'),
-    icon: icons.options.upload,
-    position: 1,
-    hasSeparator: false,
-    subMenu: [
-      {
-        name: 'uploadFolder',
-        title: i18n.global.t('Documents.options.uploadFolder'),
-        icon: icons.folder,
-        position: 0,
-        hasSeparator: true
-      },
-      {
-        name: 'uploadFiles',
-        title: i18n.global.t('Documents.options.uploadFiles'),
-        icon: icons.file,
-        position: 1,
+        position: 10,
         hasSeparator: false
       }
     ]
@@ -115,73 +106,73 @@ const mobileDocumentSpaceOptions = [
         hasSeparator: true
       },
       {
+        name: 'uploadFiles',
+        title: i18n.global.t('Documents.options.mobileUploadFiles'),
+        icon: icons.file,
+        position: 1,
+        hasSeparator: true
+      },
+      {
         name: 'newODT',
         title: i18n.global.t('Documents.options.newODT'),
         icon: icons.extensions.odt,
-        position: 1,
+        position: 2,
         hasSeparator: false
       },
       {
         name: 'newODS',
         title: i18n.global.t('Documents.options.newODS'),
         icon: icons.extensions.ods,
-        position: 1,
+        position: 3,
         hasSeparator: false
       },
       {
         name: 'newODP',
         title: i18n.global.t('Documents.options.newODP'),
         icon: icons.extensions.odp,
-        position: 1,
+        position: 4,
         hasSeparator: false
       },
       {
         name: 'newGeogebra',
         title: i18n.global.t('Documents.options.newGeogebra'),
         icon: icons.extensions.ggb,
-        position: 0,
+        position: 5,
         hasSeparator: false
       },
       {
         name: 'newMindMap',
         title: i18n.global.t('Documents.options.newMindMap'),
         icon: icons.extensions.mind,
-        position: 1,
+        position: 6,
         hasSeparator: false
       },
       {
         name: 'newScratch',
         title: i18n.global.t('Documents.options.newScratch'),
         icon: icons.extensions.sb3,
-        position: 2,
+        position: 7,
         hasSeparator: false
       },
       {
         name: 'newAudio',
         title: i18n.global.t('Documents.options.newAudio'),
         icon: icons.extensions.mp3,
-        position: 3,
+        position: 8,
         hasSeparator: false
       },
       {
         name: 'newHTML',
         title: i18n.global.t('Documents.options.newHTML'),
         icon: icons.extensions.html,
-        position: 4,
+        position: 9,
         hasSeparator: false
       }
     ]
-  },
-  {
-    name: 'uploadFiles',
-    title: i18n.global.t('Documents.options.mobileUploadFiles'),
-    icon: icons.file,
-    position: 1,
-    hasSeparator: false
   }
 ]
 
-const fileOptions = [
+const fileOptions = documentSpaceOptions.concat([
   {
     name: 'open',
     title: i18n.global.t('Documents.options.open'),
@@ -245,9 +236,9 @@ const fileOptions = [
     position: 9,
     hasSeparator: false
   }
-]
+])
 
-const folderOptions = [
+const folderOptions = documentSpaceOptions.concat([
   {
     name: 'rename',
     title: i18n.global.t('Documents.options.rename'),
@@ -304,7 +295,7 @@ const folderOptions = [
     position: 8,
     hasSeparator: false
   }
-]
+])
 
 const currentFolderOptions = [
   {
