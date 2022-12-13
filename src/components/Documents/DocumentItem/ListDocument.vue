@@ -244,7 +244,7 @@ export default {
   align-items: center;
   padding-right: 20px;
   height: 40px;
-  border-top: 1px solid $color-border;
+  border-top: 1px solid $color-document-border;
 
   .selection-icon {
     cursor: pointer;
@@ -363,7 +363,7 @@ export default {
     .separator {
       height: 13px;
       width: 1px;
-      border-right: 1px solid $color-border;
+      border-right: 1px solid $color-document-border;
       margin: 0 20px;
     }
 
@@ -433,7 +433,7 @@ export default {
 }
 
 .last {
-  border-bottom: 1px solid $color-border;;
+  border-bottom: 1px solid $color-document-border;;
 }
 
 .hovering {
