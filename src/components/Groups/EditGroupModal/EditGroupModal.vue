@@ -62,11 +62,13 @@
               v-model="selectedRole"
               :list="roleList"
               display-field="label"
+              :sort="false"
               @update:modelValue="getCompletion"
             />
             <PentilaDropdown
               v-model="selectedSchool"
               :list="schoolList"
+              :sort="false"
               display-field="schoolName"
               @update:modelValue="getCompletion"
             />
@@ -244,14 +246,14 @@ export default {
     getRoles().then((data) => {
       if (data.success) {
         this.selectedRole = this.emptyRole
-        this.roleList = [this.emptyRole, ...data.roles]
+        this.roleList = [this.emptyRole, ...PentilaUtils.Array.sortWithString(data.roles, false, 'label')]
       }
     })
 
     getSchools().then((data) => {
       if (data.success) {
         this.selectedSchool = this.emptySchool
-        this.schoolList = [this.emptySchool, ...data.schools]
+        this.schoolList = [this.emptySchool, ...PentilaUtils.Array.sortWithString(data.schools, false, 'schoolName')]
       }
     })
   },
