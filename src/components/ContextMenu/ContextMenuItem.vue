@@ -225,7 +225,7 @@ export default {
     padding: 10px;
     margin-bottom: 5px;
     font-size: 0.9375em;
-    font-weight: 600;
+    // font-weight: 600;
     letter-spacing: 0;
     line-height: 23px;
     overflow: hidden;

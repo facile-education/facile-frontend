@@ -1,23 +1,22 @@
 <template>
-  <button
-    ref="root"
-    class="option-item"
-    :title="option.title"
-    @click="handleClick"
-  >
-    <div
+  <div class="wrapper">
+    <PentilaButton
       v-if="isNew"
+      class="create-button"
+      @click="handleClick"
     >
-      <PentilaButton
-        class="create-button"
-      >
-        <NeroIcon
-          name="fa-plus"
-        />
-        <span>{{ $t('new') }}</span>
-      </PentilaButton>
-    </div>
-    <div v-else>
+      <NeroIcon
+        name="fa-plus"
+      />
+      <span>{{ $t('new') }}</span>
+    </PentilaButton>
+    <button
+      v-else
+      ref="root"
+      class="option-item"
+      :title="option.title"
+      @click="handleClick"
+    >
       <img
         :src="option.icon"
         alt=""
@@ -31,15 +30,14 @@
         src="@assets/arrow-down.svg"
         alt=""
       >
-    </div>
-
+    </button>
     <ContextMenu
       v-if="isContextMenuDisplayed && isAContextMenuDisplayed"
       :is-absolute="true"
       @chooseOption="subMenuOptionClicked"
       @close="isContextMenuDisplayed=false"
     />
-  </button>
+  </div>
 </template>
 
 <script>
@@ -70,7 +68,11 @@ export default {
     }
   },
   mounted () {
-    this.$emit('addSize', this.$refs.root.clientWidth)
+    if (this.isNew) {
+      this.$emit('addSize', 150)
+    } else {
+      this.$emit('addSize', this.$refs.root.clientWidth)
+    }
   },
   methods: {
     handleClick (event) {
@@ -102,9 +104,12 @@ export default {
 <style lang="scss" scoped>
 @import "@design";
 
+.wrapper {
+  position: relative;
+}
+
 .option-item {
   display: flex;
-  position: relative;
   cursor: pointer;
   align-items: center;
   border-radius: 6px;
@@ -114,31 +119,32 @@ export default {
   background: none;
   border: none;
 
-  .create-button {
-    @extend %create-button;
-  }
-
-  img {
-    width: 28px;
-    height: 28px;
-    padding: 5px;
-  }
-
-  .title {
-    font-size: 0.875em;
-  }
-
-  .arrow-down {
-    width: 15px;
-    height: 15px;
-    padding: 0;
-    margin-left: 10px;
-  }
-
-  &:hover:not(.create-button) {
+  &:hover {
     background-color: $color-hover-bg;
   }
 }
+
+img {
+  width: 28px;
+  height: 28px;
+  padding: 5px;
+}
+
+.title {
+  font-size: 0.875em;
+}
+
+.arrow-down {
+  width: 15px;
+  height: 15px;
+  padding: 0;
+  margin-left: 10px;
+}
+
+.create-button {
+  @extend %create-button;
+}
+
 </style>
 
 <i18n locale="fr">

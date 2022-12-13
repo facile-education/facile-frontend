@@ -116,6 +116,7 @@ export default {
       }
       e.dataTransfer.setData('entitiesToDrop', JSON.stringify(entitiesToDrag))
       this.$store.dispatch('misc/addDraggedEntities', entitiesToDrag)
+      this.$store.dispatch('contextMenu/closeMenus')
     },
     onDragEnd () {
       this.$store.dispatch('misc/removeDraggedEntities')
