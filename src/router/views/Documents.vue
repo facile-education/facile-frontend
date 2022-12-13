@@ -544,7 +544,8 @@ export default {
   }
 
   .breadCrumb {
-    margin-left: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
   }
 
   .body {
