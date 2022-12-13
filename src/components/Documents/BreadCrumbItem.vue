@@ -28,6 +28,12 @@
         {{ folder.name }}
       </span>
     </div>
+    <img
+      v-if="!isFirstElement && isCurrentFolder && folder.isGroupDirectory"
+      class="collaborative"
+      src="@assets/icon_commu-black.svg"
+      alt=""
+    >
     <button
       v-if="currentOptions.length > 0 && isFirstElement"
       class="first-folder-options"
@@ -226,11 +232,13 @@ export default {
   cursor: pointer;
   font-size: 1em;
   letter-spacing: 0;
-  border-radius: 6px;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom: 1px solid transparent;
   margin-right: 3px;
   padding: 3px;
   background: none;
-  border: none;
 
   &.current-folder:not(.phone-breadcrumb-item){
     font-weight: bold;
@@ -241,7 +249,7 @@ export default {
   }
 
   &:hover:not(.phone-breadcrumb-item) {
-    background-color: $color-hover-bg;
+    border-bottom: 1px solid black;
   }
 
   &.first-element {
@@ -289,21 +297,20 @@ export default {
     }
   }
 
+  .collaborative {
+    margin-left: 10px;
+  }
+
   .first-folder-options {
-    margin: 0 5px 0 8px;
     position: relative;
     cursor: pointer;
-    height: 20px;
-    width: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 3px;
-    border: 1px solid $color-border;
+    margin-left: 10px;
+    padding: 0;
+    border: none;
     background-color: white;
 
     .icon {
-      font-size: 10px;
+      font-size: 12px;
     }
   }
 
