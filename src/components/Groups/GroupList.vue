@@ -21,6 +21,7 @@
       @click="toggleEditModalDisplay"
     />
   </div>
+  <PentilaSpinner v-else />
 </template>
 
 <script>
