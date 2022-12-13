@@ -74,7 +74,7 @@ export default {
   grid-template-columns: 326px auto;
   grid-gap: 20px;
   grid-template-columns: repeat(auto-fill, 285px);
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 
 .empty-container {
