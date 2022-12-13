@@ -213,6 +213,7 @@ export default {
    list-style: none;
    background: white;
    box-shadow: 0 2px 14px 0 rgba(0,0,0,0.1);
+   color: initial;
 
    /* disable text selection on documents (not convenient when shift-select) */
    user-select: none; /* CSS3 (little to no support) */

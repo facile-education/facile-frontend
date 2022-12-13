@@ -499,6 +499,11 @@ export default {
       input.click()
     },
     importDocument (fileList) {
+      // Prevent upload in root collaborative
+      if (this.currentFolderId === 'collaborative') {
+        return
+      }
+
       if (this.currentUploadingFile === undefined) { // Reset file upload list
         this.$store.dispatch('currentActions/setImportFileList', fileList)
       } else { // Add files to upload list
@@ -583,6 +588,7 @@ export default {
 {
   "deletionWarning": "Ce document sera définitivement perdu",
   "moveInCurrentFolder": "Le dossier de destination est le même que celui de départ!",
-  "serviceTitle": "Mes documents"
+  "serviceTitle": "Mes documents",
+  "rootCollaborativeUploadForbidden": "Il n'est pas autorisé d'ajouter un document ici"
 }
 </i18n>
