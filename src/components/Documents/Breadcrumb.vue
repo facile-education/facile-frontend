@@ -16,7 +16,7 @@
       <BreadCrumbItem
         :folder="folder"
         :hidden-actions="hiddenActions"
-        :is-first-element="index === 0"
+        :is-first-element="folder.id === breadcrumb[0].id"
         :is-current-folder="index === displayableBreadcrumb.length-1"
         :previous-folder-name="index >= 1 ? displayableBreadcrumb[index - 1].name : ''"
         @click-back="goInParentFolder(index)"
@@ -103,7 +103,7 @@ export default {
 }
 
 .chevron {
-  width: 11px;
+  width: 6px;
   margin: 0 10px;
 }
 
