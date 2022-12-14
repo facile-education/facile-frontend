@@ -160,6 +160,10 @@ export default {
       const ruleIdList = []
       this.removeEmptyRuleList()
 
+      if (this.emptyRule.orgs.length && this.emptyRule.roles.length) {
+        this.addScope(this.emptyRule)
+      }
+
       // Build id lists for saving
       this.ruleList.forEach((currentRule) => {
         const currentRuleId = { roleIds: [], orgIds: [] }

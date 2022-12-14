@@ -65,7 +65,7 @@ function updateApplication (application) {
 function removeApplication (serviceId) {
   return axios.get(constants.JSON_WS_URL + SERVICEMANAGER_PATH + SERVICE_CTX + 'remove-service', {
     params: {
-      serviceId: serviceId
+      serviceId
     }
   }).then(response => response.data)
 }
@@ -73,7 +73,7 @@ function removeApplication (serviceId) {
 function getSchoolApplications (schoolId) {
   return axios.get(constants.JSON_WS_URL + SERVICEMANAGER_PATH + SERVICE_CTX + 'get-school-services', {
     params: {
-      schoolId: schoolId
+      schoolId
     }
   }).then(response => response.data)
 }
@@ -89,7 +89,7 @@ function getApplicationBroadcastScope (applicationId, schoolId) {
   return axios.get(constants.JSON_WS_URL + SERVICEMANAGER_PATH + SERVICEBROADCASTRULE_CTX + 'get-service-rules', {
     params: {
       serviceId: applicationId,
-      schoolId: schoolId
+      schoolId
     }
   }).then(response => response.data)
 }
@@ -97,8 +97,8 @@ function getApplicationBroadcastScope (applicationId, schoolId) {
 function updateBroadcastScope (serviceId, schoolId, rules) {
   return axios.post(constants.JSON_WS_URL + SERVICEMANAGER_PATH + SERVICEBROADCASTRULE_CTX + 'update-broadcast-rules',
     PentilaUtils.URL.params({
-      serviceId: serviceId,
-      schoolId: schoolId,
+      serviceId,
+      schoolId,
       rules: JSON.stringify(rules)
     })
   ).then(response => response.data)
@@ -107,20 +107,20 @@ function updateBroadcastScope (serviceId, schoolId, rules) {
 function updateBroadcast (serviceId, schoolId, isBroadcasted, serviceUrl) {
   return axios.post(constants.JSON_WS_URL + SERVICEMANAGER_PATH + SERVICEBROADCAST_CTX + 'update-broadcast',
     PentilaUtils.URL.params({
-      serviceId: serviceId,
-      schoolId: schoolId,
-      isBroadcasted: isBroadcasted,
-      serviceUrl: serviceUrl
+      serviceId,
+      schoolId,
+      isBroadcasted,
+      serviceUrl
     })
   ).then(response => response.data)
 }
 
-function exportApplicationUserList (schoolId, applicationId, role) {
+function exportApplicationUserList (schoolId, applicationId, roleName) {
   return axios.get(constants.JSON_WS_URL + SERVICEMANAGER_PATH + SERVICE_CTX + 'export', {
     params: {
       serviceId: applicationId,
-      schoolId: schoolId,
-      roleName: role
+      schoolId,
+      roleName
     }
   }).then(response => response.data)
 }

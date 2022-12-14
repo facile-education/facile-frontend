@@ -70,9 +70,9 @@ export const actions = {
         console.error(err)
       })
   },
-  exportApplicationUserList ({ state }, { school, role }) {
+  exportApplicationUserList ({ state }, { school, type }) {
     return applicationManagerService.exportApplicationUserList(school.schoolId,
-      state.selectedApplication.serviceId, role).then((data) => {
+      state.selectedApplication.serviceId, type).then((data) => {
       if (data.success) {
         return data.message
       }
@@ -184,7 +184,7 @@ export const actions = {
       })
   },
   updateURL ({ state, commit }, { school, applicationURL }) {
-    applicationManagerService.updateURL(state.selectedApplication.serviceId, school.schoolId, state.selectedApplication.isBroadcasted, applicationURL).then(
+    applicationManagerService.updateBroadcast(state.selectedApplication.serviceId, school.schoolId, state.selectedApplication.isBroadcasted, applicationURL).then(
       (data) => {
         if (data.success) {
           commit('updateApplication', { property: 'serviceUrl', value: applicationURL })
