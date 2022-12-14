@@ -7,7 +7,7 @@ const documentSpaceOptions = [
     title: i18n.global.t('Commons.new'),
     icon: icons.options.new,
     position: 0,
-    hasSeparator: true,
+    hasSeparator: false,
     subMenu: [
       {
         name: 'newFolder',
