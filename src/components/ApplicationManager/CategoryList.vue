@@ -39,7 +39,7 @@ export default {
 @import '@/design';
 
 .category {
-  padding: 10px;
+  margin-bottom: 30px;
 }
 
 .header {

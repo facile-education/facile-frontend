@@ -1,20 +1,22 @@
 <template>
   <NeroToolbar v-if="show">
+    <PentilaButton
+      v-if="isAdministrator"
+      class="create-button"
+      @click="onAddApplication"
+    >
+      <NeroIcon name="plus" />
+      NOUVEAU
+    </PentilaButton>
     <PentilaDropdown
       v-if="managedSchoolList"
       :model-value="selectedSchool"
       :list="managedSchoolList"
       display-field="schoolName"
+      class="school-dropdown"
       @update:modelValue="onSchoolSelect"
     />
     <PentilaSpinner v-else />
-    <PentilaButton
-      v-if="isAdministrator"
-      class="add-button"
-      @click="onAddApplication"
-    >
-      <NeroIcon name="plus" />
-    </PentilaButton>
   </NeroToolbar>
 </template>
 
@@ -70,7 +72,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.add-button {
+@import "@design";
+
+.create-button{
+  @extend %create-button;
+}
+
+.school-dropdown {
   margin-left: auto;
 }
 </style>
