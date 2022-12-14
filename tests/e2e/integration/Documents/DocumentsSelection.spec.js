@@ -1,9 +1,9 @@
 import { url } from '../../support/constants/documents'
 import { HEADMASTER } from '../../support/constants'
 
-const folderOptions = ['Renommer', 'Déplacer vers', 'Dupliquer vers', 'Télécharger', 'Supprimer', 'Détails']
-const fileOptions = ['Ouvrir', 'Renommer', 'Déplacer vers', 'Dupliquer vers', 'Télécharger', 'Supprimer', 'Détails']
-const multiSelectionOptions = ['Déplacer vers', 'Dupliquer vers', 'Supprimer']
+const folderOptions = ['Renommer', 'Déplacer', 'Dupliquer', 'Télécharger', 'Supprimer', 'Détails']
+const fileOptions = ['Ouvrir', 'Renommer', 'Déplacer', 'Dupliquer', 'Télécharger', 'Supprimer', 'Détails']
+const multiSelectionOptions = ['Déplacer', 'Dupliquer', 'Supprimer']
 
 const checkCurrentOptions = (optionsNames) => {
   cy.get('[data-test=current-options]').children().should('have.length', optionsNames.length)

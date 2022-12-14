@@ -50,7 +50,7 @@ describe('Move and duplicate', () => {
 
   it('duplicate one file', () => {
     cy.contains('[data-test=file]', 'createdNote.html').rightclick()
-    cy.get('[data-test="context-menu"]').contains('Dupliquer vers').click()
+    cy.get('[data-test="context-menu"]').contains('Dupliquer').click()
     cy.get('[data-test=file-picker-modal]').within(() => {
       cy.get('.folder').contains('createdFolder').click()
       cy.get('[data-test=submitButton]').click()
@@ -61,7 +61,7 @@ describe('Move and duplicate', () => {
     // re-duplicate for conflicts
     cy.visit(url + '/8040788')
     cy.contains('[data-test=file]', 'createdNote.html').rightclick()
-    cy.get('[data-test="context-menu"]').contains('Dupliquer vers').click()
+    cy.get('[data-test="context-menu"]').contains('Dupliquer').click()
     cy.get('[data-test=file-picker-modal]').within(() => {
       cy.get('.folder').contains('createdFolder').click()
       cy.get('[data-test=submitButton]').click()
@@ -86,7 +86,7 @@ describe('Move and duplicate', () => {
   it('duplicate many documents at once', () => {
     cy.contains('[data-test=folder]', 'createdFolder').click()
     cy.contains('[data-test=file]', 'createdNote.html').find('.selection-icon').click().rightclick()
-    cy.get('[data-test="context-menu"]').contains('Dupliquer vers').click()
+    cy.get('[data-test="context-menu"]').contains('Dupliquer').click()
     cy.get('[data-test=file-picker-modal]').within(() => {
       cy.get('[data-test=submitButton]').click() // duplicate in root folder
     }).should('not.exist')
@@ -102,7 +102,7 @@ describe('Move and duplicate', () => {
 
   it('move one file', () => {
     cy.contains('[data-test=file]', 'createdNote.html').rightclick()
-    cy.get('[data-test="context-menu"]').contains('Déplacer vers').click()
+    cy.get('[data-test="context-menu"]').contains('Déplacer').click()
     cy.get('[data-test=file-picker-modal]').within(() => {
       cy.get('.folder').contains('createdFolder').click()
       cy.get('[data-test=submitButton]').click()
@@ -126,7 +126,7 @@ describe('Move and duplicate', () => {
     cy.contains('[data-test=file]', 'createdNote').should('exist').rightclick()
 
     // Move it
-    cy.get('[data-test="context-menu"]').contains('Déplacer vers').click()
+    cy.get('[data-test="context-menu"]').contains('Déplacer').click()
     cy.get('[data-test=file-picker-modal]').within(() => {
       cy.get('.folder').contains('createdFolder').click()
       cy.get('[data-test=submitButton]').click()
