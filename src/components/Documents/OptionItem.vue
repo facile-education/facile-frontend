@@ -2,6 +2,7 @@
   <div class="wrapper">
     <PentilaButton
       v-if="isNew"
+      :class="{'phone': mq.phone}"
       class="create-button"
       @click="handleClick"
     >
@@ -47,6 +48,7 @@ import ContextMenu from '@components/ContextMenu/ContextMenu'
 export default {
   name: 'OptionItem',
   components: { NeroIcon, ContextMenu },
+  inject: ['mq'],
   props: {
     option: {
       type: Object,
@@ -106,6 +108,14 @@ export default {
 
 .wrapper {
   position: relative;
+  min-width: 70px;
+}
+
+.create-button {
+  &.phone {
+    width: 110px;
+    padding: 9px 10px;
+  }
 }
 
 .option-item {
