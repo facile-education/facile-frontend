@@ -5,7 +5,7 @@
       class="menu-header"
     >
       <img
-        src="@assets/menu/menu_messaging_black.svg"
+        src="@assets/icons/menus/menu_messaging.svg"
         alt=""
       >
       <h3 v-t="'Messaging.boxes'" />

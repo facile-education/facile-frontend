@@ -19,7 +19,7 @@
         v-if="displayFolderRootIcon"
         ref="docIcon"
         class="img-icon"
-        :data="require('@assets/documentIcons/icon-folder.svg')"
+        :data="require('@assets/icons/documents/icon-folder.svg')"
         type="image/svg+xml"
       />
 
