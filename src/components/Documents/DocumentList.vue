@@ -161,10 +161,11 @@ export default {
 
 <style lang="scss" scoped>
 .display-grid {
+  width: 100%;
+  overflow: auto;
   display: grid;
-  grid-template-columns: 200px auto;
   grid-gap: 20px;
-  grid-template-columns: repeat(auto-fill, 180px);
-  justify-content: space-between;
+  grid-template-columns: repeat(auto-fill, 200px);
+  justify-content: space-evenly;
 }
 </style>

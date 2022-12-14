@@ -199,7 +199,6 @@ export default {
   background-color: white;
   height: 180px;
   width: 180px;
-  margin: 0 20px 40px 20px;
 
   .icon-container {
     position: relative;
