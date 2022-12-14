@@ -203,6 +203,7 @@ export default {
 @import "@design";
 
  .context-menu {
+   font-weight: normal;
    position: fixed;
    z-index: $context-menu-z-index;
    display: flex;
