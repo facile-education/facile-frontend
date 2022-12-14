@@ -71,7 +71,6 @@ export default {
   overflow: auto;
   flex: 1;
   display: grid;
-  grid-template-columns: 326px auto;
   grid-gap: 20px;
   grid-template-columns: repeat(auto-fill, 285px);
   justify-content: space-evenly;
