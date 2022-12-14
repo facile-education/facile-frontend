@@ -1,1 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><defs><clipPath id="a"><path d="M24,0 L24,24 L0,24 L0,0 L24,0 Z"/></clipPath><clipPath id="b"><path d="M21.3333333,0 L21.3333333,12 L0,12 L0,0 L21.3333333,0 Z"/></clipPath></defs><g clip-path="url(#a)"><g clip-path="url(#a)"><polygon fill="#EB8D59" points="0 0 24 0 24 24 0 24 0 0"/></g><g clip-path="url(#b)" transform="translate(1.333 6.667)"><polygon fill="#FFF" points="0 0 21.333 0 21.333 12 0 12 0 0"/></g></g></svg>
+
+<svg width="30px" height="31px" viewBox="0 0 30 31" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <polygon id="path--mwfpxfja7-1" points="30 0 30 30 0 30 0 0"></polygon>
+        <polygon id="path--mwfpxfja7-3" points="30 0 30 34 0 34 0 0"></polygon>
+        <polygon id="path--mwfpxfja7-5" points="26.6666666 0 26.6666666 15 0 15 0 0"></polygon>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="odp" transform="translate(-0.000000, 0.007805)">
+            <mask id="mask--mwfpxfja7-2" fill="white">
+                <use xlink:href="#path--mwfpxfja7-1"></use>
+            </mask>
+            <g id="Path"></g>
+            <g id="Group" mask="url(#mask--mwfpxfja7-2)">
+                <g id="Clipped">
+                    <mask id="mask--mwfpxfja7-4" fill="white">
+                        <use xlink:href="#path--mwfpxfja7-3"></use>
+                    </mask>
+                    <g id="Path"></g>
+                    <polygon id="Path" fill="#EB8D59" fill-rule="nonzero" mask="url(#mask--mwfpxfja7-4)" points="0 0 30 0 30 34 0 34"></polygon>
+                </g>
+                <g id="Clipped" transform="translate(2.000000, 9.000000)">
+                    <mask id="mask--mwfpxfja7-6" fill="white">
+                        <use xlink:href="#path--mwfpxfja7-5"></use>
+                    </mask>
+                    <g id="Path"></g>
+                    <g id="Group" mask="url(#mask--mwfpxfja7-6)" fill="#FFFFFF" fill-rule="nonzero">
+                        <g transform="translate(-0.333750, -0.666250)" id="Path">
+                            <polygon points="0 0 26.66625 0 26.66625 15 0 15"></polygon>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
