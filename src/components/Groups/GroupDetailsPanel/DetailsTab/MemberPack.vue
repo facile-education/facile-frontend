@@ -69,7 +69,12 @@ export default {
   height: 30px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  &:hover {
+    cursor: pointer;
+  }
+  span {
+    margin-right: 20px;
+  }
 
   .collapse, .extend {
     width: 10px;

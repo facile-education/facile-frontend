@@ -124,7 +124,7 @@ export default {
         } else if (this.selectedGroup.isInstitutional) {
           return this.$t('institutionnal')
         } else {
-          return this.$t('community')
+          return ''
         }
       } else {
         return ''
@@ -264,7 +264,6 @@ export default {
   "activities": "Activités",
   "class": "Classe",
   "close": "Fermer les détails",
-  "community": "Communautaire",
   "delete": "Supprimer",
   "details": "Détails",
   "edit": "Modifier",
