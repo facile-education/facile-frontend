@@ -65,7 +65,7 @@ export default {
           }
         })
         if (!find) {
-          hiddenElements.push({ ...originalElem, title: originalElem.name, isHoverable: true })
+          hiddenElements.push({ ...originalElem, title: originalElem.name, isHoverable: originalElem.permissions.ADD_OBJECT })
         }
       })
       return hiddenElements
