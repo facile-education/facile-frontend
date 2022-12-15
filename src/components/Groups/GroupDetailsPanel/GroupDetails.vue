@@ -161,11 +161,13 @@ export default {
   border-left: 1px solid $color-border;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   max-width: 500px;
+  min-width: 396px;
   margin-left: 20px;
 
   &.phone {
     border: none;
     box-shadow: none;
+    min-width: 100px;
   }
 }
 
