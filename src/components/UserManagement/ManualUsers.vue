@@ -149,7 +149,6 @@ export default {
     },
     handleScroll (e) {
       const scroll = e.target
-      console.log('scroll', scroll)
       this.isScrollTopDisplayed = (scroll.scrollTop > 1000)
 
       if (scroll.scrollTop > this.currentScrollTop) { // if we go down

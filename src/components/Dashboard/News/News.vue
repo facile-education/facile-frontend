@@ -97,7 +97,6 @@ export default {
           if (data.success) {
             this.$store.dispatch('dashboard/setNewsDetails', { news: this.news, groups: data.broadcastedGroups, attachFiles: data.attachedFiles, doSetEditedNews: true }).then(
               () => {
-                console.log('start emit')
                 this.$emit('editNews')
               }
             )

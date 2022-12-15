@@ -52,11 +52,9 @@ export default {
   },
   methods: {
     openResource () {
-      console.log('open resource')
       window.open(this.resource.url)
     },
     toggleDetails () {
-      console.log('toggleDetails')
       this.flipped = !this.flipped
     }
   }

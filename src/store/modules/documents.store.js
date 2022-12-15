@@ -124,7 +124,6 @@ export const actions = {
     this.dispatch('documents/cleanSelectedEntities')
     commit('updateLastSelectedEntity', undefined)
     if (directory.isGroupDirectory) {
-      console.log('change directory to ', directory)
       this.dispatch('documents/updateGroupBreadcrumb', directory.id)
       this.dispatch('documents/getGroupEntities', directory.id)
     } else {

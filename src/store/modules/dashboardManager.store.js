@@ -53,7 +53,7 @@ export const actions = {
       },
       (err) => {
         // TODO toastr
-        console.log(err)
+        console.error(err)
       })
   },
   getSchoolWidgetList ({ commit }, school) {
@@ -65,7 +65,7 @@ export const actions = {
       },
       (err) => {
         // TODO toastr
-        console.log(err)
+        console.error(err)
       })
   },
   openEditionModal ({ commit }, editedWidget) {
@@ -84,7 +84,7 @@ export const actions = {
       },
       (err) => {
         // TODO toastr
-        console.log(err)
+        console.error(err)
       })
   }
 }

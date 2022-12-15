@@ -195,7 +195,6 @@ export default {
       })
     },
     askToConfirmFolderDeletion () {
-      console.log('confirm folder deletion')
       this.$store.dispatch('warningModal/addWarning', {
         text: this.$t('Messaging.confirmFolderDeletionWarning'),
         lastAction: { fct: this.deleteFolder }

@@ -73,7 +73,7 @@ export default {
         // Open it
         this.$store.dispatch('documents/openFile', this.file)
       } else {
-        console.log('there is already an open file!')
+        console.error('there is already an open file!')
       }
     },
     dispatchEvent (file) {

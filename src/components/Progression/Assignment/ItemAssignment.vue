@@ -188,7 +188,6 @@ export default {
       this.isItemPreviewDisplayed = !this.isItemPreviewDisplayed
     },
     editSessionSpecificContent (assignment) {
-      console.log('edit content for assignment=', assignment)
       this.$store.dispatch('progression/setAssignedItem', this.item)
       this.$store.dispatch('progression/setEditedAssignment', assignment)
       this.$store.dispatch('progression/setSessionContentEditMode', true)

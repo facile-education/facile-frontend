@@ -264,7 +264,6 @@ export default {
           if (data.success) {
             this.teacherList = data.teachers
             // Select the group of the created session, in the main panel
-            console.log('selected group = ', this.selectedGroup)
             this.$store.dispatch('horaires/selectGroup', this.selectedGroup)
           }
         })

@@ -44,7 +44,7 @@ export const actions = {
       },
       (err) => {
         // TODO toastr
-        console.log(err)
+        console.error(err)
       })
   },
   toggleMobileMenu ({ commit }) {

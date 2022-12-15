@@ -120,7 +120,6 @@ export default {
       this.$store.dispatch('progression/setEditedItem', undefined)
     },
     saveContent () {
-      console.log('About to save specific content')
       if (this.assignment.homeworkId !== 0) {
         this.$store.dispatch('progression/saveHomeworkSpecificItem', { homeworkId: this.assignment.homeworkId })
       } else {

@@ -258,7 +258,6 @@ export default {
       this.expirationDate = this.news.expirationDate
       this.groups = this.news.groups
       this.attachFiles = this.news.attachFiles
-      console.log('editedNews is ', this.news)
     } else {
       this.parutionDate = dayjs()
       this.expirationDate = dayjs().add(1, 'month')
@@ -310,14 +309,12 @@ export default {
     onGroupPickerSelectedGroups (selectedGroups) {
       this.groups = selectedGroups
       this.isGroupPickerDisplayed = false
-      console.log('selected groups are ', this.groups)
     },
     closeFilePicker () {
       this.isFilePickerDisplayed = false
     },
     attachNewFiles (selectedFiles) {
       this.attachFiles.push(selectedFiles)
-      console.log('this.attachFiles=', this.attachFiles)
     },
     deleteGroup (group) {
       const groupIndex = this.groups.map(group => group.groupId).indexOf(group.groupId)
