@@ -1,5 +1,8 @@
 <template>
-  <div class="placeholder">
+  <div
+    class="placeholder"
+    :class="{'phone': mq.phone}"
+  >
     <div class="icon-container">
       <img
         v-if="isLoadDocumentsError"
@@ -86,6 +89,10 @@ export default {
   flex-direction: column;
   align-items: center;
   font-size: 1.25em;
+
+  &.phone {
+    height: calc(100% - #{$doc-breadcrumb-mobile-size});
+  }
 }
 
 .icon-container {
