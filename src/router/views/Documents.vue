@@ -554,6 +554,7 @@ export default {
     display: flex;
 
     .spinner {
+      position: absolute;
       z-index: 1;
     }
 

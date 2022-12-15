@@ -63,6 +63,15 @@ export default {
       }
     }
   },
+  watch: {
+    status: {
+      handler (value) {
+        if (value === 'uploading') {
+          this.$el.scrollIntoView({ behavior: 'smooth', block: 'end' })
+        }
+      }
+    }
+  },
   created () {
     this.counter = setInterval(() => {
       this.count++
