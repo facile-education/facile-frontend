@@ -2,7 +2,7 @@
   <div
     ref="document"
     class="list-document"
-    :class="{'selected': isSelected, 'hovering': hoverSelection, 'phone-list-document': mq.phone || mq.tablet, 'last': isLast}"
+    :class="{'selected': isSelected, 'hovering': !mq.phone && !mq.tablet && hoverSelection, 'phone-list-document': mq.phone || mq.tablet, 'last': isLast}"
     tabindex="-1"
     @keypress.enter="triggerAction"
     @click.ctrl.exact="ctrlSelect"
