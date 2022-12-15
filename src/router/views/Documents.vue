@@ -544,6 +544,7 @@ export default {
   }
 
   .breadCrumb {
+    height: $doc-breadcrumb-size;
     padding-left: 20px;
     padding-right: 20px;
   }
@@ -575,7 +576,16 @@ export default {
   }
 
   &.mobile {
+    .currents-options {
+      height: $doc-currents-mobile-options-height;
+    }
+
+    .breadCrumb {
+      height: $doc-breadcrumb-mobile-size;
+    }
+
     .body {
+      height: calc(100% - #{$doc-currents-mobile-options-height} - #{$doc-breadcrumb-mobile-size});
       .document-details {
         width: 100%;
       }

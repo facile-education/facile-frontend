@@ -96,7 +96,6 @@ export default {
 @import '@design';
 
 .breadcrumb {
-  height: $doc-breadcrumb-size;
   display: flex;
   align-items: center;
   border-bottom: 1px solid $color-border;
