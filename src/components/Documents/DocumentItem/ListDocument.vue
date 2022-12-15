@@ -321,7 +321,7 @@ export default {
 
         .size-label, .date-label{
           letter-spacing: 0;
-          line-height: 16px;
+          line-height: 0.650em;
           margin-right: 10px;
         }
       }
@@ -399,7 +399,7 @@ export default {
 }
 
 .phone-list-document {
-  height: 74px;
+  height: 51px;
 
   .selection-icon {
     justify-content: center;
