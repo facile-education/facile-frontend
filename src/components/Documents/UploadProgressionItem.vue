@@ -50,12 +50,12 @@ export default {
       return this.$store.state.currentActions.listUploadedFiles
     },
     status () {
-      if (this.currentUploadingFile && this.document.name === this.currentUploadingFile.name) {
+      if (this.currentUploadingFile && this.document.name.split('/').at(-1) === this.currentUploadingFile.name.split('/').at(-1)) {
         return 'uploading'
       } else {
         let find = false
         this.listUploadedFiles.forEach((uploadedFile) => {
-          if (uploadedFile.name === this.document.name) {
+          if (uploadedFile.name.split('/').at(-1) === this.document.name.split('/').at(-1)) {
             find = true
           }
         })
