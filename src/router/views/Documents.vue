@@ -208,7 +208,6 @@ export default {
             this.$store.dispatch('documents/goInDocumentRoot')
           }
         } else if (this.$route.name === 'GroupDocuments') {
-          console.log('group doc params=', this.$route.params)
           if (this.$route.params.folderId) {
             this.$store.dispatch('documents/changeDirectory', { id: this.$route.params.folderId, isGroupDirectory: true })
           } else if (this.$route.params.fileId) {

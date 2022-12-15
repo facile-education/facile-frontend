@@ -50,7 +50,6 @@ const isVersionNameValid = (str) => {
 const isJsonContentValid = (str) => {
   try {
     const json = JSON.parse(str)
-    console.log(json)
     if (json.news === undefined || json.others === undefined) {
       return false
     }
@@ -89,7 +88,6 @@ export default {
       return this.$store.state.information.createVersionMessage
     },
     formErrorList () {
-      console.log(this.v$.form.versionNumber.$invalid, this.v$.form.versionNumber.$dirty, this.v$.form.versionNumber.isVersionNameValid.$invalid)
       return {
         // Ugly
         versionNumber: (this.v$.form.versionNumber.$invalid && this.v$.form.versionNumber.$dirty)

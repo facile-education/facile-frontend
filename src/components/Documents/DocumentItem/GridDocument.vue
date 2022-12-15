@@ -170,19 +170,15 @@ export default {
       this.$emit('select')
     },
     triggerAction () {
-      console.log('grid trigger action')
       this.$emit('triggerAction')
     },
     select () {
-      console.log('select')
       this.$emit('select')
     },
     ctrlSelect () {
-      console.log('ctrl select')
       this.$emit('ctrlSelect')
     },
     shiftSelect () {
-      console.log('shift select')
       this.$emit('shiftSelect')
     }
   }

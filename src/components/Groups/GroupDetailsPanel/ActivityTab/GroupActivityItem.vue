@@ -94,7 +94,6 @@ export default {
   },
   methods: {
     clickAttached () {
-      console.log('click attached', this.activityType, this.activity.fileId, this.activity.folderId)
       if (this.activityType === 'file' && this.activity.type !== activityTypes.TYPE_FILE_DELETION) {
         // Properties id (as string) and name are needed by FileDisplay component
         this.$store.dispatch('documents/openFile', { ...this.activity, id: this.activity.fileId + '', name: this.activity.fileName, readOnly: true })

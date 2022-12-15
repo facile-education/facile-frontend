@@ -116,7 +116,6 @@ export default {
       this.$emit('shiftSelect', { id: file.id, name: file.name })
     },
     changeDir () {
-      console.log('change dir')
       if (this.folder.isGroupDirectory) {
         this.$router.push({ name: 'GroupDocuments', params: { folderId: this.folder.id } })
         if (this.folder.isGroupRootFolder || this.folder.id === 'collaborative') {

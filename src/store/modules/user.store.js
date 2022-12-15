@@ -141,7 +141,7 @@ export const actions = {
       },
       (err) => {
         // TODO toastr
-        console.log(err)
+        console.error(err)
       })
   },
   saveInterfacePreferences ({ commit }, preferences) {
@@ -153,7 +153,7 @@ export const actions = {
       },
       (err) => {
         // TODO toastr
-        console.log(err)
+        console.error(err)
       })
   },
   saveProfilePicture ({ commit }, formData) {
@@ -165,7 +165,7 @@ export const actions = {
       },
       (err) => {
         // TODO toastr
-        console.log(err)
+        console.error(err)
       })
   }
 }

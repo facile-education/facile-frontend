@@ -235,7 +235,6 @@ export default {
       this.$emit('editedHomework', this.homework)
     },
     onCloseStudentModal (students, isWholeClass) {
-      console.log('on student change isWholeClass=', isWholeClass, ', students=', students)
       this.isStudentsListDisplayed = false
       this.homework.isWholeClass = isWholeClass
       // If specific students, keep the selected ones

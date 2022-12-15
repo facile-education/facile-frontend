@@ -176,13 +176,13 @@ export const mutations = {
     // Check if new session was initially affected or not
     const assignedIndex = state.assignedItem.assignments.map(assignment => assignment.sessionId).indexOf(payload.sessionId)
     if (assignedIndex === -1) {
-      console.log('added session ' + payload.sessionId + ' to the toAdd list')
+      // console.log('added session ' + payload.sessionId + ' to the toAdd list')
       state.addedAssignedSessions.push(payload)
     }
     // Remove it from the removed list if needed
     const removedIndex = state.removedAssignedSessions.map(session => session.sessionId).indexOf(payload.sessionId)
     if (removedIndex !== -1) {
-      console.log('removed session ' + payload.sessionId + ' from the toRemove list')
+      // console.log('removed session ' + payload.sessionId + ' from the toRemove list')
       state.removedAssignedSessions.splice(removedIndex, 1)
     }
   },
@@ -190,13 +190,13 @@ export const mutations = {
     // Check if removed sessionId was initially affected or not
     const assignedIndex = state.assignedItem.assignments.map(assignment => assignment.sessionId).indexOf(payload.sessionId)
     if (assignedIndex !== -1) {
-      console.log('added session ' + payload.sessionId + ' to the toRemove list')
+      // console.log('added session ' + payload.sessionId + ' to the toRemove list')
       state.removedAssignedSessions.push(payload)
     }
     // Remove it from the added list if needed
     const addedIndex = state.addedAssignedSessions.map(session => session.sessionId).indexOf(payload.sessionId)
     if (addedIndex !== -1) {
-      console.log('removed session ' + payload.sessionId + ' from the toAdd list')
+      // console.log('removed session ' + payload.sessionId + ' from the toAdd list')
       state.addedAssignedSessions.splice(addedIndex, 1)
     }
   },

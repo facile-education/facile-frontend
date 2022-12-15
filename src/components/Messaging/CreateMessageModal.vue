@@ -301,7 +301,6 @@ export default {
       }, 300)
     },
     getCompletion (query) {
-      console.log('get completion with query: ' + query)
       messageService.getUsersCompletion(query).then((data) => {
         if (data.success) {
           this.autocompleteItems = data.results

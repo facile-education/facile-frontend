@@ -137,18 +137,13 @@ export default {
   },
   methods: {
     getItemFolder (item) {
-      console.log(item.name)
       this.currentProgressionSections.forEach((section) => {
-        console.log('section', section.name)
         // console.log(section.subSections)
         if (section.folderId === item.folderId) {
-          console.log('return section')
           return section
         } else {
           section.subSections.forEach((subSection) => {
-            console.log('subSection', subSection.name)
             if (subSection.folderId === item.folderId) {
-              console.log('return subsection')
               return subSection
             }
           })

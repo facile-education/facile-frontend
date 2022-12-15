@@ -178,7 +178,6 @@ export default {
     // Pre-select him and display sessions if user is a teacher
     if (this.$store.state.user.isTeacher) {
       this.$store.dispatch('horaires/selectUser', this.$store.state.user)
-      console.log('adding user ', this.$store.state.user)
       this.tagsList.push(this.$store.state.user)
     }
     this.$store.dispatch('horaires/getSessionList')

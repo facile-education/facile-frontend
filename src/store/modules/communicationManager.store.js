@@ -33,7 +33,7 @@ export const actions = {
     },
     (err) => {
       // TODO toastr
-      console.log(err)
+      console.error(err)
     })
   },
   getSchoolInternalCommunicationRights ({ commit }, { schoolId }) {
@@ -45,7 +45,7 @@ export const actions = {
     },
     (err) => {
       // TODO toastr
-      console.log(err)
+      console.error(err)
     })
   },
   updateSchoolInternalCommunicationRights ({ commit }, { schoolId, rightList }) {
@@ -57,7 +57,7 @@ export const actions = {
     },
     (err) => {
       // TODO toastr
-      console.log(err)
+      console.error(err)
     })
   },
   getSchoolExternalCommunicationRights ({ commit }, { schoolId }) {
@@ -69,7 +69,7 @@ export const actions = {
     },
     (err) => {
       // TODO toastr
-      console.log(err)
+      console.error(err)
     })
   },
   updateSchoolExternalCommunicationRights ({ commit }, { schoolId, rightList }) {
@@ -81,7 +81,7 @@ export const actions = {
     },
     (err) => {
       // TODO toastr
-      console.log(err)
+      console.error(err)
     })
   }
 }
