@@ -31,7 +31,7 @@
         :to="documentRoute"
       >
         <img
-          src="/pentilaBanner-theme/images/icon/menu/icon-nav-documents.svg"
+          src="@assets/documents.svg"
           alt="image"
         >
         <span v-t="'accessToDocuments'" />
@@ -229,11 +229,13 @@ export default {
 
   img {
     margin-right: 20px;
+    height: 30px;
+    width: 30px;
   }
 }
 
 .members-details {
-  margin-left: 75px;
+  margin-left: 60px;
 }
 </style>
 

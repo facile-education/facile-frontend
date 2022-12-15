@@ -66,9 +66,10 @@
       <p v-t="'disabledSpace'" />
       <button
         v-if="hasEditionRights"
+        class="activate-button button"
         @click.stop="extendGroup"
       >
-        {{ $t('reactivate') + group.groupName }}
+        {{ $t('reactivate') }}
       </button>
     </div>
   </div>
@@ -118,7 +119,7 @@ export default {
       } else if (this.group.isInstitutional) {
         return this.$t('institutional')
       } else {
-        return this.$t('community')
+        return ''
       }
     },
     hasEditionRights () {
@@ -147,6 +148,7 @@ export default {
         this.isLoading = false
         if (data.success) {
           this.$store.dispatch('groups/getGroupList', this.$store.state.groups.currentFilter)
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('extension-success'), type: 'info' })
         } else {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
         }
@@ -260,8 +262,6 @@ export default {
   position: absolute;
   height: 100%;
   width: 100%;
-  top: 0;
-  left: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -270,33 +270,39 @@ export default {
   cursor: default;
 
   p {
-    color: red;
+    font-weight: 600;
+    color: rgba(238, 139, 25, 0.637);
   }
 
-  button {
+  .activate-button {
+    float: left;
     cursor: pointer;
+    border: 1px solid transparent;
     background-color: transparent;
+    color: rgb(79, 79, 218);
+    font-weight: 600;
     border: none;
     &:hover {
-      font-weight: 600;
+      border: 1px solid grey;
     }
   }
+
 }
 </style>
 
 <i18n locale="fr">
 {
   "class": "Classe",
-  "community": "Communautaire",
   "delete": "Supprimer",
-  "disabledSpace": "Espace désactivé avant suppression",
+  "disabledSpace": "Désactivé avant suppression",
   "edit": "Modifier",
   "institutional": "Institutionnel",
   "members": "Aucun membre | {count} membre | {count} membres",
   "pedagogical": "Pédagogique",
-  "reactivate": "Je souhaite réactiver ",
+  "reactivate": "Réactiver",
   "school": "Établissement",
   "subject": "Discipline",
-  "warning": "La suppression de ce groupe est définitive."
+  "warning": "La suppression de ce groupe est définitive.",
+  "extension-success": "Groupe réactivé"
 }
 </i18n>

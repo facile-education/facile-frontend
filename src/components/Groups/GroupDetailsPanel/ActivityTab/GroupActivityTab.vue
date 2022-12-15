@@ -1,14 +1,12 @@
 <template>
   <div class="activity-tab">
-    <div class="header">
-      <img
-        src="@assets/icon_news.svg"
-        alt="icon_commu"
-      >
-      <span v-t="'activity-feed'" />
-    </div>
-
+    <p
+      v-if="activityList.length === 0"
+      v-t="('noActivity')"
+      class="placeholder"
+    />
     <div
+      v-else
       ref="scroll"
       class="activities"
       @scroll="handleScroll"
@@ -70,7 +68,7 @@ export default {
     },
     getGroupDocumentHistory () {
       this.activitiesLoading = true
-      getSpecificGroupActivities(this.group.groupId, this.maxDate.format('YYYY-MM-DD'), nbActivityPerPage, true, false, true, false, false, false, false).then((data) => {
+      getSpecificGroupActivities(this.group.groupId, this.maxDate.format('YYYY-MM-DD'), nbActivityPerPage, true, false, true, false, false, false, false, false).then((data) => {
         this.activitiesLoading = false
         if (data.success) {
           this.activityList = this.activityList.concat(data.activities)
@@ -118,20 +116,7 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 0 20px;
-
-  .header {
-    display: flex;
-    align-items: center;
-    font-weight: 600;
-    border-bottom: 1px solid $color-border;
-
-    img {
-      margin-right: 10px;
-      height: 40px;
-      width: 40px;
-    }
-  }
+  padding: 3px;
 
   .activities {
     position: relative;
@@ -140,10 +125,16 @@ export default {
   }
 }
 
+.placeholder {
+  margin-top: 50px;
+  text-align: center;
+}
+
 </style>
 
 <i18n locale="fr">
 {
-  "activity-feed": "Fil d'activité"
+  "activity-feed": "Fil d'activité",
+  "noActivity": "Aucune activité dans ce groupe"
 }
 </i18n>

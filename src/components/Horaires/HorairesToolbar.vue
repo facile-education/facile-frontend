@@ -90,6 +90,7 @@
 
 <script>
 import dayjs from 'dayjs'
+import PentilaUtils from 'pentila-utils'
 
 import NeroToolbar from '@/components/Nero/NeroToolbar'
 import NeroIcon from '@/components/Nero/NeroIcon'
@@ -178,7 +179,12 @@ export default {
     // Pre-select him and display sessions if user is a teacher
     if (this.$store.state.user.isTeacher) {
       this.$store.dispatch('horaires/selectUser', this.$store.state.user)
-      this.tagsList.push(this.$store.state.user)
+
+      // Add displayName
+      const user = PentilaUtils.JSON.deepCopy(this.$store.state.user)
+      user.displayName = this.$store.state.user.firstName + ' ' + this.$store.state.user.lastName
+      console.log('adding user ', user)
+      this.tagsList.push(user)
     }
     this.$store.dispatch('horaires/getSessionList')
   },

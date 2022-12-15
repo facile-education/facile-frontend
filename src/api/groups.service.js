@@ -97,7 +97,7 @@ function getGroupHistory (groupId, maxDate, nbResults) {
   }).then(response => response.data)
 }
 
-function getSpecificGroupActivities (groupId, maxDate, nbResults, allHistory, containNews, containDocs, containMembership, containPendingFirings, containFirings, containHomework) {
+function getSpecificGroupActivities (groupId, maxDate, nbResults, allHistory, containNews, containDocs, containMembership, containPendingFirings, containFirings, containHomework, containSessions) {
   return axios.get(constants.JSON_WS_URL + GROUP_PATH + GROUP_CTX + 'get-specific-group-activities', {
     params: {
       groupId: groupId,
@@ -109,7 +109,8 @@ function getSpecificGroupActivities (groupId, maxDate, nbResults, allHistory, co
       containMembership: containMembership,
       containPendingFirings: containPendingFirings,
       containFirings: containFirings,
-      containHomework: containHomework
+      containHomework: containHomework,
+      containSessions: containSessions
     }
   }).then(response => response.data)
 }

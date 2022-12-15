@@ -1,24 +1,29 @@
 <template>
   <div class="activity">
-    <div class="left-part">
+    <div class="icon">
       <img
         :src="computedIcon"
         alt=""
       >
-      <div class="activity-description">
-        <span v-html="content" />
-        <a
-          v-if="(activityType === 'file' || activityType === 'folder') && activity.type != 4 && activity.type != 8"
-          href="javascript:void(0);"
-          @click="clickAttached"
-        >
-          {{ activity.target }}
-        </a>
-      </div>
     </div>
-
-    <div class="date">
-      {{ formattedDate }}
+    <div class="activity-description">
+      <div class="date-author">
+        <span class="date">
+          {{ formattedDate }} - {{ activity.author }}
+        </span>
+      </div>
+      <span
+        class="description"
+        v-html="content"
+      />
+      <a
+        v-if="(activityType === 'file' || activityType === 'folder') && activity.type != 4 && activity.type != 8"
+        class="description"
+        href="javascript:void(0);"
+        @click="clickAttached"
+      >
+        {{ activity.target }}
+      </a>
     </div>
   </div>
 </template>
@@ -47,8 +52,14 @@ export default {
         return 'membership'
       } else if (this.activity.type < 13) {
         return 'schoollife'
-      } else {
+      } else if (this.activity.type === 13) {
         return 'news'
+      } else if (this.activity.type === 14) {
+        return 'homework'
+      } else if (this.activity.type === 15) {
+        return 'session'
+      } else {
+        return 'other'
       }
     },
     content () {
@@ -56,7 +67,7 @@ export default {
 
       activityTypes.forEach(activityType => {
         if (this.activity.type === activityType.value) {
-          content = this.$t(activityType.key, { author: this.activity.author, target: this.activity.target })
+          content = this.$t(activityType.key, { target: this.activity.target })
         }
       })
       return content
@@ -87,8 +98,12 @@ export default {
       } else if (this.activityType === 'news') {
         // TODO
         return require('@assets/icon_news.svg')
-      } else {
+      } else if (this.activityType === 'homework') {
         return require('@assets/devoir.svg')
+      } else if (this.activityType === 'session') {
+        return require('@assets/seance.svg')
+      } else {
+        return require('@assets/icon_news.svg')
       }
     }
   },
@@ -109,9 +124,9 @@ export default {
 @import "@design";
 
 .activity {
-  margin-top: 15px;
+  margin-top: 8px;
   padding: 10px;
-  height: 75px;
+  height: 60px;
   width: 100%;
   border-radius: 6px;
   border: 1px solid $color-border;
@@ -119,49 +134,61 @@ export default {
   justify-content: space-between;
 }
 
-.left-part {
+.icon {
   display: flex;
   align-items: center;
-  width: 77%;
+  width: 50px;
 
   img {
     margin-right: 10px;
-    width: 25px;
+    width: 40px;
+  }
+}
+.activity-description {
+  margin: auto;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  a {
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
 
-.activity-description a {
-  cursor: pointer;
-
-  &:hover {
-    text-decoration: underline;
-  }
+.date-author {
+  font-weight: 600;
 }
 
+.description {
+  font-size: 0.8rem;
+}
 .date {
   font-size: 0.925rem;
-  width: 23%;
-  text-align: right;
 }
 </style>
 
 <i18n locale="fr">
 {
-  "TYPE_FILE_CREATION": "<b>{author}</b> a partagé le fichier ",
-  "TYPE_FILE_MODIFICATION": "<b>{author}</b> a modifié le fichier ",
-  "TYPE_FILE_MOVE": "<b>{author}</b> a déplacé le fichier ",
-  "TYPE_FILE_DELETION": "<b>{author}</b> a supprimé le fichier {target}",
-  "TYPE_FOLDER_CREATION": "<b>{author}</b> a partagé le dossier ",
-  "TYPE_FOLDER_MODIFICATION": "<b>{author}</b> a renommé le dossier ",
-  "TYPE_FOLDER_MOVE": "<b>{author}</b> a déplacé le dossier ",
-  "TYPE_FOLDER_DELETION": "<b>{author}</b> a supprimé le dossier {target}",
-  "TYPE_ADD_MEMBERSHIP": "<b>{author}</b> a inscrit <b>{target}</b> dans l'espace",
-  "TYPE_REMOVE_MEMBERSHIP": "<b>{author}</b> a supprimé <b>{target}</b> de l'espace",
-  "TYPE_PENDING_RENVOI": "<b>{author}</b> a renvoyé (pending) <b>{target}</b>",
-  "TYPE_SCHOOL_RENVOI": "<b>{author}</b> a renvoyé <b>{target}</b>",
-  "TYPE_NEWS": "<b>{author}</b> a diffusé {target}",
-  "TYPE_HOMEWORK": "<b>{author}</b> a donné un devoir à <b>{target}</b>",
-  "TYPE_SESSION": "<b>{author}</b> TODO <b>{target}</b>",
-  "Unknown" : "Activité inconnue"
+  "TYPE_FILE_CREATION": "a partagé le fichier ",
+  "TYPE_FILE_MODIFICATION": "a modifié le fichier ",
+  "TYPE_FILE_MOVE": "a déplacé le fichier ",
+  "TYPE_FILE_DELETION": "a supprimé le fichier {target}",
+  "TYPE_FOLDER_CREATION": "a partagé le dossier ",
+  "TYPE_FOLDER_MODIFICATION": "a renommé le dossier ",
+  "TYPE_FOLDER_MOVE": "a déplacé le dossier ",
+  "TYPE_FOLDER_DELETION": "a supprimé le dossier {target}",
+  "TYPE_ADD_MEMBERSHIP": "a inscrit <b>{target}</b> dans l'espace",
+  "TYPE_REMOVE_MEMBERSHIP": "a supprimé <b>{target}</b> de l'espace",
+  "TYPE_PENDING_RENVOI": "a renvoyé (pending) <b>{target}</b>",
+  "TYPE_SCHOOL_RENVOI": "a renvoyé <b>{target}</b>",
+  "TYPE_NEWS": "a diffusé {target}",
+  "TYPE_HOMEWORK": "a donné un devoir à <b>{target}</b>",
+  "TYPE_SESSION": "a renseigné le contenu de la séance <b>{target}</b>",
+  "Unknown" : "Activité inconnue",
+  "all": "tous",
+  "students": "élèves"
 }
 </i18n>

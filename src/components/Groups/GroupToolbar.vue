@@ -121,7 +121,7 @@ export default {
 <i18n locale="fr">
 {
   "add": "NOUVEAU",
-  "community": "Communautaire",
+  "community": "Personnel",
   "institutional": "Institutionnel",
   "pedagogical": "Pédagogique",
   "SearchPlaceholder": "Filtrer par nom",

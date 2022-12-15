@@ -337,17 +337,21 @@ export default {
     submitChanges () {
       if (this.editedGroup && this.editedGroup.groupId > 0) {
         // Update
+        const message = this.$t('edition-success')
         editCommunity(this.group.groupId, this.group.groupName, this.group.description, this.group.isPedagogical, this.groupMembers, this.group.color).then((data) => {
           if (data.success) {
             this.$store.dispatch('groups/getGroupList', this.$store.state.groups.currentFilter)
+            this.$store.dispatch('popups/pushPopup', { message, type: 'info' })
             this.closeModal()
           }
         })
       } else {
         // Creation
+        const message = this.$t('creation-success')
         createCommunity(this.group.groupName, this.group.description, this.group.isPedagogical, this.groupMembers, this.group.color).then((data) => {
           if (data.success) {
             this.$store.dispatch('groups/getGroupList', this.$store.state.groups.currentFilter)
+            this.$store.dispatch('popups/pushPopup', { message, type: 'info' })
             this.closeModal()
           }
         })
@@ -471,6 +475,8 @@ hr {
   "profile": "Profil",
   "school": "Établissement",
   "searchPlaceholder": "Rechercher par nom",
-  "admin": "Administrateur"
+  "admin": "Administrateur",
+  "creation-success": "Groupe créé",
+  "edition-success": "Groupe modifié"
 }
 </i18n>
