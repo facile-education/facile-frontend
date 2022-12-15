@@ -58,17 +58,16 @@ export default {
       return this.warning.lastAction
     }
   },
+  created () {
+    this.$store.dispatch('misc/incrementModalCount')
+  },
   methods: {
-    pressEnter (e) {
-      console.log('press enter')
-      e.preventDefault()
-      this.forceLastAction()
-    },
     forceLastAction () {
       this.lastAction.fct.apply(this, this.lastAction.params)
       this.onClose()
     },
     onClose () {
+      this.$store.dispatch('misc/decreaseModalCount')
       this.$store.dispatch('warningModal/removeFirstWarning')
     }
   }

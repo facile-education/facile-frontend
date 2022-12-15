@@ -211,7 +211,9 @@ export default {
   },
   methods: {
     triggerAction () {
-      this.$emit('triggerAction')
+      if (!this.isModalOpen) {
+        this.$emit('triggerAction')
+      }
     },
     select () {
       this.$emit('select')
