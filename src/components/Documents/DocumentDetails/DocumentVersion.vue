@@ -44,7 +44,7 @@
       v-else
       class="options"
     >
-      <span
+      <PentilaButton
         class="bottom-option"
         data-test="view-button"
         @click="viewVersion"
@@ -54,9 +54,8 @@
           alt=""
         >
         {{ $t('Documents.documentDetails.viewVersion') }}
-
-      </span>
-      <span
+      </PentilaButton>
+      <PentilaButton
         v-t="('Documents.documentDetails.restoreVersion')"
         class="bottom-option"
         data-test="restore-button"
@@ -171,9 +170,12 @@ export default {
       font-size: 14px;
       margin-left: 10px;
       font-weight: 500;
+      height: 25px;
+      display: flex;
+      align-items: center;
 
-      &:hover {
-        color: black;
+      img {
+        margin-right: 5px;
       }
     }
   }
