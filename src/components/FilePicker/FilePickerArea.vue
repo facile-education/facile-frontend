@@ -165,7 +165,7 @@ export default {
   background-color: white;
   z-index: $popup-z-index;
   position: absolute;
-  bottom: 0;
+  bottom: 1px;
   right: 20px;
   flex-direction: column;
   max-width: 100%;
@@ -175,7 +175,6 @@ export default {
   }
 
   &.phone {
-    bottom: 0;
     right: 50%;
     transform: translate(50%, 0);
 
