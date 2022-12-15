@@ -2,6 +2,7 @@
   <div
     ref="optionsContainer"
     class="current-options"
+    :class="{'phone': mq.phone}"
     data-test="current-options"
   >
     <OptionItem
@@ -26,6 +27,7 @@ import HiddenItems from '@components/Base/HiddenItems'
 export default {
   name: 'Options',
   components: { HiddenItems, OptionItem },
+  inject: ['mq'],
   props: {
     options: {
       type: Array,
@@ -45,14 +47,29 @@ export default {
     options (value) {
       this.visibleOptions = [...value]
       this.hiddenOptions = []
+      if (this.mq.phone) {
+        if (this.visibleOptions && this.visibleOptions[0].name === 'new') {
+          this.hiddenOptions = this.visibleOptions.slice(1, -1)
+          this.visibleOptions = [this.visibleOptions[0]]
+        }
+      }
     }
   },
   mounted () {
     this.getWidth()
-    window.addEventListener('resize', this.getWidth)
+    if (this.mq.phone) {
+      if (this.visibleOptions && this.visibleOptions[0].name === 'new') {
+        this.hiddenOptions = this.visibleOptions.slice(1, -1)
+        this.visibleOptions = [this.visibleOptions[0]]
+      }
+    } else {
+      window.addEventListener('resize', this.getWidth)
+    }
   },
   unmounted () {
-    window.removeEventListener('resize', this.getWidth)
+    if (!this.mq.phone) {
+      window.removeEventListener('resize', this.getWidth)
+    }
   },
   methods: {
     getWidth () {
@@ -62,9 +79,11 @@ export default {
       }
     },
     addOptionSize (size, index) {
-      this.optionsWidthArray[index] = size
-      if (this.optionsWidthArray.length === this.options.length && this.width > 0) {
-        this.computeVisibleOptions()
+      if (!this.mq.phone) {
+        this.optionsWidthArray[index] = size
+        if (this.optionsWidthArray.length === this.options.length && this.width > 0) {
+          this.computeVisibleOptions()
+        }
       }
     },
     computeVisibleOptions () {
@@ -96,9 +115,14 @@ export default {
 .current-options {
   display: flex;
   padding-left: 20px;
+  padding-right: 10px;
   align-items: center;
   flex-wrap: wrap;
   overflow: visible;
+
+  &.phone {
+    justify-content: space-between;
+  }
 }
 
 </style>
