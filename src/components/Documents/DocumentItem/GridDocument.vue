@@ -4,6 +4,7 @@
     class="grid-document"
     :class="{'phone-list-document': mq.phone || mq.tablet}"
     tabindex="-1"
+    :title="document.name"
     @keypress.enter="triggerAction"
     @click.ctrl.exact="ctrlSelect"
     @click.meta.exact="ctrlSelect"
