@@ -348,7 +348,7 @@ export default {
   width: 100%;
   border-radius: 0;
   margin-right: 0;
-  padding: 0 10px;
+  padding: 0;
 
   .name {
     margin: auto;
