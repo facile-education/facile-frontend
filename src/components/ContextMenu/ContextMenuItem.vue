@@ -219,6 +219,7 @@ export default {
   align-items: center;
   cursor: pointer;
   height: 54px;
+  padding: 0 20px;
 
   .title {
     margin-top: 5px;

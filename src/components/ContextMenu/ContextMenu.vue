@@ -209,7 +209,7 @@ export default {
    display: flex;
    flex-direction: column;
    width: 300px;
-   padding: 0 20px;
+   padding: 0;
    margin: 0;
    list-style: none;
    background: white;
