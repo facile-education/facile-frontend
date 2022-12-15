@@ -201,7 +201,6 @@ export default {
     margin-left: auto;
     margin-right: auto;
     height: 48px;
-    width: 130px;
 }
 
 </style>
