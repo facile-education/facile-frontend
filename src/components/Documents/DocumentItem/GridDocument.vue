@@ -269,7 +269,7 @@ export default {
 
 <i18n locale="fr">
 {
-  "details": "Détails",
+  "details": "Afficher les informations",
   "members": "Membres"
 }
 </i18n>

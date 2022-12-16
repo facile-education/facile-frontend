@@ -141,7 +141,7 @@ export default {
 
   img {
     margin-right: 10px;
-    width: 40px;
+    width: 43px;
   }
 }
 .activity-description {

@@ -82,7 +82,7 @@
       />
       <PermissionsModal
         v-if="isPermissionModalDisplayed"
-        :document="selectedDocuments[0]"
+        :document="selectedDocuments[0] || currentFolder"
         @close="isPermissionModalDisplayed=false"
       />
     </teleport>
@@ -97,7 +97,7 @@ import Breadcrumb from '@components/Documents/Breadcrumb'
 import DocumentList from '@components/Documents/DocumentList'
 import DocumentDetails from '@components/Documents/DocumentDetails/DocumentDetails'
 import ContextMenu from '@components/ContextMenu/ContextMenu'
-import { documentSpaceOptions, mobileDocumentSpaceOptions } from '@/constants/options'
+import { documentSpaceOptions, mobileDocumentSpaceOptions, groupOptions } from '@/constants/options'
 import { defaultFields, fieldsWithoutSize } from '@/constants/documentsConstants'
 import FilePickerArea from '@components/FilePicker/FilePickerArea'
 import { computeDocumentsOptions, downloadDocument, deleteEntities, importDocuments } from '@utils/documents.util'
@@ -167,7 +167,7 @@ export default {
       return computeDocumentsOptions(this.selectedDocuments)
     },
     currentOptions () {
-      const options = (this.selectedDocuments.length > 0) ? this.selectedDocumentsOptions : (this.currentFolder && this.currentFolder.type !== 'Group' && (this.currentFolder.permissions && this.currentFolder.permissions.ADD_OBJECT) ? (this.mq.phone || this.mq.tablet ? mobileDocumentSpaceOptions : documentSpaceOptions) : [])
+      const options = (this.selectedDocuments.length === 0 && this.currentFolder && this.currentFolder.isGroupRootFolder && this.currentFolder.permissions && this.currentFolder.permissions.PERMISSIONS) ? groupOptions : (this.selectedDocuments.length > 0) ? this.selectedDocumentsOptions : (this.currentFolder && this.currentFolder.type !== 'Group' && (this.currentFolder.permissions && this.currentFolder.permissions.ADD_OBJECT) ? (this.mq.phone || this.mq.tablet ? mobileDocumentSpaceOptions : documentSpaceOptions) : [])
       // Remove Mindmap, Geogebra and Scratch if not broadcasted to user
       if (options !== undefined && options.length >= 1 && options[0].subMenu !== undefined && !this.$store.state.documents.documentsProperties.hasMindmapBroadcasted) {
         removeMenuOptionIfExist(options[0].subMenu, 'newMindMap')

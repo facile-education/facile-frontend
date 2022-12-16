@@ -52,7 +52,7 @@ const icons = {
     move: require('@/assets/options/icon_move.svg'),
     modify: require('@/assets/options/icon_edit_texte.svg'),
     new: require('@assets/options/icon_add.svg'),
-    openFile: require('@assets/icons/documents/icon-file.svg'),
+    openFile: require('@assets/documents.svg'),
     paste: require('@/assets/options/icon_duplicate.svg'),
     permissions: require('@/assets/options/icon_permissions.svg'),
     share: require('@/assets/options/icon_share.svg'),
