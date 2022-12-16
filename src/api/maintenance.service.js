@@ -22,7 +22,7 @@ export default {
 }
 
 const MAINTENANCE_PATH = '/entTools-portlet.maintenance'
-const GROUPS_PATH = '/entTools-portlet.groupsMaintenance'
+const GROUPS_PATH = '/entTools-portlet.groupsmaintenance'
 
 function runMessageMigration () {
   return axios.get(constants.JSON_WS_URL + MAINTENANCE_PATH + '/run-message-migration').then(response => response.data)
@@ -40,10 +40,11 @@ function runArchiving () {
 }
 
 function deleteGroup (groupId) {
-  return axios.delete(constants.JSON_WS_URL + GROUPS_PATH + '/delete-groups',
+  return axios.post(constants.JSON_WS_URL + GROUPS_PATH + '/delete-groups',
     PentilaUtils.URL.params({
       groupId
-    }).then(response => response.data))
+    })
+  ).then(response => response.data)
 }
 
 function deleteGroups (file) {
