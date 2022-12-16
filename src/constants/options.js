@@ -314,7 +314,15 @@ const currentFolderOptions = [
   }
 ]
 
-const groupOptions = []
+const groupOptions = documentSpaceOptions.concat([
+  {
+    name: 'managePermissions',
+    title: i18n.global.t('Documents.options.managePermissions'),
+    icon: icons.options.permissions,
+    position: 0,
+    hasSeparator: true
+  }
+])
 
 const spaceSelectionOptions = [
   {

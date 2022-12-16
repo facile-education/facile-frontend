@@ -100,6 +100,7 @@ export default {
   },
   created () {
     this.$store.dispatch('misc/incrementModalCount')
+    console.log('doc=', this.document)
     if (this.document.type === 'File') {
       permissionsService.getFilePermissionMatrix(this.document.id).then((data) => {
         if (data.success) {
@@ -194,7 +195,7 @@ export default {
   "delete": "Supprimer",
   "permissions": "Permissions",
   "recursiveLabel": "Appliquer ces permissions à tous les éléments contenus dans le dossier",
-  "name": "Role",
+  "name": "Rôle",
   "submit": "Valider"
 }
 </i18n>

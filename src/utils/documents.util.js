@@ -30,8 +30,10 @@ function computeDocumentsOptions (documentList) {
     }
 
     // Permissions
-    if (!document.permissions.UPDATE && !document.permissions.ADD_OBJECT) {
+    if (!document.permissions.UPDATE) {
       removeMenuOptionIfExist(documentContextMenu, 'rename')
+    }
+    if (!document.permissions.UPDATE && !document.permissions.DELETE) {
       removeMenuOptionIfExist(documentContextMenu, 'move')
     }
     if (!document.permissions.DELETE) {
@@ -46,6 +48,13 @@ function computeDocumentsOptions (documentList) {
 
   // Compute the intersection of context menus
   const contextMenu = mergeContextMenus(listCM)
+
+  // New button does not depend on the selected documents, but on the current folder
+  const currentFolder = store.getters['documents/currentFolder']
+  console.log('current folder=', currentFolder)
+  if (currentFolder.isGroupDirectory && !currentFolder.permissions.ADD_OBJECT) {
+    removeMenuOptionIfExist(contextMenu, 'new')
+  }
 
   // Remove some options depending on context
   if (store.state.clipboard.documentList.length === 0) { // remove paste option if no documents were copied

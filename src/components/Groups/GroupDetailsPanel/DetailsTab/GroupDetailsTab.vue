@@ -235,7 +235,7 @@ export default {
 }
 
 .members-details {
-  margin-left: 60px;
+  margin-left: 50px;
 }
 </style>
 
