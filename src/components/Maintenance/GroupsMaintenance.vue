@@ -7,23 +7,33 @@
       <span>{{ $t('archive') }}</span>
     </PentilaButton>
 
-    <PentilaInput
-      v-model="groupId"
-      placeholder="group id"
-      :maxlength="75"
-    />
+    <div>
+      <PentilaInput
+        v-model="groupId"
+        placeholder="group id"
+        :maxlength="75"
+      />
+      <button
+        type="button"
+        @click="deleteGroup"
+      >
+        Supprimer le groupe
+      </button>
+    </div>
 
-    <input
-      type="file"
-      name="file"
-      @change="fileChange($event.target.files)"
-    >
-    <button
-      type="button"
-      @click="deleteGroups"
-    >
-      Upload
-    </button>
+    <div>
+      <input
+        type="file"
+        name="file"
+        @change="fileChange($event.target.files)"
+      >
+      <button
+        type="button"
+        @click="deleteGroups"
+      >
+        delete groups
+      </button>
+    </div>
   </div>
 </template>
 
