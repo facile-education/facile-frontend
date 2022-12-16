@@ -1,16 +1,20 @@
 import { url } from '../../support/constants/documents'
 import { HEADMASTER } from '../../support/constants'
 
-const folderOptions = ['Renommer', 'Déplacer', 'Dupliquer', 'Télécharger', 'Supprimer', 'Détails']
-const fileOptions = ['Ouvrir', 'Renommer', 'Déplacer', 'Dupliquer', 'Télécharger', 'Supprimer', 'Détails']
-const multiSelectionOptions = ['Déplacer', 'Dupliquer', 'Supprimer']
+const folderOptions = ['Nouveau', 'Renommer', 'Déplacer', 'Dupliquer', 'Télécharger', 'Supprimer', 'Détails']
+const fileOptions = ['Nouveau', 'Ouvrir', 'Renommer', 'Déplacer', 'Dupliquer', 'Télécharger', 'Supprimer', 'Détails']
+const multiSelectionOptions = ['Nouveau', 'Déplacer', 'Dupliquer', 'Supprimer']
 
 const checkCurrentOptions = (optionsNames) => {
   cy.get('[data-test=current-options]').children().should('have.length', optionsNames.length)
   cy.get('[data-test=context-menu] >').children().should('have.length', optionsNames.length)
 
   optionsNames.forEach((name) => {
-    cy.get('[data-test=current-options]').should('contain', name)
+    if (name === 'Nouveau') {
+      cy.get('[data-test=current-options]').should('contain', 'NOUVEAU') // Handle case
+    } else {
+      cy.get('[data-test=current-options]').should('contain', name)
+    }
     cy.get('[data-test=context-menu]').should('contain', name)
   })
 }

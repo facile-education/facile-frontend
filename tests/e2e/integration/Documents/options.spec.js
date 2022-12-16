@@ -10,7 +10,7 @@ const deleteAll = () => {
 
 const createManualEntities = () => {
   // Create Folder
-  cy.get('[title="Nouveau"]').click()
+  cy.contains('button', 'NOUVEAU').click()
   cy.get('[data-test="context-menu"]').contains('Dossier').click()
   cy.get('[data-test=folder-name-modal]').within(() => {
     cy.get('input').type('createdFolder') // TODO tests form validation
@@ -19,7 +19,7 @@ const createManualEntities = () => {
   cy.contains('[data-test=folder]', 'createdFolder').should('exist')
 
   // Create file
-  cy.get('[title="Nouveau"]').click()
+  cy.contains('button', 'NOUVEAU').click()
   cy.get('[data-test="context-menu"]').contains('Note').click()
   cy.get('[data-test=file-name-modal]').within(() => {
     cy.get('input').type('createdNote')

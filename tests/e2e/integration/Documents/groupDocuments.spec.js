@@ -41,7 +41,7 @@ describe('Group documents', () => {
   })
 
   it('détails Panel', () => {
-    cy.contains('.grid-document', 'groupTest').should('exist').click()
+    cy.contains('.grid-document', 'groupTest').trigger('mouseover').find('[data-test="open-details-icon"]').click()
 
     cy.get('[data-test=group-details-panel]').within(() => {
       // Description

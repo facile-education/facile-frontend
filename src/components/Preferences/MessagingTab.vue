@@ -2,6 +2,7 @@
   <div
     v-if="configuration"
     class="messaging-tab"
+    data-test="messaging-tab"
   >
     <!-- Forward -->
     <div class="param-header">

@@ -10,7 +10,7 @@ describe('File and Folder creation', () => {
 
   it('Create folder and all type of files', () => {
     // Create Folder
-    cy.get('[title="Nouveau"]').click()
+    cy.contains('button', 'NOUVEAU').click()
     cy.get('[data-test="context-menu"]').contains('Dossier').click()
     cy.get('[data-test=folder-name-modal]').within(() => {
       cy.get('input').type('createdFolder') // TODO tests form validation
@@ -19,7 +19,7 @@ describe('File and Folder creation', () => {
     cy.contains('[data-test=folder]', 'createdFolder').should('exist')
 
     // Create ODT
-    cy.get('[title="Nouveau"]').click()
+    cy.contains('button', 'NOUVEAU').click()
     cy.get('[data-test="context-menu"]').contains('ODT').click()
     cy.get('[data-test=file-name-modal]').within(() => {
       cy.get('input').type('createdODT') // TODO tests form validation
@@ -32,7 +32,7 @@ describe('File and Folder creation', () => {
     cy.contains('[data-test=file]', 'createdODT.odt').should('exist').find('.selection-icon').click() // Unselect it
 
     // Create ODS
-    cy.get('[title="Nouveau"]').click()
+    cy.contains('button', 'NOUVEAU').click()
     cy.get('[data-test="context-menu"]').contains('ODS').click()
     cy.get('[data-test=file-name-modal]').within(() => {
       cy.get('input').type('createdODS')
@@ -45,7 +45,7 @@ describe('File and Folder creation', () => {
     cy.contains('[data-test=file]', 'createdODS').should('exist').find('.selection-icon').click() // Unselect it
 
     // Create ODP
-    cy.get('[title="Nouveau"]').click()
+    cy.contains('button', 'NOUVEAU').click()
     cy.get('[data-test="context-menu"]').contains('ODP').click()
     cy.get('[data-test=file-name-modal]').within(() => {
       cy.get('input').type('createdODP')
@@ -58,7 +58,7 @@ describe('File and Folder creation', () => {
     cy.contains('[data-test=file]', 'createdODP').should('exist').find('.selection-icon').click() // Unselect it
 
     // Create Géogébra
-    cy.get('[title="Nouveau"]').click()
+    cy.contains('button', 'NOUVEAU').click()
     cy.get('[data-test="context-menu"]').contains('Géogébra').click()
     cy.get('[data-test=file-name-modal]').within(() => {
       cy.get('input').type('createdGéogébra')
@@ -72,7 +72,7 @@ describe('File and Folder creation', () => {
     cy.contains('[data-test=file]', 'createdGéogébra').should('exist').find('.selection-icon').click() // Unselect it
 
     // Create Carte Mentale
-    cy.get('[title="Nouveau"]').click()
+    cy.contains('button', 'NOUVEAU').click()
     cy.get('[data-test="context-menu"]').contains('Carte Mentale').click()
     cy.get('[data-test=file-name-modal]').within(() => {
       cy.get('input').type('createdCarte Mentale')
@@ -86,7 +86,7 @@ describe('File and Folder creation', () => {
     cy.contains('[data-test=file]', 'createdCarte Mentale').should('exist').find('.selection-icon').click() // Unselect it
 
     // Create Scratch
-    cy.get('[title="Nouveau"]').click()
+    cy.contains('button', 'NOUVEAU').click()
     cy.get('[data-test="context-menu"]').contains('Scratch').click()
     cy.get('[data-test=file-name-modal]').within(() => {
       cy.get('input').type('createdScratch')
@@ -103,7 +103,7 @@ describe('File and Folder creation', () => {
     // Create FichierAudio // TODO
 
     // Create Note
-    cy.get('[title="Nouveau"]').click()
+    cy.contains('button', 'NOUVEAU').click()
     cy.get('[data-test="context-menu"]').contains('Note').click()
     cy.get('[data-test=file-name-modal]').within(() => {
       cy.get('input').type('createdNote')
