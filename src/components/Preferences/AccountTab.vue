@@ -1,5 +1,8 @@
 <template>
-  <div class="account-tab">
+  <div
+    class="account-tab"
+    data-test="account-tab"
+  >
     <section class="user-data">
       <h4 v-t="'userData'" />
       <div class="body">
