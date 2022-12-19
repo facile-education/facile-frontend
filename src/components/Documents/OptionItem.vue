@@ -111,13 +111,6 @@ export default {
   min-width: 70px;
 }
 
-.create-button {
-  &.phone {
-    width: 110px;
-    padding: 9px 10px;
-  }
-}
-
 .option-item {
   display: flex;
   cursor: pointer;
@@ -154,7 +147,6 @@ img {
 .create-button {
   @extend %create-button;
 }
-
 </style>
 
 <i18n locale="fr">

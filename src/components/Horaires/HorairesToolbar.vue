@@ -4,6 +4,7 @@
     <PentilaButton
       v-if="displayCreateButton"
       class="create-button"
+      :class="{'phone': mq.phone}"
       @click="openCreateSessionModal"
     >
       <NeroIcon

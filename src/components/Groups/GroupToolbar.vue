@@ -4,6 +4,7 @@
       v-if="!mq.phone && canCreateGroup"
       data-test="createGroupButton"
       class="create-button"
+      :class="{'phone': mq.phone}"
       @click="toggleEditGroupModal"
     >
       <NeroIcon

@@ -3,6 +3,7 @@
     <PentilaButton
       v-if="isAdministrator"
       class="create-button"
+      :class="{'phone': mq.phone}"
       @click="onAddApplication"
     >
       <NeroIcon name="plus" />
@@ -33,8 +34,13 @@ export default {
     NeroIcon,
     NeroToolbar
   },
+  inject: ['mq'],
   computed: {
     managedSchoolList () {
+      if (this.$store.state.administration.schoolList === undefined) {
+        return []
+      }
+
       const schoolList = PentilaUtils.JSON.deepCopy(this.$store.state.administration.schoolList)
       if (this.isAdministrator) {
         schoolList.push({ schoolId: 0, schoolName: this.$t('allENT') })
