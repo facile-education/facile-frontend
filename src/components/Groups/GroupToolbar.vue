@@ -56,7 +56,7 @@ export default {
       timeout: 0,
       isEditGroupModalDisplayed: false,
       filter: '',
-      selectedScope: undefined,
+      selectedScope: {},
       scopeList: [
         { name: this.$t('spaces') },
         { name: this.$t('community'), isCommunity: true },
