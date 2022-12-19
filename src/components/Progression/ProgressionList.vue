@@ -3,6 +3,7 @@
     <NeroToolbar>
       <PentilaButton
         class="create-button"
+        :class="{'phone': mq.phone}"
         @click="toggleEditModalDisplay()"
       >
         <NeroIcon
@@ -75,6 +76,7 @@ const ProgressionItem = defineAsyncComponent(() => import('@/components/Progress
 export default {
   name: 'ProgressionList',
   components: { EditProgressionModal, NeroIcon, NeroToolbar, ProgressionItem },
+  inject: ['mq'],
   data () {
     return {
       isEditModalDisplayed: false,
