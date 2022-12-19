@@ -51,7 +51,6 @@ function computeDocumentsOptions (documentList) {
 
   // New button does not depend on the selected documents, but on the current folder
   const currentFolder = store.getters['documents/currentFolder']
-  console.log('current folder=', currentFolder)
   if (currentFolder.isGroupDirectory && !currentFolder.permissions.ADD_OBJECT) {
     removeMenuOptionIfExist(contextMenu, 'new')
   }
