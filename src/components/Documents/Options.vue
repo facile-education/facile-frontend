@@ -48,7 +48,7 @@ export default {
       this.visibleOptions = [...value]
       this.hiddenOptions = []
       if (this.mq.phone) {
-        if (this.visibleOptions && this.visibleOptions[0].name === 'new') {
+        if (this.visibleOptions && this.visibleOptions.length && this.visibleOptions[0].name === 'new') {
           this.hiddenOptions = this.visibleOptions.slice(1, -1)
           this.visibleOptions = [this.visibleOptions[0]]
         }
@@ -58,7 +58,7 @@ export default {
   mounted () {
     this.getWidth()
     if (this.mq.phone) {
-      if (this.visibleOptions && this.visibleOptions[0].name === 'new') {
+      if (this.visibleOptions && this.visibleOptions.length && this.visibleOptions[0].name === 'new') {
         this.hiddenOptions = this.visibleOptions.slice(1, -1)
         this.visibleOptions = [this.visibleOptions[0]]
       }
