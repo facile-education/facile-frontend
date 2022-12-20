@@ -30,10 +30,10 @@ function computeDocumentsOptions (documentList) {
     }
 
     // Permissions
-    if (!document.permissions.UPDATE) {
+    if (!document.permissions.UPDATE && !document.permissions.ADD_OBJECT) {
       removeMenuOptionIfExist(documentContextMenu, 'rename')
     }
-    if (!document.permissions.UPDATE && !document.permissions.DELETE) {
+    if ((!document.permissions.UPDATE && !document.permissions.ADD_OBJECT) || !document.permissions.DELETE) {
       removeMenuOptionIfExist(documentContextMenu, 'move')
     }
     if (!document.permissions.DELETE) {
