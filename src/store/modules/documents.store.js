@@ -43,7 +43,11 @@ export const mutations = {
     state.folderHistory.pop()
   },
   setSelectedEntities (state, documents) {
-    state.selectedEntities = documents
+    if (documents.length === 0) {
+      state.selectedEntities.length = 0
+    } else {
+      state.selectedEntities = documents
+    }
   },
   setDocumentsProperties (state, payload) {
     state.documentsProperties = payload
@@ -59,16 +63,17 @@ export const mutations = {
       }
     }
   },
+  emptyFolderContent (state) {
+    state.folderContent = {}
+  },
   setBreadcrumb (state, payload) {
     if (payload[0].name === '_PRIVATE_') {
       payload[0].name = i18n.global.t('AppCommonsLabels.Documents.privateFolderName') // TODO change it
     }
-    if (payload[payload.length - 1].id === 'collaborative') { // if current folder is the collaborative folder
-      state.currentDisplay = 'grid'
-    } else {
-      state.currentDisplay = 'list'
-    }
     state.breadcrumb = payload
+  },
+  setCurrentDisplay (state, payload) {
+    state.currentDisplay = payload
   },
   setCurrentFolderId (state, payload) {
     state.currentFolderId = payload
@@ -120,9 +125,17 @@ export const actions = {
   },
   changeDirectory ({ commit, state }, directory) {
     // commit('setDocumentPanelDisplayed', false) // confirm ergonomic
-    commit('setCurrentFolderId', directory.id)
+    commit('emptyFolderContent')
     this.dispatch('documents/cleanSelectedEntities')
+    commit('setCurrentFolderId', directory.id)
     commit('updateLastSelectedEntity', undefined)
+
+    if (directory.id === 'collaborative') {
+      commit('setCurrentDisplay', 'grid')
+    } else {
+      commit('setCurrentDisplay', 'list')
+    }
+
     if (directory.isGroupDirectory) {
       this.dispatch('documents/updateGroupBreadcrumb', directory.id)
       this.dispatch('documents/getGroupEntities', directory.id)
