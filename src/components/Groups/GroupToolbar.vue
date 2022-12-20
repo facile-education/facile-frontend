@@ -81,6 +81,11 @@ export default {
       }
     }
   },
+  created () {
+    if (this.hasScopeList) {
+      this.selectedScope = this.scopeList[0]
+    }
+  },
   methods: {
     onScopeChange () {
       this.$store.dispatch('groups/closePanel')

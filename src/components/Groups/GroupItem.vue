@@ -2,6 +2,7 @@
   <div
     data-test="group-item"
     class="group"
+    ref="group"
     @click="selectGroup"
   >
     <PentilaSpinner v-if="isLoading" />
@@ -141,6 +142,10 @@ export default {
     },
     selectGroup () {
       this.$store.dispatch('groups/setSelectedGroup', this.group)
+      this.$nextTick(() => {
+        // Bring the selected group to top of the page
+        this.$refs.group.scrollIntoView({ block: 'start', behavior: 'smooth' })
+      })
     },
     extendGroup () {
       this.isLoading = true
