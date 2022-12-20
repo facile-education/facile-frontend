@@ -1,8 +1,8 @@
 <template>
   <div
+    ref="group"
     data-test="group-item"
     class="group"
-    ref="group"
     @click="selectGroup"
   >
     <PentilaSpinner v-if="isLoading" />

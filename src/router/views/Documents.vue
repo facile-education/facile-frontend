@@ -167,7 +167,16 @@ export default {
       return computeDocumentsOptions(this.selectedDocuments)
     },
     currentOptions () {
-      const options = (this.selectedDocuments.length === 0 && this.currentFolder && this.currentFolder.isGroupRootFolder && this.currentFolder.permissions && this.currentFolder.permissions.PERMISSIONS) ? groupOptions : (this.selectedDocuments.length > 0) ? this.selectedDocumentsOptions : (this.currentFolder && this.currentFolder.type !== 'Group' && (this.currentFolder.permissions && this.currentFolder.permissions.ADD_OBJECT) ? (this.mq.phone || this.mq.tablet ? mobileDocumentSpaceOptions : documentSpaceOptions) : [])
+      const options = (this.selectedDocuments.length === 0 && this.currentFolder &&
+          this.currentFolder.isGroupRootFolder && this.currentFolder.permissions && this.currentFolder.permissions.PERMISSIONS)
+        ? groupOptions
+        : (this.selectedDocuments.length > 0)
+            ? this.selectedDocumentsOptions
+            : (this.currentFolder && this.currentFolder.type !== 'Group' && (this.currentFolder.permissions && this.currentFolder.permissions.ADD_OBJECT)
+                ? (this.mq.phone || this.mq.tablet
+                    ? mobileDocumentSpaceOptions
+                    : documentSpaceOptions)
+                : [])
       // Remove Mindmap, Geogebra and Scratch if not broadcasted to user
       if (options !== undefined && options.length >= 1 && options[0].subMenu !== undefined && !this.$store.state.documents.documentsProperties.hasMindmapBroadcasted) {
         removeMenuOptionIfExist(options[0].subMenu, 'newMindMap')
