@@ -157,7 +157,7 @@ export default {
         const img = svgDoc.getElementById('svg-img')
         img.setAttribute('style', 'cursor: pointer;')
 
-        img.addEventListener('mouseup', function () {
+        img.addEventListener('click', function () {
           vm.triggerAction()
         }, false)
 
