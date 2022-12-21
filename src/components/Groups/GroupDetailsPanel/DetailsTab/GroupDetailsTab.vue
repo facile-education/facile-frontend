@@ -233,10 +233,6 @@ export default {
     width: 30px;
   }
 }
-
-.members-details {
-  margin-left: 50px;
-}
 </style>
 
 <i18n locale="fr">
