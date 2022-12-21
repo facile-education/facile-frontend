@@ -4,7 +4,8 @@
       class="title"
       @click="toggleCollapse"
     >
-      <span>{{ memberList.length + ' ' + title }}</span>
+      <span class="count">{{ memberList.length }}</span>
+      <span>{{ ' ' + title }}</span>
       <img
         :class="isCollapsed ? 'extend': 'collapse'"
         src="@assets/arrow-right.svg"
@@ -69,26 +70,33 @@ export default {
   height: 30px;
   display: flex;
   align-items: center;
+
   &:hover {
     cursor: pointer;
   }
-  span {
-    margin-right: 20px;
-  }
+}
 
-  .collapse, .extend {
-    width: 10px;
-    transition:  transform .3s;
-    cursor: pointer;
-  }
+.count {
+  width: 30px;
+  text-align: center;
+}
 
-  .extend {
-    transform: rotate(0);
-  }
+span {
+  margin-right: 10px;
+}
 
-  .collapse {
-    transform: rotate(90deg);
-  }
+.collapse, .extend {
+  width: 10px;
+  transition:  transform .3s;
+  cursor: pointer;
+}
+
+.extend {
+  transform: rotate(0);
+}
+
+.collapse {
+  transform: rotate(90deg);
 }
 
 .member-list {

@@ -168,6 +168,7 @@ export default {
     border: none;
     box-shadow: none;
     min-width: 100px;
+    margin-left: 0;
   }
 }
 
