@@ -19,7 +19,7 @@
         :is-first-element="folder.id === breadcrumb[0].id"
         :is-current-folder="index === displayableBreadcrumb.length-1"
         :previous-folder-name="index >= 1 ? displayableBreadcrumb[index - 1].name : ''"
-        @click-back="goInParentFolder(index)"
+        @click-back="goInParentFolder"
         @change-dir="changeDir"
         @change-space="changeSpace"
       />
@@ -72,12 +72,12 @@ export default {
     }
   },
   methods: {
-    goInParentFolder (index) {
-      if (index > 0) {
-        const parentFolder = this.breadcrumb[index - 1]
+    goInParentFolder () {
+      if (this.breadcrumb.length > 1) {
+        const parentFolder = this.breadcrumb[this.breadcrumb.length - 2]
         this.$emit('changeDir', parentFolder)
       } else {
-        console.error('cannot go in parent folder of a folder with index ' + index)
+        console.error('cannot go in parent folder in breadcrumb ' + this.breadcrumb)
       }
     },
     changeDir (folder) {

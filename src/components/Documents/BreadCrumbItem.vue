@@ -1,5 +1,18 @@
 <template>
   <button
+    v-if="isCurrentFolder && (mq.phone || mq.tablet) && !isFirstElement"
+    class="return-back"
+    data-test="back"
+    @click="clickBack"
+  >
+    <img
+      src="@assets/icon_arrow_left.svg"
+      class="image"
+      alt="go back"
+    >
+    <span class="previous-name">{{ (previousFolderName.length > 12) ? $t('Commons.back') : previousFolderName }}</span>
+  </button>
+  <button
     v-if="(!mq.phone && !mq.tablet) || isCurrentFolder"
     class="breadcrumb-item"
     data-test="breadcrumb-item"
@@ -10,48 +23,35 @@
     @drop="dropFile"
     @click.stop="changeDir"
   >
-    <div
-      v-if="(mq.phone || mq.tablet) && !isFirstElement"
-      class="return-back"
-      data-test="back"
-      @click="clickBack"
-    >
-      <img
-        src="@assets/icon_arrow_left.svg"
-        class="image"
-        alt="go back"
-      >
-      <span class="previous-name">{{ (previousFolderName.length > 12) ? $t('Commons.back') : previousFolderName }}</span>
-    </div>
     <div class="name">
       <span>
         {{ folder.name }}
       </span>
-    </div>
-    <img
-      v-if="!isFirstElement && isCurrentFolder && folder.isGroupDirectory"
-      class="collaborative"
-      src="@assets/icon_commu-black.svg"
-      alt=""
-    >
-    <button
-      v-if="currentOptions.length > 0 && isFirstElement"
-      class="first-folder-options"
-      @click.stop="toggleContextMenu"
-    >
-      <BaseIcon
-        class="icon"
-        name="chevron-down"
-      />
-    </button>
-    <div
-      v-else-if="currentOptions.length > 0"
-      class="current-folder-options"
-    >
-      <BaseIcon
-        class="icon"
-        name="chevron-down"
-      />
+      <img
+        v-if="!isFirstElement && isCurrentFolder && folder.isGroupDirectory"
+        class="collaborative"
+        src="@assets/icon_commu-black.svg"
+        alt=""
+      >
+      <button
+        v-if="currentOptions.length > 0 && isFirstElement"
+        class="first-folder-options"
+        @click.stop="toggleContextMenu"
+      >
+        <BaseIcon
+          class="icon"
+          name="chevron-down"
+        />
+      </button>
+      <div
+        v-else-if="currentOptions.length > 0"
+        class="current-folder-options"
+      >
+        <BaseIcon
+          class="icon"
+          name="chevron-down"
+        />
+      </div>
     </div>
 
     <ContextMenu
@@ -224,7 +224,28 @@ export default {
 <style lang="scss" scoped>
 @import '@design';
 
-.breadcrumb-item{
+.return-back {
+  background: none;
+  height: 35px;
+  padding: 0 5px;
+  border: 1px solid $color-border;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .previous-name {
+    white-space: nowrap;
+    margin-left: 5px;
+    line-height: 100%;
+  }
+
+  .image {
+    height: 12px;
+  }
+}
+
+.breadcrumb-item {
   height: 40px;
   display: flex;
   position: relative;
@@ -263,84 +284,64 @@ export default {
       margin-right: 10px;
     }
   }
+}
 
-  .return-back {
-    height: 35px;
-    padding: 0 5px;
-    border: 1px solid $color-border;
-    border-radius: 6px;
+.name {
+  display: flex;
+  align-items: center;
+  max-width: 100%;
+
+  span{
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+
+.collaborative {
+  margin-left: 10px;
+}
+
+.first-folder-options {
+  position: relative;
+  cursor: pointer;
+  margin-left: 10px;
+  padding: 0;
+  border: none;
+  background-color: white;
+
+  .icon {
+    font-size: 12px;
+  }
+}
+
+.current-folder-options {
+  margin-left: 10px;
+  position: relative;
+
+  .icon {
+    font-size: 12px;
+  }
+
+  .img-container {
+    height: 33px;
+    width: 33px;
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 17px;
+    background-color: $color-not-white-bg;
 
-    .previous-name {
-      white-space: nowrap;
-      margin-left: 5px;
-      line-height: 100%;
-    }
-
-    .image {
-      height: 12px;
+    &.active {
+      background-color: $color-active-bg;
     }
   }
 
-  .name {
-    display: flex;
-    align-items: center;
-    max-width: 100%;
-
-    span{
-      max-width: 100%;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-  }
-
-  .collaborative {
-    margin-left: 10px;
-  }
-
-  .first-folder-options {
-    position: relative;
-    cursor: pointer;
-    margin-left: 10px;
-    padding: 0;
-    border: none;
-    background-color: white;
-
-    .icon {
-      font-size: 12px;
-    }
-  }
-
-  .current-folder-options {
-    margin-left: 10px;
-    position: relative;
-
-    .icon {
-      font-size: 12px;
-    }
-
-    .img-container {
-      height: 33px;
-      width: 33px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 17px;
-      background-color: $color-not-white-bg;
-
-      &.active {
-        background-color: $color-active-bg;
-      }
-    }
-
-    .options {
-      position: absolute;
-      left: 110%;
-      top: 0;
-    }
+  .options {
+    position: absolute;
+    left: 110%;
+    top: 0;
   }
 }
 
