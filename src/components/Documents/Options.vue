@@ -49,7 +49,7 @@ export default {
       this.hiddenOptions = []
       if (this.mq.phone) {
         if (this.visibleOptions && this.visibleOptions.length && this.visibleOptions[0].name === 'new') {
-          this.hiddenOptions = this.visibleOptions.slice(1, -1)
+          this.hiddenOptions = this.visibleOptions.slice(1, this.visibleOptions.length)
           this.visibleOptions = [this.visibleOptions[0]]
         }
       }
@@ -59,7 +59,7 @@ export default {
     this.getWidth()
     if (this.mq.phone) {
       if (this.visibleOptions && this.visibleOptions.length && this.visibleOptions[0].name === 'new') {
-        this.hiddenOptions = this.visibleOptions.slice(1, -1)
+        this.hiddenOptions = this.visibleOptions.slice(1, this.visibleOptions.length)
         this.visibleOptions = [this.visibleOptions[0]]
       }
     } else {
