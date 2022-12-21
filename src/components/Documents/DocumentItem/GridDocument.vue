@@ -212,7 +212,7 @@ export default {
       position: absolute;
       bottom: 10%;
       width: 100%;
-      padding: 0 10%;
+      padding: 7px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -234,6 +234,8 @@ export default {
 
       .button {
         margin-left: auto;
+        width: 22px;
+        height: 22px;
       }
     }
   }
