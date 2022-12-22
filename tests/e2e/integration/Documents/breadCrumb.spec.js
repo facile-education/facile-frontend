@@ -51,11 +51,11 @@ describe('BreadCrumb', () => {
     cy.get('[data-test="breadcrumb"]').within(() => {
       // Navigate throw root
       cy.contains('.current-folder > .name', 'dossier1_1').click()
-      cy.get('[data-test=context-menu]').should('not.exist') // Test currentOption (no context menu on mobile)
+      cy.get('[data-test=context-menu]').should('exist') // Test currentOption (context menu on mobile)
       cy.contains('[data-test=back]', 'dossier1').click()
       cy.contains('.current-folder > .name', 'dossier1')
       cy.contains('[data-test=back]', 'Personnels').click()
-      cy.contains('.current-folder > .name', 'dossier1')
+      cy.contains('.current-folder > .name', 'Personnels')
       cy.get('[data-test=back]').should('not.exist')
 
       // Test root options
