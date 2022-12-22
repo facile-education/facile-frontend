@@ -114,15 +114,13 @@ export default {
 
 .current-options {
   display: flex;
-  padding-left: 20px;
-  padding-right: 10px;
   align-items: center;
   flex-wrap: wrap;
   overflow: visible;
 
   &.phone {
+    padding-left: 5px;
     justify-content: space-between;
   }
 }
-
 </style>

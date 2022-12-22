@@ -1,8 +1,8 @@
 <template>
   <div class="role">
-    <div class="role-name">
+    <span class="role-name">
       {{ $t(role.roleName.split(' ').join('')) }}
-    </div>
+    </span>
 
     <div class="permission view">
       <PentilaCheckbox
@@ -96,6 +96,9 @@ export default {
 
   .role-name {
     width: 250px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   .permission {

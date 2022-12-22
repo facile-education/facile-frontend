@@ -553,8 +553,6 @@ export default {
 
   .breadCrumb {
     height: $doc-breadcrumb-size;
-    padding-left: 20px;
-    padding-right: 20px;
   }
 
   .body {
@@ -591,6 +589,7 @@ export default {
 
     .breadCrumb {
       height: $doc-breadcrumb-mobile-size;
+      padding-left: 5px;
     }
 
     .body {
