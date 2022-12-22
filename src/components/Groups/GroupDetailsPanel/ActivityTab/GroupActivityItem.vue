@@ -113,6 +113,9 @@ export default {
         // Properties id (as string) and name are needed by FileDisplay component
         this.$store.dispatch('documents/openFile', { ...this.activity, id: this.activity.fileId + '', name: this.activity.fileName, readOnly: true })
       } else if (this.activityType === 'folder' && this.activity.type !== activityTypes.TYPE_FOLDER_DELETION) {
+        if (this.$store.state.documents.isDocumentPanelDisplayed) {
+          this.$store.dispatch('documents/closeDocumentPanel')
+        }
         this.$router.push('/documents/groups/' + this.activity.folderId)
       }
     }

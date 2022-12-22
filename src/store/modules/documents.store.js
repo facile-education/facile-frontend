@@ -84,6 +84,12 @@ export const mutations = {
     // Update selectedEntities (reselect the new entities based on the old selected ids)
     const oldSelectedEntitiesIds = state.selectedEntities.map(entity => entity.id)
     const newSelectedEntities = []
+    if (payload.files === undefined) {
+      payload.files = []
+    }
+    if (payload.subFolders === undefined) {
+      payload.subFolders = []
+    }
     oldSelectedEntitiesIds.forEach((oldSelectedEntityId) => {
       [...payload.files, ...payload.subFolders].forEach((newEntity) => {
         if (newEntity.id === oldSelectedEntityId) {

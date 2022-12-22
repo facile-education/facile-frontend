@@ -124,3 +124,11 @@ export default {
 }
 
 </style>
+
+<i18n locale="fr">
+{
+  "noData": "Il n'y a aucune information à afficher",
+  "noDocumentSelected": "Aucun document sélectionné",
+  "selectedDocuments": " documents sélectionnés"
+}
+</i18n>

@@ -129,7 +129,7 @@ export default {
       return this.folder.type === 'Group' || this.folder.isGroupRootFolder
     },
     currentOptions () {
-      if (!this.hiddenActions && (!this.mq.phone && !this.mq.tablet) && this.isCurrentFolder && !this.isFirstElement && !this.isGroupFolder) {
+      if (!this.hiddenActions && this.isCurrentFolder && !this.isFirstElement && !this.isGroupFolder) {
         return [...currentFolderOptions]
       } else if (this.isFirstElement) {
         return [...spaceSelectionOptions]
@@ -228,8 +228,7 @@ export default {
   background: none;
   height: 35px;
   padding: 0 5px;
-  border: 1px solid $color-border;
-  border-radius: 6px;
+  border: none;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -261,7 +260,7 @@ export default {
   padding: 3px;
   background: none;
 
-  &.current-folder:not(.phone-breadcrumb-item){
+  &.current-folder {
     font-weight: bold;
   }
 
@@ -289,9 +288,9 @@ export default {
 .name {
   display: flex;
   align-items: center;
-  max-width: 100%;
+  max-width: 90%;
 
-  span{
+  span {
     max-width: 100%;
     overflow: hidden;
     white-space: nowrap;
@@ -353,7 +352,7 @@ export default {
 
   .name {
     margin: auto;
-    font-size: 1.125em;
+    font-size: 1.225em;
   }
 
   .current-folder-options {
