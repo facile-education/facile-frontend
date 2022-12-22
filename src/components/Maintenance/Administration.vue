@@ -2,12 +2,6 @@
   <div class="param-header">
     <PentilaButton
       class="round"
-      @click="runMessageMigration"
-    >
-      <span>{{ $t('message-migration') }}</span>
-    </PentilaButton>
-    <PentilaButton
-      class="round"
       @click="runSynchro"
     >
       <span>{{ $t('synchro') }}</span>
@@ -18,12 +12,24 @@
     >
       <span>{{ $t('parentSynchro') }}</span>
     </PentilaButton>
+    <PentilaButton
+      class="round"
+      @click="startFsAnalysis"
+    >
+      <span>{{ $t('startFsAnalysis') }}</span>
+    </PentilaButton>
+    <PentilaButton
+      class="round"
+      @click="startFsAnalysisV2"
+    >
+      <span>{{ $t('startFsAnalysisV2') }}</span>
+    </PentilaButton>
   </div>
 </template>
 
 <script>
 
-import { runMessageMigration, startSynchro, startParentSynchro } from '@/api/maintenance.service'
+import { startSynchro, startParentSynchro, startFsAnalysis, startFsAnalysisV2 } from '@/api/maintenance.service'
 
 export default {
   name: 'Administration',
@@ -36,17 +42,6 @@ export default {
   created () {
   },
   methods: {
-    runMessageMigration () {
-      runMessageMigration().then(
-        (data) => {
-          if (data.success) {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
-          } else {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
-          }
-        }
-      )
-    },
     runSynchro () {
       startSynchro().then(
         (data) => {
@@ -68,6 +63,28 @@ export default {
           }
         }
       )
+    },
+    startFsAnalysis () {
+      startFsAnalysis().then(
+        (data) => {
+          if (data.success) {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
+          } else {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+          }
+        }
+      )
+    },
+    startFsAnalysisV2 () {
+      startFsAnalysisV2().then(
+        (data) => {
+          if (data.success) {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
+          } else {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+          }
+        }
+      )
     }
   }
 }
@@ -78,15 +95,21 @@ export default {
   display: flex;
   flex-direction: column;
   width: 150px;
+  .button {
+    margin-left: 10px;
+    margin-top: 10px;
+    width: 220px;
+  }
 }
 </style>
 
 <i18n locale="fr">
 {
-  "message-migration": "Migration des messages",
   "synchro": "Synchro",
   "parentSynchro": "Synchro Parents",
-  "success": "Migration terminée en succès",
-  "error": "Migration terminée en erreur"
+  "success": "Opération terminée en succès",
+  "error": "Opération terminée en erreur",
+  "startFsAnalysis": "Explorer le Fs",
+  "startFsAnalysisV2": "Explorer les fichiers en DB"
 }
 </i18n>

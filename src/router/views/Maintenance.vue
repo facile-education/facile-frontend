@@ -13,6 +13,12 @@
       >
         <GroupsMaintenance />
       </PentilaTabItem>
+      <PentilaTabItem
+        :title="$t('one-shot-tools')"
+        class="tab"
+      >
+        <OneShotMaintenance />
+      </PentilaTabItem>
     </PentilaTabList>
   </Layout>
 </template>
@@ -22,13 +28,15 @@
 import Layout from '@/router/layouts/EmptyLayout'
 import Administration from '@/components/Maintenance/Administration.vue'
 import GroupsMaintenance from '@components/Maintenance/GroupsMaintenance.vue'
+import OneShotMaintenance from '@components/Maintenance/OneShotMaintenance.vue'
 
 export default {
   name: 'Maintenance',
   components: {
     Layout,
     Administration,
-    GroupsMaintenance
+    GroupsMaintenance,
+    OneShotMaintenance
   },
   inject: ['mq'],
   computed: {
@@ -52,6 +60,7 @@ export default {
 <i18n locale="fr">
 {
   "administration": "Administration",
-  "groups": "Groupes "
+  "groups": "Groupes ",
+  "one-shot-tools": "Outils one-shot"
 }
 </i18n>
