@@ -288,7 +288,6 @@ export default {
 .name {
   display: flex;
   align-items: center;
-  max-width: 90%;
 
   span {
     max-width: 100%;
@@ -350,9 +349,15 @@ export default {
   margin-right: 0;
   padding: 0;
 
+  &.first-element {
+    width: 70%;
+    margin: auto;
+  }
+
   .name {
     margin: auto;
     font-size: 1.225em;
+    max-width: 90%;
   }
 
   .current-folder-options {
