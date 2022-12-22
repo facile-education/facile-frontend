@@ -7,18 +7,21 @@
       <span>{{ $t('archive') }}</span>
     </PentilaButton>
 
-    <div>
+    <p>{{ $t('group-deletion') }}</p>
+
+    <div class="group-deletion">
       <PentilaInput
         v-model="groupId"
+        class="groupid"
         placeholder="group id"
         :maxlength="75"
       />
-      <button
-        type="button"
+      <PentilaButton
+        class="round"
         @click="deleteGroup"
       >
-        Supprimer le groupe
-      </button>
+        <span>{{ $t('delete-group') }}</span>
+      </PentilaButton>
     </div>
 
     <div>
@@ -27,12 +30,12 @@
         name="file"
         @change="fileChange($event.target.files)"
       >
-      <button
-        type="button"
+      <PentilaButton
+        class="round"
         @click="deleteGroups"
       >
-        delete groups
-      </button>
+        <span>{{ $t('delete-groups') }}</span>
+      </PentilaButton>
     </div>
   </div>
 </template>
@@ -96,12 +99,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.group-deletion {
+  display: flex;
+  margin-bottom: 10px;
+  .groupid {
+    margin-right: 72px;
+  }
+}
 </style>
 
 <i18n locale="fr">
 {
   "archive": "Archivage",
+  "group-deletion": "Suppression de groupe(s)",
+  "delete-group": "Supprimer le groupe",
+  "delete-groups": "Supprimer les groupes",
   "success": "Archivage terminé en succès",
   "error": "Archivage terminé en erreur"
 }
