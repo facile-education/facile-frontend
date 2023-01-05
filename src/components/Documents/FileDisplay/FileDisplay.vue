@@ -2,7 +2,7 @@
   <!-- TODO merge similar viewers (like geogebra, mind map, pdf...) -->
   <div
     v-if="isLoaded"
-    class="container"
+    class="document-wrapper"
     data-test="file-content"
   >
     <Image
@@ -175,12 +175,12 @@ export default {
 </script>
 
 <style scoped>
-  .container {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+.document-wrapper {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>
 
 <i18n locale="fr">
