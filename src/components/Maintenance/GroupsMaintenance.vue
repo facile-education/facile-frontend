@@ -58,8 +58,8 @@ export default {
   },
   methods: {
     fileChange (fileList) {
-      this.files = new FormData()
-      this.files.append('file', fileList[0], fileList[0].name)
+      console.log('fileList=', fileList)
+      this.files = fileList
     },
     runArchiving () {
       runArchiving().then(
@@ -114,7 +114,7 @@ export default {
   "group-deletion": "Suppression de groupe(s)",
   "delete-group": "Supprimer le groupe",
   "delete-groups": "Supprimer les groupes",
-  "success": "Archivage terminé en succès",
-  "error": "Archivage terminé en erreur"
+  "success": "Opération terminée en succès",
+  "error": "Opération terminée en erreur"
 }
 </i18n>

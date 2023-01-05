@@ -1,6 +1,5 @@
 import axios from 'axios'
 import constants from '@/api/constants'
-import { getCookie } from '@utils/browser.util'
 
 export {
   runMessageMigration,
@@ -10,7 +9,8 @@ export {
   startFsAnalysisV2,
   runArchiving,
   deleteGroup,
-  deleteGroups
+  deleteGroups,
+  runAnonymisation
 }
 
 export default {
@@ -21,7 +21,8 @@ export default {
   startFsAnalysisV2,
   runArchiving,
   deleteGroup,
-  deleteGroups
+  deleteGroups,
+  runAnonymisation
 }
 
 const MAINTENANCE_PATH = '/entTools-portlet.maintenance'
@@ -47,21 +48,30 @@ function startFsAnalysisV2 () {
   return axios.post(constants.JSON_WS_URL + MAINTENANCE_PATH + '/start-fs-analysis-v2').then(response => response.data)
 }
 
+function runAnonymisation () {
+  return axios.post(constants.JSON_WS_URL + MAINTENANCE_PATH + '/run-anonymisation').then(response => response.data)
+}
+
 function runArchiving () {
   return axios.post(constants.JSON_WS_URL + GROUPS_PATH + '/archive-groups').then(response => response.data)
 }
 
 function deleteGroup (groupId) {
-  return axios.post(constants.JSON_WS_URL + GROUPS_PATH + '/delete-group').then(response => response.data)
+  const formData = new FormData()
+  formData.append('groupId', groupId)
+  return axios.post(
+    constants.JSON_WS_URL + GROUPS_PATH + '/delete-group',
+    formData
+  ).then(response => response.data)
 }
 
 function deleteGroups (file) {
   const formData = new FormData()
-  formData.append('p_auth', getCookie('pauth'))
-  formData.append('file', file)
+  formData.append('file', file, file.name)
 
   return axios.post(
-    constants.JSON_WS_URL + GROUPS_PATH + '/delete-groups?',
-    formData
+    constants.JSON_WS_URL + GROUPS_PATH + '/delete-groups',
+    formData,
+    { headers: { 'Content-Type': 'multipart/form-data' } }
   ).then(response => response.data)
 }
