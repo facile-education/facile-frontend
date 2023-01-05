@@ -288,6 +288,7 @@ export default {
 .name {
   display: flex;
   align-items: center;
+  width: 100%;
 
   span {
     max-width: 100%;
