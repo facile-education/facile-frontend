@@ -10,17 +10,22 @@
     <template #body>
       <PentilaTabList ref="tabList">
         <PentilaTabItem :title="$t('accountTabLabel')">
-          <AccountTab />
+          <AccountTab @save="updateInfoLabel" />
         </PentilaTabItem>
         <PentilaTabItem :title="$t('messagingTabLabel')">
-          <MessagingTab />
+          <MessagingTab @save="updateInfoLabel" />
         </PentilaTabItem>
       </PentilaTabList>
+    </template>
+
+    <template #footer>
+      <i>{{ infoLabel }}</i>
     </template>
   </PentilaWindow>
 </template>
 
 <script>
+import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 const AccountTab = defineAsyncComponent(() => import('@/components/Preferences/AccountTab'))
 const MessagingTab = defineAsyncComponent(() => import('@/components/Preferences/MessagingTab'))
@@ -35,6 +40,11 @@ export default {
     tab: {
       type: String,
       default: 'account'
+    }
+  },
+  data () {
+    return {
+      infoLabel: undefined
     }
   },
   created () {
@@ -54,6 +64,9 @@ export default {
     close () {
       this.$store.dispatch('misc/decreaseModalCount')
       this.$store.dispatch('messaging/closeParametersModal')
+    },
+    updateInfoLabel () {
+      this.infoLabel = this.$t('infoLabel') + dayjs().format('HH:mm')
     }
   }
 }
@@ -66,11 +79,8 @@ export default {
 <i18n locale="fr">
 {
   "accountTabLabel": "Mon compte",
-  "backupTabLabel": "Sauvegarde",
-  "interfaceTabLabel": "Interface",
+  "infoLabel": "Paramètres enregistrés - ",
   "messagingTabLabel": "Messagerie",
-  "modalHeaderLabel": "Préférences",
-  "notificationsTabLabel": "Notifications",
-  "webdavTabLabel": "WebDAV"
+  "modalHeaderLabel": "Préférences"
 }
 </i18n>

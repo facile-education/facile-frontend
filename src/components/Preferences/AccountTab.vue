@@ -160,6 +160,7 @@ const AssistanceModal = defineAsyncComponent(() => import('@/components/Assistan
 export default {
   name: 'AccountTab',
   components: { AssistanceModal, ColorPicker, ImagePickerModal },
+  emits: ['save'],
   data () {
     return {
       show: false,
@@ -221,6 +222,7 @@ export default {
         if (data.success) {
           PentilaUtils.Theme.updateColor(this.themeColor, newColor)
           this.themeColor = newColor
+          this.$emit('save')
         } else {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
         }
@@ -235,6 +237,7 @@ export default {
               reportFrequency: newfrequency.value
             })
             this.selectedFrequency = this.frequency[newfrequency.value]
+            this.$emit('save')
           } else {
             this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
           }
@@ -246,6 +249,7 @@ export default {
         if (data.success) {
           this.webdavValue = value
           // todo update value in store
+          this.$emit('save')
         } else {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
         }

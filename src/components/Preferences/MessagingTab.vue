@@ -79,6 +79,7 @@ import TextContent from '@components/Progression/Edit/Contents/TextContent'
 export default {
   name: 'MessagingTab',
   components: { TextContent, InformationIcon },
+  emits: ['save'],
   data () {
     return {
       configuration: undefined,
@@ -125,6 +126,7 @@ export default {
             if (data.success) {
               this.$store.dispatch('popups/pushPopup', { message: this.$t('successMessage'), type: 'success' })
               this.oldConfiguration = JSON.stringify(this.configuration)
+              this.$emit('save')
             } else {
               this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
               // Rewrite from with back-end config
