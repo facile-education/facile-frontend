@@ -19,6 +19,12 @@
       >
         <OneShotMaintenance />
       </PentilaTabItem>
+      <PentilaTabItem
+        :title="$t('password-update')"
+        class="tab"
+      >
+        <PasswordUpdate />
+      </PentilaTabItem>
     </PentilaTabList>
   </Layout>
 </template>
@@ -29,6 +35,7 @@ import Layout from '@/router/layouts/EmptyLayout'
 import Administration from '@/components/Maintenance/Administration.vue'
 import GroupsMaintenance from '@components/Maintenance/GroupsMaintenance.vue'
 import OneShotMaintenance from '@components/Maintenance/OneShotMaintenance.vue'
+import PasswordUpdate from '@components/Maintenance/PasswordUpdate.vue'
 
 export default {
   name: 'Maintenance',
@@ -36,7 +43,8 @@ export default {
     Layout,
     Administration,
     GroupsMaintenance,
-    OneShotMaintenance
+    OneShotMaintenance,
+    PasswordUpdate
   },
   inject: ['mq'],
   computed: {
@@ -61,6 +69,7 @@ export default {
 {
   "administration": "Administration",
   "groups": "Groupes ",
-  "one-shot-tools": "Outils one-shot"
+  "one-shot-tools": "Outils one-shot",
+  "password-update": "Codes de secours"
 }
 </i18n>

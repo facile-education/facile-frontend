@@ -24,12 +24,18 @@
     >
       <span>{{ $t('startFsAnalysisV2') }}</span>
     </PentilaButton>
+    <PentilaButton
+      class="round"
+      @click="confirmAnonymisation"
+    >
+      <span>{{ $t('runAnonymisation') }}</span>
+    </PentilaButton>
   </div>
 </template>
 
 <script>
 
-import { startSynchro, startParentSynchro, startFsAnalysis, startFsAnalysisV2 } from '@/api/maintenance.service'
+import { startSynchro, startParentSynchro, startFsAnalysis, startFsAnalysisV2, runAnonymisation } from '@/api/maintenance.service'
 
 export default {
   name: 'Administration',
@@ -85,6 +91,23 @@ export default {
           }
         }
       )
+    },
+    confirmAnonymisation () {
+      this.$store.dispatch('warningModal/addWarning', {
+        text: this.$t('warning'),
+        lastAction: { fct: this.runAnonymisation }
+      })
+    },
+    runAnonymisation () {
+      runAnonymisation().then(
+        (data) => {
+          if (data.success) {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
+          } else {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+          }
+        }
+      )
     }
   }
 }
@@ -110,6 +133,8 @@ export default {
   "success": "Opération terminée en succès",
   "error": "Opération terminée en erreur",
   "startFsAnalysis": "Explorer le Fs",
-  "startFsAnalysisV2": "Explorer les fichiers en DB"
+  "startFsAnalysisV2": "Explorer les fichiers en DB",
+  "runAnonymisation": "Anonymisation",
+  "warning": "Sûr sûr de lancer l'anonymisation ?"
 }
 </i18n>
