@@ -8,6 +8,7 @@
       :draggable="true"
       :resizable="true"
       :full-screen="mq.phone"
+      :hidden-footer="true"
       @close="onClose"
     >
       <template #header>
