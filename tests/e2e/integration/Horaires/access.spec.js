@@ -24,7 +24,7 @@ describe('Service access', () => {
       cy.login(url, user)
 
       cy.get('.toolbar .base-dropdown').should('be.visible')
-      cy.get('.toolbar .search .base-input').should('be.visible')
+      cy.get('.toolbar .search').should('be.visible')
       cy.get('.weekly-horizontal-timeline').should('be.visible')
       cy.get('.fc').should('be.visible')
 
@@ -47,7 +47,7 @@ describe('Service access', () => {
       cy.login(url, user)
 
       cy.get('.toolbar .base-dropdown').should('be.visible')
-      cy.get('.toolbar .search .base-input').should('be.visible')
+      cy.get('.toolbar .search').should('be.visible')
       cy.get('.weekly-horizontal-timeline').should('be.visible')
       cy.get('.fc').should('be.visible')
 
@@ -70,7 +70,7 @@ describe('Service access', () => {
       cy.login(url, user)
 
       cy.get('.toolbar .base-dropdown').should('not.exist')
-      cy.get('.toolbar .search .base-input').should('not.exist')
+      cy.get('.toolbar .search').should('not.exist')
       cy.get('.weekly-horizontal-timeline').should('be.visible')
       cy.get('.fc').should('be.visible')
 
@@ -85,7 +85,7 @@ describe('Service access', () => {
     cy.visit(url)
 
     cy.get('.toolbar .base-dropdown').should('not.exist')
-    cy.get('.toolbar .search .base-input').should('not.exist')
+    cy.get('.toolbar .search').should('not.exist')
     cy.get('.weekly-horizontal-timeline').should('not.exist')
     cy.get('.fc').should('not.exist')
     cy.contains('Une authentification est requise pour accéder au service.').should('exist')
