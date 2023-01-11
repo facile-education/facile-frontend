@@ -6,17 +6,17 @@ const createdGroup = {
   description: 'Ma description',
   members: [
     {
-      name: 'Salvatore Di Dio',
+      name: 'Di Dio Salvatore',
       isCreator: true,
       isAdmin: true
     },
     {
-      name: 'Alexandre Regad',
+      name: 'Regad Alexandre',
       isCreator: false,
       isAdmin: true
     },
     {
-      name: 'ANYA ALOSTA',
+      name: 'ALOSTA ANYA',
       isCreator: false,
       isAdmin: false
     }
@@ -28,14 +28,14 @@ const updatedGroup = {
   description: 'My new description',
   removedMember: [
     {
-      name: 'Alexandre Regad',
+      name: 'Regad Alexandre',
       isCreator: false,
       isAdmin: true
     }
   ],
   addedMember: [
     {
-      name: 'MANON FREY',
+      name: 'FREY MANON',
       isCreator: false,
       isAdmin: false
     }
@@ -54,7 +54,7 @@ describe('Group list', () => {
       cy.get('input[placeholder=\'Nom du groupe\']').type(createdGroup.name)
       cy.get('textarea[placeholder=\'Description\']').type(createdGroup.description)
       createdGroup.members.forEach((member) => {
-        cy.get('input[placeholder=\'Rechercher par nom\']').clear().type(member.name)
+        cy.get('input[placeholder=\'Rechercher par nom\']').click({force: true}).clear().type(member.name)
         cy.contains('.group-user-item', member.name).click()
         cy.contains('.selected-group-member-item', member.name)
         if (member.isCreator) {
@@ -84,13 +84,15 @@ describe('Group list', () => {
       cy.contains('3 Membres')
       // test toggle
       cy.contains('2 Administrateur').click()
-      cy.contains('Salvatore Di Dio').should('exist')
-      cy.contains('Alexandre Regad').should('exist')
+      cy.contains('Di Dio Salvatore').should('exist')
+      cy.contains('Regad Alexandre').should('exist')
+      cy.contains('2 Administrateur').click()
 
-      cy.contains('0 Enseignant').click()
+      cy.contains('1 Enseignant').click()
+      cy.contains('Regad Alexandre').should('exist')
 
-      cy.contains('1 Autre').click()
-      cy.contains('ANYA ALOSTA')
+      cy.contains('1 Elève').click()
+      cy.contains('ALOSTA ANYA')
     })
   })
 
@@ -108,7 +110,7 @@ describe('Group list', () => {
       })
 
       updatedGroup.addedMember.forEach((member) => {
-        cy.get('input[placeholder=\'Rechercher par nom\']').clear().type(member.name)
+        cy.get('input[placeholder=\'Rechercher par nom\']').click({force: true}).clear().type(member.name)
         cy.contains('.group-user-item', member.name).click()
         cy.contains('.selected-group-member-item', member.name)
         if (member.isAdmin) {
@@ -137,13 +139,11 @@ describe('Group list', () => {
       cy.contains('3 Membres')
       // test toggle
       cy.contains('1 Administrateur').click()
-      cy.contains('Salvatore Di Dio').should('exist')
+      cy.contains('Di Dio Salvatore').should('exist')
 
-      cy.contains('0 Enseignant').click()
-
-      cy.contains('2 Autre').click()
-      cy.contains('ANYA ALOSTA')
-      cy.contains('MANON FREY')
+      cy.contains('2 Elèves').click()
+      cy.contains('ALOSTA ANYA')
+      cy.contains('FREY MANON')
     })
   })
 

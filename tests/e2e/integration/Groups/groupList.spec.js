@@ -7,7 +7,7 @@ describe('Group list', () => {
   })
 
   it('Test group List interface (desktop)', () => {
-    cy.get('[data-test=group-item]').should('have.length', 11)
+    cy.get('[data-test=group-item]').should('have.length', 12)
 
     // Test filter
     cy.get('.toolbar').find('input').type('reten', { force: true })

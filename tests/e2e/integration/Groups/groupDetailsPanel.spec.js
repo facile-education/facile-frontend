@@ -41,30 +41,32 @@ describe('Group Details', () => {
       // Members
       cy.contains('5 Membres')
       // test toggle
-      cy.contains('Salvatore Di Dio').should('not.exist')
+      cy.contains('Di Dio Salvatore').should('not.exist')
       cy.contains('1 Administrateur').click()
-      cy.contains('Salvatore Di Dio').should('exist')
+      cy.contains('Di Dio Salvatore').should('exist')
       cy.contains('1 Administrateur').click()
-      cy.contains('Salvatore Di Dio').should('not.exist')
+      cy.contains('Di Dio Salvatore').should('not.exist')
 
       cy.contains('1 Enseignant').click()
-      cy.contains('Isabel Mendez')
+      cy.contains('Mendez Isabel')
 
-      cy.contains('3 Autres').click()
-      cy.contains('ANYA ALOSTA')
-      cy.contains('DYALA ROUSAN').should('exist')
-      cy.contains('Erona Berisha').click() // test Messaging Modal
+      cy.contains('1 Elève').click()
+      cy.contains('ALOSTA ANYA').should('exist')
+      cy.contains('1 Responsable légal').click()
+      cy.contains('ROUSAN DYALA').should('exist')
+      cy.contains('2 Personnels').click()
+      cy.contains('Berisha Erona').click() // test Messaging Modal
       cy.get('[data-test=send-message]').click()
     })
 
     cy.get('[data-test="createMessageModal"]').within(() => {
-      cy.contains('.recipients', 'Erona Berisha').should('exist')
+      cy.contains('.recipients', 'Berisha Erona').should('exist')
       cy.get('[data-test="closeModal"]').click()
     })
 
     // Access to documents
     cy.get('[data-test=group-details-panel]').within(() => {
-      cy.contains('button', 'Accéder aux documents').click()
+      cy.contains('a', 'Accéder aux documents').click()
     })
 
     cy.url().should('contain', Cypress.config().baseUrl + '/nero/documents/groups/') // TODO: replace 'nero/documents' by the appropriated constant
@@ -84,28 +86,28 @@ describe('Group Details', () => {
     cy.get('[data-test=group-details-panel]').within(() => {
       cy.contains('Activités').click()
 
-      cy.contains('Fil d\'activité').should('exist')
+      // Can be a bit long should we add a wait/sleep ?
 
       // Test activities
       cy.get('.activity').eq(0)
         .should('contain', 'Salvatore Di Dio')
-        .should('contain', 'a partagé le fichier')
-        .should('contain', 'document de groupe.html')
+        .should('contain', 'a inscrit')
+        .should('contain', 'DYALA ROUSAN')
 
       cy.get('.activity').eq(1)
+        .should('contain', 'Salvatore Di Dio')
+        .should('contain', 'a supprimé')
+        .should('contain', 'Alexandre Regad')
+
+      cy.get('.activity').eq(2)
         .should('contain', 'Salvatore Di Dio')
         .should('contain', 'a supprimé le fichier')
         .should('contain', 'document de groupe.html')
 
-      cy.get('.activity').eq(2)
-        .should('contain', 'Salvatore Di Dio')
-        .should('contain', 'a inscrit')
-        .should('contain', 'DYALA ROUSAN')
-
       cy.get('.activity').eq(3)
         .should('contain', 'Salvatore Di Dio')
-        .should('contain', 'a supprimé')
-        .should('contain', 'Alexandre Regad')
+        .should('contain', 'a partagé le fichier')
+        .should('contain', 'document de groupe.html')
     })
   })
 })

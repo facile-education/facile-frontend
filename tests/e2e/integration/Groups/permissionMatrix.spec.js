@@ -8,9 +8,10 @@ const rolesList = [
     canUpdateGroup: true,
     canDeleteGroup: true,
     hasCourses: false,
+    hasContextDropdown: true,
     hasPersonal: true,
     hasSchool: true,
-    hasClass: true,
+    hasClass: false,
     hasDiscipline: true,
     hasAllClasses: true,
     hasAllDisciplines: false,
@@ -66,7 +67,7 @@ const rolesList = [
     hasCourses: false,
     hasPersonal: true,
     hasSchool: true,
-    hasClass: true,
+    hasClass: false,
     hasDiscipline: false,
     hasAllClasses: true,
     hasAllDisciplines: false,
@@ -107,14 +108,22 @@ describe('Permission matrix', () => {
         }
       })
 
+      if (role.hasContextDropdown) {
+	cy.get('.base-dropdown > .button').should('exist')
+	cy.get('.base-dropdown > .button').click()
+        cy.get('.suggestion-list > :nth-child(1)').should('exist')
+        cy.get('.suggestion-list > :nth-child(2)').should('exist')
+        cy.get('.suggestion-list > :nth-child(3)').should('exist')
+        cy.get('.suggestion-list > :nth-child(4)').should('exist')
+	cy.get('.base-dropdown > .button').click()
+      }
+
       // Group visibility // TODO match with good groups
       if (role.hasCourses) {
-        cy.get('.filters > :nth-child(2)').click()
         cy.contains('[data-test=group-item]', 'MA1051').should('exist') // The common course of the student and the teacher
       }
 
       if (role.hasPersonal) {
-        cy.get('.filters > :nth-child(1)').click()
         cy.contains('[data-test=group-item]', 'groupTest').should('exist')
       }
 
@@ -123,7 +132,6 @@ describe('Permission matrix', () => {
       }
 
       if (role.hasClass) {
-        cy.get('.filters > :nth-child(2)').click()
         cy.contains('[data-test=group-item]', '1051AC').should('exist') // The common class of the student and the teacher
       }
 
@@ -132,7 +140,8 @@ describe('Permission matrix', () => {
       }
 
       if (role.hasAllClasses) {
-        cy.get('.filters > :nth-child(2)').click()
+        cy.get('.base-dropdown > .button').click()
+        cy.get('.suggestion-list > :nth-child(3)').click()
         cy.contains('[data-test=group-item]', '1051AC').should('exist')
         cy.contains('[data-test=group-item]', '0911R1').should('exist')
       }
@@ -143,7 +152,6 @@ describe('Permission matrix', () => {
       }
 
       if (role.hasAllPersonal) {
-        cy.get('.filters > :nth-child(1)').click()
         // TODO
       }
     })
