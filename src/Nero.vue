@@ -6,11 +6,6 @@
 import { setMainColor } from '@/utils/theme.util'
 
 export default {
-  data () {
-    return {
-      el: undefined
-    }
-  },
   computed: {
     isIOS () {
       const platform = navigator?.userAgentData?.platform || navigator?.platform || 'unknown'
@@ -43,7 +38,6 @@ export default {
         }
 
         el.setAttribute('content', content)
-        this.el = el
       }
     }
   }
