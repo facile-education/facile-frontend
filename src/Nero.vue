@@ -6,9 +6,46 @@
 import { setMainColor } from '@/utils/theme.util'
 
 export default {
+  data () {
+    return {
+      el: undefined
+    }
+  },
+  computed: {
+    isIOS () {
+      const platform = navigator?.userAgentData?.platform || navigator?.platform || 'unknown'
+
+      return ((/iPad|iPhone|iPod/.test(platform) || (platform === 'MacIntel' && navigator.maxTouchPoints > 1)) &&
+        !window.MSStream)
+    }
+  },
   created () {
     setMainColor(this.$store.state.theme.mainColor)
     // this.$store.dispatch('auth/checkSession')
+
+    // In case of iOS device add maximug scale to meta viewport to prevent zoom on input selection
+    if (this.isIOS) {
+      this.addMaxScaleToViewport()
+    }
+  },
+  methods: {
+    addMaxScaleToViewport () {
+      const el = document.querySelector('meta[name=viewport]')
+
+      if (el !== null) {
+        let content = el.getAttribute('content')
+        const regex = /maximum-scale=[0-9.]+/g
+
+        if (regex.test(content)) {
+          content = content.replace(regex, 'maximum-scale=1.0')
+        } else {
+          content = [content, 'maximum-scale=1.0'].join(', ')
+        }
+
+        el.setAttribute('content', content)
+        this.el = el
+      }
+    }
   }
 }
 </script>
