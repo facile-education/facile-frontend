@@ -93,7 +93,6 @@ describe('File and Folder creation', () => {
       cy.contains('button', 'Créer').click()
     })
     cy.get('[data-test=file-display-modal]', { timeout: 10000 }).within(() => {
-      cy.get('h1', 'createdScratch')
       cy.get('h1').should('contain', 'createdScratch.sb3')
       cy.get('[data-test="closeModal"]').click()
     })

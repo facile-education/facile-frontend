@@ -142,6 +142,9 @@ export default {
       })
       return breadCrumb
     },
+    documentProperties () {
+      return this.$store.state.documents.documentsProperties
+    },
     isLoadDocumentsError () {
       return this.$store.state.documents.loadDocumentsError
     },
@@ -178,13 +181,16 @@ export default {
                     : documentSpaceOptions)
                 : [])
       // Remove Mindmap, Geogebra and Scratch if not broadcasted to user
-      if (options !== undefined && options.length >= 1 && options[0].subMenu !== undefined && !this.$store.state.documents.documentsProperties.hasMindmapBroadcasted) {
+      if (options !== undefined && options.length >= 1 && options[0].subMenu !== undefined &&
+          (this.documentProperties === undefined || !this.documentProperties.hasMindmapBroadcasted)) {
         removeMenuOptionIfExist(options[0].subMenu, 'newMindMap')
       }
-      if (options !== undefined && options.length >= 1 && options[0].subMenu !== undefined && !this.$store.state.documents.documentsProperties.hasGeogebraBroadcasted) {
+      if (options !== undefined && options.length >= 1 && options[0].subMenu !== undefined &&
+          (this.documentProperties === undefined || !this.documentProperties.hasGeogebraBroadcasted)) {
         removeMenuOptionIfExist(options[0].subMenu, 'newGeogebra')
       }
-      if (options !== undefined && options.length >= 1 && options[0].subMenu !== undefined && !this.$store.state.documents.documentsProperties.hasScratchBroadcasted) {
+      if (options !== undefined && options.length >= 1 && options[0].subMenu !== undefined &&
+          (this.documentProperties === undefined || !this.documentProperties.hasScratchBroadcasted)) {
         removeMenuOptionIfExist(options[0].subMenu, 'newScratch')
       }
       // Remove CopyUrl option if local documents
