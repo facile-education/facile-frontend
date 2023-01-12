@@ -17,7 +17,7 @@ export const state = {
   isCurrentlyLoading: false,
   isDocumentPanelDisplayed: false,
   openFiles: [],
-  documentsProperties: {},
+  documentsProperties: undefined,
   loadDocumentsError: false
 }
 
@@ -130,6 +130,9 @@ export const actions = {
     commit('closeFile', file)
   },
   changeDirectory ({ commit, state }, directory) {
+    if (state.documentsProperties === undefined) {
+      this.dispatch('documents/getGlobalDocumentsProperties')
+    }
     // commit('setDocumentPanelDisplayed', false) // confirm ergonomic
     commit('emptyFolderContent')
     this.dispatch('documents/cleanSelectedEntities')
@@ -201,7 +204,7 @@ export const actions = {
     })
   },
   goInDocumentRoot ({ state, commit }) {
-    if (state.documentsProperties.private) {
+    if (state.documentsProperties !== undefined && state.documentsProperties.private) {
       this.dispatch('documents/changeDirectory', { id: state.documentsProperties.private.id })
     } else {
       documentsService.getGlobalDocumentsProperties().then((data) => {
@@ -210,12 +213,7 @@ export const actions = {
       })
     }
   },
-  goInGroupRoot ({ state, commit }) {
-    if (!state.documentsProperties.maxUploadSize) {
-      documentsService.getGlobalDocumentsProperties().then((data) => {
-        commit('setDocumentsProperties', data)
-      })
-    }
+  goInGroupRoot () {
     this.dispatch('documents/changeDirectory', { id: 'collaborative', isGroupDirectory: true }) // TODO get those key from documentsProperties
   },
   openDocumentPanel ({ commit }) {
