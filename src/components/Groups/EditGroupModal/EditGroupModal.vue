@@ -144,10 +144,10 @@ import {
   createCommunity,
   editCommunity,
   getCommunityMembers,
-  getRoles,
   getSchools,
   getUsersCompletion
 } from '@/api/groups.service'
+import { getRoleList } from '@/api/role.service'
 
 import ColorPicker from '@/components/Nero/ColorPicker'
 import GroupUserItem from '@components/Groups/EditGroupModal/GroupUserItem'
@@ -243,7 +243,7 @@ export default {
     }
     nextTick(() => this.$refs.name.$el.childNodes[0].focus())
 
-    getRoles().then((data) => {
+    getRoleList().then((data) => {
       if (data.success) {
         this.selectedRole = this.emptyRole
         this.roleList = [this.emptyRole, ...PentilaUtils.Array.sortWithString(data.roles, false, 'label')]

@@ -1,5 +1,5 @@
 import administrationService from '@/api/administration.service'
-
+import { getBroadcastRoleList } from '@/api/role.service'
 export const state = {
   classList: undefined,
   portletList: undefined,
@@ -58,7 +58,7 @@ export const actions = {
     })
   },
   getRoleList ({ commit }) {
-    administrationService.getRoleList().then((data) => {
+    getBroadcastRoleList().then((data) => {
       if (data.success) {
         // TODO move to back-end
         data.roles.unshift({

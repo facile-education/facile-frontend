@@ -67,11 +67,11 @@
 
 import PentilaUtils from 'pentila-utils'
 import {
-  getRoles,
   getSchools,
   getUsersCompletion
 } from '@/api/groups.service'
 import { updatePassword } from '@/api/userManagement.service'
+import { getRoleList } from '@/api/role.service'
 
 export default {
   name: 'PasswordUpdate',
@@ -93,7 +93,7 @@ export default {
   computed: {
   },
   created () {
-    getRoles().then((data) => {
+    getRoleList().then((data) => {
       if (data.success) {
         this.selectedRole = this.emptyRole
         this.roleList = [this.emptyRole, ...PentilaUtils.Array.sortWithString(data.roles, false, 'label')]
