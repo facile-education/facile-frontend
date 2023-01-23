@@ -4,7 +4,6 @@ import PentilaUtils from 'pentila-utils'
 
 export default {
   getPersonalDetails,
-  getServiceList,
   getUserInformations,
   updateUserPicture,
   removeUserPicture,
@@ -117,15 +116,4 @@ function uploadProfilePicture (formData) {
         'Content-Type': undefined
       }
     }).then(response => response.data)
-}
-
-/**
- * Get User's service list
- */
-function getServiceList () {
-  return axios.get(constants.INFORMATION_MANAGER_URL, {
-    params: {
-      cmd: 'getServiceList'
-    }
-  }).then(response => response.data)
 }
