@@ -7,7 +7,6 @@ export {
   getSubjects,
   getManualUsers,
   getSchools,
-  getRoles,
   createManualUser,
   editManualUser,
   removeManualUser,
@@ -64,13 +63,6 @@ function getManualUsers (schoolId, search, pageNb, nbItemsPerPage, sort = 'lastN
 
 function getSchools () {
   return axios.get(constants.JSON_WS_URL + USER_MANAGEMENT_PATH + '/get-schools', {
-    params: {
-    }
-  }).then(response => response.data)
-}
-
-function getRoles () {
-  return axios.get(constants.JSON_WS_URL + USER_MANAGEMENT_PATH + '/get-roles', {
     params: {
     }
   }).then(response => response.data)

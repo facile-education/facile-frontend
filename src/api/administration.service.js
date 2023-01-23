@@ -4,8 +4,7 @@ import constants from './constants'
 export default {
   getAdministeredSchoolList,
   getClassList,
-  getPortletList,
-  getRoleList
+  getPortletList
 }
 
 const SERVICEMANAGER_PATH = '/gestionApplications-portlet.'
@@ -29,13 +28,6 @@ function getClassList (schoolId) {
 
 function getPortletList () {
   return axios.get(constants.JSON_WS_URL + SERVICEMANAGER_PATH + SERVICE_CTX + 'get-portlets', {
-    params: {
-    }
-  }).then(response => response.data)
-}
-
-function getRoleList () {
-  return axios.get(constants.JSON_WS_URL + SERVICEMANAGER_PATH + SERVICE_CTX + 'get-roles', {
     params: {
     }
   }).then(response => response.data)
