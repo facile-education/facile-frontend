@@ -2,12 +2,26 @@ import axios from 'axios'
 import constants from './constants'
 import PentilaUtils from 'pentila-utils'
 
+export {
+  createApplication,
+  exportApplicationUserList,
+  getApplicationBroadcastScope,
+  getSchoolApplications,
+  getAllApplications,
+  getUserApplications,
+  removeApplication,
+  updateApplication,
+  updateBroadcastScope,
+  updateBroadcast
+}
+
 export default {
   createApplication,
   exportApplicationUserList,
   getApplicationBroadcastScope,
   getSchoolApplications,
   getAllApplications,
+  getUserApplications,
   removeApplication,
   updateApplication,
   updateBroadcastScope,
@@ -80,8 +94,7 @@ function getSchoolApplications (schoolId) {
 
 function getAllApplications () {
   return axios.get(constants.JSON_WS_URL + SERVICEMANAGER_PATH + SERVICE_CTX + 'get-all-services', {
-    params: {
-    }
+    params: {}
   }).then(response => response.data)
 }
 
@@ -122,5 +135,11 @@ function exportApplicationUserList (schoolId, applicationId, roleName) {
       schoolId,
       roleName
     }
+  }).then(response => response.data)
+}
+
+function getUserApplications () {
+  return axios.get(constants.JSON_WS_URL + SERVICEMANAGER_PATH + SERVICE_CTX + 'get-user-services', {
+    params: {}
   }).then(response => response.data)
 }

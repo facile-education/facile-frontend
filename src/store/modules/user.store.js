@@ -1,5 +1,6 @@
 // import PentilaUtils from 'pentila-utils'
 import userService from '@/api/user.service'
+import { getUserApplications } from '@/api/applicationManager.service'
 
 export const state = {
   userId: undefined,
@@ -100,9 +101,9 @@ export const actions = {
     commit('updateUserDetails', data)
   },
   getServiceList ({ commit }) {
-    userService.getServiceList().then((data) => {
+    getUserApplications().then((data) => {
       if (data.success) {
-        commit('initServiceList', data.items)
+        commit('initServiceList', data.services)
       }
     })
   },
