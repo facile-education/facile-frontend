@@ -103,6 +103,11 @@ const routes = [
     component: () => import('@/router/views/Viewer')
   },
   {
+    path: '/advanced-search',
+    name: 'AdvancedSearch',
+    component: () => import('@/router/views/AdvancedSearch')
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: () => import('@/router/views/NotFound')
