@@ -4,12 +4,8 @@ import axios from 'axios'
 import constants from '@/api/constants'
 
 export {
-  getSchoolCLassList,
+  getSchoolClassList,
   getSchoolVoleeList
-}
-
-export default {
-  getSchoolCLassList
 }
 
 const ORG_PATH = '/accesAteliers-portlet.'
@@ -17,7 +13,7 @@ const ORG_PATH = '/accesAteliers-portlet.'
 /**
  * Get school classes
  */
-function getSchoolCLassList (schoolId, includeCours) {
+function getSchoolClassList (schoolId, includeCours) {
   return axios.get(constants.JSON_WS_URL + ORG_PATH + 'orgutils/get-school-classes', {
     params: {
       schoolId: schoolId,

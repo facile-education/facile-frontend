@@ -1,5 +1,5 @@
 import i18n from '@/i18n'
-import organizationService from '@/api/organization.service'
+import { getSchoolClassList } from '@/api/organization.service'
 import schoolLifeService from '@/api/schoolLife-portlet.service'
 
 function getNonUsualSlots (store) {
@@ -90,7 +90,7 @@ export const mutations = {
 }
 export const actions = {
   getClassList ({ commit }, schoolId) {
-    organizationService.getSchoolCLassList(schoolId, false).then(
+    getSchoolClassList(schoolId, false).then(
       (data) => {
         if (data.success) {
           commit('setClassList', data.orgs)

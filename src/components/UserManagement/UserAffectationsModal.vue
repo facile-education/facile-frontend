@@ -82,7 +82,7 @@
 
 <script>
 import { addUserAffectation, removeUserAffectation } from '@/api/userManagement.service'
-import { getSchoolCLassList } from '@/api/organization.service'
+import { getSchoolClassList } from '@/api/organization.service'
 import dayjs from 'dayjs'
 import localizedFormat from 'dayjs/plugin/localizedFormat'
 
@@ -116,7 +116,7 @@ export default {
     }
   },
   mounted () {
-    getSchoolCLassList(this.selectedSchool.schoolId, true).then(
+    getSchoolClassList(this.selectedSchool.schoolId, true).then(
       (data) => {
         if (data.success) {
           this.schoolOrgs = data.orgs
