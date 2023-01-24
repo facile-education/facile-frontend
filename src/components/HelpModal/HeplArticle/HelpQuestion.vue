@@ -1,0 +1,128 @@
+<template>
+  <button
+    class="question"
+    @click="toggleQuestion"
+  >
+    {{ question.question }}
+    <span>
+      <img
+        v-if="isAdministrator"
+        class="admin-trash-icon"
+        src="@/assets/icon_trash.svg"
+        alt="delete"
+        @click.stop="confirmQuestionRemoval"
+      >
+      <BaseIcon
+        class="icon"
+        :class="isExtended ? 'extend': 'collapse'"
+        name="chevron-up"
+      />
+    </span>
+  </button>
+  <div
+    v-if="isExtended"
+    class="answer"
+    v-html="question.answer"
+  />
+  <div class="separator" />
+</template>
+
+<script>
+import BaseIcon from '@components/Base/BaseIcon.vue'
+
+export default {
+  name: 'HelpQuestion',
+  components: { BaseIcon },
+  props: {
+    question: {
+      type: Object,
+      required: true
+    }
+  },
+  emits: ['delete'],
+  data () {
+    return {
+      isExtended: false
+    }
+  },
+  computed: {
+    isAdministrator () {
+      return this.$store.state.user.isAdministrator
+    }
+  },
+  methods: {
+    toggleQuestion () {
+      this.isExtended = !this.isExtended
+    },
+    confirmQuestionRemoval () {
+      this.$store.dispatch('warningModal/addWarning', {
+        text: this.$t('confirmQuestionRemovalMessage'),
+        lastAction: { fct: this.deleteQuestion, params: [] }
+      })
+    },
+    deleteQuestion () {
+      this.$emit('delete')
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+@import "@design";
+
+button {
+  display: flex;
+  height: 50px;
+  width: 100%;
+  cursor: pointer;
+  background-color: transparent;
+  border-radius: 0;
+  padding: 0 1em;
+  border: none;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: lighter;
+  font-size: 1em;
+
+  .collapse, .extend {
+    transition:  transform .6s;
+  }
+
+  .extend {
+    transform: rotate(0);
+  }
+
+  .collapse {
+    transform: rotate(180deg);
+  }
+
+  .admin-trash-icon {
+    margin-right: 10px;
+    display: none;
+  }
+
+  &:hover {
+    .admin-trash-icon {
+      display: inline;
+    }
+  }
+}
+
+.answer {
+  padding: 0 1em;
+  font-size: 0.875em;
+}
+
+.separator {
+  width: 100%;
+  height: 1px;
+  background-color: $color-border;
+}
+
+</style>
+
+<i18n locale="fr">
+{
+  "confirmQuestionRemovalMessage": "Supprimmer la question définitivement?"
+}
+</i18n>
