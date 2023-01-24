@@ -25,7 +25,7 @@
         :placeholder="$t('orgsPlaceholder') + '*'"
         :list="classList"
         :sort="false"
-        display-field="name"
+        display-field="orgName"
         @blur="onBlurOrgs"
         @update:modelValue="updateOrgs"
       />
@@ -88,7 +88,13 @@ export default {
   },
   computed: {
     classList () {
-      return this.$store.state.administration.classList
+      if (this.$store.state.administration.classList === undefined) {
+        return undefined
+      }
+
+      const classList = [{ orgId: 0, orgName: this.$t('all-school') }]
+      classList.push(...this.$store.state.administration.classList)
+      return classList
     },
     formErrorList () {
       const form = this.v$.rule
@@ -180,6 +186,7 @@ export default {
 
 <i18n locale="fr">
 {
+  "all-school": "Tout l'établissement",
   "orgsPlaceholder": "Liste des classes",
   "fromLabel": "de",
   "rolesPlaceholder": "Liste des profils"
