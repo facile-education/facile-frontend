@@ -1,5 +1,7 @@
 import administrationService from '@/api/administration.service'
+import { getSchoolClassList } from '@/api/organization.service'
 import { getBroadcastRoleList } from '@/api/role.service'
+
 export const state = {
   classList: undefined,
   portletList: undefined,
@@ -44,7 +46,7 @@ export const actions = {
     })
   },
   getClassList ({ state, commit }) {
-    administrationService.getClassList(state.selectedSchool.schoolId).then((data) => {
+    getSchoolClassList(state.selectedSchool.schoolId, false).then((data) => {
       if (data.success) {
         commit('setClassList', data.orgs)
       }
