@@ -25,9 +25,10 @@ const CDT_PATH = '/cdt-portlet.'
 /**
  * Get CDT configuration
  */
-function getConfiguration () {
+function getConfiguration (schoolId = 0) {
   return axios.get(constants.JSON_WS_URL + CDT_PATH + 'configuration/get-configuration', {
     params: {
+      schoolId: schoolId,
       childId: 0
     }
   }).then(response => response.data)
