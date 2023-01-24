@@ -5,7 +5,6 @@ import PentilaUtils from 'pentila-utils'
 export {
   getSubjects,
   getManualUsers,
-  getSchools,
   createManualUser,
   editManualUser,
   removeManualUser,
@@ -45,13 +44,6 @@ function getManualUsers (schoolId, search, pageNb, nbItemsPerPage, sort = 'lastN
       limit,
       sort,
       asc
-    }
-  }).then(response => response.data)
-}
-
-function getSchools () {
-  return axios.get(constants.JSON_WS_URL + USER_MANAGEMENT_PATH + '/get-schools', {
-    params: {
     }
   }).then(response => response.data)
 }

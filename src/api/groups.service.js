@@ -11,7 +11,6 @@ export {
   editCommunity,
   removeCommunity,
   getGroupHistory,
-  getSchools,
   getSpecificGroupActivities,
   extendCommunity
 }
@@ -71,12 +70,6 @@ function getCommunityMembers (groupId) {
     params: {
       groupId
     }
-  }).then(response => response.data)
-}
-
-function getSchools () {
-  return axios.get(constants.JSON_WS_URL + GROUP_PATH + GROUP_CTX + 'get-schools', {
-    params: {}
   }).then(response => response.data)
 }
 

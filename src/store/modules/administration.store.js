@@ -1,5 +1,5 @@
 import administrationService from '@/api/administration.service'
-import { getSchoolClassList } from '@/api/organization.service'
+import { getAdministeredSchoolList, getSchoolClassList } from '@/api/organization.service'
 import { getBroadcastRoleList } from '@/api/role.service'
 
 export const state = {
@@ -28,7 +28,7 @@ export const mutations = {
 }
 export const actions = {
   async getAdministrationSchools ({ commit }) {
-    await administrationService.getAdministeredSchoolList().then((data) => {
+    await getAdministeredSchoolList().then((data) => {
       if (data.success) {
         commit('initAdministeredSchoolList', data.schools)
         if (data.schools.length > 0) {

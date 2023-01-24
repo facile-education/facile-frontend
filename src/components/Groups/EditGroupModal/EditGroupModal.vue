@@ -144,9 +144,9 @@ import {
   createCommunity,
   editCommunity,
   getCommunityMembers,
-  getSchools,
   getUsersCompletion
 } from '@/api/groups.service'
+import { getSchools } from '@/api/organization.service'
 import { getRoleList } from '@/api/role.service'
 
 import ColorPicker from '@/components/Nero/ColorPicker'

@@ -66,10 +66,8 @@
 <script>
 
 import PentilaUtils from 'pentila-utils'
-import {
-  getSchools,
-  getUsersCompletion
-} from '@/api/groups.service'
+import { getUsersCompletion } from '@/api/groups.service'
+import { getSchools } from '@/api/organization.service'
 import { updatePassword } from '@/api/userManagement.service'
 import { getRoleList } from '@/api/role.service'
 
