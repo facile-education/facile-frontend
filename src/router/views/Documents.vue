@@ -374,9 +374,9 @@ export default {
           break
         case 'copyUrl':
           if (this.selectedDocuments[0].type === 'File') {
-            this.copyToClipboard(window.location.host + '/nero/viewer/' + this.selectedDocuments[0].id)
+            this.copyToClipboard(window.location.protocol + '//' + window.location.host + '/nero/viewer/' + this.selectedDocuments[0].id)
           } else {
-            this.copyToClipboard(window.location.host + '/user//nero#/documents?folderId=' + this.selectedDocuments[0].id)
+            this.copyToClipboard(window.location.protocol + '//' + window.location.host + '/user//nero#/documents?folderId=' + this.selectedDocuments[0].id)
           }
           break
         case 'managePermissions':
