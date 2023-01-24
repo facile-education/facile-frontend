@@ -8,7 +8,6 @@ export default {
   updateUserPicture,
   removeUserPicture,
   updateInterfacePreferences,
-  uploadProfilePicture,
   updateThemeColor,
   updateReportFrequency,
   updateWebdavState,
@@ -103,17 +102,4 @@ function updateWebdavPassword (password, confirmPassword) {
       confirmPassword: confirmPassword
     })
   ).then(response => response.data)
-}
-
-/**
- * Update user profile picture
- * @param {*} formData
- */
-function uploadProfilePicture (formData) {
-  return axios.post(constants.PREFERENCES_URL + '&cmd=uploadPicture', formData,
-    {
-      headers: {
-        'Content-Type': undefined
-      }
-    }).then(response => response.data)
 }

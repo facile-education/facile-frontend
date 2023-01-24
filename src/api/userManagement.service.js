@@ -3,7 +3,6 @@ import constants from '@/api/constants'
 import PentilaUtils from 'pentila-utils'
 
 export {
-  getSchoolUsers,
   getSubjects,
   getManualUsers,
   getSchools,
@@ -22,27 +21,16 @@ export {
 }
 
 export default {
-  getSchoolUsers,
   getSubjects
 }
 
 const SUBJECT_PATH = '/gestionUtilisateurs-portlet.subject'
-const USER_SEARCH_PATH = '/gestionUtilisateurs-portlet.usersearch'
 const USER_MANAGEMENT_PATH = '/gestionUtilisateurs-portlet.usermanagement'
 const AFFECTATION_PATH = '/gestionUtilisateurs-portlet.affectation'
 const SCHOOL_ADMIN_PATH = '/gestionUtilisateurs-portlet.schooladmin'
 
 function getSubjects () {
   return axios.get(constants.JSON_WS_URL + SUBJECT_PATH + '/get-subjects').then(response => response.data)
-}
-
-function getSchoolUsers (schoolId, search) {
-  return axios.get(constants.JSON_WS_URL + USER_SEARCH_PATH + '/get-school-student-teacher-list', {
-    params: {
-      schoolId,
-      search
-    }
-  }).then(response => response.data)
 }
 
 function getManualUsers (schoolId, search, pageNb, nbItemsPerPage, sort = 'lastName', asc = true) {

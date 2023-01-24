@@ -18,7 +18,7 @@
 
 <script>
 import PentilaUtils from 'pentila-utils'
-import schoolLifeService from '@/api/schoolLife-portlet.service'
+import { getSchoolStudents, getSchoollifeAgents } from '@/api/userSearch.service'
 import { nbCharBeforeCompletion } from '@/constants/appConstants'
 let timeout
 
@@ -82,7 +82,7 @@ export default {
     getCompletion (inputValue) {
       switch (this.userType) {
         case 'student':
-          schoolLifeService.getSchoolStudents(this.selectedSchool.schoolId, inputValue).then((data) => {
+          getSchoolStudents(this.selectedSchool.schoolId, inputValue).then((data) => {
             if (data.success) {
               if (data.students.length > 0) {
                 this.autocompleteUserList = data.students
@@ -96,7 +96,7 @@ export default {
           })
           break
         case 'teacher':
-          schoolLifeService.getSchoolTeachers(this.selectedSchool.schoolId, inputValue).then((data) => {
+          getSchoollifeAgents(this.selectedSchool.schoolId, inputValue).then((data) => {
             if (data.success) {
               if (data.members.length > 0) {
                 this.autocompleteUserList = data.members
