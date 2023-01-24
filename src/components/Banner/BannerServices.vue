@@ -3,7 +3,10 @@
     <BannerItem src="/pentilaBanner-theme/images/icon/banner/icon-star.svg" />
     <BannerItem src="/pentilaBanner-theme/images/icon/banner/icon-letter.svg" />
     <BannerItem src="/pentilaBanner-theme/images/icon/banner/icon-archives.svg" />
-    <BannerItem src="/pentilaBanner-theme/images/icon/banner/icon-question.svg" />
+    <BannerItem
+      src="/pentilaBanner-theme/images/icon/banner/icon-question.svg"
+      @click="openHelpModal"
+    />
   </div>
 </template>
 
@@ -14,6 +17,11 @@ export default {
   name: 'BannerServices',
   components: {
     BannerItem
+  },
+  methods: {
+    openHelpModal () {
+      this.$store.dispatch('help/openHelpModal')
+    }
   }
 }
 </script>

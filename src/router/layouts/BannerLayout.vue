@@ -59,7 +59,7 @@
         :file="file"
         @close="closeFile(file)"
       />
-    </teleport>
+    </teleport-->
 
     <teleport
       v-if="isWarningModalDisplayed"
@@ -68,7 +68,17 @@
       <WarningModal
         win-width="500px"
       />
-    </teleport-->
+    </teleport>
+
+    <teleport
+      v-if="isHelpModalDisplayed"
+      to="body"
+    >
+      <HelpModal
+        v-if="isHelpModalDisplayed"
+        @close="closeHelpModal"
+      />
+    </teleport>
   </div>
 </template>
 
@@ -81,10 +91,12 @@ import Banner from '@/components/Banner/Banner'
 // const FileDisplayModal = defineAsyncComponent(() => import('@/components/Documents/FileDisplay/FileDisplayModal'))
 const MobileMenu = defineAsyncComponent(() => import('@/components/Menu/MobileMenu'))
 const SideMenu = defineAsyncComponent(() => import('@/components/Menu/SideMenu'))
-// const WarningModal = defineAsyncComponent(() => import('@/components/Nero/WarningModal'))
+const HelpModal = defineAsyncComponent(() => import('@components/HelpModal/HelpModal.vue'))
+const WarningModal = defineAsyncComponent(() => import('@/components/Nero/WarningModal'))
 
 export default {
-  components: { Banner, MobileMenu, /* FileDisplayModal, Popup, */ SideMenu/* , WarningModal */ },
+  name: 'BannerLayout',
+  components: { HelpModal, Banner, MobileMenu, /* FileDisplayModal, Popup, */ SideMenu, WarningModal },
   inject: ['mq'],
   props: {
     isAllowed: {
@@ -93,8 +105,14 @@ export default {
     }
   },
   computed: {
+    isWarningModalDisplayed () {
+      return this.$store.getters['warningModal/isWarningModalDisplayed']
+    },
     isMobileMenuDisplayed () {
       return this.$store.state.nero.isMobileMenuDisplayed
+    },
+    isHelpModalDisplayed () {
+      return this.$store.state.help.isHelpModalDisplayed
     },
     menuExpanded () {
       return this.$store.state.nero.menuExpanded
@@ -142,6 +160,9 @@ export default {
     },
     closePopup () {
       this.$store.dispatch('popups/popPopup')
+    },
+    closeHelpModal () {
+      this.$store.dispatch('help/closeHelpModal')
     }
   }
 }
