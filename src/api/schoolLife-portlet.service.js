@@ -2,8 +2,6 @@ import axios from 'axios'
 import constants from '@/api/constants'
 
 export default {
-  getSchoolStudents,
-  getSchoolTeachers,
   createSlot,
   updateSlot,
   deleteSlot,
@@ -25,30 +23,6 @@ const SCHOOL_LIFE_SLOT_PATH = '/schoollife-portlet.schoollifeslot'
 const SCHOOL_LIFE_SESSION_PATH = '/schoollife-portlet.schoollifesession'
 const SCHOOL_LIFE_SESSION_STUDENT_PATH = '/schoollife-portlet.schoollifesessionstudent'
 const SCHOOL_LIFE_RENVOI_PATH = '/schoollife-portlet.renvoi'
-
-/**
- * Get the specified school's students filtered by name
- */
-function getSchoolStudents (schoolId, query) {
-  return axios.get(constants.JSON_WS_URL + SCHOOL_LIFE_SESSION_STUDENT_PATH + '/get-school-students', {
-    params: {
-      schoolId: schoolId,
-      search: query
-    }
-  }).then(response => response.data)
-}
-
-/**
- * Get the specified school's teachers filtered by name
- */
-function getSchoolTeachers (schoolId, query) {
-  return axios.get(constants.JSON_WS_URL + SCHOOL_LIFE_SLOT_PATH + '/get-teachers', {
-    params: {
-      schoolId: schoolId,
-      search: query
-    }
-  }).then(response => response.data)
-}
 
 /**
  * Create a slot of a given type in the school. (return only success field)

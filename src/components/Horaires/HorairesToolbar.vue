@@ -95,7 +95,7 @@ import PentilaUtils from 'pentila-utils'
 
 import NeroToolbar from '@/components/Nero/NeroToolbar'
 import NeroIcon from '@/components/Nero/NeroIcon'
-import userManagementService from '@/api/userManagement.service'
+import { getSchoolUsers } from '@/api/userSearch.service'
 
 import { defineAsyncComponent } from 'vue'
 const DatepickerNav = defineAsyncComponent(() => import('@/components/Horaires/DatepickerNav'))
@@ -191,7 +191,7 @@ export default {
   },
   methods: {
     getCompletion (inputValue) {
-      userManagementService.getSchoolUsers(this.selectedSchool.schoolId, inputValue).then((data) => {
+      getSchoolUsers(this.selectedSchool.schoolId, inputValue).then((data) => {
         if (data.success) {
           if (data.users.length > 0) {
             this.autocompleteUserList = data.users

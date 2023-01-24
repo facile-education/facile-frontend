@@ -141,7 +141,7 @@
 import { required } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
 import { createSession } from '@/api/cdt.service'
-import { getSchoolTeachers } from '@/api/organization.service'
+import { getSchoolTeachers } from '@/api/userSearch.service'
 import { getSubjects } from '@/api/userManagement.service'
 import { getUserGroups } from '@/api/groups.service'
 import dayjs from 'dayjs'
