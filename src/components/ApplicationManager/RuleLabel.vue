@@ -37,7 +37,7 @@ export default {
             if (j > 0) {
               label += ', '
             }
-            label += org.name
+            label += org.orgName
           }
         }
       }
