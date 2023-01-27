@@ -71,15 +71,25 @@
       </div>
 
       <!-- Role -->
-      <div class="role">
+      <div
+        v-if="(roleList && roleList.length > 1 && !isParent)"
+        class="role"
+      >
         <p v-t="'role'" />
         <PentilaDropdown
-          v-if="(roleList && roleList.length > 1)"
           v-model="selectedRole"
           :list="roleList"
           display-field="label"
         />
       </div>
+
+      <!-- Screen name -->
+      <p
+        v-if="!isCreation && isParent"
+      >
+        {{ $t('parent-account') }}{{ screenName }}
+      </p>
+
       <p
         v-if="isCreation"
         v-t="'email-warning'"
@@ -139,7 +149,9 @@ export default {
       email: '',
       selectedRole: undefined,
       school: undefined,
-      roleList: []
+      roleList: [],
+      isParent: false,
+      screenName: ''
     }
   },
   computed: {
@@ -172,6 +184,8 @@ export default {
           this.lastName = this.editedUser.lastName
           this.firstName = this.editedUser.firstName
           this.email = this.editedUser.email
+          this.isParent = this.editedUser.isParent
+          this.screenName = this.editedUser.screenName
           const roleIndex = this.roleList.map(role => role.roleId).indexOf(this.editedUser.roleId)
           this.selectedRole = this.roleList[roleIndex]
           const schoolIndex = this.schoolList.map(school => school.schoolId).indexOf(this.editedUser.schoolId)
@@ -219,7 +233,9 @@ export default {
       if (this.v$.$invalid) {
         this.v$.$touch()
       } else {
-        editManualUser(this.editedUser.userId, this.lastName, this.firstName, this.email, this.selectedRole.roleId, this.selectedSchool.schoolId).then(
+        // Manage roleId for parents
+        const roleId = this.selectedRole !== undefined ? this.selectedRole.roleId : this.editedUser.roleId
+        editManualUser(this.editedUser.userId, this.lastName, this.firstName, this.email, roleId, this.selectedSchool.schoolId).then(
           (data) => {
             if (data.success) {
               this.$store.dispatch('userManagement/editManualUser', data.user)
@@ -282,13 +298,14 @@ export default {
   "creation-title": "Créer un utilisateur",
   "edition-title": "Modifier un utilisateur",
   "add": "Créer",
-  "edit": "Modifier",
+  "edit": "Valider",
   "delete": "Supprimer",
   "lastNamePlaceholder": "Nom",
   "firstNamePlaceholder": "Prénom",
   "emailPlaceholder": "Mail",
   "school": "Établissement",
   "role": "Profil",
+  "parent-account": "Compte parent - Login: {0}",
   "email-warning": "NB: Un e-mail contenant les informations d'authentification sera envoyé à l'utilisateur créé.",
   "delete-warning": "La suppression de cet utilisateur est définitive.",
   "Popup": {

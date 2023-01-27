@@ -47,6 +47,9 @@ export const mutations = {
   setNbTotalResults (state, nbTotalResults) {
     state.nbTotalResults = nbTotalResults
   },
+  addNbTotalResults (state, nbNewUsers) {
+    state.nbTotalResults += nbNewUsers
+  },
   emptyManualUserList (state) {
     state.isSearchLocked = false
     state.manualUserList.length = 0
@@ -104,12 +107,14 @@ export const actions = {
   },
   addManualUser ({ commit }, user) {
     commit('addUser', user)
+    commit('addNbTotalResults', 1)
   },
   editManualUser ({ commit }, user) {
     commit('editUser', user)
   },
   removeManualUser ({ commit }, user) {
     commit('removeUser', user)
+    commit('addNbTotalResults', -1)
   },
   addAffectedUsers ({ commit }, users) {
     commit('addAffectedUsers', users)
