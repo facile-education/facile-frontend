@@ -40,6 +40,7 @@ import navigationService from '@/api/documents/folder.service'
 import Breadcrumb from '@components/Documents/Breadcrumb'
 import FilePickerFolder from '@components/FilePicker/FilePickerFolder'
 import FilePickerFile from '@components/FilePicker/FilePickerFile'
+import PentilaUtils from 'pentila-utils'
 
 export default {
   name: 'FilePickerModalDocumentTab',
@@ -129,7 +130,11 @@ export default {
         this.isLoadingFiles = false
         if (data.success) {
           this.currentFolders = data.folders ? data.folders : []
+          this.currentFolders = PentilaUtils.Array.sortWithString(this.currentFolders, false, 'name')
+
           this.currentFiles = data.files ? data.files : []
+          this.currentFiles = PentilaUtils.Array.sortWithString(this.currentFiles, false, 'name')
+
           this.selectedFolder = undefined
           this.$emit('selectedFolder', undefined)
           groupService.getGroupBreadcrumb(folderId).then((data) => {
@@ -159,7 +164,11 @@ export default {
         if (data.success) {
           data.subFolders.forEach(subFolder => { subFolder.hasAddPermission = true }) // Add hasAddPermission = true property to all document folder for compliance with group objects
           this.currentFolders = data.subFolders ? data.subFolders : []
+          this.currentFolders = PentilaUtils.Array.sortWithString(this.currentFolders, false, 'name')
+
           this.currentFiles = data.files ? data.files : []
+          this.currentFiles = PentilaUtils.Array.sortWithString(this.currentFiles, false, 'name')
+
           this.selectedFolder = undefined
           this.$emit('selectedFolder', undefined)
           navigationService.getBreadcrumb(folderId).then((data) => {
