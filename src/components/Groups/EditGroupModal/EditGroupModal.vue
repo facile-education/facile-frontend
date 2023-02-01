@@ -143,6 +143,8 @@ import PentilaUtils from 'pentila-utils'
 import {
   createCommunity,
   editCommunity,
+  checkCommunityName,
+  extendCommunity,
   getCommunityMembers,
   getUsersCompletion
 } from '@/api/groups.service'
@@ -152,6 +154,7 @@ import { getRoleList } from '@/api/role.service'
 import ColorPicker from '@/components/Nero/ColorPicker'
 import GroupUserItem from '@components/Groups/EditGroupModal/GroupUserItem'
 import SelectedGroupMemberItem from '@components/Groups/EditGroupModal/SelectedGroupMemberItem'
+import dayjs from 'dayjs'
 
 export default {
   name: 'EditGroupModal',
@@ -347,16 +350,42 @@ export default {
         })
       } else {
         // Creation
-        const message = this.$t('creation-success')
-        createCommunity(this.group.groupName, this.group.description, this.group.isPedagogical, this.groupMembers, this.group.color).then((data) => {
+        // First check if the provided name exists or not
+        checkCommunityName(this.group.groupName).then((data) => {
           if (data.success) {
-            this.$store.dispatch('groups/getGroupList', this.$store.state.groups.currentFilter)
-            this.$store.dispatch('popups/pushPopup', { message, type: 'info' })
-            this.closeModal()
+            const message = this.$t('creation-success')
+            createCommunity(this.group.groupName, this.group.description, this.group.isPedagogical, this.groupMembers, this.group.color).then((data) => {
+              if (data.success) {
+                this.$store.dispatch('groups/getGroupList', this.$store.state.groups.currentFilter)
+                this.$store.dispatch('popups/pushPopup', { message, type: 'info' })
+                this.closeModal()
+              }
+            })
+          } else {
+            // Group already exists
+            // Case 1 : community is deactivated and was created by current user -> suggest him to extend and reactivate the group
+            if (data.errorCode === 1) {
+              this.$store.dispatch('warningModal/addWarning', {
+                text: this.$t('reactivate-community', { creationDate: dayjs(data.creationDate).format('DD MMM YYYY'), expirationDate: dayjs(data.expirationDate).format('DD MMM YYYY') }),
+                lastAction: { fct: this.reactivateCommunity, params: [data.groupId] }
+              })
+            }
+            // Case 2 : else, display warning
+            if (data.errorCode === 2) {
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('community-name-exists'), type: 'error' })
+            }
           }
         })
       }
-      this.closeModal()
+    },
+    reactivateCommunity (groupId) {
+      extendCommunity(groupId).then((data) => {
+        if (data.success) {
+          this.closeModal()
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('community-reactivated'), type: 'info' })
+          this.$store.dispatch('groups/getGroupList', this.$store.state.groups.currentFilter)
+        }
+      })
     },
     closeModal () {
       this.$store.dispatch('misc/decreaseModalCount')
@@ -477,6 +506,9 @@ hr {
   "searchPlaceholder": "Rechercher par nom",
   "admin": "Administrateur",
   "creation-success": "Groupe créé",
-  "edition-success": "Groupe modifié"
+  "edition-success": "Groupe modifié",
+  "community-name-exists": "Un espace existe déjà avec ce nom, merci d'en choisir un autre",
+  "reactivate-community": "Un espace du même nom a été trouvé, créé par vous-même le {creationDate}, et expiré depuis le {expirationDate}. Souhaitez-vous le réactiver et prolonger sa durée de vie jusqu'à la fin de l'année scolaire en cours ?",
+  "community-reactivated": "Votre communauté a été réactivée"
 }
 </i18n>
