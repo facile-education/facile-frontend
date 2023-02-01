@@ -8,6 +8,7 @@ export {
   getUsersCompletion,
   getCommunityMembers,
   createCommunity,
+  checkCommunityName,
   editCommunity,
   removeCommunity,
   getGroupHistory,
@@ -17,7 +18,8 @@ export {
 
 export default {
   getUserGroups,
-  getUserCommunities
+  getUserCommunities,
+  checkCommunityName
 }
 
 const GROUP_PATH = '/accesAteliers-portlet.'
@@ -111,6 +113,14 @@ function createCommunity (groupName, description, isPedagogical, members, color)
       color
     })
   ).then(response => response.data)
+}
+
+function checkCommunityName (communityName) {
+  return axios.get(constants.JSON_WS_URL + GROUP_PATH + COMMUNITY_CTX + 'check-community-name', {
+    params: {
+      communityName
+    }
+  }).then(response => response.data)
 }
 
 function editCommunity (groupId, groupName, description, isPedagogical, members, color) {
