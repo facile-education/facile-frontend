@@ -2,6 +2,7 @@
   <div class="help-tools">
     <button
       v-if="mq.phone"
+      data-test="toggle-menu-icon"
       class="menu-button"
       @click="toggleMobileMenu"
     >

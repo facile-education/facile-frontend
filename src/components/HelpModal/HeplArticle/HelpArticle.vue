@@ -50,6 +50,7 @@
       />
       <button
         v-else
+        data-test="toggle-phone-links"
         @click="togglePhoneLinks"
       >
         <BaseIcon

@@ -4,6 +4,7 @@
     <BannerItem src="/pentilaBanner-theme/images/icon/banner/icon-letter.svg" />
     <BannerItem src="/pentilaBanner-theme/images/icon/banner/icon-archives.svg" />
     <BannerItem
+      data-test="open-help-item"
       src="/pentilaBanner-theme/images/icon/banner/icon-question.svg"
       @click="openHelpModal"
     />

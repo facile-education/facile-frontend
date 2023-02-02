@@ -16,6 +16,7 @@
       <li v-if="isAdministrator">
         <PentilaButton
           v-t="('createCategoryLabel')"
+          data-test="create-category-button"
           class="create-category-button"
           :class="{'phone': mq.phone}"
           @click="isCreateCategoryModalDisplayed=true"
