@@ -11,6 +11,7 @@
       {{ category.categoryName }}
       <span v-if="isAdministrator && isHovering">
         <BaseIcon
+          data-test="admin-create-category-button"
           name="plus"
           @click.stop="isCreateArticleModalDisplayed=true"
         />

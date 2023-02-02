@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="faq-section">
     <div class="header">
       <h3
         v-t="'FAQ'"

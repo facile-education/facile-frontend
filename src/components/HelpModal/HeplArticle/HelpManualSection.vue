@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="manual-section">
     <div class="header">
       <h3 v-t="'manual'" />
       <button
