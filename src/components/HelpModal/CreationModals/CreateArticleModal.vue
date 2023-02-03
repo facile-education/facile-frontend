@@ -19,12 +19,13 @@
         :placeholder="$t('namePlaceHolder')"
       />
 
-      <PentilaDropdown
-        v-model="selectedRole"
-        class="dropdown"
+      <PentilaTagsInput
+        v-model="selectedRoles"
+        class="tags-input"
+        :placeholder="$t('rolesPlaceholder')"
         :list="roleList"
-        :sort="false"
         display-field="displayText"
+        id-field="roleId"
       />
 
       <PentilaDropdown
@@ -62,7 +63,7 @@ export default {
   data () {
     return {
       articleName: '',
-      selectedRole: { roleId: 0, displayText: 'Roles (laisser vide pour tous)' }, // TODO: Find a more satisfying way to do the dropdown placeholder
+      selectedRoles: [],
       roleList: [],
       selectedLanguage: 'fr',
       languageList: []
@@ -83,7 +84,6 @@ export default {
       getBroadcastRoleList().then((data) => {
         if (data.success) {
           this.roleList = data.roles
-          this.roleList.push({ roleId: 0, displayText: 'Roles (laisser vide pour tous)' })
         } else {
           console.error('Error while getting users', data.error)
         }
@@ -93,7 +93,7 @@ export default {
       this.languageList = ['fr']
     },
     submit () {
-      saveItem(this.parentCategory.categoryId, { itemName: this.articleName, roles: this.selectedRole, language: this.selectedLanguage }).then((data) => {
+      saveItem(this.parentCategory.categoryId, { itemName: this.articleName, roles: this.selectedRoles, language: this.selectedLanguage }).then((data) => {
         if (data.success) {
           this.$store.dispatch('help/getHelpMenu', { query: '' })
           this.onClose()
@@ -111,7 +111,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.dropdown {
+.dropdown, .tags-input {
   margin-top: 15px;
   width: 100%;
 }
@@ -121,6 +121,7 @@ export default {
 {
   "title": "CRÉER UN ARTICLE",
   "namePlaceHolder": "Titre",
+  "rolesPlaceholder": "Roles (laisser vide pour tous)",
   "submit": "Valider"
 }
 </i18n>
