@@ -1,5 +1,6 @@
 <template>
   <li
+    class="menu-item"
     @mouseover="isHovering = true"
     @mouseleave="isHovering = false"
   >
@@ -120,13 +121,13 @@ a {
   }
 }
 
-li:first-child {
+.menu-item:first-child {
   .arrow-up {
     display: none;
   }
 }
 
-li:last-child {
+.menu-item:last-child {
   .arrow-down {
     display: none;
   }
