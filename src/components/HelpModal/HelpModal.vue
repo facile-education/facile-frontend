@@ -21,8 +21,9 @@
           class="help-menu"
         />
         <MobileFloatingPanel
-          v-if="mq.phone && isMobileMenuDisplayed"
+          v-if="mq.phone"
           class="mobile-menu-panel"
+          :class="{'collapsed': !isMobileMenuDisplayed}"
         >
           <HelpMenu />
         </MobileFloatingPanel>
@@ -86,6 +87,11 @@ h1 {
     left: 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     z-index: 1;
+    transition: width 0.35s ease;
+
+    &.collapsed {
+      width: 0;
+    }
   }
 
   &:not(.phone) {
