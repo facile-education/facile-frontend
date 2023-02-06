@@ -103,6 +103,25 @@ h1 {
       width: calc(100% - 244px);
     }
   }
+
+  @media screen and (max-width: 1100px) {
+    .help-menu {width: 200px;}
+
+    &:not(.phone) {
+      .help-article {
+        width: calc(100% - 200px);
+      }
+    }
+  }
+  @media screen and (max-width: 930px) {
+    .help-menu {width: 180px;}
+
+    &:not(.phone) {
+      .help-article {
+        width: calc(100% - 180px);
+      }
+    }
+  }
 }
 
 </style>
