@@ -127,7 +127,7 @@ describe('HelpModal', () => {
         helpSearchResultsMenu.forEach((category) => {
           category.items.forEach((item) => {
             nbItems++
-            cy.contains('a', 'Enregistrement audio')
+            cy.contains('a', item.name)
           })
         })
         cy.get('a').should('have.length', nbItems)
@@ -228,12 +228,27 @@ describe('HelpModal', () => {
         cy.contains('button', categoryToCreate.name).should('not.exist') // Empty category doesn't appear
       })
     })
+  })
 
-    // Test the category diffusion by services
+  it('Category diffusion by service', () => {
     const teacherRoleId = 11220
-    // Create an Item broadcast to all roles, so the category is never empty
+
+    cy.exec('npm run db:loadTables help_tables.sql')
+    cy.clearDBCache()
     cy.login(url, GLOBAL_ADMIN)
+
     cy.get('[data-test=open-help-item]').click()
+
+    // Create a non-empty category (with an item inside)
+    cy.get('[data-test=create-category-button]').click()
+    cy.get('[data-test=create-category-modal]').within(() => {
+      cy.get('input').type(categoryToCreate.name)
+      cy.get('.base-dropdown > .button').click()
+      cy.get('.base-dropdown > .base-autocomplete').contains(categoryToCreate.service.label).click()
+      cy.get('[data-test="submitButton"]').click()
+    })
+    cy.get('[data-test=create-category-modal]').should('not.exist')
+
     const secondItemToCreate = categoryToCreate.items[1]
     cy.get('[data-test=help-modal]').within(() => {
       cy.contains('button', categoryToCreate.name).trigger('mouseover').get('[data-test=admin-create-category-button]').click()
@@ -247,7 +262,7 @@ describe('HelpModal', () => {
     cy.get('[data-test=help-modal]').within(() => {
       cy.get('nav.menu').within(() => {
         cy.contains('button', categoryToCreate.name).click()
-        cy.contains('a', itemToCreate.name).click()
+        cy.contains('a', secondItemToCreate.name).click()
       })
     })
 
@@ -260,7 +275,7 @@ describe('HelpModal', () => {
     cy.get('[data-test=help-modal]').within(() => {
       cy.get('nav.menu').within(() => {
         cy.contains('button', categoryToCreate.name).click() // The category and the item are here
-        cy.contains('a', secondItemToCreate.name).click()
+        cy.contains('a', secondItemToCreate.name)
       })
     })
 
