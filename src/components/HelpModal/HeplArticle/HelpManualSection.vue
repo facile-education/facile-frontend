@@ -9,6 +9,7 @@
       />
     </div>
     <div
+      ref="htmlContent"
       class="html-content"
       :class="{'folded': isFolded}"
       v-html="htmlContent"
@@ -36,6 +37,7 @@
 <script>
 import { defineAsyncComponent } from 'vue'
 const EditManualModal = defineAsyncComponent(() => import('@components/HelpModal/CreationModals/EditManualModal.vue'))
+const maxFoldedContentHeight = 150 // px
 export default {
   name: 'HelpManualSection',
   components: { EditManualModal },
@@ -44,15 +46,17 @@ export default {
       type: String,
       required: true
     },
-    isFoldable: {
+    hasFaq: {
       type: Boolean,
       required: true
     }
   },
   data () {
     return {
+      isFoldable: undefined,
       isFolded: undefined,
-      isEditManualModalDisplayed: false
+      isEditManualModalDisplayed: false,
+      isFoldAction: false
     }
   },
   computed: {
@@ -60,16 +64,24 @@ export default {
       return this.$store.state.user.isAdministrator
     }
   },
-  watch: {
-    isFoldable: {
-      immediate: true,
-      handler () {
-        this.isFolded = this.isFoldable
-      }
+  mounted () { // Not triggered when item selection change
+    const htmlContentHeight = this.$refs.htmlContent.offsetHeight
+    this.isFoldable = this.hasFaq && htmlContentHeight >= maxFoldedContentHeight
+    this.isFolded = this.isFoldable
+    // console.log('mounted: ', this.isFoldable, this.$refs.htmlContent.offsetHeight)
+  },
+  updated () { // Updates everytime Dom change, so when item selection change
+    if (!this.isFoldAction) {
+      const htmlContentHeight = this.$refs.htmlContent.offsetHeight
+      this.isFoldable = this.hasFaq && htmlContentHeight >= maxFoldedContentHeight
+      this.isFolded = this.isFoldable
+      // console.log('domUpdated: ', this.isFoldable, this.$refs.htmlContent.offsetHeight)
     }
+    this.isFoldAction = false
   },
   methods: {
     toggleFold () {
+      this.isFoldAction = true
       this.isFolded = !this.isFolded
     }
   }

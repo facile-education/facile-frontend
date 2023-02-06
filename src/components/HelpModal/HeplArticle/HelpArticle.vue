@@ -30,6 +30,7 @@
         v-if="isAdministrator || (article.manual !== '')"
         :html-content="article.manual"
         :is-foldable="article.questions.length > 0"
+        :has-faq="article.questions.length > 0"
       />
       <HelpFAQSection
         v-if="isAdministrator || (article.questions.length > 0)"
