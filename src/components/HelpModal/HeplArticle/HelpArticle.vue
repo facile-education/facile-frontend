@@ -68,7 +68,12 @@
       </MobileFloatingPanel>
     </aside>
     <div
-      v-if="!article"
+      v-if="!article && isLoadingArticleError"
+      v-t="'articleErrorPlaceholder'"
+      class="placeholder"
+    />
+    <div
+      v-else-if="!article"
       v-t="'articlePlaceholder'"
       class="placeholder"
     />
@@ -105,6 +110,7 @@ export default {
       article: undefined,
       isMobileLinksDisplayed: false,
       isLoadingArticle: false,
+      isLoadingArticleError: false,
       isEditTitleModalDisplayed: false
     }
   },
@@ -133,13 +139,19 @@ export default {
     loadHelpItem () {
       this.isLoadingArticle = true
       getHelpItem(this.selectedHelpItem.itemId).then((data) => {
-        this.isLoadingArticle = false
-        this.article = data.helpItem
-        this.$store.dispatch('help/setCurrentArticle', data.helpItem)
-        // Force the article's elevator to return on top
-        this.$el.scrollTo({ top: 0 })
-        // Close mobile aside panel
-        this.isMobileLinksDisplayed = false
+        if (data.success) {
+          this.isLoadingArticle = false
+          this.isLoadingArticleError = false
+          this.article = data.helpItem
+          this.$store.dispatch('help/setCurrentArticle', data.helpItem)
+          // Force the article's elevator to return on top
+          this.$el.scrollTo({ top: 0 })
+          // Close mobile aside panel
+          this.isMobileLinksDisplayed = false
+        } else {
+          this.isLoadingArticleError = true
+          console.error('Error on help item loading')
+        }
       })
     },
     togglePhoneLinks () {
@@ -237,13 +249,15 @@ aside {
   width: 100%;
   justify-content: center;
   padding-top: 10em;
+  font-weight: bold;
 }
 
 </style>
 
 <i18n locale="fr">
 {
-  "articlePlaceholder": "Erreur lors du chargement de l'article",
+  "articlePlaceholder": "Veuillez sélectionner un contenu d'aide",
+  "articleErrorPlaceholder": "Erreur lors du chargement de l'article",
   "edit": "Éditer"
 }
 </i18n>
