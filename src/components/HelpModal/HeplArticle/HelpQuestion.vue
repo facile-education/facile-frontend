@@ -20,8 +20,8 @@
     </span>
   </button>
   <div
-    v-if="isExtended"
     class="answer"
+    :class="isExtended ? 'extended' : 'collapsed'"
     v-html="question.answer"
   />
   <div class="separator" />
@@ -111,6 +111,14 @@ button {
 .answer {
   padding: 0 1em;
   font-size: 0.875em;
+  max-height: 500px; // Something bigger than I will ever get.
+  overflow: hidden;
+  transition: max-height 0.35s ease-in;
+
+  &.collapsed {
+    max-height: 0;
+    transition: max-height 0.35s ease-out;
+  }
 }
 
 .separator {

@@ -22,7 +22,9 @@
         >
       </span>
     </button>
-    <nav v-if="isCategoryExtended">
+    <nav
+      :class="isCategoryExtended ? 'extended' : 'collapsed'"
+    >
       <ul>
         <HelpMenuItem
           v-for="(item, index) in category.items"
@@ -170,6 +172,18 @@ button {
   img {
     margin-left: 10px;
   }
+}
+
+.collapsed {
+  max-height: 0;
+  transition: max-height 0.15s ease-out;
+  overflow: hidden;
+  background: #d5d5d5;
+}
+
+.extended {
+  max-height: 500px;
+  transition: max-height 0.35s ease-in;
 }
 
 ul {
