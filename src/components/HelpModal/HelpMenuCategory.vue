@@ -4,6 +4,7 @@
   >
     <button
       :class="{'selected': containsTheSelectedHelpItem, 'admin': isAdministrator}"
+      :title="category.categoryName"
       @mouseover="isHovering = true"
       @mouseleave="isHovering = false"
       @click="toggleCategoryExtension"
@@ -154,6 +155,9 @@ button {
   font-weight: 600;
   padding-left: 1rem;
   text-align: left;
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
 
   &.admin {
     display: flex;
