@@ -61,8 +61,9 @@
         />
       </button>
       <MobileFloatingPanel
-        v-if="mq.phone && isMobileLinksDisplayed"
+        v-if="mq.phone"
         class="mobile-links-panel"
+        :class="isMobileLinksDisplayed ? 'extended': 'collapsed'"
       >
         <RelatedItems :related-articles="article.relations" />
         <ExternalLinks :links="article.links" />
@@ -241,6 +242,12 @@ aside {
       box-shadow: -1px 2px 4px rgba(0, 0, 0, 0.2);
       padding: 0 1rem;
       height: 100%;
+      transition: all 0.35s ease;
+
+      &.collapsed {
+        width: 0;
+        padding: 0
+      }
     }
   }
 }
