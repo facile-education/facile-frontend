@@ -2,16 +2,28 @@ import axios from 'axios'
 import constants from '@/api/constants'
 
 export {
-  search
+  search,
+  quickSearch,
+  getLastSearchQueries
 }
 
-const PREF_PATH = '/moteurDeRecherche-portlet.'
+const SEARCH_PATH = '/moteurDeRecherche-portlet.'
+
+function quickSearch (query, start, end) {
+  return axios.get(constants.JSON_WS_URL + SEARCH_PATH + 'search/quick-search', {
+    params: {
+      query: query,
+      start: start,
+      end: end
+    }
+  }).then(response => response.data)
+}
 
 /**
  * Run search parameterized
  */
 function search (query, searchNews, searchMessaging, searchDocs, searchProgression, start, end) {
-  return axios.get(constants.JSON_WS_URL + PREF_PATH + 'search/search', {
+  return axios.get(constants.JSON_WS_URL + SEARCH_PATH + 'search/advanced-search', {
     params: {
       query,
       searchNews,
@@ -22,4 +34,8 @@ function search (query, searchNews, searchMessaging, searchDocs, searchProgressi
       end
     }
   }).then(response => response.data)
+}
+
+function getLastSearchQueries () {
+  return axios.get(constants.JSON_WS_URL + SEARCH_PATH + 'search/get-last-search-queries').then(response => response.data)
 }

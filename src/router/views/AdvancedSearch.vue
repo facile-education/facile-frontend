@@ -3,14 +3,13 @@
     class="layout"
   >
     <h1 :aria-label="$t('serviceTitle')" />
-    <PentilaSpinner v-if="areActionsInProgress" />
     <PentilaInput
       v-model="searchInput"
       :placeholder="$t('searchPlaceholder')"
       :maxlength="75"
     />
     <PentilaButton
-      :label="buttonLabel"
+      :label="$t('search')"
       class="confirm-button"
       :disabled="searchInput === ''"
       @click="runSearch"
@@ -19,7 +18,7 @@
 </template>
 
 <script>
-import Layout from '@/router/layouts/EmptyLayout'
+import Layout from '@/router/layouts/BannerLayout.vue'
 import { search } from '@/api/search.service'
 
 export default {
@@ -31,6 +30,9 @@ export default {
     return {
       searchInput: ''
     }
+  },
+  created () {
+    this.searchInput = this.$store.state.search.searchInput
   },
   methods: {
     runSearch () {
@@ -54,6 +56,7 @@ export default {
 
 <i18n locale="fr">
 {
+  "search": "Rechercher",
   "serviceTitle": "Recherche avancée",
   "searchPlaceholder": "Mots-clés",
   "buttonLabel": "Rechercher"
