@@ -5,7 +5,10 @@
       Dashboard (0%)
     </RouterLink>
     <RouterLink to="/groups">
-      Groups (0%)
+      Groups
+    </RouterLink>
+    <RouterLink to="/advanced-search">
+      Advanced search (0%)
     </RouterLink>
 
     <h2>School life</h2>
@@ -24,7 +27,7 @@
 
     <h2>Documents</h2>
     <RouterLink to="/documents">
-      Documents (80%)
+      Documents
     </RouterLink>
     <RouterLink to="/dropbox">
       Dropbox (0%)

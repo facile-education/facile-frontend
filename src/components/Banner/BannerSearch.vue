@@ -5,12 +5,16 @@
   >
     <input
       v-if="mq.desktop"
+      v-model="searchInput"
       :placeholder="$t('searchLabel') + '...'"
       class="search-input"
+      @input="inputChange"
+      @focus="focus"
+      @blur="blur"
     >
     <span
       :title="$t('searchLabel')"
-      class="advanced-search"
+      class="search-icon"
     >
       <NeroIcon name="search" />
     </span>
@@ -19,11 +23,54 @@
 
 <script>
 import NeroIcon from '@/components/Nero/NeroIcon'
+import { nbCharBeforeCompletion, timeBeforeCompletion } from '@/constants/appConstants'
 
 export default {
   name: 'AppBannerSearch',
   components: { NeroIcon },
-  inject: ['mq']
+  inject: ['mq'],
+  data () {
+    return {
+      timeout: 0
+    }
+  },
+  computed: {
+    searchInput: {
+      get () {
+        return this.$store.state.search.searchInput
+      },
+      set (value) {
+        this.$store.dispatch('search/setSearchInput', value)
+      }
+    }
+  },
+  methods: {
+    focus () {
+      if (this.searchInput.length < nbCharBeforeCompletion) {
+        this.$store.dispatch('search/openHistory')
+      }
+    },
+    blur () {
+      setTimeout(() => this.$store.dispatch('search/closeHistory'), 50)
+    },
+    inputChange () {
+      // Handle empty case
+      if (this.searchInput.length < nbCharBeforeCompletion) {
+        this.$store.dispatch('search/openHistory')
+      }
+
+      // Trigger a countdown before the search
+      clearTimeout(this.timeout)
+      this.timeout = setTimeout(() => {
+        if (this.searchInput.length >= nbCharBeforeCompletion) {
+          this.runSearch()
+        }
+      }, timeBeforeCompletion)
+    },
+    runSearch () {
+      this.$store.dispatch('search/quickSearch')
+    }
+  }
 }
 </script>
 
@@ -37,7 +84,7 @@ export default {
   height: 35px;
 }
 
-.advanced-search {
+.search-icon {
   width: 35px;
   height: 35px;
   line-height: 35px;
@@ -63,6 +110,6 @@ export default {
 
 <i18n locale="fr">
 {
-  "searchLabel": "Recherche",
+  "searchLabel": "Rechercher"
 }
 </i18n>

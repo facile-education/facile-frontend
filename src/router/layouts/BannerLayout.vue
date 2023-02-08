@@ -20,6 +20,10 @@
     <header class="nero-header theme-background-color">
       <Banner />
     </header>
+    <QuickSearchPanel
+      class="quick-search-panel"
+      :class="{'collapsed': !isQuickSearchDisplayed}"
+    />
     <section
       v-if="!mq.phone"
       class="nero-menu"
@@ -86,6 +90,7 @@
 import { defineAsyncComponent } from 'vue'
 // import { popupDurationTime } from '@/constants/appConstants'
 import Banner from '@/components/Banner/Banner'
+import QuickSearchPanel from '@components/Search/QuickSearchPanel.vue'
 // import Popup from '@components/Base/Popup'
 
 // const FileDisplayModal = defineAsyncComponent(() => import('@/components/Documents/FileDisplay/FileDisplayModal'))
@@ -96,7 +101,7 @@ const WarningModal = defineAsyncComponent(() => import('@/components/Nero/Warnin
 
 export default {
   name: 'BannerLayout',
-  components: { HelpModal, Banner, MobileMenu, /* FileDisplayModal, Popup, */ SideMenu, WarningModal },
+  components: { QuickSearchPanel, HelpModal, Banner, MobileMenu, /* FileDisplayModal, Popup, */ SideMenu, WarningModal },
   inject: ['mq'],
   props: {
     isAllowed: {
@@ -113,6 +118,9 @@ export default {
     },
     isHelpModalDisplayed () {
       return this.$store.state.help.isHelpModalDisplayed
+    },
+    isQuickSearchDisplayed () {
+      return this.$store.state.search.isHistoryOpen || this.$store.state.search.isQuickSearchResultDisplayed
     },
     menuExpanded () {
       return this.$store.state.nero.menuExpanded
@@ -174,12 +182,12 @@ export default {
 .nero {
   width: 100%;
   height: 100%;
-  overflow: none;
+  overflow: hidden;
   display: grid;
   /* + 1 because of useless scroll appearing */
   grid-template-rows: $banner-height calc(100% - #{$banner-height + 1});
-  height: 100%;
   transition: grid-template-columns 0.3s;
+  position: relative;
 
   &.menu-expanded {
     grid-template-columns: $open-side-menu-width calc(100% - #{$open-side-menu-width});
@@ -191,6 +199,22 @@ export default {
 
   &.mobile {
     grid-template-columns: 100%;
+  }
+}
+
+.quick-search-panel {
+  position: absolute;
+  background-color: white;
+  box-shadow: 0 0 14px 0 rgba(0,0,0,0.15);
+  top: $banner-height;
+  left: 0;
+  height: calc(100% - $banner-height);
+  width: 441px;
+  transition: width 0.35s ease;
+  z-index: $quick-search-z-index;
+
+  &.collapsed {
+    width: 0;
   }
 }
 

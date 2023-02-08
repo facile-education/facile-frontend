@@ -1,4 +1,5 @@
 const nbCharBeforeCompletion = 2
+const timeBeforeCompletion = 500
 
 const slotLabelList = {
   '08 h': 'P1',
@@ -19,18 +20,25 @@ const fileAutoSaveTime = 60000
 
 const entityNameMaxSize = 255
 
+// Search
+const quickSearchPaginationSize = 10
+
 export {
   nbCharBeforeCompletion,
+  timeBeforeCompletion,
   slotLabelList,
   popupDurationTime,
   fileAutoSaveTime,
-  entityNameMaxSize
+  entityNameMaxSize,
+  quickSearchPaginationSize
 }
 
 export default {
   nbCharBeforeCompletion,
+  timeBeforeCompletion,
   slotLabelList,
   popupDurationTime,
   fileAutoSaveTime,
-  entityNameMaxSize
+  entityNameMaxSize,
+  quickSearchPaginationSize
 }
