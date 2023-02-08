@@ -92,6 +92,7 @@ export default {
 .html-content {
   img {
     max-width: 100%;
+    vertical-align: middle;
   }
 }
 </style>
