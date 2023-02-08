@@ -67,6 +67,15 @@ export default {
 }
 </script>
 
+<style lang="scss">
+.answer {
+  img {
+    max-width: 100%;
+    vertical-align: middle;
+  }
+}
+</style>
+
 <style lang="scss" scoped>
 @import "@design";
 
