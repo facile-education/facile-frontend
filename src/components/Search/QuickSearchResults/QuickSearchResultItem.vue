@@ -2,6 +2,8 @@
   <li
     :class="{'selected': isSelected}"
     @mousedown="redirect"
+    @mouseover="onHover"
+    @mouseleave="onHoverQuit"
   >
     <div class="icon-container">
       <FileIcon
@@ -35,15 +37,22 @@
         {{ searchResult.score + '%' }}
       </p>
     </div>
+
+    <SearchResultPreview
+      v-if="displayTooltip"
+      class="preview"
+      :search-result="searchResult"
+    />
   </li>
 </template>
 
 <script>
 import searchConstants from '@/constants/searchConstants'
 import FileIcon from '@components/Base/FileIcon.vue'
+import SearchResultPreview from '@components/Search/SearchResultPreview.vue'
 export default {
   name: 'QuickSearchResultItem',
-  components: { FileIcon },
+  components: { SearchResultPreview, FileIcon },
   props: {
     searchResult: {
       type: Object,
@@ -56,6 +65,12 @@ export default {
     isLast: {
       type: Boolean,
       default: false
+    }
+  },
+  data () {
+    return {
+      isHovering: false,
+      displayTooltip: false
     }
   },
   computed: {
@@ -109,6 +124,16 @@ export default {
     window.removeEventListener('keydown', this.keyMonitor)
   },
   methods: {
+    onHover () {
+      this.isHovering = true
+      // this.hovered = true
+      setTimeout(() => { if (this.isHovering) { this.displayTooltip = true } }, 500)
+    },
+    onHoverQuit () {
+      this.isHovering = false
+      this.displayTooltip = false
+      // setTimeout(() => { if (!this.isHovering) { this.displayTooltip = false } }, 500)
+    },
     isInViewport (element) {
       const rect = element.getBoundingClientRect()
       return (
@@ -151,6 +176,19 @@ li {
   &:hover, &.selected {
     background-color: $color-hover-bg;
   }
+}
+
+.preview {
+  position: absolute;
+  top: 0;
+  left: 105%;
+  z-index: 100;
+  height: 140px;
+  width: 367px;
+  border-radius: 11.5px;
+  background-color: #FFFFFF;
+  box-shadow: 0 0 10px 0 rgba(0,0,0,0.15);
+  padding: 24px;
 }
 
 .icon-container {
