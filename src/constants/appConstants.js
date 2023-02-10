@@ -20,17 +20,13 @@ const fileAutoSaveTime = 60000
 
 const entityNameMaxSize = 255
 
-// Search
-const quickSearchPaginationSize = 10
-
 export {
   nbCharBeforeCompletion,
   timeBeforeCompletion,
   slotLabelList,
   popupDurationTime,
   fileAutoSaveTime,
-  entityNameMaxSize,
-  quickSearchPaginationSize
+  entityNameMaxSize
 }
 
 export default {
@@ -39,6 +35,5 @@ export default {
   slotLabelList,
   popupDurationTime,
   fileAutoSaveTime,
-  entityNameMaxSize,
-  quickSearchPaginationSize
+  entityNameMaxSize
 }
