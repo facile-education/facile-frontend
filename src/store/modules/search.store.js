@@ -1,5 +1,5 @@
 import { quickSearch } from '@/api/search.service'
-import { quickSearchPaginationSize } from '@/constants/appConstants'
+import { quickSearchPaginationSize } from '@/constants/searchConstants'
 
 export const state = {
   searchInput: '',
