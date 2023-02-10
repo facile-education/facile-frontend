@@ -4,7 +4,8 @@ import constants from '@/api/constants'
 export {
   search,
   quickSearch,
-  getLastSearchQueries
+  getLastSearchQueries,
+  getSearchResultDetails
 }
 
 const SEARCH_PATH = '/moteurDeRecherche-portlet.'
@@ -38,4 +39,13 @@ function search (query, searchNews, searchMessaging, searchDocs, searchProgressi
 
 function getLastSearchQueries () {
   return axios.get(constants.JSON_WS_URL + SEARCH_PATH + 'search/get-last-search-queries').then(response => response.data)
+}
+
+function getSearchResultDetails (entityId, service) {
+  return axios.get(constants.JSON_WS_URL + SEARCH_PATH + 'search/get-search-result-details', {
+    params: {
+      entityId: entityId,
+      service: service
+    }
+  }).then(response => response.data)
 }
