@@ -6,7 +6,7 @@
 import { Chart, registerables } from 'chart.js'
 
 export default {
-  name: 'Chart',
+  name: 'LineChart',
   props: {
     labels: {
       type: Array,
