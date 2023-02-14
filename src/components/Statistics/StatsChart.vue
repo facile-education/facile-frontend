@@ -3,7 +3,7 @@
     <h2 v-t="comparator === '' ? 'globalUses' : 'profileUses'" />
     <PentilaSpinner v-if="isLoading" />
     <div v-else-if="data !== undefined">
-      <LineChart
+      <Chart
         v-if="data.labels"
         :labels="data.labels"
         :datasets="data.datasets"
@@ -14,11 +14,11 @@
 
 <script>
 import { getSessionsCount } from '@/api/statistics.service'
-import LineChart from '@/components/Statistics/LineChart.vue'
+import Chart from '@/components/Statistics/Chart.vue'
 
 export default {
   name: 'StatsChart',
-  components: { LineChart },
+  components: { Chart },
   props: {
     startTime: {
       type: Object,

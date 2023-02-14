@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import Chart from '@components/Statistics/LineChart.vue'
+import Chart from '@components/Statistics/Chart.vue'
 import { getFilesCount, getHomeworksCount } from '@/api/statistics.service'
 
 export default {
@@ -70,7 +70,7 @@ export default {
             console.error('Error')
           }
         })
-      } else if (this.service === 'homework') {
+      } else if (this.service === 'homeworks') {
         this.isLoading = true
         getHomeworksCount(this.selectedSchool.schoolId, this.startTime, this.endTime).then((data) => {
           this.isLoading = false
