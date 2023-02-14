@@ -1,62 +1,100 @@
 <template>
-  <Layout>
+  <Layout v-if="selectedSchool">
     <h1 :aria-label="$t('serviceTitle')" />
-    <div style="display: flex;">
-      <div style="width: 50%;">
-        <Chart
-          v-if="lineLabels"
-          :type="'line'"
-          :labels="lineLabels"
-          :datasets="lineDatasets"
+    <div class="header">
+      <StatsActivesUsers
+        :start-time="selectedStartDate"
+        :end-time="selectedEndDate"
+        :selected-school="selectedSchool"
+      />
+      <section class="selectors">
+        <!--        <DatepickerNav-->
+        <!--          class="date-picker"-->
+        <!--          :selected-date="selectedDate"-->
+        <!--          @selectDate="onSelectDate"-->
+        <!--        />-->
+        <PentilaDropdown
+          v-if="managedSchoolList.length > 1"
+          v-model="selectedSchool"
+          :list="managedSchoolList"
+          display-field="schoolName"
         />
-      </div>
-      <div style="width: 25%;">
-        <span>Total : {{ doughnutTotal }}</span>
-        <Chart
-          v-if="doughnutLabels"
-          :type="'doughnut'"
-          :labels="doughnutLabels"
-          :datasets="doughnutDatasets"
-        />
-      </div>
+      </section>
     </div>
-    <div style="display: flex;">
-      <div style="width: 50%;">
-        <LineChart
-          v-if="lineLabelsCompare"
-          :labels="lineLabelsCompare"
-          :datasets="lineDatasetsCompare"
-        />
-      </div>
-      <div style="width: 25%;">
-        <span>Total : {{ pieTotal }}</span>
-        <PieChart
-          v-if="pieLabels"
-          :labels="pieLabels"
-          :datasets="pieDatasets"
-        />
-      </div>
+
+    <StatsChart
+      :start-time="selectedStartDate"
+      :end-time="selectedEndDate"
+      :selected-school="selectedSchool"
+    />
+
+    <StatsChart
+      :start-time="selectedStartDate"
+      :end-time="selectedEndDate"
+      :selected-school="selectedSchool"
+      comparator="profile"
+    />
+
+    <div class="doughnuts">
+      <StatsDoughnut
+        class="doughnut"
+        :start-time="selectedStartDate"
+        :end-time="selectedEndDate"
+        :selected-school="selectedSchool"
+        service="documents"
+      />
+
+      <StatsDoughnut
+        class="doughnut"
+        :start-time="selectedStartDate"
+        :end-time="selectedEndDate"
+        :selected-school="selectedSchool"
+        service="homeworks"
+      />
+    </div>
+
+    <div class="general-stats">
+      <GlobalStat
+        :start-time="selectedStartDate"
+        :end-time="selectedEndDate"
+        :selected-school="selectedSchool"
+        service="messaging"
+      />
+      <GlobalStat
+        :start-time="selectedStartDate"
+        :end-time="selectedEndDate"
+        :selected-school="selectedSchool"
+        service="news"
+      />
+      <GlobalStat
+        :start-time="selectedStartDate"
+        :end-time="selectedEndDate"
+        :selected-school="selectedSchool"
+        service="news"
+      />
     </div>
   </Layout>
 </template>
 
 <script>
-import axios from 'axios'
 import Layout from '@/router/layouts/BannerLayout'
-
-import Chart from '@/components/Statistics/Chart.vue'
-import LineChart from '@/components/Statistics/LineChart.vue'
-import PieChart from '@/components/Statistics/PieChart.vue'
+import StatsActivesUsers from '@components/Statistics/StatsActivesUsers.vue'
+import GlobalStat from '@components/Statistics/GlobalStat.vue'
+import StatsDoughnut from '@components/Statistics/StatsDoughnut.vue'
+import StatsChart from '@components/Statistics/StatsChart.vue'
+import dayjs from 'dayjs'
 
 export default {
   name: 'Statistics',
-  components: { Chart, Layout, LineChart, PieChart },
+  components: { StatsChart, StatsActivesUsers, StatsDoughnut, GlobalStat, Layout },
   data () {
     return {
-      lineLabels: undefined,
-      lineDatasets: undefined,
-      lineLabelsCompare: undefined,
-      lineDatasetsCompare: undefined,
+      selectedStartDate: dayjs().subtract(3, 'month'),
+      selectedEndDate: dayjs()
+      // lineLabels: undefined,
+      // lineDatasets: undefined,
+      // lineLabelsCompare: undefined,
+      // lineDatasetsCompare: undefined,
       /* lineLabelsCompare: ['2018-05-27', '2018-05-28', '2018-05-29', '2018-05-30', '2018-05-31',
         '2018-06-01', '2018-06-02', '2018-06-03', '2018-06-04', '2018-06-05', '2018-06-06',
         '2018-06-07', '2018-06-08', '2018-06-09', '2018-06-10', '2018-06-11', '2018-06-12',
@@ -97,73 +135,105 @@ export default {
       //  data: [36, 44, 90, 23, 5],
       //  backgroundColor: ['rgba(255, 0, 0, 0.45)', 'rgba(255, 130, 0, 0.45)', 'rgba(255, 255, 0, 0.45)', 'rgba(0, 235, 0, 0.45)', 'rgba(0, 231, 255, 0.45)']
       // }],
-      pieLabels: undefined,
-      pieDatasets: undefined,
-      pieTotal: 0,
-      doughnutLabels: undefined,
-      doughnutDatasets: undefined,
-      doughnutTotal: 0
+      // pieLabels: undefined,
+      // pieDatasets: undefined,
+      // pieTotal: 0,
+      // doughnutLabels: undefined,
+      // doughnutDatasets: undefined,
+      // doughnutTotal: 0
     }
   },
-  // computed: {
-  //  hasHomeworkWidget () {
-  //    return this.$store.state.dashboard.hasHomeworkWidget
-  //  }
-  // },
+  computed: {
+    managedSchoolList () {
+      return this.$store.state.administration.schoolList
+    },
+    selectedSchool: {
+      get () {
+        return this.$store.state.administration.selectedSchool
+      },
+      set (school) {
+        this.$store.commit('administration/setSelectedSchool', school)
+      }
+    }
+  },
   created () {
-    axios.get('/api/jsonws/statistics-portlet.generalstat/get-homeworks-count', {
-      params: {
-        schoolId: 328701,
-        endDate: '2022-02-01 00:00',
-        startDate: '2022-01-01 00:00'
-      }
-    }).then(response => {
-      this.pieLabels = response.data.labels
-      this.pieDatasets = response.data.datasets
-      this.pieTotal = response.data.totalCount
-    })
-
-    axios.get('/api/jsonws/statistics-portlet.generalstat/get-files-count', {
-      params: {
-        schoolId: 328701,
-        endDate: '2022-02-01 00:00',
-        startDate: '2022-01-01 00:00'
-      }
-    }).then(response => {
-      this.doughnutLabels = response.data.labels
-      this.doughnutDatasets = response.data.datasets
-      this.doughnutTotal = response.data.totalCount
-    })
-
-    // Comparator is either "profile", "school", "service" or any other value for no comparison
-    axios.get('/api/jsonws/statistics-portlet.generalstat/get-sessions-count', {
-      params: {
-        comparator: '',
-        schoolId: 328701,
-        endDate: '2022-02-01 00:00',
-        startDate: '2022-01-01 00:00'
-      }
-    }).then(response => {
-      this.lineLabels = response.data.labels
-      this.lineDatasets = response.data.datasets
-    })
-
-    axios.get('/api/jsonws/statistics-portlet.generalstat/get-sessions-count', {
-      params: {
-        comparator: 'profile',
-        schoolId: 328701,
-        endDate: '2022-02-01 00:00',
-        startDate: '2022-01-01 00:00'
-      }
-    }).then(response => {
-      this.lineLabelsCompare = response.data.labels
-      this.lineDatasetsCompare = response.data.datasets
-    })
+    if (this.managedSchoolList === undefined) {
+      this.$store.dispatch('administration/getAdministrationSchools')
+    }
   }
+  // created () {
+  //   axios.get('/api/jsonws/statistics-portlet.generalstat/get-homeworks-count', {
+  //     params: {
+  //       schoolId: 328701,
+  //       endDate: '2022-02-01 00:00',
+  //       startDate: '2022-01-01 00:00'
+  //     }
+  //   }).then(response => {
+  //     this.pieLabels = response.data.labels
+  //     this.pieDatasets = response.data.datasets
+  //     this.pieTotal = response.data.totalCount
+  //   })
+  //
+  //   axios.get('/api/jsonws/statistics-portlet.generalstat/get-files-count', {
+  //     params: {
+  //       schoolId: 328701,
+  //       endDate: '2022-02-01 00:00',
+  //       startDate: '2022-01-01 00:00'
+  //     }
+  //   }).then(response => {
+  //     this.doughnutLabels = response.data.labels
+  //     this.doughnutDatasets = response.data.datasets
+  //     this.doughnutTotal = response.data.totalCount
+  //   })
+  //
+  //   // Comparator is either "profile", "school", "service" or any other value for no comparison
+  //   axios.get('/api/jsonws/statistics-portlet.generalstat/get-sessions-count', {
+  //     params: {
+  //       comparator: '',
+  //       schoolId: 328701,
+  //       endDate: '2022-02-01 00:00',
+  //       startDate: '2022-01-01 00:00'
+  //     }
+  //   }).then(response => {
+  //     this.lineLabels = response.data.labels
+  //     this.lineDatasets = response.data.datasets
+  //   })
+  //
+  //   axios.get('/api/jsonws/statistics-portlet.generalstat/get-sessions-count', {
+  //     params: {
+  //       comparator: 'profile',
+  //       schoolId: 328701,
+  //       endDate: '2022-02-01 00:00',
+  //       startDate: '2022-01-01 00:00'
+  //     }
+  //   }).then(response => {
+  //     this.lineLabelsCompare = response.data.labels
+  //     this.lineDatasetsCompare = response.data.datasets
+  //   })
+  // }
 }
 </script>
 
 <style lang="scss" scoped>
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.doughnuts {
+  display: flex;
+
+  .doughnut {
+    flex: 1;
+  }
+}
+
+.general-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 264px
+}
 </style>
 
 <i18n locale="fr">
