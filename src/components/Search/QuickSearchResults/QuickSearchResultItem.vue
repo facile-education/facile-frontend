@@ -1,5 +1,6 @@
 <template>
   <li
+    ref="resultItem"
     :class="{'selected': isSelected}"
     @mousedown="redirect"
     @mouseover="onHover"
@@ -41,6 +42,7 @@
     <SearchResultPreview
       v-if="displayTooltip"
       class="preview"
+      :fixed-position="tooltipPosition"
       :search-result="searchResult"
     />
   </li>
@@ -70,7 +72,8 @@ export default {
   data () {
     return {
       isHovering: false,
-      displayTooltip: false
+      displayTooltip: false,
+      tooltipPosition: undefined
     }
   },
   computed: {
@@ -127,12 +130,24 @@ export default {
     onHover () {
       this.isHovering = true
       // this.hovered = true
-      setTimeout(() => { if (this.isHovering) { this.displayTooltip = true } }, 500)
+      setTimeout(() => {
+        if (this.isHovering) {
+          this.computeTooltipPosition()
+          this.displayTooltip = true
+        }
+      }, 500)
     },
     onHoverQuit () {
       this.isHovering = false
       this.displayTooltip = false
       // setTimeout(() => { if (!this.isHovering) { this.displayTooltip = false } }, 500)
+    },
+    computeTooltipPosition () {
+      const domRect = this.$refs.resultItem.getBoundingClientRect()
+      this.tooltipPosition = {
+        x: domRect.x + domRect.width + 25,
+        y: domRect.y
+      }
     },
     isInViewport (element) {
       const rect = element.getBoundingClientRect()
@@ -179,7 +194,7 @@ li {
 }
 
 .preview {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 105%;
   z-index: 100;

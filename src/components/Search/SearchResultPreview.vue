@@ -1,5 +1,8 @@
 <template>
-  <div class="result-details">
+  <div
+    ref="tooltip"
+    class="result-details"
+  >
     {{ searchResult.title }}
   </div>
 </template>
@@ -13,6 +16,10 @@ export default {
     searchResult: {
       type: Object,
       required: true
+    },
+    fixedPosition: {
+      type: Object,
+      default: undefined
     }
   },
   data () {
@@ -22,6 +29,21 @@ export default {
   },
   created () {
     this.getResultDetails()
+  },
+  mounted () {
+    if (this.fixedPosition) {
+      //  Set x position
+      this.$refs.tooltip.style.left = this.fixedPosition.x + 'px'
+
+      // Set y position, prevent windows overflow
+      const domRect = this.$refs.tooltip.getBoundingClientRect()
+      const yOverflow = (this.fixedPosition.y + domRect.height) - window.innerHeight
+      if (yOverflow > 0) {
+        this.$refs.tooltip.style.top = this.fixedPosition.y - yOverflow + 'px'
+      } else {
+        this.$refs.tooltip.style.top = this.fixedPosition.y + 'px'
+      }
+    }
   },
   methods: {
     getResultDetails () {
