@@ -212,6 +212,7 @@ export default {
   width: 441px;
   transition: width 0.35s ease;
   z-index: $quick-search-z-index;
+  white-space: nowrap;
 
   &.collapsed {
     width: 0;
