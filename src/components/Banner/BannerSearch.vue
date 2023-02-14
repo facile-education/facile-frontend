@@ -11,10 +11,12 @@
       @input="inputChange"
       @focus="focus"
       @blur="blur"
+      @keyup.enter.stop="submit"
     >
     <span
       :title="$t('searchLabel')"
       class="search-icon"
+      @click="submit"
     >
       <NeroIcon name="search" />
     </span>
@@ -66,6 +68,11 @@ export default {
           this.runSearch()
         }
       }, timeBeforeCompletion)
+    },
+    submit () {
+      if (this.searchInput.length >= nbCharBeforeCompletion) {
+        this.runSearch()
+      }
     },
     runSearch () {
       this.$store.dispatch('search/quickSearch')
