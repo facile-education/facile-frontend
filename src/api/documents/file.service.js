@@ -14,6 +14,8 @@ export default {
   createLoolFile,
   createAudioFile,
   createHtmlFile,
+  addLock,
+  removeLock,
   getHtmlContent,
   saveHtmlContent,
   removeLoolToken,
@@ -138,7 +140,7 @@ function getHtmlContent (fileVersionId) {
   return axios.get(constants.JSON_WS_URL + WISIWIG_PATH + '/get-html-content', {
     params: {
       p_auth: getCookie('pauth'),
-      fileVersionId: fileVersionId
+      fileVersionId
     }
   }).then(response => response.data)
 }
@@ -149,11 +151,33 @@ function getHtmlContent (fileVersionId) {
 function saveHtmlContent (fileVersionId, content, majorVersion) {
   return axios.post(constants.JSON_WS_URL + WISIWIG_PATH + '/save-html-content',
     PentilaUtils.URL.params({
-      fileVersionId: fileVersionId,
-      content: content,
-      majorVersion: majorVersion
+      fileVersionId,
+      content,
+      majorVersion
     })
   ).then(response => response.data)
+}
+
+/**
+ * Lock file to prevent multiple edition
+ */
+function addLock (fileId) {
+  return axios.post(constants.JSON_WS_URL + FILE_PATH + '/add-lock',
+    PentilaUtils.URL.params({
+      fileId
+    })
+  ).then(response => response.data)
+}
+
+/**
+ * Remove lock for targeted file
+ */
+function removeLock (fileId) {
+  return axios.get(constants.JSON_WS_URL + FILE_PATH + '/remove-lock', {
+    params: {
+      fileId
+    }
+  }).then(response => response.data)
 }
 
 /**
@@ -163,9 +187,9 @@ function getResource (fileId, versionId, readOnly) {
   return axios.get(constants.JSON_WS_URL + FILE_PATH + '/get-resource', {
     params: {
       p_auth: getCookie('pauth'),
-      fileId: fileId,
-      versionId: versionId,
-      readOnly: readOnly
+      fileId,
+      versionId,
+      readOnly
     }
   }).then(response => response.data)
 }

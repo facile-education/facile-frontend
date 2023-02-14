@@ -95,11 +95,12 @@ export default {
   emits: ['close', 'keepOpen'],
   data () {
     return {
-      loadedFile: undefined,
-      typeOfView: undefined,
+      hasLock: false,
+      haveToSaveFile: false,
       fileUrl: undefined,
       isLoaded: false,
-      haveToSaveFile: false
+      loadedFile: undefined,
+      typeOfView: undefined
     }
   },
   computed: {
@@ -118,7 +119,7 @@ export default {
       if (this.wantsToCloseFile) {
         if (this.typeOfView === 'WISIWIG' && this.loadedFile && !this.loadedFile.readOnly) { // Only WISIWIG can auto-save for the moment...
           this.haveToSaveFile = true
-        } else if (this.typeOfView === 'MindMap' || this.typeOfView === 'Geogebra' || this.typeOfView === 'Scratch') {
+        } else if (!this.loadedFile.readOnly && (this.typeOfView === 'MindMap' || this.typeOfView === 'Geogebra' || this.typeOfView === 'Scratch')) {
           this.$store.dispatch('warningModal/addWarning', {
             text: this.$t('quitWithoutSaving'),
             lastAction: { fct: this.emitCloseEvent }
@@ -132,6 +133,15 @@ export default {
   },
   created () {
     this.loadMedia()
+  },
+  unmounted () {
+    if (this.hasLock) {
+      fileService.removeLock(this.file.id).then((data) => {
+        if (data.success) {
+          this.hasLock = false
+        }
+      })
+    }
   },
   methods: {
     loadMedia () {
@@ -147,7 +157,11 @@ export default {
           this.loadedFile = { ...this.file }
           this.loadedFile.fileVersionId = data.fileVersionId
           this.loadedFile.readOnly = data.readOnly
-          this.isLoaded = true
+          if (!data.readOnly) {
+            this.checkLock()
+          } else {
+            this.isLoaded = true
+          }
         } else {
           if (data.error === 'UnsupportedFileExtension') {
             this.typeOfView = 'Unsupported'
@@ -161,6 +175,36 @@ export default {
           }
         }
       })
+    },
+    checkLock () {
+      // Handling write lock to prevent concurrent edition if not supported
+      if (this.file.isGroupFile && (this.typeOfView === 'MindMap' || this.typeOfView === 'Geogebra' || this.typeOfView === 'Scratch')) {
+        fileService.addLock(this.file.id).then((data) => {
+          if (data.success) {
+            this.hasLock = true
+            this.isLoaded = true
+          } else {
+            // Handle error message
+            if (data.userName !== undefined) {
+              const message = this.$t('lockWarningUser', { userName: data.userName })
+              this.$store.dispatch('popups/pushPopup', { message, type: 'warning' })
+            } else if (data.isWritable !== undefined) {
+              const message = this.$t('lockWarning')
+              this.$store.dispatch('popups/pushPopup', { message, type: 'warning' })
+            }
+            this.fileUrl = this.fileUrl.replace('editor.html', 'viewmode.html')
+            this.fileUrl = this.fileUrl.replace('readonly=false', 'readonly=true')
+            this.fileUrl = this.fileUrl.replace('isCreation=false', 'isCreation=true')
+            if (this.typeOfView === 'MindMap' && this.fileUrl.indexOf('readonly') === -1) {
+              this.fileUrl += '&readonly=true'
+            }
+            this.loadedFile.readOnly = true
+            this.isLoaded = true
+          }
+        })
+      } else {
+        this.isLoaded = true
+      }
     },
     emitCloseEvent () {
       this.$emit('close')
@@ -185,6 +229,8 @@ export default {
 
 <i18n locale="fr">
 {
+  "lockWarning": "Ce fichier est ouvert en édition par un autre utilisateur. Ouverture en consultation seule...",
+  "lockWarningUser": "Ce fichier est ouvert en édition par {userName}. Ouverture en consultation seule...",
   "quitWithoutSaving": "Toute modification non sauvegardée sera perdue",
   "Unsupported": "Type de fichier non affichable",
   "Forbidden": "Vous n'avez pas la permission de voir ce fichier"
