@@ -168,6 +168,7 @@ describe('Firing registration', () => {
     cy.visit('/nero/horaires')
 
     // Check slots for the first student
+    utils.clearSelectedUser()
     utils.selectStudent(studentToRegister)
     cy.contains('[data-cy="' + slotToRegisterInside.date.format('MM-DD') + '_' + slotToRegisterInside.startHour + '"]', 'Renvoi').parent().within(() => {
       cy.contains(slotToRegisterInside.teacherLastName).first().should('exist')
@@ -266,6 +267,7 @@ describe('Firing registration', () => {
     cy.visit('/nero/horaires')
 
     // Check slots for the first student
+    utils.clearSelectedUser()
     utils.selectStudent(studentToRegister)
     cy.contains('[data-cy="' + slotToRegisterInside.date.format('MM-DD') + '_' + slotToRegisterInside.startHour + '"]', 'Renvoi').parent().within(() => {
       cy.contains(slotToRegisterInside.teacherLastName).first().should('exist')

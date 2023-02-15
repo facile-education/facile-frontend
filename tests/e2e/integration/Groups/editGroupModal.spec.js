@@ -1,3 +1,4 @@
+import { now } from '../../support/constants/horairesHorsCadres' 
 import { url } from '../../support/constants/groups'
 import { HEADMASTER } from '../../support/constants'
 
@@ -44,6 +45,7 @@ const updatedGroup = {
 
 describe('Group list', () => {
   beforeEach(() => {
+    cy.clock(now.toDate().getTime())
     cy.login(url, HEADMASTER)
   })
 

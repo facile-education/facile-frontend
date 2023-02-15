@@ -92,6 +92,7 @@ describe('Depannage registration', () => {
     cy.visit('/nero/horaires')
 
     // Check slots for the first student
+    utils.clearSelectedUser()
     utils.selectStudent(studentsToRegister)
     cy.contains('[data-cy="' + slotToRegisterInside.date.format('MM-DD') + '_' + slotToRegisterInside.startHour + '"]', 'Dépannage').parent().within(() => {
       cy.contains(slotToRegisterInside.teacherLastName).first().should('exist')
