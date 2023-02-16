@@ -144,7 +144,6 @@ import {
   createCommunity,
   editCommunity,
   checkCommunityName,
-  extendCommunity,
   getCommunityMembers,
   getUsersCompletion
 } from '@/api/groups.service'
@@ -365,10 +364,7 @@ export default {
             // Group already exists
             // Case 1 : community is deactivated and was created by current user -> suggest him to extend and reactivate the group
             if (data.errorCode === 1) {
-              this.$store.dispatch('warningModal/addWarning', {
-                text: this.$t('reactivate-community', { creationDate: dayjs(data.creationDate).format('DD MMM YYYY'), expirationDate: dayjs(data.expirationDate).format('DD MMM YYYY') }),
-                lastAction: { fct: this.reactivateCommunity, params: [data.groupId] }
-              })
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('reactivate-community', { creationDate: dayjs(data.creationDate).format('DD MMM YYYY'), expirationDate: dayjs(data.expirationDate).format('DD MMM YYYY') }), type: 'info' })
             }
             // Case 2 : else, display warning
             if (data.errorCode === 2) {
@@ -377,15 +373,6 @@ export default {
           }
         })
       }
-    },
-    reactivateCommunity (groupId) {
-      extendCommunity(groupId).then((data) => {
-        if (data.success) {
-          this.closeModal()
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('community-reactivated'), type: 'info' })
-          this.$store.dispatch('groups/getGroupList', this.$store.state.groups.currentFilter)
-        }
-      })
     },
     closeModal () {
       this.$store.dispatch('misc/decreaseModalCount')
@@ -508,7 +495,7 @@ hr {
   "creation-success": "Groupe créé",
   "edition-success": "Groupe modifié",
   "community-name-exists": "Un espace existe déjà avec ce nom, merci d'en choisir un autre",
-  "reactivate-community": "Un espace du même nom a été trouvé, créé par vous-même le {creationDate}, et expiré depuis le {expirationDate}. Souhaitez-vous le réactiver et prolonger sa durée de vie jusqu'à la fin de l'année scolaire en cours ?",
+  "reactivate-community": "Un espace du même nom a été trouvé, créé par vous-même le {creationDate}, et expiré depuis le {expirationDate}. Nous vous invitons à le réactiver.",
   "community-reactivated": "Votre communauté a été réactivée"
 }
 </i18n>
