@@ -80,9 +80,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  section {
-    position: relative;
-  }
+section {
+  position: relative;
+  min-width: 150px;
+}
 </style>
 
 <i18n locale="fr">

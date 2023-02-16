@@ -1,10 +1,16 @@
 <template>
   <section>
     <h2 v-t="comparator === '' ? 'globalUses' : 'profileUses'" />
-    <PentilaSpinner v-if="isLoading" />
+    <div
+      v-if="isLoading"
+      class="loading-placeholder"
+    >
+      <PentilaSpinner />
+    </div>
     <div v-else-if="data !== undefined">
       <Chart
         v-if="data.labels"
+        class="stat-chart"
         :labels="data.labels"
         :datasets="data.datasets"
       />
@@ -74,8 +80,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-section {
+.loading-placeholder {
   position: relative;
+  height: 40vh;
+  max-height: 442px;
+}
+
+.stat-chart {
+  height: 40vh;
+  max-height: 442px;
 }
 </style>
 

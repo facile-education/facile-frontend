@@ -1,8 +1,12 @@
 <template>
   <Layout v-if="selectedSchool">
     <h1 :aria-label="$t('serviceTitle')" />
-    <div class="header">
+    <div
+      class="header"
+      :class="{'phone' : mq.phone || mq.tablet}"
+    >
       <StatsActivesUsers
+        v-if="!(mq.phone || mq.tablet)"
         :start-time="selectedStartDate"
         :end-time="selectedEndDate"
         :selected-school="selectedSchool"
@@ -21,6 +25,13 @@
         />
       </section>
     </div>
+
+    <StatsActivesUsers
+      v-if="mq.phone || mq.tablet"
+      :start-time="selectedStartDate"
+      :end-time="selectedEndDate"
+      :selected-school="selectedSchool"
+    />
 
     <StatsChart
       :start-time="selectedStartDate"
@@ -88,6 +99,7 @@ import DateRangePicker from '@components/Statistics/DateRangePicker.vue'
 export default {
   name: 'Statistics',
   components: { DateRangePicker, StatsChart, StatsActivesUsers, StatsDoughnut, GlobalStat, Layout },
+  inject: ['mq'],
   data () {
     return {
       selectedStartDate: dayjs().subtract(7, 'days'),
@@ -126,6 +138,10 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  &.phone{
+    justify-content: flex-end;
+  }
 }
 
 .selectors {
@@ -136,19 +152,21 @@ export default {
   }
 }
 
-.doughnuts {
-  display: flex;
-  align-items: center;
+@media screen and (min-width: 774px) {  // Inline if enough space
+  .doughnuts {
+    display: flex;
+    align-items: center;
 
-  .doughnut {
-    flex: 1;
+    .doughnut {
+      flex: 1;
+    }
   }
 }
 
 .general-stats {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 264px
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 </style>
 
