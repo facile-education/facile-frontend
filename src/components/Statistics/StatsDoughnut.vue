@@ -1,11 +1,17 @@
 <template>
   <section>
     <h2 v-t="service" />
-    <PentilaSpinner v-if="isLoading" />
+    <div
+      v-if="isLoading"
+      class="loading-placeholder"
+    >
+      <PentilaSpinner />
+    </div>
     <div v-else-if="data !== undefined">
       <span>Total : {{ data.totalCount }}</span>
       <Chart
         :type="'doughnut'"
+        class="doughnut-chart"
         :labels="data.labels"
         :datasets="data.datasets"
       />
@@ -87,9 +93,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  section {
-    position: relative;
-  }
+.loading-placeholder {
+  position: relative;
+  height: 30vh;
+  max-height: 350px;
+}
+
+.doughnut-chart {
+  height: 30vh;
+  max-height: 350px;
+}
 </style>
 
 <i18n locale="fr">

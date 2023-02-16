@@ -35,7 +35,7 @@ export default {
         return {
           responsive: true,
           fill: true,
-          maintainAspectRatio: true,
+          maintainAspectRatio: false,
           lineTension: 0.3,
           interaction: {
             intersect: false,
@@ -43,7 +43,7 @@ export default {
           }
         }
       } else if (this.type === 'pie' || this.type === 'doughnut') {
-        return { responsive: true }
+        return { responsive: true, maintainAspectRatio: false }
       } else {
         return {}
       }
