@@ -66,18 +66,21 @@
 
     <div class="general-stats">
       <GlobalStat
+        class="general-stat"
         :start-time="selectedStartDate"
         :end-time="selectedEndDate"
         :selected-school="selectedSchool"
         service="messaging"
       />
       <GlobalStat
+        class="general-stat"
         :start-time="selectedStartDate"
         :end-time="selectedEndDate"
         :selected-school="selectedSchool"
-        service="news"
+        service="schoolNews"
       />
       <GlobalStat
+        class="general-stat"
         :start-time="selectedStartDate"
         :end-time="selectedEndDate"
         :selected-school="selectedSchool"
@@ -167,6 +170,11 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+
+  .general-stat {
+    flex: 1;
+    margin-right: 58px;
+  }
 }
 </style>
 
