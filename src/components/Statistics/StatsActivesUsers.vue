@@ -1,6 +1,6 @@
 <template>
   <section v-if="nbUsers !== undefined">
-    <span> {{ nbUsers + ' ' + (nbUsers > 1 ? $t('activeUsers') : $t('activeUser')) }}</span>
+    <span class="theme-text-color"> {{ nbUsers + ' ' + (nbUsers > 1 ? $t('activeUsers') : $t('activeUser')) }}</span>
   </section>
 </template>
 
@@ -58,12 +58,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+span {
+  font-size: 2em;
+  letter-spacing: 0;
+  line-height: 2em;
+}
 </style>
 
 <i18n locale="fr">
 {
-  "activeUsers": "Utilisateurs actifs",
-  "activeUser": "Utilisateur actif"
+  "activeUsers": "utilisateurs actifs",
+  "activeUser": "utilisateur actif"
 }
 </i18n>

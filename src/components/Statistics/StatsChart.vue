@@ -82,6 +82,6 @@ section {
 <i18n locale="fr">
 {
   "globalUses": "Fréquentation globale",
-  "profileUses": "Fréquentation par profils"
+  "profileUses": "Fréquentation par profil"
 }
 </i18n>
