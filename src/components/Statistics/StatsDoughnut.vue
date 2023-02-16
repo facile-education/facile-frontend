@@ -8,13 +8,20 @@
       <PentilaSpinner />
     </div>
     <div v-else-if="data !== undefined">
-      <span>Total : {{ data.totalCount }}</span>
       <Chart
+        v-if="data.totalCount > 0"
         :type="'doughnut'"
         class="doughnut-chart"
         :labels="data.labels"
         :datasets="data.datasets"
+        :centered-text="data.totalCount"
       />
+      <div
+        v-else
+        class="null-placeholder"
+      >
+        {{ nullPlaceholder }}
+      </div>
     </div>
   </section>
 </template>
@@ -48,6 +55,17 @@ export default {
     return {
       isLoading: false,
       data: undefined
+    }
+  },
+  computed: {
+    nullPlaceholder () {
+      if (this.service === 'documents') {
+        return this.$t('documentsPlaceholder')
+      } else if (this.service === 'homeworks') {
+        return this.$t('homeworkPlaceholder')
+      } else {
+        return '0'
+      }
     }
   },
   watch: {
@@ -93,21 +111,29 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.loading-placeholder {
-  position: relative;
+
+.doughnut-chart, .null-placeholder, .loading-placeholder {
   height: 30vh;
   max-height: 350px;
 }
 
-.doughnut-chart {
-  height: 30vh;
-  max-height: 350px;
+.loading-placeholder {
+  position: relative;
+}
+
+.null-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2em;
 }
 </style>
 
 <i18n locale="fr">
 {
   "documents": "Documents",
-  "homeworks": "Travail donné"
+  "homeworks": "Travail donné",
+  "documentsPlaceholder": "Aucun document mis en ligne",
+  "homeworkPlaceholder": "Aucun travail donné"
 }
 </i18n>
