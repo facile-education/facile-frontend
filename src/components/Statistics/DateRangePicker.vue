@@ -7,12 +7,16 @@
     @update:model-value="emitNewDates"
   >
     <template #default="{ togglePopover }">
-      <NeroIcon
-        name="fa-calendar-alt"
-        type="far"
-        class="icon"
-        @click="togglePopover()"
-      />
+      <button @click="togglePopover()">
+        <span class="label">
+          {{ formattedStartDate + ' - ' + formattedEndDate }}
+        </span>
+        <NeroIcon
+          name="fa-calendar-alt"
+          type="far"
+          class="icon"
+        />
+      </button>
     </template>
   </DatePicker>
 </template>
@@ -38,10 +42,24 @@ export default {
     }
   },
   computed: {
+    // TODO: fetch min date?
     maxDate () {
       return dayjs().toDate()
+    },
+    formattedStartDate () {
+      if (this.range.start) {
+        return dayjs(this.range.start).format('DD/MM/YYYY')
+      } else {
+        return ''
+      }
+    },
+    formattedEndDate () {
+      if (this.range.end) {
+        return dayjs(this.range.end).format('DD/MM/YYYY')
+      } else {
+        return ''
+      }
     }
-    // TODO: fetch min date?
   },
   created () {
     this.range = {
@@ -58,10 +76,36 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
+
 .date {
   display: flex;
   align-items: center;
 }
+
+button {
+  height: 100%;
+  background-color: #f5f5f5;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  border: 1px solid $color-border;
+  border-radius: 6px;
+
+  &:hover {
+    background-color: $color-hover-bg;
+  }
+}
+
+.label {
+  display: flex;
+  margin-top: 3px;
+  margin-right: 5px;
+  margin-left: 0.5em;
+  font-size: 14px;
+  font-weight: bold;
+}
+
 .icon {
   font-size: 2.5rem;
   padding: 0 0.5rem;
