@@ -137,6 +137,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
+
 .header {
   display: flex;
   align-items: center;
@@ -152,6 +154,8 @@ export default {
 
   .school-dropdown {
     margin-left: 15px;
+    border: 1px solid $color-border;
+    border-radius: 6px;
   }
 }
 
