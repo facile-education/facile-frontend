@@ -1,7 +1,17 @@
 <template>
   <section>
     <h2 v-t="service" />
-    <PentilaSpinner v-if="isLoading" />
+    <div
+      v-if="isLoading"
+      class="loading-placeholder"
+    >
+      <PentilaSpinner />
+    </div>
+    <div
+      v-else-if="error === true"
+      v-t="'error'"
+      class="error-placeholder"
+    />
     <div
       v-else-if="count !== undefined"
       class="content"
@@ -50,6 +60,7 @@ export default {
   data () {
     return {
       isLoading: false,
+      error: false,
       count: undefined
     }
   },
@@ -77,8 +88,10 @@ export default {
         getMessagesCount(this.selectedSchool.schoolId, this.startTime, this.endTime).then((data) => {
           this.isLoading = false
           if (data.success) {
+            this.error = false
             this.count = data.count
           } else {
+            this.error = true
             console.error('Error')
           }
         })
@@ -87,8 +100,10 @@ export default {
         getNewsCount(this.selectedSchool.schoolId, this.startTime, this.endTime).then((data) => {
           this.isLoading = false
           if (data.success) {
+            this.error = false
             this.count = data.groupNewsCount
           } else {
+            this.error = true
             console.error('Error')
           }
         })
@@ -97,8 +112,10 @@ export default {
         getNewsCount(this.selectedSchool.schoolId, this.startTime, this.endTime).then((data) => {
           this.isLoading = false
           if (data.success) {
+            this.error = false
             this.count = data.schoolNewsCount // or data.groupNewsCount
           } else {
+            this.error = true
             console.error('Error')
           }
         })
@@ -121,11 +138,23 @@ h2 {
   color: black;
 }
 
-.content {
-  height: 227px;
-  width: 100%;
+.loading-placeholder, .error-placeholder, .content {
   border: 1px solid $color-border;
   border-radius: 10px;
+  height: 227px;
+  width: 100%;
+}
+
+.loading-placeholder {
+  position: relative;
+}
+
+.error-placeholder{
+  color: black;
+  font-size: 1.25em;
+}
+
+.content, .error-placeholder {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -147,6 +176,7 @@ h2 {
 {
   "messaging": "Messages envoyés",
   "news": "Actualités",
+  "error": "Oups, une erreur est survenue...",
   "schoolNews": "Annonces de l'établissement"
 }
 </i18n>

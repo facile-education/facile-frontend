@@ -7,6 +7,11 @@
     >
       <PentilaSpinner />
     </div>
+    <div
+      v-else-if="error === true"
+      v-t="'error'"
+      class="error-placeholder"
+    />
     <div v-else-if="data !== undefined">
       <Chart
         v-if="data.totalCount > 0"
@@ -54,7 +59,8 @@ export default {
   data () {
     return {
       isLoading: false,
-      data: undefined
+      data: undefined,
+      error: false
     }
   },
   computed: {
@@ -89,8 +95,10 @@ export default {
         getFilesCount(this.selectedSchool.schoolId, this.startTime, this.endTime).then((data) => {
           this.isLoading = false
           if (data.success) {
+            this.error = false
             this.data = data
           } else {
+            this.error = true
             console.error('Error')
           }
         })
@@ -99,8 +107,10 @@ export default {
         getHomeworksCount(this.selectedSchool.schoolId, this.startTime, this.endTime).then((data) => {
           this.isLoading = false
           if (data.success) {
+            this.error = false
             this.data = data
           } else {
+            this.error = true
             console.error('Error')
           }
         })
@@ -112,26 +122,34 @@ export default {
 
 <style lang="scss" scoped>
 
-.doughnut-chart, .null-placeholder, .loading-placeholder {
+.doughnut-chart, .null-placeholder, .loading-placeholder, .error-placeholder {
   height: 30vh;
   max-height: 350px;
+  background-color: #F4F8FF;
 }
 
 .loading-placeholder {
   position: relative;
 }
 
-.null-placeholder {
+.null-placeholder, .error-placeholder {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.null-placeholder {
   font-size: 2em;
+}
+
+.error-placeholder {
+  font-size: 1.25em;
 }
 </style>
 
 <i18n locale="fr">
 {
   "documents": "Documents",
+  "error": "Oups, une erreur est survenue...",
   "homeworks": "Travail donné",
   "documentsPlaceholder": "Aucun document mis en ligne",
   "homeworkPlaceholder": "Aucun travail donné"

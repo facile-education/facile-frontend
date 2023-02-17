@@ -7,6 +7,11 @@
     >
       <PentilaSpinner />
     </div>
+    <div
+      v-else-if="error === true"
+      v-t="'error'"
+      class="error-placeholder"
+    />
     <div v-else-if="data !== undefined">
       <Chart
         v-if="data.labels"
@@ -46,7 +51,8 @@ export default {
   data () {
     return {
       isLoading: false,
-      data: undefined
+      data: undefined,
+      error: false
     }
   },
   watch: {
@@ -69,8 +75,10 @@ export default {
       getSessionsCount(this.selectedSchool.schoolId, this.startTime, this.endTime, this.comparator).then((data) => {
         this.isLoading = false
         if (data.success) {
+          this.error = false
           this.data = data
         } else {
+          this.error = true
           console.error('Error')
         }
       })
@@ -80,10 +88,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.loading-placeholder {
+.loading-placeholder, .error-placeholder {
   position: relative;
   height: 40vh;
   max-height: 442px;
+}
+
+.error-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25em;
+  background-color: #F4F8FF;
 }
 
 .stat-chart {
@@ -95,6 +111,7 @@ export default {
 <i18n locale="fr">
 {
   "globalUses": "Fréquentation globale",
+  "error": "Oups, une erreur est survenue...",
   "profileUses": "Fréquentation par profil"
 }
 </i18n>
