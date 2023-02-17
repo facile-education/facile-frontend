@@ -61,6 +61,29 @@ export default {
               minFontSize: 25, // Default is 20 (in px), set to false and text will not wrap.
               lineHeight: 25 // Default is 25 (in px), used for when text wraps
             }
+          },
+          plugins: {
+            tooltip: {
+              backgroundColor: '#fff',
+              bodyColor: '#000',
+              borderColor: '#D4D4D4',
+              borderWidth: 1,
+              bodyFont: { weight: 'bold', size: 14 },
+              cornerRadius: 16,
+              padding: 10,
+              boxPadding: 5,
+              caretSize: 0,
+              callbacks: {
+                label: function (context) {
+                  let total = 0
+                  context.dataset.data.forEach(value => {
+                    total += value
+                  })
+                  const percent = Math.floor((context.parsed / total) * 100)
+                  return context.label + ': ' + percent + '%'
+                }
+              }
+            }
           }
         }
       } else {

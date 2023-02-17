@@ -39,12 +39,12 @@
       :selected-school="selectedSchool"
     />
 
-    <!--    <StatsChart-->
-    <!--      :start-time="selectedStartDate"-->
-    <!--      :end-time="selectedEndDate"-->
-    <!--      :selected-school="selectedSchool"-->
-    <!--      comparator="profile"-->
-    <!--    />-->
+    <StatsChart
+      :start-time="selectedStartDate"
+      :end-time="selectedEndDate"
+      :selected-school="selectedSchool"
+      comparator="profile"
+    />
 
     <div class="doughnuts">
       <StatsDoughnut
