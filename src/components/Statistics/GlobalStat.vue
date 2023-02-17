@@ -9,7 +9,6 @@
       <AnimatedCounter
         class="value"
         :target="count"
-        @click="setRandomValue"
       />
       <div
         v-t="service"
@@ -65,9 +64,6 @@ export default {
     this.getData()
   },
   methods: {
-    setRandomValue () {
-      this.count = Math.floor(Math.random() * 1000)
-    },
     getData () {
       if (this.service === 'messaging') {
         this.isLoading = true

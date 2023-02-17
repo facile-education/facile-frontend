@@ -1,14 +1,24 @@
 <template>
   <section v-if="nbUsers !== undefined">
-    <span class="theme-text-color"> {{ nbUsers + ' ' + (nbUsers > 1 ? $t('activeUsers') : $t('activeUser')) }}</span>
+    <span class="theme-text-color">
+      <AnimatedCounter
+        :target="nbUsers"
+        :animation-duration="300"
+      />
+      <span class="label">
+        {{ nbUsers > 1 ? $t('activeUsers') : $t('activeUser') }}
+      </span>
+    </span>
   </section>
 </template>
 
 <script>
 import { getActiveUsersCount } from '@/api/statistics.service'
+import AnimatedCounter from '@components/Base/AnimatedCounter.vue'
 
 export default {
   name: 'StatsActivesUsers',
+  components: { AnimatedCounter },
   props: {
     startTime: {
       type: Object,
@@ -46,7 +56,6 @@ export default {
     getData () {
       getActiveUsersCount(this.selectedSchool.schoolId, this.startTime, this.endTime).then((data) => {
         if (data.success) {
-          this.nbUsers = 0
           this.nbUsers = data.count
         } else {
           console.error('Error')
@@ -58,10 +67,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-span {
+.theme-text-color {
   font-size: 2em;
   letter-spacing: 0;
   line-height: 2em;
+  display: flex;
+}
+
+.label {
+  margin-left: 10px;
 }
 </style>
 
