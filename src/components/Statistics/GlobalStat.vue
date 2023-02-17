@@ -4,7 +4,7 @@
     <PentilaSpinner v-if="isLoading" />
     <div
       v-else-if="count !== undefined"
-      class="content theme-text-color"
+      class="content"
     >
       <AnimatedCounter
         class="value"
@@ -41,6 +41,10 @@ export default {
     selectedSchool: {
       type: Object,
       required: true
+    },
+    color: {
+      type: String,
+      default: '#000000'
     }
   },
   data () {
@@ -62,6 +66,9 @@ export default {
   },
   created () {
     this.getData()
+  },
+  mounted () {
+    this.$el.style.color = this.color
   },
   methods: {
     getData () {
@@ -108,6 +115,10 @@ section {
   position: relative;
   min-width: min(300px, 100vw);
   white-space: nowrap;
+}
+
+h2 {
+  color: black;
 }
 
 .content {

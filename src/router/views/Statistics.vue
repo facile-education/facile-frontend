@@ -71,6 +71,7 @@
         :end-time="selectedEndDate"
         :selected-school="selectedSchool"
         service="messaging"
+        color="#E74C3C"
       />
       <GlobalStat
         class="general-stat"
@@ -78,6 +79,7 @@
         :end-time="selectedEndDate"
         :selected-school="selectedSchool"
         service="schoolNews"
+        color="#306CD3"
       />
       <GlobalStat
         class="general-stat"
@@ -85,6 +87,7 @@
         :end-time="selectedEndDate"
         :selected-school="selectedSchool"
         service="news"
+        color="#306CD3"
       />
     </div>
   </Layout>
