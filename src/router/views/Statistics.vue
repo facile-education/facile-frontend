@@ -166,6 +166,7 @@ export default {
   .doughnuts {
     display: flex;
     align-items: center;
+    gap: 50px;
 
     .doughnut {
       flex: 1;
@@ -175,13 +176,10 @@ export default {
 
 .general-stats {
   display: flex;
+  margin-top: 2em;
   flex-wrap: wrap;
-  justify-content: space-between;
-
-  .general-stat {
-    flex: 1;
-    margin-right: 58px;
-  }
+  justify-content: space-around;
+  gap: 25px 50px;
 }
 </style>
 

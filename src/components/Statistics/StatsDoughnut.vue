@@ -123,11 +123,12 @@ export default {
 <style lang="scss" scoped>
 h2 {
   font-weight: normal;
+  margin-top: 2em;
 }
 
 .doughnut-chart, .null-placeholder, .loading-placeholder, .error-placeholder {
-  height: 40vh;
-  max-height: 40vh;
+  height: 37vh;
+  max-height: 37vh;
   background-color: #F4F8FF;
 }
 

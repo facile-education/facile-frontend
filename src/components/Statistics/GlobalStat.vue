@@ -131,6 +131,8 @@ export default {
 section {
   position: relative;
   min-width: min(300px, 100vw);
+  max-width: 450px;
+  flex: 1;
   white-space: nowrap;
 }
 
@@ -142,7 +144,7 @@ h2 {
 .loading-placeholder, .error-placeholder, .content {
   border: 1px solid $color-border;
   border-radius: 10px;
-  height: 227px;
+  height: 200px;
   width: 100%;
 }
 
