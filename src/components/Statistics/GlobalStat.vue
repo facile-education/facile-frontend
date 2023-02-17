@@ -136,6 +136,7 @@ section {
 
 h2 {
   color: black;
+  font-weight: normal;
 }
 
 .loading-placeholder, .error-placeholder, .content {
