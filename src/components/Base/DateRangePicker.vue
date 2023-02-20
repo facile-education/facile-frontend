@@ -4,6 +4,7 @@
     :is-range="true"
     class="date"
     :max-date="maxDate"
+    :min-date="minDate"
     @update:model-value="emitNewDates"
   >
     <template #default="{ togglePopover }">
@@ -33,6 +34,14 @@ export default {
     initialRange: {
       type: Object,
       required: true
+    },
+    maxDate: {
+      type: Date,
+      default: undefined
+    },
+    minDate: {
+      type: Date,
+      default: undefined
     }
   },
   emits: ['updateDates'],
@@ -42,10 +51,6 @@ export default {
     }
   },
   computed: {
-    // TODO: fetch min date?
-    maxDate () {
-      return dayjs().toDate()
-    },
     formattedStartDate () {
       if (this.range.start) {
         return dayjs(this.range.start).format('DD/MM/YYYY')

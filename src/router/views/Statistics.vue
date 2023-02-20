@@ -13,7 +13,10 @@
       />
       <section class="selectors">
         <DateRangePicker
+          v-if="minDate !== undefined"
           :initial-range="{start: selectedStartDate, end: selectedEndDate}"
+          :max-date="maxDate"
+          :min-date="minDate"
           @updateDates="updateDates"
         />
         <PentilaDropdown
@@ -100,7 +103,7 @@ import GlobalStat from '@components/Statistics/GlobalStat.vue'
 import StatsDoughnut from '@components/Statistics/StatsDoughnut.vue'
 import StatsChart from '@components/Statistics/StatsChart.vue'
 import dayjs from 'dayjs'
-import DateRangePicker from '@components/Statistics/DateRangePicker.vue'
+import DateRangePicker from '@components/Base/DateRangePicker.vue'
 
 export default {
   name: 'Statistics',
@@ -123,11 +126,21 @@ export default {
       set (school) {
         this.$store.commit('administration/setSelectedSchool', school)
       }
+    },
+    maxDate () {
+      return dayjs().toDate()
+    },
+    minDate () {
+      return this.$store.state.cdt.configuration.startDateProject ? dayjs(this.$store.state.cdt.configuration.startDateProject).toDate() : undefined
     }
   },
   created () {
     if (this.managedSchoolList === undefined) {
       this.$store.dispatch('administration/getAdministrationSchools')
+    }
+
+    if (this.minDate === undefined) {
+      this.$store.dispatch('cdt/getConfiguration')
     }
   },
   methods: {
