@@ -1,6 +1,10 @@
 <template>
   <section v-if="nbUsers !== undefined">
     <span class="theme-text-color">
+      <img
+        src="@/assets/user.svg"
+        alt=""
+      >
       <AnimatedCounter
         :target="nbUsers"
         :animation-duration="300"
@@ -72,6 +76,16 @@ export default {
   letter-spacing: 0;
   line-height: 2em;
   display: flex;
+}
+
+@media screen and (max-width: 840px) and (min-width: 450px) {
+  .theme-text-color {
+    font-size: 1.5em;
+  }
+}
+
+img {
+  margin-right: 15px;
 }
 
 .label {
