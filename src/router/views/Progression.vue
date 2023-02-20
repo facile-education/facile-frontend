@@ -51,7 +51,10 @@ export default {
             this.$store.dispatch('progression/initCoursList')
           }
 
-          this.$store.dispatch('progression/getProgressionContent', this.$route.params.progressionId)
+          this.$store.dispatch('progression/getProgressionContent', { progressionId: this.$route.params.progressionId, itemId: this.$route.params.itemId })
+          if (this.$route.params.fileId && this.$route.params.display) {
+            this.$store.dispatch('documents/openFile', { id: this.$route.params.fileId, name: this.$route.params.fileName })
+          }
           // Set default folder
           // if (this.$store.state.progression.currentProgression.sections !== undefined && this.$store.state.progression.currentProgression.sections.length > 0) {
           //   this.$store.dispatch('progression/setCurrentFolder', this.$store.state.progression.currentProgression.sections[0])
