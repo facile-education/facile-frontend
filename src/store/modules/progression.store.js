@@ -47,6 +47,8 @@ export const helperMethods = {
         }
       }
     }
+    console.error('Cannot get item ' + itemId + ' from following progression', progression)
+    return undefined
   }
 }
 
@@ -541,16 +543,22 @@ export const actions = {
   setIsWaiting ({ commit }, isWaiting) {
     commit('setIsWaiting', isWaiting)
   },
-  getProgressionContent ({ commit, dispatch }, progressionId) {
-    getProgressionContent(progressionId).then(
+  getProgressionContent ({ commit, dispatch }, params) {
+    getProgressionContent(params.progressionId).then(
       (data) => {
         if (data.success) {
           commit('setCurrentProgression', data.progression)
           commit('setCurrentProgressionContent', data)
-          // Set default folder
-          if (data.sections !== undefined && data.sections.length > 0) {
-            commit('setCurrentFolder', data.sections[0])
-            dispatch('getFolderContent', data.sections[0].folderId)
+          if (params.itemId) {
+            const item = helperMethods.getItemByItemId(data, parseInt(params.itemId))
+            commit('setCurrentItem', item)
+            this.dispatch('progression/getItemContents', item)
+          } else {
+            // Set default folder
+            if (data.sections !== undefined && data.sections.length > 0) {
+              commit('setCurrentFolder', data.sections[0])
+              dispatch('getFolderContent', data.sections[0].folderId)
+            }
           }
         }
       },

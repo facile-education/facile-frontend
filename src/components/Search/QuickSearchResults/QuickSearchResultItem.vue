@@ -191,10 +191,10 @@ export default {
         //   this.$router.push({ name: 'GroupDocuments', params: { folderId: this.searchResult.folderId, fileId: this.searchResult.entityId, display: this.searchResult.displayable } })
         //   break
         case searchConstants.TYPE_PROGRESSION:
-          console.log('TODO: redirection')
+          this.$router.push({ name: 'Progression', params: { progressionId: this.searchResult.entityId } })
           break
         case searchConstants.TYPE_PROGRESSION_FILE:
-          console.log('TODO: redirection')
+          this.$router.push({ name: 'Progression', params: { progressionId: this.searchResult.progressionId, itemId: this.searchResult.itemId, fileId: this.searchResult.entityId, fileName: this.searchResult.title, display: this.searchResult.displayable } })
           break
         default:
           console.error('Unknown entity type')
