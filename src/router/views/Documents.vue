@@ -108,7 +108,6 @@ import FilePickerModal from '@components/FilePicker/FilePickerModal'
 import DocumentDetailsModal from '@components/Documents/DocumentDetails/DocumentDetailsModal'
 import PermissionsModal from '@components/Documents/Modals/PermissionModal/PermissionsModal'
 import { removeMenuOptionIfExist } from '@/utils/commons.util'
-import fileService from '@/api/documents/file.service'
 
 export default {
   name: 'Documents',
@@ -218,19 +217,13 @@ export default {
       () => {
         if (this.$route.name === 'Documents') {
           if (this.$route.params.folderId) {
-            this.$store.dispatch('documents/changeDirectory', { id: this.$route.params.folderId })
+            this.$store.dispatch('documents/changeDirectory', { folderId: this.$route.params.folderId, fileId: this.$route.params.fileId, displayFile: this.$route.params.display })
           } else {
             this.$store.dispatch('documents/goInDocumentRoot')
           }
         } else if (this.$route.name === 'GroupDocuments') {
           if (this.$route.params.folderId) {
-            this.$store.dispatch('documents/changeDirectory', { id: this.$route.params.folderId, isGroupDirectory: true })
-          } else if (this.$route.params.fileId) {
-            fileService.getFileInfos(this.$route.params.fileId).then((data) => {
-              if (data.success) {
-                this.$store.dispatch('documents/changeDirectory', { id: data.folderId, isGroupDirectory: true })
-              }
-            })
+            this.$store.dispatch('documents/changeDirectory', { folderId: this.$route.params.folderId, isGroupDirectory: true, fileId: this.$route.params.fileId, displayFile: this.$route.params.display })
           } else {
             this.$store.dispatch('documents/goInGroupRoot')
           }
