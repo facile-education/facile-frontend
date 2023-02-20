@@ -129,28 +129,54 @@ export const actions = {
   closeFile ({ commit }, file) {
     commit('closeFile', file)
   },
-  changeDirectory ({ commit, state }, directory) {
+  changeDirectory ({ commit, state }, params) {
     if (state.documentsProperties === undefined) {
       this.dispatch('documents/getGlobalDocumentsProperties')
     }
     // commit('setDocumentPanelDisplayed', false) // confirm ergonomic
     commit('emptyFolderContent')
     this.dispatch('documents/cleanSelectedEntities')
-    commit('setCurrentFolderId', directory.id)
+    commit('setCurrentFolderId', params.folderId)
     commit('updateLastSelectedEntity', undefined)
 
-    if (directory.id === 'collaborative') {
+    if (params.folderId === 'collaborative') {
       commit('setCurrentDisplay', 'grid')
     } else {
       commit('setCurrentDisplay', 'list')
     }
 
-    if (directory.isGroupDirectory) {
-      this.dispatch('documents/updateGroupBreadcrumb', directory.id)
-      this.dispatch('documents/getGroupEntities', directory.id)
+    if (params.isGroupDirectory) {
+      this.dispatch('documents/updateGroupBreadcrumb', params.folderId)
+      this.dispatch('documents/getGroupEntities', params.folderId).then((value) => {
+        if (params.fileId) { // Select the given file if exist
+          const index = value.files.map(file => file.id).indexOf(params.fileId)
+          if (index !== -1) {
+            const file = value.files[index]
+            this.dispatch('documents/selectOneDocument', file)
+            if (params.displayFile) { // Display file if asked
+              this.dispatch('documents/openFile', file)
+            }
+          } else {
+            console.error('cannot find fileId: ' + params.fileId + ' in folder ' + params.folderId)
+          }
+        }
+      })
     } else {
-      this.dispatch('documents/updateBreadcrumb', directory.id)
-      this.dispatch('documents/getEntities', directory.id)
+      this.dispatch('documents/updateBreadcrumb', params.folderId)
+      this.dispatch('documents/getEntities', params.folderId).then((value) => {
+        if (params.fileId) { // Select the given file if exist
+          const index = value.files.map(file => file.id).indexOf(params.fileId)
+          if (index !== -1) {
+            const file = value.files[index]
+            this.dispatch('documents/selectOneDocument', file)
+            if (params.displayFile) { // Display file if asked
+              this.dispatch('documents/openFile', file)
+            }
+          } else {
+            console.error('cannot find fileId: ' + params.fileId + ' in folder ' + params.folderId)
+          }
+        }
+      })
     }
   },
   cleanSelectedEntities ({ commit }) {
@@ -205,16 +231,16 @@ export const actions = {
   },
   goInDocumentRoot ({ state, commit }) {
     if (state.documentsProperties !== undefined && state.documentsProperties.private) {
-      this.dispatch('documents/changeDirectory', { id: state.documentsProperties.private.id })
+      this.dispatch('documents/changeDirectory', { folderId: state.documentsProperties.private.id })
     } else {
       documentsService.getGlobalDocumentsProperties().then((data) => {
         commit('setDocumentsProperties', data)
-        this.dispatch('documents/changeDirectory', { id: data.private.id })
+        this.dispatch('documents/changeDirectory', { folderId: data.private.id })
       })
     }
   },
   goInGroupRoot () {
-    this.dispatch('documents/changeDirectory', { id: 'collaborative', isGroupDirectory: true }) // TODO get those key from documentsProperties
+    this.dispatch('documents/changeDirectory', { folderId: 'collaborative', isGroupDirectory: true }) // TODO get those key from documentsProperties
   },
   openDocumentPanel ({ commit }) {
     commit('setDocumentPanelDisplayed', true)

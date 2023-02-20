@@ -164,7 +164,42 @@ export default {
       }
     },
     redirect () {
-      console.log('TODO')
+      switch (this.searchResult.service) {
+        case searchConstants.TYPE_NEWS:
+          console.log('TODO: redirection')
+          break
+        case searchConstants.TYPE_NEWS_FILE:
+          console.log('TODO: redirection')
+          break
+        case searchConstants.TYPE_MESSAGE:
+          console.log('TODO: redirection')
+          break
+        case searchConstants.TYPE_MESSAGE_FILE:
+          console.log('TODO: redirection')
+          break
+        case searchConstants.TYPE_FOLDER:
+          this.$router.push({ name: 'Documents', params: { folderId: this.searchResult.entityId } })
+          break
+        case searchConstants.TYPE_FILE:
+          this.$router.push({ name: 'Documents', params: { folderId: this.searchResult.folderId, fileId: this.searchResult.entityId, display: this.searchResult.displayable } })
+          break
+        // TODO
+        // case searchConstants.TYPE_COLLABORATIVE_FOLDER:
+        //   this.$router.push({ name: 'GroupDocuments', params: { folderId: this.searchResult.entityId } })
+        //   break
+        // case searchConstants.TYPE_COLLABORATIVE_FILE:
+        //   this.$router.push({ name: 'GroupDocuments', params: { folderId: this.searchResult.folderId, fileId: this.searchResult.entityId, display: this.searchResult.displayable } })
+        //   break
+        case searchConstants.TYPE_PROGRESSION:
+          console.log('TODO: redirection')
+          break
+        case searchConstants.TYPE_PROGRESSION_FILE:
+          console.log('TODO: redirection')
+          break
+        default:
+          console.error('Unknown entity type')
+          return undefined
+      }
     }
   }
 }
