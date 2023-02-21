@@ -76,16 +76,23 @@ export default {
   letter-spacing: 0;
   line-height: 2em;
   display: flex;
+  align-items: center;
 }
 
 @media screen and (max-width: 840px) and (min-width: 450px) {
   .theme-text-color {
     font-size: 1.5em;
   }
+
+  img {
+    height: 25px;
+    margin-bottom: 3px;
+  }
 }
 
 img {
   margin-right: 15px;
+  margin-bottom: 6px;
 }
 
 .label {
