@@ -127,6 +127,9 @@ export default {
     getMessageThread () {
       messageService.getMessageThread(this.$route.params.messageId).then((data) => {
         this.searchResultThreads = [data.thread]
+        // Select thread
+
+        // Select message in thread
       })
     },
     pointerDown (e) {

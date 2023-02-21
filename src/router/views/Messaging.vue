@@ -114,13 +114,22 @@ export default {
     // window.removeEventListener('keydown', this.keyMonitor)
   },
   created () {
-    this.loadFolders()
     this.getSignature()
+    this.$watch(
+      () => this.$route.params,
+      () => {
+        if (this.$route.params.messageId) {
+          this.$store.dispatch('messaging/loadMessagingFolders', true)
+        } else {
+          this.$store.dispatch('messaging/loadMessagingFolders')
+        }
+      },
+      // fetch the data when the view is created and the data is
+      // already being observed
+      { immediate: true }
+    )
   },
   methods: {
-    loadFolders () {
-      this.$store.dispatch('messaging/loadMessagingFolders')
-    },
     // keyboard shortcuts management
     keyMonitor: function (event) {
       // Ctrl-A for 'All' selection
