@@ -78,7 +78,7 @@ const routes = [
     component: () => import('@/router/views/MediacenterManager')
   },
   {
-    path: '/messaging',
+    path: '/messaging/:messageId(\\d+)?',
     name: 'Messaging',
     component: () => import('@/router/views/Messaging')
   },

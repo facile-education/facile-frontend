@@ -304,7 +304,10 @@ export default {
       messageService.getUsersCompletion(query).then((data) => {
         if (data.success) {
           this.autocompleteItems = data.results
-          this.autocompleteItems.forEach((item) => { item.type = 1 }) // Override generic getUserCompletion results to have the good type
+          this.autocompleteItems.forEach((item) => {
+            item.type = 1 // Override generic getUserCompletion results to have the good type
+            item.text = item.name
+          })
         } else {
           console.error('Error while getting users', data.error)
         }
