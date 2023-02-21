@@ -5,6 +5,7 @@ import { getCookie } from '@/utils/browser.util'
 export default {
   getThreads,
   getThreadMessages,
+  getMessageThread,
   getNbNewMessages,
   searchMessages,
   getMessageRecipients,
@@ -44,6 +45,15 @@ function getThreadMessages (threadId, folderId) {
       p_auth: getCookie('pauth'),
       threadId: threadId,
       folderId: folderId
+    }
+  }).then(response => response.data)
+}
+
+function getMessageThread (messageId) {
+  return axios.get(constants.JSON_WS_URL + MESSAGING_PATH + '/get-message-thread', {
+    params: {
+      p_auth: getCookie('pauth'),
+      messageId: messageId
     }
   }).then(response => response.data)
 }

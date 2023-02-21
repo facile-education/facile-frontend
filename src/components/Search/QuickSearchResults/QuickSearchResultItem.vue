@@ -172,7 +172,7 @@ export default {
           console.log('TODO: redirection')
           break
         case searchConstants.TYPE_MESSAGE:
-          console.log('TODO: redirection')
+          this.$router.push({ name: 'Messaging', params: { messageId: this.searchResult.entityId } })
           break
         case searchConstants.TYPE_MESSAGE_FILE:
           console.log('TODO: redirection')
