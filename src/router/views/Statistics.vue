@@ -131,7 +131,7 @@ export default {
       return dayjs().toDate()
     },
     minDate () {
-      return this.$store.state.cdt.configuration.startDateProject ? dayjs(this.$store.state.cdt.configuration.startDateProject).toDate() : undefined
+      return this.$store.state.cdt.configuration.startDateProject ? dayjs(this.$store.state.cdt.configuration.startDateProject).toDate() : dayjs().subtract(2, 'year').toDate() // arbitrary min date
     }
   },
   created () {
