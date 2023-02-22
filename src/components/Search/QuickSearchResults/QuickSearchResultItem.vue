@@ -83,7 +83,7 @@ export default {
     isFile () {
       return this.searchResult.service === searchConstants.TYPE_NEWS_FILE || this.searchResult.service === searchConstants.TYPE_MESSAGE_FILE || this.searchResult.service === searchConstants.TYPE_FILE || this.searchResult.service === searchConstants.TYPE_COLLABORATIVE_FILE || this.searchResult.service === searchConstants.TYPE_PROGRESSION_FILE
     },
-    icon () { // TODO: specify icons
+    icon () {
       switch (this.searchResult.service) {
         case searchConstants.TYPE_NEWS:
           return require('@assets/icon_news.svg')
@@ -122,6 +122,15 @@ export default {
           if (this.isInViewport(this.$el)) {
             this.$store.dispatch('search/quickSearch', false)
           }
+        }
+      }
+    },
+    isSelected: { // Simulate hover behaviour when select it by keyboard, so it can trigger tooltip
+      handler () {
+        if (this.isSelected) {
+          this.onHover()
+        } else {
+          this.onHoverQuit()
         }
       }
     }
