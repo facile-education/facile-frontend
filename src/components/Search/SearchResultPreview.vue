@@ -20,6 +20,11 @@
     <div class="content">
       <div class="header">
         {{ searchResult.title }}
+        <img
+          v-if="isCollaborative"
+          src="@assets/icon_commu-black.svg"
+          alt="collaborative"
+        >
       </div>
       <div
         v-if="resultDetails"
@@ -79,7 +84,6 @@
 import { getSearchResultDetails } from '@/api/search.service'
 import FileIcon from '@components/Base/FileIcon.vue'
 import { formatSize } from '@utils/commons.util'
-import searchConstants from '@/constants/searchConstants'
 
 export default {
   name: 'SearchResultPreview',
@@ -90,6 +94,10 @@ export default {
       required: true
     },
     isFile: {
+      type: Boolean,
+      default: false
+    },
+    isCollaborative: {
       type: Boolean,
       default: false
     },
@@ -105,11 +113,6 @@ export default {
   data () {
     return {
       resultDetails: undefined
-    }
-  },
-  computed: {
-    isCollaborative () {
-      return this.searchResult.service === searchConstants.TYPE_COLLABORATIVE_FILE || this.searchResult.service === searchConstants.TYPE_COLLABORATIVE_FOLDER
     }
   },
   created () {
@@ -180,6 +183,13 @@ export default {
   .header {
     margin: 5px 0 10px 0;
     font-weight: bold;
+    display: flex;
+    align-items: center;
+
+    img {
+      margin-left: 7px;
+      height: 22px;
+    }
   }
 
   .text {

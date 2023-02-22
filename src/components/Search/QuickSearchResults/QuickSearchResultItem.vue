@@ -26,6 +26,11 @@
         :title="searchResult.title"
       >
         {{ searchResult.title }}
+        <img
+          v-if="isCollaborative"
+          src="@assets/icon_commu-black.svg"
+          alt="collaborative"
+        >
       </p>
       <p class="content-extract">
         {{ searchResult.content }}
@@ -44,6 +49,7 @@
       class="preview"
       :search-result="searchResult"
       :is-file="isFile"
+      :is-collaborative="isCollaborative"
       :icon="icon"
       :fixed-position="tooltipPosition"
     />
@@ -82,6 +88,9 @@ export default {
   computed: {
     isFile () {
       return this.searchResult.service === searchConstants.TYPE_NEWS_FILE || this.searchResult.service === searchConstants.TYPE_MESSAGE_FILE || this.searchResult.service === searchConstants.TYPE_FILE || this.searchResult.service === searchConstants.TYPE_COLLABORATIVE_FILE || this.searchResult.service === searchConstants.TYPE_PROGRESSION_FILE
+    },
+    isCollaborative () {
+      return this.searchResult.service === searchConstants.TYPE_COLLABORATIVE_FILE || this.searchResult.service === searchConstants.TYPE_COLLABORATIVE_FOLDER
     },
     icon () {
       switch (this.searchResult.service) {
@@ -293,6 +302,13 @@ li {
     white-space: nowrap;
     text-overflow: ellipsis;
     font-size: 0.85em;
+    display: flex;
+    align-items: center;
+
+    img {
+      margin-left: 7px;
+      height: 18px;
+    }
   }
 
   .content-extract {
