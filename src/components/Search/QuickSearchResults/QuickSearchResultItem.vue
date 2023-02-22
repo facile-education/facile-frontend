@@ -42,8 +42,10 @@
     <SearchResultPreview
       v-if="displayTooltip"
       class="preview"
-      :fixed-position="tooltipPosition"
       :search-result="searchResult"
+      :is-file="isFile"
+      :icon="icon"
+      :fixed-position="tooltipPosition"
     />
   </li>
 </template>
@@ -52,6 +54,7 @@
 import searchConstants from '@/constants/searchConstants'
 import FileIcon from '@components/Base/FileIcon.vue'
 import SearchResultPreview from '@components/Search/SearchResultPreview.vue'
+import { getSearchResultDetails } from '@/api/search.service'
 export default {
   name: 'QuickSearchResultItem',
   components: { SearchResultPreview, FileIcon },
@@ -78,7 +81,7 @@ export default {
   },
   computed: {
     isFile () {
-      return this.searchResult.service === searchConstants.TYPE_NEWS_FILE || this.searchResult.service === searchConstants.TYPE_MESSAGE_FILE || this.searchResult.service === searchConstants.TYPE_FILE || this.searchResult.service === searchConstants.TYPE_PROGRESSION_FILE
+      return this.searchResult.service === searchConstants.TYPE_NEWS_FILE || this.searchResult.service === searchConstants.TYPE_MESSAGE_FILE || this.searchResult.service === searchConstants.TYPE_FILE || this.searchResult.service === searchConstants.TYPE_COLLABORATIVE_FILE || this.searchResult.service === searchConstants.TYPE_PROGRESSION_FILE
     },
     icon () { // TODO: specify icons
       switch (this.searchResult.service) {
@@ -87,19 +90,27 @@ export default {
         case searchConstants.TYPE_NEWS_FILE:
           return require('@assets/icons/documents/icon-file.svg')
         case searchConstants.TYPE_MESSAGE:
-          return require('@assets/menu_messaging_black.svg') // TODO mail icons
+          return require('@assets/menu_messaging_black.svg') // TODO mail icon
         case searchConstants.TYPE_MESSAGE_FILE:
           return require('@assets/icons/documents/icon-file.svg')
         case searchConstants.TYPE_FOLDER:
           return require('@assets/icons/documents/icon-folder.svg')
         case searchConstants.TYPE_FILE:
           return require('@assets/icons/documents/icon-file.svg')
+        case searchConstants.TYPE_COLLABORATIVE_FILE:
+          return require('@assets/icons/documents/icon-file.svg')
+        case searchConstants.TYPE_COLLABORATIVE_FOLDER:
+          return require('@assets/icons/documents/icon-file.svg')
         case searchConstants.TYPE_PROGRESSION:
-          return require('@assets/seance.svg') // and not homework?
+          return require('@assets/seance.svg') // TODO progression icon
+        case searchConstants.TYPE_PROGRESSION_COURSE:
+          return require('@assets/seance.svg')
+        case searchConstants.TYPE_PROGRESSION_HOMEWORK:
+          return require('@assets/devoir.svg')
         case searchConstants.TYPE_PROGRESSION_FILE:
           return require('@assets/icons/documents/icon-file.svg')
         default:
-          console.error('Unknown entity type')
+          console.error('Unknown entity type', this.searchResult)
           return undefined
       }
     }
@@ -139,8 +150,8 @@ export default {
     },
     onHoverQuit () {
       this.isHovering = false
-      this.displayTooltip = false
-      // setTimeout(() => { if (!this.isHovering) { this.displayTooltip = false } }, 500)
+      // this.displayTooltip = false
+      setTimeout(() => { if (!this.isHovering) { this.displayTooltip = false } }, 500) // To let time to hover tooltip
     },
     computeTooltipPosition () {
       const domRect = this.$refs.resultItem.getBoundingClientRect()
@@ -164,42 +175,55 @@ export default {
       }
     },
     redirect () {
-      switch (this.searchResult.service) {
-        case searchConstants.TYPE_NEWS:
-          console.log('TODO: redirection')
-          break
-        case searchConstants.TYPE_NEWS_FILE:
-          console.log('TODO: redirection')
-          break
-        case searchConstants.TYPE_MESSAGE:
-          this.$router.push({ name: 'Messaging', params: { messageId: this.searchResult.entityId } })
-          break
-        case searchConstants.TYPE_MESSAGE_FILE:
-          console.log('TODO: redirection')
-          break
-        case searchConstants.TYPE_FOLDER:
-          this.$router.push({ name: 'Documents', params: { folderId: this.searchResult.entityId } })
-          break
-        case searchConstants.TYPE_FILE:
-          this.$router.push({ name: 'Documents', params: { folderId: this.searchResult.folderId, fileId: this.searchResult.entityId, display: this.searchResult.displayable } })
-          break
-        // TODO
-        // case searchConstants.TYPE_COLLABORATIVE_FOLDER:
-        //   this.$router.push({ name: 'GroupDocuments', params: { folderId: this.searchResult.entityId } })
-        //   break
-        // case searchConstants.TYPE_COLLABORATIVE_FILE:
-        //   this.$router.push({ name: 'GroupDocuments', params: { folderId: this.searchResult.folderId, fileId: this.searchResult.entityId, display: this.searchResult.displayable } })
-        //   break
-        case searchConstants.TYPE_PROGRESSION:
-          this.$router.push({ name: 'Progression', params: { progressionId: this.searchResult.entityId } })
-          break
-        case searchConstants.TYPE_PROGRESSION_FILE:
-          this.$router.push({ name: 'Progression', params: { progressionId: this.searchResult.progressionId, itemId: this.searchResult.itemId, fileId: this.searchResult.entityId, fileName: this.searchResult.title, display: this.searchResult.displayable } })
-          break
-        default:
-          console.error('Unknown entity type')
-          return undefined
-      }
+      getSearchResultDetails(this.searchResult.entityId, this.searchResult.service).then((data) => { // To retrieve redirection and action to perform on this result
+        if (data.success) {
+          switch (this.searchResult.service) {
+            case searchConstants.TYPE_NEWS:
+              console.log('TODO: redirection')
+              break
+            case searchConstants.TYPE_NEWS_FILE:
+              console.log('TODO: redirection')
+              break
+            case searchConstants.TYPE_MESSAGE:
+              this.$router.push({ name: 'Messaging', params: { messageId: this.searchResult.entityId } })
+              break
+            case searchConstants.TYPE_MESSAGE_FILE:
+              this.$router.push({ name: 'Messaging', params: { messageId: data.result.messageId } })
+              // TODO: open file (and normalize this behaviour?)
+              break
+            case searchConstants.TYPE_FOLDER:
+              this.$router.push({ name: 'Documents', params: { folderId: this.searchResult.entityId } })
+              break
+            case searchConstants.TYPE_FILE:
+              this.$router.push({ name: 'Documents', params: { folderId: data.result.folderId, fileId: this.searchResult.entityId, display: data.result.displayable } })
+              break
+            case searchConstants.TYPE_COLLABORATIVE_FOLDER:
+              this.$router.push({ name: 'GroupDocuments', params: { folderId: this.searchResult.entityId } })
+              break
+            case searchConstants.TYPE_COLLABORATIVE_FILE:
+              this.$router.push({ name: 'GroupDocuments', params: { folderId: data.result.folderId, fileId: this.searchResult.entityId, display: data.result.displayable } })
+              break
+            case searchConstants.TYPE_PROGRESSION:
+              this.$router.push({ name: 'Progression', params: { progressionId: this.searchResult.entityId } })
+              break
+            case searchConstants.TYPE_PROGRESSION_COURSE:
+            case searchConstants.TYPE_PROGRESSION_HOMEWORK:
+              this.$router.push({ name: 'Progression', params: { progressionId: data.result.progressionId, itemId: data.result.itemId } })
+              break
+            case searchConstants.TYPE_PROGRESSION_FILE:
+              this.$router.push({ name: 'Progression', params: { progressionId: data.result.progressionId, itemId: data.result.itemId, fileId: this.searchResult.entityId, fileName: this.searchResult.title, display: data.result.displayable } })
+              break
+            default:
+              console.error('Unknown entity type')
+              return undefined
+          }
+          // TODO: Save query as an interesting query
+          // Close panel
+          this.$store.dispatch('search/closeQuickSearchResultDisplayed')
+        } else {
+          console.error('Cannot get result details')
+        }
+      })
     }
   }
 }
@@ -233,7 +257,7 @@ li {
   top: 0;
   left: 105%;
   z-index: 100;
-  height: 140px;
+  min-height: 140px;
   width: 367px;
   border-radius: 11.5px;
   background-color: #FFFFFF;
@@ -243,8 +267,6 @@ li {
 
 .icon-container {
   min-width: var(--icon-width);
-  display: flex;
-  justify-content: center;
 
   img {
     width: 30px;
