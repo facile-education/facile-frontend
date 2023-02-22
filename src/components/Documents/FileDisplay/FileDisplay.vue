@@ -117,14 +117,18 @@ export default {
   watch: {
     wantsToCloseFile () {
       if (this.wantsToCloseFile) {
-        if (this.typeOfView === 'WISIWIG' && this.loadedFile && !this.loadedFile.readOnly) { // Only WISIWIG can auto-save for the moment...
-          this.haveToSaveFile = true
-        } else if (!this.loadedFile.readOnly && (this.typeOfView === 'MindMap' || this.typeOfView === 'Geogebra' || this.typeOfView === 'Scratch')) {
-          this.$store.dispatch('warningModal/addWarning', {
-            text: this.$t('quitWithoutSaving'),
-            lastAction: { fct: this.emitCloseEvent }
-          })
-          this.$emit('keepOpen') // In case of canceling the closure
+        if (this.loadedFile) {
+          if (this.typeOfView === 'WISIWIG' && !this.loadedFile.readOnly) { // Only WISIWIG can auto-save for the moment...
+            this.haveToSaveFile = true
+          } else if (!this.loadedFile.readOnly && (this.typeOfView === 'MindMap' || this.typeOfView === 'Geogebra' || this.typeOfView === 'Scratch')) {
+            this.$store.dispatch('warningModal/addWarning', {
+              text: this.$t('quitWithoutSaving'),
+              lastAction: { fct: this.emitCloseEvent }
+            })
+            this.$emit('keepOpen') // In case of canceling the closure
+          } else {
+            this.$emit('close')
+          }
         } else {
           this.$emit('close')
         }
