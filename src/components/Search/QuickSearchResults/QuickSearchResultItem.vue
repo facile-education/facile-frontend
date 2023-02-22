@@ -172,10 +172,12 @@ export default {
       setTimeout(() => { if (!this.isHovering) { this.displayTooltip = false } }, 500) // To let time to hover tooltip
     },
     computeTooltipPosition () {
-      const domRect = this.$refs.resultItem.getBoundingClientRect()
-      this.tooltipPosition = {
-        x: domRect.x + domRect.width + 25,
-        y: domRect.y
+      if (this.$refs.resultItem) {
+        const domRect = this.$refs.resultItem.getBoundingClientRect()
+        this.tooltipPosition = {
+          x: domRect.x + domRect.width + 25,
+          y: domRect.y
+        }
       }
     },
     isInViewport (element) {
@@ -206,8 +208,7 @@ export default {
               this.$router.push({ name: 'Messaging', params: { messageId: this.searchResult.entityId } })
               break
             case searchConstants.TYPE_MESSAGE_FILE:
-              this.$router.push({ name: 'Messaging', params: { messageId: data.result.messageId } })
-              // TODO: open file (and normalize this behaviour?)
+              this.$router.push({ name: 'Messaging', params: { messageId: data.result.messageId, fileId: this.searchResult.entityId, display: data.result.displayable } })
               break
             case searchConstants.TYPE_FOLDER:
               this.$router.push({ name: 'Documents', params: { folderId: this.searchResult.entityId } })
