@@ -135,7 +135,6 @@ export default {
       getSearchResultDetails(this.searchResult.entityId, this.searchResult.service).then((data) => {
         if (data.success) {
           this.resultDetails = data.result
-          // this.resultDetails.breadcrumb = JSON.parse('[{"folderId": "8040788", "folderName": "Personnel"}, {"folderId": "8040788", "folderName": "Personnel"}]')
         } else {
           console.error('Cannot get result details')
         }
@@ -145,7 +144,6 @@ export default {
       return formatSize(size)
     },
     redirectInDocument (folderId) {
-      console.log('redirectInDocument')
       this.$router.push({ name: this.isCollaborative ? 'GroupDocuments' : 'Documents', params: { folderId: folderId } })
       // Close panel
       this.$store.dispatch('search/closeQuickSearchResultDisplayed')
@@ -167,6 +165,7 @@ export default {
   min-width: var(--icon-width);
   display: flex;
   justify-content: center;
+  height: 30px;
 
   img {
     width: 30px;
