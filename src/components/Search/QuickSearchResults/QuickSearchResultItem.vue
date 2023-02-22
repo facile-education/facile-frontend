@@ -208,7 +208,7 @@ export default {
               this.$router.push({ name: 'Messaging', params: { messageId: this.searchResult.entityId } })
               break
             case searchConstants.TYPE_MESSAGE_FILE:
-              this.$router.push({ name: 'Messaging', params: { messageId: data.result.messageId, fileId: this.searchResult.entityId, display: data.result.displayable } })
+              this.$router.push({ name: 'Messaging', params: { messageId: data.result.messageId, fileId: this.searchResult.entityId, fileName: this.searchResult.title, display: data.result.displayable } })
               break
             case searchConstants.TYPE_FOLDER:
               this.$router.push({ name: 'Documents', params: { folderId: this.searchResult.entityId } })
@@ -227,7 +227,7 @@ export default {
               break
             case searchConstants.TYPE_PROGRESSION_COURSE:
             case searchConstants.TYPE_PROGRESSION_HOMEWORK:
-              this.$router.push({ name: 'Progression', params: { progressionId: data.result.progressionId, itemId: data.result.itemId } })
+              this.$router.push({ name: 'Progression', params: { progressionId: data.result.progressionId, itemId: this.searchResult.entityId } })
               break
             case searchConstants.TYPE_PROGRESSION_FILE:
               this.$router.push({ name: 'Progression', params: { progressionId: data.result.progressionId, itemId: data.result.itemId, fileId: this.searchResult.entityId, fileName: this.searchResult.title, display: data.result.displayable } })
