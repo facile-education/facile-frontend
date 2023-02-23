@@ -5,7 +5,8 @@ export {
   search,
   quickSearch,
   getLastSearchQueries,
-  getSearchResultDetails
+  getSearchResultDetails,
+  addQueryHistory
 }
 
 const SEARCH_PATH = '/moteurDeRecherche-portlet.'
@@ -46,6 +47,14 @@ function getSearchResultDetails (entityId, service) {
     params: {
       entityId: entityId,
       service: service
+    }
+  }).then(response => response.data)
+}
+
+function addQueryHistory (query) {
+  return axios.get(constants.JSON_WS_URL + SEARCH_PATH + 'search/add-query-history', {
+    params: {
+      query
     }
   }).then(response => response.data)
 }

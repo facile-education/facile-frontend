@@ -236,7 +236,8 @@ export default {
               console.error('Unknown entity type')
               return undefined
           }
-          // TODO: Save query as an interesting query
+          // Save query as an interesting query
+          this.$store.dispatch('search/saveQuery')
           // Close panel
           this.$store.dispatch('search/closeQuickSearchResultDisplayed')
         } else {

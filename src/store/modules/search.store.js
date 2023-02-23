@@ -1,4 +1,4 @@
-import { quickSearch } from '@/api/search.service'
+import { addQueryHistory, quickSearch } from '@/api/search.service'
 import { quickSearchPaginationSize } from '@/constants/searchConstants'
 
 export const state = {
@@ -59,6 +59,13 @@ export const actions = {
         }
       } else {
         console.error('Error while retrieving quickSearchResult')
+      }
+    })
+  },
+  saveQuery () {
+    addQueryHistory(state.searchInput).then((data) => {
+      if (!data.success) {
+        console.error('Error while saving request')
       }
     })
   }
