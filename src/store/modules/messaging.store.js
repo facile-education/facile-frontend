@@ -1,4 +1,4 @@
-import messagingService from '@/api/messaging/message.service'
+import messageService from '@/api/messaging/message.service'
 import messagingUtils from '@utils/messaging.utils'
 import folderService from '@/api/messaging/folder.service'
 // import constants from '@/constants/appConstants'
@@ -26,7 +26,8 @@ export const state = {
   search: '',
   createMessageParameters: {},
   draggedThreads: [],
-  signature: ''
+  signature: '',
+  displaySearchMessageBehaviour: false
 }
 
 // Defined outside of mutations because of recursion
@@ -54,6 +55,9 @@ const doActionInPersonalFolder = (action, folderList, personalFolder, subFolder 
 }
 
 export const mutations = {
+  setDisplaySearchMessageBehaviour (state, payload) {
+    state.displaySearchMessageBehaviour = payload
+  },
   setMessagingFolders (state, folders) {
     state.messagingFolders = folders
   },
@@ -243,6 +247,9 @@ export const mutations = {
 }
 
 export const actions = {
+  setDisplaySearchMessageBehaviour ({ commit }, value) {
+    commit('setDisplaySearchMessageBehaviour', value)
+  },
   showMenuPanel ({ commit }) {
     commit('setShowMenuPanel', true)
   },
@@ -283,7 +290,7 @@ export const actions = {
       commit('setCurrentThreadMessages', [])
       commit('setSelectedMessages', [])
     }
-    if (folder.folderId) {
+    if (folder.folderId && !state.displaySearchMessageBehaviour) {
       this.dispatch('messaging/getThreads', { folderId: folder.folderId })
     }
   },
@@ -291,7 +298,7 @@ export const actions = {
     folderService.getAllUserFolders().then((data) => {
       if (data.success) {
         commit('setMessagingFolders', data.folders)
-        if (!noSelection) {
+        if (!noSelection && !state.displaySearchMessageBehaviour) {
           const inboxFolder = data.folders.find((folder) => { return folder.type === 1 })
           this.dispatch('messaging/selectFolder', inboxFolder)
         } else {
@@ -326,7 +333,7 @@ export const actions = {
     commit('addSelectedMessages', messages)
   },
   getMessageRecipients ({ commit }, messageId) {
-    messagingService.getMessageRecipients(messageId).then((data) => {
+    messageService.getMessageRecipients(messageId).then((data) => {
       if (data.success) {
         commit('setMessageRecipients', { messageId, recipients: data.recipients })
       }
@@ -351,7 +358,7 @@ export const actions = {
       }
       this.dispatch('currentActions/addAction', { name: 'loadThreads' })
 
-      messagingService.getThreads(folderId, lastDate, state.nbDisplayed, state.unreadOnly).then((data) => {
+      messageService.getThreads(folderId, lastDate, state.nbDisplayed, state.unreadOnly).then((data) => {
         this.dispatch('currentActions/removeAction', { name: 'loadThreads' })
 
         if (data.success) {
@@ -365,6 +372,20 @@ export const actions = {
         }
       })
       messagingUtils.updateNbNewMessages()
+    })
+  },
+  getMessageThread ({ commit }, messageId) {
+    this.dispatch('currentActions/addAction', { name: 'loadThreads' })
+    messageService.getMessageThread(messageId).then((data) => {
+      this.dispatch('currentActions/removeAction', { name: 'loadThreads' })
+
+      commit('setThreadList', [data.thread])
+
+      // Select threadFolder
+
+      // Select thread
+
+      // Select message in thread
     })
   },
   openCreateMessageModal ({ commit }, createMessageParameters) {
