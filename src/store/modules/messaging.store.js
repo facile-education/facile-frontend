@@ -396,8 +396,7 @@ export const actions = {
         this.dispatch('messaging/selectFolder', folderToSelect)
 
         // Select thread
-
-        // Select message in thread
+        messagingUtils.selectThread(data.thread, messageId)
       } else {
         if (data.Error === 'PermissionException') {
           commit('setLoadingThreadsError', 'PermissionException')

@@ -216,6 +216,9 @@ export default {
       } else {
         return this.mainMessage.senderName
       }
+    },
+    isDisplaySearchMessageBehaviour () {
+      return this.$store.state.messaging.displaySearchMessageBehaviour
     }
   },
   mounted () {
@@ -237,11 +240,7 @@ export default {
       }
     },
     selectThread () {
-      if (this.$route.params.messageId) {
-        messagingUtils.selectThread(this.thread, this.thread.messages)
-      } else {
-        messagingUtils.selectThread(this.thread)
-      }
+      messagingUtils.selectThread(this.thread)
     },
     toggleThreadExtension () {
       if (!this.isThreadSelected && (!this.mq.phone && !this.mq.tablet)) {
