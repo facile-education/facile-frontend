@@ -53,21 +53,6 @@ const doActionInPersonalFolder = (action, folderList, personalFolder, subFolder 
     }
   }
 }
-const getFolderFromId = (folderList, folderId) => {
-  for (let i = 0; i < folderList.length; i++) {
-    const folder = folderList[i]
-
-    if (folder.folderId === folderId) {
-      return folder
-    } else {
-      const foundSubFolder = getFolderFromId(folder.subFolders, folderId)
-      if (foundSubFolder !== undefined) {
-        return foundSubFolder
-      }
-    }
-  }
-  return undefined
-}
 
 export const mutations = {
   setDisplaySearchMessageBehaviour (state, payload) {
@@ -397,7 +382,7 @@ export const actions = {
       commit('setThreadList', [data.thread])
 
       // Select threadFolder
-      const folderToSelect = getFolderFromId(state.messagingFolders, 15410602)
+      const folderToSelect = messagingUtils.getFolderFromId(state.messagingFolders, data.messageFolderId)
       this.dispatch('messaging/selectFolder', folderToSelect)
 
       // Select thread
