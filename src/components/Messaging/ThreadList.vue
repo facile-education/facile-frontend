@@ -21,6 +21,28 @@
         alt=""
       />
       <div
+        v-if="loadingThreadsError"
+        class="placeholder"
+      >
+        <div v-t="loadingThreadsError === 'PermissionException' ? 'permissionError' : 'loadingError'" />
+        <NeroIcon
+          name="fa-exclamation-triangle"
+          class="icon"
+          style="margin-top: 40px; font-size: 40px;"
+        />
+      </div>
+      <div
+        v-else-if="threads.length === 0"
+        class="placeholder"
+      >
+        <div v-t="currentFolder.type === 1 ? 'emptyBox' : 'emptyFolder'" />
+        <img
+          src="@assets/messaging_placeholder.svg"
+          alt=""
+        >
+      </div>
+      <div
+        v-else
         ref="scroll"
         class="scroll"
         @touchstart="pointerDown"
@@ -37,16 +59,6 @@
             @contextmenu.prevent="openContextMenu($event, thread)"
           />
           <hr class="hr-thread-list">
-        </div>
-        <div
-          v-if="threads.length === 0"
-          class="placeholder"
-        >
-          <div v-t="currentFolder.type === 1 ? 'emptyBox' : 'emptyFolder'" />
-          <img
-            src="@assets/messaging_placeholder.svg"
-            alt=""
-          >
         </div>
         <ContextMenu
           v-if="isContextMenuDisplayed"
@@ -76,6 +88,7 @@ import utils from '@utils/utils'
 import ThreadListHeader from '@components/Messaging/ThreadListHeader'
 import IconOption from '@components/Base/IconOption'
 import ThreadListOptions from '@components/Messaging/ThreadListOptions'
+import NeroIcon from '@components/Nero/NeroIcon.vue'
 
 let mouseY = 0
 let startMouseY = 0
@@ -85,6 +98,7 @@ let refrechTimeout
 export default {
   name: 'ThreadList',
   components: {
+    NeroIcon,
     ThreadListOptions,
     IconOption,
     ThreadListHeader,
@@ -107,6 +121,9 @@ export default {
     },
     nbNewMessages () {
       return this.$store.state.messaging.nbNewMessages
+    },
+    loadingThreadsError () {
+      return this.$store.state.messaging.loadingThreadsError
     },
     isLoadingThreads () {
       return this.$store.getters['currentActions/isInProgress']('loadThreads')
@@ -410,6 +427,8 @@ hr.hr-thread-list {
 <i18n locale="fr">
 {
   "emptyBox": "Cette boîte est vide",
-  "emptyFolder": "Ce dossier est vide"
+  "emptyFolder": "Ce dossier est vide",
+  "loadingError": "Erreur lors du chargement de la ressource",
+  "permissionError": "Permission non accordée"
 }
 </i18n>
