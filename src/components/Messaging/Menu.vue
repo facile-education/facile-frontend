@@ -164,8 +164,8 @@ export default {
       }
       return false
     },
-    isDisplaySearchMessageBehaviour () {
-      return this.$store.state.messaging.displaySearchMessageBehaviour
+    isDisplayMessageFromRouting () {
+      return this.$store.state.messaging.displayMessageFromRouting
     },
     nbNewMessages () {
       return this.$store.state.messaging.nbNewMessages
@@ -175,7 +175,7 @@ export default {
     isAPersonalFolderSelected: {
       immediate: true,
       handler () {
-        if (this.isDisplaySearchMessageBehaviour && this.isAPersonalFolderSelected) {
+        if (this.isDisplayMessageFromRouting && this.isAPersonalFolderSelected) {
           this.isPersonalFoldersExpanded = true
         }
       }

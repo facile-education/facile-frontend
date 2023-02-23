@@ -217,8 +217,8 @@ export default {
         return this.mainMessage.senderName
       }
     },
-    isDisplaySearchMessageBehaviour () {
-      return this.$store.state.messaging.displaySearchMessageBehaviour
+    isDisplayMessageFromRouting () {
+      return this.$store.state.messaging.displayMessageFromRouting
     }
   },
   mounted () {
