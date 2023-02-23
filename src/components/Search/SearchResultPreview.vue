@@ -138,6 +138,8 @@ export default {
       getSearchResultDetails(this.searchResult.entityId, this.searchResult.service).then((data) => {
         if (data.success) {
           this.resultDetails = data.result
+          // Save query as an interesting query
+          this.$store.dispatch('search/saveQuery')
         } else {
           console.error('Cannot get result details')
         }
