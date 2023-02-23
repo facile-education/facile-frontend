@@ -102,6 +102,7 @@ import messageService from '@/api/messaging/message.service'
 import BaseIcon from '@components/Base/BaseIcon'
 import _ from 'lodash'
 import { nextTick } from 'vue'
+import messagingUtils from '@utils/messaging.utils'
 
 export default {
   name: 'MenuFolder',
@@ -134,6 +135,10 @@ export default {
     isSelected () {
       return this.$store.state.messaging.currentFolder.folderId === this.folder.folderId
     },
+    isSubFolderSelected () {
+      const selectedFolderId = this.$store.state.messaging.currentFolder.folderId
+      return messagingUtils.getFolderFromId(this.folder.subFolders, selectedFolderId) !== undefined
+    },
     draggedThreads () {
       return this.$store.state.messaging.draggedThreads
     }
@@ -141,6 +146,9 @@ export default {
   created () {
     this.renamedFolderName = this.folder.folderName
     this.currentFolder = JSON.parse(JSON.stringify(this.folder))
+    if (this.isSubFolderSelected) {
+      this.isExpanded = true
+    }
   },
   methods: {
     handleClick () {

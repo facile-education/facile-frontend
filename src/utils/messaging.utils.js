@@ -185,6 +185,21 @@ const MessagingUtils = {
         return message
       }
     }
+  },
+  getFolderFromId (folderList, folderId) {
+    for (let i = 0; i < folderList.length; i++) {
+      const folder = folderList[i]
+
+      if (folder.folderId === folderId) {
+        return folder
+      } else {
+        const foundSubFolder = this.getFolderFromId(folder.subFolders, folderId)
+        if (foundSubFolder !== undefined) {
+          return foundSubFolder
+        }
+      }
+    }
+    return undefined
   }
 }
 

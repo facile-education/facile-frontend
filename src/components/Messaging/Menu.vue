@@ -115,6 +115,7 @@ import messageService from '@/api/messaging/message.service'
 import MenuFolder from '@components/Messaging/MenuFolder'
 import MenuRootFolder from '@components/Messaging/MenuRootFolder'
 import { nextTick } from 'vue'
+import messagingUtils from '@utils/messaging.utils'
 
 export default {
   name: 'Menu',
@@ -154,8 +155,30 @@ export default {
     personalFolders () {
       return this.folderList.filter(folder => folder.type === constants.messagingPersonalFolderType)
     },
+    isAPersonalFolderSelected () {
+      for (let i = 0; i < this.personalFolders.length; i++) {
+        const selectedFolderId = this.$store.state.messaging.currentFolder.folderId
+        if (messagingUtils.getFolderFromId(this.personalFolders[i].subFolders, selectedFolderId) !== undefined) {
+          return true
+        }
+      }
+      return false
+    },
+    isDisplaySearchMessageBehaviour () {
+      return this.$store.state.messaging.displaySearchMessageBehaviour
+    },
     nbNewMessages () {
       return this.$store.state.messaging.nbNewMessages
+    }
+  },
+  watch: {
+    isAPersonalFolderSelected: {
+      immediate: true,
+      handler () {
+        if (this.isDisplaySearchMessageBehaviour && this.isAPersonalFolderSelected) {
+          this.isPersonalFoldersExpanded = true
+        }
+      }
     }
   },
   methods: {
