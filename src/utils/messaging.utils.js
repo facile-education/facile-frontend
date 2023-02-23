@@ -121,20 +121,25 @@ const MessagingUtils = {
       this.markMessagesAsReadUnread([message.messageId], true)
     }
   },
-  selectThread (thread, messages) {
+  selectThread (thread, messageIdToSelect) {
     store.dispatch('messaging/setLastSelectedThread', thread)
     store.dispatch('messaging/setSelectedThreads', [thread])
-    if (!messages) {
-      store.dispatch('messaging/setSelectedMessages', [])
+    store.dispatch('messaging/setSelectedMessages', [])
 
-      messageService.getThreadMessages(thread.threadId, store.state.messaging.currentFolder.folderId).then((data) => {
-        if (data.success) {
-          store.dispatch('messaging/setCurrentThreadMessages', data.messages)
+    messageService.getThreadMessages(thread.threadId, store.state.messaging.currentFolder.folderId).then((data) => {
+      if (data.success) {
+        store.dispatch('messaging/setCurrentThreadMessages', data.messages)
+
+        if (messageIdToSelect) {
+          const index = data.messages.map(message => message.messageId).indexOf(parseInt(messageIdToSelect))
+          if (index !== -1) {
+            this.selectMessage(data.messages[index])
+          } else {
+            console.error('cannot select messageId ' + messageIdToSelect + ' in ', data.messages)
+          }
         }
-      })
-    } else {
-      store.dispatch('messaging/setSelectedMessages', messages)
-    }
+      }
+    })
 
     // Mark as read if unread
     for (const message of thread.messages) {
