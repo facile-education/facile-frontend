@@ -22,6 +22,7 @@ export const state = {
   isMobileDetailsPanelDisplayed: false,
   isMultiSelectionActive: false,
   isCreateMessageModalDisplayed: false,
+  loadingThreadsError: undefined,
   nbNewMessages: 0,
   search: '',
   createMessageParameters: {},
@@ -57,6 +58,9 @@ const doActionInPersonalFolder = (action, folderList, personalFolder, subFolder 
 export const mutations = {
   setDisplaySearchMessageBehaviour (state, payload) {
     state.displaySearchMessageBehaviour = payload
+  },
+  setLoadingThreadsError (state, payload) {
+    state.loadingThreadsError = payload
   },
   setMessagingFolders (state, folders) {
     state.messagingFolders = folders
@@ -362,6 +366,7 @@ export const actions = {
         this.dispatch('currentActions/removeAction', { name: 'loadThreads' })
 
         if (data.success) {
+          commit('setLoadingThreadsError', undefined)
           commit('updateStartIndex', state.startIndex + state.nbDisplayed)
           if (lastDate === '-1') {
             commit('setThreadList', data.threads)
@@ -369,6 +374,9 @@ export const actions = {
             commit('addToThreadList', data.threads)
           }
           resolve({ threads: data.threads })
+        } else {
+          commit('setLoadingThreadsError', 'loading')
+          console.error('Error while getting threads from folderId ' + folderId + ' with last date = ' + lastDate)
         }
       })
       messagingUtils.updateNbNewMessages()
@@ -377,17 +385,27 @@ export const actions = {
   getMessageThread ({ commit }, messageId) {
     this.dispatch('currentActions/addAction', { name: 'loadThreads' })
     messageService.getMessageThread(messageId).then((data) => {
-      this.dispatch('currentActions/removeAction', { name: 'loadThreads' })
+      if (data.success) {
+        commit('setLoadingThreadsError', undefined)
+        this.dispatch('currentActions/removeAction', { name: 'loadThreads' })
 
-      commit('setThreadList', [data.thread])
+        commit('setThreadList', [data.thread])
 
-      // Select threadFolder
-      const folderToSelect = messagingUtils.getFolderFromId(state.messagingFolders, data.messageFolderId)
-      this.dispatch('messaging/selectFolder', folderToSelect)
+        // Select threadFolder
+        const folderToSelect = messagingUtils.getFolderFromId(state.messagingFolders, data.messageFolderId)
+        this.dispatch('messaging/selectFolder', folderToSelect)
 
-      // Select thread
+        // Select thread
 
-      // Select message in thread
+        // Select message in thread
+      } else {
+        if (data.Error === 'PermissionException') {
+          commit('setLoadingThreadsError', 'PermissionException')
+        } else {
+          commit('setLoadingThreadsError', 'loading')
+        }
+        console.error('Error while getting thread from message ' + messageId)
+      }
     })
   },
   openCreateMessageModal ({ commit }, createMessageParameters) {
