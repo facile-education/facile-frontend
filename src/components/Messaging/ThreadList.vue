@@ -76,7 +76,6 @@ import utils from '@utils/utils'
 import ThreadListHeader from '@components/Messaging/ThreadListHeader'
 import IconOption from '@components/Base/IconOption'
 import ThreadListOptions from '@components/Messaging/ThreadListOptions'
-import messageService from '@/api/messaging/message.service'
 
 let mouseY = 0
 let startMouseY = 0
@@ -95,18 +94,13 @@ export default {
   inject: ['mq'],
   data () {
     return {
-      searchResultThreads: [],
       isContextMenuDisplayed: false,
       isWaiting: false
     }
   },
   computed: {
     threads () {
-      if (this.$route.params.messageId) {
-        return this.searchResultThreads
-      } else {
-        return _.orderBy(this.$store.state.messaging.threads, 'lastSendDate', 'desc')
-      }
+      return _.orderBy(this.$store.state.messaging.threads, 'lastSendDate', 'desc')
     },
     currentFolder () {
       return this.$store.state.messaging.currentFolder
@@ -116,22 +110,22 @@ export default {
     },
     isLoadingThreads () {
       return this.$store.getters['currentActions/isInProgress']('loadThreads')
+    },
+    isDisplaySearchMessageBehaviour () {
+      return this.$store.state.messaging.displaySearchMessageBehaviour
     }
   },
-  created () {
-    if (this.$route.params.messageId) {
-      this.getMessageThread()
+  watch: {
+    isDisplaySearchMessageBehaviour: {
+      immediate: true,
+      handler () {
+        if (this.isDisplaySearchMessageBehaviour) {
+          this.$store.dispatch('messaging/getMessageThread', this.$route.params.messageId)
+        }
+      }
     }
   },
   methods: {
-    getMessageThread () {
-      messageService.getMessageThread(this.$route.params.messageId).then((data) => {
-        this.searchResultThreads = [data.thread]
-        // Select thread
-
-        // Select message in thread
-      })
-    },
     pointerDown (e) {
       if (this.$refs.scroll.scrollTop <= 50) {
         startMouseY = mouseY = e.touches[0].clientY
@@ -276,7 +270,7 @@ export default {
     },
     handleScroll () {
       const scroll = this.$refs.scroll
-      if (scroll.scrollTop > oldScrollTop) { // if we go down
+      if (scroll.scrollTop > oldScrollTop && !this.isDisplaySearchMessageBehaviour) { // if we go down
         const nbPixelsBeforeBottom = scroll.scrollHeight - (scroll.scrollTop + scroll.clientHeight)
 
         if (nbPixelsBeforeBottom === 0) {

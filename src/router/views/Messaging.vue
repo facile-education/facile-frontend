@@ -119,10 +119,11 @@ export default {
       () => this.$route.params,
       () => {
         if (this.$route.params.messageId) {
-          this.$store.dispatch('messaging/loadMessagingFolders', true)
+          this.$store.dispatch('messaging/setDisplaySearchMessageBehaviour', true)
         } else {
-          this.$store.dispatch('messaging/loadMessagingFolders')
+          this.$store.dispatch('messaging/setDisplaySearchMessageBehaviour', false)
         }
+        this.$store.dispatch('messaging/loadMessagingFolders')
       },
       // fetch the data when the view is created and the data is
       // already being observed
