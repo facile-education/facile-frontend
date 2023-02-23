@@ -128,15 +128,15 @@ export default {
     isLoadingThreads () {
       return this.$store.getters['currentActions/isInProgress']('loadThreads')
     },
-    isDisplaySearchMessageBehaviour () {
-      return this.$store.state.messaging.displaySearchMessageBehaviour
+    isDisplayMessageFromRouting () {
+      return this.$store.state.messaging.displayMessageFromRouting
     }
   },
   watch: {
-    isDisplaySearchMessageBehaviour: {
+    isDisplayMessageFromRouting: {
       immediate: true,
       handler () {
-        if (this.isDisplaySearchMessageBehaviour) {
+        if (this.isDisplayMessageFromRouting) {
           this.$store.dispatch('messaging/getMessageThread', this.$route.params.messageId)
         }
       }
@@ -287,7 +287,7 @@ export default {
     },
     handleScroll () {
       const scroll = this.$refs.scroll
-      if (scroll.scrollTop > oldScrollTop && !this.isDisplaySearchMessageBehaviour) { // if we go down
+      if (scroll.scrollTop > oldScrollTop && !this.isDisplayMessageFromRouting) { // if we go down
         const nbPixelsBeforeBottom = scroll.scrollHeight - (scroll.scrollTop + scroll.clientHeight)
 
         if (nbPixelsBeforeBottom === 0) {

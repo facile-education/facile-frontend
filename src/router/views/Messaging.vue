@@ -119,9 +119,9 @@ export default {
       () => this.$route.params,
       () => {
         if (this.$route.params.messageId) {
-          this.$store.dispatch('messaging/setDisplaySearchMessageBehaviour', true)
+          this.$store.dispatch('messaging/setDisplayMessageFromRouting', true)
         } else {
-          this.$store.dispatch('messaging/setDisplaySearchMessageBehaviour', false)
+          this.$store.dispatch('messaging/setDisplayMessageFromRouting', false)
         }
         this.$store.dispatch('messaging/loadMessagingFolders')
       },

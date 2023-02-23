@@ -28,7 +28,7 @@ export const state = {
   createMessageParameters: {},
   draggedThreads: [],
   signature: '',
-  displaySearchMessageBehaviour: false
+  displayMessageFromRouting: false
 }
 
 // Defined outside of mutations because of recursion
@@ -56,8 +56,8 @@ const doActionInPersonalFolder = (action, folderList, personalFolder, subFolder 
 }
 
 export const mutations = {
-  setDisplaySearchMessageBehaviour (state, payload) {
-    state.displaySearchMessageBehaviour = payload
+  setDisplayMessageFromRouting (state, payload) {
+    state.displayMessageFromRouting = payload
   },
   setLoadingThreadsError (state, payload) {
     state.loadingThreadsError = payload
@@ -251,8 +251,8 @@ export const mutations = {
 }
 
 export const actions = {
-  setDisplaySearchMessageBehaviour ({ commit }, value) {
-    commit('setDisplaySearchMessageBehaviour', value)
+  setDisplayMessageFromRouting ({ commit }, value) {
+    commit('setDisplayMessageFromRouting', value)
   },
   showMenuPanel ({ commit }) {
     commit('setShowMenuPanel', true)
@@ -294,7 +294,7 @@ export const actions = {
       commit('setCurrentThreadMessages', [])
       commit('setSelectedMessages', [])
     }
-    if (folder.folderId && !state.displaySearchMessageBehaviour) {
+    if (folder.folderId && !state.displayMessageFromRouting) {
       this.dispatch('messaging/getThreads', { folderId: folder.folderId })
     }
   },
@@ -302,7 +302,7 @@ export const actions = {
     folderService.getAllUserFolders().then((data) => {
       if (data.success) {
         commit('setMessagingFolders', data.folders)
-        if (!noSelection && !state.displaySearchMessageBehaviour) {
+        if (!noSelection && !state.displayMessageFromRouting) {
           const inboxFolder = data.folders.find((folder) => { return folder.type === 1 })
           this.dispatch('messaging/selectFolder', inboxFolder)
         } else {
