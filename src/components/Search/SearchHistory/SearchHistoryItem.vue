@@ -3,11 +3,18 @@
     :class="{'selected': isSelected}"
     @mousedown="selectHistoryItem"
   >
-    <span>{{ item.query }}</span>
+    <div class="text">
+      {{ item.query }}
+    </div>
+    <div class="date">
+      {{ formattedDate }}
+    </div>
   </li>
 </template>
 
 <script>
+import dayjs from 'dayjs'
+
 export default {
   name: 'SearchHistoryItem',
   props: {
@@ -18,6 +25,11 @@ export default {
     isSelected: {
       type: Boolean,
       required: true
+    }
+  },
+  computed: {
+    formattedDate () {
+      return dayjs(this.item.date, 'YYYY-MM-DD HH:mm:ss').calendar()
     }
   },
   mounted () {
@@ -44,6 +56,8 @@ export default {
 @import "@design";
 
 li {
+  --date-width: 80px;
+
   height: 50px;
   display: flex;
   align-items: center;
@@ -54,5 +68,17 @@ li {
   &:hover, &.selected {
     background-color: $color-hover-bg;
   }
+}
+
+.text {
+  flex: 1;
+  max-width: calc(100% - var(--date-width));
+}
+
+.date {
+  width: var(--date-width);
+  font-size: 0.725em;
+  color: $color-new-light-text;
+  text-align: right;
 }
 </style>
