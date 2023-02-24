@@ -7,7 +7,7 @@
     <!-- Image -->
     <div class="news-thumbnail-wrapper">
       <img
-        v-if="news.thumbnail.url"
+        v-if="news.thumbnail && news.thumbnail.url"
         class="news-thumbnail"
         :src="news.thumbnail.url"
       >
@@ -22,7 +22,7 @@
           {{ news.author }}
         </span>
         <span class="date">
-          - {{ convertDateStr(news.date) }}
+          - {{ convertDateStr(news.publicationDate) }}
         </span>
         <i
           v-if="news.hasAttachFiles"
@@ -36,7 +36,7 @@
       class="edit-buttons"
     >
       <div
-        v-if="news.isEditor || news.isAuthor"
+        v-if="news.isEditor || isAuthor(news)"
         class="content-button"
         :title="$t('edit')"
         @click="editContent()"
@@ -47,7 +47,7 @@
         >
       </div>
       <div
-        v-if="news.isAuthor"
+        v-if="isAuthor(news)"
         class="content-button"
         :title="$t('delete')"
         @click="confirmNewsDeletion()"
@@ -71,10 +71,6 @@ export default {
     news: {
       type: Object,
       required: true
-    },
-    isGroupNews: {
-      type: Boolean,
-      required: true
     }
   },
   emits: ['editNews'],
@@ -91,8 +87,11 @@ export default {
     convertDateStr (dateStr) {
       return dayjs(dateStr, 'YYYY-MM-DD HH:mm').format('DD MMM YYYY HH:mm')
     },
+    isAuthor (news) {
+      return news.authorId === this.$store.state.user.userId
+    },
     editContent () {
-      getNewsDetails(this.news.blogEntryInfosId).then(
+      getNewsDetails(this.news.newsId).then(
         (data) => {
           if (data.success) {
             this.$store.dispatch('dashboard/setNewsDetails', { news: this.news, groups: data.broadcastedGroups, attachFiles: data.attachedFiles, doSetEditedNews: true }).then(
@@ -110,7 +109,7 @@ export default {
       })
     },
     deleteNews () {
-      this.$store.dispatch('dashboard/deleteNews', { blogEntryId: this.news.blogEntryId, isGroupNews: this.isGroupNews })
+      this.$store.dispatch('dashboard/deleteNews', { newsId: this.news.newsId })
     }
   }
 }

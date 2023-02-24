@@ -3,88 +3,113 @@ import constants from '@/api/constants'
 import PentilaUtils from 'pentila-utils'
 
 export {
-  getSchoolNews,
-  getBroadcastGroups,
   addNews,
   editNews,
-  deleteNews,
+  getSchoolNews,
+  setNewsRead,
+  getGroupNewsBroadcastGroups,
+  getSchoolNewsBroadcastGroups,
   getNewsDetails,
+  getNewsReadStatus,
+  deleteNews,
   addNewsDelegate,
   removeNewsDelegate
 }
 
-const NEWS_PATH = '/actualites-portlet.'
+const NEWS_PATH = '/news-portlet.'
 const NEWS_CTX = 'news/'
+const DELEGATION_PATH = '/actualites-portlet.'
 const DELEGATION_CTX = 'blogentrydelegate/'
 
-function getSchoolNews (startLimit, endLimit) {
-  return axios.get(constants.JSON_WS_URL + NEWS_PATH + NEWS_CTX + 'get-school-news', {
-    params: {
-      startLimit: startLimit,
-      endLimit: endLimit
-    }
-  }).then(response => response.data)
-}
-
-function getBroadcastGroups (filter, isSchoolNews) {
-  return axios.get(constants.JSON_WS_URL + NEWS_PATH + NEWS_CTX + 'get-broadcast-groups', {
-    params: {
-      filter: filter,
-      isSchoolNews: isSchoolNews
-    }
-  }).then(response => response.data)
-}
-
-function addNews (title, content, isSchoolNews, isHighPriority, imageId, releaseDateStr, expirationDateStr, populationStr, attachFilesStr) {
+function addNews (title, content, isSchoolNews, isImportant, imageId, publicationDate, expirationDate, population, attachFiles) {
   return axios.post(constants.JSON_WS_URL + NEWS_PATH + NEWS_CTX + 'add-news',
     PentilaUtils.URL.params({
       title,
       content,
       isSchoolNews,
-      isHighPriority,
+      isImportant,
       imageId,
-      releaseDateStr,
-      expirationDateStr,
-      populationStr,
-      attachFilesStr
+      publicationDate,
+      expirationDate,
+      population,
+      attachFiles
     })).then(response => response.data)
 }
 
-function editNews (blogEntryInfoId, title, content, isSchoolNews, isHighPriority, imageId, releaseDateStr, expirationDateStr, populationStr, existingAttachFilesStr, newAttachFilesStr) {
+function editNews (newsId, title, content, isImportant, imageId, publicationDate, expirationDate, population, attachFiles) {
   return axios.post(constants.JSON_WS_URL + NEWS_PATH + NEWS_CTX + 'edit-news',
     PentilaUtils.URL.params({
-      blogEntryInfoId,
+      newsId,
       title,
       content,
-      isSchoolNews,
-      isHighPriority,
+      isImportant,
       imageId,
-      releaseDateStr,
-      expirationDateStr,
-      populationStr,
-      existingAttachFilesStr,
-      newAttachFilesStr
+      publicationDate,
+      expirationDate,
+      population,
+      attachFiles
     })).then(response => response.data)
 }
 
-function deleteNews (blogEntryId) {
-  return axios.get(constants.JSON_WS_URL + NEWS_PATH + NEWS_CTX + 'delete-news', {
+function getSchoolNews (maxDate, nbNews, importantOnly, unreadOnly) {
+  return axios.get(constants.JSON_WS_URL + NEWS_PATH + NEWS_CTX + 'get-school-news', {
     params: {
-      blogEntryId: blogEntryId
+      maxDate,
+      nbNews,
+      importantOnly,
+      unreadOnly
     }
   }).then(response => response.data)
 }
 
-function getNewsDetails (blogEntryInfosId) {
+function setNewsRead (newsId) {
+  return axios.get(constants.JSON_WS_URL + NEWS_PATH + NEWS_CTX + 'set-news-read', {
+    params: {
+      newsId
+    }
+  }).then(response => response.data)
+}
+
+function getGroupNewsBroadcastGroups () {
+  return axios.get(constants.JSON_WS_URL + NEWS_PATH + NEWS_CTX + 'get-group-news-broadcast-groups', {
+    params: {
+    }
+  }).then(response => response.data)
+}
+
+function getSchoolNewsBroadcastGroups () {
+  return axios.get(constants.JSON_WS_URL + NEWS_PATH + NEWS_CTX + 'get-school-news-broadcast-groups', {
+    params: {
+    }
+  }).then(response => response.data)
+}
+
+function getNewsDetails (newsId) {
   return axios.get(constants.JSON_WS_URL + NEWS_PATH + NEWS_CTX + 'get-news-details', {
     params: {
-      blogEntryInfosId: blogEntryInfosId
+      newsId
+    }
+  }).then(response => response.data)
+}
+
+function getNewsReadStatus (newsId) {
+  return axios.get(constants.JSON_WS_URL + NEWS_PATH + NEWS_CTX + 'get-news-read-status', {
+    params: {
+      newsId
+    }
+  }).then(response => response.data)
+}
+
+function deleteNews (newsId) {
+  return axios.get(constants.JSON_WS_URL + NEWS_PATH + NEWS_CTX + 'delete-news', {
+    params: {
+      newsId
     }
   }).then(response => response.data)
 }
 
 function addNewsDelegate (userId, schoolId) {
-  return axios.get(constants.JSON_WS_URL + NEWS_PATH + DELEGATION_CTX + '/add-news-delegate', {
+  return axios.get(constants.JSON_WS_URL + DELEGATION_PATH + DELEGATION_CTX + '/add-news-delegate', {
     params: {
       userId: userId,
       schoolId: schoolId
@@ -93,7 +118,7 @@ function addNewsDelegate (userId, schoolId) {
 }
 
 function removeNewsDelegate (userId, schoolId) {
-  return axios.get(constants.JSON_WS_URL + NEWS_PATH + DELEGATION_CTX + '/remove-news-delegate', {
+  return axios.get(constants.JSON_WS_URL + DELEGATION_PATH + DELEGATION_CTX + '/remove-news-delegate', {
     params: {
       userId: userId,
       schoolId: schoolId

@@ -23,7 +23,6 @@
         <News
           v-if="activity.isNews"
           :news="activity"
-          :is-group-news="true"
           @edit-news="isNewsModalDisplayed = true"
         />
         <DocActivity
@@ -62,6 +61,7 @@ import RenvoiActivity from '@components/Dashboard/Activities/RenvoiActivity'
 import BaseIcon from '@components/Base/BaseIcon'
 import { nbActivityPerPage, activityTypes } from '@/constants/activityConstants'
 import PentilaUtils from 'pentila-utils'
+import dayjs from 'dayjs'
 
 export default {
   name: 'UserThreadWidget',
@@ -86,7 +86,7 @@ export default {
   methods: {
     loadGroupNews () {
       this.$store.dispatch('dashboard/getGroupActivities', {
-        maxDate: this.groupActivities.length > 0 ? this.groupActivities[this.groupActivities.length - 1].modificationDate : '-1',
+        maxDate: this.groupActivities.length > 0 ? this.groupActivities[this.groupActivities.length - 1].modificationDate : dayjs().format('YYYY-MM-DD HH:mm'),
         nbActivities: nbActivityPerPage
       })
     },

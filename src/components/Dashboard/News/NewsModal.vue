@@ -8,10 +8,10 @@
     @close="closeModal"
   >
     <template #header>
-      <span v-if="isCreation && isSchoolNews">{{ $t('school-news-creation-title') }}</span>
-      <span v-if="isCreation && !isSchoolNews">{{ $t('group-news-creation-title') }}</span>
-      <span v-if="!isCreation && isSchoolNews">{{ $t('school-news-edition-title') }}</span>
-      <span v-if="!isCreation && !isSchoolNews">{{ $t('group-news-edition-title') }}</span>
+      <span v-if="isCreation && !isGroupNews">{{ $t('school-news-creation-title') }}</span>
+      <span v-if="isCreation && isGroupNews">{{ $t('group-news-creation-title') }}</span>
+      <span v-if="!isCreation && !isGroupNews">{{ $t('school-news-edition-title') }}</span>
+      <span v-if="!isCreation && isGroupNews">{{ $t('group-news-edition-title') }}</span>
     </template>
 
     <template #body>
@@ -116,12 +116,12 @@
         </div>
       </div>
 
-      <!-- Parution and expiration dates -->
+      <!-- Publication and expiration dates -->
       <div class="news-dates">
-        <div class="parution-date">
-          <span>{{ $t('parution-date') }}</span>
+        <div class="publication-date">
+          <span>{{ $t('publication-date') }}</span>
           <NeroDatePicker
-            v-model="parutionDate"
+            v-model="publicationDate"
             class="news-date"
             :min-date="minDate.toDate()"
           />
@@ -139,7 +139,7 @@
       <teleport to="body">
         <GroupPickerModal
           v-if="isGroupPickerDisplayed"
-          :is-school-news="isSchoolNews"
+          :is-school-news="!isSchoolNews"
           :initial-groups="groups"
           @close="onGroupPickerSelectedGroups"
         />
@@ -202,7 +202,7 @@ export default {
     return {
       title: '',
       content: '',
-      parutionDate: dayjs(),
+      publicationDate: dayjs(),
       expirationDate: dayjs().add(1, 'month'),
       groups: [],
       attachFiles: [],
@@ -245,7 +245,7 @@ export default {
     getFileIds () {
       const ids = []
       for (let i = 0; i < this.attachFiles.length; i++) {
-        ids.push(this.attachFiles.id)
+        ids.push(this.attachFiles.fileId)
       }
       return ids
     }
@@ -254,12 +254,12 @@ export default {
     if (!this.isCreation) {
       this.title = this.news.title
       this.content = this.news.content
-      this.parutionDate = this.news.parutionDate
+      this.publicationDate = this.news.publicationDate
       this.expirationDate = this.news.expirationDate
       this.groups = this.news.groups
       this.attachFiles = this.news.attachFiles
     } else {
-      this.parutionDate = dayjs()
+      this.publicationDate = dayjs()
       this.expirationDate = dayjs().add(1, 'month')
     }
 
@@ -284,12 +284,12 @@ export default {
           title: this.title,
           content: this.content,
           isSchoolNews: this.isSchoolNews,
-          isHighPriority: false,
+          isImportant: false,
           imageId: 0,
-          releaseDateStr: dayjs(this.parutionDate).format('YYYY-MM-DD HH:mm'),
-          expirationDateStr: dayjs(this.expirationDate).format('YYYY-MM-DD HH:mm'),
-          populationStr: JSON.stringify(this.groups),
-          attachFilesStr: JSON.stringify(this.getFileIds)
+          publicationDate: dayjs(this.publicationDate).format('YYYY-MM-DD HH:mm'),
+          expirationDate: dayjs(this.expirationDate).format('YYYY-MM-DD HH:mm'),
+          population: JSON.stringify(this.groups),
+          attachFiles: JSON.stringify(this.getFileIds)
         })
         this.closeModal()
       }
@@ -300,8 +300,16 @@ export default {
         this.v$.$touch()
       } else {
         this.$store.dispatch('dashboard/editNews', {
-          blogEntryId: this.news.blogEntryId,
-          title: this.title
+          newsId: this.news.newsId,
+          title: this.title,
+          content: this.content,
+          isSchoolNews: this.isSchoolNews,
+          isImportant: false,
+          imageId: 0,
+          publicationDate: dayjs(this.publicationDate).format('YYYY-MM-DD HH:mm'),
+          expirationDate: dayjs(this.expirationDate).format('YYYY-MM-DD HH:mm'),
+          population: JSON.stringify(this.groups),
+          attachFiles: JSON.stringify(this.getFileIds)
         })
         this.closeModal()
       }
@@ -387,7 +395,7 @@ export default {
   "group-news-edition-title": "Modifier une actualité",
   "school-news-creation-title": "Créer une annonce d'établissement",
   "school-news-edition-title": "Modifier une annonce d'établissement",
-  "parution-date": "Parution",
+  "publication-date": "Publication",
   "expiration-date": "Expiration",
   "cancel": "Annuler",
   "add": "Créer",
