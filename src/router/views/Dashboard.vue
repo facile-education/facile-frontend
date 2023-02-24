@@ -2,24 +2,24 @@
   <Layout>
     <h1 :aria-label="$t('serviceTitle')" />
     <div class="dashboard-panel">
-      <AnnouncementsWidget v-if="hasSchoolNewsWidget" />
-      <HomeworkWidget v-if="hasHomeworkWidget" />
-      <EDTWidget v-if="hasEDTWidget" />
-      <UserThreadWidget v-if="hasActivityThreadWidget" />
+      <!--      <AnnouncementsWidget v-if="hasSchoolNewsWidget" />-->
+      <DiaryWidget v-if="hasDiaryWidget" />
+      <!--      <HomeworkWidget v-if="hasHomeworkWidget" />-->
+      <!--      <EDTWidget v-if="hasEDTWidget" />-->
+      <!--      <UserThreadWidget v-if="hasActivityThreadWidget" />-->
+      <!--      <StaticWidget v-if="hasStaticWidget" />-->
     </div>
   </Layout>
 </template>
 
 <script>
 import Layout from '@/router/layouts/EmptyLayout'
-import UserThreadWidget from '@components/Dashboard/News/UserThreadWidget.vue'
-import AnnouncementsWidget from '@components/Dashboard/News/AnnoucementsWidget.vue'
-import HomeworkWidget from '@/components/Dashboard/HomeworkWidget.vue'
-import EDTWidget from '@/components/Dashboard/EDTWidget.vue'
-
+// TODO: import asynchronously
+import { defineAsyncComponent } from 'vue'
+const DiaryWidget = defineAsyncComponent(() => import('@/components/Dashboard/Diary/DiaryWidget.vue'))
 export default {
   name: 'Dashboard',
-  components: { Layout, UserThreadWidget, AnnouncementsWidget, HomeworkWidget, EDTWidget },
+  components: { DiaryWidget, Layout },
   computed: {
     hasActivityThreadWidget () {
       return this.$store.state.dashboard.hasActivityThreadWidget
@@ -32,6 +32,9 @@ export default {
     },
     hasHomeworkWidget () {
       return this.$store.state.dashboard.hasHomeworkWidget
+    },
+    hasDiaryWidget () {
+      return this.$store.state.dashboard.hasDiaryWidget
     }
   },
   created () {

@@ -16,6 +16,7 @@ export const state = {
   canAddSchoolNews: false,
   canAddEvents: false,
   isNewsModalDisplayed: false,
+  hasDiaryWidget: true,
   groupActivities: [],
   editedNews: undefined,
   schoolNews: [],
@@ -26,6 +27,7 @@ export const mutations = {
   initDashboard (state, payload) {
     state.hasHomeworkWidget = payload.hasHomeworkWidget
     state.hasEDTWidget = payload.hasEDTWidget
+    state.hasDiaryWidget = payload.hasDiaryWidget
     state.hasSchoolNewsWidget = payload.hasSchoolNewsWidget
     state.hasActivityThreadWidget = payload.hasActivityThreadWidget
     state.canAddGroupNews = payload.canAddGroupNews
