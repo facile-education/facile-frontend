@@ -139,7 +139,7 @@ export default {
       this.$store.dispatch('administration/getAdministrationSchools')
     }
 
-    if (this.minDate === undefined) {
+    if (this.$store.state.cdt.configuration.startDateProject === undefined) {
       this.$store.dispatch('cdt/getConfiguration')
     }
   },
