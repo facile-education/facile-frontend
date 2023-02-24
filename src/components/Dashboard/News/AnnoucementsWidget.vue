@@ -16,12 +16,11 @@
     <template #default>
       <div
         v-for="news in schoolNews"
-        :key="news.blogEntryId"
+        :key="news.newsId"
         class="news"
       >
         <News
           :news="news"
-          :is-group-news="false"
         />
       </div>
     </template>
@@ -42,6 +41,7 @@ import News from '@/components/Dashboard/News/News.vue'
 import NewsModal from '@/components/Dashboard/News/NewsModal.vue'
 import Widget from '@components/Dashboard/Widget'
 import BaseIcon from '@components/Base/BaseIcon'
+import dayjs from 'dayjs'
 
 export default {
   name: 'AnnouncementsWidget',
@@ -64,11 +64,11 @@ export default {
     }
   },
   created () {
-    this.$store.dispatch('dashboard/getSchoolNews', { startIndex: this.startIndex, endIndex: this.endIndex })
+    this.$store.dispatch('dashboard/getSchoolNews', { maxDate: dayjs().format('YYYY-MM-DD HH:mm'), nbNews: 10, importantOnly: false, unreadOnly: false })
   },
   methods: {
     openNewsModal () {
-      this.$store.dispatch('dashboard/setEditedNews', {})
+      this.$store.dispatch('dashboard/openNewsModal', {})
       this.isNewsModalDisplayed = true
     }
   }

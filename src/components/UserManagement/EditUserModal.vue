@@ -60,7 +60,7 @@
       <div class="school">
         <p v-t="'school'" />
         <PentilaDropdown
-          v-if="(schoolList && schoolList.length > 1)"
+          v-if="(schoolList && schoolList.length > 1 && !isParent)"
           v-model="school"
           :list="schoolList"
           display-field="schoolName"

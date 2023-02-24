@@ -76,13 +76,13 @@
 
 <script>
 
-import { getBroadcastGroups } from '@/api/news.service'
+import { getGroupNewsBroadcastGroups, getSchoolNewsBroadcastGroups } from '@/api/news.service'
 
 export default {
   name: 'GroupPickerModal',
   inject: ['mq'],
   props: {
-    isSchoolNews: {
+    isGroupNews: {
       type: Boolean,
       required: true
     },
@@ -134,24 +134,45 @@ export default {
     }
   },
   created () {
-    getBroadcastGroups(this.filter, this.isSchoolNews).then(
-      (data) => {
-        if (data.success) {
-          this.categories = data.schoolsGroups
-          for (let i = 0; i < this.categories.length; i++) {
-            for (let j = 0; j < this.categories[i].groups.length; j++) {
-              const group = this.categories[i].groups[j]
-              for (let k = 0; k < this.initialGroups.length; k++) {
-                const initialGroup = this.initialGroups[k]
-                if (initialGroup.groupId === group.groupId && initialGroup.roleId === group.roleId) {
-                  group.isSelected = true
+    if (this.isGroupNews) {
+      getGroupNewsBroadcastGroups().then(
+        (data) => {
+          if (data.success) {
+            this.categories = data.schoolsGroups
+            for (let i = 0; i < this.categories.length; i++) {
+              for (let j = 0; j < this.categories[i].groups.length; j++) {
+                const group = this.categories[i].groups[j]
+                for (let k = 0; k < this.initialGroups.length; k++) {
+                  const initialGroup = this.initialGroups[k]
+                  if (initialGroup.groupId === group.groupId && initialGroup.roleId === group.roleId) {
+                    group.isSelected = true
+                  }
                 }
               }
             }
           }
         }
-      }
-    )
+      )
+    } else {
+      getSchoolNewsBroadcastGroups().then(
+        (data) => {
+          if (data.success) {
+            this.categories = data.schoolsGroups
+            for (let i = 0; i < this.categories.length; i++) {
+              for (let j = 0; j < this.categories[i].groups.length; j++) {
+                const group = this.categories[i].groups[j]
+                for (let k = 0; k < this.initialGroups.length; k++) {
+                  const initialGroup = this.initialGroups[k]
+                  if (initialGroup.groupId === group.groupId && initialGroup.roleId === group.roleId) {
+                    group.isSelected = true
+                  }
+                }
+              }
+            }
+          }
+        }
+      )
+    }
   },
   methods: {
     closeModal () {

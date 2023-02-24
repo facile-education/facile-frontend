@@ -8,14 +8,13 @@ import { nbActivityPerPage } from '@/constants/activityConstants'
 import dayjs from 'dayjs'
 
 export const state = {
-  hasGroupNewsWidget: false,
+  hasActivityThreadWidget: false,
   hasHomeworkWidget: false,
   hasEDTWidget: false,
   hasSchoolNewsWidget: false,
-  hasMyGroupsOnly: false,
   canAddGroupNews: false,
   canAddSchoolNews: false,
-  canDelegateHM: false,
+  canAddEvents: false,
   isNewsModalDisplayed: false,
   groupActivities: [],
   editedNews: undefined,
@@ -28,11 +27,10 @@ export const mutations = {
     state.hasHomeworkWidget = payload.hasHomeworkWidget
     state.hasEDTWidget = payload.hasEDTWidget
     state.hasSchoolNewsWidget = payload.hasSchoolNewsWidget
-    state.hasMyGroupsOnly = payload.hasMyGroupsOnly
-    state.hasGroupNewsWidget = true
+    state.hasActivityThreadWidget = payload.hasActivityThreadWidget
     state.canAddGroupNews = payload.canAddGroupNews
-    state.canAddSchoolNews = payload.canAddHMNews
-    state.canDelegateHM = payload.canDelegateHM
+    state.canAddSchoolNews = payload.canAddSchoolNews
+    state.canAddEvents = payload.canAddEvents
   },
   addGroupNews (state, payload) {
     for (let idx = 0; idx < payload.length; ++idx) {
@@ -48,12 +46,12 @@ export const mutations = {
     state.isNewsModalDisplayed = true
   },
   setEditedNews (state, payload) {
-    // payload is the blogEntryId
-    let newsIndex = state.groupActivities.map(activity => activity.blogEntryId).indexOf(payload.news.blogEntryId)
+    // payload is the newsId
+    let newsIndex = state.groupActivities.map(activity => activity.newsId).indexOf(payload.news.newsId)
     if (newsIndex !== -1) {
       state.editedNews = state.groupActivities[newsIndex]
     } else {
-      newsIndex = state.schoolNews.map(news => news.blogEntryId).indexOf(payload.news.blogEntryId)
+      newsIndex = state.schoolNews.map(news => news.newsId).indexOf(payload.news.newsId)
       if (newsIndex !== -1) {
         state.editedNews = state.schoolNews[newsIndex]
       }
@@ -62,19 +60,19 @@ export const mutations = {
   deleteNews (state, payload) {
     let newsIndex
     if (payload.isGroupNews) {
-      newsIndex = state.groupActivities.map(activity => activity.blogEntryId).indexOf(payload.blogEntryId)
+      newsIndex = state.groupActivities.map(activity => activity.newsId).indexOf(payload.newsId)
       if (newsIndex !== -1) {
         state.groupActivities.splice(newsIndex, 1)
       }
     } else {
-      newsIndex = state.schoolNews.map(news => news.blogEntryId).indexOf(payload.blogEntryId)
+      newsIndex = state.schoolNews.map(news => news.newsId).indexOf(payload.newsId)
       if (newsIndex !== -1) {
         state.schoolNews.splice(newsIndex, 1)
       }
     }
   },
   setNewsDetails (state, payload) {
-    let newsIndex = state.groupActivities.map(activity => activity.blogEntryId).indexOf(payload.news.blogEntryId)
+    let newsIndex = state.groupActivities.map(activity => activity.newsId).indexOf(payload.news.newsId)
     if (newsIndex !== -1) {
       state.groupActivities[newsIndex].groups = payload.groups
       state.groupActivities[newsIndex].attachFiles = payload.attachFiles
@@ -82,7 +80,7 @@ export const mutations = {
         state.editedNews = state.groupActivities[newsIndex]
       }
     } else {
-      newsIndex = state.schoolNews.map(news => news.blogEntryId).indexOf(payload.news.blogEntryId)
+      newsIndex = state.schoolNews.map(news => news.newsId).indexOf(payload.news.newsId)
       if (newsIndex !== -1) {
         state.schoolNews[newsIndex].groups = payload.groups
         state.schoolNews[newsIndex].attachFiles = payload.attachFiles
@@ -117,8 +115,8 @@ export const actions = {
         console.error(err)
       })
   },
-  getSchoolNews ({ commit }, { startIndex, endIndex }) {
-    getSchoolNews(startIndex, endIndex).then(
+  getSchoolNews ({ commit }, { maxDate, nbNews, importantOnly, unreadOnly }) {
+    getSchoolNews(maxDate, nbNews, importantOnly, unreadOnly).then(
       (data) => {
         if (data.success) {
           commit('addSchoolNews', data.news)
@@ -131,23 +129,23 @@ export const actions = {
   openNewsModal ({ commit }, { news }) {
     commit('openNewsModal', news)
   },
-  setEditedNews ({ commit }, { blogEntryId }) {
-    commit('setEditedNews', blogEntryId)
+  setEditedNews ({ commit }, { newsId }) {
+    commit('setEditedNews', newsId)
   },
-  addNews ({ commit, dispatch }, { title, content, isSchoolNews, isHighPriority, imageId, releaseDateStr, expirationDateStr, populationStr, attachFilesStr }) {
-    addNews(title, content, isSchoolNews, isHighPriority, imageId, releaseDateStr, expirationDateStr, populationStr, attachFilesStr).then(
+  addNews ({ commit, dispatch }, { title, content, isSchoolNews, isImportant, imageId, publicationDate, expirationDate, population, attachFiles }) {
+    addNews(title, content, isSchoolNews, isImportant, imageId, publicationDate, expirationDate, population, attachFiles).then(
       (data) => {
         if (data.success) {
           commit('addGroupNews', [data.newsCreated])
-          dispatch('getGroupActivities', dayjs(), nbActivityPerPage)
+          dispatch('getGroupActivities', { maxDate: dayjs().format('YYYY-MM-DD HH:mm'), nbActivities: nbActivityPerPage })
         }
       },
       (err) => {
         console.error(err)
       })
   },
-  editNews ({ commit }, { blogEntryInfoId, title, content, isSchoolNews, isHighPriority, imageId, releaseDateStr, expirationDateStr, populationStr, existingAttachFilesStr, newAttachFilesStr }) {
-    editNews(blogEntryInfoId, title, content, isSchoolNews, isHighPriority, imageId, releaseDateStr, expirationDateStr, populationStr, existingAttachFilesStr, newAttachFilesStr).then(
+  editNews ({ commit }, { newsId, title, content, isSchoolNews, isImportant, imageId, publicationDate, expirationDate, population, attachFiles }) {
+    editNews(newsId, title, content, isSchoolNews, isImportant, imageId, publicationDate, expirationDate, population, attachFiles).then(
       (data) => {
         if (data.success) {
           commit('addGroupNews', data.news)
@@ -157,11 +155,11 @@ export const actions = {
         console.error(err)
       })
   },
-  deleteNews ({ commit }, { blogEntryId, isGroupNews }) {
-    deleteNews(blogEntryId).then(
+  deleteNews ({ commit }, { newsId, isGroupNews }) {
+    deleteNews(newsId).then(
       (data) => {
         if (data.success) {
-          commit('deleteNews', blogEntryId, isGroupNews)
+          commit('deleteNews', newsId, isGroupNews)
         }
       },
       (err) => {

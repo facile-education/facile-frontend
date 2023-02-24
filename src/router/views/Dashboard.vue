@@ -5,8 +5,7 @@
       <AnnouncementsWidget v-if="hasSchoolNewsWidget" />
       <HomeworkWidget v-if="hasHomeworkWidget" />
       <EDTWidget v-if="hasEDTWidget" />
-      <UserThreadWidget v-if="hasGroupNewsWidget" />
-      <!--      <StaticWidget v-if="hasStaticWidget" />-->
+      <UserThreadWidget v-if="hasActivityThreadWidget" />
     </div>
   </Layout>
 </template>
@@ -22,8 +21,8 @@ export default {
   name: 'Dashboard',
   components: { Layout, UserThreadWidget, AnnouncementsWidget, HomeworkWidget, EDTWidget },
   computed: {
-    hasGroupNewsWidget () {
-      return this.$store.state.dashboard.hasGroupNewsWidget
+    hasActivityThreadWidget () {
+      return this.$store.state.dashboard.hasActivityThreadWidget
     },
     hasSchoolNewsWidget () {
       return this.$store.state.dashboard.hasSchoolNewsWidget
