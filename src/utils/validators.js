@@ -1,9 +1,8 @@
-import { entityNameMaxSize } from '@/constants/appConstants'
-
 export default {
   notBeginByDot,
   containsNoCotes,
-  isUnderMaxSize
+  isUnderMaxSize,
+  isNotEmpty
 }
 
 function notBeginByDot (str) {
@@ -14,6 +13,10 @@ function containsNoCotes (str) {
   return !str.includes('\'') && !str.includes('"')
 }
 
-function isUnderMaxSize (str) {
-  return str.length <= entityNameMaxSize
+function isUnderMaxSize (str, maxSize) {
+  return str.length <= maxSize
+}
+
+function isNotEmpty (list) {
+  return list.length > 0
 }

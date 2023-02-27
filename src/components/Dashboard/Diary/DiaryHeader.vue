@@ -10,22 +10,39 @@
     </div>
     <DashboardCreateButton
       v-if="canCreateDiaryEvent"
-      @click="createDiaryEvent"
+      @click="isCreateModalDisplayed = true"
     />
   </div>
+
+  <teleport
+    v-if="isCreateModalDisplayed"
+    to="body"
+  >
+    <SaveDiaryEventModal
+      @createEvent="createEvent"
+      @close="isCreateModalDisplayed = false"
+    />
+  </teleport>
 </template>
 
 <script>
 import Pellet from '@components/Base/Pellet.vue'
 import DashboardCreateButton from '@components/Dashboard/DashboardCreateButton.vue'
+import SaveDiaryEventModal from '@components/Dashboard/Diary/SaveDiaryEventModal/SaveDiaryEventModal.vue'
 
 export default {
   name: 'DiaryHeader',
-  components: { DashboardCreateButton, Pellet },
+  components: { SaveDiaryEventModal, DashboardCreateButton, Pellet },
   props: {
     nbNewEvents: {
       type: Number,
       default: 0
+    }
+  },
+  emits: ['createEvent'],
+  data () {
+    return {
+      isCreateModalDisplayed: false
     }
   },
   computed: {
@@ -35,9 +52,8 @@ export default {
     }
   },
   methods: {
-    createDiaryEvent () {
-      // TODO
-      console.log('open creation modal')
+    createEvent () {
+      this.$emit('createEvent')
     }
   }
 }

@@ -1,6 +1,9 @@
 <template>
   <section>
-    <DiaryHeader :nb-new-events="nbNewEvents" />
+    <DiaryHeader
+      :nb-new-events="nbNewEvents"
+      @createEvent="refresh"
+    />
     <div
       v-if="isLoading"
       class="placeholder"
@@ -84,6 +87,13 @@ export default {
     }
   },
   methods: {
+    refresh () {
+      if (this.minDate) {
+        this.loadDiaryEvents()
+      } else {
+        console.error('Cannot refresh diary events without a minDate')
+      }
+    },
     loadDiaryEvents () {
       this.isLoading = true
       getEvents(this.minDate, nbDiaryEventInWidget, this.unReadOnly).then((data) => {
