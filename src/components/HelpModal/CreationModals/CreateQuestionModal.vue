@@ -52,7 +52,9 @@ export default {
       questionInput: '',
       answerInput: '',
       editor: InlineEditor,
-      editorConfig: {}
+      editorConfig: {
+        placeholder: this.$t('answerPlaceholder')
+      }
     }
   },
   computed: {
@@ -105,6 +107,7 @@ export default {
 {
   "title": "AJOUTER UNE QUESTION/RÉPONSE",
   "questionPlaceHolder": "Question",
+  "answerPlaceholder": "Réponse",
   "submit": "Valider"
 }
 </i18n>
