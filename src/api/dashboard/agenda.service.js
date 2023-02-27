@@ -31,7 +31,7 @@ function getEventDetails (eventId) {
 }
 
 function createEvent (title, description, location, startDate, endDate, populations) {
-  return axios.POST(constants.JSON_WS_URL + AGENDA_PATH + '/create-event',
+  return axios.post(constants.JSON_WS_URL + AGENDA_PATH + '/create-event',
     PentilaUtils.URL.params({
       title,
       description,
@@ -44,7 +44,7 @@ function createEvent (title, description, location, startDate, endDate, populati
 }
 
 function modifyEvent (eventId, title, description, location, startDate, endDate, populations) {
-  return axios.POST(constants.JSON_WS_URL + AGENDA_PATH + '/modify-event',
+  return axios.post(constants.JSON_WS_URL + AGENDA_PATH + '/modify-event',
     PentilaUtils.URL.params({
       eventId,
       title,

@@ -61,7 +61,7 @@ import AudioRecorder from '@components/Nero/AudioRecorder'
 
 const notBeginByDot = (value) => validators.notBeginByDot(value)
 const containsNoCotes = (value) => validators.containsNoCotes(value)
-const isUnderMaxSize = (value) => validators.isUnderMaxSize(value)
+const isUnderMaxSize = (value) => validators.isUnderMaxSize(value, entityNameMaxSize)
 
 export default {
   name: 'FileNameModal',
