@@ -11,7 +11,7 @@
       <PentilaSpinner />
     </div>
     <div
-      v-if="minDate === undefined || error === true"
+      v-if="error === true"
       v-t="'errorPlaceholder'"
       class="placeholder"
     />
@@ -66,37 +66,20 @@ export default {
     periodLabel () {
       return 'Février'
     },
-    minDate () {
-      // return this.$store.state.cdt.configuration.startDateSchool // TODO: or schoolYear date? => to define
-      return dayjs().subtract(1, 'year')
-    }
-  },
-  watch: {
-    minDate: {
-      immediate: true,
-      handler () {
-        if (this.minDate !== undefined) {
-          this.loadDiaryEvents()
-        }
-      }
+    fromDate () {
+      return dayjs()
     }
   },
   created () {
-    if (this.minDate === undefined) {
-      this.$store.dispatch('cdt/getConfiguration')
-    }
+    this.loadDiaryEvents()
   },
   methods: {
     refresh () {
-      if (this.minDate) {
-        this.loadDiaryEvents()
-      } else {
-        console.error('Cannot refresh diary events without a minDate')
-      }
+      this.loadDiaryEvents()
     },
     loadDiaryEvents () {
       this.isLoading = true
-      getEvents(this.minDate, nbDiaryEventInWidget, this.unReadOnly).then((data) => {
+      getEvents(this.fromDate, nbDiaryEventInWidget, this.unReadOnly).then((data) => {
         this.isLoading = false
         if (data.success) {
           this.error = false
