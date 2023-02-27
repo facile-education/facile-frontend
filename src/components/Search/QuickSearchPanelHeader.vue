@@ -22,27 +22,27 @@
       <span>{{ $t('history') }} </span>
     </span>
     <span v-else>{{ nbResults + ' ' + (nbResults > 1 ? $t('results') : $t('result')) }}</span>
-    <button
-      v-if="!isAlreadyInAdvancedSearchService"
-      class="theme-text-color"
-      @mousedown="displayAdvancedSearch"
-      @click="displayAdvancedSearch"
-    >
-      <span v-t="'advancedSearch'" />
-      <NeroIcon
-        class="chevron"
-        name="chevron-right"
-      />
-    </button>
+    <!--    <button-->
+    <!--      v-if="!isAlreadyInAdvancedSearchService"-->
+    <!--      class="theme-text-color"-->
+    <!--      @mousedown="displayAdvancedSearch"-->
+    <!--      @click="displayAdvancedSearch"-->
+    <!--    >-->
+    <!--      <span v-t="'advancedSearch'" />-->
+    <!--      <NeroIcon-->
+    <!--        class="chevron"-->
+    <!--        name="chevron-right"-->
+    <!--      />-->
+    <!--    </button>-->
   </div>
 </template>
 
 <script>
-import NeroIcon from '@components/Nero/NeroIcon.vue'
+// import NeroIcon from '@components/Nero/NeroIcon.vue'
 
 export default {
   name: 'QuickSearchPanelHeader',
-  components: { NeroIcon },
+  // components: { NeroIcon },
   props: {
     isSearchHistory: {
       type: Boolean,
