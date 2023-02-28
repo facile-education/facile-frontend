@@ -18,6 +18,7 @@
         class="stat-chart"
         :labels="data.labels"
         :datasets="data.datasets"
+        :fill="comparator === ''"
       />
     </div>
   </section>
