@@ -15,7 +15,8 @@
       />
       <div
         v-if="mq.phone"
-        v-hammer:swipe.horizontal="onSwipe"
+        v-touch:swipe.left="onSwipeLeft"
+        v-touch:swipe.right="onSwipeRight"
         class="swipe-container"
       >
         <div
@@ -287,18 +288,14 @@ export default {
       this.$store.dispatch('horaires/selectDates',
         { start: dayjs(week.firstDayOfWeek, 'YYYY-MM-DD'), end: dayjs(week.lastDayOfWeek, 'YYYY-MM-DD') })
     },
-    onSwipe (event) {
+    onSwipeLeft () {
       if (this.mq.phone) {
-        switch (event.type) {
-          case 'swipeleft':
-            // this.pan -= 320
-            if (event.isFinal) this.nextDate()
-            break
-          case 'swiperight':
-            // this.pan += 320
-            if (event.isFinal) this.previousDate()
-            break
-        }
+        this.nextDate()
+      }
+    },
+    onSwipeRight () {
+      if (this.mq.phone) {
+        this.previousDate()
       }
     },
     openEditModalDisplay (sessionEvent) {
