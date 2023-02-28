@@ -31,6 +31,8 @@
         v-for="(event, index) in eventList"
         :key="index"
         :event="event"
+        @updateEvent="refresh"
+        @deleteEvent="refresh"
       />
       <div class="footer">
         <button
@@ -103,7 +105,6 @@ export default {
 @import "@design";
 
 section {
-  border: 1px solid;
   width: min(355px, 100vw);
 }
 
@@ -120,6 +121,8 @@ section {
     cursor: pointer;
     padding: 9px 10px;
     background-color: white;
+    display: flex;
+    align-items: center;
   }
 }
 </style>
