@@ -8,7 +8,7 @@ import { Vue3Mq } from 'vue3-mq'
 import PentilaComponents from 'pentila-components'
 import dayjs from 'dayjs'
 import fr from 'dayjs/locale/fr'
-import { VueHammer } from '@/utils/vuehammer'
+import Vue3TouchEvents from 'vue3-touch-events'
 // import axios from 'axios'
 
 const app = createApp(App)
@@ -22,9 +22,7 @@ const app = createApp(App)
       desktop: 800
     }
   })
-  .use(VueHammer, {
-    threshold: 200
-  })
+  .use(Vue3TouchEvents)
 
 // Register Pentila components globally
 Object.keys(PentilaComponents).forEach(name => {
