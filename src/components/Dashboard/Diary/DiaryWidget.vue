@@ -100,13 +100,34 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
 
+section {
+  border: 1px solid;
+  width: min(355px, 100vw);
+}
+
+.footer {
+  margin-top: 8px;
+  display: flex;
+  justify-content: flex-end;
+
+  button {
+    margin-right: 4px;
+    border: 1px solid $color-border;
+    border-radius: 4px;
+    height: 29px;
+    cursor: pointer;
+    padding: 9px 10px;
+    background-color: white;
+  }
+}
 </style>
 
 <i18n locale="fr">
 {
   "errorPlaceholder": "Oups, une erreur est survenue...",
-  "emptyPlaceholder": "Aucun évenement",
-  "showMore": "Voir tous les évenements"
+  "emptyPlaceholder": "Aucun événement",
+  "showMore": "Voir tous les événements"
 }
 </i18n>

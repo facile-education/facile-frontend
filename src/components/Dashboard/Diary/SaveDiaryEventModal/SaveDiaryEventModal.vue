@@ -197,7 +197,6 @@ export default {
     const input = this.$refs.nameInput
     input.focus()
     input.select()
-    console.log(this.v$.$invalid)
   },
   methods: {
     updateStartDate (date) {
