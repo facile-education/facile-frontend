@@ -94,17 +94,16 @@ button {
   display: flex;
   align-items: center;
   cursor: pointer;
-  border: 1px solid $color-border;
   border-radius: 6px;
+  border: none;
 
   &:hover {
-    background-color: $color-hover-bg;
+    background-color: #c5c5c5;
   }
 }
 
 .label {
   display: flex;
-  margin-top: 3px;
   margin-right: 5px;
   margin-left: 0.5em;
   font-size: 14px;

@@ -16,6 +16,10 @@ export default {
       type: Array,
       required: true
     },
+    fill: {
+      type: Boolean,
+      default: false
+    },
     type: {
       type: String,
       default: 'line'
@@ -38,14 +42,41 @@ export default {
       if (this.type === 'line') {
         return {
           responsive: true,
-          fill: true,
+          fill: this.fill,
           maintainAspectRatio: false,
           lineTension: 0.3,
           interaction: {
             intersect: false,
             mode: 'index'
           },
+          scales: {
+            xAxis: {
+              grid: {
+                display: false
+              }
+            },
+            yAxis: {
+              grid: {
+                display: true
+              }
+            }
+          },
           elements: {
+          },
+          plugins: {
+            legend: {
+              position: 'bottom',
+              align: 'start',
+              labels: {
+                usePointStyle: true,
+                font: {
+                  size: 14
+                }
+              }
+            },
+            tooltip: {
+              usePointStyle: true
+            }
           }
         }
       } else if (this.type === 'pie' || this.type === 'doughnut') {
@@ -63,6 +94,16 @@ export default {
             }
           },
           plugins: {
+            legend: {
+              position: 'bottom',
+              align: 'start',
+              labels: {
+                usePointStyle: true,
+                font: {
+                  size: 14
+                }
+              }
+            },
             tooltip: {
               backgroundColor: '#fff',
               bodyColor: '#000',
@@ -207,7 +248,8 @@ export default {
         data: this.data,
         options: this.options
       })
-      console.log(chart)
+
+      return chart
     }
   }
 }

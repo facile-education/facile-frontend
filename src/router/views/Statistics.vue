@@ -97,7 +97,7 @@
 </template>
 
 <script>
-import Layout from '@/router/layouts/BannerLayout'
+import Layout from '@/router/layouts/EmptyLayout'
 import StatsActivesUsers from '@components/Statistics/StatsActivesUsers.vue'
 import GlobalStat from '@components/Statistics/GlobalStat.vue'
 import StatsDoughnut from '@components/Statistics/StatsDoughnut.vue'
@@ -170,8 +170,6 @@ export default {
 
   .school-dropdown {
     margin-left: 15px;
-    border: 1px solid $color-border;
-    border-radius: 6px;
   }
 }
 

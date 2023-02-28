@@ -97,9 +97,10 @@ export default {
           if (data.success) {
             this.error = false
             this.data = data
+            this.translateLabels()
           } else {
             this.error = true
-            console.error('Error')
+            console.error('Error', data)
           }
         })
       } else if (this.service === 'homeworks') {
@@ -109,11 +110,19 @@ export default {
           if (data.success) {
             this.error = false
             this.data = data
+            this.translateLabels()
           } else {
             this.error = true
-            console.error('Error')
+            console.error('Error', data)
           }
         })
+      }
+    },
+    translateLabels () {
+      if (this.data !== undefined && this.data.labels !== undefined) {
+        for (let index = 0; index < this.data.labels.length; ++index) {
+          this.data.labels[index] = this.$t(this.data.labels[index].toString())
+        }
       }
     }
   }
@@ -156,6 +165,22 @@ h2 {
   "error": "Oups, une erreur est survenue...",
   "homeworks": "Travail donné",
   "documentsPlaceholder": "Aucun document mis en ligne",
-  "homeworkPlaceholder": "Aucun travail donné"
+  "homeworkPlaceholder": "Aucun travail donné",
+  "1": "Consigne simple",
+  "2": "Doc. à compléter",
+  "3": "Doc. à rendre",
+  "text": "Texte",
+  "other": "Autre",
+  "tab": "Tableur",
+  "pres": "Présentation",
+  "pdf": "PDF",
+  "html": "HTML",
+  "image": "Image",
+  "audio": "Audio",
+  "video": "Vidéo",
+  "solidworks": "Solidworks",
+  "geogebra": "Géogébra",
+  "scratch": "Scratch",
+  "mindmap": "Carte mentale"
 }
 </i18n>
