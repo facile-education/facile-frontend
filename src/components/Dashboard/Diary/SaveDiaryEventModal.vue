@@ -35,6 +35,9 @@
             :minute-increment="15"
             @selectDate="updateStartDate"
           />
+          <PentilaErrorMessage
+            :error-message="formErrorList.startDate"
+          />
         </div>
         <div class="end-date">
           <div v-t="'endDateLabel'" />
@@ -151,7 +154,14 @@ export default {
     populations: {
       isNotEmpty
     },
-    endDate: {
+    startDate: { // Should be in future
+      required,
+      function (value) {
+        return value.diff(dayjs()) >= 0
+      }
+    },
+    endDate: { // Should be > startDate
+      required,
       function (value) {
         return value.diff(this.startDate) >= 0
       }
@@ -177,6 +187,9 @@ export default {
           : '',
         populations: (this.v$.populations.$invalid && this.v$.populations.$dirty)
           ? this.$t('selectPopulations')
+          : '',
+        startDate: (this.v$.startDate.$invalid && this.v$.startDate.$dirty)
+          ? this.$t('dateInPast')
           : '',
         endDate: (this.v$.endDate.$invalid && this.v$.endDate.$dirty)
           ? this.$t('dateOrder')
@@ -311,6 +324,7 @@ export default {
   "sizeLimit1": "Ne doit pas dépasser ",
   "sizeLimit2": " caractères",
   "selectPopulations": "Veuillez séléctionner une population cible",
+  "dateInPast": "La date de début ne doit pas se situer dans le passé",
   "dateOrder": "La date de fin doit être postérieure ou égale à celle de début"
 }
 </i18n>
