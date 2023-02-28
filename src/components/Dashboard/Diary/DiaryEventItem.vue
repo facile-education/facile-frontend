@@ -3,6 +3,8 @@
     <div
       class="diary-event"
       :class="{'theme-border-color': !event.hasRead}"
+      tabindex="0"
+      @click="showDetails"
     >
       <div class="date theme-text-color">
         <div class="day-label">
@@ -12,6 +14,7 @@
           {{ eventDayNumber }}
         </b>
       </div>
+
       <div
         class="content"
         :title="event.title"
@@ -24,23 +27,68 @@
           {{ event.title }}
         </strong>
       </div>
+
+      <div
+        v-if="event.isEditable"
+        class="event-options"
+      >
+        <button
+          class="option"
+          @click="isUpdateModalDisplayed = true"
+        >
+          <img
+            src="@/assets/icon_edit_texte.svg"
+            alt="edit"
+          >
+        </button>
+        <button
+          class="option"
+          @click="confirmDeleteEvent"
+        >
+          <img
+            src="@/assets/icon_trash.svg"
+            alt="edit"
+          >
+        </button>
+      </div>
+
       <div
         v-if="!event.hasRead"
         class="pellet theme-background-color"
       />
     </div>
   </div>
+
+  <teleport
+    v-if="isUpdateModalDisplayed"
+    to="body"
+  >
+    <SaveDiaryEventModal
+      :init-event="event"
+      @updateEvent="updateEvent"
+      @close="isUpdateModalDisplayed = false"
+    />
+  </teleport>
 </template>
 
 <script>
 import dayjs from 'dayjs'
+import { deleteEvent } from '@/api/dashboard/agenda.service'
+import SaveDiaryEventModal from '@components/Dashboard/Diary/SaveDiaryEventModal.vue'
 
 export default {
   name: 'DiaryEventItem',
+  components: { SaveDiaryEventModal },
   props: {
     event: {
       type: Object,
       required: true
+    }
+  },
+  emits: ['deleteEvent', 'updateEvent'],
+  data () {
+    return {
+      isUpdateModalDisplayed: false
     }
   },
   computed: {
@@ -52,6 +100,31 @@ export default {
     },
     eventHour () {
       return dayjs(this.event.startDate).format('HH:mm')
+    }
+  },
+  methods: {
+    showDetails () {
+      // TODO
+      console.log('TODO: Show event details')
+    },
+    updateEvent () {
+      this.$emit('updateEvent')
+    },
+    confirmDeleteEvent () {
+      this.$store.dispatch('warningModal/addWarning', {
+        text: this.$t('removalConfirmMessage'),
+        lastAction: { fct: this.deleteEvent, params: [] }
+      })
+    },
+    deleteEvent () {
+      deleteEvent(this.event.eventId).then((data) => {
+        if (data.success) {
+          this.$emit('deleteEvent')
+          this.onClose()
+        } else {
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+        }
+      })
     }
   }
 }
@@ -122,4 +195,34 @@ export default {
   }
 }
 
+.event-options {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  display: flex;
+  border-radius: 0 5px 5px 0;
+  overflow: hidden;
+
+  .option {
+    height: 100%;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #01d801;
+    }
+  }
+}
+
 </style>
+
+<i18n locale="fr">
+{
+  "removalConfirmMessage": "L'événement sera définitivement perdu"
+}
+</i18n>
