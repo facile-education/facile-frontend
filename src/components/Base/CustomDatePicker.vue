@@ -5,6 +5,7 @@
     :min-date="minDate"
     :mode="withHours ? 'dateTime' : undefined"
     :is-required="isRequired"
+    :minute-increment="minuteIncrement"
     class="date"
     :is24hr="true"
     :disabled-dates="{ weekdays: hiddenDays }"
@@ -51,6 +52,10 @@ export default {
     isRequired: {
       type: Boolean,
       default: false
+    },
+    minuteIncrement: {
+      type: Number,
+      default: undefined
     },
     hiddenDays: {
       type: Array,

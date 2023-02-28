@@ -32,6 +32,7 @@
             :min-date="minDate"
             :with-hours="true"
             :is-required="true"
+            :minute-increment="15"
             @selectDate="updateStartDate"
           />
         </div>
@@ -42,6 +43,7 @@
             :min-date="startDate.toDate()"
             :with-hours="true"
             :is-required="true"
+            :minute-increment="15"
             @selectDate="updateEndDate"
           />
           <PentilaErrorMessage
@@ -124,8 +126,8 @@ export default {
       title: '',
       location: '',
       description: '',
-      startDate: dayjs(),
-      endDate: dayjs(), // TODO: put to undefined?
+      startDate: dayjs().add(1, 'hour').minute(0),
+      endDate: dayjs().add(1, 'hour').minute(0),
       populations: [],
 
       editor: InlineEditor,
