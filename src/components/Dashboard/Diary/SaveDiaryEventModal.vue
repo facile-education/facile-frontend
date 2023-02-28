@@ -203,8 +203,8 @@ export default {
       this.title = this.initEvent.title
       this.description = this.initEvent.title
       this.location = this.initEvent.location
-      this.startDate = this.initEvent.startDate
-      this.endDate = this.initEvent.endDate
+      this.startDate = dayjs(this.initEvent.startDate)
+      this.endDate = dayjs(this.initEvent.endDate)
     }
     this.getBroadcastGroups()
   },
