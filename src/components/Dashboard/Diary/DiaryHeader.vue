@@ -63,6 +63,12 @@ export default {
 .header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+
+  h2{
+    font-weight: normal;
+    margin: 0.5em 0;
+  }
 }
 </style>
 
