@@ -84,8 +84,9 @@
 <script>
 import dayjs from 'dayjs'
 import { deleteEvent, setEventRead } from '@/api/dashboard/agenda.service'
-import SaveDiaryEventModal from '@components/Dashboard/Diary/SaveDiaryEventModal.vue'
-import DiaryEventDetailsModal from '@components/Dashboard/Diary/DiaryEventDetailsModal.vue'
+import { defineAsyncComponent } from 'vue'
+const SaveDiaryEventModal = defineAsyncComponent(() => import('@/components/Dashboard/Diary/SaveDiaryEventModal.vue'))
+const DiaryEventDetailsModal = defineAsyncComponent(() => import('@/components/Dashboard/Diary/DiaryEventDetailsModal.vue'))
 
 export default {
   name: 'DiaryEventItem',
