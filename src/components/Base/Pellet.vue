@@ -1,5 +1,5 @@
 <template>
-  <div class="pellet">
+  <div class="pellet theme-background-color">
     <div v-if="showCount">
       {{ count }}
     </div>
@@ -26,12 +26,12 @@ export default {
 
 .pellet{
   margin-left: auto;
-  font-size: 15px;
+  font-size: 12px;
+  font-weight: bold;
   line-height: 20px;
   color: white;
-  text-align:center;
-  background:#F00;
-  border-radius:25px;
+  text-align: center;
+  border-radius: 50%;
 }
 
 </style>

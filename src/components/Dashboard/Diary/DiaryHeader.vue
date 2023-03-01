@@ -4,6 +4,7 @@
       <h2 v-t="'diary'" />
       <Pellet
         v-if="nbNewEvents > 0"
+        class="pellet"
         :count="nbNewEvents"
         :show-count="true"
       />
@@ -65,11 +66,23 @@ export default {
   align-items: center;
   justify-content: space-between;
 
+  .left {
+    display: flex;
+    align-items: center;
+  }
+
   h2{
     font-weight: normal;
-    margin: 0.5em 0;
+    margin: 0.3em 0;
   }
 }
+
+.pellet {
+  margin-left: 10px;
+  height: 19px;
+  width: 19px;
+}
+
 </style>
 
 <i18n locale="fr">
