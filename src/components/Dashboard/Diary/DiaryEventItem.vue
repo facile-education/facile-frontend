@@ -20,8 +20,8 @@
         :title="event.title"
       >
         <div class="meta-data">
-          <span>{{ event.location }}</span>
-          <span>{{ ' - ' + eventHour }}</span>
+          <span v-if="event.location">{{ event.location + ' - ' }}</span>
+          <span>{{ eventHour }}</span>
         </div>
         <strong class="title">
           {{ event.title }}
@@ -131,14 +131,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
+
 .container {
   padding-right: 4px;
   padding-top: 4px;
   height: 50px;
+  //border: 1px solid;
 }
 
 .diary-event {
   position: relative;
+  cursor: pointer;
   height: 100%;
   border-radius: 5px;
   background-color: #F4F8FF;
@@ -161,6 +165,16 @@ export default {
     top: 0;
     left: 100%;
     transform: translate(-75%, -25%);
+  }
+
+  &:hover, &:focus-within {
+    .event-options {
+      opacity: 100%;
+
+      .option {
+        width: 40px;
+      }
+    }
   }
 }
 
@@ -203,10 +217,12 @@ export default {
   display: flex;
   border-radius: 0 5px 5px 0;
   overflow: hidden;
+  transition: all .3s ease;
+  opacity: 0;
 
   .option {
-    height: 100%;
-    width: 40px;
+    width: 0;
+    transition: all .3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -214,7 +230,7 @@ export default {
     cursor: pointer;
 
     &:hover {
-      background-color: #01d801;
+      background-color: $color-hover-bg;
     }
   }
 }
