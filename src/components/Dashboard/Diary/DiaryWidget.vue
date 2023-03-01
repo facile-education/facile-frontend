@@ -70,7 +70,8 @@ import DiaryEventItem from '@components/Dashboard/Diary/DiaryEventItem.vue'
 import { nbDiaryEventInWidget } from '@/constants/dashboardConstants'
 import { getEvents } from '@/api/dashboard/agenda.service'
 import dayjs from 'dayjs'
-import DiaryAllEventsModal from '@components/Dashboard/Diary/DiaryAllEventsModal.vue'
+import { defineAsyncComponent } from 'vue'
+const DiaryAllEventsModal = defineAsyncComponent(() => import('@/components/Dashboard/Diary/DiaryAllEventsModal.vue'))
 
 export default {
   name: 'DiaryWidget',
