@@ -34,7 +34,7 @@
       >
         <button
           class="option"
-          @click="isUpdateModalDisplayed = true"
+          @click.stop="isUpdateModalDisplayed = true"
         >
           <img
             src="@/assets/icon_edit_texte.svg"
@@ -43,7 +43,7 @@
         </button>
         <button
           class="option"
-          @click="confirmDeleteEvent"
+          @click.stop="confirmDeleteEvent"
         >
           <img
             src="@/assets/icon_trash.svg"
@@ -69,16 +69,27 @@
       @close="isUpdateModalDisplayed = false"
     />
   </teleport>
+
+  <teleport
+    v-if="isDetailsModalDisplayed"
+    to="body"
+  >
+    <DiaryEventDetailsModal
+      :init-event="event"
+      @close="isDetailsModalDisplayed = false"
+    />
+  </teleport>
 </template>
 
 <script>
 import dayjs from 'dayjs'
-import { deleteEvent } from '@/api/dashboard/agenda.service'
+import { deleteEvent, setEventRead } from '@/api/dashboard/agenda.service'
 import SaveDiaryEventModal from '@components/Dashboard/Diary/SaveDiaryEventModal.vue'
+import DiaryEventDetailsModal from '@components/Dashboard/Diary/DiaryEventDetailsModal.vue'
 
 export default {
   name: 'DiaryEventItem',
-  components: { SaveDiaryEventModal },
+  components: { DiaryEventDetailsModal, SaveDiaryEventModal },
   props: {
     event: {
       type: Object,
@@ -88,7 +99,8 @@ export default {
   emits: ['deleteEvent', 'updateEvent'],
   data () {
     return {
-      isUpdateModalDisplayed: false
+      isUpdateModalDisplayed: false,
+      isDetailsModalDisplayed: false
     }
   },
   computed: {
@@ -104,11 +116,22 @@ export default {
   },
   methods: {
     showDetails () {
-      // TODO
-      console.log('TODO: Show event details')
+      if (!this.event.hasRead) {
+        this.markEventAsRead()
+      }
+      this.isDetailsModalDisplayed = true
     },
     updateEvent () {
       this.$emit('updateEvent')
+    },
+    markEventAsRead () {
+      setEventRead(this.event.eventId, true).then((data) => {
+        if (data.success) {
+          this.$emit('updateEvent')
+        } else {
+          console.error('Error')
+        }
+      })
     },
     confirmDeleteEvent () {
       this.$store.dispatch('warningModal/addWarning', {
