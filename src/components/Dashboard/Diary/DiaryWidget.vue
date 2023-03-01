@@ -127,6 +127,8 @@ section {
 
 .period {
   text-transform: capitalize;
+  font-size: 0.875em;
+  margin-top: 4px;
 }
 
 .footer {
