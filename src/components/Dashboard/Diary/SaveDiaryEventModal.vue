@@ -100,7 +100,7 @@
 <script>
 import InlineEditor from '@ckeditor/ckeditor5-build-inline'
 import { component as CKEditor } from '@ckeditor/ckeditor5-vue'
-import { createEvent, modifyEvent } from '@/api/dashboard/agenda.service'
+import { createEvent, modifyEvent, getEventDetails } from '@/api/dashboard/agenda.service'
 import dayjs from 'dayjs'
 import CustomDatePicker from '@components/Base/CustomDatePicker.vue'
 import { useVuelidate } from '@vuelidate/core'
@@ -205,6 +205,7 @@ export default {
       this.location = this.initEvent.location
       this.startDate = dayjs(this.initEvent.startDate)
       this.endDate = dayjs(this.initEvent.endDate)
+      this.initPopulations(this.initEvent.eventId)
     }
     this.getBroadcastGroups()
   },
@@ -224,6 +225,15 @@ export default {
     },
     updateEndDate (date) {
       this.endDate = dayjs(date)
+    },
+    initPopulations (eventId) {
+      getEventDetails(eventId).then((data) => {
+        if (data.success) {
+          this.populations = data.populations
+        } else {
+          console.error('Error')
+        }
+      })
     },
     getBroadcastGroups () {
       getSchoolNewsBroadcastGroups().then((data) => {
