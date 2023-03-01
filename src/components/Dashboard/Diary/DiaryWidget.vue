@@ -22,18 +22,24 @@
     />
     <div
       v-else
-      class="events"
+      class="events-by-month"
     >
-      <div class="period">
-        {{ periodLabel }}
-      </div>
-      <DiaryEventItem
-        v-for="(event, index) in eventList"
+      <div
+        v-for="(month, index) in eventsByMonth"
         :key="index"
-        :event="event"
-        @updateEvent="refresh"
-        @deleteEvent="refresh"
-      />
+      >
+        <div class="period">
+          {{ month.monthName }}
+        </div>
+        <DiaryEventItem
+          v-for="(event, i) in month.eventList"
+          :key="i"
+          :event="event"
+          @updateEvent="refresh"
+          @deleteEvent="refresh"
+        />
+      </div>
+
       <div class="footer">
         <button
           v-t="'showMore'"
@@ -64,12 +70,22 @@ export default {
       error: false
     }
   },
-  computed: { // TODO: Confirm behaviour
-    periodLabel () {
-      return 'Février'
-    },
+  computed: {
     fromDate () {
       return dayjs()
+    },
+    eventsByMonth () {
+      const eventsByMonth = []
+      this.eventList.forEach((event) => {
+        const eventMonth = dayjs(event.startDate).month()
+        const monthIndex = eventsByMonth.map(month => month.monthId).indexOf(eventMonth)
+        if (monthIndex !== -1) {
+          eventsByMonth[monthIndex].eventList.push(event)
+        } else {
+          eventsByMonth.push({ monthId: eventMonth, monthName: dayjs().month(eventMonth).format('MMMM'), eventList: [event] })
+        }
+      })
+      return eventsByMonth
     }
   },
   created () {
@@ -86,7 +102,7 @@ export default {
         if (data.success) {
           this.error = false
           this.eventList = data.events
-          this.nbNewEvents = data.nbNewEvents
+          this.nbNewEvents = data.nbUnreadEvents
         } else {
           this.error = true
           console.error('Error')
@@ -106,6 +122,10 @@ export default {
 
 section {
   width: min(355px, 100vw);
+}
+
+.period {
+  text-transform: capitalize;
 }
 
 .footer {
