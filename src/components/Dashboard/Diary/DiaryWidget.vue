@@ -42,13 +42,24 @@
 
       <div class="footer">
         <button
+          v-if="eventList.length > 0"
           v-t="'showMore'"
           class="show-more"
-          @click="showMore"
+          @click="isAllEventsModalDisplayed = true"
         />
       </div>
     </div>
   </section>
+
+  <teleport
+    v-if="isAllEventsModalDisplayed"
+    to="body"
+  >
+    <DiaryAllEventsModal
+      @refresh="refresh"
+      @close="isAllEventsModalDisplayed = false"
+    />
+  </teleport>
 </template>
 
 <script>
@@ -57,17 +68,19 @@ import DiaryEventItem from '@components/Dashboard/Diary/DiaryEventItem.vue'
 import { nbDiaryEventInWidget } from '@/constants/dashboardConstants'
 import { getEvents } from '@/api/dashboard/agenda.service'
 import dayjs from 'dayjs'
+import DiaryAllEventsModal from '@components/Dashboard/Diary/DiaryAllEventsModal.vue'
 
 export default {
   name: 'DiaryWidget',
-  components: { DiaryHeader, DiaryEventItem },
+  components: { DiaryAllEventsModal, DiaryHeader, DiaryEventItem },
   data () {
     return {
       unReadOnly: false,
       eventList: [],
       nbNewEvents: 0,
       isLoading: false,
-      error: false
+      error: false,
+      isAllEventsModalDisplayed: false
     }
   },
   computed: {
@@ -109,10 +122,6 @@ export default {
           console.error('Error')
         }
       })
-    },
-    showMore () {
-      // TODO
-      console.log('TODO:  display Modal')
     }
   }
 }
