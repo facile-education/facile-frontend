@@ -8,6 +8,15 @@
         :count="nbNewEvents"
         :show-count="true"
       />
+      <button
+        class="read-only-button"
+        @click="toggleReadOnly"
+      >
+        <img
+          :src="unReadOnly ? require('@/assets/options/icon_unread_filter_active.svg') : require('@/assets/options/icon_unread_filter.svg')"
+          alt="unread filter"
+        >
+      </button>
     </div>
     <DashboardCreateButton
       v-if="canCreateDiaryEvent"
@@ -38,9 +47,13 @@ export default {
     nbNewEvents: {
       type: Number,
       default: 0
+    },
+    unReadOnly: {
+      type: Boolean,
+      required: true
     }
   },
-  emits: ['createEvent'],
+  emits: ['createEvent', 'updateUnreadOnly'],
   data () {
     return {
       isCreateModalDisplayed: false
@@ -53,6 +66,9 @@ export default {
     }
   },
   methods: {
+    toggleReadOnly () {
+      this.$emit('updateUnreadOnly', !this.unReadOnly)
+    },
     createEvent () {
       this.$emit('createEvent')
     }
@@ -79,8 +95,21 @@ export default {
 
 .pellet {
   margin-left: 10px;
-  height: 19px;
-  width: 19px;
+  height: 20px;
+  width: 20px;
+}
+
+.read-only-button {
+  height: 15px;
+  width: 15px;
+  padding: 0;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 </style>

@@ -2,6 +2,8 @@
   <section>
     <DiaryHeader
       :nb-new-events="nbNewEvents"
+      :un-read-only="unReadOnly"
+      @updateUnreadOnly="updateUnreadOnlyValue"
       @createEvent="refresh"
     />
     <div
@@ -106,6 +108,10 @@ export default {
     this.loadDiaryEvents()
   },
   methods: {
+    updateUnreadOnlyValue (value) {
+      this.unReadOnly = value
+      this.refresh()
+    },
     refresh () {
       this.loadDiaryEvents()
     },
