@@ -11,6 +11,15 @@
     </template>
 
     <template #body>
+      <button
+        class="read-only-button"
+        @click="toggleReadOnly"
+      >
+        <img
+          :src="unReadOnly ? require('@/assets/options/icon_unread_filter_active.svg') : require('@/assets/options/icon_unread_filter.svg')"
+          alt="unread filter"
+        >
+      </button>
       <div
         v-if="isLoading"
         class="placeholder"
@@ -37,8 +46,8 @@
             v-for="(event, i) in month.eventList"
             :key="i"
             :event="event"
-            @updateEvent="refresh"
-            @deleteEvent="refresh"
+            @updateEvent="updateList"
+            @deleteEvent="updateList"
           />
         </div>
       </div>
@@ -86,10 +95,17 @@ export default {
     this.loadDiaryEvents()
   },
   methods: {
+    toggleReadOnly () {
+      this.unReadOnly = !this.unReadOnly
+      this.refresh()
+    },
+    updateList () {
+      this.refresh()
+      this.$emit('refresh') // So the widget can update too
+    },
     refresh () {
       this.fromDate = dayjs()
       this.loadDiaryEvents()
-      this.$emit('refresh')
     },
     loadDiaryEvents () {
       this.isLoading = true
@@ -114,6 +130,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.read-only-button {
+  height: 15px;
+  width: 15px;
+  padding: 0;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .period {
   text-transform: capitalize;
   font-size: 0.875em;
