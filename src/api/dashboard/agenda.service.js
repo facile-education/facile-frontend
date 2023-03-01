@@ -7,7 +7,8 @@ export {
   getEventDetails,
   createEvent,
   modifyEvent,
-  deleteEvent
+  deleteEvent,
+  setEventRead
 }
 
 const AGENDA_PATH = '/agenda-portlet.agenda'
@@ -63,4 +64,13 @@ function deleteEvent (eventId) {
       eventId: eventId
     }
   }).then(response => response.data)
+}
+
+function setEventRead (eventId, read) {
+  return axios.post(constants.JSON_WS_URL + AGENDA_PATH + '/set-event-read',
+    PentilaUtils.URL.params({
+      eventId,
+      read
+    })
+  ).then(response => response.data)
 }
