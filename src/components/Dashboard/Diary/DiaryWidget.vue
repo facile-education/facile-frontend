@@ -77,12 +77,13 @@ export default {
     eventsByMonth () {
       const eventsByMonth = []
       this.eventList.forEach((event) => {
-        const eventMonth = dayjs(event.startDate).month()
+        const yearDifferenceFromToday = dayjs(event.startDate).year() - dayjs().year()
+        const eventMonth = dayjs(event.startDate).month() + 12 * yearDifferenceFromToday
         const monthIndex = eventsByMonth.map(month => month.monthId).indexOf(eventMonth)
         if (monthIndex !== -1) {
           eventsByMonth[monthIndex].eventList.push(event)
         } else {
-          eventsByMonth.push({ monthId: eventMonth, monthName: dayjs().month(eventMonth).format('MMMM'), eventList: [event] })
+          eventsByMonth.push({ monthId: eventMonth, monthName: dayjs(event.startDate).format('MMMM' + (yearDifferenceFromToday ? ' YYYY' : '')), eventList: [event] })
         }
       })
       return eventsByMonth
