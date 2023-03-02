@@ -1,11 +1,11 @@
 <template>
   <div class="header">
     <div class="left">
-      <h2 v-t="'diary'" />
+      <h2 v-t="'announcements'" />
       <Pellet
-        v-if="nbNewEvents > 0"
+        v-if="nbNewAnnouncements > 0"
         class="header-pellet"
-        :count="nbNewEvents"
+        :count="nbNewAnnouncements"
         :show-count="true"
       />
       <button
@@ -19,7 +19,7 @@
       </button>
     </div>
     <DashboardCreateButton
-      v-if="canCreateDiaryEvent"
+      v-if="canCreateAnnouncement"
       @click="isCreateModalDisplayed = true"
     />
   </div>
@@ -28,8 +28,8 @@
     v-if="isCreateModalDisplayed"
     to="body"
   >
-    <SaveDiaryEventModal
-      @createEvent="createEvent"
+    <SaveAnnouncementModal
+      @createAnnouncement="createAnnouncement"
       @close="isCreateModalDisplayed = false"
     />
   </teleport>
@@ -39,13 +39,13 @@
 import Pellet from '@components/Base/Pellet.vue'
 import DashboardCreateButton from '@components/Dashboard/DashboardCreateButton.vue'
 import { defineAsyncComponent } from 'vue'
-const SaveDiaryEventModal = defineAsyncComponent(() => import('@/components/Dashboard/Diary/SaveDiaryEventModal.vue'))
+const SaveAnnouncementModal = defineAsyncComponent(() => import('@/components/Dashboard/Announcements/SaveAnnouncementModal.vue'))
 
 export default {
-  name: 'DiaryHeader',
-  components: { SaveDiaryEventModal, DashboardCreateButton, Pellet },
+  name: 'AnnouncementsHeader',
+  components: { SaveAnnouncementModal, DashboardCreateButton, Pellet },
   props: {
-    nbNewEvents: {
+    nbNewAnnouncements: {
       type: Number,
       default: 0
     },
@@ -54,23 +54,23 @@ export default {
       required: true
     }
   },
-  emits: ['createEvent', 'updateUnreadOnly'],
+  emits: ['createAnnouncement', 'updateUnreadOnly'],
   data () {
     return {
       isCreateModalDisplayed: false
     }
   },
   computed: {
-    canCreateDiaryEvent () {
-      return this.$store.state.dashboard.canAddEvents
+    canCreateAnnouncement () {
+      return this.$store.state.dashboard.canAddSchoolNews
     }
   },
   methods: {
     toggleReadOnly () {
       this.$emit('updateUnreadOnly', !this.unReadOnly)
     },
-    createEvent () {
-      this.$emit('createEvent')
+    createAnnouncement () {
+      this.$emit('createAnnouncement')
     }
   }
 }
@@ -102,6 +102,6 @@ export default {
 
 <i18n locale="fr">
 {
-  "diary": "Agenda"
+  "announcements": "Annonces"
 }
 </i18n>

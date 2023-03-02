@@ -44,7 +44,6 @@
 
       <div class="footer">
         <button
-          v-if="eventList.length > 0"
           v-t="'showMore'"
           class="show-more"
           @click="isAllEventsModalDisplayed = true"
