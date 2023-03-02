@@ -2,7 +2,7 @@
   <Layout>
     <h1 :aria-label="$t('serviceTitle')" />
     <div class="dashboard-panel">
-      <!--      <AnnouncementsWidget v-if="hasSchoolNewsWidget" />-->
+      <AnnouncementsWidget v-if="hasSchoolNewsWidget" />
       <DiaryWidget v-if="hasDiaryWidget" />
       <!--      <HomeworkWidget v-if="hasHomeworkWidget" />-->
       <!--      <EDTWidget v-if="hasEDTWidget" />-->
@@ -14,12 +14,12 @@
 
 <script>
 import Layout from '@/router/layouts/EmptyLayout'
-// TODO: import asynchronously
 import { defineAsyncComponent } from 'vue'
+const AnnouncementsWidget = defineAsyncComponent(() => import('@components/Dashboard/Announcements/AnnouncementsWidget.vue'))
 const DiaryWidget = defineAsyncComponent(() => import('@/components/Dashboard/Diary/DiaryWidget.vue'))
 export default {
   name: 'Dashboard',
-  components: { DiaryWidget, Layout },
+  components: { AnnouncementsWidget, DiaryWidget, Layout },
   computed: {
     hasActivityThreadWidget () {
       return this.$store.state.dashboard.hasActivityThreadWidget
@@ -47,6 +47,7 @@ export default {
 .dashboard-panel {
   display: flex;
   flex-wrap: wrap;
+  gap: 10%;
 }
 </style>
 
