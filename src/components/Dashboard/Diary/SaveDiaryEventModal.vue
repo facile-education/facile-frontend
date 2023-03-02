@@ -15,9 +15,9 @@
         <PentilaTagsInput
           v-model="populations"
           :placeholder="$t('populationPlaceholder') + '*'"
-          :list="groupsList"
+          :list="availablePopulationsList"
           :close-on-select="true"
-          display-field="groupName"
+          display-field="populationName"
         />
         <PentilaErrorMessage
           :error-message="formErrorList.populations"
@@ -148,7 +148,7 @@ export default {
       editorConfig: {
         placeholder: this.$t('descriptionPlaceHolder')
       },
-      groupsList: []
+      availablePopulationsList: []
     }
   },
   validations: {
@@ -249,13 +249,17 @@ export default {
     getBroadcastGroups () {
       getSchoolNewsBroadcastGroups().then((data) => {
         if (data.success) {
-          // Concat all groups of all schools in one list
-          this.groupsList = []
+          // Concat all populations of all schools in one list
+          this.availablePopulationsList = []
           const schools = data.schoolsGroups
           schools.forEach((school) => {
-            this.groupsList = [...this.groupsList, ...school.Classes]
-            this.groupsList = [...this.groupsList, ...school.Volees]
-            this.groupsList = [...this.groupsList, ...school.populations]
+            this.availablePopulationsList = [...this.availablePopulationsList, ...school.populations]
+            school.Classes.forEach((schoolClass) => {
+              this.availablePopulationsList = [...this.availablePopulationsList, ...schoolClass.populations]
+            })
+            school.Volees.forEach((schoolVolee) => {
+              this.availablePopulationsList = [...this.availablePopulationsList, ...schoolVolee.populations]
+            })
           })
         } else {
           console.error('Error')
