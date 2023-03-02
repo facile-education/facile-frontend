@@ -61,9 +61,8 @@ export default {
     }
   },
   computed: {
-    canCreateDiaryEvent () { // TODO: match correct roles specified in specification
-      // return this.$store.state.user.isAdministrator
-      return true
+    canCreateDiaryEvent () {
+      return this.$store.state.dashboard.canAddEvents
     }
   },
   methods: {
