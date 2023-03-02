@@ -18,10 +18,12 @@
           :list="availablePopulationsList"
           :close-on-select="true"
           display-field="populationName"
+          :disabled="isLoadingEventPopulations"
         />
         <PentilaErrorMessage
           :error-message="formErrorList.populations"
         />
+        <PentilaSpinner v-if="isLoadingEventPopulations" />
       </div>
 
       <div class="dates">
@@ -148,7 +150,8 @@ export default {
       editorConfig: {
         placeholder: this.$t('descriptionPlaceHolder')
       },
-      availablePopulationsList: []
+      availablePopulationsList: [],
+      isLoadingEventPopulations: false
     }
   },
   validations: {
@@ -238,7 +241,9 @@ export default {
       this.endDate = dayjs(date)
     },
     initPopulations (eventId) {
+      this.isLoadingEventPopulations = true
       getEventDetails(eventId).then((data) => {
+        this.isLoadingEventPopulations = false
         if (data.success) {
           this.populations = data.populations
         } else {
@@ -312,6 +317,10 @@ export default {
   border: 1px solid black;
   max-height: 30vh;
   overflow-y: auto;
+}
+
+.population-selection {
+  position: relative;
 }
 
 .population-selection, .input {
