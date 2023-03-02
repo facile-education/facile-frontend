@@ -44,7 +44,7 @@ function createEvent (title, description, location, startDate, endDate, populati
   ).then(response => response.data)
 }
 
-function modifyEvent (eventId, title, description, location, startDate, endDate, populations) {
+function modifyEvent (eventId, title, description, location, startDate, endDate, populations, markAsUnreadForAll) {
   return axios.post(constants.JSON_WS_URL + AGENDA_PATH + '/modify-event',
     PentilaUtils.URL.params({
       eventId,
@@ -53,7 +53,8 @@ function modifyEvent (eventId, title, description, location, startDate, endDate,
       location,
       startDate: startDate.format('YYYY-MM-DD HH:mm'),
       endDate: endDate.format('YYYY-MM-DD HH:mm'),
-      populations: JSON.stringify(populations)
+      populations: JSON.stringify(populations),
+      markAsUnreadForAll
     })
   ).then(response => response.data)
 }
