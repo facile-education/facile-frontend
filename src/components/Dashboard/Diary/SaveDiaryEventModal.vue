@@ -85,6 +85,16 @@
       <PentilaErrorMessage
         :error-message="formErrorList.description"
       />
+
+      <div
+        v-if="!isCreation"
+        class="unread-checkbox"
+      >
+        <PentilaCheckbox
+          v-model="markAsUnreadForAll"
+          :label="$t('markAsUnreadForAll')"
+        />
+      </div>
     </template>
 
     <template #footer>
@@ -132,6 +142,7 @@ export default {
       startDate: dayjs().add(1, 'hour').minute(0),
       endDate: dayjs().add(1, 'hour').minute(0),
       populations: [],
+      markAsUnreadForAll: false,
 
       editor: InlineEditor,
       editorConfig: {
@@ -273,7 +284,7 @@ export default {
       })
     },
     updateEvent () {
-      modifyEvent(this.initEvent.eventId, this.title, this.description, this.location, this.startDate, this.endDate, this.populations).then((data) => {
+      modifyEvent(this.initEvent.eventId, this.title, this.description, this.location, this.startDate, this.endDate, this.populations, this.markAsUnreadForAll).then((data) => {
         if (data.success) {
           this.$emit('updateEvent')
           this.onClose()
@@ -303,6 +314,10 @@ export default {
   margin-bottom: 20px;
 }
 
+.unread-checkbox {
+  margin-top: 20px;
+}
+
 @media screen and (min-width: 700px) {
   .dates {
     display: flex;
@@ -329,6 +344,7 @@ export default {
   "endDateLabel": "Date / heure de fin d'événement",
   "descriptionPlaceHolder": "Description",
   "populationPlaceholder": "Population cible",
+  "markAsUnreadForAll": "Forcer cet événement à 'non lu' pour tous",
   "creationSubmit": "Créer",
   "updateSubmit": "Modifier",
   "sizeLimit1": "Ne doit pas dépasser ",
