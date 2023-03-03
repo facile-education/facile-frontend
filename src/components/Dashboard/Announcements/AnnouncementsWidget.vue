@@ -6,12 +6,10 @@
       @updateUnreadOnly="updateUnreadOnlyValue"
       @createAnnouncement="refresh"
     />
-    <div
+    <PentilaSpinner
       v-if="isLoading"
-      class="placeholder"
-    >
-      <PentilaSpinner />
-    </div>
+      style="z-index: 1"
+    />
     <div
       v-if="error === true"
       v-t="'errorPlaceholder'"
@@ -113,6 +111,11 @@ export default {
 @import '@design';
 section {
   width: min(355px, 100vw);
+  position: relative;
+}
+
+.placeholder {
+  height: 106px;
 }
 
 .announcements-list {

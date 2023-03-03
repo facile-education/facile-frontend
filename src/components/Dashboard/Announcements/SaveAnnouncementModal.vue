@@ -1,7 +1,7 @@
 <template>
   <PentilaWindow
-    class="update-diary-event-modal"
-    data-test="update-diary-event-modal"
+    class="update-announcement-modal"
+    data-test="update-announcement-modal"
     :modal="true"
     :draggable="true"
     @close="onClose"
@@ -63,12 +63,12 @@
           :list="availablePopulationsList"
           :close-on-select="true"
           display-field="populationName"
-          :disabled="isLoadingEventPopulations"
+          :disabled="isLoadingAnnouncementPopulations"
         />
         <PentilaErrorMessage
           :error-message="formErrorList.populations"
         />
-        <PentilaSpinner v-if="isLoadingEventPopulations" />
+        <PentilaSpinner v-if="isLoadingAnnouncementPopulations" />
       </div>
 
       <div
@@ -131,7 +131,7 @@ export default {
         placeholder: this.$t('descriptionPlaceHolder')
       },
       availablePopulationsList: [],
-      isLoadingEventPopulations: false
+      isLoadingAnnouncementPopulations: false
     }
   },
   validations: {
@@ -180,8 +180,8 @@ export default {
     this.$store.dispatch('misc/incrementModalCount')
     if (!this.isCreation) {
       this.title = this.initAnnouncement.title
-      this.description = this.initAnnouncement.description
-      this.releaseDate = dayjs(this.initAnnouncement.releaseDate)
+      this.description = this.initAnnouncement.content
+      this.releaseDate = dayjs(this.initAnnouncement.publicationDate)
       this.initPopulations(this.initAnnouncement.newsId)
     }
     this.getBroadcastGroups()
@@ -195,12 +195,12 @@ export default {
     updateReleaseDate (date) {
       this.releaseDate = dayjs(date)
     },
-    initPopulations (eventId) {
-      this.isLoadingEventPopulations = true
-      getNewsDetails(eventId).then((data) => {
-        this.isLoadingEventPopulations = false
+    initPopulations (newsId) {
+      this.isLoadingAnnouncementPopulations = true
+      getNewsDetails(newsId).then((data) => {
+        this.isLoadingAnnouncementPopulations = false
         if (data.success) {
-          this.populations = data.populations
+          this.populations = data.news.populations
         } else {
           console.error('Error')
         }
@@ -277,6 +277,10 @@ export default {
 .release-date {
   color: $color-new-light-text;
   margin-bottom: 15px;
+}
+
+.population-selection {
+  position: relative;
 }
 
 .title, .population-selection {
