@@ -11,42 +11,39 @@
     </template>
 
     <template #body>
-      <div class="dates">
-        <div class="start-date">
-          <div v-t="'startDateLabel'" />
-          <CustomDatePicker
-            :selected-date="startDate"
-            :min-date="minDate"
-            :is-required="true"
-            @selectDate="updateStartDate"
-          />
-          <PentilaErrorMessage
-            :error-message="formErrorList.startDate"
-          />
+      <div class="first-line">
+        <div class="image-picker">
+          <img
+            :src="thumbnailUrl"
+            alt="thumbnail"
+          >
         </div>
-        <div class="end-date">
-          <div v-t="'endDateLabel'" />
-          <CustomDatePicker
-            :selected-date="endDate"
-            :min-date="startDate.toDate()"
-            :is-required="true"
-            @selectDate="updateEndDate"
-          />
-          <PentilaErrorMessage
-            :error-message="formErrorList.endDate"
-          />
-        </div>
-      </div>
 
-      <div class="input">
-        <PentilaInput
-          ref="nameInput"
-          v-model="title"
-          :placeholder="$t('namePlaceHolder') + '*'"
-        />
-        <PentilaErrorMessage
-          :error-message="formErrorList.title"
-        />
+        <div class="release-date">
+          <div v-t="'releaseDateLabel'" />
+          <CustomDatePicker
+            :selected-date="releaseDate"
+            :min-date="minDate"
+            :with-hours="true"
+            :is-required="true"
+            :minute-increment="15"
+            @selectDate="updateReleaseDate"
+          />
+          <PentilaErrorMessage
+            :error-message="formErrorList.releaseDate"
+          />
+        </div>
+
+        <div class="title">
+          <PentilaInput
+            ref="nameInput"
+            v-model="title"
+            :placeholder="$t('namePlaceHolder') + '*'"
+          />
+          <PentilaErrorMessage
+            :error-message="formErrorList.title"
+          />
+        </div>
       </div>
 
       <CKEditor
@@ -125,8 +122,7 @@ export default {
     return {
       title: '',
       description: '',
-      startDate: dayjs(),
-      endDate: dayjs(),
+      releaseDate: dayjs(),
       populations: [],
       markAsUnreadForAll: false,
 
@@ -149,16 +145,10 @@ export default {
     populations: {
       isNotEmpty
     },
-    startDate: { // Should be in future (or today)
+    releaseDate: { // Should be in future or today
       required,
       function (value) {
         return value.diff(dayjs().hour(0)) >= 0
-      }
-    },
-    endDate: { // Should be > startDate
-      required,
-      function (value) {
-        return value.diff(this.startDate) >= 0
       }
     }
   },
@@ -180,11 +170,8 @@ export default {
         populations: (this.v$.populations.$invalid && this.v$.populations.$dirty)
           ? this.$t('selectPopulations')
           : '',
-        startDate: (this.v$.startDate.$invalid && this.v$.startDate.$dirty)
+        releaseDate: (this.v$.releaseDate.$invalid && this.v$.releaseDate.$dirty)
           ? this.$t('dateInPast')
-          : '',
-        endDate: (this.v$.endDate.$invalid && this.v$.endDate.$dirty)
-          ? this.$t('dateOrder')
           : ''
       }
     }
@@ -194,8 +181,7 @@ export default {
     if (!this.isCreation) {
       this.title = this.initAnnouncement.title
       this.description = this.initAnnouncement.description
-      this.startDate = dayjs(this.initAnnouncement.startDate)
-      this.endDate = dayjs(this.initAnnouncement.endDate)
+      this.releaseDate = dayjs(this.initAnnouncement.releaseDate)
       this.initPopulations(this.initAnnouncement.newsId)
     }
     this.getBroadcastGroups()
@@ -206,16 +192,8 @@ export default {
     input.select()
   },
   methods: {
-    updateStartDate (date) {
-      this.startDate = dayjs(date).hour(0)
-
-      // Update end date if needed
-      if (this.startDate.isAfter(this.endDate)) {
-        this.endDate = this.startDate
-      }
-    },
-    updateEndDate (date) {
-      this.endDate = dayjs(date).hour(0)
+    updateReleaseDate (date) {
+      this.releaseDate = dayjs(date)
     },
     initPopulations (eventId) {
       this.isLoadingEventPopulations = true
@@ -260,7 +238,7 @@ export default {
       }
     },
     createAnnouncement () {
-      addNews(this.title, this.description, true, false, 0, this.startDate, this.endDate, this.populations, []).then((data) => {
+      addNews(this.title, this.description, true, false, 0, this.releaseDate, this.populations, []).then((data) => {
         if (data.success) {
           this.$emit('createAnnouncement')
           this.onClose()
@@ -270,7 +248,7 @@ export default {
       })
     },
     updateAnnouncement () {
-      editNews(this.initAnnouncement.newsId, this.title, this.description, false, 0, this.startDate, this.endDate, this.populations, [], this.markAsUnreadForAll).then((data) => {
+      editNews(this.initAnnouncement.newsId, this.title, this.description, false, 0, this.releaseDate, this.populations, [], this.markAsUnreadForAll).then((data) => {
         if (data.success) {
           this.$emit('updateAnnouncement')
           this.onClose()
@@ -288,5 +266,49 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
 
+.image-picker {
+  height: 199px;
+  width: 140px;
+  margin-bottom: 20px;
+}
+
+.release-date {
+  color: $color-new-light-text;
+  margin-bottom: 15px;
+}
+
+.title, .population-selection {
+  margin-bottom: 20px;
+}
+
+.ck-editor {
+  border: 1px solid black;
+  max-height: 30vh;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+.unread-checkbox {
+  margin-top: 20px;
+}
 </style>
+
+<i18n locale="fr">
+{
+  "creationTitle": "Créer une annonce",
+  "updateTitle": "Modifier une annonce",
+  "releaseDateLabel": "Parution",
+  "namePlaceHolder": "Titre",
+  "descriptionPlaceHolder": "Description",
+  "populationPlaceholder": "Population cible",
+  "markAsUnreadForAll": "Forcer cet événement à 'non lu' pour tous",
+  "creationSubmit": "Créer",
+  "updateSubmit": "Modifier",
+  "sizeLimit1": "Ne doit pas dépasser ",
+  "sizeLimit2": " caractères",
+  "selectPopulations": "Veuillez séléctionner une population cible",
+  "dateInPast": "La date de parution ne doit pas se situer dans le passé"
+}
+</i18n>

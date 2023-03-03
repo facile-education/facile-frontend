@@ -17,7 +17,7 @@
         {{ announcement.author }}
       </span>
       <span class="date">
-        - {{ convertDateStr(announcement.publicationDate) }}
+        - {{ announcement.publicationDate }}
       </span>
       <i
         v-if="announcement.hasAttachFiles"
