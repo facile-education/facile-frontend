@@ -29,14 +29,14 @@ function addNews (title, content, isSchoolNews, isImportant, imageId, publicatio
       isSchoolNews,
       isImportant,
       imageId,
-      publicationDate,
-      expirationDate,
-      population,
-      attachFiles
+      publicationDate: publicationDate.format('YYYY-MM-DD HH:mm'),
+      expirationDate: expirationDate.format('YYYY-MM-DD HH:mm'),
+      population: JSON.stringify(population),
+      attachFiles: JSON.stringify(attachFiles)
     })).then(response => response.data)
 }
 
-function editNews (newsId, title, content, isImportant, imageId, publicationDate, expirationDate, population, attachFiles) {
+function editNews (newsId, title, content, isImportant, imageId, publicationDate, expirationDate, population, attachFiles, markAsUnreadForAll) {
   return axios.post(constants.JSON_WS_URL + NEWS_PATH + NEWS_CTX + 'edit-news',
     PentilaUtils.URL.params({
       newsId,
@@ -44,10 +44,11 @@ function editNews (newsId, title, content, isImportant, imageId, publicationDate
       content,
       isImportant,
       imageId,
-      publicationDate,
-      expirationDate,
-      population,
-      attachFiles
+      publicationDate: publicationDate.format('YYYY-MM-DD HH:mm'),
+      expirationDate: expirationDate.format('YYYY-MM-DD HH:mm'),
+      population: JSON.stringify(population),
+      attachFiles: JSON.stringify(attachFiles),
+      markAsUnreadForAll
     })).then(response => response.data)
 }
 

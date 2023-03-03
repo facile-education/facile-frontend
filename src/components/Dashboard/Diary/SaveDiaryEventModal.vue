@@ -215,7 +215,7 @@ export default {
     this.$store.dispatch('misc/incrementModalCount')
     if (!this.isCreation) {
       this.title = this.initEvent.title
-      this.description = this.initEvent.title
+      this.description = this.initEvent.title // TODO: fix this
       this.location = this.initEvent.location
       this.startDate = dayjs(this.initEvent.startDate)
       this.endDate = dayjs(this.initEvent.endDate)
