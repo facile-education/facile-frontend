@@ -1,7 +1,7 @@
 <template>
   <section>
     <AnnouncementsHeader
-      :nb-new-announcement="nbUnreadAnnouncements"
+      :nb-new-announcements="nbUnreadAnnouncements"
       :un-read-only="unReadOnly"
       @updateUnreadOnly="updateUnreadOnlyValue"
       @createAnnouncement="refresh"
