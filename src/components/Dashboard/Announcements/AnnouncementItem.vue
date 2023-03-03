@@ -35,21 +35,69 @@
       </div>
 
       <div
+        v-if="announcement.isEditable"
+        class="announcement-options"
+      >
+        <button
+          class="option"
+          @click.stop="isUpdateModalDisplayed = true"
+        >
+          <img
+            src="@/assets/icon_edit_texte.svg"
+            alt="edit"
+          >
+        </button>
+        <button
+          class="option"
+          @click.stop="confirmDeleteAnnouncement"
+        >
+          <img
+            src="@/assets/icon_trash.svg"
+            alt="edit"
+          >
+        </button>
+      </div>
+
+      <div
         v-if="!announcement.hasRead"
         class="pellet theme-background-color"
       />
     </div>
   </div>
+
+  <teleport
+    v-if="isUpdateModalDisplayed"
+    to="body"
+  >
+    <SaveAnnouncementModal
+      :init-announcement="announcement"
+      @updateAnnouncement="updateAnnouncement"
+      @close="isUpdateModalDisplayed = false"
+    />
+  </teleport>
+
+  <teleport
+    v-if="isDetailsModalDisplayed"
+    to="body"
+  >
+    <AnnouncementDetailsModal
+      :init-announcement="announcement"
+      @close="isDetailsModalDisplayed = false"
+    />
+  </teleport>
 </template>
 
 <script>
 import { deleteNews, setNewsRead } from '@/api/news.service'
 import dayjs from 'dayjs'
 import BaseIcon from '@components/Base/BaseIcon.vue'
+import { defineAsyncComponent } from 'vue'
+const SaveAnnouncementModal = defineAsyncComponent(() => import('@/components/Dashboard/Announcements/SaveAnnouncementModal.vue'))
+const AnnouncementDetailsModal = defineAsyncComponent(() => import('@/components/Dashboard/Announcements/AnnouncementDetailsModal.vue'))
 
 export default {
   name: 'AnnouncementItem',
-  components: { BaseIcon },
+  components: { BaseIcon, SaveAnnouncementModal, AnnouncementDetailsModal },
   props: {
     announcement: {
       type: Object,
@@ -108,6 +156,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
+
 .container {
   padding-right: 4px;
   padding-top: 4px;
@@ -120,7 +170,6 @@ export default {
   height: 106px;
   width: 323px;
   border-radius: 5px;
-  background-color: #F4F8FF;
   padding: 4px;
   font-size: 14px;
   line-height: 18px;
@@ -138,12 +187,21 @@ export default {
     left: 100%;
     transform: translate(-75%, -25%);
   }
+
+  &:hover, &:focus-within {
+    .announcement-options {
+      opacity: 100%;
+
+      .option {
+        height: 50px;
+      }
+    }
+  }
 }
 
 .thumbnail{
   width: var(--thumbnail-width);
   height: 100%;
-  background-color: green;
 }
 
 .content {
@@ -164,6 +222,32 @@ export default {
   }
 }
 
+.announcement-options {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  border-radius: 0 5px 5px 0;
+  overflow: hidden;
+  transition: all .3s ease;
+  opacity: 0;
+
+  .option {
+    height: 0;
+    width: 40px;
+    transition: all .3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $color-hover-bg;
+    }
+  }
+}
+
 .paper-clip {
   margin-left: 1em;
 }
@@ -174,6 +258,6 @@ export default {
 {
   "at": "Le ",
   "by": " par ",
-  "removalConfirmMessage": "L'Annonce sera définitivement perdue"
+  "removalConfirmMessage": "L'annonce sera définitivement perdue"
 }
 </i18n>

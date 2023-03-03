@@ -7,7 +7,7 @@
     @close="onClose"
   >
     <template #header>
-      <span> {{ initEvent.title }} </span>
+      <span> {{ initAnnouncement.title }} </span>
     </template>
 
     <template #body>
@@ -24,21 +24,21 @@
       />
       <div
         v-else
-        class="detailed-event"
+        class="detailed-announcement"
       >
-        {{ detailedEvent }}
+        {{ detailedAnnouncement }}
       </div>
     </template>
   </PentilaWindow>
 </template>
 
 <script>
-import { getEventDetails } from '@/api/dashboard/agenda.service'
+import { getNewsDetails } from '@/api/news.service'
 
 export default {
-  name: 'DiaryEventDetailsModal',
+  name: 'AnnouncementDetailsModal',
   props: {
-    initEvent: {
+    initAnnouncement: {
       type: Object,
       default: undefined
     }
@@ -46,26 +46,26 @@ export default {
   emits: ['close'],
   data () {
     return {
-      detailedEvent: undefined,
+      detailedAnnouncement: undefined,
       isLoading: false,
       error: undefined
     }
   },
   created () {
     this.$store.dispatch('misc/incrementModalCount')
-    this.getEventDetails()
+    this.getAnnouncementDetails()
   },
   methods: {
-    getEventDetails () {
+    getAnnouncementDetails () {
       this.isLoading = true
-      getEventDetails(this.initEvent.eventId).then((data) => {
+      getNewsDetails(this.initAnnouncement.newsId).then((data) => {
         this.isLoading = false
         if (data.success) {
           this.error = false
-          this.detailedEvent = data
+          this.detailedAnnouncement = data
         } else {
           this.error = true
-          console.error('Error')
+          console.error('Error while getting announcement details')
         }
       })
     },
