@@ -22,17 +22,16 @@
       v-t="'emptyPlaceholder'"
       class="placeholder"
     />
-    <div
-      v-else
-      class="announcements-list"
-    >
-      <AnnouncementItem
-        v-for="(announcement, index) in announcementsList"
-        :key="index"
-        :announcement="announcement"
-        @updateAnnouncement="refresh"
-        @deleteAnnouncement="refresh"
-      />
+    <div v-else>
+      <div class="announcements-list">
+        <AnnouncementItem
+          v-for="(announcement, index) in announcementsList"
+          :key="index"
+          :announcement="announcement"
+          @updateAnnouncement="refresh"
+          @deleteAnnouncement="refresh"
+        />
+      </div>
       <div class="footer">
         <button
           v-t="'showMore'"
