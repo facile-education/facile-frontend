@@ -19,7 +19,10 @@
           >
         </div>
 
-        <div class="release-date">
+        <div
+          v-if="isReleaseDateDisplayed"
+          class="release-date"
+        >
           <div v-t="'releaseDateLabel'" />
           <CustomDatePicker
             :selected-date="releaseDate"
@@ -131,6 +134,7 @@ export default {
         placeholder: this.$t('contentPlaceHolder')
       },
       availablePopulationsList: [],
+      isReleaseDateDisplayed: true,
       isLoadingAnnouncementPopulations: false
     }
   },
@@ -182,6 +186,9 @@ export default {
       this.title = this.initAnnouncement.title
       this.content = this.initAnnouncement.content
       this.releaseDate = dayjs(this.initAnnouncement.publicationDate)
+      if (this.releaseDate.isBefore(dayjs())) { // If Announcement is already release, cannot modify the release date
+        this.isReleaseDateDisplayed = false
+      }
       this.initPopulations(this.initAnnouncement.newsId)
     }
     this.getBroadcastGroups()
