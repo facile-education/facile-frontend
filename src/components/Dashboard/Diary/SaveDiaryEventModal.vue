@@ -18,12 +18,12 @@
           :list="availablePopulationsList"
           :close-on-select="true"
           display-field="populationName"
-          :disabled="isLoadingEventPopulations"
+          :disabled="isLoadingEventDetails"
         />
         <PentilaErrorMessage
           :error-message="formErrorList.populations"
         />
-        <PentilaSpinner v-if="isLoadingEventPopulations" />
+        <PentilaSpinner v-if="isLoadingEventDetails" />
       </div>
 
       <div class="dates">
@@ -151,7 +151,7 @@ export default {
         placeholder: this.$t('descriptionPlaceHolder')
       },
       availablePopulationsList: [],
-      isLoadingEventPopulations: false
+      isLoadingEventDetails: false
     }
   },
   validations: {
@@ -215,11 +215,10 @@ export default {
     this.$store.dispatch('misc/incrementModalCount')
     if (!this.isCreation) {
       this.title = this.initEvent.title
-      this.description = this.initEvent.title // TODO: fix this
       this.location = this.initEvent.location
       this.startDate = dayjs(this.initEvent.startDate)
       this.endDate = dayjs(this.initEvent.endDate)
-      this.initPopulations(this.initEvent.eventId)
+      this.initDetails(this.initEvent.eventId)
     }
     this.getBroadcastGroups()
   },
@@ -240,12 +239,13 @@ export default {
     updateEndDate (date) {
       this.endDate = dayjs(date)
     },
-    initPopulations (eventId) {
-      this.isLoadingEventPopulations = true
+    initDetails (eventId) {
+      this.isLoadingEventDetails = true
       getEventDetails(eventId).then((data) => {
-        this.isLoadingEventPopulations = false
+        this.isLoadingEventDetails = false
         if (data.success) {
           this.populations = data.populations
+          this.description = data.description
         } else {
           console.error('Error')
         }
