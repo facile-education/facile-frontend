@@ -98,7 +98,7 @@ import { useVuelidate } from '@vuelidate/core'
 import dayjs from 'dayjs'
 import InlineEditor from '@ckeditor/ckeditor5-build-inline'
 import { required } from '@vuelidate/validators'
-import { getSchoolNewsBroadcastGroups, getNewsDetails, addNews, editNews } from '@/api/news.service'
+import { getSchoolNewsBroadcastGroups, getNewsDetails, addNews, editNews } from '@/api/dashboard/news.service'
 import { component as CKEditor } from '@ckeditor/ckeditor5-vue'
 import CustomDatePicker from '@components/Base/CustomDatePicker.vue'
 

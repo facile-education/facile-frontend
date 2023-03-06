@@ -88,7 +88,7 @@
 </template>
 
 <script>
-import { deleteNews, setNewsRead } from '@/api/news.service'
+import { deleteNews, setNewsRead } from '@/api/dashboard/news.service'
 import dayjs from 'dayjs'
 import BaseIcon from '@components/Base/BaseIcon.vue'
 import { defineAsyncComponent } from 'vue'

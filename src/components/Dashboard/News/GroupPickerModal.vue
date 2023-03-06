@@ -76,7 +76,7 @@
 
 <script>
 
-import { getGroupNewsBroadcastGroups, getSchoolNewsBroadcastGroups } from '@/api/news.service'
+import { getGroupNewsBroadcastGroups, getSchoolNewsBroadcastGroups } from '@/api/dashboard/news.service'
 
 export default {
   name: 'GroupPickerModal',
