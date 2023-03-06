@@ -20,8 +20,20 @@
       v-t="'emptyPlaceholder'"
       class="placeholder"
     />
-    <div v-else>
-      <div class="announcements-list">
+    <div
+      v-else
+      class="test"
+    >
+      <div
+        v-if="displayLeftLinear"
+        class="left-linear"
+      />
+
+      <div
+        ref="announcementsList"
+        class="announcements-list"
+        @scroll="updateScrollPosition"
+      >
         <AnnouncementItem
           v-for="(announcement, index) in announcementsList"
           :key="index"
@@ -30,6 +42,12 @@
           @deleteAnnouncement="refresh"
         />
       </div>
+
+      <div
+        v-if="displayRightLinear"
+        class="right-linear"
+      />
+
       <div class="footer">
         <button
           v-t="'showMore'"
@@ -70,7 +88,9 @@ export default {
       nbUnreadAnnouncements: 0,
       isLoading: false,
       error: false,
-      isAllAnnouncementsModalDisplayed: false
+      isAllAnnouncementsModalDisplayed: false,
+      displayLeftLinear: false,
+      displayRightLinear: true
     }
   },
   computed: {
@@ -82,6 +102,11 @@ export default {
     this.loadAnnouncements()
   },
   methods: {
+    updateScrollPosition () {
+      const scrollLeft = this.$refs.announcementsList.scrollLeft
+      this.displayLeftLinear = scrollLeft > 0
+      this.displayRightLinear = scrollLeft < this.$refs.announcementsList.scrollWidth - this.$refs.announcementsList.getBoundingClientRect().width
+    },
     updateUnreadOnlyValue (value) {
       this.unReadOnly = value
       this.refresh()
@@ -118,9 +143,34 @@ section {
   height: 106px;
 }
 
+.test {
+  position: relative;
+}
 .announcements-list {
   display: flex;
   overflow-x: auto;
+}
+
+.right-linear {
+  content: " ";
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  height: 110px;
+  width: 10%;
+  background-image: linear-gradient(to right, transparent, white);
+}
+
+.left-linear {
+  content: " ";
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  height: 110px;
+  width: 10%;
+  background-image: linear-gradient(to left, transparent, white);
 }
 
 .footer {
