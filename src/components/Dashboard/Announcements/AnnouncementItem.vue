@@ -178,14 +178,7 @@ export default {
   border: 1px solid #FFDDDD;
 
   .pellet {
-    --pellet_size: 16px;
-    height: var(--pellet_size);
-    width: var(--pellet_size);
-    border-radius: 50%;
-    position: absolute;
-    top: 0;
-    left: 100%;
-    transform: translate(-75%, -25%);
+    @extend %item-pellet;
   }
 
   &:hover, &:focus-within {

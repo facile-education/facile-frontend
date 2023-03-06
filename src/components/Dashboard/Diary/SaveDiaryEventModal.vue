@@ -314,9 +314,7 @@ export default {
 @import "@design";
 
 .ck-editor {
-  border: 1px solid black;
-  max-height: 30vh;
-  overflow-y: auto;
+  @extend %inline-modal-ck;
 }
 
 .population-selection {

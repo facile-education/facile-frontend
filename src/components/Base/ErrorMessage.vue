@@ -26,7 +26,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'src/design/common';
+@import '@design';
 
 .error-message {
   color: $error-color;
