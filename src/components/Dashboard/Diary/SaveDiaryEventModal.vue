@@ -110,15 +110,21 @@
 </template>
 
 <script>
-import InlineEditor from '@ckeditor/ckeditor5-build-inline'
-import { component as CKEditor } from '@ckeditor/ckeditor5-vue'
 import { createEvent, modifyEvent, getEventDetails } from '@/api/dashboard/agenda.service'
 import dayjs from 'dayjs'
-import CustomDatePicker from '@components/Base/CustomDatePicker.vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import validators from '@utils/validators'
 import { getSchoolNewsBroadcastGroups } from '@/api/dashboard/news.service'
+import { defineAsyncComponent } from 'vue'
+import CustomDatePicker from '@components/Base/CustomDatePicker.vue' // TODO: Check time and optimise if necessary
+import InlineEditor from '@ckeditor/ckeditor5-build-inline'
+// const CustomDatePicker = defineAsyncComponent(() => import('@/components/Base/CustomDatePicker.vue'))
+// const InlineEditor = defineAsyncComponent(() => import('@ckeditor/ckeditor5-build-inline'))
+const CKEditor = defineAsyncComponent({
+  loader: async () => { return (await import('@ckeditor/ckeditor5-vue')).component }
+  // loadingComponent: CKLoadingPlaceholder // TODO: CKLoadingPlaceholder with same size and spinner
+})
 const inputMaxSize = 75
 const ckMaxSize = 63206
 const isUnderInputMaxSize = (value) => validators.isUnderMaxSize(value, inputMaxSize)
@@ -151,7 +157,9 @@ export default {
         placeholder: this.$t('descriptionPlaceHolder')
       },
       availablePopulationsList: [],
-      isLoadingEventDetails: false
+      isLoadingEventDetails: false,
+      isMounted: false,
+      timer: undefined
     }
   },
   validations: {
