@@ -55,7 +55,7 @@
 import dayjs from 'dayjs'
 import { nbAnnouncementsInWidget } from '@/constants/dashboardConstants'
 import AnnouncementsHeader from '@components/Dashboard/Announcements/AnnouncementsHeader.vue'
-import { getSchoolNews } from '@/api/news.service'
+import { getSchoolNews } from '@/api/dashboard/news.service'
 import { defineAsyncComponent } from 'vue'
 import AnnouncementItem from '@components/Dashboard/Announcements/AnnouncementItem.vue'
 const AllAnnouncementsModal = defineAsyncComponent(() => import('@/components/Dashboard/Announcements/AllAnnouncementsModal.vue'))

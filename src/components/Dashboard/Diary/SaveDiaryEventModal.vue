@@ -118,7 +118,7 @@ import CustomDatePicker from '@components/Base/CustomDatePicker.vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import validators from '@utils/validators'
-import { getSchoolNewsBroadcastGroups } from '@/api/news.service'
+import { getSchoolNewsBroadcastGroups } from '@/api/dashboard/news.service'
 const inputMaxSize = 75
 const ckMaxSize = 63206
 const isUnderInputMaxSize = (value) => validators.isUnderMaxSize(value, inputMaxSize)

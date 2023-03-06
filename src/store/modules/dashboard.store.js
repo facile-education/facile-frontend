@@ -3,7 +3,7 @@ import {
 } from '@/api/dashboard.service'
 import {
   getSchoolNews, addNews, editNews, deleteNews
-} from '@/api/news.service'
+} from '@/api/dashboard/news.service'
 import { nbActivityPerPage } from '@/constants/activityConstants'
 import dayjs from 'dayjs'
 

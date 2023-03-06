@@ -63,7 +63,7 @@
 
 <script>
 import dayjs from 'dayjs'
-import { getNewsDetails } from '@/api/news.service'
+import { getNewsDetails } from '@/api/dashboard/news.service'
 
 export default {
   name: 'News',

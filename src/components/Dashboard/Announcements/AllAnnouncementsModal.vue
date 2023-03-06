@@ -51,7 +51,7 @@
 import dayjs from 'dayjs'
 import AnnouncementItem from '@components/Dashboard/Announcements/AnnouncementItem.vue'
 import { allAnnouncementModalPaginationSize } from '@/constants/dashboardConstants'
-import { getSchoolNews } from '@/api/news.service'
+import { getSchoolNews } from '@/api/dashboard/news.service'
 
 export default {
   name: 'AllAnnouncementsModal',
