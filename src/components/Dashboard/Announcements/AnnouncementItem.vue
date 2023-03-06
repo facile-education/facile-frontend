@@ -20,13 +20,14 @@
         <strong class="title">
           {{ announcement.title }}
         </strong>
-        <div
-          class="content"
-          v-html="announcement.content"
-        />
+        <div class="description">
+          {{ announcement.content }}
+        </div>
         <div class="meta-data">
-          <span>{{ announcementDay }}</span>
-          <span>{{ $t('by') + announcement.authorName }}</span>
+          <span class="text">
+            <span>{{ announcementDay }}</span>
+            <span>{{ $t('by') + announcement.authorName }}</span>
+          </span>
           <BaseIcon
             class="paper-clip"
             name="paperclip"
@@ -198,19 +199,38 @@ export default {
 
 .content {
   width: calc(100% - var(--thumbnail-width));
-  // TODO: find a way to remove following lines
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  padding: 1em 0;
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
 
-  .content, .meta-data {
+  .description, .meta-data {
+    margin-top: 0.5em;
     font-size: 12px;
   }
 
-  .title, .content, .meta-data {
+  .description {
+    min-height: 1.5em;
+  }
+
+  .description, .text {
     white-space: nowrap;
     overflow-x: hidden;
     text-overflow: ellipsis;
+  }
+
+  .meta-data {
+    display: flex;
+    align-items: center;
+  }
+
+  .text {
+    display: inline-block;
+    max-width: calc(100% - 2em);
+  }
+
+  .paper-clip {
+    margin-left: 1em;
   }
 }
 
@@ -238,10 +258,6 @@ export default {
       background-color: $color-hover-bg;
     }
   }
-}
-
-.paper-clip {
-  margin-left: 1em;
 }
 
 </style>
