@@ -102,8 +102,12 @@ import dayjs from 'dayjs'
 import InlineEditor from '@ckeditor/ckeditor5-build-inline'
 import { required } from '@vuelidate/validators'
 import { getSchoolNewsBroadcastGroups, getNewsDetails, addNews, editNews } from '@/api/dashboard/news.service'
-import { component as CKEditor } from '@ckeditor/ckeditor5-vue'
 import CustomDatePicker from '@components/Base/CustomDatePicker.vue'
+import { defineAsyncComponent } from 'vue'
+const CKEditor = defineAsyncComponent({
+  loader: async () => { return (await import('@ckeditor/ckeditor5-vue')).component }
+  // loadingComponent: CKLoadingPlaceholder // TODO: CKLoadingPlaceholder with same size and spinner
+})
 
 const inputMaxSize = 75
 const ckMaxSize = 63206
