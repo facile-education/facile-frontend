@@ -150,21 +150,7 @@ section {
 }
 
 .footer {
-  margin-top: 8px;
-  display: flex;
-  justify-content: flex-end;
-
-  button {
-    margin-right: 4px;
-    border: 1px solid $color-border;
-    border-radius: 4px;
-    height: 29px;
-    cursor: pointer;
-    padding: 9px 10px;
-    background-color: white;
-    display: flex;
-    align-items: center;
-  }
+  @extend %widget-footer;
 }
 </style>
 

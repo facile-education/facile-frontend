@@ -77,7 +77,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@components/Dashboard/dashboard.scss";
+@import "@design";
+
+h2 {
+  @extend %widget-h2;
+}
 
 .header {
   display: flex;
@@ -92,10 +96,12 @@ export default {
 
 .header-pellet {
   margin-left: 10px;
+  @extend %dashboard-header-pellet;
 }
 
 .read-only-button {
   margin-left: 10px;
+  @extend %read-only-button;
 }
 
 </style>

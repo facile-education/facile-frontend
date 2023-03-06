@@ -161,7 +161,6 @@ export default {
   padding-right: 4px;
   padding-top: 4px;
   height: 50px;
-  //border: 1px solid;
 }
 
 .diary-event {
@@ -181,14 +180,7 @@ export default {
   }
 
   .pellet {
-    --pellet_size: 16px;
-    height: var(--pellet_size);
-    width: var(--pellet_size);
-    border-radius: 50%;
-    position: absolute;
-    top: 0;
-    left: 100%;
-    transform: translate(-75%, -25%);
+    @extend %item-pellet;
   }
 
   &:hover, &:focus-within {
