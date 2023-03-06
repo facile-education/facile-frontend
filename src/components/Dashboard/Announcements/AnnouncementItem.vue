@@ -21,7 +21,7 @@
           {{ announcement.title }}
         </strong>
         <div
-          class="description"
+          class="content"
           v-html="announcement.content"
         />
         <div class="meta-data">
@@ -161,7 +161,6 @@ export default {
 .container {
   padding-right: 4px;
   padding-top: 4px;
-  //border: 1px solid;
 }
 
 .announcement {
@@ -204,11 +203,11 @@ export default {
   flex-direction: column;
   justify-content: center;
 
-  .description, .meta-data {
+  .content, .meta-data {
     font-size: 12px;
   }
 
-  .title, .description, .meta-data {
+  .title, .content, .meta-data {
     white-space: nowrap;
     overflow-x: hidden;
     text-overflow: ellipsis;
