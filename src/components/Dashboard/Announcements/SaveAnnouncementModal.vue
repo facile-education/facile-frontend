@@ -19,45 +19,37 @@
           >
         </div>
 
-        <div
-          v-if="isReleaseDateDisplayed"
-          class="release-date"
-        >
-          <div v-t="'releaseDateLabel'" />
-          <CustomDatePicker
-            :selected-date="releaseDate"
-            :min-date="minDate"
-            :with-hours="true"
-            :is-required="true"
-            :minute-increment="15"
-            @selectDate="updateReleaseDate"
-          />
-          <PentilaErrorMessage
-            :error-message="formErrorList.releaseDate"
-          />
-        </div>
+        <div class="right-section">
+          <div
+            v-if="isReleaseDateDisplayed"
+            class="release-date"
+          >
+            <div v-t="'releaseDateLabel'" />
+            <CustomDatePicker
+              :selected-date="releaseDate"
+              :min-date="minDate"
+              :with-hours="true"
+              :is-required="true"
+              :minute-increment="15"
+              @selectDate="updateReleaseDate"
+            />
+            <PentilaErrorMessage
+              :error-message="formErrorList.releaseDate"
+            />
+          </div>
 
-        <div class="title">
-          <PentilaInput
-            ref="nameInput"
-            v-model="title"
-            :placeholder="$t('namePlaceHolder') + '*'"
-          />
-          <PentilaErrorMessage
-            :error-message="formErrorList.title"
-          />
+          <div class="title">
+            <PentilaInput
+              ref="nameInput"
+              v-model="title"
+              :placeholder="$t('namePlaceHolder') + '*'"
+            />
+            <PentilaErrorMessage
+              :error-message="formErrorList.title"
+            />
+          </div>
         </div>
       </div>
-
-      <CKEditor
-        v-model="content"
-        class="ck-editor"
-        :editor="editor"
-        :config="editorConfig"
-      />
-      <PentilaErrorMessage
-        :error-message="formErrorList.content"
-      />
 
       <div class="population-selection">
         <PentilaTagsInput
@@ -73,6 +65,16 @@
         />
         <PentilaSpinner v-if="isLoadingAnnouncementPopulations" />
       </div>
+
+      <CKEditor
+        v-model="content"
+        class="ck-editor"
+        :editor="editor"
+        :config="editorConfig"
+      />
+      <PentilaErrorMessage
+        :error-message="formErrorList.content"
+      />
 
       <div
         v-if="!isCreation"
@@ -280,21 +282,22 @@ export default {
 @import "@design";
 
 .image-picker {
-  height: 199px;
-  width: 140px;
+  height: 130px;
+  width: 100px;
+  margin-right: 20px;
   margin-bottom: 20px;
+  background-color: #01d801;
 }
 
 .release-date {
   color: $color-new-light-text;
-  margin-bottom: 15px;
 }
 
 .population-selection {
   position: relative;
 }
 
-.title, .population-selection {
+.title, .population-selection, .release-date {
   margin-bottom: 20px;
 }
 
@@ -305,6 +308,16 @@ export default {
 
 .unread-checkbox {
   margin-top: 20px;
+}
+
+@media screen and (min-width: 700px) {
+  .first-line {
+    display: flex;
+
+    .right-section {
+      flex: 1;
+    }
+  }
 }
 </style>
 
