@@ -158,7 +158,7 @@ export default {
     releaseDate: { // Should be in future or today
       required,
       function (value) {
-        return value.diff(dayjs().hour(0)) >= 0
+        return this.isReleaseDateDisplayed ? value.diff(dayjs().hour(0)) >= 0 : true
       }
     }
   },
