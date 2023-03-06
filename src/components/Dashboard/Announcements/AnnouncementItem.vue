@@ -166,7 +166,7 @@ export default {
 .announcement {
   position: relative;
   cursor: pointer;
-  height: 106px;
+  height: $announcement-item-height;
   width: 323px;
   border-radius: 5px;
   padding: 4px;

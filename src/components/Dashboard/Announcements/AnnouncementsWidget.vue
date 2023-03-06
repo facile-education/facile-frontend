@@ -140,7 +140,7 @@ section {
 }
 
 .placeholder {
-  height: 106px;
+  height: $announcement-item-height;
 }
 
 .test {
@@ -157,7 +157,7 @@ section {
   z-index: 1;
   top: 0;
   right: 0;
-  height: 110px;
+  height: calc(#{$announcement-item-height} + 4px);
   width: 10%;
   background-image: linear-gradient(to right, transparent, white);
 }
@@ -168,7 +168,7 @@ section {
   z-index: 1;
   top: 0;
   left: 0;
-  height: 110px;
+  height: calc(#{$announcement-item-height} + 4px);
   width: 10%;
   background-image: linear-gradient(to left, transparent, white);
 }
