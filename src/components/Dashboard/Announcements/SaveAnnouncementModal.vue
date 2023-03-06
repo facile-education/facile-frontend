@@ -47,13 +47,13 @@
       </div>
 
       <CKEditor
-        v-model="description"
+        v-model="content"
         class="ck-editor"
         :editor="editor"
         :config="editorConfig"
       />
       <PentilaErrorMessage
-        :error-message="formErrorList.description"
+        :error-message="formErrorList.content"
       />
 
       <div class="population-selection">
@@ -121,14 +121,14 @@ export default {
   data () {
     return {
       title: '',
-      description: '',
+      content: '',
       releaseDate: dayjs(),
       populations: [],
       markAsUnreadForAll: false,
 
       editor: InlineEditor,
       editorConfig: {
-        placeholder: this.$t('descriptionPlaceHolder')
+        placeholder: this.$t('contentPlaceHolder')
       },
       availablePopulationsList: [],
       isLoadingAnnouncementPopulations: false
@@ -139,7 +139,7 @@ export default {
       required,
       isUnderInputMaxSize
     },
-    description: {
+    content: {
       isUnderCKMaxSize
     },
     populations: {
@@ -164,7 +164,7 @@ export default {
         title: (this.v$.title.$invalid && this.v$.title.$dirty)
           ? (this.v$.title.$errors[0].$validator === 'required' ? this.$t('Commons.required') : this.$t('sizeLimit1') + inputMaxSize + this.$t('sizeLimit2'))
           : '',
-        description: (this.v$.description.$invalid && this.v$.description.$dirty)
+        content: (this.v$.content.$invalid && this.v$.content.$dirty)
           ? this.$t('sizeLimit1') + ckMaxSize + this.$t('sizeLimit2')
           : '',
         populations: (this.v$.populations.$invalid && this.v$.populations.$dirty)
@@ -180,7 +180,7 @@ export default {
     this.$store.dispatch('misc/incrementModalCount')
     if (!this.isCreation) {
       this.title = this.initAnnouncement.title
-      this.description = this.initAnnouncement.content
+      this.content = this.initAnnouncement.content
       this.releaseDate = dayjs(this.initAnnouncement.publicationDate)
       this.initPopulations(this.initAnnouncement.newsId)
     }
@@ -238,7 +238,7 @@ export default {
       }
     },
     createAnnouncement () {
-      addNews(this.title, this.description, true, false, 0, this.releaseDate, this.populations, []).then((data) => {
+      addNews(this.title, this.content, true, false, 0, this.releaseDate, this.populations, []).then((data) => {
         if (data.success) {
           this.$emit('createAnnouncement')
           this.onClose()
@@ -248,7 +248,7 @@ export default {
       })
     },
     updateAnnouncement () {
-      editNews(this.initAnnouncement.newsId, this.title, this.description, false, 0, this.releaseDate, this.populations, [], this.markAsUnreadForAll).then((data) => {
+      editNews(this.initAnnouncement.newsId, this.title, this.content, false, 0, this.releaseDate, this.populations, [], this.markAsUnreadForAll).then((data) => {
         if (data.success) {
           this.$emit('updateAnnouncement')
           this.onClose()
@@ -303,7 +303,7 @@ export default {
   "updateTitle": "Modifier une annonce",
   "releaseDateLabel": "Parution",
   "namePlaceHolder": "Titre",
-  "descriptionPlaceHolder": "Description",
+  "contentPlaceHolder": "Contenu",
   "populationPlaceholder": "Population cible",
   "markAsUnreadForAll": "Forcer cet événement à 'non lu' pour tous",
   "creationSubmit": "Créer",
