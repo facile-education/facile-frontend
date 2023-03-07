@@ -30,14 +30,23 @@
 
         <div class="first-line-right">
           <div class="populations">
-            <div v-t="'populations'" />
+            <div
+              v-t="'populations'"
+              class="label"
+            />
             <PopulationList :population-list="detailedEvent.populations" />
           </div>
 
-          <ReadInfos
+          <div
             v-if="detailedEvent.isEditable"
-            :read-infos="detailedEvent.readInfos"
-          />
+            class="read-infos"
+          >
+            <div
+              v-t="'readBy'"
+              class="label"
+            />
+            <ReadInfos :read-infos="detailedEvent.readInfos" />
+          </div>
 
           <div class="author">
             {{ $t('by') + detailedEvent.authorName }}
@@ -160,6 +169,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
+
 .placeholder {
   height: 20vh;
   width: 100%;
@@ -167,9 +178,6 @@ export default {
   justify-content: center;
   align-items: center;
   font-size: 1.25em;
-}
-
-.detailed-event {
 }
 
 .first-line {
@@ -208,6 +216,23 @@ export default {
   padding-left: 20px;
 }
 
+.populations, .read-infos {
+  display: flex;
+}
+
+.label {
+  width: 75px;
+}
+
+.author {
+  margin-top: 0.5em;
+  color: $color-new-light-text;
+}
+
+h2 {
+  margin: 0.25em 0;
+}
+
 .description {
   max-height: 30vh;
   overflow-y: auto;
@@ -237,6 +262,7 @@ export default {
   "errorPlaceholder": "Oups, une erreur est survenue...",
   "by": "Par ",
   "populations": "Diffusé à",
+  "readBy": "Lu par",
   "update": "Modifier",
   "delete": "Supprimer"
 }
