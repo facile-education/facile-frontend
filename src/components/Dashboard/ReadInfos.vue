@@ -1,12 +1,19 @@
 <template>
   <div>
-    <span> {{ $t('readBy') + allReadMembers.length + $t('on') + allMembers.length }} </span>
+    <BaseIcon
+      class="check-icon"
+      name="check"
+    />
+    <span> {{ allReadMembers.length + (allReadMembers.length > 1 ? $t('usersOn') : $t('userOn')) + allMembers.length }} </span>
   </div>
 </template>
 
 <script>
+import BaseIcon from '@components/Base/BaseIcon.vue'
+
 export default {
   name: 'ReadInfos',
+  components: { BaseIcon },
   props: {
     readInfos: {
       type: Array,
@@ -29,12 +36,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.check-icon {
+  color: green;
+  margin-right: 5px;
+}
 </style>
 
 <i18n locale="fr">
 {
   "readBy": "Lu par ",
-  "on": " destinataires sur "
+  "userOn": " destinataire sur ",
+  "usersOn": " destinataires sur "
 }
 </i18n>
