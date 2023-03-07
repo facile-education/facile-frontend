@@ -20,10 +20,7 @@
         </div>
 
         <div class="right-section">
-          <div
-            v-if="isReleaseDateDisplayed"
-            class="release-date"
-          >
+          <div class="release-date">
             <div v-t="'releaseDateLabel'" />
             <CustomDatePicker
               :selected-date="releaseDate"
@@ -31,6 +28,7 @@
               :with-hours="true"
               :is-required="true"
               :minute-increment="15"
+              :disabled="isReleaseDateDisabled"
               @selectDate="updateReleaseDate"
             />
             <PentilaErrorMessage
@@ -140,7 +138,7 @@ export default {
         placeholder: this.$t('contentPlaceHolder')
       },
       availablePopulationsList: [],
-      isReleaseDateDisplayed: true,
+      isReleaseDateDisabled: false,
       isLoadingAnnouncementPopulations: false
     }
   },
@@ -155,10 +153,10 @@ export default {
     populations: {
       isNotEmpty
     },
-    releaseDate: { // Should be in future or today
+    releaseDate: { // Should be in future or today (or whatever if it's already past)
       required,
       function (value) {
-        return this.isReleaseDateDisplayed ? value.diff(dayjs().hour(0)) >= 0 : true
+        return this.isReleaseDateDisabled ? true : value.diff(dayjs().hour(0)) >= 0
       }
     }
   },
@@ -192,8 +190,8 @@ export default {
       this.title = this.initAnnouncement.title
       this.content = this.initAnnouncement.content
       this.releaseDate = dayjs(this.initAnnouncement.publicationDate)
-      if (this.releaseDate.isBefore(dayjs())) { // If Announcement is already release, cannot modify the release date
-        this.isReleaseDateDisplayed = false
+      if (this.releaseDate.isBefore(dayjs().hour(0))) { // If Announcement is already release (for more that one day), cannot modify the release date
+        this.isReleaseDateDisabled = true
       }
       this.initPopulations(this.initAnnouncement.newsId)
     }

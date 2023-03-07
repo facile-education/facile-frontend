@@ -11,7 +11,10 @@
     :disabled-dates="{ weekdays: hiddenDays }"
   >
     <template #default="{ togglePopover }">
-      <button @click="togglePopover()">
+      <button
+        :disabled="disabled"
+        @click="togglePopover()"
+      >
         <span class="label">
           {{ selectedDateLabel }}
         </span>
@@ -60,6 +63,10 @@ export default {
     hiddenDays: {
       type: Array,
       default: () => { return [] }
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   emits: ['selectDate'],

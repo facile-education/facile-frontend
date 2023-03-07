@@ -35,6 +35,7 @@
             :with-hours="true"
             :is-required="true"
             :minute-increment="15"
+            :disabled="isStartDateDisabled"
             @selectDate="updateStartDate"
           />
           <PentilaErrorMessage
@@ -49,6 +50,7 @@
             :with-hours="true"
             :is-required="true"
             :minute-increment="15"
+            :disabled="isEndDateDisabled"
             @selectDate="updateEndDate"
           />
           <PentilaErrorMessage
@@ -159,7 +161,9 @@ export default {
       availablePopulationsList: [],
       isLoadingEventDetails: false,
       isMounted: false,
-      timer: undefined
+      timer: undefined,
+      isStartDateDisabled: false,
+      isEndDateDisabled: false
     }
   },
   validations: {
@@ -176,10 +180,10 @@ export default {
     populations: {
       isNotEmpty
     },
-    startDate: { // Should be in future
+    startDate: { // Should be in future or today (or whatever if the start date as already began)
       required,
       function (value) {
-        return value.diff(dayjs()) >= 0
+        return this.isStartDateDisabled ? true : value.diff(dayjs().hour(0)) >= 0
       }
     },
     endDate: { // Should be > startDate
@@ -225,7 +229,13 @@ export default {
       this.title = this.initEvent.title
       this.location = this.initEvent.location
       this.startDate = dayjs(this.initEvent.startDate)
+      if (this.startDate.isBefore(dayjs().hour(0))) { // If event has already began (for more that one day), cannot modify the start date
+        this.isStartDateDisabled = true
+      }
       this.endDate = dayjs(this.initEvent.endDate)
+      if (this.endDate.isBefore(dayjs().hour(0))) { // If event is already finished (for more that one day), cannot modify the end date
+        this.isEndDateDisabled = true
+      }
       this.initDetails(this.initEvent.eventId)
     }
     this.getBroadcastGroups()
