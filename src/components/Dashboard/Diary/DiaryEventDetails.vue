@@ -16,8 +16,8 @@
       class="detailed-event"
     >
       <div class="first-line">
-        <div class="date theme-text-color">
-          <div class="day-label">
+        <div class="date theme-background-color">
+          <div class="day-label theme-text-color">
             {{ eventDay }}
           </div>
           <b class="day-number-label">
@@ -71,7 +71,7 @@
       />
 
       <div
-        v-if="detailedEvent.isEditable"
+        v-if="!isInModal && detailedEvent.isEditable"
         class="footer"
       >
         <PentilaButton
@@ -104,6 +104,10 @@ export default {
     initEvent: {
       type: Object,
       default: undefined
+    },
+    isInModal: {
+      type: Boolean,
+      default: false
     }
   },
   emits: ['update', 'delete'],
@@ -116,7 +120,7 @@ export default {
   },
   computed: {
     eventDay () {
-      return dayjs(this.initEvent.startDate).format('dd')
+      return dayjs(this.initEvent.startDate).format('ddd')
     },
     eventDayNumber () {
       return dayjs(this.initEvent.startDate).format('DD')
@@ -169,7 +173,7 @@ export default {
 }
 
 .first-line {
-  --date-width: 60px;
+  --date-width: min(100px, 20vw);
   display: flex;
 }
 
@@ -179,20 +183,29 @@ export default {
   justify-content: center;
   width: var(--date-width);
   text-align: center;
+  border-radius: 10px;
+  line-height: 1.5em;
 
   .day-label {
     font-size: 12px;
     text-transform: uppercase;
+    opacity: 54%;
+  }
+
+  .day-label, .day-number-label, .month-label {
+    color: white;
   }
 
   .month-label {
     font-size: 12px;
     text-transform: capitalize;
+    font-weight: bold;
   }
 }
 
 .first-line-right {
   width: calc(100% - var(--date-width));
+  padding-left: 20px;
 }
 
 .description {

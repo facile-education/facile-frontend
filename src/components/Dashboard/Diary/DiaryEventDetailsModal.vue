@@ -9,8 +9,26 @@
     <template #body>
       <DiaryEventDetails
         :init-event="initEvent"
+        :is-in-modal="true"
         @update="updateEvent"
         @delete="deleteEvent"
+      />
+    </template>
+
+    <template #footer>
+      <PentilaButton
+        v-if="initEvent.isEditable"
+        class="footer-button"
+        data-test="updateButton"
+        :label="$t('update')"
+        @click="updateEvent"
+      />
+      <PentilaButton
+        v-if="initEvent.isEditable"
+        class="footer-button"
+        data-test="deleteButton"
+        :label="$t('delete')"
+        @click="deleteEvent"
       />
     </template>
   </PentilaWindow>
@@ -64,10 +82,16 @@ export default {
   align-items: center;
   font-size: 1.25em;
 }
+
+.footer-button {
+  margin-left: 15px;
+}
 </style>
 
 <i18n locale="fr">
 {
-  "errorPlaceholder": "Oups, une erreur est survenue..."
+  "errorPlaceholder": "Oups, une erreur est survenue...",
+  "update": "Modifier",
+  "delete": "Supprimer"
 }
 </i18n>
