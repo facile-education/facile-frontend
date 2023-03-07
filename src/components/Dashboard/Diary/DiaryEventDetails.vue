@@ -138,7 +138,16 @@ export default {
       return dayjs(this.initEvent.startDate).format('MMMM')
     },
     formattedRangeDate () {
-      return dayjs(this.initEvent.startDate).format('DD-MM-YY HH:mm') + ' - ' + dayjs(this.initEvent.endDate).format('DD-MM-YY HH:mm')
+      const startDate = dayjs(this.initEvent.startDate)
+      const endDate = dayjs(this.initEvent.endDate)
+      if (startDate.isSame(endDate, 'day')) { // If start date and end date are the same day
+        return this.$t('from') + startDate.format('HH:mm') + this.$t('at') + endDate.format('HH:mm')
+      } else if (startDate.isSame(endDate, 'year')) { // If start date and end date are the same year
+        return this.$t('fromDay') + startDate.format('dddd DD MMMM') + this.$t('at') + startDate.format('HH:mm') +
+          this.$t('to') + endDate.format('dddd DD MMMM') + this.$t('at') + endDate.format('HH:mm')
+      } else {
+        return this.$t('fromDay') + startDate.format('DD-MM-YY HH:mm') + this.$t('to') + endDate.format('DD-MM-YY HH:mm')
+      }
     }
   },
   created () {
@@ -221,7 +230,11 @@ export default {
 }
 
 .label {
-  width: 75px;
+  min-width: 75px;
+}
+
+.populations .label {
+  margin-top: 5px;
 }
 
 .author {
@@ -260,6 +273,10 @@ h2 {
 {
   "descriptionPlaceholder": "Aucune description pour cet événement",
   "errorPlaceholder": "Oups, une erreur est survenue...",
+  "from": "De ",
+  "fromDay": "Du ",
+  "at": " à ",
+  "to": " au ",
   "by": "Par ",
   "populations": "Diffusé à",
   "readBy": "Lu par",
