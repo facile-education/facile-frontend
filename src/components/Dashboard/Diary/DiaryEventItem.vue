@@ -76,6 +76,8 @@
   >
     <DiaryEventDetailsModal
       :init-event="event"
+      @update="isUpdateModalDisplayed = true"
+      @delete="confirmDeleteEvent"
       @close="isDetailsModalDisplayed = false"
     />
   </teleport>
@@ -124,6 +126,10 @@ export default {
     },
     updateEvent () {
       this.$emit('updateEvent')
+      // TODO: Reload details modal content instead of close it (pass by store or by calling ref methods)
+      if (this.isDetailsModalDisplayed) {
+        this.isDetailsModalDisplayed = false
+      }
     },
     markEventAsRead () {
       setEventRead(this.event.eventId, true).then((data) => {
@@ -144,7 +150,6 @@ export default {
       deleteEvent(this.event.eventId).then((data) => {
         if (data.success) {
           this.$emit('deleteEvent')
-          this.onClose()
         } else {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
         }

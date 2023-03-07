@@ -32,8 +32,8 @@
           {{ month.monthName }}
         </div>
         <DiaryEventItem
-          v-for="(event, i) in month.eventList"
-          :key="i"
+          v-for="event in month.eventList"
+          :key="event.eventId"
           :event="event"
           @updateEvent="refresh"
           @deleteEvent="refresh"
