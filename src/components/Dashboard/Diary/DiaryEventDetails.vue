@@ -69,6 +69,24 @@
         v-t="'descriptionPlaceholder'"
         class="description-placeholder"
       />
+
+      <div
+        v-if="detailedEvent.isEditable"
+        class="footer"
+      >
+        <PentilaButton
+          class="footer-button"
+          data-test="updateButton"
+          :label="$t('update')"
+          @click="updateEvent"
+        />
+        <PentilaButton
+          class="footer-button"
+          data-test="deleteButton"
+          :label="$t('delete')"
+          @click="deleteEvent"
+        />
+      </div>
     </div>
   </article>
 </template>
@@ -88,6 +106,7 @@ export default {
       default: undefined
     }
   },
+  emits: ['update', 'delete'],
   data () {
     return {
       detailedEvent: undefined,
@@ -125,6 +144,12 @@ export default {
           console.error('Error')
         }
       })
+    },
+    updateEvent () {
+      this.$emit('update')
+    },
+    deleteEvent () {
+      this.$emit('delete')
     }
   }
 }
@@ -181,6 +206,16 @@ export default {
   align-items: center;
   justify-content: center;
 }
+
+.footer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+
+  .footer-button {
+    margin-left: 15px;
+  }
+}
 </style>
 
 <i18n locale="fr">
@@ -188,6 +223,8 @@ export default {
   "descriptionPlaceholder": "Aucune description pour cet événement",
   "errorPlaceholder": "Oups, une erreur est survenue...",
   "by": "Par ",
-  "populations": "Diffusé à"
+  "populations": "Diffusé à",
+  "update": "Modifier",
+  "delete": "Supprimer"
 }
 </i18n>
