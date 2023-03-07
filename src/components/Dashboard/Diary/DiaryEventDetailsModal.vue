@@ -6,37 +6,19 @@
     :draggable="true"
     @close="onClose"
   >
-    <template #header>
-      <span> {{ initEvent.title }} </span>
-    </template>
-
     <template #body>
-      <div
-        v-if="isLoading"
-        class="placeholder"
-      >
-        <PentilaSpinner />
-      </div>
-      <div
-        v-if="error === true"
-        v-t="'errorPlaceholder'"
-        class="placeholder"
-      />
-      <div
-        v-else
-        class="detailed-event"
-      >
-        {{ detailedEvent }}
-      </div>
+      <DiaryEventDetails :init-event="initEvent" />
     </template>
   </PentilaWindow>
 </template>
 
 <script>
-import { getEventDetails } from '@/api/dashboard/agenda.service'
+
+import DiaryEventDetails from '@components/Dashboard/Diary/DiaryEventDetails.vue'
 
 export default {
   name: 'DiaryEventDetailsModal',
+  components: { DiaryEventDetails },
   props: {
     initEvent: {
       type: Object,
@@ -53,22 +35,8 @@ export default {
   },
   created () {
     this.$store.dispatch('misc/incrementModalCount')
-    this.getEventDetails()
   },
   methods: {
-    getEventDetails () {
-      this.isLoading = true
-      getEventDetails(this.initEvent.eventId).then((data) => {
-        this.isLoading = false
-        if (data.success) {
-          this.error = false
-          this.detailedEvent = data
-        } else {
-          this.error = true
-          console.error('Error')
-        }
-      })
-    },
     onClose () {
       this.$store.dispatch('misc/decreaseModalCount')
       this.$emit('close')
