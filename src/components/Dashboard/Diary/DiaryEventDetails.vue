@@ -55,15 +55,20 @@
           <h2> {{ detailedEvent.title }}</h2>
 
           <div class="where-and-when">
-            <div
-              v-if="detailedEvent.location"
-              class="location"
-            >
+            <span v-if="detailedEvent.location">
+              <img
+                src="@/assets/icons/location.svg"
+                alt=""
+              >
               {{ detailedEvent.location }}
-            </div>
-            <div class="location">
+            </span>
+            <span>
+              <img
+                src="@/assets/history.svg"
+                alt=""
+              >
               {{ formattedRangeDate }}
-            </div>
+            </span>
           </div>
         </div>
       </div>
@@ -268,6 +273,16 @@ article {
 
 .populations .label {
   margin-top: 5px;
+}
+
+.where-and-when {
+  span {
+    margin-right: 10px;
+  }
+
+  img {
+    height: 13px;
+  }
 }
 
 .author {
