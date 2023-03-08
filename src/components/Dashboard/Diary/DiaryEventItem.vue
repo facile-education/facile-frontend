@@ -1,5 +1,8 @@
 <template>
-  <div class="container">
+  <div
+    ref="item"
+    class="container"
+  >
     <div
       class="diary-event"
       :class="{'theme-border-color': !event.hasRead}"
@@ -97,9 +100,13 @@ export default {
     event: {
       type: Object,
       required: true
+    },
+    isLast: {
+      type: Boolean,
+      default: false
     }
   },
-  emits: ['deleteEvent', 'updateEvent'],
+  emits: ['deleteEvent', 'updateEvent', 'getNextEvents'],
   data () {
     return {
       isUpdateModalDisplayed: false,
@@ -115,6 +122,26 @@ export default {
     },
     eventHour () {
       return dayjs(this.event.startDate).format('HH:mm')
+    }
+  },
+  watch: { // Must be watched to react on a new search
+    isLast: {
+      handler () {
+        if (this.isLast) {
+          if (this.isInViewport(this.$refs.item)) {
+            console.log(this.event)
+            this.$emit('getNextEvents')
+          }
+        }
+      }
+    }
+  },
+  mounted () {
+    if (this.isLast) {
+      if (this.isInViewport(this.$refs.item)) {
+        console.log(this.event)
+        this.$emit('getNextEvents')
+      }
     }
   },
   methods: {
@@ -154,6 +181,17 @@ export default {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
         }
       })
+    },
+    isInViewport (element) {
+      // console.log(element)
+      // const rect = element.getBoundingClientRect()
+      // return (
+      //   rect.top >= 0 &&
+      //   rect.left >= 0 &&
+      //   rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      //   rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+      // )
+      return true
     }
   }
 }

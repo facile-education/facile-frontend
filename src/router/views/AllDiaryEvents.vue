@@ -21,7 +21,9 @@
       />
       <div
         v-else
+        ref="scroll"
         class="events-by-month"
+        @scroll="handleScroll"
       >
         <div
           v-for="(month, index) in eventsByMonth"
@@ -31,11 +33,13 @@
             {{ month.monthName }}
           </div>
           <DiaryEventItem
-            v-for="(event, i) in month.eventList"
-            :key="i"
+            v-for="event in month.eventList"
+            :key="event.eventId"
             :event="event"
+            :is-last="isLastDisplayed(event)"
             @updateEvent="updateList"
             @deleteEvent="updateList"
+            @getNextEvents="loadDiaryEvents"
           />
         </div>
       </div>
@@ -50,6 +54,7 @@ import dayjs from 'dayjs'
 import { getEvents } from '@/api/dashboard/agenda.service'
 import { diaryEventModalPaginationSize } from '@/constants/dashboardConstants'
 import AllDiaryEventsHeader from '@components/Dashboard/Diary/AllDiaryEvents/AllDiaryEventsHeader.vue'
+let oldScrollTop = 0
 
 export default {
   name: 'AllDiaryEvents',
@@ -85,6 +90,9 @@ export default {
     this.loadDiaryEvents()
   },
   methods: {
+    isLastDisplayed (event) {
+      return this.eventList[this.eventList.length - 1].eventId === event.eventId // Assume display order is the same as eventListOrder
+    },
     toggleReadOnly () {
       this.unReadOnly = !this.unReadOnly
       this.refresh()
@@ -93,23 +101,42 @@ export default {
       this.refresh()
     },
     refresh () {
+      // Reset pagination
       this.fromDate = dayjs()
+      this.eventList = []
       this.loadDiaryEvents()
     },
     loadDiaryEvents () {
+      console.log('loadDiaryEvents from date ' + this.fromDate.format('DD/MM/YYYY HH:mm'))
       this.isLoading = true
       getEvents(this.fromDate, diaryEventModalPaginationSize, this.unReadOnly).then((data) => {
         this.isLoading = false
         if (data.success) {
           this.error = false
-          this.eventList = data.events
+          this.eventList = this.eventList.concat(data.events)
           this.nbNewEvents = data.nbUnreadEvents
-          this.fromDate = dayjs(data.events[data.events.lenght - 1].startDate) // Assume they are sorted by date, so take the last event date
+          // Update pagination
+          if (data.events.length > 0) {
+            this.fromDate = dayjs(data.events[data.events.length - 1].startDate).add(1, 'hour') // Assume they are sorted by date, so take the last event date
+          }
         } else {
           this.error = true
-          console.error('Error')
+          console.error('Error getting events')
         }
       })
+    },
+    handleScroll () {
+      const scroll = this.$refs.scroll
+      if (scroll.scrollTop > oldScrollTop) { // if we go down
+        const nbPixelsBeforeBottom = scroll.scrollHeight - (scroll.scrollTop + scroll.clientHeight)
+
+        if (nbPixelsBeforeBottom === 0) {
+          if (!this.isLoading) {
+            this.loadDiaryEvents() // Get next events
+          }
+        }
+      }
+      oldScrollTop = scroll.scrollTop
     }
   }
 }

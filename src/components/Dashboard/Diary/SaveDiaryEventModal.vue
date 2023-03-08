@@ -149,8 +149,8 @@ export default {
       title: '',
       location: '',
       description: '',
-      startDate: dayjs().add(1, 'hour').minute(0),
-      endDate: dayjs().add(1, 'hour').minute(0),
+      startDate: dayjs(),
+      endDate: dayjs().add(1, 'day').minute(0),
       populations: [],
       markAsUnreadForAll: false,
 
