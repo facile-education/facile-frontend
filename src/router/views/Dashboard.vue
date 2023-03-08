@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import Layout from '@/router/layouts/EmptyLayout'
+import Layout from '@/router/layouts/BannerLayout.vue'
 import { defineAsyncComponent } from 'vue'
 const AnnouncementsWidget = defineAsyncComponent(() => import('@components/Dashboard/Announcements/AnnouncementsWidget.vue'))
 const DiaryWidget = defineAsyncComponent(() => import('@/components/Dashboard/Diary/DiaryWidget.vue'))
