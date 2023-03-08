@@ -7,7 +7,7 @@
       <PentilaSpinner />
     </div>
     <div
-      v-if="error === true"
+      v-else-if="error === true"
       v-t="'errorPlaceholder'"
       class="placeholder"
     />
@@ -165,6 +165,14 @@ export default {
       }
     }
   },
+  watch: {
+    initEvent: {
+      deep: true,
+      handler () {
+        this.getEventDetails()
+      }
+    }
+  },
   created () {
     this.getEventDetails()
   },
@@ -210,6 +218,8 @@ export default {
 
 article {
   height: 100%;
+  flex:1;
+  position: relative;
 }
 
 .detailed-event {

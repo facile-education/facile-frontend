@@ -7,42 +7,63 @@
       @createEvent="refresh"
     />
 
-    <div class="body">
-      <div
-        v-if="isLoading"
-        class="placeholder"
-      >
-        <PentilaSpinner />
-      </div>
-      <div
-        v-if="error === true"
-        v-t="'errorPlaceholder'"
-        class="placeholder"
-      />
-      <div
-        v-else
-        ref="scroll"
-        class="events-by-month"
-        @scroll="handleScroll"
-      >
+    <div
+      class="body"
+      :class="{'details-display' : isDetailsPanelDisplayed}"
+    >
+      <div class="event-list">
         <div
-          v-for="(month, index) in eventsByMonth"
-          :key="index"
+          v-if="isLoading"
+          class="placeholder"
         >
-          <div class="period">
-            {{ month.monthName }}
+          <PentilaSpinner />
+        </div>
+        <div
+          v-if="error === true"
+          v-t="'errorPlaceholder'"
+          class="placeholder"
+        />
+        <div
+          v-else
+          ref="scroll"
+          class="events-by-month"
+          @scroll="handleScroll"
+        >
+          <div
+            v-for="(month, index) in eventsByMonth"
+            :key="index"
+          >
+            <div class="period">
+              {{ month.monthName }}
+            </div>
+            <DiaryEventItem
+              v-for="event in month.eventList"
+              :key="event.eventId"
+              :event="event"
+              :is-selection-mode="isDetailsPanelDisplayed"
+              :is-selected="selectedEvent && selectedEvent.eventId === event.eventId"
+              :is-last="isLastDisplayed(event)"
+              @select="selectedEvent=event"
+              @updateEvent="updateList"
+              @deleteEvent="updateList"
+              @getNextEvents="loadDiaryEvents"
+            />
           </div>
-          <DiaryEventItem
-            v-for="event in month.eventList"
-            :key="event.eventId"
-            :event="event"
-            :is-last="isLastDisplayed(event)"
-            @updateEvent="updateList"
-            @deleteEvent="updateList"
-            @getNextEvents="loadDiaryEvents"
-          />
         </div>
       </div>
+
+      <DiaryEventDetails
+        v-if="selectedEvent && isDetailsPanelDisplayed"
+        class="details"
+        :init-event="selectedEvent"
+        @update="refresh"
+        @delete="deleteEvent"
+      />
+      <div
+        v-if="!selectedEvent && isDetailsPanelDisplayed"
+        v-t="'detailsPlaceholder'"
+        class="details-placeholder"
+      />
     </div>
   </Layout>
 </template>
@@ -54,11 +75,13 @@ import dayjs from 'dayjs'
 import { getEvents } from '@/api/dashboard/agenda.service'
 import { diaryEventModalPaginationSize } from '@/constants/dashboardConstants'
 import AllDiaryEventsHeader from '@components/Dashboard/Diary/AllDiaryEvents/AllDiaryEventsHeader.vue'
+import DiaryEventDetails from '@components/Dashboard/Diary/DiaryEventDetails.vue'
 let oldScrollTop = 0
 
 export default {
   name: 'AllDiaryEvents',
-  components: { AllDiaryEventsHeader, DiaryEventItem, Layout },
+  components: { DiaryEventDetails, AllDiaryEventsHeader, DiaryEventItem, Layout },
+  inject: ['mq'],
   data () {
     return {
       unReadOnly: false,
@@ -66,10 +89,14 @@ export default {
       nbNewEvents: 0,
       error: undefined,
       eventList: [],
-      fromDate: dayjs()
+      fromDate: dayjs(),
+      selectedEvent: undefined
     }
   },
   computed: {
+    isDetailsPanelDisplayed () {
+      return !(this.mq.phone || this.mq.tablet)
+    },
     eventsByMonth () {
       const eventsByMonth = []
       this.eventList.forEach((event) => {
@@ -100,6 +127,10 @@ export default {
     updateList () {
       this.refresh()
     },
+    deleteEvent () {
+      this.selectedEvent = undefined
+      this.refresh()
+    },
     refresh () {
       // Reset pagination
       this.fromDate = dayjs()
@@ -118,6 +149,10 @@ export default {
           // Update pagination
           if (data.events.length > 0) {
             this.fromDate = dayjs(data.events[data.events.length - 1].startDate).add(1, 'hour') // Assume they are sorted by date, so take the last event date
+          }
+
+          if (this.selectedEvent === undefined && this.eventList.length > 0) {
+            this.selectedEvent = this.eventList[0]
           }
         } else {
           this.error = true
@@ -149,10 +184,25 @@ export default {
   font-size: 0.875em;
   margin-top: 4px;
 }
+
+.body.details-display{
+  display: flex;
+  padding-top: 20px;
+
+  .event-list {
+    width: 33%;
+    margin-right: 20px;
+  }
+
+  .details-placeholder {
+    flex: 1;
+  }
+}
 </style>
 
 <i18n locale="fr">
 {
-  "errorPlaceholder": "Oups, une erreur est survenue..."
+  "errorPlaceholder": "Oups, une erreur est survenue...",
+  "detailsPlaceholder": "Veuillez séléctionner un événement"
 }
 </i18n>

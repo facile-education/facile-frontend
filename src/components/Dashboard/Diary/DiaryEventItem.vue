@@ -5,7 +5,7 @@
   >
     <div
       class="diary-event"
-      :class="{'theme-border-color': !event.hasRead}"
+      :class="{'theme-border-color': !event.hasRead, 'theme-light-background-color': isSelected, 'theme-hover-light-background-color': isSelectionMode}"
       tabindex="0"
       @click="showDetails"
     >
@@ -32,7 +32,7 @@
       </div>
 
       <div
-        v-if="event.isEditable"
+        v-if="!isSelectionMode && event.isEditable"
         class="event-options"
       >
         <button
@@ -104,9 +104,17 @@ export default {
     isLast: {
       type: Boolean,
       default: false
+    },
+    isSelectionMode: {
+      type: Boolean,
+      default: false
+    },
+    isSelected: {
+      type: Boolean,
+      default: false
     }
   },
-  emits: ['deleteEvent', 'updateEvent', 'getNextEvents'],
+  emits: ['deleteEvent', 'updateEvent', 'getNextEvents', 'select'],
   data () {
     return {
       isUpdateModalDisplayed: false,
@@ -129,7 +137,6 @@ export default {
       handler () {
         if (this.isLast) {
           if (this.isInViewport(this.$refs.item)) {
-            console.log(this.event)
             this.$emit('getNextEvents')
           }
         }
@@ -139,7 +146,6 @@ export default {
   mounted () {
     if (this.isLast) {
       if (this.isInViewport(this.$refs.item)) {
-        console.log(this.event)
         this.$emit('getNextEvents')
       }
     }
@@ -149,14 +155,14 @@ export default {
       if (!this.event.hasRead) {
         this.markEventAsRead()
       }
-      this.isDetailsModalDisplayed = true
+      if (this.isSelectionMode) {
+        this.$emit('select')
+      } else {
+        this.isDetailsModalDisplayed = true
+      }
     },
     updateEvent () {
       this.$emit('updateEvent')
-      // // TODO: Reload details modal content instead of close it (pass by store or by calling ref methods)
-      // if (this.isDetailsModalDisplayed) {
-      //   this.isDetailsModalDisplayed = false
-      // }
     },
     markEventAsRead () {
       setEventRead(this.event.eventId, true).then((data) => {
@@ -183,15 +189,13 @@ export default {
       })
     },
     isInViewport (element) {
-      // console.log(element)
-      // const rect = element.getBoundingClientRect()
-      // return (
-      //   rect.top >= 0 &&
-      //   rect.left >= 0 &&
-      //   rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-      //   rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-      // )
-      return true
+      const rect = element.getBoundingClientRect()
+      return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+      )
     }
   }
 }
@@ -211,12 +215,15 @@ export default {
   cursor: pointer;
   height: 100%;
   border-radius: 5px;
-  background-color: #F4F8FF;
   display: flex;
   padding: 4px;
   --date-width: 41px;
   font-size: 14px;
   line-height: 18px;
+
+  &:not(.theme-light-background-color):not(.theme-hover-light-background-color) {
+    background-color: #F4F8FF;
+  }
 
   &.theme-border-color {
     border: 1px solid;
