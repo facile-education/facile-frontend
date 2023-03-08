@@ -100,9 +100,11 @@ export default {
 .header {
   display: flex;
   align-items: center;
+  height: 48px;
   justify-content: space-between;
 
   .left {
+    height: 100%;
     display: flex;
     align-items: center;
   }
@@ -116,10 +118,7 @@ h1 {
 .previous-button {
   width: 30px;
   height: 100%;
-  //display: flex;
-  //align-items: center;
-  //justify-content: center;
-  background-color: green;
+  background-color: white;
   cursor: pointer;
   border: none;
 
