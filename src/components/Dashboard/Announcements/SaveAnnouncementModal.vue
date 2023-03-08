@@ -276,6 +276,14 @@ export default {
 }
 </script>
 
+<style lang="scss">
+.update-announcement-modal {
+  .window-body {
+    overflow-y: auto;
+  }
+}
+</style>
+
 <style lang="scss" scoped>
 @import "@design";
 
