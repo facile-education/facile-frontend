@@ -328,15 +328,19 @@ export default {
 }
 </script>
 
+<style lang="scss">
+.update-diary-event-modal {
+  .window-body {
+    overflow-y: auto;
+  }
+}
+</style>
+
 <style lang="scss" scoped>
 @import "@design";
 
 .ck-editor {
   @extend %inline-modal-ck;
-}
-
-.population-selection {
-  position: relative;
 }
 
 .population-selection, .input {
