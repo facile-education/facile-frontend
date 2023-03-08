@@ -76,8 +76,8 @@
   >
     <DiaryEventDetailsModal
       :init-event="event"
-      @update="isUpdateModalDisplayed = true"
-      @delete="confirmDeleteEvent"
+      @update="updateEvent"
+      @delete="updateEvent"
       @close="isDetailsModalDisplayed = false"
     />
   </teleport>
@@ -126,10 +126,10 @@ export default {
     },
     updateEvent () {
       this.$emit('updateEvent')
-      // TODO: Reload details modal content instead of close it (pass by store or by calling ref methods)
-      if (this.isDetailsModalDisplayed) {
-        this.isDetailsModalDisplayed = false
-      }
+      // // TODO: Reload details modal content instead of close it (pass by store or by calling ref methods)
+      // if (this.isDetailsModalDisplayed) {
+      //   this.isDetailsModalDisplayed = false
+      // }
     },
     markEventAsRead () {
       setEventRead(this.event.eventId, true).then((data) => {

@@ -9,28 +9,27 @@
     <template #body>
       <DiaryEventDetails
         :init-event="initEvent"
-        :is-in-modal="true"
         @update="updateEvent"
         @delete="deleteEvent"
       />
     </template>
 
-    <template #footer>
-      <PentilaButton
-        v-if="initEvent.isEditable"
-        class="footer-button"
-        data-test="updateButton"
-        :label="$t('update')"
-        @click="updateEvent"
-      />
-      <PentilaButton
-        v-if="initEvent.isEditable"
-        class="footer-button"
-        data-test="deleteButton"
-        :label="$t('delete')"
-        @click="deleteEvent"
-      />
-    </template>
+    <!--    <template #footer>-->
+    <!--      <PentilaButton-->
+    <!--        v-if="initEvent.isEditable"-->
+    <!--        class="footer-button"-->
+    <!--        data-test="updateButton"-->
+    <!--        :label="$t('update')"-->
+    <!--        @click="updateEvent"-->
+    <!--      />-->
+    <!--      <PentilaButton-->
+    <!--        v-if="initEvent.isEditable"-->
+    <!--        class="footer-button"-->
+    <!--        data-test="deleteButton"-->
+    <!--        :label="$t('delete')"-->
+    <!--        @click="deleteEvent"-->
+    <!--      />-->
+    <!--    </template>-->
   </PentilaWindow>
 </template>
 

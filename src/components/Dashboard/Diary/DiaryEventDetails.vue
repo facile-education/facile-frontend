@@ -80,43 +80,52 @@
       />
 
       <div
-        v-if="!isInModal && detailedEvent.isEditable"
+        v-if="detailedEvent.isEditable"
         class="footer"
       >
         <PentilaButton
           class="footer-button"
           data-test="updateButton"
           :label="$t('update')"
-          @click="updateEvent"
+          @click="isUpdateModalDisplayed = true"
         />
         <PentilaButton
           class="footer-button"
           data-test="deleteButton"
           :label="$t('delete')"
-          @click="deleteEvent"
+          @click="confirmDeleteEvent"
         />
       </div>
     </div>
   </article>
+
+  <teleport
+    v-if="isUpdateModalDisplayed"
+    to="body"
+  >
+    <SaveDiaryEventModal
+      :init-event="detailedEvent"
+      @updateEvent="updateEvent"
+      @close="isUpdateModalDisplayed = false"
+    />
+  </teleport>
 </template>
 
 <script>
-import { getEventDetails } from '@/api/dashboard/agenda.service'
+import { deleteEvent, getEventDetails } from '@/api/dashboard/agenda.service'
 import dayjs from 'dayjs'
 import PopulationList from '@components/Dashboard/PopulationList.vue'
 import ReadInfos from '@components/Dashboard/ReadInfos.vue'
+import { defineAsyncComponent } from 'vue'
+const SaveDiaryEventModal = defineAsyncComponent(() => import('@/components/Dashboard/Diary/SaveDiaryEventModal.vue'))
 
 export default {
   name: 'DiaryEventDetails',
-  components: { ReadInfos, PopulationList },
+  components: { ReadInfos, PopulationList, SaveDiaryEventModal },
   props: {
     initEvent: {
       type: Object,
       default: undefined
-    },
-    isInModal: {
-      type: Boolean,
-      default: false
     }
   },
   emits: ['update', 'delete'],
@@ -124,22 +133,23 @@ export default {
     return {
       detailedEvent: undefined,
       isLoading: false,
-      error: undefined
+      error: undefined,
+      isUpdateModalDisplayed: false
     }
   },
   computed: {
     eventDay () {
-      return dayjs(this.initEvent.startDate).format('ddd')
+      return dayjs(this.detailedEvent.startDate).format('ddd')
     },
     eventDayNumber () {
-      return dayjs(this.initEvent.startDate).format('DD')
+      return dayjs(this.detailedEvent.startDate).format('DD')
     },
     eventMonth () {
-      return dayjs(this.initEvent.startDate).format('MMMM')
+      return dayjs(this.detailedEvent.startDate).format('MMMM')
     },
     formattedRangeDate () {
-      const startDate = dayjs(this.initEvent.startDate)
-      const endDate = dayjs(this.initEvent.endDate)
+      const startDate = dayjs(this.detailedEvent.startDate)
+      const endDate = dayjs(this.detailedEvent.endDate)
       if (startDate.isSame(endDate, 'day')) { // If start date and end date are the same day
         return this.$t('from') + startDate.format('HH:mm') + this.$t('at') + endDate.format('HH:mm')
       } else if (startDate.isSame(endDate, 'year')) { // If start date and end date are the same year
@@ -168,10 +178,23 @@ export default {
       })
     },
     updateEvent () {
+      this.getEventDetails()
       this.$emit('update')
     },
+    confirmDeleteEvent () {
+      this.$store.dispatch('warningModal/addWarning', {
+        text: this.$t('removalConfirmMessage'),
+        lastAction: { fct: this.deleteEvent, params: [] }
+      })
+    },
     deleteEvent () {
-      this.$emit('delete')
+      deleteEvent(this.initEvent.eventId).then((data) => {
+        if (data.success) {
+          this.$emit('delete')
+        } else {
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+        }
+      })
     }
   }
 }
@@ -179,6 +202,16 @@ export default {
 
 <style lang="scss" scoped>
 @import "@design";
+
+article {
+  height: 100%;
+}
+
+.detailed-event {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
 
 .placeholder {
   height: 20vh;
@@ -259,6 +292,8 @@ h2 {
 }
 
 .footer {
+  align-self: flex-end;
+  margin-top: auto;
   width: 100%;
   display: flex;
   justify-content: flex-end;
@@ -281,6 +316,7 @@ h2 {
   "populations": "Diffusé à",
   "readBy": "Lu par",
   "update": "Modifier",
-  "delete": "Supprimer"
+  "delete": "Supprimer",
+  "removalConfirmMessage": "L'événement sera définitivement perdu"
 }
 </i18n>
