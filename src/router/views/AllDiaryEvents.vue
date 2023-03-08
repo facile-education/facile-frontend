@@ -1,25 +1,13 @@
 <template>
-  <PentilaWindow
-    class="update-diary-event-modal"
-    data-test="update-diary-event-modal"
-    :modal="true"
-    :draggable="true"
-    @close="onClose"
-  >
-    <template #header>
-      <span v-t="'title'" />
-    </template>
+  <Layout>
+    <AllDiaryEventsHeader
+      :nb-new-events="nbNewEvents"
+      :un-read-only="unReadOnly"
+      @toggleReadOnly="toggleReadOnly"
+      @createEvent="refresh"
+    />
 
-    <template #body>
-      <button
-        class="read-only-button"
-        @click="toggleReadOnly"
-      >
-        <img
-          :src="unReadOnly ? require('@/assets/options/icon_unread_filter_active.svg') : require('@/assets/options/icon_unread_filter.svg')"
-          alt="unread filter"
-        >
-      </button>
+    <div class="body">
       <div
         v-if="isLoading"
         class="placeholder"
@@ -51,24 +39,26 @@
           />
         </div>
       </div>
-    </template>
-  </PentilaWindow>
+    </div>
+  </Layout>
 </template>
 
 <script>
-import { getEvents } from '@/api/dashboard/agenda.service'
-import { diaryEventModalPaginationSize } from '@/constants/dashboardConstants'
+import Layout from '@/router/layouts/BannerLayout.vue'
 import DiaryEventItem from '@components/Dashboard/Diary/DiaryEventItem.vue'
 import dayjs from 'dayjs'
+import { getEvents } from '@/api/dashboard/agenda.service'
+import { diaryEventModalPaginationSize } from '@/constants/dashboardConstants'
+import AllDiaryEventsHeader from '@components/Dashboard/Diary/AllDiaryEvents/AllDiaryEventsHeader.vue'
 
 export default {
-  name: 'DiaryAllEventsModal',
-  components: { DiaryEventItem },
-  emits: ['close', 'refresh'],
+  name: 'AllDiaryEvents',
+  components: { AllDiaryEventsHeader, DiaryEventItem, Layout },
   data () {
     return {
       unReadOnly: false,
       isLoading: false,
+      nbNewEvents: 0,
       error: undefined,
       eventList: [],
       fromDate: dayjs()
@@ -101,7 +91,6 @@ export default {
     },
     updateList () {
       this.refresh()
-      this.$emit('refresh') // So the widget can update too
     },
     refresh () {
       this.fromDate = dayjs()
@@ -114,34 +103,19 @@ export default {
         if (data.success) {
           this.error = false
           this.eventList = data.events
+          this.nbNewEvents = data.nbUnreadEvents
           this.fromDate = dayjs(data.events[data.events.lenght - 1].startDate) // Assume they are sorted by date, so take the last event date
         } else {
           this.error = true
           console.error('Error')
         }
       })
-    },
-    onClose () {
-      this.$store.dispatch('misc/decreaseModalCount')
-      this.$emit('close')
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.read-only-button {
-  height: 15px;
-  width: 15px;
-  padding: 0;
-  background-color: white;
-  border: none;
-  cursor: pointer;
-  margin-left: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
 .period {
   text-transform: capitalize;
@@ -152,7 +126,6 @@ export default {
 
 <i18n locale="fr">
 {
-  "title": "Liste des événements",
   "errorPlaceholder": "Oups, une erreur est survenue..."
 }
 </i18n>

@@ -44,21 +44,11 @@
         <button
           v-t="'showMore'"
           class="show-more"
-          @click="isAllEventsModalDisplayed = true"
+          @click="showMore"
         />
       </div>
     </div>
   </section>
-
-  <teleport
-    v-if="isAllEventsModalDisplayed"
-    to="body"
-  >
-    <DiaryAllEventsModal
-      @refresh="refresh"
-      @close="isAllEventsModalDisplayed = false"
-    />
-  </teleport>
 </template>
 
 <script>
@@ -67,12 +57,10 @@ import DiaryEventItem from '@components/Dashboard/Diary/DiaryEventItem.vue'
 import { nbDiaryEventInWidget } from '@/constants/dashboardConstants'
 import { getEvents } from '@/api/dashboard/agenda.service'
 import dayjs from 'dayjs'
-import { defineAsyncComponent } from 'vue'
-const DiaryAllEventsModal = defineAsyncComponent(() => import('@/components/Dashboard/Diary/DiaryAllEventsModal.vue'))
 
 export default {
   name: 'DiaryWidget',
-  components: { DiaryAllEventsModal, DiaryHeader, DiaryEventItem },
+  components: { DiaryHeader, DiaryEventItem },
   data () {
     return {
       unReadOnly: false,
@@ -126,6 +114,9 @@ export default {
           console.error('Error')
         }
       })
+    },
+    showMore () {
+      this.$router.push({ name: 'AllEvents' })
     }
   }
 }
