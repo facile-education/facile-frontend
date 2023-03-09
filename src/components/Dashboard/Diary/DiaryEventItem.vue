@@ -7,7 +7,7 @@
       class="diary-event"
       :class="{'theme-border-color': !event.hasRead, 'theme-light-background-color': isSelected, 'theme-hover-light-background-color': isSelectionMode}"
       tabindex="0"
-      @click="showDetails"
+      @click="handleClick"
     >
       <div class="date theme-text-color">
         <div class="day-label">
@@ -114,7 +114,7 @@ export default {
       default: false
     }
   },
-  emits: ['deleteEvent', 'updateEvent', 'getNextEvents', 'select'],
+  emits: ['deleteEvent', 'updateEvent', 'getNextEvents', 'select', 'markAsRead'],
   data () {
     return {
       isUpdateModalDisplayed: false,
@@ -141,6 +141,16 @@ export default {
           }
         }
       }
+    },
+    isSelected: {
+      immediate: true,
+      handler () {
+        if (this.isSelected) {
+          if (!this.event.hasRead) {
+            this.markEventAsRead()
+          }
+        }
+      }
     }
   },
   mounted () {
@@ -151,13 +161,13 @@ export default {
     }
   },
   methods: {
-    showDetails () {
-      if (!this.event.hasRead) {
-        this.markEventAsRead()
-      }
+    handleClick () {
       if (this.isSelectionMode) {
         this.$emit('select')
       } else {
+        if (!this.event.hasRead) {
+          this.markEventAsRead()
+        }
         this.isDetailsModalDisplayed = true
       }
     },
@@ -167,7 +177,7 @@ export default {
     markEventAsRead () {
       setEventRead(this.event.eventId, true).then((data) => {
         if (data.success) {
-          this.$emit('updateEvent')
+          this.$emit('markAsRead')
         } else {
           console.error('Error')
         }

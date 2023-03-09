@@ -35,6 +35,7 @@
           v-for="event in month.eventList"
           :key="event.eventId"
           :event="event"
+          @markAsRead="event.hasRead=true"
           @updateEvent="refresh"
           @deleteEvent="refresh"
         />
