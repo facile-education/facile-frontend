@@ -44,6 +44,7 @@
               :is-selected="selectedEvent && selectedEvent.eventId === event.eventId"
               :is-last="isLastDisplayed(event)"
               @select="selectedEvent=event"
+              @markAsRead="event.hasRead=true"
               @updateEvent="updateList"
               @deleteEvent="updateList"
               @getNextEvents="loadDiaryEvents"
@@ -115,6 +116,12 @@ export default {
     this.$store.dispatch('misc/incrementModalCount')
     this.loadDiaryEvents()
   },
+  mounted () {
+    window.addEventListener('keydown', this.keyMonitor)
+  },
+  beforeUnmount () {
+    window.removeEventListener('keydown', this.keyMonitor)
+  },
   methods: {
     isLastDisplayed (event) {
       return this.eventList[this.eventList.length - 1].eventId === event.eventId // Assume display order is the same as eventListOrder
@@ -152,7 +159,8 @@ export default {
             this.fromDate = dayjs(data.events[data.events.length - 1].startDate).add(1, 'hour') // Assume they are sorted by date, so take the last event date
           }
 
-          if (this.selectedEvent === undefined && this.eventList.length > 0 && !this.unReadOnly) {
+          // Handle selection
+          if (this.isDetailsPanelDisplayed && this.selectedEvent === undefined && this.eventList.length > 0 && !this.unReadOnly) {
             this.selectedEvent = this.eventList[0]
           }
         } else {
@@ -173,6 +181,35 @@ export default {
         }
       }
       oldScrollTop = scroll.scrollTop
+    },
+    keyMonitor (event) {
+      if (this.isDetailsPanelDisplayed && this.eventList.length > 0) {
+        if (event.key === 'ArrowDown') {
+          this.selectNextItem()
+        } else if (event.key === 'ArrowUp') {
+          this.selectPreviousItem()
+        }
+      }
+    },
+    selectNextItem () {
+      if (this.selectedEvent === undefined) {
+        this.selectedEvent = this.eventList[0]
+      } else if (this.eventList.map(event => event.eventId).indexOf(this.selectedEvent.eventId) === this.eventList.length - 1) { // The last event
+        // Do nothing
+      } else {
+        const currentIndex = this.eventList.map(event => event.eventId).indexOf(this.selectedEvent.eventId)
+        this.selectedEvent = this.eventList[currentIndex + 1]
+      }
+    },
+    selectPreviousItem () {
+      if (this.selectedEvent === undefined) {
+        this.selectedEvent = this.eventList[this.eventList.length - 1]
+      } else if (this.eventList.map(event => event.eventId).indexOf(this.selectedEvent.eventId) === 0) { // The first event
+        // Do nothing
+      } else {
+        const currentIndex = this.eventList.map(event => event.eventId).indexOf(this.selectedEvent.eventId)
+        this.selectedEvent = this.eventList[currentIndex + -1]
+      }
     }
   }
 }
