@@ -80,10 +80,9 @@ export default {
     FileIcon
   },
   props: {
-    initialAttachedFiles: {
+    attachedFiles: {
       type: Array,
-      required: false,
-      default: function () { return [] }
+      required: true
     },
     readOnly: {
       type: Boolean,
@@ -97,35 +96,14 @@ export default {
       selectedFileForAction: undefined
     }
   },
-  computed: {
-    attachedFiles () {
-      return this.initialAttachedFiles
-    }
-  },
-  created () {
-  },
   methods: {
     removeAttachedFile (e, attachedFile) {
       this.$emit('removeAttachedFile', e, attachedFile)
-    },
-    iconPrefix (file) {
-      if (file.type === 'File') {
-        if (file.icon === 'code') {
-          return 'fas'
-        } else {
-          return 'far'
-        }
-      } else {
-        return 'fas'
-      }
     },
     downloadAttachedFile (attachedFile) {
       if (this.readOnly) {
         downloadDocument(attachedFile)
       }
-    },
-    viewAttachedFile (attachedFile) {
-      this.$store.dispatch('documents/openFile', { ...attachedFile, readOnly: true })
     },
     addToMyDocs (attachedFile) {
       this.selectedFileForAction = attachedFile
@@ -208,6 +186,7 @@ export default {
   "attachedFile": " pièce jointe",
   "attachedFiles": " pièces jointes",
   "addToFolder": "Enregistrer dans mes documents",
-  "download": "Télécharger"
+  "download": "Télécharger",
+  "remove": "Supprimer"
 }
 </i18n>
