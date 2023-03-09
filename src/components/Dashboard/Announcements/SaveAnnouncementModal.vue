@@ -78,9 +78,9 @@
         v-if="!isCreation"
         class="unread-checkbox"
       >
-        <PentilaCheckbox
+        <span v-t="'markAsUnreadForAll'" />
+        <PentilaToggleSwitch
           v-model="markAsUnreadForAll"
-          :label="$t('markAsUnreadForAll')"
         />
       </div>
     </template>
@@ -313,7 +313,13 @@ export default {
 }
 
 .unread-checkbox {
+  display: flex;
+  align-items: center;
   margin-top: 20px;
+
+  span {
+    margin-right: 1em;
+  }
 }
 
 @media screen and (min-width: 700px) {
@@ -335,7 +341,7 @@ export default {
   "namePlaceHolder": "Titre",
   "contentPlaceHolder": "Contenu",
   "populationPlaceholder": "Population cible",
-  "markAsUnreadForAll": "Forcer cet événement à 'non lu' pour tous",
+  "markAsUnreadForAll": "Notifier les destinataires",
   "creationSubmit": "Créer",
   "updateSubmit": "Modifier",
   "sizeLimit1": "Ne doit pas dépasser ",
