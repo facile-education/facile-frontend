@@ -75,6 +75,23 @@
       />
 
       <div
+        class="add-content-buttons"
+      >
+        <img
+          class="add-content-button"
+          src="@assets/options/icon_upload.svg"
+          :alt="$t('addFile')"
+          :title="$t('addFile')"
+          @click="isFilePickerDisplayed = true"
+        >
+      </div>
+      <AttachedFiles
+        :attached-files="attachedFiles"
+        :read-only="false"
+        @removeAttachedFile="removeFile"
+      />
+
+      <div
         v-if="!isCreation"
         class="unread-checkbox"
       >
@@ -93,6 +110,16 @@
       />
     </template>
   </PentilaWindow>
+
+  <teleport to="body">
+    <FilePickerModal
+      v-if="isFilePickerDisplayed"
+      :multi-selection="true"
+      :allow-files-from-device="true"
+      @addedFiles="attachNewFiles"
+      @close="isFilePickerDisplayed = false"
+    />
+  </teleport>
 </template>
 
 <script>
@@ -104,6 +131,8 @@ import { required } from '@vuelidate/validators'
 import { getSchoolNewsBroadcastGroups, getNewsDetails, addNews, editNews } from '@/api/dashboard/news.service'
 import CustomDatePicker from '@components/Base/CustomDatePicker.vue'
 import { defineAsyncComponent } from 'vue'
+import AttachedFiles from '@components/Base/AttachedFiles.vue'
+const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal.vue'))
 const CKEditor = defineAsyncComponent({
   loader: async () => { return (await import('@ckeditor/ckeditor5-vue')).component }
   // loadingComponent: CKLoadingPlaceholder // TODO: CKLoadingPlaceholder with same size and spinner
@@ -116,7 +145,7 @@ const isUnderCKMaxSize = (value) => validators.isUnderMaxSize(value, ckMaxSize)
 const isNotEmpty = (list) => validators.isNotEmpty(list)
 export default {
   name: 'SaveAnnouncementModal',
-  components: { CustomDatePicker, CKEditor },
+  components: { AttachedFiles, FilePickerModal, CustomDatePicker, CKEditor },
   props: {
     initAnnouncement: {
       type: Object,
@@ -131,6 +160,7 @@ export default {
       content: '',
       releaseDate: dayjs(),
       populations: [],
+      attachedFiles: [],
       markAsUnreadForAll: false,
 
       editor: InlineEditor,
@@ -139,7 +169,8 @@ export default {
       },
       availablePopulationsList: [],
       isReleaseDateDisabled: false,
-      isLoadingAnnouncementPopulations: false
+      isLoadingAnnouncementPopulations: false,
+      isFilePickerDisplayed: false
     }
   },
   validations: {
@@ -182,6 +213,9 @@ export default {
           ? this.$t('dateInPast')
           : ''
       }
+    },
+    attachedFileIds () {
+      return this.attachedFiles.map(attachedFile => attachedFile.id)
     }
   },
   created () {
@@ -193,7 +227,7 @@ export default {
       if (this.releaseDate.isBefore(dayjs().hour(0))) { // If Announcement is already release (for more that one day), cannot modify the release date
         this.isReleaseDateDisabled = true
       }
-      this.initPopulations(this.initAnnouncement.newsId)
+      this.initDetails(this.initAnnouncement.newsId)
     }
     this.getBroadcastGroups()
   },
@@ -206,12 +240,24 @@ export default {
     updateReleaseDate (date) {
       this.releaseDate = dayjs(date)
     },
-    initPopulations (newsId) {
+    attachNewFiles (selectedFiles) {
+      this.attachedFiles = [...this.attachedFiles, ...selectedFiles]
+    },
+    removeFile (file) {
+      const fileIndex = this.attachedFiles.map(attachFile => attachFile.id).indexOf(file.id)
+      if (fileIndex !== -1) {
+        this.attachedFiles.splice(fileIndex, 1)
+      } else {
+        console.error('Cannot remove attached file', file)
+      }
+    },
+    initDetails (newsId) {
       this.isLoadingAnnouncementPopulations = true
       getNewsDetails(newsId).then((data) => {
         this.isLoadingAnnouncementPopulations = false
         if (data.success) {
           this.populations = data.news.populations
+          // TODO: init attachedFiles at the same time
         } else {
           console.error('Error')
         }
@@ -249,7 +295,7 @@ export default {
       }
     },
     createAnnouncement () {
-      addNews(this.title, this.content, true, false, 0, this.releaseDate, this.populations, []).then((data) => {
+      addNews(this.title, this.content, true, false, 0, this.releaseDate, this.populations, this.attachedFileIds).then((data) => {
         if (data.success) {
           this.$emit('createAnnouncement')
           this.onClose()
@@ -259,7 +305,7 @@ export default {
       })
     },
     updateAnnouncement () {
-      editNews(this.initAnnouncement.newsId, this.title, this.content, false, 0, this.releaseDate, this.populations, [], this.markAsUnreadForAll).then((data) => {
+      editNews(this.initAnnouncement.newsId, this.title, this.content, false, 0, this.releaseDate, this.populations, this.attachedFileIds, this.markAsUnreadForAll).then((data) => {
         if (data.success) {
           this.$emit('updateAnnouncement')
           this.onClose()
@@ -288,7 +334,7 @@ export default {
 @import "@design";
 
 .image-picker {
-  height: 130px;
+  height: 131px;
   width: 100px;
   margin-right: 20px;
   margin-bottom: 20px;
@@ -309,7 +355,22 @@ export default {
 
 .ck-editor {
   @extend %inline-modal-ck;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+}
+
+.add-content-buttons {
+
+  .add-content-button {
+    border: 1px solid transparent;
+    border-radius: 5px;
+    padding: 7px;
+    margin: 5px;
+
+    &:hover {
+      background-color: $color-hover-bg;
+      cursor: pointer;
+    }
+  }
 }
 
 .unread-checkbox {
@@ -341,6 +402,7 @@ export default {
   "namePlaceHolder": "Titre",
   "contentPlaceHolder": "Contenu",
   "populationPlaceholder": "Population cible",
+  "addFile": "Ajouter une pièce jointe",
   "markAsUnreadForAll": "Notifier les destinataires",
   "creationSubmit": "Créer",
   "updateSubmit": "Modifier",
