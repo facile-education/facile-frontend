@@ -1,14 +1,34 @@
 <template>
-  <ul>
-    <li
-      v-for="(population, index) in populationList"
-      :key="index"
-      :title="population.populationName"
-      tabindex="0"
+  <div
+    class="population-list"
+    @mouseover="populationList.length > 1 ? listDisplayed = true : ''"
+    @mouseleave="listDisplayed = false"
+  >
+    <div
+      v-if="populationList.length === 1"
+      class="lonely-population"
+      :title="populationList[0].populationName"
     >
-      {{ population.populationName }}
-    </li>
-  </ul>
+      {{ populationList[0].populationName }}
+    </div>
+
+    <button
+      v-else
+      @focus="listDisplayed = true"
+      @blur="listDisplayed = false"
+    >
+      {{ populationList.length + $t('populations') }}
+    </button>
+
+    <ul v-if="listDisplayed">
+      <li
+        v-for="(population, index) in populationList"
+        :key="index"
+      >
+        {{ population.populationName }}
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
@@ -19,24 +39,23 @@ export default {
       type: Array,
       required: true
     }
+  },
+  data () {
+    return {
+      listDisplayed: false
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-ul {
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+.population-list {
+  position: relative;
+  flex: 1;
 }
 
-li {
-  max-width: 15vw;
-  margin-right: 6px;
-  white-space: nowrap;
+.lonely-population {
+  display: inline-block;
   overflow: hidden;
   text-overflow: ellipsis;
   border-radius: 6px;
@@ -44,4 +63,44 @@ li {
   color: #646464;
   background-color: #F5F5F5;
 }
+
+button {
+  border-radius: 6px;
+  padding: 5px;
+  color: #646464;
+  background-color: #F5F5F5;
+  border: none;
+  cursor: pointer;
+  margin-top: 1px;
+}
+
+ul {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: min(80vw, 350px);
+  max-height: 60vh;
+  overflow-y: auto;
+  background-color: white;
+  margin: 0;
+  padding: 10px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  list-style-type: none;
+}
+
+li {
+  margin-bottom: 10px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
 </style>
+
+<i18n locale="fr">
+{
+  "populations": " populations"
+}
+</i18n>

@@ -273,12 +273,16 @@ article {
   padding-left: 20px;
 }
 
+.populations {
+  margin-bottom: 5px;
+}
+
 .populations, .read-infos {
   display: flex;
 }
 
 .label {
-  min-width: 75px;
+  min-width: 5em;
 }
 
 .populations .label {
