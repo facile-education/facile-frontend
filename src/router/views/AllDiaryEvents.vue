@@ -54,7 +54,6 @@
 
       <DiaryEventDetails
         v-if="selectedEvent && isDetailsPanelDisplayed"
-        class="details"
         :init-event="selectedEvent"
         @update="refresh"
         @delete="deleteEvent"
@@ -122,6 +121,9 @@ export default {
     },
     toggleReadOnly () {
       this.unReadOnly = !this.unReadOnly
+      if (this.unReadOnly) { // Unselect selected event when we enter in unreadOnly mode (assume that the selected event is read and should not be selected anymore)
+        this.selectedEvent = undefined
+      }
       this.refresh()
     },
     updateList () {
@@ -138,7 +140,6 @@ export default {
       this.loadDiaryEvents()
     },
     loadDiaryEvents () {
-      console.log('loadDiaryEvents from date ' + this.fromDate.format('DD/MM/YYYY HH:mm'))
       this.isLoading = true
       getEvents(this.fromDate, diaryEventModalPaginationSize, this.unReadOnly).then((data) => {
         this.isLoading = false
@@ -151,7 +152,7 @@ export default {
             this.fromDate = dayjs(data.events[data.events.length - 1].startDate).add(1, 'hour') // Assume they are sorted by date, so take the last event date
           }
 
-          if (this.selectedEvent === undefined && this.eventList.length > 0) {
+          if (this.selectedEvent === undefined && this.eventList.length > 0 && !this.unReadOnly) {
             this.selectedEvent = this.eventList[0]
           }
         } else {
@@ -196,6 +197,11 @@ export default {
 
   .details-placeholder {
     flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20vh;
+    font-size: 1.25em;
   }
 }
 </style>
