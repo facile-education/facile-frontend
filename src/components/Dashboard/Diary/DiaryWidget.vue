@@ -149,7 +149,7 @@ section {
 <i18n locale="fr">
 {
   "errorPlaceholder": "Oups, une erreur est survenue...",
-  "emptyPlaceholder": "Aucun événement",
+  "emptyPlaceholder": "Aucun événement à venir",
   "showMore": "Voir tous les événements"
 }
 </i18n>

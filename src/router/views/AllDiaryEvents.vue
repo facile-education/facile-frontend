@@ -24,6 +24,11 @@
           class="placeholder"
         />
         <div
+          v-else-if="eventList.length === 0"
+          v-t="'emptyPlaceholder'"
+          class="placeholder"
+        />
+        <div
           v-else
           ref="scroll"
           class="events-by-month"
@@ -246,6 +251,7 @@ export default {
 <i18n locale="fr">
 {
   "errorPlaceholder": "Oups, une erreur est survenue...",
+  "emptyPlaceholder": "Aucun événement à venir",
   "detailsPlaceholder": "Veuillez séléctionner un événement"
 }
 </i18n>
