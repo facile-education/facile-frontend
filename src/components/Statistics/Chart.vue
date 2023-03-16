@@ -243,13 +243,11 @@ export default {
       // chartData.data.datasets[0].backgroundColor = gradient
       // chartData.data.datasets[1].backgroundColor = gradient2
 
-      const chart = new Chart(context, {
+      return new Chart(context, {
         type: this.type,
         data: this.data,
         options: this.options
       })
-
-      return chart
     }
   }
 }
