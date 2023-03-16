@@ -22,7 +22,7 @@ export default {
   checkCommunityName
 }
 
-const GROUP_PATH = '/accesAteliers-portlet.'
+const GROUP_PATH = '/group.'
 const GROUP_CTX = 'grouputils/'
 const COMMUNITY_CTX = 'communityinfos/'
 

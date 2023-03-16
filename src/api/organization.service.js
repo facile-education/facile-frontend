@@ -8,7 +8,7 @@ export {
   getSchoolVoleeList
 }
 
-const ORG_PATH = '/accesAteliers-portlet.'
+const ORG_PATH = '/organization.'
 
 function getSchools () {
   return axios.get(constants.JSON_WS_URL + ORG_PATH + 'orgutils/get-all-schools', {

@@ -15,12 +15,13 @@ export default {
 }
 
 const PREF_PATH = '/preference-portlet.'
+const USER_PATH = '/user.userutils'
 
 /**
  * Get user details for preferences modal window
  */
 function getPersonalDetails () {
-  return axios.get(constants.JSON_WS_URL + PREF_PATH + 'userproperties/get-personnal-details', {
+  return axios.get(constants.JSON_WS_URL + USER_PATH + '/get-personnal-details', {
     params: {}
   }).then(response => response.data)
 }
@@ -29,7 +30,7 @@ function getPersonalDetails () {
  * Get global user informations
  */
 function getUserInformations () {
-  return axios.get(constants.JSON_WS_URL + PREF_PATH + 'userproperties/get-user-infos', {
+  return axios.get(constants.JSON_WS_URL + USER_PATH + '/get-user-infos', {
     params: {}
   }).then(response => response.data)
 }
