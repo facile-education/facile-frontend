@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import Layout from '@/router/layouts/BannerLayout.vue'
+import Layout from '@/router/layouts/BannerLayout'
 import { search } from '@/api/search.service'
 
 export default {
@@ -39,7 +39,7 @@ export default {
       search(this.searchInput, true, true, true, true, 0, 10).then((data) => {
         this.isLoadingCompletion = false
         if (data.success) {
-          console.log('results=', data.results)
+          // TODO
         }
       })
     }

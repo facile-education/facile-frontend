@@ -132,7 +132,6 @@ export default {
   methods: {
     publishNews () {
       // TODO
-      console.log('TODO')
     },
     getMembers () {
       this.memberLoading = true

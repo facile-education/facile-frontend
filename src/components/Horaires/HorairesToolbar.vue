@@ -184,7 +184,6 @@ export default {
       // Add displayName
       const user = PentilaUtils.JSON.deepCopy(this.$store.state.user)
       user.displayName = this.$store.state.user.firstName + ' ' + this.$store.state.user.lastName
-      console.log('adding user ', user)
       this.tagsList.push(user)
     }
     this.$store.dispatch('horaires/getSessionList')

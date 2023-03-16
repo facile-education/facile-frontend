@@ -115,7 +115,8 @@ export default {
   methods: {
     submit () {
       groupService.getGroupEntities(this.inputText).then((data) => {
-        console.log(data)
+        // TODO ?
+        // console.log(data)
       })
     },
     updateSelectedFolder (folder) {
