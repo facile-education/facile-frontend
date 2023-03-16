@@ -1,11 +1,11 @@
 <template>
   <div>
-    <BannerItem src="/pentilaBanner-theme/images/icon/banner/icon-star.svg" />
-    <BannerItem src="/pentilaBanner-theme/images/icon/banner/icon-letter.svg" />
-    <BannerItem src="/pentilaBanner-theme/images/icon/banner/icon-archives.svg" />
+    <BannerItem :src="require('@/assets/images/banner/icon-star.svg')" />
+    <BannerItem :src="require('@/assets/images/banner/icon-letter.svg')" />
+    <BannerItem :src="require('@/assets/images/banner/icon-archives.svg')" />
     <BannerItem
       data-test="open-help-item"
-      src="/pentilaBanner-theme/images/icon/banner/icon-question.svg"
+      :src="require('@/assets/images/banner/icon-question.svg')"
       @click="openHelpModal"
     />
   </div>
