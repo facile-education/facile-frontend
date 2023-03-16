@@ -29,20 +29,20 @@
         :key="entry.route"
       >
         <RouterLink
-          v-if="entry.isLeaf"
-          :to="entry.route"
+          v-if="entry.menu === undefined || entry.menu.length === 0"
+          :to="$t('Menu.route.' + entry.i18nKey)"
           class="entry"
           @click="closeMenu"
         >
-          <img :src="entry.icon">
-          <span v-t="'Menu.' + entry.route.replace('/', '')" />
+          <img :src="'/nero/img/menu/' + entry.icon">
+          <span v-t="'Menu.' + entry.i18nKey" />
           <div class="notification" />
           <div class="toggle" />
         </RouterLink>
         <template v-else>
           <div class="entry">
-            <img :src="entry.icon">
-            <span v-t="entry.label" />
+            <img :src="'/nero/img/menu/' + entry.icon">
+            <span v-t="'Menu.' + entry.i18nKey" />
             <div class="notification">
               n
             </div>
@@ -54,12 +54,12 @@
           <div class="submenu">
             <RouterLink
               v-for="subEntry in entry.menu"
-              :key="subEntry.route"
-              :to="subEntry.route"
+              :key="subEntry.position"
+              :to="$t('Menu.route.' + subEntry.i18nKey)"
               class="sub-entry"
               @click="closeMenu"
             >
-              <span v-t="'Menu.' + subEntry.route.replace('/', '')" />
+              <span v-t="'Menu.' + subEntry.i18nKey" />
             </RouterLink>
           </div>
         </template>

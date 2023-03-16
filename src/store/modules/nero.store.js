@@ -1,5 +1,18 @@
 import neroService from '@/api/nero.service'
+import i18n from '@/i18n'
 import router from '@/router'
+
+function capitalize (string) {
+  return string.charAt(0).toUpperCase() + string.slice(1).replaceAll('-', ' ')
+}
+
+function getRoute (entry) {
+  return {
+    name: capitalize(i18n.global.t('Menu.route.' + entry.i18nKey)),
+    path: `/${i18n.global.t('Menu.route.' + entry.i18nKey)}`,
+    component: () => import('@/router/views/' + entry.component + '.vue')
+  }
+}
 
 export const state = {
   activeRoute: undefined,
@@ -36,8 +49,15 @@ export const actions = {
     return neroService.getUserMenu().then(
       (data) => {
         if (data.success) {
-          // TODO when full Vue
-          // router.createRoutes(data.menu) -> addRoute({ path: '/about', component: About })
+          data.menu.forEach(entry => {
+            if (entry.component !== undefined) {
+              router.addRoute(getRoute(entry))
+            } else {
+              entry.menu.forEach(entry => {
+                router.addRoute(getRoute(entry))
+              })
+            }
+          })
           commit('initSideMenu', { menu: data.menu, expanded: data.expanded })
         }
         // TODO else toastr

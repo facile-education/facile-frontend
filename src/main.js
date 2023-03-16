@@ -9,7 +9,7 @@ import PentilaComponents from 'pentila-components'
 import dayjs from 'dayjs'
 import fr from 'dayjs/locale/fr'
 import Vue3TouchEvents from 'vue3-touch-events'
-// import axios from 'axios'
+import axios from 'axios'
 
 const app = createApp(App)
   .use(store)
@@ -58,6 +58,15 @@ dayjs.updateLocale('fr', {
     lastWeek: 'dddd [dernier]', // Last week ( Last Monday at 2:30 AM )
     sameElse: 'DD/MM/YYYY' // Everything else ( 7/10/2011 )
   }
+})
+
+axios.interceptors.request.use(async (config) => {
+  if (store.state.user.pauth === undefined) {
+    await fetch('/p_auth_token.jsp').then(response => response.text()).then(response => { store.commit('user/setPAuth', response) })
+  }
+
+  config.params = { ...config.params, p_auth: store.state.user.pauth }
+  return config
 })
 
 if (window.Cypress) {
