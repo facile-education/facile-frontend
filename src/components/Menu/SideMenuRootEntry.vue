@@ -7,20 +7,20 @@
     <div v-if="isEntryRoute">
       <div
         v-if="!expanded"
-        v-t="'Menu.' + entry.key"
+        v-t="'Menu.' + entry.i18nKey"
         class="popover"
       />
       <RouterLink
-        :to="entry.route"
+        :to="$t('Menu.route.' + entry.i18nKey)"
         class="entry link"
       >
         <img
-          :src="entry.icon"
+          :src="'/nero/img/menu/' + entry.icon"
           class="menu-icon"
         >
         <span
           v-if="expanded"
-          v-t="'Menu.' + entry.key"
+          v-t="'Menu.' + entry.i18nKey"
         />
       </RouterLink>
     </div>
@@ -35,12 +35,12 @@
         @click="toggleSubMenu"
       >
         <img
-          :src="entry.icon"
+          :src="'/nero/img/menu/' + entry.icon"
           class="menu-icon"
         >
         <span
           v-if="expanded"
-          v-t="'Menu.' + entry.key"
+          v-t="'Menu.' + entry.i18nKey"
         />
       </div>
       <SideMenuCategory
@@ -82,9 +82,9 @@ export default {
   },
   computed: {
     isEntryRoute () {
-      return this.entry.isLeaf
+      return this.entry.menu === undefined || this.entry.menu.length === 0
     },
-    isCategoryActive (entry) {
+    isCategoryActive () {
       for (let idx = 0; idx < this.entry.menu.length; ++idx) {
         if (this.entry.menu[idx].route === this.$store.state.nero.activeRoute) {
           return true

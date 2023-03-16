@@ -3,6 +3,7 @@ import userService from '@/api/user.service'
 import { getUserApplications } from '@/api/applicationManager.service'
 
 export const state = {
+  pauth: undefined,
   userId: undefined,
   // TODO merge fields that are in 'details' object (like firstName, etc...)
   firstName: '',
@@ -27,6 +28,9 @@ export const state = {
   selectedChild: undefined
 }
 export const mutations = {
+  setPAuth (state, payload) {
+    state.pauth = payload
+  },
   initServiceList (state, payload) {
     state.serviceList = payload
   },
@@ -128,15 +132,15 @@ export const actions = {
         }
       },
       (err) => {
-        // TODO toastr
         console.error(err)
+        commit('initUserInformations', { userId: 0 })
       })
   },
   removePicture ({ commit }) {
     userService.removeUserPicture().then(
       (data) => {
         if (data.success) {
-          console.log('TODO get default img dynamiccaly')
+          // TODO get default img in a dynamic way
           commit('updatePicture', '/image/user_male_portrait?img_id=3274117&t=1546588956172')
         }
       },

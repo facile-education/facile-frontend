@@ -9,7 +9,7 @@
     >
       <h4
         v-if="popup"
-        v-t="'Menu.' + category.key"
+        v-t="'Menu.' + category.i18nKey"
         class="popup-header"
       />
       <ul class="sub-menu">
@@ -28,8 +28,8 @@
           </a>
           <RouterLink
             v-else
-            v-t="'Menu.' + entry.key"
-            :to="entry.route"
+            v-t="'Menu.' + entry.i18nKey"
+            :to="$t('Menu.route.' + entry.i18nKey)"
             class="link"
           />
         </li>
@@ -57,7 +57,7 @@ export default {
   },
   methods: {
     isEntryInternetLink (entry) {
-      return (entry.isLeaf && entry.href)
+      return entry.href
     }
   }
 }

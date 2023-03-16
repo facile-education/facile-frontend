@@ -4,43 +4,13 @@ import store from '@/store'
 const routes = [
   {
     path: '/',
-    name: 'Menu',
-    component: () => import('@/router/views/Menu.vue')
-  },
-  {
-    path: '/dashboard',
-    name: 'Dashboard',
-    component: () => import('@/router/views/Dashboard.vue')
+    name: 'Authentication',
+    component: () => import('@/router/views/Authentication.vue')
   },
   {
     path: '/dashboard/all-events',
     name: 'AllEvents',
     component: () => import('@/router/views/AllDiaryEvents.vue')
-  },
-  {
-    path: '/application-manager',
-    name: 'Application Manager',
-    component: () => import('@/router/views/ApplicationManager.vue')
-  },
-  {
-    path: '/dashboard-manager',
-    name: 'Dashboard Manager',
-    component: () => import('@/router/views/DashboardManager.vue')
-  },
-  {
-    path: '/communication-manager',
-    name: 'Communication Manager',
-    component: () => import('@/router/views/CommunicationManager.vue')
-  },
-  {
-    path: '/not-usual-slots',
-    name: 'Not usual slots',
-    component: () => import('@/router/views/NotUsualSlotsManager')
-  },
-  {
-    path: '/horaires',
-    name: 'Horaires',
-    component: () => import('@/router/views/Horaires')
   },
   {
     path: '/progression/:progressionId(\\d+)?',
@@ -68,49 +38,14 @@ const routes = [
     component: () => import('@/router/views/Documents')
   },
   {
-    path: '/user-manager',
-    name: 'UserManager',
-    component: () => import('@/router/views/UserManagement')
-  },
-  {
-    path: '/mediacenter',
-    name: 'Mediacenter',
-    component: () => import('@/router/views/Mediacenter')
-  },
-  {
-    path: '/mediacenter-manager',
-    name: 'MediacenterManager',
-    component: () => import('@/router/views/MediacenterManager')
-  },
-  {
     path: '/messaging/:messageId(\\d+)?',
     name: 'Messaging',
     component: () => import('@/router/views/Messaging')
   },
   {
-    path: '/maintenance',
-    name: 'Maintenance',
-    component: () => import('@/router/views/Maintenance')
-  },
-  {
-    path: '/groups',
-    name: 'Groups',
-    component: () => import('@/router/views/Groups')
-  },
-  {
-    path: '/statistics',
-    name: 'Statistics',
-    component: () => import('@/router/views/Statistics')
-  },
-  {
     path: '/viewer/:fileEntryId(\\d+)?',
     name: 'Viewer',
     component: () => import('@/router/views/Viewer')
-  },
-  {
-    path: '/advanced-search',
-    name: 'AdvancedSearch',
-    component: () => import('@/router/views/AdvancedSearch')
   },
   {
     path: '/:pathMatch(.*)*',

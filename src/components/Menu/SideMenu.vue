@@ -18,7 +18,7 @@
       @click="toggleAllMenu"
     >
       <img
-        src="/pentilaBanner-theme/images/icon/menu/icon-reduction-nav.svg"
+        src="@/assets/images/menu/icon-reduction-nav.svg"
         :class="{'rotated': !expanded}"
       >
     </div>
