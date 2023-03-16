@@ -49,13 +49,13 @@
     <teleport to="body">
       <AddAffectedUserModal
         v-if="isAddAffectedUserModalDisplayed"
-        height="30em"
         @close="isAddAffectedUserModalDisplayed = false"
         @new-users="newUsers"
       />
       <UserAffectationsModal
         v-if="isUserAffectationsModalDisplayed"
-        height="30em"
+        :height="500"
+
         :edited-user="selectedUser"
         @close="isUserAffectationsModalDisplayed = false"
       />

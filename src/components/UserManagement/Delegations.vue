@@ -44,7 +44,6 @@
     <teleport to="body">
       <AddDelegationModal
         v-if="isAddDelegationModalDisplayed"
-        height="30em"
         @close="isAddDelegationModalDisplayed = false"
         @added-delegates="addedDelegates"
       />
