@@ -13,10 +13,11 @@
 </template>
 
 <script>
-import Layout from '@/router/layouts/BannerLayout.vue'
+import Layout from '@/router/layouts/BannerLayout'
 import { defineAsyncComponent } from 'vue'
 const AnnouncementsWidget = defineAsyncComponent(() => import('@components/Dashboard/Announcements/AnnouncementsWidget.vue'))
 const DiaryWidget = defineAsyncComponent(() => import('@/components/Dashboard/Diary/DiaryWidget.vue'))
+
 export default {
   name: 'Dashboard',
   components: { AnnouncementsWidget, DiaryWidget, Layout },

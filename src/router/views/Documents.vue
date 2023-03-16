@@ -91,7 +91,7 @@
 
 <script>
 
-import Layout from '@layouts/EmptyLayout'
+import Layout from '@layouts/BannerLayout'
 import CurrentOptions from '@components/Documents/Options'
 import Breadcrumb from '@components/Documents/Breadcrumb'
 import DocumentList from '@components/Documents/DocumentList'

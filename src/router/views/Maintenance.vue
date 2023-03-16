@@ -31,7 +31,7 @@
 
 <script>
 
-import Layout from '@/router/layouts/EmptyLayout'
+import Layout from '@/router/layouts/BannerLayout'
 import Administration from '@/components/Maintenance/Administration.vue'
 import GroupsMaintenance from '@components/Maintenance/GroupsMaintenance.vue'
 import OneShotMaintenance from '@components/Maintenance/OneShotMaintenance.vue'

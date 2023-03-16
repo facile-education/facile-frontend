@@ -20,7 +20,7 @@
 <script>
 import { defineAsyncComponent } from 'vue'
 
-import Layout from '@/router/layouts/EmptyLayout'
+import Layout from '@/router/layouts/BannerLayout'
 import GroupList from '@/components/Groups/GroupList'
 import GroupToolbar from '@components/Groups/GroupToolbar'
 

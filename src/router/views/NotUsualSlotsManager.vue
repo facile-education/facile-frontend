@@ -72,7 +72,7 @@ import schoolLifeService from '@/api/schoolLife-portlet.service'
 import SlotTypeItem from '@/components/NotUsualSlotManager/SlotTypeItem'
 import Calendar from '@/components/NotUsualSlotManager/Calendar'
 import SelectedSchool from '@/components/NotUsualSlotManager/SelectedSchool'
-import Layout from '@layouts/EmptyLayout'
+import Layout from '@layouts/BannerLayout'
 
 import { defineAsyncComponent } from 'vue'
 
