@@ -23,10 +23,10 @@ export default {
   getSubjects
 }
 
-const SUBJECT_PATH = '/gestionUtilisateurs-portlet.subject'
-const USER_MANAGEMENT_PATH = '/gestionUtilisateurs-portlet.usermanagement'
-const AFFECTATION_PATH = '/gestionUtilisateurs-portlet.affectation'
-const SCHOOL_ADMIN_PATH = '/gestionUtilisateurs-portlet.schooladmin'
+const SUBJECT_PATH = '/eel-synchronization.subject'
+const USER_MANAGEMENT_PATH = '/user.usermanagement'
+const AFFECTATION_PATH = '/user.affectation'
+const SCHOOL_ADMIN_PATH = '/user.schooladmin'
 
 function getSubjects () {
   return axios.get(constants.JSON_WS_URL + SUBJECT_PATH + '/get-subjects').then(response => response.data)

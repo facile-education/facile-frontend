@@ -8,7 +8,7 @@ export {
   getSchoolUsers
 }
 
-const USER_SEARCH_PATH = '/gestionUtilisateurs-portlet.usersearch'
+const USER_SEARCH_PATH = '/user.usersearch'
 
 function getSchoolUsers (schoolId, search = '') {
   return axios.get(constants.JSON_WS_URL + USER_SEARCH_PATH + '/get-school-student-teacher-list', {

@@ -7,7 +7,7 @@ export {
   getRoleList
 }
 
-const USER_MANAGEMENT_PATH = '/gestionUtilisateurs-portlet.'
+const USER_MANAGEMENT_PATH = '/role.'
 const ROLE_UTILS_CTX = 'roleutils/'
 
 function getBroadcastRoleList () {
