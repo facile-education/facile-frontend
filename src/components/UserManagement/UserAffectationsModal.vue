@@ -4,6 +4,7 @@
     :draggable="true"
     class="affectations-modal"
     :width="600"
+    :hidden-footer="true"
     @close="closeModal"
   >
     <template #header>
@@ -68,14 +69,6 @@
           </div>
         </div>
       </div>
-    </template>
-
-    <template #footer>
-      <PentilaButton
-        :label="$t('add')"
-        class="button"
-        @click="addAffectations"
-      />
     </template>
   </PentilaWindow>
 </template>
