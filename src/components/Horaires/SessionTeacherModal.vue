@@ -163,7 +163,8 @@ export default {
       )
     },
     updateSubstitute (value) {
-      console.log(value)
+      // TODO
+      // console.log(value)
     }
   }
 }
