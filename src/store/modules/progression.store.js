@@ -816,7 +816,7 @@ export const actions = {
     saveSessionSpecificItem(sessionId, item).then(
       (data) => {
         if (data.success) {
-          console.log('saved specific session content')
+          // console.log('saved specific session content')
         }
       },
       (err) => {
@@ -828,7 +828,7 @@ export const actions = {
     saveHomeworkSpecificItem(homeworkId, item).then(
       (data) => {
         if (data.success) {
-          console.log('saved specific homework content')
+          // console.log('saved specific homework content')
         }
       },
       (err) => {

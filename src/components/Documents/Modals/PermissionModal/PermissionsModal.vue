@@ -100,7 +100,6 @@ export default {
   },
   created () {
     this.$store.dispatch('misc/incrementModalCount')
-    console.log('doc=', this.document)
     if (this.document.type === 'File') {
       permissionsService.getFilePermissionMatrix(this.document.id).then((data) => {
         if (data.success) {
@@ -122,7 +121,6 @@ export default {
   methods: {
     updateMatrix (action, role) {
       for (let i = 0; i < this.permissionMatrix.length; i++) {
-        // console.log(role)
         const row = this.permissionMatrix[i]
         if (row.roleId === role.roleId) {
           row[action.actionName] = action.value

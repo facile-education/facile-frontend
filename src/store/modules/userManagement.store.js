@@ -23,7 +23,6 @@ export const mutations = {
     state.affectedUsers.length = 0
   },
   addUserAffectation (state, payload) {
-    console.log('add payload=', payload)
     const affectation = { orgId: payload.orgId, orgName: payload.orgName }
     // Search user in affectedUsers
     const user = state.affectedUsers.find(affectedUser => affectedUser.userId === payload.userId)

@@ -58,7 +58,6 @@ export default {
   },
   methods: {
     fileChange (fileList) {
-      console.log('fileList=', fileList)
       this.files = fileList
     },
     runArchiving () {

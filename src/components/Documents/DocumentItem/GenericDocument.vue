@@ -123,7 +123,7 @@ export default {
     },
     handleChosenOption (option) {
       // TODO handle quickOptions
-      console.log('quickOptionClicked!', option)
+      // console.log('quickOptionClicked!', option)
     },
     triggerAction () {
       this.$emit('triggerAction')
