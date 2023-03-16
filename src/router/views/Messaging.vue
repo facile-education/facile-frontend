@@ -65,7 +65,7 @@
 
 <script>
 
-import Layout from '@/router/layouts/EmptyLayout'
+import Layout from '@/router/layouts/BannerLayout'
 import Split from '@components/Split/Split'
 import SplitArea from '@components/Split/SplitArea'
 import Menu from '@components/Messaging/Menu'

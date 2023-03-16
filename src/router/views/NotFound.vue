@@ -1,17 +1,43 @@
 <template>
   <Layout>
     <h1 :aria-label="$t('serviceTitle')" />
-    <h2 v-t="'message'" />
+    <PentilaSpinner v-if="menu === undefined" />
+    <h2
+      v-else-if="showMessage"
+      v-t="'message'"
+    />
   </Layout>
 </template>
 
 <script>
-import Layout from '@/router/layouts/EmptyLayout'
+import Layout from '@/router/layouts/BannerLayout'
 
 export default {
   name: 'NotFound',
   components: {
     Layout
+  },
+  data () {
+    return {
+      showMessage: false
+    }
+  },
+  computed: {
+    menu () {
+      return this.$store.state.nero.menu
+    }
+  },
+  watch: {
+    menu (value) {
+      if (value !== undefined) {
+        this.$router.push({ path: this.$route.fullPath })
+      }
+    }
+  },
+  mounted () {
+    setTimeout(() => {
+      this.showMessage = true
+    }, 500)
   }
 }
 </script>

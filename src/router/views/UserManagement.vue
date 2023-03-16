@@ -1,7 +1,6 @@
 <template>
   <Layout
     :is-allowed="$store.state.user.isLocalAdmin || $store.state.user.isDirectionMember || $store.state.user.isAdministrator"
-    class="layout"
   >
     <h1 :aria-label="$t('serviceTitle')" />
 
@@ -41,7 +40,7 @@
 </template>
 
 <script>
-import Layout from '@/router/layouts/EmptyLayout'
+import Layout from '@/router/layouts/BannerLayout'
 import ManualUsers from '@/components/UserManagement/ManualUsers'
 import Delegations from '@/components/UserManagement/Delegations'
 import Affectations from '@/components/UserManagement/Affectations.vue'
@@ -73,40 +72,34 @@ export default {
 <style lang="scss" scoped>
 @import "@design";
 
-.layout {
+.header {
+  width: 100%;
+  height: $um-ĥeader-height;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
 
-  .header {
-    width: 100%;
-    height: $um-ĥeader-height;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-
-    p {
-      font-weight: 600;
-      font-size: 1.125em;
-    }
-
-    .dropdown {
-      margin-left: 1em;
-    }
+  p {
+    font-weight: 600;
+    font-size: 1.125em;
   }
 
-  .tabs {
-    height: 32px;
-  }
-
-  .tab-content {
-    padding: 0;
-  }
-
-  .tab {
-    height: calc(100% - #{$um-ĥeader-height} - 32px);
+  .dropdown {
+    margin-left: 1em;
   }
 }
 
+.tabs {
+  height: 32px;
+}
+
+.tab-content {
+  padding: 0;
+}
+
+.tab {
+  height: calc(100% - #{$um-ĥeader-height} - 32px);
+}
 </style>
 
 <i18n locale="fr">

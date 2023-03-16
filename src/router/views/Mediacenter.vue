@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import Layout from '@/router/layouts/EmptyLayout'
+import Layout from '@/router/layouts/BannerLayout'
 import CategoryList from '@/components/Mediacenter/CategoryList'
 import NeroToolbar from '@/components/Nero/NeroToolbar'
 

@@ -74,7 +74,7 @@ import customParseFormat from 'dayjs/plugin/customParseFormat'
 import FullCalendar from '@fullcalendar/vue3'
 import frLocale from '@fullcalendar/core/locales/fr'
 import timeGridPlugin from '@fullcalendar/timegrid'
-import Layout from '@/router/layouts/EmptyLayout'
+import Layout from '@/router/layouts/BannerLayout'
 import HorairesToolbar from '@/components/Horaires/HorairesToolbar'
 
 // Lazy loading

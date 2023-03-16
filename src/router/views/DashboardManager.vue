@@ -9,7 +9,7 @@
 
 <script>
 
-import Layout from '@/router/layouts/EmptyLayout'
+import Layout from '@/router/layouts/BannerLayout'
 import DMToolbar from '@/components/DashboardManager/DMToolbar'
 import WidgetList from '@/components/DashboardManager/WidgetList'
 import WidgetEditionModal from '@/components/DashboardManager/WidgetEditionModal'

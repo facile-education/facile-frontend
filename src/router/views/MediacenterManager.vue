@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import Layout from '@/router/layouts/EmptyLayout'
+import Layout from '@/router/layouts/BannerLayout'
 import NeroIcon from '@/components/Nero/NeroIcon'
 
 export default {
