@@ -29,7 +29,7 @@
         <img
           src="@assets/icons/users.svg"
           :title="$tc('members', group.nbMembers)"
-          alt="$tc('members', group.nbMembers)"
+          :alt="$tc('members', group.nbMembers)"
         >
       </div>
       <div
