@@ -1,6 +1,16 @@
 <template>
   <section>
-    <h2 v-t="comparator === '' ? 'globalUses' : 'profileUses'" />
+    <header>
+      <h2 v-t="comparator === '' ? 'globalUses' : 'profileUses'" />
+      <PentilaDropdown
+        v-model="selectedService"
+        :list="services"
+        display-field="name"
+        :sort="false"
+        class="services"
+        @update:modelValue="onServiceSelect"
+      />
+    </header>
     <div
       v-if="isLoading"
       class="loading-placeholder"
@@ -25,7 +35,10 @@
 </template>
 
 <script>
+import PentilaUtils from 'pentila-utils'
+import { getStatServices } from '@/api/applicationManager.service'
 import { getSessionsCount } from '@/api/statistics.service'
+
 import Chart from '@/components/Statistics/Chart.vue'
 
 export default {
@@ -53,7 +66,10 @@ export default {
     return {
       isLoading: false,
       data: undefined,
-      error: false
+      error: false,
+      defaultService: { serviceId: 0, name: this.$t('allServices') },
+      selectedService: undefined,
+      services: []
     }
   },
   watch: {
@@ -64,16 +80,19 @@ export default {
       this.getData()
     },
     selectedSchool () {
+      this.selectedService = this.defaultService
       this.getData()
     }
   },
   created () {
+    this.selectedService = this.defaultService
+    this.getServices()
     this.getData()
   },
   methods: {
     getData () {
       this.isLoading = true
-      getSessionsCount(this.selectedSchool.schoolId, this.startTime, this.endTime, this.comparator).then((data) => {
+      getSessionsCount(this.selectedSchool.schoolId, this.startTime, this.endTime, this.selectedService.serviceId, this.comparator).then((data) => {
         this.isLoading = false
         if (data.success) {
           this.error = false
@@ -83,14 +102,46 @@ export default {
           console.error('Error')
         }
       })
+    },
+    getServices () {
+      getStatServices(this.selectedSchool.schoolId).then(
+        (data) => {
+          if (data.success) {
+            // TODO sort data.services
+            this.services = [this.defaultService, ...PentilaUtils.Array.sortWithString(data.services, false, 'name')]
+          }
+        },
+        (err) => {
+        // TODO toastr
+          console.error(err)
+        })
+    },
+    onServiceSelect () {
+      this.getData()
     }
   }
 }
 </script>
 
+<style>
+/* TODO fix alignement issue within dropdown component */
+.services .base-autocomplete {
+  right: 0;
+}
+</style>
+
 <style lang="scss" scoped>
+header {
+  display: flex;
+  align-items: center;
+}
+
 h2 {
   font-weight: normal;
+}
+
+.services {
+  margin-left: auto;
 }
 
 .loading-placeholder, .error-placeholder {
@@ -115,6 +166,7 @@ h2 {
 
 <i18n locale="fr">
 {
+  "allServices": "Tous les services",
   "globalUses": "Fréquentation globale",
   "error": "Oups, une erreur est survenue...",
   "profileUses": "Fréquentation par profil"
