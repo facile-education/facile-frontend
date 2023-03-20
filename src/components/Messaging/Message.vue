@@ -38,12 +38,12 @@
           </p>
         </div>
         <div class="header-line2">
-          <p>{{ message.subject }}</p>
+          <p v-html="message.subject" />
         </div>
         <div class="header-line3">
           <MessageRecipients
             :recipients="message.recipients"
-            :recipients-max-length="2"
+            :nb-recipients="message.nbRecipients"
           />
         </div>
       </div>
@@ -60,7 +60,7 @@
     <!-- Attached files-->
     <AttachedFiles
       v-if="message.hasAttachFiles"
-      :initial-attached-files="message.attachments"
+      :attached-files="message.attachments"
       :read-only="true"
       class="files"
     />
@@ -95,7 +95,7 @@ export default {
       return messagingUtils.isSentFolder()
     },
     senderAcronym () {
-      return this.message.senderName ? this.message.senderName.split(' ').map((n) => n[0].toUpperCase()).join(' ') : ''
+      return this.message.senderName ? (this.message.senderName.includes('(') ? 'US' : this.message.senderName.trim().split(' ').map((n) => n[0].toUpperCase()).join(' ')) : ''
     }
   },
   mounted () {

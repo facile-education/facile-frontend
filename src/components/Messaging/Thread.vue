@@ -80,9 +80,10 @@
 
           <!-- Line 2 : subject + thread toggle -->
           <div class="line2">
-            <p :title="mainMessage.subject">
-              {{ mainMessage.subject }}
-            </p>
+            <p
+              :title="mainMessage.subject"
+              v-html="mainMessage.subject"
+            />
             <div
               v-if="thread.messages.length > 1"
               class="thread-toggle"

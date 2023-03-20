@@ -23,7 +23,7 @@ export const state = {
   isMultiSelectionActive: false,
   isCreateMessageModalDisplayed: false,
   loadingThreadsError: undefined,
-  nbNewMessages: 0,
+  nbMessages: 0,
   search: '',
   createMessageParameters: {},
   draggedThreads: [],
@@ -63,6 +63,7 @@ export const mutations = {
     state.loadingThreadsError = payload
   },
   setMessagingFolders (state, folders) {
+    console.log('set messaging folders to ', folders)
     state.messagingFolders = folders
   },
   addPersonalRootFolder (state, folder) {
@@ -164,8 +165,19 @@ export const mutations = {
     }
     state.isMultiSelectionActive = !state.isMultiSelectionActive
   },
-  setNbNewMessages (state, nbNewMessages) {
-    state.nbNewMessages = nbNewMessages
+  setNbUnread (state, payload) {
+    for (const folder of state.messagingFolders) {
+      if (folder.folderId === payload.folderId) {
+        folder.nbUnread = payload.nbUnread
+      }
+    }
+  },
+  setNbMessages (state, { folderId, nbMessages }) {
+    for (const folder of state.messagingFolders) {
+      if (folder.folderId === folderId) {
+        folder.nbMessages = nbMessages
+      }
+    }
   },
   markMessagesAsRead (state, messageIds) {
     // Change status of both messages which belongs to threads[] and currentThreadMessages[] arrays
@@ -182,7 +194,13 @@ export const mutations = {
         message.isNew = false
       }
     }
-    state.nbNewMessages -= 1
+
+    // Decrement the number of unread messages in current folder
+    for (const folder of state.messagingFolders) {
+      if (folder.folderId === state.currentFolder.folderId && folder.nbUnread >= messageIds.length) {
+        folder.nbUnread -= messageIds.length
+      }
+    }
   },
   markMessagesAsUnread (state, unreadMessageIds) {
     for (const thread of state.threads) {
@@ -198,7 +216,12 @@ export const mutations = {
         message.isNew = true
       }
     }
-    state.nbNewMessages += 1
+    // Increment the number of unread messages in current folder
+    for (const folder of state.messagingFolders) {
+      if (folder.folderId === state.currentFolder.folderId) {
+        folder.nbUnread += unreadMessageIds.length
+      }
+    }
   },
   addNewMessage (state, newMessage) {
     state.currentThreadMessages.splice(0, 0, newMessage)
@@ -216,6 +239,7 @@ export const mutations = {
         if (state.threads[j].threadId === state.selectedThreads[i].threadId) {
           state.threads.splice(j, 1)
           lastIndex = j
+          state.currentFolder.nbMessages--
           break
         }
       }
@@ -288,6 +312,7 @@ export const actions = {
     commit('setCurrentThreadMessages', messages)
   },
   selectFolder ({ commit, state }, folder) {
+    console.log('select folder ', folder)
     if (folder.folderId !== state.currentFolder.folderId) {
       commit('setCurrentFolder', folder)
       commit('setSelectedThreads', [])
@@ -296,6 +321,7 @@ export const actions = {
     }
     if (folder.folderId && !state.displayMessageFromRouting) {
       this.dispatch('messaging/getThreads', { folderId: folder.folderId })
+      this.dispatch('messaging/updateNbUnread', folder.folderId)
     }
   },
   loadMessagingFolders ({ commit }, noSelection) {
@@ -379,7 +405,17 @@ export const actions = {
           console.error('Error while getting threads from folderId ' + folderId + ' with last date = ' + lastDate)
         }
       })
-      messagingUtils.updateNbNewMessages()
+    })
+  },
+  updateNbUnread ({ commit }, folderId) {
+    messageService.getNbMessages(folderId).then((data) => {
+      if (data.success) {
+        commit('setNbMessages', { folderId: folderId, nbMessages: data.nbMessages })
+        commit('setNbUnread', { folderId: folderId, nbUnread: data.nbUnread })
+      } else {
+        commit('setNbMessages', { folderId: folderId, nbMessages: 0 })
+        commit('setNbUnread', { folderId: folderId, nbUnread: 0 })
+      }
     })
   },
   getMessageThread ({ commit }, messageId) {
@@ -420,8 +456,11 @@ export const actions = {
   closeParametersModal ({ commit }) {
     commit('setParametersModalDisplayed', false)
   },
-  setNbNewMessages ({ commit }, nbNewMessages) {
-    commit('setNbNewMessages', nbNewMessages)
+  setNbUnread ({ commit }, folderId, nbUnread) {
+    commit('setNbUnread', { folderId: folderId, nbUnread: nbUnread })
+  },
+  setNbMessages ({ commit }, folderId, nbMessages) {
+    commit('setNbMessages', { folderId: folderId, nbMessages: nbMessages })
   },
   markMessagesAsRead ({ commit }, messages) {
     commit('markMessagesAsRead', messages)

@@ -16,10 +16,10 @@
     </div>
     {{ folder.folderName }}
     <div
-      v-if="nbNotification > 0"
+      v-if="nbUnread > 0"
       class="nb-new-messages"
     >
-      {{ '(' + nbNotification + ')' }}
+      {{ '(' + nbUnread + ')' }}
     </div>
   </div>
 </template>
@@ -38,10 +38,6 @@ export default {
     iconWidth: {
       type: String,
       default: 'auto'
-    },
-    nbNotification: {
-      type: Number,
-      default: 0
     },
     icon: {
       type: String,
@@ -64,6 +60,14 @@ export default {
   computed: {
     currentFolderId () {
       return this.$store.state.messaging.currentFolder.folderId
+    },
+    nbUnread () {
+      for (const folder of this.$store.state.messaging.messagingFolders) {
+        if (folder.folderId === this.folder.folderId) {
+          return folder.nbUnread
+        }
+      }
+      return 0
     }
   },
   methods: {

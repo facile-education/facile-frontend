@@ -209,8 +209,10 @@ export default {
       editor: InlineEditor,
       editorOptions: {
         removePlugins: [
-          'CKFinder',
+        'CKFinder',
           'CKFinderUploadAdapter',
+          'CKBox',
+          'CKBoxEditing',
           'CloudServicesUploadAdapter',
           'CloudServices',
           'EasyImage',

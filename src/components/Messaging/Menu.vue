@@ -20,7 +20,6 @@
         class="base-folder"
         :folder="inboxFolder"
         :icon="require('@assets/icon_reception.svg')"
-        :nb-notification="nbNewMessages"
         :drop-allowed="true"
         icon-width="21px"
         alt="icon reception"
@@ -79,6 +78,7 @@
             name="plus"
             data-test="createMessagingFolder"
             class="fa-lg folder-action"
+            :title="$t('Messaging.addFolder')"
             @click.stop="toggleNewFolderInput"
           />
         </div>
@@ -166,9 +166,6 @@ export default {
     },
     isDisplayMessageFromRouting () {
       return this.$store.state.messaging.displayMessageFromRouting
-    },
-    nbNewMessages () {
-      return this.$store.state.messaging.nbNewMessages
     }
   },
   watch: {
@@ -198,8 +195,13 @@ export default {
         })
       }
     },
-    selectFolder (folder) {
-      this.$store.dispatch('messaging/selectFolder', folder)
+    nbUnread (folderId) {
+      for (const folder in this.$store.state.messaging.messagingFolders) {
+        if (folder.folderId === folderId) {
+          return folder.nbUnread
+        }
+      }
+      return 0
     },
     createPersonalRootFolder () {
       this.displayNewFolderInput = false
