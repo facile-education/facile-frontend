@@ -157,7 +157,6 @@ const MessagingUtils = {
     return store.state.messaging.currentFolder.type === messagingConstants.messagingSentFolderType
   },
   shortRecipientList (message) {
-    console.log('shortRecipientList of message ', message)
     if (message.nbRecipients === 0) {
       return ''
     }
