@@ -6,11 +6,12 @@
         alt=""
       >
       <AnimatedCounter
+        v-if="nbUsers > 0"
         :target="nbUsers"
         :animation-duration="300"
       />
       <span class="label">
-        {{ nbUsers > 1 ? $t('activeUsers') : $t('activeUser') }}
+        {{ $tc('activeUsers', nbUsers) }}
       </span>
     </span>
   </section>
@@ -102,7 +103,6 @@ img {
 
 <i18n locale="fr">
 {
-  "activeUsers": "utilisateurs actifs",
-  "activeUser": "utilisateur actif"
+  "activeUsers": "Aucun utilisateur unique sur la période | utilisateur unique sur la période | utilisateurs uniques sur la période"
 }
 </i18n>
