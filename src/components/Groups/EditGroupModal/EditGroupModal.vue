@@ -147,7 +147,7 @@ import {
   getCommunityMembers
 } from '@/api/groups.service'
 import { searchDirectory } from '@/api/contact.service'
-import { getSchools } from '@/api/organization.service'
+import { getAllSchools } from '@/api/organization.service'
 import { getRoleList } from '@/api/role.service'
 
 import ColorPicker from '@/components/Nero/ColorPicker'
@@ -252,7 +252,7 @@ export default {
       }
     })
 
-    getSchools().then((data) => {
+    getAllSchools().then((data) => {
       if (data.success) {
         this.selectedSchool = this.emptySchool
         this.schoolList = [this.emptySchool, ...PentilaUtils.Array.sortWithString(data.schools, false, 'schoolName')]

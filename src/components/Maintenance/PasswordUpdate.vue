@@ -67,7 +67,7 @@
 
 import PentilaUtils from 'pentila-utils'
 import { searchDirectory } from '@/api/contact.service'
-import { getSchools } from '@/api/organization.service'
+import { getAllSchools } from '@/api/organization.service'
 import { updatePassword } from '@/api/userManagement.service'
 import { getRoleList } from '@/api/role.service'
 
@@ -98,7 +98,7 @@ export default {
       }
     })
 
-    getSchools().then((data) => {
+    getAllSchools().then((data) => {
       if (data.success) {
         this.selectedSchool = this.emptySchool
         this.schoolList = [this.emptySchool, ...PentilaUtils.Array.sortWithString(data.schools, false, 'schoolName')]

@@ -43,6 +43,8 @@
 <script>
 
 import { getLocalUserRoleList } from '@/api/role.service'
+import { getAllSchools } from '@/api/organization.service'
+import PentilaUtils from 'pentila-utils'
 
 export default {
   name: 'Directory',
@@ -56,19 +58,25 @@ export default {
       searchQuery: '',
       roleList: [],
       selectedRole: undefined,
-      selectedSchool: undefined
+      emptyRole: { label: 'Tous', roleId: 0 },
+      schoolList: [],
+      selectedSchool: undefined,
+      emptySchool: { schoolName: 'Tous', schoolId: 0 }
     }
   },
   computed: {
-    schoolList () {
-      // return this.$store.state.user.schools
-      return this.$store.getters['user/adminSchoolList']
-    }
   },
   created () {
     getLocalUserRoleList().then((data) => {
       if (data.success) {
-        this.roleList = data.roles
+        this.selectedRole = this.emptyRole
+        this.roleList = [this.emptyRole, ...PentilaUtils.Array.sortWithString(data.roles, false, 'label')]
+      }
+    })
+    getAllSchools().then((data) => {
+      if (data.success) {
+        this.selectedSchool = this.emptySchool
+        this.schoolList = [this.emptySchool, ...PentilaUtils.Array.sortWithString(data.schools, false, 'schoolName')]
       }
     })
 
@@ -79,7 +87,7 @@ export default {
   },
   methods: {
     runSearch () {
-      this.$store.dispatch('contact/searchDirectory', { query: this.searchQuery, roleId: (this.selectedRole !== undefined ? this.selectedRole.roleId : 0), schoolId: (this.selectedSchool !== undefined ? this.selectedSchool.schoolId : 0) })
+      this.$store.dispatch('contact/searchDirectory', { query: this.searchQuery, roleId: this.selectedRole.roleId, schoolId: this.selectedSchool.schoolId })
     }
   }
 }

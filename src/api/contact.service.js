@@ -5,14 +5,18 @@ export default {
   getContactTree,
   getOrgMembers,
   searchDirectory,
-  getContactDetails
+  getContactDetails,
+  getMyStudents,
+  getMyRelatives
 }
 
 export {
   getContactTree,
   getOrgMembers,
   searchDirectory,
-  getContactDetails
+  getContactDetails,
+  getMyStudents,
+  getMyRelatives
 }
 
 const CONTACT_PATH = '/contact-portlet.'
@@ -48,6 +52,20 @@ function getContactDetails (contactUserId) {
   return axios.get(constants.JSON_WS_URL + CONTACT_PATH + CONTACT_CTX + 'get-contact-details', {
     params: {
       contactUserId
+    }
+  }).then(response => response.data)
+}
+
+function getMyStudents () {
+  return axios.get(constants.JSON_WS_URL + CONTACT_PATH + CONTACT_CTX + 'get-my-students', {
+    params: {
+    }
+  }).then(response => response.data)
+}
+
+function getMyRelatives () {
+  return axios.get(constants.JSON_WS_URL + CONTACT_PATH + CONTACT_CTX + 'get-my-relatives', {
+    params: {
     }
   }).then(response => response.data)
 }

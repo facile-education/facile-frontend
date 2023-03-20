@@ -24,7 +24,7 @@
     class="populations"
   >
     <div
-      v-for="population in populations"
+      v-for="population in sortedPopulations"
       :key="population.rolelId"
       class="population"
       @click="getMembers(population)"
@@ -37,6 +37,7 @@
 <script>
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import PentilaUtils from 'pentila-utils'
 
 export default {
   name: 'SchoolPersonals',
@@ -56,6 +57,14 @@ export default {
     }
   },
   computed: {
+    sortedPopulations () {
+      return PentilaUtils.Array.sortWithString(this.populations, false, 'groupName')
+    }
+  },
+  created () {
+    if (this.$store.state.user.isStudent || this.$store.state.user.isParent) {
+      this.isExpanded = true
+    }
   },
   methods: {
     getMembers (population) {

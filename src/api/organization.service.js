@@ -3,14 +3,14 @@ import constants from '@/api/constants'
 
 export {
   getAdministeredSchoolList,
-  getSchools,
+  getAllSchools,
   getSchoolClassList,
   getSchoolVoleeList
 }
 
 const ORG_PATH = '/accesAteliers-portlet.'
 
-function getSchools () {
+function getAllSchools () {
   return axios.get(constants.JSON_WS_URL + ORG_PATH + 'orgutils/get-all-schools', {
     params: {}
   }).then(response => response.data)

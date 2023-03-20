@@ -90,6 +90,9 @@ export default {
   },
   created () {
     this.localCours = PentilaUtils.JSON.deepCopy(this.cours)
+    if (this.$store.state.user.isTeacher) {
+      this.isExpanded = true
+    }
   },
   methods: {
     toggleCour (cour) {
