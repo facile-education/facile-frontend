@@ -30,11 +30,7 @@
             v-else
             class="nb-messages"
           >{{ $tc('messages', nbMessages) }}</span>
-          <BaseIcon
-            name="circle"
-            class="fa-xs unread"
-            :class="{'color': themeColor}"
-          />
+          <div class="unread theme-background-color" />
           <span class="nb-unread">{{ $tc('unRead', nbUnread) }}</span>
         </div>
       </div>
@@ -54,11 +50,10 @@
 
 <script>
 import ThreadListOptions from '@components/Messaging/ThreadListOptions'
-import BaseIcon from '@components/Base/BaseIcon'
 
 export default {
   name: 'ThreadListHeader',
-  components: { ThreadListOptions, BaseIcon },
+  components: { ThreadListOptions },
   inject: ['mq'],
   data () {
     return {
@@ -142,16 +137,18 @@ export default {
 
       .counts {
         display: flex;
+        align-items: center;
         .nb-messages {
           font-weight: 100;
           margin-right: 10px;
         }
         .unread {
-          margin: auto;
+          margin-left: 5px;
+          @extend %messaging-pellet;
         }
         .nb-unread {
           font-weight: 600;
-          margin-left: 10px;
+          margin-left: 5px;
         }
       }
       p {
@@ -191,20 +188,6 @@ export default {
         left: 50%;
         transform: translate(-50%, -50%);
         margin: 0;
-        .counts {
-          display: flex;
-          .nb-messages {
-            font-weight: 200;
-            margin-right: 10px;
-          }
-          svg {
-            color: green;
-          }
-          .nb-unread {
-            font-weight: 600;
-            margin-left: 10px;
-          }
-        }
       }
 
       .toggle-multi-selection {

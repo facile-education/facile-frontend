@@ -9,8 +9,8 @@
       <!-- Thread with 1 single message AND thread multi-message collapsed -->
       <div
         class="main"
-        :class="{'selected': isThreadSelected,
-                 'subMessageSelected': isSubMessageSelected,
+        :class="{'theme-background-color': isThreadSelected && !isSubMessageSelected,
+                 'theme-light-background-color': (!isThreadSelected || isSubMessageSelected) && isThreadExpanded,
                  'expanded': isThreadExpanded}"
         @click.exact="handleClick()"
         @dblclick="editDraft()"
@@ -34,13 +34,10 @@
           class="icons"
           :class="{'shrink': isMultiSelectionActive}"
         >
-          <BaseIcon
+          <div
             v-if="isUnread"
-            name="circle"
-            class="fa-xs unread icon"
+            class="unread theme-background-color icon"
             data-test="unread-icon"
-            :class="{'selected' : isThreadSelected && !isSubMessageSelected}"
-            :title="$t('Messaging.new')"
           />
           <img
             v-if="mainMessage.hasAttachFiles"
@@ -109,7 +106,7 @@
       <Transition name="slide-fade">
         <div
           v-if="isThreadExpanded"
-          class="expanded"
+          class="expanded theme-light-background-color"
           data-test="threadExpansion"
         >
           <div
@@ -134,14 +131,12 @@
 import messagingUtils from '@/utils/messaging.utils'
 import dayjs from 'dayjs'
 import constants from '@/constants/appConstants'
-import BaseIcon from '@components/Base/BaseIcon'
 import ThreadMessage from '@components/Messaging/ThreadMessage'
 import _ from 'lodash'
 import messageService from '@/api/messaging/message.service'
 
 export default {
   components: {
-    BaseIcon,
     ThreadMessage
   },
   inject: ['mq'],
@@ -344,13 +339,6 @@ export default {
   transition-property: border-bottom-right-radius, border-bottom-left-radius;
   transition-duration: .3s;
 
-  &.selected:not(.subMessageSelected) {
-    background-color: $color-selected-thread;
-  }
-  &.subMessageSelected {
-    background-color: $color-selected-sub-message;
-  }
-
   .selected-icon {
     width: var(--icons-width);
     display: flex;
@@ -396,7 +384,7 @@ export default {
     }
 
     .unread {
-      color: $color-messaging-bg;
+      @extend %messaging-pellet;
     }
 
     .attached-file-icon {
@@ -504,7 +492,6 @@ export default {
   }
 }
 .expanded {
-  background-color: #F3F6F8;
   border-bottom: none;
 }
 

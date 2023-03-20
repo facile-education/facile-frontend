@@ -56,7 +56,7 @@ export default {
   cursor: pointer;
 
   &.selected {
-    background-color: $color-selected-sub-message;
+    background-color: #F3F6F8;
   }
 
   .checkbox {

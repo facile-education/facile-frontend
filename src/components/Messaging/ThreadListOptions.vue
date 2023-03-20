@@ -204,7 +204,6 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: $color-messaging-link-text;
 
   .buttons {
     display: flex;
@@ -219,7 +218,7 @@ export default {
   .unread {
     display: flex;
     align-items: center;
-    color: $color-messaging-dark-text;
+    color: violet;
 
     label {
       white-space: nowrap;
@@ -229,7 +228,7 @@ export default {
   &.phone {
     padding: 0 20px;
     height: $messaging-mobile-footer-height;
-    background-color: $color-messaging-dark-white-bg;
+    background-color: $color-messaging-bg;
 
     .unread {
       margin-left: 0;
