@@ -13,7 +13,8 @@ export {
   updateApplication,
   updateBroadcastScope,
   updateBroadcast,
-  getAllServices
+  getAllServices,
+  getStatServices
 }
 
 export default {
@@ -148,5 +149,13 @@ function getUserApplications () {
 function getAllServices () {
   return axios.get(constants.JSON_WS_URL + SERVICEMANAGER_PATH + SERVICE_CTX + 'get-all-services', {
     params: {}
+  }).then(response => response.data)
+}
+
+function getStatServices (schoolId) {
+  return axios.get(constants.JSON_WS_URL + SERVICEMANAGER_PATH + SERVICE_CTX + 'get-stat-services', {
+    params: {
+      schoolId
+    }
   }).then(response => response.data)
 }

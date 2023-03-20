@@ -22,12 +22,13 @@ function getActiveUsersCount (schoolId, startDate, endDate) {
   }).then(response => response.data)
 }
 
-function getSessionsCount (schoolId, startDate, endDate, comparator) {
+function getSessionsCount (schoolId, startDate, endDate, serviceId, comparator) {
   return axios.get(constants.JSON_WS_URL + STAT_PATH + '/get-sessions-count', {
     params: {
       schoolId: schoolId,
       startDate: startDate.format('YYYY-MM-DD HH:mm'),
       endDate: endDate.format('YYYY-MM-DD HH:mm'),
+      serviceId,
       comparator: comparator
     }
   }).then(response => response.data)
