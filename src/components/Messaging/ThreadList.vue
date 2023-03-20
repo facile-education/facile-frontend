@@ -426,7 +426,7 @@ hr.hr-thread-list {
 
 <i18n locale="fr">
 {
-  "emptyBox": "Cette boîte est vide",
+  "emptyBox": "Aucun message",
   "emptyFolder": "Ce dossier est vide",
   "loadingError": "Erreur lors du chargement de la ressource",
   "permissionError": "Permission non accordée",
