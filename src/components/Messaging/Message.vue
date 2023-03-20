@@ -7,24 +7,23 @@
     data-test="message"
   >
     <!-- Source folder -->
-    <div
-      v-if="message.folderName !== undefined"
-      class="message-sourcefolder"
-    >
-      <p>{{ $t('Messaging.findInFolder') + ' ' + message.folderName }}</p>
+    <div class="message-sourcefolder">
+      <img
+        v-if="message.folderName !== undefined"
+        :src="folderIcon"
+        alt=""
+      >
+      <span v-if="message.folderName !== undefined">
+        {{ $t('Messaging.findInFolder') + ' ' + message.folderName }}
+      </span>
     </div>
 
     <!-- Header -->
     <div class="message-header">
-      <div class="sender-icon">
-        <div
-          v-if="message.isNew"
-          class="unread theme-background-color"
-        />
-        <div class="icon-container">
-          {{ senderAcronym }}
-        </div>
-      </div>
+      <div
+        v-if="message.isNew"
+        class="unread theme-background-color"
+      />
       <div class="header-main">
         <div class="header-line1">
           <p class="sender">
@@ -70,7 +69,6 @@
 <script>
 import dayjs from 'dayjs'
 import AttachedFiles from '@components/Base/AttachedFiles'
-import messagingUtils from '@/utils/messaging.utils'
 import MessageRecipients from '@components/Messaging/MessageRecipients'
 
 export default {
@@ -91,11 +89,19 @@ export default {
     }
   },
   computed: {
-    isSentFolder () {
-      return messagingUtils.isSentFolder()
-    },
-    senderAcronym () {
-      return this.message.senderName ? (this.message.senderName.includes('(') ? 'US' : this.message.senderName.trim().split(' ').map((n) => n[0].toUpperCase()).join(' ')) : ''
+    folderIcon () {
+      switch (this.message.folderName) { // TODO use a kee which deserve this name
+        case 'Boîte de réception':
+          return require('@/assets/icon_reception.svg')
+        case 'Brouillons':
+          return require('@/assets/icon_fichier.svg')
+        case 'Envoyés':
+          return require('@/assets/icon_envoyes.svg')
+        case 'Corbeille':
+          return require('@/assets/icon_trash.svg')
+        default:
+          return require('@/assets/icon_messaging_folder.svg')
+      }
     }
   },
   mounted () {
@@ -117,55 +123,40 @@ export default {
 
 .message {
   border-radius: 6px;
-  background-color: white;
   border: 1px solid $color-border;
   box-shadow: 0 2px 14px 0 rgba(0,0,0,0.1);
-  padding: 0 20px;
+  padding: 0 1em;
 
-  p{
-    margin: 3px 0;
+  p {
+    margin: 0;
   }
 
   .message-sourcefolder {
-    padding: 3px 0;
-    border-bottom: 1px solid $color-border-menu;
-    font-style: italic;
-    text-align: center;
-    font-size: 0.915rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 1.875em;
+    font-size: 0.750em;
+    color: $color-new-light-text;
+
+    img {
+      margin-right: 6px;
+      height: 1em;
+    }
   }
 
   .message-header {
+    position: relative;
     display: flex;
-    padding-top: 5px;
 
-    .sender-icon {
-      position: relative;
-      min-width: 50px;
-      display: flex;
-      justify-content: flex-start;
-
-      .unread {
-        @extend %messaging-pellet;
-        position: absolute;
-        top: 2px;
-        left: -5px;
-      }
-
-      .icon-container {
-        margin-top : 8px;
-        height: 50px;
-        width: 50px;
-        border-radius: 25px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: grey;
-        font-weight: bold;
-        color: white;
-        white-space: nowrap;
-        word-spacing: -2px;
-      }
+    .unread {
+      @extend %messaging-pellet;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translate(-100%, -100%);
     }
+
     .header-main {
       margin-left: 1%;
       flex-grow: 1;
