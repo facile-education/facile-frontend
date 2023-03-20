@@ -130,7 +130,7 @@ export default {
   data: function () {
     return {
       isLoadingFolders: false,
-      isPersonalFoldersExpanded: false,
+      isPersonalFoldersExpanded: true,
       displayNewFolderInput: false,
       newFolderName: '',
       isTrashActive: false
