@@ -10,6 +10,7 @@ const style = `.theme-text-color { color: ${mainColor}; }
     .theme-hover-light-background-color:hover { background-color: ${mainColor}27; }
     .theme-hover-text-color:hover { color: ${mainColor}; }
     .theme-border-color { border-color: ${mainColor} !important; }
+    .theme-shadow-color { box-shadow: 0 0 6px ${mainColor}; }
     body .vc-container { --blue-600: ${mainColor}; }`
 
 // Update main theme color

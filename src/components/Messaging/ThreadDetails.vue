@@ -45,7 +45,7 @@
         <IconOption
           v-if="isActionEnabled && (mq.phone || mq.tablet)"
           class="header-icon read-icon"
-          :icon="require('@/assets/options/icon_mark_as_read.svg')"
+          :icon="require('@/assets/options/icon_unread_filter.svg')"
           :title="$t('Messaging.markAsRead')"
           name="mark-as-read"
           icon-height="20px"
@@ -149,7 +149,7 @@
           v-for="message in messageListWithoutSelfMessages"
           :key="message.messageId"
           class="details-message"
-          :class="{'selected': (isSelected(message))}"
+          :class="{'theme-shadow-color': (isSelected(message))}"
           @click="selectMessage(message)"
         >
           <Message
@@ -405,7 +405,6 @@ hr {
     width: 100%;
     height: 100%;
     padding-top: 40px;
-    color: $color-messaging-dark-text;
     text-align: center;
     font-weight: bold;
     font-size: 1em;
@@ -435,11 +434,6 @@ hr {
       margin-bottom: 10px;
       border-radius: 6px;
       border: 2px solid white;
-
-      &.selected {
-        border: 2px solid $color-selected-message;
-        box-shadow: 0 0 6px $color-selected-message;
-      }
 
       .message-header {
         display: flex;

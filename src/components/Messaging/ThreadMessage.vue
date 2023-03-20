@@ -1,18 +1,16 @@
 <template>
   <div
     class="thread-message"
-    :class="{'selected': isMessageSelected,
+    :class="{'theme-background-color': isMessageSelected,
              'last' : isLast,
              'shifted': isMultiSelectionActive}"
     @click.exact="selectMessage"
   >
     <div class="icons">
-      <BaseIcon
+      <div
         v-if="message.isNew"
-        name="circle"
-        class="fa-xs unread icon"
-        :class="{'selected' : isMessageSelected}"
-        :title="$t('Messaging.new')"
+        class="unread theme-background-color icon"
+        data-test="unread-icon"
       />
       <img
         v-if="message.hasAttachFiles"
@@ -65,13 +63,9 @@
 
 import messagingUtils from '@/utils/messaging.utils'
 import dayjs from 'dayjs'
-import BaseIcon from '@components/Base/BaseIcon'
 
 export default {
   name: 'ThreadMessage',
-  components: {
-    BaseIcon
-  },
   props: {
     message: {
       type: Object,
@@ -155,7 +149,7 @@ export default {
     }
 
     .unread {
-      color: $color-messaging-bg;
+      @extend %messaging-pellet;
     }
 
     .attached-file-icon {

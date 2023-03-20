@@ -19,7 +19,7 @@
       <div class="sender-icon">
         <div
           v-if="message.isNew"
-          class="is-read"
+          class="unread theme-background-color"
         />
         <div class="icon-container">
           {{ senderAcronym }}
@@ -116,7 +116,6 @@ export default {
 @import "@design";
 
 .message {
-  color: $color-messaging-dark-text;
   border-radius: 6px;
   background-color: white;
   border: 1px solid $color-border;
@@ -145,14 +144,11 @@ export default {
       display: flex;
       justify-content: flex-start;
 
-      .is-read {
+      .unread {
+        @extend %messaging-pellet;
         position: absolute;
         top: 2px;
         left: -5px;
-        width: 12px;
-        height: 12px;
-        border-radius: 5px;
-        background-color: $color-messaging-bg;
       }
 
       .icon-container {

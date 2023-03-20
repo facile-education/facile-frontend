@@ -118,7 +118,6 @@ export default {
       display: flex;
       align-items: center;
       font-size: 0.875em;
-      color: $color-messaging-dark-text;
       margin-right: 0.5em;
 
       &.last-recipient {
@@ -134,7 +133,6 @@ export default {
 
     .others {
       font-size: 0.875em;
-      color: $color-messaging-dark-text;
       margin-left: 0.3em;
     }
   }

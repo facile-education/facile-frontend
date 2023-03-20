@@ -316,7 +316,6 @@ export default {
 
 .panel {
   height: 100%;
-  color: $color-messaging-dark-text;
 
   &.phone {
     .thread-list-header {
@@ -383,7 +382,6 @@ hr.hr-thread-list {
   width: 100%;
   height: 100%;
   padding-top: 40px;
-  color: $color-messaging-dark-text;
   text-align: center;
   font-weight: bold;
   font-size: 1em;

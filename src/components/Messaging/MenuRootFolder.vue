@@ -123,7 +123,6 @@ export default {
   cursor: pointer;
   margin-right: 10px;
   width: 100%;
-  color: $color-messaging-dark-text;
   display: flex;
   align-items: center;
   font-size: 1em;
@@ -170,9 +169,6 @@ export default {
   }
   &.selected {
     font-weight: bold;
-    //color: white;
-    //background-color: $color-messaging-bg;
-    //border-radius: 0 20px 20px 0;
   }
 }
 </style>
