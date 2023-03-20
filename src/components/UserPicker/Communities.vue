@@ -24,7 +24,7 @@
     class="communities"
   >
     <div
-      v-for="community in communities"
+      v-for="community in sortedCommunities"
       :key="community.groupName"
       class="community"
       @click="getMembers(community.groupId)"
@@ -37,6 +37,7 @@
 <script>
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import PentilaUtils from 'pentila-utils'
 
 export default {
   name: 'SchoolSubjects',
@@ -56,6 +57,9 @@ export default {
     }
   },
   computed: {
+    sortedCommunities () {
+      return PentilaUtils.Array.sortWithString(this.communities, false, 'groupName')
+    }
   },
   methods: {
     getMembers (groupId) {

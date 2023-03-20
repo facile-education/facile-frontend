@@ -21,7 +21,10 @@
             <PentilaTabItem :title="$t('address-book')">
               <AddressBook />
             </PentilaTabItem>
-            <PentilaTabItem :title="$t('directory')">
+            <PentilaTabItem
+              v-if="hasDirectory"
+              :title="$t('directory')"
+            >
               <Directory />
             </PentilaTabItem>
           </PentilaTabList>
@@ -35,7 +38,10 @@
               <PentilaTabItem :title="$t('address-book')">
                 <AddressBook />
               </PentilaTabItem>
-              <PentilaTabItem :title="$t('directory')">
+              <PentilaTabItem
+                v-if="hasDirectory"
+                :title="$t('directory')"
+              >
                 <Directory />
               </PentilaTabItem>
             </PentilaTabList>
@@ -74,6 +80,9 @@ export default {
     }
   },
   computed: {
+    hasDirectory () {
+      return !this.$store.state.user.isStudent && !this.$store.state.user.isParent
+    }
   },
   created () {
   },

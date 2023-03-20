@@ -8,32 +8,34 @@
     >
       <div
         class="school-header"
-        @click="toggleNode(school.schoolId)"
       >
         <!-- <div class="address-book-icon">
           <img src="@assets/school.svg">
         </div> -->
         {{ school.schoolName }}
-        <div
-          class="caret"
-        >
-          <FontAwesomeIcon
-            v-if="school.isExpanded"
-            icon="caret-up"
-            class="caret"
-          />
-          <FontAwesomeIcon
-            v-else
-            icon="caret-down"
-            class="caret"
-          />
-        </div>
       </div>
       <div class="school-categories">
         <SchoolPersonals
           v-if="school.Personnels"
           :populations="school.Personnels"
         />
+        <!-- Students and parents have student and parents lists -->
+        <div
+          v-if="isStudent || isRelative"
+          class="population"
+          @click="getMyStudents()"
+        >
+          <span v-if="isStudent">{{ $t('students') }}</span>
+          <span v-if="isRelative">{{ $t('my-students') }}</span>
+        </div>
+        <div
+          v-if="isStudent || isRelative"
+          class="population"
+          @click="getMyRelatives()"
+        >
+          <span>{{ $t('relatives') }}</span>
+        </div>
+
         <SchoolClasses
           v-if="school.classes"
           :classes="school.classes"
@@ -58,7 +60,6 @@
 <script>
 
 import contactService from '@/api/contact.service'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import SchoolPersonals from './SchoolPersonals.vue'
 import SchoolClasses from './SchoolClasses.vue'
 import SchoolCours from './SchoolCours.vue'
@@ -68,7 +69,6 @@ import Communities from './Communities.vue'
 export default {
   name: 'AddressBook',
   components: {
-    FontAwesomeIcon,
     SchoolPersonals,
     SchoolClasses,
     SchoolCours,
@@ -88,15 +88,18 @@ export default {
     },
     communities () {
       return this.$store.state.contact.communities
+    },
+    isStudent () {
+      return this.$store.state.user.isStudent
+    },
+    isRelative () {
+      return this.$store.state.user.isParent
     }
   },
   created () {
     this.getContactTree()
   },
   methods: {
-    toggleNode (schoolId) {
-      this.$store.dispatch('contact/toggleSchool', schoolId)
-    },
     getContactTree () {
       contactService.getContactTree().then((data) => {
         if (data.success) {
@@ -104,8 +107,13 @@ export default {
           this.$store.dispatch('contact/setContactTree', data.categories)
         }
       })
+    },
+    getMyStudents () {
+      this.$store.dispatch('contact/getMyStudents')
+    },
+    getMyRelatives () {
+      this.$store.dispatch('contact/getMyRelatives')
     }
-
   }
 }
 </script>
@@ -124,4 +132,18 @@ export default {
 .school-categories {
   margin-left: 10px;
 }
+.population {
+  &:hover {
+    cursor: pointer;
+    background-color: lightgray;
+  }
+}
 </style>
+
+<i18n locale="fr">
+  {
+    "students": "Elèves",
+    "my-students": "Elèves en responsabilité",
+    "relatives": "Responsables légaux"
+  }
+</i18n>

@@ -20,13 +20,6 @@ export const mutations = {
   },
   setNbResults (state, payload) {
     state.nbResults = payload
-  },
-  toggleSchool (state, payload) {
-    state.schools.forEach(school => {
-      if (school.schoolOrgId === payload) {
-        school.isExpanded = !school.isExpanded
-      }
-    })
   }
 }
 
@@ -41,9 +34,6 @@ export const actions = {
       }
     })
     commit('setSchools', schools)
-  },
-  toggleSchool ({ commit }, schoolId) {
-    commit('toggleSchool', schoolId)
   },
   getMembers ({ commit }, population) {
     console.log('get Members of population ', population)
@@ -63,6 +53,26 @@ export const actions = {
         if (data.success) {
           commit('setSearchResults', data.members)
           commit('setNbResults', data.members.length)
+        }
+      }
+    )
+  },
+  getMyStudents ({ commit }) {
+    contactService.getMyStudents().then(
+      (data) => {
+        if (data.success) {
+          commit('setSearchResults', data.users)
+          commit('setNbResults', data.nbResults)
+        }
+      }
+    )
+  },
+  getMyRelatives ({ commit }) {
+    contactService.getMyRelatives().then(
+      (data) => {
+        if (data.success) {
+          commit('setSearchResults', data.users)
+          commit('setNbResults', data.nbResults)
         }
       }
     )

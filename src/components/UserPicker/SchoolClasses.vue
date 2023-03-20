@@ -75,6 +75,12 @@
               @click="getMembers(population)"
             >
               <span>{{ population.groupName }}</span>
+              <PentilaButton
+                class="add-button"
+                @click="addPopulation(population)"
+              >
+                <NeroIcon name="plus" />
+              </PentilaButton>
             </div>
           </div>
         </div>
@@ -142,6 +148,9 @@ export default {
           }
         }
       }
+    },
+    addPopulation (population) {
+      // TODO
     }
   }
 }
@@ -177,6 +186,8 @@ export default {
   margin-left: 10px;
 }
 .population {
+  display: flex;
+  justify-content: space-between;
   &:hover {
     cursor: pointer;
     background-color: lightgray;
