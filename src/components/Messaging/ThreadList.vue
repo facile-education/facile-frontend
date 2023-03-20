@@ -14,7 +14,7 @@
         class="pull-to-refresh-icon"
         :class="{'is-waiting': isWaiting}"
         :icon="require('@/assets/options/icon_refresh.svg')"
-        :title="$t('Messaging.refresh')"
+        :title="$t('refresh')"
         :gray-background-color="true"
         name="refresh"
         icon-height="20px"
@@ -429,6 +429,7 @@ hr.hr-thread-list {
   "emptyBox": "Cette boîte est vide",
   "emptyFolder": "Ce dossier est vide",
   "loadingError": "Erreur lors du chargement de la ressource",
-  "permissionError": "Permission non accordée"
+  "permissionError": "Permission non accordée",
+  "refresh": "Rafraîchir"
 }
 </i18n>

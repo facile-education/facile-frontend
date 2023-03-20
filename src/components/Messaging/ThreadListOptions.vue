@@ -35,7 +35,7 @@
         v-if="!mq.tablet && !mq.phone"
         class="button"
         :icon="require('@/assets/options/icon_menu_lateral.svg')"
-        :title="isMenuPanelDisplayed ? $t('Messaging.hideMenuPanel') : $t('displayMenuPanel')"
+        :title="isMenuPanelDisplayed ? $t('hideMenuPanel') : $t('displayMenuPanel')"
         name="toggleMessagingMenu"
         icon-height="20px"
         alt="toggle menu"
@@ -45,7 +45,7 @@
         v-if="!mq.tablet && !mq.phone"
         class="button"
         :icon="require('@/assets/options/icon_refresh.svg')"
-        :title="$t('Messaging.refresh')"
+        :title="$t('refresh')"
         name="refresh"
         icon-height="20px"
         alt="refresh"
@@ -243,7 +243,9 @@ export default {
   "mark": "Marquer",
   "trash": "Supprimer",
   "displayMenuPanel": "Afficher le menu",
-  "all": "Tous"
+  "hideMenuPanel": "Cacher le menu",
+  "all": "Tous",
+  "refresh": "Rafraîchir"
 }
 
 </i18n>
