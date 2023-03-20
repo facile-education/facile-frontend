@@ -49,6 +49,8 @@ export default {
         removePlugins: [
           'CKFinder',
           'CKFinderUploadAdapter',
+          'CKBox',
+          'CKBoxEditing',
           'CloudServicesUploadAdapter',
           'CloudServices',
           'EasyImage',

@@ -1,12 +1,11 @@
 import axios from 'axios'
 import constants from '@/api/constants'
-import { getCookie } from '@/utils/browser.util'
 
 export default {
   getThreads,
   getThreadMessages,
   getMessageThread,
-  getNbNewMessages,
+  getNbMessages,
   searchMessages,
   getMessageRecipients,
   getMessageAnswerForwardInfos,
@@ -27,7 +26,6 @@ const MESSAGING_PATH = '/messaging-portlet.message'
 function getThreads (folderId, start, nbDisplayed, unreadOnly) {
   return axios.get(constants.JSON_WS_URL + MESSAGING_PATH + '/get-threads', {
     params: {
-      p_auth: getCookie('pauth'),
       folderId: folderId,
       fromDate: start,
       nbDisplayed: nbDisplayed,
@@ -42,7 +40,6 @@ function getThreads (folderId, start, nbDisplayed, unreadOnly) {
 function getThreadMessages (threadId, folderId) {
   return axios.get(constants.JSON_WS_URL + MESSAGING_PATH + '/get-thread-messages', {
     params: {
-      p_auth: getCookie('pauth'),
       threadId: threadId,
       folderId: folderId
     }
@@ -52,19 +49,18 @@ function getThreadMessages (threadId, folderId) {
 function getMessageThread (messageId) {
   return axios.get(constants.JSON_WS_URL + MESSAGING_PATH + '/get-message-thread', {
     params: {
-      p_auth: getCookie('pauth'),
       messageId: messageId
     }
   }).then(response => response.data)
 }
 
 /**
- * Get number of new messges
+ * Get number of both messages and unread messages
  */
-function getNbNewMessages () {
-  return axios.get(constants.JSON_WS_URL + MESSAGING_PATH + '/get-nb-new-messages', {
+function getNbMessages (folderId) {
+  return axios.get(constants.JSON_WS_URL + MESSAGING_PATH + '/get-nb-messages', {
     params: {
-      p_auth: getCookie('pauth')
+      folderId
     }
   }).then(response => response.data)
 }
@@ -75,7 +71,6 @@ function getNbNewMessages () {
 function searchMessages (folderId, search, startIndex, nbResults, unreadOnly) {
   return axios.get(constants.JSON_WS_URL + MESSAGING_PATH + '/search-messages', {
     params: {
-      p_auth: getCookie('pauth'),
       folderId: folderId,
       search: search,
       startIndex: startIndex,
@@ -91,7 +86,6 @@ function searchMessages (folderId, search, startIndex, nbResults, unreadOnly) {
 function getMessageRecipients (messageId) {
   return axios.get(constants.JSON_WS_URL + MESSAGING_PATH + '/get-message-recipients', {
     params: {
-      p_auth: getCookie('pauth'),
       messageId: messageId
     }
   }).then(response => response.data)
@@ -103,7 +97,6 @@ function getMessageRecipients (messageId) {
 function getMessageAnswerForwardInfos (messageId, isReply, isReplyAll, isForward, isDraft) {
   return axios.get(constants.JSON_WS_URL + MESSAGING_PATH + '/get-message-answer-forward-infos', {
     params: {
-      p_auth: getCookie('pauth'),
       messageId: messageId,
       isReply: isReply,
       isReplyAll: isReplyAll,
@@ -118,7 +111,6 @@ function getMessageAnswerForwardInfos (messageId, isReply, isReplyAll, isForward
  */
 function setMessageReadStatus (messageIds, isRead) {
   const formData = new FormData()
-  formData.append('p_auth', getCookie('pauth'))
   formData.append('messageIds', JSON.stringify(messageIds))
   formData.append('isRead', isRead)
 
@@ -132,7 +124,6 @@ function setMessageReadStatus (messageIds, isRead) {
  */
 function sendMessage (recipients, subject, content, attachedFiles, draftMessageId, originMessageId, isReply, isForward, isSupport) {
   const formData = new FormData()
-  formData.append('p_auth', getCookie('pauth'))
   formData.append('recipients', JSON.stringify(recipients))
   formData.append('subject', subject)
   formData.append('content', content)
@@ -153,7 +144,6 @@ function sendMessage (recipients, subject, content, attachedFiles, draftMessageI
  */
 function saveDraft (recipients, subject, content, attachedFiles, draftMessageId, isSupport) {
   const formData = new FormData()
-  formData.append('p_auth', getCookie('pauth'))
   formData.append('recipients', JSON.stringify(recipients))
   formData.append('subject', subject)
   formData.append('content', content)
@@ -171,7 +161,6 @@ function saveDraft (recipients, subject, content, attachedFiles, draftMessageId,
 function getMessageFollowUpInfos (messageId) {
   return axios.get(constants.JSON_WS_URL + MESSAGING_PATH + '/get-message-follow-up-infos', {
     params: {
-      p_auth: getCookie('pauth'),
       messageId: messageId
     }
   }).then(response => response.data)
@@ -182,7 +171,6 @@ function getMessageFollowUpInfos (messageId) {
  */
 function moveMessages (folderId, messageIds) {
   const formData = new FormData()
-  formData.append('p_auth', getCookie('pauth'))
   formData.append('folderId', folderId)
   formData.append('messageIds', JSON.stringify(messageIds))
 
@@ -196,7 +184,6 @@ function moveMessages (folderId, messageIds) {
  */
 function deleteMessages (messageIds) {
   const formData = new FormData()
-  formData.append('p_auth', getCookie('pauth'))
   formData.append('messageIds', JSON.stringify(messageIds))
 
   return axios.post(constants.JSON_WS_URL + MESSAGING_PATH + '/delete-messages',
@@ -210,7 +197,6 @@ function deleteMessages (messageIds) {
 function getUsersCompletion (query) {
   return axios.get(constants.JSON_WS_URL + MESSAGING_PATH + '/get-users-completion', {
     params: {
-      p_auth: getCookie('pauth'),
       query: query
     }
   }).then(response => response.data)

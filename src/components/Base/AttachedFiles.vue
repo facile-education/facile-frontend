@@ -10,7 +10,7 @@
       <div
         v-for="attachedFile in attachedFiles"
         :key="attachedFile.fileId"
-        :title="attachedFile.name"
+        :title="viewFileName(attachedFile)"
         class="attached-file"
         @click="viewAttachedFile(attachedFile)"
       >
@@ -111,6 +111,12 @@ export default {
     },
     doSelectFolderAction (targetFolder) {
       this.$store.dispatch('clipboard/duplicate', { targetFolder, entities: [this.selectedFileForAction] })
+    },
+    viewAttachedFile (attachedFile) {
+      this.$store.dispatch('documents/openFile', { id: attachedFile.id, name: attachedFile.name })
+    },
+    viewFileName (attachedFile) {
+      return this.$t('view') + ' ' + attachedFile.name
     }
   }
 }
@@ -151,6 +157,10 @@ export default {
         border: 1px solid black;
       }
 
+      .file-icon {
+        margin-left: 10px;
+      }
+
       p {
         margin-left: 10px;
         margin-right: 10px;
@@ -178,6 +188,9 @@ export default {
       }
     }
   }
+  &:hover {
+    cursor: pointer;
+  }
 }
 </style>
 
@@ -187,6 +200,7 @@ export default {
   "attachedFiles": " pièces jointes",
   "addToFolder": "Enregistrer dans mes documents",
   "download": "Télécharger",
+  "view": "Visualiser",
   "remove": "Supprimer"
 }
 </i18n>

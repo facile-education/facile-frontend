@@ -21,7 +21,22 @@
         :title="currentFolder && currentFolder.type === 5 ? currentFolderName : ''"
       >
         <p>{{ formattedCurrentFolderName }}</p>
-        <p>{{ nbNewMessages + $t('unRead') }}</p>
+        <div class="counts">
+          <span
+            v-if="isReadOnlyToggled"
+            class="nb-messages"
+          >{{ $t('filterByUnread') }}</span>
+          <span
+            v-else
+            class="nb-messages"
+          >{{ $tc('messages', nbMessages) }}</span>
+          <BaseIcon
+            name="circle"
+            class="fa-xs unread"
+            :class="{'color': themeColor}"
+          />
+          <span class="nb-unread">{{ $tc('unRead', nbUnread) }}</span>
+        </div>
       </div>
 
       <img
@@ -39,10 +54,11 @@
 
 <script>
 import ThreadListOptions from '@components/Messaging/ThreadListOptions'
+import BaseIcon from '@components/Base/BaseIcon'
 
 export default {
   name: 'ThreadListHeader',
-  components: { ThreadListOptions },
+  components: { ThreadListOptions, BaseIcon },
   inject: ['mq'],
   data () {
     return {
@@ -75,8 +91,17 @@ export default {
     formattedCurrentFolderName () {
       return this.currentFolderName ? this.currentFolderName.toUpperCase() : ''
     },
-    nbNewMessages () {
-      return this.$store.state.messaging.nbNewMessages
+    nbUnread () {
+      return this.$store.state.messaging.currentFolder.nbUnread
+    },
+    nbMessages () {
+      return this.$store.state.messaging.currentFolder.nbMessages
+    },
+    themeColor () {
+      return this.$store.state.user.themeColor
+    },
+    isReadOnlyToggled () {
+      return this.$store.state.messaging.unreadOnly
     }
   },
   methods: {
@@ -115,6 +140,20 @@ export default {
       font-weight: bold;
       justify-content: center;
 
+      .counts {
+        display: flex;
+        .nb-messages {
+          font-weight: 100;
+          margin-right: 10px;
+        }
+        .unread {
+          margin: auto;
+        }
+        .nb-unread {
+          font-weight: 600;
+          margin-left: 10px;
+        }
+      }
       p {
         max-width: 170px; /* TODO find solution to mix that with flex: justify-content:space-between */
         overflow: hidden;
@@ -152,6 +191,20 @@ export default {
         left: 50%;
         transform: translate(-50%, -50%);
         margin: 0;
+        .counts {
+          display: flex;
+          .nb-messages {
+            font-weight: 200;
+            margin-right: 10px;
+          }
+          svg {
+            color: green;
+          }
+          .nb-unread {
+            font-weight: 600;
+            margin-left: 10px;
+          }
+        }
       }
 
       .toggle-multi-selection {
@@ -168,6 +221,8 @@ export default {
 
 <i18n locale="fr">
 {
-  "unRead": " non lus"
+  "unRead": "0 non lu | 1 non lu | {count} non lus",
+  "messages": "0 message | 1 message | {count} messages",
+  "filterByUnread": "Filtré par non lus"
 }
 </i18n>

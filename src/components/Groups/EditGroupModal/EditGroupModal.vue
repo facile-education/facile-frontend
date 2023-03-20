@@ -144,9 +144,9 @@ import {
   createCommunity,
   editCommunity,
   checkCommunityName,
-  getCommunityMembers,
-  getUsersCompletion
+  getCommunityMembers
 } from '@/api/groups.service'
+import { searchDirectory } from '@/api/contact.service'
 import { getSchools } from '@/api/organization.service'
 import { getRoleList } from '@/api/role.service'
 
@@ -269,10 +269,10 @@ export default {
     getCompletion () {
       if (this.searchInput.length >= 2) {
         this.isLoadingCompletion = true
-        getUsersCompletion(this.searchInput, this.selectedSchool.schoolId, this.selectedRole.roleId).then((data) => {
+        searchDirectory(this.searchInput, this.selectedRole.roleId, this.selectedSchool.schoolId).then((data) => {
           this.isLoadingCompletion = false
           if (data.success) {
-            this.completionUsers = data.results
+            this.completionUsers = data.users
           } else {
             console.error('Error while getting users', data.error)
           }

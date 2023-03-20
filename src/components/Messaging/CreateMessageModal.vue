@@ -8,11 +8,7 @@
       class="create-message-modal"
       :class="{'phone': mq.phone}"
       @close="onClose"
-      @keydown.exact.backspace.stop=""
-      @keydown.exact.delete.stop=""
-      @keydown.exact.f2.stop=""
-      @keydown.ctrl.stop=""
-      @keydown.exact.escape.stop="onClose"
+      @keydown.exact.escape.stop="onConfirmClose"
     >
       <template #header>
         <span
@@ -35,20 +31,31 @@
 
       <template #body>
         <!-- Recipients -->
-        <PentilaTagsInput
-          ref="tagsinput"
-          v-model="recipients"
-          :close-on-select="true"
-          :completion-only="true"
-          :min-length="1"
-          :placeholder="$t('recipientsPlaceHolder')"
-          display-field="text"
-          id-field="id"
-          :list="autocompleteItems"
-          class="recipients"
-          :class="device"
-          @input="searchTimeOut"
-        />
+        <div class="recipients-panel">
+          <PentilaTagsInput
+            ref="tagsinput"
+            v-model="recipients"
+            :close-on-select="true"
+            :completion-only="true"
+            :min-length="1"
+            :placeholder="$t('recipientsPlaceHolder')"
+            display-field="text"
+            id-field="id"
+            :list="autocompleteItems"
+            class="recipients"
+            :class="device"
+            @input="searchTimeOut"
+          />
+          <PentilaButton
+            :class="{'phone': mq.phone}"
+            class="create-button"
+            @click="displayUserPicker"
+          >
+            <NeroIcon
+              name="fa-plus"
+            />
+          </PentilaButton>
+        </div>
         <div class="error-container">
           <ErrorMessage
             v-if="error==='missingRecipient'"
@@ -92,7 +99,7 @@
             @click="displayFilePicker"
           />
           <AttachedFiles
-            :initial-attached-files="attachedFiles"
+            :attached-files="attachedFiles"
             :read-only="false"
             class="files"
             @removeAttachedFile="removeAttachedFile"
@@ -124,11 +131,20 @@
   <teleport to="body">
     <FilePickerModal
       v-if="isFilePickerModalDisplayed"
-      class="file-picker-mode"
-      height="30em"
       :multi-selection="true"
       @addedFiles="addNewFiles"
       @close="closeFilePicker"
+    />
+  </teleport>
+  <teleport to="body">
+    <UserPickerModal
+      v-if="isUserPickerModalDisplayed"
+      v-model:recipients="recipients"
+      class="user-picker-mode"
+      height="30em"
+      @addedUsers="addNewUsers"
+      @toggleUserSelection="toggleUserSelection"
+      @close="closeUserPicker"
     />
   </teleport>
 </template>
@@ -142,8 +158,10 @@ import messagingUtils from '@/utils/messaging.utils'
 import ErrorMessage from '@components/Base/ErrorMessage.vue'
 import AttachedFiles from '@components/Base/AttachedFiles'
 import FilePickerModal from '@components/FilePicker/FilePickerModal'
+import UserPickerModal from '@components/UserPicker/UserPickerModal'
 import TextContent from '@components/Progression/Edit/Contents/TextContent'
 import dayjs from 'dayjs'
+import NeroIcon from '@/components/Nero/NeroIcon'
 
 const isRecipientsValid = (str) => {
   return !(str.length > 0) // A recipient at least
@@ -161,7 +179,9 @@ export default {
     TextContent,
     FilePickerModal,
     ErrorMessage,
-    AttachedFiles
+    AttachedFiles,
+    UserPickerModal,
+    NeroIcon
   },
   inject: ['mq'],
   props: {
@@ -181,6 +201,7 @@ export default {
       error: '',
       autocompleteItems: [],
       isFilePickerModalDisplayed: false,
+      isUserPickerModalDisplayed: false,
       originMessage: {},
       initialRecipients: []
     }
@@ -305,7 +326,6 @@ export default {
         if (data.success) {
           this.autocompleteItems = data.results
           this.autocompleteItems.forEach((item) => {
-            item.type = 1 // Override generic getUserCompletion results to have the good type
             item.text = item.name
           })
         } else {
@@ -330,6 +350,7 @@ export default {
       const successMessage = this.$t('successMessage')
       // In case of reply, replyAll or forward
       // previous content is added in case of forward OR (reply or replyAll AND no recipient added)
+      console.log('before sending message, recipients=', this.recipients)
       messageService.sendMessage(
         this.recipients,
         this.subject,
@@ -387,6 +408,12 @@ export default {
       })
       this.onClose()
     },
+    onConfirmClose () {
+      this.$store.dispatch('warningModal/addWarning', {
+        text: this.$t('closeWarning'),
+        lastAction: { fct: this.onClose }
+      })
+    },
     onClose () {
       this.$emit('close')
       this.recipients = []
@@ -396,6 +423,18 @@ export default {
       this.closeFilePicker()
       this.$store.dispatch('messaging/closeCreateMessageModal')
     },
+    displayUserPicker () {
+      this.isUserPickerModalDisplayed = true
+    },
+    closeUserPicker () {
+      this.isUserPickerModalDisplayed = false
+    },
+    addNewUsers (newUsers) {
+      this.recipients = [...newUsers]
+    },
+    toggleUserSelection (contact) {
+      this.recipients.push(contact)
+    },
     displayFilePicker () {
       this.isFilePickerModalDisplayed = true
     },
@@ -403,7 +442,7 @@ export default {
       this.isFilePickerModalDisplayed = false
     },
     addNewFiles (newFiles) {
-      this.attachedFiles = [...newFiles]
+      this.attachedFiles = [...this.attachedFiles, ...newFiles]
     },
     removeAttachedFile (fileToRemove) {
       this.attachedFiles.splice(this.attachedFiles.indexOf(fileToRemove), 1)
@@ -436,6 +475,15 @@ export default {
 .create-message-modal {
     padding: 20px;
     display: flex;
+
+  .recipients-panel{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .recipients {
+    width: 90%;
+  }
 
   .recipients, .subject {
     padding-bottom: 10px;
@@ -503,6 +551,8 @@ export default {
   "containsNoCotes": "Ne doit pas contenir de caractères spéciaux",
   "missingRecipient": "Sélectionnez au moins un destinataire",
   "sizeLimit1": "Ne doit pas dépasser ",
-  "sizeLimit2": " caractères"
+  "sizeLimit2": " caractères",
+  "addRecipients": "Ajouter des destinataires",
+  "closeWarning": "Souhaitez-vous fermer cette fenêtre ? (Vous perdrez son contenu)"
 }
 </i18n>

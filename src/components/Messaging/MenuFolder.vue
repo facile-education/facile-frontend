@@ -310,13 +310,14 @@ export default {
 
       .folder-action {
         margin-right: 5px;
+        height: 40px;
       }
 
       .edit {
-        width: 12px;
+        width: 20px;
 
         &:hover {
-          width: 13px;
+          width: 21px;
         }
       }
 
