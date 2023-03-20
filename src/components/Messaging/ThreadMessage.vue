@@ -68,6 +68,7 @@ import dayjs from 'dayjs'
 import BaseIcon from '@components/Base/BaseIcon'
 
 export default {
+  name: 'ThreadMessage',
   components: {
     BaseIcon
   },

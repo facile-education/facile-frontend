@@ -337,6 +337,7 @@ export default {
 @import '@design';
 
 .main {
+  --icons-width: 40px;
   display: flex;
   width: 100%;
   cursor: pointer;
@@ -351,7 +352,7 @@ export default {
   }
 
   .selected-icon {
-    width: 40px;
+    width: var(--icons-width);
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -377,10 +378,10 @@ export default {
   }
 
   .icons {
+    width: var(--icons-width);
     padding-top: 17px;
     padding-bottom: 10px;
-    width: 40px;
-    min-width: 40px;
+    min-width: var(--icons-width);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -410,7 +411,7 @@ export default {
     display: flex;
     flex-direction: column;
     padding: 10px 10px 10px 0;
-    width: 100%;
+    width: calc(100% - var(--icons-width));
 
     p {
       margin: 0;
@@ -423,6 +424,9 @@ export default {
       margin-bottom: 5px;
       justify-content: space-between;
       .sender {
+        overflow-x: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
         font-weight: bold;
       }
       .sendDate {
