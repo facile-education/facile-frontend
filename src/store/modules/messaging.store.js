@@ -63,7 +63,6 @@ export const mutations = {
     state.loadingThreadsError = payload
   },
   setMessagingFolders (state, folders) {
-    console.log('set messaging folders to ', folders)
     state.messagingFolders = folders
   },
   addPersonalRootFolder (state, folder) {
@@ -312,7 +311,6 @@ export const actions = {
     commit('setCurrentThreadMessages', messages)
   },
   selectFolder ({ commit, state }, folder) {
-    console.log('select folder ', folder)
     if (folder.folderId !== state.currentFolder.folderId) {
       commit('setCurrentFolder', folder)
       commit('setSelectedThreads', [])

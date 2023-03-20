@@ -115,6 +115,7 @@ export default {
   },
   created () {
     this.getSignature()
+    this.$store.dispatch('messaging/loadMessagingFolders')
     this.$watch(
       () => this.$route.params,
       () => {
@@ -126,10 +127,7 @@ export default {
         } else {
           this.$store.dispatch('messaging/setDisplayMessageFromRouting', false)
         }
-        this.$store.dispatch('messaging/loadMessagingFolders')
       },
-      // fetch the data when the view is created and the data is
-      // already being observed
       { immediate: true }
     )
   },
