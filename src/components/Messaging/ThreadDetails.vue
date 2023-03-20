@@ -134,7 +134,10 @@
         v-else-if="!areMultiThreadsSelected && messageListWithoutSelfMessages.length === 1 || (selectedMessages.length === 1 && !isSelectedMessageFromRightPanel)"
         class="single-message"
       >
-        <Message :message="messageToDisplay" />
+        <Message
+          :key="messageToDisplay.messageId"
+          :message="messageToDisplay"
+        />
       </div>
 
       <!-- Thread with >1 messages -->
