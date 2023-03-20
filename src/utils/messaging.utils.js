@@ -161,16 +161,10 @@ const MessagingUtils = {
       return ''
     }
     let shortRecipients = 'À: ' + message.recipients[0].text
-    if (message.nbRecipients === 1) {
-      // nothing
-    } else if (message.nbRecipients === 2) {
+    if (message.nbRecipients === 2) {
       shortRecipients += ', ' + message.recipients[1].text
-    } else if (message.nbRecipients === 3) {
-      shortRecipients += ', ' + message.recipients[1].text
-      shortRecipients += ', ' + message.recipients[2].text
-    } else {
-      shortRecipients += ', ' + message.recipients[1].text
-      const nbOthers = message.nbRecipients - 2
+    } else if (message.nbRecipients > 2) {
+      const nbOthers = message.nbRecipients - 1
       shortRecipients += ' et ' + nbOthers + ' autres'
     }
     return shortRecipients
