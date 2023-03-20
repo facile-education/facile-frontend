@@ -1,33 +1,30 @@
 <template>
   <Layout v-if="selectedSchool">
     <h1 :aria-label="$t('serviceTitle')" />
-    <div
-      class="header"
-      :class="{'phone' : mq.phone || mq.tablet}"
-    >
+    <NeroToolbar>
       <StatsActivesUsers
         v-if="!(mq.phone || mq.tablet)"
         :start-time="selectedStartDate"
         :end-time="selectedEndDate"
         :selected-school="selectedSchool"
       />
-      <section class="selectors">
-        <DateRangePicker
-          v-if="minDate !== undefined"
-          :initial-range="{start: selectedStartDate, end: selectedEndDate}"
-          :max-date="maxDate"
-          :min-date="minDate"
-          @updateDates="updateDates"
-        />
-        <PentilaDropdown
-          v-if="managedSchoolList.length > 1"
-          v-model="selectedSchool"
-          class="school-dropdown"
-          :list="managedSchoolList"
-          display-field="schoolName"
-        />
-      </section>
-    </div>
+      <DateRangePicker
+        v-if="minDate !== undefined"
+        :initial-range="{start: selectedStartDate, end: selectedEndDate}"
+        :max-date="maxDate"
+        :min-date="minDate"
+        class="range-picker"
+        @updateDates="updateDates"
+      />
+      <PentilaDropdown
+        v-if="managedSchoolList.length > 1"
+        v-model="selectedSchool"
+        class="school-dropdown"
+        :list="managedSchoolList"
+        display-field="schoolName"
+        :sort="!isGlobalAdmin"
+      />
+    </NeroToolbar>
 
     <StatsActivesUsers
       v-if="mq.phone || mq.tablet"
@@ -98,25 +95,34 @@
 
 <script>
 import Layout from '@/router/layouts/EmptyLayout'
-import StatsActivesUsers from '@components/Statistics/StatsActivesUsers.vue'
-import GlobalStat from '@components/Statistics/GlobalStat.vue'
-import StatsDoughnut from '@components/Statistics/StatsDoughnut.vue'
-import StatsChart from '@components/Statistics/StatsChart.vue'
+import NeroToolbar from '@/components/Nero/NeroToolbar'
+import StatsActivesUsers from '@components/Statistics/StatsActivesUsers'
+import GlobalStat from '@components/Statistics/GlobalStat'
+import StatsDoughnut from '@components/Statistics/StatsDoughnut'
+import StatsChart from '@components/Statistics/StatsChart'
 import dayjs from 'dayjs'
-import DateRangePicker from '@components/Base/DateRangePicker.vue'
+import DateRangePicker from '@components/Base/DateRangePicker'
 
 export default {
   name: 'Statistics',
-  components: { DateRangePicker, StatsChart, StatsActivesUsers, StatsDoughnut, GlobalStat, Layout },
+  components: { DateRangePicker, NeroToolbar, StatsChart, StatsActivesUsers, StatsDoughnut, GlobalStat, Layout },
   inject: ['mq'],
   data () {
     return {
+      allSchools: { schoolName: this.$t('allSchools'), schoolId: 0 },
       selectedStartDate: dayjs().subtract(7, 'days'),
       selectedEndDate: dayjs()
     }
   },
   computed: {
+    isGlobalAdmin () {
+      return (this.$store.state.user.isAdministrator || this.$store.state.user.isENTAdmin)
+    },
     managedSchoolList () {
+      if (this.isGlobalAdmin && this.$store.state.administration.schoolList !== undefined) {
+        return [this.allSchools, ...this.$store.state.administration.schoolList]
+      }
+
       return this.$store.state.administration.schoolList
     },
     selectedSchool: {
@@ -155,22 +161,8 @@ export default {
 <style lang="scss" scoped>
 @import "@design";
 
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  &.phone{
-    justify-content: flex-end;
-  }
-}
-
-.selectors {
-  display: flex;
-
-  .school-dropdown {
-    margin-left: 15px;
-  }
+.range-picker {
+  margin-left: auto;
 }
 
 @media screen and (min-width: 774px) {  // Inline if enough space
@@ -196,6 +188,7 @@ export default {
 
 <i18n locale="fr">
 {
+  "allSchools": "Tous les établissements",
   "serviceTitle": "Statistiques"
 }
 </i18n>
