@@ -106,7 +106,7 @@
       <Transition name="slide-fade">
         <div
           v-if="isThreadExpanded"
-          class="expanded theme-light-background-color"
+          class="expanded theme-extra-light-background-color"
           data-test="threadExpansion"
         >
           <div
