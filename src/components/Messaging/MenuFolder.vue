@@ -33,7 +33,7 @@
       </div>
 
       <div
-        v-if="isHovering"
+        v-if="isHovering && !(mq.phone || mq.tablet)"
         class="folder-actions"
       >
         <img
