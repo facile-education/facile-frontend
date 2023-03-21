@@ -3,7 +3,7 @@
     ref="iconOption"
     :data-test="'option_' + name"
     class="container"
-    :class="{'hover': isHovering || forceHovering, 'gray': grayBackgroundColor}"
+    :class="{'hover': isHovering || forceHovering}"
     :title="title"
     @dragstart.prevent
     @mouseover="isHovering = true"
@@ -61,10 +61,6 @@ export default {
     forceHovering: {
       type: Boolean,
       default: false
-    },
-    grayBackgroundColor: {
-      type: Boolean,
-      default: false
     }
   },
   emits: ['click', 'mousedown', 'mouseup'],
@@ -99,16 +95,11 @@ export default {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    background-color: white;
     /* disable text selection on documents (not convenient when shift-select) */
     -ms-user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
     user-select: none; /* CSS3 (little to no support) */
-
-    &.gray {
-      background-color: #F3F6F8;
-    }
 
     &.hover {
       border: 1px solid $color-border;
