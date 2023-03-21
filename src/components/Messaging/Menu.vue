@@ -71,6 +71,7 @@
         </div>
         {{ $t('Messaging.personalFolders') }}
         <div
+          v-if="!(mq.phone || mq.tablet)"
           class="folder-actions"
           data-test="folder-actions"
         >
