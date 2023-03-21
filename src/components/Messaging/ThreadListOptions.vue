@@ -26,7 +26,7 @@
         :icon="require('@assets/icon_engrenage.svg')"
         :title="$t('Messaging.Parameters.header')"
         name="toggleMessagingMenu"
-        icon-height="20px"
+        icon-height="18px"
         alt="parameters"
         @click="openParametersModal"
       />
@@ -37,7 +37,7 @@
         :icon="require('@/assets/options/icon_menu_lateral.svg')"
         :title="isMenuPanelDisplayed ? $t('hideMenuPanel') : $t('displayMenuPanel')"
         name="toggleMessagingMenu"
-        icon-height="20px"
+        icon-height="18px"
         alt="toggle menu"
         @click="toggleSideMenuPanel"
       />
@@ -47,7 +47,7 @@
         :icon="require('@/assets/options/icon_refresh.svg')"
         :title="$t('refresh')"
         name="refresh"
-        icon-height="20px"
+        icon-height="18px"
         alt="refresh"
         @click="refresh"
       />
@@ -57,7 +57,7 @@
         :icon="require('@/assets/options/icon_edit_texte.svg')"
         :title="$t('Messaging.new')"
         name="createNewMessage"
-        icon-height="20px"
+        icon-height="18px"
         alt="new message"
         @click="createNewMessage"
       />
@@ -67,7 +67,7 @@
         :icon="unreadOnly ? require('@/assets/options/icon_unread_filter_active.svg') : require('@/assets/options/icon_unread_filter.svg')"
         :title="unreadOnly ? $t('all') : $t('Messaging.unreadOnly')"
         name="toggleUnreadOnly"
-        icon-height="20px"
+        icon-height="18px"
         :alt="$t('unreadOnly')"
         @click="toggleUnreadOnly"
       />

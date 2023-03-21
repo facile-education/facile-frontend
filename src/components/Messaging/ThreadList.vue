@@ -1,5 +1,5 @@
 <template>
-  <div
+  <section
     class="panel"
     data-test="threads-panel"
     :class="{'phone': mq.phone || mq.tablet}"
@@ -72,7 +72,7 @@
     </div>
 
     <ThreadListOptions v-if="mq.phone || mq.tablet" />
-  </div>
+  </section>
 </template>
 
 <script>
@@ -315,8 +315,13 @@ export default {
 
 .panel {
   height: 100%;
+  border-right: 1px solid $color-border;
+  border-left: 1px solid $color-border;
 
   &.phone {
+    border: none;
+    min-width: 0;
+
     .thread-list-header {
       position: relative;
     }
@@ -324,7 +329,7 @@ export default {
     .thread-list {
       position: relative;
       height: calc(100% - (#{$messaging-mobile-header-height} + #{$messaging-mobile-footer-height} + 2px));
-      padding: 0;
+      border: none;
     }
 
     .pull-to-refresh-icon {
@@ -365,7 +370,6 @@ hr.hr-thread-list {
 .thread-list {
   position: relative;
   height: calc(100% - (#{$messaging-header-height} + 2px)); /* 100% - (banner-height + hr-height) */
-  padding: 0 10px;
 }
 
 .scroll {

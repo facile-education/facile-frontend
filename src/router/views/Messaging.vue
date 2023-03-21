@@ -4,33 +4,25 @@
       class="messaging-body"
       :class="{'mobile': mq.phone || mq.tablet, 'tablet': mq.tablet}"
     >
-      <Menu
+      <div
         v-if="!mq.phone && !mq.tablet"
-        v-show="isMenuPanelDisplayed"
-        data-test="messaging-menu"
-        class="menu-panel"
-      />
-      <Split
-        v-if="(!mq.phone && ! mq.tablet)"
-        ref="split"
-        class="split"
-        :gutter-size="1"
+        class="desktop-display"
       >
-        <SplitArea
-          data-test="threads-panel"
-          :size="44.7"
-          :min-size="475"
+        <div
+          class="left"
+          :class="{'menu-displayed': isMenuPanelDisplayed}"
         >
-          <ThreadList />
-        </SplitArea>
-        <SplitArea
-          data-test="messages-panel"
-          :size="55.3"
-          :min-size="350"
-        >
-          <ThreadDetails />
-        </SplitArea>
-      </Split>
+          <Menu
+            v-show="isMenuPanelDisplayed"
+            data-test="messaging-menu"
+            class="menu-panel"
+          />
+
+          <ThreadList class="thread-list" />
+        </div>
+
+        <ThreadDetails class="thread-details" />
+      </div>
 
       <div v-else>
         <ThreadList />
@@ -50,13 +42,10 @@
       </div>
 
       <teleport to="body">
-        <!-- Parameters -->
-        <!--        <ParametersModal v-if="isParametersModalDisplayed" />-->
         <PreferencesModal
           v-if="isParametersModalDisplayed"
           tab="messaging"
         />
-        <!-- Create message modal -->
         <CreateMessageModal v-if="isCreateMessageModalDisplayed" />
       </teleport>
     </div>
@@ -66,8 +55,6 @@
 <script>
 
 import Layout from '@/router/layouts/EmptyLayout'
-import Split from '@components/Split/Split'
-import SplitArea from '@components/Split/SplitArea'
 import Menu from '@components/Messaging/Menu'
 import ThreadList from '@components/Messaging/ThreadList'
 import ThreadDetails from '@components/Messaging/ThreadDetails'
@@ -80,8 +67,6 @@ const PreferencesModal = defineAsyncComponent(() => import('@components/Preferen
 export default {
   name: 'Messaging',
   components: {
-    Split,
-    SplitArea,
     Layout,
     Menu,
     ThreadList,
@@ -171,12 +156,37 @@ export default {
   display: flex;
 
   .menu-panel {
-    width: 240px;
+    min-width: 240px;
   }
 
-  .split {
-    height: 100%;
-    flex: 1;
+  .desktop-display {
+    width: 100%;
+    display: flex;
+
+    .left {
+      height: 100%;
+      max-width: 600px;
+      flex: 1;
+      display: flex;
+
+      &.menu-displayed {
+        max-width: 700px;
+      }
+    }
+
+    .thread-list {
+      min-width: 358px;
+      flex: 1;
+    }
+
+    .thread-details {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .thread-list, .thread-details {
+      height: 100%;
+    }
   }
 
   &.mobile {

@@ -87,9 +87,13 @@ export default {
   @import "@design";
 
   .container {
+    --container-size: 30px;
+    --container-min-size: 30px;
     position: relative;
-    height: 40px;
-    width: 40px;
+    height: var(--container-size);
+    min-height: var(--container-min-size);
+    width: var(--container-size);
+    min-width: var(--container-min-size);
     border-radius: 6px;
     display: flex;
     align-items: center;
