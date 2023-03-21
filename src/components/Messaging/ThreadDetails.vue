@@ -1,5 +1,5 @@
 <template>
-  <div
+  <section
     class="thread-details"
     data-test="messages-panel"
   >
@@ -20,7 +20,7 @@
           :icon="require('@/assets/options/icon_edit_texte.svg')"
           :title="$t('Messaging.new')"
           name="createNewMessage"
-          icon-height="20px"
+          icon-height="18px"
           alt="new message"
           @click="createNewMessage"
         />
@@ -34,7 +34,7 @@
           :icon="require('@assets/icon_trash.svg')"
           :title="$t('Messaging.deleteMessage')"
           name="trash"
-          icon-height="20px"
+          icon-height="18px"
           alt="delete item"
           @click="deleteItem"
         />
@@ -48,7 +48,7 @@
           :icon="require('@/assets/options/icon_unread_filter.svg')"
           :title="$t('Messaging.markAsRead')"
           name="mark-as-read"
-          icon-height="20px"
+          icon-height="18px"
           alt="mark-as-read item"
           @click="markAsRead"
         />
@@ -62,7 +62,7 @@
           :icon="require('@assets/options/icon_answer.svg')"
           :title="$t('Messaging.reply')"
           name="reply"
-          icon-height="20px"
+          icon-height="18px"
           alt="reply"
           @click="reply"
         />
@@ -76,7 +76,7 @@
           :icon="require('@assets/options/icon_answer_all.svg')"
           :title="$t('Messaging.replyAll')"
           name="replyAll"
-          icon-height="20px"
+          icon-height="18px"
           alt="reply All"
           @click="replyAll"
         />
@@ -90,7 +90,7 @@
           :icon="require('@assets/options/icon_share.svg')"
           :title="$t('Messaging.forward')"
           name="forward"
-          icon-height="20px"
+          icon-height="18px"
           alt="forward"
           @click="forward"
         />
@@ -100,7 +100,7 @@
           :icon="require('@assets/options/icon_edit_texte.svg')"
           :title="$t('Messaging.editDraft')"
           name="editDraft"
-          icon-height="20px"
+          icon-height="18px"
           alt="edit draft"
           @click="editDraft"
         />
@@ -159,7 +159,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>

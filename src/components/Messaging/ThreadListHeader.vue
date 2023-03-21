@@ -114,7 +114,7 @@ export default {
 @import "@design";
 
 .splitarea-header {
-  padding: 0 20px;
+  padding: 0 1% 0 3.8%;
   height: $messaging-header-height;
   display: flex;
   justify-content: space-between;
@@ -163,6 +163,7 @@ export default {
 
   &.phone {
     display: block;
+    padding: 0 20px;
     height: $messaging-mobile-header-height;
 
     .header-label {

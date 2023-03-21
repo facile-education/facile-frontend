@@ -1,5 +1,5 @@
 <template>
-  <div class="menu-panel">
+  <section class="menu-panel">
     <div
       v-if="mq.phone || mq.tablet"
       class="menu-header"
@@ -103,7 +103,7 @@
         />
       </div>
     </nav>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -251,7 +251,6 @@ export default {
 
 .menu-panel {
   background-color: white;
-  border-right: 1px solid $color-border;
   height: 100%;
   overflow: auto;
 
