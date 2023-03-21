@@ -15,7 +15,6 @@
         :class="{'is-waiting': isWaiting}"
         :icon="require('@/assets/options/icon_refresh.svg')"
         :title="$t('refresh')"
-        :gray-background-color="true"
         name="refresh"
         icon-height="20px"
         alt=""
