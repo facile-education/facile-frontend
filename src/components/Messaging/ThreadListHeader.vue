@@ -30,8 +30,14 @@
             v-else
             class="nb-messages"
           >{{ $tc('messages', nbMessages) }}</span>
-          <div class="unread theme-background-color" />
-          <span class="nb-unread">{{ $tc('unRead', nbUnread) }}</span>
+          <div
+            v-if="nbUnread>0"
+            class="unread theme-background-color"
+          />
+          <span
+            v-if="nbUnread>0"
+            class="nb-unread theme-text-color"
+          >{{ $tc('unRead', nbUnread) }}</span>
         </div>
       </div>
 
@@ -139,7 +145,9 @@ export default {
         display: flex;
         align-items: center;
         .nb-messages {
-          font-weight: 100;
+          color: $color-new-light-text;
+          font-weight: normal;
+          font-size: 0.875em;
           margin-right: 10px;
         }
         .unread {
@@ -147,7 +155,7 @@ export default {
           @extend %messaging-pellet;
         }
         .nb-unread {
-          font-weight: 600;
+          font-size: 0.875em;
           margin-left: 5px;
         }
       }
@@ -206,7 +214,7 @@ export default {
 <i18n locale="fr">
 {
   "unRead": "0 non lu | 1 non lu | {count} non lus",
-  "messages": "0 message | 1 message | {count} messages",
+  "messages": "Aucun message | 1 message | {count} messages",
   "filterByUnread": "Filtré par non lus"
 }
 </i18n>
