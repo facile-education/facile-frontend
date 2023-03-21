@@ -209,6 +209,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+    opacity: 60%;
 
     .button {
       margin: 0 5px;
@@ -229,6 +230,10 @@ export default {
     padding: 0 20px;
     height: $messaging-mobile-footer-height;
     background-color: $color-messaging-bg;
+
+    .buttons {
+      opacity: 100%;
+    }
 
     .unread {
       margin-left: 0;

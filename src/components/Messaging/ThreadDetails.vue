@@ -4,7 +4,10 @@
     data-test="messages-panel"
   >
     <!-- Contextual actions -->
-    <div class="splitarea-header">
+    <div
+      class="splitarea-header"
+      :class="{'phone': mq.phone || mq.tablet}"
+    >
       <IconOption
         v-if="mq.phone || mq.tablet"
         class="header-icon back-arrow"
@@ -352,6 +355,7 @@ export default {
   .icons {
     display: flex;
     align-items: center;
+    opacity: 60%;
   }
 
   .header-icon {
@@ -380,6 +384,12 @@ export default {
     width: 159px;
     border: 1px solid #D9E2EA;
     border-radius: 6px;
+  }
+
+  &.phone {
+    .icons {
+      opacity: 100%;
+    }
   }
 }
 
