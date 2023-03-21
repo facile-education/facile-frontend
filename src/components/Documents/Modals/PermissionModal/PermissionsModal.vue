@@ -139,12 +139,14 @@ export default {
       if (this.document.type === 'File') {
         permissionsService.saveFilePermissionMatrix(this.document.id, this.permissionMatrix).then((data) => {
           if (data.success) {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('permission-success'), type: 'success' })
             this.onClose()
           }
         })
       } else if (this.document.type === 'Folder') {
         permissionsService.saveFolderPermissionMatrix(this.document.id, this.permissionMatrix, this.isRecursive).then((data) => {
           if (data.success) {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('permission-success'), type: 'success' })
             this.onClose()
           }
         })
@@ -196,6 +198,7 @@ export default {
   "permissions": "Permissions",
   "recursiveLabel": "Appliquer ces permissions à tous les éléments contenus dans le dossier",
   "name": "Rôle",
-  "submit": "Valider"
+  "submit": "Valider",
+  "permission-success": "Permissions applquées"
 }
 </i18n>
