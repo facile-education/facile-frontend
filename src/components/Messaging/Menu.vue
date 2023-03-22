@@ -308,7 +308,7 @@ hr {
     }
 
     .icon-container {
-      width: 30px;
+      min-width: 30px;
       display: flex;
       align-items: center;
       justify-content: center;
