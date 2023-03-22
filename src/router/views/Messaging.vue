@@ -13,9 +13,9 @@
           :class="{'menu-displayed': isMenuPanelDisplayed}"
         >
           <Menu
-            v-show="isMenuPanelDisplayed"
             data-test="messaging-menu"
             class="menu-panel"
+            :class="{'menu-collapsed': !isMenuPanelDisplayed}"
           />
 
           <ThreadList class="thread-list" />
@@ -157,6 +157,16 @@ export default {
 
   .menu-panel {
     min-width: 240px;
+    width: 240px;
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    transition: all .3s ease;
+
+    &.menu-collapsed {
+      min-width: 0;
+      width: 0;
+    }
   }
 
   .desktop-display {
