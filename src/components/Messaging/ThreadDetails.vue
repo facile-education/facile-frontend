@@ -46,22 +46,6 @@
           />
         </li>
         <li
-          v-if="isActionEnabled && (mq.phone || mq.tablet)"
-          class="separator"
-        />
-        <li>
-          <IconOption
-            v-if="isActionEnabled && (mq.phone || mq.tablet)"
-            class="header-icon read-icon"
-            :icon="require('@/assets/options/icon_unread_filter.svg')"
-            :title="$t('Messaging.markAsRead')"
-            name="mark-as-read"
-            icon-height="18px"
-            alt="mark-as-read item"
-            @click="markAsRead"
-          />
-        </li>
-        <li
           v-if="isActionEnabled"
           class="separator"
         />
@@ -284,30 +268,6 @@ export default {
     },
     createNewMessage () {
       messagingUtils.newMessage()
-    },
-    markAsRead () {
-      const messageIds = []
-      let markAsRead = false
-
-      // Add all selected messages
-      for (const selectedMessage of this.selectedMessages) {
-        if (selectedMessage.isNew) {
-          markAsRead = true
-        }
-        messageIds.push(selectedMessage.messageId)
-      }
-
-      if (messageIds.length === 0) { // No messages selected
-        // Pick all messages from selected thread
-        for (const message of this.messageListWithoutSelfMessages) {
-          if (message.isNew) {
-            markAsRead = true
-          }
-          messageIds.push(message.messageId)
-        }
-      }
-
-      messagingUtils.markMessagesAsReadUnread(messageIds, markAsRead)
     },
     selectMessage (message) {
       this.$store.dispatch('messaging/setIsSelectedMessageFromRightPanel', true)
