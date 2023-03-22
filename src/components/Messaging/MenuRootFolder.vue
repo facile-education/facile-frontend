@@ -1,5 +1,5 @@
 <template>
-  <div
+  <button
     class="base-folder"
     :class="{'selected': ($store.state.messaging.currentFolder.folderId === folder.folderId), 'active': isActive}"
     @click="selectFolder(folder)"
@@ -7,21 +7,21 @@
     @dragleave="cancelActive"
     @drop="moveToFolder"
   >
-    <div class="img-container">
+    <span class="img-container">
       <img
         :style="`width: ${iconWidth};`"
         :src="icon"
         :alt="alt"
       >
-    </div>
+    </span>
     {{ folder.folderName }}
-    <div
+    <span
       v-if="nbUnread > 0"
       class="nb-new-messages"
     >
       {{ '(' + nbUnread + ')' }}
-    </div>
-  </div>
+    </span>
+  </button>
 </template>
 
 <script>
@@ -117,6 +117,13 @@ export default {
 
 <style lang="scss" scoped>
 @import '@design';
+
+button {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+}
 
 .base-folder {
   height: 40px;

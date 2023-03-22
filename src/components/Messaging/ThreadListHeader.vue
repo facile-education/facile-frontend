@@ -5,7 +5,7 @@
     data-test="header"
   >
     <div class="header-label">
-      <div
+      <button
         v-if="mq.phone || mq.tablet"
         class="open-menu"
         @click="toggleSideMenuPanel"
@@ -14,8 +14,8 @@
           :src="require('@assets/arrow_right.svg')"
           alt="open menu"
         >
-        <div v-t="'Messaging.boxes'" />
-      </div>
+        <span v-t="'Messaging.boxes'" />
+      </button>
       <div
         class="current-folder"
         :title="currentFolder && currentFolder.type === 5 ? currentFolderName : ''"
@@ -182,6 +182,10 @@ export default {
       .open-menu {
         display: flex;
         align-items: center;
+        margin: 0;
+        padding: 0;
+        background-color: transparent;
+        border: none;
 
         img {
           transform: rotate(180deg);

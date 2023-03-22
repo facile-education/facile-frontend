@@ -1,5 +1,5 @@
 <template>
-  <div
+  <button
     ref="iconOption"
     :data-test="'option_' + name"
     class="container"
@@ -17,13 +17,13 @@
       :src="icon"
       :alt="alt"
     >
-    <div
+    <span
       v-if="nbNotifications!==0"
       class="notifications"
     >
       {{ nbNotifications }}
-    </div>
-  </div>
+    </span>
+  </button>
 </template>
 
 <script>
@@ -85,6 +85,13 @@ export default {
 
 <style lang="scss" scoped>
   @import "@design";
+
+  button {
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+  }
 
   .container {
     --container-size: 30px;

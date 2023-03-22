@@ -193,6 +193,7 @@
   "Messaging": {
     "answered": "Répondu",
     "addFolder": "Nouveau dossier",
+    "addSubFolder": "Nouveau sous-dossier",
     "boxes": "Boîtes",
     "deleteFolder": "@:ContextMenuOptions.delete",
     "forwarded": "Transféré",

@@ -5,73 +5,78 @@
     :class="{'phone': mq.phone || mq.tablet}"
   >
     <!-- Display unread messages only toggle -->
-    <div
+    <IconOption
       v-if="mq.phone || mq.tablet"
-      class="unread"
-    >
-      <IconOption
-        class="button"
-        :icon="unreadOnly ? require('@/assets/options/icon_unread_filter_active.svg') : require('@/assets/options/icon_unread_filter.svg')"
-        :title="unreadOnly ? $t('all') : $t('Messaging.unreadOnly')"
-        name="toggleUnreadOnly"
-        icon-height="20px"
-        :alt="$t('unreadOnly')"
-        @click="toggleUnreadOnly"
-      />
-    </div>
+      class="button"
+      :icon="unreadOnly ? require('@/assets/options/icon_unread_filter_active.svg') : require('@/assets/options/icon_unread_filter.svg')"
+      :title="unreadOnly ? $t('all') : $t('Messaging.unreadOnly')"
+      name="toggleUnreadOnly"
+      icon-height="20px"
+      :alt="$t('unreadOnly')"
+      @click="toggleUnreadOnly"
+    />
 
-    <div class="buttons">
-      <IconOption
-        class="button"
-        :icon="require('@assets/icon_engrenage.svg')"
-        :title="$t('Messaging.Parameters.header')"
-        name="toggleMessagingMenu"
-        icon-height="18px"
-        alt="parameters"
-        @click="openParametersModal"
-      />
-
-      <IconOption
-        v-if="!mq.tablet && !mq.phone"
-        class="button"
-        :icon="require('@/assets/options/icon_menu_lateral.svg')"
-        :title="isMenuPanelDisplayed ? $t('hideMenuPanel') : $t('displayMenuPanel')"
-        name="toggleMessagingMenu"
-        icon-height="18px"
-        alt="toggle menu"
-        @click="toggleSideMenuPanel"
-      />
-      <IconOption
-        v-if="!mq.tablet && !mq.phone"
-        class="button"
-        :icon="require('@/assets/options/icon_refresh.svg')"
-        :title="$t('refresh')"
-        name="refresh"
-        icon-height="18px"
-        alt="refresh"
-        @click="refresh"
-      />
-      <IconOption
-        v-if="mq.tablet || mq.phone"
-        class="button"
-        :icon="require('@/assets/options/icon_edit_texte.svg')"
-        :title="$t('Messaging.new')"
-        name="createNewMessage"
-        icon-height="18px"
-        alt="new message"
-        @click="createNewMessage"
-      />
-      <IconOption
-        v-if="(!mq.tablet && !mq.phone)"
-        class="button"
-        :icon="unreadOnly ? require('@/assets/options/icon_unread_filter_active.svg') : require('@/assets/options/icon_unread_filter.svg')"
-        :title="unreadOnly ? $t('all') : $t('Messaging.unreadOnly')"
-        name="toggleUnreadOnly"
-        icon-height="18px"
-        :alt="$t('unreadOnly')"
-        @click="toggleUnreadOnly"
-      />
-    </div>
+    <ul class="buttons">
+      <li>
+        <IconOption
+          class="button"
+          :icon="require('@assets/icon_engrenage.svg')"
+          :title="$t('Messaging.Parameters.header')"
+          name="toggleMessagingMenu"
+          icon-height="18px"
+          alt="parameters"
+          @click="openParametersModal"
+        />
+      </li>
+      <li>
+        <IconOption
+          v-if="!mq.tablet && !mq.phone"
+          class="button"
+          :icon="require('@/assets/options/icon_menu_lateral.svg')"
+          :title="isMenuPanelDisplayed ? $t('hideMenuPanel') : $t('displayMenuPanel')"
+          name="toggleMessagingMenu"
+          icon-height="18px"
+          alt="toggle menu"
+          @click="toggleSideMenuPanel"
+        />
+      </li>
+      <li>
+        <IconOption
+          v-if="!mq.tablet && !mq.phone"
+          class="button"
+          :icon="require('@/assets/options/icon_refresh.svg')"
+          :title="$t('refresh')"
+          name="refresh"
+          icon-height="18px"
+          alt="refresh"
+          @click="refresh"
+        />
+      </li>
+      <li>
+        <IconOption
+          v-if="mq.tablet || mq.phone"
+          class="button"
+          :icon="require('@/assets/options/icon_edit_texte.svg')"
+          :title="$t('Messaging.new')"
+          name="createNewMessage"
+          icon-height="18px"
+          alt="new message"
+          @click="createNewMessage"
+        />
+      </li>
+      <li>
+        <IconOption
+          v-if="(!mq.tablet && !mq.phone)"
+          class="button"
+          :icon="unreadOnly ? require('@/assets/options/icon_unread_filter_active.svg') : require('@/assets/options/icon_unread_filter.svg')"
+          :title="unreadOnly ? $t('all') : $t('Messaging.unreadOnly')"
+          name="toggleUnreadOnly"
+          icon-height="18px"
+          :alt="$t('unreadOnly')"
+          @click="toggleUnreadOnly"
+        />
+      </li>
+    </ul>
   </div>
 
   <div
@@ -197,6 +202,18 @@ export default {
 
 <style lang="scss" scoped>
 @import '@design';
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+}
 
 .thread-list-options {
   padding-left: 0;
@@ -216,16 +233,6 @@ export default {
     }
   }
 
-  .unread {
-    display: flex;
-    align-items: center;
-    color: violet;
-
-    label {
-      white-space: nowrap;
-    }
-  }
-
   &.phone {
     padding: 0 20px;
     height: $messaging-mobile-footer-height;
@@ -233,10 +240,6 @@ export default {
 
     .buttons {
       opacity: 100%;
-    }
-
-    .unread {
-      margin-left: 0;
     }
   }
 }

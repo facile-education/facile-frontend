@@ -129,6 +129,9 @@ export default {
     },
     isDisplayMessageFromRouting () {
       return this.$store.state.messaging.displayMessageFromRouting
+    },
+    selectedThreads () {
+      return this.$store.state.messaging.selectedThreads
     }
   },
   watch: {
@@ -141,7 +144,52 @@ export default {
       }
     }
   },
+  mounted () {
+    window.addEventListener('keydown', this.keyMonitor)
+  },
+  beforeUnmount () {
+    window.removeEventListener('keydown', this.keyMonitor)
+  },
   methods: {
+    keyMonitor (event) {
+      if (this.threads.length > 0) {
+        if (event.key === 'ArrowDown') {
+          this.selectNextThread()
+        } else if (event.key === 'ArrowUp') {
+          this.selectPreviousThread()
+        }
+      }
+    },
+    selectNextThread () {
+      if (this.selectedThreads.length > 1) {
+        // Multiple selected threads, do nothing
+      } else if (this.selectedThreads.length === 0) { // No selected thread
+        messagingUtils.selectThread(this.threads[0])
+      } else { // Exactly one selected thread
+        const selectedThread = this.selectedThreads[0]
+        if (this.threads.map(thread => thread.threadId).indexOf(selectedThread.threadId) === this.threads.length - 1) { // The last event
+          // Do nothing
+        } else {
+          const currentIndex = this.threads.map(thread => thread.threadId).indexOf(selectedThread.threadId)
+          messagingUtils.selectThread(this.threads[currentIndex + 1])
+        }
+      }
+    },
+    selectPreviousThread () {
+      if (this.selectedThreads.length > 1) {
+        // Multiple selected threads, do nothing
+      } else if (this.selectedThreads.length === 0) { // No selected thread
+        messagingUtils.selectThread(this.threads[this.threads.length - 1])
+      } else { // Exactly one selected thread
+        const selectedThread = this.selectedThreads[0]
+        if (this.threads.map(thread => thread.threadId).indexOf(selectedThread.threadId) === 0) { // The first event
+          // Do nothing
+        } else {
+          const currentIndex = this.threads.map(thread => thread.threadId).indexOf(selectedThread.threadId)
+          messagingUtils.selectThread(this.threads[currentIndex - 1])
+        }
+      }
+    },
     pointerDown (e) {
       if (this.$refs.scroll.scrollTop <= 50) {
         startMouseY = mouseY = e.touches[0].clientY
@@ -275,14 +323,6 @@ export default {
     },
     draggedThreads () {
       return this.$store.state.messaging.draggedThreads
-    },
-    isDragged () {
-      for (let i = 0; i < this.draggedThreads.length; ++i) {
-        if (this.folder.id === this.draggedThreads[i].id) {
-          return true
-        }
-      }
-      return false
     },
     handleScroll () {
       const scroll = this.$refs.scroll

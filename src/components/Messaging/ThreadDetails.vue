@@ -17,97 +17,111 @@
         alt="back"
         @click="hideDetails"
       />
-      <div class="icons">
-        <IconOption
-          class="header-icon new-icon"
-          :icon="require('@/assets/options/icon_edit_texte.svg')"
-          :title="$t('Messaging.new')"
-          name="createNewMessage"
-          icon-height="18px"
-          alt="new message"
-          @click="createNewMessage"
-        />
-        <div
+      <ul class="icons">
+        <li>
+          <IconOption
+            class="header-icon new-icon"
+            :icon="require('@/assets/options/icon_edit_texte.svg')"
+            :title="$t('Messaging.new')"
+            name="createNewMessage"
+            icon-height="18px"
+            alt="new message"
+            @click="createNewMessage"
+          />
+        </li>
+        <li
           v-if="isActionEnabled"
           class="separator"
         />
-        <IconOption
-          v-if="isActionEnabled"
-          class="header-icon trash-icon"
-          :icon="require('@assets/icon_trash.svg')"
-          :title="$t('Messaging.deleteMessage')"
-          name="trash"
-          icon-height="18px"
-          alt="delete item"
-          @click="deleteItem"
-        />
-        <div
+        <li>
+          <IconOption
+            v-if="isActionEnabled"
+            class="header-icon trash-icon"
+            :icon="require('@assets/icon_trash.svg')"
+            :title="$t('Messaging.deleteMessage')"
+            name="trash"
+            icon-height="18px"
+            alt="delete item"
+            @click="deleteItem"
+          />
+        </li>
+        <li
           v-if="isActionEnabled && (mq.phone || mq.tablet)"
           class="separator"
         />
-        <IconOption
-          v-if="isActionEnabled && (mq.phone || mq.tablet)"
-          class="header-icon read-icon"
-          :icon="require('@/assets/options/icon_unread_filter.svg')"
-          :title="$t('Messaging.markAsRead')"
-          name="mark-as-read"
-          icon-height="18px"
-          alt="mark-as-read item"
-          @click="markAsRead"
-        />
-        <div
+        <li>
+          <IconOption
+            v-if="isActionEnabled && (mq.phone || mq.tablet)"
+            class="header-icon read-icon"
+            :icon="require('@/assets/options/icon_unread_filter.svg')"
+            :title="$t('Messaging.markAsRead')"
+            name="mark-as-read"
+            icon-height="18px"
+            alt="mark-as-read item"
+            @click="markAsRead"
+          />
+        </li>
+        <li
           v-if="isActionEnabled"
           class="separator"
         />
-        <IconOption
-          v-if="isActionEnabled && !isDraft"
-          class="header-icon"
-          :icon="require('@assets/options/icon_answer.svg')"
-          :title="$t('Messaging.reply')"
-          name="reply"
-          icon-height="18px"
-          alt="reply"
-          @click="reply"
-        />
-        <div
+        <li>
+          <IconOption
+            v-if="isActionEnabled && !isDraft"
+            class="header-icon"
+            :icon="require('@assets/options/icon_answer.svg')"
+            :title="$t('Messaging.reply')"
+            name="reply"
+            icon-height="18px"
+            alt="reply"
+            @click="reply"
+          />
+        </li>
+        <li
           v-if="isActionEnabled"
           class="separator"
         />
-        <IconOption
-          v-if="isActionEnabled && !isDraft"
-          class="header-icon"
-          :icon="require('@assets/options/icon_answer_all.svg')"
-          :title="$t('Messaging.replyAll')"
-          name="replyAll"
-          icon-height="18px"
-          alt="reply All"
-          @click="replyAll"
-        />
-        <div
+        <li>
+          <IconOption
+            v-if="isActionEnabled && !isDraft"
+            class="header-icon"
+            :icon="require('@assets/options/icon_answer_all.svg')"
+            :title="$t('Messaging.replyAll')"
+            name="replyAll"
+            icon-height="18px"
+            alt="reply All"
+            @click="replyAll"
+          />
+        </li>
+        <li
           v-if="isActionEnabled"
           class="separator"
         />
-        <IconOption
-          v-if="isActionEnabled && !isDraft"
-          class="header-icon"
-          :icon="require('@assets/options/icon_share.svg')"
-          :title="$t('Messaging.forward')"
-          name="forward"
-          icon-height="18px"
-          alt="forward"
-          @click="forward"
-        />
-        <IconOption
-          v-if="isActionEnabled && isDraft"
-          class="header-icon"
-          :icon="require('@assets/options/icon_edit_texte.svg')"
-          :title="$t('Messaging.editDraft')"
-          name="editDraft"
-          icon-height="18px"
-          alt="edit draft"
-          @click="editDraft"
-        />
-      </div>
+        <li>
+          <IconOption
+            v-if="isActionEnabled && !isDraft"
+            class="header-icon"
+            :icon="require('@assets/options/icon_share.svg')"
+            :title="$t('Messaging.forward')"
+            name="forward"
+            icon-height="18px"
+            alt="forward"
+            @click="forward"
+          />
+        </li>
+        <li>
+          <IconOption
+            v-if="isActionEnabled && isDraft"
+            class="header-icon"
+            :icon="require('@assets/options/icon_edit_texte.svg')"
+            :title="$t('Messaging.editDraft')"
+            name="editDraft"
+            icon-height="18px"
+            alt="edit draft"
+            @click="editDraft"
+          />
+        </li>
+      </ul>
     </div>
     <hr>
 
@@ -336,6 +350,11 @@ export default {
 
 <style lang="scss" scoped>
 @import '@design';
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
 
 .thread-details {
   height: 100%;
