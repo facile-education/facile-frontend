@@ -161,7 +161,7 @@ export default {
       }
     },
     performChosenOption (option) {
-      switch (option) {
+      switch (option.name) {
         case 'markAsRead':
           messagingUtils.markMessagesAsReadUnread(this.selectedThreads.map(t => t.mainMessageId), true)
           break
