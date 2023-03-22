@@ -243,6 +243,7 @@ export const mutations = {
         }
       }
     }
+    state.selectedThreads = []
     if (state.threads.length > 0 && state.threads[lastIndex] !== undefined) {
       messagingUtils.selectThread(state.threads[lastIndex])
     } else {
