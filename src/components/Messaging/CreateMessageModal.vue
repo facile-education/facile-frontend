@@ -313,6 +313,7 @@ export default {
       this.currentContent.contentValue = value
     },
     searchTimeOut () {
+      this.autocompleteItems = []
       clearTimeout(timeout)
       // Make a new timeout set to go off in 800ms
       timeout = setTimeout(() => {
@@ -350,7 +351,6 @@ export default {
       const successMessage = this.$t('successMessage')
       // In case of reply, replyAll or forward
       // previous content is added in case of forward OR (reply or replyAll AND no recipient added)
-      console.log('before sending message, recipients=', this.recipients)
       messageService.sendMessage(
         this.recipients,
         this.subject,
@@ -390,10 +390,10 @@ export default {
       this.onClose()
     },
     buildPreviousContent (previousContent) {
-      this.previousContent.contentValue = '</br><details><summary>Afficher les détails</summary>' +
+      this.previousContent.contentValue = '</br><details><summary>' + this.$t('displayDetails') + '</summary>' +
         '</br> ' + "<div style='border-left:1px solid #000; padding-left:20px'>" +
-        'Le ' + dayjs(this.originMessage.sendDate, 'YYYY/MM/DD HH:mm:ss').format('DD/MM/YYYY HH:mm') +
-        ' ' + this.originMessage.senderName + ' a écrit :</br> ' +
+        +this.$t('at') + dayjs(this.originMessage.sendDate, 'YYYY/MM/DD HH:mm:ss').format('DD/MM/YYYY HH:mm') +
+        ' ' + this.originMessage.senderName + this.$t('wrote') + '</br> ' +
         previousContent +
         '</div>' +
         '</details>'
@@ -452,6 +452,11 @@ export default {
 </script>
 
 <style lang="scss">
+:not(.phone).create-message-modal.modal-mask .window-container .window-body {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
 .phone .window-container .window-body.full-screen {
   max-height: 80vh;
 }
@@ -479,13 +484,14 @@ export default {
   .recipients-panel{
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
 
   .recipients {
     width: 90%;
   }
 
-  .recipients, .subject {
+  .recipients-panel, .subject {
     padding-bottom: 10px;
   }
 
@@ -553,6 +559,9 @@ export default {
   "sizeLimit1": "Ne doit pas dépasser ",
   "sizeLimit2": " caractères",
   "addRecipients": "Ajouter des destinataires",
-  "closeWarning": "Souhaitez-vous fermer cette fenêtre ? (Vous perdrez son contenu)"
+  "closeWarning": "Souhaitez-vous fermer cette fenêtre ? (Vous perdrez son contenu)",
+  "displayDetails": "Afficher les détails",
+  "at": "Le ",
+  "wrote": " a écrit :"
 }
 </i18n>
