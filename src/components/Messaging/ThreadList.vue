@@ -322,6 +322,10 @@ export default {
     border: none;
     min-width: 0;
 
+    .scroll {
+      padding: 0;
+    }
+
     .thread-list-header {
       position: relative;
     }
@@ -363,8 +367,6 @@ hr {
 
 hr.hr-thread-list {
   border: 0; border-top: 1px solid #e0e0e0;
-  margin-left: 40px;
-  margin-right: 10px;
 }
 
 .thread-list {
@@ -374,6 +376,7 @@ hr.hr-thread-list {
 
 .scroll {
   height: 100%;
+  padding: 1em;
   overflow: auto;
   .thread-list-item {
     border-radius: 6px;

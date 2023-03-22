@@ -332,7 +332,7 @@ export default {
 @import '@design';
 
 .main {
-  --icons-width: 40px;
+  --icons-width: 35px;
   display: flex;
   width: 100%;
   cursor: pointer;

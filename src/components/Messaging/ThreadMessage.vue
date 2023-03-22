@@ -135,11 +135,11 @@ export default {
   }
 
   .icons {
-    margin-left: 15px;
+    //margin-left: 15px;
     padding-top: 17px;
     padding-bottom: 10px;
-    width: 40px;
-    min-width: 40px;
+    width: 35px;
+    min-width: 35px;
     display: flex;
     flex-direction: column;
     align-items: center;
