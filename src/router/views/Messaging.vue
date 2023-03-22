@@ -16,6 +16,7 @@
             data-test="messaging-menu"
             class="menu-panel"
             :class="{'menu-collapsed': !isMenuPanelDisplayed}"
+            :is-displayed="isMenuPanelDisplayed"
           />
 
           <ThreadList class="thread-list" />
@@ -37,6 +38,7 @@
             v-show="isMenuPanelDisplayed"
             data-test="messaging-menu"
             class="menu-panel"
+            :is-displayed="isMenuPanelDisplayed"
           />
         </Transition>
       </div>

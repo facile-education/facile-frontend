@@ -1,19 +1,18 @@
 <template>
-  <div class="menu-folder">
+  <li class="menu-folder">
     <!-- Folder icon + name + actions -->
-    <div
+    <button
       v-if="!displayFolderNameInput"
+      ref="personalFolder"
       class="personal-folder"
       :class="{'selected': isSelected, 'active': isActive }"
       :title="currentFolder.folderName"
-      @mouseover="isHovering = true"
-      @mouseleave="isHovering = false"
       @dragover="setActive"
       @dragleave="cancelActive"
       @drop="dropThreads"
       @click="handleClick"
     >
-      <div class="icon-container">
+      <span class="icon-container">
         <BaseIcon
           v-if="!isExpanded && folder.subFolders.length > 0"
           name="caret-right"
@@ -26,38 +25,47 @@
           class="fa-lg folder-icon"
           @click.stop="isExpanded = false"
         />
-      </div>
+      </span>
 
-      <div class="folder-name">
+      <span class="folder-name">
         {{ currentFolder.folderName }}
-      </div>
+      </span>
 
-      <div
-        v-if="isHovering && !(mq.phone || mq.tablet)"
+      <span
+        v-if="!(mq.phone || mq.tablet)"
         class="folder-actions"
       >
-        <img
-          src="@/assets/options/icon_edit_texte.svg"
-          alt="edit folder"
-          class="folder-action edit"
+        <button
           :title="$t('Messaging.rename')"
           @click.stop="toggleFolderNameInput"
         >
-        <BaseIcon
-          name="plus"
-          class="folder-action add"
-          :title="$t('Messaging.addFolder')"
+          <img
+            src="@/assets/options/icon_edit_texte.svg"
+            alt="edit folder"
+            class="folder-action edit"
+          >
+        </button>
+        <button
+          :title="$t('Messaging.addSubFolder')"
           @click.stop="toggleNewFolderInput"
-        />
-        <img
-          src="@/assets/icon_trash.svg"
-          alt="delete folder"
-          class="folder-action delete"
+        >
+          <BaseIcon
+            name="plus"
+            class="folder-action add"
+          />
+        </button>
+        <button
           :title="$t('Messaging.deleteFolder')"
           @click.stop="askToConfirmFolderDeletion"
         >
-      </div>
-    </div>
+          <img
+            src="@/assets/icon_trash.svg"
+            alt="delete folder"
+            class="folder-action delete"
+          >
+        </button>
+      </span>
+    </button>
 
     <!-- Input for folder name edition -->
     <PentilaInput
@@ -81,7 +89,7 @@
     />
 
     <!-- Sub folders -->
-    <div
+    <ul
       v-if="isExpanded && folder.subFolders.length > 0"
       class="sub-folder-list"
     >
@@ -91,8 +99,8 @@
         class="sub-folder"
         :folder="subFolder"
       />
-    </div>
-  </div>
+    </ul>
+  </li>
 </template>
 
 <script>
@@ -123,7 +131,6 @@ export default {
       displayNewFolderInput: false,
       displayFolderNameInput: false,
       newFolderName: '',
-      isHovering: false,
       isActive: false,
       isDragging: false
     }
@@ -151,7 +158,14 @@ export default {
     }
   },
   methods: {
-    handleClick () {
+    handleClick (e) {
+      if (e.pointerType === 'mouse') {
+        // Focus input
+        const vm = this
+        nextTick(function () {
+          vm.$refs.personalFolder.blur()
+        })
+      }
       this.selectFolder() // Invert following instructions to change extend behaviour
       this.$router.push({ name: 'Messaging' })
       if (this.isSelected) {
@@ -251,6 +265,19 @@ export default {
 <style lang="scss" scoped>
 @import '@design';
 
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+}
+
 .menu-folder {
   margin-left: 15px;
   flex-direction: column;
@@ -263,19 +290,30 @@ export default {
     cursor: pointer;
     display: flex;
     align-items: center;
+    position: relative;
+    overflow: hidden;
+    text-align: left;
 
     &.active {
       color: $color-light-text;
-      background-color: blue;
+      background-color: $color-active-bg;
     }
 
     &:hover:not(.selected) {
-      //background-color: $color-menu-hover-bg;
       font-weight: bold;
     }
     &.selected {
-      //background-color: $color-selected-bg;
       font-weight: bold;
+    }
+
+    &:focus-within &:focus-visible {
+      background-color: yellow;
+    }
+
+    &:hover, &:focus-within {
+      .folder-actions {
+        transform: translateX(-100%);
+      }
     }
 
     .icon-container {
@@ -299,40 +337,43 @@ export default {
     }
 
     .folder-actions {
+      position: absolute;
+      top: 0;
+      left: 100%;
+      height: 100%;
       display: flex;
       align-items: center;
-      margin-left: auto;
+      overflow: hidden;
+      transition: all .3s ease;
+
       /* disable text selection icons */
       -ms-user-select: none;
       -moz-user-select: none;
       -webkit-user-select: none;
       user-select: none; /* CSS3 (little to no support) */
 
-      .folder-action {
-        margin-right: 5px;
+      button {
+        background-color: white;
+        width: 30px;
+        transition: all .3s ease;
         height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $color-hover-bg;
+        }
       }
 
       .edit {
         width: 20px;
-
-        &:hover {
-          width: 21px;
-        }
       }
 
-      .add {
+      .add, .delete {
         width: 16px;
-        &:hover {
-          font-weight: bold;
-        }
-      }
-
-      .delete {
-        width: 16px;
-        &:hover {
-          width: 17px;
-        }
       }
     }
   }

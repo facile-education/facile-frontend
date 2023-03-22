@@ -213,7 +213,7 @@ export default {
         // Do nothing
       } else {
         const currentIndex = this.eventList.map(event => event.eventId).indexOf(this.selectedEvent.eventId)
-        this.selectedEvent = this.eventList[currentIndex + -1]
+        this.selectedEvent = this.eventList[currentIndex - 1]
       }
     }
   }

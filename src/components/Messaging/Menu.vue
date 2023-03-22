@@ -15,45 +15,53 @@
       v-if="folderList.length > 0"
       class="menu"
     >
-      <!-- Inbox -->
-      <MenuRootFolder
-        class="base-folder"
-        :folder="inboxFolder"
-        :icon="require('@assets/icon_reception.svg')"
-        :drop-allowed="true"
-        icon-width="21px"
-        alt="icon reception"
-      />
-
-      <!-- Draft -->
-      <MenuRootFolder
-        class="base-folder"
-        :folder="draftFolder"
-        :icon="require('@assets/icon_fichier.svg')"
-        :drop-allowed="true"
-        icon-width="16px"
-        alt="icon draft"
-      />
-
-      <!-- Sent -->
-      <MenuRootFolder
-        class="base-folder"
-        :folder="sentFolder"
-        :icon="require('@assets/icon_envoyes.svg')"
-        :drop-allowed="true"
-        icon-width="17px"
-        alt="icon sent"
-      />
-
-      <!-- Trash -->
-      <MenuRootFolder
-        class="base-folder"
-        :folder="trashFolder"
-        :icon="require('@assets/icon_trash.svg')"
-        :drop-allowed="true"
-        icon-width="15px"
-        alt="icon trash"
-      />
+      <ul>
+        <li>
+          <!-- Inbox -->
+          <MenuRootFolder
+            ref="inboxFolder"
+            class="base-folder"
+            :folder="inboxFolder"
+            :icon="require('@assets/icon_reception.svg')"
+            :drop-allowed="true"
+            icon-width="21px"
+            alt="icon reception"
+          />
+        </li>
+        <li>
+          <!-- Draft -->
+          <MenuRootFolder
+            class="base-folder"
+            :folder="draftFolder"
+            :icon="require('@assets/icon_fichier.svg')"
+            :drop-allowed="true"
+            icon-width="16px"
+            alt="icon draft"
+          />
+        </li>
+        <li>
+          <!-- Sent -->
+          <MenuRootFolder
+            class="base-folder"
+            :folder="sentFolder"
+            :icon="require('@assets/icon_envoyes.svg')"
+            :drop-allowed="true"
+            icon-width="17px"
+            alt="icon sent"
+          />
+        </li>
+        <li>
+          <!-- Trash -->
+          <MenuRootFolder
+            class="base-folder"
+            :folder="trashFolder"
+            :icon="require('@assets/icon_trash.svg')"
+            :drop-allowed="true"
+            icon-width="15px"
+            alt="icon trash"
+          />
+        </li>
+      </ul>
 
       <!-- Personal folders -->
       <div
@@ -70,19 +78,20 @@
           >
         </div>
         {{ $t('Messaging.personalFolders') }}
-        <div
+        <button
           v-if="!(mq.phone || mq.tablet)"
           class="folder-actions"
+          :class="{'display-input': displayNewFolderInput}"
           data-test="folder-actions"
+          :title="$t('Messaging.addFolder')"
+          @click.stop="toggleNewFolderInput"
         >
           <BaseIcon
             name="plus"
             data-test="createMessagingFolder"
             class="fa-lg folder-action"
-            :title="$t('Messaging.addFolder')"
-            @click.stop="toggleNewFolderInput"
           />
-        </div>
+        </button>
       </div>
       <PentilaInput
         v-if="displayNewFolderInput"
@@ -95,14 +104,14 @@
       />
 
       <!-- Sub folders -->
-      <div v-if="isPersonalFoldersExpanded">
+      <ul v-if="isPersonalFoldersExpanded">
         <MenuFolder
           v-for="folder in personalFolders"
           :key="folder.folderId"
           class="personal-sub-folder"
           :folder="folder"
         />
-      </div>
+      </ul>
     </nav>
   </section>
 </template>
@@ -127,6 +136,10 @@ export default {
   },
   inject: ['mq'],
   props: {
+    isDisplayed: {
+      type: Boolean,
+      default: false
+    }
   },
   data: function () {
     return {
@@ -177,6 +190,11 @@ export default {
           this.isPersonalFoldersExpanded = true
         }
       }
+    },
+    isDisplayed (value) {
+      if (value) {
+        this.$refs.inboxFolder.$el.focus()
+      }
     }
   },
   methods: {
@@ -186,9 +204,9 @@ export default {
     togglePersonalFolders () {
       this.isPersonalFoldersExpanded = !this.isPersonalFoldersExpanded
     },
-    toggleNewFolderInput () {
+    toggleNewFolderInput (event) {
       this.displayNewFolderInput = !this.displayNewFolderInput
-      if (this.displayNewFolderInput) {
+      if (this.displayNewFolderInput && event.pointerType === 'mouse') {
         // Focus input
         const vm = this
         nextTick(function () {
@@ -205,14 +223,16 @@ export default {
       return 0
     },
     createPersonalRootFolder () {
-      this.displayNewFolderInput = false
-      folderService.addFolder(0, this.newFolderName).then((data) => {
-        if (data.success) {
-          this.$store.dispatch('messaging/addPersonalRootFolder', data.folder)
-          this.isPersonalFoldersExpanded = true
-          this.newFolderName = ''
-        }
-      })
+      if (this.newFolderName.length > 0) { // Basic check, TODO: Other form like verifications?
+        this.displayNewFolderInput = false
+        folderService.addFolder(0, this.newFolderName).then((data) => {
+          if (data.success) {
+            this.$store.dispatch('messaging/addPersonalRootFolder', data.folder)
+            this.isPersonalFoldersExpanded = true
+            this.newFolderName = ''
+          }
+        })
+      }
     },
     cancelHandlers (e) {
       e.preventDefault()
@@ -260,6 +280,12 @@ export default {
       padding-top: 0;
     }
   }
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
 }
 
 .menu-header {
@@ -320,12 +346,19 @@ hr {
     }
 
     .folder-actions {
-      display: none;
-    }
-    &:hover .folder-actions {
+      cursor: pointer;
       margin-left: auto;
       margin-right: 25px;
-      display: block;
+      background-color: transparent;
+      border: none;
+      opacity: 0;
+
+      &:focus, .display-input{
+        opacity: 1;
+      }
+    }
+    &:hover .folder-actions {
+      opacity: 1;
     }
   }
 

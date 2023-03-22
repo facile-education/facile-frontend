@@ -81,18 +81,18 @@
               :title="mainMessage.subject"
               v-html="mainMessage.subject"
             />
-            <div
+            <button
               v-if="thread.messages.length > 1"
               class="thread-toggle"
               @click.stop="toggleThreadExtension"
             >
-              <p>{{ thread.messages.length }}</p>
+              <span>{{ thread.messages.length }}</span>
               <img
                 :class="isThreadExpanded ? 'collapse-thread': 'extend-thread'"
                 src="@assets/arrow_down.svg"
                 alt="toggle thread"
               >
-            </div>
+            </button>
           </div>
 
           <!-- Line 3 : content -->
@@ -446,12 +446,16 @@ export default {
         align-items: center;
         cursor: pointer;
         border: 1px solid transparent;
+        margin: 0;
+        padding: 0;
+        background-color: transparent;
+        color: inherit;
 
         &:hover {
           font-weight: bold;
         }
 
-        p {
+        span {
           margin-top: -2px;
           margin-right: 3px;
           padding-right: 3px;
