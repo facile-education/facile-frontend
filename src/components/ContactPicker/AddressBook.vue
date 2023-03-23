@@ -64,7 +64,7 @@ import SchoolPersonals from './SchoolPersonals.vue'
 import SchoolClasses from './SchoolClasses.vue'
 import SchoolCours from './SchoolCours.vue'
 import SchoolSubjects from './SchoolSubjects.vue'
-import Communities from './Communities.vue'
+import Communities from './AddressBookCommunities.vue'
 
 export default {
   name: 'AddressBook',
