@@ -78,7 +78,7 @@
           />
         </li>
         <li
-          v-if="isActionEnabled"
+          v-if="isActionEnabled && !isDraft"
           class="separator"
         />
         <li>
