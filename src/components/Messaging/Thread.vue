@@ -418,6 +418,7 @@ export default {
         font-weight: bold;
       }
       .sendDate {
+        white-space: nowrap;
         font-weight: normal;
         font-size: 0.75em;
         letter-spacing: 0;
@@ -425,11 +426,7 @@ export default {
       }
     }
     .line2 {
-      //width: 100%;
       min-width: 0;
-      //overflow: hidden;
-      //white-space: nowrap;
-      //text-overflow: ellipsis;
       height: 20px;
       display: flex;
       margin-bottom: 5px;
@@ -437,7 +434,6 @@ export default {
 
       p{
         overflow: hidden;
-        //white-space: nowrap;
         text-overflow: ellipsis;
       }
 
