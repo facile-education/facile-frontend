@@ -195,12 +195,6 @@ export default {
     selectedMessages () {
       return this.$store.state.messaging.selectedMessages
     },
-    currentThreads () {
-      return this.$store.state.messaging.threads
-    },
-    currentSelectedThreads () {
-      return this.$store.state.messaging.selectedThreads
-    },
     messageToDisplay () {
       return this.selectedMessages.length === 1 ? this.messageList[this.messageList.map(message => message.messageId).indexOf(this.selectedMessages[0].messageId)] : this.messageListWithoutSelfMessages[0]
     },
