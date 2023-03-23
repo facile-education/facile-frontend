@@ -49,7 +49,7 @@
           <PentilaButton
             :class="{'phone': mq.phone}"
             class="create-button"
-            @click="displayUserPicker"
+            @click="isContactPickerModalDisplayed=true"
           >
             <NeroIcon
               name="fa-plus"
@@ -137,14 +137,9 @@
     />
   </teleport>
   <teleport to="body">
-    <UserPickerModal
-      v-if="isUserPickerModalDisplayed"
-      v-model:recipients="recipients"
-      class="user-picker-mode"
-      height="30em"
-      @addedUsers="addNewUsers"
-      @toggleUserSelection="toggleUserSelection"
-      @close="closeUserPicker"
+    <ContactPickerModal
+      v-if="isContactPickerModalDisplayed"
+      @close="isContactPickerModalDisplayed=false"
     />
   </teleport>
 </template>
@@ -158,10 +153,11 @@ import messagingUtils from '@/utils/messaging.utils'
 import ErrorMessage from '@components/Base/ErrorMessage.vue'
 import AttachedFiles from '@components/Base/AttachedFiles'
 import FilePickerModal from '@components/FilePicker/FilePickerModal'
-import UserPickerModal from '@components/UserPicker/UserPickerModal'
 import TextContent from '@components/Progression/Edit/Contents/TextContent'
 import dayjs from 'dayjs'
 import NeroIcon from '@/components/Nero/NeroIcon'
+import { defineAsyncComponent } from 'vue'
+const ContactPickerModal = defineAsyncComponent(() => import('@components/ContactPicker/ContactPickerModal.vue'))
 
 const isRecipientsValid = (str) => {
   return !(str.length > 0) // A recipient at least
@@ -176,11 +172,11 @@ let timeout
 export default {
   name: 'CreateMessageModal',
   components: {
+    ContactPickerModal,
     TextContent,
     FilePickerModal,
     ErrorMessage,
     AttachedFiles,
-    UserPickerModal,
     NeroIcon
   },
   inject: ['mq'],
@@ -201,7 +197,7 @@ export default {
       error: '',
       autocompleteItems: [],
       isFilePickerModalDisplayed: false,
-      isUserPickerModalDisplayed: false,
+      isContactPickerModalDisplayed: false,
       originMessage: {},
       initialRecipients: []
     }
@@ -422,15 +418,6 @@ export default {
       this.currentContent = {}
       this.closeFilePicker()
       this.$store.dispatch('messaging/closeCreateMessageModal')
-    },
-    displayUserPicker () {
-      this.isUserPickerModalDisplayed = true
-    },
-    closeUserPicker () {
-      this.isUserPickerModalDisplayed = false
-    },
-    addNewUsers (newUsers) {
-      this.recipients = [...newUsers]
     },
     toggleUserSelection (contact) {
       this.recipients.push(contact)

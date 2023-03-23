@@ -1,0 +1,158 @@
+<template>
+  <div>
+    <button
+      :class="{'leaf': isLeaf, 'root': icon !== undefined, 'theme-text-color': isThemeColor, 'theme-border-color': isThemeColor}"
+      @click="handleClick"
+    >
+      <span>
+        <img
+          v-if="icon"
+          :src="icon"
+          alt=""
+        >
+        {{ title }}
+      </span>
+      <BaseIcon
+        v-if="!isLeaf"
+        class="icon"
+        :class="isExtended ? 'extend': 'collapse'"
+        name="chevron-up"
+      />
+    </button>
+    <Transition name="slide-fade">
+      <div
+        v-if="isExtended"
+        :class="isExtended ? 'extended' : 'collapsed'"
+        class="sub-tree"
+      >
+        <slot />
+      </div>
+    </Transition>
+  </div>
+</template>
+
+<script>
+import BaseIcon from '@components/Base/BaseIcon.vue'
+
+export default {
+  name: 'AddressBookItem',
+  components: { BaseIcon },
+  props: {
+    title: {
+      type: String,
+      required: true
+    },
+    icon: {
+      type: String,
+      default: undefined
+    },
+    isLeaf: {
+      type: Boolean,
+      default: false
+    },
+    isThemeColor: {
+      type: Boolean,
+      default: false
+    }
+  },
+  emits: ['select'],
+  data () {
+    return {
+      isExtended: false
+    }
+  },
+  methods: {
+    handleClick () {
+      this.isLeaf ? this.select() : this.toggleExtension()
+    },
+    toggleExtension () {
+      this.isExtended = !this.isExtended
+    },
+    select () {
+      this.$emit('select')
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+@import "@design";
+
+button {
+  display: flex;
+  height: 30px;
+  padding: 0 0.5em;
+  width: 100%;
+  cursor: pointer;
+  background-color: transparent;
+  border-radius: 0;
+  border: none;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1em;
+
+  &.root {
+    height: 45px;
+  }
+
+  &:not(.leaf):not(.theme-border-color) {
+    border-bottom: 1px solid $color-border;
+  }
+
+  &.theme-border-color {
+    border-bottom: 1px solid;
+  }
+
+  &:hover {
+    background-color: $color-hover-bg;
+  }
+
+  span {
+    display: flex;
+    align-items: center;
+
+    img {
+      margin-right: 0.5em;
+    }
+  }
+}
+
+.collapse, .extend {
+  transition:  transform .6s;
+}
+
+.extend {
+  transform: rotate(0);
+}
+
+.collapse {
+  transform: rotate(180deg);
+}
+
+.sub-tree {
+  padding-left: 10px;
+  //max-height: 500px; // Something bigger than I will ever get.
+  //overflow: hidden;
+  //transition: max-height 0.35s ease-in;
+
+  //&.collapsed {
+  //  max-height: 0;
+  //  transition: max-height 0.35s ease-out;
+  //}
+}
+
+.slide-fade-enter-active {
+  transition: all .35s;
+}
+.slide-fade-leave-active {
+  transition: all .35s;
+}
+
+.slide-fade-enter-from, .slide-fade-leave-to {
+  max-height: 0;
+}
+.slide-fade-enter-to, .slide-fade-leave-from {
+  max-height: 500px;
+}
+
+</style>
