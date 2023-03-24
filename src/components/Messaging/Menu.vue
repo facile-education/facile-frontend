@@ -33,7 +33,7 @@
           <MenuRootFolder
             class="base-folder"
             :folder="draftFolder"
-            :icon="require('@assets/icon_fichier.svg')"
+            :icon="require('@assets/icons/messaging_draft.svg')"
             :drop-allowed="true"
             icon-width="16px"
             alt="icon draft"
@@ -44,9 +44,9 @@
           <MenuRootFolder
             class="base-folder"
             :folder="sentFolder"
-            :icon="require('@assets/icon_envoyes.svg')"
+            :icon="require('@assets/icons/messaging_sent.svg')"
             :drop-allowed="true"
-            icon-width="17px"
+            icon-width="19px"
             alt="icon sent"
           />
         </li>
@@ -55,9 +55,9 @@
           <MenuRootFolder
             class="base-folder"
             :folder="trashFolder"
-            :icon="require('@assets/icon_trash.svg')"
+            :icon="require('@assets/icons/trash.svg')"
             :drop-allowed="true"
-            icon-width="15px"
+            icon-width="18px"
             alt="icon trash"
           />
         </li>
@@ -72,7 +72,7 @@
       >
         <div class="icon-container">
           <img
-            src="@assets/icon_messaging_folder.svg"
+            src="@assets/icons/messaging_folders.svg"
             alt=""
             class="folder-icon"
           >
@@ -341,7 +341,7 @@ hr {
       margin-right: 10px;
 
       .folder-icon {
-        width: 18px;
+        width: 19px;
       }
     }
 

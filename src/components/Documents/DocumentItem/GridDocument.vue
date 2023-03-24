@@ -45,7 +45,7 @@
           <span>{{ document.nbMembers }}</span>
           <img
             class="members-icon"
-            src="@assets/icon_commu-black.svg"
+            src="@assets/icons/users.svg"
             :title="$t('members')"
             alt=""
           >

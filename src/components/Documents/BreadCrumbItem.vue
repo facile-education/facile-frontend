@@ -30,7 +30,7 @@
       <img
         v-if="!isFirstElement && isCurrentFolder && folder.isGroupDirectory"
         class="collaborative"
-        src="@assets/icon_commu-black.svg"
+        src="@assets/icons/users.svg"
         alt=""
       >
       <button
