@@ -157,13 +157,14 @@ const MessagingUtils = {
     return store.state.messaging.currentFolder.type === messagingConstants.messagingSentFolderType
   },
   shortRecipientList (message) {
-    if (message.nbRecipients === 0) {
+    const nbRecipients = message.recipients.length
+    if (nbRecipients === 0) {
       return ''
     }
     let shortRecipients = 'À: ' + message.recipients[0].text
-    if (message.nbRecipients === 2) {
+    if (nbRecipients === 2) {
       shortRecipients += ', ' + message.recipients[1].text
-    } else if (message.nbRecipients > 2) {
+    } else if (nbRecipients > 2) {
       const nbOthers = message.nbRecipients - 1
       shortRecipients += ' et ' + nbOthers + ' autres'
     }
