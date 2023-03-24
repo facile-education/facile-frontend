@@ -21,7 +21,7 @@
         <li>
           <IconOption
             class="header-icon new-icon"
-            :icon="require('@/assets/options/icon_edit_texte.svg')"
+            :icon="require('@/assets/icons/pencil.svg')"
             :title="$t('Messaging.new')"
             name="createNewMessage"
             icon-height="18px"
@@ -37,7 +37,7 @@
           <IconOption
             v-if="isActionEnabled"
             class="header-icon trash-icon"
-            :icon="require('@assets/icon_trash.svg')"
+            :icon="require('@assets/icons/trash.svg')"
             :title="$t('Messaging.deleteMessage')"
             name="trash"
             icon-height="18px"
@@ -97,7 +97,7 @@
           <IconOption
             v-if="isActionEnabled && isDraft"
             class="header-icon"
-            :icon="require('@assets/options/icon_edit_texte.svg')"
+            :icon="require('@assets/icons/pencil.svg')"
             :title="$t('Messaging.editDraft')"
             name="editDraft"
             icon-height="18px"

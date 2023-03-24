@@ -56,7 +56,7 @@
         <IconOption
           v-if="mq.tablet || mq.phone"
           class="button"
-          :icon="require('@/assets/options/icon_edit_texte.svg')"
+          :icon="require('@/assets/icons/pencil.svg')"
           :title="$t('Messaging.new')"
           name="createNewMessage"
           icon-height="18px"

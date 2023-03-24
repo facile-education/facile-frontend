@@ -27,7 +27,7 @@
       <div class="members">
         <span>{{ group.nbMembers }}</span>
         <img
-          src="@assets/icon_commu-black.svg"
+          src="@assets/icons/users.svg"
           :title="$tc('members', group.nbMembers)"
           alt="$tc('members', group.nbMembers)"
         >
