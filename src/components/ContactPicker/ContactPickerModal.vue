@@ -23,10 +23,10 @@
           </PentilaTabList>
         </div>
 
-        <!--        <ContactUserList-->
-        <!--          class="user-list"-->
-        <!--          :user-list="userList"-->
-        <!--        />-->
+        <ContactUserList
+          class="user-list"
+          :selected-users="selectedUsers"
+        />
       </div>
     </template>
   </PentilaWindow>
@@ -35,16 +35,27 @@
 <script>
 import ContactAddressBook from '@components/ContactPicker/ContactAddressBook.vue'
 import ContactAdvancedSearch from '@components/ContactPicker/ContactAdvancedSearch.vue'
-// import ContactUserList from '@components/ContactPicker/ContactUserList.vue'
+import ContactUserList from '@components/ContactPicker/ContactUserList.vue'
 
 export default {
   name: 'ContactPickerModal',
-  components: { ContactAdvancedSearch, ContactAddressBook },
+  components: { ContactUserList, ContactAdvancedSearch, ContactAddressBook },
   inject: ['mq'],
+  props: {
+    selectedContacts: {
+      type: Array,
+      required: true
+    }
+  },
   emits: ['close'],
   data () {
     return {
       userList: []
+    }
+  },
+  computed: {
+    selectedUsers () {
+      return this.selectedContacts.filter((contact) => contact.userId !== undefined)
     }
   },
   methods: {
@@ -52,6 +63,7 @@ export default {
       this.userList = newUserList
     },
     onClose () {
+      this.$store.dispatch('contact/resetContactStore')
       this.$emit('close')
     }
   }
@@ -69,7 +81,7 @@ h1 {
   display: flex;
 
   .left, .user-list {
-    flex: 1;
+    width: 50%;
   }
 }
 

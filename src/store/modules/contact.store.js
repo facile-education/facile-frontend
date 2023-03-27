@@ -4,26 +4,38 @@ import groupsService from '@/api/groups.service'
 export const state = {
   schools: [],
   communities: [],
-  searchResults: [],
-  nbResults: 0
+  userList: [],
+  isLoadingUsers: false,
+  error: undefined
 }
 
 export const mutations = {
+  reset (state) {
+    state.userList = []
+    state.isLoadingUsers = false
+    state.error = undefined
+  },
   setSchools (state, payload) {
     state.schools = payload
   },
   setCommunities (state, payload) {
     state.communities = payload
   },
-  setSearchResults (state, payload) {
-    state.searchResults = payload
+  setUserList (state, payload) {
+    state.userList = payload
   },
-  setNbResults (state, payload) {
-    state.nbResults = payload
+  setIsLoadingUsers (state, payload) {
+    state.isLoadingUsers = payload
+  },
+  setError (state, payload) {
+    state.error = payload
   }
 }
 
 export const actions = {
+  resetContactStore ({ commit }) {
+    commit('reset')
+  },
   setContactTree ({ commit }, categories) {
     const schools = []
     categories.forEach(school => {
@@ -36,56 +48,71 @@ export const actions = {
     commit('setSchools', schools)
   },
   getMembers ({ commit }, population) {
-    console.log('get Members of population ', population)
-    contactService.getOrgMembers(population.orgId, population.roleId).then(
-      (data) => {
-        if (data.success) {
-          commit('setSearchResults', data.users)
-          commit('setNbResults', data.nbResults)
-        }
+    commit('setIsLoadingUsers', true)
+    contactService.getOrgMembers(population.orgId, population.roleId).then((data) => {
+      commit('setIsLoadingUsers', false)
+
+      if (data.success) {
+        commit('setError', undefined)
+        commit('setUserList', data.users)
+      } else {
+        commit('setError', true)
       }
+    }
     )
   },
   getCommunityMembers ({ commit }, groupId) {
-    console.log('get Members of community ', groupId)
-    groupsService.getCommunityMembers(groupId).then(
-      (data) => {
-        if (data.success) {
-          commit('setSearchResults', data.members)
-          commit('setNbResults', data.members.length)
-        }
+    commit('setIsLoadingUsers', true)
+    groupsService.getCommunityMembers(groupId).then((data) => {
+      commit('setIsLoadingUsers', false)
+
+      if (data.success) {
+        commit('setError', undefined)
+        commit('setUserList', data.members)
+        commit('setNbResults', data.members.length)
+      } else {
+        commit('setError', true)
       }
+    }
     )
   },
   getMyStudents ({ commit }) {
-    contactService.getMyStudents().then(
-      (data) => {
-        if (data.success) {
-          commit('setSearchResults', data.users)
-          commit('setNbResults', data.nbResults)
-        }
+    commit('setIsLoadingUsers', true)
+    contactService.getMyStudents().then((data) => {
+      commit('setIsLoadingUsers', false)
+
+      if (data.success) {
+        commit('setUserList', data.users)
+      } else {
+        commit('setError', true)
       }
+    }
     )
   },
   getMyRelatives ({ commit }) {
-    contactService.getMyRelatives().then(
-      (data) => {
-        if (data.success) {
-          commit('setSearchResults', data.users)
-          commit('setNbResults', data.nbResults)
-        }
+    commit('setIsLoadingUsers', true)
+    contactService.getMyRelatives().then((data) => {
+      commit('setIsLoadingUsers', false)
+
+      if (data.success) {
+        commit('setUserList', data.users)
+      } else {
+        commit('setError', true)
       }
+    }
     )
   },
   searchDirectory ({ commit }, { query, roleId, schoolId }) {
-    console.log('directory search')
-    contactService.searchDirectory(query, roleId, schoolId).then(
-      (data) => {
-        if (data.success) {
-          commit('setSearchResults', data.users)
-          commit('setNbResults', data.users.length)
-        }
+    commit('setIsLoadingUsers', true)
+    contactService.searchDirectory(query, roleId, schoolId).then((data) => {
+      commit('setIsLoadingUsers', false)
+
+      if (data.success) {
+        commit('setUserList', data.users)
+      } else {
+        commit('setError', true)
       }
+    }
     )
   }
 }
