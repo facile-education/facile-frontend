@@ -18,7 +18,7 @@
         >
       </button>
     </div>
-    <DashboardCreateButton
+    <CreateButton
       v-if="canCreateDiaryEvent"
       @click="isCreateModalDisplayed = true"
     />
@@ -37,13 +37,13 @@
 
 <script>
 import Pellet from '@components/Base/Pellet.vue'
-import DashboardCreateButton from '@components/Dashboard/DashboardCreateButton.vue'
+import CreateButton from '@components/Base/CreateButton.vue'
 import { defineAsyncComponent } from 'vue'
 const SaveDiaryEventModal = defineAsyncComponent(() => import('@/components/Dashboard/Diary/SaveDiaryEventModal.vue'))
 
 export default {
   name: 'DiaryHeader',
-  components: { SaveDiaryEventModal, DashboardCreateButton, Pellet },
+  components: { SaveDiaryEventModal, CreateButton, Pellet },
   props: {
     nbNewEvents: {
       type: Number,
