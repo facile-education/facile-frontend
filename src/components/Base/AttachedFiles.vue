@@ -113,7 +113,7 @@ export default {
       this.$store.dispatch('clipboard/duplicate', { targetFolder, entities: [this.selectedFileForAction] })
     },
     viewAttachedFile (attachedFile) {
-      this.$store.dispatch('documents/openFile', { id: attachedFile.id, name: attachedFile.name })
+      this.$store.dispatch('documents/openFile', { id: attachedFile.id, name: attachedFile.name, readOnly: true })
     },
     viewFileName (attachedFile) {
       return this.$t('view') + ' ' + attachedFile.name
