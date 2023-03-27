@@ -131,13 +131,6 @@ const MessagingUtils = {
         }
       }
     })
-
-    // Mark as read if unread
-    for (const message of thread.messages) {
-      if (message.messageId === thread.mainMessageId && message.isNew) {
-        this.markMessagesAsReadUnread([thread.mainMessageId], true)
-      }
-    }
   },
   markMessagesAsReadUnread (messageIds, markAsRead) {
     messageService.setMessageReadStatus(messageIds, markAsRead).then((data) => {
