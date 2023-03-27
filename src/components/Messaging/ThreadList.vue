@@ -132,6 +132,9 @@ export default {
     },
     selectedThreads () {
       return this.$store.state.messaging.selectedThreads
+    },
+    isModalOpen () {
+      return this.$store.state.misc.nbOpenModals > 0
     }
   },
   watch: {
@@ -152,7 +155,7 @@ export default {
   },
   methods: {
     keyMonitor (event) {
-      if (this.threads.length > 0) {
+      if (this.threads.length > 0 && !this.isModalOpen) {
         if (event.key === 'ArrowDown') {
           this.selectNextThread()
         } else if (event.key === 'ArrowUp') {

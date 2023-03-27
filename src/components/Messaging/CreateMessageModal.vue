@@ -234,6 +234,7 @@ export default {
     }
   },
   created () {
+    this.$store.dispatch('misc/incrementModalCount')
     this.init()
   },
   mounted () {
@@ -411,6 +412,7 @@ export default {
       })
     },
     onClose () {
+      this.$store.dispatch('misc/decreaseModalCount')
       this.$emit('close')
       this.recipients = []
       this.subject = ''
