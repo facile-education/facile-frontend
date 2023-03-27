@@ -54,18 +54,6 @@
       </li>
       <li>
         <IconOption
-          v-if="mq.tablet || mq.phone"
-          class="button"
-          :icon="require('@/assets/icons/pencil.svg')"
-          :title="$t('Messaging.new')"
-          name="createNewMessage"
-          icon-height="18px"
-          alt="new message"
-          @click="createNewMessage"
-        />
-      </li>
-      <li>
-        <IconOption
           v-if="(!mq.tablet && !mq.phone)"
           class="button"
           :icon="unreadOnly ? require('@/assets/options/icon_unread_filter_active.svg') : require('@/assets/options/icon_unread_filter.svg')"
@@ -185,9 +173,6 @@ export default {
       messagingUtils.deleteSelectedThreads().then(() => {
         this.toggleMultiSelection()
       })
-    },
-    createNewMessage () {
-      messagingUtils.newMessage()
     },
     refresh () {
       messagingUtils.refresh()
