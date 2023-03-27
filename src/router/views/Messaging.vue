@@ -41,6 +41,12 @@
             :is-displayed="isMenuPanelDisplayed"
           />
         </Transition>
+
+        <CreateButton
+          class="create-button"
+          :title="$t('Messaging.new')"
+          @click="createNewMessage"
+        />
       </div>
 
       <teleport to="body">
@@ -63,12 +69,14 @@ import ThreadDetails from '@components/Messaging/ThreadDetails'
 import configurationService from '@/api/messaging/configuration.service'
 import messagingUtils from '@/utils/messaging.utils'
 import { defineAsyncComponent } from 'vue'
+import CreateButton from '@components/Base/CreateButton.vue'
 const CreateMessageModal = defineAsyncComponent(() => import('@components/Messaging/CreateMessageModal'))
 const PreferencesModal = defineAsyncComponent(() => import('@components/Preferences/PreferencesModal'))
 
 export default {
   name: 'Messaging',
   components: {
+    CreateButton,
     Layout,
     Menu,
     ThreadList,
@@ -139,6 +147,9 @@ export default {
         // utils.selectDocument(this.$store, this.allSortedDocuments, this.selectedFiles, event)
       }
     },
+    createNewMessage () {
+      messagingUtils.newMessage()
+    },
     getSignature () {
       configurationService.getMessagingConfiguration().then((data) => {
         if (data.success) {
@@ -156,6 +167,13 @@ export default {
 .messaging-body {
   height: 100%;
   display: flex;
+  position: relative;
+
+  .create-button {
+    position: absolute;
+    bottom: 2em;
+    right: 1em;
+  }
 
   .menu-panel {
     min-width: 240px;

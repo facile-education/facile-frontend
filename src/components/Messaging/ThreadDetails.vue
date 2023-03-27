@@ -20,21 +20,6 @@
       <ul class="icons">
         <li>
           <IconOption
-            class="header-icon new-icon"
-            :icon="require('@/assets/icons/pencil.svg')"
-            :title="$t('Messaging.new')"
-            name="createNewMessage"
-            icon-height="18px"
-            alt="new message"
-            @click="createNewMessage"
-          />
-        </li>
-        <li
-          v-if="isActionEnabled"
-          class="separator"
-        />
-        <li>
-          <IconOption
             v-if="isActionEnabled"
             class="header-icon trash-icon"
             :icon="require('@assets/icons/trash.svg')"
@@ -106,6 +91,16 @@
           />
         </li>
       </ul>
+      <PentilaButton
+        v-if="!(mq.phone || mq.tablet)"
+        class="create-button"
+        @click="createNewMessage"
+      >
+        <NeroIcon
+          name="fa-plus"
+        />
+        <span v-t="'Messaging.new'" />
+      </PentilaButton>
     </div>
     <hr>
 
@@ -171,10 +166,12 @@ import Message from '@components/Messaging/Message'
 import _ from 'lodash'
 import IconOption from '@components/Base/IconOption'
 import messagingConstants from '@/constants/messagingConstants'
+import NeroIcon from '@components/Nero/NeroIcon.vue'
 
 export default {
   name: 'ThreadDetails',
   components: {
+    NeroIcon,
     IconOption,
     Message
   },
@@ -308,6 +305,9 @@ ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
+}
+.create-button {
+  @extend %create-button;
 }
 
 .thread-details {
