@@ -193,13 +193,6 @@ export const mutations = {
         message.isNew = false
       }
     }
-
-    // Decrement the number of unread messages in current folder
-    for (const folder of state.messagingFolders) {
-      if (folder.folderId === state.currentFolder.folderId && folder.nbUnread >= messageIds.length) {
-        folder.nbUnread -= messageIds.length
-      }
-    }
   },
   markMessagesAsUnread (state, unreadMessageIds) {
     for (const thread of state.threads) {
@@ -213,12 +206,6 @@ export const mutations = {
     for (const message of state.currentThreadMessages) {
       if (unreadMessageIds.includes(message.messageId)) {
         message.isNew = true
-      }
-    }
-    // Increment the number of unread messages in current folder
-    for (const folder of state.messagingFolders) {
-      if (folder.folderId === state.currentFolder.folderId) {
-        folder.nbUnread += unreadMessageIds.length
       }
     }
   },
