@@ -38,7 +38,7 @@ export default {
   },
   computed: {
     searchResults () {
-      return PentilaUtils.Array.sortWithString(this.$store.state.contact.searchResults, false, 'lastName')
+      return PentilaUtils.Array.sortWithString(this.$store.state.contact.userList, false, 'lastName')
     }
   },
   methods: {

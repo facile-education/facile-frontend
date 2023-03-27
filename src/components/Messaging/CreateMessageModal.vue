@@ -139,6 +139,7 @@
   <teleport to="body">
     <ContactPickerModal
       v-if="isContactPickerModalDisplayed"
+      :selected-contacts="recipients"
       @close="isContactPickerModalDisplayed=false"
     />
   </teleport>
