@@ -310,15 +310,20 @@ export default {
       this.$store.dispatch('contextMenu/closeMenus')
     },
     markSelectionAsRead (markAsRead) {
-      const messageIds = []
-      // Pick mainMessage for each selected thread
-      for (const selectedThread of this.$store.state.messaging.selectedThreads) {
-        messageIds.push(selectedThread.mainMessageId)
+      console.log('selectedThreads = ', this.$store.state.messaging.selectedThreads)
+      let messageIds = []
+
+      if (this.$store.state.messaging.selectedMessages.length > 0) {
+        for (const selectedMessage of this.$store.state.messaging.selectedMessages) {
+          messageIds.push(selectedMessage.messageId)
+        }
+      } else {
+        // Pick all messages of each selected thread
+        for (const selectedThread of this.$store.state.messaging.selectedThreads) {
+          messageIds = [...messageIds, ...selectedThread.messages.map(message => message.messageId)]
+        }
       }
-      // Add all selected messages
-      for (const selectedMessage of this.$store.state.messaging.selectedMessages) {
-        messageIds.push(selectedMessage.messageId)
-      }
+      console.log(markAsRead, messageIds)
       messagingUtils.markMessagesAsReadUnread(messageIds, markAsRead)
     },
     draggedThreads () {

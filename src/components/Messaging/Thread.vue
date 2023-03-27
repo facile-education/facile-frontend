@@ -237,6 +237,12 @@ export default {
     },
     selectThread () {
       messagingUtils.selectThread(this.thread)
+      // Mark as read if unread
+      for (const message of this.thread.messages) {
+        if (message.messageId === this.thread.mainMessageId && message.isNew) {
+          messagingUtils.markMessagesAsReadUnread([this.thread.mainMessageId], true)
+        }
+      }
     },
     toggleThreadExtension () {
       if (!this.isThreadSelected && (!this.mq.phone && !this.mq.tablet)) {
