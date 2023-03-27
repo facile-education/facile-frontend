@@ -140,6 +140,7 @@ const MessagingUtils = {
         } else {
           store.dispatch('messaging/markMessagesAsUnread', messageIds)
         }
+        store.dispatch('messaging/updateNbUnread', store.state.messaging.currentFolder.folderId)
       }
     })
   },
