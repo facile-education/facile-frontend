@@ -2,15 +2,18 @@
   <div>
     <button
       :class="{'leaf': isLeaf, 'root': icon !== undefined, 'theme-text-color': isThemeColor, 'theme-border-color': isThemeColor}"
+      :title="title"
       @click="handleClick"
     >
-      <span>
+      <span class="left">
         <img
           v-if="icon"
           :src="icon"
           alt=""
         >
-        {{ title }}
+        <span>
+          {{ title }}
+        </span>
       </span>
       <BaseIcon
         v-if="!isLeaf"
@@ -89,6 +92,7 @@ button {
   border: none;
   align-items: center;
   justify-content: space-between;
+  text-align: left;
   font-size: 1em;
 
   &.root {
@@ -107,12 +111,20 @@ button {
     background-color: $color-hover-bg;
   }
 
-  span {
-    display: flex;
+  .left {
+    height: 100%;
     align-items: center;
+    display: flex;
+    overflow-x: hidden;
 
     img {
       margin-right: 0.5em;
+    }
+
+    span {
+      overflow-x: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
   }
 }
