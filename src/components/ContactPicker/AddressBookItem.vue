@@ -131,28 +131,22 @@ button {
 
 .sub-tree {
   padding-left: 10px;
-  //max-height: 500px; // Something bigger than I will ever get.
-  //overflow: hidden;
-  //transition: max-height 0.35s ease-in;
-
-  //&.collapsed {
-  //  max-height: 0;
-  //  transition: max-height 0.35s ease-out;
-  //}
+  overflow-y: hidden;
 }
 
 .slide-fade-enter-active {
-  transition: all .35s;
+  transition: all .3s ease-in;
 }
 .slide-fade-leave-active {
-  transition: all .35s;
+  transition: all .3s ease-out;
 }
 
 .slide-fade-enter-from, .slide-fade-leave-to {
   max-height: 0;
 }
 .slide-fade-enter-to, .slide-fade-leave-from {
-  max-height: 500px;
+  /* TODO: make max-height adaptive to content height */
+  max-height: 200px;
 }
 
 </style>
