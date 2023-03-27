@@ -6,8 +6,7 @@
 
 <script>
 export default {
-  // TODO: to export to project scope?
-  name: 'DashboardCreateButton'
+  name: 'CreateButton'
 }
 </script>
 

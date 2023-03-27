@@ -18,7 +18,7 @@
         >
       </button>
     </div>
-    <DashboardCreateButton
+    <CreateButton
       v-if="canCreateAnnouncement"
       @click="isCreateModalDisplayed = true"
     />
@@ -37,13 +37,13 @@
 
 <script>
 import Pellet from '@components/Base/Pellet.vue'
-import DashboardCreateButton from '@components/Dashboard/DashboardCreateButton.vue'
+import CreateButton from '@components/Base/CreateButton.vue'
 import { defineAsyncComponent } from 'vue'
 const SaveAnnouncementModal = defineAsyncComponent(() => import('@/components/Dashboard/Announcements/SaveAnnouncementModal.vue'))
 
 export default {
   name: 'AnnouncementsHeader',
-  components: { SaveAnnouncementModal, DashboardCreateButton, Pellet },
+  components: { SaveAnnouncementModal, CreateButton, Pellet },
   props: {
     nbNewAnnouncements: {
       type: Number,
