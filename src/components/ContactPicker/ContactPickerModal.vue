@@ -11,7 +11,10 @@
     </template>
 
     <template #body>
-      <div class="container">
+      <div
+        class="container"
+        :class="{'phone': mq.phone}"
+      >
         <div class="left">
           <PentilaTabList>
             <PentilaTabItem :title="$t('addressBook')">
@@ -25,6 +28,7 @@
 
         <ContactUserList
           class="user-list"
+          :class="{'collapsed': (mq.phone && !isMobileUserListDisplayed)}"
           :selected-users="selectedUsers"
         />
       </div>
@@ -56,6 +60,9 @@ export default {
   computed: {
     selectedUsers () {
       return this.selectedContacts.filter((contact) => contact.userId !== undefined)
+    },
+    isMobileUserListDisplayed () {
+      return this.$store.state.contact.isMobileUserListDisplayed
     }
   },
   methods: {
@@ -78,7 +85,28 @@ h1 {
 }
 
 .container {
+  position: relative;
+  overflow-x: hidden;
+
+  .user-list {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    transition: all .3s ease-in-out;
+
+    &.collapsed {
+      transform: translateX(100%);
+    }
+  }
+}
+
+.container:not(.phone) {
   display: flex;
+
+  .user-list {
+    position: relative;
+  }
 
   .left, .user-list {
     width: 50%;

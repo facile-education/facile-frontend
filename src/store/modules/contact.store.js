@@ -6,7 +6,8 @@ export const state = {
   communities: [],
   userList: [],
   isLoadingUsers: false,
-  error: undefined
+  error: undefined,
+  isMobileUserListDisplayed: false
 }
 
 export const mutations = {
@@ -14,6 +15,7 @@ export const mutations = {
     state.userList = []
     state.isLoadingUsers = false
     state.error = undefined
+    state.isMobileUserListDisplayed = false
   },
   setSchools (state, payload) {
     state.schools = payload
@@ -29,6 +31,9 @@ export const mutations = {
   },
   setError (state, payload) {
     state.error = payload
+  },
+  setIsMobileUserListDisplayed (state, payload) {
+    state.isMobileUserListDisplayed = payload
   }
 }
 
@@ -114,5 +119,11 @@ export const actions = {
       }
     }
     )
+  },
+  openMobileUserList ({ commit }) {
+    commit('setIsMobileUserListDisplayed', true)
+  },
+  closeMobileUserList ({ commit }) {
+    commit('setIsMobileUserListDisplayed', false)
   }
 }

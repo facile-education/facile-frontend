@@ -73,6 +73,7 @@ export default {
     },
     select () {
       this.$emit('select')
+      this.$store.dispatch('contact/openMobileUserList')
     }
   }
 }
