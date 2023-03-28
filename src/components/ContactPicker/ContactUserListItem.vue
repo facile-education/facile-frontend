@@ -39,6 +39,7 @@ export default {
   },
   methods: {
     toggleUser () {
+      // TODO: Remove formatting when back-end will return good data
       const formattedContact = { ...this.user }
       formattedContact.id = this.user.userId
       formattedContact.text = this.user.fullName
