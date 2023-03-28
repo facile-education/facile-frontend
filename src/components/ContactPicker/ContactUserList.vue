@@ -23,6 +23,8 @@
         :key="user.userId"
         :selected-users="selectedUsers"
         :user="user"
+        @addContact="addContact"
+        @removeContact="removeContact"
       />
     </ul>
   </section>
@@ -41,6 +43,7 @@ export default {
       required: true
     }
   },
+  emits: ['addContacts', 'removeContacts'],
   computed: {
     isLoadingUserList () {
       return this.$store.state.contact.isLoadingUsers
@@ -50,6 +53,14 @@ export default {
     },
     userList () {
       return this.$store.state.contact.userList
+    }
+  },
+  methods: {
+    addContact (user) {
+      this.$emit('addContacts', [user])
+    },
+    removeContact (user) {
+      this.$emit('removeContacts', [user])
     }
   }
 }
