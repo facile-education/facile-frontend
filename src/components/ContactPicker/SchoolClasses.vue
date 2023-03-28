@@ -2,6 +2,7 @@
   <AddressBookItem
     :title="$t('classes')"
     :is-theme-color="true"
+    :begin-extended="classes.isExpanded"
   >
     <AddressBookItem
       v-for="volee in sortedVolees"

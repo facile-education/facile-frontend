@@ -2,6 +2,7 @@
   <AddressBookItem
     :title="$t('courses')"
     :is-theme-color="true"
+    :begin-extended="courses.isExpanded"
   >
     <AddressBookItem
       v-for="course in sortedCourses"
@@ -31,7 +32,7 @@ export default {
   },
   inject: ['mq'],
   props: {
-    cours: {
+    courses: {
       type: Array,
       required: true
     }
