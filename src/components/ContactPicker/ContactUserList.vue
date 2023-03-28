@@ -59,6 +59,8 @@ export default {
 .user-list {
   position: relative;
   padding-left: 1rem;
+  width: 100%;
+  background-color: white;
 }
 
 .header {
