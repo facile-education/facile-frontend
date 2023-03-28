@@ -1,6 +1,11 @@
 <template>
   <section class="user-list">
-    <ContactUserListHeader class="header" />
+    <ContactUserListHeader
+      :user-list-length="userList.length"
+      :is-all-list-selected="isAllListSelected"
+      @updateFilter="updateFilter"
+      @toggle-all="toggleAll"
+    />
     <div
       v-if="isLoadingUserList"
       class="placeholder"
@@ -19,7 +24,7 @@
     />
     <ul v-else>
       <ContactUserListItem
-        v-for="user in userList"
+        v-for="user in filteredUserList"
         :key="user.userId"
         :selected-users="selectedUsers"
         :user="user"
@@ -44,6 +49,11 @@ export default {
     }
   },
   emits: ['addContacts', 'removeContacts'],
+  data () {
+    return {
+      filter: ''
+    }
+  },
   computed: {
     isLoadingUserList () {
       return this.$store.state.contact.isLoadingUsers
@@ -53,9 +63,27 @@ export default {
     },
     userList () {
       return this.$store.state.contact.userList
+    },
+    filteredUserList () {
+      return this.userList.filter((user) => { return user.fullName.toLowerCase().includes(this.filter.toLowerCase()) })
+    },
+    isAllListSelected () {
+      for (let i = 0; i < this.filteredUserList; i++) {
+        const filteredUser = this.filteredUserList[i]
+        if (this.selectedUsers.map(user => user.userId).indexOf(filteredUser.userId) === -1) {
+          return false
+        }
+      }
+      return true
     }
   },
   methods: {
+    updateFilter (newValue) {
+      this.filter = newValue
+    },
+    toggleAll () {
+      console.log('TODO')
+    },
     addContact (user) {
       this.$emit('addContacts', [user])
     },
@@ -72,10 +100,6 @@ export default {
   padding-left: 1rem;
   width: 100%;
   background-color: white;
-}
-
-.header {
-  height: 32px;
 }
 
 ul {
