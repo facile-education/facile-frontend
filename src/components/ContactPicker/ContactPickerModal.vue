@@ -3,6 +3,7 @@
     :modal="true"
     :is-full-screen="mq.phone"
     :hidden-footer="true"
+    :draggable="true"
     data-test="contactPickerModal"
     @close="onClose"
   >
@@ -18,10 +19,13 @@
         <div class="left">
           <PentilaTabList>
             <PentilaTabItem :title="$t('addressBook')">
-              <ContactAddressBook @setUserList="setUserList" />
+              <ContactAddressBook
+                @addContacts="addContacts"
+                @removeContacts="removeContacts"
+              />
             </PentilaTabItem>
             <PentilaTabItem :title="$t('advancedSearch')">
-              <ContactAdvancedSearch @setUserList="setUserList" />
+              <ContactAdvancedSearch />
             </PentilaTabItem>
           </PentilaTabList>
         </div>
@@ -30,6 +34,8 @@
           class="user-list"
           :class="{'collapsed': (mq.phone && !isMobileUserListDisplayed)}"
           :selected-users="selectedUsers"
+          @addContacts="addContacts"
+          @removeContacts="removeContacts"
         />
       </div>
     </template>
@@ -51,12 +57,7 @@ export default {
       required: true
     }
   },
-  emits: ['close'],
-  data () {
-    return {
-      userList: []
-    }
-  },
+  emits: ['close', 'addContacts', 'removeContacts'],
   computed: {
     selectedUsers () {
       return this.selectedContacts.filter((contact) => contact.userId !== undefined)
@@ -66,8 +67,11 @@ export default {
     }
   },
   methods: {
-    setUserList (newUserList) {
-      this.userList = newUserList
+    addContacts (contactList) {
+      this.$emit('addContacts', contactList)
+    },
+    removeContacts (contactList) {
+      this.$emit('removeContacts', contactList)
     },
     onClose () {
       this.$store.dispatch('contact/resetContactStore')

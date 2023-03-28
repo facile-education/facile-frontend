@@ -31,7 +31,7 @@ export default {
       required: true
     }
   },
-  emits: ['removeUser', 'addUser'],
+  emits: ['removeContact', 'addContact'],
   computed: {
     isSelected () {
       return this.selectedUsers.map(user => user.userId).indexOf(this.user.userId) !== -1
@@ -39,10 +39,15 @@ export default {
   },
   methods: {
     toggleUser () {
+      const formattedContact = { ...this.user }
+      formattedContact.id = this.user.userId
+      formattedContact.text = this.user.fullName
+      formattedContact.type = 1 // Get contact type from backend
+
       if (this.isSelected) {
-        this.$emit('removeUser')
+        this.$emit('removeContact', formattedContact)
       } else {
-        this.$emit('addUser')
+        this.$emit('addContact', formattedContact)
       }
     }
   }

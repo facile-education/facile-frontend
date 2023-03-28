@@ -140,6 +140,8 @@
     <ContactPickerModal
       v-if="isContactPickerModalDisplayed"
       :selected-contacts="recipients"
+      @addContacts="addRecipients"
+      @removeContacts="removeRecipients"
       @close="isContactPickerModalDisplayed=false"
     />
   </teleport>
@@ -422,8 +424,21 @@ export default {
       this.closeFilePicker()
       this.$store.dispatch('messaging/closeCreateMessageModal')
     },
-    toggleUserSelection (contact) {
-      this.recipients.push(contact)
+    addRecipients (contactList) {
+      this.recipients = [...this.recipients, ...contactList]
+    },
+    removeRecipients (contactList) {
+      contactList.forEach((contact) => {
+        this.removeRecipient(contact)
+      })
+    },
+    removeRecipient (contact) {
+      const index = this.recipients.map(recipient => recipient.id).indexOf(contact.id)
+      if (index !== -1) {
+        this.recipients.splice(index, 1)
+      } else {
+        console.error('Cannot remove ', contact, 'from recipientList: ', this.recipients)
+      }
     },
     displayFilePicker () {
       this.isFilePickerModalDisplayed = true
