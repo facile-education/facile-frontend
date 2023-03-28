@@ -28,13 +28,13 @@
 
     <button @click="toggleAll">
       <img
-        v-if="isAllListSelected"
-        src="@assets/icons/remove-list.svg"
+        v-if="!isAllListSelected"
+        src="@assets/icons/add_list.svg"
         alt="toggle list"
       >
       <img
-        v-else
-        src="@assets/icons/add_list.svg"
+        v-show="isAllListSelected"
+        src="@assets/icons/remove-list.svg"
         alt="toggle list"
       >
     </button>
