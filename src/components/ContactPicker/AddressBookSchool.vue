@@ -2,6 +2,7 @@
   <AddressBookItem
     :title="school.schoolName"
     :icon="require('@/assets/icons/school.svg')"
+    :begin-extended="school.isExpanded"
   >
     <SchoolPersonals
       v-if="school.Personnels"
@@ -13,7 +14,7 @@
     />
     <SchoolCours
       v-if="school.cours"
-      :cours="school.cours"
+      :courses="school.cours"
     />
     <SchoolSubjects
       v-if="school.subjects"

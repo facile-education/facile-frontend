@@ -56,6 +56,10 @@ export default {
     isThemeColor: {
       type: Boolean,
       default: false
+    },
+    beginExtended: {
+      type: Boolean,
+      default: false
     }
   },
   emits: ['select'],
@@ -63,6 +67,9 @@ export default {
     return {
       isExtended: false
     }
+  },
+  mounted () {
+    this.isExtended = this.beginExtended
   },
   methods: {
     handleClick () {
