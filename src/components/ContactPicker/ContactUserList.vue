@@ -68,13 +68,17 @@ export default {
       return this.userList.filter((user) => { return user.fullName.toLowerCase().includes(this.filter.toLowerCase()) })
     },
     isAllListSelected () {
-      for (let i = 0; i < this.filteredUserList; i++) {
-        const filteredUser = this.filteredUserList[i]
-        if (this.selectedUsers.map(user => user.userId).indexOf(filteredUser.userId) === -1) {
-          return false
+      if (this.filteredUserList.length > 0) {
+        for (let i = 0; i < this.filteredUserList.length; i++) {
+          const filteredUser = this.filteredUserList[i]
+          if (this.selectedUsers.map(user => user.userId).indexOf(filteredUser.userId) === -1) {
+            return false
+          }
         }
+        return true
+      } else {
+        return false
       }
-      return true
     }
   },
   methods: {
@@ -82,7 +86,34 @@ export default {
       this.filter = newValue
     },
     toggleAll () {
-      console.log('TODO')
+      if (this.isAllListSelected) {
+        // TODO: Remove formatting when back-end will return good data
+        const formattedContactsToRemove = this.filteredUserList.map((user) => {
+          const formattedContact = { ...user }
+          formattedContact.id = user.userId
+          formattedContact.text = user.fullName
+          formattedContact.type = 1
+          return formattedContact
+        })
+        this.$emit('removeContacts', formattedContactsToRemove)
+      } else {
+        const contactsToAdd = []
+        for (let i = 0; i < this.filteredUserList.length; i++) {
+          const filteredUser = this.filteredUserList[i]
+          if (this.selectedUsers.map(user => user.userId).indexOf(filteredUser.userId) === -1) { // if user is not selected
+            contactsToAdd.push(filteredUser)
+          }
+        }
+        // TODO: Remove formatting when back-end will return good data
+        const formattedContactsToAdd = contactsToAdd.map((user) => {
+          const formattedContact = { ...user }
+          formattedContact.id = user.userId
+          formattedContact.text = user.fullName
+          formattedContact.type = 1
+          return formattedContact
+        })
+        this.$emit('addContacts', formattedContactsToAdd)
+      }
     },
     addContact (user) {
       this.$emit('addContacts', [user])
