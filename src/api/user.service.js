@@ -14,7 +14,7 @@ export default {
   updateWebdavPassword
 }
 
-const PREF_PATH = '/preference-portlet.'
+const PREF_PATH = '/preference.userproperties'
 const USER_PATH = '/user.userutils'
 
 /**
@@ -55,7 +55,7 @@ function updateInterfacePreferences (preferences) {
 
 function updateThemeColor (newColor) {
   const formattedColor = newColor.replace('#', '').toLowerCase()
-  return axios.post(constants.JSON_WS_URL + PREF_PATH + 'userproperties/update-theme-color',
+  return axios.post(constants.JSON_WS_URL + PREF_PATH + '/update-theme-color',
     PentilaUtils.URL.params({
       color: formattedColor
     })
@@ -63,7 +63,7 @@ function updateThemeColor (newColor) {
 }
 
 function updateReportFrequency (frequency) {
-  return axios.post(constants.JSON_WS_URL + PREF_PATH + 'userproperties/update-report-frequency',
+  return axios.post(constants.JSON_WS_URL + PREF_PATH + '/update-report-frequency',
     PentilaUtils.URL.params({
       frequency: frequency
     })
@@ -71,7 +71,7 @@ function updateReportFrequency (frequency) {
 }
 
 function updateWebdavState (isEnabled) {
-  return axios.post(constants.JSON_WS_URL + PREF_PATH + 'userproperties/update-webdav-state',
+  return axios.post(constants.JSON_WS_URL + PREF_PATH + '/update-webdav-state',
     PentilaUtils.URL.params({
       isEnabled: isEnabled
     })
@@ -79,7 +79,7 @@ function updateWebdavState (isEnabled) {
 }
 
 function updateUserPicture (formData) {
-  return axios.post(constants.JSON_WS_URL + PREF_PATH + 'userproperties/update-user-picture',
+  return axios.post(constants.JSON_WS_URL + PREF_PATH + '/update-user-picture',
     formData
   ).then(response => response.data)
 }
@@ -91,13 +91,13 @@ function removeUserPicture () {
   const formData = new FormData()
   formData.append('picture', new Blob([]), '')
 
-  return axios.post(constants.JSON_WS_URL + PREF_PATH + 'userproperties/update-user-picture',
+  return axios.post(constants.JSON_WS_URL + PREF_PATH + '/update-user-picture',
     formData
   ).then(response => response.data)
 }
 
 function updateWebdavPassword (password, confirmPassword) {
-  return axios.post(constants.JSON_WS_URL + PREF_PATH + 'userproperties/update-webdav-password',
+  return axios.post(constants.JSON_WS_URL + PREF_PATH + '/update-webdav-password',
     PentilaUtils.URL.params({
       password: password,
       confirmPassword: confirmPassword
