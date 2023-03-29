@@ -77,14 +77,41 @@ export default {
 
 <style lang="scss" scoped>
 .user-list-header {
-  height: 32px;
+  height: 50px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+button {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  background-color: transparent;
+  border-radius: 0;
+  border: none;
 }
 
 .back-arrow {
+  width: 13px;
   transform: rotate(180deg);
 }
+
+.nb-users {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 1rem;
+
+  img {
+    width: 0.875rem;
+    margin: 3px 0;
+  }
+}
+
 </style>
 
 <i18n locale="fr">

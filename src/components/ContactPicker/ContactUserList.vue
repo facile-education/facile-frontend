@@ -1,5 +1,8 @@
 <template>
-  <section class="user-list">
+  <section
+    class="user-list"
+    :class="{'phone': mq.phone}"
+  >
     <ContactUserListHeader
       :user-list-length="userList.length"
       :is-all-list-selected="isAllListSelected"
@@ -42,6 +45,7 @@ import ContactUserListItem from '@components/ContactPicker/ContactUserListItem.v
 export default {
   name: 'ContactUserList',
   components: { ContactUserListItem, ContactUserListHeader },
+  inject: ['mq'],
   props: {
     selectedUsers: {
       type: Array,
@@ -126,9 +130,12 @@ export default {
 <style lang="scss" scoped>
 .user-list {
   position: relative;
-  padding-left: 1rem;
   width: 100%;
   background-color: white;
+
+  &:not(.phone) {
+    padding-left: 1rem;
+  }
 }
 
 ul {
