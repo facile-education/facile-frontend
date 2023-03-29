@@ -18,14 +18,20 @@
       >
         <div class="left">
           <PentilaTabList>
-            <PentilaTabItem :title="$t('addressBook')">
+            <PentilaTabItem
+              :title="$t('addressBook')"
+              :icon="require('@assets/icons/communities.svg')"
+            >
               <ContactAddressBook
                 :selected-lists="selectedLists"
                 @addContacts="addContacts"
                 @removeContacts="removeContacts"
               />
             </PentilaTabItem>
-            <PentilaTabItem :title="$t('advancedSearch')">
+            <PentilaTabItem
+              :title="$t('advancedSearch')"
+              :icon="require('@assets/icons/contact-book.svg')"
+            >
               <ContactAdvancedSearch />
             </PentilaTabItem>
           </PentilaTabList>
