@@ -43,7 +43,6 @@ export default {
       const formattedContact = { ...this.user }
       formattedContact.id = this.user.userId
       formattedContact.text = this.user.fullName
-      formattedContact.type = 1 // Get contact type from backend
 
       if (this.isSelected) {
         this.$emit('removeContact', formattedContact)

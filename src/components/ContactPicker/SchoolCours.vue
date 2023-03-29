@@ -33,7 +33,7 @@ export default {
   inject: ['mq'],
   props: {
     courses: {
-      type: Array,
+      type: Object,
       required: true
     }
   },
@@ -48,7 +48,7 @@ export default {
     }
   },
   created () {
-    this.localCourses = PentilaUtils.JSON.deepCopy(this.courses)
+    this.localCourses = PentilaUtils.JSON.deepCopy(this.courses.cours)
   },
   methods: {
     getMembers (population) {
