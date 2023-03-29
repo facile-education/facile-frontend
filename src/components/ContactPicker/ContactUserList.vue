@@ -92,7 +92,6 @@ export default {
           const formattedContact = { ...user }
           formattedContact.id = user.userId
           formattedContact.text = user.fullName
-          formattedContact.type = 1
           return formattedContact
         })
         this.$emit('removeContacts', formattedContactsToRemove)
@@ -109,7 +108,6 @@ export default {
           const formattedContact = { ...user }
           formattedContact.id = user.userId
           formattedContact.text = user.fullName
-          formattedContact.type = 1
           return formattedContact
         })
         this.$emit('addContacts', formattedContactsToAdd)
