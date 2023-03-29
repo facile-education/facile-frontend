@@ -4,7 +4,7 @@
     :is-theme-color="true"
   >
     <AddressBookItem
-      v-for="population in populations"
+      v-for="population in sortedPopulations"
       :key="population.rolelId"
       :title="population.groupName"
       :is-leaf="true"
@@ -34,6 +34,7 @@
 <script>
 
 import AddressBookItem from '@components/ContactPicker/AddressBookItem.vue'
+import PentilaUtils from 'pentila-utils'
 
 export default {
   name: 'SchoolPersonals',
@@ -57,6 +58,9 @@ export default {
     },
     isParent () {
       return this.$store.state.user.isParent
+    },
+    sortedPopulations () {
+      return PentilaUtils.Array.sortWithString(this.populations, false, 'groupName')
     }
   },
   methods: {

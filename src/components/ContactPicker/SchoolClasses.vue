@@ -15,7 +15,7 @@
         :title="classe.groupName"
       >
         <AddressBookItem
-          v-for="population in classe.populations"
+          v-for="population in sortedPopulations(classe)"
           :key="population.populationName"
           :title="population.populationName"
           :is-leaf="true"
@@ -66,6 +66,9 @@ export default {
   methods: {
     sortedClasses (volee) {
       return PentilaUtils.Array.sortWithString(volee.classes, false, 'groupName')
+    },
+    sortedPopulations (classe) {
+      return PentilaUtils.Array.sortWithString(classe.populations, false, 'populationName')
     },
     isSelected (population) {
       return this.selectedLists.map(list => list.id).indexOf(this.formatContact(population).id) !== -1

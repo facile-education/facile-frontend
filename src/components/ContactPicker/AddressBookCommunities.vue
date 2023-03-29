@@ -4,7 +4,7 @@
     :icon="require('@/assets/icons/communities.svg')"
   >
     <AddressBookItem
-      v-for="community in communities"
+      v-for="community in sortedCommunities"
       :key="community.groupName"
       :title="community.groupName"
       :is-leaf="true"
@@ -18,6 +18,7 @@
 
 <script>
 import AddressBookItem from '@components/ContactPicker/AddressBookItem.vue'
+import PentilaUtils from 'pentila-utils'
 
 export default {
   name: 'AddressBookCommunities',
@@ -42,6 +43,9 @@ export default {
     }
   },
   computed: {
+    sortedCommunities () {
+      return PentilaUtils.Array.sortWithString(this.communities, false, 'groupName')
+    }
   },
   methods: {
     isSelected (community) {
