@@ -27,7 +27,7 @@
     />
     <ul v-else>
       <ContactUserListItem
-        v-for="user in filteredUserList"
+        v-for="user in sortedUserList"
         :key="user.userId"
         :selected-users="selectedUsers"
         :user="user"
@@ -41,6 +41,7 @@
 <script>
 import ContactUserListHeader from '@components/ContactPicker/ContactUserListHeader.vue'
 import ContactUserListItem from '@components/ContactPicker/ContactUserListItem.vue'
+import PentilaUtils from 'pentila-utils'
 
 export default {
   name: 'ContactUserList',
@@ -70,6 +71,9 @@ export default {
     },
     filteredUserList () {
       return this.userList.filter((user) => { return user.fullName.toLowerCase().includes(this.filter.toLowerCase()) })
+    },
+    sortedUserList () {
+      return PentilaUtils.Array.sortWithString(this.filteredUserList, false, 'fullName')
     },
     isAllListSelected () {
       if (this.filteredUserList.length > 0) {

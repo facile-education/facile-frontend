@@ -10,7 +10,7 @@
       :title="course.groupName"
     >
       <AddressBookItem
-        v-for="population in course.populations"
+        v-for="population in sortedPopulations(course)"
         :key="population.populationName"
         :title="population.populationName"
         :is-leaf="true"
@@ -59,6 +59,9 @@ export default {
     this.localCourses = PentilaUtils.JSON.deepCopy(this.courses.cours)
   },
   methods: {
+    sortedPopulations (course) {
+      return PentilaUtils.Array.sortWithString(course.populations, false, 'populationName')
+    },
     isSelected (population) {
       return this.selectedLists.map(list => list.id).indexOf(this.formatContact(population).id) !== -1
     },
