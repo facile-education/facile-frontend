@@ -108,6 +108,10 @@ h1 {
       transform: translateX(100vw);
     }
   }
+
+  .left {
+    margin-top: 13px;
+  }
 }
 
 .container:not(.phone) {

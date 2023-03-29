@@ -84,6 +84,7 @@ export default {
 
 <style lang="scss" scoped>
 .address-book {
+  margin-top: 5px;
   position: relative;
   min-height: 20vh;
   max-height: 70vh;

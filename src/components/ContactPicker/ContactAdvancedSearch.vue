@@ -85,6 +85,7 @@ export default {
 
 <style lang="scss" scoped>
 .advanced-search {
+  margin-top: 5px;
   min-height: 20vh;
   max-height: 70vh;
   display: flex;
