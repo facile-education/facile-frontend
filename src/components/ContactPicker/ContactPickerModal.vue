@@ -96,17 +96,16 @@ h1 {
 
 .container {
   position: relative;
-  overflow-x: hidden;
 
   .user-list {
     position: absolute;
     top: 0;
     left: 0;
     height: 100%;
-    transition: all .3s ease-in-out;
+    transition: all .4s ease-in-out;
 
     &.collapsed {
-      transform: translateX(100%);
+      transform: translateX(100vw);
     }
   }
 }

@@ -63,8 +63,7 @@ export const actions = {
       } else {
         commit('setError', true)
       }
-    }
-    )
+    })
   },
   getCommunityMembers ({ commit }, groupId) {
     commit('setIsLoadingUsers', true)
@@ -78,8 +77,7 @@ export const actions = {
       } else {
         commit('setError', true)
       }
-    }
-    )
+    })
   },
   getMyStudents ({ commit }) {
     commit('setIsLoadingUsers', true)
@@ -107,18 +105,19 @@ export const actions = {
     }
     )
   },
-  searchDirectory ({ commit }, { query, roleId, schoolId }) {
+  getUsersFromSearch ({ commit }, { query, roleId, schoolId }) {
+    commit('setIsMobileUserListDisplayed', true)
     commit('setIsLoadingUsers', true)
     contactService.searchDirectory(query, roleId, schoolId).then((data) => {
       commit('setIsLoadingUsers', false)
 
       if (data.success) {
+        commit('setError', undefined)
         commit('setUserList', data.users)
       } else {
         commit('setError', true)
       }
-    }
-    )
+    })
   },
   openMobileUserList ({ commit }) {
     commit('setIsMobileUserListDisplayed', true)

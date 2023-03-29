@@ -25,7 +25,7 @@
               v-if="hasDirectory"
               :title="$t('directory')"
             >
-              <Directory />
+              <ContactAdvancedSearch />
             </PentilaTabItem>
           </PentilaTabList>
         </div>
@@ -60,14 +60,14 @@
 
 <script>
 import AddressBook from './AddressBook.vue'
-import Directory from './Directory.vue'
 import ResultPanel from './ResultPanel.vue'
+import ContactAdvancedSearch from '@components/ContactPicker/ContactAdvancedSearch.vue'
 
 export default {
   name: 'UserPickerModal',
   components: {
+    ContactAdvancedSearch,
     AddressBook,
-    Directory,
     ResultPanel
   },
   inject: ['mq'],
