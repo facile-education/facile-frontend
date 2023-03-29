@@ -1,6 +1,7 @@
 <template>
   <div>
     <button
+      class="title"
       :class="{'leaf': isLeaf, 'root': icon !== undefined, 'theme-text-color': isThemeColor, 'theme-border-color': isThemeColor}"
       :title="title"
       @click="handleClick"
@@ -17,10 +18,26 @@
       </span>
       <BaseIcon
         v-if="!isLeaf"
-        class="icon"
+        class="extend-icon"
         :class="isExtended ? 'extend': 'collapse'"
         name="chevron-up"
       />
+      <button
+        v-else
+        class="toggle-selection-button"
+        @click.stop="toggleList"
+      >
+        <img
+          v-if="!isSelected"
+          src="@assets/icons/add.svg"
+          alt="remove"
+        >
+        <img
+          v-else
+          src="@assets/icons/remove.svg"
+          alt="add"
+        >
+      </button>
     </button>
     <Transition name="slide-fade">
       <div
@@ -60,9 +77,13 @@ export default {
     beginExtended: {
       type: Boolean,
       default: false
+    },
+    isSelected: {
+      type: Boolean,
+      default: false
     }
   },
-  emits: ['select'],
+  emits: ['select', 'add', 'remove'],
   data () {
     return {
       isExtended: false
@@ -78,6 +99,13 @@ export default {
     toggleExtension () {
       this.isExtended = !this.isExtended
     },
+    toggleList () {
+      if (this.isSelected) {
+        this.$emit('remove')
+      } else {
+        this.$emit('add')
+      }
+    },
     select () {
       this.$emit('select')
       this.$store.dispatch('contact/openMobileUserList')
@@ -90,14 +118,17 @@ export default {
 @import "@design";
 
 button {
-  display: flex;
-  height: 30px;
-  padding: 0 0.5em;
-  width: 100%;
   cursor: pointer;
   background-color: transparent;
   border-radius: 0;
   border: none;
+}
+
+.title {
+  display: flex;
+  height: 30px;
+  padding: 0 0.4em;
+  width: 100%;
   align-items: center;
   justify-content: space-between;
   text-align: left;
@@ -134,6 +165,18 @@ button {
       white-space: nowrap;
       text-overflow: ellipsis;
     }
+  }
+
+  .toggle-selection-button {
+    padding-right: 0;
+
+    img {
+      width: 18px;
+    }
+  }
+
+  .extend-icon {
+    margin-right: 2px;
   }
 }
 

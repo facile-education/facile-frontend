@@ -19,6 +19,9 @@
           :key="population.populationName"
           :title="population.populationName"
           :is-leaf="true"
+          :is-selected="isSelected(population)"
+          @add="addContacts(population)"
+          @remove="removeContacts(population)"
           @select="getMembers(population)"
         />
       </AddressBookItem>
@@ -40,8 +43,13 @@ export default {
     classes: {
       type: Object,
       required: true
+    },
+    selectedLists: {
+      type: Array,
+      required: true
     }
   },
+  emits: ['addContacts', 'removeContacts'],
   data: function () {
     return {
       localVolees: []
@@ -59,8 +67,23 @@ export default {
     sortedClasses (volee) {
       return PentilaUtils.Array.sortWithString(volee.classes, false, 'groupName')
     },
+    isSelected (population) {
+      return this.selectedLists.map(list => list.id).indexOf(this.formatContact(population).id) !== -1
+    },
     getMembers (population) {
       this.$store.dispatch('contact/getMembers', population)
+    },
+    formatContact (population) {
+      const formattedContact = { ...population }
+      formattedContact.id = Number(String(population.orgId) + String(population.roleId)) // Concat the two primary keys. TODO: backend returned field?
+      formattedContact.text = population.groupName
+      return formattedContact
+    },
+    addContacts (population) {
+      this.$emit('addContacts', [this.formatContact(population)])
+    },
+    removeContacts (population) {
+      this.$emit('removeContacts', [this.formatContact(population)])
     }
   }
 }

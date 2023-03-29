@@ -16,11 +16,17 @@
         v-for="(school) in schools"
         :key="school.schoolOrgId"
         :school="school"
+        :selected-lists="selectedLists"
+        @addContacts="$emit('addContacts', $event)"
+        @removeContacts="$emit('removeContacts', $event)"
       />
       <!-- Dedicated component for the list because this list can be folded-->
       <AddressBookCommunities
         v-if="communities.length > 0"
         :communities="communities"
+        :selected-lists="selectedLists"
+        @addContacts="$emit('addContacts', $event)"
+        @removeContacts="$emit('removeContacts', $event)"
       />
     </div>
   </section>
@@ -34,6 +40,13 @@ import AddressBookSchool from '@components/ContactPicker/AddressBookSchool.vue'
 export default {
   name: 'ContactAddressBook',
   components: { AddressBookSchool, AddressBookCommunities },
+  props: {
+    selectedLists: {
+      type: Array,
+      required: true
+    }
+  },
+  emits: ['addContacts', 'removeContacts'],
   data () {
     return {
       categories: [],

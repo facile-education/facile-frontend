@@ -8,6 +8,9 @@
       :key="community.groupName"
       :title="community.groupName"
       :is-leaf="true"
+      :is-selected="isSelected(community)"
+      @add="addContacts(community)"
+      @remove="removeContacts(community)"
       @select="getMembers(community)"
     />
   </AddressBookItem>
@@ -26,8 +29,13 @@ export default {
     communities: {
       type: Array,
       required: true
+    },
+    selectedLists: {
+      type: Array,
+      required: true
     }
   },
+  emits: ['addContacts', 'removeContacts'],
   data: function () {
     return {
       isExpanded: false
@@ -36,8 +44,23 @@ export default {
   computed: {
   },
   methods: {
+    isSelected (community) {
+      return this.selectedLists.map(list => list.id).indexOf(this.formatContact(community).id) !== -1
+    },
     getMembers (community) {
       this.$store.dispatch('contact/getCommunityMembers', community.groupId)
+    },
+    formatContact (community) {
+      const formattedContact = { ...community }
+      formattedContact.id = community.groupId
+      formattedContact.text = community.groupName
+      return formattedContact
+    },
+    addContacts (community) {
+      this.$emit('addContacts', [this.formatContact(community)])
+    },
+    removeContacts (community) {
+      this.$emit('removeContacts', [this.formatContact(community)])
     }
   }
 }

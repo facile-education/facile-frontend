@@ -7,14 +7,23 @@
     <SchoolPersonals
       v-if="school.Personnels"
       :populations="school.Personnels"
+      :selected-lists="selectedLists"
+      @addContacts="$emit('addContacts', $event)"
+      @removeContacts="$emit('removeContacts', $event)"
     />
     <SchoolClasses
       v-if="school.classes"
       :classes="school.classes"
+      :selected-lists="selectedLists"
+      @addContacts="$emit('addContacts', $event)"
+      @removeContacts="$emit('removeContacts', $event)"
     />
     <SchoolCours
       v-if="school.cours"
       :courses="school.cours"
+      :selected-lists="selectedLists"
+      @addContacts="$emit('addContacts', $event)"
+      @removeContacts="$emit('removeContacts', $event)"
     />
     <SchoolSubjects
       v-if="school.subjects"
@@ -37,8 +46,13 @@ export default {
     school: {
       type: Object,
       required: true
+    },
+    selectedLists: {
+      type: Array,
+      required: true
     }
-  }
+  },
+  emits: ['addContacts', 'removeContacts']
 }
 </script>
 

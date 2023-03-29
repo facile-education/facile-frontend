@@ -20,6 +20,7 @@
           <PentilaTabList>
             <PentilaTabItem :title="$t('addressBook')">
               <ContactAddressBook
+                :selected-lists="selectedLists"
                 @addContacts="addContacts"
                 @removeContacts="removeContacts"
               />
@@ -62,15 +63,20 @@ export default {
     selectedUsers () {
       return this.selectedContacts.filter((contact) => contact.userId !== undefined)
     },
+    selectedLists () {
+      return this.selectedContacts.filter((contact) => contact.userId === undefined)
+    },
     isMobileUserListDisplayed () {
       return this.$store.state.contact.isMobileUserListDisplayed
     }
   },
   methods: {
     addContacts (contactList) {
+      console.log('addContacts', contactList)
       this.$emit('addContacts', contactList)
     },
     removeContacts (contactList) {
+      console.log('removeContacts', contactList)
       this.$emit('removeContacts', contactList)
     },
     onClose () {
