@@ -29,6 +29,7 @@
               />
             </PentilaTabItem>
             <PentilaTabItem
+              v-if="hasAdvancedSearchPanel"
               :title="$t('advancedSearch')"
               :icon="require('@assets/icons/contact-book.svg')"
             >
@@ -66,6 +67,9 @@ export default {
   },
   emits: ['close', 'addContacts', 'removeContacts'],
   computed: {
+    hasAdvancedSearchPanel () {
+      return !this.$store.state.user.isStudent && !this.$store.state.user.isParent
+    },
     selectedUsers () {
       return this.selectedContacts.filter((contact) => contact.userId !== undefined)
     },
