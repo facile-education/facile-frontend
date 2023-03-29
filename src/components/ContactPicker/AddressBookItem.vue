@@ -23,7 +23,7 @@
         name="chevron-up"
       />
       <button
-        v-else
+        v-else-if="isASelectableLeaf"
         class="toggle-selection-button"
         @click.stop="toggleList"
       >
@@ -81,6 +81,10 @@ export default {
     isSelected: {
       type: Boolean,
       default: false
+    },
+    isASelectableLeaf: {
+      type: Boolean,
+      default: true
     }
   },
   emits: ['select', 'add', 'remove'],
