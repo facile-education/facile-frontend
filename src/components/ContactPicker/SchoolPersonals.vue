@@ -8,6 +8,9 @@
       :key="population.rolelId"
       :title="population.groupName"
       :is-leaf="true"
+      :is-selected="isSelected(population)"
+      @add="addContacts(population)"
+      @remove="removeContacts(population)"
       @select="getMembers(population)"
     />
   </AddressBookItem>
@@ -26,11 +29,31 @@ export default {
     populations: {
       type: Array,
       required: true
+    },
+    selectedLists: {
+      type: Array,
+      required: true
     }
   },
+  emits: ['addContacts', 'removeContacts'],
   methods: {
+    isSelected (population) {
+      return this.selectedLists.map(list => list.id).indexOf(this.formatContact(population).id) !== -1
+    },
     getMembers (population) {
       this.$store.dispatch('contact/getMembers', population)
+    },
+    formatContact (population) {
+      const formattedContact = { ...population }
+      formattedContact.id = Number(String(population.orgId) + String(population.roleId)) // Concat the two primary keys. TODO: backend returned field?
+      formattedContact.text = population.groupName
+      return formattedContact
+    },
+    addContacts (population) {
+      this.$emit('addContacts', [this.formatContact(population)])
+    },
+    removeContacts (population) {
+      this.$emit('removeContacts', [this.formatContact(population)])
     }
   }
 }
