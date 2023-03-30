@@ -31,10 +31,10 @@
 
 <script>
 import PentilaUtils from 'pentila-utils'
-import AddressBookItem from '@components/ContactPicker/AddressBookItem.vue'
+import AddressBookItem from '@components/ContactPicker/AddressBook/AddressBookItem.vue'
 
 export default {
-  name: 'SchoolClasses',
+  name: 'AddressBookClasses',
   components: {
     AddressBookItem
   },

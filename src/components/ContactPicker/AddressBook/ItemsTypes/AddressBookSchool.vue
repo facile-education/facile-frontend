@@ -1,47 +1,42 @@
 <template>
   <AddressBookItem
     :title="school.schoolName"
-    :icon="require('@/assets/icons/school.svg')"
+    :icon="require('@assets/icons/school.svg')"
     :begin-extended="school.isExpanded"
   >
-    <SchoolPersonals
+    <AddressBookPersonals
       v-if="school.Personnels"
       :populations="school.Personnels"
       :selected-lists="selectedLists"
       @addContacts="$emit('addContacts', $event)"
       @removeContacts="$emit('removeContacts', $event)"
     />
-    <SchoolClasses
+    <AddressBookClasses
       v-if="school.classes"
       :classes="school.classes"
       :selected-lists="selectedLists"
       @addContacts="$emit('addContacts', $event)"
       @removeContacts="$emit('removeContacts', $event)"
     />
-    <SchoolCours
+    <AddressBookCourses
       v-if="school.cours"
       :courses="school.cours"
       :selected-lists="selectedLists"
       @addContacts="$emit('addContacts', $event)"
       @removeContacts="$emit('removeContacts', $event)"
     />
-    <SchoolSubjects
-      v-if="school.subjects"
-      :subjects="school.subjects"
-    />
   </AddressBookItem>
 </template>
 
 <script>
-import SchoolPersonals from '@components/ContactPicker/SchoolPersonals.vue'
-import SchoolClasses from '@components/ContactPicker/SchoolClasses.vue'
-import SchoolCours from '@components/ContactPicker/SchoolCours.vue'
-import SchoolSubjects from '@components/ContactPicker/SchoolSubjects.vue'
-import AddressBookItem from '@components/ContactPicker/AddressBookItem.vue'
+import AddressBookPersonals from '@components/ContactPicker/AddressBook/ItemsTypes/AddressBookPersonals.vue'
+import AddressBookClasses from '@components/ContactPicker/AddressBook/ItemsTypes/AddressBookClasses.vue'
+import AddressBookCourses from '@components/ContactPicker/AddressBook/ItemsTypes/AddressBookCourses.vue'
+import AddressBookItem from '@components/ContactPicker/AddressBook/AddressBookItem.vue'
 
 export default {
   name: 'AddressBookSchool',
-  components: { AddressBookItem, SchoolSubjects, SchoolCours, SchoolClasses, SchoolPersonals },
+  components: { AddressBookItem, AddressBookCourses, AddressBookClasses, AddressBookPersonals },
   props: {
     school: {
       type: Object,
@@ -57,5 +52,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 </style>

@@ -6,12 +6,12 @@
       </span>
       <img
         v-if="!isSelected"
-        src="@assets/icons/add.svg"
+        src="@/assets/icons/add.svg"
         alt="remove"
       >
       <img
         v-else
-        src="@assets/icons/remove.svg"
+        src="@/assets/icons/remove.svg"
         alt="add"
       >
     </button>

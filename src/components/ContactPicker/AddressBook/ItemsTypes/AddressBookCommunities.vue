@@ -1,7 +1,7 @@
 <template>
   <AddressBookItem
     :title="$t('communities')"
-    :icon="require('@/assets/icons/communities.svg')"
+    :icon="require('@assets/icons/communities.svg')"
   >
     <AddressBookItem
       v-for="community in sortedCommunities"
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import AddressBookItem from '@components/ContactPicker/AddressBookItem.vue'
+import AddressBookItem from '@components/ContactPicker/AddressBook/AddressBookItem.vue'
 import PentilaUtils from 'pentila-utils'
 
 export default {

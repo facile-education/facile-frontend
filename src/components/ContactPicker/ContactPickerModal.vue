@@ -22,7 +22,7 @@
               :title="$t('addressBook')"
               :icon="require('@assets/icons/communities.svg')"
             >
-              <ContactAddressBook
+              <AddressBook
                 :selected-lists="selectedLists"
                 @addContacts="addContacts"
                 @removeContacts="removeContacts"
@@ -51,13 +51,13 @@
 </template>
 
 <script>
-import ContactAddressBook from '@components/ContactPicker/ContactAddressBook.vue'
-import ContactAdvancedSearch from '@components/ContactPicker/ContactAdvancedSearch.vue'
-import ContactUserList from '@components/ContactPicker/ContactUserList.vue'
+import AddressBook from '@components/ContactPicker/AddressBook/AddressBook.vue'
+import ContactAdvancedSearch from '@components/ContactPicker/AdvancedSearch/ContactAdvancedSearch.vue'
+import ContactUserList from '@components/ContactPicker/UserList/ContactUserList.vue'
 
 export default {
   name: 'ContactPickerModal',
-  components: { ContactUserList, ContactAdvancedSearch, ContactAddressBook },
+  components: { ContactUserList, ContactAdvancedSearch, AddressBook },
   inject: ['mq'],
   props: {
     selectedContacts: {
@@ -82,11 +82,9 @@ export default {
   },
   methods: {
     addContacts (contactList) {
-      console.log('addContacts', contactList)
       this.$emit('addContacts', contactList)
     },
     removeContacts (contactList) {
-      console.log('removeContacts', contactList)
       this.$emit('removeContacts', contactList)
     },
     onClose () {
