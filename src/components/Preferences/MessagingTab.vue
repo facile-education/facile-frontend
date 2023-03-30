@@ -161,12 +161,12 @@ export default {
 
 <i18n locale="fr">
 {
-  "addRedirection": "Ajouter un couriel",
+  "addRedirection": "Ajouter un courriel",
   "signature": "Signature",
   "autoReply": "Réponse automatique",
   "save": "Enregistrer",
   "forward": "Être averti par courriel",
-  "forwardInfo": "Renseignez une adresse de courriel pour être averti de l’arrivé d’un nouveau message.",
+  "forwardInfo": "Renseignez une adresse de courriel pour être averti de l’arrivée d’un nouveau message.",
   "successMessage": "Paramètres sauvegardés"
 }
 </i18n>
