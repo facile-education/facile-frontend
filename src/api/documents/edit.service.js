@@ -1,13 +1,12 @@
 import axios from 'axios'
 import constants from '@/api/constants'
-import { getCookie } from '@utils/browser.util'
 
 export default {
   createFolder,
   renameEntity
 }
 
-const EDIT_PATH = '/documents.edit'
+const EDIT_PATH = '/document.folderutils'
 
 /**
  * Create a folder with the specified name
@@ -15,7 +14,6 @@ const EDIT_PATH = '/documents.edit'
 function createFolder (parentFolderId, name) {
   return axios.get(constants.JSON_WS_URL + EDIT_PATH + '/create-folder', {
     params: {
-      p_auth: getCookie('pauth'),
       parentFolderId: parentFolderId,
       name: name
     }
@@ -31,7 +29,6 @@ function renameEntity (entity, name) {
 
   return axios.get(constants.JSON_WS_URL + EDIT_PATH + '/rename', {
     params: {
-      p_auth: getCookie('pauth'),
       recordsList: JSON.stringify(listRecToRename)
     }
   }).then(response => response.data)
