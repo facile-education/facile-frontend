@@ -79,7 +79,7 @@ export default {
     formatContact (population) {
       const formattedContact = { ...population }
       formattedContact.id = Number(String(population.orgId) + String(population.roleId)) // Concat the two primary keys. TODO: backend returned field?
-      formattedContact.text = population.groupName
+      formattedContact.text = population.populationName
       return formattedContact
     },
     addContacts (population) {
