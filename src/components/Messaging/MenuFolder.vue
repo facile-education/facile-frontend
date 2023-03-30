@@ -159,8 +159,8 @@ export default {
   },
   methods: {
     handleClick (e) {
-      if (e.pointerType === 'mouse') {
-        // Focus input
+      if (e.pointerType === 'mouse' || e.mozInputSource === 1 || e instanceof MouseEvent) {
+        // Remove focus from button
         const vm = this
         nextTick(function () {
           vm.$refs.personalFolder.blur()
