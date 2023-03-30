@@ -1,0 +1,151 @@
+<template>
+  <div
+    ref="tooltip"
+    class="contact-picker-tooltip"
+  >
+    <div class="header">
+      <h2 v-t="'header'" />
+      <button
+        class="close-button"
+        data-test="closeTooltip"
+        @click="onClose"
+      >
+        <BaseIcon name="times" />
+      </button>
+    </div>
+
+    <ContactPicker
+      :selected-contacts="selectedContacts"
+      :max-height="maxHeight"
+      :min-height="minHeight"
+      @addContacts="$emit('addContacts', $event)"
+      @removeContacts="$emit('removeContacts', $event)"
+    />
+  </div>
+</template>
+
+<script>
+import ContactPicker from '@components/ContactPicker/ContactPicker.vue'
+import BaseIcon from '@components/Base/BaseIcon.vue'
+
+export default {
+  name: 'ContactPickerToolTip',
+  components: { BaseIcon, ContactPicker },
+  props: {
+    selectedContacts: {
+      type: Array,
+      required: true
+    },
+    createButton: {
+      type: Object,
+      required: true
+    },
+    initCoordinates: {
+      type: Object,
+      default: undefined
+    }
+  },
+  emits: ['addContacts', 'removeContacts', 'close'],
+  data () {
+    return {
+      maxHeight: undefined,
+      minHeight: undefined
+    }
+  },
+  created () {
+    this.$store.dispatch('misc/incrementModalCount')
+  },
+  mounted () {
+    window.addEventListener('click', this.clickOutside)
+    this.updatePosition()
+  },
+  beforeUnmount () {
+    window.removeEventListener('click', this.clickOutside)
+  },
+  updated () {
+    this.updatePosition()
+  },
+  methods: {
+    updatePosition () {
+      if (this.initCoordinates) {
+        //  Set x position
+        this.$refs.tooltip.style.left = this.initCoordinates.x + 'px'
+
+        // Set y position, prevent windows overflow
+        const domRect = this.$refs.tooltip.getBoundingClientRect()
+        const yOverflow = (this.initCoordinates.y + domRect.height) - window.innerHeight
+        let top
+        if (yOverflow > 0) {
+          top = this.initCoordinates.y - yOverflow
+        } else {
+          top = this.initCoordinates.y
+        }
+        this.$refs.tooltip.style.top = top + 'px'
+
+        // Compute new max-height
+        this.maxHeight = Math.max(window.innerHeight - top - 120 - 50) + 'px' // 120 is the contact picker header, 50 in the margin to window bottom
+
+        // Compute min-size too
+        this.minHeight = this.initCoordinates.minHeight - 145 + 'px'
+      }
+    },
+    clickOutside (e) {
+      const self = this
+      if (self.$el && !self.$el.contains(e.target) && this.createButton.$el && !this.createButton.$el.contains(e.target) && e.target.parentNode !== null) {
+        this.onClose()
+      }
+    },
+    onClose () {
+      this.$store.dispatch('contact/resetContactStore')
+      this.$store.dispatch('misc/decreaseModalCount')
+      this.$emit('close')
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+@import "@design";
+
+.contact-picker-tooltip {
+  position: fixed;
+  width: 75vw;
+  background-color: #FFFFFF;
+  z-index: 100;
+  border: 1px solid $color-border;
+  padding: 24px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 35px;
+
+  h2 {
+    margin: 0;
+    font-size: 1.3rem;
+  }
+
+  button {
+    margin-left: 5px;
+    background: none;
+    border: none;
+    height: 30px;
+    width: 30px;
+    font-size: 1.3rem;
+    padding: 0;
+
+    &:hover {
+      cursor: pointer;
+      background-color: rgba(220, 220, 220, 0.5);
+    }
+  }
+}
+</style>
+
+<i18n locale="fr">
+{
+  "header": "Sélection de contact"
+}
+</i18n>

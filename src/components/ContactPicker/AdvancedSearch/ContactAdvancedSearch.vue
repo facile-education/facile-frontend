@@ -1,5 +1,8 @@
 <template>
-  <section class="advanced-search">
+  <section
+    class="advanced-search"
+    :style="'min-height: ' + minHeight"
+  >
     <div class="field">
       <PentilaInput
         ref="queryInput"
@@ -39,6 +42,12 @@ import { getAllSchools } from '@/api/organization.service'
 
 export default {
   name: 'ContactAdvancedSearch',
+  props: {
+    minHeight: {
+      type: String,
+      default: undefined
+    }
+  },
   data () {
     return {
       searchQuery: '',

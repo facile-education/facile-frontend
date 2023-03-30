@@ -25,7 +25,10 @@
       v-t="'emptyPlaceholder'"
       class="placeholder"
     />
-    <ul v-else>
+    <ul
+      v-else
+      :style="'max-height: ' + maxHeight"
+    >
       <ContactUserListItem
         v-for="user in sortedUserList"
         :key="user.userId"
@@ -51,6 +54,10 @@ export default {
     selectedUsers: {
       type: Array,
       required: true
+    },
+    maxHeight: {
+      type: String,
+      default: undefined
     }
   },
   emits: ['addContacts', 'removeContacts'],
@@ -146,7 +153,6 @@ ul {
   margin:  10px 0 0 0;
   padding: 0;
   list-style-type: none;
-  max-height: 70vh;
   overflow-y: auto;
 }
 
