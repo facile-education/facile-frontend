@@ -1,5 +1,8 @@
 <template>
-  <section class="address-book">
+  <section
+    class="address-book"
+    :style="'max-height: ' + maxHeight + '; min-height: ' + minHeight"
+  >
     <div
       v-if="isLoadingContactTree"
       class="placeholder"
@@ -44,6 +47,14 @@ export default {
     selectedLists: {
       type: Array,
       required: true
+    },
+    maxHeight: {
+      type: String,
+      default: undefined
+    },
+    minHeight: {
+      type: String,
+      default: undefined
     }
   },
   emits: ['addContacts', 'removeContacts'],
@@ -86,8 +97,6 @@ export default {
 .address-book {
   margin-top: 5px;
   position: relative;
-  min-height: 20vh;
-  max-height: 70vh;
   overflow-y: auto;
 }
 

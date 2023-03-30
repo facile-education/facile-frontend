@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div ref="createMessageModal">
     <PentilaWindow
       :modal="true"
-      :is-full-screen="mq.phone"
       :draggable="true"
+      :is-full-screen="mq.phone"
       data-test="createMessageModal"
       class="create-message-modal"
       :class="{'phone': mq.phone}"
@@ -47,9 +47,10 @@
             @input="searchTimeOut"
           />
           <PentilaButton
+            ref="openContactTooltipButton"
             :class="{'phone': mq.phone}"
             class="create-button"
-            @click="isContactPickerModalDisplayed=true"
+            @click="isContactPickerModalDisplayed=!isContactPickerModalDisplayed"
           >
             <NeroIcon
               name="fa-plus"
@@ -67,6 +68,7 @@
         <!-- Subject -->
         <PentilaInput
           id="create-message-subject-input"
+          ref="createMessageSubjectInput"
           v-model="subject"
           :class="device"
           class="subject"
@@ -128,18 +130,32 @@
       </template>
     </PentilaWindow>
   </div>
-  <teleport to="body">
+  <teleport
+    v-if="isFilePickerModalDisplayed"
+    to="body"
+  >
     <FilePickerModal
-      v-if="isFilePickerModalDisplayed"
       :multi-selection="true"
       @addedFiles="addNewFiles"
       @close="closeFilePicker"
     />
   </teleport>
-  <teleport to="body">
+  <teleport
+    v-if="isContactPickerModalDisplayed"
+    to="body"
+  >
     <ContactPickerModal
-      v-if="isContactPickerModalDisplayed"
+      v-if="mq.phone"
       :selected-contacts="recipients"
+      @addContacts="addRecipients"
+      @removeContacts="removeRecipients"
+      @close="isContactPickerModalDisplayed=false"
+    />
+    <ContactPickerToolTip
+      v-else
+      :selected-contacts="recipients"
+      :create-button="$refs.openContactTooltipButton"
+      :init-coordinates="initTooltipPosition"
       @addContacts="addRecipients"
       @removeContacts="removeRecipients"
       @close="isContactPickerModalDisplayed=false"
@@ -160,6 +176,7 @@ import TextContent from '@components/Progression/Edit/Contents/TextContent'
 import dayjs from 'dayjs'
 import NeroIcon from '@/components/Nero/NeroIcon'
 import { defineAsyncComponent } from 'vue'
+import ContactPickerToolTip from '@components/ContactPicker/ContactPickerToolTip.vue'
 const ContactPickerModal = defineAsyncComponent(() => import('@components/ContactPicker/ContactPickerModal.vue'))
 
 const isRecipientsValid = (str) => {
@@ -175,6 +192,7 @@ let timeout
 export default {
   name: 'CreateMessageModal',
   components: {
+    ContactPickerToolTip,
     ContactPickerModal,
     TextContent,
     FilePickerModal,
@@ -202,7 +220,8 @@ export default {
       isFilePickerModalDisplayed: false,
       isContactPickerModalDisplayed: false,
       originMessage: {},
-      initialRecipients: []
+      initialRecipients: [],
+      initTooltipPosition: { x: 0, y: 0 }
     }
   },
   validations: {
@@ -245,6 +264,10 @@ export default {
       const input = this.$refs.tagsinput.$el.firstChild.lastChild
       input.focus()
     }
+    this.getToolTipPosition()
+  },
+  updated () {
+    this.getToolTipPosition()
   },
   methods: {
     init () {
@@ -311,6 +334,12 @@ export default {
     },
     updateContent (value) {
       this.currentContent.contentValue = value
+    },
+    getToolTipPosition () {
+      const windowContainer = this.$refs.createMessageModal.getElementsByClassName('window-container')[0]
+      this.initTooltipPosition.x = windowContainer.getBoundingClientRect().x
+      this.initTooltipPosition.y = this.$refs.createMessageSubjectInput.$el.getBoundingClientRect().y
+      this.initTooltipPosition.minHeight = windowContainer.getBoundingClientRect().bottom - this.initTooltipPosition.y
     },
     searchTimeOut () {
       this.autocompleteItems = []
@@ -490,6 +519,7 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
   }
 
   .recipients {
