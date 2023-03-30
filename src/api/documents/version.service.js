@@ -1,6 +1,5 @@
 import axios from 'axios'
 import constants from '@/api/constants'
-import { getCookie } from '@/utils/browser.util'
 
 export default {
   restoreVersion,
@@ -9,7 +8,7 @@ export default {
   getFileVersions
 }
 
-const VERSION_PATH = '/documents-portlet.version'
+const VERSION_PATH = '/document.version'
 
 /**
  * Put the specified version number as the last version of the file
@@ -17,7 +16,6 @@ const VERSION_PATH = '/documents-portlet.version'
 function restoreVersion (fileVersionId) {
   return axios.get(constants.JSON_WS_URL + VERSION_PATH + '/restore-version', {
     params: {
-      p_auth: getCookie('pauth'),
       fileVersionId: fileVersionId
     }
   }).then(response => response.data)
@@ -29,7 +27,6 @@ function restoreVersion (fileVersionId) {
 function createMajorVersion (fileId) {
   return axios.get(constants.JSON_WS_URL + VERSION_PATH + '/create-major-version', {
     params: {
-      p_auth: getCookie('pauth'),
       fileEntryId: fileId
     }
   }).then(response => response.data)
@@ -41,7 +38,6 @@ function createMajorVersion (fileId) {
 function saveVersionDescription (fileVersionId, description) {
   return axios.get(constants.JSON_WS_URL + VERSION_PATH + '/save-version-description', {
     params: {
-      p_auth: getCookie('pauth'),
       fileVersionId: fileVersionId,
       description: description
     }
@@ -54,7 +50,6 @@ function saveVersionDescription (fileVersionId, description) {
 function getFileVersions (fileId) {
   return axios.get(constants.JSON_WS_URL + VERSION_PATH + '/get-file-versions', {
     params: {
-      p_auth: getCookie('pauth'),
       fileId: fileId
     }
   }).then(response => response.data)

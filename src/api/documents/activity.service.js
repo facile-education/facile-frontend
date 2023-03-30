@@ -1,13 +1,12 @@
 import axios from 'axios'
 import constants from '@/constants/appConstants'
-import { getCookie } from '@/utils/browser.util'
 
 export default {
   recordDownloadActivity,
   recordViewActivity
 }
 
-const ACTIVITY_PATH = '/documents.activity'
+const ACTIVITY_PATH = '/document.activity'
 
 /**
  * increment the download count of a file, or of a specific version of this file if specified (put 0 for the latest version)
@@ -15,7 +14,6 @@ const ACTIVITY_PATH = '/documents.activity'
 function recordDownloadActivity (fileVersionId, fileEntryId) {
   return axios.get(constants.JSON_WS_URL + ACTIVITY_PATH + '/record-download-activity', {
     params: {
-      p_auth: getCookie('pauth'),
       fileVersionId: fileVersionId,
       fileEntryId: fileEntryId
     }
@@ -28,7 +26,6 @@ function recordDownloadActivity (fileVersionId, fileEntryId) {
 function recordViewActivity (fileVersionId, fileEntryId) {
   return axios.get(constants.JSON_WS_URL + ACTIVITY_PATH + '/record-view-activity', {
     params: {
-      p_auth: getCookie('pauth'),
       fileVersionId: fileVersionId,
       fileEntryId: fileEntryId
     }

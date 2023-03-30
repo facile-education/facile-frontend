@@ -1,6 +1,5 @@
 import axios from 'axios'
 import constants from '@/api/constants'
-import { getCookie } from '@utils/browser.util'
 import PentilaUtils from 'pentila-utils'
 
 export default {
@@ -11,7 +10,7 @@ export default {
   getBreadcrumb
 }
 
-const FOLDER_PATH = '/documents-portlet.folderutil'
+const FOLDER_PATH = '/document.folderutils'
 
 /**
  * Create a zip containing the folderContent and download it
@@ -19,7 +18,6 @@ const FOLDER_PATH = '/documents-portlet.folderutil'
 function downloadFolder (folderId) {
   return axios.get(constants.JSON_WS_URL + FOLDER_PATH + '/download-folder', {
     params: {
-      p_auth: getCookie('pauth'),
       folderId: folderId
     }
   }).then(response => response.data)
@@ -55,7 +53,6 @@ function renameFolder (folderId, folderName) {
 function getAllEntities (folderId, withDetails) {
   return axios.get(constants.JSON_WS_URL + FOLDER_PATH + '/get-all-entities', {
     params: {
-      p_auth: getCookie('pauth'),
       folderId: folderId,
       withDetails: withDetails
     }
@@ -68,7 +65,6 @@ function getAllEntities (folderId, withDetails) {
 function getBreadcrumb (folderId) {
   return axios.get(constants.JSON_WS_URL + FOLDER_PATH + '/get-breadcrumb', {
     params: {
-      p_auth: getCookie('pauth'),
       folderId: folderId
     }
   }).then(response => response.data)

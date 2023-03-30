@@ -1,7 +1,6 @@
 import axios from 'axios'
 import constants from '@/api/constants'
 import { conflicts } from '@/constants/documentsConstants'
-import { getCookie } from '@utils/browser.util'
 import PentilaUtils from 'pentila-utils'
 
 export default {
@@ -22,8 +21,8 @@ export default {
   getFileInfos
 }
 
-const FILE_PATH = '/documents-portlet.fileutil'
-const WISIWIG_PATH = '/documents-portlet.wisiwig'
+const FILE_PATH = '/document.fileutils'
+const WISIWIG_PATH = '/document.wysiwyg'
 
 /**
  * Upload a file in a folder
@@ -33,7 +32,6 @@ const WISIWIG_PATH = '/documents-portlet.wisiwig'
  */
 function uploadFile (folderId, file, mode = conflicts.MODE_NORMAL) {
   const formData = new FormData()
-  formData.append('p_auth', getCookie('pauth'))
   formData.append('folderId', folderId)
   formData.append('fileName', file.name)
   formData.append('file', file, file.name)
@@ -50,7 +48,6 @@ function uploadFile (folderId, file, mode = conflicts.MODE_NORMAL) {
  */
 function createAudioFile (folderId, name, audioFile) {
   const formData = new FormData()
-  formData.append('p_auth', getCookie('pauth'))
   formData.append('folderId', folderId)
   formData.append('name', name)
   formData.append('file', audioFile)
@@ -139,7 +136,6 @@ function createHtmlFile (folderId, name) {
 function getHtmlContent (fileVersionId) {
   return axios.get(constants.JSON_WS_URL + WISIWIG_PATH + '/get-html-content', {
     params: {
-      p_auth: getCookie('pauth'),
       fileVersionId
     }
   }).then(response => response.data)
@@ -186,7 +182,6 @@ function removeLock (fileId) {
 function getResource (fileId, versionId, readOnly) {
   return axios.get(constants.JSON_WS_URL + FILE_PATH + '/get-resource', {
     params: {
-      p_auth: getCookie('pauth'),
       fileId,
       versionId,
       readOnly
