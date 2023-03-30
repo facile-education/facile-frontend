@@ -34,11 +34,11 @@
 
 <script>
 import { getContactTree } from '@/api/contact.service'
-import AddressBookCommunities from '@components/ContactPicker/AddressBookCommunities.vue'
-import AddressBookSchool from '@components/ContactPicker/AddressBookSchool.vue'
+import AddressBookCommunities from '@components/ContactPicker/AddressBook/ItemsTypes/AddressBookCommunities.vue'
+import AddressBookSchool from '@components/ContactPicker/AddressBook/ItemsTypes/AddressBookSchool.vue'
 
 export default {
-  name: 'ContactAddressBook',
+  name: 'AddressBook',
   components: { AddressBookSchool, AddressBookCommunities },
   props: {
     selectedLists: {

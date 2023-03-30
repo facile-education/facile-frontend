@@ -6,7 +6,7 @@
     >
       <img
         class="back-arrow"
-        src="@assets/arrow_right.svg"
+        src="@/assets/arrow_right.svg"
         alt="back"
       >
     </button>
@@ -20,7 +20,7 @@
 
     <div class="nb-users">
       <img
-        src="@assets/icons/user_2.svg"
+        src="@/assets/icons/user_2.svg"
         alt="user"
       >
       <div>{{ userListLength }}</div>
@@ -29,12 +29,12 @@
     <button @click="toggleAll">
       <img
         v-if="!isAllListSelected"
-        src="@assets/icons/add_list.svg"
+        src="@/assets/icons/add_list.svg"
         alt="toggle list"
       >
       <img
         v-show="isAllListSelected"
-        src="@assets/icons/remove-list.svg"
+        src="@/assets/icons/remove-list.svg"
         alt="toggle list"
       >
     </button>

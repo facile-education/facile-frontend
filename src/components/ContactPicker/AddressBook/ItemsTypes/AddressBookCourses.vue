@@ -26,10 +26,10 @@
 <script>
 
 import PentilaUtils from 'pentila-utils'
-import AddressBookItem from '@components/ContactPicker/AddressBookItem.vue'
+import AddressBookItem from '@components/ContactPicker/AddressBook/AddressBookItem.vue'
 
 export default {
-  name: 'SchoolCours',
+  name: 'AddressBookCourses',
   components: {
     AddressBookItem
   },
@@ -52,11 +52,8 @@ export default {
   },
   computed: {
     sortedCourses () {
-      return PentilaUtils.Array.sortWithString(this.localCourses, false, 'groupName')
+      return PentilaUtils.Array.sortWithString(this.courses, false, 'groupName')
     }
-  },
-  created () {
-    this.localCourses = PentilaUtils.JSON.deepCopy(this.courses.cours)
   },
   methods: {
     sortedPopulations (course) {
@@ -85,7 +82,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@design';
 </style>
 
 <i18n locale="fr">

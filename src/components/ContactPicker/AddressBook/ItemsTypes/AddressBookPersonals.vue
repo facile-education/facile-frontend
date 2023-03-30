@@ -33,11 +33,11 @@
 
 <script>
 
-import AddressBookItem from '@components/ContactPicker/AddressBookItem.vue'
+import AddressBookItem from '@components/ContactPicker/AddressBook/AddressBookItem.vue'
 import PentilaUtils from 'pentila-utils'
 
 export default {
-  name: 'SchoolPersonals',
+  name: 'AddressBookPersonals',
   components: {
     AddressBookItem
   },
@@ -93,7 +93,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 </style>
 
 <i18n locale="fr">

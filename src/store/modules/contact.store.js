@@ -2,8 +2,6 @@ import contactService from '@/api/contact.service'
 import groupsService from '@/api/groups.service'
 
 export const state = {
-  schools: [],
-  communities: [],
   userList: [],
   isLoadingUsers: false,
   error: undefined,
@@ -73,7 +71,6 @@ export const actions = {
       if (data.success) {
         commit('setError', undefined)
         commit('setUserList', data.members)
-        commit('setNbResults', data.members.length)
       } else {
         commit('setError', true)
       }
@@ -89,8 +86,7 @@ export const actions = {
       } else {
         commit('setError', true)
       }
-    }
-    )
+    })
   },
   getMyRelatives ({ commit }) {
     commit('setIsLoadingUsers', true)

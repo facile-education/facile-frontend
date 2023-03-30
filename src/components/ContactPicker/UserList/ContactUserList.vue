@@ -39,8 +39,8 @@
 </template>
 
 <script>
-import ContactUserListHeader from '@components/ContactPicker/ContactUserListHeader.vue'
-import ContactUserListItem from '@components/ContactPicker/ContactUserListItem.vue'
+import ContactUserListHeader from '@components/ContactPicker/UserList/ContactUserListHeader.vue'
+import ContactUserListItem from '@components/ContactPicker/UserList/ContactUserListItem.vue'
 import PentilaUtils from 'pentila-utils'
 
 export default {
