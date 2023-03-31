@@ -2,10 +2,11 @@ import contactService from '@/api/contact.service'
 import groupsService from '@/api/groups.service'
 
 export const state = {
-  userList: [],
+  userList: undefined,
   isLoadingUsers: false,
   error: undefined,
-  isMobileUserListDisplayed: false
+  isMobileUserListDisplayed: false,
+  activeTab: 'addressBook'
 }
 
 export const mutations = {
@@ -32,6 +33,9 @@ export const mutations = {
   },
   setIsMobileUserListDisplayed (state, payload) {
     state.isMobileUserListDisplayed = payload
+  },
+  setActiveTab (state, payload) {
+    state.activeTab = payload
   }
 }
 
@@ -122,6 +126,9 @@ export const actions = {
     commit('setIsMobileUserListDisplayed', false)
   },
   resetUserList ({ commit }) {
-    commit('setUserList', [])
+    commit('setUserList', undefined)
+  },
+  setActiveTab ({ commit }, tabName) {
+    commit('setActiveTab', tabName)
   }
 }

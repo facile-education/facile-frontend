@@ -4,7 +4,7 @@
     :class="{'phone': mq.phone}"
   >
     <ContactUserListHeader
-      :user-list-length="userList.length"
+      :user-list-length="userList ? userList.length : 0"
       :is-all-list-selected="isAllListSelected"
       @updateFilter="updateFilter"
       @toggle-all="toggleAll"
@@ -21,8 +21,13 @@
       class="placeholder"
     />
     <div
+      v-else-if="!userList"
+      v-t="activeTab === 'addressBook' ? 'addressBookPlaceholder' : 'advancedSearchPlaceholder'"
+      class="placeholder"
+    />
+    <div
       v-else-if="userList.length === 0"
-      v-t="'emptyPlaceholder'"
+      v-t="activeTab === 'addressBook' ? 'addressBookEmptyPlaceholder': 'advancedSearchEmptyPlaceholder'"
       class="placeholder"
     />
     <ul
@@ -76,8 +81,11 @@ export default {
     userList () {
       return this.$store.state.contact.userList
     },
+    activeTab () {
+      return this.$store.state.contact.activeTab
+    },
     filteredUserList () {
-      return this.userList.filter((user) => { return user.fullName.toLowerCase().includes(this.filter.toLowerCase()) })
+      return this.userList ? this.userList.filter((user) => { return user.fullName.toLowerCase().includes(this.filter.toLowerCase()) }) : []
     },
     sortedUserList () {
       return PentilaUtils.Array.sortWithString(this.filteredUserList, false, 'fullName')
@@ -163,12 +171,16 @@ ul {
   justify-content: center;
   padding-top: 20%;
   font-size: 1rem;
+  text-align: center;
 }
 </style>
 
 <i18n locale="fr" >
 {
-  "emptyPlaceholder": "Liste vide",
-  "errorPlaceholder": "Oups, une erreur est survenue..."
+  "addressBookEmptyPlaceholder": "Aucun contact",
+  "advancedSearchEmptyPlaceholder": "Aucun contact ne correspond à la recherche",
+  "errorPlaceholder": "Oups, une erreur est survenue...",
+  "addressBookPlaceholder": "Sélectionner une liste pour afficher les contacts",
+  "advancedSearchPlaceholder": "Effectuer une recherche pour afficher des contacts"
 }
 </i18n>
