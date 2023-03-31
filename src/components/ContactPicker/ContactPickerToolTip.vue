@@ -52,6 +52,11 @@ export default {
       minHeight: undefined
     }
   },
+  computed: {
+    hasAdvancedSearchPanel () {
+      return !this.$store.state.user.isStudent && !this.$store.state.user.isParent
+    }
+  },
   created () {
     this.$store.dispatch('misc/incrementModalCount')
   },
@@ -83,10 +88,11 @@ export default {
         this.$refs.tooltip.style.top = top + 'px'
 
         // Compute new max-height
-        this.maxHeight = Math.max(window.innerHeight - top - 120 - 50) + 'px' // 120 is the contact picker header, 50 in the margin to window bottom
+        const tabHeaderHeight = this.hasAdvancedSearchPanel ? 135 : 74
+        this.maxHeight = Math.max(window.innerHeight - top - tabHeaderHeight - 50) + 'px' // 120 is the contact picker header, 50 in the margin to window bottom
 
         // Compute min-size too
-        this.minHeight = this.initCoordinates.minHeight - 145 + 'px'
+        this.minHeight = this.initCoordinates.minHeight - tabHeaderHeight + 'px'
       }
     },
     clickOutside (e) {
@@ -113,14 +119,14 @@ export default {
   background-color: #FFFFFF;
   z-index: 100;
   border: 1px solid $color-border;
-  padding: 24px;
+  padding: 14px 24px;
 }
 
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 35px;
+  height: 45px;
 
   h2 {
     margin: 0;

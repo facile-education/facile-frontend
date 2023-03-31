@@ -3,8 +3,11 @@
     class="container"
     :class="{'phone': mq.phone}"
   >
-    <div class="left">
-      <PentilaTabList>
+    <div
+      class="left"
+      :class="{'contains-tabs': hasAdvancedSearchPanel}"
+    >
+      <PentilaTabList v-if="hasAdvancedSearchPanel">
         <PentilaTabItem
           :title="$t('addressBook')"
           :icon="require('@assets/icons/communities.svg')"
@@ -13,12 +16,12 @@
             :selected-lists="selectedLists"
             :max-height="maxHeight"
             :min-height="minHeight"
+            class="contains-tabs"
             @addContacts="$emit('addContacts', $event)"
             @removeContacts="$emit('removeContacts', $event)"
           />
         </PentilaTabItem>
         <PentilaTabItem
-          v-if="hasAdvancedSearchPanel"
           :title="$t('advancedSearch')"
           :icon="require('@assets/icons/contact-book.svg')"
         >
@@ -27,6 +30,16 @@
           />
         </PentilaTabItem>
       </PentilaTabList>
+
+      <!-- Do not display tab list if only one tab -->
+      <AddressBook
+        v-else
+        :selected-lists="selectedLists"
+        :max-height="maxHeight"
+        :min-height="minHeight"
+        @addContacts="$emit('addContacts', $event)"
+        @removeContacts="$emit('removeContacts', $event)"
+      />
     </div>
 
     <ContactUserList
@@ -106,7 +119,9 @@ export default {
   }
 
   .left {
-    margin-top: 13px;
+    &.contains-tabs {
+      margin-top: 13px;
+    }
   }
 
   .left, .user-list {
