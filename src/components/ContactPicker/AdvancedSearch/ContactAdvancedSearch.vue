@@ -66,6 +66,7 @@ export default {
     input.select()
   },
   created () {
+    this.$store.dispatch('contact/resetUserList')
     getLocalUserRoleList().then((data) => {
       if (data.success) {
         this.selectedRole = this.emptyRole

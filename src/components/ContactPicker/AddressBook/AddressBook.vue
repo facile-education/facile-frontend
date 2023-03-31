@@ -76,6 +76,7 @@ export default {
   },
   created () {
     this.getContactTree()
+    this.$store.dispatch('contact/resetUserList')
   },
   methods: {
     getContactTree () {
