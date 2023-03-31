@@ -13,21 +13,6 @@
       @remove="removeContacts(population)"
       @select="getMembers(population)"
     />
-    <!-- Students and parents have student and parents lists -->
-    <AddressBookItem
-      v-if="isStudent || isParent"
-      :title="isStudent ? $t('students') : $t('myStudents')"
-      :is-leaf="true"
-      :is-a-selectable-leaf="false"
-      @select="getMyStudents()"
-    />
-    <AddressBookItem
-      v-if="isStudent || isParent"
-      :title="$t('relatives')"
-      :is-leaf="true"
-      :is-a-selectable-leaf="false"
-      @select="getMyRelatives()"
-    />
   </AddressBookItem>
 </template>
 
@@ -53,12 +38,6 @@ export default {
   },
   emits: ['addContacts', 'removeContacts'],
   computed: {
-    isStudent () {
-      return this.$store.state.user.isStudent
-    },
-    isParent () {
-      return this.$store.state.user.isParent
-    },
     sortedPopulations () {
       return PentilaUtils.Array.sortWithString(this.populations, false, 'groupName')
     }
@@ -69,12 +48,6 @@ export default {
     },
     getMembers (population) {
       this.$store.dispatch('contact/getMembers', population)
-    },
-    getMyStudents () {
-      this.$store.dispatch('contact/getMyStudents')
-    },
-    getMyRelatives () {
-      this.$store.dispatch('contact/getMyRelatives')
     },
     formatContact (population) {
       const formattedContact = { ...population }
@@ -97,9 +70,6 @@ export default {
 
 <i18n locale="fr">
   {
-    "personals": "Personnels",
-    "students": "Elèves",
-    "myStudents": "Elèves en responsabilité",
-    "relatives": "Responsables légaux"
+    "personals": "Personnels"
   }
 </i18n>

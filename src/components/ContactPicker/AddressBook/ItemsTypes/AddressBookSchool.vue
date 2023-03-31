@@ -25,6 +25,21 @@
       @addContacts="$emit('addContacts', $event)"
       @removeContacts="$emit('removeContacts', $event)"
     />
+    <!-- Students and parents have student and parents lists -->
+    <AddressBookItem
+      v-if="isStudent || isParent"
+      :title="isStudent ? $t('myClass') : $t('myStudents')"
+      :is-leaf="true"
+      :is-a-selectable-leaf="false"
+      @select="getMyStudents()"
+    />
+    <AddressBookItem
+      v-if="isStudent || isParent"
+      :title="isStudent ? $t('myRelatives') : $t('relatives')"
+      :is-leaf="true"
+      :is-a-selectable-leaf="false"
+      @select="getMyRelatives()"
+    />
   </AddressBookItem>
 </template>
 
@@ -47,9 +62,34 @@ export default {
       required: true
     }
   },
-  emits: ['addContacts', 'removeContacts']
+  emits: ['addContacts', 'removeContacts'],
+  computed: {
+    isStudent () {
+      return this.$store.state.user.isStudent
+    },
+    isParent () {
+      return this.$store.state.user.isParent
+    }
+  },
+  methods: {
+    getMyStudents () {
+      this.$store.dispatch('contact/getMyStudents')
+    },
+    getMyRelatives () {
+      this.$store.dispatch('contact/getMyRelatives')
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 </style>
+
+<i18n locale="fr">
+{
+  "myClass": "Ma classe",
+  "myStudents": "Elèves en responsabilité",
+  "relatives": "Responsables légaux",
+  "myRelatives": "Mes responsables légaux"
+}
+</i18n>
