@@ -77,6 +77,7 @@ export default {
   created () {
     this.getContactTree()
     this.$store.dispatch('contact/resetUserList')
+    this.$store.dispatch('contact/setActiveTab', 'addressBook')
   },
   methods: {
     getContactTree () {
