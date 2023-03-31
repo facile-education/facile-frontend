@@ -52,7 +52,7 @@ export default {
   },
   computed: {
     sortedCourses () {
-      return PentilaUtils.Array.sortWithString(this.courses, false, 'groupName')
+      return PentilaUtils.Array.sortWithString(this.courses.cours, false, 'groupName')
     }
   },
   methods: {
