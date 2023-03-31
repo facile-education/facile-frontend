@@ -120,5 +120,8 @@ export const actions = {
   },
   closeMobileUserList ({ commit }) {
     commit('setIsMobileUserListDisplayed', false)
+  },
+  resetUserList ({ commit }) {
+    commit('setUserList', [])
   }
 }
