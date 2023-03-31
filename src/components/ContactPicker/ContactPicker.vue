@@ -96,10 +96,6 @@ export default {
       transform: translateX(100vw);
     }
   }
-
-  .left {
-    margin-top: 13px;
-  }
 }
 
 .container:not(.phone) {
@@ -107,6 +103,10 @@ export default {
 
   .user-list {
     position: relative;
+  }
+
+  .left {
+    margin-top: 13px;
   }
 
   .left, .user-list {
