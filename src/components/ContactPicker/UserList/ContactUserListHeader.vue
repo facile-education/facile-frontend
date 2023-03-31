@@ -116,6 +116,6 @@ button {
 
 <i18n locale="fr">
 {
-  "searchPlaceHolder": "Rechercher"
+  "searchPlaceHolder": "Filtrer"
 }
 </i18n>
