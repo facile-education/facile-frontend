@@ -85,7 +85,11 @@ export default {
       return this.$store.state.contact.activeTab
     },
     filteredUserList () {
-      return this.userList ? this.userList.filter((user) => { return user.fullName.toLowerCase().includes(this.filter.toLowerCase()) }) : []
+      return this.userList
+        ? this.userList.filter((user) => {
+          return user.fullName.normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase().includes(this.filter.normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase())
+        })
+        : []
     },
     sortedUserList () {
       return PentilaUtils.Array.sortWithString(this.filteredUserList, false, 'fullName')
