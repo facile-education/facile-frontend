@@ -44,6 +44,8 @@
             :list="autocompleteItems"
             class="recipients"
             :class="device"
+            :max-tags-to-display="4"
+            :others-label-template="(nbOthers) => {return $t('othersLabel', {'nbOthers': nbOthers})}"
             @input="searchTimeOut"
           />
           <PentilaButton
@@ -597,6 +599,7 @@ export default {
   "closeWarning": "Souhaitez-vous fermer cette fenêtre ? (Vous perdrez son contenu)",
   "displayDetails": "Afficher les détails",
   "at": "Le ",
-  "wrote": " a écrit :"
+  "wrote": " a écrit :",
+  "othersLabel": "et {nbOthers} autres"
 }
 </i18n>
