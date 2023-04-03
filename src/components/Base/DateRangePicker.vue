@@ -95,24 +95,20 @@ button {
   align-items: center;
   cursor: pointer;
   border-radius: 6px;
+  padding: 14px;
   border: none;
 
   &:hover {
+    transition: .2s background-color linear;
     background-color: #c5c5c5;
   }
 }
 
 .label {
-  display: flex;
-  margin-right: 5px;
-  margin-left: 0.5em;
-  font-size: 14px;
-  font-weight: bold;
+  margin-right: 8px;
 }
 
 .icon {
-  font-size: 2.5rem;
-  padding: 0 0.5rem;
-  cursor: pointer;
+  font-size: 1.3rem;
 }
 </style>

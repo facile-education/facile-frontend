@@ -116,12 +116,13 @@ export default {
               caretSize: 0,
               callbacks: {
                 label: function (context) {
-                  let total = 0
-                  context.dataset.data.forEach(value => {
-                    total += value
-                  })
-                  const percent = Math.floor((context.parsed / total) * 100)
-                  return context.label + ': ' + percent + '%'
+                  const label = context.label
+                  const currentValue = context.raw
+                  const total = context.chart._metasets[context.datasetIndex].total
+
+                  const percentage = parseFloat((currentValue / total * 100).toFixed(1))
+
+                  return label + ': ' + currentValue + ' (' + percentage + '%)'
                 }
               }
             }
@@ -148,7 +149,7 @@ export default {
           // Get options from the center object in options
           const centerConfig = chart.config.options.elements.center
           const fontStyle = centerConfig.fontStyle || 'Arial'
-          const txt = centerConfig.text
+          const txt = chart._metasets[chart._metasets.length - 1].total
           const color = centerConfig.color || '#000'
           const maxFontSize = centerConfig.maxFontSize || 75
           const sidePadding = centerConfig.sidePadding || 20
@@ -193,32 +194,34 @@ export default {
             return
           }
 
-          const words = txt.split(' ')
-          let line = ''
-          const lines = []
+          if (txt !== undefined && (typeof txt === 'string' || txt instanceof String)) {
+            const words = txt.split(' ')
+            let line = ''
+            const lines = []
 
-          // Break words up into multiple lines if necessary
-          for (let n = 0; n < words.length; n++) {
-            const testLine = line + words[n] + ' '
-            const metrics = ctx.measureText(testLine)
-            const testWidth = metrics.width
-            if (testWidth > elementWidth && n > 0) {
-              lines.push(line)
-              line = words[n] + ' '
-            } else {
-              line = testLine
+            // Break words up into multiple lines if necessary
+            for (let n = 0; n < words.length; n++) {
+              const testLine = line + words[n] + ' '
+              const metrics = ctx.measureText(testLine)
+              const testWidth = metrics.width
+              if (testWidth > elementWidth && n > 0) {
+                lines.push(line)
+                line = words[n] + ' '
+              } else {
+                line = testLine
+              }
             }
-          }
 
-          // Move the center up depending on line height and number of lines
-          centerY -= (lines.length / 2) * lineHeight
+            // Move the center up depending on line height and number of lines
+            centerY -= (lines.length / 2) * lineHeight
 
-          for (let n = 0; n < lines.length; n++) {
-            ctx.fillText(lines[n], centerX, centerY)
-            centerY += lineHeight
+            for (let n = 0; n < lines.length; n++) {
+              ctx.fillText(lines[n], centerX, centerY)
+              centerY += lineHeight
+            }
+            // Draw text in center
+            ctx.fillText(line, centerX, centerY)
           }
-          // Draw text in center
-          ctx.fillText(line, centerX, centerY)
         }
       }
     })

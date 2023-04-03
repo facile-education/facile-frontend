@@ -10,7 +10,16 @@
         :target="nbUsers"
         :animation-duration="300"
       />
-      <span class="label">
+      <span
+        v-if="mq.phone || mq.tablet"
+        class="label"
+      >
+        {{ $tc('activeUsersShort', nbUsers) }}
+      </span>
+      <span
+        v-else
+        class="label"
+      >
         {{ $tc('activeUsers', nbUsers) }}
       </span>
     </span>
@@ -24,6 +33,7 @@ import AnimatedCounter from '@components/Base/AnimatedCounter.vue'
 export default {
   name: 'StatsActivesUsers',
   components: { AnimatedCounter },
+  inject: ['mq'],
   props: {
     startTime: {
       type: Object,
@@ -75,7 +85,7 @@ export default {
 .theme-text-color {
   font-size: 2em;
   letter-spacing: 0;
-  line-height: 2em;
+  line-height: 1.5em;
   display: flex;
   align-items: center;
 }
@@ -103,6 +113,7 @@ img {
 
 <i18n locale="fr">
 {
-  "activeUsers": "Aucun utilisateur unique sur la période | utilisateur unique sur la période | utilisateurs uniques sur la période"
+  "activeUsers": "Aucun utilisateur unique sur la période | utilisateur unique sur la période | utilisateurs uniques sur la période",
+  "activeUsersShort": "Aucun utilisateur unique | utilisateur unique | utilisateurs uniques"
 }
 </i18n>

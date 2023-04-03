@@ -26,69 +26,71 @@
       />
     </NeroToolbar>
 
-    <StatsActivesUsers
-      v-if="mq.phone || mq.tablet"
-      :start-time="selectedStartDate"
-      :end-time="selectedEndDate"
-      :selected-school="selectedSchool"
-    />
-
-    <StatsChart
-      :start-time="selectedStartDate"
-      :end-time="selectedEndDate"
-      :selected-school="selectedSchool"
-    />
-
-    <StatsChart
-      :start-time="selectedStartDate"
-      :end-time="selectedEndDate"
-      :selected-school="selectedSchool"
-      comparator="profile"
-    />
-
-    <div class="doughnuts">
-      <StatsDoughnut
-        class="doughnut"
+    <div class="stats">
+      <StatsActivesUsers
+        v-if="mq.phone || mq.tablet"
         :start-time="selectedStartDate"
         :end-time="selectedEndDate"
         :selected-school="selectedSchool"
-        service="documents"
       />
 
-      <StatsDoughnut
-        class="doughnut"
+      <StatsChart
         :start-time="selectedStartDate"
         :end-time="selectedEndDate"
         :selected-school="selectedSchool"
-        service="homeworks"
       />
-    </div>
 
-    <div class="general-stats">
-      <GlobalStat
-        class="general-stat"
+      <StatsChart
         :start-time="selectedStartDate"
         :end-time="selectedEndDate"
         :selected-school="selectedSchool"
-        service="messaging"
-        color="#E74C3C"
+        comparator="profile"
       />
-      <GlobalStat
-        class="general-stat"
-        :start-time="selectedStartDate"
-        :end-time="selectedEndDate"
-        :selected-school="selectedSchool"
-        service="schoolNews"
-        color="#306CD3"
-      />
-      <GlobalStat
-        class="general-stat"
-        :start-time="selectedStartDate"
-        :end-time="selectedEndDate"
-        :selected-school="selectedSchool"
-        service="news"
-        color="#306CD3"
-      />
+
+      <div class="doughnuts">
+        <StatsDoughnut
+          class="doughnut"
+          :start-time="selectedStartDate"
+          :end-time="selectedEndDate"
+          :selected-school="selectedSchool"
+          service="documents"
+        />
+
+        <StatsDoughnut
+          class="doughnut"
+          :start-time="selectedStartDate"
+          :end-time="selectedEndDate"
+          :selected-school="selectedSchool"
+          service="homeworks"
+        />
+      </div>
+
+      <div class="general-stats">
+        <GlobalStat
+          class="general-stat"
+          :start-time="selectedStartDate"
+          :end-time="selectedEndDate"
+          :selected-school="selectedSchool"
+          service="messaging"
+          color="#E74C3C"
+        />
+        <GlobalStat
+          class="general-stat"
+          :start-time="selectedStartDate"
+          :end-time="selectedEndDate"
+          :selected-school="selectedSchool"
+          service="schoolNews"
+          color="#306CD3"
+        />
+        <GlobalStat
+          class="general-stat"
+          :start-time="selectedStartDate"
+          :end-time="selectedEndDate"
+          :selected-school="selectedSchool"
+          service="news"
+          color="#306CD3"
+        />
+      </div>
     </div>
   </Layout>
 </template>
@@ -163,6 +165,16 @@ export default {
 
 .range-picker {
   margin-left: auto;
+}
+
+.service-body {
+  overflow: hidden;
+}
+
+.stats {
+  overflow: auto;
+  // 20 px = toolbar margin
+  height: calc(100% - (#{$toolbar-height} + 20px ));
 }
 
 @media screen and (min-width: 774px) {  // Inline if enough space
