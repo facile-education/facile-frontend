@@ -2,7 +2,7 @@
   <li>
     <button @click="toggleUser">
       <span>
-        {{ user.fullName }}
+        {{ user.text }}
       </span>
       <img
         v-if="!isSelected"
@@ -39,15 +39,10 @@ export default {
   },
   methods: {
     toggleUser () {
-      // TODO: Remove formatting when back-end will return good data
-      const formattedContact = { ...this.user }
-      formattedContact.id = this.user.userId
-      formattedContact.text = this.user.fullName
-
       if (this.isSelected) {
-        this.$emit('removeContact', formattedContact)
+        this.$emit('removeContact', this.user)
       } else {
-        this.$emit('addContact', formattedContact)
+        this.$emit('addContact', this.user)
       }
     }
   }
