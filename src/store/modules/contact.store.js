@@ -1,6 +1,14 @@
 import contactService from '@/api/contact.service'
 import groupsService from '@/api/groups.service'
 
+const addContactFieldsToUserList = (userList) => {
+  // Set user contact attributes
+  userList.forEach((user) => {
+    user.text = user.lastName + ' ' + user.firstName
+    user.id = user.userId
+  })
+}
+
 export const state = {
   userList: undefined,
   isLoadingUsers: false,
@@ -61,6 +69,7 @@ export const actions = {
 
       if (data.success) {
         commit('setError', undefined)
+        addContactFieldsToUserList(data.users)
         commit('setUserList', data.users)
       } else {
         commit('setError', true)
@@ -74,6 +83,7 @@ export const actions = {
 
       if (data.success) {
         commit('setError', undefined)
+        addContactFieldsToUserList(data.members)
         commit('setUserList', data.members)
       } else {
         commit('setError', true)
@@ -86,6 +96,7 @@ export const actions = {
       commit('setIsLoadingUsers', false)
 
       if (data.success) {
+        addContactFieldsToUserList(data.users)
         commit('setUserList', data.users)
       } else {
         commit('setError', true)
@@ -98,6 +109,7 @@ export const actions = {
       commit('setIsLoadingUsers', false)
 
       if (data.success) {
+        addContactFieldsToUserList(data.users)
         commit('setUserList', data.users)
       } else {
         commit('setError', true)
@@ -113,6 +125,7 @@ export const actions = {
 
       if (data.success) {
         commit('setError', undefined)
+        addContactFieldsToUserList(data.users)
         commit('setUserList', data.users)
       } else {
         commit('setError', true)

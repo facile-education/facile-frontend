@@ -92,7 +92,7 @@ export default {
         : []
     },
     sortedUserList () {
-      return PentilaUtils.Array.sortWithString(this.filteredUserList, false, 'fullName')
+      return PentilaUtils.Array.sortWithString(this.filteredUserList, false, 'text')
     },
     isAllListSelected () {
       if (this.filteredUserList.length > 0) {
@@ -114,14 +114,7 @@ export default {
     },
     toggleAll () {
       if (this.isAllListSelected) {
-        // TODO: Remove formatting when back-end will return good data
-        const formattedContactsToRemove = this.filteredUserList.map((user) => {
-          const formattedContact = { ...user }
-          formattedContact.id = user.userId
-          formattedContact.text = user.fullName
-          return formattedContact
-        })
-        this.$emit('removeContacts', formattedContactsToRemove)
+        this.$emit('removeContacts', this.filteredUserList)
       } else {
         const contactsToAdd = []
         for (let i = 0; i < this.filteredUserList.length; i++) {
@@ -130,14 +123,7 @@ export default {
             contactsToAdd.push(filteredUser)
           }
         }
-        // TODO: Remove formatting when back-end will return good data
-        const formattedContactsToAdd = contactsToAdd.map((user) => {
-          const formattedContact = { ...user }
-          formattedContact.id = user.userId
-          formattedContact.text = user.fullName
-          return formattedContact
-        })
-        this.$emit('addContacts', formattedContactsToAdd)
+        this.$emit('addContacts', contactsToAdd)
       }
     },
     addContact (user) {
