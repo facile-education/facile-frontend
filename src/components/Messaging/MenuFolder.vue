@@ -7,6 +7,7 @@
       class="personal-folder"
       :class="{'selected': isSelected, 'active': isActive }"
       :title="currentFolder.folderName"
+      :data-test="'personalSubFolder-' + currentFolder.folderName"
       @dragover="setActive"
       @dragleave="cancelActive"
       @drop="dropThreads"
@@ -37,6 +38,7 @@
       >
         <button
           :title="$t('Messaging.rename')"
+          data-test="rename"
           @click.stop="toggleFolderNameInput"
         >
           <img
@@ -47,6 +49,7 @@
         </button>
         <button
           :title="$t('Messaging.addSubFolder')"
+          data-test="add"
           @click.stop="toggleNewFolderInput"
         >
           <BaseIcon
@@ -56,6 +59,7 @@
         </button>
         <button
           :title="$t('Messaging.deleteFolder')"
+          data-test="delete"
           @click.stop="askToConfirmFolderDeletion"
         >
           <img

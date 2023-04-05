@@ -15,7 +15,7 @@ CREATE TABLE `messaging_message` (
   `readDate` datetime DEFAULT NULL,
   `isAnswered` tinyint(4) DEFAULT NULL,
   `isForwarded` tinyint(4) DEFAULT NULL,
-  `isSupport` tinyint(4) DEFAULT NULL,
+  `type_` int(11) DEFAULT NULL,
   PRIMARY KEY (`messageId`),
   KEY `IX_F4208ACF` (`folderId`),
   KEY `IX_CC578397` (`folderId`,`isNew`),

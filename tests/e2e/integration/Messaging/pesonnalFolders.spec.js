@@ -15,17 +15,15 @@ describe('Personal folders', () => {
     cy.get('[data-test=option_toggleMessagingMenu]').click()
     cy.log('Create a first personal Folder')
     cy.get('[data-test=messaging-menu]').within(() => {
-      cy.get('[data-test=folder-actions]').invoke('show') // TODO replace by user action like (hover)
-      cy.get('[data-test=createMessagingFolder]').should('be.visible').click()
-      cy.get('input').type('My first personal folder')
+      cy.get('[data-test=createMessagingFolder]').invoke('show').click() // TODO replace by user action like (hover)
+      cy.get('input').type('My first personal folder', { force: true })
     })
     cy.globalKeyPress('{enter}') // Have to target the body element, so it can't be in the previous within()
 
     cy.log('Create a second personal Folder')
     cy.get('[data-test=messaging-menu]').within(() => {
-      cy.get('[data-test=folder-actions]').invoke('show')
-      cy.get('[data-test=createMessagingFolder]').should('be.visible').click()
-      cy.get('input').type('My second personal folder')
+      cy.get('[data-test=createMessagingFolder]').invoke('show').click()
+      cy.get('input').type('My second personal folder', { force: true })
     })
     cy.globalKeyPress('{enter}')
 
@@ -33,10 +31,10 @@ describe('Personal folders', () => {
       cy.get('.personal-sub-folder').contains('My first personal folder').parent().as('firstFolderItem')
       cy.get('.personal-sub-folder').contains('sous-dossier').parent().as('thirdFolderItem')
       cy.get('.personal-sub-folder').contains('test').parent().as('fourthFolderItem')
-      cy.get('.personal-sub-folder').contains('My second personal folder').parent().as('secondFolderItem').trigger('mouseover')
+      cy.get('.personal-sub-folder').contains('My second personal folder').parent().as('secondFolderItem')
 
       cy.log('Create personal subFolder')
-      cy.get('.folder-actions > .add').click()
+      cy.get('[data-test=personalSubFolder-My\\ second\\ personal\\ folder]').find('[data-test=add]').invoke('show').click()
       cy.get('input').type('My subFolder')
     })
     cy.globalKeyPress('{enter}')
@@ -46,22 +44,20 @@ describe('Personal folders', () => {
 
     // Test folder navigation
     cy.log('Test folder navigation')
-    cy.get('@secondFolderItem').click()
+    cy.get('@secondFolderItem').click('top')
     cy.get('.personal-sub-folder').should('not.contain', 'My subFolder')
-    cy.get('@secondFolderItem').click()
+    cy.get('@secondFolderItem').click('top')
     cy.get('@subFolderItem').should('exist')
-    cy.contains('Mes dossiers').click()
+    cy.contains('Mes dossiers').click('top')
     cy.get('.personal-sub-folder').should('not.exist')
-    cy.contains('Mes dossiers').click()
+    cy.contains('Mes dossiers').click('top')
     cy.get('@firstFolderItem').should('exist')
     cy.get('@secondFolderItem').should('exist')
     cy.get('.personal-sub-folder').should('not.contain', 'My subFolder')
 
     // Test folder renaming
     cy.log('Test folder renaming')
-    cy.get('@firstFolderItem').trigger('mouseover').within(() => {
-      cy.get('.edit').click()
-    })
+    cy.get('@firstFolderItem').find('[data-test=rename]').invoke('show').click()
     cy.get('[data-test=messaging-menu]').within(() => {
       cy.get('input').type(' (modified)')
     })
@@ -72,25 +68,18 @@ describe('Personal folders', () => {
 
     // Delete folders
     cy.log('Delete folders')
-    cy.get('@firstFolderItem').trigger('mouseover').within(() => {
-      cy.get('.delete').click()
-    })
+    cy.get('@firstFolderItem').find('[data-test=delete]').invoke('show').click()
     cy.get('[data-test=warning-modal]').find('[data-test=confirmButton]').click()
     cy.get('.personal-sub-folder').should('not.contain', 'My first personal folder (modified)')
-    cy.get('@secondFolderItem').trigger('mouseover').within(() => {
-      cy.get('.delete').click()
-    })
+    cy.get('@secondFolderItem').find('[data-test=delete]').invoke('show').click()
     cy.get('[data-test=warning-modal]').find('[data-test=confirmButton]').click()
-    cy.get('@thirdFolderItem').trigger('mouseover').within(() => {
-      cy.get('.delete').click()
-    })
+    cy.get('@thirdFolderItem').find('[data-test=delete]').invoke('show').click()
     cy.get('[data-test=warning-modal]').find('[data-test=confirmButton]').click()
-    cy.get('@fourthFolderItem').trigger('mouseover').within(() => {
-      cy.get('.delete').click()
-    })
+    cy.get('@fourthFolderItem').find('[data-test=delete]').invoke('show').click()
     cy.get('[data-test=warning-modal]').find('[data-test=confirmButton]').click()
     cy.get('.personal-sub-folder').should('not.exist')
     cy.reload() // To be sure that the back data are up-to date
+    cy.get('[data-test=option_toggleMessagingMenu]').click()
     cy.get('[data-test=messaging-menu]').within(() => {
       cy.contains('Mes dossiers')
       cy.get('.personal-sub-folder').should('not.exist')

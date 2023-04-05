@@ -2,16 +2,16 @@
 // import '../login.spec'
 
 // Documents
-import '../Documents/breadCrumb.spec'
-import '../Documents/Deletion.spec'
-import '../Documents/DocumentsInternDragNDrop.spec'
-import '../Documents/DocumentsNavigation.spec'
-import '../Documents/DocumentsSelection.spec'
-import '../Documents/FileAndFolderCreation.spec'
-import '../Documents/moveAndDuplicate.spec'
-import '../Documents/options.spec'
-import '../Documents/rename.spec'
-import '../Documents/groupDocuments.spec'
+// import '../Documents/breadCrumb.spec'
+// import '../Documents/Deletion.spec'
+// import '../Documents/DocumentsInternDragNDrop.spec'
+// import '../Documents/DocumentsNavigation.spec'
+// import '../Documents/DocumentsSelection.spec'
+// import '../Documents/FileAndFolderCreation.spec'
+// import '../Documents/moveAndDuplicate.spec'
+// import '../Documents/options.spec'
+// import '../Documents/rename.spec'
+// import '../Documents/groupDocuments.spec'
 
 // Groups
 // import '../Groups/editGroupModal.spec'
@@ -48,3 +48,10 @@ import '../Documents/groupDocuments.spec'
 // import '../Progression/ProgressionEdit/ProgressionSection.spec'
 // import '../Progression/ProgressionEdit/ProgressionSubsection.spec'
 // import '../Progression/ProgressionList.spec'
+
+// Messaging
+import '../Messaging/deleteMessage.spec'
+import '../Messaging/dragNdropMessage.spec'
+import '../Messaging/navigationAndStructure.spec'
+import '../Messaging/pesonnalFolders.spec'
+import '../Messaging/sendMessage.spec'

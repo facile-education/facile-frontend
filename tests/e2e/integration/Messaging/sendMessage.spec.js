@@ -47,7 +47,7 @@ describe('Sending message', () => {
   })
 
   it('sending modal form', () => {
-    cy.get('[data-test=option_createNewMessage]').click()
+    cy.get('[data-test=createMessageButton]').click()
 
     // Test modal closure
     cy.log('Test modal closure')
@@ -55,7 +55,7 @@ describe('Sending message', () => {
     cy.get('[data-test=closeModal]').click()
     cy.get('[data-test=createMessageModal]').should('not.exist')
 
-    cy.get('[data-test=option_createNewMessage]').click()
+    cy.get('[data-test=createMessageButton]').click()
 
     // Test required fields
     cy.get('[data-test=createMessageModal]').as('createMessageModal').within(() => {
@@ -103,7 +103,7 @@ describe('Sending message', () => {
     }
 
     // Open create message modal
-    cy.get('[data-test=option_createNewMessage]').click()
+    cy.get('[data-test=createMessageButton]').click()
 
     // Select multiple recipients
     cy.log('Select multiple recipients')
@@ -116,7 +116,7 @@ describe('Sending message', () => {
 
     // Enter subject
     cy.log('Enter subject')
-    cy.get('[data-test=subject-section]').find('input').type(message.subject)
+    cy.get('[data-test=subject-input]').find('input').type(message.subject)
 
     // Write content
     cy.log('Write content')
@@ -174,7 +174,7 @@ describe('Sending message', () => {
     }
 
     // Open create message modal
-    cy.get('[data-test=option_createNewMessage]').click()
+    cy.get('[data-test=createMessageButton]').click()
 
     // Select multiple recipients
     cy.log('Select multiple recipients')
@@ -187,7 +187,7 @@ describe('Sending message', () => {
 
     // Enter subject
     cy.log('Enter subject')
-    cy.get('[data-test=subject-section]').find('input').type(message.subject)
+    cy.get('[data-test=subject-input]').find('input').type(message.subject)
 
     // Write content
     cy.log('Write content')

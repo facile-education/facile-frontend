@@ -31,7 +31,7 @@
 
       <template #body>
         <!-- Recipients -->
-        <div class="recipients-panel">
+        <div class="recipients-panel" data-test="recipients-section">
           <PentilaTagsInput
             ref="tagsinput"
             v-model="recipients"
