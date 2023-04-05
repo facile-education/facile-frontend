@@ -37,6 +37,7 @@
           <div
             v-if="isUnread"
             class="unread theme-background-color icon"
+            :class="{'selected' :isThreadSelected && !isSubMessageSelected}"
             data-test="unread-icon"
           />
           <img
@@ -391,6 +392,10 @@ export default {
 
     .unread {
       @extend %messaging-pellet;
+
+      &.selected {
+        background-color: white;
+      }
     }
 
     .attached-file-icon {
