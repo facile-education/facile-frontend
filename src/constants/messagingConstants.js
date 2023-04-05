@@ -4,12 +4,15 @@ const messagingSentFolderType = 3
 const messagingTrashFolderType = 4
 const messagingPersonalFolderType = 5
 
+const threadListPaginationSize = 20
+
 export {
   messagingInboxFolderType,
   messagingDraftFolderType,
   messagingSentFolderType,
   messagingTrashFolderType,
-  messagingPersonalFolderType
+  messagingPersonalFolderType,
+  threadListPaginationSize
 }
 
 export default {
@@ -17,5 +20,6 @@ export default {
   messagingDraftFolderType,
   messagingSentFolderType,
   messagingTrashFolderType,
-  messagingPersonalFolderType
+  messagingPersonalFolderType,
+  threadListPaginationSize
 }

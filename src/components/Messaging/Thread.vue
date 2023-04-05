@@ -155,7 +155,7 @@ export default {
   },
   computed: {
     currentFolder () {
-      return this.$store.messaging.currentFolder
+      return this.$store.state.messaging.currentFolder
     },
     isMultiSelectionActive () {
       return this.$store.state.messaging.isMultiSelectionActive
@@ -184,7 +184,7 @@ export default {
       return false
     },
     isDraft () {
-      return this.$store.state.messaging.currentFolder.type === constants.messagingDraftFolderType
+      return this.currentFolder.type === constants.messagingDraftFolderType
     },
     isThreadSelected () {
       for (const selectedThread of this.$store.state.messaging.selectedThreads) {
@@ -298,7 +298,7 @@ export default {
         this.$store.dispatch('messaging/setSelectedThreads', [this.thread])
         this.$store.dispatch('messaging/setSelectedMessages', [])
 
-        messageService.getThreadMessages(this.thread.threadId, this.$store.state.messaging.currentFolder.folderId).then((data) => {
+        messageService.getThreadMessages(this.thread.threadId, this.currentFolder.folderId).then((data) => {
           if (data.success) {
             this.$store.dispatch('messaging/setCurrentThreadMessages', data.messages)
           }
