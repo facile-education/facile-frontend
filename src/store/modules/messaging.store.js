@@ -3,6 +3,7 @@ import messagingUtils from '@utils/messaging.utils'
 import folderService from '@/api/messaging/folder.service'
 // import constants from '@/constants/appConstants'
 import _ from 'lodash'
+import messagingConstants from '@/constants/messagingConstants'
 
 export const state = {
   messagingFolders: [],
@@ -14,7 +15,6 @@ export const state = {
   lastSelectedThread: undefined,
   isThreadSelected: true,
   startIndex: 0,
-  nbDisplayed: 20,
   unreadOnly: false,
   isParametersModalDisplayed: false,
   isSelectedMessageFromRightPanel: false,
@@ -83,7 +83,6 @@ export const mutations = {
   setCurrentFolder (state, folder) {
     state.currentFolder = folder
     state.startIndex = 0
-    state.nbDisplayed = 20
   },
   setLastSelectedThread (state, thread) {
     state.lastSelectedThread = thread
@@ -374,12 +373,12 @@ export const actions = {
       }
       this.dispatch('currentActions/addAction', { name: 'loadThreads' })
 
-      messageService.getThreads(folderId, lastDate, state.nbDisplayed, state.unreadOnly).then((data) => {
+      messageService.getThreads(folderId, lastDate, messagingConstants.threadListPaginationSize, state.unreadOnly).then((data) => {
         this.dispatch('currentActions/removeAction', { name: 'loadThreads' })
 
         if (data.success) {
           commit('setLoadingThreadsError', undefined)
-          commit('updateStartIndex', state.startIndex + state.nbDisplayed)
+          commit('updateStartIndex', state.startIndex + messagingConstants.threadListPaginationSize)
           if (lastDate === '-1') {
             commit('setThreadList', data.threads)
           } else {
