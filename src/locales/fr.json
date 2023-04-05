@@ -222,7 +222,7 @@
     "hideAllRecipients": "Masquer",
     "to": "À :",
     "noObjectWarning": "Vous vous apprétez à envoyer un message sans objet",
-    "confirmFolderDeletionWarning": "Supprimer ce dossier sera irréversible et vous risquez de perdre les messages qu'il contient",
+    "confirmFolderDeletionWarning": "Supprimer ce dossier sera irréversible",
     "Parameters": {
       "header": "Paramètres de messagerie",
       "submitButton": "Enregistrer",
