@@ -54,6 +54,7 @@
         >
           <Thread
             :thread="thread"
+            :is-last="thread.threadId === threads[threads.length-1].threadId"
             class="thread-list-item"
             @contextmenu.prevent="openContextMenu($event, thread)"
           />

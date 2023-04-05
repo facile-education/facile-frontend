@@ -60,6 +60,7 @@
 import searchConstants from '@/constants/searchConstants'
 import FileIcon from '@components/Base/FileIcon.vue'
 import SearchResultPreview from '@components/Search/SearchResultPreview.vue'
+import { isInViewport } from '@/utils/commons.util'
 import { getSearchResultDetails } from '@/api/search.service'
 export default {
   name: 'QuickSearchResultItem',
@@ -128,7 +129,7 @@ export default {
     isLast: {
       handler () {
         if (this.isLast) {
-          if (this.isInViewport(this.$el)) {
+          if (isInViewport(this.$el)) {
             this.$store.dispatch('search/quickSearch', false)
           }
         }
@@ -147,7 +148,7 @@ export default {
   mounted () {
     window.addEventListener('keydown', this.keyMonitor)
     if (this.isLast) {
-      if (this.isInViewport(this.$el)) {
+      if (isInViewport(this.$el)) {
         this.$store.dispatch('search/quickSearch', false) // get the followings results because it's the last element of the scroll but still visible
       }
     }
@@ -179,15 +180,6 @@ export default {
           y: domRect.y
         }
       }
-    },
-    isInViewport (element) {
-      const rect = element.getBoundingClientRect()
-      return (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-      )
     },
     keyMonitor (event) {
       if (event.key === 'Enter' && this.isSelected) {

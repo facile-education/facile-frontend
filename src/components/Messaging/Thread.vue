@@ -130,6 +130,7 @@
 <script>
 
 import messagingUtils from '@/utils/messaging.utils'
+import { isInViewport } from '@/utils/commons.util'
 import dayjs from 'dayjs'
 import constants from '@/constants/appConstants'
 import ThreadMessage from '@components/Messaging/ThreadMessage'
@@ -145,6 +146,10 @@ export default {
     thread: {
       type: Object,
       required: true
+    },
+    isLast: {
+      type: Boolean,
+      default: false
     }
   },
   emits: ['openContextMenu'],
@@ -220,8 +225,22 @@ export default {
   },
   mounted () {
     this.isThreadExpanded = false
+    if (this.isLast) {
+      if (isInViewport(this.$el)) {
+        this.getNextThreads()
+      }
+    }
   },
   methods: {
+    getNextThreads () {
+      let lastThreadDate = '-1'
+      const lastThread = this.$store.getters['messaging/oldestThread']
+      if (lastThread) {
+        lastThreadDate = lastThread.lastSendDate
+      }
+
+      this.$store.dispatch('messaging/getThreads', { folderId: this.currentFolder.folderId, lastDate: lastThreadDate })
+    },
     handleClick () {
       if (this.isMultiSelectionActive) {
         this.ctrlSelectThread()
