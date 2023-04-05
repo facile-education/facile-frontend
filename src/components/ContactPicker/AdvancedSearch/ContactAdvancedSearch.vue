@@ -83,7 +83,7 @@ export default {
   },
   methods: {
     runSearch () {
-      if (this.selectedRole.roleId === 0 && this.selectedSchool.schoolId === 0 && this.searchQuery.length <= 2) {
+      if (this.selectedRole.roleId === 0 && this.selectedSchool.schoolId === 0 && this.searchQuery.length < 2) {
         this.errorMessage = 'emptyRequest'
       } else {
         this.errorMessage = ''
