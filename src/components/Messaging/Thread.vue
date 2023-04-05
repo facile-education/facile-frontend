@@ -445,6 +445,7 @@ export default {
 
       p{
         overflow: hidden;
+        white-space: nowrap;
         text-overflow: ellipsis;
       }
 
