@@ -169,6 +169,9 @@ export default {
   height: 100%;
   display: flex;
   position: relative;
+  --menu-min-width: 240px;
+  --thread-list-min-width: 358px;
+  --thread-details-min-width: 300px;
 
   .create-button {
     position: absolute;
@@ -177,8 +180,8 @@ export default {
   }
 
   .menu-panel {
-    min-width: 240px;
-    width: 240px;
+    min-width: var(--menu-min-width);
+    width: var(--menu-min-width);
     white-space: nowrap;
     overflow-x: hidden;
     text-overflow: ellipsis;
@@ -196,23 +199,25 @@ export default {
 
     .left {
       height: 100%;
+      min-width: var(--thread-list-min-width);
       max-width: 600px;
-      flex: 1;
+      width: 50%;
       display: flex;
 
       &.menu-displayed {
+        min-width: calc(var(--menu-min-width) + var(--thread-list-min-width));
         max-width: 700px;
       }
     }
 
     .thread-list {
-      min-width: 358px;
+      min-width: var(--thread-list-min-width);
       flex: 1;
     }
 
     .thread-details {
       flex: 1;
-      min-width: 300px;
+      min-width: var(--thread-details-min-width);
     }
 
     .thread-list, .thread-details {
