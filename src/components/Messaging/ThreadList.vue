@@ -364,7 +364,6 @@ export default {
 .panel {
   height: 100%;
   border-right: 1px solid $color-border;
-  border-left: 1px solid $color-border;
 
   &.phone {
     border: none;
