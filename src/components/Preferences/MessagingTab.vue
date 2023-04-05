@@ -126,6 +126,11 @@ export default {
             if (data.success) {
               this.$store.dispatch('popups/pushPopup', { message: this.$t('successMessage'), type: 'success' })
               this.oldConfiguration = JSON.stringify(this.configuration)
+              if (this.configuration.signature.isActive) {
+                this.$store.dispatch('messaging/setSignature', this.configuration.signature.content)
+              } else {
+                this.$store.dispatch('messaging/setSignature', '')
+              }
               this.$emit('save')
             } else {
               this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })

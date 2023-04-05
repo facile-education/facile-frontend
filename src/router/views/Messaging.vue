@@ -153,7 +153,7 @@ export default {
     },
     getSignature () {
       configurationService.getMessagingConfiguration().then((data) => {
-        if (data.success) {
+        if (data.success && data.configuration.signature.isActive) {
           this.$store.dispatch('messaging/setSignature', data.configuration.signature.content)
         }
       })
