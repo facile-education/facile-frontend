@@ -94,6 +94,7 @@
       <PentilaButton
         v-if="!(mq.phone || mq.tablet)"
         class="create-button"
+        data-test="createMessageButton"
         @click="createNewMessage"
       >
         <NeroIcon

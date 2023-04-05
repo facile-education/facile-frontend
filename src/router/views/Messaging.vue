@@ -44,6 +44,7 @@
 
         <CreateButton
           class="create-button"
+          data-test="createMessageButton"
           :title="$t('Messaging.new')"
           @click="createNewMessage"
         />

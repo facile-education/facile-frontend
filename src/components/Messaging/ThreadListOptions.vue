@@ -22,7 +22,7 @@
           class="button"
           :icon="require('@assets/icon_engrenage.svg')"
           :title="$t('Messaging.Parameters.header')"
-          name="toggleMessagingMenu"
+          name="toggleParameters"
           icon-height="18px"
           alt="parameters"
           @click="openParametersModal"

@@ -82,13 +82,12 @@
           v-if="!(mq.phone || mq.tablet)"
           class="folder-actions"
           :class="{'display-input': displayNewFolderInput}"
-          data-test="folder-actions"
+          data-test="createMessagingFolder"
           :title="$t('Messaging.addFolder')"
           @click.stop="toggleNewFolderInput"
         >
           <BaseIcon
             name="plus"
-            data-test="createMessagingFolder"
             class="fa-lg folder-action"
           />
         </button>
