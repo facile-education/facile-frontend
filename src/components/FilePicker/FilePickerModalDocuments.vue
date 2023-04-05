@@ -11,6 +11,12 @@
     <div class="documents-list">
       <PentilaSpinner v-if="isLoadingFiles" />
 
+      <div
+        v-if="allSortedDocuments.length === 0"
+        v-t="('emptyPlaceholder')"
+        class="placeholder"
+      />
+
       <FilePickerFolder
         v-for="subFolder in currentFolders"
         :key="subFolder.id"
@@ -274,6 +280,15 @@ export default {
     padding: 0 15px;
   }
 
+  .placeholder {
+    height: 15vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.25em;
+  }
+
   .documents-list {
     flex: 1;
     margin-top: 10px;
@@ -325,3 +340,9 @@ export default {
   }
 }
 </style>
+
+<i18n locale="fr" >
+{
+  "emptyPlaceholder": "Aucun document"
+}
+</i18n>
