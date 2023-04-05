@@ -1,5 +1,8 @@
 <template>
-  <section class="menu-panel">
+  <section
+    class="menu-panel"
+    :class="{'phone': mq.phone || mq.tablet}"
+  >
     <div
       v-if="mq.phone || mq.tablet"
       class="menu-header"
@@ -274,10 +277,13 @@ export default {
   background-color: white;
   height: 100%;
   overflow: auto;
+  border-right: 1px solid $color-border;
 
   &.phone {
-    .menu {
-      padding-top: 0;
+    border-right: none;
+
+    .menu .base-folder {
+      padding-left: 20px;
     }
   }
 }
@@ -320,7 +326,7 @@ hr {
   width: 100%;
 
   .base-folder {
-    padding-left: 20px;
+    padding-left: 10px;
   }
 
   .personal-folders {
