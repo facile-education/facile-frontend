@@ -18,6 +18,7 @@
       v-model="selectedRole"
       class="field"
       :list="roleList"
+      :sort="false"
       display-field="label"
     />
 
@@ -25,6 +26,7 @@
       v-model="selectedSchool"
       class="field"
       :list="schoolList"
+      :sort="false"
       display-field="schoolName"
     />
 
