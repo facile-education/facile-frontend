@@ -16,7 +16,7 @@
     v-if="(!mq.phone && !mq.tablet) || isCurrentFolder"
     class="breadcrumb-item"
     data-test="breadcrumb-item"
-    :class="{ 'active': isActive, 'first-element': isFirstElement, 'phone-breadcrumb-item': mq.phone || mq.tablet, 'current-folder': isCurrentFolder }"
+    :class="{ 'active': isActive, 'theme-background-color': isActive, 'first-element': isFirstElement, 'phone-breadcrumb-item': mq.phone || mq.tablet, 'current-folder': isCurrentFolder }"
     :title="folder.name"
     @dragover="setActive"
     @dragleave="cancelActive"
@@ -258,7 +258,10 @@ export default {
   border-bottom: 1px solid transparent;
   margin-right: 3px;
   padding: 3px;
-  background: none;
+
+  &:not(.theme-background-color) {
+    background: none;
+  }
 
   &.current-folder {
     font-weight: bold;
@@ -331,10 +334,6 @@ export default {
     justify-content: center;
     border-radius: 17px;
     background-color: $color-not-white-bg;
-
-    &.active {
-      background-color: $color-active-bg;
-    }
   }
 
   .options {
@@ -368,11 +367,6 @@ export default {
       top: 135%;
     }
   }
-}
-
-.active {
-  color: $color-light-text;
-  background-color: $color-active-bg;
 }
 
 //.slide-fade-enter-active {

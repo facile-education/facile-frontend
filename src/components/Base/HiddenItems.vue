@@ -3,7 +3,7 @@
     ref="hiddenItems"
     data-test="hidden-items"
     class="container"
-    :class="{ 'active': isActive}"
+    :class="{ 'active': isActive, 'theme-background-color': isActive}"
     @click="handleClick"
     @dragenter="setActive"
     @dragleave="cancelActive"
@@ -127,14 +127,6 @@ export default {
 
   .dots {
     font-size: 20px;
-  }
-
-  &.active {
-    background-color: $color-active-bg;
-
-    .dots{
-      color: white;
-    }
   }
 }
 

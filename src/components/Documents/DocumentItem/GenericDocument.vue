@@ -81,7 +81,7 @@ export default {
     },
     computeClass () {
       if (this.isDragged) {
-        return 'is-dragging'
+        return 'theme-text-color'
       } else {
         if (this.isSelected) {
           return 'selected'
@@ -153,17 +153,4 @@ export default {
 
 <style lang="scss" scoped>
 @import '@design';
-
-.document {
-  background-color: white;
-}
-
-.dark {
-  //background-color: $color-not-white-bg;
-}
-
-.is-dragging {
-  color: $color-active-bg;
-  background-color : $color-hover-bg;
-}
 </style>

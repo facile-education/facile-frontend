@@ -6,6 +6,7 @@
                'is-grayed': option.isGrayed,
                'hoverable': !option.isGrayed,
                'active': isActive,
+               'theme-background-color': isActive,
                'is-selected theme-light-background-color': isSelected}"
       @mouseover="isHovering = true"
       @mouseleave="isHovering = false"
@@ -262,14 +263,6 @@ export default {
 
     .sub-menu-chevron{
       color: black;
-    }
-  }
-
-  &.active {
-    background-color: $color-active-bg;
-
-    .title {
-      color: white;
     }
   }
 }
