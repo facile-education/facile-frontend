@@ -22,7 +22,7 @@ export const mutations = {
 }
 
 export const actions = {
-  duplicate ({ commit, rootState }, { targetFolder, entities, mode = conflicts.MODE_NORMAL }) {
+  duplicate ({ commit, rootState }, { targetFolder, entities, mode = conflicts.MODE_NORMAL, successMessage = i18n.global.t('Popup.duplicated') }) {
     if (entities.length > 0) {
       const folderIds = []
       const fileIds = []
@@ -39,13 +39,13 @@ export const actions = {
         this.dispatch('currentActions/removeAction', { name: 'duplicate' })
         if (data.success) {
           this.dispatch('documents/refreshCurrentFolder')
-          this.dispatch('popups/pushPopup', { message: i18n.global.t('Popup.duplicated'), type: 'success' })
+          this.dispatch('popups/pushPopup', { message: successMessage, type: 'success' })
         } else {
           const entitiesInConflict = [...data.foldersInConflict, ...data.filesInConflict]
           if (entitiesInConflict.length > 0) {
             this.dispatch('conflictModal/addConflict', {
               entitiesInConflict: entitiesInConflict,
-              lastAction: { fct: this.dispatch, params: { storePath: 'clipboard/duplicate', storeParams: { targetFolder, entities: entitiesInConflict } } }
+              lastAction: { fct: this.dispatch, params: { storePath: 'clipboard/duplicate', storeParams: { targetFolder, entities: entitiesInConflict, successMessage } } }
             })
           // Print error messages if any
           } else if (data.errorMessages !== undefined && data.errorMessages.length > 0) {
