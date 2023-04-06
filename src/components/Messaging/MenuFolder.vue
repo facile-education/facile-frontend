@@ -131,6 +131,7 @@ export default {
   data: function () {
     return {
       currentFolder: {},
+      currentFolderOldName: '',
       isExpanded: false,
       displayNewFolderInput: false,
       displayFolderNameInput: false,
@@ -160,6 +161,7 @@ export default {
     if (this.isSubFolderSelected) {
       this.isExpanded = true
     }
+    this.currentFolderOldName = this.currentFolder.folderName
   },
   methods: {
     handleClick (e) {
@@ -204,21 +206,31 @@ export default {
     },
     createSubFolder () {
       this.displayNewFolderInput = false
-      folderService.addFolder(this.folder.folderId, this.newFolderName).then((data) => {
-        if (data.success) {
-          this.$store.dispatch('messaging/addSubFolder', { personalFolder: this.currentFolder, subFolder: data.folder })
-          this.isExpanded = true
-          this.newFolderName = ''
-        }
-      })
+      if (this.newFolderName.length > 0) {
+        folderService.addFolder(this.folder.folderId, this.newFolderName).then((data) => {
+          if (data.success) {
+            this.$store.dispatch('messaging/addSubFolder', {
+              personalFolder: this.currentFolder,
+              subFolder: data.folder
+            })
+            this.isExpanded = true
+            this.newFolderName = ''
+          }
+        })
+      }
     },
     editFolderName () {
       this.displayFolderNameInput = false
-      folderService.renameFolder(this.folder.folderId, this.currentFolder.folderName).then((data) => {
-        if (data.success) {
-          this.$store.dispatch('messaging/updatePersonalFolder', data.renamedFolder)
-        }
-      })
+      if (this.currentFolder.folderName.length === 0) {
+        this.currentFolder.folderName = this.currentFolderOldName
+      } else {
+        folderService.renameFolder(this.folder.folderId, this.currentFolder.folderName).then((data) => {
+          if (data.success) {
+            this.currentFolderOldName = this.currentFolder.folderName
+            this.$store.dispatch('messaging/updatePersonalFolder', data.renamedFolder)
+          }
+        })
+      }
     },
     askToConfirmFolderDeletion () {
       this.$store.dispatch('warningModal/addWarning', {

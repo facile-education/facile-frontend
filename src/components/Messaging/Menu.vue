@@ -222,8 +222,8 @@ export default {
       return 0
     },
     createPersonalRootFolder () {
+      this.displayNewFolderInput = false
       if (this.newFolderName.length > 0) { // Basic check, TODO: Other form like verifications?
-        this.displayNewFolderInput = false
         folderService.addFolder(0, this.newFolderName).then((data) => {
           if (data.success) {
             this.$store.dispatch('messaging/addPersonalRootFolder', data.folder)
