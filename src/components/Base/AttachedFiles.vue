@@ -110,7 +110,7 @@ export default {
       this.isFilePickerModalDisplayed = true
     },
     doSelectFolderAction (targetFolder) {
-      this.$store.dispatch('clipboard/duplicate', { targetFolder, entities: [this.selectedFileForAction] })
+      this.$store.dispatch('clipboard/duplicate', { targetFolder, entities: [this.selectedFileForAction], successMessage: this.$t('addToFolderSuccess') })
     },
     viewAttachedFile (attachedFile) {
       this.$store.dispatch('documents/openFile', { id: attachedFile.id, name: attachedFile.name, readOnly: true })
@@ -199,6 +199,7 @@ export default {
   "attachedFile": " pièce jointe",
   "attachedFiles": " pièces jointes",
   "addToFolder": "Enregistrer dans mes documents",
+  "addToFolderSuccess": "Fichier déposé",
   "download": "Télécharger",
   "view": "Visualiser",
   "remove": "Supprimer"
