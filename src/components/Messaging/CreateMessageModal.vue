@@ -31,7 +31,10 @@
 
       <template #body>
         <!-- Recipients -->
-        <div class="recipients-panel" data-test="recipients-section">
+        <div
+          class="recipients-panel"
+          data-test="recipients-section"
+        >
           <PentilaTagsInput
             ref="tagsinput"
             v-model="recipients"
@@ -52,7 +55,7 @@
             ref="openContactTooltipButton"
             :class="{'phone': mq.phone}"
             class="create-button"
-            @click="isContactPickerModalDisplayed=!isContactPickerModalDisplayed"
+            @click="toggleContactsPicker"
           >
             <NeroIcon
               name="fa-plus"
@@ -142,19 +145,17 @@
       @close="closeFilePicker"
     />
   </teleport>
-  <teleport
-    v-if="isContactPickerModalDisplayed"
-    to="body"
-  >
+  <teleport to="body">
     <ContactPickerModal
-      v-if="mq.phone"
+      v-if="mq.phone && isContactPickerModalDisplayed"
       :selected-contacts="recipients"
       @addContacts="addRecipients"
       @removeContacts="removeRecipients"
       @close="isContactPickerModalDisplayed=false"
     />
     <ContactPickerToolTip
-      v-else
+      v-else-if="isContactPickerInitialized"
+      v-show="isContactPickerModalDisplayed"
       :selected-contacts="recipients"
       :create-button="$refs.openContactTooltipButton"
       :init-coordinates="initTooltipPosition"
@@ -223,7 +224,8 @@ export default {
       isContactPickerModalDisplayed: false,
       originMessage: {},
       initialRecipients: [],
-      initTooltipPosition: { x: 0, y: 0 }
+      initTooltipPosition: { x: 0, y: 0 },
+      isContactPickerInitialized: false // Useful in add to v-show to not initialize component immediately
     }
   },
   validations: {
@@ -272,6 +274,12 @@ export default {
     this.getToolTipPosition()
   },
   methods: {
+    toggleContactsPicker () {
+      if (!this.isContactPickerInitialized) {
+        this.isContactPickerInitialized = true
+      }
+      this.isContactPickerModalDisplayed = !this.isContactPickerModalDisplayed
+    },
     init () {
       // If a message is selected -> action on this message
       // Else -> pick last thread's message
