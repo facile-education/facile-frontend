@@ -10,7 +10,7 @@
         v-model="configuration.forward.isActive"
         class="checkbox"
         label=""
-        @update:modelValue="updateConfiguration"
+        @update:modelValue="checkForm"
       />
       {{ $t('forward') }}
       <InformationIcon
@@ -23,10 +23,12 @@
       :placeholder="$t('addRedirection')"
       display-field="text"
       id-field="id"
+      :close-on-select="true"
       :disabled="!configuration.forward.isActive"
       class="param-value"
-      @update:modelValue="updateConfiguration"
+      @update:modelValue="checkForm"
     />
+    <PentilaErrorMessage :error-message="errorMessage" />
 
     <!-- Signature -->
     <div class="param-header">
@@ -34,7 +36,7 @@
         v-model="configuration.signature.isActive"
         class="checkbox"
         label=""
-        @update:modelValue="updateConfiguration"
+        @update:modelValue="checkForm"
       />
       {{ $t('signature') }}
     </div>
@@ -46,7 +48,7 @@
       :disabled="!configuration.signature.isActive"
       :is-in-progression="false"
       @input="updateSignature"
-      @blur="updateConfiguration"
+      @blur="checkForm"
     />
 
     <!-- Auto-reply -->
@@ -55,7 +57,7 @@
         v-model="configuration.autoReply.isActive"
         class="checkbox"
         label=""
-        @update:modelValue="updateConfiguration"
+        @update:modelValue="checkForm"
       />
       {{ $t('autoReply') }}
     </div>
@@ -67,7 +69,7 @@
       :disabled="!configuration.autoReply.isActive"
       :is-in-progression="false"
       @input="updateAutoReply"
-      @blur="updateConfiguration"
+      @blur="checkForm"
     />
   </div>
   <PentilaSpinner v-else />
@@ -88,18 +90,29 @@ export default {
       oldConfiguration: undefined,
       isLoading: false,
       signatureContent: undefined,
-      autoReplyContent: undefined
-      // validation: [{
-      //   classes: 'email',
-      //   rule: /^(.+)@(.+)\.(.+)$/,
-      //   disableAdd: true
-      // }]
+      autoReplyContent: undefined,
+      errorMessage: ''
     }
   },
   created () {
     this.getConfiguration()
   },
   methods: {
+    checkForm () {
+      this.errorMessage = ''
+      for (let i = 0; i < this.configuration.forward.addresses.length; i++) {
+        const email = this.configuration.forward.addresses[i].text
+        if (!this.isValidEmail(email)) {
+          this.errorMessage = this.$t('invalidEmailAddress')
+        }
+      }
+      if (this.errorMessage === '') {
+        this.updateConfiguration()
+      }
+    },
+    isValidEmail (email) {
+      return /^[^@]+@\w+(\.\w+)+\w$/.test(email)
+    },
     updateSignature (value) {
       this.configuration.signature.content = value
     },
@@ -174,6 +187,7 @@ export default {
   "save": "Enregistrer",
   "forward": "Être averti par courriel",
   "forwardInfo": "Renseignez une adresse de courriel pour être averti de l’arrivée d’un nouveau message.",
-  "successMessage": "Paramètres sauvegardés"
+  "successMessage": "Paramètres sauvegardés",
+  "invalidEmailAddress": "Adresse e-mail invalide"
 }
 </i18n>
