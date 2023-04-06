@@ -165,7 +165,7 @@ export default {
   },
   methods: {
     handleClick (e) {
-      if (e.pointerType === 'mouse' || e.mozInputSource === 1 || e instanceof MouseEvent) {
+      if (e.pointerType === 'mouse' || e.mozInputSource === 1) {
         // Remove focus from button
         const vm = this
         nextTick(function () {
@@ -178,20 +178,18 @@ export default {
         this.isExpanded = !this.isExpanded
       }
     },
-    toggleFolderNameInput () {
+    toggleFolderNameInput (e) {
       this.displayFolderNameInput = !this.displayFolderNameInput
-      if (this.displayFolderNameInput) {
-        // Focus input
+      if (this.displayFolderNameInput && (e.pointerType === 'mouse' || e.mozInputSource === 1)) { // focus input if it's safe (enter button submit input if focused)
         const vm = this
         nextTick(function () {
           vm.$refs.folderNameInput.focus()
         })
       }
     },
-    toggleNewFolderInput () {
+    toggleNewFolderInput (e) {
       this.displayNewFolderInput = !this.displayNewFolderInput
-      if (this.displayNewFolderInput) {
-        // Focus input
+      if (this.displayNewFolderInput && (e.pointerType === 'mouse' || e.mozInputSource === 1)) { // focus input if it's safe (enter button submit input if focused)
         const vm = this
         nextTick(function () {
           vm.$refs.newFolderInput.focus()
@@ -220,6 +218,7 @@ export default {
       }
     },
     editFolderName () {
+      console.log('edit folderName')
       this.displayFolderNameInput = false
       if (this.currentFolder.folderName.length === 0) {
         this.currentFolder.folderName = this.currentFolderOldName
