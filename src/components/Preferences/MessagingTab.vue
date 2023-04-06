@@ -40,6 +40,7 @@
     </div>
     <TextContent
       class="ck"
+      :class="{'disabled': !configuration.signature.isActive}"
       data-test="signature-input"
       :content="{contentValue: signatureContent}"
       :disabled="!configuration.signature.isActive"
@@ -60,7 +61,8 @@
     </div>
     <TextContent
       class="ck"
-      data-test="signature-input"
+      :class="{'disabled': !configuration.autoReply.isActive}"
+      data-test="autoReply-input"
       :content="{contentValue: autoReplyContent}"
       :disabled="!configuration.autoReply.isActive"
       :is-in-progression="false"
