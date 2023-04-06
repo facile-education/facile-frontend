@@ -205,7 +205,7 @@ export default {
     },
     toggleNewFolderInput (event) {
       this.displayNewFolderInput = !this.displayNewFolderInput
-      if (this.displayNewFolderInput && event.pointerType === 'mouse') {
+      if (this.displayNewFolderInput && (event.pointerType === 'mouse' || event.mozInputSource === 1)) {
         // Focus input
         const vm = this
         nextTick(function () {
