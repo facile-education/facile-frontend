@@ -77,7 +77,8 @@
       ref="folderNameInput"
       v-model="currentFolder.folderName"
       class="folder-name-input"
-      @keyup.enter.stop="editFolderName"
+      @blur="editFolderName"
+      @keyup.enter.stop="blurFolderNameInput"
       @keyup.escape="displayFolderNameInput = false"
     />
 
@@ -88,7 +89,8 @@
       v-model="newFolderName"
       class="new-folder-input"
       placeholder="Nouveau dossier"
-      @keyup.enter.stop="createSubFolder"
+      @blur="createSubFolder"
+      @keyup.enter.stop="blurNewFolderNameInput"
       @keyup.escape="displayNewFolderInput = false"
     />
 
@@ -196,6 +198,18 @@ export default {
         })
       }
     },
+    blurFolderNameInput () {
+      const vm = this
+      nextTick(function () {
+        vm.$refs.folderNameInput.blur()
+      })
+    },
+    blurNewFolderNameInput () {
+      const vm = this
+      nextTick(function () {
+        vm.$refs.newFolderInput.blur()
+      })
+    },
     selectFolder () {
       this.$store.dispatch('messaging/selectFolder', this.folder)
       if (this.mq.phone || this.mq.tablet) {
@@ -218,7 +232,6 @@ export default {
       }
     },
     editFolderName () {
-      console.log('edit folderName')
       this.displayFolderNameInput = false
       if (this.currentFolder.folderName.length === 0) {
         this.currentFolder.folderName = this.currentFolderOldName

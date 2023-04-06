@@ -97,7 +97,8 @@
         v-model="newFolderName"
         class="new-folder-input"
         placeholder="Nouveau dossier"
-        @keyup.enter.stop="createPersonalRootFolder"
+        @blur="createPersonalRootFolder"
+        @keyup.enter.stop="blurNewFolderNameInput"
         @keyup.escape="displayNewFolderInput = false"
       />
 
@@ -197,6 +198,12 @@ export default {
     }
   },
   methods: {
+    blurNewFolderNameInput () {
+      const vm = this
+      nextTick(function () {
+        vm.$refs.newFolderInput.blur()
+      })
+    },
     toggleSideMenuPanel () {
       this.$store.dispatch('messaging/toggleSideMenuPanel')
     },
