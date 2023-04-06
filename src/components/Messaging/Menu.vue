@@ -7,10 +7,6 @@
       v-if="mq.phone || mq.tablet"
       class="menu-header"
     >
-      <img
-        src="@assets/icons/menus/menu_messaging.svg"
-        alt=""
-      >
       <h3 v-t="'Messaging.boxes'" />
     </div>
 
@@ -299,25 +295,9 @@ ul {
   width: 100%;
   display: flex;
   align-items: center;
-
-  .header-icon {
-    margin: auto;
-    padding: 5px;
-    width: 35px;
-    height: 35px;
-    border: 1px solid transparent;
-
-    &:hover {
-      border-radius: 5px;
-      border: 1px solid black;
-      cursor: pointer;
-    }
-  }
-
-  img {
-    margin-right: 15px;
-    margin-left: 20px;
-  }
+  font-size: 1.25em;
+  margin-left: 20px;
+  margin-top: 15px;
 }
 hr {
   margin: 0;
