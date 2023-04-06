@@ -1,7 +1,7 @@
 <template>
   <button
     class="base-folder"
-    :class="{'selected': ($store.state.messaging.currentFolder.folderId === folder.folderId), 'active': isActive}"
+    :class="{'selected': ($store.state.messaging.currentFolder.folderId === folder.folderId), 'active': isActive, 'theme-background-color': isActive }"
     @click="selectFolder(folder)"
     @dragover="setActive"
     @dragleave="cancelActive"
@@ -121,8 +121,11 @@ export default {
 button {
   margin: 0;
   padding: 0;
-  background-color: transparent;
   border: none;
+
+  &:not(.theme-background-color) {
+    background-color: transparent;
+  }
 }
 
 .base-folder {
@@ -160,18 +163,11 @@ button {
     width: 20px;
   }
 
-  &.active {
-    color: lightgrey;
-    background-color: grey;
-  }
-
   .folder-icon {
     width: 20px;
     margin-right: 10px;
   }
   &:hover:not(.selected) {
-    //background-color: $light-grey-bg;
-    //border-radius: 0 20px 20px 0;
     font-weight: bold;
   }
   &.selected {

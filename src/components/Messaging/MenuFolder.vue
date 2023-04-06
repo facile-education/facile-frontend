@@ -5,7 +5,7 @@
       v-if="!displayFolderNameInput"
       ref="personalFolder"
       class="personal-folder"
-      :class="{'selected': isSelected, 'active': isActive }"
+      :class="{'selected': isSelected, 'active': isActive, 'theme-background-color': isActive }"
       :title="currentFolder.folderName"
       :data-test="'personalSubFolder-' + currentFolder.folderName"
       @dragover="setActive"
@@ -278,8 +278,11 @@ ul {
 button {
   margin: 0;
   padding: 0;
-  background-color: transparent;
   border: none;
+
+  &:not(.theme-background-color) {
+    background-color: transparent;
+  }
 }
 
 .menu-folder {
@@ -297,11 +300,6 @@ button {
     position: relative;
     overflow: hidden;
     text-align: left;
-
-    &.active {
-      color: $color-light-text;
-      background-color: $color-active-bg;
-    }
 
     &:hover:not(.selected) {
       font-weight: bold;
