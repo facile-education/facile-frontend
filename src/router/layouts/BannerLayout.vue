@@ -66,18 +66,16 @@
     </teleport>
 
     <teleport
-      v-if="isWarningModalDisplayed"
       to="body"
     >
       <WarningModal
+        v-if="isWarningModalDisplayed"
         win-width="500px"
       />
-    </teleport>
-
-    <teleport
-      v-if="isHelpModalDisplayed"
-      to="body"
-    >
+      <ConflictModal
+        v-if="isConflictModalDisplayed"
+        win-width="500px"
+      />
       <HelpModal
         v-if="isHelpModalDisplayed"
         @close="closeHelpModal"
@@ -92,6 +90,7 @@ import { popupDurationTime } from '@/constants/appConstants'
 import Banner from '@/components/Banner/Banner'
 import QuickSearchPanel from '@components/Search/QuickSearchPanel.vue'
 
+const ConflictModal = defineAsyncComponent(() => import('@/components/Documents/Modals/ConflictModal'))
 const FileDisplayModal = defineAsyncComponent(() => import('@/components/Documents/FileDisplay/FileDisplayModal'))
 const MobileMenu = defineAsyncComponent(() => import('@/components/Menu/MobileMenu'))
 const SideMenu = defineAsyncComponent(() => import('@/components/Menu/SideMenu'))
@@ -102,6 +101,7 @@ const WarningModal = defineAsyncComponent(() => import('@/components/Nero/Warnin
 export default {
   name: 'BannerLayout',
   components: {
+    ConflictModal,
     FileDisplayModal,
     QuickSearchPanel,
     HelpModal,
@@ -119,6 +119,9 @@ export default {
     }
   },
   computed: {
+    isConflictModalDisplayed () {
+      return this.$store.getters['conflictModal/isConflictModalDisplayed']
+    },
     isWarningModalDisplayed () {
       return this.$store.getters['warningModal/isWarningModalDisplayed']
     },
