@@ -178,6 +178,7 @@ import FilePickerModal from '@components/FilePicker/FilePickerModal'
 import TextContent from '@components/Progression/Edit/Contents/TextContent'
 import dayjs from 'dayjs'
 import NeroIcon from '@/components/Nero/NeroIcon'
+import { addContactFieldsToContactList } from '@utils/contacts.utils'
 import { defineAsyncComponent } from 'vue'
 import ContactPickerToolTip from '@components/ContactPicker/ContactPickerToolTip.vue'
 const ContactPickerModal = defineAsyncComponent(() => import('@components/ContactPicker/ContactPickerModal.vue'))
@@ -365,9 +366,7 @@ export default {
       messageService.getUsersCompletion(query).then((data) => {
         if (data.success) {
           this.autocompleteItems = data.results
-          this.autocompleteItems.forEach((item) => {
-            item.text = item.name
-          })
+          addContactFieldsToContactList(data.results)
         } else {
           console.error('Error while getting users', data.error)
         }
