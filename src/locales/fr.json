@@ -205,6 +205,7 @@
     "hasRead": "Lu",
     "deleteMessage": "Supprimer",
     "editDraft": "Éditer",
+    "noRecipient": "(Aucun destinataire)",
     "rename": "Modifier",
     "reply" : "Répondre",
     "replyAll": "Répondre à tous",
