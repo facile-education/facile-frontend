@@ -102,7 +102,6 @@ export default {
       }
     },
     onClose () {
-      this.$store.dispatch('contact/resetContactStore')
       this.$store.dispatch('misc/decreaseModalCount')
       this.$emit('close')
     }
