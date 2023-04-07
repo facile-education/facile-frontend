@@ -36,7 +36,7 @@
         />
         <li>
           <IconOption
-            v-if="isActionEnabled && !isDraft"
+            v-if="isActionEnabled && !isDraft && !isSenderDeleted"
             class="header-icon"
             :icon="require('@assets/options/icon_answer.svg')"
             :title="$t('Messaging.reply')"
@@ -47,12 +47,12 @@
           />
         </li>
         <li
-          v-if="isActionEnabled && !isDraft"
+          v-if="isActionEnabled && !isDraft && !isSenderDeleted"
           class="separator"
         />
         <li>
           <IconOption
-            v-if="isActionEnabled && !isDraft"
+            v-if="isActionEnabled && !isDraft && !isSenderDeleted"
             class="header-icon"
             :icon="require('@assets/options/icon_answer_all.svg')"
             :title="$t('Messaging.replyAll')"
@@ -63,7 +63,7 @@
           />
         </li>
         <li
-          v-if="isActionEnabled && !isDraft"
+          v-if="isActionEnabled && !isDraft && !isSenderDeleted"
           class="separator"
         />
         <li>
@@ -204,6 +204,17 @@ export default {
     },
     currentFolder () {
       return this.$store.state.messaging.currentFolder
+    },
+    isSenderDeleted () {
+      if (this.$store.state.messaging.selectedMessages.length === 1) {
+        // Message is selected -> use it
+        return this.$store.state.messaging.selectedMessages[0].isSenderDeleted
+      } else if (this.$store.state.messaging.selectedThreads.length === 1) {
+        // Thread is selected -> pick last message
+        return messagingUtils.getThreadLastMessage(this.$store.state.messaging.selectedThreads[0]).isSenderDeleted
+      } else {
+        return false
+      }
     },
     isDraft () {
       return this.currentFolder.type === messagingConstants.messagingDraftFolderType
