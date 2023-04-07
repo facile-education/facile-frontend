@@ -2,7 +2,7 @@
   <li>
     <button @click="toggleUser">
       <span>
-        {{ user.text }}
+        {{ user.lastName + ' ' + user.firstName }}
       </span>
       <img
         v-if="!isSelected"

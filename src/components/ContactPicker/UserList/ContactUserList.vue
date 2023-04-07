@@ -87,7 +87,7 @@ export default {
     filteredUserList () {
       return this.userList
         ? this.userList.filter((user) => {
-          return user.fullName.normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase().includes(this.filter.normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase())
+          return (user.lastName + ' ' + user.firstName).normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase().includes(this.filter.normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase())
         })
         : []
     },

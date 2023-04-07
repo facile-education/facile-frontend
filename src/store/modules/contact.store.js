@@ -1,13 +1,6 @@
 import contactService from '@/api/contact.service'
 import groupsService from '@/api/groups.service'
-
-const addContactFieldsToUserList = (userList) => {
-  // Set user contact attributes
-  userList.forEach((user) => {
-    user.text = user.lastName + ' ' + user.firstName
-    user.id = user.userId
-  })
-}
+import { addContactFieldsToContactList } from '@utils/contacts.utils'
 
 export const state = {
   userList: undefined,
@@ -69,7 +62,7 @@ export const actions = {
 
       if (data.success) {
         commit('setError', undefined)
-        addContactFieldsToUserList(data.users)
+        addContactFieldsToContactList(data.users)
         commit('setUserList', data.users)
       } else {
         commit('setError', true)
@@ -83,7 +76,7 @@ export const actions = {
 
       if (data.success) {
         commit('setError', undefined)
-        addContactFieldsToUserList(data.members)
+        addContactFieldsToContactList(data.members)
         commit('setUserList', data.members)
       } else {
         commit('setError', true)
@@ -96,7 +89,7 @@ export const actions = {
       commit('setIsLoadingUsers', false)
 
       if (data.success) {
-        addContactFieldsToUserList(data.users)
+        addContactFieldsToContactList(data.users)
         commit('setUserList', data.users)
       } else {
         commit('setError', true)
@@ -109,7 +102,7 @@ export const actions = {
       commit('setIsLoadingUsers', false)
 
       if (data.success) {
-        addContactFieldsToUserList(data.users)
+        addContactFieldsToContactList(data.users)
         commit('setUserList', data.users)
       } else {
         commit('setError', true)
@@ -125,7 +118,7 @@ export const actions = {
 
       if (data.success) {
         commit('setError', undefined)
-        addContactFieldsToUserList(data.users)
+        addContactFieldsToContactList(data.users)
         commit('setUserList', data.users)
       } else {
         commit('setError', true)
