@@ -12,7 +12,7 @@ export const state = {
 
 export const mutations = {
   reset (state) {
-    state.userList = []
+    state.userList = undefined
     state.isLoadingUsers = false
     state.error = undefined
     state.isMobileUserListDisplayed = false
