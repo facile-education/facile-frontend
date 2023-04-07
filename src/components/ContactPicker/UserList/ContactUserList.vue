@@ -50,6 +50,7 @@
 import ContactUserListHeader from '@components/ContactPicker/UserList/ContactUserListHeader.vue'
 import ContactUserListItem from '@components/ContactPicker/UserList/ContactUserListItem.vue'
 import PentilaUtils from 'pentila-utils'
+import { getFullName } from '@utils/commons.util'
 
 export default {
   name: 'ContactUserList',
@@ -87,7 +88,7 @@ export default {
     filteredUserList () {
       return this.userList
         ? this.userList.filter((user) => {
-          return (user.lastName + ' ' + user.firstName).normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase().includes(this.filter.normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase())
+          return getFullName(user).normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase().includes(this.filter.normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase())
         })
         : []
     },

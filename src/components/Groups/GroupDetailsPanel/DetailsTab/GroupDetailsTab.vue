@@ -88,6 +88,7 @@
 <script>
 import dayjs from 'dayjs'
 import { getCommunityMembers } from '@/api/groups.service'
+import { addContactFieldsToContactList } from '@utils/contacts.utils'
 import MemberPack from '@components/Groups/GroupDetailsPanel/DetailsTab/MemberPack'
 
 export default {
@@ -140,6 +141,7 @@ export default {
         this.memberLoading = false
         if (data.success) {
           this.members = data.members
+          addContactFieldsToContactList(data.members)
           this.adminMembers.length = 0
           this.teachersMembers.length = 0
           this.studentMembers.length = 0

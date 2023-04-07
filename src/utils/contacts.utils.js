@@ -1,3 +1,5 @@
+import { getFullName } from '@utils/commons.util'
+
 const CONTACT_TYPE_USER = 1
 const CONTACT_TYPE_ORG = 2
 const CONTACT_TYPE_GROUP = 3
@@ -7,7 +9,7 @@ const addContactFieldsToContactList = (contactList) => {
   contactList.forEach((contact) => {
     switch (contact.type) {
       case CONTACT_TYPE_USER:
-        contact.text = contact.lastName + ' ' + contact.firstName
+        contact.text = getFullName(contact)
         if (contact.roles) {
           contact.text += ' (' + contact.roles
           if (contact.subjects) {

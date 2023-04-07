@@ -77,6 +77,10 @@ function getExtensionFromName (fileName) {
   return parts[parts.length - 1]
 }
 
+function getFullName (user) {
+  return user.lastName + ' ' + user.firstName
+}
+
 /**
  * Compare entities on fields 'name', 'size', 'lastModifiedDate', 'creationDate', 'date' or 'deleteDate'
  **/
@@ -121,5 +125,6 @@ export {
   formatSize,
   fileNameWithoutExtension,
   getExtensionFromName,
-  compare
+  compare,
+  getFullName
 }

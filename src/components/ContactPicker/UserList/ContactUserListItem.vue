@@ -2,7 +2,7 @@
   <li>
     <button @click="toggleUser">
       <span>
-        {{ user.lastName + ' ' + user.firstName }}
+        {{ getFullName(user) }}
       </span>
       <img
         v-if="!isSelected"
@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import { getFullName } from '@utils/commons.util'
+
 export default {
   name: 'ContactUserListItem',
   props: {
@@ -38,6 +40,9 @@ export default {
     }
   },
   methods: {
+    getFullName (user) {
+      return getFullName(user)
+    },
     toggleUser () {
       if (this.isSelected) {
         this.$emit('removeContact', this.user)
