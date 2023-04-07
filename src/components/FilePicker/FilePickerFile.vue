@@ -1,10 +1,10 @@
 <template>
-  <div
+  <button
     class="file"
     :class="{'selected': isSelected, 'dark': dark, 'grayed': grayed}"
     @click="fileClicked"
   >
-    <div class="icon-container">
+    <span class="icon-container">
       <img
         v-if="fileIconIsImage"
         class="img-icon"
@@ -17,11 +17,11 @@
         :class="{'selected': isSelected}"
         :name="[iconPrefix, icon]"
       />
-    </div>
-    <div class="name">
+    </span>
+    <span class="name">
       {{ file.name }}
-    </div>
-  </div>
+    </span>
+  </button>
 </template>
 
 <script>
@@ -76,8 +76,17 @@ export default {
 <style lang="scss" scoped>
 @import '@design';
 
-.file {
+button {
+  cursor: pointer;
+  background-color: transparent;
+  border-radius: 0;
   margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.file {
+  width: 100%;
   display: flex;
   align-items: center;
   cursor: pointer;
