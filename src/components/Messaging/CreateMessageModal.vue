@@ -508,7 +508,8 @@ export default {
 .create-message-modal {
   .ck-editor {
     p {
-      margin: 0;
+      margin: 5px 0;
+      line-height: 1.25rem;
     }
   }
 
