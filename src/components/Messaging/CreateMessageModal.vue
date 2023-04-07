@@ -501,13 +501,22 @@ export default {
   overflow-y: auto;
 }
 
-.phone .window-container .window-body.full-screen {
+.create-message-modal.phone .window-container .window-body.full-screen {
   max-height: 80vh;
 }
 
-.ck-editor__editable {
-  min-height: 15rem;
+.create-message-modal {
+  .ck-editor {
+    p {
+      margin: 0;
+    }
+  }
+
+  .ck-editor__editable {
+    min-height: 15rem;
+  }
 }
+
 </style>
 
 <style lang="scss" scoped>
@@ -530,6 +539,10 @@ export default {
     justify-content: space-between;
     align-items: center;
     position: relative;
+
+    .create-button {
+      margin-left: 1em;
+    }
   }
 
   .recipients {
