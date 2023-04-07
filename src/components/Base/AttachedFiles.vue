@@ -7,7 +7,7 @@
       {{ attachedFiles.length + (attachedFiles.length > 1 ? $t('attachedFiles') : $t('attachedFile')) }}
     </div>
     <div class="file-list">
-      <div
+      <button
         v-for="attachedFile in attachedFiles"
         :key="attachedFile.fileId"
         :title="viewFileName(attachedFile)"
@@ -18,10 +18,10 @@
           class="file-icon"
           :file="attachedFile"
         />
-        <p class="file-name">
+        <span class="file-name">
           {{ attachedFile.name }}
-        </p>
-        <div
+        </span>
+        <button
           v-if="!readOnly"
           class="file-actions"
         >
@@ -32,27 +32,31 @@
             :title="$t('AttachedFiles.remove')"
             @click.stop="removeAttachedFile(attachedFile)"
           >
-        </div>
-        <div
+        </button>
+        <span
           v-else
           class="file-actions"
         >
-          <img
-            class="file-action add-to-folder"
-            src="@assets/add_to_folder.svg"
-            :alt="$t('addToFolder')"
-            :title="$t('addToFolder')"
-            @click.stop="addToMyDocs(attachedFile)"
-          >
-          <img
-            class="file-action"
-            src="@assets/attached_file_download.svg"
-            :alt="$t('download')"
-            :title="$t('download')"
-            @click.stop="downloadAttachedFile(attachedFile)"
-          >
-        </div>
-      </div>
+          <button>
+            <img
+              class="file-action add-to-folder"
+              src="@assets/add_to_folder.svg"
+              :alt="$t('addToFolder')"
+              :title="$t('addToFolder')"
+              @click.stop="addToMyDocs(attachedFile)"
+            >
+          </button>
+          <button>
+            <img
+              class="file-action"
+              src="@assets/attached_file_download.svg"
+              :alt="$t('download')"
+              :title="$t('download')"
+              @click.stop="downloadAttachedFile(attachedFile)"
+            >
+          </button>
+        </span>
+      </button>
     </div>
   </div>
 
@@ -125,6 +129,15 @@ export default {
 <style lang="scss" scoped>
 @import '@design';
 
+button {
+  cursor: pointer;
+  background-color: transparent;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
 .attached-files {
   margin-bottom: 10px;
 
@@ -161,7 +174,7 @@ export default {
         margin-left: 10px;
       }
 
-      p {
+      .file-name {
         margin-left: 10px;
         margin-right: 10px;
         max-width: 300px;
