@@ -394,7 +394,7 @@ export default {
   .icons {
     width: var(--icons-width);
     padding-top: 17px;
-    padding-bottom: 10px;
+    padding-bottom: 7px;
     min-width: var(--icons-width);
     display: flex;
     flex-direction: column;
@@ -428,7 +428,7 @@ export default {
   .body {
     display: flex;
     flex-direction: column;
-    padding: 10px 10px 10px 0;
+    padding: 10px 10px 7px 0;
     width: calc(100% - var(--icons-width));
 
     p {
@@ -439,13 +439,15 @@ export default {
       width: 100%;
       height: 20px;
       display: flex;
-      margin-bottom: 5px;
       justify-content: space-between;
+      align-items: center;
       .sender {
         overflow-x: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
         font-weight: bold;
+        font-size: 1.07rem;
+        line-height: 1.1rem;
       }
       .sendDate {
         white-space: nowrap;
@@ -459,7 +461,7 @@ export default {
       min-width: 0;
       height: 20px;
       display: flex;
-      margin-bottom: 5px;
+      margin: 0;
       justify-content: space-between;
 
       p{
@@ -521,7 +523,18 @@ export default {
       }
     }
   }
+
+  &:not(.theme-background-color) {
+    .body {
+      .line3 {
+        p {
+          color: $color-new-light-text;
+        }
+      }
+    }
+  }
 }
+
 .expanded {
   border-bottom: none;
 }
