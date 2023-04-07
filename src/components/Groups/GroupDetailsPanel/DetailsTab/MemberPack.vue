@@ -52,7 +52,7 @@ export default {
   },
   computed: {
     sortedMemberList () {
-      return PentilaUtils.Array.sortWithString(this.memberList, false, 'userName')
+      return PentilaUtils.Array.sortWithString(this.memberList, false, 'text')
     }
   },
   methods: {
