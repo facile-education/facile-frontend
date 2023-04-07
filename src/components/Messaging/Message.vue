@@ -194,18 +194,19 @@ export default {
   .message-content {
     padding: 10px 10px 10px 10px;
     p {
-      margin: 0;
+      margin: 5px 0;
+      line-height: 1.25rem;
       width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
 
     p ::v-deep p {
-      margin: 0;
+      margin: 5px 0;
+      line-height: 1.25rem;
     }
 
     p ::v-deep figure {
-      margin: 0;
+      margin: 5px 0;
+      line-height: 1.25rem;
     }
   }
 }
