@@ -1,6 +1,7 @@
 import messageService from '@/api/messaging/message.service'
 import messagingConstants from '@/constants/messagingConstants'
 import store from '@store/index.js'
+import i18n from '@/i18n'
 import _ from 'lodash'
 
 const MessagingUtils = {
@@ -153,7 +154,7 @@ const MessagingUtils = {
   shortRecipientList (message) {
     const nbRecipients = message.recipients.length
     if (nbRecipients === 0) {
-      return ''
+      return i18n.global.t('Messaging.noRecipient')
     }
     let shortRecipients = 'À: ' + message.recipients[0].text
     if (nbRecipients === 2) {
