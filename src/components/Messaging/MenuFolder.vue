@@ -29,7 +29,7 @@
       </span>
 
       <span class="folder-name">
-        {{ currentFolder.folderName }}
+        {{ folder.folderName + (folder.nbUnread > 0 ? ' (' +folder.nbUnread + ')' : '') }}
       </span>
 
       <span
