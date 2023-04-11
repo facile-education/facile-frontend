@@ -32,15 +32,23 @@ export const state = {
 }
 
 // Defined outside of mutations because of recursion
-const doActionInPersonalFolder = (action, folderList, personalFolder, subFolder = undefined) => {
+const doActionInPersonalFolder = (store, action, folderList, state, personalFolder, subFolder = undefined) => {
   for (let i = 0; i < folderList.length; ++i) {
     if (folderList[i].folderId === personalFolder.folderId) {
       switch (action) {
         case 'delete':
           folderList.splice(i, 1)
+          // Update currentFolder Object if concern
+          if (personalFolder.folderId === state.currentFolder.folderId) {
+            store.dispatch('messaging/selectFolder', state.messagingFolders[0])
+          }
           break
         case 'update': {
           folderList.splice(i, 1, personalFolder)
+          // Update currentFolder Object if concern
+          if (personalFolder.folderId === state.currentFolder.folderId) {
+            state.currentFolder = personalFolder
+          }
           break
         }
         case 'addSubFolder': {
@@ -50,7 +58,7 @@ const doActionInPersonalFolder = (action, folderList, personalFolder, subFolder 
       }
       break
     } else {
-      doActionInPersonalFolder(action, folderList[i].subFolders, personalFolder, subFolder)
+      doActionInPersonalFolder(store, action, folderList[i].subFolders, state, personalFolder, subFolder)
     }
   }
 }
@@ -69,13 +77,13 @@ export const mutations = {
     state.messagingFolders.push(folder)
   },
   deletePersonalFolder (state, folderToDelete) {
-    doActionInPersonalFolder('delete', state.messagingFolders, folderToDelete)
+    doActionInPersonalFolder(this, 'delete', state.messagingFolders, state, folderToDelete)
   },
   updatePersonalFolder (state, folderToUpdate) {
-    doActionInPersonalFolder('update', state.messagingFolders, folderToUpdate)
+    doActionInPersonalFolder(this, 'update', state.messagingFolders, state, folderToUpdate)
   },
   addSubFolder (state, { personalFolder, subFolder }) {
-    doActionInPersonalFolder('addSubFolder', state.messagingFolders, personalFolder, subFolder)
+    doActionInPersonalFolder(this, 'addSubFolder', state.messagingFolders, state, personalFolder, subFolder)
   },
   updateStartIndex (state, payload) {
     state.startIndex = payload
