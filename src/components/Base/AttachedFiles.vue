@@ -24,35 +24,37 @@
         <button
           v-if="!readOnly"
           class="file-actions"
+          :title="$t('AttachedFiles.remove')"
+          @click.stop="removeAttachedFile(attachedFile)"
         >
           <img
             class="file-action cross"
             src="@assets/big-cross-black.svg"
             :alt="$t('AttachedFiles.remove')"
-            :title="$t('AttachedFiles.remove')"
-            @click.stop="removeAttachedFile(attachedFile)"
           >
         </button>
         <span
           v-else
           class="file-actions"
         >
-          <button>
+          <button
+            :title="$t('addToFolder')"
+            @click.stop="addToMyDocs(attachedFile, $event)"
+          >
             <img
               class="file-action add-to-folder"
               src="@assets/add_to_folder.svg"
               :alt="$t('addToFolder')"
-              :title="$t('addToFolder')"
-              @click.stop="addToMyDocs(attachedFile)"
             >
           </button>
-          <button>
+          <button
+            :title="$t('download')"
+            @click.stop="downloadAttachedFile(attachedFile)"
+          >
             <img
               class="file-action"
               src="@assets/attached_file_download.svg"
               :alt="$t('download')"
-              :title="$t('download')"
-              @click.stop="downloadAttachedFile(attachedFile)"
             >
           </button>
         </span>
@@ -101,8 +103,8 @@ export default {
     }
   },
   methods: {
-    removeAttachedFile (e, attachedFile) {
-      this.$emit('removeAttachedFile', e, attachedFile)
+    removeAttachedFile (attachedFile) {
+      this.$emit('removeAttachedFile', attachedFile)
     },
     downloadAttachedFile (attachedFile) {
       if (this.readOnly) {
