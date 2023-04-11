@@ -214,6 +214,7 @@
     "multiThreads": " fils de discussion sélectionnés",
     "markAsRead": "@:ContextMenuOptions.markAsRead",
     "markAsUnread": "@:ContextMenuOptions.markAsUnread",
+    "multiSelection": "Sélection multiple",
     "OtherRecipient": "et un autre",
     "OtherRecipient1": "et ",
     "OtherRecipient2": " autres",
