@@ -174,9 +174,10 @@ export default {
   --thread-details-min-width: 300px;
 
   .create-button {
-    position: absolute;
-    bottom: 2em;
-    right: 1em;
+    position: fixed;
+    bottom: 33px;
+    right: 17px;
+    font-size: 3em;
   }
 
   .menu-panel {
