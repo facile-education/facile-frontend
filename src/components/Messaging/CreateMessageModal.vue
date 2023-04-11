@@ -517,6 +517,16 @@ export default {
   }
 }
 
+@supports(height: 100dvh) {
+  :not(.phone).create-message-modal.modal-mask .window-container .window-body {
+    max-height: 70dvh;
+  }
+
+  .create-message-modal.phone .window-container .window-body.full-screen {
+    max-height: 80dvh;
+  }
+}
+
 </style>
 
 <style lang="scss" scoped>
