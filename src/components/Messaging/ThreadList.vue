@@ -71,8 +71,6 @@
         />
       </div>
     </div>
-
-    <ThreadListOptions v-if="mq.phone || mq.tablet" />
   </section>
 </template>
 
@@ -87,7 +85,6 @@ import _ from 'lodash'
 import utils from '@utils/utils'
 import ThreadListHeader from '@components/Messaging/ThreadListHeader'
 import IconOption from '@components/Base/IconOption'
-import ThreadListOptions from '@components/Messaging/ThreadListOptions'
 import NeroIcon from '@components/Nero/NeroIcon.vue'
 
 let mouseY = 0
@@ -99,7 +96,6 @@ export default {
   name: 'ThreadList',
   components: {
     NeroIcon,
-    ThreadListOptions,
     IconOption,
     ThreadListHeader,
     Thread,
@@ -380,7 +376,7 @@ export default {
 
     .thread-list {
       position: relative;
-      height: calc(100% - (#{$messaging-mobile-header-height} + #{$messaging-mobile-footer-height} + 2px));
+      height: calc(100% - (#{$messaging-mobile-header-height} + 2px));
       border: none;
     }
 

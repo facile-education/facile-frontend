@@ -1,23 +1,10 @@
 <template>
   <div
-    v-if="!isMultiSelectionActive"
     class="thread-list-options"
     :class="{'phone': mq.phone || mq.tablet}"
   >
-    <!-- Display unread messages only toggle -->
-    <IconOption
-      v-if="mq.phone || mq.tablet"
-      class="button"
-      :icon="unreadOnly ? require('@/assets/options/icon_unread_filter_active.svg') : require('@/assets/options/icon_unread_filter.svg')"
-      :title="unreadOnly ? $t('all') : $t('Messaging.unreadOnly')"
-      name="toggleUnreadOnly"
-      icon-height="20px"
-      :alt="$t('unreadOnly')"
-      @click="toggleUnreadOnly"
-    />
-
     <ul class="buttons">
-      <li>
+      <li v-if="!mq.tablet && !mq.phone">
         <IconOption
           class="button"
           :icon="require('@assets/icon_engrenage.svg')"
@@ -28,9 +15,8 @@
           @click="openParametersModal"
         />
       </li>
-      <li>
+      <li v-if="!mq.tablet && !mq.phone">
         <IconOption
-          v-if="!mq.tablet && !mq.phone"
           class="button"
           :icon="require('@/assets/options/icon_menu_lateral.svg')"
           :title="isMenuPanelDisplayed ? $t('hideMenuPanel') : $t('displayMenuPanel')"
@@ -40,9 +26,8 @@
           @click="toggleSideMenuPanel"
         />
       </li>
-      <li>
+      <li v-if="!mq.tablet && !mq.phone">
         <IconOption
-          v-if="!mq.tablet && !mq.phone"
           class="button"
           :icon="require('@/assets/options/icon_refresh.svg')"
           :title="$t('refresh')"
@@ -52,9 +37,30 @@
           @click="refresh"
         />
       </li>
-      <li>
+      <li v-if="mq.tablet || mq.phone">
         <IconOption
-          v-if="(!mq.tablet && !mq.phone)"
+          class="button"
+          :icon="require('@assets/icon_list.svg')"
+          :title="$t('Messaging.multiSelection')"
+          name="toggleMultiSelection"
+          icon-height="15px"
+          :alt="$t('toggle multiselection')"
+          @click="toggleMultiSelection"
+        />
+      </li>
+      <li v-if="mq.tablet || mq.phone">
+        <IconOption
+          v-if="selectedThreads.length > 0"
+          class="button"
+          :icon="require('@/assets/icons/vertical_dots.svg')"
+          title="options"
+          name="options"
+          icon-height="18px"
+          :alt="$t('unreadOnly')"
+          @click.stop="displayThreadOptions"
+        />
+        <IconOption
+          v-else
           class="button"
           :icon="unreadOnly ? require('@/assets/options/icon_unread_filter_active.svg') : require('@/assets/options/icon_unread_filter.svg')"
           :title="unreadOnly ? $t('all') : $t('Messaging.unreadOnly')"
@@ -67,26 +73,15 @@
     </ul>
   </div>
 
-  <div
-    v-else
-    class="thread-list-options"
-    :class="{'phone': mq.phone || mq.tablet}"
+  <teleport
+    v-if="isAContextMenuDisplayed && isThreadOptionsDisplayed"
+    to="body"
   >
-    <span
-      v-t="'mark'"
-      @click="displayMarkerSelection"
+    <ContextMenu
+      @chooseOption="performChosenOption"
+      @close="isThreadOptionsDisplayed=false"
     />
-    <span
-      v-t="'trash'"
-      @click="deleteSelectedThreads"
-    />
-  </div>
-
-  <ContextMenu
-    v-if="isAContextMenuDisplayed && isMarkerSelectionDisplayed"
-    @chooseOption="performChosenOption"
-    @close="closeMarkerSelection"
-  />
+  </teleport>
 </template>
 
 <script>
@@ -101,7 +96,7 @@ export default {
   inject: ['mq'],
   data () {
     return {
-      isMarkerSelectionDisplayed: false
+      isThreadOptionsDisplayed: false
     }
   },
   computed: {
@@ -143,13 +138,13 @@ export default {
     toggleMultiSelection () {
       this.$store.dispatch('messaging/toggleMultiSelection')
     },
-    displayMarkerSelection (event) {
+    displayThreadOptions (event) {
       if (!this.isAContextMenuDisplayed) {
-        this.isMarkerSelectionDisplayed = true
+        this.isThreadOptionsDisplayed = true
         this.$store.dispatch('contextMenu/openContextMenu',
           {
             event: event,
-            options: contextMenus.messagingMarkerMenu
+            options: contextMenus.messagingThreadsOptions
           })
       }
     },
@@ -157,17 +152,24 @@ export default {
       switch (option.name) {
         case 'markAsRead':
           messagingUtils.markMessagesAsReadUnread(this.selectedThreads.map(t => t.mainMessageId), true)
+          this.toggleMultiSelection()
+          this.isThreadOptionsDisplayed = false
           break
         case 'markAsUnread':
           messagingUtils.markMessagesAsReadUnread(this.selectedThreads.map(t => t.mainMessageId), false)
+          this.toggleMultiSelection()
+          this.isThreadOptionsDisplayed = false
           break
+        case 'delete':
+          this.deleteSelectedThreads()
+          this.isThreadOptionsDisplayed = false
+          break
+        default:
+          console.error('no option with name ' + option.name + ' exists')
       }
       this.closeMarkerSelection()
       this.$store.dispatch('contextMenu/closeMenus')
       this.toggleMultiSelection()
-    },
-    closeMarkerSelection () {
-      this.isMarkerSelectionDisplayed = false
     },
     deleteSelectedThreads () {
       messagingUtils.deleteSelectedThreads().then(() => {
@@ -202,7 +204,6 @@ button {
 
 .thread-list-options {
   padding-left: 0;
-  height: $messaging-mobile-footer-height;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -215,16 +216,6 @@ button {
 
     .button {
       margin: 0 5px;
-    }
-  }
-
-  &.phone {
-    padding: 0 20px;
-    height: $messaging-mobile-footer-height;
-    background-color: $color-messaging-bg;
-
-    .buttons {
-      opacity: 100%;
     }
   }
 }

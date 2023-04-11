@@ -51,7 +51,7 @@ const contextMenus = {
       hasSeparator: false
     }
   ],
-  messagingMarkerMenu: [
+  messagingThreadsOptions: [
     {
       name: 'markAsRead',
       title: i18n.global.t('Messaging.markAsRead'),
@@ -62,6 +62,12 @@ const contextMenus = {
       name: 'markAsUnread',
       title: i18n.global.t('Messaging.markAsUnread'),
       position: 1,
+      hasSeparator: true
+    },
+    {
+      name: 'delete',
+      title: i18n.global.t('Messaging.deleteMessage'),
+      position: 2,
       hasSeparator: false
     }
   ],

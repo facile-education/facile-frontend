@@ -21,7 +21,10 @@
         :title="currentFolder && currentFolder.type === 5 ? currentFolderName : ''"
       >
         <p>{{ formattedCurrentFolderName }}</p>
-        <div class="counts">
+        <div
+          v-if="!mq.phone && !mq.tablet"
+          class="counts"
+        >
           <span
             v-if="isReadOnlyToggled"
             class="nb-messages"
@@ -40,17 +43,9 @@
           >{{ $tc('unRead', nbUnread) }}</span>
         </div>
       </div>
-
-      <img
-        v-if="(mq.phone || mq.tablet) && isThreadsDisplayed"
-        class="toggle-multi-selection"
-        src="@assets/icon_list.svg"
-        alt="toggle multi-selection"
-        @click="toggleMultiSelection"
-      >
     </div>
 
-    <ThreadListOptions v-if="!mq.phone && !mq.tablet" />
+    <ThreadListOptions />
   </div>
 </template>
 
@@ -108,9 +103,6 @@ export default {
   methods: {
     toggleSideMenuPanel () {
       this.$store.dispatch('messaging/toggleSideMenuPanel')
-    },
-    toggleMultiSelection () {
-      this.$store.dispatch('messaging/toggleMultiSelection')
     }
   }
 }
@@ -170,13 +162,11 @@ export default {
   }
 
   &.phone {
-    display: block;
-    padding: 0 20px;
+    padding-left: 20px;
     height: $messaging-mobile-header-height;
 
     .header-label {
       justify-content: space-between;
-      position: relative;
       height: 60px;
 
       .open-menu {
