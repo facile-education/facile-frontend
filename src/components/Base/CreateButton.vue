@@ -12,7 +12,7 @@ export default {
 
 <style lang="scss" scoped>
 button {
-  --size: 33px;
+  --size: 50px;
   height: var(--size);
   width: var(--size);
   border-radius: 50%;
