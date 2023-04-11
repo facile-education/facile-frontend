@@ -32,7 +32,7 @@ export const state = {
 }
 
 // Defined outside of mutations because of recursion
-const doActionInPersonalFolder = (store, action, folderList, state, personalFolder, subFolder = undefined) => {
+const doActionInPersonalFolder = (store, action, folderList, state, personalFolder, payload = undefined) => {
   for (let i = 0; i < folderList.length; ++i) {
     if (folderList[i].folderId === personalFolder.folderId) {
       switch (action) {
@@ -43,22 +43,26 @@ const doActionInPersonalFolder = (store, action, folderList, state, personalFold
             store.dispatch('messaging/selectFolder', state.messagingFolders[0])
           }
           break
-        case 'update': {
+        case 'update':
           folderList.splice(i, 1, personalFolder)
           // Update currentFolder Object if concern
           if (personalFolder.folderId === state.currentFolder.folderId) {
             state.currentFolder = personalFolder
           }
           break
-        }
-        case 'addSubFolder': {
-          folderList[i].subFolders.splice(0, 0, subFolder)
+        case 'addSubFolder':
+          folderList[i].subFolders.splice(0, 0, payload)
           break
-        }
+        case 'setNbUnread':
+          folderList[i].nbUnread = payload
+          break
+        case 'setNbMessages':
+          folderList[i].nbMessages = payload
+          break
       }
       break
     } else {
-      doActionInPersonalFolder(store, action, folderList[i].subFolders, state, personalFolder, subFolder)
+      doActionInPersonalFolder(store, action, folderList[i].subFolders, state, personalFolder, payload)
     }
   }
 }
@@ -172,18 +176,10 @@ export const mutations = {
     state.isMultiSelectionActive = !state.isMultiSelectionActive
   },
   setNbUnread (state, payload) {
-    for (const folder of state.messagingFolders) {
-      if (folder.folderId === payload.folderId) {
-        folder.nbUnread = payload.nbUnread
-      }
-    }
+    doActionInPersonalFolder(this, 'setNbUnread', state.messagingFolders, state, { folderId: payload.folderId }, payload.nbUnread)
   },
   setNbMessages (state, { folderId, nbMessages }) {
-    for (const folder of state.messagingFolders) {
-      if (folder.folderId === folderId) {
-        folder.nbMessages = nbMessages
-      }
-    }
+    doActionInPersonalFolder(this, 'setNbMessages', state.messagingFolders, state, { folderId: folderId }, nbMessages)
   },
   markMessagesAsRead (state, messageIds) {
     // Change status of both messages which belongs to threads[] and currentThreadMessages[] arrays
@@ -314,7 +310,6 @@ export const actions = {
     }
     if (folder.folderId && !state.displayMessageFromRouting) {
       this.dispatch('messaging/getThreads', { folderId: folder.folderId })
-      this.dispatch('messaging/updateNbUnread', folder.folderId)
     }
   },
   loadMessagingFolders ({ commit }, noSelection) {
@@ -392,6 +387,7 @@ export const actions = {
           } else {
             commit('addToThreadList', data.threads)
           }
+          this.dispatch('messaging/updateNbUnread', folderId)
           resolve({ threads: data.threads })
         } else {
           commit('setLoadingThreadsError', 'loading')
