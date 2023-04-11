@@ -264,6 +264,7 @@ export default {
   },
   methods: {
     hideDetails () {
+      this.$store.dispatch('messaging/setSelectedThreads', [])
       this.$store.dispatch('messaging/hideDetailPanel')
     },
     editDraft () {
