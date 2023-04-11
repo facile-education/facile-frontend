@@ -210,8 +210,8 @@ export default {
       }
       this.$emit('updateSelectedFiles', this.selectedFiles)
     },
-    clickOnFolder (folder) {
-      if (this.folderSelection && !this.mq.phone && !this.mq.tablet) { // On phone and tablet, we need to navigate on simple click
+    clickOnFolder (folder, e) {
+      if (this.folderSelection && !this.mq.phone && !this.mq.tablet && (e.pointerType === 'mouse' || e.mozInputSource === 1)) { // On phone and tablet, we need to navigate on simple click
         if (this.isFolderSelected(folder)) {
           this.selectedFolder = undefined
           this.$emit('selectedFolder', undefined)

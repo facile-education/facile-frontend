@@ -44,8 +44,8 @@ export default {
     }
   },
   methods: {
-    folderClicked () {
-      this.$emit('folderClicked', this.folder)
+    folderClicked (e) {
+      this.$emit('folderClicked', this.folder, e)
     },
     folderDblClicked () {
       this.$emit('folderDblClicked', this.folder)
