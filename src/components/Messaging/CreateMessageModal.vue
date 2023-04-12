@@ -419,8 +419,13 @@ export default {
             }
           }
           // Refresh thread list if this is a reply, a forward or a draft
-          if (this.messageParameters.isReply || this.messageParameters.isForward || this.messageParameters.isDraft) {
+          if (this.messageParameters.isReply || this.messageParameters.isReplyAll || this.messageParameters.isForward || this.messageParameters.isDraft) {
             this.$store.dispatch('messaging/selectFolder', this.$store.state.messaging.currentFolder)
+          }
+          // Reload messages panel if this is a reply
+          if ((this.messageParameters.isReply || this.messageParameters.isReplyAll) && this.$store.state.messaging.selectedThreads.length === 1) {
+            console.log('select Thread ', this.$store.state.messaging.selectedThreads[0], 'to reload messages thread')
+            messagingUtils.selectThread(this.$store.state.messaging.selectedThreads[0]) // Assume there is one selected thread to respond to a message
           }
           // Refresh thread list if this is a new message and if current folder is sentBox
           if (this.$store.state.messaging.currentFolder.type === constants.messagingSentFolderType) {
