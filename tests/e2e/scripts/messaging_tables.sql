@@ -19,7 +19,6 @@ CREATE TABLE `messaging_message` (
   PRIMARY KEY (`messageId`),
   KEY `IX_F4208ACF` (`folderId`),
   KEY `IX_CC578397` (`folderId`,`isNew`),
-  KEY `IX_C88FD5E2` (`folderId`,`senderName`,`messageSubject`,`messageContent`),
   KEY `IX_15B84E88` (`folderId`,`threadId`),
   KEY `IX_7C5EA58` (`sendMessageId`),
   KEY `IX_DEDA4E6B` (`threadId`)
