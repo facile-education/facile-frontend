@@ -334,7 +334,7 @@ export default {
       if (scroll.scrollTop > oldScrollTop && !this.isDisplayMessageFromRouting) { // if we go down
         const nbPixelsBeforeBottom = scroll.scrollHeight - (scroll.scrollTop + scroll.clientHeight)
 
-        if (nbPixelsBeforeBottom <= 0) {
+        if (nbPixelsBeforeBottom <= 5) {
           if (!this.$store.getters['currentActions/isInProgress']('loadThreads')) {
             this.getNextThreads()
           }
