@@ -247,6 +247,9 @@ export default {
         return 'desktop'
       }
     },
+    isAttachedFileOpen () {
+      return this.$store.state.documents.openFiles.length > 0
+    },
     messageParameters () {
       return this.$store.state.messaging.createMessageParameters
     },
@@ -447,14 +450,16 @@ export default {
       this.onClose()
     },
     onConfirmClose () {
-      // TODO: Save initial recipients and subject to be accurate on drafts
-      if (this.currentContent.contentValue !== this.initialContent.contentValue || this.recipients.length > 0 || this.subject !== '') {
-        this.$store.dispatch('warningModal/addWarning', {
-          text: this.$t('closeWarning'),
-          lastAction: { fct: this.onClose }
-        })
-      } else {
-        this.onClose()
+      if (!this.isFilePickerModalDisplayed && !this.isAttachedFileOpen) {
+        // TODO: Save initial recipients and subject to be accurate on drafts
+        if (this.currentContent.contentValue !== this.initialContent.contentValue || this.recipients.length > 0 || this.subject !== '') {
+          this.$store.dispatch('warningModal/addWarning', {
+            text: this.$t('closeWarning'),
+            lastAction: { fct: this.onClose }
+          })
+        } else {
+          this.onClose()
+        }
       }
     },
     onClose () {
