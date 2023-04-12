@@ -197,16 +197,19 @@ export default {
       margin: 5px 0;
       line-height: 1.25rem;
       width: 100%;
+      overflow-wrap: break-word;
     }
 
     p ::v-deep p {
       margin: 5px 0;
       line-height: 1.25rem;
+      overflow-wrap: break-word;
     }
 
     p ::v-deep figure {
       margin: 5px 0;
       line-height: 1.25rem;
+      overflow-wrap: break-word;
     }
   }
 }
