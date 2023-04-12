@@ -1,5 +1,6 @@
 <template>
   <Layout :is-allowed="true">
+    <h1 :aria-label="$t('Messaging.serviceTitle')" />
     <div
       class="messaging-body"
       :class="{'mobile': mq.phone || mq.tablet, 'tablet': mq.tablet}"
