@@ -35,7 +35,7 @@ describe('Personal folders', () => {
 
       cy.log('Create personal subFolder')
       cy.get('[data-test=personalSubFolder-My\\ second\\ personal\\ folder]').find('[data-test=add]').invoke('show').click()
-      cy.get('input').type('My subFolder')
+      cy.get('input').type('My subFolder', { force: true })
     })
     cy.globalKeyPress('{enter}')
     cy.get('[data-test=messaging-menu]').within(() => {
@@ -59,7 +59,7 @@ describe('Personal folders', () => {
     cy.log('Test folder renaming')
     cy.get('@firstFolderItem').find('[data-test=rename]').invoke('show').click()
     cy.get('[data-test=messaging-menu]').within(() => {
-      cy.get('input').type(' (modified)')
+      cy.get('input').type(' (modified)', { force: true })
     })
     cy.globalKeyPress('{enter}')
     cy.get('[data-test=messaging-menu]').within(() => {

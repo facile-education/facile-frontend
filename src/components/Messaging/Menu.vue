@@ -289,6 +289,10 @@ export default {
       padding-left: 20px;
     }
   }
+
+  &.menu-collapsed {
+    border-right: none;
+  }
 }
 
 ul {
