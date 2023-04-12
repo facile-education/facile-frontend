@@ -11,7 +11,8 @@
         class="main"
         :class="{'theme-background-color': isThreadSelected && !isSubMessageSelected,
                  'theme-light-background-color': (!isThreadSelected || isSubMessageSelected) && isThreadExpanded,
-                 'expanded': isThreadExpanded}"
+                 'expanded': isThreadExpanded,
+                 'selection-mode': isMultiSelectionActive}"
         @click.exact="handleClick()"
         @dblclick="editDraft()"
         @click.ctrl.exact="ctrlSelectThread()"
@@ -359,14 +360,22 @@ export default {
 
 .main {
   --icons-width: 35px;
+  --icons-shrink-width: 30px;
   display: flex;
   width: 100%;
   cursor: pointer;
   transition-property: border-bottom-right-radius, border-bottom-left-radius;
   transition-duration: .3s;
 
+  &.selection-mode {
+    .body {
+      width: calc(100% - var(--icons-width) - var(--icons-shrink-width));
+    }
+  }
+
   .selected-icon {
     width: var(--icons-width);
+    min-width: var(--icons-width);
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -401,8 +410,8 @@ export default {
     align-items: center;
 
     &.shrink {
-      width: 30px;
-      min-width: 30px;
+      width: var(--icons-shrink-width);
+      min-width: var(--icons-shrink-width);
     }
 
     .icon {
