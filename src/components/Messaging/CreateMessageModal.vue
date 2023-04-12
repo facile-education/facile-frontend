@@ -7,7 +7,7 @@
       data-test="createMessageModal"
       class="create-message-modal"
       :class="{'phone': mq.phone}"
-      @close="onClose"
+      @close="onConfirmClose"
       @keydown.exact.escape.stop="onConfirmClose"
     >
       <template #header>
@@ -447,10 +447,15 @@ export default {
       this.onClose()
     },
     onConfirmClose () {
-      this.$store.dispatch('warningModal/addWarning', {
-        text: this.$t('closeWarning'),
-        lastAction: { fct: this.onClose }
-      })
+      // TODO: Save initial recipients and subject to be accurate on drafts
+      if (this.currentContent.contentValue !== this.initialContent.contentValue || this.recipients.length > 0 || this.subject !== '') {
+        this.$store.dispatch('warningModal/addWarning', {
+          text: this.$t('closeWarning'),
+          lastAction: { fct: this.onClose }
+        })
+      } else {
+        this.onClose()
+      }
     },
     onClose () {
       this.$store.dispatch('misc/decreaseModalCount')
