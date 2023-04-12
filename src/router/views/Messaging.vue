@@ -232,7 +232,7 @@ export default {
   &.mobile {
     position: relative;
     overflow: hidden;
-    height: 100vh;
+    height: 100%;
 
     .panel {
       width: 100vw;
@@ -278,19 +278,9 @@ export default {
   }
 
   &.tablet {
-    height: 100vh;
+    height: 100%;
     .panel {
       height: 100%;
-    }
-  }
-
-  @supports(height: 100dvh) {
-    &.mobile {
-      height: 100dvh;
-    }
-
-    &.tablet {
-      height: 100dvh;
     }
   }
 }
