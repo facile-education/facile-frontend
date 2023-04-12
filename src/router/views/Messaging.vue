@@ -174,9 +174,11 @@ export default {
   --thread-details-min-width: 300px;
 
   .create-button {
-    position: fixed;
-    bottom: 33px;
-    right: 17px;
+    position: relative;
+    bottom: 88px;
+    height: 50px;
+    width: 50px;
+    left: calc(100% - 67px);
     font-size: 3em;
   }
 

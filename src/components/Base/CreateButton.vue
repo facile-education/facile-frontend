@@ -12,9 +12,9 @@ export default {
 
 <style lang="scss" scoped>
 button {
-  --size: 50px;
-  height: var(--size);
-  width: var(--size);
+  --size: 33px;
+  height: 33px;
+  width: 33px;
   border-radius: 50%;
   color: white;
   display: flex;
