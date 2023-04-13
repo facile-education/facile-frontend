@@ -15,7 +15,59 @@
       v-else
       class="detailed-announcement"
     >
-      {{ detailedAnnouncement }}
+      <div class="first-line">
+        <div class="thumbnail">
+          <img
+            :src="detailedAnnouncement.thumbnailUrl"
+            alt="thumbnail"
+          >
+        </div>
+
+        <div class="first-line-right">
+          <div class="populations">
+            <div
+              v-t="'populations'"
+              class="label"
+            />
+            <PopulationList :population-list="detailedAnnouncement.populations" />
+          </div>
+
+          <div
+            v-if="detailedAnnouncement.isEditable"
+            class="read-infos"
+          >
+            <div
+              v-t="'readBy'"
+              class="label"
+            />
+            <ReadInfos :read-infos="detailedAnnouncement.readInfos" />
+          </div>
+
+          <div class="publication">
+            {{ $t('at') + detailedAnnouncement.publicationDate + $t('by') + detailedAnnouncement.authorName }}
+          </div>
+
+          <h2> {{ detailedAnnouncement.title }}</h2>
+        </div>
+      </div>
+
+      <div
+        v-if="detailedAnnouncement.content"
+        class="content"
+        v-html="detailedAnnouncement.content"
+      />
+      <div
+        v-else
+        v-t="'contentPlaceholder'"
+        class="content-placeholder"
+      />
+
+      <AttachedFiles
+        v-if="detailedAnnouncement.hasAttachedFiles"
+        :read-only="true"
+        :attached-files="detailedAnnouncement.attachedFiles"
+      />
+
       <div
         v-if="detailedAnnouncement.isEditable"
         class="footer"
@@ -51,10 +103,13 @@
 <script>
 import { getNewsDetails, deleteNews } from '@/api/dashboard/news.service'
 import SaveAnnouncementModal from '@components/Dashboard/Announcements/SaveAnnouncementModal.vue'
+import AttachedFiles from '@components/Base/AttachedFiles.vue'
+import PopulationList from '@components/Dashboard/PopulationList.vue'
+import ReadInfos from '@components/Dashboard/ReadInfos.vue'
 
 export default {
   name: 'AnnouncementDetails',
-  components: { SaveAnnouncementModal },
+  components: { ReadInfos, PopulationList, AttachedFiles, SaveAnnouncementModal },
   props: {
     initAnnouncement: {
       type: Object,
@@ -111,6 +166,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
+
 .placeholder {
   height: 20vh;
   width: 100%;
@@ -118,6 +175,59 @@ export default {
   justify-content: center;
   align-items: center;
   font-size: 1.25em;
+}
+
+.first-line {
+  --thumbnail-width: min(100px, 20vw);
+  display: flex;
+}
+
+.thumbnail{
+  width: var(--thumbnail-width);
+  height: 100%;
+  background-color: green;
+}
+
+.first-line-right {
+  width: calc(100% - var(--thumbnail-width));
+  padding-left: 20px;
+}
+
+.populations {
+}
+
+.populations, .read-infos {
+  display: flex;
+}
+
+.label {
+  min-width: 5em;
+  margin-right: 1rem;
+}
+
+.populations .label {
+  margin-top: 5px;
+}
+
+.publication {
+  margin-top: 1rem;
+  color: $color-new-light-text;
+}
+
+h2 {
+  margin: 0.3em 0;
+}
+
+.content {
+  max-height: 30vh;
+  overflow-y: auto;
+}
+
+.content-placeholder {
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .footer {
@@ -135,9 +245,14 @@ export default {
 
 <i18n locale="fr">
 {
+  "populations": "Diffusé à",
+  "at": "Le ",
+  "by": " par ",
+  "readBy": "Lu par",
   "update": "Modifier",
   "delete": "Supprimer",
   "errorPlaceholder": "Oups, une erreur est survenue...",
+  "contentPlaceholder": "Aucun contenu pour cette annonce",
   "removalConfirmMessage": "L'annonce sera définitivement perdue"
 }
 </i18n>

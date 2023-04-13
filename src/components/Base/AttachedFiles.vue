@@ -203,9 +203,6 @@ button {
       }
     }
   }
-  &:hover {
-    cursor: pointer;
-  }
 }
 </style>
 
