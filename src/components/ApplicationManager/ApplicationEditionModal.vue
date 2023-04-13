@@ -42,21 +42,21 @@
         <!-- App name -->
         <div class="informations">
           <PentilaInput
-            v-model="application.serviceName"
+            v-model="application.applicationName"
             :placeholder="$t('namePlaceholder') + '*'"
             :maxlength="75"
             class="name"
-            @blur="v$.application.serviceName.$touch()"
+            @blur="v$.application.applicationName.$touch()"
           />
-          <PentilaErrorMessage :error-message="formErrorList.serviceName" />
+          <PentilaErrorMessage :error-message="formErrorList.applicationName" />
 
           <PentilaInput
-            v-model="application.serviceKey"
+            v-model="application.applicationKey"
             :placeholder="$t('keyPlaceholder') + '*'"
             :maxlength="75"
-            @blur="v$.application.serviceKey.$touch()"
+            @blur="v$.application.applicationKey.$touch()"
           />
-          <PentilaErrorMessage :error-message="formErrorList.serviceKey" />
+          <PentilaErrorMessage :error-message="formErrorList.applicationKey" />
         </div>
       </div>
 
@@ -99,13 +99,13 @@
           />
         </div>
 
-        <div class="default-portlet">
-          <h5 v-t="'portletLabel'" />
-          <PentilaDropdown
-            v-if="portletList"
-            v-model="selectedPortlet"
-            :list="portletList"
-            display-field="name"
+        <div class="menu-entry">
+          <PentilaInput
+            ref="category"
+            v-model="application.menuEntryId"
+            :placeholder="$t('menuEntryLabel')"
+            :max-lenght="75"
+            type="number"
           />
         </div>
 
@@ -207,8 +207,8 @@ export default {
   },
   validations: {
     application: {
-      serviceName: { required },
-      serviceKey: { required },
+      applicationName: { required },
+      applicationKey: { required },
       category: { required }
     }
   },
@@ -219,13 +219,10 @@ export default {
     formErrorList () {
       const form = this.v$.application
       return {
-        serviceName: (form.serviceName.$invalid && form.serviceName.$dirty) ? this.$t('Commons.formRequired') : '',
-        serviceKey: (form.serviceKey.$invalid && form.serviceKey.$dirty) ? this.$t('Commons.formRequired') : '',
+        applicationName: (form.applicationName.$invalid && form.applicationName.$dirty) ? this.$t('Commons.formRequired') : '',
+        applicationKey: (form.applicationKey.$invalid && form.applicationKey.$dirty) ? this.$t('Commons.formRequired') : '',
         category: (form.category.$invalid && form.category.$dirty) ? this.$t('Commons.formRequired') : ''
       }
-    },
-    portletList () {
-      return this.$store.state.administration.portletList
     },
     roleList () {
       return this.$store.state.administration.roleList
@@ -233,24 +230,9 @@ export default {
     schoolList () {
       return this.$store.state.administration.schoolList
     },
-    selectedPortlet: {
-      get () {
-        if (this.portletList && this.application.portletId) {
-          for (let idx = 0; idx < this.portletList.length; ++idx) {
-            if (this.portletList[idx].portletId === this.application.portletId) {
-              return this.portletList[idx]
-            }
-          }
-        }
-        return undefined
-      },
-      set (value) {
-        this.application.portletId = value.portletId
-      }
-    },
     title () {
       let title = 'addModalTitle'
-      if (this.application && this.application.serviceId) {
+      if (this.application && this.application.applicationId) {
         title = 'editModalTitle'
       }
       return title
@@ -266,9 +248,6 @@ export default {
     }
   },
   created () {
-    if (this.portletList === undefined) {
-      this.$store.dispatch('administration/getPortletList')
-    }
     if (this.roleList === undefined) {
       this.$store.dispatch('administration/getRoleList')
     }
@@ -308,8 +287,8 @@ export default {
       } else {
         this.buildApplicationBeforeSave()
 
-        // Update if serviceId is defined else create new app
-        if (this.application && this.application.serviceId) {
+        // Update if applicationId is defined else create new app
+        if (this.application && this.application.applicationId) {
           this.$store.dispatch('applicationManager/updateApplication', this.application)
         } else {
           const params = {
@@ -449,7 +428,7 @@ h5 {
   "modalSaveButton": "Valider",
   "namePlaceholder": "Nom",
   "noUrlCombobox": "Aucun",
-  "portletLabel": "Portlet",
+  "menuEntryLabel": "Id de menu correspondant",
   "rolesPlaceholder": "Profil(s) par défaut",
   "schoolsPlaceholder": "Filtre d'établissements",
   "urlTypeLabel": "Type de lien"

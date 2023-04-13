@@ -146,7 +146,7 @@ export default {
     }
   },
   created () {
-    this.applicationURL = this.application.serviceUrl
+    this.applicationURL = this.application.applicationUrl
     this.selectedExport = this.exportList[0]
   },
   methods: {
@@ -180,7 +180,7 @@ export default {
       })
     },
     updateURL () {
-      if (this.applicationURL !== this.application.serviceUrl) {
+      if (this.applicationURL !== this.application.applicationUrl) {
         this.$store.dispatch('applicationManager/updateURL', {
           school: this.$store.state.administration.selectedSchool,
           applicationURL: this.applicationURL

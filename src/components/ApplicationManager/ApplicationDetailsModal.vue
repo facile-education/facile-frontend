@@ -5,7 +5,7 @@
     @close="closeModal"
   >
     <template #header>
-      <span>{{ application.serviceName }}</span>
+      <span>{{ application.applicationName }}</span>
     </template>
     <template #body>
       <div class="details">

@@ -12,8 +12,7 @@ export {
   removeApplication,
   updateApplication,
   updateBroadcastScope,
-  updateBroadcast,
-  getAllServices
+  updateBroadcast
 }
 
 export default {
@@ -29,18 +28,18 @@ export default {
   updateBroadcast
 }
 
-const SERVICEMANAGER_PATH = '/gestionApplications-portlet.'
-const SERVICE_CTX = '/'
-const SERVICEBROADCAST_CTX = 'broadcast/'
-const SERVICEBROADCASTRULE_CTX = 'broadcastrule/'
+const APP_MANAGER_PATH = '/application.'
+const APPLICATION_CTX = 'application/'
+const BROADCAST_CTX = 'broadcast/'
+const BROADCASTRULE_CTX = 'broadcastrule/'
 
 function createApplication (application) {
-  return axios.post(constants.JSON_WS_URL + SERVICEMANAGER_PATH + SERVICE_CTX + 'add-service',
+  return axios.post(constants.JSON_WS_URL + APP_MANAGER_PATH + APPLICATION_CTX + 'add-application',
     PentilaUtils.URL.params({
-      serviceName: application.serviceName,
-      serviceKey: application.serviceKey,
+      applicationName: application.applicationName,
+      applicationKey: application.applicationKey,
       category: application.category,
-      portletId: application.portletId,
+      menuEntryId: application.menuEntryId,
       image: application.image,
       hasCustomUrl: application.hasCustomUrl,
       globalUrl: application.globalUrl,
@@ -56,13 +55,13 @@ function createApplication (application) {
 }
 
 function updateApplication (application) {
-  return axios.post(constants.JSON_WS_URL + SERVICEMANAGER_PATH + SERVICE_CTX + 'edit-service',
+  return axios.post(constants.JSON_WS_URL + APP_MANAGER_PATH + APPLICATION_CTX + 'edit-application',
     PentilaUtils.URL.params({
-      serviceId: application.serviceId,
-      serviceName: application.serviceName,
-      serviceKey: application.serviceKey,
+      applicationId: application.applicationId,
+      applicationName: application.applicationName,
+      applicationKey: application.applicationKey,
       category: application.category,
-      portletId: application.portletId,
+      menuEntryId: application.menuEntryId,
       image: application.image,
       hasCustomUrl: application.hasCustomUrl,
       globalUrl: application.globalUrl,
@@ -77,16 +76,16 @@ function updateApplication (application) {
   ).then(response => response.data)
 }
 
-function removeApplication (serviceId) {
-  return axios.get(constants.JSON_WS_URL + SERVICEMANAGER_PATH + SERVICE_CTX + 'remove-service', {
+function removeApplication (applicationId) {
+  return axios.get(constants.JSON_WS_URL + APP_MANAGER_PATH + APPLICATION_CTX + 'remove-application', {
     params: {
-      serviceId
+      applicationId
     }
   }).then(response => response.data)
 }
 
 function getSchoolApplications (schoolId) {
-  return axios.get(constants.JSON_WS_URL + SERVICEMANAGER_PATH + SERVICE_CTX + 'get-school-services', {
+  return axios.get(constants.JSON_WS_URL + APP_MANAGER_PATH + APPLICATION_CTX + 'get-school-applications', {
     params: {
       schoolId
     }
@@ -94,45 +93,45 @@ function getSchoolApplications (schoolId) {
 }
 
 function getAllApplications () {
-  return axios.get(constants.JSON_WS_URL + SERVICEMANAGER_PATH + SERVICE_CTX + 'get-all-services', {
+  return axios.get(constants.JSON_WS_URL + APP_MANAGER_PATH + APPLICATION_CTX + 'get-all-applications', {
     params: {}
   }).then(response => response.data)
 }
 
 function getApplicationBroadcastScope (applicationId, schoolId) {
-  return axios.get(constants.JSON_WS_URL + SERVICEMANAGER_PATH + SERVICEBROADCASTRULE_CTX + 'get-service-rules', {
+  return axios.get(constants.JSON_WS_URL + APP_MANAGER_PATH + BROADCASTRULE_CTX + 'get-application-rules', {
     params: {
-      serviceId: applicationId,
+      applicationId,
       schoolId
     }
   }).then(response => response.data)
 }
 
-function updateBroadcastScope (serviceId, schoolId, rules) {
-  return axios.post(constants.JSON_WS_URL + SERVICEMANAGER_PATH + SERVICEBROADCASTRULE_CTX + 'update-broadcast-rules',
+function updateBroadcastScope (applicationId, schoolId, rules) {
+  return axios.post(constants.JSON_WS_URL + APP_MANAGER_PATH + BROADCASTRULE_CTX + 'update-broadcast-rules',
     PentilaUtils.URL.params({
-      serviceId,
+      applicationId,
       schoolId,
       rules: JSON.stringify(rules)
     })
   ).then(response => response.data)
 }
 
-function updateBroadcast (serviceId, schoolId, isBroadcasted, serviceUrl) {
-  return axios.post(constants.JSON_WS_URL + SERVICEMANAGER_PATH + SERVICEBROADCAST_CTX + 'update-broadcast',
+function updateBroadcast (applicationId, schoolId, isBroadcasted, applicationUrl) {
+  return axios.post(constants.JSON_WS_URL + APP_MANAGER_PATH + BROADCAST_CTX + 'update-broadcast',
     PentilaUtils.URL.params({
-      serviceId,
+      applicationId,
       schoolId,
       isBroadcasted,
-      serviceUrl
+      applicationUrl
     })
   ).then(response => response.data)
 }
 
 function exportApplicationUserList (schoolId, applicationId, roleName) {
-  return axios.get(constants.JSON_WS_URL + SERVICEMANAGER_PATH + SERVICE_CTX + 'export', {
+  return axios.get(constants.JSON_WS_URL + APP_MANAGER_PATH + APPLICATION_CTX + 'export', {
     params: {
-      serviceId: applicationId,
+      applicationId,
       schoolId,
       roleName
     }
@@ -140,13 +139,7 @@ function exportApplicationUserList (schoolId, applicationId, roleName) {
 }
 
 function getUserApplications () {
-  return axios.get(constants.JSON_WS_URL + SERVICEMANAGER_PATH + SERVICE_CTX + 'get-user-services', {
-    params: {}
-  }).then(response => response.data)
-}
-
-function getAllServices () {
-  return axios.get(constants.JSON_WS_URL + SERVICEMANAGER_PATH + SERVICE_CTX + 'get-all-services', {
+  return axios.get(constants.JSON_WS_URL + APP_MANAGER_PATH + APPLICATION_CTX + 'get-user-applications', {
     params: {}
   }).then(response => response.data)
 }

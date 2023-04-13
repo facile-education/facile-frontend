@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { getAllServices } from '@/api/applicationManager.service'
+import { getAllApplications } from '@/api/applicationManager.service'
 import { saveCategory } from '@/api/help.service'
 
 export default {
@@ -64,7 +64,7 @@ export default {
   },
   methods: {
     getServiceList () {
-      getAllServices().then((data) => {
+      getAllApplications().then((data) => {
         if (data.success) {
           this.serviceList = data.services
         } else {

@@ -80,7 +80,9 @@ export default {
     }
   },
   created () {
-    this.ruleList = PentilaUtils.JSON.deepCopy(this.$store.state.applicationManager.selectedApplication.rules)
+    if (this.$store.state.applicationManager.selectedApplication.rules !== undefined) {
+      this.ruleList = PentilaUtils.JSON.deepCopy(this.$store.state.applicationManager.selectedApplication.rules)
+    }
   },
   methods: {
     addScope (rule) {
