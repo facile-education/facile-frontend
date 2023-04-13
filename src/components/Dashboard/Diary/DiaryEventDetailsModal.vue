@@ -13,23 +13,6 @@
         @delete="deleteEvent"
       />
     </template>
-
-    <!--    <template #footer>-->
-    <!--      <PentilaButton-->
-    <!--        v-if="initEvent.isEditable"-->
-    <!--        class="footer-button"-->
-    <!--        data-test="updateButton"-->
-    <!--        :label="$t('update')"-->
-    <!--        @click="updateEvent"-->
-    <!--      />-->
-    <!--      <PentilaButton-->
-    <!--        v-if="initEvent.isEditable"-->
-    <!--        class="footer-button"-->
-    <!--        data-test="deleteButton"-->
-    <!--        :label="$t('delete')"-->
-    <!--        @click="deleteEvent"-->
-    <!--      />-->
-    <!--    </template>-->
   </PentilaWindow>
 </template>
 
@@ -49,9 +32,7 @@ export default {
   emits: ['close', 'update', 'delete'],
   data () {
     return {
-      detailedEvent: undefined,
-      isLoading: false,
-      error: undefined
+      detailedEvent: undefined
     }
   },
   created () {
@@ -73,24 +54,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.placeholder {
-  height: 20vh;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.25em;
-}
 
-.footer-button {
-  margin-left: 15px;
-}
 </style>
-
-<i18n locale="fr">
-{
-  "errorPlaceholder": "Oups, une erreur est survenue...",
-  "update": "Modifier",
-  "delete": "Supprimer"
-}
-</i18n>

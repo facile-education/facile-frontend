@@ -6,68 +6,42 @@
     :draggable="true"
     @close="onClose"
   >
-    <template #header>
-      <span> {{ initAnnouncement.title }} </span>
-    </template>
-
     <template #body>
-      <div
-        v-if="isLoading"
-        class="placeholder"
-      >
-        <PentilaSpinner />
-      </div>
-      <div
-        v-if="error === true"
-        v-t="'errorPlaceholder'"
-        class="placeholder"
+      <AnnouncementDetails
+        :init-announcement="initAnnouncement"
+        @update="updateAnnouncement"
+        @delete="deleteAnnouncement"
       />
-      <div
-        v-else
-        class="detailed-announcement"
-      >
-        {{ detailedAnnouncement }}
-      </div>
     </template>
   </PentilaWindow>
 </template>
 
 <script>
-import { getNewsDetails } from '@/api/dashboard/news.service'
-
+import AnnouncementDetails from '@components/Dashboard/Announcements/AnnouncementDetails.vue'
 export default {
   name: 'AnnouncementDetailsModal',
+  components: { AnnouncementDetails },
   props: {
     initAnnouncement: {
       type: Object,
       default: undefined
     }
   },
-  emits: ['close'],
+  emits: ['close', 'update', 'delete'],
   data () {
     return {
-      detailedAnnouncement: undefined,
-      isLoading: false,
-      error: undefined
+      detailedAnnouncement: undefined
     }
   },
   created () {
     this.$store.dispatch('misc/incrementModalCount')
-    this.getAnnouncementDetails()
   },
   methods: {
-    getAnnouncementDetails () {
-      this.isLoading = true
-      getNewsDetails(this.initAnnouncement.newsId).then((data) => {
-        this.isLoading = false
-        if (data.success) {
-          this.error = false
-          this.detailedAnnouncement = data
-        } else {
-          this.error = true
-          console.error('Error while getting announcement details')
-        }
-      })
+    updateAnnouncement () {
+      this.$emit('update')
+    },
+    deleteAnnouncement () {
+      this.$emit('delete')
     },
     onClose () {
       this.$store.dispatch('misc/decreaseModalCount')
@@ -78,18 +52,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.placeholder {
-  height: 20vh;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.25em;
-}
 </style>
-
-<i18n locale="fr">
-{
-  "errorPlaceholder": "Oups, une erreur est survenue..."
-}
-</i18n>
