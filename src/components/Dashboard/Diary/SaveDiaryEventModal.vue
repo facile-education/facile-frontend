@@ -277,10 +277,10 @@ export default {
           const schools = data.schoolsGroups
           schools.forEach((school) => {
             this.availablePopulationsList = [...this.availablePopulationsList, ...school.populations]
-            school.Classes.forEach((schoolClass) => {
+            school.classes.forEach((schoolClass) => {
               this.availablePopulationsList = [...this.availablePopulationsList, ...schoolClass.populations]
             })
-            school.Volees.forEach((schoolVolee) => {
+            school.volees.forEach((schoolVolee) => {
               this.availablePopulationsList = [...this.availablePopulationsList, ...schoolVolee.populations]
             })
           })
