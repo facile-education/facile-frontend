@@ -36,7 +36,7 @@
         />
       </div>
       <p class="name">
-        {{ application.serviceName }}
+        {{ application.applicationName }}
       </p>
     </div>
     <teleport to="body">

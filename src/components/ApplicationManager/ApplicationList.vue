@@ -2,7 +2,7 @@
   <div>
     <ApplicationItem
       v-for="application in sortedApplicationList"
-      :key="application.serviceId"
+      :key="application.applicationId"
       :application="application"
     />
   </div>
@@ -36,7 +36,7 @@ export default {
       return applicationList
     },
     sortedApplicationList () {
-      return PentilaUtils.Array.sortWithString(this.applicationList, false, 'serviceName')
+      return PentilaUtils.Array.sortWithString(this.applicationList, false, 'applicationName')
     }
   },
   methods: {

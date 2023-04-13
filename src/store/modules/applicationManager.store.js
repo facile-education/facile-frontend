@@ -16,7 +16,7 @@ export const mutations = {
     state.applicationList = payload
   },
   removeApplication (state, payload) {
-    const index = state.applicationList.map(item => item.serviceId).indexOf(payload.serviceId)
+    const index = state.applicationList.map(item => item.applicationId).indexOf(payload.applicationId)
     state.applicationList.splice(index, 1)
   },
   setSelectedApplication (state, payload) {
@@ -35,7 +35,7 @@ export const mutations = {
     if (payload.property !== undefined) {
       state.selectedApplication[payload.property] = payload.value
     } else {
-      const index = state.applicationList.map(item => item.serviceId).indexOf(payload.serviceId)
+      const index = state.applicationList.map(item => item.applicationId).indexOf(payload.applicationId)
       state.applicationList[index] = payload
     }
   }
@@ -72,7 +72,7 @@ export const actions = {
   },
   exportApplicationUserList ({ state }, { school, type }) {
     return applicationManagerService.exportApplicationUserList(school.schoolId,
-      state.selectedApplication.serviceId, type).then((data) => {
+      state.selectedApplication.applicationId, type).then((data) => {
       if (data.success) {
         return data.message
       }
@@ -91,7 +91,7 @@ export const actions = {
       })
   },
   getApplicationBroadcastScope ({ state, commit }, school) {
-    applicationManagerService.getApplicationBroadcastScope(state.selectedApplication.serviceId, school.schoolId).then(
+    applicationManagerService.getApplicationBroadcastScope(state.selectedApplication.applicationId, school.schoolId).then(
       (data) => {
         if (data.success) {
           // TODO userFilters property ?
@@ -111,7 +111,7 @@ export const actions = {
   },
   removeApplication ({ state, commit }) {
     const app = PentilaUtils.JSON.deepCopy(state.selectedApplication)
-    applicationManagerService.removeApplication(state.selectedApplication.serviceId).then(
+    applicationManagerService.removeApplication(state.selectedApplication.applicationId).then(
       (data) => {
         if (data.success) {
           commit('removeApplication', app)
@@ -124,15 +124,15 @@ export const actions = {
   },
   resetApplication ({ commit }) {
     commit('setSelectedApplication', {
-      serviceName: '',
-      serviceKey: '',
+      applicationName: '',
+      applicationKey: '',
       category: '',
       roleList: [],
       authorizedSchools: [],
       globalUrl: '',
       hasCustomUrl: false,
       hasGlobalUrl: false,
-      portletId: undefined,
+      menuEntryId: -1,
       exportParent: false,
       exportStudent: false,
       exportTeacher: false,
@@ -159,7 +159,7 @@ export const actions = {
       })
   },
   updateBroadcastScope ({ state, commit, dispatch }, { school, ruleList, ruleIdList }) {
-    applicationManagerService.updateBroadcastScope(state.selectedApplication.serviceId, school.schoolId, ruleIdList).then(
+    applicationManagerService.updateBroadcastScope(state.selectedApplication.applicationId, school.schoolId, ruleIdList).then(
       (data) => {
         if (data.success) {
           commit('updateApplication', { property: 'rules', value: ruleList })
@@ -172,7 +172,7 @@ export const actions = {
       })
   },
   updateBroadcast ({ state, commit }, { school, isBroadcasted }) {
-    applicationManagerService.updateBroadcast(state.selectedApplication.serviceId, school.schoolId, isBroadcasted, state.selectedApplication.applicationURL === undefined ? '' : state.selectedApplication.applicationURL).then(
+    applicationManagerService.updateBroadcast(state.selectedApplication.applicationId, school.schoolId, isBroadcasted, state.selectedApplication.applicationURL === undefined ? '' : state.selectedApplication.applicationURL).then(
       (data) => {
         if (data.success) {
           commit('updateApplication', { property: 'isBroadcasted', value: isBroadcasted })
@@ -184,10 +184,10 @@ export const actions = {
       })
   },
   updateURL ({ state, commit }, { school, applicationURL }) {
-    applicationManagerService.updateBroadcast(state.selectedApplication.serviceId, school.schoolId, state.selectedApplication.isBroadcasted, applicationURL).then(
+    applicationManagerService.updateBroadcast(state.selectedApplication.applicationId, school.schoolId, state.selectedApplication.isBroadcasted, applicationURL).then(
       (data) => {
         if (data.success) {
-          commit('updateApplication', { property: 'serviceUrl', value: applicationURL })
+          commit('updateApplication', { property: 'applicationUrl', value: applicationURL })
         }
       },
       (err) => {
