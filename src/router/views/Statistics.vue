@@ -97,7 +97,7 @@
 </template>
 
 <script>
-import Layout from '@/router/layouts/EmptyLayout'
+import Layout from '@/router/layouts/BannerLayout'
 import StatsActivesUsers from '@components/Statistics/StatsActivesUsers.vue'
 import GlobalStat from '@components/Statistics/GlobalStat.vue'
 import StatsDoughnut from '@components/Statistics/StatsDoughnut.vue'
