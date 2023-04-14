@@ -31,7 +31,7 @@
         <div
           v-else
           ref="scroll"
-          class="events-by-month"
+          class="scroll"
           @scroll="handleScroll"
         >
           <div
@@ -221,6 +221,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
 
 .period {
   text-transform: capitalize;
@@ -229,12 +230,19 @@ export default {
 }
 
 .body.details-display{
+  height: calc(100% - $all-events-header-height);
   display: flex;
   padding-top: 20px;
 
   .event-list {
     width: 33%;
+    position: relative;
     margin-right: 20px;
+  }
+
+  .scroll {
+    height: 100%;
+    overflow-y: auto;
   }
 
   .details-placeholder {

@@ -219,7 +219,6 @@ export default {
 article {
   height: 100%;
   flex:1;
-  position: relative;
 }
 
 .detailed-event {
@@ -229,6 +228,7 @@ article {
 }
 
 .placeholder {
+  position: relative;
   height: 20vh;
   width: 100%;
   display: flex;

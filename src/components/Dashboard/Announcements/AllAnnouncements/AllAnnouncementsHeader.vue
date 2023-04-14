@@ -100,7 +100,7 @@ export default {
 .header {
   display: flex;
   align-items: center;
-  height: 48px;
+  height: $all-events-header-height;
   justify-content: space-between;
 
   .left {

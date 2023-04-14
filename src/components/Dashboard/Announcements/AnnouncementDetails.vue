@@ -176,7 +176,19 @@ export default {
 <style lang="scss" scoped>
 @import "@design";
 
+article {
+  height: 100%;
+  flex:1;
+}
+
+.detailed-announcement {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 .placeholder {
+  position: relative;
   height: 20vh;
   width: 100%;
   display: flex;
