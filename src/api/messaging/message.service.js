@@ -12,7 +12,6 @@ export default {
   setMessageReadStatus,
   sendMessage,
   saveDraft,
-  getMessageFollowUpInfos,
   moveMessages,
   deleteMessages,
   getUsersCompletion
@@ -153,17 +152,6 @@ function saveDraft (recipients, subject, content, attachedFiles, draftMessageId,
   return axios.post(constants.JSON_WS_URL + MESSAGING_PATH + '/save-draft',
     formData
   ).then(response => response.data)
-}
-
-/**
- * Returns the list of recipients for a message, with the one having read and the ones having not yet read
- */
-function getMessageFollowUpInfos (messageId) {
-  return axios.get(constants.JSON_WS_URL + MESSAGING_PATH + '/get-message-follow-up-infos', {
-    params: {
-      messageId: messageId
-    }
-  }).then(response => response.data)
 }
 
 /**
