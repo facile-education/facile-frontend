@@ -16,7 +16,7 @@
         @click="toggleReadOnly"
       >
         <img
-          :src="unReadOnly ? require('@/assets/options/icon_unread_filter_active.svg') : require('@/assets/options/icon_unread_filter.svg')"
+          :src="unReadOnly ? require('@assets/options/icon_unread_filter_active.svg') : require('@assets/options/icon_unread_filter.svg')"
           alt="unread filter"
         >
       </button>
@@ -73,14 +73,14 @@ export default {
   methods: {
     toggleReadOnly () {
       this.unReadOnly = !this.unReadOnly
+      if (this.unReadOnly) { // Unselect selected event when we enter in unreadOnly mode (assume that the selected event is read and should not be selected anymore)
+        this.selectedEvent = undefined
+      }
       this.refresh()
-    },
-    updateList () {
-      this.refresh()
-      this.$emit('refresh') // So the widget can update too
     },
     refresh () {
       this.fromDate = dayjs()
+      this.announcementsList = []
       this.loadAnnouncements()
     },
     loadAnnouncements () {

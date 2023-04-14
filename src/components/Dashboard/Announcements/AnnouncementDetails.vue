@@ -125,6 +125,14 @@ export default {
       isUpdateModalDisplayed: false
     }
   },
+  watch: {
+    initAnnouncement: {
+      deep: true,
+      handler () {
+        this.getAnnouncementDetails()
+      }
+    }
+  },
   created () {
     this.getAnnouncementDetails()
   },
