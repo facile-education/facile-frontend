@@ -31,7 +31,7 @@
         <div
           v-else
           ref="scroll"
-          class="events-by-month"
+          class="scroll"
           @scroll="handleScroll"
         >
           <AnnouncementItem
@@ -136,13 +136,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
+
 .body.details-display{
+  height: calc(100% - $all-events-header-height);
   display: flex;
   padding-top: 20px;
 
-  .announcement-list {
-    width: 33%;
+  .announcements-list {
+    min-width: 33%;
+    position: relative;
     margin-right: 20px;
+  }
+
+  .scroll {
+    height: 100%;
+    overflow-y: auto;
   }
 
   .details-placeholder {
