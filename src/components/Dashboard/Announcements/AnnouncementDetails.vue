@@ -94,7 +94,7 @@
   >
     <SaveAnnouncementModal
       :init-announcement="detailedAnnouncement"
-      @updateAnnouncement="getAnnouncementDetails"
+      @updateAnnouncement="updateAnnouncement"
       @close="isUpdateModalDisplayed = false"
     />
   </teleport>

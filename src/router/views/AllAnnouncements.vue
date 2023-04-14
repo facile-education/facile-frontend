@@ -4,7 +4,7 @@
       :nb-new-announcements="nbNewAnnouncements"
       :un-read-only="unReadOnly"
       @toggleReadOnly="toggleReadOnly"
-      @createEvent="refresh"
+      @createAnnouncement="refresh"
     />
 
     <div
@@ -108,6 +108,7 @@ export default {
     },
     refresh () {
       this.fromDate = dayjs()
+      this.announcementsList = []
       this.loadAnnouncements()
     },
     deleteAnnouncement () {
@@ -133,8 +134,13 @@ export default {
         this.isLoading = false
         if (data.success) {
           this.error = false
-          this.announcementsList = data.news
-          this.fromDate = dayjs(data.news[data.news.lenght - 1].publicationDate) // Assume they are sorted by date, so take the last announcement date
+          this.announcementsList = this.announcementsList.concat(data.news)
+          this.nbNewAnnouncements = data.nbUnreadNews
+          // Update pagination
+          if (data.news.length > 0) {
+            this.fromDate = dayjs(data.news[data.news.length - 1].publicationDate) // Assume they are sorted by date, so take the last announcement date
+          }
+          // TODO Handle selection like in events?
         } else {
           this.error = true
           console.error('Error')
