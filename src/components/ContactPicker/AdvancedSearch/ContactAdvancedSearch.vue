@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { getLocalUserRoleList } from '@/api/role.service'
+import { getRoleList } from '@/api/role.service'
 import PentilaUtils from 'pentila-utils'
 import { getAllSchools } from '@/api/organization.service'
 
@@ -70,7 +70,7 @@ export default {
   created () {
     this.$store.dispatch('contact/resetUserList')
     this.$store.dispatch('contact/setActiveTab', 'advancedSearch')
-    getLocalUserRoleList().then((data) => {
+    getRoleList().then((data) => {
       if (data.success) {
         this.selectedRole = this.emptyRole
         this.roleList = [this.emptyRole, ...PentilaUtils.Array.sortWithString(data.roles, false, 'label')]
