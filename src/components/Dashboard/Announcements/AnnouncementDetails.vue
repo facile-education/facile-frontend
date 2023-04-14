@@ -205,7 +205,6 @@ article {
 .thumbnail{
   width: var(--thumbnail-width);
   height: 100%;
-  background-color: green;
 }
 
 .first-line-right {

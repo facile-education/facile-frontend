@@ -39,7 +39,7 @@
       <slot />
     </section>
 
-    <!--div
+    <div
       class="popups-container"
       :class="{'phone': mq.phone}"
     >
@@ -63,7 +63,7 @@
         :file="file"
         @close="closeFile(file)"
       />
-    </teleport-->
+    </teleport>
 
     <teleport
       v-if="isWarningModalDisplayed"
@@ -88,12 +88,12 @@
 
 <script>
 import { defineAsyncComponent } from 'vue'
-// import { popupDurationTime } from '@/constants/appConstants'
+import { popupDurationTime } from '@/constants/appConstants'
 import Banner from '@/components/Banner/Banner'
 import QuickSearchPanel from '@components/Search/QuickSearchPanel.vue'
-// import Popup from '@components/Base/Popup'
+import Popup from '@components/Base/Popup'
 
-// const FileDisplayModal = defineAsyncComponent(() => import('@/components/Documents/FileDisplay/FileDisplayModal'))
+const FileDisplayModal = defineAsyncComponent(() => import('@/components/Documents/FileDisplay/FileDisplayModal'))
 const MobileMenu = defineAsyncComponent(() => import('@/components/Menu/MobileMenu'))
 const SideMenu = defineAsyncComponent(() => import('@/components/Menu/SideMenu'))
 const HelpModal = defineAsyncComponent(() => import('@components/HelpModal/HelpModal.vue'))
@@ -101,7 +101,7 @@ const WarningModal = defineAsyncComponent(() => import('@/components/Nero/Warnin
 
 export default {
   name: 'BannerLayout',
-  components: { QuickSearchPanel, HelpModal, Banner, MobileMenu, /* FileDisplayModal, Popup, */ SideMenu, WarningModal },
+  components: { QuickSearchPanel, HelpModal, Banner, MobileMenu, FileDisplayModal, Popup, SideMenu, WarningModal },
   inject: ['mq'],
   props: {
     isAllowed: {
@@ -110,6 +110,15 @@ export default {
     }
   },
   computed: {
+    openFiles () {
+      return this.$store.state.documents.openFiles
+    },
+    popupList () {
+      return this.$store.state.popups.currentPopupList
+    },
+    popupTimeout () {
+      return popupDurationTime
+    },
     isWarningModalDisplayed () {
       return this.$store.getters['warningModal/isWarningModalDisplayed']
     },
@@ -135,18 +144,6 @@ export default {
         'menu-shrinked': (!this.menuExpanded && !this.mq.phone)
       }
     },
-    /* openFiles () {
-      return this.$store.state.documents.openFiles
-    },
-    isWarningModalDisplayed () {
-      return this.$store.getters['warningModal/isWarningModalDisplayed']
-    },
-    popupTimeout () {
-      return popupDurationTime
-    },
-    popupList () {
-      return this.$store.state.popups.currentPopupList
-    }, */
     user () {
       return this.$store.state.user
     },
@@ -164,6 +161,7 @@ export default {
   },
   methods: {
     closeFile (file) {
+      this.$store.dispatch('documents/refreshCurrentFolder') // To update the displayed closed document properties (last modified date, etc...)
       this.$store.dispatch('documents/closeFile', file)
     },
     closePopup () {
