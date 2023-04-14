@@ -39,10 +39,13 @@
             :key="announcement.newsId"
             :announcement="announcement"
             :is-selection-mode="isDetailsPanelDisplayed"
+            :is-selected="selectedAnnouncement && selectedAnnouncement.newsId === announcement.newsId"
+            :is-last="isLastDisplayed(announcement)"
             @updateAnnouncement="refresh"
             @deleteAnnouncement="refresh"
             @select="selectedAnnouncement=announcement"
             @markAsRead="announcement.hasRead=true"
+            @getNextAnnouncements="loadAnnouncements"
           />
         </div>
       </div>
@@ -96,6 +99,9 @@ export default {
     this.loadAnnouncements()
   },
   methods: {
+    isLastDisplayed (announcement) {
+      return this.announcementsList[this.announcementsList.length - 1].newsId === announcement.newsId // Assume display order is the same as announcementsList order
+    },
     toggleReadOnly () {
       this.unReadOnly = !this.unReadOnly
       this.refresh()
@@ -103,6 +109,10 @@ export default {
     refresh () {
       this.fromDate = dayjs()
       this.loadAnnouncements()
+    },
+    deleteAnnouncement () {
+      this.selectedAnnouncement = undefined
+      this.refresh()
     },
     handleScroll () {
       const scroll = this.$refs.scroll

@@ -2,7 +2,7 @@
   <div class="container">
     <div
       class="announcement"
-      :class="{'theme-border-color': !announcement.hasRead}"
+      :class="{'theme-border-color': !announcement.hasRead, 'theme-light-background-color': isSelected, 'theme-hover-light-background-color': isSelectionMode}"
       tabindex="0"
       @click="handleClick"
     >
@@ -37,7 +37,7 @@
       </div>
 
       <div
-        v-if="announcement.isEditable"
+        v-if="!isSelectionMode && announcement.isEditable"
         class="announcement-options"
       >
         <button
@@ -94,6 +94,7 @@ import { deleteNews, setNewsRead } from '@/api/dashboard/news.service'
 import dayjs from 'dayjs'
 import BaseIcon from '@components/Base/BaseIcon.vue'
 import { defineAsyncComponent } from 'vue'
+import { isInViewport } from '@utils/commons.util'
 const SaveAnnouncementModal = defineAsyncComponent(() => import('@/components/Dashboard/Announcements/SaveAnnouncementModal.vue'))
 const AnnouncementDetailsModal = defineAsyncComponent(() => import('@/components/Dashboard/Announcements/AnnouncementDetailsModal.vue'))
 
@@ -108,9 +109,13 @@ export default {
     isSelectionMode: {
       type: Boolean,
       default: false
+    },
+    isSelected: {
+      type: Boolean,
+      default: false
     }
   },
-  emits: ['deleteAnnouncement', 'updateAnnouncement', 'select'],
+  emits: ['deleteAnnouncement', 'updateAnnouncement', 'select', 'getNextAnnouncements'],
   data () {
     return {
       isUpdateModalDisplayed: false,
@@ -120,6 +125,34 @@ export default {
   computed: {
     announcementDay () {
       return this.$t('at') + dayjs(this.announcement.publicationDate).format('DD-MM-YY')
+    }
+  },
+  watch: { // Must be watched to react on a new search
+    isLast: {
+      handler () {
+        if (this.isLast) {
+          if (isInViewport(this.$refs.item)) {
+            this.$emit('getNextAnnouncements')
+          }
+        }
+      }
+    },
+    isSelected: {
+      immediate: true,
+      handler () {
+        if (this.isSelected) {
+          if (!this.announcement.hasRead) {
+            this.markAnnouncementAsRead()
+          }
+        }
+      }
+    }
+  },
+  mounted () {
+    if (this.isLast) {
+      if (isInViewport(this.$refs.item)) {
+        this.$emit('getNextAnnouncements')
+      }
     }
   },
   methods: {
