@@ -1,5 +1,8 @@
 <template>
-  <div class="container">
+  <div
+    ref="item"
+    class="container"
+  >
     <div
       class="announcement"
       :class="{'theme-border-color': !announcement.hasRead, 'theme-light-background-color': isSelected, 'theme-hover-light-background-color': isSelectionMode}"
@@ -113,9 +116,13 @@ export default {
     isSelected: {
       type: Boolean,
       default: false
+    },
+    isLast: {
+      type: Boolean,
+      default: false
     }
   },
-  emits: ['deleteAnnouncement', 'updateAnnouncement', 'select', 'getNextAnnouncements'],
+  emits: ['deleteAnnouncement', 'updateAnnouncement', 'select', 'getNextAnnouncements', 'markAsRead'],
   data () {
     return {
       isUpdateModalDisplayed: false,
@@ -151,6 +158,7 @@ export default {
   mounted () {
     if (this.isLast) {
       if (isInViewport(this.$refs.item)) {
+        console.log('I\'m last!')
         this.$emit('getNextAnnouncements')
       }
     }
@@ -175,7 +183,7 @@ export default {
     markAnnouncementAsRead () {
       setNewsRead(this.announcement.newsId, true).then((data) => {
         if (data.success) {
-          this.$emit('updateAnnouncement')
+          this.$emit('markAsRead')
         } else {
           console.error('Error')
         }
