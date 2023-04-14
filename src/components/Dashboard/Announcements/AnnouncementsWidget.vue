@@ -52,21 +52,11 @@
         <button
           v-t="'showMore'"
           class="show-more"
-          @click="isAllAnnouncementsModalDisplayed = true"
+          @click="showMore"
         />
       </div>
     </div>
   </section>
-
-  <teleport
-    v-if="isAllAnnouncementsModalDisplayed"
-    to="body"
-  >
-    <AllAnnouncementsModal
-      @refresh="refresh"
-      @close="isAllAnnouncementsModalDisplayed = false"
-    />
-  </teleport>
 </template>
 
 <script>
@@ -74,13 +64,11 @@ import dayjs from 'dayjs'
 import { nbAnnouncementsInWidget } from '@/constants/dashboardConstants'
 import AnnouncementsHeader from '@components/Dashboard/Announcements/AnnouncementsHeader.vue'
 import { getSchoolNews } from '@/api/dashboard/news.service'
-import { defineAsyncComponent } from 'vue'
 import AnnouncementItem from '@components/Dashboard/Announcements/AnnouncementItem.vue'
-const AllAnnouncementsModal = defineAsyncComponent(() => import('@/components/Dashboard/Announcements/AllAnnouncementsModal.vue'))
 
 export default {
   name: 'AnnouncementsWidget',
-  components: { AnnouncementItem, AllAnnouncementsModal, AnnouncementsHeader },
+  components: { AnnouncementItem, AnnouncementsHeader },
   data () {
     return {
       unReadOnly: false,
@@ -127,6 +115,9 @@ export default {
           console.error('Error')
         }
       })
+    },
+    showMore () {
+      this.$router.push({ name: 'AllAnnouncements' })
     }
   }
 }

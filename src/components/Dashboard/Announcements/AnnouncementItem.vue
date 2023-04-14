@@ -4,7 +4,7 @@
       class="announcement"
       :class="{'theme-border-color': !announcement.hasRead}"
       tabindex="0"
-      @click="showDetails"
+      @click="handleClick"
     >
       <div class="thumbnail">
         <img
@@ -104,9 +104,13 @@ export default {
     announcement: {
       type: Object,
       required: true
+    },
+    isSelectionMode: {
+      type: Boolean,
+      default: false
     }
   },
-  emits: ['deleteAnnouncement', 'updateAnnouncement'],
+  emits: ['deleteAnnouncement', 'updateAnnouncement', 'select'],
   data () {
     return {
       isUpdateModalDisplayed: false,
@@ -119,6 +123,13 @@ export default {
     }
   },
   methods: {
+    handleClick () {
+      if (this.isSelectionMode) {
+        this.$emit('select')
+      } else {
+        this.showDetails()
+      }
+    },
     showDetails () {
       if (!this.announcement.hasRead) {
         this.markAnnouncementAsRead()
