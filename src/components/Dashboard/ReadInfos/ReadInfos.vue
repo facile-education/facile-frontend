@@ -20,7 +20,7 @@
 
 <script>
 import BaseIcon from '@components/Base/BaseIcon.vue'
-import ReadInfoModal from '@components/Dashboard/ReadInfoModal.vue'
+import ReadInfoModal from '@components/Dashboard/ReadInfos/ReadInfoModal.vue'
 
 // import { defineAsyncComponent } from 'vue'
 // const ReadInfoModal = defineAsyncComponent(() => import('@components/Dashboard/ReadInfoModal.vue'))
