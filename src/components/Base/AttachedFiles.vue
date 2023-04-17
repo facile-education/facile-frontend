@@ -12,6 +12,7 @@
         :key="attachedFile.fileId"
         :title="viewFileName(attachedFile)"
         class="attached-file"
+        :class="{'phone': mq.phone}"
         @click="viewAttachedFile(attachedFile)"
       >
         <FileIcon
@@ -85,6 +86,7 @@ export default {
     FilePickerModal,
     FileIcon
   },
+  inject: ['mq'],
   props: {
     attachedFiles: {
       type: Array,
@@ -167,6 +169,11 @@ button {
       display: flex;
       align-items: center;
       border: 1px solid $color-border;
+
+      &.phone {
+        height: 40px;
+        margin: 3px 5px 3px 0;
+      }
 
       &:hover {
         border: 1px solid black;

@@ -510,7 +510,7 @@ export default {
 </script>
 
 <style lang="scss">
-:not(.phone).create-message-modal.modal-mask .window-container .window-body {
+.create-message-modal.modal-mask .window-container .window-body {
   max-height: 70vh;
   overflow-y: auto;
 }
@@ -529,6 +529,10 @@ export default {
 
   .ck-editor__editable {
     min-height: 15rem;
+  }
+
+  &.phone .ck-editor__editable {
+    min-height: 12rem;
   }
 }
 
