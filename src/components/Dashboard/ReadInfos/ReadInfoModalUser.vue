@@ -4,18 +4,29 @@
       {{ user.fullName }}
     </div>
     <div class="readStatus">
-      {{ user.hasRead ? $t('read'): $t('unread') }}
+      {{ user.hasRead ? formattedReadDate : $t('unread') }}
     </div>
   </div>
 </template>
 
 <script>
+import dayjs from 'dayjs'
+
 export default {
   name: 'ReadInfoModalUser',
   props: {
     user: {
       type: Object,
       required: true
+    }
+  },
+  computed: {
+    formattedReadDate () {
+      if (this.user.readDate) {
+        return dayjs(this.user.readDate, 'YYYY-MM-DD HH:mm:ss').calendar()
+      } else {
+        return ''
+      }
     }
   }
 }
@@ -33,7 +44,6 @@ export default {
 
 <i18n locale="fr" >
 {
-  "read": "Lu",
   "unread": "Non lu"
 }
 </i18n>
