@@ -82,7 +82,7 @@ ul {
   align-items: center;
   justify-content: space-between;
   padding-right: 5px;
-  font-size: 1.25rem;
+  font-size: 1.15rem;
 }
 
 .icon-collapse, .icon-extend {
