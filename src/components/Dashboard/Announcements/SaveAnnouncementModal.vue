@@ -60,12 +60,12 @@
           :list="availablePopulationsList"
           :close-on-select="true"
           display-field="populationName"
-          :disabled="isLoadingAnnouncementPopulations"
+          :disabled="isLoadingAnnouncementDetails"
         />
         <PentilaErrorMessage
           :error-message="formErrorList.populations"
         />
-        <PentilaSpinner v-if="isLoadingAnnouncementPopulations" />
+        <PentilaSpinner v-if="isLoadingAnnouncementDetails" />
       </div>
 
       <CKEditor
@@ -172,7 +172,7 @@ export default {
       },
       availablePopulationsList: [],
       isReleaseDateDisabled: false,
-      isLoadingAnnouncementPopulations: false,
+      isLoadingAnnouncementDetails: false,
       isProcessingSave: false,
       isFilePickerDisplayed: false
     }
@@ -256,12 +256,13 @@ export default {
       }
     },
     initDetails (newsId) {
-      this.isLoadingAnnouncementPopulations = true
+      this.isLoadingAnnouncementDetails = true
       getNewsDetails(newsId).then((data) => {
-        this.isLoadingAnnouncementPopulations = false
+        this.isLoadingAnnouncementDetails = false
         if (data.success) {
           this.populations = data.news.populations
-          // TODO: init attachedFiles at the same time
+          this.content = data.news.content
+          this.attachedFiles = data.news.attachedFiles
         } else {
           console.error('Error')
         }
