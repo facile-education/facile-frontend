@@ -1,0 +1,109 @@
+<template>
+  <PentilaWindow
+    :modal="true"
+    :is-full-screen="mq.phone"
+    :hidden-footer="true"
+    :draggable="true"
+    data-test="readInfoModal"
+    @close="onClose"
+  >
+    <template #header>
+      <h1>{{ $tc('header', allReadMembers.length, {n: allReadMembers.length, totalCount: allMembers.length}) }}</h1>
+    </template>
+
+    <template #body>
+      <ul :class="{'phone': mq.phone}">
+        <li
+          v-for="(population, index) in readInfos"
+          :key="index"
+        >
+          <ReadInfoModalPopulation :population="population" />
+        </li>
+      </ul>
+    </template>
+  </PentilaWindow>
+</template>
+
+<script>
+
+import ReadInfoModalPopulation from '@components/Dashboard/ReadInfoModalPopulation.vue'
+
+export default {
+  name: 'ReadInfoModal',
+  components: { ReadInfoModalPopulation },
+  inject: ['mq'],
+  props: {
+    readInfos: {
+      type: Array,
+      required: true
+    }
+  },
+  emits: ['close'],
+  computed: {
+    allMembers () {
+      let allMembers = []
+      this.readInfos.forEach((population) => {
+        allMembers = [...allMembers, ...population.members]
+      })
+      return allMembers
+    },
+    allReadMembers () {
+      return this.allMembers.filter(member => member.hasRead === true)
+    }
+  },
+  created () {
+    this.$store.dispatch('misc/incrementModalCount')
+  },
+  methods: {
+    onClose () {
+      this.$emit('close')
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+@import "@design";
+
+h1 {
+  margin: 0;
+  font-size: 1em;
+  line-height: 1.25em;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  max-height: 75vh;
+  overflow: auto;
+
+  li {
+    border-bottom: 1px solid $color-border;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &.phone {
+    max-height: 85vh;
+  }
+}
+
+@supports(height: 100dvh) {
+  ul {
+    max-height: 75dvh;
+
+    &.phone {
+      max-height: 85dvh;
+    }
+  }
+}
+</style>
+
+<i18n locale="fr" >
+{
+  "header": "Lu par {n} destinataire sur {totalCount} | Lu par {n} destinataire sur {totalCount} | Lu par {n} destinataires sur {totalCount}"
+}
+</i18n>

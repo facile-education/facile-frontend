@@ -1,23 +1,42 @@
 <template>
-  <div>
+  <button @click="displayReadInfoModal=true">
     <BaseIcon
       class="check-icon"
       name="check"
     />
-    <span> {{ allReadMembers.length + (allReadMembers.length > 1 ? $t('usersOn') : $t('userOn')) + allMembers.length }} </span>
-  </div>
+    <span> {{ $tc('usersOn', allReadMembers.length, {n: allReadMembers.length, totalCount: allMembers.length}) }} </span>
+  </button>
+
+  <teleport
+    v-if="displayReadInfoModal"
+    to="body"
+  >
+    <ReadInfoModal
+      :read-infos="readInfos"
+      @close="displayReadInfoModal=false"
+    />
+  </teleport>
 </template>
 
 <script>
 import BaseIcon from '@components/Base/BaseIcon.vue'
+import ReadInfoModal from '@components/Dashboard/ReadInfoModal.vue'
+
+// import { defineAsyncComponent } from 'vue'
+// const ReadInfoModal = defineAsyncComponent(() => import('@components/Dashboard/ReadInfoModal.vue'))
 
 export default {
   name: 'ReadInfos',
-  components: { BaseIcon },
+  components: { ReadInfoModal, BaseIcon },
   props: {
     readInfos: {
       type: Array,
       required: true
+    }
+  },
+  data () {
+    return {
+      displayReadInfoModal: false
     }
   },
   computed: {
@@ -36,6 +55,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+button {
+  cursor: pointer;
+  background-color: transparent;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
 .check-icon {
   color: green;
   margin-right: 5px;
@@ -45,7 +73,6 @@ export default {
 <i18n locale="fr">
 {
   "readBy": "Lu par ",
-  "userOn": " destinataire sur ",
-  "usersOn": " destinataires sur "
+  "usersOn": "{n} destinataire sur {totalCount} | {n} destinataire sur {totalCount} | {n} destinataires sur {totalCount}"
 }
 </i18n>
