@@ -25,7 +25,7 @@
           {{ announcement.title }}
         </strong>
         <div class="description">
-          {{ announcement.content }}
+          {{ announcement.shortContent }}
         </div>
         <div class="meta-data">
           <span class="text">
@@ -269,6 +269,7 @@ export default {
   .description, .meta-data {
     margin-top: 0.5em;
     font-size: 12px;
+    color: $color-new-light-text;
   }
 
   .description {
