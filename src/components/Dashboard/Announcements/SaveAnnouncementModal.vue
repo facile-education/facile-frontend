@@ -78,17 +78,16 @@
         :error-message="formErrorList.content"
       />
 
-      <div
-        class="add-content-buttons"
+      <button
+        class="add-content-button"
+        :title="$t('addFile')"
+        @click="isFilePickerDisplayed = true"
       >
         <img
-          class="add-content-button"
           src="@assets/options/icon_upload.svg"
           :alt="$t('addFile')"
-          :title="$t('addFile')"
-          @click="isFilePickerDisplayed = true"
         >
-      </div>
+      </button>
       <AttachedFiles
         :attached-files="attachedFiles"
         :read-only="false"
@@ -372,18 +371,16 @@ export default {
   margin-bottom: 15px;
 }
 
-.add-content-buttons {
+.add-content-button {
+  border: 1px solid transparent;
+  border-radius: 5px;
+  padding: 7px;
+  margin: 5px;
+  background-color: transparent;
 
-  .add-content-button {
-    border: 1px solid transparent;
-    border-radius: 5px;
-    padding: 7px;
-    margin: 5px;
-
-    &:hover {
-      background-color: $color-hover-bg;
-      cursor: pointer;
-    }
+  &:hover {
+    background-color: $color-hover-bg;
+    cursor: pointer;
   }
 }
 
