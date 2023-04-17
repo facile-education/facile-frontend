@@ -20,7 +20,7 @@
   <ul v-if="isExtended">
     <!-- TODO: use userId as key-->
     <li
-      v-for="(member, index) in population.members"
+      v-for="(member, index) in sortedMembers"
       :key="index"
     >
       <ReadInfoModalUser :user="member" />
@@ -31,6 +31,7 @@
 <script>
 import BaseIcon from '@components/Base/BaseIcon.vue'
 import ReadInfoModalUser from '@components/Dashboard/ReadInfos/ReadInfoModalUser.vue'
+import PentilaUtils from 'pentila-utils'
 
 export default {
   name: 'ReadInfoModalPopulation',
@@ -47,6 +48,9 @@ export default {
     }
   },
   computed: {
+    sortedMembers () {
+      return PentilaUtils.Array.sortWithString(this.population.members, false, 'fullName')
+    },
     populationReadMembers () {
       return this.population.members.filter(member => member.hasRead === true)
     }
