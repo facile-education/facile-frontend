@@ -158,7 +158,6 @@ export default {
   mounted () {
     if (this.isLast) {
       if (isInViewport(this.$refs.item)) {
-        console.log('I\'m last!')
         this.$emit('getNextAnnouncements')
       }
     }
@@ -221,7 +220,8 @@ export default {
   position: relative;
   cursor: pointer;
   height: $announcement-item-height;
-  width: 323px;
+  width: 100%;
+  min-width: $announcement-item-min-width;
   border-radius: 5px;
   padding: 4px;
   font-size: 14px;
