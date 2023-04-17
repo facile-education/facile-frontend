@@ -160,7 +160,8 @@ export default {
   padding-top: 20px;
 
   .announcements-list {
-    min-width: 33%;
+    min-width: calc($announcement-item-min-width + 20px);
+    width: 33%;
     position: relative;
     margin-right: 20px;
   }

@@ -38,6 +38,7 @@
           v-for="(announcement, index) in announcementsList"
           :key="index"
           :announcement="announcement"
+          :is-in-horizontal-scroll="true"
           @markAsRead="announcement.hasRead=true"
           @updateAnnouncement="refresh"
           @deleteAnnouncement="refresh"
