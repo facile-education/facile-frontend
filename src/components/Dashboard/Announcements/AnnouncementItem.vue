@@ -5,7 +5,7 @@
   >
     <div
       class="announcement"
-      :class="{'theme-border-color': !announcement.hasRead, 'theme-light-background-color': isSelected, 'theme-hover-light-background-color': isSelectionMode}"
+      :class="{'theme-border-color': !announcement.hasRead, 'theme-light-background-color': isSelected, 'theme-hover-light-background-color': isSelectionMode, 'is-in-horizontal-scroll': isInHorizontalScroll}"
       tabindex="0"
       @keyup.enter="handleClick"
       @click="handleClick"
@@ -111,6 +111,10 @@ export default {
       required: true
     },
     isSelectionMode: {
+      type: Boolean,
+      default: false
+    },
+    isInHorizontalScroll: {
       type: Boolean,
       default: false
     },
@@ -230,6 +234,10 @@ export default {
   display: flex;
   --thumbnail-width: 70px;
   border: 1px solid #FFDDDD;
+
+  &.is-in-horizontal-scroll {
+    max-width: $announcement-item-min-width;
+  }
 
   .pellet {
     @extend %item-pellet;
