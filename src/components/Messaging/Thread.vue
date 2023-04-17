@@ -451,7 +451,7 @@ export default {
       justify-content: space-between;
       align-items: center;
       .sender {
-        overflow-x: hidden;
+        overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
         font-weight: bold;
