@@ -14,7 +14,7 @@
     <template #body>
       <ul :class="{'phone': mq.phone}">
         <li
-          v-for="(population, index) in readInfos"
+          v-for="(population, index) in sortedPopulations"
           :key="index"
         >
           <ReadInfoModalPopulation :population="population" />
@@ -27,6 +27,7 @@
 <script>
 
 import ReadInfoModalPopulation from '@components/Dashboard/ReadInfos/ReadInfoModalPopulation.vue'
+import PentilaUtils from 'pentila-utils'
 
 export default {
   name: 'ReadInfoModal',
@@ -49,6 +50,9 @@ export default {
     },
     allReadMembers () {
       return this.allMembers.filter(member => member.hasRead === true)
+    },
+    sortedPopulations () {
+      return PentilaUtils.Array.sortWithString(this.readInfos, false, 'name')
     }
   },
   created () {
