@@ -11,6 +11,10 @@
     </template>
 
     <template #body>
+      <PentilaSpinner
+        v-if="isProcessingSave"
+        class="save-spinner"
+      />
       <div class="first-line">
         <div class="image-picker">
           <img
@@ -170,6 +174,7 @@ export default {
       availablePopulationsList: [],
       isReleaseDateDisabled: false,
       isLoadingAnnouncementPopulations: false,
+      isProcessingSave: false,
       isFilePickerDisplayed: false
     }
   },
@@ -295,7 +300,9 @@ export default {
       }
     },
     createAnnouncement () {
+      this.isProcessingSave = true
       addNews(this.title, this.content, true, false, 0, this.releaseDate, this.populations, this.attachedFileIds).then((data) => {
+        this.isProcessingSave = false
         if (data.success) {
           this.$emit('createAnnouncement')
           this.onClose()
@@ -305,7 +312,9 @@ export default {
       })
     },
     updateAnnouncement () {
+      this.isProcessingSave = true
       editNews(this.initAnnouncement.newsId, this.title, this.content, false, 0, this.releaseDate, this.populations, this.attachedFileIds, this.markAsUnreadForAll).then((data) => {
+        this.isProcessingSave = false
         if (data.success) {
           this.$emit('updateAnnouncement')
           this.onClose()
@@ -325,6 +334,7 @@ export default {
 <style lang="scss">
 .update-announcement-modal {
   .window-body {
+    position: relative;
     overflow-y: auto;
   }
 }
@@ -332,6 +342,10 @@ export default {
 
 <style lang="scss" scoped>
 @import "@design";
+
+.save-spinner {
+  z-index: 100;
+}
 
 .image-picker {
   height: 131px;
