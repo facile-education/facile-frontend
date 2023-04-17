@@ -105,7 +105,7 @@ import { getNewsDetails, deleteNews } from '@/api/dashboard/news.service'
 import SaveAnnouncementModal from '@components/Dashboard/Announcements/SaveAnnouncementModal.vue'
 import AttachedFiles from '@components/Base/AttachedFiles.vue'
 import PopulationList from '@components/Dashboard/PopulationList.vue'
-import ReadInfos from '@components/Dashboard/ReadInfos.vue'
+import ReadInfos from '@components/Dashboard/ReadInfos/ReadInfos.vue'
 
 export default {
   name: 'AnnouncementDetails',

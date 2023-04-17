@@ -30,7 +30,7 @@
 
 <script>
 import BaseIcon from '@components/Base/BaseIcon.vue'
-import ReadInfoModalUser from '@components/Dashboard/News/ReadInfoModalUser.vue'
+import ReadInfoModalUser from '@components/Dashboard/ReadInfos/ReadInfoModalUser.vue'
 
 export default {
   name: 'ReadInfoModalPopulation',

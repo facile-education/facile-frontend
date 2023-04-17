@@ -26,7 +26,7 @@
 
 <script>
 
-import ReadInfoModalPopulation from '@components/Dashboard/ReadInfoModalPopulation.vue'
+import ReadInfoModalPopulation from '@components/Dashboard/ReadInfos/ReadInfoModalPopulation.vue'
 
 export default {
   name: 'ReadInfoModal',
@@ -63,7 +63,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@design";
+@import "../../../design/index";
 
 h1 {
   margin: 0;
