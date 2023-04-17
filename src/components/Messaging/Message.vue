@@ -7,13 +7,15 @@
     data-test="message"
   >
     <!-- Source folder -->
-    <div class="message-sourcefolder">
+    <div
+      v-if="message.folderName !== undefined"
+      class="message-sourcefolder"
+    >
       <img
-        v-if="message.folderName !== undefined"
         :src="folderIcon"
         alt=""
       >
-      <span v-if="message.folderName !== undefined">
+      <span>
         {{ $t('Messaging.findInFolder') + ' ' + message.folderName }}
       </span>
     </div>
