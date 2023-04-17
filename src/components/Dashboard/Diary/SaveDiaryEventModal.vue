@@ -11,6 +11,10 @@
     </template>
 
     <template #body>
+      <PentilaSpinner
+        v-if="isProcessingSave"
+        class="save-spinner"
+      />
       <div class="population-selection">
         <PentilaTagsInput
           v-model="populations"
@@ -160,6 +164,7 @@ export default {
       },
       availablePopulationsList: [],
       isLoadingEventDetails: false,
+      isProcessingSave: false,
       isMounted: false,
       timer: undefined,
       isStartDateDisabled: false,
@@ -301,7 +306,9 @@ export default {
       }
     },
     createEvent () {
+      this.isProcessingSave = true
       createEvent(this.title, this.description, this.location, this.startDate, this.endDate, this.populations).then((data) => {
+        this.isProcessingSave = false
         if (data.success) {
           this.$emit('createEvent')
           this.onClose()
@@ -311,7 +318,9 @@ export default {
       })
     },
     updateEvent () {
+      this.isProcessingSave = true
       modifyEvent(this.initEvent.eventId, this.title, this.description, this.location, this.startDate, this.endDate, this.populations, this.markAsUnreadForAll).then((data) => {
+        this.isProcessingSave = false
         if (data.success) {
           this.$emit('updateEvent')
           this.onClose()
@@ -338,6 +347,10 @@ export default {
 
 <style lang="scss" scoped>
 @import "@design";
+
+.save-spinner {
+  z-index: 100;
+}
 
 .ck-editor {
   @extend %inline-modal-ck;
