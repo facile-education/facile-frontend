@@ -7,6 +7,7 @@
       class="announcement"
       :class="{'theme-border-color': !announcement.hasRead, 'theme-light-background-color': isSelected, 'theme-hover-light-background-color': isSelectionMode}"
       tabindex="0"
+      @keyup.enter="handleClick"
       @click="handleClick"
     >
       <div class="thumbnail">

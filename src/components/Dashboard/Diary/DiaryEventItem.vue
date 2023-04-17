@@ -7,6 +7,7 @@
       class="diary-event"
       :class="{'theme-border-color': !event.hasRead, 'theme-light-background-color': isSelected, 'theme-hover-light-background-color': isSelectionMode}"
       tabindex="0"
+      @keyup.enter="handleClick"
       @click="handleClick"
     >
       <div class="date theme-text-color">
