@@ -107,7 +107,7 @@ export default {
     }
   },
   mounted () {
-    if (this.isOldestUnread) {
+    if (this.isOldestUnread && !this.mq.phone) {
       // this.$refs.message.scrollIntoView(true)
       this.$refs.message.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' }) // To test in safari, do like above if it's not working
     }

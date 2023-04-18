@@ -167,9 +167,7 @@ export default {
         default:
           console.error('no option with name ' + option.name + ' exists')
       }
-      this.closeMarkerSelection()
       this.$store.dispatch('contextMenu/closeMenus')
-      this.toggleMultiSelection()
     },
     deleteSelectedThreads () {
       messagingUtils.deleteSelectedThreads().then(() => {
