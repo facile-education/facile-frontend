@@ -440,10 +440,10 @@ export default {
       this.onClose()
     },
     buildPreviousContent (previousContent) {
-      this.previousContent.contentValue = '</br><details><summary>' + this.$t('displayDetails') + '</summary>' +
+      this.previousContent.contentValue = '</br><details><summary>' + this.$t('at') +
+        dayjs(this.originMessage.sendDate, 'YYYY/MM/DD HH:mm:ss').format('DD/MM/YYYY HH:mm') +
+        ' ' + this.originMessage.senderName + this.$t('wrote') + '</summary>' +
         '</br> ' + "<div style='border-left:1px solid #000; padding-left:20px'>" +
-        +this.$t('at') + dayjs(this.originMessage.sendDate, 'YYYY/MM/DD HH:mm:ss').format('DD/MM/YYYY HH:mm') +
-        ' ' + this.originMessage.senderName + this.$t('wrote') + '</br> ' +
         previousContent +
         '</div>' +
         '</details>'
