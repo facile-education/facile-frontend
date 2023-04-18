@@ -358,6 +358,10 @@ export default {
 <style lang="scss" scoped>
 @import '@design';
 
+.sender, .line2 p {
+  font-size: 0.9rem;
+}
+
 .main {
   --icons-width: 35px;
   --icons-shrink-width: 30px;
@@ -455,8 +459,6 @@ export default {
         white-space: nowrap;
         text-overflow: ellipsis;
         font-weight: bold;
-        font-size: 1.07rem;
-        line-height: 1.1rem;
       }
       .sendDate {
         white-space: nowrap;

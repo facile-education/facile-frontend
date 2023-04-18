@@ -47,7 +47,7 @@
             :list="autocompleteItems"
             class="recipients"
             :class="device"
-            :max-tags-to-display="4"
+            :max-tags-to-display="2"
             :others-label-template="(nbOthers) => {return $t('othersLabel', {'nbOthers': nbOthers})}"
             @input="searchTimeOut"
           />
@@ -100,11 +100,15 @@
           class="attached-files"
           data-test="attached-files-section"
         >
-          <p v-t="'attachedFiles'" />
-          <PentilaButton
-            :label="$t('addAttachFileButton')"
-            @click="displayFilePicker"
-          />
+          <div class="attached-label">
+            <label v-t="'attachedFiles'" />
+            <img
+              class="documents-files"
+              src="@assets/documents.svg"
+              :title="$t('addAttachFileButton')"
+              @click="displayFilePicker"
+            >
+          </div>
           <AttachedFiles
             :attached-files="attachedFiles"
             :read-only="false"
@@ -515,8 +519,8 @@ export default {
   overflow-y: auto;
 }
 
-.create-message-modal.phone .window-container .window-body.full-screen {
-  max-height: 80vh;
+.create-message-modal.phone .window-container .window-body {
+  max-height: none;
 }
 
 .create-message-modal {
@@ -560,73 +564,83 @@ export default {
 }
 
 .create-message-modal {
-    padding: 20px;
-    display: flex;
-
-  .recipients-panel{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-
-    .create-button {
-      margin-left: 1em;
-    }
-  }
-
-  .recipients {
-    width: 90%;
-  }
-
-  .recipients-panel, .subject {
-    padding-bottom: 10px;
-  }
-
-  .error-container {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-  }
-
-  .content {
-    border: 1px solid $color-border;
-    width: 100%;
-    min-width: 30rem;
-
-    &.phone {
-      min-width: 0;
-    }
-  }
-
-  .footer {
-    width: 100%;
-
-    &.desktop {
-      .draftButton {
-        margin-left: auto;
-        margin-right: 20px;
-      }
-    }
-
-    &.phone{
-      display: flex;
-      justify-content: space-between;
-    }
-  }
+  padding: 20px;
+  display: flex;
 
   &.phone {
     padding: 0;
+  }
+}
 
-    .attached-files {
-      padding-top: 0;
+.recipients-panel{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+
+  .create-button {
+    margin-left: 1em;
+  }
+}
+
+.recipients {
+  width: 90%;
+  max-width: calc(100% - 55px)
+}
+
+.recipients-panel, .subject {
+  padding-bottom: 10px;
+}
+
+.error-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.content {
+  border: 1px solid $color-border;
+  width: 100%;
+  min-width: 30rem;
+
+  &.phone {
+    min-width: 0;
+  }
+}
+
+.attached-label {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.documents-files {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+}
+
+.footer {
+  width: 100%;
+
+  &.desktop {
+    .draftButton {
+      margin-left: auto;
+      margin-right: 20px;
     }
+  }
+
+  &.phone{
+    display: flex;
+    justify-content: space-between;
   }
 }
 </style>
 
 <i18n locale="fr">
 {
-  "attachedFiles": "Pièces jointes",
+  "attachedFiles": "Pièces jointes :",
   "header": "Nouveau message",
   "headerForward": "Transférer",
   "headerReply": "Répondre",
