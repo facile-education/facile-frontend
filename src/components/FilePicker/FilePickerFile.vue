@@ -113,7 +113,7 @@ button {
   }
 
   &.selected {
-    background-color: $color-file-picker-selected-file;
+    background-color: $color-file-picker-selected-file !important;
     font-weight: 500;
   }
 
