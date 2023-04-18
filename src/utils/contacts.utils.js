@@ -4,7 +4,7 @@ const CONTACT_TYPE_USER = 1
 const CONTACT_TYPE_ORG = 2
 const CONTACT_TYPE_GROUP = 3
 
-const addContactFieldsToContactList = (contactList) => {
+const addContactFieldsToContactList = (contactList, hasDetails = true) => {
   // Because contacts fields have not a normalized "text" attribute (TODO: put this logic in backend ?)
   contactList.forEach((contact) => {
     switch (contact.type) {
@@ -12,10 +12,10 @@ const addContactFieldsToContactList = (contactList) => {
         contact.text = getFullName(contact)
         if (contact.roles) {
           contact.text += ' (' + contact.roles
-          if (contact.subjects) {
+          if (contact.subjects && hasDetails) {
             contact.text += ' - ' + contact.subjects
           }
-          if (contact.classes) {
+          if (contact.classes && hasDetails) {
             contact.text += ' de ' + contact.classes
           }
           contact.text += ')'
