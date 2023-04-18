@@ -154,9 +154,8 @@ export default {
     .unread {
       @extend %messaging-pellet;
       position: absolute;
-      top: 0;
-      left: 0;
-      transform: translate(-100%, -100%);
+      top: 6px;
+      left: -11px;
     }
 
     .header-main {
@@ -164,6 +163,7 @@ export default {
       flex-grow: 1;
       .header-line1 {
         width: 100%;
+        /* Add padding if no folder */
         margin-top: 3px;
         display: flex;
         justify-content: space-between;
