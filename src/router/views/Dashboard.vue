@@ -2,10 +2,22 @@
   <Layout>
     <h1 :aria-label="$t('serviceTitle')" />
     <div class="dashboard-panel">
+      <PentilaDropDown
+        v-if="childList.length > 1"
+        v-model="selectedUser"
+        :list="childList"
+        display-field="fullName"
+      />
       <AnnouncementsWidget v-if="hasSchoolNewsWidget" />
       <DiaryWidget v-if="hasDiaryWidget" />
-      <HomeworkWidget v-if="hasHomeworkWidget" />
-      <EDTWidget v-if="hasEDTWidget" />
+      <HomeworkWidget
+        v-if="hasHomeworkWidget && selectedUser"
+        :user-id="selectedUser.userId"
+      />
+      <EDTWidget
+        v-if="hasEDTWidget && selectedUser"
+        :user-id="selectedUser.userId"
+      />
       <!--      <UserThreadWidget v-if="hasActivityThreadWidget" />-->
       <!--      <StatisticWidget v-if="hasStatisticWidget" />-->
     </div>
@@ -22,6 +34,11 @@ const HomeworkWidget = defineAsyncComponent(() => import('@/components/Dashboard
 export default {
   name: 'Dashboard',
   components: { AnnouncementsWidget, DiaryWidget, EDTWidget, HomeworkWidget, Layout },
+  data () {
+    return {
+      selectedUser: undefined
+    }
+  },
   computed: {
     hasActivityThreadWidget () {
       return this.$store.state.dashboard.hasActivityThreadWidget
@@ -37,10 +54,19 @@ export default {
     },
     hasDiaryWidget () {
       return this.$store.state.dashboard.hasDiaryWidget
+    },
+    childList () {
+      return this.$store.state.dashboard.childList
     }
   },
   created () {
-    this.$store.dispatch('dashboard/initDashboard') // Get user's widget list
+    this.$store.dispatch('dashboard/initDashboard').then(() => {
+      if (this.childList.length > 0) {
+        this.selectedUser = this.childList[0]
+      } else {
+        this.selectedUser = this.$store.state.user
+      }
+    })
   }
 }
 </script>

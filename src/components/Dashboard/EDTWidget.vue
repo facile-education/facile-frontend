@@ -102,6 +102,10 @@ export default {
   name: 'EDTWidget',
   components: { BaseIcon, Widget },
   props: {
+    userId: {
+      type: Number,
+      required: true
+    }
   },
   data () {
     return {
@@ -109,7 +113,10 @@ export default {
       currentDate: dayjs()
     }
   },
-  computed: {
+  watch: {
+    userId () {
+      this.getUserSchedule(true)
+    }
   },
   created () {
     this.getUserSchedule(true)
@@ -131,7 +138,7 @@ export default {
     },
     getUserSchedule (goForward) {
       // TODO : manage parents watching their child's schedule
-      getUserSchedule(this.$store.state.user.userId, this.formatDate(this.currentDate), goForward).then(
+      getUserSchedule(this.userId, this.formatDate(this.currentDate), goForward).then(
         (data) => {
           if (data.success) {
             this.sessions = data.eventList

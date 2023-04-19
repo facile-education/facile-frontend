@@ -31,6 +31,10 @@ export default {
   name: 'HomeworkWidget',
   components: { Widget, BaseIcon },
   props: {
+    userId: {
+      type: Number,
+      required: true
+    }
   },
   data () {
     return {
@@ -38,17 +42,23 @@ export default {
       currentDate: dayjs()
     }
   },
-  computed: {
+  watch: {
+    userId () {
+      this.getHomeworks()
+    }
   },
   created () {
-    // TODO : manage parents watching their child's schedule
-    getStudentHomeworks(this.$store.state.user.userId).then(
-      (data) => {
+    this.getHomeworks()
+  },
+  methods: {
+    getHomeworks () {
+      getStudentHomeworks(this.userId).then((data) => {
         if (data.success) {
           this.homeworks = data.homeworkList
         }
       }
-    )
+      )
+    }
   }
 }
 </script>
