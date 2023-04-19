@@ -10,7 +10,6 @@ export {
   getGroupNewsBroadcastGroups,
   getSchoolNewsBroadcastGroups,
   getNewsDetails,
-  getNewsReadStatus,
   deleteNews,
   addNewsDelegate,
   removeNewsDelegate
@@ -85,14 +84,6 @@ function getSchoolNewsBroadcastGroups () {
 
 function getNewsDetails (newsId) {
   return axios.get(constants.JSON_WS_URL + NEWS_PATH + NEWS_CTX + 'get-news-details', {
-    params: {
-      newsId
-    }
-  }).then(response => response.data)
-}
-
-function getNewsReadStatus (newsId) {
-  return axios.get(constants.JSON_WS_URL + NEWS_PATH + NEWS_CTX + 'get-news-read-status', {
     params: {
       newsId
     }

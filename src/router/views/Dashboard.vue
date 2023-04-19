@@ -4,10 +4,10 @@
     <div class="dashboard-panel">
       <AnnouncementsWidget v-if="hasSchoolNewsWidget" />
       <DiaryWidget v-if="hasDiaryWidget" />
-      <!--      <HomeworkWidget v-if="hasHomeworkWidget" />-->
-      <!--      <EDTWidget v-if="hasEDTWidget" />-->
+      <HomeworkWidget v-if="hasHomeworkWidget" />
+      <EDTWidget v-if="hasEDTWidget" />
       <!--      <UserThreadWidget v-if="hasActivityThreadWidget" />-->
-      <!--      <StaticWidget v-if="hasStaticWidget" />-->
+      <!--      <StatisticWidget v-if="hasStatisticWidget" />-->
     </div>
   </Layout>
 </template>
@@ -17,9 +17,11 @@ import Layout from '@/router/layouts/BannerLayout.vue'
 import { defineAsyncComponent } from 'vue'
 const AnnouncementsWidget = defineAsyncComponent(() => import('@components/Dashboard/Announcements/AnnouncementsWidget.vue'))
 const DiaryWidget = defineAsyncComponent(() => import('@/components/Dashboard/Diary/DiaryWidget.vue'))
+const EDTWidget = defineAsyncComponent(() => import('@/components/Dashboard/EDTWidget.vue'))
+const HomeworkWidget = defineAsyncComponent(() => import('@/components/Dashboard/HomeworkWidget.vue'))
 export default {
   name: 'Dashboard',
-  components: { AnnouncementsWidget, DiaryWidget, Layout },
+  components: { AnnouncementsWidget, DiaryWidget, EDTWidget, HomeworkWidget, Layout },
   computed: {
     hasActivityThreadWidget () {
       return this.$store.state.dashboard.hasActivityThreadWidget

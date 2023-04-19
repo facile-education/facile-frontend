@@ -16,7 +16,7 @@
         :key="homework.homeworkId"
         class="homework"
       >
-        <p>TODO: display homworks</p>
+        <p>TODO: display homeworks</p>
       </div>
     </template>
   </Widget>
