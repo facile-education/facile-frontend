@@ -44,7 +44,7 @@
           </div>
 
           <div class="publication">
-            {{ $t('at') + detailedAnnouncement.publicationDate + $t('by') + detailedAnnouncement.authorName }}
+            {{ $t('at') + formattedPublicationDate + $t('by') + detailedAnnouncement.authorName }}
           </div>
 
           <h2> {{ detailedAnnouncement.title }}</h2>
@@ -106,6 +106,7 @@ import SaveAnnouncementModal from '@components/Dashboard/Announcements/SaveAnnou
 import AttachedFiles from '@components/Base/AttachedFiles.vue'
 import PopulationList from '@components/Dashboard/PopulationList.vue'
 import ReadInfos from '@components/Dashboard/ReadInfos/ReadInfos.vue'
+import dayjs from 'dayjs'
 
 export default {
   name: 'AnnouncementDetails',
@@ -123,6 +124,11 @@ export default {
       isLoading: false,
       error: undefined,
       isUpdateModalDisplayed: false
+    }
+  },
+  computed: {
+    formattedPublicationDate () {
+      return dayjs(this.detailedAnnouncement.publicationDate).format('DD/MM/YY')
     }
   },
   watch: {

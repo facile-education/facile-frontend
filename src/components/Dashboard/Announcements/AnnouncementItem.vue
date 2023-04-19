@@ -136,7 +136,7 @@ export default {
   },
   computed: {
     announcementDay () {
-      return this.$t('at') + dayjs(this.announcement.publicationDate).format('DD-MM-YY')
+      return this.$t('at') + dayjs(this.announcement.publicationDate).format('DD/MM/YY')
     }
   },
   watch: { // Must be watched to react on a new search

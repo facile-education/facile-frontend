@@ -161,7 +161,7 @@ export default {
           this.nbNewEvents = data.nbUnreadEvents
           // Update pagination
           if (data.events.length > 0) {
-            this.fromDate = dayjs(data.events[data.events.length - 1].startDate).add(1, 'hour') // Assume they are sorted by date, so take the last event date
+            this.fromDate = dayjs(data.events[data.events.length - 1].startDate) // Assume they are sorted by date, so take the last event date
           }
 
           // Handle selection
