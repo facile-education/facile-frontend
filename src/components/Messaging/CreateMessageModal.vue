@@ -102,12 +102,17 @@
         >
           <div class="attached-label">
             <label v-t="'attachedFiles'" />
-            <img
-              class="documents-files"
-              src="@assets/documents.svg"
+            <button
+              class="add-document-button"
               :title="$t('addAttachFileButton')"
               @click="displayFilePicker"
             >
+              <img
+                class="documents-icon"
+                src="@assets/documents.svg"
+                :alt="$t('addAttachFileButton')"
+              >
+            </button>
           </div>
           <AttachedFiles
             :attached-files="attachedFiles"
@@ -615,10 +620,20 @@ export default {
   gap: 10px;
 }
 
-.documents-files {
+.add-document-button {
   cursor: pointer;
-  width: 20px;
-  height: 20px;
+  background-color: transparent;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  border: none;
+  display: flex;
+  align-items: center;
+
+  .documents-icon {
+    width: 20px;
+    height: 20px;
+  }
 }
 
 .footer {
