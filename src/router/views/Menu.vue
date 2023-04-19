@@ -41,7 +41,7 @@
       Contacts (0%)
     </RouterLink>
     <RouterLink to="/messaging">
-      Messaging (0%)
+      Messaging
     </RouterLink>
 
     <h2>Resources</h2>
@@ -66,7 +66,7 @@
       Dashboard Manager (40% -> labels, external rights, css, animations)
     </RouterLink>
     <RouterLink to="/statistics">
-      Statistics (0%)
+      Statistics
     </RouterLink>
     <RouterLink to="/user-manager">
       User Manager (0%)
@@ -84,11 +84,6 @@
     </RouterLink>
     <RouterLink to="/tools">
       ENT Tools (0%)
-    </RouterLink>
-
-    <h2>Calendar Tests</h2>
-    <RouterLink to="/full-calendar">
-      Full Calendar
     </RouterLink>
   </Layout>
 </template>

@@ -1,7 +1,10 @@
 <template>
   <div>
     <BannerItem src="/pentilaBanner-theme/images/icon/banner/icon-star.svg" />
-    <BannerItem src="/pentilaBanner-theme/images/icon/banner/icon-letter.svg" />
+    <BannerItem
+      src="/pentilaBanner-theme/images/icon/banner/icon-letter.svg"
+      @click="$router.push({ name: 'Messaging' })"
+    />
     <BannerItem src="/pentilaBanner-theme/images/icon/banner/icon-archives.svg" />
     <BannerItem
       data-test="open-help-item"
