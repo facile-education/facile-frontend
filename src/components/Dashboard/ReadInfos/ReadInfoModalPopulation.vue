@@ -4,7 +4,7 @@
     @click="isExtended=!isExtended"
   >
     <span>
-      {{ population.name }}
+      {{ population.populationName }}
     </span>
     <span class="right">
       <span>
@@ -19,10 +19,9 @@
 
   <Transition name="slide-fade">
     <ul v-if="isExtended">
-      <!-- TODO: use userId as key-->
       <li
-        v-for="(member, index) in sortedMembers"
-        :key="index"
+        v-for="member in sortedMembers"
+        :key="member.userId"
       >
         <ReadInfoModalUser :user="member" />
       </li>
@@ -34,6 +33,7 @@
 import BaseIcon from '@components/Base/BaseIcon.vue'
 import ReadInfoModalUser from '@components/Dashboard/ReadInfos/ReadInfoModalUser.vue'
 import PentilaUtils from 'pentila-utils'
+import { getFullName } from '@utils/commons.util'
 
 export default {
   name: 'ReadInfoModalPopulation',
@@ -50,11 +50,18 @@ export default {
     }
   },
   computed: {
+    formattedPopulation () {
+      const formattedPopulation = { ...this.population }
+      formattedPopulation.members.forEach(member => {
+        member.fullName = getFullName(member)
+      })
+      return formattedPopulation
+    },
     sortedMembers () {
-      return PentilaUtils.Array.sortWithString(this.population.members, false, 'fullName')
+      return PentilaUtils.Array.sortWithString(this.formattedPopulation.members, false, 'fullName')
     },
     populationReadMembers () {
-      return this.population.members.filter(member => member.hasRead === true)
+      return this.formattedPopulation.members.filter(member => member.hasRead === true)
     }
   }
 }

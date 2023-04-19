@@ -52,7 +52,7 @@ export default {
       return this.allMembers.filter(member => member.hasRead === true)
     },
     sortedPopulations () {
-      return PentilaUtils.Array.sortWithString(this.readInfos, false, 'name')
+      return PentilaUtils.Array.sortWithString(this.readInfos, false, 'populationName')
     }
   },
   created () {
