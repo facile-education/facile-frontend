@@ -53,6 +53,7 @@
           :key="thread.threadId"
         >
           <Thread
+            v-touch:hold="toggleMultiSelection"
             :thread="thread"
             :is-last="thread.threadId === threads[threads.length-1].threadId"
             class="thread-list-item"
@@ -350,6 +351,11 @@ export default {
       }
 
       this.$store.dispatch('messaging/getThreads', { folderId: this.currentFolder.folderId, lastDate: lastThreadDate })
+    },
+    toggleMultiSelection () {
+      if (this.mq.phone) {
+        this.$store.dispatch('messaging/toggleMultiSelection')
+      }
     }
   }
 }
