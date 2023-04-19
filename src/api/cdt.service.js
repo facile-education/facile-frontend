@@ -20,13 +20,13 @@ export default {
   createSession
 }
 
-const CDT_PATH = '/cdt-portlet.'
+const CDT_PATH = '/schedule.'
 
 /**
  * Get CDT configuration
  */
 function getConfiguration (schoolId = 0) {
-  return axios.get(constants.JSON_WS_URL + CDT_PATH + 'configuration/get-configuration', {
+  return axios.get(constants.JSON_WS_URL + CDT_PATH + 'scheduleconfiguration/get-configuration', {
     params: {
       schoolId: schoolId,
       childId: 0
