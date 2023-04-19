@@ -351,11 +351,13 @@ export default {
 
   &.first-element {
     width: 70%;
+  }
+
+  &:not(.first-element) .name {
     margin: auto;
   }
 
   .name {
-    margin: auto;
     font-size: 1.225em;
     max-width: 90%;
   }
