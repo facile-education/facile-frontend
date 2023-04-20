@@ -13,7 +13,6 @@
       <HomeworkWidget
         v-if="hasHomeworkWidget && selectedUser"
         :user-id="selectedUser.userId"
-        style="width: 300px"
       />
       <EDTWidget
         v-if="hasEDTWidget && selectedUser"
