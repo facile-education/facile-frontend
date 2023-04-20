@@ -2,7 +2,7 @@
   <Layout>
     <h1 :aria-label="$t('serviceTitle')" />
     <div class="dashboard-panel">
-      <PentilaDropDown
+      <PentilaDropdown
         v-if="childList.length > 1"
         v-model="selectedUser"
         :list="childList"
@@ -30,7 +30,7 @@ import { defineAsyncComponent } from 'vue'
 const AnnouncementsWidget = defineAsyncComponent(() => import('@components/Dashboard/Announcements/AnnouncementsWidget.vue'))
 const DiaryWidget = defineAsyncComponent(() => import('@/components/Dashboard/Diary/DiaryWidget.vue'))
 const EDTWidget = defineAsyncComponent(() => import('@/components/Dashboard/EDTWidget.vue'))
-const HomeworkWidget = defineAsyncComponent(() => import('@/components/Dashboard/HomeworkWidget.vue'))
+const HomeworkWidget = defineAsyncComponent(() => import('@components/Dashboard/Homeworks/HomeworkWidget.vue'))
 export default {
   name: 'Dashboard',
   components: { AnnouncementsWidget, DiaryWidget, EDTWidget, HomeworkWidget, Layout },

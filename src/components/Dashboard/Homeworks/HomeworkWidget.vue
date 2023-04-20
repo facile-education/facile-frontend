@@ -11,25 +11,24 @@
     </template>
 
     <template #default>
-      <div
+      <HomeworkItem
         v-for="homework in homeworks"
         :key="homework.homeworkId"
-        class="homework"
-      >
-        <p>TODO: display homeworks</p>
-      </div>
+        :homework="homework"
+      />
     </template>
   </Widget>
 </template>
 
 <script>
 import dayjs from 'dayjs'
-import { getStudentHomeworks } from '@/api/dashboard.service'
-import BaseIcon from '@components/Base/BaseIcon'
-import Widget from '@components/Dashboard/Widget'
+import { getHomeworks } from '@/api/dashboard/homeworks.service'
+import BaseIcon from '@components/Base/BaseIcon.vue'
+import Widget from '@components/Dashboard/Widget.vue'
+import HomeworkItem from '@components/Dashboard/Homeworks/HomeworkItem.vue'
 export default {
   name: 'HomeworkWidget',
-  components: { Widget, BaseIcon },
+  components: { HomeworkItem, Widget, BaseIcon },
   props: {
     userId: {
       type: Number,
@@ -39,7 +38,7 @@ export default {
   data () {
     return {
       homeworks: [],
-      currentDate: dayjs()
+      undoneOnly: false
     }
   },
   watch: {
@@ -52,19 +51,18 @@ export default {
   },
   methods: {
     getHomeworks () {
-      getStudentHomeworks(this.userId).then((data) => {
+      getHomeworks(this.userId, dayjs().format('YYYY-MM-DD HH:mm'), this.undoneOnly).then((data) => {
         if (data.success) {
-          this.homeworks = data.homeworkList
+          this.homeworks = data.homeworks
         }
-      }
-      )
+      })
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-@import '@design';
+@import '../../../design/index';
 .widget-header {
   display: flex;
   align-items: center;
