@@ -14,7 +14,7 @@
 
       <span class="transparent-part">
         <span class="left-section">
-          <span class="subject"> {{ homework.subject }}</span>
+          <strong class="subject"> {{ homework.subject }}</strong>
           <span
             class="description"
             v-html="homework.description"
@@ -142,6 +142,8 @@ export default {
 
 .right-section {
   margin-left: 1rem;
+  white-space: nowrap;
+  font-size: 0.8rem;
 }
 
 .subject {
@@ -155,6 +157,7 @@ export default {
 .description {
   ::v-deep(p) {
     margin: 0;
+    font-size: 0.8rem;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -164,12 +167,10 @@ export default {
 .done-status {
   display: flex;
   align-items: center;
-  white-space: nowrap;
-  font-size: 0.8rem;
+}
 
-  .switch {
-    margin-left: 0.5rem;
-  }
+.switch, .paper-clip {
+  margin-left: 0.5rem;
 }
 
 </style>
