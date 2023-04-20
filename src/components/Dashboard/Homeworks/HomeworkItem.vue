@@ -1,46 +1,54 @@
 <template>
-  <div
-    class="homework-item"
-    :style="'background-color: ' + homework.subjectColor + '; border-color: ' + homeWorkBorderColor"
-  >
-    <span
-      v-if="!homework.isDone && !homework.isSent"
-      class="pellet"
-      :style="'background-color: ' + homework.subjectColor"
-    />
-    <PentilaSpinner v-if="isLoading" />
-    <span class="transparent-part">
-      <span class="left-section">
-        <span class="subject"> {{ homework.subject }}</span>
+  <div class="container">
+    <div
+      class="homework-item"
+      :style="'background-color: ' + homework.subjectColor + '; border-color: ' + homeWorkBorderColor"
+    >
+      <span
+        v-if="!homework.isDone && !homework.isSent"
+        class="pellet"
+        :style="'background-color: ' + homework.subjectColor"
+      />
+
+      <PentilaSpinner v-if="isLoading" />
+
+      <span class="transparent-part">
+        <span class="left-section">
+          <span class="subject"> {{ homework.subject }}</span>
+          <span
+            class="description"
+            v-html="homework.description"
+          />
+        </span>
         <span
-          class="description"
-          v-html="homework.description"
+          v-if="homework.type===homeworksTypes.SIMPLE_INSTRUCTION"
+          class="right-section done-status"
+        >
+          <span v-t="(isDoneSwitchStatus ? 'done' : 'todo')" />
+          <PentilaToggleSwitch
+            v-model="isDoneSwitchStatus"
+            class="switch"
+            @update:modelValue="toggleDoneStatus"
+          />
+        </span>
+
+        <span
+          v-else-if="homework.isSent"
+          class="right-section"
+        >
+          {{ $t('returned') }}
+          <BaseIcon
+            class="paper-clip"
+            name="paperclip"
+          />
+        </span>
+        <span
+          v-else
+          v-t="'toReturn'"
+          class="right-section"
         />
       </span>
-      <PentilaToggleSwitch
-        v-if="homework.type===homeworksTypes.SIMPLE_INSTRUCTION"
-        v-model="isDoneSwitchStatus"
-        class="right-section"
-        :title="isDoneSwitchStatus ? $t('done') : $t('todo')"
-        :label="isDoneSwitchStatus ? $t('done') : $t('todo')"
-        @update:modelValue="toggleDoneStatus"
-      />
-      <span
-        v-else-if="homework.isSent"
-        class="right-section"
-      >
-        {{ $t('returned') }}
-        <BaseIcon
-          class="paper-clip"
-          name="paperclip"
-        />
-      </span>
-      <span
-        v-else
-        v-t="'toReturn'"
-        class="right-section"
-      />
-    </span>
+    </div>
   </div>
 </template>
 
@@ -94,8 +102,15 @@ export default {
 <style lang="scss" scoped>
 @import "@design";
 
-.homework-item {
+.container {
+  padding-right: 4px;
+  padding-top: 4px;
   height: 50px;
+  width: 100%;
+}
+
+.homework-item {
+  height: 100%;
   width: 100%;
   position: relative;
   border-top: 1px solid;
@@ -113,7 +128,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem;
+  padding: 0 1rem;
 }
 
 .pellet {
@@ -122,6 +137,7 @@ export default {
 
 .left-section {
   display: block;
+  overflow: hidden;
 }
 
 .right-section {
@@ -129,12 +145,30 @@ export default {
 }
 
 .subject {
+  display: block;
   font-size: 0.8rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .description {
   ::v-deep(p) {
     margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.done-status {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  font-size: 0.8rem;
+
+  .switch {
+    margin-left: 0.5rem;
   }
 }
 
