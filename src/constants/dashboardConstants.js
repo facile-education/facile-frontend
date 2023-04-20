@@ -6,8 +6,8 @@ const allAnnouncementModalPaginationSize = 20
 
 const homeworksTypes = {
   SIMPLE_INSTRUCTION: 1,
-  DOCUMENT_TO_RETURN: 2,
-  DOCUMENT_TO_COMPLETE: 3
+  DOCUMENT_TO_COMPLETE: 2,
+  DOCUMENT_TO_RETURN: 3
 }
 
 export {
