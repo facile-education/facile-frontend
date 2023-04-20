@@ -15,6 +15,7 @@
         v-for="homework in homeworks"
         :key="homework.homeworkId"
         :homework="homework"
+        @updateDoneStatus="homework.isDone = $event"
       />
     </template>
   </Widget>
@@ -62,7 +63,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../../design/index';
 .widget-header {
   display: flex;
   align-items: center;
