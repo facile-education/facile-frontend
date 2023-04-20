@@ -63,7 +63,6 @@
       v-if="message.hasAttachFiles"
       :attached-files="message.attachments"
       :read-only="true"
-      class="files"
     />
   </div>
 </template>
