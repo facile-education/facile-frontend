@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="homework-container">
     <div
       class="homework-item"
       :style="'background-color: ' + homework.subjectColor + '; border-color: ' + homeWorkBorderColor"
@@ -102,7 +102,7 @@ export default {
 <style lang="scss" scoped>
 @import "@design";
 
-.container {
+.homework-container {
   padding-right: 4px;
   padding-top: 4px;
   height: 50px;

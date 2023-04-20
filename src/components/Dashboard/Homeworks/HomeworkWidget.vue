@@ -5,12 +5,34 @@
       :undone-only="undoneOnly"
       @updateUndoneOnly="updateUndoneOnlyValue"
     />
-    <HomeworkItem
-      v-for="homework in homeworks"
-      :key="homework.homeworkId"
-      :homework="homework"
-      @updateDoneStatus="homework.isDone = $event"
+    <PentilaSpinner
+      v-if="isLoading"
+      style="z-index: 1"
     />
+    <div
+      v-if="error === true"
+      v-t="'errorPlaceholder'"
+      class="placeholder"
+    />
+    <div
+      v-else-if="homeworkList.length === 0"
+      v-t="'emptyPlaceholder'"
+      class="placeholder"
+    />
+    <ul
+      v-else
+      class="homework-list"
+    >
+      <li
+        v-for="homework in homeworkList"
+        :key="homework.homeworkId"
+      >
+        <HomeworkItem
+          :homework="homework"
+          @updateDoneStatus="homework.isDone = $event"
+        />
+      </li>
+    </ul>
   </section>
 </template>
 
@@ -31,9 +53,11 @@ export default {
   },
   data () {
     return {
-      homeworks: [],
-      nbHomeworksUndone: 0,
-      undoneOnly: false
+      isLoading: false,
+      error: false,
+      undoneOnly: false,
+      homeworkList: [],
+      nbHomeworksUndone: 0
     }
   },
   watch: {
@@ -50,10 +74,16 @@ export default {
       this.getHomeworks()
     },
     getHomeworks () {
+      this.isLoading = true
       getHomeworks(this.userId, dayjs().format('YYYY-MM-DD HH:mm'), this.undoneOnly).then((data) => {
+        this.isLoading = false
         if (data.success) {
-          this.homeworks = data.homeworks
+          this.error = false
+          this.homeworkList = data.homeworks
           // TODO this.nbHomeworksUndone = data.nbHomeworksUndone
+        } else {
+          this.error = true
+          console.error('Error')
         }
       })
     }
@@ -62,19 +92,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.widget-header {
-  display: flex;
-  align-items: center;
-
-  .header-icon {
-    font-size: 1.5rem;
-    margin-right: 10px;
-  }
+section {
+  width: min(355px, 100vw);
+  position: relative;
 }
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.placeholder {
+  height: 106px;
+}
+
 </style>
 
 <i18n locale="fr">
 {
-  "homeworks": "Devoirs"
+  "errorPlaceholder": "Oups, une erreur est survenue...",
+  "emptyPlaceholder": "Aucun devoir à faire!!"
 }
 </i18n>
