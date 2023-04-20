@@ -19,24 +19,16 @@
     <div class="slot">
       <slot />
     </div>
-
-    <div
-      v-if="isLoadingProgressionDisplayed"
-      class="background-actions-container"
-      :class="{'phone': mq.phone}"
-    >
-      <UploadProgression />
-    </div>
   </div>
 </template>
 
 <script>
 import { returnAddedFiles } from '@/utils/upload.util'
 import BaseIcon from '@components/Base/BaseIcon'
-import UploadProgression from '@components/Documents/UploadProgression'
+
 export default {
   name: 'FilePickerArea',
-  components: { UploadProgression, BaseIcon },
+  components: { BaseIcon },
   inject: ['mq'],
   props: {
     accept: {
@@ -67,9 +59,6 @@ export default {
     },
     isThereInternDocumentDrag () {
       return this.$store.state.misc.isThereDocumentDrag
-    },
-    isLoadingProgressionDisplayed () {
-      return this.$store.state.currentActions.isLoadingProgressionDisplayed
     }
   },
   methods: {
@@ -159,30 +148,6 @@ export default {
   font-size: 30px;
   color: black;
   pointer-events: none;
-}
-
-.background-actions-container {
-  background-color: white;
-  z-index: $popup-z-index;
-  position: absolute;
-  bottom: 1px;
-  right: 20px;
-  flex-direction: column;
-  max-width: 100%;
-
-  .action {
-    color: white;
-  }
-
-  &.phone {
-    right: 50%;
-    transform: translate(50%, 0);
-
-    .action {
-      width: 90vw;
-      height: 50px;
-    }
-  }
 }
 </style>
 
