@@ -1,35 +1,28 @@
 <template>
-  <Widget>
-    <template #header>
-      <span class="widget-header">
-        <BaseIcon
-          class="header-icon"
-          name="newspaper"
-        />
-        {{ $t('homeworks') }}
-      </span>
-    </template>
-
-    <template #default>
-      <HomeworkItem
-        v-for="homework in homeworks"
-        :key="homework.homeworkId"
-        :homework="homework"
-        @updateDoneStatus="homework.isDone = $event"
-      />
-    </template>
-  </Widget>
+  <section>
+    <HomeworkHeader
+      :nb-homeworks-undone="nbHomeworksUndone"
+      :undone-only="undoneOnly"
+      @updateUndoneOnly="updateUndoneOnlyValue"
+    />
+    <HomeworkItem
+      v-for="homework in homeworks"
+      :key="homework.homeworkId"
+      :homework="homework"
+      @updateDoneStatus="homework.isDone = $event"
+    />
+  </section>
 </template>
 
 <script>
 import dayjs from 'dayjs'
 import { getHomeworks } from '@/api/dashboard/homeworks.service'
-import BaseIcon from '@components/Base/BaseIcon.vue'
-import Widget from '@components/Dashboard/Widget.vue'
 import HomeworkItem from '@components/Dashboard/Homeworks/HomeworkItem.vue'
+import HomeworkHeader from '@components/Dashboard/Homeworks/HomeworkHeader.vue'
+
 export default {
   name: 'HomeworkWidget',
-  components: { HomeworkItem, Widget, BaseIcon },
+  components: { HomeworkHeader, HomeworkItem },
   props: {
     userId: {
       type: Number,
@@ -39,6 +32,7 @@ export default {
   data () {
     return {
       homeworks: [],
+      nbHomeworksUndone: 0,
       undoneOnly: false
     }
   },
@@ -51,10 +45,15 @@ export default {
     this.getHomeworks()
   },
   methods: {
+    updateUndoneOnlyValue (value) {
+      this.undoneOnly = value
+      this.getHomeworks()
+    },
     getHomeworks () {
       getHomeworks(this.userId, dayjs().format('YYYY-MM-DD HH:mm'), this.undoneOnly).then((data) => {
         if (data.success) {
           this.homeworks = data.homeworks
+          // TODO this.nbHomeworksUndone = data.nbHomeworksUndone
         }
       })
     }

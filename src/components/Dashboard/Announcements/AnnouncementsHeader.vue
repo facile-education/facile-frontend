@@ -1,5 +1,5 @@
 <template>
-  <div class="header">
+  <header>
     <div class="left">
       <h2 v-t="'announcements'" />
       <Pellet
@@ -22,7 +22,7 @@
       v-if="canCreateAnnouncement"
       @click="isCreateModalDisplayed = true"
     />
-  </div>
+  </header>
 
   <teleport
     v-if="isCreateModalDisplayed"
@@ -83,7 +83,7 @@ h2 {
   @extend %widget-h2;
 }
 
-.header {
+header {
   display: flex;
   align-items: center;
   justify-content: space-between;
