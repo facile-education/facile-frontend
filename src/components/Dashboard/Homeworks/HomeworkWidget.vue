@@ -33,6 +33,13 @@
         />
       </li>
     </ul>
+    <div class="footer">
+      <button
+        v-t="'showMore'"
+        class="show-more"
+        @click="$router.push({ name: 'Planning' })"
+      />
+    </div>
   </section>
 </template>
 
@@ -92,6 +99,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
+
 section {
   width: min(355px, 100vw);
   position: relative;
@@ -111,11 +120,15 @@ ul {
   height: 106px;
 }
 
+.footer {
+  @extend %widget-footer;
+}
 </style>
 
 <i18n locale="fr">
 {
   "errorPlaceholder": "Oups, une erreur est survenue...",
-  "emptyPlaceholder": "Aucun devoir à faire!!"
+  "emptyPlaceholder": "Aucun devoir à faire!!",
+  "showMore": "Voir tous les devoirs"
 }
 </i18n>
