@@ -30,7 +30,7 @@ function getUserSchedule (userId, targetDate, goForward) {
   return axios.get(constants.JSON_WS_URL + DASHBOARD_PATH + DASHBOARD_CTX + 'get-user-schedule', {
     params: {
       userId: userId,
-      dateStr: targetDate,
+      dateStr: targetDate.format('YYYY-MM-DD HH:mm'),
       goForward: goForward
     }
   }).then(response => response.data)
