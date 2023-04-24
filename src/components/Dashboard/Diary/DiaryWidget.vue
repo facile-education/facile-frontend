@@ -104,7 +104,7 @@ export default {
     },
     loadDiaryEvents () {
       this.isLoading = true
-      getEvents(this.fromDate, nbDiaryEventInWidget, this.unReadOnly).then((data) => {
+      getEvents(0, nbDiaryEventInWidget, this.unReadOnly).then((data) => {
         this.isLoading = false
         if (data.success) {
           this.error = false

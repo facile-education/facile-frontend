@@ -94,7 +94,6 @@ export default {
       nbNewEvents: 0,
       error: undefined,
       eventList: [],
-      fromDate: dayjs(),
       selectedEvent: undefined
     }
   },
@@ -146,23 +145,17 @@ export default {
       this.refresh()
     },
     refresh () {
-      // Reset pagination
-      this.fromDate = dayjs()
       this.eventList = []
       this.loadDiaryEvents()
     },
     loadDiaryEvents () {
       this.isLoading = true
-      getEvents(this.fromDate, diaryEventModalPaginationSize, this.unReadOnly).then((data) => {
+      getEvents(this.eventList.length, diaryEventModalPaginationSize, this.unReadOnly).then((data) => {
         this.isLoading = false
         if (data.success) {
           this.error = false
           this.eventList = this.eventList.concat(data.events)
           this.nbNewEvents = data.nbUnreadEvents
-          // Update pagination
-          if (data.events.length > 0) {
-            this.fromDate = dayjs(data.events[data.events.length - 1].startDate) // Assume they are sorted by date, so take the last event date
-          }
 
           // Handle selection
           if (this.isDetailsPanelDisplayed && this.selectedEvent === undefined && this.eventList.length > 0 && !this.unReadOnly) {
