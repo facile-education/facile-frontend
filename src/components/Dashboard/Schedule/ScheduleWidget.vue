@@ -1,13 +1,28 @@
 <template>
   <section>
     <ScheduleHeader
-      :current-date="currentDate"
+      :current-date="currentDisplayedDate"
       @goBefore="goBefore"
       @goAfter="goAfter"
     />
 
+    <PentilaSpinner
+      v-if="isLoading"
+      style="z-index: 1"
+    />
     <div
-      v-for="session in sessions"
+      v-if="error === true"
+      v-t="'errorPlaceholder'"
+      class="placeholder"
+    />
+    <div
+      v-else-if="sessionList.length === 0"
+      v-t="'emptyPlaceholder'"
+      class="placeholder"
+    />
+
+    <div
+      v-for="session in sessionList"
       :key="session.sessionId"
       class="session"
     >
@@ -78,36 +93,41 @@ export default {
   },
   data () {
     return {
-      sessions: [],
-      currentDate: dayjs()
+      goForward: true, // Option to determine if we display the next day containing course or the current date
+      isLoading: false,
+      error: false,
+      currentDisplayedDate: undefined,
+      sessionList: []
     }
   },
   watch: {
     userId () {
-      this.getUserSchedule(true)
+      this.getUserSchedule(dayjs(), this.goForward)
     }
   },
   created () {
-    this.getUserSchedule(true)
+    this.getUserSchedule(dayjs(), this.goForward)
   },
   methods: {
     goBefore () {
-      this.currentDate = this.currentDate.add(-1, 'day')
-      this.getUserSchedule(false)
+      this.getUserSchedule(this.currentDisplayedDate.add(-1, 'day'), false)
     },
     goAfter () {
-      this.currentDate = this.currentDate.add(1, 'day')
-      this.getUserSchedule(true)
+      this.getUserSchedule(this.currentDisplayedDate.add(1, 'day'), this.goForward)
     },
-    getUserSchedule (goForward) {
-      getUserSchedule(this.userId, this.currentDate, goForward).then(
-        (data) => {
-          if (data.success) {
-            this.sessions = data.eventList
-            this.currentDate = dayjs(data.date, 'YYYY-MM-DD HH:mm')
-          }
+    getUserSchedule (date, goForward) {
+      this.isLoading = true
+      getUserSchedule(this.userId, date, goForward).then((data) => {
+        this.isLoading = false
+        if (data.success) {
+          this.error = false
+          this.sessionList = data.eventList
+          this.currentDisplayedDate = dayjs(data.date, 'YYYY-MM-DD HH:mm')
+        } else {
+          this.error = true
+          console.error('Error')
         }
-      )
+      })
     },
     redirectToUrl (targetUrl) {
       if (targetUrl !== undefined && targetUrl !== '') {
@@ -160,6 +180,7 @@ section {
 
 <i18n locale="fr">
 {
-  "room": "Salle"
+  "errorPlaceholder": "Oups, une erreur est survenue...",
+  "emptyPlaceholder": "Aucun cours"
 }
 </i18n>
