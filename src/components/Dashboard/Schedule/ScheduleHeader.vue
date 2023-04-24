@@ -58,6 +58,7 @@ export default {
 header {
   display: flex;
   align-items: center;
+  @extend %widget-header;
 }
 
 h2 {

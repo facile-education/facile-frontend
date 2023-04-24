@@ -54,6 +54,7 @@ h2 {
 header {
   display: flex;
   align-items: center;
+  @extend %widget-header;
 }
 
 .header-pellet {
