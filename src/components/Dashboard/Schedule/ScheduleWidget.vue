@@ -96,10 +96,10 @@
 <script>
 import dayjs from 'dayjs'
 import { getUserSchedule } from '@/api/dashboard.service'
-import Widget from '@components/Dashboard/Widget'
-import BaseIcon from '@components/Base/BaseIcon'
+import Widget from '@components/Dashboard/Widget.vue'
+import BaseIcon from '@components/Base/BaseIcon.vue'
 export default {
-  name: 'EDTWidget',
+  name: 'ScheduleWidget',
   components: { BaseIcon, Widget },
   props: {
     userId: {
