@@ -103,6 +103,11 @@ const routes = [
     component: () => import('@/router/views/Groups')
   },
   {
+    path: '/planning',
+    name: 'Planning',
+    component: () => import('@/router/views/Planning.vue')
+  },
+  {
     path: '/statistics',
     name: 'Statistics',
     component: () => import('@/router/views/Statistics')

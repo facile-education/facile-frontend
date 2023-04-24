@@ -1,8 +1,9 @@
 <template>
   <div class="homework-container">
-    <div
+    <button
       class="homework-item"
       :style="'background-color: ' + homework.subjectColor + '; border-color: ' + homeWorkBorderColor"
+      @click="$router.push({ name: 'Planning', params: { sourceSessionId: homework.sourceSessionId }})"
     >
       <span
         v-if="!homework.isDone && !homework.isSent"
@@ -48,7 +49,7 @@
           class="right-section"
         />
       </span>
-    </div>
+    </button>
   </div>
 </template>
 
@@ -101,6 +102,16 @@ export default {
 
 <style lang="scss" scoped>
 @import "@design";
+
+button {
+  cursor: pointer;
+  background-color: transparent;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  border: none;
+  text-align: left;
+}
 
 .homework-container {
   padding-right: 4px;
