@@ -14,7 +14,7 @@
         v-if="hasHomeworkWidget && selectedUser"
         :user-id="selectedUser.userId"
       />
-      <EDTWidget
+      <ScheduleWidget
         v-if="hasEDTWidget && selectedUser"
         :user-id="selectedUser.userId"
       />
@@ -29,11 +29,11 @@ import Layout from '@/router/layouts/BannerLayout.vue'
 import { defineAsyncComponent } from 'vue'
 const AnnouncementsWidget = defineAsyncComponent(() => import('@components/Dashboard/Announcements/AnnouncementsWidget.vue'))
 const DiaryWidget = defineAsyncComponent(() => import('@/components/Dashboard/Diary/DiaryWidget.vue'))
-const EDTWidget = defineAsyncComponent(() => import('@/components/Dashboard/EDTWidget.vue'))
+const ScheduleWidget = defineAsyncComponent(() => import('@components/Dashboard/Schedule/ScheduleWidget'))
 const HomeworkWidget = defineAsyncComponent(() => import('@components/Dashboard/Homeworks/HomeworkWidget.vue'))
 export default {
   name: 'Dashboard',
-  components: { AnnouncementsWidget, DiaryWidget, EDTWidget, HomeworkWidget, Layout },
+  components: { AnnouncementsWidget, DiaryWidget, ScheduleWidget, HomeworkWidget, Layout },
   data () {
     return {
       selectedUser: undefined
