@@ -1,9 +1,11 @@
 <template>
   <div class="homework-container">
-    <button
+    <div
       class="homework-item"
       :style="'background-color: ' + homework.subjectColor + '; border-color: ' + homeWorkBorderColor"
-      @click="$router.push({ name: 'Planning', params: { sourceSessionId: homework.sourceSessionId }})"
+      :tabindex="0"
+      @keyup.enter="redirect"
+      @click="redirect"
     >
       <span
         v-if="!homework.isDone && !homework.isSent"
@@ -30,6 +32,8 @@
             v-model="isDoneSwitchStatus"
             class="switch"
             @update:modelValue="toggleDoneStatus"
+            @click.stop
+            @keyup.enter.stop
           />
         </span>
 
@@ -49,7 +53,7 @@
           class="right-section"
         />
       </span>
-    </button>
+    </div>
   </div>
 </template>
 
@@ -83,6 +87,9 @@ export default {
     }
   },
   methods: {
+    redirect () {
+      this.$router.push({ name: 'Planning', params: { sourceSessionId: this.homework.sourceSessionId } })
+    },
     toggleDoneStatus () {
       this.isLoading = true
       setHomeworkDoneStatus(this.homework.homeworkId, this.isDoneSwitchStatus).then((data) => {
