@@ -38,7 +38,7 @@
           >
             <HomeworkItem
               :homework="homework"
-              @updateDoneStatus="homework.isDone = $event"
+              @updateDoneStatus="updateHomeworkDoneStatus(homework, $event)"
             />
           </li>
         </ul>
@@ -120,12 +120,18 @@ export default {
         if (data.success) {
           this.error = false
           this.homeworkList = data.homeworks
-          // TODO this.nbHomeworksUndone = data.nbHomeworksUndone
+          this.nbHomeworksUndone = data.nbUndoneHomeworks
         } else {
           this.error = true
           console.error('Error')
         }
       })
+    },
+    updateHomeworkDoneStatus (homework, isDone) {
+      if (homework.isDone !== isDone) {
+        homework.isDone = isDone
+        this.nbHomeworksUndone += (isDone ? -1 : 1)
+      }
     }
   }
 }
