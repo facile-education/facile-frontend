@@ -9,11 +9,13 @@ const homeworksTypes = {
   DOCUMENT_TO_COMPLETE: 2,
   DOCUMENT_TO_RETURN: 3
 }
+const nbHomeworksInWidget = 5
 
 export {
   nbDiaryEventInWidget,
   diaryEventModalPaginationSize,
   nbAnnouncementsInWidget,
   allAnnouncementModalPaginationSize,
-  homeworksTypes
+  homeworksTypes,
+  nbHomeworksInWidget
 }
