@@ -81,6 +81,17 @@ function getFullName (user) {
   return user.lastName + ' ' + user.firstName
 }
 
+function getTeachersLabel (teacherList) {
+  let label = ''
+  if (teacherList !== undefined) {
+    for (let index = 0; index < teacherList.length; ++index) {
+      const name = teacherList[index].firstName.substring(0, 1) + '. ' + teacherList[index].lastName
+      label += (label === '') ? name : ', ' + name
+    }
+  }
+  return label
+}
+
 /**
  * Compare entities on fields 'name', 'size', 'lastModifiedDate', 'creationDate', 'date' or 'deleteDate'
  **/
@@ -126,5 +137,6 @@ export {
   fileNameWithoutExtension,
   getExtensionFromName,
   compare,
-  getFullName
+  getFullName,
+  getTeachersLabel
 }

@@ -87,6 +87,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  @extend %widget-header;
 
   .left {
     display: flex;

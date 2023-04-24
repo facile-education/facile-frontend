@@ -20,61 +20,17 @@
       v-t="'emptyPlaceholder'"
       class="placeholder"
     />
-
-    <div
-      v-for="session in sessionList"
-      :key="session.sessionId"
-      class="session"
+    <ol
+      v-else
+      class="session-list"
     >
-      <div
-        v-if="isTeacher"
-        class="session-infos"
-        :class="{'pointer': (session.sessionUrl != undefined)}"
-        title="session.title"
-        @click="redirectToUrl(session.sessionUrl)"
+      <li
+        v-for="session in sessionList"
+        :key="session.sessionId"
       >
-        <p class="start-session">
-          {{ getHour(session.startDate) }} - {{ getHour(session.endDate) }}
-        </p>
-
-        <!-- group name OR subject -->
-        <p
-          v-if="isTeacher"
-          class="session-subject nero-text theme-color"
-        >
-          {{ session.groupName }}
-        </p>
-        <p
-          v-else
-          class="session-subject"
-        >
-          {{ getSubject(session) }}
-        </p>
-
-        <!-- title OR teachers -->
-        <p
-          v-if="isTeacher"
-          class="subject"
-        >
-          {{ session.subject }}
-        </p>
-        <p
-          v-else
-          class="teacher-name"
-        >
-          {{ session.teachers }}
-        </p>
-        <p class="room-number">
-          {{ $t('room') }}:{{ session.room }}
-        </p>
-        <div
-          v-if="session.isCancelled"
-          class="cancelled-session"
-        >
-          <i class="icon-cancelled-session" />
-        </div>
-      </div>
-    </div>
+        <ScheduleItem :session="session" />
+      </li>
+    </ol>
   </section>
 </template>
 
@@ -82,9 +38,10 @@
 import dayjs from 'dayjs'
 import { getUserSchedule } from '@/api/dashboard.service'
 import ScheduleHeader from '@components/Dashboard/Schedule/ScheduleHeader.vue'
+import ScheduleItem from '@components/Dashboard/Schedule/ScheduleItem.vue'
 export default {
   name: 'ScheduleWidget',
-  components: { ScheduleHeader },
+  components: { ScheduleItem, ScheduleHeader },
   props: {
     userId: {
       type: Number,
@@ -128,24 +85,6 @@ export default {
           console.error('Error')
         }
       })
-    },
-    redirectToUrl (targetUrl) {
-      if (targetUrl !== undefined && targetUrl !== '') {
-        this.$window.location.href = targetUrl
-      }
-    },
-    getHour (sessionDate) {
-      return dayjs(sessionDate, 'YYYY-MM-DD HH:mm').format('HH:mm')
-    },
-    getSubject (session) {
-      if (session.cdtSessionId !== undefined) {
-        return session.subject
-      } else {
-        return session.title
-      }
-    },
-    isTeacher () {
-      return this.$store.state.user.isTeacher
     }
   }
 }
@@ -163,16 +102,13 @@ section {
   height: 106px;
 }
 
-.session {
-  border-left: 3px solid black;
-  margin-bottom: 5px;
-  &:hover.pointer {
-    cursor: pointer
-  }
-  p {
-    margin: 0;
-    margin-left: 3px;
-    font-size: 0.7em;
+ol {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+
+  li:not(:last-child) {
+    margin-bottom: 5px;
   }
 }
 
