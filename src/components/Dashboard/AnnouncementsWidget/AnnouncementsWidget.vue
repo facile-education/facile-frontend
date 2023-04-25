@@ -127,22 +127,27 @@ export default {
 <style lang="scss" scoped>
 @import '@design';
 section {
-  width: min(355px, 100vw);
+  width: min(500px, 100vw);
   position: relative;
   @extend %widget;
+  display: flex;
+  flex-direction: column;
 }
 
 .placeholder {
-  height: $announcement-item-height;
+  flex: 1;
 }
 
 .announcements-container {
   position: relative;
+  flex: 1;
+  min-height: $announcement-item-min-height;
 }
 
 .announcements-list {
   display: flex;
   overflow-x: auto;
+  height: 100%;
 }
 
 .right-linear {
@@ -151,7 +156,7 @@ section {
   z-index: 1;
   top: 0;
   right: 0;
-  height: calc(#{$announcement-item-height} + 4px);
+  height: 100%;
   width: 10%;
   background-image: linear-gradient(to right, transparent, white);
 }
@@ -162,7 +167,7 @@ section {
   z-index: 1;
   top: 0;
   left: 0;
-  height: calc(#{$announcement-item-height} + 4px);
+  height: 100%;
   width: 10%;
   background-image: linear-gradient(to left, transparent, white);
 }
