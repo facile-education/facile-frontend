@@ -129,6 +129,7 @@ export default {
 section {
   width: min(355px, 100vw);
   position: relative;
+  @extend %widget;
 }
 
 .placeholder {

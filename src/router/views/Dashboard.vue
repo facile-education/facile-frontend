@@ -8,7 +8,7 @@
         :list="childList"
         display-field="fullName"
       />
-      <AnnouncementsWidget v-if="hasSchoolNewsWidget" />
+      <AnnouncementsWidget v-if="hasSchoolNewsWidget"/>
       <DiaryWidget v-if="hasDiaryWidget" />
       <HomeworkWidget
         v-if="hasHomeworkWidget && selectedUser"
