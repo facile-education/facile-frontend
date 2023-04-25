@@ -2,7 +2,6 @@ import axios from 'axios'
 import constants from '@/api/constants'
 
 export {
-  runMessageMigration,
   startSynchro,
   startParentSynchro,
   startFsAnalysis,
@@ -14,7 +13,6 @@ export {
 }
 
 export default {
-  runMessageMigration,
   startSynchro,
   startParentSynchro,
   startFsAnalysis,
@@ -25,12 +23,8 @@ export default {
   runAnonymisation
 }
 
-const MAINTENANCE_PATH = '/entTools-portlet.maintenance'
-const GROUPS_PATH = '/entTools-portlet.groupsmaintenance'
-
-function runMessageMigration () {
-  return axios.post(constants.JSON_WS_URL + MAINTENANCE_PATH + '/run-message-migration').then(response => response.data)
-}
+const MAINTENANCE_PATH = '/maintenance.maintenance'
+const GROUPS_PATH = '/maintenance.groupsmaintenance'
 
 function startSynchro () {
   return axios.post(constants.JSON_WS_URL + MAINTENANCE_PATH + '/start-synchro').then(response => response.data)
