@@ -2,6 +2,7 @@ import axios from 'axios'
 import constants from './constants'
 
 export {
+  getDashboardStatistics,
   getSessionsCount,
   getActiveUsersCount,
   getFilesCount,
@@ -11,6 +12,11 @@ export {
 }
 
 const STAT_PATH = '/statistics-portlet.generalstat'
+
+function getDashboardStatistics () {
+  return axios.get(constants.JSON_WS_URL + STAT_PATH + '/get-dashboard-statistics-count')
+    .then(response => response.data)
+}
 
 function getActiveUsersCount (schoolId, startDate, endDate) {
   return axios.get(constants.JSON_WS_URL + STAT_PATH + '/get-active-users-count', {

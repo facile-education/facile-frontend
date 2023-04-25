@@ -8,7 +8,7 @@
         :list="childList"
         display-field="fullName"
       />
-      <AnnouncementsWidget v-if="hasSchoolNewsWidget"/>
+      <AnnouncementsWidget v-if="hasSchoolNewsWidget" />
       <DiaryWidget v-if="hasDiaryWidget" />
       <HomeworkWidget
         v-if="hasHomeworkWidget && selectedUser"
@@ -19,7 +19,7 @@
         :user-id="selectedUser.userId"
       />
       <!--      <UserThreadWidget v-if="hasActivityThreadWidget" />-->
-      <!--      <StatisticWidget v-if="hasStatisticWidget" />-->
+      <StatisticWidget v-if="hasStatisticWidget" />
     </div>
   </Layout>
 </template>
@@ -31,9 +31,10 @@ const AnnouncementsWidget = defineAsyncComponent(() => import('@components/Dashb
 const DiaryWidget = defineAsyncComponent(() => import('@components/Dashboard/DiaryWidget/DiaryWidget.vue'))
 const ScheduleWidget = defineAsyncComponent(() => import('@components/Dashboard/ScheduleWidget/ScheduleWidget'))
 const HomeworkWidget = defineAsyncComponent(() => import('@components/Dashboard/HomeworksWidget/HomeworkWidget.vue'))
+const StatisticWidget = defineAsyncComponent(() => import('@components/Dashboard/StatisticsWidget/StatisticsWidget.vue'))
 export default {
   name: 'Dashboard',
-  components: { AnnouncementsWidget, DiaryWidget, ScheduleWidget, HomeworkWidget, Layout },
+  components: { AnnouncementsWidget, DiaryWidget, ScheduleWidget, HomeworkWidget, StatisticWidget, Layout },
   data () {
     return {
       selectedUser: undefined
@@ -54,6 +55,9 @@ export default {
     },
     hasDiaryWidget () {
       return this.$store.state.dashboard.hasDiaryWidget
+    },
+    hasStatisticWidget () {
+      return this.$store.state.dashboard.hasStatisticWidget
     },
     childList () {
       return this.$store.state.dashboard.childList
