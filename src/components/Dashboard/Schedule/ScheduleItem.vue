@@ -103,6 +103,15 @@ export default {
   width: 100%;
   background-color: #FFFFFFDD;
   padding: 0.2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+strong, .metadata {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 </style>
