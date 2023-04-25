@@ -16,8 +16,8 @@
   width: 20px;
 }
 
-$announcement-item-height: 106px;
-$announcement-item-min-width: 323px;
+$announcement-item-min-height: 150px;
+$announcement-item-min-width: min(450px, 80vw);
 
 %read-only-button {
   height: 15px;

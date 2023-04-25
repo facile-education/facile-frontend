@@ -21,11 +21,13 @@
         class="content"
         :title="announcement.title"
       >
-        <strong class="title">
-          {{ announcement.title }}
-        </strong>
-        <div class="description">
-          {{ announcement.shortContent }}
+        <div>
+          <strong class="title">
+            {{ announcement.title }}
+          </strong>
+          <div class="description">
+            {{ announcement.shortContent }}
+          </div>
         </div>
         <div class="meta-data">
           <span class="text">
@@ -219,12 +221,13 @@ export default {
 .container {
   padding-right: 4px;
   padding-top: 4px;
+  height: 100%;
 }
 
 .announcement {
   position: relative;
   cursor: pointer;
-  height: $announcement-item-height;
+  height: calc(100% - 4px);
   width: 100%;
   min-width: $announcement-item-min-width;
   border-radius: 5px;
@@ -232,7 +235,7 @@ export default {
   font-size: 14px;
   line-height: 18px;
   display: flex;
-  --thumbnail-width: 70px;
+  --thumbnail-width: 25%;
   border: 1px solid #FFDDDD;
 
   &.is-in-horizontal-scroll {
@@ -265,18 +268,20 @@ export default {
   white-space: nowrap;
   overflow-x: hidden;
   text-overflow: ellipsis;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   .description, .meta-data {
-    margin-top: 0.5em;
-    font-size: 12px;
+    font-size: 0.8rem;
     color: $color-new-light-text;
   }
 
   .description {
-    min-height: 1.5em;
+    margin-top: 1rem;
   }
 
-  .description, .text {
+  .title, .description, .text {
     white-space: nowrap;
     overflow-x: hidden;
     text-overflow: ellipsis;
