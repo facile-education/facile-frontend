@@ -12,8 +12,9 @@ export const state = {
   hasActivityThreadWidget: false,
   hasHomeworkWidget: false,
   hasEDTWidget: false,
-  hasDiaryWidget: true, // TODO: back end
+  hasDiaryWidget: false,
   hasSchoolNewsWidget: false,
+  hasStatisticWidget: false,
   canAddGroupNews: undefined,
   canAddSchoolNews: undefined,
   canAddEvents: undefined,
@@ -32,6 +33,7 @@ export const mutations = {
     state.hasDiaryWidget = payload.hasDiaryWidget
     state.hasSchoolNewsWidget = payload.hasSchoolNewsWidget
     state.hasActivityThreadWidget = payload.hasActivityThreadWidget
+    state.hasStatisticWidget = payload.hasStatisticWidget
     state.canAddGroupNews = payload.canAddGroupNews
     state.canAddSchoolNews = payload.canAddSchoolNews
     state.canAddEvents = payload.canAddEvents
