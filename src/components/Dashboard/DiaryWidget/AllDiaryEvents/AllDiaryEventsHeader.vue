@@ -49,7 +49,7 @@
 import Pellet from '@components/Base/Pellet.vue'
 import CreateButton from '@components/Base/CreateButton.vue'
 import { defineAsyncComponent } from 'vue'
-const SaveDiaryEventModal = defineAsyncComponent(() => import('@/components/Dashboard/Diary/SaveDiaryEventModal.vue'))
+const SaveDiaryEventModal = defineAsyncComponent(() => import('@components/Dashboard/DiaryWidget/SaveDiaryEventModal.vue'))
 
 export default {
   name: 'AllDiaryEventsHeader',

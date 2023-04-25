@@ -37,8 +37,8 @@
 <script>
 import dayjs from 'dayjs'
 import { getUserSchedule } from '@/api/dashboard.service'
-import ScheduleHeader from '@components/Dashboard/Schedule/ScheduleHeader.vue'
-import ScheduleItem from '@components/Dashboard/Schedule/ScheduleItem.vue'
+import ScheduleHeader from '@components/Dashboard/ScheduleWidget/ScheduleHeader.vue'
+import ScheduleItem from '@components/Dashboard/ScheduleWidget/ScheduleItem.vue'
 export default {
   name: 'ScheduleWidget',
   components: { ScheduleItem, ScheduleHeader },

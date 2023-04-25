@@ -99,8 +99,8 @@ import dayjs from 'dayjs'
 import BaseIcon from '@components/Base/BaseIcon.vue'
 import { defineAsyncComponent } from 'vue'
 import { isInViewport } from '@utils/commons.util'
-const SaveAnnouncementModal = defineAsyncComponent(() => import('@/components/Dashboard/Announcements/SaveAnnouncementModal.vue'))
-const AnnouncementDetailsModal = defineAsyncComponent(() => import('@/components/Dashboard/Announcements/AnnouncementDetailsModal.vue'))
+const SaveAnnouncementModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/SaveAnnouncementModal.vue'))
+const AnnouncementDetailsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/AnnouncementDetailsModal.vue'))
 
 export default {
   name: 'AnnouncementItem',

@@ -53,8 +53,8 @@
 </template>
 
 <script>
-import DiaryHeader from '@components/Dashboard/Diary/DiaryHeader.vue'
-import DiaryEventItem from '@components/Dashboard/Diary/DiaryEventItem.vue'
+import DiaryHeader from '@components/Dashboard/DiaryWidget/DiaryHeader.vue'
+import DiaryEventItem from '@components/Dashboard/DiaryWidget/DiaryEventItem.vue'
 import { nbDiaryEventInWidget } from '@/constants/dashboardConstants'
 import { getEvents } from '@/api/dashboard/agenda.service'
 import dayjs from 'dayjs'

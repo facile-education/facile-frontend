@@ -58,8 +58,8 @@
 <script>
 import dayjs from 'dayjs'
 import { getHomeworks } from '@/api/dashboard/homeworks.service'
-import HomeworkItem from '@components/Dashboard/Homeworks/HomeworkItem.vue'
-import HomeworkHeader from '@components/Dashboard/Homeworks/HomeworkHeader.vue'
+import HomeworkItem from '@components/Dashboard/HomeworksWidget/HomeworkItem.vue'
+import HomeworkHeader from '@components/Dashboard/HomeworksWidget/HomeworkHeader.vue'
 import { nbHomeworksInWidget } from '@/constants/dashboardConstants'
 import PentilaUtils from 'pentila-utils'
 

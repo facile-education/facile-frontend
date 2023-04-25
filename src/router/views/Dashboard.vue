@@ -27,10 +27,10 @@
 <script>
 import Layout from '@/router/layouts/BannerLayout.vue'
 import { defineAsyncComponent } from 'vue'
-const AnnouncementsWidget = defineAsyncComponent(() => import('@components/Dashboard/Announcements/AnnouncementsWidget.vue'))
-const DiaryWidget = defineAsyncComponent(() => import('@/components/Dashboard/Diary/DiaryWidget.vue'))
-const ScheduleWidget = defineAsyncComponent(() => import('@components/Dashboard/Schedule/ScheduleWidget'))
-const HomeworkWidget = defineAsyncComponent(() => import('@components/Dashboard/Homeworks/HomeworkWidget.vue'))
+const AnnouncementsWidget = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/AnnouncementsWidget.vue'))
+const DiaryWidget = defineAsyncComponent(() => import('@components/Dashboard/DiaryWidget/DiaryWidget.vue'))
+const ScheduleWidget = defineAsyncComponent(() => import('@components/Dashboard/ScheduleWidget/ScheduleWidget'))
+const HomeworkWidget = defineAsyncComponent(() => import('@components/Dashboard/HomeworksWidget/HomeworkWidget.vue'))
 export default {
   name: 'Dashboard',
   components: { AnnouncementsWidget, DiaryWidget, ScheduleWidget, HomeworkWidget, Layout },
