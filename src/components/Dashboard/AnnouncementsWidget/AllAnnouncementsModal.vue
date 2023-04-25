@@ -49,7 +49,7 @@
 
 <script>
 import dayjs from 'dayjs'
-import AnnouncementItem from '@components/Dashboard/Announcements/AnnouncementItem.vue'
+import AnnouncementItem from '@components/Dashboard/AnnouncementsWidget/AnnouncementItem.vue'
 import { allAnnouncementModalPaginationSize } from '@/constants/dashboardConstants'
 import { getSchoolNews } from '@/api/dashboard/news.service'
 

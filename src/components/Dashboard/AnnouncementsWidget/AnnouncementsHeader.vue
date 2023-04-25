@@ -1,11 +1,11 @@
 <template>
   <header>
     <div class="left">
-      <h2 v-t="'diary'" />
+      <h2 v-t="'announcements'" />
       <Pellet
-        v-if="nbNewEvents > 0"
+        v-if="nbNewAnnouncements > 0"
         class="header-pellet"
-        :count="nbNewEvents"
+        :count="nbNewAnnouncements"
         :show-count="true"
       />
       <button
@@ -19,7 +19,7 @@
       </button>
     </div>
     <CreateButton
-      v-if="canCreateDiaryEvent"
+      v-if="canCreateAnnouncement"
       @click="isCreateModalDisplayed = true"
     />
   </header>
@@ -28,8 +28,8 @@
     v-if="isCreateModalDisplayed"
     to="body"
   >
-    <SaveDiaryEventModal
-      @createEvent="createEvent"
+    <SaveAnnouncementModal
+      @createAnnouncement="createAnnouncement"
       @close="isCreateModalDisplayed = false"
     />
   </teleport>
@@ -39,13 +39,13 @@
 import Pellet from '@components/Base/Pellet.vue'
 import CreateButton from '@components/Base/CreateButton.vue'
 import { defineAsyncComponent } from 'vue'
-const SaveDiaryEventModal = defineAsyncComponent(() => import('@/components/Dashboard/Diary/SaveDiaryEventModal.vue'))
+const SaveAnnouncementModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/SaveAnnouncementModal.vue'))
 
 export default {
-  name: 'DiaryHeader',
-  components: { SaveDiaryEventModal, CreateButton, Pellet },
+  name: 'AnnouncementsHeader',
+  components: { SaveAnnouncementModal, CreateButton, Pellet },
   props: {
-    nbNewEvents: {
+    nbNewAnnouncements: {
       type: Number,
       default: 0
     },
@@ -54,23 +54,23 @@ export default {
       required: true
     }
   },
-  emits: ['createEvent', 'updateUnreadOnly'],
+  emits: ['createAnnouncement', 'updateUnreadOnly'],
   data () {
     return {
       isCreateModalDisplayed: false
     }
   },
   computed: {
-    canCreateDiaryEvent () {
-      return this.$store.state.dashboard.canAddEvents
+    canCreateAnnouncement () {
+      return this.$store.state.dashboard.canAddSchoolNews
     }
   },
   methods: {
     toggleReadOnly () {
       this.$emit('updateUnreadOnly', !this.unReadOnly)
     },
-    createEvent () {
-      this.$emit('createEvent')
+    createAnnouncement () {
+      this.$emit('createAnnouncement')
     }
   }
 }
@@ -109,6 +109,6 @@ header {
 
 <i18n locale="fr">
 {
-  "diary": "Agenda"
+  "announcements": "Annonces"
 }
 </i18n>

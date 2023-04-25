@@ -7,24 +7,22 @@
     @close="onClose"
   >
     <template #body>
-      <DiaryEventDetails
-        :init-event="initEvent"
-        @update="updateEvent"
-        @delete="deleteEvent"
+      <AnnouncementDetails
+        :init-announcement="initAnnouncement"
+        @update="updateAnnouncement"
+        @delete="deleteAnnouncement"
       />
     </template>
   </PentilaWindow>
 </template>
 
 <script>
-
-import DiaryEventDetails from '@components/Dashboard/Diary/DiaryEventDetails.vue'
-
+import AnnouncementDetails from '@components/Dashboard/AnnouncementsWidget/AnnouncementDetails.vue'
 export default {
-  name: 'DiaryEventDetailsModal',
-  components: { DiaryEventDetails },
+  name: 'AnnouncementDetailsModal',
+  components: { AnnouncementDetails },
   props: {
-    initEvent: {
+    initAnnouncement: {
       type: Object,
       default: undefined
     }
@@ -32,17 +30,17 @@ export default {
   emits: ['close', 'update', 'delete'],
   data () {
     return {
-      detailedEvent: undefined
+      detailedAnnouncement: undefined
     }
   },
   created () {
     this.$store.dispatch('misc/incrementModalCount')
   },
   methods: {
-    updateEvent () {
+    updateAnnouncement () {
       this.$emit('update')
     },
-    deleteEvent () {
+    deleteAnnouncement () {
       this.$emit('delete')
     },
     onClose () {
@@ -54,5 +52,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 </style>

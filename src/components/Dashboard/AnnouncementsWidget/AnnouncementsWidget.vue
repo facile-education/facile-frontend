@@ -64,9 +64,9 @@
 <script>
 import dayjs from 'dayjs'
 import { nbAnnouncementsInWidget } from '@/constants/dashboardConstants'
-import AnnouncementsHeader from '@components/Dashboard/Announcements/AnnouncementsHeader.vue'
+import AnnouncementsHeader from '@components/Dashboard/AnnouncementsWidget/AnnouncementsHeader.vue'
 import { getSchoolNews } from '@/api/dashboard/news.service'
-import AnnouncementItem from '@components/Dashboard/Announcements/AnnouncementItem.vue'
+import AnnouncementItem from '@components/Dashboard/AnnouncementsWidget/AnnouncementItem.vue'
 
 export default {
   name: 'AnnouncementsWidget',
