@@ -125,7 +125,8 @@ export default {
   },
   computed: {
     eventDay () {
-      return dayjs(this.event.startDate).format('dd')
+      const string = dayjs(this.event.startDate).format('ddd')
+      return string.substring(0, string.length - 1) // To remove the last '.' with 'ddd' formatting
     },
     eventDayNumber () {
       return dayjs(this.event.startDate).format('DD')
@@ -266,10 +267,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   padding-left: 4px;
-
-  .meta-data {
-    font-size: 12px;
-  }
+  font-size: 0.8rem;
 
   .meta-data, .title {
     white-space: nowrap;
