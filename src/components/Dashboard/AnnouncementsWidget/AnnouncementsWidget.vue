@@ -22,7 +22,7 @@
     />
     <div
       v-else
-      class="test"
+      class="announcements-container"
     >
       <div
         v-if="displayLeftLinear"
@@ -49,14 +49,13 @@
         v-if="displayRightLinear"
         class="right-linear"
       />
-
-      <div class="footer">
-        <button
-          v-t="'showMore'"
-          class="show-more"
-          @click="showMore"
-        />
-      </div>
+    </div>
+    <div class="footer">
+      <button
+        v-t="'showMore'"
+        class="show-more"
+        @click="showMore"
+      />
     </div>
   </section>
 </template>
@@ -137,9 +136,10 @@ section {
   height: $announcement-item-height;
 }
 
-.test {
+.announcements-container {
   position: relative;
 }
+
 .announcements-list {
   display: flex;
   overflow-x: auto;
