@@ -128,6 +128,13 @@ export default {
             }
           }
         }
+      } else if (this.type === 'bar') {
+        return {
+          responsive: true,
+          fill: this.fill,
+          elements: {
+          }
+        }
       } else {
         return {}
       }

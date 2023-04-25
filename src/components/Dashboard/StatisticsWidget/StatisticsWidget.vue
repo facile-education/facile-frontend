@@ -17,7 +17,7 @@
     />
     <Chart
       v-else
-      :type="'doughnut'"
+      :type="'bar'"
       :labels="data.labels"
       :datasets="data.datasets"
     />
