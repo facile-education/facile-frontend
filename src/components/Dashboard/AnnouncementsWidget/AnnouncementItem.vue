@@ -2,10 +2,11 @@
   <div
     ref="item"
     class="container"
+    :class="{'is-in-horizontal-scroll': isInHorizontalScroll}"
   >
     <div
       class="announcement"
-      :class="{'theme-border-color': !announcement.hasRead, 'theme-light-background-color': isSelected, 'theme-hover-light-background-color': isSelectionMode, 'is-in-horizontal-scroll': isInHorizontalScroll}"
+      :class="{'theme-border-color': !announcement.hasRead, 'theme-light-background-color': isSelected, 'theme-hover-light-background-color': isSelectionMode}"
       tabindex="0"
       @keyup.enter="handleClick"
       @click="handleClick"
@@ -221,7 +222,14 @@ export default {
 .container {
   padding-right: 4px;
   padding-top: 4px;
-  height: 100%;
+  min-height: $announcement-item-min-height;
+  height: $announcement-item-min-height;
+
+  &.is-in-horizontal-scroll {
+    height: 100%;
+    min-width: $announcement-item-horizontal-min-width;
+    max-width: $announcement-item-horizontal-min-width;
+  }
 }
 
 .announcement {
@@ -229,7 +237,6 @@ export default {
   cursor: pointer;
   height: calc(100% - 4px);
   width: 100%;
-  min-width: $announcement-item-min-width;
   border-radius: 5px;
   padding: 4px;
   font-size: 14px;
@@ -237,10 +244,6 @@ export default {
   display: flex;
   --thumbnail-width: 25%;
   border: 1px solid #FFDDDD;
-
-  &.is-in-horizontal-scroll {
-    max-width: $announcement-item-min-width;
-  }
 
   .pellet {
     @extend %item-pellet;
@@ -282,6 +285,7 @@ export default {
   }
 
   .title, .description, .text {
+    display: block;
     white-space: nowrap;
     overflow-x: hidden;
     text-overflow: ellipsis;
