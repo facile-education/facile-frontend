@@ -3,8 +3,12 @@
     <AnnouncementsHeader
       :nb-new-announcements="nbUnreadAnnouncements"
       :un-read-only="unReadOnly"
+      :can-scroll-to-right="canScrollToRight"
+      :can-scroll-to-left="canScrollToLeft"
       @updateUnreadOnly="updateUnreadOnlyValue"
       @createAnnouncement="refresh"
+      @goNext="goNext"
+      @goPrevious="goPrevious"
     />
     <PentilaSpinner
       v-if="isLoading"
@@ -25,7 +29,7 @@
       class="announcements-container"
     >
       <div
-        v-if="displayLeftLinear"
+        v-if="canScrollToLeft"
         class="left-linear"
       />
 
@@ -46,7 +50,7 @@
       </div>
 
       <div
-        v-if="displayRightLinear"
+        v-if="canScrollToRight"
         class="right-linear"
       />
     </div>
@@ -78,8 +82,8 @@ export default {
       isLoading: false,
       error: false,
       isAllAnnouncementsModalDisplayed: false,
-      displayLeftLinear: false,
-      displayRightLinear: true
+      canScrollToLeft: false,
+      canScrollToRight: true
     }
   },
   computed: {
@@ -91,10 +95,22 @@ export default {
     this.loadAnnouncements()
   },
   methods: {
+    goNext () {
+      const scroll = this.$refs.announcementsList
+      const announcementItemWidth = 450 // $announcement-item-horizontal-min-width, TODO: get the real value of announcement to handle all cases
+      const valueToScroll = this.canScrollToLeft ? announcementItemWidth : announcementItemWidth - 50 // 50 is to prevent announcement to go throw the transparent linear gradiant
+      scroll.scrollTo({ top: 0, left: scroll.scrollLeft + valueToScroll, behavior: 'smooth' })
+    },
+    goPrevious () {
+      const scroll = this.$refs.announcementsList
+      const announcementItemWidth = 450 // $announcement-item-horizontal-min-width, TODO: get the real value of announcement to handle all cases
+      const valueToScroll = this.canScrollToRight ? announcementItemWidth : announcementItemWidth - 50 // 50 is to prevent announcement to go throw the transparent linear gradiant
+      scroll.scrollTo({ top: 0, left: scroll.scrollLeft - valueToScroll, behavior: 'smooth' })
+    },
     updateScrollPosition () {
       const scrollLeft = this.$refs.announcementsList.scrollLeft
-      this.displayLeftLinear = scrollLeft > 0
-      this.displayRightLinear = scrollLeft < this.$refs.announcementsList.scrollWidth - this.$refs.announcementsList.getBoundingClientRect().width
+      this.canScrollToLeft = scrollLeft > 0
+      this.canScrollToRight = scrollLeft < this.$refs.announcementsList.scrollWidth - this.$refs.announcementsList.getBoundingClientRect().width
     },
     updateUnreadOnlyValue (value) {
       this.unReadOnly = value

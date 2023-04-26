@@ -18,10 +18,36 @@
         >
       </button>
     </div>
-    <CreateButton
-      v-if="canCreateAnnouncement"
-      @click="isCreateModalDisplayed = true"
-    />
+    <div class="right">
+      <CreateButton
+        v-if="canCreateAnnouncement"
+        @click="isCreateModalDisplayed = true"
+      />
+      <button
+        v-if="!mq.phone"
+        class="arrow-button"
+        :class="{'disabled': !canScrollToLeft}"
+        :disabled="!canScrollToLeft"
+        @click="$emit('goPrevious')"
+      >
+        <BaseIcon
+          class="left-arrow"
+          name="chevron-up"
+        />
+      </button>
+      <button
+        v-if="!mq.phone"
+        class="arrow-button"
+        :class="{'disabled': !canScrollToRight}"
+        :disabled="!canScrollToRight"
+        @click="$emit('goNext')"
+      >
+        <BaseIcon
+          class="right-arrow"
+          name="chevron-up"
+        />
+      </button>
+    </div>
   </header>
 
   <teleport
@@ -39,11 +65,13 @@
 import Pellet from '@components/Base/Pellet.vue'
 import CreateButton from '@components/Base/CreateButton.vue'
 import { defineAsyncComponent } from 'vue'
+import BaseIcon from '@components/Base/BaseIcon.vue'
 const SaveAnnouncementModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/SaveAnnouncementModal.vue'))
 
 export default {
   name: 'AnnouncementsHeader',
-  components: { SaveAnnouncementModal, CreateButton, Pellet },
+  components: { BaseIcon, SaveAnnouncementModal, CreateButton, Pellet },
+  inject: ['mq'],
   props: {
     nbNewAnnouncements: {
       type: Number,
@@ -52,9 +80,17 @@ export default {
     unReadOnly: {
       type: Boolean,
       required: true
+    },
+    canScrollToRight: {
+      type: Boolean,
+      required: false
+    },
+    canScrollToLeft: {
+      type: Boolean,
+      required: false
     }
   },
-  emits: ['createAnnouncement', 'updateUnreadOnly'],
+  emits: ['createAnnouncement', 'updateUnreadOnly', 'goPrevious', 'goNext'],
   data () {
     return {
       isCreateModalDisplayed: false
@@ -83,18 +119,6 @@ h2 {
   @extend %widget-h2;
 }
 
-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  @extend %widget-header;
-
-  .left {
-    display: flex;
-    align-items: center;
-  }
-}
-
 .header-pellet {
   margin-left: 10px;
   @extend %dashboard-header-pellet;
@@ -103,6 +127,40 @@ header {
 .read-only-button {
   margin-left: 10px;
   @extend %read-only-button;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  @extend %widget-header;
+
+  .left, .right {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.arrow-button {
+  width: 1rem;
+  cursor: pointer;
+  background-color: transparent;
+  border-radius: 0;
+  padding: 0;
+  margin: 0 0 0 1rem;
+  border: none;
+}
+
+.left-arrow, .right-arrow {
+  height: 1rem;
+}
+
+.left-arrow {
+  transform: rotate(-90deg);
+}
+
+.right-arrow {
+  transform: rotate(90deg);
 }
 
 </style>
