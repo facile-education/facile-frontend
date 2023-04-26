@@ -30,11 +30,11 @@ export {
   deleteAssignment
 }
 
-const PROGRESSION_PATH = '/progression-portlet.'
+const PROGRESSION_PATH = '/progression.'
 const PROGRESSION_CTX = 'progression/'
 const FOLDER_CTX = 'progressionfolder/'
 const ITEM_CTX = 'progressionitem/'
-const ASSIGNMENT_CTX = 'progressionitemassignment/'
+const ASSIGNMENT_CTX = 'itemassignment/'
 
 // Progression object
 function addProgression ({ name, description, subjectId, volee, color }) {
@@ -237,7 +237,7 @@ function saveHomeworkSpecificItem (homeworkId) {
     })).then(response => response.data)
 }
 
-// ProgressionItemAssignment object
+// ItemAssignment object
 function addSessionAssignment (itemId, sessionId) {
   return axios.post(constants.JSON_WS_URL + PROGRESSION_PATH + ASSIGNMENT_CTX + 'add-session-assignment',
     PentilaUtils.URL.params({
