@@ -16,6 +16,12 @@
   width: 20px;
 }
 
+$diary-widget-min-width: 355px;
+$announcements-widget-min-width: 500px;
+$homework-widget-min-width: 355px;
+$schedule-widget-min-width: 355px;
+$statistics-widget-min-width: 500px;
+
 $announcement-item-min-height: 150px;
 $announcement-item-min-width: min(323px, 80vw);
 $announcement-item-horizontal-min-width: min(450px, 80vw);

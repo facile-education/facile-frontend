@@ -2,24 +2,40 @@
   <Layout>
     <h1 :aria-label="$t('serviceTitle')" />
     <div class="dashboard-panel">
+      <div class="administration-widgets">
+        <DiaryWidget
+          v-if="hasDiaryWidget"
+          class="diary"
+        />
+        <AnnouncementsWidget
+          v-if="hasSchoolNewsWidget"
+          class="announcements"
+        />
+      </div>
       <PentilaDropdown
         v-if="childList.length > 1"
         v-model="selectedUser"
         :list="childList"
         display-field="fullName"
+        class="child-selector"
       />
-      <DiaryWidget v-if="hasDiaryWidget" />
-      <AnnouncementsWidget v-if="hasSchoolNewsWidget" />
-      <HomeworkWidget
-        v-if="hasHomeworkWidget && selectedUser"
-        :user-id="selectedUser.userId"
-      />
-      <ScheduleWidget
-        v-if="hasEDTWidget && selectedUser"
-        :user-id="selectedUser.userId"
-      />
-      <!--      <UserThreadWidget v-if="hasActivityThreadWidget" />-->
-      <StatisticWidget v-if="hasStatisticWidget" />
+      <div class="personal-widgets">
+        <HomeworkWidget
+          v-if="hasHomeworkWidget && selectedUser"
+          :user-id="selectedUser.userId"
+          class="homework"
+        />
+        <ScheduleWidget
+          v-if="hasEDTWidget && selectedUser"
+          :user-id="selectedUser.userId"
+          class="schedule"
+        />
+        <!--      <UserThreadWidget v-if="hasActivityThreadWidget" />-->
+        <StatisticWidget
+          v-if="hasStatisticWidget"
+          class="statistics"
+        />
+      </div>
     </div>
   </Layout>
 </template>
@@ -76,11 +92,40 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.dashboard-panel {
+@import "@design";
+
+.administration-widgets {
   display: flex;
   flex-wrap: wrap;
-  gap: 10%;
+  gap: 0 3rem;
+
+  .diary {
+    flex: 1;
+  }
+
+  .announcements {
+    flex: 2;
+  }
 }
+
+.personal-widgets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 3rem;
+
+  .homework {
+    flex: 2;
+  }
+
+  .schedule {
+    flex: 1;
+  }
+
+  .statistics {
+    flex: 1;
+  }
+}
+
 </style>
 
 <i18n locale="fr">
