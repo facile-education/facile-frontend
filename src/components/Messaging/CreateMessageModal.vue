@@ -109,7 +109,7 @@
             >
               <img
                 class="icon"
-                src="@assets/documents.svg"
+                src="@assets/options/dossier-pj.svg"
                 :alt="$t('addAttachFileButton')"
               >
             </button>
