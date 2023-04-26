@@ -3,6 +3,7 @@
     <AnnouncementsHeader
       :nb-new-announcements="nbUnreadAnnouncements"
       :un-read-only="unReadOnly"
+      :has-arrows="!mq.phone && announcementsList.length > 1"
       :can-scroll-to-right="canScrollToRight"
       :can-scroll-to-left="canScrollToLeft"
       @updateUnreadOnly="updateUnreadOnlyValue"
@@ -74,6 +75,7 @@ import AnnouncementItem from '@components/Dashboard/AnnouncementsWidget/Announce
 export default {
   name: 'AnnouncementsWidget',
   components: { AnnouncementItem, AnnouncementsHeader },
+  inject: ['mq'],
   data () {
     return {
       unReadOnly: false,
@@ -180,6 +182,9 @@ section {
   display: flex;
   overflow-x: auto;
   height: 100%;
+  &::-webkit-scrollbar{
+    display: none;
+  }
 }
 
 .right-linear {

@@ -24,7 +24,7 @@
         @click="isCreateModalDisplayed = true"
       />
       <button
-        v-if="!mq.phone"
+        v-if="hasArrows"
         class="arrow-button"
         :class="{'disabled': !canScrollToLeft}"
         :disabled="!canScrollToLeft"
@@ -37,7 +37,7 @@
         />
       </button>
       <button
-        v-if="!mq.phone"
+        v-if="hasArrows"
         class="arrow-button"
         :class="{'disabled': !canScrollToRight}"
         :disabled="!canScrollToRight"
@@ -73,7 +73,6 @@ const SaveAnnouncementModal = defineAsyncComponent(() => import('@components/Das
 export default {
   name: 'AnnouncementsHeader',
   components: { BaseIcon, SaveAnnouncementModal, CreateButton, Pellet },
-  inject: ['mq'],
   props: {
     nbNewAnnouncements: {
       type: Number,
@@ -82,6 +81,10 @@ export default {
     unReadOnly: {
       type: Boolean,
       required: true
+    },
+    hasArrows: {
+      type: Boolean,
+      default: true
     },
     canScrollToRight: {
       type: Boolean,
