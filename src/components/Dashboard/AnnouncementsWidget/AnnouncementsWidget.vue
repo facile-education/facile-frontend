@@ -30,8 +30,8 @@
       class="announcements-container"
     >
       <div
-        v-if="canScrollToLeft"
         class="left-linear"
+        :class="{'hidden' : !canScrollToLeft}"
       />
 
       <div
@@ -51,8 +51,8 @@
       </div>
 
       <div
-        v-if="canScrollToRight"
         class="right-linear"
+        :class="{'hidden' : !canScrollToRight}"
       />
     </div>
     <div class="footer">
@@ -196,6 +196,14 @@ section {
   height: 100%;
   width: 10%;
   background-image: linear-gradient(to right, transparent, white);
+  opacity: 100;
+  transform: translateX(0);
+  transition: all .2s ease;
+
+  &.hidden {
+    opacity: 0;
+    transform: translateX(100%);
+  }
 }
 
 .left-linear {
@@ -207,6 +215,14 @@ section {
   height: 100%;
   width: 10%;
   background-image: linear-gradient(to left, transparent, white);
+  opacity: 100;
+  transform: translateX(0);
+  transition: all .2s ease;
+
+  &.hidden {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
 }
 
 .footer {
