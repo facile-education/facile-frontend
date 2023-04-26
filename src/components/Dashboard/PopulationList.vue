@@ -67,7 +67,7 @@ export default {
 button {
   border-radius: 6px;
   padding: 5px;
-  color: #646464;
+  color: #646464 !important;
   background-color: #F5F5F5;
   border: none;
   cursor: pointer;
