@@ -32,6 +32,7 @@
       >
         <BaseIcon
           class="left-arrow"
+          :class="{'disabled': !canScrollToLeft}"
           name="chevron-up"
         />
       </button>
@@ -44,6 +45,7 @@
       >
         <BaseIcon
           class="right-arrow"
+          :class="{'disabled': !canScrollToRight}"
           name="chevron-up"
         />
       </button>
@@ -142,7 +144,8 @@ header {
 }
 
 .arrow-button {
-  width: 1rem;
+  width: 2rem;
+  height: 100%;
   cursor: pointer;
   background-color: transparent;
   border-radius: 0;
@@ -152,7 +155,13 @@ header {
 }
 
 .left-arrow, .right-arrow {
-  height: 1rem;
+  font-size: 1.3rem;
+  color: $color-new-light-text;
+
+  &.disabled {
+    color: $color-border;
+    background-color: transparent;
+  }
 }
 
 .left-arrow {
