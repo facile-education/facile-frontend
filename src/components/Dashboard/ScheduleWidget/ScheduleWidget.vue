@@ -94,7 +94,7 @@ export default {
 @import '@design';
 
 section {
-  width: min(355px, 100vw);
+  width: min(355px, 100%);
   position: relative;
   @extend %widget;
 }
