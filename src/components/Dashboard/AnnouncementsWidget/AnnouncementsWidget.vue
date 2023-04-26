@@ -127,7 +127,8 @@ export default {
 <style lang="scss" scoped>
 @import '@design';
 section {
-  width: min(500px, 100%);
+  min-width: min($announcements-widget-min-width, 100%);
+  width: 100%;
   position: relative;
   @extend %widget;
   display: flex;

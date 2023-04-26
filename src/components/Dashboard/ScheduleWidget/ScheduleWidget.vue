@@ -94,7 +94,8 @@ export default {
 @import '@design';
 
 section {
-  width: min(355px, 100%);
+  min-width: min($schedule-widget-min-width, 100%);
+  width: 100%;
   position: relative;
   @extend %widget;
 }
