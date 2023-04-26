@@ -82,6 +82,7 @@ export default {
       isLoading: false,
       error: false,
       isAllAnnouncementsModalDisplayed: false,
+      displayedAnnouncementIndex: 0,
       canScrollToLeft: false,
       canScrollToRight: true
     }
@@ -96,21 +97,35 @@ export default {
   },
   methods: {
     goNext () {
-      const scroll = this.$refs.announcementsList
-      const announcementItemWidth = 450 // $announcement-item-horizontal-min-width, TODO: get the real value of announcement to handle all cases
-      const valueToScroll = this.canScrollToLeft ? announcementItemWidth : announcementItemWidth - 50 // 50 is to prevent announcement to go throw the transparent linear gradiant
-      scroll.scrollTo({ top: 0, left: scroll.scrollLeft + valueToScroll, behavior: 'smooth' })
+      if (this.displayedAnnouncementIndex < this.announcementsList.length - 1) {
+        this.displayedAnnouncementIndex += 1
+      }
+      this.scrollToDisplayedAnnouncement()
     },
     goPrevious () {
+      if (this.displayedAnnouncementIndex > 0) {
+        this.displayedAnnouncementIndex -= 1
+      }
+      this.scrollToDisplayedAnnouncement()
+    },
+    scrollToDisplayedAnnouncement () {
       const scroll = this.$refs.announcementsList
       const announcementItemWidth = 450 // $announcement-item-horizontal-min-width, TODO: get the real value of announcement to handle all cases
-      const valueToScroll = this.canScrollToRight ? announcementItemWidth : announcementItemWidth - 50 // 50 is to prevent announcement to go throw the transparent linear gradiant
-      scroll.scrollTo({ top: 0, left: scroll.scrollLeft - valueToScroll, behavior: 'smooth' })
+      let scrollOffset // To center non firsts announcements
+      if (this.displayedAnnouncementIndex === 0) {
+        scrollOffset = 0
+        scroll.scrollTo({ top: 0, left: this.displayedAnnouncementIndex * announcementItemWidth - scrollOffset, behavior: 'smooth' })
+      } else if (this.displayedAnnouncementIndex === this.announcementsList.length - 1) {
+        scroll.scrollTo({ top: 0, left: scroll.scrollWidth, behavior: 'smooth' })
+      } else {
+        scrollOffset = (scroll.getBoundingClientRect().width / 2) - (announcementItemWidth / 2)
+        scroll.scrollTo({ top: 0, left: this.displayedAnnouncementIndex * announcementItemWidth - scrollOffset, behavior: 'smooth' })
+      }
     },
     updateScrollPosition () {
       const scrollLeft = this.$refs.announcementsList.scrollLeft
       this.canScrollToLeft = scrollLeft > 0
-      this.canScrollToRight = scrollLeft < this.$refs.announcementsList.scrollWidth - this.$refs.announcementsList.getBoundingClientRect().width
+      this.canScrollToRight = scrollLeft < this.$refs.announcementsList.scrollWidth - Math.floor(this.$refs.announcementsList.getBoundingClientRect().width)
     },
     updateUnreadOnlyValue (value) {
       this.unReadOnly = value
