@@ -11,7 +11,7 @@ export {
   getMessagesCount
 }
 
-const STAT_PATH = '/statistics-portlet.generalstat'
+const STAT_PATH = '/statistic.generalstat'
 
 function getDashboardStatistics () {
   return axios.get(constants.JSON_WS_URL + STAT_PATH + '/get-dashboard-statistics-count')
