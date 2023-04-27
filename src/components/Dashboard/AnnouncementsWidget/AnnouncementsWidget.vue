@@ -37,6 +37,7 @@
       <div
         ref="announcementsList"
         class="announcements-list"
+        :class="{'phone': mq.phone}"
         @scroll="updateScrollPosition"
       >
         <AnnouncementItem
@@ -182,7 +183,8 @@ section {
   display: flex;
   overflow-x: auto;
   height: 100%;
-  &::-webkit-scrollbar{
+
+  &:not(.phone)::-webkit-scrollbar{
     display: none;
   }
 }
