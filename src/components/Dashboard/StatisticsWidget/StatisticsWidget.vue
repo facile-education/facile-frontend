@@ -11,27 +11,29 @@
       class="placeholder"
     />
     <div
-      v-else-if="data.datasets === undefined || data.labels === undefined "
+      v-else-if="data.datasets === undefined || data.datasets.length === 0 "
       v-t="'emptyPlaceholder'"
       class="placeholder"
     />
-    <Chart
-      v-else
-      :type="'bar'"
-      :labels="data.labels"
-      :datasets="data.datasets"
-    />
+    <ul v-else>
+      <li
+        v-for="statistic in data.datasets"
+        :key="statistic.label"
+      >
+        <StatisticItem :statistic="statistic" />
+      </li>
+    </ul>
   </section>
 </template>
 
 <script>
 import StatisticsHeader from '@components/Dashboard/StatisticsWidget/StatisticsHeader.vue'
 import { getDashboardStatistics } from '@/api/statistics.service'
-import Chart from '@components/Statistics/Chart.vue'
+import StatisticItem from '@components/Dashboard/StatisticsWidget/StatisticItem.vue'
 
 export default {
   name: 'StatisticsWidget',
-  components: { Chart, StatisticsHeader },
+  components: { StatisticItem, StatisticsHeader },
   data () {
     return {
       isLoading: false,
@@ -74,6 +76,12 @@ section {
   position: relative;
   cursor: pointer;
   @extend %widget;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
 }
 
 .placeholder {
