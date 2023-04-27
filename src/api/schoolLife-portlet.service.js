@@ -19,10 +19,10 @@ export default {
   markStudentsPresent
 }
 
-const SCHOOL_LIFE_SLOT_PATH = '/schoollife-portlet.schoollifeslot'
-const SCHOOL_LIFE_SESSION_PATH = '/schoollife-portlet.schoollifesession'
-const SCHOOL_LIFE_SESSION_STUDENT_PATH = '/schoollife-portlet.schoollifesessionstudent'
-const SCHOOL_LIFE_RENVOI_PATH = '/schoollife-portlet.renvoi'
+const SCHOOL_LIFE_SLOT_PATH = '/schoollife.schoollifeslot'
+const SCHOOL_LIFE_SESSION_PATH = '/schoollife.schoollifesession'
+const SCHOOL_LIFE_SESSION_STUDENT_PATH = '/schoollife.sessionstudent'
+const SCHOOL_LIFE_RENVOI_PATH = '/schoollife.renvoi'
 
 /**
  * Create a slot of a given type in the school. (return only success field)
