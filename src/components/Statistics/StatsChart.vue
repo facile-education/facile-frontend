@@ -67,7 +67,7 @@ export default {
       isLoading: false,
       data: undefined,
       error: false,
-      defaultService: { serviceId: 0, name: this.$t('allServices') },
+      defaultService: { applicationId: 0, name: this.$t('allServices') },
       selectedService: undefined,
       services: []
     }
@@ -92,7 +92,7 @@ export default {
   methods: {
     getData () {
       this.isLoading = true
-      getSessionsCount(this.selectedSchool.schoolId, this.startTime, this.endTime, this.selectedService.serviceId, this.comparator).then((data) => {
+      getSessionsCount(this.selectedSchool.schoolId, this.startTime, this.endTime, this.selectedService.applicationId, this.comparator).then((data) => {
         this.isLoading = false
         if (data.success) {
           this.error = false
@@ -107,12 +107,15 @@ export default {
       getStatServices(this.selectedSchool.schoolId).then(
         (data) => {
           if (data.success) {
-            // TODO sort data.services
+            data.services.forEach(element => {
+              element.name = this.$t('Menu.' + element.name)
+            })
+
             this.services = [this.defaultService, ...PentilaUtils.Array.sortWithString(data.services, false, 'name')]
           }
         },
         (err) => {
-        // TODO toastr
+          // TODO toastr
           console.error(err)
         })
     },
