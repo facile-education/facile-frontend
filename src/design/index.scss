@@ -16,10 +16,6 @@ h1 {
   line-height: 2em;
 }
 
-button:not(.theme-background-color):not(.theme-text-color):not(.base-button.delete):not(.disabled) {
-  color: $color-dark-text;
-}
-
 %side-menu-transition {
   -webkit-transition: width .3s;
   transition: width .3s;
