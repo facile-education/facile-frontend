@@ -4,7 +4,7 @@
     @mouseover="isHovering = true"
     @mouseleave="isHovering = false"
   >
-    <span class="member-name"> {{ member.userName }}</span>
+    <span class="member-name"> {{ member.lastName }} {{ member.firstName }}</span>
     <img
       v-if="isHovering"
       data-test="send-message"
@@ -51,7 +51,7 @@ export default {
   methods: {
     openCreateMessageModal () {
       this.isMessagingModalDisplayed = true
-      messagingUtils.newMessage([{ type: 1, text: this.member.userName, userId: this.member.userId }])
+      messagingUtils.newMessage([{ type: 1, text: this.member.lastName + ' ' + this.member.firstName, userId: this.member.userId }])
     },
     closeModal () {
       this.isMessagingModalDisplayed = false

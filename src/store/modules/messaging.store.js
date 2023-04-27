@@ -3,6 +3,7 @@ import messagingUtils from '@utils/messaging.utils'
 import folderService from '@/api/messaging/folder.service'
 // import constants from '@/constants/appConstants'
 import _ from 'lodash'
+import messagingConstants from '@/constants/messagingConstants'
 
 export const state = {
   messagingFolders: [],
@@ -14,7 +15,6 @@ export const state = {
   lastSelectedThread: undefined,
   isThreadSelected: true,
   startIndex: 0,
-  nbDisplayed: 20,
   unreadOnly: false,
   isParametersModalDisplayed: false,
   isSelectedMessageFromRightPanel: false,
@@ -23,7 +23,7 @@ export const state = {
   isMultiSelectionActive: false,
   isCreateMessageModalDisplayed: false,
   loadingThreadsError: undefined,
-  nbNewMessages: 0,
+  nbMessages: 0,
   search: '',
   createMessageParameters: {},
   draggedThreads: [],
@@ -32,25 +32,37 @@ export const state = {
 }
 
 // Defined outside of mutations because of recursion
-const doActionInPersonalFolder = (action, folderList, personalFolder, subFolder = undefined) => {
+const doActionInPersonalFolder = (store, action, folderList, state, personalFolder, payload = undefined) => {
   for (let i = 0; i < folderList.length; ++i) {
     if (folderList[i].folderId === personalFolder.folderId) {
       switch (action) {
         case 'delete':
           folderList.splice(i, 1)
+          // Update currentFolder Object if concern
+          if (personalFolder.folderId === state.currentFolder.folderId) {
+            store.dispatch('messaging/selectFolder', state.messagingFolders[0])
+          }
           break
-        case 'update': {
+        case 'update':
           folderList.splice(i, 1, personalFolder)
+          // Update currentFolder Object if concern
+          if (personalFolder.folderId === state.currentFolder.folderId) {
+            state.currentFolder = personalFolder
+          }
           break
-        }
-        case 'addSubFolder': {
-          folderList[i].subFolders.splice(0, 0, subFolder)
+        case 'addSubFolder':
+          folderList[i].subFolders.splice(0, 0, payload)
           break
-        }
+        case 'setNbUnread':
+          folderList[i].nbUnread = payload
+          break
+        case 'setNbMessages':
+          folderList[i].nbMessages = payload
+          break
       }
       break
     } else {
-      doActionInPersonalFolder(action, folderList[i].subFolders, personalFolder, subFolder)
+      doActionInPersonalFolder(store, action, folderList[i].subFolders, state, personalFolder, payload)
     }
   }
 }
@@ -69,13 +81,13 @@ export const mutations = {
     state.messagingFolders.push(folder)
   },
   deletePersonalFolder (state, folderToDelete) {
-    doActionInPersonalFolder('delete', state.messagingFolders, folderToDelete)
+    doActionInPersonalFolder(this, 'delete', state.messagingFolders, state, folderToDelete)
   },
   updatePersonalFolder (state, folderToUpdate) {
-    doActionInPersonalFolder('update', state.messagingFolders, folderToUpdate)
+    doActionInPersonalFolder(this, 'update', state.messagingFolders, state, folderToUpdate)
   },
   addSubFolder (state, { personalFolder, subFolder }) {
-    doActionInPersonalFolder('addSubFolder', state.messagingFolders, personalFolder, subFolder)
+    doActionInPersonalFolder(this, 'addSubFolder', state.messagingFolders, state, personalFolder, subFolder)
   },
   updateStartIndex (state, payload) {
     state.startIndex = payload
@@ -83,7 +95,6 @@ export const mutations = {
   setCurrentFolder (state, folder) {
     state.currentFolder = folder
     state.startIndex = 0
-    state.nbDisplayed = 20
   },
   setLastSelectedThread (state, thread) {
     state.lastSelectedThread = thread
@@ -164,8 +175,11 @@ export const mutations = {
     }
     state.isMultiSelectionActive = !state.isMultiSelectionActive
   },
-  setNbNewMessages (state, nbNewMessages) {
-    state.nbNewMessages = nbNewMessages
+  setNbUnread (state, payload) {
+    doActionInPersonalFolder(this, 'setNbUnread', state.messagingFolders, state, { folderId: payload.folderId }, payload.nbUnread)
+  },
+  setNbMessages (state, { folderId, nbMessages }) {
+    doActionInPersonalFolder(this, 'setNbMessages', state.messagingFolders, state, { folderId: folderId }, nbMessages)
   },
   markMessagesAsRead (state, messageIds) {
     // Change status of both messages which belongs to threads[] and currentThreadMessages[] arrays
@@ -182,7 +196,6 @@ export const mutations = {
         message.isNew = false
       }
     }
-    state.nbNewMessages -= 1
   },
   markMessagesAsUnread (state, unreadMessageIds) {
     for (const thread of state.threads) {
@@ -198,7 +211,6 @@ export const mutations = {
         message.isNew = true
       }
     }
-    state.nbNewMessages += 1
   },
   addNewMessage (state, newMessage) {
     state.currentThreadMessages.splice(0, 0, newMessage)
@@ -216,10 +228,12 @@ export const mutations = {
         if (state.threads[j].threadId === state.selectedThreads[i].threadId) {
           state.threads.splice(j, 1)
           lastIndex = j
+          state.currentFolder.nbMessages--
           break
         }
       }
     }
+    state.selectedThreads = []
     if (state.threads.length > 0 && state.threads[lastIndex] !== undefined) {
       messagingUtils.selectThread(state.threads[lastIndex])
     } else {
@@ -362,24 +376,35 @@ export const actions = {
       }
       this.dispatch('currentActions/addAction', { name: 'loadThreads' })
 
-      messageService.getThreads(folderId, lastDate, state.nbDisplayed, state.unreadOnly).then((data) => {
+      messageService.getThreads(folderId, lastDate, messagingConstants.threadListPaginationSize, state.unreadOnly).then((data) => {
         this.dispatch('currentActions/removeAction', { name: 'loadThreads' })
 
         if (data.success) {
           commit('setLoadingThreadsError', undefined)
-          commit('updateStartIndex', state.startIndex + state.nbDisplayed)
+          commit('updateStartIndex', state.startIndex + messagingConstants.threadListPaginationSize)
           if (lastDate === '-1') {
             commit('setThreadList', data.threads)
           } else {
             commit('addToThreadList', data.threads)
           }
+          this.dispatch('messaging/updateNbUnread', folderId)
           resolve({ threads: data.threads })
         } else {
           commit('setLoadingThreadsError', 'loading')
           console.error('Error while getting threads from folderId ' + folderId + ' with last date = ' + lastDate)
         }
       })
-      messagingUtils.updateNbNewMessages()
+    })
+  },
+  updateNbUnread ({ commit }, folderId) {
+    messageService.getNbMessages(folderId).then((data) => {
+      if (data.success) {
+        commit('setNbMessages', { folderId: folderId, nbMessages: data.nbMessages })
+        commit('setNbUnread', { folderId: folderId, nbUnread: data.nbUnread })
+      } else {
+        commit('setNbMessages', { folderId: folderId, nbMessages: 0 })
+        commit('setNbUnread', { folderId: folderId, nbUnread: 0 })
+      }
     })
   },
   getMessageThread ({ commit }, messageId) {
@@ -420,8 +445,11 @@ export const actions = {
   closeParametersModal ({ commit }) {
     commit('setParametersModalDisplayed', false)
   },
-  setNbNewMessages ({ commit }, nbNewMessages) {
-    commit('setNbNewMessages', nbNewMessages)
+  setNbUnread ({ commit }, folderId, nbUnread) {
+    commit('setNbUnread', { folderId: folderId, nbUnread: nbUnread })
+  },
+  setNbMessages ({ commit }, folderId, nbMessages) {
+    commit('setNbMessages', { folderId: folderId, nbMessages: nbMessages })
   },
   markMessagesAsRead ({ commit }, messages) {
     commit('markMessagesAsRead', messages)

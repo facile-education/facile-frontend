@@ -87,6 +87,7 @@ import interactionPlugin from '@fullcalendar/interaction'
 // import FCEvent from '@components/Horaires/FCEvent'
 
 import { defineAsyncComponent } from 'vue'
+import { getTeachersLabel } from '@utils/commons.util'
 
 const NotUsualSlotsToolBar = defineAsyncComponent(() => import('@components/NotUsualSlotManager/NotUsualSlotsToolBar'))
 const Timeline = defineAsyncComponent(() => import('@components/Horaires/Timeline')) // Needed for event creation
@@ -240,16 +241,6 @@ export default {
   methods: {
     allowSelection (selectInfo) {
       return selectInfo.start.getDay() === selectInfo.end.getDay()
-    },
-    getTeachersLabel (teachers) {
-      let label = ''
-      if (teachers !== undefined) {
-        for (let index = 0; index < teachers.length; ++index) {
-          const name = teachers[index].firstName.substring(0, 1) + '. ' + teachers[index].lastName
-          label += (label === '') ? name : ', ' + name
-        }
-      }
-      return label
     },
     onSelectDate (date) {
       this.selectedDate = dayjs(date).startOf('day')
@@ -414,8 +405,8 @@ export default {
         const tag = document.createElement('div')
         tag.classList.add('fc-event-teacher')
         const label = (info.event.extendedProps.teacher !== undefined)
-          ? this.getTeachersLabel([info.event.extendedProps.teacher])
-          : this.getTeachersLabel(info.event.extendedProps.teachers)
+          ? getTeachersLabel([info.event.extendedProps.teacher])
+          : getTeachersLabel(info.event.extendedProps.teachers)
         tag.appendChild(document.createTextNode(label))
         tag.setAttribute('title', label)
         container.appendChild(tag)

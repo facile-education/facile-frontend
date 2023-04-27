@@ -31,7 +31,7 @@
         <div
           v-else
           ref="scroll"
-          class="events-by-month"
+          class="scroll"
           @scroll="handleScroll"
         >
           <div
@@ -75,12 +75,12 @@
 
 <script>
 import Layout from '@/router/layouts/BannerLayout.vue'
-import DiaryEventItem from '@components/Dashboard/Diary/DiaryEventItem.vue'
+import DiaryEventItem from '@components/Dashboard/DiaryWidget/DiaryEventItem.vue'
 import dayjs from 'dayjs'
 import { getEvents } from '@/api/dashboard/agenda.service'
 import { diaryEventModalPaginationSize } from '@/constants/dashboardConstants'
-import AllDiaryEventsHeader from '@components/Dashboard/Diary/AllDiaryEvents/AllDiaryEventsHeader.vue'
-import DiaryEventDetails from '@components/Dashboard/Diary/DiaryEventDetails.vue'
+import AllDiaryEventsHeader from '@components/Dashboard/DiaryWidget/AllDiaryEvents/AllDiaryEventsHeader.vue'
+import DiaryEventDetails from '@components/Dashboard/DiaryWidget/DiaryEventDetails.vue'
 let oldScrollTop = 0
 
 export default {
@@ -94,7 +94,6 @@ export default {
       nbNewEvents: 0,
       error: undefined,
       eventList: [],
-      fromDate: dayjs(),
       selectedEvent: undefined
     }
   },
@@ -146,23 +145,17 @@ export default {
       this.refresh()
     },
     refresh () {
-      // Reset pagination
-      this.fromDate = dayjs()
       this.eventList = []
       this.loadDiaryEvents()
     },
     loadDiaryEvents () {
       this.isLoading = true
-      getEvents(this.fromDate, diaryEventModalPaginationSize, this.unReadOnly).then((data) => {
+      getEvents(this.eventList.length, diaryEventModalPaginationSize, this.unReadOnly).then((data) => {
         this.isLoading = false
         if (data.success) {
           this.error = false
           this.eventList = this.eventList.concat(data.events)
           this.nbNewEvents = data.nbUnreadEvents
-          // Update pagination
-          if (data.events.length > 0) {
-            this.fromDate = dayjs(data.events[data.events.length - 1].startDate).add(1, 'hour') // Assume they are sorted by date, so take the last event date
-          }
 
           // Handle selection
           if (this.isDetailsPanelDisplayed && this.selectedEvent === undefined && this.eventList.length > 0 && !this.unReadOnly) {
@@ -179,7 +172,7 @@ export default {
       if (scroll.scrollTop > oldScrollTop) { // if we go down
         const nbPixelsBeforeBottom = scroll.scrollHeight - (scroll.scrollTop + scroll.clientHeight)
 
-        if (nbPixelsBeforeBottom === 0) {
+        if (nbPixelsBeforeBottom <= 5) {
           if (!this.isLoading) {
             this.loadDiaryEvents() // Get next events
           }
@@ -213,7 +206,7 @@ export default {
         // Do nothing
       } else {
         const currentIndex = this.eventList.map(event => event.eventId).indexOf(this.selectedEvent.eventId)
-        this.selectedEvent = this.eventList[currentIndex + -1]
+        this.selectedEvent = this.eventList[currentIndex - 1]
       }
     }
   }
@@ -221,6 +214,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
 
 .period {
   text-transform: capitalize;
@@ -229,12 +223,19 @@ export default {
 }
 
 .body.details-display{
+  height: calc(100% - $all-events-header-height);
   display: flex;
   padding-top: 20px;
 
   .event-list {
     width: 33%;
+    position: relative;
     margin-right: 20px;
+  }
+
+  .scroll {
+    height: 100%;
+    overflow-y: auto;
   }
 
   .details-placeholder {

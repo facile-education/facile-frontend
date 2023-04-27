@@ -144,10 +144,10 @@ import {
   createCommunity,
   editCommunity,
   checkCommunityName,
-  getCommunityMembers,
-  getUsersCompletion
+  getCommunityMembers
 } from '@/api/groups.service'
-import { getSchools } from '@/api/organization.service'
+import { searchDirectory } from '@/api/contact.service'
+import { getAllSchools } from '@/api/organization.service'
 import { getRoleList } from '@/api/role.service'
 
 import ColorPicker from '@/components/Nero/ColorPicker'
@@ -252,7 +252,7 @@ export default {
       }
     })
 
-    getSchools().then((data) => {
+    getAllSchools().then((data) => {
       if (data.success) {
         this.selectedSchool = this.emptySchool
         this.schoolList = [this.emptySchool, ...PentilaUtils.Array.sortWithString(data.schools, false, 'schoolName')]
@@ -269,10 +269,10 @@ export default {
     getCompletion () {
       if (this.searchInput.length >= 2) {
         this.isLoadingCompletion = true
-        getUsersCompletion(this.searchInput, this.selectedSchool.schoolId, this.selectedRole.roleId).then((data) => {
+        searchDirectory(this.searchInput, this.selectedRole.roleId, this.selectedSchool.schoolId).then((data) => {
           this.isLoadingCompletion = false
           if (data.success) {
-            this.completionUsers = data.results
+            this.completionUsers = data.users
           } else {
             console.error('Error while getting users', data.error)
           }

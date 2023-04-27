@@ -13,6 +13,11 @@ const routes = [
     component: () => import('@/router/views/AllDiaryEvents.vue')
   },
   {
+    path: '/dashboard/all-announcements',
+    name: 'AllAnnouncements',
+    component: () => import('@/router/views/AllAnnouncements.vue')
+  },
+  {
     path: '/progression/:progressionId(\\d+)?',
     name: 'Progression',
     component: () => import('@/router/views/Progression')

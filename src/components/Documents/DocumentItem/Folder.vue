@@ -2,7 +2,7 @@
   <GenericDocument
     class="folder-document"
     data-test="folder"
-    :class="{ 'active': isActive }"
+    :class="{ 'active': isActive, 'theme-background-color': isActive }"
     :document="folder"
     :document-icon="folderIcon"
     :quick-options="quickOptions"
@@ -133,13 +133,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@design';
-
-.folder-document {
-  &.active {
-    color: $color-light-text;
-    background-color: $color-active-bg;
-  }
-}
 
 </style>

@@ -91,7 +91,7 @@ export default {
       } else if (this.activityType === 'folder') {
         return icons.folder
       } else if (this.activityType === 'membership') {
-        return require('@assets/icon_commu-black.svg')
+        return require('@assets/icons/users.svg')
       } else if (this.activityType === 'schoollife') {
         // TODO
         return require('@assets/calendar.svg')

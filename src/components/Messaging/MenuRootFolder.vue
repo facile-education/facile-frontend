@@ -1,27 +1,27 @@
 <template>
-  <div
+  <button
     class="base-folder"
-    :class="{'selected': ($store.state.messaging.currentFolder.folderId === folder.folderId), 'active': isActive}"
+    :class="{'selected': ($store.state.messaging.currentFolder.folderId === folder.folderId), 'active': isActive, 'theme-background-color': isActive }"
     @click="selectFolder(folder)"
     @dragover="setActive"
     @dragleave="cancelActive"
     @drop="moveToFolder"
   >
-    <div class="img-container">
+    <span class="img-container">
       <img
         :style="`width: ${iconWidth};`"
         :src="icon"
         :alt="alt"
       >
-    </div>
+    </span>
     {{ folder.folderName }}
-    <div
-      v-if="nbNotification > 0"
+    <span
+      v-if="nbUnread > 0"
       class="nb-new-messages"
     >
-      {{ '(' + nbNotification + ')' }}
-    </div>
-  </div>
+      {{ '(' + nbUnread + ')' }}
+    </span>
+  </button>
 </template>
 
 <script>
@@ -38,10 +38,6 @@ export default {
     iconWidth: {
       type: String,
       default: 'auto'
-    },
-    nbNotification: {
-      type: Number,
-      default: 0
     },
     icon: {
       type: String,
@@ -64,6 +60,14 @@ export default {
   computed: {
     currentFolderId () {
       return this.$store.state.messaging.currentFolder.folderId
+    },
+    nbUnread () {
+      for (const folder of this.$store.state.messaging.messagingFolders) {
+        if (folder.folderId === this.folder.folderId) {
+          return folder.nbUnread
+        }
+      }
+      return 0
     }
   },
   methods: {
@@ -114,12 +118,21 @@ export default {
 <style lang="scss" scoped>
 @import '@design';
 
+button {
+  margin: 0;
+  padding: 0;
+  border: none;
+
+  &:not(.theme-background-color) {
+    background-color: transparent;
+  }
+}
+
 .base-folder {
   height: 40px;
   cursor: pointer;
   margin-right: 10px;
   width: 100%;
-  color: $color-messaging-dark-text;
   display: flex;
   align-items: center;
   font-size: 1em;
@@ -131,7 +144,7 @@ export default {
   }
 
   .img-container {
-    width: 30px;
+    min-width: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -150,25 +163,15 @@ export default {
     width: 20px;
   }
 
-  &.active {
-    color: lightgrey;
-    background-color: grey;
-  }
-
   .folder-icon {
     width: 20px;
     margin-right: 10px;
   }
   &:hover:not(.selected) {
-    //background-color: $light-grey-bg;
-    //border-radius: 0 20px 20px 0;
     font-weight: bold;
   }
   &.selected {
     font-weight: bold;
-    //color: white;
-    //background-color: $color-messaging-bg;
-    //border-radius: 0 20px 20px 0;
   }
 }
 </style>

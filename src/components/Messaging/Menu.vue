@@ -1,13 +1,12 @@
 <template>
-  <div class="menu-panel">
+  <section
+    class="menu-panel"
+    :class="{'phone': mq.phone || mq.tablet}"
+  >
     <div
       v-if="mq.phone || mq.tablet"
       class="menu-header"
     >
-      <img
-        src="@assets/icons/menus/menu_messaging.svg"
-        alt=""
-      >
       <h3 v-t="'Messaging.boxes'" />
     </div>
 
@@ -15,46 +14,53 @@
       v-if="folderList.length > 0"
       class="menu"
     >
-      <!-- Inbox -->
-      <MenuRootFolder
-        class="base-folder"
-        :folder="inboxFolder"
-        :icon="require('@assets/icon_reception.svg')"
-        :nb-notification="nbNewMessages"
-        :drop-allowed="true"
-        icon-width="21px"
-        alt="icon reception"
-      />
-
-      <!-- Draft -->
-      <MenuRootFolder
-        class="base-folder"
-        :folder="draftFolder"
-        :icon="require('@assets/icon_fichier.svg')"
-        :drop-allowed="true"
-        icon-width="16px"
-        alt="icon draft"
-      />
-
-      <!-- Sent -->
-      <MenuRootFolder
-        class="base-folder"
-        :folder="sentFolder"
-        :icon="require('@assets/icon_envoyes.svg')"
-        :drop-allowed="true"
-        icon-width="17px"
-        alt="icon sent"
-      />
-
-      <!-- Trash -->
-      <MenuRootFolder
-        class="base-folder"
-        :folder="trashFolder"
-        :icon="require('@assets/icon_trash.svg')"
-        :drop-allowed="true"
-        icon-width="15px"
-        alt="icon trash"
-      />
+      <ul>
+        <li>
+          <!-- Inbox -->
+          <MenuRootFolder
+            ref="inboxFolder"
+            class="base-folder"
+            :folder="inboxFolder"
+            :icon="require('@assets/icon_reception.svg')"
+            :drop-allowed="true"
+            icon-width="21px"
+            alt="icon reception"
+          />
+        </li>
+        <li>
+          <!-- Draft -->
+          <MenuRootFolder
+            class="base-folder"
+            :folder="draftFolder"
+            :icon="require('@assets/icons/messaging_draft.svg')"
+            :drop-allowed="true"
+            icon-width="16px"
+            alt="icon draft"
+          />
+        </li>
+        <li>
+          <!-- Sent -->
+          <MenuRootFolder
+            class="base-folder"
+            :folder="sentFolder"
+            :icon="require('@assets/icons/messaging_sent.svg')"
+            :drop-allowed="true"
+            icon-width="19px"
+            alt="icon sent"
+          />
+        </li>
+        <li>
+          <!-- Trash -->
+          <MenuRootFolder
+            class="base-folder"
+            :folder="trashFolder"
+            :icon="require('@assets/icons/trash.svg')"
+            :drop-allowed="true"
+            icon-width="18px"
+            alt="icon trash"
+          />
+        </li>
+      </ul>
 
       <!-- Personal folders -->
       <div
@@ -65,23 +71,25 @@
       >
         <div class="icon-container">
           <img
-            src="@assets/icon_messaging_folder.svg"
+            src="@assets/icons/messaging_folders.svg"
             alt=""
             class="folder-icon"
           >
         </div>
         {{ $t('Messaging.personalFolders') }}
-        <div
+        <button
+          v-if="!(mq.phone || mq.tablet)"
           class="folder-actions"
-          data-test="folder-actions"
+          :class="{'display-input': displayNewFolderInput}"
+          data-test="createMessagingFolder"
+          :title="$t('Messaging.addFolder')"
+          @click.stop="toggleNewFolderInput"
         >
           <BaseIcon
             name="plus"
-            data-test="createMessagingFolder"
             class="fa-lg folder-action"
-            @click.stop="toggleNewFolderInput"
           />
-        </div>
+        </button>
       </div>
       <PentilaInput
         v-if="displayNewFolderInput"
@@ -89,21 +97,22 @@
         v-model="newFolderName"
         class="new-folder-input"
         placeholder="Nouveau dossier"
-        @keyup.enter.stop="createPersonalRootFolder"
+        @blur="createPersonalRootFolder"
+        @keyup.enter.stop="blurNewFolderNameInput"
         @keyup.escape="displayNewFolderInput = false"
       />
 
       <!-- Sub folders -->
-      <div v-if="isPersonalFoldersExpanded">
+      <ul v-if="isPersonalFoldersExpanded">
         <MenuFolder
           v-for="folder in personalFolders"
           :key="folder.folderId"
           class="personal-sub-folder"
           :folder="folder"
         />
-      </div>
+      </ul>
     </nav>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -116,6 +125,7 @@ import MenuFolder from '@components/Messaging/MenuFolder'
 import MenuRootFolder from '@components/Messaging/MenuRootFolder'
 import { nextTick } from 'vue'
 import messagingUtils from '@utils/messaging.utils'
+import PentilaUtils from 'pentila-utils'
 
 export default {
   name: 'Menu',
@@ -126,11 +136,15 @@ export default {
   },
   inject: ['mq'],
   props: {
+    isDisplayed: {
+      type: Boolean,
+      default: false
+    }
   },
   data: function () {
     return {
       isLoadingFolders: false,
-      isPersonalFoldersExpanded: false,
+      isPersonalFoldersExpanded: true,
       displayNewFolderInput: false,
       newFolderName: '',
       isTrashActive: false
@@ -153,7 +167,7 @@ export default {
       return this.folderList.find(folder => folder.type === constants.messagingTrashFolderType)
     },
     personalFolders () {
-      return this.folderList.filter(folder => folder.type === constants.messagingPersonalFolderType)
+      return PentilaUtils.Array.sortWithString(this.folderList.filter(folder => folder.type === constants.messagingPersonalFolderType), false, 'folderName')
     },
     isAPersonalFolderSelected () {
       for (let i = 0; i < this.personalFolders.length; i++) {
@@ -166,9 +180,6 @@ export default {
     },
     isDisplayMessageFromRouting () {
       return this.$store.state.messaging.displayMessageFromRouting
-    },
-    nbNewMessages () {
-      return this.$store.state.messaging.nbNewMessages
     }
   },
   watch: {
@@ -179,18 +190,29 @@ export default {
           this.isPersonalFoldersExpanded = true
         }
       }
+    },
+    isDisplayed (value) {
+      if (value) {
+        this.$refs.inboxFolder.$el.focus()
+      }
     }
   },
   methods: {
+    blurNewFolderNameInput () {
+      const vm = this
+      nextTick(function () {
+        vm.$refs.newFolderInput.blur()
+      })
+    },
     toggleSideMenuPanel () {
       this.$store.dispatch('messaging/toggleSideMenuPanel')
     },
     togglePersonalFolders () {
       this.isPersonalFoldersExpanded = !this.isPersonalFoldersExpanded
     },
-    toggleNewFolderInput () {
+    toggleNewFolderInput (event) {
       this.displayNewFolderInput = !this.displayNewFolderInput
-      if (this.displayNewFolderInput) {
+      if (this.displayNewFolderInput && (event.pointerType === 'mouse' || event.mozInputSource === 1)) {
         // Focus input
         const vm = this
         nextTick(function () {
@@ -198,18 +220,25 @@ export default {
         })
       }
     },
-    selectFolder (folder) {
-      this.$store.dispatch('messaging/selectFolder', folder)
+    nbUnread (folderId) {
+      for (const folder in this.$store.state.messaging.messagingFolders) {
+        if (folder.folderId === folderId) {
+          return folder.nbUnread
+        }
+      }
+      return 0
     },
     createPersonalRootFolder () {
       this.displayNewFolderInput = false
-      folderService.addFolder(0, this.newFolderName).then((data) => {
-        if (data.success) {
-          this.$store.dispatch('messaging/addPersonalRootFolder', data.folder)
-          this.isPersonalFoldersExpanded = true
-          this.newFolderName = ''
-        }
-      })
+      if (this.newFolderName.length > 0) { // Basic check, TODO: Other form like verifications?
+        folderService.addFolder(0, this.newFolderName).then((data) => {
+          if (data.success) {
+            this.$store.dispatch('messaging/addPersonalRootFolder', data.folder)
+            this.isPersonalFoldersExpanded = true
+            this.newFolderName = ''
+          }
+        })
+      }
     },
     cancelHandlers (e) {
       e.preventDefault()
@@ -249,15 +278,27 @@ export default {
 
 .menu-panel {
   background-color: white;
-  border-right: 1px solid $color-border;
   height: 100%;
   overflow: auto;
+  border-right: 1px solid $color-border;
 
   &.phone {
-    .menu {
-      padding-top: 0;
+    border-right: none;
+
+    .menu .base-folder {
+      padding-left: 20px;
     }
   }
+
+  &.menu-collapsed {
+    border-right: none;
+  }
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
 }
 
 .menu-header {
@@ -265,25 +306,9 @@ export default {
   width: 100%;
   display: flex;
   align-items: center;
-
-  .header-icon {
-    margin: auto;
-    padding: 5px;
-    width: 35px;
-    height: 35px;
-    border: 1px solid transparent;
-
-    &:hover {
-      border-radius: 5px;
-      border: 1px solid black;
-      cursor: pointer;
-    }
-  }
-
-  img {
-    margin-right: 15px;
-    margin-left: 20px;
-  }
+  font-size: 1.25em;
+  margin-left: 20px;
+  margin-top: 15px;
 }
 hr {
   margin: 0;
@@ -292,7 +317,7 @@ hr {
   width: 100%;
 
   .base-folder {
-    padding-left: 20px;
+    padding-left: 10px;
   }
 
   .personal-folders {
@@ -306,24 +331,31 @@ hr {
     }
 
     .icon-container {
-      width: 30px;
+      min-width: 30px;
       display: flex;
       align-items: center;
       justify-content: center;
       margin-right: 10px;
 
       .folder-icon {
-        width: 18px;
+        width: 19px;
       }
     }
 
     .folder-actions {
-      display: none;
-    }
-    &:hover .folder-actions {
+      cursor: pointer;
       margin-left: auto;
       margin-right: 25px;
-      display: block;
+      background-color: transparent;
+      border: none;
+      opacity: 0;
+
+      &:focus, .display-input{
+        opacity: 1;
+      }
+    }
+    &:hover .folder-actions {
+      opacity: 1;
     }
   }
 

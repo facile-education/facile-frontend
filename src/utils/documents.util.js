@@ -141,43 +141,61 @@ async function importDocuments (folderId, documentList, mode) {
     const doc = documentList[i]
     if (!store.state.currentActions.cancelUpload) {
       store.dispatch('currentActions/setCurrentUploadFile', doc)
-      await fileService.uploadFile(folderId, doc, i === 0 ? mode : conflicts.MODE_MERGE).then((data) => {
-        store.dispatch('currentActions/removeCurrentUploadFile')
-        if (data.success) {
-          store.dispatch('currentActions/addUploadedFile', doc)
-          store.dispatch('documents/refreshCurrentFolder')
-          if (data.firstCreatedFolder && mode === conflicts.MODE_RENAME) { // If we previously have created a new folder, change the followings file paths to place it in th new folder
-            for (let j = i + 1; j < documentList.length; j++) {
-              const fileToUpload = documentList[j]
-              const parts = fileToUpload.name.split('/')
-              if (parts.length > 1) { // rename the root folder part of the name
-                parts[0] = data.firstCreatedFolder.name
-                documentList[j] = new File([fileToUpload], parts.join('/'))
+
+      if (folderId === undefined) {
+        await fileService.uploadTmpFile(doc).then((data) => {
+          store.dispatch('currentActions/removeCurrentUploadFile')
+          if (data.success) {
+            store.dispatch('currentActions/addUploadedFile', data.uploadedFile)
+          } else {
+            stop = handleError(data, doc, folderId, documentList, i)
+          }
+        })
+      } else {
+        await fileService.uploadFile(folderId, doc, i === 0 ? mode : conflicts.MODE_MERGE).then((data) => {
+          store.dispatch('currentActions/removeCurrentUploadFile')
+          if (data.success) {
+            store.dispatch('currentActions/addUploadedFile', doc)
+            store.dispatch('documents/refreshCurrentFolder')
+            if (data.firstCreatedFolder && mode === conflicts.MODE_RENAME) { // If we previously have created a new folder, change the followings file paths to place it in th new folder
+              for (let j = i + 1; j < documentList.length; j++) {
+                const fileToUpload = documentList[j]
+                const parts = fileToUpload.name.split('/')
+                if (parts.length > 1) { // rename the root folder part of the name
+                  parts[0] = data.firstCreatedFolder.name
+                  documentList[j] = new File([fileToUpload], parts.join('/'))
+                }
               }
             }
+          } else {
+            stop = handleError(data, doc, folderId, documentList, i)
           }
-        } else {
-          if (data.error === 'fileSizeException') {
-            store.dispatch('popups/pushPopup', {
-              message: i18n.global.t('Documents.fileSizeException'),
-              type: 'error'
-            })
-          } else if (data.error === 'DuplicateFileException') {
-            stop = true
-            store.dispatch('conflictModal/addConflict', {
-              entitiesInConflict: [doc],
-              lastAction: { fct: importDocuments, params: [folderId, documentList.slice(i)] }
-            })
-          } else if (data.error === 'PermissionException') {
-            store.dispatch('popups/pushPopup', {
-              message: i18n.global.t('Documents.permissionException'),
-              type: 'error'
-            })
-          }
-        }
-      })
+        })
+      }
     }
   }
+}
+
+function handleError (data, doc, folderId, documentList, index) {
+  if (data.error === 'fileSizeException') {
+    store.dispatch('popups/pushPopup', {
+      message: i18n.global.t('Documents.fileSizeException'),
+      type: 'error'
+    })
+  } else if (data.error === 'DuplicateFileException') {
+    store.dispatch('conflictModal/addConflict', {
+      entitiesInConflict: [doc],
+      lastAction: { fct: importDocuments, params: [folderId, documentList.slice(index)] }
+    })
+    return true
+  } else if (data.error === 'PermissionException') {
+    store.dispatch('popups/pushPopup', {
+      message: i18n.global.t('Documents.permissionException'),
+      type: 'error'
+    })
+  }
+
+  return false
 }
 
 async function downloadDocument (entity) {

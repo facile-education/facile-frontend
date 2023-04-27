@@ -48,7 +48,7 @@ export default {
       if (scroll.scrollTop > oldScrollTop) { // if we go down
         const nbPixelsBeforeBottom = scroll.scrollHeight - (scroll.scrollTop + scroll.clientHeight)
 
-        if (nbPixelsBeforeBottom === 0) {
+        if (nbPixelsBeforeBottom <= 0) {
           if (!this.$store.getters['currentActions/isInProgress']('loadThreads')) {
             this.$emit('scrollReachBottom')
           }

@@ -6,13 +6,15 @@ import {
 } from '@/api/dashboard/news.service'
 import { nbActivityPerPage } from '@/constants/activityConstants'
 import dayjs from 'dayjs'
+import { getFullName } from '@utils/commons.util'
 
 export const state = {
   hasActivityThreadWidget: false,
   hasHomeworkWidget: false,
   hasEDTWidget: false,
-  hasDiaryWidget: true, // TODO: back end
+  hasDiaryWidget: false,
   hasSchoolNewsWidget: false,
+  hasStatisticWidget: false,
   canAddGroupNews: undefined,
   canAddSchoolNews: undefined,
   canAddEvents: undefined,
@@ -20,7 +22,8 @@ export const state = {
   groupActivities: [],
   editedNews: undefined,
   schoolNews: [],
-  homeworks: []
+  homeworks: [],
+  childList: []
 }
 
 export const mutations = {
@@ -30,9 +33,16 @@ export const mutations = {
     state.hasDiaryWidget = payload.hasDiaryWidget
     state.hasSchoolNewsWidget = payload.hasSchoolNewsWidget
     state.hasActivityThreadWidget = payload.hasActivityThreadWidget
+    state.hasStatisticWidget = payload.hasStatisticWidget
     state.canAddGroupNews = payload.canAddGroupNews
     state.canAddSchoolNews = payload.canAddSchoolNews
     state.canAddEvents = payload.canAddEvents
+    if (payload.children) {
+      payload.children.forEach((child) => {
+        child.fullName = getFullName(child)
+      })
+      state.childList = payload.children
+    }
   },
   addGroupNews (state, payload) {
     for (let idx = 0; idx < payload.length; ++idx) {
@@ -96,15 +106,17 @@ export const mutations = {
 
 export const actions = {
   initDashboard ({ commit }) {
-    initDashboard().then(
-      (data) => {
+    return new Promise((resolve, reject) => {
+      initDashboard().then((data) => {
         if (data.success) {
+          resolve()
           commit('initDashboard', data)
         }
-      },
-      (err) => {
+      }, (err) => {
+        reject(err)
         console.error(err)
       })
+    })
   },
   getGroupActivities ({ commit }, { maxDate, nbActivities }) {
     getGroupActivities(maxDate, nbActivities).then(

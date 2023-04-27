@@ -1,5 +1,5 @@
 <template>
-  <div
+  <button
     class="folder"
     :class="{'selected': isSelected, 'dark': dark}"
     @click="folderClicked"
@@ -15,7 +15,7 @@
     <div class="name">
       {{ folder.name }}
     </div>
-  </div>
+  </button>
 </template>
 
 <script>
@@ -44,8 +44,8 @@ export default {
     }
   },
   methods: {
-    folderClicked () {
-      this.$emit('folderClicked', this.folder)
+    folderClicked (e) {
+      this.$emit('folderClicked', this.folder, e)
     },
     folderDblClicked () {
       this.$emit('folderDblClicked', this.folder)
@@ -57,8 +57,17 @@ export default {
 <style lang="scss" scoped>
 @import '@design';
 
+button {
+  cursor: pointer;
+  background-color: transparent;
+  border-radius: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
   .folder {
-    margin: 0;
+    width: 100%;
     display: flex;
     align-items: center;
     cursor: pointer;

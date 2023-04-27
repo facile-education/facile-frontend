@@ -176,6 +176,7 @@ export default {
   },
   methods: {
     closeFile (file) {
+      this.$store.dispatch('documents/refreshCurrentFolder') // To update the displayed closed document properties (last modified date, etc...)
       this.$store.dispatch('documents/closeFile', file)
     },
     closePopup () {
@@ -245,7 +246,7 @@ export default {
   padding: 10px;
 }
 
-/* .popups-container {
+.popups-container {
   z-index: $popup-z-index;
   position: fixed;
   top: 30px;
@@ -270,5 +271,5 @@ export default {
 
 .msg {
   text-align: center;
-} */
+}
 </style>

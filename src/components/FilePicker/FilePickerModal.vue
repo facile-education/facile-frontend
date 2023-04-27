@@ -157,19 +157,15 @@ export default {
     }
   }
 
-  // Shit to make the thing works (inherit max-height minus elements paddings)
-  .resizable-component {
-    .window-container {
-      .window-body {
-        --body-max-height: calc(90vh - 133px);
-        max-height: var(--body-max-height);
+  &:not(.mobile) .window-body .body {
+    --tab-content-max-height: calc(var(--body-max-height) - 87px);
+    max-height: calc(var(--tab-content-max-height) - 10px);
+  }
 
-        .body {
-          --tab-content-max-height: calc(var(--body-max-height) - 87px);
-          max-height: calc(var(--tab-content-max-height) - 10px);
-        }
-      }
-    }
+  // Shit to make the thing works (inherit max-height minus elements paddings)
+  .window-body {
+    --body-max-height: calc(90vh - 133px);
+    max-height: var(--body-max-height);
   }
 }
 

@@ -155,7 +155,7 @@ export default {
         const nbPixelsBeforeBottom = scroll.scrollHeight - (scroll.scrollTop + scroll.clientHeight)
 
         // Load next page if search is not locked
-        if (nbPixelsBeforeBottom === 0 && !this.isLocked) {
+        if (nbPixelsBeforeBottom <= 0 && !this.isLocked) {
           ++this.pageNb
           this.runSearch()
         }

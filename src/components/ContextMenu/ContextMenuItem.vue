@@ -1,11 +1,12 @@
 <template>
   <li>
-    <div
+    <button
       class="context-menu-item"
       :class="{'has-separator': option.hasSeparator,
                'is-grayed': option.isGrayed,
                'hoverable': !option.isGrayed,
                'active': isActive,
+               'theme-background-color': isActive,
                'is-selected theme-light-background-color': isSelected}"
       @mouseover="isHovering = true"
       @mouseleave="isHovering = false"
@@ -15,7 +16,7 @@
       @dragleave="cancelActive"
       @drop="dropFile"
     >
-      <div
+      <span
         v-if="option.hasCheckbox"
         class="checkbox"
       >
@@ -23,32 +24,25 @@
           v-if="option.isSelected"
           name="check"
         />
-      </div>
-      <div class="title">
+      </span>
+      <span class="title">
         {{ option.title }}
-      </div>
-      {{ option.iconWhite }}
-      <div
-        v-if="option.icon !== ''"
+      </span>
+      <span
+        v-if="option.icon"
         class="icon"
       >
         <img
-          v-if="option.icon !== undefined && (option.iconWhite === undefined || (!isHovering && !isSelected))"
           :src="option.icon"
           :alt="option.title"
         >
-        <img
-          v-show="option.iconWhite !== undefined && (isHovering || isSelected)"
-          :src="option.iconWhite"
-          :alt="option.title"
-        >
-      </div>
+      </span>
       <BaseIcon
         v-if="hasSubMenu"
         class="sub-menu-chevron"
         name="chevron-right"
       />
-    </div>
+    </button>
     <ContextMenu
       v-if="isSubMenuDisplay"
       :sub-menu-mobile="mq.phone"
@@ -214,6 +208,16 @@ export default {
 <style lang="scss" scoped>
 @import '@design';
 
+button {
+  width: 100%;
+  cursor: pointer;
+  background-color: white;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
 .context-menu-item {
   display: flex;
   align-items: center;
@@ -262,14 +266,6 @@ export default {
 
     .sub-menu-chevron{
       color: black;
-    }
-  }
-
-  &.active {
-    background-color: $color-active-bg;
-
-    .title {
-      color: white;
     }
   }
 }

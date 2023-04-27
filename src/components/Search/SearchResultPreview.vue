@@ -22,7 +22,7 @@
         {{ searchResult.title }}
         <img
           v-if="isCollaborative"
-          src="@assets/icon_commu-black.svg"
+          src="@assets/icons/users.svg"
           alt="collaborative"
         >
       </div>

@@ -1,0 +1,63 @@
+<template>
+  <PentilaWindow
+    :modal="true"
+    :is-full-screen="mq.phone"
+    :hidden-footer="true"
+    :draggable="true"
+    data-test="contactPickerModal"
+    @close="onClose"
+  >
+    <template #header>
+      <h1 v-t="'header'" />
+    </template>
+
+    <template #body>
+      <ContactPicker
+        :selected-contacts="selectedContacts"
+        @addContacts="$emit('addContacts', $event)"
+        @removeContacts="$emit('removeContacts', $event)"
+      />
+    </template>
+  </PentilaWindow>
+</template>
+
+<script>
+import ContactPicker from '@components/ContactPicker/ContactPicker.vue'
+export default {
+  name: 'ContactPickerModal',
+  components: { ContactPicker },
+  inject: ['mq'],
+  props: {
+    selectedContacts: {
+      type: Array,
+      required: true
+    }
+  },
+  emits: ['addContacts', 'removeContacts', 'close'],
+  created () {
+    this.$store.dispatch('misc/incrementModalCount')
+  },
+  methods: {
+    onClose () {
+      this.$store.dispatch('contact/resetContactStore')
+      this.$store.dispatch('misc/decreaseModalCount')
+      this.$emit('close')
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+h1 {
+  margin: 0;
+  font-size: 1em;
+  line-height: 1.25em;
+}
+
+</style>
+
+<i18n locale="fr">
+{
+  "header": "Sélection de contact"
+}
+</i18n>

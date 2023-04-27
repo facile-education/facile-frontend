@@ -1,19 +1,19 @@
 <template>
-  <div class="menu-folder">
+  <li class="menu-folder">
     <!-- Folder icon + name + actions -->
-    <div
+    <button
       v-if="!displayFolderNameInput"
+      ref="personalFolder"
       class="personal-folder"
-      :class="{'selected': isSelected, 'active': isActive }"
+      :class="{'selected': isSelected, 'active': isActive, 'theme-background-color': isActive }"
       :title="currentFolder.folderName"
-      @mouseover="isHovering = true"
-      @mouseleave="isHovering = false"
+      :data-test="'personalSubFolder-' + currentFolder.folderName"
       @dragover="setActive"
       @dragleave="cancelActive"
       @drop="dropThreads"
       @click="handleClick"
     >
-      <div class="icon-container">
+      <span class="icon-container">
         <BaseIcon
           v-if="!isExpanded && folder.subFolders.length > 0"
           name="caret-right"
@@ -26,38 +26,50 @@
           class="fa-lg folder-icon"
           @click.stop="isExpanded = false"
         />
-      </div>
+      </span>
 
-      <div class="folder-name">
-        {{ currentFolder.folderName }}
-      </div>
+      <span class="folder-name">
+        {{ folder.folderName + (folder.nbUnread > 0 ? ' (' +folder.nbUnread + ')' : '') }}
+      </span>
 
-      <div
-        v-if="isHovering"
+      <span
+        v-if="!(mq.phone || mq.tablet)"
         class="folder-actions"
       >
-        <img
-          src="@/assets/options/icon_edit_texte.svg"
-          alt="edit folder"
-          class="folder-action edit"
+        <button
           :title="$t('Messaging.rename')"
+          data-test="rename"
           @click.stop="toggleFolderNameInput"
         >
-        <BaseIcon
-          name="plus"
-          class="folder-action add"
-          :title="$t('Messaging.addFolder')"
+          <img
+            src="@/assets/options/icon_edit_texte.svg"
+            alt="edit folder"
+            class="folder-action edit"
+          >
+        </button>
+        <button
+          :title="$t('Messaging.addSubFolder')"
+          data-test="add"
           @click.stop="toggleNewFolderInput"
-        />
-        <img
-          src="@/assets/icon_trash.svg"
-          alt="delete folder"
-          class="folder-action delete"
+        >
+          <BaseIcon
+            name="plus"
+            class="folder-action add"
+          />
+        </button>
+        <button
           :title="$t('Messaging.deleteFolder')"
+          data-test="delete"
           @click.stop="askToConfirmFolderDeletion"
         >
-      </div>
-    </div>
+          <img
+            src="@/assets/icon_trash.svg"
+            alt="delete folder"
+            class="folder-action delete"
+          >
+        </button>
+      </span>
+    </button>
 
     <!-- Input for folder name edition -->
     <PentilaInput
@@ -65,7 +77,8 @@
       ref="folderNameInput"
       v-model="currentFolder.folderName"
       class="folder-name-input"
-      @keyup.enter.stop="editFolderName"
+      @blur="editFolderName"
+      @keyup.enter.stop="blurFolderNameInput"
       @keyup.escape="displayFolderNameInput = false"
     />
 
@@ -76,12 +89,13 @@
       v-model="newFolderName"
       class="new-folder-input"
       placeholder="Nouveau dossier"
-      @keyup.enter.stop="createSubFolder"
+      @blur="createSubFolder"
+      @keyup.enter.stop="blurNewFolderNameInput"
       @keyup.escape="displayNewFolderInput = false"
     />
 
     <!-- Sub folders -->
-    <div
+    <ul
       v-if="isExpanded && folder.subFolders.length > 0"
       class="sub-folder-list"
     >
@@ -91,8 +105,8 @@
         class="sub-folder"
         :folder="subFolder"
       />
-    </div>
-  </div>
+    </ul>
+  </li>
 </template>
 
 <script>
@@ -119,11 +133,11 @@ export default {
   data: function () {
     return {
       currentFolder: {},
+      currentFolderOldName: '',
       isExpanded: false,
       displayNewFolderInput: false,
       displayFolderNameInput: false,
       newFolderName: '',
-      isHovering: false,
       isActive: false,
       isDragging: false
     }
@@ -149,34 +163,52 @@ export default {
     if (this.isSubFolderSelected) {
       this.isExpanded = true
     }
+    this.currentFolderOldName = this.currentFolder.folderName
   },
   methods: {
-    handleClick () {
+    handleClick (e) {
+      if (e.pointerType === 'mouse' || e.mozInputSource === 1) {
+        // Remove focus from button
+        const vm = this
+        nextTick(function () {
+          vm.$refs.personalFolder.blur()
+        })
+      }
       this.selectFolder() // Invert following instructions to change extend behaviour
       this.$router.push({ name: 'Messaging' })
       if (this.isSelected) {
         this.isExpanded = !this.isExpanded
       }
     },
-    toggleFolderNameInput () {
+    toggleFolderNameInput (e) {
       this.displayFolderNameInput = !this.displayFolderNameInput
-      if (this.displayFolderNameInput) {
-        // Focus input
+      if (this.displayFolderNameInput && (e.pointerType === 'mouse' || e.mozInputSource === 1)) { // focus input if it's safe (enter button submit input if focused)
         const vm = this
         nextTick(function () {
           vm.$refs.folderNameInput.focus()
         })
       }
     },
-    toggleNewFolderInput () {
+    toggleNewFolderInput (e) {
       this.displayNewFolderInput = !this.displayNewFolderInput
-      if (this.displayNewFolderInput) {
-        // Focus input
+      if (this.displayNewFolderInput && (e.pointerType === 'mouse' || e.mozInputSource === 1)) { // focus input if it's safe (enter button submit input if focused)
         const vm = this
         nextTick(function () {
           vm.$refs.newFolderInput.focus()
         })
       }
+    },
+    blurFolderNameInput () {
+      const vm = this
+      nextTick(function () {
+        vm.$refs.folderNameInput.blur()
+      })
+    },
+    blurNewFolderNameInput () {
+      const vm = this
+      nextTick(function () {
+        vm.$refs.newFolderInput.blur()
+      })
     },
     selectFolder () {
       this.$store.dispatch('messaging/selectFolder', this.folder)
@@ -186,21 +218,31 @@ export default {
     },
     createSubFolder () {
       this.displayNewFolderInput = false
-      folderService.addFolder(this.folder.folderId, this.newFolderName).then((data) => {
-        if (data.success) {
-          this.$store.dispatch('messaging/addSubFolder', { personalFolder: this.currentFolder, subFolder: data.folder })
-          this.isExpanded = true
-          this.newFolderName = ''
-        }
-      })
+      if (this.newFolderName.length > 0) {
+        folderService.addFolder(this.folder.folderId, this.newFolderName).then((data) => {
+          if (data.success) {
+            this.$store.dispatch('messaging/addSubFolder', {
+              personalFolder: this.currentFolder,
+              subFolder: data.folder
+            })
+            this.isExpanded = true
+            this.newFolderName = ''
+          }
+        })
+      }
     },
     editFolderName () {
       this.displayFolderNameInput = false
-      folderService.renameFolder(this.folder.folderId, this.currentFolder.folderName).then((data) => {
-        if (data.success) {
-          this.$store.dispatch('messaging/updatePersonalFolder', data.renamedFolder)
-        }
-      })
+      if (this.currentFolder.folderName.length === 0) {
+        this.currentFolder.folderName = this.currentFolderOldName
+      } else {
+        folderService.renameFolder(this.folder.folderId, this.currentFolder.folderName).then((data) => {
+          if (data.success) {
+            this.currentFolderOldName = this.currentFolder.folderName
+            this.$store.dispatch('messaging/updatePersonalFolder', data.renamedFolder)
+          }
+        })
+      }
     },
     askToConfirmFolderDeletion () {
       this.$store.dispatch('warningModal/addWarning', {
@@ -251,6 +293,22 @@ export default {
 <style lang="scss" scoped>
 @import '@design';
 
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  border: none;
+
+  &:not(.theme-background-color) {
+    background-color: transparent;
+  }
+}
+
 .menu-folder {
   margin-left: 15px;
   flex-direction: column;
@@ -263,23 +321,29 @@ export default {
     cursor: pointer;
     display: flex;
     align-items: center;
-
-    &.active {
-      color: $color-light-text;
-      background-color: blue;
-    }
+    position: relative;
+    overflow: hidden;
+    text-align: left;
 
     &:hover:not(.selected) {
-      //background-color: $color-menu-hover-bg;
       font-weight: bold;
     }
     &.selected {
-      //background-color: $color-selected-bg;
       font-weight: bold;
     }
 
+    &:focus-within &:focus-visible {
+      background-color: yellow;
+    }
+
+    &:hover, &:focus-within {
+      .folder-actions {
+        transform: translateX(-100%);
+      }
+    }
+
     .icon-container {
-      width: 30px;
+      min-width: 30px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -299,39 +363,43 @@ export default {
     }
 
     .folder-actions {
+      position: absolute;
+      top: 0;
+      left: 100%;
+      height: 100%;
       display: flex;
       align-items: center;
-      margin-left: auto;
+      overflow: hidden;
+      transition: all .3s ease;
+
       /* disable text selection icons */
       -ms-user-select: none;
       -moz-user-select: none;
       -webkit-user-select: none;
       user-select: none; /* CSS3 (little to no support) */
 
-      .folder-action {
-        margin-right: 5px;
+      button {
+        background-color: white;
+        width: 30px;
+        transition: all .3s ease;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $color-hover-bg;
+        }
       }
 
       .edit {
-        width: 12px;
-
-        &:hover {
-          width: 13px;
-        }
+        width: 20px;
       }
 
-      .add {
+      .add, .delete {
         width: 16px;
-        &:hover {
-          font-weight: bold;
-        }
-      }
-
-      .delete {
-        width: 16px;
-        &:hover {
-          width: 17px;
-        }
       }
     }
   }
