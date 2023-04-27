@@ -50,7 +50,7 @@
       </li>
       <li v-if="mq.tablet || mq.phone">
         <IconOption
-          v-if="selectedThreads.length > 0"
+          v-if="selectedThreads.length > 0 && isMultiSelectionActive"
           class="button"
           :icon="require('@/assets/icons/vertical_dots.svg')"
           title="options"

@@ -6,6 +6,7 @@ import PentilaUtils from 'pentila-utils'
 
 export default {
   uploadFile,
+  uploadTmpFile,
   renameFile,
   getResource,
   createMindMapFile,
@@ -41,6 +42,21 @@ function uploadFile (folderId, file, mode = conflicts.MODE_NORMAL) {
 
   return axios.post(
     constants.JSON_WS_URL + FILE_PATH + '/upload-file?',
+    formData
+  ).then(response => response.data)
+}
+
+/**
+ * Upload a file in user tmp folder
+ */
+function uploadTmpFile (file) {
+  const formData = new FormData()
+  formData.append('p_auth', getCookie('pauth'))
+  formData.append('fileName', file.name)
+  formData.append('file', file, file.name)
+
+  return axios.post(
+    constants.JSON_WS_URL + FILE_PATH + '/upload-tmp-file?',
     formData
   ).then(response => response.data)
 }
