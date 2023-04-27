@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section @click="$router.push({name: 'Statistics'})">
     <StatisticsHeader />
     <PentilaSpinner
       v-if="isLoading"
@@ -72,6 +72,7 @@ section {
   width: 100%;
   max-width: $statistics-widget-max-width;
   position: relative;
+  cursor: pointer;
   @extend %widget;
 }
 
