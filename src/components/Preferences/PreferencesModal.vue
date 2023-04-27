@@ -9,10 +9,9 @@
 
     <template #body>
       <PentilaTabList ref="tabList">
-        <!-- Commented out with LFR6 -->
-        <!--<PentilaTabItem :title="$t('accountTabLabel')">
+        <PentilaTabItem :title="$t('accountTabLabel')">
           <AccountTab @save="updateInfoLabel" />
-        </PentilaTabItem>-->
+        </PentilaTabItem>
         <PentilaTabItem :title="$t('messagingTabLabel')">
           <MessagingTab @save="updateInfoLabel" />
         </PentilaTabItem>
@@ -28,14 +27,14 @@
 <script>
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
-// const AccountTab = defineAsyncComponent(() => import('@/components/Preferences/AccountTab'))
+const AccountTab = defineAsyncComponent(() => import('@/components/Preferences/AccountTab'))
 const MessagingTab = defineAsyncComponent(() => import('@/components/Preferences/MessagingTab'))
 
 export default {
   name: 'PreferencesModal',
   components: {
-    MessagingTab
-    // AccountTab
+    MessagingTab,
+    AccountTab
   },
   props: {
     tab: {
@@ -56,12 +55,11 @@ export default {
   },
   methods: {
     selectTab (tabName) {
-      // if (tabName === 'account') {
-      //  this.$refs.tabList.selectTab(0)
-      // } else {
-      // this.$refs.tabList.selectTab(1)
-      // }
-      this.$refs.tabList.selectTab(0)
+      if (tabName === 'account') {
+        this.$refs.tabList.selectTab(0)
+      } else {
+        this.$refs.tabList.selectTab(1)
+      }
     },
     close () {
       this.$store.dispatch('misc/decreaseModalCount')
