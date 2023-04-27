@@ -108,16 +108,26 @@
               @click="displayFilePicker"
             >
               <img
-                class="documents-icon"
-                src="@assets/documents.svg"
+                class="icon"
+                src="@assets/options/dossier-pj.svg"
                 :alt="$t('addAttachFileButton')"
+              >
+            </button>
+            <button
+              class="add-document-button"
+              :title="$t('addLocalAttachFileButton')"
+              @click="importDocument"
+            >
+              <img
+                class="icon"
+                src="@assets/options/icon_upload.svg"
+                :alt="$t('addLocalAttachFileButton')"
               >
             </button>
           </div>
           <AttachedFiles
             :attached-files="attachedFiles"
             :read-only="false"
-            class="files"
             @removeAttachedFile="removeAttachedFile"
           />
         </div>
@@ -176,6 +186,9 @@
 </template>
 
 <script>
+import { returnAddedFiles, alertNoFile } from '@utils/upload.util'
+import { importDocuments } from '@utils/documents.util'
+
 import { required } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
 import constants from '@/constants/messagingConstants'
@@ -273,6 +286,10 @@ export default {
     }
   },
   created () {
+    if (this.$store.state.documentsProperties === undefined) {
+      this.$store.dispatch('documents/getGlobalDocumentsProperties')
+    }
+
     this.$store.dispatch('misc/incrementModalCount')
     this.init()
   },
@@ -287,6 +304,33 @@ export default {
     this.getToolTipPosition()
   },
   methods: {
+    importDocument () {
+      // Create hidden inputFile
+      const input = document.createElement('input')
+      input.style.display = 'none'
+      input.type = 'file'
+      input.accept = '*/*'
+      input.multiple = true
+
+      input.onchange = e => {
+        returnAddedFiles(e, this.$store).then((files) => {
+          if (files.length !== 0) {
+            this.$store.dispatch('currentActions/setImportFileList', files)
+            this.$store.dispatch('currentActions/displayUploadProgression')
+
+            importDocuments(undefined, files).then((data) => {
+              this.addNewFiles(this.$store.state.currentActions.listUploadedFiles)
+              this.$store.dispatch('currentActions/hideUploadProgression')
+            })
+          } else {
+            alertNoFile()
+          }
+        })
+      }
+
+      // Click it
+      input.click()
+    },
     toggleContactsPicker () {
       if (!this.isContactPickerInitialized) {
         this.isContactPickerInitialized = true
@@ -630,7 +674,7 @@ export default {
   display: flex;
   align-items: center;
 
-  .documents-icon {
+  .icon {
     width: 20px;
     height: 20px;
   }
@@ -664,7 +708,8 @@ export default {
   "recipientsPlaceHolder": "Destinataires",
   "subjectPlaceHolder": "Objet",
   "contentPlaceHolder": "Contenu",
-  "addAttachFileButton": "Ajouter une pièce jointe",
+  "addAttachFileButton": "Ajouter une pièce jointe depuis mes documents",
+  "addLocalAttachFileButton": "Ajouter une pièce jointe depuis mon poste de travail",
   "draftButton": "Enregistrer en brouillon",
   "draftSaved": "Brouillon enregistré!",
   "successMessage": "Message envoyé",
