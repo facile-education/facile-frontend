@@ -30,6 +30,14 @@
       />
     </div>
 
+    <div
+      v-if="isLoadingProgressionDisplayed"
+      class="background-actions-container"
+      :class="{'phone': mq.phone}"
+    >
+      <UploadProgression />
+    </div>
+
     <teleport
       v-for="(file, index) in openFiles"
       :key="index"
@@ -65,12 +73,13 @@
 import { defineAsyncComponent } from 'vue'
 import Popup from '@components/Base/Popup'
 import { popupDurationTime } from '@/constants/appConstants'
-const WarningModal = defineAsyncComponent(() => import('@/components/Nero/WarningModal'))
 const ConflictModal = defineAsyncComponent(() => import('@/components/Documents/Modals/ConflictModal'))
 const FileDisplayModal = defineAsyncComponent(() => import('@/components/Documents/FileDisplay/FileDisplayModal'))
+const UploadProgression = defineAsyncComponent(() => import('@components/Documents/UploadProgression'))
+const WarningModal = defineAsyncComponent(() => import('@/components/Nero/WarningModal'))
 
 export default {
-  components: { ConflictModal, Popup, WarningModal, FileDisplayModal },
+  components: { ConflictModal, FileDisplayModal, Popup, UploadProgression, WarningModal },
   inject: ['mq'],
   props: {
     isAllowed: {
@@ -82,11 +91,14 @@ export default {
     openFiles () {
       return this.$store.state.documents.openFiles
     },
-    isWarningModalDisplayed () {
-      return this.$store.getters['warningModal/isWarningModalDisplayed']
-    },
     isConflictModalDisplayed () {
       return this.$store.getters['conflictModal/isConflictModalDisplayed']
+    },
+    isLoadingProgressionDisplayed () {
+      return this.$store.state.currentActions.isLoadingProgressionDisplayed
+    },
+    isWarningModalDisplayed () {
+      return this.$store.getters['warningModal/isWarningModalDisplayed']
     },
     popupTimeout () {
       return popupDurationTime
@@ -153,5 +165,29 @@ export default {
 
 .msg {
   text-align: center;
+}
+
+.background-actions-container {
+  background-color: white;
+  z-index: $popup-z-index;
+  position: absolute;
+  bottom: 1px;
+  right: 20px;
+  flex-direction: column;
+  max-width: 100%;
+
+  .action {
+    color: white;
+  }
+
+  &.phone {
+    right: 50%;
+    transform: translate(50%, 0);
+
+    .action {
+      width: 90vw;
+      height: 50px;
+    }
+  }
 }
 </style>

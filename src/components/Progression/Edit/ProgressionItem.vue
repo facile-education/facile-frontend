@@ -183,7 +183,7 @@
         >
         <img
           class="add-content-button"
-          src="@assets/options/icon_upload.svg"
+          src="@assets/options/dossier-pj.svg"
           :alt="$t('addFile')"
           :title="$t('addFile')"
           @click="openFilePicker()"

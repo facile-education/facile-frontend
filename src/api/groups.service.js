@@ -5,7 +5,6 @@ import PentilaUtils from 'pentila-utils'
 export {
   getUserGroups,
   getUserCommunities,
-  getUsersCompletion,
   getCommunityMembers,
   createCommunity,
   checkCommunityName,
@@ -19,6 +18,7 @@ export {
 export default {
   getUserGroups,
   getUserCommunities,
+  getCommunityMembers,
   checkCommunityName
 }
 
@@ -50,19 +50,6 @@ function getUserCommunities (userId, filter) {
       allCommunities: filter.isCommunityActive,
       allClasses: filter.isInstitutionalActive,
       allCours: filter.isPedagogicalActive
-    }
-  }).then(response => response.data)
-}
-
-/**
- * Get auto completion in search members
- */
-function getUsersCompletion (query, schoolId = 0, roleId = 0) {
-  return axios.get(constants.JSON_WS_URL + GROUP_PATH + GROUP_CTX + 'get-users-completion', {
-    params: {
-      query,
-      schoolId,
-      roleId
     }
   }).then(response => response.data)
 }

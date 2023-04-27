@@ -1,10 +1,13 @@
 <template>
-  <div
+  <section
     class="thread-details"
     data-test="messages-panel"
   >
     <!-- Contextual actions -->
-    <div class="splitarea-header">
+    <div
+      class="splitarea-header"
+      :class="{'phone': mq.phone || mq.tablet}"
+    >
       <IconOption
         v-if="mq.phone || mq.tablet"
         class="header-icon back-arrow"
@@ -14,97 +17,91 @@
         alt="back"
         @click="hideDetails"
       />
-      <div class="icons">
-        <IconOption
-          class="header-icon new-icon"
-          :icon="require('@/assets/options/icon_edit_texte.svg')"
-          :title="$t('Messaging.new')"
-          name="createNewMessage"
-          icon-height="20px"
-          alt="new message"
-          @click="createNewMessage"
-        />
-        <div
+      <ul class="icons">
+        <li>
+          <IconOption
+            v-if="isActionEnabled"
+            class="header-icon trash-icon"
+            :icon="require('@assets/icons/trash.svg')"
+            :title="$t('Messaging.deleteMessage')"
+            name="trash"
+            icon-height="18px"
+            alt="delete item"
+            @click="deleteItem"
+          />
+        </li>
+        <li
           v-if="isActionEnabled"
           class="separator"
         />
-        <IconOption
-          v-if="isActionEnabled"
-          class="header-icon trash-icon"
-          :icon="require('@assets/icon_trash.svg')"
-          :title="$t('Messaging.deleteMessage')"
-          name="trash"
-          icon-height="20px"
-          alt="delete item"
-          @click="deleteItem"
-        />
-        <div
-          v-if="isActionEnabled && (mq.phone || mq.tablet)"
+        <li>
+          <IconOption
+            v-if="isActionEnabled && !isDraft && !isSenderDeleted"
+            class="header-icon"
+            :icon="require('@assets/options/icon_answer.svg')"
+            :title="$t('Messaging.reply')"
+            name="reply"
+            icon-height="18px"
+            alt="reply"
+            @click="reply"
+          />
+        </li>
+        <li
+          v-if="isActionEnabled && !isDraft && !isSenderDeleted"
           class="separator"
         />
-        <IconOption
-          v-if="isActionEnabled && (mq.phone || mq.tablet)"
-          class="header-icon read-icon"
-          :icon="require('@/assets/options/icon_mark_as_read.svg')"
-          :title="$t('Messaging.markAsRead')"
-          name="mark-as-read"
-          icon-height="20px"
-          alt="mark-as-read item"
-          @click="markAsRead"
-        />
-        <div
-          v-if="isActionEnabled"
+        <li>
+          <IconOption
+            v-if="isActionEnabled && !isDraft && !isSenderDeleted"
+            class="header-icon"
+            :icon="require('@assets/options/icon_answer_all.svg')"
+            :title="$t('Messaging.replyAll')"
+            name="replyAll"
+            icon-height="18px"
+            alt="reply All"
+            @click="replyAll"
+          />
+        </li>
+        <li
+          v-if="isActionEnabled && !isDraft && !isSenderDeleted"
           class="separator"
         />
-        <IconOption
-          v-if="isActionEnabled && !isDraft"
-          class="header-icon"
-          :icon="require('@assets/options/icon_answer.svg')"
-          :title="$t('Messaging.reply')"
-          name="reply"
-          icon-height="20px"
-          alt="reply"
-          @click="reply"
+        <li>
+          <IconOption
+            v-if="isActionEnabled && !isDraft"
+            class="header-icon"
+            :icon="require('@assets/options/icon_share.svg')"
+            :title="$t('Messaging.forward')"
+            name="forward"
+            icon-height="18px"
+            alt="forward"
+            @click="forward"
+          />
+        </li>
+        <li>
+          <IconOption
+            v-if="isActionEnabled && isDraft"
+            class="header-icon"
+            :icon="require('@assets/icons/pencil.svg')"
+            :title="$t('Messaging.editDraft')"
+            name="editDraft"
+            icon-height="18px"
+            alt="edit draft"
+            @click="editDraft"
+          />
+        </li>
+      </ul>
+      <PentilaButton
+        v-if="!(mq.phone || mq.tablet)"
+        class="create-button"
+        data-test="createMessageButton"
+        @click="createNewMessage"
+      >
+        <NeroIcon
+          name="fa-plus"
         />
-        <div
-          v-if="isActionEnabled"
-          class="separator"
-        />
-        <IconOption
-          v-if="isActionEnabled && !isDraft"
-          class="header-icon"
-          :icon="require('@assets/options/icon_answer_all.svg')"
-          :title="$t('Messaging.replyAll')"
-          name="replyAll"
-          icon-height="20px"
-          alt="reply All"
-          @click="replyAll"
-        />
-        <div
-          v-if="isActionEnabled"
-          class="separator"
-        />
-        <IconOption
-          v-if="isActionEnabled && !isDraft"
-          class="header-icon"
-          :icon="require('@assets/options/icon_share.svg')"
-          :title="$t('Messaging.forward')"
-          name="forward"
-          icon-height="20px"
-          alt="forward"
-          @click="forward"
-        />
-        <IconOption
-          v-if="isActionEnabled && isDraft"
-          class="header-icon"
-          :icon="require('@assets/options/icon_edit_texte.svg')"
-          :title="$t('Messaging.editDraft')"
-          name="editDraft"
-          icon-height="20px"
-          alt="edit draft"
-          @click="editDraft"
-        />
-      </div>
+        <span v-t="'Messaging.new'" />
+      </PentilaButton>
     </div>
     <hr>
 
@@ -134,7 +131,10 @@
         v-else-if="!areMultiThreadsSelected && messageListWithoutSelfMessages.length === 1 || (selectedMessages.length === 1 && !isSelectedMessageFromRightPanel)"
         class="single-message"
       >
-        <Message :message="messageToDisplay" />
+        <Message
+          :key="messageToDisplay.messageId"
+          :message="messageToDisplay"
+        />
       </div>
 
       <!-- Thread with >1 messages -->
@@ -146,7 +146,7 @@
           v-for="message in messageListWithoutSelfMessages"
           :key="message.messageId"
           class="details-message"
-          :class="{'selected': (isSelected(message))}"
+          :class="{'theme-shadow-color': (isSelected(message))}"
           @click="selectMessage(message)"
         >
           <Message
@@ -156,7 +156,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -167,10 +167,12 @@ import Message from '@components/Messaging/Message'
 import _ from 'lodash'
 import IconOption from '@components/Base/IconOption'
 import messagingConstants from '@/constants/messagingConstants'
+import NeroIcon from '@components/Nero/NeroIcon.vue'
 
 export default {
   name: 'ThreadDetails',
   components: {
+    NeroIcon,
     IconOption,
     Message
   },
@@ -191,12 +193,6 @@ export default {
     selectedMessages () {
       return this.$store.state.messaging.selectedMessages
     },
-    currentThreads () {
-      return this.$store.state.messaging.threads
-    },
-    currentSelectedThreads () {
-      return this.$store.state.messaging.selectedThreads
-    },
     messageToDisplay () {
       return this.selectedMessages.length === 1 ? this.messageList[this.messageList.map(message => message.messageId).indexOf(this.selectedMessages[0].messageId)] : this.messageListWithoutSelfMessages[0]
     },
@@ -208,6 +204,17 @@ export default {
     },
     currentFolder () {
       return this.$store.state.messaging.currentFolder
+    },
+    isSenderDeleted () {
+      if (this.$store.state.messaging.selectedMessages.length === 1) {
+        // Message is selected -> use it
+        return this.$store.state.messaging.selectedMessages[0].isSenderDeleted
+      } else if (this.$store.state.messaging.selectedThreads.length === 1) {
+        // Thread is selected -> pick last message
+        return messagingUtils.getThreadLastMessage(this.$store.state.messaging.selectedThreads[0]).isSenderDeleted
+      } else {
+        return false
+      }
     },
     isDraft () {
       return this.currentFolder.type === messagingConstants.messagingDraftFolderType
@@ -257,6 +264,7 @@ export default {
   },
   methods: {
     hideDetails () {
+      this.$store.dispatch('messaging/setSelectedThreads', [])
       this.$store.dispatch('messaging/hideDetailPanel')
     },
     editDraft () {
@@ -264,30 +272,6 @@ export default {
     },
     createNewMessage () {
       messagingUtils.newMessage()
-    },
-    markAsRead () {
-      const messageIds = []
-      let markAsRead = false
-
-      // Add all selected messages
-      for (const selectedMessage of this.selectedMessages) {
-        if (selectedMessage.isNew) {
-          markAsRead = true
-        }
-        messageIds.push(selectedMessage.messageId)
-      }
-
-      if (messageIds.length === 0) { // No messages selected
-        // Pick all messages from selected thread
-        for (const message of this.messageListWithoutSelfMessages) {
-          if (message.isNew) {
-            markAsRead = true
-          }
-          messageIds.push(message.messageId)
-        }
-      }
-
-      messagingUtils.markMessagesAsReadUnread(messageIds, markAsRead)
     },
     selectMessage (message) {
       this.$store.dispatch('messaging/setIsSelectedMessageFromRightPanel', true)
@@ -330,6 +314,14 @@ export default {
 
 <style lang="scss" scoped>
 @import '@design';
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.create-button {
+  @extend %create-button;
+}
 
 .thread-details {
   height: 100%;
@@ -349,6 +341,7 @@ export default {
   .icons {
     display: flex;
     align-items: center;
+    opacity: 60%;
   }
 
   .header-icon {
@@ -378,6 +371,12 @@ export default {
     border: 1px solid #D9E2EA;
     border-radius: 6px;
   }
+
+  &.phone {
+    .icons {
+      opacity: 100%;
+    }
+  }
 }
 
 hr {
@@ -402,7 +401,6 @@ hr {
     width: 100%;
     height: 100%;
     padding-top: 40px;
-    color: $color-messaging-dark-text;
     text-align: center;
     font-weight: bold;
     font-size: 1em;
@@ -432,11 +430,6 @@ hr {
       margin-bottom: 10px;
       border-radius: 6px;
       border: 2px solid white;
-
-      &.selected {
-        border: 2px solid $color-selected-message;
-        box-shadow: 0 0 6px $color-selected-message;
-      }
 
       .message-header {
         display: flex;

@@ -2,6 +2,7 @@ import axios from 'axios'
 import constants from './constants'
 
 export {
+  getDashboardStatistics,
   getSessionsCount,
   getActiveUsersCount,
   getFilesCount,
@@ -11,6 +12,11 @@ export {
 }
 
 const STAT_PATH = '/statistics-portlet.generalstat'
+
+function getDashboardStatistics () {
+  return axios.get(constants.JSON_WS_URL + STAT_PATH + '/get-dashboard-statistics-count')
+    .then(response => response.data)
+}
 
 function getActiveUsersCount (schoolId, startDate, endDate) {
   return axios.get(constants.JSON_WS_URL + STAT_PATH + '/get-active-users-count', {
@@ -22,12 +28,13 @@ function getActiveUsersCount (schoolId, startDate, endDate) {
   }).then(response => response.data)
 }
 
-function getSessionsCount (schoolId, startDate, endDate, comparator) {
+function getSessionsCount (schoolId, startDate, endDate, serviceId, comparator) {
   return axios.get(constants.JSON_WS_URL + STAT_PATH + '/get-sessions-count', {
     params: {
       schoolId: schoolId,
       startDate: startDate.format('YYYY-MM-DD HH:mm'),
       endDate: endDate.format('YYYY-MM-DD HH:mm'),
+      serviceId,
       comparator: comparator
     }
   }).then(response => response.data)

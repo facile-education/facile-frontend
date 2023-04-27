@@ -79,6 +79,7 @@ import HorairesToolbar from '@/components/Horaires/HorairesToolbar'
 
 // Lazy loading
 import { defineAsyncComponent } from 'vue'
+import { getTeachersLabel } from '@utils/commons.util'
 const Timeline = defineAsyncComponent(() => import('@/components/Horaires/Timeline'))
 const FCEvent = defineAsyncComponent(() => import('@/components/Horaires/FCEvent'))
 const SessionTeacherModal = defineAsyncComponent(() => import('@/components/Horaires/SessionTeacherModal'))
@@ -221,7 +222,7 @@ export default {
         extendedProps: {
           id: (slot.sessionId === undefined ? slot.schoollifeSessionId : slot.sessionId),
           subject: slot.subject,
-          teachers: this.getTeachersLabel(slot.teachers),
+          teachers: getTeachersLabel(slot.teachers),
           room: slot.room,
           cy: dayjs(slot.startDate, 'YYYY-MM-DD HH:mm').format('MM-DD_HH:mm')
         },
@@ -232,18 +233,6 @@ export default {
         borderColor: slot.color
       }
       return json
-    },
-    getTeachersLabel (teachers) {
-      let label = ''
-      if (teachers !== undefined) {
-        for (let index = 0; index < teachers.length; ++index) {
-          if (!this.isTeacherSelected || teachers[index].userId !== this.$store.state.horaires.selectedUser.userId) {
-            const name = teachers[index].firstName.substring(0, 1) + '. ' + teachers[index].lastName
-            label += (label === '') ? name : ', ' + name
-          }
-        }
-      }
-      return label
     },
     nextDate () {
       this.selectedDate = this.selectedDate.add(1, 'day')

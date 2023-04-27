@@ -25,14 +25,14 @@
         </div>
       </div>
       <div
-        v-if="recipients.length > recipientsMaxLength && !isAllRecipientsDisplayed"
+        v-if="nbRecipients > nbDisplayed && !isAllRecipientsDisplayed"
         class="others"
       >
         {{ formattedOtherRecipients }}
       </div>
     </div>
     <div
-      v-if="recipients.length > recipientsMaxLength"
+      v-if="nbRecipients > nbDisplayed"
       class="toggle-icon-container"
       :title="isAllRecipientsDisplayed ? $t('Messaging.hideAllRecipients') : $t('Messaging.showAllRecipients')"
       @click.stop="toggleAllRecipientsDisplay"
@@ -54,14 +54,15 @@ export default {
       type: Array,
       required: true
     },
-    recipientsMaxLength: {
+    nbRecipients: {
       type: Number,
-      default: 3
+      default: 1
     }
   },
   data () {
     return {
-      isAllRecipientsDisplayed: false
+      isAllRecipientsDisplayed: false,
+      nbDisplayed: 2
     }
   },
   computed: {
@@ -69,15 +70,18 @@ export default {
       if (this.isAllRecipientsDisplayed) {
         return this.recipients
       } else {
-        return this.recipients.slice(0, this.recipientsMaxLength)
+        return this.recipients.slice(0, this.nbDisplayed)
       }
     },
     formattedOtherRecipients () {
-      const nbOtherRecipients = this.recipients.length - this.recipientsMaxLength
+      const nbOtherRecipients = this.nbRecipients - this.nbDisplayed
       return nbOtherRecipients > 1
         ? this.$t('Messaging.OtherRecipient1') + nbOtherRecipients + this.$t('Messaging.OtherRecipient2')
         : this.$t('Messaging.OtherRecipient')
     }
+  },
+  created () {
+    this.isAllRecipientsDisplayed = false
   },
   methods: {
     toggleAllRecipientsDisplay () {
@@ -88,7 +92,7 @@ export default {
         return ''
       }
       return dayjs(readDate, 'YYYY/MM/DD HH:mm:ss')
-        .format('[ ' + this.$t('Moment.the') + '] DD/MM/YYYY [' + this.$t('Moment.at') + '] HH:mm') // TODO call a suitable calendar ?
+        .format('[ ' + this.$t('Moment.the') + '] DD/MM/YYYY [' + this.$t('Moment.at') + '] HH:mm')
     }
   }
 }
@@ -114,7 +118,6 @@ export default {
       display: flex;
       align-items: center;
       font-size: 0.875em;
-      color: $color-messaging-dark-text;
       margin-right: 0.5em;
 
       &.last-recipient {
@@ -130,7 +133,6 @@ export default {
 
     .others {
       font-size: 0.875em;
-      color: $color-messaging-dark-text;
       margin-left: 0.3em;
     }
   }

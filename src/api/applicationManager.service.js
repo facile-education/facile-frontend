@@ -12,7 +12,8 @@ export {
   removeApplication,
   updateApplication,
   updateBroadcastScope,
-  updateBroadcast
+  updateBroadcast,
+  getStatServices
 }
 
 export default {
@@ -141,5 +142,13 @@ function exportApplicationUserList (schoolId, applicationId, roleName) {
 function getUserApplications () {
   return axios.get(constants.JSON_WS_URL + APP_MANAGER_PATH + APPLICATION_CTX + 'get-user-applications', {
     params: {}
+  }).then(response => response.data)
+}
+
+function getStatServices (schoolId) {
+  return axios.get(constants.JSON_WS_URL + APP_MANAGER_PATH + APPLICATION_CTX + 'get-stat-applications', {
+    params: {
+      schoolId
+    }
   }).then(response => response.data)
 }

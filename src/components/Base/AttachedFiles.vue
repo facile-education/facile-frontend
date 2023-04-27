@@ -7,52 +7,59 @@
       {{ attachedFiles.length + (attachedFiles.length > 1 ? $t('attachedFiles') : $t('attachedFile')) }}
     </div>
     <div class="file-list">
-      <div
+      <button
         v-for="attachedFile in attachedFiles"
         :key="attachedFile.fileId"
-        :title="attachedFile.name"
+        :title="viewFileName(attachedFile)"
         class="attached-file"
+        :class="{'phone': mq.phone}"
         @click="viewAttachedFile(attachedFile)"
       >
         <FileIcon
           class="file-icon"
           :file="attachedFile"
         />
-        <p class="file-name">
+        <span class="file-name">
           {{ attachedFile.name }}
-        </p>
-        <div
+        </span>
+        <button
           v-if="!readOnly"
           class="file-actions"
+          :title="$t('AttachedFiles.remove')"
+          @click.stop="removeAttachedFile(attachedFile)"
         >
           <img
             class="file-action cross"
             src="@assets/big-cross-black.svg"
             :alt="$t('AttachedFiles.remove')"
-            :title="$t('AttachedFiles.remove')"
-            @click.stop="removeAttachedFile(attachedFile)"
           >
-        </div>
-        <div
+        </button>
+        <span
           v-else
           class="file-actions"
         >
-          <img
-            class="file-action add-to-folder"
-            src="@assets/add_to_folder.svg"
-            :alt="$t('addToFolder')"
+          <button
             :title="$t('addToFolder')"
-            @click.stop="addToMyDocs(attachedFile)"
+            @click.stop="addToMyDocs(attachedFile, $event)"
           >
-          <img
-            class="file-action"
-            src="@assets/attached_file_download.svg"
-            :alt="$t('download')"
+            <img
+              class="file-action add-to-folder"
+              src="@assets/add_to_folder.svg"
+              :alt="$t('addToFolder')"
+            >
+          </button>
+          <button
             :title="$t('download')"
             @click.stop="downloadAttachedFile(attachedFile)"
           >
-        </div>
-      </div>
+            <img
+              class="file-action"
+              src="@assets/attached_file_download.svg"
+              :alt="$t('download')"
+            >
+          </button>
+        </span>
+      </button>
     </div>
   </div>
 
@@ -79,6 +86,7 @@ export default {
     FilePickerModal,
     FileIcon
   },
+  inject: ['mq'],
   props: {
     attachedFiles: {
       type: Array,
@@ -97,8 +105,8 @@ export default {
     }
   },
   methods: {
-    removeAttachedFile (e, attachedFile) {
-      this.$emit('removeAttachedFile', e, attachedFile)
+    removeAttachedFile (attachedFile) {
+      this.$emit('removeAttachedFile', attachedFile)
     },
     downloadAttachedFile (attachedFile) {
       if (this.readOnly) {
@@ -110,7 +118,13 @@ export default {
       this.isFilePickerModalDisplayed = true
     },
     doSelectFolderAction (targetFolder) {
-      this.$store.dispatch('clipboard/duplicate', { targetFolder, entities: [this.selectedFileForAction] })
+      this.$store.dispatch('clipboard/duplicate', { targetFolder, entities: [this.selectedFileForAction], successMessage: this.$t('addToFolderSuccess') })
+    },
+    viewAttachedFile (attachedFile) {
+      this.$store.dispatch('documents/openFile', { id: attachedFile.id, name: attachedFile.name, readOnly: true })
+    },
+    viewFileName (attachedFile) {
+      return this.$t('view') + ' ' + attachedFile.name
     }
   }
 }
@@ -118,6 +132,15 @@ export default {
 
 <style lang="scss" scoped>
 @import '@design';
+
+button {
+  cursor: pointer;
+  background-color: transparent;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  border: none;
+}
 
 .attached-files {
   margin-bottom: 10px;
@@ -147,11 +170,20 @@ export default {
       align-items: center;
       border: 1px solid $color-border;
 
+      &.phone {
+        height: 40px;
+        margin: 3px 5px 3px 0;
+      }
+
       &:hover {
         border: 1px solid black;
       }
 
-      p {
+      .file-icon {
+        margin-left: 10px;
+      }
+
+      .file-name {
         margin-left: 10px;
         margin-right: 10px;
         max-width: 300px;
@@ -186,7 +218,9 @@ export default {
   "attachedFile": " pièce jointe",
   "attachedFiles": " pièces jointes",
   "addToFolder": "Enregistrer dans mes documents",
+  "addToFolderSuccess": "Fichier déposé",
   "download": "Télécharger",
+  "view": "Visualiser",
   "remove": "Supprimer"
 }
 </i18n>

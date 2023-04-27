@@ -29,18 +29,17 @@ describe('Delete message', () => {
     cy.log('delete message in thread by delete key')
     cy.get('[data-test=threads-panel]').get('.thread-list-item').eq(0).click()
     cy.get('[data-test=messages-panel]').get('.message-list').children().eq(2).as('messageToDelete').click()
-      .should('have.class', 'selected')
+      .should('have.class', 'theme-shadow-color')
     cy.globalKeyPress('{del}')
     cy.get('[data-test=spinner]').should('not.exist')
     cy.get('@messageToDelete').should('not.exist')
-    cy.log('test finished test!')
 
     cy.log('delete message in thread by trash icon')
     cy.get('[data-test=threads-panel]').get('.thread-list-item').eq(0).click()
-    cy.get('[data-test=messages-panel]').get('.message-list').children().eq(1).as('messageToDelete').click()
-      .should('have.class', 'selected')
+    cy.get('[data-test=messages-panel]').get('.message-list').children().eq(1).as('message2ToDelete').click()
+      .should('have.class', 'theme-shadow-color')
     cy.get('[data-test=option_trash]').click()
-
-    cy.get('[data-test=messages-panel]').get('.message-list').children().eq(1).should('not.exist') // TODO: investigate as behaviour
+    cy.get('[data-test=spinner]').should('not.exist')
+    cy.get('@messageToDelete').should('not.exist')
   })
 })

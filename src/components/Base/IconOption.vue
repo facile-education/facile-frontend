@@ -1,9 +1,9 @@
 <template>
-  <div
+  <button
     ref="iconOption"
     :data-test="'option_' + name"
     class="container"
-    :class="{'hover': isHovering || forceHovering, 'gray': grayBackgroundColor}"
+    :class="{'hover': isHovering || forceHovering}"
     :title="title"
     @dragstart.prevent
     @mouseover="isHovering = true"
@@ -17,13 +17,13 @@
       :src="icon"
       :alt="alt"
     >
-    <div
+    <span
       v-if="nbNotifications!==0"
       class="notifications"
     >
       {{ nbNotifications }}
-    </div>
-  </div>
+    </span>
+  </button>
 </template>
 
 <script>
@@ -61,10 +61,6 @@ export default {
     forceHovering: {
       type: Boolean,
       default: false
-    },
-    grayBackgroundColor: {
-      type: Boolean,
-      default: false
     }
   },
   emits: ['click', 'mousedown', 'mouseup'],
@@ -90,25 +86,31 @@ export default {
 <style lang="scss" scoped>
   @import "@design";
 
+  button {
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+  }
+
   .container {
+    --container-size: 30px;
+    --container-min-size: 30px;
     position: relative;
-    height: 40px;
-    width: 40px;
+    height: var(--container-size);
+    min-height: var(--container-min-size);
+    width: var(--container-size);
+    min-width: var(--container-min-size);
     border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    background-color: white;
     /* disable text selection on documents (not convenient when shift-select) */
     -ms-user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
     user-select: none; /* CSS3 (little to no support) */
-
-    &.gray {
-      background-color: #F3F6F8;
-    }
 
     &.hover {
       border: 1px solid $color-border;

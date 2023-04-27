@@ -46,7 +46,7 @@
       <div v-else>
         <div class="member-list-header">
           <img
-            src="@assets/icon_commu-black.svg"
+            src="@assets/icons/users.svg"
             alt="icon_commu"
           >
           <span>

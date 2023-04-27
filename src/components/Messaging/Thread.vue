@@ -9,9 +9,10 @@
       <!-- Thread with 1 single message AND thread multi-message collapsed -->
       <div
         class="main"
-        :class="{'selected': isThreadSelected,
-                 'subMessageSelected': isSubMessageSelected,
-                 'expanded': isThreadExpanded}"
+        :class="{'theme-background-color': isThreadSelected && !isSubMessageSelected,
+                 'theme-light-background-color': (!isThreadSelected || isSubMessageSelected) && isThreadExpanded,
+                 'expanded': isThreadExpanded,
+                 'selection-mode': isMultiSelectionActive}"
         @click.exact="handleClick()"
         @dblclick="editDraft()"
         @click.ctrl.exact="ctrlSelectThread()"
@@ -34,13 +35,11 @@
           class="icons"
           :class="{'shrink': isMultiSelectionActive}"
         >
-          <BaseIcon
+          <div
             v-if="isUnread"
-            name="circle"
-            class="fa-xs unread icon"
+            class="unread theme-background-color icon"
+            :class="{'selected' :isThreadSelected && !isSubMessageSelected}"
             data-test="unread-icon"
-            :class="{'selected' : isThreadSelected && !isSubMessageSelected}"
-            :title="$t('Messaging.new')"
           />
           <img
             v-if="mainMessage.hasAttachFiles"
@@ -80,21 +79,22 @@
 
           <!-- Line 2 : subject + thread toggle -->
           <div class="line2">
-            <p :title="mainMessage.subject">
-              {{ mainMessage.subject }}
-            </p>
-            <div
+            <p
+              :title="mainMessage.subject"
+              v-html="mainMessage.subject"
+            />
+            <button
               v-if="thread.messages.length > 1"
               class="thread-toggle"
               @click.stop="toggleThreadExtension"
             >
-              <p>{{ thread.messages.length }}</p>
+              <span>{{ thread.messages.length }}</span>
               <img
                 :class="isThreadExpanded ? 'collapse-thread': 'extend-thread'"
                 src="@assets/arrow_down.svg"
                 alt="toggle thread"
               >
-            </div>
+            </button>
           </div>
 
           <!-- Line 3 : content -->
@@ -108,7 +108,7 @@
       <Transition name="slide-fade">
         <div
           v-if="isThreadExpanded"
-          class="expanded"
+          class="expanded theme-extra-light-background-color"
           data-test="threadExpansion"
         >
           <div
@@ -131,16 +131,15 @@
 <script>
 
 import messagingUtils from '@/utils/messaging.utils'
+import { isInViewport } from '@/utils/commons.util'
 import dayjs from 'dayjs'
 import constants from '@/constants/appConstants'
-import BaseIcon from '@components/Base/BaseIcon'
 import ThreadMessage from '@components/Messaging/ThreadMessage'
 import _ from 'lodash'
 import messageService from '@/api/messaging/message.service'
 
 export default {
   components: {
-    BaseIcon,
     ThreadMessage
   },
   inject: ['mq'],
@@ -148,6 +147,10 @@ export default {
     thread: {
       type: Object,
       required: true
+    },
+    isLast: {
+      type: Boolean,
+      default: false
     }
   },
   emits: ['openContextMenu'],
@@ -158,7 +161,7 @@ export default {
   },
   computed: {
     currentFolder () {
-      return this.$store.messaging.currentFolder
+      return this.$store.state.messaging.currentFolder
     },
     isMultiSelectionActive () {
       return this.$store.state.messaging.isMultiSelectionActive
@@ -187,7 +190,7 @@ export default {
       return false
     },
     isDraft () {
-      return this.$store.state.messaging.currentFolder.type === constants.messagingDraftFolderType
+      return this.currentFolder.type === constants.messagingDraftFolderType
     },
     isThreadSelected () {
       for (const selectedThread of this.$store.state.messaging.selectedThreads) {
@@ -223,8 +226,22 @@ export default {
   },
   mounted () {
     this.isThreadExpanded = false
+    if (this.isLast) {
+      if (isInViewport(this.$el)) {
+        this.getNextThreads()
+      }
+    }
   },
   methods: {
+    getNextThreads () {
+      let lastThreadDate = '-1'
+      const lastThread = this.$store.getters['messaging/oldestThread']
+      if (lastThread) {
+        lastThreadDate = lastThread.lastSendDate
+      }
+
+      this.$store.dispatch('messaging/getThreads', { folderId: this.currentFolder.folderId, lastDate: lastThreadDate })
+    },
     handleClick () {
       if (this.isMultiSelectionActive) {
         this.ctrlSelectThread()
@@ -241,6 +258,12 @@ export default {
     },
     selectThread () {
       messagingUtils.selectThread(this.thread)
+      // Mark as read if unread
+      for (const message of this.thread.messages) {
+        if (message.messageId === this.thread.mainMessageId && message.isNew) {
+          messagingUtils.markMessagesAsReadUnread([this.thread.mainMessageId], true)
+        }
+      }
     },
     toggleThreadExtension () {
       if (!this.isThreadSelected && (!this.mq.phone && !this.mq.tablet)) {
@@ -295,7 +318,7 @@ export default {
         this.$store.dispatch('messaging/setSelectedThreads', [this.thread])
         this.$store.dispatch('messaging/setSelectedMessages', [])
 
-        messageService.getThreadMessages(this.thread.threadId, this.$store.state.messaging.currentFolder.folderId).then((data) => {
+        messageService.getThreadMessages(this.thread.threadId, this.currentFolder.folderId).then((data) => {
           if (data.success) {
             this.$store.dispatch('messaging/setCurrentThreadMessages', data.messages)
           }
@@ -335,22 +358,28 @@ export default {
 <style lang="scss" scoped>
 @import '@design';
 
+.sender, .line2 p {
+  font-size: 0.9rem;
+}
+
 .main {
+  --icons-width: 35px;
+  --icons-shrink-width: 30px;
   display: flex;
   width: 100%;
   cursor: pointer;
   transition-property: border-bottom-right-radius, border-bottom-left-radius;
   transition-duration: .3s;
 
-  &.selected:not(.subMessageSelected) {
-    background-color: $color-selected-thread;
-  }
-  &.subMessageSelected {
-    background-color: $color-selected-sub-message;
+  &.selection-mode {
+    .body {
+      width: calc(100% - var(--icons-width) - var(--icons-shrink-width));
+    }
   }
 
   .selected-icon {
-    width: 40px;
+    width: var(--icons-width);
+    min-width: var(--icons-width);
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -376,17 +405,17 @@ export default {
   }
 
   .icons {
+    width: var(--icons-width);
     padding-top: 17px;
-    padding-bottom: 10px;
-    width: 40px;
-    min-width: 40px;
+    padding-bottom: 7px;
+    min-width: var(--icons-width);
     display: flex;
     flex-direction: column;
     align-items: center;
 
     &.shrink {
-      width: 30px;
-      min-width: 30px;
+      width: var(--icons-shrink-width);
+      min-width: var(--icons-shrink-width);
     }
 
     .icon {
@@ -394,7 +423,11 @@ export default {
     }
 
     .unread {
-      color: $color-messaging-bg;
+      @extend %messaging-pellet;
+
+      &.selected {
+        background-color: white;
+      }
     }
 
     .attached-file-icon {
@@ -408,8 +441,8 @@ export default {
   .body {
     display: flex;
     flex-direction: column;
-    padding: 10px 10px 10px 0;
-    width: 100%;
+    padding: 10px 10px 7px 0;
+    width: calc(100% - var(--icons-width));
 
     p {
       margin: 0;
@@ -419,12 +452,16 @@ export default {
       width: 100%;
       height: 20px;
       display: flex;
-      margin-bottom: 5px;
       justify-content: space-between;
+      align-items: center;
       .sender {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
         font-weight: bold;
       }
       .sendDate {
+        white-space: nowrap;
         font-weight: normal;
         font-size: 0.75em;
         letter-spacing: 0;
@@ -432,19 +469,15 @@ export default {
       }
     }
     .line2 {
-      //width: 100%;
       min-width: 0;
-      //overflow: hidden;
-      //white-space: nowrap;
-      //text-overflow: ellipsis;
       height: 20px;
       display: flex;
-      margin-bottom: 5px;
+      margin: 0;
       justify-content: space-between;
 
       p{
         overflow: hidden;
-        //white-space: nowrap;
+        white-space: nowrap;
         text-overflow: ellipsis;
       }
 
@@ -453,12 +486,16 @@ export default {
         align-items: center;
         cursor: pointer;
         border: 1px solid transparent;
+        margin: 0;
+        padding: 0;
+        background-color: transparent;
+        color: inherit;
 
         &:hover {
           font-weight: bold;
         }
 
-        p {
+        span {
           margin-top: -2px;
           margin-right: 3px;
           padding-right: 3px;
@@ -497,9 +534,19 @@ export default {
       }
     }
   }
+
+  &:not(.theme-background-color) {
+    .body {
+      .line3 {
+        p {
+          color: $color-new-light-text;
+        }
+      }
+    }
+  }
 }
+
 .expanded {
-  background-color: #F3F6F8;
   border-bottom: none;
 }
 

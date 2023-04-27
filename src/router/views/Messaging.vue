@@ -1,36 +1,30 @@
 <template>
   <Layout :is-allowed="true">
+    <h1 :aria-label="$t('Messaging.serviceTitle')" />
     <div
       class="messaging-body"
       :class="{'mobile': mq.phone || mq.tablet, 'tablet': mq.tablet}"
     >
-      <Menu
+      <div
         v-if="!mq.phone && !mq.tablet"
-        v-show="isMenuPanelDisplayed"
-        data-test="messaging-menu"
-        class="menu-panel"
-      />
-      <Split
-        v-if="(!mq.phone && ! mq.tablet)"
-        ref="split"
-        class="split"
-        :gutter-size="1"
+        class="desktop-display"
       >
-        <SplitArea
-          data-test="threads-panel"
-          :size="44.7"
-          :min-size="475"
+        <div
+          class="left"
+          :class="{'menu-displayed': isMenuPanelDisplayed}"
         >
-          <ThreadList />
-        </SplitArea>
-        <SplitArea
-          data-test="messages-panel"
-          :size="55.3"
-          :min-size="350"
-        >
-          <ThreadDetails />
-        </SplitArea>
-      </Split>
+          <Menu
+            data-test="messaging-menu"
+            class="menu-panel"
+            :class="{'menu-collapsed': !isMenuPanelDisplayed}"
+            :is-displayed="isMenuPanelDisplayed"
+          />
+
+          <ThreadList class="thread-list" />
+        </div>
+
+        <ThreadDetails class="thread-details" />
+      </div>
 
       <div v-else>
         <ThreadList />
@@ -45,18 +39,23 @@
             v-show="isMenuPanelDisplayed"
             data-test="messaging-menu"
             class="menu-panel"
+            :is-displayed="isMenuPanelDisplayed"
           />
         </Transition>
+
+        <CreateButton
+          class="create-button"
+          data-test="createMessageButton"
+          :title="$t('Messaging.new')"
+          @click="createNewMessage"
+        />
       </div>
 
       <teleport to="body">
-        <!-- Parameters -->
-        <!--        <ParametersModal v-if="isParametersModalDisplayed" />-->
         <PreferencesModal
           v-if="isParametersModalDisplayed"
           tab="messaging"
         />
-        <!-- Create message modal -->
         <CreateMessageModal v-if="isCreateMessageModalDisplayed" />
       </teleport>
     </div>
@@ -66,22 +65,21 @@
 <script>
 
 import Layout from '@/router/layouts/BannerLayout'
-import Split from '@components/Split/Split'
-import SplitArea from '@components/Split/SplitArea'
 import Menu from '@components/Messaging/Menu'
 import ThreadList from '@components/Messaging/ThreadList'
 import ThreadDetails from '@components/Messaging/ThreadDetails'
 import configurationService from '@/api/messaging/configuration.service'
 import messagingUtils from '@/utils/messaging.utils'
 import { defineAsyncComponent } from 'vue'
+import CreateButton from '@components/Base/CreateButton.vue'
+
 const CreateMessageModal = defineAsyncComponent(() => import('@components/Messaging/CreateMessageModal'))
 const PreferencesModal = defineAsyncComponent(() => import('@components/Preferences/PreferencesModal'))
 
 export default {
   name: 'Messaging',
   components: {
-    Split,
-    SplitArea,
+    CreateButton,
     Layout,
     Menu,
     ThreadList,
@@ -115,6 +113,7 @@ export default {
   },
   created () {
     this.getSignature()
+    this.$store.dispatch('messaging/loadMessagingFolders')
     this.$watch(
       () => this.$route.params,
       () => {
@@ -126,10 +125,7 @@ export default {
         } else {
           this.$store.dispatch('messaging/setDisplayMessageFromRouting', false)
         }
-        this.$store.dispatch('messaging/loadMessagingFolders')
       },
-      // fetch the data when the view is created and the data is
-      // already being observed
       { immediate: true }
     )
   },
@@ -154,9 +150,12 @@ export default {
         // utils.selectDocument(this.$store, this.allSortedDocuments, this.selectedFiles, event)
       }
     },
+    createNewMessage () {
+      messagingUtils.newMessage()
+    },
     getSignature () {
       configurationService.getMessagingConfiguration().then((data) => {
-        if (data.success) {
+        if (data.success && data.configuration.signature.isActive) {
           this.$store.dispatch('messaging/setSignature', data.configuration.signature.content)
         }
       })
@@ -171,14 +170,64 @@ export default {
 .messaging-body {
   height: 100%;
   display: flex;
+  position: relative;
+  --menu-min-width: 240px;
+  --thread-list-min-width: 358px;
+  --thread-details-min-width: 300px;
 
-  .menu-panel {
-    width: 240px;
+  .create-button {
+    position: absolute;
+    bottom: 33px;
+    right: 17px;
+    height: 50px;
+    width: 50px;
+    font-size: 3em;
   }
 
-  .split {
-    height: 100%;
-    flex: 1;
+  .menu-panel {
+    min-width: var(--menu-min-width);
+    width: var(--menu-min-width);
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    transition: all .3s ease;
+
+    &.menu-collapsed {
+      min-width: 0;
+      width: 0;
+    }
+  }
+
+  .desktop-display {
+    width: 100%;
+    display: flex;
+
+    .left {
+      height: 100%;
+      min-width: var(--thread-list-min-width);
+      max-width: 600px;
+      width: 50%;
+      display: flex;
+
+      &.menu-displayed {
+        min-width: calc(var(--menu-min-width) + var(--thread-list-min-width));
+        max-width: 700px;
+      }
+    }
+
+    .thread-list {
+      min-width: var(--thread-list-min-width);
+      flex: 1;
+    }
+
+    .thread-details {
+      flex: 1;
+      min-width: var(--thread-details-min-width);
+    }
+
+    .thread-list, .thread-details {
+      height: 100%;
+    }
   }
 
   &.mobile {

@@ -11,20 +11,21 @@
       v-if="message.folderName !== undefined"
       class="message-sourcefolder"
     >
-      <p>{{ $t('Messaging.findInFolder') + ' ' + message.folderName }}</p>
+      <img
+        :src="folderIcon"
+        alt=""
+      >
+      <span>
+        {{ $t('Messaging.findInFolder') + ' ' + message.folderName }}
+      </span>
     </div>
 
     <!-- Header -->
     <div class="message-header">
-      <div class="sender-icon">
-        <div
-          v-if="message.isNew"
-          class="is-read"
-        />
-        <div class="icon-container">
-          {{ senderAcronym }}
-        </div>
-      </div>
+      <div
+        v-if="message.isNew"
+        class="unread theme-background-color"
+      />
       <div class="header-main">
         <div class="header-line1">
           <p class="sender">
@@ -38,12 +39,12 @@
           </p>
         </div>
         <div class="header-line2">
-          <p>{{ message.subject }}</p>
+          <p v-html="message.subject" />
         </div>
         <div class="header-line3">
           <MessageRecipients
             :recipients="message.recipients"
-            :recipients-max-length="2"
+            :nb-recipients="message.nbRecipients"
           />
         </div>
       </div>
@@ -60,9 +61,8 @@
     <!-- Attached files-->
     <AttachedFiles
       v-if="message.hasAttachFiles"
-      :initial-attached-files="message.attachments"
+      :attached-files="message.attachments"
       :read-only="true"
-      class="files"
     />
   </div>
 </template>
@@ -70,7 +70,6 @@
 <script>
 import dayjs from 'dayjs'
 import AttachedFiles from '@components/Base/AttachedFiles'
-import messagingUtils from '@/utils/messaging.utils'
 import MessageRecipients from '@components/Messaging/MessageRecipients'
 
 export default {
@@ -91,15 +90,23 @@ export default {
     }
   },
   computed: {
-    isSentFolder () {
-      return messagingUtils.isSentFolder()
-    },
-    senderAcronym () {
-      return this.message.senderName ? this.message.senderName.split(' ').map((n) => n[0].toUpperCase()).join(' ') : ''
+    folderIcon () {
+      switch (this.message.folderName) { // TODO use a kee which deserve this name
+        case 'Boîte de réception':
+          return require('@/assets/icon_reception.svg')
+        case 'Brouillons':
+          return require('@/assets/icon_fichier.svg')
+        case 'Envoyés':
+          return require('@/assets/icon_envoyes.svg')
+        case 'Corbeille':
+          return require('@/assets/icon_trash.svg')
+        default:
+          return require('@/assets/icon_messaging_folder.svg')
+      }
     }
   },
   mounted () {
-    if (this.isOldestUnread) {
+    if (this.isOldestUnread && !this.mq.phone) {
       // this.$refs.message.scrollIntoView(true)
       this.$refs.message.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' }) // To test in safari, do like above if it's not working
     }
@@ -116,65 +123,46 @@ export default {
 @import "@design";
 
 .message {
-  color: $color-messaging-dark-text;
   border-radius: 6px;
-  background-color: white;
   border: 1px solid $color-border;
   box-shadow: 0 2px 14px 0 rgba(0,0,0,0.1);
-  padding: 0 20px;
+  padding: 0 1em;
 
-  p{
-    margin: 3px 0;
+  p {
+    margin: 0;
   }
 
   .message-sourcefolder {
-    padding: 3px 0;
-    border-bottom: 1px solid $color-border-menu;
-    font-style: italic;
-    text-align: center;
-    font-size: 0.915rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 1.875em;
+    font-size: 0.750em;
+    color: $color-new-light-text;
+
+    img {
+      margin-right: 6px;
+      height: 1em;
+    }
   }
 
   .message-header {
+    position: relative;
     display: flex;
-    padding-top: 5px;
 
-    .sender-icon {
-      position: relative;
-      min-width: 50px;
-      display: flex;
-      justify-content: flex-start;
-
-      .is-read {
-        position: absolute;
-        top: 2px;
-        left: -5px;
-        width: 12px;
-        height: 12px;
-        border-radius: 5px;
-        background-color: $color-messaging-bg;
-      }
-
-      .icon-container {
-        margin-top : 8px;
-        height: 50px;
-        width: 50px;
-        border-radius: 25px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: grey;
-        font-weight: bold;
-        color: white;
-        white-space: nowrap;
-        word-spacing: -2px;
-      }
+    .unread {
+      @extend %messaging-pellet;
+      position: absolute;
+      top: 6px;
+      left: -11px;
     }
+
     .header-main {
       margin-left: 1%;
       flex-grow: 1;
       .header-line1 {
         width: 100%;
+        /* Add padding if no folder */
         margin-top: 3px;
         display: flex;
         justify-content: space-between;
@@ -207,18 +195,22 @@ export default {
   .message-content {
     padding: 10px 10px 10px 10px;
     p {
-      margin: 0;
+      margin: 5px 0;
+      line-height: 1.25rem;
       width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      overflow-wrap: break-word;
     }
 
     p ::v-deep p {
-      margin: 0;
+      margin: 5px 0;
+      line-height: 1.25rem;
+      overflow-wrap: break-word;
     }
 
     p ::v-deep figure {
-      margin: 0;
+      margin: 5px 0;
+      line-height: 1.25rem;
+      overflow-wrap: break-word;
     }
   }
 }

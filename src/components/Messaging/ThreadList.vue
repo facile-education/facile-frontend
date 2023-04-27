@@ -1,5 +1,5 @@
 <template>
-  <div
+  <section
     class="panel"
     data-test="threads-panel"
     :class="{'phone': mq.phone || mq.tablet}"
@@ -14,8 +14,7 @@
         class="pull-to-refresh-icon"
         :class="{'is-waiting': isWaiting}"
         :icon="require('@/assets/options/icon_refresh.svg')"
-        :title="$t('Messaging.refresh')"
-        :gray-background-color="true"
+        :title="$t('refresh')"
         name="refresh"
         icon-height="20px"
         alt=""
@@ -54,7 +53,9 @@
           :key="thread.threadId"
         >
           <Thread
+            v-touch:hold="toggleMultiSelection"
             :thread="thread"
+            :is-last="thread.threadId === threads[threads.length-1].threadId"
             class="thread-list-item"
             @contextmenu.prevent="openContextMenu($event, thread)"
           />
@@ -71,9 +72,7 @@
         />
       </div>
     </div>
-
-    <ThreadListOptions v-if="mq.phone || mq.tablet" />
-  </div>
+  </section>
 </template>
 
 <script>
@@ -87,7 +86,6 @@ import _ from 'lodash'
 import utils from '@utils/utils'
 import ThreadListHeader from '@components/Messaging/ThreadListHeader'
 import IconOption from '@components/Base/IconOption'
-import ThreadListOptions from '@components/Messaging/ThreadListOptions'
 import NeroIcon from '@components/Nero/NeroIcon.vue'
 
 let mouseY = 0
@@ -99,7 +97,6 @@ export default {
   name: 'ThreadList',
   components: {
     NeroIcon,
-    ThreadListOptions,
     IconOption,
     ThreadListHeader,
     Thread,
@@ -130,6 +127,12 @@ export default {
     },
     isDisplayMessageFromRouting () {
       return this.$store.state.messaging.displayMessageFromRouting
+    },
+    selectedThreads () {
+      return this.$store.state.messaging.selectedThreads
+    },
+    isModalOpen () {
+      return this.$store.state.misc.nbOpenModals > 0
     }
   },
   watch: {
@@ -142,7 +145,52 @@ export default {
       }
     }
   },
+  mounted () {
+    window.addEventListener('keydown', this.keyMonitor)
+  },
+  beforeUnmount () {
+    window.removeEventListener('keydown', this.keyMonitor)
+  },
   methods: {
+    keyMonitor (event) {
+      if (this.threads.length > 0 && !this.isModalOpen) {
+        if (event.key === 'ArrowDown') {
+          this.selectNextThread()
+        } else if (event.key === 'ArrowUp') {
+          this.selectPreviousThread()
+        }
+      }
+    },
+    selectNextThread () {
+      if (this.selectedThreads.length > 1) {
+        // Multiple selected threads, do nothing
+      } else if (this.selectedThreads.length === 0) { // No selected thread
+        messagingUtils.selectThread(this.threads[0])
+      } else { // Exactly one selected thread
+        const selectedThread = this.selectedThreads[0]
+        if (this.threads.map(thread => thread.threadId).indexOf(selectedThread.threadId) === this.threads.length - 1) { // The last event
+          // Do nothing
+        } else {
+          const currentIndex = this.threads.map(thread => thread.threadId).indexOf(selectedThread.threadId)
+          messagingUtils.selectThread(this.threads[currentIndex + 1])
+        }
+      }
+    },
+    selectPreviousThread () {
+      if (this.selectedThreads.length > 1) {
+        // Multiple selected threads, do nothing
+      } else if (this.selectedThreads.length === 0) { // No selected thread
+        messagingUtils.selectThread(this.threads[this.threads.length - 1])
+      } else { // Exactly one selected thread
+        const selectedThread = this.selectedThreads[0]
+        if (this.threads.map(thread => thread.threadId).indexOf(selectedThread.threadId) === 0) { // The first event
+          // Do nothing
+        } else {
+          const currentIndex = this.threads.map(thread => thread.threadId).indexOf(selectedThread.threadId)
+          messagingUtils.selectThread(this.threads[currentIndex - 1])
+        }
+      }
+    },
     pointerDown (e) {
       if (this.$refs.scroll.scrollTop <= 50) {
         startMouseY = mouseY = e.touches[0].clientY
@@ -263,34 +311,31 @@ export default {
       this.$store.dispatch('contextMenu/closeMenus')
     },
     markSelectionAsRead (markAsRead) {
-      const messageIds = []
-      // Pick mainMessage for each selected thread
-      for (const selectedThread of this.$store.state.messaging.selectedThreads) {
-        messageIds.push(selectedThread.mainMessageId)
+      console.log('selectedThreads = ', this.$store.state.messaging.selectedThreads)
+      let messageIds = []
+
+      if (this.$store.state.messaging.selectedMessages.length > 0) {
+        for (const selectedMessage of this.$store.state.messaging.selectedMessages) {
+          messageIds.push(selectedMessage.messageId)
+        }
+      } else {
+        // Pick all messages of each selected thread
+        for (const selectedThread of this.$store.state.messaging.selectedThreads) {
+          messageIds = [...messageIds, ...selectedThread.messages.map(message => message.messageId)]
+        }
       }
-      // Add all selected messages
-      for (const selectedMessage of this.$store.state.messaging.selectedMessages) {
-        messageIds.push(selectedMessage.messageId)
-      }
+      console.log(markAsRead, messageIds)
       messagingUtils.markMessagesAsReadUnread(messageIds, markAsRead)
     },
     draggedThreads () {
       return this.$store.state.messaging.draggedThreads
-    },
-    isDragged () {
-      for (let i = 0; i < this.draggedThreads.length; ++i) {
-        if (this.folder.id === this.draggedThreads[i].id) {
-          return true
-        }
-      }
-      return false
     },
     handleScroll () {
       const scroll = this.$refs.scroll
       if (scroll.scrollTop > oldScrollTop && !this.isDisplayMessageFromRouting) { // if we go down
         const nbPixelsBeforeBottom = scroll.scrollHeight - (scroll.scrollTop + scroll.clientHeight)
 
-        if (nbPixelsBeforeBottom === 0) {
+        if (nbPixelsBeforeBottom <= 5) {
           if (!this.$store.getters['currentActions/isInProgress']('loadThreads')) {
             this.getNextThreads()
           }
@@ -306,6 +351,11 @@ export default {
       }
 
       this.$store.dispatch('messaging/getThreads', { folderId: this.currentFolder.folderId, lastDate: lastThreadDate })
+    },
+    toggleMultiSelection () {
+      if (this.mq.phone) {
+        this.$store.dispatch('messaging/toggleMultiSelection')
+      }
     }
   }
 }
@@ -316,17 +366,24 @@ export default {
 
 .panel {
   height: 100%;
-  color: $color-messaging-dark-text;
+  border-right: 1px solid $color-border;
 
   &.phone {
+    border: none;
+    min-width: 0;
+
+    .scroll {
+      padding: 0;
+    }
+
     .thread-list-header {
       position: relative;
     }
 
     .thread-list {
       position: relative;
-      height: calc(100% - (#{$messaging-mobile-header-height} + #{$messaging-mobile-footer-height} + 2px));
-      padding: 0;
+      height: calc(100% - (#{$messaging-mobile-header-height} + 2px));
+      border: none;
     }
 
     .pull-to-refresh-icon {
@@ -360,18 +417,16 @@ hr {
 
 hr.hr-thread-list {
   border: 0; border-top: 1px solid #e0e0e0;
-  margin-left: 40px;
-  margin-right: 10px;
 }
 
 .thread-list {
   position: relative;
   height: calc(100% - (#{$messaging-header-height} + 2px)); /* 100% - (banner-height + hr-height) */
-  padding: 0 10px;
 }
 
 .scroll {
   height: 100%;
+  padding: 0 0.5em;
   overflow: auto;
   .thread-list-item {
     border-radius: 6px;
@@ -383,7 +438,6 @@ hr.hr-thread-list {
   width: 100%;
   height: 100%;
   padding-top: 40px;
-  color: $color-messaging-dark-text;
   text-align: center;
   font-weight: bold;
   font-size: 1em;
@@ -426,9 +480,10 @@ hr.hr-thread-list {
 
 <i18n locale="fr">
 {
-  "emptyBox": "Cette boîte est vide",
+  "emptyBox": "Aucun message",
   "emptyFolder": "Ce dossier est vide",
   "loadingError": "Erreur lors du chargement de la ressource",
-  "permissionError": "Permission non accordée"
+  "permissionError": "Permission non accordée",
+  "refresh": "Rafraîchir"
 }
 </i18n>

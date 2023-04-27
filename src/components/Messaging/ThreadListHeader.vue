@@ -5,7 +5,7 @@
     data-test="header"
   >
     <div class="header-label">
-      <div
+      <button
         v-if="mq.phone || mq.tablet"
         class="open-menu"
         @click="toggleSideMenuPanel"
@@ -14,26 +14,38 @@
           :src="require('@assets/arrow_right.svg')"
           alt="open menu"
         >
-        <div v-t="'Messaging.boxes'" />
-      </div>
+        <span v-t="'Messaging.boxes'" />
+      </button>
       <div
         class="current-folder"
         :title="currentFolder && currentFolder.type === 5 ? currentFolderName : ''"
       >
         <p>{{ formattedCurrentFolderName }}</p>
-        <p>{{ nbNewMessages + $t('unRead') }}</p>
+        <div
+          v-if="!mq.phone && !mq.tablet"
+          class="counts"
+        >
+          <span
+            v-if="isReadOnlyToggled"
+            class="nb-messages"
+          >{{ $t('filterByUnread') }}</span>
+          <span
+            v-else
+            class="nb-messages"
+          >{{ $tc('messages', nbMessages) }}</span>
+          <div
+            v-if="nbUnread>0"
+            class="unread theme-background-color"
+          />
+          <span
+            v-if="nbUnread>0"
+            class="nb-unread theme-text-color"
+          >{{ $tc('unRead', nbUnread) }}</span>
+        </div>
       </div>
-
-      <img
-        v-if="(mq.phone || mq.tablet) && isThreadsDisplayed"
-        class="toggle-multi-selection"
-        src="@assets/icon_list.svg"
-        alt="toggle multi-selection"
-        @click="toggleMultiSelection"
-      >
     </div>
 
-    <ThreadListOptions v-if="!mq.phone && !mq.tablet" />
+    <ThreadListOptions />
   </div>
 </template>
 
@@ -75,16 +87,22 @@ export default {
     formattedCurrentFolderName () {
       return this.currentFolderName ? this.currentFolderName.toUpperCase() : ''
     },
-    nbNewMessages () {
-      return this.$store.state.messaging.nbNewMessages
+    nbUnread () {
+      return this.$store.state.messaging.currentFolder.nbUnread
+    },
+    nbMessages () {
+      return this.$store.state.messaging.currentFolder.nbMessages
+    },
+    themeColor () {
+      return this.$store.state.user.themeColor
+    },
+    isReadOnlyToggled () {
+      return this.$store.state.messaging.unreadOnly
     }
   },
   methods: {
     toggleSideMenuPanel () {
       this.$store.dispatch('messaging/toggleSideMenuPanel')
-    },
-    toggleMultiSelection () {
-      this.$store.dispatch('messaging/toggleMultiSelection')
     }
   }
 }
@@ -94,7 +112,7 @@ export default {
 @import "@design";
 
 .splitarea-header {
-  padding: 0 20px;
+  padding: 0 1% 0 3.8%;
   height: $messaging-header-height;
   display: flex;
   justify-content: space-between;
@@ -115,6 +133,24 @@ export default {
       font-weight: bold;
       justify-content: center;
 
+      .counts {
+        display: flex;
+        align-items: center;
+        .nb-messages {
+          color: $color-new-light-text;
+          font-weight: normal;
+          font-size: 0.875em;
+          margin-right: 10px;
+        }
+        .unread {
+          margin-left: 5px;
+          @extend %messaging-pellet;
+        }
+        .nb-unread {
+          font-size: 0.875em;
+          margin-left: 5px;
+        }
+      }
       p {
         max-width: 170px; /* TODO find solution to mix that with flex: justify-content:space-between */
         overflow: hidden;
@@ -126,17 +162,20 @@ export default {
   }
 
   &.phone {
-    display: block;
+    padding-left: 20px;
     height: $messaging-mobile-header-height;
 
     .header-label {
       justify-content: space-between;
-      position: relative;
       height: 60px;
 
       .open-menu {
         display: flex;
         align-items: center;
+        margin: 0;
+        padding: 0;
+        background-color: transparent;
+        border: none;
 
         img {
           transform: rotate(180deg);
@@ -168,6 +207,8 @@ export default {
 
 <i18n locale="fr">
 {
-  "unRead": " non lus"
+  "unRead": "0 non lu | 1 non lu | {count} non lus",
+  "messages": "Aucun message | 1 message | {count} messages",
+  "filterByUnread": "Filtré par non lus"
 }
 </i18n>

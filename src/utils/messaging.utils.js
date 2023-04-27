@@ -1,6 +1,7 @@
 import messageService from '@/api/messaging/message.service'
 import messagingConstants from '@/constants/messagingConstants'
 import store from '@store/index.js'
+import i18n from '@/i18n'
 import _ from 'lodash'
 
 const MessagingUtils = {
@@ -24,15 +25,6 @@ const MessagingUtils = {
         return sortedThreads.slice(threadIndex, lastSelectedThreadIndex + 1)
       }
     }
-  },
-  updateNbNewMessages () {
-    messageService.getNbNewMessages().then((data) => {
-      if (data.success) {
-        store.dispatch('messaging/setNbNewMessages', data.nbNewMessages)
-      } else {
-        store.dispatch('messaging/setNbNewMessages', 0)
-      }
-    })
   },
   refresh () {
     store.dispatch('messaging/selectFolder', store.state.messaging.currentFolder)
@@ -140,13 +132,6 @@ const MessagingUtils = {
         }
       }
     })
-
-    // Mark as read if unread
-    for (const message of thread.messages) {
-      if (message.messageId === thread.mainMessageId && message.isNew) {
-        this.markMessagesAsReadUnread([thread.mainMessageId], true)
-      }
-    }
   },
   markMessagesAsReadUnread (messageIds, markAsRead) {
     messageService.setMessageReadStatus(messageIds, markAsRead).then((data) => {
@@ -156,6 +141,7 @@ const MessagingUtils = {
         } else {
           store.dispatch('messaging/markMessagesAsUnread', messageIds)
         }
+        store.dispatch('messaging/updateNbUnread', store.state.messaging.currentFolder.folderId)
       }
     })
   },
@@ -166,20 +152,15 @@ const MessagingUtils = {
     return store.state.messaging.currentFolder.type === messagingConstants.messagingSentFolderType
   },
   shortRecipientList (message) {
-    if (message.recipients.length === 0) {
-      return ''
+    const nbRecipients = message.recipients.length
+    if (nbRecipients === 0) {
+      return i18n.global.t('Messaging.noRecipient')
     }
     let shortRecipients = 'À: ' + message.recipients[0].text
-    if (message.recipients.length === 1) {
-      // nothing
-    } else if (message.recipients.length === 2) {
+    if (nbRecipients === 2) {
       shortRecipients += ', ' + message.recipients[1].text
-    } else if (message.recipients.length === 3) {
-      shortRecipients += ', ' + message.recipients[1].text
-      shortRecipients += ', ' + message.recipients[2].text
-    } else {
-      shortRecipients += ', ' + message.recipients[1].text
-      const nbOthers = message.recipients.length - 2
+    } else if (nbRecipients > 2) {
+      const nbOthers = message.nbRecipients - 1
       shortRecipients += ' et ' + nbOthers + ' autres'
     }
     return shortRecipients

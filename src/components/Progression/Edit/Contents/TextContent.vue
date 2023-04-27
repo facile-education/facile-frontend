@@ -1,7 +1,7 @@
 <template>
   <CKEditor
     class="ck-editor"
-    :class="{'maximised' : maximised }"
+    :class="{'maximised' : maximised , 'disabled': disabled && ready}"
     :model-value="content.contentValue"
     :editor-id="editorId"
     :editor="editor"
@@ -45,10 +45,13 @@ export default {
     return {
       timeout: undefined,
       editor: InlineEditor,
+      ready: false, // Mandatory to not set the 'disable' class too earlier and prevent bad class toggle on editor focus
       editorOptions: {
         removePlugins: [
           'CKFinder',
           'CKFinderUploadAdapter',
+          'CKBox',
+          'CKBoxEditing',
           'CloudServicesUploadAdapter',
           'CloudServices',
           'EasyImage',
@@ -78,6 +81,7 @@ export default {
       this.$emit('blur')
     },
     onEditorReady (e) {
+      this.ready = true
       // Make CKEditor available for tests
       if (window.Cypress) {
         window.ckeditor = e

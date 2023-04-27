@@ -41,7 +41,6 @@ describe('Drag and drop messages', () => {
       cy.contains('Brouillons').as('draftFolder')
       cy.contains('Envoyés').as('sentFolder')
       cy.contains('Corbeille').as('trashFolder')
-      cy.contains('Mes dossiers').click()
       cy.contains('sous-dossier').as('personalFolder')
     })
 
@@ -53,8 +52,6 @@ describe('Drag and drop messages', () => {
     cy.get('@threads').should('have.length', 4)
     cy.get('@draftFolder').trigger('dragover').should('have.class', 'active')
     cy.get('@draftFolder').trigger('drop', { dataTransfer: currentDataTransfer })
-    cy.get('[data-test=spinner]').should('exist')
-    cy.get('[data-test=spinner]').should('not.exist')
     cy.get('@threads').should('have.length', 3) // The thread should have been moved
 
     cy.log('move message to sent')
@@ -62,8 +59,6 @@ describe('Drag and drop messages', () => {
     currentDataTransfer = dataTransfer
     cy.get('@sentFolder').trigger('dragover').should('have.class', 'active')
     cy.get('@sentFolder').trigger('drop', { dataTransfer: currentDataTransfer })
-    cy.get('[data-test=spinner]').should('exist')
-    cy.get('[data-test=spinner]').should('not.exist')
     cy.get('@threads').should('have.length', 2) // The thread should have been moved
 
     cy.log('move message to trash')
@@ -71,17 +66,13 @@ describe('Drag and drop messages', () => {
     currentDataTransfer = dataTransfer
     cy.get('@trashFolder').trigger('dragover').should('have.class', 'active')
     cy.get('@trashFolder').trigger('drop', { dataTransfer: currentDataTransfer })
-    cy.get('[data-test=spinner]').should('exist')
-    cy.get('[data-test=spinner]').should('not.exist')
     cy.get('@threads').should('have.length', 1) // The thread should have been moved
 
     cy.log('move message to personal folder')
     cy.get('@threads').eq(0).trigger('dragstart', { dataTransfer: dataTransfer })
     currentDataTransfer = dataTransfer
-    cy.get('@personalFolder').trigger('dragover').parent().should('have.class', 'active')
+    cy.get('@personalFolder').trigger('dragover').should('have.class', 'active')
     cy.get('@personalFolder').trigger('drop', { dataTransfer: currentDataTransfer })
-    cy.get('[data-test=spinner]').should('exist')
-    cy.get('[data-test=spinner]').should('not.exist')
     cy.get('@threads').should('have.length', 0) // The thread should have been moved
 
     cy.log('check messages and return them in inbox folder')
@@ -92,8 +83,6 @@ describe('Drag and drop messages', () => {
     currentDataTransfer = dataTransfer
     cy.get('@inBoxFolder').trigger('dragover').should('have.class', 'active')
     cy.get('@inBoxFolder').trigger('drop', { dataTransfer: currentDataTransfer })
-    cy.get('[data-test=spinner]').should('exist')
-    cy.get('[data-test=spinner]').should('not.exist')
     cy.get('@threads').should('have.length', 0)
 
     // Sent
@@ -103,8 +92,6 @@ describe('Drag and drop messages', () => {
     currentDataTransfer = dataTransfer
     cy.get('@inBoxFolder').trigger('dragover').should('have.class', 'active')
     cy.get('@inBoxFolder').trigger('drop', { dataTransfer: currentDataTransfer })
-    cy.get('[data-test=spinner]').should('exist')
-    cy.get('[data-test=spinner]').should('not.exist')
     cy.get('@threads').should('have.length', 1) // the sent messages still be display here
 
     // Trash
@@ -114,8 +101,6 @@ describe('Drag and drop messages', () => {
     currentDataTransfer = dataTransfer
     cy.get('@inBoxFolder').trigger('dragover').should('have.class', 'active')
     cy.get('@inBoxFolder').trigger('drop', { dataTransfer: currentDataTransfer })
-    cy.get('[data-test=spinner]').should('exist')
-    cy.get('[data-test=spinner]').should('not.exist')
     cy.get('@threads').should('have.length', 0)
 
     // Personal
@@ -125,8 +110,6 @@ describe('Drag and drop messages', () => {
     currentDataTransfer = dataTransfer
     cy.get('@inBoxFolder').trigger('dragover').should('have.class', 'active')
     cy.get('@inBoxFolder').trigger('drop', { dataTransfer: currentDataTransfer })
-    cy.get('[data-test=spinner]').should('exist')
-    cy.get('[data-test=spinner]').should('not.exist')
     cy.get('@threads').should('have.length', 0)
 
     cy.log('Check inboxFolder')
