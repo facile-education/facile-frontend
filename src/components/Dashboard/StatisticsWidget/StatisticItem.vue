@@ -76,7 +76,6 @@ export default {
 .statistic-item {
   height: 50px;
   width: 100%;
-  padding: 0 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
