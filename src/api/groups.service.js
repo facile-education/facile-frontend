@@ -10,8 +10,7 @@ export {
   checkCommunityName,
   editCommunity,
   removeCommunity,
-  getGroupHistory,
-  getSpecificGroupActivities,
+  getGroupActivity,
   extendCommunity
 }
 
@@ -62,30 +61,13 @@ function getCommunityMembers (groupId) {
   }).then(response => response.data)
 }
 
-function getGroupHistory (groupId, maxDate, nbResults) {
-  return axios.get(constants.JSON_WS_URL + GROUP_PATH + GROUP_CTX + 'get-group-history', {
+function getGroupActivity (groupId, maxDate, nbResults) {
+  console.log('nbresult=', nbResults)
+  return axios.get(constants.JSON_WS_URL + GROUP_PATH + GROUP_CTX + 'get-group-activity', {
     params: {
       groupId,
       maxDate,
       nbResults
-    }
-  }).then(response => response.data)
-}
-
-function getSpecificGroupActivities (groupId, maxDate, nbResults, allHistory, containNews, containDocs, containMembership, containPendingFirings, containFirings, containHomework, containSessions) {
-  return axios.get(constants.JSON_WS_URL + GROUP_PATH + GROUP_CTX + 'get-specific-group-activities', {
-    params: {
-      groupId: groupId,
-      maxDate: maxDate,
-      nbResults: nbResults,
-      allHistory: allHistory,
-      containNews: containNews,
-      containDocs: containDocs,
-      containMembership: containMembership,
-      containPendingFirings: containPendingFirings,
-      containFirings: containFirings,
-      containHomework: containHomework,
-      containSessions: containSessions
     }
   }).then(response => response.data)
 }

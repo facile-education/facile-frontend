@@ -4,7 +4,7 @@
   >
     <div>
       <span>{{ activity.actionUserName }}</span>
-      <span v-t="activity.type === activityTypes.TYPE_ADD_MEMBERSHIP ? 'add' : 'remove' " />
+      <span v-t="isAddActivity ? 'add' : 'remove' " />
       <span>{{ activity.shortTargetUserNames !== "" ? activity.shortTargetUserNames : activity.targetUserNames }}</span>
       <span v-t="'toTheGroup' " />
       <span> {{ activity.groupName }}</span>
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { activityTypes } from '@/constants/activityConstants'
+import activityConstants from '@/constants/activityConstants'
 
 export default {
   name: 'MembershipActivity',
@@ -26,10 +26,12 @@ export default {
   },
   data () {
     return {
-      activityTypes: activityTypes
     }
   },
   computed: {
+    isAddActivity () {
+      return this.activity.type === activityConstants.TYPE_ADD_MEMBERSHIP
+    }
   },
   created () {
   },

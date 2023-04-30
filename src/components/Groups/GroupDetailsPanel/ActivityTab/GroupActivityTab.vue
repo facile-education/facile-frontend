@@ -22,8 +22,9 @@
 </template>
 
 <script>
-import { getGroupHistory, getSpecificGroupActivities } from '@/api/groups.service'
-import { nbActivityPerPage } from '@/constants/activityConstants'
+import { getGroupActivity } from '@/api/groups.service'
+import documentsService from '@/api/documents/documents.service'
+import activityConstants from '@/constants/activityConstants'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 const GroupActivityItem = defineAsyncComponent(() => import('@components/Groups/GroupDetailsPanel/ActivityTab/GroupActivityItem'))
@@ -61,36 +62,30 @@ export default {
   methods: {
     getActivities () {
       if (this.group.isGroupRootFolder) {
-        this.getGroupDocumentHistory()
+        this.activitiesLoading = true
+        documentsService.getDocumentGroupActivity(this.group.groupId, this.maxDate.format('YYYY-MM-DD'), activityConstants.nbActivityPerPage).then((data) => {
+          this.activitiesLoading = false
+          if (data.success) {
+            this.activityList = this.activityList.concat(data.activities)
+            // Update maxDate
+            if (this.activityList.length > 1) {
+              this.maxDate = dayjs(this.activityList[this.activityList.length - 1].modificationDate) // /!\ Assume the returned list is already sorted by date
+            }
+          }
+        })
       } else {
-        this.getGroupHistory()
+        this.activitiesLoading = true
+        getGroupActivity(this.group.groupId, this.maxDate.format('YYYY-MM-DD'), activityConstants.nbActivityPerPage).then((data) => {
+          this.activitiesLoading = false
+          if (data.success) {
+            this.activityList = this.activityList.concat(data.activities)
+            // Update maxDate
+            if (this.activityList.length > 1) {
+              this.maxDate = dayjs(this.activityList[this.activityList.length - 1].modificationDate) // /!\ Assume the returned list is already sorted by date
+            }
+          }
+        })
       }
-    },
-    getGroupDocumentHistory () {
-      this.activitiesLoading = true
-      getSpecificGroupActivities(this.group.groupId, this.maxDate.format('YYYY-MM-DD'), nbActivityPerPage, true, false, true, false, false, false, false, false).then((data) => {
-        this.activitiesLoading = false
-        if (data.success) {
-          this.activityList = this.activityList.concat(data.activities)
-          // Update maxDate
-          if (this.activityList.length > 1) {
-            this.maxDate = dayjs(this.activityList[this.activityList.length - 1].modificationDate) // /!\ Assume the returned list is already sorted by date
-          }
-        }
-      })
-    },
-    getGroupHistory () {
-      this.activitiesLoading = true
-      getGroupHistory(this.group.groupId, this.maxDate.format('YYYY-MM-DD'), nbActivityPerPage).then((data) => {
-        this.activitiesLoading = false
-        if (data.success) {
-          this.activityList = this.activityList.concat(data.activities)
-          // Update maxDate
-          if (this.activityList.length > 1) {
-            this.maxDate = dayjs(this.activityList[this.activityList.length - 1].modificationDate) // /!\ Assume the returned list is already sorted by date
-          }
-        }
-      })
     },
     handleScroll () {
       const scroll = this.$refs.scroll

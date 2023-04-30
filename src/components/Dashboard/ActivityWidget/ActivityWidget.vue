@@ -21,16 +21,16 @@
         class="news"
       >
         <News
-          v-if="activity.isNews"
+          v-if="isNewsActivity(activity)"
           :news="activity"
           @edit-news="isNewsModalDisplayed = true"
         />
         <DocActivity
-          v-else-if="activity.type <= activityTypes.TYPE_FOLDER_DELETION"
+          v-else-if="isDocActivity(activity)"
           :activity="activity"
         />
         <MembershipActivity
-          v-else-if="activity.type <= activityTypes.TYPE_REMOVE_MEMBERSHIP"
+          v-else-if="isMembershipActivity(activity)"
           :activity="activity"
         />
         <RenvoiActivity
@@ -55,21 +55,20 @@
 import Widget from '@components/Dashboard/Widget'
 import NewsModal from '@components/Dashboard/News/NewsModal'
 import News from '@components/Dashboard/News/News'
-import DocActivity from '@components/Dashboard/Activities/DocActivity'
-import MembershipActivity from '@components/Dashboard/Activities/MembershipActivity'
-import RenvoiActivity from '@components/Dashboard/Activities/RenvoiActivity'
+import DocActivity from '@components/Dashboard/ActivityWidget/DocActivity'
+import MembershipActivity from '@components/Dashboard/ActivityWidget/MembershipActivity'
+import RenvoiActivity from '@components/Dashboard/ActivityWidget/RenvoiActivity'
 import BaseIcon from '@components/Base/BaseIcon'
-import { nbActivityPerPage, activityTypes } from '@/constants/activityConstants'
+import activityConstants from '@/constants/activityConstants'
 import PentilaUtils from 'pentila-utils'
 import dayjs from 'dayjs'
 
 export default {
-  name: 'UserThreadWidget',
+  name: 'ActivityWidget',
   components: { BaseIcon, RenvoiActivity, MembershipActivity, DocActivity, News, NewsModal, Widget },
   data () {
     return {
-      isNewsModalDisplayed: false,
-      activityTypes: activityTypes
+      isNewsModalDisplayed: false
     }
   },
   computed: {
@@ -87,12 +86,34 @@ export default {
     loadGroupNews () {
       this.$store.dispatch('dashboard/getGroupActivities', {
         maxDate: this.groupActivities.length > 0 ? this.groupActivities[this.groupActivities.length - 1].modificationDate : dayjs().format('YYYY-MM-DD HH:mm'),
-        nbActivities: nbActivityPerPage
+        nbActivities: activityConstants.nbActivityPerPage
       })
     },
     openNewsModal () {
       this.$store.dispatch('dashboard/setEditedNews', {})
       this.isNewsModalDisplayed = true
+    },
+    isNewsActivity (activity) {
+      return activity.type === activityConstants.TYPE_NEWS
+    },
+    isDocActivity (activity) {
+      return activity.type === activityConstants.TYPE_FILE_CREATION ||
+      activity.type === activityConstants.TYPE_FILE_MODIFICATION ||
+      activity.type === activityConstants.TYPE_FILE_MOVE ||
+      activity.type === activityConstants.TYPE_FILE_DELETION ||
+      activity.type === activityConstants.TYPE_FOLDER_CREATION ||
+      activity.type === activityConstants.TYPE_FOLDER_MODIFICATION ||
+      activity.type === activityConstants.TYPE_FOLDER_MOVE ||
+      activity.type === activityConstants.TYPE_FOLDER_DELETION
+    },
+    isMembershipActivity (activity) {
+      return activity.type === activityConstants.TYPE_ADD_MEMBERSHIP || activity.type === activityConstants.TYPE_REMOVE_MEMBERSHIP
+    },
+    isHhcActivity (activity) {
+      return activity.type === activityConstants.TYPE_PENDING_RENVOI || activity.type === activityConstants.TYPE_SCHOOL_RENVOI
+    },
+    isSessionActivity (activity) {
+      return activity.type === activityConstants.TYPE_HOMEWORK || activity.type === activityConstants.TYPE_SESSION
     }
   }
 }
@@ -117,6 +138,6 @@ export default {
 
 <i18n locale="fr">
 {
-  "groups-activity": "Fil d'activité de mes groupes"
+  "groups-activity": "Activités"
 }
 </i18n>
