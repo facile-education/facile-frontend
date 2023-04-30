@@ -30,7 +30,10 @@
           :user-id="selectedUser.userId"
           class="schedule"
         />
-        <!--      <UserThreadWidget v-if="hasActivityThreadWidget" />-->
+        <ActivityWidget
+          v-if="hasActivityThreadWidget"
+          class="activity"
+        />
         <StatisticWidget
           v-if="hasStatisticWidget"
           class="statistics"
@@ -48,9 +51,10 @@ const DiaryWidget = defineAsyncComponent(() => import('@components/Dashboard/Dia
 const ScheduleWidget = defineAsyncComponent(() => import('@components/Dashboard/ScheduleWidget/ScheduleWidget'))
 const HomeworkWidget = defineAsyncComponent(() => import('@components/Dashboard/HomeworksWidget/HomeworkWidget.vue'))
 const StatisticWidget = defineAsyncComponent(() => import('@components/Dashboard/StatisticsWidget/StatisticsWidget.vue'))
+const ActivityWidget = defineAsyncComponent(() => import('@components/Dashboard/ActivityWidget/ActivityWidget.vue'))
 export default {
   name: 'Dashboard',
-  components: { AnnouncementsWidget, DiaryWidget, ScheduleWidget, HomeworkWidget, StatisticWidget, Layout },
+  components: { AnnouncementsWidget, DiaryWidget, ScheduleWidget, HomeworkWidget, StatisticWidget, ActivityWidget, Layout },
   data () {
     return {
       selectedUser: undefined

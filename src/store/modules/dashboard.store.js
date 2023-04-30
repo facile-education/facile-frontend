@@ -1,10 +1,8 @@
-import {
-  initDashboard, getGroupActivities
-} from '@/api/dashboard.service'
+import { initDashboard, getDashboardActivity } from '@/api/dashboard.service'
 import {
   getSchoolNews, addNews, editNews, deleteNews
 } from '@/api/dashboard/news.service'
-import { nbActivityPerPage } from '@/constants/activityConstants'
+import activityConstants from '@/constants/activityConstants'
 import dayjs from 'dayjs'
 import { getFullName } from '@utils/commons.util'
 
@@ -119,7 +117,7 @@ export const actions = {
     })
   },
   getGroupActivities ({ commit }, { maxDate, nbActivities }) {
-    getGroupActivities(maxDate, nbActivities).then(
+    getDashboardActivity(maxDate, nbActivities, true, true, true, true).then(
       (data) => {
         if (data.success) {
           commit('addGroupNews', data.activities)
@@ -151,7 +149,7 @@ export const actions = {
       (data) => {
         if (data.success) {
           commit('addGroupNews', [data.newsCreated])
-          dispatch('getGroupActivities', { maxDate: dayjs().format('YYYY-MM-DD HH:mm'), nbActivities: nbActivityPerPage })
+          dispatch('getGroupActivities', { maxDate: dayjs().format('YYYY-MM-DD HH:mm'), nbActivities: activityConstants.nbActivityPerPage })
         }
       },
       (err) => {
