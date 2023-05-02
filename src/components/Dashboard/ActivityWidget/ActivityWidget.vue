@@ -22,22 +22,7 @@
           v-for="activity in activities"
           :key="activity.activityId"
         >
-          <News
-            v-if="isNewsActivity(activity)"
-            :news="activity"
-          />
-          <DocActivity
-            v-else-if="isDocActivity(activity)"
-            :activity="activity"
-          />
-          <MembershipActivity
-            v-else-if="isMembershipActivity(activity)"
-            :activity="activity"
-          />
-          <RenvoiActivity
-            v-else
-            :activity="activity"
-          />
+          <ActivityItem :activity="activity" />
         </li>
       </ul>
       <div class="footer">
@@ -52,18 +37,15 @@
 </template>
 
 <script>
-import News from '@components/Dashboard/News/News'
-import DocActivity from '@components/Dashboard/ActivityWidget/DocActivity'
-import MembershipActivity from '@components/Dashboard/ActivityWidget/MembershipActivity'
-import RenvoiActivity from '@components/Dashboard/ActivityWidget/RenvoiActivity'
 import activityConstants from '@/constants/activityConstants'
 import dayjs from 'dayjs'
 import ActivityHeader from '@components/Dashboard/ActivityWidget/ActivityHeader.vue'
 import { getDashboardActivity } from '@/api/dashboard.service'
+import ActivityItem from '@components/Dashboard/ActivityWidget/ActivityItem.vue'
 
 export default {
   name: 'ActivityWidget',
-  components: { ActivityHeader, RenvoiActivity, MembershipActivity, DocActivity, News },
+  components: { ActivityItem, ActivityHeader },
   data () {
     return {
       isLoading: false,
@@ -90,28 +72,6 @@ export default {
         this.error = true
         console.error(err)
       })
-    },
-    isNewsActivity (activity) {
-      return activity.type === activityConstants.TYPE_NEWS
-    },
-    isDocActivity (activity) {
-      return activity.type === activityConstants.TYPE_FILE_CREATION ||
-      activity.type === activityConstants.TYPE_FILE_MODIFICATION ||
-      activity.type === activityConstants.TYPE_FILE_MOVE ||
-      activity.type === activityConstants.TYPE_FILE_DELETION ||
-      activity.type === activityConstants.TYPE_FOLDER_CREATION ||
-      activity.type === activityConstants.TYPE_FOLDER_MODIFICATION ||
-      activity.type === activityConstants.TYPE_FOLDER_MOVE ||
-      activity.type === activityConstants.TYPE_FOLDER_DELETION
-    },
-    isMembershipActivity (activity) {
-      return activity.type === activityConstants.TYPE_ADD_MEMBERSHIP || activity.type === activityConstants.TYPE_REMOVE_MEMBERSHIP
-    },
-    isHHCActivity (activity) {
-      return activity.type === activityConstants.TYPE_PENDING_RENVOI || activity.type === activityConstants.TYPE_SCHOOL_RENVOI
-    },
-    isSessionActivity (activity) {
-      return activity.type === activityConstants.TYPE_HOMEWORK || activity.type === activityConstants.TYPE_SESSION
     }
   }
 }
@@ -133,7 +93,7 @@ ul {
   list-style-type: none;
 
   li {
-    margin-bottom: 10px;
+    margin-bottom: 6px;
 
     &:last-child {
       margin-bottom: 0;

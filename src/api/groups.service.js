@@ -62,7 +62,6 @@ function getCommunityMembers (groupId) {
 }
 
 function getGroupActivity (groupId, maxDate, nbResults) {
-  console.log('nbresult=', nbResults)
   return axios.get(constants.JSON_WS_URL + GROUP_PATH + GROUP_CTX + 'get-group-activity', {
     params: {
       groupId,

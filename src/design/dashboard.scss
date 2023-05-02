@@ -25,6 +25,7 @@ $statistics-widget-max-width: 355px;
 $activity-widget-min-width: 355px;
 
 $announcement-item-min-height: 150px;
+$activity-item-height: 80px;
 $announcement-item-min-width: min(323px, 80vw);
 $announcement-item-horizontal-min-width: min(450px, 80vw);
 
@@ -72,5 +73,30 @@ $announcement-item-horizontal-min-width: min(450px, 80vw);
     background-color: white;
     display: flex;
     align-items: center;
+  }
+}
+
+// Activities common css
+%activity-item {
+  --icon-width: 60px;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  padding-right: 2rem;
+
+  .icon {
+    width: var(--icon-width);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .content {
+    flex: 1;
+  }
+
+  .date {
+    font-size: 0.8rem;
+    color: $color-new-light-text;
   }
 }
