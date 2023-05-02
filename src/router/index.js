@@ -23,6 +23,11 @@ const routes = [
     component: () => import('@/router/views/AllAnnouncements.vue')
   },
   {
+    path: '/dashboard/all-activities',
+    name: 'AllActivities',
+    component: () => import('@/router/views/AllActivities.vue')
+  },
+  {
     path: '/application-manager',
     name: 'Application Manager',
     component: () => import('@/router/views/ApplicationManager.vue')

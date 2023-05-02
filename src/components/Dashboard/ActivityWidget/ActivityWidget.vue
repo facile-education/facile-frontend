@@ -1,97 +1,95 @@
 <template>
-  <Widget
-    :can-add-content="canAddGroupNews"
-    @scrollReachBottom="loadGroupNews"
-    @addContent="openNewsModal"
-  >
-    <template #header>
-      <span class="widget-header">
-        <BaseIcon
-          class="header-icon"
-          name="newspaper"
-        />
-        {{ $t('groups-activity') }}
-      </span>
-    </template>
+  <section>
+    <ActivityHeader />
 
-    <template #default>
-      <div
-        v-for="activity in groupActivities"
-        :key="activity.activityId"
-        class="news"
-      >
-        <News
-          v-if="isNewsActivity(activity)"
-          :news="activity"
-          @edit-news="isNewsModalDisplayed = true"
-        />
-        <DocActivity
-          v-else-if="isDocActivity(activity)"
-          :activity="activity"
-        />
-        <MembershipActivity
-          v-else-if="isMembershipActivity(activity)"
-          :activity="activity"
-        />
-        <RenvoiActivity
-          v-else
-          :activity="activity"
+    <PentilaSpinner
+      v-if="isLoading"
+      style="z-index: 1"
+    />
+    <div
+      v-if="error === true"
+      v-t="'errorPlaceholder'"
+      class="placeholder"
+    />
+    <div
+      v-else-if="activities.length === 0 "
+      v-t="'emptyPlaceholder'"
+      class="placeholder"
+    />
+    <div v-else>
+      <ul>
+        <li
+          v-for="activity in activities"
+          :key="activity.activityId"
+        >
+          <News
+            v-if="isNewsActivity(activity)"
+            :news="activity"
+          />
+          <DocActivity
+            v-else-if="isDocActivity(activity)"
+            :activity="activity"
+          />
+          <MembershipActivity
+            v-else-if="isMembershipActivity(activity)"
+            :activity="activity"
+          />
+          <RenvoiActivity
+            v-else
+            :activity="activity"
+          />
+        </li>
+      </ul>
+      <div class="footer">
+        <button
+          v-t="'showMore'"
+          class="show-more"
+          @click="$router.push({ name: 'AllActivities' })"
         />
       </div>
-    </template>
-  </Widget>
-
-  <teleport to="body">
-    <NewsModal
-      v-if="isNewsModalDisplayed"
-      :is-school-news="false"
-      height="30em"
-      @close="isNewsModalDisplayed = false"
-    />
-  </teleport>
+    </div>
+  </section>
 </template>
 
 <script>
-import Widget from '@components/Dashboard/Widget'
-import NewsModal from '@components/Dashboard/News/NewsModal'
 import News from '@components/Dashboard/News/News'
 import DocActivity from '@components/Dashboard/ActivityWidget/DocActivity'
 import MembershipActivity from '@components/Dashboard/ActivityWidget/MembershipActivity'
 import RenvoiActivity from '@components/Dashboard/ActivityWidget/RenvoiActivity'
-import BaseIcon from '@components/Base/BaseIcon'
 import activityConstants from '@/constants/activityConstants'
-import PentilaUtils from 'pentila-utils'
 import dayjs from 'dayjs'
+import ActivityHeader from '@components/Dashboard/ActivityWidget/ActivityHeader.vue'
+import { getDashboardActivity } from '@/api/dashboard.service'
 
 export default {
   name: 'ActivityWidget',
-  components: { BaseIcon, RenvoiActivity, MembershipActivity, DocActivity, News, NewsModal, Widget },
+  components: { ActivityHeader, RenvoiActivity, MembershipActivity, DocActivity, News },
   data () {
     return {
-      isNewsModalDisplayed: false
-    }
-  },
-  computed: {
-    groupActivities () {
-      return PentilaUtils.Array.sortWithString(this.$store.state.dashboard.groupActivities, true, 'modificationDate')
-    },
-    canAddGroupNews () {
-      return !!this.$store.state.dashboard.canAddGroupNews // '!!' to assure Boolean
+      isLoading: false,
+      error: false,
+      activities: []
     }
   },
   created () {
-    this.loadGroupNews()
+    this.getActivities()
   },
   methods: {
-    loadGroupNews () {
-      this.$store.dispatch('dashboard/getGroupActivities', {
-        maxDate: this.groupActivities.length > 0 ? this.groupActivities[this.groupActivities.length - 1].modificationDate : dayjs().format('YYYY-MM-DD HH:mm'),
-        nbActivities: activityConstants.nbActivityPerPage
+    getActivities () {
+      this.isLoading = true
+      getDashboardActivity(dayjs().format('YYYY-MM-DD HH:mm'), activityConstants.nbActivityPerPage, true, true, true, true).then((data) => {
+        this.isLoading = false
+        if (data.success) {
+          this.error = false
+          this.activities = data.activities
+          // TODO: this.nbUnread = data.nbUnread
+        } else {
+          this.error = true
+        }
+      }, (err) => {
+        this.error = true
+        console.error(err)
       })
-    },
-    openNewsModal () {
-      this.$store.dispatch('dashboard/setEditedNews', {})
-      this.isNewsModalDisplayed = true
     },
     isNewsActivity (activity) {
       return activity.type === activityConstants.TYPE_NEWS
@@ -109,7 +107,7 @@ export default {
     isMembershipActivity (activity) {
       return activity.type === activityConstants.TYPE_ADD_MEMBERSHIP || activity.type === activityConstants.TYPE_REMOVE_MEMBERSHIP
     },
-    isHhcActivity (activity) {
+    isHHCActivity (activity) {
       return activity.type === activityConstants.TYPE_PENDING_RENVOI || activity.type === activityConstants.TYPE_SCHOOL_RENVOI
     },
     isSessionActivity (activity) {
@@ -120,24 +118,42 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
 
-  .widget-header {
-    display: flex;
-    align-items: center;
+section {
+  min-width: min($activity-widget-min-width, 100%);
+  width: 100%;
+  position: relative;
+  @extend %widget;
+}
 
-    .header-icon {
-      font-size: 1.5rem;
-      margin-right: 10px;
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+
+  li {
+    margin-bottom: 10px;
+
+    &:last-child {
+      margin-bottom: 0;
     }
   }
+}
 
-  .news {
-    margin: 5px 0;
-  }
+.placeholder {
+  height: 106px;
+}
+
+.footer {
+  @extend %widget-footer;
+}
 </style>
 
 <i18n locale="fr">
 {
-  "groups-activity": "Activités"
+  "errorPlaceholder": "Oups, une erreur est survenue...",
+  "emptyPlaceholder": "Aucune activité à afficher",
+  "showMore": "Voir toutes les activités"
 }
 </i18n>
