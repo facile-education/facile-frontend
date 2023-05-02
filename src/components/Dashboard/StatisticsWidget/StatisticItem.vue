@@ -3,13 +3,10 @@
     class="statistic-item"
     :title="evolution >= 0 ? ('+ ' + evolution) : evolution"
   >
-    <div
-      class="left"
-      :style="'color: ' + statistic.pointBackgroundColor"
-    >
+    <div class="left">
       <AnimatedCounter
         class="value"
-        :target="currentValue"
+        :target="statistic.current"
       />
       <div class="title">
         {{ statistic.label }}
@@ -46,14 +43,8 @@ export default {
     }
   },
   computed: {
-    currentValue () {
-      return this.statistic.data[1]
-    },
-    oldValue () {
-      return this.statistic.data[0]
-    },
     evolution () {
-      return this.currentValue - this.oldValue
+      return this.statistic.current - this.statistic.previous
     },
     isIncreasing () {
       return this.evolution > 0
@@ -62,10 +53,10 @@ export default {
       return this.evolution < 0
     },
     evolutionPercent () {
-      if (this.oldValue !== 0) {
-        return (this.evolution * 100) / this.oldValue
+      if (this.statistic.previous !== 0) {
+        return (this.evolution * 100) / this.statistic.previous
       } else {
-        return this.currentValue > 0 ? 100 : 0
+        return this.statistic.current > 0 ? 100 : 0
       }
     }
   }

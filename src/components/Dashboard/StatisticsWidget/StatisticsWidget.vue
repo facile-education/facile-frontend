@@ -11,13 +11,13 @@
       class="placeholder"
     />
     <div
-      v-else-if="data.datasets === undefined || data.datasets.length === 0 "
+      v-else-if="statistics.length === 0 "
       v-t="'emptyPlaceholder'"
       class="placeholder"
     />
     <ul v-else>
       <li
-        v-for="statistic in data.datasets"
+        v-for="statistic in statistics"
         :key="statistic.label"
       >
         <StatisticItem :statistic="statistic" />
@@ -38,10 +38,7 @@ export default {
     return {
       isLoading: false,
       error: false,
-      data: {
-        datasets: undefined,
-        labels: undefined
-      }
+      statistics: []
     }
   },
   created () {
@@ -54,8 +51,24 @@ export default {
         this.isLoading = false
         if (data.success) {
           this.error = false
-          this.data.datasets = data.datasets
-          this.data.labels = data.labels
+          const nbUsers = {
+            label: this.$tc('nbUsers', data.activeUsersCount),
+            current: data.activeUsersCount,
+            previous: data.previousActiveUsersCount
+          }
+          const nbConnexions = {
+            label: this.$tc('nbConnexions', data.nbConnexions),
+            current: data.nbConnexions,
+            previous: data.previousNbConnexions
+          }
+          const nbActivities = {
+            label: this.$tc('nbActivities', data.groupNewsCount),
+            current: data.groupNewsCount,
+            previous: data.previousGroupNewsCount
+          }
+          this.statistics.push(nbUsers)
+          this.statistics.push(nbConnexions)
+          this.statistics.push(nbActivities)
         } else {
           this.error = true
           console.error('Error')
@@ -92,6 +105,9 @@ ul {
 <i18n locale="fr">
 {
   "errorPlaceholder": "Oups, une erreur est survenue...",
-  "emptyPlaceholder": "Aucune statistique à afficher"
+  "emptyPlaceholder": "Aucune statistique à afficher",
+  "nbActivities": "Activité | Activité | Activités",
+  "nbConnexions": "Session | Session | Sessions",
+  "nbUsers": "Visiteur unique | Visiteur unique | Visiteurs uniques"
 }
 </i18n>
