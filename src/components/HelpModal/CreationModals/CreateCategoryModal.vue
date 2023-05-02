@@ -20,11 +20,11 @@
       />
 
       <PentilaDropdown
-        v-model="selectedService"
+        v-model="selectedApplication"
         class="dropdown"
-        :list="serviceList"
+        :list="applicationList"
         :sort="false"
-        display-field="serviceName"
+        display-field="applicationName"
       />
     </template>
 
@@ -32,7 +32,7 @@
       <PentilaButton
         data-test="submitButton"
         :label="$t('submit')"
-        :disabled="categoryName.length === 0 || selectedService.serviceId === 0"
+        :disabled="categoryName.length === 0 || selectedApplication.applicationId === 0"
         @click="submit"
       />
     </template>
@@ -49,13 +49,13 @@ export default {
   data () {
     return {
       categoryName: '',
-      selectedService: { serviceId: 0, serviceName: 'Service' }, // TODO: Find a more satisfying way to do the dropdown placeholder
-      serviceList: []
+      selectedApplication: { applicationId: 0, applicationName: 'Service' }, // TODO: Find a more satisfying way to do the dropdown placeholder
+      applicationList: []
     }
   },
   created () {
     this.$store.dispatch('misc/incrementModalCount')
-    this.getServiceList()
+    this.getApplicationList()
   },
   mounted () {
     const input = this.$refs.nameInput
@@ -63,17 +63,17 @@ export default {
     input.select()
   },
   methods: {
-    getServiceList () {
+    getApplicationList () {
       getAllApplications().then((data) => {
         if (data.success) {
-          this.serviceList = data.services
+          this.applicationList = data.services
         } else {
           console.error('Error while getting users', data.error)
         }
       })
     },
     submit () {
-      saveCategory(this.categoryName, this.selectedService.serviceId).then((data) => {
+      saveCategory(this.categoryName, this.selectedApplication.applicationId).then((data) => {
         if (data.success) {
           this.$store.dispatch('help/getHelpMenu', { query: '' })
           this.onClose()

@@ -16,7 +16,7 @@ export {
   deleteItem
 }
 
-const HELP_PATH = '/help-portlet.'
+const HELP_PATH = '/help.'
 
 /**
  * Get user details for preferences modal window
@@ -58,6 +58,7 @@ function saveRelation (itemId, relatedItemId) {
     relation: JSON.stringify({ itemId: itemId, relatedItemId: relatedItemId })
   })).then(response => response.data)
 }
+
 function deleteRelation (relationId) {
   return axios.get(constants.JSON_WS_URL + HELP_PATH + 'helprelation/delete-relation', {
     params: {
