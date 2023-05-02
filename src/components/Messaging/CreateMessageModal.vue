@@ -92,6 +92,8 @@
             :content="initialContent"
             :is-in-progression="false"
             @input="updateContent"
+            @keydown.stop
+            @keyup.stop
           />
         </div>
 
