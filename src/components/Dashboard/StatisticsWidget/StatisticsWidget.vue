@@ -15,14 +15,20 @@
       v-t="'emptyPlaceholder'"
       class="placeholder"
     />
-    <ul v-else>
-      <li
-        v-for="statistic in statistics"
-        :key="statistic.label"
-      >
-        <StatisticItem :statistic="statistic" />
-      </li>
-    </ul>
+    <div v-else>
+      <div
+        v-t="'lastWeek'"
+        class="period"
+      />
+      <ul>
+        <li
+          v-for="statistic in statistics"
+          :key="statistic.label"
+        >
+          <StatisticItem :statistic="statistic" />
+        </li>
+      </ul>
+    </div>
   </section>
 </template>
 
@@ -52,17 +58,17 @@ export default {
         if (data.success) {
           this.error = false
           const nbUsers = {
-            label: this.$tc('nbUsers', data.activeUsersCount),
+            label: this.$t('nbUsers'),
             current: data.activeUsersCount,
             previous: data.previousActiveUsersCount
           }
           const nbConnexions = {
-            label: this.$tc('nbConnexions', data.nbConnexions),
+            label: this.$t('nbConnexions'),
             current: data.nbConnexions,
             previous: data.previousNbConnexions
           }
           const nbActivities = {
-            label: this.$tc('nbActivities', data.groupNewsCount),
+            label: this.$t('nbActivities'),
             current: data.groupNewsCount,
             previous: data.previousGroupNewsCount
           }
@@ -95,10 +101,22 @@ ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
+
+  li {
+    margin-bottom: 10px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
 }
 
 .placeholder {
   height: 106px;
+}
+
+.period {
+  font-size: 0.8rem;
 }
 </style>
 
@@ -106,8 +124,9 @@ ul {
 {
   "errorPlaceholder": "Oups, une erreur est survenue...",
   "emptyPlaceholder": "Aucune statistique à afficher",
-  "nbActivities": "Activité | Activité | Activités",
-  "nbConnexions": "Session | Session | Sessions",
-  "nbUsers": "Visiteur unique | Visiteur unique | Visiteurs uniques"
+  "lastWeek": "7 derniers jours",
+  "nbActivities": "Activités",
+  "nbConnexions": "Sessions",
+  "nbUsers": "Visiteurs uniques"
 }
 </i18n>
