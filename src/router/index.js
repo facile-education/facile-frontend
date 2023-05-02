@@ -28,12 +28,12 @@ const routes = [
     component: () => import('@/router/views/ProgressionSeance')
   },
   {
-    path: '/documents/:folderId(\\d+)?',
+    path: '/documents/:folderId(\\d+)',
     name: 'Documents',
     component: () => import('@/router/views/Documents')
   },
   {
-    path: '/documents/groups/:folderId(.*)?',
+    path: '/documents/groups/:folderId(.*)',
     name: 'GroupDocuments',
     component: () => import('@/router/views/Documents')
   },
@@ -43,7 +43,7 @@ const routes = [
     component: () => import('@/router/views/Documents')
   },
   {
-    path: '/messaging/:messageId(\\d+)?',
+    path: '/messaging/:messageId(\\d+)',
     name: 'Messaging',
     component: () => import('@/router/views/Messaging')
   },
