@@ -10,6 +10,7 @@ function getRoute (entry) {
   return {
     name: capitalize(i18n.global.t('Menu.route.' + entry.i18nKey)),
     path: `/${i18n.global.t('Menu.route.' + entry.i18nKey)}`,
+    meta: { id: entry.id },
     component: () => import('@/router/views/' + entry.component + '.vue')
   }
 }

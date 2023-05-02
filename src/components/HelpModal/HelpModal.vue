@@ -35,9 +35,10 @@
 
 <script>
 import HelpTools from '@components/HelpModal/HelpTools.vue'
-import HelpMenu from '@components/HelpModal/HelpMenu.vue'
 import HelpArticle from '@components/HelpModal/HeplArticle/HelpArticle.vue'
-import MobileFloatingPanel from '@components/Base/MobileFloatingPanel.vue'
+import { defineAsyncComponent } from 'vue'
+const HelpMenu = defineAsyncComponent(() => import('@components/HelpModal/HelpMenu.vue'))
+const MobileFloatingPanel = defineAsyncComponent(() => import('@components/Base/MobileFloatingPanel.vue'))
 
 export default {
   name: 'HelpModal',
@@ -51,7 +52,7 @@ export default {
   },
   created () {
     this.$store.dispatch('misc/incrementModalCount')
-    this.$store.dispatch('help/getHelpMenu', { query: '', itemIdToSelect: 'default' })
+    this.$store.dispatch('help/getHelpMenu', { query: '', menuEntryId: this.$route.meta.id })
   },
   methods: {
     closeModal () {
@@ -113,6 +114,7 @@ h1 {
       }
     }
   }
+
   @media screen and (max-width: 930px) {
     .help-menu {width: 180px;}
 

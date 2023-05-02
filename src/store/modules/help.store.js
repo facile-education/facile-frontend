@@ -85,7 +85,7 @@ export const actions = {
     commit('setSelectedItem', undefined)
     commit('setSelectedItem', currentItem)
   },
-  getHelpMenu ({ commit }, { query, itemIdToSelect }) {
+  getHelpMenu ({ commit }, { query, menuEntryId }) {
     this.dispatch('currentActions/addAction', { name: 'getHelpMenu' })
     getHelpMenu(query).then((data) => {
       this.dispatch('currentActions/removeAction', { name: 'getHelpMenu' })
@@ -97,17 +97,26 @@ export const actions = {
           commit('setIsSearchResult', false)
           commit('setIsMobileMenuDisplayed', false)
         }
+
+        let itemIdToSelect
         // Sort categories and items inside category
         data.helpTree.sort((a, b) => { return a.position - b.position })
         data.helpTree.forEach((category) => {
           category.items.sort((a, b) => { return a.position - b.position })
+
+          if (menuEntryId !== undefined && category.menuEntryId === menuEntryId &&
+              category.items !== undefined && category.items.length > 0) {
+            itemIdToSelect = category.items[0].itemId
+          }
         })
+
         commit('setHelpMenu', data.helpTree)
-        if (data.helpTree.length > 0 && itemIdToSelect) {
-          if (itemIdToSelect === 'default') {
-            this.dispatch('help/selectDefaultItem')
-          } else {
+
+        if (data.helpTree.length > 0) {
+          if (itemIdToSelect !== undefined) {
             commit('selectItem', itemIdToSelect)
+          } else {
+            this.dispatch('help/selectDefaultItem')
           }
         }
       } else {

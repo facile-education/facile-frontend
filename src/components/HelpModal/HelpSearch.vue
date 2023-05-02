@@ -45,6 +45,6 @@ export default {
 
 <i18n locale="fr">
 {
-  "searchPlaceholder": "Chercher avec un mot-clé"
+  "searchPlaceholder": "Rechercher"
 }
 </i18n>
