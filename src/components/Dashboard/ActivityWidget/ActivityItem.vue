@@ -14,7 +14,7 @@
       />
       <DocActivity
         v-else-if="isDocActivity"
-        :activity="activity"
+        :activity="{...activity, ...{author: 'Vivien Donat-Bouillud'}}"
       />
       <MembershipActivity
         v-else-if="isMembershipActivity"

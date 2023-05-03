@@ -23,7 +23,7 @@
         {{ activity.author }}
       </div>
       <div class="description">
-        {{ description + activity.target }}
+        {{ description }}
       </div>
     </div>
 
