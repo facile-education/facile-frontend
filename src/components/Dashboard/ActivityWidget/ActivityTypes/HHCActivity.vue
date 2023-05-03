@@ -30,7 +30,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@design';
+@import '@/design/index';
 
 .activity {
   display: flex;
