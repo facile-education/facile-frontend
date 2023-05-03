@@ -130,10 +130,6 @@ export default {
   @extend %activity-item;
 }
 
-i {
-  font-style: normal;
-  color: #6190E0;
-}
 </style>
 
 <i18n locale="fr">

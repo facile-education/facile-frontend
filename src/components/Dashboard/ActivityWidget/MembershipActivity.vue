@@ -1,19 +1,43 @@
 <template>
   <div
-    class="activity"
+    class="membership-activity"
+    tabindex="0"
+    @click="redirect"
+    @keyup.enter="redirect"
   >
-    <div>
-      <span>{{ activity.actionUserName }}</span>
-      <span v-t="isAddActivity ? 'add' : 'remove' " />
-      <span>{{ activity.shortTargetUserNames !== "" ? activity.shortTargetUserNames : activity.targetUserNames }}</span>
-      <span v-t="'toTheGroup' " />
-      <span> {{ activity.groupName }}</span>
+    <div class="icon">
+      <img
+        class="img-icon"
+        src="@/assets/icons/users.svg"
+        alt="group icon"
+      >
     </div>
-    <div> {{ activity.modificationDate }}</div>
+
+    <div class="content">
+      <div class="author">
+        <i :title="activity.groupName">
+          {{ activity.groupName }}
+        </i>
+        <span>
+          {{ ' - ' + activity.author }}
+        </span>
+      </div>
+      <div class="description">
+        <span>
+          {{ description }}
+        </span>
+      </div>
+    </div>
+
+    <div class="date">
+      {{ formattedDate }}
+    </div>
   </div>
 </template>
 
 <script>
+
+import dayjs from 'dayjs'
 import activityConstants from '@/constants/activityConstants'
 
 export default {
@@ -24,18 +48,25 @@ export default {
       required: true
     }
   },
-  data () {
-    return {
-    }
-  },
   computed: {
-    isAddActivity () {
-      return this.activity.type === activityConstants.TYPE_ADD_MEMBERSHIP
+    formattedDate () {
+      return dayjs(this.activity.modificationDate, 'YYYY-MM-DD HH:mm').calendar()
+    },
+    description () {
+      switch (this.activity.type) {
+        case activityConstants.TYPE_ADD_MEMBERSHIP:
+          return this.$t('TYPE_ADD_MEMBERSHIP', { target: this.activity.target })
+        case activityConstants.TYPE_REMOVE_MEMBERSHIP:
+          return this.$t('TYPE_REMOVE_MEMBERSHIP')
+        default:
+          return 'Unknown activity type'
+      }
     }
-  },
-  created () {
   },
   methods: {
+    redirect () {
+      this.$router.push('/groups/' + this.activity.groupId)
+    }
   }
 }
 </script>
@@ -43,16 +74,19 @@ export default {
 <style lang="scss" scoped>
 @import '@design';
 
-.activity {
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+.membership-activity {
+  cursor: pointer;
+  @extend %activity-item;
+}
+
+.img-icon {
+  width: 30px;
 }
 </style>
 
 <i18n locale="fr">
 {
-  "add": "a ajouté ",
-  "toTheGroup": " au groupe",
-  "remove": "a retiré "
+  "TYPE_ADD_MEMBERSHIP": "a inscrit {target} dans l'espace",
+  "TYPE_REMOVE_MEMBERSHIP": "a désinscrit "
 }
 </i18n>
