@@ -16,6 +16,7 @@
         v-if="childList.length > 1"
         v-model="selectedUser"
         :list="childList"
+        :sort="false"
         display-field="fullName"
         class="child-selector"
       />
