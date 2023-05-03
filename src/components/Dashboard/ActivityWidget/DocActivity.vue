@@ -23,7 +23,21 @@
         {{ activity.author }}
       </div>
       <div class="description">
-        {{ description }}
+        <span>
+          {{ description }}
+        </span>
+        <i :title="activity.target">
+          {{ activity.target }}
+        </i>
+        <span v-t="'inGroup'" />
+        <i
+          :title="activity.groupName"
+          tabindex="0"
+          @click.stop="redirectInGroup"
+          @keyup.enter.stop="redirectInGroup"
+        >
+          {{ activity.groupName }}
+        </i>
       </div>
     </div>
 
@@ -67,21 +81,21 @@ export default {
     description () {
       switch (this.activity.type) {
         case activityConstants.TYPE_FILE_CREATION:
-          return this.$t('TYPE_FILE_CREATION', { target: this.activity.target })
+          return this.$t('TYPE_FILE_CREATION')
         case activityConstants.TYPE_FILE_MODIFICATION:
-          return this.$t('TYPE_FILE_MODIFICATION', { target: this.activity.target })
+          return this.$t('TYPE_FILE_MODIFICATION')
         case activityConstants.TYPE_FILE_MOVE:
-          return this.$t('TYPE_FILE_CREATION', { target: this.activity.target })
+          return this.$t('TYPE_FILE_CREATION')
         case activityConstants.TYPE_FILE_DELETION:
-          return this.$t('TYPE_FILE_DELETION', { target: this.activity.target })
+          return this.$t('TYPE_FILE_DELETION')
         case activityConstants.TYPE_FOLDER_CREATION:
-          return this.$t('TYPE_FOLDER_CREATION', { target: this.activity.target })
+          return this.$t('TYPE_FOLDER_CREATION')
         case activityConstants.TYPE_FOLDER_MODIFICATION:
-          return this.$t('TYPE_FOLDER_MODIFICATION', { target: this.activity.target })
+          return this.$t('TYPE_FOLDER_MODIFICATION')
         case activityConstants.TYPE_FOLDER_MOVE:
-          return this.$t('TYPE_FOLDER_MOVE', { target: this.activity.target })
+          return this.$t('TYPE_FOLDER_MOVE')
         case activityConstants.TYPE_FOLDER_DELETION:
-          return this.$t('TYPE_FOLDER_DELETION', { target: this.activity.target })
+          return this.$t('TYPE_FOLDER_DELETION')
         default:
           return 'Unknown activity type'
       }
@@ -96,6 +110,13 @@ export default {
           this.$store.dispatch('documents/openFile', { ...this.activity, id: this.activity.fileId + '', name: this.activity.fileName, readOnly: false })
         }
       }
+    },
+    redirectInGroup () {
+      if (this.isFolder) {
+        this.$router.push('/documents/groups/' + this.activity.parentFolderId) // TODO: handle parent folder Id for redirection?
+      } else {
+        this.$router.push('/documents/groups/' + this.activity.folderId)
+      }
     }
   }
 }
@@ -108,6 +129,11 @@ export default {
   cursor: pointer;
   @extend %activity-item;
 }
+
+i {
+  font-style: normal;
+  color: #6190E0;
+}
 </style>
 
 <i18n locale="fr">
@@ -115,10 +141,11 @@ export default {
   "TYPE_FILE_CREATION": "a partagé le fichier ",
   "TYPE_FILE_MODIFICATION": "a modifié le fichier ",
   "TYPE_FILE_MOVE": "a déplacé le fichier ",
-  "TYPE_FILE_DELETION": "a supprimé le fichier {target}",
+  "TYPE_FILE_DELETION": "a supprimé le fichier",
   "TYPE_FOLDER_CREATION": "a partagé le dossier ",
   "TYPE_FOLDER_MODIFICATION": "a renommé le dossier ",
   "TYPE_FOLDER_MOVE": "a déplacé le dossier ",
-  "TYPE_FOLDER_DELETION": "a supprimé le dossier {target}"
+  "TYPE_FOLDER_DELETION": "a supprimé le dossier",
+  "inGroup": " dans l'espace "
 }
 </i18n>
