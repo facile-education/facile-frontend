@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: 'RenvoiActivity',
+  name: 'HHCActivity',
   props: {
     activity: {
       type: Object,

@@ -20,7 +20,7 @@
         v-else-if="isMembershipActivity"
         :activity="activity"
       />
-      <RenvoiActivity
+      <HHCActivity
         v-else-if="isHHCActivity"
         :activity="activity"
       />
@@ -36,11 +36,11 @@ import activityConstants from '@/constants/activityConstants'
 import News from '@components/Dashboard/News/News.vue'
 import DocActivity from '@components/Dashboard/ActivityWidget/DocActivity.vue'
 import MembershipActivity from '@components/Dashboard/ActivityWidget/MembershipActivity.vue'
-import RenvoiActivity from '@components/Dashboard/ActivityWidget/RenvoiActivity.vue'
+import HHCActivity from '@components/Dashboard/ActivityWidget/HHCActivity.vue'
 
 export default {
   name: 'ActivityItem',
-  components: { RenvoiActivity, MembershipActivity, DocActivity, News },
+  components: { HHCActivity, MembershipActivity, DocActivity, News },
   props: {
     activity: {
       type: Object,
