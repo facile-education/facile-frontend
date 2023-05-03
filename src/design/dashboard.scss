@@ -83,8 +83,10 @@ $announcement-item-horizontal-min-width: min(450px, 80vw);
   width: 100%;
   display: flex;
   padding-right: 2rem;
+  overflow: hidden;
 
   .icon {
+    min-width: 25px;
     width: var(--icon-width);
     display: flex;
     align-items: center;
@@ -93,9 +95,35 @@ $announcement-item-horizontal-min-width: min(450px, 80vw);
 
   .content {
     flex: 1;
+    min-width: 150px;
+    position: relative;
+    font-size: 0.8rem;
+    padding-top: 1rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    .author, .description {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .author {
+      font-size: 0.875rem;
+      font-weight: bold;
+      color: $color-new-light-text;
+    }
+
+    .description {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+    }
   }
 
   .date {
+    padding-top: 1rem;
     font-size: 0.8rem;
     color: $color-new-light-text;
   }
