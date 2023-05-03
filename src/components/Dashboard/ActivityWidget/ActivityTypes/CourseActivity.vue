@@ -1,21 +1,28 @@
 <template>
   <div
-    class="hhc-activity"
+    class="course-activity"
     tabindex="0"
     @click="redirect"
     @keyup.enter="redirect"
   >
     <div class="icon">
       <img
+        v-if="isCourse"
         class="img-icon"
-        src="@/assets/icons/firing.svg"
+        src="@/assets/seance.svg"
+        alt="group icon"
+      >
+      <img
+        v-else
+        class="img-icon"
+        src="@/assets/devoir.svg"
         alt="group icon"
       >
     </div>
 
     <div class="content">
       <div class="author">
-        {{ isPendingFiring ? $t('setFiringReason') : activity.author }}
+        {{ activity.author }}
       </div>
       <div class="description">
         <span>
@@ -31,11 +38,11 @@
 </template>
 
 <script>
-import activityConstants from '@/constants/activityConstants'
 import dayjs from 'dayjs'
+import activityConstants from '@/constants/activityConstants'
 
 export default {
-  name: 'HHCActivity',
+  name: 'CourseActivity',
   props: {
     activity: {
       type: Object,
@@ -46,15 +53,15 @@ export default {
     formattedDate () {
       return dayjs(this.activity.modificationDate, 'YYYY-MM-DD HH:mm').calendar()
     },
-    isPendingFiring () {
-      return this.activity.type === activityConstants.TYPE_PENDING_RENVOI
+    isCourse () {
+      return this.activity.type === activityConstants.TYPE_SESSION
     },
     description () {
       switch (this.activity.type) {
-        case activityConstants.TYPE_PENDING_RENVOI:
-          return this.$t('TYPE_PENDING_RENVOI', { firedUser: this.activity.target, courseName: this.activity.sessionSubject, courseDate: this.activity.sessionDate })
-        case activityConstants.TYPE_SCHOOL_RENVOI:
-          return this.$t('TYPE_SCHOOL_RENVOI', { firedUser: this.activity.target, courseName: this.activity.sessionSubject, courseDate: this.activity.sessionDate })
+        case activityConstants.TYPE_SESSION:
+          return this.$t('TYPE_SESSION', { courseDate: this.activity.sessionDate })
+        case activityConstants.TYPE_HOMEWORK:
+          return this.$t('TYPE_HOMEWORK', { homeworkDate: this.activity.homeworkDate })
         default:
           return 'Unknown activity type'
       }
@@ -73,20 +80,19 @@ export default {
 <style lang="scss" scoped>
 @import '@/design/index';
 
-.hhc-activity {
+.course-activity {
   cursor: pointer;
   @extend %activity-item;
 }
 
 .img-icon {
-  width: 30px;
+  width: 35px;
 }
 </style>
 
 <i18n locale="fr">
 {
-  "TYPE_SCHOOL_RENVOI": "a renvoyé {firedUser} du cours de {courseName} du {courseDate}",
-  "TYPE_PENDING_RENVOI": "Pensez à motiver le renvoi de {firedUser} du cours de {courseName} du {courseDate}",
-  "setFiringReason": "Motivation de renvoi"
+  "TYPE_SESSION": "a renseigné la séance du {courseDate}",
+  "TYPE_HOMEWORK": "a donné une activité à faire pour le {homeworkDate}"
 }
 </i18n>

@@ -24,6 +24,10 @@
         v-else-if="isHHCActivity"
         :activity="activity"
       />
+      <CourseActivity
+        v-else-if="isCourseActivity"
+        :activity="activity"
+      />
       <div v-else>
         Unrecognized activity type!
       </div>
@@ -37,10 +41,11 @@ import NewsActivity from '@components/Dashboard/ActivityWidget/ActivityTypes/New
 import DocActivity from '@components/Dashboard/ActivityWidget/ActivityTypes/DocActivity.vue'
 import MembershipActivity from '@components/Dashboard/ActivityWidget/ActivityTypes/MembershipActivity.vue'
 import HHCActivity from '@components/Dashboard/ActivityWidget/ActivityTypes/HHCActivity.vue'
+import CourseActivity from '@components/Dashboard/ActivityWidget/ActivityTypes/CourseActivity.vue'
 
 export default {
   name: 'ActivityItem',
-  components: { HHCActivity, MembershipActivity, DocActivity, NewsActivity },
+  components: { CourseActivity, HHCActivity, MembershipActivity, DocActivity, NewsActivity },
   props: {
     activity: {
       type: Object,
@@ -66,6 +71,9 @@ export default {
     },
     isHHCActivity () {
       return this.activity.type === activityConstants.TYPE_PENDING_RENVOI || this.activity.type === activityConstants.TYPE_SCHOOL_RENVOI
+    },
+    isCourseActivity () {
+      return this.activity.type === activityConstants.TYPE_SESSION || this.activity.type === activityConstants.TYPE_HOMEWORK
     },
     isSessionActivity () {
       return this.activity.type === activityConstants.TYPE_HOMEWORK || this.activity.type === activityConstants.TYPE_SESSION
