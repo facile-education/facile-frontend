@@ -8,7 +8,7 @@
         v-if="activity.isNew"
         class="pellet theme-background-color"
       />
-      <News
+      <NewsActivity
         v-if="isNewsActivity"
         :news="activity"
       />
@@ -33,14 +33,14 @@
 
 <script>
 import activityConstants from '@/constants/activityConstants'
-import News from '@components/Dashboard/News/News.vue'
-import DocActivity from '@components/Dashboard/ActivityWidget/DocActivity.vue'
-import MembershipActivity from '@components/Dashboard/ActivityWidget/MembershipActivity.vue'
-import HHCActivity from '@components/Dashboard/ActivityWidget/HHCActivity.vue'
+import NewsActivity from '@components/Dashboard/ActivityWidget/ActivityTypes/NewsActivity.vue'
+import DocActivity from '@components/Dashboard/ActivityWidget/ActivityTypes/DocActivity.vue'
+import MembershipActivity from '@components/Dashboard/ActivityWidget/ActivityTypes/MembershipActivity.vue'
+import HHCActivity from '@components/Dashboard/ActivityWidget/ActivityTypes/HHCActivity.vue'
 
 export default {
   name: 'ActivityItem',
-  components: { HHCActivity, MembershipActivity, DocActivity, News },
+  components: { HHCActivity, MembershipActivity, DocActivity, NewsActivity },
   props: {
     activity: {
       type: Object,
