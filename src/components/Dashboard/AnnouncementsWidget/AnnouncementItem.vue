@@ -237,7 +237,7 @@ export default {
   cursor: pointer;
   height: calc(100% - 4px);
   width: 100%;
-  border-radius: 5px;
+  border-radius: 10px;
   padding: 4px;
   font-size: 14px;
   line-height: 18px;

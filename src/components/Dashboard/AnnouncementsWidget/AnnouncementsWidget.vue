@@ -34,22 +34,25 @@
         :class="{'hidden' : !canScrollToLeft}"
       />
 
-      <div
+      <ul
         ref="announcementsList"
         class="announcements-list"
         :class="{'phone': mq.phone}"
         @scroll="updateScrollPosition"
       >
-        <AnnouncementItem
+        <li
           v-for="(announcement, index) in announcementsList"
           :key="index"
-          :announcement="announcement"
-          :is-in-horizontal-scroll="true"
-          @markAsRead="announcement.hasRead=true"
-          @updateAnnouncement="refresh"
-          @deleteAnnouncement="refresh"
-        />
-      </div>
+        >
+          <AnnouncementItem
+            :announcement="announcement"
+            :is-in-horizontal-scroll="true"
+            @markAsRead="announcement.hasRead=true"
+            @updateAnnouncement="refresh"
+            @deleteAnnouncement="refresh"
+          />
+        </li>
+      </ul>
 
       <div
         class="right-linear"
@@ -177,6 +180,21 @@ section {
   position: relative;
   flex: 1;
   min-height: $announcement-item-min-height;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+
+  // TODO: handle this on scroll
+  //li {
+  //  margin-right: 24px;
+  //
+  //  &:last-child {
+  //    margin-right: 0;
+  //  }
+  //}
 }
 
 .announcements-list {
