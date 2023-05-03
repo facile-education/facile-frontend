@@ -59,7 +59,7 @@ export default {
   methods: {
     getActivities () {
       this.isLoading = true
-      getDashboardActivity(dayjs().format('YYYY-MM-DD HH:mm'), activityConstants.nbActivityPerPage, true, true, true, true).then((data) => {
+      getDashboardActivity(dayjs().format('YYYY-MM-DD HH:mm:ss'), activityConstants.nbActivityPerPage, true, true, true, true).then((data) => {
         this.isLoading = false
         if (data.success) {
           this.error = false
