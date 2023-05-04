@@ -91,7 +91,7 @@ export default {
 section {
   min-width: min($statistics-widget-min-width, 100%);
   width: 100%;
-  max-width: $statistics-widget-max-width;
+  //max-width: $statistics-widget-max-width;
   position: relative;
   cursor: pointer;
   @extend %widget;

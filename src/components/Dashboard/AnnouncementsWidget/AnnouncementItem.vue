@@ -243,7 +243,7 @@ export default {
   line-height: 18px;
   display: flex;
   --thumbnail-width: 25%;
-  border: 1px solid #FFDDDD;
+  border: 1px solid $color-border;
 
   .pellet {
     @extend %item-pellet;
