@@ -173,6 +173,7 @@ section {
   @extend %widget;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .placeholder {
