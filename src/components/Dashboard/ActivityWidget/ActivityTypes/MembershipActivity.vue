@@ -56,8 +56,6 @@ export default {
       switch (this.activity.type) {
         case activityConstants.TYPE_ADD_MEMBERSHIP:
           return this.$t('TYPE_ADD_MEMBERSHIP', { target: this.activity.target })
-        case activityConstants.TYPE_REMOVE_MEMBERSHIP:
-          return this.$t('TYPE_REMOVE_MEMBERSHIP')
         default:
           return 'Unknown activity type'
       }
@@ -86,7 +84,6 @@ export default {
 
 <i18n locale="fr">
 {
-  "TYPE_ADD_MEMBERSHIP": "a inscrit {target} dans l'espace",
-  "TYPE_REMOVE_MEMBERSHIP": "a désinscrit "
+  "TYPE_ADD_MEMBERSHIP": "vous a inscrit dans l'espace"
 }
 </i18n>
