@@ -1,10 +1,5 @@
 <template>
-  <div
-    class="doc-activity"
-    tabindex="0"
-    @click="redirect"
-    @keyup.enter="redirect"
-  >
+  <div class="doc-activity">
     <div class="icon">
       <img
         v-if="isFolder"
@@ -26,7 +21,12 @@
         <span>
           {{ description }}
         </span>
-        <i :title="activity.target">
+        <i
+          tabindex="0"
+          :title="activity.target"
+          @click="open"
+          @keyup.enter="open"
+        >
           {{ activity.target }}
         </i>
         <span v-t="'inGroup'" />
@@ -102,11 +102,11 @@ export default {
     }
   },
   methods: {
-    redirect () {
+    open () {
       if (!this.isDeletion) {
-        this.$router.push('/documents/groups/' + this.activity.folderId)
-        if (!this.isFolder) { // File
-          // Properties id (as string) and name are needed by FileDisplay component
+        if (this.isFolder) {
+          this.$router.push('/documents/groups/' + this.activity.folderId)
+        } else {
           this.$store.dispatch('documents/openFile', { ...this.activity, id: this.activity.fileId + '', name: this.activity.fileName, readOnly: false })
         }
       }
@@ -126,7 +126,6 @@ export default {
 @import '@/design/index';
 
 .doc-activity {
-  cursor: pointer;
   @extend %activity-item;
 }
 

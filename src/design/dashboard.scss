@@ -88,6 +88,11 @@ $announcement-item-horizontal-min-width: min(450px, 80vw);
   i {
     font-style: normal;
     color: #6190E0;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   .icon {
