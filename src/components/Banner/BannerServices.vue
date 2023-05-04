@@ -3,7 +3,7 @@
     <BannerItem :src="require('@/assets/images/banner/icon-star.svg')" />
     <BannerItem
       :src="require('@/assets/images/banner/icon-letter.svg')"
-      @click="$router.push({ name: 'Messaging' })"
+      @click="$router.push({ name: 'Messagerie' })"
     />
     <BannerItem :src="require('@/assets/images/banner/icon-archives.svg')" />
     <BannerItem

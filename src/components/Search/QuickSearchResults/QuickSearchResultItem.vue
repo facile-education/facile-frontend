@@ -197,10 +197,10 @@ export default {
               console.log('TODO: redirection')
               break
             case searchConstants.TYPE_MESSAGE:
-              this.$router.push({ name: 'Messaging', params: { messageId: this.searchResult.entityId } })
+              this.$router.push({ name: 'Messagerie', params: { messageId: this.searchResult.entityId } })
               break
             case searchConstants.TYPE_MESSAGE_FILE:
-              this.$router.push({ name: 'Messaging', params: { messageId: data.result.messageId, fileId: this.searchResult.entityId, fileName: this.searchResult.title, display: data.result.displayable } })
+              this.$router.push({ name: 'Messagerie', params: { messageId: data.result.messageId, fileId: this.searchResult.entityId, fileName: this.searchResult.title, display: data.result.displayable } })
               break
             case searchConstants.TYPE_FOLDER:
               this.$router.push({ name: 'Documents', params: { folderId: this.searchResult.entityId } })

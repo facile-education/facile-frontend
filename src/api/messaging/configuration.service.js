@@ -6,7 +6,7 @@ export default {
   updateMessagingConfiguration
 }
 
-const MESSAGING_PATH = '/messaging-portlet.messagingconfig'
+const MESSAGING_PATH = '/messaging.messagingconfig'
 
 /**
  * Get user messaging configuration

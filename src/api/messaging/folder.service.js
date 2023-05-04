@@ -8,7 +8,7 @@ export default {
   deleteFolder
 }
 
-const MESSAGING_PATH = '/messaging-portlet.messagefolder'
+const MESSAGING_PATH = '/messaging.messagefolder'
 
 /**
  * Add a personal folder

@@ -74,7 +74,7 @@ export default {
     selectFolder (folder) {
       this.$store.dispatch('messaging/selectFolder', folder)
       // Reset messageId param in url
-      this.$router.push({ name: 'Messaging' })
+      this.$router.push({ name: 'Messagerie' })
       if (this.mq.phone || this.mq.tablet) {
         this.$store.dispatch('messaging/hideMenuPanel')
       }
