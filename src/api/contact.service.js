@@ -19,7 +19,7 @@ export {
   getMyRelatives
 }
 
-const CONTACT_PATH = '/contact-portlet.'
+const CONTACT_PATH = '/contact.'
 const CONTACT_CTX = 'contact/'
 
 function getContactTree () {
