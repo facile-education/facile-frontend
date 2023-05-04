@@ -7,17 +7,17 @@ export default {
   createMessage
 }
 
-const url = constants.INFORMATION_MANAGER_URL
+const url = 'TODO'
 
 function addScreenShot (image) {
-  return axios.post(url, PentilaUtils.URL.params({
+  return axios.post(constants.JSON_WS_URL + url, PentilaUtils.URL.params({
     cmd: 'screenshot',
     img: image
   })).then(response => response.data)
 }
 
 function createMessage (isSuggestion, service, contentField, mail, attachFiles, isUsurpationAllowed) {
-  return axios.get(url, {
+  return axios.get(constants.JSON_WS_URL + url, {
     params: {
       cmd: 'createMessage',
       isSuggestion: isSuggestion,

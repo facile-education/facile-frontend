@@ -29,13 +29,10 @@
 
 <script>
 import PentilaUtils from 'pentila-utils'
-// import informationService from '@/api/information.service'
 import { required } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
 
 const isValidJson = (value) => PentilaUtils.JSON.isValidJson(value)
-// const isJsonContentValid = (value) => informationService.isJsonContentValid(value)
-// const isVersionNameValid = (value) => informationService.isVersionNameValid(value)
 const isVersionNameValid = (str) => {
   try {
     const regex = /[0-9]+.[0-9]+.[0-9]+/gm
@@ -85,7 +82,7 @@ export default {
   },
   computed: {
     createVersionMessage () {
-      return this.$store.state.information.createVersionMessage
+      return this.$store.state.about.createVersionMessage
     },
     formErrorList () {
       return {
@@ -112,7 +109,7 @@ export default {
       if (this.v$.$invalid) { // form checking
         this.v$.$touch()
       } else {
-        this.$store.dispatch('information/createVersion', {
+        this.$store.dispatch('about/createVersion', {
           number: this.form.versionNumber,
           details: this.form.versionDetails
         })

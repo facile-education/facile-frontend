@@ -53,10 +53,10 @@ export default {
     },
     versionList () {
       // this.selectedVersion(this.latestVersion) // we would like to update the selected version any times the version list change
-      return this.$store.state.information.versionList
+      return this.$store.state.about.versionList
     },
     versionDetails () {
-      return this.$store.state.information.versionDetails
+      return this.$store.state.about.versionDetails
     },
     sortedVersionList () {
       // TODO unit tests ?
@@ -85,13 +85,13 @@ export default {
   },
   created () {
     if (this.versionList === undefined) {
-      this.$store.dispatch('information/getVersionList')
+      this.$store.dispatch('about/getVersionList')
     }
   },
   methods: {
     selectVersion (version) {
       this.selected = version
-      this.$store.dispatch('information/getVersionDetails', this.selected)
+      this.$store.dispatch('about/getVersionDetails', this.selected)
     }
   }
 }

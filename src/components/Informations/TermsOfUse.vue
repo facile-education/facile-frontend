@@ -18,7 +18,7 @@ export default {
   },
   computed: {
     termsOfUse () {
-      return this.$store.state.information.termsOfUse
+      return this.$store.state.about.termsOfUse
     }
   },
   created () {
