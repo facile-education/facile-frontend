@@ -22,7 +22,10 @@
           v-for="activity in activities"
           :key="activity.activityId"
         >
-          <ActivityItem :activity="activity" />
+          <ActivityItem
+            :activity="activity"
+            @refresh="refresh"
+          />
         </li>
       </ul>
       <div class="footer">
@@ -59,6 +62,9 @@ export default {
     this.getActivities()
   },
   methods: {
+    refresh () {
+      this.getActivities()
+    },
     getActivities () {
       this.isLoading = true
       getDashboardActivity(dayjs().format('YYYY-MM-DD HH:mm:ss'), activityConstants.nbActivityPerPage, true, true, true, true).then((data) => {

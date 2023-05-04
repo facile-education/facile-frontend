@@ -19,6 +19,7 @@
       <MembershipActivity
         v-else-if="isMembershipActivity"
         :activity="activity"
+        @refresh="$emit('refresh')"
       />
       <HHCActivity
         v-else-if="isHHCActivity"
@@ -52,6 +53,7 @@ export default {
       required: true
     }
   },
+  emits: ['refresh'],
   computed: {
     isNewsActivity () {
       return this.activity.type === activityConstants.TYPE_NEWS
@@ -67,7 +69,9 @@ export default {
         this.activity.type === activityConstants.TYPE_FOLDER_DELETION
     },
     isMembershipActivity () {
-      return this.activity.type === activityConstants.TYPE_ADD_MEMBERSHIP || this.activity.type === activityConstants.TYPE_REMOVE_MEMBERSHIP
+      return this.activity.type === activityConstants.TYPE_ADD_MEMBERSHIP ||
+        this.activity.type === activityConstants.TYPE_REMOVE_MEMBERSHIP ||
+        this.activity.type === activityConstants.TYPE_EXPIRED_GROUP
     },
     isHHCActivity () {
       return this.activity.type === activityConstants.TYPE_PENDING_RENVOI || this.activity.type === activityConstants.TYPE_SCHOOL_RENVOI

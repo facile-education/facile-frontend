@@ -1,5 +1,5 @@
 
-const nbActivityPerPage = 20
+const nbActivityPerPage = 10
 
 const TYPE_FILE_CREATION = 1
 const TYPE_FILE_MODIFICATION = 2
@@ -16,6 +16,7 @@ const TYPE_SCHOOL_RENVOI = 12
 const TYPE_NEWS = 13
 const TYPE_HOMEWORK = 14
 const TYPE_SESSION = 15
+const TYPE_EXPIRED_GROUP = 16
 
 export default {
   nbActivityPerPage,
@@ -33,5 +34,6 @@ export default {
   TYPE_SCHOOL_RENVOI,
   TYPE_NEWS,
   TYPE_HOMEWORK,
-  TYPE_SESSION
+  TYPE_SESSION,
+  TYPE_EXPIRED_GROUP
 }
