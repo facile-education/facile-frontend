@@ -1,6 +1,6 @@
 <template>
   <section>
-    <ActivityHeader />
+    <ActivityHeader :nb-new-activities="nbNewActivities" />
 
     <PentilaSpinner
       v-if="isLoading"
@@ -50,7 +50,9 @@ export default {
     return {
       isLoading: false,
       error: false,
-      activities: []
+      activities: [],
+      nbNewActivities: 0,
+      lastDashboardAccessDate: undefined
     }
   },
   created () {
@@ -64,7 +66,8 @@ export default {
         if (data.success) {
           this.error = false
           this.activities = data.activities
-          // TODO: this.nbUnread = data.nbUnread
+          this.nbNewActivities = data.nbNewActivities
+          this.lastDashboardAccessDate = data.lastDashboardAccessDate
         } else {
           this.error = true
         }
