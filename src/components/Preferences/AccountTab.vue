@@ -221,7 +221,8 @@ export default {
       userService.updateThemeColor(newColor).then((data) => {
         if (data.success) {
           PentilaUtils.Theme.updateColor(this.themeColor, newColor)
-          this.themeColor = newColor
+          this.$store.commit('user/updateInterfacePreferences', { themeColor: newColor })
+          this.themeColor = this.$store.state.user.themeColor
           this.$emit('save')
         } else {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
@@ -247,8 +248,8 @@ export default {
     onWebdavChange (value) {
       userService.updateWebdavState(value).then((data) => {
         if (data.success) {
+          this.$store.commit('user/updateWebdavState', value)
           this.webdavValue = value
-          // todo update value in store
           this.$emit('save')
         } else {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })

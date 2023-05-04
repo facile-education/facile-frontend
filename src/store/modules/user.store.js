@@ -84,6 +84,9 @@ export const mutations = {
     state.details.isLocalUser = payload.isLocalUser
     state.details.reportFrequency = payload.reportFrequency
     state.details.webdavUrl = payload.webdavUrl
+  },
+  updateWebdavState (state, payload) {
+    state.hasWebdavEnabled = payload
   }
 }
 export const actions = {
