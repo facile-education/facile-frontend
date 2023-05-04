@@ -24,6 +24,7 @@
         >
           <ActivityItem
             :activity="activity"
+            :last-dashboard-access-date="lastDashboardAccessDate"
             @refresh="refresh"
           />
         </li>
