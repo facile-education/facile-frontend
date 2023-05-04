@@ -78,7 +78,7 @@ export default {
   },
   methods: {
     redirect () {
-      this.$router.push('/groups/' + this.activity.groupId)
+      this.$router.push({ name: 'Groups', params: { groupId: this.activity.groupId } })
     },
     confirmGroupReactivation () {
       this.$store.dispatch('warningModal/addWarning', {

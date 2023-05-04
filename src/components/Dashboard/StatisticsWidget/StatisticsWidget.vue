@@ -1,5 +1,5 @@
 <template>
-  <section @click="$router.push({name: 'Statistics'})">
+  <section>
     <StatisticsHeader />
     <PentilaSpinner
       v-if="isLoading"
@@ -20,7 +20,7 @@
         v-t="'lastWeek'"
         class="period"
       />
-      <ul>
+      <ul @click="$router.push({name: 'Statistics'})">
         <li
           v-for="statistic in statistics"
           :key="statistic.label"
@@ -93,7 +93,6 @@ section {
   width: 100%;
   //max-width: $statistics-widget-max-width;
   position: relative;
-  cursor: pointer;
   @extend %widget;
 }
 
@@ -101,6 +100,7 @@ ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
+  cursor: pointer;
 
   li {
     margin-bottom: 10px;
