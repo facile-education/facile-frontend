@@ -1,4 +1,4 @@
-import informationService from '@/api/information.service'
+import aboutService from '@/api/about.service'
 
 export const state = {
   versionList: undefined,
@@ -23,25 +23,25 @@ export const mutations = {
 
 export const actions = {
   getVersionList ({ commit }) {
-    informationService.getVersionList().then((data) => {
+    aboutService.getVersionList().then((data) => {
       if (data.success) {
         commit('initVersionList', data.versions)
       }
     })
   },
   getVersionDetails ({ commit }, version) {
-    informationService.getVersionDetails(version.versionId).then((data) => {
+    aboutService.getVersionDetails(version.versionId).then((data) => {
       if (data.success) {
         commit('initVersionDetails', data.versionDetails)
       }
     })
   },
   createVersion ({ commit }, { number, details }) {
-    informationService.createVersion(number, details).then((data) => {
+    aboutService.createVersion(number, details).then((data) => {
       if (data.success) {
         commit('initCreateVersionMessage', data.success)
         // if success, update versionList
-        this.dispatch('information/getVersionList')
+        this.dispatch('about/getVersionList')
         this.dispatch('nero/closeVersionEditionModal')
         // TODO popup message "success"
       } else {
