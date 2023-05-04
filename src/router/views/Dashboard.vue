@@ -26,14 +26,14 @@
           :user-id="selectedUser.userId"
           class="homework"
         />
+        <ActivityWidget
+          v-if="hasActivityThreadWidget"
+          class="activities"
+        />
         <ScheduleWidget
           v-if="hasEDTWidget && selectedUser"
           :user-id="selectedUser.userId"
           class="schedule"
-        />
-        <ActivityWidget
-          v-if="hasActivityThreadWidget"
-          class="activity"
         />
         <StatisticWidget
           v-if="hasStatisticWidget"
@@ -120,6 +120,10 @@ export default {
 
   .homework {
     flex: 2;
+  }
+
+  .activities {
+    flex: 2
   }
 
   .schedule {
