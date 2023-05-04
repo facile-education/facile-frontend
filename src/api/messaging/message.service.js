@@ -17,7 +17,7 @@ export default {
   getUsersCompletion
 }
 
-const MESSAGING_PATH = '/messaging-portlet.message'
+const MESSAGING_PATH = '/messaging.message'
 
 /**
  * Get user threads with pagination

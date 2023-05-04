@@ -175,7 +175,7 @@ export default {
         })
       }
       this.selectFolder() // Invert following instructions to change extend behaviour
-      this.$router.push({ name: 'Messaging' })
+      this.$router.push({ name: 'Messagerie' })
       if (this.isSelected) {
         this.isExpanded = !this.isExpanded
       }

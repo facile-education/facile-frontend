@@ -43,8 +43,8 @@ const routes = [
     component: () => import('@/router/views/Documents')
   },
   {
-    path: '/messaging/:messageId(\\d+)',
-    name: 'Messaging',
+    path: '/messagerie/:messageId(\\d+)',
+    name: 'Messagerie',
     component: () => import('@/router/views/Messaging')
   },
   {
