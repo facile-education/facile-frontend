@@ -156,6 +156,7 @@
     "notAllowed": "Vous ne possédez pas les droits requis pour accéder à ce service."
   },
   "Menu": {
+    "access-admin": "Accès",
     "administration": "Administration",
     "application-admin": "Applications",
     "cdt": "Cours & devoirs",
@@ -182,6 +183,7 @@
     "universalis-junior": "Universalis Junior",
     "user-admin": "Utilisateurs",
     "route": {
+      "access-admin": "administration-acces",
       "application-admin": "admininistration-applications",
       "cdt": "cours-et-devoirs",
       "contacts": "contacts",
