@@ -2,6 +2,11 @@
   <section>
     <ActivityHeader :nb-new-activities="nbNewActivities" />
 
+    <ActivityFilter
+      :initial-filter="filter"
+      @updateFilter="updateFilter"
+    />
+
     <PentilaSpinner
       v-if="isLoading"
       style="z-index: 1"
@@ -65,14 +70,19 @@ import dayjs from 'dayjs'
 import ActivityHeader from '@components/Dashboard/ActivityWidget/ActivityHeader.vue'
 import { getDashboardActivity } from '@/api/dashboard.service'
 import ActivityItem from '@components/Dashboard/ActivityWidget/ActivityItem.vue'
+import ActivityFilter from '@components/Dashboard/ActivityWidget/ActivityTypes/ActivityFilter.vue'
 
 export default {
   name: 'ActivityWidget',
-  components: { ActivityItem, ActivityHeader },
+  components: { ActivityFilter, ActivityItem, ActivityHeader },
   data () {
     return {
       isLoading: false,
       error: false,
+      filter: {
+        activityTypes: [],
+        selectedGroup: undefined
+      },
       nbNewActivities: 0,
       lastDashboardAccessDate: undefined,
       readActivities: [],
@@ -82,18 +92,48 @@ export default {
   computed: {
     separatorLabel () {
       return this.$t('newsSince') + dayjs(this.lastDashboardAccessDate, 'YYYY-MM-DD HH:mm').format('DD MMMM YYYY')
+    },
+    filterBooleans () {
+      if (this.filter.activityTypes.length === 0) { // If no filter selected, return all activity types
+        return {
+          withNews: true,
+          withDocs: true,
+          withSchoolLife: true,
+          withMemberShip: true,
+          withSession: true
+        }
+      } else { // else, return only the selected types
+        return {
+          withNews: this.filter.activityTypes.includes('news'),
+          withDocs: this.filter.activityTypes.includes('docs'),
+          withSchoolLife: this.filter.activityTypes.includes('schoolLife'),
+          withMemberShip: this.filter.activityTypes.includes('membership'),
+          withSession: this.filter.activityTypes.includes('sessions')
+        }
+      }
     }
   },
   created () {
     this.getActivities()
   },
   methods: {
+    updateFilter (filter) {
+      this.filter = filter
+      this.refresh()
+    },
     refresh () {
       this.getActivities()
     },
     getActivities () {
       this.isLoading = true
-      getDashboardActivity(dayjs().format('YYYY-MM-DD HH:mm:ss'), activityConstants.nbActivityPerPage, true, true, true, true).then((data) => {
+      getDashboardActivity( // TODO call with memberShip boolean and groupId
+        dayjs().format('YYYY-MM-DD HH:mm:ss'),
+        activityConstants.nbActivityPerPage,
+        this.filterBooleans.withNews,
+        this.filterBooleans.withDocs,
+        this.filterBooleans.withSchoolLife,
+        this.filterBooleans.withSession
+      ).then((data) => {
         this.isLoading = false
         if (data.success) {
           this.error = false
