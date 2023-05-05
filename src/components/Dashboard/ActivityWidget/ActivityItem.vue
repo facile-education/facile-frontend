@@ -43,7 +43,6 @@ import DocActivity from '@components/Dashboard/ActivityWidget/ActivityTypes/DocA
 import MembershipActivity from '@components/Dashboard/ActivityWidget/ActivityTypes/MembershipActivity.vue'
 import HHCActivity from '@components/Dashboard/ActivityWidget/ActivityTypes/HHCActivity.vue'
 import CourseActivity from '@components/Dashboard/ActivityWidget/ActivityTypes/CourseActivity.vue'
-import dayjs from 'dayjs'
 
 export default {
   name: 'ActivityItem',
@@ -53,20 +52,13 @@ export default {
       type: Object,
       required: true
     },
-    lastDashboardAccessDate: {
-      type: String,
-      default: undefined
+    isUnread: {
+      type: Boolean,
+      default: false
     }
   },
   emits: ['refresh'],
   computed: {
-    isUnread () {
-      if (this.lastDashboardAccessDate && this.lastDashboardAccessDate !== '') {
-        return dayjs(this.activity.modificationDate, 'YYYY-MM-DD HH:mm').isAfter(dayjs(this.lastDashboardAccessDate, 'YYYY-MM-DD HH:mm'))
-      } else {
-        return true
-      }
-    },
     isNewsActivity () {
       return this.activity.type === activityConstants.TYPE_NEWS
     },
