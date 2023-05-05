@@ -25,7 +25,7 @@
         v-else-if="isHHCActivity"
         :activity="activity"
       />
-      <CourseActivity
+      <SessionActivity
         v-else-if="isCourseActivity"
         :activity="activity"
       />
@@ -42,11 +42,11 @@ import NewsActivity from '@components/Dashboard/ActivityWidget/ActivityTypes/New
 import DocActivity from '@components/Dashboard/ActivityWidget/ActivityTypes/DocActivity.vue'
 import MembershipActivity from '@components/Dashboard/ActivityWidget/ActivityTypes/MembershipActivity.vue'
 import HHCActivity from '@components/Dashboard/ActivityWidget/ActivityTypes/HHCActivity.vue'
-import CourseActivity from '@components/Dashboard/ActivityWidget/ActivityTypes/CourseActivity.vue'
+import SessionActivity from '@components/Dashboard/ActivityWidget/ActivityTypes/SessionActivity.vue'
 
 export default {
   name: 'ActivityItem',
-  components: { CourseActivity, HHCActivity, MembershipActivity, DocActivity, NewsActivity },
+  components: { SessionActivity, HHCActivity, MembershipActivity, DocActivity, NewsActivity },
   props: {
     activity: {
       type: Object,

@@ -48,7 +48,7 @@ import dayjs from 'dayjs'
 import activityConstants from '@/constants/activityConstants'
 
 export default {
-  name: 'CourseActivity',
+  name: 'SessionActivity',
   props: {
     activity: {
       type: Object,
