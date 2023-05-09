@@ -125,6 +125,22 @@ export default {
     },
     hasEditionRights () {
       return (this.group.isAdmin && !this.group.isInstitutional)
+    },
+    isSelected () {
+      return this.$store.state.groups.selectedGroup && this.$store.state.groups.selectedGroup.groupId === this.group.groupId
+    }
+  },
+  watch: {
+    isSelected: {
+      handler (value) {
+        if (value) {
+          this.$nextTick(() => {
+            // Bring the selected group to top of the page
+            this.$refs.group.scrollIntoView({ block: 'start', behavior: 'smooth' })
+          })
+        }
+      },
+      immediate: true
     }
   },
   methods: {
@@ -142,17 +158,13 @@ export default {
     },
     selectGroup () {
       this.$store.dispatch('groups/setSelectedGroup', this.group)
-      this.$nextTick(() => {
-        // Bring the selected group to top of the page
-        this.$refs.group.scrollIntoView({ block: 'start', behavior: 'smooth' })
-      })
     },
     extendGroup () {
       this.isLoading = true
       extendCommunity(this.group.groupId).then((data) => {
         this.isLoading = false
         if (data.success) {
-          this.$store.dispatch('groups/getGroupList', this.$store.state.groups.currentFilter)
+          this.$store.dispatch('groups/getGroupList', { filter: this.$store.state.groups.currentFilter })
           this.$store.dispatch('popups/pushPopup', { message: this.$t('extension-success'), type: 'info' })
         } else {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })

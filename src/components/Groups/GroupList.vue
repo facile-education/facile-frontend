@@ -50,10 +50,11 @@ export default {
   },
   created () {
     this.getGroupList()
+    // Reset this.$route.params.groupId ?
   },
   methods: {
     getGroupList () {
-      this.$store.dispatch('groups/getGroupList', this.$store.state.groups.currentFilter)
+      this.$store.dispatch('groups/getGroupList', { filter: this.$store.state.groups.currentFilter, groupIdToSelect: Number(this.$route.params.groupId) })
     },
     toggleEditModalDisplay (group) {
       this.selectedGroup = group
