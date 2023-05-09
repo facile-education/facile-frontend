@@ -19,7 +19,14 @@
         </li>
       </ol>
 
+      <div
+        v-if="isLoadingGroups"
+        class="spinner-container"
+      >
+        <PentilaSpinner />
+      </div>
       <PentilaDropdown
+        v-else
         v-model="filter.selectedGroup"
         :list="groupList"
         :sort="false"
@@ -49,7 +56,8 @@ export default {
     return {
       filter: undefined,
       availableActivityTypes: ['news', 'docs', 'schoolLife', 'membership', 'sessions'],
-      groupList: []
+      groupList: [],
+      isLoadingGroups: false
     }
   },
   created () {
@@ -58,7 +66,9 @@ export default {
   },
   methods: {
     getGroupList () {
+      this.isLoadingGroups = true
       getUserCommunities(this.$store.state.user.userId, { label: '', isCommunityActive: false, isInstitutionalActive: false, isPedagogicalActive: false }).then((data) => {
+        this.isLoadingGroups = false
         if (data.success) {
           const allGroupObject = { groupId: -1, groupName: this.$t('allGroups') }
           this.groupList = data.groups
@@ -112,7 +122,13 @@ ol {
   gap: 10px;
 }
 
+.spinner-container {
+  position: relative;
+  min-width: 80px;
+}
+
 .dropdown {
+  margin-left: 10px;
   white-space: nowrap;
 }
 
