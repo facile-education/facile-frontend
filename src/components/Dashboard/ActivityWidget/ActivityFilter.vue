@@ -33,7 +33,7 @@
 
 <script>
 import { getUserCommunities } from '@/api/groups.service'
-import ActivityFilterItem from '@components/Dashboard/ActivityWidget/ActivityTypes/ActivityFilterItem.vue'
+import ActivityFilterItem from '@components/Dashboard/ActivityWidget/ActivityFilterItem.vue'
 
 export default {
   name: 'ActivityFilter',

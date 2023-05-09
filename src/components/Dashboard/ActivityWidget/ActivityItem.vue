@@ -38,11 +38,12 @@
 
 <script>
 import activityConstants from '@/constants/activityConstants'
-import NewsActivity from '@components/Dashboard/ActivityWidget/ActivityTypes/NewsActivity.vue'
-import DocActivity from '@components/Dashboard/ActivityWidget/ActivityTypes/DocActivity.vue'
-import MembershipActivity from '@components/Dashboard/ActivityWidget/ActivityTypes/MembershipActivity.vue'
-import HHCActivity from '@components/Dashboard/ActivityWidget/ActivityTypes/HHCActivity.vue'
-import SessionActivity from '@components/Dashboard/ActivityWidget/ActivityTypes/SessionActivity.vue'
+import { defineAsyncComponent } from 'vue'
+const NewsActivity = defineAsyncComponent(() => import('@components/Dashboard/ActivityWidget/ActivityTypes/NewsActivity.vue'))
+const DocActivity = defineAsyncComponent(() => import('@components/Dashboard/ActivityWidget/ActivityTypes/DocActivity.vue'))
+const MembershipActivity = defineAsyncComponent(() => import('@components/Dashboard/ActivityWidget/ActivityTypes/MembershipActivity.vue'))
+const HHCActivity = defineAsyncComponent(() => import('@components/Dashboard/ActivityWidget/ActivityTypes/HHCActivity.vue'))
+const SessionActivity = defineAsyncComponent(() => import('@components/Dashboard/ActivityWidget/ActivityTypes/SessionActivity.vue'))
 
 export default {
   name: 'ActivityItem',
