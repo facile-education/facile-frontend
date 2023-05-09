@@ -70,7 +70,7 @@ import dayjs from 'dayjs'
 import ActivityHeader from '@components/Dashboard/ActivityWidget/ActivityHeader.vue'
 import { getDashboardActivity } from '@/api/dashboard.service'
 import ActivityItem from '@components/Dashboard/ActivityWidget/ActivityItem.vue'
-import ActivityFilter from '@components/Dashboard/ActivityWidget/ActivityTypes/ActivityFilter.vue'
+import ActivityFilter from '@components/Dashboard/ActivityWidget/ActivityFilter.vue'
 
 export default {
   name: 'ActivityWidget',
