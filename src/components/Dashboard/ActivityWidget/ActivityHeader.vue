@@ -6,12 +6,14 @@
       class="header-pellet"
       :count="nbNewActivities"
       :show-count="true"
+      :and-more="andMore"
     />
   </header>
 </template>
 
 <script>
 import Pellet from '@components/Base/Pellet.vue'
+import activityConstants from '@/constants/activityConstants'
 
 export default {
   name: 'ActivityHeader',
@@ -20,6 +22,11 @@ export default {
     nbNewActivities: {
       type: Number,
       default: 0
+    }
+  },
+  computed: {
+    andMore () {
+      return this.nbNewActivities >= activityConstants.nbActivityPerPage
     }
   }
 }
