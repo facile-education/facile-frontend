@@ -1,6 +1,9 @@
 <template>
-  <section>
-    <ActivityHeader :nb-new-activities="nbNewActivities" />
+  <section :class="{'full-page': displayAll}">
+    <ActivityHeader
+      :nb-new-activities="nbNewActivities"
+      :display-all="displayAll"
+    />
 
     <ActivityFilter
       :initial-filter="filter"
@@ -21,7 +24,12 @@
       v-t="'emptyPlaceholder'"
       class="placeholder"
     />
-    <div v-else>
+    <div
+      v-else
+      ref="scroll"
+      class="activities"
+      :class="{'infinite-scroll' : displayAll}"
+    >
       <ul v-if="unreadActivities.length !== 0">
         <li
           v-for="activity in unreadActivities"
@@ -30,6 +38,7 @@
           <ActivityItem
             :activity="activity"
             :is-unread="true"
+            :is-last="activity.activityId === lastActivity.activityId"
             @refresh="refresh"
           />
         </li>
@@ -49,11 +58,16 @@
         >
           <ActivityItem
             :activity="activity"
+            :is-last="activity.activityId === lastActivity.activityId"
             @refresh="refresh"
           />
         </li>
       </ul>
-      <div class="footer">
+
+      <div
+        v-if="!displayAll"
+        class="footer"
+      >
         <button
           v-t="'showMore'"
           class="show-more"
@@ -75,6 +89,12 @@ import ActivityFilter from '@components/Dashboard/ActivityWidget/ActivityFilter.
 export default {
   name: 'ActivityWidget',
   components: { ActivityFilter, ActivityItem, ActivityHeader },
+  props: {
+    displayAll: {
+      type: Boolean,
+      default: false
+    }
+  },
   data () {
     return {
       isLoading: false,
@@ -111,6 +131,24 @@ export default {
           withSession: this.filter.activityTypes.includes('sessions')
         }
       }
+    },
+    lastActivity () {
+      // Return the last activity between read Activities and unRead Activities, assume each of them are sorted by date in their respective array
+      const oldestRead = this.readActivities.length > 0 ? this.readActivities[this.readActivities.length - 1] : undefined
+      const oldestUnread = this.unreadActivities.length > 0 ? this.unreadActivities[this.unreadActivities.length - 1] : undefined
+
+      return oldestRead !== undefined && oldestUnread !== undefined && dayjs(oldestUnread.modificationDate, 'YYYY-MM-DD HH:mm').isBefore(dayjs(oldestRead.modificationDate, 'YYYY-MM-DD HH:mm'))
+        ? oldestUnread
+        : oldestRead !== undefined
+          ? oldestRead
+          : oldestUnread
+    },
+    lastActivityDate () {
+      if (this.lastActivity) {
+        return this.lastActivity.modificationDate
+      } else { // if no activity, return the currentDate
+        return dayjs()
+      }
     }
   },
   created () {
@@ -122,13 +160,15 @@ export default {
       this.refresh()
     },
     refresh () {
+      this.readActivities = []
+      this.unreadActivities = []
       this.getActivities()
     },
     getActivities () {
       this.isLoading = true
       getDashboardActivity( // TODO call with memberShip boolean and groupId
-        dayjs().format('YYYY-MM-DD HH:mm:ss'),
-        activityConstants.nbActivityPerPage,
+        this.displayAll ? this.lastActivityDate.format('YYYY-MM-DD HH:mm:ss') : dayjs().format('YYYY-MM-DD HH:mm:ss'),
+        this.displayAll ? activityConstants.nbActivityPerPage : activityConstants.nbActivityInWidget,
         this.filterBooleans.withNews,
         this.filterBooleans.withDocs,
         this.filterBooleans.withSchoolLife,
@@ -140,8 +180,7 @@ export default {
           this.nbNewActivities = data.nbNewActivities
           this.lastDashboardAccessDate = data.lastDashboardAccessDate
           // this.lastDashboardAccessDate = '2022-05-05 10:19:48'
-          this.readActivities = []
-          this.unreadActivities = []
+
           data.activities.forEach((activity) => {
             if (this.isUnread(activity)) {
               this.unreadActivities.push(activity)
@@ -172,6 +211,12 @@ section {
   width: 100%;
   position: relative;
   @extend %widget;
+
+  &.full-page {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 ul {
@@ -186,6 +231,11 @@ ul {
       margin-bottom: 0;
     }
   }
+}
+
+.infinite-scroll {
+  flex: 1;
+  overflow: auto;
 }
 
 .separator {

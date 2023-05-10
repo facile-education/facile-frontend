@@ -1,5 +1,6 @@
 
-const nbActivityPerPage = 10
+const nbActivityInWidget = 10
+const nbActivityPerPage = 20
 
 const TYPE_FILE_CREATION = 1
 const TYPE_FILE_MODIFICATION = 2
@@ -19,6 +20,7 @@ const TYPE_SESSION = 15
 const TYPE_EXPIRED_GROUP = 16
 
 export default {
+  nbActivityInWidget,
   nbActivityPerPage,
   TYPE_FILE_CREATION,
   TYPE_FILE_MODIFICATION,

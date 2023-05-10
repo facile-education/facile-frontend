@@ -1,6 +1,24 @@
 <template>
   <header>
-    <h2 v-t="'activities'" />
+    <button
+      v-if="displayAll"
+      class="previous-button"
+      @click="$router.back()"
+    >
+      <img
+        src="@assets/arrow-left.svg"
+        :alt="$t('previous')"
+        :title="$t('previous')"
+      >
+    </button>
+    <h1
+      v-if="displayAll"
+      v-t="'allActivities'"
+    />
+    <h2
+      v-else
+      v-t="'activities'"
+    />
     <Pellet
       v-if="nbNewActivities > 0"
       class="header-pellet"
@@ -22,11 +40,15 @@ export default {
     nbNewActivities: {
       type: Number,
       default: 0
+    },
+    displayAll: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
     andMore () {
-      return this.nbNewActivities >= activityConstants.nbActivityPerPage
+      return this.nbNewActivities >= activityConstants.nbActivityInWidget
     }
   }
 }
@@ -41,6 +63,11 @@ header {
   align-items: center;
 }
 
+h1 {
+  font-size: 1.5em;
+  text-transform: uppercase;
+}
+
 h2 {
   @extend %widget-h2;
 }
@@ -49,10 +76,24 @@ h2 {
   margin-left: 10px;
   @extend %dashboard-header-pellet;
 }
+
+.previous-button {
+  width: 30px;
+  height: 100%;
+  background-color: white;
+  cursor: pointer;
+  border: none;
+
+  img {
+    width: 20px;
+    height: 20px;
+  }
+}
 </style>
 
 <i18n locale="fr">
 {
-  "activities": "Activités"
+  "activities": "Activités",
+  "allActivities": "Toutes les activités"
 }
 </i18n>
