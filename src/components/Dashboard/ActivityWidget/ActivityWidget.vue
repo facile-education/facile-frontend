@@ -29,6 +29,7 @@
       ref="scroll"
       class="activities"
       :class="{'infinite-scroll' : displayAll}"
+      @scroll="handleScroll"
     >
       <ul v-if="unreadActivities.length !== 0">
         <li
@@ -39,6 +40,7 @@
             :activity="activity"
             :is-unread="true"
             :is-last="activity.activityId === lastActivity.activityId"
+            @getNextActivities="getActivities"
             @refresh="refresh"
           />
         </li>
@@ -59,6 +61,7 @@
           <ActivityItem
             :activity="activity"
             :is-last="activity.activityId === lastActivity.activityId"
+            @getNextActivities="getActivities"
             @refresh="refresh"
           />
         </li>
@@ -85,6 +88,7 @@ import ActivityHeader from '@components/Dashboard/ActivityWidget/ActivityHeader.
 import { getDashboardActivity } from '@/api/dashboard.service'
 import ActivityItem from '@components/Dashboard/ActivityWidget/ActivityItem.vue'
 import ActivityFilter from '@components/Dashboard/ActivityWidget/ActivityFilter.vue'
+let oldScrollTop = 0
 
 export default {
   name: 'ActivityWidget',
@@ -155,6 +159,19 @@ export default {
     this.getActivities()
   },
   methods: {
+    handleScroll () {
+      const scroll = this.$refs.scroll
+      if (scroll.scrollTop > oldScrollTop) { // if we go down
+        const nbPixelsBeforeBottom = scroll.scrollHeight - (scroll.scrollTop + scroll.clientHeight)
+
+        if (nbPixelsBeforeBottom <= 5) {
+          if (!this.isLoading) {
+            this.getActivities()
+          }
+        }
+      }
+      oldScrollTop = scroll.scrollTop
+    },
     updateFilter (filter) {
       this.filter = filter
       this.refresh()
@@ -236,6 +253,7 @@ ul {
 .infinite-scroll {
   flex: 1;
   overflow: auto;
+  padding: 0 20%;
 }
 
 .separator {

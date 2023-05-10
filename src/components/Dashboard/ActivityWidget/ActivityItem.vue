@@ -39,6 +39,7 @@
 <script>
 import activityConstants from '@/constants/activityConstants'
 import { defineAsyncComponent } from 'vue'
+import { isInViewport } from '@utils/commons.util'
 const NewsActivity = defineAsyncComponent(() => import('@components/Dashboard/ActivityWidget/ActivityTypes/NewsActivity.vue'))
 const DocActivity = defineAsyncComponent(() => import('@components/Dashboard/ActivityWidget/ActivityTypes/DocActivity.vue'))
 const MembershipActivity = defineAsyncComponent(() => import('@components/Dashboard/ActivityWidget/ActivityTypes/MembershipActivity.vue'))
@@ -54,6 +55,10 @@ export default {
       required: true
     },
     isUnread: {
+      type: Boolean,
+      default: false
+    },
+    isLast: {
       type: Boolean,
       default: false
     }
@@ -86,6 +91,13 @@ export default {
     },
     isSessionActivity () {
       return this.activity.type === activityConstants.TYPE_HOMEWORK || this.activity.type === activityConstants.TYPE_SESSION
+    }
+  },
+  mounted () {
+    if (this.isLast) {
+      if (isInViewport(this.$refs.item)) {
+        this.$emit('getNextAnnouncements')
+      }
     }
   }
 }
