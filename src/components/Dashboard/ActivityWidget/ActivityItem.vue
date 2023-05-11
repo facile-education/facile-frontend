@@ -63,7 +63,7 @@ export default {
       default: false
     }
   },
-  emits: ['getNextAnnouncements', 'refresh'],
+  emits: ['getNextActivities', 'refresh'],
   computed: {
     isNewsActivity () {
       return this.activity.type === activityConstants.TYPE_NEWS
@@ -96,7 +96,7 @@ export default {
   mounted () {
     if (this.isLast && this.$refs.item !== undefined) {
       if (isInViewport(this.$refs.item)) {
-        this.$emit('getNextAnnouncements')
+        this.$emit('getNextActivities')
       }
     }
   }

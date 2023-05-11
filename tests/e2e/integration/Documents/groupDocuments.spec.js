@@ -40,7 +40,7 @@ describe('Group documents', () => {
     cy.get('.grid-document').should('not.exist')
   })
 
-  // TODO create some activities to test it : currently none 
+  // TODO create some activities to test it : currently none
   /*it.only('détails Panel', () => {
     cy.contains('.grid-document', 'groupTest').trigger('mouseover').find('[data-test="open-details-icon"]').click()
 

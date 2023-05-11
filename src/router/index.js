@@ -8,6 +8,11 @@ const routes = [
     component: () => import('@/router/views/Authentication.vue')
   },
   {
+    path: '/access-manager',
+    name: 'AccessManager',
+    component: () => import('@/router/views/AccessManager.vue')
+  },
+  {
     path: '/agree-terms-of-use',
     name: 'AgreeTermsOfUse',
     component: () => import('@/router/views/AgreeTermsOfUse.vue')
