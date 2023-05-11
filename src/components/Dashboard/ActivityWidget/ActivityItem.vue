@@ -63,7 +63,7 @@ export default {
       default: false
     }
   },
-  emits: ['refresh'],
+  emits: ['getNextAnnouncements', 'refresh'],
   computed: {
     isNewsActivity () {
       return this.activity.type === activityConstants.TYPE_NEWS
