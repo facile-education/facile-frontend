@@ -65,7 +65,7 @@
       <AttachedFiles
         v-if="detailedAnnouncement.hasAttachedFiles"
         :read-only="true"
-        :attached-files="detailedAnnouncement.attachedFiles"
+        :v-model="detailedAnnouncement.attachedFiles"
       />
 
       <div

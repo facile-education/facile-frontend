@@ -61,7 +61,7 @@
     <!-- Attached files-->
     <AttachedFiles
       v-if="message.hasAttachFiles"
-      :attached-files="message.attachments"
+      :model-value="message.attachments"
       :read-only="true"
     />
   </div>

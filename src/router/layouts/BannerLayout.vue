@@ -54,6 +54,14 @@
       />
     </div>
 
+    <div
+      v-if="isLoadingProgressionDisplayed"
+      class="background-actions-container"
+      :class="{'phone': mq.phone}"
+    >
+      <UploadProgression />
+    </div>
+
     <teleport
       v-for="(file, index) in openFiles"
       :key="index"
@@ -96,6 +104,7 @@ const MobileMenu = defineAsyncComponent(() => import('@/components/Menu/MobileMe
 const SideMenu = defineAsyncComponent(() => import('@/components/Menu/SideMenu'))
 const HelpModal = defineAsyncComponent(() => import('@components/HelpModal/HelpModal.vue'))
 const Popup = defineAsyncComponent(() => import('@components/Base/Popup'))
+const UploadProgression = defineAsyncComponent(() => import('@components/Documents/UploadProgression'))
 const WarningModal = defineAsyncComponent(() => import('@/components/Nero/WarningModal'))
 
 export default {
@@ -109,6 +118,7 @@ export default {
     MobileMenu,
     Popup,
     SideMenu,
+    UploadProgression,
     WarningModal
   },
   inject: ['mq'],
@@ -122,9 +132,6 @@ export default {
     isConflictModalDisplayed () {
       return this.$store.getters['conflictModal/isConflictModalDisplayed']
     },
-    isWarningModalDisplayed () {
-      return this.$store.getters['warningModal/isWarningModalDisplayed']
-    },
     isMobileMenuDisplayed () {
       return this.$store.state.nero.isMobileMenuDisplayed
     },
@@ -133,6 +140,12 @@ export default {
     },
     isQuickSearchDisplayed () {
       return this.$store.state.search.isHistoryOpen || this.$store.state.search.isQuickSearchResultDisplayed
+    },
+    isLoadingProgressionDisplayed () {
+      return this.$store.state.currentActions.isLoadingProgressionDisplayed
+    },
+    isWarningModalDisplayed () {
+      return this.$store.getters['warningModal/isWarningModalDisplayed']
     },
     menuExpanded () {
       return this.$store.state.nero.menuExpanded
@@ -271,5 +284,29 @@ export default {
 
 .msg {
   text-align: center;
+}
+
+.background-actions-container {
+  background-color: white;
+  z-index: $popup-z-index;
+  position: absolute;
+  bottom: 1px;
+  right: 20px;
+  flex-direction: column;
+  max-width: 100%;
+
+  .action {
+    color: white;
+  }
+
+  &.phone {
+    right: 50%;
+    transform: translate(50%, 0);
+
+    .action {
+      width: 90vw;
+      height: 50px;
+    }
+  }
 }
 </style>
