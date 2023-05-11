@@ -31,7 +31,7 @@
 <script>
 import dayjs from 'dayjs'
 import { icons } from '@/constants/icons'
-import { activityTypes } from '@/constants/activityConstants'
+import activityConstants from '@/constants/activityConstants'
 import { getExtensionFromName } from '@utils/commons.util'
 
 export default {
@@ -44,32 +44,27 @@ export default {
   },
   computed: {
     activityType () { // See activityConstant.js for details
-      if (this.activity.type < 5) {
+      if (this.activity.type < activityConstants.TYPE_FOLDER_CREATION) {
         return 'file'
-      } else if (this.activity.type < 9) {
+      } else if (this.activity.type < activityConstants.TYPE_ADD_MEMBERSHIP) {
         return 'folder'
-      } else if (this.activity.type < 11) {
+      } else if (this.activity.type < activityConstants.TYPE_PENDING_RENVOI) {
         return 'membership'
-      } else if (this.activity.type < 13) {
+      } else if (this.activity.type < activityConstants.TYPE_NEWS) {
         return 'schoollife'
-      } else if (this.activity.type === 13) {
+      } else if (this.activity.type === activityConstants.TYPE_NEWS) {
         return 'news'
-      } else if (this.activity.type === 14) {
+      } else if (this.activity.type === activityConstants.TYPE_HOMEWORK) {
         return 'homework'
-      } else if (this.activity.type === 15) {
+      } else if (this.activity.type === activityConstants.TYPE_SESSION) {
         return 'session'
       } else {
         return 'other'
       }
     },
     content () {
-      let content = this.$t('Unknown')
-
-      activityTypes.forEach(activityType => {
-        if (this.activity.type === activityType.value) {
-          content = this.$t(activityType.key, { target: this.activity.target })
-        }
-      })
+      const content = this.$t('Unknown')
+      // TODO use dashboard activities
       return content
     },
     formattedDate () {
@@ -109,10 +104,10 @@ export default {
   },
   methods: {
     clickAttached () {
-      if (this.activityType === 'file' && this.activity.type !== activityTypes.TYPE_FILE_DELETION) {
+      if (this.activityType === 'file' && this.activity.type !== activityConstants.TYPE_FILE_DELETION) {
         // Properties id (as string) and name are needed by FileDisplay component
         this.$store.dispatch('documents/openFile', { ...this.activity, id: this.activity.fileId + '', name: this.activity.fileName, readOnly: true })
-      } else if (this.activityType === 'folder' && this.activity.type !== activityTypes.TYPE_FOLDER_DELETION) {
+      } else if (this.activityType === 'folder' && this.activity.type !== activityConstants.TYPE_FOLDER_DELETION) {
         if (this.$store.state.documents.isDocumentPanelDisplayed) {
           this.$store.dispatch('documents/closeDocumentPanel')
         }

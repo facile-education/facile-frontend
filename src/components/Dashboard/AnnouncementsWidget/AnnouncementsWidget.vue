@@ -34,22 +34,25 @@
         :class="{'hidden' : !canScrollToLeft}"
       />
 
-      <div
+      <ul
         ref="announcementsList"
         class="announcements-list"
         :class="{'phone': mq.phone}"
         @scroll="updateScrollPosition"
       >
-        <AnnouncementItem
+        <li
           v-for="(announcement, index) in announcementsList"
           :key="index"
-          :announcement="announcement"
-          :is-in-horizontal-scroll="true"
-          @markAsRead="announcement.hasRead=true"
-          @updateAnnouncement="refresh"
-          @deleteAnnouncement="refresh"
-        />
-      </div>
+        >
+          <AnnouncementItem
+            :announcement="announcement"
+            :is-in-horizontal-scroll="true"
+            @markAsRead="announcement.hasRead=true"
+            @updateAnnouncement="refresh"
+            @deleteAnnouncement="refresh"
+          />
+        </li>
+      </ul>
 
       <div
         class="right-linear"
@@ -113,7 +116,9 @@ export default {
     },
     scrollToDisplayedAnnouncement () {
       const scroll = this.$refs.announcementsList
-      const announcementItemWidth = 450 // $announcement-item-horizontal-min-width, TODO: get the real value of announcement to handle all cases
+      // console.log('scroll width: ' + scroll.scrollWidth)
+      // console.log('div width: ' + scroll.getBoundingClientRect().width)
+      const announcementItemWidth = 450 + 24 // $announcement-item-horizontal-min-width + margin-right, TODO: get the real value of announcement to handle all cases
       let scrollOffset // To center non firsts announcements
       if (this.displayedAnnouncementIndex === 0) {
         scrollOffset = 0
@@ -126,6 +131,7 @@ export default {
       }
     },
     updateScrollPosition () {
+      // console.log('current scroll position: ', this.$refs.announcementsList.scrollLeft)
       const scrollLeft = this.$refs.announcementsList.scrollLeft
       this.canScrollToLeft = scrollLeft > 0
       this.canScrollToRight = scrollLeft < this.$refs.announcementsList.scrollWidth - Math.floor(this.$refs.announcementsList.getBoundingClientRect().width)
@@ -167,6 +173,7 @@ section {
   @extend %widget;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .placeholder {
@@ -177,6 +184,20 @@ section {
   position: relative;
   flex: 1;
   min-height: $announcement-item-min-height;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+
+  li {
+    margin-right: 24px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
 }
 
 .announcements-list {

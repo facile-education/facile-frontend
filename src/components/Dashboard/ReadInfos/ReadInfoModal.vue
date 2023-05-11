@@ -67,7 +67,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../../design/index";
+@import "@/design/index";
 
 h1 {
   margin: 0;
