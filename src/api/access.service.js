@@ -2,7 +2,7 @@ import axios from 'axios'
 import constants from '@/api/constants'
 import PentilaUtils from 'pentila-utils'
 
-export default {
+export {
   getSchoolAccesses,
   saveSchoolAccesses,
   getUserAccesses,
