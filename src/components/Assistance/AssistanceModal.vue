@@ -4,7 +4,6 @@
       :modal="true"
       :draggable="true"
       :full-screen="mq.phone"
-      data-html2canvas-ignore="true"
       @close="onClose"
     >
       <template #header>
@@ -32,11 +31,11 @@
           />
           <h5> {{ (modalType==='Assistance' ? $t('serviceLabel') : $t('serviceConcernLabel')) + '*' }} </h5>
           <PentilaDropdown
-            v-if="serviceList"
+            v-if="applicationList"
             v-model="selected"
             data-test="servicesDropDown"
-            :list="serviceList"
-            display-field="serviceName"
+            :list="applicationList"
+            display-field="applicationName"
           />
         </div>
         <div class="issue-description">
@@ -54,32 +53,12 @@
           </div>
           <PentilaErrorMessage :error-message="formErrorList.issueDescription" />
         </div>
-        <div
-          v-if="isFilesEnabled"
-          class="add-files"
-        >
-          <PentilaButton
-            data-test="addFile"
-            :label="$t('addFilesButtonLabel')"
-            @click="isFilePickerDisplayed=true"
-          />
-
-          <AttachedFiles
-            :initial-attached-files="attachFiles"
-            :read-only="false"
-            @removeAttachedFile="removeAttachedFile"
-          />
-        </div>
-        <div
-          v-if="isScreenShotEnabled"
-          class="add-screenshot"
-        >
-          <PentilaButton
-            data-test="addScreenShot"
-            :label="$t('screenShotButtonLabel')"
-            @click="addScreenShot"
-          />
-        </div>
+        <!-- Attached files -->
+        <AttachedFiles
+          v-model="attachFiles"
+          :read-only="false"
+          @removeAttachedFile="removeAttachedFile"
+        />
       </template>
 
       <template #footer>
@@ -96,7 +75,6 @@
     <FilePickerModal
       v-if="isFilePickerDisplayed"
       :multi-selection="true"
-      :allow-files-from-device="true"
       @addedFiles="attachNewFiles"
       @close="isFilePickerDisplayed=false"
     />
@@ -104,16 +82,16 @@
 </template>
 
 <script>
+import { sendAssistanceMessage } from '@/api/messaging/message.service'
+
 import CKEditor from '@ckeditor/ckeditor5-vue'
 import InlineEditor from '@ckeditor/ckeditor5-build-inline'
 import { required } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
-import supportService from '@/api/support.service'
-import FilePickerModal from '@components/FilePicker/FilePickerModal'
 import AttachedFiles from '@components/Base/AttachedFiles'
 
-// import platform from 'platform'
-// import html2canvas from 'html2canvas'
+import { defineAsyncComponent } from 'vue'
+const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal'))
 
 export default {
   name: 'AssistanceModal',
@@ -145,9 +123,6 @@ export default {
           // viewportTopOffset: 500
         }
       },
-      isUsurpationAllowed: false,
-      isScreenShotEnabled: false,
-      isFilesEnabled: true,
       attachFiles: [],
       isFilePickerDisplayed: false
     }
@@ -162,8 +137,8 @@ export default {
   // validations: {
   //  application: {
   //    roleList: { required },
-  //    serviceName: { required },
-  //    serviceKey: { required },
+  //    applicationName: { required },
+  //    applicationKey: { required },
   //    category: { required }
   //  }
   // },
@@ -181,17 +156,14 @@ export default {
     isAdministrator () {
       return this.$store.state.user.isAdministrator
     },
-    eMailAddress () {
-      return this.userDetails.emailAddress
-    },
-    serviceList () {
+    applicationList () {
       return this.$store.state.user.serviceList
     },
     subjectField () {
-      return 'Anomalie ' + this.selected.serviceName
+      return 'Anomalie ' + this.selected.applicationName
     },
     contentField () {
-      return '<p>Service affecté : ' + this.selected.serviceName + '</p>' +
+      return '<p>Service affecté : ' + this.selected.applicationName + '</p>' +
              '<p>Description : ' + this.form.issueDescription + '</p>' // + // issue description in html format
       //        'Type de navigateur : ' + platform.description
     }
@@ -200,7 +172,7 @@ export default {
     if (this.userDetails.lastName === undefined) {
       this.$store.dispatch('user/getPersonalDetails')
     }
-    if (this.serviceList === undefined) {
+    if (this.applicationList === undefined) {
       this.$store.dispatch('user/getServiceList')
     }
   },
@@ -211,24 +183,15 @@ export default {
     removeAttachedFile (fileToRemove) {
       this.attachFiles.splice(this.attachFiles.indexOf(fileToRemove), 1)
     },
-    addScreenShot () {
-      // TODO add screenShot to message
-      /* const vm = this
-      html2canvas(document.body).then(function (canvas) {
-        vm.$store.dispatch('support/addScreenShot', { image: canvas.toDataURL() })
-      }) */
-    },
     submitTicket () {
       if (this.v$.$invalid) { // form checking
         this.v$.$touch()
       } else {
-        supportService.createMessage(
+        sendAssistanceMessage(
           this.modalType === 'Suggestion',
-          this.selected.serviceName,
+          this.selected.applicationId,
           this.contentField,
-          this.eMailAddress,
-          JSON.stringify(this.attachFiles),
-          this.isUsurpationAllowed
+          JSON.stringify(this.attachFiles)
         ).then((data) => {
           if (data.success) {
             this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
@@ -247,7 +210,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .italic {
   margin-top: 15px;
   font-style: italic;
@@ -274,7 +236,7 @@ h5 {
   min-height: 150px;  /* TO DEFINE */
 }
 
-.add-files, .add-screenshot{
+.add-files {
   margin-top: 5px
 }
 </style>
@@ -290,11 +252,8 @@ h5 {
   "assistanceHeaderLabel": "Signaler un problème",
   "suggestionHeaderLabel": "Proposer une amélioration",
   "nonAdminMessage": "Votre demande de support sera transmise à l'administrateur",
-  "screenShotButtonLabel": "Capture d'écran (facultatif)",
-  "screenShotMessage": "La capture d'écran sera déposée dans votre casier",
   "serviceLabel": "Service affecté",
   "serviceConcernLabel": "Service concerné",
   "success": "Demande envoyé"
 }
-
 </i18n>

@@ -100,33 +100,8 @@
           class="attached-files"
           data-test="attached-files-section"
         >
-          <div class="attached-label">
-            <label v-t="'attachedFiles'" />
-            <button
-              class="add-document-button"
-              :title="$t('addAttachFileButton')"
-              @click="displayFilePicker"
-            >
-              <img
-                class="icon"
-                src="@assets/options/dossier-pj.svg"
-                :alt="$t('addAttachFileButton')"
-              >
-            </button>
-            <button
-              class="add-document-button"
-              :title="$t('addLocalAttachFileButton')"
-              @click="importDocument"
-            >
-              <img
-                class="icon"
-                src="@assets/options/icon_upload.svg"
-                :alt="$t('addLocalAttachFileButton')"
-              >
-            </button>
-          </div>
           <AttachedFiles
-            :attached-files="attachedFiles"
+            v-model="attachedFiles"
             :read-only="false"
             @removeAttachedFile="removeAttachedFile"
           />
@@ -154,16 +129,6 @@
       </template>
     </PentilaWindow>
   </div>
-  <teleport
-    v-if="isFilePickerModalDisplayed"
-    to="body"
-  >
-    <FilePickerModal
-      :multi-selection="true"
-      @addedFiles="addNewFiles"
-      @close="closeFilePicker"
-    />
-  </teleport>
   <teleport to="body">
     <ContactPickerModal
       v-if="mq.phone && isContactPickerModalDisplayed"
@@ -186,9 +151,6 @@
 </template>
 
 <script>
-import { returnAddedFiles, alertNoFile } from '@utils/upload.util'
-import { importDocuments } from '@utils/documents.util'
-
 import { required } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
 import constants from '@/constants/messagingConstants'
@@ -196,7 +158,6 @@ import messageService from '@/api/messaging/message.service'
 import messagingUtils from '@/utils/messaging.utils'
 import ErrorMessage from '@components/Base/ErrorMessage.vue'
 import AttachedFiles from '@components/Base/AttachedFiles'
-import FilePickerModal from '@components/FilePicker/FilePickerModal'
 import TextContent from '@components/Progression/Edit/Contents/TextContent'
 import dayjs from 'dayjs'
 import NeroIcon from '@/components/Nero/NeroIcon'
@@ -221,7 +182,6 @@ export default {
     ContactPickerToolTip,
     ContactPickerModal,
     TextContent,
-    FilePickerModal,
     ErrorMessage,
     AttachedFiles,
     NeroIcon
@@ -243,7 +203,6 @@ export default {
       search: '',
       error: '',
       autocompleteItems: [],
-      isFilePickerModalDisplayed: false,
       isContactPickerModalDisplayed: false,
       originMessage: {},
       initialRecipients: [],
@@ -286,10 +245,6 @@ export default {
     }
   },
   created () {
-    if (this.$store.state.documentsProperties === undefined) {
-      this.$store.dispatch('documents/getGlobalDocumentsProperties')
-    }
-
     this.$store.dispatch('misc/incrementModalCount')
     this.init()
   },
@@ -304,33 +259,6 @@ export default {
     this.getToolTipPosition()
   },
   methods: {
-    importDocument () {
-      // Create hidden inputFile
-      const input = document.createElement('input')
-      input.style.display = 'none'
-      input.type = 'file'
-      input.accept = '*/*'
-      input.multiple = true
-
-      input.onchange = e => {
-        returnAddedFiles(e, this.$store).then((files) => {
-          if (files.length !== 0) {
-            this.$store.dispatch('currentActions/setImportFileList', files)
-            this.$store.dispatch('currentActions/displayUploadProgression')
-
-            importDocuments(undefined, files).then((data) => {
-              this.addNewFiles(this.$store.state.currentActions.listUploadedFiles)
-              this.$store.dispatch('currentActions/hideUploadProgression')
-            })
-          } else {
-            alertNoFile()
-          }
-        })
-      }
-
-      // Click it
-      input.click()
-    },
     toggleContactsPicker () {
       if (!this.isContactPickerInitialized) {
         this.isContactPickerInitialized = true
@@ -508,7 +436,7 @@ export default {
       this.onClose()
     },
     onConfirmClose () {
-      if (!this.isFilePickerModalDisplayed && !this.isAttachedFileOpen) {
+      if (!this.isAttachedFileOpen) {
         // TODO: Save initial recipients and subject to be accurate on drafts
         if (this.currentContent.contentValue !== this.initialContent.contentValue || this.recipients.length > 0 || this.subject !== '') {
           this.$store.dispatch('warningModal/addWarning', {
@@ -527,7 +455,6 @@ export default {
       this.subject = ''
       this.initialContent = {}
       this.currentContent = {}
-      this.closeFilePicker()
       this.$store.dispatch('messaging/closeCreateMessageModal')
     },
     addRecipients (contactList) {
@@ -545,15 +472,6 @@ export default {
       } else {
         console.error('Cannot remove ', contact, 'from recipientList: ', this.recipients)
       }
-    },
-    displayFilePicker () {
-      this.isFilePickerModalDisplayed = true
-    },
-    closeFilePicker () {
-      this.isFilePickerModalDisplayed = false
-    },
-    addNewFiles (newFiles) {
-      this.attachedFiles = [...this.attachedFiles, ...newFiles]
     },
     removeAttachedFile (fileToRemove) {
       this.attachedFiles.splice(this.attachedFiles.indexOf(fileToRemove), 1)
@@ -657,29 +575,6 @@ export default {
   }
 }
 
-.attached-label {
-  margin-top: 10px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.add-document-button {
-  cursor: pointer;
-  background-color: transparent;
-  border-radius: 0;
-  padding: 0;
-  margin: 0;
-  border: none;
-  display: flex;
-  align-items: center;
-
-  .icon {
-    width: 20px;
-    height: 20px;
-  }
-}
-
 .footer {
   width: 100%;
 
@@ -699,7 +594,6 @@ export default {
 
 <i18n locale="fr">
 {
-  "attachedFiles": "Pièces jointes :",
   "header": "Nouveau message",
   "headerForward": "Transférer",
   "headerReply": "Répondre",
@@ -707,21 +601,13 @@ export default {
   "submitButton": "Envoyer",
   "recipientsPlaceHolder": "Destinataires",
   "subjectPlaceHolder": "Objet",
-  "contentPlaceHolder": "Contenu",
-  "addAttachFileButton": "Ajouter une pièce jointe depuis mes documents",
-  "addLocalAttachFileButton": "Ajouter une pièce jointe depuis mon poste de travail",
   "draftButton": "Enregistrer en brouillon",
   "draftSaved": "Brouillon enregistré!",
   "successMessage": "Message envoyé",
   "required": "Champ requis",
-  "notBeginByDot": "Ne doit pas commencer par un '.'",
-  "containsNoCotes": "Ne doit pas contenir de caractères spéciaux",
   "missingRecipient": "Sélectionnez au moins un destinataire",
-  "sizeLimit1": "Ne doit pas dépasser ",
-  "sizeLimit2": " caractères",
   "addRecipients": "Ajouter des destinataires",
   "closeWarning": "Souhaitez-vous fermer cette fenêtre ? (Vous perdrez son contenu)",
-  "displayDetails": "Afficher les détails",
   "at": "Le ",
   "wrote": " a écrit :",
   "othersLabel": "et {nbOthers} autres"

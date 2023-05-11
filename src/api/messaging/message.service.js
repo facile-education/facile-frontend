@@ -17,6 +17,10 @@ export default {
   getUsersCompletion
 }
 
+export {
+  sendAssistanceMessage
+}
+
 const MESSAGING_PATH = '/messaging.message'
 
 /**
@@ -186,6 +190,17 @@ function getUsersCompletion (query) {
   return axios.get(constants.JSON_WS_URL + MESSAGING_PATH + '/get-users-completion', {
     params: {
       query: query
+    }
+  }).then(response => response.data)
+}
+
+function sendAssistanceMessage (isSuggestion, applicationId, content, attachFiles) {
+  return axios.get(constants.JSON_WS_URL + MESSAGING_PATH + '/send-assistance-message', {
+    params: {
+      isSuggestion,
+      applicationId,
+      content,
+      attachFiles
     }
   }).then(response => response.data)
 }

@@ -89,7 +89,7 @@
         >
       </button>
       <AttachedFiles
-        :attached-files="attachedFiles"
+        v-model="attachedFiles"
         :read-only="false"
         @removeAttachedFile="removeFile"
       />
