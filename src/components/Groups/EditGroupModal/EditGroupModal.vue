@@ -342,7 +342,7 @@ export default {
         const message = this.$t('edition-success')
         editCommunity(this.group.groupId, this.group.groupName, this.group.description, this.group.isPedagogical, this.groupMembers, this.group.color).then((data) => {
           if (data.success) {
-            this.$store.dispatch('groups/getGroupList', this.$store.state.groups.currentFilter)
+            this.$store.dispatch('groups/getGroupList', { filter: this.$store.state.groups.currentFilter })
             this.$store.dispatch('popups/pushPopup', { message, type: 'info' })
             this.closeModal()
           }
@@ -355,7 +355,7 @@ export default {
             const message = this.$t('creation-success')
             createCommunity(this.group.groupName, this.group.description, this.group.isPedagogical, this.groupMembers, this.group.color).then((data) => {
               if (data.success) {
-                this.$store.dispatch('groups/getGroupList', this.$store.state.groups.currentFilter)
+                this.$store.dispatch('groups/getGroupList', { filter: this.$store.state.groups.currentFilter })
                 this.$store.dispatch('popups/pushPopup', { message, type: 'info' })
                 this.closeModal()
               }

@@ -20,10 +20,12 @@ $diary-widget-min-width: 355px;
 $announcements-widget-min-width: 500px;
 $homework-widget-min-width: 355px;
 $schedule-widget-min-width: 355px;
-$statistics-widget-min-width: 500px;
-$statistics-widget-max-width: 1000px;
+$statistics-widget-min-width: 355px;
+$statistics-widget-max-width: 355px;
+$activity-widget-min-width: 355px;
 
 $announcement-item-min-height: 150px;
+$activity-item-height: 80px;
 $announcement-item-min-width: min(323px, 80vw);
 $announcement-item-horizontal-min-width: min(450px, 80vw);
 
@@ -71,5 +73,68 @@ $announcement-item-horizontal-min-width: min(450px, 80vw);
     background-color: white;
     display: flex;
     align-items: center;
+  }
+}
+
+// Activities common css
+%activity-item {
+  --icon-width: 60px;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  padding-right: 2rem;
+  overflow: hidden;
+
+  i {
+    font-style: normal;
+    color: #6190E0;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .icon {
+    min-width: 25px;
+    width: var(--icon-width);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .content {
+    flex: 1;
+    min-width: 150px;
+    position: relative;
+    font-size: 0.8rem;
+    padding-top: 1rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    .author, .description {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .author {
+      font-size: 0.875rem;
+      font-weight: bold;
+      color: $color-new-light-text;
+    }
+
+    .description {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+    }
+  }
+
+  .date {
+    padding-top: 1rem;
+    font-size: 0.8rem;
+    color: $color-new-light-text;
   }
 }

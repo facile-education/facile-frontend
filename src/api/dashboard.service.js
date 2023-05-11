@@ -3,8 +3,8 @@ import constants from '@/api/constants'
 
 export {
   initDashboard,
-  getGroupActivities,
-  getUserSchedule
+  getUserSchedule,
+  getDashboardActivity
 }
 
 const DASHBOARD_PATH = '/dashboard-portlet.'
@@ -17,21 +17,25 @@ function initDashboard () {
   }).then(response => response.data)
 }
 
-function getGroupActivities (maxDate, nbResults) {
-  return axios.get(constants.JSON_WS_URL + DASHBOARD_PATH + DASHBOARD_CTX + 'get-group-activities', {
-    params: {
-      maxDate,
-      nbResults
-    }
-  }).then(response => response.data)
-}
-
 function getUserSchedule (userId, targetDate, goForward) {
   return axios.get(constants.JSON_WS_URL + DASHBOARD_PATH + DASHBOARD_CTX + 'get-user-schedule', {
     params: {
       userId: userId,
-      dateStr: targetDate.format('YYYY-MM-DD HH:mm'),
+      date: targetDate.format('YYYY-MM-DD HH:mm'),
       goForward: goForward
+    }
+  }).then(response => response.data)
+}
+
+function getDashboardActivity (maxDate, nbResults, withNews, withDocs, withSchoollife, withSessions) {
+  return axios.get(constants.JSON_WS_URL + DASHBOARD_PATH + DASHBOARD_CTX + 'get-dashboard-activity', {
+    params: {
+      maxDate,
+      nbResults,
+      withNews,
+      withDocs,
+      withSchoollife,
+      withSessions
     }
   }).then(response => response.data)
 }

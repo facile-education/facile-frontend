@@ -31,12 +31,23 @@ export const mutations = {
 }
 
 export const actions = {
-  getGroupList ({ commit }, filter) {
+  getGroupList ({ commit }, { filter, groupIdToSelect = undefined }) {
     commit('emptyGroupList')
     getUserCommunities(this.state.user.userId, filter).then((data) => {
       if (data.success) {
-        commit('setSelectedGroup', undefined)
         commit('setGroupList', data.groups)
+
+        // Select group if specified
+        if (groupIdToSelect !== undefined) {
+          const idx = data.groups.map(group => group.groupId).indexOf(groupIdToSelect)
+          if (idx !== -1) {
+            this.dispatch('groups/setSelectedGroup', data.groups[idx])
+          } else {
+            console.error('Cannot select groupId ' + groupIdToSelect + ' in ', data.groups)
+          }
+        } else {
+          commit('setSelectedGroup', undefined)
+        }
       }
     }, (err) => {
       console.error(err)
@@ -55,13 +66,13 @@ export const actions = {
   updateFilter ({ commit }, filter) {
     commit('setFilter', filter)
     // Refresh GroupList
-    this.dispatch('groups/getGroupList', filter)
+    this.dispatch('groups/getGroupList', { filter: filter })
   },
   deleteGroup ({ commit }, group) {
     removeCommunity(group.groupId).then((data) => {
       if (data.success) {
         // Refresh interface
-        this.dispatch('groups/getGroupList', this.state.groups.currentFilter)
+        this.dispatch('groups/getGroupList', { filter: this.state.groups.currentFilter })
       } else {
         console.error('error in group deletion')
       }

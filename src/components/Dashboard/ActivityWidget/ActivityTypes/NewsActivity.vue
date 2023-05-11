@@ -42,7 +42,7 @@
         @click="editContent()"
       >
         <img
-          src="@assets/edit.svg"
+          src="@/assets/edit.svg"
           :alt="$t('edit')"
         >
       </div>
@@ -53,7 +53,7 @@
         @click="confirmNewsDeletion()"
       >
         <img
-          src="@assets/trash.svg"
+          src="@/assets/trash.svg"
           :alt="$t('delete')"
         >
       </div>
@@ -66,7 +66,7 @@ import dayjs from 'dayjs'
 import { getNewsDetails } from '@/api/dashboard/news.service'
 
 export default {
-  name: 'News',
+  name: 'NewsActivity',
   props: {
     news: {
       type: Object,
@@ -116,7 +116,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@design';
+@import '@/design/index';
 
 .news {
   display: flex;
