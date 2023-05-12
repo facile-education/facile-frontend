@@ -27,12 +27,6 @@ import ContextMenu from '@components/ContextMenu/ContextMenu.vue'
 export default {
   name: 'AccessCreateButton',
   components: { ContextMenu, NeroIcon },
-  props: {
-    canCreateAccess: {
-      type: Boolean,
-      default: false
-    }
-  },
   emits: ['createCategory', 'createAccess'],
   data () {
     return {
@@ -40,6 +34,12 @@ export default {
     }
   },
   computed: {
+    categoryList () {
+      return this.$store.state.accessManager.categoryList
+    },
+    canCreateAccess () {
+      return this.categoryList.length > 0
+    },
     isAContextMenuDisplayed () {
       return this.$store.state.contextMenu.isAContextMenuDisplayed
     },

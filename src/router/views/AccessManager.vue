@@ -6,10 +6,9 @@
   >
     <h1 :aria-label="$t('serviceTitle')" />
 
-    <SchoolSelector @setSchool="setSchool" />
+    <SchoolSelector />
 
     <AccessCreateButton
-      :can-create-access="categoryList.length > 0"
       class="create-button"
       @createCategory="isCreateCategoryInputDisplayed=true"
       @createAccess="isSaveAccessModalDisplayed=true"
@@ -43,7 +42,6 @@
 
     <AccessFooter
       class="footer"
-      :have-changes="haveChanges"
       @reset="reset"
       @submit="submit"
     />
@@ -63,13 +61,13 @@
 
 <script>
 import Layout from '@/router/layouts/BannerLayout'
-import { getSchoolAccesses, saveSchoolAccesses } from '@/api/access.service'
 import AccessCategoryList from '@components/Accesses/AccessManager/AccessCategoryList.vue'
 import { defineAsyncComponent } from 'vue'
 import AccessCreateButton from '@components/Accesses/AccessManager/AccessCreateButton.vue'
 import AccessCategoryInput from '@components/Accesses/AccessManager/AccessCategoryInput.vue'
 import SchoolSelector from '@components/Accesses/AccessManager/SchoolSelector.vue'
 import AccessFooter from '@components/Accesses/AccessManager/AccessFooter.vue'
+import { saveSchoolAccesses } from '@/api/access.service'
 const SaveAccessModal = defineAsyncComponent(() => import('@components/Accesses/AccessManager/SaveAccessModal.vue'))
 
 export default {
@@ -86,58 +84,45 @@ export default {
   data () {
     return {
       isSaveAccessModalDisplayed: false,
-      isCreateCategoryInputDisplayed: false,
-      isLoading: false,
-      error: false,
-      selectedSchool: undefined,
-      initialCategoryList: [],
-      categoryList: []
+      isCreateCategoryInputDisplayed: false
     }
   },
   computed: {
-    haveChanges () {
-      return JSON.stringify(this.initialCategoryList) !== JSON.stringify(this.categoryList)
+    selectedSchool () {
+      return this.$store.state.accessManager.selectedSchool
+    },
+    isLoading () {
+      return this.$store.state.accessManager.isLoading
+    },
+    error () {
+      return this.$store.state.accessManager.error
+    },
+    initialCategoryList () {
+      return this.$store.state.accessManager.initialCategoryList
+    },
+    categoryList () {
+      return this.$store.state.accessManager.categoryList
     }
   },
   methods: {
-    setSchool (school) {
-      this.selectedSchool = school
-      this.getSchoolAccesses()
-    },
-    getSchoolAccesses () {
-      this.isLoading = true
-      getSchoolAccesses(this.selectedSchool.schoolId).then((data) => {
-        this.isLoading = false
-        if (data.success) {
-          this.error = false
-          this.initialCategoryList = data.accesses
-          this.categoryList = data.accesses
-        } else {
-          this.error = true
-          console.error('Error')
-        }
-      }, (err) => {
-        this.isLoading = false
-        this.error = true
-        console.error(err)
-      })
-    },
     createCategory (name) {
       this.isCreateCategoryInputDisplayed = false
       if (name.length > 0) {
-        this.categoryList.push({
+        const newCategoryList = [...this.categoryList]
+        newCategoryList.push({
           categoryName: name,
           schoolId: this.selectedSchool,
           position: this.categoryList.length,
           accessList: []
         })
+        this.$store.dispatch('accessManager/setCategoryList', newCategoryList)
       }
     },
     createAccess () {
       console.log('TODO')
     },
     reset () {
-      this.categoryList = this.initialCategoryList
+      this.$store.dispatch('accessManager/setCategoryList', this.initialCategoryList)
     },
     submit () {
       saveSchoolAccesses(this.selectedSchool.schoolId, this.categoryList).then((data) => {
