@@ -10,6 +10,7 @@
 
     <AccessCreateButton
       :can-create-access="categoryList.length > 0"
+      class="create-button"
       @createCategory="isCreateCategoryInputDisplayed=true"
       @createAccess="isSaveAccessModalDisplayed=true"
     />
@@ -39,6 +40,13 @@
       @submitName="createCategory"
       @close="isCreateCategoryInputDisplayed = false"
     />
+
+    <AccessFooter
+      class="footer"
+      :have-changes="haveChanges"
+      @reset="reset"
+      @submit="submit"
+    />
   </Layout>
 
   <teleport
@@ -55,17 +63,19 @@
 
 <script>
 import Layout from '@/router/layouts/BannerLayout'
-import { getSchoolAccesses } from '@/api/access.service'
+import { getSchoolAccesses, saveSchoolAccesses } from '@/api/access.service'
 import AccessCategoryList from '@components/Accesses/AccessManager/AccessCategoryList.vue'
 import { defineAsyncComponent } from 'vue'
 import AccessCreateButton from '@components/Accesses/AccessManager/AccessCreateButton.vue'
 import AccessCategoryInput from '@components/Accesses/AccessManager/AccessCategoryInput.vue'
 import SchoolSelector from '@components/Accesses/AccessManager/SchoolSelector.vue'
+import AccessFooter from '@components/Accesses/AccessManager/AccessFooter.vue'
 const SaveAccessModal = defineAsyncComponent(() => import('@components/Accesses/AccessManager/SaveAccessModal.vue'))
 
 export default {
   name: 'AccessManager',
   components: {
+    AccessFooter,
     SchoolSelector,
     AccessCategoryInput,
     AccessCreateButton,
@@ -82,6 +92,11 @@ export default {
       selectedSchool: undefined,
       initialCategoryList: [],
       categoryList: []
+    }
+  },
+  computed: {
+    haveChanges () {
+      return JSON.stringify(this.initialCategoryList) !== JSON.stringify(this.categoryList)
     }
   },
   methods: {
@@ -121,29 +136,50 @@ export default {
     createAccess () {
       console.log('TODO')
     },
-    updateAccess () {
-      console.log('TODO')
+    reset () {
+      this.categoryList = this.initialCategoryList
+    },
+    submit () {
+      saveSchoolAccesses(this.selectedSchool.schoolId, this.categoryList).then((data) => {
+        if (data.success) {
+          this.getSchoolAccesses() // Reload changes to assure to have the backend-data
+        } else {
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+          console.error('Error')
+        }
+      })
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-
-.school-selection {
+@import "@design";
+.placeholder {
+  height: 20vh;
+  width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  text-align: center;
+  border: 1px solid $color-border;
+  border-radius: 6px;
 }
 
+.create-button {
+  margin-bottom: 15px;
+}
+
+.footer {
+  margin-top: 15px;
+}
 </style>
 
 <i18n locale="fr">
 {
   "errorPlaceholder": "Oups, une erreur est survenue...",
   "emptyPlaceholder": "Aucun accès",
-  "serviceTitle": "Gestion des accès",
-  "rolePlaceholder": "Choisir un profil",
-  "new": "Nouveau",
-  "seeAs": "Voir en tant que"
+  "serviceTitle": "Gestion des accès"
 }
 </i18n>

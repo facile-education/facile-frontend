@@ -7,7 +7,7 @@
       v-model="selectedSchool"
       :list="schoolList"
       display-field="schoolName"
-      @update:modelValue="$emit('setSchool')"
+      @update:modelValue="$emit('setSchool', selectedSchool)"
     />
   </div>
 </template>
@@ -33,5 +33,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.school-selection {
+  display: flex;
+  justify-content: flex-end;
+}
 </style>

@@ -2,7 +2,7 @@
   <PentilaInput
     ref="nameInput"
     v-model="categoryName"
-    :placeholder="initialName ? $t('newCategory') : undefined"
+    :placeholder="!initialName ? $t('newCategory') : undefined"
     @blur="$emit('submitName', categoryName)"
     @keyup.enter.stop="blurInput"
     @keyup.escape="$emit('close')"
@@ -31,6 +31,12 @@ export default {
     if (this.initialName) {
       this.categoryName = this.initialName
     }
+  },
+  mounted () {
+    const vm = this
+    nextTick(function () {
+      vm.$refs.nameInput.focus()
+    })
   },
   methods: {
     blurInput () {
