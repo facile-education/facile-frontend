@@ -12,9 +12,10 @@ export {
 const ACCESS_PATH = '/access.'
 const ACCESS_CTX = 'access/'
 
-function getSchoolAccesses () {
+function getSchoolAccesses (schoolId) {
   return axios.get(constants.JSON_WS_URL + ACCESS_PATH + ACCESS_CTX + 'get-school-accesses', {
     params: {
+      schoolId: schoolId
     }
   }).then(response => response.data)
 }
