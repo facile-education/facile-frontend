@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import Layout from '@layouts/EmptyLayout.vue'
+import Layout from '@layouts/BannerLayout.vue'
 
 export default {
   name: 'HomeworksAndCourses',

@@ -61,8 +61,10 @@ dayjs.updateLocale('fr', {
 })
 
 axios.interceptors.request.use(async (config) => {
+  // Store the last webservice call date
+  store.commit('user/setLastActionDate', dayjs())
   if (store.state.user.pauth === undefined) {
-    await fetch('/p_auth_token.jsp').then(response => response.text()).then(response => { store.commit('user/setPAuth', response) })
+    await fetch('/p_auth_token.jsp').then(response => response.text()).then(response => { store.commit('user/setPAuth', response.trim()) })
   }
 
   config.params = { ...config.params, p_auth: store.state.user.pauth }

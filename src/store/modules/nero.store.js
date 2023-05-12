@@ -25,7 +25,9 @@ export const state = {
     // contacts: undefined,
     messaging: undefined
     // dropbox: undefined
-  }
+  },
+  sessionTimeout: 1800000, // 30 min, Liferay default
+  sessionTimeoutWarning: 300000 // 5 min, Liferay default
 }
 
 export const mutations = {
@@ -33,6 +35,8 @@ export const mutations = {
     state.menu = payload.menu
     state.menuExpanded = payload.expanded
     state.isMenuExpandedOnLoad = payload.expanded
+    state.sessionTimeout = payload.sessionTimeout
+    state.sessionTimeoutWarning = payload.sessionTimeoutWarning
   },
   toggleMenu (state) {
     state.menuExpanded = !state.menuExpanded
@@ -59,7 +63,7 @@ export const actions = {
               })
             }
           })
-          commit('initSideMenu', { menu: data.menu, expanded: data.expanded })
+          commit('initSideMenu', { menu: data.menu, expanded: data.expanded, sessionTimeout: data.sessionTimeout, sessionTimeoutWarning: data.sessionTimeoutWarning })
         }
         // TODO else toastr
       },

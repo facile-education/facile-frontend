@@ -11,7 +11,8 @@ export default {
   updateThemeColor,
   updateReportFrequency,
   updateWebdavState,
-  updateWebdavPassword
+  updateWebdavPassword,
+  acceptTermsOfUse
 }
 
 const PREF_PATH = '/preference.userproperties'
@@ -103,4 +104,14 @@ function updateWebdavPassword (password, confirmPassword) {
       confirmPassword: confirmPassword
     })
   ).then(response => response.data)
+}
+
+/**
+ * Accept terms of use
+ */
+function acceptTermsOfUse () {
+  return axios.get(constants.JSON_WS_URL + USER_PATH + '/accept-terms-of-use', {
+    params: {
+    }
+  }).then(response => response.data)
 }
