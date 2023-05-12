@@ -29,6 +29,7 @@
       </PentilaButton>
 
       <div class="see-preview">
+        <span v-t="('seeAs')" />
         <PentilaDropdown
           v-model="selectedRole"
           :list="roleList"
@@ -59,6 +60,18 @@
       :category-list="categoryList"
     />
   </Layout>
+
+  <teleport
+    v-if="isSaveAccessModalDisplayed"
+    to="body"
+  >
+    <SaveAccessModal
+      :category-list="categoryList"
+      @createAccess="createAccess"
+      @updateAccess="updateAccess"
+      @close="isSaveAccessModalDisplayed=false"
+    />
+  </teleport>
 </template>
 
 <script>
@@ -68,10 +81,13 @@ import { getUserSchoolList } from '@/api/mediacenter.service'
 import { getSchoolAccesses } from '@/api/access.service'
 import { getBroadcastRoleList } from '@/api/role.service'
 import AccessCategoryList from '@components/Accesses/AccessManager/AccessCategoryList.vue'
+import { defineAsyncComponent } from 'vue'
+const SaveAccessModal = defineAsyncComponent(() => import('@components/Accesses/AccessManager/SaveAccessModal.vue'))
 
 export default {
   name: 'AccessManager',
   components: {
+    SaveAccessModal,
     AccessCategoryList,
     NeroIcon,
     Layout
@@ -80,6 +96,7 @@ export default {
     return {
       isLoading: false,
       error: false,
+      isSaveAccessModalDisplayed: false,
       selectedSchool: undefined,
       // schoolList: [],
       selectedRole: undefined,
@@ -93,7 +110,7 @@ export default {
     }
   },
   created () {
-    this.getSchoolList()
+    // this.getSchoolList()
     this.getRoleList()
   },
   methods: {
@@ -128,9 +145,16 @@ export default {
           console.error('Error')
         }
       }, (err) => {
+        this.isLoading = false
         this.error = true
         console.error(err)
       })
+    },
+    createAccess () {
+      console.log('TODO')
+    },
+    updateAccess () {
+      console.log('TODO')
     },
     clickNew () {
       console.log('TODO')
@@ -143,7 +167,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@design';
 
+.school-selection {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.first-line {
+  display: flex;
+  justify-content: space-between;
+}
+
+.create-button {
+  @extend %create-button;
+}
 </style>
 
 <i18n locale="fr">
@@ -152,6 +190,7 @@ export default {
   "emptyPlaceholder": "Aucun accès",
   "serviceTitle": "Gestion des accès",
   "rolePlaceholder": "Choisir un profil",
-  "new": "Nouveau"
+  "new": "Nouveau",
+  "seeAs": "Voir en tant que"
 }
 </i18n>
