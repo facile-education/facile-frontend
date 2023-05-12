@@ -1,0 +1,112 @@
+<template>
+  <div class="access-create-button">
+    <PentilaButton
+      class="create-button"
+      data-test="createMessageButton"
+      @click="clickNew"
+    >
+      <NeroIcon
+        name="fa-plus"
+      />
+      <span v-t="'new'" />
+    </PentilaButton>
+
+    <ContextMenu
+      v-if="isContextMenuDisplayed && isAContextMenuDisplayed"
+      :is-absolute="true"
+      @chooseOption="optionClicked"
+      @close="isContextMenuDisplayed=false"
+    />
+  </div>
+</template>
+
+<script>
+import NeroIcon from '@components/Nero/NeroIcon.vue'
+import ContextMenu from '@components/ContextMenu/ContextMenu.vue'
+
+export default {
+  name: 'AccessCreateButton',
+  components: { ContextMenu, NeroIcon },
+  props: {
+    canCreateAccess: {
+      type: Boolean,
+      default: false
+    }
+  },
+  emits: ['createCategory', 'createAccess'],
+  data () {
+    return {
+      isContextMenuDisplayed: false
+    }
+  },
+  computed: {
+    isAContextMenuDisplayed () {
+      return this.$store.state.contextMenu.isAContextMenuDisplayed
+    },
+    createMenu () {
+      const options = [
+        {
+          name: 'createCategory',
+          title: this.$t('category'),
+          position: 0,
+          hasSeparator: false
+        }
+      ]
+      if (this.canCreateAccess) {
+        options.push(
+          {
+            name: 'createAccess',
+            title: this.$t('access'),
+            position: 1,
+            hasSeparator: false
+          }
+        )
+      }
+      return options
+    }
+  },
+  methods: {
+    clickNew (event) {
+      if (!this.isAContextMenuDisplayed) {
+        this.isContextMenuDisplayed = true
+        this.$store.dispatch('contextMenu/openContextMenu',
+          {
+            event: event,
+            options: this.createMenu
+          })
+      }
+    },
+    optionClicked (option) {
+      switch (option.name) {
+        case 'createCategory':
+          this.$emit('createCategory')
+          break
+        case 'createAccess':
+          this.$emit('createAccess')
+          break
+        default:
+          console.error('unknown action for option', option)
+      }
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+@import "@design";
+.access-create-button {
+  position: relative;
+}
+
+.create-button {
+  @extend %create-button;
+}
+
+</style>
+
+<i18n locale="fr">
+{
+  "category": "Categorie",
+  "access": "Accès"
+}
+</i18n>

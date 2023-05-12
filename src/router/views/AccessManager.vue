@@ -5,40 +5,14 @@
     class="layout"
   >
     <h1 :aria-label="$t('serviceTitle')" />
-    <div
-      v-if="schoolList && schoolList.length > 1"
-      class="school-selection"
-    >
-      <PentilaDropdown
-        v-model="selectedSchool"
-        :list="schoolList"
-        display-field="schoolName"
-        @update:modelValue="getSchoolAccesses"
-      />
-    </div>
-    <div class="first-line">
-      <PentilaButton
-        class="create-button"
-        data-test="createMessageButton"
-        @click="clickNew"
-      >
-        <NeroIcon
-          name="fa-plus"
-        />
-        <span v-t="'new'" />
-      </PentilaButton>
 
-      <div class="see-preview">
-        <span v-t="('seeAs')" />
-        <PentilaDropdown
-          v-model="selectedRole"
-          :list="roleList"
-          display-field="displayText"
-          :sort="false"
-          @update:modelValue="seePreview"
-        />
-      </div>
-    </div>
+    <SchoolSelector @setSchool="setSchool" />
+
+    <AccessCreateButton
+      :can-create-access="categoryList.length > 0"
+      @createCategory="isCreateCategoryInputDisplayed=true"
+      @createAccess="isSaveAccessModalDisplayed=true"
+    />
 
     <PentilaSpinner
       v-if="isLoading"
@@ -50,7 +24,7 @@
       class="placeholder"
     />
     <div
-      v-else-if="categoryList.length === 0"
+      v-else-if="categoryList.length === 0 && !isCreateCategoryInputDisplayed"
       v-t="'emptyPlaceholder'"
       class="placeholder"
     />
@@ -58,6 +32,12 @@
     <AccessCategoryList
       v-else
       :category-list="categoryList"
+    />
+
+    <AccessCategoryInput
+      v-if="isCreateCategoryInputDisplayed"
+      @submitName="createCategory"
+      @close="isCreateCategoryInputDisplayed = false"
     />
   </Layout>
 
@@ -68,7 +48,6 @@
     <SaveAccessModal
       :category-list="categoryList"
       @createAccess="createAccess"
-      @updateAccess="updateAccess"
       @close="isSaveAccessModalDisplayed=false"
     />
   </teleport>
@@ -76,62 +55,39 @@
 
 <script>
 import Layout from '@/router/layouts/BannerLayout'
-import NeroIcon from '@components/Nero/NeroIcon.vue'
-import { getUserSchoolList } from '@/api/mediacenter.service'
 import { getSchoolAccesses } from '@/api/access.service'
-import { getBroadcastRoleList } from '@/api/role.service'
 import AccessCategoryList from '@components/Accesses/AccessManager/AccessCategoryList.vue'
 import { defineAsyncComponent } from 'vue'
+import AccessCreateButton from '@components/Accesses/AccessManager/AccessCreateButton.vue'
+import AccessCategoryInput from '@components/Accesses/AccessManager/AccessCategoryInput.vue'
+import SchoolSelector from '@components/Accesses/AccessManager/SchoolSelector.vue'
 const SaveAccessModal = defineAsyncComponent(() => import('@components/Accesses/AccessManager/SaveAccessModal.vue'))
 
 export default {
   name: 'AccessManager',
   components: {
+    SchoolSelector,
+    AccessCategoryInput,
+    AccessCreateButton,
     SaveAccessModal,
     AccessCategoryList,
-    NeroIcon,
     Layout
   },
   data () {
     return {
+      isSaveAccessModalDisplayed: false,
+      isCreateCategoryInputDisplayed: false,
       isLoading: false,
       error: false,
-      isSaveAccessModalDisplayed: false,
       selectedSchool: undefined,
-      // schoolList: [],
-      selectedRole: undefined,
-      roleList: [],
+      initialCategoryList: [],
       categoryList: []
     }
   },
-  computed: {
-    schoolList () {
-      return this.$store.getters['user/adminSchoolList']
-    }
-  },
-  created () {
-    // this.getSchoolList()
-    this.getRoleList()
-  },
   methods: {
-    getSchoolList () {
-      getUserSchoolList().then((data) => {
-        if (data.success) {
-          this.schoolList = data.schools
-          this.selectedSchool = data.schools[0]
-        }
-      })
-    },
-    getRoleList () {
-      getBroadcastRoleList().then((data) => {
-        if (data.success) {
-          this.roleList = data.roles
-          this.roleList.unshift({ id: -1, displayText: this.$t('rolePlaceholder') })
-          this.selectedRole = this.roleList[0]
-        } else {
-          console.error('Error while getting users', data.error)
-        }
-      })
+    setSchool (school) {
+      this.selectedSchool = school
+      this.getSchoolAccesses()
     },
     getSchoolAccesses () {
       this.isLoading = true
@@ -139,6 +95,7 @@ export default {
         this.isLoading = false
         if (data.success) {
           this.error = false
+          this.initialCategoryList = data.accesses
           this.categoryList = data.accesses
         } else {
           this.error = true
@@ -150,16 +107,21 @@ export default {
         console.error(err)
       })
     },
+    createCategory (name) {
+      this.isCreateCategoryInputDisplayed = false
+      if (name.length > 0) {
+        this.categoryList.push({
+          categoryName: name,
+          schoolId: this.selectedSchool,
+          position: this.categoryList.length,
+          accessList: []
+        })
+      }
+    },
     createAccess () {
       console.log('TODO')
     },
     updateAccess () {
-      console.log('TODO')
-    },
-    clickNew () {
-      console.log('TODO')
-    },
-    seePreview () {
       console.log('TODO')
     }
   }
@@ -167,21 +129,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@design';
 
 .school-selection {
   display: flex;
   justify-content: flex-end;
 }
 
-.first-line {
-  display: flex;
-  justify-content: space-between;
-}
-
-.create-button {
-  @extend %create-button;
-}
 </style>
 
 <i18n locale="fr">
