@@ -23,13 +23,18 @@
 <script>
 export default {
   name: 'AccessFooter',
-  props: {
-    haveChanges: {
-      type: Boolean,
-      default: false
+  emits: ['submit', 'reset'],
+  computed: {
+    initialCategoryList () {
+      return this.$store.state.accessManager.initialCategoryList
+    },
+    categoryList () {
+      return this.$store.state.accessManager.categoryList
+    },
+    haveChanges () {
+      return JSON.stringify(this.initialCategoryList) !== JSON.stringify(this.categoryList)
     }
   },
-  emits: ['submit', 'reset'],
   methods: {
     confirmReset () {
       this.$store.dispatch('warningModal/addWarning', {

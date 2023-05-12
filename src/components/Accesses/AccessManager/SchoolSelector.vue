@@ -16,14 +16,18 @@
 export default {
   name: 'SchoolSelector',
   emits: ['setSchool'],
-  data () {
-    return {
-      selectedSchool: undefined
-    }
-  },
   computed: {
     schoolList () {
       return this.$store.getters['user/adminSchoolList']
+    },
+    selectedSchool: {
+      get () {
+        return this.$store.state.accessManager.selectedSchool
+      },
+      set (school) {
+        this.$store.dispatch('accessManager/setSelectedSchool', school)
+        this.$store.dispatch('accessManager/getSchoolAccesses')
+      }
     }
   },
   created () {
