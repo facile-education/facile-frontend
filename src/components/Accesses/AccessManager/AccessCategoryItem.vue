@@ -1,7 +1,7 @@
 <template>
   <div class="category">
     <div class="title">
-      {{ category.title }}
+      {{ category.categoryName }}
     </div>
     <ul v-if="category.accessList.length > 1">
       <li
