@@ -20,7 +20,8 @@ export {
 }
 
 export default {
-  getSubjects
+  getSubjects,
+  updatePassword
 }
 
 const SUBJECT_PATH = '/eel-synchronization.subject'
@@ -150,11 +151,12 @@ function getDelegationCandidates (schoolId, filter) {
   }).then(response => response.data)
 }
 
-function updatePassword (userId, password) {
+function updatePassword (userId, password, resetPassword) {
   return axios.get(constants.JSON_WS_URL + USER_MANAGEMENT_PATH + '/update-password', {
     params: {
-      userId: userId,
-      password: password
+      userId,
+      password,
+      resetPassword
     }
   }).then(response => response.data)
 }

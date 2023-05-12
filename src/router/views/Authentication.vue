@@ -1,5 +1,5 @@
 <template>
-  <Layout>
+  <PublicLayout>
     <div class="wrapper">
       <img
         src="https://rec-ent.eduge.ch/GVEFrontPage-theme/images/logo_eel.png"
@@ -15,10 +15,7 @@
       />
       <div class="guest">
         <span v-t="'parentOther'" />
-        <form
-          :action="formUrl + p_auth"
-          method="POST"
-        >
+        <form @submit.prevent="doLogin">
           <input
             name="_com_liferay_login_web_portlet_LoginPortlet_formDate"
             type="hidden"
@@ -44,6 +41,7 @@
             :placeholder="$t('login')"
             name="_com_liferay_login_web_portlet_LoginPortlet_login"
             class="input"
+            @keypress="handleKeyPressed"
           >
           <input
             v-model="password"
@@ -51,7 +49,22 @@
             :placeholder="$t('password')"
             name="_com_liferay_login_web_portlet_LoginPortlet_password"
             class="input"
+            @keypress="handleKeyPressed"
           >
+          <div>
+            <span
+              v-show="isError"
+              v-t="'loginError'"
+              class="errorMessage"
+            />
+          </div>
+          <div>
+            <span
+              v-show="!isActive"
+              v-t="'inactiveAccount'"
+              class="errorMessage"
+            />
+          </div>
           <!-- <input
             name="_com_liferay_login_web_portlet_LoginPortlet_rememberMe"
             type="checkbox"
@@ -65,7 +78,7 @@
             v-t="'authenticate'"
             class="btn"
             :title="$t('entLogin')"
-            @click="loggin"
+            type="submit"
           />
         </form>
       </div>
@@ -75,24 +88,30 @@
         class="gva-img"
       >
     </div>
-  </Layout>
+  </PublicLayout>
 </template>
 
 <script>
-import Layout from '@/router/layouts/PublicLayout'
+import PublicLayout from '@/router/layouts/PublicLayout'
+import axios from 'axios'
+import authenticationService from '@/api/authentication.service'
+import userService from '@/api/user.service'
+import store from '@/store'
 
 export default {
   name: 'Authentication',
   components: {
-    Layout
+    PublicLayout
   },
   data () {
     return {
-      formUrl: '/home?p_p_id=com_liferay_login_web_portlet_LoginPortlet&p_p_lifecycle=1&p_p_state=exclusive&p_p_mode=view&_com_liferay_login_web_portlet_LoginPortlet_javax.portlet.action=%2Flogin%2Flogin&_com_liferay_login_web_portlet_LoginPortlet_mvcRenderCommandName=%2Flogin%2Flogin&p_auth=',
+      formUrl: '/home?p_p_id=com_liferay_login_web_portlet_LoginPortlet&p_p_lifecycle=1&p_p_state=exclusive&p_p_mode=view&_com_liferay_login_web_portlet_LoginPortlet_javax.portlet.action=/login/login&_com_liferay_login_web_portlet_LoginPortlet_mvcRenderCommandName=/login/login',
       login: '',
       password: '',
       p_auth: '',
-      ssoUrl: 'https://rec-ent.eduge.ch/Shibboleth.sso/Login?entityID=https://ssoeel.geneveid.ch/ginasso/gina/fed/ent&amp;target='
+      ssoUrl: 'https://rec-ent.eduge.ch/Shibboleth.sso/Login?entityID=https://ssoeel.geneveid.ch/ginasso/gina/fed/ent&amp;target=',
+      isError: false,
+      isActive: true
     }
   },
   computed: {
@@ -100,6 +119,62 @@ export default {
   created () {
     // Using fetch instead of axios to avoid intercept loop
     fetch('/p_auth_token.jsp').then(response => response.text()).then(response => { this.p_auth = response })
+  },
+  methods: {
+    doLogin () {
+      // First check credentials
+      authenticationService.checkCredentials(this.login, this.password).then((data) => {
+        if (!data.isValid) {
+          this.isError = true
+        } else if (data.isValid && !data.isActive) {
+          this.isInactive = true
+        } else {
+          const formData = new FormData()
+          formData.append('_com_liferay_login_web_portlet_LoginPortlet_formDate', new Date().getTime())
+          formData.append('_com_liferay_login_web_portlet_LoginPortlet_saveLastPath', false)
+          formData.append('_com_liferay_login_web_portlet_LoginPortlet_redirect', '')
+          formData.append('_com_liferay_login_web_portlet_LoginPortlet_doActionAfterLogin', false)
+          formData.append('_com_liferay_login_web_portlet_LoginPortlet_login', this.login)
+          formData.append('_com_liferay_login_web_portlet_LoginPortlet_password', this.password)
+          formData.append('_com_liferay_login_web_portlet_LoginPortlet_checkboxNames', 'rememberMe')
+
+          axios.post('http://dev-ent-gve.com' + this.formUrl,
+            formData,
+            {
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+              }
+            }
+          ).then(() => {
+            // Reset p_auth_token
+            store.commit('user/setPAuth', undefined)
+            if (this.userId === undefined) {
+              userService.getUserInformations().then(
+                (data) => {
+                  if (data.success) {
+                    this.$store.dispatch('user/initUserInformations', data)
+                    // If terms of use have not been accepted yet
+                    if (!data.agreedTermsOfUse) {
+                      this.$router.push({ path: 'agree-terms-of-use' })
+                    } else if (data.passwordChange) {
+                      this.$router.push({ path: 'password-change' })
+                    } else {
+                      setTimeout(() => this.$router.push({ path: 'espaces' }), 500)
+                    }
+                  }
+                }
+              )
+            } else {
+              // Redirect to dashboard if already logged in
+              this.$router.push({ path: 'dashboard' })
+            }
+          })
+        }
+      })
+    },
+    handleKeyPressed () {
+      this.isError = false
+    }
   }
 }
 </script>
@@ -108,7 +183,7 @@ export default {
 .wrapper {
   background-color: #fff;
   padding: 1rem 3rem;
-  width: 400px;
+  width: 450px;
   max-width: 90vw;
   margin: auto;
   display: flex;
@@ -172,6 +247,10 @@ export default {
   border-radius: 0;
   margin: .3rem 0;
 }
+
+.errorMessage {
+  color: red;
+}
 </style>
 
 <i18n locale="fr">
@@ -183,6 +262,8 @@ export default {
   "login": "Identifiant",
   "parentOther": "Parents / Autres profils",
   "password": "Mot de passe",
-  "studentTeacher": "Élève / Enseignant"
+  "studentTeacher": "Élève / Enseignant",
+  "loginError": "Identifiant ou mot de passe incorrect",
+  "inactiveAccount": "Votre compte est inactif."
 }
 </i18n>

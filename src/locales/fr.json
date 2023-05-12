@@ -204,7 +204,9 @@
       "statistics": "statistiques",
       "universalis": "universalis",
       "universalis-junior": "universalis-junior",
-      "user-admin": "admininistration-utilisateurs"
+      "user-admin": "admininistration-utilisateurs",
+      "agree-terms-of-use": "agree-terms-of-use",
+      "password-change": "password-change"
     }
   },
   "Messaging": {

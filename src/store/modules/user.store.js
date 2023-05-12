@@ -4,6 +4,7 @@ import { getUserApplications } from '@/api/applicationManager.service'
 
 export const state = {
   pauth: undefined,
+  lastActionDate: undefined,
   userId: undefined,
   // TODO merge fields that are in 'details' object (like firstName, etc...)
   firstName: '',
@@ -25,11 +26,15 @@ export const state = {
   selectedSchool: undefined,
   serviceList: undefined,
   children: [],
-  selectedChild: undefined
+  selectedChild: undefined,
+  agreedTermsOfUse: true
 }
 export const mutations = {
   setPAuth (state, payload) {
     state.pauth = payload
+  },
+  setLastActionDate (state, payload) {
+    state.lastActionDate = payload
   },
   initServiceList (state, payload) {
     state.serviceList = payload
@@ -61,6 +66,7 @@ export const mutations = {
       state.children = payload.children
       state.selectedChild = payload.children[0]
     }
+    state.agreedTermsOfUse = payload.agreedTermsOfUse
   },
   setSelectedSchool (state, payload) {
     state.selectedSchool = payload
@@ -114,30 +120,19 @@ export const actions = {
       }
     })
   },
-  initUserInformations ({ rootState, commit, dispatch }) {
-    this.dispatch('currentActions/addAction', { name: 'getUserInformations' })
-    userService.getUserInformations().then(
-      (data) => {
-        this.dispatch('currentActions/removeAction', { name: 'getUserInformations' })
-        if (data.success) {
-          // Handle theme color
-          if (data.themeColor && data.themeColor !== '') {
-            if (data.themeColor.indexOf('#') === -1) {
-              data.themeColor = '#' + data.themeColor
-            }
-            if (data.themeColor !== rootState.theme.themeColor && data.themeColor !== 'FFFFFF') {
-              dispatch('theme/updateMainColor', data.themeColor, { root: true })
-            }
-          }
-          commit('initUserInformations', data)
-        } else {
-          commit('initUserInformations', { userId: 0 })
-        }
-      },
-      (err) => {
-        console.error(err)
-        commit('initUserInformations', { userId: 0 })
-      })
+  initUserInformations ({ rootState, commit, dispatch }, data) {
+    // this.dispatch('currentActions/addAction', { name: 'getUserInformations' })
+    // this.dispatch('currentActions/removeAction', { name: 'getUserInformations' })
+    // Handle theme color
+    if (data.themeColor && data.themeColor !== '') {
+      if (data.themeColor.indexOf('#') === -1) {
+        data.themeColor = '#' + data.themeColor
+      }
+      if (data.themeColor !== rootState.theme.themeColor && data.themeColor !== 'FFFFFF') {
+        dispatch('theme/updateMainColor', data.themeColor, { root: true })
+      }
+    }
+    commit('initUserInformations', data)
   },
   removePicture ({ commit }) {
     userService.removeUserPicture().then(

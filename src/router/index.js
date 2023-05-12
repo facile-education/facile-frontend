@@ -8,6 +8,21 @@ const routes = [
     component: () => import('@/router/views/Authentication.vue')
   },
   {
+    path: '/agree-terms-of-use',
+    name: 'AgreeTermsOfUse',
+    component: () => import('@/router/views/AgreeTermsOfUse.vue')
+  },
+  {
+    path: '/password-change',
+    name: 'PasswordChange',
+    component: () => import('@/router/views/PasswordChange.vue')
+  },
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: () => import('@/router/views/Dashboard.vue')
+  },
+  {
     path: '/dashboard/all-events',
     name: 'AllEvents',
     component: () => import('@/router/views/AllDiaryEvents.vue')

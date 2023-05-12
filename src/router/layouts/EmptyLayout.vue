@@ -116,9 +116,6 @@ export default {
       return this.user.userId
     }
   },
-  created () {
-    this.$store.dispatch('user/initUserInformations')
-  },
   methods: {
     closeFile (file) {
       this.$store.dispatch('documents/refreshCurrentFolder') // To update the displayed closed document properties (last modified date, etc...)

@@ -135,7 +135,7 @@ export default {
       return this.selectedUser !== undefined && user.userId === this.selectedUser.userId
     },
     updatePassword () {
-      updatePassword(this.selectedUser.userId, this.password1).then((data) => {
+      updatePassword(this.selectedUser.userId, this.password1, true).then((data) => {
         if (data.success) {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
         } else {

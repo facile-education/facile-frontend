@@ -39,9 +39,6 @@ export default {
       return this.$store.state.user
     }
   },
-  created () {
-    // this.$store.dispatch('user/initUserInformations')
-  },
   methods: {
   }
 }
