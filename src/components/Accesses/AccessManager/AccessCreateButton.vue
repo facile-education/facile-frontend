@@ -87,6 +87,8 @@ export default {
         default:
           console.error('unknown action for option', option)
       }
+      this.isContextMenuDisplayed = false
+      this.$store.dispatch('contextMenu/closeMenus')
     }
   }
 }
@@ -107,6 +109,7 @@ export default {
 <i18n locale="fr">
 {
   "category": "Categorie",
-  "access": "Accès"
+  "access": "Accès",
+  "new": "Nouveau"
 }
 </i18n>
