@@ -130,7 +130,7 @@ export default {
         // Set the new categoryList
         this.$store.dispatch('accessManager/setCategoryList', newCategoryList)
       } else {
-        console.error("Can't find categoryId " + access.categoryId + ' in ', this.categoryList())
+        console.error("Can't find categoryId " + access.categoryId + ' in ', this.categoryList)
       }
     },
     reset () {
@@ -139,6 +139,7 @@ export default {
     submit () {
       saveSchoolAccesses(this.selectedSchool.schoolId, this.categoryList).then((data) => {
         if (data.success) {
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('saveSuccess'), type: 'success' })
           this.$store.dispatch('accessManager/getSchoolAccesses') // Reload changes to assure to have the backend-data
         } else {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
@@ -177,6 +178,7 @@ export default {
 {
   "errorPlaceholder": "Oups, une erreur est survenue...",
   "emptyPlaceholder": "Aucun accès",
-  "serviceTitle": "Gestion des accès"
+  "serviceTitle": "Gestion des accès",
+  "saveSuccess": "Accès mis à jour avec succès!"
 }
 </i18n>
