@@ -81,11 +81,7 @@ export default {
   props: {
     file: {
       type: Object,
-      required: true,
-      validator: function (obj) {
-        return (typeof obj.id === 'string') &&
-               (typeof obj.name === 'string' && obj.name.length > 0)
-      }
+      required: true
     },
     wantsToCloseFile: {
       type: Boolean,

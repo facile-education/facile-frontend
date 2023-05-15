@@ -78,16 +78,6 @@
         :error-message="formErrorList.content"
       />
 
-      <button
-        class="add-content-button"
-        :title="$t('addFile')"
-        @click="isFilePickerDisplayed = true"
-      >
-        <img
-          src="@assets/options/icon_upload.svg"
-          :alt="$t('addFile')"
-        >
-      </button>
       <AttachedFiles
         v-model="attachedFiles"
         :read-only="false"
