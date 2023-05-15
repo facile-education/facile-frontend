@@ -7,7 +7,7 @@ export {
   getDashboardActivity
 }
 
-const DASHBOARD_PATH = '/dashboard-portlet.'
+const DASHBOARD_PATH = '/dashboard.'
 const DASHBOARD_CTX = 'dashboard/'
 
 function initDashboard () {
