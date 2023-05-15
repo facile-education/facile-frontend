@@ -40,7 +40,6 @@ export const mutations = {
     state.serviceList = payload
   },
   initUserInformations (state, payload) {
-    console.log(payload)
     state.userId = payload.userId
     state.lastName = payload.lastName
     state.firstName = payload.firstName
@@ -68,6 +67,7 @@ export const mutations = {
       state.selectedChild = payload.children[0]
     }
     state.agreedTermsOfUse = payload.agreedTermsOfUse
+    state.passwordChange = payload.passwordChange
   },
   setSelectedSchool (state, payload) {
     state.selectedSchool = payload
@@ -94,6 +94,12 @@ export const mutations = {
   },
   updateWebdavState (state, payload) {
     state.hasWebdavEnabled = payload
+  },
+  setAgreedTermsOfUse (state, payload) {
+    state.agreedTermsOfUse = true
+  },
+  setPasswordChange (state, payload) {
+    state.passwordChange = payload
   }
 }
 export const actions = {
@@ -142,6 +148,7 @@ export const actions = {
         }
       },
       (err) => {
+        // TODO toastr
         console.error(err)
         commit('initUserInformations', { userId: 0 })
       })
@@ -182,6 +189,12 @@ export const actions = {
         // TODO toastr
         console.error(err)
       })
+  },
+  setAgreedTermsOfUse ({ commit }) {
+    commit('setAgreedTermsOfUse')
+  },
+  setPasswordChange ({ commit }, passwordChange) {
+    commit('setPasswordChange', passwordChange)
   }
 }
 

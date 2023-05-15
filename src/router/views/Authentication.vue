@@ -21,12 +21,14 @@
           v-if="showPasswordRecoveryForm"
           @submit.prevent="sendRecoveryEmail"
         >
-          <span
-            v-t="'email-label'"
-          />
+          <div class="login-label">
+            <span
+              v-t="'login-label'"
+            />
+          </div>
           <input
-            v-model="email"
-            :placeholder="$t('emailPlaceholder')"
+            v-model="recoveryLogin"
+            :placeholder="$t('loginPlaceholder')"
             class="input"
             @keypress="handleKeyPressed"
           >
@@ -36,11 +38,22 @@
             :title="$t('send-recovery')"
             type="submit"
           />
-          <a
-            v-if="showForgotPassword"
-            v-t="'main-form'"
-            @click="showPasswordRecoveryForm = false"
-          />
+          <div
+            v-if="checkEmail"
+            class="check-email"
+          >
+            <span
+              v-t="'check-email'"
+            />
+          </div>
+          <div>
+            <a
+              v-if="showForgotPassword"
+              v-t="'main-form'"
+              href="#"
+              @click="showPasswordRecoveryForm = false"
+            />
+          </div>
         </form>
         <form
           v-else
@@ -59,27 +72,32 @@
             class="input"
             @keypress="handleKeyPressed"
           >
-          <span
-            v-show="isError"
-            v-t="'loginError'"
-            class="errorMessage"
-          />
-          <span
-            v-show="!isActive"
-            v-t="'inactiveAccount'"
-            class="errorMessage"
-          />
+          <div>
+            <span
+              v-show="isError"
+              v-t="'loginError'"
+              class="errorMessage"
+            />
+            <span
+              v-show="!isActive"
+              v-t="'inactiveAccount'"
+              class="errorMessage"
+            />
+          </div>
           <button
             v-t="'authenticate'"
             class="btn"
             :title="$t('authenticate')"
             type="submit"
           />
-          <a
-            v-if="showForgotPassword"
-            v-t="'forgot-password'"
-            @click="showPasswordRecoveryForm = true"
-          />
+          <div>
+            <a
+              v-if="showForgotPassword"
+              v-t="'forgot-password'"
+              href="#"
+              @click="showPasswordRecoveryForm = true"
+            />
+          </div>
         </form>
       </div>
       <img
@@ -95,7 +113,6 @@
 import PublicLayout from '@/router/layouts/PublicLayout'
 import axios from 'axios'
 import authenticationService from '@/api/authentication.service'
-import userService from '@/api/user.service'
 import store from '@/store'
 
 export default {
@@ -112,10 +129,11 @@ export default {
       ssoUrl: 'https://rec-ent.eduge.ch/Shibboleth.sso/Login?entityID=https://ssoeel.geneveid.ch/ginasso/gina/fed/ent&amp;target=',
       isError: false,
       isActive: true,
-      showForgotPassword: true,
+      showForgotPassword: false,
       showPasswordRecoveryForm: false,
-      email: '',
-      passwordRecoveryUrl: '/web/guest/home?p_p_id=58&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&saveLastPath=0&_58_struts_action=%2Flogin%2Fforgot_password'
+      recoveryLogin: '',
+      passwordRecoveryUrl: '/home?p_p_id=com_liferay_login_web_portlet_LoginPortlet&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&_com_liferay_login_web_portlet_LoginPortlet_javax.portlet.action=/login/forgot_password&_com_liferay_login_web_portlet_LoginPortlet_mvcRenderCommandName=/login/forgot_password',
+      checkEmail: false
     }
   },
   computed: {
@@ -143,35 +161,13 @@ export default {
           formData.append('_com_liferay_login_web_portlet_LoginPortlet_password', this.password)
           formData.append('_com_liferay_login_web_portlet_LoginPortlet_checkboxNames', 'rememberMe')
 
-          axios.post('http://dev-ent-gve.com' + this.formUrl,
+          axios.post(this.formUrl,
             formData,
-            {
-              headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-              }
-            }
+            { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
           ).then(() => {
             // Reset p_auth_token
             store.commit('user/setPAuth', undefined)
-            if (this.userId === undefined) {
-              userService.getUserInformations().then(
-                (data) => {
-                  if (data.success) {
-                    // If terms of use have not been accepted yet
-                    if (!data.agreedTermsOfUse) {
-                      this.$router.push({ path: 'agree-terms-of-use' })
-                    } else if (data.passwordChange) {
-                      this.$router.push({ path: 'password-change' })
-                    } else {
-                      setTimeout(() => this.$router.push({ path: 'espaces' }), 500)
-                    }
-                  }
-                }
-              )
-            } else {
-              // Redirect to dashboard if already logged in
-              this.$router.push({ path: 'dashboard' })
-            }
+            this.$router.push({ path: 'espaces' })
           })
         }
       })
@@ -180,21 +176,14 @@ export default {
       this.isError = false
     },
     sendRecoveryEmail () {
-      console.log('send email to ', this.email)
       const formData = new FormData()
-      formData.append('_58_custom', true)
-      formData.append('_58_screenName', this.email)
-      formData.append('_58_captchaText', '')
+      formData.append('_com_liferay_login_web_portlet_LoginPortlet_login', this.recoveryLogin)
 
-      axios.post('http://dev-ent-gve.com' + this.passwordRecoveryUrl,
+      axios.post(this.passwordRecoveryUrl,
         formData,
-        {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
-        }
+        { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
       ).then(() => {
-        console.log('Recovery password form sent')
+        this.checkEmail = true
       })
     }
   }
@@ -273,6 +262,9 @@ export default {
 .errorMessage {
   color: red;
 }
+.login-label {
+  word-wrap: break-word;
+}
 </style>
 
 <i18n locale="fr">
@@ -288,9 +280,10 @@ export default {
   "loginError": "Identifiant ou mot de passe incorrect",
   "inactiveAccount": "Votre compte est inactif.",
   "forgot-password": "Mot de passe oublié",
-  "email-label": "Saisissez votre courriel. Si il est renseigné dans l'ENTA, vous recevrez un lien de réinitialisation de votre mot de passe ENTA.",
-  "emailPlaceholder": "Courriel",
+  "login-label": "Saisissez votre identifiant. Vous recevrez un lien de réinitialisation de votre mot de passe ENTA sur le courriel associé à votre compte.",
+  "loginPlaceholder": "Identifiant",
   "send-recovery": "Envoyer",
-  "main-form": "Retour au formulaire"
+  "main-form": "Retour au formulaire",
+  "check-email": "Vérifier votre courriel"
 }
 </i18n>

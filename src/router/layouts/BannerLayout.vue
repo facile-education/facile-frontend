@@ -12,6 +12,8 @@
   >
     {{ $t('Layout.notAllowed') }}
   </h2>
+  <AgreeTermsOfUse v-else-if="!user.agreedTermsOfUse" />
+  <PasswordChange v-else-if="user.passwordChange" />
   <div
     v-else
     class="nero"
@@ -97,6 +99,8 @@ import { defineAsyncComponent } from 'vue'
 import { popupDurationTime } from '@/constants/appConstants'
 import Banner from '@/components/Banner/Banner'
 import QuickSearchPanel from '@components/Search/QuickSearchPanel.vue'
+import AgreeTermsOfUse from '../views/AgreeTermsOfUse.vue'
+import PasswordChange from '../views/PasswordChange.vue'
 
 const ConflictModal = defineAsyncComponent(() => import('@/components/Documents/Modals/ConflictModal'))
 const FileDisplayModal = defineAsyncComponent(() => import('@/components/Documents/FileDisplay/FileDisplayModal'))
@@ -119,7 +123,9 @@ export default {
     Popup,
     SideMenu,
     UploadProgression,
-    WarningModal
+    WarningModal,
+    AgreeTermsOfUse,
+    PasswordChange
   },
   inject: ['mq'],
   props: {
