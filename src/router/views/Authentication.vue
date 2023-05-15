@@ -157,7 +157,6 @@ export default {
               userService.getUserInformations().then(
                 (data) => {
                   if (data.success) {
-                    this.$store.dispatch('user/initUserInformations', data)
                     // If terms of use have not been accepted yet
                     if (!data.agreedTermsOfUse) {
                       this.$router.push({ path: 'agree-terms-of-use' })
