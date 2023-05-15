@@ -15,31 +15,40 @@
       />
       <div class="guest">
         <span v-t="'parentOther'" />
-        <form @submit.prevent="doLogin">
+
+        <!-- Password recovery -->
+        <form
+          v-if="showPasswordRecoveryForm"
+          @submit.prevent="sendRecoveryEmail"
+        >
+          <span
+            v-t="'email-label'"
+          />
           <input
-            name="_com_liferay_login_web_portlet_LoginPortlet_formDate"
-            type="hidden"
-            :value="new Date().getTime()"
+            v-model="email"
+            :placeholder="$t('emailPlaceholder')"
+            class="input"
+            @keypress="handleKeyPressed"
           >
-          <input
-            name="_com_liferay_login_web_portlet_LoginPortlet_saveLastPath"
-            type="hidden"
-            value="false"
-          >
-          <input
-            name="_com_liferay_login_web_portlet_LoginPortlet_redirect"
-            type="hidden"
-            value=""
-          >
-          <input
-            name="_com_liferay_login_web_portlet_LoginPortlet_doActionAfterLogin"
-            type="hidden"
-            value="false"
-          >
+          <button
+            v-t="'send-recovery'"
+            class="btn"
+            :title="$t('send-recovery')"
+            type="submit"
+          />
+          <a
+            v-if="showForgotPassword"
+            v-t="'main-form'"
+            @click="showPasswordRecoveryForm = false"
+          />
+        </form>
+        <form
+          v-else
+          @submit.prevent="doLogin"
+        >
           <input
             v-model="login"
             :placeholder="$t('login')"
-            name="_com_liferay_login_web_portlet_LoginPortlet_login"
             class="input"
             @keypress="handleKeyPressed"
           >
@@ -47,38 +56,29 @@
             v-model="password"
             type="password"
             :placeholder="$t('password')"
-            name="_com_liferay_login_web_portlet_LoginPortlet_password"
             class="input"
             @keypress="handleKeyPressed"
           >
-          <div>
-            <span
-              v-show="isError"
-              v-t="'loginError'"
-              class="errorMessage"
-            />
-          </div>
-          <div>
-            <span
-              v-show="!isActive"
-              v-t="'inactiveAccount'"
-              class="errorMessage"
-            />
-          </div>
-          <!-- <input
-            name="_com_liferay_login_web_portlet_LoginPortlet_rememberMe"
-            type="checkbox"
-          > -->
-          <input
-            name="_com_liferay_login_web_portlet_LoginPortlet_checkboxNames"
-            type="hidden"
-            value="rememberMe"
-          >
+          <span
+            v-show="isError"
+            v-t="'loginError'"
+            class="errorMessage"
+          />
+          <span
+            v-show="!isActive"
+            v-t="'inactiveAccount'"
+            class="errorMessage"
+          />
           <button
             v-t="'authenticate'"
             class="btn"
-            :title="$t('entLogin')"
+            :title="$t('authenticate')"
             type="submit"
+          />
+          <a
+            v-if="showForgotPassword"
+            v-t="'forgot-password'"
+            @click="showPasswordRecoveryForm = true"
           />
         </form>
       </div>
@@ -111,7 +111,11 @@ export default {
       p_auth: '',
       ssoUrl: 'https://rec-ent.eduge.ch/Shibboleth.sso/Login?entityID=https://ssoeel.geneveid.ch/ginasso/gina/fed/ent&amp;target=',
       isError: false,
-      isActive: true
+      isActive: true,
+      showForgotPassword: true,
+      showPasswordRecoveryForm: false,
+      email: '',
+      passwordRecoveryUrl: '/web/guest/home?p_p_id=58&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&saveLastPath=0&_58_struts_action=%2Flogin%2Fforgot_password'
     }
   },
   computed: {
@@ -126,6 +130,7 @@ export default {
       authenticationService.checkCredentials(this.login, this.password).then((data) => {
         if (!data.isValid) {
           this.isError = true
+          this.showForgotPassword = true
         } else if (data.isValid && !data.isActive) {
           this.isInactive = true
         } else {
@@ -174,6 +179,24 @@ export default {
     },
     handleKeyPressed () {
       this.isError = false
+    },
+    sendRecoveryEmail () {
+      console.log('send email to ', this.email)
+      const formData = new FormData()
+      formData.append('_58_custom', true)
+      formData.append('_58_screenName', this.email)
+      formData.append('_58_captchaText', '')
+
+      axios.post('http://dev-ent-gve.com' + this.passwordRecoveryUrl,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+        }
+      ).then(() => {
+        console.log('Recovery password form sent')
+      })
     }
   }
 }
@@ -264,6 +287,11 @@ export default {
   "password": "Mot de passe",
   "studentTeacher": "Élève / Enseignant",
   "loginError": "Identifiant ou mot de passe incorrect",
-  "inactiveAccount": "Votre compte est inactif."
+  "inactiveAccount": "Votre compte est inactif.",
+  "forgot-password": "Mot de passe oublié",
+  "email-label": "Saisissez votre courriel. Si il est renseigné dans l'ENTA, vous recevrez un lien de réinitialisation de votre mot de passe ENTA.",
+  "emailPlaceholder": "Courriel",
+  "send-recovery": "Envoyer",
+  "main-form": "Retour au formulaire"
 }
 </i18n>
