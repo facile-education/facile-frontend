@@ -125,6 +125,7 @@ export default {
       const categoryIndex = newCategoryList.map(category => category.categoryId).indexOf(access.categoryId)
       if (categoryIndex !== -1) {
         const category = newCategoryList[categoryIndex]
+        access.position = category.accessList.length // Put in last position
         category.accessList.push(access)
         // Set the new categoryList
         this.$store.dispatch('accessManager/setCategoryList', newCategoryList)
