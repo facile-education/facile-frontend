@@ -164,7 +164,6 @@ export default {
     this.$store.dispatch('misc/incrementModalCount')
     this.getRoleList()
     if (!this.isCreation) {
-      console.log(this.initAccess)
       this.title = this.initAccess.title
       this.url = this.initAccess.url
       this.roles = this.initAccess.profiles
