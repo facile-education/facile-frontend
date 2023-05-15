@@ -1,4 +1,5 @@
 import { getSchoolAccesses } from '@/api/access.service'
+import { sortAccesses } from '@utils/accessUtils'
 
 export const state = {
   isLoading: false,
@@ -36,8 +37,9 @@ export const actions = {
       commit('setLoading', false)
       if (data.success) {
         commit('setError', false)
-        commit('setInitialCategoryList', data.accesses)
-        commit('setCategoryList', data.accesses)
+        const sortedAccesses = sortAccesses(data.accesses)
+        commit('setInitialCategoryList', sortedAccesses)
+        commit('setCategoryList', sortedAccesses)
       } else {
         commit('setError', true)
         console.error('Error')

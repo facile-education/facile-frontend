@@ -118,20 +118,18 @@ export default {
         this.$store.dispatch('accessManager/setCategoryList', newCategoryList)
       }
     },
-    createAccess (access) {
+    createAccess (accessForm) {
+      const access = accessForm.access
+      const selectedCategory = accessForm.selectedCategory
+
       // Deep copy categoryList
       const newCategoryList = JSON.parse(JSON.stringify(this.categoryList))
       // Add the new access in place
-      const categoryIndex = newCategoryList.map(category => category.categoryId).indexOf(access.categoryId)
-      if (categoryIndex !== -1) {
-        const category = newCategoryList[categoryIndex]
-        access.position = category.accessList.length // Put in last position
-        category.accessList.push(access)
-        // Set the new categoryList
-        this.$store.dispatch('accessManager/setCategoryList', newCategoryList)
-      } else {
-        console.error("Can't find categoryId " + access.categoryId + ' in ', this.categoryList)
-      }
+      const category = newCategoryList[selectedCategory.position]
+      access.position = category.accessList.length // Put in last position
+      category.accessList.push(access)
+      // Set the new categoryList
+      this.$store.dispatch('accessManager/setCategoryList', newCategoryList)
     },
     reset () {
       this.$store.dispatch('accessManager/setCategoryList', this.initialCategoryList)

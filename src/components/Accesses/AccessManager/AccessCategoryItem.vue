@@ -42,7 +42,10 @@
         v-for="access in category.accessList"
         :key="access.title"
       >
-        <AccessItem :access="access" />
+        <AccessItem
+          :access="access"
+          :parent-category="category"
+        />
       </li>
     </ul>
   </div>
@@ -85,29 +88,25 @@ export default {
         // Deep copy categoryList
         const newCategoryList = JSON.parse(JSON.stringify(this.categoryList))
         // Modify the category name
-        const categoryIndex = newCategoryList.map(category => category.categoryId).indexOf(this.category.categoryId)
-        if (categoryIndex !== -1) {
-          const category = newCategoryList[categoryIndex]
-          category.categoryName = name
-          // Save the new categoryList
-          this.$store.dispatch('accessManager/setCategoryList', newCategoryList)
-        } else {
-          console.error("Can't find categoryId " + this.category.categoryId + ' in ', this.categoryList)
-        }
+        const category = newCategoryList[this.category.position]
+        category.categoryName = name
+        // Save the new categoryList
+        this.$store.dispatch('accessManager/setCategoryList', newCategoryList)
       }
     },
     deleteCategory () {
       // Deep copy categoryList
       const newCategoryList = JSON.parse(JSON.stringify(this.categoryList))
       // Delete the category
-      const categoryIndex = newCategoryList.map(category => category.categoryId).indexOf(this.category.categoryId)
-      if (categoryIndex !== -1) {
-        newCategoryList.splice(categoryIndex, 1)
-        // Save the new categoryList
-        this.$store.dispatch('accessManager/setCategoryList', newCategoryList)
-      } else {
-        console.error("Can't find categoryId " + this.category.categoryId + ' in ', this.categoryList)
+      newCategoryList.splice(this.category.position, 1)
+
+      // Compute new positions
+      for (let index = 0; index < newCategoryList.length; index++) {
+        newCategoryList[index].position = index
       }
+
+      // Save the new categoryList
+      this.$store.dispatch('accessManager/setCategoryList', newCategoryList)
     }
   }
 }

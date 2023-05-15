@@ -89,6 +89,10 @@ export default {
       type: Object,
       default: undefined
     },
+    initCategory: {
+      type: Object,
+      default: undefined
+    },
     categoryList: {
       type: Array,
       required: true
@@ -128,13 +132,15 @@ export default {
     },
     formAccess () {
       return {
-        id: this.initAccess ? this.initAccess.accessId : undefined,
-        title: this.title,
-        categoryId: this.selectedCategory.categoryId,
-        url: this.url,
-        profiles: this.roles,
-        // todo: thumbnail
-        thumbnail: ''
+        access: {
+          id: this.initAccess ? this.initAccess.accessId : undefined,
+          title: this.title,
+          url: this.url,
+          profiles: this.roles,
+          // todo: thumbnail
+          thumbnail: ''
+        },
+        selectedCategory: this.selectedCategory
       }
     },
     formErrorList () {
@@ -158,13 +164,11 @@ export default {
     this.$store.dispatch('misc/incrementModalCount')
     this.getRoleList()
     if (!this.isCreation) {
+      console.log(this.initAccess)
       this.title = this.initAccess.title
       this.url = this.initAccess.url
       this.roles = this.initAccess.profiles
-      const categoryIndex = this.categoryList.map(category => category.categoryId).indexOf(this.initAccess.categoryId)
-      if (categoryIndex !== -1) {
-        this.selectedCategory = this.initAccess.categoryId
-      }
+      this.selectedCategory = this.categoryList[this.initCategory.position]
     }
   },
   mounted () {
@@ -245,7 +249,7 @@ export default {
   "placeholderCategory": "Choisir une catégorie",
   "rolesPlaceholder": "Profils cibles",
   "creationSubmit": "Créer",
-  "updateSubmit": "modifier",
+  "updateSubmit": "Modifier",
   "sizeLimit1": "Ne doit pas dépasser ",
   "sizeLimit2": " caractères",
   "selectRoles": "Veuillez séléctionner au moins un profil cible",
