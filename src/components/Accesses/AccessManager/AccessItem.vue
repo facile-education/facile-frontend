@@ -129,9 +129,11 @@ h3 {
 
 .access {
   height: 50px;
-  background-color: cornflowerblue;
   position: relative;
   overflow: hidden;
+  border: 1px solid $color-border;
+  border-radius: 6px;
+  padding-left: 1rem;
 
   &:hover, &:focus-within {
     .options {

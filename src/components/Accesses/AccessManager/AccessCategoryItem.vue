@@ -1,41 +1,40 @@
 <template>
   <div class="category">
     <div
-      v-if="!isNameModification"
-      class="category-name"
+      class="category-item"
     >
-      <h2 class="title">
+      <h2
+        v-if="!isNameModification"
+        class="title"
+        tabindex="0"
+        @click="isNameModification = true"
+        @keyup.enter="isNameModification = true"
+      >
         {{ category.categoryName }}
       </h2>
 
-      <div class="options">
-        <button
-          class="option"
-          @click.stop="isNameModification = true"
-        >
-          <img
-            src="@/assets/icon_edit_texte.svg"
-            alt="edit"
-          >
-        </button>
-        <button
-          class="option"
-          @click.stop="confirmDeleteCategory"
-        >
-          <img
-            src="@/assets/icon_trash.svg"
-            alt="edit"
-          >
-        </button>
-      </div>
-    </div>
+      <AccessCategoryInput
+        v-else
+        class="title"
+        :initial-name="category.categoryName"
+        @submitName="updateName"
+        @close="isNameModification = false"
+      />
 
-    <AccessCategoryInput
-      v-else
-      :initial-name="category.categoryName"
-      @submitName="updateName"
-      @close="isNameModification = false"
-    />
+      <PentilaButton
+        class="delete-button"
+        cls="cancel"
+        @click="confirmDeleteCategory"
+      >
+        <img
+          class="trash-icon"
+          src="@/assets/icon_trash.svg"
+          :alt="$t('delete')"
+          :title="$t('delete')"
+        >
+        <span v-t="'delete'" />
+      </PentilaButton>
+    </div>
 
     <ul v-if="category.accessList.length > 0">
       <li
@@ -119,10 +118,17 @@ h2 {
   height: 100%;
   display: flex;
   align-items: center;
-  margin: 0;
+  margin: 0 0 1px 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  cursor: text;
+  border: none;
+  border-bottom: 1px solid transparent;
+
+  &:hover {
+    border-bottom: 1px solid black;
+  }
 }
 
 ul {
@@ -131,55 +137,42 @@ ul {
   list-style-type: none;
 
   li {
-    margin-bottom: 10px;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
+    margin-top: 10px;
   }
 }
 
-.category-name {
+.category-item {
   height: 50px;
-  background-color: #01d801;
-  position: relative;
-  overflow: hidden;
-
-  &:hover, &:focus-within {
-    .options {
-      transform: translateX(0);
-    }
-  }
+  display: flex;
 }
 
-.options {
-  position: absolute;
-  top: 0;
-  right: 0;
-  transform: translateX(100%);
-  height: 100%;
+.title {
+  flex: 1;
+  font-size: 1.5rem;
+  font-weight: 500;
+  padding-left: 0;
+}
+
+.delete-button {
+  margin-left: 1rem;
   display: flex;
-  border-radius: 0 5px 5px 0;
-  transition: all .3s ease;
+  justify-content: center;
+  align-items: center;
 
-  .option {
-    width: 40px;
-    transition: all .3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    cursor: pointer;
+  span {
+    margin-left: 12px;
+  }
 
-    &:hover {
-      background-color: $color-hover-bg;
-    }
+  .trash-icon {
+    width: 20px;
+    height: 20px;
   }
 }
 </style>
 
 <i18n locale="fr" >
 {
+  "delete": "Supprimer cette catégorie",
   "deleteCategoryWarning": "Souhaitez-vous supprimer la catégorie {categoryName} et ses accès?"
 }
 </i18n>
