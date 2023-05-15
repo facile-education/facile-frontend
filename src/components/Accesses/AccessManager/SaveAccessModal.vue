@@ -27,6 +27,7 @@
           <PentilaDropdown
             v-model="selectedCategory"
             :list="categoryList"
+            class="dropdown"
             display-field="categoryName"
             :sort="false"
           />
@@ -201,6 +202,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.dropdown {
+  max-width: min(100%, 200px);
+  white-space: nowrap;
+}
 
 .input, .category-selection {
   margin-bottom: 15px;

@@ -15,5 +15,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.access {
+  height: 40px;
+}
 </style>
