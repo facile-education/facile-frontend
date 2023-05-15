@@ -76,6 +76,7 @@ import { getBroadcastRoleList } from '@/api/role.service'
 import { required } from '@vuelidate/validators'
 import validators from '@utils/validators'
 import { useVuelidate } from '@vuelidate/core'
+import { nextTick } from 'vue'
 const inputMaxSize = 75
 const isUnderInputMaxSize = (value) => validators.isUnderMaxSize(value, inputMaxSize)
 const isNotEmpty = (list) => validators.isNotEmpty(list)
@@ -110,6 +111,7 @@ export default {
       isUnderInputMaxSize
     },
     url: {
+      required,
       isUnderInputMaxSize
     },
     roles: {
@@ -163,6 +165,12 @@ export default {
         this.selectedCategory = this.initAccess.categoryId
       }
     }
+  },
+  mounted () {
+    const vm = this
+    nextTick(function () {
+      vm.$refs.nameInput.focus()
+    })
   },
   methods: {
     getRoleList () {
