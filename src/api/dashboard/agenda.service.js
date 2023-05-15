@@ -11,7 +11,7 @@ export {
   setEventRead
 }
 
-const AGENDA_PATH = '/agenda-portlet.agenda'
+const AGENDA_PATH = '/agenda.agenda'
 
 function getEvents (startIndex, nbEvents, unreadOnly) {
   return axios.get(constants.JSON_WS_URL + AGENDA_PATH + '/get-events', {

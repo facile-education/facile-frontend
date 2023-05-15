@@ -15,10 +15,10 @@ export {
   removeNewsDelegate
 }
 
-const NEWS_PATH = '/news-portlet.'
+const NEWS_PATH = '/news.'
 const NEWS_CTX = 'news/'
-const DELEGATION_PATH = '/actualites-portlet.'
-const DELEGATION_CTX = 'blogentrydelegate/'
+const DELEGATION_PATH = '/user.'
+const DELEGATION_CTX = 'newsadmin/'
 
 function addNews (title, content, isSchoolNews, isImportant, imageId, publicationDate, population, attachFiles) {
   return axios.post(constants.JSON_WS_URL + NEWS_PATH + NEWS_CTX + 'add-news',
@@ -52,7 +52,7 @@ function editNews (newsId, title, content, isImportant, imageId, publicationDate
 function getSchoolNews (maxDate, nbNews, importantOnly, unreadOnly) {
   return axios.get(constants.JSON_WS_URL + NEWS_PATH + NEWS_CTX + 'get-school-news', {
     params: {
-      maxDate: maxDate.format('YYYY-MM-DD HH:mm:sss'),
+      maxDateString: maxDate.format('YYYY-MM-DD HH:mm:sss'),
       nbNews,
       importantOnly,
       unreadOnly

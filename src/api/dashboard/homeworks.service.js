@@ -6,7 +6,7 @@ export {
   setHomeworkDoneStatus
 }
 
-const CDT_PATH = '/cdt-portlet.'
+const CDT_PATH = '/schedule.'
 const HOMEWORKS_CTX = 'homework/'
 
 function getHomeworks (studentId, minDate, undoneOnly) {
