@@ -132,8 +132,9 @@ export default {
         title: this.title,
         categoryId: this.selectedCategory.categoryId,
         url: this.url,
-        roles: this.roles
+        profiles: this.roles,
         // todo: thumbnail
+        thumbnail: ''
       }
     },
     formErrorList () {
@@ -159,7 +160,7 @@ export default {
     if (!this.isCreation) {
       this.title = this.initAccess.title
       this.url = this.initAccess.url
-      this.roles = this.initAccess.roles
+      this.roles = this.initAccess.profiles
       const categoryIndex = this.categoryList.map(category => category.categoryId).indexOf(this.initAccess.categoryId)
       if (categoryIndex !== -1) {
         this.selectedCategory = this.initAccess.categoryId
