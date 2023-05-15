@@ -1,6 +1,7 @@
 <template>
   <section>
     <ScheduleHeader
+      v-if="currentDisplayedDate"
       :current-date="currentDisplayedDate"
       @goBefore="goBefore"
       @goAfter="goAfter"

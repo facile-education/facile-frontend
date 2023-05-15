@@ -1,10 +1,7 @@
 <template>
   <header>
     <h2 v-t="'schedule'" />
-    <div
-      v-if="currentDate"
-      class="date-selector"
-    >
+    <div class="date-selector">
       <button
         :title="$t('goBefore')"
         @click="$emit('goBefore')"
