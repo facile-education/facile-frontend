@@ -118,8 +118,19 @@ export default {
         this.$store.dispatch('accessManager/setCategoryList', newCategoryList)
       }
     },
-    createAccess () {
-      console.log('TODO')
+    createAccess (access) {
+      // Deep copy categoryList
+      const newCategoryList = JSON.parse(JSON.stringify(this.categoryList))
+      // Add the new access in place
+      const categoryIndex = newCategoryList.map(category => category.categoryId).indexOf(access.categoryId)
+      if (categoryIndex !== -1) {
+        const category = newCategoryList[categoryIndex]
+        category.accessList.push(access)
+        // Set the new categoryList
+        this.$store.dispatch('accessManager/setCategoryList', newCategoryList)
+      } else {
+        console.error("Can't find categoryId " + access.categoryId + ' in ', this.categoryList())
+      }
     },
     reset () {
       this.$store.dispatch('accessManager/setCategoryList', this.initialCategoryList)
@@ -127,7 +138,7 @@ export default {
     submit () {
       saveSchoolAccesses(this.selectedSchool.schoolId, this.categoryList).then((data) => {
         if (data.success) {
-          this.getSchoolAccesses() // Reload changes to assure to have the backend-data
+          this.$store.dispatch('accessManager/getSchoolAccesses') // Reload changes to assure to have the backend-data
         } else {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
           console.error('Error')

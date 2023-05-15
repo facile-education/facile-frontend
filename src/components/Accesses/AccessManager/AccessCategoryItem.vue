@@ -3,10 +3,10 @@
     <h2 class="title">
       {{ category.categoryName }}
     </h2>
-    <ul v-if="category.accessList.length > 1">
+    <ul v-if="category.accessList.length > 0">
       <li
-        v-for="access in accessList"
-        :key="access.accessId"
+        v-for="access in category.accessList"
+        :key="access.title"
       >
         <AccessItem :access="access" />
       </li>
@@ -32,13 +32,13 @@ export default {
 <style lang="scss" scoped>
 
 .category {
-  height: 50px;
-  //background-color: #01d801;
-  display: flex;
-  align-items: center;
 }
 
 h2 {
+  height: 50px;
+  background-color: #01d801;
+  display: flex;
+  align-items: center;
   margin: 0;
   white-space: nowrap;
   overflow: hidden;
