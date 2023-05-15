@@ -29,5 +29,13 @@ ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
+
+  li {
+    margin-bottom: 10px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
 }
 </style>
