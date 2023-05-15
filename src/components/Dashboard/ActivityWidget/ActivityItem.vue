@@ -94,7 +94,7 @@ export default {
     }
   },
   mounted () {
-    if (this.isLast) {
+    if (this.isLast && this.$refs.item !== undefined) {
       if (isInViewport(this.$refs.item)) {
         this.$emit('getNextAnnouncements')
       }
