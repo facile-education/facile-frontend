@@ -46,6 +46,7 @@
 </template>
 
 <script>
+import store from '@/store/index'
 import userManagementService from '@/api/userManagement.service'
 import EmptyLayout from '@/router/layouts/EmptyLayout'
 
@@ -73,7 +74,7 @@ export default {
       } else {
         userManagementService.updatePassword(this.$store.state.user.userId, this.password1, false).then((data) => {
           if (data.success) {
-            this.$router.push({ path: 'espaces' })
+            store.commit('user/setPasswordChange', false)
           } else {
             this.isError = true
           }

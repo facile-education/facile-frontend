@@ -23,6 +23,7 @@
 
 <script>
 import axios from 'axios'
+import store from '@/store'
 import userService from '@/api/user.service'
 import EmptyLayout from '@/router/layouts/EmptyLayout'
 
@@ -43,14 +44,12 @@ export default {
     acceptTermsOfUse () {
       userService.acceptTermsOfUse().then((data) => {
         if (data.success) {
-          this.$router.push({ path: 'espaces' })
+          store.commit('user/setAgreedTermsOfUse')
         }
       })
     },
     declineTermsOfUse () {
       window.location = '/c/portal/logout'
-      // this.$router.push({ name: 'Authentication' })
-      // TODO logout
     }
   }
 }
