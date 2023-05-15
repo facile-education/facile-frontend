@@ -1,21 +1,32 @@
 <template>
   <div class="access">
-    {{ access.title }}
+    <h3>
+      {{ access.title }}
+    </h3>
   </div>
 </template>
 
 <script>
 export default {
   name: 'AccessItem',
-  access: {
-    type: Object,
-    required: true
+  props: {
+    access: {
+      type: Object,
+      required: true
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.access {
-  height: 40px;
+h3 {
+  height: 50px;
+  background-color: cornflowerblue;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
