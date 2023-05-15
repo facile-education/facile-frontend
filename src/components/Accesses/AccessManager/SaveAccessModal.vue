@@ -74,9 +74,11 @@
 import { getBroadcastRoleList } from '@/api/role.service'
 import { required } from '@vuelidate/validators'
 import validators from '@utils/validators'
+import { useVuelidate } from '@vuelidate/core'
 const inputMaxSize = 75
 const isUnderInputMaxSize = (value) => validators.isUnderMaxSize(value, inputMaxSize)
 const isNotEmpty = (list) => validators.isNotEmpty(list)
+const isNotPlaceholder = (value) => value.categoryId !== -1
 
 export default {
   name: 'SaveAccessModal',
@@ -91,6 +93,7 @@ export default {
     }
   },
   emits: ['close', 'createAccess', 'updateAccess'],
+  setup: () => ({ v$: useVuelidate() }),
   data () {
     return {
       title: undefined,
@@ -112,7 +115,8 @@ export default {
       isNotEmpty
     },
     selectedCategory: {
-      required
+      required,
+      isNotPlaceholder
     }
   },
   computed: {
@@ -197,12 +201,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.first-line {
-  display: inline
+
+.input, .category-selection {
+  margin-bottom: 15px;
 }
 
-.first-line, .category-selection, .roles-selection {
-  margin-bottom: 15px;
+@media screen and (min-width: 700px) {
+  .first-line {
+    display: flex;
+
+    .input {
+      flex: 1
+    }
+
+    .category-selection {
+      margin-left: 15px;
+    }
+  }
 }
 </style>
 
@@ -210,7 +225,10 @@ export default {
 {
   "creationTitle": "Ajouter un accès",
   "updateTitle": "Modifier un accès",
+  "namePlaceHolder": "Titre",
+  "urlPlaceHolder": "Url",
   "placeholderCategory": "Choisir une catégorie",
+  "rolesPlaceholder": "Profils cibles",
   "creationSubmit": "Créer",
   "updateSubmit": "modifier",
   "sizeLimit1": "Ne doit pas dépasser ",
