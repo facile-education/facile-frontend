@@ -180,6 +180,9 @@ export default {
     }
   },
   created () {
+    if (this.userId === undefined) {
+      this.$store.dispatch('user/initUserInformations')
+    }
     if (this.$store.state.nero.menu === undefined) {
       this.$store.dispatch('nero/initUserMenu')
     }

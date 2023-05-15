@@ -40,6 +40,7 @@ export const mutations = {
     state.serviceList = payload
   },
   initUserInformations (state, payload) {
+    console.log(payload)
     state.userId = payload.userId
     state.lastName = payload.lastName
     state.firstName = payload.firstName
@@ -120,19 +121,30 @@ export const actions = {
       }
     })
   },
-  initUserInformations ({ rootState, commit, dispatch }, data) {
-    // this.dispatch('currentActions/addAction', { name: 'getUserInformations' })
-    // this.dispatch('currentActions/removeAction', { name: 'getUserInformations' })
-    // Handle theme color
-    if (data.themeColor && data.themeColor !== '') {
-      if (data.themeColor.indexOf('#') === -1) {
-        data.themeColor = '#' + data.themeColor
-      }
-      if (data.themeColor !== rootState.theme.themeColor && data.themeColor !== 'FFFFFF') {
-        dispatch('theme/updateMainColor', data.themeColor, { root: true })
-      }
-    }
-    commit('initUserInformations', data)
+  initUserInformations ({ rootState, commit, dispatch }) {
+    this.dispatch('currentActions/addAction', { name: 'getUserInformations' })
+    userService.getUserInformations().then(
+      (data) => {
+        this.dispatch('currentActions/removeAction', { name: 'getUserInformations' })
+        if (data.success) {
+          // Handle theme color
+          if (data.themeColor && data.themeColor !== '') {
+            if (data.themeColor.indexOf('#') === -1) {
+              data.themeColor = '#' + data.themeColor
+            }
+            if (data.themeColor !== rootState.theme.themeColor && data.themeColor !== 'FFFFFF') {
+              dispatch('theme/updateMainColor', data.themeColor, { root: true })
+            }
+          }
+          commit('initUserInformations', data)
+        } else {
+          commit('initUserInformations', { userId: 0 })
+        }
+      },
+      (err) => {
+        console.error(err)
+        commit('initUserInformations', { userId: 0 })
+      })
   },
   removePicture ({ commit }) {
     userService.removeUserPicture().then(
