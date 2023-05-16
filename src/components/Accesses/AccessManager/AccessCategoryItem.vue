@@ -132,7 +132,7 @@ h2 {
 }
 
 ul {
-  margin: 0 0 0 1rem;
+  margin: 0 0 0 30px;
   padding: 0;
   list-style-type: none;
 

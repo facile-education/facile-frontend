@@ -6,7 +6,8 @@ export const state = {
   error: false,
   selectedSchool: undefined,
   initialCategoryList: [],
-  categoryList: []
+  categoryList: [],
+  draggedAccess: undefined
 }
 
 export const mutations = {
@@ -15,6 +16,9 @@ export const mutations = {
   },
   setError (state, payload) {
     state.error = payload
+  },
+  setDraggedAccess (state, payload) {
+    state.draggedAccess = payload
   },
   setSchool (state, payload) {
     state.selectedSchool = payload
@@ -28,6 +32,9 @@ export const mutations = {
 }
 
 export const actions = {
+  setDraggedAccess ({ commit }, access) {
+    commit('setDraggedAccess', access)
+  },
   setSelectedSchool ({ commit }, school) {
     commit('setSchool', school)
   },
