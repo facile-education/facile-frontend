@@ -167,7 +167,8 @@ export default {
           ).then(() => {
             // Reset p_auth_token
             store.commit('user/setPAuth', undefined)
-            this.$router.push({ path: 'espaces' })
+            // Route to landing page
+            this.$router.push({ path: 'tableau-de-bord' })
           })
         }
       })
