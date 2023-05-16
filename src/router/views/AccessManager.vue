@@ -31,7 +31,7 @@
 
     <AccessCategoryList
       v-else
-      :category-list="categoryList"
+      :category-list="sortedCategoryList"
     />
 
     <AccessCategoryInput
@@ -68,6 +68,7 @@ import AccessCategoryInput from '@components/Accesses/AccessManager/AccessCatego
 import SchoolSelector from '@components/Accesses/AccessManager/SchoolSelector.vue'
 import AccessFooter from '@components/Accesses/AccessManager/AccessFooter.vue'
 import { saveSchoolAccesses } from '@/api/access.service'
+import { sortAccesses } from '@utils/accessUtils'
 const SaveAccessModal = defineAsyncComponent(() => import('@components/Accesses/AccessManager/SaveAccessModal.vue'))
 
 export default {
@@ -102,6 +103,9 @@ export default {
     },
     categoryList () {
       return this.$store.state.accessManager.categoryList
+    },
+    sortedCategoryList () {
+      return sortAccesses(this.categoryList)
     }
   },
   methods: {

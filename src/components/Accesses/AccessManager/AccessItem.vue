@@ -1,5 +1,23 @@
 <template>
-  <div class="access">
+  <div
+    class="access"
+    :class="{'droppable': draggedAccess}"
+    :draggable="true"
+    @dragstart="dragStart"
+    @dragend="dragEnd"
+    @dragover.prevent="dragOver"
+    @dragleave="dragLeave"
+    @drop="drop"
+  >
+    <hr class="drag-placeholder theme-border-color">
+
+    <div class="content-move">
+      <NeroIcon
+        name="grip-lines"
+        class="icon"
+      />
+    </div>
+
     <h3>
       {{ access.title }}
     </h3>
@@ -41,10 +59,11 @@
 
 <script>
 import SaveAccessModal from '@components/Accesses/AccessManager/SaveAccessModal.vue'
+import NeroIcon from '@components/Nero/NeroIcon.vue'
 
 export default {
   name: 'AccessItem',
-  components: { SaveAccessModal },
+  components: { NeroIcon, SaveAccessModal },
   props: {
     access: {
       type: Object,
@@ -63,9 +82,71 @@ export default {
   computed: {
     categoryList () {
       return this.$store.state.accessManager.categoryList
+    },
+    draggedAccess () {
+      return this.$store.state.accessManager.draggedAccess
     }
   },
   methods: {
+    dragLeave (e) {
+      e.target.classList.remove('top')
+      e.target.classList.remove('bottom')
+    },
+    dragOver (e) {
+      if (this.draggedAccess && this.draggedAccess.parentCategoryPosition === this.parentCategory.position && this.draggedAccess.position !== this.access.position) {
+        if (this.access.position < this.draggedAccess.position) {
+          e.target.classList.add('top')
+        } else {
+          e.target.classList.add('bottom')
+        }
+      } else if (this.draggedAccess && this.draggedAccess.parentCategoryPosition !== this.parentCategory.position) {
+        e.target.classList.add('bottom')
+      }
+    },
+    dragStart () {
+      const accessToDrop = { ...this.access, parentCategoryPosition: this.parentCategory.position }
+      this.$store.commit('accessManager/setDraggedAccess', accessToDrop)
+    },
+    dragEnd () {
+      this.$store.commit('accessManager/setDraggedAccess', undefined)
+    },
+    drop () {
+      if (this.draggedAccess) {
+        // Deep copy categoryList
+        const newCategoryList = JSON.parse(JSON.stringify(this.categoryList))
+
+        if (this.draggedAccess.parentCategoryPosition === this.parentCategory.position && this.draggedAccess.position !== this.access.position) {
+          // Delete the dropped access from accessList
+          const category = newCategoryList[this.draggedAccess.parentCategoryPosition]
+          category.accessList.splice(this.draggedAccess.position, 1)
+          // Insert him in the good place
+          category.accessList.splice(this.access.position, 0, { ...this.draggedAccess })
+          // Recompute category positions
+          for (let index = 0; index < category.accessList.length; index++) {
+            category.accessList[index].position = index
+          }
+        } else if (this.draggedAccess.parentCategoryPosition !== this.parentCategory.position) {
+          // Delete the dropped access from old category
+          const oldCategory = newCategoryList[this.draggedAccess.parentCategoryPosition]
+          oldCategory.accessList.splice(this.draggedAccess.position, 1)
+          // Recompute old category positions
+          for (let index = 0; index < oldCategory.accessList.length; index++) {
+            oldCategory.accessList[index].position = index
+          }
+
+          // Insert him in the good place in new category
+          const newCategory = newCategoryList[this.parentCategory.position]
+          newCategory.accessList.splice(this.access.position + 1, 0, { ...this.draggedAccess })
+          // Recompute new category positions
+          for (let index = 0; index < newCategory.accessList.length; index++) {
+            newCategory.accessList[index].position = index
+          }
+        }
+        // Save the new categoryList
+        this.$store.dispatch('accessManager/setCategoryList', newCategoryList)
+        this.$store.commit('accessManager/setDraggedAccess', undefined)
+      }
+    },
     confirmDeleteAccess () {
       this.$store.dispatch('warningModal/addWarning', {
         text: this.$t('deleteAccessWarning', { accessName: this.access.title }),
@@ -130,15 +211,70 @@ h3 {
 .access {
   height: 50px;
   position: relative;
-  overflow: hidden;
   border: 1px solid $color-border;
   border-radius: 6px;
   padding-left: 1rem;
 
   &:hover, &:focus-within {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+
     .options {
-      transform: translateX(0);
+      opacity: 100%;
+
+      .option {
+        width: 40px;
+      }
     }
+
+    .content-move {
+      opacity: 1;
+      transition: .3s;
+      left: -30px;
+      width: 30px;
+    }
+  }
+
+  &.droppable * {
+    pointer-events: none;
+  }
+
+  &.top .drag-placeholder {
+    border-top: 2px solid;
+    top: -7px;
+  }
+
+  &.bottom .drag-placeholder {
+    border-bottom: 2px solid;
+    bottom: -7px;
+  }
+}
+
+.drag-placeholder {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  margin: 0;
+  border: none;
+}
+
+.content-move {
+  position: absolute;
+  height: calc(100% + 2px);
+  width: 0;
+  top: -1px;
+  left: 0;
+  background: $color-not-white-bg;
+  border: 1px solid $color-border;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  border-right: none;
+  display: flex;
+  cursor: move;
+  opacity: 0;
+
+  .icon {
+    margin: auto
   }
 }
 
@@ -146,14 +282,15 @@ h3 {
   position: absolute;
   top: 0;
   right: 0;
-  transform: translateX(100%);
   height: 100%;
+  overflow: hidden;
+  opacity: 0;
   display: flex;
   border-radius: 0 5px 5px 0;
   transition: all .3s ease;
 
   .option {
-    width: 40px;
+    width: 0;
     transition: all .3s ease;
     display: flex;
     align-items: center;
