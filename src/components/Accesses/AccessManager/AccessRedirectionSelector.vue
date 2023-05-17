@@ -69,7 +69,7 @@ export default {
       default: undefined
     }
   },
-  emits: ['updateUrl', 'updateFolderId', 'updateFileId', 'updateType'],
+  emits: ['updateUrl', 'updateFolder', 'updateFile', 'updateType'],
   data () {
     return {
       typeList: [
@@ -90,15 +90,18 @@ export default {
   },
   watch: {
     folder (value) {
-      this.$emit('updateFolderId', value ? value.id : undefined)
+      this.$emit('updateFolder', value)
     },
     file (value) {
-      this.$emit('updateFileId', value ? value.id : undefined)
+      this.$emit('updateFile', value)
     }
   },
   created () {
     if (this.initRedirection) {
-      this.selectedType = this.initRedirection.type
+      const selectedTypeIndex = this.typeList.map(type => type.type).indexOf(this.initRedirection.type)
+      if (selectedTypeIndex !== -1) {
+        this.selectedType = this.typeList[selectedTypeIndex]
+      }
       switch (this.initRedirection.type) {
         case Types.TYPE_EXTERNAL_URL:
           this.url = this.initRedirection.url
@@ -114,12 +117,12 @@ export default {
       }
     } else {
       this.selectedType = { type: Types.TYPE_EXTERNAL_URL, label: this.$t('TYPE_EXTERNAL_URL') }
-      this.$emit('updateType', this.selectedType)
+      this.$emit('updateType', this.selectedType.type)
     }
   },
   methods: {
     changeType (type) {
-      this.$emit('updateType', type)
+      this.$emit('updateType', type.type)
       if (type.type === Types.TYPE_COLLABORATIVE_FOLDER) {
         this.isFolderPickerDisplayed = true
       } else if (type.type === Types.TYPE_SHARED_FILE) {
