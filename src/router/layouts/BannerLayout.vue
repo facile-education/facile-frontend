@@ -90,6 +90,10 @@
         v-if="isHelpModalDisplayed"
         @close="closeHelpModal"
       />
+      <AccessModal
+        v-if="isAccessModalDisplayed"
+        @close="closeAccessModal"
+      />
     </teleport>
   </div>
 </template>
@@ -110,10 +114,12 @@ const HelpModal = defineAsyncComponent(() => import('@components/HelpModal/HelpM
 const Popup = defineAsyncComponent(() => import('@components/Base/Popup'))
 const UploadProgression = defineAsyncComponent(() => import('@components/Documents/UploadProgression'))
 const WarningModal = defineAsyncComponent(() => import('@/components/Nero/WarningModal'))
+const AccessModal = defineAsyncComponent(() => import('@components/Accesses/AccessVisualization/AccessModal.vue'))
 
 export default {
   name: 'BannerLayout',
   components: {
+    AccessModal,
     ConflictModal,
     FileDisplayModal,
     QuickSearchPanel,
@@ -143,6 +149,9 @@ export default {
     },
     isHelpModalDisplayed () {
       return this.$store.state.help.isHelpModalDisplayed
+    },
+    isAccessModalDisplayed () {
+      return this.$store.state.accessManager.isUserAccessModalOpen
     },
     isQuickSearchDisplayed () {
       return this.$store.state.search.isHistoryOpen || this.$store.state.search.isQuickSearchResultDisplayed
@@ -203,6 +212,9 @@ export default {
     },
     closeHelpModal () {
       this.$store.dispatch('help/closeHelpModal')
+    },
+    closeAccessModal () {
+      this.$store.dispatch('accessManager/closeAccessModal')
     }
   }
 }

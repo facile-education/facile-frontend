@@ -7,7 +7,8 @@ export const state = {
   selectedSchool: undefined,
   initialCategoryList: [],
   categoryList: [],
-  draggedAccess: undefined
+  draggedAccess: undefined,
+  isUserAccessModalOpen: false
 }
 
 export const mutations = {
@@ -28,6 +29,9 @@ export const mutations = {
   },
   setCategoryList (state, payload) {
     state.categoryList = payload
+  },
+  setIsUserAccessModalOpen (state, payload) {
+    state.isUserAccessModalOpen = payload
   }
 }
 
@@ -59,5 +63,11 @@ export const actions = {
   },
   setCategoryList ({ commit }, categoryList) {
     commit('setCategoryList', categoryList)
+  },
+  openAccessModal ({ commit }) {
+    commit('setIsUserAccessModalOpen', true)
+  },
+  closeAccessModal ({ commit }) {
+    commit('setIsUserAccessModalOpen', false)
   }
 }
