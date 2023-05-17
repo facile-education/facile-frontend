@@ -58,8 +58,10 @@
 </template>
 
 <script>
-import SaveAccessModal from '@components/Accesses/AccessManager/SaveAccessModal.vue'
+
 import NeroIcon from '@components/Nero/NeroIcon.vue'
+import { defineAsyncComponent } from 'vue'
+const SaveAccessModal = defineAsyncComponent(() => import('@components/Accesses/AccessManager/SaveAccessModal.vue'))
 
 export default {
   name: 'AccessItem',

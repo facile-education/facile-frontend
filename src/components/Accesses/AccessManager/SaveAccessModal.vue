@@ -41,9 +41,9 @@
         <AccessRedirectionSelector
           :init-redirection="initRedirection"
           @updateType="selectedType=$event"
-          @updateUrl="url = $event"
-          @updateFolderId="folderId = $event"
-          @updateFileId="fileId = $event"
+          @updateUrl="updateURL"
+          @updateFolder="updateFolder"
+          @updateFile="updateFile"
         />
         <PentilaErrorMessage
           :error-message="formErrorList.redirection"
@@ -116,7 +116,9 @@ export default {
       selectedType: undefined,
       url: undefined,
       folderId: undefined,
-      fileId: undefined
+      folderName: '',
+      fileId: undefined,
+      fileName: ''
     }
   },
   validations: {
@@ -156,10 +158,12 @@ export default {
         access: {
           id: this.initAccess ? this.initAccess.accessId : undefined,
           title: this.title,
-          type: this.selectedType.type,
+          type: this.selectedType,
           url: this.url,
-          folderId: this.folderId,
-          fileId: this.fileId,
+          folderId: this.folderId ? this.folderId : '-1',
+          folderName: this.folderName,
+          fileId: this.fileId ? this.fileId : '-1',
+          fileName: this.fileName,
           profiles: this.roles,
           // todo: thumbnail
           thumbnail: ''
@@ -200,19 +204,18 @@ export default {
       this.title = this.initAccess.title
       this.roles = this.initAccess.profiles
       this.selectedCategory = this.categoryList[this.initCategory.position]
-      const selectedTypeIndex = this.typeList.map(type => type.type).indexOf(this.initAccess.type)
-      if (selectedTypeIndex !== -1) {
-        this.selectedType = this.typeList[selectedTypeIndex]
-        this.initRedirection = { // To initialize AccessRedirectionSelector component
-          type: this.typeList[selectedTypeIndex],
-          url: this.initAccess.url,
-          folder: { id: this.initAccess.folderId, name: this.initAccess.folderName },
-          file: { id: this.initAccess.fileId, name: this.initAccess.fileName }
-        }
-      }
+      this.selectedType = this.initAccess.type
       this.url = this.initAccess.url
       this.folderId = this.initAccess.folderId
+      this.folderName = this.initAccess.folderName
       this.fileId = this.initAccess.fileId
+      this.fileName = this.initAccess.fileName
+      this.initRedirection = { // To initialize AccessRedirectionSelector component
+        type: this.initAccess.type,
+        url: this.initAccess.url,
+        folder: { id: this.initAccess.folderId, name: this.initAccess.folderName },
+        file: { id: this.initAccess.fileId, name: this.initAccess.fileName }
+      }
     }
   },
   mounted () {
@@ -222,6 +225,31 @@ export default {
     })
   },
   methods: {
+    resetRedirectionFields () {
+      this.url = ''
+      this.folderId = '-1'
+      this.folderName = ''
+      this.fileId = '-1'
+      this.fileName = ''
+    },
+    updateURL (url) {
+      this.resetRedirectionFields()
+      this.url = url
+    },
+    updateFolder (folder) {
+      this.resetRedirectionFields()
+      if (folder) {
+        this.folderId = folder.id
+        this.folderName = folder.name
+      }
+    },
+    updateFile (file) {
+      this.resetRedirectionFields()
+      if (file) {
+        this.fileId = file.id
+        this.fileName = file.name
+      }
+    },
     getRoleList () {
       getBroadcastRoleList().then((data) => {
         if (data.success) {
