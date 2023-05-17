@@ -26,6 +26,7 @@
         :init-in-current-folder="initInCurrentFolder"
         :multi-selection="multiSelection"
         :allow-files-from-device="allowFilesFromDevice"
+        :collaborative-only="collaborativeOnly"
         @selectedFolder="updateSelectedFolder"
         @currentFolder="updateCurrentFolder"
         @chosenFolder="emitSelectedFolder"
@@ -73,6 +74,10 @@ export default {
       default: false
     },
     allowFilesFromDevice: {
+      type: Boolean,
+      default: false
+    },
+    collaborativeOnly: {
       type: Boolean,
       default: false
     },

@@ -4,6 +4,7 @@
       class="breadcrumb"
       :breadcrumb="currentBreadcrumb"
       :hidden-actions="true"
+      :multi-space="false"
       @change-dir="loadFolderContent"
       @change-space="changeSpace"
     />
@@ -69,6 +70,10 @@ export default {
       type: Boolean,
       default: false
     },
+    collaborativeOnly: {
+      type: Boolean,
+      default: false
+    },
     header: {
       type: String,
       default: ''
@@ -107,7 +112,11 @@ export default {
       documentsService.getGlobalDocumentsProperties().then((data) => {
         this.maxUploadSize = data.maxUploadSize
         this.userFolderId = data.private.id
-        this.loadUserFolderContent(this.userFolderId)
+        if (this.collaborativeOnly) {
+          this.loadGroupFolderContent('collaborative') // TODO get those key from data
+        } else {
+          this.loadUserFolderContent(this.userFolderId)
+        }
       })
     }
   },

@@ -108,6 +108,10 @@ export default {
     isCurrentFolder: {
       type: Boolean,
       default: false
+    },
+    multiSpace: {
+      type: Boolean,
+      default: true
     }
   },
   emits: ['changeDir', 'changeSpace', 'clickBack'],
@@ -131,7 +135,7 @@ export default {
     currentOptions () {
       if (!this.hiddenActions && this.isCurrentFolder && !this.isFirstElement && !this.isGroupFolder) {
         return [...currentFolderOptions]
-      } else if (this.isFirstElement) {
+      } else if (this.isFirstElement && this.multiSpace) {
         return [...spaceSelectionOptions]
       } else {
         return []
