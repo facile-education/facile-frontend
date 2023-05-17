@@ -1,7 +1,7 @@
 <template>
   <div
     class="access"
-    :class="{'droppable': draggedAccess}"
+    :class="{'droppable': draggedAccess && !isDragged}"
     :draggable="true"
     @dragstart="dragStart"
     @dragend="dragEnd"
@@ -76,7 +76,8 @@ export default {
   },
   data () {
     return {
-      isUpdateModalDisplayed: false
+      isUpdateModalDisplayed: false,
+      isDragged: false
     }
   },
   computed: {
@@ -104,10 +105,12 @@ export default {
       }
     },
     dragStart () {
+      this.isDragged = true
       const accessToDrop = { ...this.access, parentCategoryPosition: this.parentCategory.position }
       this.$store.commit('accessManager/setDraggedAccess', accessToDrop)
     },
     dragEnd () {
+      this.isDragged = false
       this.$store.commit('accessManager/setDraggedAccess', undefined)
     },
     drop () {
@@ -206,6 +209,8 @@ h3 {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 1.2rem;
+  font-weight: 500;
 }
 
 .access {
