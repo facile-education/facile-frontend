@@ -37,13 +37,16 @@
         </div>
       </div>
 
-      <div class="input">
-        <PentilaInput
-          v-model="url"
-          :placeholder="$t('urlPlaceHolder') + '*'"
+      <div class="redirection">
+        <AccessRedirectionSelector
+          :init-redirection="initRedirection"
+          @updateType="selectedType=$event"
+          @updateUrl="url = $event"
+          @updateFolderId="folderId = $event"
+          @updateFileId="fileId = $event"
         />
         <PentilaErrorMessage
-          :error-message="formErrorList.url"
+          :error-message="formErrorList.redirection"
         />
       </div>
 
@@ -77,6 +80,8 @@ import { required } from '@vuelidate/validators'
 import validators from '@utils/validators'
 import { useVuelidate } from '@vuelidate/core'
 import { nextTick } from 'vue'
+import AccessRedirectionSelector from '@components/Accesses/AccessManager/AccessRedirectionSelector.vue'
+import Types from '@/constants/accessConstants'
 const inputMaxSize = 75
 const isUnderInputMaxSize = (value) => validators.isUnderMaxSize(value, inputMaxSize)
 const isNotEmpty = (list) => validators.isNotEmpty(list)
@@ -84,6 +89,7 @@ const isNotPlaceholder = (value) => value.categoryId !== -1
 
 export default {
   name: 'SaveAccessModal',
+  components: { AccessRedirectionSelector },
   props: {
     initAccess: {
       type: Object,
@@ -104,9 +110,13 @@ export default {
     return {
       title: undefined,
       selectedCategory: { categoryId: -1, categoryName: this.$t('placeholderCategory') },
-      url: undefined,
       roles: [],
-      availableRoleList: []
+      availableRoleList: [],
+      initRedirection: undefined,
+      selectedType: undefined,
+      url: undefined,
+      folderId: undefined,
+      fileId: undefined
     }
   },
   validations: {
@@ -115,8 +125,19 @@ export default {
       isUnderInputMaxSize
     },
     url: {
-      required,
-      isUnderInputMaxSize
+      function () {
+        return (this.selectedType.type === Types.TYPE_EXTERNAL_URL) ? required : true
+      }
+    },
+    folderId: {
+      function () {
+        return (this.selectedType.type === Types.TYPE_COLLABORATIVE_FOLDER) ? required : true
+      }
+    },
+    fileId: {
+      function () {
+        return (this.selectedType.type === Types.TYPE_SHARED_FILE) ? required : true
+      }
     },
     roles: {
       isNotEmpty
@@ -135,7 +156,10 @@ export default {
         access: {
           id: this.initAccess ? this.initAccess.accessId : undefined,
           title: this.title,
+          type: this.selectedType.type,
           url: this.url,
+          folderId: this.folderId,
+          fileId: this.fileId,
           profiles: this.roles,
           // todo: thumbnail
           thumbnail: ''
@@ -148,15 +172,24 @@ export default {
         title: (this.v$.title.$invalid && this.v$.title.$dirty)
           ? (this.v$.title.$errors[0].$validator === 'required' ? this.$t('Commons.required') : this.$t('sizeLimit1') + inputMaxSize + this.$t('sizeLimit2'))
           : '',
-        url: (this.v$.url.$invalid && this.v$.url.$dirty)
-          ? (this.v$.url.$errors[0].$validator === 'required' ? this.$t('Commons.required') : this.$t('sizeLimit1') + inputMaxSize + this.$t('sizeLimit2'))
-          : '',
         roles: (this.v$.roles.$invalid && this.v$.roles.$dirty)
           ? this.$t('selectRoles')
           : '',
         category: (this.v$.selectedCategory.$invalid && this.v$.selectedCategory.$dirty)
           ? this.$t('selectCategory')
-          : ''
+          : '',
+        redirection: this.redirectionError
+      }
+    },
+    redirectionError () {
+      if (this.v$.url.$invalid && this.v$.url.$dirty) {
+        return (this.v$.url.$errors[0].$validator === 'required' ? this.$t('Commons.required') : this.$t('sizeLimit1') + inputMaxSize + this.$t('sizeLimit2'))
+      } else if (this.v$.folderId.$invalid && this.v$.folderId.$dirty) {
+        return this.$t('selectFolder')
+      } else if (this.v$.fileId.$invalid && this.v$.fileId.$dirty) {
+        return this.$t('selectFile')
+      } else {
+        return ''
       }
     }
   },
@@ -165,9 +198,21 @@ export default {
     this.getRoleList()
     if (!this.isCreation) {
       this.title = this.initAccess.title
-      this.url = this.initAccess.url
       this.roles = this.initAccess.profiles
       this.selectedCategory = this.categoryList[this.initCategory.position]
+      const selectedTypeIndex = this.typeList.map(type => type.type).indexOf(this.initAccess.type)
+      if (selectedTypeIndex !== -1) {
+        this.selectedType = this.typeList[selectedTypeIndex]
+        this.initRedirection = { // To initialize AccessRedirectionSelector component
+          type: this.typeList[selectedTypeIndex],
+          url: this.initAccess.url,
+          folder: { id: this.initAccess.folderId, name: this.initAccess.folderName },
+          file: { id: this.initAccess.fileId, name: this.initAccess.fileName }
+        }
+      }
+      this.url = this.initAccess.url
+      this.folderId = this.initAccess.folderId
+      this.fileId = this.initAccess.fileId
     }
   },
   mounted () {
@@ -220,7 +265,7 @@ export default {
   white-space: nowrap;
 }
 
-.input, .category-selection {
+.input, .category-selection, .redirection {
   margin-bottom: 15px;
 }
 
@@ -244,7 +289,6 @@ export default {
   "creationTitle": "Ajouter un accès",
   "updateTitle": "Modifier un accès",
   "namePlaceHolder": "Titre",
-  "urlPlaceHolder": "Url",
   "placeholderCategory": "Choisir une catégorie",
   "rolesPlaceholder": "Profils cibles",
   "creationSubmit": "Créer",
@@ -252,6 +296,8 @@ export default {
   "sizeLimit1": "Ne doit pas dépasser ",
   "sizeLimit2": " caractères",
   "selectRoles": "Veuillez séléctionner au moins un profil cible",
-  "selectCategory": "Veuillez séléctionner une catégorie"
+  "selectCategory": "Veuillez séléctionner une catégorie",
+  "selectFolder": "Selectionnez un dossier collaboratif",
+  "selectFile": "Selectionnez un fichier collaboratif"
 }
 </i18n>
