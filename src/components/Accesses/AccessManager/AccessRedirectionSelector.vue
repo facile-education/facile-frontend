@@ -37,6 +37,7 @@
   >
     <FilePickerModal
       :folder-selection="true"
+      :collaborative-only="true"
       @chosenFolder="folder = $event"
       @close="isFolderPickerDisplayed = false"
     />
@@ -46,6 +47,7 @@
     to="body"
   >
     <FilePickerModal
+      :collaborative-only="true"
       @addedFiles="file = $event[0]"
       @close="isFilePickerDisplayed = false"
     />

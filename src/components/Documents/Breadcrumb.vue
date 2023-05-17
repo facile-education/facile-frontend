@@ -19,6 +19,7 @@
         :is-first-element="folder.id === breadcrumb[0].id"
         :is-current-folder="index === displayableBreadcrumb.length-1"
         :previous-folder-name="index >= 1 ? displayableBreadcrumb[index - 1].name : ''"
+        :multi-space="multiSpace"
         @click-back="goInParentFolder"
         @change-dir="changeDir"
         @change-space="changeSpace"
@@ -48,6 +49,10 @@ export default {
     hiddenActions: {
       type: Boolean,
       default: false
+    },
+    multiSpace: {
+      type: Boolean,
+      default: true
     }
   },
   emits: ['changeDir', 'changeSpace'],
