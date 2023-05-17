@@ -1,6 +1,9 @@
 <template>
   <div>
-    <BannerItem :src="require('@/assets/images/banner/icon-star.svg')" />
+    <BannerItem
+      :src="require('@/assets/images/banner/icon-star.svg')"
+      @click="openAccessModal"
+    />
     <BannerItem
       :src="require('@/assets/images/banner/icon-letter.svg')"
       @click="$router.push({ name: 'Messagerie' })"
@@ -23,6 +26,9 @@ export default {
     BannerItem
   },
   methods: {
+    openAccessModal () {
+      this.$store.dispatch('accessManager/openAccessModal')
+    },
     openHelpModal () {
       this.$store.dispatch('help/openHelpModal')
     }
