@@ -95,6 +95,9 @@ export const getters = {
       }
     }
     return 'Unknown role name'
+  },
+  haveChanges (state) {
+    return JSON.stringify(state.initialCategoryList) !== JSON.stringify(state.categoryList)
   }
 }
 

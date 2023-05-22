@@ -32,7 +32,7 @@ export default {
       return this.$store.state.accessManager.categoryList
     },
     haveChanges () {
-      return JSON.stringify(this.initialCategoryList) !== JSON.stringify(this.categoryList)
+      return this.$store.getters['accessManager/haveChanges']
     }
   },
   methods: {
