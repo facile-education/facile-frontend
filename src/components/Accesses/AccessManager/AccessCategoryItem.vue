@@ -36,7 +36,9 @@
       </PentilaButton>
     </div>
 
-    <ul v-if="category.accessList.length > 0">
+    <AccessesPlaceholder v-if="category.accessList.length === 0" />
+
+    <ul v-else>
       <li
         v-for="access in category.accessList"
         :key="access.title"
@@ -53,10 +55,11 @@
 <script>
 import AccessItem from '@components/Accesses/AccessManager/AccessItem.vue'
 import AccessCategoryInput from '@components/Accesses/AccessManager/AccessCategoryInput.vue'
+import AccessesPlaceholder from '@components/Accesses/AccessManager/AccessesPlaceholder.vue'
 
 export default {
   name: 'AccessCategoryItem',
-  components: { AccessCategoryInput, AccessItem },
+  components: { AccessesPlaceholder, AccessCategoryInput, AccessItem },
   props: {
     category: {
       type: Object,

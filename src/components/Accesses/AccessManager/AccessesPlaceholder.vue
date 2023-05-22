@@ -1,17 +1,17 @@
 <template>
   <div class="placeholder">
     <span v-t="'noAccess'" />
-    <em
-      v-t="'createCategory'"
-      @click="$emit('createCategory')"
-    />
+    <!--    <em-->
+    <!--      v-t="'createAccess'"-->
+    <!--      @click="$emit('createAccess')"-->
+    <!--    />-->
   </div>
 </template>
 
 <script>
 export default {
-  name: 'CategoriesPlaceholder',
-  emits: ['createCategory']
+  name: 'AccessesPlaceholder',
+  emits: ['createAccess']
 }
 </script>
 
@@ -19,8 +19,10 @@ export default {
 @import "@design";
 
 .placeholder {
-  height: 20vh;
-  width: 100%;
+  margin-left: 30px;
+  margin-top: 10px;
+  height: 10vh;
+  width: calc(100% - 30px);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -46,6 +48,6 @@ em {
 <i18n locale="fr">
 {
   "noAccess": "Aucun accès",
-  "createCategory": "Ajoutez votre première catégorie d'accès !"
+  "createAccess": "Ajoutez un accès"
 }
 </i18n>
