@@ -40,4 +40,9 @@ ul {
   flex-wrap: wrap;
   gap: 1rem;
 }
+
+h2 {
+  margin: 0 0 0.8rem 0;
+  font-size: 1.125rem
+}
 </style>

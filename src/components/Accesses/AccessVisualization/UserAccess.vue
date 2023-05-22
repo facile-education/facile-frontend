@@ -65,8 +65,11 @@ export default {
 }
 
 .title {
+  max-width: 100px;
   margin-top: 5px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   text-align: center;
-  font-weight: bold;
 }
 </style>
