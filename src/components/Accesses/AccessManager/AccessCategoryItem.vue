@@ -36,7 +36,10 @@
       </PentilaButton>
     </div>
 
-    <AccessesPlaceholder v-if="category.accessList.length === 0" />
+    <AccessesPlaceholder
+      v-if="category.accessList.length === 0"
+      :parent-category="category"
+    />
 
     <ul v-else>
       <li
