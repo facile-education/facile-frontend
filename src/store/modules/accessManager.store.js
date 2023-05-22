@@ -47,13 +47,14 @@ export const actions = {
   setSelectedSchool ({ commit }, school) {
     commit('setSchool', school)
   },
-  getSchoolAccesses ({ commit, state }) {
+  getSchoolAccesses ({ commit, state, getters }) {
     commit('setLoading', true)
     getSchoolAccesses(state.selectedSchool.schoolId).then((data) => {
       commit('setLoading', false)
       if (data.success) {
         commit('setError', false)
         const sortedAccesses = sortAccesses(data.accesses)
+        addRoleLabel(sortedAccesses, getters) // Assume that store.roleList is set
         commit('setInitialCategoryList', sortedAccesses)
         commit('setCategoryList', sortedAccesses)
       } else {
@@ -84,4 +85,26 @@ export const actions = {
   closeAccessModal ({ commit }) {
     commit('setIsUserAccessModalOpen', false)
   }
+}
+
+export const getters = {
+  getRoleName: (state) => (roleId) => {
+    for (let i = 0; i < state.roleList.length; ++i) {
+      if (state.roleList[i].roleId === roleId) {
+        return state.roleList[i].displayText
+      }
+    }
+    return 'Unknown role name'
+  }
+}
+
+const addRoleLabel = (categoryList, getters) => {
+  categoryList.forEach(category => {
+    category.accessList.forEach(access => {
+      for (let i = 0; i < access.profiles.length; i++) {
+        const profileId = access.profiles[i]
+        access.profiles[i] = { roleId: profileId, displayText: getters.getRoleName(profileId) }
+      }
+    })
+  })
 }
