@@ -30,6 +30,9 @@
       @remove="file = undefined"
     />
   </div>
+  <PentilaErrorMessage
+    :error-message="errorMessage"
+  />
 
   <teleport
     v-if="isFolderPickerDisplayed"
@@ -58,6 +61,8 @@
 import Types from '@/constants/accessConstants'
 import { defineAsyncComponent } from 'vue'
 import FilePickerModal from '@components/FilePicker/FilePickerModal.vue'
+import { useVuelidate } from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
 const RedirectionEntity = defineAsyncComponent(() => import('@components/Accesses/AccessManager/RedirectionEntity.vue'))
 
 export default {
@@ -70,6 +75,7 @@ export default {
     }
   },
   emits: ['updateUrl', 'updateFolder', 'updateFile', 'updateType'],
+  setup: () => ({ v$: useVuelidate() }),
   data () {
     return {
       typeList: [
@@ -85,8 +91,51 @@ export default {
       isFilePickerDisplayed: false
     }
   },
+  validations () {
+    const localRules = {}
+    if (this.selectedType.type === Types.TYPE_EXTERNAL_URL) {
+      localRules.url = {
+        required
+      }
+    } else if (this.selectedType.type === Types.TYPE_COLLABORATIVE_FOLDER) {
+      localRules.folder = {
+        required
+      }
+    } else if (this.selectedType.type === Types.TYPE_SHARED_FILE) {
+      localRules.file = {
+        required
+      }
+    }
+    return localRules
+  },
   computed: {
-    types () { return Types }
+    types () { return Types },
+    formErrorList () {
+      return {
+        url: (this.v$.url && this.v$.url.$invalid && this.v$.url.$dirty)
+          ? this.$t('urlRequired')
+          : '',
+        folder: (this.v$.folder && this.v$.folder.$invalid && this.v$.folder.$dirty)
+          ? this.$t('folderRequired')
+          : '',
+        file: (this.v$.file && this.v$.file.$invalid && this.v$.file.$dirty)
+          ? this.$t('fileRequired')
+          : ''
+      }
+    },
+    errorMessage () {
+      switch (this.selectedType.type) {
+        case Types.TYPE_EXTERNAL_URL:
+          return this.formErrorList.url
+        case Types.TYPE_COLLABORATIVE_FOLDER:
+          return this.formErrorList.folder
+        case Types.TYPE_SHARED_FILE:
+          return this.formErrorList.file
+        default:
+          console.error('Unknown type: ' + this.selectedType.type)
+          return ''
+      }
+    }
   },
   watch: {
     folder (value) {
@@ -152,6 +201,9 @@ export default {
   "urlPlaceHolder": "Url",
   "TYPE_EXTERNAL_URL": "Url externe",
   "TYPE_COLLABORATIVE_FOLDER": "Dossier interne",
-  "TYPE_SHARED_FILE": "Fichier interne"
+  "TYPE_SHARED_FILE": "Fichier interne",
+  "urlRequired": "Champ requis",
+  "folderRequired": "Veuillez sélectionner un dossier",
+  "fileRequired": "Veuillez sélectionner un fichier"
 }
 </i18n>
