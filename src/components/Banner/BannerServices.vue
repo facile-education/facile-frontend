@@ -1,7 +1,7 @@
 <template>
   <div>
     <BannerItem
-      :src="require('@/assets/images/banner/icon-star.svg')"
+      :src="require('@/assets/icons/accesses.svg')"
       @click="openAccessModal"
     />
     <BannerItem
