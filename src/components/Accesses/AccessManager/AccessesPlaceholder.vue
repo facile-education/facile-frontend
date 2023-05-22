@@ -1,5 +1,11 @@
 <template>
-  <div class="placeholder">
+  <div
+    class="placeholder"
+    :class="{'theme-border-color' : dragover}"
+    @dragover.prevent="dragover=true"
+    @dragleave="dragover=false"
+    @drop="drop"
+  >
     <span v-t="'noAccess'" />
     <!--    <em-->
     <!--      v-t="'createAccess'"-->
@@ -11,7 +17,54 @@
 <script>
 export default {
   name: 'AccessesPlaceholder',
-  emits: ['createAccess']
+  props: {
+    parentCategory: {
+      type: Object,
+      required: true
+    }
+  },
+  emits: ['createAccess'],
+  data () {
+    return {
+      dragover: false
+    }
+  },
+  computed: {
+    categoryList () {
+      return this.$store.state.accessManager.categoryList
+    },
+    draggedAccess () {
+      return this.$store.state.accessManager.draggedAccess
+    }
+  },
+  methods: {
+    drop () {
+      if (this.draggedAccess) {
+        // Deep copy categoryList
+        const newCategoryList = JSON.parse(JSON.stringify(this.categoryList))
+
+        // Delete the dropped access from old category
+        const oldCategory = newCategoryList[this.draggedAccess.parentCategoryPosition]
+        oldCategory.accessList.splice(this.draggedAccess.position, 1)
+        // Recompute old category positions
+        for (let index = 0; index < oldCategory.accessList.length; index++) {
+          oldCategory.accessList[index].position = index
+        }
+
+        // Insert him in the good place in new category
+        const newCategory = newCategoryList[this.parentCategory.position]
+        newCategory.accessList.splice(0, 0, { ...this.draggedAccess })
+        // Recompute new category positions
+        for (let index = 0; index < newCategory.accessList.length; index++) {
+          newCategory.accessList[index].position = index
+        }
+
+        // Save the new categoryList
+        this.$store.commit('accessManager/setDraggedAccess', undefined)
+        this.$store.dispatch('accessManager/setCategoryList', newCategoryList)
+      }
+    }
+  }
 }
 </script>
 
@@ -42,6 +95,10 @@ em {
   text-decoration: underline;
   font-style: normal;
   font-weight: 600;
+}
+
+.theme-border-color {
+  border: 2px solid;
 }
 </style>
 
