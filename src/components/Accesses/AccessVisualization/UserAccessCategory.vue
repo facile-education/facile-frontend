@@ -43,6 +43,6 @@ ul {
 
 h2 {
   margin: 0 0 0.8rem 0;
-  font-size: 1.125rem
+  font-size: 0.875rem
 }
 </style>
