@@ -23,10 +23,9 @@
       v-t="'errorPlaceholder'"
       class="placeholder"
     />
-    <div
+    <CategoriesPlaceholder
       v-else-if="categoryList.length === 0 && !isCreateCategoryInputDisplayed"
-      v-t="'emptyPlaceholder'"
-      class="placeholder"
+      @createCategory="isCreateCategoryInputDisplayed=true"
     />
 
     <AccessCategoryList
@@ -69,11 +68,13 @@ import SchoolSelector from '@components/Accesses/AccessManager/SchoolSelector.vu
 import AccessFooter from '@components/Accesses/AccessManager/AccessFooter.vue'
 import { saveSchoolAccesses } from '@/api/access.service'
 import { sortAccesses } from '@utils/accessUtils'
+import CategoriesPlaceholder from '@components/Accesses/AccessManager/CategoriesPlaceholder.vue'
 const SaveAccessModal = defineAsyncComponent(() => import('@components/Accesses/AccessManager/SaveAccessModal.vue'))
 
 export default {
   name: 'AccessManager',
   components: {
+    CategoriesPlaceholder,
     AccessFooter,
     SchoolSelector,
     AccessCategoryInput,
@@ -179,7 +180,6 @@ export default {
 <i18n locale="fr">
 {
   "errorPlaceholder": "Oups, une erreur est survenue...",
-  "emptyPlaceholder": "Aucun accès",
   "serviceTitle": "Gestion des accès",
   "saveSuccess": "Accès mis à jour avec succès!"
 }
