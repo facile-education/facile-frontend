@@ -22,12 +22,22 @@
       :name="folder.name"
       @remove="folder = undefined"
     />
+    <button
+      v-else-if="selectedType.type === types.TYPE_COLLABORATIVE_FOLDER && folder === undefined"
+      v-t="'selectFolder'"
+      @click="isFolderPickerDisplayed = true"
+    />
     <RedirectionEntity
       v-else-if="selectedType.type === types.TYPE_SHARED_FILE && file !== undefined"
       class="field"
       :is-folder="false"
       :name="file.name"
       @remove="file = undefined"
+    />
+    <button
+      v-else-if="selectedType.type === types.TYPE_SHARED_FILE && file === undefined"
+      v-t="'selectFile'"
+      @click="isFilePickerDisplayed = true"
     />
   </div>
   <PentilaErrorMessage
@@ -183,7 +193,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .redirection-selector {
   display: flex;
   align-items: center;
@@ -192,6 +201,10 @@ export default {
     margin-left: 1rem;
     flex: 1;
   }
+}
+
+button {
+  margin-left: auto;
 }
 
 </style>
@@ -204,6 +217,8 @@ export default {
   "TYPE_SHARED_FILE": "Fichier interne",
   "urlRequired": "Champ requis",
   "folderRequired": "Veuillez sélectionner un dossier",
-  "fileRequired": "Veuillez sélectionner un fichier"
+  "fileRequired": "Veuillez sélectionner un fichier",
+  "selectFolder": "Sélectionnez un dossier",
+  "selectFile": "Sélectionnez un fichier"
 }
 </i18n>
