@@ -18,9 +18,19 @@
       />
     </div>
 
-    <h3>
-      {{ access.title }}
-    </h3>
+    <div class="content">
+      <div class="thumbnail">
+        image
+      </div>
+      <div class="access-text">
+        <h3>
+          {{ access.title }}
+        </h3>
+        <div class="roles">
+          {{ formattedRoleList }}
+        </div>
+      </div>
+    </div>
     <div class="options">
       <button
         class="option"
@@ -88,6 +98,16 @@ export default {
     },
     draggedAccess () {
       return this.$store.state.accessManager.draggedAccess
+    },
+    formattedRoleList () {
+      let result = this.$t('profiles')
+      for (let i = 0; i < this.access.profiles.length; i++) {
+        result += this.access.profiles[i].displayText
+        if (i !== this.access.profiles.length - 1) {
+          result += ' - '
+        }
+      }
+      return result
     }
   },
   methods: {
@@ -205,18 +225,12 @@ export default {
 
 h3 {
   height: 100%;
-  display: flex;
-  align-items: center;
   margin: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 1.2rem;
   font-weight: 500;
 }
 
 .access {
-  height: 50px;
+  height: 74px;
   position: relative;
   border: 1px solid $color-border;
   border-radius: 6px;
@@ -285,6 +299,40 @@ h3 {
   }
 }
 
+.content {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+}
+
+.thumbnail {
+  height: 64px;
+  width: 64px;
+  min-width: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid $color-border;
+  border-radius: 50%;
+  font-size: 0.75rem;
+}
+
+.access-text {
+  margin-left: 1rem;
+  overflow: hidden;
+
+  .roles {
+    margin-top: 4px;
+  }
+
+  h3, .roles {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
 .options {
   position: absolute;
   top: 0;
@@ -293,10 +341,12 @@ h3 {
   overflow: hidden;
   opacity: 0;
   display: flex;
+  flex-direction: column;
   border-radius: 0 5px 5px 0;
   transition: all .3s ease;
 
   .option {
+    flex: 1;
     width: 0;
     transition: all .3s ease;
     display: flex;
@@ -314,6 +364,7 @@ h3 {
 
 <i18n locale="fr">
 {
-  "deleteAccessWarning": "Souhaitez-vous supprimer l'accès {accessName} ?"
+  "deleteAccessWarning": "Souhaitez-vous supprimer l'accès {accessName} ?",
+  "profiles": "Profils: "
 }
 </i18n>
