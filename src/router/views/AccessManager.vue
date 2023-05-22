@@ -1,7 +1,6 @@
 <template>
-  <!--  TODO : check isSchoolAdmin role-->
   <Layout
-    :is-allowed="$store.state.user.isSchoolAdmin"
+    :is-allowed="$store.state.user.isAdministrator || $store.state.user.isLocalAdmin || $store.state.user.isENTAdmin || $store.state.user.isDirectionMember"
     class="layout"
   >
     <h1 :aria-label="$t('serviceTitle')" />
