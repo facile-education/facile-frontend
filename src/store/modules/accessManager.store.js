@@ -1,5 +1,6 @@
 import { getSchoolAccesses } from '@/api/access.service'
 import { sortAccesses } from '@utils/accessUtils'
+import { getBroadcastRoleList } from '@/api/role.service'
 
 export const state = {
   isLoading: false,
@@ -8,7 +9,8 @@ export const state = {
   initialCategoryList: [],
   categoryList: [],
   draggedAccess: undefined,
-  isUserAccessModalOpen: false
+  isUserAccessModalOpen: false,
+  roleList: []
 }
 
 export const mutations = {
@@ -32,6 +34,9 @@ export const mutations = {
   },
   setIsUserAccessModalOpen (state, payload) {
     state.isUserAccessModalOpen = payload
+  },
+  setRoleList (state, payload) {
+    state.roleList = payload
   }
 }
 
@@ -59,6 +64,15 @@ export const actions = {
       commit('setLoading', false)
       commit('setError', true)
       console.error(err)
+    })
+  },
+  getRoleList ({ commit }) {
+    getBroadcastRoleList().then((data) => {
+      if (data.success) {
+        commit('setRoleList', data.roles)
+      } else {
+        console.error('Error while getting users', data.error)
+      }
     })
   },
   setCategoryList ({ commit }, categoryList) {

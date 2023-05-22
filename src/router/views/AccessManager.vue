@@ -5,43 +5,50 @@
   >
     <h1 :aria-label="$t('serviceTitle')" />
 
-    <SchoolSelector />
+    <div v-if="roleList.length > 0">
+      <SchoolSelector />
 
-    <AccessCreateButton
-      class="create-button"
-      @createCategory="isCreateCategoryInputDisplayed=true"
-      @createAccess="isSaveAccessModalDisplayed=true"
-    />
+      <AccessCreateButton
+        class="create-button"
+        @createCategory="isCreateCategoryInputDisplayed=true"
+        @createAccess="isSaveAccessModalDisplayed=true"
+      />
 
-    <PentilaSpinner
-      v-if="isLoading"
-      style="z-index: 1"
-    />
+      <PentilaSpinner
+        v-if="isLoading"
+        style="z-index: 1"
+      />
+      <div
+        v-if="error === true"
+        v-t="'errorPlaceholder'"
+        class="placeholder"
+      />
+      <CategoriesPlaceholder
+        v-else-if="categoryList.length === 0 && !isCreateCategoryInputDisplayed"
+        @createCategory="isCreateCategoryInputDisplayed=true"
+      />
+
+      <AccessCategoryList
+        v-else
+        :category-list="sortedCategoryList"
+      />
+
+      <AccessCategoryInput
+        v-if="isCreateCategoryInputDisplayed"
+        @submitName="createCategory"
+        @close="isCreateCategoryInputDisplayed = false"
+      />
+
+      <AccessFooter
+        class="footer"
+        @reset="reset"
+        @submit="submit"
+      />
+    </div>
     <div
-      v-if="error === true"
-      v-t="'errorPlaceholder'"
-      class="placeholder"
-    />
-    <CategoriesPlaceholder
-      v-else-if="categoryList.length === 0 && !isCreateCategoryInputDisplayed"
-      @createCategory="isCreateCategoryInputDisplayed=true"
-    />
-
-    <AccessCategoryList
       v-else
-      :category-list="sortedCategoryList"
-    />
-
-    <AccessCategoryInput
-      v-if="isCreateCategoryInputDisplayed"
-      @submitName="createCategory"
-      @close="isCreateCategoryInputDisplayed = false"
-    />
-
-    <AccessFooter
-      class="footer"
-      @reset="reset"
-      @submit="submit"
+      v-t="'noRolePlaceholder'"
+      class="placeholder"
     />
   </Layout>
 
@@ -89,6 +96,9 @@ export default {
     }
   },
   computed: {
+    roleList () {
+      return this.$store.state.accessManager.roleList
+    },
     selectedSchool () {
       return this.$store.state.accessManager.selectedSchool
     },
@@ -106,6 +116,11 @@ export default {
     },
     sortedCategoryList () {
       return sortAccesses(this.categoryList)
+    }
+  },
+  created () {
+    if (this.roleList.length === 0) {
+      this.$store.dispatch('accessManager/getRoleList')
     }
   },
   methods: {
@@ -180,6 +195,7 @@ export default {
 {
   "errorPlaceholder": "Oups, une erreur est survenue...",
   "serviceTitle": "Gestion des accès",
-  "saveSuccess": "Accès mis à jour avec succès!"
+  "saveSuccess": "Accès mis à jour avec succès!",
+  "noRolePlaceholder": "Erreur lors de la récupération des roles, veuillez contacter le service technique"
 }
 </i18n>
