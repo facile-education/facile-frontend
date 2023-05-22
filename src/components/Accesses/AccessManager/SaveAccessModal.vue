@@ -81,7 +81,6 @@ import validators from '@utils/validators'
 import { useVuelidate } from '@vuelidate/core'
 import { nextTick } from 'vue'
 import AccessRedirectionSelector from '@components/Accesses/AccessManager/AccessRedirectionSelector.vue'
-import Types from '@/constants/accessConstants'
 const inputMaxSize = 75
 const isUnderInputMaxSize = (value) => validators.isUnderMaxSize(value, inputMaxSize)
 const isNotEmpty = (list) => validators.isNotEmpty(list)
@@ -126,21 +125,6 @@ export default {
       required,
       isUnderInputMaxSize
     },
-    url: {
-      function () {
-        return (this.selectedType.type === Types.TYPE_EXTERNAL_URL) ? required : true
-      }
-    },
-    folderId: {
-      function () {
-        return (this.selectedType.type === Types.TYPE_COLLABORATIVE_FOLDER) ? required : true
-      }
-    },
-    fileId: {
-      function () {
-        return (this.selectedType.type === Types.TYPE_SHARED_FILE) ? required : true
-      }
-    },
     roles: {
       isNotEmpty
     },
@@ -181,19 +165,7 @@ export default {
           : '',
         category: (this.v$.selectedCategory.$invalid && this.v$.selectedCategory.$dirty)
           ? this.$t('selectCategory')
-          : '',
-        redirection: this.redirectionError
-      }
-    },
-    redirectionError () {
-      if (this.v$.url.$invalid && this.v$.url.$dirty) {
-        return (this.v$.url.$errors[0].$validator === 'required' ? this.$t('Commons.required') : this.$t('sizeLimit1') + inputMaxSize + this.$t('sizeLimit2'))
-      } else if (this.v$.folderId.$invalid && this.v$.folderId.$dirty) {
-        return this.$t('selectFolder')
-      } else if (this.v$.fileId.$invalid && this.v$.fileId.$dirty) {
-        return this.$t('selectFile')
-      } else {
-        return ''
+          : ''
       }
     }
   },
