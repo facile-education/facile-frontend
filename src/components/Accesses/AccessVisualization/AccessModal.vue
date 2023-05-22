@@ -1,6 +1,7 @@
 <template>
   <PentilaWindow
     class="create-link-modal"
+    :class="{'phone': mq.phone}"
     data-test="create-link-modal"
     :modal="true"
     :draggable="true"
@@ -45,6 +46,7 @@ import UserAccessCategory from '@components/Accesses/AccessVisualization/UserAcc
 export default {
   name: 'AccessModal',
   components: { UserAccessCategory },
+  inject: ['mq'],
   emits: ['close'],
   data () {
     return {
@@ -87,6 +89,16 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.create-link-modal.modal-mask .window-container .window-body {
+  overflow-y: auto;
+}
+
+:not(.phone).create-link-modal.modal-mask .window-container .window-body {
+  max-height: 30vh;
+}
+</style>
 
 <style lang="scss" scoped>
 
