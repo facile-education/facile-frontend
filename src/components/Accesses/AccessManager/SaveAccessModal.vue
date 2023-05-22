@@ -75,7 +75,6 @@
 </template>
 
 <script>
-import { getBroadcastRoleList } from '@/api/role.service'
 import { required } from '@vuelidate/validators'
 import validators from '@utils/validators'
 import { useVuelidate } from '@vuelidate/core'
@@ -110,7 +109,6 @@ export default {
       title: undefined,
       selectedCategory: { categoryId: -1, categoryName: this.$t('placeholderCategory') },
       roles: [],
-      availableRoleList: [],
       initRedirection: undefined,
       selectedType: undefined,
       url: undefined,
@@ -134,6 +132,9 @@ export default {
     }
   },
   computed: {
+    availableRoleList () {
+      return this.$store.state.accessManager.roleList
+    },
     isCreation () {
       return this.initAccess === undefined
     },
@@ -171,7 +172,6 @@ export default {
   },
   created () {
     this.$store.dispatch('misc/incrementModalCount')
-    this.getRoleList()
     if (!this.isCreation) {
       this.title = this.initAccess.title
       this.roles = this.initAccess.profiles
@@ -221,15 +221,6 @@ export default {
         this.fileId = file.id
         this.fileName = file.name
       }
-    },
-    getRoleList () {
-      getBroadcastRoleList().then((data) => {
-        if (data.success) {
-          this.availableRoleList = data.roles
-        } else {
-          console.error('Error while getting users', data.error)
-        }
-      })
     },
     submit () {
       if (this.v$.$invalid) {
