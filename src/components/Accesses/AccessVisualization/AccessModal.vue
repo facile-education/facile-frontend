@@ -96,7 +96,7 @@ ul {
   list-style-type: none;
 
   li {
-    margin-bottom: 10px;
+    margin-bottom: 1rem;
 
     &:last-child {
       margin-bottom: 0;
