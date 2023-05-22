@@ -89,6 +89,18 @@ export default {
     AccessCategoryList,
     Layout
   },
+  beforeRouteLeave (to, from, next) {
+    if (this.haveChanges) {
+      const answer = window.confirm(this.$t('confirmExitMessage'))
+      if (answer) {
+        next()
+      } else {
+        next(false)
+      }
+    } else {
+      next()
+    }
+  },
   data () {
     return {
       isSaveAccessModalDisplayed: false,
@@ -116,6 +128,9 @@ export default {
     },
     sortedCategoryList () {
       return sortAccesses(this.categoryList)
+    },
+    haveChanges () {
+      return this.$store.getters['accessManager/haveChanges']
     }
   },
   created () {
@@ -123,7 +138,22 @@ export default {
       this.$store.dispatch('accessManager/getRoleList')
     }
   },
+  mounted () {
+    window.addEventListener('beforeunload', this.confirmExit)
+  },
+  beforeUnmount () {
+    window.removeEventListener('beforeunload', this.confirmExit)
+  },
   methods: {
+    confirmExit (event) {
+      if (this.haveChanges) {
+        const confirmationMessage = this.$t('confirmExitMessage')
+        // For old versions of Chrome and Firefox
+        event.returnValue = confirmationMessage
+        // The return value is used by most of modern browsers
+        return confirmationMessage
+      }
+    },
     createCategory (name) {
       this.isCreateCategoryInputDisplayed = false
       if (name.length > 0) {
@@ -196,6 +226,7 @@ export default {
   "errorPlaceholder": "Oups, une erreur est survenue...",
   "serviceTitle": "Gestion des accès",
   "saveSuccess": "Accès mis à jour avec succès!",
-  "noRolePlaceholder": "Erreur lors de la récupération des roles, veuillez contacter le service technique"
+  "noRolePlaceholder": "Erreur lors de la récupération des roles, veuillez contacter le service technique",
+  "confirmExitMessage": "Êtes-vous sûr de vouloir quitter cette page ? Les modifications non sauvegardées seront perdues."
 }
 </i18n>
