@@ -55,21 +55,23 @@ export default {
 }
 
 .thumbnail {
-  height: 100px;
-  width: 100px;
+  height: 64px;
+  width: 64px;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1px solid $color-border;
   border-radius: 50%;
+  font-size: 0.75rem;
 }
 
 .title {
-  max-width: 100px;
+  max-width: 64px;
   margin-top: 5px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   text-align: center;
+  font-size: 0.75rem;
 }
 </style>
