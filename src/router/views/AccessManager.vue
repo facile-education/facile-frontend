@@ -38,6 +38,7 @@
 
       <AccessCategoryInput
         v-if="isCreateCategoryInputDisplayed"
+        class="category-input"
         @submitName="createCategory"
         @close="isCreateCategoryInputDisplayed = false"
       />
@@ -210,6 +211,10 @@ export default {
   display: flex;
   justify-content: space-between;
   margin-bottom: 15px;
+}
+
+.category-input {
+  margin-top: 15px
 }
 
 .footer {
