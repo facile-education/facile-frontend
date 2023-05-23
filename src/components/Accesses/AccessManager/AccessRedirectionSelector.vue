@@ -75,6 +75,16 @@ import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 const RedirectionEntity = defineAsyncComponent(() => import('@components/Accesses/AccessManager/RedirectionEntity.vue'))
 
+const isValidURL = (url) => { // TODO: Move to utils?
+  const pattern = new RegExp('^(https?:\\/\\/)?' + // Protocol
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // Domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))' + // IP address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // Port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?' + // Request string
+    '(\\#[-a-z\\d_]*)?$', 'i') // Fragment
+  return !!pattern.test(url)
+}
+
 export default {
   name: 'AccessRedirectionSelector',
   components: { FilePickerModal, RedirectionEntity },
@@ -105,7 +115,8 @@ export default {
     const localRules = {}
     if (this.selectedType.type === Types.TYPE_EXTERNAL_URL) {
       localRules.url = {
-        required
+        required,
+        isValidURL
       }
     } else if (this.selectedType.type === Types.TYPE_COLLABORATIVE_FOLDER) {
       localRules.folder = {
@@ -123,7 +134,7 @@ export default {
     formErrorList () {
       return {
         url: (this.v$.url && this.v$.url.$invalid && this.v$.url.$dirty)
-          ? this.$t('urlRequired')
+          ? (this.v$.url.$errors[0].$validator === 'required' ? this.$t('urlRequired') : this.$t('urlInvalid'))
           : '',
         folder: (this.v$.folder && this.v$.folder.$invalid && this.v$.folder.$dirty)
           ? this.$t('folderRequired')
@@ -216,6 +227,7 @@ button {
   "TYPE_COLLABORATIVE_FOLDER": "Dossier interne",
   "TYPE_SHARED_FILE": "Fichier interne",
   "urlRequired": "Champ requis",
+  "urlInvalid": "Url invalide",
   "folderRequired": "Veuillez sélectionner un dossier",
   "fileRequired": "Veuillez sélectionner un fichier",
   "selectFolder": "Sélectionnez un dossier",
