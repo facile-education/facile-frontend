@@ -117,7 +117,7 @@ export default {
 }
 
 :not(.phone).create-link-modal.modal-mask .window-container .window-body {
-  max-height: 30vh;
+  max-height: 40vh;
 }
 </style>
 
