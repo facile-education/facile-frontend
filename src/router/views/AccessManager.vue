@@ -60,8 +60,6 @@
     to="body"
   >
     <SaveAccessModal
-      :category-list="categoryList"
-      @createAccess="createAccess"
       @close="isSaveAccessModalDisplayed=false"
     />
   </teleport>
@@ -171,19 +169,6 @@ export default {
         })
         this.$store.dispatch('accessManager/setCategoryList', newCategoryList)
       }
-    },
-    createAccess (accessForm) {
-      const access = accessForm.access
-      const selectedCategory = accessForm.selectedCategory
-
-      // Deep copy categoryList
-      const newCategoryList = JSON.parse(JSON.stringify(this.categoryList))
-      // Add the new access in place
-      const category = newCategoryList[selectedCategory.position]
-      access.position = category.accessList.length // Put in last position
-      category.accessList.push(access)
-      // Set the new categoryList
-      this.$store.dispatch('accessManager/setCategoryList', newCategoryList)
     },
     reset () {
       this.$store.dispatch('accessManager/setCategoryList', this.initialCategoryList)

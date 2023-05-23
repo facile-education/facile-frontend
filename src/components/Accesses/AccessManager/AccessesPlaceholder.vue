@@ -7,26 +7,42 @@
     @drop="drop"
   >
     <span v-t="'noAccess'" />
-    <!--    <em-->
-    <!--      v-t="'createAccess'"-->
-    <!--      @click="$emit('createAccess')"-->
-    <!--    />-->
+    <em
+      v-t="'createAccess'"
+      @click="isSaveAccessModalDisplayed=true"
+    />
   </div>
+
+  <teleport
+    v-if="isSaveAccessModalDisplayed"
+    to="body"
+  >
+    <SaveAccessModal
+      :init-category="parentCategory"
+      @close="isSaveAccessModalDisplayed=false"
+    />
+  </teleport>
 </template>
 
 <script>
+import { defineAsyncComponent } from 'vue'
+const SaveAccessModal = defineAsyncComponent(() => import('@components/Accesses/AccessManager/SaveAccessModal.vue'))
+
 export default {
   name: 'AccessesPlaceholder',
+  components: {
+    SaveAccessModal
+  },
   props: {
     parentCategory: {
       type: Object,
       required: true
     }
   },
-  emits: ['createAccess'],
   data () {
     return {
-      dragover: false
+      dragover: false,
+      isSaveAccessModalDisplayed: false
     }
   },
   computed: {
@@ -89,7 +105,7 @@ export default {
 em {
   // TODO: Uniform placeholder style with progression
   font-size: 0.9rem;
-  margin-top: 5px;
+  margin-top: 3px;
   cursor: pointer;
   color: $color-link;
   text-decoration: underline;
@@ -105,6 +121,6 @@ em {
 <i18n locale="fr">
 {
   "noAccess": "Aucun accès",
-  "createAccess": "Ajoutez un accès"
+  "createAccess": "Ajoutez votre premier accès !"
 }
 </i18n>
