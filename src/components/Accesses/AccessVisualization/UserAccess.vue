@@ -52,6 +52,9 @@ export default {
 
 .user-access {
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .thumbnail {
@@ -66,7 +69,8 @@ export default {
 }
 
 .title {
-  max-width: 64px;
+  width: 80px;
+  max-width: 80px;
   margin-top: 5px;
   overflow: hidden;
   white-space: nowrap;
