@@ -96,13 +96,9 @@ export default {
     initCategory: {
       type: Object,
       default: undefined
-    },
-    categoryList: {
-      type: Array,
-      required: true
     }
   },
-  emits: ['close', 'createAccess', 'updateAccess'],
+  emits: ['close', 'updateAccess'],
   setup: () => ({ v$: useVuelidate() }),
   data () {
     return {
@@ -132,6 +128,9 @@ export default {
     }
   },
   computed: {
+    categoryList () {
+      return this.$store.state.accessManager.categoryList
+    },
     availableRoleList () {
       return this.$store.state.accessManager.roleList
     },
@@ -172,10 +171,12 @@ export default {
   },
   created () {
     this.$store.dispatch('misc/incrementModalCount')
+    if (this.initCategory) {
+      this.selectedCategory = this.categoryList[this.initCategory.position]
+    }
     if (!this.isCreation) {
       this.title = this.initAccess.title
       this.roles = this.initAccess.profiles
-      this.selectedCategory = this.categoryList[this.initCategory.position]
       this.selectedType = this.initAccess.type
       this.url = this.initAccess.url
       this.folderId = this.initAccess.folderId
@@ -234,7 +235,17 @@ export default {
       }
     },
     createAccess () {
-      this.$emit('createAccess', this.formAccess)
+      const access = this.formAccess.access
+      const selectedCategory = this.formAccess.selectedCategory
+
+      // Deep copy categoryList
+      const newCategoryList = JSON.parse(JSON.stringify(this.categoryList))
+      // Add the new access in place
+      const category = newCategoryList[selectedCategory.position]
+      access.position = category.accessList.length // Put in last position
+      category.accessList.push(access)
+      // Set the new categoryList
+      this.$store.dispatch('accessManager/setCategoryList', newCategoryList)
       this.onClose()
     },
     updateAccess () {
