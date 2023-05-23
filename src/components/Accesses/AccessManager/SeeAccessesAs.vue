@@ -2,7 +2,7 @@
   <PentilaDropdown
     v-model="selectedRole"
     :list="roleList"
-    placeholder="test"
+    :placeholder="$t('seeAs')"
     display-field="displayText"
     @update:modelValue="isAccessVisualizationOpen=true"
   />
@@ -28,7 +28,7 @@ export default {
   components: { AccessModal },
   data () {
     return {
-      selectedRole: { roleId: -1, displayText: this.$t('seeAs') },
+      selectedRole: undefined,
       isAccessVisualizationOpen: false
     }
   },
@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     closeAccessModal () {
-      this.selectedRole = { roleId: -1, displayText: this.$t('seeAs') }
+      this.selectedRole = undefined
       this.isAccessVisualizationOpen = false
     }
   }
