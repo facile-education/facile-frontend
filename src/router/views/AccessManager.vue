@@ -6,13 +6,16 @@
     <h1 :aria-label="$t('serviceTitle')" />
 
     <div v-if="roleList.length > 0">
-      <SchoolSelector />
+      <SchoolSelector class="school-selector" />
 
-      <AccessCreateButton
-        class="create-button"
-        @createCategory="isCreateCategoryInputDisplayed=true"
-        @createAccess="isSaveAccessModalDisplayed=true"
-      />
+      <div class="first-line">
+        <AccessCreateButton
+          @createCategory="isCreateCategoryInputDisplayed=true"
+          @createAccess="isSaveAccessModalDisplayed=true"
+        />
+
+        <SeeAccessesAs />
+      </div>
 
       <PentilaSpinner
         v-if="isLoading"
@@ -75,11 +78,13 @@ import AccessFooter from '@components/Accesses/AccessManager/AccessFooter.vue'
 import { saveSchoolAccesses } from '@/api/access.service'
 import { sortAccesses } from '@utils/accessUtils'
 import CategoriesPlaceholder from '@components/Accesses/AccessManager/CategoriesPlaceholder.vue'
+import SeeAccessesAs from '@components/Accesses/AccessManager/SeeAccessesAs.vue'
 const SaveAccessModal = defineAsyncComponent(() => import('@components/Accesses/AccessManager/SaveAccessModal.vue'))
 
 export default {
   name: 'AccessManager',
   components: {
+    SeeAccessesAs,
     CategoriesPlaceholder,
     AccessFooter,
     SchoolSelector,
@@ -212,7 +217,13 @@ export default {
   border-radius: 6px;
 }
 
-.create-button {
+.school-selector {
+  margin-bottom: 15px;
+}
+
+.first-line {
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 15px;
 }
 

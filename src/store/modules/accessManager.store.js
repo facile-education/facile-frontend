@@ -98,6 +98,23 @@ export const getters = {
   },
   haveChanges (state) {
     return JSON.stringify(state.initialCategoryList) !== JSON.stringify(state.categoryList)
+  },
+  filteredCategoryList: (state) => (role) => {
+    let filteredCategoryList = JSON.parse(JSON.stringify(state.categoryList))
+
+    // Only keep accesses that match to selected role
+    filteredCategoryList.forEach(category => {
+      category.accessList = category.accessList.filter(access => {
+        return access.profiles.map(profile => profile.roleId).indexOf(role.roleId) !== -1
+      })
+    })
+
+    // Remove empty categories after previous filter
+    filteredCategoryList = filteredCategoryList.filter(category => {
+      return category.accessList.length > 0
+    })
+
+    return filteredCategoryList
   }
 }
 
