@@ -9,7 +9,7 @@
     @close="onClose"
   >
     <template #header>
-      <span v-t="'title'" />
+      <span> {{ modalTitle }}</span>
     </template>
     <template #body>
       <PentilaSpinner
@@ -47,6 +47,16 @@ export default {
   name: 'AccessModal',
   components: { UserAccessCategory },
   inject: ['mq'],
+  props: {
+    initCategoryList: {
+      type: Array,
+      default: undefined
+    },
+    concernedRole: {
+      type: Object,
+      default: undefined
+    }
+  },
   emits: ['close'],
   data () {
     return {
@@ -56,13 +66,24 @@ export default {
     }
   },
   computed: {
+    modalTitle () {
+      if (this.concernedRole) {
+        return this.$t('AccessesOf', { roleLabel: this.concernedRole.displayText })
+      } else {
+        return this.$t('myAccesses')
+      }
+    },
     sortedCategoryList () {
       return sortAccesses(this.categoryList)
     }
   },
   created () {
     this.$store.dispatch('misc/incrementModalCount')
-    this.getUserAccesses()
+    if (this.initCategoryList) {
+      this.categoryList = this.initCategoryList
+    } else {
+      this.getUserAccesses()
+    }
   },
   methods: {
     getUserAccesses () {
@@ -119,7 +140,8 @@ ul {
 
 <i18n locale="fr">
 {
-  "title": "Mes accès",
+  "myAccesses": "Mes accès",
+  "AccessesOf": "Accès des {roleLabel}",
   "errorPlaceholder": "Oups, une erreur est survenue...",
   "emptyPlaceholder": "Aucun accès"
 }
