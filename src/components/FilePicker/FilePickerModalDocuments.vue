@@ -113,6 +113,7 @@ export default {
         this.maxUploadSize = data.maxUploadSize
         this.userFolderId = data.private.id
         if (this.collaborativeOnly) {
+          this.currentSpace = 'Group'
           this.loadGroupFolderContent('collaborative') // TODO get those key from data
         } else {
           this.loadUserFolderContent(this.userFolderId)
