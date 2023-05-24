@@ -28,6 +28,8 @@ import { GLOBAL_ADMIN, HEADMASTER as defaultUser } from '../support/constants'
 import constants from '../../../src/constants/appConstants'
 
 Cypress.Commands.add('clearDBCache', () => {
+  cy.log('===== clearDBCache =====')
+
   // Login as global admin to execute request to clear DB cache
   cy.clearCookies()
 
@@ -63,20 +65,19 @@ Cypress.Commands.add('clearDBCache', () => {
   cy.get(':nth-child(4) > :nth-child(2) > input').click()
 
   // // Do request
-  // const url = Cypress.config().baseUrl + '/group/control_panel/manage/-/server/resources?' +
-  //   'doAsGroupId=11107' +
-  //   '&refererPlid=315105&_137_cur=0' +
-  //   '&_137_delta=0'
+  // const url = Cypress.config().baseUrl + 'https://dev-ent-gve.com/group/control_panel/manage?' +
+  // 'p_p_id=com_liferay_server_admin_web_portlet_ServerAdminPortlet&' +
+  // 'p_p_lifecycle=1&' +
+  // 'p_p_state=maximized&' +
+  // 'p_p_mode=view&' +
+  // '_com_liferay_server_admin_web_portlet_ServerAdminPortlet_javax.portlet.action=%2Fserver_admin%2Fedit_server'
   //
   // const params = {
-  //   _137_formDate: Date.now(),
-  //   _137_cmd: 'cacheDb',
-  //   _137_tabs1: 'server',
-  //   _137_tabs2: 'resources',
-  //   _137_tabs3: '',
-  //   _137_redirect: '',
-  //   _137_portletId: '',
-  //   _137_tabs2TabsScroll: ''
+  //   _com_liferay_server_admin_web_portlet_ServerAdminPortlet_formDate: Date.now(),
+  //   _com_liferay_server_admin_web_portlet_ServerAdminPortlet_cmd: 'cacheSingle',
+  //   _com_liferay_server_admin_web_portlet_ServerAdminPortlet_tabs1: 'resources',
+  //   _com_liferay_server_admin_web_portlet_ServerAdminPortlet_redirect: '',
+  //   p_auth: '',
   // }
   //
   // cy.request({
@@ -105,30 +106,13 @@ Cypress.Commands.add('login', (visitUrl = '/', user = defaultUser) => {
   // To always have the same setup
   cy.clearCookies()
 
-  cy.visit('/')
+  cy.setCookie('COOKIE_SUPPORT', 'true')
 
-  const params = {
-    _58_login: user.login,
-    _58_password: user.password,
-    p_auth: ''
-  }
-
-  const loginUrl = Cypress.config().baseUrl + '/web/guest/home?' +
-    'p_p_id=58' +
-    '&p_p_lifecycle=1&' +
-    'p_p_state=normal&' +
-    'p_p_mode=view&' +
-    'saveLastPath=0&' +
-    '_58_struts_action=/login/login'
-
-  cy.request({
-    method: 'POST',
-    url: loginUrl,
-    form: true,
-    body: params
-  }).then((response) => {
-    expect(response.status).to.eq(200) // to test here or not?
-  })
+  // UI method
+  cy.visit('/nero/')
+  cy.get('[placeholder="Identifiant"]').type(user.login)
+  cy.get('[placeholder="Mot de passe"]').type(user.password)
+  cy.get('form > .btn').click()
 
   cy.visit(visitUrl)
   if (visitUrl === '/') {
@@ -136,7 +120,64 @@ Cypress.Commands.add('login', (visitUrl = '/', user = defaultUser) => {
   } else {
     cy.url().should('eq', Cypress.config().baseUrl + visitUrl)
   }
-  cy.wait(1000) // to be sure
+
+  // Request method (works only if there is no redirection on login request that ends in 404)
+  // // Get p_auth
+  // cy.request({
+  //   method: 'GET',
+  //   url: Cypress.config().baseUrl + '/p_auth_token.jsp',
+  //   headers: {
+  //     Referer: 'https://dev-ent-gve.com/nero/'
+  //   }
+  // }).then((response) => {
+  //   // expect(response.status).to.eq(200) // to test here or not?
+  //   const pAuth = response.body.replace(/(\r\n|\n|\r|\s)/gm, '')
+  //
+  //   const params = {
+  //     _com_liferay_login_web_portlet_LoginPortlet_formDate: Date.now(),
+  //     _com_liferay_login_web_portlet_LoginPortlet_saveLastPath: false,
+  //     _com_liferay_login_web_portlet_LoginPortlet_redirect: '',
+  //     _com_liferay_login_web_portlet_LoginPortlet_doActionAfterLogin: false,
+  //     _com_liferay_login_web_portlet_LoginPortlet_login: user.login,
+  //     _com_liferay_login_web_portlet_LoginPortlet_password: user.password,
+  //     _com_liferay_login_web_portlet_LoginPortlet_checkboxNames: 'rememberMe',
+  //     p_auth: pAuth
+  //   }
+  //
+  //   const loginUrl = Cypress.config().baseUrl + '/home?' +
+  //     'p_p_id=com_liferay_login_web_portlet_LoginPortlet' +
+  //     '&p_p_lifecycle=1&' +
+  //     'p_p_state=exclusive&' +
+  //     'p_p_mode=view&' +
+  //     '_com_liferay_login_web_portlet_LoginPortlet_javax.portlet.action=%2Flogin%2Flogin&' +
+  //     '_com_liferay_login_web_portlet_LoginPortlet_mvcRenderCommandName=%2Flogin%2Flogin'
+  //
+  //   cy.request({
+  //     method: 'POST',
+  //     url: loginUrl,
+  //     form: true,
+  //     body: params,
+  //     headers: {
+  //       Origin: 'https://dev-ent-gve.com'
+  //     }
+  //   }).then((authResponse) => {
+  //     expect(authResponse.status).to.eq(200) // to test here or not?
+  //
+  //     console.log(authResponse.body)
+  //
+  //     // "GUEST_LANGUAGE_ID=fr_FR; COOKIE_SUPPORT=true; JSESSIONID=DACF51174FD494C169047630C1A1A34D"
+  //     // "COOKIE_SUPPORT=true; LFR_SESSION_STATE_11105=1684919766820; JSESSIONID=5C92E79BDDF250CAC7038A0C6BBEB906; GUEST_LANGUAGE_ID=fr_FR; LFR_SESSION_STATE_10205=1684919857948"
+  //
+  //     cy.wait(1000) // to be sure
+  //
+  //     cy.visit(visitUrl)
+  //     if (visitUrl === '/') {
+  //       cy.url().should('contain', Cypress.config().baseUrl + visitUrl) // because of the '/tableau-de-board' redirection
+  //     } else {
+  //       cy.url().should('eq', Cypress.config().baseUrl + visitUrl)
+  //     }
+  //   })
+  // })
 })
 
 Cypress.Commands.add('logout', () => {

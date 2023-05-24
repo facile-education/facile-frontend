@@ -6,11 +6,14 @@ const firstSelectedCategory = helpTestMenu[0]
 const firstSelectedItem = firstSelectedCategory.items[0]
 const test = [...helpAdminResultMenu]
 test.push(categoryToCreate)
-console.log(test.length)
 
 describe('HelpModal', () => {
   beforeEach(() => {
     cy.login(url)
+  })
+
+  it.only('test authentification', () => {
+    cy.get('[data-test=open-help-item]').click()
   })
 
   it('Test modal loading and article content', () => {
