@@ -12,10 +12,6 @@ describe('HelpModal', () => {
     cy.login(url)
   })
 
-  it.only('test authentification', () => {
-    cy.get('[data-test=open-help-item]').click()
-  })
-
   it('Test modal loading and article content', () => {
     cy.exec('npm run db:loadTables help_tables.sql')
     cy.clearDBCache()

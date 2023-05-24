@@ -27,79 +27,6 @@
 import { GLOBAL_ADMIN, HEADMASTER as defaultUser } from '../support/constants'
 import constants from '../../../src/constants/appConstants'
 
-Cypress.Commands.add('clearDBCache', () => {
-  cy.log('===== clearDBCache =====')
-
-  // Login as global admin to execute request to clear DB cache
-  cy.clearCookies()
-
-  cy.visit('/') // mandatory to access control panel by UI
-
-  // Login
-  const loginParams = {
-    _58_login: GLOBAL_ADMIN.login,
-    _58_password: GLOBAL_ADMIN.password,
-    p_auth: ''
-  }
-
-  const loginUrl = Cypress.config().baseUrl + '/web/guest/home?' +
-    'p_p_id=58' +
-    '&p_p_lifecycle=1&' +
-    'p_p_state=normal&' +
-    'p_p_mode=view&' +
-    'saveLastPath=0&' +
-    '_58_struts_action=/login/login'
-
-  cy.request({
-    method: 'POST',
-    url: loginUrl,
-    form: true,
-    body: loginParams
-  }).then((response) => {
-    expect(response.status).to.eq(200) // to test here or not?
-  })
-
-  // Manual UI method => TODO: To remove in favor of request method (see above)
-  cy.visit('/group/control_panel/manage/')
-  cy.contains('Administration du serveur').click()
-  cy.get(':nth-child(4) > :nth-child(2) > input').click()
-
-  // // Do request
-  // const url = Cypress.config().baseUrl + 'https://dev-ent-gve.com/group/control_panel/manage?' +
-  // 'p_p_id=com_liferay_server_admin_web_portlet_ServerAdminPortlet&' +
-  // 'p_p_lifecycle=1&' +
-  // 'p_p_state=maximized&' +
-  // 'p_p_mode=view&' +
-  // '_com_liferay_server_admin_web_portlet_ServerAdminPortlet_javax.portlet.action=%2Fserver_admin%2Fedit_server'
-  //
-  // const params = {
-  //   _com_liferay_server_admin_web_portlet_ServerAdminPortlet_formDate: Date.now(),
-  //   _com_liferay_server_admin_web_portlet_ServerAdminPortlet_cmd: 'cacheSingle',
-  //   _com_liferay_server_admin_web_portlet_ServerAdminPortlet_tabs1: 'resources',
-  //   _com_liferay_server_admin_web_portlet_ServerAdminPortlet_redirect: '',
-  //   p_auth: '',
-  // }
-  //
-  // cy.request({
-  //   method: 'POST',
-  //   url: url,
-  //   form: true,
-  //   body: params
-  // }).then((response) => {
-  //   expect(response.status).to.be.oneOf([200, 304])
-  //   console.log(response)
-  // })
-  //
-  // // // Test the 2nd call
-  // // cy.request({
-  // //   method: 'GET',
-  // //   url: Cypress.config().baseUrl + '/group/control_panel/manage/-/server/resources?doAsGroupId=11107&refererPlid=315105&_137_cur=0&_137_delta=0'
-  // // }).then((response) => {
-  // //   expect(response.status).to.be.oneOf([200, 304])
-  // //   console.log(response)
-  // // })
-})
-
 Cypress.Commands.add('login', (visitUrl = '/', user = defaultUser) => {
   cy.log('===== LOG IN (' + user.login + ') =====')
 
@@ -113,6 +40,8 @@ Cypress.Commands.add('login', (visitUrl = '/', user = defaultUser) => {
   cy.get('[placeholder="Identifiant"]').type(user.login)
   cy.get('[placeholder="Mot de passe"]').type(user.password)
   cy.get('form > .btn').click()
+
+  cy.wait(1000)
 
   cy.visit(visitUrl)
   if (visitUrl === '/') {
@@ -178,6 +107,54 @@ Cypress.Commands.add('login', (visitUrl = '/', user = defaultUser) => {
   //     }
   //   })
   // })
+})
+
+Cypress.Commands.add('clearDBCache', () => {
+  cy.login('/nero/', GLOBAL_ADMIN)
+
+  cy.log('===== clearDBCache =====')
+
+  // Manual UI method
+  // cy.visit('/group/control_panel/manage?p_p_id=com_liferay_server_admin_web_portlet_ServerAdminPortlet&p_p_lifecycle=0&p_p_state=maximized&p_v_l_s_g_id=10226')
+  // cy.contains('Administration du serveur')
+  // cy.get('#_com_liferay_server_admin_web_portlet_ServerAdminPortlet_cache-actionsContent > .panel-body > .list-group > :nth-child(3) > :nth-child(2)').click()
+
+  // Request method
+  cy.request({ // get pauth
+    method: 'GET',
+    url: Cypress.config().baseUrl + '/p_auth_token.jsp',
+    headers: {
+      Referer: 'https://dev-ent-gve.com/nero/'
+    }
+  }).then((response) => {
+    // expect(response.status).to.eq(200) // to test here or not?
+    const pAuth = response.body.replace(/(\r\n|\n|\r|\s)/gm, '')
+
+    const url = Cypress.config().baseUrl + '/group/control_panel/manage?' +
+    'p_p_id=com_liferay_server_admin_web_portlet_ServerAdminPortlet&' +
+    'p_p_lifecycle=1&' +
+    'p_p_state=maximized&' +
+    'p_p_mode=view&' +
+    '_com_liferay_server_admin_web_portlet_ServerAdminPortlet_javax.portlet.action=%2Fserver_admin%2Fedit_server'
+
+    const params = {
+      _com_liferay_server_admin_web_portlet_ServerAdminPortlet_formDate: Date.now(),
+      _com_liferay_server_admin_web_portlet_ServerAdminPortlet_cmd: 'cacheDb',
+      _com_liferay_server_admin_web_portlet_ServerAdminPortlet_tabs1: 'resources',
+      _com_liferay_server_admin_web_portlet_ServerAdminPortlet_redirect: '',
+      p_auth: pAuth
+    }
+
+    cy.request({
+      method: 'POST',
+      url: url,
+      form: true,
+      body: params
+    }).then((response) => {
+      expect(response.status).to.be.oneOf([200, 304])
+      console.log(response)
+    })
+  })
 })
 
 Cypress.Commands.add('logout', () => {
