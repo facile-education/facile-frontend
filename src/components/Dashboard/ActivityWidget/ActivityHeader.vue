@@ -1,41 +1,65 @@
 <template>
   <header>
-    <button
-      v-if="displayAll"
-      class="previous-button"
-      @click="$router.back()"
-    >
-      <img
-        src="@assets/arrow-left.svg"
-        :alt="$t('previous')"
-        :title="$t('previous')"
+    <div class="left">
+      <button
+        v-if="displayAll"
+        class="previous-button"
+        @click="$router.back()"
       >
-    </button>
-    <h1
-      v-if="displayAll"
-      v-t="'allActivities'"
-    />
-    <h2
-      v-else
-      v-t="'activities'"
-    />
-    <Pellet
-      v-if="nbNewActivities > 0"
-      class="header-pellet"
-      :count="nbNewActivities"
-      :show-count="true"
-      :and-more="andMore"
-    />
+        <img
+          src="@assets/arrow-left.svg"
+          :alt="$t('previous')"
+          :title="$t('previous')"
+        >
+      </button>
+      <h1
+        v-if="displayAll"
+        v-t="'allActivities'"
+      />
+      <h2
+        v-else
+        v-t="'activities'"
+      />
+      <Pellet
+        v-if="nbNewActivities > 0"
+        class="header-pellet"
+        :count="nbNewActivities"
+        :show-count="true"
+        :and-more="andMore"
+      />
+    </div>
+    <div
+      v-if="canCreateNews"
+      class="right"
+    >
+      <CreateButton
+        @click="isCreateModalDisplayed = true"
+      />
+    </div>
   </header>
+
+  <teleport
+    v-if="isCreateModalDisplayed"
+    to="body"
+  >
+    <SaveNewsModal
+      @createNews="$emit('createNews')"
+      @close="isCreateModalDisplayed = false"
+    />
+  </teleport>
 </template>
 
 <script>
+import { defineAsyncComponent } from 'vue'
+
 import Pellet from '@components/Base/Pellet.vue'
 import activityConstants from '@/constants/activityConstants'
+import CreateButton from '@components/Base/CreateButton.vue'
+const SaveNewsModal = defineAsyncComponent(() => import('@components/Dashboard/ActivityWidget/SaveNewsModal.vue'))
 
 export default {
   name: 'ActivityHeader',
-  components: { Pellet },
+  components: { SaveNewsModal, CreateButton, Pellet },
   props: {
     nbNewActivities: {
       type: Number,
@@ -46,7 +70,17 @@ export default {
       default: false
     }
   },
+  emits: ['createNews'],
+  data () {
+    return {
+      isCreateModalDisplayed: false
+    }
+  },
   computed: {
+    canCreateNews () {
+      return true
+      // TODO:  return this.$store.state.dashboard.canAddGroupNews
+    },
     andMore () {
       return this.nbNewActivities >= activityConstants.nbActivityInWidget
     }
@@ -61,6 +95,12 @@ header {
   @extend %widget-header;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+
+  .left {
+    display: flex;
+    align-items: center;
+  }
 }
 
 h1 {

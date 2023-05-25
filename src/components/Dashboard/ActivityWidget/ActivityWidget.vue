@@ -3,6 +3,7 @@
     <ActivityHeader
       :nb-new-activities="nbNewActivities"
       :display-all="displayAll"
+      @createNews="refresh"
     />
 
     <ActivityFilter
