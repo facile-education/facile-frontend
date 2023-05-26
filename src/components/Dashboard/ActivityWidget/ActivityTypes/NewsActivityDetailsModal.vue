@@ -4,6 +4,7 @@
     data-test="diary-event-details-modal"
     :modal="true"
     :draggable="true"
+    :width="600"
     @close="onClose"
   >
     <template #header>
