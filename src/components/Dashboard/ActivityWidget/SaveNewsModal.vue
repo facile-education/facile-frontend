@@ -150,7 +150,7 @@ export default {
       releaseDate: dayjs(),
       populations: [],
       attachedFiles: [],
-      thumbnailUrl: require('@/assets/images/default_news_0.svg'),
+      thumbnailUrl: require('@/assets/images/default_news_0.png'),
 
       editor: InlineEditor,
       editorConfig: {
