@@ -1,69 +1,36 @@
 <template>
-  <div
-    class="news"
-    @mouseover="isHovering = true"
-    @mouseleave="isHovering = false"
-  >
-    <!-- Image -->
-    <div class="news-thumbnail-wrapper">
+  <div class="news-activity">
+    <div class="icon">
       <img
-        v-if="news.thumbnail && news.thumbnail.url"
-        class="news-thumbnail"
-        :src="news.thumbnail.url"
+        class="img-icon"
+        :src="thumbnail"
+        alt="document icon"
       >
     </div>
 
-    <div class="news-other">
-      <span class="news-title">{{ news.title }}</span>
-      <span class="news-content">{{ news.ellipsise }}</span>
-
-      <div class="news-info">
-        <span class="author">
-          {{ news.author }}
-        </span>
-        <span class="date">
-          - {{ convertDateStr(news.publicationDate) }}
+    <div class="content">
+      <div class="author">
+        {{ news.authorName }}
+      </div>
+      <div class="description">
+        <span>
+          {{ news.title }}
         </span>
         <i
-          v-if="news.hasAttachFiles"
-          class="fa fa-paperclip theme-color"
+          v-t="'see'"
         />
       </div>
     </div>
 
-    <div
-      v-if="isHovering"
-      class="edit-buttons"
-    >
-      <div
-        v-if="news.isEditor || isAuthor(news)"
-        class="content-button"
-        :title="$t('edit')"
-        @click="editContent()"
-      >
-        <img
-          src="@/assets/edit.svg"
-          :alt="$t('edit')"
-        >
-      </div>
-      <div
-        v-if="isAuthor(news)"
-        class="content-button"
-        :title="$t('delete')"
-        @click="confirmNewsDeletion()"
-      >
-        <img
-          src="@/assets/trash.svg"
-          :alt="$t('delete')"
-        >
-      </div>
+    <div class="date">
+      {{ formattedDate }}
     </div>
   </div>
 </template>
 
 <script>
 import dayjs from 'dayjs'
-import { getNewsDetails } from '@/api/dashboard/news.service'
+import validators from '@utils/validators'
 
 export default {
   name: 'NewsActivity',
@@ -73,35 +40,19 @@ export default {
       required: true
     }
   },
-  emits: ['editNews'],
-  data () {
-    return {
-      isHovering: false
+  computed: {
+    thumbnail () {
+      if (validators.isValidURL(this.news.thumbnailUrl)) {
+        return this.news.thumbnailUrl
+      } else { // Returned url is a key for local default image
+        return require('@assets/images/' + this.news.thumbnailUrl + '.svg')
+      }
+    },
+    formattedDate () {
+      return dayjs(this.news.modificationDate, 'YYYY-MM-DD HH:mm').calendar()
     }
   },
-  computed: {
-  },
-  created () {
-  },
   methods: {
-    convertDateStr (dateStr) {
-      return dayjs(dateStr, 'YYYY-MM-DD HH:mm').format('DD MMM YYYY HH:mm')
-    },
-    isAuthor (news) {
-      return news.authorId === this.$store.state.user.userId
-    },
-    editContent () {
-      getNewsDetails(this.news.newsId).then(
-        (data) => {
-          if (data.success) {
-            this.$store.dispatch('dashboard/setNewsDetails', { news: this.news, groups: data.broadcastedGroups, attachFiles: data.attachedFiles, doSetEditedNews: true }).then(
-              () => {
-                this.$emit('editNews')
-              }
-            )
-          }
-        })
-    },
     confirmNewsDeletion () {
       this.$store.dispatch('warningModal/addWarning', {
         text: this.$t('deleteNewsWarning'),
@@ -109,7 +60,7 @@ export default {
       })
     },
     deleteNews () {
-      this.$store.dispatch('dashboard/deleteNews', { newsId: this.news.newsId })
+      // TODO
     }
   }
 }
@@ -118,38 +69,24 @@ export default {
 <style lang="scss" scoped>
 @import '@/design/index';
 
-.news {
-  display: flex;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  .news-thumbnail-wrapper {
-    display: flex;
-    padding: 5px;
-    .news-thumbnail {
-      margin: auto;
-      width: 60px;
-      height: 60px;
-    }
-  }
-  .news-other {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    .news-title {
-      font-weight: bold;
-    }
-    .news-content {
-      font-size: 0.8em;
-    }
-    .news-info {
+.news-activity {
+  @extend %activity-item;
 
-    }
+  .description {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  i {
+    margin-right: 1rem;
   }
 }
+
 </style>
 
 <i18n locale="fr">
 {
+  "see": "Voir",
   "groups-activity": "Fil d'activité de mes groupes",
   "edit": "Modifier cette actualité",
   "delete": "Supprimer cette actualité",

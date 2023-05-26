@@ -200,6 +200,10 @@ export default {
           // this.lastDashboardAccessDate = '2022-05-05 10:19:48'
 
           data.activities.forEach((activity) => {
+            if (activity.type === activityConstants.TYPE_NEWS) {
+              activity.modificationDate = activity.publicationDate
+            }
+
             if (this.isUnread(activity)) {
               this.unreadActivities.push(activity)
             } else {
