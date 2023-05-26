@@ -13,7 +13,7 @@
     <template #body>
       <NewsActivityDetails
         :init-news="initNews"
-        @update="updateNews"
+        @update="$emit('update')"
         @delete="deleteNews"
       />
     </template>
@@ -42,11 +42,9 @@ export default {
     this.$store.dispatch('misc/incrementModalCount')
   },
   methods: {
-    updateNews () {
-      this.$emit('update')
-    },
     deleteNews () {
       this.$emit('delete')
+      this.onClose()
     },
     onClose () {
       this.$store.dispatch('misc/decreaseModalCount')

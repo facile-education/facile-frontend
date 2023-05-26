@@ -102,11 +102,12 @@
 
 <script>
 import { getNewsDetails, deleteNews } from '@/api/dashboard/news.service'
-import SaveAnnouncementModal from '@components/Dashboard/AnnouncementsWidget/SaveAnnouncementModal.vue'
 import AttachedFiles from '@components/Base/AttachedFiles.vue'
 import PopulationList from '@components/Dashboard/PopulationList.vue'
 import ReadInfos from '@components/Dashboard/ReadInfos/ReadInfos.vue'
 import dayjs from 'dayjs'
+import { defineAsyncComponent } from 'vue'
+const SaveAnnouncementModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/SaveAnnouncementModal.vue'))
 
 export default {
   name: 'AnnouncementDetails',
