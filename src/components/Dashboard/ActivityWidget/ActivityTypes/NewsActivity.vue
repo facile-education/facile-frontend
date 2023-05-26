@@ -1,5 +1,10 @@
 <template>
-  <div class="news-activity">
+  <div
+    class="news-activity"
+    tabindex="0"
+    @click="isDetailsModalDisplayed=true"
+    @keyup.enter="isDetailsModalDisplayed=true"
+  >
     <div class="icon">
       <img
         class="img-icon"
@@ -10,15 +15,18 @@
 
     <div class="content">
       <div class="author">
-        {{ news.authorName }}
+        <i>
+          {{ news.groupName }}
+        </i>
+        <span>
+          {{ ' - ' + news.authorName }}
+        </span>
       </div>
       <div class="description">
         <span>
           {{ news.title }}
         </span>
-        <i
-          v-t="'see'"
-        />
+        <i v-t="'see'" />
       </div>
     </div>
 
@@ -26,18 +34,36 @@
       {{ formattedDate }}
     </div>
   </div>
+
+  <teleport
+    v-if="isDetailsModalDisplayed"
+    to="body"
+  >
+    <NewsActivityDetailsModal
+      :init-news="news"
+      @close="isDetailsModalDisplayed = false"
+    />
+  </teleport>
 </template>
 
 <script>
 import dayjs from 'dayjs'
 import validators from '@utils/validators'
+import { defineAsyncComponent } from 'vue'
+const NewsActivityDetailsModal = defineAsyncComponent(() => import('@components/Dashboard/ActivityWidget/ActivityTypes/NewsActivityDetailsModal.vue'))
 
 export default {
   name: 'NewsActivity',
+  components: { NewsActivityDetailsModal },
   props: {
     news: {
       type: Object,
       required: true
+    }
+  },
+  data () {
+    return {
+      isDetailsModalDisplayed: false
     }
   },
   computed: {
@@ -45,7 +71,7 @@ export default {
       if (validators.isValidURL(this.news.thumbnailUrl)) {
         return this.news.thumbnailUrl
       } else { // Returned url is a key for local default image
-        return require('@assets/images/' + this.news.thumbnailUrl + '.svg')
+        return require('@assets/images/' + this.news.thumbnailUrl + '.png')
       }
     },
     formattedDate () {
@@ -71,6 +97,7 @@ export default {
 
 .news-activity {
   @extend %activity-item;
+  cursor: pointer;
 
   .description {
     display: flex;
@@ -79,6 +106,16 @@ export default {
 
   i {
     margin-right: 1rem;
+  }
+
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 50%;
+    }
   }
 }
 

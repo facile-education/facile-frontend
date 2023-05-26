@@ -146,7 +146,7 @@ export default {
       if (validators.isValidURL(this.announcement.thumbnailUrl)) {
         return this.announcement.thumbnailUrl
       } else { // Returned url is a key for local default image
-        return require('@assets/images/' + this.announcement.thumbnailUrl + '.svg')
+        return require('@assets/images/' + this.announcement.thumbnailUrl + '.png')
       }
     }
   },
@@ -271,6 +271,13 @@ export default {
 .thumbnail{
   width: var(--thumbnail-width);
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 70%;
+  }
 }
 
 .content {
