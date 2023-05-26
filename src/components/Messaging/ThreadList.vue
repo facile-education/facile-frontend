@@ -83,10 +83,10 @@ import Thread from '@components/Messaging/Thread'
 import messagingUtils from '@/utils/messaging.utils'
 import ContextMenu from '@/components/ContextMenu/ContextMenu'
 import _ from 'lodash'
-import utils from '@utils/utils'
 import ThreadListHeader from '@components/Messaging/ThreadListHeader'
 import IconOption from '@components/Base/IconOption'
 import NeroIcon from '@components/Nero/NeroIcon.vue'
+import { removeMenuOptionIfExist } from '@utils/commons.util'
 
 let mouseY = 0
 let startMouseY = 0
@@ -269,13 +269,13 @@ export default {
       if (this.currentFolder.type === constants.messagingDraftFolderType) { // Draft options
         contextMenu = contextMenus.messagingEditDraftMenu.concat(contextMenu)
         if (this.$store.state.messaging.selectedThreads.length > 1) {
-          utils.removeMenuOptionIfExist(contextMenu, 'editDraft')
+          removeMenuOptionIfExist(contextMenu, 'editDraft')
         }
-        utils.removeMenuOptionIfExist(contextMenu, 'markAsRead')
-        utils.removeMenuOptionIfExist(contextMenu, 'markAsUnread')
-        utils.removeMenuOptionIfExist(contextMenu, 'reply')
-        utils.removeMenuOptionIfExist(contextMenu, 'replyAll')
-        utils.removeMenuOptionIfExist(contextMenu, 'forward')
+        removeMenuOptionIfExist(contextMenu, 'markAsRead')
+        removeMenuOptionIfExist(contextMenu, 'markAsUnread')
+        removeMenuOptionIfExist(contextMenu, 'reply')
+        removeMenuOptionIfExist(contextMenu, 'replyAll')
+        removeMenuOptionIfExist(contextMenu, 'forward')
       }
 
       this.isContextMenuDisplayed = true
