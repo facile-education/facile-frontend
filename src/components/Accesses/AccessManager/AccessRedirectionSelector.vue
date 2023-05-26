@@ -73,17 +73,10 @@ import { defineAsyncComponent } from 'vue'
 import FilePickerModal from '@components/FilePicker/FilePickerModal.vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
+import validators from '@utils/validators'
 const RedirectionEntity = defineAsyncComponent(() => import('@components/Accesses/AccessManager/RedirectionEntity.vue'))
 
-const isValidURL = (url) => { // TODO: Move to utils?
-  const pattern = new RegExp('^(https?:\\/\\/)?' + // Protocol
-    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // Domain name
-    '((\\d{1,3}\\.){3}\\d{1,3}))' + // IP address
-    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // Port and path
-    '(\\?[;&a-z\\d%_.~+=-]*)?' + // Request string
-    '(\\#[-a-z\\d_]*)?$', 'i') // Fragment
-  return !!pattern.test(url)
-}
+const isValidURL = (value) => validators.isValidURL(value)
 
 export default {
   name: 'AccessRedirectionSelector',

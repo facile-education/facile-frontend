@@ -13,7 +13,7 @@
     >
       <div class="thumbnail">
         <img
-          :src="announcement.thumbnailUrl"
+          :src="thumbnail"
           alt="thumbnail"
         >
       </div>
@@ -102,6 +102,7 @@ import dayjs from 'dayjs'
 import BaseIcon from '@components/Base/BaseIcon.vue'
 import { defineAsyncComponent } from 'vue'
 import { isInViewport } from '@utils/commons.util'
+import validators from '@utils/validators'
 const SaveAnnouncementModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/SaveAnnouncementModal.vue'))
 const AnnouncementDetailsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/AnnouncementDetailsModal.vue'))
 
@@ -140,6 +141,14 @@ export default {
   computed: {
     announcementDay () {
       return this.$t('at') + dayjs(this.announcement.publicationDate).format('DD/MM/YY')
+    },
+    thumbnail () {
+      if (validators.isValidURL(this.announcement.thumbnailUrl)) {
+        console.log(this.announcement.thumbnailUrl + ' is valid')
+        return this.announcement.thumbnailUrl
+      } else { // Returned url is a key for local default image
+        return require('@assets/images/' + this.announcement.thumbnailUrl + '.svg')
+      }
     }
   },
   watch: { // Must be watched to react on a new search
