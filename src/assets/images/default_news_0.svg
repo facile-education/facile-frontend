@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="17px" height="15px" viewBox="0 0 17 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>DEFEA6D2-7268-4298-8DD4-2075C1BF8DDA</title>
+    <g id="Plateforme" stroke="none" stroke-width="1" fill="#0B3C5F">
+        <g id="M1.7_EspaceCaDyCo_optionsDossier" transform="translate(-267.000000, -190.000000)" >
+            <g id="Actions" transform="translate(90.000000, 65.000000)">
+                <g id="move" transform="translate(19.000000, 116.000000)">
+                    <g id="icon/deplace" transform="translate(158.000000, 9.000000)">
+                        <path d="M8,0 L8,4 L12,4 L12,8 L11,8 L11,5 L7,5 L7,1 L2,1 C1.48716416,1 1.06449284,1.38604019 1.00672773,1.88337887 L1,2 L1,13 C1,13.5128358 1.38604019,13.9355072 1.88337887,13.9932723 L2,14 L10,14 C10.5128358,14 10.9355072,13.6139598 10.9932723,13.1166211 L11,13 L11,11 L12,11 L12,13 C12,14.1045695 11.1045695,15 10,15 L2,15 C0.8954305,15 0,14.1045695 0,13 L0,2 C0,0.8954305 0.8954305,0 2,0 L8,0 Z M14.6465798,7 L17,9.46402579 L14.6929635,12 L14.0225793,11.2638733 L15.174,10 L7,10 L7,9 L15.208,9 L14,7.76136869 L14.6465798,7 Z" id="icon/move"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
