@@ -78,8 +78,7 @@ export default {
   },
   computed: {
     canCreateNews () {
-      return true
-      // TODO:  return this.$store.state.dashboard.canAddGroupNews
+      return this.$store.state.dashboard.canAddGroupNews
     },
     andMore () {
       return this.nbNewActivities >= activityConstants.nbActivityInWidget

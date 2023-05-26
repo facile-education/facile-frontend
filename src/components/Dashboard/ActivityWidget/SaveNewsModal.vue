@@ -1,7 +1,7 @@
 <template>
   <PentilaWindow
-    class="update-announcement-modal"
-    data-test="update-announcement-modal"
+    class="update-news-modal"
+    data-test="update-news-modal"
     :modal="true"
     :draggable="true"
     @close="onClose"
@@ -60,12 +60,12 @@
           :list="availablePopulationsList"
           :close-on-select="true"
           display-field="populationName"
-          :disabled="isLoadingAnnouncementDetails"
+          :disabled="isLoadingNewsDetails"
         />
         <PentilaErrorMessage
           :error-message="formErrorList.populations"
         />
-        <PentilaSpinner v-if="isLoadingAnnouncementDetails" />
+        <PentilaSpinner v-if="isLoadingNewsDetails" />
       </div>
 
       <CKEditor
@@ -83,16 +83,6 @@
         :read-only="false"
         @removeAttachedFile="removeFile"
       />
-
-      <div
-        v-if="!isCreation"
-        class="unread-checkbox"
-      >
-        <span v-t="'markAsUnreadForAll'" />
-        <PentilaToggleSwitch
-          v-model="markAsUnreadForAll"
-        />
-      </div>
     </template>
 
     <template #footer>
@@ -121,10 +111,15 @@ import { useVuelidate } from '@vuelidate/core'
 import dayjs from 'dayjs'
 import InlineEditor from '@ckeditor/ckeditor5-build-inline'
 import { required } from '@vuelidate/validators'
-import { getSchoolNewsBroadcastGroups, getNewsDetails, addNews, editNews } from '@/api/dashboard/news.service'
 import CustomDatePicker from '@components/Base/CustomDatePicker.vue'
-import { defineAsyncComponent } from 'vue'
 import AttachedFiles from '@components/Base/AttachedFiles.vue'
+import { defineAsyncComponent } from 'vue'
+import {
+  addNews,
+  editNews,
+  getGroupNewsBroadcastGroups,
+  getNewsDetails
+} from '@/api/dashboard/news.service'
 const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal.vue'))
 const CKEditor = defineAsyncComponent({
   loader: async () => { return (await import('@ckeditor/ckeditor5-vue')).component }
@@ -136,16 +131,17 @@ const ckMaxSize = 63206
 const isUnderInputMaxSize = (value) => validators.isUnderMaxSize(value, inputMaxSize)
 const isUnderCKMaxSize = (value) => validators.isUnderMaxSize(value, ckMaxSize)
 const isNotEmpty = (list) => validators.isNotEmpty(list)
+
 export default {
-  name: 'SaveAnnouncementModal',
+  name: 'SaveNewsModal',
   components: { AttachedFiles, FilePickerModal, CustomDatePicker, CKEditor },
   props: {
-    initAnnouncement: {
+    initNews: {
       type: Object,
       default: undefined
     }
   },
-  emits: ['close', 'createAnnouncement', 'updateAnnouncement'],
+  emits: ['close', 'createNews', 'updateNews'],
   setup: () => ({ v$: useVuelidate() }),
   data () {
     return {
@@ -154,7 +150,6 @@ export default {
       releaseDate: dayjs(),
       populations: [],
       attachedFiles: [],
-      markAsUnreadForAll: false,
 
       editor: InlineEditor,
       editorConfig: {
@@ -162,7 +157,7 @@ export default {
       },
       availablePopulationsList: [],
       isReleaseDateDisabled: false,
-      isLoadingAnnouncementDetails: false,
+      isLoadingNewsDetails: false,
       isProcessingSave: false,
       isFilePickerDisplayed: false
     }
@@ -187,7 +182,7 @@ export default {
   },
   computed: {
     isCreation () {
-      return this.initAnnouncement === undefined
+      return this.initNews === undefined
     },
     minDate () {
       return dayjs().toDate()
@@ -215,13 +210,13 @@ export default {
   created () {
     this.$store.dispatch('misc/incrementModalCount')
     if (!this.isCreation) {
-      this.title = this.initAnnouncement.title
-      this.content = this.initAnnouncement.content
-      this.releaseDate = dayjs(this.initAnnouncement.publicationDate)
-      if (this.releaseDate.isBefore(dayjs().hour(0))) { // If Announcement is already release (for more that one day), cannot modify the release date
+      this.title = this.initNews.title
+      this.content = this.initNews.content
+      this.releaseDate = dayjs(this.initNews.publicationDate)
+      if (this.releaseDate.isBefore(dayjs().hour(0))) { // If News is already release (for more that one day), cannot modify the release date
         this.isReleaseDateDisabled = true
       }
-      this.initDetails(this.initAnnouncement.newsId)
+      this.initDetails(this.initNews.newsId)
     }
     this.getBroadcastGroups()
   },
@@ -246,9 +241,9 @@ export default {
       }
     },
     initDetails (newsId) {
-      this.isLoadingAnnouncementDetails = true
+      this.isLoadingNewsDetails = true
       getNewsDetails(newsId).then((data) => {
-        this.isLoadingAnnouncementDetails = false
+        this.isLoadingNewsDetails = false
         if (data.success) {
           this.populations = data.news.populations
           this.content = data.news.content
@@ -259,19 +254,20 @@ export default {
       })
     },
     getBroadcastGroups () {
-      getSchoolNewsBroadcastGroups().then((data) => {
+      getGroupNewsBroadcastGroups().then((data) => {
         if (data.success) {
           // Concat all populations of all schools in one list
           this.availablePopulationsList = []
-          const schools = data.schoolsGroups
-          schools.forEach((school) => {
-            this.availablePopulationsList = [...this.availablePopulationsList, ...school.populations]
+          const groupTree = data.schoolsGroups
+          this.availablePopulationsList = [...this.availablePopulationsList, ...groupTree.Communities]
+          groupTree.schoolGroups.forEach((school) => {
             // this.availablePopulationsList = [...this.availablePopulationsList, ...school.subjects]
+            // TODO: courses?
             school.classes.forEach((schoolClass) => {
-              this.availablePopulationsList = [...this.availablePopulationsList, ...schoolClass.populations]
+              // this.availablePopulationsList = [...this.availablePopulationsList, ...schoolClass.populations]
             })
             school.volees.forEach((schoolVolee) => {
-              this.availablePopulationsList = [...this.availablePopulationsList, ...schoolVolee.populations]
+              // this.availablePopulationsList = [...this.availablePopulationsList, ...schoolVolee.populations]
             })
           })
         } else {
@@ -284,30 +280,30 @@ export default {
         this.v$.$touch()
       } else {
         if (this.isCreation) {
-          this.createAnnouncement()
+          this.createNews()
         } else {
-          this.updateAnnouncement()
+          this.updateNews()
         }
       }
     },
-    createAnnouncement () {
+    createNews () {
       this.isProcessingSave = true
-      addNews(this.title, this.content, true, false, 0, this.releaseDate, this.populations, this.attachedFileIds).then((data) => {
+      addNews(this.title, this.content, false, false, 0, this.releaseDate, this.populations, this.attachedFileIds).then((data) => {
         this.isProcessingSave = false
         if (data.success) {
-          this.$emit('createAnnouncement')
+          this.$emit('createNews')
           this.onClose()
         } else {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
         }
       })
     },
-    updateAnnouncement () {
+    updateNews () {
       this.isProcessingSave = true
-      editNews(this.initAnnouncement.newsId, this.title, this.content, false, 0, this.releaseDate, this.populations, this.attachedFileIds, this.markAsUnreadForAll).then((data) => {
+      editNews(this.initNews.newsId, this.title, this.content, false, 0, this.releaseDate, this.populations, this.attachedFileIds, false).then((data) => {
         this.isProcessingSave = false
         if (data.success) {
-          this.$emit('updateAnnouncement')
+          this.$emit('updateNews')
           this.onClose()
         } else {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
@@ -323,10 +319,11 @@ export default {
 </script>
 
 <style lang="scss">
-.update-announcement-modal {
+.update-news-modal {
   .window-body {
     position: relative;
     overflow-y: auto;
+    max-height: 70vh !important;
   }
 }
 </style>
@@ -399,14 +396,13 @@ export default {
 
 <i18n locale="fr">
 {
-  "creationTitle": "Créer une annonce",
-  "updateTitle": "Modifier une annonce",
+  "creationTitle": "Partager une information",
+  "updateTitle": "Modifier une information",
   "releaseDateLabel": "Parution",
   "namePlaceHolder": "Titre",
-  "contentPlaceHolder": "Contenu",
-  "populationPlaceholder": "Population cible",
-  "addFile": "Ajouter une pièce jointe",
-  "markAsUnreadForAll": "Notifier les destinataires",
+  "contentPlaceHolder": "Description",
+  "populationPlaceholder": "Destinataires",
+  "addFile": "Ajouter un fichier",
   "creationSubmit": "Créer",
   "updateSubmit": "Modifier",
   "sizeLimit1": "Ne doit pas dépasser ",
