@@ -24,7 +24,10 @@
         </div>
 
         <div class="first-line-right">
-          <div class="populations">
+          <div
+            v-if="detailedNews.isEditable"
+            class="populations"
+          >
             <div
               v-t="'populations'"
               class="label"
@@ -43,12 +46,20 @@
             <ReadInfos :read-infos="detailedNews.readInfos" />
           </div>
 
-          <div class="publication">
+          <div
+            v-if="!detailedNews.isEditable"
+            class="publication"
+          >
             {{ $t('at') + formattedPublicationDate + $t('by') + detailedNews.authorName }}
           </div>
-
-          <h2> {{ detailedNews.title }}</h2>
         </div>
+      </div>
+
+      <div
+        v-if="detailedNews.isEditable"
+        class="publication"
+      >
+        {{ $t('at') + formattedPublicationDate + $t('by') + detailedNews.authorName }}
       </div>
 
       <div
@@ -213,8 +224,9 @@ article {
 }
 
 .first-line {
-  --thumbnail-width: min(100px, 20vw);
+  --thumbnail-width: min(74px, 20vw);
   display: flex;
+  height: 50px;
 }
 
 .thumbnail{
@@ -223,14 +235,15 @@ article {
   display: flex;
   align-items: center;
   justify-content: center;
+
+  img {
+    height: 100%;
+  }
 }
 
 .first-line-right {
   width: calc(100% - var(--thumbnail-width));
-  padding-left: 20px;
-}
-
-.populations {
+  padding-left: 25px;
 }
 
 .populations, .read-infos {
@@ -239,7 +252,7 @@ article {
 
 .label {
   min-width: 5em;
-  margin-right: 1rem;
+  margin-right: 0.5rem;
 }
 
 .populations .label {
@@ -249,6 +262,7 @@ article {
 .publication {
   margin-top: 1rem;
   color: $color-new-light-text;
+  text-align: right;
 }
 
 h2 {
@@ -256,8 +270,13 @@ h2 {
 }
 
 .content {
+  margin-top: 1rem;
   max-height: 30vh;
   overflow-y: auto;
+
+  ::v-deep(p) {
+    margin: 0;
+  }
 }
 
 .content-placeholder {
@@ -269,7 +288,7 @@ h2 {
 
 .footer {
   align-self: flex-end;
-  margin-top: auto;
+  margin-top: 1rem;
   width: 100%;
   display: flex;
   justify-content: flex-end;
