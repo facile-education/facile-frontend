@@ -18,7 +18,7 @@
       <div class="first-line">
         <div class="thumbnail">
           <img
-            :src="detailedNews.thumbnailUrl"
+            :src="thumbnail"
             alt="thumbnail"
           >
         </div>
@@ -107,6 +107,7 @@ import AttachedFiles from '@components/Base/AttachedFiles.vue'
 import dayjs from 'dayjs'
 import { deleteNews, getNewsDetails } from '@/api/dashboard/news.service'
 import { defineAsyncComponent } from 'vue'
+import validators from '@utils/validators'
 const SaveNewsModal = defineAsyncComponent(() => import('@components/Dashboard/ActivityWidget/SaveNewsModal.vue'))
 
 export default {
@@ -130,6 +131,13 @@ export default {
   computed: {
     formattedPublicationDate () {
       return dayjs(this.detailedNews.publicationDate).format('DD/MM/YY')
+    },
+    thumbnail () {
+      if (validators.isValidURL(this.detailedNews.thumbnailUrl)) {
+        return this.detailedNews.thumbnailUrl
+      } else { // Returned url is a key for local default image
+        return require('@assets/images/' + this.detailedNews.thumbnailUrl + '.png')
+      }
     }
   },
   watch: {
@@ -212,6 +220,9 @@ article {
 .thumbnail{
   width: var(--thumbnail-width);
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .first-line-right {
