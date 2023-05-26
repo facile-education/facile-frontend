@@ -67,6 +67,8 @@
   >
     <NewsActivityDetailsModal
       :init-news="news"
+      @delete="$emit('deleteNews')"
+      @update="$emit('updateNews')"
       @close="isDetailsModalDisplayed = false"
     />
   </teleport>
