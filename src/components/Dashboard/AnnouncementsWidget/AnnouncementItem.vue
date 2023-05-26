@@ -214,7 +214,6 @@ export default {
       deleteNews(this.announcement.newsId).then((data) => {
         if (data.success) {
           this.$emit('deleteAnnouncement')
-          this.onClose()
         } else {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
         }
