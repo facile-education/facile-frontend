@@ -150,6 +150,7 @@ export default {
       releaseDate: dayjs(),
       populations: [],
       attachedFiles: [],
+      thumbnailUrl: require('@/assets/images/default_news_0.svg'),
 
       editor: InlineEditor,
       editorConfig: {
@@ -260,15 +261,21 @@ export default {
           this.availablePopulationsList = []
           const groupTree = data.schoolsGroups
           this.availablePopulationsList = [...this.availablePopulationsList, ...groupTree.Communities]
-          groupTree.schoolGroups.forEach((school) => {
-            // this.availablePopulationsList = [...this.availablePopulationsList, ...school.subjects]
+          groupTree.schools.forEach((school) => {
             // TODO: courses?
-            school.classes.forEach((schoolClass) => {
-              // this.availablePopulationsList = [...this.availablePopulationsList, ...schoolClass.populations]
-            })
-            school.volees.forEach((schoolVolee) => {
-              // this.availablePopulationsList = [...this.availablePopulationsList, ...schoolVolee.populations]
-            })
+            if (school.subjects) {
+              this.availablePopulationsList = [...this.availablePopulationsList, ...school.subjects]
+            }
+            if (school.classes) {
+              school.classes.forEach((schoolClass) => {
+                // this.availablePopulationsList = [...this.availablePopulationsList, ...schoolClass.populations]
+              })
+            }
+            if (school.volees) {
+              school.volees.forEach((schoolVolee) => {
+                // this.availablePopulationsList = [...this.availablePopulationsList, ...schoolVolee.populations]
+              })
+            }
           })
         } else {
           console.error('Error')
