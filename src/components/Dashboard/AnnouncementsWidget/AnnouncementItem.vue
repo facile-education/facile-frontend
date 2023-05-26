@@ -144,7 +144,6 @@ export default {
     },
     thumbnail () {
       if (validators.isValidURL(this.announcement.thumbnailUrl)) {
-        console.log(this.announcement.thumbnailUrl + ' is valid')
         return this.announcement.thumbnailUrl
       } else { // Returned url is a key for local default image
         return require('@assets/images/' + this.announcement.thumbnailUrl + '.svg')
