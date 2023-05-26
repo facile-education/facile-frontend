@@ -33,6 +33,32 @@
     <div class="date">
       {{ formattedDate }}
     </div>
+
+    <div
+      v-if="news.isEditable"
+      class="options"
+    >
+      <button
+        class="option"
+        :aria-label="$t('update')"
+        @click.stop="isUpdateModalDisplayed = true"
+      >
+        <img
+          src="@/assets/icon_edit_texte.svg"
+          alt="edit"
+        >
+      </button>
+      <button
+        class="option"
+        :aria-label="$t('delete')"
+        @click.stop="confirmNewsDeletion"
+      >
+        <img
+          src="@/assets/icon_trash.svg"
+          alt="delete"
+        >
+      </button>
+    </div>
   </div>
 
   <teleport
@@ -44,26 +70,41 @@
       @close="isDetailsModalDisplayed = false"
     />
   </teleport>
+
+  <teleport
+    v-if="isUpdateModalDisplayed"
+    to="body"
+  >
+    <SaveNewsModal
+      :init-news="news"
+      @updateNews="$emit('updateNews')"
+      @close="isUpdateModalDisplayed = false"
+    />
+  </teleport>
 </template>
 
 <script>
 import dayjs from 'dayjs'
 import validators from '@utils/validators'
 import { defineAsyncComponent } from 'vue'
+import { deleteNews } from '@/api/dashboard/news.service'
+const SaveNewsModal = defineAsyncComponent(() => import('@components/Dashboard/ActivityWidget/SaveNewsModal.vue'))
 const NewsActivityDetailsModal = defineAsyncComponent(() => import('@components/Dashboard/ActivityWidget/ActivityTypes/NewsActivityDetailsModal.vue'))
 
 export default {
   name: 'NewsActivity',
-  components: { NewsActivityDetailsModal },
+  components: { SaveNewsModal, NewsActivityDetailsModal },
   props: {
     news: {
       type: Object,
       required: true
     }
   },
+  emits: ['updateNews', 'deleteNews'],
   data () {
     return {
-      isDetailsModalDisplayed: false
+      isDetailsModalDisplayed: false,
+      isUpdateModalDisplayed: false
     }
   },
   computed: {
@@ -86,7 +127,13 @@ export default {
       })
     },
     deleteNews () {
-      // TODO
+      deleteNews(this.news.newsId).then((data) => {
+        if (data.success) {
+          this.$emit('deleteNews')
+        } else {
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+        }
+      })
     }
   }
 }
@@ -98,6 +145,17 @@ export default {
 .news-activity {
   @extend %activity-item;
   cursor: pointer;
+  position: relative;
+
+  &:hover, &:focus-within {
+    .options {
+      opacity: 100%;
+
+      .option {
+        width: 40px;
+      }
+    }
+  }
 
   .description {
     display: flex;
@@ -117,6 +175,34 @@ export default {
       width: 50%;
     }
   }
+
+  .options {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    overflow: hidden;
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0 5px 5px 0;
+    transition: all .3s ease;
+
+    .option {
+      flex: 1;
+      width: 0;
+      transition: all .3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $color-hover-bg;
+      }
+    }
+  }
 }
 
 </style>
@@ -125,8 +211,8 @@ export default {
 {
   "see": "Voir",
   "groups-activity": "Fil d'activité de mes groupes",
-  "edit": "Modifier cette actualité",
-  "delete": "Supprimer cette actualité",
-  "deleteContentWarning": "Supprimer cette actualité ?"
+  "update": "Modifier cette information",
+  "delete": "Supprimer cette information",
+    "deleteNewsWarning": "Supprimer cette information ?"
 }
 </i18n>

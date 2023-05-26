@@ -11,6 +11,8 @@
       <NewsActivity
         v-if="isNewsActivity"
         :news="activity"
+        @updateNews="$emit('refresh')"
+        @deleteNews="$emit('refresh')"
       />
       <DocActivity
         v-else-if="isDocActivity"
