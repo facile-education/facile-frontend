@@ -77,8 +77,12 @@ export default {
           this.statistics.push(nbActivities)
         } else {
           this.error = true
-          console.error('Error')
+          console.error('Error when getting dashboard statistics')
         }
+      }, (err) => {
+        this.isLoading = false
+        this.error = true
+        console.error(err)
       })
     }
   }
