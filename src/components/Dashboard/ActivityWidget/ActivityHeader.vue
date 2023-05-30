@@ -43,7 +43,7 @@
     to="body"
   >
     <SaveNewsModal
-      @createNews="$emit('createNews')"
+      @create="$emit('createNews')"
       @close="isCreateModalDisplayed = false"
     />
   </teleport>

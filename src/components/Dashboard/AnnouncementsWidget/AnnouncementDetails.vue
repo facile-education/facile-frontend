@@ -92,9 +92,10 @@
     v-if="isUpdateModalDisplayed"
     to="body"
   >
-    <SaveAnnouncementModal
-      :init-announcement="detailedAnnouncement"
-      @updateAnnouncement="updateAnnouncement"
+    <SaveNewsModal
+      :init-news="detailedAnnouncement"
+      :is-school-news="true"
+      @update="updateAnnouncement"
       @close="isUpdateModalDisplayed = false"
     />
   </teleport>
@@ -107,11 +108,11 @@ import PopulationList from '@components/Dashboard/PopulationList.vue'
 import ReadInfos from '@components/Dashboard/ReadInfos/ReadInfos.vue'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
-const SaveAnnouncementModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/SaveAnnouncementModal.vue'))
+const SaveNewsModal = defineAsyncComponent(() => import('@components/Dashboard/ActivityWidget/SaveNewsModal.vue'))
 
 export default {
   name: 'AnnouncementDetails',
-  components: { ReadInfos, PopulationList, AttachedFiles, SaveAnnouncementModal },
+  components: { ReadInfos, PopulationList, AttachedFiles, SaveNewsModal },
   props: {
     initAnnouncement: {
       type: Object,

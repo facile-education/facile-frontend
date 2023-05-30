@@ -7,7 +7,7 @@
     @close="onClose"
   >
     <template #header>
-      <span v-t="isCreation ? 'creationTitle' : 'updateTitle'" />
+      <span v-t="isCreation ? (isSchoolNews ? 'schoolCreationTitle' : 'creationTitle') : (isSchoolNews ? 'schoolUpdateTitle' : 'updateTitle')" />
     </template>
 
     <template #body>
@@ -102,6 +102,16 @@
         :read-only="false"
         @removeAttachedFile="removeFile"
       />
+
+      <div
+        v-if="isSchoolNews && !isCreation"
+        class="unread-checkbox"
+      >
+        <span v-t="'markAsUnreadForAll'" />
+        <PentilaToggleSwitch
+          v-model="markAsUnreadForAll"
+        />
+      </div>
     </template>
 
     <template #footer>
@@ -137,7 +147,7 @@ import {
   addNews,
   editNews,
   getGroupNewsBroadcastGroups,
-  getNewsDetails
+  getNewsDetails, getSchoolNewsBroadcastGroups
 } from '@/api/dashboard/news.service'
 const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal.vue'))
 const CKEditor = defineAsyncComponent({
@@ -159,18 +169,23 @@ export default {
     initNews: {
       type: Object,
       default: undefined
+    },
+    isSchoolNews: {
+      type: Boolean,
+      default: false
     }
   },
-  emits: ['close', 'createNews', 'updateNews'],
+  emits: ['close', 'create', 'update'],
   setup: () => ({ v$: useVuelidate() }),
   data () {
     return {
+      thumbnailUrl: this.isSchoolNews ? require('@/assets/images/default_school_news_0.png') : require('@/assets/images/default_news_0.png'),
       title: '',
       content: '',
       releaseDate: dayjs(),
       populations: [],
       attachedFiles: [],
-      thumbnailUrl: require('@/assets/images/default_news_0.png'),
+      markAsUnreadForAll: false,
 
       editor: InlineEditor,
       editorConfig: {
@@ -239,7 +254,7 @@ export default {
       }
       this.initDetails(this.initNews.newsId)
     }
-    this.getBroadcastGroups()
+    this.isSchoolNews ? this.getSchoolNewsBroadcastGroups() : this.getGroupNewsBroadcastGroups()
   },
   mounted () {
     const input = this.$refs.nameInput
@@ -269,12 +284,34 @@ export default {
           this.populations = data.news.populations
           this.content = data.news.content
           this.attachedFiles = data.news.attachedFiles
+          // TODO: thumbnail
         } else {
           console.error('Error')
         }
       })
     },
-    getBroadcastGroups () {
+    getSchoolNewsBroadcastGroups () {
+      getSchoolNewsBroadcastGroups().then((data) => {
+        if (data.success) {
+          // Concat all populations of all schools in one list
+          this.availablePopulationsList = []
+          const schools = data.schoolsGroups
+          schools.forEach((school) => {
+            this.availablePopulationsList = [...this.availablePopulationsList, ...school.populations]
+            // this.availablePopulationsList = [...this.availablePopulationsList, ...school.subjects]
+            school.classes.forEach((schoolClass) => {
+              this.availablePopulationsList = [...this.availablePopulationsList, ...schoolClass.populations]
+            })
+            school.volees.forEach((schoolVolee) => {
+              this.availablePopulationsList = [...this.availablePopulationsList, ...schoolVolee.populations]
+            })
+          })
+        } else {
+          console.error('Error')
+        }
+      })
+    },
+    getGroupNewsBroadcastGroups () {
       getGroupNewsBroadcastGroups().then((data) => {
         if (data.success) {
           // Concat all populations of all schools in one list
@@ -315,10 +352,10 @@ export default {
     },
     createNews () {
       this.isProcessingSave = true
-      addNews(this.title, this.content, false, false, 0, this.releaseDate, this.populations, this.attachedFileIds).then((data) => {
+      addNews(this.title, this.content, this.isCreation, this.isSchoolNews, 0, this.releaseDate, this.populations, this.attachedFileIds).then((data) => {
         this.isProcessingSave = false
         if (data.success) {
-          this.$emit('createNews')
+          this.$emit('create')
           this.onClose()
         } else {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
@@ -327,10 +364,10 @@ export default {
     },
     updateNews () {
       this.isProcessingSave = true
-      editNews(this.initNews.newsId, this.title, this.content, false, 0, this.releaseDate, this.populations, this.attachedFileIds, false).then((data) => {
+      editNews(this.initNews.newsId, this.title, this.content, false, 0, this.releaseDate, this.populations, this.attachedFileIds, this.markAsUnreadForAll).then((data) => {
         this.isProcessingSave = false
         if (data.success) {
-          this.$emit('updateNews')
+          this.$emit('update')
           this.onClose()
         } else {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
@@ -429,11 +466,14 @@ export default {
 {
   "creationTitle": "Partager une information",
   "updateTitle": "Modifier une information",
+  "schoolCreationTitle": "Créer une annonce",
+  "schoolUpdateTitle": "Modifier une annonce",
   "releaseDateLabel": "Parution",
   "namePlaceHolder": "Titre",
   "contentPlaceHolder": "Description",
   "populationPlaceholder": "Destinataires",
   "addFile": "Ajouter un fichier",
+  "markAsUnreadForAll": "Notifier les destinataires",
   "creationSubmit": "Créer",
   "updateSubmit": "Modifier",
   "sizeLimit1": "Ne doit pas dépasser ",
