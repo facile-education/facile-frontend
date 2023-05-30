@@ -8,7 +8,7 @@
     @close="onClose"
   >
     <template #header>
-      <span>{{ initNews.title }}</span>
+      <span class="header">{{ initNews.title }}</span>
     </template>
 
     <template #body>
@@ -58,5 +58,16 @@ export default {
 <style lang="scss">
 .news-details-modal.modal-mask .window-container .window-body {
   padding-bottom: 0;
+}
+</style>
+
+<style lang="scss" scoped>
+// TODO: put this in pentila component?
+.header {
+  width: 90%;
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 </style>
