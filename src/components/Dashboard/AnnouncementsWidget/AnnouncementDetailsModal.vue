@@ -1,7 +1,7 @@
 <template>
   <PentilaWindow
-    class="diary-event-details-modal"
-    data-test="diary-event-details-modal"
+    class="announcement-details-modal"
+    data-test="announcement-details-modal"
     :modal="true"
     :draggable="true"
     @close="onClose"
@@ -51,5 +51,8 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" >
+.announcement-details-modal.modal-mask .window-container .window-body {
+  padding-bottom: 0;
+}
 </style>
