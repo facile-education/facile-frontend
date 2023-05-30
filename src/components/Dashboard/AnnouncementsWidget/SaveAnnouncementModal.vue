@@ -124,7 +124,7 @@ import { required } from '@vuelidate/validators'
 import { getSchoolNewsBroadcastGroups, getNewsDetails, addNews, editNews } from '@/api/dashboard/news.service'
 import CustomDatePicker from '@components/Base/CustomDatePicker.vue'
 import { defineAsyncComponent } from 'vue'
-import AttachedFiles from '@components/Base/AttachedFiles.vue'
+import AttachedFiles from '@components/AttachedFiles/AttachedFiles.vue'
 const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal.vue'))
 const CKEditor = defineAsyncComponent({
   loader: async () => { return (await import('@ckeditor/ckeditor5-vue')).component }

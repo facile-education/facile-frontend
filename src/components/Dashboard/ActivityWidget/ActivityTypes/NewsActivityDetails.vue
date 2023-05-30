@@ -114,7 +114,7 @@
 <script>
 import PopulationList from '@components/Dashboard/PopulationList.vue'
 import ReadInfos from '@components/Dashboard/ReadInfos/ReadInfos.vue'
-import AttachedFiles from '@components/Base/AttachedFiles.vue'
+import AttachedFiles from '@components/AttachedFiles/AttachedFiles.vue'
 import dayjs from 'dayjs'
 import { deleteNews, getNewsDetails } from '@/api/dashboard/news.service'
 import { defineAsyncComponent } from 'vue'

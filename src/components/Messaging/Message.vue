@@ -69,7 +69,7 @@
 
 <script>
 import dayjs from 'dayjs'
-import AttachedFiles from '@components/Base/AttachedFiles'
+import AttachedFiles from '@components/AttachedFiles/AttachedFiles.vue'
 import MessageRecipients from '@components/Messaging/MessageRecipients'
 
 export default {
