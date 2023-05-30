@@ -352,7 +352,7 @@ export default {
     },
     createNews () {
       this.isProcessingSave = true
-      addNews(this.title, this.content, this.isCreation, this.isSchoolNews, 0, this.releaseDate, this.populations, this.attachedFileIds).then((data) => {
+      addNews(this.title, this.content, this.isSchoolNews, false, 0, this.releaseDate, this.populations, this.attachedFileIds).then((data) => {
         this.isProcessingSave = false
         if (data.success) {
           this.$emit('create')
