@@ -23,37 +23,56 @@
           >
         </div>
 
-        <div class="right-section">
-          <div class="release-date">
-            <div v-t="'releaseDateLabel'" />
-            <CustomDatePicker
-              :selected-date="releaseDate"
-              :min-date="minDate"
-              :with-hours="true"
-              :is-required="true"
-              :minute-increment="15"
-              :disabled="isReleaseDateDisabled"
-              @selectDate="updateReleaseDate"
-            />
-            <PentilaErrorMessage
-              :error-message="formErrorList.releaseDate"
-            />
-          </div>
+        <div
+          v-if="!mq.phone && !mq.tablet"
+          class="population-selection"
+        >
+          <PentilaTagsInput
+            v-model="populations"
+            :placeholder="$t('populationPlaceholder') + '*'"
+            :list="availablePopulationsList"
+            :close-on-select="true"
+            display-field="populationName"
+            :disabled="isLoadingNewsDetails"
+          />
+          <PentilaErrorMessage
+            :error-message="formErrorList.populations"
+          />
+          <PentilaSpinner v-if="isLoadingNewsDetails" />
+        </div>
 
-          <div class="title">
-            <PentilaInput
-              ref="nameInput"
-              v-model="title"
-              :placeholder="$t('namePlaceHolder') + '*'"
-            />
-            <PentilaErrorMessage
-              :error-message="formErrorList.title"
-            />
-          </div>
+        <div class="release-date">
+          <div v-t="'releaseDateLabel'" />
+          <CustomDatePicker
+            :selected-date="releaseDate"
+            :min-date="minDate"
+            :with-hours="true"
+            :is-required="true"
+            :minute-increment="15"
+            :disabled="isReleaseDateDisabled"
+            @selectDate="updateReleaseDate"
+          />
+          <PentilaErrorMessage
+            :error-message="formErrorList.releaseDate"
+          />
         </div>
       </div>
 
-      <div class="population-selection">
+      <div class="title">
+        <PentilaInput
+          ref="nameInput"
+          v-model="title"
+          :placeholder="$t('namePlaceHolder') + '*'"
+        />
+        <PentilaErrorMessage
+          :error-message="formErrorList.title"
+        />
+      </div>
+
+      <div
+        v-if="mq.phone || mq.tablet"
+        class="population-selection"
+      >
         <PentilaTagsInput
           v-model="populations"
           :placeholder="$t('populationPlaceholder') + '*'"
@@ -135,6 +154,7 @@ const isNotEmpty = (list) => validators.isNotEmpty(list)
 export default {
   name: 'SaveNewsModal',
   components: { AttachedFiles, FilePickerModal, CustomDatePicker, CKEditor },
+  inject: ['mq'],
   props: {
     initNews: {
       type: Object,
@@ -342,23 +362,37 @@ export default {
   z-index: 100;
 }
 
+.first-line {
+  display: flex;
+  gap: 1rem;
+}
+
 .image-picker {
-  height: 131px;
-  width: 100px;
-  margin-right: 20px;
-  margin-bottom: 20px;
-  background-color: #01d801;
+  cursor: pointer;
+  height: 90px;
+  width: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $color-not-white-bg;
+
+  img {
+    height: 50%;
+    width: 50%;
+  }
 }
 
 .release-date {
   color: $color-new-light-text;
+  white-space: nowrap;
 }
 
 .population-selection {
   position: relative;
+  flex: 1;
 }
 
-.title, .population-selection, .release-date {
+.first-line, .title, .population-selection {
   margin-bottom: 20px;
 }
 
@@ -387,16 +421,6 @@ export default {
 
   span {
     margin-right: 1em;
-  }
-}
-
-@media screen and (min-width: 700px) {
-  .first-line {
-    display: flex;
-
-    .right-section {
-      flex: 1;
-    }
   }
 }
 </style>
