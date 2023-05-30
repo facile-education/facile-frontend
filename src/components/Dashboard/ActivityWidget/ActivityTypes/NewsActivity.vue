@@ -15,17 +15,21 @@
 
     <div class="content">
       <div class="author">
-        <i>
-          {{ news.groupName }}
-        </i>
         <span>
-          {{ ' - ' + news.authorName }}
+          {{ news.groupName + ' - ' + news.authorName }}
         </span>
       </div>
       <div class="description">
-        <span>
-          {{ news.title }}
-        </span>
+        <div class="left">
+          <span class="text">
+            {{ news.title }}
+          </span>
+          <BaseIcon
+            v-if="news.hasAttachedFiles"
+            class="paper-clip"
+            name="paperclip"
+          />
+        </div>
         <i v-t="'see'" />
       </div>
     </div>
@@ -90,12 +94,13 @@ import dayjs from 'dayjs'
 import validators from '@utils/validators'
 import { defineAsyncComponent } from 'vue'
 import { deleteNews } from '@/api/dashboard/news.service'
+import BaseIcon from '@components/Base/BaseIcon.vue'
 const SaveNewsModal = defineAsyncComponent(() => import('@components/Dashboard/ActivityWidget/SaveNewsModal.vue'))
 const NewsActivityDetailsModal = defineAsyncComponent(() => import('@components/Dashboard/ActivityWidget/ActivityTypes/NewsActivityDetailsModal.vue'))
 
 export default {
   name: 'NewsActivity',
-  components: { SaveNewsModal, NewsActivityDetailsModal },
+  components: { BaseIcon, SaveNewsModal, NewsActivityDetailsModal },
   props: {
     news: {
       type: Object,
@@ -144,6 +149,10 @@ export default {
 <style lang="scss" scoped>
 @import '@/design/index';
 
+button {
+  padding: 0
+}
+
 .news-activity {
   @extend %activity-item;
   cursor: pointer;
@@ -162,10 +171,30 @@ export default {
   .description {
     display: flex;
     justify-content: space-between;
+
+    .left {
+      flex: 1;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      display: flex;
+      align-items: center;
+
+      .text {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+
+  .paper-clip {
+    color: $color-new-light-text;
+    margin: 0 0.5rem;
   }
 
   i {
-    margin-right: 1rem;
+    margin: 0 0.5em;
   }
 
   .icon {
