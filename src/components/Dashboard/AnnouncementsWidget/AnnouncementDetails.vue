@@ -102,7 +102,7 @@
 
 <script>
 import { getNewsDetails, deleteNews } from '@/api/dashboard/news.service'
-import AttachedFiles from '@components/Base/AttachedFiles.vue'
+import AttachedFiles from '@components/AttachedFiles/AttachedFiles.vue'
 import PopulationList from '@components/Dashboard/PopulationList.vue'
 import ReadInfos from '@components/Dashboard/ReadInfos/ReadInfos.vue'
 import dayjs from 'dayjs'

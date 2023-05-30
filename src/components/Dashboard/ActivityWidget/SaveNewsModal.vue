@@ -112,7 +112,7 @@ import dayjs from 'dayjs'
 import InlineEditor from '@ckeditor/ckeditor5-build-inline'
 import { required } from '@vuelidate/validators'
 import CustomDatePicker from '@components/Base/CustomDatePicker.vue'
-import AttachedFiles from '@components/Base/AttachedFiles.vue'
+import AttachedFiles from '@components/AttachedFiles/AttachedFiles.vue'
 import { defineAsyncComponent } from 'vue'
 import {
   addNews,

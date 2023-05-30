@@ -88,7 +88,7 @@ import CKEditor from '@ckeditor/ckeditor5-vue'
 import InlineEditor from '@ckeditor/ckeditor5-build-inline'
 import { required } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
-import AttachedFiles from '@components/Base/AttachedFiles'
+import AttachedFiles from '@components/AttachedFiles/AttachedFiles.vue'
 
 import { defineAsyncComponent } from 'vue'
 const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal'))
