@@ -73,11 +73,17 @@
         class="content-placeholder"
       />
 
-      <AttachedFiles
-        v-if="detailedNews.hasAttachedFiles"
-        :read-only="true"
-        :model-value="detailedNews.attachedFiles"
-      />
+      <ul class="attached-files">
+        <li
+          v-for="attachedFile in detailedNews.attachedFiles"
+          :key="attachedFile.fileId"
+        >
+          <AttachedFile
+            :read-only="true"
+            :attached-file="attachedFile"
+          />
+        </li>
+      </ul>
 
       <div
         v-if="detailedNews.isEditable"
@@ -114,16 +120,16 @@
 <script>
 import PopulationList from '@components/Dashboard/PopulationList.vue'
 import ReadInfos from '@components/Dashboard/ReadInfos/ReadInfos.vue'
-import AttachedFiles from '@components/AttachedFiles/AttachedFiles.vue'
 import dayjs from 'dayjs'
 import { deleteNews, getNewsDetails } from '@/api/dashboard/news.service'
 import { defineAsyncComponent } from 'vue'
 import validators from '@utils/validators'
+const AttachedFile = defineAsyncComponent(() => import('@components/AttachedFiles/AttachedFile.vue'))
 const SaveNewsModal = defineAsyncComponent(() => import('@components/Dashboard/ActivityWidget/SaveNewsModal.vue'))
 
 export default {
   name: 'NewsActivityDetails',
-  components: { SaveNewsModal, AttachedFiles, ReadInfos, PopulationList },
+  components: { AttachedFile, SaveNewsModal, ReadInfos, PopulationList },
   props: {
     initNews: {
       type: Object,
@@ -207,6 +213,13 @@ article {
   flex:1;
 }
 
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  width: 100%;
+}
+
 .detailed-news {
   height: 100%;
   display: flex;
@@ -265,10 +278,6 @@ article {
   text-align: right;
 }
 
-h2 {
-  margin: 0.3em 0;
-}
-
 .content {
   margin-top: 1rem;
   max-height: 30vh;
@@ -284,6 +293,11 @@ h2 {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.attached-files {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .footer {

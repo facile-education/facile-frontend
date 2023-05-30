@@ -102,7 +102,7 @@ export default {
       downloadDocument(this.attachedFile)
     },
     saveInFolder (targetFolder) {
-      this.$store.dispatch('clipboard/duplicate', { targetFolder, entities: [this.selectedFileForAction], successMessage: this.$t('addToFolderSuccess') })
+      this.$store.dispatch('clipboard/duplicate', { targetFolder, entities: [this.attachedFile], successMessage: this.$t('addToFolderSuccess') })
     }
   }
 }
