@@ -308,7 +308,7 @@ h2 {
   "update": "Modifier",
   "delete": "Supprimer",
   "errorPlaceholder": "Oups, une erreur est survenue...",
-  "contentPlaceholder": "Aucun contenu pour cette annonce",
-  "removalConfirmMessage": "L'annonce sera définitivement perdue"
+  "contentPlaceholder": "Aucun contenu pour cette actualité",
+  "removalConfirmMessage": "L'actualité sera définitivement perdue"
 }
 </i18n>
