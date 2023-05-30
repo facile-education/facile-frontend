@@ -111,7 +111,7 @@
   >
     <SaveNewsModal
       :init-news="detailedNews"
-      @updateNews="updateNews"
+      @update="updateNews"
       @close="isUpdateModalDisplayed = false"
     />
   </teleport>

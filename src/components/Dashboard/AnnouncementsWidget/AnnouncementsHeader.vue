@@ -56,8 +56,9 @@
     v-if="isCreateModalDisplayed"
     to="body"
   >
-    <SaveAnnouncementModal
-      @createAnnouncement="createAnnouncement"
+    <SaveNewsModal
+      :is-school-news="true"
+      @create="createAnnouncement"
       @close="isCreateModalDisplayed = false"
     />
   </teleport>
@@ -68,11 +69,11 @@ import Pellet from '@components/Base/Pellet.vue'
 import CreateButton from '@components/Base/CreateButton.vue'
 import { defineAsyncComponent } from 'vue'
 import BaseIcon from '@components/Base/BaseIcon.vue'
-const SaveAnnouncementModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/SaveAnnouncementModal.vue'))
+const SaveNewsModal = defineAsyncComponent(() => import('@components/Dashboard/ActivityWidget/SaveNewsModal.vue'))
 
 export default {
   name: 'AnnouncementsHeader',
-  components: { BaseIcon, SaveAnnouncementModal, CreateButton, Pellet },
+  components: { BaseIcon, SaveNewsModal, CreateButton, Pellet },
   props: {
     nbNewAnnouncements: {
       type: Number,

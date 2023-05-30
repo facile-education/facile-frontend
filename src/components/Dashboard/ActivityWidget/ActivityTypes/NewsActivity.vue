@@ -83,7 +83,7 @@
   >
     <SaveNewsModal
       :init-news="news"
-      @updateNews="$emit('updateNews')"
+      @update="$emit('updateNews')"
       @close="isUpdateModalDisplayed = false"
     />
   </teleport>
