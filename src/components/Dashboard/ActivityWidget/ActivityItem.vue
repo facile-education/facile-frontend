@@ -2,10 +2,10 @@
   <div class="container">
     <div
       class="activity-item"
-      :class="{'theme-border-color': isUnread}"
+      :class="{'theme-border-color': isUnread && !isConsulted}"
     >
       <div
-        v-if="isUnread"
+        v-if="isUnread && !isConsulted"
         class="pellet theme-background-color"
       />
       <NewsActivity
@@ -13,6 +13,7 @@
         :news="activity"
         @updateNews="$emit('refresh')"
         @deleteNews="$emit('refresh')"
+        @displayDetails="isConsulted=true"
       />
       <DocActivity
         v-else-if="isDocActivity"
@@ -66,6 +67,11 @@ export default {
     }
   },
   emits: ['getNextActivities', 'refresh'],
+  data () {
+    return {
+      isConsulted: false
+    }
+  },
   computed: {
     isNewsActivity () {
       return this.activity.type === activityConstants.TYPE_NEWS
