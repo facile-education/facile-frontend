@@ -75,17 +75,7 @@
       />
     </teleport>
 
-    <teleport
-      to="body"
-    >
-      <WarningModal
-        v-if="isWarningModalDisplayed"
-        win-width="500px"
-      />
-      <ConflictModal
-        v-if="isConflictModalDisplayed"
-        win-width="500px"
-      />
+    <teleport to="body">
       <HelpModal
         v-if="isHelpModalDisplayed"
         @close="closeHelpModal"
@@ -93,6 +83,22 @@
       <AccessModal
         v-if="isAccessModalDisplayed"
         @close="closeAccessModal"
+      />
+    </teleport>
+    <teleport
+      v-if="isConflictModalDisplayed"
+      to="body"
+    >
+      <ConflictModal
+        win-width="500px"
+      />
+    </teleport>
+    <teleport
+      v-if="isWarningModalDisplayed"
+      to="body"
+    >
+      <WarningModal
+        win-width="500px"
       />
     </teleport>
   </div>
