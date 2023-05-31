@@ -142,7 +142,7 @@ export default {
       const oldestRead = this.readActivities.length > 0 ? this.readActivities[this.readActivities.length - 1] : undefined
       const oldestUnread = this.unreadActivities.length > 0 ? this.unreadActivities[this.unreadActivities.length - 1] : undefined
 
-      return oldestRead !== undefined && oldestUnread !== undefined && dayjs(oldestUnread.modificationDate, 'YYYY-MM-DD HH:mm').isBefore(dayjs(oldestRead.modificationDate, 'YYYY-MM-DD HH:mm'))
+      return oldestRead !== undefined && oldestUnread !== undefined && dayjs(oldestUnread.modificationDate, 'YYYY-MM-DD HH:mm:sss').isBefore(dayjs(oldestRead.modificationDate, 'YYYY-MM-DD HH:mm:sss'))
         ? oldestUnread
         : oldestRead !== undefined
           ? oldestRead
@@ -150,7 +150,7 @@ export default {
     },
     lastActivityDate () {
       if (this.lastActivity) {
-        return this.lastActivity.modificationDate
+        return dayjs(this.lastActivity.modificationDate, 'YYYY-MM-DD HH:mm:sss')
       } else { // if no activity, return the currentDate
         return dayjs()
       }
@@ -185,7 +185,7 @@ export default {
     getActivities () {
       this.isLoading = true
       getDashboardActivity( // TODO call with memberShip boolean and groupId
-        this.displayAll ? this.lastActivityDate.format('YYYY-MM-DD HH:mm:ss') : dayjs().format('YYYY-MM-DD HH:mm:ss'),
+        this.displayAll ? this.lastActivityDate.format('YYYY-MM-DD HH:mm:sss') : dayjs().format('YYYY-MM-DD HH:mm:sss'),
         this.displayAll ? activityConstants.nbActivityPerPage : activityConstants.nbActivityInWidget,
         this.filterBooleans.withNews,
         this.filterBooleans.withDocs,
@@ -236,6 +236,7 @@ section {
 
   &.full-page {
     height: 100%;
+    margin-bottom: 0;
     display: flex;
     flex-direction: column;
   }
