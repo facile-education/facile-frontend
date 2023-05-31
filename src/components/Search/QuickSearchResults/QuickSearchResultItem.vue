@@ -51,7 +51,7 @@
     />
 
     <teleport to="body">
-      <AnnouncementDetailsModal
+      <NewsDetailsModal
         v-if="isNewsModalDisplayed"
         :init-announcement="searchResult.news"
         @close="isNewsModalDisplayed = false"
@@ -72,12 +72,12 @@ import { isInViewport } from '@/utils/commons.util'
 import { defineAsyncComponent } from 'vue'
 const FileIcon = defineAsyncComponent(() => import('@components/Base/FileIcon'))
 const SearchResultPreview = defineAsyncComponent(() => import('@components/Search/SearchResultPreview'))
-const AnnouncementDetailsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/AnnouncementDetailsModal'))
+const NewsDetailsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/NewsDetailsModal'))
 const DiaryEventDetailsModal = defineAsyncComponent(() => import('@components/Dashboard/DiaryWidget/DiaryEventDetailsModal'))
 
 export default {
   name: 'QuickSearchResultItem',
-  components: { AnnouncementDetailsModal, DiaryEventDetailsModal, FileIcon, SearchResultPreview },
+  components: { NewsDetailsModal, DiaryEventDetailsModal, FileIcon, SearchResultPreview },
   props: {
     searchResult: {
       type: Object,
