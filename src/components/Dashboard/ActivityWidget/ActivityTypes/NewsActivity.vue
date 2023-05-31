@@ -95,8 +95,8 @@ import validators from '@utils/validators'
 import { defineAsyncComponent } from 'vue'
 import { deleteNews } from '@/api/dashboard/news.service'
 import BaseIcon from '@components/Base/BaseIcon.vue'
-const SaveNewsModal = defineAsyncComponent(() => import('@components/Dashboard/ActivityWidget/SaveNewsModal.vue'))
-const NewsActivityDetailsModal = defineAsyncComponent(() => import('@components/Dashboard/ActivityWidget/ActivityTypes/NewsActivityDetailsModal.vue'))
+const SaveNewsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/SaveNewsModal.vue'))
+const NewsActivityDetailsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/NewsDetailsModal.vue'))
 
 export default {
   name: 'NewsActivity',

@@ -50,7 +50,7 @@
 import CreateButton from '@components/Base/CreateButton.vue'
 import Pellet from '@components/Base/Pellet.vue'
 import { defineAsyncComponent } from 'vue'
-const SaveNewsModal = defineAsyncComponent(() => import('@components/Dashboard/ActivityWidget/SaveNewsModal.vue'))
+const SaveNewsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/SaveNewsModal.vue'))
 
 export default {
   name: 'AllAnnouncementsHeader',
