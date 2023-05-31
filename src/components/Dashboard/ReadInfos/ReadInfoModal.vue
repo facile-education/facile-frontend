@@ -49,7 +49,13 @@ export default {
       return allMembers
     },
     allReadMembers () {
-      return this.allMembers.filter(member => member.hasRead === true)
+      let allReadMembers = this.allMembers.filter(member => member.hasRead === true)
+
+      // Remove duplicate users based on userId (user can be present in different populations)
+      allReadMembers = allReadMembers.filter((user, index) => {
+        return allReadMembers.findIndex(u => u.userId === user.userId) === index
+      })
+      return allReadMembers
     },
     sortedPopulations () {
       return PentilaUtils.Array.sortWithString(this.readInfos, false, 'populationName')
