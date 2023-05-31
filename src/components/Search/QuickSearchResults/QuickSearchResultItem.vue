@@ -53,7 +53,7 @@
     <teleport to="body">
       <NewsDetailsModal
         v-if="isNewsModalDisplayed"
-        :init-announcement="searchResult.news"
+        :init-news="searchResult.news"
         @close="isNewsModalDisplayed = false"
       />
       <DiaryEventDetailsModal
@@ -282,7 +282,6 @@ export default {
       }
     },
     redirectPreview ({ routeName, params, isNews }) {
-      console.log(routeName, params)
       if (routeName !== undefined) {
         this.$router.push({ name: routeName, params })
       } else if (isNews) {
