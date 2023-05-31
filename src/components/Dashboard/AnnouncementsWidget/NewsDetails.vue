@@ -1,5 +1,5 @@
 <template>
-  <article>
+  <article :class="{'not-in-modal': !isInModal}">
     <div
       v-if="isLoading"
       class="placeholder"
@@ -13,48 +13,64 @@
     />
     <div
       v-else
-      class="detailed-announcement"
+      class="detailed-news"
+      :class="{'is-school-news': detailedNews.isSchoolNews}"
     >
+      <h2 v-if="!isInModal">
+        {{ detailedNews.title }}
+      </h2>
+
       <div class="first-line">
         <div class="thumbnail">
           <img
-            :src="detailedAnnouncement.thumbnailUrl"
+            :src="thumbnail"
             alt="thumbnail"
           >
         </div>
 
         <div class="first-line-right">
-          <div class="populations">
+          <div
+            v-if="detailedNews.isEditable"
+            class="populations"
+          >
             <div
               v-t="'populations'"
               class="label"
             />
-            <PopulationList :population-list="detailedAnnouncement.populations" />
+            <PopulationList :population-list="detailedNews.populations" />
           </div>
 
           <div
-            v-if="detailedAnnouncement.isEditable"
+            v-if="detailedNews.isEditable"
             class="read-infos"
           >
             <div
               v-t="'readBy'"
               class="label"
             />
-            <ReadInfos :read-infos="detailedAnnouncement.readInfos" />
+            <ReadInfos :read-infos="detailedNews.readInfos" />
           </div>
 
-          <div class="publication">
-            {{ $t('at') + formattedPublicationDate + $t('by') + detailedAnnouncement.authorName }}
+          <div
+            v-if="!detailedNews.isEditable"
+            class="publication"
+          >
+            {{ $t('at') + formattedPublicationDate + $t('by') + detailedNews.authorName }}
           </div>
-
-          <h2> {{ detailedAnnouncement.title }}</h2>
         </div>
       </div>
 
       <div
-        v-if="detailedAnnouncement.content"
+        v-if="detailedNews.isEditable"
+        class="publication"
+      >
+        {{ $t('at') + formattedPublicationDate + $t('by') + detailedNews.authorName }}
+      </div>
+
+      <div
+        v-if="detailedNews.content"
         class="content"
-        v-html="detailedAnnouncement.content"
+        v-html="detailedNews.content"
       />
       <div
         v-else
@@ -62,14 +78,20 @@
         class="content-placeholder"
       />
 
-      <AttachedFiles
-        v-if="detailedAnnouncement.hasAttachedFiles"
-        :read-only="true"
-        :model-value="detailedAnnouncement.attachedFiles"
-      />
+      <ul class="attached-files">
+        <li
+          v-for="attachedFile in detailedNews.attachedFiles"
+          :key="attachedFile.fileId"
+        >
+          <AttachedFile
+            :read-only="true"
+            :attached-file="attachedFile"
+          />
+        </li>
+      </ul>
 
       <div
-        v-if="detailedAnnouncement.isEditable"
+        v-if="detailedNews.isEditable"
         class="footer"
       >
         <PentilaButton
@@ -82,7 +104,7 @@
           class="footer-button"
           data-test="deleteButton"
           :label="$t('delete')"
-          @click="confirmDeleteAnnouncement"
+          @click="confirmDeleteNews"
         />
       </div>
     </div>
@@ -93,36 +115,40 @@
     to="body"
   >
     <SaveNewsModal
-      :init-news="detailedAnnouncement"
-      :is-school-news="true"
-      @update="updateAnnouncement"
+      :init-news="detailedNews"
+      @update="updateNews"
       @close="isUpdateModalDisplayed = false"
     />
   </teleport>
 </template>
 
 <script>
-import { getNewsDetails, deleteNews } from '@/api/dashboard/news.service'
-import AttachedFiles from '@components/AttachedFiles/AttachedFiles.vue'
 import PopulationList from '@components/Dashboard/PopulationList.vue'
 import ReadInfos from '@components/Dashboard/ReadInfos/ReadInfos.vue'
 import dayjs from 'dayjs'
+import { deleteNews, getNewsDetails } from '@/api/dashboard/news.service'
 import { defineAsyncComponent } from 'vue'
-const SaveNewsModal = defineAsyncComponent(() => import('@components/Dashboard/ActivityWidget/SaveNewsModal.vue'))
+import validators from '@utils/validators'
+const AttachedFile = defineAsyncComponent(() => import('@components/AttachedFiles/AttachedFile.vue'))
+const SaveNewsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/SaveNewsModal.vue'))
 
 export default {
-  name: 'AnnouncementDetails',
-  components: { ReadInfos, PopulationList, AttachedFiles, SaveNewsModal },
+  name: 'NewsDetails',
+  components: { AttachedFile, SaveNewsModal, ReadInfos, PopulationList },
   props: {
-    initAnnouncement: {
+    initNews: {
       type: Object,
       default: undefined
+    },
+    isInModal: {
+      type: Boolean,
+      default: true
     }
   },
   emits: ['update', 'delete'],
   data () {
     return {
-      detailedAnnouncement: undefined,
+      detailedNews: undefined,
       isLoading: false,
       error: undefined,
       isUpdateModalDisplayed: false
@@ -130,46 +156,53 @@ export default {
   },
   computed: {
     formattedPublicationDate () {
-      return dayjs(this.detailedAnnouncement.publicationDate).format('DD/MM/YY')
+      return dayjs(this.detailedNews.publicationDate).format('DD/MM/YY')
+    },
+    thumbnail () {
+      if (validators.isValidURL(this.detailedNews.thumbnailUrl)) {
+        return this.detailedNews.thumbnailUrl
+      } else { // Returned url is a key for local default image
+        return require('@assets/images/' + this.detailedNews.thumbnailUrl + '.png')
+      }
     }
   },
   watch: {
-    initAnnouncement: {
+    initNews: {
       deep: true,
       handler () {
-        this.getAnnouncementDetails()
+        this.getNewsDetails()
       }
     }
   },
   created () {
-    this.getAnnouncementDetails()
+    this.getNewsDetails()
   },
   methods: {
-    getAnnouncementDetails () {
+    getNewsDetails () {
       this.isLoading = true
-      getNewsDetails(this.initAnnouncement.newsId).then((data) => {
+      getNewsDetails(this.initNews.newsId).then((data) => {
         this.isLoading = false
         if (data.success) {
           this.error = false
-          this.detailedAnnouncement = data.news
+          this.detailedNews = data.news
         } else {
           this.error = true
-          console.error('Error while getting announcement details')
+          console.error('Error while getting news details')
         }
       })
     },
-    confirmDeleteAnnouncement () {
+    confirmDeleteNews () {
       this.$store.dispatch('warningModal/addWarning', {
         text: this.$t('removalConfirmMessage'),
-        lastAction: { fct: this.deleteAnnouncement, params: [] }
+        lastAction: { fct: this.deleteNews, params: [] }
       })
     },
-    updateAnnouncement () {
-      this.getAnnouncementDetails()
+    updateNews () {
+      this.getNewsDetails()
       this.$emit('update')
     },
-    deleteAnnouncement () {
-      deleteNews(this.initAnnouncement.newsId).then((data) => {
+    deleteNews () {
+      deleteNews(this.initNews.newsId).then((data) => {
         if (data.success) {
           this.$emit('delete')
         } else {
@@ -189,7 +222,18 @@ article {
   flex:1;
 }
 
-.detailed-announcement {
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  width: 100%;
+}
+
+h2 {
+  margin: 1rem 0;
+}
+
+.detailed-news {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -206,21 +250,26 @@ article {
 }
 
 .first-line {
-  --thumbnail-width: min(100px, 20vw);
+  --thumbnail-width: min(74px, 20vw);
   display: flex;
+  height: 50px;
 }
 
 .thumbnail{
   width: var(--thumbnail-width);
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    height: 100%;
+  }
 }
 
 .first-line-right {
   width: calc(100% - var(--thumbnail-width));
-  padding-left: 20px;
-}
-
-.populations {
+  padding-left: 25px;
 }
 
 .populations, .read-infos {
@@ -229,7 +278,7 @@ article {
 
 .label {
   min-width: 5em;
-  margin-right: 1rem;
+  margin-right: 0.5rem;
 }
 
 .populations .label {
@@ -239,15 +288,17 @@ article {
 .publication {
   margin-top: 1rem;
   color: $color-new-light-text;
-}
-
-h2 {
-  margin: 0.3em 0;
+  text-align: right;
 }
 
 .content {
+  margin-top: 1rem;
   max-height: 30vh;
   overflow-y: auto;
+
+  ::v-deep(p) {
+    margin: 0;
+  }
 }
 
 .content-placeholder {
@@ -257,15 +308,32 @@ h2 {
   justify-content: center;
 }
 
+.attached-files {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .footer {
   align-self: flex-end;
-  margin-top: auto;
+  margin-top: 1rem;
   width: 100%;
   display: flex;
   justify-content: flex-end;
 
   .footer-button {
     margin-left: 15px;
+  }
+}
+
+.not-in-modal {
+  .footer {
+    margin-top: auto;
+  }
+}
+
+.is-school-news {
+  .first-line {
+    height: 74px;
   }
 }
 </style>
@@ -279,7 +347,7 @@ h2 {
   "update": "Modifier",
   "delete": "Supprimer",
   "errorPlaceholder": "Oups, une erreur est survenue...",
-  "contentPlaceholder": "Aucun contenu pour cette annonce",
-  "removalConfirmMessage": "L'annonce sera définitivement perdue"
+  "contentPlaceholder": "Aucun contenu pour cette actualité",
+  "removalConfirmMessage": "L'actualité sera définitivement perdue"
 }
 </i18n>

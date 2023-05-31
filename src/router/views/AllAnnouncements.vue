@@ -50,9 +50,10 @@
         </div>
       </div>
 
-      <AnnouncementDetails
+      <NewsDetails
         v-if="selectedAnnouncement && isDetailsPanelDisplayed"
-        :init-announcement="selectedAnnouncement"
+        :init-news="selectedAnnouncement"
+        :is-in-modal="false"
         @update="refresh"
         @delete="deleteAnnouncement"
       />
@@ -68,16 +69,16 @@
 <script>
 import Layout from '@layouts/BannerLayout.vue'
 import AnnouncementItem from '@components/Dashboard/AnnouncementsWidget/AnnouncementItem.vue'
-import AnnouncementDetails from '@components/Dashboard/AnnouncementsWidget/AnnouncementDetails.vue'
 import dayjs from 'dayjs'
 import { getSchoolNews } from '@/api/dashboard/news.service'
 import { allAnnouncementModalPaginationSize } from '@/constants/dashboardConstants'
 import AllAnnouncementsHeader from '@components/Dashboard/AnnouncementsWidget/AllAnnouncements/AllAnnouncementsHeader.vue'
+import NewsDetails from '@components/Dashboard/AnnouncementsWidget/NewsDetails.vue'
 let oldScrollTop = 0
 
 export default {
   name: 'AllAnnouncements',
-  components: { AllAnnouncementsHeader, AnnouncementDetails, AnnouncementItem, Layout },
+  components: { NewsDetails, AllAnnouncementsHeader, AnnouncementItem, Layout },
   inject: ['mq'],
   data () {
     return {

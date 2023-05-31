@@ -179,7 +179,7 @@ export default {
   setup: () => ({ v$: useVuelidate() }),
   data () {
     return {
-      thumbnailUrl: this.isSchoolNews ? require('@/assets/images/default_school_news_0.png') : require('@/assets/images/default_news_0.png'),
+      thumbnailUrl: this.isSchoolNews ? require('@assets/images/default_school_news_0.png') : require('@assets/images/default_news_0.png'),
       title: '',
       content: '',
       releaseDate: dayjs(),

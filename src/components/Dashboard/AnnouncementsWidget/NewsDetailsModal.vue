@@ -12,7 +12,7 @@
     </template>
 
     <template #body>
-      <NewsActivityDetails
+      <NewsDetails
         :init-news="initNews"
         @update="$emit('update')"
         @delete="deleteNews"
@@ -22,11 +22,11 @@
 </template>
 
 <script>
-import NewsActivityDetails from '@components/Dashboard/ActivityWidget/ActivityTypes/NewsActivityDetails.vue'
+import NewsDetails from '@components/Dashboard/AnnouncementsWidget/NewsDetails.vue'
 
 export default {
-  name: 'NewsActivityDetailsModal',
-  components: { NewsActivityDetails },
+  name: 'NewsDetailsModal',
+  components: { NewsDetails },
   props: {
     initNews: {
       type: Object,

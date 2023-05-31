@@ -90,8 +90,8 @@
     v-if="isDetailsModalDisplayed"
     to="body"
   >
-    <AnnouncementDetailsModal
-      :init-announcement="announcement"
+    <NewsActivityDetailsModal
+      :init-news="announcement"
       @close="isDetailsModalDisplayed = false"
     />
   </teleport>
@@ -104,12 +104,12 @@ import BaseIcon from '@components/Base/BaseIcon.vue'
 import { defineAsyncComponent } from 'vue'
 import { isInViewport } from '@utils/commons.util'
 import validators from '@utils/validators'
-const SaveNewsModal = defineAsyncComponent(() => import('@components/Dashboard/ActivityWidget/SaveNewsModal.vue'))
-const AnnouncementDetailsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/AnnouncementDetailsModal.vue'))
+const SaveNewsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/SaveNewsModal.vue'))
+const NewsActivityDetailsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/NewsDetailsModal.vue'))
 
 export default {
   name: 'AnnouncementItem',
-  components: { BaseIcon, SaveNewsModal, AnnouncementDetailsModal },
+  components: { NewsActivityDetailsModal, BaseIcon, SaveNewsModal },
   props: {
     announcement: {
       type: Object,
