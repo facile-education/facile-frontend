@@ -16,12 +16,15 @@
         class="save-spinner"
       />
       <div class="first-line">
-        <div class="image-picker">
+        <button
+          class="image-picker"
+          @click="isImagePickerDisplayed=true"
+        >
           <img
             :src="thumbnailUrl"
             alt="thumbnail"
           >
-        </div>
+        </button>
 
         <div
           v-if="!mq.phone && !mq.tablet"
@@ -123,13 +126,25 @@
     </template>
   </PentilaWindow>
 
-  <teleport to="body">
+  <teleport
+    v-if="isFilePickerDisplayed"
+    to="body"
+  >
     <FilePickerModal
-      v-if="isFilePickerDisplayed"
       :multi-selection="true"
       :allow-files-from-device="true"
       @addedFiles="attachNewFiles"
       @close="isFilePickerDisplayed = false"
+    />
+  </teleport>
+
+  <teleport
+    v-if="isImagePickerDisplayed"
+    to="body"
+  >
+    <ImagePicker
+      @save="selectImage"
+      @close="isImagePickerDisplayed=false"
     />
   </teleport>
 </template>
@@ -149,6 +164,7 @@ import {
   getGroupNewsBroadcastGroups,
   getNewsDetails, getSchoolNewsBroadcastGroups
 } from '@/api/dashboard/news.service'
+import ImagePicker from '@components/Nero/ImagePicker.vue'
 const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal.vue'))
 const CKEditor = defineAsyncComponent({
   loader: async () => { return (await import('@ckeditor/ckeditor5-vue')).component }
@@ -163,7 +179,7 @@ const isNotEmpty = (list) => validators.isNotEmpty(list)
 
 export default {
   name: 'SaveNewsModal',
-  components: { AttachedFiles, FilePickerModal, CustomDatePicker, CKEditor },
+  components: { ImagePicker, AttachedFiles, FilePickerModal, CustomDatePicker, CKEditor },
   inject: ['mq'],
   props: {
     initNews: {
@@ -195,7 +211,8 @@ export default {
       isReleaseDateDisabled: false,
       isLoadingNewsDetails: false,
       isProcessingSave: false,
-      isFilePickerDisplayed: false
+      isFilePickerDisplayed: false,
+      isImagePickerDisplayed: false
     }
   },
   validations: {

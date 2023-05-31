@@ -43,6 +43,9 @@
               {{ $t('selectButton') }}
             </span>
           </div>
+          <button @click="isFilePickerDisplayed=true">
+            {{ $t('openFilePicker') }}
+          </button>
         </div>
       </div>
     </template>
@@ -54,15 +57,28 @@
       />
     </template>
   </PentilaWindow>
+
+  <teleport
+    v-if="isFilePickerDisplayed"
+    to="body"
+  >
+    <FilePickerModal
+      @addedFiles="doSelectFilesAction"
+      @close="isFilePickerDisplayed=false"
+    />
+  </teleport>
 </template>
 
 <script>
 import { Cropper, Preview } from 'vue-advanced-cropper'
 import 'vue-advanced-cropper/dist/style.css'
+import FilePickerModal from '@components/FilePicker/FilePickerModal.vue'
+import fileService from '@/api/documents/file.service'
 
 export default {
   name: 'ImagePickerModal',
   components: {
+    FilePickerModal,
     Cropper,
     Preview
   },
@@ -73,7 +89,8 @@ export default {
         coordinates: null,
         image: null
       },
-      image: null
+      image: null,
+      isFilePickerDisplayed: false
     }
   },
   computed: {
@@ -87,6 +104,17 @@ export default {
     }
   },
   methods: {
+    doSelectFilesAction (files) {
+      console.log(files)
+      const file = files[0]
+      fileService.getResource(file.id, 0, true).then((data) => {
+        if (data.success) {
+          this.loadImageAsBase64(data.fileUrl)
+        } else {
+          console.error('cannot load file in cropper')
+        }
+      })
+    },
     reset () {
       this.image = null
     },
@@ -106,6 +134,18 @@ export default {
         // Start the reader job - read file as a data url (base64 format)
         reader.readAsDataURL(input.files[0])
       }
+    },
+    loadImageAsBase64 (imageUrl) {
+      return fetch(imageUrl)
+        .then(response => response.blob())
+        .then(blob => {
+          return new Promise((resolve, reject) => {
+            const reader = new FileReader()
+            reader.onload = (e) => { this.image = e.target.result }
+            reader.onerror = reject
+            reader.readAsDataURL(blob)
+          })
+        })
     },
     onChange ({ coordinates, image }) {
       this.result = {
@@ -188,6 +228,7 @@ export default {
 {
   "header": "Image",
   "saveButton": "Valider",
-  "selectButton": "Sélectionner une image"
+  "selectButton": "Sélectionner une image",
+  "openFilePicker": "Choisir un fichier de l'ent"
 }
 </i18n>
