@@ -1,5 +1,5 @@
 <template>
-  <QuickSearchPanelHeader :nb-results="searchResults ? searchResults.length : undefined" />
+  <QuickSearchPanelHeader :nb-results="total" />
   <PentilaSpinner v-if="isLoadingResults" />
   <ul
     v-if="searchResults && searchResults.length > 0"
@@ -17,9 +17,11 @@
 </template>
 
 <script>
+import QuickSearchPanelHeader from '@components/Search/QuickSearchPanelHeader'
 
-import QuickSearchPanelHeader from '@components/Search/QuickSearchPanelHeader.vue'
-import QuickSearchResultItem from '@components/Search/QuickSearchResults/QuickSearchResultItem.vue'
+import { defineAsyncComponent } from 'vue'
+const QuickSearchResultItem = defineAsyncComponent(() => import('@components/Search/QuickSearchResults/QuickSearchResultItem'))
+
 let oldScrollTop = 0
 
 export default {
@@ -36,6 +38,9 @@ export default {
     },
     searchResults () {
       return this.$store.state.search.quickSearchResults
+    },
+    total () {
+      return this.$store.state.search.quickSearchTotal
     }
   },
   mounted () {
@@ -51,7 +56,7 @@ export default {
         const nbPixelsBeforeBottom = scroll.scrollHeight - (scroll.scrollTop + scroll.clientHeight)
 
         if (nbPixelsBeforeBottom <= 0) {
-          if (!this.activitiesLoading) {
+          if (!this.isLoadingResults) {
             this.$store.dispatch('search/quickSearch', false) // Get next results
           }
         }
@@ -96,7 +101,7 @@ ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
-  height: calc(100% - #{$quick-search-banner-height} - #{$quick-search-close-option-height});
+  height: calc(100% - #{$quick-search-banner-height});
   overflow-y: auto;
 }
 </style>

@@ -31,40 +31,46 @@
         class="text"
       >
         <div class="first-line">
-          <span>{{ $t(''+searchResult.service) }}</span>
-          <span v-if="resultDetails.size">{{ ' - ' + formatSize(resultDetails.size) }}</span>
-          <span v-if="resultDetails.section">{{ ' - ' + resultDetails.section }}</span>
-          <span v-if="resultDetails.messagingFolder">{{ ' - ' + JSON.parse(resultDetails.messagingFolder).folderName }}</span>
-          <span v-if="searchResult.groupName">{{ ' - ' + searchResult.groupName }}</span>
+          <span>{{ formattedDate }}</span>
+          <span v-if="searchResult.size">{{ ' - ' + formatSize(searchResult.size) }}</span>
+          <span v-if="searchResult.section">{{ ' - ' + searchResult.section }}</span>
+          <span v-if="resultDetails.messagingFolder">{{ ' - ' + resultDetails.messagingFolder.folderName }}</span>
         </div>
         <div class="second-line">
-          <span> {{ searchResult.date }}</span>
-          <span> {{ ' - ' +searchResult.author }}</span>
+          <span> {{ searchResult.author }}</span>
+          <span v-if="searchResult.groupName">{{ ' - ' + searchResult.groupName }}</span>
         </div>
         <div class="third-line">
-          <span v-if="resultDetails.description">{{ resultDetails.description }}</span>
+          <span v-if="searchResult.description">{{ searchResult.description }}</span>
         </div>
       </div>
       <div
-        v-if="resultDetails && resultDetails.breadcrumb"
-        class="breadcrumb"
+        v-if="searchResult && searchResult.folder"
+        class="folder"
       >
-        <!-- TODO: remove all JSON.parse() when remove stubbing-->
-        <div
-          v-for="(folder, index) in JSON.parse(resultDetails.breadcrumb)"
-          :key="index"
-          class="breadcrumb-folder"
-          @mousedown.stop="redirectInDocument(folder.folderId)"
-        >
-          {{ folder.folderName }}
-        </div>
+        <label>{{ $t('folder') + ': ' }}</label>
+        <a @mousedown.stop="redirectInDocument(searchResult.folder.folderId)">{{ searchResult.folder.folderName }}</a>
+      </div>
+      <div
+        v-else-if="searchResult && searchResult.message"
+        class="folder"
+      >
+        <label>{{ $t('message') + ': ' }}</label>
+        <a @mousedown.stop="redirectInMessaging(searchResult.message.messageId)">{{ searchResult.message.subject }}</a>
+      </div>
+      <div
+        v-else-if="searchResult && searchResult.news"
+        class="folder"
+      >
+        <label>{{ $t('news') + ': ' }}</label>
+        <a @mousedown.stop="redirectInNews(searchResult.news.newsId)">{{ searchResult.news.title }}</a>
       </div>
       <div
         v-if="resultDetails && resultDetails.attachedFiles"
         class="attached-files"
       >
         <div
-          v-for="(attachedFile, index) in JSON.parse(resultDetails.attachedFiles)"
+          v-for="(attachedFile, index) in resultDetails.attachedFiles"
           :key="index"
           class="attached-file"
         >
@@ -81,9 +87,13 @@
 </template>
 
 <script>
+import dayjs from 'dayjs'
+import searchConstants from '@/constants/searchConstants'
 import { getSearchResultDetails } from '@/api/search.service'
-import FileIcon from '@components/Base/FileIcon.vue'
 import { formatSize } from '@utils/commons.util'
+
+import { defineAsyncComponent } from 'vue'
+const FileIcon = defineAsyncComponent(() => import('@components/Base/FileIcon'))
 
 export default {
   name: 'SearchResultPreview',
@@ -97,10 +107,6 @@ export default {
       type: Boolean,
       default: false
     },
-    isCollaborative: {
-      type: Boolean,
-      default: false
-    },
     icon: {
       type: String,
       default: ''
@@ -110,13 +116,25 @@ export default {
       default: undefined
     }
   },
+  emits: ['redirect'],
   data () {
     return {
       resultDetails: undefined
     }
   },
+  computed: {
+    formattedDate () {
+      return dayjs(this.searchResult.date, 'YYYY-MM-DD HH:mm').format('DD/MM/YYYY')
+    },
+    isCollaborative () {
+      return this.searchResult.service === searchConstants.TYPE_COLLABORATIVE_FILE || this.searchResult.service === searchConstants.TYPE_COLLABORATIVE_FOLDER
+    }
+  },
   created () {
-    this.getResultDetails()
+    if (this.searchResult.service === searchConstants.TYPE_MESSAGE ||
+        this.searchResult.service === searchConstants.TYPE_NEWS) {
+      this.getResultDetails()
+    }
   },
   updated () {
     if (this.fixedPosition) {
@@ -149,9 +167,16 @@ export default {
       return formatSize(size)
     },
     redirectInDocument (folderId) {
-      this.$router.push({ name: this.isCollaborative ? 'GroupDocuments' : 'Documents', params: { folderId: folderId } })
-      // Close panel
-      this.$store.dispatch('search/closeQuickSearchResultDisplayed')
+      this.$emit('redirect', {
+        routeName: this.isCollaborative ? 'GroupDocuments' : 'Documents',
+        params: { folderId: folderId }
+      })
+    },
+    redirectInMessaging (messageId) {
+      this.$emit('redirect', { routeName: 'Messagerie', params: { messageId } })
+    },
+    redirectInNews () {
+      this.$emit('redirect', { isNews: true })
     }
   }
 }
@@ -167,6 +192,7 @@ export default {
 }
 
 .icon-container {
+  padding-right: 5px;
   min-width: var(--icon-width);
   display: flex;
   justify-content: center;
@@ -183,7 +209,7 @@ export default {
   max-width: calc(100% - var(--icon-width));
 
   .header {
-    margin: 5px 0 10px 0;
+    margin: 5px 0 0 0;
     font-weight: bold;
     display: flex;
     align-items: center;
@@ -203,7 +229,7 @@ export default {
     white-space: normal;
   }
 
-  .breadcrumb, .attached-files {
+  .attached-files {
     font-size: 0.75em;
     margin-top: 10px;
     font-weight: bold;
@@ -211,12 +237,13 @@ export default {
     flex-wrap: wrap;
   }
 
-  .breadcrumb-folder {
-    cursor: pointer;
+  .folder {
+    padding-top: 5px;
+    font-size: 0.75em;
+    font-weight: bold;
 
-    &:not(:last-child):after {
-      content: "/";
-      margin: 0 5px;
+    a {
+      cursor: pointer;
     }
   }
 
@@ -232,6 +259,9 @@ export default {
 
 <i18n locale="fr">
 {
+  "folder": "Dossier",
+  "news": "Annonce",
+  "message": "Message",
   "1": "Actualités",
   "2": "Actualités",
   "3": "Messagerie",
@@ -243,6 +273,7 @@ export default {
   "9": "Progression",
   "10": "Progression",
   "11": "Progression",
-  "12": "Progression"
+  "12": "Progression",
+  "18": "Agenda"
 }
 </i18n>

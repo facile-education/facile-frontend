@@ -5,7 +5,8 @@ export const state = {
   searchInput: '',
   isHistoryOpen: false,
   isQuickSearchResultDisplayed: false,
-  quickSearchResults: []
+  quickSearchResults: [],
+  quickSearchTotal: 0
 }
 
 export const mutations = {
@@ -23,6 +24,9 @@ export const mutations = {
   },
   addQuickResults (state, payload) {
     state.quickSearchResults = state.quickSearchResults.concat(payload)
+  },
+  setQuickSearchTotal (state, payload) {
+    state.quickSearchTotal = payload
   }
 }
 
@@ -44,23 +48,26 @@ export const actions = {
   setSearchInput ({ commit }, query) {
     commit('setSearchInput', query)
   },
-  quickSearch ({ commit }, resetResults = true) {
+  quickSearch ({ commit, state }, resetResults = true) {
     const start = resetResults ? 0 : state.quickSearchResults.length
 
-    this.dispatch('search/openQuickSearchResultDisplayed', { name: 'getQuickSearch' })
-    this.dispatch('currentActions/addAction', { name: 'getQuickSearch' })
-    quickSearch(state.searchInput, start, start + quickSearchPaginationSize).then((data) => {
-      this.dispatch('currentActions/removeAction', { name: 'getQuickSearch' })
-      if (data.success) {
-        if (resetResults) {
-          commit('setQuickResults', data.results)
+    if (start === 0 || state.quickSearchResults.length < state.quickSearchTotal) {
+      this.dispatch('search/openQuickSearchResultDisplayed', { name: 'getQuickSearch' })
+      this.dispatch('currentActions/addAction', { name: 'getQuickSearch' })
+      quickSearch(state.searchInput, start, start + quickSearchPaginationSize).then((data) => {
+        this.dispatch('currentActions/removeAction', { name: 'getQuickSearch' })
+        if (data.success) {
+          if (resetResults) {
+            commit('setQuickResults', data.results)
+          } else {
+            commit('addQuickResults', data.results)
+          }
+          commit('setQuickSearchTotal', data.totalCount)
         } else {
-          commit('addQuickResults', data.results)
+          console.error('Error while retrieving quickSearchResult')
         }
-      } else {
-        console.error('Error while retrieving quickSearchResult')
-      }
-    })
+      })
+    }
   },
   saveQuery () {
     addQueryHistory(state.searchInput).then((data) => {

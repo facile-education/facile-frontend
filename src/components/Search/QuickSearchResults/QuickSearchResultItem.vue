@@ -26,15 +26,11 @@
         :title="searchResult.title"
       >
         {{ searchResult.title }}
-        <img
-          v-if="isCollaborative"
-          src="@assets/icons/users.svg"
-          alt="collaborative"
-        >
       </p>
-      <p class="content-extract">
-        {{ searchResult.content }}
-      </p>
+      <p
+        class="content-extract"
+        v-html="searchResult.content"
+      />
     </div>
 
     <div class="score">
@@ -49,22 +45,39 @@
       class="preview"
       :search-result="searchResult"
       :is-file="isFile"
-      :is-collaborative="isCollaborative"
       :icon="icon"
       :fixed-position="tooltipPosition"
+      @redirect="redirectPreview"
     />
+
+    <teleport to="body">
+      <AnnouncementDetailsModal
+        v-if="isNewsModalDisplayed"
+        :init-announcement="searchResult.news"
+        @close="isNewsModalDisplayed = false"
+      />
+      <DiaryEventDetailsModal
+        v-if="isEventModalDisplayed"
+        :init-event="searchResult.event"
+        @close="isEventModalDisplayed = false"
+      />
+    </teleport>
   </li>
 </template>
 
 <script>
 import searchConstants from '@/constants/searchConstants'
-import FileIcon from '@components/Base/FileIcon.vue'
-import SearchResultPreview from '@components/Search/SearchResultPreview.vue'
 import { isInViewport } from '@/utils/commons.util'
-import { getSearchResultDetails } from '@/api/search.service'
+
+import { defineAsyncComponent } from 'vue'
+const FileIcon = defineAsyncComponent(() => import('@components/Base/FileIcon'))
+const SearchResultPreview = defineAsyncComponent(() => import('@components/Search/SearchResultPreview'))
+const AnnouncementDetailsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/AnnouncementDetailsModal'))
+const DiaryEventDetailsModal = defineAsyncComponent(() => import('@components/Dashboard/DiaryWidget/DiaryEventDetailsModal'))
+
 export default {
   name: 'QuickSearchResultItem',
-  components: { SearchResultPreview, FileIcon },
+  components: { AnnouncementDetailsModal, DiaryEventDetailsModal, FileIcon, SearchResultPreview },
   props: {
     searchResult: {
       type: Object,
@@ -83,15 +96,14 @@ export default {
     return {
       isHovering: false,
       displayTooltip: false,
-      tooltipPosition: undefined
+      tooltipPosition: undefined,
+      isEventModalDisplayed: false,
+      isNewsModalDisplayed: false
     }
   },
   computed: {
     isFile () {
       return this.searchResult.service === searchConstants.TYPE_NEWS_FILE || this.searchResult.service === searchConstants.TYPE_MESSAGE_FILE || this.searchResult.service === searchConstants.TYPE_FILE || this.searchResult.service === searchConstants.TYPE_COLLABORATIVE_FILE || this.searchResult.service === searchConstants.TYPE_PROGRESSION_FILE
-    },
-    isCollaborative () {
-      return this.searchResult.service === searchConstants.TYPE_COLLABORATIVE_FILE || this.searchResult.service === searchConstants.TYPE_COLLABORATIVE_FOLDER
     },
     icon () {
       switch (this.searchResult.service) {
@@ -110,7 +122,7 @@ export default {
         case searchConstants.TYPE_COLLABORATIVE_FILE:
           return require('@assets/icons/documents/icon-file.svg')
         case searchConstants.TYPE_COLLABORATIVE_FOLDER:
-          return require('@assets/icons/documents/icon-file.svg')
+          return require('@assets/icons/documents/icon-folder.svg')
         case searchConstants.TYPE_PROGRESSION:
           return require('@assets/seance.svg') // TODO progression icon
         case searchConstants.TYPE_PROGRESSION_COURSE:
@@ -119,8 +131,10 @@ export default {
           return require('@assets/devoir.svg')
         case searchConstants.TYPE_PROGRESSION_FILE:
           return require('@assets/icons/documents/icon-file.svg')
+        case searchConstants.TYPE_EVENT:
+          return require('@assets/icons/documents/icon-file.svg')
         default:
-          console.error('Unknown entity type', this.searchResult)
+          console.warn('Unknown entity type', this.searchResult)
           return undefined
       }
     }
@@ -176,7 +190,7 @@ export default {
       if (this.$refs.resultItem) {
         const domRect = this.$refs.resultItem.getBoundingClientRect()
         this.tooltipPosition = {
-          x: domRect.x + domRect.width + 25,
+          x: domRect.x + domRect.width + 10,
           y: domRect.y
         }
       }
@@ -187,59 +201,104 @@ export default {
       }
     },
     redirect () {
-      getSearchResultDetails(this.searchResult.entityId, this.searchResult.service).then((data) => { // To retrieve redirection and action to perform on this result
-        if (data.success) {
-          switch (this.searchResult.service) {
-            case searchConstants.TYPE_NEWS:
-              console.log('TODO: redirection')
-              break
-            case searchConstants.TYPE_NEWS_FILE:
-              console.log('TODO: redirection')
-              break
-            case searchConstants.TYPE_MESSAGE:
-              this.$router.push({ name: 'Messagerie', params: { messageId: this.searchResult.entityId } })
-              break
-            case searchConstants.TYPE_MESSAGE_FILE:
-              this.$router.push({ name: 'Messagerie', params: { messageId: data.result.messageId, fileId: this.searchResult.entityId, fileName: this.searchResult.title, display: data.result.displayable } })
-              break
-            case searchConstants.TYPE_FOLDER:
-              this.$router.push({ name: 'Documents', params: { folderId: this.searchResult.entityId } })
-              break
-            case searchConstants.TYPE_FILE:
-              this.$router.push({ name: 'Documents', params: { folderId: data.result.folderId, fileId: this.searchResult.entityId, display: data.result.displayable } })
-              break
-            case searchConstants.TYPE_COLLABORATIVE_FOLDER:
-              this.$router.push({ name: 'GroupDocuments', params: { folderId: this.searchResult.entityId } })
-              break
-            case searchConstants.TYPE_COLLABORATIVE_FILE:
-              this.$router.push({ name: 'GroupDocuments', params: { folderId: data.result.folderId, fileId: this.searchResult.entityId, display: data.result.displayable } })
-              break
-            case searchConstants.TYPE_PROGRESSION:
-              this.$router.push({ name: 'Progression', params: { progressionId: this.searchResult.entityId } })
-              break
-            case searchConstants.TYPE_PROGRESSION_COURSE:
-            case searchConstants.TYPE_PROGRESSION_HOMEWORK:
-              this.$router.push({ name: 'Progression', params: { progressionId: data.result.progressionId, itemId: this.searchResult.entityId } })
-              break
-            case searchConstants.TYPE_PROGRESSION_FILE:
-              this.$router.push({ name: 'Progression', params: { progressionId: data.result.progressionId, itemId: data.result.itemId, fileId: this.searchResult.entityId, fileName: this.searchResult.title, display: data.result.displayable } })
-              break
-            default:
-              console.error('Unknown entity type')
-              return undefined
+      let redirect = false
+      switch (this.searchResult.service) {
+        case searchConstants.TYPE_NEWS:
+          this.isNewsModalDisplayed = true
+          break
+        case searchConstants.TYPE_NEWS_FILE:
+          if (this.searchResult.displayable) {
+            this.$store.dispatch('documents/openFile', { id: this.searchResult.entityId, name: this.searchResult.title })
+          } else {
+            this.isNewsModalDisplayed = true
           }
-          // Save query as an interesting query
-          this.$store.dispatch('search/saveQuery')
-          // Close panel
-          this.$store.dispatch('search/closeQuickSearchResultDisplayed')
-        } else {
-          console.error('Cannot get result details')
-        }
-      })
+          break
+        case searchConstants.TYPE_MESSAGE:
+          redirect = true
+          this.$router.push({ name: 'Messagerie', params: { messageId: this.searchResult.entityId } })
+          break
+        case searchConstants.TYPE_MESSAGE_FILE:
+          if (this.searchResult.displayable) {
+            this.$store.dispatch('documents/openFile', { id: this.searchResult.entityId, name: this.searchResult.title })
+          } else {
+            redirect = true
+            this.$router.push({ name: 'Messagerie', params: { messageId: this.searchResult.message.messageId, fileId: this.searchResult.entityId, fileName: this.searchResult.title } })
+          }
+          break
+        case searchConstants.TYPE_FOLDER:
+          redirect = true
+          this.$router.push({ name: 'Documents', params: { folderId: this.searchResult.entityId } })
+          break
+        case searchConstants.TYPE_FILE:
+          if (this.searchResult.displayable) {
+            this.$store.dispatch('documents/openFile', { id: this.searchResult.entityId, name: this.searchResult.title })
+          } else {
+            redirect = true
+            this.$router.push({ name: 'Documents', params: { folderId: this.searchResult.folderId, fileId: this.searchResult.entityId } })
+          }
+          break
+        case searchConstants.TYPE_COLLABORATIVE_FOLDER:
+          redirect = true
+          this.$router.push({ name: 'GroupDocuments', params: { folderId: this.searchResult.entityId } })
+          break
+        case searchConstants.TYPE_COLLABORATIVE_FILE:
+          if (this.searchResult.displayable) {
+            this.$store.dispatch('documents/openFile', { id: this.searchResult.entityId, name: this.searchResult.title })
+          } else {
+            redirect = true
+            this.$router.push({ name: 'GroupDocuments', params: { folderId: this.searchResult.folderId, fileId: this.searchResult.entityId } })
+          }
+          break
+        case searchConstants.TYPE_PROGRESSION:
+          redirect = true
+          this.$router.push({ name: 'Progression', params: { progressionId: this.searchResult.entityId } })
+          break
+        case searchConstants.TYPE_PROGRESSION_COURSE:
+        case searchConstants.TYPE_PROGRESSION_HOMEWORK:
+          redirect = true
+          this.$router.push({ name: 'Progression', params: { progressionId: this.searchResult.progressionId, itemId: this.searchResult.entityId } })
+          break
+        case searchConstants.TYPE_PROGRESSION_FILE:
+          if (this.searchResult.displayable) {
+            this.$store.dispatch('documents/openFile', { id: this.searchResult.entityId, name: this.searchResult.title })
+          } else {
+            redirect = true
+            this.$router.push({ name: 'Progression', params: { progressionId: this.searchResult.progressionId, itemId: this.searchResult.itemId, fileId: this.searchResult.entityId, fileName: this.searchResult.title, display: this.searchResult.displayable } })
+          }
+          break
+        case searchConstants.TYPE_EVENT:
+          this.isEventModalDisplayed = true
+          break
+        default:
+          console.error('Unknown entity type')
+          return undefined
+      }
+      // Save query as an interesting query
+      this.$store.dispatch('search/saveQuery')
+
+      if (redirect) {
+      // Close panel
+        this.$store.dispatch('search/closeQuickSearchResultDisplayed')
+      }
+    },
+    redirectPreview ({ routeName, params, isNews }) {
+      console.log(routeName, params)
+      if (routeName !== undefined) {
+        this.$router.push({ name: routeName, params })
+      } else if (isNews) {
+        this.isNewsModalDisplayed = true
+      }
     }
+
   }
 }
 </script>
+
+<style lang="scss">
+.content-extract strong {
+  color: black;
+}
+</style>
 
 <style lang="scss" scoped>
 @import "@design";
@@ -267,14 +326,12 @@ li {
 .preview {
   position: fixed;
   top: 0;
-  left: 105%;
   z-index: 100;
-  min-height: 140px;
-  width: 367px;
+  min-width: 200px;
   border-radius: 11.5px;
   background-color: #FFFFFF;
   box-shadow: 0 0 10px 0 rgba(0,0,0,0.15);
-  padding: 24px;
+  padding: 16px;
 }
 
 .icon-container {
@@ -323,7 +380,6 @@ li {
     text-align: center;
   }
 }
-
 </style>
 
 <i18n locale="fr">

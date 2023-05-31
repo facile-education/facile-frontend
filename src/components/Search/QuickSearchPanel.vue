@@ -6,8 +6,9 @@
 </template>
 
 <script>
-import QuickSearchResults from '@components/Search/QuickSearchResults/QuickSearchResults.vue'
-import SearchHistory from '@components/Search/SearchHistory/SearchHistory.vue'
+import { defineAsyncComponent } from 'vue'
+const QuickSearchResults = defineAsyncComponent(() => import('@components/Search/QuickSearchResults/QuickSearchResults'))
+const SearchHistory = defineAsyncComponent(() => import('@components/Search/SearchHistory/SearchHistory'))
 
 export default {
   name: 'QuickSearchPanel',
