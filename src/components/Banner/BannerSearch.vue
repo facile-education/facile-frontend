@@ -65,6 +65,7 @@ export default {
       clearTimeout(this.timeout)
       this.timeout = setTimeout(() => {
         if (this.searchInput.length >= nbCharBeforeCompletion) {
+          clearTimeout(this.timeout)
           this.runSearch()
         }
       }, timeBeforeCompletion)

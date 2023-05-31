@@ -9,10 +9,10 @@ export {
   addQueryHistory
 }
 
-const SEARCH_PATH = '/moteurDeRecherche-portlet.'
+const SEARCH_PATH = '/search.'
 
 function quickSearch (query, start, end) {
-  return axios.get(constants.JSON_WS_URL + SEARCH_PATH + 'search/quick-search', {
+  return axios.get(constants.JSON_WS_URL + SEARCH_PATH + 'searchengine/quick-search', {
     params: {
       query: query,
       start: start,
@@ -25,7 +25,7 @@ function quickSearch (query, start, end) {
  * Run search parameterized
  */
 function search (query, searchNews, searchMessaging, searchDocs, searchProgression, start, end) {
-  return axios.get(constants.JSON_WS_URL + SEARCH_PATH + 'search/advanced-search', {
+  return axios.get(constants.JSON_WS_URL + SEARCH_PATH + 'searchengine/advanced-search', {
     params: {
       query,
       searchNews,
@@ -39,11 +39,11 @@ function search (query, searchNews, searchMessaging, searchDocs, searchProgressi
 }
 
 function getLastSearchQueries () {
-  return axios.get(constants.JSON_WS_URL + SEARCH_PATH + 'search/get-last-search-queries').then(response => response.data)
+  return axios.get(constants.JSON_WS_URL + SEARCH_PATH + 'searchengine/get-last-search-queries').then(response => response.data)
 }
 
 function getSearchResultDetails (entityId, service) {
-  return axios.get(constants.JSON_WS_URL + SEARCH_PATH + 'search/get-search-result-details', {
+  return axios.get(constants.JSON_WS_URL + SEARCH_PATH + 'searchengine/get-search-result-details', {
     params: {
       entityId: entityId,
       service: service
@@ -52,7 +52,7 @@ function getSearchResultDetails (entityId, service) {
 }
 
 function addQueryHistory (query) {
-  return axios.get(constants.JSON_WS_URL + SEARCH_PATH + 'search/add-query-history', {
+  return axios.get(constants.JSON_WS_URL + SEARCH_PATH + 'searchengine/add-query-history', {
     params: {
       query
     }

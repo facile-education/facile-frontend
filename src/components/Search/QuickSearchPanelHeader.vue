@@ -1,15 +1,4 @@
 <template>
-  <div class="close-header">
-    <button
-      class="close-option"
-      @click="closePanel"
-    >
-      <img
-        src="@assets/options/icon_cross_black.svg"
-        alt="close"
-      >
-    </button>
-  </div>
   <div class="search-panel-header">
     <span
       v-if="isSearchHistory"
@@ -34,6 +23,15 @@
     <!--        name="chevron-right"-->
     <!--      />-->
     <!--    </button>-->
+    <button
+      class="close-option"
+      @click="closePanel"
+    >
+      <img
+        src="@assets/options/icon_cross_black.svg"
+        alt="close"
+      >
+    </button>
   </div>
 </template>
 
@@ -79,7 +77,6 @@ export default {
   padding: 0 $quick-search-horizontal-padding;
   display: flex;
   align-items: center;
-  width: 100%;
 }
 
 .search-history-text {
@@ -106,25 +103,18 @@ button {
   }
 }
 
-.close-header {
-  width: 100%;
-  height: $quick-search-close-option-height;
-  padding: 0 $quick-search-horizontal-padding;
+.close-option {
+  margin-left: auto;
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
 
-  .close-option {
-    margin-left: auto;
-    height: 100%;
-    display: flex;
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
-    background: none;
-    border: none;
-
-    img {
-      width: 16px;
-      height: 16px;
-    }
+  img {
+    width: 16px;
+    height: 16px;
   }
 }
 </style>
