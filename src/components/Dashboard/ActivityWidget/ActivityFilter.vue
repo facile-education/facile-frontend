@@ -136,7 +136,7 @@ ol {
 
 <i18n locale="fr">
 {
-  "allGroups": "Tous les groupes",
+  "allGroups": "Tous les espaces",
   "filter": "Filtrer",
   "news": "Nouveautés",
   "docs": "Documents",
