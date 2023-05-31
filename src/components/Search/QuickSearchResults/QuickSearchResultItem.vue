@@ -277,13 +277,15 @@ export default {
       this.$store.dispatch('search/saveQuery')
 
       if (redirect) {
-      // Close panel
+        // Close panel
         this.$store.dispatch('search/closeQuickSearchResultDisplayed')
       }
     },
     redirectPreview ({ routeName, params, isNews }) {
       if (routeName !== undefined) {
         this.$router.push({ name: routeName, params })
+        // Close panel
+        this.$store.dispatch('search/closeQuickSearchResultDisplayed')
       } else if (isNews) {
         this.isNewsModalDisplayed = true
       }
