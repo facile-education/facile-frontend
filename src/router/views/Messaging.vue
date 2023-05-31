@@ -235,10 +235,6 @@ export default {
     overflow: hidden;
     height: 100%;
 
-    .panel {
-      width: 100vw;
-    }
-
     .thread-display {
       position: absolute;
       top: 0;
@@ -252,7 +248,7 @@ export default {
       position: absolute;
       top: 0;
       left: 0;
-      width: 100vw;
+      width: 100%;
       height: 100%;
     }
 
