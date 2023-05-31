@@ -123,7 +123,7 @@
 </template>
 
 <script>
-import PopulationList from '@components/Dashboard/PopulationList.vue'
+import PopulationList from '@components/Base/PopulationList.vue'
 import ReadInfos from '@components/Dashboard/ReadInfos/ReadInfos.vue'
 import dayjs from 'dayjs'
 import { deleteNews, getNewsDetails } from '@/api/dashboard/news.service'
