@@ -2,8 +2,8 @@
   <div
     class="news-activity"
     tabindex="0"
-    @click="displayDetails"
-    @keyup.enter="displayDetails"
+    @click="isDetailsModalDisplayed=true"
+    @keyup.enter="isDetailsModalDisplayed=true"
   >
     <div class="icon">
       <img
@@ -107,7 +107,7 @@ export default {
       required: true
     }
   },
-  emits: ['updateNews', 'deleteNews', 'displayDetails'],
+  emits: ['updateNews', 'deleteNews'],
   data () {
     return {
       isDetailsModalDisplayed: false,
@@ -127,10 +127,6 @@ export default {
     }
   },
   methods: {
-    displayDetails () {
-      this.isDetailsModalDisplayed = true
-      this.$emit('displayDetails')
-    },
     confirmNewsDeletion () {
       this.$store.dispatch('warningModal/addWarning', {
         text: this.$t('deleteNewsWarning'),
