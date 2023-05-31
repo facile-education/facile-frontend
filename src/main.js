@@ -10,6 +10,7 @@ import dayjs from 'dayjs'
 import fr from 'dayjs/locale/fr'
 import Vue3TouchEvents from 'vue3-touch-events'
 import axios from 'axios'
+import VueMatomo from 'vue-matomo'
 
 const app = createApp(App)
   .use(store)
@@ -23,7 +24,20 @@ const app = createApp(App)
     }
   })
   .use(Vue3TouchEvents)
-
+  .use(VueMatomo, {
+    host: 'https://dev-ent-gve.com/matomo',
+    siteId: 1,
+    router: router,
+    requireConsent: false,
+    disableCookies: false,
+    requireCookieConsent: false,
+    enableHeartBeatTimer: false,
+    heartBeatTimerInterval: 15,
+    debug: false,
+    cookieDomain: undefined,
+    domains: undefined,
+    trackSiteSearch: false
+  })
 // Register Pentila components globally
 Object.keys(PentilaComponents).forEach(name => {
   app.component(name, PentilaComponents[name])

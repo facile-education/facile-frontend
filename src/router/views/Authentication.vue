@@ -167,6 +167,9 @@ export default {
           ).then(() => {
             // Reset p_auth_token
             store.commit('user/setPAuth', undefined)
+            // Reset Matomo userId
+            window._paq.push(['setUserId', Math.random().toString(36)])
+            window._paq.push(['trackPageView'])
             // Route to landing page
             this.$router.push({ path: 'tableau-de-bord' })
           })

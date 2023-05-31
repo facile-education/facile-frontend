@@ -27,7 +27,8 @@ export const state = {
   serviceList: undefined,
   children: [],
   selectedChild: undefined,
-  agreedTermsOfUse: true
+  agreedTermsOfUse: true,
+  roleId: 0 // For Matomo
 }
 export const mutations = {
   setPAuth (state, payload) {
@@ -68,6 +69,7 @@ export const mutations = {
     }
     state.agreedTermsOfUse = payload.agreedTermsOfUse
     state.passwordChange = payload.passwordChange
+    state.profileId = payload.profileId
   },
   setSelectedSchool (state, payload) {
     state.selectedSchool = payload
