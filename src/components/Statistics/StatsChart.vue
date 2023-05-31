@@ -67,7 +67,7 @@ export default {
       isLoading: false,
       data: undefined,
       error: false,
-      defaultService: { applicationId: 0, name: this.$t('allServices') },
+      defaultService: { applicationId: -1, name: this.$t('allServices') },
       selectedService: undefined,
       services: []
     }
