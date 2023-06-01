@@ -4,7 +4,7 @@
       class="breadcrumb"
       :breadcrumb="currentBreadcrumb"
       :hidden-actions="true"
-      :multi-space="false"
+      :multi-space="!collaborativeOnly"
       @change-dir="loadFolderContent"
       @change-space="changeSpace"
     />
@@ -71,6 +71,10 @@ export default {
       default: false
     },
     collaborativeOnly: {
+      type: Boolean,
+      default: false
+    },
+    imagesOnly: {
       type: Boolean,
       default: false
     },
@@ -175,31 +179,40 @@ export default {
     },
     loadUserFolderContent (folderId) {
       this.isLoadingFiles = true
-      navigationService.getAllEntities(folderId, false).then((data) => {
-        this.isLoadingFiles = false
-        if (data.success) {
-          data.subFolders.forEach(subFolder => { subFolder.hasAddPermission = true }) // Add hasAddPermission = true property to all document folder for compliance with group objects
-          this.currentFolders = data.subFolders ? data.subFolders : []
-          this.currentFolders = PentilaUtils.Array.sortWithString(this.currentFolders, false, 'name')
+      if (this.imagesOnly) {
+        navigationService.getImagesEntities(folderId, false).then((data) => {
+          this.handleResponse(data, folderId)
+        })
+      } else {
+        navigationService.getAllEntities(folderId, false).then((data) => {
+          this.handleResponse(data, folderId)
+        })
+      }
+    },
+    handleResponse (data, folderId) {
+      this.isLoadingFiles = false
+      if (data.success) {
+        data.subFolders.forEach(subFolder => { subFolder.hasAddPermission = true }) // Add hasAddPermission = true property to all document folder for compliance with group objects
+        this.currentFolders = data.subFolders ? data.subFolders : []
+        this.currentFolders = PentilaUtils.Array.sortWithString(this.currentFolders, false, 'name')
 
-          this.currentFiles = data.files ? data.files : []
-          this.currentFiles = PentilaUtils.Array.sortWithString(this.currentFiles, false, 'name')
+        this.currentFiles = data.files ? data.files : []
+        this.currentFiles = PentilaUtils.Array.sortWithString(this.currentFiles, false, 'name')
 
-          this.selectedFolder = undefined
-          this.$emit('selectedFolder', undefined)
-          navigationService.getBreadcrumb(folderId).then((data) => {
-            if (data.success) {
-              data.breadcrumb.forEach(folder => { folder.hasAddPermission = true }) // Add hasAddPermission = true property to all document folder for compliance with group objects
-              this.currentBreadcrumb = data.breadcrumb
-              this.$emit('currentFolder', this.currentFolder)
-            } else {
-              console.error('Unable to get breadcrumb from backend for folder id ' + folderId)
-            }
-          })
-        } else {
-          console.error('Unable to get entities from backend for folder id ' + folderId)
-        }
-      })
+        this.selectedFolder = undefined
+        this.$emit('selectedFolder', undefined)
+        navigationService.getBreadcrumb(folderId).then((data) => {
+          if (data.success) {
+            data.breadcrumb.forEach(folder => { folder.hasAddPermission = true }) // Add hasAddPermission = true property to all document folder for compliance with group objects
+            this.currentBreadcrumb = data.breadcrumb
+            this.$emit('currentFolder', this.currentFolder)
+          } else {
+            console.error('Unable to get breadcrumb from backend for folder id ' + folderId)
+          }
+        })
+      } else {
+        console.error('Unable to get entities from backend for folder id ' + folderId)
+      }
     },
     clickOnFile (file) {
       if (!this.folderSelection) {
