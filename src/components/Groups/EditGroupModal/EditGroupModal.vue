@@ -16,7 +16,7 @@
           ref="name"
           v-model="group.groupName"
           :placeholder="$t('name')"
-          :maxlength="75"
+          :maxlength="2000"
           @blur="v$.group.groupName.$touch()"
         />
         <PentilaErrorMessage :error-message="formErrorList.formErrorList" />
