@@ -15,6 +15,10 @@ export default {
   acceptTermsOfUse
 }
 
+export {
+  updateSideMenuState
+}
+
 const PREF_PATH = '/preference.userproperties'
 const USER_PATH = '/user.userutils'
 
@@ -75,6 +79,14 @@ function updateWebdavState (isEnabled) {
   return axios.post(constants.JSON_WS_URL + PREF_PATH + '/update-webdav-state',
     PentilaUtils.URL.params({
       isEnabled: isEnabled
+    })
+  ).then(response => response.data)
+}
+
+function updateSideMenuState (isExpanded) {
+  return axios.post(constants.JSON_WS_URL + PREF_PATH + '/update-side-menu-state',
+    PentilaUtils.URL.params({
+      isExpanded
     })
   ).then(response => response.data)
 }

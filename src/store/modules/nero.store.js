@@ -1,4 +1,5 @@
 import neroService from '@/api/nero.service'
+import { updateSideMenuState } from '@/api/user.service'
 import i18n from '@/i18n'
 import router from '@/router'
 
@@ -75,8 +76,9 @@ export const actions = {
   toggleMobileMenu ({ commit }) {
     commit('toggleMobileMenu')
   },
-  toggleSideMenu ({ commit }) {
+  toggleSideMenu ({ commit, state }) {
     commit('toggleMenu')
+    updateSideMenuState(state.menuExpanded)
   },
   updateActiveRoute ({ commit }, service) {
     commit('updateActiveRoute', service)
