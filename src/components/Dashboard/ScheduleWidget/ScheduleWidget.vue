@@ -26,7 +26,7 @@
       class="session-list"
     >
       <li
-        v-for="session in sessionList"
+        v-for="session in sortedSessionList"
         :key="session.sessionId"
       >
         <ScheduleItem :session="session" />
@@ -56,6 +56,14 @@ export default {
       error: false,
       currentDisplayedDate: undefined,
       sessionList: []
+    }
+  },
+  computed: {
+    sortedSessionList () {
+      const sortedSessionList = [...this.sessionList]
+      return sortedSessionList.sort((sessionA, sessionB) => {
+        return (dayjs(sessionA.startDate, 'YYYY-MM-DD HH:mm').isAfter(dayjs(sessionB.startDate, 'YYYY-MM-DD HH:mm'))) ? 1 : -1
+      })
     }
   },
   watch: {
