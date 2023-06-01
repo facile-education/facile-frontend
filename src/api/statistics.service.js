@@ -8,7 +8,8 @@ export {
   getFilesCount,
   getHomeworksCount,
   getNewsCount,
-  getMessagesCount
+  getMessagesCount,
+  getActionsCount
 }
 
 const STAT_PATH = '/statistic.generalstat'
@@ -28,14 +29,26 @@ function getActiveUsersCount (schoolId, startDate, endDate) {
   }).then(response => response.data)
 }
 
-function getSessionsCount (schoolId, startDate, endDate, serviceId, comparator) {
+function getSessionsCount (schoolId, startDate, endDate, comparator) {
   return axios.get(constants.JSON_WS_URL + STAT_PATH + '/get-sessions-count', {
     params: {
       schoolId: schoolId,
       startDate: startDate.format('YYYY-MM-DD HH:mm'),
       endDate: endDate.format('YYYY-MM-DD HH:mm'),
-      serviceId,
       comparator: comparator
+    }
+  }).then(response => response.data)
+}
+
+function getActionsCount (schoolId, serviceId, startDate, endDate, comparator) {
+  console.log('comparator=', comparator)
+  return axios.get(constants.JSON_WS_URL + STAT_PATH + '/get-actions-count', {
+    params: {
+      startDate: startDate.format('YYYY-MM-DD HH:mm'),
+      endDate: endDate.format('YYYY-MM-DD HH:mm'),
+      schoolId,
+      serviceId,
+      comparator
     }
   }).then(response => response.data)
 }

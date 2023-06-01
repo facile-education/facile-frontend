@@ -1,15 +1,7 @@
 <template>
   <section>
     <header>
-      <h2 v-t="comparator === '' ? 'globalUses' : 'profileUses'" />
-      <PentilaDropdown
-        v-model="selectedService"
-        :list="services"
-        display-field="name"
-        :sort="false"
-        class="services"
-        @update:modelValue="onServiceSelect"
-      />
+      <h2 v-t="'globalVisits'" />
     </header>
     <div
       v-if="isLoading"
@@ -42,7 +34,7 @@ import { getSessionsCount } from '@/api/statistics.service'
 import Chart from '@/components/Statistics/Chart.vue'
 
 export default {
-  name: 'StatsChart',
+  name: 'VisitsChart',
   components: { Chart },
   props: {
     startTime: {
@@ -92,7 +84,7 @@ export default {
   methods: {
     getData () {
       this.isLoading = true
-      getSessionsCount(this.selectedSchool.schoolId, this.startTime, this.endTime, this.selectedService.applicationId, this.comparator).then((data) => {
+      getSessionsCount(this.selectedSchool.schoolId, this.startTime, this.endTime, this.comparator).then((data) => {
         this.isLoading = false
         if (data.success) {
           this.error = false
@@ -170,8 +162,7 @@ h2 {
 <i18n locale="fr">
 {
   "allServices": "Tous les services",
-  "globalUses": "Fréquentation globale",
-  "error": "Oups, une erreur est survenue...",
-  "profileUses": "Fréquentation par profil"
+  "globalVisits": "Fréquentation globale (Nombre de connexions)",
+  "error": "Oups, une erreur est survenue..."
 }
 </i18n>
