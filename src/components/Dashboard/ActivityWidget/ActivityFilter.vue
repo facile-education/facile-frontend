@@ -55,7 +55,7 @@ export default {
   data () {
     return {
       filter: undefined,
-      availableActivityTypes: ['news', 'docs', 'schoolLife', 'membership', 'sessions'],
+      availableActivityTypes: ['news', 'docs', 'schoolLife', 'sessions'],
       groupList: [],
       isLoadingGroups: false
     }
