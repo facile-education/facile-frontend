@@ -1,7 +1,8 @@
 <template>
   <div
     class="hhc-activity"
-    tabindex="0"
+    :class="{'pending': isPendingFiring}"
+    :tabindex="isPendingFiring ? 0 : -1"
     @click="redirect"
     @keyup.enter="redirect"
   >
@@ -52,9 +53,9 @@ export default {
     description () {
       switch (this.activity.type) {
         case activityConstants.TYPE_PENDING_RENVOI:
-          return this.$t('TYPE_PENDING_RENVOI', { firedUser: this.activity.target, courseName: this.activity.sessionSubject, courseDate: this.activity.sessionDate })
+          return this.$t('TYPE_PENDING_RENVOI', { firedUser: this.activity.target, courseName: this.activity.groupName, courseDate: this.activity.sessionDate })
         case activityConstants.TYPE_SCHOOL_RENVOI:
-          return this.$t('TYPE_SCHOOL_RENVOI', { firedUser: this.activity.target, courseName: this.activity.sessionSubject, courseDate: this.activity.sessionDate })
+          return this.$t('TYPE_SCHOOL_RENVOI', { firedUser: this.activity.target, courseName: this.activity.groupName, courseDate: this.activity.sessionDate })
         default:
           return 'Unknown activity type'
       }
@@ -74,8 +75,11 @@ export default {
 @import '@/design/index';
 
 .hhc-activity {
-  cursor: pointer;
   @extend %activity-item;
+
+  &.pending {
+    cursor: pointer;
+  }
 }
 
 .img-icon {
