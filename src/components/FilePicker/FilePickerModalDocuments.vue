@@ -144,32 +144,6 @@ export default {
     getEntityIndex (entityId) {
       return this.allSortedDocuments.map(item => item.id).indexOf(entityId)
     },
-    loadGroupFolderContent (folderId) {
-      this.isLoadingFiles = true
-      groupService.getGroupEntities(folderId).then((data) => {
-        this.isLoadingFiles = false
-        if (data.success) {
-          this.currentFolders = data.folders ? data.folders : []
-          this.currentFolders = PentilaUtils.Array.sortWithString(this.currentFolders, false, 'name')
-
-          this.currentFiles = data.files ? data.files : []
-          this.currentFiles = PentilaUtils.Array.sortWithString(this.currentFiles, false, 'name')
-
-          this.selectedFolder = undefined
-          this.$emit('selectedFolder', undefined)
-          groupService.getGroupBreadcrumb(folderId).then((data) => {
-            if (data.success) {
-              this.currentBreadcrumb = data.breadCrumb
-              this.$emit('currentFolder', this.currentFolder)
-            } else {
-              console.error('Unable to get breadcrumb from backend for folder id ' + folderId)
-            }
-          })
-        } else {
-          console.error('Unable to get entities from backend for folder id ' + folderId)
-        }
-      })
-    },
     loadFolderContent (folder) {
       if (this.currentSpace === 'Group') {
         this.loadGroupFolderContent(folder.id)
@@ -189,6 +163,18 @@ export default {
         })
       }
     },
+    loadGroupFolderContent (folderId) {
+      this.isLoadingFiles = true
+      if (this.imagesOnly) {
+        groupService.getGroupImages(folderId).then((data) => {
+          this.handleGroupResponse(data, folderId)
+        })
+      } else {
+        groupService.getGroupEntities(folderId, false).then((data) => {
+          this.handleGroupResponse(data, folderId)
+        })
+      }
+    },
     handleResponse (data, folderId) {
       this.isLoadingFiles = false
       if (data.success) {
@@ -205,6 +191,29 @@ export default {
           if (data.success) {
             data.breadcrumb.forEach(folder => { folder.hasAddPermission = true }) // Add hasAddPermission = true property to all document folder for compliance with group objects
             this.currentBreadcrumb = data.breadcrumb
+            this.$emit('currentFolder', this.currentFolder)
+          } else {
+            console.error('Unable to get breadcrumb from backend for folder id ' + folderId)
+          }
+        })
+      } else {
+        console.error('Unable to get entities from backend for folder id ' + folderId)
+      }
+    },
+    handleGroupResponse (data, folderId) {
+      this.isLoadingFiles = false
+      if (data.success) {
+        this.currentFolders = data.folders ? data.folders : []
+        this.currentFolders = PentilaUtils.Array.sortWithString(this.currentFolders, false, 'name')
+
+        this.currentFiles = data.files ? data.files : []
+        this.currentFiles = PentilaUtils.Array.sortWithString(this.currentFiles, false, 'name')
+
+        this.selectedFolder = undefined
+        this.$emit('selectedFolder', undefined)
+        groupService.getGroupBreadcrumb(folderId).then((data) => {
+          if (data.success) {
+            this.currentBreadcrumb = data.breadCrumb
             this.$emit('currentFolder', this.currentFolder)
           } else {
             console.error('Unable to get breadcrumb from backend for folder id ' + folderId)

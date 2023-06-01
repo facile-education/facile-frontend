@@ -7,6 +7,7 @@ export default {
   createFolder,
   renameFolder,
   getAllEntities,
+  getImagesEntities,
   getBreadcrumb
 }
 
@@ -52,6 +53,18 @@ function renameFolder (folderId, folderName) {
  */
 function getAllEntities (folderId, withDetails) {
   return axios.get(constants.JSON_WS_URL + FOLDER_PATH + '/get-all-entities', {
+    params: {
+      folderId: folderId,
+      withDetails: withDetails
+    }
+  }).then(response => response.data)
+}
+
+/**
+ * Return the images entities (and folders) inside a given folder
+ */
+function getImagesEntities (folderId, withDetails) {
+  return axios.get(constants.JSON_WS_URL + FOLDER_PATH + '/get-images-entities', {
     params: {
       folderId: folderId,
       withDetails: withDetails

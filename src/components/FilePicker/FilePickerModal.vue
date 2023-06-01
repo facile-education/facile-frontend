@@ -27,6 +27,7 @@
         :multi-selection="multiSelection"
         :allow-files-from-device="allowFilesFromDevice"
         :collaborative-only="collaborativeOnly"
+        :images-only="imagesOnly"
         @selectedFolder="updateSelectedFolder"
         @currentFolder="updateCurrentFolder"
         @chosenFolder="emitSelectedFolder"
@@ -78,6 +79,10 @@ export default {
       default: false
     },
     collaborativeOnly: {
+      type: Boolean,
+      default: false
+    },
+    imagesOnly: {
       type: Boolean,
       default: false
     },
