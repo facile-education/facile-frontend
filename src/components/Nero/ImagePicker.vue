@@ -63,6 +63,7 @@
     to="body"
   >
     <FilePickerModal
+      :images-only="true"
       @addedFiles="doSelectFilesAction"
       @close="isFilePickerDisplayed=false"
     />
@@ -72,8 +73,9 @@
 <script>
 import { Cropper, Preview } from 'vue-advanced-cropper'
 import 'vue-advanced-cropper/dist/style.css'
-import FilePickerModal from '@components/FilePicker/FilePickerModal.vue'
 import fileService from '@/api/documents/file.service'
+import { defineAsyncComponent } from 'vue'
+const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal'))
 
 export default {
   name: 'ImagePickerModal',
