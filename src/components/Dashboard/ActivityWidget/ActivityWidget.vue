@@ -184,11 +184,13 @@ export default {
     },
     getActivities () {
       this.isLoading = true
-      getDashboardActivity( // TODO call with memberShip boolean and groupId
+      getDashboardActivity( // TODO call with memberShip boolean
+        this.filter.selectedGroup ? this.filter.selectedGroup.groupId : 0,
         this.displayAll ? this.lastActivityDate.format('YYYY-MM-DD HH:mm:sss') : dayjs().format('YYYY-MM-DD HH:mm:sss'),
         this.displayAll ? activityConstants.nbActivityPerPage : activityConstants.nbActivityInWidget,
         this.filterBooleans.withNews,
         this.filterBooleans.withDocs,
+        this.filterBooleans.withMemberShip,
         this.filterBooleans.withSchoolLife,
         this.filterBooleans.withSession
       ).then((data) => {

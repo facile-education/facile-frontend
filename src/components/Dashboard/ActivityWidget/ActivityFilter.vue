@@ -70,7 +70,7 @@ export default {
       getUserCommunities(this.$store.state.user.userId, { label: '', isCommunityActive: false, isInstitutionalActive: false, isPedagogicalActive: false }).then((data) => {
         this.isLoadingGroups = false
         if (data.success) {
-          const allGroupObject = { groupId: -1, groupName: this.$t('allGroups') }
+          const allGroupObject = { groupId: 0, groupName: this.$t('allGroups') }
           this.groupList = data.groups
           this.groupList.unshift(allGroupObject)
           this.filter.selectedGroup = allGroupObject

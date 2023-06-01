@@ -27,13 +27,15 @@ function getUserSchedule (userId, targetDate, goForward) {
   }).then(response => response.data)
 }
 
-function getDashboardActivity (maxDate, nbResults, withNews, withDocs, withSchoollife, withSessions) {
+function getDashboardActivity (groupId, maxDate, nbResults, withNews, withDocs, withMemberships, withSchoollife, withSessions) {
   return axios.get(constants.JSON_WS_URL + DASHBOARD_PATH + DASHBOARD_CTX + 'get-dashboard-activity', {
     params: {
+      groupId,
       maxDate,
       nbResults,
       withNews,
       withDocs,
+      withMemberships,
       withSchoollife,
       withSessions
     }
