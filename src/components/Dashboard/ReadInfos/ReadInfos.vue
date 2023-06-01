@@ -44,16 +44,15 @@ export default {
       this.readInfos.forEach((population) => {
         allMembers = [...allMembers, ...population.members]
       })
+
+      // Remove duplicate users based on userId (user can be present in different populations)
+      allMembers = allMembers.filter((user, index) => {
+        return allMembers.findIndex(u => u.userId === user.userId) === index
+      })
       return allMembers
     },
     allReadMembers () {
-      let allReadMembers = this.allMembers.filter(member => member.hasRead === true)
-
-      // Remove duplicate users based on userId (user can be present in different populations)
-      allReadMembers = allReadMembers.filter((user, index) => {
-        return allReadMembers.findIndex(u => u.userId === user.userId) === index
-      })
-      return allReadMembers
+      return this.allMembers.filter(member => member.hasRead === true)
     }
   }
 }
