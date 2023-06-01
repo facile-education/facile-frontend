@@ -50,6 +50,7 @@ CREATE TABLE `schoollife_renvoi` (
   `schoollifeSessionId` bigint(20) NOT NULL,
   `studentId` bigint(20) NOT NULL,
   `schoolId` bigint(20) DEFAULT NULL,
+  `orgId` bigint(20) DEFAULT NULL,
   `renvoiDate` datetime DEFAULT NULL,
   `teacherId` bigint(20) DEFAULT NULL,
   `sourceSessionId` bigint(20) DEFAULT NULL,
