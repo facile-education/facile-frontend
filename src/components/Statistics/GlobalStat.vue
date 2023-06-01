@@ -20,10 +20,6 @@
         class="value"
         :target="count"
       />
-      <div
-        v-t="service"
-        class="label"
-      />
     </div>
   </section>
 </template>

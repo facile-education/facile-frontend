@@ -34,13 +34,14 @@
         :selected-school="selectedSchool"
       />
 
-      <StatsChart
+      <VisitsChart
         :start-time="selectedStartDate"
         :end-time="selectedEndDate"
         :selected-school="selectedSchool"
+        comparator="profile"
       />
 
-      <StatsChart
+      <ActionsChart
         :start-time="selectedStartDate"
         :end-time="selectedEndDate"
         :selected-school="selectedSchool"
@@ -101,13 +102,14 @@ import NeroToolbar from '@/components/Nero/NeroToolbar'
 import StatsActivesUsers from '@components/Statistics/StatsActivesUsers'
 import GlobalStat from '@components/Statistics/GlobalStat'
 import StatsDoughnut from '@components/Statistics/StatsDoughnut'
-import StatsChart from '@components/Statistics/StatsChart'
+import VisitsChart from '@components/Statistics/VisitsChart'
+import ActionsChart from '@components/Statistics/ActionsChart'
 import dayjs from 'dayjs'
 import DateRangePicker from '@components/Base/DateRangePicker'
 
 export default {
   name: 'Statistics',
-  components: { DateRangePicker, NeroToolbar, StatsChart, StatsActivesUsers, StatsDoughnut, GlobalStat, Layout },
+  components: { DateRangePicker, NeroToolbar, VisitsChart, ActionsChart, StatsActivesUsers, StatsDoughnut, GlobalStat, Layout },
   inject: ['mq'],
   data () {
     return {
