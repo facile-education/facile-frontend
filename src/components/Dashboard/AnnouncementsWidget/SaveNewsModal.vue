@@ -21,7 +21,7 @@
           @click="isImagePickerDisplayed=true"
         >
           <img
-            :src="thumbnailUrl"
+            :src="thumbnail"
             alt="thumbnail"
           >
         </button>
@@ -143,7 +143,7 @@
     to="body"
   >
     <ImagePicker
-      @save="selectImage"
+      @createdTmpFile="selectImage"
       @close="isImagePickerDisplayed=false"
     />
   </teleport>
@@ -165,6 +165,7 @@ import {
   getNewsDetails, getSchoolNewsBroadcastGroups
 } from '@/api/dashboard/news.service'
 import ImagePicker from '@components/Nero/ImagePicker.vue'
+import { defaultImagesKeys } from '@/constants/icons'
 const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal.vue'))
 const CKEditor = defineAsyncComponent({
   loader: async () => { return (await import('@ckeditor/ckeditor5-vue')).component }
@@ -195,11 +196,12 @@ export default {
   setup: () => ({ v$: useVuelidate() }),
   data () {
     return {
-      thumbnailUrl: this.isSchoolNews ? require('@assets/images/default_school_news_0.png') : require('@assets/images/default_news_0.png'),
       title: '',
       content: '',
       releaseDate: dayjs(),
       populations: [],
+      thumbnailId: 0,
+      thumbnailUrl: this.isSchoolNews ? 'default_school_news_0' : 'default_news_0',
       attachedFiles: [],
       markAsUnreadForAll: false,
 
@@ -234,6 +236,13 @@ export default {
     }
   },
   computed: {
+    thumbnail () {
+      if (defaultImagesKeys.indexOf(this.thumbnailUrl) !== -1) {
+        return require('@assets/images/' + this.thumbnailUrl + '.png')
+      } else { // Returned url is a key for local default image
+        return this.thumbnailUrl
+      }
+    },
     isCreation () {
       return this.initNews === undefined
     },
@@ -279,6 +288,10 @@ export default {
     input.select()
   },
   methods: {
+    selectImage (tempFile) {
+      this.thumbnailId = tempFile.id
+      this.thumbnailUrl = tempFile.fileUrl
+    },
     updateReleaseDate (date) {
       this.releaseDate = dayjs(date)
     },
@@ -301,7 +314,8 @@ export default {
           this.populations = data.news.populations
           this.content = data.news.content
           this.attachedFiles = data.news.attachedFiles
-          // TODO: thumbnail
+          this.thumbnailId = data.news.thumbnailId
+          this.thumbnailUrl = data.news.thumbnailUrl
         } else {
           console.error('Error')
         }
@@ -369,7 +383,7 @@ export default {
     },
     createNews () {
       this.isProcessingSave = true
-      addNews(this.title, this.content, this.isSchoolNews, false, 0, this.releaseDate, this.populations, this.attachedFileIds).then((data) => {
+      addNews(this.title, this.content, this.isSchoolNews, false, this.thumbnailId, this.releaseDate, this.populations, this.attachedFileIds).then((data) => {
         this.isProcessingSave = false
         if (data.success) {
           this.$emit('create')
@@ -381,7 +395,7 @@ export default {
     },
     updateNews () {
       this.isProcessingSave = true
-      editNews(this.initNews.newsId, this.title, this.content, false, 0, this.releaseDate, this.populations, this.attachedFileIds, this.markAsUnreadForAll).then((data) => {
+      editNews(this.initNews.newsId, this.title, this.content, false, this.thumbnailId, this.releaseDate, this.populations, this.attachedFileIds, this.markAsUnreadForAll).then((data) => {
         this.isProcessingSave = false
         if (data.success) {
           this.$emit('update')
