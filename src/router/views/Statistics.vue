@@ -167,6 +167,7 @@ export default {
 
 .range-picker {
   margin-left: auto;
+  margin-right: 50px;
 }
 
 .service-body {
