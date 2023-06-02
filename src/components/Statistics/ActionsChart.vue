@@ -67,7 +67,6 @@ export default {
       isLoading: false,
       data: undefined,
       error: false,
-      defaultService: { applicationId: -1, name: this.$t('allServices') },
       selectedService: undefined,
       services: []
     }
@@ -80,19 +79,17 @@ export default {
       this.getData()
     },
     selectedSchool () {
-      this.selectedService = this.defaultService
       this.getData()
     }
   },
   created () {
-    this.selectedService = this.defaultService
     this.getServices()
     this.getData()
   },
   methods: {
     getData () {
       this.isLoading = true
-      getActionsCount(this.selectedSchool.schoolId, this.selectedService.applicationId, this.startTime, this.endTime, this.comparator).then((data) => {
+      getActionsCount(this.selectedSchool.schoolId, (this.selectedService === undefined ? 0 : this.selectedService.applicationId), this.startTime, this.endTime, this.comparator).then((data) => {
         this.isLoading = false
         if (data.success) {
           this.error = false
@@ -111,7 +108,9 @@ export default {
               element.name = this.$t('Menu.' + element.name)
             })
 
-            this.services = [this.defaultService, ...PentilaUtils.Array.sortWithString(data.services, false, 'name')]
+            this.services = PentilaUtils.Array.sortWithString(data.services, false, 'name')
+            // Select 'TDB' by default
+            this.selectedService = data.services.find(service => service.applicationId === 0)
           }
         },
         (err) => {
@@ -145,6 +144,7 @@ h2 {
 
 .services {
   margin-left: auto;
+  margin-right: 30px;
 }
 
 .loading-placeholder, .error-placeholder {
