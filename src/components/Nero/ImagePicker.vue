@@ -8,50 +8,59 @@
     </template>
 
     <template #body>
-      <div class="container">
-        <div class="content">
-          <cropper
-            ref="cropper"
-            class="cropper"
-            :src="image"
-            :stencil-props="{
-              aspectRatio: 1/1
-            }"
-            :debounce="false"
-            :min-height="50"
-            :min-width="50"
-            @change="onChange"
-          />
-          <preview
-            :width="120"
-            :height="120"
-            :image="result.image"
-            :coordinates="result.coordinates"
-            class="my-preview"
-          />
-          <div class="button-wrapper theme-background-color">
-            <span
-              class="button"
-              @click="$refs.file.click()"
+      <div
+        v-show="image!==null"
+        class="content"
+      >
+        <cropper
+          ref="cropper"
+          class="cropper"
+          :src="image"
+          :stencil-props="{
+            aspectRatio: 1/1
+          }"
+          :debounce="false"
+          :min-height="50"
+          :min-width="50"
+          @change="onChange"
+        />
+        <preview
+          :width="120"
+          :height="120"
+          :image="result.image"
+          :coordinates="result.coordinates"
+          class="my-preview"
+        />
+      </div>
+      <div class="buttons">
+        <PentilaButton
+          v-t="'openFilePicker'"
+          @click="isFilePickerDisplayed=true"
+        />
+        <span
+          v-t="'or'"
+          class="or"
+        />
+        <div class="button-wrapper theme-background-color">
+          <span
+            class="button"
+            @click="$refs.file.click()"
+          >
+            <input
+              ref="file"
+              type="file"
+              accept="image/*"
+              @change="loadImage($event)"
             >
-              <input
-                ref="file"
-                type="file"
-                accept="image/*"
-                @change="loadImage($event)"
-              >
-              {{ $t('selectButton') }}
-            </span>
-          </div>
-          <button @click="isFilePickerDisplayed=true">
-            {{ $t('openFilePicker') }}
-          </button>
+            {{ $t('selectButton') }}
+          </span>
         </div>
       </div>
     </template>
 
     <template #footer>
       <PentilaButton
+        v-if="result.image !== null"
         :label="$t('saveButton')"
         @click="onConfirm"
       />
@@ -107,7 +116,6 @@ export default {
   },
   methods: {
     doSelectFilesAction (files) {
-      console.log(files)
       const file = files[0]
       getResource(file.id, 0, true).then((data) => {
         if (data.success) {
@@ -181,27 +189,32 @@ export default {
 
 <style lang="scss" scoped>
 
-.container {
+.content {
+  position: relative;
+  width: 500px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+
+  .my-preview {
+    position: absolute;
+    right: -200px;
+    top: 70px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+}
+
+.buttons {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
 
-  .content {
-    position: relative;
-    width: 500px;
-    height: 300px;
-    display: flex;
-    justify-content: center;
-
-    .my-preview {
-      position: absolute;
-      right: -165px;
-      top: 70px;
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      overflow: hidden;
-    }
+  .or {
+    font-size: 1.5rem;
   }
 }
 
@@ -212,18 +225,16 @@ export default {
 }
 
 .button-wrapper {
-  position: absolute;
-  right: -200px;
-  top: 20px;
-
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   box-shadow: 0 2px 3px rgba(0,0,0,.19);
   font-family: inherit;
   border-radius: 5px;
   padding: 6px 12px;
-  text-align: center;
   border: none;
   cursor: pointer;
-  display: inline-block;
 }
 
 .button input {
@@ -236,7 +247,8 @@ export default {
 {
   "header": "Image",
   "saveButton": "Valider",
-  "selectButton": "Sélectionner une image",
+  "or": "ou",
+  "selectButton": "Depuis le poste de travail",
   "openFilePicker": "Choisir un fichier de l'ent"
 }
 </i18n>
