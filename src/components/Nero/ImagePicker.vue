@@ -73,7 +73,7 @@
 <script>
 import { Cropper, Preview } from 'vue-advanced-cropper'
 import 'vue-advanced-cropper/dist/style.css'
-import fileService from '@/api/documents/file.service'
+import { getResource, uploadTmpFile } from '@/api/documents/file.service'
 import { defineAsyncComponent } from 'vue'
 const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal'))
 
@@ -84,7 +84,7 @@ export default {
     Cropper,
     Preview
   },
-  emits: ['close', 'save'],
+  emits: ['close', 'save', 'createdTmpFile'],
   data () {
     return {
       result: {
@@ -109,7 +109,7 @@ export default {
     doSelectFilesAction (files) {
       console.log(files)
       const file = files[0]
-      fileService.getResource(file.id, 0, true).then((data) => {
+      getResource(file.id, 0, true).then((data) => {
         if (data.success) {
           this.loadImageAsBase64(data.fileUrl)
         } else {
@@ -161,8 +161,14 @@ export default {
         canvas.toBlob(blob => {
           this.fileName = 't.png'
           this.$emit('save', { blob, fileName: this.fileName })
-
-          this.onClose()
+          uploadTmpFile(new File([blob], this.fileName)).then((data) => {
+            if (data.success) {
+              this.$emit('createdTmpFile', data.uploadedFile)
+            } else {
+              console.error('Error')
+            }
+            this.onClose()
+          })
         }, 'image/jpeg')
       }
     },

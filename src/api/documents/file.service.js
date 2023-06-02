@@ -22,6 +22,25 @@ export default {
   getFileInfos
 }
 
+export {
+  uploadFile,
+  uploadTmpFile,
+  renameFile,
+  getResource,
+  createMindMapFile,
+  createGeogebraFile,
+  createScratchFile,
+  createLoolFile,
+  createAudioFile,
+  createHtmlFile,
+  addLock,
+  removeLock,
+  getHtmlContent,
+  saveHtmlContent,
+  removeLoolToken,
+  getFileInfos
+}
+
 const FILE_PATH = '/document.fileutils'
 const WISIWIG_PATH = '/document.wysiwyg'
 

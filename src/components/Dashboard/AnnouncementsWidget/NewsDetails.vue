@@ -128,7 +128,7 @@ import ReadInfos from '@components/Dashboard/ReadInfos/ReadInfos.vue'
 import dayjs from 'dayjs'
 import { deleteNews, getNewsDetails } from '@/api/dashboard/news.service'
 import { defineAsyncComponent } from 'vue'
-import validators from '@utils/validators'
+import { defaultImagesKeys } from '@/constants/icons'
 const AttachedFile = defineAsyncComponent(() => import('@components/AttachedFiles/AttachedFile.vue'))
 const SaveNewsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/SaveNewsModal.vue'))
 
@@ -159,10 +159,10 @@ export default {
       return dayjs(this.detailedNews.publicationDate).format('DD/MM/YY')
     },
     thumbnail () {
-      if (validators.isValidURL(this.detailedNews.thumbnailUrl)) {
-        return this.detailedNews.thumbnailUrl
+      if (defaultImagesKeys.indexOf(this.initNews.thumbnailUrl) !== -1) {
+        return require('@assets/images/' + this.initNews.thumbnailUrl + '.png')
       } else { // Returned url is a key for local default image
-        return require('@assets/images/' + this.detailedNews.thumbnailUrl + '.png')
+        return this.initNews.thumbnailUrl
       }
     }
   },

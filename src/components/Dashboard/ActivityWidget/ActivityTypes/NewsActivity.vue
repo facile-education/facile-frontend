@@ -91,10 +91,10 @@
 
 <script>
 import dayjs from 'dayjs'
-import validators from '@utils/validators'
 import { defineAsyncComponent } from 'vue'
 import { deleteNews } from '@/api/dashboard/news.service'
 import BaseIcon from '@components/Base/BaseIcon.vue'
+import { defaultImagesKeys } from '@/constants/icons'
 const SaveNewsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/SaveNewsModal.vue'))
 const NewsActivityDetailsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/NewsDetailsModal.vue'))
 
@@ -116,10 +116,10 @@ export default {
   },
   computed: {
     thumbnail () {
-      if (validators.isValidURL(this.news.thumbnailUrl)) {
-        return this.news.thumbnailUrl
-      } else { // Returned url is a key for local default image
+      if (defaultImagesKeys.indexOf(this.news.thumbnailUrl) !== -1) {
         return require('@assets/images/' + this.news.thumbnailUrl + '.png')
+      } else { // Returned url is a key for local default image
+        return this.news.thumbnailUrl
       }
     },
     formattedDate () {
