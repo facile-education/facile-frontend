@@ -1,19 +1,20 @@
 <template>
-  <Layout>
-    <p>Gestion des horaires</p>
-  </Layout>
+  <p>School config</p>
 </template>
 
 <script>
 
-import Layout from '@/router/layouts/BannerLayout'
-
 export default {
-  name: 'HorairesManager',
+  name: 'SchoolScheduleConfiguration',
   components: {
-    Layout
+  },
+  data () {
+    return {
+    }
   },
   computed: {
+  },
+  methods: {
   }
 }
 </script>
