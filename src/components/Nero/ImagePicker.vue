@@ -9,55 +9,62 @@
     </template>
 
     <template #body>
-      <div
-        v-if="initialThumbnailUrl && image===null"
-        class="placeholder"
-      >
-        <img
-          :src="initialThumbnailUrl"
-          alt="init thumbnail"
+      <div class="body">
+        <div
+          v-if="initialThumbnailUrl && image===null"
+          class="placeholder"
         >
-      </div>
-      <div
-        v-show="image!==null"
-        class="content"
-      >
-        <cropper
-          ref="cropper"
-          class="cropper"
-          :src="image"
-          :stencil-props="{
-            aspectRatio: 1
-          }"
-          :debounce="false"
-          :min-height="50"
-          :min-width="50"
-          @change="onChange"
-        />
-        <preview
-          :width="120"
-          :height="120"
-          :image="result.image"
-          :coordinates="result.coordinates"
-          class="my-preview"
-        />
-      </div>
-      <div class="buttons">
-        <PentilaButton
-          v-t="'openFilePicker'"
-          class="button"
-          @click="isFilePickerDisplayed=true"
-        />
-        <span
-          v-t="'or'"
-          class="or"
-        />
-        <FilePickerButton
-          v-t="'selectButton'"
-          class="button"
-          accept="image/*"
-          @change="loadImage($event)"
-        />
+          <img
+            :src="initialThumbnailUrl"
+            alt="init thumbnail"
+          >
+        </div>
+        <div
+          v-show="image!==null"
+          class="content"
+        >
+          <cropper
+            ref="cropper"
+            class="cropper"
+            :src="image"
+            :stencil-props="{
+              aspectRatio: 1
+            }"
+            :debounce="false"
+            :min-height="50"
+            :min-width="50"
+            @change="onChange"
+          />
+          <div
+            v-if="!mq.phone && !mq.tablet"
+            class="preview-container"
+          >
+            <preview
+              class="my-preview"
+              :width="120"
+              :height="120"
+              :image="result.image"
+              :coordinates="result.coordinates"
+            />
+          </div>
+        </div>
+        <div class="buttons">
+          <PentilaButton
+            v-t="'openFilePicker'"
+            class="button"
+            @click="isFilePickerDisplayed=true"
+          />
+          <div
+            v-t="'or'"
+            class="or"
+          />
+          <FilePickerButton
+            v-t="'selectButton'"
+            class="button"
+            accept="image/*"
+            @change="loadImage($event)"
+          />
+        </div>
       </div>
     </template>
 
@@ -98,6 +105,7 @@ export default {
     Cropper,
     Preview
   },
+  inject: ['mq'],
   props: {
     initialThumbnailUrl: {
       type: String,
@@ -199,19 +207,44 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
-.content {
-  position: relative;
-  width: 500px;
-  height: 300px;
+.placeholder, .content {
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.placeholder {
   display: flex;
   justify-content: center;
-  margin-bottom: 1rem;
+
+  img {
+    width: min(350px, 100%);;
+  }
+}
+
+.content {
+  display: flex;
+
+  .cropper {
+    border: solid 1px #EEE;
+    height: 300px;
+    width: min(500px, 100%);
+  }
+
+  .preview-container {
+    width: 100%;
+    margin-top: 2rem;
+    display: flex;
+    justify-content: flex-end;
+  }
 
   .my-preview {
-    position: absolute;
-    right: -200px;
-    top: 70px;
     width: 100px;
     height: 100px;
     border-radius: 50%;
@@ -219,29 +252,10 @@ export default {
   }
 }
 
-.placeholder {
-  height: 300px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 1rem;
-
-  img {
-    height: 100%;
-    width: 300px;
-  }
-}
-
-.cropper {
-  border: solid 1px #EEE;
-  height: 300px;
-  width: 100%;
-}
-
 .buttons {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  .button, .or {
+    margin-bottom: 1rem;
+  }
 
   .button {
     width: 202px;
@@ -249,6 +263,18 @@ export default {
 
   .or {
     font-size: 1.5rem;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .button, .or {
+      margin-bottom: 0;
+    }
   }
 }
 </style>
