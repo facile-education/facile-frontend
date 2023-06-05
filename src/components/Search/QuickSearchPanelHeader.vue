@@ -74,6 +74,7 @@ export default {
 
 .search-panel-header {
   height: $quick-search-banner-height;
+  width: $quick-search-result-width;
   padding: 0 $quick-search-horizontal-padding;
   display: flex;
   align-items: center;

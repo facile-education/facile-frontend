@@ -15,12 +15,15 @@ export default {
   acceptTermsOfUse
 }
 
-export {
-  updateSideMenuState
-}
-
 const PREF_PATH = '/preference.userproperties'
 const USER_PATH = '/user.userutils'
+const GET_USER_INFOS_WS = '/get-user-infos'
+
+export {
+  updateSideMenuState,
+  USER_PATH,
+  GET_USER_INFOS_WS
+}
 
 /**
  * Get user details for preferences modal window
@@ -35,7 +38,7 @@ function getPersonalDetails () {
  * Get global user informations
  */
 function getUserInformations () {
-  return axios.get(constants.JSON_WS_URL + USER_PATH + '/get-user-infos', {
+  return axios.get(constants.JSON_WS_URL + USER_PATH + GET_USER_INFOS_WS, {
     params: {}
   }).then(response => response.data)
 }

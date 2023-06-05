@@ -77,12 +77,30 @@ dayjs.updateLocale('fr', {
 axios.interceptors.request.use(async (config) => {
   // Store the last webservice call date
   store.commit('user/setLastActionDate', dayjs())
+
   if (store.state.user.pauth === undefined) {
     await fetch('/p_auth_token.jsp').then(response => response.text()).then(response => { store.commit('user/setPAuth', response.trim()) })
   }
 
   config.params = { ...config.params, p_auth: store.state.user.pauth }
+
+  // Do as user param
+  if (router.currentRoute._value.query.doAsUserId) {
+    config.params = { ...config.params, doAsUserId: router.currentRoute._value.query.doAsUserId }
+  }
+
   return config
+})
+
+// Catch 403 error to display unauthenticated error
+axios.interceptors.response.use(undefined, (error) => {
+  if (error.response.status === 403 && error.response.config && !error.response.config.__isRetryRequest) {
+    // If you ever get an unauthorized, redirect to error page
+    store.commit('user/initUserInformations', { userId: 0 })
+  }
+
+  // Do something with response error
+  return Promise.reject(error)
 })
 
 if (window.Cypress) {

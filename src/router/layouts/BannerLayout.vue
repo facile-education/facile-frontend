@@ -1,17 +1,7 @@
 <template>
   <PentilaSpinner v-if="userId === undefined" />
-  <h2
-    v-else-if="userId === 0"
-    class="msg"
-  >
-    {{ $t('Layout.authRequired') }}
-  </h2>
-  <h2
-    v-else-if="!isAllowed && !user.isAdministrator"
-    class="msg"
-  >
-    {{ $t('Layout.notAllowed') }}
-  </h2>
+  <AuthenticationRequired v-else-if="userId === 0" />
+  <NotAllowed v-else-if="!isAllowed && !user.isAdministrator" />
   <AgreeTermsOfUse v-else-if="!user.agreedTermsOfUse" />
   <PasswordChange v-else-if="user.passwordChange" />
   <div
@@ -19,27 +9,26 @@
     class="nero"
     :class="neroClasses"
   >
-    <header class="nero-header theme-background-color">
-      <Banner />
-    </header>
-    <QuickSearchPanel
-      class="quick-search-panel"
-      :class="{'collapsed': !isQuickSearchDisplayed}"
-    />
-    <section
+    <Banner class="nero-header theme-background-color" />
+
+    <SideMenu
       v-if="!mq.phone"
       class="nero-menu"
-    >
-      <SideMenu />
-    </section>
+    />
     <Transition name="fade">
       <MobileMenu v-if="isMobileMenuDisplayed" />
     </Transition>
-    <section
-      class="nero-body"
-    >
+
+    <section class="nero-body">
       <slot />
     </section>
+
+    <Transition name="expand">
+      <QuickSearchPanel
+        v-if="isQuickSearchDisplayed"
+        class="quick-search-panel"
+      />
+    </Transition>
 
     <div
       class="popups-container"
@@ -75,7 +64,10 @@
       />
     </teleport>
 
-    <teleport to="body">
+    <teleport
+      v-if="isHelpModalDisplayed || isAccessModalDisplayed || isConflictModalDisplayed || isWarningModalDisplayed"
+      to="body"
+    >
       <HelpModal
         v-if="isHelpModalDisplayed"
         @close="closeHelpModal"
@@ -84,20 +76,12 @@
         v-if="isAccessModalDisplayed"
         @close="closeAccessModal"
       />
-    </teleport>
-    <teleport
-      v-if="isConflictModalDisplayed"
-      to="body"
-    >
       <ConflictModal
+        v-if="isConflictModalDisplayed"
         win-width="500px"
       />
-    </teleport>
-    <teleport
-      v-if="isWarningModalDisplayed"
-      to="body"
-    >
       <WarningModal
+        v-if="isWarningModalDisplayed"
         win-width="500px"
       />
     </teleport>
@@ -107,37 +91,41 @@
 <script>
 import { defineAsyncComponent } from 'vue'
 import { popupDurationTime } from '@/constants/appConstants'
-import Banner from '@/components/Banner/Banner'
-import QuickSearchPanel from '@components/Search/QuickSearchPanel.vue'
-import AgreeTermsOfUse from '../views/AgreeTermsOfUse.vue'
-import PasswordChange from '../views/PasswordChange.vue'
 
+const AccessModal = defineAsyncComponent(() => import('@components/Accesses/AccessVisualization/AccessModal'))
+const AgreeTermsOfUse = defineAsyncComponent(() => import('@router/views/AgreeTermsOfUse'))
+const AuthenticationRequired = defineAsyncComponent(() => import('@router/views/AuthenticationRequired'))
+const Banner = defineAsyncComponent(() => import('@/components/Banner/Banner'))
 const ConflictModal = defineAsyncComponent(() => import('@/components/Documents/Modals/ConflictModal'))
 const FileDisplayModal = defineAsyncComponent(() => import('@/components/Documents/FileDisplay/FileDisplayModal'))
-const MobileMenu = defineAsyncComponent(() => import('@/components/Menu/MobileMenu'))
-const SideMenu = defineAsyncComponent(() => import('@/components/Menu/SideMenu'))
-const HelpModal = defineAsyncComponent(() => import('@components/HelpModal/HelpModal.vue'))
+const HelpModal = defineAsyncComponent(() => import('@components/HelpModal/HelpModal'))
+const MobileMenu = defineAsyncComponent(() => import('@components/Menu/MobileMenu'))
+const NotAllowed = defineAsyncComponent(() => import('@router/views/NotAllowed'))
+const PasswordChange = defineAsyncComponent(() => import('@router/views/PasswordChange'))
 const Popup = defineAsyncComponent(() => import('@components/Base/Popup'))
+const QuickSearchPanel = defineAsyncComponent(() => import('@components/Search/QuickSearchPanel'))
+const SideMenu = defineAsyncComponent(() => import('@/components/Menu/SideMenu'))
 const UploadProgression = defineAsyncComponent(() => import('@components/Documents/UploadProgression'))
 const WarningModal = defineAsyncComponent(() => import('@/components/Nero/WarningModal'))
-const AccessModal = defineAsyncComponent(() => import('@components/Accesses/AccessVisualization/AccessModal.vue'))
 
 export default {
   name: 'BannerLayout',
   components: {
     AccessModal,
+    AgreeTermsOfUse,
+    AuthenticationRequired,
+    Banner,
     ConflictModal,
     FileDisplayModal,
-    QuickSearchPanel,
     HelpModal,
-    Banner,
     MobileMenu,
+    NotAllowed,
+    PasswordChange,
     Popup,
+    QuickSearchPanel,
     SideMenu,
     UploadProgression,
-    WarningModal,
-    AgreeTermsOfUse,
-    PasswordChange
+    WarningModal
   },
   inject: ['mq'],
   props: {
@@ -173,9 +161,6 @@ export default {
     },
     neroClasses () {
       return {
-        // 'sm': (this.mq.phone || (this.menuExpanded && this.mq.tablet)),
-        // 'md': (!this.menuExpanded && this.$device.tablet),
-        // 'lg': this.mq.desktop,
         mobile: this.mq.phone,
         'menu-expanded': (this.menuExpanded && !this.mq.phone),
         'menu-shrinked': (!this.menuExpanded && !this.mq.phone)
@@ -184,9 +169,6 @@ export default {
     openFiles () {
       return this.$store.state.documents.openFiles
     },
-    /* isWarningModalDisplayed () {
-      return this.$store.getters['warningModal/isWarningModalDisplayed']
-    }, */
     popupTimeout () {
       return popupDurationTime
     },
@@ -236,6 +218,9 @@ export default {
   display: grid;
   /* + 1 because of useless scroll appearing */
   grid-template-rows: $banner-height calc(100% - #{$banner-height + 1});
+  grid-template-areas:
+    "header header"
+    "side   main  ";
   transition: grid-template-columns 0.3s;
   position: relative;
 
@@ -249,7 +234,41 @@ export default {
 
   &.mobile {
     grid-template-columns: 100%;
+    grid-template-areas:
+    "header"
+    "main  ";
   }
+}
+
+.nero-header {
+  grid-area: header;
+  border: 0;
+  padding: 6px 10px;
+  top: 0;
+  z-index: $banner-z-index;
+}
+
+.nero-body {
+  grid-area: main;
+  height: 100%;
+  overflow: auto;
+  padding: 10px;
+}
+
+.nero-menu {
+  grid-area: side;
+}
+
+.expand-enter-active, .expand-leave-active {
+  transition: width .35s ease;
+}
+
+.expand-enter-from, .expand-leave-to {
+  width: 0;
+}
+
+.expand-enter-to, .expand-leave-from {
+  width: $quick-search-result-width;
 }
 
 .quick-search-panel {
@@ -259,28 +278,10 @@ export default {
   top: $banner-height;
   left: 0;
   height: calc(100% - $banner-height);
-  width: 441px;
-  transition: width 0.35s ease;
+  max-width: $quick-search-result-width;
   z-index: $quick-search-z-index;
   white-space: nowrap;
-
-  &.collapsed {
-    width: 0;
-  }
-}
-
-.nero-header {
-  grid-column: span 2;
-  border: 0;
-  padding: 6px 10px;
-  top: 0;
-  z-index: $banner-z-index;
-}
-
-.nero-body {
-  height: 100%;
-  overflow: auto;
-  padding: 10px;
+  overflow: hidden;
 }
 
 .popups-container {
@@ -304,10 +305,6 @@ export default {
       height: 50px;
     }
   }
-}
-
-.msg {
-  text-align: center;
 }
 
 .background-actions-container {

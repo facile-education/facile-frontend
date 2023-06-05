@@ -63,6 +63,7 @@
             v-model="login"
             :placeholder="$t('login')"
             class="input"
+            name="unsername"
             @keypress="handleKeyPressed"
           >
           <input
@@ -70,6 +71,7 @@
             type="password"
             :placeholder="$t('password')"
             class="input"
+            name="password"
             @keypress="handleKeyPressed"
           >
           <div>
@@ -114,11 +116,19 @@ import PublicLayout from '@/router/layouts/PublicLayout'
 import axios from 'axios'
 import authenticationService from '@/api/authentication.service'
 import store from '@/store'
+import constants from '@/api/constants'
+import { GET_USER_INFOS_WS, USER_PATH } from '@/api/user.service'
 
 export default {
   name: 'Authentication',
   components: {
     PublicLayout
+  },
+  props: {
+    redirect: {
+      type: String,
+      default: ''
+    }
   },
   data () {
     return {
@@ -140,7 +150,20 @@ export default {
   },
   created () {
     // Using fetch instead of axios to avoid intercept loop
-    fetch('/p_auth_token.jsp').then(response => response.text()).then(response => { this.p_auth = response })
+    fetch('/p_auth_token.jsp').then(response => response.text()).then(response => {
+      this.p_auth = response
+
+      // Check if already authenticated
+      fetch(constants.JSON_WS_URL + USER_PATH + GET_USER_INFOS_WS + '?p_auth=' + this.p_auth).then(response => {
+        if (response.status === 200) {
+          if (this.redirect) {
+            this.$router.push(this.redirect)
+          } else {
+            this.$router.push('tableau-de-bord')
+          }
+        }
+      })
+    })
   },
   methods: {
     doLogin () {
@@ -167,11 +190,17 @@ export default {
           ).then(() => {
             // Reset p_auth_token
             store.commit('user/setPAuth', undefined)
+
             // Reset Matomo userId
             window._paq.push(['setUserId', Math.random().toString(36)])
             window._paq.push(['trackPageView'])
+
             // Route to landing page
-            this.$router.push({ path: 'tableau-de-bord' })
+            if (this.redirect) {
+              this.$router.push(this.redirect)
+            } else {
+              this.$router.push('tableau-de-bord')
+            }
           })
         }
       })
