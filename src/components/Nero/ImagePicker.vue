@@ -27,7 +27,7 @@
           class="cropper"
           :src="image"
           :stencil-props="{
-            aspectRatio: 1/1
+            aspectRatio: 1
           }"
           :debounce="false"
           :min-height="50"
@@ -45,27 +45,19 @@
       <div class="buttons">
         <PentilaButton
           v-t="'openFilePicker'"
-          class="pentila-button"
+          class="button"
           @click="isFilePickerDisplayed=true"
         />
         <span
           v-t="'or'"
           class="or"
         />
-        <div class="button-wrapper theme-background-color">
-          <span
-            class="button"
-            @click="$refs.file.click()"
-          >
-            <input
-              ref="file"
-              type="file"
-              accept="image/*"
-              @change="loadImage($event)"
-            >
-            {{ $t('selectButton') }}
-          </span>
-        </div>
+        <FilePickerButton
+          v-t="'selectButton'"
+          class="button"
+          accept="image/*"
+          @change="loadImage($event)"
+        />
       </div>
     </template>
 
@@ -95,11 +87,13 @@ import { Cropper, Preview } from 'vue-advanced-cropper'
 import 'vue-advanced-cropper/dist/style.css'
 import { getResource, uploadTmpFile } from '@/api/documents/file.service'
 import { defineAsyncComponent } from 'vue'
+import FilePickerButton from '@components/FilePicker/FilePickerButton.vue'
 const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal'))
 
 export default {
   name: 'ImagePickerModal',
   components: {
+    FilePickerButton,
     FilePickerModal,
     Cropper,
     Preview
@@ -225,16 +219,6 @@ export default {
   }
 }
 
-.buttons {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  .or {
-    font-size: 1.5rem;
-  }
-}
-
 .placeholder {
   height: 300px;
   width: 100%;
@@ -254,27 +238,19 @@ export default {
   width: 100%;
 }
 
-.pentila-button, .button-wrapper {
-  width: 202px;
-}
-
-.button-wrapper {
-  height: 48px;
+.buttons {
   display: flex;
   align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 3px rgba(0,0,0,.19);
-  font-family: inherit;
-  border-radius: 5px;
-  padding: 6px 12px;
-  border: none;
-  cursor: pointer;
-}
+  justify-content: space-between;
 
-.button input {
-  display: none;
-}
+  .button {
+    width: 202px;
+  }
 
+  .or {
+    font-size: 1.5rem;
+  }
+}
 </style>
 
 <i18n locale="fr">
