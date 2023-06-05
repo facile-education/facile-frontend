@@ -426,7 +426,7 @@ hr.hr-thread-list {
 
 .scroll {
   height: 100%;
-  padding: 0 0.5em;
+  padding-right: 0.5em;
   overflow: auto;
   .thread-list-item {
     border-radius: 6px;
