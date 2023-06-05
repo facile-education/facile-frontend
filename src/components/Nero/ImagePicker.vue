@@ -1,6 +1,7 @@
 <template>
   <PentilaWindow
     :modal="true"
+    :width="700"
     @close="onClose"
   >
     <template #header>
@@ -8,6 +9,15 @@
     </template>
 
     <template #body>
+      <div
+        v-if="initialThumbnailUrl && image===null"
+        class="placeholder"
+      >
+        <img
+          :src="initialThumbnailUrl"
+          alt="init thumbnail"
+        >
+      </div>
       <div
         v-show="image!==null"
         class="content"
@@ -92,6 +102,12 @@ export default {
     FilePickerModal,
     Cropper,
     Preview
+  },
+  props: {
+    initialThumbnailUrl: {
+      type: String,
+      default: undefined
+    }
   },
   emits: ['close', 'save', 'createdTmpFile'],
   data () {
@@ -215,6 +231,19 @@ export default {
 
   .or {
     font-size: 1.5rem;
+  }
+}
+
+.placeholder {
+  height: 300px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+
+  img {
+    height: 100%;
+    width: 300px;
   }
 }
 

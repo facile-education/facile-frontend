@@ -143,6 +143,7 @@
     to="body"
   >
     <ImagePicker
+      :initial-thumbnail-url="thumbnail"
       @createdTmpFile="selectImage"
       @close="isImagePickerDisplayed=false"
     />
