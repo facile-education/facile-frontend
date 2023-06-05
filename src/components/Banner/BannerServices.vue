@@ -8,7 +8,6 @@
       :src="require('@/assets/images/banner/icon-letter.svg')"
       @click="$router.push({ name: 'Messagerie' })"
     />
-    <BannerItem :src="require('@/assets/images/banner/icon-archives.svg')" />
     <BannerItem
       data-test="open-help-item"
       :src="require('@/assets/images/banner/icon-question.svg')"
