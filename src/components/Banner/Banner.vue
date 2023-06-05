@@ -1,5 +1,5 @@
 <template>
-  <nav class="banner">
+  <header class="banner">
     <NeroIcon
       v-if="mq.phone"
       class="menu-icon"
@@ -20,11 +20,11 @@
         @click="extendSession"
       />
     </div>
-    <div class="right-section">
+    <nav class="right-section">
       <BannerServices />
       <BannerUserProfile />
-    </div>
-  </nav>
+    </nav>
+  </header>
 </template>
 
 <script>
@@ -68,7 +68,8 @@ export default {
     this.interval = setInterval(() => {
       this.inactionTime = dayjs() - this.$store.state.user.lastActionDate
       if (this.inactionTime > this.$store.state.nero.sessionTimeout) {
-        this.$router.push({ name: 'Authentication' })
+        // Logout
+        window.location = '/c/portal/logout'
       }
     }, 1000)
   },
@@ -77,15 +78,13 @@ export default {
   },
   methods: {
     onShowMobileMenu () {
-      // TODO change to teleport body ?
       this.$store.dispatch('nero/toggleMobileMenu')
     },
     extendSession () {
       fetch('/html/portal/extend_session.jsp').then(response => response.text()).then(response => {
         const extendSessionResult = response.trim()
-        console.log('result = ', extendSessionResult)
+
         if (extendSessionResult === '0') {
-          console.log('extend ok')
           this.$store.commit('user/setLastActionDate', dayjs())
         }
       })

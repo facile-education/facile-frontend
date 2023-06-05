@@ -8,6 +8,7 @@ function capitalize (string) {
 }
 
 function getRoute (entry) {
+  console.log(entry)
   return {
     name: capitalize(i18n.global.t('Menu.route.' + entry.i18nKey)),
     path: `/${i18n.global.t('Menu.route.' + entry.i18nKey)}`,
@@ -27,8 +28,8 @@ export const state = {
     messaging: undefined
     // dropbox: undefined
   },
-  sessionTimeout: 1800000, // 30 min, Liferay default
-  sessionTimeoutWarning: 300000 // 5 min, Liferay default
+  sessionTimeout: 900000, // 15 min, Liferay default
+  sessionTimeoutWarning: 60000 // 1 min, Liferay default
 }
 
 export const mutations = {
