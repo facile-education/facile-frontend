@@ -45,6 +45,7 @@
       <div class="buttons">
         <PentilaButton
           v-t="'openFilePicker'"
+          class="pentila-button"
           @click="isFilePickerDisplayed=true"
         />
         <span
@@ -253,6 +254,10 @@ export default {
   width: 100%;
 }
 
+.pentila-button, .button-wrapper {
+  width: 202px;
+}
+
 .button-wrapper {
   height: 48px;
   display: flex;
@@ -274,10 +279,10 @@ export default {
 
 <i18n locale="fr">
 {
-  "header": "Image",
+  "header": "Choisir une image",
   "saveButton": "Valider",
   "or": "ou",
   "selectButton": "Depuis le poste de travail",
-  "openFilePicker": "Choisir un fichier de l'ent"
+  "openFilePicker": "Depuis l'application"
 }
 </i18n>
