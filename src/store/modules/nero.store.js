@@ -8,7 +8,6 @@ function capitalize (string) {
 }
 
 function getRoute (entry) {
-  console.log(entry)
   return {
     name: capitalize(i18n.global.t('Menu.route.' + entry.i18nKey)),
     path: `/${i18n.global.t('Menu.route.' + entry.i18nKey)}`,

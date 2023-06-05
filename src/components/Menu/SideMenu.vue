@@ -1,9 +1,9 @@
 <template>
-  <nav
+  <section
     :class="{open: expanded}"
     class="side-menu"
   >
-    <div class="entry-list">
+    <nav class="entry-list">
       <SideMenuRootEntry
         v-for="entry in menu"
         :key="entry.id"
@@ -12,7 +12,7 @@
         :open-all="openAll"
         @open="toggleMenu"
       />
-    </div>
+    </nav>
     <div
       class="side-menu-caret"
       @click="toggleAllMenu"
@@ -22,7 +22,7 @@
         :class="{'rotated': !expanded}"
       >
     </div>
-  </nav>
+  </section>
 </template>
 
 <script>

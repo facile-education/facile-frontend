@@ -1,5 +1,5 @@
 <template>
-  <section class="quick-search-panel">
+  <section>
     <SearchHistory v-if="isSearchHistoryDisplayed" />
     <QuickSearchResults v-else-if="isQuickSearchResultDisplayed" />
   </section>
@@ -25,7 +25,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.quick-search-panel {
-  position: relative;
-}
+
 </style>

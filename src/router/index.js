@@ -4,48 +4,39 @@ import store from '@/store'
 const routes = [
   {
     path: '/',
-    name: 'Authentication',
-    component: () => import('@/router/views/Authentication.vue')
+    name: '',
+    redirect: '/login'
   },
   {
-    path: '/access-manager',
-    name: 'AccessManager',
-    component: () => import('@/router/views/AccessManager.vue')
+    path: '/login',
+    name: 'Authentication',
+    component: () => import('@/router/views/Authentication'),
+    props: route => ({ redirect: route.query.redirect })
   },
   {
     path: '/agree-terms-of-use',
     name: 'AgreeTermsOfUse',
-    component: () => import('@/router/views/AgreeTermsOfUse.vue')
+    component: () => import('@/router/views/AgreeTermsOfUse')
   },
   {
     path: '/password-change',
     name: 'PasswordChange',
-    component: () => import('@/router/views/PasswordChange.vue')
-  },
-  {
-    path: '/dashboard',
-    name: 'Dashboard',
-    component: () => import('@/router/views/Dashboard.vue')
+    component: () => import('@/router/views/PasswordChange')
   },
   {
     path: '/dashboard/all-events',
     name: 'AllEvents',
-    component: () => import('@/router/views/AllDiaryEvents.vue')
+    component: () => import('@/router/views/AllDiaryEvents')
   },
   {
     path: '/dashboard/all-announcements',
     name: 'AllAnnouncements',
-    component: () => import('@/router/views/AllAnnouncements.vue')
+    component: () => import('@/router/views/AllAnnouncements')
   },
   {
     path: '/dashboard/all-activities',
     name: 'AllActivities',
-    component: () => import('@/router/views/AllActivities.vue')
-  },
-  {
-    path: '/sessions-and-homeworks',
-    name: 'SessionsAndHomeworks',
-    component: () => import('@/router/views/SessionsAndHomeworks.vue')
+    component: () => import('@/router/views/AllActivities')
   },
   {
     path: '/progression/:progressionId(\\d+)?',
@@ -97,8 +88,13 @@ const router = createRouter({
 
 // Update browser tab title
 router.beforeEach((to, from, next) => {
-  document.title = to.name || 'Nero'
-  next()
+  document.title = to.name || 'Facile'
+
+  if (from.query.doAsUserId && !to.query.doAsUserId) {
+    next({ ...to, query: { ...to.query, doAsUserId: from.query.doAsUserId } })
+  } else {
+    next()
+  }
 })
 
 // Update menu CSS

@@ -1,18 +1,8 @@
 <template>
   <div class="service-body">
     <PentilaSpinner v-if="userId === undefined" />
-    <h2
-      v-else-if="userId === 0"
-      class="msg"
-    >
-      {{ $t('Layout.authRequired') }}
-    </h2>
-    <h2
-      v-else-if="!isAllowed && !user.isAdministrator"
-      class="msg"
-    >
-      {{ $t('Layout.notAllowed') }}
-    </h2>
+    <AuthenticationRequired v-else-if="userId === 0" />
+    <NotAllowed v-else-if="!isAllowed && !user.isAdministrator" />
     <slot v-else />
 
     <div
@@ -29,57 +19,17 @@
         @close="closePopup"
       />
     </div>
-
-    <div
-      v-if="isLoadingProgressionDisplayed"
-      class="background-actions-container"
-      :class="{'phone': mq.phone}"
-    >
-      <UploadProgression />
-    </div>
-
-    <teleport
-      v-for="(file, index) in openFiles"
-      :key="index"
-      to="body"
-    >
-      <FileDisplayModal
-        :file="file"
-        @close="closeFile(file)"
-      />
-    </teleport>
-
-    <teleport
-      v-if="isWarningModalDisplayed"
-      to="body"
-    >
-      <WarningModal
-        win-width="500px"
-      />
-    </teleport>
-
-    <teleport
-      v-if="isConflictModalDisplayed"
-      to="body"
-    >
-      <ConflictModal
-        win-width="500px"
-      />
-    </teleport>
   </div>
 </template>
 
 <script>
 import { defineAsyncComponent } from 'vue'
-import Popup from '@components/Base/Popup'
 import { popupDurationTime } from '@/constants/appConstants'
-const ConflictModal = defineAsyncComponent(() => import('@/components/Documents/Modals/ConflictModal'))
-const FileDisplayModal = defineAsyncComponent(() => import('@/components/Documents/FileDisplay/FileDisplayModal'))
-const UploadProgression = defineAsyncComponent(() => import('@components/Documents/UploadProgression'))
-const WarningModal = defineAsyncComponent(() => import('@/components/Nero/WarningModal'))
+
+const Popup = defineAsyncComponent(() => import('@components/Base/Popup'))
 
 export default {
-  components: { ConflictModal, FileDisplayModal, Popup, UploadProgression, WarningModal },
+  components: { Popup },
   inject: ['mq'],
   props: {
     isAllowed: {
@@ -88,26 +38,11 @@ export default {
     }
   },
   computed: {
-    openFiles () {
-      return this.$store.state.documents.openFiles
-    },
-    isConflictModalDisplayed () {
-      return this.$store.getters['conflictModal/isConflictModalDisplayed']
-    },
-    isLoadingProgressionDisplayed () {
-      return this.$store.state.currentActions.isLoadingProgressionDisplayed
-    },
-    isWarningModalDisplayed () {
-      return this.$store.getters['warningModal/isWarningModalDisplayed']
-    },
     popupTimeout () {
       return popupDurationTime
     },
     popupList () {
       return this.$store.state.popups.currentPopupList
-    },
-    backgroundActionList () {
-      return this.$store.state.currentActions.currentBackgroundActionList
     },
     user () {
       return this.$store.state.user
@@ -117,10 +52,6 @@ export default {
     }
   },
   methods: {
-    closeFile (file) {
-      this.$store.dispatch('documents/refreshCurrentFolder') // To update the displayed closed document properties (last modified date, etc...)
-      this.$store.dispatch('documents/closeFile', file)
-    },
     closePopup () {
       this.$store.dispatch('popups/popPopup')
     }
@@ -154,34 +85,6 @@ export default {
     transform: translate(50%, 0);
 
     .popup {
-      width: 90vw;
-      height: 50px;
-    }
-  }
-}
-
-.msg {
-  text-align: center;
-}
-
-.background-actions-container {
-  background-color: white;
-  z-index: $popup-z-index;
-  position: absolute;
-  bottom: 1px;
-  right: 20px;
-  flex-direction: column;
-  max-width: 100%;
-
-  .action {
-    color: white;
-  }
-
-  &.phone {
-    right: 50%;
-    transform: translate(50%, 0);
-
-    .action {
       width: 90vw;
       height: 50px;
     }
