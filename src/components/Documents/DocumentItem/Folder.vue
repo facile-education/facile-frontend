@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { DOCUMENTS } from '@/constants/appConstants'
 import { icons } from '@/constants/icons'
 import GenericDocument from '@components/Documents/DocumentItem/GenericDocument'
 
@@ -122,7 +123,7 @@ export default {
           this.$store.dispatch('documents/closeDocumentPanel')
         }
       } else {
-        this.$router.push({ name: 'Documents', params: { folderId: this.folder.id } })
+        this.$router.push({ name: DOCUMENTS, params: { folderId: this.folder.id } })
       }
     },
     openContextMenu (e) {

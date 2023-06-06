@@ -6,7 +6,7 @@
     />
     <BannerItem
       :src="require('@/assets/images/banner/icon-letter.svg')"
-      @click="$router.push({ name: 'Messagerie' })"
+      @click="redirect"
     />
     <BannerItem
       data-test="open-help-item"
@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { MESSAGING } from '@/constants/appConstants'
 import BannerItem from '@/components/Banner/BannerItem'
 
 export default {
@@ -30,6 +31,9 @@ export default {
     },
     openHelpModal () {
       this.$store.dispatch('help/openHelpModal')
+    },
+    redirect () {
+      this.$router.push({ name: MESSAGING })
     }
   }
 }

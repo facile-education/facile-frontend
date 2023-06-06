@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { SCHOOL_LIFE } from '@/constants/appConstants'
 import activityConstants from '@/constants/activityConstants'
 import dayjs from 'dayjs'
 
@@ -64,7 +65,7 @@ export default {
   methods: {
     redirect () {
       if (this.isPendingFiring) {
-        this.$router.push({ name: 'Not usual slots' })
+        this.$router.push({ name: SCHOOL_LIFE })
       }
     }
   }

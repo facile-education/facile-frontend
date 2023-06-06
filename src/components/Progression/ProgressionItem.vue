@@ -49,6 +49,8 @@
 </template>
 
 <script>
+import { PROGRESSION } from '@/constants/appConstants'
+
 export default {
   name: 'ProgressionItem',
   props: {
@@ -72,7 +74,7 @@ export default {
       this.$emit('edit', this.progression)
     },
     selectProgression () {
-      this.$router.push({ name: 'Progression', params: { progressionId: this.progression.progressionId } })
+      this.$router.push({ name: PROGRESSION, params: { progressionId: this.progression.progressionId } })
     }
   }
 }

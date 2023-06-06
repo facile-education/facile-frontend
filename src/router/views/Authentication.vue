@@ -120,6 +120,7 @@
 </template>
 
 <script>
+import { DASHBOARD } from '@/constants/appConstants'
 import PublicLayout from '@/router/layouts/PublicLayout'
 import axios from 'axios'
 import authenticationService from '@/api/authentication.service'
@@ -168,7 +169,7 @@ export default {
           if (this.redirect) {
             this.$router.push(this.redirect)
           } else {
-            this.$router.push('tableau-de-bord')
+            this.$router.push(DASHBOARD)
           }
         }
       })
@@ -208,7 +209,7 @@ export default {
             if (this.redirect) {
               this.$router.push(this.redirect)
             } else {
-              this.$router.push('tableau-de-bord')
+              this.$router.push(DASHBOARD)
             }
           })
         }

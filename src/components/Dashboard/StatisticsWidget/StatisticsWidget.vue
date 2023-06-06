@@ -20,7 +20,7 @@
         v-t="'lastWeek'"
         class="period"
       />
-      <ul @click="$router.push({name: 'Statistics'})">
+      <ul @click="redirect">
         <li
           v-for="statistic in statistics"
           :key="statistic.label"
@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import { STATISTICS } from '@/constants/appConstants'
 import StatisticsHeader from '@components/Dashboard/StatisticsWidget/StatisticsHeader.vue'
 import { getDashboardStatistics } from '@/api/statistics.service'
 import StatisticItem from '@components/Dashboard/StatisticsWidget/StatisticItem.vue'
@@ -53,6 +54,7 @@ export default {
   methods: {
     getSchoolStatistics () {
       this.isLoading = true
+
       getDashboardStatistics().then((data) => {
         this.isLoading = false
         if (data.success) {
@@ -84,6 +86,9 @@ export default {
         this.error = true
         console.error(err)
       })
+    },
+    redirect () {
+      this.$router.push({ name: STATISTICS })
     }
   }
 }
