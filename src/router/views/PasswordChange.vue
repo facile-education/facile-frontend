@@ -75,10 +75,10 @@ export default {
         userManagementService.updatePassword(this.$store.state.user.userId, this.password1, false).then((data) => {
           if (data.success) {
             this.$store.commit('user/setPasswordChange', false)
-            // Logout
-            window.location = constants.LOGOUT_URL
             // Reset p_auth_token
             this.$store.commit('user/setPAuth', undefined)
+            // Logout
+            window.location = constants.LOGOUT_URL
           } else {
             this.isError = true
           }
