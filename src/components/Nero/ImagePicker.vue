@@ -186,7 +186,7 @@ export default {
       const { canvas } = this.$refs.cropper.getResult()
       if (canvas) {
         canvas.toBlob(blob => {
-          this.fileName = 't.png'
+          this.fileName = 't.jpeg'
           this.$emit('save', { blob, fileName: this.fileName })
           uploadTmpFile(new File([blob], this.fileName)).then((data) => {
             if (data.success) {
