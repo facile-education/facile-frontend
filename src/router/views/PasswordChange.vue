@@ -46,9 +46,9 @@
 </template>
 
 <script>
-import store from '@/store/index'
 import userManagementService from '@/api/userManagement.service'
-import EmptyLayout from '@/router/layouts/EmptyLayout'
+import constants from '@/api/constants'
+import EmptyLayout from '@router/layouts/EmptyLayout'
 
 export default {
   name: 'PasswordChange',
@@ -74,11 +74,11 @@ export default {
       } else {
         userManagementService.updatePassword(this.$store.state.user.userId, this.password1, false).then((data) => {
           if (data.success) {
-            store.commit('user/setPasswordChange', false)
+            this.$store.commit('user/setPasswordChange', false)
             // Logout
-            window.location = '/c/portal/logout'
+            window.location = constants.LOGOUT_URL
             // Reset p_auth_token
-            store.commit('user/setPAuth', undefined)
+            this.$store.commit('user/setPAuth', undefined)
           } else {
             this.isError = true
           }
@@ -103,23 +103,28 @@ export default {
 p {
   text-align: center;
 }
+
 .password {
   margin: auto;
   max-width: 300px;
   max-height: 400px;
   overflow: auto;
 }
+
 .input {
   margin-bottom: 20px;
 }
+
 .wrapper {
   width: 100%;
   margin: auto;
   text-align: center;
 }
+
 .button {
   margin: auto;
 }
+
 .errorMessage {
   color: red;
   margin-bottom: 20px;
