@@ -12,6 +12,11 @@
 
     <template #body>
       <div class="first-line">
+        <ThumbnailSelector
+          :thumbnail-url="thumbnail"
+          @selectImage="selectImage"
+        />
+
         <div class="input">
           <PentilaInput
             ref="nameInput"
@@ -80,6 +85,8 @@ import validators from '@utils/validators'
 import { useVuelidate } from '@vuelidate/core'
 import { nextTick } from 'vue'
 import AccessRedirectionSelector from '@components/Accesses/AccessManager/AccessRedirectionSelector.vue'
+import { defaultImagesKeys } from '@/constants/icons'
+import ThumbnailSelector from '@components/Base/ThumbnailSelector.vue'
 const inputMaxSize = 75
 const isUnderInputMaxSize = (value) => validators.isUnderMaxSize(value, inputMaxSize)
 const isNotEmpty = (list) => validators.isNotEmpty(list)
@@ -87,7 +94,7 @@ const isNotPlaceholder = (value) => value.categoryId !== -1
 
 export default {
   name: 'SaveAccessModal',
-  components: { AccessRedirectionSelector },
+  components: { ThumbnailSelector, AccessRedirectionSelector },
   props: {
     initAccess: {
       type: Object,
@@ -111,7 +118,9 @@ export default {
       folderId: undefined,
       folderName: '',
       fileId: undefined,
-      fileName: ''
+      fileName: '',
+      thumbnailId: 0,
+      thumbnailUrl: 'default_access_0'
     }
   },
   validations: {
@@ -128,6 +137,13 @@ export default {
     }
   },
   computed: {
+    thumbnail () {
+      if (defaultImagesKeys.indexOf(this.thumbnailUrl) !== -1) {
+        return require('@assets/images/' + this.thumbnailUrl + '.png')
+      } else { // Returned url is a key for local default image
+        return this.thumbnailUrl
+      }
+    },
     categoryList () {
       return this.$store.state.accessManager.categoryList
     },
@@ -150,7 +166,8 @@ export default {
           fileName: this.fileName,
           profiles: this.roles,
           // todo: thumbnail
-          thumbnail: ''
+          thumbnailId: this.thumbnailId,
+          thumbnailUrl: this.thumbnailUrl
         },
         selectedCategory: this.selectedCategory
       }
@@ -183,6 +200,8 @@ export default {
       this.folderName = this.initAccess.folderName
       this.fileId = this.initAccess.fileId
       this.fileName = this.initAccess.fileName
+      this.thumbnailId = this.initAccess.thumbnailId
+      this.thumbnailUrl = this.initAccess.thumbnailUrl
       this.initRedirection = { // To initialize AccessRedirectionSelector component
         type: this.initAccess.type,
         url: this.initAccess.url,
@@ -198,6 +217,10 @@ export default {
     })
   },
   methods: {
+    selectImage (tempFile) {
+      this.thumbnailId = tempFile.id
+      this.thumbnailUrl = tempFile.fileUrl
+    },
     resetRedirectionFields () {
       this.url = ''
       this.folderId = '-1'

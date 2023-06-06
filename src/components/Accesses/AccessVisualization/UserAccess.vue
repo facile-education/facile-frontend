@@ -5,9 +5,11 @@
     @click="openAccess"
     @keyup.enter="openAccess"
   >
-    <div class="thumbnail">
-      image
-    </div>
+    <img
+      class="thumbnail"
+      :src="thumbnail"
+      alt="thumbnail"
+    >
     <div class="title">
       {{ access.title }}
     </div>
@@ -16,6 +18,7 @@
 
 <script>
 import Types from '@/constants/accessConstants'
+import { defaultImagesKeys } from '@/constants/icons'
 
 export default {
   name: 'UserAccess',
@@ -23,6 +26,15 @@ export default {
     access: {
       type: Object,
       required: true
+    }
+  },
+  computed: {
+    thumbnail () {
+      if (defaultImagesKeys.indexOf(this.access.thumbnailUrl) !== -1) {
+        return require('@assets/images/' + this.access.thumbnailUrl + '.png')
+      } else { // Returned url is a key for local default image
+        return this.access.thumbnailUrl
+      }
     }
   },
   methods: {

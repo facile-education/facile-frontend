@@ -273,7 +273,6 @@ export default {
   },
   methods: {
     selectImage (tempFile) {
-      console.log(tempFile)
       this.thumbnailId = tempFile.id
       this.thumbnailUrl = tempFile.fileUrl
     },
