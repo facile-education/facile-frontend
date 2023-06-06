@@ -110,7 +110,7 @@
 </template>
 
 <script>
-
+import { MESSAGING } from '@/constants/appConstants'
 import folderService from '@/api/messaging/folder.service'
 import messageService from '@/api/messaging/message.service'
 import BaseIcon from '@components/Base/BaseIcon'
@@ -175,7 +175,7 @@ export default {
         })
       }
       this.selectFolder() // Invert following instructions to change extend behaviour
-      this.$router.push({ name: 'Messagerie' })
+      this.$router.push({ name: MESSAGING })
       if (this.isSelected) {
         this.isExpanded = !this.isExpanded
       }

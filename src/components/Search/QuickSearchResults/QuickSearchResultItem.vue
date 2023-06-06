@@ -66,6 +66,7 @@
 </template>
 
 <script>
+import { DOCUMENTS, MESSAGING, PROGRESSION } from '@/constants/appConstants'
 import searchConstants from '@/constants/searchConstants'
 import { isInViewport } from '@/utils/commons.util'
 
@@ -215,26 +216,26 @@ export default {
           break
         case searchConstants.TYPE_MESSAGE:
           redirect = true
-          this.$router.push({ name: 'Messagerie', params: { messageId: this.searchResult.entityId } })
+          this.$router.push({ name: MESSAGING, params: { messageId: this.searchResult.entityId } })
           break
         case searchConstants.TYPE_MESSAGE_FILE:
           if (this.searchResult.displayable) {
             this.$store.dispatch('documents/openFile', { id: this.searchResult.entityId, name: this.searchResult.title })
           } else {
             redirect = true
-            this.$router.push({ name: 'Messagerie', params: { messageId: this.searchResult.message.messageId, fileId: this.searchResult.entityId, fileName: this.searchResult.title } })
+            this.$router.push({ name: MESSAGING, params: { messageId: this.searchResult.message.messageId, fileId: this.searchResult.entityId, fileName: this.searchResult.title } })
           }
           break
         case searchConstants.TYPE_FOLDER:
           redirect = true
-          this.$router.push({ name: 'Documents', params: { folderId: this.searchResult.entityId } })
+          this.$router.push({ name: DOCUMENTS, params: { folderId: this.searchResult.entityId } })
           break
         case searchConstants.TYPE_FILE:
           if (this.searchResult.displayable) {
             this.$store.dispatch('documents/openFile', { id: this.searchResult.entityId, name: this.searchResult.title })
           } else {
             redirect = true
-            this.$router.push({ name: 'Documents', params: { folderId: this.searchResult.folderId, fileId: this.searchResult.entityId } })
+            this.$router.push({ name: DOCUMENTS, params: { folderId: this.searchResult.folderId, fileId: this.searchResult.entityId } })
           }
           break
         case searchConstants.TYPE_COLLABORATIVE_FOLDER:
@@ -251,19 +252,19 @@ export default {
           break
         case searchConstants.TYPE_PROGRESSION:
           redirect = true
-          this.$router.push({ name: 'Progression', params: { progressionId: this.searchResult.entityId } })
+          this.$router.push({ name: PROGRESSION, params: { progressionId: this.searchResult.entityId } })
           break
         case searchConstants.TYPE_PROGRESSION_COURSE:
         case searchConstants.TYPE_PROGRESSION_HOMEWORK:
           redirect = true
-          this.$router.push({ name: 'Progression', params: { progressionId: this.searchResult.progressionId, itemId: this.searchResult.entityId } })
+          this.$router.push({ name: PROGRESSION, params: { progressionId: this.searchResult.progressionId, itemId: this.searchResult.entityId } })
           break
         case searchConstants.TYPE_PROGRESSION_FILE:
           if (this.searchResult.displayable) {
             this.$store.dispatch('documents/openFile', { id: this.searchResult.entityId, name: this.searchResult.title })
           } else {
             redirect = true
-            this.$router.push({ name: 'Progression', params: { progressionId: this.searchResult.progressionId, itemId: this.searchResult.itemId, fileId: this.searchResult.entityId, fileName: this.searchResult.title, display: this.searchResult.displayable } })
+            this.$router.push({ name: PROGRESSION, params: { progressionId: this.searchResult.progressionId, itemId: this.searchResult.itemId, fileId: this.searchResult.entityId, fileName: this.searchResult.title, display: this.searchResult.displayable } })
           }
           break
         case searchConstants.TYPE_EVENT:

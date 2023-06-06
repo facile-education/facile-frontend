@@ -88,6 +88,7 @@
 
 <script>
 import dayjs from 'dayjs'
+import { DOCUMENTS } from '@/constants/appConstants'
 import searchConstants from '@/constants/searchConstants'
 import { getSearchResultDetails } from '@/api/search.service'
 import { formatSize } from '@utils/commons.util'
@@ -168,7 +169,7 @@ export default {
     },
     redirectInDocument (folderId) {
       this.$emit('redirect', {
-        routeName: this.isCollaborative ? 'GroupDocuments' : 'Documents',
+        routeName: this.isCollaborative ? 'GroupDocuments' : DOCUMENTS,
         params: { folderId: folderId }
       })
     },

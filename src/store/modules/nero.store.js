@@ -1,16 +1,12 @@
 import neroService from '@/api/nero.service'
 import { updateSideMenuState } from '@/api/user.service'
-import i18n from '@/i18n'
 import router from '@/router'
-
-function capitalize (string) {
-  return string.charAt(0).toUpperCase() + string.slice(1).replaceAll('-', ' ')
-}
 
 function getRoute (entry) {
   return {
-    name: capitalize(i18n.global.t('Menu.route.' + entry.i18nKey)),
-    path: `/${i18n.global.t('Menu.route.' + entry.i18nKey)}`,
+    name: entry.i18nKey,
+    // path: `/${i18n.global.t('Menu.route.' + entry.i18nKey)}`, localized path
+    path: `/${entry.i18nKey}`,
     meta: { id: entry.id },
     component: () => import('@/router/views/' + entry.component + '.vue')
   }

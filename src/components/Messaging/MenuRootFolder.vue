@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import { MESSAGING } from '@/constants/appConstants'
 import messageService from '@/api/messaging/message.service'
 
 export default {
@@ -74,7 +75,7 @@ export default {
     selectFolder (folder) {
       this.$store.dispatch('messaging/selectFolder', folder)
       // Reset messageId param in url
-      this.$router.push({ name: 'Messagerie' })
+      this.$router.push({ name: MESSAGING })
       if (this.mq.phone || this.mq.tablet) {
         this.$store.dispatch('messaging/hideMenuPanel')
       }

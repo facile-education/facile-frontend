@@ -72,6 +72,7 @@
 </template>
 
 <script>
+import { PROGRESSION } from '@/constants/appConstants'
 
 export default {
   name: 'ProgressionSwitchMode',
@@ -87,7 +88,7 @@ export default {
   },
   methods: {
     toggleListMode () {
-      this.$router.push({ name: 'Progression' })
+      this.$router.push({ name: PROGRESSION })
     },
     toggleEditMode () {
       this.$store.dispatch('progression/setEditMode', true)

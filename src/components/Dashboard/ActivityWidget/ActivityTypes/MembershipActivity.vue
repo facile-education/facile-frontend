@@ -44,7 +44,7 @@
 </template>
 
 <script>
-
+import { GROUPS } from '@/constants/appConstants'
 import dayjs from 'dayjs'
 import activityConstants from '@/constants/activityConstants'
 import { extendCommunity } from '@/api/groups.service'
@@ -78,7 +78,7 @@ export default {
   },
   methods: {
     redirect () {
-      this.$router.push({ name: 'Groups', params: { groupId: this.activity.groupId } })
+      this.$router.push({ name: GROUPS, params: { groupId: this.activity.groupId } })
     },
     confirmGroupReactivation () {
       this.$store.dispatch('warningModal/addWarning', {

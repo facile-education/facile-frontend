@@ -90,7 +90,7 @@
 </template>
 
 <script>
-
+import { DOCUMENTS } from '@/constants/appConstants'
 import Layout from '@layouts/BannerLayout'
 import CurrentOptions from '@components/Documents/Options'
 import Breadcrumb from '@components/Documents/Breadcrumb'
@@ -215,7 +215,7 @@ export default {
     this.$watch(
       () => this.$route.params,
       () => {
-        if (this.$route.name === 'Documents') {
+        if (this.$route.name === DOCUMENTS) {
           if (this.$route.params.folderId) {
             this.$store.dispatch('documents/changeDirectory', { folderId: this.$route.params.folderId, fileId: this.$route.params.fileId, displayFile: this.$route.params.display })
           } else {
@@ -260,7 +260,7 @@ export default {
           this.$store.dispatch('documents/closeDocumentPanel')
         }
       } else {
-        this.$router.push({ name: 'Documents', params: { folderId: folder.id } })
+        this.$router.push({ name: DOCUMENTS, params: { folderId: folder.id } })
       }
       // this.$store.dispatch('documents/closeDocumentPanel') // TODO: discuss about ergonomics
     },
@@ -545,7 +545,6 @@ export default {
 
   .currents-options {
     width: 100%;
-    height: $doc-currents-options-height;
   }
 
   .breadCrumb {

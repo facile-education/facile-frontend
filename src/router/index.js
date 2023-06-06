@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { DOCUMENTS, MESSAGING, PROGRESSION } from '@/constants/appConstants'
 import store from '@/store'
+import i18n from '@/i18n'
 
 const routes = [
   {
@@ -40,7 +42,7 @@ const routes = [
   },
   {
     path: '/progression/:progressionId(\\d+)?',
-    name: 'Progression',
+    name: PROGRESSION,
     component: () => import('@/router/views/Progression')
   },
   {
@@ -50,11 +52,11 @@ const routes = [
   },
   {
     path: '/documents/:folderId(\\d+)',
-    name: 'Documents',
+    name: DOCUMENTS,
     component: () => import('@/router/views/Documents')
   },
   {
-    path: '/documents/groups/:folderId(.*)',
+    path: '/documents/groups/:folderId(.*)?',
     name: 'GroupDocuments',
     component: () => import('@/router/views/Documents')
   },
@@ -65,7 +67,7 @@ const routes = [
   },
   {
     path: '/messagerie/:messageId(\\d+)',
-    name: 'Messagerie',
+    name: MESSAGING,
     component: () => import('@/router/views/Messaging')
   },
   {
@@ -86,10 +88,16 @@ const router = createRouter({
   linkExactActiveClass: 'theme-text-color'
 })
 
-// Update browser tab title
-router.beforeEach((to, from, next) => {
-  document.title = to.name || 'Facile'
+function capitalize (string) {
+  return string.charAt(0).toUpperCase() + string.slice(1).replaceAll('-', ' ')
+}
 
+router.beforeEach((to, from, next) => {
+  // Update browser tab title
+  const name = capitalize(i18n.global.t('Menu.route.' + to.name))
+  document.title = name || 'Facile'
+
+  // Handle usurpation
   if (from.query.doAsUserId && !to.query.doAsUserId) {
     next({ ...to, query: { ...to.query, doAsUserId: from.query.doAsUserId } })
   } else {
@@ -97,9 +105,10 @@ router.beforeEach((to, from, next) => {
   }
 })
 
-// Update menu CSS
 router.afterEach((to, from) => {
+  // Update menu CSS
   store.dispatch('nero/updateActiveRoute', to.path)
+
   // Matomo stats : use window._paq instead of this.$matomo because this one is not in the context
   if (store.state.user.schoolList !== undefined && store.state.user.schoolList[0] !== undefined) {
     window._paq.push(['setCustomDimension', 1, store.state.user.schoolList[0].schoolId])

@@ -30,7 +30,7 @@
       >
         <RouterLink
           v-if="entry.menu === undefined || entry.menu.length === 0"
-          :to="$t('Menu.route.' + entry.i18nKey)"
+          :to="entry.i18nKey"
           class="entry"
           @click="closeMenu"
         >
