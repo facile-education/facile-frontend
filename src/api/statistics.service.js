@@ -41,7 +41,6 @@ function getSessionsCount (schoolId, startDate, endDate, comparator) {
 }
 
 function getActionsCount (schoolId, serviceId, startDate, endDate, comparator) {
-  console.log('comparator=', comparator)
   return axios.get(constants.JSON_WS_URL + STAT_PATH + '/get-actions-count', {
     params: {
       startDate: startDate.format('YYYY-MM-DD HH:mm'),
