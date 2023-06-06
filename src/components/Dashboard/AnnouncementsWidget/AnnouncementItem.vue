@@ -103,7 +103,7 @@ import dayjs from 'dayjs'
 import BaseIcon from '@components/Base/BaseIcon.vue'
 import { defineAsyncComponent } from 'vue'
 import { isInViewport } from '@utils/commons.util'
-import validators from '@utils/validators'
+import { defaultImagesKeys } from '@/constants/icons'
 const SaveNewsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/SaveNewsModal.vue'))
 const NewsActivityDetailsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/NewsDetailsModal.vue'))
 
@@ -144,10 +144,10 @@ export default {
       return this.$t('at') + dayjs(this.announcement.publicationDate).format('DD/MM/YY')
     },
     thumbnail () {
-      if (validators.isValidURL(this.announcement.thumbnailUrl)) {
-        return this.announcement.thumbnailUrl
-      } else { // Returned url is a key for local default image
+      if (defaultImagesKeys.indexOf(this.announcement.thumbnailUrl) !== -1) {
         return require('@assets/images/' + this.announcement.thumbnailUrl + '.png')
+      } else { // Returned url is a key for local default image
+        return this.announcement.thumbnailUrl
       }
     }
   },
