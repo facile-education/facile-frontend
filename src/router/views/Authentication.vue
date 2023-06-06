@@ -14,93 +14,101 @@
         class="btn"
       />
       <div class="guest">
-        <span v-t="'parentOther'" />
+        <span
+          v-t="'parentOther'"
+          style="cursor:pointer;"
+          @click="toggleGuestForm"
+        />
 
-        <!-- Password recovery -->
-        <form
-          v-if="showPasswordRecoveryForm"
-          @submit.prevent="sendRecoveryEmail"
-        >
-          <div class="login-label">
-            <span
-              v-t="'login-label'"
-            />
+        <Transition name="expand">
+          <div v-if="isGuestFormDisplayed">
+            <!-- Password recovery -->
+            <form
+              v-if="showPasswordRecoveryForm"
+              @submit.prevent="sendRecoveryEmail"
+            >
+              <div class="login-label">
+                <p
+                  v-t="'login-label'"
+                />
+              </div>
+              <input
+                v-model="recoveryLogin"
+                :placeholder="$t('loginPlaceholder')"
+                class="input"
+                @keypress="handleKeyPressed"
+              >
+              <button
+                v-t="'send-recovery'"
+                class="btn"
+                :title="$t('send-recovery')"
+                type="submit"
+              />
+              <div
+                v-if="checkEmail"
+                class="check-email"
+              >
+                <span
+                  v-t="'check-email'"
+                />
+              </div>
+              <div>
+                <a
+                  v-if="showForgotPassword"
+                  v-t="'main-form'"
+                  href="#"
+                  @click="showPasswordRecoveryForm = false"
+                />
+              </div>
+            </form>
+            <form
+              v-else
+              @submit.prevent="doLogin"
+            >
+              <input
+                v-model="login"
+                :placeholder="$t('login')"
+                class="input"
+                name="unsername"
+                @keypress="handleKeyPressed"
+              >
+              <input
+                v-model="password"
+                type="password"
+                :placeholder="$t('password')"
+                class="input"
+                name="password"
+                @keypress="handleKeyPressed"
+              >
+              <div>
+                <span
+                  v-show="isError"
+                  v-t="'loginError'"
+                  class="errorMessage"
+                />
+                <span
+                  v-show="!isActive"
+                  v-t="'inactiveAccount'"
+                  class="errorMessage"
+                />
+              </div>
+              <button
+                v-t="'authenticate'"
+                class="btn"
+                :title="$t('authenticate')"
+                type="submit"
+              />
+              <div>
+                <a
+                  v-if="showForgotPassword"
+                  v-t="'forgot-password'"
+                  href="#"
+                  @click="showPasswordRecoveryForm = true"
+                />
+              </div>
+            </form>
           </div>
-          <input
-            v-model="recoveryLogin"
-            :placeholder="$t('loginPlaceholder')"
-            class="input"
-            @keypress="handleKeyPressed"
-          >
-          <button
-            v-t="'send-recovery'"
-            class="btn"
-            :title="$t('send-recovery')"
-            type="submit"
-          />
-          <div
-            v-if="checkEmail"
-            class="check-email"
-          >
-            <span
-              v-t="'check-email'"
-            />
-          </div>
-          <div>
-            <a
-              v-if="showForgotPassword"
-              v-t="'main-form'"
-              href="#"
-              @click="showPasswordRecoveryForm = false"
-            />
-          </div>
-        </form>
-        <form
-          v-else
-          @submit.prevent="doLogin"
-        >
-          <input
-            v-model="login"
-            :placeholder="$t('login')"
-            class="input"
-            name="unsername"
-            @keypress="handleKeyPressed"
-          >
-          <input
-            v-model="password"
-            type="password"
-            :placeholder="$t('password')"
-            class="input"
-            name="password"
-            @keypress="handleKeyPressed"
-          >
-          <div>
-            <span
-              v-show="isError"
-              v-t="'loginError'"
-              class="errorMessage"
-            />
-            <span
-              v-show="!isActive"
-              v-t="'inactiveAccount'"
-              class="errorMessage"
-            />
-          </div>
-          <button
-            v-t="'authenticate'"
-            class="btn"
-            :title="$t('authenticate')"
-            type="submit"
-          />
-          <div>
-            <a
-              v-if="showForgotPassword"
-              v-t="'forgot-password'"
-              href="#"
-              @click="showPasswordRecoveryForm = true"
-            />
-          </div>
-        </form>
+        </Transition>
       </div>
       <img
         src="https://rec-ent.eduge.ch/GVEFrontPage-theme/images/geneve-logo.png"
@@ -137,8 +145,9 @@ export default {
       password: '',
       p_auth: '',
       ssoUrl: 'https://rec-ent.eduge.ch/Shibboleth.sso/Login?entityID=https://ssoeel.geneveid.ch/ginasso/gina/fed/ent&amp;target=',
-      isError: false,
       isActive: true,
+      isError: false,
+      isGuestFormDisplayed: false,
       showForgotPassword: false,
       showPasswordRecoveryForm: false,
       recoveryLogin: '',
@@ -218,14 +227,21 @@ export default {
       ).then(() => {
         this.checkEmail = true
       })
+    },
+    toggleGuestForm () {
+      this.isGuestFormDisplayed = !this.isGuestFormDisplayed
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
+
+$eel-blue: #2c7bb8;
+
 .wrapper {
-  background-color: #fff;
+  background-color: $color-body-bg;
   padding: 1rem 3rem;
   width: 450px;
   max-width: 90vw;
@@ -243,16 +259,16 @@ export default {
 }
 
 .guest {
-  color: #2c7bb8;
-  border: 2px solid #2c7bb8;
-  background: #fff;
+  color: $eel-blue;
+  border: 2px solid $eel-blue;
+  background: $color-body-bg;
   width: 100%;
 }
 
 .btn {
-  border-color: #2c7bb8;
-  background: #2c7bb8;
-  color: #fff;
+  border-color: $eel-blue;
+  background: $eel-blue;
+  color: $color-body-bg;
   width: 300px;
   border-radius: 0;
   width: 100%;
@@ -266,7 +282,6 @@ export default {
   display: inline-block;
   font-weight: normal;
   text-align: center;
-  white-space: nowrap;
   vertical-align: middle;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -275,7 +290,7 @@ export default {
   padding: .5rem .75rem;
   font-size: 1rem;
   line-height: 1.25;
-  transition: all .15s ease-in-out;
+  overflow: hidden;
 }
 
 .input {
@@ -286,17 +301,26 @@ export default {
   display: block;
   width: 100%;
   color: #555;
-  background-color: #fff;
-  border: 1px solid #ccc;
+  background-color: $color-body-bg;
+  border: 1px solid $color-border;
   border-radius: 0;
   margin: .3rem 0;
 }
 
 .errorMessage {
-  color: red;
+  color: $error-color;
 }
-.login-label {
-  word-wrap: break-word;
+
+.expand-enter-active, .expand-leave-active {
+  transition: max-height .4s ease;
+}
+
+.expand-enter-from, .expand-leave-to {
+  max-height: 0;
+}
+
+.expand-enter-to, .expand-leave-from {
+  max-height: 200px;
 }
 </style>
 
