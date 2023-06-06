@@ -50,6 +50,8 @@ export default {
     focus () {
       if (this.searchInput.length < nbCharBeforeCompletion) {
         this.$store.dispatch('search/openHistory')
+      } else {
+        this.$store.dispatch('search/openQuickSearchResultDisplayed')
       }
     },
     blur () {
