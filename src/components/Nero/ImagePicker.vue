@@ -10,6 +10,7 @@
 
     <template #body>
       <div class="body">
+        <PentilaSpinner v-if="isLoading" />
         <div
           v-if="initialThumbnailUrl && image===null"
           class="placeholder"
@@ -120,7 +121,8 @@ export default {
         image: null
       },
       image: null,
-      isFilePickerDisplayed: false
+      isFilePickerDisplayed: false,
+      isLoading: false
     }
   },
   computed: {
@@ -184,11 +186,13 @@ export default {
     },
     onConfirm () {
       const { canvas } = this.$refs.cropper.getResult()
-      if (canvas) {
+      if (canvas && !this.isLoading) {
         canvas.toBlob(blob => {
           this.fileName = 't.jpeg'
           this.$emit('save', { blob, fileName: this.fileName })
+          this.isLoading = true
           uploadTmpFile(new File([blob], this.fileName)).then((data) => {
+            this.isLoading = false
             if (data.success) {
               this.$emit('createdTmpFile', data.uploadedFile)
             } else {
@@ -208,6 +212,7 @@ export default {
 
 <style lang="scss" scoped>
 .body {
+  position: relative;
   height: 100%;
   display: flex;
   flex-direction: column;
