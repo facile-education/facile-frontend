@@ -27,7 +27,12 @@
           class="errorMessage"
         />
         <p
-          v-show="isError"
+          v-show="isError && error"
+          class="errorMessage"
+          v-html="error"
+        />
+        <p
+          v-show="isError && !error"
           v-t="'errorMessage'"
           class="errorMessage"
         />
@@ -46,7 +51,7 @@
 </template>
 
 <script>
-import userManagementService from '@/api/userManagement.service'
+import userService from '@/api/user.service'
 import constants from '@/api/constants'
 import EmptyLayout from '@router/layouts/EmptyLayout'
 
@@ -57,6 +62,7 @@ export default {
     return {
       password1: '',
       password2: '',
+      error: '',
       isError: false,
       arePasswordsDifferent: false
     }
@@ -72,15 +78,15 @@ export default {
       if (this.password1 !== this.password2) {
         this.arePasswordsDifferent = true
       } else {
-        userManagementService.updatePassword(this.$store.state.user.userId, this.password1, false).then((data) => {
+        userService.updatePassword(this.password1, this.password2).then((data) => {
           if (data.success) {
-            this.$store.commit('user/setPasswordChange', false)
             // Reset p_auth_token
             this.$store.commit('user/setPAuth', undefined)
             // Logout
             window.location = constants.LOGOUT_URL
           } else {
             this.isError = true
+            this.error = data.error
           }
         })
       }
@@ -94,6 +100,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
+
 .main {
   display: flex;
   flex-direction: column;
@@ -126,7 +134,7 @@ p {
 }
 
 .errorMessage {
-  color: red;
+  color: $error-color;
   margin-bottom: 20px;
 }
 </style>

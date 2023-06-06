@@ -152,11 +152,10 @@ function getDelegationCandidates (schoolId, filter) {
 }
 
 function updatePassword (userId, password, resetPassword) {
-  return axios.get(constants.JSON_WS_URL + USER_MANAGEMENT_PATH + '/update-password', {
-    params: {
+  return axios.post(constants.JSON_WS_URL + USER_MANAGEMENT_PATH + '/update-password',
+    PentilaUtils.URL.params({
       userId,
       password,
       resetPassword
-    }
-  }).then(response => response.data)
+    })).then(response => response.data)
 }

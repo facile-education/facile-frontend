@@ -16,7 +16,6 @@
       <div class="guest">
         <span
           v-t="'parentOther'"
-          style="cursor:pointer;"
           @click="toggleGuestForm"
         />
 
@@ -264,6 +263,14 @@ $eel-blue: #2c7bb8;
   border: 2px solid $eel-blue;
   background: $color-body-bg;
   width: 100%;
+
+  span {
+    cursor: pointer;
+    display: inline-block;
+    width: 100%;
+    margin: -10px;
+    padding: 10px;
+  }
 }
 
 .btn {

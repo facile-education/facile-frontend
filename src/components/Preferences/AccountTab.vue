@@ -260,13 +260,13 @@ export default {
       if (this.password !== this.confirmedPassword) {
         this.confirmationError = this.$t('confirmationError')
       } else {
-        userService.updateWebdavPassword(this.password, this.confirmedPassword).then((data) => {
+        userService.updatePassword(this.password, this.confirmedPassword, true).then((data) => {
           if (data.success) {
             this.$store.dispatch('popups/pushPopup', { message: this.$t('updatedPassword'), type: 'success' })
             this.confirmationError = ''
             this.isCollapsed = true
           } else {
-            this.confirmationError = data.portal_message
+            this.confirmationError = data.error
             this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
           }
         })
