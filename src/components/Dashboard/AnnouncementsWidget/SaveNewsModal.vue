@@ -16,15 +16,10 @@
         class="save-spinner"
       />
       <div class="first-line">
-        <button
-          class="image-picker"
-          @click="isImagePickerDisplayed=true"
-        >
-          <img
-            :src="thumbnail"
-            alt="thumbnail"
-          >
-        </button>
+        <ThumbnailSelector
+          :thumbnail-url="thumbnail"
+          @selectImage="selectImage"
+        />
 
         <div
           v-if="!mq.phone && !mq.tablet"
@@ -137,17 +132,6 @@
       @close="isFilePickerDisplayed = false"
     />
   </teleport>
-
-  <teleport
-    v-if="isImagePickerDisplayed"
-    to="body"
-  >
-    <ImagePicker
-      :initial-thumbnail-url="thumbnail"
-      @createdTmpFile="selectImage"
-      @close="isImagePickerDisplayed=false"
-    />
-  </teleport>
 </template>
 
 <script>
@@ -165,8 +149,8 @@ import {
   getGroupNewsBroadcastGroups,
   getNewsDetails, getSchoolNewsBroadcastGroups
 } from '@/api/dashboard/news.service'
-import ImagePicker from '@components/Nero/ImagePicker.vue'
 import { defaultImagesKeys } from '@/constants/icons'
+import ThumbnailSelector from '@components/Base/ThumbnailSelector.vue'
 const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal.vue'))
 const CKEditor = defineAsyncComponent({
   loader: async () => { return (await import('@ckeditor/ckeditor5-vue')).component }
@@ -181,7 +165,7 @@ const isNotEmpty = (list) => validators.isNotEmpty(list)
 
 export default {
   name: 'SaveNewsModal',
-  components: { ImagePicker, AttachedFiles, FilePickerModal, CustomDatePicker, CKEditor },
+  components: { ThumbnailSelector, AttachedFiles, FilePickerModal, CustomDatePicker, CKEditor },
   inject: ['mq'],
   props: {
     initNews: {
@@ -214,8 +198,7 @@ export default {
       isReleaseDateDisabled: false,
       isLoadingNewsDetails: false,
       isProcessingSave: false,
-      isFilePickerDisplayed: false,
-      isImagePickerDisplayed: false
+      isFilePickerDisplayed: false
     }
   },
   validations: {
@@ -290,6 +273,7 @@ export default {
   },
   methods: {
     selectImage (tempFile) {
+      console.log(tempFile)
       this.thumbnailId = tempFile.id
       this.thumbnailUrl = tempFile.fileUrl
     },
@@ -434,21 +418,6 @@ export default {
 .first-line {
   display: flex;
   gap: 1rem;
-}
-
-.image-picker {
-  cursor: pointer;
-  height: 90px;
-  width: 90px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: $color-not-white-bg;
-
-  img {
-    height: 50%;
-    width: 50%;
-  }
 }
 
 .release-date {
