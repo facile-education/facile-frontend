@@ -11,7 +11,7 @@ export default {
   updateThemeColor,
   updateReportFrequency,
   updateWebdavState,
-  updateWebdavPassword,
+  updatePassword,
   acceptTermsOfUse
 }
 
@@ -112,11 +112,12 @@ function removeUserPicture () {
   ).then(response => response.data)
 }
 
-function updateWebdavPassword (password, confirmPassword) {
-  return axios.post(constants.JSON_WS_URL + PREF_PATH + '/update-webdav-password',
+function updatePassword (password, confirmPassword, isWebdav = false) {
+  return axios.post(constants.JSON_WS_URL + PREF_PATH + '/update-password',
     PentilaUtils.URL.params({
-      password: password,
-      confirmPassword: confirmPassword
+      password,
+      confirmPassword,
+      isWebdav
     })
   ).then(response => response.data)
 }
