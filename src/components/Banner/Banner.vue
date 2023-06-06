@@ -28,10 +28,11 @@
 </template>
 
 <script>
-import { defineAsyncComponent } from 'vue'
-import BannerServices from '@/components/Banner/BannerServices'
-import BannerUserProfile from '@/components/Banner/BannerUserProfile'
 import dayjs from 'dayjs'
+import constants from '@/api/constants'
+import BannerServices from '@components/Banner/BannerServices'
+import BannerUserProfile from '@components/Banner/BannerUserProfile'
+import { defineAsyncComponent } from 'vue'
 
 const BannerSearch = defineAsyncComponent(() => import('@/components/Banner/BannerSearch'))
 const NeroIcon = defineAsyncComponent(() => import('@/components/Nero/NeroIcon'))
@@ -69,7 +70,7 @@ export default {
       this.inactionTime = dayjs() - this.$store.state.user.lastActionDate
       if (this.inactionTime > this.$store.state.nero.sessionTimeout) {
         // Logout
-        window.location = '/c/portal/logout'
+        window.location = constants.LOGOUT_URL
       }
     }, 1000)
   },

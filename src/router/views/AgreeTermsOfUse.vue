@@ -23,9 +23,9 @@
 
 <script>
 import axios from 'axios'
-import store from '@/store'
+import constants from '@/api/constants'
 import userService from '@/api/user.service'
-import EmptyLayout from '@/router/layouts/EmptyLayout'
+import EmptyLayout from '@router/layouts/EmptyLayout'
 
 export default {
   name: 'AgreeTermsOfUse',
@@ -44,12 +44,12 @@ export default {
     acceptTermsOfUse () {
       userService.acceptTermsOfUse().then((data) => {
         if (data.success) {
-          store.commit('user/setAgreedTermsOfUse')
+          this.$store.commit('user/setAgreedTermsOfUse')
         }
       })
     },
     declineTermsOfUse () {
-      window.location = '/c/portal/logout'
+      window.location = constants.LOGOUT_URL
     }
   }
 }
@@ -60,6 +60,7 @@ export default {
   max-width: 1200px;
   margin: auto;
 }
+
 .chart {
   overflow: auto;
   max-height: 500px;
@@ -67,6 +68,7 @@ export default {
     margin: 0.67em;
   }
 }
+
 .buttons {
   margin-top: 30px;
   display: flex;
