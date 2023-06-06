@@ -94,7 +94,7 @@ function capitalize (string) {
 
 router.beforeEach((to, from, next) => {
   // Update browser tab title
-  const name = capitalize(i18n.global.t('Menu.route.' + to.name))
+  const name = capitalize(i18n.global.t('Menu.' + to.name))
   document.title = name || 'Facile'
 
   // Handle usurpation
