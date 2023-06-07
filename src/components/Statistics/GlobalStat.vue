@@ -161,7 +161,6 @@ h2 {
 
   .value {
     font-size: 5em;
-    height: 70px;
     vertical-align: bottom;
   }
 
