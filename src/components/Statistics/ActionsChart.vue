@@ -171,6 +171,6 @@ h2 {
 {
   "allServices": "Tous les services",
   "error": "Oups, une erreur est survenue...",
-  "serviceActions": "Fréquentation par services (Nombre d'accès aux services)"
+  "serviceActions": "Fréquentation par services (Nombre d'accès au service)"
 }
 </i18n>
