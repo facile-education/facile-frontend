@@ -104,7 +104,7 @@ export default {
   },
   computed: {
     defaultHeader () {
-      return this.folderSelection ? this.$t('headerFolder') : this.$t('headerFile')
+      return this.imagesOnly ? this.$t('headerImagePicker') : (this.folderSelection ? this.$t('headerFolder') : this.$t('headerFile'))
     },
     submitLabel () {
       if (this.selectedFolder && this.selectedFolder.permissions.ADD_OBJECT) {
@@ -217,6 +217,7 @@ export default {
   "documents": "Personnels",
   "errorNoFiles": "Le chargement n'est pas autorisé",
   "groups": "Collaboratifs",
+  "headerImagePicker": "Sélectionnez une image",
   "headerFolder": "Sélectionnez un dossier de destination",
   "headerFile": "Ajouter un document",
   "noSelectedFolder": "Dépose impossible",
