@@ -10,6 +10,8 @@
       />
       <button
         class="read-only-button"
+        :aria-label="$t('unreadFilter')"
+        :title="$t('unreadFilter')"
         @click="toggleReadOnly"
       >
         <img
@@ -180,6 +182,7 @@ header {
 
 <i18n locale="fr">
 {
-  "announcements": "Annonces"
+  "announcements": "Annonces",
+  "unreadFilter": "Filtrer les non lu"
 }
 </i18n>
