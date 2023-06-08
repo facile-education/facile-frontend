@@ -34,7 +34,10 @@
     >
       {{ modelValue.length + (modelValue.length > 1 ? $t('attachedFiles') : $t('attachedFile')) }}
     </div>
-    <ul class="file-list">
+    <ul
+      class="file-list"
+      :style="'max-height: ' + maxHeight"
+    >
       <li
         v-for="attachedFile in modelValue"
         :key="attachedFile.fileId"
@@ -81,6 +84,10 @@ export default {
     readOnly: {
       type: Boolean,
       required: true
+    },
+    maxHeight: {
+      type: String,
+      default: ''
     }
   },
   emits: ['removeAttachedFile', 'update:modelValue'],
@@ -154,6 +161,10 @@ ul {
     width: 20px;
     height: 20px;
   }
+}
+
+.file-list {
+  overflow: auto;
 }
 
 button {

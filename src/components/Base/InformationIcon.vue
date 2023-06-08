@@ -2,6 +2,10 @@
   <div
     class="information-icon"
     :style="'width: ' + size + '; height: ' + size"
+    :aria-label="text"
+    tabindex="0"
+    @focus="isHovering=true"
+    @blur="isHovering=false"
     @mouseover="isHovering = true"
     @mouseleave="isHovering = false"
   >
@@ -46,7 +50,6 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
 
   .text {
     cursor: default;
@@ -57,6 +60,7 @@ export default {
     padding: 5px;
     background-color: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
   }
 }
 
