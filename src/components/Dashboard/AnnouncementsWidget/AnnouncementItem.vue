@@ -277,6 +277,7 @@ export default {
 
   img {
     width: 70%;
+    border-radius: 6px;
   }
 }
 
