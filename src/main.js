@@ -11,6 +11,7 @@ import fr from 'dayjs/locale/fr'
 import Vue3TouchEvents from 'vue3-touch-events'
 import axios from 'axios'
 import VueMatomo from 'vue-matomo'
+import constants from '@/api/constants'
 
 const app = createApp(App)
   .use(store)
@@ -79,7 +80,7 @@ axios.interceptors.request.use(async (config) => {
   store.commit('user/setLastActionDate', dayjs())
 
   if (store.state.user.pauth === undefined) {
-    await fetch('/p_auth_token.jsp').then(response => response.text()).then(response => { store.commit('user/setPAuth', response.trim()) })
+    await fetch(constants.P_AUTH_URL).then(response => response.text()).then(response => { store.commit('user/setPAuth', response.trim()) })
   }
 
   config.params = { ...config.params, p_auth: store.state.user.pauth }

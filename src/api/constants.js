@@ -7,13 +7,20 @@ const MINDMAP_TYPE = 'mind'
 const GEOGEBRA_TYPE = 'ggb'
 const SCRATCH_TYPE = 'sb3'
 
-const JSON_WS_URL = '/api/jsonws'
+// TODO DYNAMIC
+const BASE_API_URL = ''
 
-const LOGOUT_URL = '/c/portal/logout'
+const JSON_WS_URL = BASE_API_URL + '/api/jsonws'
+
+const LOGOUT_URL = BASE_API_URL + '/c/portal/logout'
+
+const P_AUTH_URL = BASE_API_URL + '/p_auth_token.jsp'
 
 export default {
+  BASE_API_URL,
   LOGOUT_URL,
   JSON_WS_URL,
+  P_AUTH_URL,
   ODT_TYPE,
   ODS_TYPE,
   ODP_TYPE,
