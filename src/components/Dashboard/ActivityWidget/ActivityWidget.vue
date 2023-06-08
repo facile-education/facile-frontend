@@ -7,6 +7,7 @@
     />
 
     <ActivityFilter
+      v-if="!isParent"
       :initial-filter="filter"
       @updateFilter="updateFilter"
     />
@@ -115,6 +116,9 @@ export default {
     }
   },
   computed: {
+    isParent () {
+      return this.$store.state.user.isParent
+    },
     separatorLabel () {
       return this.$t('newsSince') + dayjs(this.lastDashboardAccessDate, 'YYYY-MM-DD HH:mm').format('DD MMMM YYYY')
     },
