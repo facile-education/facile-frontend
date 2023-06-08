@@ -2,8 +2,10 @@
   <PublicLayout>
     <div class="wrapper">
       <img
-        src="https://rec-ent.eduge.ch/GVEFrontPage-theme/images/logo_eel.png"
+        src="@assets/images/gva/logo_eel.png"
         :alt="$t('eelImg')"
+        width="354"
+        height="66"
         class="eel-img"
       >
       <a
@@ -110,8 +112,10 @@
         </Transition>
       </div>
       <img
-        src="https://rec-ent.eduge.ch/GVEFrontPage-theme/images/geneve-logo.png"
+        src="@assets/images/gva/geneve-logo.png"
         :alt="$t('gvaImg')"
+        width="140"
+        height="108"
         class="gva-img"
       >
     </div>
@@ -159,7 +163,7 @@ export default {
   },
   created () {
     // Using fetch instead of axios to avoid intercept loop
-    fetch('/p_auth_token.jsp').then(response => response.text()).then(response => {
+    fetch(constants.P_AUTH_URL).then(response => response.text()).then(response => {
       this.p_auth = response
 
       // Check if already authenticated
