@@ -9,7 +9,7 @@
       <img
         class="img-icon"
         :src="thumbnail"
-        alt="document icon"
+        alt="thumbnail"
       >
     </div>
 
