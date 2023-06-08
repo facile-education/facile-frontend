@@ -102,6 +102,10 @@
         <PentilaToggleSwitch
           v-model="markAsUnreadForAll"
         />
+        <InformationIcon
+          class="info"
+          :text="$t('switchHelp')"
+        />
       </div>
     </template>
 
@@ -125,6 +129,7 @@ import { getSchoolNewsBroadcastGroups } from '@/api/dashboard/news.service'
 import { defineAsyncComponent } from 'vue'
 import CustomDatePicker from '@components/Base/CustomDatePicker.vue' // TODO: Check time and optimise if necessary
 import InlineEditor from '@ckeditor/ckeditor5-build-inline'
+import InformationIcon from '@components/Base/InformationIcon.vue'
 // const CustomDatePicker = defineAsyncComponent(() => import('@/components/Base/CustomDatePicker.vue'))
 // const InlineEditor = defineAsyncComponent(() => import('@ckeditor/ckeditor5-build-inline'))
 const CKEditor = defineAsyncComponent({
@@ -139,7 +144,7 @@ const isNotEmpty = (list) => validators.isNotEmpty(list)
 
 export default {
   name: 'SaveDiaryEventModal',
-  components: { CustomDatePicker, CKEditor },
+  components: { InformationIcon, CustomDatePicker, CKEditor },
   props: {
     initEvent: {
       type: Object,
@@ -340,7 +345,7 @@ export default {
 <style lang="scss">
 .update-diary-event-modal {
   .window-body {
-    overflow-y: auto;
+    overflow-y: visible;
   }
 }
 </style>
@@ -367,6 +372,10 @@ export default {
 
   span {
     margin-right: 1em;
+  }
+
+  .info {
+    margin-left: 1rem;
   }
 }
 
@@ -403,6 +412,7 @@ export default {
   "sizeLimit2": " caractères",
   "selectPopulations": "Veuillez séléctionner une population cible",
   "dateInPast": "La date de début ne doit pas se situer dans le passé",
-  "dateOrder": "La date de fin doit être postérieure ou égale à celle de début"
+  "dateOrder": "La date de fin doit être postérieure ou égale à celle de début",
+  "switchHelp": "Cette option permet de notifier les destinataires et l'annonce sera considérée comme non lue"
 }
 </i18n>

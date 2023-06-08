@@ -98,6 +98,7 @@
       <AttachedFiles
         v-model="attachedFiles"
         :read-only="false"
+        :max-height="mq.phone ? '120px' : '300px'"
         @removeAttachedFile="removeFile"
       />
 
@@ -108,6 +109,10 @@
         <span v-t="'markAsUnreadForAll'" />
         <PentilaToggleSwitch
           v-model="markAsUnreadForAll"
+        />
+        <InformationIcon
+          class="info"
+          :text="$t('switchHelp')"
         />
       </div>
     </template>
@@ -151,6 +156,7 @@ import {
 } from '@/api/dashboard/news.service'
 import { defaultImagesKeys } from '@/constants/icons'
 import ThumbnailSelector from '@components/Base/ThumbnailSelector.vue'
+import InformationIcon from '@components/Base/InformationIcon.vue'
 const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal.vue'))
 const CKEditor = defineAsyncComponent({
   loader: async () => { return (await import('@ckeditor/ckeditor5-vue')).component }
@@ -165,7 +171,7 @@ const isNotEmpty = (list) => validators.isNotEmpty(list)
 
 export default {
   name: 'SaveNewsModal',
-  components: { ThumbnailSelector, AttachedFiles, FilePickerModal, CustomDatePicker, CKEditor },
+  components: { InformationIcon, ThumbnailSelector, AttachedFiles, FilePickerModal, CustomDatePicker, CKEditor },
   inject: ['mq'],
   props: {
     initNews: {
@@ -401,7 +407,7 @@ export default {
 .update-news-modal {
   .window-body {
     position: relative;
-    overflow-y: auto;
+    overflow-y: visible;
     max-height: 70vh !important;
   }
 }
@@ -451,6 +457,11 @@ export default {
   }
 }
 
+.attached-files {
+  max-height: 300px;
+  overflow: auto;
+}
+
 .unread-checkbox {
   display: flex;
   align-items: center;
@@ -458,6 +469,10 @@ export default {
 
   span {
     margin-right: 1em;
+  }
+
+  .info {
+    margin-left: 1rem;
   }
 }
 </style>
@@ -479,6 +494,7 @@ export default {
   "sizeLimit1": "Ne doit pas dépasser ",
   "sizeLimit2": " caractères",
   "selectPopulations": "Veuillez séléctionner une population cible",
-  "dateInPast": "La date de parution ne doit pas se situer dans le passé"
+  "dateInPast": "La date de parution ne doit pas se situer dans le passé",
+  "switchHelp": "Cette option permet de notifier les destinataires et l'annonce sera considérée comme non lue"
 }
 </i18n>
