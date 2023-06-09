@@ -211,7 +211,7 @@ export default {
     },
     confirmDeleteAnnouncement () {
       this.$store.dispatch('warningModal/addWarning', {
-        text: this.$t('removalConfirmMessage'),
+        text: this.$t('removalConfirmMessage', { target: this.announcement.title }),
         lastAction: { fct: this.deleteAnnouncement, params: [] }
       })
     },
@@ -360,6 +360,6 @@ export default {
   "by": " par ",
   "update": "Modifier",
   "delete": "Supprimer",
-  "removalConfirmMessage": "L'annonce sera définitivement perdue"
+  "removalConfirmMessage": "Veuillez confirmer la suppression de l'annonce \"{target}\""
 }
 </i18n>

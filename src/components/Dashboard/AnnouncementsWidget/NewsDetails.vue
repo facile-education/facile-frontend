@@ -193,7 +193,7 @@ export default {
     },
     confirmDeleteNews () {
       this.$store.dispatch('warningModal/addWarning', {
-        text: this.$t('removalConfirmMessage'),
+        text: this.initNews.isSchoolNews ? this.$t('removalAnnouncementConfirmMessage', { target: this.initNews.title }) : this.$t('removalGroupNewsConfirmMessage'),
         lastAction: { fct: this.deleteNews, params: [] }
       })
     },
@@ -349,6 +349,7 @@ h2 {
   "delete": "Supprimer",
   "errorPlaceholder": "Oups, une erreur est survenue...",
   "contentPlaceholder": "Aucun contenu pour cette actualité",
-  "removalConfirmMessage": "L'actualité sera définitivement perdue"
+  "removalAnnouncementConfirmMessage": "Veuillez confirmer la suppression de l'annonce \"{target}\"",
+  "removalGroupNewsConfirmMessage": "Supprimer cette information ?"
 }
 </i18n>

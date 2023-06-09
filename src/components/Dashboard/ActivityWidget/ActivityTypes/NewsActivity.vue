@@ -246,6 +246,6 @@ button {
   "groups-activity": "Fil d'activité de mes groupes",
   "update": "Modifier cette information",
   "delete": "Supprimer cette information",
-    "deleteNewsWarning": "Supprimer cette information ?"
+  "deleteNewsWarning": "Supprimer cette information ?"
 }
 </i18n>
