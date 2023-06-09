@@ -413,6 +413,6 @@ export default {
   "selectPopulations": "Veuillez séléctionner une population cible",
   "dateInPast": "La date de début ne doit pas se situer dans le passé",
   "dateOrder": "La date de fin doit être postérieure ou égale à celle de début",
-  "switchHelp": "Cette option permet de notifier les destinataires et l'annonce sera considérée comme non lue"
+  "switchHelp": "Cette option permet de notifier les destinataires et l'évènement sera considéré comme non lu"
 }
 </i18n>
