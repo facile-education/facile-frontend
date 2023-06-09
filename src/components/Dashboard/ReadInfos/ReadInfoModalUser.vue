@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="read-info-user"
-    :class="{'unread': !user.hasRead}"
-  >
+  <div class="read-info-user">
     <div class="userName">
       {{ user.fullName }}
     </div>
@@ -42,10 +39,6 @@ export default {
   align-items: center;
   justify-content: space-between;
   padding-right: 2rem;
-
-  &.unread {
-    font-weight: bold;
-  }
 }
 </style>
 
