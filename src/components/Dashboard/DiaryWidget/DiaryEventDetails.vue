@@ -52,7 +52,7 @@
             {{ $t('by') + detailedEvent.authorName }}
           </div>
 
-          <h2> {{ detailedEvent.title }}</h2>
+          <h2 v-if="!isInModal"> {{ detailedEvent.title }}</h2>
 
           <div class="where-and-when">
             <span v-if="detailedEvent.location">
@@ -131,6 +131,10 @@ export default {
     initEvent: {
       type: Object,
       default: undefined
+    },
+    isInModal: {
+      type: Boolean,
+      default: false
     }
   },
   emits: ['update', 'delete'],
