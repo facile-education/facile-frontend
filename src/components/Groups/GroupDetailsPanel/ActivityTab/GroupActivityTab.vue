@@ -12,11 +12,19 @@
       @scroll="handleScroll"
     >
       <PentilaSpinner v-if="activitiesLoading" />
-      <GroupActivityItem
-        v-for="(activity, index) in activityList"
-        :key="index"
-        :activity="activity"
-      />
+      <ul>
+        <li
+          v-for="activity in activityList"
+          :key="activity.activityId"
+        >
+          <ActivityItem
+            :activity="activity"
+            :is-last="activity.activityId === lastActivity.activityId"
+            @getNextActivities="getActivities"
+            @refresh="refresh"
+          />
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -25,14 +33,13 @@
 import { getGroupActivity } from '@/api/groups.service'
 import documentsService from '@/api/documents/documents.service'
 import dayjs from 'dayjs'
-import { defineAsyncComponent } from 'vue'
 import { allActivitiesPaginationSize } from '@/constants/dashboardConstants'
-const GroupActivityItem = defineAsyncComponent(() => import('@components/Groups/GroupDetailsPanel/ActivityTab/GroupActivityItem'))
+import ActivityItem from '@components/Dashboard/ActivityWidget/ActivityItem.vue'
 let oldScrollTop = 0
 
 export default {
   name: 'GroupActivityTab',
-  components: { GroupActivityItem },
+  components: { ActivityItem },
   props: {
     group: {
       type: Object,
@@ -42,8 +49,19 @@ export default {
   data () {
     return {
       activitiesLoading: false,
-      activityList: [],
-      maxDate: undefined
+      activityList: []
+    }
+  },
+  computed: {
+    lastActivity () {
+      return this.activityList[this.activityList.length - 1]
+    },
+    lastActivityDate () {
+      if (this.lastActivity) {
+        return dayjs(this.lastActivity.publicationDate, 'YYYY-MM-DD HH:mm:sss')
+      } else { // if no activity, return the currentDate
+        return dayjs()
+      }
     }
   },
   watch: {
@@ -60,10 +78,14 @@ export default {
     this.getActivities()
   },
   methods: {
+    refresh () {
+      this.activityList = []
+      this.getActivities()
+    },
     getActivities () {
       if (this.group.isGroupRootFolder) {
         this.activitiesLoading = true
-        documentsService.getDocumentGroupActivity(this.group.groupId, this.maxDate.format('YYYY-MM-DD HH:mm'), allActivitiesPaginationSize).then((data) => {
+        documentsService.getDocumentGroupActivity(this.group.groupId, this.lastActivityDate.format('YYYY-MM-DD HH:mm:sss'), allActivitiesPaginationSize).then((data) => {
           this.activitiesLoading = false
           if (data.success) {
             this.activityList = this.activityList.concat(data.activities)
@@ -75,7 +97,7 @@ export default {
         })
       } else {
         this.activitiesLoading = true
-        getGroupActivity(this.group.groupId, this.maxDate.format('YYYY-MM-DD HH:mm'), allActivitiesPaginationSize).then((data) => {
+        getGroupActivity(this.group.groupId, this.lastActivityDate.format('YYYY-MM-DD HH:mm:sss'), allActivitiesPaginationSize).then((data) => {
           this.activitiesLoading = false
           if (data.success) {
             this.activityList = this.activityList.concat(data.activities)
@@ -106,6 +128,12 @@ export default {
 
 <style lang="scss" scoped>
 @import "@design";
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
 
 .activity-tab {
   height: 100%;
