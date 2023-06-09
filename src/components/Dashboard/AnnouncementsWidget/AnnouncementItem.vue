@@ -3,6 +3,7 @@
     ref="item"
     class="container"
     :class="{'is-in-horizontal-scroll': isInHorizontalScroll}"
+    :title="$t('selectToConsult')"
   >
     <div
       class="announcement"
@@ -18,10 +19,7 @@
         >
       </div>
 
-      <div
-        class="content"
-        :title="announcement.title"
-      >
+      <div class="content">
         <div>
           <strong class="title">
             {{ announcement.title }}
@@ -360,6 +358,7 @@ export default {
   "by": " par ",
   "update": "Modifier",
   "delete": "Supprimer",
-  "removalConfirmMessage": "Veuillez confirmer la suppression de l'annonce \"{target}\""
+  "removalConfirmMessage": "Veuillez confirmer la suppression de l'annonce \"{target}\"",
+  "selectToConsult": "Sélectionner pour consulter"
 }
 </i18n>

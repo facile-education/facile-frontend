@@ -2,6 +2,7 @@
   <div
     class="news-activity"
     tabindex="0"
+    :title="$t('selectToConsult')"
     @click="isDetailsModalDisplayed=true"
     @keyup.enter="isDetailsModalDisplayed=true"
   >
@@ -246,6 +247,7 @@ button {
   "groups-activity": "Fil d'activité de mes groupes",
   "update": "Modifier cette information",
   "delete": "Supprimer cette information",
-  "deleteNewsWarning": "Supprimer cette information ?"
+  "deleteNewsWarning": "Supprimer cette information ?",
+  "selectToConsult": "Sélectionner pour consulter"
 }
 </i18n>
