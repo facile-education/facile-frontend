@@ -37,7 +37,10 @@
       </div>
     </div>
 
-    <div class="date">
+    <div
+      class="date"
+      :title="formattedDateLong"
+    >
       {{ formattedDate }}
     </div>
   </div>
@@ -61,6 +64,9 @@ export default {
   computed: {
     formattedDate () {
       return dayjs(this.activity.modificationDate, 'YYYY-MM-DD HH:mm').calendar()
+    },
+    formattedDateLong () {
+      return dayjs(this.activity.modificationDate, 'YYYY-MM-DD HH:mm').format(this.$t('on') + ' DD MMMM YYYY ' + this.$t('at') + ' HH:mm')
     },
     isDeactivation () {
       return this.activity.type === activityConstants.TYPE_EXPIRED_GROUP
