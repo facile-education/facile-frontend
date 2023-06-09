@@ -1,16 +1,16 @@
 <template>
   <div class="header">
     <div class="left">
-      <button
-        class="previous-button"
-        @click="back"
+      <RouterLink
+        class="back"
+        :to="'/' + $t('Menu.route.dashboard')"
       >
         <img
           src="@assets/arrow-left.svg"
-          :alt="$t('previous')"
-          :title="$t('previous')"
+          :alt="$t('dashboard')"
+          :title="$t('dashboard')"
         >
-      </button>
+      </RouterLink>
       <h1 v-t="'header'" />
       <Pellet
         v-if="nbNewAnnouncements > 0"
@@ -87,9 +87,6 @@ export default {
     },
     createAnnouncement () {
       this.$emit('createAnnouncement')
-    },
-    back () {
-      this.$router.back()
     }
   }
 }
@@ -116,12 +113,13 @@ h1 {
   text-transform: uppercase;
 }
 
-.previous-button {
+.back {
   width: 30px;
   height: 100%;
-  background-color: white;
   cursor: pointer;
-  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   img {
     width: 20px;
@@ -143,7 +141,7 @@ h1 {
 <i18n locale="fr">
 {
   "header": "Toutes les annonces",
-  "previous": "Précédent",
+  "dashboard": "Tableau de bord",
   "errorPlaceholder": "Oups, une erreur est survenue..."
 }
 </i18n>

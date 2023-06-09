@@ -1,17 +1,17 @@
 <template>
   <header>
     <div class="left">
-      <button
+      <RouterLink
         v-if="displayAll"
-        class="previous-button"
-        @click="$router.back()"
+        class="back"
+        :to="'/' + $t('Menu.route.dashboard')"
       >
         <img
           src="@assets/arrow-left.svg"
-          :alt="$t('previous')"
-          :title="$t('previous')"
+          :alt="$t('dashboard')"
+          :title="$t('dashboard')"
         >
-      </button>
+      </RouterLink>
       <h1
         v-if="displayAll"
         v-t="'allActivities'"
@@ -116,12 +116,13 @@ h2 {
   @extend %dashboard-header-pellet;
 }
 
-.previous-button {
+.back {
   width: 30px;
   height: 100%;
-  background-color: white;
   cursor: pointer;
-  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   img {
     width: 20px;
@@ -133,6 +134,7 @@ h2 {
 <i18n locale="fr">
 {
   "activities": "Activités",
-  "allActivities": "Toutes les activités"
+  "allActivities": "Toutes les activités",
+  "dashboard": "Tableau de bord"
 }
 </i18n>
