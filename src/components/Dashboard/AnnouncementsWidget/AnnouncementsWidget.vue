@@ -25,46 +25,45 @@
       v-t="'emptyPlaceholder'"
       class="placeholder"
     />
-    <div
-      v-else
-      class="announcements-container"
-    >
-      <div
-        class="left-linear"
-        :class="{'hidden' : !canScrollToLeft}"
-      />
+    <div v-else>
+      <div class="announcements-container">
+        <div
+          class="left-linear"
+          :class="{'hidden' : !canScrollToLeft}"
+        />
 
-      <ul
-        ref="announcementsList"
-        class="announcements-list"
-        :class="{'phone': mq.phone}"
-        @scroll="updateScrollPosition"
-      >
-        <li
-          v-for="(announcement, index) in announcementsList"
-          :key="index"
+        <ul
+          ref="announcementsList"
+          class="announcements-list"
+          :class="{'phone': mq.phone}"
+          @scroll="updateScrollPosition"
         >
-          <AnnouncementItem
-            :announcement="announcement"
-            :is-in-horizontal-scroll="true"
-            @markAsRead="announcement.hasRead=true"
-            @updateAnnouncement="refresh"
-            @deleteAnnouncement="refresh"
-          />
-        </li>
-      </ul>
+          <li
+            v-for="(announcement, index) in announcementsList"
+            :key="index"
+          >
+            <AnnouncementItem
+              :announcement="announcement"
+              :is-in-horizontal-scroll="true"
+              @markAsRead="announcement.hasRead=true"
+              @updateAnnouncement="refresh"
+              @deleteAnnouncement="refresh"
+            />
+          </li>
+        </ul>
 
-      <div
-        class="right-linear"
-        :class="{'hidden' : !canScrollToRight}"
-      />
-    </div>
-    <div class="footer">
-      <button
-        v-t="'showMore'"
-        class="show-more"
-        @click="showMore"
-      />
+        <div
+          class="right-linear"
+          :class="{'hidden' : !canScrollToRight}"
+        />
+      </div>
+      <div class="footer">
+        <button
+          v-t="'showMore'"
+          class="show-more"
+          @click="showMore"
+        />
+      </div>
     </div>
   </section>
 </template>
