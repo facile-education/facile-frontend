@@ -4,7 +4,7 @@
     data-test="update-news-modal"
     :modal="true"
     :draggable="true"
-    @close="onClose"
+    @close="confirmClosure"
   >
     <template #header>
       <span v-t="isCreation ? (isSchoolNews ? 'schoolCreationTitle' : 'creationTitle') : (isSchoolNews ? 'schoolUpdateTitle' : 'updateTitle')" />
@@ -196,6 +196,8 @@ export default {
       attachedFiles: [],
       markAsUnreadForAll: false,
 
+      initialForm: undefined,
+
       editor: InlineEditor,
       editorConfig: {
         placeholder: this.$t('contentPlaceHolder')
@@ -260,6 +262,7 @@ export default {
     }
   },
   created () {
+    this.setInitialForm()
     this.$store.dispatch('misc/incrementModalCount')
     if (!this.isCreation) {
       this.title = this.initNews.title
@@ -278,6 +281,17 @@ export default {
     input.select()
   },
   methods: {
+    setInitialForm () {
+      this.initialForm = {
+        title: this.title,
+        content: this.content,
+        releaseDate: this.releaseDate,
+        populations: [...this.populations],
+        thumbnailId: this.thumbnailId,
+        attachedFiles: [...this.attachedFiles],
+        markAsUnreadForAll: this.markAsUnreadForAll
+      }
+    },
     selectImage (tempFile) {
       this.thumbnailId = tempFile.id
       this.thumbnailUrl = tempFile.fileUrl
@@ -306,6 +320,7 @@ export default {
           this.attachedFiles = data.news.attachedFiles
           this.thumbnailId = data.news.thumbnailId
           this.thumbnailUrl = data.news.thumbnailUrl
+          this.setInitialForm()
         } else {
           console.error('Error')
         }
@@ -394,6 +409,26 @@ export default {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
         }
       })
+    },
+    confirmClosure () {
+      const actualForm = {
+        title: this.title,
+        content: this.content,
+        releaseDate: this.releaseDate,
+        populations: this.populations,
+        thumbnailId: this.thumbnailId,
+        attachedFiles: this.attachedFiles,
+        markAsUnreadForAll: this.markAsUnreadForAll
+      }
+
+      if (JSON.stringify(actualForm) !== JSON.stringify(this.initialForm)) {
+        this.$store.dispatch('warningModal/addWarning', {
+          text: this.$t('confirmClosure'),
+          lastAction: { fct: this.onClose }
+        })
+      } else {
+        this.onClose()
+      }
     },
     onClose () {
       this.$store.dispatch('misc/decreaseModalCount')
@@ -495,6 +530,7 @@ export default {
   "sizeLimit2": " caractères",
   "selectPopulations": "Veuillez séléctionner une population cible",
   "dateInPast": "La date de parution ne doit pas se situer dans le passé",
-  "switchHelp": "Cette option permet de notifier les destinataires et l'annonce sera considérée comme non lue"
+  "switchHelp": "Cette option permet de notifier les destinataires et l'annonce sera considérée comme non lue",
+  "confirmClosure": "Souhaitez-vous fermer cette fenêtre ? (Vous perdrez son contenu)"
 }
 </i18n>
