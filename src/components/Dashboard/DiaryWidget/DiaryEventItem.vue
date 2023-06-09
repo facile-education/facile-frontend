@@ -192,7 +192,7 @@ export default {
     },
     confirmDeleteEvent () {
       this.$store.dispatch('warningModal/addWarning', {
-        text: this.$t('removalConfirmMessage'),
+        text: this.$t('removalConfirmMessage', { target: this.event.title }),
         lastAction: { fct: this.deleteEvent, params: [] }
       })
     },
@@ -310,6 +310,6 @@ export default {
 
 <i18n locale="fr">
 {
-  "removalConfirmMessage": "L'événement sera définitivement perdu"
+  "removalConfirmMessage": "Veuillez confirmer la suppression de l'évènement \"{target}\""
 }
 </i18n>
