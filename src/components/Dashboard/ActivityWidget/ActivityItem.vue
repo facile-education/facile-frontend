@@ -11,6 +11,7 @@
       <NewsActivity
         v-if="isNewsActivity"
         :news="activity"
+        @markAsRead="$emit('markAsRead')"
         @updateNews="$emit('refresh')"
         @deleteNews="$emit('refresh')"
       />
@@ -65,7 +66,7 @@ export default {
       default: false
     }
   },
-  emits: ['getNextActivities', 'refresh'],
+  emits: ['getNextActivities', 'refresh', 'markAsRead'],
   computed: {
     isNewsActivity () {
       return this.activity.type === activityConstants.TYPE_NEWS
