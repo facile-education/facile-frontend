@@ -65,9 +65,9 @@
 <script>
 import { importDocuments } from '@utils/documents.util'
 import { returnAddedFiles, alertNoFile } from '@utils/upload.util'
-import AttachedFile from '@components/AttachedFiles/AttachedFile.vue'
 import { defineAsyncComponent } from 'vue'
 const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal.vue'))
+const AttachedFile = defineAsyncComponent(() => import('@components/AttachedFiles/AttachedFile.vue'))
 
 export default {
   name: 'AttachedFiles',

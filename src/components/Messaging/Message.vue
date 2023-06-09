@@ -69,8 +69,9 @@
 
 <script>
 import dayjs from 'dayjs'
-import AttachedFiles from '@components/AttachedFiles/AttachedFiles.vue'
 import MessageRecipients from '@components/Messaging/MessageRecipients'
+import { defineAsyncComponent } from 'vue'
+const AttachedFiles = defineAsyncComponent(() => import('@components/AttachedFiles/AttachedFiles.vue'))
 
 export default {
   name: 'Message',
