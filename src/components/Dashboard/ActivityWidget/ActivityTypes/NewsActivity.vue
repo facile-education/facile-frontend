@@ -3,8 +3,8 @@
     class="news-activity"
     tabindex="0"
     :title="$t('selectToConsult')"
-    @click="isDetailsModalDisplayed=true"
-    @keyup.enter="isDetailsModalDisplayed=true"
+    @click="showDetails"
+    @keyup.enter="showDetails"
   >
     <div class="icon">
       <img
@@ -95,7 +95,7 @@
 <script>
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
-import { deleteNews } from '@/api/dashboard/news.service'
+import { deleteNews, setNewsRead } from '@/api/dashboard/news.service'
 import BaseIcon from '@components/Base/BaseIcon.vue'
 import { defaultImagesKeys } from '@/constants/icons'
 const SaveNewsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/SaveNewsModal.vue'))
@@ -110,7 +110,7 @@ export default {
       required: true
     }
   },
-  emits: ['updateNews', 'deleteNews'],
+  emits: ['updateNews', 'deleteNews', 'markAsRead'],
   data () {
     return {
       isDetailsModalDisplayed: false,
@@ -130,6 +130,20 @@ export default {
     }
   },
   methods: {
+    showDetails () {
+      if (!this.news.hasRead) {
+        setNewsRead(this.news.newsId, true).then((data) => {
+          if (data.success) {
+            this.$emit('markAsRead')
+            this.isDetailsModalDisplayed = true
+          } else {
+            console.error('Error')
+          }
+        })
+      } else {
+        this.isDetailsModalDisplayed = true
+      }
+    },
     confirmNewsDeletion () {
       this.$store.dispatch('warningModal/addWarning', {
         text: this.$t('deleteNewsWarning'),

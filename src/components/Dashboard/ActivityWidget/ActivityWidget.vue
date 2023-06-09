@@ -63,6 +63,7 @@
           <ActivityItem
             :activity="activity"
             :is-last="activity.activityId === lastActivity.activityId"
+            @markAsRead="activity.hasRead=true"
             @getNextActivities="getActivities"
             @refresh="refresh"
           />
