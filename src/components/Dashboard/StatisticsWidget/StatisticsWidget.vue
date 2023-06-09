@@ -20,7 +20,7 @@
         v-t="'lastWeek'"
         class="period"
       />
-      <ul @click="$router.push({name: 'Statistics'})">
+      <ul @click="$router.push('/' + $t('Menu.route.statistics'))">
         <li
           v-for="statistic in statistics"
           :key="statistic.label"
