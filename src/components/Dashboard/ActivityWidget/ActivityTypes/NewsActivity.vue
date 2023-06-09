@@ -35,7 +35,10 @@
       </div>
     </div>
 
-    <div class="date">
+    <div
+      class="date"
+      :title="formattedDateLong"
+    >
       {{ formattedDate }}
     </div>
 
@@ -127,6 +130,9 @@ export default {
     },
     formattedDate () {
       return dayjs(this.news.modificationDate, 'YYYY-MM-DD HH:mm').calendar()
+    },
+    formattedDateLong () {
+      return dayjs(this.news.modificationDate, 'YYYY-MM-DD HH:mm').format(this.$t('on') + ' DD MMMM YYYY ' + this.$t('at') + ' HH:mm')
     }
   },
   methods: {
@@ -257,6 +263,8 @@ button {
 
 <i18n locale="fr">
 {
+  "on": "Le",
+  "at": "à",
   "see": "Voir",
   "groups-activity": "Fil d'activité de mes groupes",
   "update": "Modifier cette information",
