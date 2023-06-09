@@ -4,7 +4,7 @@
     data-test="update-diary-event-modal"
     :modal="true"
     :draggable="true"
-    @close="onClose"
+    @close="confirmClosure"
   >
     <template #header>
       <span v-t="isCreation ? 'creationTitle' : 'updateTitle'" />
@@ -163,6 +163,8 @@ export default {
       populations: [],
       markAsUnreadForAll: false,
 
+      initialForm: undefined,
+
       editor: InlineEditor,
       editorConfig: {
         placeholder: this.$t('descriptionPlaceHolder')
@@ -234,6 +236,7 @@ export default {
     }
   },
   created () {
+    this.setInitialForm()
     this.$store.dispatch('misc/incrementModalCount')
     if (!this.isCreation) {
       this.title = this.initEvent.title
@@ -256,6 +259,17 @@ export default {
     input.select()
   },
   methods: {
+    setInitialForm () {
+      this.initialForm = {
+        title: this.title,
+        location: this.location,
+        description: this.description,
+        startDate: this.startDate,
+        endDate: this.endDate,
+        populations: [...this.populations],
+        markAsUnreadForAll: this.markAsUnreadForAll
+      }
+    },
     updateStartDate (date) {
       this.startDate = dayjs(date)
 
@@ -274,6 +288,7 @@ export default {
         if (data.success) {
           this.populations = data.populations
           this.description = data.description
+          this.setInitialForm()
         } else {
           console.error('Error')
         }
@@ -333,6 +348,26 @@ export default {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
         }
       })
+    },
+    confirmClosure () {
+      const actualForm = {
+        title: this.title,
+        location: this.location,
+        description: this.description,
+        startDate: this.startDate,
+        endDate: this.endDate,
+        populations: this.populations,
+        markAsUnreadForAll: this.markAsUnreadForAll
+      }
+
+      if (JSON.stringify(actualForm) !== JSON.stringify(this.initialForm)) {
+        this.$store.dispatch('warningModal/addWarning', {
+          text: this.$t('confirmClosure'),
+          lastAction: { fct: this.onClose }
+        })
+      } else {
+        this.onClose()
+      }
     },
     onClose () {
       this.$store.dispatch('misc/decreaseModalCount')
@@ -413,6 +448,7 @@ export default {
   "selectPopulations": "Veuillez séléctionner une population cible",
   "dateInPast": "La date de début ne doit pas se situer dans le passé",
   "dateOrder": "La date de fin doit être postérieure ou égale à celle de début",
-  "switchHelp": "Cette option permet de notifier les destinataires et l'évènement sera considéré comme non lu"
+  "switchHelp": "Cette option permet de notifier les destinataires et l'évènement sera considéré comme non lu",
+  "confirmClosure": "Souhaitez-vous fermer cette fenêtre ? (Vous perdrez son contenu)"
 }
 </i18n>
