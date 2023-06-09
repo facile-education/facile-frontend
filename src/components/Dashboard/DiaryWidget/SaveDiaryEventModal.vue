@@ -330,6 +330,9 @@ export default {
       createEvent(this.title, this.description, this.location, this.startDate, this.endDate, this.populations).then((data) => {
         this.isProcessingSave = false
         if (data.success) {
+          if (this.startDate.isAfter(dayjs())) {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('creationSuccess'), type: 'success' })
+          }
           this.$emit('createEvent')
           this.onClose()
         } else {
@@ -342,6 +345,9 @@ export default {
       modifyEvent(this.initEvent.eventId, this.title, this.description, this.location, this.startDate, this.endDate, this.populations, this.markAsUnreadForAll).then((data) => {
         this.isProcessingSave = false
         if (data.success) {
+          if (this.startDate.isAfter(dayjs())) {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('updateSuccess'), type: 'success' })
+          }
           this.$emit('updateEvent')
           this.onClose()
         } else {
@@ -449,6 +455,8 @@ export default {
   "dateInPast": "La date de début ne doit pas se situer dans le passé",
   "dateOrder": "La date de fin doit être postérieure ou égale à celle de début",
   "switchHelp": "Cette option permet de notifier les destinataires et l'évènement sera considéré comme non lu",
-  "confirmClosure": "Souhaitez-vous fermer cette fenêtre ? (Vous perdrez son contenu)"
+  "confirmClosure": "Souhaitez-vous fermer cette fenêtre ? (Vous perdrez son contenu)",
+  "creationSuccess": "Évènement créé",
+  "updateSuccess": "Évènement modifié"
 }
 </i18n>

@@ -391,6 +391,9 @@ export default {
       addNews(this.title, this.content, this.isSchoolNews, false, this.thumbnailId, this.releaseDate, this.populations, this.attachedFileIds).then((data) => {
         this.isProcessingSave = false
         if (data.success) {
+          if (this.releaseDate.isAfter(dayjs())) {
+            this.$store.dispatch('popups/pushPopup', { message: this.isSchoolNews ? this.$t('announcementCreationSuccess') : this.$t('groupNewsCreationSuccess'), type: 'success' })
+          }
           this.$emit('create')
           this.onClose()
         } else {
@@ -403,6 +406,9 @@ export default {
       editNews(this.initNews.newsId, this.title, this.content, false, this.thumbnailId, this.releaseDate, this.populations, this.attachedFileIds, this.markAsUnreadForAll).then((data) => {
         this.isProcessingSave = false
         if (data.success) {
+          if (this.releaseDate.isAfter(dayjs())) {
+            this.$store.dispatch('popups/pushPopup', { message: this.isSchoolNews ? this.$t('announcementUpdateSuccess') : this.$t('groupNewsUpdateSuccess'), type: 'success' })
+          }
           this.$emit('update')
           this.onClose()
         } else {
@@ -531,6 +537,10 @@ export default {
   "selectPopulations": "Veuillez séléctionner une population cible",
   "dateInPast": "La date de parution ne doit pas se situer dans le passé",
   "switchHelp": "Cette option permet de notifier les destinataires et l'annonce sera considérée comme non lue",
-  "confirmClosure": "Souhaitez-vous fermer cette fenêtre ? (Vous perdrez son contenu)"
+  "confirmClosure": "Souhaitez-vous fermer cette fenêtre ? (Vous perdrez son contenu)",
+  "announcementCreationSuccess": "Annonce créée",
+  "groupNewsCreationSuccess": "Information créée",
+  "announcementUpdateSuccess": "Annonce modifiée",
+  "groupNewsUpdateSuccess": "Information modifiée"
 }
 </i18n>
