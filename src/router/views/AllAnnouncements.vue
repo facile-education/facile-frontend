@@ -140,7 +140,10 @@ export default {
           if (data.news.length > 0) {
             this.fromDate = dayjs(data.news[data.news.length - 1].publicationDate) // Assume they are sorted by date, so take the last announcement date
           }
-          // TODO Handle selection like in events?
+          // Handle selection
+          if (this.isDetailsPanelDisplayed && this.selectedEvent === undefined && this.announcementsList.length > 0 && !this.unReadOnly) {
+            this.selectedAnnouncement = this.announcementsList[0]
+          }
         } else {
           this.error = true
           console.error('Error')
