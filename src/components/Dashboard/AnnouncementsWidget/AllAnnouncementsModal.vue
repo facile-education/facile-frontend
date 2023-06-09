@@ -50,7 +50,7 @@
 <script>
 import dayjs from 'dayjs'
 import AnnouncementItem from '@components/Dashboard/AnnouncementsWidget/AnnouncementItem.vue'
-import { allAnnouncementModalPaginationSize } from '@/constants/dashboardConstants'
+import { allAnnouncementsPaginationSize } from '@/constants/dashboardConstants'
 import { getSchoolNews } from '@/api/dashboard/news.service'
 
 export default {
@@ -85,7 +85,7 @@ export default {
     },
     loadAnnouncements () {
       this.isLoading = true
-      getSchoolNews(this.fromDate, allAnnouncementModalPaginationSize, false, this.unReadOnly).then((data) => {
+      getSchoolNews(this.fromDate, allAnnouncementsPaginationSize, false, this.unReadOnly).then((data) => {
         this.isLoading = false
         if (data.success) {
           this.error = false

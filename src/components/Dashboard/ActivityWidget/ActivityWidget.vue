@@ -85,6 +85,7 @@
 
 <script>
 import activityConstants from '@/constants/activityConstants'
+import { allActivitiesPaginationSize, nbActivityInWidget } from '@/constants/dashboardConstants'
 import dayjs from 'dayjs'
 import ActivityHeader from '@components/Dashboard/ActivityWidget/ActivityHeader.vue'
 import { getDashboardActivity } from '@/api/dashboard.service'
@@ -191,7 +192,7 @@ export default {
       getDashboardActivity( // TODO call with memberShip boolean
         this.filter.selectedGroup ? this.filter.selectedGroup.groupId : 0,
         this.displayAll ? this.lastActivityDate.format('YYYY-MM-DD HH:mm:sss') : dayjs().format('YYYY-MM-DD HH:mm:sss'),
-        this.displayAll ? activityConstants.nbActivityPerPage : activityConstants.nbActivityInWidget,
+        this.displayAll ? allActivitiesPaginationSize : nbActivityInWidget,
         this.filterBooleans.withNews,
         this.filterBooleans.withDocs,
         this.filterBooleans.withMemberShip,

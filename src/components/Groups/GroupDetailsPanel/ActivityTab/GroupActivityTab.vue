@@ -24,9 +24,9 @@
 <script>
 import { getGroupActivity } from '@/api/groups.service'
 import documentsService from '@/api/documents/documents.service'
-import activityConstants from '@/constants/activityConstants'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
+import { allActivitiesPaginationSize } from '@/constants/dashboardConstants'
 const GroupActivityItem = defineAsyncComponent(() => import('@components/Groups/GroupDetailsPanel/ActivityTab/GroupActivityItem'))
 let oldScrollTop = 0
 
@@ -63,7 +63,7 @@ export default {
     getActivities () {
       if (this.group.isGroupRootFolder) {
         this.activitiesLoading = true
-        documentsService.getDocumentGroupActivity(this.group.groupId, this.maxDate.format('YYYY-MM-DD HH:mm'), activityConstants.nbActivityPerPage).then((data) => {
+        documentsService.getDocumentGroupActivity(this.group.groupId, this.maxDate.format('YYYY-MM-DD HH:mm'), allActivitiesPaginationSize).then((data) => {
           this.activitiesLoading = false
           if (data.success) {
             this.activityList = this.activityList.concat(data.activities)
@@ -75,7 +75,7 @@ export default {
         })
       } else {
         this.activitiesLoading = true
-        getGroupActivity(this.group.groupId, this.maxDate.format('YYYY-MM-DD HH:mm'), activityConstants.nbActivityPerPage).then((data) => {
+        getGroupActivity(this.group.groupId, this.maxDate.format('YYYY-MM-DD HH:mm'), allActivitiesPaginationSize).then((data) => {
           this.activitiesLoading = false
           if (data.success) {
             this.activityList = this.activityList.concat(data.activities)
