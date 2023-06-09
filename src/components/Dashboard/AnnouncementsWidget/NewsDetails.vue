@@ -16,10 +16,6 @@
       class="detailed-news"
       :class="{'is-school-news': detailedNews.isSchoolNews}"
     >
-      <h2 v-if="!isInModal">
-        {{ detailedNews.title }}
-      </h2>
-
       <div class="first-line">
         <div class="thumbnail">
           <img
@@ -59,6 +55,10 @@
           </div>
         </div>
       </div>
+
+      <h2 v-if="!isInModal">
+        {{ detailedNews.title }}
+      </h2>
 
       <div
         v-if="detailedNews.isEditable"
@@ -142,7 +142,7 @@ export default {
     },
     isInModal: {
       type: Boolean,
-      default: true
+      default: false
     }
   },
   emits: ['update', 'delete'],
@@ -230,7 +230,8 @@ ul {
 }
 
 h2 {
-  margin: 1rem 0;
+  margin: 0;
+  padding-left: 99px;
 }
 
 .detailed-news {

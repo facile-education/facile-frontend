@@ -53,7 +53,6 @@
       <NewsDetails
         v-if="selectedAnnouncement && isDetailsPanelDisplayed"
         :init-news="selectedAnnouncement"
-        :is-in-modal="false"
         @update="refresh"
         @delete="deleteAnnouncement"
       />

@@ -6,9 +6,14 @@
     :draggable="true"
     @close="onClose"
   >
+    <template #header>
+      <span class="header">{{ initEvent.title }}</span>
+    </template>
+
     <template #body>
       <DiaryEventDetails
         :init-event="initEvent"
+        :is-in-modal="true"
         @update="updateEvent"
         @delete="deleteEvent"
       />
