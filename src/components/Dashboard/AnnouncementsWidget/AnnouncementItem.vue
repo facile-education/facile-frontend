@@ -25,7 +25,7 @@
             {{ announcement.title }}
           </strong>
           <div class="description">
-            {{ announcement.shortContent }}
+            {{ computedDescription }}
           </div>
         </div>
         <div class="meta-data">
@@ -144,6 +144,9 @@ export default {
   computed: {
     announcementDay () {
       return this.$t('at') + dayjs(this.announcement.publicationDate).format('DD/MM/YY')
+    },
+    computedDescription () {
+      return this.announcement.shortContent ? this.announcement.shortContent : this.$t('descriptionPlaceholder')
     },
     thumbnail () {
       if (defaultImagesKeys.indexOf(this.announcement.thumbnailUrl) !== -1) {
@@ -359,6 +362,7 @@ export default {
   "update": "Modifier",
   "delete": "Supprimer",
   "removalConfirmMessage": "Veuillez confirmer la suppression de l'annonce \"{target}\"",
-  "selectToConsult": "Sélectionner pour consulter"
+  "selectToConsult": "Sélectionner pour consulter",
+  "descriptionPlaceholder": "Aucune description"
 }
 </i18n>
