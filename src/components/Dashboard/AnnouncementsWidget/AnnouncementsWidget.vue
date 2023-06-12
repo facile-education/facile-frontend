@@ -176,7 +176,7 @@ section {
 }
 
 .placeholder {
-  flex: 1;
+  @extend %widget-placeholder;
 }
 
 .announcements-container {
