@@ -83,7 +83,7 @@
     <SaveNewsModal
       :init-news="announcement"
       :is-school-news="true"
-      @update="updateAnnouncement"
+      @update="$emit('updateAnnouncement')"
       @close="isUpdateModalDisplayed = false"
     />
   </teleport>
@@ -94,6 +94,7 @@
   >
     <NewsActivityDetailsModal
       :init-news="announcement"
+      @update="$emit('updateAnnouncement')"
       @close="isDetailsModalDisplayed = false"
     />
   </teleport>
@@ -197,9 +198,6 @@ export default {
         this.markAnnouncementAsRead()
       }
       this.isDetailsModalDisplayed = true
-    },
-    updateAnnouncement () {
-      this.$emit('updateAnnouncement')
     },
     markAnnouncementAsRead () {
       setNewsRead(this.announcement.newsId, true).then((data) => {
