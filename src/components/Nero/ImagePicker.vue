@@ -50,9 +50,13 @@
           </div>
         </div>
         <div class="buttons">
+          <span
+            v-t="'changePictureLabel'"
+            class="text"
+          />
           <button
             :title="$t('openFilePicker')"
-            class="button"
+            class="button open-file-picker-button"
             @click="isFilePickerDisplayed=true"
           >
             <img
@@ -61,22 +65,11 @@
               :alt="$t('openFilePicker')"
             >
           </button>
-          <div
-            v-t="'or'"
-            class="or"
-          />
           <FilePickerButton
-            :title="$t('selectButton')"
             class="button"
             accept="image/*"
             @change="loadImage($event)"
-          >
-            <img
-              class="icon"
-              src="@assets/options/icon_upload.svg"
-              :alt="$t('addLocalAttachFileButton')"
-            >
-          </FilePickerButton>
+          />
         </div>
       </div>
     </template>
@@ -269,29 +262,32 @@ export default {
   }
 }
 
-.buttons {
-  .button, .or {
-    margin-bottom: 1rem;
-  }
+button {
+  cursor: pointer;
+  background-color: transparent;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  border: none;
+}
 
-  .button {
-    width: 202px;
-  }
+.open-file-picker-button {
+  display: flex;
+  align-items: center;
 
-  .or {
-    font-size: 1.5rem;
+  .icon {
+    width: 20px;
+    height: 20px;
   }
 }
 
-@media screen and (min-width: 700px) {
-  .buttons {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 
-    .button, .or {
-      margin-bottom: 0;
-    }
+  .button, .or {
+    margin-bottom: 0;
   }
 }
 </style>
@@ -301,7 +297,7 @@ export default {
   "header": "Choisir une image",
   "saveButton": "Valider",
   "or": "ou",
-  "selectButton": "Depuis le poste de travail",
-  "openFilePicker": "Depuis l'application"
+  "openFilePicker": "Depuis l'application",
+  "changePictureLabel": "Changer l'image"
 }
 </i18n>
