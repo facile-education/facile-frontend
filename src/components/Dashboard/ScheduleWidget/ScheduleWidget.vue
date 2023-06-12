@@ -17,7 +17,7 @@
       class="placeholder"
     />
     <div
-      v-else-if="sessionList.length === 0"
+      v-else-if="sessionList.length === 0 && !isFirstLoad"
       v-t="'emptyPlaceholder'"
       class="placeholder"
     />
@@ -53,6 +53,7 @@ export default {
     return {
       goForward: true, // Option to determine if we display the next day containing course or the current date
       isLoading: false,
+      isFirstLoad: true,
       error: false,
       currentDisplayedDate: undefined,
       sessionList: []
@@ -85,6 +86,7 @@ export default {
       this.isLoading = true
       getUserSchedule(this.userId, date, goForward).then((data) => {
         this.isLoading = false
+        this.isFirstLoad = false
         if (data.success) {
           this.error = false
           this.sessionList = data.eventList

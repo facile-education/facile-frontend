@@ -22,7 +22,7 @@
       class="placeholder"
     />
     <div
-      v-else-if="readActivities.length === 0 && unreadActivities.length === 0"
+      v-else-if="readActivities.length === 0 && unreadActivities.length === 0 && !isFirstLoad"
       v-t="'emptyPlaceholder'"
       class="placeholder"
     />
@@ -106,6 +106,7 @@ export default {
   data () {
     return {
       isLoading: false,
+      isFirstLoad: true,
       error: false,
       filter: {
         activityTypes: [],
@@ -201,6 +202,7 @@ export default {
         this.filterBooleans.withSession
       ).then((data) => {
         this.isLoading = false
+        this.isFirstLoad = false
         if (data.success) {
           this.error = false
           this.nbNewActivities = data.nbNewActivities

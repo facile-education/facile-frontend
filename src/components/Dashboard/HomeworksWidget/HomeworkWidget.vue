@@ -15,7 +15,7 @@
       class="placeholder"
     />
     <div
-      v-else-if="homeworkList.length === 0"
+      v-else-if="homeworkList.length === 0 && !isFirstLoad"
       v-t="'emptyPlaceholder'"
       class="placeholder"
     />
@@ -73,8 +73,9 @@ export default {
   },
   data () {
     return {
-      isLoading: false,
       error: false,
+      isLoading: false,
+      isFirstLoad: true,
       undoneOnly: false,
       homeworkList: [],
       nbHomeworksUndone: 0
@@ -116,6 +117,7 @@ export default {
       this.isLoading = true
       getHomeworks(this.userId, dayjs().format('YYYY-MM-DD HH:mm'), this.undoneOnly).then((data) => {
         this.isLoading = false
+        this.isFirstLoad = false
         if (data.success) {
           this.error = false
           this.homeworkList = data.homeworks
