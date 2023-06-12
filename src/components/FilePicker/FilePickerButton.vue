@@ -1,21 +1,23 @@
 <template>
-  <div
+  <button
+    :title="$t('selectFromDevice')"
+    :aria-label="$t('selectFromDevice')"
     class="file-picker-button"
-    tabindex="0"
     @click="$refs.file.click()"
-    @keyup.enter="$refs.file.click()"
   >
-    <span class="button">
-      <input
-        ref="file"
-        type="file"
-        accept="image/*"
-        :multiple="allowMultiple"
-        @change="$emit('change', $event)"
-      >
-      <slot />
-    </span>
-  </div>
+    <img
+      class="icon"
+      src="@assets/options/icon_upload.svg"
+      alt="upload"
+    >
+    <input
+      ref="file"
+      type="file"
+      accept="image/*"
+      :multiple="allowMultiple"
+      @change="$emit('change', $event)"
+    >
+  </button>
 </template>
 
 <script>
@@ -36,21 +38,33 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  button {
+    cursor: pointer;
+    background-color: transparent;
+    border-radius: 0;
+    padding: 0;
+    margin: 0;
+    border: none;
+  }
+
   .file-picker-button{
-    height: 48px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 3px rgba(0,0,0,.19);
-    font-family: inherit;
-    border-radius: 5px;
-    padding: 6px 12px;
-    border: none;
-    cursor: pointer;
+
+    .icon {
+      width: 20px;
+      height: 20px;
+    }
   }
 
   input {
     display: none;
   }
 </style>
+
+<i18n locale="fr">
+{
+  "selectFromDevice": "importer depuis le poste de travail"
+}
+</i18n>
