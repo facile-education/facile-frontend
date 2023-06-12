@@ -49,28 +49,13 @@
             />
           </div>
         </div>
-        <div class="buttons">
-          <span
-            v-t="'changePictureLabel'"
-            class="text"
-          />
-          <button
-            :title="$t('openFilePicker')"
-            class="button open-file-picker-button"
-            @click="isFilePickerDisplayed=true"
-          >
-            <img
-              class="icon"
-              src="@assets/options/dossier-pj.svg"
-              :alt="$t('openFilePicker')"
-            >
-          </button>
-          <FilePickerButton
-            class="button"
-            accept="image/*"
-            @change="loadImage($event)"
-          />
-        </div>
+
+        <SelectFilesButtons
+          :label="$t('changePictureLabel')"
+          :images-only="true"
+          @load="loadImage"
+          @select-files="selectImageFromApp"
+        />
       </div>
     </template>
 
@@ -82,32 +67,18 @@
       />
     </template>
   </PentilaWindow>
-
-  <teleport
-    v-if="isFilePickerDisplayed"
-    to="body"
-  >
-    <FilePickerModal
-      :images-only="true"
-      @addedFiles="doSelectFilesAction"
-      @close="isFilePickerDisplayed=false"
-    />
-  </teleport>
 </template>
 
 <script>
 import { Cropper, Preview } from 'vue-advanced-cropper'
 import 'vue-advanced-cropper/dist/style.css'
 import { getResource, uploadTmpFile } from '@/api/documents/file.service'
-import { defineAsyncComponent } from 'vue'
-import FilePickerButton from '@components/FilePicker/FilePickerButton.vue'
-const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal'))
+import SelectFilesButtons from '@components/FilePicker/SelectFilesButtons.vue'
 
 export default {
   name: 'ImagePickerModal',
   components: {
-    FilePickerButton,
-    FilePickerModal,
+    SelectFilesButtons,
     Cropper,
     Preview
   },
@@ -141,9 +112,12 @@ export default {
     }
   },
   methods: {
-    doSelectFilesAction (files) {
-      const file = files[0]
-      getResource(file.id, 0, true).then((data) => {
+    reset () {
+      this.image = null
+    },
+    selectImageFromApp (files) {
+      const image = files[0]
+      getResource(image.id, 0, true).then((data) => {
         if (data.success) {
           this.loadImageAsBase64(data.fileUrl)
         } else {
@@ -151,8 +125,17 @@ export default {
         }
       })
     },
-    reset () {
-      this.image = null
+    loadImageAsBase64 (imageUrl) {
+      return fetch(imageUrl)
+        .then(response => response.blob())
+        .then(blob => {
+          return new Promise((resolve, reject) => {
+            const reader = new FileReader()
+            reader.onload = (e) => { this.image = e.target.result }
+            reader.onerror = reject
+            reader.readAsDataURL(blob)
+          })
+        })
     },
     loadImage (event) {
       // Reference to the DOM input element
@@ -170,18 +153,6 @@ export default {
         // Start the reader job - read file as a data url (base64 format)
         reader.readAsDataURL(input.files[0])
       }
-    },
-    loadImageAsBase64 (imageUrl) {
-      return fetch(imageUrl)
-        .then(response => response.blob())
-        .then(blob => {
-          return new Promise((resolve, reject) => {
-            const reader = new FileReader()
-            reader.onload = (e) => { this.image = e.target.result }
-            reader.onerror = reject
-            reader.readAsDataURL(blob)
-          })
-        })
     },
     onChange ({ coordinates, image }) {
       this.result = {
@@ -262,42 +233,12 @@ export default {
   }
 }
 
-button {
-  cursor: pointer;
-  background-color: transparent;
-  border-radius: 0;
-  padding: 0;
-  margin: 0;
-  border: none;
-}
-
-.open-file-picker-button {
-  display: flex;
-  align-items: center;
-
-  .icon {
-    width: 20px;
-    height: 20px;
-  }
-}
-
-.buttons {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-
-  .button, .or {
-    margin-bottom: 0;
-  }
-}
 </style>
 
 <i18n locale="fr">
 {
   "header": "Choisir une image",
   "saveButton": "Valider",
-  "or": "ou",
-  "openFilePicker": "Depuis l'application",
   "changePictureLabel": "Changer l'image"
 }
 </i18n>
