@@ -209,6 +209,14 @@ ul {
   &:not(.phone)::-webkit-scrollbar{
     display: none;
   }
+
+  &.phone {
+    scroll-snap-type: x mandatory;
+
+    li {
+      scroll-snap-align: center;
+    }
+  }
 }
 
 .right-linear {
