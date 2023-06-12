@@ -21,7 +21,7 @@
       class="placeholder"
     />
     <div
-      v-else-if="announcementsList.length === 0"
+      v-else-if="announcementsList.length === 0 && !isFirstLoad"
       v-t="'emptyPlaceholder'"
       class="placeholder"
     />
@@ -85,6 +85,7 @@ export default {
       announcementsList: [],
       nbUnreadAnnouncements: 0,
       isLoading: false,
+      isFirstLoad: true,
       error: false,
       isAllAnnouncementsModalDisplayed: false,
       displayedAnnouncementIndex: 0,
@@ -146,6 +147,7 @@ export default {
       this.isLoading = true
       getSchoolNews(this.fromDate, nbAnnouncementsInWidget, false, this.unReadOnly).then((data) => {
         this.isLoading = false
+        this.isFirstLoad = false
         if (data.success) {
           this.error = false
           this.announcementsList = data.news
