@@ -23,7 +23,7 @@ export default {
   computed: {
     formattedReadDate () {
       if (this.user.readDate) {
-        return dayjs(this.user.readDate, 'YYYY-MM-DD HH:mm:ss').calendar()
+        return this.$t('read') + ' (' + dayjs(this.user.readDate, 'YYYY-MM-DD HH:mm:ss').calendar() + ')'
       } else {
         return ''
       }
@@ -44,6 +44,7 @@ export default {
 
 <i18n locale="fr" >
 {
-  "unread": "Non lu"
+  "unread": "Non lu",
+  "read": "Lu"
 }
 </i18n>
