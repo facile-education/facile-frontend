@@ -1,6 +1,6 @@
 <template>
   <div
-    class="file-picker-button theme-background-color"
+    class="file-picker-button"
     tabindex="0"
     @click="$refs.file.click()"
     @keyup.enter="$refs.file.click()"
@@ -13,6 +13,7 @@
         :multiple="allowMultiple"
         @change="$emit('change', $event)"
       >
+      <slot />
     </span>
   </div>
 </template>

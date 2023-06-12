@@ -50,21 +50,33 @@
           </div>
         </div>
         <div class="buttons">
-          <PentilaButton
-            v-t="'openFilePicker'"
+          <button
+            :title="$t('openFilePicker')"
             class="button"
             @click="isFilePickerDisplayed=true"
-          />
+          >
+            <img
+              class="icon"
+              src="@assets/options/dossier-pj.svg"
+              :alt="$t('openFilePicker')"
+            >
+          </button>
           <div
             v-t="'or'"
             class="or"
           />
           <FilePickerButton
-            v-t="'selectButton'"
+            :title="$t('selectButton')"
             class="button"
             accept="image/*"
             @change="loadImage($event)"
-          />
+          >
+            <img
+              class="icon"
+              src="@assets/options/icon_upload.svg"
+              :alt="$t('addLocalAttachFileButton')"
+            >
+          </FilePickerButton>
         </div>
       </div>
     </template>
