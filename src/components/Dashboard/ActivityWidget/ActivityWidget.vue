@@ -279,7 +279,7 @@ ul {
 }
 
 .placeholder {
-  height: 106px;
+  @extend %widget-placeholder;
 }
 
 .footer {
