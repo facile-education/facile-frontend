@@ -11,26 +11,24 @@
       class="placeholder"
     />
     <div v-else>
-      {{ configuration }}
-
       <YearDates
         v-model:start-date="schoolYearStartDate"
         v-model:semester-date="schoolYearSemesterDate"
         v-model:end-date="schoolYearEndDate"
       />
 
-      <section>
-        <h2 v-t="'holidays'" />
-      </section>
+      <Holidays v-model:holidays="holidays" />
 
       <section>
         <h2 v-t="'weekParity'" />
       </section>
 
-      <PentilaButton
-        v-t="'submit'"
-        @click="submit"
-      />
+      <footer>
+        <PentilaButton
+          v-t="'submit'"
+          @click="submit"
+        />
+      </footer>
     </div>
   </div>
 </template>
@@ -40,17 +38,17 @@ import { getGlobalConfiguration, saveGlobalConfiguration } from '@/api/schedule.
 import dayjs from 'dayjs'
 import YearDates from '@components/ScheduleManager/YearDates.vue'
 import { useVuelidate } from '@vuelidate/core'
+import Holidays from '@components/ScheduleManager/Holidays.vue'
 
 export default {
   name: 'GlobalScheduleSettings',
-  components: { YearDates },
+  components: { Holidays, YearDates },
   setup: () => ({ v$: useVuelidate() }),
   data () {
     return {
       isLoading: false,
       error: false,
 
-      configuration: undefined,
       schoolYearStartDate: dayjs(),
       schoolYearSemesterDate: dayjs(),
       schoolYearEndDate: dayjs(),
@@ -69,11 +67,10 @@ export default {
         this.isLoading = false
         if (data.success) {
           this.error = false
-          this.configuration = data.configuration
           this.schoolYearStartDate = dayjs(data.configuration.schoolYearStartDate, 'YYYY-MM-DD')
           this.schoolYearSemesterDate = dayjs(data.configuration.schoolYearSemesterDate, 'YYYY-MM-DD')
           this.schoolYearEndDate = dayjs(data.configuration.schoolYearEndDate, 'YYYY-MM-DD')
-          this.holidays = JSON.parse(data.configuration.holidays)
+          this.holidays = data.configuration.holidays
           this.h1Weeks = data.configuration.h1Weeks
           this.h2Weeks = data.configuration.h2Weeks
         } else {
@@ -123,15 +120,20 @@ export default {
   letter-spacing: 0;
   line-height: 1rem;
 }
+
+footer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
 </style>
 
 <i18n locale="fr">
 {
   "serviceTitle": "Paramètres globeaux d'emploi du temps",
   "errorPlaceholder": "Oups, une erreur est survenue...",
-  "holidays": "Vacances",
   "weekParity": "Parité des semaines",
-  "submit": "Valider",
+  "submit": "Valider la configuration",
   "success": "Configuration mise à jour",
   "error": "Échec de l'enregistrement"
 }
