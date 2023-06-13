@@ -1,6 +1,12 @@
 <template>
   <section>
-    <h2 v-t="'holidays'" />
+    <header>
+      <h2 v-t="'holidays'" />
+      <InformationIcon
+        class="info"
+        :text="$t('holidaysInfos')"
+      />
+    </header>
 
     <ul class="holiday-list">
       <li
@@ -35,10 +41,11 @@
 import HolidayItem from '@components/ScheduleManager/HolidayItem.vue'
 import HolidayForm from '@components/ScheduleManager/HolidayForm.vue'
 import dayjs from 'dayjs'
+import InformationIcon from '@components/Base/InformationIcon.vue'
 
 export default {
   name: 'Holidays',
-  components: { HolidayForm, HolidayItem },
+  components: { InformationIcon, HolidayForm, HolidayItem },
   props: {
     holidays: {
       type: Array,
@@ -81,6 +88,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+header {
+  display: flex;
+  align-items: center;
+
+  .info {
+    margin-left: 1rem;
+  }
+}
+
 ul {
   margin: 0;
   padding: 0;
@@ -96,6 +112,7 @@ ul {
 <i18n locale="fr">
 {
   "holidays": "Vacances",
-  "addHoliday": "Ajouter des vacances"
+  "addHoliday": "Ajouter des vacances",
+  "holidaysInfos": "Pour une paire de dates de vacances, la 1ère date est la date du 1er jour de vacances, et la 2ème date est la date du 1er jour de reprise."
 }
 </i18n>
