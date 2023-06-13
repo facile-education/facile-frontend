@@ -5,7 +5,7 @@ import {
 } from '@/api/progression.service'
 import { getSubjects } from '@/api/userManagement.service'
 import { getSchoolVoleeList } from '@/api/organization.service'
-import { getTeacherGroups, getSessions } from '@/api/cdt.service'
+import { getTeacherGroups, getUserSessions } from '@/api/schedule.service'
 
 export const helperMethods = {
   getFolderByFolderId (progression, folderId) {
@@ -759,7 +759,7 @@ export const actions = {
   getSessionList ({ state, commit, rootState }) {
     if (state.startDate && state.endDate) {
       commit('loading')
-      getSessions(rootState.user.userId, 0, state.startDate, state.endDate, state.currentProgression.volee).then(
+      getUserSessions(rootState.user.userId, state.startDate, state.endDate).then(
         (data) => {
           if (data.success) {
             commit('setSessionList', [...data.sessions])

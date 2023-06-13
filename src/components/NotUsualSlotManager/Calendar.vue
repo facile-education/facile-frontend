@@ -137,7 +137,7 @@ export default {
       return this.$store.state.user
     },
     configuration () {
-      return (this.$store.state.cdt.configuration.schoolDays.length > 0) ? this.$store.state.cdt.configuration : undefined
+      return (this.$store.state.horaires.configuration.schoolDays.length > 0) ? this.$store.state.horaires.configuration : undefined
     },
     minDate () {
       return dayjs(this.configuration.startDateSchool, 'YYYY-MM-DD HH:mm')

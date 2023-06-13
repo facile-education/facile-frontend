@@ -1,17 +1,25 @@
-import cdtService from '@/api/cdt.service'
+import scheduleService from '@/api/schedule.service'
 import groupService from '@/api/groups.service'
 
 const defaultGroup = { groupId: 0, groupName: 'Groupe' }
 
 export const state = {
+  startDate: undefined,
   endDate: undefined,
   groupList: undefined,
   isLoading: false,
   selectedGroup: defaultGroup,
   selectedUser: { userId: 0 },
   sessionList: [],
-  startDate: undefined,
-  isCreateSessionModalDisplayed: false
+  isCreateSessionModalDisplayed: false,
+  configuration: {
+    isLoaded: false,
+    schoolYearStartDate: '',
+    schoolYearEndDate: '',
+    startDayTime: '7h30',
+    endDayTime: '18h00',
+    schoolDays: [1, 2, 3, 4, 5]
+  }
 }
 
 export const mutations = {
@@ -39,6 +47,11 @@ export const mutations = {
   },
   setCreateSessionModalDisplayed (state, payload) {
     state.isCreateSessionModalDisplayed = payload
+  },
+  setConfiguration (state, payload) {
+    state.configuration.schoolYearStartDate = payload.schoolYearStartDate
+    state.configuration.schoolYearEndDate = payload.schoolYearEndDate
+    state.configuration.isLoaded = true
   }
 }
 export const actions = {
@@ -73,19 +86,35 @@ export const actions = {
       } else {
         targetUserId = state.selectedUser.userId
       }
-      cdtService.getSessions(targetUserId, state.selectedGroup.groupId, state.startDate, state.endDate).then(
-        (data) => {
-          if (data.success) {
-            commit('setSessionList', [...data.sessions, ...data.schoollifeSessions])
+      if (targetUserId !== 0) {
+        scheduleService.getUserSessions(targetUserId, state.startDate, state.endDate).then(
+          (data) => {
+            if (data.success) {
+              commit('setSessionList', [...data.sessions, ...data.schoollifeSessions])
+            }
+            commit('endLoading')
+          },
+          (err) => {
+            commit('endLoading')
+            // TODO toastr
+            console.error(err)
           }
-          commit('endLoading')
-        },
-        (err) => {
-          commit('endLoading')
-          // TODO toastr
-          console.error(err)
-        }
-      )
+        )
+      } else {
+        scheduleService.getGroupSessions(state.selectedGroup.groupId, state.startDate, state.endDate).then(
+          (data) => {
+            if (data.success) {
+              commit('setSessionList', [...data.sessions, ...data.schoollifeSessions])
+            }
+            commit('endLoading')
+          },
+          (err) => {
+            commit('endLoading')
+            // TODO toastr
+            console.error(err)
+          }
+        )
+      }
     } else if (state.sessionList.length) {
       commit('setSessionList', [])
     }
@@ -111,5 +140,21 @@ export const actions = {
   },
   setCreateSessionModalDisplayed ({ commit }, isDisplayed) {
     commit('setCreateSessionModalDisplayed', isDisplayed)
+  },
+  getConfiguration ({ commit, dispatch }) {
+    scheduleService.getConfiguration().then(
+      (data) => {
+        if (data.success) {
+          commit('setConfiguration', data.configuration)
+          commit('setDates', { startDate: data.startDate, endDate: data.endDate })
+        } else {
+          console.error('Cannot get cdt config')
+        }
+      },
+      (err) => {
+        // TODO toastr
+        console.error(err)
+      }
+    )
   }
 }

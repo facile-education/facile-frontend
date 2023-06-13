@@ -123,7 +123,7 @@ export default {
     }
   },
   created () {
-    this.$store.dispatch('cdt/getConfiguration')
+    this.$store.dispatch('horaires/getConfiguration')
     this.getPendingFirings()
     this.$store.dispatch('notUsualSlots/setDisplayedDates', {
       startDate: dayjs().startOf('week'),

@@ -4,7 +4,8 @@ import PentilaUtils from 'pentila-utils'
 
 export {
   getConfiguration,
-  getSessions,
+  getUserSessions,
+  getGroupSessions,
   getTeacherGroups,
   getSessionDetails,
   getSessionTeachersAndSubstitutes,
@@ -14,7 +15,8 @@ export {
 
 export default {
   getConfiguration,
-  getSessions,
+  getUserSessions,
+  getGroupSessions,
   getTeacherGroups,
   getSessionDetails,
   createSession
@@ -35,16 +37,27 @@ function getConfiguration (schoolId = 0) {
 }
 
 /**
- * Get the user or group session list for specified date range
+ * Get the user session list for specified date range
  */
-function getSessions (userId, groupId, minDate, maxDate, volee = '') {
-  return axios.get(constants.JSON_WS_URL + CDT_PATH + 'cdtsession/get-horaires-sessions', {
+function getUserSessions (userId, minDate, maxDate) {
+  return axios.get(constants.JSON_WS_URL + CDT_PATH + 'cdtsession/get-user-sessions', {
     params: {
       userId,
+      minDateStr: minDate.format('YYYY-MM-DD HH:mm'),
+      maxDateStr: maxDate.format('YYYY-MM-DD HH:mm')
+    }
+  }).then(response => response.data)
+}
+
+/**
+ * Get the group session list for specified date range
+ */
+function getGroupSessions (groupId, minDate, maxDate) {
+  return axios.get(constants.JSON_WS_URL + CDT_PATH + 'cdtsession/get-group-sessions', {
+    params: {
       groupId,
-      start: minDate.format('YYYY-MM-DD HH:mm'),
-      end: maxDate.format('YYYY-MM-DD HH:mm'),
-      volee: volee
+      minDateStr: minDate.format('YYYY-MM-DD HH:mm'),
+      maxDateStr: maxDate.format('YYYY-MM-DD HH:mm')
     }
   }).then(response => response.data)
 }

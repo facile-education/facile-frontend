@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import { getSessionTeachersAndSubstitutes, saveTeacherSubstitutes } from '@/api/cdt.service'
+import { getSessionTeachersAndSubstitutes, saveTeacherSubstitutes } from '@/api/schedule.service'
 import dayjs from 'dayjs'
 
 import UserCompletion from '@components/NotUsualSlotManager/UserCompletion'

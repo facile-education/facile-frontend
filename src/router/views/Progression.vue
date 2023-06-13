@@ -44,7 +44,7 @@ export default {
       () => {
         if (this.$route.params.progressionId) {
           // Init cdt conf and session list
-          this.$store.dispatch('cdt/getConfiguration')
+          this.$store.dispatch('horaires/getConfiguration')
 
           const teacherGroups = this.$store.state.progression.teacherGroups
           if (teacherGroups === undefined) {

@@ -5,7 +5,6 @@ export default {
   createSlot,
   updateSlot,
   deleteSlot,
-  getSessions,
   getCandidateSessions,
   getWeekSession,
   getSessionMembers,
@@ -70,20 +69,6 @@ function deleteSlot (slotId, startDateStr) {
     params: {
       schoollifeSessionId: slotId,
       startDateStr: startDateStr
-    }
-  }).then(response => response.data)
-}
-
-/**
- * Get the student's or class's slots in the specified amount of time
- */
-function getSessions (studentId, classId, minDate, maxDate) {
-  return axios.get(constants.JSON_WS_URL + SCHOOL_LIFE_SESSION_STUDENT_PATH + '/get-sessions', {
-    params: {
-      studentId,
-      classId,
-      minDateStr: minDate.format('YYYY-MM-DD HH:mm'),
-      maxDateStr: maxDate.format('YYYY-MM-DD HH:mm')
     }
   }).then(response => response.data)
 }
