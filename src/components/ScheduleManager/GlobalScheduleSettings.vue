@@ -12,44 +12,12 @@
     />
     <div v-else>
       {{ configuration }}
-      <section>
-        <h2 v-t="'schoolYear'" />
-        <div class="dates">
-          <div class="start-date">
-            <div v-t="'startDateLabel'" />
-            <CustomDatePicker
-              :selected-date="schoolYearStartDate"
-              :is-required="true"
-              @selectDate="updateStartDate"
-            />
-            <PentilaErrorMessage
-              :error-message="formErrorList.schoolYearStartDate"
-            />
-          </div>
-          <div class="semester-date">
-            <div v-t="'semesterDateLabel'" />
-            <CustomDatePicker
-              :selected-date="schoolYearSemesterDate"
-              :is-required="true"
-              @selectDate="updateSemesterDate"
-            />
-            <PentilaErrorMessage
-              :error-message="formErrorList.semesterDate"
-            />
-          </div>
-          <div class="end-date">
-            <div v-t="'endDateLabel'" />
-            <CustomDatePicker
-              :selected-date="schoolYearEndDate"
-              :is-required="true"
-              @selectDate="updateEndDate"
-            />
-            <PentilaErrorMessage
-              :error-message="formErrorList.endDate"
-            />
-          </div>
-        </div>
-      </section>
+
+      <YearDates
+        v-model:start-date="schoolYearStartDate"
+        v-model:semester-date="schoolYearSemesterDate"
+        v-model:end-date="schoolYearEndDate"
+      />
 
       <section>
         <h2 v-t="'holidays'" />
@@ -69,14 +37,13 @@
 
 <script>
 import { getGlobalConfiguration, saveGlobalConfiguration } from '@/api/schedule.service'
-import CustomDatePicker from '@components/Base/CustomDatePicker.vue'
 import dayjs from 'dayjs'
-import { required } from '@vuelidate/validators'
+import YearDates from '@components/ScheduleManager/YearDates.vue'
 import { useVuelidate } from '@vuelidate/core'
 
 export default {
   name: 'GlobalScheduleSettings',
-  components: { CustomDatePicker },
+  components: { YearDates },
   setup: () => ({ v$: useVuelidate() }),
   data () {
     return {
@@ -90,38 +57,6 @@ export default {
       holidays: [],
       h1Weeks: '',
       h2Weeks: ''
-    }
-  },
-  validations: {
-    schoolYearStartDate: {
-      required
-    },
-    schoolYearSemesterDate: { // Should be > startDate and < endDate
-      required,
-      function (value) {
-        return (value.diff(this.schoolYearStartDate) >= 0) && (value.diff(this.schoolYearEndDate) <= 0)
-      }
-    },
-    schoolYearEndDate: { // Should be > startDate
-      required,
-      function (value) {
-        return value.diff(this.schoolYearStartDate) >= 0
-      }
-    }
-  },
-  computed: {
-    formErrorList () {
-      return {
-        startDate: (this.v$.schoolYearStartDate.$invalid && this.v$.schoolYearStartDate.$dirty)
-          ? this.$t('required')
-          : '',
-        semesterDate: (this.v$.schoolYearSemesterDate.$invalid && this.v$.schoolYearSemesterDate.$dirty)
-          ? (this.v$.schoolYearSemesterDate.$errors[0].$validator === 'required' ? this.$t('required') : this.$t('betweenStartAndEnd'))
-          : '',
-        endDate: (this.v$.schoolYearEndDate.$invalid && this.v$.schoolYearEndDate.$dirty)
-          ? (this.v$.schoolYearEndDate.$errors[0].$validator === 'required' ? this.$t('required') : this.$t('afterStartDate'))
-          : ''
-      }
     }
   },
   created () {
@@ -161,15 +96,6 @@ export default {
         }
       })
     },
-    updateStartDate (date) {
-      this.schoolYearStartDate = dayjs(date)
-    },
-    updateSemesterDate (date) {
-      this.schoolYearSemesterDate = dayjs(date)
-    },
-    updateEndDate (date) {
-      this.schoolYearEndDate = dayjs(date)
-    },
     submit () {
       if (this.v$.$invalid) {
         this.v$.$touch()
@@ -203,12 +129,8 @@ export default {
 {
   "serviceTitle": "Paramètres globeaux d'emploi du temps",
   "errorPlaceholder": "Oups, une erreur est survenue...",
-  "schoolYear": "Année scolaire",
   "holidays": "Vacances",
   "weekParity": "Parité des semaines",
-  "required": "Champ requis",
-  "betweenStartAndEnd": "Cette date doit se situer entre le début et la fin d'année scolaire",
-  "afterStartDate": "Cette date doit se situer après le début de l'année scolaire",
   "submit": "Valider",
   "success": "Configuration mise à jour",
   "error": "Échec de l'enregistrement"
