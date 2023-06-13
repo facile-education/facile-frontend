@@ -104,8 +104,8 @@ export default {
 <style lang="scss" scoped>
 .holiday-form {
   width: 100%;
+  flex-direction: column;
   display: flex;
-  align-items: center;
   gap: 1rem;
 }
 
@@ -117,6 +117,13 @@ export default {
   display: flex;
   align-items: center;
   gap: 10px
+}
+
+@media screen and (min-width: 700px) {
+  .holiday-form {
+    flex-direction: initial;
+    align-items: center;
+  }
 }
 
 </style>
