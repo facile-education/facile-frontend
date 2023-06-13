@@ -17,11 +17,14 @@
         v-model:end-date="schoolYearEndDate"
       />
 
-      <Holidays v-model:holidays="holidays" />
+      <Holidays
+        v-model:holidays="holidays"
+      />
 
-      <section>
-        <h2 v-t="'weekParity'" />
-      </section>
+      <WeeksParity
+        v-model:h1Weeks="h1Weeks"
+        v-model:h2Weeks="h2Weeks"
+      />
 
       <footer>
         <PentilaButton
@@ -39,10 +42,11 @@ import dayjs from 'dayjs'
 import YearDates from '@components/ScheduleManager/YearDates.vue'
 import { useVuelidate } from '@vuelidate/core'
 import Holidays from '@components/ScheduleManager/Holidays.vue'
+import WeeksParity from '@components/ScheduleManager/WeeksParity.vue'
 
 export default {
   name: 'GlobalScheduleSettings',
-  components: { Holidays, YearDates },
+  components: { WeeksParity, Holidays, YearDates },
   setup: () => ({ v$: useVuelidate() }),
   data () {
     return {
@@ -132,7 +136,6 @@ footer {
 {
   "serviceTitle": "Paramètres globeaux d'emploi du temps",
   "errorPlaceholder": "Oups, une erreur est survenue...",
-  "weekParity": "Parité des semaines",
   "submit": "Valider la configuration",
   "success": "Configuration mise à jour",
   "error": "Échec de l'enregistrement"
