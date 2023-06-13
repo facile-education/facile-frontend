@@ -4,6 +4,8 @@ import PentilaUtils from 'pentila-utils'
 
 export {
   getConfiguration,
+  getGlobalConfiguration,
+  saveGlobalConfiguration,
   getSessions,
   getTeacherGroups,
   getSessionDetails,
@@ -32,6 +34,27 @@ function getConfiguration (schoolId = 0) {
       childId: 0
     }
   }).then(response => response.data)
+}
+
+/**
+ * Get ENT configuration (star year date, end year date, holidays and weeks parity
+ */
+function getGlobalConfiguration () {
+  return axios.get(constants.JSON_WS_URL + CDT_PATH + 'scheduleconfiguration/get-global-configuration').then(response => response.data)
+}
+
+/**
+ * Save ENT configuration (star year date, end year date, holidays and weeks parity
+ */
+function saveGlobalConfiguration (startDate, semesterDate, endDate, holidays, h1Weeks, h2Weeks) {
+  return axios.post(constants.JSON_WS_URL + CDT_PATH + 'scheduleconfiguration/save-global-configuration', PentilaUtils.URL.params({
+    startDateStr: startDate.format('YYYY-MM-DD'),
+    semesterDateStr: semesterDate.format('YYYY-MM-DD'),
+    endDateStr: endDate.format('YYYY-MM-DD'),
+    holidays: JSON.stringify(holidays),
+    h1Weeks,
+    h2Weeks
+  })).then(response => response.data)
 }
 
 /**
