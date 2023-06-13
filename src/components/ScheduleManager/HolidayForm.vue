@@ -13,6 +13,8 @@
     <div class="dates">
       <DateRangePicker
         :initial-range="{start: startDate, end: endDate}"
+        :min-date="minDate.toDate()"
+        :max-date="maxDate.toDate()"
         @updateDates="updateDates"
       />
       <PentilaErrorMessage
@@ -42,8 +44,17 @@ import { required } from '@vuelidate/validators'
 export default {
   name: 'HolidayForm',
   components: { DateRangePicker },
+  props: {
+    minDate: {
+      type: Object,
+      default: undefined
+    },
+    maxDate: {
+      type: Object,
+      default: undefined
+    }
+  },
   emits: ['addHoliday', 'cancel'],
-  // TODO: min and max dates
   setup: () => ({ v$: useVuelidate() }),
   data () {
     return {

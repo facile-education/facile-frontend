@@ -19,6 +19,8 @@
 
       <Holidays
         v-model:holidays="holidays"
+        :school-year-start-date="schoolYearStartDate"
+        :school-year-end-date="schoolYearEndDate"
       />
 
       <WeeksParity
