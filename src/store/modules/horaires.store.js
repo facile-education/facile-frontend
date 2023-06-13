@@ -1,4 +1,4 @@
-import cdtService from '@/api/cdt.service'
+import cdtService from '@/api/schedule.service'
 import groupService from '@/api/groups.service'
 
 const defaultGroup = { groupId: 0, groupName: 'Groupe' }

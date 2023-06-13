@@ -5,7 +5,7 @@ import {
 } from '@/api/progression.service'
 import { getSubjects } from '@/api/userManagement.service'
 import { getSchoolVoleeList } from '@/api/organization.service'
-import { getTeacherGroups, getSessions } from '@/api/cdt.service'
+import { getTeacherGroups, getSessions } from '@/api/schedule.service'
 
 export const helperMethods = {
   getFolderByFolderId (progression, folderId) {
