@@ -141,7 +141,7 @@ export default {
       return dayjs().toDate()
     },
     minDate () {
-      return this.$store.state.cdt.configuration.startDateProject ? dayjs(this.$store.state.cdt.configuration.startDateProject).toDate() : dayjs().subtract(2, 'year').toDate() // arbitrary min date
+      return this.$store.state.horaires.configuration.startDateProject ? dayjs(this.$store.state.horaires.configuration.startDateProject).toDate() : dayjs().subtract(2, 'year').toDate() // arbitrary min date
     }
   },
   created () {
@@ -149,8 +149,8 @@ export default {
       this.$store.dispatch('administration/getAdministrationSchools')
     }
 
-    if (this.$store.state.cdt.configuration.startDateProject === undefined) {
-      this.$store.dispatch('cdt/getConfiguration')
+    if (!this.$store.state.horaires.configuration.isLoaded) {
+      this.$store.dispatch('horaires/getConfiguration')
     }
   },
   methods: {

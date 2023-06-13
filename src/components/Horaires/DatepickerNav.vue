@@ -37,7 +37,7 @@ export default {
   emits: ['selectDate'],
   computed: {
     configuration () {
-      return (this.$store.state.cdt.configuration.schoolDays.length > 0) ? this.$store.state.cdt.configuration : undefined
+      return (this.$store.state.horaires.configuration.schoolDays.length > 0) ? this.$store.state.horaires.configuration : undefined
     },
     formattedDate: {
       get () {

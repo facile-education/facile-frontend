@@ -140,7 +140,7 @@
 <script>
 import { required } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
-import { createSession } from '@/api/cdt.service'
+import { createSession } from '@/api/schedule.service'
 import { getSchoolTeachers } from '@/api/userSearch.service'
 import { getSubjects } from '@/api/userManagement.service'
 import { getUserGroups } from '@/api/groups.service'

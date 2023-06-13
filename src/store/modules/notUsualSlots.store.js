@@ -1,6 +1,7 @@
 import i18n from '@/i18n'
 import { getSchoolClassList } from '@/api/organization.service'
 import schoolLifeService from '@/api/schoolLife-portlet.service'
+import cdtService from '@/api/schedule.service'
 
 function getNonUsualSlots (store) {
   store.dispatch('currentActions/addAction', { name: 'getNonUsualSlots' })
@@ -23,20 +24,36 @@ function getNonUsualSlots (store) {
 function getSessions (store) {
   store.dispatch('currentActions/addAction', { name: 'getSessions' })
   const student = store.state.notUsualSlots.queriedUser || { studentId: 0 }
-  schoolLifeService.getSessions(student.studentId, store.state.notUsualSlots.selectedClass.orgId,
-    store.state.notUsualSlots.displayedDates.startDate, store.state.notUsualSlots.displayedDates.endDate).then(
-    (data) => {
-      store.dispatch('currentActions/removeAction', { name: 'getSessions' })
-      if (data.success) {
-        data.sessions.forEach(slot => { slot.isUserSlot = true })
-        store.commit('notUsualSlots/setUserSlots', data.sessions)
-      } else {
-        console.error('Cannot get user slots')
-      }
-    },
-    (err) => {
-      console.error(err)
-    })
+  if (student.studentId !== 0) {
+    cdtService.getUserSessions(student.studentId, store.state.notUsualSlots.displayedDates.startDate, store.state.notUsualSlots.displayedDates.endDate).then(
+      (data) => {
+        store.dispatch('currentActions/removeAction', { name: 'getSessions' })
+        if (data.success) {
+          data.sessions.forEach(slot => { slot.isUserSlot = true })
+          store.commit('notUsualSlots/setUserSlots', data.sessions)
+        } else {
+          console.error('Cannot get user slots')
+        }
+      },
+      (err) => {
+        console.error(err)
+      })
+  } else {
+    cdtService.getGroupSessions(store.state.notUsualSlots.selectedClass.orgId,
+      store.state.notUsualSlots.displayedDates.startDate, store.state.notUsualSlots.displayedDates.endDate).then(
+      (data) => {
+        store.dispatch('currentActions/removeAction', { name: 'getSessions' })
+        if (data.success) {
+          data.sessions.forEach(slot => { slot.isUserSlot = true })
+          store.commit('notUsualSlots/setUserSlots', data.sessions)
+        } else {
+          console.error('Cannot get user slots')
+        }
+      },
+      (err) => {
+        console.error(err)
+      })
+  }
 }
 
 const defaultClass = { orgId: 0, orgName: i18n.global.t('NotUsualSlots.classPlaceholder') }
