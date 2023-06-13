@@ -23,6 +23,8 @@
     <HolidayForm
       v-if="isFormDisplayed"
       class="holiday-form"
+      :min-date="(schoolYearStartDate && schoolYearStartDate!==schoolYearEndDate) ? schoolYearStartDate : undefined"
+      :max-date="(schoolYearEndDate && schoolYearStartDate!==schoolYearEndDate) ? schoolYearEndDate : undefined"
       @addHoliday="addHoliday"
       @cancel="isFormDisplayed = false"
     />
@@ -32,6 +34,7 @@
 <script>
 import HolidayItem from '@components/ScheduleManager/HolidayItem.vue'
 import HolidayForm from '@components/ScheduleManager/HolidayForm.vue'
+import dayjs from 'dayjs'
 
 export default {
   name: 'Holidays',
@@ -40,6 +43,14 @@ export default {
     holidays: {
       type: Array,
       required: true
+    },
+    schoolYearStartDate: {
+      type: Object,
+      default: dayjs()
+    },
+    schoolYearEndDate: {
+      type: Object,
+      default: dayjs()
     }
   },
   emits: ['update:holidays'],
