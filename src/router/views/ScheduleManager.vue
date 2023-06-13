@@ -15,8 +15,8 @@
 
 import Layout from '@/router/layouts/BannerLayout'
 import { defineAsyncComponent } from 'vue'
-const GlobalScheduleSettings = defineAsyncComponent(() => import('@components/ScheduleManager/GlobalScheduleSettings.vue'))
-const SchoolScheduleSettings = defineAsyncComponent(() => import('@components/ScheduleManager/SchoolScheduleSettings.vue'))
+const GlobalScheduleSettings = defineAsyncComponent(() => import('@components/ScheduleManager/GlobalScheduleSettings/GlobalScheduleSettings.vue'))
+const SchoolScheduleSettings = defineAsyncComponent(() => import('@components/ScheduleManager/SchoolScheduleSettings/SchoolScheduleSettings.vue'))
 
 export default {
   name: 'HorairesManager',
