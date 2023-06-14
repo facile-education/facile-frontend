@@ -14,11 +14,12 @@
       <ul>
         <li
           v-for="(slot, index) in slots"
-          :key="slot.slotNumber"
+          :key="slot.slotStartHour"
         >
           <SchoolSlotItem
             v-model:slot="slots[index]"
-            @delete="deleteSlot(slot)"
+            :position="index"
+            @delete="deleteSlot(index)"
           />
         </li>
       </ul>
@@ -67,6 +68,8 @@ export default {
         if (data.success) {
           this.error = false
           this.slots = data.configuration
+          // Sort slots by slotNumber
+          this.slots.sort((a, b) => { return a.slotNumber - b.slotNumber })
         } else {
           this.error = true
           console.error('Error')
@@ -84,18 +87,12 @@ export default {
         slotStartHour = slotStartHour.add(5, 'minute')
       }
       this.slots.push({
-        slotNumber: this.slots.length,
         slotStartHour: slotStartHour.format('HH:mm'),
         slotEndHour: slotStartHour.add(45, 'minute').format('HH:mm')
       })
     },
-    deleteSlot (slot) {
-      const index = this.slots.indexOf(slot)
-      if (index !== -1) {
-        this.slots.splice(index, 1)
-      } else {
-        console.error('Cannot remove ', slot, 'from slotList: ', this.slots)
-      }
+    deleteSlot (index) {
+      this.slots.splice(index, 1)
     }
   }
 }

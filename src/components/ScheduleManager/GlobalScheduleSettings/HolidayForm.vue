@@ -64,7 +64,7 @@ export default {
     }
   },
   validations: {
-    name: { // Should be > startDate and < endDate
+    name: {
       required
     },
     startDate: {

@@ -2,97 +2,111 @@
   <div data-test="time-selection">
     <div class="input-section">
       <slot />
-      <span> {{ ` ${$t('the')} ${startTime.format('dddd')}s ${$t('at')} ` }}</span>
-      <PentilaInput
-        v-model="inputStartHour"
-        class="input start"
-        :placeholder="'hh:mm'"
-        :labelled="false"
-      />
+      <!--      <span> {{ ` ${$t('the')} ${startTime.format('dddd')}s ${$t('at')} ` }}</span>-->
+      <div>
+        <PentilaInput
+          v-model="inputStartHour"
+          class="input start"
+          :placeholder="'hh:mm'"
+          :labelled="false"
+          @blur="update"
+        />
+        <PentilaErrorMessage :error-message="formErrorList.startHour" />
+      </div>
       <span v-t="'to'" />
-      <PentilaInput
-        v-model="inputEndHour"
-        class="input end"
-        :placeholder="'hh:mm'"
-        :labelled="false"
-      />
+      <div>
+        <PentilaInput
+          v-model="inputEndHour"
+          class="input end"
+          :placeholder="'hh:mm'"
+          :labelled="false"
+          @blur="update"
+        />
+        <PentilaErrorMessage
+          v-if="formErrorList.startHour === ''"
+          :error-message="formErrorList.endHour"
+        />
+      </div>
     </div>
-    <PentilaErrorMessage
-      v-if="error !== ''"
-      :error-message="error"
-    />
-    <div class="from-date">
-      {{ $t('fromThe') + startTime.format('DD MMMM YYYY') }}
-    </div>
+    <!--    <div class="from-date">-->
+    <!--      {{ $t('fromThe') + startTime.format('DD MMMM YYYY') }}-->
+    <!--    </div>-->
   </div>
 </template>
 
 <script>
 import dayjs from 'dayjs'
+import { useVuelidate } from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
+
+dayjs.extend(customParseFormat)
 
 export default {
   name: 'TimeSelection',
   props: {
-    start: {
-      type: [String, Date],
-      required: true
-    },
-    end: {
-      type: [String, Date],
+    range: {
+      type: Object,
       required: true
     }
   },
-  emits: ['update:start', 'update:end', 'error'],
+  emits: ['update:range'],
+  setup: () => ({ v$: useVuelidate() }),
   data () {
     return {
       inputStartHour: '',
-      inputEndHour: '',
-      error: ''
+      inputEndHour: ''
+    }
+  },
+  validations: {
+    inputStartHour: {
+      required,
+      function () {
+        return this.startTime.isValid()
+      }
+    },
+    inputEndHour: { // Should be > startDate
+      required,
+      function () {
+        return this.startTime.isValid() && this.endTime.diff(this.startTime) >= 0
+      }
     }
   },
   computed: {
     startTime () {
-      return dayjs(this.start)
+      const today = dayjs().format('YYYY/MM/DD')
+      return dayjs(today + ' ' + this.inputStartHour, 'YYYY/MM/DD HH:mm', true)
     },
     endTime () {
-      return dayjs(this.end)
-    }
-  },
-  watch: {
-    inputStartHour (value) {
-      const hour = dayjs(value, 'HH:mm')
-      const newStartHour = dayjs(this.startTime.format('YYYY-MM-DD') + ' ' + value, 'YYYY-MM-DD HH:mm')
-      const currentEndHour = dayjs(this.endTime.format('YYYY-MM-DD') + ' ' + this.inputEndHour, 'YYYY-MM-DD HH:mm')
-
-      if (hour.isValid() && currentEndHour.isValid() && newStartHour.isBefore(currentEndHour)) {
-        this.error = ''
-        this.$emit('update:start', newStartHour.format('YYYY-MM-DDTHH:mm'))
-        this.$emit('update:end', currentEndHour.format('YYYY-MM-DDTHH:mm'))
-        this.$emit('error', false)
-      } else {
-        this.error = this.$t('NotUsualSlots.EditSlotModal.haveToSelectHour')
-        this.$emit('error', true)
-      }
+      const today = dayjs().format('YYYY/MM/DD')
+      return dayjs(today + ' ' + this.inputEndHour, 'YYYY/MM/DD HH:mm', true)
     },
-    inputEndHour (value) {
-      const hour = dayjs(value, 'HH:mm', true)
-      const currentStartHour = dayjs(this.startTime.format('YYYY-MM-DD') + ' ' + this.inputStartHour, 'YYYY-MM-DD HH:mm')
-      const newEndHour = dayjs(this.endTime.format('YYYY-MM-DD') + ' ' + value, 'YYYY-MM-DD HH:mm')
-
-      if (hour.isValid() && currentStartHour.isValid() && newEndHour.isAfter(currentStartHour)) {
-        this.error = ''
-        this.$emit('update:start', currentStartHour.format('YYYY-MM-DDTHH:mm'))
-        this.$emit('update:end', newEndHour.format('YYYY-MM-DDTHH:mm'))
-        this.$emit('error', false)
-      } else {
-        this.error = this.$t('NotUsualSlots.EditSlotModal.haveToSelectHour')
-        this.$emit('error', true)
+    formErrorList () {
+      return {
+        startHour: (this.v$.inputStartHour.$invalid && this.v$.inputStartHour.$dirty)
+          ? (this.v$.inputEndHour.$errors[0].$validator === 'required' ? this.$t('required') : this.$t('invalidDateFormat'))
+          : '',
+        endHour: (this.v$.inputEndHour.$invalid && this.v$.inputEndHour.$dirty)
+          ? (this.v$.inputEndHour.$errors[0].$validator === 'required' ? this.$t('required') : this.$t('afterStartDate'))
+          : ''
       }
     }
   },
   created () {
-    this.inputStartHour = this.startTime.format('HH:mm')
-    this.inputEndHour = this.endTime.format('HH:mm')
+    this.inputStartHour = this.range.start
+    this.inputEndHour = this.range.end
+  },
+  methods: {
+    update () {
+      if (this.v$.$invalid) {
+        this.v$.$touch()
+      } else {
+        this.$emit('update:range', {
+          start: this.inputStartHour,
+          end: this.inputEndHour
+        })
+      }
+    }
   }
 }
 </script>
@@ -125,6 +139,9 @@ export default {
   "at": "de",
   "fromThe": "À partir du ",
   "the": "des",
-  "to": "à"
+  "to": "à",
+  "required": "Champ requis",
+  "afterStartDate": "Cette date doit être sous la forme \"HH:mm\" et doit se situer après la date de début",
+  "invalidDateFormat": "Format de date invalide, veuillez utiliser la forme \"HH:mm\""
 }
 </i18n>

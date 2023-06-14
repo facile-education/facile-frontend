@@ -1,8 +1,13 @@
 <template>
   <div class="school-slot">
-    <h3> {{ 'P' + slot.slotNumber }}</h3>
-    <span> {{ slot.slotStartHour }}</span>
-    <span> {{ slot.slotEndHour }}</span>
+    <h3> {{ 'P' + position }}</h3>
+    <div class="time-selection">
+      <span v-t="'from'" />
+      <TimeSelection
+        :range="{start: slot.slotStartHour, end: slot.slotEndHour}"
+        @update:range="updateRange"
+      />
+    </div>
     <PentilaButton
       v-t="'delete'"
       @click="$emit('delete')"
@@ -11,15 +16,30 @@
 </template>
 
 <script>
+import TimeSelection from '@components/NotUsualSlotManager/EditSlotModal/TimeSelection.vue'
+
 export default {
   name: 'SchoolSlotItem',
+  components: { TimeSelection },
   props: {
     slot: {
       type: Object,
       required: true
+    },
+    position: {
+      type: Number,
+      required: true
     }
   },
-  emits: ['delete']
+  emits: ['delete', 'update:slot'],
+  methods: {
+    updateRange (range) {
+      const newSlot = { ...this.slot }
+      newSlot.slotStartHour = range.start
+      newSlot.slotEndHour = range.end
+      this.$emit('update:slot', newSlot)
+    }
+  }
 }
 </script>
 
@@ -30,10 +50,20 @@ export default {
   align-items: center;
   justify-content: space-between;
 }
+
+.time-selection {
+  display: flex;
+  align-items: center;
+
+  span {
+    margin-right: 1rem;
+  }
+}
 </style>
 
 <i18n locale="fr">
 {
+  "from": "De",
   "delete": "Supprimer"
 }
 </i18n>
