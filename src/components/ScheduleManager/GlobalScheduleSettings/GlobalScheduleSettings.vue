@@ -97,6 +97,9 @@ export default {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
           console.error('Error')
         }
+      }, (err) => {
+        this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+        console.error(err)
       })
     },
     submit () {
