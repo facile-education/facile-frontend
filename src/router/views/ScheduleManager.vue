@@ -34,7 +34,7 @@ export default {
 
 <i18n locale="fr">
 {
-  "globalSettings": "Paramètres globeaux",
+  "globalSettings": "Paramètres globaux",
   "schoolSettings": "Paramètres d'établissement"
 }
 </i18n>
