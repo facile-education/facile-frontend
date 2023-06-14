@@ -139,7 +139,7 @@ footer {
 
 <i18n locale="fr">
 {
-  "serviceTitle": "Paramètres globeaux d'emploi du temps",
+  "serviceTitle": "Paramètres globaux d'emploi du temps",
   "errorPlaceholder": "Oups, une erreur est survenue...",
   "submit": "Valider la configuration",
   "success": "Configuration mise à jour",
