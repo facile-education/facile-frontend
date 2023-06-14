@@ -30,10 +30,13 @@
     </div>
 
     <footer>
-      <PentilaButton
-        v-t="'submit'"
-        @click="saveSchoolSlotConfiguration"
-      />
+      <div class="right">
+        <PentilaButton
+          v-t="'submit'"
+          @click="submit"
+        />
+        <PentilaErrorMessage :error-message="formErrorList.slots" />
+      </div>
     </footer>
   </section>
 </template>
@@ -42,6 +45,7 @@
 import { getSchoolSlotConfiguration, saveSchoolSlotConfiguration } from '@/api/schedule.service'
 import dayjs from 'dayjs'
 import SchoolSlotItem from '@components/ScheduleManager/SchoolScheduleSettings/SchoolSlotItem.vue'
+import { useVuelidate } from '@vuelidate/core'
 
 export default {
   name: 'SchoolSlots',
@@ -52,11 +56,19 @@ export default {
       required: true
     }
   },
+  setup: () => ({ v$: useVuelidate() }),
   data () {
     return {
       isLoading: false,
       error: false,
       slots: []
+    }
+  },
+  validations: {
+    slots: {
+      function () {
+        return !this.isSlotsOverlaps
+      }
     }
   },
   computed: {
@@ -66,6 +78,40 @@ export default {
         slotsWithPosition[i].slotNumber = i + 1
       }
       return slotsWithPosition
+    },
+    isSlotsOverlaps () {
+      // For each slot
+      for (let i = 0; i < this.slots.length; i++) {
+        const currentSlot = this.slots[i]
+        // Check if current slot startDate if after all the previous slots endDate
+        for (let j = 0; j < i; j++) {
+          const previousSlot = this.slots[j]
+          const today = dayjs()
+          const previousSlotEndDate = dayjs(today.format('YYYY/MM/DD') + ' ' + previousSlot.slotEndHour, 'YYYY/MM/DD HH:mm')
+          const currentSlotStartDate = dayjs(today.format('YYYY/MM/DD') + ' ' + currentSlot.slotStartHour, 'YYYY/MM/DD HH:mm')
+          if (currentSlotStartDate.isBefore(previousSlotEndDate)) {
+            return true
+          }
+        }
+        // Check if current slot endDate if before all the next slots startDate
+        for (let h = i + 1; h < this.slots.length; h++) {
+          const nextSlot = this.slots[h]
+          const today = dayjs()
+          const nextSlotStartDate = dayjs(today.format('YYYY/MM/DD') + ' ' + nextSlot.slotStartHour, 'YYYY/MM/DD HH:mm')
+          const currentSlotEndDate = dayjs(today.format('YYYY/MM/DD') + ' ' + currentSlot.slotEndHour, 'YYYY/MM/DD HH:mm')
+          if (currentSlotEndDate.isAfter(nextSlotStartDate)) {
+            return true
+          }
+        }
+      }
+      return false
+    },
+    formErrorList () {
+      return {
+        slots: (this.v$.slots.$invalid && this.v$.slots.$dirty)
+          ? this.$t('slotsOverlaps')
+          : ''
+      }
     }
   },
   watch: {
@@ -77,6 +123,13 @@ export default {
     this.getSchoolSlotsConfiguration()
   },
   methods: {
+    submit () {
+      if (this.v$.$invalid) {
+        this.v$.$touch()
+      } else {
+        this.saveSchoolSlotConfiguration()
+      }
+    },
     getSchoolSlotsConfiguration () {
       this.isLoading = true
       getSchoolSlotConfiguration(this.selectedSchool.schoolId).then((data) => {
@@ -156,6 +209,10 @@ footer {
   width: 100%;
   display: flex;
   justify-content: flex-end;
+
+  .right {
+    text-align: right;
+  }
 }
 </style>
 
@@ -166,6 +223,7 @@ footer {
   "addSlot": "Ajouter un créneau",
   "submit": "Valider les créneaux",
   "success": "Créneaux mis à jour",
-  "error": "Échec de l'enregistrement"
+  "error": "Échec de l'enregistrement",
+  "slotsOverlaps": "Les créneaux ne doivent pas se chevaucher"
 }
 </i18n>
