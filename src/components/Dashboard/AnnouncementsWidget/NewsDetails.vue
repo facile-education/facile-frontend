@@ -16,10 +16,6 @@
       class="detailed-news"
       :class="{'is-school-news': detailedNews.isSchoolNews}"
     >
-      <h2 v-if="!isInModal">
-        {{ detailedNews.title }}
-      </h2>
-
       <div class="first-line">
         <div class="thumbnail">
           <img
@@ -59,6 +55,10 @@
           </div>
         </div>
       </div>
+
+      <h2 v-if="!isInModal">
+        {{ detailedNews.title }}
+      </h2>
 
       <div
         v-if="detailedNews.isEditable"
@@ -142,7 +142,7 @@ export default {
     },
     isInModal: {
       type: Boolean,
-      default: true
+      default: false
     }
   },
   emits: ['update', 'delete'],
@@ -193,7 +193,7 @@ export default {
     },
     confirmDeleteNews () {
       this.$store.dispatch('warningModal/addWarning', {
-        text: this.$t('removalConfirmMessage'),
+        text: this.initNews.isSchoolNews ? this.$t('removalAnnouncementConfirmMessage', { target: this.initNews.title }) : this.$t('removalGroupNewsConfirmMessage'),
         lastAction: { fct: this.deleteNews, params: [] }
       })
     },
@@ -230,7 +230,8 @@ ul {
 }
 
 h2 {
-  margin: 1rem 0;
+  margin: 0;
+  padding-left: 99px;
 }
 
 .detailed-news {
@@ -348,6 +349,7 @@ h2 {
   "delete": "Supprimer",
   "errorPlaceholder": "Oups, une erreur est survenue...",
   "contentPlaceholder": "Aucun contenu pour cette actualité",
-  "removalConfirmMessage": "L'actualité sera définitivement perdue"
+  "removalAnnouncementConfirmMessage": "Veuillez confirmer la suppression de l'annonce \"{target}\"",
+  "removalGroupNewsConfirmMessage": "Supprimer cette information ?"
 }
 </i18n>

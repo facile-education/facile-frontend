@@ -21,50 +21,49 @@
       class="placeholder"
     />
     <div
-      v-else-if="announcementsList.length === 0"
+      v-else-if="announcementsList.length === 0 && !isFirstLoad"
       v-t="'emptyPlaceholder'"
       class="placeholder"
     />
-    <div
-      v-else
-      class="announcements-container"
-    >
-      <div
-        class="left-linear"
-        :class="{'hidden' : !canScrollToLeft}"
-      />
+    <div v-else>
+      <div class="announcements-container">
+        <div
+          class="left-linear"
+          :class="{'hidden' : !canScrollToLeft}"
+        />
 
-      <ul
-        ref="announcementsList"
-        class="announcements-list"
-        :class="{'phone': mq.phone}"
-        @scroll="updateScrollPosition"
-      >
-        <li
-          v-for="(announcement, index) in announcementsList"
-          :key="index"
+        <ul
+          ref="announcementsList"
+          class="announcements-list"
+          :class="{'phone': mq.phone}"
+          @scroll="updateScrollPosition"
         >
-          <AnnouncementItem
-            :announcement="announcement"
-            :is-in-horizontal-scroll="true"
-            @markAsRead="announcement.hasRead=true"
-            @updateAnnouncement="refresh"
-            @deleteAnnouncement="refresh"
-          />
-        </li>
-      </ul>
+          <li
+            v-for="(announcement, index) in announcementsList"
+            :key="index"
+          >
+            <AnnouncementItem
+              :announcement="announcement"
+              :is-in-horizontal-scroll="true"
+              @markAsRead="announcement.hasRead=true"
+              @updateAnnouncement="refresh"
+              @deleteAnnouncement="refresh"
+            />
+          </li>
+        </ul>
 
-      <div
-        class="right-linear"
-        :class="{'hidden' : !canScrollToRight}"
-      />
-    </div>
-    <div class="footer">
-      <button
-        v-t="'showMore'"
-        class="show-more"
-        @click="showMore"
-      />
+        <div
+          class="right-linear"
+          :class="{'hidden' : !canScrollToRight}"
+        />
+      </div>
+      <div class="footer">
+        <button
+          v-t="'showMore'"
+          class="show-more"
+          @click="showMore"
+        />
+      </div>
     </div>
   </section>
 </template>
@@ -86,6 +85,7 @@ export default {
       announcementsList: [],
       nbUnreadAnnouncements: 0,
       isLoading: false,
+      isFirstLoad: true,
       error: false,
       isAllAnnouncementsModalDisplayed: false,
       displayedAnnouncementIndex: 0,
@@ -147,6 +147,7 @@ export default {
       this.isLoading = true
       getSchoolNews(this.fromDate, nbAnnouncementsInWidget, false, this.unReadOnly).then((data) => {
         this.isLoading = false
+        this.isFirstLoad = false
         if (data.success) {
           this.error = false
           this.announcementsList = data.news
@@ -177,7 +178,7 @@ section {
 }
 
 .placeholder {
-  flex: 1;
+  @extend %widget-placeholder;
 }
 
 .announcements-container {
@@ -207,6 +208,14 @@ ul {
 
   &:not(.phone)::-webkit-scrollbar{
     display: none;
+  }
+
+  &.phone {
+    scroll-snap-type: x mandatory;
+
+    li {
+      scroll-snap-align: center;
+    }
   }
 }
 

@@ -78,7 +78,7 @@ import Layout from '@/router/layouts/BannerLayout.vue'
 import DiaryEventItem from '@components/Dashboard/DiaryWidget/DiaryEventItem.vue'
 import dayjs from 'dayjs'
 import { getEvents } from '@/api/dashboard/agenda.service'
-import { diaryEventModalPaginationSize } from '@/constants/dashboardConstants'
+import { allDiaryEventsPaginationSize } from '@/constants/dashboardConstants'
 import AllDiaryEventsHeader from '@components/Dashboard/DiaryWidget/AllDiaryEvents/AllDiaryEventsHeader.vue'
 import DiaryEventDetails from '@components/Dashboard/DiaryWidget/DiaryEventDetails.vue'
 let oldScrollTop = 0
@@ -150,7 +150,7 @@ export default {
     },
     loadDiaryEvents () {
       this.isLoading = true
-      getEvents(this.eventList.length, diaryEventModalPaginationSize, this.unReadOnly).then((data) => {
+      getEvents(this.eventList.length, allDiaryEventsPaginationSize, this.unReadOnly).then((data) => {
         this.isLoading = false
         if (data.success) {
           this.error = false

@@ -1,3 +1,5 @@
+@import "colors";
+
 %widget {
   margin-bottom: 1rem;
 }
@@ -9,6 +11,19 @@
 
 %widget-header {
   margin-bottom: 0.3em;
+}
+
+%widget-placeholder {
+  height: 45px;
+  margin-top: 0.5rem;
+  background-color: $color-not-white-bg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1rem;
 }
 
 %dashboard-header-pellet {

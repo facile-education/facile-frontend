@@ -1,10 +1,14 @@
 <template>
   <div class="activity-filter">
-    <div
+    <button
       v-t="'filter'"
       class="filter-label"
+      @click="isFiltersDisplayed=!isFiltersDisplayed"
     />
-    <div class="filters">
+    <div
+      v-if="isFiltersDisplayed"
+      class="filters"
+    >
       <ol class="type-filter">
         <li
           v-for="(type, index) in availableActivityTypes"
@@ -57,7 +61,8 @@ export default {
       filter: undefined,
       availableActivityTypes: ['news', 'docs', 'schoolLife', 'sessions'],
       groupList: [],
-      isLoadingGroups: false
+      isLoadingGroups: false,
+      isFiltersDisplayed: false
     }
   },
   created () {
@@ -98,6 +103,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.filter-label {
+  height: 1.25rem;
+  cursor: pointer;
+  background-color: transparent;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
 .activity-filter {
   margin-bottom: 5px
 }

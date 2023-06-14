@@ -16,7 +16,7 @@
       class="placeholder"
     />
     <div
-      v-else-if="eventList.length === 0"
+      v-else-if="eventList.length === 0 && !isFirstLoad"
       v-t="'emptyPlaceholder'"
       class="placeholder"
     />
@@ -68,6 +68,7 @@ export default {
       eventList: [],
       nbNewEvents: 0,
       isLoading: false,
+      isFirstLoad: true,
       error: false,
       isAllEventsModalDisplayed: false
     }
@@ -106,6 +107,7 @@ export default {
       this.isLoading = true
       getEvents(0, nbDiaryEventInWidget, this.unReadOnly).then((data) => {
         this.isLoading = false
+        this.isFirstLoad = false
         if (data.success) {
           this.error = false
           this.eventList = data.events
@@ -134,7 +136,7 @@ section {
 }
 
 .placeholder {
-  height: 106px;
+  @extend %widget-placeholder;
 }
 
 .period {

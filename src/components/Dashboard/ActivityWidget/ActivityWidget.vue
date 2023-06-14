@@ -7,6 +7,7 @@
     />
 
     <ActivityFilter
+      v-if="!isParent"
       :initial-filter="filter"
       @updateFilter="updateFilter"
     />
@@ -21,7 +22,7 @@
       class="placeholder"
     />
     <div
-      v-else-if="readActivities.length === 0 && unreadActivities.length === 0"
+      v-else-if="readActivities.length === 0 && unreadActivities.length === 0 && !isFirstLoad"
       v-t="'emptyPlaceholder'"
       class="placeholder"
     />
@@ -62,6 +63,7 @@
           <ActivityItem
             :activity="activity"
             :is-last="activity.activityId === lastActivity.activityId"
+            @markAsRead="activity.hasRead=true"
             @getNextActivities="getActivities"
             @refresh="refresh"
           />
@@ -84,6 +86,7 @@
 
 <script>
 import activityConstants from '@/constants/activityConstants'
+import { allActivitiesPaginationSize, nbActivityInWidget } from '@/constants/dashboardConstants'
 import dayjs from 'dayjs'
 import ActivityHeader from '@components/Dashboard/ActivityWidget/ActivityHeader.vue'
 import { getDashboardActivity } from '@/api/dashboard.service'
@@ -103,6 +106,7 @@ export default {
   data () {
     return {
       isLoading: false,
+      isFirstLoad: true,
       error: false,
       filter: {
         activityTypes: [],
@@ -115,6 +119,9 @@ export default {
     }
   },
   computed: {
+    isParent () {
+      return this.$store.state.user.isParent
+    },
     separatorLabel () {
       return this.$t('newsSince') + dayjs(this.lastDashboardAccessDate, 'YYYY-MM-DD HH:mm').format('DD MMMM YYYY')
     },
@@ -187,7 +194,7 @@ export default {
       getDashboardActivity( // TODO call with memberShip boolean
         this.filter.selectedGroup ? this.filter.selectedGroup.groupId : 0,
         this.displayAll ? this.lastActivityDate.format('YYYY-MM-DD HH:mm:sss') : dayjs().format('YYYY-MM-DD HH:mm:sss'),
-        this.displayAll ? activityConstants.nbActivityPerPage : activityConstants.nbActivityInWidget,
+        this.displayAll ? allActivitiesPaginationSize : nbActivityInWidget,
         this.filterBooleans.withNews,
         this.filterBooleans.withDocs,
         this.filterBooleans.withMemberShip,
@@ -195,6 +202,7 @@ export default {
         this.filterBooleans.withSession
       ).then((data) => {
         this.isLoading = false
+        this.isFirstLoad = false
         if (data.success) {
           this.error = false
           this.nbNewActivities = data.nbNewActivities
@@ -273,7 +281,7 @@ ul {
 }
 
 .placeholder {
-  height: 106px;
+  @extend %widget-placeholder;
 }
 
 .footer {

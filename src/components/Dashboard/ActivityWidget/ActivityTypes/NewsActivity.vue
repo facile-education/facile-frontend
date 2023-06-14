@@ -2,14 +2,15 @@
   <div
     class="news-activity"
     tabindex="0"
-    @click="isDetailsModalDisplayed=true"
-    @keyup.enter="isDetailsModalDisplayed=true"
+    :title="$t('selectToConsult')"
+    @click="showDetails"
+    @keyup.enter="showDetails"
   >
     <div class="icon">
       <img
         class="img-icon"
         :src="thumbnail"
-        alt="document icon"
+        alt="thumbnail"
       >
     </div>
 
@@ -34,7 +35,10 @@
       </div>
     </div>
 
-    <div class="date">
+    <div
+      class="date"
+      :title="formattedDateLong"
+    >
       {{ formattedDate }}
     </div>
 
@@ -45,6 +49,7 @@
       <button
         class="option"
         :aria-label="$t('update')"
+        :title="$t('update')"
         @click.stop="isUpdateModalDisplayed = true"
       >
         <img
@@ -55,6 +60,7 @@
       <button
         class="option"
         :aria-label="$t('delete')"
+        :title="$t('delete')"
         @click.stop="confirmNewsDeletion"
       >
         <img
@@ -92,7 +98,7 @@
 <script>
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
-import { deleteNews } from '@/api/dashboard/news.service'
+import { deleteNews, setNewsRead } from '@/api/dashboard/news.service'
 import BaseIcon from '@components/Base/BaseIcon.vue'
 import { defaultImagesKeys } from '@/constants/icons'
 const SaveNewsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/SaveNewsModal.vue'))
@@ -107,7 +113,7 @@ export default {
       required: true
     }
   },
-  emits: ['updateNews', 'deleteNews'],
+  emits: ['updateNews', 'deleteNews', 'markAsRead'],
   data () {
     return {
       isDetailsModalDisplayed: false,
@@ -124,9 +130,26 @@ export default {
     },
     formattedDate () {
       return dayjs(this.news.modificationDate, 'YYYY-MM-DD HH:mm').calendar()
+    },
+    formattedDateLong () {
+      return dayjs(this.news.modificationDate, 'YYYY-MM-DD HH:mm').format(this.$t('on') + ' DD MMMM YYYY ' + this.$t('at') + ' HH:mm')
     }
   },
   methods: {
+    showDetails () {
+      if (!this.news.hasRead) {
+        setNewsRead(this.news.newsId, true).then((data) => {
+          if (data.success) {
+            this.$emit('markAsRead')
+            this.isDetailsModalDisplayed = true
+          } else {
+            console.error('Error')
+          }
+        })
+      } else {
+        this.isDetailsModalDisplayed = true
+      }
+    },
     confirmNewsDeletion () {
       this.$store.dispatch('warningModal/addWarning', {
         text: this.$t('deleteNewsWarning'),
@@ -240,10 +263,13 @@ button {
 
 <i18n locale="fr">
 {
+  "on": "Le",
+  "at": "à",
   "see": "Voir",
   "groups-activity": "Fil d'activité de mes groupes",
   "update": "Modifier cette information",
   "delete": "Supprimer cette information",
-    "deleteNewsWarning": "Supprimer cette information ?"
+  "deleteNewsWarning": "Supprimer cette information ?",
+  "selectToConsult": "Sélectionner pour consulter"
 }
 </i18n>

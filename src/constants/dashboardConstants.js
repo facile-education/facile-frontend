@@ -1,8 +1,11 @@
 const nbDiaryEventInWidget = 3
-const diaryEventModalPaginationSize = 10
+const allDiaryEventsPaginationSize = 10
 
 const nbAnnouncementsInWidget = 5
-const allAnnouncementModalPaginationSize = 20
+const allAnnouncementsPaginationSize = 20
+
+const nbActivityInWidget = 5
+const allActivitiesPaginationSize = 20
 
 const homeworksTypes = {
   SIMPLE_INSTRUCTION: 1,
@@ -12,10 +15,12 @@ const homeworksTypes = {
 const nbHomeworksInWidget = 5
 
 export {
+  nbActivityInWidget,
+  allActivitiesPaginationSize,
   nbDiaryEventInWidget,
-  diaryEventModalPaginationSize,
+  allDiaryEventsPaginationSize,
   nbAnnouncementsInWidget,
-  allAnnouncementModalPaginationSize,
+  allAnnouncementsPaginationSize,
   homeworksTypes,
   nbHomeworksInWidget
 }

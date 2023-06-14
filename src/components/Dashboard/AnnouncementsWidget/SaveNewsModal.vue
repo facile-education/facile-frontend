@@ -4,7 +4,7 @@
     data-test="update-news-modal"
     :modal="true"
     :draggable="true"
-    @close="onClose"
+    @close="confirmClosure"
   >
     <template #header>
       <span v-t="isCreation ? (isSchoolNews ? 'schoolCreationTitle' : 'creationTitle') : (isSchoolNews ? 'schoolUpdateTitle' : 'updateTitle')" />
@@ -98,6 +98,7 @@
       <AttachedFiles
         v-model="attachedFiles"
         :read-only="false"
+        :max-height="mq.phone ? '120px' : '300px'"
         @removeAttachedFile="removeFile"
       />
 
@@ -108,6 +109,10 @@
         <span v-t="'markAsUnreadForAll'" />
         <PentilaToggleSwitch
           v-model="markAsUnreadForAll"
+        />
+        <InformationIcon
+          class="info"
+          :text="$t('switchHelp')"
         />
       </div>
     </template>
@@ -151,6 +156,7 @@ import {
 } from '@/api/dashboard/news.service'
 import { defaultImagesKeys } from '@/constants/icons'
 import ThumbnailSelector from '@components/Base/ThumbnailSelector.vue'
+import InformationIcon from '@components/Base/InformationIcon.vue'
 const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal.vue'))
 const CKEditor = defineAsyncComponent({
   loader: async () => { return (await import('@ckeditor/ckeditor5-vue')).component }
@@ -165,7 +171,7 @@ const isNotEmpty = (list) => validators.isNotEmpty(list)
 
 export default {
   name: 'SaveNewsModal',
-  components: { ThumbnailSelector, AttachedFiles, FilePickerModal, CustomDatePicker, CKEditor },
+  components: { InformationIcon, ThumbnailSelector, AttachedFiles, FilePickerModal, CustomDatePicker, CKEditor },
   inject: ['mq'],
   props: {
     initNews: {
@@ -189,6 +195,8 @@ export default {
       thumbnailUrl: this.isSchoolNews ? 'default_school_news_0' : 'default_news_0',
       attachedFiles: [],
       markAsUnreadForAll: false,
+
+      initialForm: undefined,
 
       editor: InlineEditor,
       editorConfig: {
@@ -254,6 +262,7 @@ export default {
     }
   },
   created () {
+    this.setInitialForm()
     this.$store.dispatch('misc/incrementModalCount')
     if (!this.isCreation) {
       this.title = this.initNews.title
@@ -272,6 +281,17 @@ export default {
     input.select()
   },
   methods: {
+    setInitialForm () {
+      this.initialForm = {
+        title: this.title,
+        content: this.content,
+        releaseDate: this.releaseDate,
+        populations: [...this.populations],
+        thumbnailId: this.thumbnailId,
+        attachedFiles: [...this.attachedFiles],
+        markAsUnreadForAll: this.markAsUnreadForAll
+      }
+    },
     selectImage (tempFile) {
       this.thumbnailId = tempFile.id
       this.thumbnailUrl = tempFile.fileUrl
@@ -300,6 +320,7 @@ export default {
           this.attachedFiles = data.news.attachedFiles
           this.thumbnailId = data.news.thumbnailId
           this.thumbnailUrl = data.news.thumbnailUrl
+          this.setInitialForm()
         } else {
           console.error('Error')
         }
@@ -370,6 +391,9 @@ export default {
       addNews(this.title, this.content, this.isSchoolNews, false, this.thumbnailId, this.releaseDate, this.populations, this.attachedFileIds).then((data) => {
         this.isProcessingSave = false
         if (data.success) {
+          if (this.releaseDate.isAfter(dayjs())) {
+            this.$store.dispatch('popups/pushPopup', { message: this.isSchoolNews ? this.$t('announcementCreationSuccess') : this.$t('groupNewsCreationSuccess'), type: 'success' })
+          }
           this.$emit('create')
           this.onClose()
         } else {
@@ -382,12 +406,35 @@ export default {
       editNews(this.initNews.newsId, this.title, this.content, false, this.thumbnailId, this.releaseDate, this.populations, this.attachedFileIds, this.markAsUnreadForAll).then((data) => {
         this.isProcessingSave = false
         if (data.success) {
+          if (this.releaseDate.isAfter(dayjs())) {
+            this.$store.dispatch('popups/pushPopup', { message: this.isSchoolNews ? this.$t('announcementUpdateSuccess') : this.$t('groupNewsUpdateSuccess'), type: 'success' })
+          }
           this.$emit('update')
           this.onClose()
         } else {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
         }
       })
+    },
+    confirmClosure () {
+      const actualForm = {
+        title: this.title,
+        content: this.content,
+        releaseDate: this.releaseDate,
+        populations: this.populations,
+        thumbnailId: this.thumbnailId,
+        attachedFiles: this.attachedFiles,
+        markAsUnreadForAll: this.markAsUnreadForAll
+      }
+
+      if (JSON.stringify(actualForm) !== JSON.stringify(this.initialForm)) {
+        this.$store.dispatch('warningModal/addWarning', {
+          text: this.$t('confirmClosure'),
+          lastAction: { fct: this.onClose }
+        })
+      } else {
+        this.onClose()
+      }
     },
     onClose () {
       this.$store.dispatch('misc/decreaseModalCount')
@@ -401,7 +448,7 @@ export default {
 .update-news-modal {
   .window-body {
     position: relative;
-    overflow-y: auto;
+    overflow-y: visible;
     max-height: 70vh !important;
   }
 }
@@ -451,6 +498,11 @@ export default {
   }
 }
 
+.attached-files {
+  max-height: 300px;
+  overflow: auto;
+}
+
 .unread-checkbox {
   display: flex;
   align-items: center;
@@ -458,6 +510,10 @@ export default {
 
   span {
     margin-right: 1em;
+  }
+
+  .info {
+    margin-left: 1rem;
   }
 }
 </style>
@@ -479,6 +535,12 @@ export default {
   "sizeLimit1": "Ne doit pas dépasser ",
   "sizeLimit2": " caractères",
   "selectPopulations": "Veuillez séléctionner une population cible",
-  "dateInPast": "La date de parution ne doit pas se situer dans le passé"
+  "dateInPast": "La date de parution ne doit pas se situer dans le passé",
+  "switchHelp": "Cette option permet de notifier les destinataires et l'annonce sera considérée comme non lue",
+  "confirmClosure": "Souhaitez-vous fermer cette fenêtre ? (Vous perdrez son contenu)",
+  "announcementCreationSuccess": "Annonce créée",
+  "groupNewsCreationSuccess": "Information créée",
+  "announcementUpdateSuccess": "Annonce modifiée",
+  "groupNewsUpdateSuccess": "Information modifiée"
 }
 </i18n>
