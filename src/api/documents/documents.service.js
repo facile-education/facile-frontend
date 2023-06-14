@@ -18,7 +18,7 @@ function getGlobalDocumentsProperties () {
 }
 
 function getDocumentGroupActivity (groupId, maxDate, nbResults) {
-  return axios.get(constants.JSON_WS_URL + DOCUMENTS_PATH + 'get-document-group-activity', {
+  return axios.get(constants.JSON_WS_URL + DOCUMENTS_PATH + '/get-document-group-activity', {
     params: {
       groupId,
       maxDate,

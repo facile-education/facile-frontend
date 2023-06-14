@@ -290,20 +290,17 @@ export default {
   white-space: nowrap;
 }
 
-.input, .category-selection, .redirection {
+.first-line, .input, .category-selection, .redirection {
   margin-bottom: 15px;
 }
 
 @media screen and (min-width: 700px) {
   .first-line {
     display: flex;
+    gap: 1rem;
 
     .input {
       flex: 1
-    }
-
-    .category-selection {
-      margin-left: 15px;
     }
   }
 }

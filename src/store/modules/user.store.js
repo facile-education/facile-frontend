@@ -156,6 +156,9 @@ export const actions = {
         commit('initUserInformations', { userId: 0 })
       })
   },
+  setSelectedSchool ({ commit }, school) {
+    commit('setSelectedSchool', school)
+  },
   removePicture ({ commit }) {
     userService.removeUserPicture().then(
       (data) => {

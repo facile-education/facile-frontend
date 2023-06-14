@@ -4,7 +4,6 @@
     data-test="news-details-modal"
     :modal="true"
     :draggable="true"
-    :width="600"
     @close="onClose"
   >
     <template #header>
@@ -14,6 +13,7 @@
     <template #body>
       <NewsDetails
         :init-news="initNews"
+        :is-in-modal="true"
         @update="$emit('update')"
         @delete="deleteNews"
       />

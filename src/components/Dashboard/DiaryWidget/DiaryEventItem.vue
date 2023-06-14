@@ -7,6 +7,7 @@
       class="diary-event"
       :class="{'theme-border-color': !event.hasRead, 'theme-light-background-color': isSelected, 'theme-hover-light-background-color': isSelectionMode}"
       tabindex="0"
+      :title="$t('selectToConsult')"
       @keyup.enter="handleClick"
       @click="handleClick"
     >
@@ -19,10 +20,7 @@
         </b>
       </div>
 
-      <div
-        class="content"
-        :title="event.title"
-      >
+      <div class="content">
         <div class="meta-data">
           <span v-if="event.location">{{ event.location + ' - ' }}</span>
           <span>{{ eventHour }}</span>
@@ -38,6 +36,8 @@
       >
         <button
           class="option"
+          :aria-label="$t('update')"
+          :title="$t('update')"
           @click.stop="isUpdateModalDisplayed = true"
         >
           <img
@@ -47,6 +47,8 @@
         </button>
         <button
           class="option"
+          :aria-label="$t('delete')"
+          :title="$t('delete')"
           @click.stop="confirmDeleteEvent"
         >
           <img
@@ -188,7 +190,7 @@ export default {
     },
     confirmDeleteEvent () {
       this.$store.dispatch('warningModal/addWarning', {
-        text: this.$t('removalConfirmMessage'),
+        text: this.$t('removalConfirmMessage', { target: this.event.title }),
         lastAction: { fct: this.deleteEvent, params: [] }
       })
     },
@@ -306,6 +308,7 @@ export default {
 
 <i18n locale="fr">
 {
-  "removalConfirmMessage": "L'événement sera définitivement perdu"
+  "removalConfirmMessage": "Veuillez confirmer la suppression de l'évènement \"{target}\"",
+  "selectToConsult": "Sélectionner pour consulter"
 }
 </i18n>

@@ -10,6 +10,7 @@
 
     <template #body>
       <div class="body">
+        <PentilaSpinner v-if="isLoading" />
         <div
           v-if="initialThumbnailUrl && image===null"
           class="placeholder"
@@ -48,23 +49,13 @@
             />
           </div>
         </div>
-        <div class="buttons">
-          <PentilaButton
-            v-t="'openFilePicker'"
-            class="button"
-            @click="isFilePickerDisplayed=true"
-          />
-          <div
-            v-t="'or'"
-            class="or"
-          />
-          <FilePickerButton
-            v-t="'selectButton'"
-            class="button"
-            accept="image/*"
-            @change="loadImage($event)"
-          />
-        </div>
+
+        <SelectFilesButtons
+          :label="$t('changePictureLabel')"
+          :images-only="true"
+          @load="loadImage"
+          @select-files="selectImageFromApp"
+        />
       </div>
     </template>
 
@@ -76,32 +67,18 @@
       />
     </template>
   </PentilaWindow>
-
-  <teleport
-    v-if="isFilePickerDisplayed"
-    to="body"
-  >
-    <FilePickerModal
-      :images-only="true"
-      @addedFiles="doSelectFilesAction"
-      @close="isFilePickerDisplayed=false"
-    />
-  </teleport>
 </template>
 
 <script>
 import { Cropper, Preview } from 'vue-advanced-cropper'
 import 'vue-advanced-cropper/dist/style.css'
 import { getResource, uploadTmpFile } from '@/api/documents/file.service'
-import { defineAsyncComponent } from 'vue'
-import FilePickerButton from '@components/FilePicker/FilePickerButton.vue'
-const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal'))
+import SelectFilesButtons from '@components/FilePicker/SelectFilesButtons.vue'
 
 export default {
   name: 'ImagePickerModal',
   components: {
-    FilePickerButton,
-    FilePickerModal,
+    SelectFilesButtons,
     Cropper,
     Preview
   },
@@ -120,7 +97,8 @@ export default {
         image: null
       },
       image: null,
-      isFilePickerDisplayed: false
+      isFilePickerDisplayed: false,
+      isLoading: false
     }
   },
   computed: {
@@ -134,9 +112,12 @@ export default {
     }
   },
   methods: {
-    doSelectFilesAction (files) {
-      const file = files[0]
-      getResource(file.id, 0, true).then((data) => {
+    reset () {
+      this.image = null
+    },
+    selectImageFromApp (files) {
+      const image = files[0]
+      getResource(image.id, 0, true).then((data) => {
         if (data.success) {
           this.loadImageAsBase64(data.fileUrl)
         } else {
@@ -144,8 +125,17 @@ export default {
         }
       })
     },
-    reset () {
-      this.image = null
+    loadImageAsBase64 (imageUrl) {
+      return fetch(imageUrl)
+        .then(response => response.blob())
+        .then(blob => {
+          return new Promise((resolve, reject) => {
+            const reader = new FileReader()
+            reader.onload = (e) => { this.image = e.target.result }
+            reader.onerror = reject
+            reader.readAsDataURL(blob)
+          })
+        })
     },
     loadImage (event) {
       // Reference to the DOM input element
@@ -164,18 +154,6 @@ export default {
         reader.readAsDataURL(input.files[0])
       }
     },
-    loadImageAsBase64 (imageUrl) {
-      return fetch(imageUrl)
-        .then(response => response.blob())
-        .then(blob => {
-          return new Promise((resolve, reject) => {
-            const reader = new FileReader()
-            reader.onload = (e) => { this.image = e.target.result }
-            reader.onerror = reject
-            reader.readAsDataURL(blob)
-          })
-        })
-    },
     onChange ({ coordinates, image }) {
       this.result = {
         coordinates,
@@ -184,11 +162,13 @@ export default {
     },
     onConfirm () {
       const { canvas } = this.$refs.cropper.getResult()
-      if (canvas) {
+      if (canvas && !this.isLoading) {
         canvas.toBlob(blob => {
           this.fileName = 't.jpeg'
           this.$emit('save', { blob, fileName: this.fileName })
+          this.isLoading = true
           uploadTmpFile(new File([blob], this.fileName)).then((data) => {
+            this.isLoading = false
             if (data.success) {
               this.$emit('createdTmpFile', data.uploadedFile)
             } else {
@@ -208,6 +188,7 @@ export default {
 
 <style lang="scss" scoped>
 .body {
+  position: relative;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -252,39 +233,12 @@ export default {
   }
 }
 
-.buttons {
-  .button, .or {
-    margin-bottom: 1rem;
-  }
-
-  .button {
-    width: 202px;
-  }
-
-  .or {
-    font-size: 1.5rem;
-  }
-}
-
-@media screen and (min-width: 700px) {
-  .buttons {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    .button, .or {
-      margin-bottom: 0;
-    }
-  }
-}
 </style>
 
 <i18n locale="fr">
 {
   "header": "Choisir une image",
   "saveButton": "Valider",
-  "or": "ou",
-  "selectButton": "Depuis le poste de travail",
-  "openFilePicker": "Depuis l'application"
+  "changePictureLabel": "Changer l'image"
 }
 </i18n>

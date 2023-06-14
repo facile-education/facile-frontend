@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="read-info-user"
-    :class="{'unread': !user.hasRead}"
-  >
+  <div class="read-info-user">
     <div class="userName">
       {{ user.fullName }}
     </div>
@@ -26,7 +23,7 @@ export default {
   computed: {
     formattedReadDate () {
       if (this.user.readDate) {
-        return dayjs(this.user.readDate, 'YYYY-MM-DD HH:mm:ss').calendar()
+        return this.$t('read') + ' (' + dayjs(this.user.readDate, 'YYYY-MM-DD HH:mm:ss').calendar() + ')'
       } else {
         return ''
       }
@@ -42,15 +39,12 @@ export default {
   align-items: center;
   justify-content: space-between;
   padding-right: 2rem;
-
-  &.unread {
-    font-weight: bold;
-  }
 }
 </style>
 
 <i18n locale="fr" >
 {
-  "unread": "Non lu"
+  "unread": "Non lu",
+  "read": "Lu"
 }
 </i18n>

@@ -15,42 +15,41 @@
       class="placeholder"
     />
     <div
-      v-else-if="homeworkList.length === 0"
+      v-else-if="homeworkList.length === 0 && !isFirstLoad"
       v-t="'emptyPlaceholder'"
       class="placeholder"
     />
-    <ul
-      v-else
-      class="homeworks-by-day"
-    >
-      <li
-        v-for="day in homeworksByDay"
-        :key="day.dayId"
-      >
-        <div class="period">
-          {{ day.dayName }}
-        </div>
+    <div v-else>
+      <ul class="homeworks-by-day">
+        <li
+          v-for="day in homeworksByDay"
+          :key="day.dayId"
+        >
+          <div class="period">
+            {{ day.dayName }}
+          </div>
 
-        <ul class="homework-list">
-          <li
-            v-for="homework in day.homeworkList"
-            :key="homework.homeworkId"
-          >
-            <HomeworkItem
-              :homework="homework"
-              @updateDoneStatus="updateHomeworkDoneStatus(homework, $event)"
-            />
-          </li>
-        </ul>
-      </li>
-    </ul>
+          <ul class="homework-list">
+            <li
+              v-for="homework in day.homeworkList"
+              :key="homework.homeworkId"
+            >
+              <HomeworkItem
+                :homework="homework"
+                @updateDoneStatus="updateHomeworkDoneStatus(homework, $event)"
+              />
+            </li>
+          </ul>
+        </li>
+      </ul>
 
-    <div class="footer">
-      <button
-        v-t="'showMore'"
-        class="show-more"
-        @click="$router.push({ name: 'Planning' })"
-      />
+      <div class="footer">
+        <button
+          v-t="'showMore'"
+          class="show-more"
+          @click="$router.push({ name: 'Planning' })"
+        />
+      </div>
     </div>
   </section>
 </template>
@@ -74,8 +73,9 @@ export default {
   },
   data () {
     return {
-      isLoading: false,
       error: false,
+      isLoading: false,
+      isFirstLoad: true,
       undoneOnly: false,
       homeworkList: [],
       nbHomeworksUndone: 0
@@ -117,6 +117,7 @@ export default {
       this.isLoading = true
       getHomeworks(this.userId, dayjs().format('YYYY-MM-DD HH:mm'), this.undoneOnly).then((data) => {
         this.isLoading = false
+        this.isFirstLoad = false
         if (data.success) {
           this.error = false
           this.homeworkList = data.homeworks

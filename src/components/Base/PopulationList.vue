@@ -51,7 +51,6 @@ export default {
 <style lang="scss" scoped>
 .population-list {
   position: relative;
-  flex: 1;
 }
 
 .lonely-population {
@@ -77,7 +76,7 @@ button {
 ul {
   position: absolute;
   top: 100%;
-  right: 0;
+  left: 0;
   width: min(80vw, 350px);
   max-height: 60vh;
   overflow-y: auto;

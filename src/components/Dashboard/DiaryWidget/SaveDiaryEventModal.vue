@@ -4,7 +4,7 @@
     data-test="update-diary-event-modal"
     :modal="true"
     :draggable="true"
-    @close="onClose"
+    @close="confirmClosure"
   >
     <template #header>
       <span v-t="isCreation ? 'creationTitle' : 'updateTitle'" />
@@ -102,6 +102,10 @@
         <PentilaToggleSwitch
           v-model="markAsUnreadForAll"
         />
+        <InformationIcon
+          class="info"
+          :text="$t('switchHelp')"
+        />
       </div>
     </template>
 
@@ -125,6 +129,7 @@ import { getSchoolNewsBroadcastGroups } from '@/api/dashboard/news.service'
 import { defineAsyncComponent } from 'vue'
 import CustomDatePicker from '@components/Base/CustomDatePicker.vue' // TODO: Check time and optimise if necessary
 import InlineEditor from '@ckeditor/ckeditor5-build-inline'
+import InformationIcon from '@components/Base/InformationIcon.vue'
 // const CustomDatePicker = defineAsyncComponent(() => import('@/components/Base/CustomDatePicker.vue'))
 // const InlineEditor = defineAsyncComponent(() => import('@ckeditor/ckeditor5-build-inline'))
 const CKEditor = defineAsyncComponent({
@@ -139,7 +144,7 @@ const isNotEmpty = (list) => validators.isNotEmpty(list)
 
 export default {
   name: 'SaveDiaryEventModal',
-  components: { CustomDatePicker, CKEditor },
+  components: { InformationIcon, CustomDatePicker, CKEditor },
   props: {
     initEvent: {
       type: Object,
@@ -157,6 +162,8 @@ export default {
       endDate: dayjs().add(1, 'hour').minute(0),
       populations: [],
       markAsUnreadForAll: false,
+
+      initialForm: undefined,
 
       editor: InlineEditor,
       editorConfig: {
@@ -229,6 +236,7 @@ export default {
     }
   },
   created () {
+    this.setInitialForm()
     this.$store.dispatch('misc/incrementModalCount')
     if (!this.isCreation) {
       this.title = this.initEvent.title
@@ -251,6 +259,17 @@ export default {
     input.select()
   },
   methods: {
+    setInitialForm () {
+      this.initialForm = {
+        title: this.title,
+        location: this.location,
+        description: this.description,
+        startDate: this.startDate,
+        endDate: this.endDate,
+        populations: [...this.populations],
+        markAsUnreadForAll: this.markAsUnreadForAll
+      }
+    },
     updateStartDate (date) {
       this.startDate = dayjs(date)
 
@@ -269,6 +288,7 @@ export default {
         if (data.success) {
           this.populations = data.populations
           this.description = data.description
+          this.setInitialForm()
         } else {
           console.error('Error')
         }
@@ -310,6 +330,9 @@ export default {
       createEvent(this.title, this.description, this.location, this.startDate, this.endDate, this.populations).then((data) => {
         this.isProcessingSave = false
         if (data.success) {
+          if (this.startDate.isAfter(dayjs())) {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('creationSuccess'), type: 'success' })
+          }
           this.$emit('createEvent')
           this.onClose()
         } else {
@@ -322,12 +345,35 @@ export default {
       modifyEvent(this.initEvent.eventId, this.title, this.description, this.location, this.startDate, this.endDate, this.populations, this.markAsUnreadForAll).then((data) => {
         this.isProcessingSave = false
         if (data.success) {
+          if (this.startDate.isAfter(dayjs())) {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('updateSuccess'), type: 'success' })
+          }
           this.$emit('updateEvent')
           this.onClose()
         } else {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
         }
       })
+    },
+    confirmClosure () {
+      const actualForm = {
+        title: this.title,
+        location: this.location,
+        description: this.description,
+        startDate: this.startDate,
+        endDate: this.endDate,
+        populations: this.populations,
+        markAsUnreadForAll: this.markAsUnreadForAll
+      }
+
+      if (JSON.stringify(actualForm) !== JSON.stringify(this.initialForm)) {
+        this.$store.dispatch('warningModal/addWarning', {
+          text: this.$t('confirmClosure'),
+          lastAction: { fct: this.onClose }
+        })
+      } else {
+        this.onClose()
+      }
     },
     onClose () {
       this.$store.dispatch('misc/decreaseModalCount')
@@ -340,7 +386,7 @@ export default {
 <style lang="scss">
 .update-diary-event-modal {
   .window-body {
-    overflow-y: auto;
+    overflow-y: visible;
   }
 }
 </style>
@@ -367,6 +413,10 @@ export default {
 
   span {
     margin-right: 1em;
+  }
+
+  .info {
+    margin-left: 1rem;
   }
 }
 
@@ -403,6 +453,10 @@ export default {
   "sizeLimit2": " caractères",
   "selectPopulations": "Veuillez séléctionner une population cible",
   "dateInPast": "La date de début ne doit pas se situer dans le passé",
-  "dateOrder": "La date de fin doit être postérieure ou égale à celle de début"
+  "dateOrder": "La date de fin doit être postérieure ou égale à celle de début",
+  "switchHelp": "Cette option permet de notifier les destinataires et l'évènement sera considéré comme non lu",
+  "confirmClosure": "Souhaitez-vous fermer cette fenêtre ? (Vous perdrez son contenu)",
+  "creationSuccess": "Évènement créé",
+  "updateSuccess": "Évènement modifié"
 }
 </i18n>

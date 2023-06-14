@@ -20,7 +20,13 @@
   <Transition name="slide-fade">
     <ul v-if="isExtended">
       <li
-        v-for="member in sortedMembers"
+        v-for="member in sortedReadMembers"
+        :key="member.userId"
+      >
+        <ReadInfoModalUser :user="member" />
+      </li>
+      <li
+        v-for="member in sortedUnReadMembers"
         :key="member.userId"
       >
         <ReadInfoModalUser :user="member" />
@@ -57,11 +63,17 @@ export default {
       })
       return formattedPopulation
     },
-    sortedMembers () {
-      return PentilaUtils.Array.sortWithString(this.formattedPopulation.members, false, 'fullName')
-    },
     populationReadMembers () {
       return this.formattedPopulation.members.filter(member => member.hasRead === true)
+    },
+    populationUnReadMembers () {
+      return this.formattedPopulation.members.filter(member => member.hasRead === false)
+    },
+    sortedReadMembers () {
+      return PentilaUtils.Array.sortWithString(this.populationReadMembers, false, 'fullName')
+    },
+    sortedUnReadMembers () {
+      return PentilaUtils.Array.sortWithString(this.populationUnReadMembers, false, 'fullName')
     }
   }
 }

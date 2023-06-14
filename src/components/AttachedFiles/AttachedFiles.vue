@@ -1,32 +1,13 @@
 <template>
-  <div
+  <SelectFilesButtons
     v-if="!readOnly"
-    class="attached-picker"
-  >
-    <label v-t="'title'" />
-    <button
-      class="add-document-button"
-      :title="$t('addAttachFileButton')"
-      @click="isFilePickerModalDisplayed = true"
-    >
-      <img
-        class="icon"
-        src="@assets/options/dossier-pj.svg"
-        :alt="$t('addAttachFileButton')"
-      >
-    </button>
-    <button
-      class="add-document-button"
-      :title="$t('addLocalAttachFileButton')"
-      @click="importDocument"
-    >
-      <img
-        class="icon"
-        src="@assets/options/icon_upload.svg"
-        :alt="$t('addLocalAttachFileButton')"
-      >
-    </button>
-  </div>
+    class="select-buttons"
+    :label="$t('title')"
+    :allow-multiple="true"
+    @load="importDocument"
+    @select-files="addNewFiles"
+  />
+
   <div class="attached-files">
     <div
       v-if="readOnly"
@@ -34,7 +15,10 @@
     >
       {{ modelValue.length + (modelValue.length > 1 ? $t('attachedFiles') : $t('attachedFile')) }}
     </div>
-    <ul class="file-list">
+    <ul
+      class="file-list"
+      :style="'max-height: ' + maxHeight"
+    >
       <li
         v-for="attachedFile in modelValue"
         :key="attachedFile.fileId"
@@ -62,13 +46,15 @@
 <script>
 import { importDocuments } from '@utils/documents.util'
 import { returnAddedFiles, alertNoFile } from '@utils/upload.util'
-import AttachedFile from '@components/AttachedFiles/AttachedFile.vue'
 import { defineAsyncComponent } from 'vue'
+import SelectFilesButtons from '@components/FilePicker/SelectFilesButtons.vue'
 const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal.vue'))
+const AttachedFile = defineAsyncComponent(() => import('@components/AttachedFiles/AttachedFile.vue'))
 
 export default {
   name: 'AttachedFiles',
   components: {
+    SelectFilesButtons,
     AttachedFile,
     FilePickerModal
   },
@@ -81,6 +67,10 @@ export default {
     readOnly: {
       type: Boolean,
       required: true
+    },
+    maxHeight: {
+      type: String,
+      default: ''
     }
   },
   emits: ['removeAttachedFile', 'update:modelValue'],
@@ -99,32 +89,20 @@ export default {
     addNewFiles (newFiles) {
       this.$emit('update:modelValue', [...this.modelValue, ...newFiles])
     },
-    importDocument () {
-      // Create hidden inputFile
-      const input = document.createElement('input')
-      input.style.display = 'none'
-      input.type = 'file'
-      input.accept = '*/*'
-      input.multiple = true
+    importDocument (event) {
+      returnAddedFiles(event, this.$store).then((files) => {
+        if (files.length !== 0) {
+          this.$store.dispatch('currentActions/setImportFileList', files)
+          this.$store.dispatch('currentActions/displayUploadProgression')
 
-      input.onchange = e => {
-        returnAddedFiles(e, this.$store).then((files) => {
-          if (files.length !== 0) {
-            this.$store.dispatch('currentActions/setImportFileList', files)
-            this.$store.dispatch('currentActions/displayUploadProgression')
-
-            importDocuments(undefined, files).then((data) => {
-              this.addNewFiles(this.$store.state.currentActions.listUploadedFiles)
-              this.$store.dispatch('currentActions/hideUploadProgression')
-            })
-          } else {
-            alertNoFile()
-          }
-        })
-      }
-
-      // Click it
-      input.click()
+          importDocuments(undefined, files).then((data) => {
+            this.addNewFiles(this.$store.state.currentActions.listUploadedFiles)
+            this.$store.dispatch('currentActions/hideUploadProgression')
+          })
+        } else {
+          alertNoFile()
+        }
+      })
     }
   }
 }
@@ -139,21 +117,12 @@ ul {
   list-style-type: none;
 }
 
-.attached-picker {
+.select-buttons {
   margin-top: 10px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
 }
 
-.add-document-button {
-  display: flex;
-  align-items: center;
-
-  .icon {
-    width: 20px;
-    height: 20px;
-  }
+.file-list {
+  overflow: auto;
 }
 
 button {

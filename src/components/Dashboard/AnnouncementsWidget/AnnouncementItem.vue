@@ -3,6 +3,7 @@
     ref="item"
     class="container"
     :class="{'is-in-horizontal-scroll': isInHorizontalScroll}"
+    :title="$t('selectToConsult')"
   >
     <div
       class="announcement"
@@ -18,16 +19,13 @@
         >
       </div>
 
-      <div
-        class="content"
-        :title="announcement.title"
-      >
+      <div class="content">
         <div>
           <strong class="title">
             {{ announcement.title }}
           </strong>
           <div class="description">
-            {{ announcement.shortContent }}
+            {{ computedDescription }}
           </div>
         </div>
         <div class="meta-data">
@@ -49,6 +47,8 @@
       >
         <button
           class="option"
+          :aria-label="$t('update')"
+          :title="$t('update')"
           @click.stop="isUpdateModalDisplayed = true"
         >
           <img
@@ -58,6 +58,8 @@
         </button>
         <button
           class="option"
+          :aria-label="$t('delete')"
+          :title="$t('delete')"
           @click.stop="confirmDeleteAnnouncement"
         >
           <img
@@ -81,7 +83,7 @@
     <SaveNewsModal
       :init-news="announcement"
       :is-school-news="true"
-      @update="updateAnnouncement"
+      @update="$emit('updateAnnouncement')"
       @close="isUpdateModalDisplayed = false"
     />
   </teleport>
@@ -92,6 +94,7 @@
   >
     <NewsActivityDetailsModal
       :init-news="announcement"
+      @update="$emit('updateAnnouncement')"
       @close="isDetailsModalDisplayed = false"
     />
   </teleport>
@@ -143,6 +146,9 @@ export default {
     announcementDay () {
       return this.$t('at') + dayjs(this.announcement.publicationDate).format('DD/MM/YY')
     },
+    computedDescription () {
+      return this.announcement.shortContent ? this.announcement.shortContent : this.$t('descriptionPlaceholder')
+    },
     thumbnail () {
       if (defaultImagesKeys.indexOf(this.announcement.thumbnailUrl) !== -1) {
         return require('@assets/images/' + this.announcement.thumbnailUrl + '.png')
@@ -193,9 +199,6 @@ export default {
       }
       this.isDetailsModalDisplayed = true
     },
-    updateAnnouncement () {
-      this.$emit('updateAnnouncement')
-    },
     markAnnouncementAsRead () {
       setNewsRead(this.announcement.newsId, true).then((data) => {
         if (data.success) {
@@ -207,7 +210,7 @@ export default {
     },
     confirmDeleteAnnouncement () {
       this.$store.dispatch('warningModal/addWarning', {
-        text: this.$t('removalConfirmMessage'),
+        text: this.$t('removalConfirmMessage', { target: this.announcement.title }),
         lastAction: { fct: this.deleteAnnouncement, params: [] }
       })
     },
@@ -277,6 +280,7 @@ export default {
 
   img {
     width: 70%;
+    border-radius: 6px;
   }
 }
 
@@ -353,6 +357,10 @@ export default {
 {
   "at": "Le ",
   "by": " par ",
-  "removalConfirmMessage": "L'annonce sera définitivement perdue"
+  "update": "Modifier",
+  "delete": "Supprimer",
+  "removalConfirmMessage": "Veuillez confirmer la suppression de l'annonce \"{target}\"",
+  "selectToConsult": "Sélectionner pour consulter",
+  "descriptionPlaceholder": "Aucune description"
 }
 </i18n>

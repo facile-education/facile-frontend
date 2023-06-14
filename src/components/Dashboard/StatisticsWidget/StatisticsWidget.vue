@@ -11,7 +11,7 @@
       class="placeholder"
     />
     <div
-      v-else-if="statistics.length === 0 "
+      v-else-if="statistics.length === 0 && !isFirstLoad"
       v-t="'emptyPlaceholder'"
       class="placeholder"
     />
@@ -44,6 +44,7 @@ export default {
   data () {
     return {
       isLoading: false,
+      isFirstLoad: true,
       error: false,
       statistics: []
     }
@@ -54,8 +55,8 @@ export default {
   methods: {
     getSchoolStatistics () {
       this.isLoading = true
-
       getDashboardStatistics().then((data) => {
+        this.isFirstLoad = false
         this.isLoading = false
         if (data.success) {
           this.error = false
@@ -121,7 +122,7 @@ ul {
 }
 
 .placeholder {
-  height: 106px;
+  @extend %widget-placeholder;
 }
 
 .period {
