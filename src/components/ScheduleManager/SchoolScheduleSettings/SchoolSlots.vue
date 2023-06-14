@@ -11,7 +11,7 @@
       class="placeholder"
     />
     <div v-else>
-      <ul>
+      <ol>
         <li
           v-for="(slot, index) in slots"
           :key="slot.slotStartHour"
@@ -22,17 +22,24 @@
             @delete="deleteSlot(index)"
           />
         </li>
-      </ul>
+      </ol>
       <PentilaButton
         v-t="'addSlot'"
         @click="addSlot"
       />
     </div>
+
+    <footer>
+      <PentilaButton
+        v-t="'submit'"
+        @click="saveSchoolSlotConfiguration"
+      />
+    </footer>
   </section>
 </template>
 
 <script>
-import { getSchoolSlotConfiguration } from '@/api/schedule.service'
+import { getSchoolSlotConfiguration, saveSchoolSlotConfiguration } from '@/api/schedule.service'
 import dayjs from 'dayjs'
 import SchoolSlotItem from '@components/ScheduleManager/SchoolScheduleSettings/SchoolSlotItem.vue'
 
@@ -50,6 +57,15 @@ export default {
       isLoading: false,
       error: false,
       slots: []
+    }
+  },
+  computed: {
+    slotsWithPosition () {
+      const slotsWithPosition = [...this.slots]
+      for (let i = 0; i < this.slots.length; i++) {
+        slotsWithPosition[i].slotNumber = i + 1
+      }
+      return slotsWithPosition
     }
   },
   watch: {
@@ -79,6 +95,20 @@ export default {
         console.log(err)
       })
     },
+    saveSchoolSlotConfiguration () {
+      saveSchoolSlotConfiguration(this.selectedSchool.schoolId, this.slotsWithPosition).then((data) => {
+        if (data.success) {
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
+          this.getSchoolSlotsConfiguration()
+        } else {
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+          console.error('Error')
+        }
+      }, (err) => {
+        this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+        console.error(err)
+      })
+    },
     addSlot () {
       let slotStartHour = dayjs()
       if (this.slots.length > 0) {
@@ -103,6 +133,13 @@ section {
   position: relative;
 }
 
+ol {
+  margin-left: 1rem;
+  padding: 0;
+  list-style-type: none;
+  cursor: pointer;
+}
+
 .placeholder {
   height: 45px;
   margin-top: 0.5rem;
@@ -115,12 +152,20 @@ section {
   line-height: 1rem;
 }
 
+footer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
 </style>
 
 <i18n locale="fr">
 {
   "schoolSlots": "Créneaux horaires de l'établissement",
   "errorPlaceholder": "Oups, une erreur est survenue...",
-  "addSlot": "Ajouter un créneau"
+  "addSlot": "Ajouter un créneau",
+  "submit": "Valider les créneaux",
+  "success": "Créneaux mis à jour",
+  "error": "Échec de l'enregistrement"
 }
 </i18n>

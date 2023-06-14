@@ -1,6 +1,6 @@
 <template>
   <div class="school-slot">
-    <h3> {{ 'P' + position }}</h3>
+    <h3> {{ 'P' + (position + 1) }}</h3>
     <div class="time-selection">
       <span v-t="'from'" />
       <TimeSelection
