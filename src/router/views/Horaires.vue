@@ -139,8 +139,8 @@ export default {
             hiddenDays: this.hiddenDays,
             nowIndicator: true,
             slotDuration: '01:00:00',
-            slotMinTime: this.configuration.startDayTime,
-            slotMaxTime: this.configuration.endDayTime
+            slotMinTime: '07:30', // TODO: get from backend
+            slotMaxTime: '18:00'
           }
         },
         events:
@@ -148,7 +148,7 @@ export default {
       }
     },
     configuration () {
-      return (this.$store.state.horaires.configuration.schoolDays.length > 0) ? this.$store.state.horaires.configuration : undefined
+      return this.$store.state.horaires.configuration
     },
     eventList () {
       return this.$store.state.horaires.sessionList
@@ -159,8 +159,9 @@ export default {
     hiddenDays () {
       const hiddenDays = []
       let dayNumber
+      const schoolDays = [1, 2, 3, 4, 5] // TODO: to get from backend
       for (dayNumber = 0; dayNumber <= 6; ++dayNumber) {
-        if (this.configuration.schoolDays.indexOf(dayNumber) === -1) {
+        if (schoolDays.indexOf(dayNumber) === -1) {
           hiddenDays.push(dayNumber)
         }
       }
@@ -170,10 +171,10 @@ export default {
       return this.$store.state.horaires.isLoading || !this.configuration
     },
     minDate () {
-      return dayjs(this.configuration.startDateSchool, 'YYYY-MM-DD HH:mm')
+      return dayjs(this.configuration.schoolYearStartDate, 'YYYY-MM-DD')
     },
     maxDate () {
-      return dayjs(this.configuration.endDateSchool, 'YYYY-MM-DD HH:mm')
+      return dayjs(this.configuration.schoolYearEndDate, 'YYYY-MM-DD')
     },
     isTeacherSelected () {
       return this.$store.state.horaires.selectedUser.isTeacher
@@ -226,7 +227,7 @@ export default {
           room: slot.room,
           cy: dayjs(slot.startDate, 'YYYY-MM-DD HH:mm').format('MM-DD_HH:mm')
         },
-        title: slot.title,
+        title: slot.groupName,
         start: dayjs(slot.startDate, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DDTHH:mm'),
         end: dayjs(slot.endDate, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DDTHH:mm'),
         backgroundColor: slot.color,

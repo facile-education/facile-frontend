@@ -137,7 +137,7 @@ export default {
       return this.$store.state.user
     },
     configuration () {
-      return (this.$store.state.horaires.configuration.schoolDays.length > 0) ? this.$store.state.horaires.configuration : undefined
+      return this.$store.state.horaires.configuration
     },
     minDate () {
       return dayjs(this.configuration.startDateSchool, 'YYYY-MM-DD HH:mm')
@@ -178,8 +178,8 @@ export default {
             hiddenDays: this.hiddenDays,
             nowIndicator: true,
             slotDuration: '01:00:00',
-            slotMinTime: this.configuration.startDayTime,
-            slotMaxTime: this.configuration.endDayTime
+            slotMinTime: '07:30', // TODO: get from backend
+            slotMaxTime: '18:00'
             // slotLabelDidMount: this.onSlotMount
           }
         },
@@ -192,8 +192,9 @@ export default {
     hiddenDays () {
       const hiddenDays = []
       let dayNumber
+      const schoolDays = [1, 2, 3, 4, 5] // TODO: to get from backend
       for (dayNumber = 0; dayNumber <= 6; ++dayNumber) {
-        if (this.configuration.schoolDays.indexOf(dayNumber) === -1) {
+        if (schoolDays.indexOf(dayNumber) === -1) {
           hiddenDays.push(dayNumber)
         }
       }

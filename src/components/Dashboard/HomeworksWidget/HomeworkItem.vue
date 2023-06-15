@@ -60,7 +60,7 @@
 <script>
 
 import { homeworksTypes } from '@/constants/dashboardConstants'
-import { setHomeworkDoneStatus } from '@/api/dashboard/homeworks.service'
+import { setHomeworkDoneStatus } from '@/api/homework.service'
 import BaseIcon from '@components/Base/BaseIcon.vue'
 export default {
   name: 'HomeworkItem',
