@@ -56,7 +56,7 @@
 
 <script>
 import dayjs from 'dayjs'
-import { getHomeworks } from '@/api/dashboard/homeworks.service'
+import { getFutureStudentHomeworks } from '@/api/homework.service'
 import HomeworkItem from '@components/Dashboard/HomeworksWidget/HomeworkItem.vue'
 import HomeworkHeader from '@components/Dashboard/HomeworksWidget/HomeworkHeader.vue'
 import { nbHomeworksInWidget } from '@/constants/dashboardConstants'
@@ -115,7 +115,7 @@ export default {
     },
     getHomeworks () {
       this.isLoading = true
-      getHomeworks(this.userId, dayjs().format('YYYY-MM-DD HH:mm'), this.undoneOnly).then((data) => {
+      getFutureStudentHomeworks(this.userId, this.undoneOnly).then((data) => {
         this.isLoading = false
         this.isFirstLoad = false
         if (data.success) {

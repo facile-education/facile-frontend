@@ -12,14 +12,7 @@ export const state = {
   selectedUser: { userId: 0 },
   sessionList: [],
   isCreateSessionModalDisplayed: false,
-  configuration: {
-    isLoaded: false,
-    schoolYearStartDate: '',
-    schoolYearEndDate: '',
-    startDayTime: '7h30',
-    endDayTime: '18h00',
-    schoolDays: [1, 2, 3, 4, 5]
-  }
+  configuration: undefined
 }
 
 export const mutations = {
@@ -49,9 +42,7 @@ export const mutations = {
     state.isCreateSessionModalDisplayed = payload
   },
   setConfiguration (state, payload) {
-    state.configuration.schoolYearStartDate = payload.schoolYearStartDate
-    state.configuration.schoolYearEndDate = payload.schoolYearEndDate
-    state.configuration.isLoaded = true
+    state.configuration = payload
   }
 }
 export const actions = {

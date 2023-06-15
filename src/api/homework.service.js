@@ -6,7 +6,7 @@ export {
   getFutureStudentHomeworks,
   getPreviousStudentHomeworks,
   getTeacherHomeworksToCorrect,
-  setHomeworkDone,
+  setHomeworkDoneStatus,
   createHomework,
   updateHomework,
   dropHomeworkFile,
@@ -41,7 +41,7 @@ function getTeacherHomeworksToCorrect () {
   }).then(response => response.data)
 }
 
-function setHomeworkDone (homeworkId, isDone) {
+function setHomeworkDoneStatus (homeworkId, isDone) {
   return axios.get(constants.JSON_WS_URL + HOMEWORK_PATH + 'set-homework-done', {
     params: {
       homeworkId,
