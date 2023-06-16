@@ -7,25 +7,29 @@
     <template #eventContent="event">
       <CalendarEvent
         :event="event"
-        :is-selected="selectedEvent"
-        @optionClicked="$emit('eventOptionClicked', {event: event, option: $event})"
+        :show-popover="showPopover"
         @unselect="unselectEvent"
       />
     </template>
   </FullCalendar>
+  <CalendarEventPopover
+    v-if="selectedEvent && showPopover"
+    :selected-event="selectedEvent"
+    @optionClicked="$emit('eventOptionClicked', {event: matchFCEventWithPropsEvents(selectedEvent), option: $event})"
+  />
 </template>
 
 <script>
+import FullCalendar from '@fullcalendar/vue3'
 import frLocale from '@fullcalendar/core/locales/fr'
 import timeGridPlugin from '@fullcalendar/timegrid'
-import FullCalendar from '@fullcalendar/vue3'
 import CalendarEvent from '@components/Base/CustomCalendar/CalendarEvent.vue'
-import { getTeachersLabel } from '@utils/commons.util'
 import dayjs from 'dayjs'
+import CalendarEventPopover from '@components/Base/CustomCalendar/CalendarEventPopover.vue'
 
 export default {
   name: 'CustomCalendar',
-  components: { CalendarEvent, FullCalendar },
+  components: { CalendarEventPopover, CalendarEvent, FullCalendar },
   inject: ['mq'],
   props: {
     events: {
@@ -93,7 +97,7 @@ export default {
         events: this.events.map(slot => this.formatCalendarSlot(slot))
       }
     },
-    definitiveCalendarOptions () {
+    definitiveCalendarOptions () { // Include and override default options by custom props options
       return {
         ...this.defaultCalendarOptions,
         ...this.calendarOptions
@@ -119,13 +123,7 @@ export default {
   methods: {
     formatCalendarSlot (slot) {
       return {
-        extendedProps: {
-          id: (slot.sessionId === undefined ? slot.schoollifeSessionId : slot.sessionId),
-          subject: slot.subject,
-          teachers: getTeachersLabel(slot.teachers),
-          room: slot.room,
-          cy: dayjs(slot.startDate, 'YYYY-MM-DD HH:mm').format('MM-DD_HH:mm')
-        },
+        extendedProps: slot,
         title: slot.groupName,
         start: dayjs(slot.startDate, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DDTHH:mm'),
         end: dayjs(slot.endDate, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DDTHH:mm'),
@@ -145,7 +143,7 @@ export default {
 
       event.el.parentNode.classList.add('selected')
       this.selectedEvent = event
-      this.$emit('selectEvent', event) // TODO: check event formatting to return event like in props eventList
+      this.$emit('selectEvent', this.matchFCEventWithPropsEvents(event))
     },
     unselectEvent () {
       if (this.selectedEvent.el.parentNode != null) {
@@ -153,6 +151,15 @@ export default {
       }
       this.selectedEvent = undefined
       this.$emit('unselectEvent')
+    },
+    matchFCEventWithPropsEvents (event) {
+      const eventId = event.event.extendedProps.sessionId
+      const index = this.events.map(event => event.sessionId).indexOf(eventId)
+      if (index !== -1) {
+        return this.events[index]
+      } else {
+        return undefined
+      }
     }
   }
 }

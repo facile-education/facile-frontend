@@ -1,7 +1,20 @@
 import scheduleService from '@/api/schedule.service'
 import groupService from '@/api/groups.service'
+import i18n from '@/i18n'
 
 const defaultGroup = { groupId: 0, groupName: 'Groupe' }
+const manageSessionsOptions = (sessions) => {
+  sessions.forEach(event => {
+    event.options = []
+    if (event.canSaveTeacherSubstitute) {
+      event.options.push({
+        name: 'saveTeacherSubstitute',
+        label: i18n.global.t('CalendarEventOptions.saveTeacherSubstitute'),
+        icon: require('@/assets/icons/pencil.svg')
+      })
+    }
+  })
+}
 
 export const state = {
   startDate: undefined,
@@ -81,7 +94,9 @@ export const actions = {
         scheduleService.getUserSessions(targetUserId, state.startDate, state.endDate).then(
           (data) => {
             if (data.success) {
-              commit('setSessionList', [...data.sessions, ...data.schoollifeSessions])
+              const sessions = [...data.sessions, ...data.schoollifeSessions]
+              manageSessionsOptions(sessions)
+              commit('setSessionList', sessions)
             }
             commit('endLoading')
           },
@@ -95,7 +110,9 @@ export const actions = {
         scheduleService.getGroupSessions(state.selectedGroup.groupId, state.startDate, state.endDate).then(
           (data) => {
             if (data.success) {
-              commit('setSessionList', [...data.sessions, ...data.schoollifeSessions])
+              const sessions = [...data.sessions, ...data.schoollifeSessions]
+              manageSessionsOptions(sessions)
+              commit('setSessionList', sessions)
             }
             commit('endLoading')
           },
