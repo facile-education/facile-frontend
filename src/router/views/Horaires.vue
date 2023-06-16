@@ -37,18 +37,22 @@
           </FullCalendar>
         </div>
       </div>
-      <FullCalendar
-        v-else
-        ref="fullCalendar"
-        :options="calendarOptions"
-      >
-        <template #eventContent="arg">
-          <FCEvent
-            :arg="arg"
-            @update="openEditModalDisplay"
-          />
-        </template>
-      </FullCalendar>
+      <!--      <FullCalendar-->
+      <!--        v-else-->
+      <!--        ref="fullCalendar"-->
+      <!--        :options="calendarOptions"-->
+      <!--      >-->
+      <!--        <template #eventContent="arg">-->
+      <!--          <FCEvent-->
+      <!--            :arg="arg"-->
+      <!--            @update="openEditModalDisplay"-->
+      <!--          />-->
+      <!--        </template>-->
+      <!--      </FullCalendar>-->
+
+      <CustomCalendar
+        :events="eventList"
+      />
     </template>
     <PentilaSpinner v-if="isLoading" />
     <teleport to="body">
@@ -80,6 +84,7 @@ import HorairesToolbar from '@/components/Horaires/HorairesToolbar'
 // Lazy loading
 import { defineAsyncComponent } from 'vue'
 import { getTeachersLabel } from '@utils/commons.util'
+import CustomCalendar from '@components/Base/CustomCalendar/CustomCalendar.vue'
 const Timeline = defineAsyncComponent(() => import('@/components/Horaires/Timeline'))
 const FCEvent = defineAsyncComponent(() => import('@/components/Horaires/FCEvent'))
 const SessionTeacherModal = defineAsyncComponent(() => import('@/components/Horaires/SessionTeacherModal'))
@@ -90,6 +95,7 @@ dayjs.extend(customParseFormat)
 export default {
   name: 'Horaires',
   components: {
+    CustomCalendar,
     FCEvent,
     FullCalendar,
     HorairesToolbar,
