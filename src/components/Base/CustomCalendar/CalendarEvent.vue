@@ -1,7 +1,7 @@
 <template>
   <div
     class="calendar-event"
-    :data-cy="event.event.extendedProps.cy"
+    :data-cy="cy"
   >
     <div
       class="fc-event-title"
@@ -12,9 +12,9 @@
     <div
       v-if="event.event.extendedProps.teachers"
       class="fc-event-teacher"
-      :title="event.event.extendedProps.teachers"
+      :title="formattedTeachersLabel"
     >
-      {{ event.event.extendedProps.teachers }}
+      {{ formattedTeachersLabel }}
     </div>
     <div class="fc-event-room">
       {{ event.event.extendedProps.room }}
@@ -24,6 +24,7 @@
 
 <script>
 import dayjs from 'dayjs'
+import { getTeachersLabel } from '@utils/commons.util'
 
 export default {
   name: 'CalendarEvent',
@@ -39,6 +40,12 @@ export default {
     },
     formattedEndHour () {
       return dayjs(this.event.event.end).format('HH:mm')
+    },
+    formattedTeachersLabel () {
+      return getTeachersLabel(this.event.event.extendedProps.teachers)
+    },
+    cy () {
+      return dayjs(this.event.event.start, 'YYYY-MM-DD HH:mm').format('MM-DD_HH:mm')
     }
   }
 }
@@ -48,6 +55,7 @@ export default {
 .calendar-event {
   font-size: 0.85rem;
   line-height: 1.1rem;
+  cursor: pointer;
 }
 
 .fc-event-title {

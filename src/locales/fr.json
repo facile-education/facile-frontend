@@ -4,6 +4,9 @@
     "download": "Télécharger",
     "remove": "Supprimer"
   },
+  "CalendarEventOptions": {
+    "saveTeacherSubstitute": "Modifier"
+  },
   "Commons": {
     "back": "Retour",
     "delete": "Supprimer",

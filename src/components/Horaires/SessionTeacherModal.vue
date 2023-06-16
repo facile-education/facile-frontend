@@ -6,7 +6,7 @@
     @close="closeModal"
   >
     <template #header>
-      <span v-t="{ path: 'teacherManagement', args: { course: sessionEvent.title }}" />
+      <span v-t="{ path: 'teacherManagement', args: { course: sessionEvent.groupName }}" />
     </template>
 
     <template #body>
@@ -30,7 +30,7 @@
             </div>
             <PentilaCheckbox
               v-model="teacher.allSlots"
-              :label="$t('allSessions', {course: sessionEvent.title})"
+              :label="$t('allSessions', {course: sessionEvent.groupName})"
               :disabled="teacher.substitutes.length === 0"
               class="all-slots"
               @update:modelValue="filterSessionList(teacher)"
@@ -86,19 +86,19 @@ export default {
   },
   computed: {
     sessionDate () {
-      return dayjs(this.sessionEvent.start).format('DD/MM/YYYY')
+      return dayjs(this.sessionEvent.startDate, 'YYYY-MM-DD HH:mm').format('DD/MM/YYYY')
     },
     sessionEnd () {
-      return dayjs(this.sessionEvent.end).format('HH:mm')
+      return dayjs(this.sessionEvent.endDate, 'YYYY-MM-DD HH:mm').format('HH:mm')
     },
     sessionStart () {
-      return dayjs(this.sessionEvent.start).format('HH:mm')
+      return dayjs(this.sessionEvent.startDate, 'YYYY-MM-DD HH:mm').format('HH:mm')
     }
   },
   created () {
     // Get teacher list from backend.
     this.teacherList.length = 0
-    getSessionTeachersAndSubstitutes(this.sessionEvent.extendedProps.id).then(
+    getSessionTeachersAndSubstitutes(this.sessionEvent.sessionId).then(
       (data) => {
         if (data.success) {
           data.teachers.forEach((teacher) => {
@@ -148,7 +148,7 @@ export default {
         })
       })
 
-      saveTeacherSubstitutes(this.sessionEvent.extendedProps.id, teacherArray).then(
+      saveTeacherSubstitutes(this.sessionEvent.sessionId, teacherArray).then(
         (data) => {
           if (data.success) {
             this.closeModal(true)
