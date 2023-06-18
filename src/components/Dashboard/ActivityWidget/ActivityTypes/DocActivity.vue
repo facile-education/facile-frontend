@@ -9,13 +9,13 @@
       >
       <FileIcon
         v-else
-        :file="{extension: activity.extension}"
+        :file="{extension: getExtension(activity)}"
       />
     </div>
 
     <div class="content">
       <div class="author">
-        {{ activity.author }}
+        {{ activity.groupName + ' - ' + activity.author }}
       </div>
       <div class="description">
         <span>
@@ -55,6 +55,7 @@ import FileIcon from '@components/Base/FileIcon.vue'
 import { icons } from '@/constants/icons'
 import activityConstants from '@/constants/activityConstants'
 import dayjs from 'dayjs'
+import { getExtensionFromName } from '@/utils/commons.util'
 
 export default {
   name: 'DocActivity',
@@ -119,10 +120,13 @@ export default {
     },
     redirectInGroup () {
       if (this.isFolder) {
-        this.$router.push('/documents/groups/' + this.activity.parentFolderId) // TODO: handle parent folder Id for redirection?
-      } else {
         this.$router.push('/documents/groups/' + this.activity.folderId)
+      } else {
+        this.$router.push('/documents/groups/' + this.activity.parentFolderId)
       }
+    },
+    getExtension (activity) {
+      return getExtensionFromName(activity.fileName)
     }
   }
 }

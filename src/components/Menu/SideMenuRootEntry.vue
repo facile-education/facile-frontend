@@ -11,7 +11,7 @@
         class="popover"
       />
       <RouterLink
-        :to="'/' + entry.i18nKey"
+        :to="'/' + $t('Menu.route.' + entry.i18nKey)"
         class="entry link"
       >
         <img

@@ -33,6 +33,7 @@
       class="right"
     >
       <CreateButton
+        :title="$t('create-news')"
         @click="isCreateModalDisplayed = true"
       />
     </div>
@@ -135,6 +136,7 @@ h2 {
 {
   "activities": "Activités",
   "allActivities": "Toutes les activités",
-  "dashboard": "Tableau de bord"
+  "dashboard": "Tableau de bord",
+  "create-news": "Partager une information"
 }
 </i18n>

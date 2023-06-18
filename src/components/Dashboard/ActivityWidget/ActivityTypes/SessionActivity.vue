@@ -15,24 +15,17 @@
       >
     </div>
 
-    <div class="content">
+    <div
+      class="content"
+      @click="redirect"
+      @keyup.enter="redirect"
+    >
       <div class="author">
-        {{ activity.author }}
+        {{ activity.groupName + " - " + activity.author }}
       </div>
       <div class="description">
         <span>
-          {{ description1 }}
-        </span>
-        <i
-          tabindex="0"
-          :title="activity.target"
-          @click="redirect"
-          @keyup.enter="redirect"
-        >
-          {{ isCourse ? $t('course') : $t('homework') }}
-        </i>
-        <span>
-          {{ description2 }}
+          {{ description }}
         </span>
       </div>
     </div>
@@ -68,24 +61,14 @@ export default {
     isCourse () {
       return this.activity.type === activityConstants.TYPE_SESSION
     },
-    description1 () {
+    description () {
       switch (this.activity.type) {
         case activityConstants.TYPE_SESSION:
-          return this.$t('TYPE_SESSION_1')
+          return this.$t('TYPE_SESSION', { courseDate: dayjs(this.activity.targetDate, 'YYYY-MM-DD HH:mm').format('DD MMMM YYYY') })
         case activityConstants.TYPE_HOMEWORK:
-          return this.$t('TYPE_HOMEWORK_1')
+          return this.$t('TYPE_HOMEWORK', { homeworkDate: dayjs(this.activity.targetDate, 'YYYY-MM-DD HH:mm').format('DD MMMM YYYY') })
         default:
-          return 'Unknown activity type'
-      }
-    },
-    description2 () {
-      switch (this.activity.type) {
-        case activityConstants.TYPE_SESSION:
-          return this.$t('TYPE_SESSION_2', { courseDate: dayjs(this.activity.targetDate, 'YYYY-MM-DD HH:mm').format('DD MMMM YYYY') })
-        case activityConstants.TYPE_HOMEWORK:
-          return this.$t('TYPE_HOMEWORK_2', { homeworkDate: dayjs(this.activity.targetDate, 'YYYY-MM-DD HH:mm').format('DD MMMM YYYY') })
-        default:
-          return 'Unknown activity type'
+          return this.$t('unknown-activity')
       }
     }
   },
@@ -102,6 +85,11 @@ export default {
 
 .course-activity {
   @extend %activity-item;
+  cursor: pointer;
+  &:hover, &:focus-within {
+    border: 2px solid black;
+    border-radius: 5px;
+  }
 }
 
 .img-icon {
@@ -111,11 +99,8 @@ export default {
 
 <i18n locale="fr">
 {
-  "TYPE_SESSION_1": "a renseigné la ",
-  "TYPE_SESSION_2": " du {courseDate}",
-  "TYPE_HOMEWORK_1": "a donné une ",
-  "TYPE_HOMEWORK_2": " à faire pour le {homeworkDate}",
-  "course": "séance",
-  "homework": "activité"
+  "TYPE_SESSION": "a ajouté un support au cours du {courseDate}",
+  "TYPE_HOMEWORK": "a donné du travail pour le cours du {homeworkDate}",
+  "unknown-activity": "Activité inconnue"
 }
 </i18n>

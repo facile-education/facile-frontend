@@ -19,21 +19,21 @@
           {{ activity.groupName }}
         </i>
         <span>
-          {{ ' - ' + (isDeactivation ? $t('deactivation') : activity.author) }}
+          {{ ' - ' + activity.author }}
         </span>
       </div>
       <div class="description">
         <span>
-          {{ description }}
+          {{ description1 }}
         </span>
         <i
-          v-if="isDeactivation"
-          v-t="'reactivate'"
-          tabindex="0"
-          @click="confirmGroupReactivation"
-          @keyup.enter="confirmGroupReactivation"
-        />
-        <span v-if="isDeactivation"> ?</span>
+          :title="usersDetail"
+        >
+          {{ nbUsers }}
+        </i>
+        <span>
+          {{ description2 }}
+        </span>
       </div>
     </div>
 
@@ -50,7 +50,6 @@
 import { GROUPS } from '@/constants/appConstants'
 import dayjs from 'dayjs'
 import activityConstants from '@/constants/activityConstants'
-import { extendCommunity } from '@/api/groups.service'
 
 export default {
   name: 'MembershipActivity',
@@ -58,9 +57,12 @@ export default {
     activity: {
       type: Object,
       required: true
+    },
+    isSelfActivity: {
+      type: Boolean,
+      required: true
     }
   },
-  emits: ['refresh'],
   computed: {
     formattedDate () {
       return dayjs(this.activity.modificationDate, 'YYYY-MM-DD HH:mm').calendar()
@@ -71,36 +73,49 @@ export default {
     isDeactivation () {
       return this.activity.type === activityConstants.TYPE_EXPIRED_GROUP
     },
-    description () {
+    description1 () {
       switch (this.activity.type) {
         case activityConstants.TYPE_ADD_MEMBERSHIP:
-          return this.$t('TYPE_ADD_MEMBERSHIP', { target: this.activity.target })
-        case activityConstants.TYPE_EXPIRED_GROUP:
-          return this.$t('TYPE_EXPIRED_GROUP')
+          return this.$t('added')
+        case activityConstants.TYPE_REMOVE_MEMBERSHIP:
+          return this.$t('removed')
         default:
-          return 'Unknown activity type'
+          return ''
       }
+    },
+    nbUsers () {
+      return this.$t('nb-users', { nbUsers: this.activity.users.length })
+    },
+    description2 () {
+      switch (this.activity.type) {
+        case activityConstants.TYPE_ADD_MEMBERSHIP:
+          return this.$t('in-this-space')
+        case activityConstants.TYPE_REMOVE_MEMBERSHIP:
+          return this.$t('from-this-space')
+        default:
+          return ''
+      }
+    },
+    usersDetail () {
+      let usersDetails = ''
+      let nbDisplayedUsers = 0
+      for (const user of this.activity.users) {
+        usersDetails += user.firstName + ' ' + user.lastName
+        nbDisplayedUsers++
+        if (nbDisplayedUsers > 100) {
+          usersDetails += ' ...'
+          break
+        }
+        if (nbDisplayedUsers !== this.activity.users.length) {
+          usersDetails += ', '
+        }
+      }
+      return usersDetails
     }
   },
   methods: {
     redirect () {
       this.$router.push({ name: GROUPS, params: { groupId: this.activity.groupId } })
-    },
-    confirmGroupReactivation () {
-      this.$store.dispatch('warningModal/addWarning', {
-        text: this.$t('reactivationConfirmMessage', { groupName: this.activity.groupName }),
-        lastAction: { fct: this.reactivateGroup, params: [] }
-      })
-    },
-    reactivateGroup () {
-      extendCommunity(this.activity.groupId).then((data) => {
-        if (data.success) {
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('extension-success'), type: 'info' })
-          this.$emit('refresh')
-        } else {
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
-        }
-      })
     }
   }
 }
@@ -120,11 +135,14 @@ export default {
 
 <i18n locale="fr">
 {
-  "TYPE_ADD_MEMBERSHIP": "vous a inscrit dans l'espace",
-  "TYPE_EXPIRED_GROUP": "L'espace est désactivé. Voulez vous le ",
-  "deactivation": "Désactivation",
-  "reactivate": "réactiver",
-  "reactivationConfirmMessage": "Voulez-vous vraiment réactiver le groupe {groupName} ?",
-  "extension-success": "Groupe réactivé"
+  "on": "Le",
+  "at": "à",
+  "added-you": "vous a inscrit ",
+  "added": "a inscrit ",
+  "removed-you": "vous a désinscrit ",
+  "removed": "a désinscrit ",
+  "nb-users": "{nbUsers} utilisateurs ",
+  "in-this-space": "dans cet espace",
+  "from-this-space": "de cet espace"
 }
 </i18n>

@@ -13,10 +13,21 @@
       :style="'background-color: ' + session.color + '; border-color: ' + session.color"
     >
       <div class="transparent-part">
-        <strong> {{ sessionTitle }} </strong>
+        <!-- Teacher: course, room and subject -->
+        <!-- Student and parent: subject, room and teachers -->
+        <strong
+          v-if="isTeacher"
+        > {{ sessionTitle }}
+        </strong>
+        <strong
+          v-else
+        > {{ session.subject }}
+        </strong>
+
         <div class="metadata room">
-          {{ $t('room') + session.room }}
+          {{ session.room }}
         </div>
+
         <div
           v-if="isTeacher"
           class="metadata subject"
@@ -51,10 +62,7 @@ export default {
       return this.$store.state.user.isTeacher
     },
     sessionTitle () {
-      return this.isTeacher ? this.session.groupName : this.sessionSubject
-    },
-    sessionSubject () {
-      return this.session.cdtSessionId ? this.session.subject : this.session.title
+      return this.session.sessionId !== undefined ? this.session.groupName : this.session.title
     },
     teacherLabel () {
       return getTeachersLabel(this.session.teachers)

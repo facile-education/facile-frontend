@@ -29,7 +29,7 @@
           <RouterLink
             v-else
             v-t="'Menu.' + entry.i18nKey"
-            :to="'/' + entry.i18nKey"
+            :to="'/' + $t('Menu.route.' + entry.i18nKey)"
             class="link"
           />
         </li>

@@ -52,7 +52,9 @@
             {{ $t('by') + detailedEvent.authorName }}
           </div>
 
-          <h2 v-if="!isInModal"> {{ detailedEvent.title }}</h2>
+          <h2 v-if="!isInModal">
+            {{ detailedEvent.title }}
+          </h2>
 
           <div class="where-and-when">
             <span v-if="detailedEvent.location">
