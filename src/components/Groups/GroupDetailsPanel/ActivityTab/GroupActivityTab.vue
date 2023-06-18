@@ -1,7 +1,11 @@
 <template>
   <div class="activity-tab">
+    <PentilaSpinner
+      v-if="activitiesLoading"
+      style="z-index: 100"
+    />
     <p
-      v-if="activityList.length === 0"
+      v-else-if="activityList.length === 0"
       v-t="('noActivity')"
       class="placeholder"
     />
@@ -11,7 +15,6 @@
       class="activities"
       @scroll="handleScroll"
     >
-      <PentilaSpinner v-if="activitiesLoading" />
       <ul>
         <li
           v-for="activity in activityList"

@@ -22,6 +22,7 @@
     </div>
     <CreateButton
       v-if="canCreateDiaryEvent"
+      :title="$t('create-event')"
       @click="isCreateModalDisplayed = true"
     />
   </header>
@@ -112,6 +113,7 @@ header {
 <i18n locale="fr">
 {
   "diary": "Agenda",
-  "unreadFilter": "Filtrer les non lu"
+  "unreadFilter": "Filtrer les non lu",
+  "create-event": "Créer un évènement"
 }
 </i18n>

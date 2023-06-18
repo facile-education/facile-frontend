@@ -1,12 +1,12 @@
 import neroService from '@/api/nero.service'
 import { updateSideMenuState } from '@/api/user.service'
 import router from '@/router'
+import i18n from '@/i18n'
 
 function getRoute (entry) {
   return {
     name: entry.i18nKey,
-    // path: `/${i18n.global.t('Menu.route.' + entry.i18nKey)}`, localized path
-    path: `/${entry.i18nKey}`,
+    path: `/${i18n.global.t('Menu.route.' + entry.i18nKey)}`, // localized path
     meta: { id: entry.id },
     component: () => import('@/router/views/' + entry.component + '.vue')
   }

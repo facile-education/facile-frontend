@@ -355,18 +355,17 @@ export default {
           const groupTree = data.schoolsGroups
           this.availablePopulationsList = [...this.availablePopulationsList, ...groupTree.Communities]
           groupTree.schools.forEach((school) => {
-            // TODO: courses?
             if (school.subjects) {
               this.availablePopulationsList = [...this.availablePopulationsList, ...school.subjects]
             }
             if (school.classes) {
               school.classes.forEach((schoolClass) => {
-                // this.availablePopulationsList = [...this.availablePopulationsList, ...schoolClass.populations]
+                this.availablePopulationsList = [...this.availablePopulationsList, ...schoolClass.populations]
               })
             }
-            if (school.volees) {
-              school.volees.forEach((schoolVolee) => {
-                // this.availablePopulationsList = [...this.availablePopulationsList, ...schoolVolee.populations]
+            if (school.cours) {
+              school.cours.forEach((schoolCours) => {
+                this.availablePopulationsList = [...this.availablePopulationsList, ...schoolCours.populations]
               })
             }
           })

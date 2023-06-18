@@ -32,8 +32,13 @@
         v-else-if="isCourseActivity"
         :activity="activity"
       />
+      <ExpiredGroupActivity
+        v-else-if="isExpiredGroupActivity"
+        :activity="activity"
+        @refresh="$emit('refresh')"
+      />
       <div v-else>
-        Unrecognized activity type!
+        {{ $t('unknown-activity') }}
       </div>
     </div>
   </div>
@@ -48,10 +53,11 @@ const DocActivity = defineAsyncComponent(() => import('@components/Dashboard/Act
 const MembershipActivity = defineAsyncComponent(() => import('@components/Dashboard/ActivityWidget/ActivityTypes/MembershipActivity.vue'))
 const HHCActivity = defineAsyncComponent(() => import('@components/Dashboard/ActivityWidget/ActivityTypes/HHCActivity.vue'))
 const SessionActivity = defineAsyncComponent(() => import('@components/Dashboard/ActivityWidget/ActivityTypes/SessionActivity.vue'))
+const ExpiredGroupActivity = defineAsyncComponent(() => import('@components/Dashboard/ActivityWidget/ActivityTypes/ExpiredGroupActivity.vue'))
 
 export default {
   name: 'ActivityItem',
-  components: { SessionActivity, HHCActivity, MembershipActivity, DocActivity, NewsActivity },
+  components: { SessionActivity, HHCActivity, MembershipActivity, DocActivity, NewsActivity, ExpiredGroupActivity },
   props: {
     activity: {
       type: Object,
@@ -83,8 +89,7 @@ export default {
     },
     isMembershipActivity () {
       return this.activity.type === activityConstants.TYPE_ADD_MEMBERSHIP ||
-        this.activity.type === activityConstants.TYPE_REMOVE_MEMBERSHIP ||
-        this.activity.type === activityConstants.TYPE_EXPIRED_GROUP
+        this.activity.type === activityConstants.TYPE_REMOVE_MEMBERSHIP
     },
     isHHCActivity () {
       return this.activity.type === activityConstants.TYPE_PENDING_RENVOI || this.activity.type === activityConstants.TYPE_SCHOOL_RENVOI
@@ -94,6 +99,9 @@ export default {
     },
     isSessionActivity () {
       return this.activity.type === activityConstants.TYPE_HOMEWORK || this.activity.type === activityConstants.TYPE_SESSION
+    },
+    isExpiredGroupActivity () {
+      return this.activity.type === activityConstants.TYPE_EXPIRED_GROUP
     }
   },
   mounted () {
@@ -128,3 +136,9 @@ export default {
 }
 
 </style>
+
+<i18n locale="fr">
+  {
+    "unknown-activity": "Activité inconnue",
+  }
+  </i18n>

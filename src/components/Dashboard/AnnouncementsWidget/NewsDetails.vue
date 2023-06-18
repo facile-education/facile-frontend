@@ -116,6 +116,7 @@
   >
     <SaveNewsModal
       :init-news="detailedNews"
+      :is-school-news="initNews.isSchoolNews"
       @update="updateNews"
       @close="isUpdateModalDisplayed = false"
     />

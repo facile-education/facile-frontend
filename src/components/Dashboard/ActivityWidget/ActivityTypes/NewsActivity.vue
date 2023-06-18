@@ -23,7 +23,7 @@
       <div class="description">
         <div class="left">
           <span class="text">
-            {{ news.title }}
+            {{ (news.isSchoolNews ? $t('hasPublishedAnnounce') : $t('hasPublishedInfo')) + news.title }}
           </span>
           <BaseIcon
             v-if="news.hasAttachedFiles"
@@ -31,7 +31,6 @@
             name="paperclip"
           />
         </div>
-        <i v-t="'see'" />
       </div>
     </div>
 
@@ -129,10 +128,10 @@ export default {
       }
     },
     formattedDate () {
-      return dayjs(this.news.modificationDate, 'YYYY-MM-DD HH:mm').calendar()
+      return dayjs(this.news.publicationDate, 'YYYY-MM-DD HH:mm').calendar()
     },
     formattedDateLong () {
-      return dayjs(this.news.modificationDate, 'YYYY-MM-DD HH:mm').format(this.$t('on') + ' DD MMMM YYYY ' + this.$t('at') + ' HH:mm')
+      return dayjs(this.news.publicationDate, 'YYYY-MM-DD HH:mm').format(this.$t('on') + ' DD MMMM YYYY ' + this.$t('at') + ' HH:mm')
     }
   },
   methods: {
@@ -182,6 +181,9 @@ button {
   position: relative;
 
   &:hover, &:focus-within {
+    border: 2px solid black;
+    border-radius: 5px;
+
     .options {
       opacity: 100%;
 
@@ -270,6 +272,8 @@ button {
   "update": "Modifier cette information",
   "delete": "Supprimer cette information",
   "deleteNewsWarning": "Supprimer cette information ?",
-  "selectToConsult": "Sélectionner pour consulter"
+  "selectToConsult": "Sélectionner pour consulter",
+  "hasPublishedInfo": "a publié ",
+  "hasPublishedAnnounce": "a publié l'annonce "
 }
 </i18n>
