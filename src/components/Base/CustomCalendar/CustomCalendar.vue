@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="configuration"
     v-touch:swipe.left="swipeLeft"
     v-touch:swipe.right="swipeRight"
     class="swipe-container"
@@ -9,7 +10,6 @@
       :style="`transform: translate3d(${pan}px, 0px, 0px);`"
     >
       <FullCalendar
-        v-if="configuration"
         ref="fullCalendar"
         class="calendar"
         :options="definitiveCalendarOptions"

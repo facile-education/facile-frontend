@@ -1,5 +1,8 @@
 <template>
-  <div class="weekly-horizontal-timeline">
+  <div
+    v-if="configuration"
+    class="weekly-horizontal-timeline"
+  >
     <div class="weekly-timeline-container">
       <div class="horizontal-timeline-left">
         <button
@@ -87,14 +90,6 @@ export default {
   name: 'Timeline',
   components: { NeroIcon },
   props: {
-    minDate: {
-      type: Object,
-      required: true
-    },
-    maxDate: {
-      type: Object,
-      required: true
-    },
     nbWeeksAfterCurrent: {
       type: Number,
       default: 3
@@ -113,6 +108,15 @@ export default {
     }
   },
   computed: {
+    configuration () {
+      return this.$store.state.calendar.configuration
+    },
+    minDate () {
+      return this.configuration ? dayjs(this.configuration.schoolYearStartDate, 'YYYY-MM-DD') : dayjs
+    },
+    maxDate () {
+      return this.configuration ? dayjs(this.configuration.schoolYearEndDate, 'YYYY-MM-DD') : dayjs
+    },
     disableNext () {
       if (!this.monthList || this.monthList.length === 0) return false
 
@@ -212,6 +216,10 @@ export default {
     }
   },
   created () {
+    if (!this.configuration) {
+      this.$store.dispatch('calendar/getConfiguration')
+    }
+
     let date = dayjs()
     if (date.isAfter(this.maxDate)) {
       date = this.maxDate.clone()
