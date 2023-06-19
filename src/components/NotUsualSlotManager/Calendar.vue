@@ -13,37 +13,11 @@
         :selected-date="selectedDate"
         @selectDate="onSelectDate"
       />
-      <div
-        v-if="!mq.desktop"
-        v-touch:swipe.left="onSwipeLeft"
-        v-touch:swipe.right="onSwipeRight"
-        class="swipe-container"
-      >
-        <div
-          class="swipe-wrapper"
-          :style="`transform: translate3d(${pan}px, 0px, 0px);`"
-        >
-          <FullCalendar
-            ref="fullCalendar"
-            class="calendar"
-            :options="calendarOptions"
-            @click.stop
-          />
-        </div>
-      </div>
-      <FullCalendar
-        v-else
-        ref="fullCalendar"
-        :options="calendarOptions"
-        @click.stop
-      />
-      <EventPopover
-        v-if="selectedEvent"
-        :selected-event="selectedEvent"
-        @editEvent="editEvent"
-        @openRegistration="openRegistration"
-        @showStudentList="showStudentList"
-        @close="unselectEvent"
+
+      <CustomCalendar
+        :display-date="selectedDate"
+        :events="eventList"
+        @selectDate="onSelectDate"
       />
     </template>
   </div>
@@ -80,18 +54,19 @@ import { isEditableSlot } from '@utils/notUsualSlot.util'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import notUsualSlotsConstants from '@/constants/notUsualSlots'
-import FullCalendar from '@fullcalendar/vue3'
-import frLocale from '@fullcalendar/core/locales/fr'
-import timeGridPlugin from '@fullcalendar/timegrid'
-import interactionPlugin from '@fullcalendar/interaction'
+// import FullCalendar from '@fullcalendar/vue3'
+// import frLocale from '@fullcalendar/core/locales/fr'
+// import timeGridPlugin from '@fullcalendar/timegrid'
+// import interactionPlugin from '@fullcalendar/interaction'
 // import FCEvent from '@components/Horaires/FCEvent'
 
 import { defineAsyncComponent } from 'vue'
 import { getTeachersLabel } from '@utils/commons.util'
+import CustomCalendar from '@components/Base/CustomCalendar/CustomCalendar.vue'
 
 const NotUsualSlotsToolBar = defineAsyncComponent(() => import('@components/NotUsualSlotManager/NotUsualSlotsToolBar'))
 const Timeline = defineAsyncComponent(() => import('@components/Horaires/Timeline')) // Needed for event creation
-const EventPopover = defineAsyncComponent(() => import('@/components/NotUsualSlotManager/EventPopover'))
+// const EventPopover = defineAsyncComponent(() => import('@/components/NotUsualSlotManager/EventPopover'))
 const StudentRegistrationModal = defineAsyncComponent(() => import('@components/NotUsualSlotManager/StudentRegistrationModal/StudentRegistrationModal'))
 const StudentListModal = defineAsyncComponent(() => import('@components/NotUsualSlotManager/StudentListModal/StudentListModal'))
 const EditSlotModal = defineAsyncComponent(() => import('@components/NotUsualSlotManager/EditSlotModal/EditSlotModal'))
@@ -101,14 +76,15 @@ dayjs.extend(customParseFormat)
 export default {
   name: 'Calendar',
   components: {
+    CustomCalendar,
     NotUsualSlotsToolBar,
     // FCEvent,
     Timeline,
     StudentRegistrationModal,
     StudentListModal,
-    EditSlotModal,
-    EventPopover,
-    FullCalendar
+    EditSlotModal
+    // EventPopover,
+    // FullCalendar
   },
   inject: ['mq'],
   props: {
@@ -145,46 +121,49 @@ export default {
     maxDate () {
       return dayjs(this.configuration.endDateSchool, 'YYYY-MM-DD HH:mm')
     },
-    calendarOptions () {
-      // const vm = this
-      return {
-        locale: frLocale,
-        plugins: [timeGridPlugin, interactionPlugin],
-        initialView: this.mq.phone ? 'timeGridDay' : 'timeGridWeek',
-        height: this.mq.phone ? 'max(800px, 100%)' : 'max(800px, calc(100% - 63px))',
-        expandRows: true,
-        headerToolbar: {
-          left: '',
-          center: '',
-          right: ''
-        },
-        selectable: true,
-        selectAllow: this.allowSelection,
-        select: this.onDateSelect,
-        eventTextColor: '#333',
-        eventTimeFormat: {
-          hour: '2-digit',
-          minute: '2-digit'
-          // omitZeroMinute: true
-        },
-        eventClick: this.onEventClick,
-        eventDidMount: this.onEventMount,
-        views: {
-          day: {
-            dayHeaderFormat: { weekday: 'long', month: 'numeric', day: 'numeric' }
-          },
-          timeGrid: {
-            allDaySlot: false,
-            hiddenDays: this.hiddenDays,
-            nowIndicator: true,
-            slotDuration: '01:00:00',
-            slotMinTime: '07:30', // TODO: get from backend
-            slotMaxTime: '18:00'
-            // slotLabelDidMount: this.onSlotMount
-          }
-        },
-        events: this.notComputedSlotsToDisplay.map(slot => this.formatCalendarSlot(slot))
-      }
+    // calendarOptions () {
+    //   // const vm = this
+    //   return {
+    //     locale: frLocale,
+    //     plugins: [timeGridPlugin, interactionPlugin],
+    //     initialView: this.mq.phone ? 'timeGridDay' : 'timeGridWeek',
+    //     height: this.mq.phone ? 'max(800px, 100%)' : 'max(800px, calc(100% - 63px))',
+    //     expandRows: true,
+    //     headerToolbar: {
+    //       left: '',
+    //       center: '',
+    //       right: ''
+    //     },
+    //     selectable: true,
+    //     selectAllow: this.allowSelection,
+    //     select: this.onDateSelect,
+    //     eventTextColor: '#333',
+    //     eventTimeFormat: {
+    //       hour: '2-digit',
+    //       minute: '2-digit'
+    //       // omitZeroMinute: true
+    //     },
+    //     eventClick: this.onEventClick,
+    //     eventDidMount: this.onEventMount,
+    //     views: {
+    //       day: {
+    //         dayHeaderFormat: { weekday: 'long', month: 'numeric', day: 'numeric' }
+    //       },
+    //       timeGrid: {
+    //         allDaySlot: false,
+    //         hiddenDays: this.hiddenDays,
+    //         nowIndicator: true,
+    //         slotDuration: '01:00:00',
+    //         slotMinTime: '07:30', // TODO: get from backend
+    //         slotMaxTime: '18:00'
+    //         // slotLabelDidMount: this.onSlotMount
+    //       }
+    //     },
+    //     events: this.eventList
+    //   }
+    // },
+    eventList () {
+      return this.notComputedSlotsToDisplay.map(slot => this.formatCalendarSlot(slot))
     },
     userSlots () {
       return this.$store.state.notUsualSlots.userSlots
@@ -301,7 +280,7 @@ export default {
         this.onSelectDate(this.selectedDate.startOf().toDate())
       }
     },
-    formatCalendarSlot (slot) {
+    formatCalendarSlot (slot) { // Set title and color for notUsualSlots
       let title = slot.title
       let color = slot.color
       if (slot.subject === undefined && slot.type !== undefined) {
@@ -310,26 +289,7 @@ export default {
         color = slotType.color
       }
 
-      return {
-        extendedProps: {
-          id: slot.cdtSessionId || slot.schoollifeSessionId,
-          subject: slot.subject,
-          teacher: slot.teacher,
-          teachers: slot.teachers,
-          inscriptionLeft: slot.capacity - slot.nbRegisteredStudents,
-          capacity: slot.capacity,
-          nbRegisteredStudents: slot.nbRegisteredStudents,
-          room: slot.room,
-          type: slot.type,
-          isUserSlot: slot.nbRegisteredStudents === undefined, // The difference between slots and student's sessions is the nbRegisteredStudents attribute
-          cy: dayjs(slot.startDate, 'YYYY-MM-DD HH:mm').format('MM-DD_HH:mm')
-        },
-        title: title,
-        start: dayjs(slot.startDate, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DDTHH:mm'),
-        end: dayjs(slot.endDate, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DDTHH:mm'),
-        backgroundColor: color,
-        borderColor: color
-      }
+      return { ...slot, ...{ title: title, color: color } }
     },
     editEvent (event) {
       if (isEditableSlot(event)) { // Only edit notUsualSlots
