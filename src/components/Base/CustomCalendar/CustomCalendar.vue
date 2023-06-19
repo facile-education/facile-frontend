@@ -38,7 +38,8 @@ import frLocale from '@fullcalendar/core/locales/fr'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import CalendarEvent from '@components/Base/CustomCalendar/CalendarEvent.vue'
 import dayjs from 'dayjs'
-import CalendarEventPopover from '@components/Base/CustomCalendar/CalendarEventPopover.vue'
+import { defineAsyncComponent } from 'vue'
+const CalendarEventPopover = defineAsyncComponent(() => import('@components/Base/CustomCalendar/CalendarEventPopover.vue'))
 
 export default {
   name: 'CustomCalendar',
