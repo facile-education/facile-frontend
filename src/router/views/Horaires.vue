@@ -38,8 +38,8 @@
       <!--        </div>-->
       <!--      </div>-->
 
-      <!-- TODO pass date to display in param-->
       <CustomCalendar
+        :display-date="selectedDate"
         :events="eventList"
         @eventOptionClicked="handleEventOption"
       />

@@ -12,6 +12,7 @@
       />
     </template>
   </FullCalendar>
+
   <CalendarEventPopover
     v-if="selectedEvent && showPopover"
     :selected-event="selectedEvent"
@@ -35,6 +36,10 @@ export default {
     events: {
       type: Array,
       required: true
+    },
+    displayDate: {
+      type: Object,
+      default: dayjs()
     },
     showPopover: {
       type: Boolean,
@@ -113,6 +118,17 @@ export default {
         }
       }
       return hiddenDays
+    }
+  },
+  watch: {
+    displayDate: {
+      immediate: true,
+      handler (value) {
+        if (this.$refs.fullCalendar) {
+          const calendar = this.$refs.fullCalendar.getApi()
+          calendar.gotoDate(value.toDate())
+        }
+      }
     }
   },
   created () {
