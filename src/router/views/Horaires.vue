@@ -9,8 +9,6 @@
     <template v-if="configuration">
       <Timeline
         v-if="!mq.phone"
-        :min-date="minDate"
-        :max-date="maxDate"
         @selectWeek="onSelectWeek"
       />
 
@@ -77,7 +75,7 @@ export default {
   },
   computed: {
     configuration () {
-      return this.$store.state.horaires.configuration
+      return this.$store.state.calendar.configuration
     },
     eventList () {
       return this.$store.state.horaires.sessionList
@@ -86,13 +84,7 @@ export default {
       return this.$store.state.horaires.isCreateSessionModalDisplayed
     },
     isLoading () {
-      return this.$store.state.horaires.isLoading || !this.configuration
-    },
-    minDate () {
-      return dayjs(this.configuration.schoolYearStartDate, 'YYYY-MM-DD')
-    },
-    maxDate () {
-      return dayjs(this.configuration.schoolYearEndDate, 'YYYY-MM-DD')
+      return this.$store.state.horaires.isLoading
     }
   },
   watch: {
@@ -110,7 +102,7 @@ export default {
   },
   created () {
     if (this.configuration === undefined) {
-      this.$store.dispatch('horaires/getConfiguration')
+      this.$store.dispatch('calendar/getConfiguration')
       if (this.mq.phone) {
         this.onSelectDate(new Date())
       }
@@ -144,22 +136,8 @@ export default {
           { start: this.$store.state.horaires.startDate, end: this.$store.state.horaires.endDate })
       }
     },
-    nextDate () {
-      this.selectedDate = this.selectedDate.add(1, 'day')
-      // Skip hidden days
-      if (this.configuration.schoolDays.indexOf(this.selectedDate.day()) === -1) {
-        this.nextDate()
-      } else {
-        this.onSelectDate(this.selectedDate.toDate())
-      }
-    },
     onSelectDate (date) {
       this.selectedDate = dayjs(date).startOf('day')
-
-      if (this.$refs.fullCalendar) {
-        const calendar = this.$refs.fullCalendar.getApi()
-        calendar.gotoDate(date)
-      }
 
       this.$store.dispatch('horaires/selectDates',
         { start: dayjs(date).subtract(1, 'day'), end: dayjs(date).add(2, 'day') })
@@ -167,31 +145,8 @@ export default {
     onSelectWeek (week) {
       this.selectedDate = dayjs(week.firstDayOfWeek).startOf('day')
 
-      if (this.$refs.fullCalendar) {
-        const calendar = this.$refs.fullCalendar.getApi()
-        calendar.gotoDate(new Date(week.firstDayOfWeek))
-      }
       this.$store.dispatch('horaires/selectDates',
         { start: dayjs(week.firstDayOfWeek, 'YYYY-MM-DD'), end: dayjs(week.lastDayOfWeek, 'YYYY-MM-DD') })
-    },
-    onSwipeLeft () {
-      if (this.mq.phone) {
-        this.nextDate()
-      }
-    },
-    onSwipeRight () {
-      if (this.mq.phone) {
-        this.previousDate()
-      }
-    },
-    previousDate () {
-      this.selectedDate = this.selectedDate.subtract(1, 'day')
-      // Skip hidden days
-      if (this.configuration.schoolDays.indexOf(this.selectedDate.day()) === -1) {
-        this.previousDate()
-      } else {
-        this.onSelectDate(this.selectedDate.startOf().toDate())
-      }
     }
   }
 }
