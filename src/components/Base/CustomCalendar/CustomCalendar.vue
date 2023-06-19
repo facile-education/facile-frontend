@@ -184,7 +184,7 @@ export default {
     formatCalendarSlot (slot) {
       return {
         extendedProps: slot,
-        title: slot.groupName,
+        title: slot.title || slot.groupName,
         start: dayjs(slot.startDate, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DDTHH:mm'),
         end: dayjs(slot.endDate, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DDTHH:mm'),
         backgroundColor: slot.color,
