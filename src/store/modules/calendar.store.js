@@ -1,5 +1,6 @@
 import scheduleService from '@/api/schedule.service'
 
+let isLoadingConfig = false
 export const state = {
   configuration: undefined
 }
@@ -10,15 +11,19 @@ export const mutations = {
 }
 export const actions = {
   getConfiguration ({ commit }) {
-    scheduleService.getConfiguration().then((data) => {
-      if (data.success) {
-        commit('setConfiguration', data.configuration)
-      } else {
-        console.error('Cannot get calendar config')
-      }
-    },
-    (err) => {
-      console.error(err)
-    })
+    if (!isLoadingConfig) {
+      isLoadingConfig = true
+      scheduleService.getConfiguration().then((data) => {
+        isLoadingConfig = false
+        if (data.success) {
+          commit('setConfiguration', data.configuration)
+        } else {
+          console.error('Cannot get calendar config')
+        }
+      },
+      (err) => {
+        console.error(err)
+      })
+    }
   }
 }

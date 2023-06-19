@@ -37,7 +37,7 @@ export default {
   emits: ['selectDate'],
   computed: {
     configuration () {
-      return (this.$store.state.horaires.configuration.schoolDays.length > 0) ? this.$store.state.horaires.configuration : undefined
+      return this.$store.state.calendar.configuration
     },
     formattedDate: {
       get () {
@@ -50,8 +50,9 @@ export default {
     hiddenDays () {
       const hiddenDays = []
       let dayNumber
+      const schoolDays = [1, 2, 3, 4, 5] // TODO: to get from config
       for (dayNumber = 0; dayNumber <= 6; ++dayNumber) {
-        if (this.configuration.schoolDays.indexOf(dayNumber) === -1) {
+        if (schoolDays.indexOf(dayNumber) === -1) {
           // Add one cause datepicker config is not the same as calendar
           // 1 to 7 instead of 0 to 6
           hiddenDays.push(dayNumber + 1)
@@ -60,10 +61,15 @@ export default {
       return hiddenDays
     },
     maxDate () {
-      return dayjs(this.configuration.endDateSchool).toDate()
+      return dayjs(this.configuration.schoolYearEndDate).toDate()
     },
     minDate () {
-      return dayjs(this.configuration.startDateSchool).toDate()
+      return dayjs(this.configuration.schoolYearStartDate).toDate()
+    }
+  },
+  created () {
+    if (!this.configuration) {
+      this.$store.dispatch('calendar/getConfiguration')
     }
   }
 }

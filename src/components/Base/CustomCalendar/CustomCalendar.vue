@@ -1,17 +1,29 @@
 <template>
-  <FullCalendar
-    v-if="configuration"
-    ref="fullCalendar"
-    :options="definitiveCalendarOptions"
+  <div
+    v-touch:swipe.left="swipeLeft"
+    v-touch:swipe.right="swipeRight"
+    class="swipe-container"
   >
-    <template #eventContent="event">
-      <CalendarEvent
-        :event="event"
-        :show-popover="showPopover"
-        @unselect="unselectEvent"
-      />
-    </template>
-  </FullCalendar>
+    <div
+      class="swipe-wrapper"
+      :style="`transform: translate3d(${pan}px, 0px, 0px);`"
+    >
+      <FullCalendar
+        v-if="configuration"
+        ref="fullCalendar"
+        class="calendar"
+        :options="definitiveCalendarOptions"
+      >
+        <template #eventContent="event">
+          <CalendarEvent
+            :event="event"
+            :show-popover="showPopover"
+            @unselect="unselectEvent"
+          />
+        </template>
+      </FullCalendar>
+    </div>
+  </div>
 
   <CalendarEventPopover
     v-if="selectedEvent && showPopover"
@@ -56,10 +68,11 @@ export default {
       }
     }
   },
-  emits: ['eventOptionClicked', 'unselectEvent', 'selectEvent'],
+  emits: ['eventOptionClicked', 'unselectEvent', 'selectEvent', 'selectDate'],
   data () {
     return {
-      selectedEvent: undefined
+      selectedEvent: undefined,
+      pan: 0
     }
   },
   computed: {
@@ -137,6 +150,36 @@ export default {
     }
   },
   methods: {
+    swipeLeft () {
+      if (this.definitiveCalendarOptions.initialView === 'timeGridDay') {
+        this.selectNextDay(this.displayDate)
+      }
+    },
+    swipeRight () {
+      if (this.definitiveCalendarOptions.initialView === 'timeGridDay') {
+        this.selectPreviousDay(this.displayDate)
+      }
+    },
+    selectPreviousDay (date) {
+      const newDate = date.subtract(1, 'day')
+      // Skip hidden days
+      const schoolDays = [1, 2, 3, 4, 5] // TODO: to get from backend
+      if (schoolDays.indexOf(newDate.day()) === -1) {
+        this.selectPreviousDay(newDate)
+      } else {
+        this.$emit('selectDate', newDate.startOf().toDate())
+      }
+    },
+    selectNextDay (date) {
+      const newDate = date.add(1, 'day')
+      // Skip hidden days
+      const schoolDays = [1, 2, 3, 4, 5] // TODO: to get from backend
+      if (schoolDays.indexOf(newDate.day()) === -1) {
+        this.selectNextDay(newDate)
+      } else {
+        this.$emit('selectDate', newDate.toDate())
+      }
+    },
     formatCalendarSlot (slot) {
       return {
         extendedProps: slot,
@@ -182,5 +225,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.swipe-container {
+  overflow-x: hidden;
+  height: max(800px, calc(100% - 125px));
+}
 
+.swipe-wrapper {
+  transition-duration: 320ms;
+  height: 100%;
+  display: flex;
+  transition-property: transform;
+  width: 100%
+}
+
+.calendar {
+  transition-property: transform;
+  position: relative;
+  flex-shrink: 0;
+  width: 100%;
+}
 </style>

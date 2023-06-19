@@ -13,34 +13,11 @@
         :max-date="maxDate"
         @selectWeek="onSelectWeek"
       />
-      <!--      <div-->
-      <!--        v-if="mq.phone"-->
-      <!--        v-touch:swipe.left="onSwipeLeft"-->
-      <!--        v-touch:swipe.right="onSwipeRight"-->
-      <!--        class="swipe-container"-->
-      <!--      >-->
-      <!--        <div-->
-      <!--          class="swipe-wrapper"-->
-      <!--          :style="`transform: translate3d(${pan}px, 0px, 0px);`"-->
-      <!--        >-->
-      <!--          <FullCalendar-->
-      <!--            ref="fullCalendar"-->
-      <!--            class="calendar"-->
-      <!--            :options="calendarOptions"-->
-      <!--          >-->
-      <!--            <template #eventContent="arg">-->
-      <!--              <FCEvent-->
-      <!--                :arg="arg"-->
-      <!--                @update="openEditModalDisplay"-->
-      <!--              />-->
-      <!--            </template>-->
-      <!--          </FullCalendar>-->
-      <!--        </div>-->
-      <!--      </div>-->
 
       <CustomCalendar
         :display-date="selectedDate"
         :events="eventList"
+        @selectDate="onSelectDate"
         @eventOptionClicked="handleEventOption"
       />
     </template>
