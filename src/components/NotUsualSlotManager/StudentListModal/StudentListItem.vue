@@ -79,7 +79,7 @@ export default {
       return this.$store.state.user
     },
     slotType () {
-      return notUsualSlotsConstants.getSlotTypeByNumber(this.event.extendedProps.type)
+      return notUsualSlotsConstants.getSlotTypeByNumber(this.event.type)
     },
     formattedStudent () {
       return toPascalCase(this.student.firstName) + ' ' + toPascalCase(this.student.lastName) + ' - ' + this.student.className

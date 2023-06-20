@@ -186,7 +186,7 @@ export default {
   },
   computed: {
     slotType () {
-      return notUsualSlotsConstants.getSlotTypeByNumber(this.event.extendedProps.type)
+      return notUsualSlotsConstants.getSlotTypeByNumber(this.event.type)
     },
     formattedStudent () {
       return toPascalCase(this.student.firstName) + ' ' + toPascalCase(this.student.lastName) + ' - ' + this.student.className
@@ -233,7 +233,7 @@ export default {
   },
   created () {
     if (this.isFired) {
-      schoolLifeService.getCandidateSessions(this.student, this.event.extendedProps.id).then((data) => {
+      schoolLifeService.getCandidateSessions(this.student, this.event.sessionId).then((data) => {
         if (data.success) {
           this.studentsDaySessions = data.candidateSessions
           this.studentsDaySessions.forEach((session) => { this.formatSession(session) })
@@ -263,9 +263,6 @@ export default {
   },
   methods: {
     formatSession (session) {
-      if (session.schoollifeSessionId) {
-        session.sessionId = 0
-      }
       session.label = dayjs(session.startDate, 'YYYY/MM/DD HH:mm').format('HH:mm') + ' / ' + dayjs(session.endDate, 'YYYY/MM/DD HH:mm').format('HH:mm') + ' - ' + session.title
     },
     submit () {
@@ -293,14 +290,14 @@ export default {
       const subjectName = this.selectedSubject.subjectId !== -1 ? this.selectedSubject.name : ''
 
       if (this.student) {
-        schoolLifeService.registerStudent(this.student, this.event.extendedProps.id, this.comment, this.notifyParents, subjectName).then((data) => {
+        schoolLifeService.registerStudent(this.student, this.event.sessionId, this.comment, this.notifyParents, subjectName).then((data) => {
           if (data.success) {
             this.$store.dispatch('notUsualSlots/refreshCalendar')
             this.closeModal()
           }
         })
       } else if (this.selectedClass.orgId > 0) {
-        schoolLifeService.registerClass(this.selectedClass.orgId, this.event.extendedProps.id, this.comment, this.notifyParents, subjectName).then((data) => {
+        schoolLifeService.registerClass(this.selectedClass.orgId, this.event.sessionId, this.comment, this.notifyParents, subjectName).then((data) => {
           if (data.success) {
             this.$store.dispatch('notUsualSlots/refreshCalendar')
             this.closeModal()
@@ -310,7 +307,7 @@ export default {
     },
     confirmDeregistration () {
       const allSession = this.slotType.type === notUsualSlotsConstants.studyType
-      schoolLifeService.unRegisterStudent(this.student, this.event.extendedProps.id, this.comment, this.notifyParents, allSession).then((data) => {
+      schoolLifeService.unRegisterStudent(this.student, this.event.sessionId, this.comment, this.notifyParents, allSession).then((data) => {
         if (data.success) {
           this.$store.dispatch('notUsualSlots/refreshCalendar')
           this.$emit('deregister')
@@ -320,8 +317,8 @@ export default {
     },
     registerFiring () {
       const sourceTeacherId = this.selectedSession.teacher ? this.selectedSession.teacher.teacherId : this.selectedSession.teachers.length > 1 ? this.dropdownSelectedTeacher.teacherId : this.selectedSession.teachers[0].teacherId
-      const sourceSchoollifeSessionId = (this.selectedSession.schoollifeSessionId === undefined) ? 0 : this.selectedSession.schoollifeSessionId
-      schoolLifeService.registerFiring(this.event.extendedProps.id, this.student, this.selectedSession.sessionId, sourceTeacherId, sourceSchoollifeSessionId, this.registrationDate.format('YYYY-MM-DD HH:mm')).then((data) => {
+      const sourceSchoollifeSessionId = (this.selectedSession.sessionId === undefined) ? 0 : this.selectedSession.sessionId
+      schoolLifeService.registerFiring(this.event.sessionId, this.student, this.selectedSession.sessionId, sourceTeacherId, sourceSchoollifeSessionId, this.registrationDate.format('YYYY-MM-DD HH:mm')).then((data) => {
         if (data.success) {
           this.$store.dispatch('notUsualSlots/refreshCalendar')
           this.closeModal()
@@ -329,7 +326,7 @@ export default {
       })
     },
     deregisterFiring () {
-      schoolLifeService.unRegisterFiring(this.event.extendedProps.id, this.student).then((data) => {
+      schoolLifeService.unRegisterFiring(this.event.sessionId, this.student).then((data) => {
         if (data.success) {
           this.$store.dispatch('notUsualSlots/refreshCalendar')
           this.$emit('deregister')

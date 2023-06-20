@@ -286,7 +286,7 @@ export default {
     formatCalendarSlot (slot) {
       const json = {
         extendedProps: {
-          sessionId: (slot.sessionId === undefined ? slot.schoollifeSessionId : slot.sessionId),
+          sessionId: slot.sessionId,
           subject: slot.subject,
           teachers: '',
           room: slot.room,
