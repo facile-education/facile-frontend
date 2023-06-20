@@ -202,13 +202,13 @@ export default {
       overflow-wrap: break-word;
     }
 
-    p ::v-deep p {
+    p ::deep p {
       margin: 5px 0;
       line-height: 1.25rem;
       overflow-wrap: break-word;
     }
 
-    p ::v-deep figure {
+    p ::deep figure {
       margin: 5px 0;
       line-height: 1.25rem;
       overflow-wrap: break-word;

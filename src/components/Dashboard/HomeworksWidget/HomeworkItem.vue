@@ -173,7 +173,7 @@ button {
 }
 
 .description {
-  ::v-deep(p) {
+  ::deep(p) {
     margin: 0;
     font-size: 0.8rem;
     white-space: nowrap;
