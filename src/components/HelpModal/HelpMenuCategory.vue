@@ -49,10 +49,11 @@
 </template>
 
 <script>
-import HelpMenuItem from '@components/HelpModal/HelpMenuItem.vue'
-import { deleteCategory, saveHelpItemPosition } from '@/api/help.service'
 import BaseIcon from '@components/Base/BaseIcon.vue'
+import HelpMenuItem from '@components/HelpModal/HelpMenuItem.vue'
 import { defineAsyncComponent } from 'vue'
+
+import { deleteCategory, saveHelpItemPosition } from '@/api/help.service'
 const CreateArticleModal = defineAsyncComponent(() => import('@components/HelpModal/CreationModals/CreateArticleModal.vue'))
 export default {
   name: 'HelpMenuCategory',

@@ -31,9 +31,10 @@
 </template>
 
 <script>
-import { saveItem } from '@/api/help.service'
 import InlineEditor from '@ckeditor/ckeditor5-build-inline'
 import { component as CKEditor } from '@ckeditor/ckeditor5-vue'
+
+import { saveItem } from '@/api/help.service'
 
 export default {
   name: 'EditManualModal',

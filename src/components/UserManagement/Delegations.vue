@@ -52,12 +52,13 @@
 </template>
 
 <script>
-import PentilaUtils from 'pentila-utils'
-import { addSchoolAdmin, removeSchoolAdmin, getSchoolDelegates } from '@/api/userManagement.service'
-import { addNewsDelegate, removeNewsDelegate } from '@/api/dashboard/news.service'
-import AddDelegationModal from '@/components/UserManagement/AddDelegationModal'
 import UserFields from '@components/UserManagement/UserFields'
 import UserRow from '@components/UserManagement/UserRow'
+import PentilaUtils from 'pentila-utils'
+
+import { addNewsDelegate, removeNewsDelegate } from '@/api/dashboard/news.service'
+import { addSchoolAdmin, getSchoolDelegates, removeSchoolAdmin } from '@/api/userManagement.service'
+import AddDelegationModal from '@/components/UserManagement/AddDelegationModal'
 
 export default {
   name: 'Delegations',

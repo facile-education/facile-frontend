@@ -1,4 +1,5 @@
 import { createI18n } from 'vue-i18n'
+
 import fr from '@/locales/fr'
 
 // function loadLocaleMessages () {

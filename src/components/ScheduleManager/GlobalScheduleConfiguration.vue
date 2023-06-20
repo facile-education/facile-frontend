@@ -39,8 +39,9 @@
 
 <script>
 
-import dayjs from 'dayjs'
 import CustomDatePicker from '@components/Base/CustomDatePicker.vue'
+import dayjs from 'dayjs'
+
 import { getScheduleConfiguration, saveScheduleConfiguration } from '@/api/scheduleManager.service'
 
 export default {

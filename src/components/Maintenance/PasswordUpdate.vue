@@ -66,10 +66,11 @@
 <script>
 
 import PentilaUtils from 'pentila-utils'
+
 import { searchDirectory } from '@/api/contact.service'
 import { getAllSchools } from '@/api/organization.service'
-import { updatePassword } from '@/api/userManagement.service'
 import { getRoleList } from '@/api/role.service'
+import { updatePassword } from '@/api/userManagement.service'
 
 export default {
   name: 'PasswordUpdate',

@@ -43,8 +43,9 @@
 
 <script>
 
-import NeroIcon from '@/components/Nero/NeroIcon'
 import ContextMenu from '@components/ContextMenu/ContextMenu'
+
+import NeroIcon from '@/components/Nero/NeroIcon'
 export default {
   name: 'OptionItem',
   components: { NeroIcon, ContextMenu },

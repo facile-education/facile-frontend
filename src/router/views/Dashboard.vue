@@ -45,8 +45,9 @@
 </template>
 
 <script>
-import Layout from '@/router/layouts/BannerLayout'
 import { defineAsyncComponent } from 'vue'
+
+import Layout from '@/router/layouts/BannerLayout'
 const AnnouncementsWidget = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/AnnouncementsWidget.vue'))
 const DiaryWidget = defineAsyncComponent(() => import('@components/Dashboard/DiaryWidget/DiaryWidget.vue'))
 const ScheduleWidget = defineAsyncComponent(() => import('@components/Dashboard/ScheduleWidget/ScheduleWidget'))

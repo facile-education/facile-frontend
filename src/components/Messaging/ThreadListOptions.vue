@@ -85,10 +85,10 @@
 </template>
 
 <script>
-import contextMenus from '@utils/contextMenus'
-import messagingUtils from '@utils/messaging.utils'
 import IconOption from '@components/Base/IconOption'
 import ContextMenu from '@components/ContextMenu/ContextMenu'
+import contextMenus from '@utils/contextMenus'
+import messagingUtils from '@utils/messaging.utils'
 
 export default {
   name: 'ThreadListOptions',

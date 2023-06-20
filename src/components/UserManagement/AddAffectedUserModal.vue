@@ -43,6 +43,7 @@
 <script>
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
+
 import { getSchoolUsers } from '@/api/userSearch.service'
 
 export default {

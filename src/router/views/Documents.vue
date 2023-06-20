@@ -90,23 +90,24 @@
 </template>
 
 <script>
-import { DOCUMENTS } from '@/constants/appConstants'
-import Layout from '@layouts/BannerLayout'
-import CurrentOptions from '@components/Documents/Options'
-import Breadcrumb from '@components/Documents/Breadcrumb'
-import DocumentList from '@components/Documents/DocumentList'
-import DocumentDetails from '@components/Documents/DocumentDetails/DocumentDetails'
 import ContextMenu from '@components/ContextMenu/ContextMenu'
-import { documentSpaceOptions, mobileDocumentSpaceOptions, groupOptions } from '@/constants/options'
-import { defaultFields, fieldsWithoutSize } from '@/constants/documentsConstants'
-import FilePickerArea from '@components/FilePicker/FilePickerArea'
-import { computeDocumentsOptions, downloadDocument, deleteEntities, importDocuments } from '@utils/documents.util'
-import { returnAddedFiles, alertNoFile } from '@utils/upload.util'
-import FolderNameModal from '@components/Documents/Modals/FolderNameModal'
-import FileNameModal from '@components/Documents/Modals/FileNameModal'
-import FilePickerModal from '@components/FilePicker/FilePickerModal'
+import Breadcrumb from '@components/Documents/Breadcrumb'
+import DocumentDetails from '@components/Documents/DocumentDetails/DocumentDetails'
 import DocumentDetailsModal from '@components/Documents/DocumentDetails/DocumentDetailsModal'
+import DocumentList from '@components/Documents/DocumentList'
+import FileNameModal from '@components/Documents/Modals/FileNameModal'
+import FolderNameModal from '@components/Documents/Modals/FolderNameModal'
 import PermissionsModal from '@components/Documents/Modals/PermissionModal/PermissionsModal'
+import CurrentOptions from '@components/Documents/Options'
+import FilePickerArea from '@components/FilePicker/FilePickerArea'
+import FilePickerModal from '@components/FilePicker/FilePickerModal'
+import Layout from '@layouts/BannerLayout'
+import { computeDocumentsOptions, deleteEntities, downloadDocument, importDocuments } from '@utils/documents.util'
+import { alertNoFile, returnAddedFiles } from '@utils/upload.util'
+
+import { DOCUMENTS } from '@/constants/appConstants'
+import { defaultFields, fieldsWithoutSize } from '@/constants/documentsConstants'
+import { documentSpaceOptions, groupOptions, mobileDocumentSpaceOptions } from '@/constants/options'
 import { removeMenuOptionIfExist } from '@/utils/commons.util'
 
 export default {

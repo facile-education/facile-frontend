@@ -77,16 +77,17 @@
 
 <script>
 
-import contextMenus from '@/utils/contextMenus'
-import constants from '@/constants/appConstants'
-import Thread from '@components/Messaging/Thread'
-import messagingUtils from '@/utils/messaging.utils'
-import ContextMenu from '@/components/ContextMenu/ContextMenu'
-import _ from 'lodash'
-import ThreadListHeader from '@components/Messaging/ThreadListHeader'
 import IconOption from '@components/Base/IconOption'
+import Thread from '@components/Messaging/Thread'
+import ThreadListHeader from '@components/Messaging/ThreadListHeader'
 import NeroIcon from '@components/Nero/NeroIcon.vue'
 import { removeMenuOptionIfExist } from '@utils/commons.util'
+import _ from 'lodash'
+
+import ContextMenu from '@/components/ContextMenu/ContextMenu'
+import constants from '@/constants/appConstants'
+import contextMenus from '@/utils/contextMenus'
+import messagingUtils from '@/utils/messaging.utils'
 
 let mouseY = 0
 let startMouseY = 0

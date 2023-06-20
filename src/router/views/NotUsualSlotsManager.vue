@@ -65,16 +65,16 @@
 </template>
 
 <script>
-
-import notUsualSlotConstants from '@/constants/notUsualSlots'
+import Layout from '@layouts/BannerLayout'
 import dayjs from 'dayjs'
+import { defineAsyncComponent } from 'vue'
+
 import schoolLifeService from '@/api/schoolLife-portlet.service'
 import SlotTypeItem from '@/components/NotUsualSlotManager/SlotTypeItem'
 import HHCCalendar from '@components/NotUsualSlotManager/HHCCalendar.vue'
 import SelectedSchool from '@/components/NotUsualSlotManager/SelectedSchool'
-import Layout from '@layouts/BannerLayout'
-
-import { defineAsyncComponent } from 'vue'
+import SlotTypeItem from '@/components/NotUsualSlotManager/SlotTypeItem'
+import notUsualSlotConstants from '@/constants/notUsualSlots'
 
 const PendingFiringModal = defineAsyncComponent(() => import('@/components/NotUsualSlotManager/PendingFiringModal/PendingFiringModal'))
 const UserCompletion = defineAsyncComponent(() => import('@/components/NotUsualSlotManager/UserCompletion'))

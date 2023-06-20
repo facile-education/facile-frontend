@@ -19,9 +19,10 @@
 </template>
 
 <script>
+import GenericDocument from '@components/Documents/DocumentItem/GenericDocument'
+
 import { DOCUMENTS } from '@/constants/appConstants'
 import { icons } from '@/constants/icons'
-import GenericDocument from '@components/Documents/DocumentItem/GenericDocument'
 
 export default {
   name: 'Folder',

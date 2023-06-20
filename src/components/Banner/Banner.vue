@@ -28,11 +28,12 @@
 </template>
 
 <script>
-import dayjs from 'dayjs'
-import constants from '@/api/constants'
 import BannerServices from '@components/Banner/BannerServices'
 import BannerUserProfile from '@components/Banner/BannerUserProfile'
+import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
+
+import constants from '@/api/constants'
 
 const BannerSearch = defineAsyncComponent(() => import('@/components/Banner/BannerSearch'))
 const NeroIcon = defineAsyncComponent(() => import('@/components/Nero/NeroIcon'))

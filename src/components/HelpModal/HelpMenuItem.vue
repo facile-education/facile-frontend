@@ -31,8 +31,9 @@
 </template>
 
 <script>
-import { deleteItem } from '@/api/help.service'
 import BaseIcon from '@components/Base/BaseIcon.vue'
+
+import { deleteItem } from '@/api/help.service'
 
 export default {
   name: 'HelpMenuItem',

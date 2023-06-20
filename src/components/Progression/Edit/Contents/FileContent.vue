@@ -23,9 +23,10 @@
 </template>
 
 <script>
-import { getExtensionFromName } from '@/utils/commons.util'
-import { icons } from '@/constants/icons'
 import BaseIcon from '@components/Base/BaseIcon'
+
+import { icons } from '@/constants/icons'
+import { getExtensionFromName } from '@/utils/commons.util'
 
 export default {
   name: 'FileContent',

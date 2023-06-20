@@ -38,8 +38,8 @@
 <script>
 import BaseIcon from '@components/Base/BaseIcon.vue'
 import ReadInfoModalUser from '@components/Dashboard/ReadInfos/ReadInfoModalUser.vue'
-import PentilaUtils from 'pentila-utils'
 import { getFullName } from '@utils/commons.util'
+import PentilaUtils from 'pentila-utils'
 
 export default {
   name: 'ReadInfoModalPopulation',

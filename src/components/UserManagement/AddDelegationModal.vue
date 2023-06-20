@@ -45,6 +45,7 @@
 <script>
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
+
 import { getDelegationCandidates } from '@/api/userManagement.service'
 
 export default {

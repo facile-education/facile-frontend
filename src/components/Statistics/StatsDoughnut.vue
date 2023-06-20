@@ -33,6 +33,7 @@
 
 <script>
 import Chart from '@components/Statistics/Chart.vue'
+
 import { getFilesCount, getHomeworksCount } from '@/api/statistics.service'
 
 export default {

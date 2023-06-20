@@ -12,10 +12,11 @@
 </template>
 
 <script>
-import { getLastSearchQueries } from '@/api/search.service'
+import QuickSearchPanelHeader from '@components/Search/QuickSearchPanelHeader.vue'
 import SearchHistoryItem from '@components/Search/SearchHistory/SearchHistoryItem.vue'
 import { compare } from '@utils/commons.util'
-import QuickSearchPanelHeader from '@components/Search/QuickSearchPanelHeader.vue'
+
+import { getLastSearchQueries } from '@/api/search.service'
 
 export default {
   name: 'SearchHistory',

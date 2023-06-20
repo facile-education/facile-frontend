@@ -26,6 +26,7 @@
 
 <script>
 import BaseIcon from '@components/Base/BaseIcon'
+
 import { icons } from '@/constants/icons'
 
 export default {

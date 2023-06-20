@@ -36,9 +36,10 @@
 </template>
 
 <script>
-import { getContactTree } from '@/api/contact.service'
 import AddressBookCommunities from '@components/ContactPicker/AddressBook/ItemsTypes/AddressBookCommunities.vue'
 import AddressBookSchool from '@components/ContactPicker/AddressBook/ItemsTypes/AddressBookSchool.vue'
+
+import { getContactTree } from '@/api/contact.service'
 
 export default {
   name: 'AddressBook',

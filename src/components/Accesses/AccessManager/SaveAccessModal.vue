@@ -80,13 +80,14 @@
 </template>
 
 <script>
-import { required } from '@vuelidate/validators'
+import AccessRedirectionSelector from '@components/Accesses/AccessManager/AccessRedirectionSelector.vue'
+import ThumbnailSelector from '@components/Base/ThumbnailSelector.vue'
 import validators from '@utils/validators'
 import { useVuelidate } from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
 import { nextTick } from 'vue'
-import AccessRedirectionSelector from '@components/Accesses/AccessManager/AccessRedirectionSelector.vue'
 import { defaultImagesKeys } from '@/constants/icons'
-import ThumbnailSelector from '@components/Base/ThumbnailSelector.vue'
+
 const inputMaxSize = 75
 const isUnderInputMaxSize = (value) => validators.isUnderMaxSize(value, inputMaxSize)
 const isNotEmpty = (list) => validators.isNotEmpty(list)

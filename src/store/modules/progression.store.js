@@ -1,11 +1,12 @@
+import { getTeacherGroups, getUserSessions } from '@/api/schedule.service'
+import { getSchoolVoleeList } from '@/api/organization.service'
 import {
-  addProgression, deleteProgression, getProgressionList, updateProgression, getProgressionContent, addFolder,
-  updateFolder, addItem, updateItem, addItemContent, addItemFileContent, updateItemContent, deleteFolder, deleteItem, getFolderContent,
-  getItemContents, deleteItemContent, addSessionAssignment, addHomeworkAssignment, deleteAssignment, saveSessionSpecificItem, saveHomeworkSpecificItem
+  addFolder,
+  addHomeworkAssignment, addItem, addItemContent, addItemFileContent, addProgression, addSessionAssignment, deleteAssignment, deleteFolder, deleteItem, deleteItemContent, deleteProgression, getFolderContent,
+  getItemContents, getProgressionContent, getProgressionList, saveHomeworkSpecificItem,
+  saveSessionSpecificItem, updateFolder, updateItem, updateItemContent, updateProgression
 } from '@/api/progression.service'
 import { getSubjects } from '@/api/userManagement.service'
-import { getSchoolVoleeList } from '@/api/organization.service'
-import { getTeacherGroups, getUserSessions } from '@/api/schedule.service'
 
 export const helperMethods = {
   getFolderByFolderId (progression, folderId) {

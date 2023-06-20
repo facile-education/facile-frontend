@@ -24,6 +24,7 @@
 
 <script>
 import { defineAsyncComponent } from 'vue'
+
 import { popupDurationTime } from '@/constants/appConstants'
 
 const Popup = defineAsyncComponent(() => import('@components/Base/Popup'))

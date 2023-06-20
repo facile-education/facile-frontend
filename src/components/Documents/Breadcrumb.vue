@@ -35,8 +35,8 @@
 </template>
 
 <script>
-import BreadCrumbItem from '@components/Documents/BreadCrumbItem'
 import HiddenItems from '@components/Base/HiddenItems'
+import BreadCrumbItem from '@components/Documents/BreadCrumbItem'
 
 export default {
   components: { HiddenItems, BreadCrumbItem },

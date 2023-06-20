@@ -17,8 +17,8 @@
 </template>
 
 <script>
-import { MESSAGING } from '@/constants/appConstants'
 import BannerItem from '@/components/Banner/BannerItem'
+import { MESSAGING } from '@/constants/appConstants'
 
 export default {
   name: 'BannerServices',

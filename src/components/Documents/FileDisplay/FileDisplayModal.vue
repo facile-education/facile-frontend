@@ -63,9 +63,9 @@
 </template>
 
 <script>
-import VueResizable from 'vue-resizable'
 import BaseIcon from '@components/Base/BaseIcon'
 import FileDisplay from '@components/Documents/FileDisplay/FileDisplay'
+import VueResizable from 'vue-resizable'
 
 export default {
   name: 'FileDisplayModal',

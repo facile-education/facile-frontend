@@ -23,6 +23,7 @@ export function isDarkBackgroundColor (color) {
 // Update main theme color
 export function getFontColorForBackground (backgroundColor) {
   return isDarkBackgroundColor(backgroundColor)
-    ? '#fff' : '#000'
+    ? '#fff'
+    : '#000'
 //    ? design['global-color-light-text'] : design['global-color-dark-text']
 }

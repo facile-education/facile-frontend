@@ -1,5 +1,5 @@
-import i18n from '@/i18n.js'
 import { icons } from '@/constants/icons'
+import i18n from '@/i18n.js'
 
 const documentSpaceOptions = [
   {

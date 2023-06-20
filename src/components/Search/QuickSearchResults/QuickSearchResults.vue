@@ -18,7 +18,6 @@
 
 <script>
 import QuickSearchPanelHeader from '@components/Search/QuickSearchPanelHeader'
-
 import { defineAsyncComponent } from 'vue'
 const QuickSearchResultItem = defineAsyncComponent(() => import('@components/Search/QuickSearchResults/QuickSearchResultItem'))
 

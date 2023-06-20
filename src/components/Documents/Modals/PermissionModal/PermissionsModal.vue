@@ -77,8 +77,9 @@
 </template>
 
 <script>
-import permissionsService from '@/api/documents/permissions.service'
 import RolePermissions from '@components/Documents/Modals/PermissionModal/RolePermissions'
+
+import permissionsService from '@/api/documents/permissions.service'
 
 export default {
   name: 'PermissionsModal',

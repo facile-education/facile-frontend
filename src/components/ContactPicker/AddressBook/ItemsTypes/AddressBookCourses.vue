@@ -25,8 +25,8 @@
 
 <script>
 
-import PentilaUtils from 'pentila-utils'
 import AddressBookItem from '@components/ContactPicker/AddressBook/AddressBookItem.vue'
+import PentilaUtils from 'pentila-utils'
 
 export default {
   name: 'AddressBookCourses',

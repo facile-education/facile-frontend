@@ -40,10 +40,10 @@
 </template>
 
 <script>
-import Layout from '@/router/layouts/BannerLayout'
-import ManualUsers from '@/components/UserManagement/ManualUsers'
-import Delegations from '@/components/UserManagement/Delegations'
 import Affectations from '@/components/UserManagement/Affectations.vue'
+import Delegations from '@/components/UserManagement/Delegations'
+import ManualUsers from '@/components/UserManagement/ManualUsers'
+import Layout from '@/router/layouts/BannerLayout'
 
 export default {
   name: 'UserManagement',

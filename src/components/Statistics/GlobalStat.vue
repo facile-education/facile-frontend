@@ -25,8 +25,9 @@
 </template>
 
 <script>
-import { getMessagesCount, getNewsCount } from '@/api/statistics.service'
 import AnimatedCounter from '@components/Base/AnimatedCounter.vue'
+
+import { getMessagesCount, getNewsCount } from '@/api/statistics.service'
 
 export default {
   name: 'GlobalStat',

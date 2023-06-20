@@ -70,8 +70,9 @@
 
 <script>
 import dayjs from 'dayjs'
-import ProgressionItem from '@/components/Progression/Edit/ProgressionItem'
+
 import { getHomeworkSpecificContents, getSessionSpecificContents } from '@/api/progression.service'
+import ProgressionItem from '@/components/Progression/Edit/ProgressionItem'
 
 export default {
   name: 'SessionContentEditPanel',

@@ -23,8 +23,9 @@
 </template>
 
 <script>
-import ProgressionTreeSection from '@/components/Progression/Tree/ProgressionTreeSection'
 import ProgressionCreateButton from '@components/Progression/Tree/ProgressionCreateButton'
+
+import ProgressionTreeSection from '@/components/Progression/Tree/ProgressionTreeSection'
 
 export default {
   name: 'ProgressionTree',

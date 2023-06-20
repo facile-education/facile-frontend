@@ -94,8 +94,8 @@
 </template>
 
 <script>
-import NeroIcon from '@/components/Nero/NeroIcon'
 import RuleLabel from '@/components/ApplicationManager/RuleLabel'
+import NeroIcon from '@/components/Nero/NeroIcon'
 
 export default {
   name: 'ApplicationDetails',

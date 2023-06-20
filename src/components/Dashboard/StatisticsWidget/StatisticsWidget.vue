@@ -33,10 +33,11 @@
 </template>
 
 <script>
-import { STATISTICS } from '@/constants/appConstants'
-import StatisticsHeader from '@components/Dashboard/StatisticsWidget/StatisticsHeader.vue'
-import { getDashboardStatistics } from '@/api/statistics.service'
 import StatisticItem from '@components/Dashboard/StatisticsWidget/StatisticItem.vue'
+import StatisticsHeader from '@components/Dashboard/StatisticsWidget/StatisticsHeader.vue'
+
+import { getDashboardStatistics } from '@/api/statistics.service'
+import { STATISTICS } from '@/constants/appConstants'
 
 export default {
   name: 'StatisticsWidget',

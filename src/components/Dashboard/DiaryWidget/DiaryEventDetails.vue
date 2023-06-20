@@ -119,11 +119,12 @@
 </template>
 
 <script>
-import { deleteEvent, getEventDetails } from '@/api/dashboard/agenda.service'
-import dayjs from 'dayjs'
 import PopulationList from '@components/Base/PopulationList.vue'
 import ReadInfos from '@components/Dashboard/ReadInfos/ReadInfos.vue'
+import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
+
+import { deleteEvent, getEventDetails } from '@/api/dashboard/agenda.service'
 const SaveDiaryEventModal = defineAsyncComponent(() => import('@components/Dashboard/DiaryWidget/SaveDiaryEventModal.vue'))
 
 export default {

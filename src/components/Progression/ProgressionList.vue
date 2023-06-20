@@ -65,11 +65,11 @@
 </template>
 
 <script>
+import PentilaUtils from 'pentila-utils'
+import { defineAsyncComponent } from 'vue'
+
 import NeroIcon from '@/components/Nero/NeroIcon'
 import NeroToolbar from '@/components/Nero/NeroToolbar'
-import PentilaUtils from 'pentila-utils'
-
-import { defineAsyncComponent } from 'vue'
 const EditProgressionModal = defineAsyncComponent(() => import('@/components/Progression/EditProgressionModal'))
 const ProgressionItem = defineAsyncComponent(() => import('@/components/Progression/ProgressionItem'))
 

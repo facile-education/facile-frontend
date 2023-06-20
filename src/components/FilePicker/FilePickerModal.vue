@@ -54,8 +54,9 @@
 </template>
 
 <script>
-import groupService from '@/api/documents/group.service'
 import FilePickerModalDocuments from '@components/FilePicker/FilePickerModalDocuments'
+
+import groupService from '@/api/documents/group.service'
 
 export default {
   name: 'FilePickerModal',

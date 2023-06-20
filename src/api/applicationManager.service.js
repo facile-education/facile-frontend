@@ -1,6 +1,7 @@
 import axios from 'axios'
-import constants from './constants'
 import PentilaUtils from 'pentila-utils'
+
+import constants from './constants'
 
 export {
   createApplication,

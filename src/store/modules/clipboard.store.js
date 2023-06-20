@@ -1,7 +1,7 @@
 // TODO LocalStorage to persist on reload ?
 import clipboardService from '@/api/documents/clipboard.service'
-import i18n from '@/i18n'
 import { conflicts } from '@/constants/documentsConstants'
+import i18n from '@/i18n'
 
 export const state = {
   action: undefined,

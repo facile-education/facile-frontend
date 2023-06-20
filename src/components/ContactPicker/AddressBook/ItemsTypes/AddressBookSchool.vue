@@ -44,10 +44,10 @@
 </template>
 
 <script>
-import AddressBookPersonals from '@components/ContactPicker/AddressBook/ItemsTypes/AddressBookPersonals.vue'
+import AddressBookItem from '@components/ContactPicker/AddressBook/AddressBookItem.vue'
 import AddressBookClasses from '@components/ContactPicker/AddressBook/ItemsTypes/AddressBookClasses.vue'
 import AddressBookCourses from '@components/ContactPicker/AddressBook/ItemsTypes/AddressBookCourses.vue'
-import AddressBookItem from '@components/ContactPicker/AddressBook/AddressBookItem.vue'
+import AddressBookPersonals from '@components/ContactPicker/AddressBook/ItemsTypes/AddressBookPersonals.vue'
 
 export default {
   name: 'AddressBookSchool',

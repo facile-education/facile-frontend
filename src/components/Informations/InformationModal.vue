@@ -36,10 +36,11 @@
 </template>
 
 <script>
-import VersionsDetails from '@/components/Informations/VersionsDetails'
-import TermsOfUse from '@/components/Informations/TermsOfUse'
-import Privacy from '@components/Informations/Privacy'
 import Accessibility from '@components/Informations/Accessibility'
+import Privacy from '@components/Informations/Privacy'
+
+import TermsOfUse from '@/components/Informations/TermsOfUse'
+import VersionsDetails from '@/components/Informations/VersionsDetails'
 
 export default {
   name: 'InformationModal',

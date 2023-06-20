@@ -82,15 +82,14 @@
 </template>
 
 <script>
-import { sendAssistanceMessage } from '@/api/messaging/message.service'
-
-import CKEditor from '@ckeditor/ckeditor5-vue'
 import InlineEditor from '@ckeditor/ckeditor5-build-inline'
-import { required } from '@vuelidate/validators'
-import { useVuelidate } from '@vuelidate/core'
+import CKEditor from '@ckeditor/ckeditor5-vue'
 import AttachedFiles from '@components/AttachedFiles/AttachedFiles.vue'
-
+import { useVuelidate } from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
 import { defineAsyncComponent } from 'vue'
+
+import { sendAssistanceMessage } from '@/api/messaging/message.service'
 const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal'))
 
 export default {

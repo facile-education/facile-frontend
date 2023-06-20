@@ -1,5 +1,6 @@
 import {
-  getManualUsers, getAffectedUsers
+  getAffectedUsers,
+  getManualUsers
 } from '@/api/userManagement.service'
 
 export const state = {

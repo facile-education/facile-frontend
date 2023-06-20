@@ -27,9 +27,8 @@
 </template>
 
 <script>
-import dayjs from 'dayjs'
 import NeroToolbar from '@components/Nero/NeroToolbar'
-
+import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 const UserCompletion = defineAsyncComponent(() => import('@components/NotUsualSlotManager/UserCompletion'))
 const DatepickerNav = defineAsyncComponent(() => import('@components/Horaires/DatepickerNav'))

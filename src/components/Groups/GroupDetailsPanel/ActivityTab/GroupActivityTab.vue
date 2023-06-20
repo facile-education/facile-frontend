@@ -38,6 +38,7 @@ import documentsService from '@/api/documents/documents.service'
 import dayjs from 'dayjs'
 import { allActivitiesPaginationSize } from '@/constants/dashboardConstants'
 import ActivityItem from '@components/Dashboard/ActivityWidget/ActivityItem.vue'
+
 let oldScrollTop = 0
 
 export default {

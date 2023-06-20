@@ -161,13 +161,14 @@
 
 <script>
 
-import messageService from '@/api/messaging/message.service'
-import messagingUtils from '@/utils/messaging.utils'
-import Message from '@components/Messaging/Message'
-import _ from 'lodash'
 import IconOption from '@components/Base/IconOption'
-import messagingConstants from '@/constants/messagingConstants'
+import Message from '@components/Messaging/Message'
 import NeroIcon from '@components/Nero/NeroIcon.vue'
+import _ from 'lodash'
+
+import messageService from '@/api/messaging/message.service'
+import messagingConstants from '@/constants/messagingConstants'
+import messagingUtils from '@/utils/messaging.utils'
 
 export default {
   name: 'ThreadDetails',

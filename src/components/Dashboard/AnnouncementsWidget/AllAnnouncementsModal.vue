@@ -48,10 +48,11 @@
 </template>
 
 <script>
-import dayjs from 'dayjs'
 import AnnouncementItem from '@components/Dashboard/AnnouncementsWidget/AnnouncementItem.vue'
-import { allAnnouncementsPaginationSize } from '@/constants/dashboardConstants'
+import dayjs from 'dayjs'
+
 import { getSchoolNews } from '@/api/dashboard/news.service'
+import { allAnnouncementsPaginationSize } from '@/constants/dashboardConstants'
 
 export default {
   name: 'AllAnnouncementsModal',

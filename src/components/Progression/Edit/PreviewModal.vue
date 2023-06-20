@@ -22,8 +22,9 @@
 </template>
 
 <script>
-import { getItemPreview } from '@/api/progression.service'
 import { nextTick } from 'vue'
+
+import { getItemPreview } from '@/api/progression.service'
 
 export default {
   name: 'PreviewModal',

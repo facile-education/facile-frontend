@@ -61,8 +61,9 @@
 
 <script>
 
-import messagingUtils from '@/utils/messaging.utils'
 import dayjs from 'dayjs'
+
+import messagingUtils from '@/utils/messaging.utils'
 
 export default {
   name: 'ThreadMessage',

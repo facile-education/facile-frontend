@@ -67,10 +67,11 @@
 </template>
 
 <script>
-import PentilaUtils from 'pentila-utils'
-import EditUserModal from '@/components/UserManagement/EditUserModal'
 import UserFields from '@components/UserManagement/UserFields'
 import UserRow from '@components/UserManagement/UserRow'
+import PentilaUtils from 'pentila-utils'
+
+import EditUserModal from '@/components/UserManagement/EditUserModal'
 
 export default {
   name: 'ManualUsers',

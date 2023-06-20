@@ -14,8 +14,9 @@
 </template>
 
 <script>
-import { icons } from '@/constants/icons'
 import GenericDocument from '@components/Documents/DocumentItem/GenericDocument'
+
+import { icons } from '@/constants/icons'
 
 export default {
   name: 'File',

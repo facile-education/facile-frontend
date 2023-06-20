@@ -130,13 +130,14 @@
 
 <script>
 
-import messagingUtils from '@/utils/messaging.utils'
-import { isInViewport } from '@/utils/commons.util'
-import dayjs from 'dayjs'
-import constants from '@/constants/appConstants'
 import ThreadMessage from '@components/Messaging/ThreadMessage'
+import dayjs from 'dayjs'
 import _ from 'lodash'
+
 import messageService from '@/api/messaging/message.service'
+import constants from '@/constants/appConstants'
+import { isInViewport } from '@/utils/commons.util'
+import messagingUtils from '@/utils/messaging.utils'
 
 export default {
   components: {

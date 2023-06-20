@@ -55,12 +55,13 @@
 </template>
 
 <script>
-import dayjs from 'dayjs'
-import { getFutureStudentHomeworks } from '@/api/homework.service'
-import HomeworkItem from '@components/Dashboard/HomeworksWidget/HomeworkItem.vue'
 import HomeworkHeader from '@components/Dashboard/HomeworksWidget/HomeworkHeader.vue'
-import { nbHomeworksInWidget } from '@/constants/dashboardConstants'
+import HomeworkItem from '@components/Dashboard/HomeworksWidget/HomeworkItem.vue'
+import dayjs from 'dayjs'
 import PentilaUtils from 'pentila-utils'
+
+import { getFutureStudentHomeworks } from '@/api/homework.service'
+import { nbHomeworksInWidget } from '@/constants/dashboardConstants'
 
 export default {
   name: 'HomeworkWidget',

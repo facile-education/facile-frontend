@@ -45,9 +45,10 @@
 <script>
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
+
+import folderServices from '@/api/documents/folder.service'
 import { entityNameMaxSize } from '@/constants/appConstants'
 import validators from '@/utils/validators'
-import folderServices from '@/api/documents/folder.service'
 
 const notBeginByDot = (value) => validators.notBeginByDot(value)
 const containsNoCotes = (value) => validators.containsNoCotes(value)

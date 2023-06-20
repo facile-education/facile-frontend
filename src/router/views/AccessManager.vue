@@ -67,17 +67,18 @@
 </template>
 
 <script>
-import Layout from '@/router/layouts/BannerLayout'
-import AccessCategoryList from '@components/Accesses/AccessManager/AccessCategoryList.vue'
-import { defineAsyncComponent } from 'vue'
-import AccessCreateButton from '@components/Accesses/AccessManager/AccessCreateButton.vue'
 import AccessCategoryInput from '@components/Accesses/AccessManager/AccessCategoryInput.vue'
-import SchoolSelector from '@components/Accesses/AccessManager/SchoolSelector.vue'
+import AccessCategoryList from '@components/Accesses/AccessManager/AccessCategoryList.vue'
+import AccessCreateButton from '@components/Accesses/AccessManager/AccessCreateButton.vue'
 import AccessFooter from '@components/Accesses/AccessManager/AccessFooter.vue'
-import { saveSchoolAccesses } from '@/api/access.service'
-import { sortAccesses } from '@utils/accessUtils'
 import CategoriesPlaceholder from '@components/Accesses/AccessManager/CategoriesPlaceholder.vue'
+import SchoolSelector from '@components/Accesses/AccessManager/SchoolSelector.vue'
 import SeeAccessesAs from '@components/Accesses/AccessManager/SeeAccessesAs.vue'
+import { sortAccesses } from '@utils/accessUtils'
+import { defineAsyncComponent } from 'vue'
+
+import { saveSchoolAccesses } from '@/api/access.service'
+import Layout from '@/router/layouts/BannerLayout'
 const SaveAccessModal = defineAsyncComponent(() => import('@components/Accesses/AccessManager/SaveAccessModal.vue'))
 
 export default {

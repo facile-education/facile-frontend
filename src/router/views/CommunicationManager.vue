@@ -11,10 +11,10 @@
 
 <script>
 
-import Layout from '@/router/layouts/BannerLayout'
 import CMToolbar from '@/components/CommunicationManager/CMToolbar'
-import InternalRightList from '@/components/CommunicationManager/InternalRightList'
 import ExternalRightList from '@/components/CommunicationManager/ExternalRightList'
+import InternalRightList from '@/components/CommunicationManager/InternalRightList'
+import Layout from '@/router/layouts/BannerLayout'
 
 export default {
   name: 'CommunicationManager',

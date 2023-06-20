@@ -127,8 +127,9 @@
 import PopulationList from '@components/Base/PopulationList.vue'
 import ReadInfos from '@components/Dashboard/ReadInfos/ReadInfos.vue'
 import dayjs from 'dayjs'
-import { deleteNews, getNewsDetails } from '@/api/dashboard/news.service'
 import { defineAsyncComponent } from 'vue'
+
+import { deleteNews, getNewsDetails } from '@/api/dashboard/news.service'
 import { defaultImagesKeys } from '@/constants/icons'
 const AttachedFile = defineAsyncComponent(() => import('@components/AttachedFiles/AttachedFile.vue'))
 const SaveNewsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/SaveNewsModal.vue'))

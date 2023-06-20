@@ -39,12 +39,12 @@
 </template>
 
 <script>
-import FilesFields from '@components/Documents/FilesFields'
-import Folder from '@components/Documents/DocumentItem/Folder'
 import File from '@components/Documents/DocumentItem/File'
-import { ctrlSelectNextEntity, ctrlSelectPreviousEntity, selectBetween, selectNextEntity, selectPreviousEntity } from '@utils/documents.util'
-import { compare } from '@utils/commons.util'
+import Folder from '@components/Documents/DocumentItem/Folder'
 import DocumentPlaceHolder from '@components/Documents/DocumentPlaceHolder'
+import FilesFields from '@components/Documents/FilesFields'
+import { compare } from '@utils/commons.util'
+import { ctrlSelectNextEntity, ctrlSelectPreviousEntity, selectBetween, selectNextEntity, selectPreviousEntity } from '@utils/documents.util'
 
 export default {
   name: 'DocumentList',

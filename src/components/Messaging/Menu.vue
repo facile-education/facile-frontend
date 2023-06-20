@@ -117,15 +117,16 @@
 
 <script>
 
-import folderService from '@/api/messaging/folder.service'
-import constants from '@/constants/messagingConstants'
 import BaseIcon from '@components/Base/BaseIcon'
-import messageService from '@/api/messaging/message.service'
 import MenuFolder from '@components/Messaging/MenuFolder'
 import MenuRootFolder from '@components/Messaging/MenuRootFolder'
-import { nextTick } from 'vue'
 import messagingUtils from '@utils/messaging.utils'
 import PentilaUtils from 'pentila-utils'
+import { nextTick } from 'vue'
+
+import folderService from '@/api/messaging/folder.service'
+import messageService from '@/api/messaging/message.service'
+import constants from '@/constants/messagingConstants'
 
 export default {
   name: 'Menu',

@@ -95,10 +95,11 @@
 </template>
 
 <script>
+import BaseIcon from '@components/Base/BaseIcon.vue'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
+
 import { deleteNews, setNewsRead } from '@/api/dashboard/news.service'
-import BaseIcon from '@components/Base/BaseIcon.vue'
 import { defaultImagesKeys } from '@/constants/icons'
 const SaveNewsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/SaveNewsModal.vue'))
 const NewsActivityDetailsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/NewsDetailsModal.vue'))

@@ -70,8 +70,9 @@
 <script>
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
-import { nextTick } from 'vue'
 import PentilaUtils from 'pentila-utils'
+import { nextTick } from 'vue'
+
 import ColorPicker from '@/components/Nero/ColorPicker'
 
 const subjectRequired = (value, vm) => {

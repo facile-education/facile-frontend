@@ -87,13 +87,13 @@
 </template>
 
 <script>
+import { formatSize } from '@utils/commons.util'
 import dayjs from 'dayjs'
+import { defineAsyncComponent } from 'vue'
+
+import { getSearchResultDetails } from '@/api/search.service'
 import { DOCUMENTS } from '@/constants/appConstants'
 import searchConstants from '@/constants/searchConstants'
-import { getSearchResultDetails } from '@/api/search.service'
-import { formatSize } from '@utils/commons.util'
-
-import { defineAsyncComponent } from 'vue'
 const FileIcon = defineAsyncComponent(() => import('@components/Base/FileIcon'))
 
 export default {

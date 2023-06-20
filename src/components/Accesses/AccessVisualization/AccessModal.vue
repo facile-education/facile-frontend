@@ -39,9 +39,10 @@
 </template>
 
 <script>
-import { getUserAccesses } from '@/api/access.service'
-import { sortAccesses } from '@utils/accessUtils'
 import UserAccessCategory from '@components/Accesses/AccessVisualization/UserAccessCategory.vue'
+import { sortAccesses } from '@utils/accessUtils'
+
+import { getUserAccesses } from '@/api/access.service'
 
 export default {
   name: 'AccessModal',

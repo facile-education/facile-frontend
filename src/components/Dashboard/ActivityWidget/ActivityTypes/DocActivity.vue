@@ -52,10 +52,11 @@
 
 <script>
 import FileIcon from '@components/Base/FileIcon.vue'
-import { icons } from '@/constants/icons'
-import activityConstants from '@/constants/activityConstants'
 import dayjs from 'dayjs'
 import { getExtensionFromName } from '@/utils/commons.util'
+
+import activityConstants from '@/constants/activityConstants'
+import { icons } from '@/constants/icons'
 
 export default {
   name: 'DocActivity',

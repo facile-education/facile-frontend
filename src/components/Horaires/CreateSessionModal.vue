@@ -138,13 +138,13 @@
 </template>
 
 <script>
-import { required } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
-import { createSession } from '@/api/schedule.service'
-import { getSchoolTeachers } from '@/api/userSearch.service'
-import { getSubjects } from '@/api/userManagement.service'
-import { getUserGroups } from '@/api/groups.service'
 import dayjs from 'dayjs'
+
+import { createSession } from '@/api/schedule.service'
+import { getUserGroups } from '@/api/groups.service'
+import { getSubjects } from '@/api/userManagement.service'
+import { getSchoolTeachers } from '@/api/userSearch.service'
 
 const teachersRequired = (value) => {
   return value !== undefined && value.length > 0

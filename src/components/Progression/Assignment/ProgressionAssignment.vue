@@ -33,8 +33,9 @@
 </template>
 
 <script>
-import SectionAssignment from '@/components/Progression/Assignment/SectionAssignment'
 import _ from 'lodash'
+
+import SectionAssignment from '@/components/Progression/Assignment/SectionAssignment'
 
 export default {
   name: 'ProgressionAssignment',

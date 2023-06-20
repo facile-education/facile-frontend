@@ -42,9 +42,9 @@
 </template>
 
 <script>
-import { defineAsyncComponent } from 'vue'
-import NeroToolbar from '@components/Nero/NeroToolbar'
 import NeroIcon from '@components/Nero/NeroIcon'
+import NeroToolbar from '@components/Nero/NeroToolbar'
+import { defineAsyncComponent } from 'vue'
 const EditGroupModal = defineAsyncComponent(() => import('@components/Groups/EditGroupModal/EditGroupModal'))
 
 export default {

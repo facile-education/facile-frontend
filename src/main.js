@@ -1,17 +1,20 @@
-import { createApp } from 'vue'
-import App from './Nero.vue'
 import './registerServiceWorker'
-import router from '@/router'
-import store from '@/store'
-import i18n from '@/i18n'
-import { Vue3Mq } from 'vue3-mq'
-import PentilaComponents from 'pentila-components'
+
+import axios from 'axios'
 import dayjs from 'dayjs'
 import fr from 'dayjs/locale/fr'
-import Vue3TouchEvents from 'vue3-touch-events'
-import axios from 'axios'
+import PentilaComponents from 'pentila-components'
+import { createApp } from 'vue'
 import VueMatomo from 'vue-matomo'
+import { Vue3Mq } from 'vue3-mq'
+import Vue3TouchEvents from 'vue3-touch-events'
+
 import constants from '@/api/constants'
+import i18n from '@/i18n'
+import router from '@/router'
+import store from '@/store'
+
+import App from './Nero.vue'
 
 const app = createApp(App)
   .use(store)

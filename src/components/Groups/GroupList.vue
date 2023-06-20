@@ -25,8 +25,8 @@
 </template>
 
 <script>
-import PentilaUtils from 'pentila-utils'
 import GroupItem from '@components/Groups/GroupItem'
+import PentilaUtils from 'pentila-utils'
 
 export default {
   name: 'GroupList',

@@ -18,7 +18,8 @@
 
 <script>
 import PentilaUtils from 'pentila-utils'
-import { getSchoolStudents, getSchoollifeAgents } from '@/api/userSearch.service'
+
+import { getSchoollifeAgents, getSchoolStudents } from '@/api/userSearch.service'
 import { nbCharBeforeCompletion } from '@/constants/appConstants'
 let timeout
 

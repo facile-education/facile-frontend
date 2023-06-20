@@ -32,9 +32,10 @@
 
 <script>
 // Store does not seem to be accessible from this context
-import store from '@/store'
-import NeroIcon from '@/components/Nero/NeroIcon'
 import dayjs from 'dayjs'
+
+import NeroIcon from '@/components/Nero/NeroIcon'
+import store from '@/store'
 
 export default {
   name: 'FCEvent',

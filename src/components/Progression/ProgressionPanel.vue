@@ -50,14 +50,16 @@
 </template>
 
 <script>
-import ProgressionSwitchMode from './ProgressionSwitchMode.vue'
-import ProgressionEdit from './Edit/ProgressionEdit.vue'
-import ProgressionAssignment from './Assignment/ProgressionAssignment.vue'
-import ProgressionTree from './Tree/ProgressionTree.vue'
+import FolderHeader from '@components/Progression/Edit/FolderHeader'
+
 import CalendarPicker from '@/components/Progression/Assignment/CalendarPicker'
 import HomeworkAssignmentPanel from '@/components/Progression/Assignment/HomeworkAssignmentPanel'
 import SessionContentEditPanel from '@/components/Progression/Assignment/SessionContentEditPanel'
-import FolderHeader from '@components/Progression/Edit/FolderHeader'
+
+import ProgressionAssignment from './Assignment/ProgressionAssignment.vue'
+import ProgressionEdit from './Edit/ProgressionEdit.vue'
+import ProgressionSwitchMode from './ProgressionSwitchMode.vue'
+import ProgressionTree from './Tree/ProgressionTree.vue'
 
 export default {
   name: 'ProgressionPanel',

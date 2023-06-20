@@ -90,6 +90,7 @@
 
 <script>
 import { defineAsyncComponent } from 'vue'
+
 import { popupDurationTime } from '@/constants/appConstants'
 
 const AccessModal = defineAsyncComponent(() => import('@components/Accesses/AccessVisualization/AccessModal'))

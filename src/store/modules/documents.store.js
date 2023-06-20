@@ -1,9 +1,10 @@
-import navigationService from '@/api/documents/folder.service'
+import store from '@store/index.js'
+
 import documentsService from '@/api/documents/documents.service'
 import editService from '@/api/documents/edit.service'
-import i18n from '@/i18n'
+import navigationService from '@/api/documents/folder.service'
 import groupService from '@/api/documents/group.service'
-import store from '@store/index.js'
+import i18n from '@/i18n'
 
 export const state = {
   currentDisplay: 'list',

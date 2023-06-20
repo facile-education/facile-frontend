@@ -101,12 +101,13 @@
 </template>
 
 <script>
-import { deleteNews, setNewsRead } from '@/api/dashboard/news.service'
-import dayjs from 'dayjs'
 import BaseIcon from '@components/Base/BaseIcon.vue'
-import { defineAsyncComponent } from 'vue'
 import { isInViewport } from '@utils/commons.util'
 import { defaultImagesKeys } from '@/constants/icons'
+import dayjs from 'dayjs'
+import { defineAsyncComponent } from 'vue'
+
+import { deleteNews, setNewsRead } from '@/api/dashboard/news.service'
 const SaveNewsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/SaveNewsModal.vue'))
 const NewsActivityDetailsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/NewsDetailsModal.vue'))
 

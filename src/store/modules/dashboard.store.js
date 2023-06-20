@@ -1,5 +1,6 @@
-import { initDashboard } from '@/api/dashboard.service'
 import { getFullName } from '@utils/commons.util'
+
+import { initDashboard } from '@/api/dashboard.service'
 
 export const state = {
   hasActivityThreadWidget: false,

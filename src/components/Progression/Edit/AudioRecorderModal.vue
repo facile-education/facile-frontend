@@ -41,9 +41,9 @@
 </template>
 
 <script>
+import AudioRecorder from '@components/Nero/AudioRecorder'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
-import AudioRecorder from '@components/Nero/AudioRecorder'
 
 export default {
   name: 'AudioRecorderModal',

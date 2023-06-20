@@ -171,13 +171,14 @@
 </template>
 
 <script>
-import NeroIcon from '@/components/Nero/NeroIcon'
-import { isInViewport } from '@utils/commons.util'
-import FileContent from '@components/Progression/Edit/Contents/FileContent'
-import documentUtils from '@utils/documents.util'
 import BaseIcon from '@components/Base/BaseIcon'
+import FileContent from '@components/Progression/Edit/Contents/FileContent'
 import TextContent from '@components/Progression/Edit/Contents/TextContent'
+import { isInViewport } from '@utils/commons.util'
+import documentUtils from '@utils/documents.util'
 import { nextTick } from 'vue'
+
+import NeroIcon from '@/components/Nero/NeroIcon'
 
 export default {
   name: 'ProgressionItemContent',

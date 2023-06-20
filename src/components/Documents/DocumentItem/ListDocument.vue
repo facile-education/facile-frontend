@@ -122,9 +122,9 @@
 
 <script>
 
-import dayjs from 'dayjs'
-import { formatSize } from '@utils/commons.util'
 import BaseIcon from '@components/Base/BaseIcon'
+import { formatSize } from '@utils/commons.util'
+import dayjs from 'dayjs'
 
 export default {
   name: 'ListDocument',

@@ -144,12 +144,13 @@
 
 <script>
 
-import notUsualSlotsConstants from '@/constants/notUsualSlots'
+import dayjs from 'dayjs'
+import { nextTick } from 'vue'
+
 import schoolLifeService from '@/api/schoolLife-portlet.service'
 import userManagementService from '@/api/userManagement.service'
+import notUsualSlotsConstants from '@/constants/notUsualSlots'
 import { toPascalCase } from '@/utils/commons.util'
-import { nextTick } from 'vue'
-import dayjs from 'dayjs'
 
 export default {
   name: 'StudentRegistrationModal',

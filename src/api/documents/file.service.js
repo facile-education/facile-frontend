@@ -1,7 +1,8 @@
 import axios from 'axios'
+import PentilaUtils from 'pentila-utils'
+
 import constants from '@/api/constants'
 import { conflicts } from '@/constants/documentsConstants'
-import PentilaUtils from 'pentila-utils'
 
 export default {
   uploadFile,

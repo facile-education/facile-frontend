@@ -83,14 +83,16 @@
 </template>
 
 <script>
-import { slotLabelList } from '@/constants/appConstants'
+import { getTeachersLabel } from '@utils/commons.util'
 import { isEditableSlot } from '@utils/notUsualSlot.util'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 
-import { defineAsyncComponent } from 'vue'
-import { getTeachersLabel } from '@utils/commons.util'
 import CustomCalendar from '@components/Base/CustomCalendar/CustomCalendar.vue'
+// import FCEvent from '@components/Horaires/FCEvent'
+import { defineAsyncComponent } from 'vue'
+
+import { slotLabelList } from '@/constants/appConstants'
 
 const NotUsualSlotsToolBar = defineAsyncComponent(() => import('@components/NotUsualSlotManager/NotUsualSlotsToolBar'))
 const Timeline = defineAsyncComponent(() => import('@components/Horaires/Timeline')) // Needed for event creation

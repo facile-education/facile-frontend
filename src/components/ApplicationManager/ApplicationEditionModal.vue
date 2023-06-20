@@ -186,10 +186,9 @@
 </template>
 
 <script>
-import PentilaUtils from 'pentila-utils'
-
-import { required } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
+import PentilaUtils from 'pentila-utils'
 
 import ImagePicker from '@/components/Nero/ImagePicker'
 import NeroIcon from '@/components/Nero/NeroIcon'

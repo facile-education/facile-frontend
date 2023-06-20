@@ -249,9 +249,9 @@
 </template>
 
 <script>
-import ProgressionItemContent from '@/components/Progression/Edit/ProgressionItemContent'
-
 import { defineAsyncComponent, nextTick } from 'vue'
+
+import ProgressionItemContent from '@/components/Progression/Edit/ProgressionItemContent'
 const PreviewModal = defineAsyncComponent(() => import('@/components/Progression/Edit/PreviewModal'))
 const LinkModal = defineAsyncComponent(() => import('@/components/Progression/Edit/LinkModal'))
 const VideoModal = defineAsyncComponent(() => import('@/components/Progression/Edit/VideoModal'))
