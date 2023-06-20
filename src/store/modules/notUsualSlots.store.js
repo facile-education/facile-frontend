@@ -29,7 +29,7 @@ const formatNonUsualSlot = (sessions) => {
 const addRegisterOption = (sessions, getters) => {
   sessions.forEach(event => {
     if (event.canRegisterStudent && getters.isAlreadyRegister(event)) {
-      event.options.push({
+      event.options.unshift({
         name: 'registerStudent',
         label: i18n.global.t('CalendarEventOptions.registerStudent'),
         icon: require('@/assets/icons/add.svg') // TODO get icon
@@ -128,7 +128,7 @@ export const mutations = {
     state.pendingFirings = payload
   },
   removePendingFirings (state, firingToRemove) {
-    const index = state.pendingFirings.findIndex((firing) => (firing.studentId === firingToRemove.studentId) && (firing.schoollifeSessionId === firingToRemove.schoollifeSessionId)) // 2 primary keys
+    const index = state.pendingFirings.findIndex((firing) => (firing.studentId === firingToRemove.studentId) && (firing.sessionId === firingToRemove.sessionId)) // 2 primary keys
     state.pendingFirings.splice(index, 1)
   },
   setDisplayedDate (state, { startDate, endDate }) {
@@ -224,6 +224,6 @@ export const actions = {
 
 export const getters = {
   isAlreadyRegister: (state) => (event) => {
-    return state.userSlots.find(userSlot => userSlot.sessionId === event.schoollifeSessionId)
+    return state.userSlots.find(userSlot => userSlot.sessionId === event.sessionId)
   }
 }

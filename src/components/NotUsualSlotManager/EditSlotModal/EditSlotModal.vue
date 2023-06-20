@@ -13,7 +13,7 @@
 
     <template #body>
       <TimeSelection
-        :range="{start: newEvent.start.format('HH:mm'), end: newEvent.end.format('HH:mm')}"
+        :range="{start: newEvent.startDate.format('HH:mm'), end: newEvent.endDate.format('HH:mm')}"
         @update:range="updateRange"
       >
         <strong>
@@ -29,8 +29,8 @@
         <UserCompletion
           user-type="teacher"
           :placeholder="$t('NotUsualSlots.EditSlotModal.teacherNamePlaceHolder')"
-          :model-value="newEvent.extendedProps.teacher? [newEvent.extendedProps.teacher] : []"
-          @blur="v$.newEvent.extendedProps.teacher.teacherId.$touch()"
+          :model-value="newEvent.teacher? [newEvent.teacher] : []"
+          @blur="v$.newEvent.teacher.teacherId.$touch()"
           @update:modelValue="updateTeacher"
         />
         <PentilaErrorMessage :error-message="formErrorList.teacher" />
@@ -41,19 +41,19 @@
         data-test="room-part"
       >
         <PentilaInput
-          v-model="newEvent.extendedProps.room"
+          v-model="newEvent.room"
           :placeholder="$t('NotUsualSlots.EditSlotModal.roomNamePlaceHolder')"
-          @blur="v$.newEvent.extendedProps.room.$touch()"
+          @blur="v$.newEvent.room.$touch()"
         />
         <PentilaErrorMessage :error-message="formErrorList.room" />
       </div>
 
       <div data-test="capacity-part">
         <PentilaInput
-          v-model="newEvent.extendedProps.capacity"
+          v-model="newEvent.capacity"
           type="number"
           :placeholder="capacityLabel"
-          @blur="v$.newEvent.extendedProps.capacity.$touch()"
+          @blur="v$.newEvent.capacity.$touch()"
         />
         <PentilaErrorMessage :error-message="formErrorList.capacity" />
       </div>
@@ -89,7 +89,7 @@ const moreThanRegistered = (value, vm) => {
   if (value < 0) {
     return false
   }
-  return (vm.eventToEdit && vm.eventToEdit.extendedProps) ? value >= vm.eventToEdit.extendedProps.nbRegisteredStudents : true
+  return (vm.eventToEdit) ? value >= vm.eventToEdit.nbRegisteredStudents : true
 }
 
 export default {
@@ -106,28 +106,24 @@ export default {
   setup: () => ({ v$: useVuelidate() }),
   validations: {
     newEvent: {
-      extendedProps: {
-        teacher: {
-          teacherId: { required }
-        },
-        capacity: { required, moreThanRegistered },
-        room: { required }
-      }
+      teacher: {
+        teacherId: { required }
+      },
+      capacity: { required, moreThanRegistered },
+      room: { required }
     }
   },
   data () {
     return {
       isTimeError: false,
       newEvent: {
-        extendedProps: {
-          id: undefined,
-          subject: undefined,
-          teacher: undefined,
-          room: undefined,
-          type: undefined,
-          capacity: undefined,
-          nbRegisteredStudents: undefined
-        },
+        sessionId: undefined,
+        subject: undefined,
+        teacher: undefined,
+        room: undefined,
+        type: undefined,
+        capacity: undefined,
+        nbRegisteredStudents: undefined,
         title: undefined,
         start: undefined,
         end: undefined,
@@ -140,17 +136,17 @@ export default {
     formErrorList () {
       const form = this.v$.newEvent
       return {
-        teacher: (form.extendedProps.teacher.teacherId.$invalid && form.extendedProps.teacher.teacherId.$dirty) ? this.$t('Commons.formRequired') : '',
-        capacity: (form.extendedProps.capacity.$invalid && form.extendedProps.capacity.$dirty)
-          ? (form.extendedProps.capacity.required.$invalid ? this.$t('Commons.formRequired') : this.$t('Commons.formMoreThanRegistered'))
+        teacher: (form.teacher.teacherId.$invalid && form.teacher.teacherId.$dirty) ? this.$t('Commons.formRequired') : '',
+        capacity: (form.capacity.$invalid && form.capacity.$dirty)
+          ? (form.capacity.required.$invalid ? this.$t('Commons.formRequired') : this.$t('Commons.formMoreThanRegistered'))
           : '',
-        room: (form.extendedProps.room.$invalid && form.extendedProps.room.$dirty) ? this.$t('Commons.formRequired') : ''
+        room: (form.room.$invalid && form.room.$dirty) ? this.$t('Commons.formRequired') : ''
       }
     },
     capacityLabel () {
       let label = this.$t('NotUsualSlots.EditSlotModal.remainingPlaces')
       if (!this.isEventCreation) {
-        label += ' - ' + this.newEvent.extendedProps.nbRegisteredStudents + ' ' + this.$t('NotUsualSlots.EditSlotModal.registered')
+        label += ' - ' + this.newEvent.nbRegisteredStudents + ' ' + this.$t('NotUsualSlots.EditSlotModal.registered')
       }
       return label
     },
@@ -165,28 +161,28 @@ export default {
     }
   },
   created () {
-    this.newEvent.start = this.eventToEdit.start
-    this.newEvent.end = this.eventToEdit.end
+    this.newEvent.startDate = dayjs(this.eventToEdit.startDate, 'YYYY/MM/DD HH:mm')
+    this.newEvent.endDate = dayjs(this.eventToEdit.endDate, 'YYYY/MM/DD HH:mm')
 
     if (this.isEventCreation) {
       this.newEvent.title = this.currentSlotType.label
       this.newEvent.backgroundColor = this.currentSlotType.color
       this.newEvent.borderColor = this.currentSlotType.color
     } else { // Event update
-      this.newEvent.extendedProps.id = this.eventToEdit.extendedProps.id
-      this.newEvent.extendedProps.teacher = { ...this.eventToEdit.extendedProps.teacher } // create a copy to not trigger store state change out of a mutation
-      this.newEvent.extendedProps.capacity = this.eventToEdit.extendedProps.capacity
-      this.newEvent.extendedProps.nbRegisteredStudents = this.eventToEdit.extendedProps.nbRegisteredStudents
-      this.newEvent.extendedProps.room = this.eventToEdit.extendedProps.room
-      this.newEvent.extendedProps.type = this.eventToEdit.extendedProps.type
+      this.newEvent.sessionId = this.sessionId
+      this.newEvent.teacher = { ...this.eventToEdit.teacher } // create a copy to not trigger store state change out of a mutation
+      this.newEvent.capacity = this.eventToEdit.capacity
+      this.newEvent.nbRegisteredStudents = this.eventToEdit.nbRegisteredStudents
+      this.newEvent.room = this.eventToEdit.room
+      this.newEvent.type = this.eventToEdit.type
       this.newEvent.borderColor = this.eventToEdit.borderColor
       this.newEvent.backgroundColor = this.eventToEdit.backgroundColor
     }
   },
   methods: {
     updateRange (range) {
-      this.newEvent.start = dayjs((this.newEvent.start.format('YYYY/MM/DD') + ' ' + range.start), 'YYYY/MM/DD HH:mm')
-      this.newEvent.end = dayjs((this.newEvent.end.format('YYYY/MM/DD') + ' ' + range.end), 'YYYY/MM/DD HH:mm')
+      this.newEvent.startDate = dayjs((this.newEvent.startDate.format('YYYY/MM/DD') + ' ' + range.start), 'YYYY/MM/DD HH:mm')
+      this.newEvent.endDate = dayjs((this.newEvent.endDate.format('YYYY/MM/DD') + ' ' + range.end), 'YYYY/MM/DD HH:mm')
     },
     confirmSlotDeletion () {
       this.$store.dispatch('warningModal/addWarning', {
@@ -196,8 +192,8 @@ export default {
     },
     deleteSlot () {
       schoolLifeService.deleteSlot(
-        this.newEvent.extendedProps.id,
-        this.newEvent.start.format('YYYY-MM-DD HH:mm') // convert from calendar format to back-end format
+        this.newEvent.sessionId,
+        this.newEvent.startDate.format('YYYY-MM-DD HH:mm') // convert from calendar format to back-end format
       ).then((data) => {
         if (data.success) {
           this.$store.dispatch('notUsualSlots/refreshCalendar')
@@ -208,7 +204,7 @@ export default {
       })
     },
     updateTeacher (value) {
-      this.newEvent.extendedProps.teacher = value[0]
+      this.newEvent.teacher = value[0]
     },
     confirm () {
       if (this.v$.$invalid || this.isTimeError) {
@@ -217,14 +213,14 @@ export default {
         if (this.isEventCreation) {
           schoolLifeService.createSlot(
             this.selectedSchool.schoolId,
-            this.newEvent.start.format('YYYY-MM-DD HH:mm'), // convert from calendar format to back-end format
-            this.newEvent.start.day(),
-            this.newEvent.start.format('HH:mm'),
-            this.newEvent.end.format('HH:mm'),
-            this.newEvent.extendedProps.teacher.teacherId,
+            this.newEvent.startDate.format('YYYY-MM-DD HH:mm'), // convert from calendar format to back-end format
+            this.newEvent.startDate.day(),
+            this.newEvent.startDate.format('HH:mm'),
+            this.newEvent.endDate.format('HH:mm'),
+            this.newEvent.teacher.teacherId,
             this.currentSlotType.type,
-            this.newEvent.extendedProps.room,
-            this.newEvent.extendedProps.capacity
+            this.newEvent.room,
+            this.newEvent.capacity
           ).then((data) => {
             if (data.success) {
               this.$store.dispatch('notUsualSlots/refreshCalendar')
@@ -235,15 +231,15 @@ export default {
           })
         } else {
           schoolLifeService.updateSlot(
-            this.newEvent.extendedProps.id,
-            dayjs(this.eventToEdit.start).format('YYYY-MM-DD HH:mm'), // pass the old slot start hour (edit all events of tis slot, beginning from this date)
-            this.newEvent.start.day(),
-            this.newEvent.start.format('HH:mm'),
-            this.newEvent.end.format('HH:mm'),
-            this.newEvent.extendedProps.teacher.teacherId,
+            this.newEvent.sessionId,
+            dayjs(this.eventToEdit.startDate).format('YYYY-MM-DD HH:mm'), // pass the old slot start hour (edit all events of tis slot, beginning from this date)
+            this.newEvent.startDate.day(),
+            this.newEvent.startDate.format('HH:mm'),
+            this.newEvent.endDate.format('HH:mm'),
+            this.newEvent.teacher.teacherId,
             this.currentSlotType.type,
-            this.newEvent.extendedProps.room,
-            this.newEvent.extendedProps.capacity
+            this.newEvent.room,
+            this.newEvent.capacity
           ).then((data) => {
             if (data.success) {
               this.$store.dispatch('notUsualSlots/refreshCalendar')

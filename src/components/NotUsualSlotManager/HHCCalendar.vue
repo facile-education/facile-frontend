@@ -52,6 +52,7 @@
         :can-create-slots="canCreateSlots"
         @selectDate="onSelectDate"
         @createSlot="createSlot"
+        @eventOptionClicked="handleEventOption"
       />
       <!--              @eventOptionClicked="handleEventOption"-->
     </template>
@@ -187,50 +188,52 @@ export default {
     }
   },
   methods: {
-    addRegisterOption (event) {
-      if (event.canRegisterStudent && (this.queriedUser || this.selectedClass.orgId > 0) && !this.isAlreadyRegister(event)) {
-        event.options.push({
-          name: 'registerStudent',
-          label: this.$t('CalendarEventOptions.registerStudent'),
-          icon: require('@/assets/icons/add.svg') // TODO get icon
-        })
+    handleEventOption (eventOption) {
+      switch (eventOption.option.name) {
+        case 'showStudentList':
+          this.eventToEdit = eventOption.event
+          this.isListModalDisplayed = true
+          break
+        case 'updateSlot':
+          this.eventToEdit = eventOption.event
+          this.isEditSlotModalDisplayed = true
+          break
+        case 'registerStudent':
+          this.eventToEdit = eventOption.event
+          this.isRegistrationModalDisplayed = true
+          break
+        default:
+          console.error('no option exist with name ' + eventOption.option.name)
+          break
       }
-      return event
     },
     isAlreadyRegister (event) {
       // Search if this slot already exist in userSlots
-      return this.$store.state.notUsualSlots.userSlots.find(userSlot => userSlot.sessionId === event.schoollifeSessionId)
+      return this.$store.state.notUsualSlots.userSlots.find(userSlot => userSlot.sessionId === event.sessionId)
     },
     onSelectDate (date) {
       this.selectedDate = dayjs(date).startOf('day')
-      if (this.selectedEvent) {
-        this.unselectEvent()
-      }
 
       // If swipe provide from tablet, get slot for the entire week and not only the current day
       const startDate = this.mq.phone ? dayjs(date) : dayjs(date).startOf('week')
       const endDate = this.mq.phone ? dayjs(date).endOf('day') : dayjs(date).endOf('week')
-      this.$store.dispatch('notUsualSlots/setDisplayedDates',
-        { startDate: startDate, endDate: endDate })
+      this.$store.dispatch('notUsualSlots/setDisplayedDates', {
+        startDate: startDate,
+        endDate: endDate
+      })
     },
     onSelectWeek (week) {
-      if (this.selectedEvent) {
-        this.unselectEvent()
-      }
+      this.selectedDate = dayjs(week.firstDayOfWeek).startOf('day')
 
-      this.$store.dispatch('notUsualSlots/setDisplayedDates',
-        { startDate: dayjs(week.firstDayOfWeek, 'YYYY-MM-DD'), endDate: dayjs(week.lastDayOfWeek, 'YYYY-MM-DD') })
+      this.$store.dispatch('notUsualSlots/setDisplayedDates', {
+        startDate: dayjs(week.firstDayOfWeek, 'YYYY-MM-DD'),
+        endDate: dayjs(week.lastDayOfWeek, 'YYYY-MM-DD')
+      })
     },
     editEvent (event) {
       if (isEditableSlot(event)) { // Only edit notUsualSlots
         this.eventToEdit = event
         this.isEditSlotModalDisplayed = true
-      }
-    },
-    openRegistration (event) {
-      if (isEditableSlot(event)) {
-        this.eventToEdit = event
-        this.isRegistrationModalDisplayed = true
       }
     },
     showStudentList (event) {
@@ -240,7 +243,7 @@ export default {
       }
     },
     createSlot (slot) {
-      this.eventToEdit = { start: dayjs(slot.start), end: dayjs(slot.end) }
+      this.eventToEdit = { startDate: slot.start.format('YYYY/MM/DD HH:mm'), endDate: slot.end.format('YYYY/MM/DD HH:mm') }
       this.isEditSlotModalDisplayed = true
     },
     onEventClick (info) {

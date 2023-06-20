@@ -81,7 +81,7 @@ export default {
   },
   computed: {
     slotType () {
-      return notUsualSlotsConstants.getSlotTypeByNumber(this.event.extendedProps.type)
+      return notUsualSlotsConstants.getSlotTypeByNumber(this.event.type)
     },
     formattedSlot () {
       return this.slotType.label + ' ' + this.$t('Moment.of') + ' ' + dayjs(this.event.start).format('DD MMMM YYYY ' + this.$t('Moment.at') + ' HH:mm')
@@ -90,7 +90,7 @@ export default {
       return this.$store.state.user
     },
     isCurrentTeacher () {
-      return this.currentUser.userId === this.event.extendedProps.teacher.teacherId
+      return this.currentUser.userId === this.event.teacher.teacherId
     },
     isRollCallable () {
       return this.isCurrentTeacher &&
@@ -105,7 +105,7 @@ export default {
   methods: {
     loadStudentList () {
       this.isLoading = true
-      schoolLifeService.getSessionMembers(this.event.extendedProps.id).then((data) => {
+      schoolLifeService.getSessionMembers(this.event.sessionId).then((data) => {
         this.isLoading = false
         if (data.success) {
           this.studentList = data.members
@@ -117,7 +117,7 @@ export default {
     },
     callRoll () {
       const jsonStudentPresence = JSON.stringify(this.studentList)
-      schoolLifeService.markStudentsPresent(this.event.extendedProps.id, jsonStudentPresence).then((data) => {
+      schoolLifeService.markStudentsPresent(this.event.sessionId, jsonStudentPresence).then((data) => {
         if (data.success) {
           this.studentList = data.members
         }

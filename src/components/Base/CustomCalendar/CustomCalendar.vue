@@ -248,7 +248,7 @@ export default {
       if (this.selectedEvent) {
         this.unselectEvent()
       } else {
-        this.$emit('createSlot', { start: selection.start, end: selection.end })
+        this.$emit('createSlot', { start: dayjs(selection.start), end: dayjs(selection.end) })
       }
     }
   }
