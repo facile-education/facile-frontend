@@ -39,9 +39,10 @@
 
 <script>
 
-import { defineAsyncComponent } from 'vue'
-import { deleteRelation } from '@/api/help.service'
 import BaseIcon from '@components/Base/BaseIcon.vue'
+import { defineAsyncComponent } from 'vue'
+
+import { deleteRelation } from '@/api/help.service'
 const CreateRelatedItemModal = defineAsyncComponent(() => import('@components/HelpModal/CreationModals/CreateRelatedItemModal.vue'))
 
 export default {

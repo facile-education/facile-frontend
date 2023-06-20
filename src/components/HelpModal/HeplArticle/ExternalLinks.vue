@@ -38,8 +38,9 @@
 </template>
 
 <script>
-import { defineAsyncComponent } from 'vue'
 import BaseIcon from '@components/Base/BaseIcon.vue'
+import { defineAsyncComponent } from 'vue'
+
 import { deleteLink } from '@/api/help.service'
 const CreateExternalLinkModal = defineAsyncComponent(() => import('@components/HelpModal/CreationModals/CreateExternalLinkModal.vue'))
 

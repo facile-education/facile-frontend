@@ -120,16 +120,17 @@
 </template>
 
 <script>
-import { createEvent, modifyEvent, getEventDetails } from '@/api/dashboard/agenda.service'
-import dayjs from 'dayjs'
+import InlineEditor from '@ckeditor/ckeditor5-build-inline'
+import CustomDatePicker from '@components/Base/CustomDatePicker.vue' // TODO: Check time and optimise if necessary
+import validators from '@utils/validators'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
-import validators from '@utils/validators'
-import { getSchoolNewsBroadcastGroups } from '@/api/dashboard/news.service'
+import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
-import CustomDatePicker from '@components/Base/CustomDatePicker.vue' // TODO: Check time and optimise if necessary
-import InlineEditor from '@ckeditor/ckeditor5-build-inline'
 import InformationIcon from '@components/Base/InformationIcon.vue'
+
+import { createEvent, getEventDetails, modifyEvent } from '@/api/dashboard/agenda.service'
+import { getSchoolNewsBroadcastGroups } from '@/api/dashboard/news.service'
 // const CustomDatePicker = defineAsyncComponent(() => import('@/components/Base/CustomDatePicker.vue'))
 // const InlineEditor = defineAsyncComponent(() => import('@ckeditor/ckeditor5-build-inline'))
 const CKEditor = defineAsyncComponent({

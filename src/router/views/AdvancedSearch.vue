@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import Layout from '@/router/layouts/BannerLayout'
 import { search } from '@/api/search.service'
+import Layout from '@/router/layouts/BannerLayout'
 
 export default {
   name: 'Progression',

@@ -9,8 +9,9 @@
 </template>
 
 <script>
-import ApplicationItem from '@/components/ApplicationManager/ApplicationItem'
 import PentilaUtils from 'pentila-utils'
+
+import ApplicationItem from '@/components/ApplicationManager/ApplicationItem'
 
 export default {
   name: 'ApplicationList',

@@ -14,6 +14,7 @@
 
 <script>
 import TextContent from '@components/Progression/Edit/Contents/TextContent'
+
 import fileServices from '@/api/documents/file.service'
 import { fileAutoSaveTime } from '@/constants/appConstants'
 

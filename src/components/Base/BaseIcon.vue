@@ -1,6 +1,6 @@
 <script>
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library as fontAwesomeIconLibrary } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import camelCase from 'lodash/camelCase'
 
 // https://fontawesome.com/icons

@@ -12,7 +12,6 @@
 </template>
 
 <script>
-
 import Layout from '@/router/layouts/BannerLayout'
 import { defineAsyncComponent } from 'vue'
 const GlobalScheduleSettings = defineAsyncComponent(() => import('@components/ScheduleManager/GlobalScheduleSettings/GlobalScheduleSettings.vue'))

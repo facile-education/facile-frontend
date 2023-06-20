@@ -47,9 +47,10 @@
 </template>
 
 <script>
-import { GROUPS } from '@/constants/appConstants'
 import dayjs from 'dayjs'
+
 import activityConstants from '@/constants/activityConstants'
+import { GROUPS } from '@/constants/appConstants'
 
 export default {
   name: 'MembershipActivity',

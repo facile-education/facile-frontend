@@ -68,12 +68,13 @@
 </template>
 
 <script>
-import Types from '@/constants/accessConstants'
-import { defineAsyncComponent } from 'vue'
 import FilePickerModal from '@components/FilePicker/FilePickerModal.vue'
+import validators from '@utils/validators'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
-import validators from '@utils/validators'
+import { defineAsyncComponent } from 'vue'
+
+import Types from '@/constants/accessConstants'
 const RedirectionEntity = defineAsyncComponent(() => import('@components/Accesses/AccessManager/RedirectionEntity.vue'))
 
 const isValidURL = (value) => validators.isValidURL(value)

@@ -54,9 +54,9 @@
 </template>
 
 <script>
+import AddressBook from '@components/ContactPicker/AddressBook/AddressBook.vue'
 import ContactAdvancedSearch from '@components/ContactPicker/AdvancedSearch/ContactAdvancedSearch.vue'
 import ContactUserList from '@components/ContactPicker/UserList/ContactUserList.vue'
-import AddressBook from '@components/ContactPicker/AddressBook/AddressBook.vue'
 
 export default {
   name: 'ContactPicker',

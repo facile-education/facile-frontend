@@ -140,14 +140,16 @@
 </template>
 
 <script>
+import InlineEditor from '@ckeditor/ckeditor5-build-inline'
+import AttachedFiles from '@components/AttachedFiles/AttachedFiles.vue'
+import CustomDatePicker from '@components/Base/CustomDatePicker.vue'
+import ImagePicker from '@components/Nero/ImagePicker.vue'
 import validators from '@utils/validators'
 import { useVuelidate } from '@vuelidate/core'
-import dayjs from 'dayjs'
-import InlineEditor from '@ckeditor/ckeditor5-build-inline'
 import { required } from '@vuelidate/validators'
-import CustomDatePicker from '@components/Base/CustomDatePicker.vue'
-import AttachedFiles from '@components/AttachedFiles/AttachedFiles.vue'
+import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
+
 import {
   addNews,
   editNews,

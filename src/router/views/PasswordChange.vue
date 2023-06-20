@@ -51,9 +51,10 @@
 </template>
 
 <script>
-import userService from '@/api/user.service'
-import constants from '@/api/constants'
 import EmptyLayout from '@router/layouts/EmptyLayout'
+
+import constants from '@/api/constants'
+import userService from '@/api/user.service'
 
 export default {
   name: 'PasswordChange',

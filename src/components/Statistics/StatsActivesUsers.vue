@@ -27,8 +27,9 @@
 </template>
 
 <script>
-import { getActiveUsersCount } from '@/api/statistics.service'
 import AnimatedCounter from '@components/Base/AnimatedCounter.vue'
+
+import { getActiveUsersCount } from '@/api/statistics.service'
 
 export default {
   name: 'StatsActivesUsers',

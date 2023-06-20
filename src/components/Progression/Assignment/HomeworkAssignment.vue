@@ -81,8 +81,8 @@
 import dayjs from 'dayjs'
 import _ from 'lodash'
 import { getSessionDetails } from '@/api/schedule.service'
-import StudentListModal from '@/components/Progression/Assignment/StudentListModal.vue'
 import NeroDatePicker from '@/components/Progression/Assignment/NeroDatePicker.vue'
+import StudentListModal from '@/components/Progression/Assignment/StudentListModal.vue'
 
 export default {
   name: 'HomeworkAssignment',

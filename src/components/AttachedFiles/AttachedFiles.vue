@@ -45,7 +45,7 @@
 
 <script>
 import { importDocuments } from '@utils/documents.util'
-import { returnAddedFiles, alertNoFile } from '@utils/upload.util'
+import { alertNoFile, returnAddedFiles } from '@utils/upload.util'
 import { defineAsyncComponent } from 'vue'
 import SelectFilesButtons from '@components/FilePicker/SelectFilesButtons.vue'
 const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal.vue'))

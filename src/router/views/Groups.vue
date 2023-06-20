@@ -18,11 +18,11 @@
 </template>
 
 <script>
+import GroupToolbar from '@components/Groups/GroupToolbar'
 import { defineAsyncComponent } from 'vue'
 
-import Layout from '@/router/layouts/BannerLayout'
 import GroupList from '@/components/Groups/GroupList'
-import GroupToolbar from '@components/Groups/GroupToolbar'
+import Layout from '@/router/layouts/BannerLayout'
 
 const GroupDetails = defineAsyncComponent(() => import('@components/Groups/GroupDetailsPanel/GroupDetails'))
 const GroupDetailsModal = defineAsyncComponent(() => import('@components/Groups/GroupDetailsPanel/GroupDetailsModal'))

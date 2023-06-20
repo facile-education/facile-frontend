@@ -51,13 +51,14 @@
 </template>
 
 <script>
+import AudioRecorder from '@components/Nero/AudioRecorder'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
-import { entityNameMaxSize } from '@/constants/appConstants'
-import validators from '@/utils/validators'
+
 import apiConstants from '@/api/constants'
 import fileServices from '@/api/documents/file.service'
-import AudioRecorder from '@components/Nero/AudioRecorder'
+import { entityNameMaxSize } from '@/constants/appConstants'
+import validators from '@/utils/validators'
 
 const notBeginByDot = (value) => validators.notBeginByDot(value)
 const containsNoCotes = (value) => validators.containsNoCotes(value)

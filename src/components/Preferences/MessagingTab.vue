@@ -74,9 +74,10 @@
 </template>
 
 <script>
-import configurationService from '@/api/messaging/configuration.service'
 import InformationIcon from '@components/Base/InformationIcon'
 import TextContent from '@components/Progression/Edit/Contents/TextContent'
+
+import configurationService from '@/api/messaging/configuration.service'
 
 export default {
   name: 'MessagingTab',

@@ -56,9 +56,9 @@
 </template>
 
 <script>
-import AccessItem from '@components/Accesses/AccessManager/AccessItem.vue'
 import AccessCategoryInput from '@components/Accesses/AccessManager/AccessCategoryInput.vue'
 import AccessesPlaceholder from '@components/Accesses/AccessManager/AccessesPlaceholder.vue'
+import AccessItem from '@components/Accesses/AccessManager/AccessItem.vue'
 
 export default {
   name: 'AccessCategoryItem',

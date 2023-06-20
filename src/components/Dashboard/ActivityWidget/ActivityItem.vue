@@ -45,9 +45,10 @@
 </template>
 
 <script>
-import activityConstants from '@/constants/activityConstants'
-import { defineAsyncComponent } from 'vue'
 import { isInViewport } from '@utils/commons.util'
+import { defineAsyncComponent } from 'vue'
+
+import activityConstants from '@/constants/activityConstants'
 const NewsActivity = defineAsyncComponent(() => import('@components/Dashboard/ActivityWidget/ActivityTypes/NewsActivity.vue'))
 const DocActivity = defineAsyncComponent(() => import('@components/Dashboard/ActivityWidget/ActivityTypes/DocActivity.vue'))
 const MembershipActivity = defineAsyncComponent(() => import('@components/Dashboard/ActivityWidget/ActivityTypes/MembershipActivity.vue'))

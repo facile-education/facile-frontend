@@ -41,13 +41,14 @@
 </template>
 
 <script>
-import documentsService from '@/api/documents/documents.service'
-import groupService from '@/api/documents/group.service'
-import navigationService from '@/api/documents/folder.service'
 import Breadcrumb from '@components/Documents/Breadcrumb'
-import FilePickerFolder from '@components/FilePicker/FilePickerFolder'
 import FilePickerFile from '@components/FilePicker/FilePickerFile'
+import FilePickerFolder from '@components/FilePicker/FilePickerFolder'
 import PentilaUtils from 'pentila-utils'
+
+import documentsService from '@/api/documents/documents.service'
+import navigationService from '@/api/documents/folder.service'
+import groupService from '@/api/documents/group.service'
 
 export default {
   name: 'FilePickerModalDocumentTab',

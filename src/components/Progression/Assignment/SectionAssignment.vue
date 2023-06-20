@@ -22,8 +22,8 @@
 </template>
 
 <script>
-import SubSectionAssignment from '@/components/Progression/Assignment/SubSectionAssignment'
 import ItemAssignment from '@/components/Progression/Assignment/ItemAssignment'
+import SubSectionAssignment from '@/components/Progression/Assignment/SubSectionAssignment'
 
 export default {
   name: 'SectionAssignment',

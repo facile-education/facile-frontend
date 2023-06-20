@@ -85,13 +85,14 @@
 </template>
 
 <script>
-import activityConstants from '@/constants/activityConstants'
 import { allActivitiesPaginationSize, nbActivityInWidget } from '@/constants/dashboardConstants'
-import dayjs from 'dayjs'
-import ActivityHeader from '@components/Dashboard/ActivityWidget/ActivityHeader.vue'
-import { getDashboardActivity } from '@/api/dashboard.service'
-import ActivityItem from '@components/Dashboard/ActivityWidget/ActivityItem.vue'
 import ActivityFilter from '@components/Dashboard/ActivityWidget/ActivityFilter.vue'
+import ActivityHeader from '@components/Dashboard/ActivityWidget/ActivityHeader.vue'
+import ActivityItem from '@components/Dashboard/ActivityWidget/ActivityItem.vue'
+import dayjs from 'dayjs'
+
+import { getDashboardActivity } from '@/api/dashboard.service'
+import activityConstants from '@/constants/activityConstants'
 let oldScrollTop = 0
 
 export default {

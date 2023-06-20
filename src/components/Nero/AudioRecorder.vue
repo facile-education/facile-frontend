@@ -57,6 +57,7 @@
 <script>
 import RecordRTC from 'recordrtc'
 import WaveSurfer from 'wavesurfer.js'
+
 import NeroIcon from '@/components/Nero/NeroIcon'
 
 export default {

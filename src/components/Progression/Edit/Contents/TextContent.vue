@@ -16,6 +16,7 @@
 
 <script>
 import '@ckeditor/ckeditor5-build-inline/build/translations/fr'
+
 import InlineEditor from '@ckeditor/ckeditor5-build-inline'
 import { component as CKEditor } from '@ckeditor/ckeditor5-vue'
 

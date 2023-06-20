@@ -115,10 +115,11 @@
 </template>
 
 <script>
-import dayjs from 'dayjs'
-import PreviewModal from '@/components/Progression/Edit/PreviewModal'
-import _ from 'lodash'
 import NeroIcon from '@components/Nero/NeroIcon'
+import dayjs from 'dayjs'
+import _ from 'lodash'
+
+import PreviewModal from '@/components/Progression/Edit/PreviewModal'
 
 export default {
   name: 'ItemAssignment',

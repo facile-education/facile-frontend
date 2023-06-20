@@ -1,8 +1,9 @@
-import messageService from '@/api/messaging/message.service'
 import messagingUtils from '@utils/messaging.utils'
-import folderService from '@/api/messaging/folder.service'
 // import constants from '@/constants/appConstants'
 import _ from 'lodash'
+
+import folderService from '@/api/messaging/folder.service'
+import messageService from '@/api/messaging/message.service'
 import messagingConstants from '@/constants/messagingConstants'
 
 export const state = {

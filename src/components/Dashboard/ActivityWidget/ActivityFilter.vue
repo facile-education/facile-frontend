@@ -43,8 +43,9 @@
 </template>
 
 <script>
-import { getUserCommunities } from '@/api/groups.service'
 import ActivityFilterItem from '@components/Dashboard/ActivityWidget/ActivityFilterItem.vue'
+
+import { getUserCommunities } from '@/api/groups.service'
 
 export default {
   name: 'ActivityFilter',

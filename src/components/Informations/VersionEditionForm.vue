@@ -28,9 +28,9 @@
 </template>
 
 <script>
-import PentilaUtils from 'pentila-utils'
-import { required } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
+import PentilaUtils from 'pentila-utils'
 
 const isValidJson = (value) => PentilaUtils.JSON.isValidJson(value)
 const isVersionNameValid = (str) => {

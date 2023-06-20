@@ -82,10 +82,11 @@
 </template>
 
 <script>
-import dayjs from 'dayjs'
 import { isEditableSlot } from '@utils/notUsualSlot.util'
-import notUsualSlotsConstants from '@/constants/notUsualSlots'
+import dayjs from 'dayjs'
+
 import NeroIcon from '@/components/Nero/NeroIcon'
+import notUsualSlotsConstants from '@/constants/notUsualSlots'
 
 export default {
   name: 'EventPopover',

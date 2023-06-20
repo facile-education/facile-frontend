@@ -1,5 +1,6 @@
-import { getSchoolAccesses } from '@/api/access.service'
 import { sortAccesses } from '@utils/accessUtils'
+
+import { getSchoolAccesses } from '@/api/access.service'
 import { getBroadcastRoleList } from '@/api/role.service'
 
 export const state = {

@@ -51,11 +51,11 @@
 </template>
 
 <script>
+import CreateButton from '@components/Base/CreateButton.vue'
+import Pellet from '@components/Base/Pellet.vue'
 import { defineAsyncComponent } from 'vue'
 
-import Pellet from '@components/Base/Pellet.vue'
 import activityConstants from '@/constants/activityConstants'
-import CreateButton from '@components/Base/CreateButton.vue'
 const SaveNewsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/SaveNewsModal.vue'))
 
 export default {

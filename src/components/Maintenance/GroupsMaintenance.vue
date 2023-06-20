@@ -42,7 +42,7 @@
 
 <script>
 
-import { runArchiving, deleteGroup, deleteGroups } from '@/api/maintenance.service'
+import { deleteGroup, deleteGroups, runArchiving } from '@/api/maintenance.service'
 
 export default {
   name: 'GroupsMaintenance',

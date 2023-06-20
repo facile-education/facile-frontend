@@ -16,11 +16,11 @@
 
 <script>
 
-import Layout from '@/router/layouts/BannerLayout'
 import AMToolbar from '@/components/ApplicationManager/AMToolbar'
 import ApplicationEditionModal from '@/components/ApplicationManager/ApplicationEditionModal'
 import BroadcastScopeModal from '@/components/ApplicationManager/BroadcastScopeModal'
 import CategoryList from '@/components/ApplicationManager/CategoryList'
+import Layout from '@/router/layouts/BannerLayout'
 
 export default {
   name: 'ApplicationManager',

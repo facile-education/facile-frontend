@@ -91,11 +91,10 @@
 </template>
 
 <script>
-import dayjs from 'dayjs'
-import FullCalendar from '@fullcalendar/vue3'
 import frLocale from '@fullcalendar/core/locales/fr'
 import timeGridPlugin from '@fullcalendar/timegrid'
-
+import FullCalendar from '@fullcalendar/vue3'
+import dayjs from 'dayjs'
 // Lazy loading
 import { defineAsyncComponent } from 'vue'
 const Timeline = defineAsyncComponent(() => import('@/components/Horaires/Timeline'))

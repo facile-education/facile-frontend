@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
+
 import { DOCUMENTS, MESSAGING, PROGRESSION } from '@/constants/appConstants'
-import store from '@/store'
 import i18n from '@/i18n'
+import store from '@/store'
 
 const routes = [
   {

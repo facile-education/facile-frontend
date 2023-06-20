@@ -28,9 +28,9 @@
 
 <script>
 import PentilaUtils from 'pentila-utils'
+
 import { getStatServices } from '@/api/applicationManager.service'
 import { getSessionsCount } from '@/api/statistics.service'
-
 import Chart from '@/components/Statistics/Chart.vue'
 
 export default {

@@ -1,6 +1,7 @@
 import axios from 'axios'
-import constants from '@/api/constants'
 import PentilaUtils from 'pentila-utils'
+
+import constants from '@/api/constants'
 
 export {
   getEvents,

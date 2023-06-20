@@ -88,8 +88,9 @@
 </template>
 
 <script>
-import Layout from '@/router/layouts/BannerLayout'
 import { Translation as I18n } from 'vue-i18n'
+
+import Layout from '@/router/layouts/BannerLayout'
 
 // TODO check fa chevron down + toggle incident window + dropdown + get info from service
 export default {

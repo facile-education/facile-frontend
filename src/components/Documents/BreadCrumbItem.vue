@@ -76,9 +76,10 @@
 
 import BaseIcon from '@components/Base/BaseIcon'
 import ContextMenu from '@components/ContextMenu/ContextMenu'
-import { currentFolderOptions, spaceSelectionOptions } from '@/constants/options'
-import { downloadDocument } from '@utils/documents.util'
 import FolderNameModal from '@components/Documents/Modals/FolderNameModal'
+import { downloadDocument } from '@utils/documents.util'
+
+import { currentFolderOptions, spaceSelectionOptions } from '@/constants/options'
 
 export default {
   name: 'BreadCrumbItem',

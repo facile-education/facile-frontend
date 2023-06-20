@@ -1,5 +1,6 @@
-import applicationManagerService from '@/api/applicationManager.service'
 import PentilaUtils from 'pentila-utils'
+
+import applicationManagerService from '@/api/applicationManager.service'
 
 export const state = {
   applicationList: undefined,

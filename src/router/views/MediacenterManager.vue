@@ -30,8 +30,8 @@
 </template>
 
 <script>
-import Layout from '@/router/layouts/BannerLayout'
 import NeroIcon from '@/components/Nero/NeroIcon'
+import Layout from '@/router/layouts/BannerLayout'
 
 export default {
   name: 'MediacenterManager',

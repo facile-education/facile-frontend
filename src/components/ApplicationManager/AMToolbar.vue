@@ -24,8 +24,9 @@
 <script>
 
 import PentilaUtils from 'pentila-utils'
-import NeroToolbar from '@/components/Nero/NeroToolbar'
 import { defineAsyncComponent } from 'vue'
+
+import NeroToolbar from '@/components/Nero/NeroToolbar'
 const NeroIcon = defineAsyncComponent(() => import('@/components/Nero/NeroIcon'))
 
 export default {

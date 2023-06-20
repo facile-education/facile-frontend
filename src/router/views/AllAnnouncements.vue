@@ -66,13 +66,14 @@
 </template>
 
 <script>
-import Layout from '@layouts/BannerLayout.vue'
+import AllAnnouncementsHeader from '@components/Dashboard/AnnouncementsWidget/AllAnnouncements/AllAnnouncementsHeader.vue'
 import AnnouncementItem from '@components/Dashboard/AnnouncementsWidget/AnnouncementItem.vue'
+import NewsDetails from '@components/Dashboard/AnnouncementsWidget/NewsDetails.vue'
+import Layout from '@layouts/BannerLayout.vue'
 import dayjs from 'dayjs'
+
 import { getSchoolNews } from '@/api/dashboard/news.service'
 import { allAnnouncementsPaginationSize } from '@/constants/dashboardConstants'
-import AllAnnouncementsHeader from '@components/Dashboard/AnnouncementsWidget/AllAnnouncements/AllAnnouncementsHeader.vue'
-import NewsDetails from '@components/Dashboard/AnnouncementsWidget/NewsDetails.vue'
 let oldScrollTop = 0
 
 export default {

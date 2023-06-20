@@ -49,8 +49,8 @@
 <script>
 import ContactUserListHeader from '@components/ContactPicker/UserList/ContactUserListHeader.vue'
 import ContactUserListItem from '@components/ContactPicker/UserList/ContactUserListItem.vue'
-import PentilaUtils from 'pentila-utils'
 import { getFullName } from '@utils/commons.util'
+import PentilaUtils from 'pentila-utils'
 
 export default {
   name: 'ContactUserList',

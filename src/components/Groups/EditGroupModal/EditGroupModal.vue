@@ -135,25 +135,24 @@
 </template>
 
 <script>
-import { useVuelidate } from '@vuelidate/core'
-import { required } from '@vuelidate/validators'
-import { nextTick } from 'vue'
-import PentilaUtils from 'pentila-utils'
-
-import {
-  createCommunity,
-  editCommunity,
-  checkCommunityName,
-  getCommunityMembers
-} from '@/api/groups.service'
-import { searchDirectory } from '@/api/contact.service'
-import { getAllSchools } from '@/api/organization.service'
-import { getRoleList } from '@/api/role.service'
-
-import ColorPicker from '@/components/Nero/ColorPicker'
 import GroupUserItem from '@components/Groups/EditGroupModal/GroupUserItem'
 import SelectedGroupMemberItem from '@components/Groups/EditGroupModal/SelectedGroupMemberItem'
+import { useVuelidate } from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
 import dayjs from 'dayjs'
+import PentilaUtils from 'pentila-utils'
+import { nextTick } from 'vue'
+
+import { searchDirectory } from '@/api/contact.service'
+import {
+  checkCommunityName,
+  createCommunity,
+  editCommunity,
+  getCommunityMembers
+} from '@/api/groups.service'
+import { getAllSchools } from '@/api/organization.service'
+import { getRoleList } from '@/api/role.service'
+import ColorPicker from '@/components/Nero/ColorPicker'
 
 export default {
   name: 'EditGroupModal',

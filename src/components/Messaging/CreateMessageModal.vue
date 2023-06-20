@@ -153,19 +153,20 @@
 </template>
 
 <script>
-import { required } from '@vuelidate/validators'
-import { useVuelidate } from '@vuelidate/core'
-import constants from '@/constants/messagingConstants'
-import messageService from '@/api/messaging/message.service'
-import messagingUtils from '@/utils/messaging.utils'
-import ErrorMessage from '@components/Base/ErrorMessage.vue'
 import AttachedFiles from '@components/AttachedFiles/AttachedFiles.vue'
-import TextContent from '@components/Progression/Edit/Contents/TextContent'
-import dayjs from 'dayjs'
-import NeroIcon from '@/components/Nero/NeroIcon'
-import { addContactFieldsToContactList } from '@utils/contacts.utils'
-import { defineAsyncComponent } from 'vue'
+import ErrorMessage from '@components/Base/ErrorMessage.vue'
 import ContactPickerToolTip from '@components/ContactPicker/ContactPickerToolTip.vue'
+import TextContent from '@components/Progression/Edit/Contents/TextContent'
+import { addContactFieldsToContactList } from '@utils/contacts.utils'
+import { useVuelidate } from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
+import dayjs from 'dayjs'
+import { defineAsyncComponent } from 'vue'
+
+import messageService from '@/api/messaging/message.service'
+import NeroIcon from '@/components/Nero/NeroIcon'
+import constants from '@/constants/messagingConstants'
+import messagingUtils from '@/utils/messaging.utils'
 const ContactPickerModal = defineAsyncComponent(() => import('@components/ContactPicker/ContactPickerModal.vue'))
 
 const isRecipientsValid = (str) => {

@@ -93,15 +93,16 @@
 </template>
 
 <script>
-import { getHelpItem } from '@/api/help.service'
-import RelatedItems from '@components/HelpModal/HeplArticle/RelatedItems.vue'
-import ExternalLinks from '@components/HelpModal/HeplArticle/ExternalLinks.vue'
-import HelpVideoSection from '@components/HelpModal/HeplArticle/HelpVideoSection.vue'
-import HelpManualSection from '@components/HelpModal/HeplArticle/HelpManualSection.vue'
-import HelpFAQSection from '@components/HelpModal/HeplArticle/HelpFAQSection.vue'
-import MobileFloatingPanel from '@components/Base/MobileFloatingPanel.vue'
 import BaseIcon from '@components/Base/BaseIcon.vue'
+import MobileFloatingPanel from '@components/Base/MobileFloatingPanel.vue'
+import ExternalLinks from '@components/HelpModal/HeplArticle/ExternalLinks.vue'
+import HelpFAQSection from '@components/HelpModal/HeplArticle/HelpFAQSection.vue'
+import HelpManualSection from '@components/HelpModal/HeplArticle/HelpManualSection.vue'
+import HelpVideoSection from '@components/HelpModal/HeplArticle/HelpVideoSection.vue'
+import RelatedItems from '@components/HelpModal/HeplArticle/RelatedItems.vue'
 import { defineAsyncComponent } from 'vue'
+
+import { getHelpItem } from '@/api/help.service'
 const EditArticleTitleModal = defineAsyncComponent(() => import('@components/HelpModal/CreationModals/EditArticleTitleModal.vue'))
 export default {
   name: 'HelpArticle',

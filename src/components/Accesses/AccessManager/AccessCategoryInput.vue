@@ -11,6 +11,7 @@
 
 <script>
 import { nextTick } from 'vue'
+
 import folderService from '@/api/messaging/folder.service'
 
 export default {

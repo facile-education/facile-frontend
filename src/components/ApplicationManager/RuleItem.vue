@@ -43,8 +43,8 @@
 </template>
 
 <script>
-import { requiredIf } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
+import { requiredIf } from '@vuelidate/validators'
 
 import NeroIcon from '@/components/Nero/NeroIcon'
 

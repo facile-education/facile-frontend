@@ -121,9 +121,10 @@
 
 <script>
 import { useVuelidate } from '@vuelidate/core'
-import { required, email } from '@vuelidate/validators'
-import { createManualUser, editManualUser, removeManualUser } from '@/api/userManagement.service'
+import { email, required } from '@vuelidate/validators'
+
 import { getLocalUserRoleList } from '@/api/role.service'
+import { createManualUser, editManualUser, removeManualUser } from '@/api/userManagement.service'
 import store from '@/store'
 
 export default {

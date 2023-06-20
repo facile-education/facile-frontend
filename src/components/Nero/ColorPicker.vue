@@ -32,7 +32,6 @@
 
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-
 import { defineAsyncComponent } from 'vue'
 
 const ColorSwatches = defineAsyncComponent(() => import('@/components/Nero/ColorSwatches'))

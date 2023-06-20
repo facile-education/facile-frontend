@@ -23,8 +23,9 @@
 </template>
 
 <script>
-import { returnAddedFiles } from '@/utils/upload.util'
 import BaseIcon from '@components/Base/BaseIcon'
+
+import { returnAddedFiles } from '@/utils/upload.util'
 
 export default {
   name: 'FilePickerArea',

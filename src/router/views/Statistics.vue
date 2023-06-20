@@ -97,15 +97,16 @@
 </template>
 
 <script>
-import Layout from '@/router/layouts/BannerLayout'
-import NeroToolbar from '@/components/Nero/NeroToolbar'
-import StatsActivesUsers from '@components/Statistics/StatsActivesUsers'
+import DateRangePicker from '@components/Base/DateRangePicker'
+import ActionsChart from '@components/Statistics/ActionsChart'
 import GlobalStat from '@components/Statistics/GlobalStat'
+import StatsActivesUsers from '@components/Statistics/StatsActivesUsers'
 import StatsDoughnut from '@components/Statistics/StatsDoughnut'
 import VisitsChart from '@components/Statistics/VisitsChart'
-import ActionsChart from '@components/Statistics/ActionsChart'
 import dayjs from 'dayjs'
-import DateRangePicker from '@components/Base/DateRangePicker'
+
+import NeroToolbar from '@/components/Nero/NeroToolbar'
+import Layout from '@/router/layouts/BannerLayout'
 
 export default {
   name: 'Statistics',

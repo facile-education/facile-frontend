@@ -55,8 +55,9 @@
 <script>
 import { toPascalCase } from '@utils/commons.util'
 import dayjs from 'dayjs'
-import schoolLifeService from '@/api/schoolLife-portlet.service'
 import { nextTick } from 'vue'
+
+import schoolLifeService from '@/api/schoolLife-portlet.service'
 
 export default {
   name: 'PendingFiringModal',

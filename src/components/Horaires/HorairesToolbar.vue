@@ -92,12 +92,11 @@
 <script>
 import dayjs from 'dayjs'
 import PentilaUtils from 'pentila-utils'
-
-import NeroToolbar from '@/components/Nero/NeroToolbar'
-import NeroIcon from '@/components/Nero/NeroIcon'
-import { getSchoolUsers } from '@/api/userSearch.service'
-
 import { defineAsyncComponent } from 'vue'
+
+import { getSchoolUsers } from '@/api/userSearch.service'
+import NeroIcon from '@/components/Nero/NeroIcon'
+import NeroToolbar from '@/components/Nero/NeroToolbar'
 const DatepickerNav = defineAsyncComponent(() => import('@/components/Horaires/DatepickerNav'))
 
 export default {

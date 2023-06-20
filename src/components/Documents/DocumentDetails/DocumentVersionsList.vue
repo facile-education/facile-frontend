@@ -12,8 +12,9 @@
 </template>
 
 <script>
-import versionsService from '@/api/documents/version.service'
 import DocumentVersion from '@components/Documents/DocumentDetails/DocumentVersion'
+
+import versionsService from '@/api/documents/version.service'
 
 export default {
   name: 'DocumentVersionsList',

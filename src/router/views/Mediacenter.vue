@@ -17,9 +17,9 @@
 </template>
 
 <script>
-import Layout from '@/router/layouts/BannerLayout'
 import CategoryList from '@/components/Mediacenter/CategoryList'
 import NeroToolbar from '@/components/Nero/NeroToolbar'
+import Layout from '@/router/layouts/BannerLayout'
 
 export default {
   name: 'Mediacenter',

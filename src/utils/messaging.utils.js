@@ -1,8 +1,9 @@
+import store from '@store/index.js'
+import _ from 'lodash'
+
 import messageService from '@/api/messaging/message.service'
 import messagingConstants from '@/constants/messagingConstants'
-import store from '@store/index.js'
 import i18n from '@/i18n'
-import _ from 'lodash'
 
 const MessagingUtils = {
 

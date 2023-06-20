@@ -42,12 +42,12 @@
 </template>
 
 <script>
-import { toPascalCase } from '@/utils/commons.util'
-import notUsualSlotsConstants from '@/constants/notUsualSlots'
 import dayjs from 'dayjs'
-import NeroIcon from '@/components/Nero/NeroIcon'
-
 import { defineAsyncComponent } from 'vue'
+
+import NeroIcon from '@/components/Nero/NeroIcon'
+import notUsualSlotsConstants from '@/constants/notUsualSlots'
+import { toPascalCase } from '@/utils/commons.util'
 const StudentRegistrationModal = defineAsyncComponent(() => import('@components/NotUsualSlotManager/StudentRegistrationModal/StudentRegistrationModal'))
 
 export default {

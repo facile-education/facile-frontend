@@ -35,9 +35,10 @@
 </template>
 
 <script>
-import { SCHOOL_LIFE } from '@/constants/appConstants'
-import activityConstants from '@/constants/activityConstants'
 import dayjs from 'dayjs'
+
+import activityConstants from '@/constants/activityConstants'
+import { SCHOOL_LIFE } from '@/constants/appConstants'
 
 export default {
   name: 'HHCActivity',

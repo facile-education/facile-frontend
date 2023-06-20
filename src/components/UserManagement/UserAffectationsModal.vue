@@ -74,10 +74,11 @@
 </template>
 
 <script>
-import { addUserAffectation, removeUserAffectation } from '@/api/userManagement.service'
-import { getSchoolClassList } from '@/api/organization.service'
 import dayjs from 'dayjs'
 import localizedFormat from 'dayjs/plugin/localizedFormat'
+
+import { getSchoolClassList } from '@/api/organization.service'
+import { addUserAffectation, removeUserAffectation } from '@/api/userManagement.service'
 
 dayjs.extend(localizedFormat)
 

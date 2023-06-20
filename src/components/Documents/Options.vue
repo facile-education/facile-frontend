@@ -21,8 +21,8 @@
 </template>
 
 <script>
-import OptionItem from '@components/Documents/OptionItem'
 import HiddenItems from '@components/Base/HiddenItems'
+import OptionItem from '@components/Documents/OptionItem'
 
 export default {
   name: 'Options',

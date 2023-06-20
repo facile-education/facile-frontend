@@ -64,14 +64,15 @@
 
 <script>
 
-import Layout from '@/router/layouts/BannerLayout'
-import Menu from '@components/Messaging/Menu'
-import ThreadList from '@components/Messaging/ThreadList'
-import ThreadDetails from '@components/Messaging/ThreadDetails'
-import configurationService from '@/api/messaging/configuration.service'
-import messagingUtils from '@/utils/messaging.utils'
-import { defineAsyncComponent } from 'vue'
 import CreateButton from '@components/Base/CreateButton.vue'
+import Menu from '@components/Messaging/Menu'
+import ThreadDetails from '@components/Messaging/ThreadDetails'
+import ThreadList from '@components/Messaging/ThreadList'
+import { defineAsyncComponent } from 'vue'
+
+import configurationService from '@/api/messaging/configuration.service'
+import Layout from '@/router/layouts/BannerLayout'
+import messagingUtils from '@/utils/messaging.utils'
 
 const CreateMessageModal = defineAsyncComponent(() => import('@components/Messaging/CreateMessageModal'))
 const PreferencesModal = defineAsyncComponent(() => import('@components/Preferences/PreferencesModal'))

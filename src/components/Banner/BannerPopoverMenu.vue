@@ -86,6 +86,7 @@
 
 <script>
 import { defineAsyncComponent } from 'vue'
+
 import NeroIcon from '@/components/Nero/NeroIcon'
 
 const AssistanceModal = defineAsyncComponent(() => import('@/components/Assistance/AssistanceModal.vue'))

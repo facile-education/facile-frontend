@@ -66,9 +66,10 @@
 </template>
 
 <script>
-import dayjs from 'dayjs'
-import versionsService from '@/api/documents/version.service'
 import BaseIcon from '@components/Base/BaseIcon'
+import dayjs from 'dayjs'
+
+import versionsService from '@/api/documents/version.service'
 
 export default {
   name: 'DocumentVersion',

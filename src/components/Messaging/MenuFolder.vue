@@ -110,13 +110,14 @@
 </template>
 
 <script>
-import { MESSAGING } from '@/constants/appConstants'
-import folderService from '@/api/messaging/folder.service'
-import messageService from '@/api/messaging/message.service'
 import BaseIcon from '@components/Base/BaseIcon'
+import messagingUtils from '@utils/messaging.utils'
 import _ from 'lodash'
 import { nextTick } from 'vue'
-import messagingUtils from '@utils/messaging.utils'
+
+import folderService from '@/api/messaging/folder.service'
+import messageService from '@/api/messaging/message.service'
+import { MESSAGING } from '@/constants/appConstants'
 
 export default {
   name: 'MenuFolder',

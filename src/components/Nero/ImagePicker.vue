@@ -70,7 +70,6 @@
 </template>
 
 <script>
-import { Cropper, Preview } from 'vue-advanced-cropper'
 import 'vue-advanced-cropper/dist/style.css'
 import { getResource, uploadTmpFile } from '@/api/documents/file.service'
 import SelectFilesButtons from '@components/FilePicker/SelectFilesButtons.vue'

@@ -15,9 +15,9 @@
 </template>
 
 <script>
-import ResourceList from '@/components/Mediacenter/ResourceList'
-
 import PentilaUtils from 'pentila-utils'
+
+import ResourceList from '@/components/Mediacenter/ResourceList'
 
 export default {
   name: 'CategoryList',

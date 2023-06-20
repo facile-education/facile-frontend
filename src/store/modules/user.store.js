@@ -1,6 +1,6 @@
 // import PentilaUtils from 'pentila-utils'
-import userService from '@/api/user.service'
 import { getUserApplications } from '@/api/applicationManager.service'
+import userService from '@/api/user.service'
 
 export const state = {
   pauth: undefined,

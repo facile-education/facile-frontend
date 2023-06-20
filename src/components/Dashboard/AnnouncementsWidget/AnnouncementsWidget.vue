@@ -69,11 +69,12 @@
 </template>
 
 <script>
-import dayjs from 'dayjs'
-import { nbAnnouncementsInWidget } from '@/constants/dashboardConstants'
-import AnnouncementsHeader from '@components/Dashboard/AnnouncementsWidget/AnnouncementsHeader.vue'
-import { getSchoolNews } from '@/api/dashboard/news.service'
 import AnnouncementItem from '@components/Dashboard/AnnouncementsWidget/AnnouncementItem.vue'
+import AnnouncementsHeader from '@components/Dashboard/AnnouncementsWidget/AnnouncementsHeader.vue'
+import dayjs from 'dayjs'
+
+import { getSchoolNews } from '@/api/dashboard/news.service'
+import { nbAnnouncementsInWidget } from '@/constants/dashboardConstants'
 
 export default {
   name: 'AnnouncementsWidget',

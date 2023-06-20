@@ -64,8 +64,8 @@
 </template>
 
 <script>
-import ProgressionTreeSubsection from '@/components/Progression/Tree/ProgressionTreeSubsection'
 import ProgressionTreeItem from '@/components/Progression/Tree/ProgressionTreeItem'
+import ProgressionTreeSubsection from '@/components/Progression/Tree/ProgressionTreeSubsection'
 
 export default {
   name: 'ProgressionTreeSection',

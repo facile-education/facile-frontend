@@ -25,8 +25,8 @@
 </template>
 
 <script>
-import ContactPicker from '@components/ContactPicker/ContactPicker.vue'
 import BaseIcon from '@components/Base/BaseIcon.vue'
+import ContactPicker from '@components/ContactPicker/ContactPicker.vue'
 
 export default {
   name: 'ContactPickerToolTip',

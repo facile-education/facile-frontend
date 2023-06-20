@@ -1,8 +1,8 @@
-import i18n from '@/i18n'
 import { getSchoolClassList } from '@/api/organization.service'
 import schoolLifeService from '@/api/schoolLife-portlet.service'
 import cdtService from '@/api/schedule.service'
 import notUsualSlotsConstants from '@/constants/notUsualSlots'
+import i18n from '@/i18n'
 
 const formatNonUsualSlot = (sessions) => {
   sessions.forEach(event => {

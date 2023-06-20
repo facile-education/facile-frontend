@@ -25,8 +25,8 @@
 </template>
 
 <script>
-import { MESSAGING } from '@/constants/appConstants'
 import messageService from '@/api/messaging/message.service'
+import { MESSAGING } from '@/constants/appConstants'
 
 export default {
   name: 'MenuRootFolder',

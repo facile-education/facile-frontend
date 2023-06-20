@@ -22,10 +22,11 @@
 </template>
 
 <script>
+import EmptyLayout from '@router/layouts/EmptyLayout'
 import axios from 'axios'
+
 import constants from '@/api/constants'
 import userService from '@/api/user.service'
-import EmptyLayout from '@router/layouts/EmptyLayout'
 
 export default {
   name: 'AgreeTermsOfUse',

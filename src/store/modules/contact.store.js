@@ -1,6 +1,7 @@
+import { addContactFieldsToContactList } from '@utils/contacts.utils'
+
 import contactService from '@/api/contact.service'
 import groupsService from '@/api/groups.service'
-import { addContactFieldsToContactList } from '@utils/contacts.utils'
 
 export const state = {
   userList: undefined,

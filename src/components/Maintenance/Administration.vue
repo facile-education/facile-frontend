@@ -35,7 +35,7 @@
 
 <script>
 
-import { startSynchro, startParentSynchro, startFsAnalysis, startFsAnalysisV2, runAnonymisation } from '@/api/maintenance.service'
+import { runAnonymisation, startFsAnalysis, startFsAnalysisV2, startParentSynchro, startSynchro } from '@/api/maintenance.service'
 
 export default {
   name: 'Administration',

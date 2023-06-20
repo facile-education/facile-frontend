@@ -65,11 +65,12 @@
 
 <script>
 
-import PentilaUtils from 'pentila-utils'
-import UserAffectationsModal from '@/components/UserManagement/UserAffectationsModal.vue'
-import AddAffectedUserModal from '@/components/UserManagement/AddAffectedUserModal.vue'
 import UserFields from '@components/UserManagement/UserFields'
 import UserRow from '@components/UserManagement/UserRow'
+import PentilaUtils from 'pentila-utils'
+
+import AddAffectedUserModal from '@/components/UserManagement/AddAffectedUserModal.vue'
+import UserAffectationsModal from '@/components/UserManagement/UserAffectationsModal.vue'
 
 export default {
   name: 'Affectations',

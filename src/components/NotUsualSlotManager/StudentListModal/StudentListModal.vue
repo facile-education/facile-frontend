@@ -57,10 +57,11 @@
 
 <script>
 
-import schoolLifeService from '@/api/schoolLife-portlet.service'
 import StudentListItem from '@components/NotUsualSlotManager/StudentListModal/StudentListItem'
-import notUsualSlotsConstants from '@/constants/notUsualSlots'
 import dayjs from 'dayjs'
+
+import schoolLifeService from '@/api/schoolLife-portlet.service'
+import notUsualSlotsConstants from '@/constants/notUsualSlots'
 
 export default {
   name: 'StudentListModal',

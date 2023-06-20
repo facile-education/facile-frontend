@@ -17,9 +17,9 @@
 </template>
 
 <script>
-import Layout from '@/router/layouts/BannerLayout'
 import ProgressionList from '@/components/Progression/ProgressionList'
 import ProgressionPanel from '@/components/Progression/ProgressionPanel'
+import Layout from '@/router/layouts/BannerLayout'
 
 export default {
   name: 'Progression',

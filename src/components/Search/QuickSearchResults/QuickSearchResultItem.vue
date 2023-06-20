@@ -66,11 +66,11 @@
 </template>
 
 <script>
+import { defineAsyncComponent } from 'vue'
+
 import { DOCUMENTS, MESSAGING, PROGRESSION } from '@/constants/appConstants'
 import searchConstants from '@/constants/searchConstants'
 import { isInViewport } from '@/utils/commons.util'
-
-import { defineAsyncComponent } from 'vue'
 const FileIcon = defineAsyncComponent(() => import('@components/Base/FileIcon'))
 const SearchResultPreview = defineAsyncComponent(() => import('@components/Search/SearchResultPreview'))
 const NewsDetailsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/NewsDetailsModal'))

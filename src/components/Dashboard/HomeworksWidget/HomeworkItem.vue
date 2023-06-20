@@ -58,10 +58,10 @@
 </template>
 
 <script>
-
-import { homeworksTypes } from '@/constants/dashboardConstants'
-import { setHomeworkDoneStatus } from '@/api/homework.service'
 import BaseIcon from '@components/Base/BaseIcon.vue'
+
+import { setHomeworkDoneStatus } from '@/api/homework.service'
+import { homeworksTypes } from '@/constants/dashboardConstants'
 export default {
   name: 'HomeworkItem',
   components: { BaseIcon },

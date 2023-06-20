@@ -36,10 +36,11 @@
 </template>
 
 <script>
-import dayjs from 'dayjs'
-import { getUserSchedule } from '@/api/dashboard.service'
 import ScheduleHeader from '@components/Dashboard/ScheduleWidget/ScheduleHeader.vue'
 import ScheduleItem from '@components/Dashboard/ScheduleWidget/ScheduleItem.vue'
+import dayjs from 'dayjs'
+
+import { getUserSchedule } from '@/api/dashboard.service'
 export default {
   name: 'ScheduleWidget',
   components: { ScheduleItem, ScheduleHeader },

@@ -40,8 +40,8 @@
 </template>
 
 <script>
-import { required } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
 import PentilaUtils from 'pentila-utils'
 
 import RuleItem from '@/components/ApplicationManager/RuleItem'

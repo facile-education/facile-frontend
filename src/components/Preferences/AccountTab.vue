@@ -152,8 +152,9 @@
 <script>
 import ColorPicker from '@components/Nero/ColorPicker'
 import PentilaUtils from 'pentila-utils'
-import userService from '@/api/user.service'
 import { defineAsyncComponent } from 'vue'
+
+import userService from '@/api/user.service'
 const ImagePickerModal = defineAsyncComponent(() => import('@/components/Nero/ImagePicker'))
 const AssistanceModal = defineAsyncComponent(() => import('@/components/Assistance/AssistanceModal'))
 

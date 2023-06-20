@@ -18,9 +18,8 @@
 
 <script>
 import { getItemContents } from '@/api/progression.service'
-import Layout from '@/router/layouts/BannerLayout'
-
 import ProgressionItemContent from '@/components/Progression/Edit/ProgressionItemContent'
+import Layout from '@/router/layouts/BannerLayout'
 
 export default {
   name: 'Progression',

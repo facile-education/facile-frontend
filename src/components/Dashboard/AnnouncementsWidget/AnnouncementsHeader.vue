@@ -68,10 +68,10 @@
 </template>
 
 <script>
-import Pellet from '@components/Base/Pellet.vue'
-import CreateButton from '@components/Base/CreateButton.vue'
-import { defineAsyncComponent } from 'vue'
 import BaseIcon from '@components/Base/BaseIcon.vue'
+import CreateButton from '@components/Base/CreateButton.vue'
+import Pellet from '@components/Base/Pellet.vue'
+import { defineAsyncComponent } from 'vue'
 const SaveNewsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/SaveNewsModal.vue'))
 
 export default {

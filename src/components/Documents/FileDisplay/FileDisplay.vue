@@ -62,18 +62,19 @@
 </template>
 
 <script>
-import fileService from '@/api/documents/file.service'
-import OtherDocument from '@/components/Documents/FileDisplay/OtherDocument'
-import Video from '@components/Documents/FileDisplay/Video'
-import Image from '@components/Documents/FileDisplay/Image'
 import Audio from '@components/Documents/FileDisplay/Audio'
-import PDF from '@components/Documents/FileDisplay/PDF'
 import Geogebra from '@components/Documents/FileDisplay/Geogebra'
+import Image from '@components/Documents/FileDisplay/Image'
 import MindMap from '@components/Documents/FileDisplay/MindMap'
-import Scratch from '@components/Documents/FileDisplay/Scratch'
 import Office from '@components/Documents/FileDisplay/Office'
+import PDF from '@components/Documents/FileDisplay/PDF'
+import Scratch from '@components/Documents/FileDisplay/Scratch'
+import Video from '@components/Documents/FileDisplay/Video'
 import WISIWIG from '@components/Documents/FileDisplay/WISIWIG'
+
+import fileService from '@/api/documents/file.service'
 import groupService from '@/api/documents/group.service'
+import OtherDocument from '@/components/Documents/FileDisplay/OtherDocument'
 
 export default {
   name: 'FileDisplay',

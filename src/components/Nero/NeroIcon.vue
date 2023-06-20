@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(
   require('@fortawesome/free-regular-svg-icons/faCalendarAlt').definition,

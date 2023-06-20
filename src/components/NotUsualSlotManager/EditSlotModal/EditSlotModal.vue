@@ -80,10 +80,11 @@
 <script>
 import TimeSelection from '@components/NotUsualSlotManager/EditSlotModal/TimeSelection'
 import UserCompletion from '@components/NotUsualSlotManager/UserCompletion'
-import schoolLifeService from '@/api/schoolLife-portlet.service'
-import dayjs from 'dayjs'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
+import dayjs from 'dayjs'
+
+import schoolLifeService from '@/api/schoolLife-portlet.service'
 
 const moreThanRegistered = (value, vm) => {
   if (value < 0) {

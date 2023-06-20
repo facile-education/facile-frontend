@@ -78,9 +78,8 @@
 
 <script>
 
-import { defineAsyncComponent } from 'vue'
-
 import dayjs from 'dayjs'
+import { defineAsyncComponent } from 'vue'
 const BaseIcon = defineAsyncComponent(() => import('@components/Base/BaseIcon'))
 
 export default {

@@ -123,13 +123,14 @@
 </template>
 
 <script>
-import { DASHBOARD } from '@/constants/appConstants'
-import PublicLayout from '@/router/layouts/PublicLayout'
 import axios from 'axios'
+
 import authenticationService from '@/api/authentication.service'
-import store from '@/store'
 import constants from '@/api/constants'
 import { GET_USER_INFOS_WS, USER_PATH } from '@/api/user.service'
+import { DASHBOARD } from '@/constants/appConstants'
+import PublicLayout from '@/router/layouts/PublicLayout'
+import store from '@/store'
 
 export default {
   name: 'Authentication',

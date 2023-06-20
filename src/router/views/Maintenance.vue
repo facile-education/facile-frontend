@@ -31,11 +31,12 @@
 
 <script>
 
-import Layout from '@/router/layouts/BannerLayout'
-import Administration from '@/components/Maintenance/Administration.vue'
 import GroupsMaintenance from '@components/Maintenance/GroupsMaintenance.vue'
 import OneShotMaintenance from '@components/Maintenance/OneShotMaintenance.vue'
 import PasswordUpdate from '@components/Maintenance/PasswordUpdate.vue'
+
+import Administration from '@/components/Maintenance/Administration.vue'
+import Layout from '@/router/layouts/BannerLayout'
 
 export default {
   name: 'Maintenance',

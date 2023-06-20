@@ -67,8 +67,8 @@
 
 <script>
 import FileIcon from '@components/Base/FileIcon.vue'
-import { defineAsyncComponent } from 'vue'
 import { downloadDocument } from '@utils/documents.util'
+import { defineAsyncComponent } from 'vue'
 const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal.vue'))
 
 export default {

@@ -9,10 +9,10 @@
 
 <script>
 
-import Layout from '@/router/layouts/BannerLayout'
 import DMToolbar from '@/components/DashboardManager/DMToolbar'
-import WidgetList from '@/components/DashboardManager/WidgetList'
 import WidgetEditionModal from '@/components/DashboardManager/WidgetEditionModal'
+import WidgetList from '@/components/DashboardManager/WidgetList'
+import Layout from '@/router/layouts/BannerLayout'
 
 export default {
   name: 'DashboardManager',

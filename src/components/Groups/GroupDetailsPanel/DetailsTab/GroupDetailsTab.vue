@@ -86,9 +86,10 @@
 </template>
 
 <script>
-import dayjs from 'dayjs'
-import { getCommunityMembers } from '@/api/groups.service'
 import MemberPack from '@components/Groups/GroupDetailsPanel/DetailsTab/MemberPack'
+import dayjs from 'dayjs'
+
+import { getCommunityMembers } from '@/api/groups.service'
 
 export default {
   name: 'GroupDetailsTab',

@@ -1,12 +1,13 @@
 import store from '@store/index.js'
-import i18n from '@/i18n'
-import trashService from '@/api/documents/trash.service'
+
 import fileService from '@/api/documents/file.service'
 import folderService from '@/api/documents/folder.service'
-import { mergeContextMenus, removeMenuOptionIfExist } from '@/utils/commons.util'
-import { folderOptions, fileOptions, groupOptions } from '@/constants/options'
 import groupService from '@/api/documents/group.service'
+import trashService from '@/api/documents/trash.service'
 import { conflicts } from '@/constants/documentsConstants'
+import { fileOptions, folderOptions, groupOptions } from '@/constants/options'
+import i18n from '@/i18n'
+import { mergeContextMenus, removeMenuOptionIfExist } from '@/utils/commons.util'
 
 function computeDocumentsOptions (documentList) {
   const listCM = []
