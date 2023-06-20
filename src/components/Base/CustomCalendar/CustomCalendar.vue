@@ -36,6 +36,7 @@
 import FullCalendar from '@fullcalendar/vue3'
 import frLocale from '@fullcalendar/core/locales/fr'
 import timeGridPlugin from '@fullcalendar/timegrid'
+import interactionPlugin from '@fullcalendar/interaction'
 import CalendarEvent from '@components/Base/CustomCalendar/CalendarEvent.vue'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
@@ -58,6 +59,10 @@ export default {
       type: Boolean,
       default: true
     },
+    canCreateSlots: {
+      type: Boolean,
+      default: false
+    },
     selectFirstEventOnLoad: {
       type: Boolean,
       default: false
@@ -69,7 +74,7 @@ export default {
       }
     }
   },
-  emits: ['eventOptionClicked', 'unselectEvent', 'selectEvent', 'selectDate'],
+  emits: ['eventOptionClicked', 'unselectEvent', 'selectEvent', 'selectDate', 'createSlot'],
   data () {
     return {
       selectedEvent: undefined,
@@ -117,10 +122,19 @@ export default {
       }
     },
     definitiveCalendarOptions () { // Include and override default options by custom props options
-      return {
+      const definitiveOptions = {
         ...this.defaultCalendarOptions,
         ...this.calendarOptions
       }
+
+      if (this.canCreateSlots) { // Add specific options if props canCreateSlots is true
+        definitiveOptions.plugins.push(interactionPlugin)
+        definitiveOptions.selectable = true
+        definitiveOptions.selectAllow = this.allowSelection
+        definitiveOptions.select = this.onDateSelect
+      }
+
+      return definitiveOptions
     },
     hiddenDays () {
       const hiddenDays = []
@@ -219,6 +233,16 @@ export default {
         return this.events[index]
       } else {
         return undefined
+      }
+    },
+    allowSelection (selectInfo) {
+      return selectInfo.start.getDay() === selectInfo.end.getDay()
+    },
+    onDateSelect (selection) {
+      if (this.selectedEvent) {
+        this.unselectEvent()
+      } else {
+        this.$emit('createSlot', { start: selection.start, end: selection.end })
       }
     }
   }

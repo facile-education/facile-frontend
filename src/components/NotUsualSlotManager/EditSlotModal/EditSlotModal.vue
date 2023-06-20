@@ -13,9 +13,8 @@
 
     <template #body>
       <TimeSelection
-        v-model:start="newEvent.start"
-        v-model:end="newEvent.end"
-        @error="updateTimeErrorStatus"
+        :range="{start: newEvent.start.format('HH:mm'), end: newEvent.end.format('HH:mm')}"
+        @update:range="updateRange"
       >
         <strong>
           {{ currentSlotType.label }}
@@ -71,7 +70,6 @@
         <PentilaButton
           :label="$t('Commons.submit')"
           class="confirm"
-          :class="{'disabled' : v$.$invalid || isTimeError}"
           @click="confirm"
         />
       </div>
@@ -101,14 +99,6 @@ export default {
   props: {
     eventToEdit: {
       type: Object,
-      required: true
-    },
-    createEventMethod: {
-      type: Function,
-      required: true
-    },
-    updateEventMethod: {
-      type: Function,
       required: true
     }
   },
@@ -194,8 +184,9 @@ export default {
     }
   },
   methods: {
-    updateTimeErrorStatus (status) {
-      this.isTimeError = status
+    updateRange (range) {
+      this.newEvent.start = dayjs((this.newEvent.start.format('YYYY/MM/DD') + ' ' + range.start), 'YYYY/MM/DD HH:mm')
+      this.newEvent.end = dayjs((this.newEvent.end.format('YYYY/MM/DD') + ' ' + range.end), 'YYYY/MM/DD HH:mm')
     },
     confirmSlotDeletion () {
       this.$store.dispatch('warningModal/addWarning', {
@@ -204,10 +195,9 @@ export default {
       })
     },
     deleteSlot () {
-      const momentStartTime = dayjs(this.newEvent.start)
       schoolLifeService.deleteSlot(
         this.newEvent.extendedProps.id,
-        momentStartTime.format('YYYY-MM-DD HH:mm') // convert from calendar format to back-end format
+        this.newEvent.start.format('YYYY-MM-DD HH:mm') // convert from calendar format to back-end format
       ).then((data) => {
         if (data.success) {
           this.$store.dispatch('notUsualSlots/refreshCalendar')
@@ -224,22 +214,19 @@ export default {
       if (this.v$.$invalid || this.isTimeError) {
         this.v$.$touch()
       } else {
-        const momentStartTime = dayjs(this.newEvent.start)
-        const momentEndTime = dayjs(this.newEvent.end)
         if (this.isEventCreation) {
           schoolLifeService.createSlot(
             this.selectedSchool.schoolId,
-            momentStartTime.format('YYYY-MM-DD HH:mm'), // convert from calendar format to back-end format
-            momentStartTime.day(),
-            momentStartTime.format('HH:mm'),
-            momentEndTime.format('HH:mm'),
+            this.newEvent.start.format('YYYY-MM-DD HH:mm'), // convert from calendar format to back-end format
+            this.newEvent.start.day(),
+            this.newEvent.start.format('HH:mm'),
+            this.newEvent.end.format('HH:mm'),
             this.newEvent.extendedProps.teacher.teacherId,
             this.currentSlotType.type,
             this.newEvent.extendedProps.room,
             this.newEvent.extendedProps.capacity
           ).then((data) => {
             if (data.success) {
-              // this.createEventMethod(this.newEvent) // With returned slot, instead of reload calendar
               this.$store.dispatch('notUsualSlots/refreshCalendar')
               this.closeModal()
             } else {
@@ -250,9 +237,9 @@ export default {
           schoolLifeService.updateSlot(
             this.newEvent.extendedProps.id,
             dayjs(this.eventToEdit.start).format('YYYY-MM-DD HH:mm'), // pass the old slot start hour (edit all events of tis slot, beginning from this date)
-            momentStartTime.day(),
-            momentStartTime.format('HH:mm'),
-            momentEndTime.format('HH:mm'),
+            this.newEvent.start.day(),
+            this.newEvent.start.format('HH:mm'),
+            this.newEvent.end.format('HH:mm'),
             this.newEvent.extendedProps.teacher.teacherId,
             this.currentSlotType.type,
             this.newEvent.extendedProps.room,

@@ -1,7 +1,7 @@
 <template>
   <div class="calendar">
     <PentilaSpinner v-if="isSpinnerDisplayed" />
-    <template v-if="configuration">
+    <template v-if="configuration && currentUser">
       <Timeline
         v-if="mq.desktop"
         :min-date="minDate"
@@ -13,12 +13,47 @@
         :selected-date="selectedDate"
         @selectDate="onSelectDate"
       />
+      <!--      <div-->
+      <!--        v-if="!mq.desktop"-->
+      <!--        v-touch:swipe.left="onSwipeLeft"-->
+      <!--        v-touch:swipe.right="onSwipeRight"-->
+      <!--        class="swipe-container"-->
+      <!--      >-->
+      <!--        <div-->
+      <!--          class="swipe-wrapper"-->
+      <!--          :style="`transform: translate3d(${pan}px, 0px, 0px);`"-->
+      <!--        >-->
+      <!--          <FullCalendar-->
+      <!--            ref="fullCalendar"-->
+      <!--            class="calendar"-->
+      <!--            :options="calendarOptions"-->
+      <!--            @click.stop-->
+      <!--          />-->
+      <!--        </div>-->
+      <!--      </div>-->
+      <!--      <FullCalendar-->
+      <!--        v-else-->
+      <!--        ref="fullCalendar"-->
+      <!--        :options="calendarOptions"-->
+      <!--        @click.stop-->
+      <!--      />-->
+      <!--      <EventPopover-->
+      <!--        v-if="selectedEvent"-->
+      <!--        :selected-event="selectedEvent"-->
+      <!--        @editEvent="editEvent"-->
+      <!--        @openRegistration="openRegistration"-->
+      <!--        @showStudentList="showStudentList"-->
+      <!--        @close="unselectEvent"-->
+      <!--      />-->
 
       <CustomCalendar
         :display-date="selectedDate"
         :events="eventList"
+        :can-create-slots="canCreateSlots"
         @selectDate="onSelectDate"
+        @createSlot="createSlot"
       />
+      <!--              @eventOptionClicked="handleEventOption"-->
     </template>
   </div>
   <teleport
@@ -28,8 +63,6 @@
     <EditSlotModal
       v-if="isEditSlotModalDisplayed"
       :event-to-edit="eventToEdit"
-      :create-event-method="createEvent"
-      :update-event-method="updateEvent"
       :full-screen="mq.phone"
       @close="isEditSlotModalDisplayed = false"
     />
@@ -184,6 +217,9 @@ export default {
     },
     allSlotsToDisplay () {
       return this.isSpinnerDisplayed ? [] : [...this.userSlots, ...this.currentNonUsualSlots]
+    },
+    canCreateSlots () {
+      return this.currentUser.isDoyen || this.currentUser.isDirectionMember || this.currentUser.isSecretariat
     }
   },
   watch: {
@@ -309,24 +345,9 @@ export default {
         this.isListModalDisplayed = true
       }
     },
-    onDateSelect (selection) {
-      if (this.selectedEvent) {
-        this.unselectEvent()
-      } else if (this.currentUser.isDoyen || this.currentUser.isDirectionMember || this.currentUser.isSecretariat) {
-        this.eventToEdit = {
-          start: selection.start,
-          end: selection.end
-        }
-        this.isEditSlotModalDisplayed = true
-      }
-    },
-    createEvent (event) {
-      const calendar = this.$refs.fullCalendar.getApi()
-      calendar.addEvent(event)
-      calendar.unselect()
-    },
-    updateEvent (event) {
-      // TODO
+    createSlot (slot) {
+      this.eventToEdit = { start: dayjs(slot.start), end: dayjs(slot.end) }
+      this.isEditSlotModalDisplayed = true
     },
     onEventClick (info) {
       // Handle event selection display
