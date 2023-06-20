@@ -1,5 +1,5 @@
-import { groupDocUrl } from '../../support/constants/documents'
 import { HEADMASTER } from '../../support/constants'
+import { groupDocUrl } from '../../support/constants/documents'
 
 describe('Group documents', () => {
   beforeEach(() => {
@@ -41,7 +41,7 @@ describe('Group documents', () => {
   })
 
   // TODO create some activities to test it : currently none
-  /*it.only('détails Panel', () => {
+  /* it.only('détails Panel', () => {
     cy.contains('.grid-document', 'groupTest').trigger('mouseover').find('[data-test="open-details-icon"]').click()
 
     cy.get('[data-test=group-details-panel]').within(() => {
@@ -65,5 +65,5 @@ describe('Group documents', () => {
         .should('contain', 'a supprimé le fichier')
         .should('contain', 'document de groupe.html')
     })
-  })*/
+  }) */
 })

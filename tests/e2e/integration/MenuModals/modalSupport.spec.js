@@ -1,5 +1,5 @@
-import { url } from '../../support/constants/statistics'
 import { GLOBAL_ADMIN } from '../../support/constants'
+import { url } from '../../support/constants/statistics'
 
 const adminWelcomeSentence = 'Votre demande de support sera traitée par les équipes de Pentila, vous recevrez une réponse dans votre messagerie'
 const userWelcomeSentence = "Votre demande de support sera transmise à l'administrateur"

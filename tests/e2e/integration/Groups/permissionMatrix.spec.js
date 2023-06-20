@@ -1,5 +1,5 @@
+import { CLASSTEACHER, HEADMASTER, PARENT, SECRETARY, STUDENT } from '../../support/constants'
 import { url } from '../../support/constants/groups'
-import { HEADMASTER, CLASSTEACHER, STUDENT, PARENT, SECRETARY } from '../../support/constants'
 
 const rolesList = [
   {
@@ -109,13 +109,13 @@ describe('Permission matrix', () => {
       })
 
       if (role.hasContextDropdown) {
-	cy.get('.base-dropdown > .button').should('exist')
-	cy.get('.base-dropdown > .button').click()
+        cy.get('.base-dropdown > .button').should('exist')
+        cy.get('.base-dropdown > .button').click()
         cy.get('.suggestion-list > :nth-child(1)').should('exist')
         cy.get('.suggestion-list > :nth-child(2)').should('exist')
         cy.get('.suggestion-list > :nth-child(3)').should('exist')
         cy.get('.suggestion-list > :nth-child(4)').should('exist')
-	cy.get('.base-dropdown > .button').click()
+        cy.get('.base-dropdown > .button').click()
       }
 
       // Group visibility // TODO match with good groups

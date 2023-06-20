@@ -1,11 +1,10 @@
+import { CLASSTEACHER, DOYEN, PARENT, SECRETARY, TEACHER } from '../../../support/constants'
 import {
   now,
-  url,
-  slotTypes
+  slotTypes,
+  url
 } from '../../../support/constants/horairesHorsCadres'
-
 import utils from '../../../support/utils/horairesHorsCardesUtils'
-import { CLASSTEACHER, DOYEN, PARENT, TEACHER, SECRETARY } from '../../../support/constants'
 
 const FIRING_SUPERVISOR = TEACHER
 

@@ -1,8 +1,9 @@
 // https://docs.cypress.io/api/introduction/api.html
 import {
-  url, now,
+  now,
   studentName,
-  studentSearch
+  studentSearch,
+  url
 } from '../../support/constants/horaires'
 
 describe('Mobile tests', () => {

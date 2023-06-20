@@ -1,6 +1,6 @@
-import { url, helpTestMenu, helpSearchResultsMenu, helpAdminResultMenu, categoryToCreate } from '../../support/constants/help'
+import { CLASSTEACHER, GLOBAL_ADMIN, STUDENT } from '../../support/constants'
+import { categoryToCreate, helpAdminResultMenu, helpSearchResultsMenu, helpTestMenu, url } from '../../support/constants/help'
 import { setServiceDiffusion, testArticleContent } from '../../support/utils/helpUtils'
-import { GLOBAL_ADMIN, CLASSTEACHER, STUDENT } from '../../support/constants'
 
 const firstSelectedCategory = helpTestMenu[0]
 const firstSelectedItem = firstSelectedCategory.items[0]

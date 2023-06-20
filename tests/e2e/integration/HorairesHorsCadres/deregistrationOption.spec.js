@@ -1,15 +1,15 @@
-import { now, slotTypes, url } from '../../support/constants/horairesHorsCadres'
-import utils from '../../support/utils/horairesHorsCardesUtils'
 import {
-  TEACHER,
-  TEACHER2,
   CLASSTEACHER,
-  SCHOOL_ADMIN,
   DOYEN,
+  PARENT,
+  SCHOOL_ADMIN,
   SECRETARY,
   STUDENT,
-  PARENT
+  TEACHER,
+  TEACHER2
 } from '../../support/constants'
+import { now, slotTypes, url } from '../../support/constants/horairesHorsCadres'
+import utils from '../../support/utils/horairesHorsCardesUtils'
 
 const slotToRegisterInside = {
   day: 'wed',

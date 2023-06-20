@@ -1,5 +1,5 @@
-import { url } from '../../support/constants/documents'
 import { HEADMASTER } from '../../support/constants'
+import { url } from '../../support/constants/documents'
 
 // Have to define here because the generated event for handling function is type of Event not DragEvent by default
 // see https://github.com/cypress-io/cypress/issues/649

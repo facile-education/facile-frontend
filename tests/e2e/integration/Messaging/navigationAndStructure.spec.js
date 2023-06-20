@@ -1,5 +1,5 @@
-import { url } from '../../support/constants/messaging'
 import { HEADMASTER } from '../../support/constants'
+import { url } from '../../support/constants/messaging'
 import { waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
 
 describe('Messaging navigation and structure', () => {

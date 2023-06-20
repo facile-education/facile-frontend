@@ -1,4 +1,4 @@
-import { now, url, slotTypes } from '../../support/constants/horairesHorsCadres'
+import { now, slotTypes, url } from '../../support/constants/horairesHorsCadres'
 
 const checkSlotSelectionMenu = () => {
   cy.get('[data-test=user-completion-input]').should('not.exist')

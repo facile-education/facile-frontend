@@ -1,18 +1,19 @@
 // https://docs.cypress.io/api/introduction/api.html
 
+import { MULTI_PARENT, PARENT, STUDENT } from '../../support/constants'
 import {
-  url, now,
   groupName,
+  now,
+  secondChildName,
   studentName,
   studentSearch,
-  teacherName,
-  teacherSearch,
-  secondChildName,
   substituteCalendarName,
   substituteName,
-  substituteSearch
+  substituteSearch,
+  teacherName,
+  teacherSearch,
+  url
 } from '../../support/constants/horaires'
-import { STUDENT, PARENT, MULTI_PARENT } from '../../support/constants'
 
 const waitForRefresh = () => {
   cy.wait(500)

@@ -1,11 +1,9 @@
+import { TEACHER } from '../../../support/constants'
 import {
   now,
-  url,
-  slotTypes
+  slotTypes,
+  url
 } from '../../../support/constants/horairesHorsCadres'
-
-import { TEACHER } from '../../../support/constants'
-
 import utils from '../../../support/utils/horairesHorsCardesUtils'
 
 const slotToRegisterInside = {

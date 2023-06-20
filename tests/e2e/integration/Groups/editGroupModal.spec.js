@@ -1,6 +1,6 @@
-import { now } from '../../support/constants/horairesHorsCadres' 
-import { url } from '../../support/constants/groups'
 import { HEADMASTER } from '../../support/constants'
+import { url } from '../../support/constants/groups'
+import { now } from '../../support/constants/horairesHorsCadres'
 
 const createdGroup = {
   name: 'aCreatedGroup',
@@ -56,7 +56,7 @@ describe('Group list', () => {
       cy.get('input[placeholder=\'Nom du groupe\']').type(createdGroup.name)
       cy.get('textarea[placeholder=\'Description\']').type(createdGroup.description)
       createdGroup.members.forEach((member) => {
-        cy.get('input[placeholder=\'Rechercher par nom\']').click({force: true}).clear().type(member.name)
+        cy.get('input[placeholder=\'Rechercher par nom\']').click({ force: true }).clear().type(member.name)
         cy.contains('.group-user-item', member.name).click()
         cy.contains('.selected-group-member-item', member.name)
         if (member.isCreator) {
@@ -112,7 +112,7 @@ describe('Group list', () => {
       })
 
       updatedGroup.addedMember.forEach((member) => {
-        cy.get('input[placeholder=\'Rechercher par nom\']').click({force: true}).clear().type(member.name)
+        cy.get('input[placeholder=\'Rechercher par nom\']').click({ force: true }).clear().type(member.name)
         cy.contains('.group-user-item', member.name).click()
         cy.contains('.selected-group-member-item', member.name)
         if (member.isAdmin) {

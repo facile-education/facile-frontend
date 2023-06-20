@@ -1,9 +1,8 @@
 import {
   now,
-  url,
-  slotTypes
+  slotTypes,
+  url
 } from '../../../support/constants/horairesHorsCadres'
-
 import utils from '../../../support/utils/horairesHorsCardesUtils'
 
 const slotToRegisterInside = {

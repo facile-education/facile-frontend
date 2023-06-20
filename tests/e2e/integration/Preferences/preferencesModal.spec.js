@@ -1,5 +1,5 @@
-import { url } from '../../support/constants/statistics'
 import { HEADMASTER } from '../../support/constants'
+import { url } from '../../support/constants/statistics'
 
 describe('preference modal', () => {
   it('panels and closure behavior', () => {

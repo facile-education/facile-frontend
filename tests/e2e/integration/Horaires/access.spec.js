@@ -1,7 +1,7 @@
 // https://docs.cypress.io/api/introduction/api.html
 
-import { HEADMASTER, TEACHER, DOYEN, SECRETARY, STUDENT, PARENT } from '../../support/constants'
-import { now, url, groupName } from '../../support/constants/horaires'
+import { DOYEN, HEADMASTER, PARENT, SECRETARY, STUDENT, TEACHER } from '../../support/constants'
+import { groupName, now, url } from '../../support/constants/horaires'
 
 const toolbarManagerUsers = [HEADMASTER, DOYEN, SECRETARY]
 const toolbarUsers = [TEACHER]

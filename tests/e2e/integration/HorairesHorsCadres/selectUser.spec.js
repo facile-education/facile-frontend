@@ -1,11 +1,11 @@
 import {
   now,
-  url,
   slotTypes,
-  studentSearch,
   studentName,
+  studentSearch,
+  studentSlotsNumberAtTuesday,
   studentSlotsNumberAtWeek35,
-  studentSlotsNumberAtTuesday
+  url
 } from '../../support/constants/horairesHorsCadres'
 
 const waitForRefresh = () => {

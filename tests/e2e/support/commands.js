@@ -24,8 +24,8 @@
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
-import { GLOBAL_ADMIN, HEADMASTER as defaultUser } from '../support/constants'
 import constants from '../../../src/constants/appConstants'
+import { GLOBAL_ADMIN, HEADMASTER as defaultUser } from '../support/constants'
 
 Cypress.Commands.add('login', (visitUrl = '/', user = defaultUser) => {
   cy.log('===== LOG IN (' + user.login + ') =====')

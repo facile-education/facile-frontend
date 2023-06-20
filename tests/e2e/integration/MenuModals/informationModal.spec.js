@@ -1,5 +1,5 @@
-import { url } from '../../support/constants/statistics'
 import { GLOBAL_ADMIN } from '../../support/constants'
+import { url } from '../../support/constants/statistics'
 
 function randomInt (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min

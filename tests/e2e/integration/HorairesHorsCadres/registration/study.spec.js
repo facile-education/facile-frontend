@@ -1,12 +1,12 @@
+import dayjs from 'dayjs'
+
+import { CLASSTEACHER, DOYEN, HEADMASTER, PARENT, STUDENT, TEACHER } from '../../../support/constants'
 import {
   now,
-  url,
-  slotTypes
+  slotTypes,
+  url
 } from '../../../support/constants/horairesHorsCadres'
-
 import utils from '../../../support/utils/horairesHorsCardesUtils'
-import { CLASSTEACHER, DOYEN, HEADMASTER, PARENT, STUDENT, TEACHER } from '../../../support/constants'
-import dayjs from 'dayjs'
 
 const slotToRegisterInside = {
   day: 'wed',

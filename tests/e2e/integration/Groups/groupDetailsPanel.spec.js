@@ -1,5 +1,5 @@
-import { url } from '../../support/constants/groups'
 import { HEADMASTER } from '../../support/constants'
+import { url } from '../../support/constants/groups'
 
 describe('Group Details', () => {
   // before(() => {

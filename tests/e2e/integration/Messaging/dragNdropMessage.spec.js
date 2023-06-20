@@ -1,5 +1,5 @@
-import { url } from '../../support/constants/messaging'
 import { HEADMASTER } from '../../support/constants'
+import { url } from '../../support/constants/messaging'
 import { waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
 
 // Have to define here because the generated event for handling function is type of Event not DragEvent by default

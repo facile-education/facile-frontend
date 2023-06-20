@@ -1,6 +1,6 @@
+import { HEADMASTER, STUDENT, TEACHER2 } from '../../support/constants'
 import { url } from '../../support/constants/messaging'
-import { HEADMASTER, TEACHER2, STUDENT } from '../../support/constants'
-import { waitMessagingToBeLoaded, reloadThreadsAndFolders } from '../../support/utils/messagingUtils'
+import { reloadThreadsAndFolders, waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
 
 const lowerTextThenCapitalize = (string) => {
   let result = string

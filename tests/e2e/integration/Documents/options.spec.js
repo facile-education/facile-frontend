@@ -1,5 +1,5 @@
-import { url } from '../../support/constants/documents'
 import { HEADMASTER } from '../../support/constants'
+import { url } from '../../support/constants/documents'
 
 const deleteAll = () => {
   cy.get('body').type('{ctrl}a')

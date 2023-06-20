@@ -1,5 +1,5 @@
-import { url } from '../../support/constants/documents'
 import { HEADMASTER } from '../../support/constants'
+import { url } from '../../support/constants/documents'
 
 const folderOptions = ['Nouveau', 'Renommer', 'Déplacer', 'Dupliquer', 'Télécharger', 'Supprimer', 'Détails']
 const fileOptions = ['Nouveau', 'Ouvrir', 'Renommer', 'Déplacer', 'Dupliquer', 'Télécharger', 'Supprimer', 'Détails']
