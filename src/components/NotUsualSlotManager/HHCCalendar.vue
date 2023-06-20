@@ -100,7 +100,7 @@ const EditSlotModal = defineAsyncComponent(() => import('@components/NotUsualSlo
 dayjs.extend(customParseFormat)
 
 export default {
-  name: 'Calendar',
+  name: 'HHCCalendar',
   components: {
     CustomCalendar,
     NotUsualSlotsToolBar,
