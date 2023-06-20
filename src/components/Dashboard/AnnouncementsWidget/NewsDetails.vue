@@ -299,7 +299,7 @@ h2 {
   max-height: 30vh;
   overflow-y: auto;
 
-  ::v-deep(p) {
+  ::deep(p) {
     margin: 0;
   }
 }
