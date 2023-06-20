@@ -105,6 +105,7 @@ export default {
           // omitZeroMinute: true
         },
         eventClick: this.selectEvent,
+        eventDidMount: this.onEventMount,
         views: {
           day: {
             dayHeaderFormat: { weekday: 'long', month: 'numeric', day: 'numeric' }
@@ -225,6 +226,11 @@ export default {
       }
       this.selectedEvent = undefined
       this.$emit('unselectEvent')
+    },
+    onEventMount (event) {
+      if (event.event.extendedProps.grayed) { // Put this here because I can't find out how to access to event el from CalendarEvent component
+        event.el.classList.add('grayed')
+      }
     },
     matchFCEventWithPropsEvents (event) {
       const eventId = event.event.extendedProps.sessionId

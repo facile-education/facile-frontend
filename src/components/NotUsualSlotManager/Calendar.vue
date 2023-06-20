@@ -86,12 +86,6 @@ import { slotLabelList } from '@/constants/appConstants'
 import { isEditableSlot } from '@utils/notUsualSlot.util'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
-import notUsualSlotsConstants from '@/constants/notUsualSlots'
-// import FullCalendar from '@fullcalendar/vue3'
-// import frLocale from '@fullcalendar/core/locales/fr'
-// import timeGridPlugin from '@fullcalendar/timegrid'
-// import interactionPlugin from '@fullcalendar/interaction'
-// import FCEvent from '@components/Horaires/FCEvent'
 
 import { defineAsyncComponent } from 'vue'
 import { getTeachersLabel } from '@utils/commons.util'
@@ -99,7 +93,6 @@ import CustomCalendar from '@components/Base/CustomCalendar/CustomCalendar.vue'
 
 const NotUsualSlotsToolBar = defineAsyncComponent(() => import('@components/NotUsualSlotManager/NotUsualSlotsToolBar'))
 const Timeline = defineAsyncComponent(() => import('@components/Horaires/Timeline')) // Needed for event creation
-// const EventPopover = defineAsyncComponent(() => import('@/components/NotUsualSlotManager/EventPopover'))
 const StudentRegistrationModal = defineAsyncComponent(() => import('@components/NotUsualSlotManager/StudentRegistrationModal/StudentRegistrationModal'))
 const StudentListModal = defineAsyncComponent(() => import('@components/NotUsualSlotManager/StudentListModal/StudentListModal'))
 const EditSlotModal = defineAsyncComponent(() => import('@components/NotUsualSlotManager/EditSlotModal/EditSlotModal'))
@@ -111,13 +104,10 @@ export default {
   components: {
     CustomCalendar,
     NotUsualSlotsToolBar,
-    // FCEvent,
     Timeline,
     StudentRegistrationModal,
     StudentListModal,
     EditSlotModal
-    // EventPopover,
-    // FullCalendar
   },
   inject: ['mq'],
   props: {
@@ -145,6 +135,12 @@ export default {
     currentUser () {
       return this.$store.state.user
     },
+    queriedUser () {
+      return this.$store.state.notUsualSlots.queriedUser
+    },
+    selectedClass () {
+      return this.$store.state.notUsualSlots.selectedClass
+    },
     configuration () {
       return this.$store.state.horaires.configuration
     },
@@ -154,63 +150,11 @@ export default {
     maxDate () {
       return dayjs(this.configuration.endDateSchool, 'YYYY-MM-DD HH:mm')
     },
-    // calendarOptions () {
-    //   // const vm = this
-    //   return {
-    //     locale: frLocale,
-    //     plugins: [timeGridPlugin, interactionPlugin],
-    //     initialView: this.mq.phone ? 'timeGridDay' : 'timeGridWeek',
-    //     height: this.mq.phone ? 'max(800px, 100%)' : 'max(800px, calc(100% - 63px))',
-    //     expandRows: true,
-    //     headerToolbar: {
-    //       left: '',
-    //       center: '',
-    //       right: ''
-    //     },
-    //     selectable: true,
-    //     selectAllow: this.allowSelection,
-    //     select: this.onDateSelect,
-    //     eventTextColor: '#333',
-    //     eventTimeFormat: {
-    //       hour: '2-digit',
-    //       minute: '2-digit'
-    //       // omitZeroMinute: true
-    //     },
-    //     eventClick: this.onEventClick,
-    //     eventDidMount: this.onEventMount,
-    //     views: {
-    //       day: {
-    //         dayHeaderFormat: { weekday: 'long', month: 'numeric', day: 'numeric' }
-    //       },
-    //       timeGrid: {
-    //         allDaySlot: false,
-    //         hiddenDays: this.hiddenDays,
-    //         nowIndicator: true,
-    //         slotDuration: '01:00:00',
-    //         slotMinTime: '07:30', // TODO: get from backend
-    //         slotMaxTime: '18:00'
-    //         // slotLabelDidMount: this.onSlotMount
-    //       }
-    //     },
-    //     events: this.eventList
-    //   }
-    // },
     eventList () {
-      return this.notComputedSlotsToDisplay.map(slot => this.formatCalendarSlot(slot))
+      return this.notComputedSlotsToDisplay
     },
     userSlots () {
       return this.$store.state.notUsualSlots.userSlots
-    },
-    hiddenDays () {
-      const hiddenDays = []
-      let dayNumber
-      const schoolDays = [1, 2, 3, 4, 5] // TODO: to get from backend
-      for (dayNumber = 0; dayNumber <= 6; ++dayNumber) {
-        if (schoolDays.indexOf(dayNumber) === -1) {
-          hiddenDays.push(dayNumber)
-        }
-      }
-      return hiddenDays
     },
     currentNonUsualSlots () {
       return this.$store.state.notUsualSlots.currentNonUsualSlots
@@ -242,21 +186,20 @@ export default {
       }
     }
   },
-  // mounted () { // TODO: Avoid calendar to go after limit date
-  //   const calendar = this.$refs.fullCalendar.getApi()
-  //   const currentDate = dayjs(calendar.getDate())
-  //
-  //   if (currentDate > this.maxDate.endOf('week')) {
-  //     calendar.gotoDate(new Date(this.maxDate.startOf('week')))
-  //     this.$store.dispatch('notUsualSlots/setDisplayedDates', {
-  //       startDate: dayjs(this.maxDate.startOf('week').format('YYYY-MM-DD'), 'YYYY-MM-DD'),
-  //       endDate: dayjs(this.maxDate.endOf('week').format('YYYY-MM-DD'), 'YYYY-MM-DD')
-  //     })
-  //   }
-  // },
   methods: {
-    allowSelection (selectInfo) {
-      return selectInfo.start.getDay() === selectInfo.end.getDay()
+    addRegisterOption (event) {
+      if (event.canRegisterStudent && (this.queriedUser || this.selectedClass.orgId > 0) && !this.isAlreadyRegister(event)) {
+        event.options.push({
+          name: 'registerStudent',
+          label: this.$t('CalendarEventOptions.registerStudent'),
+          icon: require('@/assets/icons/add.svg') // TODO get icon
+        })
+      }
+      return event
+    },
+    isAlreadyRegister (event) {
+      // Search if this slot already exist in userSlots
+      return this.$store.state.notUsualSlots.userSlots.find(userSlot => userSlot.sessionId === event.schoollifeSessionId)
     },
     onSelectDate (date) {
       this.selectedDate = dayjs(date).startOf('day')
@@ -264,10 +207,6 @@ export default {
         this.unselectEvent()
       }
 
-      if (this.$refs.fullCalendar) {
-        const calendar = this.$refs.fullCalendar.getApi()
-        calendar.gotoDate(date)
-      }
       // If swipe provide from tablet, get slot for the entire week and not only the current day
       const startDate = this.mq.phone ? dayjs(date) : dayjs(date).startOf('week')
       const endDate = this.mq.phone ? dayjs(date).endOf('day') : dayjs(date).endOf('week')
@@ -279,53 +218,8 @@ export default {
         this.unselectEvent()
       }
 
-      if (this.$refs.fullCalendar) {
-        const calendar = this.$refs.fullCalendar.getApi()
-        calendar.gotoDate(new Date(week.firstDayOfWeek))
-      }
       this.$store.dispatch('notUsualSlots/setDisplayedDates',
         { startDate: dayjs(week.firstDayOfWeek, 'YYYY-MM-DD'), endDate: dayjs(week.lastDayOfWeek, 'YYYY-MM-DD') })
-    },
-    onSwipeLeft () {
-      if (this.mq.phone) {
-        this.nextDate()
-      }
-    },
-    onSwipeRight () {
-      if (this.mq.phone) {
-        this.previousDate()
-      }
-    },
-    nextDate () {
-      const unit = this.mq.phone ? 'day' : 'week'
-      this.selectedDate = this.selectedDate.add(1, unit)
-      // Skip hidden days
-      if (this.configuration.schoolDays.indexOf(this.selectedDate.day()) === -1) {
-        this.nextDate()
-      } else {
-        this.onSelectDate(this.selectedDate.toDate())
-      }
-    },
-    previousDate () {
-      const unit = this.mq.phone ? 'day' : 'week'
-      this.selectedDate = this.selectedDate.subtract(1, unit)
-      // Skip hidden days
-      if (this.configuration.schoolDays.indexOf(this.selectedDate.day()) === -1) {
-        this.previousDate()
-      } else {
-        this.onSelectDate(this.selectedDate.startOf().toDate())
-      }
-    },
-    formatCalendarSlot (slot) { // Set title and color for notUsualSlots
-      let title = slot.title
-      let color = slot.color
-      if (slot.subject === undefined && slot.type !== undefined) {
-        const slotType = notUsualSlotsConstants.getSlotTypeByNumber(slot.type)
-        title = slotType.label
-        color = slotType.color
-      }
-
-      return { ...slot, ...{ title: title, color: color } }
     },
     editEvent (event) {
       if (isEditableSlot(event)) { // Only edit notUsualSlots
