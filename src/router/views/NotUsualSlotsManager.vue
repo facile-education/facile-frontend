@@ -39,7 +39,7 @@
           @update:modelValue="getUserSlots"
         />
       </div>
-      <Calendar
+      <HHCCalendar
         v-if="currentSlotType"
         :current-slot-type="currentSlotType"
       />
@@ -70,7 +70,7 @@ import notUsualSlotConstants from '@/constants/notUsualSlots'
 import dayjs from 'dayjs'
 import schoolLifeService from '@/api/schoolLife-portlet.service'
 import SlotTypeItem from '@/components/NotUsualSlotManager/SlotTypeItem'
-import Calendar from '@/components/NotUsualSlotManager/Calendar'
+import HHCCalendar from '@components/NotUsualSlotManager/HHCCalendar.vue'
 import SelectedSchool from '@/components/NotUsualSlotManager/SelectedSchool'
 import Layout from '@layouts/BannerLayout'
 
@@ -81,7 +81,7 @@ const UserCompletion = defineAsyncComponent(() => import('@/components/NotUsualS
 
 export default {
   name: 'NotUsualSlotManager',
-  components: { PendingFiringModal, Layout, SelectedSchool, UserCompletion, Calendar, SlotTypeItem },
+  components: { PendingFiringModal, Layout, SelectedSchool, UserCompletion, HHCCalendar, SlotTypeItem },
   inject: ['mq'],
   data () {
     return {
