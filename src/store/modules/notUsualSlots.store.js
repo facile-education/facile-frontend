@@ -2,6 +2,47 @@ import i18n from '@/i18n'
 import { getSchoolClassList } from '@/api/organization.service'
 import schoolLifeService from '@/api/schoolLife-portlet.service'
 import cdtService from '@/api/schedule.service'
+import notUsualSlotsConstants from '@/constants/notUsualSlots'
+
+const formatNonUsualSlot = (sessions) => {
+  sessions.forEach(event => {
+    const slotType = notUsualSlotsConstants.getSlotTypeByNumber(event.type)
+    event.title = slotType.label
+    event.color = slotType.color
+
+    event.options = []
+    event.options.push({
+      name: 'showStudentList',
+      label: i18n.global.t('CalendarEventOptions.showStudentList'),
+      icon: require('@/assets/icon_list.svg')
+    })
+    if (event.canUpdateSlot) {
+      event.options.push({
+        name: 'updateSlot',
+        label: i18n.global.t('CalendarEventOptions.update'),
+        icon: require('@/assets/icons/pencil.svg')
+      })
+    }
+  })
+}
+
+const addRegisterOption = (sessions, getters) => {
+  sessions.forEach(event => {
+    if (event.canRegisterStudent && getters.isAlreadyRegister(event)) {
+      event.options.push({
+        name: 'registerStudent',
+        label: i18n.global.t('CalendarEventOptions.registerStudent'),
+        icon: require('@/assets/icons/add.svg') // TODO get icon
+      })
+    }
+  })
+}
+
+const formatUsualSlot = (sessions) => {
+  sessions.forEach(event => {
+    event.grayed = true
+  })
+}
 
 function getNonUsualSlots (store) {
   store.dispatch('currentActions/addAction', { name: 'getNonUsualSlots' })
@@ -9,6 +50,7 @@ function getNonUsualSlots (store) {
     (data) => {
       store.dispatch('currentActions/removeAction', { name: 'getNonUsualSlots' })
       if (data.success) {
+        formatNonUsualSlot(data.sessions)
         store.commit('notUsualSlots/setCurrentNonUsualSlots', data.sessions)
       } else {
         console.error('Cannot get slots for type ' + store.state.notUsualSlots.currentSlotType.type)
@@ -29,6 +71,7 @@ function getSessions (store) {
       (data) => {
         store.dispatch('currentActions/removeAction', { name: 'getSessions' })
         if (data.success) {
+          formatUsualSlot(data.sessions)
           data.sessions.forEach(slot => { slot.isUserSlot = true })
           store.commit('notUsualSlots/setUserSlots', data.sessions)
         } else {
@@ -94,6 +137,10 @@ export const mutations = {
   },
   setQueriedUser (state, queriedUser) {
     state.queriedUser = queriedUser
+
+    if (queriedUser !== undefined) {
+      addRegisterOption(state.currentNonUsualSlots, getters)
+    }
   },
   setSelectedClass (state, payload) {
     state.selectedClass = payload
@@ -172,5 +219,11 @@ export const actions = {
   },
   resetUserSlots ({ commit }) {
     commit('setUserSlots', [])
+  }
+}
+
+export const getters = {
+  isAlreadyRegister: (state) => (event) => {
+    return state.userSlots.find(userSlot => userSlot.sessionId === event.schoollifeSessionId)
   }
 }

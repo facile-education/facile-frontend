@@ -5,7 +5,10 @@
     "remove": "Supprimer"
   },
   "CalendarEventOptions": {
-    "saveTeacherSubstitute": "Modifier"
+    "registerStudent": "A",
+    "saveTeacherSubstitute": "@:CalendarEventOptions.download",
+    "showStudentList": "Liste des inscrits",
+    "update": "Modifier"
   },
   "Commons": {
     "back": "Retour",
