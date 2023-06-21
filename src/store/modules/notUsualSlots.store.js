@@ -26,18 +26,6 @@ const formatNonUsualSlot = (sessions) => {
   })
 }
 
-const addRegisterOption = (sessions, getters) => {
-  sessions.forEach(event => {
-    if (event.canRegisterStudent && getters.isAlreadyRegister(event)) {
-      event.options.unshift({
-        name: 'registerStudent',
-        label: i18n.global.t('CalendarEventOptions.registerStudent'),
-        icon: require('@/assets/icons/add.svg') // TODO get icon
-      })
-    }
-  })
-}
-
 const formatUsualSlot = (sessions) => {
   sessions.forEach(event => {
     event.grayed = true
@@ -71,9 +59,11 @@ function getSessions (store) {
       (data) => {
         store.dispatch('currentActions/removeAction', { name: 'getSessions' })
         if (data.success) {
-          formatUsualSlot(data.sessions)
+          const sessions = [...data.sessions, ...data.schoollifeSessions]
+          formatUsualSlot(sessions)
           data.sessions.forEach(slot => { slot.isUserSlot = true })
-          store.commit('notUsualSlots/setUserSlots', data.sessions)
+          store.commit('notUsualSlots/setUserSlots', sessions)
+          store.commit('notUsualSlots/addRegisterOption')
         } else {
           console.error('Cannot get user slots')
         }
@@ -89,6 +79,7 @@ function getSessions (store) {
         if (data.success) {
           data.sessions.forEach(slot => { slot.isUserSlot = true })
           store.commit('notUsualSlots/setUserSlots', data.sessions)
+          store.commit('notUsualSlots/addRegisterOption')
         } else {
           console.error('Cannot get user slots')
         }
@@ -137,10 +128,17 @@ export const mutations = {
   },
   setQueriedUser (state, queriedUser) {
     state.queriedUser = queriedUser
-
-    if (queriedUser !== undefined) {
-      addRegisterOption(state.currentNonUsualSlots, getters)
-    }
+  },
+  addRegisterOption (state) {
+    state.currentNonUsualSlots.forEach(event => {
+      if (event.canRegisterStudent && !getters.isAlreadyRegister(state, event)) {
+        event.options.unshift({
+          name: 'registerStudent',
+          label: i18n.global.t('CalendarEventOptions.registerStudent'),
+          icon: require('@/assets/icons/add.svg') // TODO get icon
+        })
+      }
+    })
   },
   setSelectedClass (state, payload) {
     state.selectedClass = payload
@@ -223,7 +221,7 @@ export const actions = {
 }
 
 export const getters = {
-  isAlreadyRegister: (state) => (event) => {
+  isAlreadyRegister (state, event) {
     return state.userSlots.find(userSlot => userSlot.sessionId === event.sessionId)
   }
 }
