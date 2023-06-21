@@ -122,12 +122,12 @@
 <script>
 import InlineEditor from '@ckeditor/ckeditor5-build-inline'
 import CustomDatePicker from '@components/Base/CustomDatePicker.vue' // TODO: Check time and optimise if necessary
+import InformationIcon from '@components/Base/InformationIcon.vue'
 import validators from '@utils/validators'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
-import InformationIcon from '@components/Base/InformationIcon.vue'
 
 import { createEvent, getEventDetails, modifyEvent } from '@/api/dashboard/agenda.service'
 import { getSchoolNewsBroadcastGroups } from '@/api/dashboard/news.service'

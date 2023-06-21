@@ -139,10 +139,11 @@
 
 <script>
 import { useVuelidate } from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
 import dayjs from 'dayjs'
 
-import { createSession } from '@/api/schedule.service'
 import { getUserGroups } from '@/api/groups.service'
+import { createSession } from '@/api/schedule.service'
 import { getSubjects } from '@/api/userManagement.service'
 import { getSchoolTeachers } from '@/api/userSearch.service'
 

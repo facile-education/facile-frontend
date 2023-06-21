@@ -71,8 +71,11 @@
 
 <script>
 import 'vue-advanced-cropper/dist/style.css'
-import { getResource, uploadTmpFile } from '@/api/documents/file.service'
+
 import SelectFilesButtons from '@components/FilePicker/SelectFilesButtons.vue'
+import { Cropper, Preview } from 'vue-advanced-cropper'
+
+import { getResource, uploadTmpFile } from '@/api/documents/file.service'
 
 export default {
   name: 'ImagePickerModal',

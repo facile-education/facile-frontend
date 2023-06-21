@@ -39,14 +39,14 @@
 </template>
 
 <script>
+import CustomCalendar from '@components/Base/CustomCalendar/CustomCalendar.vue'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
-import Layout from '@/router/layouts/BannerLayout'
-import HorairesToolbar from '@/components/Horaires/HorairesToolbar'
-
 // Lazy loading
 import { defineAsyncComponent } from 'vue'
-import CustomCalendar from '@components/Base/CustomCalendar/CustomCalendar.vue'
+
+import HorairesToolbar from '@/components/Horaires/HorairesToolbar'
+import Layout from '@/router/layouts/BannerLayout'
 const Timeline = defineAsyncComponent(() => import('@/components/Horaires/Timeline'))
 const SessionTeacherModal = defineAsyncComponent(() => import('@/components/Horaires/SessionTeacherModal'))
 const CreateSessionModal = defineAsyncComponent(() => import('@/components/Horaires/CreateSessionModal'))

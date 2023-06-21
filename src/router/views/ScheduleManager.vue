@@ -12,8 +12,9 @@
 </template>
 
 <script>
-import Layout from '@/router/layouts/BannerLayout'
 import { defineAsyncComponent } from 'vue'
+
+import Layout from '@/router/layouts/BannerLayout'
 const GlobalScheduleSettings = defineAsyncComponent(() => import('@components/ScheduleManager/GlobalScheduleSettings/GlobalScheduleSettings.vue'))
 const SchoolScheduleSettings = defineAsyncComponent(() => import('@components/ScheduleManager/SchoolScheduleSettings/SchoolScheduleSettings.vue'))
 

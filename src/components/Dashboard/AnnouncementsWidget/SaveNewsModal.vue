@@ -143,7 +143,8 @@
 import InlineEditor from '@ckeditor/ckeditor5-build-inline'
 import AttachedFiles from '@components/AttachedFiles/AttachedFiles.vue'
 import CustomDatePicker from '@components/Base/CustomDatePicker.vue'
-import ImagePicker from '@components/Nero/ImagePicker.vue'
+import InformationIcon from '@components/Base/InformationIcon.vue'
+import ThumbnailSelector from '@components/Base/ThumbnailSelector.vue'
 import validators from '@utils/validators'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
@@ -157,8 +158,7 @@ import {
   getNewsDetails, getSchoolNewsBroadcastGroups
 } from '@/api/dashboard/news.service'
 import { defaultImagesKeys } from '@/constants/icons'
-import ThumbnailSelector from '@components/Base/ThumbnailSelector.vue'
-import InformationIcon from '@components/Base/InformationIcon.vue'
+
 const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal.vue'))
 const CKEditor = defineAsyncComponent({
   loader: async () => { return (await import('@ckeditor/ckeditor5-vue')).component }

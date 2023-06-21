@@ -74,15 +74,13 @@
 </template>
 
 <script>
-import DiaryEventItem from '@components/Dashboard/DiaryWidget/DiaryEventItem.vue'
-import dayjs from 'dayjs'
-import { allDiaryEventsPaginationSize } from '@/constants/dashboardConstants'
 import AllDiaryEventsHeader from '@components/Dashboard/DiaryWidget/AllDiaryEvents/AllDiaryEventsHeader.vue'
 import DiaryEventDetails from '@components/Dashboard/DiaryWidget/DiaryEventDetails.vue'
 import DiaryEventItem from '@components/Dashboard/DiaryWidget/DiaryEventItem.vue'
 import dayjs from 'dayjs'
 
 import { getEvents } from '@/api/dashboard/agenda.service'
+import { allDiaryEventsPaginationSize } from '@/constants/dashboardConstants'
 import Layout from '@/router/layouts/BannerLayout.vue'
 let oldScrollTop = 0
 

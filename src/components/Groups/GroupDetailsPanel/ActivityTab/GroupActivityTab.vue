@@ -33,11 +33,12 @@
 </template>
 
 <script>
-import { getGroupActivity } from '@/api/groups.service'
-import documentsService from '@/api/documents/documents.service'
-import dayjs from 'dayjs'
-import { allActivitiesPaginationSize } from '@/constants/dashboardConstants'
 import ActivityItem from '@components/Dashboard/ActivityWidget/ActivityItem.vue'
+import dayjs from 'dayjs'
+
+import documentsService from '@/api/documents/documents.service'
+import { getGroupActivity } from '@/api/groups.service'
+import { allActivitiesPaginationSize } from '@/constants/dashboardConstants'
 
 let oldScrollTop = 0
 

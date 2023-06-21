@@ -68,8 +68,8 @@
 </template>
 
 <script>
-import dayjs from 'dayjs'
 import MessageRecipients from '@components/Messaging/MessageRecipients'
+import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 const AttachedFiles = defineAsyncComponent(() => import('@components/AttachedFiles/AttachedFiles.vue'))
 

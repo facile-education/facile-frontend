@@ -62,8 +62,10 @@
 </template>
 
 <script>
-import { getSessionTeachersAndSubstitutes, saveTeacherSubstitutes } from '@/api/schedule.service'
+import UserCompletion from '@components/NotUsualSlotManager/UserCompletion'
 import dayjs from 'dayjs'
+
+import { getSessionTeachersAndSubstitutes, saveTeacherSubstitutes } from '@/api/schedule.service'
 
 export default {
   name: 'SessionTeacherModal',
