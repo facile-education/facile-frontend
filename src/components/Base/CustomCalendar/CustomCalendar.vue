@@ -35,11 +35,11 @@
 </template>
 
 <script>
-import FullCalendar from '@fullcalendar/vue3'
-import frLocale from '@fullcalendar/core/locales/fr'
-import timeGridPlugin from '@fullcalendar/timegrid'
-import interactionPlugin from '@fullcalendar/interaction'
 import CalendarEvent from '@components/Base/CustomCalendar/CalendarEvent.vue'
+import frLocale from '@fullcalendar/core/locales/fr'
+import interactionPlugin from '@fullcalendar/interaction'
+import timeGridPlugin from '@fullcalendar/timegrid'
+import FullCalendar from '@fullcalendar/vue3'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 const CalendarEventPopover = defineAsyncComponent(() => import('@components/Base/CustomCalendar/CalendarEventPopover.vue'))

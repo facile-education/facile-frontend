@@ -65,13 +65,12 @@
 </template>
 
 <script>
+import HHCCalendar from '@components/NotUsualSlotManager/HHCCalendar.vue'
 import Layout from '@layouts/BannerLayout'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
 import schoolLifeService from '@/api/schoolLife-portlet.service'
-import SlotTypeItem from '@/components/NotUsualSlotManager/SlotTypeItem'
-import HHCCalendar from '@components/NotUsualSlotManager/HHCCalendar.vue'
 import SelectedSchool from '@/components/NotUsualSlotManager/SelectedSchool'
 import SlotTypeItem from '@/components/NotUsualSlotManager/SlotTypeItem'
 import notUsualSlotConstants from '@/constants/notUsualSlots'
