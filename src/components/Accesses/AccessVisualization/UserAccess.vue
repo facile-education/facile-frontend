@@ -31,7 +31,7 @@ export default {
   computed: {
     thumbnail () {
       if (defaultImagesKeys.indexOf(this.access.thumbnailUrl) !== -1) {
-        return require('@assets/images/' + this.access.thumbnailUrl + '.png')
+        return '/src/assets/images/' + this.access.thumbnailUrl + '.png'
       } else { // Returned url is a key for local default image
         return this.access.thumbnailUrl
       }
