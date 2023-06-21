@@ -13,6 +13,7 @@
         ref="fullCalendar"
         class="calendar"
         :options="definitiveCalendarOptions"
+        @click.stop
       >
         <template #eventContent="event">
           <CalendarEvent
@@ -28,7 +29,8 @@
   <CalendarEventPopover
     v-if="selectedEvent && showPopover"
     :selected-event="selectedEvent"
-    @optionClicked="$emit('eventOptionClicked', {event: matchFCEventWithPropsEvents(selectedEvent), option: $event})"
+    @optionClicked="optionClicked"
+    @close="unselectEvent"
   />
 </template>
 
@@ -173,6 +175,10 @@ export default {
     }
   },
   methods: {
+    optionClicked (option) {
+      this.$emit('eventOptionClicked', { event: this.matchFCEventWithPropsEvents(this.selectedEvent), option: option })
+      this.unselectEvent()
+    },
     swipeLeft () {
       if (this.definitiveCalendarOptions.initialView === 'timeGridDay') {
         this.selectNextDay(this.displayDate)
