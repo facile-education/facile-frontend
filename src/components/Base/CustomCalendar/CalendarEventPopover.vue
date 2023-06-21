@@ -96,6 +96,9 @@ export default {
   },
   emits: ['close', 'editEvent', 'openRegistration', 'showStudentList', 'optionClicked'],
   computed: {
+    appEvent () {
+      return this.selectedEvent.event.extendedProps
+    },
     options () {
       return this.selectedEvent.event.extendedProps.options
     },
@@ -167,9 +170,12 @@ export default {
       }
       return label + (this.selectedEvent.event.extendedProps.subject ? ' - ' : '')
     },
+    inscriptionLeft () {
+      return this.appEvent.capacity - this.appEvent.nbRegisteredStudents
+    },
     formattedRoomAndPlaces () {
-      const isPlural = this.selectedEvent.event.extendedProps.inscriptionLeft > 1
-      return this.selectedEvent.event.extendedProps.room + (this.selectedEvent.event.extendedProps.inscriptionLeft ? (' - ' + this.selectedEvent.event.extendedProps.inscriptionLeft + ' ' + this.$t('NotUsualSlots.remainingPlaces') + (isPlural ? 's' : '') + ' ' + this.$t('NotUsualSlots.free') + (isPlural ? 's' : '')) : '')
+      const isPlural = this.inscriptionLeft > 1
+      return this.selectedEvent.event.extendedProps.room + (this.inscriptionLeft ? (' - ' + this.inscriptionLeft + ' ' + this.$t('NotUsualSlots.remainingPlaces') + (isPlural ? 's' : '') + ' ' + this.$t('NotUsualSlots.free') + (isPlural ? 's' : '')) : '')
     }
   },
   mounted () {

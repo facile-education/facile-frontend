@@ -10,21 +10,27 @@
       <span class="hours"> {{ formattedStartHour }} - {{ formattedEndHour }}</span>
     </div>
     <div
-      v-if="event.event.extendedProps.teachers"
+      v-if="appEvent.teachers"
       class="fc-event-teacher"
       :title="formattedTeachersLabel"
     >
       {{ formattedTeachersLabel }}
     </div>
-    <div class="fc-event-room">
-      {{ event.event.extendedProps.room }}
+    <div class="fc-event-capacity">
+      {{ formattedRoomAndPlacesLabel }}
+    </div>
+    <div
+      v-if="appEvent.nbRegisteredStudents === undefined"
+      class="fc-event-room"
+    >
+      {{ appEvent.room }}
     </div>
   </div>
 </template>
 
 <script>
 import dayjs from 'dayjs'
-import { getTeachersLabel } from '@utils/commons.util'
+import i18n from '@/i18n'
 
 export default {
   name: 'CalendarEvent',
@@ -35,6 +41,9 @@ export default {
     }
   },
   computed: {
+    appEvent () {
+      return this.event.event.extendedProps
+    },
     formattedStartHour () {
       return dayjs(this.event.event.start).format('HH:mm')
     },
@@ -42,7 +51,15 @@ export default {
       return dayjs(this.event.event.end).format('HH:mm')
     },
     formattedTeachersLabel () {
-      return getTeachersLabel(this.event.event.extendedProps.teachers)
+      let label = ''
+      this.appEvent.teachers.forEach(teacher => {
+        const name = teacher.firstName.substring(0, 1) + '. ' + teacher.lastName
+        label += (label === '') ? name : ', ' + name
+      })
+      return label
+    },
+    formattedRoomAndPlacesLabel () {
+      return this.appEvent.capacity !== undefined ? (i18n.global.t('NotUsualSlots.capacity') + (this.appEvent.capacity - this.appEvent.nbRegisteredStudents) + '/' + this.appEvent.capacity) : ''
     },
     cy () {
       return dayjs(this.event.event.start, 'YYYY-MM-DD HH:mm').format('MM-DD_HH:mm')
@@ -70,5 +87,9 @@ export default {
     font-weight: normal;
     font-size: 0.75rem;
   }
+}
+
+.fc-event-capacity {
+  font-style: italic;
 }
 </style>
