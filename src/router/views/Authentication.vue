@@ -162,7 +162,7 @@ export default {
   },
   created () {
     // Using fetch instead of axios to avoid intercept loop
-    fetch(constants.P_AUTH_URL).then(response => { if (response.status === 200) { response.text() } }).then(response => {
+    fetch(constants.P_AUTH_URL).then(response => { if (response.status === 200) { return response.text() } }).then(response => {
       if (response !== undefined) {
         this.p_auth = response
 
