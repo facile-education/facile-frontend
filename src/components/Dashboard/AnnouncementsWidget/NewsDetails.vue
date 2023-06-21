@@ -162,7 +162,7 @@ export default {
     },
     thumbnail () {
       if (defaultImagesKeys.indexOf(this.initNews.thumbnailUrl) !== -1) {
-        return require('@assets/images/' + this.initNews.thumbnailUrl + '.png')
+        return '/src/assets/images/' + this.initNews.thumbnailUrl + '.png'
       } else { // Returned url is a key for local default image
         return this.initNews.thumbnailUrl
       }

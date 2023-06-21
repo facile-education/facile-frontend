@@ -34,14 +34,14 @@
           class="entry"
           @click="closeMenu"
         >
-          <img :src="'/nero/img/menu/' + entry.icon">
+          <img :src="'/img/menu/' + entry.icon">
           <span v-t="'Menu.' + entry.i18nKey" />
           <div class="notification" />
           <div class="toggle" />
         </RouterLink>
         <template v-else>
           <div class="entry">
-            <img :src="'/nero/img/menu/' + entry.icon">
+            <img :src="'/img/menu/' + entry.icon">
             <span v-t="'Menu.' + entry.i18nKey" />
             <div class="notification">
               n

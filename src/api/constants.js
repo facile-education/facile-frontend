@@ -7,8 +7,7 @@ const MINDMAP_TYPE = 'mind'
 const GEOGEBRA_TYPE = 'ggb'
 const SCRATCH_TYPE = 'sb3'
 
-// TODO DYNAMIC
-const BASE_API_URL = ''
+const BASE_API_URL = import.meta.env.VITE_BASE_API_URL
 
 const JSON_WS_URL = BASE_API_URL + '/api/jsonws'
 

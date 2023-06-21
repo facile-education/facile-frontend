@@ -47,11 +47,11 @@ export default {
 <style lang="scss">
 // Normalize default styles across browsers,
 // https://necolas.github.io/normalize.css/
-@import '~normalize.css/normalize.css';
+@import '@modules/normalize.css/normalize.css';
 
 // Pentila components library
-@import '~pentila-components/dist/nero-theme.css';
-@import '~pentila-components/dist/pentila-components.css';
+@import '@modules/pentila-components/dist/nero-theme.css';
+@import '@modules/pentila-components/dist/pentila-components.css';
 
 // Design variables and utilities from src/design.
 @import '@/design';

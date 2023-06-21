@@ -145,7 +145,7 @@ export default {
   },
   data () {
     return {
-      formUrl: '/home?p_p_id=com_liferay_login_web_portlet_LoginPortlet&p_p_lifecycle=1&p_p_state=exclusive&p_p_mode=view&_com_liferay_login_web_portlet_LoginPortlet_javax.portlet.action=/login/login&_com_liferay_login_web_portlet_LoginPortlet_mvcRenderCommandName=/login/login',
+      formUrl: constants.BASE_API_URL + '/home?p_p_id=com_liferay_login_web_portlet_LoginPortlet&p_p_lifecycle=1&p_p_state=exclusive&p_p_mode=view&_com_liferay_login_web_portlet_LoginPortlet_javax.portlet.action=/login/login&_com_liferay_login_web_portlet_LoginPortlet_mvcRenderCommandName=/login/login',
       login: '',
       password: '',
       p_auth: '',
@@ -156,27 +156,27 @@ export default {
       showForgotPassword: false,
       showPasswordRecoveryForm: false,
       recoveryLogin: '',
-      passwordRecoveryUrl: '/home?p_p_id=com_liferay_login_web_portlet_LoginPortlet&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&_com_liferay_login_web_portlet_LoginPortlet_javax.portlet.action=/login/forgot_password&_com_liferay_login_web_portlet_LoginPortlet_mvcRenderCommandName=/login/forgot_password',
+      passwordRecoveryUrl: constants.BASE_API_URL + '/home?p_p_id=com_liferay_login_web_portlet_LoginPortlet&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&_com_liferay_login_web_portlet_LoginPortlet_javax.portlet.action=/login/forgot_password&_com_liferay_login_web_portlet_LoginPortlet_mvcRenderCommandName=/login/forgot_password',
       checkEmail: false
     }
   },
-  computed: {
-  },
   created () {
     // Using fetch instead of axios to avoid intercept loop
-    fetch(constants.P_AUTH_URL).then(response => response.text()).then(response => {
-      this.p_auth = response
+    fetch(constants.P_AUTH_URL).then(response => { if (response.status === 200) { response.text() } }).then(response => {
+      if (response !== undefined) {
+        this.p_auth = response
 
-      // Check if already authenticated
-      fetch(constants.JSON_WS_URL + USER_PATH + GET_USER_INFOS_WS + '?p_auth=' + this.p_auth).then(response => {
-        if (response.status === 200) {
-          if (this.redirect) {
-            this.$router.push(this.redirect)
-          } else {
-            this.$router.push(DASHBOARD)
+        // Check if already authenticated
+        fetch(constants.JSON_WS_URL + USER_PATH + GET_USER_INFOS_WS + '?p_auth=' + this.p_auth).then(response => {
+          if (response.status === 200) {
+            if (this.redirect) {
+              this.$router.push(this.redirect)
+            } else {
+              this.$router.push(DASHBOARD)
+            }
           }
-        }
-      })
+        })
+      }
     })
   },
   methods: {
