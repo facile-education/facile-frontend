@@ -119,7 +119,7 @@ export default {
             slotMaxTime: '17:55'
           }
         },
-        events: this.events.map(slot => this.formatCalendarSlot(slot))
+        events: this.formattedEvents
       }
     },
     definitiveCalendarOptions () { // Include and override default options by custom props options
@@ -136,6 +136,13 @@ export default {
       }
 
       return definitiveOptions
+    },
+    formattedEvents () {
+      const formattedEvents = [...this.events]
+      for (let i = 0; i < formattedEvents.length; i++) {
+        formattedEvents[i] = this.formatCalendarSlot(formattedEvents[i], i)
+      }
+      return formattedEvents
     },
     hiddenDays () {
       const hiddenDays = []
@@ -196,9 +203,9 @@ export default {
         this.$emit('selectDate', newDate.toDate())
       }
     },
-    formatCalendarSlot (slot) {
+    formatCalendarSlot (slot, eventPosition) {
       return {
-        extendedProps: slot,
+        extendedProps: { ...slot, ...{ eventPosition: eventPosition } },
         title: slot.title || slot.groupName,
         start: dayjs(slot.startDate, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DDTHH:mm'),
         end: dayjs(slot.endDate, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DDTHH:mm'),
@@ -233,11 +240,11 @@ export default {
       }
     },
     matchFCEventWithPropsEvents (event) {
-      const eventId = event.event.extendedProps.sessionId
-      const index = this.events.map(event => event.sessionId).indexOf(eventId)
-      if (index !== -1) {
-        return this.events[index]
+      // Do not only based on sessionId because some views can display two times the same slot session (like in HHC when we select user registered in existing HHC)
+      if (event.event.extendedProps.sessionId === this.events[event.event.extendedProps.eventPosition].sessionId) {
+        return this.events[event.event.extendedProps.eventPosition]
       } else {
+        console.error('Cannot match props event with the clicked calendar event', event, this.events)
         return undefined
       }
     },
