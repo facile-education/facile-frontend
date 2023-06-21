@@ -39,12 +39,11 @@
 </template>
 
 <script>
-
-import dayjs from 'dayjs'
-import FullCalendar from '@fullcalendar/vue3'
 import frLocale from '@fullcalendar/core/locales/fr'
 import timeGridPlugin from '@fullcalendar/timegrid'
+import FullCalendar from '@fullcalendar/vue3'
 import { getTeachersLabel } from '@utils/commons.util'
+import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 const FCEvent = defineAsyncComponent(() => import('@/components/Horaires/FCEvent'))
 
