@@ -70,9 +70,9 @@
 </template>
 
 <script>
-
 import NeroIcon from '@components/Nero/NeroIcon.vue'
 import { defineAsyncComponent } from 'vue'
+
 import { defaultImagesKeys } from '@/constants/icons'
 const SaveAccessModal = defineAsyncComponent(() => import('@components/Accesses/AccessManager/SaveAccessModal.vue'))
 
@@ -114,7 +114,7 @@ export default {
     },
     thumbnail () {
       if (defaultImagesKeys.indexOf(this.access.thumbnailUrl) !== -1) {
-        return require('@assets/images/' + this.access.thumbnailUrl + '.png')
+        return '/src/assets/images/' + this.access.thumbnailUrl + '.png'
       } else { // Returned url is a key for local default image
         return this.access.thumbnailUrl
       }
