@@ -103,11 +103,11 @@
 <script>
 import BaseIcon from '@components/Base/BaseIcon.vue'
 import { isInViewport } from '@utils/commons.util'
-import { defaultImagesKeys } from '@/constants/icons'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
 import { deleteNews, setNewsRead } from '@/api/dashboard/news.service'
+import { defaultImagesKeys } from '@/constants/icons'
 const SaveNewsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/SaveNewsModal.vue'))
 const NewsActivityDetailsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/NewsDetailsModal.vue'))
 
@@ -152,7 +152,7 @@ export default {
     },
     thumbnail () {
       if (defaultImagesKeys.indexOf(this.announcement.thumbnailUrl) !== -1) {
-        return require('@assets/images/' + this.announcement.thumbnailUrl + '.png')
+        return '/src/assets/images/' + this.announcement.thumbnailUrl + '.png'
       } else { // Returned url is a key for local default image
         return this.announcement.thumbnailUrl
       }

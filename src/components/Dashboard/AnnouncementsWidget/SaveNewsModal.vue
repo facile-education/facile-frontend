@@ -232,7 +232,7 @@ export default {
   computed: {
     thumbnail () {
       if (defaultImagesKeys.indexOf(this.thumbnailUrl) !== -1) {
-        return require('@assets/images/' + this.thumbnailUrl + '.png')
+        return '/src/assets/images/' + this.thumbnailUrl + '.png'
       } else { // Returned url is a key for local default image
         return this.thumbnailUrl
       }

@@ -56,9 +56,8 @@
       </a>
     </li>
     <li>
-      <!-- TODO dynamic url -->
       <a
-        href="/c/portal/logout"
+        :href="logoutUrl"
         class="logout"
         data-test="logout"
         title="Déconnexion"
@@ -87,6 +86,7 @@
 <script>
 import { defineAsyncComponent } from 'vue'
 
+import constants from '@/api/constants'
 import NeroIcon from '@/components/Nero/NeroIcon'
 
 const AssistanceModal = defineAsyncComponent(() => import('@/components/Assistance/AssistanceModal.vue'))
@@ -103,6 +103,7 @@ export default {
   },
   data () {
     return {
+      logoutUrl: constants.LOGOUT_URL,
       supportModalType: '',
       isInformationsModalDisplayed: false,
       isPreferencesDisplayed: false,

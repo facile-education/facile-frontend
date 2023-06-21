@@ -7,21 +7,13 @@ import camelCase from 'lodash/camelCase'
 const modulesCache = {}
 const storeData = { modules: {} }
 
-;(function updateModules () {
+; (function updateModules () {
   // Allow us to dynamically require all Vuex module files.
-  // https://webpack.js.org/guides/dependency-management/#require-context
-  const requireModule = require.context(
-    // Search for files in the current directory.
-    '.',
-    // Search for files in subdirectories.
-    true,
-    // Include any .js files that are not this file or a unit test.
-    /^((?!index|\.unit\.).)*\.js$/
-  )
+  const requireModule = import.meta.glob('./*.store.js', { eager: true })
 
   // For every Vuex module...
-  requireModule.keys().forEach((fileName) => {
-    const moduleDefinition = requireModule(fileName)
+  for (const fileName in requireModule) {
+    const moduleDefinition = requireModule[fileName]
 
     // Skip the module during hot reload if it refers to the
     // same module definition as the one we have cached.
@@ -52,17 +44,6 @@ const storeData = { modules: {} }
       namespaced: true,
       ...moduleDefinition
     }
-  })
-
-  // If the environment supports hot reloading...
-  if (module.hot) {
-    // Whenever any Vuex module is updated...
-    module.hot.accept(requireModule.id, () => {
-      // Update `storeData.modules` with the latest definitions.
-      updateModules()
-      // Trigger a hot update in the store.
-      require('../index').default.hotUpdate({ modules: storeData.modules })
-    })
   }
 })()
 
@@ -79,4 +60,6 @@ function getNamespace (subtree, path) {
   return getNamespace(subtree.modules[namespace], path)
 }
 
-export default storeData.modules
+const modules = storeData.modules
+
+export { modules }

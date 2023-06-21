@@ -171,21 +171,6 @@ export default {
 
 <i18n locale="fr">
 {
-  "TYPE_FILE_CREATION": "a partagé le fichier ",
-  "TYPE_FILE_MODIFICATION": "a modifié le fichier ",
-  "TYPE_FILE_MOVE": "a déplacé le fichier ",
-  "TYPE_FILE_DELETION": "a supprimé le fichier {target}",
-  "TYPE_FOLDER_CREATION": "a partagé le dossier ",
-  "TYPE_FOLDER_MODIFICATION": "a renommé le dossier ",
-  "TYPE_FOLDER_MOVE": "a déplacé le dossier ",
-  "TYPE_FOLDER_DELETION": "a supprimé le dossier {target}",
-  "TYPE_ADD_MEMBERSHIP": "a inscrit <b>{target}</b> dans l'espace",
-  "TYPE_REMOVE_MEMBERSHIP": "a supprimé <b>{target}</b> de l'espace",
-  "TYPE_PENDING_RENVOI": "a renvoyé (pending) <b>{target}</b>",
-  "TYPE_SCHOOL_RENVOI": "a renvoyé <b>{target}</b>",
-  "TYPE_NEWS": "a diffusé {target}",
-  "TYPE_HOMEWORK": "a donné un devoir à <b>{target}</b>",
-  "TYPE_SESSION": "a renseigné le contenu de la séance <b>{target}</b>",
   "Unknown" : "Activité inconnue",
   "all": "tous",
   "students": "élèves"

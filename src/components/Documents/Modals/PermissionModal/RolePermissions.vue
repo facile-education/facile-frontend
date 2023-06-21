@@ -10,7 +10,7 @@
         :model-value="role.VIEW"
         :disabled="!role.editable"
         :label="''"
-        @update:modelValue="updateMatrix($event, 'VIEW')"
+        @update:model-value="updateMatrix($event, 'VIEW')"
       />
     </div>
 
@@ -23,7 +23,7 @@
         :model-value="role.ADD_OBJECT"
         :disabled="!role.editable"
         :label="''"
-        @update:modelValue="updateMatrix($event, 'ADD_OBJECT')"
+        @update:model-value="updateMatrix($event, 'ADD_OBJECT')"
       />
     </div>
 
@@ -36,7 +36,7 @@
         :model-value="role.UPDATE"
         :disabled="!role.editable"
         :label="''"
-        @update:modelValue="updateMatrix($event, 'UPDATE')"
+        @update:model-value="updateMatrix($event, 'UPDATE')"
       />
     </div>
 
@@ -46,7 +46,7 @@
         :model-value="role.DELETE"
         :disabled="!role.editable"
         :label="''"
-        @update:modelValue="updateMatrix($event, 'DELETE')"
+        @update:model-value="updateMatrix($event, 'DELETE')"
       />
     </div>
 
@@ -56,7 +56,7 @@
         :model-value="role.PERMISSIONS"
         :disabled="!role.editable"
         :label="''"
-        @update:modelValue="updateMatrix($event, 'PERMISSIONS')"
+        @update:model-value="updateMatrix($event, 'PERMISSIONS')"
       />
     </div>
   </div>
@@ -119,7 +119,7 @@ export default {
   "Assistanttechnique": "Assistant·e technique",
   "Caissiercomptable": "Caissier·ère comptable",
   "Conseillersocial": "Conseiller·ère social·e",
-  "Conseillerd\'orientation": "Conseiller·ère d'orientation",
+  "Conseillerd'orientation": "Conseiller·ère d'orientation",
   "Doyen": "Doyen·ne",
   "Infirmiere": "Infirmier·ère",
   "Bibliothecaire": "Bibliothécaire",

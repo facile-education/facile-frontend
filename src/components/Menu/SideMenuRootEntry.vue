@@ -15,7 +15,7 @@
         class="entry link"
       >
         <img
-          :src="'/nero/img/menu/' + entry.icon"
+          :src="'/img/menu/' + entry.icon"
           class="menu-icon"
         >
         <span
@@ -35,7 +35,7 @@
         @click="toggleSubMenu"
       >
         <img
-          :src="'/nero/img/menu/' + entry.icon"
+          :src="'/img/menu/' + entry.icon"
           class="menu-icon"
         >
         <span

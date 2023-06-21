@@ -29,7 +29,7 @@ const app = createApp(App)
   })
   .use(Vue3TouchEvents)
   .use(VueMatomo, {
-    host: 'https://dev-ent-gve.com/matomo',
+    host: '/matomo',
     siteId: 1,
     router: router,
     requireConsent: false,
