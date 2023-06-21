@@ -3,6 +3,7 @@
     class="hhc-activity"
     :class="{'pending': isPendingFiring}"
     :tabindex="isPendingFiring ? 0 : -1"
+    :title="description"
     @click="redirect"
     @keyup.enter="redirect"
   >
@@ -61,9 +62,9 @@ export default {
     description () {
       switch (this.activity.type) {
         case activityConstants.TYPE_PENDING_RENVOI:
-          return this.$t('TYPE_PENDING_RENVOI', { firedUser: this.activity.target, courseName: this.activity.groupName, courseDate: this.activity.sessionDate })
+          return this.$t('TYPE_PENDING_RENVOI', { firedUser: this.activity.target, courseName: this.activity.sessionName, courseDate: this.formatDate(this.activity.sessionDate) })
         case activityConstants.TYPE_SCHOOL_RENVOI:
-          return this.$t('TYPE_SCHOOL_RENVOI', { firedUser: this.activity.target, courseName: this.activity.groupName, courseDate: this.activity.sessionDate })
+          return this.$t('TYPE_SCHOOL_RENVOI', { firedUser: this.activity.target, courseName: this.activity.sessionName, courseDate: this.formatDate(this.activity.sessionDate) })
         default:
           return 'Unknown activity type'
       }
@@ -74,6 +75,9 @@ export default {
       if (this.isPendingFiring) {
         this.$router.push({ name: SCHOOL_LIFE })
       }
+    },
+    formatDate (date) {
+      return dayjs(date, 'YYYY-MM-DD HH:mm').format(' DD MMMM YYYY ' + this.$t('at') + ' HH:mm')
     }
   }
 }
@@ -87,6 +91,10 @@ export default {
 
   &.pending {
     cursor: pointer;
+    &:hover, &:focus-within {
+      border: 2px solid black;
+      border-radius: 5px;
+    }
   }
 }
 
@@ -99,6 +107,7 @@ export default {
 {
   "TYPE_SCHOOL_RENVOI": "a renvoyé {firedUser} du cours de {courseName} du {courseDate}",
   "TYPE_PENDING_RENVOI": "Pensez à motiver le renvoi de {firedUser} du cours de {courseName} du {courseDate}",
-  "setFiringReason": "Motivation de renvoi"
+  "setFiringReason": "Motivation de renvoi",
+  "at": "à"
 }
 </i18n>
