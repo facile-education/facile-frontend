@@ -1,4 +1,3 @@
-import { getTeacherGroups, getUserSessions } from '@/api/schedule.service'
 import { getSchoolVoleeList } from '@/api/organization.service'
 import {
   addFolder,
@@ -6,6 +5,7 @@ import {
   getItemContents, getProgressionContent, getProgressionList, saveHomeworkSpecificItem,
   saveSessionSpecificItem, updateFolder, updateItem, updateItemContent, updateProgression
 } from '@/api/progression.service'
+import { getTeacherGroups, getUserSessions } from '@/api/schedule.service'
 import { getSubjects } from '@/api/userManagement.service'
 
 export const helperMethods = {

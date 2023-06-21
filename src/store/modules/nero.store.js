@@ -1,7 +1,7 @@
 import neroService from '@/api/nero.service'
 import { updateSideMenuState } from '@/api/user.service'
-import router from '@/router'
 import i18n from '@/i18n'
+import router from '@/router'
 
 function getRoute (entry) {
   return {

@@ -44,10 +44,10 @@
 </template>
 
 <script>
+import SelectFilesButtons from '@components/FilePicker/SelectFilesButtons.vue'
 import { importDocuments } from '@utils/documents.util'
 import { alertNoFile, returnAddedFiles } from '@utils/upload.util'
 import { defineAsyncComponent } from 'vue'
-import SelectFilesButtons from '@components/FilePicker/SelectFilesButtons.vue'
 const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal.vue'))
 const AttachedFile = defineAsyncComponent(() => import('@components/AttachedFiles/AttachedFile.vue'))
 

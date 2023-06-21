@@ -86,6 +86,7 @@ import validators from '@utils/validators'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import { nextTick } from 'vue'
+
 import { defaultImagesKeys } from '@/constants/icons'
 
 const inputMaxSize = 75
