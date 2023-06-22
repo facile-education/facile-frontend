@@ -6,19 +6,18 @@
       :selected-date="selectedDate"
       @selectDate="onSelectDate"
     />
-    <template v-if="configuration">
-      <Timeline
-        v-if="!mq.phone"
-        @selectWeek="onSelectWeek"
-      />
 
-      <CustomCalendar
-        :display-date="selectedDate"
-        :events="eventList"
-        @selectDate="onSelectDate"
-        @eventOptionClicked="handleEventOption"
-      />
-    </template>
+    <Timeline
+      v-if="!mq.phone"
+      @selectWeek="onSelectWeek"
+    />
+
+    <CustomCalendar
+      :display-date="selectedDate"
+      :events="eventList"
+      @selectDate="onSelectDate"
+      @eventOptionClicked="handleEventOption"
+    />
 
     <PentilaSpinner v-if="isLoading" />
 
@@ -66,17 +65,12 @@ export default {
   inject: ['mq'],
   data () {
     return {
-      isEditModalDisplayed: false,
-      // pan: -320,
-      pan: 0,
       selectedDate: dayjs(),
-      updatedSession: undefined
+      updatedSession: undefined,
+      isEditModalDisplayed: false
     }
   },
   computed: {
-    configuration () {
-      return this.$store.state.calendar.configuration
-    },
     eventList () {
       return this.$store.state.horaires.sessionList
     },
@@ -85,14 +79,6 @@ export default {
     },
     isLoading () {
       return this.$store.state.horaires.isLoading
-    }
-  },
-  created () {
-    if (this.configuration === undefined) {
-      this.$store.dispatch('calendar/getConfiguration')
-      if (this.mq.phone) {
-        this.onSelectDate(new Date())
-      }
     }
   },
   methods: {
@@ -140,33 +126,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.swipe-container {
-  overflow-x: hidden;
-  height: max(800px, calc(100% - 125px));
-}
-
-.swipe-wrapper {
-  transition-duration: 320ms;
-  height: 100%;
-  display: flex;
-  transition-property: transform;
-  width: 100%
-}
-
-.calendar {
-  transition-property: transform;
-  position: relative;
-  flex-shrink: 0;
-  width: 100%;
-}
-
 .v-spinner {
   z-index: 1;
 }
-</style>
-
-<style lang="scss">
-@import 'src/design/fullcalendar';
 </style>
 
 <i18n locale="fr">
