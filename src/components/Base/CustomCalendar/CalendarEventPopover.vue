@@ -28,11 +28,13 @@
         :style="`background-color:${selectedEvent.event.backgroundColor};`"
         class="theme-background-color"
       >
-        <h4>
-          {{ selectedEvent.event.title }}
+        <div class="sub-header">
+          <h4>
+            {{ selectedEvent.event.title }}
+          </h4>
           <ul class="options">
             <li
-              v-for="option in options"
+              v-for="option in appEvent.options"
               :key="option.name"
             >
               <button
@@ -47,7 +49,7 @@
               </button>
             </li>
           </ul>
-        </h4>
+        </div>
       </header>
       <div class="slot-content">
         <div>
@@ -80,8 +82,7 @@
 
 <script>
 import dayjs from 'dayjs'
-import { isEditableSlot } from '@utils/notUsualSlot.util'
-import notUsualSlotsConstants from '@/constants/notUsualSlots'
+
 import NeroIcon from '@/components/Nero/NeroIcon'
 
 export default {
@@ -94,45 +95,10 @@ export default {
       required: true
     }
   },
-  emits: ['close', 'editEvent', 'openRegistration', 'showStudentList', 'optionClicked'],
+  emits: ['close', 'optionClicked'],
   computed: {
     appEvent () {
       return this.selectedEvent.event.extendedProps
-    },
-    options () {
-      return this.selectedEvent.event.extendedProps.options
-    },
-    queriedUser () {
-      return this.$store.state.notUsualSlots.queriedUser
-    },
-    currentUser () {
-      return this.$store.state.user
-    },
-    isAlreadyRegister () {
-      // Search if this slot already exist in userSlots
-      return this.$store.state.notUsualSlots.userSlots.find(userSlot => userSlot.schoollifeSessionId === this.selectedEvent.event.extendedProps.id)
-    },
-    selectedClass () {
-      return this.$store.state.notUsualSlots.selectedClass
-    },
-    slotType () {
-      return notUsualSlotsConstants.getSlotTypeByNumber(this.selectedEvent.event.extendedProps.type)
-    },
-    isEditableEvent () {
-      return isEditableSlot(this.selectedEvent.event)
-    },
-    isRegistration () {
-      let isAllowed = true
-      if (this.slotType !== undefined && this.slotType.type === notUsualSlotsConstants.tutoringType) {
-        isAllowed = this.selectedEvent.event.extendedProps.teacher.teacherId === this.currentUser.userId // Only the slot's teacher can register tutoring
-      } else if (this.slotType !== undefined && this.slotType.type === notUsualSlotsConstants.firedType) {
-        // Only direction, secretaires, doyens and slot's teacher can fire student
-        isAllowed = this.currentUser.isDirectionMember ||
-          this.currentUser.isSecretariat || this.currentUser.isDoyen ||
-          (this.selectedEvent.event.extendedProps.teacher.teacherId === this.currentUser.userId)
-      }
-      return this.isEditableEvent && (this.queriedUser || this.selectedClass.orgId > 0) &&
-        !this.isAlreadyRegister && this.selectedEvent.event.extendedProps.inscriptionLeft > 0 && isAllowed
     },
     isPopupTop () {
       return this.mq.phone
@@ -159,23 +125,18 @@ export default {
     },
     formattedTeacherName () {
       let label = ''
-      if (this.selectedEvent.event.extendedProps.teachers) {
-        const teachers = this.selectedEvent.event.extendedProps.teachers
-        for (let index = 0; index < teachers.length; ++index) {
-          const name = teachers[index].firstName + ' ' + teachers[index].lastName
-          label += (label === '') ? name : ', ' + name
-        }
-      } else {
-        label = this.selectedEvent.event.extendedProps.teacher.lastName + ' ' + this.selectedEvent.event.extendedProps.teacher.firstName
-      }
-      return label + (this.selectedEvent.event.extendedProps.subject ? ' - ' : '')
+      this.appEvent.teachers.forEach(teacher => {
+        const name = teacher.firstName.substring(0, 1) + '. ' + teacher.lastName
+        label += (label === '') ? name : ', ' + name
+      })
+      return label + (this.appEvent.subject ? ' - ' : '')
     },
     inscriptionLeft () {
       return this.appEvent.capacity - this.appEvent.nbRegisteredStudents
     },
     formattedRoomAndPlaces () {
       const isPlural = this.inscriptionLeft > 1
-      return this.selectedEvent.event.extendedProps.room + (this.inscriptionLeft ? (' - ' + this.inscriptionLeft + ' ' + this.$t('NotUsualSlots.remainingPlaces') + (isPlural ? 's' : '') + ' ' + this.$t('NotUsualSlots.free') + (isPlural ? 's' : '')) : '')
+      return this.appEvent.room + (this.inscriptionLeft ? (' - ' + this.inscriptionLeft + ' ' + this.$t('NotUsualSlots.remainingPlaces') + (isPlural ? 's' : '') + ' ' + this.$t('NotUsualSlots.free') + (isPlural ? 's' : '')) : '')
     }
   },
   mounted () {
@@ -190,18 +151,6 @@ export default {
       if (self.$el && !self.$el.contains(e.target)) {
         this.$emit('close')
       }
-    },
-    openEditModal () {
-      this.$emit('editEvent', this.selectedEvent.event)
-      this.$emit('close')
-    },
-    openRegistration () {
-      this.$emit('openRegistration', this.selectedEvent.event)
-      this.$emit('close')
-    },
-    showStudentList () {
-      this.$emit('showStudentList', this.selectedEvent.event)
-      this.$emit('close')
     }
   }
 }
@@ -251,17 +200,20 @@ export default {
     font-size: 1.5rem;
   }
 
-  h4 {
+  .sub-header {
     background: #FFFFFFBB;
     color: #333;
-    margin-top: 0;
-    margin-bottom: .2rem;
     padding: 5px;
     display: flex;
 
     .svg-inline--fa {
       margin: 0 5px;
       cursor: pointer;
+    }
+
+    h4 {
+      margin-top: 0;
+      margin-bottom: .2rem;
     }
 
     ul {

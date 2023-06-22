@@ -1,57 +1,19 @@
 <template>
   <div class="main">
     <p>Horaires</p>
-    <div
-      v-if="mq.phone"
-      v-touch:swipe.left="onSwipeLeft"
-      v-touch:swipe.right="onSwipeRight"
-      class="swipe-container"
-    >
-      <div
-        class="swipe-wrapper"
-        :style="`transform: translate3d(${pan}px, 0px, 0px);`"
-      >
-        <FullCalendar
-          ref="fullCalendar"
-          class="calendar"
-          :options="calendarOptions"
-        >
-          <template #eventContent="arg">
-            <FCEvent
-              :arg="arg"
-            />
-          </template>
-        </FullCalendar>
-      </div>
-    </div>
-    <FullCalendar
-      v-else
-      ref="fullCalendar"
-      :options="calendarOptions"
-    >
-      <template #eventContent="arg">
-        <FCEvent
-          :arg="arg"
-        />
-      </template>
-    </FullCalendar>
+
   </div>
 </template>
 
 <script>
 import frLocale from '@fullcalendar/core/locales/fr'
 import timeGridPlugin from '@fullcalendar/timegrid'
-import FullCalendar from '@fullcalendar/vue3'
 import { getTeachersLabel } from '@utils/commons.util'
 import dayjs from 'dayjs'
-import { defineAsyncComponent } from 'vue'
-const FCEvent = defineAsyncComponent(() => import('@/components/Horaires/FCEvent'))
 
 export default {
   name: 'DailySchedule',
   components: {
-    FCEvent,
-    FullCalendar
   },
   inject: ['mq'],
   data () {
