@@ -25,7 +25,7 @@
         <Pellet
           v-if="getNbNewItems(entry) > 0 && expanded"
           class="menu-pellet"
-          :count="getNbNewItems(entry)"
+          :count="getNbNewItemsStr(entry)"
           :show-count="true"
         />
         <div
@@ -145,6 +145,13 @@ export default {
         return this.$store.state.nero.notifications.schoollife
       }
       return 0
+    },
+    getNbNewItemsStr (entry) {
+      const nbNewItems = this.getNbNewItems(entry)
+      if (nbNewItems > 99) {
+        return '99+'
+      }
+      return nbNewItems
     }
   }
 }
