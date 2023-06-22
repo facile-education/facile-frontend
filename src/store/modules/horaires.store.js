@@ -1,5 +1,5 @@
-import scheduleService from '@/api/schedule.service'
 import groupService from '@/api/groups.service'
+import scheduleService from '@/api/schedule.service'
 import i18n from '@/i18n'
 
 const defaultGroup = { groupId: 0, groupName: 'Groupe' }
@@ -148,21 +148,5 @@ export const actions = {
   },
   setCreateSessionModalDisplayed ({ commit }, isDisplayed) {
     commit('setCreateSessionModalDisplayed', isDisplayed)
-  },
-  getConfiguration ({ commit, dispatch }) {
-    scheduleService.getConfiguration().then(
-      (data) => {
-        if (data.success) {
-          commit('setConfiguration', data.configuration)
-          commit('setDates', { startDate: data.startDate, endDate: data.endDate })
-        } else {
-          console.error('Cannot get cdt config')
-        }
-      },
-      (err) => {
-        // TODO toastr
-        console.error(err)
-      }
-    )
   }
 }

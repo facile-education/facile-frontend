@@ -117,8 +117,8 @@ export default {
             hiddenDays: this.hiddenDays,
             nowIndicator: true,
             slotDuration: '01:00:00',
-            slotMinTime: '07:55', // TODO: get from backend
-            slotMaxTime: '17:55'
+            slotMinTime: this.configuration.startDayTime,
+            slotMaxTime: this.configuration.endDayTime
           }
         },
         events: this.formattedEvents
@@ -149,7 +149,7 @@ export default {
     hiddenDays () {
       const hiddenDays = []
       let dayNumber
-      const schoolDays = [1, 2, 3, 4, 5] // TODO: to get from backend
+      const schoolDays = this.configuration.schoolDays
       for (dayNumber = 0; dayNumber <= 6; ++dayNumber) {
         if (schoolDays.indexOf(dayNumber) === -1) {
           hiddenDays.push(dayNumber)
@@ -192,7 +192,7 @@ export default {
     selectPreviousDay (date) {
       const newDate = date.subtract(1, 'day')
       // Skip hidden days
-      const schoolDays = [1, 2, 3, 4, 5] // TODO: to get from backend
+      const schoolDays = this.configuration.schoolDays
       if (schoolDays.indexOf(newDate.day()) === -1) {
         this.selectPreviousDay(newDate)
       } else {
@@ -202,7 +202,7 @@ export default {
     selectNextDay (date) {
       const newDate = date.add(1, 'day')
       // Skip hidden days
-      const schoolDays = [1, 2, 3, 4, 5] // TODO: to get from backend
+      const schoolDays = this.configuration.schoolDays
       if (schoolDays.indexOf(newDate.day()) === -1) {
         this.selectNextDay(newDate)
       } else {
