@@ -105,6 +105,7 @@ import StatsDoughnut from '@components/Statistics/StatsDoughnut'
 import VisitsChart from '@components/Statistics/VisitsChart'
 import dayjs from 'dayjs'
 
+import { getGlobalConfiguration } from '@/api/schedule.service'
 import NeroToolbar from '@/components/Nero/NeroToolbar'
 import Layout from '@/router/layouts/BannerLayout'
 
@@ -116,7 +117,8 @@ export default {
     return {
       allSchools: { schoolName: this.$t('allSchools'), schoolId: 0 },
       selectedStartDate: dayjs().subtract(7, 'days'),
-      selectedEndDate: dayjs()
+      selectedEndDate: dayjs(),
+      globalScheduleConfiguration: undefined
     }
   },
   computed: {
@@ -142,7 +144,7 @@ export default {
       return dayjs().toDate()
     },
     minDate () {
-      return this.$store.state.horaires.configuration.startDateProject ? dayjs(this.$store.state.horaires.configuration.startDateProject).toDate() : dayjs().subtract(2, 'year').toDate() // arbitrary min date
+      return this.globalScheduleConfiguration ? dayjs(this.globalScheduleConfiguration.startDateProject).toDate() : dayjs().subtract(2, 'year').toDate() // arbitrary min date
     }
   },
   created () {
@@ -150,14 +152,23 @@ export default {
       this.$store.dispatch('administration/getAdministrationSchools')
     }
 
-    if (!this.$store.state.horaires.configuration.isLoaded) {
-      this.$store.dispatch('horaires/getConfiguration')
-    }
+    this.getGlobalScheduleConfig()
   },
   methods: {
     updateDates (range) {
       this.selectedStartDate = dayjs(range.start)
       this.selectedEndDate = dayjs(range.end)
+    },
+    getGlobalScheduleConfig () {
+      getGlobalConfiguration().then((data) => {
+        if (data.success) {
+          this.globalScheduleConfiguration = data.configuration
+        } else {
+          console.error('Error')
+        }
+      }, (err) => {
+        console.error(err)
+      })
     }
   }
 }
