@@ -87,19 +87,6 @@ export default {
       return this.$store.state.horaires.isLoading
     }
   },
-  watch: {
-    mq: { // To correctly handle date and slots when we move from portrait to landscape
-      deep: true,
-      handler (value) {
-        if (!value.desktop) {
-          if (this.$refs.fullCalendar) {
-            const calendar = this.$refs.fullCalendar.getApi()
-            calendar.gotoDate(this.selectedDate.toDate())
-          }
-        }
-      }
-    }
-  },
   created () {
     if (this.configuration === undefined) {
       this.$store.dispatch('calendar/getConfiguration')
