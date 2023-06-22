@@ -36,8 +36,8 @@
 
 <script>
 
-import { defineAsyncComponent } from 'vue'
 import FilePickerButton from '@components/FilePicker/FilePickerButton.vue'
+import { defineAsyncComponent } from 'vue'
 const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal'))
 
 export default {

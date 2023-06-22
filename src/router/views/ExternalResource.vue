@@ -201,10 +201,9 @@ export default {
   "clickHereLabel": "cliquez ici",
   "noConfigLabel": "Aucun de vos établissements ne possède une configuration {resourceName}.",
   "contactLabel": "Vous pouvez signaler un incident en {0}.",
-  "newTabLabel": "<strong>{resourceName}</strong> a été ouvert dans un nouvel onglet.",
+  "newTabLabel": "{resourceName} a été ouvert dans un nouvel onglet.",
   "openAgainLabel": "Si vous ne le voyez pas, {0} pour l'ouvrir à nouveau.",
-  "popupIssueLabel": "Si le problème persiste, votre navigateur doit certainement bloquer les fenêtres surgissantes (pop-ups) ouvertes depuis l'ENT. Pour les autoriser, veuillez suivre la démarche indiquée dans l'onglet \"Autoriser les pop-ups\" de la fenêtre d'informations (accessible depuis le menu utilisateur sur la droite du bandeau <i class=\"fa fa-chevron-down\"></i>).",
+  "popupIssueLabel": "Si le problème persiste, votre navigateur doit certainement bloquer les fenêtres surgissantes (pop-ups) ouvertes depuis l'ENT. Pour les autoriser, veuillez suivre la démarche indiquée dans l'onglet \"Autoriser les pop-ups\" de la fenêtre d'informations (accessible depuis le menu utilisateur sur la droite du bandeau).",
   "openInTabLabel": "Vous pouvez également {0} pour ouvrir le service dans un nouvel onglet."
-
 }
 </i18n>

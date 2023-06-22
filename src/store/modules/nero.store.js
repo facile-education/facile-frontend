@@ -8,7 +8,7 @@ function getRoute (entry) {
     name: entry.i18nKey,
     path: `/${i18n.global.t('Menu.route.' + entry.i18nKey)}`, // localized path
     meta: { id: entry.id },
-    component: () => import(/* @vite-ignore */'/src/router/views/' + entry.component + '.vue')
+    component: () => import(`../../router/views/${entry.component}.vue`)
   }
 }
 

@@ -18,7 +18,7 @@
 <script>
 import { defineAsyncComponent } from 'vue'
 
-const NeroIcon = defineAsyncComponent(() => import('@/components/Nero/NeroIcon'))
+const NeroIcon = defineAsyncComponent(() => import('@components/Nero/NeroIcon'))
 
 export default {
   name: 'BannerItem',

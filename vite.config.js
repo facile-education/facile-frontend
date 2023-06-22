@@ -2,6 +2,7 @@ import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
 import legacy from '@vitejs/plugin-legacy'
 import vue from '@vitejs/plugin-vue'
 import { defineConfig } from 'vite'
+import dynamicImport from 'vite-plugin-dynamic-import'
 import vitePluginRequire from 'vite-plugin-require'
 
 const path = require('path')
@@ -31,7 +32,9 @@ export default defineConfig({
     }),
     legacy({
       targets: ['defaults', 'not IE 11', 'Firefox 52']
-    })
+    }),
+    /* For dynamic imports (ex. router) */
+    dynamicImport()
   ],
   resolve: {
     alias: {
