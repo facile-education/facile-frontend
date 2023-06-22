@@ -272,6 +272,10 @@ export default {
 }
 </script>
 
+<style lang="scss">
+@import 'src/design/fullcalendar';
+</style>
+
 <style lang="scss" scoped>
 .swipe-container {
   overflow-x: hidden;

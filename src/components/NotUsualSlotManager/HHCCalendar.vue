@@ -370,7 +370,3 @@ h3 {
   }
 }
 </style>
-
-<style lang="scss">
-@import 'src/design/fullcalendar';
-</style>
