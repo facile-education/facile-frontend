@@ -149,7 +149,7 @@ export default {
       }
     },
     configuration () {
-      return (this.$store.state.horaires.configuration.schoolDays.length > 0) ? this.$store.state.horaires.configuration : undefined
+      return (this.$store.state.calendar.configuration.schoolDays.length > 0) ? this.$store.state.calendar.configuration : undefined
     },
     eventList () {
       return this.$store.state.progression.sessionList
@@ -179,7 +179,7 @@ export default {
   },
   created () {
     if (this.configuration === undefined) {
-      this.$store.dispatch('horaires/getConfiguration')
+      this.$store.dispatch('calendar/getConfiguration')
       if (this.mq.phone) {
         this.onSelectDate(new Date())
       }
