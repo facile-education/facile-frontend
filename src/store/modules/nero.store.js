@@ -19,9 +19,9 @@ export const state = {
   menu: undefined,
   menuExpanded: undefined,
   notifications: {
-    // contacts: undefined,
-    messaging: undefined
-    // dropbox: undefined
+    messaging: 0,
+    courses: 0,
+    schoollife: 0
   },
   sessionTimeout: 900000, // 15 min, Liferay default
   sessionTimeoutWarning: 60000 // 1 min, Liferay default
@@ -34,6 +34,7 @@ export const mutations = {
     state.isMenuExpandedOnLoad = payload.expanded
     state.sessionTimeout = payload.sessionTimeout
     state.sessionTimeoutWarning = payload.sessionTimeoutWarning
+    state.notifications = payload.notifications
   },
   toggleMenu (state) {
     state.menuExpanded = !state.menuExpanded
@@ -43,6 +44,16 @@ export const mutations = {
   },
   updateActiveRoute (state, payload) {
     state.activeRoute = payload
+  },
+  updateMessagingNotification (state, payload) {
+    console.log('update mess with nbRead=', payload.nbRead)
+    state.notifications.messaging -= payload
+  },
+  updateCoursesNotification (state, payload) {
+    state.notifications.courses -= payload
+  },
+  updateSchoollifeNotification (state, payload) {
+    state.notifications.schoollife -= payload
   }
 }
 
@@ -60,7 +71,7 @@ export const actions = {
               })
             }
           })
-          commit('initSideMenu', { menu: data.menu, expanded: data.expanded, sessionTimeout: data.sessionTimeout, sessionTimeoutWarning: data.sessionTimeoutWarning })
+          commit('initSideMenu', { menu: data.menu, expanded: data.expanded, sessionTimeout: data.sessionTimeout, sessionTimeoutWarning: data.sessionTimeoutWarning, notifications: data.notifications })
         }
         // TODO else toastr
       },
@@ -78,6 +89,15 @@ export const actions = {
   },
   updateActiveRoute ({ commit }, service) {
     commit('updateActiveRoute', service)
+  },
+  updateMessagingNotification ({ commit }, nbRead) {
+    commit('updateMessagingNotification', nbRead)
+  },
+  updateCoursesNotification ({ commit }, nbRead) {
+    commit('updateCoursesNotification', nbRead)
+  },
+  updateSchoollifeNotification ({ commit }, nbRead) {
+    commit('updateSchoollifeNotification', nbRead)
   }
 }
 

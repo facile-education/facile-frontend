@@ -53,10 +53,10 @@
 <script>
 import FileIcon from '@components/Base/FileIcon.vue'
 import dayjs from 'dayjs'
-import { getExtensionFromName } from '@/utils/commons.util'
 
 import activityConstants from '@/constants/activityConstants'
 import { icons } from '@/constants/icons'
+import { getExtensionFromName } from '@/utils/commons.util'
 
 export default {
   name: 'DocActivity',
@@ -152,6 +152,8 @@ export default {
   "TYPE_FOLDER_MODIFICATION": "a renommé le dossier ",
   "TYPE_FOLDER_MOVE": "a déplacé le dossier ",
   "TYPE_FOLDER_DELETION": "a supprimé le dossier",
-  "inGroup": " dans l'espace "
+  "inGroup": " dans l'espace ",
+  "on": "Le",
+  "at": "à"
 }
 </i18n>

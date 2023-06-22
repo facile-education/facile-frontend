@@ -22,6 +22,16 @@
           v-if="expanded"
           v-t="'Menu.' + entry.i18nKey"
         />
+        <Pellet
+          v-if="getNbNewItems(entry) > 0 && expanded"
+          class="menu-pellet"
+          :count="getNbNewItems(entry)"
+          :show-count="true"
+        />
+        <div
+          v-if="getNbNewItems(entry) > 0 && !expanded"
+          class="unread theme-background-color icon"
+        />
       </RouterLink>
     </div>
     <div
@@ -53,12 +63,15 @@
 </template>
 
 <script>
+import Pellet from '@components/Base/Pellet.vue'
+
 import SideMenuCategory from '@/components/Menu/SideMenuCategory'
 
 export default {
   name: 'SideMenuRootEntry',
   components: {
-    SideMenuCategory
+    SideMenuCategory,
+    Pellet
   },
   props: {
     entry: {
@@ -120,6 +133,18 @@ export default {
       if (!this.expanded) {
         this.showSubMenu = (event.type === 'mouseover')
       }
+    },
+    getNbNewItems (entry) {
+      if (entry.i18nKey === 'messaging') {
+        return this.$store.state.nero.notifications.messaging
+      }
+      if (entry.i18nKey === 'courses') {
+        return this.$store.state.nero.notifications.courses
+      }
+      if (entry.i18nKey === 'horaires-hors-cadre') {
+        return this.$store.state.nero.notifications.schoollife
+      }
+      return 0
     }
   }
 }
@@ -201,5 +226,21 @@ export default {
   flex-grow: 0;
   flex-shrink: 0;
   transition: padding .5s;
+}
+
+.menu-pellet {
+  margin: auto;
+  margin-right: 10px;
+  height: 20px;
+  width: 20px;
+}
+
+.unread {
+  height: 0.75em;
+  width: 0.75em;
+  border-radius: 50%;
+  position: absolute;
+  margin-top: 5px;
+  margin-left: 25px;
 }
 </style>
