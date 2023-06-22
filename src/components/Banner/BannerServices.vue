@@ -2,15 +2,13 @@
   <div>
     <BannerItem
       :src="require('@/assets/icons/accesses.svg')"
+      :title="$t('accesses')"
       @click="openAccessModal"
-    />
-    <BannerItem
-      :src="require('@/assets/images/banner/icon-letter.svg')"
-      @click="redirect"
     />
     <BannerItem
       data-test="open-help-item"
       :src="require('@/assets/images/banner/icon-question.svg')"
+      :title="$t('help')"
       @click="openHelpModal"
     />
   </div>
@@ -18,7 +16,6 @@
 
 <script>
 import BannerItem from '@/components/Banner/BannerItem'
-import { MESSAGING } from '@/constants/appConstants'
 
 export default {
   name: 'BannerServices',
@@ -31,9 +28,6 @@ export default {
     },
     openHelpModal () {
       this.$store.dispatch('help/openHelpModal')
-    },
-    redirect () {
-      this.$router.push({ name: MESSAGING })
     }
   }
 }
@@ -44,3 +38,10 @@ div {
   display: flex;
 }
 </style>
+
+<i18n locale="fr">
+  {
+    "accesses": "Accès",
+    "help": "Aide",
+  }
+  </i18n>
