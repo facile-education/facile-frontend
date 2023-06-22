@@ -11,6 +11,7 @@
     >
       <FullCalendar
         ref="fullCalendar"
+        :key="calendarView"
         class="calendar"
         :options="definitiveCalendarOptions"
         @click.stop
@@ -87,11 +88,14 @@ export default {
     configuration () {
       return this.$store.state.calendar.configuration
     },
+    calendarView () {
+      return this.mq.phone ? 'timeGridDay' : 'timeGridWeek' // Use as component key to force it to re-render when view change
+    },
     defaultCalendarOptions () {
       return {
         locale: frLocale,
         plugins: [timeGridPlugin],
-        initialView: this.mq.phone ? 'timeGridDay' : 'timeGridWeek',
+        initialView: this.calendarView,
         // 110 is toolbar (50) + margin (15) + timeline (45)
         height: this.mq.phone ? '100%' : 'max(800px, calc(100% - 110px))',
         expandRows: true,
