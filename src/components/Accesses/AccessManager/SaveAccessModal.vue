@@ -141,7 +141,7 @@ export default {
   computed: {
     thumbnail () {
       if (defaultImagesKeys.indexOf(this.thumbnailUrl) !== -1) {
-        return require('@assets/images/' + this.thumbnailUrl + '.png')
+        return new URL(`../../../assets/images/${this.thumbnailUrl}.png`, import.meta.url).href
       } else { // Returned url is a key for local default image
         return this.thumbnailUrl
       }

@@ -152,7 +152,7 @@ export default {
     },
     thumbnail () {
       if (defaultImagesKeys.indexOf(this.announcement.thumbnailUrl) !== -1) {
-        return '/src/assets/images/' + this.announcement.thumbnailUrl + '.png'
+        return new URL(`../../../assets/images/${this.announcement.thumbnailUrl}.png`, import.meta.url).href
       } else { // Returned url is a key for local default image
         return this.announcement.thumbnailUrl
       }

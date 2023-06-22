@@ -16,7 +16,6 @@ export default {
   },
   created () {
     setMainColor(this.$store.state.theme.mainColor)
-    // this.$store.dispatch('auth/checkSession')
 
     // In case of iOS device add maximug scale to meta viewport to prevent zoom on input selection
     if (this.isIOS) {
