@@ -1,9 +1,10 @@
 import axios from 'axios'
-import constants from '@/api/constants'
 import PentilaUtils from 'pentila-utils'
 
+import constants from '@/api/constants'
+
 export {
-  getConfiguration,
+  getScheduleConfiguration,
   getUserSessions,
   getGroupSessions,
   getGlobalConfiguration,
@@ -18,11 +19,8 @@ export {
 }
 
 export default {
-  getConfiguration,
   getUserSessions,
   getGroupSessions,
-  getTeacherGroups,
-  getSessionDetails,
   createSession
 }
 
@@ -31,13 +29,8 @@ const CDT_PATH = '/schedule.'
 /**
  * Get CDT configuration
  */
-function getConfiguration (schoolId = 0) {
-  return axios.get(constants.JSON_WS_URL + CDT_PATH + 'scheduleconfiguration/get-configuration', {
-    params: {
-      schoolId: schoolId,
-      childId: 0
-    }
-  }).then(response => response.data)
+function getScheduleConfiguration () {
+  return axios.get(constants.JSON_WS_URL + CDT_PATH + 'scheduleconfiguration/get-schedule-configuration').then(response => response.data)
 }
 
 /**

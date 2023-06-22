@@ -51,7 +51,7 @@ export default {
     hiddenDays () {
       const hiddenDays = []
       let dayNumber
-      const schoolDays = [1, 2, 3, 4, 5] // TODO: to get from config
+      const schoolDays = this.configuration.schoolDays
       for (dayNumber = 0; dayNumber <= 6; ++dayNumber) {
         if (schoolDays.indexOf(dayNumber) === -1) {
           // Add one cause datepicker config is not the same as calendar

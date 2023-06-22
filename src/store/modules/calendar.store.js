@@ -1,4 +1,4 @@
-import scheduleService from '@/api/schedule.service'
+import { getScheduleConfiguration } from '@/api/schedule.service'
 
 let isLoadingConfig = false
 export const state = {
@@ -13,7 +13,7 @@ export const actions = {
   getConfiguration ({ commit }) {
     if (!isLoadingConfig) {
       isLoadingConfig = true
-      scheduleService.getConfiguration().then((data) => {
+      getScheduleConfiguration().then((data) => {
         isLoadingConfig = false
         if (data.success) {
           commit('setConfiguration', data.configuration)
