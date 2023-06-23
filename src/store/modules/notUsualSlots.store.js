@@ -14,13 +14,13 @@ const formatNonUsualSlot = (sessions) => {
     event.options.push({
       name: 'showStudentList',
       label: i18n.global.t('CalendarEventOptions.showStudentList'),
-      icon: require('@/assets/icon_list.svg')
+      icon: 'fa-list'
     })
     if (event.canUpdateSlot) {
       event.options.push({
         name: 'updateSlot',
         label: i18n.global.t('CalendarEventOptions.update'),
-        icon: require('@/assets/icons/pencil.svg')
+        icon: 'fa-pencil-alt'
       })
     }
   })
@@ -135,7 +135,7 @@ export const mutations = {
         event.options.unshift({
           name: 'registerStudent',
           label: i18n.global.t('CalendarEventOptions.registerStudent'),
-          icon: require('@/assets/icons/add.svg') // TODO get icon
+          icon: 'fa-user-plus'
         })
       }
     })
