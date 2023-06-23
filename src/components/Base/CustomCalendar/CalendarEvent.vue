@@ -45,6 +45,9 @@ export default {
     appEvent () {
       return this.event.event.extendedProps
     },
+    currentUser () {
+      return this.$store.state.user
+    },
     formattedStartHour () {
       return dayjs(this.event.event.start).format('HH:mm')
     },
@@ -54,8 +57,10 @@ export default {
     formattedTeachersLabel () {
       let label = ''
       this.appEvent.teachers.forEach(teacher => {
-        const name = teacher.firstName.substring(0, 1) + '. ' + teacher.lastName
-        label += (label === '') ? name : ', ' + name
+        if (this.currentUser && this.currentUser.userId !== teacher.userId) {
+          const name = teacher.firstName.substring(0, 1) + '. ' + teacher.lastName
+          label += (label === '') ? name : ', ' + name
+        }
       })
       return label
     },
