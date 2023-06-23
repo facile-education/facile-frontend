@@ -445,7 +445,7 @@ export default {
   "locationPlaceHolder": "Lieu",
   "startDateLabel": "Date / heure événement",
   "endDateLabel": "Date / heure de fin d'événement",
-  "descriptionPlaceHolder": "Description",
+  "descriptionPlaceHolder": "Détails",
   "populationPlaceholder": "Population cible",
   "markAsUnreadForAll": "Notifier les destinataires",
   "creationSubmit": "Créer",

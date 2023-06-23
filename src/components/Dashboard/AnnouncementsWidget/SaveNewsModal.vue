@@ -527,7 +527,7 @@ export default {
   "schoolUpdateTitle": "Modifier une annonce",
   "releaseDateLabel": "Parution",
   "namePlaceHolder": "Titre",
-  "contentPlaceHolder": "Description",
+  "contentPlaceHolder": "Détails",
   "populationPlaceholder": "Destinataires",
   "addFile": "Ajouter un fichier",
   "markAsUnreadForAll": "Notifier les destinataires",
