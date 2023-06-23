@@ -45,7 +45,6 @@
       data-test="signature-input"
       :content="{contentValue: signatureContent}"
       :disabled="!configuration.signature.isActive"
-      :is-in-progression="false"
       @input="updateSignature"
       @blur="checkForm"
     />
@@ -65,7 +64,6 @@
       data-test="autoReply-input"
       :content="{contentValue: autoReplyContent}"
       :disabled="!configuration.autoReply.isActive"
-      :is-in-progression="false"
       @input="updateAutoReply"
       @blur="checkForm"
     />

@@ -30,6 +30,7 @@
       v-if="content.contentType === 1 && hasBeenInViewport"
       :content="content"
       :disabled="readOnly"
+      :is-in-progression="true"
       @focus="onEditorFocus"
       @blur="onEditorBlur"
     />

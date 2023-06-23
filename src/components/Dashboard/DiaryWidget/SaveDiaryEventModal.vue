@@ -84,11 +84,10 @@
         />
       </div>
 
-      <CKEditor
-        v-model="description"
+      <TextContent
+        v-model:content="description"
         class="ck-editor"
-        :editor="editor"
-        :config="editorConfig"
+        :placeholder="$t('contentPlaceHolder')"
       />
       <PentilaErrorMessage
         :error-message="formErrorList.description"
@@ -120,23 +119,17 @@
 </template>
 
 <script>
-import InlineEditor from '@ckeditor/ckeditor5-build-inline'
 import CustomDatePicker from '@components/Base/CustomDatePicker.vue' // TODO: Check time and optimise if necessary
 import InformationIcon from '@components/Base/InformationIcon.vue'
+import TextContent from '@components/Progression/Edit/Contents/TextContent.vue'
 import validators from '@utils/validators'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import dayjs from 'dayjs'
-import { defineAsyncComponent } from 'vue'
 
 import { createEvent, getEventDetails, modifyEvent } from '@/api/dashboard/agenda.service'
 import { getSchoolNewsBroadcastGroups } from '@/api/dashboard/news.service'
-// const CustomDatePicker = defineAsyncComponent(() => import('@/components/Base/CustomDatePicker.vue'))
-// const InlineEditor = defineAsyncComponent(() => import('@ckeditor/ckeditor5-build-inline'))
-const CKEditor = defineAsyncComponent({
-  loader: async () => { return (await import('@ckeditor/ckeditor5-vue')).component }
-  // loadingComponent: CKLoadingPlaceholder // TODO: CKLoadingPlaceholder with same size and spinner
-})
+
 const inputMaxSize = 75
 const ckMaxSize = 63206
 const isUnderInputMaxSize = (value) => validators.isUnderMaxSize(value, inputMaxSize)
@@ -145,7 +138,7 @@ const isNotEmpty = (list) => validators.isNotEmpty(list)
 
 export default {
   name: 'SaveDiaryEventModal',
-  components: { InformationIcon, CustomDatePicker, CKEditor },
+  components: { TextContent, InformationIcon, CustomDatePicker },
   props: {
     initEvent: {
       type: Object,
@@ -166,10 +159,6 @@ export default {
 
       initialForm: undefined,
 
-      editor: InlineEditor,
-      editorConfig: {
-        placeholder: this.$t('descriptionPlaceHolder')
-      },
       availablePopulationsList: [],
       isLoadingEventDetails: false,
       isProcessingSave: false,
@@ -388,6 +377,21 @@ export default {
 .update-diary-event-modal {
   .window-body {
     overflow-y: visible;
+  }
+
+  .ck-editor {
+    p {
+      margin: 5px 0;
+      line-height: 1.25rem;
+    }
+  }
+
+  .ck-editor__editable {
+    min-height: 15rem;
+  }
+
+  &.phone .ck-editor__editable {
+    min-height: 12rem;
   }
 }
 </style>
