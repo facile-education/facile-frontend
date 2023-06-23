@@ -110,7 +110,7 @@ export const actions = {
         scheduleService.getGroupSessions(state.selectedGroup.groupId, state.startDate, state.endDate).then(
           (data) => {
             if (data.success) {
-              const sessions = [...data.sessions, ...data.schoollifeSessions]
+              const sessions = data.sessions
               manageSessionsOptions(sessions)
               commit('setSessionList', sessions)
             }
