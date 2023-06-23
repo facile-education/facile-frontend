@@ -2,7 +2,7 @@
   <CKEditor
     class="ck-editor"
     :class="{'maximised' : maximised , 'disabled': disabled && ready}"
-    :model-value="content.contentValue"
+    :model-value="content"
     :editor-id="editorId"
     :editor="editor"
     :config="editorOptions"
@@ -18,19 +18,23 @@
 import '@ckeditor/ckeditor5-build-inline/build/translations/fr'
 
 import InlineEditor from '@ckeditor/ckeditor5-build-inline'
-import { component as CKEditor } from '@ckeditor/ckeditor5-vue'
+import { defineAsyncComponent } from 'vue'
+const CKEditor = defineAsyncComponent({
+  loader: async () => { return (await import('@ckeditor/ckeditor5-vue')).component }
+  // loadingComponent: CKLoadingPlaceholder // TODO: CKLoadingPlaceholder with same size and spinner
+})
 
 export default {
   name: 'TextContent',
   components: { CKEditor },
   props: {
     content: {
-      type: Object,
+      type: String,
       required: true
     },
     isInProgression: {
       type: Boolean,
-      default: true
+      default: false
     },
     disabled: {
       type: Boolean,
@@ -39,9 +43,17 @@ export default {
     maximised: {
       type: Boolean,
       default: false
+    },
+    placeholder: {
+      type: String,
+      default: undefined
+    },
+    editorId: {
+      type: Number,
+      default: 0
     }
   },
-  emits: ['focus', 'blur', 'input', 'save'],
+  emits: ['focus', 'blur', 'input', 'save', 'update:content'],
   data () {
     return {
       timeout: undefined,
@@ -64,14 +76,9 @@ export default {
           'MediaEmbed'
         ],
         toolbar: ['heading', '|', 'bold', 'italic', 'link', 'numberedList', 'bulletedList', '|', 'outdent', 'indent', '|', 'blockQuote', 'insertTable', 'undo', 'redo'],
-        language: 'fr'
+        language: 'fr',
+        placeholder: this.placeholder
       }
-    }
-  },
-  computed: {
-    editorId () {
-      // Used to manage multiple editors - editorId is based on the (unique) order
-      return 'editor' + this.content.order
     }
   },
   methods: {
@@ -90,14 +97,14 @@ export default {
     },
     updateContent (newValue) {
       this.$emit('input', newValue)
+      this.$emit('update:content', newValue)
       clearTimeout(this.timeout)
       if (this.isInProgression) {
         this.$store.dispatch('progression/setIsWaiting', true)
       }
       // 2s timeout
       this.timeout = setTimeout(() => {
-        const updatedContent = { ...this.content }
-        updatedContent.contentValue = newValue
+        const updatedContent = { contentValue: this.content }
         if (this.isInProgression) {
           this.$store.dispatch('progression/updateItemContent', updatedContent)
         } else {

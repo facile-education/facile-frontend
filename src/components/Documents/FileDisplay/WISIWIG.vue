@@ -6,7 +6,6 @@
       :maximised="true"
       :content="initialContent"
       :disabled="readOnly"
-      :is-in-progression="false"
       @input="updateContent"
     />
   </div>

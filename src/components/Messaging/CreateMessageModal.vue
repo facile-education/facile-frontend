@@ -90,7 +90,6 @@
         >
           <TextContent
             :content="initialContent"
-            :is-in-progression="false"
             @input="updateContent"
             @keydown.stop
             @keyup.stop
@@ -198,9 +197,9 @@ export default {
     return {
       recipients: [],
       subject: '',
-      initialContent: { contentValue: '' },
-      currentContent: { contentValue: '' },
-      previousContent: {},
+      initialContent: '',
+      currentContent: '',
+      previousContent: '',
       isInitialized: false,
       attachedFiles: [],
       search: '',
@@ -294,10 +293,10 @@ export default {
           this.messageParameters.isDraft).then((data) => {
           if (data.success) {
             if (this.messageParameters.isDraft || this.messageParameters.isForward) {
-              this.initialContent.contentValue = data.content
+              this.initialContent = data.content
             } else {
               // Reply, replyAll, forward
-              this.initialContent.contentValue = ''
+              this.initialContent = ''
               this.buildPreviousContent(data.content)
             }
             this.subject = data.subject
@@ -307,10 +306,10 @@ export default {
 
             // Prefix content with signature except for draft edition
             if (!this.messageParameters.isDraft && this.$store.state.messaging.signature !== '') {
-              this.initialContent.contentValue = this.initialContent.contentValue + '</br></br>' + this.$store.state.messaging.signature
+              this.initialContent = this.initialContent + '</br></br>' + this.$store.state.messaging.signature
             }
             this.isInitialized = true
-            this.currentContent.contentValue = this.initialContent.contentValue
+            this.currentContent = this.initialContent
           }
         })
       } else if (!this.messageParameters.isNew) {
@@ -323,15 +322,15 @@ export default {
         }
         // Prefix content with signature except for draft edition
         if (!this.messageParameters.isDraft && this.$store.state.messaging.signature !== '') {
-          this.initialContent.contentValue = '</br></br>' + this.$store.state.messaging.signature
+          this.initialContent = '</br></br>' + this.$store.state.messaging.signature
         }
         this.isInitialized = true
       }
 
-      this.currentContent.contentValue = this.initialContent.contentValue
+      this.currentContent = this.initialContent
     },
     updateContent (value) {
-      this.currentContent.contentValue = value
+      this.currentContent = value
     },
     getToolTipPosition () {
       const windowContainer = this.$refs.createMessageModal.getElementsByClassName('window-container')[0]
@@ -379,7 +378,7 @@ export default {
       messageService.sendMessage(
         this.recipients,
         this.subject,
-        (this.areNewRecipientsAdded && this.previousContent.contentValue) ? this.currentContent.contentValue + this.previousContent.contentValue : this.currentContent.contentValue,
+        (this.areNewRecipientsAdded && this.previousContent) ? this.currentContent + this.previousContent : this.currentContent,
         this.attachedFiles,
         this.messageParameters.draftMessageId,
         this.originMessage.messageId === undefined ? '0' : this.originMessage.messageId,
@@ -420,7 +419,7 @@ export default {
       this.onClose()
     },
     buildPreviousContent (previousContent) {
-      this.previousContent.contentValue = '</br><details><summary>' + this.$t('at') +
+      this.previousContent = '</br><details><summary>' + this.$t('at') +
         dayjs(this.originMessage.sendDate, 'YYYY/MM/DD HH:mm:ss').format('DD/MM/YYYY HH:mm') +
         ' ' + this.originMessage.senderName + this.$t('wrote') + '</summary>' +
         '</br> ' + "<div style='border-left:1px solid #000; padding-left:20px'>" +
@@ -430,7 +429,7 @@ export default {
     },
     saveDraft () {
       const successMessage = this.$t('draftSaved')
-      messageService.saveDraft(this.recipients, this.subject, this.currentContent.contentValue, this.attachedFiles, this.messageParameters.draftMessageId, false).then((data) => {
+      messageService.saveDraft(this.recipients, this.subject, this.currentContent, this.attachedFiles, this.messageParameters.draftMessageId, false).then((data) => {
         if (data.success) {
           this.$store.dispatch('popups/pushPopup', { message: successMessage, type: 'info' })
           messagingUtils.refresh() // Useless because of the running thread in backend
@@ -441,7 +440,7 @@ export default {
     onConfirmClose () {
       if (!this.isAttachedFileOpen) {
         // TODO: Save initial recipients and subject to be accurate on drafts
-        if (this.currentContent.contentValue !== this.initialContent.contentValue || this.recipients.length > 0 || this.subject !== '') {
+        if (this.currentContent !== this.initialContent || this.recipients.length > 0 || this.subject !== '') {
           this.$store.dispatch('warningModal/addWarning', {
             text: this.$t('closeWarning'),
             lastAction: { fct: this.onClose }
@@ -456,8 +455,8 @@ export default {
       this.$emit('close')
       this.recipients = []
       this.subject = ''
-      this.initialContent = {}
-      this.currentContent = {}
+      this.initialContent = ''
+      this.currentContent = ''
       this.$store.dispatch('messaging/closeCreateMessageModal')
     },
     addRecipients (contactList) {

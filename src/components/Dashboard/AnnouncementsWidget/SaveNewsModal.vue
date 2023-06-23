@@ -85,12 +85,12 @@
         <PentilaSpinner v-if="isLoadingNewsDetails" />
       </div>
 
-      <CKEditor
-        v-model="content"
+      <TextContent
+        v-model:content="content"
         class="ck-editor"
-        :editor="editor"
-        :config="editorConfig"
+        :placeholder="$t('contentPlaceHolder')"
       />
+
       <PentilaErrorMessage
         :error-message="formErrorList.content"
       />
@@ -140,11 +140,11 @@
 </template>
 
 <script>
-import InlineEditor from '@ckeditor/ckeditor5-build-inline'
 import AttachedFiles from '@components/AttachedFiles/AttachedFiles.vue'
 import CustomDatePicker from '@components/Base/CustomDatePicker.vue'
 import InformationIcon from '@components/Base/InformationIcon.vue'
 import ThumbnailSelector from '@components/Base/ThumbnailSelector.vue'
+import TextContent from '@components/Progression/Edit/Contents/TextContent.vue'
 import validators from '@utils/validators'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
@@ -160,10 +160,6 @@ import {
 import { defaultImagesKeys } from '@/constants/icons'
 
 const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal.vue'))
-const CKEditor = defineAsyncComponent({
-  loader: async () => { return (await import('@ckeditor/ckeditor5-vue')).component }
-  // loadingComponent: CKLoadingPlaceholder // TODO: CKLoadingPlaceholder with same size and spinner
-})
 
 const inputMaxSize = 75
 const ckMaxSize = 63206
@@ -173,7 +169,7 @@ const isNotEmpty = (list) => validators.isNotEmpty(list)
 
 export default {
   name: 'SaveNewsModal',
-  components: { InformationIcon, ThumbnailSelector, AttachedFiles, FilePickerModal, CustomDatePicker, CKEditor },
+  components: { TextContent, InformationIcon, ThumbnailSelector, AttachedFiles, FilePickerModal, CustomDatePicker },
   inject: ['mq'],
   props: {
     initNews: {
@@ -200,10 +196,6 @@ export default {
 
       initialForm: undefined,
 
-      editor: InlineEditor,
-      editorConfig: {
-        placeholder: this.$t('contentPlaceHolder')
-      },
       availablePopulationsList: [],
       isReleaseDateDisabled: false,
       isLoadingNewsDetails: false,
@@ -451,6 +443,21 @@ export default {
     position: relative;
     overflow-y: visible;
     max-height: 70vh !important;
+  }
+
+  .ck-editor {
+    p {
+      margin: 5px 0;
+      line-height: 1.25rem;
+    }
+  }
+
+  .ck-editor__editable {
+    min-height: 15rem;
+  }
+
+  &.phone .ck-editor__editable {
+    min-height: 12rem;
   }
 }
 </style>
