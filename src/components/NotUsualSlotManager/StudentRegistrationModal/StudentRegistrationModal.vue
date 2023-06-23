@@ -264,7 +264,7 @@ export default {
   },
   methods: {
     formatSession (session) {
-      session.label = dayjs(session.startDate, 'YYYY/MM/DD HH:mm').format('HH:mm') + ' / ' + dayjs(session.endDate, 'YYYY/MM/DD HH:mm').format('HH:mm') + ' - ' + session.title
+      session.label = dayjs(session.startDate, 'YYYY/MM/DD HH:mm').format('HH:mm') + ' / ' + dayjs(session.endDate, 'YYYY/MM/DD HH:mm').format('HH:mm') + ' - ' + session.groupName
     },
     submit () {
       if (this.deregistration) {
