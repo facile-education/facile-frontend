@@ -42,10 +42,9 @@
                 :title="option.label"
                 @click="$emit('optionClicked', option)"
               >
-                <img
-                  :src="option.icon"
-                  :alt="option.label"
-                >
+                <NeroIcon
+                  :name="option.icon"
+                />
               </button>
             </li>
           </ul>
@@ -205,6 +204,7 @@ export default {
     color: #333;
     padding: 5px;
     display: flex;
+    align-items: center;
 
     .svg-inline--fa {
       margin: 0 5px;
