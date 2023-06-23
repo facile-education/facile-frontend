@@ -57,7 +57,7 @@ $announcement-item-horizontal-min-width: min(450px, 80vw);
 }
 
 %inline-modal-ck {
-  border: 1px solid #666;
+  border: 1px solid #666 !important;
   max-height: 30vh;
   overflow-y: auto;
 }
