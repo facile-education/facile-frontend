@@ -26,6 +26,8 @@
 </template>
 
 <script>
+import _ from 'lodash'
+
 import SideMenuRootEntry from '@/components/Menu/SideMenuRootEntry'
 
 export default {
@@ -43,7 +45,8 @@ export default {
       return this.$store.state.nero.menuExpanded
     },
     menu () {
-      return this.$store.state.nero.menu
+      console.log('menu=', this.$store.state.nero.menu)
+      return _.orderBy(this.$store.state.nero.menu, 'position', 'asc')
     }
   },
   methods: {
