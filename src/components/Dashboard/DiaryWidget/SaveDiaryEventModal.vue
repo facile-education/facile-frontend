@@ -87,7 +87,7 @@
       <TextContent
         v-model:content="description"
         class="ck-editor"
-        :placeholder="$t('contentPlaceHolder')"
+        :placeholder="$t('descriptionPlaceHolder')"
       />
       <PentilaErrorMessage
         :error-message="formErrorList.description"
