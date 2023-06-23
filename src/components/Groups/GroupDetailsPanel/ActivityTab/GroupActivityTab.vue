@@ -141,13 +141,13 @@ ul {
 }
 
 .activity-tab {
+  position: relative;
   height: 100%;
   display: flex;
   flex-direction: column;
   padding: 3px;
 
   .activities {
-    position: relative;
     overflow: auto;
     flex: 1;
   }
