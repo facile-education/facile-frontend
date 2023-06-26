@@ -225,6 +225,7 @@ export default {
           this.error = true
         }
       }, (err) => {
+        this.isLoading = false
         this.error = true
         console.error(err)
       })
