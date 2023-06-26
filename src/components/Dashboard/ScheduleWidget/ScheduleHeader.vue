@@ -1,6 +1,7 @@
 <template>
   <header>
-    <h2 v-t="'schedule'" />
+    <h2 :aria-label="$t('schedule')" />
+
     <div class="date-selector">
       <button
         :title="$t('goBefore')"
@@ -13,7 +14,7 @@
         >
       </button>
 
-      <strong class="date-label">
+      <strong class="date-label theme-text-color">
         {{ formattedDate }}
       </strong>
 
@@ -28,6 +29,17 @@
         >
       </button>
     </div>
+
+    <button
+      class="redirect-button"
+      @click="$emit('redirect')"
+    >
+      <img
+        src="@/assets/icons/calendar.svg"
+        alt=""
+      >
+      <span v-t="'redirect'" />
+    </button>
   </header>
 </template>
 
@@ -40,7 +52,7 @@ export default {
       required: true
     }
   },
-  emits: ['goBefore', 'goAfter'],
+  emits: ['goBefore', 'goAfter', 'redirect'],
   computed: {
     formattedDate () {
       return this.currentDate.format('ddd DD/MM')
@@ -53,8 +65,6 @@ export default {
 @import "@design";
 
 header {
-  display: flex;
-  align-items: center;
   @extend %widget-header;
 }
 
@@ -62,9 +72,13 @@ h2 {
   @extend %widget-h2;
 }
 
-button {
+button:not(.redirect-button){
   cursor: pointer;
-  width: 1rem;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #FFFFFFDD;
   border-radius: 0;
   padding: 0;
@@ -73,18 +87,17 @@ button {
 }
 
 .date-selector {
+  width: 100%;
   display: flex;
   align-items: center;
-  margin-left: 1rem;
+  justify-content: space-between;
+  margin-bottom: 1rem;
 }
 
 .date-label {
-  margin: 0 1rem;
-  height: 100%;
-  padding: 0.2rem 1rem;
-  border: 1px solid $color-border;
-  border-radius: 6px;
-  text-transform: capitalize;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 24px;
 }
 
 .arrow {
@@ -95,12 +108,30 @@ button {
   transform: rotate(180deg);
 }
 
+.redirect-button {
+  width: 100%;
+  background-color: transparent;
+  cursor: pointer;
+  display: flex;
+  padding: 4px 8px;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+  border-radius: 6px;
+  border: 1px solid $color-border;
+
+  img {
+    margin-right: 1rem;
+  }
+}
+
 </style>
 
 <i18n locale="fr">
 {
   "goAfter": "Jour suivant",
   "goBefore": "Jour précédent",
-  "schedule": "Horaires"
+  "schedule": "Horaires",
+  "redirect": "Accéder au semainier"
 }
 </i18n>
