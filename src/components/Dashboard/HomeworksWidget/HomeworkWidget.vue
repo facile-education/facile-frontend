@@ -47,7 +47,7 @@
         <button
           v-t="'showMore'"
           class="show-more"
-          @click="$router.push({ name: 'Planning' })"
+          @click="redirect"
         />
       </div>
     </div>
@@ -61,6 +61,7 @@ import dayjs from 'dayjs'
 import PentilaUtils from 'pentila-utils'
 
 import { getFutureStudentHomeworks } from '@/api/homework.service'
+import { CDT } from '@/constants/appConstants'
 import { nbHomeworksInWidget } from '@/constants/dashboardConstants'
 
 export default {
@@ -110,6 +111,9 @@ export default {
     this.getHomeworks()
   },
   methods: {
+    redirect () {
+      this.$router.push({ name: CDT }) // TODO push correct route
+    },
     updateUndoneOnlyValue (value) {
       this.undoneOnly = value
       this.getHomeworks()
