@@ -117,6 +117,10 @@ export default {
           this.error = true
           console.error('Error')
         }
+      }, (err) => {
+        this.isLoading = false
+        this.error = true
+        console.error(err)
       })
     },
     showMore () {
