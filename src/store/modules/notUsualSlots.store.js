@@ -40,6 +40,7 @@ function getNonUsualSlots (store) {
       if (data.success) {
         formatNonUsualSlot(data.sessions)
         store.commit('notUsualSlots/setCurrentNonUsualSlots', data.sessions)
+        store.commit('notUsualSlots/addRegisterOption')
       } else {
         console.error('Cannot get slots for type ' + store.state.notUsualSlots.currentSlotType.type)
       }
@@ -130,13 +131,23 @@ export const mutations = {
     state.queriedUser = queriedUser
   },
   addRegisterOption (state) {
+    if (state.queriedUser || state.selectedClass.orgId !== 0) { // Only add this option if we have selected someone
+      state.currentNonUsualSlots.forEach(event => {
+        if (event.canRegisterStudent && !getters.isAlreadyRegister(state, event)) {
+          event.options.unshift({
+            name: 'registerStudent',
+            label: i18n.global.t('CalendarEventOptions.registerStudent'),
+            icon: 'fa-user-plus'
+          })
+        }
+      })
+    }
+  },
+  removeRegisterOption (state) {
     state.currentNonUsualSlots.forEach(event => {
-      if (event.canRegisterStudent && !getters.isAlreadyRegister(state, event)) {
-        event.options.unshift({
-          name: 'registerStudent',
-          label: i18n.global.t('CalendarEventOptions.registerStudent'),
-          icon: 'fa-user-plus'
-        })
+      const index = event.options.map(option => option.name).indexOf('registerStudent')
+      if (index !== -1) {
+        event.options.splice(index, 1)
       }
     })
   },
@@ -217,6 +228,7 @@ export const actions = {
   },
   resetUserSlots ({ commit }) {
     commit('setUserSlots', [])
+    commit('removeRegisterOption')
   }
 }
 
