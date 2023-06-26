@@ -1,7 +1,6 @@
 <template>
   <PentilaSpinner v-if="userId === undefined" />
   <AuthenticationRequired v-else-if="userId === 0" />
-  <NotAllowed v-else-if="!isAllowed && !user.isAdministrator" />
   <AgreeTermsOfUse v-else-if="!user.agreedTermsOfUse" />
   <PasswordChange v-else-if="user.passwordChange" />
   <div
@@ -20,7 +19,8 @@
     </Transition>
 
     <section class="nero-body">
-      <slot />
+      <NotAllowed v-if="!isAllowed && !user.isAdministrator" />
+      <slot v-else />
     </section>
 
     <Transition name="expand">

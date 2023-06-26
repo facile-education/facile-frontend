@@ -21,8 +21,8 @@
 </template>
 
 <script>
-
 import dayjs from 'dayjs'
+
 import SessionContent from '@/components/Course/SessionContent.vue'
 
 export default {

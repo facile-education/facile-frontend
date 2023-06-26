@@ -31,6 +31,55 @@
 
 @use 'sass:math';
 
+$font-xs: 0.6875rem;
+$font-s: 0.75rem;
+$font-m: 0.875rem;
+$font-l: 1rem;
+
+%medium-font-s {
+  font-weight: 500;
+  line-height: 1rem;
+}
+
+%bold-font-s {
+  font-weight: 700;
+  line-height: 1rem;
+}
+
+%medium-font-m {
+  font-weight: 500;
+  line-height: 1.25rem;
+}
+
+%medium-font-l {
+  font-weight: 700;
+  line-height: 1.5rem;
+}
+
+%heading-xs {
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.75rem; 
+}
+
+%heading-s {
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 2rem;
+}
+
+%heading-m {
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 2.5rem;
+}
+
+%heading-l {
+  font-size: 2.5rem;
+  font-weight: 500;
+  line-height: 3rem;
+}
+
 // stylelint-disable scss/dollar-variable-pattern
 @mixin typography-interpolate(
   $property,
