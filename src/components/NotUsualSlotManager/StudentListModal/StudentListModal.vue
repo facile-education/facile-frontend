@@ -91,7 +91,7 @@ export default {
       return this.$store.state.user
     },
     isCurrentTeacher () {
-      return this.currentUser.userId === this.event.teacher.teacherId
+      return this.event.teachers.map(teacher => teacher.teacherId).indexOf(this.currentUser.userId) !== -1
     },
     isRollCallable () {
       return this.isCurrentTeacher &&
