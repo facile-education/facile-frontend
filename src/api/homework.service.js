@@ -1,9 +1,10 @@
 import axios from 'axios'
-import constants from '@/api/constants'
 import PentilaUtils from 'pentila-utils'
 
+import constants from '@/api/constants'
+
 export {
-  getFutureStudentHomeworks,
+  getStudentHomeworks,
   getPreviousStudentHomeworks,
   getTeacherHomeworksToCorrect,
   setHomeworkDoneStatus,
@@ -15,10 +16,12 @@ export {
 
 const HOMEWORK_PATH = '/course.homework/'
 
-function getFutureStudentHomeworks (studentId, undoneOnly) {
-  return axios.get(constants.JSON_WS_URL + HOMEWORK_PATH + 'get-future-student-homeworks', {
+function getStudentHomeworks (studentId, minDateStr, maxDateStr, undoneOnly) {
+  return axios.get(constants.JSON_WS_URL + HOMEWORK_PATH + 'get-student-homeworks', {
     params: {
       studentId,
+      minDateStr,
+      maxDateStr,
       undoneOnly
     }
   }).then(response => response.data)

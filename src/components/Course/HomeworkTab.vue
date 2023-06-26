@@ -2,7 +2,7 @@
   <div class="main">
     <p>dfdf</p>
     <div
-      v-if="homeworkList && homeworkList.length === 0"
+      v-if="homeworks && homeworks.length === 0"
       class="main-label"
     >
       <p>{{ $t('no-homeworks') }}</p>
@@ -22,8 +22,11 @@
 </template>
 
 <script>
+import dayjs from 'dayjs'
 import PentilaUtils from 'pentila-utils'
-import { getFutureStudentHomeworks, getTeacherHomeworksToCorrect } from '@/api/homework.service'
+
+import { getStudentHomeworks } from '@/api/homework.service'
+
 export default {
   name: 'HomeworkTab',
   components: {},
@@ -38,19 +41,13 @@ export default {
     }
   },
   created () {
-    if (this.$store.state.user.isStudent) {
-      getFutureStudentHomeworks(this.$store.state.user.userId, false).then((data) => {
-        if (data.success) {
-          this.homeworks = data.homeworks
-        }
-      })
-    } else if (this.$store.state.user.isTeacher) {
-      getTeacherHomeworksToCorrect().then((data) => {
-        if (data.success) {
-          this.homeworks = data.homeworks
-        }
-      })
-    }
+    const minDate = dayjs().day(0).format('YYYY-MM-DD HH:mm')
+    const maxDate = dayjs().day(6).format('YYYY-MM-DD HH:mm')
+    getStudentHomeworks(this.$store.state.user.userId, minDate, maxDate, false).then((data) => {
+      if (data.success) {
+        this.homeworks = data.homeworks
+      }
+    })
   },
   methods: {
   }
