@@ -3,6 +3,7 @@
     <ScheduleHeader
       v-if="currentDisplayedDate"
       :current-date="currentDisplayedDate"
+      @redirect="redirect"
       @goBefore="goBefore"
       @goAfter="goAfter"
     />
@@ -41,6 +42,7 @@ import ScheduleItem from '@components/Dashboard/ScheduleWidget/ScheduleItem.vue'
 import dayjs from 'dayjs'
 
 import { getUserSchedule } from '@/api/dashboard.service'
+import { SCHEDULE } from '@/constants/appConstants'
 export default {
   name: 'ScheduleWidget',
   components: { ScheduleItem, ScheduleHeader },
@@ -77,6 +79,9 @@ export default {
     this.getUserSchedule(dayjs(), this.goForward)
   },
   methods: {
+    redirect () {
+      this.$router.push({ name: SCHEDULE, params: { userId: this.userId, displayDate: this.currentDisplayedDate } })
+    },
     goBefore () {
       this.getUserSchedule(this.currentDisplayedDate.add(-1, 'day'), false)
     },
