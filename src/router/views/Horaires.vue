@@ -3,13 +3,12 @@
     <h1 :aria-label="$t('serviceTitle')" />
     <HorairesToolbar
       v-if="!$store.state.user.isStudent"
-      :selected-date="selectedDate"
-      @selectDate="onSelectDate"
+      @updateSessions="getSessions"
     />
 
     <Timeline
       v-if="!mq.phone"
-      :initial-date="initialDisplayDate"
+      :initial-date="selectedDate"
       @selectWeek="onSelectWeek"
     />
 
@@ -66,8 +65,6 @@ export default {
   inject: ['mq'],
   data () {
     return {
-      initialDisplayDate: undefined,
-      selectedDate: dayjs(),
       updatedSession: undefined,
       isEditModalDisplayed: false
     }
@@ -75,6 +72,9 @@ export default {
   computed: {
     eventList () {
       return this.$store.state.horaires.sessionList
+    },
+    selectedDate () {
+      return this.$store.state.horaires.selectedDate
     },
     isCreateSessionModalDisplayed () {
       return this.$store.state.horaires.isCreateSessionModalDisplayed
@@ -85,11 +85,29 @@ export default {
   },
   created () {
     if (this.$route.query.initialDisplayDate) {
-      this.initialDisplayDate = dayjs(this.$route.query.initialDisplayDate, 'YYYY/MM/DD')
-      // this.selectedDate = this.initialDisplayDate
+      this.$store.dispatch('horaires/setSelectedDate', dayjs(this.$route.query.initialDisplayDate, 'YYYY/MM/DD'))
+    } else {
+      this.$store.dispatch('horaires/setSelectedDate', dayjs())
     }
+
+    if (this.$store.state.user.isParent && this.$store.state.user.selectedChild !== undefined) {
+      this.$store.dispatch('horaires/setSelectedUser', this.$store.state.user.selectedChild)
+    } else {
+      this.$store.dispatch('horaires/setSelectedUser', this.$store.state.user)
+    }
+
+    this.getSessions()
   },
   methods: {
+    getSessions () {
+      if (this.$store.state.horaires.selectedUser) {
+        this.$store.dispatch('horaires/getUserSessions')
+      } else if (this.$store.state.horaires.selectedGroup) {
+        this.$store.dispatch('horaires/getGroupSessions')
+      } else {
+        this.$store.dispatch('horaires/resetSessions')
+      }
+    },
     handleEventOption (eventOption) {
       switch (eventOption.option.name) {
         case 'saveTeacherSubstitute':
@@ -103,33 +121,23 @@ export default {
     },
     closeEditModalDisplay (refresh) {
       this.isEditModalDisplayed = !this.isEditModalDisplayed
-      // force refresh calendar if changes are applied
       if (refresh) {
-        this.$store.dispatch('horaires/selectDates',
-          { start: this.$store.state.horaires.startDate, end: this.$store.state.horaires.endDate })
+        this.getSessions()
       }
     },
     closeCreateSessionModal (refresh) {
       this.isCreateSessionModalDisplayed = !this.isCreateSessionModalDisplayed
-      // force refresh calendar if changes are applied
       if (refresh) {
-        this.$store.dispatch('horaires/selectDates',
-          { start: this.$store.state.horaires.startDate, end: this.$store.state.horaires.endDate })
+        this.getSessions()
       }
     },
     onSelectDate (date) {
-      console.log('onSelectDate on parent component')
-      this.selectedDate = dayjs(date).startOf('day')
-
-      this.$store.dispatch('horaires/selectDates',
-        { start: dayjs(date).subtract(1, 'day'), end: dayjs(date).add(2, 'day') })
+      this.$store.dispatch('horaires/setSelectedDate', dayjs(date))
+      this.getSessions()
     },
     onSelectWeek (week) {
-      console.log('on select week ', week)
-      this.selectedDate = dayjs(week.firstDayOfWeek).startOf('day')
-
-      this.$store.dispatch('horaires/selectDates',
-        { start: dayjs(week.firstDayOfWeek, 'YYYY-MM-DD'), end: dayjs(week.lastDayOfWeek, 'YYYY-MM-DD') })
+      this.$store.dispatch('horaires/setSelectedDate', dayjs(week.firstDayOfWeek).startOf('day'))
+      this.getSessions()
     }
   }
 }
