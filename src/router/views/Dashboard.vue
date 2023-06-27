@@ -12,33 +12,45 @@
           class="announcements"
         />
       </div>
-      <PentilaDropdown
-        v-if="childList.length > 1"
-        v-model="selectedUser"
-        :list="childList"
-        :sort="false"
-        display-field="fullName"
-        class="child-selector"
-      />
+
       <div class="personal-widgets">
-        <HomeworkWidget
-          v-if="hasHomeworkWidget && selectedUser"
-          :user-id="selectedUser.userId"
-          class="homework"
-        />
         <ActivityWidget
           v-if="hasActivityThreadWidget"
           class="activities"
         />
-        <ScheduleWidget
-          v-if="hasEDTWidget && selectedUser"
-          :user-id="selectedUser.userId"
-          class="schedule"
-        />
+
         <StatisticWidget
           v-if="hasStatisticWidget"
           class="statistics"
         />
+      </div>
+
+      <div class="user-selection">
+        <div
+          v-if="childList.length > 1"
+          class="first-line"
+        >
+          <PentilaDropdown
+            v-model="selectedUser"
+            :list="childList"
+            :sort="false"
+            display-field="fullName"
+            class="child-selector"
+          />
+          <div class="line" />
+        </div>
+        <div class="selected-user-widgets">
+          <ScheduleWidget
+            v-if="hasEDTWidget && selectedUser"
+            :user-id="selectedUser.userId"
+            class="schedule"
+          />
+          <HomeworkWidget
+            v-if="hasHomeworkWidget && selectedUser"
+            :user-id="selectedUser.userId"
+            class="homework"
+          />
+        </div>
       </div>
     </div>
   </Layout>
@@ -120,20 +132,34 @@ export default {
   flex-wrap: wrap;
   gap: 0 3rem;
 
-  .homework {
-    flex: 2;
-  }
-
   .activities {
-    flex: 2
-  }
-
-  .schedule {
-    flex: 1;
+    flex: 2;
   }
 
   .statistics {
     flex: 1;
+  }
+}
+
+.selected-user-widgets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 3rem;
+
+  .homework, .schedule {
+    flex: 1;
+  }
+}
+
+.first-line {
+  display: flex;
+  align-items: center;
+
+  .line {
+    flex: 1;
+    margin-left: 1rem;
+    height: 1px;
+    background-color: $color-border;
   }
 }
 
