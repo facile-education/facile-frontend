@@ -94,6 +94,7 @@ import dayjs from 'dayjs'
 import PentilaUtils from 'pentila-utils'
 import { defineAsyncComponent } from 'vue'
 
+import groupService from '@/api/groups.service'
 import { getSchoolUsers } from '@/api/userSearch.service'
 import NeroIcon from '@/components/Nero/NeroIcon'
 import NeroToolbar from '@/components/Nero/NeroToolbar'
@@ -107,25 +108,20 @@ export default {
     NeroToolbar
   },
   inject: ['mq'],
-  props: {
-    selectedDate: {
-      type: Object,
-      default: dayjs()
-    }
-  },
-  emits: ['selectDate'],
+  emits: ['updateSessions'],
   data () {
     return {
       autocompleteUserList: [],
       isSingleUser: true,
       maxSize: 1,
       tagsList: [],
+      groupList: [],
       timeout: undefined
     }
   },
   computed: {
-    groupList () {
-      return this.$store.state.horaires.groupList
+    selectedDate () {
+      return this.$store.state.horaires.selectedDate
     },
     iconClass () {
       return this.isSingleUser ? 'fa-user' : 'fa-users'
@@ -142,7 +138,8 @@ export default {
       },
       set (group) {
         this.tagsList.length = 0
-        this.$store.dispatch('horaires/selectGroup', group)
+        this.$store.dispatch('horaires/setSelectedGroup', group)
+        this.$emit('updateSessions')
       }
     },
     selectedSchool: {
@@ -159,7 +156,8 @@ export default {
       },
       set (child) {
         this.$store.commit('user/setSelectedChild', child)
-        this.$store.dispatch('horaires/getSessionList')
+        this.$store.dispatch('horaires/setSelectedUser', child)
+        this.$emit('updateSessions')
       }
     },
     displayCreateButton () {
@@ -172,22 +170,34 @@ export default {
     }
   },
   created () {
-    if (this.groupList === undefined) {
-      this.$store.dispatch('horaires/getGroupList')
-    }
+    this.getGroupList()
 
-    // Pre-select him and display sessions if user is a teacher
+    // Pre-select him if user is a teacher
     if (this.$store.state.user.isTeacher) {
-      this.$store.dispatch('horaires/selectUser', this.$store.state.user)
-
       // Add displayName
       const user = PentilaUtils.JSON.deepCopy(this.$store.state.user)
       user.displayName = this.$store.state.user.firstName + ' ' + this.$store.state.user.lastName
       this.tagsList.push(user)
     }
-    this.$store.dispatch('horaires/getSessionList')
   },
   methods: {
+    getGroupList () {
+      groupService.getUserGroups(
+        (this.$store.state.user.selectedSchool.schoolId !== undefined) ? this.$store.state.user.selectedSchool.schoolId : 0,
+        true,
+        false,
+        false
+      ).then((data) => {
+        if (data.success) {
+          this.groupList = data.groups
+        } else {
+          console.error('error')
+        }
+      },
+      (err) => {
+        console.error(err)
+      })
+    },
     getCompletion (inputValue) {
       getSchoolUsers(this.selectedSchool.schoolId, inputValue).then((data) => {
         if (data.success) {
@@ -205,21 +215,24 @@ export default {
       })
     },
     onSelectDate (date) {
-      this.$emit('selectDate', date)
+      this.$store.dispatch('horaires/setSelectedDate', dayjs(date))
+      this.$emit('updateSessions')
     },
     onSelectUser (userList) {
       if (userList.length) {
-        this.$store.dispatch('horaires/selectUser', userList[0])
+        this.$store.dispatch('horaires/setSelectedUser', userList[0])
       } else {
-        this.$store.dispatch('horaires/selectUser', { userId: 0 })
+        this.$store.dispatch('horaires/setSelectedUser', undefined)
         this.autocompleteUserList.length = 0
       }
+      this.$emit('updateSessions')
     },
     onSelectSchool () {
       // TODO : use global school instead of user's school
-      this.$store.dispatch('horaires/getGroupList')
+      this.getGroupList()
       this.tagsList.length = 0
-      this.$store.dispatch('horaires/selectGroup', {})
+      this.$store.dispatch('horaires/setSelectedGroup', undefined)
+      this.$emit('updateSessions')
     },
     searchTimeOut (inputValue) {
       clearTimeout(this.timeout)

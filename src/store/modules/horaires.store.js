@@ -1,8 +1,6 @@
-import groupService from '@/api/groups.service'
 import scheduleService from '@/api/schedule.service'
 import i18n from '@/i18n'
 
-const defaultGroup = { groupId: 0, groupName: 'Groupe' }
 const manageSessionsOptions = (sessions) => {
   sessions.forEach(event => {
     event.options = []
@@ -17,141 +15,94 @@ const manageSessionsOptions = (sessions) => {
 }
 
 export const state = {
-  startDate: undefined,
-  endDate: undefined,
-  groupList: undefined,
-  isLoading: false,
-  selectedGroup: defaultGroup,
-  selectedUser: { userId: 0 },
+  selectedDate: undefined,
+  selectedUser: undefined,
+  selectedGroup: undefined,
   sessionList: [],
-  isCreateSessionModalDisplayed: false,
-  configuration: undefined
+  isLoading: false,
+  error: false,
+  isCreateSessionModalDisplayed: false
 }
 
 export const mutations = {
-  endLoading (state) {
-    state.isLoading = false
+  setSelectedDate (state, payload) {
+    state.selectedDate = payload
   },
-  loading (state) {
-    state.isLoading = true
-  },
-  setDates (state, { start, end }) {
-    state.startDate = start
-    state.endDate = end
-  },
-  setGroupList (state, payload) {
-    state.groupList = payload
+  setSelectedUser (state, payload) {
+    state.selectedUser = payload
   },
   setSelectedGroup (state, payload) {
     state.selectedGroup = payload
   },
-  setSelectedUser (state, payload) {
-    state.selectedUser = payload
+  setLoading (state, payload) {
+    state.isLoading = payload
+  },
+  setError (state, payload) {
+    state.error = true
   },
   setSessionList (state, payload) {
     state.sessionList = payload
   },
   setCreateSessionModalDisplayed (state, payload) {
     state.isCreateSessionModalDisplayed = payload
-  },
-  setConfiguration (state, payload) {
-    state.configuration = payload
   }
 }
 export const actions = {
-  getGroupList ({ commit, rootState }) {
-    commit('loading')
-    groupService.getUserGroups((rootState.user.selectedSchool.schoolId !== undefined) ? rootState.user.selectedSchool.schoolId : 0, true, false, false).then(
-      (data) => {
-        if (data.success) {
-          commit('setGroupList', data.groups)
-        }
-        commit('endLoading')
-      },
-      (err) => {
-        commit('endLoading')
-        // TODO toastr
-        console.error(err)
-      }
-    )
+  setSelectedDate ({ commit }, date) {
+    commit('setSelectedDate', date)
   },
-  getSessionList ({ state, commit, rootState }) {
-    console.log('getsesisonList from store', state.startDate && state.endDate &&
-      (state.selectedUser.userId !== 0 ||
-        state.selectedGroup.groupId !== 0 ||
-        (rootState.user.selectedChild !== undefined && rootState.user.selectedChild.userId !== 0) ||
-        (rootState.user.isStudent)))
-
-    if (state.startDate && state.endDate &&
-        (state.selectedUser.userId !== 0 ||
-          state.selectedGroup.groupId !== 0 ||
-          (rootState.user.selectedChild !== undefined && rootState.user.selectedChild.userId !== 0) ||
-          (rootState.user.isStudent))) {
-      commit('loading')
-      let targetUserId = 0
-      if (rootState.user.isStudent) {
-        targetUserId = rootState.user.userId
-      } else if (rootState.user.selectedChild !== undefined && rootState.user.selectedChild.userId !== 0) {
-        targetUserId = rootState.user.selectedChild.userId
-      } else {
-        targetUserId = state.selectedUser.userId
-      }
-      if (targetUserId !== 0) {
-        scheduleService.getUserSessions(targetUserId, state.startDate, state.endDate).then(
-          (data) => {
-            if (data.success) {
-              const sessions = [...data.sessions, ...data.schoollifeSessions]
-              manageSessionsOptions(sessions)
-              commit('setSessionList', sessions)
-            }
-            commit('endLoading')
-          },
-          (err) => {
-            commit('endLoading')
-            // TODO toastr
-            console.error(err)
-          }
-        )
-      } else {
-        scheduleService.getGroupSessions(state.selectedGroup.groupId, state.startDate, state.endDate).then(
-          (data) => {
-            if (data.success) {
-              const sessions = data.sessions
-              manageSessionsOptions(sessions)
-              commit('setSessionList', sessions)
-            }
-            commit('endLoading')
-          },
-          (err) => {
-            commit('endLoading')
-            // TODO toastr
-            console.error(err)
-          }
-        )
-      }
-    } else if (state.sessionList.length) {
-      commit('setSessionList', [])
-    }
-  },
-  selectDates ({ commit, dispatch }, { start, end }) {
-    console.log('setDate', start, end)
-    commit('setDates', { start, end })
-    dispatch('getSessionList')
-  },
-  selectGroup ({ commit, dispatch }, group) {
-    commit('setSelectedUser', { userId: 0 })
-    if (group.groupId !== undefined) {
-      commit('setSelectedGroup', group)
-      dispatch('getSessionList')
-    } else {
-      // Happens when new school is selected
-      commit('setSelectedGroup', defaultGroup)
-    }
-  },
-  selectUser ({ commit, dispatch }, user) {
-    commit('setSelectedGroup', defaultGroup)
+  setSelectedUser ({ commit }, user) {
     commit('setSelectedUser', user)
-    dispatch('getSessionList')
+    commit('setSelectedGroup', undefined) // To keep separation
+  },
+  setSelectedGroup ({ commit }, group) {
+    commit('setSelectedUser', undefined)
+    commit('setSelectedGroup', group) // To keep separation
+  },
+  resetSessions ({ commit }) {
+    commit('setSessionList', [])
+  },
+  getUserSessions ({ state, commit }) {
+    const startDate = state.selectedDate.startOf('week')
+    const endDate = state.selectedDate.endOf('week')
+    commit('setLoading', true)
+    scheduleService.getUserSessions(state.selectedUser.userId, startDate, endDate).then((data) => {
+      commit('setLoading', false)
+      if (data.success) {
+        commit('setError', false)
+        const sessions = [...data.sessions, ...data.schoollifeSessions]
+        manageSessionsOptions(sessions)
+        commit('setSessionList', sessions)
+      } else {
+        commit('setError', true)
+      }
+    },
+    (err) => {
+      commit('endLoading')
+      commit('setError', true)
+      console.error(err)
+    })
+  },
+  getGroupSessions ({ state, commit }) {
+    const startDate = state.selectedDate.startOf('week')
+    const endDate = state.selectedDate.endOf('week')
+    commit('setLoading', true)
+    scheduleService.getGroupSessions(state.selectedGroup.groupId, startDate, endDate).then((data) => {
+      commit('setLoading', false)
+      if (data.success) {
+        commit('setError', false)
+        const sessions = data.sessions
+        manageSessionsOptions(sessions)
+        commit('setSessionList', sessions)
+      } else {
+        commit('setError', true)
+      }
+    },
+    (err) => {
+      commit('endLoading')
+      commit('setError', true)
+      console.error(err)
+    })
   },
   setCreateSessionModalDisplayed ({ commit }, isDisplayed) {
     commit('setCreateSessionModalDisplayed', isDisplayed)
