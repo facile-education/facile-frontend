@@ -110,7 +110,7 @@ export default {
     window.addEventListener('keydown', this.keyMonitor)
   },
   beforeUnmount () {
-    // window.removeEventListener('keydown', this.keyMonitor)
+    window.removeEventListener('keydown', this.keyMonitor)
   },
   created () {
     this.getSignature()

@@ -3,7 +3,7 @@
     <AnnouncementsHeader
       :nb-new-announcements="nbUnreadAnnouncements"
       :un-read-only="unReadOnly"
-      :has-arrows="!mq.phone && announcementsList.length > 1"
+      :has-arrows="hasArrows"
       :can-scroll-to-right="canScrollToRight"
       :can-scroll-to-left="canScrollToLeft"
       @updateUnreadOnly="updateUnreadOnlyValue"
@@ -91,7 +91,8 @@ export default {
       isAllAnnouncementsModalDisplayed: false,
       displayedAnnouncementIndex: 0,
       canScrollToLeft: false,
-      canScrollToRight: true
+      canScrollToRight: true,
+      hasArrows: false
     }
   },
   computed: {
@@ -102,7 +103,23 @@ export default {
   created () {
     this.loadAnnouncements()
   },
+  mounted () {
+    this.computeHasArrowsProperty()
+    window.addEventListener('resize', this.computeHasArrowsProperty)
+  },
+  beforeUnmount () {
+    window.removeEventListener('resize', this.computeHasArrowsProperty)
+  },
   methods: {
+    computeHasArrowsProperty () {
+      if (!this.mq.phone && this.announcementsList.length > 1) {
+        const containerWidth = this.$refs.announcementsList.getBoundingClientRect().width
+        const announcementItemWidth = 450 + 24
+        this.hasArrows = this.announcementsList.length * announcementItemWidth > containerWidth
+      } else {
+        this.hasArrows = false
+      }
+    },
     goNext () {
       if (this.displayedAnnouncementIndex < this.announcementsList.length - 1) {
         this.displayedAnnouncementIndex += 1
