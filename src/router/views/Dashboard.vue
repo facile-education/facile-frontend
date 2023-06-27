@@ -31,7 +31,7 @@
           class="first-line"
         >
           <PentilaDropdown
-            v-model="selectedUser"
+            v-model="selectedChild"
             :list="childList"
             :sort="false"
             display-field="fullName"
@@ -96,12 +96,22 @@ export default {
     },
     childList () {
       return this.$store.state.dashboard.childList
+    },
+    selectedChild: {
+      get () {
+        return this.$store.state.user.selectedChild
+      },
+      set (child) {
+        this.$store.commit('user/setSelectedChild', child)
+        this.selectedUser = child
+      }
     }
   },
   created () {
     this.$store.dispatch('dashboard/initDashboard').then(() => {
       if (this.childList.length > 0) {
-        this.selectedUser = this.childList[0]
+        this.$store.commit('user/setSelectedChild', this.childList[0])
+        this.selectedUser = this.selectedChild
       } else {
         this.selectedUser = this.$store.state.user
       }

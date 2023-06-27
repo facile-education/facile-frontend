@@ -80,7 +80,7 @@ export default {
   },
   methods: {
     redirect () {
-      this.$router.push({ name: SCHEDULE, params: { userId: this.userId, displayDate: this.currentDisplayedDate } })
+      this.$router.push({ name: SCHEDULE, query: { initialDisplayDate: this.currentDisplayedDate.format('YYYY/MM/DD') } })
     },
     goBefore () {
       this.getUserSchedule(this.currentDisplayedDate.add(-1, 'day'), false)

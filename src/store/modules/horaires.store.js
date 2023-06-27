@@ -76,6 +76,12 @@ export const actions = {
     )
   },
   getSessionList ({ state, commit, rootState }) {
+    console.log('getsesisonList from store', state.startDate && state.endDate &&
+      (state.selectedUser.userId !== 0 ||
+        state.selectedGroup.groupId !== 0 ||
+        (rootState.user.selectedChild !== undefined && rootState.user.selectedChild.userId !== 0) ||
+        (rootState.user.isStudent)))
+
     if (state.startDate && state.endDate &&
         (state.selectedUser.userId !== 0 ||
           state.selectedGroup.groupId !== 0 ||
@@ -128,6 +134,7 @@ export const actions = {
     }
   },
   selectDates ({ commit, dispatch }, { start, end }) {
+    console.log('setDate', start, end)
     commit('setDates', { start, end })
     dispatch('getSessionList')
   },

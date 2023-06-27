@@ -98,6 +98,10 @@ export default {
     nbWeeksBeforeCurrent: {
       type: Number,
       default: 2
+    },
+    initialDate: {
+      type: Object,
+      default: undefined
     }
   },
   emits: ['selectWeek'],
@@ -191,7 +195,7 @@ export default {
 
           if (firstWeekOfMonth.week() === dayjs().week()) {
             week.isCurrent = true
-            if (this.selectedWeek.weekNumber === undefined) {
+            if (this.selectedWeek.weekNumber === undefined && !this.initialDate) {
               this.onClickWeek(week)
             }
           }
@@ -230,8 +234,26 @@ export default {
 
     this.startDate = date.subtract(this.nbWeeksBeforeCurrent, 'week').startOf('week')
     this.endDate = date.add(this.nbWeeksAfterCurrent, 'week').endOf('week')
+
+    if (this.initialDate) {
+      const initialDisplayWeek = this.getWeekFromLocalWeekList(this.initialDate)
+      if (initialDisplayWeek !== undefined) {
+        this.onClickWeek(initialDisplayWeek)
+      }
+    }
   },
   methods: {
+    getWeekFromLocalWeekList (date) {
+      for (let i = 0; i < this.monthList.length; i++) {
+        const month = this.monthList[i]
+        for (let j = 0; j < month.weekList.length; j++) {
+          if (month.weekList[j].weekNumber === date.diff(dayjs(this.minDate, 'YYYY-MM-DD').startOf('week'), 'week') + 1) {
+            return month.weekList[j]
+          }
+        }
+      }
+      return undefined
+    },
     onClickNext () {
       // Go n weeks to the right
       this.startDate = this.startDate.add(this.nbWeeksDisplayed, 'week')
