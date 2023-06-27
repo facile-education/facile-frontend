@@ -9,6 +9,7 @@
 
     <Timeline
       v-if="!mq.phone"
+      :initial-date="initialDisplayDate"
       @selectWeek="onSelectWeek"
     />
 
@@ -65,6 +66,7 @@ export default {
   inject: ['mq'],
   data () {
     return {
+      initialDisplayDate: undefined,
       selectedDate: dayjs(),
       updatedSession: undefined,
       isEditModalDisplayed: false
@@ -79,6 +81,12 @@ export default {
     },
     isLoading () {
       return this.$store.state.horaires.isLoading
+    }
+  },
+  created () {
+    if (this.$route.query.initialDisplayDate) {
+      this.initialDisplayDate = dayjs(this.$route.query.initialDisplayDate, 'YYYY/MM/DD')
+      // this.selectedDate = this.initialDisplayDate
     }
   },
   methods: {
@@ -110,12 +118,14 @@ export default {
       }
     },
     onSelectDate (date) {
+      console.log('onSelectDate on parent component')
       this.selectedDate = dayjs(date).startOf('day')
 
       this.$store.dispatch('horaires/selectDates',
         { start: dayjs(date).subtract(1, 'day'), end: dayjs(date).add(2, 'day') })
     },
     onSelectWeek (week) {
+      console.log('on select week ', week)
       this.selectedDate = dayjs(week.firstDayOfWeek).startOf('day')
 
       this.$store.dispatch('horaires/selectDates',
