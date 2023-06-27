@@ -5,7 +5,6 @@ import constants from '@/api/constants'
 
 export {
   getStudentHomeworks,
-  getPreviousStudentHomeworks,
   getTeacherHomeworksToCorrect,
   setHomeworkDoneStatus,
   createHomework,
@@ -21,16 +20,6 @@ function getStudentHomeworks (studentId, minDateStr, maxDateStr, undoneOnly) {
     params: {
       studentId,
       minDateStr,
-      maxDateStr,
-      undoneOnly
-    }
-  }).then(response => response.data)
-}
-
-function getPreviousStudentHomeworks (studentId, maxDateStr, undoneOnly) {
-  return axios.get(constants.JSON_WS_URL + HOMEWORK_PATH + 'get-previous-student-homeworks', {
-    params: {
-      studentId,
       maxDateStr,
       undoneOnly
     }

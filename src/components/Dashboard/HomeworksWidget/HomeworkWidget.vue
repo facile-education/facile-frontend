@@ -60,7 +60,7 @@ import HomeworkItem from '@components/Dashboard/HomeworksWidget/HomeworkItem.vue
 import dayjs from 'dayjs'
 import PentilaUtils from 'pentila-utils'
 
-import { getFutureStudentHomeworks } from '@/api/homework.service'
+import { getStudentHomeworks } from '@/api/homework.service'
 import { CDT } from '@/constants/appConstants'
 import { nbHomeworksInWidget } from '@/constants/dashboardConstants'
 
@@ -120,7 +120,7 @@ export default {
     },
     getHomeworks () {
       this.isLoading = true
-      getFutureStudentHomeworks(this.userId, this.undoneOnly).then((data) => {
+      getStudentHomeworks(this.userId, dayjs().format('YYYY-MM-DD HH:mm'), dayjs().add(1, 'year').format('YYYY-MM-DD HH:mm'), this.undoneOnly).then((data) => {
         this.isLoading = false
         this.isFirstLoad = false
         if (data.success) {
