@@ -13,12 +13,15 @@
     <template #body>
       <button
         class="read-only-button"
+        :aria-label="$t('unreadFilter')"
+        :title="$t('unreadFilter')"
         @click="toggleReadOnly"
       >
-        <img
-          :src="unReadOnly ? require('@assets/options/icon_unread_filter_active.svg') : require('@assets/options/icon_unread_filter.svg')"
-          alt="unread filter"
-        >
+        <CustomIcon
+          icon-name="icon-unread_filter"
+          class="unread-filter-icon"
+          :class="{'theme-text-color': unReadOnly}"
+        />
       </button>
       <div
         v-if="isLoading"
@@ -48,6 +51,7 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import AnnouncementItem from '@components/Dashboard/AnnouncementsWidget/AnnouncementItem.vue'
 import dayjs from 'dayjs'
 
@@ -56,7 +60,7 @@ import { allAnnouncementsPaginationSize } from '@/constants/dashboardConstants'
 
 export default {
   name: 'AllAnnouncementsModal',
-  components: { AnnouncementItem },
+  components: { CustomIcon, AnnouncementItem },
   emits: ['close', 'refresh'],
   data () {
     return {
@@ -124,6 +128,7 @@ export default {
 <i18n locale="fr">
 {
   "title": "Liste des annonces",
+  "unreadFilter": "Filtrer les non lu",
   "errorPlaceholder": "Oups, une erreur est survenue..."
 }
 </i18n>
