@@ -96,6 +96,7 @@ export default {
         locale: frLocale,
         plugins: [timeGridPlugin],
         initialView: this.calendarView,
+        viewDidMount: this.goToDisplayDate,
         // 110 is toolbar (50) + margin (15) + timeline (45)
         height: this.mq.phone ? '100%' : 'max(800px, calc(100% - 110px))',
         expandRows: true,
@@ -164,12 +165,8 @@ export default {
   },
   watch: {
     displayDate: {
-      immediate: true,
-      handler (value) {
-        if (this.$refs.fullCalendar) {
-          const calendar = this.$refs.fullCalendar.getApi()
-          calendar.gotoDate(value.toDate())
-        }
+      handler () {
+        this.goToDisplayDate()
       }
     }
   },
@@ -179,6 +176,12 @@ export default {
     }
   },
   methods: {
+    goToDisplayDate () {
+      if (this.$refs.fullCalendar) {
+        const calendar = this.$refs.fullCalendar.getApi()
+        calendar.gotoDate(this.displayDate.toDate())
+      }
+    },
     optionClicked (option) {
       this.$emit('eventOptionClicked', { event: this.matchFCEventWithPropsEvents(this.selectedEvent), option: option })
       this.unselectEvent()
