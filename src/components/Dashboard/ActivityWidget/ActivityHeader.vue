@@ -113,7 +113,6 @@ h2 {
 }
 
 .header-pellet {
-  margin-left: 10px;
   @extend %dashboard-header-pellet;
 }
 

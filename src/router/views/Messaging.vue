@@ -13,7 +13,7 @@
           class="left"
           :class="{'menu-displayed': isMenuPanelDisplayed}"
         >
-          <Menu
+          <MessagingMenu
             data-test="messaging-menu"
             class="menu-panel"
             :class="{'menu-collapsed': !isMenuPanelDisplayed}"
@@ -35,7 +35,7 @@
           />
         </Transition>
         <Transition name="slide-menu">
-          <Menu
+          <MessagingMenu
             v-show="isMenuPanelDisplayed"
             data-test="messaging-menu"
             class="menu-panel"
@@ -65,7 +65,7 @@
 <script>
 
 import CreateButton from '@components/Base/CreateButton.vue'
-import Menu from '@components/Messaging/Menu'
+import MessagingMenu from '@components/Messaging/MessagingMenu.vue'
 import ThreadDetails from '@components/Messaging/ThreadDetails'
 import ThreadList from '@components/Messaging/ThreadList'
 import { defineAsyncComponent } from 'vue'
@@ -82,7 +82,7 @@ export default {
   components: {
     CreateButton,
     Layout,
-    Menu,
+    MessagingMenu,
     ThreadList,
     ThreadDetails,
     PreferencesModal,

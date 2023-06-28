@@ -129,7 +129,7 @@ import messageService from '@/api/messaging/message.service'
 import constants from '@/constants/messagingConstants'
 
 export default {
-  name: 'Menu',
+  name: 'MessagingMenu',
   components: {
     MenuRootFolder,
     BaseIcon,

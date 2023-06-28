@@ -13,9 +13,10 @@ function getRoute (entry) {
 }
 
 export const state = {
+  isLoadingMenu: false,
+  menuError: false,
   activeRoute: undefined,
   isMobileMenuDisplayed: false,
-  isMenuExpandedOnLoad: undefined,
   menu: undefined,
   menuExpanded: undefined,
   notifications: {
@@ -28,10 +29,15 @@ export const state = {
 }
 
 export const mutations = {
+  setIsLoadingMenu (state, payload) {
+    state.isLoadingMenu = payload
+  },
+  setMenuError (state, payload) {
+    state.menuError = payload
+  },
   initSideMenu (state, payload) {
     state.menu = payload.menu
     state.menuExpanded = payload.expanded
-    state.isMenuExpandedOnLoad = payload.expanded
     state.sessionTimeout = payload.sessionTimeout
     state.sessionTimeoutWarning = payload.sessionTimeoutWarning
     state.notifications = payload.notifications
@@ -44,6 +50,7 @@ export const mutations = {
   },
   updateActiveRoute (state, payload) {
     state.activeRoute = payload
+    state.isMobileMenuDisplayed = false
   },
   updateMessagingNotification (state, payload) {
     state.notifications.messaging -= payload
@@ -58,26 +65,32 @@ export const mutations = {
 
 export const actions = {
   initUserMenu ({ commit }) {
-    return neroService.getUserMenu().then(
-      (data) => {
-        if (data.success) {
-          data.menu.forEach(entry => {
-            if (entry.component !== undefined) {
+    commit('setIsLoadingMenu', true)
+    return neroService.getUserMenu().then((data) => {
+      commit('setIsLoadingMenu', false)
+      if (data.success) {
+        commit('setMenuError', false)
+        data.menu.forEach(entry => {
+          if (entry.component !== undefined) {
+            router.addRoute(getRoute(entry))
+          } else {
+            entry.menu.forEach(entry => {
               router.addRoute(getRoute(entry))
-            } else {
-              entry.menu.forEach(entry => {
-                router.addRoute(getRoute(entry))
-              })
-            }
-          })
-          commit('initSideMenu', { menu: data.menu, expanded: data.expanded, sessionTimeout: data.sessionTimeout, sessionTimeoutWarning: data.sessionTimeoutWarning, notifications: data.notifications })
-        }
-        // TODO else toastr
-      },
-      (err) => {
-        // TODO toastr
-        console.error(err)
-      })
+            })
+          }
+        })
+        data.menu = data.menu.sort((a, b) => {
+          return a.position > b.position
+        })
+        commit('initSideMenu', { menu: data.menu, expanded: data.expanded, sessionTimeout: data.sessionTimeout, sessionTimeoutWarning: data.sessionTimeoutWarning, notifications: data.notifications })
+      } else {
+        commit('setMenuError', true)
+      }
+    }, (err) => {
+      commit('setIsLoadingMenu', false)
+      commit('setMenuError', err)
+      console.error(err)
+    })
   },
   toggleMobileMenu ({ commit }) {
     commit('toggleMobileMenu')
@@ -97,13 +110,5 @@ export const actions = {
   },
   updateSchoollifeNotification ({ commit }, nbRead) {
     commit('updateSchoollifeNotification', nbRead)
-  }
-}
-
-export const getters = {
-  getMobileMenu (state) {
-    return router.getMobileMenu(state.menu).sort((itemA, itemB) => {
-      return (itemA.mobileOrder > itemB.mobileOrder) ? 1 : -1
-    })
   }
 }

@@ -8,7 +8,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'fontello';
-    src: url('../font/fontello.svg?78213072#fontello') format('svg');
+    src: url('../font/fontello.svg?3460860#fontello') format('svg');
   }
 }
 */
@@ -48,3 +48,14 @@
 }
 
 .icon-unread_filter:before { content: '\e800'; } /* '' */
+.icon-admin:before { content: '\e801'; } /* '' */
+.icon-calendar:before { content: '\e802'; } /* '' */
+.icon-clock:before { content: '\e803'; } /* '' */
+.icon-collab-workspace:before { content: '\e804'; } /* '' */
+.icon-folder:before { content: '\e805'; } /* '' */
+.icon-home:before { content: '\e806'; } /* '' */
+.icon-langues:before { content: '\e807'; } /* '' */
+.icon-resource:before { content: '\e808'; } /* '' */
+.icon-school-life:before { content: '\e809'; } /* '' */
+.icon-double-arrow:before { content: '\e80a'; } /* '' */
+.icon-clock-1:before { content: '\e80b'; } /* '' */
