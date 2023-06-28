@@ -101,7 +101,6 @@ export const mutations = {
     state.agreedTermsOfUse = true
   },
   setPasswordChange (state, payload) {
-    console.log('set psasword change to ', payload)
     state.passwordChange = payload
   }
 }

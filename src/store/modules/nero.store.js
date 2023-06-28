@@ -46,7 +46,6 @@ export const mutations = {
     state.activeRoute = payload
   },
   updateMessagingNotification (state, payload) {
-    console.log('update mess with nbRead=', payload.nbRead)
     state.notifications.messaging -= payload
   },
   updateCoursesNotification (state, payload) {

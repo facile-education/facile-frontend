@@ -57,6 +57,7 @@ export default {
 
 html, body, #app {
   height: 100%;
+  color: $neutral-100;
 
   @extend %typography-small;
 }
