@@ -1,5 +1,7 @@
-import scheduleService from '@/api/schedule.service'
 import dayjs from 'dayjs'
+
+import scheduleService from '@/api/schedule.service'
+
 export const state = {
   isConfigurationLoaded: false,
   startDate: dayjs(),
@@ -34,7 +36,6 @@ export const mutations = {
 }
 export const actions = {
   getSessionList ({ state, commit, rootState }) {
-    console.log('getSessionList')
     commit('loading')
     let targetUserId = 0
     if (rootState.user.selectedChild !== undefined && rootState.user.selectedChild.userId !== 0) {
