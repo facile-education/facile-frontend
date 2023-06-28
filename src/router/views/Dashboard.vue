@@ -23,33 +23,36 @@
           v-if="hasStatisticWidget"
           class="statistics"
         />
-      </div>
 
-      <div class="user-selection">
         <div
-          v-if="childList.length > 1"
-          class="first-line"
+          class="user-selection"
+          :class="{'has-homework-widget': hasHomeworkWidget && selectedUser}"
         >
-          <PentilaDropdown
-            v-model="selectedChild"
-            :list="childList"
-            :sort="false"
-            display-field="fullName"
-            class="child-selector"
-          />
-          <div class="line" />
-        </div>
-        <div class="selected-user-widgets">
-          <ScheduleWidget
-            v-if="hasEDTWidget && selectedUser"
-            :user-id="selectedUser.userId"
-            class="schedule"
-          />
-          <HomeworkWidget
-            v-if="hasHomeworkWidget && selectedUser"
-            :user-id="selectedUser.userId"
-            class="homework"
-          />
+          <div
+            v-if="childList.length > 1"
+            class="first-line"
+          >
+            <PentilaDropdown
+              v-model="selectedChild"
+              :list="childList"
+              :sort="false"
+              display-field="fullName"
+              class="child-selector"
+            />
+            <div class="line" />
+          </div>
+          <div class="selected-user-widgets">
+            <ScheduleWidget
+              v-if="hasEDTWidget && selectedUser"
+              :user-id="selectedUser.userId"
+              class="schedule"
+            />
+            <HomeworkWidget
+              v-if="hasHomeworkWidget && selectedUser"
+              :user-id="selectedUser.userId"
+              class="homework"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -151,6 +154,14 @@ export default {
   }
 }
 
+.user-selection {
+  flex: 1;
+
+  &.has-homework-widget {
+    flex: 6
+  }
+}
+
 .selected-user-widgets {
   display: flex;
   flex-wrap: wrap;
@@ -173,6 +184,11 @@ export default {
   }
 }
 
+@media screen and (max-width: 1035px) {
+  .personal-widgets {
+    flex-direction: column;
+  }
+}
 </style>
 
 <i18n locale="fr">
