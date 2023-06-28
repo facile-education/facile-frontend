@@ -45,6 +45,7 @@ $announcement-item-min-width: min(323px, 80vw);
 $announcement-item-horizontal-min-width: min(450px, 80vw);
 
 %read-only-button {
+  line-height: 1;
   height: 15px;
   width: 15px;
   padding: 0;
@@ -54,6 +55,10 @@ $announcement-item-horizontal-min-width: min(450px, 80vw);
   display: flex;
   align-items: center;
   justify-content: center;
+
+  .unread-filter-icon {
+    font-size: 20px;
+  }
 }
 
 %inline-modal-ck {

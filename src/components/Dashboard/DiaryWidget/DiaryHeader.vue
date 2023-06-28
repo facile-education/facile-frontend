@@ -14,10 +14,11 @@
         :title="$t('unreadFilter')"
         @click="toggleReadOnly"
       >
-        <img
-          :src="unReadOnly ? require('@/assets/options/icon_unread_filter_active.svg') : require('@/assets/options/icon_unread_filter.svg')"
-          alt="unread filter"
-        >
+        <CustomIcon
+          icon-name="icon-unread_filter"
+          class="unread-filter-icon"
+          :class="{'theme-text-color': unReadOnly}"
+        />
       </button>
     </div>
     <CreateButton
@@ -40,13 +41,14 @@
 
 <script>
 import CreateButton from '@components/Base/CreateButton.vue'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import Pellet from '@components/Base/Pellet.vue'
 import { defineAsyncComponent } from 'vue'
 const SaveDiaryEventModal = defineAsyncComponent(() => import('@components/Dashboard/DiaryWidget/SaveDiaryEventModal.vue'))
 
 export default {
   name: 'DiaryHeader',
-  components: { SaveDiaryEventModal, CreateButton, Pellet },
+  components: { CustomIcon, SaveDiaryEventModal, CreateButton, Pellet },
   props: {
     nbNewEvents: {
       type: Number,

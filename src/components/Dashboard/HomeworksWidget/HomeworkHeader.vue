@@ -9,22 +9,26 @@
     />
     <button
       class="read-only-button"
+      :aria-label="$t('unreadFilter')"
+      :title="$t('unreadFilter')"
       @click="toggleUndoneOnly"
     >
-      <img
-        :src="undoneOnly ? require('@/assets/options/icon_unread_filter_active.svg') : require('@/assets/options/icon_unread_filter.svg')"
-        alt="unread filter"
-      >
+      <CustomIcon
+        icon-name="icon-unread_filter"
+        class="unread-filter-icon"
+        :class="{'theme-text-color': undoneOnly}"
+      />
     </button>
   </header>
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import Pellet from '@components/Base/Pellet.vue'
 
 export default {
   name: 'HomeworkHeader',
-  components: { Pellet },
+  components: { CustomIcon, Pellet },
   props: {
     nbHomeworksUndone: {
       type: Number,
@@ -70,6 +74,7 @@ header {
 
 <i18n locale="fr">
 {
-  "homeworks": "Devoirs"
+  "homeworks": "Devoirs",
+  "unreadFilter": "Filtrer les non faits"
 }
 </i18n>
