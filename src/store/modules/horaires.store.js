@@ -1,4 +1,5 @@
 import scheduleService from '@/api/schedule.service'
+import notUsualSlotsConstants from '@/constants/notUsualSlots'
 import i18n from '@/i18n'
 
 const manageSessionsOptions = (sessions) => {
@@ -11,6 +12,16 @@ const manageSessionsOptions = (sessions) => {
         icon: 'fa-pencil-alt'
       })
     }
+  })
+}
+
+const formatNonUsualSlots = (sessions) => {
+  sessions.forEach(event => {
+    const slotType = notUsualSlotsConstants.getSlotTypeByNumber(event.type)
+    event.title = slotType.label
+    event.color = slotType.color
+    event.capacity = undefined
+    event.nbRegisteredStudents = undefined
   })
 }
 
@@ -70,6 +81,7 @@ export const actions = {
       commit('setLoading', false)
       if (data.success) {
         commit('setError', false)
+        formatNonUsualSlots(data.schoollifeSessions)
         const sessions = [...data.sessions, ...data.schoollifeSessions]
         manageSessionsOptions(sessions)
         commit('setSessionList', sessions)
