@@ -2,11 +2,9 @@
   <div
     ref="pellet"
     class="pellet theme-background-color"
+    :class="{'show-count': showCount}"
   >
-    <div
-      v-if="showCount"
-      :style="'font-size: ' + fontSize + 'px;'"
-    >
+    <div v-if="showCount">
       {{ text }}
     </div>
   </div>
@@ -27,6 +25,10 @@ export default {
     andMore: {
       type: Boolean,
       default: false
+    },
+    maxValue: {
+      type: Number,
+      default: 99
     }
   },
   data () {
@@ -36,31 +38,12 @@ export default {
   },
   computed: {
     text () {
-      return this.count + (this.andMore ? '+' : '')
+      if (this.count > this.maxValue) {
+        return this.maxValue + '+'
+      } else {
+        return this.count + (this.andMore ? '+' : '')
+      }
     }
-  },
-  mounted () {
-    const defaultFontSize = 20
-    const minFontSize = 10
-    const letterRatio = 0.5 // to compute letter width
-
-    // Get the width of the string and also the width of the element minus 6 to give it 3px side padding
-    const stringWidth = this.text.length * (defaultFontSize * letterRatio) // Very basic and inaccurate width computing
-    const elementWidth = this.$refs.pellet.getBoundingClientRect().width - 3
-
-    // Find out how much the font can grow in width.
-    const widthRatio = elementWidth / stringWidth
-    const newFontSize = Math.floor(15 * widthRatio)
-    const elementHeight = this.$refs.pellet.getBoundingClientRect().height - 5 // Same, give it padding by minus some length
-
-    // Pick a new font size so it will not be larger than the height of label.
-    let fontSizeToUse = Math.min(newFontSize, elementHeight)
-
-    if (fontSizeToUse < minFontSize) {
-      fontSizeToUse = minFontSize
-    }
-
-    this.fontSize = fontSizeToUse
   }
 }
 </script>
@@ -68,14 +51,25 @@ export default {
 <style scoped>
 
 .pellet{
-  margin-left: auto;
-  font-size: 12px;
-  font-weight: bold;
-  line-height: 20px;
-  color: white;
-  text-align: center;
+  height: 0.75em;
+  width: 0.75em;
   border-radius: 50%;
-  white-space: nowrap;
+
+  &.show-count {
+    height: 15px;
+    width: 20px;
+    border-radius: 8px;
+    display: flex;
+    padding: 4px;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    white-space: nowrap;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
 }
 
 </style>

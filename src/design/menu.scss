@@ -1,0 +1,61 @@
+@import "sizes";
+@import "typography";
+@import "colors";
+
+%menu-item {
+  position: relative;
+  width: 100%;
+  text-decoration: none;
+  &:not(.router-link-active) {
+    color: inherit;
+  }
+
+  .menu-item-icon {
+    font-size: 1.5rem;
+  }
+
+  .label {
+    @extend %font-medium-m;
+    color: #000;
+    white-space: nowrap;
+  }
+
+  &:hover {
+    background-color: $color-hover-bg;
+  }
+
+  &.root-menu-entry {
+    height: $side-menu-entry-height;
+    line-height: $side-menu-entry-height;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &.expanded {
+      justify-content: flex-start;
+      padding: 8px;
+      gap: 8px;
+    }
+
+    &::after {
+      @extend %menu-separator;
+      bottom: 0;
+    }
+  }
+
+  &.sub-menu-item {
+    display: block;
+    height: $side-menu-sub-entry-height;
+    line-height: $side-menu-sub-entry-height;
+    text-align: left;
+  }
+}
+
+%menu-separator {
+  content: "";
+  position: absolute;
+  left: 3%;
+  width: 94%;
+  height: 1px;
+  background-color: $color-border;
+}

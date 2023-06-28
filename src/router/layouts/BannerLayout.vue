@@ -10,12 +10,12 @@
   >
     <Banner class="nero-header theme-background-color" />
 
-    <SideMenu
+    <Menu
       v-if="!mq.phone"
       class="nero-menu"
     />
     <Transition name="fade">
-      <MobileMenu v-if="isMobileMenuDisplayed" />
+      <Menu v-if="isMobileMenuDisplayed" />
     </Transition>
 
     <section class="nero-body">
@@ -100,12 +100,11 @@ const Banner = defineAsyncComponent(() => import('@/components/Banner/Banner'))
 const ConflictModal = defineAsyncComponent(() => import('@/components/Documents/Modals/ConflictModal'))
 const FileDisplayModal = defineAsyncComponent(() => import('@/components/Documents/FileDisplay/FileDisplayModal'))
 const HelpModal = defineAsyncComponent(() => import('@components/HelpModal/HelpModal'))
-const MobileMenu = defineAsyncComponent(() => import('@components/Menu/MobileMenu'))
 const NotAllowed = defineAsyncComponent(() => import('@router/views/NotAllowed'))
 const PasswordChange = defineAsyncComponent(() => import('@router/views/PasswordChange'))
 const Popup = defineAsyncComponent(() => import('@components/Base/Popup'))
 const QuickSearchPanel = defineAsyncComponent(() => import('@components/Search/QuickSearchPanel'))
-const SideMenu = defineAsyncComponent(() => import('@/components/Menu/SideMenu'))
+const Menu = defineAsyncComponent(() => import('@/components/Menu/Menu'))
 const UploadProgression = defineAsyncComponent(() => import('@components/Documents/UploadProgression'))
 const WarningModal = defineAsyncComponent(() => import('@/components/Nero/WarningModal'))
 
@@ -119,12 +118,11 @@ export default {
     ConflictModal,
     FileDisplayModal,
     HelpModal,
-    MobileMenu,
     NotAllowed,
     PasswordChange,
     Popup,
     QuickSearchPanel,
-    SideMenu,
+    Menu,
     UploadProgression,
     WarningModal
   },

@@ -1,0 +1,150 @@
+<template>
+  <section
+    :class="{'open': expanded, 'phone-menu': mq.phone}"
+    class="menu"
+  >
+    <button
+      v-if="mq.phone"
+      class="close-menu"
+      :aria-label="$t('close')"
+      :title="$t('close')"
+      @click="closeMobileMenu"
+    >
+      <img
+        class="cross-icon"
+        src="@assets/big-cross-black.svg"
+        alt="remove"
+      >
+    </button>
+
+    <MenuItemList class="menu-item-list" />
+
+    <button
+      v-if="!mq.phone"
+      class="expand-menu"
+      :aria-label="expanded ? $t('collapse') : $t('extend')"
+      :title="expanded ? $t('collapse') : $t('extend')"
+      @click="toggleSideMenu"
+    >
+      <CustomIcon
+        class="arrow-icon"
+        :class="{'rotated': !expanded}"
+        icon-name="icon-double-arrow"
+      />
+    </button>
+  </section>
+</template>
+
+<script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
+import MenuItemList from '@components/Menu/MenuItemList.vue'
+
+export default {
+  name: 'Menu',
+  components: {
+    CustomIcon,
+    MenuItemList
+  },
+  inject: ['mq'],
+  computed: {
+    expanded () {
+      return this.$store.state.nero.menuExpanded
+    }
+  },
+  methods: {
+    toggleSideMenu () {
+      this.$store.dispatch('nero/toggleSideMenu')
+    },
+    closeMobileMenu () {
+      this.$store.dispatch('nero/toggleMobileMenu')
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+@import "@design";
+
+.menu {
+  height: 100%;
+  z-index: $side-menu-z-index;
+  position: relative;
+  background-color: $color-menu-bg;
+  border-right: $border;
+  padding-top: 1rem;
+  @extend %no-text-highlight;
+
+  &.open .menu-item-list {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}
+
+.phone-menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: $mobile-menu-z-index;
+}
+
+button {
+  cursor: pointer;
+  background-color: transparent;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+.menu-item-list {
+  @include calc(height, '100% - #{$side-menu-entry-height}');
+  overflow: visible;
+}
+
+.close-menu {
+  width: 100%;
+  text-align: left;
+  padding-left: 16px;
+
+  img {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
+
+.expand-menu {
+  position: absolute;
+  bottom: 0;
+  height: $side-menu-entry-height;
+  line-height: $side-menu-entry-height;
+  font-size: $side-menu-icon-size;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 100%;
+
+  &::before {
+    @extend %menu-separator;
+    top: 0;
+  }
+
+  .arrow-icon {
+    transition: transform .5s;
+  }
+}
+
+.rotated {
+  transform: rotate(180deg);
+}
+</style>
+
+<i18n locale="fr">
+{
+  "close": "Fermer le menu",
+  "collapse": "Réduire",
+  "extend": "Étendre"
+}
+</i18n>

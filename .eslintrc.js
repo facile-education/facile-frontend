@@ -10,6 +10,7 @@ module.exports = {
     'no-console': 'off',
     // 'no-debugger': import.meta.env.NODE_ENV === 'production' ? 'error' : 'off',
     'vue/no-v-html': 'off', // Ignore but we have to sanitize all of them
-    'simple-import-sort/imports': 'error'
+    'simple-import-sort/imports': 'error',
+    'vue/multi-word-component-names': 'off'
   }
 }
