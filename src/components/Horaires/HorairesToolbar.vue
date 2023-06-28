@@ -13,8 +13,9 @@
       <span>{{ $t('add') }}</span>
     </PentilaButton>
 
+    <!-- To switch between user selection and group selection -->
     <NeroIcon
-      v-if="mq.phone"
+      v-if="mq.phone && !$store.state.user.isStudent && !$store.state.user.isParent"
       :name="iconClass"
       class="selection"
       @click="toggleSelection"
@@ -170,7 +171,9 @@ export default {
     }
   },
   created () {
-    this.getGroupList()
+    if (this.groupList === undefined && !this.$store.state.user.isStudent && !this.$store.state.user.isParent) {
+      this.getGroupList()
+    }
 
     // Pre-select him if user is a teacher
     if (this.$store.state.user.isTeacher) {
