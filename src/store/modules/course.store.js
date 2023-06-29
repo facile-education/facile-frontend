@@ -1,5 +1,6 @@
 import dayjs from 'dayjs'
 
+import { setHomeworkDoneStatus } from '@/api/homework.service'
 import scheduleService from '@/api/schedule.service'
 
 export const state = {
@@ -7,6 +8,7 @@ export const state = {
   startDate: dayjs(),
   endDate: dayjs().add(1, 'day'),
   isLoading: false,
+  homeworkList: [],
   sessionList: [],
   selectedSession: undefined,
   isCreateSessionModalDisplayed: false
@@ -24,6 +26,9 @@ export const mutations = {
     state.endDate = end
     state.isConfigurationLoaded = true
   },
+  setHomeworkList (state, payload) {
+    state.homeworkList = payload
+  },
   setSessionList (state, payload) {
     state.sessionList = payload
   },
@@ -32,6 +37,12 @@ export const mutations = {
   },
   setCreateSessionModalDisplayed (state, payload) {
     state.isCreateSessionModalDisplayed = payload
+  },
+  updateHomeworkDoneStatus (state, { homeworkId, isDone }) {
+    const index = state.homeworkList.map(homework => homework.homeworkId).indexOf(homeworkId)
+    if (index !== -1) {
+      state.homeworkList[index].isDone = isDone
+    }
   }
 }
 export const actions = {
@@ -73,7 +84,7 @@ export const actions = {
       )
     }
   },
-  selectSession ({ commit, dispatch }, session) {
+  selectSession ({ commit }, session) {
     commit('setSelectedSession', session)
   },
   selectDates ({ commit, dispatch }, { start, end }) {
@@ -82,5 +93,18 @@ export const actions = {
   },
   setCreateSessionModalDisplayed ({ commit }, isDisplayed) {
     commit('setCreateSessionModalDisplayed', isDisplayed)
+  },
+  setHomeworkDone ({ commit }, { homeworkId, isDone }) {
+    setHomeworkDoneStatus(homeworkId, isDone).then(
+      (data) => {
+        if (data.success) {
+          commit('updateHomeworkDoneStatus', { homeworkId, isDone })
+        }
+      },
+      (err) => {
+        // TODO toastr
+        console.error(err)
+      }
+    )
   }
 }
