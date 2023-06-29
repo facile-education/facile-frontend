@@ -1,8 +1,10 @@
 import axios from 'axios'
-import constants from '@/api/constants'
 import PentilaUtils from 'pentila-utils'
 
+import constants from '@/api/constants'
+
 export {
+  getCourses,
   getCourseContent,
   getSessionDetails,
   savePrivateNotes,
@@ -19,6 +21,12 @@ export {
 const COURSE_PATH = '/course.course/'
 const SESSION_CONTENT_PATH = '/course.sessioncontent/'
 const CONTENT_BLOCK_PATH = '/course.contentblock/'
+
+function getCourses () {
+  return axios.get(constants.JSON_WS_URL + COURSE_PATH + 'get-user-courses', {
+    params: {}
+  }).then(response => response.data)
+}
 
 function getCourseContent (courseId, minDate, maxDate) {
   return axios.get(constants.JSON_WS_URL + COURSE_PATH + 'get-course-content', {
