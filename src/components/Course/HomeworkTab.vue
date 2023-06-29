@@ -1,55 +1,135 @@
 <template>
   <div class="main">
-    <p>dfdf</p>
+    <div class="toolbar">
+      <h3 class="title">
+        {{ $t('thisWeek') }}
+        <a
+          v-t="{ path: 'works', args: { count: nbHomeworks } }"
+          href="#"
+          @click="loadCurrentWeek()"
+        />
+      </h3>
+    </div>
     <div
       v-if="homeworks && homeworks.length === 0"
       class="main-label"
     >
-      <p>{{ $t('no-homeworks') }}</p>
+      <p>{{ $t('noHomeworks') }}</p>
     </div>
     <div
       v-else
       class="homeworks"
     >
-      <Homework
-        v-for="homework in sortedHomeworks"
-        :key="homework"
+      <template
+        v-for="day in homeworksByDay"
+        :key="day.dayId"
       >
-        <p>devoir</p>
-      </homework>
+        <span class="target-date">{{ day.label }}</span>
+        <StudentHomework
+          v-for="homework in day.homeworkList"
+          :key="homework.homeworkId"
+          :homework="homework"
+        />
+      </template>
     </div>
+    <h3 class="title">
+      {{ $t('nextWeek') }}
+      <a
+        v-t="{ path: 'works', args: { count: nbNextHomeworks } }"
+        href="#"
+        @click="loadNextWeek()"
+      />
+    </h3>
+    <h3 class="title">
+      {{ $t('later') }}
+      <a
+        v-t="{ path: 'works', args: { count: nbLaterHomeworks } }"
+        href="#"
+        @click="loadLaterHomeworks()"
+      />
+    </h3>
   </div>
 </template>
 
 <script>
+import StudentHomework from '@components/Course/StudentHomework.vue'
 import dayjs from 'dayjs'
-import PentilaUtils from 'pentila-utils'
 
-import { getStudentHomeworks } from '@/api/homework.service'
+import { getStudentHomeworks, getStudentUndoneCount } from '@/api/homework.service'
 
 export default {
   name: 'HomeworkTab',
-  components: {},
+  components: { StudentHomework },
   data () {
     return {
-      homeworks: []
+      nbHomeworks: 0,
+      nbLaterHomeworks: 0,
+      nbNextHomeworks: 0
     }
   },
   computed: {
-    sortedHomeworks () {
-      return PentilaUtils.Array.sortWithString(this.homeworks, false, 'targetDate')
+    homeworks () {
+      return this.$store.state.course.homeworkList
+    },
+    homeworksByDay () {
+      const homeworksByDay = []
+      this.homeworks.forEach((homework) => {
+        const homeworkDay = 366 * dayjs(homework.toDate).year() + 31 * dayjs(homework.toDate).month() + dayjs(homework.toDate).date()
+        const dayIndex = homeworksByDay.map(homework => homework.dayId).indexOf(homeworkDay)
+
+        if (dayIndex !== -1) {
+          homeworksByDay[dayIndex].homeworkList.push(homework)
+        } else {
+          homeworksByDay.push({ dayId: homeworkDay, label: dayjs(homework.toDate).format(this.$t('for') + ' dddd DD MMM'), homeworkList: [homework] })
+        }
+      })
+
+      return homeworksByDay
+    },
+    studentId () {
+      // TODO if parent
+      return this.$store.state.user.userId
     }
   },
   created () {
-    const minDate = dayjs().day(0).format('YYYY-MM-DD HH:mm')
-    const maxDate = dayjs().day(6).format('YYYY-MM-DD HH:mm')
-    getStudentHomeworks(this.$store.state.user.userId, minDate, maxDate, false).then((data) => {
+    this.loadCurrentWeek()
+
+    getStudentUndoneCount(this.studentId, dayjs().format('YYYY-MM-DD HH:mm'), dayjs().day(6).format('YYYY-MM-DD HH:mm')).then((data) => {
       if (data.success) {
-        this.homeworks = data.homeworks
+        this.nbHomeworks = data.nbUndoneHomeworks
+      }
+    })
+
+    getStudentUndoneCount(this.studentId, dayjs().day(0).add(7, 'day').format('YYYY-MM-DD HH:mm'), dayjs().day(6).add(7, 'day').format('YYYY-MM-DD HH:mm')).then((data) => {
+      if (data.success) {
+        this.nbNextHomeworks = data.nbUndoneHomeworks
+      }
+    })
+
+    getStudentUndoneCount(this.studentId, dayjs().day(0).add(14, 'day').format('YYYY-MM-DD HH:mm'), dayjs().day(6).add(50, 'day').format('YYYY-MM-DD HH:mm')).then((data) => {
+      if (data.success) {
+        this.nbLaterHomeworks = data.nbUndoneHomeworks
       }
     })
   },
   methods: {
+    loadCurrentWeek () {
+      this.updateHomeworkList(dayjs().startOf('day'), dayjs().day(6))
+    },
+    loadLaterHomeworks () {
+      // TODO Max date
+      this.updateHomeworkList(dayjs().day(0).add(14, 'day'), dayjs().day(6).add(50, 'day'))
+    },
+    loadNextWeek () {
+      this.updateHomeworkList(dayjs().day(0).add(7, 'day'), dayjs().day(6).add(7, 'day'))
+    },
+    updateHomeworkList (minDate, maxDate) {
+      getStudentHomeworks(this.$store.state.user.userId, minDate.format('YYYY-MM-DD HH:mm'), maxDate.format('YYYY-MM-DD HH:mm'), false).then((data) => {
+        if (data.success) {
+          this.$store.commit('course/setHomeworkList', data.homeworks)
+        }
+      })
+    }
   }
 }
 </script>
@@ -57,28 +137,50 @@ export default {
 <style lang="scss" scoped>
 @import '@design';
 
-  .main-label {
-    margin-top: 10em;
-    text-align: center;
-  }
+.main-label {
+  text-align: center;
+  padding: 1rem;
 
+  border-radius: 6px;
+  background: $neutral-20;
+
+  @extend %font-regular-l;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  align-self: stretch;
+}
+
+.title {
+  @extend %font-heading-xs;
+}
+
+.homeworks {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  align-self: stretch;
+}
+
+.target-date {
+  margin-top: 0.5rem;
+  color: $neutral-80;
+
+  @extend %font-medium-m;
+}
 </style>
 
 <i18n locale="fr">
 {
-  "action": "Editer",
-  "display": "Résultats 1",
-  "to": "à",
-  "over": "sur un total de",
-  "create": "Ajouter un utilisateur",
-  "no-users" : "Aucun compte manuel pour cet établissement",
-  "please-select-school": "Veuillez sélectionner un établissement",
-  "email": "E-mail",
-  "firstName": "Prénom",
-  "lastName": "Nom",
-  "login": "Identifiant",
-  "role": "Profil",
-  "search": "Recherche",
-  "nameFilterPlaceholder": "Filtrer par nom / prénom"
+  "for": "Pour ",
+  "later": "Plus tard :",
+  "nextWeek": "La semaine prochaine :",
+  "noHomeworks": "Aucun travail à faire",
+  "thisWeek": "Cette semaine :",
+  "works": "Aucun travail | {count} Travail | {count} Travaux"
 }
 </i18n>

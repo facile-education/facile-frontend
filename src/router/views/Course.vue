@@ -19,7 +19,7 @@
     </PentilaTabList>
     <PentilaTabList v-else>
       <PentilaTabItem
-        :title="$t('homework')"
+        :title="$t('homework') + ' ' + nbUndoneHomeworks"
       >
         <HomeworkTab />
       </PentilaTabItem>
@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import { getStudentUndoneCount } from '@/api/homework.service'
 import CourseTab from '@/components/Course/CourseTab.vue'
 import HomeworkTab from '@/components/Course/HomeworkTab.vue'
 import ScheduleTab from '@/components/Course/ScheduleTab.vue'
@@ -51,19 +52,45 @@ export default {
   inject: ['mq'],
   data () {
     return {
+      nbUndoneHomeworks: 0
     }
   },
   computed: {
     isTeacher () {
       return this.$store.state.user.isTeacher
+    },
+    studentId () {
+      // TODO if parent
+      return this.$store.state.user.userId
     }
   },
   created () {
+    if (this.$store.state.user.isStudent || this.$store.state.user.isParent) {
+      getStudentUndoneCount(this.studentId).then((data) => {
+        if (data.success) {
+          this.nbUndoneHomeworks = data.nbUndoneHomeworks
+        }
+      })
+    }
   },
   methods: {
   }
 }
 </script>
+
+<style lang="scss">
+@import '@design';
+
+.base-tab {
+  color: $neutral-100;
+
+  @extend %font-regular-l;
+
+  &.active {
+    @extend %font-medium-l;
+  }
+}
+</style>
 
 <style lang="scss" scoped>
 </style>

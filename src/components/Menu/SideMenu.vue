@@ -45,7 +45,6 @@ export default {
       return this.$store.state.nero.menuExpanded
     },
     menu () {
-      console.log('menu=', this.$store.state.nero.menu)
       return _.orderBy(this.$store.state.nero.menu, 'position', 'asc')
     }
   },
