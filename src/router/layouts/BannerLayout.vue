@@ -53,6 +53,11 @@
       <UploadProgression />
     </div>
 
+    <CookiesAgreement
+      v-if="!hasConfirmCookiesAgreement && !cookiesMustBeClosed"
+      @close="cookiesMustBeClosed=true"
+    />
+
     <teleport
       v-for="(file, index) in openFiles"
       :key="index"
@@ -89,6 +94,8 @@
 </template>
 
 <script>
+import CookiesAgreement from '@components/Nero/CookiesAgreement.vue'
+import { getCookie } from '@utils/browser.util'
 import { defineAsyncComponent } from 'vue'
 
 import { popupDurationTime } from '@/constants/appConstants'
@@ -111,6 +118,7 @@ const WarningModal = defineAsyncComponent(() => import('@/components/Nero/Warnin
 export default {
   name: 'BannerLayout',
   components: {
+    CookiesAgreement,
     AccessModal,
     AgreeTermsOfUse,
     AuthenticationRequired,
@@ -131,6 +139,11 @@ export default {
     isAllowed: {
       type: Boolean,
       default: true
+    }
+  },
+  data () {
+    return {
+      cookiesMustBeClosed: false
     }
   },
   computed: {
@@ -179,6 +192,10 @@ export default {
     },
     userId () {
       return this.user.userId
+    },
+    hasConfirmCookiesAgreement () {
+      console.log(getCookie('cookiesAgreement'))
+      return getCookie('cookiesAgreement') === 'true'
     }
   },
   created () {
