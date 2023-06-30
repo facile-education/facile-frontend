@@ -16,7 +16,7 @@
       </template>
 
       <template #body>
-        <PentilaTabList>
+        <PentilaTabList ref="tabList">
           <PentilaTabItem :title="$t('versionsTabLabel')">
             <VersionsDetails />
           </PentilaTabItem>
@@ -51,9 +51,40 @@ export default {
     TermsOfUse
   },
   inject: ['mq'],
+  props: {
+    tab: {
+      type: String,
+      default: 'version'
+    }
+  },
   emits: ['close'],
+  created () {
+    this.$store.dispatch('misc/incrementModalCount')
+  },
+  mounted () {
+    this.selectTab(this.tab)
+  },
   methods: {
+    selectTab (tabName) {
+      switch (tabName) {
+        case 'version':
+          this.$refs.tabList.selectTab(0)
+          break
+        case 'termOfUse':
+          this.$refs.tabList.selectTab(1)
+          break
+        case 'privacy':
+          this.$refs.tabList.selectTab(2)
+          break
+        case 'accessibility':
+          this.$refs.tabList.selectTab(3)
+          break
+        default:
+          this.$refs.tabList.selectTab(0)
+      }
+    },
     onClose () {
+      this.$store.dispatch('misc/decreaseModalCount')
       this.$emit('close')
     }
   }
