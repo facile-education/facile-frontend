@@ -1,5 +1,8 @@
 <template>
-  <div class="profile">
+  <div
+    class="profile"
+    @click="togglePopoverMenu"
+  >
     <img
       class="picture"
       :src="userPicture"
@@ -16,7 +19,6 @@
       v-if="mq.desktop"
       icon="chevron-down"
       data-test="togglePopoverMenu"
-      @click="togglePopoverMenu"
     />
     <BannerPopoverMenu v-if="isPopoverMenuDisplayed" />
   </div>
