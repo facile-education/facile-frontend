@@ -108,7 +108,7 @@ router.beforeEach((to, from, next) => {
 
 router.afterEach((to, from) => {
   // Update menu CSS
-  store.dispatch('nero/updateActiveRoute', to.path)
+  store.dispatch('menu/updateActiveRoute', to.path)
 
   // Matomo stats : use window._paq instead of this.$matomo because this one is not in the context
   if (store.state.user.schoolList !== undefined && store.state.user.schoolList[0] !== undefined) {

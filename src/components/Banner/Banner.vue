@@ -55,10 +55,10 @@ export default {
   },
   computed: {
     isSessionWarningDisplayed () {
-      return this.inactionTime > this.$store.state.nero.sessionTimeout - this.$store.state.nero.sessionTimeoutWarning
+      return this.inactionTime > this.$store.state.menu.sessionTimeout - this.$store.state.menu.sessionTimeoutWarning
     },
     getRemainingTime () {
-      const remainingTime = this.$store.state.nero.sessionTimeout - this.inactionTime
+      const remainingTime = this.$store.state.menu.sessionTimeout - this.inactionTime
       const totalSeconds = Math.floor(remainingTime / 1000)
       const nbMinutes = Math.floor(totalSeconds / 60)
       const nbSeconds = totalSeconds % 60
@@ -69,7 +69,7 @@ export default {
   mounted () {
     this.interval = setInterval(() => {
       this.inactionTime = dayjs() - this.$store.state.user.lastActionDate
-      if (this.inactionTime > this.$store.state.nero.sessionTimeout) {
+      if (this.inactionTime > this.$store.state.menu.sessionTimeout) {
         // Logout
         window.location = constants.LOGOUT_URL
       }
@@ -80,7 +80,7 @@ export default {
   },
   methods: {
     onShowMobileMenu () {
-      this.$store.dispatch('nero/toggleMobileMenu')
+      this.$store.dispatch('menu/toggleMobileMenu')
     },
     extendSession () {
       fetch('/html/portal/extend_session.jsp').then(response => response.text()).then(response => {

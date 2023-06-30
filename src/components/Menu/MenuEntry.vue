@@ -44,16 +44,16 @@ export default {
   },
   computed: {
     isExpanded () {
-      return this.mq.phone || this.$store.state.nero.menuExpanded
+      return this.mq.phone || this.$store.state.menu.menuExpanded
     },
     notificationCount () {
       switch (this.menuEntry.i18nKey) {
         case 'messaging':
-          return this.$store.state.nero.notifications.messaging
+          return this.$store.state.menu.notifications.messaging
         case 'courses':
-          return this.$store.state.nero.notifications.courses
+          return this.$store.state.menu.notifications.courses
         case 'horaires-hors-cadre':
-          return this.$store.state.nero.notifications.schoollife
+          return this.$store.state.menu.notifications.schoollife
         default:
           return 0
       }

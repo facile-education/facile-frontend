@@ -138,7 +138,7 @@ export default {
       return this.$store.getters['conflictModal/isConflictModalDisplayed']
     },
     isMobileMenuDisplayed () {
-      return this.$store.state.nero.isMobileMenuDisplayed
+      return this.$store.state.menu.isMobileMenuDisplayed
     },
     isHelpModalDisplayed () {
       return this.$store.state.help.isHelpModalDisplayed
@@ -156,7 +156,7 @@ export default {
       return this.$store.getters['warningModal/isWarningModalDisplayed']
     },
     menuExpanded () {
-      return this.$store.state.nero.menuExpanded
+      return this.$store.state.menu.menuExpanded
     },
     neroClasses () {
       return {
@@ -185,8 +185,8 @@ export default {
     if (this.userId === undefined) {
       this.$store.dispatch('user/initUserInformations')
     }
-    if (this.$store.state.nero.menu === undefined) {
-      this.$store.dispatch('nero/initUserMenu')
+    if (this.$store.state.menu.menu === undefined) {
+      this.$store.dispatch('menu/initUserMenu')
     }
   },
   methods: {
