@@ -93,10 +93,9 @@ export default {
 
 <style lang="scss" >
 .information-modal {
-  .window-body {
-    .tab-content {
-      height: calc(100% - 55px);
-    }
+  .window-body .tab-content {
+    max-height: 70vh !important;
+    overflow: auto;
   }
 }
 
