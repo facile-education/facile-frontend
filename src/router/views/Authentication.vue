@@ -15,7 +15,14 @@
         :title="$t('entLogin')"
         class="btn"
       />
-      <div class="guest">
+      <p
+        v-if="isMobileApp"
+      >
+        {{ fullUrl }}
+      </p>
+      <div
+        class="guest"
+      >
         <span
           v-t="'parentOther'"
           @click="toggleGuestForm"
@@ -127,6 +134,7 @@ import axios from 'axios'
 
 import authenticationService from '@/api/authentication.service'
 import constants from '@/api/constants'
+import mobileService from '@/api/mobile.service'
 import { GET_USER_INFOS_WS, USER_PATH } from '@/api/user.service'
 import { DASHBOARD } from '@/constants/appConstants'
 import PublicLayout from '@/router/layouts/PublicLayout'
@@ -158,6 +166,14 @@ export default {
       recoveryLogin: '',
       passwordRecoveryUrl: constants.BASE_API_URL + '/home?p_p_id=com_liferay_login_web_portlet_LoginPortlet&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&_com_liferay_login_web_portlet_LoginPortlet_javax.portlet.action=/login/forgot_password&_com_liferay_login_web_portlet_LoginPortlet_mvcRenderCommandName=/login/forgot_password',
       checkEmail: false
+    }
+  },
+  computed: {
+    isMobileApp () {
+      return window.location.href.includes('mobile_app')
+    },
+    fullUrl () {
+      return window.location.href
     }
   },
   created () {
@@ -209,15 +225,51 @@ export default {
             window._paq.push(['setUserId', Math.random().toString(36)])
             window._paq.push(['trackPageView'])
 
-            // Route to landing page
-            if (this.redirect) {
-              this.$router.push(this.redirect)
+            const redirectUrl = this.redirect ? this.redirect : DASHBOARD
+            if (this.isMobileApp) {
+              // Manage mobile token
+              this.manageMobileApp(redirectUrl)
             } else {
-              this.$router.push(DASHBOARD)
+              // Route to landing page
+              this.$router.push(redirectUrl)
             }
           })
         }
       })
+    },
+    manageMobileApp (redirectUrl) {
+      console.log('manage mobile app')
+      let refreshToken = ''
+      let userId = 0
+      fetch(constants.JSON_WS_URL + USER_PATH + GET_USER_INFOS_WS + '?p_auth=' + this.p_auth).then(response => {
+        if (response.status === 200) {
+          userId = response.userId
+        }
+      }
+      )
+      if (window.location.href.includes('mobile_token')) {
+        console.log('refresh')
+        // Refreshing with new token
+        const mobileToken = new URLSearchParams(window.location.search).get('mobile_token')
+        mobileService.refreshMobileToken(mobileToken).then((response) => {
+          if (response.success) {
+            refreshToken = response.refreshToken
+            const serviceUrl = 'pentila://authorized?refresh_token=' + refreshToken + '&user_id=' + userId + '&home_url=' + encodeURI(window.location.href + redirectUrl, 'UTF-8')
+            window.location = serviceUrl
+          }
+        })
+      } else {
+        console.log('add')
+        // Adding new token
+        mobileService.addMobileToken().then((response) => {
+          if (response.success) {
+            refreshToken = response.refreshToken
+            const mobileUrl = encodeURI(window.location.protocol + '//' + window.location.hostname + redirectUrl, 'UTF-8')
+            const serviceUrl = 'pentila://authorized?refresh_token=' + refreshToken + '&user_id=' + userId + '&home_url=' + mobileUrl
+            window.location = serviceUrl
+          }
+        })
+      }
     },
     handleKeyPressed () {
       this.isError = false
