@@ -48,15 +48,15 @@ export default {
   inject: ['mq'],
   computed: {
     expanded () {
-      return this.$store.state.nero.menuExpanded
+      return this.$store.state.menu.menuExpanded
     }
   },
   methods: {
     toggleSideMenu () {
-      this.$store.dispatch('nero/toggleSideMenu')
+      this.$store.dispatch('menu/toggleSideMenu')
     },
     closeMobileMenu () {
-      this.$store.dispatch('nero/toggleMobileMenu')
+      this.$store.dispatch('menu/toggleMobileMenu')
     }
   }
 }

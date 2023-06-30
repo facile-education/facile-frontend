@@ -42,7 +42,7 @@ export const actions = {
         commit('initCreateVersionMessage', data.success)
         // if success, update versionList
         this.dispatch('about/getVersionList')
-        this.dispatch('nero/closeVersionEditionModal')
+        this.dispatch('menu/closeVersionEditionModal')
         // TODO popup message "success"
       } else {
         commit('initCreateVersionMessage', data.success)

@@ -40,13 +40,13 @@ export default {
   components: { MenuCategory, MenuEntry },
   computed: {
     isLoading () {
-      return this.$store.state.nero.isLoadingMenu
+      return this.$store.state.menu.isLoadingMenu
     },
     menuError () {
-      return this.$store.state.nero.menuError
+      return this.$store.state.menu.menuError
     },
     menu () {
-      return this.$store.state.nero.menu
+      return this.$store.state.menu.menu
     }
   }
 }

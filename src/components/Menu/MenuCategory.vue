@@ -69,7 +69,7 @@ export default {
   },
   computed: {
     isMenuExpanded () {
-      return this.mq.phone || this.$store.state.nero.menuExpanded
+      return this.mq.phone || this.$store.state.menu.menuExpanded
     }
   },
   watch: {

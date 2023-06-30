@@ -24,7 +24,7 @@ export default {
   },
   computed: {
     menu () {
-      return this.$store.state.nero.menu
+      return this.$store.state.menu.menu
     }
   },
   watch: {

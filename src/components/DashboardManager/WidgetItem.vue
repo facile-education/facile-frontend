@@ -130,7 +130,7 @@ export default {
         this.widget.scope === this.$store.state.dashboardManager.scopeList.USER_SCHOOL)
     },
     hasSmallDisplay () {
-      return (this.mq.phone || (this.mq.tablet && this.$store.state.nero.menuExpanded))
+      return (this.mq.phone || (this.mq.tablet && this.$store.state.menu.menuExpanded))
     }
   },
   methods: {
@@ -144,7 +144,7 @@ export default {
         onConfirm: this.removeWidget,
         title: this.$t('DashboardManager.WidgetItem.DeleteConfirmModal.title')
       }
-      this.$store.dispatch('nero/updateAndShowConfirmModal', confirmModalParams)
+      this.$store.dispatch('menu/updateAndShowConfirmModal', confirmModalParams)
     },
     removeWidget () {
       this.$store.dispatch('dashboardManager/deleteWidget', this.widget)

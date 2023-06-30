@@ -108,7 +108,7 @@ export default {
         if (data.success) {
           this.$store.dispatch('notUsualSlots/removePendingFirings', this.pendingFiring)
           // Decrement notification count
-          this.$store.dispatch('nero/updateSchoollifeNotification', 1)
+          this.$store.dispatch('menu/updateSchoollifeNotification', 1)
         }
       },
       (err) => {

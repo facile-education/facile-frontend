@@ -139,10 +139,10 @@ const MessagingUtils = {
       if (data.success) {
         if (markAsRead) {
           store.dispatch('messaging/markMessagesAsRead', messageIds)
-          store.dispatch('nero/updateMessagingNotification', messageIds.length)
+          store.dispatch('menu/updateMessagingNotification', messageIds.length)
         } else {
           store.dispatch('messaging/markMessagesAsUnread', messageIds)
-          store.dispatch('nero/updateMessagingNotification', -messageIds.length)
+          store.dispatch('menu/updateMessagingNotification', -messageIds.length)
         }
         store.dispatch('messaging/updateNbUnread', store.state.messaging.currentFolder.folderId)
       }
