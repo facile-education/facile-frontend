@@ -100,7 +100,7 @@ axios.interceptors.request.use(async (config) => {
 axios.interceptors.response.use(undefined, (error) => {
   if (error.response.status === 403 && error.response.config && !error.response.config.__isRetryRequest) {
     // If you ever get an unauthorized, redirect to error page
-    store.commit('user/initUserInformations', { userId: 0 })
+    router.push({ name: 'AuthenticationRequired' })
   }
 
   // Do something with response error

@@ -17,6 +17,12 @@ const routes = [
     props: route => ({ redirect: route.query.redirect })
   },
   {
+    path: '/authentication-required',
+    name: 'AuthenticationRequired',
+    component: () => import('@/router/views/AuthenticationRequired'),
+    props: route => ({ redirect: route.query.redirect })
+  },
+  {
     path: '/agree-terms-of-use',
     name: 'AgreeTermsOfUse',
     component: () => import('@/router/views/AgreeTermsOfUse')

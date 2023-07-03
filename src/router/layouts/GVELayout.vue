@@ -1,10 +1,10 @@
 <template>
-  <div class="body">
-    <nav
-      class="nav-bar"
-      role="navigation"
-    >
-      <h1>ENT REPUBLIQUE ET CANTON DE GENEVE</h1>
+  <div
+    class="body"
+    :class="{'authenticated': isAuthenticated}"
+  >
+    <header class="theme-background-color">
+      <h1>ENT République et Canton de Genève</h1>
       <div class="store-icons">
         <i class="fa fa-apple" />
         <i class="fa fa-android" />
@@ -20,26 +20,23 @@
           </p>
         </div> -->
       </div>
-    </nav>
+    </header>
+
     <slot />
-    <footer class="bottom-bar">
-      <h2>Ecole en ligne</h2>
+
+    <footer class="bottom-bar theme-background-color">
+      <h2>École en ligne</h2>
     </footer>
   </div>
 </template>
 
 <script>
 export default {
-  components: {},
-  inject: ['mq'],
-  props: {
-  },
+  name: 'GVELayout',
   computed: {
-    user () {
-      return this.$store.state.user
+    isAuthenticated () {
+      return this.$store.state.user.userId && this.$store.state.user.userId !== 0
     }
-  },
-  methods: {
   }
 }
 </script>
@@ -53,6 +50,12 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  &:not(.authenticated) {
+    header, footer {
+      background-color: rgba(0,0,0,0.6);
+    }
+  }
 }
 
 h1, h2 {
@@ -60,8 +63,7 @@ h1, h2 {
   font-weight: 500;
 }
 
-.nav-bar, .bottom-bar {
-  background-color: rgba(0,0,0,0.6);
+header, footer {
   color: #fff;
   font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
   margin-bottom: 0;
@@ -76,7 +78,7 @@ h1, h2 {
   padding: 0 1rem;
 }
 
-.bottom-bar {
+footer {
   h2 {
     margin-left: auto;
   }

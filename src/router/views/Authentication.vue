@@ -1,5 +1,5 @@
 <template>
-  <PublicLayout>
+  <GVELayout>
     <div class="wrapper">
       <img
         src="@assets/images/gva/logo_eel.png"
@@ -126,10 +126,11 @@
         class="gva-img"
       >
     </div>
-  </PublicLayout>
+  </GVELayout>
 </template>
 
 <script>
+import GVELayout from '@layouts/GVELayout.vue'
 import axios from 'axios'
 
 import authenticationService from '@/api/authentication.service'
@@ -137,13 +138,12 @@ import constants from '@/api/constants'
 import mobileService from '@/api/mobile.service'
 import { GET_USER_INFOS_WS, USER_PATH } from '@/api/user.service'
 import { DASHBOARD } from '@/constants/appConstants'
-import PublicLayout from '@/router/layouts/PublicLayout'
 import store from '@/store'
 
 export default {
   name: 'Authentication',
   components: {
-    PublicLayout
+    GVELayout
   },
   props: {
     redirect: {
