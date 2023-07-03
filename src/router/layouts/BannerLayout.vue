@@ -53,6 +53,12 @@
       <UploadProgression />
     </div>
 
+    <SessionEndAdvertising
+      v-if="isSessionWarningDisplayed"
+      :remaining-milliseconds="remainingSessionMilliseconds"
+      @close="isSessionWarningDisplayed=false"
+    />
+
     <CookiesAgreement
       v-if="!hasConfirmCookiesAgreement && !cookiesMustBeClosed"
       @close="cookiesMustBeClosed=true"
@@ -95,9 +101,12 @@
 
 <script>
 import CookiesAgreement from '@components/Nero/CookiesAgreement.vue'
+import SessionEndAdvertising from '@components/Nero/SessionEndAdvertising.vue'
 import { getCookie } from '@utils/browser.util'
+import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
+import constants from '@/api/constants'
 import { popupDurationTime } from '@/constants/appConstants'
 
 const AccessModal = defineAsyncComponent(() => import('@components/Accesses/AccessVisualization/AccessModal'))
@@ -118,6 +127,7 @@ const WarningModal = defineAsyncComponent(() => import('@/components/Nero/Warnin
 export default {
   name: 'BannerLayout',
   components: {
+    SessionEndAdvertising,
     CookiesAgreement,
     AccessModal,
     AgreeTermsOfUse,
@@ -143,7 +153,10 @@ export default {
   },
   data () {
     return {
-      cookiesMustBeClosed: false
+      cookiesMustBeClosed: false,
+      interval: undefined,
+      inactionTime: 0,
+      isSessionWarningDisplayed: false
     }
   },
   computed: {
@@ -194,8 +207,10 @@ export default {
       return this.user.userId
     },
     hasConfirmCookiesAgreement () {
-      console.log(getCookie('cookiesAgreement'))
       return getCookie('cookiesAgreement') === 'true'
+    },
+    remainingSessionMilliseconds () {
+      return this.$store.state.menu.sessionTimeout - this.inactionTime
     }
   },
   created () {
@@ -205,6 +220,22 @@ export default {
     if (this.$store.state.menu.menu === undefined) {
       this.$store.dispatch('menu/initUserMenu')
     }
+  },
+  mounted () {
+    this.interval = setInterval(() => {
+      this.inactionTime = dayjs() - this.$store.state.user.lastActionDate
+
+      if (this.remainingSessionMilliseconds <= this.$store.state.menu.sessionTimeoutWarning) {
+        this.isSessionWarningDisplayed = true
+      }
+
+      if (this.remainingSessionMilliseconds <= 0) {
+        window.location = constants.LOGOUT_URL // Logout
+      }
+    }, 1000)
+  },
+  unmounted () {
+    clearInterval(this.interval)
   },
   methods: {
     closeFile (file) {
