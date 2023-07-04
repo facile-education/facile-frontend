@@ -7,7 +7,7 @@
     />
     <BannerItem
       data-test="open-help-item"
-      :src="require('@/assets/images/banner/icon-question.svg')"
+      :src="require('@/assets/icons/help.svg')"
       :title="$t('help')"
       @click="openHelpModal"
     />
@@ -36,6 +36,8 @@ export default {
 <style lang="scss" scoped>
 div {
   display: flex;
+  gap: 1rem;
+  padding: 0 1rem;
 }
 </style>
 

@@ -1,61 +1,47 @@
 <template>
-  <div
-    :title="tooltip"
-    class="banner-item"
-    @click="dispatchEvent"
+  <button
+    :title="title"
+    :aria-label="title"
+    @click="$emit('click')"
   >
     <img
       v-if="src"
       :src="src"
+      :alt="title"
     >
-    <NeroIcon
-      v-else
-      :name="icon"
-    />
-  </div>
+  </button>
 </template>
 
 <script>
-import { defineAsyncComponent } from 'vue'
-
-const NeroIcon = defineAsyncComponent(() => import('@components/Nero/NeroIcon'))
 
 export default {
   name: 'BannerItem',
-  components: { NeroIcon },
   props: {
-    icon: {
+    title: {
       type: String,
       default: ''
     },
     src: {
       type: String,
       default: ''
-    },
-    tooltip: {
-      type: String,
-      default: ''
     }
   },
-  emits: ['click'],
-  methods: {
-    dispatchEvent () {
-      this.$emit('click')
-    }
-  }
+  emits: ['click']
 }
 </script>
 
 <style lang="scss" scoped>
 @import "@design";
 
-.banner-item {
-  margin: auto 5px;
-  height: 30px;
-  width: 30px;
+button {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  border: none;
   cursor: pointer;
-  text-align: center;
-  font-size: 1.4rem;
-  line-height: 2rem;
+
+  img {
+    height: 32px;
+  }
 }
 </style>

@@ -88,23 +88,24 @@ export default {
 @import "@design";
 
 .banner-search {
+  margin-left: 8px;
   border: 1px white solid;
   display: flex;
   border-radius: $border-radius;
-  height: 35px;
+  height: 32px;
 }
 
 .search-icon {
-  width: 35px;
-  height: 35px;
-  line-height: 35px;
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
   vertical-align: top;
   text-align: center;
   cursor: pointer;
 }
 
 .search-input {
-  height: 33px;
+  height: 30px;
   width: 303px;
   padding: 0 0 0 8px;
   margin: 0;
