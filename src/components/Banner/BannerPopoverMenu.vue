@@ -1,93 +1,84 @@
 <template>
-  <ul
+  <nav
     class="popover-menu"
     data-test="popover-menu"
     data-html2canvas-ignore="true"
   >
-    <li>
-      <NeroIcon name="caret-up" />
-      <img
-        :src="userPicture"
-        alt=""
-        class="picture"
-      >
-      <div
-        class="user-name"
-        data-test="user-name"
-      >
-        <span>{{ userFullName }}</span>
-        <a
+    <ul>
+      <li>
+        <button
           v-t="'preferences'"
           data-test="openPreferencesModal"
-          href="#"
           @click="togglePreferencesModal"
         />
-      </div>
-    </li>
-    <li>
-      <a
-        href="#"
-        data-test="openInformationModal"
-        @click="toggleInformationsModal"
-      >
-        {{ $t('informations') }}<NeroIcon name="chevron-right" />
-      </a>
-      <a
-        href="#"
-        data-test="openSupportModal"
-        @click="toggleSupportModal"
-      >
-        {{ $t('assistance') }}<NeroIcon name="chevron-right" />
-      </a>
-      <a
-        href="#"
-        data-test="openSuggestionModal"
-        @click="toggleSuggestionModal"
-      >
-        {{ $t('suggestion') }}<NeroIcon name="chevron-right" />
-      </a>
-      <!-- TODO dynamic url -->
-      <a
-        v-if="isAdministrator"
-        data-test="openControl_panel"
-        href="/group/control_panel?doAsGroupId=11107&refererPlid=4439929"
-      >
-        {{ $t('controlPanel') }}<NeroIcon name="chevron-right" />
-      </a>
-    </li>
-    <li>
+      </li>
+      <li>
+        <button
+          v-t="'informations'"
+          data-test="openInformationModal"
+          @click="toggleInformationsModal"
+        />
+      </li>
+      <li>
+        <button
+          v-t="'assistance'"
+          data-test="openSupportModal"
+          @click="toggleSupportModal"
+        />
+      </li>
+      <li>
+        <button
+          v-t="'suggestion'"
+          data-test="openSuggestionModal"
+          @click="toggleSuggestionModal"
+        />
+      </li>
+      <li v-if="isAdministrator">
+        <!-- TODO dynamic url -->
+        <a
+          v-t="'controlPanel'"
+          data-test="openControl_panel"
+          href="/group/control_panel?doAsGroupId=11107&refererPlid=4439929"
+        />
+      </li>
+    </ul>
+
+    <div class="logout-container">
       <a
         :href="logoutUrl"
-        class="logout"
+        class="logout-link"
         data-test="logout"
-        title="Déconnexion"
       >
-        <NeroIcon name="sign-out-alt" /> {{ $t('logout') }}
+        <img
+          src="@/assets/icons/logout.svg"
+          alt=""
+        >
+        <span>{{ $t('logout') }}</span>
       </a>
-    </li>
-  </ul>
-  <teleport to="body">
-    <InformationModal
-      v-if="isInformationsModalDisplayed"
-      @close="toggleInformationsModal"
-    />
-    <PreferencesModal
-      v-if="isPreferencesDisplayed"
-      @close="togglePreferencesModal"
-    />
-    <AssistanceModal
-      v-if="isSupportModalDisplayed"
-      :modal-type="supportModalType"
-      @close="toggleSupportModal"
-    />
-  </teleport>
+    </div>
+
+    <teleport to="body">
+      <InformationModal
+        v-if="isInformationModalDisplayed"
+        @close="toggleInformationsModal"
+      />
+      <PreferencesModal
+        v-if="isPreferencesDisplayed"
+        @close="togglePreferencesModal"
+      />
+      <AssistanceModal
+        v-if="isSupportModalDisplayed"
+        :modal-type="supportModalType"
+        @close="toggleSupportModal"
+      />
+    </teleport>
+  </nav>
 </template>
 
 <script>
 import { defineAsyncComponent } from 'vue'
 
 import constants from '@/api/constants'
-import NeroIcon from '@/components/Nero/NeroIcon'
 
 const AssistanceModal = defineAsyncComponent(() => import('@/components/Assistance/AssistanceModal.vue'))
 const InformationModal = defineAsyncComponent(() => import('@/components/Informations/InformationModal.vue'))
@@ -98,14 +89,13 @@ export default {
   components: {
     AssistanceModal,
     InformationModal,
-    NeroIcon,
     PreferencesModal
   },
   data () {
     return {
       logoutUrl: constants.LOGOUT_URL,
       supportModalType: '',
-      isInformationsModalDisplayed: false,
+      isInformationModalDisplayed: false,
       isPreferencesDisplayed: false,
       isSupportModalDisplayed: false
     }
@@ -113,17 +103,11 @@ export default {
   computed: {
     isAdministrator () {
       return this.$store.state.user.isAdministrator
-    },
-    userFullName () {
-      return (this.$store.state.user.firstName + ' ' + this.$store.state.user.lastName)
-    },
-    userPicture () {
-      return this.$store.state.user.picture
     }
   },
   methods: {
     toggleInformationsModal () {
-      this.isInformationsModalDisplayed = !this.isInformationsModalDisplayed
+      this.isInformationModalDisplayed = !this.isInformationModalDisplayed
     },
     togglePreferencesModal () {
       this.isPreferencesDisplayed = !this.isPreferencesDisplayed
@@ -143,73 +127,63 @@ export default {
 <style lang="scss" scoped>
 @import "@design";
 
-.fa-caret-up {
-  position: absolute;
-  top: -20px;
-  left: 8px;
-  color: #fff;
-  font-size: 2em;
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
 }
 
 .popover-menu {
-  margin: 0;
-  padding: 0;
-  background-color: $color-white-bg;
   position: absolute;
-  left: 0;
+  right: 4px;
   top: 46px;
+  width: 240px;
+  background-color: white;
+  padding: 16px 0;
   z-index: $popup-z-index;
-  border-radius: $border-radius;
-  @extend %object-shadow;
+  border: 1px solid $neutral-40;
+  border-radius: 4px;
+  @extend %object-shadow-2;
 
-  li {
-    display: block;
-    border-bottom: solid 1px $color-menu-text;
-    padding: 7px;
+  button {
+    margin: 0;
+    padding: 8px 1rem;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+
+    @extend %font-regular-m;
+    width: 100%;
+    text-align: center;
+
+    &:hover {
+      background-color: $color-hover-bg;
+    }
   }
 
-  a {
-    display: block;
-    padding: 2px;
-    color: $color-menu-text;
+  .logout-container {
+    padding: 1rem 1rem 0 1rem;
+  }
+
+  a.logout-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 6px 6px;
+    color: white;
     text-decoration: none;
+    background-color: $color-logout-button;
+    border-radius: 6px;
 
     &:hover {
       text-decoration: underline;
     }
+
+    span {
+      padding: 0 8px;
+    }
   }
-}
-
-.picture {
-  display: inline-block;
-  border-radius: 50px;
-  width: 50px;
-  height: 50px;
-}
-
-.user-name {
-  display: inline-block;
-  vertical-align: top;
-  margin-left: 5px;
-  // 55px = padding (14px) + img (36px) + margin (5px)
-  @include calc(width, '100% - 55px');
-
-  span {
-    color: $color-text;
-  }
-}
-
-.fa-chevron-right {
-  float: right;
-}
-
-a.logout {
-  padding: 6px 0;
-  border-radius: $border-radius;
-  color: $color-light-text;
-  text-align: center;
-  text-decoration: none;
-  background-color: $color-notif-bg;
 }
 </style>
 
