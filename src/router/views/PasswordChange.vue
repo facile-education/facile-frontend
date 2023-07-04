@@ -1,100 +1,136 @@
 <template>
-  <EmptyLayout>
-    <div class="main">
-      <p v-t="'password-change'" />
-      <div class="password">
-        <PentilaInput
-          v-model="password1"
-          class="input"
-          type="password"
-          :placeholder="$t('passwordPlaceholder')"
-          :maxlength="75"
-          @input="typing"
-          @keyup.enter.stop="updatePassword"
-        />
-        <PentilaInput
-          v-model="password2"
-          class="input"
-          type="password"
-          :placeholder="$t('confirmPasswordPlaceholder')"
-          :maxlength="75"
-          @input="typing"
-          @keyup.enter.stop="updatePassword"
-        />
-        <p
-          v-show="arePasswordsDifferent"
-          v-t="'differentPasswords'"
-          class="errorMessage"
-        />
-        <p
-          v-show="isError && error"
-          class="errorMessage"
-          v-html="error"
-        />
-        <p
-          v-show="isError && !error"
-          v-t="'errorMessage'"
-          class="errorMessage"
-        />
-        <div class="wrapper">
-          <PentilaButton
-            class="button"
-            :disabled="isButtonDisabled"
-            @click="updatePassword"
+  <GVELayout>
+    <div class="password-change">
+      <img
+        class="lock-open"
+        src="@/assets/icons/lock-open.svg"
+        alt=""
+      >
+
+      <h1 v-t="'title'" />
+
+      <div class="passwords-section">
+        <div class="password1 input-container">
+          <PentilaInput
+            v-model="password1"
+            class="input"
+            :type="password1InputType"
+            :placeholder="$t('passwordPlaceholder')"
+            :maxlength="75"
+            @input="errorMessage = ''"
+            @keyup.enter.stop="updatePassword"
+          />
+          <!--  TODO: Put those logic on pentila component-->
+          <button
+            class="toggle-password-type"
+            @click="togglePassword1Type"
           >
-            <span>{{ $t('update-password') }}</span>
-          </PentilaButton>
+            <img
+              src="@/assets/icons/eye-off.svg"
+              alt=""
+            >
+          </button>
+        </div>
+
+        <div
+          v-t="'passwordPolicy'"
+          class="password-policy"
+        />
+
+        <div class="password2">
+          <div class="input-container">
+            <PentilaInput
+              v-model="password2"
+              class="input"
+              :type="password2InputType"
+              :placeholder="$t('confirmPasswordPlaceholder')"
+              :maxlength="75"
+              @input="errorMessage = ''"
+              @keyup.enter.stop="updatePassword"
+            />
+            <!--  TODO: Put those logic on pentila component-->
+            <button
+              class="toggle-password-type"
+              @click="togglePassword2Type"
+            >
+              <img
+                src="@/assets/icons/eye-off.svg"
+                alt=""
+              >
+            </button>
+          </div>
+          <PentilaErrorMessage
+            class="error-message"
+            :error-message="errorMessage"
+          />
         </div>
       </div>
+
+      <PentilaButton
+        v-t="'submit'"
+        class="button"
+        type="submit"
+        @click="updatePassword"
+      />
     </div>
-  </Emptylayout>
+  </GVELayout>
 </template>
 
 <script>
-import EmptyLayout from '@router/layouts/EmptyLayout'
+
+import GVELayout from '@layouts/GVELayout.vue'
 
 import constants from '@/api/constants'
 import userService from '@/api/user.service'
 
 export default {
   name: 'PasswordChange',
-  components: { EmptyLayout },
+  components: { GVELayout },
   data () {
     return {
       password1: '',
       password2: '',
-      error: '',
-      isError: false,
-      arePasswordsDifferent: false
-    }
-  },
-  computed: {
-    isButtonDisabled () {
-      return this.password1 === '' && this.password2 === ''
+      password1InputType: 'password',
+      password2InputType: 'password',
+      errorMessage: ''
     }
   },
   methods: {
     updatePassword () {
-      // First check if passwords are equal
-      if (this.password1 !== this.password2) {
-        this.arePasswordsDifferent = true
+      // First check if passwords are equals
+      if (this.password1.trim() === '') {
+        this.errorMessage = this.$t('passwordPolicy')
+      } else if (this.password1 !== this.password2) {
+        this.errorMessage = this.$t('differentPasswords')
       } else {
         userService.updatePassword(this.password1, this.password2).then((data) => {
           if (data.success) {
+            this.errorMessage = ''
             // Reset p_auth_token
             this.$store.commit('user/setPAuth', undefined)
-            // Logout
-            window.location = constants.LOGOUT_URL
+            window.location = constants.LOGOUT_URL // Logout
           } else {
-            this.isError = true
-            this.error = data.error
+            this.errorMessage = data.error ? data.error : this.$t('unknownError')
           }
+        }, (err) => {
+          console.error(err)
+          this.errorMessage = this.$t('unknownError')
         })
       }
     },
-    typing () {
-      this.arePasswordsDifferent = false
-      this.isError = false
+    togglePassword1Type () {
+      if (this.password1InputType === 'password') {
+        this.password1InputType = 'text'
+      } else {
+        this.password1InputType = 'password'
+      }
+    },
+    togglePassword2Type () {
+      if (this.password2InputType === 'password') {
+        this.password2InputType = 'text'
+      } else {
+        this.password2InputType = 'password'
+      }
     }
   }
 }
@@ -103,50 +139,78 @@ export default {
 <style lang="scss" scoped>
 @import "@design";
 
-.main {
+.password-change {
   display: flex;
   flex-direction: column;
-  margin-top: 100px;
+  align-items: center;
+  padding: 0 1rem;
 }
 
-p {
-  text-align: center;
+.lock-open {
+  height: 1.5rem;
 }
 
-.password {
-  margin: auto;
-  max-width: 300px;
-  max-height: 400px;
-  overflow: auto;
+h1 {
+  line-height: 2rem;
+  margin: 1rem 0 2rem 0;
+  @extend %font-heading-s;
 }
 
-.input {
-  margin-bottom: 20px;
+.password-section {
+  width: 360px;
 }
 
-.wrapper {
-  width: 100%;
-  margin: auto;
-  text-align: center;
+.input-container {
+  position: relative;
+
+  .input {
+    width: 360px;
+  }
+
+  .toggle-password-type {
+    height: 1rem;
+    cursor: pointer;
+    background-color: transparent;
+    border-radius: 0;
+    padding: 0;
+    margin: 0;
+    border: none;
+
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+
+    img {
+      height: 1rem;
+    }
+  }
+}
+
+.password-policy, .error-message {
+  margin-top: 8px;
+  @extend %font-regular-s;
+}
+
+.password2 {
+  margin: 1.5rem 0;
 }
 
 .button {
-  margin: auto;
+  width: 200px;
 }
 
-.errorMessage {
-  color: $error-color;
-  margin-bottom: 20px;
-}
 </style>
 
 <i18n locale="fr">
 {
-  "password-change": "Vous devez mettre à jour votre mot de passe",
+  "title": "Mise à jour de votre mot de passe",
   "passwordPlaceholder": "Mot de passe",
   "confirmPasswordPlaceholder": "Confirmer le mot de passe",
-  "update-password": "Mettre à jour",
+  "submit": "Mettre à jour",
   "differentPasswords": "Les mots de passe sont différents",
-  "errorMessage": "Une erreur est survenue"
+  "errorMessage": "Une erreur est survenue",
+  "passwordPolicy": "Le mot de passe doit contenir au moins 6 caractères",
+  "unknownError": "Oups, une erreur est survenue..."
 }
 </i18n>

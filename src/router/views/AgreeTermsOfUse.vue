@@ -1,5 +1,6 @@
 <template>
   <GVELayout>
+    <h1 :aria-label="$t('title')" />
     <div class="center">
       <div class="chart-container">
         <div
@@ -113,6 +114,7 @@ export default {
 
 <i18n locale="fr">
 {
+  "title": "Acceptation des conditions d'utilisation",
   "accept": "Accepter",
   "decline": "Refuser"
 }
