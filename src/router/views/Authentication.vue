@@ -5,8 +5,6 @@
       <img
         src="@assets/images/gva/logo_eel.png"
         :alt="$t('eelImg')"
-        width="354"
-        height="66"
         class="eel-img"
       >
       <a
@@ -310,6 +308,7 @@ $eel-blue: #2c7bb8;
 
 .eel-img {
   margin-bottom: 1.5rem;
+  width: 100%;
 }
 
 .gva-img {
