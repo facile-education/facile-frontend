@@ -1,37 +1,41 @@
 <template>
-  <div
-    class="profile"
-    @click="togglePopoverMenu"
-  >
-    <img
-      class="picture"
-      :src="userPicture"
+  <div class="profile">
+    <button
+      class="banner-profile"
+      data-test="togglePopoverMenu"
+      @click="togglePopoverMenu"
     >
-    <div
-      v-if="mq.desktop"
-      class="user-infos"
-    >
-      <span class="username">
+      <img
+        class="user-picture"
+        :src="userPicture"
+        alt="user_picture"
+      >
+      <span
+        v-if="mq.desktop"
+        class="username"
+      >
         {{ userName }}
       </span>
-    </div>
-    <BannerItem
-      v-if="mq.desktop"
-      icon="chevron-down"
-      data-test="togglePopoverMenu"
-    />
+      <img
+        v-if="mq.desktop"
+        src="@/assets/icons/chevron-up-white.svg"
+        alt=""
+        class="chevron"
+        :class="{'reverse': !isPopoverMenuDisplayed}"
+      >
+    </button>
     <BannerPopoverMenu v-if="isPopoverMenuDisplayed" />
   </div>
 </template>
 
 <script>
-import BannerItem from '@/components/Banner/BannerItem'
-import BannerPopoverMenu from '@/components/Banner/BannerPopoverMenu'
+
+import { defineAsyncComponent } from 'vue'
+const BannerPopoverMenu = defineAsyncComponent(() => import('@/components/Banner/BannerPopoverMenu'))
 
 export default {
   name: 'BannerUserProfile',
   components: {
-    BannerItem,
     BannerPopoverMenu
   },
   inject: ['mq'],
@@ -42,8 +46,6 @@ export default {
   },
   computed: {
     userName () {
-      // return (this.$store.state.user.firstName.charAt() + '. ' +
-      //  this.$store.state.user.lastName)
       return this.$store.state.user.firstName + ' ' + this.$store.state.user.lastName
     },
     userPicture () {
@@ -51,10 +53,6 @@ export default {
     }
   },
   methods: {
-    setLang: function (lang) {
-      // TODO
-      // i18n.setLang(lang)
-    },
     togglePopoverMenu () {
       this.isPopoverMenuDisplayed = !this.isPopoverMenuDisplayed
     }
@@ -67,39 +65,44 @@ export default {
 
 .profile {
   position: relative;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
   display: flex;
+  align-items: center;
+  color: white;
+}
+
+.banner-profile {
+  display: flex;
+  align-items: center;
   border-left: 1px solid #fff8;
-  padding-left: 15px;
-  margin-left: 10px;
+  padding: 0 1rem;
+  height: 32px;
 }
 
-.picture {
-  border-radius: 50px;
-  width: 36px;
-  height: 36px;
-}
-
-.user-infos {
-  vertical-align: top;
-  white-space: nowrap;
-  overflow-x: hidden;
-  text-overflow: ellipsis;
-  display: flex;
+.user-picture {
+  height: 100%;
+  border-radius: 50%;
 }
 
 .username {
-  margin: auto 10px;
-  overflow-x: hidden;
-  text-overflow: ellipsis;
-  font-size: .9rem;
+  margin-left: 8px;
+  @extend %font-regular-m;
 }
 
-.school-link {
-  color: $color-light-text;
-  text-decoration: none;
+.chevron {
+  width: 1rem;
+  margin-left: 1rem;
+  transition: transform .5s;
 
-  &:hover {
-    text-decoration: underline;
-  }
+  //&.reverse {
+    transform: rotate(-180deg);
+  //}
 }
 </style>

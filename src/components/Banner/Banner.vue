@@ -1,11 +1,18 @@
 <template>
   <header class="banner">
-    <NeroIcon
+    <button
       v-if="mq.phone"
-      class="menu-icon"
-      name="bars"
-      @click="onShowMobileMenu"
-    />
+      :aria-label="$t('toggleMenu')"
+      :title="$t('toggleMenu')"
+      class="menu-icon-button"
+    >
+      <img
+        src="@/assets/icons/menu_burger.svg"
+        alt="menu_burger"
+        @click="onShowMobileMenu"
+      >
+    </button>
+
     <BannerSearch v-if="!mq.phone" />
 
     <nav class="right-section">
@@ -21,15 +28,13 @@ import BannerUserProfile from '@components/Banner/BannerUserProfile'
 import { defineAsyncComponent } from 'vue'
 
 const BannerSearch = defineAsyncComponent(() => import('@/components/Banner/BannerSearch'))
-const NeroIcon = defineAsyncComponent(() => import('@/components/Nero/NeroIcon'))
 
 export default {
   name: 'Banner',
   components: {
     BannerSearch,
     BannerServices,
-    BannerUserProfile,
-    NeroIcon
+    BannerUserProfile
   },
   inject: ['mq'],
   data () {
@@ -64,10 +69,26 @@ export default {
   display: flex;
 }
 
+button {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.menu-icon-button {
+  padding: 0 1rem;
+
+  img {
+    height: 32px;
+  }
+}
+
 .menu-icon {
   margin: auto 0;
-  height: 25px;
-  width: 25px;
+  height: 32px;
+  padding: 0 1rem;
   cursor: pointer;
 }
 
@@ -78,8 +99,7 @@ export default {
 </style>
 
 <i18n locale="fr">
-  {
-    "session-is-expiring": "Votre session va expirer dans ",
-    "extend-session": "Etendre"
-  }
+{
+  "toggleMenu": "Menu"
+}
 </i18n>
