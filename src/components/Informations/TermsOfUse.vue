@@ -16,11 +16,6 @@ export default {
       template: ''
     }
   },
-  computed: {
-    termsOfUse () {
-      return this.$store.state.about.termsOfUse
-    }
-  },
   created () {
     axios.get('chart.html').then(response => {
       this.template = response.data

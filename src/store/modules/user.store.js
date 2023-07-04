@@ -1,6 +1,7 @@
 // import PentilaUtils from 'pentila-utils'
 import { getUserApplications } from '@/api/applicationManager.service'
 import userService from '@/api/user.service'
+import router from '@/router'
 
 export const state = {
   pauth: undefined,
@@ -142,6 +143,9 @@ export const actions = {
             }
             if (data.themeColor !== rootState.theme.themeColor && data.themeColor !== 'FFFFFF') {
               dispatch('theme/updateMainColor', data.themeColor, { root: true })
+            }
+            if (!data.agreedTermsOfUse) {
+              router.push({ name: 'AgreeTermsOfUse' })
             }
           }
           commit('initUserInformations', data)
