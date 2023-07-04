@@ -46,7 +46,6 @@ export default {
 
 .body {
   height: 100%;
-  background-color: #eceff4;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -68,7 +67,7 @@ header, footer {
   font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
   margin-bottom: 0;
   border-radius: 0;
-  height: 40px;
+  min-height: $gve-layout-banner-height;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;

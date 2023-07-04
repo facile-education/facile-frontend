@@ -1,6 +1,5 @@
 <template>
   <PentilaSpinner v-if="userId === undefined" />
-  <AgreeTermsOfUse v-else-if="!user.agreedTermsOfUse" />
   <PasswordChange v-else-if="user.passwordChange" />
   <div
     v-else
@@ -109,8 +108,6 @@ import constants from '@/api/constants'
 import { popupDurationTime } from '@/constants/appConstants'
 
 const AccessModal = defineAsyncComponent(() => import('@components/Accesses/AccessVisualization/AccessModal'))
-const AgreeTermsOfUse = defineAsyncComponent(() => import('@router/views/AgreeTermsOfUse'))
-const AuthenticationRequired = defineAsyncComponent(() => import('@router/views/AuthenticationRequired'))
 const Banner = defineAsyncComponent(() => import('@/components/Banner/Banner'))
 const ConflictModal = defineAsyncComponent(() => import('@/components/Documents/Modals/ConflictModal'))
 const FileDisplayModal = defineAsyncComponent(() => import('@/components/Documents/FileDisplay/FileDisplayModal'))
@@ -129,8 +126,6 @@ export default {
     SessionEndAdvertising,
     CookiesAgreement,
     AccessModal,
-    AgreeTermsOfUse,
-    AuthenticationRequired,
     Banner,
     ConflictModal,
     FileDisplayModal,
@@ -215,6 +210,8 @@ export default {
   created () {
     if (this.userId === undefined) {
       this.$store.dispatch('user/initUserInformations')
+    } else if (!this.user.agreedTermsOfUse) {
+      this.$router.push({ name: 'AgreeTermsOfUse' })
     }
     if (this.$store.state.menu.menu === undefined) {
       this.$store.dispatch('menu/initUserMenu')
