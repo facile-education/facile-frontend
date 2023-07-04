@@ -25,8 +25,28 @@ $content-font-weight: 400;
 
 @font-face {
   font-family: "Roboto Sans";
-  font-style: normal;
-  src: url(/src/assets/fonts/Roboto-Regular.ttf) format("truetype");
-  font-display: swap
+  src: url(/src/assets/fonts/Roboto-Light.ttf) format("truetype");
+  font-display: swap;
+  font-weight: 300;
 }
 
+@font-face {
+  font-family: "Roboto Sans";
+  src: url(/src/assets/fonts/Roboto-Regular.ttf) format("truetype");
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Roboto Sans";
+  src: url(/src/assets/fonts/Roboto-Medium.ttf) format("truetype");
+  font-display: swap;
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "Roboto Sans";
+  src: url(/src/assets/fonts/Roboto-Bold.ttf) format("truetype");
+  font-display: swap;
+  font-weight: 700;
+}
