@@ -1,5 +1,6 @@
 <template>
   <GVELayout>
+    <h1 :aria-label="$t('title')" />
     <div class="error">
       <img
         src="@/assets/user.svg"
@@ -51,6 +52,7 @@ img {
 
 <i18n locale="fr">
 {
+  "title": "Authentification requise",
   "authRequired": "Une authentification est requise pour accéder au service.",
   "redirected": "Vous allez être redirigé vers la page d'authentification."
 }

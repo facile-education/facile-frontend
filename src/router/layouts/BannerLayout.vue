@@ -1,6 +1,5 @@
 <template>
   <PentilaSpinner v-if="userId === undefined" />
-  <PasswordChange v-else-if="user.passwordChange" />
   <div
     v-else
     class="nero"
@@ -113,7 +112,6 @@ const ConflictModal = defineAsyncComponent(() => import('@/components/Documents/
 const FileDisplayModal = defineAsyncComponent(() => import('@/components/Documents/FileDisplay/FileDisplayModal'))
 const HelpModal = defineAsyncComponent(() => import('@components/HelpModal/HelpModal'))
 const NotAllowed = defineAsyncComponent(() => import('@router/views/NotAllowed'))
-const PasswordChange = defineAsyncComponent(() => import('@router/views/PasswordChange'))
 const Popup = defineAsyncComponent(() => import('@components/Base/Popup'))
 const QuickSearchPanel = defineAsyncComponent(() => import('@components/Search/QuickSearchPanel'))
 const Menu = defineAsyncComponent(() => import('@/components/Menu/Menu'))
@@ -131,7 +129,6 @@ export default {
     FileDisplayModal,
     HelpModal,
     NotAllowed,
-    PasswordChange,
     Popup,
     QuickSearchPanel,
     Menu,
@@ -212,6 +209,8 @@ export default {
       this.$store.dispatch('user/initUserInformations')
     } else if (!this.user.agreedTermsOfUse) {
       this.$router.push({ name: 'AgreeTermsOfUse' })
+    } else if (this.user.passwordChange) {
+      this.$router.push({ name: 'PasswordChange' })
     }
     if (this.$store.state.menu.menu === undefined) {
       this.$store.dispatch('menu/initUserMenu')

@@ -1,5 +1,6 @@
 <template>
   <GVELayout>
+    <h1 :aria-label="$t('title')" />
     <div class="wrapper">
       <img
         src="@assets/images/gva/logo_eel.png"
@@ -391,6 +392,7 @@ $eel-blue: #2c7bb8;
 
 <i18n locale="fr">
 {
+  "title": "Authentification",
   "authenticate": "Se connecter",
   "eelImg": "Logo d'école en ligne",
   "entLogin": "Se connecter à l'ENT",

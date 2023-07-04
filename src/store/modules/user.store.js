@@ -146,6 +146,8 @@ export const actions = {
             }
             if (!data.agreedTermsOfUse) {
               router.push({ name: 'AgreeTermsOfUse' })
+            } else if (data.passwordChange) {
+              router.push({ name: 'PasswordChange' })
             }
           }
           commit('initUserInformations', data)

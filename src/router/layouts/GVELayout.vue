@@ -4,7 +4,7 @@
     :class="{'authenticated': isAuthenticated}"
   >
     <header class="theme-background-color">
-      <h1>ENT République et Canton de Genève</h1>
+      <div>ENT République et Canton de Genève</div>
       <div class="store-icons">
         <i class="fa fa-apple" />
         <i class="fa fa-android" />
@@ -25,7 +25,7 @@
     <slot />
 
     <footer class="bottom-bar theme-background-color">
-      <h2>École en ligne</h2>
+      <div>École en ligne</div>
     </footer>
   </div>
 </template>
@@ -57,28 +57,19 @@ export default {
   }
 }
 
-h1, h2 {
-  font-size: 1rem;
-  font-weight: 500;
-}
-
 header, footer {
+  @extend %font-regular-m;
   color: #fff;
-  font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
-  margin-bottom: 0;
-  border-radius: 0;
   min-height: $gve-layout-banner-height;
+  max-height: $gve-layout-banner-height;
   display: flex;
-  flex-direction: row;
   flex-wrap: nowrap;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
   align-items: center;
   padding: 0 1rem;
 }
 
 footer {
-  h2 {
+  div {
     margin-left: auto;
   }
 }
