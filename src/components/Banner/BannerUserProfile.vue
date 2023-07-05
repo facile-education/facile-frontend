@@ -3,7 +3,7 @@
     <button
       class="banner-profile"
       data-test="togglePopoverMenu"
-      @click="togglePopoverMenu"
+      @click.stop="togglePopoverMenu"
     >
       <img
         class="user-picture"
@@ -24,7 +24,10 @@
         :class="{'reverse': !isPopoverMenuDisplayed}"
       >
     </button>
-    <BannerPopoverMenu v-if="isPopoverMenuDisplayed" />
+    <BannerPopoverMenu
+      v-if="isPopoverMenuDisplayed"
+      @close="isPopoverMenuDisplayed=false"
+    />
   </div>
 </template>
 
