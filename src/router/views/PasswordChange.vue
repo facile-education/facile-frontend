@@ -59,9 +59,9 @@
               >
             </button>
           </div>
-          <PentilaErrorMessage
+          <div
             class="error-message"
-            :error-message="errorMessage"
+            v-html="errorMessage"
           />
         </div>
       </div>
@@ -99,7 +99,7 @@ export default {
     updatePassword () {
       // First check if passwords are equals
       if (this.password1.trim() === '') {
-        this.errorMessage = this.$t('passwordPolicy')
+        this.errorMessage = this.$t('emptyPassword')
       } else if (this.password1 !== this.password2) {
         this.errorMessage = this.$t('differentPasswords')
       } else {
@@ -156,8 +156,8 @@ h1 {
   @extend %font-heading-s;
 }
 
-.password-section {
-  width: 360px;
+.passwords-section {
+  max-width: 360px;
 }
 
 .input-container {
@@ -192,6 +192,10 @@ h1 {
   @extend %font-regular-s;
 }
 
+.error-message {
+  color: $danger;
+}
+
 .password2 {
   margin: 1.5rem 0;
 }
@@ -210,7 +214,8 @@ h1 {
   "submit": "Mettre à jour",
   "differentPasswords": "Les mots de passe sont différents",
   "errorMessage": "Une erreur est survenue",
-  "passwordPolicy": "Le mot de passe doit contenir au moins 6 caractères",
+  "passwordPolicy": "Le mot de passe doit contenir au moins 8 caractères dont une majuscule, un chiffre et un caractère spécial",
+  "emptyPassword": "Veuillez saisir un mot de passe",
   "unknownError": "Oups, une erreur est survenue..."
 }
 </i18n>
