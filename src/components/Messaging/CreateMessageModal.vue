@@ -63,9 +63,8 @@
           </PentilaButton>
         </div>
         <div class="error-container">
-          <ErrorMessage
+          <PentilaErrorMessage
             v-if="error==='missingRecipient'"
-            class="error-message"
             :error-message="$t('missingRecipient')"
           />
         </div>
@@ -153,7 +152,6 @@
 
 <script>
 import AttachedFiles from '@components/AttachedFiles/AttachedFiles.vue'
-import ErrorMessage from '@components/Base/ErrorMessage.vue'
 import ContactPickerToolTip from '@components/ContactPicker/ContactPickerToolTip.vue'
 import TextContent from '@components/Progression/Edit/Contents/TextContent'
 import { addContactFieldsToContactList } from '@utils/contacts.utils'
@@ -184,7 +182,6 @@ export default {
     ContactPickerToolTip,
     ContactPickerModal,
     TextContent,
-    ErrorMessage,
     AttachedFiles,
     NeroIcon
   },
