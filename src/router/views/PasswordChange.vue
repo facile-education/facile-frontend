@@ -66,12 +66,19 @@
         </div>
       </div>
 
-      <PentilaButton
-        v-t="'submit'"
-        class="button"
-        type="submit"
-        @click="updatePassword"
-      />
+      <div class="buttons">
+        <a
+          v-t="'logout'"
+          :href="logoutUrl"
+          class="logout-link"
+        />
+        <PentilaButton
+          v-t="'submit'"
+          class="button"
+          type="submit"
+          @click="updatePassword"
+        />
+      </div>
     </div>
   </GVELayout>
 </template>
@@ -88,6 +95,7 @@ export default {
   components: { GVELayout },
   data () {
     return {
+      logoutUrl: constants.LOGOUT_URL,
       password1: '',
       password2: '',
       password1InputType: 'password',
@@ -157,14 +165,14 @@ h1 {
 }
 
 .passwords-section {
-  max-width: 360px;
+  max-width: min(100%, 360px);
 }
 
 .input-container {
   position: relative;
 
   .input {
-    width: 360px;
+    width: min(100%, 360px);
   }
 
   .toggle-password-type {
@@ -200,8 +208,30 @@ h1 {
   margin: 1.5rem 0;
 }
 
-.button {
-  width: 200px;
+.buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.logout-link, .button {
+  width: 125px;
+}
+
+a.logout-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 6px;
+  color: $color-dark-text;
+  text-decoration: none;
+  background-color: $neutral-40;
+  border-radius: 6px;
+}
+
+@media screen and (min-width: 450px){
+  .logout-link, .button {
+    width: 200px;
+  }
 }
 
 </style>
@@ -216,6 +246,7 @@ h1 {
   "errorMessage": "Une erreur est survenue",
   "passwordPolicy": "Le mot de passe doit contenir au moins 8 caractères dont une majuscule, un chiffre et un caractère spécial",
   "emptyPassword": "Veuillez saisir un mot de passe",
-  "unknownError": "Oups, une erreur est survenue..."
+  "unknownError": "Oups, une erreur est survenue...",
+  "logout": "Abandonner"
 }
 </i18n>
