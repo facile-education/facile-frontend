@@ -58,7 +58,10 @@ export default {
         const extendSessionResult = response.trim()
 
         if (extendSessionResult === '0') { // extend_session.jsp has been modified to return custom success code
-          this.$store.commit('user/setLastActionDate', dayjs())
+          this.$store.dispatch('user/setLastActionDate', dayjs())
+          // Share last action date to other tabs that share locale storage
+          localStorage.setItem('lastActionDate', dayjs().format('YYYY/MM/DD HH:mm:ss'))
+
           this.onClose()
         } else {
           console.error('Cannot extend session')
