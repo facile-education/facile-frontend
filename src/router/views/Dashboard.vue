@@ -25,6 +25,7 @@
         />
 
         <div
+          v-if="hasEDTWidget || hasHomeworkWidget"
           class="user-selection"
           :class="{'has-homework-widget': hasHomeworkWidget && selectedUser}"
         >
