@@ -1,15 +1,17 @@
 <template>
   <GVELayout>
-    <h1 :aria-label="$t('title')" />
-    <div class="error">
-      <img
-        src="@/assets/user.svg"
-        alt=""
-      >
-      <h2 v-t="'authRequired'" />
-      <p>{{ $t('redirected') }}</p>
-      <div class="spinner-container">
-        <PentilaSpinner class="my-spinner" />
+    <div class="authentication-required">
+      <h1 :aria-label="$t('title')" />
+      <div class="error">
+        <img
+          src="@/assets/user.svg"
+          alt=""
+        >
+        <h2 v-t="'authRequired'" />
+        <p>{{ $t('redirected') }}</p>
+        <div class="spinner-container">
+          <PentilaSpinner class="my-spinner" />
+        </div>
       </div>
     </div>
   </GVELayout>
