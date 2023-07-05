@@ -39,9 +39,10 @@ button {
   background-color: transparent;
   border: none;
   cursor: pointer;
+  height: 32px;
 
   img {
-    height: 32px;
+    height: 100%;
   }
 }
 </style>

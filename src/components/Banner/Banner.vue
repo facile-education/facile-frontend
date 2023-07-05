@@ -67,6 +67,7 @@ export default {
 <style lang="scss" scoped>
 .banner {
   display: flex;
+  align-items: center;
 }
 
 button {
@@ -95,6 +96,7 @@ button {
 .right-section {
   margin-left: auto;
   display: flex;
+  align-items: center;
 }
 </style>
 

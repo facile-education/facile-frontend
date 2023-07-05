@@ -285,7 +285,6 @@ export default {
 .nero-header {
   grid-area: header;
   border: 0;
-  padding: 8px 0;
   top: 0;
   z-index: $banner-z-index;
 }
