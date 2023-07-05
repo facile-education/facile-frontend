@@ -18,18 +18,19 @@
       class="search-icon"
       @click="submit"
     >
-      <NeroIcon name="search" />
+      <img
+        src="@/assets/icons/search.svg"
+        alt="search_icon"
+      >
     </span>
   </div>
 </template>
 
 <script>
-import NeroIcon from '@/components/Nero/NeroIcon'
 import { nbCharBeforeCompletion, timeBeforeCompletion } from '@/constants/appConstants'
 
 export default {
   name: 'AppBannerSearch',
-  components: { NeroIcon },
   inject: ['mq'],
   data () {
     return {
@@ -89,29 +90,36 @@ export default {
 
 .banner-search {
   margin-left: 8px;
-  border: 1px white solid;
+  background-color: white;
   display: flex;
-  border-radius: $border-radius;
-  height: 32px;
+  height: 40px;
+  border-radius: 6px;
 }
 
 .search-icon {
-  width: 32px;
-  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1rem 0 8px;
+  height: 100%;
   line-height: 32px;
   vertical-align: top;
-  text-align: center;
   cursor: pointer;
+
+  img {
+    height: 18px;
+  }
 }
 
 .search-input {
-  height: 30px;
+  height: 100%;
   width: 303px;
-  padding: 0 0 0 8px;
+  padding-left: 8px;
   margin: 0;
   font-size: 12px;
   border: 0;
   background-image: none;
+  border-radius: 6px;
 }
 
 .fa-search {
