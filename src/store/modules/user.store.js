@@ -152,13 +152,12 @@ export const actions = {
           }
           commit('initUserInformations', data)
         } else {
-          commit('initUserInformations', { userId: 0 })
+          console.error(data.error.message)
         }
       },
       (err) => {
         // TODO toastr
         console.error(err)
-        commit('initUserInformations', { userId: 0 })
       })
   },
   setSelectedSchool ({ commit }, school) {
