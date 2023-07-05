@@ -228,11 +228,22 @@ export default {
         window.location = constants.LOGOUT_URL // Logout
       }
     }, 1000)
+
+    window.addEventListener('storage', this.localStorageUpdated)
   },
   unmounted () {
     clearInterval(this.interval)
+    window.removeEventListener('storage', this.localStorageUpdated)
   },
   methods: {
+    localStorageUpdated (event) {
+      // Update last action date if it was updated by another tab
+      if (event.key === 'lastActionDate') {
+        const lastActionDate = event.newValue
+        this.$store.dispatch('user/setLastActionDate', dayjs(lastActionDate, 'YYYY/MM/DD HH:mm:ss'))
+        this.isSessionWarningDisplayed = false
+      }
+    },
     closeFile (file) {
       this.$store.dispatch('documents/refreshCurrentFolder') // To update the displayed closed document properties (last modified date, etc...)
       this.$store.dispatch('documents/closeFile', file)

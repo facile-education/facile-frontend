@@ -205,6 +205,9 @@ export const actions = {
   },
   setPasswordChange ({ commit }, passwordChange) {
     commit('setPasswordChange', passwordChange)
+  },
+  setLastActionDate ({ commit }, lastActionDate) {
+    commit('setLastActionDate', lastActionDate)
   }
 }
 

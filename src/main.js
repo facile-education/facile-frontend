@@ -80,7 +80,9 @@ dayjs.updateLocale('fr', {
 
 axios.interceptors.request.use(async (config) => {
   // Store the last webservice call date
-  store.commit('user/setLastActionDate', dayjs())
+  store.dispatch('user/setLastActionDate', dayjs())
+  // Share last action date to other tabs that share locale storage
+  localStorage.setItem('lastActionDate', dayjs().format('YYYY/MM/DD HH:mm:ss'))
 
   if (store.state.user.pauth === undefined) {
     await fetch(constants.P_AUTH_URL).then(response => response.text()).then(response => { store.commit('user/setPAuth', response.trim()) })
