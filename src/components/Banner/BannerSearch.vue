@@ -89,7 +89,7 @@ export default {
 @import "@design";
 
 .banner-search {
-  margin-left: 8px;
+  margin-left: 4px;
   background-color: white;
   display: flex;
   height: 40px;
