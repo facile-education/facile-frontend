@@ -91,6 +91,7 @@ export default {
     InformationModal,
     PreferencesModal
   },
+  emits: ['close'],
   data () {
     return {
       logoutUrl: constants.LOGOUT_URL,
@@ -105,7 +106,21 @@ export default {
       return this.$store.state.user.isAdministrator
     }
   },
+  mounted () {
+    window.addEventListener('click', this.clickOutside)
+  },
+  beforeUnmount () {
+    window.removeEventListener('click', this.clickOutside)
+  },
   methods: {
+    clickOutside (e) {
+      const self = this
+      if (self.$el && !self.$el.contains(e.target)) {
+        if (!this.isInformationModalDisplayed && !this.isPreferencesDisplayed && !this.isSupportModalDisplayed) {
+          this.$emit('close')
+        }
+      }
+    },
     toggleInformationsModal () {
       this.isInformationModalDisplayed = !this.isInformationModalDisplayed
     },
