@@ -57,6 +57,12 @@ $font-l: 1rem;
   line-height: 1rem;
 }
 
+%font-bold-l {
+  font-size: $font-l;
+  font-weight: 700;
+  line-height: 1.5rem;
+}
+
 %font-regular-m {
   font-size: $font-m;
   line-height: 1.25rem;

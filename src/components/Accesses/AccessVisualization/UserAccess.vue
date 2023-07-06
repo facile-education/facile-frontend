@@ -83,11 +83,11 @@ export default {
 .title {
   width: 80px;
   max-width: 80px;
-  margin-top: 5px;
+  margin-top: 4px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   text-align: center;
-  font-size: 0.75rem;
+  @extend %font-regular-s;
 }
 </style>
