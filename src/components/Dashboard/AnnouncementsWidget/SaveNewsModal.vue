@@ -4,6 +4,7 @@
     data-test="update-news-modal"
     :modal="true"
     :draggable="true"
+    :max-width="1000"
     @close="confirmClosure"
   >
     <template #header>

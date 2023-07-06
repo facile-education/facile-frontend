@@ -4,6 +4,7 @@
     :is-full-screen="mq.phone"
     :hidden-footer="true"
     :draggable="true"
+    :max-width="1000"
     data-test="readInfoModal"
     @close="onClose"
   >
