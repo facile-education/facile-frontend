@@ -295,9 +295,16 @@ export default {
   flex-direction: column;
   justify-content: space-between;
 
-  .description, .meta-data {
-    font-size: 0.8rem;
-    color: $color-new-light-text;
+  .description {
+    @extend %font-regular-s;
+  }
+
+  .meta-data {
+    @extend %font-regular-xs;
+  }
+
+  .title {
+    @extend %font-medium-m;
   }
 
   .description {

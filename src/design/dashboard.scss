@@ -84,14 +84,15 @@ $announcement-item-horizontal-min-width: min(450px, 80vw);
 
   button {
     margin-right: 4px;
-    border: 1px solid $color-border;
-    border-radius: 4px;
-    height: 29px;
+    height: 2rem;
+    border: 1px solid $neutral-60;
+    border-radius: 6px;
+    background-color: $neutral-10;
     cursor: pointer;
-    padding: 9px 10px;
-    background-color: white;
+    padding: 6px 1rem;
     display: flex;
     align-items: center;
+    @extend %font-regular-m;
   }
 }
 
