@@ -13,49 +13,49 @@
 }
 */
 [class^="icon-"]:before, [class*=" icon-"]:before {
-  font-family: "CustomIcons", sans-serif;
+  font-family: "CustomIcons", sans-serif !important;
+  speak: never;
   font-style: normal;
   font-weight: normal;
-  speak: never;
-
-  display: inline-block;
-  text-decoration: inherit;
-  width: 1em;
-  margin-right: .2em;
-  text-align: center;
-  /* opacity: .8; */
-
-  /* For safety - reset parent styles, that can break glyph codes*/
   font-variant: normal;
   text-transform: none;
+  line-height: 1;
 
-  /* fix buttons height, for twitter bootstrap */
-  line-height: 1em;
-
-  /* Animation center compensation - margins should be symmetric */
-  /* remove if not needed */
-  margin-left: .2em;
-
-  /* you can be more comfortable with increased icons size */
-  /* font-size: 120%; */
-
-  /* Font smoothing. That was taken from TWBS */
+  /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  /* Uncomment for 3D effect */
-  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
 
-.icon-unread_filter:before { content: '\e800'; } /* '' */
-.icon-admin:before { content: '\e801'; } /* '' */
-.icon-calendar:before { content: '\e802'; } /* '' */
-.icon-clock:before { content: '\e803'; } /* '' */
-.icon-collab-workspace:before { content: '\e804'; } /* '' */
-.icon-folder:before { content: '\e805'; } /* '' */
-.icon-home:before { content: '\e806'; } /* '' */
-.icon-langues:before { content: '\e807'; } /* '' */
-.icon-resource:before { content: '\e808'; } /* '' */
-.icon-school-life:before { content: '\e809'; } /* '' */
-.icon-double-arrow:before { content: '\e80a'; } /* '' */
-.icon-clock-1:before { content: '\e80b'; } /* '' */
+.icon-school-life:before {
+  content: "\e902";
+}
+.icon-resource:before {
+  content: "\e903";
+}
+.icon-clock:before {
+  content: "\e904";
+}
+.icon-calendar:before {
+  content: "\e905";
+}
+.icon-langues:before {
+  content: "\e906";
+}
+.icon-collab-workspace:before {
+  content: "\e907";
+}
+.icon-folder:before {
+  content: "\e908";
+}
+.icon-double-arrow:before {
+  content: "\e909";
+}
+.icon-home:before {
+  content: "\e90a";
+}
+.icon-admin:before {
+  content: "\e900";
+}
+.icon-filtres:before {
+  content: "\e901";
+}

@@ -15,7 +15,7 @@
         @click="toggleReadOnly"
       >
         <CustomIcon
-          icon-name="icon-unread_filter"
+          icon-name="icon-filtres"
           class="unread-filter-icon"
           :class="{'theme-text-color': unReadOnly}"
         />
