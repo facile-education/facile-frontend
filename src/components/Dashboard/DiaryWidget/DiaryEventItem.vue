@@ -214,7 +214,7 @@ export default {
 .container {
   padding-right: 4px;
   padding-top: 4px;
-  height: 50px;
+  height: 52px;
 }
 
 .diary-event {
@@ -233,7 +233,7 @@ export default {
   }
 
   &.theme-border-color {
-    border: 1px solid;
+    border: 2px solid;
   }
 
   .pellet {
