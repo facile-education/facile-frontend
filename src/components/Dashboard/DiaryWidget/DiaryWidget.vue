@@ -32,10 +32,10 @@
           {{ month.monthName }}
         </div>
         <DiaryEventItem
-          v-for="event in month.eventList"
-          :key="event.eventId"
-          :event="event"
-          @markAsRead="event.hasRead=true"
+          v-for="myEvent in month.eventList"
+          :key="myEvent.eventId"
+          :event="myEvent"
+          @markAsRead="myEvent.hasRead=true"
           @updateEvent="refresh"
           @deleteEvent="refresh"
         />

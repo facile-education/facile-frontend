@@ -223,7 +223,7 @@ export default {
   height: 100%;
   border-radius: 5px;
   display: flex;
-  padding: 4px;
+  padding: 0 4px;
   --date-width: 41px;
   font-size: 14px;
   line-height: 18px;
@@ -270,12 +270,19 @@ export default {
   flex-direction: column;
   justify-content: center;
   padding-left: 4px;
-  font-size: 0.8rem;
 
   .meta-data, .title {
     white-space: nowrap;
     overflow-x: hidden;
     text-overflow: ellipsis;
+  }
+
+  .title {
+    @extend %font-medium-m;
+  }
+
+  .meta-data {
+    @extend %font-regular-xs;
   }
 }
 
