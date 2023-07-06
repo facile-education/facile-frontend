@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="banner-services">
     <BannerItem
       :src="require('@/assets/icons/accesses.svg')"
       :title="$t('accesses')"
-      @click="openAccessModal"
+      @click="isAccessPopoverDisplayed=!isAccessPopoverDisplayed"
     />
     <BannerItem
       data-test="open-help-item"
@@ -11,21 +11,32 @@
       :title="$t('help')"
       @click="openHelpModal"
     />
+
+    <AccessPopover
+      v-if="isAccessPopoverDisplayed"
+      @close="isAccessPopoverDisplayed=false"
+    />
   </div>
 </template>
 
 <script>
+import { defineAsyncComponent } from 'vue'
+
 import BannerItem from '@/components/Banner/BannerItem'
+const AccessPopover = defineAsyncComponent(() => import('@components/Accesses/AccessVisualization/AccessPopover'))
 
 export default {
   name: 'BannerServices',
   components: {
+    AccessPopover,
     BannerItem
   },
+  data () {
+    return {
+      isAccessPopoverDisplayed: false
+    }
+  },
   methods: {
-    openAccessModal () {
-      this.$store.dispatch('accessManager/openAccessModal')
-    },
     openHelpModal () {
       this.$store.dispatch('help/openHelpModal')
     }
@@ -38,6 +49,11 @@ div {
   display: flex;
   gap: 1rem;
   padding: 0 1rem;
+  overflow: visible;
+}
+
+.banner-services {
+  position: relative;
 }
 </style>
 

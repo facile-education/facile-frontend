@@ -2,7 +2,7 @@
   <button
     :title="title"
     :aria-label="title"
-    @click="$emit('click')"
+    @click.stop="$emit('click')"
   >
     <img
       v-if="src"

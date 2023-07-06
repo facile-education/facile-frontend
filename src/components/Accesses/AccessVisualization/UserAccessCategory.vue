@@ -32,6 +32,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
+
 ul {
   margin: 0;
   padding: 0;
@@ -42,7 +44,7 @@ ul {
 }
 
 h2 {
-  margin: 0 0 0.8rem 0;
-  font-size: 0.875rem
+  @extend %font-bold-l;
+  margin: 0 0 1rem 0;
 }
 </style>
