@@ -20,6 +20,11 @@
       :count="notificationCount"
       :show-count="isExpanded"
     />
+    <div
+      v-if="!isExpanded && !isSubMenu"
+      v-t="'Menu.' + menuEntry.i18nKey"
+      class="menu-entry-popover"
+    />
   </RouterLink>
 </template>
 
