@@ -91,7 +91,7 @@ export default {
       return this.isCurrentTeacher &&
         !(this.slotType.type === notUsualSlotsConstants.firedType) &&
         !(this.slotType.type === notUsualSlotsConstants.tutoringType) &&
-        dayjs().isAfter(dayjs(this.event.start))
+        dayjs().isAfter(dayjs(this.event.startDate, 'YYYY/MM/DD HH:mm'))
     },
     isRegisterer () {
       return this.student.registererId === this.currentUser.userId
