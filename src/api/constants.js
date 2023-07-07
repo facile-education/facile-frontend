@@ -15,6 +15,8 @@ const LOGOUT_URL = BASE_API_URL + '/c/portal/logout'
 
 const P_AUTH_URL = BASE_API_URL + '/p_auth_token.jsp'
 
+const MOBILE_TOKEN_URL = BASE_API_URL + '/mobile_token.jsp'
+
 export default {
   BASE_API_URL,
   LOGOUT_URL,
@@ -27,5 +29,6 @@ export default {
   HTML_TYPE,
   MINDMAP_TYPE,
   GEOGEBRA_TYPE,
-  SCRATCH_TYPE
+  SCRATCH_TYPE,
+  MOBILE_TOKEN_URL
 }

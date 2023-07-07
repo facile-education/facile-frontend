@@ -35,7 +35,7 @@
           v-for="myEvent in month.eventList"
           :key="myEvent.eventId"
           :event="myEvent"
-          @markAsRead="myEvent.hasRead=true"
+          @markAsRead="markAsRead(myEvent)"
           @updateEvent="refresh"
           @deleteEvent="refresh"
         />
@@ -125,6 +125,10 @@ export default {
     },
     showMore () {
       this.$router.push({ name: 'AllEvents' })
+    },
+    markAsRead (event) {
+      event.hasRead = true
+      this.nbNewEvents--
     }
   }
 }

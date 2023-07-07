@@ -14,11 +14,6 @@
         :title="$t('entLogin')"
         class="btn"
       />
-      <p
-        v-if="isMobileApp"
-      >
-        {{ fullUrl }}
-      </p>
       <div
         class="guest"
       >
@@ -181,6 +176,11 @@ export default {
       if (response !== undefined) {
         this.p_auth = response
 
+        // Check if already authenticated on Mobile app
+        if (window.location.href.includes('mobile_token')) {
+          this.doMobileAutoConnect()
+        }
+
         // Check if already authenticated
         fetch(constants.JSON_WS_URL + USER_PATH + GET_USER_INFOS_WS + '?p_auth=' + this.p_auth).then(response => {
           if (response.status === 200) {
@@ -204,6 +204,7 @@ export default {
         } else if (data.isValid && !data.isActive) {
           this.isInactive = true
         } else {
+          // Call Login form
           const formData = new FormData()
           formData.append('_com_liferay_login_web_portlet_LoginPortlet_formDate', new Date().getTime())
           formData.append('_com_liferay_login_web_portlet_LoginPortlet_saveLastPath', false)
@@ -227,7 +228,7 @@ export default {
             const redirectUrl = this.redirect ? this.redirect : DASHBOARD
             if (this.isMobileApp) {
               // Manage mobile token
-              this.manageMobileApp(redirectUrl)
+              this.manageMobileApp(data.userId, redirectUrl)
             } else {
               // Route to landing page
               this.$router.push(redirectUrl)
@@ -236,39 +237,70 @@ export default {
         }
       })
     },
-    manageMobileApp (redirectUrl) {
-      console.log('manage mobile app')
+    manageMobileApp (userId, redirectUrl) {
       let refreshToken = ''
-      let userId = 0
-      fetch(constants.JSON_WS_URL + USER_PATH + GET_USER_INFOS_WS + '?p_auth=' + this.p_auth).then(response => {
-        if (response.status === 200) {
-          userId = response.userId
-        }
-      }
-      )
       if (window.location.href.includes('mobile_token')) {
-        console.log('refresh')
         // Refreshing with new token
         const mobileToken = new URLSearchParams(window.location.search).get('mobile_token')
         mobileService.refreshMobileToken(mobileToken).then((response) => {
           if (response.success) {
             refreshToken = response.refreshToken
-            const serviceUrl = 'pentila://authorized?refresh_token=' + refreshToken + '&user_id=' + userId + '&home_url=' + encodeURI(window.location.href + redirectUrl, 'UTF-8')
+            const mobileUrl = encodeURI(window.location.protocol + '//' + window.location.hostname + '/' + redirectUrl, 'UTF-8')
+            const serviceUrl = 'pentila://authorized?refresh_token=' + refreshToken + '&user_id=' + userId + '&home_url=' + mobileUrl
             window.location = serviceUrl
           }
         })
       } else {
-        console.log('add')
         // Adding new token
         mobileService.addMobileToken().then((response) => {
           if (response.success) {
             refreshToken = response.refreshToken
-            const mobileUrl = encodeURI(window.location.protocol + '//' + window.location.hostname + redirectUrl, 'UTF-8')
+            const mobileUrl = encodeURI(window.location.protocol + '//' + window.location.hostname + '/' + redirectUrl, 'UTF-8')
             const serviceUrl = 'pentila://authorized?refresh_token=' + refreshToken + '&user_id=' + userId + '&home_url=' + mobileUrl
             window.location = serviceUrl
           }
         })
       }
+    },
+    doMobileAutoConnect () {
+      const formData = new FormData()
+      formData.append('_com_liferay_login_web_portlet_LoginPortlet_formDate', new Date().getTime())
+      formData.append('_com_liferay_login_web_portlet_LoginPortlet_saveLastPath', false)
+      formData.append('_com_liferay_login_web_portlet_LoginPortlet_redirect', '')
+      formData.append('_com_liferay_login_web_portlet_LoginPortlet_doActionAfterLogin', false)
+      formData.append('_com_liferay_login_web_portlet_LoginPortlet_login', this.login)
+      formData.append('_com_liferay_login_web_portlet_LoginPortlet_password', this.password)
+      formData.append('_com_liferay_login_web_portlet_LoginPortlet_checkboxNames', 'rememberMe')
+      formData.append('_com_liferay_login_web_portlet_LoginPortlet_checkboxNames', 'rememberMe')
+
+      // Suffix POST url with mobile_app, mobile_token and user_id parameters added by the mobile app
+      // So that MobileApplicationAutoLogin fetches these params and authenticate the mobile user
+      let loginUrl = this.formUrl
+      if (window.location.href.includes('mobile_app')) {
+        const mobileApp = new URLSearchParams(window.location.search).get('mobile_app')
+        loginUrl += '&mobile_app=' + mobileApp
+      }
+      if (window.location.href.includes('mobile_token')) {
+        const mobileToken = new URLSearchParams(window.location.search).get('mobile_token')
+        loginUrl += '&mobile_token=' + mobileToken
+      }
+      if (window.location.href.includes('user_id')) {
+        const userId = new URLSearchParams(window.location.search).get('user_id')
+        loginUrl += '&user_id=' + userId
+      }
+      axios.post(loginUrl,
+        formData,
+        { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
+      ).then(() => {
+        // Reset p_auth_token
+        store.commit('user/setPAuth', undefined)
+
+        // Reset Matomo userId
+        window._paq.push(['setUserId', Math.random().toString(36)])
+        window._paq.push(['trackPageView'])
+
+        this.$router.push(DASHBOARD)
+      })
     },
     handleKeyPressed () {
       this.isError = false

@@ -34,11 +34,10 @@
         />
       </li>
       <li v-if="isAdministrator">
-        <!-- TODO dynamic url -->
         <a
           v-t="'controlPanel'"
           data-test="openControl_panel"
-          href="/group/control_panel?doAsGroupId=11107&refererPlid=4439929"
+          href="/lfr"
         />
       </li>
     </ul>
