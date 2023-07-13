@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import { DOCUMENTS, MESSAGING, PROGRESSION } from '@/constants/appConstants'
+// import { PROGRESSION } from '@/constants/appConstants'
 import i18n from '@/i18n'
 import store from '@/store'
 
@@ -47,41 +47,31 @@ const routes = [
     name: 'AllActivities',
     component: () => import('@/router/views/AllActivities')
   },
-  {
-    path: '/progression/:progressionId(\\d+)?',
-    name: PROGRESSION,
-    component: () => import('@/router/views/Progression')
-  },
-  {
-    path: '/progression/seance/:itemId(\\d+)?',
-    name: 'Seance',
-    component: () => import('@/router/views/ProgressionSeance')
-  },
-  {
-    path: '/documents/:folderId(\\d+)',
-    name: DOCUMENTS,
-    component: () => import('@/router/views/Documents')
-  },
+  // {
+  //   path: '/progression/:progressionId(\\d+)?',
+  //   name: PROGRESSION,
+  //   component: () => import('@/router/views/Progression')
+  // },
+  // {
+  //   path: '/progression/seance/:itemId(\\d+)?',
+  //   name: 'Seance',
+  //   component: () => import('@/router/views/ProgressionSeance')
+  // },
   {
     path: '/documents/groups/:folderId(.*)?',
     name: 'GroupDocuments',
     component: () => import('@/router/views/Documents')
   },
-  {
-    path: '/documents/recent',
-    name: 'Recent',
-    component: () => import('@/router/views/Documents')
-  },
-  {
-    path: '/messagerie/:messageId(\\d+)',
-    name: MESSAGING,
-    component: () => import('@/router/views/Messaging')
-  },
-  {
-    path: '/viewer/:fileEntryId(\\d+)?',
-    name: 'Viewer',
-    component: () => import('@/router/views/Viewer')
-  },
+  // {
+  //   path: '/documents/recent',
+  //   name: 'Recent',
+  //   component: () => import('@/router/views/Documents')
+  // },
+  // {
+  //   path: '/viewer/:fileEntryId(\\d+)?',
+  //   name: 'Viewer',
+  //   component: () => import('@/router/views/Viewer')
+  // },
   {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',

@@ -6,7 +6,7 @@ import router from '@/router'
 function getRoute (entry) {
   return {
     name: entry.i18nKey,
-    path: `/${i18n.global.t('Menu.route.' + entry.i18nKey)}`, // localized path
+    path: `/${i18n.global.t('Menu.route.' + entry.i18nKey)}${entry.param ? '/' + entry.param : ''}`, // localized path
     meta: { id: entry.id },
     component: () => import(`../../router/views/${entry.component}.vue`)
   }
