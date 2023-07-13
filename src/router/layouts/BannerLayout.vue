@@ -99,8 +99,8 @@
 <script>
 import CookiesAgreement from '@components/Nero/CookiesAgreement.vue'
 import SessionEndAdvertising from '@components/Nero/SessionEndAdvertising.vue'
-import { getCookie } from '@utils/browser.util'
 import dayjs from 'dayjs'
+import PentilaUtils from 'pentila-utils'
 import { defineAsyncComponent } from 'vue'
 
 import constants from '@/api/constants'
@@ -198,7 +198,7 @@ export default {
       return this.user.userId
     },
     hasConfirmCookiesAgreement () {
-      return getCookie('cookiesAgreement') === 'true'
+      return PentilaUtils.Cookies.getCookie('cookiesAgreement') === 'true'
     },
     remainingSessionMilliseconds () {
       return this.$store.state.menu.sessionTimeout - this.inactionTime
