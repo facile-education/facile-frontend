@@ -1,16 +1,21 @@
 <template>
-  <div class="main">
-    <p>Détails de la séance</p>
+  <div>
+    <Content
+      v-for="content in blocks"
+      :key="content"
+      v-model="content.contentValue"
+      :content="content"
+    />
   </div>
 </template>
 
 <script>
-
-import dayjs from 'dayjs'
+import Content from '@/components/Course/Content.vue'
 
 export default {
   name: 'SessionContent',
   components: {
+    Content
   },
   inject: ['mq'],
   props: {
@@ -19,24 +24,10 @@ export default {
       required: true
     }
   },
-  data () {
-    return {
-      pan: 0,
-      selectedDate: dayjs(),
-      selectedEvent: undefined,
-      updatedSession: undefined
-    }
-  },
   computed: {
-  },
-  created () {
-    if (!this.isConfigurationLoaded) {
-      this.$store.dispatch('horaires/getConfiguration').then((res) => {
-        this.$store.dispatch('course/getSessionList')
-      })
+    blocks () {
+      return this.$store.state.course.selectedSession.blocks
     }
-  },
-  methods: {
   }
 }
 </script>
@@ -44,15 +35,9 @@ export default {
 <style lang="scss" scoped>
 @import '@design';
 
-  .main-label {
-    margin-top: 10em;
-    text-align: center;
-  }
-
 </style>
 
 <i18n locale="fr">
 {
-  "action": "Editer"
 }
 </i18n>

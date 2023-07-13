@@ -84,14 +84,14 @@ export default {
   props: {
     item: {
       type: Object,
-      required: true
+      default: () => { return undefined }
     },
     editedContent: {
       type: Object,
       required: true
     }
   },
-  emits: ['close'],
+  emits: ['close', 'save'],
   setup: () => ({ v$: useVuelidate() }),
   validations: {
     contentName: { required },
@@ -156,7 +156,7 @@ export default {
       e.preventDefault()
       if (this.v$.$invalid) {
         this.v$.$touch()
-      } else {
+      } else if (this.item !== undefined) {
         this.$store.dispatch('progression/addItemContent',
           { itemId: this.item.itemId, contentType: 6, contentName: this.contentName, contentValue: this.embedSrcAttribute })
           .then(() => {
@@ -170,13 +170,16 @@ export default {
               this.closeModal()
             }
           })
+      } else {
+        this.$emit('save', { contentType: 6, contentName: this.contentName, contentValue: this.embedSrcAttribute })
+        this.closeModal()
       }
     },
     editH5P (e) {
       e.preventDefault()
       if (this.v$.$invalid) {
         this.v$.$touch()
-      } else {
+      } else if (this.item !== undefined) {
         this.$store.dispatch('progression/updateItemContent', {
           contentId: this.editedContent.contentId,
           contentName: this.contentName,
@@ -194,6 +197,9 @@ export default {
               this.closeModal()
             }
           })
+      } else {
+        this.$emit('save', { contentType: 6, contentName: this.contentName, contentValue: this.embedSrcAttribute })
+        this.closeModal()
       }
     }
   }

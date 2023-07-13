@@ -71,14 +71,14 @@ export default {
   props: {
     item: {
       type: Object,
-      required: true
+      default: () => { return undefined }
     },
     editedContent: {
       type: Object,
       required: true
     }
   },
-  emits: ['close'],
+  emits: ['close', 'save'],
   setup: () => ({ v$: useVuelidate() }),
   validations: {
     linkName: { required },
@@ -123,9 +123,12 @@ export default {
       e.preventDefault()
       if (this.v$.$invalid) {
         this.v$.$touch()
-      } else {
+      } else if (this.item !== undefined) {
         this.$store.dispatch('progression/addItemContent',
           { itemId: this.item.itemId, contentType: 3, contentName: this.linkName, contentValue: this.linkUrl })
+        this.closeModal()
+      } else {
+        this.$emit('save', { contentType: 3, contentName: this.linkName, contentValue: this.linkUrl })
         this.closeModal()
       }
     },
@@ -133,13 +136,17 @@ export default {
       e.preventDefault()
       if (this.v$.$invalid) {
         this.v$.$touch()
-      } else {
+      } else if (this.item !== undefined) {
         this.$store.dispatch('progression/updateItemContent', {
           contentId: this.editedContent.contentId,
           contentName: this.linkName,
           contentValue: this.linkUrl,
           order: this.editedContent.order
         })
+        this.closeModal()
+      } else {
+        // TODO content id for edition ?
+        this.$emit('save', { contentType: 3, contentName: this.linkName, contentValue: this.linkUrl })
         this.closeModal()
       }
     }

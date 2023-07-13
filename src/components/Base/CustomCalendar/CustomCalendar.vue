@@ -30,7 +30,7 @@
   <CalendarEventPopover
     v-if="selectedEvent && showPopover"
     :selected-event="selectedEvent"
-    @optionClicked="optionClicked"
+    @option-clicked="optionClicked"
     @close="unselectEvent"
   />
 </template>

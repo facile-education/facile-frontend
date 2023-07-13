@@ -39,8 +39,7 @@ function getStudentUndoneCount (studentId, minDateStr = '', maxDateStr = '') {
 
 function getTeacherHomeworksToCorrect () {
   return axios.get(constants.JSON_WS_URL + HOMEWORK_PATH + 'get-teacher-homeworks-to-correct', {
-    params: {
-    }
+    params: {}
   }).then(response => response.data)
 }
 
@@ -53,26 +52,30 @@ function setHomeworkDoneStatus (homeworkId, isDone) {
   }).then(response => response.data)
 }
 
-function createHomework (courseId, sourceSessionId, targetSessionId, targetDate, homeworkType, students, blocks) {
+function createHomework (courseId, sourceSessionId, homework, publicationDate, isDraft) {
   return axios.post(constants.JSON_WS_URL + HOMEWORK_PATH + 'create-homework', PentilaUtils.URL.params({
     courseId,
+    title: homework.title,
     sourceSessionId,
-    targetSessionId,
-    targetDate,
-    homeworkType,
-    students: JSON.stringify(students),
-    blocks: JSON.stringify(blocks)
+    targetSessionId: homework.targetSessionId,
+    targetDateStr: homework.targetDate,
+    homeworkType: homework.homeworkType.type,
+    estimatedTime: homework.homeworkDuration.time,
+    students: homework.isWholeClass ? '' : JSON.stringify(homework.students),
+    blocks: JSON.stringify(homework.blocks),
+    publicationDateStr: publicationDate.format('YYYY-MM-DD HH:mm'),
+    isDraft
   })).then(response => response.data)
 }
 
-function updateHomework (homeworkId, targetSessionId, targetDate, homeworkType, students, blocks) {
+function updateHomework (homework) {
   return axios.post(constants.JSON_WS_URL + HOMEWORK_PATH + 'update-homework', PentilaUtils.URL.params({
-    homeworkId,
-    targetSessionId,
-    targetDate,
-    homeworkType,
-    students: JSON.stringify(students),
-    blocks: JSON.stringify(blocks)
+    homeworkId: homework.homeworkId,
+    targetSessionId: homework.targetSessionId,
+    targetDateStr: homework.targetDate,
+    homeworkType: homework.homeworkType.type,
+    students: homework.isWholeClass ? '' : JSON.stringify(homework.students),
+    blocks: JSON.stringify(homework.blocks)
   })).then(response => response.data)
 }
 

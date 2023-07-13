@@ -25,8 +25,8 @@
       </div>
 
       <AudioRecorder
-        @audioFile="setAudioFile"
-        @stoppedState="setStoppedState"
+        @audio-file="setAudioFile"
+        @stopped-state="setStoppedState"
       />
     </template>
 
@@ -110,99 +110,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$color: #878787;
-$red: rgb(230, 109, 109);
-
 .audio-name {
   margin-bottom: 20px
-}
-
-.icon {
-  height: 60px;
-  width: 60px;
-  font-size: 1.7rem;
-  color: $color;
-  border: 1px solid rgba($red, 0.8);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 1.5rem;
-
-  &.pulse {
-    box-shadow: 0 0 0 0 rgba($red, 1);
-    transform: scale(1);
-    animation: pulse 2s infinite;
-  }
-}
-
-.state {
-  overflow: hidden;
-  height: 0;
-  transition: height 0.3s;
-  margin: 0;
-  background-color: rgba($red, 0.2);
-  color: rgba($red, 1);
-  text-align: center;
-
-  &.recording {
-    height: 36px;
-    padding: 0.5rem 0;
-  }
-}
-
-.timer {
-  font-size: 1.7rem;
-  width: 100px;
-  text-align: center;
-  margin: 20px auto;
-  color: $color;
-}
-
-.actions {
-  text-align: center;
-
-  button {
-    border-radius: 30px;
-    margin: 0 10px;
-
-    span {
-      margin-left: 10px;
-    }
-  }
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba($red, 0.7);
-  }
-
-  70% {
-    transform: scale(1);
-    box-shadow: 0 0 0 10px rgba($red, 0);
-  }
-
-  100% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba($red, 0);
-  }
 }
 </style>
 
 <i18n locale="fr">
 {
-  "browserError": "Votre navigateur ne permet pas l'enregistrement de contenu media.",
-  "continue": "Reprendre",
-  "deniedError": "Une erreur est survenue lors de l'accès aux ressources de l'ordinateur (Accès refusé)",
-  "listen": "Ecouter",
   "namePlaceholder": "Titre",
   "title": "Enregistrement audio",
-  "pause": "Interrompre",
-  "recording": "Enregistrement...",
-  "restart": "Recommencer",
-  "save": "Valider",
-  "start": "Démarrer",
-  "stop": "Arrêter"
+  "save": "Valider"
 }
 </i18n>

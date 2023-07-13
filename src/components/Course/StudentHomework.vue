@@ -25,23 +25,26 @@
       </section>
     </header>
 
-    <div
+    <Content
       v-for="block in homework.blocks"
-      :key="block.id"
-      class="instruction"
-    >
-      {{ block.blockValue }}
-    </div>
+      :key="block.contentId"
+      v-model="block.contentValue"
+      :content="block"
+    />
   </div>
 </template>
 
 <script>
-import Pellet from '@components/Base/Pellet.vue'
 import dayjs from 'dayjs'
+import { defineAsyncComponent } from 'vue'
+
+import Pellet from '@/components/Base/Pellet.vue'
+
+const Content = defineAsyncComponent(() => import('@/components/Course/Content'))
 
 export default {
   name: 'StudentHomework',
-  components: { Pellet },
+  components: { Content, Pellet },
   props: {
     homework: {
       type: Object,
@@ -75,7 +78,7 @@ export default {
       return dayjs(this.homework.modificationDate, 'YYYY-MM-DD HH:mm')
     },
     teacherName () {
-      return this.homework.teacher.firstName.substring(0, 1) + '. ' + this.homework.teacher.lastName
+      return this.homework.teacher !== undefined ? this.homework.teacher.firstName.substring(0, 1) + '. ' + this.homework.teacher.lastName : ''
     }
   },
   methods: {
@@ -133,7 +136,7 @@ header {
   align-items: center;
   gap: 0.5rem;
 
-  @extend %font-medium-l;
+  @extend %font-bold-l;
 }
 
 .tag {
@@ -162,17 +165,6 @@ header {
   text-align: right;
 
   @extend %font-regular-xs;
-}
-
-.instruction {
-  display: flex;
-  padding: 1rem;
-  align-items: center;
-  gap: 1.5rem;
-  align-self: stretch;
-
-  border-radius: 6px;
-  background: $neutral-10;
 }
 </style>
 

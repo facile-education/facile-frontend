@@ -1,5 +1,7 @@
 <template>
   <div class="main">
+    TODO Remettre un devoir
+    Components : tab notif + checkbox background
     <div class="toolbar">
       <h3 class="title">
         {{ $t('thisWeek') }}

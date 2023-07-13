@@ -3,20 +3,20 @@
     <h1 :aria-label="$t('serviceTitle')" />
     <HorairesToolbar
       v-if="!$store.state.user.isStudent"
-      @updateSessions="getSessions"
+      @update-sessions="getSessions"
     />
 
     <Timeline
       v-if="!mq.phone"
       :initial-date="selectedDate"
-      @selectWeek="onSelectWeek"
+      @select-week="onSelectWeek"
     />
 
     <CustomCalendar
       :display-date="selectedDate"
       :events="eventList"
-      @selectDate="onSelectDate"
-      @eventOptionClicked="handleEventOption"
+      @select-date="onSelectDate"
+      @event-option-clicked="handleEventOption"
     />
 
     <PentilaSpinner v-if="isLoading" />

@@ -1,5 +1,6 @@
 import dayjs from 'dayjs'
 
+import { getSessionContents, getSessionDetails } from '@/api/course.service'
 import { setHomeworkDoneStatus } from '@/api/homework.service'
 import scheduleService from '@/api/schedule.service'
 
@@ -37,6 +38,12 @@ export const mutations = {
   },
   setCreateSessionModalDisplayed (state, payload) {
     state.isCreateSessionModalDisplayed = payload
+  },
+  updateContent (state, payload) {
+    state.selectedSession = { ...state.selectedSession, ...payload }
+  },
+  updateDetails (state, payload) {
+    state.selectedSession = { ...state.selectedSession, ...payload }
   },
   updateHomeworkDoneStatus (state, { homeworkId, isDone }) {
     const index = state.homeworkList.map(homework => homework.homeworkId).indexOf(homeworkId)
@@ -86,6 +93,55 @@ export const actions = {
   },
   selectSession ({ commit }, session) {
     commit('setSelectedSession', session)
+
+    const details = getSessionDetails(session.sessionId)
+    const content = getSessionContents(session.sessionId)
+
+    Promise.all([details, content]).then(([detailsData, contentData]) => {
+      console.log(detailsData, contentData)
+      if (detailsData.success && contentData.success) {
+        session = {
+          ...session,
+          ...detailsData.sessionDetails,
+          blocks: contentData.blocks,
+          title: contentData.title,
+          isDraft: contentData.isDraft,
+          publicationDate: contentData.publicationDate
+        }
+        commit('setSelectedSession', session)
+      }
+    },
+    (err) => {
+      // TODO toastr
+      console.error(err)
+    })
+  },
+  updateSessionContent ({ commit, state }) {
+    getSessionContents(state.selectedSession.sessionId).then((data) => {
+      if (data.success) {
+        commit('updateContent', {
+          blocks: data.blocks,
+          title: data.title,
+          isDraft: data.isDraft,
+          publicationDate: data.publicationDate
+        })
+      }
+    },
+    (err) => {
+      // TODO toastr
+      console.error(err)
+    })
+  },
+  updateSessionDetails ({ commit, state }) {
+    getSessionDetails(state.selectedSession.sessionId).then((data) => {
+      if (data.success) {
+        commit('updateDetails', data.sessionDetails)
+      }
+    },
+    (err) => {
+      // TODO toastr
+      console.error(err)
+    })
   },
   selectDates ({ commit, dispatch }, { start, end }) {
     commit('setDates', { start, end })

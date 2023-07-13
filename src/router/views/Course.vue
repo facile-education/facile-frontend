@@ -87,7 +87,7 @@ export default {
   @extend %font-regular-l;
 
   &.active {
-    @extend %font-medium-l;
+    @extend %font-bold-l;
   }
 }
 </style>

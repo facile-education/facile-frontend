@@ -52,7 +52,7 @@ header {
   border-left: 8px solid;
 
   .subject {
-    @extend %font-medium-l;
+    @extend %font-bold-l;
   }
 
   .infos {
