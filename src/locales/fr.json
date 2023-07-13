@@ -150,13 +150,6 @@
       "uploadFolder": "Importer un dossier"
     }
   },
-  "Horaires": {
-    "groupFilter": "Groupe",
-    "userInput": "Elève / Maître",
-    "childFilter": "Enfant",
-    "timetableOf": "Horaire de ",
-    "createSession": "Créer un cours"
-  },
   "Menu": {
     "access-admin": "Accès",
     "administration": "Administration",

@@ -26,7 +26,7 @@
       v-if="children.length === 1"
       class="child"
     >
-      {{ $t('Horaires.timetableOf') }} {{ children[0].firstName }}
+      {{ $t('timetableOf') }} {{ children[0].firstName }}
     </p>
 
     <!-- Group selector for agents -->
@@ -34,7 +34,7 @@
       v-if="groupList && (!mq.phone || !isSingleUser) && !$store.state.user.isStudent && !$store.state.user.isParent"
       v-model="selectedGroup"
       class="group-list"
-      :placeholder="$t('Horaires.groupFilter')"
+      :placeholder="$t('groupFilter')"
       :list="groupList"
       display-field="groupName"
     />
@@ -45,21 +45,21 @@
       v-model="tagsList"
       class="search"
       data-test="user-completion-input"
-      :placeholder="$t('Horaires.userInput')"
+      :placeholder="$t('userInput')"
       :close-on-select="true"
       :max-size="maxSize"
       :completion-only="true"
       :list="autocompleteUserList"
       display-field="displayName"
       id-field="userId"
-      @inputChange="searchTimeOut"
-      @update:modelValue="onSelectUser"
+      @input-change="searchTimeOut"
+      @update:model-value="onSelectUser"
     />
     <DatepickerNav
       v-if="mq.phone"
       class="date-picker"
       :selected-date="selectedDate"
-      @selectDate="onSelectDate"
+      @select-date="onSelectDate"
     />
 
     <!-- Parents with 2 or more children -->
@@ -68,12 +68,12 @@
       class="children"
     >
       <p class="children-label">
-        {{ $t('Horaires.timetableOf') }}
+        {{ $t('timetableOf') }}
       </p>
       <PentilaDropdown
         v-model="selectedChild"
         class="children-list"
-        :placeholder="$t('Horaires.childFilter')"
+        :placeholder="$t('childFilter')"
         :list="$store.state.user.children"
         display-field="firstName"
       />
@@ -85,7 +85,7 @@
       :list="schoolList"
       display-field="schoolName"
       class="filter"
-      @update:modelValue="onSelectSchool"
+      @update:model-value="onSelectSchool"
     />
   </NeroToolbar>
 </template>
@@ -116,7 +116,7 @@ export default {
       isSingleUser: true,
       maxSize: 1,
       tagsList: [],
-      groupList: [],
+      groupList: undefined,
       timeout: undefined
     }
   },
@@ -306,6 +306,11 @@ export default {
 
 <i18n locale="fr">
   {
-    "add": "NOUVEAU"
+    "add": "NOUVEAU",
+    "groupFilter": "Groupe",
+    "userInput": "Elève / Maître",
+    "childFilter": "Enfant",
+    "timetableOf": "Horaires de ",
+    "createSession": "Créer un cours"
   }
 </i18n>
