@@ -12,15 +12,18 @@ export {
   updateSessionContent,
   deleteSessionContent,
   getSessionContents,
+  getSessionPreview,
+  getSessionStudents,
   addBlock,
   addFileBlock,
   updateBlock,
   deleteBlock
 }
 
-const COURSE_PATH = '/course.course/'
-const SESSION_CONTENT_PATH = '/course.sessioncontent/'
-const CONTENT_BLOCK_PATH = '/course.contentblock/'
+const COURSE_PREFIX = '/course.'
+const COURSE_PATH = COURSE_PREFIX + 'course/'
+const SESSION_CONTENT_PATH = COURSE_PREFIX + 'sessioncontent/'
+const CONTENT_BLOCK_PATH = COURSE_PREFIX + 'contentblock/'
 
 function getCourses () {
   return axios.get(constants.JSON_WS_URL + COURSE_PATH + 'get-user-courses', {
@@ -90,6 +93,14 @@ function getSessionContents (sessionId) {
   }).then(response => response.data)
 }
 
+function getSessionPreview (sessionId) {
+  return axios.get(constants.JSON_WS_URL + SESSION_CONTENT_PATH + 'get-session-preview', {
+    params: {
+      sessionId
+    }
+  }).then(response => response.data)
+}
+
 function addBlock (itemId, blockType, blockName, blockValue, fileEntryId) {
   return axios.post(constants.JSON_WS_URL + CONTENT_BLOCK_PATH + 'add-block', PentilaUtils.URL.params({
     itemId,
@@ -123,6 +134,14 @@ function deleteBlock (blockId) {
   return axios.del(constants.JSON_WS_URL + SESSION_CONTENT_PATH + 'delete-block', {
     params: {
       blockId
+    }
+  }).then(response => response.data)
+}
+
+function getSessionStudents (courseId) {
+  return axios.get(constants.JSON_WS_URL + COURSE_PATH + 'get-course-students', {
+    params: {
+      courseId
     }
   }).then(response => response.data)
 }

@@ -4,6 +4,7 @@ import PentilaUtils from 'pentila-utils'
 import constants from '@/api/constants'
 
 export {
+  getNextSessions,
   getScheduleConfiguration,
   getUserSessions,
   getGroupSessions,
@@ -142,4 +143,13 @@ function createSession (groupId, subject, room, startDate, endDate, teacherIds, 
     teacherIds: JSON.stringify(teacherIds),
     isRecurrent
   })).then(response => response.data)
+}
+
+function getNextSessions (sessionId, minDate) {
+  return axios.get(constants.JSON_WS_URL + CDT_PATH + 'cdtsession/get-course-next-sessions', {
+    params: {
+      sessionId,
+      minDate
+    }
+  }).then(response => response.data)
 }

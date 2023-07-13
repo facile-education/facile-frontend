@@ -1,9 +1,7 @@
 <template>
-  <div class="main">
-    <p>dfdf</p>
+  <div>
     <div
-      v-if="homeworkList && homeworkList.length === 0"
-      class="main-label"
+      v-if="homeworks && homeworks.length === 0"
     >
       <p>{{ $t('no-homeworks') }}</p>
     </div>
@@ -11,24 +9,26 @@
       v-else
       class="homeworks"
     >
-      <Homework
+      <StudentHomework
         v-for="homework in sortedHomeworks"
-        :key="homework"
-      >
-        <p>devoir</p>
-      </homework>
+        :key="homework.homeworkId"
+        :homework="homework"
+      />
     </div>
   </div>
 </template>
 
 <script>
 import PentilaUtils from 'pentila-utils'
+import { defineAsyncComponent } from 'vue'
 
 import { getTeacherHomeworksToCorrect } from '@/api/homework.service'
 
+const StudentHomework = defineAsyncComponent(() => import('@/components/Course/StudentHomework'))
+
 export default {
   name: 'TeacherHomeworkTab',
-  components: {},
+  components: { StudentHomework },
   data () {
     return {
       homeworks: []
@@ -42,6 +42,7 @@ export default {
   created () {
     getTeacherHomeworksToCorrect().then((data) => {
       if (data.success) {
+        console.log(data)
         this.homeworks = data.homeworks
       }
     })
@@ -54,13 +55,10 @@ export default {
 <style lang="scss" scoped>
 @import '@design';
 
-.main-label {
-  margin-top: 10em;
-  text-align: center;
-}
 </style>
 
 <i18n locale="fr">
 {
+  "no-homeworks": "Aucun devoir à corriger"
 }
 </i18n>

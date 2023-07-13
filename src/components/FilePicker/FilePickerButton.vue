@@ -13,7 +13,7 @@
     <input
       ref="file"
       type="file"
-      accept="image/*"
+      :accept="accept"
       :multiple="allowMultiple"
       @change="$emit('change', $event)"
     >

@@ -47,7 +47,7 @@
           type="checkbox"
           label=""
         >
-        {{ student.fullName }}
+        {{ student.lastName }} {{ student.firstName }}
       </div>
     </template>
 
@@ -106,23 +106,18 @@ export default {
   .whole-class {
     margin-right: 20px;
   }
+
   .specific {
     margin-bottom: 20px;
   }
+
   input {
     margin-right: 5px;
   }
+
   span {
     text-align: center;
     margin: 10px;
-  }
-}
-
-.footer {
-  display: flex;
-  justify-content: space-around;
-  .button {
-    width: 150px;
   }
 }
 </style>

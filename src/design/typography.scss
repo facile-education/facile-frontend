@@ -38,10 +38,12 @@ $font-l: 1rem;
 
 %font-regular-xs {
   font-size: $font-xs;
+  font-weight: 400; 
 }
 
 %font-regular-s {
   font-size: $font-s;
+  font-weight: 400; 
   line-height: 1rem;
 }
 
@@ -65,6 +67,7 @@ $font-l: 1rem;
 
 %font-regular-m {
   font-size: $font-m;
+  font-weight: 400; 
   line-height: 1.25rem;
 }
 
@@ -76,10 +79,12 @@ $font-l: 1rem;
 
 %font-regular-l {
   font-size: $font-l;
+  font-weight: 400; 
   line-height: 1.5rem;
 }
 
-%font-medium-l {
+%font-bold-l {
+  font-size: $font-l;
   font-weight: 700;
   line-height: 1.5rem;
 }

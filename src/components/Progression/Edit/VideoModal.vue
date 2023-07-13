@@ -68,7 +68,6 @@
 </template>
 
 <script>
-
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 
@@ -78,14 +77,14 @@ export default {
   props: {
     item: {
       type: Object,
-      required: true
+      default: () => { return undefined }
     },
     editedContent: {
       type: Object,
       required: true
     }
   },
-  emits: ['close'],
+  emits: ['close', 'save'],
   setup: () => ({ v$: useVuelidate() }),
   validations: {
     videoName: { required },
@@ -150,7 +149,7 @@ export default {
       e.preventDefault()
       if (this.v$.$invalid) {
         this.v$.$touch()
-      } else {
+      } else if (this.item !== undefined) {
         this.$store.dispatch('progression/addItemContent', { itemId: this.item.itemId, contentType: 4, contentName: this.videoName, contentValue: this.embedSrcAttribute })
           .then(() => {
             this.closeModal()
@@ -163,13 +162,16 @@ export default {
               this.closeModal()
             }
           })
+      } else {
+        this.$emit('save', { contentType: 4, contentName: this.videoName, contentValue: this.embedSrcAttribute })
+        this.closeModal()
       }
     },
     editVideo (e) {
       e.preventDefault()
       if (this.v$.$invalid) {
         this.v$.$touch()
-      } else {
+      } else if (this.item !== undefined) {
         this.$store.dispatch('progression/updateItemContent', {
           contentId: this.editedContent.contentId,
           contentName: this.videoName,
@@ -187,6 +189,9 @@ export default {
               this.closeModal()
             }
           })
+      } else {
+        this.$emit('save', { contentType: 4, contentName: this.videoName, contentValue: this.embedSrcAttribute })
+        this.closeModal()
       }
     }
   }
