@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <TextContent
-      v-if="loaded && initialContent.contentValue !== undefined"
+      v-if="loaded && initialContent !== undefined"
       class="ck"
       :maximised="true"
       :content="initialContent"
@@ -36,7 +36,7 @@ export default {
       counter: undefined,
       loaded: false,
       readOnly: false,
-      initialContent: {},
+      initialContent: undefined,
       currentContent: {}
     }
   },
@@ -65,8 +65,7 @@ export default {
         if (data.content === '') {
           data.content = '<p>texte</p>'
         }
-        this.initialContent.contentValue = this.currentContent.contentValue = data.content
-        this.initialContent.order = 1 // display only one editor at time with this component
+        this.initialContent = this.currentContent.contentValue = data.content
         this.readOnly = this.file.readOnly
         this.loaded = true
       })
@@ -76,7 +75,7 @@ export default {
     },
     saveContent (majorVersion = true) {
       if (!this.readOnly) {
-        if (this.currentContent.contentValue !== this.initialContent.contentValue) {
+        if (this.currentContent.contentValue !== this.initialContent) {
           fileServices.saveHtmlContent(this.file.fileVersionId, this.currentContent.contentValue, majorVersion).then((data) => {
             if (data.success) {
               this.$emit('saved')

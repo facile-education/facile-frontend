@@ -103,7 +103,7 @@
           <AttachedFiles
             v-model="attachedFiles"
             :read-only="false"
-            @removeAttachedFile="removeAttachedFile"
+            @remove-attached-file="removeAttachedFile"
           />
         </div>
       </template>
@@ -133,8 +133,8 @@
     <ContactPickerModal
       v-if="mq.phone && isContactPickerModalDisplayed"
       :selected-contacts="recipients"
-      @addContacts="addRecipients"
-      @removeContacts="removeRecipients"
+      @add-contacts="addRecipients"
+      @remove-contacts="removeRecipients"
       @close="isContactPickerModalDisplayed=false"
     />
     <ContactPickerToolTip
@@ -143,8 +143,8 @@
       :selected-contacts="recipients"
       :create-button="$refs.openContactTooltipButton"
       :init-coordinates="initTooltipPosition"
-      @addContacts="addRecipients"
-      @removeContacts="removeRecipients"
+      @add-contacts="addRecipients"
+      @remove-contacts="removeRecipients"
       @close="isContactPickerModalDisplayed=false"
     />
   </teleport>
