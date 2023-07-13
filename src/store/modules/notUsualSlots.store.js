@@ -73,7 +73,7 @@ function getSessions (store) {
         console.error(err)
       })
   } else {
-    cdtService.getGroupSessions(store.state.notUsualSlots.selectedClass.orgId,
+    cdtService.getGroupSessions(store.state.notUsualSlots.selectedClass.groupId,
       store.state.notUsualSlots.displayedDates.startDate, store.state.notUsualSlots.displayedDates.endDate).then(
       (data) => {
         store.dispatch('currentActions/removeAction', { name: 'getSessions' })
