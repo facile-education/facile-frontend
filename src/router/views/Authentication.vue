@@ -126,6 +126,7 @@
 <script>
 import GVELayout from '@layouts/GVELayout.vue'
 import axios from 'axios'
+import PentilaUtils from 'pentila-utils'
 
 import authenticationService from '@/api/authentication.service'
 import constants from '@/api/constants'
@@ -147,7 +148,7 @@ export default {
   },
   data () {
     return {
-      formUrl: constants.BASE_API_URL + '/home?p_p_id=com_liferay_login_web_portlet_LoginPortlet&p_p_lifecycle=1&p_p_state=exclusive&p_p_mode=view&_com_liferay_login_web_portlet_LoginPortlet_javax.portlet.action=/login/login&_com_liferay_login_web_portlet_LoginPortlet_mvcRenderCommandName=/login/login',
+      formUrl: constants.BASE_API_URL + '/home?p_p_id=com_liferay_login_web_portlet_LoginPortlet&p_p_lifecycle=1&p_p_state=maximized&p_p_mode=view&_com_liferay_login_web_portlet_LoginPortlet_javax.portlet.action=%2Flogin%2Flogin&_com_liferay_login_web_portlet_LoginPortlet_mvcRenderCommandName=%2Flogin%2Flogin',
       login: '',
       password: '',
       p_auth: '',
@@ -171,10 +172,15 @@ export default {
     }
   },
   created () {
+    // Add LFR cookie needed for authentication
+    if (PentilaUtils.Cookies.getCookie('COOKIE_SUPPORT') === '') {
+      this.setCookie('COOKIE_SUPPORT', true, 365)
+    }
+
     // Using fetch instead of axios to avoid intercept loop
     fetch(constants.P_AUTH_URL).then(response => { if (response.status === 200) { return response.text() } }).then(response => {
       if (response !== undefined) {
-        this.p_auth = response
+        this.p_auth = response.trim()
 
         // Check if already authenticated on Mobile app
         if (window.location.href.includes('mobile_token')) {
@@ -315,6 +321,17 @@ export default {
       ).then(() => {
         this.checkEmail = true
       })
+    },
+    setCookie (name, value, days) {
+      let expires = ''
+
+      if (days) {
+        const date = new Date()
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000))
+        expires = '; expires=' + date.toUTCString()
+      }
+
+      document.cookie = name + '=' + (value || '') + expires + '; path=/'
     },
     toggleGuestForm () {
       this.isGuestFormDisplayed = !this.isGuestFormDisplayed
