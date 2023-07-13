@@ -10,7 +10,7 @@
         v-model="configuration.forward.isActive"
         class="checkbox"
         label=""
-        @update:modelValue="checkForm"
+        @update:model-value="checkForm"
       />
       {{ $t('forward') }}
       <InformationIcon
@@ -26,7 +26,7 @@
       :close-on-select="true"
       :disabled="!configuration.forward.isActive"
       class="param-value"
-      @update:modelValue="checkForm"
+      @update:model-value="checkForm"
     />
     <PentilaErrorMessage :error-message="errorMessage" />
 
@@ -36,14 +36,14 @@
         v-model="configuration.signature.isActive"
         class="checkbox"
         label=""
-        @update:modelValue="checkForm"
+        @update:model-value="checkForm"
       />
       {{ $t('signature') }}
     </div>
     <TextContent
       class="ck"
       data-test="signature-input"
-      :content="{contentValue: signatureContent}"
+      :content="signatureContent"
       :disabled="!configuration.signature.isActive"
       @input="updateSignature"
       @blur="checkForm"
@@ -55,14 +55,14 @@
         v-model="configuration.autoReply.isActive"
         class="checkbox"
         label=""
-        @update:modelValue="checkForm"
+        @update:model-value="checkForm"
       />
       {{ $t('autoReply') }}
     </div>
     <TextContent
       class="ck"
       data-test="autoReply-input"
-      :content="{contentValue: autoReplyContent}"
+      :content="autoReplyContent"
       :disabled="!configuration.autoReply.isActive"
       @input="updateAutoReply"
       @blur="checkForm"

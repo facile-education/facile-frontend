@@ -19,6 +19,7 @@ import '@ckeditor/ckeditor5-build-inline/build/translations/fr'
 
 import InlineEditor from '@ckeditor/ckeditor5-build-inline'
 import { defineAsyncComponent } from 'vue'
+
 const CKEditor = defineAsyncComponent({
   loader: async () => { return (await import('@ckeditor/ckeditor5-vue')).component }
   // loadingComponent: CKLoadingPlaceholder // TODO: CKLoadingPlaceholder with same size and spinner
