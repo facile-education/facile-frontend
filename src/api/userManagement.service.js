@@ -25,7 +25,7 @@ export default {
   updatePassword
 }
 
-const SUBJECT_PATH = '/eel-synchronization.subject'
+const SUBJECT_PATH = '/schedule.subject'
 const USER_MANAGEMENT_PATH = '/user.usermanagement'
 const AFFECTATION_PATH = '/user.affectation'
 const SCHOOL_ADMIN_PATH = '/user.schooladmin'
