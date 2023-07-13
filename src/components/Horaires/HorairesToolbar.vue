@@ -121,6 +121,9 @@ export default {
     }
   },
   computed: {
+    defaultGroup () {
+      return this.$store.state.horaires.defaultGroup
+    },
     selectedDate () {
       return this.$store.state.horaires.selectedDate
     },
@@ -192,7 +195,8 @@ export default {
         false
       ).then((data) => {
         if (data.success) {
-          this.groupList = data.groups
+          this.groupList = [this.defaultGroup, ...data.groups]
+          this.$store.dispatch('horaires/setSelectedGroup', this.defaultGroup)
         } else {
           console.error('error')
         }
