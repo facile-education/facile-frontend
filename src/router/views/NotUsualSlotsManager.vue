@@ -25,7 +25,7 @@
         <PentilaDropdown
           v-if="currentUser.selectedSchool && currentSlotType && currentSlotType.type === 5"
           v-model="selectedClass"
-          :placeholder="$t('Horaires.groupFilter')"
+          :placeholder="$t('groupFilter')"
           :list="classList"
           display-field="orgName"
           class="class-dropdown"
@@ -36,7 +36,7 @@
           :placeholder="$t('NotUsualSlots.studentNamePlaceHolder')"
           :model-value="queriedUser ? [queriedUser] : []"
           class="user-completion"
-          @update:modelValue="getUserSlots"
+          @update:model-value="getUserSlots"
         />
       </div>
       <HHCCalendar
@@ -188,6 +188,7 @@ export default {
 
 <i18n locale="fr">
 {
+  "groupFilter": "Groupe",
   "serviceTitle": "Horaires hors cadre"
 }
 </i18n>
