@@ -220,7 +220,7 @@ export default {
       if (data.success) {
         this.teacherList = data.teachers
         // Pre-select if teacher is selected in main panel
-        if (this.$store.state.horaires.selectedUser.userId !== 0 && this.$store.state.horaires.selectedUser.isTeacher) {
+        if (this.$store.state.horaires.selectedUser && this.$store.state.horaires.selectedUser.userId !== 0 && this.$store.state.horaires.selectedUser.isTeacher) {
           this.selectedTeachers.push(this.$store.state.horaires.selectedUser)
         }
       }
@@ -240,7 +240,7 @@ export default {
       if (data.success) {
         this.groupList = this.groupList.concat(data.groups)
         // Pre-select current group if any
-        if (this.$store.state.horaires.selectedGroup.groupId !== 0) {
+        if (this.$store.state.horaires.selectedGroup && this.$store.state.horaires.selectedGroup.groupId !== 0) {
           this.selectedGroup = this.$store.state.horaires.selectedGroup
         } else {
           this.selectedGroup = data.groups[0]
