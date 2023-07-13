@@ -12,7 +12,7 @@
       >
         <img
           src="@/assets/big-cross-black.svg"
-          alt="close"
+          :alt="$t('close')"
         >
       </button>
       <PentilaSpinner
@@ -109,6 +109,13 @@ export default {
 <style lang="scss" scoped>
 @import "@design";
 
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
 .access-popover {
   color: $color-dark-text;
   position: absolute;
@@ -175,9 +182,10 @@ ul {
 
 <i18n locale="fr">
 {
-  "myAccesses": "Mes accès",
   "AccessesOf": "Accès des {roleLabel}",
+  "close": "Fermer",
+  "emptyPlaceholder": "Aucun accès",
   "errorPlaceholder": "Oups, une erreur est survenue...",
-  "emptyPlaceholder": "Aucun accès"
+  "myAccesses": "Mes accès"
 }
 </i18n>

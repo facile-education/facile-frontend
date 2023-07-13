@@ -159,12 +159,15 @@ ul {
   border-radius: 4px;
   @extend %object-shadow-2;
 
-  button {
+  button, a {
+    display: inline-block;
     margin: 0;
     padding: 8px 1rem;
     background-color: transparent;
     border: none;
     cursor: pointer;
+    color: initial;
+    text-decoration: none;
 
     @extend %font-regular-m;
     width: 100%;
