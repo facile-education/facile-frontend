@@ -58,24 +58,28 @@ function createHomework (courseId, sourceSessionId, homework, publicationDate, i
     title: homework.title,
     sourceSessionId,
     targetSessionId: homework.targetSessionId,
-    targetDateStr: homework.targetDate,
+    targetDateStr: homework.toDate,
     homeworkType: homework.homeworkType.type,
     estimatedTime: homework.homeworkDuration.time,
-    students: homework.isWholeClass ? '' : JSON.stringify(homework.students),
+    students: homework.isWholeClass ? '' : JSON.stringify(homework.selectedStudents),
     blocks: JSON.stringify(homework.blocks),
     publicationDateStr: publicationDate.format('YYYY-MM-DD HH:mm'),
     isDraft
   })).then(response => response.data)
 }
 
-function updateHomework (homework) {
+function updateHomework (homework, publicationDate, isDraft) {
   return axios.post(constants.JSON_WS_URL + HOMEWORK_PATH + 'update-homework', PentilaUtils.URL.params({
     homeworkId: homework.homeworkId,
+    title: homework.title,
     targetSessionId: homework.targetSessionId,
-    targetDateStr: homework.targetDate,
+    targetDateStr: homework.toDate,
+    estimatedTime: homework.homeworkDuration.time,
     homeworkType: homework.homeworkType.type,
-    students: homework.isWholeClass ? '' : JSON.stringify(homework.students),
-    blocks: JSON.stringify(homework.blocks)
+    students: homework.isWholeClass ? '' : JSON.stringify(homework.selectedStudents),
+    blocks: JSON.stringify(homework.blocks),
+    publicationDateStr: publicationDate.format('YYYY-MM-DD HH:mm'),
+    isDraft
   })).then(response => response.data)
 }
 
