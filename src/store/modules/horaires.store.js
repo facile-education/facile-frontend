@@ -26,6 +26,7 @@ const formatNonUsualSlots = (sessions) => {
 }
 
 export const state = {
+  defaultGroup: { groupId: 0, groupName: 'Groupe' },
   selectedDate: undefined,
   selectedUser: undefined,
   selectedGroup: undefined,
@@ -62,9 +63,9 @@ export const actions = {
   setSelectedDate ({ commit }, date) {
     commit('setSelectedDate', date)
   },
-  setSelectedUser ({ commit }, user) {
+  setSelectedUser ({ commit, state }, user) {
     commit('setSelectedUser', user)
-    commit('setSelectedGroup', undefined) // To keep separation
+    commit('setSelectedGroup', state.defaultGroup) // To keep separation
   },
   setSelectedGroup ({ commit }, group) {
     commit('setSelectedUser', undefined)
