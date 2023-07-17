@@ -65,7 +65,7 @@
           <HomeworkList
             :header="$t('toDoHomeworkHeader')"
             :placeholder="$t('toDoHomeworkPlaceholder')"
-            :homework-list="session.TodoHomeworks"
+            :homework-list="session.toDoHomeworks"
           />
           <HomeworkList
             :header="$t('givenHomeworkHeader')"
@@ -163,7 +163,9 @@ export default {
         return this.session.privateNotes
       },
       set (value) {
-        this.saveNotes(value)
+        if (value !== this.session.privateNotes) {
+          this.saveNotes(value)
+        }
       }
     },
     session () {
@@ -194,8 +196,7 @@ export default {
 
         savePrivateNotes(this.session.sessionId, value).then((data) => {
           if (data.success) {
-            // TODO update selectedDetails ?
-            console.log(data)
+            // TODO update selectedDetails ? / toaster?
           }
         },
         (err) => {
