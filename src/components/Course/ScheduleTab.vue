@@ -1,9 +1,9 @@
 <template>
-  <div class="main">
+  <div class="schedule-tab">
     <DailySchedule
       class="daily-schedule"
     />
-    <div
+    <article
       v-if="session"
       class="session-infos"
     >
@@ -13,28 +13,37 @@
           <label class="date-label">{{ dateLabel }} P* or room ?</label>
         </div>
       </header>
-      <div class="content-title">
-        <h3>{{ courseTitle }}</h3>
-        <PentilaButton
-          v-if="!hasContent"
-          class="circle"
-          @click="openCourseEditModal"
-        >
-          +
-        </PentilaButton>
-        <img
-          v-else
-          height="20"
-          width="20"
-          :src="require('@/assets/icons/vertical_dots.svg')"
-          @click="openCourseEditModal"
-        >
-      </div>
-      <div class="top">
+
+      <section class="session-content">
+        <div class="content-title">
+          <h3>{{ courseTitle }}</h3>
+          <PentilaButton
+            v-if="!hasContent"
+            class="circle"
+            @click="openCourseEditModal"
+          >
+            +
+          </PentilaButton>
+          <button
+            v-else
+            class="edit-button"
+            @click="openCourseEditModal"
+          >
+            <img
+              height="20"
+              width="20"
+              :src="require('@/assets/icons/vertical_dots.svg')"
+              alt="options"
+            >
+          </button>
+        </div>
+
         <SessionContent
-          class="session-content"
           :session="session"
         />
+      </section>
+
+      <section class="homeworks">
         <div class="content-title">
           <h3 v-t="'workToDo'" />
           <PentilaButton
@@ -54,13 +63,17 @@
           :key="homework.homeworkId"
           :homework="homework"
         />
-      </div>
-      <h3 v-t="'notes'" />
-      <div class="notes">
-        <textarea v-model="notes" />
-      </div>
-    </div>
+      </section>
+
+      <section class="notes">
+        <h3 v-t="'notes'" />
+        <div class="notes">
+          <textarea v-model="notes" />
+        </div>
+      </section>
+    </article>
   </div>
+
   <teleport to="body">
     <CourseEditModal
       v-if="isModalDisplayed"
@@ -175,7 +188,7 @@ export default {
 <style lang="scss" scoped>
 @import '@design';
 
-.main {
+.schedule-tab {
   display: flex;
 }
 
@@ -225,6 +238,14 @@ header {
 
 .notes {
   border: 1px black;
+}
+
+.edit-button {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }
 </style>
 
