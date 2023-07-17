@@ -66,9 +66,11 @@
 
       <section class="notes">
         <h3 v-t="'notes'" />
-        <div class="notes">
-          <textarea v-model="notes" />
-        </div>
+        <TextContent
+          v-model:content="notes"
+          class="ck-editor"
+          :placeholder="$t('notesPlaceholder')"
+        />
       </section>
     </article>
     <div
@@ -93,6 +95,7 @@
 
 <script>
 import HomeworkList from '@components/Course/HomeworkList.vue'
+import TextContent from '@components/Progression/Edit/Contents/TextContent.vue'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
@@ -106,6 +109,7 @@ const SessionContent = defineAsyncComponent(() => import('@/components/Course/Se
 export default {
   name: 'ScheduleTab',
   components: {
+    TextContent,
     HomeworkList,
     CourseEditModal,
     DailySchedule,
@@ -189,6 +193,21 @@ export default {
 }
 </script>
 
+<style lang="scss">
+.schedule-tab {
+  .ck-editor {
+    p {
+      margin: 5px 0;
+      line-height: 1.25rem;
+    }
+  }
+
+  .ck-editor__editable {
+    min-height: 8rem;
+  }
+}
+</style>
+
 <style lang="scss" scoped>
 @import '@design';
 
@@ -247,7 +266,10 @@ header {
 }
 
 .notes {
-  border: 1px black;
+  .ck-editor{
+    //border: 1px solid rgba(0, 0, 0, 0.15);
+    background-color: $neutral-20;
+  }
 }
 
 .edit-button {
