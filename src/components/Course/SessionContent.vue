@@ -1,12 +1,20 @@
 <template>
-  <div>
-    <Content
-      v-for="content in blocks"
+  <ul v-if="session.blocks && session.blocks.length > 0">
+    <li
+      v-for="content in session.blocks"
       :key="content"
-      v-model="content.contentValue"
-      :content="content"
-    />
-  </div>
+    >
+      <Content
+        v-model="content.contentValue"
+        :content="content"
+      />
+    </li>
+  </ul>
+  <div
+    v-else
+    v-t="'courseContentPlaceholder'"
+    class="placeholder"
+  />
 </template>
 
 <script>
@@ -23,11 +31,6 @@ export default {
       type: Object,
       required: true
     }
-  },
-  computed: {
-    blocks () {
-      return this.$store.state.course.selectedSession.blocks
-    }
   }
 }
 </script>
@@ -35,9 +38,13 @@ export default {
 <style lang="scss" scoped>
 @import '@design';
 
+.placeholder {
+  @extend %content-placeholder;
+}
 </style>
 
 <i18n locale="fr">
 {
+  "courseContentPlaceholder": "Aucun support de cours enregistré"
 }
 </i18n>

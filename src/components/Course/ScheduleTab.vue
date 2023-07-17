@@ -38,9 +38,7 @@
           </button>
         </div>
 
-        <SessionContent
-          :session="session"
-        />
+        <SessionContent :session="session" />
       </section>
 
       <section class="homeworks">
@@ -53,15 +51,16 @@
             +
           </PentilaButton>
         </div>
-        <Homework
-          v-for="homework in session.TodoHomeworks"
-          :key="homework.homeworkId"
-          :homework="homework"
+
+        <HomeworkList
+          :header="$t('toDoHomeworkHeader')"
+          :placeholder="$t('toDoHomeworkPlaceholder')"
+          :homework-list="session.TodoHomeworks"
         />
-        <Homework
-          v-for="homework in session.givenHomeworks"
-          :key="homework.homeworkId"
-          :homework="homework"
+        <HomeworkList
+          :header="$t('givenHomeworkHeader')"
+          :placeholder="$t('givenHomeworkPlaceholder')"
+          :homework-list="session.givenHomeworks"
         />
       </section>
 
@@ -72,6 +71,11 @@
         </div>
       </section>
     </article>
+    <div
+      v-else
+      v-t="'selectSessionPlaceholder'"
+      class="select-session-placeholder"
+    />
   </div>
 
   <teleport to="body">
@@ -88,6 +92,7 @@
 </template>
 
 <script>
+import HomeworkList from '@components/Course/HomeworkList.vue'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
@@ -95,16 +100,15 @@ import { savePrivateNotes } from '@/api/course.service'
 import DailySchedule from '@/components/Course/DailySchedule.vue'
 
 const CourseEditModal = defineAsyncComponent(() => import('@/components/Course/CourseEditModal'))
-const Homework = defineAsyncComponent(() => import('@/components/Course/Homework'))
 const HomeworkEditModal = defineAsyncComponent(() => import('@/components/Course/HomeworkEditModal'))
 const SessionContent = defineAsyncComponent(() => import('@/components/Course/SessionContent'))
 
 export default {
   name: 'ScheduleTab',
   components: {
+    HomeworkList,
     CourseEditModal,
     DailySchedule,
-    Homework,
     HomeworkEditModal,
     SessionContent
   },
@@ -204,10 +208,16 @@ export default {
   margin: 10px;
 }
 
+.select-session-placeholder {
+  width: 70%;
+  margin-top: 30%;
+  text-align: center;
+  @extend %font-bold-l;
+}
+
 header {
   display: flex;
   padding: 1rem 1.5rem;
-  // justify-content: space-between;
   align-items: center;
   align-self: stretch;
 
@@ -251,8 +261,14 @@ header {
 
 <i18n locale="fr">
 {
+  "selectSessionPlaceholder": "Veuillez sélectionner une séance pour accéder à son contenu",
+  "toDoHomeworkPlaceholder": "Aucun travail à préparer",
+  "toDoHomeworkHeader": "Pour cette séance",
+  "givenHomeworkPlaceholder": "Aucun travail donné",
+  "givenHomeworkHeader": "Pour une prochaine date",
   "courseContent": "Support de cours",
   "notes": "Note privée",
+  "notesPlaceholder": "Ma note privée",
   "workToDo": "Travaux à faire"
 }
 </i18n>
