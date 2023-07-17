@@ -53,6 +53,12 @@ h4 {
   @extend %font-regular-xs;
 }
 
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
 .placeholder {
   @extend %content-placeholder;
 }
