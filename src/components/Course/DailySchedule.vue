@@ -4,7 +4,7 @@
       <button @click="diplayPreviousDay()">
         <img
           class="previous"
-          src="@assets/arrow-right.svg"
+          src="@assets/icons/chevron-right.svg"
           :alt="$t('previousDay')"
           :title="$t('previousDay')"
         >
@@ -18,7 +18,7 @@
       >
         <template #default="{ togglePopover }">
           <div
-            class="date theme-text-color theme-light-background-color"
+            class="date theme-text-color theme-extra-light-background-color"
             @click="togglePopover()"
           >
             {{ dateLabel }}
@@ -27,7 +27,7 @@
       </DatePicker>
       <button @click="diplayNextDay()">
         <img
-          src="@assets/arrow-right.svg"
+          src="@assets/icons/chevron-right.svg"
           :alt="$t('nextDay')"
           :title="$t('nextDay')"
         >
