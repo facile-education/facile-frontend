@@ -23,15 +23,12 @@
               class="icon theme-text-color"
             />
             <h3>{{ courseTitle }}</h3>
-            <PentilaButton
+            <CreateButton
               v-if="!hasContent"
-              class="circle"
               :aria-label="$t('add')"
               :title="$t('add')"
               @click="openCourseEditModal"
-            >
-              +
-            </PentilaButton>
+            />
             <button
               v-else
               class="edit-button"
@@ -58,14 +55,11 @@
               class="icon theme-text-color"
             />
             <h3 v-t="'workToDo'" />
-            <PentilaButton
-              class="circle"
+            <CreateButton
               :aria-label="$t('add')"
               :title="$t('add')"
               @click="openHomeworkEditModal"
-            >
-              +
-            </PentilaButton>
+            />
           </div>
 
           <HomeworkList
@@ -111,6 +105,7 @@
 </template>
 
 <script>
+import CreateButton from '@components/Base/CreateButton.vue'
 import CustomIcon from '@components/Base/CustomIcon.vue'
 import HomeworkList from '@components/Course/HomeworkList.vue'
 import TextContent from '@components/Progression/Edit/Contents/TextContent.vue'
@@ -127,6 +122,7 @@ const SessionContent = defineAsyncComponent(() => import('@/components/Course/Se
 export default {
   name: 'ScheduleTab',
   components: {
+    CreateButton,
     CustomIcon,
     TextContent,
     HomeworkList,
