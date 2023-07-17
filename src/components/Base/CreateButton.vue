@@ -1,6 +1,9 @@
 <template>
   <button class="theme-background-color">
-    +
+    <img
+      src="@/assets/icons/icon_plus_white.svg"
+      alt="plus"
+    >
   </button>
 </template>
 
@@ -12,7 +15,7 @@ export default {
 
 <style lang="scss" scoped>
 button {
-  --size: 33px;
+  --size: 32px;
   height: var(--size);
   width: var(--size);
   border-radius: 50%;
@@ -21,9 +24,17 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2em;
   cursor: pointer;
   border: none;
+
+  &:hover {
+    filter: brightness(115%);
+    -webkit-transition: .2s filter linear;
+    -moz-transition: .2s filter linear;
+    -ms-transition: .2s filter linear;
+    -o-transition: .2s filter linear;
+    transition: .2s filter linear;
+  }
 }
 
 </style>
