@@ -207,6 +207,6 @@ nav {
 <i18n locale="fr">
 {
   "nextDay": "Jour suivant",
-  "previousDay": "Jour précédant"
+  "previousDay": "Jour précédent"
 }
 </i18n>
