@@ -41,6 +41,12 @@ export default {
 .placeholder {
   @extend %content-placeholder;
 }
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
 </style>
 
 <i18n locale="fr">
