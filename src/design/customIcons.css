@@ -26,6 +26,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-devoirs:before {
+  content: "\e90b";
+}
+.icon-seance:before {
+  content: "\e90c";
+}
 .icon-school-life:before {
   content: "\e902";
 }
