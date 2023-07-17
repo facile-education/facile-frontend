@@ -7,62 +7,73 @@
       v-if="session"
       class="session-infos"
     >
-      <header :style="`background-color: ${session.color}33; border-color: ${session.color};`">
-        <div>
-          <label>{{ session.subject }} - {{ session.groupName }}</label>
-          <label class="date-label">{{ dateLabel }} P* or room ?</label>
-        </div>
-      </header>
+      <div style="display: flex; flex-direction: column; gap: 2rem;">
+        <!-- Set 24 to color opacity <=> to add a white background with DD as opacity (FF - DD = 24) -->
+        <header :style="`background-color: ${session.color}24; border-color: ${session.color};`">
+          <div>
+            <label>{{ session.subject }} - {{ session.groupName }}</label>
+            <label class="date-label">{{ dateLabel }} P* or room ?</label>
+          </div>
+        </header>
 
-      <section class="session-content">
-        <div class="content-title">
-          <h3>{{ courseTitle }}</h3>
-          <PentilaButton
-            v-if="!hasContent"
-            class="circle"
-            @click="openCourseEditModal"
-          >
-            +
-          </PentilaButton>
-          <button
-            v-else
-            class="edit-button"
-            @click="openCourseEditModal"
-          >
-            <img
-              height="20"
-              width="20"
-              :src="require('@/assets/icons/vertical_dots.svg')"
-              alt="options"
+        <section class="session-content">
+          <div class="content-title">
+            <CustomIcon
+              icon-name="icon-seance"
+              class="icon theme-text-color"
+            />
+            <h3>{{ courseTitle }}</h3>
+            <PentilaButton
+              v-if="!hasContent"
+              class="circle"
+              @click="openCourseEditModal"
             >
-          </button>
-        </div>
+              +
+            </PentilaButton>
+            <button
+              v-else
+              class="edit-button"
+              @click="openCourseEditModal"
+            >
+              <img
+                height="20"
+                width="20"
+                :src="require('@/assets/icons/vertical_dots.svg')"
+                alt="options"
+              >
+            </button>
+          </div>
 
-        <SessionContent :session="session" />
-      </section>
+          <SessionContent :session="session" />
+        </section>
 
-      <section class="homeworks">
-        <div class="content-title">
-          <h3 v-t="'workToDo'" />
-          <PentilaButton
-            class="circle"
-            @click="openHomeworkEditModal"
-          >
-            +
-          </PentilaButton>
-        </div>
+        <section class="homeworks">
+          <div class="content-title">
+            <CustomIcon
+              icon-name="icon-devoirs"
+              class="icon theme-text-color"
+            />
+            <h3 v-t="'workToDo'" />
+            <PentilaButton
+              class="circle"
+              @click="openHomeworkEditModal"
+            >
+              +
+            </PentilaButton>
+          </div>
 
-        <HomeworkList
-          :header="$t('toDoHomeworkHeader')"
-          :placeholder="$t('toDoHomeworkPlaceholder')"
-          :homework-list="session.TodoHomeworks"
-        />
-        <HomeworkList
-          :header="$t('givenHomeworkHeader')"
-          :placeholder="$t('givenHomeworkPlaceholder')"
-          :homework-list="session.givenHomeworks"
-        />
-      </section>
+          <HomeworkList
+            :header="$t('toDoHomeworkHeader')"
+            :placeholder="$t('toDoHomeworkPlaceholder')"
+            :homework-list="session.TodoHomeworks"
+          />
+          <HomeworkList
+            :header="$t('givenHomeworkHeader')"
+            :placeholder="$t('givenHomeworkPlaceholder')"
+            :homework-list="session.givenHomeworks"
+          />
+        </section>
+      </div>
 
       <section class="notes">
         <h3 v-t="'notes'" />
@@ -94,6 +105,7 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import HomeworkList from '@components/Course/HomeworkList.vue'
 import TextContent from '@components/Progression/Edit/Contents/TextContent.vue'
 import dayjs from 'dayjs'
@@ -109,6 +121,7 @@ const SessionContent = defineAsyncComponent(() => import('@/components/Course/Se
 export default {
   name: 'ScheduleTab',
   components: {
+    CustomIcon,
     TextContent,
     HomeworkList,
     CourseEditModal,
@@ -213,6 +226,7 @@ export default {
 
 .schedule-tab {
   display: flex;
+  gap: 50px;
 }
 
 .daily-schedule {
@@ -224,7 +238,7 @@ export default {
   height: 800px;
   display: flex;
   flex-direction: column;
-  margin: 10px;
+  gap: 70px;
 }
 
 .select-session-placeholder {
@@ -257,8 +271,19 @@ header {
 
 .content-title {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  height: 48px;
+
+  .icon {
+    font-size: 1.5rem;
+    margin-right: 8px;
+  }
+
+  h3 {
+    flex: 1;
+    margin: 0;
+    @extend %font-bold-l;
+  }
 }
 
 .given-homeworks {
@@ -269,6 +294,11 @@ header {
   .ck-editor{
     //border: 1px solid rgba(0, 0, 0, 0.15);
     background-color: $neutral-20;
+  }
+
+  h3 {
+    margin: 0 0 1rem 0;
+    @extend %font-heading-xs;
   }
 }
 
@@ -288,9 +318,9 @@ header {
   "toDoHomeworkHeader": "Pour cette séance",
   "givenHomeworkPlaceholder": "Aucun travail donné",
   "givenHomeworkHeader": "Pour une prochaine date",
-  "courseContent": "Support de cours",
+  "courseContent": "SUPPORTS DE COURS",
   "notes": "Note privée",
   "notesPlaceholder": "Ma note privée",
-  "workToDo": "Travaux à faire"
+  "workToDo": "TRAVAUX À FAIRE"
 }
 </i18n>
