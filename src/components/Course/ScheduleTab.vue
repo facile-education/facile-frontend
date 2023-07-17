@@ -26,6 +26,8 @@
             <PentilaButton
               v-if="!hasContent"
               class="circle"
+              :aria-label="$t('add')"
+              :title="$t('add')"
               @click="openCourseEditModal"
             >
               +
@@ -33,13 +35,15 @@
             <button
               v-else
               class="edit-button"
+              :aria-label="$t('update')"
+              :title="$t('update')"
               @click="openCourseEditModal"
             >
               <img
                 height="20"
                 width="20"
                 :src="require('@/assets/icons/vertical_dots.svg')"
-                alt="options"
+                alt="update"
               >
             </button>
           </div>
@@ -56,6 +60,8 @@
             <h3 v-t="'workToDo'" />
             <PentilaButton
               class="circle"
+              :aria-label="$t('add')"
+              :title="$t('add')"
               @click="openHomeworkEditModal"
             >
               +
@@ -313,6 +319,8 @@ header {
 
 <i18n locale="fr">
 {
+  "add": "Ajouter",
+  "update": "Modifier",
   "selectSessionPlaceholder": "Veuillez sélectionner une séance pour accéder à son contenu",
   "toDoHomeworkPlaceholder": "Aucun travail à préparer",
   "toDoHomeworkHeader": "Pour cette séance",

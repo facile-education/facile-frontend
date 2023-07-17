@@ -1,12 +1,15 @@
 <template>
   <div>
     <nav>
-      <button @click="diplayPreviousDay()">
+      <button
+        :title="$t('previousDay')"
+        :aria-label="$t('previousDay')"
+        @click="displayPreviousDay"
+      >
         <img
           class="previous"
           src="@assets/icons/chevron-right.svg"
           :alt="$t('previousDay')"
-          :title="$t('previousDay')"
         >
       </button>
       <DatePicker
@@ -25,11 +28,14 @@
           </div>
         </template>
       </DatePicker>
-      <button @click="diplayNextDay()">
+      <button
+        :title="$t('nextDay')"
+        :aria-label="$t('nextDay')"
+        @click="displayNextDay"
+      >
         <img
           src="@assets/icons/chevron-right.svg"
           :alt="$t('nextDay')"
-          :title="$t('nextDay')"
         >
       </button>
     </nav>
@@ -109,8 +115,8 @@ export default {
     this.selectDate(this.selectedDate, init)
   },
   methods: {
-    diplayNextDay () { this.selectDate(this.selectedDate.add(1, 'day')) },
-    diplayPreviousDay () { this.selectDate(this.selectedDate.add(-1, 'day'), false, false) },
+    displayNextDay () { this.selectDate(this.selectedDate.add(1, 'day')) },
+    displayPreviousDay () { this.selectDate(this.selectedDate.add(-1, 'day'), false, false) },
     selectDate (date, init = false, goForward = true) {
       getUserSchedule(this.$store.state.user.userId, date, goForward).then((data) => {
         this.isLoading = false
