@@ -92,13 +92,10 @@ export const actions = {
     }
   },
   selectSession ({ commit }, session) {
-    commit('setSelectedSession', session)
-
     const details = getSessionDetails(session.sessionId)
     const content = getSessionContents(session.sessionId)
 
     Promise.all([details, content]).then(([detailsData, contentData]) => {
-      console.log(detailsData, contentData)
       if (detailsData.success && contentData.success) {
         session = {
           ...session,
