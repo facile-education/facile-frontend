@@ -7,11 +7,10 @@
       class="circle"
       @click="content.callback()"
     >
-      <img
-        class="add-content-button"
-        :src="content.icon"
-        :alt="content.name"
-      >
+      <CustomIcon
+        :icon-name="content.icon"
+        :style="'font-size: ' + content.fontSize"
+      />
       <input
         v-if="content.hasInput"
         ref="file"
@@ -55,6 +54,7 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import { importDocuments } from '@utils/documents.util'
 import { alertNoFile, returnAddedFiles } from '@utils/upload.util'
 import { defineAsyncComponent } from 'vue'
@@ -70,6 +70,7 @@ const VideoModal = defineAsyncComponent(() => import('@/components/Progression/E
 export default {
   name: 'ContentPicker',
   components: {
+    CustomIcon,
     AudioRecorderModal,
     LinkModal,
     FilePickerModal,
@@ -81,38 +82,45 @@ export default {
     return {
       contents: [
         {
-          icon: require('@assets/options/dossier-pj.svg'),
+          icon: 'icon-folder',
+          fontSize: '1.25rem',
           name: this.$t('addFile'),
           callback: this.toggleFilePicker
         },
         {
-          icon: require('@assets/options/icon_upload.svg'),
+          icon: 'icon-upload',
+          fontSize: '1rem',
           name: this.$t('addFile'),
           callback: this.toggleOSFilePicker,
           hasInput: true
         },
         {
-          icon: require('@assets/icon_text.svg'),
+          icon: 'icon-Aa',
+          fontSize: '0.8rem',
           name: this.$t('addText'),
           callback: this.addText
         },
         {
-          icon: require('@assets/icon_record.svg'),
+          icon: 'icon-record',
+          fontSize: '1.25rem',
           name: this.$t('addSound'),
           callback: this.toggleAudioRecorderModal
         },
         {
-          icon: require('@assets/icon_link.svg'),
+          icon: 'icon-link',
+          fontSize: '1.1rem',
           name: this.$t('addLink'),
           callback: this.toggleLinkModal
         },
         {
-          icon: require('@assets/icon_play.svg'),
+          icon: 'icon-play',
+          fontSize: '1rem',
           name: this.$t('addVideo'),
           callback: this.toggleVideoModal
         },
         {
-          icon: require('@assets/icon_h5p.svg'),
+          icon: 'icon-h5p',
+          fontSize: '0.6rem',
           name: this.$t('addH5p'),
           callback: this.toggleH5PModal
         }
@@ -195,6 +203,18 @@ export default {
 
 <style lang="scss" scoped>
 @import '@design';
+
+.add-content-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 15px;
+}
 
 input {
   display: none;
