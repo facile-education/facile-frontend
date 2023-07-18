@@ -58,6 +58,7 @@ import { defineAsyncComponent } from 'vue'
 
 import { addSessionContent, getSessionPreview, updateSessionContent } from '@/api/course.service'
 import ContentPicker from '@/components/Course/ContentPicker.vue'
+import contentTypeConstants from '@/constants/contentTypeConstants'
 
 const Content = defineAsyncComponent(() => import('@/components/Course/Content'))
 
@@ -159,7 +160,7 @@ export default {
       console.log(this.isCreation, this.session.groupId, this.session.sessionId, this.session.title, JSON.stringify(this.session.blocks), publicationDate, isDraft)
 
       // Remove empty text blocks
-      this.session.blocks = this.session.blocks.filter(block => block.contentType !== 1 || block.contentValue !== '')
+      this.session.blocks = this.session.blocks.filter(block => block.contentType !== contentTypeConstants.TYPE_TEXT_CONTENT || block.contentValue !== '')
 
       if (this.isCreation) {
         addSessionContent(this.session.groupId, this.session.sessionId, this.session.title, JSON.stringify(this.session.blocks), publicationDate, isDraft).then((data) => {
