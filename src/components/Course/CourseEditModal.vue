@@ -1,6 +1,7 @@
 <template>
   <PentilaWindow
     class="edit-course-modal"
+    :class="{'phone': mq.phone}"
     :modal="true"
     :draggable="true"
     @close="onClose"
@@ -25,6 +26,7 @@
           v-model="block.contentValue"
           :content="block"
           :is-edition="true"
+          class="content-item"
           @delete="deleteContent(index)"
         />
         <ContentPicker @add="addContent" />
@@ -68,6 +70,7 @@ export default {
     Content,
     ContentPicker
   },
+  inject: ['mq'],
   props: {
     editedSession: {
       type: Object,
@@ -189,13 +192,20 @@ export default {
 <style lang="scss">
 .edit-course-modal .window-body {
   display: flex;
-  padding: 1.5rem 0rem;
+  padding: 1.5rem 0;
   align-items: flex-start;
   gap: 2rem;
   align-self: stretch;
 
   overflow: auto;
-  max-height: 70vh;
+}
+
+.edit-course-modal {
+  &:not(.phone) {
+    .window-body {
+      max-height: 70vh !important;
+    }
+  }
 }
 </style>
 
