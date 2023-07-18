@@ -3,6 +3,7 @@ import cdtService from '@/api/schedule.service'
 import schoolLifeService from '@/api/schoolLife-portlet.service'
 import notUsualSlotsConstants from '@/constants/notUsualSlots'
 import i18n from '@/i18n'
+import { formatNonUsualSlots } from '@/utils/notUsualSlot.util'
 
 const formatNonUsualSlot = (sessions) => {
   sessions.forEach(event => {
@@ -60,6 +61,7 @@ function getSessions (store) {
       (data) => {
         store.dispatch('currentActions/removeAction', { name: 'getSessions' })
         if (data.success) {
+          formatNonUsualSlots(data.schoollifeSessions)
           const sessions = [...data.sessions, ...data.schoollifeSessions]
           formatUsualSlot(sessions)
           data.sessions.forEach(slot => { slot.isUserSlot = true })
