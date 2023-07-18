@@ -6,14 +6,7 @@
     @close="onClose"
   >
     <template #header>
-      <span
-        v-if="isCreation"
-        v-t="'title'"
-      />
-      <span
-        v-else
-        v-t="'editTitle'"
-      />
+      <span> {{ formattedTitle }} </span>
     </template>
 
     <template #body>
@@ -80,6 +73,14 @@ export default {
     }
   },
   computed: {
+    formattedTitle () {
+      const sessionStartDate = dayjs(this.editedSession.startDate, 'YYYY/MM/DD HH:mm')
+      return this.$t('title', {
+        courseName: this.editedSession.groupName,
+        day: sessionStartDate.format('DD/MM'),
+        hour: sessionStartDate.format('HH:mm')
+      })
+    }
   },
   created () {
     console.log(this.editedSession)
@@ -191,11 +192,10 @@ export default {
 
 <i18n locale="fr">
   {
+    "title": "Support du cours {courseName} - Séance du {day} à {hour}",
     "courseTitle": "Titre du support",
-    "editTitle": "Édition du support de cours",
     "post": "Publier",
     "preview": "Aperçu",
-    "previousSession": "Voir la séance précédente",
-    "title": "Nouveau support de cours"
+    "previousSession": "Voir la séance précédente"
   }
 </i18n>
