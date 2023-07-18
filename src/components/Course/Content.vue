@@ -7,6 +7,7 @@
     :disabled="!isEdition"
     :class="{'placeholder': content.placeholder}"
     @update:model-value="update"
+    @blur="blur"
   />
   <div
     v-else
@@ -45,40 +46,27 @@
     <button
       v-if="isEdition"
       class="actions"
-      @click="toggleContextMenu"
+      @click="$emit('delete')"
     >
       <img
-        :src="require('@/assets/icons/vertical_dots.svg')"
+        :src="require('@/assets/icons/trash.svg')"
         alt="options"
       >
     </button>
   </div>
-  <teleport
-    v-if="displayMenu"
-    to="body"
-  >
-    <ContextMenu
-      @choose-option="performChosenOption"
-      @close="displayMenu=false"
-    />
-  </teleport>
 </template>
 
 <script>
 import TextContent from '@components/Progression/Edit/Contents/TextContent.vue'
-import { defineAsyncComponent } from 'vue'
 
 import contentTypeConstants from '@/constants/contentTypeConstants'
 import { icons } from '@/constants/icons'
 import { getExtensionFromName } from '@/utils/commons.util'
 
-const ContextMenu = defineAsyncComponent(() => import('@/components/ContextMenu/ContextMenu'))
-
 export default {
   name: 'Content',
   components: {
-    TextContent,
-    ContextMenu
+    TextContent
   },
   props: {
     content: {
@@ -95,11 +83,6 @@ export default {
     }
   },
   emits: ['update:modelValue', 'delete'],
-  data () {
-    return {
-      displayMenu: false
-    }
-  },
   computed: {
     icon () {
       return new URL(`../../assets/icons/contents/${this.typeLabel}.svg`, import.meta.url).href
@@ -141,42 +124,10 @@ export default {
     displayFile () {
       this.$store.dispatch('documents/openFile', { id: this.fileId, name: this.fileName })
     },
-    performChosenOption (option) {
-      switch (option.name) {
-        case 'edit':
-          // TODO
-          console.log('todo edit')
-          this.displayMenu = false
-          break
-        case 'delete':
-          this.$emit('delete')
-          this.displayMenu = false
-          break
-        default:
-          console.error('no option with name ' + option.name + ' exists')
+    blur () {
+      if (this.modelValue === '') {
+        this.$emit('delete')
       }
-      this.$store.dispatch('contextMenu/closeMenus')
-    },
-    toggleContextMenu (event) {
-      this.displayMenu = true
-      this.$store.dispatch('contextMenu/openContextMenu', {
-        event: event,
-        options: [
-          {
-            name: 'edit',
-            title: this.$t('edit'),
-            icon: icons.options.rename,
-            position: 1,
-            hasSeparator: false
-          },
-          {
-            name: 'delete',
-            title: this.$t('delete'),
-            icon: icons.options.delete,
-            position: 2,
-            hasSeparator: false
-          }]
-      })
     },
     update (value) {
       this.$emit('update:modelValue', value)
@@ -293,16 +244,14 @@ button {
 }
 
 .actions img {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.25rem;
+  height: 1.25rem;
 }
 </style>
 
 <i18n locale="fr">
 {
   "audio": "Audio",
-  "delete": "Supprimer",
-  "edit": "Modifier",
   "file": "Fichier",
   "h5p": "Contenu riche",
   "link": "Lien externe",
