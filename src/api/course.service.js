@@ -78,7 +78,7 @@ function updateSessionContent (sessionId, title, blocks, publicationDate, isDraf
 }
 
 function deleteSessionContent (sessionId) {
-  return axios.del(constants.JSON_WS_URL + SESSION_CONTENT_PATH + 'delete-session-content', {
+  return axios.delete(constants.JSON_WS_URL + SESSION_CONTENT_PATH + 'delete-session-content', {
     params: {
       sessionId
     }
