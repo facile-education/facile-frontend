@@ -110,10 +110,8 @@ export default {
   },
   methods: {
     diplayNextDay () { this.selectDate(this.selectedDate.add(1, 'day')) },
-    diplayPreviousDay () { this.selectDate(this.selectedDate.add(-1, 'day')) },
-    selectDate (date, init = false) {
-      const goForward = true
-
+    diplayPreviousDay () { this.selectDate(this.selectedDate.add(-1, 'day'), false, false) },
+    selectDate (date, init = false, goForward = true) {
       getUserSchedule(this.$store.state.user.userId, date, goForward).then((data) => {
         this.isLoading = false
         this.isFirstLoad = false
