@@ -17,10 +17,10 @@ export const mutations = {
     state.isThereDocumentDrag = payload
   },
   incrementModalCount (state) {
-    state.nbOpenModals++
+    state.nbOpenModals = state.nbOpenModals + 1
   },
   decreaseModalCount (state) {
-    state.nbOpenModals--
+    state.nbOpenModals = state.nbOpenModals - 1
   }
 }
 

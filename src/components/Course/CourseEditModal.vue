@@ -106,7 +106,7 @@ export default {
     }
   },
   created () {
-    // this.$store.dispatch('misc/incrementModalCount')
+    this.$store.dispatch('misc/incrementModalCount')
     this.session.groupId = this.editedSession.groupId
     this.session.sessionId = this.editedSession.sessionId
 
@@ -130,7 +130,7 @@ export default {
       this.session.blocks.splice(index, 1)
     },
     onClose () {
-      // this.$store.dispatch('misc/decreaseModalCount')
+      this.$store.dispatch('misc/decreaseModalCount')
       this.$emit('close')
     },
     preview () {
