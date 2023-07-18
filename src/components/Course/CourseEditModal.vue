@@ -11,10 +11,14 @@
 
     <template #body>
       <section class="left">
-        <PentilaInput
-          v-model="session.title"
-          :placeholder="$t('courseTitle')"
-        />
+        <div class="title">
+          <PentilaInput
+            v-model="session.title"
+            :placeholder="$t('courseTitle')"
+          />
+          <PentilaErrorMessage :error-message="formErrorList" />
+        </div>
+
         <Content
           v-for="(block, index) in session.blocks"
           :key="block.contentId"
@@ -39,13 +43,15 @@
     <template #footer>
       <PentilaButton
         v-t="'post'"
-        @click="save()"
+        @click="onConfirm"
       />
     </template>
   </PentilaWindow>
 </template>
 
 <script>
+import { useVuelidate } from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
 import dayjs from 'dayjs'
 import PentilaUtils from 'pentila-utils'
 import { defineAsyncComponent } from 'vue'
@@ -68,6 +74,12 @@ export default {
     }
   },
   emits: ['close'],
+  setup: () => ({ v$: useVuelidate() }),
+  validations: {
+    session: {
+      title: { required }
+    }
+  },
   data () {
     return {
       isCreation: true,
@@ -82,6 +94,14 @@ export default {
         day: sessionStartDate.format('DD/MM'),
         hour: sessionStartDate.format('HH:mm')
       })
+    },
+    formErrorList () {
+      const form = this.v$.session.title
+      if (form.$invalid && form.$dirty) {
+        return this.$t('required')
+      } else {
+        return ''
+      }
     }
   },
   created () {
@@ -125,6 +145,13 @@ export default {
         // TODO toastr
         console.error(err)
       })
+    },
+    onConfirm () {
+      if (this.v$.$invalid) {
+        this.v$.$touch()
+      } else {
+        this.save()
+      }
     },
     save (isDraft = false) {
       // TODO courseId = groupId ?
@@ -200,12 +227,13 @@ export default {
 </style>
 
 <i18n locale="fr">
-  {
-    "title": "Support du cours {courseName} - Séance du {day} à {hour}",
-    "courseTitle": "Titre du support",
-    "post": "Publier",
-    "preview": "Aperçu",
-    "previousSession": "Voir la séance précédente",
-    "description": "Description (facultative)"
-  }
+{
+  "title": "Support du cours {courseName} - Séance du {day} à {hour}",
+  "courseTitle": "Titre du support*",
+  "post": "Publier",
+  "preview": "Aperçu",
+  "previousSession": "Voir la séance précédente",
+  "description": "Description",
+  "required": "Champ requis"
+}
 </i18n>
