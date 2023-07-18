@@ -83,7 +83,7 @@ export default {
       this.$router.push({ name: SCHEDULE, query: { initialDisplayDate: this.currentDisplayedDate.format('YYYY/MM/DD') } })
     },
     goBefore () {
-      this.getUserSchedule(this.currentDisplayedDate.add(-1, 'day'), this.goForward)
+      this.getUserSchedule(this.currentDisplayedDate.add(-1, 'day'), false)
     },
     goAfter () {
       this.getUserSchedule(this.currentDisplayedDate.add(1, 'day'), this.goForward)
