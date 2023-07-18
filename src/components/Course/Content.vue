@@ -42,13 +42,16 @@
         {{ content.contentValue }}
       </p>
     </div>
-    <div
+    <button
       v-if="isEdition"
       class="actions"
       @click="toggleContextMenu"
     >
-      <img :src="require('@/assets/icons/vertical_dots.svg')">
-    </div>
+      <img
+        :src="require('@/assets/icons/vertical_dots.svg')"
+        alt="options"
+      >
+    </button>
   </div>
   <teleport
     v-if="displayMenu"
@@ -141,6 +144,7 @@ export default {
     performChosenOption (option) {
       switch (option.name) {
         case 'edit':
+          // TODO
           console.log('todo edit')
           this.displayMenu = false
           break
@@ -210,6 +214,7 @@ export default {
     border: none;
     color: black;
     cursor: auto;
+    @extend %font-regular-m;
   }
 }
 
@@ -277,6 +282,14 @@ export default {
   margin: 0;
 
   @extend %font-regular-s;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }
 
 .actions img {

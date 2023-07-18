@@ -106,7 +106,6 @@ export default {
     }
   },
   created () {
-    console.log(this.editedSession)
     // this.$store.dispatch('misc/incrementModalCount')
     this.session.groupId = this.editedSession.groupId
     this.session.sessionId = this.editedSession.sessionId
@@ -124,7 +123,6 @@ export default {
   },
   methods: {
     addContent (content) {
-      console.log('add content', content)
       content.contentId = -1
       this.session.blocks.push(content)
     },
@@ -139,7 +137,6 @@ export default {
       getSessionPreview(this.session.sessionId).then((data) => {
         if (data.success) {
           // TODO update selectedDetails ?
-          console.log(data)
         }
       },
       (err) => {
@@ -157,7 +154,6 @@ export default {
     save (isDraft = false) {
       // TODO courseId = groupId ?
       const publicationDate = isDraft ? '' : dayjs().format('YYYY-MM-DD HH:mm')
-      console.log(this.isCreation, this.session.groupId, this.session.sessionId, this.session.title, JSON.stringify(this.session.blocks), publicationDate, isDraft)
 
       // Remove empty text blocks
       this.session.blocks = this.session.blocks.filter(block => block.contentType !== contentTypeConstants.TYPE_TEXT_CONTENT || block.contentValue !== '')
