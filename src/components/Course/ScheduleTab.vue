@@ -23,6 +23,10 @@
               class="icon theme-text-color"
             />
             <h3>{{ courseTitle }}</h3>
+            <span
+              v-if="session.publicationDate"
+              class="publication-date"
+            > {{ formattedPublicationDate }}</span>
             <CreateButton
               v-if="!hasContent"
               :aria-label="$t('add')"
@@ -170,6 +174,9 @@ export default {
     },
     hasContent () {
       return (this.session.title !== undefined || (this.session.blocks !== undefined && this.session.blocks.length > 0))
+    },
+    formattedPublicationDate () {
+      return this.session.publicationDate ? this.$t('publishOn', { date: dayjs(this.session.publicationDate).format('DD/MM/YYYY') }) : ''
     },
     notes: {
       get () {
@@ -337,6 +344,11 @@ header {
     margin: 0;
     @extend %font-bold-l;
   }
+
+  .publication-date {
+    margin: 0 1rem;
+    @extend %font-regular-xs
+  }
 }
 
 .given-homeworks {
@@ -378,6 +390,7 @@ header {
   "courseContent": "SUPPORTS DE COURS",
   "notes": "Note privée",
   "notesPlaceholder": "Ma note privée",
+  "publishOn": "Publié le {date}",
   "workToDo": "TRAVAUX À FAIRE"
 }
 </i18n>
