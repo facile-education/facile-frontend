@@ -103,7 +103,9 @@
     "documentDeleted": "Elément(s) supprimé(s)",
     "fileSizeException": "Le fichier à charger dépasse la taille limite autorisée",
     "permissionException": "Vous ne disposez pas de la permission pour effectuer cette action",
+    "extensionException": "Extension non supportée",
     "uploadSuccess": " importé avec succès!",
+    "uploadError": "Une erreur est survenue lors du téléversement",
     "documentFields": {
       "creationDate": "Création",
       "downloadCount": "Téléchargements",

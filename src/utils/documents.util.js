@@ -194,6 +194,16 @@ function handleError (data, doc, folderId, documentList, index) {
       message: i18n.global.t('Documents.permissionException'),
       type: 'error'
     })
+  } else if (data.error === 'FileExtensionException') {
+    store.dispatch('popups/pushPopup', {
+      message: i18n.global.t('Documents.extensionException'),
+      type: 'error'
+    })
+  } else {
+    store.dispatch('popups/pushPopup', {
+      message: i18n.global.t('Documents.uploadError'),
+      type: 'error'
+    })
   }
 
   return false
