@@ -4,7 +4,7 @@
     :class="{'phone': mq.phone}"
     :modal="true"
     :draggable="true"
-    @close="onClose"
+    @close="confirmClosure"
   >
     <template #header>
       <span> {{ formattedTitle }} </span>
@@ -87,7 +87,8 @@ export default {
   data () {
     return {
       isCreation: true,
-      session: { blocks: [], title: '' }
+      session: { blocks: [], title: '' },
+      initialForm: undefined
     }
   },
   computed: {
@@ -123,6 +124,7 @@ export default {
         contentType: 1, contentValue: '', contentName: '', placeholder: this.$t('description')
       })
     }
+    this.initialForm = JSON.stringify(this.session)
   },
   methods: {
     addContent (content) {
@@ -131,10 +133,6 @@ export default {
     },
     deleteContent (index) {
       this.session.blocks.splice(index, 1)
-    },
-    onClose () {
-      this.$store.dispatch('misc/decreaseModalCount')
-      this.$emit('close')
     },
     preview () {
       getSessionPreview(this.session.sessionId).then((data) => {
@@ -184,6 +182,20 @@ export default {
           console.error(err)
         })
       }
+    },
+    confirmClosure () {
+      if (JSON.stringify(this.session) !== this.initialForm) {
+        this.$store.dispatch('warningModal/addWarning', {
+          text: this.$t('confirmClosure'),
+          lastAction: { fct: this.onClose }
+        })
+      } else {
+        this.onClose()
+      }
+    },
+    onClose () {
+      this.$store.dispatch('misc/decreaseModalCount')
+      this.$emit('close')
     }
   }
 }
@@ -241,6 +253,7 @@ export default {
   "preview": "Aperçu",
   "previousSession": "Voir la séance précédente",
   "description": "Description",
-  "required": "Champ requis"
+  "required": "Champ requis",
+  "confirmClosure": "Des modifications ne sont pas enregistrées, êtes-vous certain de quitter l’édition et de perdre les modifications ?"
 }
 </i18n>
