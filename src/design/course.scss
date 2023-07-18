@@ -7,9 +7,4 @@
   background-color: $neutral-20;
   text-align: center;
   @extend %font-regular-l;
-
-  strong {
-    text-transform: lowercase;
-    @extend %font-bold-l;
-  }
 }
