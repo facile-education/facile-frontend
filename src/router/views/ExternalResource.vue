@@ -1,14 +1,14 @@
 <template>
   <Layout>
     <div class="external-resource">
-      <div v-if="serviceSchoolUrls.length == 0">
+      <div v-if="serviceSchoolUrls.length == 0 && selectedUrl === undefined">
         <img
           class="icon"
           src="@/assets/images/ExternalResource/icon-external-service.png"
         >
         <h3 v-t="{path: 'noConfigLabel', args: {resourceName:serviceName}}" />
         <I18n
-          path="contactLabel"
+          keypath="contactLabel"
           tag="p"
           class="content"
         >
@@ -23,20 +23,12 @@
 
       <div v-else>
         <div v-if="serviceSchoolUrls.length > 1">
-          <form name="selectUrl">
-          <!-- TODO dropdown user schools - select
-            class="dropdown"
-            name="serviceSchoolUrls"
-            ng-model="ConnectorCtrl.selectedUrl"
-            @change="onChangeUrl()">
-            <option
-              ng-repeat="url in ConnectorCtrl.serviceSchoolUrls"
-              value="{{url.serviceUrl}}">
-              {{ serviceName }} - {{ url.schoolName }}
-            </option>
-          </select -->
-          </form>
-          <br>
+          <PentilaDropdown
+            v-model="selectedSchool"
+            :list="serviceSchoolUrls"
+            display-field="schoolName"
+            @update:model-value="selectSchool"
+          />
         </div>
 
         <div v-if="!isHttps">
@@ -84,18 +76,28 @@
         </div>
       </div>
     </div>
+    <teleport to="body">
+      <AssistanceModal
+        v-if="isSupportModalDisplayed"
+        @close="isSupportModalDisplayed = false"
+      />
+    </teleport>
   </Layout>
 </template>
 
 <script>
+import { defineAsyncComponent } from 'vue'
 import { Translation as I18n } from 'vue-i18n'
 
+import { getResourceUrls } from '@/api/applicationManager.service'
 import Layout from '@/router/layouts/BannerLayout'
 
-// TODO check fa chevron down + toggle incident window + dropdown + get info from service
+const AssistanceModal = defineAsyncComponent(() => import('@/components/Assistance/AssistanceModal'))
+
 export default {
   export: 'ExternalResource',
   components: {
+    AssistanceModal,
     Layout,
     I18n
   },
@@ -108,11 +110,12 @@ export default {
   data () {
     return {
       forceNewTab: false,
+      isSupportModalDisplayed: false,
       resourceTab: undefined,
-      serviceSchoolUrls: ['Pronote'],
-      serviceName: 'Pronote',
-      // selectedUrl: 'https://nero.l-educdenormandie.fr/'
-      selectedUrl: 'http://nero.l-educdenormandie.fr/'
+      serviceSchoolUrls: [],
+      serviceName: this.$t('Menu.' + this.$route.name),
+      selectedSchool: undefined,
+      selectedUrl: ''
     }
   },
   computed: {
@@ -128,6 +131,26 @@ export default {
       }
     }
   },
+  created () {
+    // fetch service url(s)
+    getResourceUrls(this.$route.meta.id).then((data) => {
+      if (data.success) {
+        console.log(data, typeof data.url)
+        if (typeof data.url === 'string') {
+          this.selectedUrl = data.url
+
+          if (!this.isHttps) {
+            this.openInNewTab()
+          }
+        } else {
+          this.selectSchool(data.url[0])
+          this.serviceSchoolUrls = data.url
+        }
+      } else {
+        console.error('Error while getting resource urls', data)
+      }
+    })
+  },
   methods: {
     openInNewTab () {
       if (this.resourceTab === undefined || this.resourceTab.closed) {
@@ -136,34 +159,23 @@ export default {
         this.resourceTab.location = this.selectedUrl
       }
     },
-    loadConfig () {
-      /*
-      config.params = {
-        cmd: "loadConnectorConfig",
-        serviceKey: this.resourceKey
-      }
-      return : {
-        "serviceKey": "pronote",
-        "serviceSchoolUrls": [{
-          "schoolName":"CLG-CAMILLE SAINT-SAENS-ac-ROUEN",
-          "serviceUrl":"https://0760093n.index-education.net/pronote/"
-        }, {
-          "schoolName":"LG-CAMILLE SAINT-SAENS-ac-ROUEN",
-          "serviceUrl":"https://0760093n.index-education.net/pronote/"
-        }],
-        "success":true,
-        "serviceName":"Pronote"}
-      */
-    },
     onClickShowIncidents () {
-      // TODO code
-      // this.$store.dispatch('openIncidentModal')
+      this.isSupportModalDisplayed = true
+    },
+    selectSchool (school) {
+      this.selectedUrl = school.url
+
+      if (!this.isHttps) {
+        this.openInNewTab()
+      }
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
+
 .external-resource {
   height: 100%;
   max-width: 100%;
@@ -183,6 +195,7 @@ export default {
 }
 
 .content {
+  color: $neutral-80;
   width: 510px;
   max-width: 100%;
   margin: auto;
