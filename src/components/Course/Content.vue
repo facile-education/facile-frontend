@@ -65,6 +65,7 @@
 import TextContent from '@components/Progression/Edit/Contents/TextContent.vue'
 import { defineAsyncComponent } from 'vue'
 
+import contentTypeConstants from '@/constants/contentTypeConstants'
 import { icons } from '@/constants/icons'
 import { getExtensionFromName } from '@/utils/commons.util'
 
@@ -116,17 +117,17 @@ export default {
     },
     typeLabel () {
       switch (this.content.contentType) {
-        case 1:
+        case contentTypeConstants.TYPE_TEXT_CONTENT:
           return 'text'
-        case 2:
+        case contentTypeConstants.TYPE_AUDIO_CONTENT:
           return 'audio'
-        case 3:
+        case contentTypeConstants.TYPE_LINK_CONTENT:
           return 'link'
-        case 4:
+        case contentTypeConstants.TYPE_VIDEO_CONTENT:
           return 'video'
-        case 5:
+        case contentTypeConstants.TYPE_FILE_CONTENT:
           return 'file'
-        case 6:
+        case contentTypeConstants.TYPE_H5P_CONTENT:
           return 'h5p'
         default:
           return ''
