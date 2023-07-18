@@ -9,6 +9,7 @@ export {
   getApplicationBroadcastScope,
   getSchoolApplications,
   getAllApplications,
+  getResourceUrls,
   getUserApplications,
   removeApplication,
   updateApplication,
@@ -105,6 +106,14 @@ function getApplicationBroadcastScope (applicationId, schoolId) {
     params: {
       applicationId,
       schoolId
+    }
+  }).then(response => response.data)
+}
+
+function getResourceUrls (menuEntryId) {
+  return axios.get(constants.JSON_WS_URL + APP_MANAGER_PATH + APPLICATION_CTX + 'get-resource-urls', {
+    params: {
+      menuEntryId
     }
   }).then(response => response.data)
 }
