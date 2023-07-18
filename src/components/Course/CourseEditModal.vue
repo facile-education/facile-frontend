@@ -25,13 +25,15 @@
         />
         <ContentPicker @add="addContent" />
       </section>
-      <section class="right">
-        <PentilaButton
-          v-t="'preview'"
-          @click="preview"
-        />
-        <PentilaButton v-t="'previousSession'" />
-      </section>
+
+      <!-- TODO: right panel (+ mobile gesture) -->
+      <!--      <section class="right">-->
+      <!--        <PentilaButton-->
+      <!--          v-t="'preview'"-->
+      <!--          @click="preview"-->
+      <!--        />-->
+      <!--        <PentilaButton v-t="'previousSession'" />-->
+      <!--      </section>-->
     </template>
 
     <template #footer>
@@ -93,6 +95,10 @@ export default {
       this.session.blocks = this.editedSession.blocks ? PentilaUtils.JSON.deepCopy(this.editedSession.blocks) : []
 
       this.isCreation = false
+    } else { // isCreation = true
+      this.session.blocks.push({
+        contentType: 1, contentValue: '', contentName: '', placeholder: this.$t('description')
+      })
     }
   },
   methods: {
@@ -124,6 +130,9 @@ export default {
       // TODO courseId = groupId ?
       const publicationDate = isDraft ? '' : dayjs().format('YYYY-MM-DD HH:mm')
       console.log(this.isCreation, this.session.groupId, this.session.sessionId, this.session.title, JSON.stringify(this.session.blocks), publicationDate, isDraft)
+
+      // Remove empty text blocks
+      this.session.blocks = this.session.blocks.filter(block => block.contentType !== 1 || block.contentValue !== '')
 
       if (this.isCreation) {
         addSessionContent(this.session.groupId, this.session.sessionId, this.session.title, JSON.stringify(this.session.blocks), publicationDate, isDraft).then((data) => {
@@ -196,6 +205,7 @@ export default {
     "courseTitle": "Titre du support",
     "post": "Publier",
     "preview": "Aperçu",
-    "previousSession": "Voir la séance précédente"
+    "previousSession": "Voir la séance précédente",
+    "description": "Description (facultative)"
   }
 </i18n>

@@ -211,15 +211,17 @@ export default {
 
 <style lang="scss">
 .schedule-tab {
-  .ck-editor {
-    p {
-      margin: 5px 0;
-      line-height: 1.25rem;
+  .notes {
+    .ck-editor {
+      p {
+        margin: 5px 0;
+        line-height: 1.25rem;
+      }
     }
-  }
 
-  .ck-editor__editable {
-    min-height: 8rem;
+    .ck-editor__editable {
+      min-height: 8rem;
+    }
   }
 }
 </style>

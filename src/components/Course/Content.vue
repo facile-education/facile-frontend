@@ -1,11 +1,11 @@
 <template>
-  <CKEditor
+  <TextContent
     v-if="typeLabel === 'text'"
-    :model-value="modelValue"
-    :editor="editor"
-    :config="editorConfig"
+    :content="modelValue"
+    :placeholder="content.placeholder"
+    class="text-content"
     :disabled="!isEdition"
-    class="editor"
+    :class="{'placeholder': content.placeholder}"
     @update:model-value="update"
   />
   <div
@@ -62,8 +62,7 @@
 </template>
 
 <script>
-import InlineEditor from '@ckeditor/ckeditor5-build-inline'
-import CKEditor from '@ckeditor/ckeditor5-vue'
+import TextContent from '@components/Progression/Edit/Contents/TextContent.vue'
 import { defineAsyncComponent } from 'vue'
 
 import { icons } from '@/constants/icons'
@@ -74,7 +73,7 @@ const ContextMenu = defineAsyncComponent(() => import('@/components/ContextMenu/
 export default {
   name: 'Content',
   components: {
-    CKEditor: CKEditor.component,
+    TextContent,
     ContextMenu
   },
   props: {
@@ -94,14 +93,7 @@ export default {
   emits: ['update:modelValue', 'delete'],
   data () {
     return {
-      displayMenu: false,
-      editor: InlineEditor,
-      editorConfig: {
-        toolbar: {
-          // items: [ 'bold', 'italic', '|', 'link' ],
-          // viewportTopOffset: 500
-        }
-      }
+      displayMenu: false
     }
   },
   computed: {
@@ -188,12 +180,36 @@ export default {
 }
 </script>
 
+<style lang="scss">
+.text-content {
+  &.ck-editor {
+    p {
+      margin: 5px 0;
+      line-height: 1.25rem;
+    }
+  }
+
+  &.ck-editor__editable.placeholder {
+    min-height: 8rem;
+  }
+}
+
+</style>
+
 <style lang="scss" scoped>
 @import '@design';
 
-.editor {
+.text-content {
   background: $neutral-20;
   border-bottom: 1px solid black;
+
+  &.disabled {
+    padding: 10px 0;
+    background-color: white;
+    border: none;
+    color: black;
+    cursor: auto;
+  }
 }
 
 .wrapper {
