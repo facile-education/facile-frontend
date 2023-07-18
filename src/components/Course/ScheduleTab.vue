@@ -32,15 +32,15 @@
             <button
               v-else
               class="edit-button"
-              :aria-label="$t('update')"
-              :title="$t('update')"
-              @click="openCourseEditModal"
+              :aria-label="$t('options')"
+              :title="$t('options')"
+              @click="toggleContextMenu"
             >
               <img
                 height="20"
                 width="20"
                 :src="require('@/assets/icons/vertical_dots.svg')"
-                alt="update"
+                alt="options"
               >
             </button>
           </div>
@@ -102,6 +102,15 @@
       @close="isHomeworkModalDisplayed = false"
     />
   </teleport>
+  <teleport
+    v-if="displayMenu"
+    to="body"
+  >
+    <ContextMenu
+      @choose-option="performChosenOption"
+      @close="displayMenu=false"
+    />
+  </teleport>
 </template>
 
 <script>
@@ -114,14 +123,17 @@ import { defineAsyncComponent } from 'vue'
 
 import { savePrivateNotes } from '@/api/course.service'
 import DailySchedule from '@/components/Course/DailySchedule.vue'
+import { icons } from '@/constants/icons'
 
 const CourseEditModal = defineAsyncComponent(() => import('@/components/Course/CourseEditModal'))
 const HomeworkEditModal = defineAsyncComponent(() => import('@/components/Course/HomeworkEditModal'))
 const SessionContent = defineAsyncComponent(() => import('@/components/Course/SessionContent'))
+const ContextMenu = defineAsyncComponent(() => import('@/components/ContextMenu/ContextMenu'))
 
 export default {
   name: 'ScheduleTab',
   components: {
+    ContextMenu,
     CreateButton,
     CustomIcon,
     TextContent,
@@ -139,7 +151,8 @@ export default {
       selectedDate: dayjs(),
       selectedEvent: undefined,
       timeout: 0,
-      updatedSession: undefined
+      updatedSession: undefined,
+      displayMenu: false
     }
   },
   computed: {
@@ -204,6 +217,41 @@ export default {
           console.error(err)
         })
       }, 500)
+    },
+    toggleContextMenu (event) {
+      this.displayMenu = true
+      this.$store.dispatch('contextMenu/openContextMenu', {
+        event: event,
+        options: [
+          {
+            name: 'edit',
+            title: this.$t('edit'),
+            icon: icons.options.rename,
+            position: 1,
+            hasSeparator: false
+          },
+          {
+            name: 'delete',
+            title: this.$t('delete'),
+            icon: icons.options.delete,
+            position: 2,
+            hasSeparator: false
+          }]
+      })
+    },
+    performChosenOption (option) {
+      switch (option.name) {
+        case 'edit':
+          this.openCourseEditModal()
+          break
+        case 'delete':
+          this.$store.dispatch('course/deleteSessionContent')
+          break
+        default:
+          console.error('no option with name ' + option.name + ' exists')
+      }
+      this.displayMenu = false
+      this.$store.dispatch('contextMenu/closeMenus')
     }
   }
 }
@@ -319,7 +367,9 @@ header {
 <i18n locale="fr">
 {
   "add": "Ajouter",
-  "update": "Modifier",
+  "options": "Options",
+  "delete": "Supprimer",
+  "edit": "Modifier",
   "selectSessionPlaceholder": "Veuillez sélectionner une séance pour accéder à son contenu",
   "toDoHomeworkPlaceholder": "Aucun travail à préparer",
   "toDoHomeworkHeader": "Pour cette séance",

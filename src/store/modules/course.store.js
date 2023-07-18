@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 
-import { getSessionContents, getSessionDetails } from '@/api/course.service'
+import { deleteSessionContent, getSessionContents, getSessionDetails } from '@/api/course.service'
 import { setHomeworkDoneStatus } from '@/api/homework.service'
 import scheduleService from '@/api/schedule.service'
 
@@ -122,6 +122,23 @@ export const actions = {
           isDraft: data.isDraft,
           publicationDate: data.publicationDate
         })
+      }
+    },
+    (err) => {
+      // TODO toastr
+      console.error(err)
+    })
+  },
+  deleteSessionContent ({ commit, state }) {
+    deleteSessionContent(state.selectedSession.sessionId).then((data) => {
+      if (data.success) {
+        this.dispatch('course/updateSessionContent')
+        // commit('updateContent', {
+        //   blocks: [],
+        //   title: undefined,
+        //   isDraft: undefined,
+        //   publicationDate: undefined
+        // })
       }
     },
     (err) => {
