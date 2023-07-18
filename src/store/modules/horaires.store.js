@@ -1,6 +1,6 @@
 import scheduleService from '@/api/schedule.service'
-import notUsualSlotsConstants from '@/constants/notUsualSlots'
 import i18n from '@/i18n'
+import { formatNonUsualSlots } from '@/utils/notUsualSlot.util'
 
 const manageSessionsOptions = (sessions) => {
   sessions.forEach(event => {
@@ -12,16 +12,6 @@ const manageSessionsOptions = (sessions) => {
         icon: 'fa-pencil-alt'
       })
     }
-  })
-}
-
-const formatNonUsualSlots = (sessions) => {
-  sessions.forEach(event => {
-    const slotType = notUsualSlotsConstants.getSlotTypeByNumber(event.type)
-    event.title = slotType.label
-    event.color = slotType.color
-    event.capacity = undefined
-    event.nbRegisteredStudents = undefined
   })
 }
 
