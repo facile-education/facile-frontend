@@ -14,7 +14,6 @@
       class="placeholder"
     >
       {{ placeholder }}
-      <strong>{{ ' ' + header }}</strong>
     </div>
   </div>
 </template>
