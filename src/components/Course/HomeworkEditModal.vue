@@ -76,18 +76,22 @@
             name="date"
             rb-value="session"
             class="radio"
+            @update:model-value="updateTarget({sessionId: selectedSession.sessionId, startDate: selectedSession.startDate})"
           />
           <PentilaRadioButton
             v-model="homework.dateType"
             :label="$t('futureDate')"
             name="date"
+            :disabled="nextSessions.length===0"
             rb-value="custom"
             class="radio future-date"
           />
           <PentilaDropdown
+            v-if="nextSessions.length > 0"
             v-model="homework.date"
             :list="nextSessions"
             :sort="false"
+            class="next-sessions-dropdown"
             display-field="startDate"
             :disabled="homework.dateType === 'session'"
             @update:model-value="updateTarget"
@@ -118,7 +122,6 @@
 </template>
 
 <script>
-import BaseIcon from '@components/Base/BaseIcon.vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import dayjs from 'dayjs'
@@ -137,7 +140,6 @@ const StudentListModal = defineAsyncComponent(() => import('@/components/Progres
 export default {
   name: 'HomeworkEditModal',
   components: {
-    BaseIcon,
     Content,
     ContentPicker,
     StudentListModal
@@ -197,14 +199,17 @@ export default {
         return ''
       }
     },
-    courseId () {
-      return this.$store.state.course.selectedSession.groupId
-    },
     isCreation () {
       return this.editedHomework === undefined
     },
+    selectedSession () {
+      return this.$store.state.course.selectedSession
+    },
+    courseId () {
+      return this.selectedSession.groupId
+    },
     sessionId () {
-      return this.$store.state.course.selectedSession.sessionId
+      return this.selectedSession.sessionId
     }
   },
   created () {
@@ -240,9 +245,15 @@ export default {
             })
           }
         } else {
-          this.homework.date = this.nextSessions[0]
-          this.updateTarget(this.nextSessions[0])
+          if (this.nextSessions.length > 0) {
+            this.homework.date = this.nextSessions[0]
+            this.updateTarget(this.nextSessions[0])
+          } else {
+            this.homework.dateType = 'session'
+            this.updateTarget({ sessionId: this.selectedSession.sessionId, startDate: this.selectedSession.startDate })
+          }
         }
+
         this.initialForm = JSON.stringify(this.homework)
       } else {
         console.error('error on homework date initialisation')
@@ -339,6 +350,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import '@design';
+
 .edit-homework-modal .window-body {
   display: flex;
   flex-wrap: wrap;
@@ -354,6 +367,14 @@ export default {
     .window-body {
       max-height: 70vh !important;
     }
+  }
+}
+
+.next-sessions-dropdown {
+  button {
+    border-radius: 6px !important;
+    border: 1px solid $neutral-60 !important;
+    background: $neutral-10 !important;
   }
 }
 </style>
@@ -449,6 +470,10 @@ label {
 
 .draft-button {
   margin-right: 1.5rem;
+}
+
+.next-sessions-dropdown {
+  margin-left: 1.5rem;
 }
 </style>
 
