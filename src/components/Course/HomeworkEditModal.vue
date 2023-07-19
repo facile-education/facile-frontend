@@ -130,7 +130,7 @@ import contentTypeConstants from '@/constants/contentTypeConstants'
 const StudentListModal = defineAsyncComponent(() => import('@/components/Progression/Assignment/StudentListModal'))
 
 export default {
-  name: 'CourseEditModal',
+  name: 'HomeworkEditModal',
   components: {
     Content,
     ContentPicker,
@@ -139,7 +139,7 @@ export default {
   props: {
     editedHomework: {
       type: Object,
-      default: () => { return {} }
+      default: undefined
     }
   },
   emits: ['close', 'update:modelValue'],
@@ -166,9 +166,9 @@ export default {
         title: ''
       },
       homeworkTypes: [
-        { type: 1, name: 'Consigne simple' },
-        // { type: 2, name: 'Doc. à compléter' },
-        { type: 3, name: 'Doc. à rendre' }
+        { type: contentTypeConstants.TYPE_HOMEWORK_BASIC_INSTRUCTION, name: this.$t('basicInstruction') },
+        // { type: contentTypeConstants.TYPE_HOMEWORK_DOC_TO_COMPLETE, name: this.$t('docToComplete') },
+        { type: contentTypeConstants.TYPE_HOMEWORK_DOC_TO_RETURN, name: this.$t('docToReturn') }
       ],
       homeworkDurations: [
         { label: '15 min', time: '15' },
@@ -194,7 +194,7 @@ export default {
       return this.$store.state.course.selectedSession.groupId
     },
     isCreation () {
-      return this.editedHomework.homeworkId === undefined
+      return this.editedHomework === undefined
     },
     sessionId () {
       return this.$store.state.course.selectedSession.sessionId
@@ -321,7 +321,7 @@ export default {
 <style lang="scss">
 .edit-homework-modal .window-body {
   display: flex;
-  padding: 1.5rem 0rem;
+  padding: 1.5rem 0;
   align-items: flex-start;
   gap: 2rem;
   align-self: stretch;
@@ -388,19 +388,22 @@ export default {
 </style>
 
 <i18n locale="fr">
-  {
-    "allStudents": "Pour tous les élèves",
-    "instructions": "Consigne",
-    "draft": "Brouillon",
-    "duration": "Durée",
-    "homeworkTitle": "Titre du travail*",
-    "homeworkType": "Type de travail",
-    "futureDate": "À faire pour le ",
-    "post": "Publier",
-    "preview": "Aperçu",
-    "required": "Champ requis",
-    "sessionDate": "À faire pendant la séance",
-    "someStudents": "Pour un élève sur {total} | Pour {count} élèves sur {total}",
-    "title": "Travail à faire"
-  }
+{
+  "allStudents": "Pour tous les élèves",
+  "basicInstruction": "Consigne simple",
+  "docToComplete": "Doc. à compléter",
+  "docToReturn": "Doc. à rendre",
+  "instructions": "Consigne",
+  "draft": "Brouillon",
+  "duration": "Durée",
+  "homeworkTitle": "Titre du travail*",
+  "homeworkType": "Type de travail",
+  "futureDate": "À faire pour le ",
+  "post": "Publier",
+  "preview": "Aperçu",
+  "required": "Champ requis",
+  "sessionDate": "À faire pendant la séance",
+  "someStudents": "Pour un élève sur {total} | Pour {count} élèves sur {total}",
+  "title": "Travail à faire"
+}
 </i18n>
