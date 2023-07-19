@@ -11,10 +11,13 @@
 
     <template #body>
       <section class="left">
-        <PentilaInput
-          v-model="homework.title"
-          :placeholder="$t('homeworkTitle')"
-        />
+        <div class="title">
+          <PentilaInput
+            v-model="homework.title"
+            :placeholder="$t('homeworkTitle')"
+          />
+          <PentilaErrorMessage :error-message="formErrorList" />
+        </div>
         <div class="dropdowns">
           <div class="type">
             <!-- Homework type menu -->
@@ -97,7 +100,7 @@
       />
       <PentilaButton
         v-t="'post'"
-        @click="save()"
+        @click="onConfirm"
       />
     </template>
   </PentilaWindow>
@@ -111,6 +114,8 @@
 </template>
 
 <script>
+import { useVuelidate } from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
 import dayjs from 'dayjs'
 import PentilaUtils from 'pentila-utils'
 import { defineAsyncComponent } from 'vue'
@@ -138,6 +143,12 @@ export default {
     }
   },
   emits: ['close', 'update:modelValue'],
+  setup: () => ({ v$: useVuelidate() }),
+  validations: {
+    homework: {
+      title: { required }
+    }
+  },
   data () {
     return {
       availableStudents: [],
@@ -171,6 +182,14 @@ export default {
     }
   },
   computed: {
+    formErrorList () {
+      const form = this.v$.homework.title
+      if (form.$invalid && form.$dirty) {
+        return this.$t('required')
+      } else {
+        return ''
+      }
+    },
     courseId () {
       return this.$store.state.course.selectedSession.groupId
     },
@@ -254,6 +273,13 @@ export default {
     },
     preview () {
       console.log('todo')
+    },
+    onConfirm () {
+      if (this.v$.$invalid) {
+        this.v$.$touch()
+      } else {
+        this.save()
+      }
     },
     save (isDraft = false) {
       // Remove empty text blocks
@@ -372,6 +398,7 @@ export default {
     "futureDate": "À faire pour le ",
     "post": "Publier",
     "preview": "Aperçu",
+    "required": "Champ requis",
     "sessionDate": "À faire pendant la séance",
     "someStudents": "Pour un élève sur {total} | Pour {count} élèves sur {total}",
     "title": "Travail à faire"
