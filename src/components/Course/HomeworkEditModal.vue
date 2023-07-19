@@ -6,7 +6,7 @@
     @close="onClose"
   >
     <template #header>
-      <span v-t="'title'" />
+      <span v-t="isCreation ? 'creationTitle' : 'updateTitle'" />
     </template>
 
     <template #body>
@@ -404,6 +404,7 @@ export default {
   "required": "Champ requis",
   "sessionDate": "À faire pendant la séance",
   "someStudents": "Pour un élève sur {total} | Pour {count} élèves sur {total}",
-  "title": "Travail à faire"
+  "creationTitle": "Donner du travail",
+  "updateTitle": "Modifier un travail"
 }
 </i18n>
