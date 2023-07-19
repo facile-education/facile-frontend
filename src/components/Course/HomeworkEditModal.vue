@@ -1,6 +1,7 @@
 <template>
   <PentilaWindow
     class="edit-homework-modal"
+    :class="{'phone': mq.phone}"
     :modal="true"
     :draggable="true"
     @close="confirmClosure"
@@ -36,6 +37,7 @@
               v-model="homework.homeworkDuration"
               :list="homeworkDurations"
               :sort="false"
+              :filtered="false"
               display-field="label"
             />
           </div>
@@ -144,6 +146,7 @@ export default {
     ContentPicker,
     StudentListModal
   },
+  inject: ['mq'],
   props: {
     editedHomework: {
       type: Object,
@@ -366,6 +369,7 @@ export default {
   &:not(.phone) {
     .window-body {
       max-height: 70vh !important;
+      min-height: 65vh !important;
     }
   }
 }
@@ -474,6 +478,7 @@ label {
 
 .next-sessions-dropdown {
   margin-left: 1.5rem;
+  margin-bottom: 5rem;
 }
 </style>
 
