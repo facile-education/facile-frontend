@@ -50,52 +50,56 @@
         />
         <ContentPicker @add="addContent" />
       </section>
-      <section class="right side">
+      <section class="right">
         <!--        <PentilaButton-->
         <!--          v-t="'preview'"-->
         <!--          @click="preview"-->
         <!--        />-->
-        <a
-          href="#"
-          @click="openStudentModal"
-        >
-          <span
-            v-if="homework.isWholeClass"
-            v-t="'allStudents'"
+        <div class="target-students">
+          <label v-t="'for'" />
+          <button
+            class="target-students-button"
+            @click="openStudentModal"
+          >
+            <span v-t="homework.isWholeClass ? 'allStudents' : { path: 'someStudents', args: { count: homework.selectedStudents.length, total: availableStudents.length } }" />
+            <img
+              src="@/assets/icons/chevron-right.svg"
+              alt=""
+            >
+          </button>
+        </div>
+
+        <div class="target-session">
+          <PentilaRadioButton
+            v-model="homework.dateType"
+            :label="$t('sessionDate')"
+            name="date"
+            rb-value="session"
+            class="radio"
           />
-          <span
-            v-else
-            v-t="{ path: 'someStudents', args: { count: homework.selectedStudents.length, total: availableStudents.length } }"
+          <PentilaRadioButton
+            v-model="homework.dateType"
+            :label="$t('futureDate')"
+            name="date"
+            rb-value="custom"
+            class="radio future-date"
           />
-        </a>
-        <PentilaRadioButton
-          v-model="homework.dateType"
-          :label="$t('sessionDate')"
-          name="date"
-          rb-value="session"
-          class="radio"
-        />
-        <PentilaRadioButton
-          v-model="homework.dateType"
-          :label="$t('futureDate')"
-          name="date"
-          rb-value="custom"
-          class="radio"
-        />
-        <PentilaDropdown
-          v-model="homework.date"
-          :list="nextSessions"
-          :sort="false"
-          display-field="startDate"
-          :disabled="homework.dateType === 'session'"
-          @update:model-value="updateTarget"
-        />
+          <PentilaDropdown
+            v-model="homework.date"
+            :list="nextSessions"
+            :sort="false"
+            display-field="startDate"
+            :disabled="homework.dateType === 'session'"
+            @update:model-value="updateTarget"
+          />
+        </div>
       </section>
     </template>
 
     <template #footer>
       <PentilaButton
         v-t="'draft'"
+        class="draft-button"
         @click="save(true)"
       />
       <PentilaButton
@@ -114,6 +118,7 @@
 </template>
 
 <script>
+import BaseIcon from '@components/Base/BaseIcon.vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import dayjs from 'dayjs'
@@ -132,6 +137,7 @@ const StudentListModal = defineAsyncComponent(() => import('@/components/Progres
 export default {
   name: 'HomeworkEditModal',
   components: {
+    BaseIcon,
     Content,
     ContentPicker,
     StudentListModal
@@ -335,6 +341,7 @@ export default {
 <style lang="scss">
 .edit-homework-modal .window-body {
   display: flex;
+  flex-wrap: wrap;
   padding: 1.5rem 0;
   align-items: flex-start;
   gap: 2rem;
@@ -358,14 +365,16 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  flex: 1 0 0;
+  flex: 2;
+  min-width: 19rem;
 }
 
 .right {
   display: flex;
+  flex: 1;
   flex-direction: column;
   gap: 1.5rem;
-  width: 19rem;
+  min-width: 19rem;
   padding: 1.5rem;
   align-items: flex-start;
   align-self: stretch;
@@ -376,9 +385,7 @@ export default {
 
 .dropdowns {
   display: flex;
-  align-items: flex-start;
   gap: 1.5rem;
-  align-self: stretch;
 }
 
 .type, .duration {
@@ -386,30 +393,75 @@ export default {
   flex-direction: column;
   align-items: flex-start;
   gap: 0.25rem;
+  white-space: nowrap;
+  flex: 1;
 
   .base-dropdown {
     width: 100%;
   }
 }
 
-.type {
-  flex: 1 0 0;
+label {
+  display: block;
+  margin-bottom: 4px;
+  @extend %font-regular-m;
 }
 
-.duration {
-  width: 16rem;
+.target-students {
+  width: 100%;
+}
+.target-students-button {
+  white-space: nowrap;
+  display: flex;
+  height: 32px;
+  width: 100%;
+  padding: 8px 16px;
+  align-items: center;
+  text-align: left;
+  gap: 8px;
+  align-self: stretch;
+  cursor: pointer;
+  border-radius: 6px;
+  border: 1px solid $neutral-60;
+  background: $neutral-10;
+
+  span {
+    flex: 1;
+  }
+
+  img {
+    transform: rotate(90deg);
+  }
+
+  &:hover {
+    filter: brightness(115%);
+    -webkit-transition: .2s filter linear;
+    -moz-transition: .2s filter linear;
+    -ms-transition: .2s filter linear;
+    -o-transition: .2s filter linear;
+    transition: .2s filter linear;
+  }
+}
+
+.future-date {
+  margin: 8px 0;
+}
+
+.draft-button {
+  margin-right: 1.5rem;
 }
 </style>
 
 <i18n locale="fr">
 {
-  "allStudents": "Pour tous les élèves",
+  "allStudents": "Tous les élèves",
   "basicInstruction": "Consigne simple",
   "confirmClosure": "Des modifications ne sont pas enregistrées, êtes-vous certain de quitter l’édition et de perdre les modifications ?",
   "docToComplete": "Doc. à compléter",
   "docToReturn": "Doc. à rendre",
+  "for": "Pour",
   "instructions": "Consigne",
-  "draft": "Brouillon",
+  "draft": "Enregistrer",
   "duration": "Durée",
   "homeworkTitle": "Titre du travail*",
   "homeworkType": "Type de travail",
@@ -418,7 +470,7 @@ export default {
   "preview": "Aperçu",
   "required": "Champ requis",
   "sessionDate": "À faire pendant la séance",
-  "someStudents": "Pour un élève sur {total} | Pour {count} élèves sur {total}",
+  "someStudents": "Un élève sur {total} | {count} élèves sur {total}",
   "creationTitle": "Donner du travail",
   "updateTitle": "Modifier un travail"
 }
