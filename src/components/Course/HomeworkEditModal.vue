@@ -38,19 +38,20 @@
           </div>
         </div>
         <Content
-          v-for="block in homework.blocks"
+          v-for="(block, index) in homework.blocks"
           :key="block.contentId"
           v-model="block.contentValue"
           :content="block"
           :is-edition="true"
+          @delete="deleteContent(index)"
         />
         <ContentPicker @add="addContent" />
       </section>
       <section class="right side">
-        <PentilaButton
-          v-t="'preview'"
-          @click="preview"
-        />
+        <!--        <PentilaButton-->
+        <!--          v-t="'preview'"-->
+        <!--          @click="preview"-->
+        <!--        />-->
         <a
           href="#"
           @click="openStudentModal"
@@ -119,6 +120,7 @@ import { createHomework, updateHomework } from '@/api/homework.service'
 import { getNextSessions } from '@/api/schedule.service'
 import Content from '@/components/Course/Content.vue'
 import ContentPicker from '@/components/Course/ContentPicker.vue'
+import contentTypeConstants from '@/constants/contentTypeConstants'
 
 const StudentListModal = defineAsyncComponent(() => import('@/components/Progression/Assignment/StudentListModal'))
 
@@ -141,7 +143,7 @@ export default {
       availableStudents: [],
       displayStudentModal: false,
       homework: {
-        blocks: [{ contentId: -1, contentName: '', contentType: 1, contentValue: '' }],
+        blocks: [{ contentId: -1, contentName: '', contentType: 1, contentValue: '', placeholder: this.$t('instructions') }],
         date: undefined,
         dateType: 'custom',
         homeworkType: undefined,
@@ -227,6 +229,9 @@ export default {
       content.contentId = -1
       this.homework.blocks.push(content)
     },
+    deleteContent (index) {
+      this.homework.blocks.splice(index, 1)
+    },
     onClose () {
       // this.$store.dispatch('misc/decreaseModalCount')
       this.$emit('close')
@@ -251,6 +256,9 @@ export default {
       console.log('todo')
     },
     save (isDraft = false) {
+      // Remove empty text blocks
+      this.homework.blocks = this.homework.blocks.filter(block => block.contentType !== contentTypeConstants.TYPE_TEXT_CONTENT || block.contentValue !== '')
+
       if (this.isCreation) {
         createHomework(this.courseId, this.sessionId, this.homework, dayjs(), isDraft).then((data) => {
           if (data.success) {
@@ -356,9 +364,10 @@ export default {
 <i18n locale="fr">
   {
     "allStudents": "Pour tous les élèves",
+    "instructions": "Consigne",
     "draft": "Brouillon",
     "duration": "Durée",
-    "homeworkTitle": "Titre du travail",
+    "homeworkTitle": "Titre du travail*",
     "homeworkType": "Type de travail",
     "futureDate": "À faire pour le ",
     "post": "Publier",
