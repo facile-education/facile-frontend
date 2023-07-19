@@ -3,7 +3,7 @@
     class="edit-homework-modal"
     :modal="true"
     :draggable="true"
-    @close="onClose"
+    @close="confirmClosure"
   >
     <template #header>
       <span v-t="isCreation ? 'creationTitle' : 'updateTitle'" />
@@ -165,6 +165,7 @@ export default {
         targetSessionId: 0,
         title: ''
       },
+      initialForm: undefined,
       homeworkTypes: [
         { type: contentTypeConstants.TYPE_HOMEWORK_BASIC_INSTRUCTION, name: this.$t('basicInstruction') },
         // { type: contentTypeConstants.TYPE_HOMEWORK_DOC_TO_COMPLETE, name: this.$t('docToComplete') },
@@ -236,6 +237,9 @@ export default {
           this.homework.date = this.nextSessions[0]
           this.updateTarget(this.nextSessions[0])
         }
+        this.initialForm = JSON.stringify(this.homework)
+      } else {
+        console.error('error on homework date initialisation')
       }
     },
     (err) => {
@@ -250,10 +254,6 @@ export default {
     },
     deleteContent (index) {
       this.homework.blocks.splice(index, 1)
-    },
-    onClose () {
-      // this.$store.dispatch('misc/decreaseModalCount')
-      this.$emit('close')
     },
     onUpdateStudents (students, isWholeClass) {
       this.displayStudentModal = false
@@ -313,6 +313,20 @@ export default {
       // TODO date libre
       this.homework.targetSessionId = value.sessionId
       this.homework.toDate = value.startDate
+    },
+    confirmClosure () {
+      if (JSON.stringify(this.homework) !== this.initialForm) {
+        this.$store.dispatch('warningModal/addWarning', {
+          text: this.$t('confirmClosure'),
+          lastAction: { fct: this.onClose }
+        })
+      } else {
+        this.onClose()
+      }
+    },
+    onClose () {
+      // this.$store.dispatch('misc/decreaseModalCount')
+      this.$emit('close')
     }
   }
 }
@@ -391,6 +405,7 @@ export default {
 {
   "allStudents": "Pour tous les élèves",
   "basicInstruction": "Consigne simple",
+  "confirmClosure": "Des modifications ne sont pas enregistrées, êtes-vous certain de quitter l’édition et de perdre les modifications ?",
   "docToComplete": "Doc. à compléter",
   "docToReturn": "Doc. à rendre",
   "instructions": "Consigne",
