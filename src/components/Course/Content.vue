@@ -125,7 +125,7 @@ export default {
       this.$store.dispatch('documents/openFile', { id: this.fileId, name: this.fileName })
     },
     blur () {
-      if (this.modelValue === '') {
+      if (!this.content.placeholder && this.modelValue === '') {
         this.$emit('delete')
       }
     },
