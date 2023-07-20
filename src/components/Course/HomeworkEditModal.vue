@@ -106,11 +106,11 @@
       <PentilaButton
         v-t="'draft'"
         class="draft-button"
-        @click="save(true)"
+        @click="onConfirm(true)"
       />
       <PentilaButton
         v-t="'post'"
-        @click="onConfirm"
+        @click="onConfirm(false)"
       />
     </template>
   </PentilaWindow>
@@ -294,11 +294,11 @@ export default {
     preview () {
       console.log('todo')
     },
-    onConfirm () {
+    onConfirm (isDraft = false) {
       if (this.v$.$invalid) {
         this.v$.$touch()
       } else {
-        this.save()
+        this.save(isDraft)
       }
     },
     save (isDraft = false) {
