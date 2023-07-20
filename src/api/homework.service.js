@@ -10,6 +10,7 @@ export {
   setHomeworkDoneStatus,
   createHomework,
   updateHomework,
+  deleteHomework,
   dropHomeworkFile,
   correctFile
 }
@@ -80,6 +81,12 @@ function updateHomework (homework, publicationDate, isDraft) {
     blocks: JSON.stringify(homework.blocks),
     publicationDateStr: publicationDate.format('YYYY-MM-DD HH:mm'),
     isDraft
+  })).then(response => response.data)
+}
+
+function deleteHomework (homeworkId) {
+  return axios.post(constants.JSON_WS_URL + HOMEWORK_PATH + 'delete-homework', PentilaUtils.URL.params({
+    homeworkId
   })).then(response => response.data)
 }
 
