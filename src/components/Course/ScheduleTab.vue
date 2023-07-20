@@ -23,30 +23,28 @@
               class="icon theme-text-color"
             />
             <h3>{{ courseTitle }}</h3>
-            <span
-              v-if="session.publicationDate"
-              class="publication-date"
-            > {{ formattedPublicationDate }}</span>
             <CreateButton
               v-if="!hasContent"
               :aria-label="$t('add')"
               :title="$t('add')"
               @click="openCourseEditModal"
             />
-            <button
-              v-else
-              class="edit-button"
-              :aria-label="$t('options')"
-              :title="$t('options')"
-              @click="toggleContextMenu"
-            >
-              <img
-                height="20"
-                width="20"
-                :src="require('@/assets/icons/vertical_dots.svg')"
-                alt="options"
+            <div v-else class="right">
+              <span class="status">{{ formattedStatus }}</span>
+              <button
+                class="edit-button"
+                :aria-label="$t('options')"
+                :title="$t('options')"
+                @click="toggleContextMenu"
               >
-            </button>
+                <img
+                  height="20"
+                  width="20"
+                  :src="require('@/assets/icons/vertical_dots.svg')"
+                  alt="options"
+                >
+              </button>
+            </div>
           </div>
 
           <SessionContent :session="session" />
@@ -168,6 +166,13 @@ export default {
     configuration () {
       return this.$store.state.calendar.configuration
     },
+    formattedStatus () {
+      if (this.session.isDraft) {
+        return this.$t('draftStatus')
+      } else {
+        return this.$t('publishedOn') + dayjs(this.session.publicationDate).format('DD/MM/YYYY')
+      }
+    },
     courseTitle () {
       return this.session.title ? this.session.title : this.$t('courseContent')
     },
@@ -179,9 +184,6 @@ export default {
     },
     hasContent () {
       return (this.session.title !== undefined || (this.session.blocks !== undefined && this.session.blocks.length > 0))
-    },
-    formattedPublicationDate () {
-      return this.session.publicationDate ? this.$t('publishOn', { date: dayjs(this.session.publicationDate).format('DD/MM/YYYY') }) : ''
     },
     notes: {
       get () {
@@ -350,7 +352,12 @@ header {
     @extend %font-bold-l;
   }
 
-  .publication-date {
+  .right {
+    display: flex;
+    align-items: center;
+  }
+
+  .status {
     margin: 0 1rem;
     @extend %font-regular-xs
   }
@@ -386,6 +393,7 @@ header {
   "add": "Ajouter",
   "options": "Options",
   "delete": "Supprimer",
+  "draftStatus": "Non publié",
   "edit": "Modifier",
   "selectSessionPlaceholder": "Veuillez sélectionner une séance pour accéder à son contenu",
   "toDoHomeworkPlaceholder": "Aucun travail à préparer",
@@ -397,7 +405,7 @@ header {
   "courseContent": "SUPPORTS DE COURS",
   "notes": "Note privée",
   "notesPlaceholder": "Ma note privée",
-  "publishOn": "Publié le {date}",
+  "publishedOn": "Publié le ",
   "workToDo": "TRAVAUX À FAIRE"
 }
 </i18n>
