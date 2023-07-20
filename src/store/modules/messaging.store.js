@@ -29,7 +29,8 @@ export const state = {
   createMessageParameters: {},
   draggedThreads: [],
   signature: '',
-  displayMessageFromRouting: false
+  displayMessageFromRouting: false,
+  isThreadListEnded: false
 }
 
 // Defined outside of mutations because of recursion
@@ -262,6 +263,9 @@ export const mutations = {
   },
   setSignature (state, signature) {
     state.signature = signature
+  },
+  setIsThreadListEnded (state, payload) {
+    state.isThreadListEnded = payload
   }
 }
 
@@ -370,31 +374,38 @@ export const actions = {
   deletePersonalFolder ({ commit }, folder) {
     commit('deletePersonalFolder', folder)
   },
-  getThreads ({ commit }, { folderId, lastDate = '-1' }) {
+  getThreads ({ commit, state }, { folderId, lastDate = '-1' }) {
     return new Promise((resolve) => {
       if (lastDate === '-1') { // it means we are in a new messaging folder
+        commit('setIsThreadListEnded', false)
         commit('setThreadList', []) // Force trigger component re-render (to fold unfolded threads)
       }
-      this.dispatch('currentActions/addAction', { name: 'loadThreads' })
 
-      messageService.getThreads(folderId, lastDate, messagingConstants.threadListPaginationSize, state.unreadOnly).then((data) => {
-        this.dispatch('currentActions/removeAction', { name: 'loadThreads' })
+      if (!state.isThreadListEnded) {
+        this.dispatch('currentActions/addAction', { name: 'loadThreads' })
 
-        if (data.success) {
-          commit('setLoadingThreadsError', undefined)
-          commit('updateStartIndex', state.startIndex + messagingConstants.threadListPaginationSize)
-          if (lastDate === '-1') {
-            commit('setThreadList', data.threads)
+        messageService.getThreads(folderId, lastDate, messagingConstants.threadListPaginationSize, state.unreadOnly).then((data) => {
+          this.dispatch('currentActions/removeAction', { name: 'loadThreads' })
+
+          if (data.success) {
+            if (data.threads.length < messagingConstants.threadListPaginationSize) {
+              commit('setIsThreadListEnded', true)
+            }
+            commit('setLoadingThreadsError', undefined)
+            commit('updateStartIndex', state.startIndex + messagingConstants.threadListPaginationSize)
+            if (lastDate === '-1') {
+              commit('setThreadList', data.threads)
+            } else {
+              commit('addToThreadList', data.threads)
+            }
+            this.dispatch('messaging/updateNbUnread', folderId)
+            resolve({ threads: data.threads })
           } else {
-            commit('addToThreadList', data.threads)
+            commit('setLoadingThreadsError', 'loading')
+            console.error('Error while getting threads from folderId ' + folderId + ' with last date = ' + lastDate)
           }
-          this.dispatch('messaging/updateNbUnread', folderId)
-          resolve({ threads: data.threads })
-        } else {
-          commit('setLoadingThreadsError', 'loading')
-          console.error('Error while getting threads from folderId ' + folderId + ' with last date = ' + lastDate)
-        }
-      })
+        })
+      }
     })
   },
   updateNbUnread ({ commit }, folderId) {
