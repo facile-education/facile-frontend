@@ -220,7 +220,11 @@ export default {
     // this.$store.dispatch('misc/incrementModalCount')
     if (!this.isCreation) {
       this.homework = PentilaUtils.JSON.deepCopy(this.editedHomework)
-      this.homework.dateType = 'custom'
+      if (this.homework.targetSessionId === this.homework.sourceSessionId) {
+        this.homework.dateType = 'session'
+      } else {
+        this.homework.dateType = 'custom'
+      }
       // Select correct estimated time object in dropdown list
       if (this.homework.estimatedTime) {
         const index = this.homeworkDurations.map(object => object.time).indexOf(this.homework.estimatedTime.toString())
