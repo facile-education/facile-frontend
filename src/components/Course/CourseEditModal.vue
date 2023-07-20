@@ -44,8 +44,13 @@
 
     <template #footer>
       <PentilaButton
+        v-t="'draft'"
+        class="draft-button"
+        @click="onConfirm(true)"
+      />
+      <PentilaButton
         v-t="'post'"
-        @click="onConfirm"
+        @click="onConfirm(false)"
       />
     </template>
   </PentilaWindow>
@@ -145,16 +150,16 @@ export default {
         console.error(err)
       })
     },
-    onConfirm () {
+    onConfirm (isDraft = false) {
       if (this.v$.$invalid) {
         this.v$.$touch()
       } else {
-        this.save()
+        this.save(isDraft)
       }
     },
     save (isDraft = false) {
       // TODO courseId = groupId ?
-      const publicationDate = isDraft ? '' : dayjs().format('YYYY-MM-DD HH:mm')
+      const publicationDate = dayjs().format('YYYY-MM-DD HH:mm')
 
       // Remove empty text blocks
       this.session.blocks = this.session.blocks.filter(block => block.contentType !== contentTypeConstants.TYPE_TEXT_CONTENT || block.contentValue !== '')
@@ -243,10 +248,15 @@ export default {
   border-radius: 0.375rem;
   background: $neutral-20;
 }
+
+.draft-button {
+  margin-right: 1.5rem;
+}
 </style>
 
 <i18n locale="fr">
 {
+  "draft": "Publier plus tard",
   "title": "Support du cours {courseName} - Séance du {day} à {hour}",
   "courseTitle": "Titre du support*",
   "post": "Publier",
