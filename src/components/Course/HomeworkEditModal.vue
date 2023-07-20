@@ -36,6 +36,7 @@
             <PentilaDropdown
               v-model="homework.homeworkDuration"
               :list="homeworkDurations"
+              :placeholder="$t('select')"
               :sort="false"
               :filtered="false"
               display-field="label"
@@ -220,16 +221,22 @@ export default {
     if (!this.isCreation) {
       this.homework = PentilaUtils.JSON.deepCopy(this.editedHomework)
       this.homework.dateType = 'custom'
-      console.log(this.homework)
+      // Select correct estimated time object in dropdown list
+      if (this.homework.estimatedTime) {
+        const index = this.homeworkDurations.map(object => object.time).indexOf(this.homework.estimatedTime.toString())
+        if (index !== -1) {
+          this.homework.homeworkDuration = this.homeworkDurations[index]
+        } else {
+          console.error('cannot init estimate duration')
+        }
+      }
     }
 
     getSessionStudents(this.courseId).then((data) => {
       if (data.success) {
-        console.log('students', data)
         this.availableStudents = data.students
       }
-    },
-    (err) => {
+    }, (err) => {
       // TODO toastr
       console.error(err)
     })
@@ -239,7 +246,6 @@ export default {
         this.nextSessions = data.nextSessions
 
         if (!this.isCreation) {
-          console.log(this.homework.targetSessionId, this.homework.toDate)
           if (this.homework.targetSessionId !== undefined) {
             this.nextSessions.forEach(session => {
               if (session.sessionId === this.homework.targetSessionId) {
@@ -492,13 +498,14 @@ label {
   "for": "Pour",
   "instructions": "Consigne",
   "draft": "Publier plus tard",
-  "duration": "Durée",
+  "duration": "Durée estimée",
   "homeworkTitle": "Titre du travail*",
   "homeworkType": "Type de travail",
   "futureDate": "À faire pour le ",
   "post": "Publier",
   "preview": "Aperçu",
   "required": "Champ requis",
+  "select": "Selectionner",
   "sessionDate": "À faire pendant la séance",
   "someStudents": "Un élève sur {total} | {count} élèves sur {total}",
   "creationTitle": "Donner du travail",
