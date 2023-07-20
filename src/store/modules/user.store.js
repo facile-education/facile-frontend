@@ -141,7 +141,7 @@ export const actions = {
             if (data.themeColor.indexOf('#') === -1) {
               data.themeColor = '#' + data.themeColor
             }
-            if (data.themeColor !== rootState.theme.themeColor && data.themeColor !== 'FFFFFF') {
+            if (data.themeColor !== rootState.theme.mainColor && data.themeColor !== 'FFFFFF') {
               dispatch('theme/updateMainColor', data.themeColor, { root: true })
             }
             if (!data.agreedTermsOfUse) {
@@ -149,6 +149,8 @@ export const actions = {
             } else if (data.passwordChange) {
               router.push({ name: 'PasswordChange' })
             }
+          } else {
+            data.themeColor = '#' + rootState.theme.mainColor
           }
           commit('initUserInformations', data)
         } else {
