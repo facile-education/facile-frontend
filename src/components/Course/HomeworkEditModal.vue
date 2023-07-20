@@ -491,7 +491,7 @@ label {
   "docToReturn": "Doc. à rendre",
   "for": "Pour",
   "instructions": "Consigne",
-  "draft": "Enregistrer",
+  "draft": "Publier plus tard",
   "duration": "Durée",
   "homeworkTitle": "Titre du travail*",
   "homeworkType": "Type de travail",

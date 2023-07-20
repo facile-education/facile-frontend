@@ -2,11 +2,17 @@
   <article class="homework">
     <header class="title">
       <div>
-        <h3>{{ homework.title }} - {{ homework.estimatedTime }}</h3>
-        <span class="theme-text-color">Réalisé par {{ homework.doneStudents.length }} élèves on {{ homework.selectedStudents.length }}</span>
+        <div class="header-first-line">
+          <h3>{{ homework.title }}</h3>
+          <span
+            v-if="homework.estimatedTime "
+            class="estimated-time"
+          >{{ formattedEstimatedTime }}</span>
+        </div>
+        <span class="nb-done theme-text-color">{{ formattedDoneStatus }}</span>
       </div>
       <div class="right">
-        <span>Donné le {{ homework.publicationDate }} (modifié le {{ homework.modificationDate }})</span>
+        <span class="status">{{ formattedStatus }}</span>
         <button
           class="edit-button"
           :aria-label="$t('options')"
@@ -26,6 +32,7 @@
       v-for="block in homework.blocks"
       :key="block.contentId"
       v-model="block.contentValue"
+      class="content"
       :content="block"
     />
   </article>
@@ -48,6 +55,7 @@
 </template>
 
 <script>
+import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
 import { deleteHomework } from '@/api/homework.service'
@@ -70,6 +78,27 @@ export default {
     return {
       isHomeworkModalDisplayed: false,
       displayMenu: false
+    }
+  },
+  computed: {
+    formattedStatus () {
+      if (this.homework.isDraft) {
+        return this.$t('draftStatus')
+      } else {
+        return this.$t('publishedOn') + dayjs(this.homework.publicationDate).format('DD/MM/YYYY')
+      }
+    },
+    formattedEstimatedTime () {
+      const nbMinutes = this.homework.estimatedTime
+      const nbHour = Math.floor(nbMinutes / 60)
+      if (nbHour > 0) {
+        return nbHour + this.$t('hourLabel') + nbMinutes % 60
+      } else {
+        return nbMinutes + ' ' + this.$t('minuteLabel')
+      }
+    },
+    formattedDoneStatus () {
+      return this.$t('doneStatus', { nbDone: this.homework.doneStudents.length, nbStudents: this.homework.selectedStudents.length })
     }
   },
   methods: {
@@ -136,7 +165,7 @@ export default {
   background: $neutral-10;
 }
 
-.title {
+header {
   display: flex;
   align-items: center;
   align-content: flex-start;
@@ -145,9 +174,27 @@ export default {
   flex-wrap: wrap;
 }
 
+.content {
+  width: 100%;
+}
+
+.header-first-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .estimated-time {
+    color: $neutral-80;
+    @extend %font-regular-s;
+  }
+}
+
+.nb-done {
+  @extend %font-bold-s;
+}
+
 h3 {
   margin: 0;
-
   @extend %font-bold-l;
 }
 
@@ -157,13 +204,28 @@ h3 {
   gap: 1rem;
   margin-left: auto;
 
-  @extend %font-regular-xs;
+  .status {
+    @extend %font-regular-xs;
+  }
+
+  button {
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
 }
 </style>
 
 <i18n locale="fr">
 {
   "delete": "Supprimer",
-  "edit": "Modifier"
+  "doneStatus": "Réalisé par {nbDone} élèves sur {nbStudents}",
+  "edit": "Modifier",
+  "hourLabel": "h",
+  "minuteLabel": "min",
+  "publishedOn": "Publié le ",
+  "draftStatus": "Non publié"
 }
 </i18n>
