@@ -2,7 +2,7 @@
   <Layout>
     <h1 :aria-label="$t('serviceTitle')" />
     <HorairesToolbar
-      v-if="!$store.state.user.isStudent"
+      v-if="!$store.state.user.isStudent || mq.phone"
       @update-sessions="getSessions"
     />
 
