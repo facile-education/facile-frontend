@@ -121,7 +121,7 @@
         class="notify-parents"
         :label="$t('NotUsualSlots.StudentRegistrationModal.notifyParents')"
         :model-value="notifyParents"
-        @update:modelValue="handleCheck"
+        @update:model-value="handleCheck"
       />
     </template>
 

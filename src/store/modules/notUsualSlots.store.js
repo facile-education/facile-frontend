@@ -41,6 +41,7 @@ function getNonUsualSlots (store) {
       if (data.success) {
         formatNonUsualSlot(data.sessions)
         store.commit('notUsualSlots/setCurrentNonUsualSlots', data.sessions)
+        store.commit('notUsualSlots/removeRegisterOption')
         store.commit('notUsualSlots/addRegisterOption')
       } else {
         console.error('Cannot get slots for type ' + store.state.notUsualSlots.currentSlotType.type)
@@ -66,6 +67,7 @@ function getSessions (store) {
           formatUsualSlot(sessions)
           data.sessions.forEach(slot => { slot.isUserSlot = true })
           store.commit('notUsualSlots/setUserSlots', sessions)
+          store.commit('notUsualSlots/removeRegisterOption')
           store.commit('notUsualSlots/addRegisterOption')
         } else {
           console.error('Cannot get user slots')
@@ -82,6 +84,7 @@ function getSessions (store) {
         if (data.success) {
           data.sessions.forEach(slot => { slot.isUserSlot = true })
           store.commit('notUsualSlots/setUserSlots', data.sessions)
+          store.commit('notUsualSlots/removeRegisterOption')
           store.commit('notUsualSlots/addRegisterOption')
         } else {
           console.error('Cannot get user slots')

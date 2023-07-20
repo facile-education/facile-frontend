@@ -31,7 +31,7 @@
           :placeholder="$t('NotUsualSlots.EditSlotModal.teacherNamePlaceHolder')"
           :model-value="newEvent.teacher? [newEvent.teacher] : []"
           @blur="v$.newEvent.teacher.teacherId.$touch()"
-          @update:modelValue="updateTeacher"
+          @update:model-value="updateTeacher"
         />
         <PentilaErrorMessage :error-message="formErrorList.teacher" />
       </div>
@@ -170,8 +170,8 @@ export default {
       this.newEvent.backgroundColor = this.currentSlotType.color
       this.newEvent.borderColor = this.currentSlotType.color
     } else { // Event update
-      this.newEvent.sessionId = this.sessionId
-      this.newEvent.teacher = { ...this.eventToEdit.teacher } // create a copy to not trigger store state change out of a mutation
+      this.newEvent.sessionId = this.eventToEdit.sessionId
+      this.newEvent.teacher = { ...this.eventToEdit.teachers[0] } // create a copy to not trigger store state change out of a mutation
       this.newEvent.capacity = this.eventToEdit.capacity
       this.newEvent.nbRegisteredStudents = this.eventToEdit.nbRegisteredStudents
       this.newEvent.room = this.eventToEdit.room
