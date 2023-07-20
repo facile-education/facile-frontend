@@ -72,6 +72,11 @@
             :homework-list="session.toDoHomeworks"
           />
           <HomeworkList
+            :header="$t('sessionHomeworkHeader')"
+            :placeholder="$t('sessionHomeworkPlaceholder')"
+            :homework-list="session.sessionHomeworks"
+          />
+          <HomeworkList
             :header="$t('givenHomeworkHeader')"
             :placeholder="$t('givenHomeworkPlaceholder')"
             :homework-list="session.givenHomeworks"
@@ -387,6 +392,8 @@ header {
   "toDoHomeworkHeader": "Pour cette séance",
   "givenHomeworkPlaceholder": "Aucun travail donné",
   "givenHomeworkHeader": "Pour une prochaine date",
+  "sessionHomeworkPlaceholder": "Aucun travail à faire",
+  "sessionHomeworkHeader": "Pendant la séance",
   "courseContent": "SUPPORTS DE COURS",
   "notes": "Note privée",
   "notesPlaceholder": "Ma note privée",
