@@ -33,12 +33,10 @@ function getCourses (userId) {
   }).then(response => response.data)
 }
 
-function getCourseContent (courseId, minDate, maxDate) {
+function getCourseContent (courseId) {
   return axios.get(constants.JSON_WS_URL + COURSE_PATH + 'get-course-content', {
     params: {
-      courseId,
-      minDate,
-      maxDate
+      courseId
     }
   }).then(response => response.data)
 }
