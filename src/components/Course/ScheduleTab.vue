@@ -29,7 +29,10 @@
               :title="$t('add')"
               @click="openCourseEditModal"
             />
-            <div v-else class="right">
+            <div
+              v-else
+              class="right"
+            >
               <span class="status">{{ formattedStatus }}</span>
               <button
                 class="edit-button"
@@ -368,6 +371,8 @@ header {
 }
 
 .notes {
+  padding-bottom: 2rem;
+
   .ck-editor{
     //border: 1px solid rgba(0, 0, 0, 0.15);
     background-color: $neutral-20;
