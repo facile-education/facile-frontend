@@ -6,16 +6,16 @@
       >
         <ScheduleTab />
       </PentilaTabItem>
-      <PentilaTabItem
-        :title="$t('course')"
-      >
-        <CourseTab />
-      </PentilaTabItem>
-      <PentilaTabItem
-        :title="$t('toCorrect')"
-      >
-        <TeacherHomeworkTab />
-      </PentilaTabItem>
+      <!--      <PentilaTabItem-->
+      <!--        :title="$t('course')"-->
+      <!--      >-->
+      <!--        <CourseTab />-->
+      <!--      </PentilaTabItem>-->
+      <!--      <PentilaTabItem-->
+      <!--        :title="$t('toCorrect')"-->
+      <!--      >-->
+      <!--        <TeacherHomeworkTab />-->
+      <!--      </PentilaTabItem>-->
     </PentilaTabList>
     <PentilaTabList v-else>
       <PentilaTabItem
@@ -37,7 +37,7 @@ import { getStudentUndoneCount } from '@/api/homework.service'
 import CourseTab from '@/components/Course/CourseTab.vue'
 import HomeworkTab from '@/components/Course/HomeworkTab.vue'
 import ScheduleTab from '@/components/Course/ScheduleTab.vue'
-import TeacherHomeworkTab from '@/components/Course/TeacherHomeworkTab.vue'
+// import TeacherHomeworkTab from '@/components/Course/TeacherHomeworkTab.vue'
 import Layout from '@/router/layouts/BannerLayout'
 
 export default {
@@ -46,8 +46,8 @@ export default {
     Layout,
     CourseTab,
     HomeworkTab,
-    ScheduleTab,
-    TeacherHomeworkTab
+    ScheduleTab
+    // TeacherHomeworkTab
   },
   inject: ['mq'],
   data () {
