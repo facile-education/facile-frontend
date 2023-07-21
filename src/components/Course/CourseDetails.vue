@@ -23,12 +23,19 @@
 </template>
 
 <script>
+import { getCourseContent } from '@/api/course.service'
+
 export default {
   name: 'CourseDetails',
   props: {
     course: {
       type: Object,
       required: true
+    }
+  },
+  data () {
+    return {
+      coursesSessions: undefined
     }
   },
   computed: {
@@ -40,9 +47,22 @@ export default {
       }
     }
   },
+  created () {
+    this.getCourseSessions()
+  },
   methods: {
     unselectCourse () {
       this.$store.dispatch('course/setSelectedCourse', undefined)
+    },
+    getCourseSessions () {
+      getCourseContent(this.course.courseId).then((data) => {
+        if (data.success) {
+          this.coursesSessions = data.sessions
+        } else {
+          console.error('Error')
+          // TODO: handle loading and error states
+        }
+      })
     }
   }
 }
