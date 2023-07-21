@@ -1,12 +1,32 @@
 <template>
-  <div>
-    <div class="courses">
-      <CourseItem
+  <div class="course-tab">
+    <div
+      v-if="isLoading"
+      class="placeholder"
+    >
+      <PentilaSpinner />
+    </div>
+    <div
+      v-if="error === true"
+      v-t="'errorPlaceholder'"
+      class="placeholder"
+    />
+    <div
+      v-else-if="courses.length === 0"
+      v-t="'emptyPlaceholder'"
+      class="placeholder"
+    />
+    <ul
+      v-else
+      class="courses"
+    >
+      <li
         v-for="course in courses"
         :key="course.courseId"
-        :course="course"
-      />
-    </div>
+      >
+        <CourseItem :course="course" />
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -19,21 +39,37 @@ export default {
   name: 'CourseTab',
   components: { CourseItem },
   inject: ['mq'],
+  props: {
+    userId: {
+      type: Number,
+      required: true
+    }
+  },
   data () {
     return {
-      courses: []
+      courses: [],
+      isLoading: false,
+      error: false
     }
   },
   computed: {
   },
   created () {
-    getCourses().then(
-      (data) => {
-        if (data.success) {
-          this.courses = data.courses
-        }
+    this.isLoading = true
+    getCourses(this.userId).then((data) => {
+      this.isLoading = false
+      if (data.success) {
+        this.error = false
+        this.courses = data.courses
+      } else {
+        this.error = true
+        console.error('Cannot retrieve courses')
       }
-    )
+    }, (err) => {
+      this.isLoading = false
+      this.error = true
+      console.error(err)
+    })
   },
   methods: {
   }
@@ -43,14 +79,26 @@ export default {
 <style lang="scss" scoped>
 @import '@design';
 
+.placeholder {
+  @extend %content-placeholder;
+}
+
 .courses {
   display: grid;
   grid-gap: 1.5rem;
   grid-template-columns: repeat(auto-fill, 200px);
 }
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
 </style>
 
 <i18n locale="fr">
 {
+  "errorPlaceholder": "Oups, une erreur est survenue...",
+  "emptyPlaceholder": "Aucun cours à afficher"
 }
 </i18n>

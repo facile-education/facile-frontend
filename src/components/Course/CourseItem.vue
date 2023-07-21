@@ -4,8 +4,8 @@
     @click="selectCourse"
   >
     <header :style="`border-color:${course.color};background-color:${course.color}22;`">
-      <span class="subject">{{ course.subject }}</span>
-      <span class="infos">{{ course.groupName }} - {{ teacherName }}</span>
+      <span class="subject">{{ course.groupName }}</span>
+      <span class="infos">{{ formattedTeachersLabel }}</span>
     </header>
   </div>
 </template>
@@ -21,8 +21,18 @@ export default {
     }
   },
   computed: {
-    teacherName () {
-      return this.course.teacher.firstName.substring(0, 1) + '. ' + this.course.teacher.lastName
+    currentUser () {
+      return this.$store.state.user
+    },
+    formattedTeachersLabel () {
+      let label = ''
+      this.course.teachers.forEach(teacher => {
+        if (this.currentUser && this.currentUser.userId !== teacher.userId) {
+          const name = teacher.firstName.substring(0, 1) + '. ' + teacher.lastName
+          label += (label === '') ? name : ', ' + name
+        }
+      })
+      return label
     }
   },
   methods: {

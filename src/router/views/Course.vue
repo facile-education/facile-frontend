@@ -17,18 +17,33 @@
       <!--        <TeacherHomeworkTab />-->
       <!--      </PentilaTabItem>-->
     </PentilaTabList>
-    <PentilaTabList v-else>
-      <PentilaTabItem
-        :title="$t('homework') + ' ' + nbUndoneHomeworks"
+    <div v-else>
+      <div
+        v-if="childList.length > 1"
+        class="first-line"
       >
-        <HomeworkTab />
-      </PentilaTabItem>
-      <PentilaTabItem
-        :title="$t('course')"
-      >
-        <CourseTab />
-      </PentilaTabItem>
-    </PentilaTabList>
+        <PentilaDropdown
+          v-model="selectedChild"
+          :list="childList"
+          :sort="false"
+          display-field="fullName"
+          class="child-selector"
+        />
+      </div>
+
+      <PentilaTabList>
+        <PentilaTabItem
+          :title="$t('homework') + ' ' + nbUndoneHomeworks"
+        >
+          <HomeworkTab />
+        </PentilaTabItem>
+        <PentilaTabItem
+          :title="$t('course')"
+        >
+          <CourseTab :user-id="selectedUser.userId" />
+        </PentilaTabItem>
+      </PentilaTabList>
+    </div>
   </Layout>
 </template>
 
@@ -52,10 +67,23 @@ export default {
   inject: ['mq'],
   data () {
     return {
+      selectedUser: undefined,
       nbUndoneHomeworks: 0
     }
   },
   computed: {
+    childList () {
+      return this.$store.state.user.children
+    },
+    selectedChild: {
+      get () {
+        return this.$store.state.user.selectedChild
+      },
+      set (child) {
+        this.$store.commit('user/setSelectedChild', child)
+        this.selectedUser = child
+      }
+    },
     isTeacher () {
       return this.$store.state.user.isTeacher
     },
@@ -71,6 +99,14 @@ export default {
           this.nbUndoneHomeworks = data.nbUndoneHomeworks
         }
       })
+    }
+
+    // Assume childList is correctly loaded at this state
+    if (this.childList.length > 0) {
+      this.$store.commit('user/setSelectedChild', this.childList[0])
+      this.selectedUser = this.selectedChild
+    } else {
+      this.selectedUser = this.$store.state.user
     }
   },
   methods: {
