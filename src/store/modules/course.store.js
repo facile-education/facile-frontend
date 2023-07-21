@@ -12,6 +12,7 @@ export const state = {
   homeworkList: [],
   sessionList: [],
   selectedSession: undefined,
+  selectedCourse: undefined,
   isCreateSessionModalDisplayed: false
 }
 
@@ -35,6 +36,9 @@ export const mutations = {
   },
   setSelectedSession (state, payload) {
     state.selectedSession = payload
+  },
+  setSelectedCourse (state, payload) {
+    state.selectedCourse = payload
   },
   setCreateSessionModalDisplayed (state, payload) {
     state.isCreateSessionModalDisplayed = payload
@@ -113,7 +117,11 @@ export const actions = {
       console.error(err)
     })
   },
-  unselectSession ({commit}) {
+  setSelectedCourse ({ commit }, course) {
+    console.log('set ', course)
+    commit('setSelectedCourse', course)
+  },
+  unselectSession ({ commit }) {
     commit('setSelectedSession', undefined)
   },
   updateSessionContent ({ commit, state }) {

@@ -44,8 +44,7 @@ export default {
   },
   methods: {
     selectCourse () {
-      // Display selected course progression and details
-      console.log('test')
+      this.$store.dispatch('course/setSelectedCourse', this.course)
     }
   }
 }

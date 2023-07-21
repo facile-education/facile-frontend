@@ -17,7 +17,7 @@
       class="placeholder"
     />
     <ul
-      v-else
+      v-else-if="!selectedCourse"
       class="courses"
     >
       <li
@@ -27,17 +27,22 @@
         <CourseItem :course="course" />
       </li>
     </ul>
+    <CourseDetails
+      v-else
+      :course="selectedCourse"
+    />
   </div>
 </template>
 
 <script>
+import CourseDetails from '@components/Course/CourseDetails.vue'
 import CourseItem from '@components/Course/CourseItem.vue'
 
 import { getCourses } from '@/api/course.service'
 
 export default {
   name: 'CourseTab',
-  components: { CourseItem },
+  components: { CourseDetails, CourseItem },
   inject: ['mq'],
   props: {
     userId: {
@@ -53,6 +58,9 @@ export default {
     }
   },
   computed: {
+    selectedCourse () {
+      return this.$store.state.course.selectedCourse
+    }
   },
   created () {
     this.isLoading = true
