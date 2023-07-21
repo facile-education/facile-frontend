@@ -179,9 +179,9 @@ export default {
       },
       initialForm: undefined,
       homeworkTypes: [
-        { type: contentTypeConstants.TYPE_HOMEWORK_BASIC_INSTRUCTION, name: this.$t('basicInstruction') },
+        { type: contentTypeConstants.TYPE_HOMEWORK_BASIC_INSTRUCTION, name: this.$t('basicInstruction') }
         // { type: contentTypeConstants.TYPE_HOMEWORK_DOC_TO_COMPLETE, name: this.$t('docToComplete') },
-        { type: contentTypeConstants.TYPE_HOMEWORK_DOC_TO_RETURN, name: this.$t('docToReturn') }
+        // { type: contentTypeConstants.TYPE_HOMEWORK_DOC_TO_RETURN, name: this.$t('docToReturn') }
       ],
       homeworkDurations: [
         { label: '15 min', time: '15' },
