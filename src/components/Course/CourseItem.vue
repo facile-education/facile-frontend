@@ -1,11 +1,18 @@
 <template>
   <div
     class="course"
+    tabindex="0"
+    @keyup.enter="selectCourse"
     @click="selectCourse"
   >
-    <header :style="`border-color:${course.color};background-color:${course.color}22;`">
+    <header :style="`border-color:${course.color};background-color:${course.color}24;`">
       <span class="subject">{{ course.groupName }}</span>
-      <span class="infos">{{ formattedTeachersLabel }}</span>
+      <span
+        class="infos"
+        :title="formattedTeachersLabel"
+      >
+        {{ formattedTeachersLabel }}
+      </span>
     </header>
   </div>
 </template>
@@ -38,6 +45,7 @@ export default {
   methods: {
     selectCourse () {
       // Display selected course progression and details
+      console.log('test')
     }
   }
 }
@@ -51,6 +59,16 @@ export default {
   flex-direction: column;
   align-items: flex-start;
   align-self: stretch;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(115%);
+    -webkit-transition: .2s filter linear;
+    -moz-transition: .2s filter linear;
+    -ms-transition: .2s filter linear;
+    -o-transition: .2s filter linear;
+    transition: .2s filter linear;
+  }
 }
 
 header {
@@ -66,12 +84,10 @@ header {
   }
 
   .infos {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     @extend %font-regular-xs;
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-}
-</i18n>
