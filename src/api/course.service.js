@@ -25,9 +25,11 @@ const COURSE_PATH = COURSE_PREFIX + 'course/'
 const SESSION_CONTENT_PATH = COURSE_PREFIX + 'sessioncontent/'
 const CONTENT_BLOCK_PATH = COURSE_PREFIX + 'contentblock/'
 
-function getCourses () {
+function getCourses (userId) {
   return axios.get(constants.JSON_WS_URL + COURSE_PATH + 'get-user-courses', {
-    params: {}
+    params: {
+      userId
+    }
   }).then(response => response.data)
 }
 
