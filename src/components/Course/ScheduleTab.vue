@@ -1,10 +1,30 @@
 <template>
-  <div class="schedule-tab">
+  <div
+    class="schedule-tab"
+    :class="{'phone': mq.phone}"
+  >
     <DailySchedule
+      ref="schedule"
       class="daily-schedule"
+      @select-event="selectEvent"
     />
 
-    <SessionInfo class="session-infos" />
+    <SessionInfo
+      v-if="!mq.phone"
+      class="session-infos"
+    />
+
+    <PentilaWindow
+      v-else-if="isSessionInfoModalDisplayed"
+      class="session-infos-modal"
+      :class="{'phone': mq.phone}"
+      :modal="true"
+      @close="closeSessionInfoModal"
+    >
+      <template #body>
+        <SessionInfo class="session-infos" />
+      </template>
+    </PentilaWindow>
   </div>
 </template>
 
@@ -20,26 +40,60 @@ export default {
     DailySchedule
   },
   inject: ['mq'],
+  data () {
+    return {
+      isSessionInfoModalDisplayed: false
+    }
+  },
   created () {
     if (!this.configuration) {
       this.$store.dispatch('calendar/getConfiguration')
+    }
+  },
+  methods: {
+    selectEvent () {
+      if (this.mq.phone) {
+        this.openSessionInfoModal()
+      }
+    },
+    unselectEvent () {
+      this.$store.dispatch('course/unselectSession')
+      this.$refs.schedule.unselectEvent()
+    },
+    openSessionInfoModal () {
+      this.$store.dispatch('misc/incrementModalCount')
+      this.isSessionInfoModalDisplayed = true
+    },
+    closeSessionInfoModal () {
+      this.unselectEvent()
+      this.$store.dispatch('misc/decreaseModalCount')
+      this.isSessionInfoModalDisplayed = false
     }
   }
 }
 </script>
 
+<style lang="scss">
+.session-infos-modal .window-body {
+    overflow: auto;
+}
+</style>
+
 <style lang="scss" scoped>
-.schedule-tab {
-  display: flex;
-  gap: 50px;
+
+.schedule-tab:not(.phone) {
+    display: flex;
+    gap: 50px;
+
+  .daily-schedule {
+    width: 30%;
+    height: 800px;
+  }
+
+  .session-infos {
+    width: 70%;
+    height: 800px;
+  }
 }
 
-.daily-schedule {
-  width: 30%;
-}
-
-.session-infos {
-  width: 70%;
-  height: 800px;
-}
 </style>

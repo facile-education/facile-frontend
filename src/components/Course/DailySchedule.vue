@@ -40,6 +40,7 @@
       </button>
     </nav>
     <CustomCalendar
+      ref="calendar"
       :display-date="selectedDate"
       :events="eventList"
       :calendar-options="calendarOptions"
@@ -63,6 +64,7 @@ export default {
     DatePicker
   },
   inject: ['mq'],
+  emits: ['select-event'],
   data () {
     return {
       calendarOptions: {
@@ -115,6 +117,9 @@ export default {
     this.selectDate(this.selectedDate, init)
   },
   methods: {
+    unselectEvent () {
+      this.$refs.calendar.unselectEvent()
+    },
     displayNextDay () { this.selectDate(this.selectedDate.add(1, 'day')) },
     displayPreviousDay () { this.selectDate(this.selectedDate.add(-1, 'day'), false, false) },
     selectDate (date, init = false, goForward = true) {
@@ -148,6 +153,7 @@ export default {
       })
     },
     selectEvent (event) {
+      this.$emit('select-event')
       this.$store.dispatch('course/selectSession', event)
     }
   }
