@@ -282,7 +282,8 @@ export default {
 <style lang="scss" scoped>
 .swipe-container {
   overflow-x: hidden;
-  height: max(800px, calc(100% - 125px));
+  //height: max(800px, calc(100% - 125px));
+  height: 800px;
 }
 
 .swipe-wrapper {

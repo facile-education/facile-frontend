@@ -113,6 +113,9 @@ export const actions = {
       console.error(err)
     })
   },
+  unselectSession ({commit}) {
+    commit('setSelectedSession', undefined)
+  },
   updateSessionContent ({ commit, state }) {
     getSessionContents(state.selectedSession.sessionId).then((data) => {
       if (data.success) {
