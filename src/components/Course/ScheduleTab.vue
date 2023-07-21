@@ -9,7 +9,7 @@
       @select-event="selectEvent"
     />
 
-    <SessionInfo
+    <SessionDetails
       v-if="!mq.phone"
       class="session-infos"
     />
@@ -22,21 +22,21 @@
       @close="closeSessionInfoModal"
     >
       <template #body>
-        <SessionInfo class="session-infos" />
+        <SessionDetails class="session-infos" />
       </template>
     </PentilaWindow>
   </div>
 </template>
 
 <script>
-import SessionInfo from '@components/Course/SessionInfo.vue'
+import SessionDetails from '@components/Course/SessionDetails.vue'
 
 import DailySchedule from '@/components/Course/DailySchedule.vue'
 
 export default {
   name: 'ScheduleTab',
   components: {
-    SessionInfo,
+    SessionDetails,
     DailySchedule
   },
   inject: ['mq'],

@@ -135,7 +135,7 @@ const SessionContent = defineAsyncComponent(() => import('@/components/Course/Se
 const ContextMenu = defineAsyncComponent(() => import('@/components/ContextMenu/ContextMenu'))
 
 export default {
-  name: 'SessionInfo',
+  name: 'SessionDetails',
   components: {
     ContextMenu,
     CreateButton,
