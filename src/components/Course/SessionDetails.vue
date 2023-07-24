@@ -56,7 +56,7 @@
           </div>
         </div>
 
-        <SessionContent :session="session" />
+        <SessionContent :session-content="session.sessionContent" />
       </section>
 
       <section class="homeworks">
@@ -183,14 +183,14 @@ export default {
   },
   computed: {
     formattedStatus () {
-      if (this.session.isDraft) {
+      if (this.session.sessionContent.isDraft) {
         return this.$t('draftStatus')
       } else {
-        return this.$t('publishedOn') + dayjs(this.session.publicationDate).format('DD/MM/YYYY')
+        return this.$t('publishedOn') + dayjs(this.session.sessionContent.publicationDate).format('DD/MM/YYYY')
       }
     },
     courseTitle () {
-      return this.session.title ? this.session.title : this.$t('courseContent')
+      return this.session.sessionContent.title ? this.session.sessionContent.title : this.$t('courseContent')
     },
     dateLabel () {
       return dayjs(this.session.startDate, 'YYYY-MM-DD HH:mm').format('ddd DD/MM')
@@ -202,7 +202,7 @@ export default {
       return this.$store.state.course.sessionList
     },
     hasContent () {
-      return (this.session.title !== undefined || (this.session.blocks !== undefined && this.session.blocks.length > 0))
+      return (this.session.sessionContent.title !== undefined || (this.session.sessionContent.blocks !== undefined && this.session.sessionContent.blocks.length > 0))
     },
     notes: {
       get () {

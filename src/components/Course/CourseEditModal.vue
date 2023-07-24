@@ -14,14 +14,14 @@
       <section class="left">
         <div class="title">
           <PentilaInput
-            v-model="session.title"
+            v-model="sessionContent.title"
             :placeholder="$t('courseTitle')"
           />
           <PentilaErrorMessage :error-message="formErrorList" />
         </div>
 
         <Content
-          v-for="(block, index) in session.blocks"
+          v-for="(block, index) in sessionContent.blocks"
           :key="block.contentId"
           v-model="block.contentValue"
           :content="block"
@@ -85,14 +85,14 @@ export default {
   emits: ['close'],
   setup: () => ({ v$: useVuelidate() }),
   validations: {
-    session: {
+    sessionContent: {
       title: { required }
     }
   },
   data () {
     return {
       isCreation: true,
-      session: { blocks: [], title: '' },
+      sessionContent: { blocks: [], title: '' },
       initialForm: undefined
     }
   },
@@ -106,7 +106,7 @@ export default {
       })
     },
     formErrorList () {
-      const form = this.v$.session.title
+      const form = this.v$.sessionContent.title
       if (form.$invalid && form.$dirty) {
         return this.$t('required')
       } else {
@@ -116,31 +116,29 @@ export default {
   },
   created () {
     this.$store.dispatch('misc/incrementModalCount')
-    this.session.groupId = this.editedSession.groupId
-    this.session.sessionId = this.editedSession.sessionId
 
-    if (this.editedSession.title || (this.editedSession.blocks && this.editedSession.blocks.length > 0)) {
-      this.session.title = this.editedSession.title ? this.editedSession.title : ''
-      this.session.blocks = this.editedSession.blocks ? PentilaUtils.JSON.deepCopy(this.editedSession.blocks) : []
+    if (this.editedSession.sessionContent.title || (this.editedSession.sessionContent.blocks && this.editedSession.sessionContent.blocks.length > 0)) {
+      this.sessionContent.title = this.editedSession.sessionContent.title ? this.editedSession.sessionContent.title : ''
+      this.sessionContent.blocks = this.editedSession.sessionContent.blocks ? PentilaUtils.JSON.deepCopy(this.editedSession.sessionContent.blocks) : []
 
       this.isCreation = false
     } else { // isCreation = true
-      this.session.blocks.push({
+      this.sessionContent.blocks.push({
         contentType: 1, contentValue: '', contentName: '', placeholder: this.$t('description')
       })
     }
-    this.initialForm = JSON.stringify(this.session)
+    this.initialForm = JSON.stringify(this.sessionContent)
   },
   methods: {
     addContent (content) {
       content.contentId = -1
-      this.session.blocks.push(content)
+      this.sessionContent.blocks.push(content)
     },
     deleteContent (index) {
-      this.session.blocks.splice(index, 1)
+      this.sessionContent.blocks.splice(index, 1)
     },
     preview () {
-      getSessionPreview(this.session.sessionId).then((data) => {
+      getSessionPreview(this.editedSession.sessionId).then((data) => {
         if (data.success) {
           // TODO update selectedDetails ?
         }
@@ -162,10 +160,10 @@ export default {
       const publicationDate = dayjs().format('YYYY-MM-DD HH:mm')
 
       // Remove empty text blocks
-      this.session.blocks = this.session.blocks.filter(block => block.contentType !== contentTypeConstants.TYPE_TEXT_CONTENT || block.contentValue !== '')
+      this.sessionContent.blocks = this.sessionContent.blocks.filter(block => block.contentType !== contentTypeConstants.TYPE_TEXT_CONTENT || block.contentValue !== '')
 
       if (this.isCreation) {
-        addSessionContent(this.session.groupId, this.session.sessionId, this.session.title, JSON.stringify(this.session.blocks), publicationDate, isDraft).then((data) => {
+        addSessionContent(this.editedSession.groupId, this.editedSession.sessionId, this.sessionContent.title, JSON.stringify(this.sessionContent.blocks), publicationDate, isDraft).then((data) => {
           if (data.success) {
             this.$store.dispatch('course/updateSessionContent')
             this.onClose()
@@ -176,7 +174,7 @@ export default {
           console.error(err)
         })
       } else {
-        updateSessionContent(this.session.sessionId, this.session.title, JSON.stringify(this.session.blocks), publicationDate, isDraft).then((data) => {
+        updateSessionContent(this.editedSession.sessionId, this.sessionContent.title, JSON.stringify(this.sessionContent.blocks), publicationDate, isDraft).then((data) => {
           if (data.success) {
             this.$store.dispatch('course/updateSessionContent')
             this.onClose()
@@ -189,7 +187,7 @@ export default {
       }
     },
     confirmClosure () {
-      if (JSON.stringify(this.session) !== this.initialForm) {
+      if (JSON.stringify(this.sessionContent) !== this.initialForm) {
         this.$store.dispatch('warningModal/addWarning', {
           text: this.$t('confirmClosure'),
           lastAction: { fct: this.onClose }
