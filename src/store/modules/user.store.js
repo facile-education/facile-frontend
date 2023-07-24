@@ -1,4 +1,6 @@
 // import PentilaUtils from 'pentila-utils'
+import { getFullName } from '@utils/commons.util'
+
 import { getUserApplications } from '@/api/applicationManager.service'
 import userService from '@/api/user.service'
 import router from '@/router'
@@ -66,6 +68,9 @@ export const mutations = {
 
     if (payload.children) {
       state.children = payload.children
+      state.children.forEach(child => {
+        child.fullName = getFullName(child)
+      })
       state.selectedChild = payload.children[0]
     }
     state.agreedTermsOfUse = payload.agreedTermsOfUse
