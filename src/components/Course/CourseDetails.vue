@@ -39,7 +39,7 @@
       />
       <ul v-else>
         <li
-          v-for="session in coursesSessions"
+          v-for="session in sortedCourseSessions"
           :key="session.sessionId"
         >
           <SessionDetails
@@ -54,6 +54,7 @@
 
 <script>
 
+import PentilaUtils from 'pentila-utils'
 import { defineAsyncComponent } from 'vue'
 
 import { getCourseContent } from '@/api/course.service'
@@ -82,6 +83,9 @@ export default {
       } else {
         return this.$t('andOthers', { nbRemaining: this.course.teachers.length - 1 })
       }
+    },
+    sortedCourseSessions () {
+      return PentilaUtils.Array.sortWithString(this.coursesSessions, true, 'startDate')
     }
   },
   created () {
