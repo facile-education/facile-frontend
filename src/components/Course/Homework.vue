@@ -9,7 +9,12 @@
             class="estimated-time"
           >{{ formattedEstimatedTime }}</span>
         </div>
-        <span class="nb-done theme-text-color">{{ formattedDoneStatus }}</span>
+        <span
+          v-if="homework.doneStudents"
+          class="nb-done theme-text-color"
+        >
+          {{ formattedDoneStatus }}
+        </span>
       </div>
       <div class="right">
         <span class="status">{{ formattedStatus }}</span>
