@@ -119,12 +119,6 @@ export default {
 <style lang="scss" scoped>
 @import '@design';
 
-.course-details {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
 header {
   display: flex;
   align-items: center;
@@ -133,6 +127,7 @@ header {
   align-self: stretch;
   border-radius: 6px;
   border-left: 8px solid;
+  margin-bottom: 1.5rem;
 }
 
 .back-button {
@@ -193,6 +188,9 @@ ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem
 }
 </style>
 
