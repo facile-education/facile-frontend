@@ -93,7 +93,7 @@
     </div>
 
     <section
-      v-if="session.privateNotes"
+      v-if="canEdit"
       class="notes"
     >
       <h3 v-t="'notes'" />
