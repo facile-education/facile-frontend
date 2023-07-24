@@ -28,6 +28,7 @@
           :sort="false"
           display-field="fullName"
           class="child-selector"
+          @update:model-value="unselectCourse"
         />
       </div>
 
@@ -110,6 +111,9 @@ export default {
     }
   },
   methods: {
+    unselectCourse () {
+      this.$store.dispatch('course/setSelectedCourse', undefined)
+    }
   }
 }
 </script>

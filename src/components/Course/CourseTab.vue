@@ -1,11 +1,9 @@
 <template>
   <div class="course-tab">
-    <div
+    <PentilaSpinner
       v-if="isLoading"
-      class="placeholder"
-    >
-      <PentilaSpinner />
-    </div>
+      style="z-index: 1"
+    />
     <div
       v-if="error === true"
       v-t="'errorPlaceholder'"
@@ -62,24 +60,32 @@ export default {
       return this.$store.state.course.selectedCourse
     }
   },
+  watch: {
+    userId () {
+      this.getCourses()
+    }
+  },
   created () {
-    this.isLoading = true
-    getCourses(this.userId).then((data) => {
-      this.isLoading = false
-      if (data.success) {
-        this.error = false
-        this.courses = data.courses
-      } else {
-        this.error = true
-        console.error('Cannot retrieve courses')
-      }
-    }, (err) => {
-      this.isLoading = false
-      this.error = true
-      console.error(err)
-    })
+    this.getCourses()
   },
   methods: {
+    getCourses () {
+      this.isLoading = true
+      getCourses(this.userId).then((data) => {
+        this.isLoading = false
+        if (data.success) {
+          this.error = false
+          this.courses = data.courses
+        } else {
+          this.error = true
+          console.error('Cannot retrieve courses')
+        }
+      }, (err) => {
+        this.isLoading = false
+        this.error = true
+        console.error(err)
+      })
+    }
   }
 }
 </script>
@@ -103,6 +109,10 @@ ul {
   list-style-type: none;
   height: 100%; // todo: find the good value
   overflow: auto;
+}
+
+.course-tab {
+  position: relative;
 }
 </style>
 
