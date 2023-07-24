@@ -1,7 +1,7 @@
 <template>
-  <ul v-if="session.blocks && session.blocks.length > 0">
+  <ul v-if="sessionContent.blocks && sessionContent.blocks.length > 0">
     <li
-      v-for="content in session.blocks"
+      v-for="content in sessionContent.blocks"
       :key="content"
     >
       <Content
@@ -27,7 +27,7 @@ export default {
   },
   inject: ['mq'],
   props: {
-    session: {
+    sessionContent: {
       type: Object,
       required: true
     }

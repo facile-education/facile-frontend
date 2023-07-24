@@ -44,7 +44,7 @@ export const mutations = {
     state.isCreateSessionModalDisplayed = payload
   },
   updateContent (state, payload) {
-    state.selectedSession = { ...state.selectedSession, ...payload }
+    state.selectedSession.sessionContent = payload
   },
   updateDetails (state, payload) {
     state.selectedSession = { ...state.selectedSession, ...payload }
@@ -104,10 +104,7 @@ export const actions = {
         session = {
           ...session,
           ...detailsData.sessionDetails,
-          blocks: contentData.blocks,
-          title: contentData.title,
-          isDraft: contentData.isDraft,
-          publicationDate: contentData.publicationDate
+          sessionContent: contentData
         }
         commit('setSelectedSession', session)
       }
