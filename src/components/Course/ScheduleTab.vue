@@ -11,6 +11,7 @@
 
     <SessionDetails
       v-if="!mq.phone"
+      :session="selectedSession"
       class="session-infos"
     />
 
@@ -22,7 +23,10 @@
       @close="closeSessionInfoModal"
     >
       <template #body>
-        <SessionDetails class="session-infos" />
+        <SessionDetails
+          class="session-infos"
+          :session="selectedSession"
+        />
       </template>
     </PentilaWindow>
   </div>
@@ -43,6 +47,11 @@ export default {
   data () {
     return {
       isSessionInfoModalDisplayed: false
+    }
+  },
+  computed: {
+    selectedSession () {
+      return this.$store.state.course.selectedSession
     }
   },
   created () {

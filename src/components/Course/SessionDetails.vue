@@ -147,6 +147,12 @@ export default {
     SessionContent
   },
   inject: ['mq'],
+  props: {
+    session: {
+      type: Object,
+      required: true
+    }
+  },
   data () {
     return {
       isHomeworkModalDisplayed: false,
@@ -187,9 +193,6 @@ export default {
           this.saveNotes(value)
         }
       }
-    },
-    session () {
-      return this.$store.state.course.selectedSession
     }
   },
   created () {

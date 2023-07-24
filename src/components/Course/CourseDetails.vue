@@ -20,13 +20,38 @@
       </div>
     </div>
   </header>
+
+  <div class="sessions">
+    <PentilaSpinner
+      v-if="isLoading"
+      style="z-index: 1"
+    />
+    <div
+      v-if="error === true"
+      v-t="'errorPlaceholder'"
+      class="placeholder"
+    />
+    <ul v-else>
+      <li
+        v-for="session in coursesSessions"
+        :key="session.sessionId"
+      >
+        <SessionDetails :session="session" />
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
+
+import { defineAsyncComponent } from 'vue'
+
 import { getCourseContent } from '@/api/course.service'
+const SessionDetails = defineAsyncComponent(() => import('@components/Course/SessionDetails.vue'))
 
 export default {
   name: 'CourseDetails',
+  components: { SessionDetails },
   props: {
     course: {
       type: Object,
@@ -35,7 +60,9 @@ export default {
   },
   data () {
     return {
-      coursesSessions: undefined
+      coursesSessions: undefined,
+      isLoading: false,
+      error: false
     }
   },
   computed: {
@@ -55,13 +82,20 @@ export default {
       this.$store.dispatch('course/setSelectedCourse', undefined)
     },
     getCourseSessions () {
+      this.isLoading = true
       getCourseContent(this.course.courseId).then((data) => {
+        this.isLoading = false
         if (data.success) {
+          this.error = false
           this.coursesSessions = data.sessions
         } else {
-          console.error('Error')
-          // TODO: handle loading and error states
+          this.error = true
+          console.error('Error when getting sessions')
         }
+      }, (err) => {
+        this.isLoading = false
+        this.error = err
+        console.error(err)
       })
     }
   }
@@ -125,11 +159,26 @@ h2 {
     line-height: 1.5rem;
   }
 }
+
+.sessions {
+  position: relative;
+}
+
+.placeholder {
+  @extend %content-placeholder;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
 </style>
 
 <i18n locale="fr">
 {
+  "andOthers": "et {nbRemaining} autres",
   "back": "Revenir aux cours",
-  "andOthers": "et {nbRemaining} autres"
+  "errorPlaceholder": "Oups, une erreur est survenue..."
 }
 </i18n>
