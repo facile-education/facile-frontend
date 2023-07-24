@@ -33,7 +33,7 @@
         class="placeholder"
       />
       <div
-        v-else-if="coursesSessions.length === 0"
+        v-else-if="coursesSessions && coursesSessions.length === 0"
         v-t="'emptyCoursePlaceholder'"
         class="placeholder"
       />
