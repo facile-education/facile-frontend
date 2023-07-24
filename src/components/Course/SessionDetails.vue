@@ -91,7 +91,10 @@
       </section>
     </div>
 
-    <section class="notes">
+    <section
+      v-if="session.privateNotes"
+      class="notes"
+    >
       <h3 v-t="'notes'" />
       <TextContent
         v-model:content="notes"
