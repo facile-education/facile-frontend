@@ -219,11 +219,6 @@ export default {
       }
     }
   },
-  created () {
-    if (this.$store.state.documentsProperties === undefined) {
-      this.$store.dispatch('documents/getGlobalDocumentsProperties')
-    }
-  },
   methods: {
     openCourseEditModal () {
       this.isModalDisplayed = true

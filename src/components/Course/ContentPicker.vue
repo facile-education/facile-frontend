@@ -1,5 +1,8 @@
 <template>
-  <div class="add-content-buttons">
+  <div
+    v-if="documentsProperties"
+    class="add-content-buttons"
+  >
     <PentilaButton
       v-for="content in contents"
       :key="content.name"
@@ -130,6 +133,16 @@ export default {
       isFilePickerDisplayed: false,
       isH5PModalDisplayed: false,
       isVideoModalDisplayed: false
+    }
+  },
+  computed: {
+    documentsProperties () {
+      return this.$store.state.documents.documentsProperties
+    }
+  },
+  created () {
+    if (this.documentsProperties === undefined) {
+      this.$store.dispatch('documents/getGlobalDocumentsProperties')
     }
   },
   methods: {
