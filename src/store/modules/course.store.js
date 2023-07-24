@@ -118,7 +118,6 @@ export const actions = {
     })
   },
   setSelectedCourse ({ commit }, course) {
-    console.log('set ', course)
     commit('setSelectedCourse', course)
   },
   unselectSession ({ commit }) {
