@@ -30,13 +30,13 @@
           />
           <h3>{{ courseTitle }}</h3>
           <CreateButton
-            v-if="!hasContent"
+            v-if="canEdit && !hasContent"
             :aria-label="$t('add')"
             :title="$t('add')"
             @click="openCourseEditModal"
           />
           <div
-            v-else
+            v-else-if="canEdit"
             class="right"
           >
             <span class="status">{{ formattedStatus }}</span>
@@ -67,6 +67,7 @@
           />
           <h3 v-t="'workToDo'" />
           <CreateButton
+            v-if="canEdit"
             :aria-label="$t('add')"
             :title="$t('add')"
             @click="openHomeworkEditModal"
@@ -182,6 +183,9 @@ export default {
     }
   },
   computed: {
+    canEdit () {
+      return this.$store.state.user.isTeacher
+    },
     formattedStatus () {
       if (this.session.sessionContent.isDraft) {
         return this.$t('draftStatus')

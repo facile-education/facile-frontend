@@ -19,6 +19,7 @@
       <div class="right">
         <span class="status">{{ formattedStatus }}</span>
         <button
+          v-if="canEdit"
           class="edit-button"
           :aria-label="$t('options')"
           :title="$t('options')"
@@ -86,6 +87,9 @@ export default {
     }
   },
   computed: {
+    canEdit () {
+      return this.$store.state.user.isTeacher
+    },
     formattedStatus () {
       if (this.homework.isDraft) {
         return this.$t('draftStatus')
