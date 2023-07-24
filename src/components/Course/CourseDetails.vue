@@ -32,6 +32,11 @@
         v-t="'errorPlaceholder'"
         class="placeholder"
       />
+      <div
+        v-else-if="coursesSessions.length === 0"
+        v-t="'emptyCoursePlaceholder'"
+        class="placeholder"
+      />
       <ul v-else>
         <li
           v-for="session in coursesSessions"
@@ -173,6 +178,7 @@ h1 {
 
 .sessions {
   position: relative;
+  min-height: 200px;
 }
 
 .placeholder {
@@ -190,6 +196,7 @@ ul {
 {
   "andOthers": "et {nbRemaining} autres",
   "back": "Revenir aux cours",
+  "emptyCoursePlaceholder": "Aucun contenu à afficher pour ce cours",
   "errorPlaceholder": "Oups, une erreur est survenue..."
 }
 </i18n>
