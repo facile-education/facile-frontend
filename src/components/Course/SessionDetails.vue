@@ -162,8 +162,8 @@ export default {
   inject: ['mq'],
   props: {
     session: {
-      type: Object,
-      required: true
+      type: [Object, undefined],
+      default: undefined
     },
     isInList: {
       type: Boolean,
