@@ -2,11 +2,21 @@
   <article
     v-if="session"
     class="session-infos"
+    :class="{'list': isInList}"
   >
-    <div style="display: flex; flex-direction: column; gap: 2rem;">
+    <div class="first-flex-section">
       <!-- Set 24 to color opacity <=> to add a white background with DD as opacity (FF - DD = 24) -->
-      <header :style="`background-color: ${session.color}24; border-color: ${session.color};`">
-        <div>
+      <header
+        :class="{'list-header': isInList}"
+        :style="isInList ? '' : `background-color: ${session.color}24; border-color: ${session.color};`"
+      >
+        <h2 v-if="isInList">
+          {{ listDateLabel }}
+        </h2>
+        <div
+          v-else
+          class="label"
+        >
           <label>{{ session.subject }} - {{ session.groupName }}</label>
           <label class="date-label">{{ dateLabel }} P* or room ?</label>
         </div>
@@ -151,6 +161,10 @@ export default {
     session: {
       type: Object,
       required: true
+    },
+    isInList: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -177,6 +191,9 @@ export default {
     },
     dateLabel () {
       return dayjs(this.session.startDate, 'YYYY-MM-DD HH:mm').format('ddd DD/MM')
+    },
+    listDateLabel () {
+      return this.$t('sessionOf') + dayjs(this.session.startDate, 'YYYY-MM-DD HH:mm').format('DD MMMM')
     },
     eventList () {
       return this.$store.state.course.sessionList
@@ -287,6 +304,23 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 70px;
+
+  .first-flex-section {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  &.list {
+    .session-content, .homeworks, .notes {
+      margin-left: 1.5rem;
+    }
+
+    .first-flex-section {
+       gap: 1rem;
+    }
+  }
+
 }
 
 .select-session-placeholder {
@@ -304,11 +338,25 @@ header {
   border-radius: 0.375rem;
   border-left: 8px solid;
 
-  div {
+  label {
     display: flex;
     flex-direction: column;
 
     @extend %font-heading-xs;
+  }
+
+  &.list-header {
+    width: 100%;
+    padding: 0 0 8px 0;
+    display: block;
+    border-radius: 0;
+    border-bottom: 1px solid $neutral-40;
+    border-left: 0;
+
+    h2 {
+      margin: 0;
+      @extend %font-bold-l;
+    }
   }
 }
 
@@ -384,6 +432,7 @@ header {
   "givenHomeworkHeader": "Pour une prochaine date",
   "sessionHomeworkPlaceholder": "Aucun travail à faire",
   "sessionHomeworkHeader": "Pendant la séance",
+  "sessionOf": "Session du ",
   "courseContent": "SUPPORTS DE COURS",
   "notes": "Note privée",
   "notesPlaceholder": "Ma note privée",

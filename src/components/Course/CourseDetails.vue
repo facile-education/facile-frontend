@@ -1,45 +1,50 @@
 <template>
-  <header :style="`background-color: ${course.color}24; border-color: ${course.color};`">
-    <button
-      class="back-button"
-      @click="unselectCourse"
-    >
-      <img
-        src="@/assets/icons/chevron-right.svg"
-        alt=""
+  <article class="course-details">
+    <header :style="`background-color: ${course.color}24; border-color: ${course.color};`">
+      <button
+        class="back-button"
+        @click="unselectCourse"
       >
-      <span v-t="'back'" />
-    </button>
-    <h2>{{ course.groupName + ' - ' + course.subject }}</h2>
-    <div class="teachers">
-      <div>
-        {{ course.teachers[0].firstName + ' ' + course.teachers[0].lastName }}
+        <img
+          src="@/assets/icons/chevron-right.svg"
+          alt=""
+        >
+        <span v-t="'back'" />
+      </button>
+      <h1>{{ course.groupName + ' - ' + course.subject }}</h1>
+      <div class="teachers">
+        <div>
+          {{ course.teachers[0].firstName + ' ' + course.teachers[0].lastName }}
+        </div>
+        <div v-if="course.teachers.length > 1">
+          {{ formattedRemainingTeachers }}
+        </div>
       </div>
-      <div v-if="course.teachers.length > 1">
-        {{ formattedRemainingTeachers }}
-      </div>
-    </div>
-  </header>
+    </header>
 
-  <div class="sessions">
-    <PentilaSpinner
-      v-if="isLoading"
-      style="z-index: 1"
-    />
-    <div
-      v-if="error === true"
-      v-t="'errorPlaceholder'"
-      class="placeholder"
-    />
-    <ul v-else>
-      <li
-        v-for="session in coursesSessions"
-        :key="session.sessionId"
-      >
-        <SessionDetails :session="session" />
-      </li>
-    </ul>
-  </div>
+    <div class="sessions">
+      <PentilaSpinner
+        v-if="isLoading"
+        style="z-index: 1"
+      />
+      <div
+        v-if="error === true"
+        v-t="'errorPlaceholder'"
+        class="placeholder"
+      />
+      <ul v-else>
+        <li
+          v-for="session in coursesSessions"
+          :key="session.sessionId"
+        >
+          <SessionDetails
+            :session="session"
+            :is-in-list="true"
+          />
+        </li>
+      </ul>
+    </div>
+  </article>
 </template>
 
 <script>
@@ -105,6 +110,12 @@ export default {
 <style lang="scss" scoped>
 @import '@design';
 
+.course-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
 header {
   display: flex;
   align-items: center;
@@ -148,7 +159,7 @@ header {
   }
 }
 
-h2 {
+h1 {
   margin: 0;
   @extend %font-heading-xs;
 }
