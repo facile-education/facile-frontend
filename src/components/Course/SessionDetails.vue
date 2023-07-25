@@ -18,7 +18,7 @@
           class="label"
         >
           <label>{{ session.subject }} - {{ session.groupName }}</label>
-          <label class="date-label">{{ dateLabel }} P* or room ?</label>
+          <label class="date-label">{{ dateLabel }}</label>
         </div>
       </header>
 
