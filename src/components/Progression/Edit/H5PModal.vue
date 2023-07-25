@@ -3,12 +3,16 @@
     :modal="true"
     class="h5pWindow"
     :width="600"
-    :class="{'mobile': mq.phone}"
+    :class="{'mobile': mq.phone, 'readOnly': readOnly}"
+    :full-screen="readOnly"
     @close="closeModal"
   >
     <template #header>
+      <span v-if="readOnly">
+        {{ editedContent.contentName }}
+      </span>
       <span
-        v-if="isCreation"
+        v-else-if="isCreation"
         v-t="'creation-title'"
       />
       <span
@@ -18,7 +22,10 @@
     </template>
 
     <template #body>
-      <div class="content-name">
+      <div
+        v-if="!readOnly"
+        class="content-name"
+      >
         <PentilaInput
           ref="nameInput"
           v-model="contentName"
@@ -31,7 +38,10 @@
         />
       </div>
 
-      <div class="content-url">
+      <div
+        v-if="!readOnly"
+        class="content-url"
+      >
         <PentilaInput
           v-model="contentValue"
           :maxlength="2000"
@@ -44,6 +54,7 @@
       </div>
 
       <a
+        v-if="!readOnly"
         v-t="'h5pUrl'"
         href="https://h5p.eduge.ch/mes-ressources-h5p"
         target="_blank"
@@ -56,7 +67,10 @@
       />
     </template>
 
-    <template #footer>
+    <template
+      v-if="!readOnly"
+      #footer
+    >
       <PentilaButton
         v-if="isCreation"
         :label="$t('add')"
@@ -89,6 +103,10 @@ export default {
     editedContent: {
       type: Object,
       required: true
+    },
+    readOnly: {
+      type: Boolean,
+      default: false
     }
   },
   emits: ['close', 'save'],
@@ -141,9 +159,11 @@ export default {
     }
 
     // Focus form
-    const input = this.$refs.nameInput
-    input.focus()
-    input.select()
+    if (!this.readOnly) {
+      const input = this.$refs.nameInput
+      input.focus()
+      input.select()
+    }
   },
   methods: {
     closeModal () {
@@ -220,6 +240,14 @@ export default {
     border: none;
     width: 100%;
     height: 300px
+  }
+
+  &.readOnly {
+    .h5p-preview {
+      border: none;
+      width: 100%;
+      height: 100%
+    }
   }
 }
 </style>
