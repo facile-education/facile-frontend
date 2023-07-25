@@ -12,6 +12,9 @@
   <div
     v-else
     class="wrapper"
+    tabindex="0"
+    @click="clickOnContent"
+    @keyup.enter="clickOnContent"
   >
     <div class="thumbnail">
       <img
@@ -121,8 +124,41 @@ export default {
     }
   },
   methods: {
+    clickOnContent () {
+      switch (this.content.contentType) {
+        case contentTypeConstants.TYPE_AUDIO_CONTENT:
+          this.openAudioModal()
+          break
+        case contentTypeConstants.TYPE_LINK_CONTENT:
+          this.openLink()
+          break
+        case contentTypeConstants.TYPE_VIDEO_CONTENT:
+          this.openVideoModal()
+          break
+        case contentTypeConstants.TYPE_FILE_CONTENT:
+          this.displayFile()
+          break
+        case contentTypeConstants.TYPE_H5P_CONTENT:
+          this.openH5PModal()
+          break
+        default:
+          return ''
+      }
+    },
+    openAudioModal () {
+      console.log(this.content)
+    },
+    openLink () {
+      window.open(this.content.contentValue, '_blank')
+    },
+    openVideoModal () {
+      console.log(this.content)
+    },
     displayFile () {
-      this.$store.dispatch('documents/openFile', { id: this.fileId, name: this.fileName })
+      this.$store.dispatch('documents/openFile', { id: this.content.fileId, name: this.content.fileName })
+    },
+    openH5PModal () {
+      console.log(this.content)
     },
     blur () {
       if (!this.content.placeholder && this.modelValue === '') {
@@ -179,6 +215,7 @@ export default {
   border-radius: 0.375rem;
   border: 1px solid $neutral-40;
   background: $neutral-10;
+  cursor: pointer;
 }
 
 .thumbnail {
