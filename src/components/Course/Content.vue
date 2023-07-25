@@ -64,21 +64,30 @@
         :read-only="true"
         @close="videoModalDisplayed=false"
       />
+      <H5PModal
+        v-if="h5pModalDisplayed"
+        :edited-content="content"
+        :read-only="true"
+        @close="h5pModalDisplayed=false"
+      />
     </teleport>
   </div>
 </template>
 
 <script>
 import TextContent from '@components/Progression/Edit/Contents/TextContent.vue'
-import VideoModal from '@components/Progression/Edit/VideoModal.vue'
+import { defineAsyncComponent } from 'vue'
 
 import contentTypeConstants from '@/constants/contentTypeConstants'
 import { icons } from '@/constants/icons'
 import { getExtensionFromName } from '@/utils/commons.util'
+const H5PModal = defineAsyncComponent(() => import('@/components/Progression/Edit/H5PModal'))
+const VideoModal = defineAsyncComponent(() => import('@/components/Progression/Edit/VideoModal'))
 
 export default {
   name: 'Content',
   components: {
+    H5PModal,
     VideoModal,
     TextContent
   },
@@ -99,7 +108,8 @@ export default {
   emits: ['update:modelValue', 'delete'],
   data () {
     return {
-      videoModalDisplayed: false
+      videoModalDisplayed: false,
+      h5pModalDisplayed: false
     }
   },
   computed: {
@@ -143,38 +153,25 @@ export default {
     clickOnContent () {
       switch (this.content.contentType) {
         case contentTypeConstants.TYPE_AUDIO_CONTENT:
-          this.openAudioModal()
+          // TODO: Test audioFile opening
+          this.$store.dispatch('documents/openFile', { id: this.content.fileId, name: this.content.fileName })
           break
         case contentTypeConstants.TYPE_LINK_CONTENT:
-          this.openLink()
+          window.open(this.content.contentValue, '_blank')
           break
         case contentTypeConstants.TYPE_VIDEO_CONTENT:
-          this.openVideoModal()
+          this.videoModalDisplayed = true
           break
         case contentTypeConstants.TYPE_FILE_CONTENT:
-          this.displayFile()
+          this.$store.dispatch('documents/openFile', { id: this.content.fileId, name: this.content.fileName })
           break
         case contentTypeConstants.TYPE_H5P_CONTENT:
-          this.openH5PModal()
+          // TODO: Test with real whitelisted h5p content
+          this.h5pModalDisplayed = true
           break
         default:
           return ''
       }
-    },
-    openAudioModal () {
-      console.log(this.content)
-    },
-    openLink () {
-      window.open(this.content.contentValue, '_blank')
-    },
-    openVideoModal () {
-      this.videoModalDisplayed = true
-    },
-    displayFile () {
-      this.$store.dispatch('documents/openFile', { id: this.content.fileId, name: this.content.fileName })
-    },
-    openH5PModal () {
-      console.log(this.content)
     },
     blur () {
       if (!this.content.placeholder && this.modelValue === '') {
