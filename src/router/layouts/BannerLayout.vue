@@ -50,12 +50,6 @@
       <UploadProgression />
     </div>
 
-    <SessionEndAdvertising
-      v-if="isSessionWarningDisplayed"
-      :remaining-milliseconds="remainingSessionMilliseconds"
-      @close="isSessionWarningDisplayed=false"
-    />
-
     <CookiesAgreement
       v-if="!hasConfirmCookiesAgreement && !cookiesMustBeClosed"
       @close="cookiesMustBeClosed=true"
@@ -91,6 +85,16 @@
       <WarningModal
         v-if="isWarningModalDisplayed"
         win-width="500px"
+      />
+    </teleport>
+
+    <teleport
+      v-if="isSessionWarningDisplayed"
+      to="body"
+    >
+      <SessionEndAdvertising
+        :remaining-milliseconds="remainingSessionMilliseconds"
+        @close="isSessionWarningDisplayed=false"
       />
     </teleport>
   </div>
