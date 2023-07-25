@@ -22,7 +22,10 @@
         </div>
       </header>
 
-      <section class="session-content">
+      <section
+        v-if="session.sessionContent || canEdit"
+        class="session-content"
+      >
         <div class="content-title">
           <CustomIcon
             icon-name="icon-seance"
@@ -59,7 +62,10 @@
         <SessionContent :session-content="session.sessionContent" />
       </section>
 
-      <section class="homeworks">
+      <section
+        v-if="hasHomeworks || canEdit"
+        class="homeworks"
+      >
         <div class="content-title">
           <CustomIcon
             icon-name="icon-devoirs"
@@ -75,16 +81,19 @@
         </div>
 
         <HomeworkList
+          v-if="session.toDoHomeworks.length > 0 || canEdit"
           :header="$t('toDoHomeworkHeader')"
           :placeholder="$t('toDoHomeworkPlaceholder')"
           :homework-list="session.toDoHomeworks"
         />
         <HomeworkList
+          v-if="session.sessionHomeworks.length > 0 || canEdit"
           :header="$t('sessionHomeworkHeader')"
           :placeholder="$t('sessionHomeworkPlaceholder')"
           :homework-list="session.sessionHomeworks"
         />
         <HomeworkList
+          v-if="session.givenHomeworks.length > 0 || canEdit"
           :header="$t('givenHomeworkHeader')"
           :placeholder="$t('givenHomeworkPlaceholder')"
           :homework-list="session.givenHomeworks"
@@ -194,7 +203,7 @@ export default {
       }
     },
     courseTitle () {
-      return this.session.sessionContent.title ? this.session.sessionContent.title : this.$t('courseContent')
+      return (this.session.sessionContent && this.session.sessionContent.title) ? this.session.sessionContent.title : this.$t('courseContent')
     },
     dateLabel () {
       return dayjs(this.session.startDate, 'YYYY-MM-DD HH:mm').format('ddd DD/MM')
@@ -207,6 +216,9 @@ export default {
     },
     hasContent () {
       return (this.session.sessionContent.title !== undefined || (this.session.sessionContent.blocks !== undefined && this.session.sessionContent.blocks.length > 0))
+    },
+    hasHomeworks () {
+      return this.session.toDoHomeworks.length + this.session.sessionHomeworks.length + this.session.givenHomeworks.length > 0
     },
     notes: {
       get () {
