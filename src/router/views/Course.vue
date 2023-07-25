@@ -139,8 +139,8 @@ export default {
 {
   "course": "Cours",
   "serviceTitle": "Cours & Devoirs",
-  "schedule": "Horaires",
-  "homework": "Travaux à faire",
+  "schedule": "Séances",
+  "homework": "À faire",
   "toCorrect": "À corriger"
 }
 </i18n>
