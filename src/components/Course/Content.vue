@@ -56,11 +56,21 @@
         alt="options"
       >
     </button>
+
+    <teleport to="body">
+      <VideoModal
+        v-if="videoModalDisplayed"
+        :edited-content="content"
+        :read-only="true"
+        @close="videoModalDisplayed=false"
+      />
+    </teleport>
   </div>
 </template>
 
 <script>
 import TextContent from '@components/Progression/Edit/Contents/TextContent.vue'
+import VideoModal from '@components/Progression/Edit/VideoModal.vue'
 
 import contentTypeConstants from '@/constants/contentTypeConstants'
 import { icons } from '@/constants/icons'
@@ -69,6 +79,7 @@ import { getExtensionFromName } from '@/utils/commons.util'
 export default {
   name: 'Content',
   components: {
+    VideoModal,
     TextContent
   },
   props: {
@@ -86,6 +97,11 @@ export default {
     }
   },
   emits: ['update:modelValue', 'delete'],
+  data () {
+    return {
+      videoModalDisplayed: false
+    }
+  },
   computed: {
     icon () {
       return new URL(`../../assets/icons/contents/${this.typeLabel}.svg`, import.meta.url).href
@@ -152,7 +168,7 @@ export default {
       window.open(this.content.contentValue, '_blank')
     },
     openVideoModal () {
-      console.log(this.content)
+      this.videoModalDisplayed = true
     },
     displayFile () {
       this.$store.dispatch('documents/openFile', { id: this.content.fileId, name: this.content.fileName })
