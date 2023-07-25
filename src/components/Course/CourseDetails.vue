@@ -1,6 +1,9 @@
 <template>
   <article class="course-details">
-    <header :style="`background-color: ${course.color}24; border-color: ${course.color};`">
+    <header
+      :class="{'phone': mq.phone}"
+      :style="`background-color: ${course.color}24; border-color: ${course.color};`"
+    >
       <button
         class="back-button"
         @click="unselectCourse"
@@ -63,6 +66,7 @@ const SessionDetails = defineAsyncComponent(() => import('@components/Course/Ses
 export default {
   name: 'CourseDetails',
   components: { SessionDetails },
+  inject: ['mq'],
   props: {
     course: {
       type: Object,
@@ -128,6 +132,11 @@ header {
   border-radius: 6px;
   border-left: 8px solid;
   margin-bottom: 1.5rem;
+
+  &.phone {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 .back-button {
