@@ -3,12 +3,16 @@
     :modal="true"
     class="videoWindow"
     :width="600"
-    :class="{'mobile': mq.phone}"
+    :class="{'mobile': mq.phone, 'readOnly': readOnly}"
+    :full-screen="readOnly"
     @close="closeModal"
   >
     <template #header>
+      <span v-if="readOnly">
+        {{ editedContent.contentName }}
+      </span>
       <span
-        v-if="isCreation"
+        v-else-if="isCreation"
         v-t="'creation-title'"
       />
       <span
@@ -18,7 +22,10 @@
     </template>
 
     <template #body>
-      <div class="video-name">
+      <div
+        v-if="!readOnly"
+        class="video-name"
+      >
         <PentilaInput
           ref="nameInput"
           v-model="videoName"
@@ -30,7 +37,10 @@
           :error-message="formErrorList.videoName"
         />
       </div>
-      <div class="video-url">
+      <div
+        v-if="!readOnly"
+        class="video-url"
+      >
         <PentilaInput
           v-model="contentValue"
           :placeholder="$t('urlPlaceholder')"
@@ -50,7 +60,10 @@
       />
     </template>
 
-    <template #footer>
+    <template
+      v-if="!readOnly"
+      #footer
+    >
       <PentilaButton
         v-if="isCreation"
         :label="$t('add')"
@@ -82,6 +95,10 @@ export default {
     editedContent: {
       type: Object,
       required: true
+    },
+    readOnly: {
+      type: Boolean,
+      default: false
     }
   },
   emits: ['close', 'save'],
@@ -134,9 +151,11 @@ export default {
     }
 
     // Focus form
-    const input = this.$refs.nameInput
-    input.focus()
-    input.select()
+    if (!this.readOnly) {
+      const input = this.$refs.nameInput
+      input.focus()
+      input.select()
+    }
   },
   methods: {
     closeModal () {
@@ -212,6 +231,14 @@ export default {
     width: 100%;
     height: 300px
   }
+
+  &.readOnly {
+    .video-preview {
+      border: none;
+      width: 100%;
+      height: 100%
+    }
+  }
 }
 
 .footer {
@@ -234,6 +261,6 @@ export default {
   "UnauthorizedUrlException": "Ce nom de domaine n'est pas autorisé pour ce type de contenu",
   "urlPlaceholder": "Coller ici le code d'intégration de la vidéo",
   "srcRequired": "Le contenu embarqué doit comprendre un attribut \"src\" non vide",
-  "embedElementCheckFailed": "Ce type de contenu n'est pas un contenu embarqué valide",
+  "embedElementCheckFailed": "Ce type de contenu n'est pas un contenu embarqué valide"
 }
 </i18n>
