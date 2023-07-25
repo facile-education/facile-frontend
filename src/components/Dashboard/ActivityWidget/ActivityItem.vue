@@ -140,6 +140,6 @@ export default {
 
 <i18n locale="fr">
   {
-    "unknown-activity": "Activité inconnue",
+    "unknown-activity": "Activité inconnue"
   }
   </i18n>
