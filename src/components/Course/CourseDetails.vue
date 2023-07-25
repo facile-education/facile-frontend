@@ -37,7 +37,7 @@
         v-t="'emptyCoursePlaceholder'"
         class="placeholder"
       />
-      <ul v-else>
+      <ul v-else-if="coursesSessions">
         <li
           v-for="session in sortedCourseSessions"
           :key="session.sessionId"
