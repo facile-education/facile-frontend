@@ -1,13 +1,12 @@
 <template>
   <div class="main">
-    TODO Remettre un devoir
-    Components : tab notif + checkbox background
     <div class="toolbar">
       <h3 class="title">
         {{ $t('thisWeek') }}
         <a
           v-t="{ path: 'works', args: { count: nbHomeworks } }"
           href="#"
+          class="theme-text-color"
           @click="loadCurrentWeek()"
         />
       </h3>
@@ -39,6 +38,7 @@
       <a
         v-t="{ path: 'works', args: { count: nbNextHomeworks } }"
         href="#"
+        class="theme-text-color"
         @click="loadNextWeek()"
       />
     </h3>
@@ -47,6 +47,7 @@
       <a
         v-t="{ path: 'works', args: { count: nbLaterHomeworks } }"
         href="#"
+        class="theme-text-color"
         @click="loadLaterHomeworks()"
       />
     </h3>
@@ -159,7 +160,14 @@ export default {
 }
 
 .title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   @extend %font-heading-xs;
+
+  a {
+    @extend %font-regular-s;
+  }
 }
 
 .homeworks {
@@ -185,6 +193,6 @@ export default {
   "nextWeek": "La semaine prochaine :",
   "noHomeworks": "Aucun travail à faire",
   "thisWeek": "Cette semaine :",
-  "works": "Aucun travail | {count} Travail | {count} Travaux"
+  "works": "Aucun nouveau travail | {count} Travail | {count} Travaux"
 }
 </i18n>
