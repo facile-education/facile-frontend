@@ -48,9 +48,9 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
-.pellet{
+.pellet {
   height: 0.75em;
   width: 0.75em;
   border-radius: 50%;
