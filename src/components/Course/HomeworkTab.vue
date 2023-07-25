@@ -62,6 +62,12 @@ import { getStudentHomeworks, getStudentUndoneCount } from '@/api/homework.servi
 export default {
   name: 'HomeworkTab',
   components: { StudentHomework },
+  props: {
+    userId: {
+      type: Number,
+      required: true
+    }
+  },
   data () {
     return {
       nbHomeworks: 0,
@@ -87,28 +93,24 @@ export default {
       })
 
       return homeworksByDay
-    },
-    studentId () {
-      // TODO if parent
-      return this.$store.state.user.userId
     }
   },
   created () {
     this.loadCurrentWeek()
 
-    getStudentUndoneCount(this.studentId, dayjs().format('YYYY-MM-DD HH:mm'), dayjs().day(6).format('YYYY-MM-DD HH:mm')).then((data) => {
+    getStudentUndoneCount(this.userId, dayjs().format('YYYY-MM-DD HH:mm'), dayjs().day(6).format('YYYY-MM-DD HH:mm')).then((data) => {
       if (data.success) {
         this.nbHomeworks = data.nbUndoneHomeworks
       }
     })
 
-    getStudentUndoneCount(this.studentId, dayjs().day(0).add(7, 'day').format('YYYY-MM-DD HH:mm'), dayjs().day(6).add(7, 'day').format('YYYY-MM-DD HH:mm')).then((data) => {
+    getStudentUndoneCount(this.userId, dayjs().day(0).add(7, 'day').format('YYYY-MM-DD HH:mm'), dayjs().day(6).add(7, 'day').format('YYYY-MM-DD HH:mm')).then((data) => {
       if (data.success) {
         this.nbNextHomeworks = data.nbUndoneHomeworks
       }
     })
 
-    getStudentUndoneCount(this.studentId, dayjs().day(0).add(14, 'day').format('YYYY-MM-DD HH:mm'), dayjs().day(6).add(50, 'day').format('YYYY-MM-DD HH:mm')).then((data) => {
+    getStudentUndoneCount(this.userId, dayjs().day(0).add(14, 'day').format('YYYY-MM-DD HH:mm'), dayjs().day(6).add(50, 'day').format('YYYY-MM-DD HH:mm')).then((data) => {
       if (data.success) {
         this.nbLaterHomeworks = data.nbUndoneHomeworks
       }

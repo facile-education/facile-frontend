@@ -36,7 +36,7 @@
         <PentilaTabItem
           :title="$t('homework') + ' ' + nbUndoneHomeworks"
         >
-          <HomeworkTab />
+          <HomeworkTab :user-id="selectedUser.userId" />
         </PentilaTabItem>
         <PentilaTabItem
           :title="$t('course')"
