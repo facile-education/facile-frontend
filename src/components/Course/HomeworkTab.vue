@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <div class="toolbar">
-      <h3 class="title">
+      <h2 class="title">
         {{ $t('thisWeek') }}
         <a
           v-t="{ path: 'works', args: { count: nbHomeworks } }"
@@ -9,7 +9,7 @@
           class="theme-text-color"
           @click="loadCurrentWeek()"
         />
-      </h3>
+      </h2>
     </div>
     <div
       v-if="homeworks && homeworks.length === 0"
@@ -33,7 +33,7 @@
         />
       </template>
     </div>
-    <h3 class="title">
+    <h2 class="title">
       {{ $t('nextWeek') }}
       <a
         v-t="{ path: 'works', args: { count: nbNextHomeworks } }"
@@ -41,8 +41,8 @@
         class="theme-text-color"
         @click="loadNextWeek()"
       />
-    </h3>
-    <h3 class="title">
+    </h2>
+    <h2 class="title">
       {{ $t('later') }}
       <a
         v-t="{ path: 'works', args: { count: nbLaterHomeworks } }"
@@ -50,7 +50,7 @@
         class="theme-text-color"
         @click="loadLaterHomeworks()"
       />
-    </h3>
+    </h2>
   </div>
 </template>
 
