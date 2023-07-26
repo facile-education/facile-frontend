@@ -24,6 +24,7 @@
           :label="homework.isDone ? $t('done') : $t('todo')"
           :disabled="isPast"
           :right-display="true"
+          @update:model-value="$emit('change-done-status')"
         />
         <span class="date">{{ dateLabel }}</span>
       </div>
@@ -55,6 +56,7 @@ export default {
       required: true
     }
   },
+  emits: ['change-done-status'],
   computed: {
     dateLabel () {
       let label = this.$t('given', { date: this.givenDate.format('DD MMMM') })
