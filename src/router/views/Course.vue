@@ -110,6 +110,23 @@ export default {
       this.selectedUser = this.$store.state.user
     }
   },
+  mounted () {
+    if (this.$route.params.sessionId) {
+      console.log('sessionId: ' + this.$route.params.sessionId)
+      if (this.isTeacher) {
+        // Select ScheduleTab and select the correct session
+      } else {
+        // Select courseTab and select the correct session
+      }
+    } else if (this.$route.params.homeworkId) {
+      console.log('homeworkId: ' + this.$route.params.homeworkId)
+      if (this.isTeacher) {
+        // Select ScheduleTab and select the correct session
+      } else {
+        // Select HomeworkTab and select the correct homework
+      }
+    }
+  },
   methods: {
     unselectCourse () {
       this.$store.dispatch('course/setSelectedCourse', undefined)
