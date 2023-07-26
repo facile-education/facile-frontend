@@ -1,5 +1,5 @@
 <template>
-  <div
+  <article
     class="homework"
     :style="`border-color: ${homework.color}; background-color: ${homework.color}22;`"
   >
@@ -8,21 +8,24 @@
       class="pellet"
     />
     <header>
-      <section class="left">
+      <div class="left">
         <span class="subject">{{ homework.subject }} · {{ homework.cours }} · {{ teacherName }}</span>
-        <span class="title">
-          {{ homework.title }}
-          <!-- <span class="tag">{{ homework.tag }}</span> -->
-        </span>
-      </section>
-      <section class="right">
+        <div class="title">
+          <h3>{{ homework.title }}</h3>
+          <span
+            v-if="homework.estimatedTime"
+            class="estimated-time"
+          > {{ formattedEstimatedTime }}</span>
+        </div>
+      </div>
+      <div class="right">
         <PentilaCheckbox
           v-model="isDone"
           :label="homework.isDone ? $t('done') : $t('todo')"
           :disabled="isPast"
         />
         <span class="date">{{ dateLabel }}</span>
-      </section>
+      </div>
     </header>
 
     <Content
@@ -31,7 +34,7 @@
       v-model="block.contentValue"
       :content="block"
     />
-  </div>
+  </article>
 </template>
 
 <script>
@@ -79,6 +82,15 @@ export default {
     },
     teacherName () {
       return this.homework.teacher !== undefined ? this.homework.teacher.firstName.substring(0, 1) + '. ' + this.homework.teacher.lastName : ''
+    },
+    formattedEstimatedTime () {
+      const nbMinutes = this.homework.estimatedTime
+      const nbHour = Math.floor(nbMinutes / 60)
+      if (nbHour > 0) {
+        return nbHour + this.$t('hourLabel') + nbMinutes % 60
+      } else {
+        return nbMinutes + ' ' + this.$t('minuteLabel')
+      }
     }
   },
   methods: {
@@ -137,6 +149,10 @@ header {
   gap: 0.5rem;
 
   @extend %font-bold-l;
+
+  h3 {
+    margin: 0;
+  }
 }
 
 .tag {
@@ -151,6 +167,11 @@ header {
   color: $neutral-80;
 
   @extend %font-regular-xs;
+}
+
+.estimated-time {
+  @extend %font-regular-s;
+  color: $neutral-80;
 }
 
 .right {
@@ -170,9 +191,11 @@ header {
 
 <i18n locale="fr">
 {
-  done: "Fait",
-  given: "Donné le {date}",
-  modified: "modifié le {date}",
-  todo: "À faire"
+  "done": "Fait",
+  "given": "Donné le {date}",
+  "modified": "modifié le {date}",
+  "todo": "À faire",
+  "hourLabel": "h",
+  "minuteLabel": "minutes"
 }
 </i18n>
