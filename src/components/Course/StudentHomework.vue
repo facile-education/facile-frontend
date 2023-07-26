@@ -23,6 +23,7 @@
           v-model="isDone"
           :label="homework.isDone ? $t('done') : $t('todo')"
           :disabled="isPast"
+          :right-display="true"
         />
         <span class="date">{{ dateLabel }}</span>
       </div>
