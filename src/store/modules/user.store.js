@@ -169,8 +169,7 @@ export const actions = {
     userService.removeUserPicture().then(
       (data) => {
         if (data.success) {
-          // TODO get default img in a dynamic way
-          commit('updatePicture', '/image/user_male_portrait?img_id=3274117&t=1546588956172')
+          commit('updatePicture', data.imageUrl)
         }
       },
       (err) => {
