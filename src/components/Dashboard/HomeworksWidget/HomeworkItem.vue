@@ -145,6 +145,7 @@ button {
   border-left: 5px solid;
   border-radius: 3px;
   overflow: visible;
+  cursor: pointer;
 }
 
 .transparent-part {
