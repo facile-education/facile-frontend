@@ -32,7 +32,7 @@
         />
       </div>
 
-      <PentilaTabList>
+      <PentilaTabList ref="tabList">
         <PentilaTabItem
           :title="$t('homework')"
         >
@@ -69,7 +69,8 @@ export default {
   data () {
     return {
       selectedUser: undefined,
-      nbUndoneHomeworks: 0
+      nbUndoneHomeworks: 0,
+      initHomeworkId: undefined
     }
   },
   computed: {
@@ -111,23 +112,32 @@ export default {
     }
   },
   mounted () {
-    if (this.$route.params.sessionId) {
-      console.log('sessionId: ' + this.$route.params.sessionId)
+    if (this.$route.query.sessionId) {
       if (this.isTeacher) {
         // Select ScheduleTab and select the correct session
+        this.selectTab('sessions')
       } else {
         // Select courseTab and select the correct session
+        this.selectTab('courses')
       }
-    } else if (this.$route.params.homeworkId) {
-      console.log('homeworkId: ' + this.$route.params.homeworkId)
+    } else if (this.$route.query.homeworkId) {
       if (this.isTeacher) {
         // Select ScheduleTab and select the correct session
+        this.selectTab('sessions')
       } else {
         // Select HomeworkTab and select the correct homework
+        this.selectTab('todo')
       }
     }
   },
   methods: {
+    selectTab (tabName) {
+      if (tabName === 'todo' || tabName === 'sessions') {
+        this.$refs.tabList.selectTab(0)
+      } else if (tabName === 'courses') {
+        this.$refs.tabList.selectTab(1)
+      }
+    },
     unselectCourse () {
       this.$store.dispatch('course/setSelectedCourse', undefined)
     }

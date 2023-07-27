@@ -45,12 +45,12 @@ export default {
       nbNextWeekUndone: 0,
       nbLaterUndone: 0,
       currentWeekDates: {
-        minDate: dayjs().startOf('day').format('YYYY-MM-DD HH:mm'),
-        maxDate: dayjs().day(6).format('YYYY-MM-DD HH:mm')
+        minDate: dayjs().startOf('day'),
+        maxDate: dayjs().day(6)
       },
       nextWeekDates: {
-        minDate: dayjs().day(0).add(7, 'day').format('YYYY-MM-DD HH:mm'),
-        maxDate: dayjs().day(6).add(7, 'day').format('YYYY-MM-DD HH:mm')
+        minDate: dayjs().day(0).add(7, 'day'),
+        maxDate: dayjs().day(6).add(7, 'day')
       }
     }
   },
@@ -61,8 +61,8 @@ export default {
     laterDates () {
       const maxDate = this.schoolYearEndDate
       return {
-        minDate: dayjs().day(0).add(14, 'day').format('YYYY-MM-DD HH:mm'),
-        maxDate: maxDate ? maxDate.format('YYYY-MM-DD HH:mm') : undefined
+        minDate: dayjs().day(0).add(14, 'day'),
+        maxDate: maxDate
       }
     }
   },
@@ -70,7 +70,20 @@ export default {
     if (!this.schoolYearEndDate) {
       this.$store.dispatch('calendar/getConfiguration')
     }
-    this.displayedSection = 'currentWeek'
+
+    if (this.$route.query.homeworkId) {
+      const homeworkDate = dayjs(this.$route.query.toDate, 'YYYY-MM-DD')
+
+      if (homeworkDate.isBefore(this.nextWeekDates.minDate)) {
+        this.displayedSection = 'currentWeek'
+      } else if (homeworkDate.isBefore(this.laterDates.minDate)) {
+        this.displayedSection = 'nextWeek'
+      } else {
+        this.displayedSection = 'later'
+      }
+    } else {
+      this.displayedSection = 'currentWeek'
+    }
   }
 }
 </script>

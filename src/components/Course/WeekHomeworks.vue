@@ -121,7 +121,11 @@ export default {
   },
   methods: {
     getNbUndone () {
-      getStudentUndoneCount(this.params.userId, this.params.dates.minDate, this.params.dates.maxDate).then((data) => {
+      getStudentUndoneCount(
+        this.params.userId,
+        this.params.dates.minDate.format('YYYY-MM-DD HH:mm'),
+        this.params.dates.maxDate.format('YYYY-MM-DD HH:mm')
+      ).then((data) => {
         if (data.success) {
           this.nbUndone = data.nbUndoneHomeworks
         }
@@ -129,7 +133,12 @@ export default {
     },
     getHomeworkList () {
       this.isLoading = true
-      getStudentHomeworks(this.params.userId, this.params.dates.minDate, this.params.dates.maxDate, false).then((data) => {
+      getStudentHomeworks(
+        this.params.userId,
+        this.params.dates.minDate.format('YYYY-MM-DD HH:mm'),
+        this.params.dates.maxDate.format('YYYY-MM-DD HH:mm'),
+        false
+      ).then((data) => {
         this.isLoading = false
         if (data.success) {
           this.error = false
