@@ -231,6 +231,15 @@ export default {
       }
     }
   },
+  mounted () {
+    if (
+      this.session &&
+      this.isInList &&
+      (this.$route.query.toDate === dayjs(this.session.startDate, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD-HH:mm'))
+    ) {
+      this.$el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  },
   methods: {
     openCourseEditModal () {
       this.isModalDisplayed = true

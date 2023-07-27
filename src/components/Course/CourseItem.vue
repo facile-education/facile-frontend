@@ -42,6 +42,11 @@ export default {
       return label
     }
   },
+  created () {
+    if (this.$route.query.courseId === this.course.courseId.toString()) {
+      this.selectCourse()
+    }
+  },
   methods: {
     selectCourse () {
       this.$store.dispatch('course/setSelectedCourse', this.course)
