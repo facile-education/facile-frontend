@@ -183,7 +183,7 @@ ul {
 <i18n locale="fr">
 {
   "errorPlaceholder": "Oups, une erreur est survenue...",
-  "emptyPlaceholder": "Aucun devoir à faire!!",
+  "emptyPlaceholder": "Aucun devoir à faire",
   "for": "Pour",
   "showMore": "Voir tous les devoirs"
 }

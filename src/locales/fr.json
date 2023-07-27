@@ -155,6 +155,9 @@
   "Menu": {
     "access-admin": "Accès",
     "administration": "Administration",
+    "AllActivities": "Toutes les activités",
+    "AllAnnouncements": "Toutes les annonces",
+    "AllEvents": "Tous les évènements",
     "application-admin": "Applications",
     "Authentication": "Accueil ENTA",
     "cdt": "Cours & devoirs",

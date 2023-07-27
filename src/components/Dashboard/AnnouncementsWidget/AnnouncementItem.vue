@@ -95,6 +95,7 @@
     <NewsActivityDetailsModal
       :init-news="announcement"
       @update="$emit('updateAnnouncement')"
+      @delete="$emit('updateAnnouncement')"
       @close="isDetailsModalDisplayed = false"
     />
   </teleport>
@@ -236,6 +237,7 @@ export default {
   padding-top: 4px;
   min-height: $announcement-item-min-height;
   height: $announcement-item-min-height;
+  width: 99%;
 
   &.is-in-horizontal-scroll {
     height: 100%;
