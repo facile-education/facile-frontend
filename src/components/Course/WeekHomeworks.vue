@@ -1,43 +1,51 @@
 <template>
   <section>
-    <div class="toolbar">
-      <h2 class="title">
-        {{ label }}
-        <a
-          v-t="{ path: 'works', args: { count: nbUndone } }"
-          href="#"
-          class="theme-text-color"
-          @click="$emit('display')"
-        />
-      </h2>
-    </div>
+    <header>
+      <h2>{{ label }}</h2>
+      <a
+        v-t="{ path: 'works', args: { count: nbUndone } }"
+        href="#"
+        class="theme-text-color"
+        @click="$emit('display')"
+      />
+    </header>
+
     <div
       v-if="displayed"
-      class="homework-list"
+      class="content"
     >
       <div
         v-if="homeworks && homeworks.length === 0"
-        class="main-label"
+        class="placeholder"
       >
         <p>{{ $t('noHomeworks') }}</p>
       </div>
-      <div
+
+      <ul
         v-else-if="homeworks"
-        class="homeworks"
+        class="homeworks-by-day-list"
       >
-        <div
+        <li
           v-for="day in homeworksByDay"
           :key="day.dayId"
+          class="homeworks-day"
         >
-          <span class="target-date">{{ day.label }}</span>
-          <StudentHomework
-            v-for="homework in day.homeworkList"
-            :key="homework.homeworkId"
-            :homework="homework"
-            @change-done-status="changeDoneStatus(homework, $event)"
-          />
-        </div>
-      </div>
+          <div class="target-date">
+            {{ day.label }}
+          </div>
+          <ul>
+            <li
+              v-for="homework in day.homeworkList"
+              :key="homework.homeworkId"
+            >
+              <StudentHomework
+                :homework="homework"
+                @change-done-status="changeDoneStatus(homework, $event)"
+              />
+            </li>
+          </ul>
+        </li>
+      </ul>
     </div>
   </section>
 </template>
@@ -129,7 +137,22 @@ export default {
 <style lang="scss" scoped>
 @import '@design';
 
-.main-label {
+header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+
+  h2 {
+    @extend %font-heading-xs;
+  }
+
+  a {
+    @extend %font-regular-s;
+  }
+}
+
+.placeholder {
   text-align: center;
   padding: 1rem;
 
@@ -139,25 +162,7 @@ export default {
   @extend %font-regular-l;
 }
 
-.toolbar {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  align-self: stretch;
-}
-
-.title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  @extend %font-heading-xs;
-
-  a {
-    @extend %font-regular-s;
-  }
-}
-
-.homeworks {
+.homeworks-by-day-list {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -165,11 +170,21 @@ export default {
   align-self: stretch;
 }
 
+.homeworks-day {
+  width: 100%;
+}
+
 .target-date {
   margin-top: 0.5rem;
   color: $neutral-80;
 
   @extend %font-medium-m;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
 }
 </style>
 
