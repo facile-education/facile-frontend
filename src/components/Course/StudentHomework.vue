@@ -123,7 +123,6 @@ export default {
   padding: 1rem 1.5rem;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
   gap: 1rem;
   align-self: stretch;
 
@@ -149,16 +148,12 @@ export default {
 header {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  align-self: stretch;
+  justify-content: space-between;
 }
 
 .left {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.1875rem;
-  flex: 1 0 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .subject {
@@ -166,6 +161,7 @@ header {
 }
 
 .title {
+  margin-top: 3px;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -174,6 +170,8 @@ header {
 
   h3 {
     margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
@@ -202,6 +200,7 @@ header {
   justify-content: center;
   align-items: flex-end;
   gap: 0.5rem;
+  white-space: nowrap;
 }
 
 .date {
