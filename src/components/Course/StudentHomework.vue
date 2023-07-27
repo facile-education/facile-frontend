@@ -109,7 +109,10 @@ export default {
       }
     }
   },
-  methods: {
+  mounted () {
+    if (this.$route.query.homeworkId && (this.$route.query.homeworkId === this.homework.homeworkId.toString())) {
+      this.$el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
   }
 }
 </script>

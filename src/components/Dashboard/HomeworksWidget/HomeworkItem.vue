@@ -59,8 +59,10 @@
 
 <script>
 import BaseIcon from '@components/Base/BaseIcon.vue'
+import dayjs from 'dayjs'
 
 import { setHomeworkDoneStatus } from '@/api/homework.service'
+import { CDT } from '@/constants/appConstants'
 import { homeworksTypes } from '@/constants/dashboardConstants'
 export default {
   name: 'HomeworkItem',
@@ -88,7 +90,13 @@ export default {
   },
   methods: {
     redirect () {
-      this.$router.push({ name: 'Planning', params: { sourceSessionId: this.homework.sourceSessionId } })
+      this.$router.push({
+        name: CDT,
+        query: {
+          homeworkId: this.homework.homeworkId,
+          toDate: dayjs(this.homework.toDate, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD')
+        }
+      })
     },
     toggleDoneStatus () {
       this.isLoading = true

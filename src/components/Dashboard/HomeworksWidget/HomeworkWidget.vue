@@ -112,7 +112,7 @@ export default {
   },
   methods: {
     redirect () {
-      this.$router.push({ name: CDT }) // TODO push correct route
+      this.$router.push({ name: CDT })
     },
     updateUndoneOnlyValue (value) {
       this.undoneOnly = value
