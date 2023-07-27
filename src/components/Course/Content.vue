@@ -49,7 +49,7 @@
     <button
       v-if="isEdition"
       class="actions"
-      @click="$emit('delete')"
+      @click.stop="$emit('delete')"
     >
       <img
         :src="require('@/assets/icons/trash.svg')"
