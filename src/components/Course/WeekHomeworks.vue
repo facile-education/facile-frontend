@@ -14,15 +14,22 @@
       v-if="displayed"
       class="content"
     >
+      <PentilaSpinner
+        v-if="isLoading"
+        style="z-index: 1"
+      />
       <div
-        v-if="homeworks && homeworks.length === 0"
+        v-if="error === true"
+        v-t="'errorPlaceholder'"
         class="placeholder"
-      >
-        <p>{{ $t('noHomeworks') }}</p>
-      </div>
-
+      />
+      <div
+        v-else-if="homeworks && homeworks.length === 0"
+        v-t="'emptyPlaceholder'"
+        class="placeholder"
+      />
       <ul
-        v-else-if="homeworks"
+        v-else-if="homeworks && homeworks.length > 0"
         class="homeworks-by-day-list"
       >
         <li
@@ -77,7 +84,9 @@ export default {
   data () {
     return {
       homeworks: undefined,
-      nbUndone: 0
+      nbUndone: 0,
+      isLoading: false,
+      error: false
     }
   },
   computed: {
@@ -119,11 +128,20 @@ export default {
       })
     },
     getHomeworkList () {
+      this.isLoading = true
       getStudentHomeworks(this.params.userId, this.params.dates.minDate, this.params.dates.maxDate, false).then((data) => {
+        this.isLoading = false
         if (data.success) {
+          this.error = false
           this.homeworks = data.homeworks
-          // TODO: handle errors
+        } else {
+          this.error = true
+          console.error('Failed to load homeworks')
         }
+      }, (err) => {
+        this.isLoading = false
+        this.error = true
+        console.error(err)
       })
     },
     changeDoneStatus (homework, isDone) {
@@ -152,14 +170,13 @@ header {
   }
 }
 
+.content {
+  position: relative;
+  min-height: 56px;
+}
+
 .placeholder {
-  text-align: center;
-  padding: 1rem;
-
-  border-radius: 6px;
-  background: $neutral-20;
-
-  @extend %font-regular-l;
+  @extend %content-placeholder;
 }
 
 .homeworks-by-day-list {
@@ -191,7 +208,8 @@ ul {
 <i18n locale="fr">
 {
   "for": "Pour ",
-  "noHomeworks": "Aucun travail à faire",
+  "emptyPlaceholder": "Aucun travail à faire",
+  "errorPlaceholder": "Oups, une erreur est survenue...",
   "works": "Aucun nouveau travail | {count} Travail | {count} Travaux"
 }
 </i18n>
