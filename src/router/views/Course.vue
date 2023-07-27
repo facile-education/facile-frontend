@@ -116,7 +116,9 @@ export default {
       if (this.isTeacher) {
         // Select ScheduleTab and select the correct session
         this.selectTab('sessions')
-      } else {
+      }
+    } else if (this.$route.query.courseId) {
+      if (!this.isTeacher) {
         // Select courseTab and select the correct session
         this.selectTab('courses')
       }

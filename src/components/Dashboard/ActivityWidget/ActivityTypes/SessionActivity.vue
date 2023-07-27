@@ -43,6 +43,7 @@
 import dayjs from 'dayjs'
 
 import activityConstants from '@/constants/activityConstants'
+import { CDT } from '@/constants/appConstants'
 
 export default {
   name: 'SessionActivity',
@@ -75,7 +76,23 @@ export default {
   },
   methods: {
     redirect () {
-      this.$router.push({ name: 'Planning' })
+      if (this.isCourse) {
+        this.$router.push({
+          name: CDT,
+          query: {
+            courseId: this.activity.groupId,
+            toDate: dayjs(this.activity.targetDate, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD-HH:mm')
+          }
+        })
+      } else {
+        this.$router.push({
+          name: CDT,
+          query: {
+            homeworkId: this.activity.homeworkId,
+            toDate: dayjs(this.activity.targetDate, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD')
+          }
+        })
+      }
     }
   }
 }
