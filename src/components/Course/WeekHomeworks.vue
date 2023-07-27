@@ -34,7 +34,7 @@
             v-for="homework in day.homeworkList"
             :key="homework.homeworkId"
             :homework="homework"
-            @change-done-status="getNbUndone"
+            @change-done-status="changeDoneStatus(homework, $event)"
           />
         </div>
       </div>
@@ -117,6 +117,10 @@ export default {
           // TODO: handle errors
         }
       })
+    },
+    changeDoneStatus (homework, isDone) {
+      homework.isDone = isDone
+      isDone ? this.nbUndone-- : this.nbUndone++
     }
   }
 }
