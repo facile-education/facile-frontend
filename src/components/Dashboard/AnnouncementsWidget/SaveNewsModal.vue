@@ -19,7 +19,7 @@
       <div class="first-line">
         <ThumbnailSelector
           :thumbnail-url="thumbnail"
-          @selectImage="selectImage"
+          @select-image="selectImage"
         />
 
         <div
@@ -49,7 +49,7 @@
             :is-required="true"
             :minute-increment="15"
             :disabled="isReleaseDateDisabled"
-            @selectDate="updateReleaseDate"
+            @select-date="updateReleaseDate"
           />
           <PentilaErrorMessage
             :error-message="formErrorList.releaseDate"
@@ -87,6 +87,7 @@
       </div>
 
       <TextContent
+        v-if="content !== undefined"
         v-model:content="content"
         class="ck-editor"
         :placeholder="$t('contentPlaceHolder')"
@@ -100,7 +101,7 @@
         v-model="attachedFiles"
         :read-only="false"
         :max-height="mq.phone ? '120px' : '300px'"
-        @removeAttachedFile="removeFile"
+        @remove-attached-file="removeFile"
       />
 
       <div
@@ -134,7 +135,7 @@
     <FilePickerModal
       :multi-selection="true"
       :allow-files-from-device="true"
-      @addedFiles="attachNewFiles"
+      @added-files="attachNewFiles"
       @close="isFilePickerDisplayed = false"
     />
   </teleport>
@@ -444,6 +445,7 @@ export default {
     position: relative;
     overflow-y: visible;
     max-height: 70vh !important;
+    overflow: auto;
   }
 
   .ck-editor {

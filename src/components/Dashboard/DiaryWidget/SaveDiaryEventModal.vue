@@ -41,7 +41,7 @@
             :is-required="true"
             :minute-increment="15"
             :disabled="isStartDateDisabled"
-            @selectDate="updateStartDate"
+            @select-date="updateStartDate"
           />
           <PentilaErrorMessage
             :error-message="formErrorList.startDate"
@@ -56,7 +56,7 @@
             :is-required="true"
             :minute-increment="15"
             :disabled="isEndDateDisabled"
-            @selectDate="updateEndDate"
+            @select-date="updateEndDate"
           />
           <PentilaErrorMessage
             :error-message="formErrorList.endDate"
@@ -377,7 +377,8 @@ export default {
 <style lang="scss">
 .update-diary-event-modal {
   .window-body {
-    overflow-y: visible;
+    max-height: 70vh !important;
+    overflow: auto;
   }
 
   .ck-editor {

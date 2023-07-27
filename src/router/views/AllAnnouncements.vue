@@ -3,8 +3,8 @@
     <AllAnnouncementsHeader
       :nb-new-announcements="nbNewAnnouncements"
       :un-read-only="unReadOnly"
-      @toggleReadOnly="toggleReadOnly"
-      @createAnnouncement="refresh"
+      @toggle-read-only="toggleReadOnly"
+      @create-announcement="refresh"
     />
 
     <div
@@ -41,11 +41,11 @@
             :is-selection-mode="isDetailsPanelDisplayed"
             :is-selected="selectedAnnouncement && selectedAnnouncement.newsId === announcement.newsId"
             :is-last="isLastDisplayed(announcement)"
-            @updateAnnouncement="refresh"
-            @deleteAnnouncement="refresh"
+            @update-announcement="refresh"
+            @delete-announcement="refresh"
             @select="selectedAnnouncement=announcement"
-            @markAsRead="announcement.hasRead=true"
-            @getNextAnnouncements="loadAnnouncements"
+            @mark-as-read="announcement.hasRead=true"
+            @get-next-announcements="loadAnnouncements"
           />
         </div>
       </div>
@@ -82,6 +82,7 @@ export default {
   inject: ['mq'],
   data () {
     return {
+      ended: false,
       unReadOnly: false,
       isLoading: false,
       nbNewAnnouncements: 0,
@@ -122,7 +123,7 @@ export default {
         const nbPixelsBeforeBottom = scroll.scrollHeight - (scroll.scrollTop + scroll.clientHeight)
 
         if (nbPixelsBeforeBottom <= 5) {
-          if (!this.isLoading) {
+          if (!this.isLoading && !this.ended) {
             this.loadAnnouncements()
           }
         }
@@ -134,6 +135,9 @@ export default {
       getSchoolNews(this.fromDate, allAnnouncementsPaginationSize, false, this.unReadOnly).then((data) => {
         this.isLoading = false
         if (data.success) {
+          if (data.news.length < allAnnouncementsPaginationSize) {
+            this.ended = true
+          }
           this.error = false
           this.announcementsList = this.announcementsList.concat(data.news)
           this.nbNewAnnouncements = data.nbUnreadNews

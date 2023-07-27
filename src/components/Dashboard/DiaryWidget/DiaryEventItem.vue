@@ -71,7 +71,7 @@
   >
     <SaveDiaryEventModal
       :init-event="event"
-      @updateEvent="updateEvent"
+      @update-event="updateEvent"
       @close="isUpdateModalDisplayed = false"
     />
   </teleport>
@@ -215,6 +215,7 @@ export default {
   padding-right: 4px;
   padding-top: 4px;
   height: 52px;
+  width: 99%;
 }
 
 .diary-event {
