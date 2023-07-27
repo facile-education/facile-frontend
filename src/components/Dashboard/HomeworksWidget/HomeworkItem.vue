@@ -2,7 +2,7 @@
   <div class="homework-container">
     <div
       class="homework-item"
-      :style="'background-color: ' + homework.subjectColor + '; border-color: ' + homeWorkBorderColor"
+      :style="'background-color: ' + homework.color + '; border-color: ' + homeWorkBorderColor"
       :tabindex="0"
       @keyup.enter="redirect"
       @click="redirect"
@@ -10,7 +10,7 @@
       <span
         v-if="!homework.isDone && !homework.isSent"
         class="pellet"
-        :style="'background-color: ' + homework.subjectColor"
+        :style="'background-color: ' + homework.color"
       />
 
       <PentilaSpinner v-if="isLoading" />
@@ -83,7 +83,7 @@ export default {
       return homeworksTypes
     },
     homeWorkBorderColor () {
-      return (this.homework.isDone || this.homework.isSent) ? ('#FFFFFFDD #FFFFFFDD #FFFFFFDD ' + this.homework.subjectColor) : this.homework.subjectColor
+      return (this.homework.isDone || this.homework.isSent) ? ('#FFFFFFDD #FFFFFFDD #FFFFFFDD ' + this.homework.color) : this.homework.color
     }
   },
   methods: {
