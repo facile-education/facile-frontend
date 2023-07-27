@@ -37,7 +37,7 @@
           :key="day.dayId"
           class="homeworks-day"
         >
-          <div class="target-date">
+          <div class="day-label">
             {{ day.label }}
           </div>
           <ul>
@@ -156,12 +156,15 @@ export default {
 @import '@design';
 
 header {
+  height: 2rem;
+  margin-bottom: 0.5rem;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0.5rem;
   align-self: stretch;
 
   h2 {
+    margin: 0;
     @extend %font-heading-xs;
   }
 
@@ -189,10 +192,19 @@ header {
 
 .homeworks-day {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
 }
 
-.target-date {
-  margin-top: 0.5rem;
+.day-label {
+  padding-top: 0.5rem;
   color: $neutral-80;
 
   @extend %font-medium-m;

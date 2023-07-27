@@ -77,6 +77,12 @@ export default {
 
 <style lang="scss" scoped>
 
+.homework-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
 </style>
 
 <i18n locale="fr">
