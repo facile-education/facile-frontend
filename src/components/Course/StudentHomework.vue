@@ -1,7 +1,8 @@
 <template>
   <article
     class="homework"
-    :style="`border-color: ${homework.color}; background-color: ${homework.color}22;`"
+    :class="{'done': isDone}"
+    :style="isDone ? '' : `border-color: ${homework.color}22; border-left-color: ${homework.color}; background-color: ${homework.color}22;`"
   >
     <Pellet
       v-if="!homework.isDone && !isPast"
@@ -127,7 +128,13 @@ export default {
   align-self: stretch;
 
   border-radius: 6px;
+  border: 1px solid;
   border-left: 8px solid;
+
+  &.done {
+    border: 1px solid $neutral-40;
+    padding-left: calc(1.5rem + 7px);
+  }
 }
 
 .pellet {
