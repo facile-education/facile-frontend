@@ -210,7 +210,7 @@ export default {
 
   &.disabled {
     padding: 10px 0;
-    background-color: white;
+    background-color: transparent;
     border: none;
     color: black;
     cursor: auto;
