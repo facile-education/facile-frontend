@@ -247,11 +247,8 @@ export default {
 }
 
 .infos {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.1875rem;
-  flex: 1 0 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .type {
@@ -268,8 +265,9 @@ export default {
 }
 
 .title {
-  margin: 0;
-
+  margin: 3px 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
   @extend %font-bold-l;
 }
 
@@ -281,7 +279,8 @@ export default {
 
 .description {
   margin: 0;
-
+  overflow: hidden;
+  text-overflow: ellipsis;
   @extend %font-regular-s;
 }
 

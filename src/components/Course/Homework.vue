@@ -1,7 +1,10 @@
 <template>
   <article class="homework">
     <header class="title">
-      <div>
+      <div
+        style="overflow: hidden;
+        text-overflow: ellipsis;"
+      >
         <div class="header-first-line">
           <h3>{{ homework.title }}</h3>
           <span
@@ -203,6 +206,8 @@ header {
 }
 
 h3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
   margin: 0;
   @extend %font-bold-l;
 }

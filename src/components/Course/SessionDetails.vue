@@ -389,6 +389,8 @@ header {
   }
 
   h3 {
+    overflow: hidden;
+    text-overflow: ellipsis;
     flex: 1;
     margin: 0;
     @extend %font-bold-l;
