@@ -24,7 +24,6 @@
           :label="homework.isDone ? $t('done') : $t('todo')"
           :disabled="isPast"
           :right-display="true"
-          @update:model-value="$emit('change-done-status')"
         />
         <span class="date">{{ dateLabel }}</span>
       </div>
@@ -43,6 +42,7 @@
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
+import { setHomeworkDoneStatus } from '@/api/homework.service'
 import Pellet from '@/components/Base/Pellet.vue'
 
 const Content = defineAsyncComponent(() => import('@/components/Course/Content'))
@@ -74,7 +74,19 @@ export default {
         return this.homework.isDone
       },
       set (isDone) {
-        this.$store.dispatch('course/setHomeworkDone', { homeworkId: this.homework.homeworkId, isDone })
+        setHomeworkDoneStatus(this.homework.homeworkId, isDone).then(
+          (data) => {
+            if (data.success) {
+              this.$emit('change-done-status', isDone)
+            } else {
+              console.error('Cannot update done status')
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+            }
+          },
+          (err) => {
+            console.error(err)
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+          })
       }
     },
     isPast () {
@@ -195,6 +207,7 @@ header {
 <i18n locale="fr">
 {
   "done": "Fait",
+  "error": "Oups, une erreur est survenue...",
   "given": "Donné le {date}",
   "modified": "modifié le {date}",
   "todo": "À faire",
