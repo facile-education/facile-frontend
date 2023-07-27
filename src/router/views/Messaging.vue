@@ -234,6 +234,7 @@ export default {
   &.mobile {
     position: relative;
     overflow: hidden;
+    display: block;
     height: 100%;
 
     .thread-display {
