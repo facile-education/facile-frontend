@@ -42,6 +42,7 @@ const popupDurationTime = 3500
 const fileAutoSaveTime = 60000
 
 const entityNameMaxSize = 255
+const ckMaxSize = 63206
 
 export {
   nbCharBeforeCompletion,
@@ -50,6 +51,7 @@ export {
   popupDurationTime,
   fileAutoSaveTime,
   entityNameMaxSize,
+  ckMaxSize,
   ACCESS_MANAGER,
   APPLICATION_MANAGER,
   CDT,

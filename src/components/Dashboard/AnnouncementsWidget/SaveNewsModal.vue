@@ -159,12 +159,12 @@ import {
   getGroupNewsBroadcastGroups,
   getNewsDetails, getSchoolNewsBroadcastGroups
 } from '@/api/dashboard/news.service'
+import { ckMaxSize } from '@/constants/appConstants'
 import { defaultImagesKeys } from '@/constants/icons'
 
 const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal.vue'))
 
 const inputMaxSize = 75
-const ckMaxSize = 63206
 const isUnderInputMaxSize = (value) => validators.isUnderMaxSize(value, inputMaxSize)
 const isUnderCKMaxSize = (value) => validators.isUnderMaxSize(value, ckMaxSize)
 const isNotEmpty = (list) => validators.isNotEmpty(list)

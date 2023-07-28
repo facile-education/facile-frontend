@@ -34,7 +34,7 @@
       <div class="link-url">
         <PentilaInput
           v-model="linkUrl"
-          :maxlength="200"
+          :maxlength="250"
           :placeholder="$t('urlPlaceholder')"
           @keyup.enter.stop="pressEnter"
         />
