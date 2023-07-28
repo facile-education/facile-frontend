@@ -5,7 +5,7 @@
     "remove": "Supprimer"
   },
   "CalendarEventOptions": {
-    "registerStudent": "A",
+    "registerStudent": "Inscrire l'élève",
     "saveTeacherSubstitute": "@:CalendarEventOptions.download",
     "showStudentList": "Liste des inscrits",
     "update": "Modifier"
@@ -287,7 +287,8 @@
     "EditSlotModal": {
       "deleteSlot": "Supprimer",
       "haveToSelectHour": "Veuillez saisir une plage d'horaires valide (hh:mm)",
-      "header": "Éditer un créneau",
+      "header-create": "Créer un créneau de {slotType}",
+      "header-modify": "Modifier un créneau de {slotType}",
       "longDeleteSlot": "Supprimer le créneau",
       "remainingPlaces": "Capacité de la salle",
       "registered": "inscrits",
@@ -296,8 +297,8 @@
     },
     "PendingFiringModal": {
       "courseOf": "Cours de ",
-      "information": "Un message de notification sera envoyé aux parents et au doyen avec le motif du renvoi",
-      "information2": "Merci de contacter un.e Doyen.ne référent.e de l'élève ou la direction",
+      "information": "Un message de notification sera envoyé aux parents et au doyen avec le motif du renvoi.",
+      "information2": "Merci de contacter un.e Doyen.ne référent.e de l'élève ou la direction.",
       "firedTimestamp": "Enregistré: ",
       "haveToWriteJustification": "Veuillez saisir un motif de renvoi",
       "justificationPlaceholder": "Motif du renvoi",

@@ -128,7 +128,7 @@ export default {
 <i18n locale="fr">
 {
   "title": "Liste des annonces",
-  "unreadFilter": "Filtrer les non lu",
+  "unreadFilter": "Filtrer les non lues",
   "errorPlaceholder": "Oups, une erreur est survenue..."
 }
 </i18n>

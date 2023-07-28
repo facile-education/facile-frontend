@@ -82,13 +82,14 @@ export default {
 }
 
 span {
-  margin-right: 10px;
+  margin-right: 5px;
 }
 
 .collapse, .extend {
-  width: 10px;
+  width: 8px;
   transition:  transform .3s;
   cursor: pointer;
+  margin-left: 5px;
 }
 
 .extend {
@@ -100,7 +101,7 @@ span {
 }
 
 .member-list {
-  margin-left: 20px;
+  margin-left: 35px;
 }
 </style>
 

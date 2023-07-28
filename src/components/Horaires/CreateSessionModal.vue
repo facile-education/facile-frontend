@@ -29,20 +29,15 @@
         <p
           class="datetime-label"
         >
-          {{ $t('from') }}
+          {{ $t('in') }}
         </p>
-        <PentilaInput
-          v-model="startTime"
-          class="datetime-input"
-        />
-        <p
-          class="datetime-label"
-        >
-          {{ $t('to') }}
-        </p>
-        <PentilaInput
-          v-model="endTime"
-          class="datetime-input"
+        <PentilaDropdown
+          v-model="selectedSlot"
+          class="slots-list"
+          :list="slotList"
+          display-field="slotLabel"
+          :sort="false"
+          :filtered="false"
         />
       </div>
       <PentilaErrorMessage
@@ -143,7 +138,7 @@ import { required } from '@vuelidate/validators'
 import dayjs from 'dayjs'
 
 import { getUserGroups } from '@/api/groups.service'
-import { createSession } from '@/api/schedule.service'
+import { createSession, getSchoolSlotConfiguration } from '@/api/schedule.service'
 import { getSubjects } from '@/api/userManagement.service'
 import { getSchoolTeachers } from '@/api/userSearch.service'
 
@@ -167,8 +162,6 @@ export default {
   validations: {
     selectedGroup: { required },
     selectedDay: { required },
-    startTime: { timeRequired },
-    endTime: { timeRequired },
     selectedTeachers: { teachersRequired },
     subject: { required }
   },
@@ -181,9 +174,9 @@ export default {
       room: '',
       subjectList: [],
       subject: '',
+      slotList: [],
+      selectedSlot: '',
       selectedDay: {},
-      startTime: '8:00',
-      endTime: '10:00',
       isRecurrent: false
     }
   },
@@ -191,16 +184,10 @@ export default {
     formErrorList () {
       return {
         day: (this.v$.selectedDay.$invalid && this.v$.selectedDay.$dirty) ? this.$t('Validation.day') : '',
-        time: ((this.v$.startTime.$invalid && this.v$.startTime.$dirty) || (this.v$.endTime.$invalid && this.v$.endTime.$dirty)) ? this.$t('Validation.time') : (this.isStartBeforeAfter ? '' : this.$t('Validation.startBeforeAfter')),
         group: (this.v$.selectedGroup.$invalid && this.v$.selectedGroup.$dirty) ? this.$t('Validation.group') : '',
         selectedTeachers: (this.v$.selectedTeachers.$invalid && this.v$.selectedTeachers.$dirty) ? this.$t('Validation.teachers') : '',
         subject: (this.v$.subject.$invalid && this.v$.subject.$dirty) ? this.$t('Validation.required') : ''
       }
-    },
-    isStartBeforeAfter () {
-      const start = dayjs(dayjs().format('YYYY-MM-DD') + ' ' + this.startTime, 'YYYY-MM-DD HH:mm')
-      const end = dayjs(dayjs().format('YYYY-MM-DD') + ' ' + this.endTime, 'YYYY-MM-DD HH:mm')
-      return start.isBefore(end)
     }
   },
   created () {
@@ -236,6 +223,17 @@ export default {
       }
     })
 
+    // Get slot list from backend
+    this.slotList.length = 0
+    getSchoolSlotConfiguration(this.$store.state.user.selectedSchool.schoolId).then((data) => {
+      if (data.success) {
+        this.slotList = data.configuration
+        this.slotList.forEach((slot) => { this.formatSlot(slot) })
+        // Pre-select first slot
+        this.selectedSlot = this.slotList[0]
+      }
+    })
+
     getUserGroups(this.$store.state.user.selectedSchool.schoolId, true, true, true).then((data) => {
       if (data.success) {
         this.groupList = this.groupList.concat(data.groups)
@@ -249,6 +247,9 @@ export default {
     })
   },
   methods: {
+    formatSlot (slot) {
+      slot.slotLabel = 'P' + slot.slotNumber + ' (' + slot.slotStartHour + ' / ' + slot.slotEndHour + ')'
+    },
     closeModal () {
       this.$store.dispatch('horaires/setCreateSessionModalDisplayed', false)
     },
@@ -257,15 +258,11 @@ export default {
       if (this.v$.$invalid) {
         this.v$.$touch()
       } else {
-        // Build startDate and endDate
-        const startDate = dayjs(dayjs().day(1).add((this.selectedDay.dayNb - 1), 'day').format('YYYY-MM-DD') + ' ' + this.startTime, 'YYYY-MM-DD HH:mm')
-        const endDate = dayjs(dayjs().day(1).add((this.selectedDay.dayNb - 1), 'day').format('YYYY-MM-DD') + ' ' + this.endTime, 'YYYY-MM-DD HH:mm')
-
-        createSession(this.selectedGroup.groupId, this.subject.name, this.room, startDate, endDate, this.selectedTeachers, this.isRecurrent).then((data) => {
+        createSession(this.selectedGroup.groupId, this.subject.name, this.room, this.selectedDay.dayNb, this.selectedSlot.slotNumber, this.selectedSlot.slotStartHour, this.selectedSlot.slotEndHour, this.selectedTeachers, this.isRecurrent).then((data) => {
           if (data.success) {
             this.teacherList = data.teachers
             // Select the group of the created session, in the main panel
-            this.$store.dispatch('horaires/selectGroup', this.selectedGroup)
+            this.$store.dispatch('horaires/setSelectedGroup', this.selectedGroup)
           }
         })
         this.closeModal()
@@ -320,6 +317,7 @@ export default {
   "from": "de",
   "to": "à",
   "hour": "h",
+  "in": "au créneau",
   "group": "Classe / Groupe",
   "subject": "Discipline",
   "teachersPlaceHolder" : "Enseignants",

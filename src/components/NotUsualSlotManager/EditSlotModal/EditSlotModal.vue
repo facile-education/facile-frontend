@@ -8,24 +8,25 @@
     @close="closeModal"
   >
     <template #header>
-      <span v-t="'NotUsualSlots.EditSlotModal.header'" />
+      <span> {{ modalTitle }} </span>
     </template>
 
     <template #body>
-      <TimeSelection
-        :range="{start: newEvent.startDate.format('HH:mm'), end: newEvent.endDate.format('HH:mm')}"
-        @update:range="updateRange"
-      >
-        <strong>
-          {{ currentSlotType.label }}
-        </strong>
-      </TimeSelection>
+      <div class="time-selection">
+        <span class="time-selection-left">{{ recursiveSlot }}</span>
+        <TimeSelection
+          :range="{start: newEvent.startDate.format('HH:mm'), end: newEvent.endDate.format('HH:mm')}"
+          @update:range="updateRange"
+        />
+        <span
+          class="time-selection-right"
+        >{{ dateRange }}</span>
+      </div>
 
       <div
         class="teacher-part"
         data-test="teacher-part"
       >
-        <label v-t="'NotUsualSlots.EditSlotModal.teacherNamePlaceHolder'" />
         <UserCompletion
           user-type="teacher"
           :placeholder="$t('NotUsualSlots.EditSlotModal.teacherNamePlaceHolder')"
@@ -85,6 +86,7 @@ import { required } from '@vuelidate/validators'
 import dayjs from 'dayjs'
 
 import schoolLifeService from '@/api/schoolLife-portlet.service'
+import notUsualSlotsConstants from '@/constants/notUsualSlots'
 
 const moreThanRegistered = (value, vm) => {
   if (value < 0) {
@@ -159,6 +161,15 @@ export default {
     },
     isEventCreation () {
       return this.eventToEdit.title === undefined
+    },
+    modalTitle () {
+      return this.isEventCreation ? this.$t('NotUsualSlots.EditSlotModal.header-create', { slotType: this.currentSlotType.label }) : this.$t('NotUsualSlots.EditSlotModal.header-modify', { slotType: this.currentSlotType.label })
+    },
+    recursiveSlot () {
+      return this.$t('all-the') + ' ' + dayjs(this.eventToEdit.startDate).format('dddd') + 's ' + this.$t('from')
+    },
+    dateRange () {
+      return this.$t('du') + ' ' + dayjs(this.eventToEdit.startDate).format('dddd DD MMMM YYYY ') + this.$t('until-school-year-end')
     }
   },
   created () {
@@ -269,7 +280,24 @@ export default {
 </style>
 
 <style lang="scss" scoped>
+.slot-title {
+  margin-right: 10px;
+}
+
+.time-selection {
+  display: inline-flex;
+  .time-selection-left {
+    margin: auto;
+    margin-right: 10px;
+  }
+  .time-selection-right {
+    margin: auto;
+    margin-left: 10px;
+  }
+}
+
 .teacher-part, .room-part {
+  margin-top: 20px;
   margin-bottom: 20px;
 }
 
@@ -283,3 +311,11 @@ export default {
   margin-left: auto;
 }
 </style>
+
+<i18n locale="fr">
+  {
+    "all-the": "Tous les ",
+    "from": "de",
+    "until-school-year-end": "jusqu'à la fin de l'année scolaire."
+  }
+</i18n>

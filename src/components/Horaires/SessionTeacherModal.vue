@@ -206,12 +206,12 @@ export default {
 
 <i18n locale="fr">
 {
-  "allSessions": "Appliquer le remplacement pour toutes les séances du {course}",
+  "allSessions": "Appliquer le remplacement pour toutes les séances de {course}",
   "confirm": "Valider",
   "firstSession": "Première séance affectée : le {date} de {start} à {end}",
   "lastSession": "Dernière séance affectée : ",
-  "substitute": "Remplaçant",
+  "substitute": "Remplaçant.e",
   "substitutedBy": " remplacé.e par ",
-  "teacherManagement": "Gérer les maîtres du {course}"
+  "teacherManagement": "Gérer les maîtres de {course}"
 }
 </i18n>

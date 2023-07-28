@@ -1,5 +1,5 @@
 import { getSchoolClassList } from '@/api/organization.service'
-import cdtService from '@/api/schedule.service'
+import scheduleService from '@/api/schedule.service'
 import schoolLifeService from '@/api/schoolLife-portlet.service'
 import notUsualSlotsConstants from '@/constants/notUsualSlots'
 import i18n from '@/i18n'
@@ -58,7 +58,7 @@ function getSessions (store) {
   store.dispatch('currentActions/addAction', { name: 'getSessions' })
   const student = store.state.notUsualSlots.queriedUser || { studentId: 0 }
   if (student.studentId !== 0) {
-    cdtService.getUserSessions(student.studentId, store.state.notUsualSlots.displayedDates.startDate, store.state.notUsualSlots.displayedDates.endDate).then(
+    scheduleService.getUserSessions(student.studentId, store.state.notUsualSlots.displayedDates.startDate, store.state.notUsualSlots.displayedDates.endDate).then(
       (data) => {
         store.dispatch('currentActions/removeAction', { name: 'getSessions' })
         if (data.success) {
@@ -77,7 +77,7 @@ function getSessions (store) {
         console.error(err)
       })
   } else {
-    cdtService.getGroupSessions(store.state.notUsualSlots.selectedClass.groupId,
+    scheduleService.getGroupSessions(store.state.notUsualSlots.selectedClass.groupId,
       store.state.notUsualSlots.displayedDates.startDate, store.state.notUsualSlots.displayedDates.endDate).then(
       (data) => {
         store.dispatch('currentActions/removeAction', { name: 'getSessions' })

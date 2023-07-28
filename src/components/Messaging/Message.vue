@@ -181,6 +181,7 @@ export default {
         width: 100%;
         display: flex;
         justify-content: space-between;
+        padding-top: 3px;
         padding-bottom: 3px;
       }
     }

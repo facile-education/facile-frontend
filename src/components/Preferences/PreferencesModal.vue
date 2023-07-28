@@ -1,6 +1,7 @@
 <template>
   <PentilaWindow
     :modal="true"
+    :width="600"
     @close="close"
   >
     <template #header>
@@ -73,7 +74,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 </style>
 
 <i18n locale="fr">

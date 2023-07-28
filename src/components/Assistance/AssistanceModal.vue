@@ -21,7 +21,7 @@
           v-else
           class="italic"
         >
-          {{ $t('nonAdminMessage') }}
+          {{ (modalType==='Assistance' ? $t('nonAdminAssistanceMessage') : $t('nonAdminSuggestionMessage')) }}
         </p>
         <div class="service">
           <p
@@ -250,9 +250,10 @@ h5 {
   "suggestionDescription": "Description de la suggestion",
   "assistanceHeaderLabel": "Signaler un problème",
   "suggestionHeaderLabel": "Proposer une amélioration",
-  "nonAdminMessage": "Votre demande de support sera transmise à l'administrateur",
+  "nonAdminAssistanceMessage": "Votre demande de support sera transmise à l'administrateur",
+  "nonAdminSuggestionMessage": "Votre suggestion sera transmise à l'administrateur",
   "serviceLabel": "Service affecté",
   "serviceConcernLabel": "Service concerné",
-  "success": "Demande envoyé"
+  "success": "Demande envoyée"
 }
 </i18n>
