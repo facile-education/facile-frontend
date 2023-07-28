@@ -321,10 +321,13 @@ export default {
           if (data.success) {
             this.$store.dispatch('course/updateSessionDetails')
             this.onClose()
+          } else {
+            console.error('Cannot create homework')
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
           }
         },
         (err) => {
-          // TODO toastr
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
           console.error(err)
         })
       } else {
@@ -332,10 +335,13 @@ export default {
           if (data.success) {
             this.$store.dispatch('course/updateSessionDetails')
             this.onClose()
+          } else {
+            console.error('Cannot update homework')
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
           }
         },
         (err) => {
-          // TODO toastr
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
           console.error(err)
         })
       }
@@ -500,6 +506,7 @@ label {
   "confirmClosure": "Des modifications ne sont pas enregistrées, êtes-vous certain de quitter l’édition et de perdre les modifications ?",
   "docToComplete": "Doc. à compléter",
   "docToReturn": "Doc. à rendre",
+  "error": "Oups, une erreur est survenue...",
   "for": "Pour",
   "instructions": "Consigne",
   "draft": "Publier plus tard",
