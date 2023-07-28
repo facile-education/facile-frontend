@@ -15,6 +15,7 @@
         <div class="title">
           <PentilaInput
             v-model="sessionContent.title"
+            :maxlength="250"
             :placeholder="$t('courseTitle')"
           />
           <PentilaErrorMessage :error-message="formErrorList" />

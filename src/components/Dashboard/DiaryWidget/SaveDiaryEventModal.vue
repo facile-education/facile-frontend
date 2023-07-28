@@ -130,9 +130,9 @@ import dayjs from 'dayjs'
 
 import { createEvent, getEventDetails, modifyEvent } from '@/api/dashboard/agenda.service'
 import { getSchoolNewsBroadcastGroups } from '@/api/dashboard/news.service'
+import { ckMaxSize } from '@/constants/appConstants'
 
 const inputMaxSize = 75
-const ckMaxSize = 63206
 const isUnderInputMaxSize = (value) => validators.isUnderMaxSize(value, inputMaxSize)
 const isUnderCKMaxSize = (value) => validators.isUnderMaxSize(value, ckMaxSize)
 const isNotEmpty = (list) => validators.isNotEmpty(list)
