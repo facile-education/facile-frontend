@@ -70,3 +70,24 @@ h1 {
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
 }
+
+%count-pellet {
+    height: 15px;
+    width: 20px;
+    border-radius: 8px;
+    display: flex;
+    padding: 4px;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    white-space: nowrap;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.tab-item-notification-pellet {
+  @extend %count-pellet;
+}
+

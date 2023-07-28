@@ -35,6 +35,7 @@
       <PentilaTabList ref="tabList">
         <PentilaTabItem
           :title="$t('homework')"
+          :nb-notification="nbUndoneHomeworks"
         >
           <HomeworkTab :user-id="selectedUser.userId" />
         </PentilaTabItem>
@@ -50,6 +51,7 @@
 
 <script>
 // import { getStudentUndoneCount } from '@/api/homework.service'
+import { getStudentUndoneCount } from '@/api/homework.service'
 import CourseTab from '@/components/Course/CourseTab.vue'
 import HomeworkTab from '@/components/Course/HomeworkTab.vue'
 import ScheduleTab from '@/components/Course/ScheduleTab.vue'
@@ -95,13 +97,13 @@ export default {
     }
   },
   created () {
-    // if (this.$store.state.user.isStudent || this.$store.state.user.isParent) {
-    //   getStudentUndoneCount(this.studentId).then((data) => {
-    //     if (data.success) {
-    //       this.nbUndoneHomeworks = data.nbUndoneHomeworks
-    //     }
-    //   })
-    // }
+    if (this.$store.state.user.isStudent || this.$store.state.user.isParent) {
+      getStudentUndoneCount(this.studentId).then((data) => {
+        if (data.success) {
+          this.nbUndoneHomeworks = data.nbUndoneHomeworks
+        }
+      })
+    }
 
     // Assume childList is correctly loaded at this state
     if (this.childList.length > 0) {
