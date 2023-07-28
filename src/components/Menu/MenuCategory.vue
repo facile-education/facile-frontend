@@ -2,7 +2,7 @@
   <div class="menu-category">
     <button
       class="category-name root-menu-entry"
-      :class="{'expanded': isMenuExpanded}"
+      :class="{'expanded': isMenuExpanded, 'show-menu': showSubMenu}"
       :aria-label="isMenuExpanded ? (showSubMenu ? $t('collapse') : $t('extend')) : ''"
       :title="isMenuExpanded ? (showSubMenu ? $t('collapse') : $t('extend')) :''"
       @click="toggleSubMenu"
@@ -75,8 +75,10 @@ export default {
   watch: {
     isMenuExpanded: {
       immediate: true,
-      handler () {
-        this.showSubMenu = this.isMenuExpanded
+      handler (oldValue, newValue) {
+        if (oldValue !== newValue) {
+          this.showSubMenu = this.isMenuExpanded
+        }
       }
     }
   },
@@ -119,7 +121,7 @@ button {
 }
 
 .category-item {
-  padding-left: 40px;
+  padding-left: 60px;
 }
 
 .menu-category-popover {
