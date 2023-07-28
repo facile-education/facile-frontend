@@ -104,6 +104,9 @@ export default {
       })
 
       return homeworksByDay
+    },
+    currentUserId () {
+      return this.params.userId
     }
   },
   watch: {
@@ -113,6 +116,12 @@ export default {
         if (this.displayed && this.homeworks === undefined) {
           this.getHomeworkList()
         }
+      }
+    },
+    currentUserId () {
+      this.getNbUndone()
+      if (this.displayed) {
+        this.getHomeworkList()
       }
     }
   },
@@ -156,6 +165,8 @@ export default {
     changeDoneStatus (homework, isDone) {
       homework.isDone = isDone
       isDone ? this.nbUndone-- : this.nbUndone++
+      // TODO: Only change value without call a WS
+      this.$store.dispatch('course/getStudentUndoneCount', this.params.userId) // For the tab notification pellet
     }
   }
 }

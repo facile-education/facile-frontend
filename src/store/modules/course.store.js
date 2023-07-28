@@ -1,6 +1,7 @@
 import dayjs from 'dayjs'
 
 import { deleteSessionContent, getSessionContents, getSessionDetails } from '@/api/course.service'
+import { getStudentUndoneCount } from '@/api/homework.service'
 import scheduleService from '@/api/schedule.service'
 
 export const state = {
@@ -11,10 +12,14 @@ export const state = {
   sessionList: [],
   selectedSession: undefined,
   selectedCourse: undefined,
-  isCreateSessionModalDisplayed: false
+  isCreateSessionModalDisplayed: false,
+  nbUndoneHomeworks: 0
 }
 
 export const mutations = {
+  setNbUndoneHomeworks (state, payload) {
+    state.nbUndoneHomeworks = payload
+  },
   endLoading (state) {
     state.isLoading = false
   },
@@ -46,6 +51,13 @@ export const mutations = {
   }
 }
 export const actions = {
+  getStudentUndoneCount ({ commit }, studentId) {
+    getStudentUndoneCount(studentId).then((data) => {
+      if (data.success) {
+        commit('setNbUndoneHomeworks', data.nbUndoneHomeworks)
+      }
+    })
+  },
   getSessionList ({ state, commit, rootState }) {
     commit('loading')
     let targetUserId = 0

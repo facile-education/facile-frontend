@@ -28,7 +28,7 @@
           :sort="false"
           display-field="fullName"
           class="child-selector"
-          @update:model-value="unselectCourse"
+          @update:model-value="changeStudent"
         />
       </div>
 
@@ -50,8 +50,6 @@
 </template>
 
 <script>
-// import { getStudentUndoneCount } from '@/api/homework.service'
-import { getStudentUndoneCount } from '@/api/homework.service'
 import CourseTab from '@/components/Course/CourseTab.vue'
 import HomeworkTab from '@/components/Course/HomeworkTab.vue'
 import ScheduleTab from '@/components/Course/ScheduleTab.vue'
@@ -71,11 +69,13 @@ export default {
   data () {
     return {
       selectedUser: undefined,
-      nbUndoneHomeworks: 0,
       initHomeworkId: undefined
     }
   },
   computed: {
+    nbUndoneHomeworks () {
+      return this.$store.state.course.nbUndoneHomeworks
+    },
     childList () {
       return this.$store.state.user.children
     },
@@ -98,11 +98,7 @@ export default {
   },
   created () {
     if (this.$store.state.user.isStudent || this.$store.state.user.isParent) {
-      getStudentUndoneCount(this.studentId).then((data) => {
-        if (data.success) {
-          this.nbUndoneHomeworks = data.nbUndoneHomeworks
-        }
-      })
+      this.$store.dispatch('course/getStudentUndoneCount', this.studentId)
     }
 
     // Assume childList is correctly loaded at this state
@@ -142,7 +138,8 @@ export default {
         this.$refs.tabList.selectTab(1)
       }
     },
-    unselectCourse () {
+    changeStudent () {
+      this.$store.dispatch('course/getStudentUndoneCount', this.studentId)
       this.$store.dispatch('course/setSelectedCourse', undefined)
     }
   }
