@@ -199,7 +199,7 @@ export default {
     font-weight: 600;
 
     img {
-      margin-right: 20px;
+      margin-right: 10px;
       height: 30px;
       width: 30px;
     }
@@ -226,13 +226,19 @@ export default {
   font-size: 1rem;
   font-weight: 600;
   align-items: center;
+  margin-bottom: 3px;
 
   img {
-    margin-right: 20px;
+    margin-right: 10px;
     height: 30px;
     width: 30px;
   }
 }
+
+.members-details {
+  margin-left: 40px;
+}
+
 </style>
 
 <i18n locale="fr">

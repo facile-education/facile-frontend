@@ -55,12 +55,6 @@
       @input-change="searchTimeOut"
       @update:model-value="onSelectUser"
     />
-    <DatepickerNav
-      v-if="mq.phone"
-      class="date-picker"
-      :selected-date="selectedDate"
-      @select-date="onSelectDate"
-    />
 
     <!-- Parents with 2 or more children -->
     <div
@@ -78,6 +72,13 @@
         display-field="firstName"
       />
     </div>
+
+    <DatepickerNav
+      v-if="mq.phone"
+      class="date-picker"
+      :selected-date="selectedDate"
+      @select-date="onSelectDate"
+    />
 
     <PentilaDropdown
       v-if="(schoolList && schoolList.length > 1)"

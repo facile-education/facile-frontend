@@ -39,20 +39,19 @@
                   class="horizontal-timeline-week"
                   :class="{ 'current-week theme-border-color': week.isCurrent, 'theme-background-color': week.isSelected }"
                   :style="'left: ' + (index * (100/month.weekList.length)) + '%, width: ' + (100/month.weekList.length) + '%'"
+                  :title="formatWeekRange(week)"
                   tabindex="0"
                   @keypress.enter="onClickWeek(week)"
                   @click="onClickWeek(week)"
                 >
                   <div
                     class="weeknumber-label"
-                    :title="formatWeekNbPopup(month.date)"
                   >
                     S.{{ week.weekNumber }}
                   </div>
                   <div
                     class="timeline-label"
                     :class="{ 'theme-color': week.isCurrent}"
-                    :title="week.label"
                   >
                     {{ week.label }}
                   </div>
@@ -277,8 +276,8 @@ export default {
       week.isSelected = true
       this.selectedWeek = week
     },
-    formatWeekNbPopup (date) {
-      return dayjs(date).format('MMM YYYY')
+    formatWeekRange (week) {
+      return this.$t('from') + ' ' + dayjs(week.firstDayOfWeek).format('DD MMMM YYYY') + ' ' + this.$t('to') + ' ' + dayjs(week.lastDayOfWeek).format('DD MMMM YYYY')
     }
   }
 }
@@ -378,3 +377,10 @@ export default {
   border-left: solid 5px;
 }
 </style>
+
+<i18n locale="fr">
+  {
+    "from": "Du",
+    "to": "au"
+  }
+</i18n>

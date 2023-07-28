@@ -1,10 +1,17 @@
 <template>
   <div class="param-header">
-    <!-- add tool here -->
+    <PentilaButton
+      class="round"
+      @click="runPermissions"
+    >
+      <span>{{ $t('permissions') }}</span>
+    </PentilaButton>
   </div>
 </template>
 
 <script>
+
+import { runPermissions } from '@/api/maintenance.service'
 
 export default {
   name: 'OneShotMaintenance',
@@ -17,6 +24,17 @@ export default {
   created () {
   },
   methods: {
+    runPermissions () {
+      runPermissions().then(
+        (data) => {
+          if (data.success) {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
+          } else {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+          }
+        }
+      )
+    }
   }
 }
 </script>
@@ -35,6 +53,8 @@ export default {
 
 <i18n locale="fr">
 {
-  "message-migration": "Migration des messages (3.0.9)"
+  "permissions": "Mise à jour des permissions",
+  "success": "Opération terminée en succès",
+  "error": "Opération terminée en erreur"
 }
 </i18n>

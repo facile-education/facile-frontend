@@ -89,10 +89,10 @@ export default {
 @import "@design";
 
 .banner-search {
-  margin-left: 4px;
+  margin-left: 10px;
   background-color: white;
   display: flex;
-  height: 40px;
+  height: 32px;
   border-radius: 6px;
 }
 
@@ -113,7 +113,7 @@ export default {
 
 .search-input {
   height: 100%;
-  width: 303px;
+  width: 200px;
   padding-left: 8px;
   margin: 0;
   font-size: 12px;

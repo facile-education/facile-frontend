@@ -145,7 +145,7 @@ h1 {
 {
   "header": "Toutes les annonces",
   "dashboard": "Tableau de bord",
-  "unreadFilter": "Filtrer les non lu",
+  "unreadFilter": "Filtrer les non lues",
   "errorPlaceholder": "Oups, une erreur est survenue..."
 }
 </i18n>

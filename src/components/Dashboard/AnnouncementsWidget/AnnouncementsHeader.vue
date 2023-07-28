@@ -185,7 +185,7 @@ header {
 <i18n locale="fr">
 {
   "announcements": "Annonces",
-  "unreadFilter": "Filtrer les non lu",
+  "unreadFilter": "Filtrer les non lues",
   "create-annouce": "Créer une annonce"
 }
 </i18n>

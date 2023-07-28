@@ -58,7 +58,9 @@ export const actions = {
     commit('setSelectedGroup', state.defaultGroup) // To keep separation
   },
   setSelectedGroup ({ commit }, group) {
-    commit('setSelectedUser', undefined)
+    if (group.groupId !== 0) {
+      commit('setSelectedUser', undefined)
+    }
     commit('setSelectedGroup', group) // To keep separation
   },
   resetSessions ({ commit }) {

@@ -250,7 +250,7 @@ export default {
     })
 
     getNextSessions(this.sessionId, dayjs().format('YYYY-MM-DD HH:mm')).then((data) => {
-      if (!data.success) {
+      if (data.success) {
         this.nextSessions = data.nextSessions
 
         if (!this.isCreation) {

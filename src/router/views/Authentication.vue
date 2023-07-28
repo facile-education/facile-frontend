@@ -294,7 +294,7 @@ export default {
         const userId = new URLSearchParams(window.location.search).get('user_id')
         loginUrl += '&user_id=' + userId
       }
-      axios.post(loginUrl,
+      axios.post(loginUrl + '&p_auth=' + this.p_auth,
         formData,
         { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
       ).then(() => {

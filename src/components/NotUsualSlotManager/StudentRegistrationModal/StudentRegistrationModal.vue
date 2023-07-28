@@ -193,7 +193,7 @@ export default {
       return toPascalCase(this.student.firstName) + ' ' + toPascalCase(this.student.lastName) + ' - ' + this.student.className
     },
     formattedSlot () {
-      return this.$t('Moment.the') + ' ' + dayjs(this.event.start).format('DD MMMM YYYY ' + this.$t('Moment.at') + ' HH:mm')
+      return this.$t('Moment.the') + ' ' + dayjs(this.event.startDate).format('DD MMMM YYYY ' + this.$t('Moment.at') + ' HH:mm')
     },
     isCommentDisplayed () {
       return !this.deregistration && this.slotType.type === notUsualSlotsConstants.detentionType
@@ -223,7 +223,7 @@ export default {
 
       if (hour.isValid()) {
         this.error = ''
-        this.registrationDate = dayjs(dayjs(this.event.start).format('YYYY-MM-DD') + ' ' + value, 'YYYY-MM-DD HH:mm')
+        this.registrationDate = dayjs(dayjs(this.event.startDate).format('YYYY-MM-DD') + ' ' + value, 'YYYY-MM-DD HH:mm')
       } else {
         this.error = this.$t('NotUsualSlots.StudentRegistrationModal.haveToSelectValidTime')
       }
@@ -264,7 +264,13 @@ export default {
   },
   methods: {
     formatSession (session) {
-      session.label = dayjs(session.startDate, 'YYYY/MM/DD HH:mm').format('HH:mm') + ' / ' + dayjs(session.endDate, 'YYYY/MM/DD HH:mm').format('HH:mm') + ' - ' + session.groupName
+      if (session.type !== undefined) {
+        // HHC slot
+        session.label = dayjs(session.startDate, 'YYYY/MM/DD HH:mm').format('HH:mm') + ' / ' + dayjs(session.endDate, 'YYYY/MM/DD HH:mm').format('HH:mm') + ' - ' + notUsualSlotsConstants.getSlotTypeByNumber(session.type).label
+      } else {
+        // Classic session slot
+        session.label = dayjs(session.startDate, 'YYYY/MM/DD HH:mm').format('HH:mm') + ' / ' + dayjs(session.endDate, 'YYYY/MM/DD HH:mm').format('HH:mm') + ' - ' + session.groupName
+      }
     },
     submit () {
       if (this.deregistration) {

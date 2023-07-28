@@ -144,7 +144,7 @@ h1 {
 {
   "header": "Tous les événements",
   "dashboard": "Tableau de bord",
-  "unreadFilter": "Filtrer les non lu",
+  "unreadFilter": "Filtrer les non lus",
   "errorPlaceholder": "Oups, une erreur est survenue..."
 }
 </i18n>

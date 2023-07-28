@@ -133,13 +133,15 @@ function saveTeacherSubstitutes (sessionId, teacherArray) {
   })).then(response => response.data)
 }
 
-function createSession (groupId, subject, room, startDate, endDate, teacherIds, isRecurrent) {
+function createSession (groupId, subject, room, dayNumber, slot, startHour, endHour, teacherIds, isRecurrent) {
   return axios.post(constants.JSON_WS_URL + CDT_PATH + 'cdtsession/create-session', PentilaUtils.URL.params({
     groupId,
     subject,
     room,
-    startDate: startDate.format('YYYY-MM-DD HH:mm'),
-    endDate: endDate.format('YYYY-MM-DD HH:mm'),
+    dayNumber,
+    slot,
+    startHour,
+    endHour,
     teacherIds: JSON.stringify(teacherIds),
     isRecurrent
   })).then(response => response.data)

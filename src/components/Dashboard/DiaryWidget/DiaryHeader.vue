@@ -114,7 +114,7 @@ header {
 <i18n locale="fr">
 {
   "diary": "Agenda",
-  "unreadFilter": "Filtrer les non lu",
+  "unreadFilter": "Filtrer les non lus",
   "create-event": "Créer un évènement"
 }
 </i18n>

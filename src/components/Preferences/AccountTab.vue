@@ -3,8 +3,8 @@
     class="account-tab"
     data-test="account-tab"
   >
-    <section class="user-data">
-      <h4 v-t="'userData'" />
+    <section class="user-picture">
+      <h4 v-t="'userPicture'" />
       <div class="body">
         <div class="left-section">
           <div class="user-picture">
@@ -26,36 +26,7 @@
               >
             </PentilaButton>
           </div>
-          <div class="user-information">
-            <div class="name">
-              {{ user.firstName + ' ' + user.lastName }}
-            </div>
-            <div v-if="details.emailAddress">
-              <label v-t="'emailAddressLabel'" /> {{ details.emailAddress }}
-            </div>
-            <div v-if="details.address">
-              <label v-t="'addressLabel'" /> {{ details.address }}
-            </div>
-            <div v-if="details.mobilePhoneNumber">
-              <label v-t="'mobilePhoneNumberLabel'" /> {{ details.mobilePhoneNumber }}
-            </div>
-            <div v-if="details.smsPhoneNumber">
-              <label v-t="'smsPhoneNumberLabel'" /> {{ details.smsPhoneNumber }}
-            </div>
-            <div v-if="details.homePhoneNumber">
-              <label v-t="'homePhoneNumberLabel'" /> {{ details.homePhoneNumber }}
-            </div>
-            <div v-if="details.officePhoneNumber">
-              <label v-t="'officePhoneNumberLabel'" /> {{ details.officePhoneNumber }}
-            </div>
-          </div>
         </div>
-        <PentilaButton
-          :title="$t('reportChange')"
-          @click="reportChange"
-        >
-          {{ $t('reportChange') }}
-        </PentilaButton>
       </div>
     </section>
     <section class="theme-color">
@@ -76,7 +47,7 @@
         @update:modelValue="onFrequencySelect"
       />
     </section>
-    <section class="webdav">
+    <!-- <section class="webdav">
       <div class="webdav-line">
         <h4 v-t="'webdav'" />
         <PentilaCheckbox
@@ -133,7 +104,7 @@
           @click="updateWebdavPassword"
         />
       </div>
-    </section>
+    </section> -->
   </div>
 
   <teleport to="body">
@@ -141,10 +112,6 @@
       v-if="show"
       @save="selectImage"
       @close="toggleImagePicker"
-    />
-    <AssistanceModal
-      v-if="isSupportModalDisplayed"
-      @close="isSupportModalDisplayed = false"
     />
   </teleport>
 </template>
@@ -156,11 +123,10 @@ import { defineAsyncComponent } from 'vue'
 
 import userService from '@/api/user.service'
 const ImagePickerModal = defineAsyncComponent(() => import('@/components/Nero/ImagePicker'))
-const AssistanceModal = defineAsyncComponent(() => import('@/components/Assistance/AssistanceModal'))
 
 export default {
   name: 'AccountTab',
-  components: { AssistanceModal, ColorPicker, ImagePickerModal },
+  components: { ColorPicker, ImagePickerModal },
   emits: ['save'],
   data () {
     return {
@@ -180,8 +146,7 @@ export default {
       isCollapsed: true,
       password: '',
       confirmedPassword: '',
-      confirmationError: '',
-      isSupportModalDisplayed: false
+      confirmationError: ''
     }
   },
   computed: {
@@ -273,9 +238,6 @@ export default {
         })
       }
     },
-    reportChange () {
-      this.isSupportModalDisplayed = true
-    },
     copyWebdavUrl () {
       navigator.permissions.query({ name: 'clipboard-write' }).then(result => {
         if (result.state === 'granted' || result.state === 'prompt') {
@@ -312,7 +274,7 @@ export default {
     }
   }
 
-  .user-data {
+  .user-picture {
     .body{
       display: flex;
       justify-content: space-between;
@@ -338,21 +300,12 @@ export default {
             right: 5px;
           }
         }
-
-        .user-information {
-          margin: auto 40px;
-
-          .name{
-            font-weight: 600;
-          }
-        }
-
       }
     }
 
   }
 
-  .theme-color, .activity-report {
+  .user-picture, .theme-color, .activity-report {
     display: flex;
     justify-content: space-between;
   }
@@ -430,7 +383,7 @@ export default {
   "activityReport": "Rapport d'activités",
   "reportChange": "Signaler un changement",
   "themeColor": "Couleur du thème",
-  "userData": "Informations personelles",
+  "userPicture": "Image de profil",
   "webdav": "Activer le Webdav",
   "copyWebdavUrl": "Copier le lien webdav",
   "updateWebdavPassword": "Réinitialiser le mot de passe",

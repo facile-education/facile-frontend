@@ -10,7 +10,8 @@ export {
   runArchiving,
   deleteGroup,
   deleteGroups,
-  runAnonymisation
+  runAnonymisation,
+  runPermissions
 }
 
 export default {
@@ -21,7 +22,8 @@ export default {
   runArchiving,
   deleteGroup,
   deleteGroups,
-  runAnonymisation
+  runAnonymisation,
+  runPermissions
 }
 
 const MAINTENANCE_PATH = '/maintenance.maintenance'
@@ -69,4 +71,8 @@ function deleteGroups (file) {
     formData,
     { headers: { 'Content-Type': 'multipart/form-data' } }
   ).then(response => response.data)
+}
+
+function runPermissions () {
+  return axios.post(constants.JSON_WS_URL + MAINTENANCE_PATH + '/add-permissions').then(response => response.data)
 }
