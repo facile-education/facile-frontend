@@ -37,18 +37,26 @@
       </div>
 
       <div
-        v-for="student in sortedStudents"
-        :key="student.userId"
-        class="student"
-      >
-        <input
-          v-model="student.isSelected"
-          :disabled="isWholeClass"
-          type="checkbox"
-          label=""
+        v-if="sortedStudents.length === 0 && !isWholeClass"
+        v-t="'errorPlaceholder'"
+        class="placeholder"
+      />
+      <ul v-else>
+        <li
+          v-for="student in sortedStudents"
+          :key="student.userId"
+          class="student"
         >
-        {{ student.lastName }} {{ student.firstName }}
-      </div>
+          <input
+            v-model="student.isSelected"
+            :disabled="isWholeClass"
+            type="checkbox"
+            label=""
+          >
+          {{ student.lastName }} {{ student.firstName }}
+        </li>
+      </ul>
+      <div />
     </template>
 
     <template #footer>
@@ -102,7 +110,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
 .studentListWindow {
+  .placeholder {
+    @extend %content-placeholder;
+  }
+
   .whole-class {
     margin-right: 20px;
   }
@@ -124,6 +143,7 @@ export default {
 
 <i18n locale="fr">
 {
+  "errorPlaceholder": "Oups, une erreur est survenue...",
   "title": "Elèves destinataires",
   "whole-class": "Toute la classe",
   "specific": "Spécifique",

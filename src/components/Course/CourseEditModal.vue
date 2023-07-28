@@ -157,7 +157,6 @@ export default {
       }
     },
     save (isDraft = false) {
-      // TODO courseId = groupId ?
       const publicationDate = dayjs().format('YYYY-MM-DD HH:mm')
 
       // Remove empty text blocks
