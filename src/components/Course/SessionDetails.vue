@@ -254,12 +254,13 @@ export default {
         clearTimeout(this.timeout)
 
         savePrivateNotes(this.session.sessionId, value).then((data) => {
-          if (data.success) {
-            // TODO update selectedDetails ? / toaster?
+          if (!data.success) {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+            console.error('Cannot save private notes')
           }
         },
         (err) => {
-          // TODO toastr
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
           console.error(err)
         })
       }, 500)
@@ -450,6 +451,7 @@ header {
   "delete": "Supprimer",
   "draftStatus": "Non publié",
   "edit": "Modifier",
+  "error": "Oups, une erreur est survenue...",
   "selectSessionPlaceholder": "Veuillez sélectionner une séance pour accéder à son contenu",
   "toDoHomeworkPlaceholder": "Aucun travail à préparer",
   "toDoHomeworkHeader": "Pour cette séance",

@@ -240,14 +240,17 @@ export default {
     getSessionStudents(this.courseId).then((data) => {
       if (data.success) {
         this.availableStudents = data.students
+      } else {
+        this.availableStudents = []
+        console.error('Cannot retrieve student list')
       }
     }, (err) => {
-      // TODO toastr
+      this.availableStudents = []
       console.error(err)
     })
 
     getNextSessions(this.sessionId, dayjs().format('YYYY-MM-DD HH:mm')).then((data) => {
-      if (data.success) {
+      if (!data.success) {
         this.nextSessions = data.nextSessions
 
         if (!this.isCreation) {
@@ -270,11 +273,12 @@ export default {
 
         this.initialForm = JSON.stringify(this.homework)
       } else {
+        this.$store.dispatch('popups/pushPopup', { message: this.$t('getNextSessionsError'), type: 'error' })
         console.error('error on homework date initialisation')
       }
     },
     (err) => {
-      // TODO toastr
+      this.$store.dispatch('popups/pushPopup', { message: this.$t('getNextSessionsError'), type: 'error' })
       console.error(err)
     })
   },
@@ -508,6 +512,7 @@ label {
   "docToReturn": "Doc. à rendre",
   "error": "Oups, une erreur est survenue...",
   "for": "Pour",
+  "getNextSessionsError": "Une erreur est survenue lors de la récupération des prochaines séances",
   "instructions": "Consigne",
   "draft": "Publier plus tard",
   "duration": "Durée estimée",
