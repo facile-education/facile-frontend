@@ -168,10 +168,13 @@ export default {
           if (data.success) {
             this.$store.dispatch('course/updateSessionContent')
             this.onClose()
+          } else {
+            console.error('Cannot create session content')
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
           }
         },
         (err) => {
-          // TODO toastr
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
           console.error(err)
         })
       } else {
@@ -179,10 +182,13 @@ export default {
           if (data.success) {
             this.$store.dispatch('course/updateSessionContent')
             this.onClose()
+          } else {
+            console.error('Cannot update session content')
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
           }
         },
         (err) => {
-          // TODO toastr
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
           console.error(err)
         })
       }
@@ -260,6 +266,7 @@ export default {
   "courseTitle": "Titre du support*",
   "post": "Publier",
   "preview": "Aperçu",
+  "error": "Oups, une erreur est survenue...",
   "previousSession": "Voir la séance précédente",
   "description": "Description",
   "required": "Champ requis",
