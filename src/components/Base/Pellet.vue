@@ -49,6 +49,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
 
 .pellet {
   height: 0.75em;
@@ -56,19 +57,7 @@ export default {
   border-radius: 50%;
 
   &.show-count {
-    height: 15px;
-    width: 20px;
-    border-radius: 8px;
-    display: flex;
-    padding: 4px;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    white-space: nowrap;
-    font-size: 10px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
+    @extend %count-pellet;
   }
 }
 
