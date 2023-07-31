@@ -66,6 +66,10 @@
     height: $side-menu-sub-entry-height;
     line-height: $side-menu-sub-entry-height;
     text-align: left;
+
+    .label {
+      color: $neutral-80;
+    }
   }
 }
 
