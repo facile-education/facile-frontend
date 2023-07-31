@@ -44,7 +44,7 @@ ul {
 h4 {
   margin: 0;
   border-bottom: $border;
-  padding: 0 8px;
+  padding: 0 1.5rem;
   text-align: left;
   cursor: default;
 }
@@ -57,7 +57,7 @@ h4 {
 }
 
 .category-item {
-  padding: 0 8px;
+  padding: 0 1.5rem;
 }
 
 </style>
