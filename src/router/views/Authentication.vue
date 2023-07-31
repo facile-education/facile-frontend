@@ -2,6 +2,10 @@
   <GVELayout>
     <h1 :aria-label="$t('title')" />
     <div class="wrapper">
+      <PentilaSpinner
+        v-if="isLoading"
+        style="z-index: 1"
+      />
       <img
         src="@assets/images/gva/logo_eel.png"
         :alt="$t('eelImg')"
@@ -148,6 +152,7 @@ export default {
   },
   data () {
     return {
+      isLoading: false,
       formUrl: constants.BASE_API_URL + '/home?p_p_id=com_liferay_login_web_portlet_LoginPortlet&p_p_lifecycle=1&p_p_state=maximized&p_p_mode=view&_com_liferay_login_web_portlet_LoginPortlet_javax.portlet.action=%2Flogin%2Flogin&_com_liferay_login_web_portlet_LoginPortlet_mvcRenderCommandName=%2Flogin%2Flogin',
       login: '',
       password: '',
@@ -203,7 +208,9 @@ export default {
   methods: {
     doLogin () {
       // First check credentials
+      this.isLoading = true
       authenticationService.checkCredentials(this.login, this.password).then((data) => {
+        this.isLoading = false
         if (!data.isValid) {
           this.isError = true
           this.showForgotPassword = true
@@ -220,10 +227,12 @@ export default {
           formData.append('_com_liferay_login_web_portlet_LoginPortlet_password', this.password)
           formData.append('_com_liferay_login_web_portlet_LoginPortlet_checkboxNames', 'rememberMe')
 
+          this.isLoading = true
           axios.post(this.formUrl,
             formData,
             { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
           ).then(() => {
+            this.isLoading = false
             // Reset p_auth_token
             store.commit('user/setPAuth', undefined)
 
@@ -239,8 +248,14 @@ export default {
               // Route to landing page
               this.$router.push(redirectUrl)
             }
+          }, (err) => {
+            this.isLoading = false
+            console.error('error when logging', err)
           })
         }
+      }, (err) => {
+        this.isLoading = false
+        console.error('error when logging', err)
       })
     },
     manageMobileApp (userId, redirectUrl) {
@@ -294,10 +309,12 @@ export default {
         const userId = new URLSearchParams(window.location.search).get('user_id')
         loginUrl += '&user_id=' + userId
       }
+      this.isLoading = true
       axios.post(loginUrl + '&p_auth=' + this.p_auth,
         formData,
         { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
       ).then(() => {
+        this.isLoading = false
         // Reset p_auth_token
         store.commit('user/setPAuth', undefined)
 
@@ -306,6 +323,9 @@ export default {
         window._paq.push(['trackPageView'])
 
         this.$router.push(DASHBOARD)
+      }, (err) => {
+        this.isLoading = false
+        console.error('error when logging', err)
       })
     },
     handleKeyPressed () {
@@ -346,6 +366,7 @@ export default {
 $eel-blue: #2c7bb8;
 
 .wrapper {
+  position: relative;
   background-color: $color-body-bg;
   padding: 1rem 3rem;
   width: 450px;
