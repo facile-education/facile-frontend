@@ -75,10 +75,8 @@ export default {
   watch: {
     isMenuExpanded: {
       immediate: true,
-      handler (oldValue, newValue) {
-        if (oldValue !== newValue) {
-          this.showSubMenu = this.isMenuExpanded
-        }
+      handler () {
+        this.showSubMenu = this.isMenuExpanded
       }
     }
   },
