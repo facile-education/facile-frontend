@@ -134,7 +134,7 @@ button {
 
 .sub-menu {
   position: relative;
-  padding: 1rem 0;
+  padding-bottom: 0.5rem;
 
   &::after {
     @extend %menu-separator;
