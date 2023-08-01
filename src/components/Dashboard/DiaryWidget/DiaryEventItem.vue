@@ -317,6 +317,8 @@ export default {
 
 <i18n locale="fr">
 {
+  "delete": "Supprimer",
+  "update": "Modifier",
   "removalConfirmMessage": "Veuillez confirmer la suppression de l'évènement \"{target}\"",
   "selectToConsult": "Sélectionner pour consulter"
 }

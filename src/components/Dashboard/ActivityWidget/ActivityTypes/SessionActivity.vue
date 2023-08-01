@@ -119,6 +119,8 @@ export default {
 {
   "TYPE_SESSION": "a ajouté un support au cours du {courseDate}",
   "TYPE_HOMEWORK": "a donné du travail pour le cours du {homeworkDate}",
-  "unknown-activity": "Activité inconnue"
+  "unknown-activity": "Activité inconnue",
+  "on": "Le",
+  "at": "à"
 }
 </i18n>
