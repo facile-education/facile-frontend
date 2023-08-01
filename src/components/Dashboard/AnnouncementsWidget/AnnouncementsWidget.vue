@@ -104,7 +104,6 @@ export default {
     this.loadAnnouncements()
   },
   mounted () {
-    this.computeHasArrowsProperty()
     window.addEventListener('resize', this.computeHasArrowsProperty)
   },
   beforeUnmount () {
@@ -170,6 +169,7 @@ export default {
           this.error = false
           this.announcementsList = data.news
           this.nbUnreadAnnouncements = data.nbUnreadNews
+          this.computeHasArrowsProperty()
         } else {
           this.error = true
           console.error('Error')
