@@ -130,6 +130,10 @@ export default {
       }
     }
   },
+  beforeUnmount () {
+    this.$store.dispatch('course/setSelectedCourse', undefined)
+    this.$store.dispatch('course/unselectSession')
+  },
   methods: {
     selectTab (tabName) {
       if (tabName === 'todo' || tabName === 'sessions') {
