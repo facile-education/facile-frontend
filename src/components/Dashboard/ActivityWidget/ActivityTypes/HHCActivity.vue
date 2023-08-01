@@ -108,6 +108,7 @@ export default {
   "TYPE_SCHOOL_RENVOI": "a renvoyé {firedUser} du cours de {courseName} du {courseDate}",
   "TYPE_PENDING_RENVOI": "Pensez à motiver le renvoi de {firedUser} du cours de {courseName} du {courseDate}",
   "setFiringReason": "Motivation de renvoi",
-  "at": "à"
+  "at": "à",
+  "on": "Le"
 }
 </i18n>
