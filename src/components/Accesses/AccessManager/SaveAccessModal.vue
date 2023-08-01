@@ -321,7 +321,7 @@ export default {
   "sizeLimit2": " caractères",
   "selectRoles": "Veuillez séléctionner au moins un profil cible",
   "selectCategory": "Veuillez séléctionner une catégorie",
-  "selectFolder": "Selectionnez un dossier collaboratif",
-  "selectFile": "Selectionnez un fichier collaboratif"
+  "selectFolder": "Sélectionnez un dossier collaboratif",
+  "selectFile": "Sélectionnez un fichier collaboratif"
 }
 </i18n>

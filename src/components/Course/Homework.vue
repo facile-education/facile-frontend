@@ -110,7 +110,7 @@ export default {
       }
     },
     formattedDoneStatus () {
-      return this.$t('doneStatus', { nbDone: this.homework.doneStudents.length, nbStudents: this.homework.selectedStudents.length })
+      return this.$tc('doneStatus', { nbDone: this.homework.doneStudents.length, nbStudents: this.homework.selectedStudents.length })
     }
   },
   methods: {
@@ -235,7 +235,7 @@ h3 {
 <i18n locale="fr">
 {
   "delete": "Supprimer",
-  "doneStatus": "Réalisé par {nbDone} élèves sur {nbStudents}",
+  "doneStatus": "Réalisé par {nbDone} élève sur {nbStudents} | Réalisé par {nbDone} élève sur {nbStudents} | Réalisé par {nbDone} élèves sur {nbStudents}",
   "edit": "Modifier",
   "hourLabel": "h",
   "minuteLabel": "min",

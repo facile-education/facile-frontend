@@ -24,10 +24,6 @@
     </div>
     <div class="infos">
       <label class="type">
-        <img
-          :src="icon"
-          alt=""
-        >
         {{ $t(typeLabel) }}
       </label>
       <h3 class="title">
@@ -221,9 +217,7 @@ export default {
 .wrapper {
   display: flex;
   // width: 49.8125rem;
-  padding: 1rem;
   align-items: center;
-  gap: 1rem;
 
   border-radius: 0.375rem;
   border: 1px solid $neutral-40;
@@ -233,7 +227,7 @@ export default {
 
 .thumbnail {
   display: flex;
-  padding: 1rem;
+  padding: 0.5rem;
   justify-content: center;
   align-items: center;
 
@@ -241,8 +235,8 @@ export default {
   background: $neutral-20;
 
   img {
-    width: 3rem;
-    height: 3rem;
+    width: 2.5rem;
+    height: 2.5rem;
   }
 }
 
@@ -255,18 +249,12 @@ export default {
 .type {
   display: flex;
   align-content: center;
-  gap: 0.5rem;
   width: 100%;
   @extend %font-regular-xs;
-
-  img {
-    width: 1rem;
-    height: 1rem;
-  }
 }
 
 .title {
-  margin: 3px 0;
+  margin: 1px 0;
   overflow: hidden;
   text-overflow: ellipsis;
   @extend %font-bold-l;
@@ -294,6 +282,7 @@ button {
 }
 
 .actions img {
+  margin-right : 1rem;
   width: 1.25rem;
   height: 1.25rem;
 }
@@ -305,6 +294,6 @@ button {
   "file": "Fichier",
   "h5p": "Contenu riche",
   "link": "Lien externe",
-  "video": "Contenu vidéo"
+  "video": "Vidéo"
 }
 </i18n>
