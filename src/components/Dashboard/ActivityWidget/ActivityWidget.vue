@@ -120,6 +120,9 @@ export default {
     }
   },
   computed: {
+    currentUserId () {
+      return this.$store.state.user.userId
+    },
     isParent () {
       return this.$store.state.user.isParent
     },
@@ -162,6 +165,15 @@ export default {
       } else { // if no activity, return the currentDate
         return dayjs()
       }
+    },
+    isAuthorOfAllNewsActivities () {
+      let isAuthorOfAllNewsActivities = true
+      this.unreadActivities.forEach((activity) => {
+        if (activity.type !== activityConstants.TYPE_NEWS || activity.authorId !== this.currentUserId) {
+          isAuthorOfAllNewsActivities = false
+        }
+      })
+      return isAuthorOfAllNewsActivities
     }
   },
   created () {
@@ -221,6 +233,11 @@ export default {
               this.readActivities.push(activity)
             }
           })
+
+          if (this.isAuthorOfAllNewsActivities) {
+            this.readActivities = [...this.unreadActivities, ...this.readActivities]
+            this.unreadActivities = []
+          }
         } else {
           this.error = true
         }
