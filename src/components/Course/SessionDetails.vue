@@ -59,7 +59,15 @@
           </div>
         </div>
 
-        <SessionContent :session-content="session.sessionContent" />
+        <SessionContent
+          v-if="hasContent"
+          :session-content="session.sessionContent"
+        />
+        <div
+          v-else
+          v-t="'courseContentPlaceholder'"
+          class="placeholder"
+        />
       </section>
 
       <section
@@ -206,7 +214,7 @@ export default {
       return (this.session.sessionContent && this.session.sessionContent.title) ? this.session.sessionContent.title : this.$t('courseContent')
     },
     dateLabel () {
-      return dayjs(this.session.startDate, 'YYYY-MM-DD HH:mm').format('ddd DD/MM')
+      return dayjs(this.session.startDate, 'YYYY-MM-DD HH:mm').format('dddd DD MMMM') + (this.session.slotNumber !== undefined ? ' - P' + this.session.slotNumber : '')
     },
     listDateLabel () {
       return this.$t('sessionOf') + dayjs(this.session.startDate, 'YYYY-MM-DD HH:mm').format('DD MMMM')
@@ -324,6 +332,9 @@ export default {
 <style lang="scss" scoped>
 @import '@design';
 
+.placeholder {
+  @extend %content-placeholder;
+}
 .session-infos {
   display: flex;
   flex-direction: column;
@@ -459,11 +470,12 @@ header {
   "givenHomeworkHeader": "Pour une prochaine date",
   "sessionHomeworkPlaceholder": "Aucun travail à faire",
   "sessionHomeworkHeader": "Pendant la séance",
-  "sessionOf": "Session du ",
-  "courseContent": "SUPPORTS DE COURS",
+  "sessionOf": "Séance du ",
+  "courseContent": "SUPPORT DE COURS",
   "notes": "Note privée",
   "notesPlaceholder": "Ma note privée",
   "publishedOn": "Publié le ",
-  "workToDo": "TRAVAUX À FAIRE"
+  "workToDo": "TRAVAUX À FAIRE",
+  "courseContentPlaceholder": "Aucun support de cours enregistré"
 }
 </i18n>

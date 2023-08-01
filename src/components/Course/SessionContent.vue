@@ -54,6 +54,6 @@ ul {
 
 <i18n locale="fr">
 {
-  "courseContentPlaceholder": "Aucun support de cours enregistré"
+  "courseContentPlaceholder": "Aucun contenu"
 }
 </i18n>

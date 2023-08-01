@@ -93,7 +93,7 @@ export default {
         {
           icon: 'icon-upload',
           fontSize: '1rem',
-          name: this.$t('addFile'),
+          name: this.$t('addOSFile'),
           callback: this.toggleOSFilePicker,
           hasInput: true
         },
@@ -236,10 +236,11 @@ input {
 
 <i18n locale="fr">
 {
-  "addFile": "Ajouter une pièce jointe",
-  "addH5p": "Ajouter un élément h5p",
+  "addFile": "Ajouter une pièce jointe depuis vos documents de l'ENTA",
+  "addOSFile": "Ajouter une pièce jointe depuis le poste de travail",
+  "addH5p": "Ajouter un élément H5P",
   "addLink": "Ajouter un lien",
-  "addSound": "Ajouter un enregistrement",
+  "addSound": "Ajouter un enregistrement audio",
   "addText": "Ajouter du texte",
   "addVideo": "Ajouter une vidéo"
 }

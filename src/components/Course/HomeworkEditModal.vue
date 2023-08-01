@@ -96,7 +96,7 @@
             :list="nextSessions"
             :sort="false"
             class="next-sessions-dropdown"
-            display-field="startDate"
+            display-field="formattedStartDate"
             :disabled="homework.dateType === 'session'"
             @update:model-value="updateTarget"
           />
@@ -252,6 +252,9 @@ export default {
     getNextSessions(this.sessionId, dayjs().format('YYYY-MM-DD HH:mm')).then((data) => {
       if (data.success) {
         this.nextSessions = data.nextSessions
+        this.nextSessions.forEach(session => {
+          session.formattedStartDate = dayjs(session.startDate).format('dddd DD MMM YYYY à HH:mm')
+        })
 
         if (!this.isCreation) {
           if (this.homework.targetSessionId !== undefined) {
@@ -522,7 +525,7 @@ label {
   "post": "Publier",
   "preview": "Aperçu",
   "required": "Champ requis",
-  "select": "Selectionner",
+  "select": "Sélectionner",
   "sessionDate": "À faire pendant la séance",
   "someStudents": "Un élève sur {total} | {count} élèves sur {total}",
   "creationTitle": "Donner du travail",
