@@ -10,6 +10,7 @@
       <FileIcon
         v-else
         :file="{extension: getExtension(activity)}"
+        width="30px"
       />
     </div>
 
