@@ -62,7 +62,6 @@ export const mutations = {
     state.notifications.schoollife -= payload
   },
   setSubMenuCategoryDisplayed (state, { category, status }) {
-    console.log(category, status)
     state.menu.find(entry => entry.i18nKey === category.i18nKey).showSubMenu = status
   }
 }
