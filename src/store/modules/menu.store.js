@@ -60,6 +60,10 @@ export const mutations = {
   },
   updateSchoollifeNotification (state, payload) {
     state.notifications.schoollife -= payload
+  },
+  setSubMenuCategoryDisplayed (state, { category, status }) {
+    console.log(category, status)
+    state.menu.find(entry => entry.i18nKey === category.i18nKey).showSubMenu = status
   }
 }
 
@@ -74,6 +78,7 @@ export const actions = {
           if (entry.component !== undefined) {
             router.addRoute(getRoute(entry))
           } else {
+            entry.showSubMenu = data.expanded
             entry.menu.forEach(entry => {
               router.addRoute(getRoute(entry))
             })
@@ -110,5 +115,8 @@ export const actions = {
   },
   updateSchoollifeNotification ({ commit }, nbRead) {
     commit('updateSchoollifeNotification', nbRead)
+  },
+  setSubMenuCategoryDisplayed ({ commit }, { category, status }) {
+    commit('setSubMenuCategoryDisplayed', { category, status })
   }
 }

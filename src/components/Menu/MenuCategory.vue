@@ -2,9 +2,9 @@
   <div class="menu-category">
     <button
       class="category-name root-menu-entry"
-      :class="{'expanded': isMenuExpanded, 'show-menu': showSubMenu}"
-      :aria-label="isMenuExpanded ? (showSubMenu ? $t('collapse') : $t('extend')) : ''"
-      :title="isMenuExpanded ? (showSubMenu ? $t('collapse') : $t('extend')) :''"
+      :class="{'expanded': isMenuExpanded, 'show-menu': menuCategory.showSubMenu}"
+      :aria-label="isMenuExpanded ? (menuCategory.showSubMenu ? $t('collapse') : $t('extend')) : ''"
+      :title="isMenuExpanded ? (menuCategory.showSubMenu ? $t('collapse') : $t('extend')) :''"
       @click="toggleSubMenu"
     >
       <CustomIcon
@@ -26,7 +26,7 @@
     </button>
 
     <nav
-      v-if="showSubMenu"
+      v-if="menuCategory.showSubMenu"
       class="sub-menu"
     >
       <ul>
@@ -63,7 +63,6 @@ export default {
   },
   data () {
     return {
-      showSubMenu: false,
       showPopover: false
     }
   },
@@ -74,16 +73,15 @@ export default {
   },
   watch: {
     isMenuExpanded: {
-      immediate: true,
       handler () {
-        this.showSubMenu = this.isMenuExpanded
+        this.$store.dispatch('menu/setSubMenuCategoryDisplayed', { category: this.menuCategory, status: this.isMenuExpanded })
       }
     }
   },
   methods: {
     toggleSubMenu () {
       if (this.isMenuExpanded) {
-        this.showSubMenu = !this.showSubMenu
+        this.$store.dispatch('menu/setSubMenuCategoryDisplayed', { category: this.menuCategory, status: !this.menuCategory.showSubMenu })
       }
     }
   }
