@@ -127,7 +127,7 @@ export default {
       return this.$store.state.user.isParent
     },
     separatorLabel () {
-      return this.$t('newsSince') + dayjs(this.lastDashboardAccessDate, 'YYYY-MM-DD HH:mm').format('DD MMMM YYYY')
+      return this.$t('newsSince') + dayjs(this.lastDashboardAccessDate, 'YYYY-MM-DD HH:mm').calendar()
     },
     filterBooleans () {
       if (this.filter.activityTypes.length === 0) { // If no filter selected, return all activity types
@@ -312,7 +312,7 @@ ul {
 {
   "errorPlaceholder": "Oups, une erreur est survenue...",
   "emptyPlaceholder": "Aucune activité à afficher",
-  "newsSince": "Nouveautés depuis le ",
+  "newsSince": "Nouveautés depuis ",
   "showMore": "Voir toutes les activités"
 }
 </i18n>
