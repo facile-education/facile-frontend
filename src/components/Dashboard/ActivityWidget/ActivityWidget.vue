@@ -220,7 +220,6 @@ export default {
           this.error = false
           this.nbNewActivities = data.nbNewActivities
           this.lastDashboardAccessDate = data.lastDashboardAccessDate
-          // this.lastDashboardAccessDate = '2022-05-05 10:19:48'
 
           data.activities.forEach((activity) => {
             if (activity.type === activityConstants.TYPE_NEWS) {
