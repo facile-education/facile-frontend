@@ -6,7 +6,7 @@
     class="text-content"
     :disabled="!isEdition"
     :class="{'placeholder': content.placeholder}"
-    :focus-on-creation="!content.placeholder"
+    :focus-on-creation="focusOnCreation"
     @update:model-value="update"
     @blur="blur"
   />
@@ -98,6 +98,10 @@ export default {
       default: ''
     },
     isEdition: {
+      type: Boolean,
+      default: false
+    },
+    focusOnCreation: {
       type: Boolean,
       default: false
     }
