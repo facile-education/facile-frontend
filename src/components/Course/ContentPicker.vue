@@ -21,39 +21,39 @@
         @change="importDocument"
       >
     </PentilaButton>
-  </div>
 
-  <teleport to="body">
-    <FilePickerModal
-      v-if="isFilePickerDisplayed"
-      @added-files="addFile"
-      @close="toggleFilePicker"
-    />
-    <AudioRecorderModal
-      v-if="isAudioRecorderModalDisplayed"
-      :edited-content="{}"
-      @save="addAudioRecording"
-      @close="toggleAudioRecorderModal"
-    />
-    <LinkModal
-      v-if="isLinkModalDisplayed"
-      :edited-content="{}"
-      @save="addContent"
-      @close="toggleLinkModal"
-    />
-    <VideoModal
-      v-if="isVideoModalDisplayed"
-      :edited-content="{}"
-      @save="addContent"
-      @close="toggleVideoModal"
-    />
-    <H5PModal
-      v-if="isH5PModalDisplayed"
-      :edited-content="{}"
-      @save="addContent"
-      @close="toggleH5PModal"
-    />
-  </teleport>
+    <teleport to="body">
+      <FilePickerModal
+        v-if="isFilePickerDisplayed"
+        @added-files="addFile"
+        @close="toggleFilePicker"
+      />
+      <AudioRecorderModal
+        v-if="isAudioRecorderModalDisplayed"
+        :edited-content="{}"
+        @save="addAudioRecording"
+        @close="toggleAudioRecorderModal"
+      />
+      <LinkModal
+        v-if="isLinkModalDisplayed"
+        :edited-content="{}"
+        @save="addContent"
+        @close="toggleLinkModal"
+      />
+      <VideoModal
+        v-if="isVideoModalDisplayed"
+        :edited-content="{}"
+        @save="addContent"
+        @close="toggleVideoModal"
+      />
+      <H5PModal
+        v-if="isH5PModalDisplayed"
+        :edited-content="{}"
+        @save="addContent"
+        @close="toggleH5PModal"
+      />
+    </teleport>
+  </div>
 </template>
 
 <script>
@@ -157,6 +157,7 @@ export default {
     },
     addContent (content) {
       this.$emit('add', content)
+      setTimeout(() => this.$el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50) // 50ms to let the added block the time to be mounted...
     },
     addFile (files) {
       this.addContent({ contentType: 5, fileId: files[0].id, contentName: files[0].name })
