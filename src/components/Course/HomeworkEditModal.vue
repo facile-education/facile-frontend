@@ -51,6 +51,7 @@
           v-model="block.contentValue"
           :content="block"
           :is-edition="true"
+          :focus-on-creation="isCreation && !block.placeholder"
           @delete="deleteContent(index)"
         />
         <ContentPicker @add="addContent" />
