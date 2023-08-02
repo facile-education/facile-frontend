@@ -232,7 +232,7 @@ export default {
   align-items: center;
 
   border-radius: 0.375rem;
-  background: $neutral-20;
+  //background: $neutral-20;
 
   img {
     width: 2.5rem;
