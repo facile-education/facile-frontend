@@ -214,10 +214,10 @@ export default {
       return (this.session.sessionContent && this.session.sessionContent.title) ? this.session.sessionContent.title : this.$t('courseContent')
     },
     dateLabel () {
-      return dayjs(this.session.startDate, 'YYYY-MM-DD HH:mm').format('dddd DD MMMM') + (this.session.slotNumber !== undefined ? ' - P' + this.session.slotNumber : '')
+      return dayjs(this.session.startDate, 'YYYY-MM-DD HH:mm').format('dddd DD MMMM') + (this.session.slotNumber ? ' - P' + this.session.slotNumber : '')
     },
     listDateLabel () {
-      return this.$t('sessionOf') + dayjs(this.session.startDate, 'YYYY-MM-DD HH:mm').format('DD MMMM')
+      return this.$t('sessionOf') + dayjs(this.session.startDate, 'YYYY-MM-DD HH:mm').format('DD MMMM') + (this.session.slotNumber ? ' - P' + this.session.slotNumber : '')
     },
     eventList () {
       return this.$store.state.course.sessionList
