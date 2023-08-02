@@ -138,11 +138,11 @@ import { defineAsyncComponent, nextTick } from 'vue'
 import { getSessionStudents } from '@/api/course.service'
 import { createHomework, updateHomework } from '@/api/homework.service'
 import { getNextSessions } from '@/api/schedule.service'
-import Content from '@/components/Course/Content.vue'
 import ContentPicker from '@/components/Course/ContentPicker.vue'
 import contentTypeConstants from '@/constants/contentTypeConstants'
 
 const StudentListModal = defineAsyncComponent(() => import('@/components/Progression/Assignment/StudentListModal'))
+const Content = defineAsyncComponent(() => import('@/components/Course/Content'))
 
 export default {
   name: 'HomeworkEditModal',

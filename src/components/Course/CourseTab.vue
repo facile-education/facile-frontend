@@ -34,9 +34,10 @@
 
 <script>
 import CourseDetails from '@components/Course/CourseDetails.vue'
-import CourseItem from '@components/Course/CourseItem.vue'
+import { defineAsyncComponent } from 'vue'
 
 import { getCourses } from '@/api/course.service'
+const CourseItem = defineAsyncComponent(() => import('@components/Course/CourseItem.vue'))
 
 export default {
   name: 'CourseTab',
