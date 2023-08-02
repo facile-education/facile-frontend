@@ -14,6 +14,7 @@
       <section class="left">
         <div class="title">
           <PentilaInput
+            ref="titleInput"
             v-model="sessionContent.title"
             :maxlength="250"
             :placeholder="$t('courseTitle')"
@@ -62,7 +63,7 @@ import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import dayjs from 'dayjs'
 import PentilaUtils from 'pentila-utils'
-import { defineAsyncComponent } from 'vue'
+import { defineAsyncComponent, nextTick } from 'vue'
 
 import { addSessionContent, getSessionPreview, updateSessionContent } from '@/api/course.service'
 import ContentPicker from '@/components/Course/ContentPicker.vue'
@@ -129,6 +130,14 @@ export default {
       })
     }
     this.initialForm = JSON.stringify(this.sessionContent)
+  },
+  mounted () {
+    if (this.isCreation) {
+      const vm = this
+      nextTick(function () {
+        vm.$refs.titleInput.focus()
+      })
+    }
   },
   methods: {
     addContent (content) {

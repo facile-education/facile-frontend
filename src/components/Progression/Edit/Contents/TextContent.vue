@@ -52,6 +52,10 @@ export default {
     editorId: {
       type: Number,
       default: 0
+    },
+    focusOnCreation: {
+      type: Boolean,
+      default: false
     }
   },
   emits: ['focus', 'blur', 'input', 'save', 'update:content'],
@@ -91,6 +95,9 @@ export default {
     },
     onEditorReady (e) {
       this.ready = true
+      if (this.focusOnCreation && !this.disabled) {
+        e.focus()
+      }
       // Make CKEditor available for tests
       if (window.Cypress) {
         window.ckeditor = e
