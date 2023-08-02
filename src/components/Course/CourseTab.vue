@@ -19,7 +19,7 @@
       class="courses"
     >
       <li
-        v-for="course in courses"
+        v-for="course in sortedCourses"
         :key="course.courseId"
       >
         <CourseItem :course="course" />
@@ -34,6 +34,7 @@
 
 <script>
 import CourseDetails from '@components/Course/CourseDetails.vue'
+import PentilaUtils from 'pentila-utils'
 import { defineAsyncComponent } from 'vue'
 
 import { getCourses } from '@/api/course.service'
@@ -59,6 +60,9 @@ export default {
   computed: {
     selectedCourse () {
       return this.$store.state.course.selectedCourse
+    },
+    sortedCourses () {
+      return PentilaUtils.Array.sortWithString(this.courses, false, 'groupName')
     }
   },
   watch: {
