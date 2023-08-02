@@ -122,7 +122,7 @@ export default {
     formErrorList () {
       return {
         videoName: (this.v$.videoName.$invalid && this.v$.videoName.$dirty) ? this.$t('Commons.required') : '',
-        embedHTMLElement: (this.v$.embedHTMLElement.$invalid && this.v$.embedHTMLElement.$dirty) ? this.$t('embedElementCheckFailed') : '',
+        embedHTMLElement: (this.v$.embedHTMLElement.$invalid && this.v$.embedHTMLElement.$dirty) ? this.$t('embedElementCheckFailed', { embedText: '<embed src="https://peertube.fr/videos/embed/7da97aab-a57b-40ec-bcbf-53ece033dae6">' }) : '',
         embedSrcAttribute: (this.v$.embedSrcAttribute.$invalid && this.v$.embedSrcAttribute.$dirty) ? this.$t('srcRequired') : ''
       }
     },
@@ -261,6 +261,6 @@ export default {
   "UnauthorizedUrlException": "Ce nom de domaine n'est pas autorisé pour ce type de contenu",
   "urlPlaceholder": "Coller ici le code d'intégration de la vidéo",
   "srcRequired": "Le contenu embarqué doit comprendre un attribut \"src\" non vide",
-  "embedElementCheckFailed": "Ce type de contenu n'est pas un contenu embarqué valide"
+  "embedElementCheckFailed": "Ceci n'est pas un code d'intégration valide (par exemple {embedText} )"
 }
 </i18n>
