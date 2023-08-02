@@ -6,6 +6,7 @@
     class="text-content"
     :disabled="!isEdition"
     :class="{'placeholder': content.placeholder}"
+    :focus-on-creation="!content.placeholder"
     @update:model-value="update"
     @blur="blur"
   />

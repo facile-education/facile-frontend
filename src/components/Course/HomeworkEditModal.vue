@@ -14,6 +14,7 @@
       <section class="left">
         <div class="title">
           <PentilaInput
+            ref="titleInput"
             v-model="homework.title"
             :maxlength="250"
             :placeholder="$t('homeworkTitle')"
@@ -130,7 +131,7 @@ import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import dayjs from 'dayjs'
 import PentilaUtils from 'pentila-utils'
-import { defineAsyncComponent } from 'vue'
+import { defineAsyncComponent, nextTick } from 'vue'
 
 import { getSessionStudents } from '@/api/course.service'
 import { createHomework, updateHomework } from '@/api/homework.service'
@@ -284,6 +285,14 @@ export default {
       this.$store.dispatch('popups/pushPopup', { message: this.$t('getNextSessionsError'), type: 'error' })
       console.error(err)
     })
+  },
+  mounted () {
+    if (this.isCreation) {
+      const vm = this
+      nextTick(function () {
+        vm.$refs.titleInput.focus()
+      })
+    }
   },
   methods: {
     addContent (content) {
