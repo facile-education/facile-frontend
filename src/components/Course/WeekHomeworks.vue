@@ -189,7 +189,7 @@ header {
   }
 
   a {
-    @extend %font-regular-s;
+    @extend %font-regular-m;
   }
 }
 
