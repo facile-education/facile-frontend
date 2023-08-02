@@ -17,14 +17,14 @@
       >
         <PentilaRadioButton
           v-model="isWholeClass"
-          :rb-value="true"
+          rb-value="true"
           :label="$t('whole-class')"
           class="radio"
         />
 
         <PentilaRadioButton
           v-model="isWholeClass"
-          :rb-value="false"
+          rb-value="false"
           :label="$t('specific')"
           class="radio"
         />
@@ -42,9 +42,10 @@
           class="student"
         >
           <PentilaCheckbox
-            v-model="student.isSelected"
-            :disabled="isWholeClass"
+            :model-value="isSelected(student)"
+            :disabled="isWholeClass==='true'"
             :label="student.lastName + ' ' + student.firstName"
+            @update:model-value="changeStudentStatus(student, $event)"
           />
         </li>
       </ul>
@@ -70,32 +71,51 @@ export default {
   name: 'StudentListModal',
   inject: ['mq'],
   props: {
-    students: {
+    studentList: {
       type: Array,
       required: true
+    },
+    initialState: {
+      type: Object,
+      default: undefined
     }
   },
   emits: ['close'],
   data () {
     return {
-      isWholeClass: true
+      isWholeClass: 'true',
+      selectedStudents: []
     }
   },
   computed: {
     sortedStudents () {
-      return _.orderBy(this.students, 'lastName', 'asc')
+      return _.orderBy(this.studentList, 'lastName', 'asc')
     }
   },
-  mounted () {
-    for (let idx = 0; idx < this.students.length; ++idx) {
-      if (this.students[idx].isSelected) {
-        this.isWholeClass = false
-      }
+  created () {
+    if (this.initialState) {
+      this.isWholeClass = this.initialState.isWholeClass ? 'true' : 'false'
+      this.selectedStudents = this.initialState.selectedStudents
     }
   },
   methods: {
+    isSelected (student) {
+      return this.selectedStudents.map(student => student.userId).indexOf(student.userId) !== -1
+    },
+    changeStudentStatus (student, selectedValue) {
+      if (selectedValue) {
+        this.selectedStudents.push(student)
+      } else {
+        const index = this.selectedStudents.map(student => student.userId).indexOf(student.userId)
+        if (index !== -1) {
+          this.selectedStudents.splice(index, 1)
+        } else {
+          console.error('Cannot unselect student ', student)
+        }
+      }
+    },
     closeModal () {
-      this.$emit('close', this.students, this.isWholeClass)
+      this.$emit('close', this.isWholeClass === 'true', this.selectedStudents)
     }
   }
 }

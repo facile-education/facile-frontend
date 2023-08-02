@@ -121,7 +121,8 @@
   <teleport to="body">
     <StudentListModal
       v-if="displayStudentModal"
-      :students="availableStudents"
+      :student-list="availableStudents"
+      :initial-state="{isWholeClass: homework.isWholeClass, selectedStudents: homework.selectedStudents}"
       @close="onUpdateStudents"
     />
   </teleport>
@@ -303,18 +304,11 @@ export default {
     deleteContent (index) {
       this.homework.blocks.splice(index, 1)
     },
-    onUpdateStudents (students, isWholeClass) {
+    onUpdateStudents (isWholeClass, selectedStudents) {
       this.displayStudentModal = false
-      // If specific students, keep the selected ones
-      this.homework.selectedStudents.length = 0
-      if (!isWholeClass) {
-        for (let idx = 0; idx < students.length; ++idx) {
-          if (students[idx].isSelected) {
-            this.homework.selectedStudents.push(students[idx])
-          }
-        }
-      }
-      this.homework.isWholeClass = (isWholeClass || this.homework.selectedStudents.length === 0)
+
+      this.homework.isWholeClass = isWholeClass
+      this.homework.selectedStudents = selectedStudents
     },
     openStudentModal () {
       this.displayStudentModal = true
