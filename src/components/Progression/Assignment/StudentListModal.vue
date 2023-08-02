@@ -13,27 +13,21 @@
 
     <template #body>
       <div
-        class="whole-class"
+        class="class-selector"
       >
-        <input
-          id="wholeClass"
+        <PentilaRadioButton
           v-model="isWholeClass"
-          type="radio"
-          :value="true"
-        >
-        {{ $t('whole-class') }}
-      </div>
+          :rb-value="true"
+          :label="$t('whole-class')"
+          class="radio"
+        />
 
-      <div
-        class="specific"
-      >
-        <input
-          id="specific"
+        <PentilaRadioButton
           v-model="isWholeClass"
-          type="radio"
-          :value="false"
-        >
-        {{ $t('specific') }}
+          :rb-value="false"
+          :label="$t('specific')"
+          class="radio"
+        />
       </div>
 
       <div
@@ -47,13 +41,11 @@
           :key="student.userId"
           class="student"
         >
-          <input
+          <PentilaCheckbox
             v-model="student.isSelected"
             :disabled="isWholeClass"
-            type="checkbox"
-            label=""
-          >
-          {{ student.lastName }} {{ student.firstName }}
+            :label="student.lastName + ' ' + student.firstName"
+          />
         </li>
       </ul>
       <div />
@@ -115,29 +107,30 @@ ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
-.studentListWindow {
-  .placeholder {
-    @extend %content-placeholder;
-  }
+.class-selector {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  margin-bottom: 1rem;
+}
 
-  .whole-class {
-    margin-right: 20px;
-  }
+.placeholder {
+  @extend %content-placeholder;
+}
 
-  .specific {
-    margin-bottom: 20px;
-  }
+input {
+  margin-right: 5px;
+}
 
-  input {
-    margin-right: 5px;
-  }
-
-  span {
-    text-align: center;
-    margin: 10px;
-  }
+span {
+  text-align: center;
+  margin: 10px;
 }
 </style>
 
