@@ -1,7 +1,7 @@
 <template>
   <header class="banner">
     <button
-      v-if="mq.phone"
+      v-if="mq.phone || displayLikePhone"
       :aria-label="$t('toggleMenu')"
       :title="$t('toggleMenu')"
       class="menu-icon-button"
@@ -13,7 +13,7 @@
       >
     </button>
 
-    <BannerSearch v-if="!mq.phone" />
+    <BannerSearch v-if="!mq.phone && !displayLikePhone" />
 
     <nav class="right-section">
       <BannerServices />
@@ -44,6 +44,9 @@ export default {
     }
   },
   computed: {
+    displayLikePhone () {
+      return this.$store.state.misc.keepPhoneStatus
+    },
     isSessionWarningDisplayed () {
       return this.inactionTime > this.$store.state.menu.sessionTimeout - this.$store.state.menu.sessionTimeoutWarning
     },

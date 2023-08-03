@@ -6,6 +6,7 @@
 import { setMainColor } from '@/utils/theme.util'
 
 export default {
+  inject: ['mq'],
   computed: {
     isIOS () {
       const platform = navigator?.userAgentData?.platform || navigator?.platform || 'unknown'
@@ -22,7 +23,24 @@ export default {
       this.addMaxScaleToViewport()
     }
   },
+  mounted () {
+    if (typeof window.screen.orientation !== 'undefined') {
+      window.screen.orientation.addEventListener('change', this.handleOrientationChange, false)
+    } else {
+      console.error('Cannot handle screen orientation change!')
+    }
+  },
+  beforeUnmount () {
+    if (typeof window.screen.orientation !== 'undefined') {
+      window.screen.orientation.removeEventListener('change', this.handleOrientationChange, false)
+    }
+  },
   methods: {
+    handleOrientationChange () {
+      if (this.mq.phone) {
+        this.$store.dispatch('misc/setKeepPhoneStatus', true)
+      }
+    },
     addMaxScaleToViewport () {
       const el = document.querySelector('meta[name=viewport]')
 

@@ -3,7 +3,8 @@
 export const state = {
   draggedEntities: [],
   isThereDocumentDrag: false,
-  nbOpenModals: 0
+  nbOpenModals: 0,
+  keepPhoneStatus: false
 }
 
 export const mutations = {
@@ -21,6 +22,9 @@ export const mutations = {
   },
   decreaseModalCount (state) {
     state.nbOpenModals = state.nbOpenModals - 1
+  },
+  setKeepPhoneStatus (state, payload) {
+    state.keepPhoneStatus = payload
   }
 }
 
@@ -38,5 +42,8 @@ export const actions = {
   },
   decreaseModalCount ({ commit }) {
     commit('decreaseModalCount')
+  },
+  setKeepPhoneStatus ({ commit }, payload) {
+    commit('setKeepPhoneStatus', payload)
   }
 }
