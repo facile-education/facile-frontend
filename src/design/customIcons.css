@@ -26,59 +26,59 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-devoirs:before {
+.icon-folder:before {
+  content: "\e900";
+}
+.icon-calendar:before {
+  content: "\e903";
+}
+.icon-langues:before {
+  content: "\e904";
+}
+.icon-clock:before {
+  content: "\e905";
+}
+.icon-home:before {
+  content: "\e906";
+}
+.icon-resource:before {
+  content: "\e907";
+}
+.icon-admin:before {
+  content: "\e908";
+}
+.icon-upload:before {
+  content: "\e909";
+}
+.icon-Aa:before {
+  content: "\e90a";
+}
+.icon-record:before {
   content: "\e90b";
 }
-.icon-seance:before {
+.icon-link:before {
   content: "\e90c";
+}
+.icon-h5p:before {
+  content: "\e90d";
+}
+.icon-play:before {
+  content: "\e90e";
+}
+.icon-devoirs:before {
+  content: "\e90f";
+}
+.icon-seance:before {
+  content: "\e910";
+}
+.icon-collab-workspace:before {
+  content: "\e911";
+}
+.icon-double-arrow:before {
+  content: "\e912";
 }
 .icon-school-life:before {
   content: "\e902";
-}
-.icon-upload:before {
-  content: "\e90d";
-}
-.icon-Aa:before {
-  content: "\e90e";
-}
-.icon-record:before {
-  content: "\e90f";
-}
-.icon-link:before {
-  content: "\e910";
-}
-.icon-h5p:before {
-  content: "\e911";
-}
-.icon-play:before {
-  content: "\e912";
-}
-.icon-resource:before {
-  content: "\e903";
-}
-.icon-clock:before {
-  content: "\e904";
-}
-.icon-calendar:before {
-  content: "\e905";
-}
-.icon-langues:before {
-  content: "\e906";
-}
-.icon-collab-workspace:before {
-  content: "\e907";
-}
-.icon-folder:before {
-  content: "\e908";
-}
-.icon-double-arrow:before {
-  content: "\e909";
-}
-.icon-home:before {
-  content: "\e90a";
-}
-.icon-admin:before {
-  content: "\e900";
 }
 .icon-filtres:before {
   content: "\e901";
