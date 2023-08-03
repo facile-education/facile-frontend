@@ -4,6 +4,7 @@
       class="homework-item"
       :style="'background-color: ' + homework.color + '; border-color: ' + homeWorkBorderColor"
       :tabindex="0"
+      :title="homework.title"
       @keyup.enter="redirect"
       @click="redirect"
     >
@@ -15,23 +16,25 @@
 
       <PentilaSpinner v-if="isLoading" />
 
-      <span class="transparent-part">
-        <span class="left-section">
-          <strong class="subject"> {{ homework.subject }}</strong>
-          <span
-            class="description"
-            v-html="homework.description"
-          />
+      <span
+        class="transparent-part"
+        :class="{'undone': !homework.isDone && !homework.isSent}"
+      >
+        <span class="left">
+          <span class="first-line">{{ homework.subject }} · {{ teacherName }} · {{ 'P' + homework.targetSlotNumber }}</span>
+          <strong class="title">{{ homework.title }}</strong>
+          <span class="description">{{ description }}</span>
         </span>
+
         <span
           v-if="homework.type===homeworksTypes.SIMPLE_INSTRUCTION"
-          class="right-section done-status"
+          class="right-section"
         >
-          <span v-t="(isDoneSwitchStatus ? 'done' : 'todo')" />
-          <PentilaToggleSwitch
+          <PentilaCheckbox
             v-model="isDoneSwitchStatus"
-            class="switch"
-            @update:modelValue="toggleDoneStatus"
+            :label="homework.isDone ? $t('done') : $t('todo')"
+            :right-display="true"
+            @update:model-value="toggleDoneStatus"
             @click.stop
             @keyup.enter.stop
           />
@@ -59,6 +62,7 @@
 
 <script>
 import BaseIcon from '@components/Base/BaseIcon.vue'
+import { getHomeworkTeacherName } from '@utils/commons.util'
 import dayjs from 'dayjs'
 
 import { setHomeworkDoneStatus } from '@/api/homework.service'
@@ -86,6 +90,12 @@ export default {
     },
     homeWorkBorderColor () {
       return (this.homework.isDone || this.homework.isSent) ? ('#FFFFFFDD #FFFFFFDD #FFFFFFDD ' + this.homework.color) : this.homework.color
+    },
+    teacherName () {
+      return getHomeworkTeacherName(this.homework)
+    },
+    description () {
+      return this.homework.shortContent
     }
   },
   methods: {
@@ -131,7 +141,6 @@ button {
 .homework-container {
   padding-right: 4px;
   padding-top: 4px;
-  height: 50px;
   width: 100%;
 }
 
@@ -143,7 +152,7 @@ button {
   border-right: 1px solid;
   border-bottom: 1px solid;
   border-left: 5px solid;
-  border-radius: 3px;
+  border-radius: 6px;
   overflow: visible;
   cursor: pointer;
 }
@@ -155,15 +164,21 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 1rem;
+  padding: 0.5rem 1rem;
+
+  &.undone {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+  }
 }
 
 .pellet {
   @extend %item-pellet;
 }
 
-.left-section {
-  display: block;
+.left {
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
 }
 
@@ -173,30 +188,31 @@ button {
   font-size: 0.8rem;
 }
 
-.subject {
-  display: block;
-  font-size: 0.8rem;
+.first-line {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  @extend %font-regular-xs;
+}
+
+.title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @extend %font-bold-l;
 }
 
 .description {
-  ::deep(p) {
-    margin: 0;
-    font-size: 0.8rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @extend %font-regular-s;
 }
 
-.done-status {
-  display: flex;
-  align-items: center;
-}
-
-.switch, .paper-clip {
+.paper-clip {
   margin-left: 0.5rem;
 }
 

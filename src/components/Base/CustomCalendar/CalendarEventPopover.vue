@@ -83,6 +83,7 @@
 import dayjs from 'dayjs'
 
 import NeroIcon from '@/components/Nero/NeroIcon'
+import { getTeachersLabel } from '@utils/commons.util'
 
 export default {
   name: 'CalendarEventPopover',
@@ -123,12 +124,7 @@ export default {
         dayjs(this.selectedEvent.event.end).format('HH:mm')
     },
     formattedTeacherName () {
-      let label = ''
-      this.appEvent.teachers.forEach(teacher => {
-        const name = teacher.firstName.substring(0, 1) + '. ' + teacher.lastName
-        label += (label === '') ? name : ', ' + name
-      })
-      return label + (this.appEvent.subject ? ' - ' : '')
+      return getTeachersLabel(this.appEvent.teachers) + (this.appEvent.subject ? ' - ' : '')
     },
     inscriptionLeft () {
       return this.appEvent.capacity - this.appEvent.nbRegisteredStudents

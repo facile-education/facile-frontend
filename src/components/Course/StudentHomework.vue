@@ -10,7 +10,7 @@
     />
     <header>
       <div class="left">
-        <span class="subject">{{ homework.subject }} · {{ homework.cours }} · {{ teacherName }}</span>
+        <span class="subject">{{ homework.subject }} · {{ homework.cours }} · {{ teacherName }} · {{ 'P' + homework.targetSlotNumber }}</span>
         <div class="title">
           <h3>{{ homework.title }}</h3>
           <span
@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import { getHomeworkTeacherName } from '@utils/commons.util'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
@@ -97,7 +98,7 @@ export default {
       return dayjs(this.homework.modificationDate, 'YYYY-MM-DD HH:mm')
     },
     teacherName () {
-      return this.homework.teacher !== undefined ? this.homework.teacher.firstName.substring(0, 1) + '. ' + this.homework.teacher.lastName : ''
+      return getHomeworkTeacherName(this.homework)
     },
     formattedEstimatedTime () {
       const nbMinutes = this.homework.estimatedTime
