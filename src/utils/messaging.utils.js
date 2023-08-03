@@ -107,12 +107,11 @@ const MessagingUtils = {
     return false
   },
   selectMessage (message) {
-    store.dispatch('messaging/setSelectedMessages', [message])
-
     // Mark as read if unread
     if (message.isNew) {
       this.markMessagesAsReadUnread([message.messageId], true)
     }
+    store.dispatch('messaging/setSelectedMessages', [message])
   },
   selectThread (thread, messageIdToSelect) {
     store.dispatch('messaging/setLastSelectedThread', thread)

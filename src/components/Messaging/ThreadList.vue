@@ -31,7 +31,7 @@
         />
       </div>
       <div
-        v-else-if="threads.length === 0"
+        v-else-if="threads.length === 0 && !isLoadingThreads"
         class="placeholder"
       >
         <div v-t="currentFolder.type === 1 ? 'emptyBox' : 'emptyFolder'" />

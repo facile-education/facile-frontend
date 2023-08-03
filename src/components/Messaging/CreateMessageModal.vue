@@ -426,9 +426,25 @@ export default {
     },
     saveDraft () {
       const successMessage = this.$t('draftSaved')
-      messageService.saveDraft(this.recipients, this.subject, this.currentContent, this.attachedFiles, this.messageParameters.draftMessageId, false).then((data) => {
+      const originThreadId = (this.originMessage !== undefined && this.originMessage.threadId !== undefined ? this.originMessage.threadId : 0)
+      messageService.saveDraft(this.recipients, this.subject, this.currentContent, this.attachedFiles, this.messageParameters.draftMessageId, originThreadId, false).then((data) => {
         if (data.success) {
           this.$store.dispatch('popups/pushPopup', { message: successMessage, type: 'info' })
+          // Refresh origin message if draft made from a reply
+          if (this.$store.state.messaging.selectedMessages.length > 0) {
+            // Message is selected -> reload parent thread
+            for (const thread of this.$store.state.messaging.threads) {
+              if (thread.threadId === this.$store.state.messaging.selectedMessages[0].threadId) {
+                messagingUtils.reloadThread(thread)
+                break
+              }
+            }
+          } else {
+            // Thread is selected
+            if (this.$store.state.messaging.lastSelectedThread !== undefined) {
+              messagingUtils.reloadThread(this.$store.state.messaging.lastSelectedThread)
+            }
+          }
           messagingUtils.refresh() // Useless because of the running thread in backend
         }
       })

@@ -146,13 +146,14 @@ function sendMessage (recipients, subject, content, attachedFiles, draftMessageI
 /**
  * Saves a draft
  */
-function saveDraft (recipients, subject, content, attachedFiles, draftMessageId, isSupport) {
+function saveDraft (recipients, subject, content, attachedFiles, draftMessageId, threadId, isSupport) {
   const formData = new FormData()
   formData.append('recipients', JSON.stringify(recipients))
   formData.append('subject', subject)
   formData.append('content', content)
   formData.append('attachedFiles', JSON.stringify(attachedFiles))
   formData.append('draftMessageId', draftMessageId)
+  formData.append('threadId', threadId)
   formData.append('isSupport', isSupport)
   return axios.post(constants.JSON_WS_URL + MESSAGING_PATH + '/save-draft',
     formData

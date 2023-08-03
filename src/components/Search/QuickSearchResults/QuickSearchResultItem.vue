@@ -109,7 +109,7 @@ export default {
     icon () {
       switch (this.searchResult.service) {
         case searchConstants.TYPE_NEWS:
-          return require('@assets/icon_news.svg')
+          return require('@assets/images/default_school_news_0.png')
         case searchConstants.TYPE_NEWS_FILE:
           return require('@assets/icons/documents/icon-file.svg')
         case searchConstants.TYPE_MESSAGE:

@@ -159,7 +159,7 @@ export default {
           this.videoModalDisplayed = true
           break
         case contentTypeConstants.TYPE_FILE_CONTENT:
-          this.$store.dispatch('documents/openFile', { id: this.content.fileId, name: this.content.fileName })
+          this.$store.dispatch('documents/openFile', { id: this.content.fileId, name: this.content.fileName, readOnly: true })
           break
         case contentTypeConstants.TYPE_H5P_CONTENT:
           // TODO: Test with real whitelisted h5p content

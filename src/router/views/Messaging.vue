@@ -120,6 +120,8 @@ export default {
       () => {
         if (this.$route.params.messageId) {
           this.$store.dispatch('messaging/setDisplayMessageFromRouting', true)
+          this.$store.dispatch('messaging/showDetailPanel')
+
           if (this.$route.params.fileId && this.$route.params.display) {
             this.$store.dispatch('documents/openFile', { id: this.$route.params.fileId, name: this.$route.params.fileName })
           }

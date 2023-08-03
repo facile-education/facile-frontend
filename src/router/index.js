@@ -106,12 +106,17 @@ router.afterEach((to, from) => {
   // Update menu CSS
   store.dispatch('menu/updateActiveRoute', to.path)
 
-  // Matomo stats : use window._paq instead of this.$matomo because this one is not in the context
-  if (store.state.user.schoolList !== undefined && store.state.user.schoolList[0] !== undefined) {
-    window._paq.push(['setCustomDimension', 1, store.state.user.schoolList[0].schoolId])
-    window._paq.push(['setCustomDimension', 2, store.state.user.profileId])
-    window._paq.push(['setCustomDimension', 4, to.meta.id])
-    window._paq.push(['trackPageView'])
+  // Register matomo hit if service changes
+  const fromService = from.fullPath.split('/')[1]
+  const toService = to.fullPath.split('/')[1]
+  if (fromService !== toService) {
+    // Matomo stats : use window._paq instead of this.$matomo because this one is not in the context
+    if (store.state.user.schoolList !== undefined && store.state.user.schoolList[0] !== undefined) {
+      window._paq.push(['setCustomDimension', 1, store.state.user.schoolList[0].schoolId])
+      window._paq.push(['setCustomDimension', 2, store.state.user.profileId])
+      window._paq.push(['setCustomDimension', 4, to.meta.id])
+      window._paq.push(['trackPageView'])
+    }
   }
 })
 
