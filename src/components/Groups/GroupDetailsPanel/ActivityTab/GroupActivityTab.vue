@@ -23,7 +23,7 @@
           <ActivityItem
             :activity="activity"
             :is-last="activity.activityId === lastActivity.activityId"
-            @getNextActivities="getActivities"
+            @get-next-activities="getActivities"
             @refresh="refresh"
           />
         </li>
@@ -54,7 +54,8 @@ export default {
   data () {
     return {
       activitiesLoading: false,
-      activityList: []
+      activityList: [],
+      hasEnded: true
     }
   },
   computed: {
@@ -74,6 +75,7 @@ export default {
       handler () {
         this.activityList.length = 0
         this.maxDate = dayjs().add(1, 'day')
+        this.hasEnded = false
         this.getActivities()
       }
     }
@@ -85,6 +87,7 @@ export default {
   methods: {
     refresh () {
       this.activityList = []
+      this.hasEnded = false
       this.getActivities()
     },
     getActivities () {
@@ -105,6 +108,10 @@ export default {
         getGroupActivity(this.group.groupId, this.lastActivityDate.format('YYYY-MM-DD HH:mm:sss'), allActivitiesPaginationSize).then((data) => {
           this.activitiesLoading = false
           if (data.success) {
+            if (data.activities.length < allActivitiesPaginationSize) {
+              this.hasEnded = true
+            }
+
             this.activityList = this.activityList.concat(data.activities)
             // Update maxDate
             if (this.activityList.length > 1) {
@@ -120,7 +127,7 @@ export default {
         const nbPixelsBeforeBottom = scroll.scrollHeight - (scroll.scrollTop + scroll.clientHeight)
 
         if (nbPixelsBeforeBottom <= 0) {
-          if (!this.activitiesLoading) {
+          if (!this.activitiesLoading && !this.hasEnded) {
             this.getActivities()
           }
         }

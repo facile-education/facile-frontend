@@ -82,6 +82,7 @@ export default {
     }
   },
   created () {
+    this.$store.commit('groups/setFilter', this.params)
     if (this.hasScopeList) {
       this.selectedScope = this.scopeList[0]
     }
