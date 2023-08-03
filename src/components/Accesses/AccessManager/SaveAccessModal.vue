@@ -14,7 +14,7 @@
       <div class="first-line">
         <ThumbnailSelector
           :thumbnail-url="thumbnail"
-          @selectImage="selectImage"
+          @select-image="selectImage"
         />
 
         <div class="input">
@@ -45,10 +45,10 @@
       <div class="redirection">
         <AccessRedirectionSelector
           :init-redirection="initRedirection"
-          @updateType="selectedType=$event"
-          @updateUrl="updateURL"
-          @updateFolder="updateFolder"
-          @updateFile="updateFile"
+          @update-type="selectedType=$event"
+          @update-url="updateURL"
+          @update-folder="updateFolder"
+          @update-file="updateFile"
         />
         <PentilaErrorMessage
           :error-message="formErrorList.redirection"
@@ -87,6 +87,7 @@ import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import { nextTick } from 'vue'
 
+import { saveSchoolAccess } from '@/api/access.service'
 import { defaultImagesKeys } from '@/constants/icons'
 
 const inputMaxSize = 75
@@ -158,7 +159,7 @@ export default {
     formAccess () {
       return {
         access: {
-          id: this.initAccess ? this.initAccess.accessId : undefined,
+          accessId: this.initAccess ? this.initAccess.accessId : undefined,
           title: this.title,
           type: this.selectedType,
           url: this.url,
@@ -167,9 +168,9 @@ export default {
           fileId: this.fileId ? this.fileId : '-1',
           fileName: this.fileName,
           profiles: this.roles,
-          // todo: thumbnail
           thumbnailId: this.thumbnailId,
-          thumbnailUrl: this.thumbnailUrl
+          thumbnailUrl: this.thumbnailUrl,
+          position: this.initAccess ? this.initAccess.position : 0
         },
         selectedCategory: this.selectedCategory
       }
@@ -186,6 +187,9 @@ export default {
           ? this.$t('selectCategory')
           : ''
       }
+    },
+    selectedSchool () {
+      return this.$store.state.accessManager.selectedSchool
     }
   },
   created () {
@@ -252,30 +256,28 @@ export default {
       if (this.v$.$invalid) {
         this.v$.$touch()
       } else {
-        if (this.isCreation) {
-          this.createAccess()
-        } else {
-          this.updateAccess()
-        }
+        this.saveAccess()
       }
     },
-    createAccess () {
+    saveAccess () {
       const access = this.formAccess.access
-      const selectedCategory = this.formAccess.selectedCategory
+      const category = this.formAccess.selectedCategory
 
-      // Deep copy categoryList
-      const newCategoryList = JSON.parse(JSON.stringify(this.categoryList))
-      // Add the new access in place
-      const category = newCategoryList[selectedCategory.position]
-      access.position = category.accessList.length // Put in last position
-      category.accessList.push(access)
-      // Set the new categoryList
-      this.$store.dispatch('accessManager/setCategoryList', newCategoryList)
-      this.onClose()
-    },
-    updateAccess () {
-      this.$emit('updateAccess', this.formAccess)
-      this.onClose()
+      if (this.isCreation || access.categoryId !== category.categoryId) {
+        access.position = category.accessList.length
+      }
+
+      access.categoryId = category.categoryId
+
+      saveSchoolAccess(this.selectedSchool.schoolId, access).then((data) => {
+        if (data.success) {
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('saveSuccess'), type: 'success' })
+          this.$store.dispatch('accessManager/getSchoolAccesses') // Reload changes to assure to have the backend-data
+          this.onClose()
+        } else {
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+        }
+      })
     },
     onClose () {
       this.$store.dispatch('misc/decreaseModalCount')
@@ -288,7 +290,6 @@ export default {
 <style lang="scss" scoped>
 
 .dropdown {
-  max-width: min(100%, 200px);
   white-space: nowrap;
 }
 
@@ -297,6 +298,10 @@ export default {
 }
 
 @media screen and (min-width: 700px) {
+  .dropdown {
+    max-width: min(100%, 200px);
+  }
+
   .first-line {
     display: flex;
     gap: 1rem;

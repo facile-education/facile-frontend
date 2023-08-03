@@ -10,8 +10,8 @@
 
       <div class="first-line">
         <AccessCreateButton
-          @createCategory="isCreateCategoryInputDisplayed=true"
-          @createAccess="isSaveAccessModalDisplayed=true"
+          @create-category="isCreateCategoryInputDisplayed=true"
+          @create-access="isSaveAccessModalDisplayed=true"
         />
 
         <SeeAccessesAs />
@@ -28,7 +28,7 @@
       />
       <CategoriesPlaceholder
         v-else-if="categoryList.length === 0 && !isCreateCategoryInputDisplayed"
-        @createCategory="isCreateCategoryInputDisplayed=true"
+        @create-category="isCreateCategoryInputDisplayed=true"
       />
 
       <AccessCategoryList
@@ -39,14 +39,8 @@
       <AccessCategoryInput
         v-if="isCreateCategoryInputDisplayed"
         class="category-input"
-        @submitName="createCategory"
+        @submit-name="createCategory"
         @close="isCreateCategoryInputDisplayed = false"
-      />
-
-      <AccessFooter
-        class="footer"
-        @reset="reset"
-        @submit="submit"
       />
     </div>
     <div
@@ -70,14 +64,13 @@
 import AccessCategoryInput from '@components/Accesses/AccessManager/AccessCategoryInput.vue'
 import AccessCategoryList from '@components/Accesses/AccessManager/AccessCategoryList.vue'
 import AccessCreateButton from '@components/Accesses/AccessManager/AccessCreateButton.vue'
-import AccessFooter from '@components/Accesses/AccessManager/AccessFooter.vue'
 import CategoriesPlaceholder from '@components/Accesses/AccessManager/CategoriesPlaceholder.vue'
 import SchoolSelector from '@components/Accesses/AccessManager/SchoolSelector.vue'
 import SeeAccessesAs from '@components/Accesses/AccessManager/SeeAccessesAs.vue'
 import { sortAccesses } from '@utils/accessUtils'
 import { defineAsyncComponent } from 'vue'
 
-import { saveSchoolAccesses } from '@/api/access.service'
+import { saveSchoolCategory } from '@/api/access.service'
 import Layout from '@/router/layouts/BannerLayout'
 const SaveAccessModal = defineAsyncComponent(() => import('@components/Accesses/AccessManager/SaveAccessModal.vue'))
 
@@ -86,25 +79,12 @@ export default {
   components: {
     SeeAccessesAs,
     CategoriesPlaceholder,
-    AccessFooter,
     SchoolSelector,
     AccessCategoryInput,
     AccessCreateButton,
     SaveAccessModal,
     AccessCategoryList,
     Layout
-  },
-  beforeRouteLeave (to, from, next) {
-    if (this.haveChanges) {
-      const answer = window.confirm(this.$t('confirmExitMessage'))
-      if (answer) {
-        next()
-      } else {
-        next(false)
-      }
-    } else {
-      next()
-    }
   },
   data () {
     return {
@@ -133,9 +113,6 @@ export default {
     },
     sortedCategoryList () {
       return sortAccesses(this.categoryList)
-    },
-    haveChanges () {
-      return this.$store.getters['accessManager/haveChanges']
     }
   },
   created () {
@@ -143,48 +120,23 @@ export default {
       this.$store.dispatch('accessManager/getRoleList')
     }
   },
-  mounted () {
-    window.addEventListener('beforeunload', this.confirmExit)
-  },
-  beforeUnmount () {
-    window.removeEventListener('beforeunload', this.confirmExit)
-  },
   methods: {
-    confirmExit (event) {
-      if (this.haveChanges) {
-        const confirmationMessage = this.$t('confirmExitMessage')
-        // For old versions of Chrome and Firefox
-        event.returnValue = confirmationMessage
-        // The return value is used by most of modern browsers
-        return confirmationMessage
-      }
-    },
     createCategory (name) {
       this.isCreateCategoryInputDisplayed = false
       if (name.length > 0) {
-        const newCategoryList = [...this.categoryList]
-        newCategoryList.push({
-          categoryName: name,
-          schoolId: this.selectedSchool,
-          position: this.categoryList.length,
-          accessList: []
+        const category = { categoryName: name, position: this.categoryList.length }
+        saveSchoolCategory(this.selectedSchool.schoolId, category).then((data) => {
+          if (data.success) {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('saveSuccess'), type: 'success' })
+            this.$store.dispatch('accessManager/getSchoolAccesses') // Reload changes to assure to have the backend-data
+          } else {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+          }
         })
-        this.$store.dispatch('accessManager/setCategoryList', newCategoryList)
       }
     },
     reset () {
       this.$store.dispatch('accessManager/setCategoryList', this.initialCategoryList)
-    },
-    submit () {
-      saveSchoolAccesses(this.selectedSchool.schoolId, this.categoryList).then((data) => {
-        if (data.success) {
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('saveSuccess'), type: 'success' })
-          this.$store.dispatch('accessManager/getSchoolAccesses') // Reload changes to assure to have the backend-data
-        } else {
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
-          console.error('Error')
-        }
-      })
     }
   }
 }
@@ -192,6 +144,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "@design";
+
 .placeholder {
   height: 20vh;
   width: 100%;
@@ -227,8 +180,7 @@ export default {
 {
   "errorPlaceholder": "Oups, une erreur est survenue...",
   "serviceTitle": "Gestion des accès",
-  "saveSuccess": "Accès mis à jour avec succès!",
-  "noRolePlaceholder": "Erreur lors de la récupération des roles, veuillez contacter le service technique",
-  "confirmExitMessage": "Êtes-vous sûr de vouloir quitter cette page ? Les modifications non sauvegardées seront perdues."
+  "saveSuccess": "Accès mis à jour avec succès.",
+  "noRolePlaceholder": "Erreur lors de la récupération des roles, veuillez contacter le service technique"
 }
 </i18n>
