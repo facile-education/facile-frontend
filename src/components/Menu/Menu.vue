@@ -1,10 +1,10 @@
 <template>
   <section
-    :class="{'open': expanded, 'phone-menu': mq.phone}"
+    :class="{'open': expanded, 'phone-menu': (mq.phone || displayLikePhone)}"
     class="menu"
   >
     <button
-      v-if="mq.phone"
+      v-if="mq.phone || displayLikePhone"
       class="close-menu"
       :aria-label="$t('close')"
       :title="$t('close')"
@@ -20,7 +20,7 @@
     <MenuItemList class="menu-item-list" />
 
     <button
-      v-if="!mq.phone"
+      v-if="!mq.phone && !displayLikePhone"
       class="expand-menu"
       :aria-label="expanded ? $t('collapse') : $t('extend')"
       :title="expanded ? $t('collapse') : $t('extend')"
@@ -47,6 +47,9 @@ export default {
   },
   inject: ['mq'],
   computed: {
+    displayLikePhone () {
+      return this.$store.state.misc.keepPhoneStatus
+    },
     expanded () {
       return this.$store.state.menu.menuExpanded
     }
@@ -87,6 +90,7 @@ export default {
   width: 100%;
   height: 100%;
   z-index: $mobile-menu-z-index;
+  overflow-y: auto;
 }
 
 button {

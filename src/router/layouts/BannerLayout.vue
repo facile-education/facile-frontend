@@ -8,7 +8,7 @@
     <Banner class="nero-header theme-background-color" />
 
     <Menu
-      v-if="!mq.phone"
+      v-if="!mq.phone && ! displayLikePhone"
       class="nero-menu"
     />
     <Transition name="fade">
@@ -29,7 +29,7 @@
 
     <div
       class="popups-container"
-      :class="{'phone': mq.phone}"
+      :class="{'phone': (mq.phone || displayLikePhone)}"
     >
       <Popup
         v-for="(popup, index) in popupList"
@@ -45,7 +45,7 @@
     <div
       v-if="isLoadingProgressionDisplayed"
       class="background-actions-container"
-      :class="{'phone': mq.phone}"
+      :class="{'phone': (mq.phone || displayLikePhone)}"
     >
       <UploadProgression />
     </div>
@@ -155,6 +155,9 @@ export default {
     }
   },
   computed: {
+    displayLikePhone () {
+      return this.$store.state.misc.keepPhoneStatus
+    },
     isConflictModalDisplayed () {
       return this.$store.getters['conflictModal/isConflictModalDisplayed']
     },
@@ -181,9 +184,9 @@ export default {
     },
     neroClasses () {
       return {
-        mobile: this.mq.phone,
-        'menu-expanded': (this.menuExpanded && !this.mq.phone),
-        'menu-shrinked': (!this.menuExpanded && !this.mq.phone)
+        mobile: this.mq.phone || this.displayLikePhone,
+        'menu-expanded': (this.menuExpanded && !this.mq.phone && !this.displayLikePhone),
+        'menu-shrinked': (!this.menuExpanded && !this.mq.phone && !this.displayLikePhone)
       }
     },
     openFiles () {
