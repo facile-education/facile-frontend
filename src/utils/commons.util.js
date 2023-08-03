@@ -92,6 +92,10 @@ function getTeachersLabel (teacherList) {
   return label
 }
 
+function getHomeworkTeacherName (homework) { // TODO: to uniform with previous
+  return homework.teacher !== undefined ? homework.teacher.firstName.substring(0, 1) + '. ' + homework.teacher.lastName : ''
+}
+
 /**
  * Compare entities on fields 'name', 'size', 'lastModifiedDate', 'creationDate', 'date' or 'deleteDate'
  **/
@@ -138,5 +142,6 @@ export {
   getExtensionFromName,
   compare,
   getFullName,
-  getTeachersLabel
+  getTeachersLabel,
+  getHomeworkTeacherName
 }
