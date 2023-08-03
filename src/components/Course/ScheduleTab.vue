@@ -4,38 +4,38 @@
     :class="{'phone': mq.phone}"
   >
     <DailySchedule
+      v-show="!mq.phone || !isMobileSessionDetailsDisplayed"
       ref="schedule"
       class="daily-schedule"
       @select-event="selectEvent"
     />
 
-    <SessionDetails
-      v-if="!mq.phone"
-      :session="selectedSession"
-      class="session-infos"
-    />
-
-    <PentilaWindow
-      v-else-if="isSessionInfoModalDisplayed"
-      class="session-infos-modal"
-      :class="{'phone': mq.phone}"
-      :modal="true"
-      @close="closeSessionInfoModal"
+    <div
+      v-if="!mq.phone || isMobileSessionDetailsDisplayed"
+      class="session-details"
     >
-      <template #body>
-        <SessionDetails
-          class="session-infos"
-          :session="selectedSession"
-        />
-      </template>
-    </PentilaWindow>
+      <button
+        v-if="mq.phone"
+        class="back-button"
+        @click="closeSessionInfoModal"
+      >
+        <img
+          src="@/assets/icons/calendar.svg"
+          alt=""
+        >
+        <span v-t="'back'" />
+      </button>
+
+      <SessionDetails :session="selectedSession" />
+    </div>
   </div>
 </template>
 
 <script>
-import SessionDetails from '@components/Course/SessionDetails.vue'
+import { defineAsyncComponent } from 'vue'
 
 import DailySchedule from '@/components/Course/DailySchedule.vue'
+const SessionDetails = defineAsyncComponent(() => import('@/components/Course/SessionDetails.vue'))
 
 export default {
   name: 'ScheduleTab',
@@ -46,7 +46,7 @@ export default {
   inject: ['mq'],
   data () {
     return {
-      isSessionInfoModalDisplayed: false
+      isMobileSessionDetailsDisplayed: false
     }
   },
   computed: {
@@ -70,25 +70,18 @@ export default {
       this.$refs.schedule.unselectEvent()
     },
     openSessionInfoModal () {
-      this.$store.dispatch('misc/incrementModalCount')
-      this.isSessionInfoModalDisplayed = true
+      this.isMobileSessionDetailsDisplayed = true
     },
     closeSessionInfoModal () {
       this.unselectEvent()
-      this.$store.dispatch('misc/decreaseModalCount')
-      this.isSessionInfoModalDisplayed = false
+      this.isMobileSessionDetailsDisplayed = false
     }
   }
 }
 </script>
 
-<style lang="scss">
-.session-infos-modal .window-body {
-    overflow: auto;
-}
-</style>
-
 <style lang="scss" scoped>
+@import "@design";
 
 .schedule-tab:not(.phone) {
     display: flex;
@@ -99,10 +92,34 @@ export default {
     height: 800px;
   }
 
-  .session-infos {
+  .session-details {
     width: 70%;
     height: 800px;
   }
 }
 
+.back-button {
+  width: 100%;
+  background-color: transparent;
+  cursor: pointer;
+  display: flex;
+  padding: 4px 8px;
+  margin-bottom: 10px;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+  border-radius: 6px;
+  border: 1px solid $color-border;
+
+  img {
+    margin-right: 1rem;
+  }
+}
+
 </style>
+
+<i18n locale="fr">
+{
+  "back": "Revenir au semainier"
+}
+</i18n>
