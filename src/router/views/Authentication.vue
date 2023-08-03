@@ -2,10 +2,6 @@
   <GVELayout>
     <h1 :aria-label="$t('title')" />
     <div class="wrapper">
-      <PentilaSpinner
-        v-if="isLoading"
-        style="z-index: 1"
-      />
       <img
         src="@assets/images/gva/logo_eel.png"
         :alt="$t('eelImg')"
@@ -99,8 +95,10 @@
                 />
               </div>
               <button
-                v-t="'authenticate'"
+                v-t="authenticateButtonLabel"
                 class="btn"
+                :class="{'disabled': isLoading}"
+                :disabled="isLoading"
                 :title="$t('authenticate')"
                 type="submit"
               />
@@ -157,7 +155,6 @@ export default {
       login: '',
       password: '',
       p_auth: '',
-      ssoUrl: 'https://rec-ent.eduge.ch/Shibboleth.sso/Login?entityID=https://ssoeel.geneveid.ch/ginasso/gina/fed/ent&amp;target=',
       isActive: true,
       isError: false,
       isGuestFormDisplayed: false,
@@ -170,10 +167,16 @@ export default {
   },
   computed: {
     isMobileApp () {
-      return window.location.href.includes('mobile_app')
+      return window.location.href.includes('mobile_app') || window.location.href.includes('mobile_token')
     },
     fullUrl () {
       return window.location.href
+    },
+    ssoUrl () {
+      return '/Shibboleth.sso/Login?entityID=https://ssoeel.geneveid.ch/ginasso/gina/fed/ent&target=' + encodeURIComponent(window.location.origin + '/login' + (this.isMobileApp ? '?mobile_app=true' : ''))
+    },
+    authenticateButtonLabel () {
+      return this.isLoading ? 'authenticationOnGoing' : 'authenticate'
     }
   },
   created () {
@@ -183,19 +186,22 @@ export default {
     }
 
     // Using fetch instead of axios to avoid intercept loop
+    // This authenticates through Shibboleth and MobileApplication
     fetch(constants.P_AUTH_URL).then(response => { if (response.status === 200) { return response.text() } }).then(response => {
       if (response !== undefined) {
         this.p_auth = response.trim()
 
-        // Check if already authenticated on Mobile app
-        if (window.location.href.includes('mobile_token')) {
-          this.doMobileAutoConnect()
-        }
-
         // Check if already authenticated
         fetch(constants.JSON_WS_URL + USER_PATH + GET_USER_INFOS_WS + '?p_auth=' + this.p_auth).then(response => {
           if (response.status === 200) {
-            if (this.redirect) {
+            if (this.isMobileApp) {
+              // Manage mobile token
+              let service = ''
+              if (window.location.href.includes('service')) {
+                service = new URLSearchParams(window.location.search).get('service')
+              }
+              response.json().then(data => this.manageMobileApp(data.userId, service))
+            } else if (this.redirect) {
               this.$router.push(this.redirect)
             } else {
               this.$router.push(DASHBOARD)
@@ -226,7 +232,9 @@ export default {
           formData.append('_com_liferay_login_web_portlet_LoginPortlet_login', this.login)
           formData.append('_com_liferay_login_web_portlet_LoginPortlet_password', this.password)
           formData.append('_com_liferay_login_web_portlet_LoginPortlet_checkboxNames', 'rememberMe')
-
+          if (this.isMobileApp) {
+            formData.append('_com_liferay_login_web_portlet_LoginPortlet_rememberMe', 'on')
+          }
           this.isLoading = true
           axios.post(this.formUrl,
             formData,
@@ -259,6 +267,10 @@ export default {
       })
     },
     manageMobileApp (userId, redirectUrl) {
+      // Remove first slash in redirectUrl
+      if (redirectUrl.startsWith('/')) {
+        redirectUrl = redirectUrl.substring(1)
+      }
       let refreshToken = ''
       if (window.location.href.includes('mobile_token')) {
         // Refreshing with new token
@@ -266,7 +278,7 @@ export default {
         mobileService.refreshMobileToken(mobileToken).then((response) => {
           if (response.success) {
             refreshToken = response.refreshToken
-            const mobileUrl = encodeURI(window.location.protocol + '//' + window.location.hostname + '/' + redirectUrl, 'UTF-8')
+            const mobileUrl = encodeURI(window.location.origin + '/' + redirectUrl, 'UTF-8')
             const serviceUrl = 'pentila://authorized?refresh_token=' + refreshToken + '&user_id=' + userId + '&home_url=' + mobileUrl
             window.location = serviceUrl
           }
@@ -276,57 +288,12 @@ export default {
         mobileService.addMobileToken().then((response) => {
           if (response.success) {
             refreshToken = response.refreshToken
-            const mobileUrl = encodeURI(window.location.protocol + '//' + window.location.hostname + '/' + redirectUrl, 'UTF-8')
+            const mobileUrl = encodeURI(window.location.origin + '/' + redirectUrl, 'UTF-8')
             const serviceUrl = 'pentila://authorized?refresh_token=' + refreshToken + '&user_id=' + userId + '&home_url=' + mobileUrl
             window.location = serviceUrl
           }
         })
       }
-    },
-    doMobileAutoConnect () {
-      const formData = new FormData()
-      formData.append('_com_liferay_login_web_portlet_LoginPortlet_formDate', new Date().getTime())
-      formData.append('_com_liferay_login_web_portlet_LoginPortlet_saveLastPath', false)
-      formData.append('_com_liferay_login_web_portlet_LoginPortlet_redirect', '')
-      formData.append('_com_liferay_login_web_portlet_LoginPortlet_doActionAfterLogin', false)
-      formData.append('_com_liferay_login_web_portlet_LoginPortlet_login', this.login)
-      formData.append('_com_liferay_login_web_portlet_LoginPortlet_password', this.password)
-      formData.append('_com_liferay_login_web_portlet_LoginPortlet_checkboxNames', 'rememberMe')
-      formData.append('_com_liferay_login_web_portlet_LoginPortlet_checkboxNames', 'rememberMe')
-
-      // Suffix POST url with mobile_app, mobile_token and user_id parameters added by the mobile app
-      // So that MobileApplicationAutoLogin fetches these params and authenticate the mobile user
-      let loginUrl = this.formUrl
-      if (window.location.href.includes('mobile_app')) {
-        const mobileApp = new URLSearchParams(window.location.search).get('mobile_app')
-        loginUrl += '&mobile_app=' + mobileApp
-      }
-      if (window.location.href.includes('mobile_token')) {
-        const mobileToken = new URLSearchParams(window.location.search).get('mobile_token')
-        loginUrl += '&mobile_token=' + mobileToken
-      }
-      if (window.location.href.includes('user_id')) {
-        const userId = new URLSearchParams(window.location.search).get('user_id')
-        loginUrl += '&user_id=' + userId
-      }
-      this.isLoading = true
-      axios.post(loginUrl + '&p_auth=' + this.p_auth,
-        formData,
-        { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
-      ).then(() => {
-        this.isLoading = false
-        // Reset p_auth_token
-        store.commit('user/setPAuth', undefined)
-
-        // Reset Matomo userId
-        window._paq.push(['setUserId', Math.random().toString(36)])
-        window._paq.push(['trackPageView'])
-
-        this.$router.push(DASHBOARD)
-      }, (err) => {
-        this.isLoading = false
-        console.error('error when logging', err)
-      })
     },
     handleKeyPressed () {
       this.isError = false
@@ -411,6 +378,11 @@ $eel-blue: #2c7bb8;
   border: 1px solid transparent;
   text-decoration: none;
   cursor: pointer;
+  &.disabled {
+    opacity: 50;
+    background-color: grey;
+    cursor: wait;
+  }
 }
 
 .guest, .btn {
@@ -463,6 +435,7 @@ $eel-blue: #2c7bb8;
 {
   "title": "Authentification",
   "authenticate": "Se connecter",
+  "authenticationOnGoing": "Connexion en cours ...",
   "eelImg": "Logo d'école en ligne",
   "entLogin": "Se connecter à l'ENT",
   "gvaImg": "Logo du Canton de Genève",

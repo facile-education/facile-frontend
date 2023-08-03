@@ -127,6 +127,9 @@ export const mutations = {
   },
   setSelectedMessages (state, messages) {
     state.selectedMessages = messages
+    if (messages.length === 1) {
+      messages[0].isNew = false
+    }
   },
   addSelectedMessages (state, messages) {
     state.selectedMessages = state.selectedMessages.concat(messages)

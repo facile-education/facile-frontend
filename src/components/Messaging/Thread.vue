@@ -12,7 +12,8 @@
         :class="{'theme-background-color': isThreadSelected && !isSubMessageSelected,
                  'theme-light-background-color': (!isThreadSelected || isSubMessageSelected) && isThreadExpanded,
                  'expanded': isThreadExpanded,
-                 'selection-mode': isMultiSelectionActive}"
+                 'selection-mode': isMultiSelectionActive,
+                 'phone': mq.phone || mq.tablet}"
         @click.exact="handleClick()"
         @dblclick="editDraft()"
         @click.ctrl.exact="ctrlSelectThread()"
@@ -258,13 +259,13 @@ export default {
       }
     },
     selectThread () {
-      messagingUtils.selectThread(this.thread)
       // Mark as read if unread
       for (const message of this.thread.messages) {
         if (message.messageId === this.thread.mainMessageId && message.isNew) {
           messagingUtils.markMessagesAsReadUnread([this.thread.mainMessageId], true)
         }
       }
+      messagingUtils.selectThread(this.thread)
     },
     toggleThreadExtension () {
       if (!this.isThreadSelected && (!this.mq.phone && !this.mq.tablet)) {
@@ -371,7 +372,9 @@ export default {
   cursor: pointer;
   transition-property: border-bottom-right-radius, border-bottom-left-radius;
   transition-duration: .3s;
-
+  &.phone {
+    --icons-width: 25px;
+  }
   &.selection-mode {
     .body {
       width: calc(100% - var(--icons-width) - var(--icons-shrink-width));

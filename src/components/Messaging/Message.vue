@@ -164,7 +164,7 @@ export default {
       .header-line1 {
         width: 100%;
         /* Add padding if no folder */
-        margin-top: 3px;
+        margin-top: 10px;
         display: flex;
         justify-content: space-between;
 
