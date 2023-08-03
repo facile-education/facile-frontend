@@ -85,8 +85,8 @@ export default {
   },
   computed: {
     homeworksToDisplay () { // return the nbHomeworksInWidget firsts homeworks
-      PentilaUtils.Array.sortWithString(this.homeworkList, false, 'toDate')
-      return this.homeworkList.slice(0, nbHomeworksInWidget)
+      const homeworksToDisplay = PentilaUtils.Array.sortWithString(this.homeworkList, false, 'toDate')
+      return homeworksToDisplay.slice(0, nbHomeworksInWidget)
     },
     homeworksByDay () {
       const homeworksByDay = []
