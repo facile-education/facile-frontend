@@ -63,7 +63,6 @@
       :category-list="categoryList"
       :init-access="access"
       :init-category="parentCategory"
-      @updateAccess="updateAccess"
       @close="isUpdateModalDisplayed=false"
     />
   </teleport>
@@ -73,6 +72,7 @@
 import NeroIcon from '@components/Nero/NeroIcon.vue'
 import { defineAsyncComponent } from 'vue'
 
+import { removeSchoolAccess, saveSchoolAccess } from '@/api/access.service'
 import { defaultImagesKeys } from '@/constants/icons'
 const SaveAccessModal = defineAsyncComponent(() => import('@components/Accesses/AccessManager/SaveAccessModal.vue'))
 
@@ -112,6 +112,9 @@ export default {
       }
       return result
     },
+    selectedSchool () {
+      return this.$store.state.accessManager.selectedSchool
+    },
     thumbnail () {
       if (defaultImagesKeys.indexOf(this.access.thumbnailUrl) !== -1) {
         return new URL(`../../../assets/images/${this.access.thumbnailUrl}.png`, import.meta.url).href
@@ -147,39 +150,25 @@ export default {
     },
     drop () {
       if (this.draggedAccess) {
-        // Deep copy categoryList
-        const newCategoryList = JSON.parse(JSON.stringify(this.categoryList))
+        let position = this.access.position + 1
 
-        if (this.draggedAccess.parentCategoryPosition === this.parentCategory.position && this.draggedAccess.position !== this.access.position) {
-          // Delete the dropped access from accessList
-          const category = newCategoryList[this.draggedAccess.parentCategoryPosition]
-          category.accessList.splice(this.draggedAccess.position, 1)
-          // Insert him in the good place
-          category.accessList.splice(this.access.position, 0, { ...this.draggedAccess })
-          // Recompute category positions
-          for (let index = 0; index < category.accessList.length; index++) {
-            category.accessList[index].position = index
+        this.parentCategory.accessList.forEach(access => {
+          if (access.accessId === this.draggedAccess.accessId) {
+            // If the category do not change just take current access position
+            position = this.access.position
           }
-        } else if (this.draggedAccess.parentCategoryPosition !== this.parentCategory.position) {
-          // Delete the dropped access from old category
-          const oldCategory = newCategoryList[this.draggedAccess.parentCategoryPosition]
-          oldCategory.accessList.splice(this.draggedAccess.position, 1)
-          // Recompute old category positions
-          for (let index = 0; index < oldCategory.accessList.length; index++) {
-            oldCategory.accessList[index].position = index
-          }
+        })
 
-          // Insert him in the good place in new category
-          const newCategory = newCategoryList[this.parentCategory.position]
-          newCategory.accessList.splice(this.access.position + 1, 0, { ...this.draggedAccess })
-          // Recompute new category positions
-          for (let index = 0; index < newCategory.accessList.length; index++) {
-            newCategory.accessList[index].position = index
-          }
+        if (this.draggedAccess.accessId !== this.access.accessId) {
+          saveSchoolAccess(this.selectedSchool.schoolId, { ...this.draggedAccess, categoryId: this.parentCategory.categoryId, position }).then((data) => {
+            if (data.success) {
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('saveSuccess'), type: 'success' })
+              this.$store.dispatch('accessManager/getSchoolAccesses') // Reload changes to assure to have the backend-data
+            } else {
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+            }
+          })
         }
-        // Save the new categoryList
-        this.$store.dispatch('accessManager/setCategoryList', newCategoryList)
-        this.$store.commit('accessManager/setDraggedAccess', undefined)
       }
     },
     confirmDeleteAccess () {
@@ -188,43 +177,15 @@ export default {
         lastAction: { fct: this.deleteAccess }
       })
     },
-    updateAccess (accessForm) {
-      const access = accessForm.access
-      const selectedCategory = accessForm.selectedCategory
-
-      // Deep copy categoryList
-      const newCategoryList = JSON.parse(JSON.stringify(this.categoryList))
-      // Modify the access in category
-      if (selectedCategory.position === this.parentCategory.position) { // If access not move from category update it
-        const category = newCategoryList[this.parentCategory.position]
-        access.position = this.access.position
-        category.accessList.splice(this.access.position, 1, access)
-      } else { // else, delete from old category and add in the new one in last position
-        const oldCategory = newCategoryList[this.parentCategory.position]
-        oldCategory.accessList.splice(this.access.position, 1)
-        // Compute new positions
-        for (let index = 0; index < oldCategory.accessList.length; index++) {
-          oldCategory.accessList[index].position = index
-        }
-        const newCategory = newCategoryList[selectedCategory.position]
-        access.position = newCategory.accessList.length
-        newCategory.accessList.push(access)
-      }
-      // Save the new categoryList
-      this.$store.dispatch('accessManager/setCategoryList', newCategoryList)
-    },
     deleteAccess () {
-      // Deep copy categoryList
-      const newCategoryList = JSON.parse(JSON.stringify(this.categoryList))
-      // Delete the access in category
-      const category = newCategoryList[this.parentCategory.position]
-      category.accessList.splice(this.access.position, 1)
-      // Compute new positions
-      for (let index = 0; index < category.accessList.length; index++) {
-        category.accessList[index].position = index
-      }
-      // Save the new categoryList
-      this.$store.dispatch('accessManager/setCategoryList', newCategoryList)
+      removeSchoolAccess(this.selectedSchool.schoolId, this.access.accessId).then((data) => {
+        if (data.success) {
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('saveSuccess'), type: 'success' })
+          this.$store.dispatch('accessManager/getSchoolAccesses') // Reload changes to assure to have the backend-data
+        } else {
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+        }
+      })
     }
   }
 }
@@ -375,6 +336,7 @@ h3 {
 <i18n locale="fr">
 {
   "deleteAccessWarning": "Souhaitez-vous supprimer l'accès {accessName} ?",
-  "profiles": "Profils: "
+  "profiles": "Profils: ",
+  "saveSuccess": "Accès mis à jour avec succès"
 }
 </i18n>

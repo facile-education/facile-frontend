@@ -17,7 +17,7 @@
         v-else
         class="title"
         :initial-name="category.categoryName"
-        @submitName="updateName"
+        @submit-name="updateName"
         @close="isNameModification = false"
       />
 
@@ -60,6 +60,8 @@ import AccessCategoryInput from '@components/Accesses/AccessManager/AccessCatego
 import AccessesPlaceholder from '@components/Accesses/AccessManager/AccessesPlaceholder.vue'
 import AccessItem from '@components/Accesses/AccessManager/AccessItem.vue'
 
+import { removeSchoolCategory, saveSchoolCategory } from '@/api/access.service'
+
 export default {
   name: 'AccessCategoryItem',
   components: { AccessesPlaceholder, AccessCategoryInput, AccessItem },
@@ -77,6 +79,9 @@ export default {
   computed: {
     categoryList () {
       return this.$store.state.accessManager.categoryList
+    },
+    selectedSchool () {
+      return this.$store.state.accessManager.selectedSchool
     }
   },
   methods: {
@@ -90,28 +95,25 @@ export default {
       this.isNameModification = false
 
       if (name.length > 0) {
-        // Deep copy categoryList
-        const newCategoryList = JSON.parse(JSON.stringify(this.categoryList))
-        // Modify the category name
-        const category = newCategoryList[this.category.position]
-        category.categoryName = name
-        // Save the new categoryList
-        this.$store.dispatch('accessManager/setCategoryList', newCategoryList)
+        saveSchoolCategory(this.selectedSchool.schoolId, { ...this.category, categoryName: name }).then((data) => {
+          if (data.success) {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('saveSuccess'), type: 'success' })
+            this.$store.dispatch('accessManager/getSchoolAccesses') // Reload changes to assure to have the backend-data
+          } else {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+          }
+        })
       }
     },
     deleteCategory () {
-      // Deep copy categoryList
-      const newCategoryList = JSON.parse(JSON.stringify(this.categoryList))
-      // Delete the category
-      newCategoryList.splice(this.category.position, 1)
-
-      // Compute new positions
-      for (let index = 0; index < newCategoryList.length; index++) {
-        newCategoryList[index].position = index
-      }
-
-      // Save the new categoryList
-      this.$store.dispatch('accessManager/setCategoryList', newCategoryList)
+      removeSchoolCategory(this.selectedSchool.schoolId, this.category.categoryId).then((data) => {
+        if (data.success) {
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('saveSuccess'), type: 'success' })
+          this.$store.dispatch('accessManager/getSchoolAccesses') // Reload changes to assure to have the backend-data
+        } else {
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+        }
+      })
     }
   }
 }
@@ -179,6 +181,7 @@ ul {
 <i18n locale="fr" >
 {
   "delete": "Supprimer cette catégorie",
-  "deleteCategoryWarning": "Souhaitez-vous supprimer la catégorie {categoryName} et ses accès?"
+  "deleteCategoryWarning": "Souhaitez-vous supprimer la catégorie {categoryName} et ses accès?",
+  "saveSuccess": "Accès mis à jour avec succès"
 }
 </i18n>
