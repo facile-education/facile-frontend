@@ -45,10 +45,7 @@
       />
 
       <!-- global modals -->
-      <teleport
-        v-if="pendingFirings.length > 0"
-        to="body"
-      >
+      <template v-if="pendingFirings.length > 0">
         <PendingFiringModal
           v-for="(pendingFiring, index) in pendingFirings"
           :key="index"
@@ -56,7 +53,7 @@
           :full-screen="mq.phone"
           :closable="false"
         />
-      </teleport>
+      </template>
     </div>
     <div v-else>
       <PentilaSpinner v-if="areActionsInProgress" />

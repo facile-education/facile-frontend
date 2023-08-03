@@ -123,8 +123,18 @@ export default {
 </script>
 
 <style lang="scss">
-.pending-firing-modal .window-wrapper {
-  max-width: 500px;
+div.non-classical-slots {
+  position: relative;
+}
+
+.pending-firing-modal {
+  &.modal-mask {
+    position: absolute;
+  }
+
+  .window-wrapper {
+    max-width: 500px;
+  }
 }
 </style>
 
