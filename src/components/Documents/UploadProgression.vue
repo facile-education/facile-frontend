@@ -86,6 +86,16 @@ export default {
       return text
     }
   },
+  watch: {
+    isUploadFinished (value) {
+      // When upload is finished, remove Progression after 5s
+      if (value) {
+        setTimeout(() => {
+          this.close()
+        }, 5000)
+      }
+    }
+  },
   methods: {
     cancel () {
       this.$store.dispatch('currentActions/cancelUpload')

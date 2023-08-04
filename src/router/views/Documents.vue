@@ -569,7 +569,7 @@ export default {
       .scroll {
         height: 100%;
         overflow-y: auto;
-        padding-top: 20px;
+        padding-top: 7px;
       }
     }
 

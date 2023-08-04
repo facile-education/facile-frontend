@@ -189,7 +189,7 @@ export default {
       return fieldsToDisplay
     },
     formattedDate () {
-      return this.document.lastModifiedDate !== undefined ? dayjs(this.document.lastModifiedDate, 'YYYY-MM-DD HH:mm:ss').calendar() : '-'
+      return this.document.lastModifiedDate !== undefined ? dayjs(this.document.lastModifiedDate, 'YYYY-MM-DD HH:mm').calendar() : '-'
     },
     formattedSize () {
       return this.document.size !== undefined ? formatSize(this.document.size) : '-'
