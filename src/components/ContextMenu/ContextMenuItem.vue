@@ -171,9 +171,10 @@ export default {
       }
     },
     computeYPosition () {
-      const subMenuHeight = this.option.subMenu.length * 54 - 2
+      const menuItemHeight = 40
+      const subMenuHeight = this.option.subMenu.length * menuItemHeight - 2
       if (this.position.y + subMenuHeight > window.innerHeight - 10) {
-        return this.position.y - subMenuHeight + 54
+        return this.position.y - subMenuHeight + menuItemHeight
       } else {
         return this.position.y
       }
@@ -222,7 +223,7 @@ button {
   display: flex;
   align-items: center;
   cursor: pointer;
-  height: 54px;
+  height: 40px;
   padding: 0 20px;
 
   .title {
