@@ -80,6 +80,7 @@ import OtherDocument from '@/components/Documents/FileDisplay/OtherDocument'
 export default {
   name: 'FileDisplay',
   components: { WISIWIG, Office, Scratch, MindMap, Geogebra, PDF, Audio, Image, Video, OtherDocument },
+  inject: ['mq'],
   props: {
     file: {
       type: Object,
@@ -90,7 +91,7 @@ export default {
       default: false
     }
   },
-  emits: ['close', 'keepOpen'],
+  emits: ['close', 'keep-open', 'set-fullscreen'],
   data () {
     return {
       hasLock: false,
@@ -123,7 +124,7 @@ export default {
               text: this.$t('quitWithoutSaving'),
               lastAction: { fct: this.emitCloseEvent }
             })
-            this.$emit('keepOpen') // In case of canceling the closure
+            this.$emit('keep-open') // In case of canceling the closure
           } else {
             this.$emit('close')
           }
@@ -164,6 +165,7 @@ export default {
           } else {
             this.isLoaded = true
           }
+          this.$emit('set-fullscreen', this.mq.phone || data.typeOfView !== 'Audio')
         } else {
           if (data.error === 'UnsupportedFileExtension') {
             this.typeOfView = 'Unsupported'

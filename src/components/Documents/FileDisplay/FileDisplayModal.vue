@@ -32,7 +32,7 @@
               v-if="!mq.phone"
               class="header-option-item"
               data-test="toggleFullScreen"
-              @click="toggleFullScreen"
+              @click="setFullScreen(!isFullScreen)"
             >
               <BaseIcon
                 class="expand"
@@ -55,7 +55,8 @@
           <FileDisplay
             :file="file"
             :wants-to-close-file="wantsToCloseFile"
-            @keepOpen="wantsToCloseFile = false"
+            @set-fullscreen="setFullScreen($event)"
+            @keep-open="wantsToCloseFile = false"
             @close="close"
           />
         </div>
@@ -140,8 +141,8 @@ export default {
         this.wantsToCloseFile = true
       }
     },
-    toggleFullScreen () {
-      this.isFullScreen = !this.isFullScreen
+    setFullScreen (value) {
+      this.isFullScreen = value
       this.$nextTick(() => {
         if (this.isFullScreen) {
           this.viewportWidth = 0
