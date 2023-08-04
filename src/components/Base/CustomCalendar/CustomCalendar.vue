@@ -96,7 +96,7 @@ export default {
         locale: frLocale,
         plugins: [timeGridPlugin],
         initialView: this.calendarView,
-        viewDidMount: this.goToDisplayDate,
+        viewDidMount: this.onCalendarMount,
         // 110 is toolbar (50) + margin (15) + timeline (45)
         height: this.mq.phone ? '100%' : 'max(800px, calc(100% - 110px))',
         expandRows: true,
@@ -176,6 +176,12 @@ export default {
     }
   },
   methods: {
+    onCalendarMount () {
+      if (this.canCreateSlots) {
+        this.$refs.fullCalendar.$el.setAttribute('title', this.$t('clickToAddSlot'))
+      }
+      this.goToDisplayDate()
+    },
     goToDisplayDate () {
       if (this.$refs.fullCalendar) {
         const calendar = this.$refs.fullCalendar.getApi()
@@ -301,3 +307,9 @@ export default {
   width: 100%;
 }
 </style>
+
+<i18n locale="fr">
+{
+  "clickToAddSlot": "Cliquer pour ajouter un créneau"
+}
+</i18n>
