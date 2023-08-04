@@ -39,6 +39,7 @@
     />
     <WISIWIG
       v-else-if="typeOfView === 'WISIWIG' && loadedFile"
+      class="wisiwyg"
       :file="loadedFile"
       :have-to-save="haveToSaveFile"
       @saved="fileSaved"
@@ -225,6 +226,9 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.wisiwyg {
+  margin-top: 40px;
 }
 </style>
 

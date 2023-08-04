@@ -45,7 +45,7 @@
             <AnnouncementItem
               :announcement="announcement"
               :is-in-horizontal-scroll="true"
-              @markAsRead="announcement.hasRead=true"
+              @markAsRead="markAsRead(announcement)"
               @updateAnnouncement="refresh"
               @deleteAnnouncement="refresh"
             />
@@ -182,6 +182,12 @@ export default {
     },
     showMore () {
       this.$router.push({ name: 'AllAnnouncements' })
+    },
+    markAsRead (announcement) {
+      announcement.hasRead = true
+      if (this.nbUnreadAnnouncements >= 1) {
+        this.nbUnreadAnnouncements--
+      }
     }
   }
 }

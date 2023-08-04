@@ -161,7 +161,6 @@ export default {
 
     .icon {
       font-size: 12px;
-      margin-top: 3px;
     }
   }
 }

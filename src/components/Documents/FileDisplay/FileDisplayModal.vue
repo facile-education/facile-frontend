@@ -36,12 +36,14 @@
             >
               <BaseIcon
                 class="expand"
+                :title="isFullScreen ? $t('compress') : $t('expand')"
                 :name="isFullScreen ? 'compress' : 'expand'"
               />
             </button>
             <button
               class="header-option-item"
               data-test="closeModal"
+              :title="$t('close')"
               @click="wantsToCloseFile = true"
             >
               <BaseIcon name="times" />
@@ -246,3 +248,11 @@ h1 {
   overflow: auto;
 }
 </style>
+
+<i18n locale="fr">
+  {
+    "compress": "Réduire",
+    "expand": "Plein écran",
+    "close": "Fermer"
+  }
+</i18n>
