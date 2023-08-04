@@ -5,6 +5,12 @@
         style="overflow: hidden;
         text-overflow: ellipsis;"
       >
+        <div
+          v-if="homeworkType"
+          class="homework-type-label"
+        >
+          {{ homeworkType === 'givenHomework' ? $t('givenHomework', {targetDate: formattedToDate}) : $t(homeworkType) }}
+        </div>
         <div class="header-first-line">
           <h3>{{ homework.title }}</h3>
           <span
@@ -81,6 +87,10 @@ export default {
     homework: {
       type: Object,
       required: true
+    },
+    homeworkType: {
+      type: String,
+      required: true
     }
   },
   data () {
@@ -108,6 +118,9 @@ export default {
       } else {
         return nbMinutes + ' ' + this.$t('minuteLabel')
       }
+    },
+    formattedToDate () {
+      return dayjs(this.homework.toDate, 'YYYY-MM-DD HH:mm').format('DD/MM')
     },
     formattedDoneStatus () {
       return this.$tc('doneStatus', { nbDone: this.homework.doneStudents.length, nbStudents: this.homework.selectedStudents.length })
@@ -190,6 +203,10 @@ header {
   width: 100%;
 }
 
+.homework-type-label {
+  @extend %font-regular-s;
+}
+
 .header-first-line {
   display: flex;
   align-items: center;
@@ -240,6 +257,9 @@ h3 {
   "hourLabel": "h",
   "minuteLabel": "min",
   "publishedOn": "Publié le ",
-  "draftStatus": "Non publié"
+  "draftStatus": "Non publié",
+  "toDoHomework": "Pour cette séance",
+  "sessionHomework": "Pendant la séance",
+  "givenHomework": "Pour le {targetDate}"
 }
 </i18n>

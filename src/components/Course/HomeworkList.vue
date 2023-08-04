@@ -1,20 +1,16 @@
 <template>
   <div class="homework-list">
-    <h4>{{ header }}</h4>
     <ul v-if="homeworkList && homeworkList.length > 0">
       <li
         v-for="homework in homeworkList"
         :key="homework.homeworkId"
       >
-        <Homework :homework="homework" />
+        <Homework
+          :homework="homework"
+          :homework-type="homeworkType"
+        />
       </li>
     </ul>
-    <div
-      v-else
-      class="placeholder"
-    >
-      {{ placeholder }}
-    </div>
   </div>
 </template>
 
@@ -27,11 +23,7 @@ export default {
   name: 'HomeworkList',
   components: { Homework },
   props: {
-    header: {
-      type: String,
-      required: true
-    },
-    placeholder: {
+    homeworkType: {
       type: String,
       required: true
     },
@@ -44,13 +36,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@design";
-
-h4 {
-  margin: 1rem 0;
-  line-height: normal;
-  @extend %font-regular-xs;
-}
 
 ul {
   margin: 0;
@@ -58,11 +43,6 @@ ul {
   list-style-type: none;
   display: flex;
   flex-direction: column;
-  gap: 8px
-}
-
-.placeholder {
-  @extend %content-placeholder;
 }
 
 </style>

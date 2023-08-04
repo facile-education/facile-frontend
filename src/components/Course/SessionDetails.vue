@@ -88,22 +88,24 @@
           />
         </div>
 
+        <div
+          v-if="session.toDoHomeworks.length + session.sessionHomeworks.length + session.givenHomeworks.length === 0"
+          v-t="'noHomeworksPlaceholder'"
+          class="placeholder"
+        />
         <HomeworkList
           v-if="session.toDoHomeworks.length > 0 || canEdit"
-          :header="$t('toDoHomeworkHeader')"
-          :placeholder="$t('toDoHomeworkPlaceholder')"
+          :homework-type="'toDoHomework'"
           :homework-list="session.toDoHomeworks"
         />
         <HomeworkList
           v-if="session.sessionHomeworks.length > 0 || canEdit"
-          :header="$t('sessionHomeworkHeader')"
-          :placeholder="$t('sessionHomeworkPlaceholder')"
+          :homework-type="'sessionHomework'"
           :homework-list="session.sessionHomeworks"
         />
         <HomeworkList
           v-if="session.givenHomeworks.length > 0 || canEdit"
-          :header="$t('givenHomeworkHeader')"
-          :placeholder="$t('givenHomeworkPlaceholder')"
+          :homework-type="'givenHomework'"
           :homework-list="session.givenHomeworks"
         />
       </section>
@@ -427,9 +429,10 @@ header {
     @extend %font-regular-xs
   }
 }
-
-.given-homeworks {
-  border: 1px black;
+.homeworks {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .notes {
@@ -464,12 +467,7 @@ header {
   "edit": "Modifier",
   "error": "Oups, une erreur est survenue...",
   "selectSessionPlaceholder": "Veuillez sélectionner une séance pour accéder à son contenu",
-  "toDoHomeworkPlaceholder": "Aucun travail à préparer",
-  "toDoHomeworkHeader": "Pour cette séance",
-  "givenHomeworkPlaceholder": "Aucun travail donné",
-  "givenHomeworkHeader": "Pour une prochaine date",
-  "sessionHomeworkPlaceholder": "Aucun travail à faire",
-  "sessionHomeworkHeader": "Pendant la séance",
+  "noHomeworksPlaceholder": "Aucun travail",
   "sessionOf": "Séance du ",
   "courseContent": "SUPPORT DE COURS",
   "notes": "Note privée",
