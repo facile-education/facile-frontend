@@ -4,6 +4,7 @@
     :draggable="true"
     class="edit-slot-modal"
     :class="{'mobile': mq.phone}"
+    :max-width="800"
     data-test="edit-slot-modal"
     @close="closeModal"
   >

@@ -4,6 +4,7 @@
     :draggable="true"
     class="student-list-modal"
     data-test="student-list-modal"
+    :max-width="800"
     @close="closeModal"
   >
     <template #header>
