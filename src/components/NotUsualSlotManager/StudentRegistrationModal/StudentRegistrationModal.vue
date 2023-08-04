@@ -4,6 +4,7 @@
     :draggable="true"
     class="student-registration-modal"
     data-test="student-registration-modal"
+    :max-width="800"
     @close="closeModal"
   >
     <template #header>
