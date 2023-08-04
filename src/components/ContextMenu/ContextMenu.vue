@@ -22,7 +22,7 @@
         :key="option.position"
         :data-test="option.name"
         :option="option"
-        :position="{x: position.x, y: position.y + option.position*54}"
+        :position="{x: position.x, y: position.y + option.position*40}"
         :is-selected="selectedIndex !== undefined ? options[selectedIndex] === option : false"
         @selectOption="emitOption(option)"
         @isContextMenuMobileExtended="subMenuMobileManagement"
@@ -150,7 +150,7 @@ export default {
       return left
     },
     computeYPosition (top) {
-      const menuHeight = this.options.length * 54 + 2 // items padding + border
+      const menuHeight = this.options.length * 40 + 2 // items padding + border
       const largestHeight = this.mq.phone
         ? window.innerHeight - menuHeight - 48 - 10 // 48 px is $mobile-menu-height, because we don't want the context menu go beside
         : window.innerHeight - menuHeight - 10
