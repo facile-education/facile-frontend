@@ -182,6 +182,6 @@ ul {
 {
   "delete": "Supprimer cette catégorie",
   "deleteCategoryWarning": "Souhaitez-vous supprimer la catégorie {categoryName} et ses accès?",
-  "saveSuccess": "Accès mis à jour avec succès"
+  "saveSuccess": "Catégorie mise à jour avec succès"
 }
 </i18n>

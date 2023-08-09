@@ -2,6 +2,7 @@
   <div
     class="user-access"
     tabindex="0"
+    :title="access.title"
     @click="openAccess"
     @keyup.enter="openAccess"
   >
@@ -75,8 +76,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid $color-border;
-  border-radius: 50%;
+  border-radius: 5px;
   font-size: 0.75rem;
 }
 

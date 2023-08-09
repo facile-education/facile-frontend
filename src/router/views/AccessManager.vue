@@ -180,7 +180,7 @@ export default {
 {
   "errorPlaceholder": "Oups, une erreur est survenue...",
   "serviceTitle": "Gestion des accès",
-  "saveSuccess": "Accès mis à jour avec succès.",
+  "saveSuccess": "Catégorie mise à jour avec succès.",
   "noRolePlaceholder": "Erreur lors de la récupération des roles, veuillez contacter le service technique"
 }
 </i18n>
