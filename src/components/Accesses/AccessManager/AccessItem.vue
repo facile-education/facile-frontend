@@ -284,8 +284,7 @@ h3 {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid $color-border;
-  border-radius: 50%;
+  border-radius: 5px;
   font-size: 0.75rem;
 }
 
