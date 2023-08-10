@@ -7,6 +7,7 @@
       :content="initialContent"
       :disabled="readOnly"
       :focus="true"
+      :focus-on-creation="true"
       @input="updateContent"
     />
   </div>
