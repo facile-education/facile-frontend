@@ -90,7 +90,7 @@
               <th v-t="'school'" />
             </tr>
             <GroupUserItem
-              v-for="(user, index) in completionUsers"
+              v-for="(user, index) in sortedCompletionUsers"
               :key="index"
               :user="user"
               :is-selected="isGroupMember(user)"
@@ -231,6 +231,9 @@ export default {
     },
     sortedGroupMembers () {
       return PentilaUtils.Array.sortWithString(this.groupMembers, false, 'lastName')
+    },
+    sortedCompletionUsers () {
+      return PentilaUtils.Array.sortWithString(this.completionUsers, false, 'lastName')
     }
   },
   created () {

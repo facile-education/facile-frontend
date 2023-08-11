@@ -4,7 +4,8 @@ import PentilaUtils from 'pentila-utils'
 import constants from '@/api/constants'
 
 export default {
-  checkCredentials
+  checkCredentials,
+  authLog
 }
 
 const AUTHENTICATION_PATH = '/authentication.authentication'
@@ -19,4 +20,12 @@ function checkCredentials (login, password) {
       password
     })
   ).then(response => response.data)
+}
+
+function authLog (str) {
+  return axios.get(constants.JSON_WS_URL + AUTHENTICATION_PATH + '/auth-log', {
+    params: {
+      str
+    }
+  }).then(response => response.data)
 }
