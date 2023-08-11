@@ -103,7 +103,7 @@ export default {
 <i18n locale="fr">
 {
   "title": "ÉDITER UNE VIDÉO",
-  "videoUrlPlaceHolder": "Url de la vidéo (laisser vide pour aucune viédo)",
+  "videoUrlPlaceHolder": "Url de la vidéo (laisser vide pour aucune vidéo)",
   "videoDescriptionPlaceHolder": "Description",
   "submit": "Valider"
 }

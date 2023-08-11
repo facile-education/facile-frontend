@@ -445,7 +445,7 @@ export default {
 
 <i18n locale="fr">
 {
-  "creationTitle": "Ajouter un événement",
+  "creationTitle": "Créer un événement",
   "updateTitle": "Modifier l'événement",
   "namePlaceHolder": "Titre",
   "locationPlaceHolder": "Lieu",
