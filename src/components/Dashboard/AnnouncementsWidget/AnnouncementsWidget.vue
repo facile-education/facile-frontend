@@ -48,6 +48,7 @@
               @markAsRead="markAsRead(announcement)"
               @updateAnnouncement="refresh"
               @deleteAnnouncement="refresh"
+              @refresh="refresh"
             />
           </li>
         </ul>
@@ -75,10 +76,11 @@ import dayjs from 'dayjs'
 
 import { getSchoolNews } from '@/api/dashboard/news.service'
 import { nbAnnouncementsInWidget } from '@/constants/dashboardConstants'
+import DiaryEventItem from '@components/Dashboard/DiaryWidget/DiaryEventItem.vue'
 
 export default {
   name: 'AnnouncementsWidget',
-  components: { AnnouncementItem, AnnouncementsHeader },
+  components: { DiaryEventItem, AnnouncementItem, AnnouncementsHeader },
   inject: ['mq'],
   data () {
     return {

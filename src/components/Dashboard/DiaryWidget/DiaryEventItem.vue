@@ -84,7 +84,7 @@
       :init-event="event"
       @update="updateEvent"
       @delete="updateEvent"
-      @close="isDetailsModalDisplayed = false"
+      @close="closeDetailsModal"
     />
   </teleport>
 </template>
@@ -119,11 +119,12 @@ export default {
       default: false
     }
   },
-  emits: ['deleteEvent', 'updateEvent', 'getNextEvents', 'select', 'markAsRead'],
+  emits: ['deleteEvent', 'updateEvent', 'getNextEvents', 'select', 'markAsRead', 'refresh'],
   data () {
     return {
       isUpdateModalDisplayed: false,
-      isDetailsModalDisplayed: false
+      isDetailsModalDisplayed: false,
+      refreshEventsOnClose: false
     }
   },
   computed: {
@@ -172,6 +173,7 @@ export default {
         this.$emit('select')
       } else {
         if (!this.event.hasRead) {
+          this.refreshEventsOnClose = true
           this.markEventAsRead()
         }
         this.isDetailsModalDisplayed = true
@@ -188,6 +190,13 @@ export default {
           console.error('Error')
         }
       })
+    },
+    closeDetailsModal () {
+      this.isDetailsModalDisplayed = false
+      if (this.refreshEventsOnClose) {
+        this.$emit('refresh')
+      }
+      this.refreshEventsOnClose = false
     },
     confirmDeleteEvent () {
       this.$store.dispatch('warningModal/addWarning', {
