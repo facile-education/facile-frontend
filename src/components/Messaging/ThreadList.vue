@@ -67,7 +67,7 @@
           @close="isContextMenuDisplayed=false"
         />
         <PentilaSpinner
-          v-if="isLoadingThreads"
+          v-if="isLoadingThreads || isDeleteThreads"
           data-test="spinner"
         />
       </div>
@@ -125,6 +125,9 @@ export default {
     },
     isLoadingThreads () {
       return this.$store.getters['currentActions/isInProgress']('loadThreads')
+    },
+    isDeleteThreads () {
+      return this.$store.getters['currentActions/isInProgress']('deleteMessages')
     },
     isDisplayMessageFromRouting () {
       return this.$store.state.messaging.displayMessageFromRouting
