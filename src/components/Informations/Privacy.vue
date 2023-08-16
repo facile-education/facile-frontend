@@ -27,6 +27,7 @@ export default {
 .privacy {
   max-height: 100%;
   overflow: auto;
+  padding-right: 1rem;
 }
 
 </style>

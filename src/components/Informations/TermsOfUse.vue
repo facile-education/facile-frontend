@@ -28,6 +28,7 @@ export default {
 .chart {
   max-height: 100%;
   overflow: auto;
+  padding-right: 1rem;
   h1 {
     margin: 0.67em;
   }
