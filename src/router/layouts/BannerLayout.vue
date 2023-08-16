@@ -312,6 +312,7 @@ export default {
   height: 100%;
   overflow: auto;
   padding: 10px;
+  //padding: 2rem 40px;
 }
 
 .nero-menu {
