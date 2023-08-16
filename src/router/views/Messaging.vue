@@ -104,6 +104,9 @@ export default {
     },
     isCreateMessageModalDisplayed () {
       return this.$store.state.messaging.isCreateMessageModalDisplayed
+    },
+    isModalOpen () {
+      return this.$store.state.misc.nbOpenModals > 0
     }
   },
   mounted () {
@@ -135,22 +138,12 @@ export default {
   methods: {
     // keyboard shortcuts management
     keyMonitor: function (event) {
-      // Ctrl-A for 'All' selection
-      if (event.ctrlKey && ((event.key === 'a') || (event.key === 'A'))) {
-        event.preventDefault()
-        // this.selectAllFiles()
-      } else if (event.ctrlKey && ((event.key === 'ArrowDown') || (event.key === 'ArrowUp'))) {
-        // Ctrl-arrow for multi-selection
-        // utils.selectCtrlDocument(this.$store, this.allSortedDocuments, this.$store.state.files.lastSelectedFile, event)
-      } else if (event.key === 'Delete') {
+      if (!this.isModalOpen && event.key === 'Delete') {
         if (this.$store.state.messaging.selectedMessages.length > 0) {
           messagingUtils.deleteSelectedMessage()
         } else if (this.$store.state.messaging.selectedThreads.length > 0) {
           messagingUtils.deleteSelectedThreads()
         }
-      } else if ((event.key === 'ArrowDown') || (event.key === 'ArrowUp')) {
-        // Arrows
-        // utils.selectDocument(this.$store, this.allSortedDocuments, this.selectedFiles, event)
       }
     },
     createNewMessage () {
