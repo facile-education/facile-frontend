@@ -5,6 +5,7 @@
     :modal="true"
     :draggable="true"
     :max-width="1000"
+    :full-screen="mq.phone || displayLikePhone"
     @close="confirmClosure"
   >
     <template #header>
@@ -147,6 +148,7 @@ export default {
     }
   },
   emits: ['close', 'createEvent', 'updateEvent'],
+  inject: ['mq'],
   setup: () => ({ v$: useVuelidate() }),
   data () {
     return {
@@ -197,6 +199,9 @@ export default {
     }
   },
   computed: {
+    displayLikePhone () {
+      return this.$store.state.misc.keepPhoneStatus
+    },
     isCreation () {
       return this.initEvent === undefined
     },

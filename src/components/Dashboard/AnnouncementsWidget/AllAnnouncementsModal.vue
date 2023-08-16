@@ -4,6 +4,7 @@
     data-test="all-announcements-modal"
     :modal="true"
     :draggable="true"
+    :full-screen="mq.phone || displayLikePhone"
     @close="onClose"
   >
     <template #header>
@@ -62,6 +63,7 @@ export default {
   name: 'AllAnnouncementsModal',
   components: { CustomIcon, AnnouncementItem },
   emits: ['close', 'refresh'],
+  inject: ['mq'],
   data () {
     return {
       unReadOnly: false,
@@ -69,6 +71,11 @@ export default {
       error: undefined,
       announcementsList: [],
       fromDate: dayjs()
+    }
+  },
+  computed: {
+    displayLikePhone () {
+      return this.$store.state.misc.keepPhoneStatus
     }
   },
   created () {

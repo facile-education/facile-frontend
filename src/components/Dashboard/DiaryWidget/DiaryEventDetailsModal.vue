@@ -4,6 +4,7 @@
     data-test="diary-event-details-modal"
     :modal="true"
     :draggable="true"
+    :full-screen="mq.phone || displayLikePhone"
     @close="onClose"
   >
     <template #header>
@@ -28,6 +29,7 @@ import DiaryEventDetails from '@components/Dashboard/DiaryWidget/DiaryEventDetai
 export default {
   name: 'DiaryEventDetailsModal',
   components: { DiaryEventDetails },
+  inject: ['mq'],
   props: {
     initEvent: {
       type: Object,
@@ -38,6 +40,11 @@ export default {
   data () {
     return {
       detailedEvent: undefined
+    }
+  },
+  computed: {
+    displayLikePhone () {
+      return this.$store.state.misc.keepPhoneStatus
     }
   },
   created () {

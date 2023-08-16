@@ -5,6 +5,7 @@
     :modal="true"
     :draggable="true"
     :max-width="1000"
+    :full-screen="mq.phone || displayLikePhone"
     @close="confirmClosure"
   >
     <template #header>
@@ -23,7 +24,7 @@
         />
 
         <div
-          v-if="!mq.phone && !mq.tablet"
+          v-if="!mq.phone && !mq.tablet && !displayLikePhone"
           class="population-selection"
         >
           <PentilaTagsInput
@@ -70,7 +71,7 @@
       </div>
 
       <div
-        v-if="mq.phone || mq.tablet"
+        v-if="mq.phone || mq.tablet || displayLikePhone"
         class="population-selection"
       >
         <PentilaTagsInput
@@ -102,7 +103,7 @@
       <AttachedFiles
         v-model="attachedFiles"
         :read-only="false"
-        :max-height="mq.phone ? '120px' : '300px'"
+        :max-height="(mq.phone || displayLikePhone) ? '120px' : '300px'"
         @remove-attached-file="removeFile"
       />
 
@@ -226,6 +227,9 @@ export default {
     }
   },
   computed: {
+    displayLikePhone () {
+      return this.$store.state.misc.keepPhoneStatus
+    },
     thumbnail () {
       if (defaultImagesKeys.indexOf(this.thumbnailUrl) !== -1) {
         return new URL(`../../../assets/images/${this.thumbnailUrl}.png`, import.meta.url).href
