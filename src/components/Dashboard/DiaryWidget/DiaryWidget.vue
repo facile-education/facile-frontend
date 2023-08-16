@@ -38,6 +38,7 @@
           @markAsRead="markAsRead(myEvent)"
           @updateEvent="refresh"
           @deleteEvent="refresh"
+          @refresh="refresh"
         />
       </div>
 

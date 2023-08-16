@@ -96,7 +96,7 @@
       :init-news="announcement"
       @update="$emit('updateAnnouncement')"
       @delete="$emit('updateAnnouncement')"
-      @close="isDetailsModalDisplayed = false"
+      @close="closeDetailsModal"
     />
   </teleport>
 </template>
@@ -137,11 +137,12 @@ export default {
       default: false
     }
   },
-  emits: ['deleteAnnouncement', 'updateAnnouncement', 'select', 'getNextAnnouncements', 'markAsRead'],
+  emits: ['deleteAnnouncement', 'updateAnnouncement', 'select', 'getNextAnnouncements', 'markAsRead', 'refresh'],
   data () {
     return {
       isUpdateModalDisplayed: false,
-      isDetailsModalDisplayed: false
+      isDetailsModalDisplayed: false,
+      refreshNewsOnClose: false
     }
   },
   computed: {
@@ -197,6 +198,7 @@ export default {
     },
     showDetails () {
       if (!this.announcement.hasRead) {
+        this.refreshNewsOnClose = true
         this.markAnnouncementAsRead()
       }
       this.isDetailsModalDisplayed = true
@@ -209,6 +211,13 @@ export default {
           console.error('Error')
         }
       })
+    },
+    closeDetailsModal () {
+      this.isDetailsModalDisplayed = false
+      if (this.refreshNewsOnClose) {
+        this.$emit('refresh')
+      }
+      this.refreshNewsOnClose = false
     },
     confirmDeleteAnnouncement () {
       this.$store.dispatch('warningModal/addWarning', {
