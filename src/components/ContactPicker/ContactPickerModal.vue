@@ -1,7 +1,7 @@
 <template>
   <PentilaWindow
     :modal="true"
-    :is-full-screen="mq.phone"
+    :full-screen="mq.phone || displayLikePhone"
     :hidden-footer="true"
     :draggable="true"
     data-test="contactPickerModal"
@@ -34,6 +34,11 @@ export default {
     }
   },
   emits: ['addContacts', 'removeContacts', 'close'],
+  computed: {
+    displayLikePhone () {
+      return this.$store.state.misc.keepPhoneStatus
+    }
+  },
   created () {
     this.$store.dispatch('misc/incrementModalCount')
   },

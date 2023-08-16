@@ -3,10 +3,10 @@
     <PentilaWindow
       :modal="true"
       :draggable="true"
-      :is-full-screen="mq.phone"
+      :full-screen="mq.phone || displayLikePhone"
       data-test="createMessageModal"
       class="create-message-modal"
-      :class="{'phone': mq.phone}"
+      :class="{'phone': (mq.phone || displayLikePhone)}"
       @close="onConfirmClose"
       @keydown.exact.escape.stop="onConfirmClose"
     >
@@ -53,7 +53,7 @@
           />
           <PentilaButton
             ref="openContactTooltipButton"
-            :class="{'phone': mq.phone}"
+            :class="{'phone': mq.phone || displayLikePhone}"
             class="create-button"
             @click="toggleContactsPicker"
           >
@@ -131,7 +131,7 @@
   </div>
   <teleport to="body">
     <ContactPickerModal
-      v-if="mq.phone && isContactPickerModalDisplayed"
+      v-if="(mq.phone || displayLikePhone) && isContactPickerModalDisplayed"
       :selected-contacts="recipients"
       @add-contacts="addRecipients"
       @remove-contacts="removeRecipients"
@@ -220,8 +220,11 @@ export default {
     }
   },
   computed: {
+    displayLikePhone () {
+      return this.$store.state.misc.keepPhoneStatus
+    },
     device () {
-      if (this.mq.phone) {
+      if (this.mq.phone || this.displayLikePhone) {
         return 'phone'
       } else {
         return 'desktop'
@@ -248,7 +251,7 @@ export default {
     this.init()
   },
   mounted () {
-    if (this.messageParameters.isNew && !this.mq.phone && !this.mq.tablet) {
+    if (this.messageParameters.isNew && !this.mq.phone && !this.displayLikePhone && !this.mq.tablet) {
       const input = this.$refs.tagsinput.$el.firstChild.lastChild
       input.focus()
     }

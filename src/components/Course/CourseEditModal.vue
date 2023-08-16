@@ -1,7 +1,8 @@
 <template>
   <PentilaWindow
     class="edit-course-modal"
-    :class="{'phone': mq.phone}"
+    :class="{'phone': mq.phone || displayLikePhone}"
+    :full-screen="mq.phone || displayLikePhone"
     :modal="true"
     :draggable="true"
     @close="confirmClosure"
@@ -100,6 +101,9 @@ export default {
     }
   },
   computed: {
+    displayLikePhone () {
+      return this.$store.state.misc.keepPhoneStatus
+    },
     formattedTitle () {
       const sessionStartDate = dayjs(this.editedSession.startDate, 'YYYY/MM/DD HH:mm')
       return this.$t('title', {

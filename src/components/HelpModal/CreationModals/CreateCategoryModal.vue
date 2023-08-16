@@ -4,6 +4,7 @@
     data-test="create-category-modal"
     :modal="true"
     :draggable="true"
+    :full-screen="mq.phone || displayLikePhone"
     :width="600"
     @close="onClose"
   >
@@ -46,11 +47,17 @@ import { saveCategory } from '@/api/help.service'
 export default {
   name: 'CreateCategoryModal',
   emits: ['close'],
+  inject: ['mq'],
   data () {
     return {
       categoryName: '',
       selectedApplication: { applicationId: 0, applicationName: 'Service' }, // TODO: Find a more satisfying way to do the dropdown placeholder
       applicationList: []
+    }
+  },
+  computed: {
+    displayLikePhone () {
+      return this.$store.state.misc.keepPhoneStatus
     }
   },
   created () {

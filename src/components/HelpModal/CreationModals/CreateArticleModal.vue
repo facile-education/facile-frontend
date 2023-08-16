@@ -2,6 +2,7 @@
   <PentilaWindow
     class="create-article-modal"
     data-test="create-article-modal"
+    :full-screen="mq.phone || displayLikePhone"
     :modal="true"
     :draggable="true"
     :width="600"
@@ -60,6 +61,7 @@ export default {
     }
   },
   emits: ['close'],
+  inject: ['mq'],
   data () {
     return {
       articleName: '',
@@ -67,6 +69,11 @@ export default {
       roleList: [],
       selectedLanguage: 'fr',
       languageList: []
+    }
+  },
+  computed: {
+    displayLikePhone () {
+      return this.$store.state.misc.keepPhoneStatus
     }
   },
   created () {
