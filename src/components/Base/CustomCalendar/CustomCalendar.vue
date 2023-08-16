@@ -85,6 +85,9 @@ export default {
     }
   },
   computed: {
+    isMenuExpanded () {
+      return this.$store.state.menu.menuExpanded
+    },
     configuration () {
       return this.$store.state.calendar.configuration
     },
@@ -164,10 +167,13 @@ export default {
     }
   },
   watch: {
-    displayDate: {
-      handler () {
-        this.goToDisplayDate()
-      }
+    displayDate () {
+      this.goToDisplayDate()
+    },
+    isMenuExpanded () {
+      setTimeout(() => {
+        this.autoResize()
+      }, 500) // 0.5s is the time the menu size animation has finished
     }
   },
   created () {
@@ -186,6 +192,12 @@ export default {
       if (this.$refs.fullCalendar) {
         const calendar = this.$refs.fullCalendar.getApi()
         calendar.gotoDate(this.displayDate.toDate())
+      }
+    },
+    autoResize () {
+      if (this.$refs.fullCalendar) {
+        const calendar = this.$refs.fullCalendar.getApi()
+        calendar.updateSize()
       }
     },
     optionClicked (option) {
