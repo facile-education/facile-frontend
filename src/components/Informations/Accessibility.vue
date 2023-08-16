@@ -27,5 +27,6 @@ export default {
 .accessibility {
   max-height: 100%;
   overflow: auto;
+  padding-right: 1rem;
 }
 </style>
