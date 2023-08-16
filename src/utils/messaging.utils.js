@@ -58,11 +58,16 @@ const MessagingUtils = {
           messageIdsToDelete.push(message.messageId)
         }
       }
+      store.dispatch('currentActions/addAction', { name: 'deleteMessages' })
       messageService.deleteMessages(messageIdsToDelete).then((data) => {
+        store.dispatch('currentActions/removeAction', { name: 'deleteMessages' })
         if (data.success) {
           store.dispatch('messaging/deleteSelectedThreads')
           resolve()
         }
+      }, (err) => {
+        console.error(err)
+        this.dispatch('currentActions/removeAction', { name: 'deleteMessages' })
       })
     })
   },
