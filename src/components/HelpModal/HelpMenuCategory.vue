@@ -138,6 +138,7 @@ export default {
 
 .help-menu-category {
   border-bottom: 1px solid $color-border;
+  overflow: hidden;
 
   &:last-child {
     border-bottom: none;
