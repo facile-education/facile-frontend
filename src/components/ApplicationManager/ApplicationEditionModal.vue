@@ -24,7 +24,10 @@
             class="remove-logo delete"
             @click.stop="removeLogo"
           >
-            <NeroIcon name="trash" />
+            <img
+              src="@assets/icons/trash_white.svg"
+              :alt="$t('deleteButtonTooltip')"
+            >
           </PentilaButton>
 
           <img
@@ -383,6 +386,16 @@ export default {
 
 h5 {
   margin: 10px 0 5px 0;
+}
+
+.delete {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    height: 18px;
+  }
 }
 
 .informations {
