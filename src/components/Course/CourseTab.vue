@@ -17,6 +17,7 @@
     <ul
       v-else-if="!selectedCourse"
       class="courses"
+      :class="{'phone': mq.phone}"
     >
       <li
         v-for="course in sortedCourses"
@@ -103,9 +104,15 @@ export default {
 }
 
 .courses {
-  display: grid;
-  grid-gap: 1.5rem;
-  grid-template-columns: repeat(auto-fill, 268px);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  &:not(.phone) {
+    display: grid;
+    grid-gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, 268px);
+  }
 }
 
 ul {
