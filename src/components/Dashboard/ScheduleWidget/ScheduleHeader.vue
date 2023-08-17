@@ -14,7 +14,10 @@
         >
       </button>
 
-      <strong class="date-label theme-text-color">
+      <strong
+        class="date-label"
+        :class="{'theme-text-color': isToday, 'theme-extra-light-background-color': isToday}"
+      >
         {{ formattedDate }}
       </strong>
 
@@ -44,6 +47,8 @@
 </template>
 
 <script>
+import dayjs from 'dayjs'
+
 export default {
   name: 'ScheduleHeader',
   props: {
@@ -54,6 +59,9 @@ export default {
   },
   emits: ['goBefore', 'goAfter', 'redirect'],
   computed: {
+    isToday () {
+      return this.currentDate.isSame(dayjs(), 'day')
+    },
     formattedDate () {
       return this.currentDate.format('ddd DD/MM')
     }
@@ -95,9 +103,11 @@ button:not(.redirect-button){
 }
 
 .date-label {
-  font-size: 1rem;
-  font-weight: 700;
-  line-height: 24px;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+
+  text-align: center;
+  @extend %font-bold-l;
 }
 
 .arrow {
