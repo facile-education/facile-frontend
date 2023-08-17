@@ -21,7 +21,8 @@
       >
         <template #default="{ togglePopover }">
           <div
-            class="date theme-text-color theme-extra-light-background-color"
+            class="date"
+            :class="{'theme-text-color': isToday, 'theme-extra-light-background-color': isToday}"
             @click="togglePopover()"
           >
             {{ dateLabel }}
@@ -83,6 +84,9 @@ export default {
     },
     dateLabel () {
       return this.selectedDate.format('ddd DD/MM')
+    },
+    isToday () {
+      return this.selectedDate.isSame(dayjs(), 'day')
     },
     formattedDate: {
       get () {
