@@ -194,6 +194,7 @@ export default {
         // Check if already authenticated
         fetch(constants.JSON_WS_URL + USER_PATH + GET_USER_INFOS_WS + '?p_auth=' + this.p_auth).then(response => {
           if (response.status === 200) {
+            store.commit('user/setPAuth', this.p_auth)
             if (this.isMobileApp) {
               // Manage mobile token
               let service = ''
@@ -201,8 +202,6 @@ export default {
                 service = new URLSearchParams(window.location.search).get('service')
               }
               response.json().then(data => this.manageMobileApp(data.userId, service))
-            } else if (this.redirect) {
-              this.$router.push(this.redirect)
             } else {
               this.$router.push(DASHBOARD)
             }
@@ -278,9 +277,10 @@ export default {
         mobileService.refreshMobileToken(mobileToken).then((response) => {
           if (response.success) {
             refreshToken = response.refreshToken
-            const mobileUrl = encodeURI(window.location.origin + '/' + redirectUrl, 'UTF-8')
+            const mobileUrl = encodeURI(window.location.origin + '/' + redirectUrl)
             const serviceUrl = 'pentila://authorized?refresh_token=' + refreshToken + '&user_id=' + userId + '&home_url=' + mobileUrl
-            window.location = serviceUrl
+            // const serviceUrl = window.location.origin + '/appmobile.html?refresh_token=' + refreshToken + '&user_id=' + userId + '&home_url=' + mobileUrl
+            window.location.replace(serviceUrl)
           }
         })
       } else {
@@ -288,9 +288,10 @@ export default {
         mobileService.addMobileToken().then((response) => {
           if (response.success) {
             refreshToken = response.refreshToken
-            const mobileUrl = encodeURI(window.location.origin + '/' + redirectUrl, 'UTF-8')
+            const mobileUrl = encodeURI(window.location.origin + '/' + redirectUrl)
             const serviceUrl = 'pentila://authorized?refresh_token=' + refreshToken + '&user_id=' + userId + '&home_url=' + mobileUrl
-            window.location = serviceUrl
+            // const serviceUrl = window.location.origin + '/appmobile.html?refresh_token=' + refreshToken + '&user_id=' + userId + '&home_url=' + mobileUrl
+            window.location.replace(serviceUrl)
           }
         })
       }

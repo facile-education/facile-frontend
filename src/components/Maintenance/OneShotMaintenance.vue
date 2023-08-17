@@ -6,6 +6,12 @@
     >
       <span>{{ $t('permissions') }}</span>
     </PentilaButton>
+    <PentilaButton
+      class="round"
+      @click="runPAuth"
+    >
+      <span>{{ $t('pAuth') }}</span>
+    </PentilaButton>
   </div>
 </template>
 
@@ -34,6 +40,9 @@ export default {
           }
         }
       )
+    },
+    runPAuth () {
+      this.$store.commit('user/setPAuth', 123456)
     }
   }
 }
@@ -55,6 +64,7 @@ export default {
 {
   "permissions": "Mise à jour des permissions",
   "success": "Opération terminée en succès",
-  "error": "Opération terminée en erreur"
+  "error": "Opération terminée en erreur",
+  "pAuth": "pAuth bidon"
 }
 </i18n>
