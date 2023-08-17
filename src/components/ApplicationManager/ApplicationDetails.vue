@@ -84,11 +84,15 @@
     <PentilaButton
       v-if="isAdministrator && isAdministratorMode"
       :title="$t('deleteButtonTooltip')"
+      class="delete-button"
       type="circle"
       cls="delete"
       @click="confirmRemoval"
     >
-      <NeroIcon name="trash" />
+      <img
+        src="@assets/icons/trash_white.svg"
+        :alt="$t('deleteButtonTooltip')"
+      >
     </PentilaButton>
   </div>
 </template>
@@ -216,6 +220,16 @@ export default {
   background-color: white;
   overflow: auto;
   border-left: 1px solid $color-border;
+}
+
+.delete-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    height: 18px;
+  }
 }
 
 .input {

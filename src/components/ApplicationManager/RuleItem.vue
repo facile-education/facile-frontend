@@ -35,9 +35,13 @@
       v-if="isRemoveButtonDisplayed"
       type="circle"
       cls="delete"
+      class="delete-button"
       @click="remove"
     >
-      <NeroIcon name="trash" />
+      <img
+        src="@assets/icons/trash_white.svg"
+        :alt="$t('deleteButtonTooltip')"
+      >
     </PentilaButton>
   </li>
 </template>
@@ -46,11 +50,8 @@
 import { useVuelidate } from '@vuelidate/core'
 import { requiredIf } from '@vuelidate/validators'
 
-import NeroIcon from '@/components/Nero/NeroIcon'
-
 export default {
   name: 'RuleItem',
-  components: { NeroIcon },
   inject: ['mq'],
   props: {
     rule: {
@@ -160,6 +161,16 @@ export default {
 
 .delete {
   margin: auto;
+}
+
+.delete-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    height: 18px;
+  }
 }
 
 .phone {
