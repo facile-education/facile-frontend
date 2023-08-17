@@ -83,12 +83,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
+
 .theme-text-color {
-  font-size: 2em;
-  letter-spacing: 0;
-  line-height: 1.5em;
   display: flex;
   align-items: center;
+
+  @extend %font-heading-s;
 }
 
 @media screen and (max-width: 840px) and (min-width: 450px) {

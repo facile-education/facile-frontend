@@ -1,96 +1,105 @@
 <template>
   <Layout v-if="selectedSchool">
-    <h1 :aria-label="$t('serviceTitle')" />
-    <NeroToolbar>
-      <StatsActivesUsers
-        v-if="!(mq.phone || mq.tablet)"
-        :start-time="selectedStartDate"
-        :end-time="selectedEndDate"
-        :selected-school="selectedSchool"
-      />
-      <DateRangePicker
-        v-if="minDate !== undefined"
-        :initial-range="{start: selectedStartDate, end: selectedEndDate}"
-        :max-date="maxDate"
-        :min-date="minDate"
-        class="range-picker"
-        @updateDates="updateDates"
-      />
-      <PentilaDropdown
-        v-if="managedSchoolList.length > 1"
-        v-model="selectedSchool"
-        class="school-dropdown"
-        :list="managedSchoolList"
-        display-field="schoolName"
-        :sort="!isGlobalAdmin"
-      />
-    </NeroToolbar>
+    <div class="statistics">
+      <h1 :aria-label="$t('serviceTitle')" />
 
-    <div class="stats">
-      <StatsActivesUsers
-        v-if="mq.phone || mq.tablet"
-        :start-time="selectedStartDate"
-        :end-time="selectedEndDate"
-        :selected-school="selectedSchool"
-      />
-
-      <VisitsChart
-        :start-time="selectedStartDate"
-        :end-time="selectedEndDate"
-        :selected-school="selectedSchool"
-        comparator="profile"
-      />
-
-      <ActionsChart
-        :start-time="selectedStartDate"
-        :end-time="selectedEndDate"
-        :selected-school="selectedSchool"
-        comparator="profile"
-      />
-
-      <div class="doughnuts">
-        <StatsDoughnut
-          class="doughnut"
-          :start-time="selectedStartDate"
-          :end-time="selectedEndDate"
-          :selected-school="selectedSchool"
-          service="documents"
-        />
-
-        <StatsDoughnut
-          class="doughnut"
-          :start-time="selectedStartDate"
-          :end-time="selectedEndDate"
-          :selected-school="selectedSchool"
-          service="homeworks"
-        />
+      <div>
+        <div
+          v-if="managedSchoolList.length > 1"
+          class="school-container"
+        >
+          <PentilaDropdown
+            v-model="selectedSchool"
+            class="school-dropdown"
+            :list="managedSchoolList"
+            display-field="schoolName"
+            :sort="!isGlobalAdmin"
+          />
+        </div>
+        <div class="toolbar">
+          <StatsActivesUsers
+            v-if="!(mq.phone || mq.tablet)"
+            :start-time="selectedStartDate"
+            :end-time="selectedEndDate"
+            :selected-school="selectedSchool"
+          />
+          <DateRangePicker
+            v-if="minDate !== undefined"
+            :initial-range="{start: selectedStartDate, end: selectedEndDate}"
+            :max-date="maxDate"
+            :min-date="minDate"
+            class="range-picker"
+            @updateDates="updateDates"
+          />
+        </div>
       </div>
 
-      <div class="general-stats">
-        <GlobalStat
-          class="general-stat"
+      <div class="stats">
+        <StatsActivesUsers
+          v-if="mq.phone || mq.tablet"
           :start-time="selectedStartDate"
           :end-time="selectedEndDate"
           :selected-school="selectedSchool"
-          service="messaging"
-          color="#E74C3C"
         />
-        <GlobalStat
-          class="general-stat"
+
+        <VisitsChart
           :start-time="selectedStartDate"
           :end-time="selectedEndDate"
           :selected-school="selectedSchool"
-          service="schoolNews"
-          color="#306CD3"
+          comparator="profile"
         />
-        <GlobalStat
-          class="general-stat"
+
+        <ActionsChart
           :start-time="selectedStartDate"
           :end-time="selectedEndDate"
           :selected-school="selectedSchool"
-          service="news"
-          color="#306CD3"
+          comparator="profile"
         />
+
+        <div class="doughnuts">
+          <StatsDoughnut
+            class="doughnut"
+            :start-time="selectedStartDate"
+            :end-time="selectedEndDate"
+            :selected-school="selectedSchool"
+            service="documents"
+          />
+
+          <StatsDoughnut
+            class="doughnut"
+            :start-time="selectedStartDate"
+            :end-time="selectedEndDate"
+            :selected-school="selectedSchool"
+            service="homeworks"
+          />
+        </div>
+
+        <div class="general-stats">
+          <GlobalStat
+            class="general-stat"
+            :start-time="selectedStartDate"
+            :end-time="selectedEndDate"
+            :selected-school="selectedSchool"
+            service="messaging"
+            color="#E74C3C"
+          />
+          <GlobalStat
+            class="general-stat"
+            :start-time="selectedStartDate"
+            :end-time="selectedEndDate"
+            :selected-school="selectedSchool"
+            service="schoolNews"
+            color="#306CD3"
+          />
+          <GlobalStat
+            class="general-stat"
+            :start-time="selectedStartDate"
+            :end-time="selectedEndDate"
+            :selected-school="selectedSchool"
+            service="news"
+            color="#306CD3"
+          />
+        </div>
       </div>
     </div>
   </Layout>
@@ -106,12 +115,11 @@ import VisitsChart from '@components/Statistics/VisitsChart'
 import dayjs from 'dayjs'
 
 import { getGlobalConfiguration } from '@/api/schedule.service'
-import NeroToolbar from '@/components/Nero/NeroToolbar'
 import Layout from '@/router/layouts/BannerLayout'
 
 export default {
   name: 'Statistics',
-  components: { DateRangePicker, NeroToolbar, VisitsChart, ActionsChart, StatsActivesUsers, StatsDoughnut, GlobalStat, Layout },
+  components: { DateRangePicker, VisitsChart, ActionsChart, StatsActivesUsers, StatsDoughnut, GlobalStat, Layout },
   inject: ['mq'],
   data () {
     return {
@@ -177,16 +185,27 @@ export default {
 <style lang="scss" scoped>
 @import "@design";
 
-.range-picker {
-  margin-left: auto;
-  margin-right: 50px;
+.statistics {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
 }
 
-.service-body {
-  overflow: hidden;
+.school-container {
+  width: 100%;
+  text-align: right;
+  margin-bottom: 1rem;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  white-space: nowrap;
 }
 
 .stats {
+  flex: 1;
   overflow: auto;
   // 20 px = toolbar margin
   height: calc(100% - (#{$toolbar-height} + 20px ));
