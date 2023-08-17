@@ -17,7 +17,7 @@
           @click.stop="isCreateArticleModalDisplayed=true"
         />
         <img
-          src="@/assets/icon_trash.svg"
+          src="@/assets/icons/trash.svg"
           alt="delete"
           @click.stop="confirmCategoryRemoval"
         >

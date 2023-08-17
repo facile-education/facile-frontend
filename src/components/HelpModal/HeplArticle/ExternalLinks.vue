@@ -20,7 +20,7 @@
         >{{ link.linkName }}</a>
         <img
           v-if="isAdministrator"
-          src="@/assets/icon_trash.svg"
+          src="@/assets/icons/trash.svg"
           class="icon-admin"
           alt="delete"
           @click="confirmLinkRemoval(link)"

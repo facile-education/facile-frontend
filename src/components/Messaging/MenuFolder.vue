@@ -63,7 +63,7 @@
           @click.stop="askToConfirmFolderDeletion"
         >
           <img
-            src="@/assets/icon_trash.svg"
+            src="@/assets/icons/trash.svg"
             alt="delete folder"
             class="folder-action delete"
           >

@@ -28,7 +28,7 @@
       >
         <img
           class="trash-icon"
-          src="@/assets/icon_trash.svg"
+          src="@/assets/icons/trash.svg"
           :alt="$t('delete')"
           :title="$t('delete')"
         >
