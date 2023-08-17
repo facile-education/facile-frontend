@@ -13,81 +13,83 @@
       <span>{{ $t('add') }}</span>
     </PentilaButton>
 
-    <!-- To switch between user selection and group selection -->
-    <NeroIcon
-      v-if="mq.phone && !$store.state.user.isStudent && !$store.state.user.isParent"
-      :name="iconClass"
-      class="selection"
-      @click="toggleSelection"
-    />
+    <div class="filters">
+      <!-- To switch between user selection and group selection -->
+      <NeroIcon
+        v-if="mq.phone && !$store.state.user.isStudent && !$store.state.user.isParent"
+        :name="iconClass"
+        class="selection"
+        @click="toggleSelection"
+      />
 
-    <!-- Parents with 1 child -->
-    <p
-      v-if="children.length === 1"
-      class="child"
-    >
-      {{ $t('timetableOf') }} {{ children[0].firstName }}
-    </p>
-
-    <!-- Group selector for agents -->
-    <PentilaDropdown
-      v-if="groupList && (!mq.phone || !isSingleUser) && !$store.state.user.isStudent && !$store.state.user.isParent"
-      v-model="selectedGroup"
-      class="group-list"
-      :placeholder="$t('groupFilter')"
-      :list="groupList"
-      display-field="groupName"
-    />
-
-    <!-- Name selector for agents -->
-    <PentilaTagsInput
-      v-if="(!mq.phone || isSingleUser) && !$store.state.user.isStudent && !$store.state.user.isParent"
-      v-model="tagsList"
-      class="search"
-      data-test="user-completion-input"
-      :placeholder="$t('userInput')"
-      :close-on-select="true"
-      :max-size="maxSize"
-      :completion-only="true"
-      :list="autocompleteUserList"
-      display-field="displayName"
-      id-field="userId"
-      @input-change="searchTimeOut"
-      @update:model-value="onSelectUser"
-    />
-
-    <!-- Parents with 2 or more children -->
-    <div
-      v-if="children.length > 1"
-      class="children"
-    >
-      <p class="children-label">
-        {{ $t('timetableOf') }}
+      <!-- Parents with 1 child -->
+      <p
+        v-if="children.length === 1"
+        class="child"
+      >
+        {{ $t('timetableOf') }} {{ children[0].firstName }}
       </p>
+
+      <!-- Group selector for agents -->
       <PentilaDropdown
-        v-model="selectedChild"
-        class="children-list"
-        :placeholder="$t('childFilter')"
-        :list="$store.state.user.children"
-        display-field="firstName"
+        v-if="groupList && (!mq.phone || !isSingleUser) && !$store.state.user.isStudent && !$store.state.user.isParent"
+        v-model="selectedGroup"
+        class="group-list"
+        :placeholder="$t('groupFilter')"
+        :list="groupList"
+        display-field="groupName"
+      />
+
+      <!-- Name selector for agents -->
+      <PentilaTagsInput
+        v-if="(!mq.phone || isSingleUser) && !$store.state.user.isStudent && !$store.state.user.isParent"
+        v-model="tagsList"
+        class="search"
+        data-test="user-completion-input"
+        :placeholder="$t('userInput')"
+        :close-on-select="true"
+        :max-size="maxSize"
+        :completion-only="true"
+        :list="autocompleteUserList"
+        display-field="displayName"
+        id-field="userId"
+        @input-change="searchTimeOut"
+        @update:model-value="onSelectUser"
+      />
+
+      <!-- Parents with 2 or more children -->
+      <div
+        v-if="children.length > 1"
+        class="children"
+      >
+        <p class="children-label">
+          {{ $t('timetableOf') }}
+        </p>
+        <PentilaDropdown
+          v-model="selectedChild"
+          class="children-list"
+          :placeholder="$t('childFilter')"
+          :list="$store.state.user.children"
+          display-field="firstName"
+        />
+      </div>
+
+      <DatepickerNav
+        v-if="mq.phone"
+        class="date-picker"
+        :selected-date="selectedDate"
+        @select-date="onSelectDate"
+      />
+
+      <PentilaDropdown
+        v-if="(schoolList && schoolList.length > 1)"
+        v-model="selectedSchool"
+        :list="schoolList"
+        display-field="schoolName"
+        class="filter"
+        @update:model-value="onSelectSchool"
       />
     </div>
-
-    <DatepickerNav
-      v-if="mq.phone"
-      class="date-picker"
-      :selected-date="selectedDate"
-      @select-date="onSelectDate"
-    />
-
-    <PentilaDropdown
-      v-if="(schoolList && schoolList.length > 1)"
-      v-model="selectedSchool"
-      :list="schoolList"
-      display-field="schoolName"
-      class="filter"
-      @update:model-value="onSelectSchool"
-    />
   </NeroToolbar>
 </template>
 
@@ -265,6 +267,16 @@ export default {
 
 <style lang="scss" scoped>
 @import "@design";
+
+.toolbar {
+  justify-content: space-between;
+}
+
+.filters {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
 
 .create-button {
   @extend %create-button;
