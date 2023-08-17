@@ -417,6 +417,7 @@ header {
     text-overflow: ellipsis;
     flex: 1;
     margin: 0;
+    text-transform: uppercase;
     @extend %font-bold-l;
   }
 
