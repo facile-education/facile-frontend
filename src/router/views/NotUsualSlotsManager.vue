@@ -169,8 +169,7 @@ export default {
 
 .filters {
   display: flex;
-  margin-top: 5px;
-  margin-bottom: 10px;
+  margin: 1rem 0;
 
   .class-dropdown {
     min-width: 120px;
