@@ -136,6 +136,10 @@ header {
   &.phone {
     flex-direction: column;
     align-items: flex-start;
+
+    .back-button {
+      margin-bottom: 0.625rem;
+    }
   }
 }
 
