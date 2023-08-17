@@ -2,7 +2,8 @@
   <div class="homework-container">
     <div
       class="homework-item"
-      :style="'background-color: ' + homework.color + '; border-color: ' + homeWorkBorderColor"
+      :class="{'done': homework.isDone || homework.isSent}"
+      :style="(!homework.isDone && !homework.isSent) ? ('background-color: ' + homework.color + '; border-color: ' + homeWorkBorderColor) : ''"
       :tabindex="0"
       :title="homework.title"
       @keyup.enter="redirect"
@@ -155,20 +156,27 @@ button {
   border-radius: 6px;
   overflow: visible;
   cursor: pointer;
+
+  &.done {
+    border-left: 1px solid;
+    border-color: $neutral-40;
+  }
 }
 
 .transparent-part {
   height: 100%;
   width: 100%;
-  background-color: #FFFFFFDD;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.5rem 1rem;
+  background-color: transparent;
+  padding: 0.5rem 1rem 0.5rem calc(1rem + 4px);
 
   &.undone {
     border-top-right-radius: 6px;
     border-bottom-right-radius: 6px;
+    background-color: #FFFFFFDD;
+    padding: 0.5rem 1rem;
   }
 }
 
