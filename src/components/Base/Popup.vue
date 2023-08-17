@@ -51,13 +51,13 @@ export default {
     backgroundColor () {
       switch (this.type) {
         case 'success':
-          return 'green'
+          return '#90C864'
         case 'info':
-          return 'blue'
+          return '#4489FB'
         case 'warning':
-          return 'orange'
+          return '#FFAA28'
         case 'error':
-          return 'red'
+          return '#F94A17'
         default:
           return ''
       }

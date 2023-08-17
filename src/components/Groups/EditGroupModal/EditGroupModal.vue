@@ -345,7 +345,7 @@ export default {
         editCommunity(this.group.groupId, this.group.groupName, this.group.description, this.group.isPedagogical, this.groupMembers, this.group.color).then((data) => {
           if (data.success) {
             this.$store.dispatch('groups/getGroupList', { filter: this.$store.state.groups.currentFilter })
-            this.$store.dispatch('popups/pushPopup', { message, type: 'info' })
+            this.$store.dispatch('popups/pushPopup', { message, type: 'success' })
             this.closeModal()
           }
         })
@@ -358,7 +358,7 @@ export default {
             createCommunity(this.group.groupName, this.group.description, this.group.isPedagogical, this.groupMembers, this.group.color).then((data) => {
               if (data.success) {
                 this.$store.dispatch('groups/getGroupList', { filter: this.$store.state.groups.currentFilter })
-                this.$store.dispatch('popups/pushPopup', { message, type: 'info' })
+                this.$store.dispatch('popups/pushPopup', { message, type: 'success' })
                 this.closeModal()
               }
             })
@@ -366,7 +366,7 @@ export default {
             // Group already exists
             // Case 1 : community is deactivated and was created by current user -> suggest him to extend and reactivate the group
             if (data.errorCode === 1) {
-              this.$store.dispatch('popups/pushPopup', { message: this.$t('reactivate-community', { creationDate: dayjs(data.creationDate).format('DD MMM YYYY'), expirationDate: dayjs(data.expirationDate).format('DD MMM YYYY') }), type: 'info' })
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('reactivate-community', { creationDate: dayjs(data.creationDate).format('DD MMM YYYY'), expirationDate: dayjs(data.expirationDate).format('DD MMM YYYY') }), type: 'error' })
             }
             // Case 2 : else, display warning
             if (data.errorCode === 2) {
