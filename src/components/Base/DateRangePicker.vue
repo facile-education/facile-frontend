@@ -12,24 +12,22 @@
         <span class="label">
           {{ formattedStartDate + ' - ' + formattedEndDate }}
         </span>
-        <NeroIcon
-          name="fa-calendar-alt"
-          type="far"
-          class="icon"
-        />
+        <img
+          src="@assets/icons/calendar.svg"
+          alt=""
+        >
       </button>
     </template>
   </DatePicker>
 </template>
 
 <script>
-import NeroIcon from '@components/Nero/NeroIcon.vue'
 import dayjs from 'dayjs'
 import { DatePicker } from 'v-calendar'
 
 export default {
   name: 'DateRangePicker',
-  components: { DatePicker, NeroIcon },
+  components: { DatePicker },
   props: {
     initialRange: {
       type: Object,
@@ -89,14 +87,15 @@ export default {
 }
 
 button {
-  height: 100%;
+  height: 2rem;
   background-color: #f5f5f5;
   display: flex;
   align-items: center;
   cursor: pointer;
   border-radius: 6px;
-  padding: 14px;
-  border: none;
+  border: 1px solid $neutral-60;
+  padding: 6px 8px;
+  @extend %font-regular-m;
 
   &:hover {
     transition: .2s background-color linear;
@@ -105,10 +104,6 @@ button {
 }
 
 .label {
-  margin-right: 8px;
-}
-
-.icon {
-  font-size: 1.3rem;
+  margin: 0 8px;
 }
 </style>
