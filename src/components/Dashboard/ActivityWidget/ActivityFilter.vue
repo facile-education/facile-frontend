@@ -54,6 +54,10 @@ export default {
     initialFilter: {
       type: Object,
       required: true
+    },
+    isFiltersDisplayedByDefault: {
+      type: Boolean,
+      default: false
     }
   },
   emits: ['updateFilter'],
@@ -67,6 +71,7 @@ export default {
     }
   },
   created () {
+    this.isFiltersDisplayed = this.isFiltersDisplayedByDefault
     this.filter = this.initialFilter
     this.getGroupList()
   },

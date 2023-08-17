@@ -9,6 +9,7 @@
     <ActivityFilter
       v-if="!isParent"
       :initial-filter="filter"
+      :is-filters-displayed-by-default="displayAll"
       @updateFilter="updateFilter"
     />
 
