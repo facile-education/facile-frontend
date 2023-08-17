@@ -53,9 +53,14 @@ const MessagingUtils = {
   deleteSelectedThreads () {
     return new Promise((resolve) => {
       const messageIdsToDelete = []
+      let nbUnreadMessages = 0
+
       for (const thread of store.state.messaging.selectedThreads) {
         for (const message of thread.messages) {
           messageIdsToDelete.push(message.messageId)
+          if (message.isNew) {
+            nbUnreadMessages++
+          }
         }
       }
       store.dispatch('currentActions/addAction', { name: 'deleteMessages' })
@@ -63,6 +68,8 @@ const MessagingUtils = {
         store.dispatch('currentActions/removeAction', { name: 'deleteMessages' })
         if (data.success) {
           store.dispatch('messaging/deleteSelectedThreads')
+          store.dispatch('menu/updateMessagingNotification', nbUnreadMessages)
+          store.dispatch('messaging/updateNbUnread', store.state.messaging.currentFolder.folderId)
           resolve()
         }
       }, (err) => {
