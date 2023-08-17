@@ -31,6 +31,7 @@
             :placeholder="$t('populationPlaceholder') + '*'"
             :list="availablePopulationsList"
             :close-on-select="true"
+            sort-field="order"
             display-field="populationName"
             :disabled="isLoadingNewsDetails"
           />
@@ -76,6 +77,7 @@
           v-model="populations"
           :placeholder="$t('populationPlaceholder') + '*'"
           :list="availablePopulationsList"
+          sort-field="order"
           :close-on-select="true"
           display-field="populationName"
           :disabled="isLoadingNewsDetails"
@@ -331,12 +333,24 @@ export default {
           schools.forEach((school) => {
             this.availablePopulationsList = [...this.availablePopulationsList, ...school.populations]
             // this.availablePopulationsList = [...this.availablePopulationsList, ...school.subjects]
-            school.classes.forEach((schoolClass) => {
-              this.availablePopulationsList = [...this.availablePopulationsList, ...schoolClass.populations]
-            })
-            school.volees.forEach((schoolVolee) => {
-              this.availablePopulationsList = [...this.availablePopulationsList, ...schoolVolee.populations]
-            })
+            if (school.classes) {
+              school.classes.forEach((schoolClass) => {
+                this.availablePopulationsList = [...this.availablePopulationsList, ...schoolClass.populations]
+              })
+            }
+            if (school.volees) {
+              school.volees.forEach((schoolVolee) => {
+                this.availablePopulationsList = [...this.availablePopulationsList, ...schoolVolee.populations]
+              })
+            }
+          })
+          this.availablePopulationsList.sort((a, b) => {
+            if (a.order < b.order) {
+              return 1
+            } else if (a.order > b.order) {
+              return -1
+            }
+            return 0
           })
         } else {
           console.error('Error')
@@ -364,6 +378,14 @@ export default {
                 this.availablePopulationsList = [...this.availablePopulationsList, ...schoolCours.populations]
               })
             }
+          })
+          this.availablePopulationsList.sort((a, b) => {
+            if (a.order < b.order) {
+              return 1
+            } else if (a.order > b.order) {
+              return -1
+            }
+            return 0
           })
         } else {
           console.error('Error')
