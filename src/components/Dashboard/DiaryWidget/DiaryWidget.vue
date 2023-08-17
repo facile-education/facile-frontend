@@ -17,7 +17,7 @@
     />
     <div
       v-else-if="eventList.length === 0 && !isFirstLoad"
-      v-t="'emptyPlaceholder'"
+      v-t="unReadOnly ? 'unReadEmptyPlaceholder' : 'emptyPlaceholder'"
       class="placeholder"
     />
     <div
@@ -164,6 +164,7 @@ section {
 {
   "errorPlaceholder": "Oups, une erreur est survenue...",
   "emptyPlaceholder": "Aucun événement à venir",
+  "unReadEmptyPlaceholder":  "Aucun nouvel événement",
   "showMore": "Voir tous les événements"
 }
 </i18n>

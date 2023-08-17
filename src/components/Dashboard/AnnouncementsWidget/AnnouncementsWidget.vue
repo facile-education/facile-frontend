@@ -22,7 +22,7 @@
     />
     <div
       v-else-if="announcementsList.length === 0 && !isFirstLoad"
-      v-t="'emptyPlaceholder'"
+      v-t="unReadOnly ? 'unReadEmptyPlaceholder' : 'emptyPlaceholder'"
       class="placeholder"
     />
     <div v-else>
@@ -76,11 +76,10 @@ import dayjs from 'dayjs'
 
 import { getSchoolNews } from '@/api/dashboard/news.service'
 import { nbAnnouncementsInWidget } from '@/constants/dashboardConstants'
-import DiaryEventItem from '@components/Dashboard/DiaryWidget/DiaryEventItem.vue'
 
 export default {
   name: 'AnnouncementsWidget',
-  components: { DiaryEventItem, AnnouncementItem, AnnouncementsHeader },
+  components: { AnnouncementItem, AnnouncementsHeader },
   inject: ['mq'],
   data () {
     return {
@@ -296,6 +295,7 @@ ul {
 {
   "errorPlaceholder": "Oups, une erreur est survenue...",
   "emptyPlaceholder": "Aucune annonce",
+  "unReadEmptyPlaceholder": "Aucune nouvelle annonce",
   "showMore": "Voir toutes les annonces"
 }
 </i18n>
