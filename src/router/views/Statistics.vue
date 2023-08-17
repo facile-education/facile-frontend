@@ -40,6 +40,7 @@
           :start-time="selectedStartDate"
           :end-time="selectedEndDate"
           :selected-school="selectedSchool"
+          class="stat"
         />
 
         <VisitsChart
@@ -47,6 +48,7 @@
           :end-time="selectedEndDate"
           :selected-school="selectedSchool"
           comparator="profile"
+          class="stat"
         />
 
         <ActionsChart
@@ -54,11 +56,12 @@
           :end-time="selectedEndDate"
           :selected-school="selectedSchool"
           comparator="profile"
+          class="stat"
         />
 
         <div class="doughnuts">
           <StatsDoughnut
-            class="doughnut"
+            class="doughnut stat"
             :start-time="selectedStartDate"
             :end-time="selectedEndDate"
             :selected-school="selectedSchool"
@@ -66,7 +69,7 @@
           />
 
           <StatsDoughnut
-            class="doughnut"
+            class="doughnut stat"
             :start-time="selectedStartDate"
             :end-time="selectedEndDate"
             :selected-school="selectedSchool"
@@ -76,7 +79,7 @@
 
         <div class="general-stats">
           <GlobalStat
-            class="general-stat"
+            class="general-stat stat"
             :start-time="selectedStartDate"
             :end-time="selectedEndDate"
             :selected-school="selectedSchool"
@@ -84,7 +87,7 @@
             color="#E74C3C"
           />
           <GlobalStat
-            class="general-stat"
+            class="general-stat stat"
             :start-time="selectedStartDate"
             :end-time="selectedEndDate"
             :selected-school="selectedSchool"
@@ -92,7 +95,7 @@
             color="#306CD3"
           />
           <GlobalStat
-            class="general-stat"
+            class="general-stat stat"
             :start-time="selectedStartDate"
             :end-time="selectedEndDate"
             :selected-school="selectedSchool"
@@ -211,6 +214,10 @@ export default {
   height: calc(100% - (#{$toolbar-height} + 20px ));
 }
 
+.stat {
+  margin-top: 20px;
+}
+
 @media screen and (min-width: 774px) {  // Inline if enough space
   .doughnuts {
     display: flex;
@@ -225,7 +232,6 @@ export default {
 
 .general-stats {
   display: flex;
-  margin-top: 2em;
   flex-wrap: wrap;
   justify-content: space-around;
   gap: 25px 50px;
