@@ -1,33 +1,30 @@
 <template>
-  <NeroToolbar>
-    <div class="toolbar">
-      <div class="first-line">
-        <SlotTypeItem
-          v-if="currentSlotType !== undefined"
-          :slot-type="currentSlotType"
-        />
-        <DatepickerNav
-          v-if="!mq.desktop"
-          class="date-picker"
-          :selected-date="selectedDate"
-          @selectDate="onSelectDate"
-        />
-      </div>
-      <div class="second-line">
-        <UserCompletion
-          v-if="currentSlotType"
-          user-type="student"
-          :placeholder="$t('NotUsualSlots.studentNamePlaceHolder')"
-          :model-value="queriedUser ? [queriedUser] : []"
-          @update:modelValue="getUserSlots"
-        />
-      </div>
+  <div class="toolbar">
+    <div class="first-line">
+      <SlotTypeItem
+        v-if="currentSlotType !== undefined"
+        :slot-type="currentSlotType"
+      />
+      <DatepickerNav
+        v-if="!mq.desktop"
+        class="date-picker"
+        :selected-date="selectedDate"
+        @selectDate="onSelectDate"
+      />
     </div>
-  </NeroToolbar>
+    <div class="second-line">
+      <UserCompletion
+        v-if="currentSlotType"
+        user-type="student"
+        :placeholder="$t('NotUsualSlots.studentNamePlaceHolder')"
+        :model-value="queriedUser ? [queriedUser] : []"
+        @update:modelValue="getUserSlots"
+      />
+    </div>
+  </div>
 </template>
 
 <script>
-import NeroToolbar from '@components/Nero/NeroToolbar'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 const UserCompletion = defineAsyncComponent(() => import('@components/NotUsualSlotManager/UserCompletion'))
@@ -36,7 +33,7 @@ const SlotTypeItem = defineAsyncComponent(() => import('@components/NotUsualSlot
 
 export default {
   name: 'NotUsualSlotsToolBar',
-  components: { NeroToolbar, UserCompletion, DatepickerNav, SlotTypeItem },
+  components: { UserCompletion, DatepickerNav, SlotTypeItem },
   inject: ['mq'],
   props: {
     selectedDate: {
@@ -67,6 +64,7 @@ export default {
 <style lang="scss" scoped>
 .toolbar {
   width: 100%;
+  margin-bottom: 1rem;
 }
 
 .first-line {
