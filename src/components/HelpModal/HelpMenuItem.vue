@@ -21,7 +21,7 @@
           @click.stop="updateItemPosition('down')"
         />
         <img
-          src="@/assets/icon_trash.svg"
+          src="@/assets/icons/trash.svg"
           alt="delete"
           @click.stop="confirmItemRemoval"
         >

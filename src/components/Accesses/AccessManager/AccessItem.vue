@@ -48,7 +48,7 @@
         @click.stop="confirmDeleteAccess"
       >
         <img
-          src="@/assets/icon_trash.svg"
+          src="@/assets/icons/trash.svg"
           alt="edit"
         >
       </button>

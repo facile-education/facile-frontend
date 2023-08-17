@@ -100,7 +100,7 @@ export default {
         case 'Envoyés':
           return require('@/assets/icon_envoyes.svg')
         case 'Corbeille':
-          return require('@/assets/icon_trash.svg')
+          return require('@/assets/icons/trash.svg')
         default:
           return require('@/assets/icon_messaging_folder.svg')
       }

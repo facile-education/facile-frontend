@@ -8,7 +8,7 @@
       <img
         v-if="isAdministrator"
         class="admin-trash-icon"
-        src="@/assets/icon_trash.svg"
+        src="@/assets/icons/trash.svg"
         alt="delete"
         @click.stop="confirmQuestionRemoval"
       >

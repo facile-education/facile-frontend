@@ -63,7 +63,7 @@
         @click.stop="confirmNewsDeletion"
       >
         <img
-          src="@/assets/icon_trash.svg"
+          src="@/assets/icons/trash.svg"
           alt="delete"
         >
       </button>
