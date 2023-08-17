@@ -152,8 +152,8 @@ export default {
   top: -8px;
   right: -8px;
   border-radius: 50%;
-  width: 30px;
-  height: 30px;
+  width: 1.5rem;
+  height: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;

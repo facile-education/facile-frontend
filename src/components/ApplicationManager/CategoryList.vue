@@ -47,8 +47,9 @@ export default {
   margin-bottom: 5px;
   margin-left: 15px;
   padding: 10px 0;
-  text-transform: uppercase;
   border-bottom: 1px solid $color-border;
+
+  @extend %font-heading-s;
 }
 
 .info {
