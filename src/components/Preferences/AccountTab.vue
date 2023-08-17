@@ -47,64 +47,6 @@
         @update:modelValue="onFrequencySelect"
       />
     </section>
-    <!-- <section class="webdav">
-      <div class="webdav-line">
-        <h4 v-t="'webdav'" />
-        <PentilaCheckbox
-          :model-value="webdavValue"
-          label=""
-          class="checkbox"
-          @click.stop
-          @update:modelValue="onWebdavChange"
-        />
-      </div>
-      <button
-        class="webdav-line"
-        @click="copyWebdavUrl"
-      >
-        <span v-t="'copyWebdavUrl'" />
-        <img
-          src="@/assets/icon_copy.svg"
-          alt="copy icon"
-        >
-      </button>
-      <button
-        v-if="details && !details.isLocalUser"
-        class="webdav-line"
-        @click="isCollapsed=!isCollapsed"
-      >
-        <span v-t="'updateWebdavPassword'" />
-        <img
-          :class="isCollapsed ? 'extend': 'collapse'"
-          src="@assets/arrow-right.svg"
-          :alt="isCollapsed ? $t('unCollapse') : $t('collapse')"
-          :title="isCollapsed ? $t('unCollapse') : $t('collapse')"
-        >
-      </button>
-      <div
-        v-if="!isCollapsed"
-        class="change-password"
-      >
-        <PentilaInput
-          v-model="password"
-          type="password"
-          class="item"
-          :placeholder="$t('newPassword')"
-        />
-        <PentilaInput
-          v-model="confirmedPassword"
-          type="password"
-          class="item"
-          :placeholder="$t('confirmNewPassword')"
-        />
-        <PentilaErrorMessage :error-message="confirmationError" />
-        <PentilaButton
-          class="item pentila-button"
-          :label="$t('updateWebdavPassword')"
-          @click="updateWebdavPassword"
-        />
-      </div>
-    </section> -->
   </div>
 
   <teleport to="body">
@@ -141,12 +83,7 @@ export default {
         { label: this.$t('daily'), value: 1 },
         { label: this.$t('weekly'), value: 2 }
       ],
-      selectedFrequency: undefined,
-      webdavValue: false,
-      isCollapsed: true,
-      password: '',
-      confirmedPassword: '',
-      confirmationError: ''
+      selectedFrequency: undefined
     }
   },
   computed: {
@@ -165,7 +102,6 @@ export default {
       this.getPersonalDetails()
     }
     this.themeColor = this.$store.state.user.themeColor
-    this.webdavValue = this.$store.state.user.hasWebdavEnabled
   },
   methods: {
     getPersonalDetails () {
@@ -210,41 +146,6 @@ export default {
           }
         })
       }
-    },
-    onWebdavChange (value) {
-      userService.updateWebdavState(value).then((data) => {
-        if (data.success) {
-          this.$store.commit('user/updateWebdavState', value)
-          this.webdavValue = value
-          this.$emit('save')
-        } else {
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
-        }
-      })
-    },
-    updateWebdavPassword () {
-      // TODO rework Webdav process
-      // if (this.password !== this.confirmedPassword) {
-      //   this.confirmationError = this.$t('confirmationError')
-      // } else {
-      //   userService.updatePassword(this.password, this.confirmedPassword, true).then((data) => {
-      //     if (data.success) {
-      //       this.$store.dispatch('popups/pushPopup', { message: this.$t('updatedPassword'), type: 'success' })
-      //       this.confirmationError = ''
-      //       this.isCollapsed = true
-      //     } else {
-      //       this.confirmationError = data.error
-      //       this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
-      //     }
-      //   })
-      // }
-    },
-    copyWebdavUrl () {
-      navigator.permissions.query({ name: 'clipboard-write' }).then(result => {
-        if (result.state === 'granted' || result.state === 'prompt') {
-          navigator.clipboard.writeText('https://' + window.location.hostname + this.details.webdavUrl) // TODO: make the 'https://hostname' returned by the backend in the webdavUrl
-        }
-      })
     },
     toggleImagePicker () {
       this.show = !this.show
@@ -318,62 +219,6 @@ export default {
     display: flex;
     justify-content: space-between;
   }
-
-  .webdav {
-    .webdav-line {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .checkbox {
-      padding-left: 20px;
-    }
-
-    button:not(.pentila-button) {
-      align-items: center;
-      height: 25px;
-      cursor: pointer;
-      background-color: transparent;
-      border: none;
-      padding: 0;
-
-      img {
-        width: 18px;
-        height: 18px;
-      }
-
-      .collapse, .extend {
-        width: 10px;
-        transition:  transform .3s;
-        cursor: pointer;
-      }
-
-      .extend {
-        transform: rotate(0);
-      }
-
-      .collapse {
-        transform: rotate(90deg);
-      }
-
-      &:hover {
-        font-weight: 600;
-      }
-    }
-
-    .change-password {
-      width: 100%;
-
-      .item {
-        margin-top: 10px;
-      }
-
-      .pentila-button {
-        margin-left: auto;
-      }
-    }
-  }
 }
 </style>
 
@@ -392,15 +237,6 @@ export default {
   "activityReport": "Rapport d'activités",
   "reportChange": "Signaler un changement",
   "themeColor": "Couleur du thème",
-  "userPicture": "Image de profil",
-  "webdav": "Activer le Webdav",
-  "copyWebdavUrl": "Copier le lien webdav",
-  "updateWebdavPassword": "Réinitialiser le mot de passe",
-  "collapse": "replier",
-  "unCollapse": "déplier",
-  "newPassword": "Nouveau mot de passe",
-  "confirmNewPassword": "Confirmation du mot de passe",
-  "updatedPassword": "Mot de passe mis à jour",
-  "confirmationError": "Le mot de passe ne correspond pas"
+  "userPicture": "Image de profil"
 }
 </i18n>
