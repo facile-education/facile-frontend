@@ -44,7 +44,7 @@
         :model-value="selectedFrequency"
         :list="frequency"
         display-field="label"
-        @update:modelValue="onFrequencySelect"
+        @update:model-value="onFrequencySelect"
       />
     </section>
   </div>
@@ -165,59 +165,54 @@ export default {
 <style lang="scss" scoped>
 @import "@design";
 
-.account-tab {
-  section {
-    margin-top: 10px;
+section {
+  &:not(:first-child) {
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
     border-top: 1px solid $color-border;
-    padding-top: 10px;
-
-    h4 {
-      margin: 0;
-    }
   }
+}
 
-  .user-picture {
-    .body{
+h4 {
+  margin: 0 0 0.5rem 0;
+  @extend %font-bold-l;
+}
+
+.user-picture {
+  .body{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    .left-section {
       display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
 
-      .left-section {
-        display: flex;
+      .user-picture {
+        display: inline-block;
+        position: relative;
 
-        .user-picture {
-          display: inline-block;
-          position: relative;
+        .picture {
+          cursor: pointer;
+          height: 100px;
+          width: 100px;
+          border-radius: 50%;
+        }
 
-          .picture {
-            cursor: pointer;
-            height: 100px;
-            width: 100px;
-            border-radius: 50%;
-          }
+        .cancel {
+          position: absolute;
+          z-index: 2;
+          top: 0;
+          right: 5px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
 
-          .cancel {
-            position: absolute;
-            z-index: 2;
-            top: 0;
-            right: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            img {
-              height: 16px;
-            }
+          img {
+            height: 16px;
           }
         }
       }
     }
-
-  }
-
-  .user-picture, .theme-color, .activity-report {
-    display: flex;
-    justify-content: space-between;
   }
 }
 </style>
