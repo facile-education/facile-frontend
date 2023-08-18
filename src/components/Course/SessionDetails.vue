@@ -25,6 +25,7 @@
       <section
         v-if="session.sessionContent || canEdit"
         class="session-content"
+        :class="{'phone': mq.phone}"
       >
         <div class="content-title">
           <CustomIcon
@@ -73,6 +74,7 @@
       <section
         v-if="hasHomeworks || canEdit"
         class="homeworks"
+        :class="{'phone': mq.phone}"
       >
         <div class="content-title">
           <CustomIcon
@@ -351,6 +353,11 @@ export default {
   &.list {
     .session-content, .homeworks, .notes {
       margin-left: 1.5rem;
+
+      &.phone {
+        margin-left: 1rem;
+        margin-right: 1rem;
+      }
     }
 
     .first-flex-section {
