@@ -58,6 +58,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
+
 button {
   cursor: pointer;
   background-color: transparent;
@@ -65,6 +67,7 @@ button {
   padding: 0;
   margin: 0;
   border: none;
+  @extend %font-regular-m;
 }
 
 .check-icon {
