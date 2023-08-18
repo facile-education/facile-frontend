@@ -5,7 +5,7 @@
   >
     <div
       class="diary-event"
-      :class="{'theme-border-color': !event.hasRead, 'theme-light-background-color': isSelected, 'theme-hover-light-background-color': isSelectionMode}"
+      :class="{'theme-border-color': !event.hasRead, 'theme-light-background-color': isSelected, 'theme-hover-light-background-color': isSelectionMode, 'theme-extra-light-background-color': (!isSelected && !isSelectionMode && event.hasRead)}"
       tabindex="0"
       :title="$t('selectToConsult')"
       @keyup.enter="handleClick"
@@ -237,10 +237,6 @@ export default {
   --date-width: 41px;
   font-size: 14px;
   line-height: 18px;
-
-  &:not(.theme-light-background-color):not(.theme-hover-light-background-color) {
-    background-color: #F4F8FF;
-  }
 
   &.theme-border-color {
     border: 2px solid;
