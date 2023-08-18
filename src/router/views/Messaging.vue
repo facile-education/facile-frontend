@@ -229,8 +229,11 @@ export default {
   &.mobile {
     position: relative;
     overflow: hidden;
-    display: block;
     height: 100%;
+
+    .panel {
+      max-width: calc(100vw - 20px);
+    }
 
     .thread-display {
       position: absolute;
