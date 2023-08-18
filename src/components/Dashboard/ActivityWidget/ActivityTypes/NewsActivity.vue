@@ -255,6 +255,10 @@ button {
       border: none;
       cursor: pointer;
 
+      img {
+        height: 1rem;
+      }
+
       &:hover {
         background-color: $color-hover-bg;
       }
