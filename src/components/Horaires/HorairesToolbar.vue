@@ -192,8 +192,8 @@ export default {
       groupService.getUserGroups(
         (this.$store.state.user.selectedSchool.schoolId !== undefined) ? this.$store.state.user.selectedSchool.schoolId : 0,
         true,
-        false,
-        false
+        true,
+        true
       ).then((data) => {
         if (data.success) {
           this.groupList = [this.defaultGroup, ...data.groups]

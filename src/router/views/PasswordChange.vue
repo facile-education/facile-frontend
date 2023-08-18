@@ -88,7 +88,7 @@
 import GVELayout from '@layouts/GVELayout.vue'
 
 import constants from '@/api/constants'
-import userService from '@/api/user.service'
+import userManagement from '@/api/userManagement.service'
 
 export default {
   name: 'PasswordChange',
@@ -100,7 +100,13 @@ export default {
       password2: '',
       password1InputType: 'password',
       password2InputType: 'password',
-      errorMessage: ''
+      errorMessage: '',
+      ticketKey: undefined
+    }
+  },
+  created () {
+    if (window.location.href.includes('ticketKey')) {
+      this.ticketKey = new URLSearchParams(window.location.search).get('ticketKey')
     }
   },
   methods: {
@@ -111,19 +117,41 @@ export default {
       } else if (this.password1 !== this.password2) {
         this.errorMessage = this.$t('differentPasswords')
       } else {
-        userService.updatePassword(this.password1, this.password2).then((data) => {
-          if (data.success) {
-            this.errorMessage = ''
-            // Reset p_auth_token
-            this.$store.commit('user/setPAuth', undefined)
-            window.location = constants.LOGOUT_URL // Logout
-          } else {
-            this.errorMessage = data.error ? data.error : this.$t('unknownError')
-          }
-        }, (err) => {
-          console.error(err)
-          this.errorMessage = this.$t('unknownError')
-        })
+        // 2 cases :
+        if (this.$store.state.user !== undefined && this.ticketKey === undefined) {
+          // A manager has changed the user's password, and the user changes it again. The user is now connected
+          userManagement.updatePasswordAfterReinitByManager(this.password1, this.password2).then((data) => {
+            if (data.success) {
+              this.errorMessage = ''
+              // Reset p_auth_token
+              this.$store.commit('user/setPAuth', undefined)
+              window.location = constants.LOGOUT_URL // Logout
+            } else {
+              this.errorMessage = data.error ? data.error : this.$t('unknownError')
+            }
+          }, (err) => {
+            console.error(err)
+            this.errorMessage = this.$t('unknownError')
+          })
+        } else if (this.$store.state.user.userId === undefined && this.ticketKey !== undefined) {
+          // The user has asked for a password retrieval : the user is not connected, but has a ticketId
+          // The webservice is public
+          userManagement.updateForgottenPassword(this.password1, this.password2, this.ticketKey).then((data) => {
+            if (data.success) {
+              this.errorMessage = ''
+              // Reset p_auth_token
+              this.$store.commit('user/setPAuth', undefined)
+              window.location = constants.LOGOUT_URL // Logout
+            } else {
+              this.errorMessage = data.error ? data.error : this.$t('unknownError')
+            }
+          }, (err) => {
+            console.error(err)
+            this.errorMessage = this.$t('unknownError')
+          })
+        } else {
+          console.error('Password change init error : store userId is ', this.$store.state.user.userId, ' and ticketKey=' + this.ticketKey)
+        }
       }
     },
     togglePassword1Type () {

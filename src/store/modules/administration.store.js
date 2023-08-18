@@ -1,4 +1,3 @@
-import administrationService from '@/api/administration.service'
 import { getAdministeredSchoolList, getSchoolClassList } from '@/api/organization.service'
 import { getBroadcastRoleList } from '@/api/role.service'
 
@@ -49,13 +48,6 @@ export const actions = {
     getSchoolClassList(state.selectedSchool.schoolId, false).then((data) => {
       if (data.success) {
         commit('setClassList', data.orgs)
-      }
-    })
-  },
-  getPortletList ({ commit }) {
-    administrationService.getPortletList().then((data) => {
-      if (data.success) {
-        commit('initPortletList', data.portlets)
       }
     })
   },

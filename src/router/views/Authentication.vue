@@ -247,8 +247,9 @@ export default {
             window._paq.push(['setUserId', Math.random().toString(36)])
             window._paq.push(['trackPageView'])
 
-            const redirectUrl = this.redirect ? this.redirect : DASHBOARD
+            const redirectUrl = DASHBOARD
             if (this.isMobileApp) {
+              authenticationService.authLog('this is mobile app')
               // Manage mobile token
               this.manageMobileApp(data.userId, redirectUrl)
             } else {
@@ -273,13 +274,15 @@ export default {
       let refreshToken = ''
       if (window.location.href.includes('mobile_token')) {
         // Refreshing with new token
+        authenticationService.authLog('refreshing Token')
         const mobileToken = new URLSearchParams(window.location.search).get('mobile_token')
         mobileService.refreshMobileToken(mobileToken).then((response) => {
           if (response.success) {
             refreshToken = response.refreshToken
+            authenticationService.authLog('refreshed token = ' + refreshToken)
             const mobileUrl = encodeURI(window.location.origin + '/' + redirectUrl)
-            const serviceUrl = 'pentila://authorized?refresh_token=' + refreshToken + '&user_id=' + userId + '&home_url=' + mobileUrl
-            // const serviceUrl = window.location.origin + '/appmobile.html?refresh_token=' + refreshToken + '&user_id=' + userId + '&home_url=' + mobileUrl
+            const serviceUrl = window.location.origin + '/appmobile.html?refresh_token=' + refreshToken + '&user_id=' + userId + '&home_url=' + mobileUrl
+            authenticationService.authLog('serviceUrl = ' + serviceUrl)
             window.location.replace(serviceUrl)
           }
         })
@@ -288,9 +291,11 @@ export default {
         mobileService.addMobileToken().then((response) => {
           if (response.success) {
             refreshToken = response.refreshToken
+            authenticationService.authLog('added new Token ', refreshToken)
             const mobileUrl = encodeURI(window.location.origin + '/' + redirectUrl)
-            const serviceUrl = 'pentila://authorized?refresh_token=' + refreshToken + '&user_id=' + userId + '&home_url=' + mobileUrl
-            // const serviceUrl = window.location.origin + '/appmobile.html?refresh_token=' + refreshToken + '&user_id=' + userId + '&home_url=' + mobileUrl
+            authenticationService.authLog('mobileUrl = ' + mobileUrl)
+            const serviceUrl = window.location.origin + '/appmobile.html?refresh_token=' + refreshToken + '&user_id=' + userId + '&home_url=' + mobileUrl
+            authenticationService.authLog('serviceUrl = ' + serviceUrl)
             window.location.replace(serviceUrl)
           }
         })
