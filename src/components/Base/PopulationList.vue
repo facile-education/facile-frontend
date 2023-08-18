@@ -49,8 +49,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
+
 .population-list {
   position: relative;
+  @extend %font-regular-m;
 }
 
 .lonely-population {

@@ -285,7 +285,7 @@ h2 {
 
 .label {
   min-width: 5em;
-  @extend %font-regular-s;
+  @extend %font-regular-m;
 }
 
 .populations {
