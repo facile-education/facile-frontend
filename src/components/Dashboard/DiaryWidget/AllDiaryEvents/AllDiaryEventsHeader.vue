@@ -108,6 +108,7 @@ export default {
     height: 100%;
     display: flex;
     align-items: center;
+    gap: 1rem;
   }
 }
 
