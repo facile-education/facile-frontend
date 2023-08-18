@@ -12,7 +12,7 @@
       @keyup.enter="handleClick"
       @click="handleClick"
     >
-      <div class="thumbnail">
+      <div class="thumbnail theme-extra-light-background-color">
         <img
           :src="thumbnail"
           alt="thumbnail"
@@ -261,12 +261,11 @@ export default {
   height: calc(100% - 4px);
   width: 100%;
   border-radius: 10px;
-  padding: 4px;
   font-size: 14px;
   line-height: 18px;
   display: flex;
-  --thumbnail-width: 25%;
-  border: 2px solid $color-border;
+  --thumbnail-width: min(74px, 20vw);
+  border: 2px solid $neutral-40;
 
   .pellet {
     @extend %item-pellet;
@@ -291,14 +290,14 @@ export default {
   justify-content: center;
 
   img {
-    width: 70%;
+    width: 75%;
     border-radius: 6px;
   }
 }
 
 .content {
   width: calc(100% - var(--thumbnail-width));
-  padding: 1em 0;
+  padding: 1em 1.5rem;
   white-space: nowrap;
   overflow-x: hidden;
   text-overflow: ellipsis;
