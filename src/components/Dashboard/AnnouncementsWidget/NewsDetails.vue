@@ -300,7 +300,7 @@ h2 {
 
 .content {
   margin-top: 1rem;
-  max-height: 30vh;
+  max-height: 60vh;
   overflow-y: auto;
 
   ::deep(p) {
