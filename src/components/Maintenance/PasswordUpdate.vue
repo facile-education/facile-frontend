@@ -70,7 +70,7 @@ import PentilaUtils from 'pentila-utils'
 import { searchDirectory } from '@/api/contact.service'
 import { getAllSchools } from '@/api/organization.service'
 import { getRoleList } from '@/api/role.service'
-import { updatePassword } from '@/api/userManagement.service'
+import { updatePasswordByManager } from '@/api/userManagement.service'
 
 export default {
   name: 'PasswordUpdate',
@@ -136,7 +136,7 @@ export default {
       return this.selectedUser !== undefined && user.userId === this.selectedUser.userId
     },
     updatePassword () {
-      updatePassword(this.selectedUser.userId, this.password1, true).then((data) => {
+      updatePasswordByManager(this.selectedUser.userId, this.password1).then((data) => {
         if (data.success) {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
         } else {

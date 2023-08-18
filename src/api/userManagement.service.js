@@ -17,12 +17,16 @@ export {
   removeSchoolAdmin,
   getSchoolDelegates,
   getDelegationCandidates,
-  updatePassword
+  updateForgottenPassword,
+  updatePasswordAfterReinitByManager,
+  updatePasswordByManager
 }
 
 export default {
   getSubjects,
-  updatePassword
+  updateForgottenPassword,
+  updatePasswordAfterReinitByManager,
+  updatePasswordByManager
 }
 
 const SUBJECT_PATH = '/schedule.subject'
@@ -152,11 +156,27 @@ function getDelegationCandidates (schoolId, filter) {
   }).then(response => response.data)
 }
 
-function updatePassword (userId, password, resetPassword) {
-  return axios.post(constants.JSON_WS_URL + USER_MANAGEMENT_PATH + '/update-password',
+function updatePasswordByManager (userId, password) {
+  return axios.post(constants.JSON_WS_URL + USER_MANAGEMENT_PATH + '/update-password-by-manager',
     PentilaUtils.URL.params({
       userId,
+      password
+    })).then(response => response.data)
+}
+
+function updatePasswordAfterReinitByManager (password, confirmPassword) {
+  return axios.post(constants.JSON_WS_URL + USER_MANAGEMENT_PATH + '/update-password-after-reinit-by-manager',
+    PentilaUtils.URL.params({
       password,
-      resetPassword
+      confirmPassword
+    })).then(response => response.data)
+}
+
+function updateForgottenPassword (password, confirmPassword, ticketKey) {
+  return axios.post(constants.JSON_WS_URL + USER_MANAGEMENT_PATH + '/update-forgotten-password',
+    PentilaUtils.URL.params({
+      password,
+      confirmPassword,
+      ticketKey
     })).then(response => response.data)
 }

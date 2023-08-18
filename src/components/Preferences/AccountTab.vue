@@ -223,20 +223,21 @@ export default {
       })
     },
     updateWebdavPassword () {
-      if (this.password !== this.confirmedPassword) {
-        this.confirmationError = this.$t('confirmationError')
-      } else {
-        userService.updatePassword(this.password, this.confirmedPassword, true).then((data) => {
-          if (data.success) {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('updatedPassword'), type: 'success' })
-            this.confirmationError = ''
-            this.isCollapsed = true
-          } else {
-            this.confirmationError = data.error
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
-          }
-        })
-      }
+      // TODO rework Webdav process
+      // if (this.password !== this.confirmedPassword) {
+      //   this.confirmationError = this.$t('confirmationError')
+      // } else {
+      //   userService.updatePassword(this.password, this.confirmedPassword, true).then((data) => {
+      //     if (data.success) {
+      //       this.$store.dispatch('popups/pushPopup', { message: this.$t('updatedPassword'), type: 'success' })
+      //       this.confirmationError = ''
+      //       this.isCollapsed = true
+      //     } else {
+      //       this.confirmationError = data.error
+      //       this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+      //     }
+      //   })
+      // }
     },
     copyWebdavUrl () {
       navigator.permissions.query({ name: 'clipboard-write' }).then(result => {
