@@ -52,7 +52,7 @@
         @click.stop="isUpdateModalDisplayed = true"
       >
         <img
-          src="@/assets/icon_edit_texte.svg"
+          src="@/assets/icons/pencil.svg"
           alt="edit"
         >
       </button>
