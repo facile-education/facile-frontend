@@ -279,13 +279,17 @@ h2 {
   display: flex;
 }
 
-.label {
-  min-width: 5em;
-  margin-right: 0.5rem;
+.read-infos {
+  margin-top: 8px;
 }
 
-.populations .label {
-  margin-top: 5px;
+.label {
+  min-width: 5em;
+  @extend %font-regular-s;
+}
+
+.populations {
+  align-items: center;
 }
 
 .publication {

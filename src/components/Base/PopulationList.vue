@@ -54,7 +54,8 @@ export default {
 }
 
 .lonely-population {
-  display: inline-block;
+  white-space: nowrap;
+  max-width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
   border-radius: 6px;
