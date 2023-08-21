@@ -14,14 +14,14 @@
       <HelpTools />
       <div
         class="help-content"
-        :class="{'phone': mq.phone}"
+        :class="{'phone': mq.phone || mq.tablet, 'tablet': mq.tablet}"
       >
         <HelpMenu
-          v-if="!mq.phone"
+          v-if="!mq.phone && !mq.tablet"
           class="help-menu"
         />
         <MobileFloatingPanel
-          v-if="mq.phone"
+          v-if="mq.phone || mq.tablet"
           class="mobile-menu-panel"
           :class="{'collapsed': !isMobileMenuDisplayed}"
         >
@@ -67,6 +67,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
+
 h1 {
   margin: 0;
   font-size: 1em;
@@ -74,9 +76,15 @@ h1 {
   text-transform: uppercase;
 }
 
+.help-body {
+  max-height: 60vh;
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+}
+
 .help-content {
-  width: 100%;
-  height: 100%;
+  flex: 1;
   position: relative;
 
   .help-menu {
@@ -96,6 +104,16 @@ h1 {
     &.collapsed {
       width: 0;
     }
+  }
+
+  &.phone {
+    height: calc(100% - $help-toolbar-height);
+  }
+
+  &.phone.tablet {
+    display: flex;
+    max-height: 60vh;
+    min-height: 60vh;
   }
 
   &:not(.phone) {
