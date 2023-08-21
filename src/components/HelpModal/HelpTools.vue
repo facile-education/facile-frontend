@@ -1,7 +1,7 @@
 <template>
   <div class="help-tools">
     <button
-      v-if="mq.phone"
+      v-if="mq.phone || mq.tablet"
       data-test="toggle-menu-icon"
       class="menu-button"
       @click="toggleMobileMenu"
@@ -32,12 +32,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
+
 .help-tools {
+  height: $help-toolbar-height;
   display: flex;
+  align-items: center;
   margin-bottom: 10px;
 }
 
 .menu-button {
+  display: flex;
+  align-items: center;
   margin-right: 1em;
   padding: 0;
   background-color: transparent;
