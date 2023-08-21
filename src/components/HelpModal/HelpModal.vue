@@ -1,7 +1,7 @@
 <template>
   <PentilaWindow
     :modal="true"
-    :full-screen="mq.phone"
+    :full-screen="mq.phone || displayLikePhone"
     :hidden-footer="true"
     data-test="help-modal"
     @close="closeModal"
@@ -48,6 +48,9 @@ export default {
   computed: {
     isMobileMenuDisplayed () {
       return this.$store.state.help.isMobileMenuDisplayed
+    },
+    displayLikePhone () {
+      return this.$store.state.misc.keepPhoneStatus
     }
   },
   created () {
