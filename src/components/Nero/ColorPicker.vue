@@ -108,7 +108,7 @@ export default {
 .popover {
   position: absolute;
   top: 49px;
-  right: 0;
+  left: 0;
   width: 250px;
   padding: 15px;
   z-index: 1;
@@ -121,7 +121,7 @@ export default {
 .caret {
   position: absolute;
   top: -16px;
-  right: 16px;
+  left: 16px;
   font-size: 30px;
   color: $color-body-bg;
 }
