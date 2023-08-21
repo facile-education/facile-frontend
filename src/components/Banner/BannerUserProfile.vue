@@ -91,6 +91,7 @@ button {
 
 .user-picture {
   height: 100%;
+  width: 32px;
   border-radius: 50%;
 }
 
