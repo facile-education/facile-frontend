@@ -53,12 +53,13 @@
           />
           <PentilaButton
             ref="openContactTooltipButton"
-            :class="{'phone': mq.phone || displayLikePhone}"
+            :class="{'phone': mq.phone || displayLikePhone, 'close-contact': isContactPickerModalDisplayed}"
             class="create-button"
             @click="toggleContactsPicker"
           >
             <NeroIcon
               name="fa-plus"
+              class="icon"
             />
           </PentilaButton>
         </div>
@@ -565,6 +566,12 @@ export default {
 
   .create-button {
     margin-left: 1em;
+
+    &.close-contact {
+      .icon {
+        transform: rotate(45deg);
+      }
+    }
   }
 }
 

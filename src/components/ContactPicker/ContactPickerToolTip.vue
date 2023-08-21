@@ -5,13 +5,6 @@
   >
     <div class="header">
       <h2 v-t="'header'" />
-      <button
-        class="close-button"
-        data-test="closeTooltip"
-        @click="onClose"
-      >
-        <BaseIcon name="times" />
-      </button>
     </div>
 
     <ContactPicker
@@ -25,12 +18,11 @@
 </template>
 
 <script>
-import BaseIcon from '@components/Base/BaseIcon.vue'
 import ContactPicker from '@components/ContactPicker/ContactPicker.vue'
 
 export default {
   name: 'ContactPickerToolTip',
-  components: { BaseIcon, ContactPicker },
+  components: { ContactPicker },
   props: {
     selectedContacts: {
       type: Array,
