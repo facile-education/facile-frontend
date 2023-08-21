@@ -232,7 +232,7 @@ export default {
     height: 100%;
 
     .panel {
-      max-width: calc(100vw - 20px);
+      width: calc(100vw - 20px);
     }
 
     .thread-display {
