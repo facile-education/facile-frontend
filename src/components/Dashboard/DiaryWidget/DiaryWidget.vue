@@ -41,14 +41,14 @@
           @refresh="refresh"
         />
       </div>
+    </div>
 
-      <div class="footer">
-        <button
-          v-t="'showMore'"
-          class="show-more"
-          @click="showMore"
-        />
-      </div>
+    <div class="footer">
+      <button
+        v-t="'showMore'"
+        class="show-more"
+        @click="showMore"
+      />
     </div>
   </section>
 </template>
@@ -147,6 +147,13 @@ section {
 
 .placeholder {
   @extend %widget-placeholder;
+}
+
+@media screen and (min-width: calc($diary-widget-min-width + $announcements-widget-min-width + 3rem + $side-menu-width)) {
+  .events-by-month {
+    height: $announcement-item-min-height;
+    overflow-y: auto;
+  }
 }
 
 .period {
