@@ -85,13 +85,9 @@ const router = createRouter({
   linkExactActiveClass: 'theme-text-color'
 })
 
-function capitalize (string) {
-  return string.charAt(0).toUpperCase() + string.slice(1).replaceAll('-', ' ')
-}
-
 router.beforeEach((to, from, next) => {
   // Update browser tab title
-  const name = capitalize(i18n.global.t('Menu.' + to.name))
+  const name = i18n.global.t('Menu.' + to.name)
   document.title = name || 'Facile'
 
   // Handle usurpation

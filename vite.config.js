@@ -31,7 +31,7 @@ export default defineConfig({
       include: [path.resolve(__dirname, './src/locales/**')]
     }),
     legacy({
-      targets: ['defaults', 'not IE 11', 'Firefox 52']
+      targets: ['defaults', 'not IE 11', 'Firefox 52', 'iOS >= 12']
     }),
     /* For dynamic imports (ex. router) */
     dynamicImport()
