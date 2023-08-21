@@ -20,7 +20,6 @@
           @blur="v$.group.groupName.$touch()"
         />
         <PentilaErrorMessage :error-message="formErrorList.formErrorList" />
-        <ColorPicker v-model="group.color" />
       </div>
 
       <PentilaTextArea
@@ -30,17 +29,23 @@
         class="description"
       />
 
-      <div class="group-is-educational">
-        <div
-          v-t="'isPedagogical'"
-          class="is-educational-label"
-        />
-        <div class="toggle-section">
-          <PentilaToggleSwitch
-            v-model="group.isPedagogical"
-            :title="$t('isPedagogical')"
+      <div class="others-fields">
+        <div class="group-color">
+          <span v-t="'color-selection'" />
+          <ColorPicker v-model="group.color" />
+        </div>
+        <div class="group-is-educational">
+          <div
+            v-t="'isPedagogical'"
+            class="is-educational-label"
           />
-          <span>{{ $t(group.isPedagogical.toString()) }}</span>
+          <div class="toggle-section">
+            <PentilaToggleSwitch
+              v-model="group.isPedagogical"
+              :title="$t('isPedagogical')"
+            />
+            <span>{{ $t(group.isPedagogical.toString()) }}</span>
+          </div>
         </div>
       </div>
 
@@ -393,30 +398,25 @@ export default {
 <style lang="scss" scoped>
 @import "@design";
 
-.group-name {
-  display: flex;
-  justify-content: space-between;
-  position: relative;
-
-  .group {
-    flex-grow: 1;
-    margin-right: 10px;
-  }
-
-  .error-message {
-    position: absolute;
-    top: 46px;
-  }
-}
-
 .description {
   width: 100%;
-  margin-top: 20px;
+  margin-top: 1rem;
+}
+
+.others-fields {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.group-color{
+  span {
+    margin-right: 1rem;
+  }
 }
 
 .group-is-educational {
-  margin-top: 20px;
-
   .is-educational-label {
     margin-bottom: 5px;
   }
@@ -481,6 +481,7 @@ hr {
 
 <i18n locale="fr">
 {
+  "color-selection": "Couleur",
   "create": "Créer",
   "description": "Description",
   "edit": "Modifier",
