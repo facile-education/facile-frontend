@@ -76,6 +76,10 @@ export default {
 .menu-entry {
   @extend %menu-item;
 
+  &.router-link-active:not(:hover) {
+    background-color: $neutral-20;
+  }
+
   &.expanded {
     .menu-pellet {
       margin: auto 10px auto auto;
