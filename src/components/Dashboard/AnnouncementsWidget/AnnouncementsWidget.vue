@@ -89,7 +89,6 @@ export default {
       isLoading: false,
       isFirstLoad: true,
       error: false,
-      isAllAnnouncementsModalDisplayed: false,
       displayedAnnouncementIndex: 0,
       canScrollToLeft: false,
       canScrollToRight: true,
