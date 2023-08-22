@@ -107,6 +107,9 @@ export default {
     },
     isModalOpen () {
       return this.$store.state.misc.nbOpenModals > 0
+    },
+    isDeleteMessages () {
+      return this.$store.getters['currentActions/isInProgress']('deleteMessages')
     }
   },
   mounted () {
@@ -138,7 +141,7 @@ export default {
   methods: {
     // keyboard shortcuts management
     keyMonitor: function (event) {
-      if (!this.isModalOpen && event.key === 'Delete') {
+      if (!this.isModalOpen && event.key === 'Delete' && !this.isDeleteMessages) {
         if (this.$store.state.messaging.selectedMessages.length > 0) {
           messagingUtils.deleteSelectedMessage()
         } else if (this.$store.state.messaging.selectedThreads.length > 0) {
