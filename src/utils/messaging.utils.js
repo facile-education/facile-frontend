@@ -80,7 +80,9 @@ const MessagingUtils = {
   },
   deleteSelectedMessage () {
     const messageIdsToDelete = [store.state.messaging.selectedMessages[0].messageId]
+    store.dispatch('currentActions/addAction', { name: 'deleteMessages' })
     messageService.deleteMessages(messageIdsToDelete).then((data) => {
+      store.dispatch('currentActions/removeAction', { name: 'deleteMessages' })
       if (data.success) {
         store.dispatch('messaging/deleteMessages', messageIdsToDelete)
         const selectedThreadBeforeDeleteMessage = store.state.messaging.selectedThreads[0]
@@ -89,6 +91,9 @@ const MessagingUtils = {
         this.refresh()
         store.dispatch('messaging/setSelectedThreads', [selectedThreadBeforeDeleteMessage])
       }
+    }, (err) => {
+      console.error(err)
+      this.dispatch('currentActions/removeAction', { name: 'deleteMessages' })
     })
   },
   reloadThread (thread) {
