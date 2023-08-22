@@ -288,7 +288,11 @@ ul {
 .infinite-scroll {
   flex: 1;
   overflow: auto;
-  padding: 0 20%;
+
+  ul {
+    margin: auto;
+    max-width: 800px;
+  }
 }
 
 .separator {
