@@ -463,6 +463,6 @@ hr {
 
 <i18n locale="fr">
 {
-  "noSelectedMessage": "Sélectionnez un fil de discussion ou un message"
+  "noSelectedMessage": "Sélectionnez une discussion ou un message"
 }
 </i18n>
