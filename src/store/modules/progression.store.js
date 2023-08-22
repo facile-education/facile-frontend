@@ -700,6 +700,7 @@ export const actions = {
         (err) => {
           // TODO toastr
           console.error(err)
+          this.dispatch('currentActions/removeAction', { name: 'addItemContent' })
         })
     })
   },
@@ -719,6 +720,7 @@ export const actions = {
         (err) => {
           // TODO toastr
           console.error(err)
+          this.dispatch('currentActions/removeAction', { name: 'addItemContent' })
         })
     })
   },

@@ -227,6 +227,9 @@ async function downloadDocument (entity) {
         } else {
           console.error('Error in getting url for folder archive download')
         }
+      }, (err) => {
+        console.error(err)
+        store.dispatch('currentActions/removeAction', { name: 'download' })
       })
     } else { // No type analysis because default is 'file'
       if (entity.isGroupFile) {
@@ -267,6 +270,9 @@ function deleteEntities (selectedEntities) {
     } else {
       console.error('cannot empty content of trash folder')
     }
+  }, (err) => {
+    console.error(err)
+    store.dispatch('currentActions/removeAction', { name: 'deleteDefinitely' })
   })
 }
 

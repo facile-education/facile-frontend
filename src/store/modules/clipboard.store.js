@@ -52,6 +52,9 @@ export const actions = {
             alert('Erreurs:' + data.errorMessages)
           }
         }
+      }, (err) => {
+        console.error(err)
+        this.$store.dispatch('currentActions/removeAction', { name: 'duplicate' })
       })
     }
   },
@@ -87,6 +90,9 @@ export const actions = {
             alert('Erreurs:' + data.errorMessages)
           }
         }
+      }, (err) => {
+        console.error(err)
+        this.$store.dispatch('currentActions/removeAction', { name: 'move' })
       })
     }
   },

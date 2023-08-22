@@ -58,6 +58,9 @@ export default {
         } else {
           console.error('Error while retrieving quickSearchResult')
         }
+      }, (err) => {
+        console.error(err)
+        this.$store.dispatch('currentActions/removeAction', { name: 'getSearchHistory' })
       })
     },
     keyMonitor (event) {

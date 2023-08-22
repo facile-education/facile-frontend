@@ -117,6 +117,7 @@ export default {
         (err) => {
           // TODO toastr
           console.error(err)
+          this.$store.dispatch('currentActions/removeAction', { name: 'getPersonalDetails' })
         })
     },
     onColorChange (newColor) {

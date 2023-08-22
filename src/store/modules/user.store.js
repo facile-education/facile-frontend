@@ -123,6 +123,7 @@ export const actions = {
       (err) => {
         // TODO toastr
         console.error(err)
+        this.dispatch('currentActions/removeAction', { name: 'getPersonalDetails' })
       })
   },
   updatePersonalDetails ({ commit }, data) {
@@ -165,6 +166,7 @@ export const actions = {
       (err) => {
         // TODO toastr
         console.error(err)
+        this.dispatch('currentActions/removeAction', { name: 'getUserInformations' })
       })
   },
   setSelectedSchool ({ commit }, school) {
