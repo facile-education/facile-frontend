@@ -8,11 +8,6 @@
     :draggable="true"
     :width="600"
     @close="onClose"
-    @keydown.exact.enter.stop="submit"
-    @keydown.exact.backspace.stop=""
-    @keydown.exact.delete.stop=""
-    @keydown.exact.f2.stop=""
-    @keydown.ctrl.stop=""
   >
     <template #header>
       <span v-t="submitAction==='rename' ? 'renameHeader' : 'createHeader'" />
@@ -26,6 +21,7 @@
         data-test="folderName-input"
         @blur="v$.folderName.$touch()"
         @input="backError=''"
+        @keyup.enter="submit"
       />
       <PentilaErrorMessage
         :error-message="formErrorList"
