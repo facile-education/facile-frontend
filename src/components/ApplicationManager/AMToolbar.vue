@@ -92,6 +92,6 @@ export default {
 
 <i18n locale="fr">
   {
-    "allENT": "Tout l'ENT"
+    "allENT": "Tout l'ENTA"
   }
 </i18n>
