@@ -160,7 +160,7 @@ ol {
 {
   "allGroups": "Tous les espaces",
   "filter": "Filtrer",
-  "news": "Nouveautés",
+  "news": "Informations",
   "docs": "Documents",
   "schoolLife": "Vie scolaire",
   "membership": "Cycle de vie des groupes",
