@@ -107,6 +107,6 @@ export default {
   "versionsTabLabel": "Mises à jour",
   "accessibilityLabel": "Accessibilité",
   "privacyLabel": "Confidentialité",
-  "termsOfUseTabLabel": "Charte d'utilisation"
+  "termsOfUseTabLabel": "CGU"
 }
 </i18n>

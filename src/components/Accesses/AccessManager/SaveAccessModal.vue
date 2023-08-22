@@ -324,7 +324,7 @@ export default {
   "updateSubmit": "Modifier",
   "sizeLimit1": "Ne doit pas dépasser ",
   "sizeLimit2": " caractères",
-  "saveSuccess": "Accès mis à jour avec succès.",
+  "saveSuccess": "Accès mis à jour",
   "selectRoles": "Veuillez séléctionner au moins un profil cible",
   "selectCategory": "Veuillez séléctionner une catégorie",
   "selectFolder": "Sélectionnez un dossier collaboratif",
