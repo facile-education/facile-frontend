@@ -208,7 +208,8 @@ export default {
       return PentilaUtils.Cookies.getCookie('cookiesAgreement') === 'true'
     },
     remainingSessionMilliseconds () {
-      return this.$store.state.menu.sessionTimeout - this.inactionTime
+      const remainingSessionMilliseconds = this.$store.state.menu.sessionTimeout - this.inactionTime
+      return remainingSessionMilliseconds > 0 ? remainingSessionMilliseconds : 0
     }
   },
   created () {
