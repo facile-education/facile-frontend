@@ -1,6 +1,7 @@
 <template>
   <div data-test="supportModal">
     <PentilaWindow
+      class="support-message-modal"
       :modal="true"
       :draggable="true"
       :full-screen="mq.phone"
@@ -208,6 +209,13 @@ export default {
 }
 </script>
 
+<style lang="scss">
+.support-message-modal.modal-mask .window-container .window-body {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+</style>
+
 <style lang="scss" scoped>
 .italic {
   margin-top: 15px;
@@ -233,6 +241,7 @@ h5 {
 
 .ck-editor__editable {
   min-height: 150px;  /* TO DEFINE */
+  max-height: 300px;  /* TO DEFINE */
 }
 
 .add-files {
