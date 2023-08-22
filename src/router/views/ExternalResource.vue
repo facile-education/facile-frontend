@@ -216,7 +216,7 @@ export default {
   "contactLabel": "Vous pouvez signaler un incident en {0}.",
   "newTabLabel": "{resourceName} a été ouvert dans un nouvel onglet.",
   "openAgainLabel": "Si vous ne le voyez pas, {0} pour l'ouvrir à nouveau.",
-  "popupIssueLabel": "Si le problème persiste, votre navigateur doit certainement bloquer les fenêtres surgissantes (pop-ups) ouvertes depuis l'ENT.",
+  "popupIssueLabel": "Si le problème persiste, votre navigateur doit certainement bloquer les fenêtres surgissantes (pop-ups) ouvertes depuis l'ENTA.",
   "openInTabLabel": "Vous pouvez également {0} pour ouvrir le service dans un nouvel onglet."
 }
 </i18n>

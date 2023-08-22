@@ -103,7 +103,7 @@ export default {
 
 <i18n locale="fr">
 {
-  "modalHeaderLabel": "Informations générales relatives à l'ENT",
+  "modalHeaderLabel": "Informations générales relatives à l'ENTA",
   "versionsTabLabel": "Mises à jour",
   "accessibilityLabel": "Accessibilité",
   "privacyLabel": "Confidentialité",

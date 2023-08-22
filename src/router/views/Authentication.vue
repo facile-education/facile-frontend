@@ -446,7 +446,7 @@ $eel-blue: #2c7bb8;
   "authenticate": "Se connecter",
   "authenticationOnGoing": "Connexion en cours ...",
   "eelImg": "Logo d'école en ligne",
-  "entLogin": "Se connecter à l'ENT",
+  "entLogin": "Se connecter à l'ENTA",
   "gvaImg": "Logo du Canton de Genève",
   "login": "Identifiant",
   "parentOther": "Parents / Autres profils",
