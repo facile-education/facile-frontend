@@ -132,6 +132,7 @@ button {
 
 .attached-file {
   height: 50px;
+  max-width: 100%;
   border-radius: 8px 8px 8px 8px;
   margin: 10px 10px 10px 0;
   display: flex;
