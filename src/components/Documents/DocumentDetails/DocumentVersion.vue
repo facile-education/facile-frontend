@@ -98,6 +98,9 @@ export default {
         } else {
           console.error('Error when restoring version', this.version.version)
         }
+      }, (err) => {
+        console.error(err)
+        this.$store.dispatch('currentActions/removeAction', { name: 'restoreVersion' })
       })
     },
     // Open the version in readOnly mode

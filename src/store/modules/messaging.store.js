@@ -407,6 +407,9 @@ export const actions = {
             commit('setLoadingThreadsError', 'loading')
             console.error('Error while getting threads from folderId ' + folderId + ' with last date = ' + lastDate)
           }
+        }, (err) => {
+          console.error(err)
+          this.$store.dispatch('currentActions/removeAction', { name: 'loadThreads' })
         })
       }
     })
@@ -445,6 +448,9 @@ export const actions = {
         }
         console.error('Error while getting thread from message ' + messageId)
       }
+    }, (err) => {
+      console.error(err)
+      this.$store.dispatch('currentActions/removeAction', { name: 'loadThreads' })
     })
   },
   openCreateMessageModal ({ commit }, createMessageParameters) {

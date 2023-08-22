@@ -66,6 +66,9 @@ export const actions = {
         } else {
           console.error('Error while retrieving quickSearchResult')
         }
+      }, (err) => {
+        console.error(err)
+        this.dispatch('currentActions/removeAction', { name: 'getQuickSearch' })
       })
     }
   },

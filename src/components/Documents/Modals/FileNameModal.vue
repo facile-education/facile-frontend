@@ -190,6 +190,9 @@ export default {
           this.backError = 'renameFolderError'
           console.error('An error was occurred')
         }
+      }, (err) => {
+        console.error(err)
+        this.$store.dispatch('currentActions/removeAction', { name: 'createFile' })
       })
     },
     createGeogebra () {
@@ -204,6 +207,9 @@ export default {
           this.backError = 'renameFolderError'
           console.error('An error was occurred')
         }
+      }, (err) => {
+        console.error(err)
+        this.$store.dispatch('currentActions/removeAction', { name: 'createFile' })
       })
     },
     createScratch () {
@@ -218,6 +224,9 @@ export default {
           this.backError = 'renameFolderError'
           console.error('An error was occurred')
         }
+      }, (err) => {
+        console.error(err)
+        this.$store.dispatch('currentActions/removeAction', { name: 'createFile' })
       })
     },
     createODT () {
@@ -241,6 +250,9 @@ export default {
           this.backError = 'renameFolderError'
           console.error('An error was occurred')
         }
+      }, (err) => {
+        console.error(err)
+        this.$store.dispatch('currentActions/removeAction', { name: 'createFile' })
       })
     },
     createLoolFile (type) {
@@ -255,6 +267,9 @@ export default {
           this.backError = 'renameFolderError'
           console.error('An error was occurred')
         }
+      }, (err) => {
+        console.error(err)
+        this.$store.dispatch('currentActions/removeAction', { name: 'createFile' })
       })
     },
     createAudio () {
@@ -268,6 +283,9 @@ export default {
           this.backError = 'renameFolderError'
           console.error('An error was occurred')
         }
+      }, (err) => {
+        console.error(err)
+        this.$store.dispatch('currentActions/removeAction', { name: 'createFile' })
       })
     },
     rename () {
