@@ -8,11 +8,6 @@
     :width="600"
     :full-screen="mq.phone"
     @close="onClose"
-    @keydown.exact.enter.stop="submit"
-    @keydown.exact.backspace.stop=""
-    @keydown.exact.delete.stop=""
-    @keydown.exact.f2.stop=""
-    @keydown.ctrl.stop=""
   >
     <template #header>
       <span v-t="submitAction==='rename' ? 'renameHeader' : 'createHeader'" />
@@ -27,6 +22,7 @@
         :error-type="formErrorList"
         @blur="v$.inputText.$touch()"
         @input="backError=''"
+        @keyup.enter="submit"
       />
       <PentilaErrorMessage
         :error-message="formErrorList"
