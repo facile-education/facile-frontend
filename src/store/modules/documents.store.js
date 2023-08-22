@@ -204,6 +204,9 @@ export const actions = {
           commit('setLoadDocumentsError', true)
           console.error('Unable to get entities from backend for folder id ' + folderId)
         }
+      }, (err) => {
+        console.error(err)
+        this.$store.dispatch('currentActions/removeAction', { name: 'getEntities' })
       })
     })
   },
@@ -227,6 +230,9 @@ export const actions = {
           commit('setLoadDocumentsError', true)
           console.error('Unable to get entities from backend for folder id ' + groupFolderId)
         }
+      }, (err) => {
+        console.error(err)
+        this.$store.dispatch('currentActions/removeAction', { name: 'getEntities' })
       })
     })
   },

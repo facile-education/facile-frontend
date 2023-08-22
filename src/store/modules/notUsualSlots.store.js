@@ -50,6 +50,7 @@ function getNonUsualSlots (store) {
     (err) => {
       // TODO toastr
       console.error(err)
+      store.dispatch('currentActions/removeAction', { name: 'getNonUsualSlots' })
     }
   )
 }
@@ -75,6 +76,7 @@ function getSessions (store) {
       },
       (err) => {
         console.error(err)
+        store.dispatch('currentActions/removeAction', { name: 'getSessions' })
       })
   } else {
     scheduleService.getGroupSessions(store.state.notUsualSlots.selectedClass.groupId,

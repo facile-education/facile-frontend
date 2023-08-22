@@ -122,6 +122,9 @@ export const actions = {
       } else {
         console.error('Error while getting users', data.error)
       }
+    }, (err) => {
+      console.error(err)
+      this.$store.dispatch('currentActions/removeAction', { name: 'getHelpMenu' })
     })
   },
   setSelectedItem ({ commit }, item) {
