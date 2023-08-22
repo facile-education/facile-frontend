@@ -233,7 +233,7 @@
     "replyAll": "Répondre à tous",
     "forward": "Transférer",
     "unreadOnly": "Non lus",
-    "multiThreads": " fils de discussion sélectionnés",
+    "multiThreads": " Discussions sélectionnées",
     "markAsRead": "@:ContextMenuOptions.markAsRead",
     "markAsUnread": "@:ContextMenuOptions.markAsUnread",
     "multiSelection": "Sélection multiple",
