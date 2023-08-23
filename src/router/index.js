@@ -111,7 +111,7 @@ router.afterEach((to, from) => {
       window._paq.push(['setCustomDimension', 1, store.state.user.schoolList[0].schoolId])
       window._paq.push(['setCustomDimension', 2, store.state.user.profileId])
       window._paq.push(['setCustomDimension', 4, to.meta.id])
-      window._paq.push(['trackPageView'])
+      window._paq.push(['trackPageView', toService])
     }
   }
 })
