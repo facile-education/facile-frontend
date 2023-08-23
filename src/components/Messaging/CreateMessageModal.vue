@@ -382,7 +382,7 @@ export default {
         this.attachedFiles,
         this.messageParameters.draftMessageId,
         this.originMessage.messageId === undefined ? '0' : this.originMessage.messageId,
-        this.messageParameters.isReply,
+        this.messageParameters.isReply || this.messageParameters.isReplyAll,
         this.messageParameters.isForward,
         false).then((data) => {
         if (data.success) {
