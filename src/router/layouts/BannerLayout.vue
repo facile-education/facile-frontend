@@ -224,17 +224,9 @@ export default {
     }
   },
   mounted () {
-    this.interval = setInterval(() => {
-      this.inactionTime = dayjs() - this.$store.state.user.lastActionDate
-
-      if (this.remainingSessionMilliseconds <= this.$store.state.menu.sessionTimeoutWarning) {
-        this.isSessionWarningDisplayed = true
-      }
-
-      if (this.remainingSessionMilliseconds <= 0) {
-        window.location = constants.LOGOUT_URL // Logout
-      }
-    }, 1000)
+    if (!this.$store.state.misc.isMobileApp) {
+      this.setRemainingTimeHandler()
+    }
 
     window.addEventListener('storage', this.localStorageUpdated)
   },
@@ -243,6 +235,19 @@ export default {
     window.removeEventListener('storage', this.localStorageUpdated)
   },
   methods: {
+    setRemainingTimeHandler () {
+      this.interval = setInterval(() => {
+        this.inactionTime = dayjs() - this.$store.state.user.lastActionDate
+
+        if (this.remainingSessionMilliseconds <= this.$store.state.menu.sessionTimeoutWarning) {
+          this.isSessionWarningDisplayed = true
+        }
+
+        if (this.remainingSessionMilliseconds <= 0) {
+          window.location = constants.LOGOUT_URL // Logout
+        }
+      }, 1000)
+    },
     localStorageUpdated (event) {
       // Update last action date if it was updated by another tab
       if (event.key === 'lastActionDate') {
