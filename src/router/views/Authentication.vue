@@ -180,6 +180,9 @@ export default {
     }
   },
   created () {
+    // Register globally that we are on the mobile app or not
+    this.$store.dispatch('menu/setIsMobileApp', this.isMobileApp)
+
     // Add LFR cookie needed for authentication
     if (PentilaUtils.Cookies.getCookie('COOKIE_SUPPORT') === '') {
       this.setCookie('COOKIE_SUPPORT', true, 365)
