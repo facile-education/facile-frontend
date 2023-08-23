@@ -19,30 +19,35 @@
     </template>
 
     <template #body>
-      <PentilaInput
-        ref="fileNameInput"
-        v-model="inputText"
-        class="name-input"
-        data-test="folderName-input"
-        :error-type="formErrorList"
-        @blur="v$.inputText.$touch()"
-        @input="backError=''"
-      />
-      <PentilaErrorMessage
-        :error-message="formErrorList"
-      />
+      <div style="position: relative">
+        <PentilaSpinner v-if="isActionInProgress" />
 
-      <AudioRecorder
-        v-if="submitAction==='createAudio'"
-        @audioFile="setAudioFile"
-        @stoppedState="setStoppedState"
-      />
+        <PentilaInput
+          ref="fileNameInput"
+          v-model="inputText"
+          class="name-input"
+          data-test="folderName-input"
+          :error-type="formErrorList"
+          @blur="v$.inputText.$touch()"
+          @input="backError=''"
+        />
+        <PentilaErrorMessage
+          :error-message="formErrorList"
+        />
+
+        <AudioRecorder
+          v-if="submitAction==='createAudio'"
+          @audioFile="setAudioFile"
+          @stoppedState="setStoppedState"
+        />
+      </div>
     </template>
 
     <template #footer>
       <PentilaButton
         v-if="!(submitAction==='createAudio' && !stoppedState)"
         data-test="submitButton"
+        :disabled="isActionInProgress"
         :label="submitAction==='rename' ? $t('rename') : $t('createSubmit')"
         @click="submit"
       />
@@ -98,6 +103,15 @@ export default {
     }
   },
   computed: {
+    isCreatingFile () {
+      return this.$store.getters['currentActions/isInProgress']('createFile')
+    },
+    isRenamingFile () {
+      return this.$store.getters['currentActions/isInProgress']('renameFile')
+    },
+    isActionInProgress () {
+      return this.isCreatingFile || this.isRenamingFile
+    },
     currentFolderId () {
       return this.$store.state.documents.currentFolderId
     },
@@ -178,7 +192,7 @@ export default {
     submit () {
       if (this.v$.$invalid) { // form checking
         this.v$.$touch()
-      } else {
+      } else if (!this.isActionInProgress) {
         this[this.submitAction]()
       }
     },
@@ -194,6 +208,10 @@ export default {
           this.backError = 'renameFolderError'
           console.error('An error was occurred')
         }
+      }, (err) => {
+        this.$store.dispatch('currentActions/removeAction', { name: 'createFile' })
+        console.error(err)
+        this.backError = 'renameFolderError'
       })
     },
     createGeogebra () {
@@ -208,6 +226,10 @@ export default {
           this.backError = 'renameFolderError'
           console.error('An error was occurred')
         }
+      }, (err) => {
+        this.$store.dispatch('currentActions/removeAction', { name: 'createFile' })
+        console.error(err)
+        this.backError = 'renameFolderError'
       })
     },
     createScratch () {
@@ -222,6 +244,10 @@ export default {
           this.backError = 'renameFolderError'
           console.error('An error was occurred')
         }
+      }, (err) => {
+        this.$store.dispatch('currentActions/removeAction', { name: 'createFile' })
+        console.error(err)
+        this.backError = 'renameFolderError'
       })
     },
     createODT () {
@@ -245,6 +271,10 @@ export default {
           this.backError = 'renameFolderError'
           console.error('An error was occurred')
         }
+      }, (err) => {
+        this.$store.dispatch('currentActions/removeAction', { name: 'createFile' })
+        console.error(err)
+        this.backError = 'renameFolderError'
       })
     },
     createLoolFile (type) {
@@ -259,6 +289,10 @@ export default {
           this.backError = 'renameFolderError'
           console.error('An error was occurred')
         }
+      }, (err) => {
+        this.$store.dispatch('currentActions/removeAction', { name: 'createFile' })
+        console.error(err)
+        this.backError = 'renameFolderError'
       })
     },
     createAudio () {
@@ -272,10 +306,16 @@ export default {
           this.backError = 'renameFolderError'
           console.error('An error was occurred')
         }
+      }, (err) => {
+        this.$store.dispatch('currentActions/removeAction', { name: 'createFile' })
+        console.error(err)
+        this.backError = 'renameFolderError'
       })
     },
     rename () {
+      this.$store.dispatch('currentActions/addAction', { name: 'renameFile' })
       fileServices.renameFile(this.initFile.id, this.inputText + '.' + this.initFile.extension).then((data) => {
+        this.$store.dispatch('currentActions/removeAction', { name: 'renameFile' })
         if (data.success) {
           this.$store.dispatch('documents/refreshCurrentFolder')
           this.onClose()
@@ -283,6 +323,10 @@ export default {
           this.backError = 'renameFolderError'
           console.error('An error was occurred')
         }
+      }, (err) => {
+        this.$store.dispatch('currentActions/removeAction', { name: 'renameFile' })
+        console.error(err)
+        this.backError = 'renameFolderError'
       })
     },
     onClose () {
