@@ -110,7 +110,6 @@ export default {
       flex: 1;
       padding-left: 10px;
       max-width: 290px;
-      font-family: Roboto-Medium, sans-serif;
       font-size: 19px;
       color: #000000;
 

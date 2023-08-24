@@ -125,7 +125,6 @@ export default {
   margin-block-end: 1em;
 
   p{
-    font-family: Roboto-Regular,sans-serif;
     font-size: 18px;
     color: #898989;
     letter-spacing: 0;
