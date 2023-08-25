@@ -19,7 +19,9 @@
       >
         <span
           v-t="'parentOther'"
+          tabindex="0"
           @click="toggleGuestForm"
+          @keyup.enter="toggleGuestForm"
         />
 
         <Transition name="expand">
