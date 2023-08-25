@@ -290,6 +290,7 @@ export default {
 <style lang="scss" scoped>
 
 .dropdown {
+  max-width: min(100%, 200px);
   white-space: nowrap;
 }
 
@@ -299,12 +300,13 @@ export default {
 
 @media screen and (min-width: 700px) {
   .dropdown {
-    max-width: min(100%, 200px);
+    max-width: 200px;
   }
 
   .first-line {
     display: flex;
     gap: 1rem;
+    align-items: center;
 
     .input {
       flex: 1
