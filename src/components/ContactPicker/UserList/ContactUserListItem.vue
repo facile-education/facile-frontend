@@ -1,9 +1,6 @@
 <template>
   <li>
-    <button
-      @click="toggleUser"
-      @dblclick="dblclick"
-    >
+    <button @click="toggleUser">
       <span>
         {{ getFullName(user) }}
       </span>
@@ -51,9 +48,6 @@ export default {
   methods: {
     getFullName (user) {
       return getFullName(user)
-    },
-    dblclick () {
-      console.log('dblclick')
     },
     toggleUser () {
       if (this.clickDelayPassed) {
