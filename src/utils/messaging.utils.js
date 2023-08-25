@@ -6,6 +6,17 @@ import messagingConstants from '@/constants/messagingConstants'
 import i18n from '@/i18n'
 
 const MessagingUtils = {
+  formatContact (contact) {
+    if (contact.type === messagingConstants.CONTACT_TYPE_USER) {
+      contact.id = contact.userId
+    }
+  },
+
+  formatContacts (contactList) {
+    contactList.forEach(contact => {
+      this.formatContact(contact)
+    })
+  },
 
   selectBetween (shiftSelectedThread) {
     // lastSelectedThread in the store indicated the source index

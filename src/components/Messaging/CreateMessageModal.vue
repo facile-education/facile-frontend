@@ -301,6 +301,7 @@ export default {
               this.buildPreviousContent(data.content)
             }
             this.subject = data.subject
+            messagingUtils.formatContacts(data.recipients)
             this.initialRecipients = data.recipients
             this.recipients = data.recipients
             this.attachedFiles = data.attachedFiles
