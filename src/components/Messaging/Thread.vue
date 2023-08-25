@@ -212,7 +212,6 @@ export default {
     hasAttachFiles () {
       // Returns true if at least 1 message of the thread has attached files
       for (const message of this.thread.messages) {
-        console.log('message=', message)
         if (message.hasAttachFiles) {
           return true
         }
