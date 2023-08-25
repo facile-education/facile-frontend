@@ -1,6 +1,9 @@
 <template>
   <li>
-    <button @click="toggleUser">
+    <button
+      @click="toggleUser"
+      @dblclick="dblclick"
+    >
       <span>
         {{ getFullName(user) }}
       </span>
@@ -34,6 +37,12 @@ export default {
     }
   },
   emits: ['removeContact', 'addContact'],
+  data () {
+    return {
+      timeout: 0,
+      clickDelayPassed: true
+    }
+  },
   computed: {
     isSelected () {
       return this.selectedUsers.map(user => user.userId).indexOf(this.user.userId) !== -1
@@ -43,12 +52,23 @@ export default {
     getFullName (user) {
       return getFullName(user)
     },
+    dblclick () {
+      console.log('dblclick')
+    },
     toggleUser () {
-      if (this.isSelected) {
-        this.$emit('removeContact', this.user)
-      } else {
-        this.$emit('addContact', this.user)
+      if (this.clickDelayPassed) {
+        if (this.isSelected) {
+          this.$emit('removeContact', this.user)
+        } else {
+          this.$emit('addContact', this.user)
+        }
       }
+      // Code to prevent double clicks to trigger two times the selection
+      this.clickDelayPassed = false
+      clearTimeout(this.timeout)
+      this.timeout = setTimeout(() => {
+        this.clickDelayPassed = true
+      }, 300)
     }
   }
 }
