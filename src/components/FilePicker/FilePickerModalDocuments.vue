@@ -13,7 +13,7 @@
       <PentilaSpinner v-if="isLoadingFiles" />
 
       <div
-        v-if="allSortedDocuments.length === 0"
+        v-if="(currentFolders && currentFiles) && allSortedDocuments.length === 0"
         v-t="('emptyPlaceholder')"
         class="placeholder"
       />
@@ -89,8 +89,8 @@ export default {
     return {
       inputText: undefined,
       currentBreadcrumb: [],
-      currentFolders: [],
-      currentFiles: [],
+      currentFolders: undefined,
+      currentFiles: undefined,
       currentSpace: 'User',
       userFolderId: undefined,
       selectedFiles: [],
@@ -327,6 +327,7 @@ export default {
     margin-top: 10px;
     overflow-y: auto;
     position: relative;
+    min-height: 100px;
   }
 
   .upload {
