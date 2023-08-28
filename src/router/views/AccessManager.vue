@@ -5,7 +5,7 @@
   >
     <h1 :aria-label="$t('serviceTitle')" />
 
-    <div v-if="roleList.length > 0">
+    <div v-if="roleList && roleList.length > 0">
       <SchoolSelector class="school-selector" />
 
       <div class="first-line">
@@ -27,12 +27,12 @@
         class="placeholder"
       />
       <CategoriesPlaceholder
-        v-else-if="categoryList.length === 0 && !isCreateCategoryInputDisplayed"
+        v-else-if="categoryList && categoryList.length === 0 && !isCreateCategoryInputDisplayed"
         @create-category="isCreateCategoryInputDisplayed=true"
       />
 
       <AccessCategoryList
-        v-else
+        v-else-if="categoryList"
         :category-list="sortedCategoryList"
       />
 
@@ -44,7 +44,7 @@
       />
     </div>
     <div
-      v-else
+      v-else-if="roleList && roleList.length === 0"
       v-t="'noRolePlaceholder'"
       class="placeholder"
     />
@@ -116,7 +116,7 @@ export default {
     }
   },
   created () {
-    if (this.roleList.length === 0) {
+    if (!this.roleList) {
       this.$store.dispatch('accessManager/getRoleList')
     }
   },

@@ -7,11 +7,11 @@ export const state = {
   isLoading: false,
   error: false,
   selectedSchool: undefined,
-  initialCategoryList: [],
-  categoryList: [],
+  initialCategoryList: undefined,
+  categoryList: undefined,
   draggedAccess: undefined,
   isUserAccessModalOpen: false,
-  roleList: []
+  roleList: undefined
 }
 
 export const mutations = {
@@ -74,7 +74,10 @@ export const actions = {
         commit('setRoleList', data.roles)
       } else {
         console.error('Error while getting users', data.error)
+        commit('setRoleList', [])
       }
+    }, (err) => {
+      commit('setRoleList', [])
     })
   },
   setCategoryList ({ commit }, categoryList) {
@@ -90,6 +93,10 @@ export const actions = {
 
 export const getters = {
   getRoleName: (state) => (roleId) => {
+    if (!state.roleList) {
+      return 'Unknown role name'
+    }
+
     for (let i = 0; i < state.roleList.length; ++i) {
       if (state.roleList[i].roleId === roleId) {
         return state.roleList[i].displayText
@@ -101,6 +108,10 @@ export const getters = {
     return JSON.stringify(state.initialCategoryList) !== JSON.stringify(state.categoryList)
   },
   filteredCategoryList: (state) => (role) => {
+    if (!state.categoryList) {
+      return undefined
+    }
+
     let filteredCategoryList = JSON.parse(JSON.stringify(state.categoryList))
 
     // Only keep accesses that match to selected role
