@@ -17,6 +17,8 @@
         @keyup.enter.stop="cleanAndRunSearch"
       />
     </div>
+
+    <PentilaSpinner v-if="isLoadingUsers" />
     <div
       v-if="selectedSchool === undefined"
       class="main-label"
@@ -95,6 +97,9 @@ export default {
     }
   },
   computed: {
+    isLoadingUsers () {
+      return this.$store.getters['currentActions/isInProgress']('loadUsers')
+    },
     selectedSchool () {
       return this.$store.state.user.selectedSchool
     },
