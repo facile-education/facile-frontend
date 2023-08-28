@@ -1,7 +1,13 @@
 <template>
   <nav class="menu">
     <div
-      v-if="!helpMenu"
+      v-if="!helpMenu && isLoadingMenu"
+      v-t="'loading'"
+      class="help-menu-placeholder"
+    />
+
+    <div
+      v-else-if="!helpMenu"
       v-t="'helpMenuErrorPlaceholder'"
       class="help-menu-placeholder"
     />
@@ -101,6 +107,7 @@ ul {
 {
   "helpMenuErrorPlaceholder": "Aucun menu displonible",
   "helpMenuEmptyPlaceholder": "Aucun résultat",
-  "createCategoryLabel": "+ Créer une catégorie"
+  "createCategoryLabel": "+ Créer une catégorie",
+  "loading": "Chargement..."
 }
 </i18n>
