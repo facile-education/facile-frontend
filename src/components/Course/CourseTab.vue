@@ -10,12 +10,12 @@
       class="placeholder"
     />
     <div
-      v-else-if="courses.length === 0"
+      v-else-if="courses && courses.length === 0"
       v-t="'emptyPlaceholder'"
       class="placeholder"
     />
     <ul
-      v-else-if="!selectedCourse"
+      v-else-if="courses && !selectedCourse"
       class="courses"
       :class="{'phone': mq.phone}"
     >
@@ -27,7 +27,7 @@
       </li>
     </ul>
     <CourseDetails
-      v-else
+      v-else-if="selectedCourse"
       :course="selectedCourse"
     />
   </div>
@@ -53,7 +53,7 @@ export default {
   },
   data () {
     return {
-      courses: [],
+      courses: undefined,
       isLoading: false,
       error: false
     }
@@ -98,6 +98,10 @@ export default {
 
 <style lang="scss" scoped>
 @import '@design';
+
+.course-tab {
+  min-height: 200px;
+}
 
 .placeholder {
   @extend %content-placeholder;
