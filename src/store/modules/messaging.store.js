@@ -9,7 +9,7 @@ import messagingConstants from '@/constants/messagingConstants'
 export const state = {
   messagingFolders: [],
   currentFolder: {},
-  threads: [],
+  threads: undefined,
   selectedThreads: [],
   currentThreadMessages: [],
   selectedMessages: [],

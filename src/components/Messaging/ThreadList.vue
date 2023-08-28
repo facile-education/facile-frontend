@@ -31,7 +31,7 @@
         />
       </div>
       <div
-        v-else-if="threads.length === 0 && !isLoadingThreads"
+        v-else-if="threads && threads.length === 0 && !isLoadingThreads"
         class="placeholder"
       >
         <div v-t="currentFolder.type === 1 ? 'emptyBox' : 'emptyFolder'" />
@@ -112,7 +112,7 @@ export default {
   },
   computed: {
     threads () {
-      return _.orderBy(this.$store.state.messaging.threads, 'lastSendDate', 'desc')
+      return this.$store.state.messaging.threads ? _.orderBy(this.$store.state.messaging.threads, 'lastSendDate', 'desc') : undefined
     },
     currentFolder () {
       return this.$store.state.messaging.currentFolder
