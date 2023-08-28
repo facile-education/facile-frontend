@@ -27,6 +27,7 @@
     </div>
 
     <!-- Results -->
+    <PentilaSpinner v-if="isLoadingUsers" />
     <div
       v-if="selectedSchool === undefined"
       class="main-label"
@@ -34,13 +35,13 @@
       <p>{{ $t('please-select-school') }}</p>
     </div>
     <div
-      v-else-if="userList.length === 0"
+      v-else-if="userList && userList.length === 0"
       class="main-label"
     >
       <p>{{ $t('no-users') }}</p>
     </div>
     <div
-      v-else
+      v-else-if="userList"
       ref="scroll"
       class="user-table"
       @scroll="handleScroll"
@@ -94,6 +95,9 @@ export default {
     }
   },
   computed: {
+    isLoadingUsers () {
+      return this.$store.getters['currentActions/isInProgress']('loadUsers')
+    },
     selectedSchool () {
       return this.$store.state.user.selectedSchool
     },
@@ -101,7 +105,7 @@ export default {
       return this.$store.state.userManagement.isSearchLocked
     },
     userList () {
-      return PentilaUtils.Array.sortWithString(this.$store.state.userManagement.manualUserList, false, 'lastName')
+      return this.$store.state.userManagement.manualUserList ? PentilaUtils.Array.sortWithString(this.$store.state.userManagement.manualUserList, false, 'lastName') : undefined
     },
     maxIndex () {
       if (this.$store.state.userManagement.nbTotalResults < this.$store.state.userManagement.nbItemsPerPage) {

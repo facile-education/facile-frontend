@@ -5,7 +5,7 @@ import {
 
 export const state = {
   isSearchLocked: false,
-  manualUserList: [],
+  manualUserList: undefined,
   nbItemsPerPage: 20,
   nbTotalResults: 0,
   affectedUsers: []
@@ -42,6 +42,9 @@ export const mutations = {
     }
   },
   setManualUserList (state, users) {
+    if (!state.manualUserList) {
+      state.manualUserList = []
+    }
     Array.prototype.push.apply(state.manualUserList, users)
   },
   setNbTotalResults (state, nbTotalResults) {
@@ -52,7 +55,7 @@ export const mutations = {
   },
   emptyManualUserList (state) {
     state.isSearchLocked = false
-    state.manualUserList.length = 0
+    state.manualUserList = undefined
   },
   setSearchLock (state, payload) {
     state.isSearchLocked = payload
@@ -82,28 +85,34 @@ export const mutations = {
 
 export const actions = {
   getManualUsers ({ commit }, { schoolId, query, pageNb, nbItemsPerPage }) {
-    getManualUsers(schoolId, query, pageNb, nbItemsPerPage).then(
-      (data) => {
-        if (data.success) {
-          commit('setManualUserList', data.users)
-          if (pageNb === 0) {
-            commit('setNbTotalResults', data.nbTotalUsers)
-          }
-          if (data.users.length < data.nbItemsPerPage) {
-            commit('setSearchLock', true)
-          }
+    this.dispatch('currentActions/addAction', { name: 'loadUsers' })
+    getManualUsers(schoolId, query, pageNb, nbItemsPerPage).then((data) => {
+      this.dispatch('currentActions/removeAction', { name: 'loadUsers' })
+      if (data.success) {
+        commit('setManualUserList', data.users)
+        if (pageNb === 0) {
+          commit('setNbTotalResults', data.nbTotalUsers)
+        }
+        if (data.users.length < data.nbItemsPerPage) {
+          commit('setSearchLock', true)
         }
       }
-    )
+    }, (err) => {
+      console.error(err)
+      this.dispatch('currentActions/removeAction', { name: 'loadUsers' })
+    })
   },
   getAffectedUsers ({ commit }, { schoolId, query }) {
-    getAffectedUsers(schoolId, query).then(
-      (data) => {
-        if (data.success) {
-          commit('addAffectedUsers', data.users)
-        }
+    this.dispatch('currentActions/addAction', { name: 'loadUsers' })
+    getAffectedUsers(schoolId, query).then((data) => {
+      this.dispatch('currentActions/removeAction', { name: 'loadUsers' })
+      if (data.success) {
+        commit('addAffectedUsers', data.users)
       }
-    )
+    }, (err) => {
+      console.error(err)
+      this.dispatch('currentActions/removeAction', { name: 'loadUsers' })
+    })
   },
   addManualUser ({ commit }, user) {
     commit('addUser', user)
