@@ -17,8 +17,8 @@
             :max-height="maxHeight"
             :min-height="minHeight"
             class="contains-tabs"
-            @addContacts="$emit('addContacts', $event)"
-            @removeContacts="$emit('removeContacts', $event)"
+            @addContacts="addContacts"
+            @removeContacts="removeContacts"
           />
         </PentilaTabItem>
         <PentilaTabItem
@@ -37,8 +37,8 @@
         :selected-lists="selectedLists"
         :max-height="maxHeight"
         :min-height="minHeight"
-        @addContacts="$emit('addContacts', $event)"
-        @removeContacts="$emit('removeContacts', $event)"
+        @addContacts="addContacts"
+        @removeContacts="removeContacts"
       />
     </div>
 
@@ -47,8 +47,8 @@
       :class="{'collapsed': (mq.phone && !isMobileUserListDisplayed)}"
       :max-height="maxHeight"
       :selected-users="selectedUsers"
-      @addContacts="$emit('addContacts', $event)"
-      @removeContacts="$emit('removeContacts', $event)"
+      @addContacts="addContacts"
+      @removeContacts="removeContacts"
     />
   </div>
 </template>
@@ -89,6 +89,21 @@ export default {
     },
     isMobileUserListDisplayed () {
       return this.$store.state.contact.isMobileUserListDisplayed
+    }
+  },
+  methods: {
+    // TODO: Find a better way than popup to advertise the user his action has been computed (with a pretty animation for example ^^)
+    addContacts (contacts) {
+      this.$emit('addContacts', contacts)
+      if (this.mq.phone) {
+        this.$store.dispatch('popups/pushPopup', { message: this.$t('addContacts'), type: 'success' })
+      }
+    },
+    removeContacts (contacts) {
+      this.$emit('removeContacts', contacts)
+      if (this.mq.phone) {
+        this.$store.dispatch('popups/pushPopup', { message: this.$t('removeContacts'), type: 'success' })
+      }
     }
   }
 }
@@ -133,6 +148,8 @@ export default {
 <i18n locale="fr" >
 {
   "addressBook": "Carnet d'adresses",
-  "advancedSearch": "Annuaire"
+  "advancedSearch": "Annuaire",
+  "addContacts": "Destinataire ajouté",
+  "removeContacts": "Destinataire retiré"
 }
 </i18n>
