@@ -25,11 +25,11 @@
         class="placeholder"
       />
       <div
-        v-else-if="categoryList.length === 0"
+        v-else-if="categoryList && categoryList.length === 0"
         v-t="'emptyPlaceholder'"
         class="placeholder"
       />
-      <ul v-else>
+      <ul v-else-if="categoryList">
         <li
           v-for="category in sortedCategoryList"
           :key="category.categoryId"
@@ -56,12 +56,12 @@ export default {
     return {
       isLoading: false,
       error: false,
-      categoryList: []
+      categoryList: undefined
     }
   },
   computed: {
     sortedCategoryList () {
-      return sortAccesses(this.categoryList)
+      return this.categoryList ? sortAccesses(this.categoryList) : undefined
     }
   },
   created () {
