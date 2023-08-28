@@ -40,6 +40,7 @@
                 v-model="recoveryLogin"
                 :placeholder="$t('loginPlaceholder')"
                 class="input"
+                autocapitalize="none"
                 @keypress="handleKeyPressed"
               >
               <button
@@ -74,6 +75,7 @@
                 :placeholder="$t('login')"
                 class="input"
                 name="unsername"
+                autocapitalize="none"
                 @keypress="handleKeyPressed"
               >
               <input
