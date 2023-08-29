@@ -549,15 +549,6 @@ export default {
   }
 }
 
-.create-message-modal {
-  padding: 20px;
-  display: flex;
-
-  &.phone {
-    padding: 0;
-  }
-}
-
 .recipients-panel{
   display: flex;
   justify-content: space-between;

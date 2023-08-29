@@ -141,6 +141,7 @@ const isNotEmpty = (list) => validators.isNotEmpty(list)
 export default {
   name: 'SaveDiaryEventModal',
   components: { TextContent, InformationIcon, CustomDatePicker },
+  inject: ['mq'],
   props: {
     initEvent: {
       type: Object,
@@ -148,7 +149,6 @@ export default {
     }
   },
   emits: ['close', 'createEvent', 'updateEvent'],
-  inject: ['mq'],
   setup: () => ({ v$: useVuelidate() }),
   data () {
     return {
@@ -381,11 +381,6 @@ export default {
 
 <style lang="scss">
 .update-diary-event-modal {
-  .window-body {
-    max-height: 70vh !important;
-    overflow: auto;
-  }
-
   .ck-editor {
     p {
       margin: 5px 0;
