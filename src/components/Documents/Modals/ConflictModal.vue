@@ -148,10 +148,6 @@ export default {
   color: orange;
 }
 
-.conflict-modal {
-  display: flex;
-}
-
 .context-message{
   display: inline;
   vertical-align: 14px;
