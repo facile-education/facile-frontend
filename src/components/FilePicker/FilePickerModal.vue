@@ -6,8 +6,7 @@
     :modal="true"
     :draggable="true"
     :full-screen="mq.phone"
-    :width="width"
-    :heigth="height"
+    :max-width="600"
     @close="close"
     @keydown.exact.enter.stop=""
     @keydown.exact.backspace.stop=""
@@ -98,9 +97,7 @@ export default {
       inputText: undefined,
       currentFolder: undefined,
       selectedFolder: undefined,
-      selectedFiles: undefined,
-      height: undefined,
-      width: undefined
+      selectedFiles: undefined
     }
   },
   computed: {
@@ -120,8 +117,6 @@ export default {
   },
   created () {
     this.$store.dispatch('misc/incrementModalCount')
-    this.width = !this.mq.phone ? Math.max(600, document.documentElement.clientWidth / 2) : ''
-    this.height = document.documentElement.clientHeight * 9 / 10
   },
   methods: {
     submit () {
@@ -162,10 +157,6 @@ export default {
 </style>
 
 <style lang="scss" scoped>
-
-.filepicker-window {
-  display: flex;
-}
 
 .mobile button {
     margin-left: auto;
