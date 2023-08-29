@@ -38,7 +38,7 @@
           </div>
 
           <div
-            v-if="detailedEvent.isEditable"
+            v-if="detailedEvent.readInfos !== undefined"
             class="read-infos"
           >
             <div
