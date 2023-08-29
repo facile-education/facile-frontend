@@ -83,6 +83,13 @@
         />
       </div>
 
+      <!-- Children -->
+      <p
+        v-if="!isCreation && isParent"
+      >
+        {{ parentInfos }}
+      </p>
+
       <!-- Screen name -->
       <p
         v-if="!isCreation && isParent"
@@ -124,6 +131,7 @@ import { useVuelidate } from '@vuelidate/core'
 import { email, required } from '@vuelidate/validators'
 
 import { getLocalUserRoleList } from '@/api/role.service'
+import userService from '@/api/user.service'
 import { createManualUser, editManualUser, removeManualUser } from '@/api/userManagement.service'
 import store from '@/store'
 
@@ -152,7 +160,8 @@ export default {
       school: undefined,
       roleList: [],
       isParent: false,
-      screenName: ''
+      screenName: '',
+      parentInfos: ''
     }
   },
   computed: {
@@ -196,6 +205,15 @@ export default {
         }
       }
     })
+
+    // Get children if parent
+    if (this.editedUser.isParent) {
+      userService.getParentInfos(this.editedUser.userId).then((data) => {
+        if (data.success) {
+          this.parentInfos = data.infos
+        }
+      })
+    }
 
     // Focus form
     const input = this.$refs.lastNameInput

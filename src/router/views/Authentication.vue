@@ -193,7 +193,6 @@ export default {
   created () {
     const { cookies } = useCookies()
     if (this.isMobileApp) {
-      console.log('this is MOB APP')
       cookies.set('isMobileApp', this.isMobileApp)
       if (window.location.href.includes('mobile_token')) {
         const mobileToken = new URLSearchParams(window.location.search).get('mobile_token')
