@@ -44,9 +44,9 @@
 
     <div class="logout-container">
       <a
-        :href="logoutUrl"
         class="logout-link"
         data-test="logout"
+        @click="doLogout"
       >
         <img
           src="@/assets/icons/logout.svg"
@@ -76,6 +76,7 @@
 
 <script>
 import { defineAsyncComponent } from 'vue'
+import { useCookies } from 'vue3-cookies'
 
 import constants from '@/api/constants'
 
@@ -133,6 +134,12 @@ export default {
     toggleSuggestionModal () {
       this.supportModalType = 'Suggestion'
       this.isSupportModalDisplayed = !this.isSupportModalDisplayed
+    },
+    doLogout () {
+      // Delete mobileToken cookie
+      const { cookies } = useCookies()
+      cookies.remove('mobileToken')
+      window.location.href = this.logoutUrl
     }
   }
 }
