@@ -70,6 +70,7 @@
       <div
         v-if="detailedNews.content"
         class="content"
+        :class="{'modal-content': isInModal}"
         v-html="detailedNews.content"
       />
       <div
@@ -91,14 +92,14 @@
       </ul>
 
       <div
-        v-if="detailedNews.isEditable"
+        v-if="!isInModal && detailedNews.isEditable"
         class="footer"
       >
         <PentilaButton
           class="footer-button"
           data-test="updateButton"
           :label="$t('update')"
-          @click="isUpdateModalDisplayed = true"
+          @click="openUpdateModal"
         />
         <PentilaButton
           class="footer-button"
@@ -180,6 +181,9 @@ export default {
     this.getNewsDetails()
   },
   methods: {
+    openUpdateModal () {
+      this.isUpdateModalDisplayed = true
+    },
     getNewsDetails () {
       this.isLoading = true
       getNewsDetails(this.initNews.newsId).then((data) => {
@@ -301,8 +305,11 @@ h2 {
 
 .content {
   margin-top: 1rem;
-  max-height: 60vh;
-  overflow-y: auto;
+
+  &:not(.modal-content) {
+    max-height: 60vh;
+    overflow-y: auto;
+  }
 
   ::deep(p) {
     margin: 0;
@@ -329,7 +336,7 @@ h2 {
   justify-content: flex-end;
 
   .footer-button {
-    margin-left: 15px;
+    margin-left: 1rem;
   }
 }
 

@@ -13,10 +13,26 @@
 
     <template #body>
       <NewsDetails
+        ref="newsDetails"
         :init-news="initNews"
         :is-in-modal="true"
         @update="$emit('update')"
         @delete="deleteNews"
+      />
+    </template>
+
+    <template #footer>
+      <PentilaButton
+        class="footer-button"
+        data-test="updateButton"
+        :label="$t('update')"
+        @click="openUpdateModal"
+      />
+      <PentilaButton
+        class="footer-button"
+        data-test="deleteButton"
+        :label="$t('delete')"
+        @click="confirmDeleteNews"
       />
     </template>
   </PentilaWindow>
@@ -28,6 +44,7 @@ import NewsDetails from '@components/Dashboard/AnnouncementsWidget/NewsDetails.v
 export default {
   name: 'NewsDetailsModal',
   components: { NewsDetails },
+  inject: ['mq'],
   props: {
     initNews: {
       type: Object,
@@ -35,7 +52,6 @@ export default {
     }
   },
   emits: ['close', 'update', 'delete'],
-  inject: ['mq'],
   data () {
     return {
       detailedNews: undefined
@@ -50,6 +66,12 @@ export default {
     this.$store.dispatch('misc/incrementModalCount')
   },
   methods: {
+    openUpdateModal () {
+      this.$refs.newsDetails.openUpdateModal()
+    },
+    confirmDeleteNews () {
+      this.$refs.newsDetails.confirmDeleteNews()
+    },
     deleteNews () {
       this.$emit('delete')
       this.onClose()
@@ -62,12 +84,6 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.news-details-modal.modal-mask .window-container .window-body {
-  padding-bottom: 0;
-}
-</style>
-
 <style lang="scss" scoped>
 // TODO: put this in pentila component?
 .header {
@@ -77,4 +93,15 @@ export default {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+.footer-button {
+  margin-left: 1rem;
+}
 </style>
+
+<i18n locale="fr">
+{
+  "update": "Modifier",
+  "delete": "Supprimer"
+}
+</i18n>
