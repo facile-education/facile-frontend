@@ -85,28 +85,12 @@ ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
-  max-height: 75vh;
-  overflow: auto;
 
   li {
     border-bottom: 1px solid $color-border;
 
     &:last-child {
       border-bottom: none;
-    }
-  }
-
-  &.phone {
-    max-height: 85vh;
-  }
-}
-
-@supports(height: 100dvh) {
-  ul {
-    max-height: 75dvh;
-
-    &.phone {
-      max-height: 85dvh;
     }
   }
 }
