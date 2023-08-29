@@ -500,15 +500,6 @@ export default {
 </script>
 
 <style lang="scss">
-.create-message-modal.modal-mask .window-container .window-body {
-  max-height: 70vh;
-  overflow-y: auto;
-}
-
-.create-message-modal.phone .window-container .window-body {
-  max-height: none;
-}
-
 .create-message-modal {
   .ck-editor {
     p {
@@ -525,17 +516,6 @@ export default {
     min-height: 12rem;
   }
 }
-
-@supports(height: 100dvh) {
-  :not(.phone).create-message-modal.modal-mask .window-container .window-body {
-    max-height: 70dvh;
-  }
-
-  .create-message-modal.phone .window-container .window-body.full-screen {
-    max-height: 80dvh;
-  }
-}
-
 </style>
 
 <style lang="scss" scoped>
