@@ -203,15 +203,13 @@ export default {
 </script>
 
 <style lang="scss">
+//Why is it here? TODO: to move?
 .edit-course-modal .window-body {
   display: flex;
-  padding: 1.5rem 0rem;
+  padding: 1.5rem 0;
   align-items: flex-start;
   gap: 2rem;
   align-self: stretch;
-
-  overflow: auto;
-  max-height: 70vh;
 }
 </style>
 

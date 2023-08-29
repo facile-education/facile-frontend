@@ -17,16 +17,28 @@
 
       <template #body>
         <PentilaTabList ref="tabList">
-          <PentilaTabItem :title="$t('versionsTabLabel')">
+          <PentilaTabItem
+            class="tab-item"
+            :title="$t('versionsTabLabel')"
+          >
             <VersionsDetails />
           </PentilaTabItem>
-          <PentilaTabItem :title="$t('termsOfUseTabLabel')">
+          <PentilaTabItem
+            class="tab-item"
+            :title="$t('termsOfUseTabLabel')"
+          >
             <TermsOfUse />
           </PentilaTabItem>
-          <PentilaTabItem :title="$t('privacyLabel')">
+          <PentilaTabItem
+            class="tab-item"
+            :title="$t('privacyLabel')"
+          >
             <Privacy />
           </PentilaTabItem>
-          <PentilaTabItem :title="$t('accessibilityLabel')">
+          <PentilaTabItem
+            class="tab-item"
+            :title="$t('accessibilityLabel')"
+          >
             <Accessibility />
           </PentilaTabItem>
         </PentilaTabList>
@@ -91,13 +103,17 @@ export default {
 }
 </script>
 
-<style lang="scss" >
-.information-modal {
-  .window-body .tab-content {
-    max-height: 70vh !important;
-    overflow: auto;
-  }
+<style lang="scss" scoped>
+.tab-item {
+  height: calc(100% - 43px);
+  overflow: auto;
 }
+
+//.full-screen {
+//  .tab-item {
+//    max-height: 100%
+//  }
+//}
 
 </style>
 
