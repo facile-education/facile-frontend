@@ -192,11 +192,12 @@ export default {
   },
   created () {
     const { cookies } = useCookies()
-    cookies.set('isMobileApp', this.isMobileApp)
     if (this.isMobileApp) {
+      console.log('this is MOB APP')
+      cookies.set('isMobileApp', this.isMobileApp)
       if (window.location.href.includes('mobile_token')) {
         const mobileToken = new URLSearchParams(window.location.search).get('mobile_token')
-        authenticationService.authLog('Setting cookie mobileToken ' + mobileToken)
+        // authenticationService.authLog('Setting cookie mobileToken ' + mobileToken)
         cookies.set('mobileToken', mobileToken)
       }
     }
@@ -270,7 +271,6 @@ export default {
 
             const redirectUrl = DASHBOARD
             if (this.isMobileApp) {
-              authenticationService.authLog('this is mobile app')
               // Manage mobile token
               this.manageMobileApp(data.userId, redirectUrl)
             } else {
@@ -295,17 +295,30 @@ export default {
       let refreshToken = ''
       if (window.location.href.includes('mobile_token')) {
         // Refreshing with new token
-        authenticationService.authLog('refreshing Token')
-        const mobileToken = new URLSearchParams(window.location.search).get('mobile_token')
+        authenticationService.authLog('refreshing Token based on url ' + window.location.search)
+        // First extract token from url
+        const mobileTokenStr = window.location.search.substring(window.location.search.indexOf('mobile_token=') + 13)
+        const idx1 = mobileTokenStr.indexOf('%')
+        const idx2 = mobileTokenStr.indexOf('&')
+        let endIdx = mobileTokenStr.length
+        if (idx1 > 0) {
+          endIdx = idx1
+        }
+        if (idx2 > 0 && idx2 < endIdx) {
+          endIdx = idx2
+        }
+        const mobileToken = mobileTokenStr.substring(0, endIdx)
+
+        authenticationService.authLog('refreshing Token with old token ' + mobileToken)
         mobileService.refreshMobileToken(mobileToken).then((response) => {
           if (response.success) {
             refreshToken = response.refreshToken
             const { cookies } = useCookies()
             cookies.set('mobileToken', refreshToken)
-            authenticationService.authLog('refreshed token = ' + refreshToken)
+            // authenticationService.authLog('refreshed token = ' + refreshToken)
             const mobileUrl = encodeURI(window.location.origin + '/' + redirectUrl)
             const serviceUrl = window.location.origin + '/appmobile.html?refresh_token=' + refreshToken + '&user_id=' + userId + '&home_url=' + mobileUrl
-            authenticationService.authLog('serviceUrl = ' + serviceUrl)
+            // authenticationService.authLog('serviceUrl = ' + serviceUrl)
             window.location.replace(serviceUrl)
           }
         })
@@ -318,9 +331,9 @@ export default {
             const { cookies } = useCookies()
             cookies.set('mobileToken', refreshToken)
             const mobileUrl = encodeURI(window.location.origin + '/' + redirectUrl)
-            authenticationService.authLog('mobileUrl = ' + mobileUrl)
+            // authenticationService.authLog('mobileUrl = ' + mobileUrl)
             const serviceUrl = window.location.origin + '/appmobile.html?refresh_token=' + refreshToken + '&user_id=' + userId + '&home_url=' + mobileUrl
-            authenticationService.authLog('serviceUrl = ' + serviceUrl)
+            // authenticationService.authLog('serviceUrl = ' + serviceUrl)
             window.location.replace(serviceUrl)
           }
         })
