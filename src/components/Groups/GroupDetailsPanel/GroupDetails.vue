@@ -67,13 +67,13 @@
     >
       <PentilaTabList>
         <PentilaTabItem
-          style="height: calc(100% - 32px)"
+          style="height: calc(100% - 37px)"
           :title="$t('details')"
         >
           <GroupDetailsTab :group="selectedGroup" />
         </PentilaTabItem>
         <PentilaTabItem
-          style="height: calc(100% - 32px)"
+          style="height: calc(100% - 37px)"
           :title="$t('activities')"
         >
           <GroupActivityTab :group="selectedGroup" />
