@@ -30,19 +30,21 @@
       v-t="activeTab === 'addressBook' ? 'addressBookEmptyPlaceholder': 'advancedSearchEmptyPlaceholder'"
       class="placeholder"
     />
-    <ul
+    <div
       v-else
-      :style="'max-height: ' + maxHeight"
+      class="user-list-container"
     >
-      <ContactUserListItem
-        v-for="user in sortedUserList"
-        :key="user.userId"
-        :selected-users="selectedUsers"
-        :user="user"
-        @addContact="addContact"
-        @removeContact="removeContact"
-      />
-    </ul>
+      <ul :style="'max-height: ' + maxHeight">
+        <ContactUserListItem
+          v-for="user in sortedUserList"
+          :key="user.userId"
+          :selected-users="selectedUsers"
+          :user="user"
+          @addContact="addContact"
+          @removeContact="removeContact"
+        />
+      </ul>
+    </div>
   </section>
 </template>
 
@@ -143,13 +145,22 @@ export default {
   width: 100%;
   background-color: white;
 
+  &.phone {
+    height: 100%;
+
+    .user-list-container {
+      margin-top: 10px;
+      height: calc(100% - 60px);
+    }
+  }
+
   &:not(.phone) {
     padding-left: 1rem;
   }
 }
 
 ul {
-  margin:  10px 0 0 0;
+  margin: 0;
   padding: 0;
   list-style-type: none;
   overflow-y: auto;

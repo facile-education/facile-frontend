@@ -11,6 +11,7 @@
         <PentilaTabItem
           :title="$t('addressBook')"
           :icon="require('@assets/icons/communities.svg')"
+          class="tab-item"
         >
           <AddressBook
             :selected-lists="selectedLists"
@@ -112,6 +113,7 @@ export default {
 <style lang="scss" scoped>
 .container {
   position: relative;
+  overflow: hidden;
 
   .user-list {
     position: absolute;
@@ -123,6 +125,18 @@ export default {
     &.collapsed {
       transform: translateX(100vw);
     }
+  }
+}
+
+.container.phone {
+  height: 100%;
+
+  .left {
+    height: 100%;
+  }
+
+  .tab-item {
+    height: calc(100% - 37px); // 37 px is the Pentila tab size, with a little bit of safe margin
   }
 }
 

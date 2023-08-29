@@ -194,12 +194,6 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.app-broadcast-modal .window-body {
-  overflow: auto;
-}
-</style>
-
 <style lang="scss" scoped>
 .add {
   margin: auto;

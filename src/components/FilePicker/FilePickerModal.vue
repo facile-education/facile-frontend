@@ -156,46 +156,8 @@ export default {
 </script>
 
 <style lang="scss">
-.filepicker-window {
-
-  &.mobile {
-    .resizable-component {
-      .window-container {
-        .window-body {
-          --body-max-height: calc(100vh - 133px);
-        }
-      }
-    }
-  }
-
-  &:not(.mobile) .window-body .body {
-    --tab-content-max-height: calc(var(--body-max-height) - 87px);
-    max-height: calc(var(--tab-content-max-height) - 10px);
-  }
-
-  // Shit to make the thing works (inherit max-height minus elements paddings)
-  .window-body {
-    --body-max-height: calc(90vh - 133px);
-    max-height: var(--body-max-height);
-  }
-}
-
 .filepicker-window.tablet {
   z-index: 1001;
-}
-
-.filepicker-window.mobile {
-  .window-header {
-    padding: 0 8px;
-  }
-
-  .window-body {
-    padding: 0;
-  }
-
-  .window-footer {
-    padding-bottom: 8px;
-  }
 }
 </style>
 

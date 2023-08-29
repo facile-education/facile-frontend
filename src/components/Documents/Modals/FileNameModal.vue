@@ -314,10 +314,6 @@ export default {
 </style>
 
 <style lang="scss" scoped>
-.file-name-modal {
-  display: flex;
-}
-
 .window-body {
   width: 100%;
 

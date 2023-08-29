@@ -165,9 +165,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.folder-name-modal {
-  display: flex;
-}
 
 .name-input {
   max-width: 100%;

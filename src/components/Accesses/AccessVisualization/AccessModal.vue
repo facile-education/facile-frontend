@@ -112,16 +112,6 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.create-link-modal.modal-mask .window-container .window-body {
-  overflow-y: auto;
-}
-
-:not(.phone).create-link-modal.modal-mask .window-container .window-body {
-  max-height: 40vh;
-}
-</style>
-
 <style lang="scss" scoped>
 
 ul {

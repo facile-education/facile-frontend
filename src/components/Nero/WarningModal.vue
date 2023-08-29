@@ -85,10 +85,6 @@ export default {
   color: orange;
 }
 
-.warning-modal {
-  display: flex;
-}
-
 .context-message{
   display: inline;
   vertical-align: 14px;
