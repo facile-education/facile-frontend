@@ -61,39 +61,6 @@
       "yes": "oui"
     }
   },
-  "DashboardManager": {
-    "WidgetItem": {
-      "DeleteConfirmModal": {
-        "buttonLabel": "Supprimer",
-        "message": "La suppression de ce widget est irréversible. Souhaitez-vous vraiment continuer ?",
-        "title": "Suppression"
-      },
-      "broadcastedLabel": "Diffusé : {profiles}",
-      "createdLabel": "Créé le {date} par {creator}",
-      "editButtonLabel": "Editer",
-      "notBroadcastedLabel": "Ce widget n'est pas diffusé.",
-      "personnelWidgetLabel": "Les personnes aux profils mentionnés ci-dessus peuvent créer un widget personnel de ce type.",
-      "removeButtonLabel": "Supprimer",
-      "typeLabel": "Type : {type}"
-    },
-    "WidgetEditionModal": {
-      "broadcastRulesTitle": "Règles de diffusion",
-      "broadcastDatesTitle": "Dates de diffusion",
-      "creationModalTitle": "Ajouter un widget",
-      "editionModalTitle": "Editer un widget",
-      "expirationDateLabel": "Date d'expiration",
-      "namePlaceholder": "Nom",
-      "parutionDateLabel": "Date de parution",
-      "personalLabel": "Personnels",
-      "saveButtonLabel": "Valider",
-      "schoolsPlaceholder": "Etablissements",
-      "targetedSchoolsTitle": "Etablissements ciblés (laisser vide pour tous)",
-      "typeDropdownLabel": "Définir le type du widget"
-    },
-    "WidgetBroadcastRoleItem": {
-      "mandatoryCheckboxLabel": "Obligatoire"
-    }
-  },
   "Documents": {
     "folder": "Dossier",
     "file": "Fichier",
