@@ -4,7 +4,6 @@
     :modal="true"
     :draggable="true"
     :width="700"
-    :height="625"
     @close="onClose"
     @keydown.exact.enter.stop=""
     @keydown.exact.backspace.stop=""
