@@ -29,6 +29,7 @@
       <div class="window-footer">
         <PentilaButton
           data-test="cancelButton"
+          class="button"
           cls="cancel"
           :label="$t('ConflictModal.cancelButton')"
           @click="cancel"
@@ -36,12 +37,14 @@
         <!-- TODO check permission? >-->
         <PentilaButton
           data-test="replaceButton"
+          class="button"
           cls="replace"
           :label="$t('ConflictModal.replaceButton')"
           @click="replace"
         />
         <PentilaButton
           data-test="renameButton"
+          class="button"
           cls="rename"
           :label="$t('ConflictModal.renameButton')"
           @click="rename"
@@ -159,7 +162,7 @@ export default {
   justify-content: space-evenly;
 }
 
-.cancel, .delete {
-  width: 130px;
+.button {
+  width: min(130px, 25vw);
 }
 </style>
