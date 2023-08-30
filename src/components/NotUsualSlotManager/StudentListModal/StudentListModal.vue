@@ -1,10 +1,9 @@
 <template>
   <PentilaWindow
     :modal="true"
-    :draggable="true"
     class="student-list-modal"
     data-test="student-list-modal"
-    :max-width="800"
+    :max-width="750"
     @close="closeModal"
   >
     <template #header>
@@ -34,8 +33,8 @@
             :student="student"
             :event="event"
             :is-current-teacher="isCurrentTeacher"
-            @update:isPresent="setPresent"
-            @deregisterStudent="loadStudentList"
+            @update:is-present="setPresent"
+            @deregister-student="loadStudentList"
           />
         </div>
         <div
@@ -57,7 +56,6 @@
 </template>
 
 <script>
-
 import StudentListItem from '@components/NotUsualSlotManager/StudentListModal/StudentListItem'
 import dayjs from 'dayjs'
 
@@ -132,12 +130,6 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-  .student-list-modal .window-wrapper {
-    max-width: 500px;
-  }
-</style>
 
 <style lang="scss" scoped>
   .body {

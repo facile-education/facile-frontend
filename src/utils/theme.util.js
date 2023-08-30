@@ -12,7 +12,7 @@ const style = `.theme-text-color { color: ${mainColor}; }
     .theme-hover-text-color:hover { color: ${mainColor}; }
     .theme-border-color { border-color: ${mainColor} !important; }
     .theme-shadow-color { box-shadow: 0 0 6px ${mainColor}; }
-    body .vc-container { --blue-600: ${mainColor}; }`
+    body .vc-blue { --vc-accent-600: ${mainColor}; }`
 
 // Update main theme color
 export function setMainColor (color) {

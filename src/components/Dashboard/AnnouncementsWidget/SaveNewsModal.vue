@@ -3,7 +3,6 @@
     class="update-news-modal"
     data-test="update-news-modal"
     :modal="true"
-    :draggable="true"
     :max-width="1000"
     :full-screen="mq.phone || displayLikePhone"
     @close="confirmClosure"

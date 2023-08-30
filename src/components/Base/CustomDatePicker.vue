@@ -3,12 +3,12 @@
     v-model="formattedDate"
     :max-date="maxDate"
     :min-date="minDate"
-    :mode="withHours ? 'dateTime' : undefined"
+    :mode="withHours ? 'dateTime' : 'date'"
     :is-required="isRequired"
-    :minute-increment="minuteIncrement"
+    :rules="rules"
     class="date"
     :is24hr="true"
-    :disabled-dates="{ weekdays: hiddenDays }"
+    :disabled-dates="disabledDates"
   >
     <template #default="{ togglePopover }">
       <button
@@ -29,8 +29,11 @@
 </template>
 
 <script>
-import NeroIcon from '@components/Nero/NeroIcon.vue'
+import 'v-calendar/style.css'
+
 import { DatePicker } from 'v-calendar'
+
+import NeroIcon from '@/components/Nero/NeroIcon.vue'
 
 export default {
   name: 'CustomDatePicker',
@@ -71,6 +74,10 @@ export default {
   },
   emits: ['selectDate'],
   computed: {
+    disabledDates () {
+      console.log(this.hiddenDays)
+      return this.hiddenDays.length > 0 ? [{ repeat: { weekdays: this.hiddenDays } }] : undefined
+    },
     formattedDate: {
       get () {
         return this.selectedDate.toDate()
@@ -78,6 +85,9 @@ export default {
       set (date) {
         this.$emit('selectDate', date)
       }
+    },
+    rules () {
+      return this.minuteIncrement ? { minutes: { interval: this.minuteIncrement } } : undefined
     },
     selectedDateLabel () {
       if (this.selectedDate) {
@@ -99,7 +109,6 @@ export default {
 }
 
 button {
-  height: 100%;
   background-color: #f5f5f5;
   display: flex;
   align-items: center;
