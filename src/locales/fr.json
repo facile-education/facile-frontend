@@ -5,6 +5,7 @@
     "remove": "Supprimer"
   },
   "CalendarEventOptions": {
+    "delete": "Supprimer",
     "registerStudent": "Inscrire l'élève",
     "saveTeacherSubstitute": "@:CalendarEventOptions.download",
     "showStudentList": "Liste des inscrits",

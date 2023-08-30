@@ -21,14 +21,18 @@
     />
   </div>
   <teleport
-    v-if="isEditSlotModalDisplayed || isRegistrationModalDisplayed || isListModalDisplayed"
+    v-if="isEditSlotModalDisplayed || isRegistrationModalDisplayed || isListModalDisplayed || isDeleteSlotModalDisplayed"
     to="body"
   >
     <EditSlotModal
       v-if="isEditSlotModalDisplayed"
       :event-to-edit="eventToEdit"
-      :full-screen="mq.phone"
       @close="isEditSlotModalDisplayed = false"
+    />
+    <DeleteSlotModal
+      v-if="isDeleteSlotModalDisplayed"
+      :init-event="eventToEdit"
+      @close="isDeleteSlotModalDisplayed = false"
     />
     <StudentRegistrationModal
       v-if="isRegistrationModalDisplayed"
@@ -56,6 +60,7 @@ const Timeline = defineAsyncComponent(() => import('@components/Horaires/Timelin
 const StudentRegistrationModal = defineAsyncComponent(() => import('@components/NotUsualSlotManager/StudentRegistrationModal/StudentRegistrationModal'))
 const StudentListModal = defineAsyncComponent(() => import('@components/NotUsualSlotManager/StudentListModal/StudentListModal'))
 const EditSlotModal = defineAsyncComponent(() => import('@components/NotUsualSlotManager/EditSlotModal/EditSlotModal'))
+const DeleteSlotModal = defineAsyncComponent(() => import('@components/NotUsualSlotManager/DeleteSlotModal/DeleteSlotModal.vue'))
 
 dayjs.extend(customParseFormat)
 
@@ -67,7 +72,8 @@ export default {
     Timeline,
     StudentRegistrationModal,
     StudentListModal,
-    EditSlotModal
+    EditSlotModal,
+    DeleteSlotModal
   },
   inject: ['mq'],
   props: {
@@ -83,6 +89,7 @@ export default {
       selectedEvent: undefined,
       eventToEdit: undefined,
       isEditSlotModalDisplayed: false,
+      isDeleteSlotModalDisplayed: false,
       isRegistrationModalDisplayed: false,
       isListModalDisplayed: false
     }
@@ -112,6 +119,10 @@ export default {
           this.eventToEdit = eventOption.event
           this.isEditSlotModalDisplayed = true
           break
+        case 'deleteSlot':
+          this.eventToEdit = eventOption.event
+          this.isDeleteSlotModalDisplayed = true
+          break
         case 'registerStudent':
           this.eventToEdit = eventOption.event
           this.isRegistrationModalDisplayed = true
@@ -132,8 +143,8 @@ export default {
       const startDate = this.mq.phone ? dayjs(date) : dayjs(date).startOf('week')
       const endDate = this.mq.phone ? dayjs(date).endOf('day') : dayjs(date).endOf('week')
       this.$store.dispatch('notUsualSlots/setDisplayedDates', {
-        startDate: startDate,
-        endDate: endDate
+        startDate,
+        endDate
       })
     },
     onSelectWeek (week) {

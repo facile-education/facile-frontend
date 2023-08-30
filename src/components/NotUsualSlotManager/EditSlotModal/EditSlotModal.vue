@@ -3,6 +3,7 @@
     v-if="configuration"
     :modal="true"
     :max-width="750"
+    :full-screen="mq.phone"
     class="edit-slot-modal"
     :class="{'mobile': mq.phone}"
     data-test="edit-slot-modal"
@@ -13,18 +14,24 @@
     </template>
 
     <template #body>
+      <div
+        v-if="!isEventCreation"
+        v-t="'updateMessage'"
+        class="update-message"
+      />
+
       <div class="time-selection">
-        <span class="time-selection-left">{{ recursiveSlot }}</span>
+        <span class="time-selection-left">{{ slotLabel }}</span>
         <TimeSelection
           :range="{start: newEvent.startDate.format('HH:mm'), end: newEvent.endDate.format('HH:mm')}"
           @update:range="updateRange"
         />
-        <!--        <span-->
-        <!--          class="time-selection-right"-->
-        <!--        >{{ dateRange }}</span>-->
       </div>
 
-      <div class="period">
+      <div
+        v-if="isEventCreation"
+        class="period"
+      >
         <span
           v-t="'onThePeriod'"
           class="label"
@@ -37,11 +44,6 @@
           @updateDates="updateSlotDates"
         />
         <PentilaSpinner v-else />
-
-        <!--        <span>{{ newEvent.firstSessionDate.format('DD/MM/YYYY HH:mm') }}</span>-->
-        <!--        <br>-->
-        <!--        <span v-if="newEvent.lastSessionDate">{{ newEvent.lastSessionDate.format('DD/MM/YYYY HH:mm') }}</span>-->
-        <!--        <PentilaSpinner v-else />-->
       </div>
 
       <div
@@ -84,12 +86,6 @@
     <template #footer>
       <div class="footer">
         <PentilaButton
-          v-if="!isEventCreation"
-          :label="mq.phone ? $t('NotUsualSlots.EditSlotModal.deleteSlot') : $t('NotUsualSlots.EditSlotModal.longDeleteSlot')"
-          class="delete"
-          @click="confirmSlotDeletion"
-        />
-        <PentilaButton
           :label="$t('Commons.submit')"
           class="confirm"
           @click="confirm"
@@ -107,7 +103,6 @@ import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import dayjs from 'dayjs'
 
-import { getGlobalConfiguration } from '@/api/schedule.service'
 import schoolLifeService from '@/api/schoolLife-portlet.service'
 
 const moreThanRegistered = (value, vm) => {
@@ -142,7 +137,6 @@ export default {
     return {
       width: 0,
       isTimeError: false,
-      isLoadingLastSessionDate: false,
       newEvent: {
         sessionId: undefined,
         subject: undefined,
@@ -189,11 +183,12 @@ export default {
     modalTitle () {
       return this.isEventCreation ? this.$t('NotUsualSlots.EditSlotModal.header-create', { slotType: this.currentSlotType.label }) : this.$t('NotUsualSlots.EditSlotModal.header-modify', { slotType: this.currentSlotType.label })
     },
-    recursiveSlot () {
-      return this.$t('all-the') + ' ' + dayjs(this.eventToEdit.startDate).format('dddd') + 's ' + this.$t('from')
-    },
-    dateRange () {
-      return this.$t('du') + ' ' + dayjs(this.eventToEdit.startDate).format('dddd DD MMMM YYYY ') + this.$t('until-school-year-end')
+    slotLabel () {
+      if (this.isEventCreation) {
+        return this.$t('all-the') + ' ' + dayjs(this.eventToEdit.startDate).format('dddd') + 's ' + this.$t('from')
+      } else {
+        return this.$t('the') + ' ' + dayjs(this.eventToEdit.startDate).format('dddd') + ' ' + this.$t('from')
+      }
     },
     configuration () {
       return this.$store.state.calendar.configuration
@@ -205,10 +200,19 @@ export default {
       return dayjs(this.configuration.schoolYearEndDate, 'YYYY-MM-DD')
     }
   },
-  created () {
-    if (!this.configuration) {
-      this.$store.dispatch('calendar/getConfiguration')
+  watch: {
+    configuration: {
+      immediate: true,
+      handler () {
+        if (this.configuration) {
+          this.newEvent.lastSessionDate = dayjs(this.configuration.schoolYearEndDate, 'YYYY-MM-DD')
+        } else {
+          this.$store.dispatch('calendar/getConfiguration')
+        }
+      }
     }
+  },
+  created () {
     this.newEvent.startDate = dayjs(this.eventToEdit.startDate, 'YYYY/MM/DD HH:mm')
     this.newEvent.endDate = dayjs(this.eventToEdit.endDate, 'YYYY/MM/DD HH:mm')
 
@@ -218,7 +222,6 @@ export default {
       this.newEvent.title = this.currentSlotType.label
       this.newEvent.backgroundColor = this.currentSlotType.color
       this.newEvent.borderColor = this.currentSlotType.color
-      this.setLastSessionDateToSchoolYearEndDate()
     } else { // Event update
       this.newEvent.sessionId = this.eventToEdit.sessionId
       this.newEvent.teacher = { ...this.eventToEdit.teachers[0] } // create a copy to not trigger store state change out of a mutation
@@ -228,7 +231,6 @@ export default {
       this.newEvent.type = this.eventToEdit.type
       this.newEvent.borderColor = this.eventToEdit.borderColor
       this.newEvent.backgroundColor = this.eventToEdit.backgroundColor
-      this.getLastSessionDate()
     }
   },
   methods: {
@@ -239,55 +241,6 @@ export default {
     updateSlotDates (range) {
       this.newEvent.firstSessionDate = dayjs(range.start)
       this.newEvent.lastSessionDate = dayjs(range.end)
-    },
-    setLastSessionDateToSchoolYearEndDate () {
-      if (this.configuration) {
-        this.newEvent.lastSessionDate = dayjs(this.configuration.schoolYearEndDate, 'YYYY-MM-DD')
-      } else {
-        this.isLoadingLastSessionDate = true
-        getGlobalConfiguration().then((data) => {
-          this.isLoadingLastSessionDate = false
-          if (data.success) {
-            this.error = false
-            this.newEvent.lastSessionDate = dayjs(data.configuration.schoolYearEndDate, 'YYYY-MM-DD')
-          }
-        }, (err) => {
-          console.error(err)
-          this.isLoadingLastSessionDate = false
-        })
-      }
-    },
-    getLastSessionDate () {
-      this.isLoadingLastSessionDate = true
-      schoolLifeService.getSessionLimitSlotDate(this.newEvent.sessionId).then((data) => {
-        this.isLoadingLastSessionDate = false
-        if (data.success) {
-          this.newEvent.lastSessionDate = dayjs(data.lastSessionDate, 'YYYY/MM/DD HH:mm')
-        }
-      }, (err) => {
-        console.error(err)
-        this.isLoadingLastSessionDate = false
-      })
-    },
-    confirmSlotDeletion () {
-      this.$store.dispatch('warningModal/addWarning', {
-        text: this.$t('NotUsualSlots.warning'),
-        lastAction: { fct: this.deleteSlot, params: [] }
-      })
-    },
-    deleteSlot () {
-      schoolLifeService.deleteSlot(
-        this.newEvent.sessionId,
-        this.newEvent.firstSessionDate.format('YYYY-MM-DD HH:mm'), // convert from calendar format to back-end format
-        this.newEvent.lastSessionDate.format('YYYY-MM-DD HH:mm')
-      ).then((data) => {
-        if (data.success) {
-          this.$store.dispatch('notUsualSlots/refreshCalendar')
-          this.closeModal()
-        } else {
-          console.error(data.error) // TODO: better error gesture
-        }
-      })
     },
     updateTeacher (value) {
       this.newEvent.teacher = value[0]
@@ -346,15 +299,12 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.edit-slot-modal .resizable-component {
-  &.mobile {
-    width: 100%;
-  }
-}
-</style>
-
 <style lang="scss" scoped>
+.update-message {
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
 .slot-title {
   margin-right: 10px;
 }
@@ -399,7 +349,9 @@ export default {
 
 <i18n locale="fr">
 {
+  "updateMessage": "Les modifications affecteront toutes les sessions concernées par ce créneau",
   "all-the": "Tous les ",
+  "the": "Le ",
   "from": "de",
   "until-school-year-end": "jusqu'à la fin de l'année scolaire.",
   "onThePeriod": "Sur la période"
