@@ -4,7 +4,7 @@
     v-model="formattedDate"
     :max-date="maxDate"
     :min-date="minDate"
-    :disabled-dates="{ weekdays: hiddenDays }"
+    :disabled-dates="disabledDates"
   >
     <template #default="{ togglePopover }">
       <NeroIcon
@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import 'v-calendar/style.css'
+
 import dayjs from 'dayjs'
 import { DatePicker } from 'v-calendar'
 
@@ -40,6 +42,9 @@ export default {
     configuration () {
       return this.$store.state.calendar.configuration
     },
+    disabledDates () {
+      return this.hiddenDays.length > 0 ? [{ repeat: { weekdays: this.hiddenDays } }] : undefined
+    },
     formattedDate: {
       get () {
         return this.selectedDate.toDate()
@@ -59,6 +64,7 @@ export default {
           hiddenDays.push(dayNumber + 1)
         }
       }
+
       return hiddenDays
     },
     maxDate () {

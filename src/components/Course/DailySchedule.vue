@@ -17,7 +17,7 @@
         v-model="formattedDate"
         :max-date="maxDate"
         :min-date="minDate"
-        :disabled-dates="{ weekdays: hiddenDays }"
+        :disabled-dates="disabledDates"
       >
         <template #default="{ togglePopover }">
           <div
@@ -52,6 +52,8 @@
 </template>
 
 <script>
+import 'v-calendar/style.css'
+
 import CustomCalendar from '@components/Base/CustomCalendar/CustomCalendar.vue'
 import dayjs from 'dayjs'
 import { DatePicker } from 'v-calendar'
@@ -87,6 +89,9 @@ export default {
     },
     isToday () {
       return this.selectedDate.isSame(dayjs(), 'day')
+    },
+    disabledDates () {
+      return this.hiddenDays.length > 0 ? [{ repeat: { weekdays: this.hiddenDays } }] : undefined
     },
     formattedDate: {
       get () {

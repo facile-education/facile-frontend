@@ -1,10 +1,9 @@
 <template>
   <PentilaWindow
     :modal="true"
-    :draggable="true"
+    :max-width="750"
     class="edit-slot-modal"
     :class="{'mobile': mq.phone}"
-    :max-width="800"
     data-test="edit-slot-modal"
     @close="closeModal"
   >
@@ -87,7 +86,6 @@ import { required } from '@vuelidate/validators'
 import dayjs from 'dayjs'
 
 import schoolLifeService from '@/api/schoolLife-portlet.service'
-import notUsualSlotsConstants from '@/constants/notUsualSlots'
 
 const moreThanRegistered = (value, vm) => {
   if (value < 0) {
@@ -119,6 +117,7 @@ export default {
   },
   data () {
     return {
+      width: 0,
       isTimeError: false,
       newEvent: {
         sessionId: undefined,
@@ -174,6 +173,7 @@ export default {
     }
   },
   created () {
+    this.width = document.documentElement.clientWidth
     this.newEvent.startDate = dayjs(this.eventToEdit.startDate, 'YYYY/MM/DD HH:mm')
     this.newEvent.endDate = dayjs(this.eventToEdit.endDate, 'YYYY/MM/DD HH:mm')
 
@@ -272,8 +272,7 @@ export default {
 </script>
 
 <style lang="scss">
-.edit-slot-modal .window-wrapper {
-  max-width: 500px;
+.edit-slot-modal .resizable-component {
   &.mobile {
     width: 100%;
   }
