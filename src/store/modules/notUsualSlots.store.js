@@ -23,6 +23,11 @@ const formatNonUsualSlot = (sessions) => {
         label: i18n.global.t('CalendarEventOptions.update'),
         icon: 'fa-pencil-alt'
       })
+      event.options.push({
+        name: 'deleteSlot',
+        label: i18n.global.t('CalendarEventOptions.delete'),
+        icon: 'fa-trash'
+      })
     }
   })
 }
