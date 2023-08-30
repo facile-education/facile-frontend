@@ -6,6 +6,7 @@ export default {
   createSlot,
   updateSlot,
   deleteSlot,
+  getSessionLimitSlotDate,
   getCandidateSessions,
   getWeekSession,
   getSessionMembers,
@@ -27,11 +28,12 @@ const SCHOOL_LIFE_RENVOI_PATH = '/schoollife.renvoi'
 /**
  * Create a slot of a given type in the school. (return only success field)
  */
-function createSlot (schoolId, startDateStr, day, startHour, endHour, teacherId, type, room, capacity) {
+function createSlot (schoolId, startDateStr, endDateStr, day, startHour, endHour, teacherId, type, room, capacity) {
   return axios.get(constants.JSON_WS_URL + SCHOOL_LIFE_SLOT_PATH + '/create-slot', {
     params: {
       schoolId: schoolId,
       startDateStr: startDateStr,
+      endDateStr: endDateStr,
       day: day,
       startHour: startHour,
       endHour: endHour,
@@ -46,11 +48,12 @@ function createSlot (schoolId, startDateStr, day, startHour, endHour, teacherId,
 /**
  * Update a slot based on it id
  */
-function updateSlot (slotId, startDateStr, day, startHour, endHour, teacherId, type, room, capacity) {
+function updateSlot (slotId, startDateStr, endDateStr, day, startHour, endHour, teacherId, type, room, capacity) {
   return axios.get(constants.JSON_WS_URL + SCHOOL_LIFE_SLOT_PATH + '/edit-slot', {
     params: {
       schoollifeSessionId: slotId,
       startDateStr: startDateStr,
+      endDateStr: endDateStr,
       newDay: day,
       newStartHour: startHour,
       newEndHour: endHour,
@@ -65,11 +68,20 @@ function updateSlot (slotId, startDateStr, day, startHour, endHour, teacherId, t
 /**
  * Delete a slot and all the sessions concerns by a slot after a given date
  */
-function deleteSlot (slotId, startDateStr) {
+function deleteSlot (slotId, startDateStr, endDateStr) {
   return axios.get(constants.JSON_WS_URL + SCHOOL_LIFE_SLOT_PATH + '/delete-slot', {
     params: {
       schoollifeSessionId: slotId,
-      startDateStr: startDateStr
+      startDateStr: startDateStr,
+      endDateStr: endDateStr
+    }
+  }).then(response => response.data)
+}
+
+function getSessionLimitSlotDate (sessionId) {
+  return axios.get(constants.JSON_WS_URL + SCHOOL_LIFE_SLOT_PATH + '/get-session-limit-slot-date', {
+    params: {
+      schoollifeSessionId: sessionId,
     }
   }).then(response => response.data)
 }

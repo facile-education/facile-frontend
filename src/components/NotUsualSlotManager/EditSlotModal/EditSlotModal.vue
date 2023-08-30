@@ -1,5 +1,6 @@
 <template>
   <PentilaWindow
+    v-if="configuration"
     :modal="true"
     :max-width="750"
     class="edit-slot-modal"
@@ -18,9 +19,29 @@
           :range="{start: newEvent.startDate.format('HH:mm'), end: newEvent.endDate.format('HH:mm')}"
           @update:range="updateRange"
         />
+        <!--        <span-->
+        <!--          class="time-selection-right"-->
+        <!--        >{{ dateRange }}</span>-->
+      </div>
+
+      <div class="period">
         <span
-          class="time-selection-right"
-        >{{ dateRange }}</span>
+          v-t="'onThePeriod'"
+          class="label"
+        />
+        <DateRangePicker
+          v-if="newEvent.lastSessionDate"
+          :initial-range="{start: newEvent.firstSessionDate, end: newEvent.lastSessionDate}"
+          :min-date="schoolYearStartDate.toDate()"
+          :max-date="schoolYearEndDate.toDate()"
+          @updateDates="updateSlotDates"
+        />
+        <PentilaSpinner v-else />
+
+        <!--        <span>{{ newEvent.firstSessionDate.format('DD/MM/YYYY HH:mm') }}</span>-->
+        <!--        <br>-->
+        <!--        <span v-if="newEvent.lastSessionDate">{{ newEvent.lastSessionDate.format('DD/MM/YYYY HH:mm') }}</span>-->
+        <!--        <PentilaSpinner v-else />-->
       </div>
 
       <div
@@ -79,12 +100,14 @@
 </template>
 
 <script>
+import DateRangePicker from '@components/Base/DateRangePicker.vue'
 import TimeSelection from '@components/NotUsualSlotManager/EditSlotModal/TimeSelection'
 import UserCompletion from '@components/NotUsualSlotManager/UserCompletion'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import dayjs from 'dayjs'
 
+import { getGlobalConfiguration } from '@/api/schedule.service'
 import schoolLifeService from '@/api/schoolLife-portlet.service'
 
 const moreThanRegistered = (value, vm) => {
@@ -96,7 +119,7 @@ const moreThanRegistered = (value, vm) => {
 
 export default {
   name: 'EditSlotModal',
-  components: { UserCompletion, TimeSelection },
+  components: { DateRangePicker, UserCompletion, TimeSelection },
   inject: ['mq'],
   props: {
     eventToEdit: {
@@ -119,6 +142,7 @@ export default {
     return {
       width: 0,
       isTimeError: false,
+      isLoadingLastSessionDate: false,
       newEvent: {
         sessionId: undefined,
         subject: undefined,
@@ -128,8 +152,8 @@ export default {
         capacity: undefined,
         nbRegisteredStudents: undefined,
         title: undefined,
-        start: undefined,
-        end: undefined,
+        firstSessionDate: undefined,
+        lastSessionDate: undefined,
         backgroundColor: undefined,
         borderColor: undefined
       }
@@ -170,17 +194,31 @@ export default {
     },
     dateRange () {
       return this.$t('du') + ' ' + dayjs(this.eventToEdit.startDate).format('dddd DD MMMM YYYY ') + this.$t('until-school-year-end')
+    },
+    configuration () {
+      return this.$store.state.calendar.configuration
+    },
+    schoolYearStartDate () {
+      return dayjs(this.configuration.schoolYearStartDate, 'YYYY-MM-DD')
+    },
+    schoolYearEndDate () {
+      return dayjs(this.configuration.schoolYearEndDate, 'YYYY-MM-DD')
     }
   },
   created () {
-    this.width = document.documentElement.clientWidth
+    if (!this.configuration) {
+      this.$store.dispatch('calendar/getConfiguration')
+    }
     this.newEvent.startDate = dayjs(this.eventToEdit.startDate, 'YYYY/MM/DD HH:mm')
     this.newEvent.endDate = dayjs(this.eventToEdit.endDate, 'YYYY/MM/DD HH:mm')
+
+    this.newEvent.firstSessionDate = dayjs(this.eventToEdit.startDate, 'YYYY/MM/DD HH:mm')
 
     if (this.isEventCreation) {
       this.newEvent.title = this.currentSlotType.label
       this.newEvent.backgroundColor = this.currentSlotType.color
       this.newEvent.borderColor = this.currentSlotType.color
+      this.setLastSessionDateToSchoolYearEndDate()
     } else { // Event update
       this.newEvent.sessionId = this.eventToEdit.sessionId
       this.newEvent.teacher = { ...this.eventToEdit.teachers[0] } // create a copy to not trigger store state change out of a mutation
@@ -190,12 +228,46 @@ export default {
       this.newEvent.type = this.eventToEdit.type
       this.newEvent.borderColor = this.eventToEdit.borderColor
       this.newEvent.backgroundColor = this.eventToEdit.backgroundColor
+      this.getLastSessionDate()
     }
   },
   methods: {
     updateRange (range) {
       this.newEvent.startDate = dayjs((this.newEvent.startDate.format('YYYY/MM/DD') + ' ' + range.start), 'YYYY/MM/DD HH:mm')
       this.newEvent.endDate = dayjs((this.newEvent.endDate.format('YYYY/MM/DD') + ' ' + range.end), 'YYYY/MM/DD HH:mm')
+    },
+    updateSlotDates (range) {
+      this.newEvent.firstSessionDate = dayjs(range.start)
+      this.newEvent.lastSessionDate = dayjs(range.end)
+    },
+    setLastSessionDateToSchoolYearEndDate () {
+      if (this.configuration) {
+        this.newEvent.lastSessionDate = dayjs(this.configuration.schoolYearEndDate, 'YYYY-MM-DD')
+      } else {
+        this.isLoadingLastSessionDate = true
+        getGlobalConfiguration().then((data) => {
+          this.isLoadingLastSessionDate = false
+          if (data.success) {
+            this.error = false
+            this.newEvent.lastSessionDate = dayjs(data.configuration.schoolYearEndDate, 'YYYY-MM-DD')
+          }
+        }, (err) => {
+          console.error(err)
+          this.isLoadingLastSessionDate = false
+        })
+      }
+    },
+    getLastSessionDate () {
+      this.isLoadingLastSessionDate = true
+      schoolLifeService.getSessionLimitSlotDate(this.newEvent.sessionId).then((data) => {
+        this.isLoadingLastSessionDate = false
+        if (data.success) {
+          this.newEvent.lastSessionDate = dayjs(data.lastSessionDate, 'YYYY/MM/DD HH:mm')
+        }
+      }, (err) => {
+        console.error(err)
+        this.isLoadingLastSessionDate = false
+      })
     },
     confirmSlotDeletion () {
       this.$store.dispatch('warningModal/addWarning', {
@@ -206,7 +278,8 @@ export default {
     deleteSlot () {
       schoolLifeService.deleteSlot(
         this.newEvent.sessionId,
-        this.newEvent.startDate.format('YYYY-MM-DD HH:mm') // convert from calendar format to back-end format
+        this.newEvent.firstSessionDate.format('YYYY-MM-DD HH:mm'), // convert from calendar format to back-end format
+        this.newEvent.lastSessionDate.format('YYYY-MM-DD HH:mm')
       ).then((data) => {
         if (data.success) {
           this.$store.dispatch('notUsualSlots/refreshCalendar')
@@ -226,7 +299,8 @@ export default {
         if (this.isEventCreation) {
           schoolLifeService.createSlot(
             this.selectedSchool.schoolId,
-            this.newEvent.startDate.format('YYYY-MM-DD HH:mm'), // convert from calendar format to back-end format
+            this.newEvent.firstSessionDate.format('YYYY-MM-DD HH:mm'), // convert from calendar format to back-end format
+            this.newEvent.lastSessionDate.format('YYYY-MM-DD HH:mm'),
             this.newEvent.startDate.day(),
             this.newEvent.startDate.format('HH:mm'),
             this.newEvent.endDate.format('HH:mm'),
@@ -245,7 +319,8 @@ export default {
         } else {
           schoolLifeService.updateSlot(
             this.newEvent.sessionId,
-            dayjs(this.eventToEdit.startDate).format('YYYY-MM-DD HH:mm'), // pass the old slot start hour (edit all events of tis slot, beginning from this date)
+            this.newEvent.firstSessionDate.format('YYYY-MM-DD HH:mm'), // convert from calendar format to back-end format
+            this.newEvent.lastSessionDate.format('YYYY-MM-DD HH:mm'),
             this.newEvent.startDate.day(),
             this.newEvent.startDate.format('HH:mm'),
             this.newEvent.endDate.format('HH:mm'),
@@ -296,6 +371,16 @@ export default {
   }
 }
 
+.period {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+
+  .label {
+    margin-right: 1rem;
+  }
+}
+
 .teacher-part, .room-part {
   margin-top: 20px;
   margin-bottom: 20px;
@@ -313,9 +398,10 @@ export default {
 </style>
 
 <i18n locale="fr">
-  {
-    "all-the": "Tous les ",
-    "from": "de",
-    "until-school-year-end": "jusqu'à la fin de l'année scolaire."
-  }
+{
+  "all-the": "Tous les ",
+  "from": "de",
+  "until-school-year-end": "jusqu'à la fin de l'année scolaire.",
+  "onThePeriod": "Sur la période"
+}
 </i18n>
