@@ -43,7 +43,7 @@
         </button>
       </div>
     </header>
-    <Content
+    <CourseContent
       v-for="block in homework.blocks"
       :key="block.contentId"
       v-model="block.contentValue"
@@ -76,13 +76,13 @@ import { defineAsyncComponent } from 'vue'
 import { deleteHomework } from '@/api/homework.service'
 import { icons } from '@/constants/icons'
 
-const Content = defineAsyncComponent(() => import('@/components/Course/Content'))
+const CourseContent = defineAsyncComponent(() => import('@/components/Course/CourseContent'))
 const HomeworkEditModal = defineAsyncComponent(() => import('@/components/Course/HomeworkEditModal'))
 const ContextMenu = defineAsyncComponent(() => import('@/components/ContextMenu/ContextMenu'))
 
 export default {
   name: 'Homework',
-  components: { ContextMenu, Content, HomeworkEditModal },
+  components: { ContextMenu, CourseContent, HomeworkEditModal },
   props: {
     homework: {
       type: Object,

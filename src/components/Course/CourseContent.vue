@@ -82,7 +82,7 @@ const H5PModal = defineAsyncComponent(() => import('@/components/Progression/Edi
 const VideoModal = defineAsyncComponent(() => import('@/components/Progression/Edit/VideoModal'))
 
 export default {
-  name: 'Content',
+  name: 'CourseContent',
   components: {
     H5PModal,
     VideoModal,

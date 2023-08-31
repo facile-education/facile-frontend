@@ -23,7 +23,7 @@
           <PentilaErrorMessage :error-message="formErrorList" />
         </div>
 
-        <Content
+        <CourseContent
           v-for="(block, index) in sessionContent.blocks"
           :key="block.contentId"
           v-model="block.contentValue"
@@ -71,12 +71,12 @@ import { addSessionContent, getSessionPreview, updateSessionContent } from '@/ap
 import ContentPicker from '@/components/Course/ContentPicker.vue'
 import contentTypeConstants from '@/constants/contentTypeConstants'
 
-const Content = defineAsyncComponent(() => import('@/components/Course/Content'))
+const CourseContent = defineAsyncComponent(() => import('@/components/Course/CourseContent'))
 
 export default {
   name: 'CourseEditModal',
   components: {
-    Content,
+    CourseContent,
     ContentPicker
   },
   inject: ['mq'],
