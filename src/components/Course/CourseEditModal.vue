@@ -231,16 +231,6 @@ export default {
   align-items: flex-start;
   gap: 2rem;
   align-self: stretch;
-
-  overflow: auto;
-}
-
-.edit-course-modal {
-  &:not(.phone) {
-    .window-body {
-      max-height: 70vh !important;
-    }
-  }
 }
 </style>
 

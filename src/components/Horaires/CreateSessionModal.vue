@@ -135,7 +135,6 @@
 <script>
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
-import dayjs from 'dayjs'
 
 import { getUserGroups } from '@/api/groups.service'
 import { createSession, getSchoolSlotConfiguration } from '@/api/schedule.service'
@@ -144,11 +143,6 @@ import { getSchoolTeachers } from '@/api/userSearch.service'
 
 const teachersRequired = (value) => {
   return value !== undefined && value.length > 0
-}
-
-const timeRequired = (value) => {
-  const time = dayjs(value, 'HH:mm')
-  return !time.$invalid
 }
 
 export default {
