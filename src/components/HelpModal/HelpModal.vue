@@ -3,6 +3,7 @@
     :modal="true"
     :full-screen="mq.phone || displayLikePhone"
     :hidden-footer="true"
+    class="help-modal"
     data-test="help-modal"
     @close="closeModal"
   >
@@ -66,6 +67,14 @@ export default {
 }
 </script>
 
+<style lang="scss">
+.help-modal {
+  .window-body {
+    overflow: hidden !important;
+  }
+}
+</style>
+
 <style lang="scss" scoped>
 @import "@design";
 
@@ -74,13 +83,6 @@ h1 {
   font-size: 1em;
   line-height: 1.25em;
   text-transform: uppercase;
-}
-
-.help-body {
-  max-height: 60vh;
-  min-height: 60vh;
-  display: flex;
-  flex-direction: column;
 }
 
 .help-content {

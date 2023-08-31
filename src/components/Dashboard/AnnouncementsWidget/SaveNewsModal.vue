@@ -466,13 +466,6 @@ export default {
 
 <style lang="scss">
 .update-news-modal {
-  .window-body {
-    position: relative;
-    overflow-y: visible;
-    max-height: 70vh !important;
-    overflow: auto;
-  }
-
   .ck-editor {
     p {
       margin: 5px 0;

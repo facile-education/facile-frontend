@@ -394,7 +394,6 @@ export default {
   align-items: flex-start;
   gap: 2rem;
   align-self: stretch;
-  overflow: auto;
 }
 
 .edit-homework-modal {
@@ -509,7 +508,6 @@ label {
 }
 
 .next-sessions-dropdown {
-  margin-left: 1.5rem;
   margin-bottom: 5rem;
 }
 </style>
