@@ -184,7 +184,7 @@ export default {
 
 <i18n locale="fr">
 {
-  "deleteWarning": "La suppresion de ce créneau sera définitive !",
+  "deleteWarning": "La suppression de ce créneau sera définitive",
   "deleteSlot": "Supprimer",
   "message": "Supprimer les sessions de {slotType} du {dayLabel} de {startHour} à {endHour}",
   "onThePeriod": "Sur la période",
