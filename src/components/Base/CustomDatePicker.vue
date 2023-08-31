@@ -75,7 +75,6 @@ export default {
   emits: ['selectDate'],
   computed: {
     disabledDates () {
-      console.log(this.hiddenDays)
       return this.hiddenDays.length > 0 ? [{ repeat: { weekdays: this.hiddenDays } }] : undefined
     },
     formattedDate: {
