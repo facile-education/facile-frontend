@@ -70,7 +70,7 @@ export default {
       }
     }
   },
-  emits: ['close', 'chooseOption', 'dropFile'],
+  emits: ['close', 'choose-option', 'dropFile'],
   data () {
     return {
       isContextMenuMobileExtended: false,
@@ -163,13 +163,13 @@ export default {
         if (this.options[i].name === option) {
           isSubOption = false
           if (!this.options[i].isGrayed) {
-            this.$emit('chooseOption', option)
+            this.$emit('choose-option', option)
           }
           break
         }
       }
       if (isSubOption) { // it's not my role to check if the option is grayed
-        this.$emit('chooseOption', option)
+        this.$emit('choose-option', option)
       }
     },
     onDownKey () {

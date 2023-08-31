@@ -14,7 +14,7 @@
 
 <script>
 export default {
-  name: 'Video',
+  name: 'VideoDocument',
   props: {
     src: {
       type: String,

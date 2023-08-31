@@ -35,7 +35,7 @@
     <ContextMenu
       v-if="isContextMenuDisplayed && isAContextMenuDisplayed"
       :is-absolute="true"
-      @chooseOption="subMenuOptionClicked"
+      @choose-option="subMenuOptionClicked"
       @close="isContextMenuDisplayed=false"
     />
   </div>

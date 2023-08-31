@@ -80,6 +80,7 @@
 <script>
 import dayjs from 'dayjs'
 import _ from 'lodash'
+
 import { getSessionDetails } from '@/api/schedule.service'
 import NeroDatePicker from '@/components/Progression/Assignment/NeroDatePicker.vue'
 import StudentListModal from '@/components/Progression/Assignment/StudentListModal.vue'

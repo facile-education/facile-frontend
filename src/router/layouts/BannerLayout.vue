@@ -7,12 +7,12 @@
   >
     <Banner class="nero-header theme-background-color" />
 
-    <Menu
+    <LayoutMenu
       v-if="!mq.phone && ! displayLikePhone"
       class="nero-menu"
     />
     <Transition name="fade">
-      <Menu v-if="isMobileMenuDisplayed" />
+      <LayoutMenu v-if="isMobileMenuDisplayed" />
     </Transition>
 
     <section class="nero-body">
@@ -120,7 +120,7 @@ const HelpModal = defineAsyncComponent(() => import('@components/HelpModal/HelpM
 const NotAllowed = defineAsyncComponent(() => import('@router/views/NotAllowed'))
 const Popup = defineAsyncComponent(() => import('@components/Base/Popup'))
 const QuickSearchPanel = defineAsyncComponent(() => import('@components/Search/QuickSearchPanel'))
-const Menu = defineAsyncComponent(() => import('@/components/Menu/Menu'))
+const LayoutMenu = defineAsyncComponent(() => import('@/components/Menu/LayoutMenu'))
 const UploadProgression = defineAsyncComponent(() => import('@components/Documents/UploadProgression'))
 const WarningModal = defineAsyncComponent(() => import('@/components/Nero/WarningModal'))
 
@@ -137,7 +137,7 @@ export default {
     NotAllowed,
     Popup,
     QuickSearchPanel,
-    Menu,
+    LayoutMenu,
     UploadProgression,
     WarningModal
   },

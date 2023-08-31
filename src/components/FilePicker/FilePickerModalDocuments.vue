@@ -84,7 +84,7 @@ export default {
       default: ''
     }
   },
-  emits: ['addedFiles', 'chosenFolder', 'close', 'selectedFolder', 'currentFolder', 'updateSelectedFiles'],
+  emits: ['added-files', 'chosen-folder', 'close', 'selected-folder', 'current-folder', 'update-selected-files'],
   data () {
     return {
       inputText: undefined,
@@ -187,12 +187,12 @@ export default {
         this.currentFiles = PentilaUtils.Array.sortWithString(this.currentFiles, false, 'name')
 
         this.selectedFolder = undefined
-        this.$emit('selectedFolder', undefined)
+        this.$emit('selected-folder', undefined)
         navigationService.getBreadcrumb(folderId).then((data) => {
           if (data.success) {
             data.breadcrumb.forEach(folder => { folder.hasAddPermission = true }) // Add hasAddPermission = true property to all document folder for compliance with group objects
             this.currentBreadcrumb = data.breadcrumb
-            this.$emit('currentFolder', this.currentFolder)
+            this.$emit('current-folder', this.currentFolder)
           } else {
             console.error('Unable to get breadcrumb from backend for folder id ' + folderId)
           }
@@ -211,11 +211,11 @@ export default {
         this.currentFiles = PentilaUtils.Array.sortWithString(this.currentFiles, false, 'name')
 
         this.selectedFolder = undefined
-        this.$emit('selectedFolder', undefined)
+        this.$emit('selected-folder', undefined)
         groupService.getGroupBreadcrumb(folderId).then((data) => {
           if (data.success) {
             this.currentBreadcrumb = data.breadCrumb
-            this.$emit('currentFolder', this.currentFolder)
+            this.$emit('current-folder', this.currentFolder)
           } else {
             console.error('Unable to get breadcrumb from backend for folder id ' + folderId)
           }
@@ -241,17 +241,17 @@ export default {
           }
         }
       }
-      this.$emit('updateSelectedFiles', this.selectedFiles)
+      this.$emit('update-selected-files', this.selectedFiles)
     },
     clickOnFolder (folder, e) {
       if (this.folderSelection && !this.mq.phone && !this.mq.tablet && (e.pointerType === 'mouse' || e.mozInputSource === 1)) { // On phone and tablet, we need to navigate on simple click
         if (this.isFolderSelected(folder)) {
           this.selectedFolder = undefined
-          this.$emit('selectedFolder', undefined)
+          this.$emit('selected-folder', undefined)
         } else {
           if (!this.belongsToAppSelectedEntities(folder) && folder.permissions.ADD_OBJECT) { // Cannot select itself
             this.selectedFolder = folder
-            this.$emit('selectedFolder', folder)
+            this.$emit('selected-folder', folder)
           }
         }
       } else {
@@ -291,10 +291,10 @@ export default {
       }
     },
     emitSelectedFolder () {
-      this.$emit('chosenFolder', this.selectedFolder ? this.selectedFolder : this.currentFolder)
+      this.$emit('chosen-folder', this.selectedFolder ? this.selectedFolder : this.currentFolder)
     },
     addNewFiles () {
-      this.$emit('addedFiles', this.selectedFiles)
+      this.$emit('added-files', this.selectedFiles)
     }
   }
 }
@@ -375,7 +375,7 @@ export default {
 }
 </style>
 
-<i18n locale="fr" >
+<i18n locale="fr">
 {
   "emptyPlaceholder": "Aucun document"
 }

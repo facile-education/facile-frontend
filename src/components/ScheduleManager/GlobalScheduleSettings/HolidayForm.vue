@@ -36,10 +36,10 @@
 </template>
 
 <script>
-import dayjs from 'dayjs'
 import DateRangePicker from '@components/Base/DateRangePicker.vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
+import dayjs from 'dayjs'
 
 export default {
   name: 'HolidayForm',

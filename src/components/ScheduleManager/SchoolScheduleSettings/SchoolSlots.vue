@@ -42,10 +42,11 @@
 </template>
 
 <script>
-import { getSchoolSlotConfiguration, saveSchoolSlotConfiguration } from '@/api/schedule.service'
-import dayjs from 'dayjs'
 import SchoolSlotItem from '@components/ScheduleManager/SchoolScheduleSettings/SchoolSlotItem.vue'
 import { useVuelidate } from '@vuelidate/core'
+import dayjs from 'dayjs'
+
+import { getSchoolSlotConfiguration, saveSchoolSlotConfiguration } from '@/api/schedule.service'
 
 export default {
   name: 'SchoolSlots',

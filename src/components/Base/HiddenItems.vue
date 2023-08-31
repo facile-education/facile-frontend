@@ -15,7 +15,7 @@
 
     <ContextMenu
       v-if="isContextMenuDisplayed && isAContextMenuDisplayed"
-      @chooseOption="subMenuOptionClicked"
+      @choose-option="subMenuOptionClicked"
       @close="isContextMenuDisplayed=false"
     />
   </div>

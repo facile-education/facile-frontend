@@ -27,7 +27,7 @@
       <FilePickerModal
         :images-only="imagesOnly"
         :multi-selection="allowMultiple"
-        @addedFiles="$emit('selectFiles', $event)"
+        @added-files="$emit('selectFiles', $event)"
         @close="isFilePickerDisplayed=false"
       />
     </teleport>

@@ -154,7 +154,7 @@ export default {
       }
     }
   },
-  emits: ['chooseOption', 'triggerAction', 'select', 'ctrlSelect', 'shiftSelect'],
+  emits: ['choose-option', 'triggerAction', 'select', 'ctrlSelect', 'shiftSelect'],
   data () {
     return {
       displayQuickOptions: false,
@@ -229,7 +229,7 @@ export default {
     },
     quickOptionClick (option) {
       this.toggleQuickOptions()
-      this.$emit('chooseOption', option)
+      this.$emit('choose-option', option)
     },
     isInCurrentsFields (name) {
       return this.fieldsToDisplay.find(field => field.name === name) !== undefined

@@ -43,10 +43,10 @@
 </template>
 
 <script>
-import dayjs from 'dayjs'
 import CustomDatePicker from '@components/Base/CustomDatePicker.vue'
-import { required } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
+import dayjs from 'dayjs'
 
 export default {
   name: 'YearDates',

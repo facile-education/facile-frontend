@@ -63,7 +63,7 @@
         </div>
         <ContextMenu
           v-if="isContextMenuDisplayed"
-          @chooseOption="handleChosenOption"
+          @choose-option="handleChosenOption"
           @close="isContextMenuDisplayed=false"
         />
         <PentilaSpinner

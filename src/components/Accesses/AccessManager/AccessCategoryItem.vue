@@ -178,7 +178,7 @@ ul {
 }
 </style>
 
-<i18n locale="fr" >
+<i18n locale="fr">
 {
   "delete": "Supprimer cette catégorie",
   "deleteCategoryWarning": "Souhaitez-vous supprimer la catégorie {categoryName} et ses accès?",

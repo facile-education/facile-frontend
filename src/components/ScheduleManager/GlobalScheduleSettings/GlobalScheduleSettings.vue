@@ -39,12 +39,13 @@
 </template>
 
 <script>
-import { getGlobalConfiguration, saveGlobalConfiguration } from '@/api/schedule.service'
-import dayjs from 'dayjs'
-import YearDates from '@components/ScheduleManager/GlobalScheduleSettings/YearDates.vue'
-import { useVuelidate } from '@vuelidate/core'
 import Holidays from '@components/ScheduleManager/GlobalScheduleSettings/Holidays.vue'
 import WeeksParity from '@components/ScheduleManager/GlobalScheduleSettings/WeeksParity.vue'
+import YearDates from '@components/ScheduleManager/GlobalScheduleSettings/YearDates.vue'
+import { useVuelidate } from '@vuelidate/core'
+import dayjs from 'dayjs'
+
+import { getGlobalConfiguration, saveGlobalConfiguration } from '@/api/schedule.service'
 
 export default {
   name: 'GlobalScheduleSettings',

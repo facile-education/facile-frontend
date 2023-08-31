@@ -27,9 +27,10 @@ import { defineAsyncComponent } from 'vue'
 import { popupDurationTime } from '@/constants/appConstants'
 
 const Popup = defineAsyncComponent(() => import('@components/Base/Popup'))
+const NotAllowed = defineAsyncComponent(() => import('@views/NotAllowed.vue'))
 
 export default {
-  components: { Popup },
+  components: { NotAllowed, Popup },
   inject: ['mq'],
   props: {
     isAllowed: {

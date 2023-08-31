@@ -46,9 +46,10 @@
 </template>
 
 <script>
-import { GROUPS } from '@/constants/appConstants'
 import dayjs from 'dayjs'
+
 import { extendCommunity } from '@/api/groups.service'
+import { GROUPS } from '@/constants/appConstants'
 
 export default {
   name: 'ExpiredGroupActivity',

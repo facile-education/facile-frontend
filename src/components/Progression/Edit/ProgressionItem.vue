@@ -209,7 +209,7 @@
         v-if="isFilePickerDisplayed"
         :multi-selection="isMultiSelectionAllowed"
         :allow-files-from-device="true"
-        @addedFiles="attachNewFiles"
+        @added-files="attachNewFiles"
         @close="closeFilePicker"
       />
     </teleport>
