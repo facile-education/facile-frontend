@@ -61,7 +61,7 @@ function saveGlobalConfiguration (startDate, semesterDate, endDate, holidays, h1
 function getSchoolSlotConfiguration (schoolId) {
   return axios.get(constants.JSON_WS_URL + CDT_PATH + 'slotconfiguration/get-school-slot-configuration', {
     params: {
-      schoolId: schoolId
+      schoolId
     }
   }).then(response => response.data)
 }
@@ -112,7 +112,7 @@ function getTeacherGroups () {
 function getSessionDetails (sessionId) {
   return axios.get(constants.JSON_WS_URL + CDT_PATH + 'cdtsession/get-session-details', {
     params: {
-      sessionId: sessionId
+      sessionId
     }
   }).then(response => response.data)
 }
@@ -147,11 +147,10 @@ function createSession (groupId, subject, room, dayNumber, slot, startHour, endH
   })).then(response => response.data)
 }
 
-function getNextSessions (sessionId, minDate) {
+function getNextSessions (sessionId) {
   return axios.get(constants.JSON_WS_URL + CDT_PATH + 'cdtsession/get-course-next-sessions', {
     params: {
-      sessionId,
-      minDate
+      sessionId
     }
   }).then(response => response.data)
 }

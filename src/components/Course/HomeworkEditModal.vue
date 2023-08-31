@@ -256,7 +256,7 @@ export default {
       console.error(err)
     })
 
-    getNextSessions(this.sessionId, dayjs().format('YYYY-MM-DD HH:mm')).then((data) => {
+    getNextSessions(this.isCreation ? this.sessionId : this.homework.sourceSessionId).then((data) => {
       if (data.success) {
         this.nextSessions = data.nextSessions
         this.nextSessions.forEach(session => {
@@ -362,6 +362,7 @@ export default {
       }
     },
     updateTarget (value) {
+      console.log('update Target')
       // TODO date libre
       this.homework.targetSessionId = value.sessionId
       this.homework.toDate = value.startDate
