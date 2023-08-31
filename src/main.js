@@ -100,8 +100,18 @@ axios.interceptors.request.use(async (config) => {
 })
 
 // Catch 403 error to display unauthenticated error
-axios.interceptors.response.use(undefined, (error) => {
+axios.interceptors.response.use(undefined, async (error) => {
   if (error.response.status === 403 && error.response.config && !error.response.config.__isRetryRequest) {
+    let newPAuth = store.state.user.pauth
+
+    await fetch(constants.P_AUTH_URL).then(response => response.text()).then(response => { newPAuth = response.trim() })
+
+    if (store.state.user.pauth !== newPAuth) {
+      console.log('p_auth has changed -> retry request')
+      store.commit('user/setPAuth', newPAuth)
+      return axios.request(error.config)
+    }
+
     // If you ever get an unauthorized, redirect to error page
     router.push({ name: 'AuthenticationRequired' })
   }
