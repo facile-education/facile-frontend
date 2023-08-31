@@ -256,7 +256,7 @@ export default {
       console.error(err)
     })
 
-    getNextSessions(this.sessionId, dayjs().format('YYYY-MM-DD HH:mm')).then((data) => {
+    getNextSessions(this.isCreation ? this.sessionId : this.homework.sourceSessionId, dayjs().format('YYYY-MM-DD HH:mm')).then((data) => {
       if (data.success) {
         this.nextSessions = data.nextSessions
         this.nextSessions.forEach(session => {

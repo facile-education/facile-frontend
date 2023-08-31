@@ -147,11 +147,10 @@ function createSession (groupId, subject, room, dayNumber, slot, startHour, endH
   })).then(response => response.data)
 }
 
-function getNextSessions (sessionId, minDate) {
+function getNextSessions (sessionId) {
   return axios.get(constants.JSON_WS_URL + CDT_PATH + 'cdtsession/get-course-next-sessions', {
     params: {
-      sessionId,
-      minDate
+      sessionId
     }
   }).then(response => response.data)
 }
