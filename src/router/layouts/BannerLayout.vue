@@ -51,7 +51,7 @@
     </div>
 
     <CookiesAgreement
-      v-if="!hasConfirmCookiesAgreement && !cookiesMustBeClosed && !isMobileApp"
+      v-if="!hasConfirmCookiesAgreement && !cookiesMustBeClosed"
       @close="cookiesMustBeClosed=true"
     />
 
