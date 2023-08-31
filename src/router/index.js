@@ -85,13 +85,9 @@ const router = createRouter({
   linkExactActiveClass: 'theme-text-color'
 })
 
-function capitalize (string) {
-  return string.charAt(0).toUpperCase() + string.slice(1).replaceAll('-', ' ')
-}
-
 router.beforeEach((to, from, next) => {
   // Update browser tab title
-  const name = capitalize(i18n.global.t('Menu.' + to.name))
+  const name = i18n.global.t('Menu.' + to.name)
   document.title = name || 'Facile'
 
   // Handle usurpation
@@ -115,7 +111,7 @@ router.afterEach((to, from) => {
       window._paq.push(['setCustomDimension', 1, store.state.user.schoolList[0].schoolId])
       window._paq.push(['setCustomDimension', 2, store.state.user.profileId])
       window._paq.push(['setCustomDimension', 4, to.meta.id])
-      window._paq.push(['trackPageView'])
+      window._paq.push(['trackPageView', toService])
     }
   }
 })

@@ -1,14 +1,13 @@
 import { getFullName } from '@utils/commons.util'
 
-const CONTACT_TYPE_USER = 1
-const CONTACT_TYPE_ORG = 2
-const CONTACT_TYPE_GROUP = 3
+import { CONTACT_TYPE_GROUP, CONTACT_TYPE_ORG, CONTACT_TYPE_USER } from '@/constants/messagingConstants'
 
 const addContactFieldsToContactList = (contactList, hasDetails = true) => {
   // Because contacts fields have not a normalized "text" attribute (TODO: put this logic in backend ?)
   contactList.forEach((contact) => {
     switch (contact.type) {
       case CONTACT_TYPE_USER:
+        contact.id = contact.userId
         contact.text = getFullName(contact)
         if (contact.roles) {
           contact.text += ' (' + contact.roles

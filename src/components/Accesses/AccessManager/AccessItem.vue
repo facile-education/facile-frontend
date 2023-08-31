@@ -336,6 +336,6 @@ h3 {
 {
   "deleteAccessWarning": "Souhaitez-vous supprimer l'accès {accessName} ?",
   "profiles": "Profils: ",
-  "saveSuccess": "Accès mis à jour avec succès"
+  "saveSuccess": "Accès mis à jour"
 }
 </i18n>

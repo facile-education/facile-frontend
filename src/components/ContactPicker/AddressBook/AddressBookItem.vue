@@ -90,7 +90,9 @@ export default {
   emits: ['select', 'add', 'remove'],
   data () {
     return {
-      isExtended: false
+      isExtended: false,
+      timeout: 0,
+      clickDelayPassed: true
     }
   },
   mounted () {
@@ -104,11 +106,19 @@ export default {
       this.isExtended = !this.isExtended
     },
     toggleList () {
-      if (this.isSelected) {
-        this.$emit('remove')
-      } else {
-        this.$emit('add')
+      if (this.clickDelayPassed) {
+        if (this.isSelected) {
+          this.$emit('remove')
+        } else {
+          this.$emit('add')
+        }
       }
+      // Code to prevent double clicks to trigger two times the selection
+      this.clickDelayPassed = false
+      clearTimeout(this.timeout)
+      this.timeout = setTimeout(() => {
+        this.clickDelayPassed = true
+      }, 300)
     },
     select () {
       this.$emit('select')

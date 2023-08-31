@@ -43,21 +43,21 @@
             data-test="unread-icon"
           />
           <img
-            v-if="mainMessage.hasAttachFiles"
+            v-if="hasAttachFiles"
             class="icon attached-file-icon"
             :src="require('@assets/icon_pj.svg')"
             alt="has attached files"
             :title="$t('Messaging.hasAttachedFiles')"
           >
           <img
-            v-if="mainMessage.isAnswered"
+            v-if="isAnswered"
             class="icon answered-icon"
             :src="require('@assets/options/icon_answer.svg')"
             alt="is answered"
             :title="$t('Messaging.answered')"
           >
           <img
-            v-if="mainMessage.isForwarded"
+            v-if="isForwarded"
             class="icon forwarded-icon"
             :src="require('@assets/options/icon_share.svg')"
             alt="is forwarded"
@@ -186,6 +186,33 @@ export default {
       // Returns true if the thread is unread, ie if at least one of its messages is unread
       for (const message of this.thread.messages) {
         if (message.isNew) {
+          return true
+        }
+      }
+      return false
+    },
+    isAnswered () {
+      // Returns true if at least 1 message of the thread has been replied
+      for (const message of this.thread.messages) {
+        if (message.isAnswered) {
+          return true
+        }
+      }
+      return false
+    },
+    isForwarded () {
+      // Returns true if at least 1 message of the thread has been forwarded
+      for (const message of this.thread.messages) {
+        if (message.isForwarded) {
+          return true
+        }
+      }
+      return false
+    },
+    hasAttachFiles () {
+      // Returns true if at least 1 message of the thread has attached files
+      for (const message of this.thread.messages) {
+        if (message.hasAttachFiles) {
           return true
         }
       }

@@ -31,7 +31,8 @@ const app = createApp(App)
   .use(VueMatomo, {
     host: '/matomo',
     siteId: 1,
-    router: router,
+    // Disabled automatic router push so that we have control over the dimensions in index.js
+    // router: router,
     requireConsent: false,
     disableCookies: false,
     requireCookieConsent: false,

@@ -34,6 +34,12 @@ export default {
     }
   },
   emits: ['removeContact', 'addContact'],
+  data () {
+    return {
+      timeout: 0,
+      clickDelayPassed: true
+    }
+  },
   computed: {
     isSelected () {
       return this.selectedUsers.map(user => user.userId).indexOf(this.user.userId) !== -1
@@ -44,11 +50,19 @@ export default {
       return getFullName(user)
     },
     toggleUser () {
-      if (this.isSelected) {
-        this.$emit('removeContact', this.user)
-      } else {
-        this.$emit('addContact', this.user)
+      if (this.clickDelayPassed) {
+        if (this.isSelected) {
+          this.$emit('removeContact', this.user)
+        } else {
+          this.$emit('addContact', this.user)
+        }
       }
+      // Code to prevent double clicks to trigger two times the selection
+      this.clickDelayPassed = false
+      clearTimeout(this.timeout)
+      this.timeout = setTimeout(() => {
+        this.clickDelayPassed = true
+      }, 300)
     }
   }
 }

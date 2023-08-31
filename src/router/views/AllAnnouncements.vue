@@ -131,6 +131,9 @@ export default {
       oldScrollTop = scroll.scrollTop
     },
     loadAnnouncements () {
+      if (this.ended) {
+        return
+      }
       this.isLoading = true
       getSchoolNews(this.fromDate, allAnnouncementsPaginationSize, false, this.unReadOnly).then((data) => {
         this.isLoading = false

@@ -39,35 +39,26 @@
     </section>
     <aside
       v-if="article && (isAdministrator || (article.relations.length + article.relations.length > 0))"
-      :class="{'phone': mq.phone, 'extended': isMobileLinksDisplayed}"
+      :class="{'extended': isAsideExtended}"
     >
-      <RelatedItems
-        v-if="!mq.phone"
-        :related-articles="article.relations"
-      />
-      <ExternalLinks
-        v-if="!mq.phone"
-        :links="article.links"
-      />
       <button
-        v-else
-        data-test="toggle-phone-links"
-        @click="togglePhoneLinks"
+        data-test="toggle-aside"
+        class="toggle-aside-button"
+        @click="isAsideExtended = !isAsideExtended"
       >
         <BaseIcon
-          class="toggle-phone-icon"
-          :class="isMobileLinksDisplayed ? 'extend': 'collapse'"
+          class="icon"
+          :class="isAsideExtended ? 'extend': 'collapse'"
           name="chevron-down"
         />
       </button>
-      <MobileFloatingPanel
-        v-if="mq.phone"
-        class="mobile-links-panel"
-        :class="isMobileLinksDisplayed ? 'extended': 'collapsed'"
+      <div
+        class="links-panel"
+        :class="isAsideExtended ? 'extended': 'collapsed'"
       >
         <RelatedItems :related-articles="article.relations" />
         <ExternalLinks :links="article.links" />
-      </MobileFloatingPanel>
+      </div>
     </aside>
     <div
       v-if="!article && isLoadingArticleError"
@@ -94,7 +85,6 @@
 
 <script>
 import BaseIcon from '@components/Base/BaseIcon.vue'
-import MobileFloatingPanel from '@components/Base/MobileFloatingPanel.vue'
 import ExternalLinks from '@components/HelpModal/HeplArticle/ExternalLinks.vue'
 import HelpFAQSection from '@components/HelpModal/HeplArticle/HelpFAQSection.vue'
 import HelpManualSection from '@components/HelpModal/HeplArticle/HelpManualSection.vue'
@@ -106,12 +96,12 @@ import { getHelpItem } from '@/api/help.service'
 const EditArticleTitleModal = defineAsyncComponent(() => import('@components/HelpModal/CreationModals/EditArticleTitleModal.vue'))
 export default {
   name: 'HelpArticle',
-  components: { EditArticleTitleModal, BaseIcon, MobileFloatingPanel, HelpFAQSection, HelpManualSection, HelpVideoSection, ExternalLinks, RelatedItems },
+  components: { EditArticleTitleModal, BaseIcon, HelpFAQSection, HelpManualSection, HelpVideoSection, ExternalLinks, RelatedItems },
   inject: ['mq'],
   data () {
     return {
       article: undefined,
-      isMobileLinksDisplayed: false,
+      isAsideExtended: false,
       isLoadingArticle: false,
       isLoadingArticleError: false,
       isEditTitleModalDisplayed: false
@@ -150,15 +140,12 @@ export default {
           // Force the article's elevator to return on top
           this.$el.scrollTo({ top: 0 })
           // Close mobile aside panel
-          this.isMobileLinksDisplayed = false
+          this.isAsideExtended = false
         } else {
           this.isLoadingArticleError = true
           console.error('Error on help item loading')
         }
       })
-    },
-    togglePhoneLinks () {
-      this.isMobileLinksDisplayed = !this.isMobileLinksDisplayed
     }
   }
 }
@@ -209,48 +196,56 @@ h2 {
 
 aside {
   width: 140px;
+  height: 100%;
+  background-color: white;
+  position: relative;
 
-  &.phone {
-    display: flex;
-    align-items: flex-start;
-    width: auto;
+  .toggle-aside-button {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  aside {
+    width: 200px;
+    transition: all 0.35s ease;
     position: absolute;
     top: 0;
     right: 0;
+    box-shadow: -1px 2px 4px rgba(0, 0, 0, 0.2);
 
-    &.extended {
-      height: 99%;  /// to make the shadow appear...
-    }
+    .toggle-aside-button {
+      display: inline-block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translateX(-100%);
 
-    button {
-      margin-top: 0.5rem;
-
-      .toggle-phone-icon {
+      .icon {
         transition:  transform .6s;
-      }
 
-      .extend {
-        transform: rotate(-90deg);
-      }
+        &.extend {
+          transform: rotate(-90deg);
+        }
 
-      .collapse {
-        transform: rotate(90deg);
+        &.collapse {
+          transform: rotate(90deg);
+        }
       }
     }
 
-    .mobile-links-panel {
-      width: 40vw;
-      box-shadow: -1px 2px 4px rgba(0, 0, 0, 0.2);
-      padding: 0 1rem;
-      height: 100%;
-      transition: all 0.35s ease;
-
-      &.collapsed {
-        width: 0;
-        padding: 0
+    &:not(.extended) {
+      width: 0;
+      .links-panel {
+        opacity: 0;
       }
+    }
+
+    .links-panel {
+      padding-left: 1rem;
     }
   }
+
 }
 
 .placeholder {
