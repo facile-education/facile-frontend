@@ -14,7 +14,7 @@
     <ContextMenu
       v-if="isContextMenuDisplayed && isAContextMenuDisplayed"
       :is-absolute="true"
-      @chooseOption="optionClicked"
+      @choose-option="optionClicked"
       @close="isContextMenuDisplayed=false"
     />
   </div>
@@ -71,7 +71,7 @@ export default {
         this.isContextMenuDisplayed = true
         this.$store.dispatch('contextMenu/openContextMenu',
           {
-            event: event,
+            event,
             options: this.createMenu
           })
       }

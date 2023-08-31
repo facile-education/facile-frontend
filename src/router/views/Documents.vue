@@ -55,7 +55,7 @@
 
     <ContextMenu
       v-if="isContextMenuDisplayed && isAContextMenuDisplayed"
-      @chooseOption="handleOption"
+      @choose-option="handleOption"
       @close="isContextMenuDisplayed=false"
     />
 
@@ -64,7 +64,7 @@
         v-if="isFilePickerModalDisplayed"
         :folder-selection="true"
         :init-in-current-folder="false"
-        @chosenFolder="doSelectFolderAction"
+        @chosen-folder="doSelectFolderAction"
         @close="isFilePickerModalDisplayed = false"
       />
       <FolderNameModal

@@ -51,7 +51,7 @@
     <FilePickerModal
       :folder-selection="true"
       :collaborative-only="true"
-      @chosenFolder="folder = $event"
+      @chosen-folder="folder = $event"
       @close="isFolderPickerDisplayed = false"
     />
   </teleport>
@@ -61,7 +61,7 @@
   >
     <FilePickerModal
       :collaborative-only="true"
-      @addedFiles="file = $event[0]"
+      @added-files="file = $event[0]"
       @close="isFilePickerDisplayed = false"
     />
   </teleport>

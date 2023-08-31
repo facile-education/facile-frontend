@@ -59,7 +59,7 @@
     <FilePickerModal
       :folder-selection="true"
       :init-in-current-folder="false"
-      @chosenFolder="saveInFolder"
+      @chosen-folder="saveInFolder"
       @close="isDepositModalDisplayed = false"
     />
   </teleport>

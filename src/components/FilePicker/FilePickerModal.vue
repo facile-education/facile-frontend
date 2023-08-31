@@ -27,10 +27,10 @@
         :allow-files-from-device="allowFilesFromDevice"
         :collaborative-only="collaborativeOnly"
         :images-only="imagesOnly"
-        @selectedFolder="updateSelectedFolder"
-        @currentFolder="updateCurrentFolder"
-        @chosenFolder="emitSelectedFolder"
-        @updateSelectedFiles="updateSelectedFiles"
+        @selected-folder="updateSelectedFolder"
+        @current-folder="updateCurrentFolder"
+        @chosen-folder="emitSelectedFolder"
+        @update-selected-files="updateSelectedFiles"
       />
     </template>
 
@@ -91,7 +91,7 @@ export default {
       default: ''
     }
   },
-  emits: ['addedFiles', 'chosenFolder', 'close'],
+  emits: ['added-files', 'chosen-folder', 'close'],
   data () {
     return {
       inputText: undefined,
@@ -135,11 +135,11 @@ export default {
       this.currentFolder = folder
     },
     emitSelectedFolder () {
-      this.$emit('chosenFolder', this.selectedFolder ? this.selectedFolder : this.currentFolder)
+      this.$emit('chosen-folder', this.selectedFolder ? this.selectedFolder : this.currentFolder)
       this.close()
     },
     addNewFiles () {
-      this.$emit('addedFiles', this.selectedFiles)
+      this.$emit('added-files', this.selectedFiles)
       this.close()
     },
     close () {

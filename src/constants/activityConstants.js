@@ -33,4 +33,3 @@ export default {
   TYPE_SESSION,
   TYPE_EXPIRED_GROUP
 }
-

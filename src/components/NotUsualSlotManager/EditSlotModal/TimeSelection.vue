@@ -35,9 +35,9 @@
 </template>
 
 <script>
-import dayjs from 'dayjs'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
+import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 
 dayjs.extend(customParseFormat)

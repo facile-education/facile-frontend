@@ -5,15 +5,15 @@
     class="document-wrapper"
     data-test="file-content"
   >
-    <Image
-      v-if="typeOfView === 'Image'"
+    <ImageDocument
+      v-if="typeOfView === 'ImageDocument'"
       :src="fileUrl"
     />
-    <Video
-      v-else-if="typeOfView === 'Video'"
+    <VideoDocument
+      v-else-if="typeOfView === 'VideoDocument'"
       :src="fileUrl"
     />
-    <Audio
+    <AudioDocument
       v-else-if="typeOfView === 'Audio'"
       :src="fileUrl"
     />
@@ -63,14 +63,14 @@
 </template>
 
 <script>
-import Audio from '@components/Documents/FileDisplay/Audio'
+import AudioDocument from '@components/Documents/FileDisplay/AudioDocument.vue'
 import Geogebra from '@components/Documents/FileDisplay/Geogebra'
-import Image from '@components/Documents/FileDisplay/Image'
+import ImageDocument from '@components/Documents/FileDisplay/ImageDocument.vue'
 import MindMap from '@components/Documents/FileDisplay/MindMap'
 import Office from '@components/Documents/FileDisplay/Office'
 import PDF from '@components/Documents/FileDisplay/PDF'
 import Scratch from '@components/Documents/FileDisplay/Scratch'
-import Video from '@components/Documents/FileDisplay/Video'
+import VideoDocument from '@components/Documents/FileDisplay/VideoDocument.vue'
 import WISIWIG from '@components/Documents/FileDisplay/WISIWIG'
 
 import fileService from '@/api/documents/file.service'
@@ -79,7 +79,7 @@ import OtherDocument from '@/components/Documents/FileDisplay/OtherDocument'
 
 export default {
   name: 'FileDisplay',
-  components: { WISIWIG, Office, Scratch, MindMap, Geogebra, PDF, Audio, Image, Video, OtherDocument },
+  components: { WISIWIG, Office, Scratch, MindMap, Geogebra, PDF, AudioDocument, ImageDocument, VideoDocument, OtherDocument },
   inject: ['mq'],
   props: {
     file: {

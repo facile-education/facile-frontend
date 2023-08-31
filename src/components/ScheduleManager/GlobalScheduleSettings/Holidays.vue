@@ -38,10 +38,10 @@
 </template>
 
 <script>
-import HolidayItem from '@components/ScheduleManager/GlobalScheduleSettings/HolidayItem.vue'
-import HolidayForm from '@components/ScheduleManager/GlobalScheduleSettings/HolidayForm.vue'
-import dayjs from 'dayjs'
 import InformationIcon from '@components/Base/InformationIcon.vue'
+import HolidayForm from '@components/ScheduleManager/GlobalScheduleSettings/HolidayForm.vue'
+import HolidayItem from '@components/ScheduleManager/GlobalScheduleSettings/HolidayItem.vue'
+import dayjs from 'dayjs'
 
 export default {
   name: 'Holidays',

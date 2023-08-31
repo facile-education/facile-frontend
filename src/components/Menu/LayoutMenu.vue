@@ -40,7 +40,7 @@ import CustomIcon from '@components/Base/CustomIcon.vue'
 import MenuItemList from '@components/Menu/MenuItemList.vue'
 
 export default {
-  name: 'Menu',
+  name: 'LayoutMenu',
   components: {
     CustomIcon,
     MenuItemList

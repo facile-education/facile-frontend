@@ -77,6 +77,7 @@ export const actions = {
         commit('setRoleList', [])
       }
     }, (err) => {
+      console.error(err)
       commit('setRoleList', [])
     })
   },

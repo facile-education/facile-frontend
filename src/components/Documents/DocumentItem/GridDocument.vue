@@ -100,7 +100,7 @@ export default {
       required: true
     }
   },
-  emits: ['chooseOption', 'triggerAction', 'select', 'ctrlSelect', 'shiftSelect'],
+  emits: ['choose-option', 'triggerAction', 'select', 'ctrlSelect', 'shiftSelect'],
   data () {
     return {
       hoverSelection: false

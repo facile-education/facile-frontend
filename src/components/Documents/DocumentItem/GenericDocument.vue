@@ -15,7 +15,7 @@
       @ctrlSelect="toggleCtrlSelection"
       @shiftSelect="toggleShiftSelection"
       @contextmenu.prevent="openContextMenu"
-      @chooseOption="handleChosenOption"
+      @choose-option="handleChosenOption"
     />
     <ListDocument
       v-else-if="display==='list'"
@@ -28,7 +28,7 @@
       @ctrlSelect="toggleCtrlSelection"
       @shiftSelect="toggleShiftSelection"
       @contextmenu.prevent="openContextMenu"
-      @chooseOption="handleChosenOption"
+      @choose-option="handleChosenOption"
     />
   </div>
 </template>

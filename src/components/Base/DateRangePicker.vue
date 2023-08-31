@@ -24,7 +24,6 @@
 <script>
 import 'v-calendar/style.css'
 
-import NeroIcon from '@components/Nero/NeroIcon.vue'
 import dayjs from 'dayjs'
 import { DatePicker } from 'v-calendar'
 

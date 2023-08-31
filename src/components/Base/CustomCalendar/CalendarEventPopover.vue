@@ -1,4 +1,4 @@
-<template @click.stop="test">
+<template>
   <div
     class="event-popup"
     data-test="event-popup"
@@ -80,10 +80,10 @@
 </template>
 
 <script>
+import { getTeachersLabel } from '@utils/commons.util'
 import dayjs from 'dayjs'
 
 import NeroIcon from '@/components/Nero/NeroIcon'
-import { getTeachersLabel } from '@utils/commons.util'
 
 export default {
   name: 'CalendarEventPopover',

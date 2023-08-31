@@ -37,7 +37,7 @@
     <FilePickerModal
       v-if="isFilePickerModalDisplayed"
       :multi-selection="true"
-      @addedFiles="addNewFiles"
+      @added-files="addNewFiles"
       @close="isFilePickerModalDisplayed = false"
     />
   </teleport>

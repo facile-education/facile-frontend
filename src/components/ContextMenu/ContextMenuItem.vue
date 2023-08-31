@@ -49,7 +49,7 @@
       :is-sub-menu="true"
       :list-options="option.subMenu"
       :menu-position="subMenuPosition"
-      @chooseOption="emitSubOption"
+      @choose-option="emitSubOption"
       @close="emitCloseOrder"
     />
   </li>

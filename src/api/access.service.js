@@ -33,7 +33,7 @@ function saveSchoolCategory (schoolId, category) {
 
 function saveSchoolAccess (schoolId, access) {
   return axios.post(constants.JSON_WS_URL + ACCESS_PATH + ACCESS_CTX + 'save-school-access', PentilaUtils.URL.params({
-    schoolId: schoolId,
+    schoolId,
     access: JSON.stringify(access)
   })).then(response => response.data)
 }

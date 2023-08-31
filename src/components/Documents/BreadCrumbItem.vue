@@ -57,7 +57,7 @@
     <ContextMenu
       v-if="isContextMenuDisplayed && isAContextMenuDisplayed"
       :is-absolute="true"
-      @chooseOption="handleOption"
+      @choose-option="handleOption"
       @close="isContextMenuDisplayed=false"
     />
   </button>

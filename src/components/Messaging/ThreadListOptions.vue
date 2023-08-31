@@ -78,7 +78,7 @@
     to="body"
   >
     <ContextMenu
-      @chooseOption="performChosenOption"
+      @choose-option="performChosenOption"
       @close="isThreadOptionsDisplayed=false"
     />
   </teleport>

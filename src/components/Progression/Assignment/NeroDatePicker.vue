@@ -19,7 +19,6 @@ import 'v-calendar/style.css'
 import dayjs from 'dayjs'
 import { DatePicker } from 'v-calendar'
 
-
 export default {
   name: 'NeroDatePicker',
   components: {
