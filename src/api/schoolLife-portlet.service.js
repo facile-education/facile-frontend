@@ -81,7 +81,7 @@ function deleteSlot (slotId, startDateStr, endDateStr) {
 function getSessionLimitSlotDate (sessionId) {
   return axios.get(constants.JSON_WS_URL + SCHOOL_LIFE_SLOT_PATH + '/get-session-limit-slot-date', {
     params: {
-      schoollifeSessionId: sessionId,
+      schoollifeSessionId: sessionId
     }
   }).then(response => response.data)
 }

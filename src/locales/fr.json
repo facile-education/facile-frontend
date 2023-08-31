@@ -251,7 +251,6 @@
     "study": "Cercle d'étude",
     "tutoring": "Dépannage",
     "studentNamePlaceHolder": "Nom d'un élève",
-    "warning": "La suppresion de ce créneau sera définitive !",
     "EditSlotModal": {
       "deleteSlot": "Supprimer",
       "haveToSelectHour": "Veuillez saisir une plage d'horaires valide (hh:mm)",
