@@ -9,7 +9,7 @@
     <ActivityFilter
       v-if="!isParent"
       :initial-filter="filter"
-      :is-filters-displayed-by-default="displayAll"
+      :is-filters-displayed-by-default="displayAll && !mq.phone"
       @updateFilter="updateFilter"
     />
 
@@ -99,6 +99,7 @@ let oldScrollTop = 0
 export default {
   name: 'ActivityWidget',
   components: { ActivityFilter, ActivityItem, ActivityHeader },
+  inject: ['mq'],
   props: {
     displayAll: {
       type: Boolean,
@@ -288,7 +289,11 @@ ul {
 .infinite-scroll {
   flex: 1;
   overflow: auto;
-  padding: 0 20%;
+
+  ul {
+    margin: auto;
+    max-width: 800px;
+  }
 }
 
 .separator {

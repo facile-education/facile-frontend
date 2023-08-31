@@ -51,7 +51,7 @@
     </div>
 
     <CookiesAgreement
-      v-if="!hasConfirmCookiesAgreement && !cookiesMustBeClosed"
+      v-if="!hasConfirmCookiesAgreement && !cookiesMustBeClosed && !isMobileApp"
       @close="cookiesMustBeClosed=true"
     />
 
@@ -93,6 +93,7 @@
       to="body"
     >
       <SessionEndAdvertising
+        v-if="!isMobileApp"
         :remaining-milliseconds="remainingSessionMilliseconds"
         @close="isSessionWarningDisplayed=false"
       />
@@ -106,6 +107,7 @@ import SessionEndAdvertising from '@components/Nero/SessionEndAdvertising.vue'
 import dayjs from 'dayjs'
 import PentilaUtils from 'pentila-utils'
 import { defineAsyncComponent } from 'vue'
+import { useCookies } from 'vue3-cookies'
 
 import constants from '@/api/constants'
 import { popupDurationTime } from '@/constants/appConstants'
@@ -151,7 +153,8 @@ export default {
       cookiesMustBeClosed: false,
       interval: undefined,
       inactionTime: 0,
-      isSessionWarningDisplayed: false
+      isSessionWarningDisplayed: false,
+      remainigTime: -1
     }
   },
   computed: {
@@ -208,8 +211,11 @@ export default {
       return PentilaUtils.Cookies.getCookie('cookiesAgreement') === 'true'
     },
     remainingSessionMilliseconds () {
-      const remainingSessionMilliseconds = this.$store.state.menu.sessionTimeout - this.inactionTime
-      return remainingSessionMilliseconds > 0 ? remainingSessionMilliseconds : 0
+      return this.$store.state.menu.sessionTimeout - this.inactionTime
+    },
+    isMobileApp () {
+      const { cookies } = useCookies()
+      return cookies.get('isMobileApp') === 'true'
     }
   },
   created () {
@@ -225,17 +231,9 @@ export default {
     }
   },
   mounted () {
-    this.interval = setInterval(() => {
-      this.inactionTime = dayjs() - this.$store.state.user.lastActionDate
-
-      if (this.remainingSessionMilliseconds <= this.$store.state.menu.sessionTimeoutWarning) {
-        this.isSessionWarningDisplayed = true
-      }
-
-      if (this.remainingSessionMilliseconds <= 0) {
-        window.location = constants.LOGOUT_URL // Logout
-      }
-    }, 1000)
+    if (!this.isMobileApp) {
+      this.setRemainingTimeHandler()
+    }
 
     window.addEventListener('storage', this.localStorageUpdated)
   },
@@ -244,6 +242,20 @@ export default {
     window.removeEventListener('storage', this.localStorageUpdated)
   },
   methods: {
+    setRemainingTimeHandler () {
+      this.interval = setInterval(() => {
+        this.remainigTime = this.remainingSessionMilliseconds
+        this.inactionTime = dayjs() - this.$store.state.user.lastActionDate
+
+        if (this.remainingSessionMilliseconds <= this.$store.state.menu.sessionTimeoutWarning) {
+          this.isSessionWarningDisplayed = true
+        }
+
+        if (this.remainingSessionMilliseconds <= 0) {
+          window.location = constants.LOGOUT_URL // Logout
+        }
+      }, 1000)
+    },
     localStorageUpdated (event) {
       // Update last action date if it was updated by another tab
       if (event.key === 'lastActionDate') {

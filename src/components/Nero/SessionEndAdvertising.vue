@@ -40,9 +40,15 @@ export default {
       return Math.floor(this.remainingMilliseconds / 1000)
     },
     formattedRemainingTime () {
-      const hours = Math.floor(this.remainingSeconds / 3600)
-      const minutes = Math.floor((this.remainingSeconds % 3600) / 60)
-      const seconds = this.remainingSeconds % 60
+      const hours = this.remainingSeconds > 3600 ? Math.floor(this.remainingSeconds / 3600) : 0
+      let minutes = Math.floor((this.remainingSeconds % 3600) / 60)
+      if (minutes <= 0) {
+        minutes = 0
+      }
+      let seconds = this.remainingSeconds % 60
+      if (seconds <= 0) {
+        seconds = 0
+      }
 
       return ('0' + hours).slice(-2) + ':' +
         ('0' + minutes).slice(-2) + ':' +

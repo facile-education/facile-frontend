@@ -19,7 +19,9 @@
       >
         <span
           v-t="'parentOther'"
+          tabindex="0"
           @click="toggleGuestForm"
+          @keyup.enter="toggleGuestForm"
         />
 
         <Transition name="expand">
@@ -38,6 +40,7 @@
                 v-model="recoveryLogin"
                 :placeholder="$t('loginPlaceholder')"
                 class="input"
+                autocapitalize="none"
                 @keypress="handleKeyPressed"
               >
               <button
@@ -72,6 +75,7 @@
                 :placeholder="$t('login')"
                 class="input"
                 name="unsername"
+                autocapitalize="none"
                 @keypress="handleKeyPressed"
               >
               <input
@@ -129,6 +133,7 @@
 import GVELayout from '@layouts/GVELayout.vue'
 import axios from 'axios'
 import PentilaUtils from 'pentila-utils'
+import { useCookies } from 'vue3-cookies'
 
 import authenticationService from '@/api/authentication.service'
 import constants from '@/api/constants'
@@ -167,6 +172,12 @@ export default {
   },
   computed: {
     isMobileApp () {
+      // We are in mobile app mode if the cookie is found or the parameter is in the url (first time)
+      const { cookies } = useCookies()
+      return cookies.get('isMobileApp') === 'true' || this.isMobileAppLoading
+    },
+    isMobileAppLoading () {
+      // Mobile app startup
       return window.location.href.includes('mobile_app') || window.location.href.includes('mobile_token')
     },
     fullUrl () {
@@ -180,6 +191,16 @@ export default {
     }
   },
   created () {
+    const { cookies } = useCookies()
+    cookies.set('isMobileApp', this.isMobileApp)
+    if (this.isMobileApp) {
+      if (window.location.href.includes('mobile_token')) {
+        const mobileToken = new URLSearchParams(window.location.search).get('mobile_token')
+        authenticationService.authLog('Setting cookie mobileToken ' + mobileToken)
+        cookies.set('mobileToken', mobileToken)
+      }
+    }
+
     // Add LFR cookie needed for authentication
     if (PentilaUtils.Cookies.getCookie('COOKIE_SUPPORT') === '') {
       this.setCookie('COOKIE_SUPPORT', true, 365)
@@ -195,7 +216,7 @@ export default {
         fetch(constants.JSON_WS_URL + USER_PATH + GET_USER_INFOS_WS + '?p_auth=' + this.p_auth).then(response => {
           if (response.status === 200) {
             store.commit('user/setPAuth', this.p_auth)
-            if (this.isMobileApp) {
+            if (this.isMobileAppLoading) {
               // Manage mobile token
               let service = ''
               if (window.location.href.includes('service')) {
@@ -279,6 +300,8 @@ export default {
         mobileService.refreshMobileToken(mobileToken).then((response) => {
           if (response.success) {
             refreshToken = response.refreshToken
+            const { cookies } = useCookies()
+            cookies.set('mobileToken', refreshToken)
             authenticationService.authLog('refreshed token = ' + refreshToken)
             const mobileUrl = encodeURI(window.location.origin + '/' + redirectUrl)
             const serviceUrl = window.location.origin + '/appmobile.html?refresh_token=' + refreshToken + '&user_id=' + userId + '&home_url=' + mobileUrl
@@ -292,6 +315,8 @@ export default {
           if (response.success) {
             refreshToken = response.refreshToken
             authenticationService.authLog('added new Token ', refreshToken)
+            const { cookies } = useCookies()
+            cookies.set('mobileToken', refreshToken)
             const mobileUrl = encodeURI(window.location.origin + '/' + redirectUrl)
             authenticationService.authLog('mobileUrl = ' + mobileUrl)
             const serviceUrl = window.location.origin + '/appmobile.html?refresh_token=' + refreshToken + '&user_id=' + userId + '&home_url=' + mobileUrl

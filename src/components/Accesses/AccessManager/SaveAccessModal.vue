@@ -290,6 +290,7 @@ export default {
 <style lang="scss" scoped>
 
 .dropdown {
+  max-width: min(100%, 200px);
   white-space: nowrap;
 }
 
@@ -299,12 +300,13 @@ export default {
 
 @media screen and (min-width: 700px) {
   .dropdown {
-    max-width: min(100%, 200px);
+    max-width: 200px;
   }
 
   .first-line {
     display: flex;
     gap: 1rem;
+    align-items: center;
 
     .input {
       flex: 1
@@ -324,7 +326,7 @@ export default {
   "updateSubmit": "Modifier",
   "sizeLimit1": "Ne doit pas dépasser ",
   "sizeLimit2": " caractères",
-  "saveSuccess": "Accès mis à jour avec succès.",
+  "saveSuccess": "Accès mis à jour",
   "selectRoles": "Veuillez séléctionner au moins un profil cible",
   "selectCategory": "Veuillez séléctionner une catégorie",
   "selectFolder": "Sélectionnez un dossier collaboratif",

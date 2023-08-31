@@ -14,23 +14,28 @@
     </template>
 
     <template #body>
-      <PentilaInput
-        ref="folderNameInput"
-        v-model="folderName"
-        class="name-input"
-        data-test="folderName-input"
-        @blur="v$.folderName.$touch()"
-        @input="backError=''"
-        @keyup.enter="submit"
-      />
-      <PentilaErrorMessage
-        :error-message="formErrorList"
-      />
+      <div style="position: relative">
+        <PentilaSpinner v-if="isActionInProgress" />
+
+        <PentilaInput
+          ref="folderNameInput"
+          v-model="folderName"
+          class="name-input"
+          data-test="folderName-input"
+          @blur="v$.folderName.$touch()"
+          @input="backError=''"
+          @keyup.enter="submit"
+        />
+        <PentilaErrorMessage
+          :error-message="formErrorList"
+        />
+      </div>
     </template>
 
     <template #footer>
       <PentilaButton
         data-test="submitButton"
+        :disabled="isActionInProgress"
         :label="submitAction==='rename' ? $t('rename') : $t('createSubmit')"
         @click="submit"
       />
@@ -67,6 +72,7 @@ export default {
   setup: () => ({ v$: useVuelidate() }),
   data () {
     return {
+      isActionInProgress: false,
       folderName: '',
       backError: ''
     }
@@ -135,7 +141,9 @@ export default {
       }
     },
     createFolder () {
+      this.isActionInProgress = true
       folderServices.createFolder(this.currentFolderId, this.folderName).then((data) => {
+        this.isActionInProgress = false
         if (data.success) {
           this.$store.dispatch('documents/refreshCurrentFolder')
           this.onClose()
@@ -143,10 +151,16 @@ export default {
           this.backError = 'createFolderError'
           console.error('An error was occurred')
         }
+      }, (err) => {
+        console.error(err)
+        this.isActionInProgress = false
+        this.backError = 'renameFolderError'
       })
     },
     renameFolder () {
+      this.isActionInProgress = true
       folderServices.renameFolder(this.initFolder.id, this.folderName).then((data) => {
+        this.isActionInProgress = false
         if (data.success) {
           this.$store.dispatch('documents/refreshCurrentFolder')
           this.onClose()
@@ -154,6 +168,10 @@ export default {
           this.backError = 'renameFolderError'
           console.error('An error was occurred')
         }
+      }, (err) => {
+        console.error(err)
+        this.isActionInProgress = false
+        this.backError = 'renameFolderError'
       })
     },
     onClose () {

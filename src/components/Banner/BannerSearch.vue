@@ -4,7 +4,7 @@
     data-test="banner-search"
   >
     <input
-      v-if="mq.desktop"
+      v-if="!mq.phone"
       v-model="searchInput"
       :placeholder="$t('searchLabel') + '...'"
       class="search-input"

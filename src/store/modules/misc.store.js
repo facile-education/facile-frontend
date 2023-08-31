@@ -4,10 +4,14 @@ export const state = {
   draggedEntities: [],
   isThereDocumentDrag: false,
   nbOpenModals: 0,
-  keepPhoneStatus: false
+  keepPhoneStatus: false,
+  isMobileApp: false
 }
 
 export const mutations = {
+  setIsMobileApp (state, payload) {
+    state.isMobileApp = payload
+  },
   addDraggedEntities (state, payload) {
     state.draggedEntities.push(...payload)
   },
@@ -45,5 +49,11 @@ export const actions = {
   },
   setKeepPhoneStatus ({ commit }, payload) {
     commit('setKeepPhoneStatus', payload)
+  },
+  setIsMobileApp ({ commit }, status) {
+    commit('setIsMobileApp', status)
+    if (status) {
+      commit('setKeepPhoneStatus', true)
+    }
   }
 }
