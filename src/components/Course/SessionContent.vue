@@ -4,7 +4,7 @@
       v-for="content in sessionContent.blocks"
       :key="content"
     >
-      <Content
+      <CourseContent
         v-model="content.contentValue"
         :content="content"
       />
@@ -18,12 +18,12 @@
 </template>
 
 <script>
-import Content from '@/components/Course/Content.vue'
+import CourseContent from '@components/Course/CourseContent.vue'
 
 export default {
   name: 'SessionContent',
   components: {
-    Content
+    CourseContent
   },
   inject: ['mq'],
   props: {

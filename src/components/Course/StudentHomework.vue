@@ -30,7 +30,7 @@
       </div>
     </header>
 
-    <Content
+    <CourseContent
       v-for="block in homework.blocks"
       :key="block.contentId"
       v-model="block.contentValue"
@@ -47,11 +47,11 @@ import { defineAsyncComponent } from 'vue'
 import { setHomeworkDoneStatus } from '@/api/homework.service'
 import Pellet from '@/components/Base/Pellet.vue'
 
-const Content = defineAsyncComponent(() => import('@/components/Course/Content'))
+const CourseContent = defineAsyncComponent(() => import('@/components/Course/CourseContent'))
 
 export default {
   name: 'StudentHomework',
-  components: { Content, Pellet },
+  components: { CourseContent, Pellet },
   props: {
     homework: {
       type: Object,
