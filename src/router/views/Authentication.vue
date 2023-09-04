@@ -163,7 +163,7 @@ export default {
       isActive: true,
       isError: false,
       isGuestFormDisplayed: false,
-      showForgotPassword: false,
+      showForgotPassword: true,
       showPasswordRecoveryForm: false,
       recoveryLogin: '',
       passwordRecoveryUrl: constants.BASE_API_URL + '/home?p_p_id=com_liferay_login_web_portlet_LoginPortlet&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&_com_liferay_login_web_portlet_LoginPortlet_javax.portlet.action=/login/forgot_password&_com_liferay_login_web_portlet_LoginPortlet_mvcRenderCommandName=/login/forgot_password',
