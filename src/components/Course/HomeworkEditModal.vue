@@ -362,7 +362,6 @@ export default {
       }
     },
     updateTarget (value) {
-      console.log('update Target')
       // TODO date libre
       this.homework.targetSessionId = value.sessionId
       this.homework.toDate = value.startDate
