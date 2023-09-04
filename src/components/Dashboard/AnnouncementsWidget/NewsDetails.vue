@@ -26,7 +26,6 @@
 
         <div class="first-line-right">
           <div
-            v-if="detailedNews.isEditable"
             class="populations"
           >
             <div
@@ -37,7 +36,7 @@
           </div>
 
           <div
-            v-if="detailedNews.isEditable"
+            v-if="detailedNews.readInfos !== undefined"
             class="read-infos"
           >
             <div
@@ -48,7 +47,6 @@
           </div>
 
           <div
-            v-if="!detailedNews.isEditable"
             class="publication"
           >
             {{ $t('at') + formattedPublicationDate + $t('by') + detailedNews.authorName }}
@@ -59,13 +57,6 @@
       <h2 v-if="!isInModal">
         {{ detailedNews.title }}
       </h2>
-
-      <div
-        v-if="detailedNews.isEditable"
-        class="publication"
-      >
-        {{ $t('at') + formattedPublicationDate + $t('by') + detailedNews.authorName }}
-      </div>
 
       <div
         v-if="detailedNews.content"

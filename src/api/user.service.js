@@ -12,7 +12,8 @@ export default {
   updateThemeColor,
   updateReportFrequency,
   updateWebdavState,
-  acceptTermsOfUse
+  acceptTermsOfUse,
+  getParentInfos
 }
 
 const PREF_PATH = '/preference.userproperties'
@@ -118,6 +119,14 @@ function removeUserPicture () {
 function acceptTermsOfUse () {
   return axios.get(constants.JSON_WS_URL + USER_PATH + '/accept-terms-of-use', {
     params: {
+    }
+  }).then(response => response.data)
+}
+
+function getParentInfos (parentUserId) {
+  return axios.get(constants.JSON_WS_URL + USER_PATH + '/get-parent-infos', {
+    params: {
+      parentUserId
     }
   }).then(response => response.data)
 }
