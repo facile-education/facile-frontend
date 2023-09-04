@@ -101,6 +101,27 @@
         v-if="isCreation"
         v-t="'email-warning'"
       />
+
+      <div
+        v-if="!isCreation"
+        class="password"
+      >
+        <PentilaInput
+          v-model="password"
+          :placeholder="$t('passwordPlaceholder')"
+          :maxlength="75"
+        />
+        <PentilaButton
+          class="round"
+          @click="updatePassword"
+        >
+          <span>{{ $t('update-password') }}</span>
+        </PentilaButton>
+      </div>
+      <p
+        v-if="!isCreation"
+        v-t="'password-policy'"
+      />
     </template>
 
     <template #footer>
@@ -132,7 +153,7 @@ import { email, required } from '@vuelidate/validators'
 
 import { getLocalUserRoleList } from '@/api/role.service'
 import userService from '@/api/user.service'
-import { createManualUser, editManualUser, removeManualUser } from '@/api/userManagement.service'
+import { createManualUser, editManualUser, removeManualUser, updatePasswordByManager } from '@/api/userManagement.service'
 import store from '@/store'
 
 export default {
@@ -161,7 +182,8 @@ export default {
       roleList: [],
       isParent: false,
       screenName: '',
-      parentInfos: ''
+      parentInfos: '',
+      password: ''
     }
   },
   computed: {
@@ -285,6 +307,15 @@ export default {
           }
         }
       )
+    },
+    updatePassword () {
+      updatePasswordByManager(this.editedUser.userId, this.password).then((data) => {
+        if (data.success) {
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
+        } else {
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+        }
+      })
     }
   }
 }
@@ -297,14 +328,18 @@ export default {
     margin: 10px;
   }
   .lastName,.firstName,.email, .school, .role {
+    width: 100%;
     margin-bottom: 5px;
   }
   .school, .role {
     display: flex;
     p {
       margin-right: 1em;
-      width: 20%;
     }
+  }
+  .password {
+    display: flex;
+    gap: 20px;
   }
   .button {
     margin-right: 1em;
@@ -324,7 +359,7 @@ export default {
   "emailPlaceholder": "Mail",
   "school": "Établissement",
   "role": "Profil",
-  "parent-account": "Compte parent - Login: {0}",
+  "parent-account": "Identifiant: {0}",
   "email-warning": "NB: Un e-mail contenant les informations d'authentification sera envoyé à l'utilisateur créé.",
   "delete-warning": "La suppression de cet utilisateur est définitive.",
   "Popup": {
@@ -333,6 +368,11 @@ export default {
     "userRemoved": "Utilisateur supprimé",
     "error": "Une erreur est survenue. Merci de réessayer",
     "existingEmail": "L'adresse e-mail existe déjà. Vous pouvez utiliser le service affectation pour affecter l'utilisateur à votre établissement."
-  }
+  },
+  "passwordPlaceholder": "Nouveau mot de passe",
+  "update-password": "Changer le mot de passe",
+  "password-policy": "Le mot de passe doit contenir au moins 8 caractères dont une majuscule, un chiffre et un caractère spécial",
+  "success": "Mot de passe changé avec succès",
+  "error": "Erreur lors du changement de mot de passe"
 }
 </i18n>
