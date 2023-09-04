@@ -58,10 +58,6 @@ export default {
     activity: {
       type: Object,
       required: true
-    },
-    isSelfActivity: {
-      type: Boolean,
-      required: true
     }
   },
   computed: {
