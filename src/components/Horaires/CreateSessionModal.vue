@@ -3,6 +3,7 @@
     :modal="true"
     :draggable="true"
     :class="{'create-session': mq.phone}"
+    class="create-session-modal"
     @close="closeModal"
   >
     <template #header>
@@ -267,8 +268,8 @@ export default {
 </script>
 
 <style lang="scss">
-.create-session .window-body {
-  overflow: auto;
+.create-session-modal .window-body {
+  overflow: visible !important;
 }
 </style>
 
