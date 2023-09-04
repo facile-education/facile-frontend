@@ -263,7 +263,6 @@ export default {
     }
   },
   created () {
-    this.setInitialForm()
     this.$store.dispatch('misc/incrementModalCount')
     if (!this.isCreation) {
       this.title = this.initNews.title
@@ -273,8 +272,11 @@ export default {
         this.isReleaseDateDisabled = true
       }
       this.initDetails(this.initNews.newsId)
+    } else {
+      this.roundMinutes()
     }
     this.isSchoolNews ? this.getSchoolNewsBroadcastGroups() : this.getGroupNewsBroadcastGroups()
+    this.setInitialForm()
   },
   mounted () {
     const input = this.$refs.nameInput
@@ -282,6 +284,10 @@ export default {
     input.select()
   },
   methods: {
+    roundMinutes () {
+      // Round releaseDate to the nearest quarter-hour (to have a compliant behaviour with v-calendar)
+      this.releaseDate = this.releaseDate.minute(Math.round(this.releaseDate.minute() / 15) * 15)
+    },
     setInitialForm () {
       this.initialForm = {
         title: this.title,
