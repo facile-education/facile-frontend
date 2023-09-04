@@ -91,3 +91,16 @@ h1 {
   @extend %count-pellet;
 }
 
+// v-calendar workaround for button style (issue #1327 https://github.com/nathanreyes/v-calendar/issues/1327)
+.vc-container button {
+  background-color: transparent !important;
+  font-family: inherit;
+}
+.vc-nav-container button {
+  font-family: inherit;
+}
+
+.vc-nav-container button:not(.is-active) {
+  background-color: transparent !important;
+}
+
