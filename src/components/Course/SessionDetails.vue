@@ -132,6 +132,8 @@
       <CourseEditModal
         v-if="isModalDisplayed"
         :edited-session="session"
+        :is-in-list="isInList"
+        @update-session="$emit('update-session')"
         @close="isModalDisplayed = false"
       />
       <HomeworkEditModal
@@ -308,7 +310,11 @@ export default {
           this.openCourseEditModal()
           break
         case 'delete':
-          this.$store.dispatch('course/deleteSessionContent')
+          if (this.isInList) {
+            this.$emit('update-session')
+          } else {
+            this.$store.dispatch('course/deleteSessionContent')
+          }
           break
         default:
           console.error('no option with name ' + option.name + ' exists')
