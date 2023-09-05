@@ -22,7 +22,20 @@
           {{ ' - ' + activity.author }}
         </span>
       </div>
-      <div class="description">
+      <!-- Dashboard only lists the activity of the user himself -->
+      <div
+        v-if="isDashboard"
+        class="description"
+      >
+        <span>
+          {{ dashboardDescription }}
+        </span>
+      </div>
+      <!-- Group activity lists all memberships operations -->
+      <div
+        v-else
+        class="description"
+      >
         <span>
           {{ description1 }}
         </span>
@@ -58,6 +71,10 @@ export default {
     activity: {
       type: Object,
       required: true
+    },
+    isDashboard: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {
@@ -108,6 +125,16 @@ export default {
         }
       }
       return usersDetails
+    },
+    dashboardDescription () {
+      switch (this.activity.type) {
+        case activityConstants.TYPE_ADD_MEMBERSHIP:
+          return this.$t('added-you')
+        case activityConstants.TYPE_REMOVE_MEMBERSHIP:
+          return this.$t('removed-you')
+        default:
+          return ''
+      }
     }
   },
   methods: {
@@ -134,9 +161,9 @@ export default {
 {
   "on": "Le",
   "at": "à",
-  "added-you": "vous a inscrit ",
+  "added-you": "vous a inscrit dans cet espace",
   "added": "a inscrit ",
-  "removed-you": "vous a désinscrit ",
+  "removed-you": "vous a désinscrit de cet espace",
   "removed": "a désinscrit ",
   "nb-users": "{nbUsers} utilisateurs ",
   "in-this-space": "dans cet espace",
