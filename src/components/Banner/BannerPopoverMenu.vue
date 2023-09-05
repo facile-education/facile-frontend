@@ -136,9 +136,6 @@ export default {
       this.isSupportModalDisplayed = !this.isSupportModalDisplayed
     },
     doLogout () {
-      // Delete mobileToken cookie
-      const { cookies } = useCookies()
-      cookies.remove('mobileToken')
       window.location.href = this.logoutUrl
     }
   }
