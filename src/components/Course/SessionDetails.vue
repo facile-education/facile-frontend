@@ -99,16 +99,19 @@
           v-if="session.toDoHomeworks.length > 0 || canEdit"
           :homework-type="'toDoHomework'"
           :homework-list="session.toDoHomeworks"
+          @update-homework="$emit('update-session')"
         />
         <HomeworkList
           v-if="session.sessionHomeworks.length > 0 || canEdit"
           :homework-type="'sessionHomework'"
           :homework-list="session.sessionHomeworks"
+          @update-homework="$emit('update-session')"
         />
         <HomeworkList
           v-if="session.givenHomeworks.length > 0 || canEdit"
           :homework-type="'givenHomework'"
           :homework-list="session.givenHomeworks"
+          @update-homework="$emit('update-session')"
         />
       </section>
     </div>
@@ -192,6 +195,7 @@ export default {
       default: false
     }
   },
+  emits: ['update-session'],
   data () {
     return {
       isHomeworkModalDisplayed: false,
@@ -205,7 +209,7 @@ export default {
   },
   computed: {
     canEdit () {
-      return this.$store.state.user.isTeacher
+      return this.$store.state.user.isTeacher && !this.isInList
     },
     formattedStatus () {
       if (this.session.sessionContent.isDraft) {
@@ -280,7 +284,7 @@ export default {
     toggleContextMenu (event) {
       this.displayMenu = true
       this.$store.dispatch('contextMenu/openContextMenu', {
-        event: event,
+        event,
         options: [
           {
             name: 'edit',

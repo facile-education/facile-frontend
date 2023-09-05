@@ -31,7 +31,7 @@
         style="z-index: 1"
       />
       <div
-        v-if="error === true"
+        v-else-if="error === true"
         v-t="'errorPlaceholder'"
         class="placeholder"
       />
@@ -48,6 +48,7 @@
           <SessionDetails
             :session="session"
             :is-in-list="true"
+            @update-session="getCourseSessions"
           />
         </li>
       </ul>
