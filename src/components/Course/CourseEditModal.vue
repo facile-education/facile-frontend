@@ -84,9 +84,13 @@ export default {
     editedSession: {
       type: Object,
       required: true
+    },
+    isInList: {
+      type: Boolean,
+      default: false
     }
   },
-  emits: ['close'],
+  emits: ['close', 'update-session'],
   setup: () => ({ v$: useVuelidate() }),
   validations: {
     sessionContent: {
@@ -193,7 +197,11 @@ export default {
       } else {
         updateSessionContent(this.editedSession.sessionId, this.sessionContent.title, JSON.stringify(this.sessionContent.blocks), publicationDate, isDraft).then((data) => {
           if (data.success) {
-            this.$store.dispatch('course/updateSessionContent')
+            if (this.isInList) {
+              this.$emit('update-session')
+            } else {
+              this.$store.dispatch('course/updateSessionContent')
+            }
             this.onClose()
           } else {
             console.error('Cannot update session content')
