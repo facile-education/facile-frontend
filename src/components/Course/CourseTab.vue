@@ -34,12 +34,12 @@
 </template>
 
 <script>
-import CourseDetails from '@components/Course/CourseDetails.vue'
 import PentilaUtils from 'pentila-utils'
 import { defineAsyncComponent } from 'vue'
 
 import { getCourses } from '@/api/course.service'
 const CourseItem = defineAsyncComponent(() => import('@components/Course/CourseItem.vue'))
+const CourseDetails = defineAsyncComponent(() => import('@components/Course/CourseDetails.vue'))
 
 export default {
   name: 'CourseTab',
