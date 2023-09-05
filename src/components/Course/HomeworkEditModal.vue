@@ -80,6 +80,7 @@
           <PentilaRadioButton
             v-model="homework.dateType"
             :label="$t('sessionDate')"
+            :disabled="isInList"
             name="date"
             rb-value="session"
             class="radio"
@@ -89,7 +90,7 @@
             v-model="homework.dateType"
             :label="$t('futureDate')"
             name="date"
-            :disabled="nextSessions.length===0"
+            :disabled="nextSessions.length===0 || (homework.dateType === 'session' && isInList)"
             rb-value="custom"
             class="radio future-date"
           />
@@ -157,9 +158,13 @@ export default {
     editedHomework: {
       type: Object,
       default: undefined
+    },
+    isInList: {
+      type: Boolean,
+      default: false
     }
   },
-  emits: ['close', 'update:modelValue'],
+  emits: ['close', 'update-homework'],
   setup: () => ({ v$: useVuelidate() }),
   validations: {
     homework: {
@@ -215,13 +220,10 @@ export default {
       return this.editedHomework === undefined
     },
     selectedSession () {
-      return this.$store.state.course.selectedSession
+      return this.isInList ? undefined : this.$store.state.course.selectedSession
     },
     courseId () {
-      return this.selectedSession.groupId
-    },
-    sessionId () {
-      return this.selectedSession.sessionId
+      return this.isCreation ? this.selectedSession.groupId : this.editedHomework.courseId
     }
   },
   created () {
@@ -256,7 +258,7 @@ export default {
       console.error(err)
     })
 
-    getNextSessions(this.isCreation ? this.sessionId : this.homework.sourceSessionId).then((data) => {
+    getNextSessions(this.isCreation ? this.selectedSession.sessionId : this.homework.sourceSessionId).then((data) => {
       if (data.success) {
         this.nextSessions = data.nextSessions
         this.nextSessions.forEach(session => {
@@ -332,7 +334,7 @@ export default {
       this.homework.blocks = this.homework.blocks.filter(block => block.contentType !== contentTypeConstants.TYPE_TEXT_CONTENT || block.contentValue !== '')
 
       if (this.isCreation) {
-        createHomework(this.courseId, this.sessionId, this.homework, dayjs(), isDraft).then((data) => {
+        createHomework(this.courseId, this.selectedSession.sessionId, this.homework, dayjs(), isDraft).then((data) => {
           if (data.success) {
             this.$store.dispatch('course/updateSessionDetails')
             this.onClose()
@@ -348,7 +350,11 @@ export default {
       } else {
         updateHomework(this.homework, dayjs(), isDraft).then((data) => {
           if (data.success) {
-            this.$store.dispatch('course/updateSessionDetails')
+            if (this.isInList) {
+              this.$emit('update-homework')
+            } else {
+              this.$store.dispatch('course/updateSessionDetails')
+            }
             this.onClose()
           } else {
             console.error('Cannot update homework')

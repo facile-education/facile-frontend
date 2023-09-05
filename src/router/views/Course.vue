@@ -6,16 +6,16 @@
       >
         <ScheduleTab />
       </PentilaTabItem>
-      <!--      <PentilaTabItem-->
-      <!--        :title="$t('course')"-->
-      <!--      >-->
-      <!--        <CourseTab />-->
-      <!--      </PentilaTabItem>-->
-      <!--      <PentilaTabItem-->
-      <!--        :title="$t('toCorrect')"-->
-      <!--      >-->
-      <!--        <TeacherHomeworkTab />-->
-      <!--      </PentilaTabItem>-->
+      <PentilaTabItem
+        :title="$t('course')"
+      >
+        <CourseTab :user-id="selectedUser.userId" />
+      </PentilaTabItem>
+      <!--            <PentilaTabItem-->
+      <!--              :title="$t('toCorrect')"-->
+      <!--            >-->
+      <!--              <TeacherHomeworkTab />-->
+      <!--            </PentilaTabItem>-->
     </PentilaTabList>
     <div v-else>
       <div

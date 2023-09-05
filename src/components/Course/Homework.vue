@@ -55,6 +55,8 @@
     <HomeworkEditModal
       v-if="isHomeworkModalDisplayed"
       :edited-homework="homework"
+      :is-in-list="isInList"
+      @update-homework="$emit('update-homework')"
       @close="isHomeworkModalDisplayed = false"
     />
   </teleport>
@@ -91,8 +93,13 @@ export default {
     homeworkType: {
       type: String,
       required: true
+    },
+    isInList: {
+      type: Boolean,
+      default: false
     }
   },
+  emits: ['update-homework'],
   data () {
     return {
       isHomeworkModalDisplayed: false,
@@ -133,7 +140,7 @@ export default {
     toggleContextMenu (event) {
       this.displayMenu = true
       this.$store.dispatch('contextMenu/openContextMenu', {
-        event: event,
+        event,
         options: [
           {
             name: 'edit',
@@ -159,7 +166,11 @@ export default {
         case 'delete':
           deleteHomework(this.homework.homeworkId).then((data) => {
             if (data.success) {
-              this.$store.dispatch('course/updateSessionDetails')
+              if (this.isInList) {
+                this.$emit('update-homework')
+              } else {
+                this.$store.dispatch('course/updateSessionDetails')
+              }
             }
           })
           break

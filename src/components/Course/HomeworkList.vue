@@ -8,6 +8,8 @@
         <Homework
           :homework="homework"
           :homework-type="homeworkType"
+          :is-in-list="true"
+          @update-homework="$emit('update-homework')"
         />
       </li>
     </ul>
@@ -31,7 +33,8 @@ export default {
       type: Array,
       required: true
     }
-  }
+  },
+  emits: ['update-homework']
 }
 </script>
 
