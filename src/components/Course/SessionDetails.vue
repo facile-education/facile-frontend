@@ -23,7 +23,7 @@
       </header>
 
       <section
-        v-if="session.sessionContent || canEdit"
+        v-if="(isInList && hasContent) || (!isInList && canEdit)"
         class="session-content"
         :class="{'phone': mq.phone}"
       >
@@ -34,13 +34,13 @@
           />
           <h3>{{ courseTitle }}</h3>
           <CreateButton
-            v-if="canEdit && !hasContent"
+            v-if="canEdit && !hasContent && !isInList"
             :aria-label="$t('add')"
             :title="$t('add')"
             @click="openCourseEditModal"
           />
           <div
-            v-else-if="canEdit"
+            v-else-if="canEdit && hasContent"
             class="right"
           >
             <span class="status">{{ formattedStatus }}</span>
@@ -65,7 +65,7 @@
           :session-content="session.sessionContent"
         />
         <div
-          v-else
+          v-else-if="!isInList"
           v-t="'courseContentPlaceholder'"
           class="placeholder"
         />
@@ -83,7 +83,7 @@
           />
           <h3 v-t="'workToDo'" />
           <CreateButton
-            v-if="canEdit"
+            v-if="canEdit && !isInList"
             :aria-label="$t('add')"
             :title="$t('add')"
             @click="openHomeworkEditModal"
@@ -117,7 +117,7 @@
     </div>
 
     <section
-      v-if="canEdit"
+      v-if="canEdit && !isInList"
       class="notes"
     >
       <h3 v-t="'notes'" />
@@ -209,7 +209,7 @@ export default {
   },
   computed: {
     canEdit () {
-      return this.$store.state.user.isTeacher && !this.isInList
+      return this.$store.state.user.isTeacher
     },
     formattedStatus () {
       if (this.session.sessionContent.isDraft) {
@@ -231,7 +231,7 @@ export default {
       return this.$store.state.course.sessionList
     },
     hasContent () {
-      return (this.session.sessionContent.title !== undefined || (this.session.sessionContent.blocks !== undefined && this.session.sessionContent.blocks.length > 0))
+      return this.session.sessionContent && (this.session.sessionContent.title !== undefined || (this.session.sessionContent.blocks !== undefined && this.session.sessionContent.blocks.length > 0))
     },
     hasHomeworks () {
       return this.session.toDoHomeworks.length + this.session.sessionHomeworks.length + this.session.givenHomeworks.length > 0
