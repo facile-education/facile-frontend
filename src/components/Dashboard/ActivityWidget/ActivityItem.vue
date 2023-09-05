@@ -22,6 +22,7 @@
       <MembershipActivity
         v-else-if="isMembershipActivity"
         :activity="activity"
+        :is-dashboard="isDashboard"
         @refresh="$emit('refresh')"
       />
       <HHCActivity
@@ -67,6 +68,10 @@ export default {
     isUnread: {
       type: Boolean,
       default: false
+    },
+    isDashboard: {
+      type: Boolean,
+      default: true
     },
     isLast: {
       type: Boolean,

@@ -23,6 +23,7 @@
           <ActivityItem
             :activity="activity"
             :is-last="activity.activityId === lastActivity.activityId"
+            :is-dashboard="false"
             @get-next-activities="getActivities"
             @refresh="refresh"
           />
