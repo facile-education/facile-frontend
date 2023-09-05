@@ -78,6 +78,7 @@
           :placeholder="$t('populationPlaceholder') + '*'"
           :list="availablePopulationsList"
           sort-field="order"
+          :sort="true"
           :close-on-select="true"
           display-field="populationName"
           :disabled="isLoadingNewsDetails"
@@ -341,7 +342,7 @@ export default {
           const schools = data.schoolsGroups
           schools.forEach((school) => {
             this.availablePopulationsList = [...this.availablePopulationsList, ...school.populations]
-            // this.availablePopulationsList = [...this.availablePopulationsList, ...school.subjects]
+            this.availablePopulationsList = [...this.availablePopulationsList, ...school.subjects]
             if (school.classes) {
               school.classes.forEach((schoolClass) => {
                 this.availablePopulationsList = [...this.availablePopulationsList, ...schoolClass.populations]
