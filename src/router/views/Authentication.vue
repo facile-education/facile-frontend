@@ -212,7 +212,13 @@ export default {
               if (window.location.href.includes('service')) {
                 service = new URLSearchParams(window.location.search).get('service')
               }
-              response.json().then(data => this.refreshMobileToken(data.userId, service))
+              response.json().then(data => {
+                if (window.location.href.includes('mobile_token')) {
+                  this.refreshMobileToken(data.userId, service)
+                } else {
+                  this.addMobileToken(data.userId, service)
+                }
+              })
             } else {
               this.$router.push(DASHBOARD)
             }
