@@ -1,19 +1,20 @@
 <template>
-  <div class="homework-list">
-    <ul v-if="homeworkList && homeworkList.length > 0">
-      <li
-        v-for="homework in homeworkList"
-        :key="homework.homeworkId"
-      >
-        <Homework
-          :homework="homework"
-          :homework-type="homeworkType"
-          :is-in-list="true"
-          @update-homework="$emit('update-homework')"
-        />
-      </li>
-    </ul>
-  </div>
+  <ul
+    v-if="homeworkList && homeworkList.length > 0"
+    class="homework-list"
+  >
+    <li
+      v-for="homework in homeworkList"
+      :key="homework.homeworkId"
+    >
+      <Homework
+        :homework="homework"
+        :homework-type="homeworkType"
+        :is-in-list="true"
+        @update-homework="$emit('update-homework')"
+      />
+    </li>
+  </ul>
 </template>
 
 <script>
