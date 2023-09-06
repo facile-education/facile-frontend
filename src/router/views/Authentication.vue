@@ -191,6 +191,11 @@ export default {
     }
   },
   created () {
+    const { cookies } = useCookies()
+    if (this.isMobileApp) {
+      cookies.set('isMobileApp', this.isMobileApp)
+    }
+
     // Add LFR cookie needed for authentication
     if (PentilaUtils.Cookies.getCookie('COOKIE_SUPPORT') === '') {
       this.setCookie('COOKIE_SUPPORT', true, 365)
@@ -223,6 +228,7 @@ export default {
               this.$router.push(DASHBOARD)
             }
           }
+          // Else replace token with mobileApp=true if existing
         })
       }
     })
