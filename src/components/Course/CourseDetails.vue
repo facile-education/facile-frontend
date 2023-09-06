@@ -25,11 +25,11 @@
       </div>
     </header>
 
-    <button
-      v-if="isTeacher"
-      v-t="hideTeachersDrafts ? 'showDrafts' : 'hideDrafts'"
-      @click="toggleDrafts"
-    />
+    <!--    <button-->
+    <!--      v-if="isTeacher"-->
+    <!--      v-t="hideTeachersDrafts ? 'showDrafts' : 'hideDrafts'"-->
+    <!--      @click="toggleDrafts"-->
+    <!--    />-->
 
     <div class="sessions">
       <PentilaSpinner
