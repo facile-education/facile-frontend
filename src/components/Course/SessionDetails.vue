@@ -72,7 +72,7 @@
       </section>
 
       <section
-        v-if="hasHomeworks || canEdit"
+        v-if="hasHomeworks || (!isInList && canEdit)"
         class="homeworks"
         :class="{'phone': mq.phone}"
       >
@@ -96,19 +96,16 @@
           class="placeholder"
         />
         <HomeworkList
-          v-if="session.toDoHomeworks.length > 0 || canEdit"
           :homework-type="'toDoHomework'"
           :homework-list="session.toDoHomeworks"
           @update-homework="$emit('update-session')"
         />
         <HomeworkList
-          v-if="session.sessionHomeworks.length > 0 || canEdit"
           :homework-type="'sessionHomework'"
           :homework-list="session.sessionHomeworks"
           @update-homework="$emit('update-session')"
         />
         <HomeworkList
-          v-if="session.givenHomeworks.length > 0 || canEdit"
           :homework-type="'givenHomework'"
           :homework-list="session.givenHomeworks"
           @update-homework="$emit('update-session')"
@@ -411,6 +408,7 @@ header {
     h2 {
       margin: 0;
       @extend %font-bold-l;
+      text-transform: uppercase;
     }
   }
 }
@@ -434,7 +432,7 @@ header {
     text-overflow: ellipsis;
     flex: 1;
     margin: 0;
-    text-transform: uppercase;
+    //text-transform: uppercase;
     @extend %font-bold-l;
   }
 
@@ -488,11 +486,11 @@ header {
   "selectSessionPlaceholder": "Veuillez sélectionner une séance pour accéder à son contenu",
   "noHomeworksPlaceholder": "Aucun travail",
   "sessionOf": "Séance du ",
-  "courseContent": "SUPPORT DE COURS",
+  "courseContent": "Support de cours",
   "notes": "Note privée",
   "notesPlaceholder": "Ma note privée",
   "publishedOn": "Publié le ",
-  "workToDo": "TRAVAUX À FAIRE",
+  "workToDo": "Travaux à faire",
   "courseContentPlaceholder": "Aucun support de cours enregistré"
 }
 </i18n>
