@@ -105,7 +105,7 @@ export const actions = {
         session = {
           ...session,
           ...detailsData.sessionDetails,
-          sessionContent: contentData
+          sessionContent: contentData.sessionContent
         }
         commit('setSelectedSession', session)
       }
@@ -124,12 +124,7 @@ export const actions = {
   updateSessionContent ({ commit, state }) {
     getSessionContents(state.selectedSession.sessionId).then((data) => {
       if (data.success) {
-        commit('updateContent', {
-          blocks: data.blocks,
-          title: data.title,
-          isDraft: data.isDraft,
-          publicationDate: data.publicationDate
-        })
+        commit('updateContent', data.sessionContent)
       }
     },
     (err) => {
