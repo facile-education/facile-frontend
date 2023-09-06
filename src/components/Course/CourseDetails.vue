@@ -25,6 +25,12 @@
       </div>
     </header>
 
+    <button
+      v-if="isTeacher"
+      v-t="hideTeachersDrafts ? 'showDrafts' : 'hideDrafts'"
+      @click="toggleDrafts"
+    />
+
     <div class="sessions">
       <PentilaSpinner
         v-if="isLoading"
@@ -78,10 +84,14 @@ export default {
     return {
       coursesSessions: undefined,
       isLoading: false,
-      error: false
+      error: false,
+      hideTeachersDrafts: false
     }
   },
   computed: {
+    isTeacher () {
+      return this.$store.state.user.isTeacher
+    },
     formattedRemainingTeachers () {
       if (this.course.teachers.length === 2) {
         return this.course.teachers[1].firstName + ' ' + this.course.teachers[1].lastName
@@ -97,12 +107,16 @@ export default {
     this.getCourseSessions()
   },
   methods: {
+    toggleDrafts () {
+      this.hideTeachersDrafts = !this.hideTeachersDrafts
+      this.getCourseSessions()
+    },
     unselectCourse () {
       this.$store.dispatch('course/setSelectedCourse', undefined)
     },
     getCourseSessions () {
       this.isLoading = true
-      getCourseContent(this.course.courseId).then((data) => {
+      getCourseContent(this.course.courseId, this.hideTeachersDrafts).then((data) => {
         this.isLoading = false
         if (data.success) {
           this.error = false
@@ -213,6 +227,8 @@ ul {
   "andOthers": "et {nbRemaining} autres",
   "back": "Revenir aux cours",
   "emptyCoursePlaceholder": "Aucun contenu à afficher pour ce cours",
-  "errorPlaceholder": "Oups, une erreur est survenue..."
+  "errorPlaceholder": "Oups, une erreur est survenue...",
+  "showDrafts": "Montrer les nons publiés",
+  "hideDrafts": "Cacher les nons publiés"
 }
 </i18n>

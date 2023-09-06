@@ -33,10 +33,11 @@ function getCourses (userId) {
   }).then(response => response.data)
 }
 
-function getCourseContent (courseId) {
+function getCourseContent (courseId, hideDrafts = false) {
   return axios.get(constants.JSON_WS_URL + COURSE_PATH + 'get-course-content', {
     params: {
-      courseId
+      courseId,
+      hideDrafts
     }
   }).then(response => response.data)
 }
