@@ -19,8 +19,12 @@
         icon-height="20px"
         alt=""
       />
+      <PentilaSpinner
+        v-if="isDeleteThreads"
+        data-test="spinner"
+      />
       <div
-        v-if="loadingThreadsError"
+        v-else-if="loadingThreadsError"
         class="placeholder"
       >
         <div v-t="loadingThreadsError === 'PermissionException' ? 'permissionError' : 'loadingError'" />

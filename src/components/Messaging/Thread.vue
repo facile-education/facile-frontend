@@ -10,7 +10,7 @@
       <div
         class="main"
         :class="{'theme-background-color': isThreadSelected && !isSubMessageSelected,
-                 'theme-light-background-color': (!isThreadSelected || isSubMessageSelected) && isThreadExpanded,
+                 'theme-light-background-color': (isSubMessageSelected || isThreadExpanded) && !isThreadSelected,
                  'expanded': isThreadExpanded,
                  'selection-mode': isMultiSelectionActive,
                  'phone': mq.phone || mq.tablet}"
@@ -39,7 +39,7 @@
           <div
             v-if="isUnread"
             class="unread theme-background-color icon"
-            :class="{'selected' :isThreadSelected && !isSubMessageSelected}"
+            :class="{'selected' :isThreadSelected}"
             data-test="unread-icon"
           />
           <img
@@ -224,17 +224,21 @@ export default {
     isThreadSelected () {
       for (const selectedThread of this.$store.state.messaging.selectedThreads) {
         if (selectedThread.threadId === this.thread.threadId) {
+          console.log('is thread selected true')
           return true
         }
       }
+      console.log('is thread selected false')
       return false
     },
     isSubMessageSelected () {
       for (const selectedMessage of this.$store.state.messaging.selectedMessages) {
         if (selectedMessage.threadId === this.thread.threadId) {
+          console.log('is sub-message selected true')
           return true
         }
       }
+      console.log('is sub-message selected false')
       return false
     },
     selectedThreads () {

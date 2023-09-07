@@ -195,8 +195,8 @@ export default {
     return {
       recipients: [],
       subject: '',
-      initialContent: '',
-      currentContent: '',
+      initialContent: '', // How the content is initialized (with initial message or not)
+      currentContent: '', // What is written
       previousContent: '',
       isInitialized: false,
       attachedFiles: [],
@@ -293,7 +293,7 @@ export default {
           this.messageParameters.isForward,
           this.messageParameters.isDraft).then((data) => {
           if (data.success) {
-            if (this.messageParameters.isDraft || this.messageParameters.isForward) {
+            if (this.messageParameters.isDraft) {
               this.initialContent = data.content
             } else {
               // Reply, replyAll, forward
@@ -389,33 +389,36 @@ export default {
         false).then((data) => {
         if (data.success) {
           this.$store.dispatch('popups/pushPopup', { message: successMessage, type: 'success' })
-          if (this.$store.state.messaging.selectedMessages.length > 0) {
+          // Wait a little before refreshing because sending is done in a new thread
+          setTimeout(() => {
+            if (this.$store.state.messaging.selectedMessages.length > 0) {
             // Message is selected -> reload parent thread
-            for (const thread of this.$store.state.messaging.threads) {
-              if (thread.threadId === this.$store.state.messaging.selectedMessages[0].threadId) {
-                messagingUtils.reloadThread(thread)
-                break
+              for (const thread of this.$store.state.messaging.threads) {
+                if (thread.threadId === this.$store.state.messaging.selectedMessages[0].threadId) {
+                  messagingUtils.reloadThread(thread)
+                  break
+                }
+              }
+            } else {
+            // Thread is selected
+              if (this.$store.state.messaging.lastSelectedThread !== undefined) {
+                messagingUtils.reloadThread(this.$store.state.messaging.lastSelectedThread)
               }
             }
-          } else {
-            // Thread is selected
-            if (this.$store.state.messaging.lastSelectedThread !== undefined) {
-              messagingUtils.reloadThread(this.$store.state.messaging.lastSelectedThread)
+            // Refresh thread list if this is a reply, a forward or a draft
+            if (this.messageParameters.isReply || this.messageParameters.isReplyAll || this.messageParameters.isForward || this.messageParameters.isDraft) {
+              this.$store.dispatch('messaging/selectFolder', this.$store.state.messaging.currentFolder)
             }
-          }
-          // Refresh thread list if this is a reply, a forward or a draft
-          if (this.messageParameters.isReply || this.messageParameters.isReplyAll || this.messageParameters.isForward || this.messageParameters.isDraft) {
-            this.$store.dispatch('messaging/selectFolder', this.$store.state.messaging.currentFolder)
-          }
-          // Reload messages panel if this is a reply
-          if ((this.messageParameters.isReply || this.messageParameters.isReplyAll) && this.$store.state.messaging.selectedThreads.length === 1) {
-            console.log('select Thread ', this.$store.state.messaging.selectedThreads[0], 'to reload messages thread')
-            messagingUtils.selectThread(this.$store.state.messaging.selectedThreads[0]) // Assume there is one selected thread to respond to a message
-          }
-          // Refresh thread list if this is a new message and if current folder is sentBox
-          if (this.$store.state.messaging.currentFolder.type === constants.messagingSentFolderType) {
-            this.$store.dispatch('messaging/selectFolder', this.$store.state.messaging.currentFolder)
-          }
+            // Reload messages panel if this is a reply
+            if ((this.messageParameters.isReply || this.messageParameters.isReplyAll) && this.$store.state.messaging.selectedThreads.length === 1) {
+              console.log('select Thread ', this.$store.state.messaging.selectedThreads[0], 'to reload messages thread')
+              messagingUtils.selectThread(this.$store.state.messaging.selectedThreads[0]) // Assume there is one selected thread to respond to a message
+            }
+            // Refresh thread list if this is a new message and if current folder is sentBox
+            if (this.$store.state.messaging.currentFolder.type === constants.messagingSentFolderType) {
+              this.$store.dispatch('messaging/selectFolder', this.$store.state.messaging.currentFolder)
+            }
+          }, 500)
         }
       })
       this.onClose()
