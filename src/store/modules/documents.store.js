@@ -187,7 +187,9 @@ export const actions = {
     commit('setDocumentPanelDisplayed', false)
   },
   getGlobalDocumentsProperties ({ commit }) {
+    this.dispatch('currentActions/addAction', { name: 'getDocumentsProperties' })
     documentsService.getGlobalDocumentsProperties().then((data) => {
+      this.dispatch('currentActions/removeAction', { name: 'getDocumentsProperties' })
       commit('setDocumentsProperties', data)
     })
   },
@@ -240,7 +242,9 @@ export const actions = {
     if (state.documentsProperties !== undefined && state.documentsProperties.private) {
       this.dispatch('documents/changeDirectory', { folderId: state.documentsProperties.private.id })
     } else {
+      this.dispatch('currentActions/addAction', { name: 'getDocumentsProperties' })
       documentsService.getGlobalDocumentsProperties().then((data) => {
+        this.dispatch('currentActions/removeAction', { name: 'getDocumentsProperties' })
         commit('setDocumentsProperties', data)
         this.dispatch('documents/changeDirectory', { folderId: data.private.id })
       })
@@ -277,7 +281,10 @@ export const actions = {
     })
   },
   updateBreadcrumb ({ commit }, folderId) {
+    this.dispatch('currentActions/addAction', { name: 'getBreadcrumb' })
     navigationService.getBreadcrumb(folderId).then((data) => {
+      this.dispatch('currentActions/removeAction', { name: 'getBreadcrumb' })
+
       if (data.breadcrumb) {
         for (let i = 0; i < data.breadcrumb.length; ++i) { // Because all documents in breadcrumb are folders, add folder icon
           data.breadcrumb[i].icon = require('@assets/icons/documents/icon-folder.svg')
@@ -289,7 +296,9 @@ export const actions = {
     })
   },
   updateGroupBreadcrumb ({ commit }, groupFolderId) {
+    this.dispatch('currentActions/addAction', { name: 'getBreadcrumb' })
     groupService.getGroupBreadcrumb(groupFolderId).then((data) => {
+      this.dispatch('currentActions/removeAction', { name: 'getBreadcrumb' })
       if (data.success && data.breadCrumb) {
         for (let i = 0; i < data.breadCrumb.length; ++i) { // Because all documents in breadcrumb are folders, add folder icon
           data.breadCrumb[i].icon = require('@assets/icons/documents/icon-folder.svg')
