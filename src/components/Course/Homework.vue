@@ -18,12 +18,13 @@
             class="estimated-time"
           >{{ formattedEstimatedTime }}</span>
         </div>
-        <span
+        <button
           v-if="homework.doneStudents"
           class="nb-done theme-text-color"
+          @click="isDoneInfoModalDisplayed = true"
         >
           {{ formattedDoneStatus }}
-        </span>
+        </button>
       </div>
       <div class="right">
         <span class="status">{{ formattedStatus }}</span>
@@ -51,13 +52,22 @@
       :content="block"
     />
   </article>
-  <teleport to="body">
+  <teleport
+    v-if="isHomeworkModalDisplayed || isDoneInfoModalDisplayed"
+    to="body"
+  >
     <HomeworkEditModal
       v-if="isHomeworkModalDisplayed"
       :edited-homework="homework"
       :is-in-list="isInList"
       @update-homework="$emit('update-homework')"
       @close="isHomeworkModalDisplayed = false"
+    />
+
+    <DoneInfoModal
+      v-if="isDoneInfoModalDisplayed"
+      :homework="homework"
+      @close="isDoneInfoModalDisplayed = false"
     />
   </teleport>
   <teleport
@@ -80,11 +90,12 @@ import { icons } from '@/constants/icons'
 
 const CourseContent = defineAsyncComponent(() => import('@/components/Course/CourseContent'))
 const HomeworkEditModal = defineAsyncComponent(() => import('@/components/Course/HomeworkEditModal'))
+const DoneInfoModal = defineAsyncComponent(() => import('@/components/Course/DoneInfoModal'))
 const ContextMenu = defineAsyncComponent(() => import('@/components/ContextMenu/ContextMenu'))
 
 export default {
   name: 'Homework',
-  components: { ContextMenu, CourseContent, HomeworkEditModal },
+  components: { ContextMenu, CourseContent, HomeworkEditModal, DoneInfoModal },
   props: {
     homework: {
       type: Object,
@@ -103,7 +114,8 @@ export default {
   data () {
     return {
       isHomeworkModalDisplayed: false,
-      displayMenu: false
+      displayMenu: false,
+      isDoneInfoModalDisplayed: false
     }
   },
   computed: {
@@ -249,14 +261,14 @@ h3 {
   .status {
     @extend %font-regular-xs;
   }
+}
 
-  button {
-    margin: 0;
-    padding: 0;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-  }
+button {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }
 </style>
 
