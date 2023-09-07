@@ -157,6 +157,7 @@ export default {
 
 .user-selection {
   flex: 1;
+  max-width: 100%;
 
   &.has-homework-widget {
     flex: 6
