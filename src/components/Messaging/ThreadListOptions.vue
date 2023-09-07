@@ -4,6 +4,15 @@
     :class="{'phone': mq.phone || mq.tablet}"
   >
     <ul class="buttons">
+      <IconOption
+        class="button"
+        :icon="unreadOnly ? require('@/assets/options/icon_unread_filter_active.svg') : require('@/assets/options/icon_unread_filter.svg')"
+        :title="unreadOnly ? $t('all') : $t('Messaging.unreadOnly')"
+        name="toggleUnreadOnly"
+        icon-height="18px"
+        :alt="$t('unreadOnly')"
+        @click="toggleUnreadOnly"
+      />
       <li v-if="!mq.tablet && !mq.phone">
         <IconOption
           class="button"
@@ -58,16 +67,6 @@
           icon-height="18px"
           :alt="$t('unreadOnly')"
           @click.stop="displayThreadOptions"
-        />
-        <IconOption
-          v-else
-          class="button"
-          :icon="unreadOnly ? require('@/assets/options/icon_unread_filter_active.svg') : require('@/assets/options/icon_unread_filter.svg')"
-          :title="unreadOnly ? $t('all') : $t('Messaging.unreadOnly')"
-          name="toggleUnreadOnly"
-          icon-height="18px"
-          :alt="$t('unreadOnly')"
-          @click="toggleUnreadOnly"
         />
       </li>
     </ul>
@@ -143,7 +142,7 @@ export default {
         this.isThreadOptionsDisplayed = true
         this.$store.dispatch('contextMenu/openContextMenu',
           {
-            event: event,
+            event,
             options: contextMenus.messagingThreadsOptions
           })
       }
