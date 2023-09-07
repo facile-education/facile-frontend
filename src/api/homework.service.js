@@ -8,6 +8,7 @@ export {
   getStudentUndoneCount,
   getTeacherHomeworksToCorrect,
   setHomeworkDoneStatus,
+  getStudentsDoneStatus,
   createHomework,
   updateHomework,
   deleteHomework,
@@ -49,6 +50,13 @@ function setHomeworkDoneStatus (homeworkId, isDone) {
     params: {
       homeworkId,
       isDone
+    }
+  }).then(response => response.data)
+}
+function getStudentsDoneStatus (homeworkId) {
+  return axios.get(constants.JSON_WS_URL + HOMEWORK_PATH + 'get-students-done-status', {
+    params: {
+      homeworkId
     }
   }).then(response => response.data)
 }

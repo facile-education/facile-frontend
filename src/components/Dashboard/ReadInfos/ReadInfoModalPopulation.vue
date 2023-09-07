@@ -23,13 +23,19 @@
         v-for="member in sortedReadMembers"
         :key="member.userId"
       >
-        <ReadInfoModalUser :user="member" />
+        <InfoModalUser
+          :user="member"
+          field="hasRead"
+        />
       </li>
       <li
         v-for="member in sortedUnReadMembers"
         :key="member.userId"
       >
-        <ReadInfoModalUser :user="member" />
+        <InfoModalUser
+          :user="member"
+          field="hasRead"
+        />
       </li>
     </ul>
   </Transition>
@@ -37,13 +43,13 @@
 
 <script>
 import BaseIcon from '@components/Base/BaseIcon.vue'
-import ReadInfoModalUser from '@components/Dashboard/ReadInfos/ReadInfoModalUser.vue'
+import InfoModalUser from '@components/Dashboard/ReadInfos/InfoModalUser.vue'
 import { getFullName } from '@utils/commons.util'
 import PentilaUtils from 'pentila-utils'
 
 export default {
   name: 'ReadInfoModalPopulation',
-  components: { ReadInfoModalUser, BaseIcon },
+  components: { InfoModalUser, BaseIcon },
   props: {
     population: {
       type: Object,
