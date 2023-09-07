@@ -3,6 +3,7 @@
     :modal="true"
     :draggable="true"
     :class="{'session-teacher': mq.phone}"
+    class="session-teacher-modal"
     @close="closeModal"
   >
     <template #header>
@@ -171,8 +172,8 @@ export default {
 </script>
 
 <style lang="scss">
-.session-teacher .window-body {
-  overflow: auto;
+.session-teacher-modal .window-body {
+  overflow: visible !important;
 }
 </style>
 

@@ -232,7 +232,6 @@ export default {
     }
   },
   created () {
-    this.setInitialForm()
     this.$store.dispatch('misc/incrementModalCount')
     if (!this.isCreation) {
       this.title = this.initEvent.title
@@ -246,8 +245,11 @@ export default {
         this.isEndDateDisabled = true
       }
       this.initDetails(this.initEvent.eventId)
+    } else {
+      this.roundMinutes()
     }
     this.getBroadcastGroups()
+    this.setInitialForm()
   },
   mounted () {
     const input = this.$refs.nameInput
@@ -255,6 +257,10 @@ export default {
     input.select()
   },
   methods: {
+    roundMinutes () {
+      // Round startDate to the nearest quarter-hour (to have a compliant behaviour with v-calendar)
+      this.startDate = this.startDate.minute(Math.round(this.startDate.minute() / 15) * 15)
+    },
     setInitialForm () {
       this.initialForm = {
         title: this.title,

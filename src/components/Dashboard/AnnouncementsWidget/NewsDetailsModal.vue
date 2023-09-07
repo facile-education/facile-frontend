@@ -22,18 +22,20 @@
     </template>
 
     <template #footer>
-      <PentilaButton
-        class="footer-button"
-        data-test="updateButton"
-        :label="$t('update')"
-        @click="openUpdateModal"
-      />
-      <PentilaButton
-        class="footer-button"
-        data-test="deleteButton"
-        :label="$t('delete')"
-        @click="confirmDeleteNews"
-      />
+      <div v-if="initNews.isEditable">
+        <PentilaButton
+          class="footer-button"
+          data-test="updateButton"
+          :label="$t('update')"
+          @click="openUpdateModal"
+        />
+        <PentilaButton
+          class="footer-button"
+          data-test="deleteButton"
+          :label="$t('delete')"
+          @click="confirmDeleteNews"
+        />
+      </div>
     </template>
   </PentilaWindow>
 </template>

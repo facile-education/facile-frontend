@@ -43,6 +43,7 @@
             :activity="activity"
             :is-unread="true"
             :is-last="activity.activityId === lastActivity.activityId"
+            :is-dashboard="true"
             @getNextActivities="getActivities"
             @refresh="refresh"
           />
@@ -64,6 +65,7 @@
           <ActivityItem
             :activity="activity"
             :is-last="activity.activityId === lastActivity.activityId"
+            :is-dashboard="true"
             @markAsRead="activity.hasRead=true"
             @getNextActivities="getActivities"
             @refresh="refresh"
