@@ -6,46 +6,13 @@
       @select-week="onSelectWeek"
     />
 
-    <nav v-else>
-      <button
-        :title="$t('previousDay')"
-        :aria-label="$t('previousDay')"
-        @click="displayPreviousDay"
-      >
-        <img
-          class="previous"
-          src="@assets/icons/chevron-right.svg"
-          :alt="$t('previousDay')"
-        >
-      </button>
-      <DatePicker
-        v-if="configuration"
-        v-model="formattedDate"
-        :max-date="maxDate"
-        :min-date="minDate"
-        :disabled-dates="disabledDates"
-      >
-        <template #default="{ togglePopover }">
-          <div
-            class="date"
-            :class="{'theme-text-color': isToday, 'theme-extra-light-background-color': isToday}"
-            @click="togglePopover()"
-          >
-            {{ dateLabel }}
-          </div>
-        </template>
-      </DatePicker>
-      <button
-        :title="$t('nextDay')"
-        :aria-label="$t('nextDay')"
-        @click="displayNextDay"
-      >
-        <img
-          src="@assets/icons/chevron-right.svg"
-          :alt="$t('nextDay')"
-        >
-      </button>
-    </nav>
+    <DayNavigation
+      v-else
+      :selected-date="selectedDate"
+      @go-previous="displayPreviousDay"
+      @go-after="displayNextDay"
+      @select-date="onSelectDay"
+    />
 
     <button
       v-if="!mq.phone && selectedSession"
@@ -74,8 +41,8 @@
 import 'v-calendar/style.css'
 
 import CustomCalendar from '@components/Base/CustomCalendar/CustomCalendar.vue'
+import DayNavigation from '@components/Dashboard/ScheduleWidget/DayNavigation.vue'
 import dayjs from 'dayjs'
-import { DatePicker } from 'v-calendar'
 import { defineAsyncComponent } from 'vue'
 
 import { getUserSchedule } from '@/api/dashboard.service'
@@ -85,9 +52,9 @@ const Timeline = defineAsyncComponent(() => import('@/components/Horaires/Timeli
 export default {
   name: 'DailySchedule',
   components: {
+    DayNavigation,
     Timeline,
-    CustomCalendar,
-    DatePicker
+    CustomCalendar
   },
   inject: ['mq'],
   emits: ['select-event'],
@@ -97,8 +64,7 @@ export default {
       selectedDate: undefined,
       selectedEvent: undefined,
       updatedSession: undefined,
-      isInit: undefined,
-      calendarOptions: undefined
+      isInit: undefined
     }
   },
   computed: {
@@ -108,45 +74,11 @@ export default {
     weekDisplay () {
       return !this.mq.phone && !this.selectedSession
     },
-    configuration () {
-      return this.$store.state.calendar.configuration
-    },
-    dateLabel () {
-      return this.selectedDate.format('ddd DD/MM')
-    },
-    isToday () {
-      return this.selectedDate.isSame(dayjs(), 'day')
-    },
-    disabledDates () {
-      return this.hiddenDays.length > 0 ? [{ repeat: { weekdays: this.hiddenDays } }] : undefined
-    },
-    formattedDate: {
-      get () {
-        return this.selectedDate.toDate()
-      },
-      set (date) {
-        this.selectedDate = dayjs(date)
-        this.getDaySessions(true)
+    calendarOptions () {
+      return {
+        dayHeaders: this.weekDisplay,
+        initialView: this.weekDisplay ? 'timeGridWeek' : 'timeGridDay'
       }
-    },
-    hiddenDays () {
-      const hiddenDays = []
-      let dayNumber
-      const schoolDays = this.configuration.schoolDays
-      for (dayNumber = 0; dayNumber <= 6; ++dayNumber) {
-        if (schoolDays.indexOf(dayNumber) === -1) {
-          // Add one cause datepicker config is not the same as calendar
-          // 1 to 7 instead of 0 to 6
-          hiddenDays.push(dayNumber + 1)
-        }
-      }
-      return hiddenDays
-    },
-    maxDate () {
-      return dayjs(this.configuration.schoolYearEndDate).toDate()
-    },
-    minDate () {
-      return dayjs(this.configuration.schoolYearStartDate).toDate()
     }
   },
   watch: {
@@ -158,12 +90,8 @@ export default {
     }
   },
   created () {
-    this.calendarOptions = {
-      dayHeaders: this.weekDisplay,
-      initialView: this.weekDisplay ? 'timeGridWeek' : 'timeGridDay'
-    }
     this.isInit = true
-    this.selectedDate = dayjs()
+    this.selectedDate = dayjs() // TODO: handle min/max date case
     this.getSessions()
   },
   methods: {
@@ -191,8 +119,8 @@ export default {
         console.error(err)
       })
     },
-    getDaySessions (goForward = true) {
-      getUserSchedule(this.$store.state.user.userId, this.selectedDate, goForward).then((data) => {
+    getDaySessions (targetDate, goForward = true) {
+      getUserSchedule(this.$store.state.user.userId, targetDate, goForward).then((data) => {
         if (data.success) {
           this.eventList = data.eventList
           this.selectedDate = dayjs(data.date, 'YYYY-MM-DD HH:mm')
@@ -232,12 +160,13 @@ export default {
       this.$refs.calendar.unselectEvent()
     },
     displayNextDay () {
-      this.selectedDate = this.selectedDate.add(1, 'day')
-      this.getDaySessions(true)
+      this.getDaySessions(this.selectedDate.add(1, 'day'), true)
     },
     displayPreviousDay () {
-      this.selectedDate = this.selectedDate.add(-1, 'day')
-      this.getDaySessions(false)
+      this.getDaySessions(this.selectedDate.add(-1, 'day'), false)
+    },
+    onSelectDay (day) {
+      this.getDaySessions(day, true)
     },
     onSelectWeek (week) {
       this.selectedDate = dayjs(week.firstDayOfWeek).startOf('day')
