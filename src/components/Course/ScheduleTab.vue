@@ -3,7 +3,7 @@
     class="schedule-tab"
     :class="{'split-view': !mq.phone && selectedSession, 'phone': mq.phone}"
   >
-    <DailySchedule
+    <CourseSchedule
       v-show="!mq.phone || !isMobileSessionDetailsDisplayed"
       ref="schedule"
       class="daily-schedule"
@@ -31,16 +31,14 @@
 </template>
 
 <script>
-import { defineAsyncComponent } from 'vue'
-
-import DailySchedule from '@/components/Course/DailySchedule.vue'
-const SessionDetails = defineAsyncComponent(() => import('@/components/Course/SessionDetails.vue'))
+import CourseSchedule from '@components/Course/CourseSchedule.vue'
+import SessionDetails from '@components/Course/SessionDetails.vue'
 
 export default {
   name: 'ScheduleTab',
   components: {
     SessionDetails,
-    DailySchedule
+    CourseSchedule
   },
   inject: ['mq'],
   data () {

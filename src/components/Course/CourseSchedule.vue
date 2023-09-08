@@ -47,16 +47,16 @@
 import 'v-calendar/style.css'
 
 import CustomCalendar from '@components/Base/CustomCalendar/CustomCalendar.vue'
-import DayNavigation from '@components/Dashboard/ScheduleWidget/DayNavigation.vue'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
 import { getUserSchedule } from '@/api/dashboard.service'
 import scheduleService from '@/api/schedule.service'
 const Timeline = defineAsyncComponent(() => import('@/components/Horaires/Timeline'))
+const DayNavigation = defineAsyncComponent(() => import('@components/Dashboard/ScheduleWidget/DayNavigation.vue'))
 
 export default {
-  name: 'DailySchedule',
+  name: 'CourseSchedule',
   components: {
     DayNavigation,
     Timeline,
