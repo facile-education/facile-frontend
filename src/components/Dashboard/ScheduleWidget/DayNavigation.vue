@@ -12,23 +12,25 @@
         :alt="$t('goPrevious')"
       >
     </button>
-    <DatePicker
-      v-if="configuration"
-      v-model="formattedDate"
-      :min-date="minDate"
-      :max-date="maxDate"
-      :disabled-dates="disabledDates"
-    >
-      <template #default="{ togglePopover }">
-        <div
-          class="date"
-          :class="{'theme-text-color': isToday, 'theme-extra-light-background-color': isToday}"
-          @click="togglePopover()"
-        >
-          {{ dateLabel }}
-        </div>
-      </template>
-    </DatePicker>
+    <div class="middle-section">
+      <DatePicker
+        v-if="configuration"
+        v-model="formattedDate"
+        :min-date="minDate"
+        :max-date="maxDate"
+        :disabled-dates="disabledDates"
+      >
+        <template #default="{ togglePopover }">
+          <div
+            class="date"
+            :class="{'theme-text-color': isToday, 'theme-extra-light-background-color': isToday}"
+            @click="togglePopover()"
+          >
+            {{ dateLabel }}
+          </div>
+        </template>
+      </DatePicker>
+    </div>
     <button
       :title="$t('goAfter')"
       :aria-label="$t('goAfter')"
@@ -72,7 +74,9 @@ export default {
         return this.selectedDate.toDate()
       },
       set (date) {
-        this.$emit('select-date', dayjs(date))
+        if (date !== null) {
+          this.$emit('select-date', dayjs(date))
+        }
       }
     },
     isToday () {
@@ -129,14 +133,16 @@ nav {
     align-items: center;
     padding: 0 4px 0 0;
     cursor: pointer;
-
-    // border-radius: 1.5625rem;
     border: none;
     background: $neutral-10;
 
     img {
       height: 1rem;
     }
+  }
+
+  .middle-section {
+    min-width: 50px;
   }
 }
 

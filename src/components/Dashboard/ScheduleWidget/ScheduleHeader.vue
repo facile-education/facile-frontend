@@ -9,37 +9,6 @@
       @select-date="$emit('selectDate', $event)"
     />
 
-    <div class="date-selector">
-      <button
-        :title="$t('goBefore')"
-        @click="$emit('goBefore')"
-      >
-        <img
-          class="arrow before"
-          src="@assets/arrow-right.svg"
-          :alt="$t('goBefore')"
-        >
-      </button>
-
-      <strong
-        class="date-label"
-        :class="{'theme-text-color': isToday, 'theme-extra-light-background-color': isToday}"
-      >
-        {{ formattedDate }}
-      </strong>
-
-      <button
-        :title="$t('goAfter')"
-        @click="$emit('goAfter')"
-      >
-        <img
-          class="arrow after"
-          src="@assets/arrow-right.svg"
-          :alt="$t('goAfter')"
-        >
-      </button>
-    </div>
-
     <button
       class="redirect-button"
       @click="$emit('redirect')"
@@ -54,8 +23,8 @@
 </template>
 
 <script>
-import dayjs from 'dayjs'
 import DayNavigation from '@components/Dashboard/ScheduleWidget/DayNavigation.vue'
+import dayjs from 'dayjs'
 
 export default {
   name: 'ScheduleHeader',
