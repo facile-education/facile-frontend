@@ -1,23 +1,22 @@
 <template>
   <div
     class="schedule-tab"
-    :class="{'split-view': !mq.phone && selectedSession}"
+    :class="{'split-view': !mq.phone && selectedSession, 'phone': mq.phone}"
   >
     <DailySchedule
       v-show="!mq.phone || !isMobileSessionDetailsDisplayed"
       ref="schedule"
       class="daily-schedule"
-      @select-event="selectEvent"
     />
 
     <div
-      v-if="!mq.phone || isMobileSessionDetailsDisplayed"
       class="session-details"
+      :class="{'hidden': !selectedSession}"
     >
       <button
         v-if="mq.phone"
         class="back-button"
-        @click="closeSessionInfoModal"
+        @click="unselectSession"
       >
         <img
           src="@/assets/icons/calendar.svg"
@@ -26,10 +25,7 @@
         <span v-t="'back'" />
       </button>
 
-      <SessionDetails
-        v-if="selectedSession"
-        :session="selectedSession"
-      />
+      <SessionDetails :session="selectedSession" />
     </div>
   </div>
 </template>
@@ -63,21 +59,9 @@ export default {
     }
   },
   methods: {
-    selectEvent () {
-      if (this.mq.phone) {
-        this.openSessionInfoModal()
-      }
-    },
-    unselectEvent () {
+    unselectSession () {
       this.$store.dispatch('course/unselectSession')
       this.$refs.schedule.unselectEvent()
-    },
-    openSessionInfoModal () {
-      this.isMobileSessionDetailsDisplayed = true
-    },
-    closeSessionInfoModal () {
-      this.unselectEvent()
-      this.isMobileSessionDetailsDisplayed = false
     }
   }
 }
@@ -85,6 +69,33 @@ export default {
 
 <style lang="scss" scoped>
 @import "@design";
+
+.schedule-tab {
+  position: relative;
+  overflow: hidden;
+
+  .session-details.hidden {
+    display: none;
+  }
+
+  &.phone {
+    .session-details {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      min-height: 100%;
+      background-color: white;
+      z-index: 1;
+      transition: all 0.5s ease-in-out;
+
+      &.hidden {
+        display: unset;
+        transform: translateX(100vw);
+      }
+    }
+  }
+}
 
 .split-view {
     display: flex;

@@ -63,7 +63,6 @@ export default {
     CustomCalendar
   },
   inject: ['mq'],
-  emits: ['select-event'],
   data () {
     return {
       eventList: [],
@@ -125,7 +124,7 @@ export default {
         console.error(err)
       })
     },
-    getDaySessions (targetDate, goForward = true) {
+    getDaySessions (targetDate = this.selectedDate, goForward = true) {
       getUserSchedule(this.$store.state.user.userId, targetDate, goForward).then((data) => {
         if (data.success) {
           this.eventList = data.eventList
@@ -154,7 +153,6 @@ export default {
       this.isInit = false
     },
     selectEvent (event) {
-      this.$emit('select-event')
       this.selectedDate = dayjs(event.startDate, 'YYYY-MM-DD HH:mm')
       this.$store.dispatch('course/selectSession', event)
     },
