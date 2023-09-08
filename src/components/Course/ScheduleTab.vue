@@ -26,7 +26,10 @@
         <span v-t="'back'" />
       </button>
 
-      <SessionDetails :session="selectedSession" />
+      <SessionDetails
+        v-if="selectedSession"
+        :session="selectedSession"
+      />
     </div>
   </div>
 </template>
