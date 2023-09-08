@@ -6,6 +6,7 @@
       @redirect="redirect"
       @goBefore="goBefore"
       @goAfter="goAfter"
+      @select-date="selectDate"
     />
 
     <PentilaSpinner
@@ -87,6 +88,9 @@ export default {
     },
     goAfter () {
       this.getUserSchedule(this.currentDisplayedDate.add(1, 'day'), this.goForward)
+    },
+    selectDate (date) {
+      this.getUserSchedule(date, true)
     },
     getUserSchedule (date, goForward) {
       this.isLoading = true

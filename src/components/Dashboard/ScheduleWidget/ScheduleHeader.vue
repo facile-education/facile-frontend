@@ -2,6 +2,13 @@
   <header>
     <h2 :aria-label="$t('schedule')" />
 
+    <DayNavigation
+      :selected-date="currentDate"
+      @go-previous="$emit('goBefore')"
+      @go-after="$emit('goAfter')"
+      @select-date="$emit('selectDate', $event)"
+    />
+
     <div class="date-selector">
       <button
         :title="$t('goBefore')"
@@ -48,16 +55,18 @@
 
 <script>
 import dayjs from 'dayjs'
+import DayNavigation from '@components/Dashboard/ScheduleWidget/DayNavigation.vue'
 
 export default {
   name: 'ScheduleHeader',
+  components: { DayNavigation },
   props: {
     currentDate: {
       type: Object,
       required: true
     }
   },
-  emits: ['goBefore', 'goAfter', 'redirect'],
+  emits: ['goBefore', 'goAfter', 'redirect', 'selectDate'],
   computed: {
     isToday () {
       return this.currentDate.isSame(dayjs(), 'day')
