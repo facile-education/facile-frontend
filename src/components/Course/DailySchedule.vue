@@ -6,6 +6,12 @@
       @select-week="onSelectWeek"
     />
 
+    <div
+      v-if="weekDisplay"
+      v-t="'instructions'"
+      class="instructions"
+    />
+
     <DayNavigation
       v-else
       :selected-date="selectedDate"
@@ -189,30 +195,6 @@ export default {
 <style lang="scss" scoped>
 @import '@design';
 
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  align-self: stretch;
-
-  button {
-    display: flex;
-    width: 2.5rem;
-    height: 2.5rem;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-
-    // border-radius: 1.5625rem;
-    border: none;
-    background: $neutral-10;
-
-    img {
-      height: 1rem;
-    }
-  }
-}
-
 .display-whole-week-button {
   width: 100%;
   background-color: transparent;
@@ -231,22 +213,8 @@ nav {
   }
 }
 
-.date {
-  display: flex;
-  padding: 0.5rem 1rem;
-  align-items: flex-start;
-  gap: 0.5rem;
-  align-self: stretch;
-  cursor: pointer;
-
-  border-radius: 0.375rem;
-
-  text-align: center;
-  @extend %font-bold-l;
-}
-
-.previous {
-  transform: rotate(180deg);
+.instructions {
+  @extend %widget-placeholder
 }
 </style>
 
@@ -254,6 +222,7 @@ nav {
 {
   "nextDay": "Jour suivant",
   "previousDay": "Jour précédent",
-  "displayWholeWeek": "Afficher la semaine complète"
+  "displayWholeWeek": "Afficher la semaine complète",
+  "instructions": "Veuillez sélectionner une séance pour accéder à son contenu"
 }
 </i18n>
