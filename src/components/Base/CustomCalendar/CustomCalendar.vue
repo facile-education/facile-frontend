@@ -200,8 +200,14 @@ export default {
         calendar.updateSize()
       }
     },
+    changeView (viewName) {
+      if (this.$refs.fullCalendar) {
+        const calendar = this.$refs.fullCalendar.getApi()
+        calendar.changeView(viewName)
+      }
+    },
     optionClicked (option) {
-      this.$emit('eventOptionClicked', { event: this.matchFCEventWithPropsEvents(this.selectedEvent), option: option })
+      this.$emit('eventOptionClicked', { event: this.matchFCEventWithPropsEvents(this.selectedEvent), option })
       this.unselectEvent()
     },
     swipeLeft () {
@@ -236,7 +242,7 @@ export default {
     },
     formatCalendarSlot (slot, eventPosition) {
       return {
-        extendedProps: { ...slot, ...{ eventPosition: eventPosition } },
+        extendedProps: { ...slot, ...{ eventPosition } },
         title: slot.title || slot.groupName,
         start: dayjs(slot.startDate, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DDTHH:mm'),
         end: dayjs(slot.endDate, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DDTHH:mm'),
@@ -259,7 +265,7 @@ export default {
       this.$emit('selectEvent', this.matchFCEventWithPropsEvents(event))
     },
     unselectEvent () {
-      if (this.selectedEvent.el.parentNode != null) {
+      if (this.selectedEvent && this.selectedEvent.el.parentNode != null) {
         this.selectedEvent.el.parentNode.classList.remove('selected')
       }
       this.selectedEvent = undefined

@@ -1,7 +1,7 @@
 <template>
   <div
     class="schedule-tab"
-    :class="{'phone': mq.phone}"
+    :class="{'split-view': !mq.phone && selectedSession}"
   >
     <DailySchedule
       v-show="!mq.phone || !isMobileSessionDetailsDisplayed"
@@ -83,7 +83,7 @@ export default {
 <style lang="scss" scoped>
 @import "@design";
 
-.schedule-tab:not(.phone) {
+.split-view {
     display: flex;
     gap: 50px;
 

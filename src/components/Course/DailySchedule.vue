@@ -1,6 +1,12 @@
 <template>
   <div>
-    <nav>
+    <Timeline
+      v-if="weekDisplay"
+      :initial-date="selectedDate"
+      @select-week="onSelectWeek"
+    />
+
+    <nav v-else>
       <button
         :title="$t('previousDay')"
         :aria-label="$t('previousDay')"
@@ -40,6 +46,19 @@
         >
       </button>
     </nav>
+
+    <button
+      v-if="!mq.phone && selectedSession"
+      class="display-whole-week-button"
+      @click="unselectSession"
+    >
+      <img
+        src="@/assets/icons/calendar.svg"
+        alt=""
+      >
+      <span v-t="'displayWholeWeek'" />
+    </button>
+
     <CustomCalendar
       ref="calendar"
       :display-date="selectedDate"
@@ -57,12 +76,16 @@ import 'v-calendar/style.css'
 import CustomCalendar from '@components/Base/CustomCalendar/CustomCalendar.vue'
 import dayjs from 'dayjs'
 import { DatePicker } from 'v-calendar'
+import { defineAsyncComponent } from 'vue'
 
 import { getUserSchedule } from '@/api/dashboard.service'
+import scheduleService from '@/api/schedule.service'
+const Timeline = defineAsyncComponent(() => import('@/components/Horaires/Timeline'))
 
 export default {
   name: 'DailySchedule',
   components: {
+    Timeline,
     CustomCalendar,
     DatePicker
   },
@@ -70,17 +93,21 @@ export default {
   emits: ['select-event'],
   data () {
     return {
-      calendarOptions: {
-        dayHeaders: false,
-        initialView: 'timeGridDay'
-      },
       eventList: [],
-      selectedDate: dayjs(),
+      selectedDate: undefined,
       selectedEvent: undefined,
-      updatedSession: undefined
+      updatedSession: undefined,
+      isInit: undefined,
+      calendarOptions: undefined
     }
   },
   computed: {
+    selectedSession () {
+      return this.$store.state.course.selectedSession
+    },
+    weekDisplay () {
+      return !this.mq.phone && !this.selectedSession
+    },
     configuration () {
       return this.$store.state.calendar.configuration
     },
@@ -98,7 +125,8 @@ export default {
         return this.selectedDate.toDate()
       },
       set (date) {
-        this.selectDate(dayjs(date))
+        this.selectedDate = dayjs(date)
+        this.getDaySessions(true)
       }
     },
     hiddenDays () {
@@ -121,49 +149,99 @@ export default {
       return dayjs(this.configuration.schoolYearStartDate).toDate()
     }
   },
+  watch: {
+    weekDisplay (weekDisplayValue) {
+      if (weekDisplayValue) {
+        this.getWeekSessions()
+      }
+      this.$refs.calendar.changeView(this.weekDisplay ? 'timeGridWeek' : 'timeGridDay')
+    }
+  },
   created () {
-    const init = (this.$store.state.course.selectedSession === undefined)
-    this.selectDate(this.selectedDate, init)
+    this.calendarOptions = {
+      dayHeaders: this.weekDisplay,
+      initialView: this.weekDisplay ? 'timeGridWeek' : 'timeGridDay'
+    }
+    this.isInit = true
+    this.selectedDate = dayjs()
+    this.getSessions()
   },
   methods: {
-    unselectEvent () {
-      this.$refs.calendar.unselectEvent()
+    getSessions () {
+      if (this.weekDisplay) {
+        this.getWeekSessions()
+      } else {
+        this.getDaySessions()
+      }
     },
-    displayNextDay () { this.selectDate(this.selectedDate.add(1, 'day')) },
-    displayPreviousDay () { this.selectDate(this.selectedDate.add(-1, 'day'), false, false) },
-    selectDate (date, init = false, goForward = true) {
-      getUserSchedule(this.$store.state.user.userId, date, goForward).then((data) => {
-        this.isLoading = false
-        this.isFirstLoad = false
+    getWeekSessions () {
+      const startDate = this.selectedDate.startOf('week')
+      const endDate = this.selectedDate.endOf('week')
+      scheduleService.getUserSessions(this.$store.state.user.userId, startDate, endDate).then((data) => {
         if (data.success) {
-          this.error = false
-          this.eventList = data.eventList
-          this.selectedDate = dayjs(data.date, 'YYYY-MM-DD HH:mm')
+          this.eventList = data.sessions
 
-          if (init) {
-            this.eventList.forEach((event) => {
-              const now = dayjs()
-              const startDate = dayjs(event.startDate, 'YYYY-MM-DD HH:mm')
-              const endDate = dayjs(event.endDate, 'YYYY-MM-DD HH:mm')
-
-              if (now.isAfter(startDate) && now.isBefore(endDate)) {
-                this.$store.dispatch('course/selectSession', event)
-              }
-            })
+          if (this.isInit) {
+            this.selectCurrentSession(data.sessions)
           }
         } else {
-          this.error = true
-          console.error('Error')
+          console.error('error while loading user sessions between ' + startDate.format('YYY-MM-DD HH:mm') + ' and ' + endDate.format('YYY-MM-DD HH:mm'))
         }
       }, (err) => {
-        this.isLoading = false
-        this.error = true
         console.error(err)
       })
     },
+    getDaySessions (goForward = true) {
+      getUserSchedule(this.$store.state.user.userId, this.selectedDate, goForward).then((data) => {
+        if (data.success) {
+          this.eventList = data.eventList
+          this.selectedDate = dayjs(data.date, 'YYYY-MM-DD HH:mm')
+
+          if (this.isInit) {
+            this.selectCurrentSession(data.eventList)
+          }
+        } else {
+          console.error('Error')
+        }
+      }, (err) => {
+        console.error(err)
+      })
+    },
+    selectCurrentSession (eventList) {
+      eventList.forEach((event) => {
+        const now = dayjs()
+        const startDate = dayjs(event.startDate, 'YYYY-MM-DD HH:mm')
+        const endDate = dayjs(event.endDate, 'YYYY-MM-DD HH:mm')
+
+        if (now.isAfter(startDate) && now.isBefore(endDate)) {
+          this.$store.dispatch('course/selectSession', event)
+        }
+      })
+      this.isInit = false
+    },
     selectEvent (event) {
       this.$emit('select-event')
+      this.selectedDate = dayjs(event.startDate, 'YYYY-MM-DD HH:mm')
       this.$store.dispatch('course/selectSession', event)
+    },
+    unselectSession () {
+      this.$store.dispatch('course/unselectSession')
+      this.unselectEvent()
+    },
+    unselectEvent () {
+      this.$refs.calendar.unselectEvent()
+    },
+    displayNextDay () {
+      this.selectedDate = this.selectedDate.add(1, 'day')
+      this.getDaySessions(true)
+    },
+    displayPreviousDay () {
+      this.selectedDate = this.selectedDate.add(-1, 'day')
+      this.getDaySessions(false)
+    },
+    onSelectWeek (week) {
+      this.selectedDate = dayjs(week.firstDayOfWeek).startOf('day')
+      this.getWeekSessions()
     }
   }
 }
@@ -206,6 +284,24 @@ nav {
   }
 }
 
+.display-whole-week-button {
+  width: 100%;
+  background-color: transparent;
+  cursor: pointer;
+  display: flex;
+  padding: 4px 8px;
+  margin-bottom: 10px;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+  border-radius: 6px;
+  border: 1px solid $color-border;
+
+  img {
+    margin-right: 1rem;
+  }
+}
+
 .date {
   display: flex;
   padding: 0.5rem 1rem;
@@ -228,6 +324,7 @@ nav {
 <i18n locale="fr">
 {
   "nextDay": "Jour suivant",
-  "previousDay": "Jour précédent"
+  "previousDay": "Jour précédent",
+  "displayWholeWeek": "Afficher la semaine complète"
 }
 </i18n>
