@@ -13,13 +13,12 @@
 
     <PentilaDropdown
       v-if="notesList"
+      v-model="selectedNote"
       data-test="versionListDropDown"
-      :model-value="selectedNote"
       :list="notesList"
       :sort="false"
       :filtered="false"
       display-field="versionNumber"
-      @update:model-value="selectNote"
     />
 
     <div v-if="isAdministrator">
@@ -41,63 +40,51 @@ import aboutService from '@/api/about.service'
 export default {
   name: 'VersionNoteSelector',
   emits: ['selectNote', 'update'],
-  data () {
-    return {
-      isLoading: false,
-      error: false,
-      notesList: undefined,
-      selectedNote: undefined
-    }
-  },
   computed: {
     isAdministrator () {
       return this.$store.state.user.isAdministrator
+    },
+    notesList () {
+      return this.$store.state.about.versionNotesList
+    },
+    selectedNote: {
+      get () {
+        return this.$store.state.about.selectedNote
+      },
+      set (value) {
+        this.$store.dispatch('about/setSelectedNote', value)
+      }
+    },
+    isLoading () {
+      return this.$store.state.about.isLoadingVersionList
+    },
+    error () {
+      return this.$store.state.about.versionListError
     }
   },
   created () {
-    this.getNotesList()
+    this.$store.dispatch('about/getVersionNotesList')
   },
   methods: {
-    getNotesList () {
-      this.isLoading = true
-      aboutService.getVersionList().then((data) => {
-        this.isLoading = false
-        if (data.success) {
-          this.notesList = data.versions
-          this.selectedNote(data.versions[0]) // Assume notes are sorted by date
-          this.error = false
-        } else {
-          console.error('Cannot get notes versions list')
-          this.error = true
-        }
-      }, (err) => {
-        this.error = err
-        console.error(err)
-      })
-    },
     confirmDeleteVersionNote () {
       this.$store.dispatch('warningModal/addWarning', {
         text: this.$t('deleteVersionNoteWarning'),
         lastAction: { fct: this.deleteVersionNote }
       })
     },
-    selectNote (note) {
-      this.selectedNote = note
-      this.$emit('selectNote', note)
-    },
     deleteVersionNote () {
-      this.isLoading = true
+      // this.isLoading = true
       aboutService.deleteVersionNote(this.selectedNote.versionId).then((data) => {
-        this.isLoading = false
+        // this.isLoading = false
         if (data.success) {
-          this.getNotesList()
-          this.error = false
+          this.$store.dispatch('about/getVersionNotesList')
+          // this.error = false
         } else {
           console.error('Cannot delete version note ', this.selectedNote)
-          this.error = true
+          // this.error = true
         }
       }, (err) => {
-        this.error = err
+        // this.error = err
         console.error(err)
       })
     }

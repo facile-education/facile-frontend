@@ -1,55 +1,77 @@
 import aboutService from '@/api/about.service'
 
 export const state = {
-  versionList: undefined,
-  versionDetails: undefined,
-  createVersionMessage: undefined
+  versionNotesList: undefined,
+  isLoadingVersionNotesList: false,
+  versionNotesListError: false,
+  selectedNote: undefined,
+  versionNoteDetails: undefined,
+  isLoadingVersionNoteDetails: false,
+  versionNoteDetailsError: false
 }
 
 export const mutations = {
-  initTermsOfUse (state, payload) {
-    state.termsOfUse = payload
+  setVersionNotesList (state, payload) {
+    state.versionNotesList = payload
   },
-  initVersionList (state, payload) {
-    state.versionList = payload
+  setIsLoadingVersionNotesList (state, payload) {
+    this.isLoadingVersionNotesList = payload
   },
-  initVersionDetails (state, payload) {
-    state.versionDetails = payload
+  setVersionNotesListError (state, payload) {
+    this.versionNotesListError = payload
   },
-  initCreateVersionMessage (state, payload) {
-    state.createVersionMessage = payload
+  setSelectedNote (state, payload) {
+    state.selectedNote = payload
+  },
+  setVersionNoteDetails (state, payload) {
+    state.versionNoteDetails = payload
+  },
+  setIsLoadingVersionNoteDetails (state, payload) {
+    this.isLoadingVersionNoteDetails = payload
+  },
+  setVersionNoteDetailsError (state, payload) {
+    this.versionNoteDetailsError = payload
   }
 }
 
 export const actions = {
-  getVersionList ({ commit }) {
-    aboutService.getVersionList().then((data) => {
+  getVersionNotesList ({ commit }) {
+    commit('setIsLoadingVersionNotesList', true)
+    aboutService.getVersionNotesList().then((data) => {
+      commit('setIsLoadingVersionNotesList', false)
       if (data.success) {
-        commit('initVersionList', data.versions)
-      }
-    })
-  },
-  getVersionDetails ({ commit }, version) {
-    aboutService.getVersionDetails(version.versionId).then((data) => {
-      if (data.success) {
-        commit('initVersionDetails', data.versionDetails)
-      }
-    })
-  },
-  createVersion ({ commit }, { number, details }) {
-    aboutService.createVersion(number, details).then((data) => {
-      if (data.success) {
-        commit('initCreateVersionMessage', data.success)
-        // if success, update versionList
-        this.dispatch('about/getVersionList')
-        this.dispatch('menu/closeVersionEditionModal')
-        // TODO popup message "success"
+        commit('setVersionNotesListError', false)
+        commit('setVersionNotesList', data.versions)
+        this.dispatch('about/setSelectedNote', data.versions[0])
       } else {
-        commit('initCreateVersionMessage', data.success)
-        // TODO popup message "fail"
+        console.error('Cannot get notes versions list')
+        commit('setVersionNotesListError', true)
       }
+    }, (err) => {
+      console.error(err)
+      commit('setVersionNotesListError', err)
+      commit('setIsLoadingVersionNotesList', false)
+    })
+  },
+  setSelectedNote ({ commit }, note) {
+    commit('setSelectedNote', note)
+    this.dispatch('about/getVersionNoteDetails', note)
+  },
+  getVersionNoteDetails ({ commit }, note) {
+    commit('setIsLoadingVersionNoteDetails', true)
+    aboutService.getVersionNoteDetails(note.versionId).then((data) => {
+      commit('setIsLoadingVersionNoteDetails', false)
+      if (data.success) {
+        commit('setVersionNoteDetailsError', false)
+        commit('setVersionNoteDetails', data.versionDetails)
+      } else {
+        commit('setVersionNoteDetailsError', true)
+        console.error('Cannot get versionNote details for versionNote', note)
+      }
+    }, (err) => {
+      console.error(err)
+      commit('setVersionNoteDetailsError', err)
+      commit('setIsLoadingVersionNoteDetails', false)
     })
   }
 }
-
-export const getters = {}
