@@ -78,10 +78,10 @@ export default {
       }
     },
     isLoading () {
-      return this.$store.state.about.isLoadingVersionList
+      return this.$store.state.about.isLoadingVersionNotesList
     },
     error () {
-      return this.$store.state.about.versionListError
+      return this.$store.state.about.versionNotesListError
     }
   },
   created () {

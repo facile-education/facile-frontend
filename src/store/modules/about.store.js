@@ -65,7 +65,7 @@ export const actions = {
   },
   getVersionNoteDetails ({ commit }, note) {
     commit('setIsLoadingVersionNoteDetails', true)
-    aboutService.getVersionNoteDetails(note.versionId).then((data) => {
+    aboutService.getVersionNoteDetails(note.versionNoteId).then((data) => {
       commit('setIsLoadingVersionNoteDetails', false)
       if (data.success) {
         commit('setVersionNoteDetailsError', false)
