@@ -1,4 +1,7 @@
+import dayjs from 'dayjs'
+
 import aboutService from '@/api/about.service'
+import i18n from '@/i18n'
 
 export const state = {
   versionNotesList: undefined,
@@ -41,6 +44,9 @@ export const actions = {
       commit('setIsLoadingVersionNotesList', false)
       if (data.success) {
         commit('setVersionNotesListError', false)
+        data.versions.forEach(versionNote => {
+          versionNote.versionNoteLabel = i18n.global.t('VersionNotes.updateOf') + dayjs(versionNote.creationDate, '').format('DD MMMM YYYY')
+        })
         commit('setVersionNotesList', data.versions)
         this.dispatch('about/setSelectedNote', data.versions[0])
       } else {

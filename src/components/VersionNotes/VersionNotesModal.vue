@@ -25,6 +25,7 @@
       </PentilaButton>
 
       <VersionNoteSelector
+        class="note-selector"
         @update="openUpdateVersionNoteModal"
       />
 
@@ -121,6 +122,10 @@ export default {
 
 .create-button {
   @extend %create-button;
+}
+
+.create-button, .note-selector {
+  margin-bottom: 1rem;
 }
 
 </style>
