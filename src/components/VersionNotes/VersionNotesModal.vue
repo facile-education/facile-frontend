@@ -25,7 +25,6 @@
       </PentilaButton>
 
       <VersionNoteSelector
-        @select-note="selectNote"
         @update="openUpdateVersionNoteModal"
       />
 
@@ -41,30 +40,36 @@
       />
 
       <div
+        v-if="versionNoteDetails"
         class="version-note-details"
         v-html="versionNoteDetails"
       />
     </template>
   </PentilaWindow>
+
+  <teleport
+    v-if="isSaveNoteVersionModalDisplayed"
+    to="body"
+  >
+    <SaveVersionNoteModal
+      :is-creation="isCreation"
+      @close="isSaveNoteVersionModalDisplayed = false"
+    />
+  </teleport>
 </template>
 
 <script>
 import NeroIcon from '@components/Nero/NeroIcon.vue'
+import SaveVersionNoteModal from '@components/VersionNotes/SaveVersionNoteModal.vue'
 import VersionNoteSelector from '@components/VersionNotes/VersionNoteSelector.vue'
-
-import aboutService from '@/api/about.service'
 
 export default {
   name: 'VersionNotesModal',
-  components: { VersionNoteSelector, NeroIcon },
+  components: { SaveVersionNoteModal, VersionNoteSelector, NeroIcon },
   inject: ['mq'],
   emits: ['close'],
   data () {
     return {
-      selectedNote: undefined,
-      isLoading: false,
-      error: false,
-      versionNoteDetails: undefined,
       isCreation: false,
       isSaveNoteVersionModalDisplayed: false
     }
@@ -72,30 +77,18 @@ export default {
   computed: {
     isAdministrator () {
       return this.$store.state.user.isAdministrator
+    },
+    versionNoteDetails () {
+      return this.$store.state.about.versionNoteDetails
+    },
+    isLoading () {
+      return this.$store.state.about.isLoadingVersionNoteDetails
+    },
+    error () {
+      return this.$store.state.about.versionNoteDetailsError
     }
   },
   methods: {
-    selectNote (versionNote) {
-      this.selectedNote = versionNote
-      this.getVersionNoteDetails()
-    },
-    getVersionNoteDetails () {
-      this.isLoading = true
-      aboutService.getVersionDetails(this.selectedNote.versionId).then((data) => {
-        this.isLoading = false
-        if (data.success) {
-          this.error = false
-          this.versionNoteDetails = data.versionDetails
-        } else {
-          this.error = true
-          console.error('Cannot get versionNote details for versionNote', this.selectedNote)
-        }
-      }, (err) => {
-        this.isLoading = false
-        this.error = err
-        console.error(err)
-      })
-    },
     openCreateVersionNoteModal () {
       this.isCreation = true
       this.isSaveNoteVersionModalDisplayed = true
