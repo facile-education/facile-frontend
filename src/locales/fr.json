@@ -324,7 +324,7 @@
     "replaceButton": "Remplacer",
     "text": " existe déjà à cet emplacement. Voulez-vous remplacer l'existant par une nouvelle version ou conserver les deux ? "
   },
-  "VersionsNotes": {
+  "VersionNotes": {
     "updateOf": "Mise à jour du "
   },
   "WarningModal": {

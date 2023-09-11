@@ -12,7 +12,7 @@
     <template #body>
       <div class="title">
         <PentilaInput
-          :v-model="title"
+          v-model="title"
           :placeholder="$t('titlePlaceholder')"
         />
       </div>
