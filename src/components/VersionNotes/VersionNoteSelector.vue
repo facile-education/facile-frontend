@@ -18,28 +18,50 @@
       :list="notesList"
       :sort="false"
       :filtered="false"
-      display-field="versionNumber"
+      display-field="versionNoteLabel"
     />
 
-    <div v-if="isAdministrator">
-      <button
-        v-t="'update'"
-        @click="$emit('update')"
+    <button
+      v-if="isAdministrator"
+      :aria-label="$t('options')"
+      :title="$t('options')"
+      @click="toggleContextMenu"
+    >
+      <img
+        height="20"
+        width="20"
+        :src="require('@/assets/icons/vertical_dots.svg')"
+        alt="options"
+      >
+    </button>
+
+    <teleport
+      v-if="displayMenu"
+      to="body"
+    >
+      <ContextMenu
+        @choose-option="performChosenOption"
+        @close="displayMenu=false"
       />
-      <button
-        v-t="'delete'"
-        @click="confirmDeleteVersionNote"
-      />
-    </div>
+    </teleport>
   </div>
 </template>
 
 <script>
+import ContextMenu from '@components/ContextMenu/ContextMenu.vue'
+
 import aboutService from '@/api/about.service'
+import { icons } from '@/constants/icons'
 
 export default {
   name: 'VersionNoteSelector',
+  components: { ContextMenu },
   emits: ['selectNote', 'update'],
+  data () {
+    return {
+      displayMenu: false
+    }
+  },
   computed: {
     isAdministrator () {
       return this.$store.state.user.isAdministrator
@@ -66,6 +88,41 @@ export default {
     this.$store.dispatch('about/getVersionNotesList')
   },
   methods: {
+    toggleContextMenu (event) {
+      this.displayMenu = true
+      this.$store.dispatch('contextMenu/openContextMenu', {
+        event,
+        options: [
+          {
+            name: 'update',
+            title: this.$t('update'),
+            icon: icons.options.rename,
+            position: 1,
+            hasSeparator: false
+          },
+          {
+            name: 'delete',
+            title: this.$t('delete'),
+            icon: icons.options.delete,
+            position: 2,
+            hasSeparator: false
+          }]
+      })
+    },
+    performChosenOption (option) {
+      switch (option.name) {
+        case 'update':
+          this.$emit('update')
+          break
+        case 'delete':
+          this.confirmDeleteVersionNote()
+          break
+        default:
+          console.error('no option with name ' + option.name + ' exists')
+      }
+      this.displayMenu = false
+      this.$store.dispatch('contextMenu/closeMenus')
+    },
     confirmDeleteVersionNote () {
       this.$store.dispatch('warningModal/addWarning', {
         text: this.$t('deleteVersionNoteWarning'),
@@ -100,6 +157,14 @@ export default {
   justify-content: space-between;
 }
 
+button {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
 </style>
 
 <i18n locale="fr">
@@ -107,6 +172,7 @@ export default {
   "delete": "Supprimer",
   "deleteVersionNoteWarning": "Vous êtes sur le point de supprimer une note de version, cette action sera irréversible",
   "errorPlaceholder": "Oups, une erreur est survenue...",
+  "options": "Options",
   "update": "Modifier"
 }
 </i18n>
