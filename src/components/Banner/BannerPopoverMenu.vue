@@ -14,9 +14,9 @@
       </li>
       <li>
         <button
-          v-t="'informations'"
-          data-test="openInformationModal"
-          @click="toggleInformationsModal"
+          v-t="'news'"
+          data-test="openVersionNotesModal"
+          @click="toggleVersionNotesModal"
         />
       </li>
       <li>
@@ -31,6 +31,13 @@
           v-t="'suggestion'"
           data-test="openSuggestionModal"
           @click="toggleSuggestionModal"
+        />
+      </li>
+      <li>
+        <button
+          v-t="'informations'"
+          data-test="openInformationModal"
+          @click="toggleInformationsModal"
         />
       </li>
       <li v-if="isAdministrator">
@@ -70,23 +77,28 @@
         :modal-type="supportModalType"
         @close="toggleSupportModal"
       />
+      <VersionNotesModal
+        v-if="isVersionNotesModalDisplayed"
+        @close="toggleVersionNotesModal"
+      />
     </teleport>
   </nav>
 </template>
 
 <script>
 import { defineAsyncComponent } from 'vue'
-import { useCookies } from 'vue3-cookies'
 
 import constants from '@/api/constants'
 
 const AssistanceModal = defineAsyncComponent(() => import('@/components/Assistance/AssistanceModal.vue'))
 const InformationModal = defineAsyncComponent(() => import('@/components/Informations/InformationModal.vue'))
 const PreferencesModal = defineAsyncComponent(() => import('@/components/Preferences/PreferencesModal.vue'))
+const VersionNotesModal = defineAsyncComponent(() => import('@components/VersionNotes/VersionNotesModal.vue'))
 
 export default {
   name: 'BannerPopoverMenu',
   components: {
+    VersionNotesModal,
     AssistanceModal,
     InformationModal,
     PreferencesModal
@@ -98,7 +110,8 @@ export default {
       supportModalType: '',
       isInformationModalDisplayed: false,
       isPreferencesDisplayed: false,
-      isSupportModalDisplayed: false
+      isSupportModalDisplayed: false,
+      isVersionNotesModalDisplayed: false
     }
   },
   computed: {
@@ -126,6 +139,9 @@ export default {
     },
     togglePreferencesModal () {
       this.isPreferencesDisplayed = !this.isPreferencesDisplayed
+    },
+    toggleVersionNotesModal () {
+      this.isVersionNotesModalDisplayed = !this.isVersionNotesModalDisplayed
     },
     toggleSupportModal () {
       this.supportModalType = 'Assistance'
@@ -214,6 +230,7 @@ ul {
   "controlPanel": "Panneau de contrôle",
   "informations": "Informations",
   "logout": "Fermer la session",
+  "news": "Nouveautés",
   "preferences": "Préférences",
   "suggestion": "Suggestion"
 }
