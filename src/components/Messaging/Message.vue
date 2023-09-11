@@ -39,7 +39,7 @@
           </p>
         </div>
         <div class="header-line2">
-          <p v-html="message.subject" />
+          <p>{{ message.subject }}</p>
         </div>
         <div class="header-line3">
           <MessageRecipients
@@ -53,7 +53,6 @@
 
     <!-- Body -->
     <div class="message-content">
-      <!-- TODO: sanitize content -->
       <!-- eslint-disable-next-line vue/no-v-html -->
       <p v-html="message.fullContent" />
     </div>
