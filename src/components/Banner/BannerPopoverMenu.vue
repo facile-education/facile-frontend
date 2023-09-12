@@ -12,17 +12,16 @@
           @click="togglePreferencesModal"
         />
       </li>
-      <li>
+      <li style="position: relative">
         <button
           v-t="'news'"
           data-test="openVersionNotesModal"
           @click="toggleVersionNotesModal"
-        >
-          <Pellet
-            v-if="!hasReadLastVersionNote"
-            class="pellet"
-          />
-        </button>
+        />
+        <Pellet
+          v-if="!hasReadLastVersionNote"
+          class="pellet"
+        />
       </li>
       <li>
         <button
@@ -198,7 +197,6 @@ ul {
     cursor: pointer;
     color: initial;
     text-decoration: none;
-    position: relative;
 
     @extend %font-regular-m;
     width: 100%;
@@ -207,13 +205,13 @@ ul {
     &:hover {
       background-color: $color-hover-bg;
     }
+  }
 
-    .pellet {
-      position: absolute;
-      top: 50%;
-      right: 1rem;
-      transform: translateY(-50%);
-    }
+  .pellet {
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
   }
 
   .logout-container {
