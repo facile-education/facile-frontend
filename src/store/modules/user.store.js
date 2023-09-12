@@ -32,6 +32,7 @@ export const state = {
   children: [],
   selectedChild: undefined,
   agreedTermsOfUse: true,
+  hasReadLastVersionNote: false,
   roleId: 0 // For Matomo
 }
 export const mutations = {
@@ -62,6 +63,7 @@ export const mutations = {
     state.isStudent = payload.isStudent
     state.isTeacher = payload.isTeacher
     state.isParent = payload.isParent
+    state.hasReadLastVersionNote = payload.hasReadLastVersionNote
 
     if (payload.userSchools) {
       state.schoolList = payload.userSchools
@@ -110,6 +112,9 @@ export const mutations = {
   },
   setPasswordChange (state, payload) {
     state.passwordChange = payload
+  },
+  setHasReadLastVersionNote (state, payload) {
+    state.hasReadLastVersionNote = payload
   }
 }
 export const actions = {
@@ -130,6 +135,9 @@ export const actions = {
   },
   updatePersonalDetails ({ commit }, data) {
     commit('updateUserDetails', data)
+  },
+  markLastVersionNoteAsRead ({ commit }) {
+    commit('setHasReadLastVersionNote', true)
   },
   getServiceList ({ commit }) {
     getUserApplications().then((data) => {
