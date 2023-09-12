@@ -91,7 +91,6 @@
 </template>
 
 <script>
-import Pellet from '@components/Base/Pellet.vue'
 import { defineAsyncComponent } from 'vue'
 
 import constants from '@/api/constants'
@@ -100,6 +99,7 @@ const AssistanceModal = defineAsyncComponent(() => import('@/components/Assistan
 const InformationModal = defineAsyncComponent(() => import('@/components/Informations/InformationModal.vue'))
 const PreferencesModal = defineAsyncComponent(() => import('@/components/Preferences/PreferencesModal.vue'))
 const VersionNotesModal = defineAsyncComponent(() => import('@components/VersionNotes/VersionNotesModal.vue'))
+const Pellet = defineAsyncComponent(() => import('@components/Base/Pellet.vue'))
 
 export default {
   name: 'BannerPopoverMenu',

@@ -61,8 +61,9 @@
 
 <script>
 import NeroIcon from '@components/Nero/NeroIcon.vue'
-import SaveVersionNoteModal from '@components/VersionNotes/SaveVersionNoteModal.vue'
 import VersionNoteSelector from '@components/VersionNotes/VersionNoteSelector.vue'
+import { defineAsyncComponent } from 'vue'
+const SaveVersionNoteModal = defineAsyncComponent(() => import('@components/VersionNotes/SaveVersionNoteModal.vue'))
 
 export default {
   name: 'VersionNotesModal',
