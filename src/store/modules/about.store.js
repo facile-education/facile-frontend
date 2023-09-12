@@ -51,6 +51,9 @@ export const actions = {
 
         if (data.versionNotes.length > 0) {
           this.dispatch('about/setSelectedNote', data.versionNotes[0])
+        } else {
+          commit('setSelectedNote', undefined)
+          commit('setVersionNoteDetails', undefined)
         }
       } else {
         console.error('Cannot get notes versions list')

@@ -25,7 +25,6 @@
           v-model="htmlContent"
           class="ck-editor"
           :editor="editor"
-          :config="{}"
         />
       </div>
     </template>
@@ -85,7 +84,7 @@ export default {
     createVersionNote () {
       createVersionNote(this.title, this.htmlContent).then((data) => {
         if (data.success) {
-          this.dispatch('about/getVersionList')
+          this.$store.dispatch('about/getVersionNotesList')
           this.$emit('close')
         }
         // TODO: handle errors
@@ -94,7 +93,7 @@ export default {
     updateVersionNote () {
       updateVersionNote(this.selectedNote.versionNoteId, this.title, this.htmlContent).then((data) => {
         if (data.success) {
-          this.dispatch('about/getVersionNoteContent', this.selectedNote)
+          this.$store.dispatch('about/getVersionNoteContent', this.selectedNote)
           this.$emit('close')
         }
         // TODO: handle errors

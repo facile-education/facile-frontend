@@ -1,4 +1,5 @@
 import axios from 'axios'
+import PentilaUtils from 'pentila-utils'
 
 import constants from './constants'
 
@@ -35,22 +36,18 @@ function getVersionNoteContent (versionNoteId) {
 }
 
 function createVersionNote (title, htmlContent) {
-  return axios.post(constants.JSON_WS_URL + ABOUT_PATH + 'versionnote/create-version-note', {
-    params: {
-      title,
-      htmlContent
-    }
-  }).then(response => response.data)
+  return axios.post(constants.JSON_WS_URL + ABOUT_PATH + 'versionnote/create-version-note', PentilaUtils.URL.params({
+    title,
+    htmlContent
+  })).then(response => response.data)
 }
 
-function updateVersionNote (versionNoteId, title, htmlContent) {
-  return axios.put(constants.JSON_WS_URL + ABOUT_PATH + 'versionnote/update-version-note', {
-    params: {
-      versionNoteId,
-      title,
-      htmlContent
-    }
-  }).then(response => response.data)
+function updateVersionNote (versionNoteId, title, htmlContent) { // TODO: to make it works with PUT http protocol
+  return axios.post(constants.JSON_WS_URL + ABOUT_PATH + 'versionnote/update-version-note', PentilaUtils.URL.params({
+    versionNoteId,
+    title,
+    htmlContent
+  })).then(response => response.data)
 }
 
 function deleteVersionNote (versionNoteId) {
