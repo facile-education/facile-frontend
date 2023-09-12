@@ -19,12 +19,6 @@
         <PentilaTabList ref="tabList">
           <PentilaTabItem
             class="tab-item"
-            :title="$t('versionsTabLabel')"
-          >
-            <VersionsDetails />
-          </PentilaTabItem>
-          <PentilaTabItem
-            class="tab-item"
             :title="$t('termsOfUseTabLabel')"
           >
             <TermsOfUse />
@@ -52,21 +46,19 @@ import Accessibility from '@components/Informations/Accessibility'
 import Privacy from '@components/Informations/Privacy'
 
 import TermsOfUse from '@/components/Informations/TermsOfUse'
-import VersionsDetails from '@/components/Informations/VersionsDetails'
 
 export default {
   name: 'InformationModal',
   components: {
     Accessibility,
     Privacy,
-    VersionsDetails,
     TermsOfUse
   },
   inject: ['mq'],
   props: {
     tab: {
       type: String,
-      default: 'version'
+      default: 'termOfUse'
     }
   },
   emits: ['close'],
@@ -79,17 +71,14 @@ export default {
   methods: {
     selectTab (tabName) {
       switch (tabName) {
-        case 'version':
+        case 'termOfUse':
           this.$refs.tabList.selectTab(0)
           break
-        case 'termOfUse':
+        case 'privacy':
           this.$refs.tabList.selectTab(1)
           break
-        case 'privacy':
-          this.$refs.tabList.selectTab(2)
-          break
         case 'accessibility':
-          this.$refs.tabList.selectTab(3)
+          this.$refs.tabList.selectTab(2)
           break
         default:
           this.$refs.tabList.selectTab(0)
@@ -120,7 +109,6 @@ export default {
 <i18n locale="fr">
 {
   "modalHeaderLabel": "Informations générales relatives à l'ENTA",
-  "versionsTabLabel": "Mises à jour",
   "accessibilityLabel": "Accessibilité",
   "privacyLabel": "Confidentialité",
   "termsOfUseTabLabel": "CGU"
