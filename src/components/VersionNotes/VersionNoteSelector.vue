@@ -137,7 +137,7 @@ export default {
     },
     deleteVersionNote () {
       // this.isLoading = true
-      aboutService.deleteVersionNote(this.selectedNote.versionId).then((data) => {
+      aboutService.deleteVersionNote(this.selectedNote.versionNoteId).then((data) => {
         // this.isLoading = false
         if (data.success) {
           this.$store.dispatch('about/getVersionNotesList')
