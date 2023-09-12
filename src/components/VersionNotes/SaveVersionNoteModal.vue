@@ -15,6 +15,7 @@
           v-model="title"
           :placeholder="$t('titlePlaceholder')"
         />
+        <PentilaErrorMessage :error-message="formErrorList.title" />
       </div>
       <div class="content">
         <div
@@ -26,6 +27,7 @@
           class="ck-editor"
           :editor="editor"
         />
+        <PentilaErrorMessage :error-message="formErrorList.htmlContent" />
       </div>
     </template>
     <template #footer>
@@ -40,6 +42,8 @@
 <script>
 import InlineEditor from '@ckeditor/ckeditor5-build-inline'
 import { component as CKEditor } from '@ckeditor/ckeditor5-vue'
+import { useVuelidate } from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
 
 import { createVersionNote, updateVersionNote } from '@/api/about.service'
 
@@ -54,6 +58,15 @@ export default {
     }
   },
   emits: ['close'],
+  setup: () => ({ v$: useVuelidate() }),
+  validations: {
+    title: {
+      required
+    },
+    htmlContent: {
+      required
+    }
+  },
   data () {
     return {
       title: undefined,
@@ -64,6 +77,12 @@ export default {
   computed: {
     selectedNote () {
       return this.$store.state.about.selectedNote
+    },
+    formErrorList () {
+      return {
+        title: (this.v$.title.$invalid && this.v$.title.$dirty) ? this.$t('required') : '',
+        htmlContent: (this.v$.htmlContent.$invalid && this.v$.htmlContent.$dirty) ? this.$t('required') : ''
+      }
     }
   },
   created () {
@@ -74,11 +93,14 @@ export default {
   },
   methods: {
     submit () {
-      // TODO: form validation
-      if (this.isCreation) {
-        this.createVersionNote()
+      if (this.v$.$invalid) {
+        this.v$.$touch()
       } else {
-        this.updateVersionNote()
+        if (this.isCreation) {
+          this.createVersionNote()
+        } else {
+          this.updateVersionNote()
+        }
       }
     },
     createVersionNote () {
@@ -126,6 +148,7 @@ export default {
   "contentLabel": "Contenu:",
   "create": "Créer",
   "createHeader": "Création d'une note de version",
+  "required": "Champs requis",
   "titlePlaceholder": "Titre",
   "update": "Modifier",
   "updateHeader": "Modification d'une note de version"

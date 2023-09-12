@@ -49,7 +49,7 @@
   </PentilaWindow>
 
   <teleport
-    v-if="isSaveNoteVersionModalDisplayed"
+    v-if="isAdministrator && isSaveNoteVersionModalDisplayed"
     to="body"
   >
     <SaveVersionNoteModal
