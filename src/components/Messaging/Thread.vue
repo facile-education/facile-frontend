@@ -224,21 +224,17 @@ export default {
     isThreadSelected () {
       for (const selectedThread of this.$store.state.messaging.selectedThreads) {
         if (selectedThread.threadId === this.thread.threadId) {
-          console.log('is thread selected true')
           return true
         }
       }
-      console.log('is thread selected false')
       return false
     },
     isSubMessageSelected () {
       for (const selectedMessage of this.$store.state.messaging.selectedMessages) {
         if (selectedMessage.threadId === this.thread.threadId) {
-          console.log('is sub-message selected true')
           return true
         }
       }
-      console.log('is sub-message selected false')
       return false
     },
     selectedThreads () {
