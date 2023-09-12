@@ -44,11 +44,14 @@ export const actions = {
       commit('setIsLoadingVersionNotesList', false)
       if (data.success) {
         commit('setVersionNotesListError', false)
-        data.versions.forEach(versionNote => {
+        data.versionNotes.forEach(versionNote => {
           versionNote.versionNoteLabel = i18n.global.t('VersionNotes.updateOf') + dayjs(versionNote.creationDate, '').format('DD MMMM YYYY')
         })
-        commit('setVersionNotesList', data.versions)
-        this.dispatch('about/setSelectedNote', data.versions[0])
+        commit('setVersionNotesList', data.versionNotes)
+
+        if (data.versionNotes.length > 0) {
+          this.dispatch('about/setSelectedNote', data.versionNotes[0])
+        }
       } else {
         console.error('Cannot get notes versions list')
         commit('setVersionNotesListError', true)
@@ -61,15 +64,15 @@ export const actions = {
   },
   setSelectedNote ({ commit }, note) {
     commit('setSelectedNote', note)
-    this.dispatch('about/getVersionNoteDetails', note)
+    this.dispatch('about/getVersionNoteContent', note)
   },
-  getVersionNoteDetails ({ commit }, note) {
+  getVersionNoteContent ({ commit }, note) {
     commit('setIsLoadingVersionNoteDetails', true)
-    aboutService.getVersionNoteDetails(note.versionNoteId).then((data) => {
+    aboutService.getVersionNoteContent(note.versionNoteId).then((data) => {
       commit('setIsLoadingVersionNoteDetails', false)
       if (data.success) {
         commit('setVersionNoteDetailsError', false)
-        commit('setVersionNoteDetails', data.versionDetails)
+        commit('setVersionNoteDetails', data.content)
       } else {
         commit('setVersionNoteDetailsError', true)
         console.error('Cannot get versionNote details for versionNote', note)

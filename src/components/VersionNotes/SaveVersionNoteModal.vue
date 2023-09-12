@@ -94,7 +94,7 @@ export default {
     updateVersionNote () {
       updateVersionNote(this.selectedNote.versionNoteId, this.title, this.htmlContent).then((data) => {
         if (data.success) {
-          this.dispatch('about/getVersionNoteDetails', this.selectedNote)
+          this.dispatch('about/getVersionNoteContent', this.selectedNote)
           this.$emit('close')
         }
         // TODO: handle errors

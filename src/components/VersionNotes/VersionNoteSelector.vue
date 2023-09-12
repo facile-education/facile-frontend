@@ -12,7 +12,7 @@
     />
 
     <PentilaDropdown
-      v-if="notesList"
+      v-if="notesList && notesList.length > 0"
       v-model="selectedNote"
       data-test="versionListDropDown"
       :list="notesList"
@@ -21,8 +21,14 @@
       display-field="versionNoteLabel"
     />
 
+    <div
+      v-else-if="notesList"
+      v-t="'emptyPlaceholder'"
+      class="placeholder"
+    />
+
     <button
-      v-if="isAdministrator"
+      v-if="selectedNote && isAdministrator"
       :aria-label="$t('options')"
       :title="$t('options')"
       @click="toggleContextMenu"
@@ -150,6 +156,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
+
+.placeholder {
+  @extend %content-placeholder;
+}
 
 .version-note-selector {
   display: flex;
@@ -171,6 +182,7 @@ button {
 {
   "delete": "Supprimer",
   "deleteVersionNoteWarning": "Vous êtes sur le point de supprimer une note de version, cette action sera irréversible",
+  "emptyPlaceholder": "Aucune note de version disponible",
   "errorPlaceholder": "Oups, une erreur est survenue...",
   "options": "Options",
   "update": "Modifier"
