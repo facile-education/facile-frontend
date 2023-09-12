@@ -40,9 +40,9 @@
 
 <script>
 
-import Pellet from '@components/Base/Pellet.vue'
 import { defineAsyncComponent } from 'vue'
 const BannerPopoverMenu = defineAsyncComponent(() => import('@/components/Banner/BannerPopoverMenu'))
+const Pellet = defineAsyncComponent(() => import('@components/Base/Pellet.vue'))
 
 export default {
   name: 'BannerUserProfile',
