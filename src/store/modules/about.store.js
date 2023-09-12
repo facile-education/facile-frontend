@@ -76,6 +76,9 @@ export const actions = {
       if (data.success) {
         commit('setVersionNoteDetailsError', false)
         commit('setVersionNoteDetails', data.content)
+        if (note.latest) {
+          this.dispatch('user/markLastVersionNoteAsRead')
+        }
       } else {
         commit('setVersionNoteDetailsError', true)
         console.error('Cannot get versionNote details for versionNote', note)

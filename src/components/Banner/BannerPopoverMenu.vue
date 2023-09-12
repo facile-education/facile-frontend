@@ -17,7 +17,12 @@
           v-t="'news'"
           data-test="openVersionNotesModal"
           @click="toggleVersionNotesModal"
-        />
+        >
+          <Pellet
+            v-if="!hasReadLastVersionNote"
+            class="pellet"
+          />
+        </button>
       </li>
       <li>
         <button
@@ -86,6 +91,7 @@
 </template>
 
 <script>
+import Pellet from '@components/Base/Pellet.vue'
 import { defineAsyncComponent } from 'vue'
 
 import constants from '@/api/constants'
@@ -98,6 +104,7 @@ const VersionNotesModal = defineAsyncComponent(() => import('@components/Version
 export default {
   name: 'BannerPopoverMenu',
   components: {
+    Pellet,
     VersionNotesModal,
     AssistanceModal,
     InformationModal,
@@ -117,6 +124,9 @@ export default {
   computed: {
     isAdministrator () {
       return this.$store.state.user.isAdministrator
+    },
+    hasReadLastVersionNote () {
+      return this.$store.state.user.hasReadLastVersionNote
     }
   },
   mounted () {
@@ -188,6 +198,7 @@ ul {
     cursor: pointer;
     color: initial;
     text-decoration: none;
+    position: relative;
 
     @extend %font-regular-m;
     width: 100%;
@@ -195,6 +206,13 @@ ul {
 
     &:hover {
       background-color: $color-hover-bg;
+    }
+
+    .pellet {
+      position: absolute;
+      top: 50%;
+      right: 1rem;
+      transform: translateY(-50%);
     }
   }
 

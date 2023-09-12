@@ -5,11 +5,18 @@
       data-test="togglePopoverMenu"
       @click.stop="togglePopoverMenu"
     >
-      <img
-        class="user-picture"
-        :src="userPicture"
-        alt="user_picture"
-      >
+      <span class="thumbnail-container">
+        <img
+          class="user-picture"
+          :src="userPicture"
+          alt="user_picture"
+        >
+        <Pellet
+          v-if="hasNotifications"
+          class="pellet"
+        />
+      </span>
+
       <span
         v-if="mq.desktop"
         class="username"
@@ -33,12 +40,14 @@
 
 <script>
 
+import Pellet from '@components/Base/Pellet.vue'
 import { defineAsyncComponent } from 'vue'
 const BannerPopoverMenu = defineAsyncComponent(() => import('@/components/Banner/BannerPopoverMenu'))
 
 export default {
   name: 'BannerUserProfile',
   components: {
+    Pellet,
     BannerPopoverMenu
   },
   inject: ['mq'],
@@ -53,6 +62,9 @@ export default {
     },
     userPicture () {
       return this.$store.state.user.picture
+    },
+    hasNotifications () {
+      return !this.$store.state.user.hasReadLastVersionNote
     }
   },
   methods: {
@@ -89,10 +101,22 @@ button {
   height: 32px;
 }
 
-.user-picture {
+.thumbnail-container {
   height: 100%;
-  width: 32px;
-  border-radius: 50%;
+  position: relative;
+
+  .pellet {
+    position: absolute;
+    right: -4px;
+    top: -4px;
+    background-color: white;
+  }
+
+  .user-picture {
+    height: 100%;
+    width: 32px;
+    border-radius: 50%;
+  }
 }
 
 .username {
