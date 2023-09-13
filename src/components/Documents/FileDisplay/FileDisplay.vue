@@ -6,11 +6,11 @@
     data-test="file-content"
   >
     <ImageDocument
-      v-if="typeOfView === 'ImageDocument'"
+      v-if="typeOfView === 'Image'"
       :src="fileUrl"
     />
     <VideoDocument
-      v-else-if="typeOfView === 'VideoDocument'"
+      v-else-if="typeOfView === 'Video'"
       :src="fileUrl"
     />
     <AudioDocument
