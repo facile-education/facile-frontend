@@ -45,18 +45,18 @@
         class="version-note-details"
         v-html="versionNoteDetails"
       />
+
+      <teleport
+        v-if="isAdministrator && isSaveNoteVersionModalDisplayed"
+        to="body"
+      >
+        <SaveVersionNoteModal
+          :is-creation="isCreation"
+          @close="isSaveNoteVersionModalDisplayed = false"
+        />
+      </teleport>
     </template>
   </PentilaWindow>
-
-  <teleport
-    v-if="isAdministrator && isSaveNoteVersionModalDisplayed"
-    to="body"
-  >
-    <SaveVersionNoteModal
-      :is-creation="isCreation"
-      @close="isSaveNoteVersionModalDisplayed = false"
-    />
-  </teleport>
 </template>
 
 <script>

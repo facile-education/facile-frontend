@@ -138,7 +138,7 @@ export default {
     clickOutside (e) {
       const self = this
       if (self.$el && !self.$el.contains(e.target)) {
-        if (!this.isInformationModalDisplayed && !this.isPreferencesDisplayed && !this.isSupportModalDisplayed) {
+        if (!this.isInformationModalDisplayed && !this.isPreferencesDisplayed && !this.isSupportModalDisplayed && !this.isVersionNotesModalDisplayed) {
           this.$emit('close')
         }
       }
