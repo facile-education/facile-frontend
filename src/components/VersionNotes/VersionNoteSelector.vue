@@ -56,7 +56,7 @@
 <script>
 import ContextMenu from '@components/ContextMenu/ContextMenu.vue'
 
-import aboutService from '@/api/about.service'
+import { deleteVersionNote } from '@/api/versionNotes.service'
 import { icons } from '@/constants/icons'
 
 export default {
@@ -137,7 +137,7 @@ export default {
     },
     deleteVersionNote () {
       // this.isLoading = true
-      aboutService.deleteVersionNote(this.selectedNote.versionNoteId).then((data) => {
+      deleteVersionNote(this.selectedNote.versionNoteId).then((data) => {
         // this.isLoading = false
         if (data.success) {
           this.$store.dispatch('about/getVersionNotesList')

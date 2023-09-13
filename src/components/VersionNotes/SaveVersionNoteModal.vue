@@ -48,7 +48,7 @@ import { component as CKEditor } from '@ckeditor/ckeditor5-vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 
-import { createVersionNote, updateVersionNote } from '@/api/about.service'
+import { createVersionNote, updateVersionNote } from '@/api/versionNotes.service'
 
 export default {
   name: 'SaveVersionNoteModal',
