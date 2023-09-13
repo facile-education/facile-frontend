@@ -13,7 +13,7 @@
         >
         <Pellet
           v-if="hasNotifications"
-          class="pellet"
+          class="pellet theme-border-color"
         />
       </span>
 
@@ -107,9 +107,10 @@ button {
 
   .pellet {
     position: absolute;
-    right: -4px;
-    top: -4px;
+    right: -2px;
+    top: -3px;
     background-color: white;
+    border: 2px solid;
   }
 
   .user-picture {
