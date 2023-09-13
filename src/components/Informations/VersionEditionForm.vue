@@ -82,7 +82,7 @@ export default {
   },
   computed: {
     createVersionMessage () {
-      return this.$store.state.about.createVersionMessage
+      return this.$store.state.versionNotes.createVersionMessage
     },
     formErrorList () {
       return {
@@ -109,7 +109,7 @@ export default {
       if (this.v$.$invalid) { // form checking
         this.v$.$touch()
       } else {
-        this.$store.dispatch('about/createVersion', {
+        this.$store.dispatch('versionNotes/createVersion', {
           number: this.form.versionNumber,
           details: this.form.versionDetails
         })

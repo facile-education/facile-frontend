@@ -81,13 +81,13 @@ export default {
       return this.$store.state.user.isAdministrator
     },
     versionNoteDetails () {
-      return this.$store.state.about.versionNoteDetails
+      return this.$store.state.versionNotes.versionNoteDetails
     },
     isLoading () {
-      return this.$store.state.about.isLoadingVersionNoteDetails
+      return this.$store.state.versionNotes.isLoadingVersionNoteDetails
     },
     error () {
-      return this.$store.state.about.versionNoteDetailsError
+      return this.$store.state.versionNotes.versionNoteDetailsError
     }
   },
   methods: {

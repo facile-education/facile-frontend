@@ -73,25 +73,25 @@ export default {
       return this.$store.state.user.isAdministrator
     },
     notesList () {
-      return this.$store.state.about.versionNotesList
+      return this.$store.state.versionNotes.versionNotesList
     },
     selectedNote: {
       get () {
-        return this.$store.state.about.selectedNote
+        return this.$store.state.versionNotes.selectedNote
       },
       set (value) {
-        this.$store.dispatch('about/setSelectedNote', value)
+        this.$store.dispatch('versionNotes/setSelectedNote', value)
       }
     },
     isLoading () {
-      return this.$store.state.about.isLoadingVersionNotesList
+      return this.$store.state.versionNotes.isLoadingVersionNotesList
     },
     error () {
-      return this.$store.state.about.versionNotesListError
+      return this.$store.state.versionNotes.versionNotesListError
     }
   },
   created () {
-    this.$store.dispatch('about/getVersionNotesList')
+    this.$store.dispatch('versionNotes/getVersionNotesList')
   },
   methods: {
     toggleContextMenu (event) {
@@ -140,7 +140,7 @@ export default {
       deleteVersionNote(this.selectedNote.versionNoteId).then((data) => {
         // this.isLoading = false
         if (data.success) {
-          this.$store.dispatch('about/getVersionNotesList')
+          this.$store.dispatch('versionNotes/getVersionNotesList')
           // this.error = false
         } else {
           console.error('Cannot delete version note ', this.selectedNote)
