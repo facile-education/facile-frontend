@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 
-import aboutService from '@/api/about.service'
+import { getVersionNoteContent, getVersionNotesList } from '@/api/versionNotes.service'
 import i18n from '@/i18n'
 
 export const state = {
@@ -40,7 +40,7 @@ export const mutations = {
 export const actions = {
   getVersionNotesList ({ commit }) {
     commit('setIsLoadingVersionNotesList', true)
-    aboutService.getVersionNotesList().then((data) => {
+    getVersionNotesList().then((data) => {
       commit('setIsLoadingVersionNotesList', false)
       if (data.success) {
         commit('setVersionNotesListError', false)
@@ -71,7 +71,7 @@ export const actions = {
   },
   getVersionNoteContent ({ commit }, note) {
     commit('setIsLoadingVersionNoteDetails', true)
-    aboutService.getVersionNoteContent(note.versionNoteId).then((data) => {
+    getVersionNoteContent(note.versionNoteId).then((data) => {
       commit('setIsLoadingVersionNoteDetails', false)
       if (data.success) {
         commit('setVersionNoteDetailsError', false)

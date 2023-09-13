@@ -3,14 +3,6 @@ import PentilaUtils from 'pentila-utils'
 
 import constants from './constants'
 
-export default {
-  getVersionNotesList,
-  getVersionNoteContent,
-  createVersionNote,
-  updateVersionNote,
-  deleteVersionNote
-}
-
 export {
   getVersionNotesList,
   getVersionNoteContent,
