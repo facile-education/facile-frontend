@@ -80,7 +80,7 @@ export default {
   },
   computed: {
     selectedNote () {
-      return this.$store.state.about.selectedNote
+      return this.$store.state.versionNotes.selectedNote
     },
     formErrorList () {
       return {
@@ -92,7 +92,7 @@ export default {
   created () {
     if (!this.isCreation) {
       this.title = this.selectedNote.title
-      this.htmlContent = this.$store.state.about.versionNoteDetails
+      this.htmlContent = this.$store.state.versionNotes.versionNoteDetails
     }
   },
   methods: {
@@ -112,7 +112,7 @@ export default {
       createVersionNote(this.title, this.htmlContent).then((data) => {
         this.isLoading = false
         if (data.success) {
-          this.$store.dispatch('about/getVersionNotesList')
+          this.$store.dispatch('versionNotes/getVersionNotesList')
           this.$emit('close')
         } else {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
@@ -129,7 +129,7 @@ export default {
       updateVersionNote(this.selectedNote.versionNoteId, this.title, this.htmlContent).then((data) => {
         this.isLoading = false
         if (data.success) {
-          this.$store.dispatch('about/getVersionNoteContent', this.selectedNote)
+          this.$store.dispatch('versionNotes/getVersionNoteContent', this.selectedNote)
           this.$emit('close')
         } else {
           console.error('Cannot update versionNote')

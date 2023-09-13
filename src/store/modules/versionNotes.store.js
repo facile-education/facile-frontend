@@ -50,7 +50,7 @@ export const actions = {
         commit('setVersionNotesList', data.versionNotes)
 
         if (data.versionNotes.length > 0) {
-          this.dispatch('about/setSelectedNote', data.versionNotes[0])
+          this.dispatch('versionNotes/setSelectedNote', data.versionNotes[0])
         } else {
           commit('setSelectedNote', undefined)
           commit('setVersionNoteDetails', undefined)
@@ -67,7 +67,7 @@ export const actions = {
   },
   setSelectedNote ({ commit }, note) {
     commit('setSelectedNote', note)
-    this.dispatch('about/getVersionNoteContent', note)
+    this.dispatch('versionNotes/getVersionNoteContent', note)
   },
   getVersionNoteContent ({ commit }, note) {
     commit('setIsLoadingVersionNoteDetails', true)
