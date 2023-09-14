@@ -2,6 +2,13 @@
   <Layout
     class="layout"
   >
+    <button
+      class="close"
+      :title="$t('close')"
+      @click="back"
+    >
+      <BaseIcon name="times" />
+    </button>
     <FileDisplay
       v-if="file !== undefined"
       :file="file"
@@ -12,12 +19,13 @@
 <script>
 import { defineAsyncComponent } from 'vue'
 
+import BaseIcon from '@/components/Base/BaseIcon'
 import Layout from '@/router/layouts/EmptyLayout'
 const FileDisplay = defineAsyncComponent(() => import('@/components/Documents/FileDisplay/FileDisplay'))
 
 export default {
   name: 'Progression',
-  components: { Layout, FileDisplay },
+  components: { BaseIcon, Layout, FileDisplay },
   data () {
     return {
       file: undefined
@@ -38,6 +46,11 @@ export default {
       // already being observed
       { immediate: true }
     )
+  },
+  methods: {
+    back () {
+      this.$router.back()
+    }
   }
 }
 </script>
@@ -45,11 +58,24 @@ export default {
 <style lang="scss" scoped>
 .layout {
   height: 100%;
+}
 
+.close {
+  position: absolute;
+  right: 0;
+  margin: 15px;
+  background: none;
+  border: none;
+  height: 30px;
+  width: 30px;
+  font-size: 1.3rem;
+  padding: 0;
+  cursor: pointer;
 }
 </style>
 
 <i18n locale="fr">
 {
+  "close": "Retour"
 }
 </i18n>
