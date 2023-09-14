@@ -52,6 +52,11 @@ export default {
       return this.user.userId
     }
   },
+  created () {
+    if (this.userId === undefined) {
+      this.$store.dispatch('user/initUserInformations')
+    }
+  },
   methods: {
     closePopup () {
       this.$store.dispatch('popups/popPopup')
