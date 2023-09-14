@@ -122,11 +122,11 @@ export default {
   right: 0;
   top: 46px;
   width: min(542px, 90vw);
-  height: 292px;
   background-color: white;
   padding: 0;
   z-index: $popup-z-index;
   border: 1px solid $neutral-40;
+  border-radius: 4px;
   @extend %object-shadow-2;
 
   &.phone {
@@ -135,6 +135,10 @@ export default {
     left: 0;
     width: 100vw;
     height: 100vh;
+
+    ul {
+      max-height: 100%;
+    }
   }
 }
 
@@ -168,6 +172,8 @@ ul {
   padding: 1.5rem;
   list-style-type: none;
   height: 100%;
+  min-height: 292px;
+  max-height: 600px;
   width: 100%;
 
   li {
