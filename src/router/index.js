@@ -67,11 +67,11 @@ const routes = [
   //   name: 'Recent',
   //   component: () => import('@/router/views/Documents')
   // },
-  // {
-  //   path: '/viewer/:fileEntryId(\\d+)?',
-  //   name: 'Viewer',
-  //   component: () => import('@/router/views/Viewer')
-  // },
+  {
+    path: '/viewer/:fileEntryId(\\d+)?',
+    name: 'Viewer',
+    component: () => import('@/router/views/Viewer')
+  },
   {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
