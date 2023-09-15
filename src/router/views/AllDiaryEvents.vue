@@ -118,7 +118,6 @@ export default {
     }
   },
   created () {
-    this.$store.dispatch('misc/incrementModalCount')
     this.loadDiaryEvents()
   },
   mounted () {
