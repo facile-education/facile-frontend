@@ -61,9 +61,6 @@ export default {
       return PentilaUtils.Array.sortWithString(this.readInfos, false, 'populationName')
     }
   },
-  created () {
-    this.$store.dispatch('misc/incrementModalCount')
-  },
   methods: {
     onClose () {
       this.$emit('close')
@@ -96,7 +93,7 @@ ul {
 }
 </style>
 
-<i18n locale="fr" >
+<i18n locale="fr">
 {
   "header": "Lu par {n} destinataire sur {totalCount} | Lu par {n} destinataire sur {totalCount} | Lu par {n} destinataires sur {totalCount}"
 }
