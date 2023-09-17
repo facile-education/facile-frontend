@@ -11,7 +11,7 @@ export {
   deleteGroup,
   deleteGroups,
   runAnonymisation,
-  runPermissions
+  cleanupDropboxes
 }
 
 export default {
@@ -23,7 +23,7 @@ export default {
   deleteGroup,
   deleteGroups,
   runAnonymisation,
-  runPermissions
+  cleanupDropboxes
 }
 
 const MAINTENANCE_PATH = '/maintenance.maintenance'
@@ -73,6 +73,6 @@ function deleteGroups (file) {
   ).then(response => response.data)
 }
 
-function runPermissions () {
-  return axios.post(constants.JSON_WS_URL + MAINTENANCE_PATH + '/add-permissions').then(response => response.data)
+function cleanupDropboxes () {
+  return axios.post(constants.JSON_WS_URL + MAINTENANCE_PATH + '/cleanup-dropboxes').then(response => response.data)
 }

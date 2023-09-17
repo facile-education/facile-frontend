@@ -2,9 +2,9 @@
   <div class="param-header">
     <PentilaButton
       class="round"
-      @click="runPermissions"
+      @click="cleanupDropboxes"
     >
-      <span>{{ $t('permissions') }}</span>
+      <span>{{ $t('cleanupDropboxes') }}</span>
     </PentilaButton>
     <PentilaButton
       class="round"
@@ -17,7 +17,7 @@
 
 <script>
 
-import { runPermissions } from '@/api/maintenance.service'
+import { cleanupDropboxes } from '@/api/maintenance.service'
 
 export default {
   name: 'OneShotMaintenance',
@@ -30,8 +30,8 @@ export default {
   created () {
   },
   methods: {
-    runPermissions () {
-      runPermissions().then(
+    cleanupDropboxes () {
+      cleanupDropboxes().then(
         (data) => {
           if (data.success) {
             this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
@@ -62,7 +62,7 @@ export default {
 
 <i18n locale="fr">
 {
-  "permissions": "Mise à jour des permissions",
+  "cleanupDropboxes": "Nettoyage des casiers",
   "success": "Opération terminée en succès",
   "error": "Opération terminée en erreur",
   "pAuth": "pAuth bidon"
