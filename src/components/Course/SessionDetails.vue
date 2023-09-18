@@ -400,6 +400,8 @@ header {
     width: 100%;
     padding: 8px 16px;
     display: block;
+    position: sticky;
+    top: 0;
     border-radius: 0;
     border-bottom: 1px solid $neutral-40;
     border-left: 0;

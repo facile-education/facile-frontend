@@ -15,7 +15,10 @@
         <span v-t="'back'" />
       </button>
       <h1>{{ course.groupName + ' - ' + course.subject }}</h1>
-      <div class="teachers">
+      <div
+        v-if="!mq.phone"
+        class="teachers"
+      >
         <div>
           {{ course.teachers[0].firstName + ' ' + course.teachers[0].lastName }}
         </div>
@@ -31,7 +34,10 @@
     <!--      @click="toggleDrafts"-->
     <!--    />-->
 
-    <div class="sessions">
+    <div
+      class="sessions"
+      :class="{'phone': mq.phone}"
+    >
       <PentilaSpinner
         v-if="isLoading"
         style="z-index: 1"
@@ -138,23 +144,28 @@ export default {
 <style lang="scss" scoped>
 @import '@design';
 
+article {
+  height: 100%;
+  --header-height: 80px;
+  --mobile-header-height: 100px;
+}
+
 header {
   display: flex;
+  height: var(--header-height);
+  gap: 0.625rem;
   align-items: center;
   padding: 1rem 1.5rem;
   justify-content: space-between;
   align-self: stretch;
   border-radius: 6px;
   border-left: 8px solid;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 
   &.phone {
+    height: var(--mobile-header-height);
     flex-direction: column;
     align-items: flex-start;
-
-    .back-button {
-      margin-bottom: 0.625rem;
-    }
   }
 }
 
@@ -193,6 +204,7 @@ header {
 
 h1 {
   margin: 0;
+  text-align: center;
   @extend %font-heading-xs;
 }
 
@@ -206,6 +218,12 @@ h1 {
 .sessions {
   position: relative;
   min-height: 200px;
+  height: calc(100% - var(--header-height) - 1rem);
+  overflow-y: auto;
+
+  &.phone {
+    height: calc(100% - var(--mobile-header-height) - 1rem);
+  }
 }
 
 .placeholder {

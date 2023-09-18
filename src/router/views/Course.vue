@@ -8,6 +8,7 @@
       </PentilaTabItem>
       <PentilaTabItem
         :title="$t('course')"
+        class="course-tab-content"
       >
         <CourseTab :user-id="selectedUser.userId" />
       </PentilaTabItem>
@@ -50,7 +51,7 @@
 </template>
 
 <script>
-import CourseTab from '@/components/Course/CourseTab.vue'
+import CourseTab from '@/components/Course/CourseTab.vue' // TODO: async
 import HomeworkTab from '@/components/Course/HomeworkTab.vue'
 import ScheduleTab from '@/components/Course/ScheduleTab.vue'
 // import TeacherHomeworkTab from '@/components/Course/TeacherHomeworkTab.vue'
@@ -165,6 +166,9 @@ export default {
 </style>
 
 <style lang="scss" scoped>
+.course-tab-content {
+  height: calc(100% - 40px); // 40px is tab height
+}
 </style>
 
 <i18n locale="fr">

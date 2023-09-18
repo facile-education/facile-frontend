@@ -101,6 +101,7 @@ export default {
 
 .course-tab {
   min-height: 200px;
+  height: 100%;
 }
 
 .placeholder {
@@ -123,7 +124,6 @@ ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
-  height: 100%; // todo: find the good value
   overflow: auto;
 }
 
