@@ -18,10 +18,9 @@
       </div>
     </div>
 
-    <div
-      class="body"
-      v-html="group.description"
-    />
+    <p class="body">
+      {{ group.description }}
+    </p>
 
     <div class="buttons">
       <div class="members">

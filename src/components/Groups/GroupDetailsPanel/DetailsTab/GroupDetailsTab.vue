@@ -7,11 +7,12 @@
       {{ $t('expire') + formattedDate }}
     </div>
 
-    <div
+    <p
       v-if="group.description !== '' && !group.isGroupRootFolder"
       class="description"
-      v-html="group.description"
-    />
+    >
+      {{ group.description }}
+    </p>
 
     <div
       v-if="!group.isExpired && !group.isGroupRootFolder"

@@ -36,7 +36,7 @@
             class="icon"
             src="@/assets/images/ExternalResource/icon-external-service.png"
           >
-          <h3 v-html="$t('newTabLabel', {resourceName: serviceName})" />
+          <h3>{{ $t('newTabLabel', {resourceName: serviceName}) }}</h3>
           <I18n
             keypath="openAgainLabel"
             tag="p"
@@ -50,10 +50,9 @@
             />
           </I18n>
           <div class="nero-separator" />
-          <p
-            class="content"
-            v-html="$t('popupIssueLabel')"
-          />
+          <p class="content">
+            {{ $t('popupIssueLabel') }}
+          </p>
         </div>
 
         <div v-else>
