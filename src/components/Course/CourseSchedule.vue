@@ -180,16 +180,6 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.daily-schedule {
-  .fc-theme-standard .fc-scrollgrid,
-  .fc-theme-standard td,
-  .fc-theme-standard th {
-    border: none
-  }
-}
-</style>
-
 <style lang="scss" scoped>
 @import '@design';
 
