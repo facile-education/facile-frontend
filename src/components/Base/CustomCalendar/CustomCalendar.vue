@@ -301,6 +301,12 @@ export default {
 
 <style lang="scss">
 @import 'src/design/fullcalendar';
+
+.fc-theme-standard .fc-scrollgrid,
+.fc-theme-standard td,
+.fc-theme-standard th {
+  border: none
+}
 </style>
 
 <style lang="scss" scoped>
