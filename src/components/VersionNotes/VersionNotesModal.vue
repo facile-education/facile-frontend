@@ -115,6 +115,11 @@ export default {
       }
     }
   }
+
+  img {
+    max-width: 100%;
+    vertical-align: middle;
+  }
 }
 </style>
 
