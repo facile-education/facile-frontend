@@ -9,8 +9,8 @@
       <!-- Thread with 1 single message AND thread multi-message collapsed -->
       <div
         class="main"
-        :class="{'theme-background-color': isThreadSelected && !isSubMessageSelected,
-                 'theme-light-background-color': (isSubMessageSelected || isThreadExpanded) && !isThreadSelected,
+        :class="{'theme-background-color': isThreadSelected,
+                 'theme-light-background-color': isSubMessageSelected,
                  'expanded': isThreadExpanded,
                  'selection-mode': isMultiSelectionActive,
                  'phone': mq.phone || mq.tablet}"
@@ -161,6 +161,9 @@ export default {
     }
   },
   computed: {
+    threads () {
+      return this.$store.state.messaging.selectedThreads
+    },
     currentFolder () {
       return this.$store.state.messaging.currentFolder
     },
@@ -222,10 +225,13 @@ export default {
     },
     isThreadSelected () {
       for (const selectedThread of this.$store.state.messaging.selectedThreads) {
+        console.log(selectedThread.threadId, this.thread.threadId)
         if (selectedThread.threadId === this.thread.threadId) {
+          console.log('thread is selected')
           return true
         }
       }
+      console.log('thread is NOT selected')
       return false
     },
     isSubMessageSelected () {

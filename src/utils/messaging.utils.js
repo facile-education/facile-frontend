@@ -42,7 +42,7 @@ const MessagingUtils = {
     store.dispatch('messaging/selectFolder', store.state.messaging.currentFolder)
   },
   newMessage (recipientList = []) {
-    const createMessageParameters = { isNew: true, isReply: false, isReplyAll: false, isForward: false, isDraft: false, draftMessageId: 0, recipientList: recipientList }
+    const createMessageParameters = { isNew: true, isReply: false, isReplyAll: false, isForward: false, isDraft: false, draftMessageId: 0, recipientList }
     store.dispatch('messaging/openCreateMessageModal', createMessageParameters)
   },
   reply () {
@@ -58,7 +58,7 @@ const MessagingUtils = {
     store.dispatch('messaging/openCreateMessageModal', createMessageParameters)
   },
   editDraft (draftMessageId) {
-    const createMessageParameters = { isNew: false, isReply: false, isReplyAll: false, isForward: false, isDraft: true, draftMessageId: draftMessageId }
+    const createMessageParameters = { isNew: false, isReply: false, isReplyAll: false, isForward: false, isDraft: true, draftMessageId }
     store.dispatch('messaging/openCreateMessageModal', createMessageParameters)
   },
   deleteSelectedThreads () {
@@ -144,7 +144,6 @@ const MessagingUtils = {
   selectThread (thread, messageIdToSelect) {
     store.dispatch('messaging/setLastSelectedThread', thread)
     store.dispatch('messaging/setSelectedThreads', [thread])
-    store.dispatch('messaging/setSelectedMessages', [])
 
     messageService.getThreadMessages(thread.threadId, store.state.messaging.currentFolder.folderId).then((data) => {
       if (data.success) {

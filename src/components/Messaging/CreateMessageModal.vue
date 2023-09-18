@@ -89,7 +89,7 @@
           :class="device"
         >
           <TextContent
-            :content="initialContent"
+            :content="currentContent"
             @input="updateContent"
             @keydown.stop
             @keyup.stop
@@ -295,6 +295,9 @@ export default {
           if (data.success) {
             if (this.messageParameters.isDraft) {
               this.initialContent = data.content
+            } else if (this.messageParameters.isForward) {
+              this.buildPreviousContent(data.content)
+              this.initialContent = this.previousContent
             } else {
               // Reply, replyAll, forward
               this.initialContent = ''
@@ -306,7 +309,7 @@ export default {
             this.recipients = data.recipients
             this.attachedFiles = data.attachedFiles
 
-            // Prefix content with signature except for draft edition
+            // Suffix content with signature except for draft edition
             if (!this.messageParameters.isDraft && this.$store.state.messaging.signature !== '') {
               this.initialContent = this.initialContent + '</br></br>' + this.$store.state.messaging.signature
             }
@@ -380,7 +383,7 @@ export default {
       messageService.sendMessage(
         this.recipients,
         this.subject,
-        (this.areNewRecipientsAdded && this.previousContent) ? this.currentContent + this.previousContent : this.currentContent,
+        this.currentContent,
         this.attachedFiles,
         this.messageParameters.draftMessageId,
         this.originMessage.messageId === undefined ? '0' : this.originMessage.messageId,

@@ -184,7 +184,7 @@ export const mutations = {
     doActionInPersonalFolder(this, 'setNbUnread', state.messagingFolders, state, { folderId: payload.folderId }, payload.nbUnread)
   },
   setNbMessages (state, { folderId, nbMessages }) {
-    doActionInPersonalFolder(this, 'setNbMessages', state.messagingFolders, state, { folderId: folderId }, nbMessages)
+    doActionInPersonalFolder(this, 'setNbMessages', state.messagingFolders, state, { folderId }, nbMessages)
   },
   markMessagesAsRead (state, messageIds) {
     // Change status of both messages which belongs to threads[] and currentThreadMessages[] arrays
@@ -354,6 +354,7 @@ export const actions = {
   },
   setSelectedMessages ({ commit }, messages) {
     commit('setSelectedMessages', messages)
+    commit('setSelectedThreads', [])
   },
   addSelectedMessages ({ commit }, messages) {
     commit('addSelectedMessages', messages)
@@ -417,11 +418,11 @@ export const actions = {
   updateNbUnread ({ commit }, folderId) {
     messageService.getNbMessages(folderId).then((data) => {
       if (data.success) {
-        commit('setNbMessages', { folderId: folderId, nbMessages: data.nbMessages })
-        commit('setNbUnread', { folderId: folderId, nbUnread: data.nbUnread })
+        commit('setNbMessages', { folderId, nbMessages: data.nbMessages })
+        commit('setNbUnread', { folderId, nbUnread: data.nbUnread })
       } else {
-        commit('setNbMessages', { folderId: folderId, nbMessages: 0 })
-        commit('setNbUnread', { folderId: folderId, nbUnread: 0 })
+        commit('setNbMessages', { folderId, nbMessages: 0 })
+        commit('setNbUnread', { folderId, nbUnread: 0 })
       }
     })
   },
@@ -467,10 +468,10 @@ export const actions = {
     commit('setParametersModalDisplayed', false)
   },
   setNbUnread ({ commit }, folderId, nbUnread) {
-    commit('setNbUnread', { folderId: folderId, nbUnread: nbUnread })
+    commit('setNbUnread', { folderId, nbUnread })
   },
   setNbMessages ({ commit }, folderId, nbMessages) {
-    commit('setNbMessages', { folderId: folderId, nbMessages: nbMessages })
+    commit('setNbMessages', { folderId, nbMessages })
   },
   markMessagesAsRead ({ commit }, messages) {
     commit('markMessagesAsRead', messages)
