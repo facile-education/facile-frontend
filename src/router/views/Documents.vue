@@ -461,7 +461,8 @@ export default {
           this.handleOption({ name: 'rename' })
           // 'Suppr' for deletion
         } else if (event.key === 'Delete') {
-          if (this.openFiles.length === 0) {
+          // Check if there is no open file + we have the permission to delete
+          if (this.openFiles.length === 0 && this.currentOptions.map(option => option.name).indexOf('delete') !== -1) {
             this.handleOption({ name: 'delete' })
           }
         } else if (event.ctrlKey && ((event.key === 'c') || (event.key === 'C'))) {
