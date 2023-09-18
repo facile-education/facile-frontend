@@ -31,6 +31,9 @@
             :stencil-props="{
               aspectRatio: 1
             }"
+            :canvas="{
+              fillColor: 'white'
+            }"
             :debounce="false"
             :min-height="50"
             :min-width="50"
@@ -166,7 +169,7 @@ export default {
       const { canvas } = this.$refs.cropper.getResult()
       if (canvas && !this.isLoading) {
         canvas.toBlob(blob => {
-          this.fileName = 't.jpeg'
+          this.fileName = Date.now() + '.jpeg'
           this.$emit('save', { blob, fileName: this.fileName })
           this.isLoading = true
           uploadTmpFile(new File([blob], this.fileName)).then((data) => {
