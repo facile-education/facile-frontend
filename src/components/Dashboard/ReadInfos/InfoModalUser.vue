@@ -33,7 +33,7 @@ export default {
       if (this.field === 'isDone') {
         return this.user[this.field] ? this.$t('done') : this.$t('unDone')
       } else if (this.field === 'hasRead') {
-        return this.user[this.field] ? this.$t('read') + ' (' + dayjs(this.user[this.field], 'YYYY-MM-DD HH:mm:ss').calendar() + ')' : this.$t('unread')
+        return this.user[this.field] ? this.$t('read') + ' (' + dayjs(this.user.readDate, 'YYYY-MM-DD HH:mm:ss').calendar() + ')' : this.$t('unread')
       } else {
         return undefined
       }
