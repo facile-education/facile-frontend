@@ -180,10 +180,11 @@ export default {
       return this.$store.state.menu.menuExpanded
     },
     neroClasses () {
+      const phoneDisplay = this.mq.phone || this.mq.tablet || this.displayLikePhone
       return {
-        mobile: this.mq.phone || this.displayLikePhone,
-        'menu-expanded': (this.menuExpanded && !this.mq.phone && !this.displayLikePhone),
-        'menu-shrinked': (!this.menuExpanded && !this.mq.phone && !this.displayLikePhone)
+        mobile: phoneDisplay,
+        'menu-expanded': (this.menuExpanded && !phoneDisplay),
+        'menu-shrinked': (!this.menuExpanded && !phoneDisplay)
       }
     },
     openFiles () {
@@ -213,8 +214,6 @@ export default {
     }
   },
   created () {
-    console.log('reload!')
-
     if (this.userId === undefined) {
       this.$store.dispatch('user/initUserInformations')
     } else if (!this.user.agreedTermsOfUse) {

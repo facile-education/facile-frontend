@@ -1,12 +1,12 @@
 <template>
   <section
-    :class="{'open': expanded, 'phone-menu': (mq.phone || displayLikePhone), 'phone-hidden': !isMobileMenuDisplayed}"
+    :class="{'open': expanded, 'phone-menu': (mq.phone || mq.tablet|| displayLikePhone), 'phone-hidden': !isMobileMenuDisplayed}"
     class="menu"
   >
     <MenuItemList class="menu-item-list" />
 
     <button
-      v-if="!mq.phone && !displayLikePhone"
+      v-if="!mq.phone && !mq.tablet && !displayLikePhone"
       class="expand-menu"
       :aria-label="expanded ? $t('collapse') : $t('extend')"
       :title="expanded ? $t('collapse') : $t('extend')"
@@ -89,7 +89,7 @@ export default {
   top: $banner-height;
   left: 0;
   height: calc(100% - $banner-height);
-  width: $open-side-menu-width;
+  width: 100%;
   z-index: $mobile-menu-z-index;
   overflow-y: auto;
   transition: all .35s ease;
