@@ -112,6 +112,8 @@ button {
     top: -3px;
     background-color: white;
     border: 2px solid;
+    height: 12px;
+    width: 12px;
   }
 
   .user-picture {
