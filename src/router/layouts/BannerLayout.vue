@@ -7,13 +7,7 @@
   >
     <Banner class="nero-header theme-background-color" />
 
-    <LayoutMenu
-      v-if="!mq.phone && ! displayLikePhone"
-      class="nero-menu"
-    />
-    <Transition name="fade">
-      <LayoutMenu v-if="isMobileMenuDisplayed" />
-    </Transition>
+    <LayoutMenu class="nero-menu" />
 
     <section class="nero-body">
       <NotAllowed v-if="!isAllowed && !user.isAdministrator" />
@@ -219,6 +213,8 @@ export default {
     }
   },
   created () {
+    console.log('reload!')
+
     if (this.userId === undefined) {
       this.$store.dispatch('user/initUserInformations')
     } else if (!this.user.agreedTermsOfUse) {

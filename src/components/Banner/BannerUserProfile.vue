@@ -69,6 +69,7 @@ export default {
   },
   methods: {
     togglePopoverMenu () {
+      this.$store.dispatch('menu/closeMobileMenu')
       this.isPopoverMenuDisplayed = !this.isPopoverMenuDisplayed
     }
   }

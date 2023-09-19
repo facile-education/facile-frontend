@@ -5,11 +5,18 @@
       :aria-label="$t('toggleMenu')"
       :title="$t('toggleMenu')"
       class="menu-icon-button"
+      @click.stop="onShowMobileMenu"
     >
       <img
+        v-show="!isMobileMenuDisplayed"
         src="@/assets/icons/menu_burger.svg"
         alt="menu_burger"
-        @click="onShowMobileMenu"
+      >
+      <img
+        v-show="isMobileMenuDisplayed"
+        class="cross"
+        src="@/assets/options/icon_cross_white.svg"
+        alt="close"
       >
     </button>
 
@@ -46,6 +53,9 @@ export default {
   computed: {
     displayLikePhone () {
       return this.$store.state.misc.keepPhoneStatus
+    },
+    isMobileMenuDisplayed () {
+      return this.$store.state.menu.isMobileMenuDisplayed
     },
     isSessionWarningDisplayed () {
       return this.inactionTime > this.$store.state.menu.sessionTimeout - this.$store.state.menu.sessionTimeoutWarning
@@ -86,6 +96,11 @@ button {
 
   img {
     height: 32px;
+  }
+
+  .cross {
+    height: 24px;
+    margin-left: 4px;
   }
 }
 
