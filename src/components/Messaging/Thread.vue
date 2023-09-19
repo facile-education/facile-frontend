@@ -319,7 +319,7 @@ export default {
     shiftSelectThread () {
       if (!this.mq.phone) { // no selection on mobile
         const selectedThreads = messagingUtils.selectBetween(this.thread)
-        this.$store.dispatch('messaging/addSelectedThreads', selectedThreads)
+        this.$store.dispatch('messaging/setSelectedThreads', selectedThreads)
       }
     },
 

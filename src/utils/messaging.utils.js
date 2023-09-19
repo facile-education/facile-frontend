@@ -1,5 +1,4 @@
 import store from '@store/index.js'
-import _ from 'lodash'
 
 import messageService from '@/api/messaging/message.service'
 import messagingConstants from '@/constants/messagingConstants'
@@ -19,14 +18,19 @@ const MessagingUtils = {
   },
 
   selectBetween (shiftSelectedThread) {
-    // lastSelectedThread in the store indicated the source index
+    const sortedThreads = store.state.messaging.threads
+    const threadIdArray = sortedThreads.map(thread => thread.threadId)
+
     let lastSelectedThreadIndex = -1
     let threadIndex = -1
-    const sortedThreads = _.orderBy(store.state.messaging.threads, 'lastSendDate', 'desc')
 
-    for (let i = 0; i < sortedThreads.length; ++i) {
-      if (store.state.messaging.lastSelectedThread && sortedThreads[i].threadId === store.state.messaging.lastSelectedThread.threadId) { lastSelectedThreadIndex = i }
-      if (sortedThreads[i].threadId === shiftSelectedThread.threadId) { threadIndex = i }
+    for (let i = 0; i < threadIdArray.length && (lastSelectedThreadIndex === -1 || threadIndex === -1); i++) {
+      if (threadIdArray[i] === store.state.messaging.lastSelectedThread.threadId) {
+        lastSelectedThreadIndex = i
+      }
+      if (threadIdArray[i] === shiftSelectedThread.threadId) {
+        threadIndex = i
+      }
     }
     if (lastSelectedThreadIndex === -1 || threadIndex === -1) {
       return []
