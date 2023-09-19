@@ -148,6 +148,7 @@ export default {
 
         if (now.isAfter(startDate) && now.isBefore(endDate)) {
           this.$store.dispatch('course/selectSession', event)
+          this.selectedDate = startDate
         }
       })
       this.isInit = false
