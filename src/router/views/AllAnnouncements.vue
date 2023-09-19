@@ -109,6 +109,7 @@ export default {
       this.refresh()
     },
     refresh () {
+      this.ended = false
       this.fromDate = dayjs()
       this.announcementsList = []
       this.loadAnnouncements()
