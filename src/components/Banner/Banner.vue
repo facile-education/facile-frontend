@@ -1,7 +1,7 @@
 <template>
   <header class="banner">
     <button
-      v-if="mq.phone || displayLikePhone"
+      v-if="mq.phone || mq.tablet || displayLikePhone"
       :aria-label="$t('toggleMenu')"
       :title="$t('toggleMenu')"
       class="menu-icon-button"
@@ -93,6 +93,7 @@ button {
 
 .menu-icon-button {
   padding: 0 1rem;
+  display: flex;
 
   img {
     height: 32px;
@@ -101,6 +102,7 @@ button {
   .cross {
     height: 24px;
     margin-left: 4px;
+    margin-right: 4px;
   }
 }
 
