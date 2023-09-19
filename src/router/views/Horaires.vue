@@ -84,11 +84,17 @@ export default {
     }
   },
   created () {
+    let dateToGo
     if (this.$route.query.initialDisplayDate) {
-      this.$store.dispatch('horaires/setSelectedDate', dayjs(this.$route.query.initialDisplayDate, 'YYYY/MM/DD'))
+      dateToGo = dayjs(this.$route.query.initialDisplayDate, 'YYYY/MM/DD')
     } else {
-      this.$store.dispatch('horaires/setSelectedDate', dayjs())
+      dateToGo = dayjs()
     }
+    // Manually make a "goForward" for saturday and sunday only (because those dates are disabled in the calendar config)
+    if (dateToGo.day() === 6 || dateToGo.day() === 0) {
+      dateToGo = dateToGo.add((dateToGo.day() === 6) ? 2 : (dateToGo.day() === 0) ? 1 : 0, 'day') // Go to the next monday
+    }
+    this.$store.dispatch('horaires/setSelectedDate', dateToGo)
 
     if (this.$store.state.user.isParent && this.$store.state.user.selectedChild !== undefined) {
       this.$store.dispatch('horaires/setSelectedUser', this.$store.state.user.selectedChild)
