@@ -1,10 +1,17 @@
 import messagingUtils from '@utils/messaging.utils'
-// import constants from '@/constants/appConstants'
-import _ from 'lodash'
+import dayjs from 'dayjs'
 
 import folderService from '@/api/messaging/folder.service'
 import messageService from '@/api/messaging/message.service'
 import messagingConstants from '@/constants/messagingConstants'
+
+const sortThreads = (threads) => {
+  return threads.sort((a, b) => {
+    const dateA = dayjs(a.lastSendDate, 'YYYY-MM-DD HH:mm:ss') // note that lastModifiedDate might be is sending date
+    const dateB = dayjs(b.lastSendDate, 'YYYY-MM-DD HH:mm:ss')
+    return dateB.diff(dateA)
+  })
+}
 
 export const state = {
   messagingFolders: [],
@@ -138,6 +145,7 @@ export const mutations = {
     state.threads = threads
   },
   addToThreadList (state, nextThreads) {
+    nextThreads = sortThreads(nextThreads)
     state.threads = [...state.threads, ...nextThreads]
   },
   setCurrentThreadMessages (state, messages) {
@@ -350,6 +358,8 @@ export const actions = {
     commit('removeSelectedThread', thread)
   },
   setThreadList ({ commit }, threads) {
+    // Sort thread
+    sortThreads(threads)
     commit('setThreadList', threads)
   },
   setSelectedMessages ({ commit }, messages) {
@@ -501,8 +511,8 @@ export const actions = {
 
 export const getters = {
   oldestThread (state) {
-    if (state.threads.length > 0) {
-      return _.orderBy(state.threads, 'lastSendDate', 'asc')[0]
+    if (state.threads.length > 0) { // Assume thread are sorted
+      return state.threads[state.threads.length - 1]
     } else {
       return undefined
     }

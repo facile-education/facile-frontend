@@ -86,7 +86,6 @@ import Thread from '@components/Messaging/Thread'
 import ThreadListHeader from '@components/Messaging/ThreadListHeader'
 import NeroIcon from '@components/Nero/NeroIcon.vue'
 import { removeMenuOptionIfExist } from '@utils/commons.util'
-import _ from 'lodash'
 
 import ContextMenu from '@/components/ContextMenu/ContextMenu'
 import constants from '@/constants/appConstants'
@@ -116,7 +115,7 @@ export default {
   },
   computed: {
     threads () {
-      return this.$store.state.messaging.threads ? _.orderBy(this.$store.state.messaging.threads, 'lastSendDate', 'desc') : undefined
+      return this.$store.state.messaging.threads
     },
     currentFolder () {
       return this.$store.state.messaging.currentFolder
