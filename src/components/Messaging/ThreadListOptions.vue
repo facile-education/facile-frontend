@@ -4,15 +4,18 @@
     :class="{'phone': mq.phone || mq.tablet}"
   >
     <ul class="buttons">
-      <IconOption
-        class="button"
-        :icon="unreadOnly ? require('@/assets/options/icon_unread_filter_active.svg') : require('@/assets/options/icon_unread_filter.svg')"
-        :title="unreadOnly ? $t('all') : $t('Messaging.unreadOnly')"
-        name="toggleUnreadOnly"
-        icon-height="18px"
-        :alt="$t('unreadOnly')"
-        @click="toggleUnreadOnly"
-      />
+      <li>
+        <IconOption
+          class="button"
+          :icon="unreadOnly ? 'icon-filter-plain' : 'icon-filter'"
+          :title="unreadOnly ? $t('all') : $t('Messaging.unreadOnly')"
+          :active="unreadOnly"
+          name="toggleUnreadOnly"
+          icon-height="18px"
+          :alt="$t('unreadOnly')"
+          @click="toggleUnreadOnly"
+        />
+      </li>
       <li v-if="!mq.tablet && !mq.phone">
         <IconOption
           class="button"
