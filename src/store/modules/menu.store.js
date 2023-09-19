@@ -48,6 +48,9 @@ export const mutations = {
   toggleMobileMenu (state) {
     state.isMobileMenuDisplayed = !state.isMobileMenuDisplayed
   },
+  setMobileMenu (state, payload) {
+    state.isMobileMenuDisplayed = payload
+  },
   updateActiveRoute (state, payload) {
     state.activeRoute = payload
     state.isMobileMenuDisplayed = false
@@ -98,6 +101,9 @@ export const actions = {
   },
   toggleMobileMenu ({ commit }) {
     commit('toggleMobileMenu')
+  },
+  closeMobileMenu ({ commit }) {
+    commit('setMobileMenu', false)
   },
   toggleSideMenu ({ commit, state }) {
     commit('toggleMenu')

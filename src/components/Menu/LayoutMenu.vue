@@ -1,22 +1,8 @@
 <template>
   <section
-    :class="{'open': expanded, 'phone-menu': (mq.phone || displayLikePhone)}"
+    :class="{'open': expanded, 'phone-menu': (mq.phone || displayLikePhone), 'phone-hidden': !isMobileMenuDisplayed}"
     class="menu"
   >
-    <button
-      v-if="mq.phone || displayLikePhone"
-      class="close-menu"
-      :aria-label="$t('close')"
-      :title="$t('close')"
-      @click="closeMobileMenu"
-    >
-      <img
-        class="cross-icon"
-        src="@assets/big-cross-black.svg"
-        alt="remove"
-      >
-    </button>
-
     <MenuItemList class="menu-item-list" />
 
     <button
@@ -52,14 +38,29 @@ export default {
     },
     expanded () {
       return this.$store.state.menu.menuExpanded
+    },
+    isMobileMenuDisplayed () {
+      return this.$store.state.menu.isMobileMenuDisplayed
     }
   },
+  mounted () {
+    window.addEventListener('click', this.clickOutside)
+  },
+  beforeUnmount () {
+    window.removeEventListener('click', this.clickOutside)
+  },
   methods: {
+    clickOutside (e) {
+      const self = this
+      if (self.$el && !self.$el.contains(e.target)) {
+        this.closeMobileMenu()
+      }
+    },
     toggleSideMenu () {
       this.$store.dispatch('menu/toggleSideMenu')
     },
     closeMobileMenu () {
-      this.$store.dispatch('menu/toggleMobileMenu')
+      this.$store.dispatch('menu/closeMobileMenu')
     }
   }
 }
@@ -85,12 +86,17 @@ export default {
 
 .phone-menu {
   position: absolute;
-  top: 0;
+  top: $banner-height;
   left: 0;
-  width: 100%;
-  height: 100%;
+  height: calc(100% - $banner-height);
+  width: $open-side-menu-width;
   z-index: $mobile-menu-z-index;
   overflow-y: auto;
+  transition: all .35s ease;
+
+  &.phone-hidden {
+    transform: translateX(-100%);
+  }
 }
 
 button {

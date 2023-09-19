@@ -3,7 +3,7 @@
     <BannerItem
       :src="require('@/assets/icons/accesses.svg')"
       :title="$t('accesses')"
-      @click="isAccessPopoverDisplayed=!isAccessPopoverDisplayed"
+      @click="toggleAccesses"
     />
     <BannerItem
       data-test="open-help-item"
@@ -37,7 +37,12 @@ export default {
     }
   },
   methods: {
+    toggleAccesses () {
+      this.$store.dispatch('menu/closeMobileMenu')
+      this.isAccessPopoverDisplayed = !this.isAccessPopoverDisplayed
+    },
     openHelpModal () {
+      this.$store.dispatch('menu/closeMobileMenu')
       this.$store.dispatch('help/openHelpModal')
     }
   }
