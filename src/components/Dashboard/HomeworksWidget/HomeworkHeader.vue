@@ -14,7 +14,7 @@
       @click="toggleUndoneOnly"
     >
       <CustomIcon
-        icon-name="icon-filtres"
+        :icon-name="undoneOnly ? 'icon-filter-plain' : 'icon-filter'"
         class="unread-filter-icon"
         :class="{'theme-text-color': undoneOnly}"
       />

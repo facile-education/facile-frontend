@@ -13,10 +13,17 @@
     @mouseup="emitMouseUp"
   >
     <img
+      v-if="isImage"
       :style="`height: ${iconHeight};`"
       :src="icon"
       :alt="alt"
     >
+    <CustomIcon
+      v-else
+      :style="`font-size: ${iconHeight};`"
+      :icon-name="icon"
+      :class="{'theme-text-color': active}"
+    />
     <span
       v-if="nbNotifications!==0"
       class="notifications"
@@ -27,8 +34,11 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
+
 export default {
   name: 'IconOption',
+  components: { CustomIcon },
   props: {
     icon: {
       type: String,
@@ -54,6 +64,10 @@ export default {
       type: String,
       default: ''
     },
+    active: {
+      type: Boolean,
+      default: false
+    },
     nbNotifications: {
       type: Number,
       default: 0
@@ -67,6 +81,11 @@ export default {
   data () {
     return {
       isHovering: false
+    }
+  },
+  computed: {
+    isImage () {
+      return this.icon.indexOf('svg') !== -1
     }
   },
   methods: {

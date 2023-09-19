@@ -1,18 +1,10 @@
 @font-face {
   font-family: 'CustomIcons';
   src: url('@/assets/fonts/Custom-icons-font.ttf') format('truetype');
+
 }
-/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
-/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
-/*
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-  @font-face {
-    font-family: 'fontello';
-    src: url('../font/fontello.svg?3460860#fontello') format('svg');
-  }
-}
-*/
-[class^="icon-"]:before, [class*=" icon-"]:before {
+
+[class^="icon-"], [class*=" icon-"] {
   font-family: "CustomIcons", sans-serif !important;
   speak: never;
   font-style: normal;
@@ -26,6 +18,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-filter-plain:before {
+  content: "\e913";
+}
 .icon-folder:before {
   content: "\e900";
 }
@@ -80,6 +75,6 @@
 .icon-school-life:before {
   content: "\e902";
 }
-.icon-filtres:before {
+.icon-filter:before {
   content: "\e901";
 }
