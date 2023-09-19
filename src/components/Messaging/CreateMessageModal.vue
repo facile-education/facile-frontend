@@ -89,8 +89,8 @@
           :class="device"
         >
           <TextContent
-            :content="currentContent"
-            @input="updateContent"
+            :content="content"
+            @input="content=$event"
             @keydown.stop
             @keyup.stop
           />
@@ -195,17 +195,15 @@ export default {
     return {
       recipients: [],
       subject: '',
-      initialContent: '', // How the content is initialized (with initial message or not)
-      currentContent: '', // What is written
-      previousContent: '',
-      isInitialized: false,
+      content: '',
       attachedFiles: [],
+      initialForm: undefined,
+      isInitialized: false,
       search: '',
       error: '',
       autocompleteItems: [],
       isContactPickerModalDisplayed: false,
       originMessage: {},
-      initialRecipients: [],
       initTooltipPosition: { x: 0, y: 0 },
       isContactPickerInitialized: false // Useful in add to v-show to not initialize component immediately
     }
@@ -236,15 +234,6 @@ export default {
     },
     messageParameters () {
       return this.$store.state.messaging.createMessageParameters
-    },
-    areNewRecipientsAdded () {
-      // Returns true if, in case of reply, replyAll or forward, any new recipient is added
-      for (const newRecipient of this.recipients) {
-        if (!this.initialRecipients.includes(newRecipient)) {
-          return true
-        }
-      }
-      return false
     }
   },
   created () {
@@ -294,28 +283,26 @@ export default {
           this.messageParameters.isDraft).then((data) => {
           if (data.success) {
             if (this.messageParameters.isDraft) {
-              this.initialContent = data.content
+              this.content = data.content
             } else if (this.messageParameters.isForward) {
-              this.buildPreviousContent(data.content)
-              this.initialContent = this.previousContent
+              this.content = this.formatPreviousContent(data.content)
             } else {
-              // Reply, replyAll, forward
-              this.initialContent = ''
-              this.buildPreviousContent(data.content)
+              // Reply, replyAll
+              this.content = ''
             }
             this.subject = data.subject
             messagingUtils.formatContacts(data.recipients)
-            this.initialRecipients = data.recipients
             this.recipients = data.recipients
             this.attachedFiles = data.attachedFiles
 
             // Suffix content with signature except for draft edition
             if (!this.messageParameters.isDraft && this.$store.state.messaging.signature !== '') {
-              this.initialContent = this.initialContent + '</br></br>' + this.$store.state.messaging.signature
+              this.content = this.content + '</br></br>' + this.$store.state.messaging.signature
             }
+
             this.isInitialized = true
-            this.currentContent = this.initialContent
           }
+          this.saveInitialForm()
         })
       } else if (!this.messageParameters.isNew) {
         console.error('More than 1 thread or 1 message selected and NO new message -> closing create message modal')
@@ -327,15 +314,19 @@ export default {
         }
         // Prefix content with signature except for draft edition
         if (!this.messageParameters.isDraft && this.$store.state.messaging.signature !== '') {
-          this.initialContent = '</br></br>' + this.$store.state.messaging.signature
+          this.content = '</br></br>' + this.$store.state.messaging.signature
         }
         this.isInitialized = true
+        this.saveInitialForm()
       }
-
-      this.currentContent = this.initialContent
     },
-    updateContent (value) {
-      this.currentContent = value
+    saveInitialForm () {
+      this.initialForm = JSON.stringify({
+        recipients: this.recipients,
+        subject: this.subject,
+        content: this.content,
+        attachedFiles: this.attachedFiles
+      })
     },
     getToolTipPosition () {
       const windowContainer = this.$refs.createMessageModal.getElementsByClassName('window-container')[0]
@@ -383,7 +374,7 @@ export default {
       messageService.sendMessage(
         this.recipients,
         this.subject,
-        this.currentContent,
+        this.content,
         this.attachedFiles,
         this.messageParameters.draftMessageId,
         this.originMessage.messageId === undefined ? '0' : this.originMessage.messageId,
@@ -426,19 +417,19 @@ export default {
       })
       this.onClose()
     },
-    buildPreviousContent (previousContent) {
-      this.previousContent = '</br><details><summary>' + this.$t('at') +
+    formatPreviousContent (content) {
+      return '</br><details><summary>' + this.$t('at') +
         dayjs(this.originMessage.sendDate, 'YYYY/MM/DD HH:mm:ss').format('DD/MM/YYYY HH:mm') +
         ' ' + this.originMessage.senderName + this.$t('wrote') + '</summary>' +
         '</br> ' + "<div style='border-left:1px solid #000; padding-left:20px'>" +
-        previousContent +
+        content +
         '</div>' +
         '</details>'
     },
     saveDraft () {
       const successMessage = this.$t('draftSaved')
       const originThreadId = (this.originMessage !== undefined && this.originMessage.threadId !== undefined ? this.originMessage.threadId : 0)
-      messageService.saveDraft(this.recipients, this.subject, this.currentContent, this.attachedFiles, this.messageParameters.draftMessageId, originThreadId, false).then((data) => {
+      messageService.saveDraft(this.recipients, this.subject, this.content, this.attachedFiles, this.messageParameters.draftMessageId, originThreadId, false).then((data) => {
         if (data.success) {
           this.$store.dispatch('popups/pushPopup', { message: successMessage, type: 'info' })
           // Refresh origin message if draft made from a reply
@@ -463,8 +454,13 @@ export default {
     },
     onConfirmClose () {
       if (!this.isAttachedFileOpen) {
-        // TODO: Save initial recipients and subject to be accurate on drafts
-        if (this.currentContent !== this.initialContent || this.recipients.length > 0 || this.subject !== '') {
+        const currentForm = JSON.stringify({
+          recipients: this.recipients,
+          subject: this.subject,
+          content: this.content,
+          attachedFiles: this.attachedFiles
+        })
+        if (currentForm !== this.initialForm) {
           this.$store.dispatch('warningModal/addWarning', {
             text: this.$t('closeWarning'),
             lastAction: { fct: this.onClose }
@@ -477,10 +473,10 @@ export default {
     onClose () {
       this.$store.dispatch('misc/decreaseModalCount')
       this.$emit('close')
+      this.initialForm = undefined
       this.recipients = []
       this.subject = ''
-      this.initialContent = ''
-      this.currentContent = ''
+      this.content = ''
       this.$store.dispatch('messaging/closeCreateMessageModal')
     },
     addRecipients (contactList) {
