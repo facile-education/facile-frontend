@@ -1,40 +1,38 @@
 <template>
-  <Layout>
-    <h1 :aria-label="$t('serviceTitle')" />
-    <HorairesToolbar
-      v-if="!$store.state.user.isStudent || mq.phone"
-      @update-sessions="getSessions"
+  <h1 :aria-label="$t('serviceTitle')" />
+  <HorairesToolbar
+    v-if="!$store.state.user.isStudent || mq.phone"
+    @update-sessions="getSessions"
+  />
+
+  <Timeline
+    v-if="!mq.phone"
+    :initial-date="selectedDate"
+    @select-week="onSelectWeek"
+  />
+
+  <CustomCalendar
+    :display-date="selectedDate"
+    :events="eventList"
+    @select-date="onSelectDate"
+    @event-option-clicked="handleEventOption"
+  />
+
+  <PentilaSpinner v-if="isLoading" />
+
+  <teleport to="body">
+    <SessionTeacherModal
+      v-if="isEditModalDisplayed"
+      :win-width="(mq.phone || mq.tablet) ? 'auto' : '650px'"
+      :session-event="updatedSession"
+      @close="closeEditModalDisplay"
     />
-
-    <Timeline
-      v-if="!mq.phone"
-      :initial-date="selectedDate"
-      @select-week="onSelectWeek"
+    <CreateSessionModal
+      v-if="isCreateSessionModalDisplayed"
+      :win-width="(mq.phone || mq.tablet) ? 'auto' : '650px'"
+      @close="closeCreateSessionModal"
     />
-
-    <CustomCalendar
-      :display-date="selectedDate"
-      :events="eventList"
-      @select-date="onSelectDate"
-      @event-option-clicked="handleEventOption"
-    />
-
-    <PentilaSpinner v-if="isLoading" />
-
-    <teleport to="body">
-      <SessionTeacherModal
-        v-if="isEditModalDisplayed"
-        :win-width="(mq.phone || mq.tablet) ? 'auto' : '650px'"
-        :session-event="updatedSession"
-        @close="closeEditModalDisplay"
-      />
-      <CreateSessionModal
-        v-if="isCreateSessionModalDisplayed"
-        :win-width="(mq.phone || mq.tablet) ? 'auto' : '650px'"
-        @close="closeCreateSessionModal"
-      />
-    </teleport>
-  </Layout>
+  </teleport>
 </template>
 
 <script>
@@ -45,7 +43,6 @@ import customParseFormat from 'dayjs/plugin/customParseFormat'
 import { defineAsyncComponent } from 'vue'
 
 import HorairesToolbar from '@/components/Horaires/HorairesToolbar'
-import Layout from '@/router/layouts/BannerLayout'
 const Timeline = defineAsyncComponent(() => import('@/components/Horaires/Timeline'))
 const SessionTeacherModal = defineAsyncComponent(() => import('@/components/Horaires/SessionTeacherModal'))
 const CreateSessionModal = defineAsyncComponent(() => import('@/components/Horaires/CreateSessionModal'))
@@ -57,12 +54,12 @@ export default {
   components: {
     CustomCalendar,
     HorairesToolbar,
-    Layout,
     SessionTeacherModal,
     CreateSessionModal,
     Timeline
   },
   inject: ['mq'],
+  emits: ['update:layout'],
   data () {
     return {
       updatedSession: undefined,
@@ -82,6 +79,9 @@ export default {
     isLoading () {
       return this.$store.state.horaires.isLoading
     }
+  },
+  beforeCreate () {
+    this.$emit('update:layout', 'BannerLayout')
   },
   created () {
     let dateToGo

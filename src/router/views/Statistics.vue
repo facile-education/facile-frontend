@@ -1,5 +1,5 @@
 <template>
-  <Layout v-if="selectedSchool">
+  <div v-if="selectedSchool">
     <div class="statistics">
       <h1 :aria-label="$t('serviceTitle')" />
 
@@ -105,7 +105,7 @@
         </div>
       </div>
     </div>
-  </Layout>
+  </div>
 </template>
 
 <script>
@@ -124,6 +124,7 @@ export default {
   name: 'Statistics',
   components: { DateRangePicker, VisitsChart, ActionsChart, StatsActivesUsers, StatsDoughnut, GlobalStat, Layout },
   inject: ['mq'],
+  emits: ['update:layout'],
   data () {
     return {
       allSchools: { schoolName: this.$t('allSchools'), schoolId: 0 },
@@ -157,6 +158,9 @@ export default {
     minDate () {
       return this.globalScheduleConfiguration ? dayjs(this.globalScheduleConfiguration.startDateProject).toDate() : dayjs().subtract(2, 'year').toDate() // arbitrary min date
     }
+  },
+  beforeCreate () {
+    this.$emit('update:layout', 'BannerLayout')
   },
   created () {
     if (this.managedSchoolList === undefined) {

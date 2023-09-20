@@ -1,5 +1,8 @@
 import './registerServiceWorker'
 
+import BannerLayout from '@layouts/BannerLayout.vue'
+import EmptyLayout from '@layouts/EmptyLayout.vue'
+import GVELayout from '@layouts/GVELayout.vue'
 import axios from 'axios'
 import dayjs from 'dayjs'
 import fr from 'dayjs/locale/fr'
@@ -43,12 +46,14 @@ const app = createApp(App)
     domains: undefined,
     trackSiteSearch: false
   })
+
+app.component('BannerLayout', BannerLayout)
+app.component('GVELayout', GVELayout)
+app.component('EmptyLayout', EmptyLayout)
 // Register Pentila components globally
 Object.keys(PentilaComponents).forEach(name => {
   app.component(name, PentilaComponents[name])
 })
-
-app.mount('#app')
 
 const calendar = require('dayjs/plugin/calendar')
 dayjs.extend(calendar)
@@ -78,7 +83,6 @@ dayjs.updateLocale('fr', {
     sameElse: 'DD/MM/YYYY' // Everything else ( 7/10/2011 )
   }
 })
-
 axios.interceptors.request.use(async (config) => {
   // Store the last webservice call date
   store.dispatch('user/setLastActionDate', dayjs())
@@ -125,3 +129,5 @@ if (window.Cypress) {
   window.store = store
   window.router = router
 }
+
+app.mount('#app')

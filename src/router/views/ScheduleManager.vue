@@ -1,20 +1,17 @@
 <template>
-  <Layout :is-allowed="$store.state.user.isAdministrator">
-    <PentilaTabList>
-      <PentilaTabItem :title="$t('globalSettings')">
-        <GlobalScheduleSettings />
-      </PentilaTabItem>
-      <PentilaTabItem :title="$t('schoolSettings')">
-        <SchoolScheduleSettings />
-      </PentilaTabItem>
-    </PentilaTabList>
-  </Layout>
+  <PentilaTabList>
+    <PentilaTabItem :title="$t('globalSettings')">
+      <GlobalScheduleSettings />
+    </PentilaTabItem>
+    <PentilaTabItem :title="$t('schoolSettings')">
+      <SchoolScheduleSettings />
+    </PentilaTabItem>
+  </PentilaTabList>
 </template>
 
 <script>
 import { defineAsyncComponent } from 'vue'
 
-import Layout from '@/router/layouts/BannerLayout'
 const GlobalScheduleSettings = defineAsyncComponent(() => import('@components/ScheduleManager/GlobalScheduleSettings/GlobalScheduleSettings.vue'))
 const SchoolScheduleSettings = defineAsyncComponent(() => import('@components/ScheduleManager/SchoolScheduleSettings/SchoolScheduleSettings.vue'))
 
@@ -22,8 +19,11 @@ export default {
   name: 'HorairesManager',
   components: {
     SchoolScheduleSettings,
-    GlobalScheduleSettings,
-    Layout
+    GlobalScheduleSettings
+  },
+  emits: ['update:layout'],
+  beforeCreate () {
+    this.$emit('update:layout', 'BannerLayout')
   }
 }
 </script>

@@ -1,5 +1,14 @@
 <template>
-  <RouterView :key="$route.path" />
+  <component
+    :is="layout"
+  >
+    <RouterView
+      v-if="layout !== 'BannerLayout' || menu !== undefined"
+      :key="$route.path"
+      @update:layout="layout = $event"
+    />
+    <PentilaSpinner v-else />
+  </component>
 </template>
 
 <script>
@@ -7,12 +16,27 @@ import { setMainColor } from '@/utils/theme.util'
 
 export default {
   inject: ['mq'],
+  data () {
+    return {
+      layout: 'div'
+    }
+  },
   computed: {
+    menu () {
+      return this.$store.state.menu.menu
+    },
     isIOS () {
       const platform = navigator?.userAgentData?.platform || navigator?.platform || 'unknown'
 
       return ((/iPad|iPhone|iPod/.test(platform) || (platform === 'MacIntel' && navigator.maxTouchPoints > 1)) &&
         !window.MSStream)
+    }
+  },
+  watch: {
+    menu (value) {
+      if (value !== undefined) {
+        this.$router.push({ path: this.$route.fullPath })
+      }
     }
   },
   created () {
@@ -110,5 +134,11 @@ a {
 /* Fix Input Zoom on iPhone 6 Plus, iPhone 6s Plus, iPhone 7 Plus, iPhone 8, iPhone X, XS, XS Max  */
 @media screen and (device-aspect-ratio: 9/16) {
     select, textarea, input { font-size: 16px; }
+}
+</style>
+
+<style lang="scss" scoped>
+.layout {
+  height: 100%;
 }
 </style>

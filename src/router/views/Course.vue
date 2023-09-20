@@ -1,53 +1,51 @@
 <template>
-  <Layout :is-allowed="isTeacher || $store.state.user.isStudent || $store.state.user.isParent">
-    <PentilaTabList v-if="isTeacher">
+  <PentilaTabList v-if="isTeacher">
+    <PentilaTabItem
+      :title="$t('schedule')"
+    >
+      <ScheduleTab />
+    </PentilaTabItem>
+    <PentilaTabItem
+      :title="$t('course')"
+      class="course-tab-content"
+    >
+      <CourseTab :user-id="selectedUser.userId" />
+    </PentilaTabItem>
+    <!--            <PentilaTabItem-->
+    <!--              :title="$t('toCorrect')"-->
+    <!--            >-->
+    <!--              <TeacherHomeworkTab />-->
+    <!--            </PentilaTabItem>-->
+  </PentilaTabList>
+  <div v-else>
+    <div
+      v-if="childList.length > 1"
+      class="first-line"
+    >
+      <PentilaDropdown
+        v-model="selectedChild"
+        :list="childList"
+        :sort="false"
+        display-field="fullName"
+        class="child-selector"
+        @update:model-value="changeStudent"
+      />
+    </div>
+
+    <PentilaTabList ref="tabList">
       <PentilaTabItem
-        :title="$t('schedule')"
+        :title="$t('homework')"
+        :nb-notification="nbUndoneHomeworks"
       >
-        <ScheduleTab />
+        <HomeworkTab :user-id="selectedUser.userId" />
       </PentilaTabItem>
       <PentilaTabItem
         :title="$t('course')"
-        class="course-tab-content"
       >
         <CourseTab :user-id="selectedUser.userId" />
       </PentilaTabItem>
-      <!--            <PentilaTabItem-->
-      <!--              :title="$t('toCorrect')"-->
-      <!--            >-->
-      <!--              <TeacherHomeworkTab />-->
-      <!--            </PentilaTabItem>-->
     </PentilaTabList>
-    <div v-else>
-      <div
-        v-if="childList.length > 1"
-        class="first-line"
-      >
-        <PentilaDropdown
-          v-model="selectedChild"
-          :list="childList"
-          :sort="false"
-          display-field="fullName"
-          class="child-selector"
-          @update:model-value="changeStudent"
-        />
-      </div>
-
-      <PentilaTabList ref="tabList">
-        <PentilaTabItem
-          :title="$t('homework')"
-          :nb-notification="nbUndoneHomeworks"
-        >
-          <HomeworkTab :user-id="selectedUser.userId" />
-        </PentilaTabItem>
-        <PentilaTabItem
-          :title="$t('course')"
-        >
-          <CourseTab :user-id="selectedUser.userId" />
-        </PentilaTabItem>
-      </PentilaTabList>
-    </div>
-  </Layout>
+  </div>
 </template>
 
 <script>
@@ -55,18 +53,17 @@ import CourseTab from '@/components/Course/CourseTab.vue' // TODO: async
 import HomeworkTab from '@/components/Course/HomeworkTab.vue'
 import ScheduleTab from '@/components/Course/ScheduleTab.vue'
 // import TeacherHomeworkTab from '@/components/Course/TeacherHomeworkTab.vue'
-import Layout from '@/router/layouts/BannerLayout'
 
 export default {
   name: 'Course',
   components: {
-    Layout,
     CourseTab,
     HomeworkTab,
     ScheduleTab
     // TeacherHomeworkTab
   },
   inject: ['mq'],
+  emits: ['update:layout'],
   data () {
     return {
       selectedUser: undefined,
@@ -96,6 +93,9 @@ export default {
       // TODO if parent
       return this.$store.state.user.userId
     }
+  },
+  beforeCreate () {
+    this.$emit('update:layout', 'BannerLayout')
   },
   created () {
     if (this.$store.state.user.isStudent || this.$store.state.user.isParent) {

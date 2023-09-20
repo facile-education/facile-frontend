@@ -1,20 +1,18 @@
 <template>
-  <Layout>
-    <PentilaSpinner v-if="areActionsInProgress" />
+  <PentilaSpinner v-if="areActionsInProgress" />
 
-    <GroupToolbar />
+  <GroupToolbar />
 
-    <div class="body">
-      <GroupList />
-      <GroupDetails
-        v-if="isPanelDisplayed && !mq.phone"
-      />
-    </div>
+  <div class="body">
+    <GroupList />
+    <GroupDetails
+      v-if="isPanelDisplayed && !mq.phone"
+    />
+  </div>
 
-    <teleport to="body">
-      <GroupDetailsModal v-if="isPanelDisplayed && mq.phone" />
-    </teleport>
-  </Layout>
+  <teleport to="body">
+    <GroupDetailsModal v-if="isPanelDisplayed && mq.phone" />
+  </teleport>
 </template>
 
 <script>
@@ -22,7 +20,6 @@ import GroupToolbar from '@components/Groups/GroupToolbar'
 import { defineAsyncComponent } from 'vue'
 
 import GroupList from '@/components/Groups/GroupList'
-import Layout from '@/router/layouts/BannerLayout'
 
 const GroupDetails = defineAsyncComponent(() => import('@components/Groups/GroupDetailsPanel/GroupDetails'))
 const GroupDetailsModal = defineAsyncComponent(() => import('@components/Groups/GroupDetailsPanel/GroupDetailsModal'))
@@ -32,11 +29,11 @@ export default {
   components: {
     GroupDetails,
     GroupToolbar,
-    Layout,
     GroupList,
     GroupDetailsModal
   },
   inject: ['mq'],
+  emits: ['update:layout'],
   computed: {
     isPanelDisplayed () {
       return this.$store.state.groups.isPanelDisplayed
@@ -44,6 +41,9 @@ export default {
     areActionsInProgress () {
       return this.$store.getters['currentActions/areActionsInProgress']
     }
+  },
+  beforeCreate () {
+    this.$emit('update:layout', 'BannerLayout')
   },
   created () {
     this.$store.dispatch('groups/closePanel')

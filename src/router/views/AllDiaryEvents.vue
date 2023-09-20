@@ -1,76 +1,74 @@
 <template>
-  <Layout>
-    <AllDiaryEventsHeader
-      :nb-new-events="nbNewEvents"
-      :un-read-only="unReadOnly"
-      @toggleReadOnly="toggleReadOnly"
-      @createEvent="refresh"
-    />
+  <AllDiaryEventsHeader
+    :nb-new-events="nbNewEvents"
+    :un-read-only="unReadOnly"
+    @toggleReadOnly="toggleReadOnly"
+    @createEvent="refresh"
+  />
 
-    <div
-      class="body"
-      :class="{'details-display' : isDetailsPanelDisplayed}"
-    >
-      <div class="event-list">
-        <div
-          v-if="isLoading"
-          class="placeholder"
-        >
-          <PentilaSpinner />
-        </div>
-        <div
-          v-if="error === true"
-          v-t="'errorPlaceholder'"
-          class="placeholder"
-        />
-        <div
-          v-else-if="eventList.length === 0"
-          v-t="'emptyPlaceholder'"
-          class="placeholder"
-        />
-        <div
-          v-else
-          ref="scroll"
-          class="scroll"
-          @scroll="handleScroll"
-        >
-          <div
-            v-for="(month, index) in eventsByMonth"
-            :key="index"
-          >
-            <div class="period">
-              {{ month.monthName }}
-            </div>
-            <DiaryEventItem
-              v-for="event in month.eventList"
-              :key="event.eventId"
-              :event="event"
-              :is-selection-mode="isDetailsPanelDisplayed"
-              :is-selected="selectedEvent && selectedEvent.eventId === event.eventId"
-              :is-last="isLastDisplayed(event)"
-              @select="selectedEvent=event"
-              @markAsRead="event.hasRead=true"
-              @updateEvent="updateList"
-              @deleteEvent="updateList"
-              @getNextEvents="loadDiaryEvents"
-            />
-          </div>
-        </div>
+  <div
+    class="body"
+    :class="{'details-display' : isDetailsPanelDisplayed}"
+  >
+    <div class="event-list">
+      <div
+        v-if="isLoading"
+        class="placeholder"
+      >
+        <PentilaSpinner />
       </div>
-
-      <DiaryEventDetails
-        v-if="selectedEvent && isDetailsPanelDisplayed"
-        :init-event="selectedEvent"
-        @update="refresh"
-        @delete="deleteEvent"
+      <div
+        v-if="error === true"
+        v-t="'errorPlaceholder'"
+        class="placeholder"
       />
       <div
-        v-if="!selectedEvent && isDetailsPanelDisplayed"
-        v-t="'detailsPlaceholder'"
-        class="details-placeholder"
+        v-else-if="eventList.length === 0"
+        v-t="'emptyPlaceholder'"
+        class="placeholder"
       />
+      <div
+        v-else
+        ref="scroll"
+        class="scroll"
+        @scroll="handleScroll"
+      >
+        <div
+          v-for="(month, index) in eventsByMonth"
+          :key="index"
+        >
+          <div class="period">
+            {{ month.monthName }}
+          </div>
+          <DiaryEventItem
+            v-for="event in month.eventList"
+            :key="event.eventId"
+            :event="event"
+            :is-selection-mode="isDetailsPanelDisplayed"
+            :is-selected="selectedEvent && selectedEvent.eventId === event.eventId"
+            :is-last="isLastDisplayed(event)"
+            @select="selectedEvent=event"
+            @markAsRead="event.hasRead=true"
+            @updateEvent="updateList"
+            @deleteEvent="updateList"
+            @getNextEvents="loadDiaryEvents"
+          />
+        </div>
+      </div>
     </div>
-  </Layout>
+
+    <DiaryEventDetails
+      v-if="selectedEvent && isDetailsPanelDisplayed"
+      :init-event="selectedEvent"
+      @update="refresh"
+      @delete="deleteEvent"
+    />
+    <div
+      v-if="!selectedEvent && isDetailsPanelDisplayed"
+      v-t="'detailsPlaceholder'"
+      class="details-placeholder"
+    />
+  </div>
 </template>
 
 <script>
@@ -81,13 +79,13 @@ import dayjs from 'dayjs'
 
 import { getEvents } from '@/api/dashboard/agenda.service'
 import { allDiaryEventsPaginationSize } from '@/constants/dashboardConstants'
-import Layout from '@/router/layouts/BannerLayout.vue'
 let oldScrollTop = 0
 
 export default {
   name: 'AllDiaryEvents',
-  components: { DiaryEventDetails, AllDiaryEventsHeader, DiaryEventItem, Layout },
+  components: { DiaryEventDetails, AllDiaryEventsHeader, DiaryEventItem },
   inject: ['mq'],
+  emits: ['update:layout'],
   data () {
     return {
       unReadOnly: false,
@@ -116,6 +114,9 @@ export default {
       })
       return eventsByMonth
     }
+  },
+  beforeCreate () {
+    this.$emit('update:layout', 'BannerLayout')
   },
   created () {
     this.loadDiaryEvents()

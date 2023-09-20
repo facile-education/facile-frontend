@@ -1,6 +1,5 @@
 <template>
-  <Layout
-    :is-allowed="!$store.state.user.isStudent && !$store.state.user.isParent"
+  <div
     class="layout"
   >
     <h1 :aria-label="$t('serviceTitle')" />
@@ -13,21 +12,20 @@
       v-else
       class="progression-list"
     />
-  </Layout>
+  </div>
 </template>
 
 <script>
 import ProgressionList from '@/components/Progression/ProgressionList'
 import ProgressionPanel from '@/components/Progression/ProgressionPanel'
-import Layout from '@/router/layouts/BannerLayout'
 
 export default {
   name: 'Progression',
   components: {
-    Layout,
     ProgressionList,
     ProgressionPanel
   },
+  emits: ['update:layout'],
   computed: {
     areActionsInProgress () {
       return this.$store.getters['currentActions/areActionsInProgress']
@@ -36,6 +34,9 @@ export default {
       return (this.$route.params.progressionId !== undefined &&
         this.$store.state.progression.currentProgression !== undefined)
     }
+  },
+  beforeCreate () {
+    this.$emit('update:layout', 'BannerLayout')
   },
   created () {
     // Watch route changes to react on progressionId change

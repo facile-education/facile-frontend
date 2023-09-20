@@ -1,32 +1,30 @@
 <template>
-  <Layout :is-allowed="$store.state.user.isAdministrator">
-    <PentilaTabList class="tablist">
-      <PentilaTabItem
-        :title="$t('administration')"
-        class="tab"
-      >
-        <Administration />
-      </PentilaTabItem>
-      <PentilaTabItem
-        :title="$t('groups')"
-        class="tab"
-      >
-        <GroupsMaintenance />
-      </PentilaTabItem>
-      <PentilaTabItem
-        :title="$t('one-shot-tools')"
-        class="tab"
-      >
-        <OneShotMaintenance />
-      </PentilaTabItem>
-      <PentilaTabItem
-        :title="$t('password-update')"
-        class="tab"
-      >
-        <PasswordUpdate />
-      </PentilaTabItem>
-    </PentilaTabList>
-  </Layout>
+  <PentilaTabList class="tablist">
+    <PentilaTabItem
+      :title="$t('administration')"
+      class="tab"
+    >
+      <Administration />
+    </PentilaTabItem>
+    <PentilaTabItem
+      :title="$t('groups')"
+      class="tab"
+    >
+      <GroupsMaintenance />
+    </PentilaTabItem>
+    <PentilaTabItem
+      :title="$t('one-shot-tools')"
+      class="tab"
+    >
+      <OneShotMaintenance />
+    </PentilaTabItem>
+    <PentilaTabItem
+      :title="$t('password-update')"
+      class="tab"
+    >
+      <PasswordUpdate />
+    </PentilaTabItem>
+  </PentilaTabList>
 </template>
 
 <script>
@@ -36,21 +34,19 @@ import OneShotMaintenance from '@components/Maintenance/OneShotMaintenance.vue'
 import PasswordUpdate from '@components/Maintenance/PasswordUpdate.vue'
 
 import Administration from '@/components/Maintenance/Administration.vue'
-import Layout from '@/router/layouts/BannerLayout'
 
 export default {
   name: 'Maintenance',
   components: {
-    Layout,
     Administration,
     GroupsMaintenance,
     OneShotMaintenance,
     PasswordUpdate
   },
   inject: ['mq'],
-  computed: {
-  },
-  methods: {
+  emits: ['update:layout'],
+  beforeCreate () {
+    this.$emit('update:layout', 'BannerLayout')
   }
 }
 </script>

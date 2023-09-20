@@ -1,48 +1,48 @@
 <template>
-  <Layout class="layout">
-    <h1 :aria-label="$t('serviceTitle')" />
-    <img
-      class="icon"
-      src="@/assets/images/gar.png"
-    >
-    <p class="title">
-      <strong
-        v-t="'serviceLabel'"
-        class="important"
-      />
-      {{ $t('has-been-open-in-new-tab-label') }}.
-    </p>
-    <p class="description">
-      {{ $t('if-not-here-label') }},
-      <a
-        v-t="'you-click-here-label'"
-        class="link"
-        :href="managerUrl"
-        target="_blank"
-      />
-      {{ $t('to-open-it-again-label') }}.
-    </p>
-    <div class="separator" />
-    <p class="content">
-      {{ $t('issue-found-label') }} <NeroIcon name="chevron-down" />).
-    </p>
-  </Layout>
+  <h1 :aria-label="$t('serviceTitle')" />
+  <img
+    class="icon"
+    src="@/assets/images/gar.png"
+  >
+  <p class="title">
+    <strong
+      v-t="'serviceLabel'"
+      class="important"
+    />
+    {{ $t('has-been-open-in-new-tab-label') }}.
+  </p>
+  <p class="description">
+    {{ $t('if-not-here-label') }},
+    <a
+      v-t="'you-click-here-label'"
+      class="link"
+      :href="managerUrl"
+      target="_blank"
+    />
+    {{ $t('to-open-it-again-label') }}.
+  </p>
+  <div class="separator" />
+  <p class="content">
+    {{ $t('issue-found-label') }} <NeroIcon name="chevron-down" />).
+  </p>
 </template>
 
 <script>
 import NeroIcon from '@/components/Nero/NeroIcon'
-import Layout from '@/router/layouts/BannerLayout'
 
 export default {
   name: 'MediacenterManager',
   components: {
-    Layout,
     NeroIcon
   },
+  emits: ['update:layout'],
   computed: {
     managerUrl () {
       return this.$store.state.mediacenter.managerUIUrl
     }
+  },
+  beforeCreate () {
+    this.$emit('update:layout', 'BannerLayout')
   },
   created () {
     this.$store.dispatch('mediacenter/getManagerUIUrl').then(() => {
@@ -53,9 +53,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.layout {
-  height: 100%;
-}
 
 .icon {
   width: 164px;

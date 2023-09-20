@@ -1,5 +1,5 @@
 <template>
-  <Layout
+  <div
     class="layout"
   >
     <h1 :aria-label="$t('serviceTitle')" />
@@ -13,20 +13,19 @@
         class="item-content"
       />
     </template>
-  </Layout>
+  </div>
 </template>
 
 <script>
 import { getItemContents } from '@/api/progression.service'
 import ProgressionItemContent from '@/components/Progression/Edit/ProgressionItemContent'
-import Layout from '@/router/layouts/BannerLayout'
 
 export default {
   name: 'Progression',
   components: {
-    Layout,
     ProgressionItemContent
   },
+  emits: ['update:layout'],
   data () {
     return {
       contentList: []
@@ -36,6 +35,9 @@ export default {
     areActionsInProgress () {
       return this.$store.getters['currentActions/areActionsInProgress']
     }
+  },
+  beforeCreate () {
+    this.$emit('update:layout', 'BannerLayout')
   },
   created () {
     // Watch route changes to react on progressionId change

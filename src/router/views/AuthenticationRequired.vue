@@ -1,28 +1,26 @@
 <template>
-  <GVELayout>
-    <div class="authentication-required">
-      <h1 :aria-label="$t('title')" />
-      <div class="error">
-        <img
-          src="@/assets/user.svg"
-          alt=""
-        >
-        <h2 v-t="'authRequired'" />
-        <p>{{ $t('redirected') }}</p>
-        <div class="spinner-container">
-          <PentilaSpinner class="my-spinner" />
-        </div>
-      </div>
+  <h1 :aria-label="$t('title')" />
+  <div class="error">
+    <img
+      src="@/assets/user.svg"
+      alt=""
+    >
+    <h2 v-t="'authRequired'" />
+    <p>{{ $t('redirected') }}</p>
+    <div class="spinner-container">
+      <PentilaSpinner class="my-spinner" />
     </div>
-  </GVELayout>
+  </div>
 </template>
 
 <script>
-import GVELayout from '@layouts/GVELayout.vue'
 
 export default {
   name: 'AuthenticationRequired',
-  components: { GVELayout },
+  emits: ['update:layout'],
+  beforeCreate () {
+    this.$emit('update:layout', 'GVELayout')
+  },
   created () {
     let redirectPath = this.$router.options.history.state.back // The previous route
     if (redirectPath === this.$route.path) { // To avoid infinite redirect loop

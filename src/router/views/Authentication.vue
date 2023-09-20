@@ -1,136 +1,133 @@
 <template>
-  <GVELayout>
-    <h1 :aria-label="$t('title')" />
-    <div class="wrapper">
-      <img
-        src="@assets/images/gva/logo_eel.png"
-        :alt="$t('eelImg')"
-        class="eel-img"
-      >
-      <a
-        id="academic"
-        v-t="'studentTeacher'"
-        :href="ssoUrl"
-        :title="$t('entLogin')"
-        class="btn"
+  <h1 :aria-label="$t('title')" />
+  <div class="wrapper">
+    <img
+      src="@assets/images/gva/logo_eel.png"
+      :alt="$t('eelImg')"
+      class="eel-img"
+    >
+    <a
+      id="academic"
+      v-t="'studentTeacher'"
+      :href="ssoUrl"
+      :title="$t('entLogin')"
+      class="btn"
+    />
+    <div
+      class="guest"
+    >
+      <span
+        v-t="'parentOther'"
+        tabindex="0"
+        @click="toggleGuestForm"
+        @keyup.enter="toggleGuestForm"
       />
-      <div
-        class="guest"
-      >
-        <span
-          v-t="'parentOther'"
-          tabindex="0"
-          @click="toggleGuestForm"
-          @keyup.enter="toggleGuestForm"
-        />
 
-        <Transition name="expand">
-          <div v-if="isGuestFormDisplayed">
-            <!-- Password recovery -->
-            <form
-              v-if="showPasswordRecoveryForm"
-              @submit.prevent="sendRecoveryEmail"
-            >
-              <div class="login-label">
-                <p
-                  v-t="'login-label'"
-                />
-              </div>
-              <input
-                v-model="recoveryLogin"
-                :placeholder="$t('loginPlaceholder')"
-                class="input"
-                autocapitalize="none"
-                @keypress="handleKeyPressed"
-              >
-              <button
-                v-t="'send-recovery'"
-                class="btn"
-                :title="$t('send-recovery')"
-                type="submit"
+      <Transition name="expand">
+        <div v-if="isGuestFormDisplayed">
+          <!-- Password recovery -->
+          <form
+            v-if="showPasswordRecoveryForm"
+            @submit.prevent="sendRecoveryEmail"
+          >
+            <div class="login-label">
+              <p
+                v-t="'login-label'"
               />
-              <div
-                v-if="checkEmail"
-                class="check-email"
-              >
-                <span
-                  v-t="'check-email'"
-                />
-              </div>
-              <div>
-                <a
-                  v-if="showForgotPassword"
-                  v-t="'main-form'"
-                  href="#"
-                  @click="showPasswordRecoveryForm = false"
-                />
-              </div>
-            </form>
-            <form
-              v-else
-              @submit.prevent="doLogin"
+            </div>
+            <input
+              v-model="recoveryLogin"
+              :placeholder="$t('loginPlaceholder')"
+              class="input"
+              autocapitalize="none"
+              @keypress="handleKeyPressed"
             >
-              <input
-                v-model="login"
-                :placeholder="$t('login')"
-                class="input"
-                name="unsername"
-                autocapitalize="none"
-                @keypress="handleKeyPressed"
-              >
-              <input
-                v-model="password"
-                type="password"
-                :placeholder="$t('password')"
-                class="input"
-                name="password"
-                @keypress="handleKeyPressed"
-              >
-              <div>
-                <span
-                  v-show="isError"
-                  v-t="'loginError'"
-                  class="errorMessage"
-                />
-                <span
-                  v-show="!isActive"
-                  v-t="'inactiveAccount'"
-                  class="errorMessage"
-                />
-              </div>
-              <button
-                v-t="authenticateButtonLabel"
-                class="btn"
-                :class="{'disabled': isLoading}"
-                :disabled="isLoading"
-                :title="$t('authenticate')"
-                type="submit"
+            <button
+              v-t="'send-recovery'"
+              class="btn"
+              :title="$t('send-recovery')"
+              type="submit"
+            />
+            <div
+              v-if="checkEmail"
+              class="check-email"
+            >
+              <span
+                v-t="'check-email'"
               />
-              <div>
-                <a
-                  v-if="showForgotPassword"
-                  v-t="'forgot-password'"
-                  href="#"
-                  @click="showPasswordRecoveryForm = true"
-                />
-              </div>
-            </form>
-          </div>
-        </Transition>
-      </div>
-      <img
-        src="@assets/images/gva/geneve-logo.png"
-        :alt="$t('gvaImg')"
-        width="140"
-        height="108"
-        class="gva-img"
-      >
+            </div>
+            <div>
+              <a
+                v-if="showForgotPassword"
+                v-t="'main-form'"
+                href="#"
+                @click="showPasswordRecoveryForm = false"
+              />
+            </div>
+          </form>
+          <form
+            v-else
+            @submit.prevent="doLogin"
+          >
+            <input
+              v-model="login"
+              :placeholder="$t('login')"
+              class="input"
+              name="unsername"
+              autocapitalize="none"
+              @keypress="handleKeyPressed"
+            >
+            <input
+              v-model="password"
+              type="password"
+              :placeholder="$t('password')"
+              class="input"
+              name="password"
+              @keypress="handleKeyPressed"
+            >
+            <div>
+              <span
+                v-show="isError"
+                v-t="'loginError'"
+                class="errorMessage"
+              />
+              <span
+                v-show="!isActive"
+                v-t="'inactiveAccount'"
+                class="errorMessage"
+              />
+            </div>
+            <button
+              v-t="authenticateButtonLabel"
+              class="btn"
+              :class="{'disabled': isLoading}"
+              :disabled="isLoading"
+              :title="$t('authenticate')"
+              type="submit"
+            />
+            <div>
+              <a
+                v-if="showForgotPassword"
+                v-t="'forgot-password'"
+                href="#"
+                @click="showPasswordRecoveryForm = true"
+              />
+            </div>
+          </form>
+        </div>
+      </Transition>
     </div>
-  </GVELayout>
+    <img
+      src="@assets/images/gva/geneve-logo.png"
+      :alt="$t('gvaImg')"
+      width="140"
+      height="108"
+      class="gva-img"
+    >
+  </div>
 </template>
 
 <script>
-import GVELayout from '@layouts/GVELayout.vue'
 import axios from 'axios'
 import PentilaUtils from 'pentila-utils'
 import { useCookies } from 'vue3-cookies'
@@ -144,15 +141,13 @@ import store from '@/store'
 
 export default {
   name: 'Authentication',
-  components: {
-    GVELayout
-  },
   props: {
     redirect: {
       type: String,
       default: ''
     }
   },
+  emits: ['update:layout'],
   data () {
     return {
       isLoading: false,
@@ -189,6 +184,9 @@ export default {
     authenticateButtonLabel () {
       return this.isLoading ? 'authenticationOnGoing' : 'authenticate'
     }
+  },
+  beforeCreate () {
+    this.$emit('update:layout', 'GVELayout')
   },
   created () {
     const { cookies } = useCookies()

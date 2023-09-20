@@ -1,17 +1,15 @@
 <template>
-  <Layout>
-    <h1 :aria-label="$t('serviceTitle')" />
-    <AMToolbar />
-    <CategoryList />
-    <div class="filler" />
-    <teleport
-      v-if="showBroadcastModal || showEditionModal"
-      to="body"
-    >
-      <BroadcastScopeModal v-if="showBroadcastModal" />
-      <ApplicationEditionModal v-if="showEditionModal" />
-    </teleport>
-  </Layout>
+  <h1 :aria-label="$t('serviceTitle')" />
+  <AMToolbar />
+  <CategoryList />
+  <div class="filler" />
+  <teleport
+    v-if="showBroadcastModal || showEditionModal"
+    to="body"
+  >
+    <BroadcastScopeModal v-if="showBroadcastModal" />
+    <ApplicationEditionModal v-if="showEditionModal" />
+  </teleport>
 </template>
 
 <script>
@@ -20,7 +18,6 @@ import AMToolbar from '@/components/ApplicationManager/AMToolbar'
 import ApplicationEditionModal from '@/components/ApplicationManager/ApplicationEditionModal'
 import BroadcastScopeModal from '@/components/ApplicationManager/BroadcastScopeModal'
 import CategoryList from '@/components/ApplicationManager/CategoryList'
-import Layout from '@/router/layouts/BannerLayout'
 
 export default {
   name: 'ApplicationManager',
@@ -28,9 +25,9 @@ export default {
     AMToolbar,
     ApplicationEditionModal,
     BroadcastScopeModal,
-    CategoryList,
-    Layout
+    CategoryList
   },
+  emits: ['update:layout'],
   computed: {
     showBroadcastModal () {
       return this.$store.state.applicationManager.showBroadcastModal
@@ -38,6 +35,9 @@ export default {
     showEditionModal () {
       return this.$store.state.applicationManager.showEditionModal
     }
+  },
+  beforeCreate () {
+    this.$emit('update:layout', 'BannerLayout')
   },
   created () {
     if (this.$store.state.administration.schoolList === undefined) {

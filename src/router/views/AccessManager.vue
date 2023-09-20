@@ -1,54 +1,49 @@
 <template>
-  <Layout
-    :is-allowed="$store.state.user.isAdministrator || $store.state.user.isLocalAdmin || $store.state.user.isENTAdmin || $store.state.user.isDirectionMember"
-    class="layout"
-  >
-    <h1 :aria-label="$t('serviceTitle')" />
+  <h1 :aria-label="$t('serviceTitle')" />
 
-    <div v-if="roleList && roleList.length > 0">
-      <SchoolSelector class="school-selector" />
+  <div v-if="roleList && roleList.length > 0">
+    <SchoolSelector class="school-selector" />
 
-      <div class="first-line">
-        <AccessCreateButton
-          @create-category="isCreateCategoryInputDisplayed=true"
-          @create-access="isSaveAccessModalDisplayed=true"
-        />
-
-        <SeeAccessesAs />
-      </div>
-
-      <PentilaSpinner
-        v-if="isLoading"
-        style="z-index: 1"
-      />
-      <div
-        v-if="error === true"
-        v-t="'errorPlaceholder'"
-        class="placeholder"
-      />
-      <CategoriesPlaceholder
-        v-else-if="categoryList && categoryList.length === 0 && !isCreateCategoryInputDisplayed"
+    <div class="first-line">
+      <AccessCreateButton
         @create-category="isCreateCategoryInputDisplayed=true"
+        @create-access="isSaveAccessModalDisplayed=true"
       />
 
-      <AccessCategoryList
-        v-else-if="categoryList"
-        :category-list="sortedCategoryList"
-      />
-
-      <AccessCategoryInput
-        v-if="isCreateCategoryInputDisplayed"
-        class="category-input"
-        @submit-name="createCategory"
-        @close="isCreateCategoryInputDisplayed = false"
-      />
+      <SeeAccessesAs />
     </div>
+
+    <PentilaSpinner
+      v-if="isLoading"
+      style="z-index: 1"
+    />
     <div
-      v-else-if="roleList && roleList.length === 0"
-      v-t="'noRolePlaceholder'"
+      v-if="error === true"
+      v-t="'errorPlaceholder'"
       class="placeholder"
     />
-  </Layout>
+    <CategoriesPlaceholder
+      v-else-if="categoryList && categoryList.length === 0 && !isCreateCategoryInputDisplayed"
+      @create-category="isCreateCategoryInputDisplayed=true"
+    />
+
+    <AccessCategoryList
+      v-else-if="categoryList"
+      :category-list="sortedCategoryList"
+    />
+
+    <AccessCategoryInput
+      v-if="isCreateCategoryInputDisplayed"
+      class="category-input"
+      @submit-name="createCategory"
+      @close="isCreateCategoryInputDisplayed = false"
+    />
+  </div>
+  <div
+    v-else-if="roleList && roleList.length === 0"
+    v-t="'noRolePlaceholder'"
+    class="placeholder"
+  />
 
   <teleport
     v-if="isSaveAccessModalDisplayed"

@@ -1,87 +1,85 @@
 <template>
-  <Layout>
-    <div class="external-resource">
-      <div v-if="serviceSchoolUrls.length == 0 && selectedUrl === undefined">
+  <div class="external-resource">
+    <div v-if="serviceSchoolUrls.length == 0 && selectedUrl === undefined">
+      <img
+        class="icon"
+        src="@/assets/images/ExternalResource/icon-external-service.png"
+      >
+      <h3 v-t="{path: 'noConfigLabel', args: {resourceName:serviceName}}" />
+      <I18n
+        keypath="contactLabel"
+        tag="p"
+        class="content"
+      >
+        <a
+          v-t="'clickHereLabel'"
+          place="link"
+          class="link"
+          @click="onClickShowIncidents()"
+        />
+      </I18n>
+    </div>
+
+    <div v-else>
+      <div v-if="serviceSchoolUrls.length > 1">
+        <PentilaDropdown
+          v-model="selectedSchool"
+          :list="serviceSchoolUrls"
+          display-field="schoolName"
+          @update:model-value="selectSchool"
+        />
+      </div>
+
+      <div v-if="!isHttps">
         <img
           class="icon"
           src="@/assets/images/ExternalResource/icon-external-service.png"
         >
-        <h3 v-t="{path: 'noConfigLabel', args: {resourceName:serviceName}}" />
+        <h3>{{ $t('newTabLabel', {resourceName: serviceName}) }}</h3>
         <I18n
-          keypath="contactLabel"
+          keypath="openAgainLabel"
           tag="p"
-          class="content"
+          class="description"
         >
           <a
             v-t="'clickHereLabel'"
             place="link"
             class="link"
-            @click="onClickShowIncidents()"
+            @click="openInNewTab"
           />
         </I18n>
+        <div class="nero-separator" />
+        <p class="content">
+          {{ $t('popupIssueLabel') }}
+        </p>
       </div>
 
       <div v-else>
-        <div v-if="serviceSchoolUrls.length > 1">
-          <PentilaDropdown
-            v-model="selectedSchool"
-            :list="serviceSchoolUrls"
-            display-field="schoolName"
-            @update:model-value="selectSchool"
+        <I18n
+          keypath="openInTabLabel"
+          tag="p"
+          class="description"
+        >
+          <a
+            v-t="'clickHereLabel'"
+            place="link"
+            class="link"
+            @click="openInNewTab"
           />
-        </div>
-
-        <div v-if="!isHttps">
-          <img
-            class="icon"
-            src="@/assets/images/ExternalResource/icon-external-service.png"
-          >
-          <h3>{{ $t('newTabLabel', {resourceName: serviceName}) }}</h3>
-          <I18n
-            keypath="openAgainLabel"
-            tag="p"
-            class="description"
-          >
-            <a
-              v-t="'clickHereLabel'"
-              place="link"
-              class="link"
-              @click="openInNewTab"
-            />
-          </I18n>
-          <div class="nero-separator" />
-          <p class="content">
-            {{ $t('popupIssueLabel') }}
-          </p>
-        </div>
-
-        <div v-else>
-          <I18n
-            keypath="openInTabLabel"
-            tag="p"
-            class="description"
-          >
-            <a
-              v-t="'clickHereLabel'"
-              place="link"
-              class="link"
-              @click="openInNewTab"
-            />
-          </I18n>
-          <iframe
-            :src="selectedUrl"
-            class="frame"
-          />
-        </div>
+        </I18n>
+        <iframe
+          :src="selectedUrl"
+          class="frame"
+        />
       </div>
     </div>
-    <teleport to="body">
-      <AssistanceModal
-        v-if="isSupportModalDisplayed"
-        @close="isSupportModalDisplayed = false"
-      />
-    </teleport>
-  </Layout>
+  </div>
+  <teleport to="body">
+    <AssistanceModal
+      v-if="isSupportModalDisplayed"
+      @close="isSupportModalDisplayed = false"
+    />
+  </teleport>
 </template>
 
 <script>
@@ -89,7 +87,6 @@ import { defineAsyncComponent } from 'vue'
 import { Translation as I18n } from 'vue-i18n'
 
 import { getResourceUrls } from '@/api/applicationManager.service'
-import Layout from '@/router/layouts/BannerLayout'
 
 const AssistanceModal = defineAsyncComponent(() => import('@/components/Assistance/AssistanceModal'))
 
@@ -97,7 +94,6 @@ export default {
   export: 'ExternalResource',
   components: {
     AssistanceModal,
-    Layout,
     I18n
   },
   props: {
@@ -106,6 +102,7 @@ export default {
       default: ''
     }
   },
+  emits: ['update:layout'],
   data () {
     return {
       forceNewTab: false,
@@ -129,6 +126,9 @@ export default {
         return true
       }
     }
+  },
+  beforeCreate () {
+    this.$emit('update:layout', 'BannerLayout')
   },
   created () {
     // fetch service url(s)

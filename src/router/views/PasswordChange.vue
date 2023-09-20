@@ -1,21 +1,48 @@
 <template>
-  <GVELayout>
-    <div class="password-change">
-      <img
-        class="lock-open"
-        src="@/assets/icons/lock-open.svg"
-        alt=""
-      >
+  <div class="password-change">
+    <img
+      class="lock-open"
+      src="@/assets/icons/lock-open.svg"
+      alt=""
+    >
 
-      <h1 v-t="'title'" />
+    <h1 v-t="'title'" />
 
-      <div class="passwords-section">
-        <div class="password1 input-container">
+    <div class="passwords-section">
+      <div class="password1 input-container">
+        <PentilaInput
+          v-model="password1"
+          class="input"
+          :type="password1InputType"
+          :placeholder="$t('passwordPlaceholder')"
+          :maxlength="75"
+          @input="errorMessage = ''"
+          @keyup.enter.stop="updatePassword"
+        />
+        <!--  TODO: Put those logic on pentila component-->
+        <button
+          class="toggle-password-type"
+          @click="togglePassword1Type"
+        >
+          <img
+            src="@/assets/icons/eye-off.svg"
+            alt=""
+          >
+        </button>
+      </div>
+
+      <div
+        v-t="'passwordPolicy'"
+        class="password-policy"
+      />
+
+      <div class="password2">
+        <div class="input-container">
           <PentilaInput
-            v-model="password1"
+            v-model="password2"
             class="input"
-            :type="password1InputType"
-            :placeholder="$t('passwordPlaceholder')"
+            :type="password2InputType"
+            :placeholder="$t('confirmPasswordPlaceholder')"
             :maxlength="75"
             @input="errorMessage = ''"
             @keyup.enter.stop="updatePassword"
@@ -23,7 +50,7 @@
           <!--  TODO: Put those logic on pentila component-->
           <button
             class="toggle-password-type"
-            @click="togglePassword1Type"
+            @click="togglePassword2Type"
           >
             <img
               src="@/assets/icons/eye-off.svg"
@@ -31,68 +58,37 @@
             >
           </button>
         </div>
-
         <div
-          v-t="'passwordPolicy'"
-          class="password-policy"
-        />
-
-        <div class="password2">
-          <div class="input-container">
-            <PentilaInput
-              v-model="password2"
-              class="input"
-              :type="password2InputType"
-              :placeholder="$t('confirmPasswordPlaceholder')"
-              :maxlength="75"
-              @input="errorMessage = ''"
-              @keyup.enter.stop="updatePassword"
-            />
-            <!--  TODO: Put those logic on pentila component-->
-            <button
-              class="toggle-password-type"
-              @click="togglePassword2Type"
-            >
-              <img
-                src="@/assets/icons/eye-off.svg"
-                alt=""
-              >
-            </button>
-          </div>
-          <div
-            class="error-message"
-            v-html="errorMessage"
-          />
-        </div>
-      </div>
-
-      <div class="buttons">
-        <a
-          v-t="'logout'"
-          :href="logoutUrl"
-          class="logout-link"
-        />
-        <PentilaButton
-          v-t="'submit'"
-          class="button"
-          type="submit"
-          @click="updatePassword"
+          class="error-message"
+          v-html="errorMessage"
         />
       </div>
     </div>
-  </GVELayout>
+
+    <div class="buttons">
+      <a
+        v-t="'logout'"
+        :href="logoutUrl"
+        class="logout-link"
+      />
+      <PentilaButton
+        v-t="'submit'"
+        class="button"
+        type="submit"
+        @click="updatePassword"
+      />
+    </div>
+  </div>
 </template>
 
 <script>
-
-import GVELayout from '@layouts/GVELayout.vue'
 
 import constants from '@/api/constants'
 import userManagement from '@/api/userManagement.service'
 
 export default {
   name: 'PasswordChange',
-  components: { GVELayout },
+  emits: ['update:layout'],
   data () {
     return {
       logoutUrl: constants.LOGOUT_URL,
@@ -103,6 +99,9 @@ export default {
       errorMessage: '',
       ticketKey: undefined
     }
+  },
+  beforeCreate () {
+    this.$emit('update:layout', 'GVELayout')
   },
   created () {
     if (window.location.href.includes('ticketKey')) {
