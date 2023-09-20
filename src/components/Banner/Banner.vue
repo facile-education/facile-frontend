@@ -7,17 +7,10 @@
       class="menu-icon-button"
       @click.stop="onShowMobileMenu"
     >
-      <img
-        v-show="!isMobileMenuDisplayed"
-        src="@/assets/icons/menu_burger.svg"
-        alt="menu_burger"
-      >
-      <img
-        v-show="isMobileMenuDisplayed"
-        class="cross"
-        src="@/assets/options/icon_cross_white.svg"
-        alt="close"
-      >
+      <CustomIcon
+        :icon-name="isMobileMenuDisplayed ? 'icon-cross-L' : 'icon-burger'"
+        class="icon"
+      />
     </button>
 
     <BannerSearch v-if="!mq.phone && !displayLikePhone" />
@@ -32,6 +25,7 @@
 <script>
 import BannerServices from '@components/Banner/BannerServices'
 import BannerUserProfile from '@components/Banner/BannerUserProfile'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import { defineAsyncComponent } from 'vue'
 
 const BannerSearch = defineAsyncComponent(() => import('@/components/Banner/BannerSearch'))
@@ -39,6 +33,7 @@ const BannerSearch = defineAsyncComponent(() => import('@/components/Banner/Bann
 export default {
   name: 'Banner',
   components: {
+    CustomIcon,
     BannerSearch,
     BannerServices,
     BannerUserProfile
@@ -95,14 +90,9 @@ button {
   padding: 0 1rem;
   display: flex;
 
-  img {
-    height: 32px;
-  }
-
-  .cross {
-    height: 24px;
-    margin-left: 4px;
-    margin-right: 4px;
+  .icon {
+    color: white;
+    font-size: 2rem;
   }
 }
 
