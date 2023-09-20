@@ -1,7 +1,6 @@
 @font-face {
   font-family: 'CustomIcons';
   src: url('@/assets/fonts/Custom-icons-font.ttf') format('truetype');
-
 }
 
 [class^="icon-"], [class*=" icon-"] {
@@ -18,6 +17,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-burger:before {
+  content: "\e914";
+}
+.icon-cross-L:before {
+  content: "\e915";
+}
 .icon-filter-plain:before {
   content: "\e913";
 }
