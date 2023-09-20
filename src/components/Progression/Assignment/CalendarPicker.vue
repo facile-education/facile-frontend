@@ -46,13 +46,11 @@
           @selectWeek="onSelectWeek"
         />
       </div>
-      <img
-        class="close-button"
-        src="@assets/big-cross-black.svg"
-        :alt="$t('close')"
-        :title="$t('close')"
+      <CustomIcon
+        icon-name="icon-cross-L"
+        class="icon"
         @click="closeCalendarPicker()"
-      >
+      />
     </div>
 
     <!-- Calendar -->
@@ -97,12 +95,13 @@ import FullCalendar from '@fullcalendar/vue3'
 import dayjs from 'dayjs'
 // Lazy loading
 import { defineAsyncComponent } from 'vue'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 const Timeline = defineAsyncComponent(() => import('@/components/Horaires/Timeline'))
 const CalendarEvent = defineAsyncComponent(() => import('@/components/Progression/Assignment/CalendarEvent'))
 
 export default {
   name: 'CalendarPicker',
-  components: { FullCalendar, Timeline, CalendarEvent },
+  components: { CustomIcon, FullCalendar, Timeline, CalendarEvent },
   inject: ['mq'],
   props: {
   },

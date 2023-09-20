@@ -14,15 +14,14 @@
     </span>
     <button
       v-if="!readOnly"
-      class="file-actions"
+      class="remove-button"
       :title="$t('AttachedFiles.remove')"
       @click.stop="removeAttachedFile"
     >
-      <img
-        class="file-action cross"
-        src="@assets/big-cross-black.svg"
-        :alt="$t('AttachedFiles.remove')"
-      >
+      <CustomIcon
+        icon-name="icon-cross-L"
+        class="icon"
+      />
     </button>
     <span
       v-else
@@ -66,6 +65,7 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import FileIcon from '@components/Base/FileIcon.vue'
 import { downloadDocument } from '@utils/documents.util'
 import { defineAsyncComponent } from 'vue'
@@ -73,7 +73,7 @@ const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicke
 
 export default {
   name: 'AttachedFile',
-  components: { FileIcon, FilePickerModal },
+  components: { CustomIcon, FileIcon, FilePickerModal },
   inject: ['mq'],
   props: {
     attachedFile: {
@@ -155,23 +155,29 @@ button {
 
 .file-name {
   margin-left: 10px;
-  margin-right: 10px;
   max-width: 300px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
+.remove-button {
+  display: flex;
+  align-items: center;
+  margin: 0 10px;
+
+  .icon {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+}
+
 .file-actions {
+  margin: 0 10px;
   img {
     cursor: pointer;
-    margin-right: 10px;
     height: 16px;
     width: 16px;
-  }
-  .cross {
-    height: 13px;
-    width: 13px;
   }
   .add-to-folder {
     height: 19px;

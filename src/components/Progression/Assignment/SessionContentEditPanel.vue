@@ -33,13 +33,11 @@
         >{{ getDate() }}</span>
       </div>
 
-      <img
-        class="close-button"
-        src="@assets/big-cross-black.svg"
-        :alt="$t('close')"
-        :title="$t('close')"
+      <CustomIcon
+        icon-name="icon-cross-L"
+        class="icon"
         @click="closeSessionContentEdit"
-      >
+      />
     </div>
 
     <ProgressionItem
@@ -73,10 +71,11 @@ import dayjs from 'dayjs'
 
 import { getHomeworkSpecificContents, getSessionSpecificContents } from '@/api/progression.service'
 import ProgressionItem from '@/components/Progression/Edit/ProgressionItem'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 
 export default {
   name: 'SessionContentEditPanel',
-  components: { ProgressionItem },
+  components: { CustomIcon, ProgressionItem },
   inject: ['mq'],
   props: {
   },

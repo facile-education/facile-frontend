@@ -58,13 +58,15 @@
           >
             <div class="affectation">
               <span :title="buildTooltip(affectation)">{{ affectation.orgName }}</span>
-              <img
-                class="remove-affectation"
-                src="@assets/big-cross-black.svg"
-                :alt="$t('remove-affectation')"
-                :title="$t('remove-affectation')"
+              <button
+                class="remove-button"
                 @click="removeAffectation(affectation)"
               >
+                <CustomIcon
+                  icon-name="icon-cross-L"
+                  class="icon"
+                />
+              </button>
             </div>
           </div>
         </div>
@@ -74,6 +76,7 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import dayjs from 'dayjs'
 import localizedFormat from 'dayjs/plugin/localizedFormat'
 
@@ -84,6 +87,7 @@ dayjs.extend(localizedFormat)
 
 export default {
   name: 'UserAffectationsModal',
+  components: { CustomIcon },
   inject: ['mq'],
   props: {
     editedUser: {
@@ -137,7 +141,7 @@ export default {
           (data) => {
             if (data.success) {
               this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.added'), type: 'success' })
-              this.$store.dispatch('userManagement/addUserAffectation', { userId: this.editedUser.userId, orgId: orgId, orgName: orgName })
+              this.$store.dispatch('userManagement/addUserAffectation', { userId: this.editedUser.userId, orgId, orgName })
             }
           }
         )
@@ -228,12 +232,17 @@ export default {
             margin: 10px;
           }
 
-          img {
-            width: 15px;
-            margin-right: 10px;
+          button {
+            margin: 0 10px 0 0;
+            padding: 0;
+            background-color: transparent;
+            border: none;
+            display: flex;
+            align-items: center;
 
-            &:hover {
-              cursor: pointer;
+            .icon {
+              font-size: 1.2rem;
+              font-weight: bold;
             }
           }
         }

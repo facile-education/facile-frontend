@@ -28,10 +28,10 @@
         class="close-option"
         @click="closePanel"
       >
-        <img
-          src="@assets/options/icon_cross_black.svg"
-          alt="close"
-        >
+        <CustomIcon
+          icon-name="icon-cross-L"
+          class="icon"
+        />
       </button>
     </div>
 
@@ -57,6 +57,7 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import DocumentMetaData from '@components/Documents/DocumentDetails/DocumentMetaData'
 import DocumentVersionsList from '@components/Documents/DocumentDetails/DocumentVersionsList'
 import { defineAsyncComponent } from 'vue'
@@ -64,7 +65,7 @@ const GroupDetails = defineAsyncComponent(() => import('@components/Groups/Group
 
 export default {
   name: 'DocumentDetails',
-  components: { GroupDetails, DocumentVersionsList, DocumentMetaData },
+  components: { CustomIcon, GroupDetails, DocumentVersionsList, DocumentMetaData },
   computed: {
     selectedDocuments () {
       return this.$store.state.documents.selectedEntities
@@ -133,9 +134,9 @@ export default {
       background: none;
       border: none;
 
-      img {
-        width: 16px;
-        height: 16px;
+      .icon {
+        font-size: 1.25rem;
+        font-weight: bold;
       }
     }
   }

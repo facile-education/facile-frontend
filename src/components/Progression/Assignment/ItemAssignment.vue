@@ -69,13 +69,11 @@
             :title="$t('edit')"
             @click="editSessionSpecificContent(assignment)"
           >{{ assignment.groupName }}</span>
-          <img
-            class="remove-cours-assignment"
-            src="@assets/big-cross-black.svg"
-            :alt="$t('remove')"
-            :title="$t('remove')"
+          <CustomIcon
+            icon-name="icon-cross-L"
+            class="icon"
             @click="confirmAssignmentDeletion(assignment)"
-          >
+          />
         </div>
         <!-- Session date and hours -->
         <span class="assignment-date"><span class="day">{{ getSessionDate(assignment) }}</span> <span style="white-space: nowrap">{{ getSessionHour(assignment) }}</span></span>
@@ -120,10 +118,11 @@ import dayjs from 'dayjs'
 import _ from 'lodash'
 
 import PreviewModal from '@/components/Progression/Edit/PreviewModal'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 
 export default {
   name: 'ItemAssignment',
-  components: { NeroIcon, PreviewModal },
+  components: { CustomIcon, NeroIcon, PreviewModal },
   props: {
     item: {
       type: Object,

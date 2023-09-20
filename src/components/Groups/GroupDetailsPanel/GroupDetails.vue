@@ -22,10 +22,10 @@
             :title="$t('close')"
             @click="closePanel"
           >
-            <img
-              src="@assets/options/icon_cross_black.svg"
-              :alt="$t('close')"
-            >
+            <CustomIcon
+              icon-name="icon-cross-L"
+              class="icon"
+            />
           </button>
           <div
             v-if="selectedGroup.isAdmin"
@@ -93,6 +93,7 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import GroupActivityTab from '@components/Groups/GroupDetailsPanel/ActivityTab/GroupActivityTab'
 import GroupDetailsTab from '@components/Groups/GroupDetailsPanel/DetailsTab/GroupDetailsTab'
 import { defineAsyncComponent } from 'vue'
@@ -100,7 +101,7 @@ const EditGroupModal = defineAsyncComponent(() => import('@components/Groups/Edi
 
 export default {
   name: 'GroupDetails',
-  components: { GroupActivityTab, GroupDetailsTab, EditGroupModal },
+  components: { CustomIcon, GroupActivityTab, GroupDetailsTab, EditGroupModal },
   inject: ['mq'],
   data () {
     return {
@@ -222,9 +223,9 @@ export default {
     background: none;
     border: none;
 
-    img {
-      width: 16px;
-      height: 16px;
+    .icon {
+      font-size: 1.25rem;
+      font-weight: bold;
     }
   }
 

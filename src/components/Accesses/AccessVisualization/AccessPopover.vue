@@ -10,10 +10,10 @@
         :aria-label="$t('close')"
         @click="onClose"
       >
-        <img
-          src="@/assets/big-cross-black.svg"
-          :alt="$t('close')"
-        >
+        <CustomIcon
+          icon-name="icon-cross-L"
+          class="icon"
+        />
       </button>
       <PentilaSpinner
         v-if="isLoading"
@@ -43,13 +43,14 @@
 
 <script>
 import UserAccessCategory from '@components/Accesses/AccessVisualization/UserAccessCategory.vue'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import { sortAccesses } from '@utils/accessUtils'
 
 import { getUserAccesses } from '@/api/access.service'
 
 export default {
   name: 'AccessPopover',
-  components: { UserAccessCategory },
+  components: { CustomIcon, UserAccessCategory },
   inject: ['mq'],
   emits: ['close'],
   data () {
@@ -160,9 +161,12 @@ button {
   position: absolute;
   top: 1rem;
   right: 1rem;
+  display: flex;
+  align-items: center;
 
-  img {
-    height: 1rem;
+  .icon {
+    font-size: 1.4rem;
+    font-weight: bold;
   }
 }
 

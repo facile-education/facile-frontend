@@ -4,14 +4,15 @@
   >
     <div class="name">
       <div> {{ fullName }}</div>
-      <img
+      <button
         v-if="!isCurrentMember && isCurrentGroupAdmin"
-        class="close-button"
-        src="@assets/big-cross-black.svg"
-        :alt="$t('delete')"
-        :title="$t('delete')"
         @click="removeUser"
       >
+        <CustomIcon
+          icon-name="icon-cross-L"
+          class="icon"
+        />
+      </button>
     </div>
     <div class="is-admin">
       <PentilaToggleSwitch
@@ -26,8 +27,11 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
+
 export default {
   name: 'SelectedGroupMemberItem',
+  components: { CustomIcon },
   props: {
     member: {
       type: Object,
@@ -96,11 +100,21 @@ export default {
       font-weight: 600;
     }
 
-    img {
-      height: 14px;
-      width: 14px;
+    button {
+      margin: 0;
+      padding: 0;
+      border: none;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      background: transparent;
+
+      .icon {
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
     }
+
   }
 
   .is-admin {

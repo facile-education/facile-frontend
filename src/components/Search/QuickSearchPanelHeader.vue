@@ -27,10 +27,10 @@
       class="close-option"
       @click="closePanel"
     >
-      <img
-        src="@assets/options/icon_cross_black.svg"
-        alt="close"
-      >
+      <CustomIcon
+        icon-name="icon-cross-L"
+        class="icon"
+      />
     </button>
   </div>
 </template>
@@ -38,8 +38,11 @@
 <script>
 // import NeroIcon from '@components/Nero/NeroIcon.vue'
 
+import CustomIcon from '@components/Base/CustomIcon.vue'
+
 export default {
   name: 'QuickSearchPanelHeader',
+  components: { CustomIcon },
   // components: { NeroIcon },
   props: {
     isSearchHistory: {
@@ -113,9 +116,9 @@ button {
   background: none;
   border: none;
 
-  img {
-    width: 16px;
-    height: 16px;
+  .icon {
+    font-size: 1.25rem;
+    font-weight: bold;
   }
 }
 </style>

@@ -10,20 +10,22 @@
       {{ name }}
     </div>
     <button @click="removeEntity">
-      <img
-        class="cross-icon"
-        src="@assets/big-cross-black.svg"
-        alt="remove"
-      >
+      <CustomIcon
+        icon-name="icon-cross-L"
+        class="icon"
+      />
     </button>
   </div>
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
+
 import { icons } from '@/constants/icons'
 
 export default {
   name: 'RedirectionEntity',
+  components: { CustomIcon },
   props: {
     isFolder: {
       type: Boolean,
@@ -75,6 +77,11 @@ button {
   background-color: transparent;
   border: none;
   cursor: pointer;
+
+  .icon {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
 }
 
 .cross-icon {
