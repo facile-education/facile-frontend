@@ -18,7 +18,7 @@
         <span>{{ nbTotalResults }}</span>
       </div>
       <PentilaInput
-        ref="nameInput"
+        ref="tagsinput"
         v-model="filter"
         :maxlength="200"
         :placeholder="$t('nameFilterPlaceholder')"
@@ -74,6 +74,8 @@ import PentilaUtils from 'pentila-utils'
 
 import EditUserModal from '@/components/UserManagement/EditUserModal'
 
+let timeout
+
 export default {
   name: 'ManualUsers',
   components: {
@@ -110,6 +112,8 @@ export default {
     maxIndex () {
       if (this.$store.state.userManagement.nbTotalResults < this.$store.state.userManagement.nbItemsPerPage) {
         return this.$store.state.userManagement.nbTotalResults
+      } else if (this.$store.state.userManagement.nbTotalResults < this.$store.state.userManagement.nbItemsPerPage * (this.pageNb + 1)) {
+        return this.$store.state.userManagement.nbTotalResults
       } else {
         return this.$store.state.userManagement.nbItemsPerPage * (this.pageNb + 1)
       }
@@ -135,8 +139,13 @@ export default {
   methods: {
     cleanAndRunSearch () {
       this.pageNb = 0
-      this.$store.commit('userManagement/emptyManualUserList')
-      this.runSearch()
+      clearTimeout(timeout)
+      timeout = setTimeout(() => {
+        if (this.$refs.tagsinput.inputValue === undefined || this.$refs.tagsinput.inputValue.length >= 2) {
+          this.$store.commit('userManagement/emptyManualUserList')
+          this.runSearch()
+        }
+      }, 300)
     },
     runSearch () {
       this.$store.dispatch('userManagement/getManualUsers', { schoolId: this.selectedSchool.schoolId, query: this.filter, pageNb: this.pageNb, nbItemsPerPage: this.$store.state.userManagement.nbItemsPerPage })
