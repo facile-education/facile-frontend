@@ -347,7 +347,7 @@ export default {
       if (!isSelected) {
         this.$store.dispatch('messaging/setLastSelectedThread', this.thread)
         this.$store.dispatch('messaging/setSelectedThreads', [this.thread])
-        this.$store.dispatch('messaging/setSelectedMessages', [])
+        this.$store.dispatch('messaging/removeSelectedMessages')
 
         messageService.getThreadMessages(this.thread.threadId, this.currentFolder.folderId).then((data) => {
           if (data.success) {
@@ -355,7 +355,6 @@ export default {
           }
         })
       }
-
       // Set in the drag event the selected threads
       e.dataTransfer.setData('draggedThreads', JSON.stringify(this.selectedThreads))
       this.$store.dispatch('messaging/setDraggedThreads', this.selectedThreads)
