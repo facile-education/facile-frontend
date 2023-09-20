@@ -1,16 +1,17 @@
 <template>
-  <Layout>
-    <ActivityWidget :display-all="true" />
-  </Layout>
+  <ActivityWidget :display-all="true" />
 </template>
 
 <script>
 import ActivityWidget from '@components/Dashboard/ActivityWidget/ActivityWidget.vue'
-import Layout from '@layouts/BannerLayout.vue'
 
 export default {
   name: 'AllActivities',
-  components: { Layout, ActivityWidget }
+  components: { ActivityWidget },
+  emits: ['update:layout'],
+  beforeCreate () {
+    this.$emit('update:layout', 'BannerLayout')
+  }
 }
 </script>
 

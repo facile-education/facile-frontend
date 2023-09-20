@@ -1,69 +1,66 @@
 <template>
-  <Layout :is-allowed="hasGoodRole">
-    <h1 :aria-label="$t('serviceTitle')" />
+  <h1 :aria-label="$t('serviceTitle')" />
+  <div
+    v-if="currentUser.userId !== 0 && currentUser.schoolList.length !== 0"
+    class="non-classical-slots"
+  >
+    <SelectedSchool />
     <div
-      v-if="currentUser.userId !== 0 && currentUser.schoolList.length !== 0"
-      class="non-classical-slots"
+      v-if="mq.desktop || currentSlotType === undefined"
+      class="slot-type-selection"
+      :class="{'mobile': !mq.desktop}"
     >
-      <SelectedSchool />
-      <div
-        v-if="mq.desktop || currentSlotType === undefined"
-        class="slot-type-selection"
-        :class="{'mobile': !mq.desktop}"
-      >
-        <SlotTypeItem
-          v-for="(slotType, index) in slotTypes"
-          :key="index"
-          class="slot-type"
-          :slot-type="slotType"
-        />
-      </div>
-      <div
-        v-if="mq.desktop"
-        class="filters"
-      >
-        <PentilaDropdown
-          v-if="currentUser.selectedSchool && currentSlotType && currentSlotType.type === 5"
-          v-model="selectedClass"
-          :placeholder="$t('groupFilter')"
-          :list="classList"
-          display-field="orgName"
-          class="class-dropdown"
-        />
-        <UserCompletion
-          v-if="currentSlotType"
-          user-type="student"
-          :placeholder="$t('NotUsualSlots.studentNamePlaceHolder')"
-          :model-value="queriedUser ? [queriedUser] : []"
-          class="user-completion"
-          @update:model-value="getUserSlots"
-        />
-      </div>
-      <HHCCalendar
-        v-if="currentSlotType"
-        :current-slot-type="currentSlotType"
+      <SlotTypeItem
+        v-for="(slotType, index) in slotTypes"
+        :key="index"
+        class="slot-type"
+        :slot-type="slotType"
       />
+    </div>
+    <div
+      v-if="mq.desktop"
+      class="filters"
+    >
+      <PentilaDropdown
+        v-if="currentUser.selectedSchool && currentSlotType && currentSlotType.type === 5"
+        v-model="selectedClass"
+        :placeholder="$t('groupFilter')"
+        :list="classList"
+        display-field="orgName"
+        class="class-dropdown"
+      />
+      <UserCompletion
+        v-if="currentSlotType"
+        user-type="student"
+        :placeholder="$t('NotUsualSlots.studentNamePlaceHolder')"
+        :model-value="queriedUser ? [queriedUser] : []"
+        class="user-completion"
+        @update:model-value="getUserSlots"
+      />
+    </div>
+    <HHCCalendar
+      v-if="currentSlotType"
+      :current-slot-type="currentSlotType"
+    />
 
-      <!-- global modals -->
-      <template v-if="pendingFirings.length > 0">
-        <PendingFiringModal
-          v-for="(pendingFiring, index) in pendingFirings"
-          :key="index"
-          :pending-firing="pendingFiring"
-          :full-screen="mq.phone"
-          :closable="false"
-        />
-      </template>
-    </div>
-    <div v-else>
-      <PentilaSpinner v-if="areActionsInProgress" />
-    </div>
-  </Layout>
+    <!-- global modals -->
+    <template v-if="pendingFirings.length > 0">
+      <PendingFiringModal
+        v-for="(pendingFiring, index) in pendingFirings"
+        :key="index"
+        :pending-firing="pendingFiring"
+        :full-screen="mq.phone"
+        :closable="false"
+      />
+    </template>
+  </div>
+  <div v-else>
+    <PentilaSpinner v-if="areActionsInProgress" />
+  </div>
 </template>
 
 <script>
 import HHCCalendar from '@components/NotUsualSlotManager/HHCCalendar.vue'
-import Layout from '@layouts/BannerLayout'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
@@ -77,8 +74,9 @@ const UserCompletion = defineAsyncComponent(() => import('@/components/NotUsualS
 
 export default {
   name: 'NotUsualSlotManager',
-  components: { PendingFiringModal, Layout, SelectedSchool, UserCompletion, HHCCalendar, SlotTypeItem },
+  components: { PendingFiringModal, SelectedSchool, UserCompletion, HHCCalendar, SlotTypeItem },
   inject: ['mq'],
+  emits: ['update:layout'],
   data () {
     return {
       slotTypes: notUsualSlotConstants.slotTypes
@@ -103,9 +101,6 @@ export default {
     queriedUser () {
       return this.$store.state.notUsualSlots.queriedUser
     },
-    hasGoodRole () { // TODO be consistent with application manager?
-      return this.currentUser.isTeacher || this.currentUser.isDoyen || this.currentUser.isDirectionMember || this.currentUser.isSecretariat
-    },
     currentSlotType () {
       return this.$store.state.notUsualSlots.currentSlotType
     },
@@ -117,6 +112,9 @@ export default {
         this.$store.dispatch('notUsualSlots/setSelectedClass', classObject)
       }
     }
+  },
+  beforeCreate () {
+    this.$emit('update:layout', 'BannerLayout')
   },
   created () {
     this.getPendingFirings()

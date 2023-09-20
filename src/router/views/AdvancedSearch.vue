@@ -1,35 +1,31 @@
 <template>
-  <Layout
-    class="layout"
-  >
-    <h1 :aria-label="$t('serviceTitle')" />
-    <PentilaInput
-      v-model="searchInput"
-      :placeholder="$t('searchPlaceholder')"
-      :maxlength="75"
-    />
-    <PentilaButton
-      :label="$t('search')"
-      class="confirm-button"
-      :disabled="searchInput === ''"
-      @click="runSearch"
-    />
-  </Layout>
+  <h1 :aria-label="$t('serviceTitle')" />
+  <PentilaInput
+    v-model="searchInput"
+    :placeholder="$t('searchPlaceholder')"
+    :maxlength="75"
+  />
+  <PentilaButton
+    :label="$t('search')"
+    class="confirm-button"
+    :disabled="searchInput === ''"
+    @click="runSearch"
+  />
 </template>
 
 <script>
 import { search } from '@/api/search.service'
-import Layout from '@/router/layouts/BannerLayout'
 
 export default {
   name: 'Progression',
-  components: {
-    Layout
-  },
+  emits: ['update:layout'],
   data () {
     return {
       searchInput: ''
     }
+  },
+  beforeCreate () {
+    this.$emit('update:layout', 'BannerLayout')
   },
   created () {
     this.searchInput = this.$store.state.search.searchInput
@@ -48,10 +44,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.layout {
-  height: 100%;
-
-}
 </style>
 
 <i18n locale="fr">

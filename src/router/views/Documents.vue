@@ -1,92 +1,90 @@
 <template>
-  <Layout :is-allowed="true">
-    <h1 :aria-label="$t('serviceTitle')" />
-    <div
-      v-if="currentUser.userId !== 0"
-      ref="documents"
-      class="documents"
-      :class="{'mobile': mq.phone}"
-      @click.right.prevent
-    >
-      <CurrentOptions
-        class="currents-options"
-        :options="currentOptions"
-        @optionClicked="handleOption"
-      />
-
-      <Breadcrumb
-        class="breadCrumb"
-        :breadcrumb="breadcrumb"
-        @change-dir="changeDir"
-        @change-space="changeSpace"
-      />
-
-      <div class="body">
-        <PentilaSpinner
-          v-if="areActionsInProgress"
-          class="spinner"
-        />
-        <FilePickerArea
-          class="file-picker-area"
-          :disabled="isLoadDocumentsError"
-          @fileAdded="importDocument"
-          @click.right.prevent="openContextMenu"
-        >
-          <div
-            class="scroll"
-            @click="clickOnScrollDiv"
-            @click.right.prevent="rightClickOnScrollDiv"
-          >
-            <DocumentList @openContextMenu="openContextMenu" />
-          </div>
-        </FilePickerArea>
-        <DocumentDetails
-          v-if="isDocumentPanelDisplayed && !mq.phone"
-          class="document-details"
-        />
-        <DocumentDetailsModal
-          v-if="isDocumentPanelDisplayed && mq.phone"
-        />
-      </div>
-    </div>
-    <div v-else>
-      <PentilaSpinner />
-    </div>
-
-    <ContextMenu
-      v-if="isContextMenuDisplayed && isAContextMenuDisplayed"
-      @choose-option="handleOption"
-      @close="isContextMenuDisplayed=false"
+  <h1 :aria-label="$t('serviceTitle')" />
+  <div
+    v-if="currentUser.userId !== 0"
+    ref="documents"
+    class="documents"
+    :class="{'mobile': mq.phone}"
+    @click.right.prevent
+  >
+    <CurrentOptions
+      class="currents-options"
+      :options="currentOptions"
+      @optionClicked="handleOption"
     />
 
-    <teleport to="body">
-      <FilePickerModal
-        v-if="isFilePickerModalDisplayed"
-        :folder-selection="true"
-        :init-in-current-folder="false"
-        @chosen-folder="doSelectFolderAction"
-        @close="isFilePickerModalDisplayed = false"
+    <Breadcrumb
+      class="breadCrumb"
+      :breadcrumb="breadcrumb"
+      @change-dir="changeDir"
+      @change-space="changeSpace"
+    />
+
+    <div class="body">
+      <PentilaSpinner
+        v-if="areActionsInProgress"
+        class="spinner"
       />
-      <FolderNameModal
-        v-if="isFolderNameModalDisplayed"
-        :submit-action="modalSubmitAction"
-        :init-folder="documentToRename"
-        @close="isFolderNameModalDisplayed = false"
+      <FilePickerArea
+        class="file-picker-area"
+        :disabled="isLoadDocumentsError"
+        @fileAdded="importDocument"
+        @click.right.prevent="openContextMenu"
+      >
+        <div
+          class="scroll"
+          @click="clickOnScrollDiv"
+          @click.right.prevent="rightClickOnScrollDiv"
+        >
+          <DocumentList @openContextMenu="openContextMenu" />
+        </div>
+      </FilePickerArea>
+      <DocumentDetails
+        v-if="isDocumentPanelDisplayed && !mq.phone"
+        class="document-details"
       />
-      <FileNameModal
-        v-if="isFileNameModalDisplayed"
-        :submit-action="modalSubmitAction"
-        :init-file="documentToRename"
-        @openFile="openFile"
-        @close="isFileNameModalDisplayed=false"
+      <DocumentDetailsModal
+        v-if="isDocumentPanelDisplayed && mq.phone"
       />
-      <PermissionsModal
-        v-if="isPermissionModalDisplayed"
-        :document="selectedDocuments[0] || currentFolder"
-        @close="isPermissionModalDisplayed=false"
-      />
-    </teleport>
-  </Layout>
+    </div>
+  </div>
+  <div v-else>
+    <PentilaSpinner />
+  </div>
+
+  <ContextMenu
+    v-if="isContextMenuDisplayed && isAContextMenuDisplayed"
+    @choose-option="handleOption"
+    @close="isContextMenuDisplayed=false"
+  />
+
+  <teleport to="body">
+    <FilePickerModal
+      v-if="isFilePickerModalDisplayed"
+      :folder-selection="true"
+      :init-in-current-folder="false"
+      @chosen-folder="doSelectFolderAction"
+      @close="isFilePickerModalDisplayed = false"
+    />
+    <FolderNameModal
+      v-if="isFolderNameModalDisplayed"
+      :submit-action="modalSubmitAction"
+      :init-folder="documentToRename"
+      @close="isFolderNameModalDisplayed = false"
+    />
+    <FileNameModal
+      v-if="isFileNameModalDisplayed"
+      :submit-action="modalSubmitAction"
+      :init-file="documentToRename"
+      @openFile="openFile"
+      @close="isFileNameModalDisplayed=false"
+    />
+    <PermissionsModal
+      v-if="isPermissionModalDisplayed"
+      :document="selectedDocuments[0] || currentFolder"
+      @close="isPermissionModalDisplayed=false"
+    />
+  </teleport>
 </template>
 
 <script>
@@ -101,7 +99,6 @@ import PermissionsModal from '@components/Documents/Modals/PermissionModal/Permi
 import CurrentOptions from '@components/Documents/Options'
 import FilePickerArea from '@components/FilePicker/FilePickerArea'
 import FilePickerModal from '@components/FilePicker/FilePickerModal'
-import Layout from '@layouts/BannerLayout'
 import { computeDocumentsOptions, deleteEntities, downloadDocument, importDocuments } from '@utils/documents.util'
 import { alertNoFile, returnAddedFiles } from '@utils/upload.util'
 
@@ -112,8 +109,9 @@ import { removeMenuOptionIfExist } from '@/utils/commons.util'
 
 export default {
   name: 'Documents',
-  components: { PermissionsModal, DocumentDetailsModal, FilePickerModal, FileNameModal, FolderNameModal, FilePickerArea, ContextMenu, DocumentDetails, DocumentList, Breadcrumb, CurrentOptions, Layout },
+  components: { PermissionsModal, DocumentDetailsModal, FilePickerModal, FileNameModal, FolderNameModal, FilePickerArea, ContextMenu, DocumentDetails, DocumentList, Breadcrumb, CurrentOptions },
   inject: ['mq'],
+  emits: ['update:layout'],
   data () {
     return {
       isUnderTabletSize: false,
@@ -209,6 +207,9 @@ export default {
       return this.$store.state.documents.openFiles
     }
   },
+  beforeCreate () {
+    this.$emit('update:layout', 'BannerLayout')
+  },
   created () {
     this.$store.dispatch('fileFields/initFields')
 
@@ -295,7 +296,7 @@ export default {
         this.isContextMenuDisplayed = true
         this.$store.dispatch('contextMenu/openContextMenu',
           {
-            event: event,
+            event,
             options: this.currentOptions
           })
       }

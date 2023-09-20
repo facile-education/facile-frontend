@@ -1,69 +1,66 @@
 <template>
-  <Layout>
-    <h1 :aria-label="$t('serviceTitle')" />
-    <div class="dashboard-panel">
-      <div class="administration-widgets">
-        <DiaryWidget
-          v-if="hasDiaryWidget"
-          class="diary"
-        />
-        <AnnouncementsWidget
-          v-if="hasSchoolNewsWidget"
-          class="announcements"
-        />
-      </div>
+  <h1 :aria-label="$t('serviceTitle')" />
+  <div class="dashboard-panel">
+    <div class="administration-widgets">
+      <DiaryWidget
+        v-if="hasDiaryWidget"
+        class="diary"
+      />
+      <AnnouncementsWidget
+        v-if="hasSchoolNewsWidget"
+        class="announcements"
+      />
+    </div>
 
-      <div class="personal-widgets">
-        <ActivityWidget
-          v-if="hasActivityThreadWidget"
-          class="activities"
-        />
+    <div class="personal-widgets">
+      <ActivityWidget
+        v-if="hasActivityThreadWidget"
+        class="activities"
+      />
 
-        <StatisticWidget
-          v-if="hasStatisticWidget"
-          class="statistics"
-        />
+      <StatisticWidget
+        v-if="hasStatisticWidget"
+        class="statistics"
+      />
 
+      <div
+        v-if="hasEDTWidget || hasHomeworkWidget"
+        class="user-selection"
+        :class="{'has-homework-widget': hasHomeworkWidget && selectedUser}"
+      >
         <div
-          v-if="hasEDTWidget || hasHomeworkWidget"
-          class="user-selection"
-          :class="{'has-homework-widget': hasHomeworkWidget && selectedUser}"
+          v-if="childList.length > 1"
+          class="first-line"
         >
-          <div
-            v-if="childList.length > 1"
-            class="first-line"
-          >
-            <PentilaDropdown
-              v-model="selectedChild"
-              :list="childList"
-              :sort="false"
-              display-field="fullName"
-              class="child-selector"
-            />
-            <div class="line" />
-          </div>
-          <div class="selected-user-widgets">
-            <ScheduleWidget
-              v-if="hasEDTWidget && selectedUser"
-              :user-id="selectedUser.userId"
-              class="schedule"
-            />
-            <HomeworkWidget
-              v-if="hasHomeworkWidget && selectedUser"
-              :user-id="selectedUser.userId"
-              class="homework"
-            />
-          </div>
+          <PentilaDropdown
+            v-model="selectedChild"
+            :list="childList"
+            :sort="false"
+            display-field="fullName"
+            class="child-selector"
+          />
+          <div class="line" />
+        </div>
+        <div class="selected-user-widgets">
+          <ScheduleWidget
+            v-if="hasEDTWidget && selectedUser"
+            :user-id="selectedUser.userId"
+            class="schedule"
+          />
+          <HomeworkWidget
+            v-if="hasHomeworkWidget && selectedUser"
+            :user-id="selectedUser.userId"
+            class="homework"
+          />
         </div>
       </div>
     </div>
-  </Layout>
+  </div>
 </template>
 
 <script>
 import { defineAsyncComponent } from 'vue'
 
-import Layout from '@/router/layouts/BannerLayout'
 const AnnouncementsWidget = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/AnnouncementsWidget.vue'))
 const DiaryWidget = defineAsyncComponent(() => import('@components/Dashboard/DiaryWidget/DiaryWidget.vue'))
 const ScheduleWidget = defineAsyncComponent(() => import('@components/Dashboard/ScheduleWidget/ScheduleWidget'))
@@ -73,7 +70,8 @@ const ActivityWidget = defineAsyncComponent(() => import('@components/Dashboard/
 
 export default {
   name: 'Dashboard',
-  components: { AnnouncementsWidget, DiaryWidget, ScheduleWidget, HomeworkWidget, StatisticWidget, ActivityWidget, Layout },
+  components: { AnnouncementsWidget, DiaryWidget, ScheduleWidget, HomeworkWidget, StatisticWidget, ActivityWidget },
+  emits: ['update:layout'],
   data () {
     return {
       selectedUser: undefined
@@ -110,6 +108,9 @@ export default {
         this.selectedUser = child
       }
     }
+  },
+  beforeCreate () {
+    this.$emit('update:layout', 'BannerLayout')
   },
   created () {
     this.$store.dispatch('dashboard/initDashboard').then(() => {

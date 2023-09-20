@@ -1,65 +1,63 @@
 <template>
-  <Layout :is-allowed="true">
-    <h1 :aria-label="$t('Messaging.serviceTitle')" />
+  <h1 :aria-label="$t('Messaging.serviceTitle')" />
+  <div
+    class="messaging-body"
+    :class="{'mobile': mq.phone || mq.tablet, 'tablet': mq.tablet}"
+  >
     <div
-      class="messaging-body"
-      :class="{'mobile': mq.phone || mq.tablet, 'tablet': mq.tablet}"
+      v-if="!mq.phone && !mq.tablet"
+      class="desktop-display"
     >
       <div
-        v-if="!mq.phone && !mq.tablet"
-        class="desktop-display"
+        class="left"
+        :class="{'menu-displayed': isMenuPanelDisplayed}"
       >
-        <div
-          class="left"
-          :class="{'menu-displayed': isMenuPanelDisplayed}"
-        >
-          <MessagingMenu
-            data-test="messaging-menu"
-            class="menu-panel"
-            :class="{'menu-collapsed': !isMenuPanelDisplayed}"
-            :is-displayed="isMenuPanelDisplayed"
-          />
+        <MessagingMenu
+          data-test="messaging-menu"
+          class="menu-panel"
+          :class="{'menu-collapsed': !isMenuPanelDisplayed}"
+          :is-displayed="isMenuPanelDisplayed"
+        />
 
-          <ThreadList class="thread-list" />
-        </div>
-
-        <ThreadDetails class="thread-details" />
+        <ThreadList class="thread-list" />
       </div>
 
-      <div v-else>
-        <ThreadList />
-        <Transition name="slide-details">
-          <ThreadDetails
-            v-if="isMobileDetailsPanelDisplayed"
-            class="thread-display"
-          />
-        </Transition>
-        <Transition name="slide-menu">
-          <MessagingMenu
-            v-show="isMenuPanelDisplayed"
-            data-test="messaging-menu"
-            class="menu-panel"
-            :is-displayed="isMenuPanelDisplayed"
-          />
-        </Transition>
-
-        <CreateButton
-          class="create-button"
-          data-test="createMessageButton"
-          :title="$t('Messaging.new')"
-          @click="createNewMessage"
-        />
-      </div>
-
-      <teleport to="body">
-        <PreferencesModal
-          v-if="isParametersModalDisplayed"
-          tab="messaging"
-        />
-        <CreateMessageModal v-if="isCreateMessageModalDisplayed" />
-      </teleport>
+      <ThreadDetails class="thread-details" />
     </div>
-  </Layout>
+
+    <div v-else>
+      <ThreadList />
+      <Transition name="slide-details">
+        <ThreadDetails
+          v-if="isMobileDetailsPanelDisplayed"
+          class="thread-display"
+        />
+      </Transition>
+      <Transition name="slide-menu">
+        <MessagingMenu
+          v-show="isMenuPanelDisplayed"
+          data-test="messaging-menu"
+          class="menu-panel"
+          :is-displayed="isMenuPanelDisplayed"
+        />
+      </Transition>
+
+      <CreateButton
+        class="create-button"
+        data-test="createMessageButton"
+        :title="$t('Messaging.new')"
+        @click="createNewMessage"
+      />
+    </div>
+
+    <teleport to="body">
+      <PreferencesModal
+        v-if="isParametersModalDisplayed"
+        tab="messaging"
+      />
+      <CreateMessageModal v-if="isCreateMessageModalDisplayed" />
+    </teleport>
+  </div>
 </template>
 
 <script>
@@ -71,7 +69,6 @@ import ThreadList from '@components/Messaging/ThreadList'
 import { defineAsyncComponent } from 'vue'
 
 import configurationService from '@/api/messaging/configuration.service'
-import Layout from '@/router/layouts/BannerLayout'
 import messagingUtils from '@/utils/messaging.utils'
 
 const CreateMessageModal = defineAsyncComponent(() => import('@components/Messaging/CreateMessageModal'))
@@ -81,7 +78,6 @@ export default {
   name: 'Messaging',
   components: {
     CreateButton,
-    Layout,
     MessagingMenu,
     ThreadList,
     ThreadDetails,
@@ -90,6 +86,7 @@ export default {
     CreateMessageModal
   },
   inject: ['mq'],
+  emits: ['update:layout'],
   computed: {
     isMobileDetailsPanelDisplayed () {
       return this.$store.state.messaging.isMobileDetailsPanelDisplayed &&
@@ -111,6 +108,9 @@ export default {
     isDeleteMessages () {
       return this.$store.getters['currentActions/isInProgress']('deleteMessages')
     }
+  },
+  beforeCreate () {
+    this.$emit('update:layout', 'BannerLayout')
   },
   mounted () {
     window.addEventListener('keydown', this.keyMonitor)

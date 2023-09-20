@@ -1,58 +1,52 @@
 <template>
-  <Layout
-    :is-allowed="$store.state.user.isLocalAdmin || $store.state.user.isDirectionMember || $store.state.user.isAdministrator"
+  <h1 :aria-label="$t('serviceTitle')" />
+
+  <div
+    v-if="schoolList.length > 1"
+    class="header"
   >
-    <h1 :aria-label="$t('serviceTitle')" />
+    <PentilaDropdown
+      v-model="selectedSchool"
+      class="dropdown"
+      :list="schoolList"
+      display-field="schoolName"
+    />
+  </div>
 
-    <div
-      v-if="schoolList.length > 1"
-      class="header"
+  <PentilaTabList>
+    <PentilaTabItem
+      :title="$t('manual-users')"
+      class="tab"
     >
-      <PentilaDropdown
-        v-model="selectedSchool"
-        class="dropdown"
-        :list="schoolList"
-        display-field="schoolName"
-      />
-    </div>
-
-    <PentilaTabList>
-      <PentilaTabItem
-        :title="$t('manual-users')"
-        class="tab"
-      >
-        <ManualUsers />
-      </PentilaTabItem>
-      <PentilaTabItem
-        :title="$t('delegations')"
-        class="tab"
-      >
-        <Delegations />
-      </PentilaTabItem>
-      <PentilaTabItem
-        :title="$t('affectations')"
-        class="tab"
-      >
-        <Affectations />
-      </PentilaTabItem>
-    </PentilaTabList>
-  </Layout>
+      <ManualUsers />
+    </PentilaTabItem>
+    <PentilaTabItem
+      :title="$t('delegations')"
+      class="tab"
+    >
+      <Delegations />
+    </PentilaTabItem>
+    <PentilaTabItem
+      :title="$t('affectations')"
+      class="tab"
+    >
+      <Affectations />
+    </PentilaTabItem>
+  </PentilaTabList>
 </template>
 
 <script>
 import Affectations from '@/components/UserManagement/Affectations.vue'
 import Delegations from '@/components/UserManagement/Delegations'
 import ManualUsers from '@/components/UserManagement/ManualUsers'
-import Layout from '@/router/layouts/BannerLayout'
-
 export default {
   name: 'UserManagement',
   components: {
-    Layout,
     ManualUsers,
     Delegations,
     Affectations
   },
+  emits: ['update:layout'],
   computed: {
     schoolList () {
       return this.$store.getters['user/adminSchoolList']
@@ -65,6 +59,9 @@ export default {
         this.$store.commit('user/setSelectedSchool', school)
       }
     }
+  },
+  beforeCreate () {
+    this.$emit('update:layout', 'BannerLayout')
   }
 }
 </script>

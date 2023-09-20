@@ -1,12 +1,10 @@
 <template>
-  <Layout>
-    <h1 :aria-label="$t('serviceTitle')" />
-    <CMToolbar />
-    <div class="rules">
-      <InternalRightList />
-      <ExternalRightList />
-    </div>
-  </Layout>
+  <h1 :aria-label="$t('serviceTitle')" />
+  <CMToolbar />
+  <div class="rules">
+    <InternalRightList />
+    <ExternalRightList />
+  </div>
 </template>
 
 <script>
@@ -21,8 +19,11 @@ export default {
   components: {
     CMToolbar,
     ExternalRightList,
-    InternalRightList,
-    Layout
+    InternalRightList
+  },
+  emits: ['update:layout'],
+  beforeCreate () {
+    this.$emit('update:layout', 'BannerLayout')
   }
 }
 </script>

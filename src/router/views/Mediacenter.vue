@@ -1,33 +1,28 @@
 <template>
-  <Layout
-    class="layout"
-  >
-    <h1 :aria-label="$t('serviceTitle')" />
-    <NeroToolbar v-if="(schoolList && schoolList.length > 1)">
-      <PentilaDropdown
-        v-model="selectedSchool"
-        :list="schoolList"
-        display-field="schoolName"
-        @update:modelValue="onSelectSchool"
-      />
-    </NeroToolbar>
+  <h1 :aria-label="$t('serviceTitle')" />
+  <NeroToolbar v-if="(schoolList && schoolList.length > 1)">
+    <PentilaDropdown
+      v-model="selectedSchool"
+      :list="schoolList"
+      display-field="schoolName"
+      @update:modelValue="onSelectSchool"
+    />
+  </NeroToolbar>
 
-    <CategoryList />
-  </Layout>
+  <CategoryList />
 </template>
 
 <script>
 import CategoryList from '@/components/Mediacenter/CategoryList'
 import NeroToolbar from '@/components/Nero/NeroToolbar'
-import Layout from '@/router/layouts/BannerLayout'
 
 export default {
   name: 'Mediacenter',
   components: {
     CategoryList,
-    Layout,
     NeroToolbar
   },
+  emits: ['update:layout'],
   data () {
     return {
       selectedSchool: undefined
@@ -37,6 +32,9 @@ export default {
     schoolList () {
       return this.$store.state.mediacenter.schoolList
     }
+  },
+  beforeCreate () {
+    this.$emit('update:layout', 'BannerLayout')
   },
   created () {
     this.$store.dispatch('mediacenter/getSchoolList')
@@ -50,9 +48,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.layout {
-  height: 100%;
-}
 </style>
 
 <i18n locale="fr">

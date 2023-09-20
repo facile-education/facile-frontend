@@ -1,68 +1,66 @@
 <template>
-  <Layout>
-    <AllAnnouncementsHeader
-      :nb-new-announcements="nbNewAnnouncements"
-      :un-read-only="unReadOnly"
-      @toggle-read-only="toggleReadOnly"
-      @create-announcement="refresh"
-    />
+  <AllAnnouncementsHeader
+    :nb-new-announcements="nbNewAnnouncements"
+    :un-read-only="unReadOnly"
+    @toggle-read-only="toggleReadOnly"
+    @create-announcement="refresh"
+  />
 
-    <div
-      class="body"
-      :class="{'details-display' : isDetailsPanelDisplayed}"
-    >
-      <div class="announcements-list">
-        <div
-          v-if="isLoading"
-          class="placeholder"
-        >
-          <PentilaSpinner />
-        </div>
-        <div
-          v-if="error === true"
-          v-t="'errorPlaceholder'"
-          class="placeholder"
-        />
-        <div
-          v-else-if="announcementsList.length === 0"
-          v-t="'emptyPlaceholder'"
-          class="placeholder"
-        />
-        <div
-          v-else
-          ref="scroll"
-          class="scroll"
-          @scroll="handleScroll"
-        >
-          <AnnouncementItem
-            v-for="announcement in announcementsList"
-            :key="announcement.newsId"
-            :announcement="announcement"
-            :is-selection-mode="isDetailsPanelDisplayed"
-            :is-selected="selectedAnnouncement && selectedAnnouncement.newsId === announcement.newsId"
-            :is-last="isLastDisplayed(announcement)"
-            @update-announcement="refresh"
-            @delete-announcement="refresh"
-            @select="selectedAnnouncement=announcement"
-            @mark-as-read="announcement.hasRead=true"
-            @get-next-announcements="loadAnnouncements"
-          />
-        </div>
+  <div
+    class="body"
+    :class="{'details-display' : isDetailsPanelDisplayed}"
+  >
+    <div class="announcements-list">
+      <div
+        v-if="isLoading"
+        class="placeholder"
+      >
+        <PentilaSpinner />
       </div>
-
-      <NewsDetails
-        v-if="selectedAnnouncement && isDetailsPanelDisplayed"
-        :init-news="selectedAnnouncement"
-        @update="refresh"
-        @delete="deleteAnnouncement"
+      <div
+        v-if="error === true"
+        v-t="'errorPlaceholder'"
+        class="placeholder"
       />
       <div
-        v-if="!selectedAnnouncement && isDetailsPanelDisplayed"
-        v-t="'detailsPlaceholder'"
-        class="details-placeholder"
+        v-else-if="announcementsList.length === 0"
+        v-t="'emptyPlaceholder'"
+        class="placeholder"
       />
+      <div
+        v-else
+        ref="scroll"
+        class="scroll"
+        @scroll="handleScroll"
+      >
+        <AnnouncementItem
+          v-for="announcement in announcementsList"
+          :key="announcement.newsId"
+          :announcement="announcement"
+          :is-selection-mode="isDetailsPanelDisplayed"
+          :is-selected="selectedAnnouncement && selectedAnnouncement.newsId === announcement.newsId"
+          :is-last="isLastDisplayed(announcement)"
+          @update-announcement="refresh"
+          @delete-announcement="refresh"
+          @select="selectedAnnouncement=announcement"
+          @mark-as-read="announcement.hasRead=true"
+          @get-next-announcements="loadAnnouncements"
+        />
+      </div>
     </div>
-  </Layout>
+
+    <NewsDetails
+      v-if="selectedAnnouncement && isDetailsPanelDisplayed"
+      :init-news="selectedAnnouncement"
+      @update="refresh"
+      @delete="deleteAnnouncement"
+    />
+    <div
+      v-if="!selectedAnnouncement && isDetailsPanelDisplayed"
+      v-t="'detailsPlaceholder'"
+      class="details-placeholder"
+    />
+  </div>
 </template>
 
 <script>
@@ -78,8 +76,9 @@ let oldScrollTop = 0
 
 export default {
   name: 'AllAnnouncements',
-  components: { NewsDetails, AllAnnouncementsHeader, AnnouncementItem, Layout },
+  components: { NewsDetails, AllAnnouncementsHeader, AnnouncementItem },
   inject: ['mq'],
+  emits: ['update:layout'],
   data () {
     return {
       ended: false,
@@ -96,6 +95,9 @@ export default {
     isDetailsPanelDisplayed () {
       return !(this.mq.phone || this.mq.tablet)
     }
+  },
+  beforeCreate () {
+    this.$emit('update:layout', 'BannerLayout')
   },
   created () {
     this.loadAnnouncements()

@@ -25,6 +25,7 @@ const routes = [
   {
     path: '/agree-terms-of-use',
     name: 'AgreeTermsOfUse',
+    meta: { layout: 'GVELayout' },
     component: () => import('@/router/views/AgreeTermsOfUse')
   },
   {
@@ -47,26 +48,11 @@ const routes = [
     name: 'AllActivities',
     component: () => import('@/router/views/AllActivities')
   },
-  // {
-  //   path: '/progression/:progressionId(\\d+)?',
-  //   name: PROGRESSION,
-  //   component: () => import('@/router/views/Progression')
-  // },
-  // {
-  //   path: '/progression/seance/:itemId(\\d+)?',
-  //   name: 'Seance',
-  //   component: () => import('@/router/views/ProgressionSeance')
-  // },
   {
     path: '/documents/groups/:folderId(.*)?',
     name: 'GroupDocuments',
     component: () => import('@/router/views/Documents')
   },
-  // {
-  //   path: '/documents/recent',
-  //   name: 'Recent',
-  //   component: () => import('@/router/views/Documents')
-  // },
   {
     path: '/viewer/:fileEntryId(\\d+)?',
     name: 'Viewer',

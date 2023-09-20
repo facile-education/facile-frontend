@@ -1,7 +1,5 @@
 <template>
-  <Layout
-    class="layout"
-  >
+  <div class="viewer">
     <button
       class="close"
       :title="$t('close')"
@@ -13,25 +11,26 @@
       v-if="file !== undefined"
       :file="file"
     />
-  </Layout>
+  </div>
 </template>
 
 <script>
 import { defineAsyncComponent } from 'vue'
 
 import BaseIcon from '@/components/Base/BaseIcon'
-import Layout from '@/router/layouts/EmptyLayout'
 const FileDisplay = defineAsyncComponent(() => import('@/components/Documents/FileDisplay/FileDisplay'))
 
 export default {
   name: 'Progression',
-  components: { BaseIcon, Layout, FileDisplay },
+  components: { BaseIcon, FileDisplay },
+  emits: ['update:layout'],
   data () {
     return {
       file: undefined
     }
   },
-  computed: {
+  beforeCreate () {
+    this.$emit('update:layout', 'EmptyLayout')
   },
   created () {
     // Watch route changes to react on fileEntryId change
@@ -56,7 +55,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.layout {
+.viewer {
   height: 100%;
 }
 

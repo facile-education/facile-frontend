@@ -1,31 +1,28 @@
 <template>
-  <GVELayout>
-    <h1 :aria-label="$t('title')" />
-    <div class="center">
-      <div class="chart-container">
-        <div
-          data-test="terms-of-use"
-          class="chart"
-          v-html="template"
-        />
-      </div>
-      <div class="buttons">
-        <PentilaButton
-          ref="declineButton"
-          v-t="'decline'"
-          @click="declineTermsOfUse"
-        />
-        <PentilaButton
-          v-t="'accept'"
-          @click="acceptTermsOfUse"
-        />
-      </div>
+  <h1 :aria-label="$t('title')" />
+  <div class="center">
+    <div class="chart-container">
+      <div
+        data-test="terms-of-use"
+        class="chart"
+        v-html="template"
+      />
     </div>
-  </GVELayout>
+    <div class="buttons">
+      <PentilaButton
+        ref="declineButton"
+        v-t="'decline'"
+        @click="declineTermsOfUse"
+      />
+      <PentilaButton
+        v-t="'accept'"
+        @click="acceptTermsOfUse"
+      />
+    </div>
+  </div>
 </template>
 
 <script>
-import GVELayout from '@layouts/GVELayout.vue'
 import axios from 'axios'
 
 import constants from '@/api/constants'
@@ -33,11 +30,14 @@ import userService from '@/api/user.service'
 
 export default {
   name: 'AgreeTermsOfUse',
-  components: { GVELayout },
+  emits: ['update:layout'],
   data () {
     return {
       template: ''
     }
+  },
+  beforeCreate () {
+    this.$emit('update:layout', 'GVELayout')
   },
   created () {
     axios.get('chart.html').then(response => {
