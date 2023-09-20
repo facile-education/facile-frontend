@@ -93,7 +93,7 @@ export const actions = {
         if (pageNb === 0) {
           commit('setNbTotalResults', data.nbTotalUsers)
         }
-        if (data.users.length < data.nbItemsPerPage) {
+        if (data.users.length < nbItemsPerPage) {
           commit('setSearchLock', true)
         }
       }
@@ -129,10 +129,10 @@ export const actions = {
     commit('addAffectedUsers', users)
   },
   addUserAffectation ({ commit }, { userId, orgId, orgName }) {
-    commit('addUserAffectation', { userId: userId, orgId: orgId, orgName: orgName })
+    commit('addUserAffectation', { userId, orgId, orgName })
   },
   removeUserAffectation ({ commit }, { userId, orgId }) {
-    commit('removeUserAffectation', { userId: userId, orgId: orgId })
+    commit('removeUserAffectation', { userId, orgId })
   },
   toggleExpandedSchool ({ commit }, { schoolId }) {
     commit('toggleExpandedSchool', schoolId)
