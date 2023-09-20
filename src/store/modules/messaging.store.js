@@ -369,6 +369,9 @@ export const actions = {
   addSelectedMessages ({ commit }, messages) {
     commit('addSelectedMessages', messages)
   },
+  removeSelectedMessages ({ commit }) {
+    commit('setSelectedMessages', [])
+  },
   getMessageRecipients ({ commit }, messageId) {
     messageService.getMessageRecipients(messageId).then((data) => {
       if (data.success) {
