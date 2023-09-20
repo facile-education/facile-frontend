@@ -12,25 +12,26 @@
     <div class="message">
       {{ message }}
     </div>
-    <div
+    <button
       class="close"
       @click="closePopup"
     >
-      <img
-        src="@/assets/options/icon_cross_white.svg"
-        alt="close"
-      >
-    </div>
+      <CustomIcon
+        icon-name="icon-cross-L"
+        class="icon"
+      />
+    </button>
   </div>
 </template>
 
 <script>
 
 import BaseIcon from '@components/Base/BaseIcon'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 export default {
-  // TODO: export via pentilaComponents
+  // TODO: export in pentilaComponents
   name: 'Popup',
-  components: { BaseIcon },
+  components: { CustomIcon, BaseIcon },
   props: {
     message: {
       type: String,
@@ -122,16 +123,22 @@ export default {
     flex: 1;
   }
 
-  .close {
+  button {
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
     height: 100%;
     width: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
 
-    img {
-      width: 12px;
+    .icon {
+      color: white;
+      font-weight: bold;
+      font-size: 1rem;
     }
   }
 }

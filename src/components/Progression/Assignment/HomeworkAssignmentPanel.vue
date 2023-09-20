@@ -28,13 +28,11 @@
           >{{ item.name }}</span>
         </div>
       </div>
-      <img
-        class="close-button"
-        src="@assets/big-cross-black.svg"
-        :alt="$t('close')"
-        :title="$t('close')"
+      <CustomIcon
+        icon-name="icon-cross-L"
+        class="icon"
         @click="closeHomeworkAssignment()"
-      >
+      />
     </div>
 
     <div
@@ -76,10 +74,11 @@
 
 <script>
 import HomeworkAssignment from '@/components/Progression/Assignment/HomeworkAssignment'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 
 export default {
   name: 'HomeworkAssignmentPanel',
-  components: { HomeworkAssignment },
+  components: { CustomIcon, HomeworkAssignment },
   inject: ['mq'],
   props: {
   },

@@ -6,10 +6,10 @@
       class="menu-button"
       @click="toggleMobileMenu"
     >
-      <img
-        src="@/assets/icons/menus/icon_menu_burger.svg"
-        alt="toggle-menu-icon"
-      >
+      <CustomIcon
+        :icon-name="isMenuExtended ? 'icon-cross-L' : 'icon-burger'"
+        class="icon"
+      />
     </button>
 
     <HelpSearch />
@@ -17,12 +17,18 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import HelpSearch from '@components/HelpModal/HelpSearch.vue'
 
 export default {
   name: 'HelpTools',
-  components: { HelpSearch },
+  components: { CustomIcon, HelpSearch },
   inject: ['mq'],
+  computed: {
+    isMenuExtended () {
+      return this.$store.state.help.isMobileMenuDisplayed
+    }
+  },
   methods: {
     toggleMobileMenu () {
       this.$store.dispatch('help/toggleMobileMenu')
@@ -48,5 +54,9 @@ export default {
   padding: 0;
   background-color: transparent;
   border: none;
+
+  .icon {
+    font-size: 2rem;
+  }
 }
 </style>

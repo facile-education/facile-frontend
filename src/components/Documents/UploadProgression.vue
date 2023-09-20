@@ -27,14 +27,17 @@
           class="cancel"
           @click="cancel"
         />
-        <img
+
+        <button
           v-else
           class="close-button"
-          src="@assets/big-cross-black.svg"
-          :alt="$t('close')"
-          :title="$t('close')"
           @click="close"
         >
+          <CustomIcon
+            icon-name="icon-cross-L"
+            class="icon"
+          />
+        </button>
       </div>
     </div>
     <div
@@ -52,10 +55,11 @@
 
 <script>
 import BaseIcon from '@components/Base/BaseIcon'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import UploadProgressionItem from '@components/Documents/UploadProgressionItem'
 export default {
   name: 'UploadProgression',
-  components: { UploadProgressionItem, BaseIcon },
+  components: { CustomIcon, UploadProgressionItem, BaseIcon },
   data () {
     return {
       isCollapsed: false
@@ -145,9 +149,18 @@ export default {
       }
 
       .close-button {
+        margin: 0;
+        padding: 0;
+        border: none;
         cursor: pointer;
-        width: 16px;
-        height: 16px;
+        display: flex;
+        align-items: center;
+        background: transparent;
+
+        .icon {
+          font-size: 1.4rem;
+          font-weight: bold;
+        }
       }
     }
 
