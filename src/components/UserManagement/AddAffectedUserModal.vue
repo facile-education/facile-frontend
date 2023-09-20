@@ -2,7 +2,7 @@
   <PentilaWindow
     :modal="true"
     :draggable="true"
-    class="addAffectedUserWindow"
+    class="add-affected-user-modal"
     :width="600"
     :class="{'mobile': mq.phone}"
     @close="closeModal"
@@ -107,11 +107,10 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.addDelegationWindow {
-  span {
-    text-align: center;
-    margin: 10px;
+<style lang="scss">
+.add-affected-user-modal {
+  .window-body {
+    overflow: visible !important;
   }
 }
 </style>
