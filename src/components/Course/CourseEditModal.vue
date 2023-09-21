@@ -128,9 +128,9 @@ export default {
   created () {
     this.$store.dispatch('misc/incrementModalCount')
 
-    if (this.editedSession.sessionContent.title || (this.editedSession.sessionContent.blocks && this.editedSession.sessionContent.blocks.length > 0)) {
+    if (this.editedSession.sessionContent) {
       this.sessionContent.title = this.editedSession.sessionContent.title ? this.editedSession.sessionContent.title : ''
-      this.sessionContent.blocks = this.editedSession.sessionContent.blocks ? PentilaUtils.JSON.deepCopy(this.editedSession.sessionContent.blocks) : []
+      this.sessionContent.blocks = (this.editedSession.sessionContent.blocks && this.editedSession.sessionContent.blocks.length > 0) ? PentilaUtils.JSON.deepCopy(this.editedSession.sessionContent.blocks) : []
 
       this.isCreation = false
     } else { // isCreation = true
