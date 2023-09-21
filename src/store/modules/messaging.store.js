@@ -234,24 +234,10 @@ export const mutations = {
     state.unreadOnly = !state.unreadOnly
   },
   deleteSelectedThreads (state) {
-    // Delete the threads in the thread list
-    let lastIndex = 0
-    for (let i = 0; i < state.selectedThreads.length; ++i) {
-      for (let j = 0; j < state.threads.length; ++j) {
-        if (state.threads[j].threadId === state.selectedThreads[i].threadId) {
-          state.threads.splice(j, 1)
-          lastIndex = j
-          state.currentFolder.nbMessages--
-          break
-        }
-      }
-    }
+    state.threads = state.threads.filter(thread => !state.selectedThreads.includes(thread))
+
     state.selectedThreads = []
-    if (state.threads.length > 0 && state.threads[lastIndex] !== undefined) {
-      messagingUtils.selectThread(state.threads[lastIndex])
-    } else {
-      state.currentThreadMessages = []
-    }
+    state.currentThreadMessages = []
   },
   deleteMessages (state, messageIds) {
     // Delete the messages in thread list
