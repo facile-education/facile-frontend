@@ -38,17 +38,6 @@
 // import '../HorairesHorsCadres/slotDeletion.spec'
 // import '../HorairesHorsCadres/slotModification.spec'
 
-// Progression
-// import '../Progression/ProgressionAffectation/homeworkAffectation.spec'
-// import '../Progression/ProgressionAffectation/sessionAffectation.spec'
-// import '../Progression/ProgressionEdit/DragAndDrop.spec'
-// import '../Progression/ProgressionEdit/ProgressionEmpty.spec'
-// import '../Progression/ProgressionEdit/ProgressionItem.spec'
-// import '../Progression/ProgressionEdit/ProgressionItemContent.spec'
-// import '../Progression/ProgressionEdit/ProgressionSection.spec'
-// import '../Progression/ProgressionEdit/ProgressionSubsection.spec'
-// import '../Progression/ProgressionList.spec'
-
 // Messaging
 import '../Messaging/deleteMessage.spec'
 import '../Messaging/dragNdropMessage.spec'

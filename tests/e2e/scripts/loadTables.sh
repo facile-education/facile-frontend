@@ -10,7 +10,7 @@ if [[ $1 ]];
 then
   DUMP_NAME=$1
 else
-  DUMP_NAME=progression_tables.sql
+  DUMP_NAME=dump_cypress_db.sql
 fi
 
 if [[ -z $VM_USER || -z $VM_IP || -z $DB_USER || -z $DB_PWD || -z $DB_NAME || -z $DUMP_NAME ]];
@@ -29,7 +29,7 @@ else
   echo "Copy dump to virtual machine"
   scp $DUMP_NAME $VM_USER@$VM_IP:/home/$VM_USER
 
-  echo "SSH as $VM_USER to reset progression tables."
+  echo "SSH as $VM_USER to reset tables."
   ssh $VM_USER@$VM_IP << EOF
 mysql -u $DB_USER -p$DB_PWD $DB_NAME < $DUMP_NAME
 rm $DUMP_NAME

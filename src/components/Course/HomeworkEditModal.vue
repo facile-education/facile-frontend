@@ -143,7 +143,7 @@ import { getNextSessions } from '@/api/schedule.service'
 import ContentPicker from '@/components/Course/ContentPicker.vue'
 import contentTypeConstants from '@/constants/contentTypeConstants'
 
-const StudentListModal = defineAsyncComponent(() => import('@/components/Progression/Assignment/StudentListModal'))
+const StudentListModal = defineAsyncComponent(() => import('@components/Course/StudentListModal.vue'))
 const CourseContent = defineAsyncComponent(() => import('@/components/Course/CourseContent'))
 
 export default {

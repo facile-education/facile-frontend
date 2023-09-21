@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-// import { PROGRESSION } from '@/constants/appConstants'
 import i18n from '@/i18n'
 import store from '@/store'
 

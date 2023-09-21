@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import TextContent from '@components/Progression/Edit/Contents/TextContent'
+import TextContent from '@components/Base/TextContent.vue'
 
 import fileServices from '@/api/documents/file.service'
 import { fileAutoSaveTime } from '@/constants/appConstants'

@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import AudioRecorder from '@components/Nero/AudioRecorder'
+import AudioRecorder from '@components/Nero/AudioRecorder.vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 

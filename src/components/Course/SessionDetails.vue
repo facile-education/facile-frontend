@@ -158,8 +158,8 @@
 <script>
 import CreateButton from '@components/Base/CreateButton.vue'
 import CustomIcon from '@components/Base/CustomIcon.vue'
+import TextContent from '@components/Base/TextContent.vue'
 import HomeworkList from '@components/Course/HomeworkList.vue'
-import TextContent from '@components/Progression/Edit/Contents/TextContent.vue'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 

@@ -154,7 +154,7 @@
 <script>
 import AttachedFiles from '@components/AttachedFiles/AttachedFiles.vue'
 import ContactPickerToolTip from '@components/ContactPicker/ContactPickerToolTip.vue'
-import TextContent from '@components/Progression/Edit/Contents/TextContent'
+import TextContent from '@components/Base/TextContent.vue'
 import { addContactFieldsToContactList } from '@utils/contacts.utils'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'

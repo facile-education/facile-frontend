@@ -123,7 +123,7 @@
 <script>
 import CustomDatePicker from '@components/Base/CustomDatePicker.vue' // TODO: Check time and optimise if necessary
 import InformationIcon from '@components/Base/InformationIcon.vue'
-import TextContent from '@components/Progression/Edit/Contents/TextContent.vue'
+import TextContent from '@components/Base/TextContent.vue'
 import validators from '@utils/validators'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'

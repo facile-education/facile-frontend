@@ -73,7 +73,7 @@
 
 <script>
 import InformationIcon from '@components/Base/InformationIcon'
-import TextContent from '@components/Progression/Edit/Contents/TextContent'
+import TextContent from '@components/Base/TextContent.vue'
 
 import configurationService from '@/api/messaging/configuration.service'
 
