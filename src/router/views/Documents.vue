@@ -213,7 +213,7 @@ export default {
   created () {
     this.$store.dispatch('fileFields/initFields')
 
-    // Watch route changes to react on progressionId change
+    // Watch route changes to react on changes
     this.$watch(
       () => this.$route.params,
       () => {

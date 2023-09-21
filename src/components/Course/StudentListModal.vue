@@ -122,7 +122,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@design";
+@import "../../design/index";
 ul {
   margin: 0;
   padding: 0;

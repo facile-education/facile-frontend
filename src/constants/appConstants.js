@@ -15,7 +15,6 @@ const SCHEDULE_MANAGER = 'horaires-admin'
 const SCHOOL_LIFE = 'horaires-hors-cadre'
 const MAINTENANCE = 'maintenance'
 const MESSAGING = 'messaging'
-const PROGRESSION = 'progression'
 const STATISTICS = 'statistics'
 const UNIVERSALIS = 'universalis'
 const UNIVERSALIS_JUNIOR = 'universalis-junior'
@@ -68,7 +67,6 @@ export {
   SCHOOL_LIFE,
   MAINTENANCE,
   MESSAGING,
-  PROGRESSION,
   STATISTICS,
   UNIVERSALIS,
   UNIVERSALIS_JUNIOR,

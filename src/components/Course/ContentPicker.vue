@@ -64,11 +64,11 @@ import { defineAsyncComponent } from 'vue'
 
 import { uploadTmpFile } from '@/api/documents/file.service'
 
-const AudioRecorderModal = defineAsyncComponent(() => import('@/components/Progression/Edit/AudioRecorderModal'))
-const LinkModal = defineAsyncComponent(() => import('@/components/Progression/Edit/LinkModal'))
+const AudioRecorderModal = defineAsyncComponent(() => import('@components/Base/ContentEdtitionModals/AudioRecorderModal'))
+const LinkModal = defineAsyncComponent(() => import('@components/Base/ContentEdtitionModals/LinkModal'))
 const FilePickerModal = defineAsyncComponent(() => import('@/components/FilePicker/FilePickerModal'))
-const H5PModal = defineAsyncComponent(() => import('@/components/Progression/Edit/H5PModal'))
-const VideoModal = defineAsyncComponent(() => import('@/components/Progression/Edit/VideoModal'))
+const H5PModal = defineAsyncComponent(() => import('@components/Base/ContentEdtitionModals/H5PModal'))
+const VideoModal = defineAsyncComponent(() => import('@components/Base/ContentEdtitionModals/VideoModal'))
 
 export default {
   name: 'ContentPicker',

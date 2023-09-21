@@ -72,14 +72,14 @@
 </template>
 
 <script>
-import TextContent from '@components/Progression/Edit/Contents/TextContent.vue'
+import TextContent from '@components/Base/TextContent.vue'
 import { defineAsyncComponent } from 'vue'
 
 import contentTypeConstants from '@/constants/contentTypeConstants'
 import { icons } from '@/constants/icons'
 import { getExtensionFromName } from '@/utils/commons.util'
-const H5PModal = defineAsyncComponent(() => import('@/components/Progression/Edit/H5PModal'))
-const VideoModal = defineAsyncComponent(() => import('@/components/Progression/Edit/VideoModal'))
+const H5PModal = defineAsyncComponent(() => import('@components/Base/ContentEdtitionModals/H5PModal'))
+const VideoModal = defineAsyncComponent(() => import('@components/Base/ContentEdtitionModals/VideoModal'))
 
 export default {
   name: 'CourseContent',
