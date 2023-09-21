@@ -58,13 +58,14 @@
             </div>
             <div>
               <a
-                v-if="showForgotPassword"
                 v-t="'main-form'"
                 href="#"
                 @click="showPasswordRecoveryForm = false"
               />
             </div>
           </form>
+
+          <!-- Classic login form -->
           <form
             v-else
             @submit.prevent="doLogin"
@@ -86,16 +87,25 @@
               @keypress="handleKeyPressed"
             >
             <div>
+              <!-- Login error -->
               <span
-                v-show="isError"
+                v-show="isError && !isLocked"
                 v-t="'loginError'"
                 class="errorMessage"
               />
+              <!-- Nb remaining tries -->
               <span
-                v-show="!isActive"
-                v-t="'inactiveAccount'"
+                v-show="isError && !isLocked && nbRemainingTries <= 2"
                 class="errorMessage"
-              />
+              >
+                {{ $t('nbRemainingTries', {nbRemainingTries: nbRemainingTries}) }}
+              </span>
+              <span
+                v-show="isError && isLocked"
+                class="errorMessage"
+              >
+                {{ $t('accountLocked', {lockoutDuration: lockoutDuration}) }}
+              </span>
             </div>
             <button
               v-t="authenticateButtonLabel"
@@ -151,14 +161,14 @@ export default {
   data () {
     return {
       isLoading: false,
-      formUrl: constants.BASE_API_URL + '/home?p_p_id=com_liferay_login_web_portlet_LoginPortlet&p_p_lifecycle=1&p_p_state=maximized&p_p_mode=view&_com_liferay_login_web_portlet_LoginPortlet_javax.portlet.action=%2Flogin%2Flogin&_com_liferay_login_web_portlet_LoginPortlet_mvcRenderCommandName=%2Flogin%2Flogin',
+      isGuestFormDisplayed: false,
       login: '',
       password: '',
       p_auth: '',
-      isActive: true,
       isError: false,
-      isGuestFormDisplayed: false,
-      showForgotPassword: true,
+      isLocked: false,
+      lockoutDuration: 0,
+      nbRemainingTries: 0,
       showPasswordRecoveryForm: false,
       recoveryLogin: '',
       passwordRecoveryUrl: constants.BASE_API_URL + '/home?p_p_id=com_liferay_login_web_portlet_LoginPortlet&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&_com_liferay_login_web_portlet_LoginPortlet_javax.portlet.action=/login/forgot_password&_com_liferay_login_web_portlet_LoginPortlet_mvcRenderCommandName=/login/forgot_password',
@@ -233,52 +243,54 @@ export default {
   },
   methods: {
     doLogin () {
-      // First check credentials
       this.isLoading = true
-      authenticationService.checkCredentials(this.login, this.password).then((data) => {
+      authenticationService.login(this.login, this.password, this.isMobileApp).then(response => {
         this.isLoading = false
-        if (!data.isValid) {
+        console.log('response=', response)
+        if (!response.success) {
+          console.log('no success')
           this.isError = true
-          this.showForgotPassword = true
-        } else if (data.isValid && !data.isActive) {
-          this.isInactive = true
-        } else {
-          // Call Login form
-          const formData = new FormData()
-          formData.append('_com_liferay_login_web_portlet_LoginPortlet_formDate', new Date().getTime())
-          formData.append('_com_liferay_login_web_portlet_LoginPortlet_saveLastPath', false)
-          formData.append('_com_liferay_login_web_portlet_LoginPortlet_redirect', '')
-          formData.append('_com_liferay_login_web_portlet_LoginPortlet_doActionAfterLogin', false)
-          formData.append('_com_liferay_login_web_portlet_LoginPortlet_login', this.login)
-          formData.append('_com_liferay_login_web_portlet_LoginPortlet_password', this.password)
-          formData.append('_com_liferay_login_web_portlet_LoginPortlet_checkboxNames', 'rememberMe')
-          if (this.isMobileApp) {
-            formData.append('_com_liferay_login_web_portlet_LoginPortlet_rememberMe', 'on')
+          if (response.isLocked) {
+            this.isLocked = true
+            this.lockoutDuration = response.lockoutDuration / 60
+            console.log('lockoutDuration=', this.lockoutDuration)
+          } else {
+            this.isLocked = false
+            this.nbRemainingTries = response.nbRemainingTries
           }
-          this.isLoading = true
-          axios.post(this.formUrl,
-            formData,
-            { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
-          ).then(() => {
-            this.isLoading = false
-            // Reset p_auth_token
-            store.commit('user/setPAuth', undefined)
+        } else {
+          this.isLocked = false
+          // Reset p_auth_token
+          store.commit('user/setPAuth', undefined)
 
-            // Reset Matomo userId
-            window._paq.push(['setUserId', Math.random().toString(36)])
-            window._paq.push(['trackPageView'])
+          // Reset Matomo userId
+          window._paq.push(['setUserId', Math.random().toString(36)])
+          window._paq.push(['trackPageView'])
 
-            const redirectUrl = DASHBOARD
-            if (this.isMobileApp) {
-              // Manage mobile token
-              this.addMobileToken(data.userId, redirectUrl)
-            } else {
-              // Route to landing page
-              this.$router.push(redirectUrl)
+          // Fetch p_auth because login changed it
+          fetch(constants.P_AUTH_URL).then(response => { if (response.status === 200) { return response.text() } }).then(response => {
+            if (response !== undefined) {
+              this.p_auth = response.trim()
+
+              // Fetch logged user
+              fetch(constants.JSON_WS_URL + USER_PATH + GET_USER_INFOS_WS + '?p_auth=' + this.p_auth).then(response => {
+                if (response.status === 200) {
+                  store.commit('user/setPAuth', this.p_auth)
+                  response.json().then(data => {
+                    const redirectUrl = DASHBOARD
+                    if (this.isMobileApp) {
+                      // Manage mobile token
+                      this.addMobileToken(data.userId, redirectUrl)
+                    } else {
+                      // Route to landing page
+                      this.$router.push(redirectUrl)
+                    }
+                  })
+                } else if (response.status === 403) {
+                  this.isError = true
+                }
+              })
             }
-          }, (err) => {
-            this.isLoading = false
-            console.error('error when logging', err)
           })
         }
       }, (err) => {
@@ -297,11 +309,8 @@ export default {
       mobileService.addMobileToken().then((response) => {
         if (response.success) {
           refreshToken = response.refreshToken
-          authenticationService.authLog('added new Token ', refreshToken)
           const mobileUrl = encodeURI(window.location.origin + '/' + redirectUrl)
-          // authenticationService.authLog('mobileUrl = ' + mobileUrl)
           const serviceUrl = window.location.origin + '/appmobile.html?refresh_token=' + refreshToken + '&user_id=' + userId + '&home_url=' + mobileUrl
-          // authenticationService.authLog('serviceUrl = ' + serviceUrl)
           window.location.replace(serviceUrl)
         }
       })
@@ -314,7 +323,6 @@ export default {
       let refreshToken = ''
 
       // Refreshing with new token
-      authenticationService.authLog('refreshing Token based on url ' + window.location.search)
       // First extract token from url
       const mobileTokenStr = window.location.search.substring(window.location.search.indexOf('mobile_token=') + 13)
       const idx1 = mobileTokenStr.indexOf('%')
@@ -328,14 +336,11 @@ export default {
       }
       const mobileToken = mobileTokenStr.substring(0, endIdx)
 
-      authenticationService.authLog('refreshing Token with old token ' + mobileToken)
       mobileService.refreshMobileToken(mobileToken).then((response) => {
         if (response.success) {
           refreshToken = response.refreshToken
-          // authenticationService.authLog('refreshed token = ' + refreshToken)
           const mobileUrl = encodeURI(window.location.origin + '/' + redirectUrl)
           const serviceUrl = window.location.origin + '/appmobile.html?refresh_token=' + refreshToken + '&user_id=' + userId + '&home_url=' + mobileUrl
-          // authenticationService.authLog('serviceUrl = ' + serviceUrl)
           window.location.replace(serviceUrl)
         }
       })
@@ -495,6 +500,8 @@ $eel-blue: #2c7bb8;
   "loginPlaceholder": "Identifiant",
   "send-recovery": "Envoyer",
   "main-form": "Retour au formulaire",
-  "check-email": "Vérifier votre courriel"
+  "check-email": "Vérifier votre courriel",
+  "nbRemainingTries": "Il vous reste {nbRemainingTries} tentatives",
+  "accountLocked": "Votre compte est bloqué pendant {lockoutDuration} minutes."
 }
 </i18n>

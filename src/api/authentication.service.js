@@ -4,28 +4,25 @@ import PentilaUtils from 'pentila-utils'
 import constants from '@/api/constants'
 
 export default {
-  checkCredentials,
-  authLog
+//  authLog,
+  login
 }
 
-const AUTHENTICATION_PATH = '/authentication.authentication'
+// const AUTHENTICATION_PATH = '/authentication.authentication'
 
-/**
- * Check credentials without logging
- */
-function checkCredentials (login, password) {
-  return axios.post(constants.JSON_WS_URL + AUTHENTICATION_PATH + '/check-credentials',
-    PentilaUtils.URL.params({
-      login,
-      password
-    })
-  ).then(response => response.data)
-}
+// Uncomment for local testing
+// function authLog (str) {
+//   return axios.get(constants.JSON_WS_URL + AUTHENTICATION_PATH + '/auth-log', {
+//     params: {
+//       str
+//     }
+//   }).then(response => response.data)
+// }
 
-function authLog (str) {
-  return axios.get(constants.JSON_WS_URL + AUTHENTICATION_PATH + '/auth-log', {
-    params: {
-      str
-    }
-  }).then(response => response.data)
+function login (login, password, rememberMe) {
+  return axios.post(constants.BASE_API_URL + '/c/common/login', PentilaUtils.URL.params({
+    login,
+    password,
+    rememberMe
+  })).then(response => response.data)
 }
