@@ -180,9 +180,8 @@ export default {
             if (data.success) {
               if (this.isInList) {
                 this.$emit('update-homework')
-              } else {
-                this.$store.dispatch('course/updateSessionDetails')
               }
+              this.$store.dispatch('course/updateSessionDetails')
             }
           })
           break
