@@ -97,6 +97,12 @@ export default {
 // Design variables and utilities from src/design.
 @import '@/design';
 
+@supports(height: 100dvh) {
+  #app {
+    height: 100dvh !important;
+  }
+}
+
 html, body, #app {
   height: 100%;
   color: $neutral-100;
