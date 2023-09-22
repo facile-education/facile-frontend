@@ -31,16 +31,16 @@ h1 {
 
 // Create button
 %create-button {
-  width: 140px;
+  padding: 0.8rem 1rem;
   border-radius: 6px;
   text-transform: uppercase;
+  white-space: nowrap;
 
   span {
     margin-left: 12px;
   }
 
   &.phone {
-    width: 110px;
     padding: 9px 10px;
   }
 }
