@@ -68,7 +68,7 @@
 <script>
 import { defineAsyncComponent } from 'vue'
 
-import { DOCUMENTS, MESSAGING, PROGRESSION } from '@/constants/appConstants'
+import { DOCUMENTS, MESSAGING } from '@/constants/appConstants'
 import searchConstants from '@/constants/searchConstants'
 import { isInViewport } from '@/utils/commons.util'
 const FileIcon = defineAsyncComponent(() => import('@components/Base/FileIcon'))
