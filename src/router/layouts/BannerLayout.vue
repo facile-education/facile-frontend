@@ -26,8 +26,8 @@
       :class="{'phone': (mq.phone || displayLikePhone)}"
     >
       <Popup
-        v-for="(popup, index) in popupList"
-        :key="index"
+        v-for="popup in popupList"
+        :key="popup.popupId"
         class="popup"
         :type="popup.type"
         :message="popup.message"
