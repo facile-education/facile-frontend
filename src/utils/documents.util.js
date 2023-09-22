@@ -178,6 +178,7 @@ async function importDocuments (folderId, documentList, mode) {
 }
 
 function handleError (data, doc, folderId, documentList, index) {
+  store.dispatch('currentActions/setUploadFileError', doc)
   if (data.error === 'fileSizeException') {
     store.dispatch('popups/pushPopup', {
       message: i18n.global.t('Documents.fileSizeException'),
@@ -197,6 +198,11 @@ function handleError (data, doc, folderId, documentList, index) {
   } else if (data.error === 'FileExtensionException') {
     store.dispatch('popups/pushPopup', {
       message: i18n.global.t('Documents.extensionException'),
+      type: 'error'
+    })
+  } else if (data.error === 'AntivirusException') {
+    store.dispatch('popups/pushPopup', {
+      message: i18n.global.t('Documents.antivirusException'),
       type: 'error'
     })
   } else {
