@@ -104,7 +104,7 @@ import { defineAsyncComponent } from 'vue'
 import { useCookies } from 'vue3-cookies'
 
 import constants from '@/api/constants'
-import { popupDurationTime } from '@/constants/appConstants'
+import { mobilePopupDurationTime, popupDurationTime } from '@/constants/appConstants'
 
 const AccessModal = defineAsyncComponent(() => import('@components/Accesses/AccessVisualization/AccessModal'))
 const Banner = defineAsyncComponent(() => import('@/components/Banner/Banner'))
@@ -191,7 +191,7 @@ export default {
       return this.$store.state.documents.openFiles
     },
     popupTimeout () {
-      return popupDurationTime
+      return this.mq.phone || this.displayLikePhone ? mobilePopupDurationTime : popupDurationTime
     },
     popupList () {
       return this.$store.state.popups.currentPopupList
