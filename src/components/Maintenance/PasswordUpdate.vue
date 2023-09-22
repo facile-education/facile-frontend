@@ -76,6 +76,7 @@ export default {
   name: 'PasswordUpdate',
   data () {
     return {
+      password1: '',
       timeout: 0,
       isLoadingCompletion: false,
       completionUsers: [],
