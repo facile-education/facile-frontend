@@ -22,6 +22,8 @@
         <!--  TODO: Put those logic on pentila component-->
         <button
           class="toggle-password-type"
+          :aria-label="$t('showPassword')"
+          :title="$t('showPassword')"
           @click="togglePassword1Type"
         >
           <img
@@ -50,6 +52,8 @@
           <!--  TODO: Put those logic on pentila component-->
           <button
             class="toggle-password-type"
+            :aria-label="$t('showPassword')"
+            :title="$t('showPassword')"
             @click="togglePassword2Type"
           >
             <img
@@ -203,22 +207,7 @@ h1 {
   }
 
   .toggle-password-type {
-    height: 1rem;
-    cursor: pointer;
-    background-color: transparent;
-    border-radius: 0;
-    padding: 0;
-    margin: 0;
-    border: none;
-
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-
-    img {
-      height: 1rem;
-    }
+    @extend %toggle-password-type;
   }
 }
 
@@ -273,6 +262,7 @@ a.logout-link {
   "errorMessage": "Une erreur est survenue",
   "passwordPolicy": "Le mot de passe doit contenir au moins 8 caractères dont une majuscule, un chiffre et un caractère spécial",
   "emptyPassword": "Veuillez saisir un mot de passe",
+  "showPassword": "Montrer",
   "unknownError": "Oups, une erreur est survenue...",
   "logout": "Abandonner"
 }

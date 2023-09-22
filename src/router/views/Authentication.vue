@@ -78,14 +78,28 @@
               autocapitalize="none"
               @keypress="handleKeyPressed"
             >
-            <input
-              v-model="password"
-              type="password"
-              :placeholder="$t('password')"
-              class="input"
-              name="password"
-              @keypress="handleKeyPressed"
-            >
+            <div class="input-container">
+              <input
+                v-model="password"
+                :type="passwordInputType"
+                :placeholder="$t('password')"
+                class="input"
+                name="password"
+                @keypress="handleKeyPressed"
+              >
+              <button
+                class="toggle-password-type"
+                type="button"
+                :aria-label="$t('showPassword')"
+                :title="$t('showPassword')"
+                @click.stop="togglePasswordType"
+              >
+                <img
+                  src="@/assets/icons/eye-off.svg"
+                  alt=""
+                >
+              </button>
+            </div>
             <div>
               <!-- Login error -->
               <span
@@ -163,6 +177,7 @@ export default {
       isGuestFormDisplayed: false,
       login: '',
       password: '',
+      passwordInputType: 'password',
       p_auth: '',
       isError: false,
       isLocked: false,
@@ -296,6 +311,13 @@ export default {
         this.isLoading = false
         console.error('error when logging', err)
       })
+    },
+    togglePasswordType () {
+      if (this.passwordInputType === 'password') {
+        this.passwordInputType = 'text'
+      } else {
+        this.passwordInputType = 'password'
+      }
     },
     addMobileToken (userId, redirectUrl) {
       // Remove first slash in redirectUrl
@@ -449,6 +471,15 @@ $eel-blue: #2c7bb8;
   overflow: hidden;
 }
 
+.input-container {
+  position: relative;
+  width: 100%;
+
+  .toggle-password-type {
+    @extend %toggle-password-type;
+  }
+}
+
 .input {
   height: 46px;
   padding: 10px 16px;
@@ -499,6 +530,7 @@ $eel-blue: #2c7bb8;
   "loginPlaceholder": "Identifiant",
   "send-recovery": "Envoyer",
   "main-form": "Retour au formulaire",
+  "showPassword": "Montrer",
   "check-email": "Vérifier votre courriel",
   "nbRemainingTries": "Il vous reste {nbRemainingTries} tentatives",
   "accountLocked": "Votre compte est bloqué pendant {lockoutDuration} minutes."
