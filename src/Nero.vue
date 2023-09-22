@@ -49,9 +49,14 @@ export default {
   },
   mounted () {
     if (typeof window.screen.orientation !== 'undefined') {
+      // TODO: handle mobile device condition correctly, maybe with Navigator: userAgent property?
+      if ((window.screen.orientation.type === 'landscape-primary' || window.screen.orientation.type === 'landscape-secondary') && window.innerHeight <= 800) {
+        this.$store.dispatch('misc/setKeepPhoneStatus', true)
+      }
+
       window.screen.orientation.addEventListener('change', this.handleOrientationChange, false)
     } else {
-      console.error('Cannot handle screen orientation change!')
+      console.error('Cannot handle screen orientation !')
     }
   },
   beforeUnmount () {
