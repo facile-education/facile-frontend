@@ -38,6 +38,7 @@ const slotLabelList = {
 
 // time in ms
 const popupDurationTime = 3500
+const mobilePopupDurationTime = 2000
 const fileAutoSaveTime = 60000
 
 const entityNameMaxSize = 255
@@ -48,6 +49,7 @@ export {
   timeBeforeCompletion,
   slotLabelList,
   popupDurationTime,
+  mobilePopupDurationTime,
   fileAutoSaveTime,
   entityNameMaxSize,
   ckMaxSize,

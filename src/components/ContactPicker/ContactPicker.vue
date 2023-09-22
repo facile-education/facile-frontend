@@ -90,19 +90,22 @@ export default {
     },
     isMobileUserListDisplayed () {
       return this.$store.state.contact.isMobileUserListDisplayed
+    },
+    displayLikePhone () {
+      return this.$store.state.misc.keepPhoneStatus
     }
   },
   methods: {
     // TODO: Find a better way than popup to advertise the user his action has been computed (with a pretty animation for example ^^)
     addContacts (contacts) {
       this.$emit('addContacts', contacts)
-      if (this.mq.phone) {
+      if (this.mq.phone || this.displayLikePhone) {
         this.$store.dispatch('popups/pushPopup', { message: this.$t('addContacts'), type: 'success' })
       }
     },
     removeContacts (contacts) {
       this.$emit('removeContacts', contacts)
-      if (this.mq.phone) {
+      if (this.mq.phone || this.displayLikePhone) {
         this.$store.dispatch('popups/pushPopup', { message: this.$t('removeContacts'), type: 'success' })
       }
     }
@@ -159,7 +162,7 @@ export default {
 }
 </style>
 
-<i18n locale="fr" >
+<i18n locale="fr">
 {
   "addressBook": "Carnet d'adresses",
   "advancedSearch": "Annuaire",
