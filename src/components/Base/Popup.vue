@@ -9,7 +9,10 @@
         :name="iconName"
       />
     </div>
-    <div class="message">
+    <div
+      class="message"
+      @click="isMounted = true"
+    >
       {{ message }}
     </div>
     <button
@@ -21,6 +24,12 @@
         class="icon"
       />
     </button>
+
+    <div
+      ref="progressBar"
+      class="progress-bar"
+      :style="'transition: width ' + timeout + 'ms linear;'"
+    />
   </div>
 </template>
 
@@ -78,6 +87,10 @@ export default {
     }
   },
   mounted () {
+    const vm = this
+    setTimeout(function () {
+      vm.$el.getElementsByClassName('progress-bar')[0].classList.add('final-state')
+    }, 10)
     this.waitBeforeClosure(this.timeout)
   },
   methods: {
@@ -98,6 +111,7 @@ export default {
 /* TODO make animation */
 
 .popup {
+  position: relative;
   height: 75px;
   min-width: 300px;
   display: flex;
@@ -143,4 +157,18 @@ export default {
   }
 }
 
+.progress-bar {
+  height: 4px;
+  width: 100%;
+  background-color: white;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+
+  &.final-state {
+    width: 0;
+  }
+}
 </style>
