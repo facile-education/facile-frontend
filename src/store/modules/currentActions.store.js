@@ -36,6 +36,15 @@ export const mutations = {
   setCurrentUploadFile (state, payload) {
     state.currentUploadingFile = payload
   },
+  setUploadFileError (state, payload) {
+    for (let i = 0; i < state.listFilesToUpload.length; ++i) {
+      if (state.listFilesToUpload[i].name === payload.name) {
+        console.log('found in store')
+        state.listFilesToUpload[i].isError = true
+        break
+      }
+    }
+  },
   removeFileToUpload (state, file) {
     for (let i = 0; i < state.listFilesToUpload.length; ++i) {
       if (state.listFilesToUpload[i].name === file.name) {
@@ -89,6 +98,9 @@ export const actions = {
   },
   cancelUpload ({ commit }) {
     commit('setCancelUpload', true)
+  },
+  setUploadFileError ({ commit }, file) {
+    commit('setUploadFileError', file)
   }
 }
 

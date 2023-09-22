@@ -76,16 +76,14 @@ export default {
       return this.listUploadedFiles.length >= this.listFilesToUpload.length
     },
     cancelStatus () {
-      return this.$store.state.currentActions.cancelUpload || this.isUploadFinished
+      return this.$store.state.currentActions.cancelUpload || !this.isUploadFinished
     },
     headerText () {
       let text = ''
       if (!this.cancelStatus) {
-        text = this.listUploadedFiles.length + this.$t('uploadOn') + this.listFilesToUpload.length + ' ...'
-      } else if (this.listUploadedFiles.length === 1) {
-        text = this.listUploadedFiles.length + this.$t('uploadfinished')
+        text = this.$tc('uploadOn', this.listUploadedFiles.length, { done: this.listUploadedFiles.length, total: this.listFilesToUpload.length })
       } else {
-        text = this.listUploadedFiles.length + this.$t('uploadsfinished')
+        text = this.$tc('uploadfinished', this.listUploadedFiles.length, { nb: this.listUploadedFiles.length })
       }
       return text
     }
@@ -177,8 +175,7 @@ export default {
 <i18n locale="fr">
 {
   "cancel": "Annuler",
-  "uploadOn": " chargements sur ",
-  "uploadfinished": " Chargement terminé",
-  "uploadsfinished": " Chargements terminés"
+  "uploadOn": "{done} chargement sur {total} | {done} chargement sur {total} | {done} chargements sur {total}",
+  "uploadfinished": "{nb} chargement terminé | {nb} chargements terminés"
 }
 </i18n>

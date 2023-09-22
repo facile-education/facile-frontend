@@ -20,6 +20,11 @@
         class="uploaded"
         name="check"
       />
+      <BaseIcon
+        v-else-if="status==='not-uploaded'"
+        class="error"
+        name="times"
+      />
       <div v-else />
     </div>
   </div>
@@ -53,8 +58,10 @@ export default {
       if (this.currentUploadingFile && this.document.name.split('/').at(-1) === this.currentUploadingFile.name.split('/').at(-1)) {
         return 'uploading'
       } else {
+        console.log('else')
         let find = false
         this.listUploadedFiles.forEach((uploadedFile) => {
+          console.log('uploadedFile = ', uploadedFile)
           if (uploadedFile.name.split('/').at(-1) === this.document.name.split('/').at(-1)) {
             find = true
           }
@@ -106,6 +113,9 @@ export default {
 
     .uploaded {
       color: green;
+    }
+    .error {
+      color: red;
     }
   }
 
