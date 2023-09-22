@@ -117,7 +117,6 @@
             />
             <div>
               <a
-                v-if="showForgotPassword"
                 v-t="'forgot-password'"
                 href="#"
                 @click="showPasswordRecoveryForm = true"
