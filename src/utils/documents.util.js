@@ -171,6 +171,9 @@ async function importDocuments (folderId, documentList, mode) {
           } else {
             stop = handleError(data, doc, folderId, documentList, i)
           }
+        }, (err) => {
+          console.error(err)
+          store.dispatch('currentActions/removeCurrentUploadFile')
         })
       }
     }

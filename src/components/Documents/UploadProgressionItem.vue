@@ -58,10 +58,8 @@ export default {
       if (this.currentUploadingFile && this.document.name.split('/').at(-1) === this.currentUploadingFile.name.split('/').at(-1)) {
         return 'uploading'
       } else {
-        console.log('else')
         let find = false
         this.listUploadedFiles.forEach((uploadedFile) => {
-          console.log('uploadedFile = ', uploadedFile)
           if (uploadedFile.name.split('/').at(-1) === this.document.name.split('/').at(-1)) {
             find = true
           }
