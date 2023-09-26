@@ -268,10 +268,6 @@ export default {
 <style lang="scss" scoped>
 @import "@design";
 
-.toolbar {
-  justify-content: space-between;
-}
-
 .filters {
   display: flex;
   align-items: center;
