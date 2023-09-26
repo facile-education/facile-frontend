@@ -134,6 +134,7 @@
 </template>
 
 <script>
+import { formatSlot } from '@utils/commons.util'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 
@@ -165,6 +166,7 @@ export default {
       teacherList: [],
       selectedTeachers: [],
       groupList: [],
+      dayList: [],
       selectedGroup: undefined,
       room: '',
       subjectList: [],
@@ -223,7 +225,7 @@ export default {
     getSchoolSlotConfiguration(this.$store.state.user.selectedSchool.schoolId).then((data) => {
       if (data.success) {
         this.slotList = data.configuration
-        this.slotList.forEach((slot) => { this.formatSlot(slot) })
+        this.slotList.forEach((slot) => { formatSlot(slot) })
         // Pre-select first slot
         this.selectedSlot = this.slotList[0]
       }
@@ -242,9 +244,6 @@ export default {
     })
   },
   methods: {
-    formatSlot (slot) {
-      slot.slotLabel = 'P' + slot.slotNumber + ' (' + slot.slotStartHour + ' / ' + slot.slotEndHour + ')'
-    },
     closeModal () {
       this.$store.dispatch('horaires/setCreateSessionModalDisplayed', false)
     },
