@@ -4,7 +4,8 @@
     :draggable="true"
     class="editUserWindow"
     :width="600"
-    :class="{'mobile': mq.phone}"
+    :full-screen="mq.phone || mq.tablet"
+    :class="{'mobile': mq.phone || mq.tablet}"
     @close="closeModal"
   >
     <template #header>

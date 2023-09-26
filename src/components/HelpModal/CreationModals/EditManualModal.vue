@@ -2,6 +2,7 @@
   <PentilaWindow
     class="edit-manual-modal"
     data-test="edit-manual-modal"
+    :full-screen="mq.phone || mq.tablet"
     :modal="true"
     :draggable="true"
     :width="600"
@@ -39,6 +40,7 @@ import { saveItem } from '@/api/help.service'
 export default {
   name: 'EditManualModal',
   components: { CKEditor },
+  inject: ['mq'],
   props: {
     htmlContent: {
       type: String,

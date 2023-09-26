@@ -2,6 +2,7 @@
   <PentilaWindow
     class="create-link-modal"
     data-test="create-link-modal"
+    :full-screen="mq.phone || mq.tablet"
     :modal="true"
     :draggable="true"
     :width="600"
@@ -44,6 +45,7 @@
 import { saveLink } from '@/api/help.service'
 export default {
   name: 'CreateExternalLinkModal',
+  inject: ['mq'],
   emits: ['close'],
   data () {
     return {

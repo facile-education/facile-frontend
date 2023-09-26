@@ -2,6 +2,7 @@
   <PentilaWindow
     :modal="true"
     :draggable="true"
+    :full-screen="mq.phone || mq.tablet"
     class="student-registration-modal"
     data-test="student-registration-modal"
     :max-width="800"

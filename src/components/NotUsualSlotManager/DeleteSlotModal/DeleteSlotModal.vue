@@ -2,7 +2,7 @@
   <PentilaWindow
     :modal="true"
     :max-width="750"
-    :full-screen="mq.phone"
+    :full-screen="mq.phone || mq.tablet"
     class="delete-slot-modal"
     @close="closeModal"
   >

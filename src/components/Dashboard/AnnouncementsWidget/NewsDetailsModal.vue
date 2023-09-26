@@ -4,7 +4,7 @@
     data-test="news-details-modal"
     :modal="true"
     :draggable="true"
-    :full-screen="mq.phone || displayLikePhone"
+    :full-screen="mq.phone || mq.tablet || displayLikePhone"
     @close="onClose"
   >
     <template #header>

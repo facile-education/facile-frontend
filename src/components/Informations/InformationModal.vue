@@ -7,7 +7,7 @@
       :modal="true"
       :draggable="true"
       :resizable="true"
-      :full-screen="mq.phone"
+      :full-screen="mq.phone || mq.tablet"
       :hidden-footer="true"
       @close="onClose"
     >

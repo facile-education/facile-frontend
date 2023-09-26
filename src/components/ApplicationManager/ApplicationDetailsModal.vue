@@ -2,6 +2,7 @@
   <PentilaWindow
     :modal="true"
     :draggable="true"
+    :full-screen="mq.phone || mq.tablet"
     @close="closeModal"
   >
     <template #header>
@@ -26,6 +27,7 @@ export default {
   components: {
     ApplicationDetails
   },
+  inject: ['mq'],
   emits: ['close'],
   computed: {
     application () {

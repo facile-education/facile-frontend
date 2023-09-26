@@ -2,7 +2,7 @@
   <PentilaWindow
     class="create-article-modal"
     data-test="create-article-modal"
-    :full-screen="mq.phone || displayLikePhone"
+    :full-screen="mq.phone || mq.tablet || displayLikePhone"
     :modal="true"
     :draggable="true"
     :width="600"

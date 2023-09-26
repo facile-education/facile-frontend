@@ -2,6 +2,7 @@
   <PentilaWindow
     :modal="true"
     class="app-edition-modal"
+    :full-screen="mq.phone || mq.tablet"
     @close="closeModal"
   >
     <template #header>
@@ -199,6 +200,7 @@ import NeroIcon from '@/components/Nero/NeroIcon'
 export default {
   name: 'ApplicationEditionModal',
   components: { ImagePicker, NeroIcon },
+  inject: ['mq'],
   setup: () => ({ v$: useVuelidate() }),
   data () {
     return {

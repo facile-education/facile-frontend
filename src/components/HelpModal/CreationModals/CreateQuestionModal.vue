@@ -2,6 +2,7 @@
   <PentilaWindow
     class="create-question-modal"
     data-test="create-question-modal"
+    :full-screen="mq.phone || mq.tablet"
     :modal="true"
     :draggable="true"
     :width="600"
@@ -47,6 +48,7 @@ import { saveItem } from '@/api/help.service'
 export default {
   name: 'CreateQuestionModal',
   components: { CKEditor },
+  inject: ['mq'],
   emits: ['close'],
   data () {
     return {

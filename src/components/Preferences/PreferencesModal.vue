@@ -1,6 +1,7 @@
 <template>
   <PentilaWindow
     :modal="true"
+    :full-screen="mq.phone || mq.tablet"
     :width="600"
     @close="close"
   >
@@ -37,6 +38,7 @@ export default {
     MessagingTab,
     AccountTab
   },
+  inject: ['mq'],
   props: {
     tab: {
       type: String,

@@ -1,11 +1,11 @@
 <template>
   <PentilaWindow
     class="filepicker-window"
-    :class="{'mobile': mq.phone}"
+    :class="{'mobile': mq.phone || mq.tablet}"
     data-test="file-picker-modal"
     :modal="true"
     :draggable="true"
-    :full-screen="mq.phone"
+    :full-screen="mq.phone || mq.tablet"
     :max-width="600"
     @close="close"
     @keydown.exact.enter.stop=""

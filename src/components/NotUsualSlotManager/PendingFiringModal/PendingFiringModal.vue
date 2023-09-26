@@ -2,6 +2,7 @@
   <PentilaWindow
     :modal="true"
     :width="600"
+    :full-screen="mq.phone || mq.tablet"
     data-test="pending-firing-modal"
     class="pending-firing-modal"
   >
@@ -61,6 +62,7 @@ import schoolLifeService from '@/api/schoolLife-portlet.service'
 
 export default {
   name: 'PendingFiringModal',
+  inject: ['mq'],
   props: {
     pendingFiring: {
       type: Object,

@@ -1,10 +1,10 @@
 <template>
   <PentilaWindow
     class="edit-homework-modal"
-    :class="{'phone': mq.phone|| displayLikePhone}"
+    :class="{'phone': mq.phone|| mq.tablet || displayLikePhone}"
     :modal="true"
     :draggable="true"
-    :full-screen="mq.phone || displayLikePhone"
+    :full-screen="mq.phone || mq.tablet || displayLikePhone"
     @close="confirmClosure"
   >
     <template #header>

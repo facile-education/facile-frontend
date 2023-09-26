@@ -4,7 +4,7 @@
       class="support-message-modal"
       :modal="true"
       :draggable="true"
-      :full-screen="mq.phone"
+      :full-screen="mq.phone || mq.tablet"
       @close="onClose"
     >
       <template #header>

@@ -5,6 +5,7 @@
     class="affectations-modal"
     :width="600"
     :hidden-footer="true"
+    :full-screen="mq.phone || mq.tablet"
     @close="closeModal"
   >
     <template #header>

@@ -3,7 +3,7 @@
     v-if="configuration"
     :modal="true"
     :max-width="750"
-    :full-screen="mq.phone"
+    :full-screen="mq.phone || mq.tablet"
     class="edit-slot-modal"
     :class="{'mobile': mq.phone}"
     data-test="edit-slot-modal"

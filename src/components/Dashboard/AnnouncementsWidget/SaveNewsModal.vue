@@ -4,7 +4,7 @@
     data-test="update-news-modal"
     :modal="true"
     :max-width="1000"
-    :full-screen="mq.phone || displayLikePhone"
+    :full-screen="mq.phone || mq.tablet || displayLikePhone"
     @close="confirmClosure"
   >
     <template #header>

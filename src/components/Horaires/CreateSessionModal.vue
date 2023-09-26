@@ -2,6 +2,7 @@
   <PentilaWindow
     :modal="true"
     :draggable="true"
+    :full-screen="mq.phone || mq.tablet"
     :class="{'create-session': mq.phone}"
     class="create-session-modal"
     @close="closeModal"
@@ -151,8 +152,6 @@ export default {
   name: 'SessionTeacherModal',
   components: {},
   inject: ['mq'],
-  props: {
-  },
   emits: ['close'],
   setup: () => ({ v$: useVuelidate() }),
   validations: {

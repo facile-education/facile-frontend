@@ -2,6 +2,7 @@
   <PentilaWindow
     class="save-access-modal"
     data-test="save-access-modal"
+    :full-screen="mq.phone || mq.tablet"
     :modal="true"
     :draggable="true"
     @close="onClose"
@@ -98,6 +99,7 @@ const isNotPlaceholder = (value) => value.categoryId !== -1
 export default {
   name: 'SaveAccessModal',
   components: { ThumbnailSelector, AccessRedirectionSelector },
+  inject: ['mq'],
   props: {
     initAccess: {
       type: Object,
