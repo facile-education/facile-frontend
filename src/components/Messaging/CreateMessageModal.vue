@@ -3,10 +3,10 @@
     <PentilaWindow
       :modal="true"
       :draggable="true"
-      :full-screen="mq.phone || displayLikePhone"
+      :full-screen="mq.phone || mq.tablet || displayLikePhone"
       data-test="createMessageModal"
       class="create-message-modal"
-      :class="{'phone': (mq.phone || displayLikePhone)}"
+      :class="{'phone': (mq.phone || mq.tablet || displayLikePhone)}"
       @close="onConfirmClose"
       @keydown.exact.escape.stop="onConfirmClose"
     >
@@ -153,8 +153,8 @@
 
 <script>
 import AttachedFiles from '@components/AttachedFiles/AttachedFiles.vue'
-import ContactPickerToolTip from '@components/ContactPicker/ContactPickerToolTip.vue'
 import TextContent from '@components/Base/TextContent.vue'
+import ContactPickerToolTip from '@components/ContactPicker/ContactPickerToolTip.vue'
 import { addContactFieldsToContactList } from '@utils/contacts.utils'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'

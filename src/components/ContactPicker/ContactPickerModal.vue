@@ -1,7 +1,7 @@
 <template>
   <PentilaWindow
     :modal="true"
-    :full-screen="mq.phone || displayLikePhone"
+    :full-screen="mq.phone || mq.tablet || displayLikePhone"
     :hidden-footer="true"
     :draggable="true"
     data-test="contactPickerModal"

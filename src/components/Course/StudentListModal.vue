@@ -4,7 +4,7 @@
     :draggable="true"
     :width="400"
     class="studentListWindow"
-    :class="{ mobile: mq.phone }"
+    :full-screen="mq.phone || mq.tablet"
     @close="closeModal"
   >
     <template #header>

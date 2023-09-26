@@ -1,7 +1,8 @@
 <template>
   <PentilaWindow
     class="create-link-modal"
-    :class="{'phone': mq.phone}"
+    :class="{'phone': mq.phone || mq.tablet}"
+    :full-screen="mq.phone || mq.tablet"
     data-test="create-link-modal"
     :modal="true"
     :draggable="true"

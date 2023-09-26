@@ -2,6 +2,7 @@
   <PentilaWindow
     :modal="true"
     :draggable="true"
+    :full-screen="mq.phone || mq.tablet"
     :class="{'session-teacher': mq.phone}"
     class="session-teacher-modal"
     @close="closeModal"

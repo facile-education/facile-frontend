@@ -3,6 +3,7 @@
     :modal="true"
     class="student-list-modal"
     data-test="student-list-modal"
+    :full-screen="mq.phone || mq.tablet"
     :max-width="750"
     @close="closeModal"
   >

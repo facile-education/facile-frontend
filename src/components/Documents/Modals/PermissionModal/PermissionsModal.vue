@@ -1,6 +1,6 @@
 <template>
   <PentilaWindow
-    :full-screen="mq.phone"
+    :full-screen="mq.phone || mq.tablet"
     :modal="true"
     :draggable="true"
     :width="700"

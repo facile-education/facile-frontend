@@ -1,7 +1,7 @@
 <template>
   <PentilaWindow
     :modal="true"
-    :is-full-screen="mq.phone"
+    :full-screen="mq.phone || mq.tablet"
     :max-width="1000"
     data-test="doneInfoModal"
     :hidden-footer="true"

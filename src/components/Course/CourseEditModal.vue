@@ -1,8 +1,8 @@
 <template>
   <PentilaWindow
     class="edit-course-modal"
-    :class="{'phone': mq.phone || displayLikePhone}"
-    :full-screen="mq.phone || displayLikePhone"
+    :class="{'phone': mq.phone || mq.tablet || displayLikePhone}"
+    :full-screen="mq.phone || mq.tablet || displayLikePhone"
     :modal="true"
     :draggable="true"
     @close="confirmClosure"

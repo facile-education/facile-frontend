@@ -2,7 +2,7 @@
   <PentilaWindow
     :modal="true"
     :draggable="true"
-    :full-screen="mq.phone"
+    :full-screen="mq.phone || mq.tablet"
     class="save-version-note-modal"
     @close="$emit('close')"
   >

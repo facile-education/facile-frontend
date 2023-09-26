@@ -4,7 +4,7 @@
     data-test="create-category-modal"
     :modal="true"
     :draggable="true"
-    :full-screen="mq.phone || displayLikePhone"
+    :full-screen="mq.phone || mq.tablet || displayLikePhone"
     :width="600"
     @close="onClose"
   >

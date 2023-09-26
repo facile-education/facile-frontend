@@ -2,10 +2,10 @@
   <PentilaWindow
     :modal="true"
     :draggable="true"
-    :full-screen="mq.phone"
+    :full-screen="mq.phone || mq.tablet"
     :hidden-footer="true"
     class="version-note-modal"
-    :class="{'phone': mq.phone}"
+    :class="{'phone': mq.phone || mq.tablet}"
     @close="$emit('close')"
   >
     <template #header>

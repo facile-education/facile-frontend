@@ -1,7 +1,8 @@
 <template>
   <PentilaWindow
     :modal="true"
-    :class="{ 'app-broadcast-modal': mq.phone }"
+    :class="{ 'app-broadcast-modal': mq.phone || mq.tablet }"
+    :full-screen="mq.phone || mq.tablet"
     @close="closeModal"
   >
     <template #header>

@@ -2,6 +2,7 @@
   <PentilaWindow
     class="edit-video-modal"
     data-test="edit-video-modal"
+    :full-screen="mq.phone || mq.tablet"
     :modal="true"
     :draggable="true"
     :width="600"
@@ -40,6 +41,7 @@ import { saveItem } from '@/api/help.service'
 
 export default {
   name: 'EditVideoModal',
+  inject: ['mq'],
   props: {
     videoUrl: {
       type: String,

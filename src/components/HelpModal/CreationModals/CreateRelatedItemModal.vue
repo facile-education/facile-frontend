@@ -2,6 +2,7 @@
   <PentilaWindow
     class="create-relation-modal"
     data-test="create-relation-modal"
+    :full-screen="mq.phone || mq.tablet"
     :modal="true"
     :draggable="true"
     :width="600"
@@ -37,6 +38,7 @@ import { getHelpMenu, saveRelation } from '@/api/help.service'
 
 export default {
   name: 'CreateRelatedItemModal',
+  inject: ['mq'],
   emits: ['close'],
   data () {
     return {
