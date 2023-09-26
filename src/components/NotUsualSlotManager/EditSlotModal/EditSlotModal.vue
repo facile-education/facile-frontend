@@ -22,9 +22,14 @@
 
       <div class="time-selection">
         <span class="time-selection-left">{{ slotLabel }}</span>
-        <TimeSelection
-          :range="{start: newEvent.startDate.format('HH:mm'), end: newEvent.endDate.format('HH:mm')}"
-          @update:range="updateRange"
+        <PentilaDropdown
+          v-if="slotList"
+          v-model="selectedSlot"
+          class="slots-list"
+          :list="slotList"
+          display-field="slotLabel"
+          :sort="false"
+          :filtered="false"
         />
       </div>
 
@@ -97,12 +102,13 @@
 
 <script>
 import DateRangePicker from '@components/Base/DateRangePicker.vue'
-import TimeSelection from '@components/NotUsualSlotManager/EditSlotModal/TimeSelection'
 import UserCompletion from '@components/NotUsualSlotManager/UserCompletion'
+import { formatSlot } from '@utils/commons.util'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import dayjs from 'dayjs'
 
+import { getSchoolSlotConfiguration } from '@/api/schedule.service'
 import schoolLifeService from '@/api/schoolLife-portlet.service'
 
 const moreThanRegistered = (value, vm) => {
@@ -114,7 +120,7 @@ const moreThanRegistered = (value, vm) => {
 
 export default {
   name: 'EditSlotModal',
-  components: { DateRangePicker, UserCompletion, TimeSelection },
+  components: { DateRangePicker, UserCompletion },
   inject: ['mq'],
   props: {
     eventToEdit: {
@@ -137,6 +143,8 @@ export default {
     return {
       width: 0,
       isTimeError: false,
+      slotList: undefined,
+      selectedSlot: undefined,
       newEvent: {
         sessionId: undefined,
         subject: undefined,
@@ -185,9 +193,9 @@ export default {
     },
     slotLabel () {
       if (this.isEventCreation) {
-        return this.$t('all-the') + ' ' + dayjs(this.eventToEdit.startDate).format('dddd') + 's ' + this.$t('from')
+        return this.$t('all-the') + ' ' + dayjs(this.eventToEdit.startDate).format('dddd') + 's ' + this.$t('on')
       } else {
-        return this.$t('the') + ' ' + dayjs(this.eventToEdit.startDate).format('dddd') + ' ' + this.$t('from')
+        return this.$t('the') + ' ' + dayjs(this.eventToEdit.startDate).format('dddd') + ' ' + this.$t('on')
       }
     },
     configuration () {
@@ -213,9 +221,8 @@ export default {
     }
   },
   created () {
+    this.getSlotList()
     this.newEvent.startDate = dayjs(this.eventToEdit.startDate, 'YYYY/MM/DD HH:mm')
-    this.newEvent.endDate = dayjs(this.eventToEdit.endDate, 'YYYY/MM/DD HH:mm')
-
     this.newEvent.firstSessionDate = dayjs(this.eventToEdit.startDate, 'YYYY/MM/DD HH:mm')
 
     if (this.isEventCreation) {
@@ -234,9 +241,38 @@ export default {
     }
   },
   methods: {
-    updateRange (range) {
-      this.newEvent.startDate = dayjs((this.newEvent.startDate.format('YYYY/MM/DD') + ' ' + range.start), 'YYYY/MM/DD HH:mm')
-      this.newEvent.endDate = dayjs((this.newEvent.endDate.format('YYYY/MM/DD') + ' ' + range.end), 'YYYY/MM/DD HH:mm')
+    getSlotList () {
+      getSchoolSlotConfiguration(this.$store.state.user.selectedSchool.schoolId).then((data) => {
+        if (data.success) {
+          this.slotList = data.configuration
+          this.slotList.forEach((slot) => {
+            formatSlot(slot)
+          })
+
+          // Select the right slot
+          this.selectCloserSlot(dayjs(this.eventToEdit.startDate, 'YYYY/MM/DD HH:mm'))
+        }
+      })
+    },
+    selectCloserSlot (startHourDate) {
+      // Force the startHour date to be today (so we can compare with slot hours using dayjs) (maybe find an other way to compare hours)
+      const today = dayjs()
+      const hours = startHourDate.hour()
+      const minutes = startHourDate.minute()
+      startHourDate = today.hour(hours).minute(minutes)
+
+      // For each slot (P1, P2, etc...) set the linked today's date and select the first slot have is endHour after the startHourDate
+      for (let i = 0; i < this.slotList.length; i++) {
+        const slotEndDate = dayjs(dayjs().format('YYYY/MM/DD') + ' ' + this.slotList[i].slotEndHour, 'YYYY/MM/DD HH:mm')
+        if (startHourDate.isBefore(slotEndDate)) {
+          this.selectedSlot = this.slotList[i]
+          break
+        }
+      }
+
+      if (!this.selectedSlot) { // if no slot after, select the first one by default
+        this.selectedSlot = this.slotList[0]
+      }
     },
     updateSlotDates (range) {
       this.newEvent.firstSessionDate = dayjs(range.start)
@@ -255,8 +291,8 @@ export default {
             this.newEvent.firstSessionDate.format('YYYY-MM-DD HH:mm'), // convert from calendar format to back-end format
             this.newEvent.lastSessionDate.format('YYYY-MM-DD HH:mm'),
             this.newEvent.startDate.day(),
-            this.newEvent.startDate.format('HH:mm'),
-            this.newEvent.endDate.format('HH:mm'),
+            this.selectedSlot.slotStartHour,
+            this.selectedSlot.slotEndHour,
             this.newEvent.teacher.teacherId,
             this.currentSlotType.type,
             this.newEvent.room,
@@ -275,8 +311,8 @@ export default {
             this.newEvent.firstSessionDate.format('YYYY-MM-DD HH:mm'), // convert from calendar format to back-end format
             this.newEvent.lastSessionDate.format('YYYY-MM-DD HH:mm'),
             this.newEvent.startDate.day(),
-            this.newEvent.startDate.format('HH:mm'),
-            this.newEvent.endDate.format('HH:mm'),
+            this.selectedSlot.slotStartHour,
+            this.selectedSlot.slotEndHour,
             this.newEvent.teacher.teacherId,
             this.currentSlotType.type,
             this.newEvent.room,
@@ -298,6 +334,14 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.edit-slot-modal{
+  .window-body {
+    overflow: visible !important;
+  }
+}
+</style>
 
 <style lang="scss" scoped>
 .update-message {
@@ -352,7 +396,7 @@ export default {
   "updateMessage": "Les modifications affecteront toutes les sessions concernées par ce créneau",
   "all-the": "Tous les ",
   "the": "Le ",
-  "from": "de",
+  "on": "en",
   "until-school-year-end": "jusqu'à la fin de l'année scolaire.",
   "onThePeriod": "Sur la période"
 }

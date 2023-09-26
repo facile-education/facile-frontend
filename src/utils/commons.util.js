@@ -92,6 +92,10 @@ function getTeachersLabel (teacherList) {
   return label
 }
 
+function formatSlot (slot) {
+  slot.slotLabel = 'P' + slot.slotNumber + ' (' + slot.slotStartHour + ' / ' + slot.slotEndHour + ')'
+}
+
 function getHomeworkTeacherName (homework) { // TODO: to uniform with previous
   return homework.teacher !== undefined ? homework.teacher.firstName.substring(0, 1) + '. ' + homework.teacher.lastName : ''
 }
@@ -138,6 +142,7 @@ export {
   mergeContextMenus,
   removeMenuOptionIfExist,
   formatSize,
+  formatSlot,
   fileNameWithoutExtension,
   getExtensionFromName,
   compare,
