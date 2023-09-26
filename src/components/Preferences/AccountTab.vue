@@ -7,14 +7,18 @@
       <h4 v-t="'userPicture'" />
       <div class="body">
         <div class="left-section">
-          <div class="user-picture">
-            <img
+          <div class="thumbnail-container">
+            <UserPicture
               class="picture"
-              :src="userPicture"
-              alt="user picture"
+              :user="user"
+              size="100px"
+              tabindex="0"
+              @keyup.enter="toggleImagePicker"
               @click="toggleImagePicker"
-            >
+            />
+
             <PentilaButton
+              v-if="user.picture !== ''"
               :title="$t('deleteButtonTitle')"
               type="circle"
               cls="cancel delete"
@@ -22,6 +26,20 @@
             >
               <img
                 src="@/assets/icons/trash_white.svg"
+                alt="trash"
+              >
+            </PentilaButton>
+
+            <PentilaButton
+              v-else
+              :title="$t('addButtonTitle')"
+              :aria-label="$t('addButtonTitle')"
+              class="add-picture"
+              type="circle"
+              @click="toggleImagePicker"
+            >
+              <img
+                src="@/assets/icons/icon_plus_white.svg"
                 alt="trash"
               >
             </PentilaButton>
@@ -59,6 +77,7 @@
 </template>
 
 <script>
+import UserPicture from '@components/Base/UserPicture.vue'
 import ColorPicker from '@components/Nero/ColorPicker'
 import PentilaUtils from 'pentila-utils'
 import { defineAsyncComponent } from 'vue'
@@ -68,7 +87,7 @@ const ImagePickerModal = defineAsyncComponent(() => import('@/components/Nero/Im
 
 export default {
   name: 'AccountTab',
-  components: { ColorPicker, ImagePickerModal },
+  components: { UserPicture, ColorPicker, ImagePickerModal },
   emits: ['save'],
   data () {
     return {
@@ -188,18 +207,15 @@ h4 {
     .left-section {
       display: flex;
 
-      .user-picture {
+      .thumbnail-container {
         display: inline-block;
         position: relative;
 
         .picture {
           cursor: pointer;
-          height: 100px;
-          width: 100px;
-          border-radius: 50%;
         }
 
-        .cancel {
+        .cancel, .add-picture {
           position: absolute;
           z-index: 2;
           top: 0;
@@ -225,6 +241,7 @@ h4 {
   "weekly": "Hebdomadaire",
   "addressLabel": "Adresse: ",
   "deleteButtonTitle": "Supprimer la photo de profil",
+  "addButtonTitle": "Ajouter une image de profil",
   "emailAddressLabel": "Courriel: ",
   "homePhoneNumberLabel": "Téléphone maison: ",
   "mobilePhoneNumberLabel": "Téléphone mobile: ",

@@ -6,11 +6,7 @@
       @click.stop="togglePopoverMenu"
     >
       <span class="thumbnail-container">
-        <img
-          class="user-picture"
-          :src="userPicture"
-          alt="user_picture"
-        >
+        <UserPicture :user="user" />
         <Pellet
           v-if="hasNotifications"
           class="pellet theme-border-color"
@@ -40,6 +36,7 @@
 
 <script>
 
+import UserPicture from '@components/Base/UserPicture.vue'
 import { defineAsyncComponent } from 'vue'
 const BannerPopoverMenu = defineAsyncComponent(() => import('@/components/Banner/BannerPopoverMenu'))
 const Pellet = defineAsyncComponent(() => import('@components/Base/Pellet.vue'))
@@ -47,6 +44,7 @@ const Pellet = defineAsyncComponent(() => import('@components/Base/Pellet.vue'))
 export default {
   name: 'BannerUserProfile',
   components: {
+    UserPicture,
     Pellet,
     BannerPopoverMenu
   },
@@ -57,14 +55,17 @@ export default {
     }
   },
   computed: {
+    user () {
+      return this.$store.state.user
+    },
     userName () {
-      return this.$store.state.user.firstName + ' ' + this.$store.state.user.lastName
+      return this.user.firstName + ' ' + this.user.lastName
     },
     userPicture () {
-      return this.$store.state.user.picture
+      return this.user.picture
     },
     hasNotifications () {
-      return !this.$store.state.user.hasReadLastVersionNote
+      return !this.user.hasReadLastVersionNote
     }
   },
   methods: {
@@ -114,12 +115,6 @@ button {
     border: 2px solid;
     height: 12px;
     width: 12px;
-  }
-
-  .user-picture {
-    height: 100%;
-    width: 32px;
-    border-radius: 50%;
   }
 }
 
