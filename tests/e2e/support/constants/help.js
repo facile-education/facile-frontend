@@ -1,5 +1,5 @@
 import { CLASSTEACHER, STUDENT } from '../../support/constants'
-const url = '/nero/accessManager'
+const url = '/tableau-de-bord'
 const helpTestMenu = [
   {
     name: 'Tableau de bord',

@@ -1,4 +1,4 @@
-import { CLASSTEACHER, GLOBAL_ADMIN, STUDENT } from '../../support/constants'
+import { CLASSTEACHER, GLOBAL_ADMIN, STUDENT, SCHOOL_ADMIN } from '../../support/constants'
 import { categoryToCreate, helpAdminResultMenu, helpSearchResultsMenu, helpTestMenu, url } from '../../support/constants/help'
 import { setServiceDiffusion, testArticleContent } from '../../support/utils/helpUtils'
 
@@ -9,13 +9,13 @@ test.push(categoryToCreate)
 
 describe('HelpModal', () => {
   beforeEach(() => {
-    cy.login(url)
+    cy.login(SCHOOL_ADMIN, url)
   })
 
   it('Test modal loading and article content', () => {
     // cy.exec('npm run db:loadTables help_tables.sql')
     // cy.clearDBCache()
-    cy.login(url)
+    // cy.login(url)
 
     // Open and close modal
     cy.get('[data-test=open-help-item]').click()

@@ -24,31 +24,41 @@
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
-import constants from '../../../src/constants/appConstants'
-import { GLOBAL_ADMIN, SCHOOL_ADMIN as defaultUser } from '../support/constants'
+import PentilaUtils from 'pentila-utils'
 
-Cypress.Commands.add('login', (visitUrl = '/', user = defaultUser) => {
+import constants from '../../../src/constants/appConstants'
+import { GLOBAL_ADMIN } from '../support/constants'
+
+Cypress.Commands.add('login', (user, visitUrl = undefined) => {
   cy.log('===== LOG IN (' + user.login + ') =====')
 
-  // To always have the same setup
-  cy.clearCookies()
+  cy.session(user, () => {
+    // UI method, TODO: api method
+    cy.visit('/login')
+    cy.contains('Parents / Autres profils').click()
 
-  cy.setCookie('COOKIE_SUPPORT', 'true')
+    cy.get('input[placeholder="Identifiant"]').type(user.login)
+    cy.get('input[type="password"]').type(user.password)
+    cy.get('button[type="submit"]').click()
+    cy.url().should('contain', '/tableau-de-bord')
+  },
+  {
+    // TODO: Review validation method (check status of get-user-info by example / check if cookie sessionId is not null...)
+    validate () {
+      const IDCookie = PentilaUtils.Cookies.getCookie('ID')
+      assert(IDCookie !== undefined)
 
-  cy.visit('/login')
-  cy.contains('Parents / Autres profils').click()
+      // cy.request(Cypress.config().baseUrl + '/lfr/p_auth_token.jsp').then(response => {
+      //   console.log(response)
+      //   const pAuth = response.body.replace(/(\r\n|\n|\r|\s)/gm, '')
+      //   cy.request(Cypress.config().baseUrl + '/lfr/api/jsonws/user.userutils/get-user-infos?p_auth=' + pAuth).its('status').should('eq', 200)
+      // })
+    },
+    cacheAcrossSpecs: true
+  })
 
-  cy.get('input[placeholder="Identifiant"]').type(user.login)
-  cy.get('input[type="password"]').type(user.password)
-  cy.get('button[type="submit"]').click()
-
-  cy.wait(1000)
-
-  cy.visit(visitUrl)
-  if (visitUrl === '/') {
-    cy.url().should('contain', Cypress.config().baseUrl + visitUrl) // because of the '/tableau-de-board' redirection
-  } else {
-    cy.url().should('eq', Cypress.config().baseUrl + visitUrl)
+  if (visitUrl) {
+    cy.visit(visitUrl)
   }
 
   // Request method (works only if there is no redirection on login request that ends in 404)
