@@ -9,6 +9,7 @@ module.exports = defineConfig({
   screenshotsFolder: 'tests/e2e/screenshots',
   videosFolder: 'tests/e2e/videos',
   watchForFileChanges: false,
+
   e2e: {
     baseUrl: 'https://dev-ent-gve.com',
     // setupNodeEvents (on, config) {
@@ -20,5 +21,14 @@ module.exports = defineConfig({
     specPattern: 'tests/e2e/**/*.spec.{js,jsx,ts,tsx}',
     // excludeSpecPattern: import.meta.env.CI ? ['tests/e2e/**/all.spec.js'] : [],
     supportFile: 'tests/e2e/support/index.js'
+  },
+
+  component: {
+    supportFile: 'tests/components/support/component.js',
+    indexHtmlFile: 'tests/components/support/component-index.html',
+    devServer: {
+      framework: 'vue',
+      bundler: 'vite'
+    }
   }
 })
