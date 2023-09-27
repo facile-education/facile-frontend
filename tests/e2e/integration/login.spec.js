@@ -1,24 +1,28 @@
-import { HEADMASTER as user } from '../support/constants'
+import { SCHOOL_ADMIN as user } from '../support/constants'
 
-describe('Authentification tests', () => {
+describe('Login page', () => {
   it('logs user in with correct credentials', () => {
+    // Test redirection
     cy.visit('/')
-    cy.get('.guest-connect > span').click()
+    cy.url().should('eq', Cypress.config().baseUrl + '/login')
 
-    cy.get('#guest_connection').within(() => {
-      cy.get('#fm1 > [type="text"]').type(user.login)
-      cy.get('#fm1 > [type="password"]').type(user.password)
-      cy.get('#fm1').submit()
-    })
+    cy.contains('Parents / Autres profils').click()
 
-    cy.url().should('eq', Cypress.config().baseUrl + '/user/didiosa/nero#/tableau-de-bord')
+    cy.get('input[placeholder="Identifiant"]').type(user.login)
+    cy.get('input[type="password"]').type(user.password)
+    cy.get('button[type="submit"]').click()
 
-    // TODO logout
+    cy.url().should('eq', Cypress.config().baseUrl + '/tableau-de-bord')
   })
 
-  it.skip('shows error with wrong credentials', () => {
-    // TODO request with bad login/password
+  it('shows error with wrong credentials', () => {
+    cy.visit('/login')
+    cy.contains('Parents / Autres profils').click()
 
-    cy.url().should('not.eq', Cypress.config().baseUrl + '/user/didiosa/nero#/tableau-de-bord')
+    cy.get('input[placeholder="Identifiant"]').type(user.login)
+    cy.get('input[type="password"]').type(user.password + '_')
+    cy.get('button[type="submit"]').click()
+
+    cy.get('.errorMessage').should('be.visible')
   })
 })

@@ -13,11 +13,11 @@ const HEADMASTER = {
 }
 
 const SCHOOL_ADMIN = {
-  login: 'edu-jovanovicd',
+  login: 'dcovaq',
   password: 'pentila',
   role: 'school admin',
-  firstName: 'Darko',
-  lastName: 'Jovanovic'
+  firstName: 'Dmitrii',
+  lastName: 'Covaqnovyi'
 }
 
 // TODO Replace with doyen who is not school admin
