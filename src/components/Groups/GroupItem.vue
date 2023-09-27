@@ -3,6 +3,7 @@
     ref="group"
     data-test="group-item"
     class="group"
+    :class="{'phone': mq.phone}"
     @click="selectGroup"
   >
     <PentilaSpinner v-if="isLoading" />
@@ -94,6 +95,7 @@ const EditGroupModal = defineAsyncComponent(() => import('@components/Groups/Edi
 export default {
   name: 'GroupItem',
   components: { EditGroupModal },
+  inject: ['mq'],
   props: {
     group: {
       type: Object,
@@ -191,11 +193,21 @@ export default {
     border: 1px solid grey;
     cursor: pointer;
   }
+
+  &.phone {
+    height: 185px;
+    width: 160px;
+
+    .body {
+      padding: 0 15px;
+    }
+  }
 }
 
 .header {
   border-left: 10px solid;
   height: 62px;
+  min-height: 62px;
   color: inherit;
 }
 
