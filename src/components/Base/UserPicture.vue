@@ -9,6 +9,7 @@
   <div
     v-else
     class="user-picture"
+    :class="colorReversed ? 'theme-text-color' : 'theme-background-color'"
     :style="'--size: ' + size + ';'"
   >
     {{ userInitials }}
@@ -26,6 +27,10 @@ export default {
     size: {
       type: String,
       default: '32px'
+    },
+    colorReversed: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -51,10 +56,12 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: $neutral-20;
-  color: $neutral-80;
-  @extend %font-regular-l;
-  font-size: calc(0.5 * var(--size))
+  @extend %font-bold-l;
+  font-size: calc(0.55 * var(--size));
+
+  &.theme-text-color {
+    background-color: $neutral-10;
+  }
 }
 
 </style>

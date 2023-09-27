@@ -6,7 +6,10 @@
       @click.stop="togglePopoverMenu"
     >
       <span class="thumbnail-container">
-        <UserPicture :user="user" />
+        <UserPicture
+          :user="user"
+          :color-reversed="true"
+        />
         <Pellet
           v-if="hasNotifications"
           class="pellet theme-border-color"
@@ -60,9 +63,6 @@ export default {
     },
     userName () {
       return this.user.firstName + ' ' + this.user.lastName
-    },
-    userPicture () {
-      return this.user.picture
     },
     hasNotifications () {
       return !this.user.hasReadLastVersionNote
