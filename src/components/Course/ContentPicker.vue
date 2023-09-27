@@ -4,7 +4,7 @@
     class="add-content-buttons"
   >
     <PentilaButton
-      v-for="content in contents"
+      v-for="content in filteredContents"
       :key="content.name"
       :title="content.name"
       class="circle"
@@ -120,12 +120,6 @@ export default {
           fontSize: '1rem',
           name: this.$t('addVideo'),
           callback: this.toggleVideoModal
-        },
-        {
-          icon: 'icon-h5p',
-          fontSize: '0.6rem',
-          name: this.$t('addH5p'),
-          callback: this.toggleH5PModal
         }
       ],
       isAudioRecorderModalDisplayed: false,
@@ -138,6 +132,18 @@ export default {
   computed: {
     documentsProperties () {
       return this.$store.state.documents.documentsProperties
+    },
+    isH5pBroadcasted () {
+      return this.documentsProperties && this.documentsProperties.hasH5pBroadcasted
+    },
+    filteredContents () {
+      const h5pContent = {
+        icon: 'icon-h5p',
+        fontSize: '0.6rem',
+        name: this.$t('addH5p'),
+        callback: this.toggleH5PModal
+      }
+      return this.contents.concat((this.isH5pBroadcasted ? h5pContent : []))
     }
   },
   created () {
