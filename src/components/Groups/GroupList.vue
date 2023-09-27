@@ -2,6 +2,7 @@
   <div
     v-if="groupList && groupList.length > 0"
     class="group-list"
+    :class="{'phone': mq.phone}"
   >
     <GroupItem
       v-for="group in sortedGroupList"
@@ -31,6 +32,7 @@ import PentilaUtils from 'pentila-utils'
 export default {
   name: 'GroupList',
   components: { GroupItem },
+  inject: ['mq'],
   data () {
     return {
       isEditModalDisplayed: false,
@@ -76,6 +78,11 @@ export default {
   grid-gap: 20px;
   grid-template-columns: repeat(auto-fill, 285px);
   justify-content: space-evenly;
+
+  &.phone {
+    grid-gap: 1rem;
+    grid-template-columns: repeat(auto-fill, 160px);
+  }
 }
 
 .empty-container {
