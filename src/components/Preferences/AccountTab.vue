@@ -111,9 +111,6 @@ export default {
     },
     details () {
       return this.user.details
-    },
-    userPicture () {
-      return this.user.picture
     }
   },
   created () {
@@ -227,6 +224,10 @@ h4 {
           img {
             height: 16px;
           }
+        }
+
+        .add-picture {
+          background-color: $success;
         }
       }
     }
