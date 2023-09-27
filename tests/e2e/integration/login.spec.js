@@ -25,4 +25,22 @@ describe('Login page', () => {
 
     cy.get('.errorMessage').should('be.visible')
   })
+
+  it.skip('Locks account after 5 unsuccessful attempts', () => {  // TODO: Need to clean DB state after
+    cy.visit('/login')
+    cy.contains('Parents / Autres profils').click()
+
+    // Add a loop to simulate 5 unsuccessful login attempts
+    for (let i = 0; i < 5; i++) {
+      cy.get('input[placeholder="Identifiant"]').clear().type(user.login)
+      cy.get('input[type="password"]').clear().type(user.password + '_')
+      cy.get('button[type="submit"]').click()
+
+      // Check for error message after each attempt
+      cy.get('.errorMessage').should('be.visible')
+    }
+
+    // After 5 attempts, check that the account is locked
+    cy.get('.errorMessage').should('contain', 'Votre compte est bloqué')
+  })
 })

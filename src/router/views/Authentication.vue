@@ -109,13 +109,13 @@
               />
               <!-- Nb remaining tries -->
               <span
-                v-show="isError && !isLocked && nbRemainingTries <= 2"
+                v-if="isError && !isLocked && nbRemainingTries <= 2"
                 class="errorMessage"
               >
                 {{ $t('nbRemainingTries', {nbRemainingTries: nbRemainingTries}) }}
               </span>
               <span
-                v-show="isError && isLocked"
+                v-if="isError && isLocked"
                 class="errorMessage"
               >
                 {{ $t('accountLocked', {lockoutDuration: lockoutDuration}) }}
