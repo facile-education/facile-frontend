@@ -25,7 +25,7 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 import constants from '../../../src/constants/appConstants'
-import { GLOBAL_ADMIN, HEADMASTER as defaultUser } from '../support/constants'
+import { GLOBAL_ADMIN, SCHOOL_ADMIN as defaultUser } from '../support/constants'
 
 Cypress.Commands.add('login', (visitUrl = '/', user = defaultUser) => {
   cy.log('===== LOG IN (' + user.login + ') =====')
@@ -35,11 +35,12 @@ Cypress.Commands.add('login', (visitUrl = '/', user = defaultUser) => {
 
   cy.setCookie('COOKIE_SUPPORT', 'true')
 
-  // UI method
-  cy.visit('/nero/')
-  cy.get('[placeholder="Identifiant"]').type(user.login)
-  cy.get('[placeholder="Mot de passe"]').type(user.password)
-  cy.get('form > .btn').click()
+  cy.visit('/login')
+  cy.contains('Parents / Autres profils').click()
+
+  cy.get('input[placeholder="Identifiant"]').type(user.login)
+  cy.get('input[type="password"]').type(user.password)
+  cy.get('button[type="submit"]').click()
 
   cy.wait(1000)
 
@@ -147,7 +148,7 @@ Cypress.Commands.add('clearDBCache', () => {
 
     cy.request({
       method: 'POST',
-      url: url,
+      url,
       form: true,
       body: params
     }).then((response) => {
@@ -171,7 +172,7 @@ Cypress.Commands.add('globalKeyPress', (keyName) => {
 Cypress.Commands.add('doAuthWSRequest', (method, url, params) => {
   // cy.getCookie('pauth').then((pauth) => {
   cy.request({
-    method: method,
+    method,
     url: constants.JSON_WS_URL + url/* + '?p_auth=' + pauth.value */,
     form: method === 'POST',
     body: params

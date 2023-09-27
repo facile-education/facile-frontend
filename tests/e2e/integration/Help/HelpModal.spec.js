@@ -13,8 +13,8 @@ describe('HelpModal', () => {
   })
 
   it('Test modal loading and article content', () => {
-    cy.exec('npm run db:loadTables help_tables.sql')
-    cy.clearDBCache()
+    // cy.exec('npm run db:loadTables help_tables.sql')
+    // cy.clearDBCache()
     cy.login(url)
 
     // Open and close modal
@@ -143,8 +143,8 @@ describe('HelpModal', () => {
 
   it('Test admin specificities (empty sections and admin options)', () => {
     // Reload tables because of the admin creation tests
-    cy.exec('npm run db:loadTables help_tables.sql')
-    cy.clearDBCache()
+    // cy.exec('npm run db:loadTables help_tables.sql')
+    // cy.clearDBCache()
     cy.login(url)
 
     cy.get('[data-test=open-help-item]').click()
@@ -232,8 +232,8 @@ describe('HelpModal', () => {
   it('Category diffusion by service', () => {
     const teacherRoleId = 11220
 
-    cy.exec('npm run db:loadTables help_tables.sql')
-    cy.clearDBCache()
+    // cy.exec('npm run db:loadTables help_tables.sql')
+    // cy.clearDBCache()
     cy.login(url, GLOBAL_ADMIN)
 
     cy.get('[data-test=open-help-item]').click()
