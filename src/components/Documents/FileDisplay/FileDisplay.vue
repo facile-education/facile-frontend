@@ -22,7 +22,7 @@
       :src="fileUrl"
     />
     <Office
-      v-else-if="typeOfView === 'Office'"
+      v-else-if="typeOfView === 'Office' && hasLoolBroadcasted"
       :src="fileUrl"
     />
     <Geogebra
@@ -111,6 +111,12 @@ export default {
     },
     hasScratchBroadcasted () {
       return this.$store.state.documents.documentsProperties.hasScratchBroadcasted
+    },
+    hasLoolBroadcasted () {
+      return this.$store.state.documents.documentsProperties.hasLoolBroadcasted
+    },
+    hasH5pBroadcasted () {
+      return this.$store.state.documents.documentsProperties.hasH5pBroadcasted
     }
   },
   watch: {

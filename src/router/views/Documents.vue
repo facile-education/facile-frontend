@@ -178,7 +178,13 @@ export default {
                     ? mobileDocumentSpaceOptions
                     : documentSpaceOptions)
                 : [])
-      // Remove Mindmap, Geogebra and Scratch if not broadcasted to user
+      // Remove Lool, Mindmap, Geogebra and Scratch if not broadcasted to user
+      if (options !== undefined && options.length >= 1 && options[0].subMenu !== undefined &&
+          (this.documentProperties === undefined || !this.documentProperties.hasLoolBroadcasted)) {
+        removeMenuOptionIfExist(options[0].subMenu, 'newODT')
+        removeMenuOptionIfExist(options[0].subMenu, 'newODS')
+        removeMenuOptionIfExist(options[0].subMenu, 'newODP')
+      }
       if (options !== undefined && options.length >= 1 && options[0].subMenu !== undefined &&
           (this.documentProperties === undefined || !this.documentProperties.hasMindmapBroadcasted)) {
         removeMenuOptionIfExist(options[0].subMenu, 'newMindMap')
