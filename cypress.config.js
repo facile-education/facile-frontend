@@ -18,7 +18,7 @@ module.exports = defineConfig({
     //   })
     // },
     specPattern: 'tests/e2e/**/*.spec.{js,jsx,ts,tsx}',
-    excludeSpecPattern: import.meta.env.CI ? ['tests/e2e/**/all.spec.js'] : [],
+    // excludeSpecPattern: import.meta.env.CI ? ['tests/e2e/**/all.spec.js'] : [],
     supportFile: 'tests/e2e/support/index.js'
   }
 })
