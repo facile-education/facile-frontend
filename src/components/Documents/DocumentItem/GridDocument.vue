@@ -2,7 +2,7 @@
   <div
     ref="document"
     class="grid-document"
-    :class="{'phone-list-document': mq.phone || mq.tablet}"
+    :class="{'phone': mq.phone}"
     tabindex="-1"
     :title="document.name"
     @keypress.enter="triggerAction"
@@ -195,6 +195,11 @@ export default {
   background-color: white;
   height: 180px;
   width: 180px;
+
+  &.phone {
+    height: 160px;
+    width: 160px;
+  }
 
   .icon-container {
     position: relative;

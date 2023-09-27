@@ -9,7 +9,7 @@
     />
     <div
       class="entities"
-      :class="{'display-grid': display === 'grid'}"
+      :class="{'display-grid': display === 'grid', 'phone': mq.phone}"
     >
       <Folder
         v-for="(folder, index) in sortedFolders"
@@ -49,6 +49,7 @@ import { ctrlSelectNextEntity, ctrlSelectPreviousEntity, selectBetween, selectNe
 export default {
   name: 'DocumentList',
   components: { DocumentPlaceHolder, File, Folder, FilesFields },
+  inject: ['mq'],
   emits: ['openContextMenu'],
   data () {
     return {
@@ -167,5 +168,10 @@ export default {
   grid-gap: 20px;
   grid-template-columns: repeat(auto-fill, 200px);
   justify-content: space-evenly;
+
+  &.phone {
+    grid-gap: 1rem;
+    grid-template-columns: repeat(auto-fill, 160px);
+  }
 }
 </style>
