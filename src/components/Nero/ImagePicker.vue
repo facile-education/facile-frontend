@@ -11,7 +11,10 @@
 
     <template #body>
       <div class="body">
-        <PentilaSpinner v-if="isLoading" />
+        <PentilaSpinner
+          v-if="isLoading"
+          style="z-index: 1"
+        />
         <div
           v-if="initialThumbnailUrl && image===null"
           class="placeholder"
@@ -171,11 +174,11 @@ export default {
       if (canvas && !this.isLoading) {
         canvas.toBlob(blob => {
           this.fileName = Date.now() + '.jpeg'
-          this.$emit('save', { blob, fileName: this.fileName })
           this.isLoading = true
           uploadTmpFile(new File([blob], this.fileName)).then((data) => {
             this.isLoading = false
             if (data.success) {
+              this.$emit('save', { blob, fileName: this.fileName })
               this.$emit('createdTmpFile', data.uploadedFile)
             } else {
               console.error('Error')

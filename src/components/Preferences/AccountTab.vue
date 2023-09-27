@@ -45,6 +45,11 @@
             </PentilaButton>
           </div>
         </div>
+
+        <PentilaSpinner
+          v-if="isSavingProfilePicture"
+          style="z-index: 1"
+        />
       </div>
     </section>
     <section class="theme-color">
@@ -111,6 +116,10 @@ export default {
     },
     details () {
       return this.user.details
+    },
+    isSavingProfilePicture () {
+      return this.$store.getters['currentActions/isInProgress']('saveProfilePicture')
+      // return true
     }
   },
   created () {
@@ -200,6 +209,7 @@ h4 {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
+    position: relative;
 
     .left-section {
       display: flex;

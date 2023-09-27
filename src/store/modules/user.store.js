@@ -3,6 +3,7 @@ import { getFullName } from '@utils/commons.util'
 
 import { getUserApplications } from '@/api/applicationManager.service'
 import userService from '@/api/user.service'
+import i18n from '@/i18n'
 import router from '@/router'
 
 export const state = {
@@ -183,40 +184,48 @@ export const actions = {
     commit('setSelectedSchool', school)
   },
   removePicture ({ commit }) {
-    userService.removeUserPicture().then(
-      (data) => {
-        if (data.success) {
-          commit('updatePicture', data.imageUrl)
-        }
-      },
-      (err) => {
-        // TODO toastr
-        console.error(err)
-      })
+    this.dispatch('currentActions/addAction', { name: 'saveProfilePicture' })
+    userService.removeUserPicture().then((data) => {
+      this.dispatch('currentActions/removeAction', { name: 'saveProfilePicture' })
+      if (data.success) {
+        commit('updatePicture', data.imageUrl)
+      } else {
+        console.error('error when removing profile picture')
+        this.dispatch('popups/pushPopup', { message: i18n.global.t('Popup.error'), type: 'error' })
+      }
+    }, (err) => {
+      this.dispatch('currentActions/removeAction', { name: 'saveProfilePicture' })
+      this.dispatch('popups/pushPopup', { message: i18n.global.t('Popup.error'), type: 'error' })
+      console.error(err)
+    })
   },
   saveInterfacePreferences ({ commit }, preferences) {
-    userService.updateInterfacePreferences(preferences).then(
-      (data) => {
-        if (data.success) {
-          commit('updateInterfacePreferences', preferences)
-        }
-      },
-      (err) => {
-        // TODO toastr
-        console.error(err)
-      })
+    userService.updateInterfacePreferences(preferences).then((data) => {
+      if (data.success) {
+        commit('updateInterfacePreferences', preferences)
+      } else {
+        this.dispatch('popups/pushPopup', { message: i18n.global.t('Popup.error'), type: 'error' })
+      }
+    }, (err) => {
+      this.dispatch('popups/pushPopup', { message: i18n.global.t('Popup.error'), type: 'error' })
+      console.error(err)
+    })
   },
   saveProfilePicture ({ commit }, formData) {
-    userService.updateUserPicture(formData).then(
-      (data) => {
-        if (data.success) {
-          commit('updatePicture', data.imageUrl)
-        }
-      },
-      (err) => {
-        // TODO toastr
-        console.error(err)
-      })
+    this.dispatch('currentActions/addAction', { name: 'saveProfilePicture' })
+    userService.updateUserPicture(formData).then((data) => {
+      this.dispatch('currentActions/removeAction', { name: 'saveProfilePicture' })
+      if (data.success) {
+        commit('updatePicture', data.imageUrl)
+      } else {
+        console.error('error when saving profile picture')
+        this.dispatch('popups/pushPopup', { message: i18n.global.t('Popup.error'), type: 'error' })
+      }
+    }, (err) => {
+      this.dispatch('currentActions/removeAction', { name: 'saveProfilePicture' })
+      this.dispatch('popups/pushPopup', { message: i18n.global.t('Popup.error'), type: 'error' })
+      console.error(err)
+    })
   },
   setAgreedTermsOfUse ({ commit }) {
     commit('setAgreedTermsOfUse')
