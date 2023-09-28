@@ -6,7 +6,7 @@ DB_NAME=$(grep DB_NAME .env.local | cut -d '=' -f2)
 
 if [[ $1 ]];
 then
-  DUMP_NAME=$1
+  DUMP_NAME="tables/$1"
   echo "DUMP_NAME: $DUMP_NAME"
 else
   DUMP_NAME=dump_cypress_db.sql

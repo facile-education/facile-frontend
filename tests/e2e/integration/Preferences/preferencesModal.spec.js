@@ -24,7 +24,7 @@ describe('preference modal', () => {
 
   context('change data', () => {
     beforeEach(function () {
-      cy.loadTables('test/preferences_tables1.sql')
+      cy.loadTables('preferences/preferences_tables.sql')
       cy.login(SCHOOL_ADMIN, url)
       cy.get('[data-test=togglePopoverMenu]').click()
       cy.get('[data-test=openPreferencesModal]').click()
