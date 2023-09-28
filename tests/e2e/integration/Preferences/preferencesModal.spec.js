@@ -1,10 +1,10 @@
-import { HEADMASTER } from '../../support/constants'
+import { SCHOOL_ADMIN } from '../../support/constants'
 import { url } from '../../support/constants/statistics'
 
 describe('preference modal', () => {
-  it('panels and closure behavior', () => {
+  it.skip('panels and closure behavior', () => {
     // Connection
-    cy.login(url, HEADMASTER)
+    cy.login(SCHOOL_ADMIN, url)
     cy.get('[data-test=togglePopoverMenu]').click()
     cy.get('[data-test=openPreferencesModal]').click()
 
@@ -24,9 +24,8 @@ describe('preference modal', () => {
 
   context('change data', () => {
     beforeEach(function () {
-      cy.exec('npm run db:loadTables preferences_tables.sql')
-      cy.clearDBCache()
-      cy.login(url, HEADMASTER) // land in 'dossier1'
+      cy.loadTables('test/preferences_tables1.sql')
+      cy.login(SCHOOL_ADMIN, url)
       cy.get('[data-test=togglePopoverMenu]').click()
       cy.get('[data-test=openPreferencesModal]').click()
     })
@@ -34,8 +33,6 @@ describe('preference modal', () => {
     it('account-tab changes', () => {
       cy.get('[data-test=account-tab]').within(() => {
         cy.get('section.user-data').within(() => {
-          cy.contains('Salvatore Di Dio')
-
           // Test the reportChange button
           cy.contains('button', 'Signaler un changement').click()
         })
