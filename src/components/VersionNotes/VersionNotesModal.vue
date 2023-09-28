@@ -5,6 +5,7 @@
     :full-screen="mq.phone || mq.tablet"
     :hidden-footer="true"
     class="version-note-modal"
+    data-test="versionNoteModal"
     :class="{'phone': mq.phone || mq.tablet}"
     @close="$emit('close')"
   >
