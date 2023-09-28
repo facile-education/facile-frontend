@@ -1,0 +1,21 @@
+{
+  "databaseExistingNotes": [
+    {
+      "content": "Encore et encore des nouvautées en tout genre…",
+      "date": "2023/09/28"
+    },
+    {
+      "content": "Attention les yeux, notre toute dernière version arrive!\nNouveautés: \nUne nouvelle interface de fou furieux!\nLes messages sont maintenant personnalisables\nNous vous avons compris, le temps de session est (enfin) ramené à 45 minutes pour éviter les déconnexions intempestives durant les cours\nCorrectifs:\nNous avons travaillé dur pour résoudre un bug qui faisait que lorsque vous téléversiez un fichier de grande taille, celui ci parfois échouait\nEn tache de fond nos équipes ont travaillé à améliorer l'accessibilité du site au plus grand nombre, répondant ainsi à la norme http://www.ech.ch/vechweb/page?p=dossier&documentNumber=eCH-0059",
+      "date": "2023/09/13"
+    },
+    {
+      "content": "Enseignants: Un nouvel onglet est disponible dans Cours et devoirs! \nBla bla bla bla, en gros, voila quoi.\n\nVous pouvez a présent…\n\n[Image]",
+      "date": "2023/09/12"
+    }
+  ],
+  "noteToCreate": {
+    "title": "1.0.5",
+    "content": "Une note de version créée de toutes pièces"
+  },
+  "modifiedText": "Ceci est une texte modifié"
+}

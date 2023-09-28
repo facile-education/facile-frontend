@@ -2,7 +2,7 @@ import { SCHOOL_ADMIN } from '../../support/constants'
 import { url } from '../../support/constants/statistics'
 
 describe('preference modal', () => {
-  it.skip('panels and closure behavior', () => {
+  it('panels and closure behavior', () => {
     // Connection
     cy.login(SCHOOL_ADMIN, url)
     cy.get('[data-test=togglePopoverMenu]').click()
