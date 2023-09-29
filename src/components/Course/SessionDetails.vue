@@ -362,7 +362,8 @@ export default {
 
   &.list {
     .session-content, .homeworks, .notes {
-      margin-left: 1.5rem;
+      margin-left: 2rem;
+      margin-right: 2rem;
 
       &.phone {
         margin-left: 1rem;
@@ -371,7 +372,7 @@ export default {
     }
 
     .first-flex-section {
-       gap: 1rem;
+       gap: 1.5rem;
     }
   }
 
@@ -401,18 +402,18 @@ header {
 
   &.list-header {
     width: 100%;
-    padding: 8px 16px;
+    padding: 1rem 0 0.5rem 0;
     display: block;
     position: sticky;
     top: 0;
     border-radius: 0;
-    border-bottom: 1px solid $neutral-40;
+    border-top: 1px solid $neutral-80;
     border-left: 0;
-    background-color: $neutral-20;
+    background-color: $neutral-10;
 
     h2 {
       margin: 0;
-      @extend %font-bold-l;
+      @extend %font-heading-xs;
       text-transform: uppercase;
     }
   }
