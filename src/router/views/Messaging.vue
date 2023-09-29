@@ -91,7 +91,7 @@ export default {
     isMobileDetailsPanelDisplayed () {
       return this.$store.state.messaging.isMobileDetailsPanelDisplayed &&
         !this.$store.state.messaging.isMultiSelectionActive &&
-        this.$store.state.messaging.selectedThreads.length === 1
+        (this.$store.state.messaging.selectedThreads.length === 1 || this.$store.state.messaging.selectedMessages.length === 1)
     },
     isMenuPanelDisplayed () {
       return this.$store.state.messaging.isMenuPanelDisplayed
@@ -120,23 +120,24 @@ export default {
   },
   created () {
     this.getSignature()
-    this.$store.dispatch('messaging/loadMessagingFolders')
-    this.$watch(
-      () => this.$route.params,
-      () => {
-        if (this.$route.params.messageId) {
-          this.$store.dispatch('messaging/setDisplayMessageFromRouting', true)
-          this.$store.dispatch('messaging/showDetailPanel')
+    this.$store.dispatch('messaging/loadMessagingFolders').then(() => {
+      this.$watch(
+        () => this.$route.params,
+        () => {
+          if (this.$route.params.messageId) {
+            this.$store.dispatch('messaging/setDisplayMessageFromRouting', true)
+            this.$store.dispatch('messaging/showDetailPanel')
 
-          if (this.$route.params.fileId && this.$route.params.display) {
-            this.$store.dispatch('documents/openFile', { id: this.$route.params.fileId, name: this.$route.params.fileName })
+            if (this.$route.params.fileId && this.$route.params.display) {
+              this.$store.dispatch('documents/openFile', { id: this.$route.params.fileId, name: this.$route.params.fileName })
+            }
+          } else {
+            this.$store.dispatch('messaging/setDisplayMessageFromRouting', false)
           }
-        } else {
-          this.$store.dispatch('messaging/setDisplayMessageFromRouting', false)
-        }
-      },
-      { immediate: true }
-    )
+        },
+        { immediate: true }
+      )
+    })
   },
   methods: {
     // keyboard shortcuts management

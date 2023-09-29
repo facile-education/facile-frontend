@@ -153,10 +153,10 @@ export default {
       return dayjs(this.detailedNews.publicationDate).format('DD/MM/YY')
     },
     thumbnail () {
-      if (defaultImagesKeys.indexOf(this.initNews.thumbnailUrl) !== -1) {
-        return new URL(`../../../assets/images/${this.initNews.thumbnailUrl}.png`, import.meta.url).href
+      if (defaultImagesKeys.indexOf(this.detailedNews.thumbnailUrl) !== -1) {
+        return new URL(`../../../assets/images/${this.detailedNews.thumbnailUrl}.png`, import.meta.url).href
       } else { // Returned url is a key for local default image
-        return this.initNews.thumbnailUrl
+        return this.detailedNews.thumbnailUrl
       }
     }
   },
@@ -289,7 +289,7 @@ h2 {
 }
 
 .publication {
-  margin-top: 1rem;
+  margin-top: 0.3rem;
   color: $color-new-light-text;
   text-align: right;
 }

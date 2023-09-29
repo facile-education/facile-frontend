@@ -314,8 +314,8 @@ export const actions = {
       this.dispatch('messaging/getThreads', { folderId: folder.folderId })
     }
   },
-  loadMessagingFolders ({ commit }, noSelection) {
-    folderService.getAllUserFolders().then((data) => {
+  async loadMessagingFolders ({ commit }, noSelection) {
+    await folderService.getAllUserFolders().then((data) => {
       if (data.success) {
         commit('setMessagingFolders', data.folders)
         if (!noSelection && !state.displayMessageFromRouting) {
@@ -431,8 +431,6 @@ export const actions = {
       if (data.success) {
         commit('setLoadingThreadsError', undefined)
         this.dispatch('currentActions/removeAction', { name: 'loadThreads' })
-
-        commit('setThreadList', [data.thread])
 
         // Select threadFolder
         const folderToSelect = messagingUtils.getFolderFromId(state.messagingFolders, data.messageFolderId)

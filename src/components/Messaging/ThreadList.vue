@@ -318,7 +318,6 @@ export default {
       this.$store.dispatch('contextMenu/closeMenus')
     },
     markSelectionAsRead (markAsRead) {
-      console.log('selectedThreads = ', this.$store.state.messaging.selectedThreads)
       let messageIds = []
 
       if (this.$store.state.messaging.selectedMessages.length > 0) {
@@ -331,7 +330,6 @@ export default {
           messageIds = [...messageIds, ...selectedThread.messages.map(message => message.messageId)]
         }
       }
-      console.log(markAsRead, messageIds)
       messagingUtils.markMessagesAsReadUnread(messageIds, markAsRead)
     },
     draggedThreads () {

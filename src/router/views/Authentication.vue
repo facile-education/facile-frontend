@@ -260,14 +260,11 @@ export default {
       this.isLoading = true
       authenticationService.login(this.login, this.password, this.isMobileApp).then(response => {
         this.isLoading = false
-        console.log('response=', response)
         if (!response.success) {
-          console.log('no success')
           this.isError = true
           if (response.isLocked) {
             this.isLocked = true
             this.lockoutDuration = response.lockoutDuration / 60
-            console.log('lockoutDuration=', this.lockoutDuration)
           } else {
             this.isLocked = false
             this.nbRemainingTries = response.nbRemainingTries

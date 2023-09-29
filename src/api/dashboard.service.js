@@ -5,7 +5,8 @@ import constants from '@/api/constants'
 export {
   initDashboard,
   getUserSchedule,
-  getDashboardActivity
+  getDashboardActivity,
+  checkDashboardParameter
 }
 
 const DASHBOARD_PATH = '/dashboard.'
@@ -21,9 +22,9 @@ function initDashboard () {
 function getUserSchedule (userId, targetDate, goForward) {
   return axios.get(constants.JSON_WS_URL + DASHBOARD_PATH + DASHBOARD_CTX + 'get-user-schedule', {
     params: {
-      userId: userId,
+      userId,
       date: targetDate.format('YYYY-MM-DD HH:mm'),
-      goForward: goForward
+      goForward
     }
   }).then(response => response.data)
 }
@@ -39,6 +40,14 @@ function getDashboardActivity (groupId, maxDate, nbResults, withNews, withDocs, 
       withMemberships,
       withSchoollife,
       withSessions
+    }
+  }).then(response => response.data)
+}
+
+function checkDashboardParameter (dashboardId) {
+  return axios.get(constants.JSON_WS_URL + DASHBOARD_PATH + DASHBOARD_CTX + 'check-dashboard-parameter', {
+    params: {
+      dashboardId
     }
   }).then(response => response.data)
 }
