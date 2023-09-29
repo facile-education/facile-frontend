@@ -9,6 +9,10 @@
           v-if="homeworkType"
           class="homework-type-label"
         >
+          <CustomIcon
+            icon-name="icon-devoirs"
+            class="icon-homework theme-text-color"
+          />
           {{ homeworkType === 'givenHomework' ? $t('givenHomework', {targetDate: formattedToDate}) : $t(homeworkType) }}
         </div>
         <div class="header-first-line">
@@ -82,6 +86,7 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
@@ -95,7 +100,7 @@ const ContextMenu = defineAsyncComponent(() => import('@/components/ContextMenu/
 
 export default {
   name: 'Homework',
-  components: { ContextMenu, CourseContent, HomeworkEditModal, DoneInfoModal },
+  components: { CustomIcon, ContextMenu, CourseContent, HomeworkEditModal, DoneInfoModal },
   props: {
     homework: {
       type: Object,
@@ -226,7 +231,15 @@ header {
 }
 
 .homework-type-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 3px;
   @extend %font-regular-s;
+
+  .icon-homework {
+    font-size: 1rem;
+  }
 }
 
 .header-first-line {
@@ -280,8 +293,8 @@ button {
   "minuteLabel": "min",
   "publishedOn": "Publié le ",
   "draftStatus": "Non publié",
-  "toDoHomework": "Pour cette séance",
-  "sessionHomework": "Pendant la séance",
+  "toDoHomework": "À faire pour cette séance",
+  "sessionHomework": "À faire pendant la séance",
   "givenHomework": "Pour le {targetDate}"
 }
 </i18n>
