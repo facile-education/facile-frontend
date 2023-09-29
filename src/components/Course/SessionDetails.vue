@@ -76,14 +76,17 @@
         class="homeworks"
         :class="{'phone': mq.phone}"
       >
-        <div class="content-title">
+        <div
+          v-if="!isInList"
+          class="content-title"
+        >
           <CustomIcon
             icon-name="icon-devoirs"
             class="icon theme-text-color"
           />
           <h3 v-t="'workToDo'" />
           <CreateButton
-            v-if="canEdit && !isInList"
+            v-if="canEdit"
             :aria-label="$t('add')"
             :title="$t('add')"
             @click="openHomeworkEditModal"
