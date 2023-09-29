@@ -383,6 +383,7 @@ export default {
           break
         // TODO HTML, ODS, ODP
         case 'newFolder':
+          this.documentToRename = undefined
           this.modalSubmitAction = 'createFolder'
           this.isFolderNameModalDisplayed = true
           break
