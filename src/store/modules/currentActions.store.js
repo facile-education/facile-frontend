@@ -39,7 +39,6 @@ export const mutations = {
   setUploadFileError (state, payload) {
     for (let i = 0; i < state.listFilesToUpload.length; ++i) {
       if (state.listFilesToUpload[i].name === payload.name) {
-        console.log('found in store')
         state.listFilesToUpload[i].isError = true
         break
       }

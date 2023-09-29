@@ -23,6 +23,7 @@
           :placeholder="$t('populationPlaceholder') + '*'"
           :list="availablePopulationsList"
           :close-on-select="true"
+          sort-field="order"
           display-field="populationName"
           :disabled="isLoadingEventDetails"
         />
