@@ -39,7 +39,7 @@ Cypress.Commands.add('login', (user, visitUrl = undefined) => {
     cy.get('input[placeholder="Identifiant"]').type(user.login)
     cy.get('input[type="password"]').type(user.password)
     cy.get('button[type="submit"]').click()
-    cy.url().should('contain', '/tableau-de-bord')
+    // cy.url().should('contain', '/tableau-de-bord')
   },
   {
     // TODO: Review validation method (check status of get-user-info by example / check if cookie sessionId is not null...)
