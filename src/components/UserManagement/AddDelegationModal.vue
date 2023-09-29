@@ -2,7 +2,7 @@
   <PentilaWindow
     :modal="true"
     :draggable="true"
-    class="addDelegationWindow"
+    class="add-delegation-window"
     :width="600"
     :full-screen="mq.phone || mq.tablet"
     :class="{'mobile': mq.phone || mq.tablet}"
@@ -111,8 +111,16 @@ export default {
 }
 </script>
 
+<style lang="scss">
+.add-delegation-window {
+  .window-body {
+    overflow: visible !important;
+  }
+}
+</style>
+
 <style lang="scss" scoped>
-.addDelegationWindow {
+.add-delegation-window {
   span {
     text-align: center;
     margin: 10px;
