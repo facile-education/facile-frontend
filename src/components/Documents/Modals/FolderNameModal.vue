@@ -121,6 +121,8 @@ export default {
     this.$store.dispatch('misc/incrementModalCount')
     if (this.initFolder !== undefined) {
       this.folderName = this.initFolder.name
+    } else {
+      this.folderName = ''
     }
   },
   methods: {
@@ -175,6 +177,8 @@ export default {
       })
     },
     onClose () {
+      console.log('empty')
+      this.folderName = ''
       this.$store.dispatch('misc/decreaseModalCount')
       this.$emit('close')
     }

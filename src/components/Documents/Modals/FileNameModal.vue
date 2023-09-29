@@ -326,6 +326,7 @@ export default {
       })
     },
     onClose () {
+      this.inputText = ''
       this.$store.dispatch('misc/decreaseModalCount')
       this.$emit('close')
     }
