@@ -1,28 +1,24 @@
-import dayjs from 'dayjs' // TODO import and set daysjs stuff elsewhere
-import fr from 'dayjs/locale/fr'
-import LocalizedFormat from 'dayjs/plugin/localizedFormat'
-
 import { SCHOOL_ADMIN } from '../../support/constants'
 import { scheduleURL } from '../../support/constants/urls' // One of the resource-less service to load
 
-dayjs.extend(LocalizedFormat)
-dayjs.locale(fr)
-
-const formatVersionDate = (date) => {
-  return 'Mise à jour du ' + dayjs(date, 'YYY/MM/DD').format('DD MMMM YYYY')
-}
+/* =========== Local methods ============= */
 const openVersionNotes = () => {
   cy.get('[data-test=togglePopoverMenu]').click()
   cy.get('[data-test=popover-menu]').within(() => {
     cy.contains('Nouveautés').click()
   })
-  cy.get('[data-test=versionNoteModal]', { timeout: 5000 }).should('be.visible') // TODO: remove timout and make login with redirection method robust (automatically waits for the service to be full loaded (no request pending?))
+  cy.get('[data-test=versionNoteModal]', { timeout: 5000 }).should('be.visible') // TODO: find why timeout is necessary and remove it
 }
-
 const selectNoteInDropdown = (index) => {
   cy.get('[data-test="versionListDropDown"] > .button').click()
   cy.get('[data-test="versionListDropDown"]').get('ul.suggestion-list > li').eq(index).click()
 }
+
+const formatVersionDate = (date) => {
+  return 'Mise à jour du ' + Cypress.dayjs(date, 'YYY/MM/DD').format('DD MMMM YYYY')
+}
+
+/* =========== Tests ============= */
 
 describe('Version notes', () => {
   beforeEach(() => {
@@ -54,15 +50,15 @@ describe('Version notes', () => {
 
   })
 
-  it('Admin can create new version note', function () {
+  it('admin can create new version note', function () {
 
   })
 
-  it('Admin can update an existing version note', function () {
+  it('admin can update an existing version note', function () {
 
   })
 
-  it('Admin can delete an existing version note', function () {
+  it('admin can delete an existing version note', function () {
 
   })
 })

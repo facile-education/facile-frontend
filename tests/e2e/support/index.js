@@ -14,7 +14,17 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import './commands'
-
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+import './commands'
+
+// Dayjs global import
+import fr from 'dayjs/locale/fr'
+import LocalizedFormat from 'dayjs/plugin/localizedFormat'
+
+const dayjs = require('dayjs')
+
+dayjs.extend(LocalizedFormat)
+dayjs.locale(fr)
+
+Cypress.dayjs = dayjs
