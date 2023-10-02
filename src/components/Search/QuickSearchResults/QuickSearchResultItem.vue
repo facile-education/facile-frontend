@@ -167,6 +167,7 @@ export default {
         this.$store.dispatch('search/quickSearch', false) // get the followings results because it's the last element of the scroll but still visible
       }
     }
+    this.computeTooltipPosition()
   },
   beforeUnmount () {
     window.removeEventListener('keydown', this.keyMonitor)
