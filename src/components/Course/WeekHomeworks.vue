@@ -177,7 +177,6 @@ export default {
 
 header {
   height: 2rem;
-  margin-bottom: 0.5rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -189,7 +188,7 @@ header {
   }
 
   a {
-    @extend %font-regular-m;
+    @extend %font-heading-xs;
   }
 }
 
@@ -211,6 +210,7 @@ header {
 }
 
 .homeworks-day {
+  margin-top: 2rem;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -224,10 +224,11 @@ header {
 }
 
 .day-label {
-  padding-top: 0.5rem;
-  color: $neutral-80;
+  padding: 1rem 0 0.5rem 0;
+  border-top: 1px solid $neutral-80;
+  text-transform: uppercase;
 
-  @extend %font-medium-m;
+  @extend %font-heading-xs;
 }
 
 ul {
