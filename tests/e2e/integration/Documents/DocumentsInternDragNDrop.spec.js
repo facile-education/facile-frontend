@@ -1,4 +1,4 @@
-import { HEADMASTER } from '../../support/constants'
+import { HEADMASTER } from '../../support/constants/users'
 import { url } from '../../support/constants/documents'
 
 // Have to define here because the generated event for handling function is type of Event not DragEvent by default

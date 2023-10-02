@@ -1,0 +1,47 @@
+{
+  "now": "2021/05/05 16:00",
+  "slotsTypes": {
+    "tutoring": {
+      "type": 4,
+      "label": "Dépannage",
+      "color": "#8763CA",
+      "nbSlotsAtWeek35": 4,
+      "teacherNameAtWednesdaySlot": "C. Kummer"
+    },
+    "study": {
+      "type": 5,
+      "label": "Cercle d'étude",
+      "color": "#32AC71",
+      "nbSlotsAtWeek35": 4,
+      "teacherNameAtWednesdaySlot": "A. Veluz"
+    },
+    "replayTest": {
+      "type": 3,
+      "label": "Travaux à refaire",
+      "color": "#3694B7",
+      "nbSlotsAtWeek35": 4,
+      "teacherNameAtWednesdaySlot": "D. Jovanovic"
+    },
+    "detention": {
+      "type": 2,
+      "label": "Retenue",
+      "color": "#EDA12A",
+      "nbSlotsAtWeek35": 3,
+      "teacherNameAtWednesdaySlot": "A. Regad"
+    },
+    "fired": {
+      "type": 1,
+      "label": "Renvoi",
+      "color": "#f00",
+      "nbSlotsAtWeek35": 6,
+      "teacherNameAtWednesdaySlot": "F. Vuilleumier Freymond"
+    }
+  },
+  "groupName": "0922R2",
+  "studentName": "BARMAN MELISSA (1021LC)",
+  "studentSearch": "mel",
+  "studentSlotsNumberAtWeek35": 36,
+  "studentSlotsNumberAtTuesday": 4,
+  "teacherName": "Jovanovic Darko (Maitre)",
+  "teacherSearch": "dar"
+}

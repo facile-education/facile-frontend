@@ -7,7 +7,7 @@ import {
   STUDENT,
   TEACHER,
   TEACHER2
-} from '../../support/constants'
+} from '../../support/constants/users'
 import { now, slotTypes, url } from '../../support/constants/horairesHorsCadres'
 import utils from '../../support/utils/horairesHorsCardesUtils'
 

@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 
-import { CLASSTEACHER, DOYEN, HEADMASTER, PARENT, STUDENT, TEACHER } from '../../../support/constants'
+import { CLASSTEACHER, DOYEN, HEADMASTER, PARENT, STUDENT, TEACHER } from '../../../support/constants/users'
 import {
   now,
   slotTypes,

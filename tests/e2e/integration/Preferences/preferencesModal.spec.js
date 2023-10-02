@@ -1,4 +1,4 @@
-import { SCHOOL_ADMIN } from '../../support/constants'
+import { SCHOOL_ADMIN } from '../../support/constants/users'
 import { url } from '../../support/constants/statistics'
 
 describe('preference modal', () => {

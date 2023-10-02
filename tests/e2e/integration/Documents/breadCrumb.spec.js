@@ -1,4 +1,4 @@
-import { HEADMASTER } from '../../support/constants'
+import { HEADMASTER } from '../../support/constants/users'
 import { url } from '../../support/constants/documents'
 
 describe('BreadCrumb', () => {

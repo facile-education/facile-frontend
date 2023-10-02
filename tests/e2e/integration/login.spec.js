@@ -1,4 +1,4 @@
-import { SCHOOL_ADMIN as user } from '../support/constants'
+import { SCHOOL_ADMIN as user } from '../support/constants/users'
 
 describe('Login page', () => {
   it('logs user in with correct credentials', () => {

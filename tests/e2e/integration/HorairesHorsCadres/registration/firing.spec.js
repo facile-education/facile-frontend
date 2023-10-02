@@ -1,4 +1,4 @@
-import { CLASSTEACHER, DOYEN, PARENT, SECRETARY, TEACHER } from '../../../support/constants'
+import { CLASSTEACHER, DOYEN, PARENT, SECRETARY, TEACHER } from '../../../support/constants/users'
 import {
   now,
   slotTypes,

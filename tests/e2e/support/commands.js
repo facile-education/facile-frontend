@@ -26,7 +26,7 @@
 
 import PentilaUtils from 'pentila-utils'
 
-import { GLOBAL_ADMIN } from '../support/constants'
+import { GLOBAL_ADMIN } from './constants/users'
 
 Cypress.Commands.add('login', (user, visitUrl = undefined) => {
   cy.log('===== LOG IN (' + user.login + ') =====')

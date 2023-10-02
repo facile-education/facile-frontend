@@ -1,4 +1,4 @@
-import { GLOBAL_ADMIN } from '../../support/constants'
+import { GLOBAL_ADMIN } from '../../support/constants/users'
 import { url } from '../../support/constants/statistics'
 
 function randomInt (min, max) {

@@ -1,5 +1,5 @@
-import { SCHOOL_ADMIN } from '../../support/constants'
 import { scheduleURL } from '../../support/constants/urls' // One of the resource-less service to load
+import { SCHOOL_ADMIN } from '../../support/constants/users'
 
 /* =========== Local methods ============= */
 const openVersionNotes = () => {
@@ -23,7 +23,7 @@ const formatVersionDate = (date) => {
 describe('Version notes', () => {
   beforeEach(() => {
     cy.loadTables('versionNotes/version_notes_tables.sql')
-    cy.fixture('versionNotes.json').as('versionNotesData') // Aliases are deleted between each test so define it here
+    cy.fixture('versionNotes.json').as('versionNotesData')
   })
 
   it('contains the sorted list of version notes', function () {

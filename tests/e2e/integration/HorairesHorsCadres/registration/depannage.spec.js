@@ -1,4 +1,4 @@
-import { TEACHER } from '../../../support/constants'
+import { TEACHER } from '../../../support/constants/users'
 import {
   now,
   slotTypes,

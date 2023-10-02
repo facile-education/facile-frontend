@@ -1,4 +1,4 @@
-import { CLASSTEACHER, HEADMASTER, PARENT, SECRETARY, STUDENT } from '../../support/constants'
+import { CLASSTEACHER, HEADMASTER, PARENT, SECRETARY, STUDENT } from '../../support/constants/users'
 import { url } from '../../support/constants/groups'
 
 const rolesList = [

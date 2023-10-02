@@ -1,4 +1,4 @@
-import { HEADMASTER, STUDENT, TEACHER2 } from '../../support/constants'
+import { HEADMASTER, STUDENT, TEACHER2 } from '../../support/constants/users'
 import { url } from '../../support/constants/messaging'
 import { reloadThreadsAndFolders, waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
 

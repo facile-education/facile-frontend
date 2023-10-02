@@ -1,6 +1,6 @@
 // https://docs.cypress.io/api/introduction/api.html
 
-import { MULTI_PARENT, PARENT, STUDENT } from '../../support/constants'
+import { MULTI_PARENT, PARENT, STUDENT } from '../../support/constants/users'
 import {
   groupName,
   now,
