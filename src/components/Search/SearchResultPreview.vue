@@ -137,8 +137,18 @@ export default {
       this.getResultDetails()
     }
   },
+  mounted () {
+    if (this.fixedPosition) {
+      this.setPosition()
+    }
+  },
   updated () {
     if (this.fixedPosition) {
+      this.setPosition()
+    }
+  },
+  methods: {
+    setPosition () {
       //  Set x position
       this.$refs.tooltip.style.left = this.fixedPosition.x + 'px'
 
@@ -150,9 +160,7 @@ export default {
       } else {
         this.$refs.tooltip.style.top = this.fixedPosition.y + 'px'
       }
-    }
-  },
-  methods: {
+    },
     getResultDetails () {
       getSearchResultDetails(this.searchResult.entityId, this.searchResult.service).then((data) => {
         if (data.success) {
@@ -170,7 +178,7 @@ export default {
     redirectInDocument (folderId) {
       this.$emit('redirect', {
         routeName: this.isCollaborative ? 'GroupDocuments' : DOCUMENTS,
-        params: { folderId: folderId }
+        params: { folderId }
       })
     },
     redirectInMessaging (messageId) {
