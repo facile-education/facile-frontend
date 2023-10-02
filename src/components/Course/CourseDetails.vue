@@ -161,11 +161,21 @@ header {
   border-radius: 6px;
   border-left: 8px solid;
   margin-bottom: 1rem;
+  overflow: hidden;
 
   &.phone {
+    padding-bottom: 0;
     height: var(--mobile-header-height);
     flex-direction: column;
     align-items: flex-start;
+
+    h1 {
+      text-align: left;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
 }
 
