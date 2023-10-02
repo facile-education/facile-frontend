@@ -61,7 +61,7 @@
         @update:model-value="onColorChange"
       />
     </section>
-    <section class="activity-report">
+    <!-- <section class="activity-report">
       <h4 v-t="'activityReport'" />
       <PentilaDropdown
         :model-value="selectedFrequency"
@@ -69,7 +69,7 @@
         display-field="label"
         @update:model-value="onFrequencySelect"
       />
-    </section>
+    </section> -->
   </div>
 
   <teleport to="body">
