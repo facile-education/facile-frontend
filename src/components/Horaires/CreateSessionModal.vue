@@ -257,6 +257,7 @@ export default {
             this.teacherList = data.teachers
             // Select the group of the created session, in the main panel
             this.$store.dispatch('horaires/setSelectedGroup', this.selectedGroup)
+            this.$store.dispatch('horaires/getGroupSessions')
           }
         })
         this.closeModal()
