@@ -1,5 +1,6 @@
 <template>
   <PentilaWindow
+    class="preferences-modal"
     :modal="true"
     :full-screen="mq.phone || mq.tablet"
     :width="600"
@@ -74,6 +75,14 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.preferences-modal {
+  .window-body {
+    overflow: visible !important;
+  }
+}
+</style>
 
 <style lang="scss" scoped>
 </style>
