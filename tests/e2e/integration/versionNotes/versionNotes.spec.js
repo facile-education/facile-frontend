@@ -23,7 +23,7 @@ const formatVersionDate = (date) => {
 describe('Version notes', () => {
   beforeEach(() => {
     cy.loadTables('versionNotes/version_notes_tables.sql')
-    cy.fixture('versionNotes.json').as('versionNotesData')
+    cy.fixture('versionNotes.json').as('versionNotesData') // Load in beforeEach to be accessible from 'this' in tests
   })
 
   it('contains the sorted list of version notes', function () {

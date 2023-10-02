@@ -140,7 +140,6 @@ Cypress.Commands.add('loadTables', (dumpName) => {
   }).then((response) => {
     // expect(response.status).to.eq(200) // to test here or not?
     const pAuth = response.body.replace(/(\r\n|\n|\r|\s)/gm, '')
-    console.log(pAuth)
 
     const url = Cypress.config().baseUrl + '/lfr/group/control_panel/manage?' +
     'p_p_id=com_liferay_server_admin_web_portlet_ServerAdminPortlet&' +

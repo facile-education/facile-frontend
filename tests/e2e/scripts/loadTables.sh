@@ -1,5 +1,7 @@
 #!/bin/bash
 
+VM_USER=$(grep VM_USER .env.local | cut -d '=' -f2)
+VM_IP=$(grep VM_IP .env.local | cut -d '=' -f2)
 DB_USER=$(grep DB_USER .env.local | cut -d '=' -f2)
 DB_PWD=$(grep DB_PWD .env.local | cut -d '=' -f2)
 DB_NAME=$(grep DB_NAME .env.local | cut -d '=' -f2)
@@ -22,6 +24,25 @@ then
 else
   # cd to script directory
   cd "$(dirname "$(realpath "$0")")" || exit;
-  mysql -u $DB_USER -p$DB_PWD $DB_NAME < $DUMP_NAME
-  echo "Tables loaded."
+
+  # Test if we have to connect to a remote device
+  if [[ $VM_USER || $VM_IP ]];
+  then
+    echo "VM_USER = $VM_USER"
+    echo "VM_IP = $VM_IP"
+
+
+    echo "Copy dump to virtual machine"
+    scp $DUMP_NAME $VM_USER@$VM_IP:/home/$VM_USER
+
+    echo "SSH as $VM_USER to reset progression tables."
+    ssh $VM_USER@$VM_IP << EOF
+    mysql -u $DB_USER -p$DB_PWD $DB_NAME < $DUMP_NAME
+    rm $DUMP_NAME
+EOF
+    echo "SSH done."
+  else
+    mysql -u $DB_USER -p$DB_PWD $DB_NAME < $DUMP_NAME
+    echo "Tables loaded."
+  fi
 fi
