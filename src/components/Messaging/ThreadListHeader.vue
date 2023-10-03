@@ -2,7 +2,7 @@
   <div
     class="splitarea-header"
     :class="{'phone': mq.phone || mq.tablet}"
-    data-test="header"
+    data-test="thread-list-header"
   >
     <div class="header-label">
       <button

@@ -1,5 +1,5 @@
 import { messagingURL } from '../../support/constants/urls'
-import { HEADMASTER, STUDENT, TEACHER2 } from '../../support/constants/users'
+import { SCHOOL_ADMIN, STUDENT, TEACHER } from '../../support/constants/users'
 import { reloadThreadsAndFolders, waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
 
 const lowerTextThenCapitalize = (string) => {
@@ -57,8 +57,8 @@ const checkMessageDetails = (message) => {
 
 describe('Sending message', () => {
   beforeEach(() => {
-    cy.loadTables('messaging/messaging_tables.sql')
-    cy.login(HEADMASTER, messagingURL)
+    cy.loadTables('messaging/messaging_tables_empty.sql')
+    cy.login(SCHOOL_ADMIN, messagingURL)
     waitMessagingToBeLoaded()
   })
 
@@ -84,8 +84,8 @@ describe('Sending message', () => {
       cy.get('@submitButton').click()
       cy.get('.error-message').contains('Sélectionnez au moins un destinataire')
       // Type and select user
-      cy.get('@recipients-input').clear().type(HEADMASTER.firstName)
-      cy.get('.suggestion-list').contains(HEADMASTER.lastName + ' ' + HEADMASTER.firstName).click()
+      cy.get('@recipients-input').clear().type(SCHOOL_ADMIN.firstName)
+      cy.get('.suggestion-list').contains(SCHOOL_ADMIN.lastName + ' ' + SCHOOL_ADMIN.firstName).click()
       cy.get('@submitButton').click()
       cy.get('.error-message').should('not.exist')
     })
@@ -112,8 +112,8 @@ describe('Sending message', () => {
 
   it('send message', () => {
     const message = {
-      sender: HEADMASTER.firstName + ' ' + HEADMASTER.lastName,
-      recipients: [HEADMASTER.firstName + ' ' + HEADMASTER.lastName, TEACHER2.firstName + ' ' + TEACHER2.lastName, STUDENT.firstName + ' ' + STUDENT.lastName],
+      sender: SCHOOL_ADMIN.firstName + ' ' + SCHOOL_ADMIN.lastName,
+      recipients: [SCHOOL_ADMIN.firstName + ' ' + SCHOOL_ADMIN.lastName, TEACHER.firstName + ' ' + TEACHER.lastName, STUDENT.firstName + ' ' + STUDENT.lastName],
       subject: 'Mon message de test',
       content: 'Mon contenu de message'
     }
@@ -123,10 +123,10 @@ describe('Sending message', () => {
 
     // Select multiple recipients
     cy.log('Select multiple recipients')
-    cy.get('[data-test=recipients-section]').find('input').as('recipients-input').type(HEADMASTER.firstName)
-    cy.get('.suggestion-list').contains(HEADMASTER.lastName + ' ' + HEADMASTER.firstName).click()
-    cy.get('@recipients-input').type(TEACHER2.lastName)
-    cy.get('.suggestion-list').contains(TEACHER2.lastName + ' ' + TEACHER2.firstName).click()
+    cy.get('[data-test=recipients-section]').find('input').as('recipients-input').type(SCHOOL_ADMIN.firstName)
+    cy.get('.suggestion-list').contains(SCHOOL_ADMIN.lastName + ' ' + SCHOOL_ADMIN.firstName).click()
+    cy.get('@recipients-input').type(TEACHER.lastName)
+    cy.get('.suggestion-list').contains(TEACHER.lastName + ' ' + TEACHER.firstName).click()
     cy.get('@recipients-input').type(STUDENT.lastName)
     cy.get('.suggestion-list').contains(lowerTextThenCapitalize(STUDENT.lastName + ' ' + STUDENT.firstName)).click()
 
@@ -167,13 +167,13 @@ describe('Sending message', () => {
       .and('contain', message.content)
 
     // Check if the message was sent to student
-    cy.login(STUDENT)
+    cy.login(STUDENT, messagingURL)
     waitMessagingToBeLoaded()
     checkAndSelectThreadMessage(message)
     checkMessageDetails(message)
 
     // Check if the message was sent to teacher
-    cy.login(TEACHER2)
+    cy.login(TEACHER, messagingURL)
     waitMessagingToBeLoaded()
     checkAndSelectThreadMessage(message)
     checkMessageDetails(message)
@@ -181,8 +181,8 @@ describe('Sending message', () => {
 
   it('Save draft and send it', () => {
     const message = {
-      sender: HEADMASTER.firstName + ' ' + HEADMASTER.lastName,
-      recipients: [HEADMASTER.firstName + ' ' + HEADMASTER.lastName, TEACHER2.firstName + ' ' + TEACHER2.lastName, STUDENT.firstName + ' ' + STUDENT.lastName],
+      sender: SCHOOL_ADMIN.firstName + ' ' + SCHOOL_ADMIN.lastName,
+      recipients: [SCHOOL_ADMIN.firstName + ' ' + SCHOOL_ADMIN.lastName, TEACHER.firstName + ' ' + TEACHER.lastName, STUDENT.firstName + ' ' + STUDENT.lastName],
       subject: 'Mon message de test',
       content: 'Mon contenu de message'
     }
@@ -192,10 +192,10 @@ describe('Sending message', () => {
 
     // Select multiple recipients
     cy.log('Select multiple recipients')
-    cy.get('[data-test=recipients-section]').find('input').as('recipients-input').type(HEADMASTER.lastName)
-    cy.get('.suggestion-list').contains(HEADMASTER.lastName + ' ' + HEADMASTER.firstName).click()
-    cy.get('@recipients-input').type(TEACHER2.lastName)
-    cy.get('.suggestion-list').contains(TEACHER2.lastName + ' ' + TEACHER2.firstName).click()
+    cy.get('[data-test=recipients-section]').find('input').as('recipients-input').type(SCHOOL_ADMIN.lastName)
+    cy.get('.suggestion-list').contains(SCHOOL_ADMIN.lastName + ' ' + SCHOOL_ADMIN.firstName).click()
+    cy.get('@recipients-input').type(TEACHER.lastName)
+    cy.get('.suggestion-list').contains(TEACHER.lastName + ' ' + TEACHER.firstName).click()
     cy.get('@recipients-input').type(STUDENT.lastName)
     cy.get('.suggestion-list').contains(lowerTextThenCapitalize(STUDENT.lastName + ' ' + STUDENT.firstName)).click()
 
@@ -238,13 +238,13 @@ describe('Sending message', () => {
     checkMessageDetails(message)
 
     // Check if the message was sent to student
-    cy.login(STUDENT)
+    cy.login(STUDENT, messagingURL)
     waitMessagingToBeLoaded()
     checkAndSelectThreadMessage(message)
     checkMessageDetails(message)
 
     // Check if the message was sent to teacher
-    cy.login(TEACHER2)
+    cy.login(TEACHER, messagingURL)
     waitMessagingToBeLoaded()
     checkAndSelectThreadMessage(message)
     checkMessageDetails(message)

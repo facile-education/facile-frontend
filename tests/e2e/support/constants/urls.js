@@ -2,7 +2,7 @@ const dashboardURL = '/tableau-de-bord'
 const HHCURL = '/horaires-hors-cadre'
 const scheduleURL = '/horaires'
 const statisticsURL = '/statistics'
-const messagingURL = '/messaging'
+const messagingURL = '/messagerie'
 const groupsURL = '/groups'
 const documentURL = '/documents'
 

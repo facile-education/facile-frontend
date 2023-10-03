@@ -56,7 +56,7 @@ Cypress.Commands.add('login', (user, visitUrl = undefined) => {
     cacheAcrossSpecs: true
   })
 
-  if (visitUrl) {
+  if (visitUrl && window.location.href !== Cypress.config().baseUrl + visitUrl) {
     cy.visit(visitUrl)
   }
 

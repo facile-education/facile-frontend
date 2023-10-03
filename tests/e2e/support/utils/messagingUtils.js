@@ -1,5 +1,5 @@
 const waitMessagingToBeLoaded = () => {
-  cy.get('[data-test=threads-panel] > [data-test=header]').contains('BOÎTE DE RÉCEPTION') // That waits the current folder loading
+  cy.get('[data-test=threads-panel] > [data-test=thread-list-header]').contains('BOÎTE DE RÉCEPTION') // That waits the current folder loading
   cy.wait(200)
   cy.get('[data-test=spinner]').should('not.exist')
 }
