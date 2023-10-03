@@ -32,6 +32,7 @@ Cypress.Commands.add('login', (user, visitUrl = undefined) => {
   cy.log('===== LOG IN (' + user.login + ') =====')
 
   cy.session(user, () => {
+    cy.setCookie('cookiesAgreement', 'true')
     // UI method, TODO: api method
     cy.visit('/login')
     cy.contains('Parents / Autres profils').click()

@@ -42,5 +42,5 @@
 import '../Messaging/deleteMessage.spec'
 import '../Messaging/dragNdropMessage.spec'
 import '../Messaging/navigationAndStructure.spec'
-import '../Messaging/pesonnalFolders.spec'
+import '../Messaging/personalFolders.spec'
 import '../Messaging/sendMessage.spec'

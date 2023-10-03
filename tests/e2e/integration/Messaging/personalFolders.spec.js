@@ -1,19 +1,57 @@
-import { HEADMASTER } from '../../support/constants/users'
-import { url } from '../../support/constants/messaging'
-import { waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
+import { messagingURL } from '../../support/constants/urls'
+import { SCHOOL_ADMIN } from '../../support/constants/users'
+import { exactString } from '../../support/utils/testUtils'
+
+const openMessagingMenu = () => {
+  cy.get('[data-test=option_toggleMessagingMenu]', { timeout: 5000 }).click()
+  cy.get('[data-test=messaging-menu]').should('be.visible')
+}
 
 describe('Personal folders', () => {
-  before(() => {
-    cy.exec('npm run db:loadTables messaging_tables.sql')
-    cy.clearDBCache()
-    cy.login(url, HEADMASTER)
-    waitMessagingToBeLoaded()
+  beforeEach(() => {
+    cy.loadTables('messaging/messaging_tables.sql')
+    cy.login(SCHOOL_ADMIN, messagingURL)
+    cy.fixture('messaging.json').as('messagingData') // Load in beforeEach to be accessible from 'this' in tests
+
+    openMessagingMenu()
+  })
+
+  const sizes = ['iphone-5', 'ipad-2', [1024, 768]]
+
+  sizes.forEach(size => {
+    it(`Consulting personal folders in ${size} screen`, function () { // TODO: Put messages in boxes and test the correct box content
+      cy.viewport(size)
+
+      cy.get('[data-test=messaging-menu]').within(() => {
+        const existingPersonalFolders = this.messagingData.personalFolders.existingPersonalFolders
+
+        cy.get('[data-test=personal-folders]').find('li').should('have.length', existingPersonalFolders.length)
+
+        existingPersonalFolders.forEach(personalFolder => {
+          cy.get('[data-test=personal-folders]').contains(exactString(personalFolder.name)).should('be.visible')
+          personalFolder.subFolders.forEach(subFolder => {
+            cy.get('[data-test=personal-folders]').contains(exactString(subFolder.name)).should('not.exist') // Folded by default
+            cy.get('[data-test=personal-folders]').contains(exactString(personalFolder.name)).click()
+            cy.get('[data-test=personal-folders]').contains(exactString(subFolder.name)).should('be.visible')
+          })
+        })
+      })
+    })
+  })
+
+  it('Create personal folders', function () {
+
+  })
+
+  it('Update personal folders', function () {
+
+  })
+
+  it('delete personal folders', function () {
+
   })
 
   it('Manage personal folders (create, rename, delete)', () => {
-    cy.log('Open messaging menu')
-    cy.get('[data-test=option_toggleMessagingMenu]').click()
-    cy.log('Create a first personal Folder')
     cy.get('[data-test=messaging-menu]').within(() => {
       cy.get('[data-test=createMessagingFolder]').invoke('show').click() // TODO replace by user action like (hover)
       cy.get('input').type('My first personal folder', { force: true })

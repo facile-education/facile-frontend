@@ -1,0 +1,30 @@
+{
+  "personalFolders": {
+    "existingPersonalFolders": [
+      {
+        "name": "sous-dossier",
+        "subFolders": [
+          {
+            "name": "sous-sous-dossier"
+          }
+        ]
+      },
+      {
+        "name": "Mon autre sous-dossier",
+        "subFolders": []
+      }
+    ],
+    "personalFoldersToCreate": [
+      {
+        "name": "nouveau sous dossier",
+        "subFolders": [
+          {
+            "name": "nouveau sous sous dossier"
+          }
+        ]
+      }
+    ],
+    "modifiedSubFolderName": "sous dossier modifié",
+    "modifiedSubSubFolderName": "sous sous dossier modifié"
+  }
+}
