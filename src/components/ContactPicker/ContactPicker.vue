@@ -116,7 +116,7 @@ export default {
 <style lang="scss" scoped>
 .container {
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 
   .user-list {
     position: absolute;
