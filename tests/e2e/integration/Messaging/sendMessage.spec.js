@@ -1,5 +1,5 @@
+import { messagingURL } from '../../support/constants/urls'
 import { HEADMASTER, STUDENT, TEACHER2 } from '../../support/constants/users'
-import { url } from '../../support/constants/messaging'
 import { reloadThreadsAndFolders, waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
 
 const lowerTextThenCapitalize = (string) => {
@@ -57,9 +57,8 @@ const checkMessageDetails = (message) => {
 
 describe('Sending message', () => {
   beforeEach(() => {
-    cy.exec('npm run db:loadTables messaging_tables_empty.sql')
-    cy.clearDBCache()
-    cy.login(url, HEADMASTER)
+    cy.loadTables('messaging/messaging_tables.sql')
+    cy.login(HEADMASTER, messagingURL)
     waitMessagingToBeLoaded()
   })
 
@@ -168,15 +167,13 @@ describe('Sending message', () => {
       .and('contain', message.content)
 
     // Check if the message was sent to student
-    cy.logout()
-    cy.login(url, STUDENT)
+    cy.login(STUDENT)
     waitMessagingToBeLoaded()
     checkAndSelectThreadMessage(message)
     checkMessageDetails(message)
 
     // Check if the message was sent to teacher
-    cy.logout()
-    cy.login(url, TEACHER2)
+    cy.login(TEACHER2)
     waitMessagingToBeLoaded()
     checkAndSelectThreadMessage(message)
     checkMessageDetails(message)
@@ -241,15 +238,13 @@ describe('Sending message', () => {
     checkMessageDetails(message)
 
     // Check if the message was sent to student
-    cy.logout()
-    cy.login(url, STUDENT)
+    cy.login(STUDENT)
     waitMessagingToBeLoaded()
     checkAndSelectThreadMessage(message)
     checkMessageDetails(message)
 
     // Check if the message was sent to teacher
-    cy.logout()
-    cy.login(url, TEACHER2)
+    cy.login(TEACHER2)
     waitMessagingToBeLoaded()
     checkAndSelectThreadMessage(message)
     checkMessageDetails(message)
