@@ -107,6 +107,12 @@
             @remove-attached-file="removeAttachedFile"
           />
         </div>
+
+        <div
+          v-if="(messageParameters.isReply || messageParameters.isReplyAll) && originMessage.content !== ''"
+          class="replied-message"
+          v-html="originMessage.content"
+        />
       </template>
 
       <template #footer>
@@ -269,10 +275,10 @@ export default {
           // Reply, replyAll, Forward
           if (this.$store.state.messaging.selectedMessages.length === 1) {
             // Message is selected -> use it
-            this.originMessage = this.$store.state.messaging.selectedMessages[0]
+            this.originMessage = { ...this.$store.state.messaging.selectedMessages[0] }
           } else if (this.$store.state.messaging.selectedThreads.length === 1) {
             // Thread is selected -> pick last message
-            this.originMessage = messagingUtils.getThreadLastMessage(this.$store.state.messaging.selectedThreads[0])
+            this.originMessage = { ...messagingUtils.getThreadLastMessage(this.$store.state.messaging.selectedThreads[0]) }
           }
         }
         messageService.getMessageAnswerForwardInfos(
@@ -289,6 +295,7 @@ export default {
             } else {
               // Reply, replyAll
               this.content = ''
+              this.originMessage.content = this.formatPreviousContent(data.content)
             }
             this.subject = data.subject
             messagingUtils.formatContacts(data.recipients)
@@ -555,6 +562,10 @@ export default {
 
 .recipients-panel, .subject {
   padding-bottom: 10px;
+}
+
+.replied-message {
+  background-color: $neutral-20;
 }
 
 .error-container {
