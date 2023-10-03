@@ -60,56 +60,55 @@
             alt="icon trash"
           />
         </li>
-      </ul>
-
-      <!-- Personal folders -->
-      <div
-        class="personal-folders base-folder"
-        data-test="personalFolders"
-        @click="togglePersonalFolders"
-        @dragover="isPersonalFoldersExpanded = true"
-      >
-        <div class="icon-container">
-          <img
-            src="@assets/icons/messaging_folders.svg"
-            alt=""
-            class="folder-icon"
+        <li data-test="personal-folders">
+          <div
+            class="base-folder"
+            @click="togglePersonalFolders"
+            @dragover="isPersonalFoldersExpanded = true"
           >
-        </div>
-        {{ $t('Messaging.personalFolders') }}
-        <button
-          v-if="!(mq.phone || mq.tablet)"
-          class="folder-actions"
-          :class="{'display-input': displayNewFolderInput}"
-          data-test="createMessagingFolder"
-          :title="$t('Messaging.addFolder')"
-          @click.stop="toggleNewFolderInput"
-        >
-          <BaseIcon
-            name="plus"
-            class="fa-lg folder-action"
+            <div class="icon-container">
+              <img
+                src="@assets/icons/messaging_folders.svg"
+                alt=""
+                class="folder-icon"
+              >
+            </div>
+            {{ $t('Messaging.personalFolders') }}
+            <button
+              v-if="!(mq.phone || mq.tablet)"
+              class="folder-actions"
+              :class="{'display-input': displayNewFolderInput}"
+              data-test="createMessagingFolder"
+              :title="$t('Messaging.addFolder')"
+              @click.stop="toggleNewFolderInput"
+            >
+              <BaseIcon
+                name="plus"
+                class="fa-lg folder-action"
+              />
+            </button>
+          </div>
+          <PentilaInput
+            v-if="displayNewFolderInput"
+            ref="newFolderInput"
+            v-model="newFolderName"
+            class="new-folder-input"
+            placeholder="Nouveau dossier"
+            @blur="createPersonalRootFolder"
+            @keyup.enter.stop="blurNewFolderNameInput"
+            @keyup.escape="displayNewFolderInput = false"
           />
-        </button>
-      </div>
-      <PentilaInput
-        v-if="displayNewFolderInput"
-        ref="newFolderInput"
-        v-model="newFolderName"
-        class="new-folder-input"
-        placeholder="Nouveau dossier"
-        @blur="createPersonalRootFolder"
-        @keyup.enter.stop="blurNewFolderNameInput"
-        @keyup.escape="displayNewFolderInput = false"
-      />
 
-      <!-- Sub folders -->
-      <ul v-if="isPersonalFoldersExpanded">
-        <MenuFolder
-          v-for="folder in personalFolders"
-          :key="folder.folderId"
-          class="personal-sub-folder"
-          :folder="folder"
-        />
+          <!-- Sub folders -->
+          <ul v-if="isPersonalFoldersExpanded">
+            <MenuFolder
+              v-for="folder in personalFolders"
+              :key="folder.folderId"
+              class="personal-sub-folder"
+              :folder="folder"
+            />
+          </ul>
+        </li>
       </ul>
     </nav>
   </section>
@@ -194,7 +193,7 @@ export default {
     },
     isDisplayed (value) {
       if (value) {
-        this.$refs.inboxFolder.$el.focus()
+        // this.$refs.inboxFolder.$el.focus()
       }
     }
   },
@@ -319,9 +318,6 @@ hr {
 
   .base-folder {
     padding-left: 10px;
-  }
-
-  .personal-folders {
     height: 40px;
     display: flex;
     align-items: center;
