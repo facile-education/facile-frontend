@@ -31,10 +31,11 @@
       </div>
 
       <div
-        v-if="!isSelectionMode && event.isEditable"
+        v-if="!isSelectionMode && (event.isEditable || event.isDeletable)"
         class="event-options"
       >
         <button
+          v-if="event.isEditable"
           class="option"
           :aria-label="$t('update')"
           :title="$t('update')"
@@ -46,6 +47,7 @@
           >
         </button>
         <button
+          v-if="event.isDeletable"
           class="option"
           :aria-label="$t('delete')"
           :title="$t('delete')"

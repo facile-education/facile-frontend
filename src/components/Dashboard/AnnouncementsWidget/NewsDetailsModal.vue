@@ -22,14 +22,16 @@
     </template>
 
     <template #footer>
-      <div v-if="initNews.isEditable">
+      <div v-if="initNews.isEditable || initNews.isDeletable">
         <PentilaButton
+          v-if="initNews.isEditable"
           class="footer-button"
           data-test="updateButton"
           :label="$t('update')"
           @click="openUpdateModal"
         />
         <PentilaButton
+          v-if="initNews.isDeletable"
           class="footer-button"
           data-test="deleteButton"
           :label="$t('delete')"
