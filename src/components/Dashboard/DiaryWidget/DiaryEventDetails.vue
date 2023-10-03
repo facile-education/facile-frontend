@@ -87,16 +87,18 @@
       />
 
       <div
-        v-if="detailedEvent.isEditable"
+        v-if="detailedEvent.isEditable || detailedEvent.isDeletable"
         class="footer"
       >
         <PentilaButton
+          v-if="detailedEvent.isEditable"
           class="footer-button"
           data-test="updateButton"
           :label="$t('update')"
           @click="isUpdateModalDisplayed = true"
         />
         <PentilaButton
+          v-if="detailedEvent.isDeletable"
           class="footer-button"
           data-test="deleteButton"
           :label="$t('delete')"

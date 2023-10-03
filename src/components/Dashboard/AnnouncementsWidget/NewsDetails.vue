@@ -83,16 +83,18 @@
       </ul>
 
       <div
-        v-if="!isInModal && detailedNews.isEditable"
+        v-if="!isInModal && (detailedNews.isEditable || detailedNews.isDeletable)"
         class="footer"
       >
         <PentilaButton
+          v-if="detailedNews.isEditable"
           class="footer-button"
           data-test="updateButton"
           :label="$t('update')"
           @click="openUpdateModal"
         />
         <PentilaButton
+          v-if="detailedNews.isDeletable"
           class="footer-button"
           data-test="deleteButton"
           :label="$t('delete')"

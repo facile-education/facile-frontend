@@ -42,10 +42,11 @@
       </div>
 
       <div
-        v-if="!isSelectionMode && announcement.isEditable"
+        v-if="!isSelectionMode && (announcement.isEditable || announcement.isDeletable)"
         class="announcement-options"
       >
         <button
+          v-if="announcement.isEditable"
           class="option"
           :aria-label="$t('update')"
           :title="$t('update')"
@@ -57,6 +58,7 @@
           >
         </button>
         <button
+          v-if="announcement.isDeletable"
           class="option"
           :aria-label="$t('delete')"
           :title="$t('delete')"

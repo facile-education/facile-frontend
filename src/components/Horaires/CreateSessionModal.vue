@@ -245,6 +245,7 @@ export default {
   methods: {
     closeModal () {
       this.$store.dispatch('horaires/setCreateSessionModalDisplayed', false)
+      this.$emit('close', true)
     },
     onCreate (e) {
       e.preventDefault()
