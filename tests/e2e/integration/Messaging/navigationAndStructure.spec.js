@@ -11,7 +11,7 @@ describe('Messaging navigation and structure', () => {
   })
 
   context('desktop', function () {
-    it('Displays 2 split areas', () => {
+    it('Displays 2 areas', () => {
       cy.get('[data-test=threads-panel]').should('exist')
       cy.get('[data-test=messages-panel]').should('exist')
       cy.get('[data-test=messaging-menu]').should('not.be.visible')
