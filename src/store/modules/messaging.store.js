@@ -53,7 +53,8 @@ const doActionInPersonalFolder = (store, action, folderList, state, personalFold
           }
           break
         case 'update':
-          folderList.splice(i, 1, personalFolder)
+          folderList[i].folderName = personalFolder.folderName
+          folderList[i].type = personalFolder.type
           // Update currentFolder Object if concern
           if (personalFolder.folderId === state.currentFolder.folderId) {
             state.currentFolder = personalFolder

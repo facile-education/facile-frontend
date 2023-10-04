@@ -2,10 +2,20 @@ import { messagingURL } from '../../support/constants/urls'
 import { SCHOOL_ADMIN } from '../../support/constants/users'
 import { exactString } from '../../support/utils/testUtils'
 
+/* =========== Local methods ============= */
 const openMessagingMenu = () => {
   cy.get('[data-test=option_toggleMessagingMenu]', { timeout: 5000 }).click()
   cy.get('[data-test=messaging-menu]').should('be.visible')
 }
+const toggleFolder = (folder) => {
+  cy.get('[data-test=personal-folders]').contains(exactString(folder.name)).click()
+}
+const triggerOptionOnFolder = (folder, action) => {
+  cy.get('[data-test=personal-folders]').contains('span', exactString(folder.name)).trigger('mouseover')
+  cy.get('[data-test=personal-folders]').contains('button', folder.name).find('[data-test=' + action + ']').click() // Todo: understand why exactString doesn't works
+}
+
+/* =========== Tests ============= */
 
 describe('Personal folders', () => {
   beforeEach(() => {
@@ -20,18 +30,19 @@ describe('Personal folders', () => {
 
   sizes.forEach(size => {
     it(`Consulting personal folders in ${size} screen`, function () { // TODO: Put messages in boxes and test the correct box content
-      cy.viewport(size)
+      const existingPersonalFolders = this.messagingData.personalFolders.existingPersonalFolders
+
+      // Set testing viewport
+      Cypress._.isArray(size) ? cy.viewport(size[0], size[1]) : cy.viewport(size)
 
       cy.get('[data-test=messaging-menu]').within(() => {
-        const existingPersonalFolders = this.messagingData.personalFolders.existingPersonalFolders
-
         cy.get('[data-test=personal-folders]').find('li').should('have.length', existingPersonalFolders.length)
 
         existingPersonalFolders.forEach(personalFolder => {
           cy.get('[data-test=personal-folders]').contains(exactString(personalFolder.name)).should('be.visible')
           personalFolder.subFolders.forEach(subFolder => {
             cy.get('[data-test=personal-folders]').contains(exactString(subFolder.name)).should('not.exist') // Folded by default
-            cy.get('[data-test=personal-folders]').contains(exactString(personalFolder.name)).click()
+            toggleFolder(personalFolder)
             cy.get('[data-test=personal-folders]').contains(exactString(subFolder.name)).should('be.visible')
           })
         })
@@ -40,87 +51,79 @@ describe('Personal folders', () => {
   })
 
   it('Create personal folders', function () {
+    const personalFoldersToCreate = this.messagingData.personalFolders.personalFoldersToCreate
 
+    cy.get('[data-test=messaging-menu]').within(() => {
+      // Create folders
+      personalFoldersToCreate.forEach(folderToCreate => {
+        cy.get('[data-test=createMessagingFolder]').click()
+        cy.get('input').type(folderToCreate.name, { force: true })
+        cy.get('input').blur()
+        cy.get('[data-test=personal-folders]').find('li').contains(exactString(folderToCreate.name)).should('be.visible')
+        // Create subFolders
+        folderToCreate.subFolders.forEach(subFolderToCreate => {
+          triggerOptionOnFolder(folderToCreate, 'add')
+          cy.get('input').type(subFolderToCreate.name, { force: true })
+          cy.get('input').blur()
+          cy.get('[data-test=personal-folders]').contains(exactString(subFolderToCreate.name)).should('be.visible')
+        })
+      })
+    })
   })
 
   it('Update personal folders', function () {
+    const existingPersonalFolders = this.messagingData.personalFolders.existingPersonalFolders
+    const personalFolderToRename = existingPersonalFolders[0]
+    const personalSubFolderToRename = personalFolderToRename.subFolders[0] // Assume that the first folder in list have subFolder
+    const personalFolderNewName = this.messagingData.personalFolders.modifiedFolderName
+    const personalSubFolderNewName = this.messagingData.personalFolders.modifiedSubFolderName
 
+    // Modify personal folder
+    cy.get('[data-test=messaging-menu]').within(() => {
+      triggerOptionOnFolder(personalFolderToRename, 'rename')
+      cy.get('input').clear()
+      cy.get('input').type(personalFolderNewName, { force: true })
+      cy.get('input').blur()
+      cy.get('[data-test=personal-folders]').contains(exactString(personalFolderNewName)).should('be.visible')
+      // todo: Test folder content (must be unchanged)
+    })
+
+    // Modify personal sub folder
+    cy.get('[data-test=messaging-menu]').within(() => {
+      toggleFolder({ name: personalFolderNewName })
+      triggerOptionOnFolder(personalSubFolderToRename, 'rename')
+      cy.get('input').clear()
+      cy.get('input').type(personalSubFolderNewName, { force: true })
+      cy.get('input').blur()
+      cy.get('[data-test=personal-folders]').contains(exactString(personalSubFolderNewName)).should('be.visible')
+    })
   })
 
   it('delete personal folders', function () {
+    const existingPersonalFolders = this.messagingData.personalFolders.existingPersonalFolders
+    const personalFolderToDelete = existingPersonalFolders[0]
+    const personalSubFolderToDelete = personalFolderToDelete.subFolders[0] // Assume that the first folder in list have subFolder
 
-  })
-
-  it('Manage personal folders (create, rename, delete)', () => {
+    // Delete subFolder
     cy.get('[data-test=messaging-menu]').within(() => {
-      cy.get('[data-test=createMessagingFolder]').invoke('show').click() // TODO replace by user action like (hover)
-      cy.get('input').type('My first personal folder', { force: true })
+      toggleFolder(personalFolderToDelete)
+      triggerOptionOnFolder(personalSubFolderToDelete, 'delete')
     })
-    cy.globalKeyPress('{enter}') // Have to target the body element, so it can't be in the previous within()
+    cy.get('[data-test=warning-modal]').within(() => {
+      cy.contains('button', 'Continuer').click()
+    })
+    cy.get('[data-test=messaging-menu]').find('[data-test=personal-folders]').contains(exactString(personalSubFolderToDelete.name)).should('not.exist')
+    // TODO: test content
 
-    cy.log('Create a second personal Folder')
+    // Delete folder
     cy.get('[data-test=messaging-menu]').within(() => {
-      cy.get('[data-test=createMessagingFolder]').invoke('show').click()
-      cy.get('input').type('My second personal folder', { force: true })
+      triggerOptionOnFolder(personalFolderToDelete, 'delete')
     })
-    cy.globalKeyPress('{enter}')
+    cy.get('[data-test=warning-modal]').within(() => {
+      cy.contains('button', 'Continuer').click()
+    })
+    cy.get('[data-test=messaging-menu]').find('[data-test=personal-folders]').contains(exactString(personalFolderToDelete.name)).should('not.exist')
 
-    cy.get('[data-test=messaging-menu]').within(() => {
-      cy.get('.personal-sub-folder').contains('My first personal folder').parent().as('firstFolderItem')
-      cy.get('.personal-sub-folder').contains('sous-dossier').parent().as('thirdFolderItem')
-      cy.get('.personal-sub-folder').contains('test').parent().as('fourthFolderItem')
-      cy.get('.personal-sub-folder').contains('My second personal folder').parent().as('secondFolderItem')
-
-      cy.log('Create personal subFolder')
-      cy.get('[data-test=personalSubFolder-My\\ second\\ personal\\ folder]').find('[data-test=add]').invoke('show').click()
-      cy.get('input').type('My subFolder', { force: true })
-    })
-    cy.globalKeyPress('{enter}')
-    cy.get('[data-test=messaging-menu]').within(() => {
-      cy.get('.personal-sub-folder').contains('My subFolder').parent().as('subFolderItem')
-    })
-
-    // Test folder navigation
-    cy.log('Test folder navigation')
-    cy.get('@secondFolderItem').click('top')
-    cy.get('.personal-sub-folder').should('not.contain', 'My subFolder')
-    cy.get('@secondFolderItem').click('top')
-    cy.get('@subFolderItem').should('exist')
-    cy.contains('Mes dossiers').click('top')
-    cy.get('.personal-sub-folder').should('not.exist')
-    cy.contains('Mes dossiers').click('top')
-    cy.get('@firstFolderItem').should('exist')
-    cy.get('@secondFolderItem').should('exist')
-    cy.get('.personal-sub-folder').should('not.contain', 'My subFolder')
-
-    // Test folder renaming
-    cy.log('Test folder renaming')
-    cy.get('@firstFolderItem').find('[data-test=rename]').invoke('show').click()
-    cy.get('[data-test=messaging-menu]').within(() => {
-      cy.get('input').type(' (modified)', { force: true })
-    })
-    cy.globalKeyPress('{enter}')
-    cy.get('[data-test=messaging-menu]').within(() => {
-      cy.get('.personal-sub-folder').contains('My first personal folder (modified)').parent().as('firstFolderItem')
-    })
-
-    // Delete folders
-    cy.log('Delete folders')
-    cy.get('@firstFolderItem').find('[data-test=delete]').invoke('show').click()
-    cy.get('[data-test=warning-modal]').find('[data-test=confirmButton]').click()
-    cy.get('.personal-sub-folder').should('not.contain', 'My first personal folder (modified)')
-    cy.get('@secondFolderItem').find('[data-test=delete]').invoke('show').click()
-    cy.get('[data-test=warning-modal]').find('[data-test=confirmButton]').click()
-    cy.get('@thirdFolderItem').find('[data-test=delete]').invoke('show').click()
-    cy.get('[data-test=warning-modal]').find('[data-test=confirmButton]').click()
-    cy.get('@fourthFolderItem').find('[data-test=delete]').invoke('show').click()
-    cy.get('[data-test=warning-modal]').find('[data-test=confirmButton]').click()
-    cy.get('.personal-sub-folder').should('not.exist')
-    cy.reload() // To be sure that the back data are up-to date
-    cy.get('[data-test=option_toggleMessagingMenu]').click()
-    cy.get('[data-test=messaging-menu]').within(() => {
-      cy.contains('Mes dossiers')
-      cy.get('.personal-sub-folder').should('not.exist')
-    })
+    // Todo: Delete folder with subFolder inside
   })
 })
