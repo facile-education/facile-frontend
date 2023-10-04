@@ -99,7 +99,7 @@ describe('Personal folders', () => {
     })
   })
 
-  it('delete personal folders', function () {
+  it('Delete personal folders', function () {
     const existingPersonalFolders = this.messagingData.personalFolders.existingPersonalFolders
     const personalFolderToDelete = existingPersonalFolders[0]
     const personalSubFolderToDelete = personalFolderToDelete.subFolders[0] // Assume that the first folder in list have subFolder

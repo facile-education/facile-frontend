@@ -161,7 +161,7 @@ CREATE TABLE `Messaging_MessageFolder` (
 
 LOCK TABLES `Messaging_MessageFolder` WRITE;
 /*!40000 ALTER TABLE `Messaging_MessageFolder` DISABLE KEYS */;
-INSERT INTO `Messaging_MessageFolder` (`folderId`, `userId`, `folderName`, `type_`, `parentFolderId`) VALUES (19654701,332442,'Boîte de réception',1,0),(19654702,332442,'Envoyés',3,0),(19654703,332442,'Corbeille',4,0),(19654704,332442,'Brouillons',2,0),(19662701,332442,'dossier personnel',5,0),(19662702,332442,'sous-dossier',5,19662701),(19662703,332442,'Mon autre dossier',5,0);/*!40000 ALTER TABLE `Messaging_MessageFolder` ENABLE KEYS */;
+INSERT INTO `Messaging_MessageFolder` (`folderId`, `userId`, `folderName`, `type_`, `parentFolderId`) VALUES (19654701,52216,'Boîte de réception',1,0),(19654702,52216,'Envoyés',3,0),(19654703,52216,'Corbeille',4,0),(19654704,52216,'Brouillons',2,0),(19662701,52216,'dossier personnel',5,0),(19662702,52216,'sous-dossier',5,19662701),(19662703,52216,'Mon autre dossier',5,0);/*!40000 ALTER TABLE `Messaging_MessageFolder` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
