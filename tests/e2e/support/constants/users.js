@@ -24,10 +24,10 @@ const SCHOOL_ADMIN = {
 
 // Doyen for the student's group class
 const DOYEN = {
-  login: 'messagee',
+  login: 'borrillj',
   password,
   role: 'doyen',
-  lastName: 'MESSAGE'
+  lastName: 'BORRILL'
 }
 
 // Class teacher for the student's class
