@@ -1,36 +1,39 @@
+const password = "W€Prode73"
+
 const GLOBAL_ADMIN = {
   login: 'pentila',
-  password: 'pentila',
+  password,
   role: 'admin'
 }
 
 const HEADMASTER = {
-  login: 'didiosa',
-  password: 'pentila',
+  login: 'hueo',
+  password,
   role: 'headmaster',
-  firstName: 'Salvatore',
-  lastName: 'Di Dio'
+  firstName: 'Orlan',
+  lastName: 'HUE'
 }
 
 const SCHOOL_ADMIN = {
-  login: 'dcovaq',
-  password: 'pentila',
+  login: 'ropkess',
+  password,
   role: 'school admin',
-  firstName: 'Dmitrii',
-  lastName: 'Covaqnovyi'
+  firstName: 'Stanislaus',
+  lastName: 'ROPKES'
 }
 
-// TODO Replace with doyen who is not school admin
-const DOYEN = { // Doyen for the student's group class
-  login: 'edu-prevostis',
-  password: 'pentila',
+// Doyen for the student's group class
+const DOYEN = {
+  login: 'messagee',
+  password,
   role: 'doyen',
-  lastName: 'Prevosti'
+  lastName: 'MESSAGE'
 }
 
-const CLASSTEACHER = { // Class teacher for the student's class
+// Class teacher for the student's class
+const CLASSTEACHER = {
   login: 'edu-mendezi',
-  password: 'pentila',
+  password,
   role: 'classTeacher',
   firstName: 'Isabel',
   lastName: 'Mendez'
@@ -38,14 +41,14 @@ const CLASSTEACHER = { // Class teacher for the student's class
 
 const SECRETARY = {
   login: 'berishaer',
-  password: 'pentila',
+  password,
   role: 'secretary',
   lastName: 'Berishae'
 }
 
 const TEACHER = {
   login: 'edu-regada',
-  password: 'pentila',
+  password,
   role: 'teacher',
   firstName: 'Alexandre',
   lastName: 'Regad'
@@ -53,7 +56,7 @@ const TEACHER = {
 
 const TEACHER2 = {
   login: 'edu-demirass',
-  password: 'pentila',
+  password,
   role: 'teacher',
   firstName: 'Serge',
   lastName: 'De Miras'
@@ -61,7 +64,7 @@ const TEACHER2 = {
 
 const STUDENT = {
   login: 'anya.alst',
-  password: 'pentila',
+  password,
   role: 'student',
   firstName: 'ANYA',
   lastName: 'ALOSTA'
@@ -69,27 +72,27 @@ const STUDENT = {
 
 const PARENT = { // Student's parent
   login: 'drousa', // 'hesmat' for the other student's parent
-  password: 'pentila',
+  password,
   role: 'parent',
   firstName: 'DYALA',
   lastName: 'ROUSAN'
 }
 
 const MULTI_STUDENT1 = { // Her parent has 2 children
-  login: 'alexia.ln',
-  password: 'pentila',
+  login: 'eleanora.cmncn',
+  password,
   role: 'student'
 }
 
 const MULTI_STUDENT2 = { // Her parent has 2 children
-  login: 'lisa.hnc',
-  password: 'pentila',
+  login: 'barbara.cpr',
+  password,
   role: 'student'
 }
 
 const MULTI_PARENT = { // This parent has 2 children : MULTI_STUDENT1 and MULTI_STUDENT2
-  login: 'vleoni',
-  password: 'pentila',
+  login: 'pcomen',
+  password,
   role: 'parent'
 }
 
