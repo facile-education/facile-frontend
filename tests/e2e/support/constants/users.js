@@ -1,4 +1,4 @@
-const password = "W€Prode73"
+const password = 'W€Prode73'
 
 const GLOBAL_ADMIN = {
   login: 'pentila',
@@ -22,15 +22,16 @@ const SCHOOL_ADMIN = {
   lastName: 'ROPKES'
 }
 
-// Doyen for the student's group class
+// Doyen for the student's class (0933)
 const DOYEN = {
-  login: 'borrillj',
+  login: 'lemarchantm',
   password,
-  role: 'doyen',
-  lastName: 'BORRILL'
+  role: 'teacher',
+  firstName: 'Mitzi',
+  lastName: 'LE MARCHANT'
 }
 
-// Class teacher for the student's class
+// Class teacher for the student's class (0933)
 const CLASSTEACHER = {
   login: 'edu-mendezi',
   password,
@@ -46,28 +47,28 @@ const SECRETARY = {
   lastName: 'Berishae'
 }
 
-const TEACHER = {
-  login: 'edu-regada',
+const TEACHER = { // TEACHER of STUDENT
+  login: 'nollir',
   password,
   role: 'teacher',
-  firstName: 'Alexandre',
-  lastName: 'Regad'
+  firstName: 'Rosana',
+  lastName: 'NOLLI'
 }
 
 const TEACHER2 = {
-  login: 'edu-demirass',
+  login: 'lemarchantm',
   password,
   role: 'teacher',
-  firstName: 'Serge',
-  lastName: 'De Miras'
+  firstName: 'Mitzi',
+  lastName: 'LE MARCHANT'
 }
 
-const STUDENT = {
-  login: 'anya.alst',
+const STUDENT = { // 0933R3
+  login: 'penelope.rbr',
   password,
   role: 'student',
-  firstName: 'ANYA',
-  lastName: 'ALOSTA'
+  firstName: 'Pénélope',
+  lastName: 'RIBEIRO'
 }
 
 const PARENT = { // Student's parent

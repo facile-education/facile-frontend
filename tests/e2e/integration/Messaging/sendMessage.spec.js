@@ -1,5 +1,5 @@
 import { messagingURL } from '../../support/constants/urls'
-import { SCHOOL_ADMIN, STUDENT, TEACHER } from '../../support/constants/users'
+import { DOYEN, STUDENT, TEACHER } from '../../support/constants/users'
 import { reloadThreadsAndFolders, waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
 
 const lowerTextThenCapitalize = (string) => {
@@ -35,7 +35,7 @@ const checkAndSelectThreadMessage = (message) => {
 }
 
 const checkMessageDetails = (message) => {
-  cy.get('[data-test=messages-panel]').get('.message')
+  cy.get('[data-test=messages-panel]').find('.message')
     .should('contain', message.subject)
     .and('contain', message.content)
     .within(() => {
@@ -58,7 +58,7 @@ const checkMessageDetails = (message) => {
 describe('Sending message', () => {
   beforeEach(() => {
     cy.loadTables('messaging/messaging_tables_empty.sql')
-    cy.login(SCHOOL_ADMIN, messagingURL)
+    cy.login(DOYEN, messagingURL)
     waitMessagingToBeLoaded()
   })
 
@@ -84,8 +84,8 @@ describe('Sending message', () => {
       cy.get('@submitButton').click()
       cy.get('.error-message').contains('Sélectionnez au moins un destinataire')
       // Type and select user
-      cy.get('@recipients-input').clear().type(SCHOOL_ADMIN.firstName)
-      cy.get('.suggestion-list').contains(SCHOOL_ADMIN.lastName + ' ' + SCHOOL_ADMIN.firstName).click()
+      cy.get('@recipients-input').clear().type(DOYEN.firstName)
+      cy.get('.suggestion-list').contains(lowerTextThenCapitalize(DOYEN.lastName + ' ' + DOYEN.firstName)).click()
       cy.get('@submitButton').click()
       cy.get('.error-message').should('not.exist')
     })
@@ -112,8 +112,8 @@ describe('Sending message', () => {
 
   it('send message', () => {
     const message = {
-      sender: SCHOOL_ADMIN.firstName + ' ' + SCHOOL_ADMIN.lastName,
-      recipients: [SCHOOL_ADMIN.firstName + ' ' + SCHOOL_ADMIN.lastName, TEACHER.firstName + ' ' + TEACHER.lastName, STUDENT.firstName + ' ' + STUDENT.lastName],
+      sender: DOYEN.firstName + ' ' + DOYEN.lastName,
+      recipients: [DOYEN.firstName + ' ' + DOYEN.lastName, TEACHER.firstName + ' ' + TEACHER.lastName, STUDENT.firstName + ' ' + STUDENT.lastName],
       subject: 'Mon message de test',
       content: 'Mon contenu de message'
     }
@@ -123,10 +123,10 @@ describe('Sending message', () => {
 
     // Select multiple recipients
     cy.log('Select multiple recipients')
-    cy.get('[data-test=recipients-section]').find('input').as('recipients-input').type(SCHOOL_ADMIN.firstName)
-    cy.get('.suggestion-list').contains(SCHOOL_ADMIN.lastName + ' ' + SCHOOL_ADMIN.firstName).click()
+    cy.get('[data-test=recipients-section]').find('input').as('recipients-input').type(DOYEN.firstName)
+    cy.get('.suggestion-list').contains(lowerTextThenCapitalize(DOYEN.lastName + ' ' + DOYEN.firstName)).click()
     cy.get('@recipients-input').type(TEACHER.lastName)
-    cy.get('.suggestion-list').contains(TEACHER.lastName + ' ' + TEACHER.firstName).click()
+    cy.get('.suggestion-list').contains(lowerTextThenCapitalize(TEACHER.lastName + ' ' + TEACHER.firstName)).click()
     cy.get('@recipients-input').type(STUDENT.lastName)
     cy.get('.suggestion-list').contains(lowerTextThenCapitalize(STUDENT.lastName + ' ' + STUDENT.firstName)).click()
 
@@ -181,8 +181,8 @@ describe('Sending message', () => {
 
   it('Save draft and send it', () => {
     const message = {
-      sender: SCHOOL_ADMIN.firstName + ' ' + SCHOOL_ADMIN.lastName,
-      recipients: [SCHOOL_ADMIN.firstName + ' ' + SCHOOL_ADMIN.lastName, TEACHER.firstName + ' ' + TEACHER.lastName, STUDENT.firstName + ' ' + STUDENT.lastName],
+      sender: DOYEN.firstName + ' ' + DOYEN.lastName,
+      recipients: [DOYEN.firstName + ' ' + DOYEN.lastName, TEACHER.firstName + ' ' + TEACHER.lastName, STUDENT.firstName + ' ' + STUDENT.lastName],
       subject: 'Mon message de test',
       content: 'Mon contenu de message'
     }
@@ -192,10 +192,10 @@ describe('Sending message', () => {
 
     // Select multiple recipients
     cy.log('Select multiple recipients')
-    cy.get('[data-test=recipients-section]').find('input').as('recipients-input').type(SCHOOL_ADMIN.lastName)
-    cy.get('.suggestion-list').contains(SCHOOL_ADMIN.lastName + ' ' + SCHOOL_ADMIN.firstName).click()
+    cy.get('[data-test=recipients-section]').find('input').as('recipients-input').type(DOYEN.lastName)
+    cy.get('.suggestion-list').contains(lowerTextThenCapitalize(DOYEN.lastName + ' ' + DOYEN.firstName)).click()
     cy.get('@recipients-input').type(TEACHER.lastName)
-    cy.get('.suggestion-list').contains(TEACHER.lastName + ' ' + TEACHER.firstName).click()
+    cy.get('.suggestion-list').contains(lowerTextThenCapitalize(TEACHER.lastName + ' ' + TEACHER.firstName)).click()
     cy.get('@recipients-input').type(STUDENT.lastName)
     cy.get('.suggestion-list').contains(lowerTextThenCapitalize(STUDENT.lastName + ' ' + STUDENT.firstName)).click()
 
