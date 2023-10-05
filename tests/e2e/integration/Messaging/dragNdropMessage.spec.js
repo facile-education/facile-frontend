@@ -1,6 +1,6 @@
 import { messagingURL } from '../../support/constants/urls'
 import { HEADMASTER } from '../../support/constants/users'
-import { waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
+import { getThread, waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
 
 // Have to define here because the generated event for handling function is type of Event not DragEvent by default
 // see https://github.com/cypress-io/cypress/issues/649
@@ -21,12 +21,6 @@ class DataTransfer {
 }
 
 let currentDataTransfer // bad practice but i don't have better.
-
-const getThread = (thread) => {
-  // get thread by subject
-  const lastThreadMessage = thread.find((message) => message.messageIndexInThread === thread.length - 1) // the displayed subject
-  return cy.contains('[data-test=thread-list-item]', lastThreadMessage.subject)
-}
 
 describe('Drag and drop messages', () => {
   beforeEach(() => {

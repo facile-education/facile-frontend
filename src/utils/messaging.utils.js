@@ -94,17 +94,16 @@ const MessagingUtils = {
     })
   },
   deleteSelectedMessage () {
-    const messageIdsToDelete = [store.state.messaging.selectedMessages[0].messageId]
+    const selectedMessage = store.state.messaging.selectedMessages[0]
+    const parentThreadId = selectedMessage.threadId
+    const messageIdsToDelete = [selectedMessage.messageId]
     store.dispatch('currentActions/addAction', { name: 'deleteMessages' })
     messageService.deleteMessages(messageIdsToDelete).then((data) => {
       store.dispatch('currentActions/removeAction', { name: 'deleteMessages' })
       if (data.success) {
         store.dispatch('messaging/deleteMessages', messageIdsToDelete)
-        const selectedThreadBeforeDeleteMessage = store.state.messaging.selectedThreads[0]
         // if (this.currentThreads.map(item => item.threadId).indexOf(selectedThreadBeforeDeleteMessage.threadId) !== -1) { // If the new thread list still contains selectedThread
-        this.reloadThread(selectedThreadBeforeDeleteMessage)
-        this.refresh()
-        store.dispatch('messaging/setSelectedThreads', [selectedThreadBeforeDeleteMessage])
+        this.reloadThread({ threadId: parentThreadId })
       }
     }, (err) => {
       console.error(err)
@@ -112,8 +111,6 @@ const MessagingUtils = {
     })
   },
   reloadThread (thread) {
-    store.dispatch('messaging/setLastSelectedThread', thread)
-    store.dispatch('messaging/setSelectedThreads', [thread])
     store.dispatch('messaging/setSelectedMessages', [])
 
     messageService.getThreadMessages(thread.threadId, store.state.messaging.currentFolder.folderId).then((data) => {

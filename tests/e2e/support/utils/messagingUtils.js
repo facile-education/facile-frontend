@@ -24,59 +24,20 @@ const reloadThreadsAndFolders = () => {
   cy.wait('@reloadThreads').its('response.body.success').should('be.equals', true)
 }
 
-// message list of dump (+ two reply of the last message)
-// const messageList = [
-//   {
-//     sender: anya,
-//     recipients: testUsers,
-//     subject: 'First message subject',
-//     content: 'First message content',
-//     attachedFiles: [],
-//     draftMessageId: 0,
-//     originMessageId: 0,
-//     isReply: false,
-//     isForward: false,
-//     isSupport: false
-//   },
-//   {
-//     sender: demira,
-//     recipients: testUsers,
-//     subject: 'Second message subject',
-//     content: 'Second message content',
-//     attachedFiles: [],
-//     draftMessageId: 0,
-//     originMessageId: 0,
-//     isReply: false,
-//     isForward: false,
-//     isSupport: false
-//   },
-//   {
-//     sender: demira,
-//     recipients: testUsers,
-//     subject: 'Third message subject',
-//     content: 'Third message content',
-//     attachedFiles: [],
-//     draftMessageId: 0,
-//     originMessageId: 0,
-//     isReply: false,
-//     isForward: false,
-//     isSupport: false
-//   },
-//   {
-//     sender: didio,
-//     recipients: testUsers,
-//     subject: 'Fourth message subject',
-//     content: 'Fourth message content',
-//     attachedFiles: [],
-//     draftMessageId: 0,
-//     originMessageId: 0,
-//     isReply: false,
-//     isForward: false,
-//     isSupport: false
-//   }
-// ]
+const getThread = (thread) => {
+  // Get thread by subject
+  const lastThreadMessage = thread.find((message) => message.messageIndexInThread === thread.length - 1) // the displayed subject
+  return cy.contains('[data-test=thread-list-item]', lastThreadMessage.subject)
+}
+
+const getMessage = (message) => {
+  // Get message by content
+  return cy.get('[data-test=messages-panel]').contains('[data-test=message]', message.content)
+}
 
 export {
   waitMessagingToBeLoaded,
-  reloadThreadsAndFolders
+  reloadThreadsAndFolders,
+  getThread,
+  getMessage
 }

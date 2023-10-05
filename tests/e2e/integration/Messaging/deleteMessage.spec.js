@@ -1,45 +1,51 @@
+import { messagingURL } from '../../support/constants/urls'
 import { HEADMASTER } from '../../support/constants/users'
-import { url } from '../../support/constants/messaging'
-import { waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
+import { getMessage, getThread, waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
 
 describe('Delete message', () => {
-  before(() => {
-    cy.exec('npm run db:loadTables messaging_tables.sql')
-    cy.clearDBCache()
-    cy.login(url, HEADMASTER)
+  beforeEach(() => {
+    cy.loadTables('messaging/messaging_tables.sql')
+    cy.login(HEADMASTER, messagingURL)
+    cy.fixture('messaging.json').as('messagingData') // Load in beforeEach to be accessible from 'this' in tests
     waitMessagingToBeLoaded()
   })
 
-  it('delete thread', () => {
+  it('delete thread', function () {
+    const firstThread = this.messagingData.existingThreads[0]
+    const secondThread = this.messagingData.existingThreads[2]
+    const thirdThread = this.messagingData.existingThreads[3]
+    const threadWithMultipleMessages = this.messagingData.existingThreads[1]
+    const firstMessageInThreadToDelete = threadWithMultipleMessages[0]
+    const secondMessageInThreadToDelete = threadWithMultipleMessages[1]
+
     cy.log('delete thread by delete key')
-    cy.get('[data-test=threads-panel]').get('.thread-list-item').eq(3).as('threadToDelete').click()
+    getThread(firstThread).click()
     cy.globalKeyPress('{del}')
-    cy.get('@threadToDelete').should('not.exist')
+    getThread(firstThread).should('not.exist')
 
     cy.log('delete thread by context menu')
-    cy.get('[data-test=threads-panel]').get('.thread-list-item').eq(2).as('threadToDelete').rightclick()
+    getThread(secondThread).rightclick()
     cy.get('[data-test=context-menu]').contains('Supprimer').click().should('not.exist')
-    cy.get('@threadToDelete').should('not.exist')
+    getThread(secondThread).should('not.exist')
 
     cy.log('delete thread by trash icon')
-    cy.get('[data-test=threads-panel]').get('.thread-list-item').eq(1).as('threadToDelete').rightclick()
+    getThread(thirdThread).click()
     cy.get('[data-test=option_trash]').click()
-    cy.get('@threadToDelete').should('not.exist')
+    getThread(thirdThread).should('not.exist')
 
     cy.log('delete message in thread by delete key')
-    cy.get('[data-test=threads-panel]').get('.thread-list-item').eq(0).click()
-    cy.get('[data-test=messages-panel]').get('.message-list').children().eq(2).as('messageToDelete').click()
-      .should('have.class', 'theme-shadow-color')
+    getThread(threadWithMultipleMessages).click()
+    getMessage(firstMessageInThreadToDelete).click()
+      .parent().should('have.class', 'theme-shadow-color')
     cy.globalKeyPress('{del}')
     cy.get('[data-test=spinner]').should('not.exist')
-    cy.get('@messageToDelete').should('not.exist')
+    getMessage(firstMessageInThreadToDelete).should('not.exist')
 
     cy.log('delete message in thread by trash icon')
-    cy.get('[data-test=threads-panel]').get('.thread-list-item').eq(0).click()
-    cy.get('[data-test=messages-panel]').get('.message-list').children().eq(1).as('message2ToDelete').click()
-      .should('have.class', 'theme-shadow-color')
+    getMessage(secondMessageInThreadToDelete).click()
+      .parent().should('have.class', 'theme-shadow-color')
     cy.get('[data-test=option_trash]').click()
     cy.get('[data-test=spinner]').should('not.exist')
-    cy.get('@messageToDelete').should('not.exist')
+    getMessage(secondMessageInThreadToDelete).should('not.exist')
   })
 })

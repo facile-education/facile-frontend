@@ -53,7 +53,7 @@ describe('Messaging navigation and structure', () => {
       cy.login(HEADMASTER, messagingURL)
     })
 
-    it.only('Check navigation', () => {
+    it('Check navigation', () => {
       // Initialisation
       cy.get('[data-test=threads-panel]').should('be.visible')
       cy.get('[data-test=messaging-menu]').should('not.be.visible')
