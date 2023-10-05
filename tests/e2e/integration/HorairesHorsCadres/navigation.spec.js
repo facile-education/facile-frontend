@@ -1,4 +1,5 @@
-import { now, slotTypes, url } from '../../support/constants/horairesHorsCadres'
+import { HHCURL } from '../../support/constants/urls'
+import { HEADMASTER } from '../../support/constants/users'
 
 const checkSlotSelectionMenu = () => {
   cy.get('[data-test=user-completion-input]').should('not.exist')
@@ -17,11 +18,11 @@ const checkSlotSelectionMenu = () => {
 
 describe('desktop navigation', () => {
   beforeEach(() => {
-    cy.clock(now.toDate().getTime())
-    cy.exec('npm run db:loadTables schoollife_tables.sql')
-    cy.clearDBCache()
-    cy.logout()
-    cy.login(url)
+    cy.fixture('hhc.json').as('hhcData').then(data => {
+      cy.clock(Cypress.dayjs(data.now, 'YYYY/MM/DD HH:mm').toDate().getTime())
+    })
+    cy.loadTables('schoollife/schoollife_tables.sql')
+    cy.login(HEADMASTER, HHCURL)
   })
 
   it('contains slot selection', () => {
@@ -29,9 +30,11 @@ describe('desktop navigation', () => {
     checkSlotSelectionMenu()
   })
 
-  for (const attr in slotTypes) {
-    const slot = slotTypes[attr]
-    it('select ' + slot.label, () => {
+  it('select slot type', function () {
+    const slotTypes = this.hhcData.slotTypes
+    for (const attr in slotTypes) {
+      const slot = slotTypes[attr]
+      cy.log('select ' + slot.label)
       // Select tutoring type
       cy.get('[data-test=slot-type-item-' + slot.type + ']').click()
 
@@ -46,16 +49,18 @@ describe('desktop navigation', () => {
         cy.contains(slot.teacherNameAtWednesdaySlot).should('be.visible')
         // cy.contains('Capacité').should('be.visible') // TODO when refactoring capacity
       })
-    })
-  }
+    }
+  })
 })
 
 describe('mobile navigation', () => {
   beforeEach(() => {
-    cy.logout()
-    cy.clock(now.toDate().getTime())
+    cy.fixture('hhc.json').as('hhcData').then(data => {
+      cy.clock(Cypress.dayjs(data.now, 'YYYY/MM/DD HH:mm').toDate().getTime())
+    })
+    cy.loadTables('schoollife/schoollife_tables.sql')
     cy.viewport('iphone-5')
-    cy.login(url)
+    cy.login(HEADMASTER, HHCURL)
   })
 
   it('contains slot selection', () => {
@@ -63,9 +68,12 @@ describe('mobile navigation', () => {
     checkSlotSelectionMenu()
   })
 
-  for (const attr in slotTypes) {
-    const slot = slotTypes[attr]
-    it('select ' + slot.label, () => {
+  it('select slot type', function () {
+    const slotTypes = this.hhcData.slotTypes
+    for (const attr in slotTypes) {
+      const slot = slotTypes[attr]
+      cy.log('select ' + slot.label)
+
       // Select tutoring type
       cy.get('[data-test=slot-type-item-' + slot.type + ']').click()
 
@@ -93,6 +101,6 @@ describe('mobile navigation', () => {
       // Click on slotType to go back on slot selection
       cy.get('@' + slot.label).click()
       checkSlotSelectionMenu()
-    })
-  }
+    }
+  })
 })

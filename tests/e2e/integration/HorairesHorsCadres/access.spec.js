@@ -6,9 +6,8 @@ const disallowedUsers = [STUDENT, PARENT]
 
 describe('Service access', () => {
   beforeEach(() => {
-    cy.loadTables('schoollife/schoollife_tables.sql')
     cy.fixture('hhc.json').as('hhcData').then(data => {
-      cy.clock(cy.dayjs(data.now, 'YYYY/MM/DD HH:mm').toDate().getTime())
+      cy.clock(Cypress.dayjs(data.now, 'YYYY/MM/DD HH:mm').toDate().getTime())
     })
   })
 
@@ -16,7 +15,7 @@ describe('Service access', () => {
     it('Displays service for ' + user.role, () => {
       cy.login(user, HHCURL)
 
-      cy.get('.slot-type-selection').should('be.visible')
+      cy.get('.slot-type-selection', { timeout: 20000 }).should('be.visible')
     })
   })
 
@@ -24,6 +23,7 @@ describe('Service access', () => {
     it('Displays error for ' + user.role, () => {
       cy.login(user, HHCURL)
 
+      cy.contains('Oups, cette page n\'existe pas', { timeout: 20000 }) // TODO: Understand why we have a blank page instead
       cy.get('.slot-type-selection').should('not.exist')
     })
   })
@@ -32,6 +32,6 @@ describe('Service access', () => {
     cy.then(Cypress.session.clearCurrentSessionData)
     cy.visit(HHCURL)
 
-    cy.contains('Une authentification est requise pour accéder au service.').should('be.visible')
+    cy.contains('Une authentification est requise pour accéder au service.', { timeout: 20000 }).should('be.visible')
   })
 })

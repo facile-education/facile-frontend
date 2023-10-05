@@ -72,6 +72,14 @@ const TEACHER2 = {
   lastName: 'LE MARCHANT'
 }
 
+const DEPANNAGE_SUPERVISOR = { // tuesday 16:20 17:05
+  login: 'pachecos',
+  password,
+  role: 'student',
+  firstName: 'Sidney',
+  lastName: 'PACHECO'
+}
+
 const STUDENT = { // 0933R3
   login: 'penelope.rbr',
   password,
@@ -113,6 +121,7 @@ export {
   DOYEN,
   TEACHER,
   TEACHER2,
+  DEPANNAGE_SUPERVISOR,
   CLASSTEACHER,
   CLASSTEACHER2,
   STUDENT,
