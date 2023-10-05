@@ -358,6 +358,12 @@ export default {
   max-width: 500px;
 }
 
+.student-registration-modal {
+  .window-body {
+    overflow: visible !important;
+  }
+}
+
 </style>
 
 <style lang="scss" scoped>
