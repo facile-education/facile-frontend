@@ -1,20 +1,20 @@
+import { HHCURL } from '../../support/constants/urls'
 import { DOYEN, HEADMASTER, PARENT, SCHOOL_ADMIN, SECRETARY, STUDENT, TEACHER } from '../../support/constants/users'
-import { now, url } from '../../support/constants/horairesHorsCadres'
 
 const allowedUsers = [HEADMASTER, DOYEN, SCHOOL_ADMIN, SECRETARY, TEACHER]
 const disallowedUsers = [STUDENT, PARENT]
 
 describe('Service access', () => {
   beforeEach(() => {
-    cy.clock(now.toDate().getTime())
-    cy.exec('npm run db:loadTables schoollife_tables.sql')
-    cy.clearDBCache()
-    cy.logout()
+    cy.loadTables('schoollife/schoollife_tables.sql')
+    cy.fixture('hhc.json').as('hhcData').then(data => {
+      cy.clock(cy.dayjs(data.now, 'YYYY/MM/DD HH:mm').toDate().getTime())
+    })
   })
 
   allowedUsers.forEach(user => {
     it('Displays service for ' + user.role, () => {
-      cy.login(url, user)
+      cy.login(user, HHCURL)
 
       cy.get('.slot-type-selection').should('be.visible')
     })
@@ -22,14 +22,15 @@ describe('Service access', () => {
 
   disallowedUsers.forEach(user => {
     it('Displays error for ' + user.role, () => {
-      cy.login(url, user)
+      cy.login(user, HHCURL)
 
       cy.get('.slot-type-selection').should('not.exist')
     })
   })
 
   it('Displays error for non authenticated user', () => {
-    cy.visit(url)
+    cy.then(Cypress.session.clearCurrentSessionData)
+    cy.visit(HHCURL)
 
     cy.contains('Une authentification est requise pour accéder au service.').should('be.visible')
   })

@@ -33,18 +33,27 @@ const DOYEN = {
 
 // Class teacher for the student's class (0933)
 const CLASSTEACHER = {
-  login: 'edu-mendezi',
+  login: 'lemarchantm',
   password,
-  role: 'classTeacher',
-  firstName: 'Isabel',
-  lastName: 'Mendez'
+  role: 'teacher',
+  firstName: 'Mitzi',
+  lastName: 'LE MARCHANT'
+}
+
+const CLASSTEACHER2 = { // An other class teacher than LE MARCHANT (0911R1)
+  login: 'whitemanc',
+  password,
+  role: 'teacher',
+  firstName: 'Clemence',
+  lastName: 'WHITEMAN'
 }
 
 const SECRETARY = {
-  login: 'berishaer',
+  login: 'laminmann',
   password,
   role: 'secretary',
-  lastName: 'Berishae'
+  firstName: 'Noelyn',
+  lastName: 'LAMINMAN'
 }
 
 const TEACHER = { // TEACHER of STUDENT
@@ -72,11 +81,11 @@ const STUDENT = { // 0933R3
 }
 
 const PARENT = { // Student's parent
-  login: 'drousa', // 'hesmat' for the other student's parent
+  login: 'uribei', // 'hesmat' for the other student's parent
   password,
   role: 'parent',
-  firstName: 'DYALA',
-  lastName: 'ROUSAN'
+  firstName: 'Ursula',
+  lastName: 'Ribeiro'
 }
 
 const MULTI_STUDENT1 = { // Her parent has 2 children
@@ -105,6 +114,7 @@ export {
   TEACHER,
   TEACHER2,
   CLASSTEACHER,
+  CLASSTEACHER2,
   STUDENT,
   SECRETARY,
   PARENT,
