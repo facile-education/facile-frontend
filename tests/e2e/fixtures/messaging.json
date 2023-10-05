@@ -28,12 +28,61 @@
     "modifiedSubFolderName": "sous dossier modifié"
   },
   "existingThreads": [
-    {
-      "sender": "Rosana Nolly",
-      "recipients": ["Orlan Hue"],
-      "date": "2023/10/04 15:17",
-      "subject": "Menu végés",
-      "content": "Les menus végétariens de la cantine ne sont pas assez diversifiés!"
-    }
+    [
+      {
+        "sender": "Rosana Nolly",
+        "recipients": ["Orlan Hue"],
+        "date": "2023/10/05 08:51",
+        "subject": "Mon premier message",
+        "content": "Ceci est un message de test",
+        "messageIndexInThread": 0
+      }
+    ],
+    [
+      {
+        "sender": "Rosana Nolly",
+        "recipients": ["Orlan Hue"],
+        "date": "2023/10/05 08:53",
+        "subject": "deuxième message",
+        "content": "Je vous pose une question",
+        "messageIndexInThread": 0
+      },
+      {
+        "sender": "Orlan Hue",
+        "recipients": ["Rosana Nolly"],
+        "date": "2023/10/05 08:54",
+        "subject": "Re: deuxième message",
+        "content": "Je vous répond!",
+        "messageIndexInThread": 1
+      },
+      {
+        "sender": "Rosana Nolly",
+        "recipients": ["Orlan Hue"],
+        "date": "2023/10/05 08:54",
+        "subject": "Re: deuxième message",
+        "content": "Merci",
+        "messageIndexInThread": 2
+      }
+    ],
+    [
+      {
+        "sender": "Rosana Nolly",
+        "recipients": ["Orlan Hue"],
+        "date": "2023/10/05 09:01",
+        "subject": "Troisième message",
+        "content": "J'ai encore des choses à dire",
+        "messageIndexInThread": 0
+      }
+    ],
+    [
+      {
+        "sender": "Rosana Nolly",
+        "recipients": ["Orlan Hue"],
+        "date": "2023/10/05 09:02",
+        "subject": "Quartième message",
+        "content": "En fait j'aime juste écrire",
+        "messageIndexInThread": 0
+      }
+    ]
   ]
 }

@@ -86,7 +86,7 @@ Cypress.Commands.add('login', (user, visitUrl = undefined) => {
 })
 
 Cypress.Commands.add('loadTables', (dumpName) => {
-  cy.log('===== Load tables =====')
+  cy.log('===== Load tables ' + dumpName + ' =====')
   cy.exec('npm run db:loadTables ' + dumpName).then((result) => {
     const { code, stderr } = result
     cy.wrap(code).should('eq', 0)
