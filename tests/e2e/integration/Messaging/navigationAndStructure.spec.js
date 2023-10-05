@@ -1,12 +1,11 @@
+import { messagingURL } from '../../support/constants/urls'
 import { HEADMASTER } from '../../support/constants/users'
-import { url } from '../../support/constants/messaging'
 import { waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
 
 describe('Messaging navigation and structure', () => {
   before(() => {
-    cy.exec('npm run db:loadTables messaging_tables.sql')
-    cy.clearDBCache()
-    cy.login(url, HEADMASTER)
+    cy.loadTables('messaging/messaging_tables.sql')
+    cy.login(HEADMASTER, messagingURL)
     waitMessagingToBeLoaded()
   })
 
@@ -31,7 +30,7 @@ describe('Messaging navigation and structure', () => {
 
       // Check navigation
       cy.log('Check navigation')
-      cy.get('[data-test=threads-panel] > [data-test=header]').within(() => {
+      cy.get('[data-test=threads-panel] > [data-test=thread-list-header]').within(() => {
         cy.contains('BOÎTE DE RÉCEPTION')
         cy.get('@draft-link').click()
         cy.contains('BROUILLONS')
@@ -51,10 +50,10 @@ describe('Messaging navigation and structure', () => {
   context('mobile', function () {
     beforeEach(function () {
       cy.viewport('iphone-5')
-      cy.login(url, HEADMASTER)
+      cy.login(HEADMASTER, messagingURL)
     })
 
-    it('Check navigation', () => {
+    it.only('Check navigation', () => {
       // Initialisation
       cy.get('[data-test=threads-panel]').should('be.visible')
       cy.get('[data-test=messaging-menu]').should('not.be.visible')

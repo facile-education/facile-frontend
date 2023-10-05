@@ -1,3 +1,24 @@
+-- MariaDB dump 10.19  Distrib 10.6.12-MariaDB, for debian-linux-gnu (x86_64)
+--
+-- Host: 127.0.0.1    Database: ent_gve
+-- ------------------------------------------------------
+-- Server version	10.6.12-MariaDB-0ubuntu0.22.04.1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `Messaging_Message`
+--
+
 DROP TABLE IF EXISTS `Messaging_Message`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -7,7 +28,6 @@ CREATE TABLE `Messaging_Message` (
   `threadId` bigint(20) DEFAULT NULL,
   `sendMessageId` bigint(20) DEFAULT NULL,
   `senderId` bigint(20) DEFAULT NULL,
-  `senderName` varchar(300) DEFAULT NULL,
   `sendDate` datetime(3) DEFAULT NULL,
   `messageSubject` longtext DEFAULT NULL,
   `messageContent` longtext DEFAULT NULL,
@@ -15,6 +35,7 @@ CREATE TABLE `Messaging_Message` (
   `readDate` datetime DEFAULT NULL,
   `isAnswered` tinyint(4) DEFAULT NULL,
   `isForwarded` tinyint(4) DEFAULT NULL,
+  `senderName` varchar(300) DEFAULT NULL,
   `type_` int(11) DEFAULT NULL,
   `companyId` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`messageId`),
@@ -26,17 +47,41 @@ CREATE TABLE `Messaging_Message` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `messaging_message`
+-- Dumping data for table `Messaging_Message`
 --
 
 LOCK TABLES `Messaging_Message` WRITE;
 /*!40000 ALTER TABLE `Messaging_Message` DISABLE KEYS */;
-INSERT INTO `Messaging_Message` VALUES (15426901,15426869,15426902,0,328939,'ANYA ALOSTA','2022-10-06 07:47:09','First message subject','First message content',0,NULL,0,0,0,10202),(15426903,15426867,15426902,15426901,328939,'ANYA ALOSTA','2022-10-06 07:47:09','First message subject','First message content',1,NULL,0,0,0,10202),(15426904,15426111,15426902,15426901,328939,'ANYA ALOSTA','2022-10-06 07:47:09','First message subject','First message content',1,NULL,0,0,0,10202),(15426905,15426875,15426902,15426901,328939,'ANYA ALOSTA','2022-10-06 07:47:09','First message subject','First message content',0,'2022-10-06 07:48:57',0,0,0,10202),(15426906,15426878,15426907,0,332724,'Serge De Miras','2022-10-06 07:48:17','Second message subject','Second message content',0,NULL,0,0,0,10202),(15426908,15426867,15426907,15426906,332724,'Serge De Miras','2022-10-06 07:48:17','Second message subject','Second message content',1,NULL,0,0,0,10202),(15426909,15426875,15426907,15426906,332724,'Serge De Miras','2022-10-06 07:48:17','Second message subject','Second message content',1,NULL,0,0,0,10202),(15426910,15426111,15426907,15426906,332724,'Serge De Miras','2022-10-06 07:48:17','Second message subject','Second message content',1,NULL,0,0,0,10202),(15426911,15426878,15426912,0,332724,'Serge De Miras','2022-10-06 07:48:51','Third message subject','Third message content',0,NULL,0,0,0,10202),(15426913,15426111,15426912,15426911,332724,'Serge De Miras','2022-10-06 07:48:52','Third message subject','Third message content',1,NULL,0,0,0,10202),(15426914,15426875,15426912,15426911,332724,'Serge De Miras','2022-10-06 07:48:52','Third message subject','Third message content',1,NULL,0,0,0,10202),(15426915,15426867,15426912,15426911,332724,'Serge De Miras','2022-10-06 07:48:52','Third message subject','Third message content',1,NULL,0,0,0,10202),(15426916,15426112,15426917,0,4696749,'Salvatore Di Dio','2022-10-06 07:49:52','Fourth message subject','Fourth message content',0,NULL,0,0,0,10202),(15426918,15426875,15426917,15426916,4696749,'Salvatore Di Dio','2022-10-06 07:49:52','Fourth message subject','Fourth message content',1,NULL,0,0,0,10202),(15426919,15426111,15426917,15426916,4696749,'Salvatore Di Dio','2022-10-06 07:49:52','Fourth message subject','Fourth message content',0,'2022-10-06 07:49:57',0,0,0,10202),(15426920,15426867,15426917,15426916,4696749,'Salvatore Di Dio','2022-10-06 07:49:52','Fourth message subject','Fourth message content',1,NULL,0,0,0,10202),(15426921,15426112,15426917,0,4696749,'Salvatore Di Dio','2022-10-06 07:50:21','Rep: Fourth message subject','A response content (1)',0,NULL,0,0,0,10202),(15426922,15426111,15426917,15426921,4696749,'Salvatore Di Dio','2022-10-06 07:50:21','Rep: Fourth message subject','A response content (1)',1,NULL,0,0,0,10202),(15426923,15426875,15426917,15426921,4696749,'Salvatore Di Dio','2022-10-06 07:50:21','Rep: Fourth message subject','A response content (1)',1,NULL,0,0,0,10202),(15426924,15426867,15426917,15426921,4696749,'Salvatore Di Dio','2022-10-06 07:50:21','Rep: Fourth message subject','A response content (1)',1,NULL,0,0,0,10202),(15426925,15426112,15426917,0,4696749,'Salvatore Di Dio','2022-10-06 07:50:34','Rep: Fourth message subject','A response content (2)',0,NULL,0,0,0,10202),(15426926,15426111,15426917,15426925,4696749,'Salvatore Di Dio','2022-10-06 07:50:34','Rep: Fourth message subject','A response content (2)',1,NULL,0,0,0,10202),(15426927,15426875,15426917,15426925,4696749,'Salvatore Di Dio','2022-10-06 07:50:34','Rep: Fourth message subject','A response content (2)',1,NULL,0,0,0,10202),(15426928,15426867,15426917,15426925,4696749,'Salvatore Di Dio','2022-10-06 07:50:34','Rep: Fourth message subject','A response content (2)',1,NULL,0,0,0,10202);
+INSERT INTO `Messaging_Message` (`messageId`, `folderId`, `threadId`, `sendMessageId`, `senderId`, `sendDate`, `messageSubject`, `messageContent`, `isNew`, `readDate`, `isAnswered`, `isForwarded`, `senderName`, `type_`, `companyId`) VALUES (502206,502205,502207,0,45479,'2023-10-04 15:17:29.605','Menus végés','Les menus végétariens de la cantine ne sont pas assez diversifiés!',0,NULL,0,0,'Rosana NOLLI',0,20097),(502208,502201,502207,502206,45479,'2023-10-04 15:17:29.703','Menus végés','Les menus végétariens de la cantine ne sont pas assez diversifiés!',1,NULL,0,0,'Rosana NOLLI',0,20097);
 /*!40000 ALTER TABLE `Messaging_Message` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `messaging_messagecontent`
+-- Table structure for table `Messaging_MessageAttachFile`
+--
+
+DROP TABLE IF EXISTS `Messaging_MessageAttachFile`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Messaging_MessageAttachFile` (
+  `messageId` bigint(20) NOT NULL,
+  `fileId` bigint(20) NOT NULL,
+  PRIMARY KEY (`messageId`,`fileId`),
+  KEY `IX_DFE0541F` (`messageId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Messaging_MessageAttachFile`
+--
+
+LOCK TABLES `Messaging_MessageAttachFile` WRITE;
+/*!40000 ALTER TABLE `Messaging_MessageAttachFile` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Messaging_MessageAttachFile` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Messaging_MessageContent`
 --
 
 DROP TABLE IF EXISTS `Messaging_MessageContent`;
@@ -56,84 +101,9 @@ CREATE TABLE `Messaging_MessageContent` (
 
 LOCK TABLES `Messaging_MessageContent` WRITE;
 /*!40000 ALTER TABLE `Messaging_MessageContent` DISABLE KEYS */;
-INSERT INTO `Messaging_MessageContent` VALUES (15426901,'<p>First message content</p>'),(15426906,'<p>Second message content</p>'),(15426911,'<p>Third message content</p>'),(15426916,'<p>Fourth message content</p>'),(15426921,'<p>A response content (1)</p>'),(15426925,'<p>A response content (2)</p>');
+INSERT INTO `Messaging_MessageContent` (`messageId`, `messageContent`) VALUES (502206,'<html>\n <head></head>\n<body>\n <p>Les menus végétariens de la cantine ne sont pas assez diversifiés!</p>\n</body></body>\n</html>'),(502208,'<html>\n <head></head>\n<body>\n <p>Les menus végétariens de la cantine ne sont pas assez diversifiés!</p>\n</body></body>\n</html>');
 /*!40000 ALTER TABLE `Messaging_MessageContent` ENABLE KEYS */;
 UNLOCK TABLES;
-
-
---
--- Table structure for table `messaging_messagerecipients`
---
-
-DROP TABLE IF EXISTS `Messaging_MessageRecipients`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Messaging_MessageRecipients` (
-  `messageId` bigint(20) NOT NULL,
-  `recipients` text DEFAULT NULL,
-  PRIMARY KEY (`messageId`),
-  KEY `IX_DDDC60A6` (`messageId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `messaging_messagerecipients`
---
-
-LOCK TABLES `Messaging_MessageRecipients` WRITE;
-/*!40000 ALTER TABLE `Messaging_MessageRecipients` DISABLE KEYS */;
-INSERT INTO `Messaging_MessageRecipients` VALUES (15426901,'328939,4696749,332724,'),(15426906,'328939,332724,4696749,'),(15426911,'4696749,332724,328939,'),(15426916,'332724,4696749,328939,'),(15426921,'4696749,332724,328939,'),(15426925,'4696749,332724,328939,');
-/*!40000 ALTER TABLE `Messaging_MessageRecipients` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
-DROP TABLE IF EXISTS `Messaging_MessagingConfig`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Messaging_MessagingConfig` (
-  `userId` bigint(20) NOT NULL,
-  `isForwardActive` tinyint(4) DEFAULT NULL,
-  `forwardMail` text DEFAULT NULL,
-  `isSignatureActive` tinyint(4) DEFAULT NULL,
-  `signature` text DEFAULT NULL,
-  `isAutoReplyActive` tinyint(4) DEFAULT NULL,
-  `autoReplyContent` text DEFAULT NULL,
-  PRIMARY KEY (`userId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Messaging_MessagingConfig`
---
-
-LOCK TABLES `Messaging_MessagingConfig` WRITE;
-/*!40000 ALTER TABLE `Messaging_MessagingConfig` DISABLE KEYS */;
-INSERT INTO `Messaging_MessagingConfig` VALUES (328939,1,'anya.alst@eduge.ch',0,'',0,''),(332724,1,'serge.demiras@edu.ge.ch',0,'',0,''),(4696749,1,'Salvatore.DiDio@etat.ge.ch',0,'',0,'');
-/*!40000 ALTER TABLE `Messaging_MessagingConfig` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
---
--- Table structure for table `Messaging_MessageAttachFile`
---
-
-DROP TABLE IF EXISTS `Messaging_MessageAttachFile`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Messaging_MessageAttachFile` (
-  `messageId` bigint(20) NOT NULL,
-  `fileId` bigint(20) NOT NULL,
-  PRIMARY KEY (`messageId`,`fileId`),
-  KEY `IX_DFE0541F` (`messageId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
-
-LOCK TABLES `Messaging_MessageAttachFile` WRITE;
-/*!40000 ALTER TABLE `Messaging_MessageAttachFile` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Messaging_MessageAttachFile` ENABLE KEYS */;
-UNLOCK TABLES;
-
 
 --
 -- Table structure for table `Messaging_MessageFolder`
@@ -162,7 +132,41 @@ CREATE TABLE `Messaging_MessageFolder` (
 LOCK TABLES `Messaging_MessageFolder` WRITE;
 /*!40000 ALTER TABLE `Messaging_MessageFolder` DISABLE KEYS */;
 INSERT INTO `Messaging_MessageFolder` (`folderId`, `userId`, `folderName`, `type_`, `parentFolderId`) VALUES (19654701,52216,'Boîte de réception',1,0),(19654702,52216,'Envoyés',3,0),(19654703,52216,'Corbeille',4,0),(19654704,52216,'Brouillons',2,0),(19662701,52216,'dossier personnel',5,0),(19662702,52216,'sous-dossier',5,19662701),(19662703,52216,'Mon autre dossier',5,0);/*!40000 ALTER TABLE `Messaging_MessageFolder` ENABLE KEYS */;
+/*!40000 ALTER TABLE `Messaging_MessageFolder` ENABLE KEYS */;
 UNLOCK TABLES;
 
+--
+-- Table structure for table `Messaging_MessageRecipients`
+--
 
+DROP TABLE IF EXISTS `Messaging_MessageRecipients`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Messaging_MessageRecipients` (
+  `messageId` bigint(20) NOT NULL,
+  `recipients` text DEFAULT NULL,
+  PRIMARY KEY (`messageId`),
+  KEY `IX_DDDC60A6` (`messageId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `Messaging_MessageRecipients`
+--
+
+LOCK TABLES `Messaging_MessageRecipients` WRITE;
+/*!40000 ALTER TABLE `Messaging_MessageRecipients` DISABLE KEYS */;
+INSERT INTO `Messaging_MessageRecipients` (`messageId`, `recipients`) VALUES (502206,'58811,'),(502208,'58811,');
+/*!40000 ALTER TABLE `Messaging_MessageRecipients` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2023-10-04 17:20:36

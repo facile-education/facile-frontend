@@ -26,5 +26,14 @@
     ],
     "modifiedFolderName": "dossier perso modifié",
     "modifiedSubFolderName": "sous dossier modifié"
-  }
+  },
+  "existingThreads": [
+    {
+      "sender": "Rosana Nolly",
+      "recipients": ["Orlan Hue"],
+      "date": "2023/10/04 15:17",
+      "subject": "Menu végés",
+      "content": "Les menus végétariens de la cantine ne sont pas assez diversifiés!"
+    }
+  ]
 }
