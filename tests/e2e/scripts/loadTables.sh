@@ -1,5 +1,6 @@
 #!/bin/bash
 
+DOCKER_NAME=$(grep DOCKER_NAME .env.local | cut -d '=' -f2)
 VM_USER=$(grep VM_USER .env.local | cut -d '=' -f2)
 VM_IP=$(grep VM_IP .env.local | cut -d '=' -f2)
 DB_USER=$(grep DB_USER .env.local | cut -d '=' -f2)
@@ -17,6 +18,7 @@ fi
 if [[ -z $DB_USER || -z $DB_PWD || -z $DB_NAME || -z $DUMP_NAME ]];
 then
   echo "One or more variables are undefined"
+  echo "DOCKER_NAME = $DOCKER_NAME"
   echo "DB_USER = $DB_USER"
   echo "DB_PWD = $DB_PWD"
   echo "DB_NAME = $DB_NAME"
@@ -37,12 +39,19 @@ else
 
     echo "SSH as $VM_USER to reset progression tables."
     ssh $VM_USER@$VM_IP << EOF
-    mysql -u $DB_USER -p$DB_PWD $DB_NAME < $DUMP_NAME
+    mariadb -u $DB_USER -p$DB_PWD $DB_NAME < $DUMP_NAME
     rm $DUMP_NAME
 EOF
     echo "SSH done."
   else
-    mysql -u $DB_USER -p$DB_PWD $DB_NAME < $DUMP_NAME
-    echo "Tables loaded."
+    if [[ $DOCKER_NAME ]];
+    then
+      echo "Run mariadb through docker"
+      docker exec -i $DOCKER_NAME mariadb -u $DB_USER -p$DB_PWD $DB_NAME < $DUMP_NAME
+      echo "Tables loaded."
+    else
+      mariadb -u $DB_USER -p$DB_PWD $DB_NAME < $DUMP_NAME
+      echo "Tables loaded."
+    fi
   fi
 fi
