@@ -1,5 +1,5 @@
+import { messagingURL } from '../../support/constants/urls'
 import { HEADMASTER } from '../../support/constants/users'
-import { url } from '../../support/constants/messaging'
 import { waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
 
 // Have to define here because the generated event for handling function is type of Event not DragEvent by default
@@ -22,18 +22,29 @@ class DataTransfer {
 
 let currentDataTransfer // bad practice but i don't have better.
 
+const getThread = (thread) => {
+  // get thread by subject
+  const lastThreadMessage = thread.find((message) => message.messageIndexInThread === thread.length - 1) // the displayed subject
+  return cy.contains('[data-test=thread-list-item]', lastThreadMessage.subject)
+}
+
 describe('Drag and drop messages', () => {
-  before(() => {
-    cy.exec('npm run db:loadTables messaging_tables.sql')
-    cy.clearDBCache()
-    cy.login(url, HEADMASTER)
+  beforeEach(() => {
+    cy.loadTables('messaging/messaging_tables.sql')
+    cy.login(HEADMASTER, messagingURL)
+    cy.fixture('messaging.json').as('messagingData') // Load in beforeEach to be accessible from 'this' in tests
     waitMessagingToBeLoaded()
   })
 
-  it('drag and drop', () => {
+  it('drag and drop', function () {
     const dataTransfer = new DataTransfer()
+    const headMasterPersonalFolder = this.messagingData.personalFolders.headMasterPersonalFolder
+    const firstThread = this.messagingData.existingThreads[0]
+    const secondThread = this.messagingData.existingThreads[1]
+    const thirdThread = this.messagingData.existingThreads[2]
+    const fourthThread = this.messagingData.existingThreads[3]
 
-    cy.get('[data-test=threads-panel]').get('.thread-list-item').as('threads')
+    cy.get('[data-test=threads-panel]').find('.thread-list-item').as('threads')
     cy.log('Open messaging menu')
     cy.get('[data-test=option_toggleMessagingMenu]').click()
     cy.get('[data-test=messaging-menu]').within(() => {
@@ -41,11 +52,11 @@ describe('Drag and drop messages', () => {
       cy.contains('Brouillons').as('draftFolder')
       cy.contains('Envoyés').as('sentFolder')
       cy.contains('Corbeille').as('trashFolder')
-      cy.contains('sous-dossier').as('personalFolder')
+      cy.contains(headMasterPersonalFolder).as('personalFolder')
     })
 
     cy.log('move thread to draft')
-    cy.get('@threads').eq(0).trigger('dragstart', { dataTransfer: dataTransfer })
+    getThread(firstThread).trigger('dragstart', { dataTransfer })
     currentDataTransfer = dataTransfer
     cy.get('@inBoxFolder').trigger('dragover').should('not.have.class', 'active')
     cy.get('@inBoxFolder').trigger('drop', { dataTransfer: currentDataTransfer })
@@ -55,21 +66,21 @@ describe('Drag and drop messages', () => {
     cy.get('@threads').should('have.length', 3) // The thread should have been moved
 
     cy.log('move message to sent')
-    cy.get('@threads').eq(0).trigger('dragstart', { dataTransfer: dataTransfer })
+    getThread(secondThread).trigger('dragstart', { dataTransfer })
     currentDataTransfer = dataTransfer
     cy.get('@sentFolder').trigger('dragover').should('have.class', 'active')
     cy.get('@sentFolder').trigger('drop', { dataTransfer: currentDataTransfer })
     cy.get('@threads').should('have.length', 2) // The thread should have been moved
 
     cy.log('move message to trash')
-    cy.get('@threads').eq(0).trigger('dragstart', { dataTransfer: dataTransfer })
+    getThread(thirdThread).trigger('dragstart', { dataTransfer })
     currentDataTransfer = dataTransfer
     cy.get('@trashFolder').trigger('dragover').should('have.class', 'active')
     cy.get('@trashFolder').trigger('drop', { dataTransfer: currentDataTransfer })
     cy.get('@threads').should('have.length', 1) // The thread should have been moved
 
     cy.log('move message to personal folder')
-    cy.get('@threads').eq(0).trigger('dragstart', { dataTransfer: dataTransfer })
+    getThread(fourthThread).trigger('dragstart', { dataTransfer })
     currentDataTransfer = dataTransfer
     cy.get('@personalFolder').trigger('dragover').should('have.class', 'active')
     cy.get('@personalFolder').trigger('drop', { dataTransfer: currentDataTransfer })
@@ -79,7 +90,7 @@ describe('Drag and drop messages', () => {
     // Draft
     cy.get('@draftFolder').click()
     cy.get('.header-label').should('contain', 'BROUILLONS')
-    cy.get('@threads').eq(0).trigger('dragstart', { dataTransfer: dataTransfer })
+    getThread(firstThread).trigger('dragstart', { dataTransfer })
     currentDataTransfer = dataTransfer
     cy.get('@inBoxFolder').trigger('dragover').should('have.class', 'active')
     cy.get('@inBoxFolder').trigger('drop', { dataTransfer: currentDataTransfer })
@@ -88,7 +99,7 @@ describe('Drag and drop messages', () => {
     // Sent
     cy.get('@sentFolder').click()
     cy.get('.header-label').should('contain', 'ENVOYÉS')
-    cy.get('@threads').eq(1).trigger('dragstart', { dataTransfer: dataTransfer })
+    getThread(secondThread).trigger('dragstart', { dataTransfer })
     currentDataTransfer = dataTransfer
     cy.get('@inBoxFolder').trigger('dragover').should('have.class', 'active')
     cy.get('@inBoxFolder').trigger('drop', { dataTransfer: currentDataTransfer })
@@ -97,7 +108,7 @@ describe('Drag and drop messages', () => {
     // Trash
     cy.get('@trashFolder').click()
     cy.get('.header-label').should('contain', 'CORBEILLE')
-    cy.get('@threads').eq(0).trigger('dragstart', { dataTransfer: dataTransfer })
+    getThread(thirdThread).trigger('dragstart', { dataTransfer })
     currentDataTransfer = dataTransfer
     cy.get('@inBoxFolder').trigger('dragover').should('have.class', 'active')
     cy.get('@inBoxFolder').trigger('drop', { dataTransfer: currentDataTransfer })
@@ -106,7 +117,7 @@ describe('Drag and drop messages', () => {
     // Personal
     cy.get('@personalFolder').click()
     cy.get('.header-label').should('contain', 'SOUS-DOSSIER')
-    cy.get('@threads').eq(0).trigger('dragstart', { dataTransfer: dataTransfer })
+    getThread(fourthThread).trigger('dragstart', { dataTransfer })
     currentDataTransfer = dataTransfer
     cy.get('@inBoxFolder').trigger('dragover').should('have.class', 'active')
     cy.get('@inBoxFolder').trigger('drop', { dataTransfer: currentDataTransfer })

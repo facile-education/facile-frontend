@@ -25,7 +25,8 @@
       }
     ],
     "modifiedFolderName": "dossier perso modifié",
-    "modifiedSubFolderName": "sous dossier modifié"
+    "modifiedSubFolderName": "sous dossier modifié",
+    "headMasterPersonalFolder": "sous-dossier"
   },
   "existingThreads": [
     [
@@ -79,7 +80,7 @@
         "sender": "Rosana Nolly",
         "recipients": ["Orlan Hue"],
         "date": "2023/10/05 09:02",
-        "subject": "Quartième message",
+        "subject": "Quatrième message",
         "content": "En fait j'aime juste écrire",
         "messageIndexInThread": 0
       }
