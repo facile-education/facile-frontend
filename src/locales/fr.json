@@ -124,6 +124,7 @@
   "Menu": {
     "access-admin": "Accès",
     "administration": "Administration",
+    "AgreeTermsOfUse": "Conditions Générales",
     "AllActivities": "Toutes les activités",
     "AllAnnouncements": "Toutes les annonces",
     "AllEvents": "Tous les évènements",
@@ -147,6 +148,7 @@
     "maintenance": "Maintenance",
     "messaging": "Messagerie",
     "NotFound": "404 Introuvable",
+    "PasswordChange": "Mise à jour du mot de passe",
     "resources": "Ressources",
     "school-life": "Vie scolaire",
     "statistics": "Statistiques",
