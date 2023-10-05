@@ -30,11 +30,15 @@ export default {
 
       return ((/iPad|iPhone|iPod/.test(platform) || (platform === 'MacIntel' && navigator.maxTouchPoints > 1)) &&
         !window.MSStream)
+    },
+    user () {
+      return this.$store.state.user
     }
   },
   watch: {
     menu (value) {
-      if (value !== undefined) {
+      // Do not redirect if user has to agree ToS or change his password
+      if (value !== undefined && this.user.agreedTermsOfUse && !this.user.passwordChange) {
         this.$router.push({ path: this.$route.fullPath })
       }
     }
