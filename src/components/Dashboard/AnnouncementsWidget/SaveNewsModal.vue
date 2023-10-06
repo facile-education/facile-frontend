@@ -334,6 +334,13 @@ export default {
         }
       })
     },
+    addOrderAttributeToAllPopulationItems (populationList) { // TODO : to remove and patch the problem
+      populationList.forEach(population => {
+        if (!population.order) {
+          population.order = 'order_9' // Put at the bottom of the list if no order specified
+        }
+      })
+    },
     getSchoolNewsBroadcastGroups () {
       getSchoolNewsBroadcastGroups().then((data) => {
         if (data.success) {
@@ -354,6 +361,7 @@ export default {
               })
             }
           })
+          this.addOrderAttributeToAllPopulationItems(this.availablePopulationsList)
           this.availablePopulationsList.sort((a, b) => {
             if (a.order < b.order) {
               return 1
@@ -389,6 +397,7 @@ export default {
               })
             }
           })
+          this.addOrderAttributeToAllPopulationItems(this.availablePopulationsList)
           this.availablePopulationsList.sort((a, b) => {
             if (a.order < b.order) {
               return 1
