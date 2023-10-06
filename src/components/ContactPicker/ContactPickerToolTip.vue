@@ -108,7 +108,7 @@ export default {
   position: fixed;
   width: 75vw;
   background-color: #FFFFFF;
-  z-index: 100;
+  z-index: 10;
   border: 1px solid $color-border;
   padding: 14px 24px;
 }
