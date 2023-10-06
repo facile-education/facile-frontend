@@ -1,7 +1,18 @@
-import { now } from '../constants/horairesHorsCadres'
+// import cypress from 'cypress'
+
+import dayjs from 'dayjs'
 
 const waitCalendarToLoad = () => {
   cy.wait(500)
+}
+
+const formatEventTeacherName = (teacher) => {
+  return teacher.firstName[0] + '. ' + teacher.lastName
+}
+
+const getSlot = (slot) => {
+  const startDate = dayjs(slot.startDate, 'YYYY/MM/DD HH:mm')
+  return cy.contains('[data-test="' + startDate.format('MM-DD_HH:mm') + '"]', formatEventTeacherName(slot.teacher))
 }
 
 const createSlot = (slotToCreate) => {
@@ -130,7 +141,7 @@ const checkSlotData = (date, expectedSlot, checkTeachersAndStuff = true) => {
 // Expose the number of events for the current, previous and next week
 // under the alias 'events'
 // apart because of the lot of nested then
-const getWeeksEventsNumber = (expectNoEventAtPreviousWeek = false, nbWeekShift = 0, isMobile = false) => {
+const getWeeksEventsNumber = (now, expectNoEventAtPreviousWeek = false, nbWeekShift = 0, isMobile = false) => {
   cy.get('.fc-timegrid-event').then((currentEvents) => {
     const nbCurrentWeekEvents = currentEvents.length
     // console.log('nbCurrentWeekEvents :', nbCurrentWeekEvents)
@@ -153,8 +164,8 @@ const getWeeksEventsNumber = (expectNoEventAtPreviousWeek = false, nbWeekShift =
         cy.get('.fc-timegrid-event').then((nextEvents) => {
           // console.log('nbNextWeekEvents :', nextEvents.length)
           const events = {
-            nbPreviousWeekEvents: nbPreviousWeekEvents,
-            nbCurrentWeekEvents: nbCurrentWeekEvents,
+            nbPreviousWeekEvents,
+            nbCurrentWeekEvents,
             nbNextWeekEvents: nextEvents.length
           }
           cy.wrap(events).as('events')
@@ -179,8 +190,8 @@ const getWeeksEventsNumber = (expectNoEventAtPreviousWeek = false, nbWeekShift =
         waitCalendarToLoad()
         cy.get('.fc-timegrid-event').then((nextEvents) => {
           const events = {
-            nbPreviousWeekEvents: nbPreviousWeekEvents,
-            nbCurrentWeekEvents: nbCurrentWeekEvents,
+            nbPreviousWeekEvents,
+            nbCurrentWeekEvents,
             nbNextWeekEvents: nextEvents.length
           }
           cy.wrap(events).as('events')
@@ -198,7 +209,9 @@ const getWeeksEventsNumber = (expectNoEventAtPreviousWeek = false, nbWeekShift =
   })
 }
 
-export default {
+export {
+  formatEventTeacherName,
+  getSlot,
   createSlot,
   deleteSlot,
   selectStudent,

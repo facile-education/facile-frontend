@@ -25,7 +25,7 @@ describe('Desktop user selection', () => {
 
   it('Display student planning beside HHC slots', () => {
     // the HHC slots are here
-    cy.get('.fc-timegrid-event').should('have.length', slotTypes.tutoring.nbSlotsAtWeek35)
+    cy.get('.fc-timegrid-event').should('have.length', slotTypes.tutoring.nbSlotsAtSelectedWeek)
 
     // Select student
     cy.get('[data-test=user-completion-input] input').type(studentSearch)
@@ -35,7 +35,7 @@ describe('Desktop user selection', () => {
     waitForRefresh()
 
     // Student's slots were added to previous ones
-    cy.get('.fc-timegrid-event').should('have.length', slotTypes.tutoring.nbSlotsAtWeek35 + studentSlotsNumberAtWeek35)
+    cy.get('.fc-timegrid-event').should('have.length', slotTypes.tutoring.nbSlotsAtSelectedWeek + studentSlotsNumberAtWeek35)
 
     // Students' slot are grayed but not HHC ones
     cy.get('.fc-day-wed > .fc-timegrid-col-frame > :nth-child(2) >> .fc-timegrid-event').within(() => {

@@ -7,12 +7,18 @@
     :disabled-dates="disabledDates"
   >
     <template #default="{ togglePopover }">
-      <NeroIcon
-        name="fa-calendar-alt"
-        type="far"
-        class="icon"
+      <button
+        data-test="toggle-calendar-selector"
+        :aria-label="$t('selectDate')"
+        :title="$t('selectDate')"
         @click="togglePopover()"
-      />
+      >
+        <NeroIcon
+          name="fa-calendar-alt"
+          type="far"
+          class="icon"
+        />
+      </button>
     </template>
   </DatePicker>
 </template>
@@ -83,9 +89,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+button {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
 .icon {
   font-size: 2.5rem;
   padding: 0 0.5rem;
   cursor: pointer;
 }
 </style>
+
+<i18n locale="fr">
+{
+  "selectDate": "Choisir une date"
+}
+</i18n>

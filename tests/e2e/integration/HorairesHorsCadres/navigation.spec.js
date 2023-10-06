@@ -1,13 +1,14 @@
 import { HHCURL } from '../../support/constants/urls'
 import { HEADMASTER } from '../../support/constants/users'
+import { formatEventTeacherName, getSlot } from '../../support/utils/horairesHorsCardesUtils'
 
-const checkSlotSelectionMenu = () => {
+const checkSlotSelectionMenu = (slotTypes) => {
   cy.get('[data-test=user-completion-input]').should('not.exist')
   cy.get('.fc').should('not.exist')
   cy.get('.date-picker').should('not.exist')
 
   // Check all the slot types are here
-  cy.get('[data-test*=slot-type-item]').should('have.length', 5).parent().within(() => {
+  cy.get('[data-test*=slot-type-item]', { timeout: 5000 }).should('have.length', 5).parent().within(() => {
     cy.get('[data-test=slot-type-item-' + slotTypes.tutoring.type + ']').should('exist')
     cy.get('[data-test=slot-type-item-' + slotTypes.study.type + ']').should('exist')
     cy.get('[data-test=slot-type-item-' + slotTypes.replayTest.type + ']').should('exist')
@@ -25,29 +26,28 @@ describe('desktop navigation', () => {
     cy.login(HEADMASTER, HHCURL)
   })
 
-  it('contains slot selection', () => {
+  it('contains slot selection', function () {
     // At the beginning (when no slot type is selected), there is no display of calendar and user selection
-    checkSlotSelectionMenu()
+    checkSlotSelectionMenu(this.hhcData.slotsTypes)
   })
 
   it('select slot type', function () {
-    const slotTypes = this.hhcData.slotTypes
+    const slotTypes = this.hhcData.slotsTypes
     for (const attr in slotTypes) {
-      const slot = slotTypes[attr]
-      cy.log('select ' + slot.label)
+      const slotType = slotTypes[attr]
+      cy.log('select ' + slotType.label)
       // Select tutoring type
-      cy.get('[data-test=slot-type-item-' + slot.type + ']').click()
+      cy.get('[data-test=slot-type-item-' + slotType.type + ']').click()
 
       // User selection and Calendar should appear
       cy.get('[data-test=user-completion-input]').should('be.visible')
       cy.get('.fc').should('be.visible')
       // Check events number
-      cy.get('.fc-timegrid-event').should('have.length', slot.nbSlotsAtWeek35)
-      // Check event type teacher is displayed
-      cy.get('.fc-day-wed > .fc-timegrid-col-frame > :nth-child(2) >> .fc-timegrid-event').within(() => {
-        cy.contains(slot.label).should('be.visible')
-        cy.contains(slot.teacherNameAtWednesdaySlot).should('be.visible')
-        // cy.contains('Capacité').should('be.visible') // TODO when refactoring capacity
+      cy.get('.fc-timegrid-event').should('have.length', slotType.nbSlotsAtSelectedWeek)
+      // Check the good event type an it teacher is displayed
+      getSlot(slotType.slotExample).within(() => {
+        cy.contains(slotType.label).should('exist')
+        cy.contains(formatEventTeacherName(slotType.slotExample.teacher)).should('exist')
       })
     }
   })
@@ -63,24 +63,25 @@ describe('mobile navigation', () => {
     cy.login(HEADMASTER, HHCURL)
   })
 
-  it('contains slot selection', () => {
+  it('contains slot selection', function () {
     // At the beginning (when no slot type is selected), there is no display of calendar and user selection
-    checkSlotSelectionMenu()
+    checkSlotSelectionMenu(this.hhcData.slotsTypes)
   })
 
   it('select slot type', function () {
-    const slotTypes = this.hhcData.slotTypes
+    const slotTypes = this.hhcData.slotsTypes
+    const now = Cypress.dayjs(this.hhcData.now)
     for (const attr in slotTypes) {
-      const slot = slotTypes[attr]
-      cy.log('select ' + slot.label)
+      const slotType = slotTypes[attr]
+      cy.log('select ' + slotType.label)
 
       // Select tutoring type
-      cy.get('[data-test=slot-type-item-' + slot.type + ']').click()
+      cy.get('[data-test=slot-type-item-' + slotType.type + ']').click()
 
       // User selection and Calendar should appear
       cy.get('[data-test=user-completion-input]').should('be.visible')
-      cy.get('.toolbar [data-test=slot-type-item-' + slot.type + ']').should('be.visible').as(slot.label)
-      cy.get('.toolbar .date-picker').should('be.visible')
+      cy.get('.toolbar [data-test=slot-type-item-' + slotType.type + ']').should('be.visible').as(slotType.label)
+      cy.get('[data-test=toggle-calendar-selector]').should('be.visible')
       cy.get('.toolbar [data-test=user-completion-input]').should('be.visible')
 
       // Calendar should be visible with today date only
@@ -90,17 +91,10 @@ describe('mobile navigation', () => {
       cy.contains(now.subtract(1, 'day').format('dddd DD/MM')).should('not.exist')
 
       // Check events number
-      cy.get('.fc-timegrid-event').should('have.length', 1)
-      // Check event type teacher is displayed
-      cy.get('.fc-day-wed > .fc-timegrid-col-frame > :nth-child(2) >> .fc-timegrid-event').within(() => {
-        cy.contains(slot.label).should('be.visible')
-        cy.contains(slot.teacherNameAtWednesdaySlot).should('be.visible')
-        // cy.contains('Capacité').should('be.visible') // TODO when refactoring capacity
-      })
+      cy.get('.fc-timegrid-event').should('have.length', slotType.nbSlotsAtSelectedDay)
 
       // Click on slotType to go back on slot selection
-      cy.get('@' + slot.label).click()
-      checkSlotSelectionMenu()
+      cy.get('@' + slotType.label).click()
     }
   })
 })

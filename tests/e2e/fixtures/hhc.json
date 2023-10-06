@@ -5,36 +5,86 @@
       "type": 4,
       "label": "Dépannage",
       "color": "#8763CA",
-      "nbSlotsAtWeek35": 4,
-      "teacherNameAtWednesdaySlot": "C. Kummer"
+      "nbSlotsAtSelectedWeek": 7,
+      "nbSlotsAtSelectedDay": 2,
+      "slotExample": {
+        "startDate": "2023/10/03 16:20",
+        "endDate": "2023/10/03 17:15",
+        "teacher": {
+          "firstName": "Sidney",
+          "lastName": "PACHECO"
+        },
+        "capacity": 20,
+        "freePlaces": 19
+      }
     },
     "study": {
       "type": 5,
       "label": "Cercle d'étude",
       "color": "#32AC71",
-      "nbSlotsAtWeek35": 4,
-      "teacherNameAtWednesdaySlot": "A. Veluz"
+      "nbSlotsAtSelectedWeek": 3,
+      "nbSlotsAtSelectedDay": 1,
+      "slotExample": {
+        "startDate": "2023/10/05 16:20",
+        "endDate": "2023/10/05 17:15",
+        "teacher": {
+          "firstName": "Morgan",
+          "lastName": "WALLACE"
+        },
+        "capacity": 20,
+        "freePlaces": 19
+      }
     },
     "replayTest": {
       "type": 3,
       "label": "Travaux à refaire",
       "color": "#3694B7",
-      "nbSlotsAtWeek35": 4,
-      "teacherNameAtWednesdaySlot": "D. Jovanovic"
+      "nbSlotsAtSelectedWeek": 2,
+      "nbSlotsAtSelectedDay": 1,
+      "slotExample": {
+        "startDate": "2023/10/05 12:50",
+        "endDate": "2023/10/05 13:35",
+        "teacher": {
+          "firstName": "Sidney",
+          "lastName": "PACHECO"
+        },
+        "capacity": 20,
+        "freePlaces": 19
+      }
     },
     "detention": {
       "type": 2,
       "label": "Retenue",
       "color": "#EDA12A",
-      "nbSlotsAtWeek35": 3,
-      "teacherNameAtWednesdaySlot": "A. Regad"
+      "nbSlotsAtSelectedWeek": 5,
+      "nbSlotsAtSelectedDay": 1,
+      "slotExample": {
+        "startDate": "2023/10/02 07:55",
+        "endDate": "2023/10/02 08:40",
+        "teacher": {
+          "firstName": "Jamie",
+          "lastName": "TAW"
+        },
+        "capacity": 15,
+        "freePlaces": 14
+      }
     },
     "fired": {
       "type": 1,
       "label": "Renvoi",
       "color": "#f00",
-      "nbSlotsAtWeek35": 6,
-      "teacherNameAtWednesdaySlot": "F. Vuilleumier Freymond"
+      "nbSlotsAtSelectedDay": 6,
+      "nbSlotsAtSelectedWeek": 27,
+      "slotExample": {
+        "startDate": "2023/10/03 10:35",
+        "endDate": "2023/10/03 11:20",
+        "teacher": {
+          "firstName": "Clemence",
+          "lastName": "WHITEMAN"
+        },
+        "capacity": 15,
+        "freePlaces": 14
+      }
     }
   },
   "groupName": "0922R2",
