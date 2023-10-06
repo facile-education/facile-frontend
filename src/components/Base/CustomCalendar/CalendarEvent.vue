@@ -1,7 +1,7 @@
 <template>
   <div
     class="calendar-event"
-    :data-cy="cy"
+    :data-test="cy"
   >
     <div
       class="fc-event-title"
@@ -68,7 +68,7 @@ export default {
       return this.appEvent.capacity !== undefined ? (i18n.global.t('NotUsualSlots.capacity') + (this.appEvent.capacity - this.appEvent.nbRegisteredStudents) + '/' + this.appEvent.capacity) : ''
     },
     cy () {
-      return dayjs(this.event.event.start, 'YYYY-MM-DD HH:mm').format('MM-DD_HH:mm')
+      return dayjs(this.event.event.start).format('MM-DD_HH:mm')
     }
   }
 }
