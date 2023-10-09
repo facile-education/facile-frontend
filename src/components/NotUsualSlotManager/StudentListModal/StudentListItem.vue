@@ -1,5 +1,8 @@
 <template>
-  <div class="student">
+  <div
+    class="student"
+    data-test="student-list-item"
+  >
     <span> {{ formattedStudent }} </span>
     <span
       v-if="student.subject"
@@ -82,7 +85,7 @@ export default {
       return notUsualSlotsConstants.getSlotTypeByNumber(this.event.type)
     },
     formattedStudent () {
-      return toPascalCase(this.student.firstName) + ' ' + toPascalCase(this.student.lastName) + ' - ' + this.student.className
+      return this.student.firstName + ' ' + this.student.lastName + ' - ' + this.student.className
     },
     formattedSubject () {
       return this.student.subject ? toPascalCase(this.student.subject) : ''

@@ -40,6 +40,7 @@
               <button
                 :aria-label="option.label"
                 :title="option.label"
+                :data-test="option.name + '-option'"
                 @click="$emit('optionClicked', option)"
               >
                 <NeroIcon
