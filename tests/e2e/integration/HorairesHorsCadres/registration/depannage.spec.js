@@ -106,7 +106,6 @@ describe('Depannage registration', () => {
   })
 
   it('registration behaviour', function () {
-    cy.login(HEADMASTER, HHCURL)
     const slotToRegisterInside = this.hhcData.slotsTypes.tutoring.slotExample
 
     // Connect with someone who can register
@@ -126,7 +125,8 @@ describe('Depannage registration', () => {
     getUserSlot(slotToRegisterInside).should('exist')
 
     // Check the slot's student list
-    getSlot(slotToRegisterInside).click()
+    const capacityLabel = slotToRegisterInside.capacity - 1 + '/' + slotToRegisterInside.capacity
+    getSlot(slotToRegisterInside).should('contain', capacityLabel).click()
     cy.get('[data-test=showStudentList-option]').click()
     cy.get('[data-test=student-list-modal]').within(() => {
       cy.contains(studentToRegister.firstName + ' ' + studentToRegister.lastName)
