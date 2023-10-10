@@ -12,14 +12,12 @@ const formatEventTeacherName = (teacher) => {
 
 const getSlot = (slot) => {
   const startDate = dayjs(slot.startDate, 'YYYY/MM/DD HH:mm')
-  return cy.contains('[data-test="' + startDate.format('MM-DD_HH:mm') + '"]', formatEventTeacherName(slot.teacher))
+  return cy.contains(':not(.grayed) >> [data-test="' + startDate.format('MM-DD_HH:mm') + '"]', formatEventTeacherName(slot.teacher))
 }
 
-const loadStudentSchedule = (student) => {
-  cy.get('input').type(student.lastName)
-  cy.tick(500)
-  cy.contains(student.lastName + ' ' + student.firstName).click()
-  cy.get('.suggestion-list').should('not.exist')
+const getUserSlot = (slot) => {
+  const startDate = dayjs(slot.startDate, 'YYYY/MM/DD HH:mm')
+  return cy.contains('.grayed >> [data-test="' + startDate.format('MM-DD_HH:mm') + '"]', formatEventTeacherName(slot.teacher))
 }
 
 const openStudentListModal = (slot) => {
@@ -50,12 +48,15 @@ const deleteSlot = (slotToDelete, capacity) => {
     cy.contains('button', 'Continuer').click()
   })
 }
+const selectSlotType = (slotType) => {
+  cy.get('[data-test=slot-type-item-' + slotType.type + ']', { timeout: 6000 }).click()
+}
 
 const selectStudent = (student) => {
-  cy.get('[data-test=user-completion-input] input').type(student.search)
+  cy.get('input').type(student.lastName)
   cy.tick(500)
-  cy.contains(student.name).click()
-  waitCalendarToLoad()
+  cy.contains(student.lastName + ' ' + student.firstName).click()
+  cy.get('.suggestion-list').should('not.exist')
 }
 
 const clearSelectedUser = () => {
@@ -225,8 +226,9 @@ const getWeeksEventsNumber = (now, expectNoEventAtPreviousWeek = false, nbWeekSh
 export {
   formatEventTeacherName,
   openStudentListModal,
-  loadStudentSchedule,
+  selectSlotType,
   getSlot,
+  getUserSlot,
   createSlot,
   deleteSlot,
   selectStudent,

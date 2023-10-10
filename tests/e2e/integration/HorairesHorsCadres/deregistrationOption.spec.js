@@ -10,9 +10,9 @@ import {
   TEACHER
 } from '../../support/constants/users'
 import {
-  getSlot,
-  loadStudentSchedule,
-  openStudentListModal,
+  getSlot, getUserSlot,
+  openStudentListModal, selectSlotType,
+  selectStudent,
   waitCalendarToLoad
 } from '../../support/utils/horairesHorsCardesUtils'
 import { getThread, waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
@@ -70,7 +70,7 @@ const rolesToBeNotifiedOfDeregistration = { // if differents than the unregister
 
 const haveDeregistrationPermissions = {
   tutoring: {
-    [REGISTERER.lastName]: true,
+    [REGISTERER('tutoring').lastName]: true,
     [TEACHER.lastName]: false,
     [CLASSTEACHER.lastName]: false,
     [DOYEN.lastName]: false,
@@ -78,7 +78,7 @@ const haveDeregistrationPermissions = {
     [SCHOOL_ADMIN.lastName]: false
   },
   fired: {
-    [REGISTERER.lastName]: false,
+    [REGISTERER('fired').lastName]: false,
     [TEACHER.lastName]: false,
     [CLASSTEACHER.lastName]: false,
     [DOYEN.lastName]: true,
@@ -86,7 +86,7 @@ const haveDeregistrationPermissions = {
     [SCHOOL_ADMIN.lastName]: true
   },
   study: {
-    [REGISTERER.lastName]: true,
+    [REGISTERER('study').lastName]: true,
     [TEACHER.lastName]: true,
     [CLASSTEACHER.lastName]: true,
     [DOYEN.lastName]: true,
@@ -94,7 +94,7 @@ const haveDeregistrationPermissions = {
     [SCHOOL_ADMIN.lastName]: true
   },
   replayTest: {
-    [REGISTERER.lastName]: true,
+    [REGISTERER('replayTest').lastName]: true,
     [TEACHER.lastName]: false,
     [CLASSTEACHER.lastName]: false,
     [DOYEN.lastName]: true,
@@ -102,7 +102,7 @@ const haveDeregistrationPermissions = {
     [SCHOOL_ADMIN.lastName]: true
   },
   detention: {
-    [REGISTERER.lastName]: true,
+    [REGISTERER('detention').lastName]: true,
     [TEACHER.lastName]: false,
     [CLASSTEACHER.lastName]: false,
     [DOYEN.lastName]: true,
@@ -131,10 +131,17 @@ describe('deregistration option', () => {
         cy.login(role, HHCURL)
 
         // Select slot
-        cy.get('[data-test=slot-type-item-' + slotType.type + ']').click()
+        selectSlotType(slotType)
         waitCalendarToLoad()
 
-        cy.get('[data-test=slot-type-item-' + slotType.type + ']', { timeout: 6000 }).click()
+        if (attr === 'fired' && role === TEACHER) { // close pending firing modal
+          cy.get('[data-test=pending-firing-modal]').within(() => {
+            cy.get('input').type('j\'ai mes raisons')
+            cy.contains('Envoyer').click()
+          })
+        }
+
+        selectSlotType(slotType)
         getSlot(slotType.slotExample).click()
         cy.get('[data-test=showStudentList-option]').click({ force: true }) // Because sometimes calendars is slow to render and element can pop everywhere
 
@@ -168,7 +175,7 @@ describe('deregistration option', () => {
       cy.login(unregisterRole, HHCURL)
 
       // Select slot
-      cy.get('[data-test=slot-type-item-' + slotType.type + ']').click()
+      selectSlotType(slotType)
       waitCalendarToLoad()
 
       // Unregister student
@@ -188,8 +195,8 @@ describe('deregistration option', () => {
         cy.contains('[data-test=student-list-item]', formatStudentName(REGISTERED_STUDENT)).should('not.exist')
         cy.get('[data-test="closeModal"]').click()
       })
-      loadStudentSchedule(REGISTERED_STUDENT)
-      getSlot(slotToUnregister).should('have.length', 1) // To test that user do not have te slot in his schedule next to hhc slots
+      selectStudent(REGISTERED_STUDENT)
+      getUserSlot(slotToUnregister).should('not.exist')
 
       // Check deregistration notification
       rolesToBeNotifiedOfDeregistration[attr].forEach((role) => {

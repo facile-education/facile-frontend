@@ -1,101 +1,118 @@
-import { TEACHER } from '../../../support/constants/users'
+import { HHCURL, messagingURL } from '../../../support/constants/urls'
+import { CLASSTEACHER, DEPANNAGE_SUPERVISOR, DOYEN, HEADMASTER, PARENT, STUDENT } from '../../../support/constants/users'
 import {
-  now,
-  slotTypes,
-  url
-} from '../../../support/constants/horairesHorsCadres'
-import utils from '../../../support/utils/horairesHorsCardesUtils'
+  getSlot, getUserSlot,
+  selectSlotType,
+  selectStudent
+} from '../../../support/utils/horairesHorsCardesUtils'
+import { getThread, waitMessagingToBeLoaded } from '../../../support/utils/messagingUtils'
 
-const slotToRegisterInside = {
-  day: 'wed',
-  date: now,
-  startHour: '09:00',
-  endHour: '10:00',
-  teacherSearch: 'reg',
-  teacherName: 'Regad Alexandre',
-  teacherLastName: 'Regad',
-  roomNumber: 'tg',
-  capacity: 2
-}
+const studentToRegister = STUDENT // Because normal Student is already register in the hhc tables
 
-const studentsToRegister = {
-  name: 'ALOSTA ANYA (1051AC)',
-  formattedName: 'Anya Alosta - 1051AC',
-  search: 'alo'
+const notifications = (registeredSlot) => {
+  return [ // TODO: test content
+    {
+      role: PARENT,
+      expectedThread: [{
+        sender: DEPANNAGE_SUPERVISOR.firstName + ' ' + DEPANNAGE_SUPERVISOR.lastName,
+        recipients: [PARENT.firstName + ' ' + PARENT.lastName],
+        date: '',
+        subject: 'Dépannage le ' + Cypress.dayjs(registeredSlot.startDate, 'YYYY/MM/DD HH:mm').format('DD MMMM YYYY [à] HH[h]mm'),
+        content: '',
+        messageIndexInThread: 0
+      }]
+    },
+    {
+      role: CLASSTEACHER,
+      expectedThread: [{
+        sender: DEPANNAGE_SUPERVISOR.firstName + ' ' + DEPANNAGE_SUPERVISOR.lastName,
+        recipients: [CLASSTEACHER.firstName + ' ' + CLASSTEACHER.lastName],
+        date: '',
+        subject: 'Dépannage le ' + Cypress.dayjs(registeredSlot.startDate, 'YYYY/MM/DD HH:mm').format('DD MMMM YYYY [à] HH[h]mm'),
+        content: '',
+        messageIndexInThread: 0
+      }]
+    },
+    {
+      role: DOYEN,
+      expectedThread: [{
+        sender: DEPANNAGE_SUPERVISOR.firstName + ' ' + DEPANNAGE_SUPERVISOR.lastName,
+        recipients: [DOYEN.firstName + ' ' + DOYEN.lastName],
+        date: '',
+        subject: 'Dépannage le ' + Cypress.dayjs(registeredSlot.startDate, 'YYYY/MM/DD HH:mm').format('DD MMMM YYYY [à] HH[h]mm'),
+        content: '',
+        messageIndexInThread: 0
+      }]
+    }
+  ]
 }
 
 const testRegistrationModal = (slot, studentToRegister) => {
   cy.get('[data-test=student-registration-modal]').within(() => {
-    cy.contains(studentToRegister.formattedName)
-    cy.contains(slot.startHour)
+    cy.contains(studentToRegister.firstName + ' ' + studentToRegister.lastName)
+    cy.contains(Cypress.dayjs(slot.startDate, 'YYYY/MM/DD HH:mm').format('[le] DD MMMM YYYY [à] HH:mm'))
     cy.get('textarea').should('not.exist')
     cy.get('.notify-parents [type="checkbox"]').should('not.exist')
 
     cy.contains('button', 'Inscrire').click()
   })
-  utils.waitCalendarToLoad()
   cy.get('[data-test=student-registration-modal]').should('not.exist')
 }
 
 // NB: Some of registration main features are already tested in study type, so here is juste a basic registration test for replayTest slots
 describe('Depannage registration', () => {
   beforeEach(() => {
-    cy.clock(now.toDate().getTime())
-    cy.exec('npm run db:loadTables schoollife_tables.sql')
-    cy.clearDBCache()
-    cy.logout()
-    cy.login(url)
-    cy.get('[data-test=slot-type-item-' + slotTypes.tutoring.type + ']').click()
+    cy.fixture('hhc.json').as('hhcData').then(data => {
+      cy.clock(Cypress.dayjs(data.now, 'YYYY/MM/DD HH:mm').toDate().getTime())
+    })
+    cy.loadTables('schoollife/schoollife_tables_empty.sql')
+    cy.loadTables('messaging/messaging_tables_empty.sql') // to empty
   })
 
-  it('registration behaviour', () => {
-    // Create slot
-    utils.createSlot(slotToRegisterInside)
+  it(' is present for good roles', function () {
+    // TODO
+  })
+
+  it('registration behaviour', function () {
+    cy.login(HEADMASTER, HHCURL)
+    const slotToRegisterInside = this.hhcData.slotsTypes.tutoring.slotExample
+    selectSlotType(this.hhcData.slotsTypes.tutoring)
 
     // Select student
-    utils.selectStudent(studentsToRegister)
+    selectStudent(studentToRegister)
 
     // Open registration modal
-    utils.openSlotPopup(slotToRegisterInside, '2/2')
-    cy.get('[data-test=openRegistration-option]').should('not.exist') // only the slot'teacher can regiser student
+    getSlot(slotToRegisterInside).click()
+    cy.get('[data-test=registerStudent-option]').should('not.exist') // only the slot'teacher can regiser student
 
     // Reconnect with the slot's teacher
-    cy.logout()
-    cy.login(url, TEACHER)
-    cy.get('[data-test=slot-type-item-' + slotTypes.tutoring.type + ']').click()
+    cy.login(DEPANNAGE_SUPERVISOR, HHCURL)
+    selectSlotType(this.hhcData.slotsTypes.tutoring)
 
     // Select student
-    utils.selectStudent(studentsToRegister)
+    selectStudent(studentToRegister)
     // Open registration modal
-    utils.openSlotPopup(slotToRegisterInside, '2/2')
-    cy.get('[data-test=openRegistration-option]').click()
+    getSlot(slotToRegisterInside).click()
+    cy.get('[data-test=registerStudent-option]').click()
 
     // Test registration modal (ends by registering student)
-    testRegistrationModal(slotToRegisterInside, studentsToRegister)
+    testRegistrationModal(slotToRegisterInside, studentToRegister)
 
     // Check the HHC slot is added in grey to the student's schedule
-    cy.get('.grayed >> [data-test="' + slotToRegisterInside.date.format('MM-DD') + '_' + slotToRegisterInside.startHour + '"]').within(() => {
-      cy.contains(slotToRegisterInside.teacherLastName).first().should('exist')
-    })
+    getUserSlot(slotToRegisterInside).should('exist')
 
     // Check the slot's student list
-    utils.openSlotPopup(slotToRegisterInside, '1/2')
+    getSlot(slotToRegisterInside).click()
     cy.get('[data-test=showStudentList-option]').click()
     cy.get('[data-test=student-list-modal]').within(() => {
-      cy.contains(studentsToRegister.formattedName)
+      cy.contains(studentToRegister.firstName + ' ' + studentToRegister.lastName)
     })
     cy.get('[data-test=closeModal]').click()
 
-    // Go in Horaires service
-    cy.visit('/nero/horaires')
-
-    // Check slots for the first student
-    utils.clearSelectedUser()
-    utils.selectStudent(studentsToRegister)
-    cy.contains('[data-cy="' + slotToRegisterInside.date.format('MM-DD') + '_' + slotToRegisterInside.startHour + '"]', 'Dépannage').parent().within(() => {
-      cy.contains(slotToRegisterInside.teacherLastName).first().should('exist')
+    notifications(slotToRegisterInside).forEach(notification => {
+      cy.login(notification.role, messagingURL)
+      waitMessagingToBeLoaded()
+      getThread(notification.expectedThread).click()
     })
-
-    // TODO Check notification (parents and students?)
   })
 })

@@ -99,19 +99,25 @@ const PARENT = { // Student's parent
 const MULTI_STUDENT1 = { // Her parent has 2 children
   login: 'eleanora.cmncn',
   password,
-  role: 'student'
+  role: 'student',
+  firstName: 'Eleanora',
+  lastName: 'COMENCINI'
 }
 
 const MULTI_STUDENT2 = { // Her parent has 2 children
   login: 'barbara.cpr',
   password,
-  role: 'student'
+  role: 'student',
+  firstName: 'Barbara',
+  lastName: 'COOPER'
 }
 
 const MULTI_PARENT = { // This parent has 2 children : MULTI_STUDENT1 and MULTI_STUDENT2
   login: 'pcomen',
   password,
-  role: 'parent'
+  role: 'parent',
+  firstName: 'Percival',
+  lastName: 'Comencini'
 }
 
 export {
