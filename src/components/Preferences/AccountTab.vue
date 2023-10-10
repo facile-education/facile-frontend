@@ -39,8 +39,8 @@
               @click="toggleImagePicker"
             >
               <img
-                src="@/assets/icons/icon_plus_white.svg"
-                alt="trash"
+                src="@/assets/icons/photo.svg"
+                alt="plus"
               >
             </PentilaButton>
           </div>
@@ -225,19 +225,16 @@ h4 {
         .cancel, .add-picture {
           position: absolute;
           z-index: 2;
-          top: 0;
-          right: 5px;
+          top: -4px;
+          right: 0px;
           display: flex;
           align-items: center;
           justify-content: center;
+          border: 2px white solid;
 
           img {
             height: 16px;
           }
-        }
-
-        .add-picture {
-          background-color: $success;
         }
       }
     }
