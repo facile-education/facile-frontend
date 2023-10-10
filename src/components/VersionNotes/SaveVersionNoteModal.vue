@@ -25,10 +25,9 @@
           v-t="'contentLabel'"
           class="content-label"
         />
-        <CKEditor
-          v-model="htmlContent"
+        <TextContent
+          v-model:content="htmlContent"
           class="ck-editor"
-          :editor="editor"
         />
         <PentilaErrorMessage :error-message="formErrorList.htmlContent" />
       </div>
@@ -44,7 +43,7 @@
 
 <script>
 import InlineEditor from '@ckeditor/ckeditor5-build-inline'
-import { component as CKEditor } from '@ckeditor/ckeditor5-vue'
+import TextContent from '@components/Base/TextContent.vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 
@@ -52,7 +51,7 @@ import { createVersionNote, updateVersionNote } from '@/api/versionNotes.service
 
 export default {
   name: 'SaveVersionNoteModal',
-  components: { CKEditor },
+  components: { TextContent },
   inject: ['mq'],
   props: {
     isCreation: {
@@ -97,6 +96,7 @@ export default {
   },
   methods: {
     submit () {
+      console.log(this.htmlContent)
       if (this.v$.$invalid) {
         this.v$.$touch()
       } else {
@@ -166,7 +166,7 @@ export default {
 }
 
 .ck-editor {
-  border: 1px solid $neutral-40 !important;
+  border: 1px solid black !important;
 }
 
 </style>
