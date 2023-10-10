@@ -53,6 +53,7 @@
       </li>
     </ul>
 
+    <span class="username">{{ firstName }}</span>
     <div class="logout-container">
       <a
         class="logout-link"
@@ -121,6 +122,9 @@ export default {
     }
   },
   computed: {
+    firstName () {
+      return this.$store.state.user.firstName
+    },
     isAdministrator () {
       return this.$store.state.user.isAdministrator
     },
@@ -206,38 +210,47 @@ ul {
       background-color: $color-hover-bg;
     }
   }
+}
 
-  .pellet {
-    position: absolute;
-    top: 50%;
-    right: 1rem;
-    transform: translateY(-50%);
+.pellet {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+}
+
+.username {
+  margin-top: 0.5rem;
+  display: block;
+  text-align: center;
+  color: $neutral-80;
+  @extend %font-regular-xs;
+}
+
+.logout-container {
+  padding: 0 1rem;
+}
+
+a.logout-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 6px 6px;
+  color: white;
+  text-decoration: none;
+  background-color: $color-logout-button;
+  border-radius: 6px;
+
+  &:hover {
+    text-decoration: underline;
   }
 
-  .logout-container {
-    padding: 1rem 1rem 0 1rem;
-  }
-
-  a.logout-link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    padding: 6px 6px;
-    color: white;
-    text-decoration: none;
-    background-color: $color-logout-button;
-    border-radius: 6px;
-
-    &:hover {
-      text-decoration: underline;
-    }
-
-    span {
-      padding: 0 8px;
-    }
+  span {
+    padding: 0 8px;
   }
 }
+
 </style>
 
 <i18n locale="fr">
