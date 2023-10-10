@@ -1,4 +1,4 @@
-import { HHCURL } from '../../support/constants/urls'
+import { HHCURL, messagingURL } from '../../support/constants/urls'
 import {
   CLASSTEACHER,
   DEPANNAGE_SUPERVISOR,
@@ -9,21 +9,29 @@ import {
   STUDENT,
   TEACHER
 } from '../../support/constants/users'
-import { getSlot, waitCalendarToLoad } from '../../support/utils/horairesHorsCardesUtils'
+import {
+  getSlot,
+  loadStudentSchedule,
+  openStudentListModal,
+  waitCalendarToLoad
+} from '../../support/utils/horairesHorsCardesUtils'
+import { getThread, waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
 
-// const slotToRegisterInside = {
-//   day: 'wed',
-//   date: now,
-//   startHour: '12:00',
-//   endHour: '13:00',
-//   teacherSearch: 'reg',
-//   teacherName: 'Regad Alexandre',
-//   teacherLastName: 'Regad',
-//   roomNumber: 'tg',
-//   capacity: 2
-// }
+const expectedDeregistrationThread = (slotType, slot, student, deregisterer) => {
+  const prefix = slotType.type === 5 ? 'Fin du ' : 'Annulation ' + (slotType.type === 1 ? 'de ' : '')
+  const slotLabel = slotType.type === 3 ? 'travail à refaire en Allemand' : slotType.label.toLowerCase()
 
-const formatStudentNameLikeInStudentListModal = (student) => {
+  return [{
+    sender: deregisterer.firstName + ' ' + deregisterer.lastName,
+    recipients: [student.firstName + ' ' + student.lastName],
+    date: '',
+    subject: prefix + slotLabel + (slotType.type === 1 ? ' : ' + formatStudentName(student) : '') + (slotType.type === 2 ? ' du ' : ' le ') + Cypress.dayjs(slot.startDate, 'YYYY/MM/DD HH:mm').format('dddd [à] H[h]mm'),
+    content: 'TODO', // TODO test all contents
+    messageIndexInThread: 0
+  }]
+}
+
+const formatStudentName = (student) => {
   return student.firstName + ' ' + student.lastName
 }
 
@@ -32,6 +40,33 @@ const REGISTERER = (slotType) => {
   return slotType === 'tutoring' ? { ...DEPANNAGE_SUPERVISOR, role: 'Registerer' } : { ...HEADMASTER, role: 'Registerer' }
 }
 const rolesToTestPermission = (slotType) => { return [REGISTERER(slotType), TEACHER, CLASSTEACHER, SCHOOL_ADMIN, DOYEN, SECRETARY] }
+
+const rolesToBeNotifiedOfDeregistration = { // if differents than the unregisterer + add parents if option is checked
+  tutoring: [
+    CLASSTEACHER,
+    DOYEN
+  ],
+  fired: [
+    // TODO: maitres et co-enseignants du cours qui as renvoyé
+    CLASSTEACHER,
+    DOYEN
+  ],
+  study: [
+    STUDENT,
+    CLASSTEACHER,
+    DOYEN
+  ],
+  replayTest: [
+    STUDENT,
+    CLASSTEACHER,
+    DOYEN
+  ],
+  detention: [
+    STUDENT,
+    CLASSTEACHER,
+    DOYEN
+  ]
+}
 
 const haveDeregistrationPermissions = {
   tutoring: {
@@ -76,48 +111,6 @@ const haveDeregistrationPermissions = {
   }
 }
 
-// const rolesToHaveDeregistrationMessage = {
-//   [slotTypes.tutoring.label]: [CLASSTEACHER, DOYEN],
-//   [slotTypes.fired.label]: [FIRING_SOURCE_TEACHER, CLASSTEACHER, DOYEN],
-//   [slotTypes.study.label]: [STUDENT, CLASSTEACHER, DOYEN],
-//   [slotTypes.replayTest.label]: [STUDENT, CLASSTEACHER, DOYEN],
-//   [slotTypes.detention.label]: [STUDENT, CLASSTEACHER, DOYEN]
-// }
-
-// function getRandomInt (max) {
-//   return Math.floor(Math.random() * max)
-// }
-// const getSlotToNotNotifyParent = (slotTypes) => {
-//   const eligibleSlots = [1, 2, 3] // Study, ReplayTest and Detention
-//   const randIndex = eligibleSlots[getRandomInt(3)]
-//   const randomSlotKey = Object.keys(slotTypes)[eligibleSlots[randIndex]]
-//   return slotTypes[randomSlotKey]
-// }
-
-// const registerStudent = (haveToSelectCourse, slot, notifyParents = true) => { // Just fill registration modal and submit
-//   if (haveToSelectCourse) {
-//     cy.get('.base-dropdown').click().within(() => {
-//       cy.get('li').first().click()
-//     })
-//   }
-//   if (!notifyParents && slot.label !== 'Renvoi') {
-//     cy.get('.notify-parents [type="checkbox"]').uncheck()
-//   }
-//   cy.get('[data-test=student-registration-modal]').within(() => {
-//     cy.contains('button', 'Inscrire').click()
-//   })
-//   waitCalendarToLoad()
-//   cy.get('[data-test=student-registration-modal]').should('not.exist')
-// }
-
-// const checkMessage = (unregisterer, slotType) => {
-//   cy.get('#nav_entry_messagerie').click()
-//   cy.get('.message-container').first().within(() => { // have to be the last notification
-//     cy.contains(unregisterer.firstName + ' ' + unregisterer.lastName)
-//     cy.contains(slotType.label === 'Cercle d\'étude' ? 'Fin du cercle d\'étude' : 'Annulation ')
-//   })
-// }
-
 describe('deregistration option', () => {
   beforeEach(() => {
     cy.fixture('hhc.json').as('hhcData').then(data => {
@@ -126,7 +119,7 @@ describe('deregistration option', () => {
     cy.loadTables('schoollife/schoollife_tables.sql')
   })
 
-  it.only('is present for good roles ', function () {
+  it('is present for good roles ', function () {
     const slotTypes = this.hhcData.slotsTypes
     for (const attr in slotTypes) {
       const slotType = slotTypes[attr]
@@ -147,12 +140,12 @@ describe('deregistration option', () => {
 
         // Open the list and unregister student
         cy.get('[data-test=student-list-modal]').within(() => {
-          cy.log(attr + ' ' + role.lastName + ' ' + REGISTERER(slotType).lastName)
+          cy.log(attr + ' ' + role.lastName + ' ' + REGISTERER(attr).lastName)
           if (haveDeregistrationPermissions[attr][role.lastName]) {
-            cy.contains('[data-test=student-list-item]', formatStudentNameLikeInStudentListModal(REGISTERED_STUDENT))
+            cy.contains('[data-test=student-list-item]', formatStudentName(REGISTERED_STUDENT))
               .find('[data-test=unregister]').should('be.visible')
           } else {
-            cy.contains('[data-test=student-list-item]', formatStudentNameLikeInStudentListModal(REGISTERED_STUDENT))
+            cy.contains('[data-test=student-list-item]', formatStudentName(REGISTERED_STUDENT))
               .find('[data-test=unregister]').should('not.exist')
           }
 
@@ -163,17 +156,26 @@ describe('deregistration option', () => {
   })
 
   it('Deregister student ', function () {
+    cy.loadTables('messaging/messaging_tables_empty.sql') // to empty
+
     const slotTypes = this.hhcData.slotsTypes
     for (const attr in slotTypes) {
       const slotType = slotTypes[attr]
-      const unregisterRole = getRoleThatCanUnregisterSlot(slotType)
+      const unregisterRole = REGISTERER(attr) // Generally, (registerer can deregister)
       const slotToUnregister = slotType.slotExample
+
+      cy.log('test derigistration on ' + slotType + ' with deregiterer ' + unregisterRole.lastName)
+      cy.login(unregisterRole, HHCURL)
+
+      // Select slot
+      cy.get('[data-test=slot-type-item-' + slotType.type + ']').click()
+      waitCalendarToLoad()
 
       // Unregister student
       cy.log('Unregiter student from slottype ' + slotType)
       cy.log(unregisterRole, HHCURL)
       openStudentListModal(slotToUnregister).within(() => {
-        cy.contains('[data-test=student-list-item]', formatStudentNameLikeInStudentListModal(REGISTERED_STUDENT))
+        cy.contains('[data-test=student-list-item]', formatStudentName(REGISTERED_STUDENT))
           .find('[data-test=unregister]').click()
       })
       cy.get('[data-test=student-registration-modal]')
@@ -183,73 +185,22 @@ describe('deregistration option', () => {
       cy.log('Check the deregistration have worked')
       cy.get('[data-test=student-registration-modal]').should('not.exist')
       cy.get('[data-test=student-list-modal]').within(() => {
-        cy.contains('[data-test=student-list-item]', formatStudentNameLikeInStudentListModal(REGISTERED_STUDENT)).should('not.exist')
+        cy.contains('[data-test=student-list-item]', formatStudentName(REGISTERED_STUDENT)).should('not.exist')
+        cy.get('[data-test="closeModal"]').click()
       })
-      // TODO: Check edt and notif
+      loadStudentSchedule(REGISTERED_STUDENT)
+      getSlot(slotToUnregister).should('have.length', 1) // To test that user do not have te slot in his schedule next to hhc slots
+
+      // Check deregistration notification
+      rolesToBeNotifiedOfDeregistration[attr].forEach((role) => {
+        if (role !== unregisterRole) { // registerer do not have notification
+          cy.login(role, messagingURL)
+          const expectedThred = expectedDeregistrationThread(slotType, slotToUnregister, REGISTERED_STUDENT, unregisterRole)
+          waitMessagingToBeLoaded()
+          getThread(expectedThred).click()
+          // getMessage(expectedThred[0]).should('exist') // TODO: Check message content
+        }
+      })
     }
   })
-
-  // it('check notification for slot ' + slot.label, () => {
-  //   // Select slot
-  //   cy.get('[data-test=slot-type-item-' + slot.type + ']').click()
-  //   utils.waitCalendarToLoad()
-  //
-  //   // Create slot
-  //   utils.createSlot(slotToRegisterInside)
-  //
-  //   // Compute if the slot deregistration will notify parents
-  //   let notifyParents
-  //   if (slot.label === 'Dépannage') {
-  //     notifyParents = true
-  //   } else if (slot.label === 'Renvoi') {
-  //     notifyParents = false
-  //   } else {
-  //     notifyParents = slot.type === slotTypeToUncheckParentNotification
-  //   }
-  //
-  //   // Register Student inside
-  //   cy.logout()
-  //   cy.login(url, REGISTERER)
-  //   cy.get('[data-test=slot-type-item-' + slot.type + ']').click()
-  //   utils.selectStudent(studentToRegister)
-  //   utils.openSlotPopup(slotToRegisterInside, '2/2')
-  //   cy.get('[data-test=openRegistration-option]').click()
-  //   registerStudent(slot.label === 'Travaux à refaire' || slot.label === 'Renvoi', slot, notifyParents)
-  //
-  //   // Deregister student
-  //   if (slot.label === 'Renvoi') {
-  //     cy.logout()
-  //     cy.login(url, SCHOOL_ADMIN) // REGISTERER cannot unregister firings
-  //     cy.get('[data-test=slot-type-item-' + slot.type + ']').click()
-  //   }
-  //   utils.openSlotPopup(slotToRegisterInside, '1/2')
-  //   cy.get('[data-test=showStudentList-option]').click()
-  //   cy.get('[data-test=student-list-modal]').within(() => {
-  //     cy.contains(studentToRegister.formattedName).parent().find('[data-test=unregister]').click()
-  //   })
-  //   cy.get('[data-test=student-registration-modal]').within(() => {
-  //     cy.contains('Désinscrire').click()
-  //   })
-  //
-  //   // Check notification messages
-  //   rolesToHaveDeregistrationMessage[slot.label].forEach(role => {
-  //     cy.log('=============== TEST NOTIFICATION FOR ROLE ' + role.role + ' =============')
-  //     cy.logout()
-  //     cy.login('/', role)
-  //     checkMessage(slot.label === 'Renvoi' ? SCHOOL_ADMIN : REGISTERER, slot)
-  //   })
-  //   if (notifyParents) {
-  //     cy.log('=============== TEST NOTIFICATION FOR ROLE PARENT =============')
-  //     cy.logout()
-  //     cy.login('/', PARENT)
-  //     checkMessage(slot.label === 'Renvoi' ? SCHOOL_ADMIN : REGISTERER, slot)
-  //   }
-  //
-  //   // Delete created slot
-  //   cy.logout()
-  //   cy.login(url)
-  //   utils.waitCalendarToLoad()
-  //   cy.get('[data-test=slot-type-item-' + slot.type + ']').click()
-  //   utils.deleteSlot(slotToRegisterInside, '2/2')
-  // })
 })

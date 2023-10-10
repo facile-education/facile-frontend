@@ -15,6 +15,19 @@ const getSlot = (slot) => {
   return cy.contains('[data-test="' + startDate.format('MM-DD_HH:mm') + '"]', formatEventTeacherName(slot.teacher))
 }
 
+const loadStudentSchedule = (student) => {
+  cy.get('input').type(student.lastName)
+  cy.tick(500)
+  cy.contains(student.lastName + ' ' + student.firstName).click()
+  cy.get('.suggestion-list').should('not.exist')
+}
+
+const openStudentListModal = (slot) => {
+  getSlot(slot).click()
+  cy.get('[data-test=showStudentList-option]').click({ force: true })
+  return cy.get('[data-test=student-list-modal]')
+}
+
 const createSlot = (slotToCreate) => {
   // Create the slot // TODO Not pass by UI
   cy.log('========= Create slot =========')
@@ -211,6 +224,8 @@ const getWeeksEventsNumber = (now, expectNoEventAtPreviousWeek = false, nbWeekSh
 
 export {
   formatEventTeacherName,
+  openStudentListModal,
+  loadStudentSchedule,
   getSlot,
   createSlot,
   deleteSlot,

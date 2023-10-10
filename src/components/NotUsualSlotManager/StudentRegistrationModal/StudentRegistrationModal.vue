@@ -152,7 +152,6 @@ import { nextTick } from 'vue'
 import schoolLifeService from '@/api/schoolLife-portlet.service'
 import userManagementService from '@/api/userManagement.service'
 import notUsualSlotsConstants from '@/constants/notUsualSlots'
-import { toPascalCase } from '@/utils/commons.util'
 
 export default {
   name: 'StudentRegistrationModal',
@@ -192,7 +191,7 @@ export default {
       return notUsualSlotsConstants.getSlotTypeByNumber(this.event.type)
     },
     formattedStudent () {
-      return toPascalCase(this.student.firstName) + ' ' + toPascalCase(this.student.lastName) + ' - ' + this.student.className
+      return this.student.firstName + ' ' + this.student.lastName + ' - ' + this.student.className
     },
     formattedSlot () {
       return this.$t('Moment.the') + ' ' + dayjs(this.event.startDate).format('DD MMMM YYYY ' + this.$t('Moment.at') + ' HH:mm')
