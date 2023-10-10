@@ -121,6 +121,7 @@ describe('deregistration option', () => {
 
   it('is present for good roles ', function () {
     const slotTypes = this.hhcData.slotsTypes
+    let hasSetFiringReason = false
     for (const attr in slotTypes) {
       const slotType = slotTypes[attr]
       cy.log('select ' + slotType.label)
@@ -134,11 +135,12 @@ describe('deregistration option', () => {
         selectSlotType(slotType)
         waitCalendarToLoad()
 
-        if (attr === 'fired' && role === TEACHER) { // close pending firing modal
+        if (!hasSetFiringReason && role === TEACHER) { // close pending firing modal
           cy.get('[data-test=pending-firing-modal]').within(() => {
-            cy.get('input').type('j\'ai mes raisons')
+            cy.get('textarea').type('j\'ai mes raisons')
             cy.contains('Envoyer').click()
           })
+          hasSetFiringReason = true
         }
 
         selectSlotType(slotType)

@@ -1,13 +1,25 @@
 import { HHCURL, messagingURL } from '../../../support/constants/urls'
-import { CLASSTEACHER, DEPANNAGE_SUPERVISOR, DOYEN, HEADMASTER, PARENT, STUDENT } from '../../../support/constants/users'
 import {
-  getSlot, getUserSlot,
+  CLASSTEACHER,
+  DEPANNAGE_SUPERVISOR,
+  DOYEN,
+  HEADMASTER,
+  PARENT,
+  STUDENT,
+  TEACHER
+} from '../../../support/constants/users'
+import {
+  getSlot,
+  getUserSlot,
   selectSlotType,
   selectStudent
 } from '../../../support/utils/horairesHorsCardesUtils'
 import { getThread, waitMessagingToBeLoaded } from '../../../support/utils/messagingUtils'
 
 const studentToRegister = STUDENT // Because normal Student is already register in the hhc tables
+
+const rolesThatCanRegister = [DEPANNAGE_SUPERVISOR] // Only the slot'teacher can regiser student
+const rolesThatCannotRegister = [HEADMASTER, CLASSTEACHER, DOYEN, TEACHER] // Not exhaustive but other users do not have the HHC service available
 
 const notifications = (registeredSlot) => {
   return [ // TODO: test content
@@ -70,23 +82,35 @@ describe('Depannage registration', () => {
   })
 
   it(' is present for good roles', function () {
-    // TODO
+    const slotToRegisterInside = this.hhcData.slotsTypes.tutoring.slotExample
+
+    rolesThatCannotRegister.forEach(role => {
+      cy.login(role, HHCURL)
+      selectSlotType(this.hhcData.slotsTypes.tutoring)
+      // Select student
+      selectStudent(studentToRegister)
+      // Open registration modal
+      getSlot(slotToRegisterInside).click()
+      cy.get('[data-test=registerStudent-option]').should('not.exist')
+    })
+
+    rolesThatCanRegister.forEach(role => {
+      cy.login(role, HHCURL)
+      selectSlotType(this.hhcData.slotsTypes.tutoring)
+      // Select student
+      selectStudent(studentToRegister)
+      // Open registration modal
+      getSlot(slotToRegisterInside).click()
+      cy.get('[data-test=registerStudent-option]').should('be.visible')
+    })
   })
 
   it('registration behaviour', function () {
     cy.login(HEADMASTER, HHCURL)
     const slotToRegisterInside = this.hhcData.slotsTypes.tutoring.slotExample
-    selectSlotType(this.hhcData.slotsTypes.tutoring)
 
-    // Select student
-    selectStudent(studentToRegister)
-
-    // Open registration modal
-    getSlot(slotToRegisterInside).click()
-    cy.get('[data-test=registerStudent-option]').should('not.exist') // only the slot'teacher can regiser student
-
-    // Reconnect with the slot's teacher
-    cy.login(DEPANNAGE_SUPERVISOR, HHCURL)
+    // Connect with someone who can register
+    cy.login(rolesThatCanRegister[0], HHCURL)
     selectSlotType(this.hhcData.slotsTypes.tutoring)
 
     // Select student
