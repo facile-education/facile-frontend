@@ -139,6 +139,7 @@ Cypress.Commands.add('globalKeyPress', (keyName) => {
 Cypress.Commands.add('type_ckeditor', (content) => {
   cy.window()
     .then(win => {
-      win.ckeditor.setData(content) // Assume the window.ckeditor is set and correspond to the wanted ckEditor (only one ck by page)
+      win.textContent.ckeditor.setData(content) // Assume the window.ckeditor is set and correspond to the wanted ckEditor (only one ck by page)
+      win.textContent.updateContent(content)
     })
 })

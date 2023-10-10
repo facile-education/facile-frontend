@@ -82,7 +82,8 @@ export default {
         ],
         toolbar: ['heading', '|', 'bold', 'italic', 'link', 'numberedList', 'bulletedList', '|', 'outdent', 'indent', '|', 'blockQuote', 'insertTable', 'undo', 'redo'],
         language: 'fr',
-        placeholder: this.placeholder
+        placeholder: this.placeholder,
+        ckeditor: undefined
       }
     }
   },
@@ -100,7 +101,8 @@ export default {
       }
       // Make CKEditor available for tests
       if (window.Cypress) {
-        window.ckeditor = e
+        this.ckeditor = e
+        window.textContent = this
       }
     },
     updateContent (newValue) {
