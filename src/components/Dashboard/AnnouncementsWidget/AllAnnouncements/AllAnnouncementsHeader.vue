@@ -11,7 +11,10 @@
           :title="$t('dashboard')"
         >
       </RouterLink>
-      <h1 v-t="'header'" />
+      <h1
+        v-t="'header'"
+        @click="back"
+      />
       <Pellet
         v-if="nbNewAnnouncements > 0"
         class="header-pellet"
@@ -33,6 +36,7 @@
     </div>
     <CreateButton
       v-if="canCreateAnnouncements"
+      class="create-button"
       @click="isCreateModalDisplayed = true"
     />
   </div>
@@ -86,6 +90,9 @@ export default {
     }
   },
   methods: {
+    back () {
+      this.$router.push('/' + this.$t('Menu.route.dashboard'))
+    },
     toggleReadOnly () {
       this.$emit('toggleReadOnly')
     },
@@ -110,12 +117,17 @@ export default {
     display: flex;
     align-items: center;
     gap: 1rem;
+    flex-grow: 1;
+    min-width: 0;
   }
 }
 
 h1 {
-  font-size: 1.5em;
-  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @extend %font-heading-s;
 }
 
 .back {
@@ -139,6 +151,10 @@ h1 {
 .read-only-button {
   margin-left: 10px;
   @extend %read-only-button;
+}
+
+.create-button {
+  margin-left: 10px;
 }
 </style>
 
