@@ -286,7 +286,7 @@
     },
     "StudentRegistrationModal": {
       "arrival": "Heure d'arrivée en salle de renvoi: ",
-      "class": "Elèves de:",
+      "class": "Elèves de: ",
       "commentPlaceholder": "Motif de la retenue",
       "firedBy": "Renvoyé par: ",
       "haveToSelectSlot": "Veuillez sélectionner un cours",
