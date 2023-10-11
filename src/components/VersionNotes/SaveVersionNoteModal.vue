@@ -4,6 +4,7 @@
     :draggable="true"
     :full-screen="mq.phone || mq.tablet"
     class="save-version-note-modal"
+    data-test="saveVersionNoteModal"
     @close="$emit('close')"
   >
     <template #header>
@@ -91,12 +92,11 @@ export default {
   created () {
     if (!this.isCreation) {
       this.title = this.selectedNote.title
-      this.htmlContent = this.$store.state.versionNotes.versionNoteDetails
+      // this.htmlContent = this.$store.state.versionNotes.versionNoteDetails
     }
   },
   methods: {
     submit () {
-      console.log(this.htmlContent)
       if (this.v$.$invalid) {
         this.v$.$touch()
       } else {
