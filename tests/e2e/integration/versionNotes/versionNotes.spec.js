@@ -22,11 +22,11 @@ const formatVersionDate = (date) => {
 
 describe('Version notes', () => {
   beforeEach(() => {
-    cy.loadTables('versionNotes/version_notes_tables.sql')
     cy.fixture('versionNotes.json').as('versionNotesData') // Load in beforeEach to be accessible from 'this' in tests
   })
 
   it('contains the sorted list of version notes', function () {
+    cy.loadTables('versionNotes/version_notes_tables.sql')
     const lastVersion = this.versionNotesData.databaseExistingNotes[0]
     const middleVersion = this.versionNotesData.databaseExistingNotes[1]
     const firstVersion = this.versionNotesData.databaseExistingNotes[2]
@@ -48,6 +48,7 @@ describe('Version notes', () => {
 
   // CHECK NOTIF
   it('notification behaviour', function () {
+    cy.loadTables('versionNotes/version_notes_tables.sql')
     cy.login(STUDENT, scheduleURL)
 
     // Find Banner User Profil Pellet
@@ -57,7 +58,6 @@ describe('Version notes', () => {
     cy.get('[data-test=togglePopoverMenu]').click()
     cy.get('[data-test=popover-menu]').within(() => {
       cy.contains('li', 'Nouveautés').find('.pellet').should('be.visible')
-      cy.contains('Nouveautés').click() // Open version note
     })
 
     // Test if pellet doesn't exist anymore
@@ -70,8 +70,15 @@ describe('Version notes', () => {
 
   // CREATE
   it('admin can create new version note', function () {
+    cy.loadTables('versionNotes/version_notes_tables.sql')
     const noteCreate = this.versionNotesData.noteToCreate
 
+    // Check if button "Nouveau" dosesn't exist
+    cy.login(STUDENT, scheduleURL)
+    openVersionNotes()
+    cy.get('[data-test=versionNoteModal]').should('not.contain', 'button', 'Nouveau')
+
+    // Create note
     cy.login(GLOBAL_ADMIN, scheduleURL)
     openVersionNotes()
 
@@ -88,6 +95,7 @@ describe('Version notes', () => {
 
   // UPDATE
   it('admin can update an existing version note', function () {
+    cy.loadTables('versionNotes/version_notes_tables.sql')
     const noteModified = this.versionNotesData.modifiedText
 
     cy.login(GLOBAL_ADMIN, scheduleURL)
@@ -105,6 +113,7 @@ describe('Version notes', () => {
 
   // DELETE
   it('admin can delete an existing version note', function () {
+    cy.loadTables('versionNotes/version_notes_tables.sql')
     const Notes = this.versionNotesData.databaseExistingNotes
 
     cy.login(GLOBAL_ADMIN, scheduleURL)
@@ -126,5 +135,26 @@ describe('Version notes', () => {
     cy.get('.suggestion-list').find('li').should('have.length', Notes.length - 1)
     cy.get('[data-test="versionListDropDown"] > .button').should('not.contain', formatVersionDate(Notes[0].date))
     cy.get('.version-note-details').should('not.contain', Notes[0].content)
+  })
+
+  it('the pellet is not visible if there is nothing new', function () {
+    cy.loadTables('versionNotes/version_notes_tables_empty.sql')
+    cy.login(STUDENT, scheduleURL)
+
+    cy.intercept(
+      { method: 'GET', url: '**/get-user-infos*' }
+    ).as('waitUserInfo')
+
+    cy.wait('@waitUserInfo')
+
+    // Find Banner User Profil Pellet
+    cy.get('[data-test=togglePopoverMenu').should('be.visible')
+    cy.get('[data-test=togglePopoverMenu').find('.pellet').should('not.exist')
+
+    // Find pellet popover menu
+    cy.get('[data-test=togglePopoverMenu]').click()
+    cy.get('[data-test=popover-menu]').within(() => {
+      cy.contains('li', 'Nouveautés').find('.pellet').should('not.exist')
+    })
   })
 })
