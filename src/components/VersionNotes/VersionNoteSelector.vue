@@ -29,6 +29,7 @@
 
     <button
       v-if="selectedNote && isAdministrator"
+      data-test="buttonToggleOptions"
       :aria-label="$t('options')"
       :title="$t('options')"
       @click="toggleContextMenu"
