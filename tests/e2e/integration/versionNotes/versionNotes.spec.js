@@ -37,25 +37,30 @@ describe('Version notes', () => {
     cy.get('[data-test=versionNoteModal]').within(() => {
       // Check if the last version is selected by default
       cy.get('[data-test="versionListDropDown"] > .button').contains(formatVersionDate(lastVersion.date))
-      cy.contains(`${lastVersion.content}`)
+      cy.contains(lastVersion.content)
       // Check if version are sorted by date in dropdown and test content
       selectNoteInDropdown(1)
-      cy.contains(`${middleVersion.content}`)
+      cy.contains(middleVersion.content)
       selectNoteInDropdown(2)
-      cy.contains(`${firstVersion.content}`)
+      cy.contains(firstVersion.content)
     })
   })
 
   // CHECK NOTIF
   it('notification behaviour', function () {
     cy.login(STUDENT, scheduleURL)
+
+    // Find Banner User Profil Pellet
+    cy.get('[data-test=togglePopoverMenu').find('.pellet').should('be.visible')
+
+    // Find pellet popover menu
     cy.get('[data-test=togglePopoverMenu]').click()
     cy.get('[data-test=popover-menu]').within(() => {
       cy.contains('li', 'Nouveautés').find('.pellet').should('be.visible')
-      cy.contains('Nouveautés').click()
+      cy.contains('Nouveautés').click() // Open version note
     })
-    // Find Banner User Profil Pellet
-    cy.get('[data-test=togglePopoverMenu').find('.pellet').should('be.visible')
+
+    // Test if pellet doesn't exist anymore
     cy.get('[data-test="closeModal"]').click()
     cy.get('[data-test=popover-menu]').within(() => {
       cy.contains('li', 'Nouveautés').find('.pellet').should('not.exist')
@@ -79,7 +84,6 @@ describe('Version notes', () => {
       cy.type_ckeditor(noteCreate.content)
       cy.contains('button', 'Créer').click()
     })
-    cy.get('[data-test="closeModal"]').click()
   })
 
   // UPDATE
@@ -89,7 +93,7 @@ describe('Version notes', () => {
     cy.login(GLOBAL_ADMIN, scheduleURL)
     openVersionNotes()
 
-    cy.get('[aria-label="Options"] > img').click()
+    cy.get('[data-test="buttonToggleOptions"]').click()
     cy.contains('button', 'Modifier').click()
     cy.get('[data-test="saveVersionNoteModal"]').within(() => {
       cy.get('.ck-editor')
@@ -97,19 +101,30 @@ describe('Version notes', () => {
       cy.contains('button', 'Modifier').click()
     })
     cy.get('.version-note-details').contains(noteModified)
-    cy.get('[data-test="closeModal"]').click()
   })
 
   // DELETE
   it('admin can delete an existing version note', function () {
-    const totalNote = this.versionNotesData.databaseExistingNotes
+    const Notes = this.versionNotesData.databaseExistingNotes
+
     cy.login(GLOBAL_ADMIN, scheduleURL)
     openVersionNotes()
 
-    cy.get('[aria-label="Options"] > img').click()
+    // Check if last note exist
+    cy.get('[data-test="versionListDropDown"] > .button').should('contain', formatVersionDate(Notes[0].date))
+    cy.get('.version-note-details').should('contain', Notes[0].content)
+
+    // Delete Note
+    cy.get('[data-test="buttonToggleOptions"]').click()
     cy.contains('button', 'Supprimer').click()
-    cy.contains('button', 'Continuer').click()
+    cy.get('[data-test="warning-modal"]').within(() => {
+      cy.contains('button', 'Continuer').click()
+    })
+
+    // Check if last note doesn't exist
     cy.get('[data-test="versionListDropDown"] > .button').click()
-    cy.get('.suggestion-list').find('li').should('have.length', totalNote.length - 1)
+    cy.get('.suggestion-list').find('li').should('have.length', Notes.length - 1)
+    cy.get('[data-test="versionListDropDown"] > .button').should('not.contain', formatVersionDate(Notes[0].date))
+    cy.get('.version-note-details').should('not.contain', Notes[0].content)
   })
 })
