@@ -3,8 +3,8 @@
     <DiaryHeader
       :nb-new-events="nbNewEvents"
       :un-read-only="unReadOnly"
-      @updateUnreadOnly="updateUnreadOnlyValue"
-      @createEvent="refresh"
+      @update-unread-only="updateUnreadOnlyValue"
+      @create-event="refresh"
     />
     <PentilaSpinner
       v-if="isLoading"
@@ -35,9 +35,9 @@
           v-for="myEvent in month.eventList"
           :key="myEvent.eventId"
           :event="myEvent"
-          @markAsRead="markAsRead(myEvent)"
-          @updateEvent="refresh"
-          @deleteEvent="refresh"
+          @mark-as-read="markAsRead(myEvent)"
+          @update-event="refresh"
+          @delete-event="refresh"
           @refresh="refresh"
         />
       </div>
@@ -171,7 +171,7 @@ section {
 {
   "errorPlaceholder": "Oups, une erreur est survenue...",
   "emptyPlaceholder": "Aucun événement à venir",
-  "unReadEmptyPlaceholder":  "Aucun nouvel événement",
+  "unReadEmptyPlaceholder": "Aucun nouvel événement",
   "showMore": "Voir tous les événements"
 }
 </i18n>
