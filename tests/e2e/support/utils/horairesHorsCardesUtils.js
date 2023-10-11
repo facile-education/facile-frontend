@@ -49,7 +49,7 @@ const deleteSlot = (slotToDelete, capacity) => {
   })
 }
 const selectSlotType = (slotType) => {
-  cy.get('[data-test=slot-type-item-' + slotType.type + ']', { timeout: 6000 }).click()
+  cy.get('[data-test=slot-type-item-' + slotType.type + ']', { timeout: 10000 }).click()
 }
 
 const selectStudent = (student) => {

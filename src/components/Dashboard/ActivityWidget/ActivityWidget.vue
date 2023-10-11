@@ -1,5 +1,8 @@
 <template>
-  <section :class="{'full-page': displayAll}">
+  <section
+    :class="{'full-page': displayAll}"
+    data-test="activity-widget"
+  >
     <ActivityHeader
       :nb-new-activities="nbNewActivities"
       :display-all="displayAll"

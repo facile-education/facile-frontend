@@ -87,6 +87,15 @@
       }
     }
   },
+  "studentSlotToBeFired": {
+    "startDate": "2023/10/03 08:45",
+    "endDate": "2023/10/03 09:30",
+    "courseName": "EC0933",
+    "teacher": {
+      "firstName": "Rosana",
+      "lastName": "NOLLI"
+    }
+  },
   "groupName": "0922R2",
   "studentName": "BARMAN MELISSA (1021LC)",
   "studentSearch": "mel",

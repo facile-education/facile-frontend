@@ -120,6 +120,22 @@ const MULTI_PARENT = { // This parent has 2 children : MULTI_STUDENT1 and MULTI_
   lastName: 'Comencini'
 }
 
+const SOCIAL_COUNSELOR = { // Social councelor of student (0933)
+  login: 'krahlt',
+  password,
+  role: 'parent',
+  firstName: 'Tomasine',
+  lastName: 'KRAHL'
+}
+
+const PSYCHOLOGIST = { // psychologist of student (0933)
+  login: 'glasnerd',
+  password,
+  role: 'parent',
+  firstName: 'Donnajean',
+  lastName: 'GLASNER'
+}
+
 export {
   GLOBAL_ADMIN,
   HEADMASTER,
@@ -133,6 +149,8 @@ export {
   STUDENT,
   SECRETARY,
   PARENT,
+  SOCIAL_COUNSELOR,
+  PSYCHOLOGIST,
   MULTI_STUDENT1,
   MULTI_STUDENT2,
   MULTI_PARENT

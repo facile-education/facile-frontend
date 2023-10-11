@@ -1,326 +1,210 @@
-import { CLASSTEACHER, DOYEN, PARENT, SECRETARY, TEACHER } from '../../../support/constants/users'
+import { dashboardURL, HHCURL, messagingURL } from '../../../support/constants/urls'
 import {
-  now,
-  slotTypes,
-  url
-} from '../../../support/constants/horairesHorsCadres'
-import utils from '../../../support/utils/horairesHorsCardesUtils'
+  CLASSTEACHER, CLASSTEACHER2,
+  DOYEN,
+  HEADMASTER,
+  PARENT,
+  PSYCHOLOGIST,
+  SECRETARY,
+  SOCIAL_COUNSELOR,
+  STUDENT,
+  TEACHER
+} from '../../../support/constants/users'
+import {
+  getSlot,
+  getUserSlot,
+  selectSlotType,
+  selectStudent
+} from '../../../support/utils/horairesHorsCardesUtils'
+import { getThread, waitMessagingToBeLoaded } from '../../../support/utils/messagingUtils'
 
-const FIRING_SUPERVISOR = TEACHER
+const studentToRegister = STUDENT // Because normal Student is already register in the hhc tables
+const firingSupervisor = CLASSTEACHER2
+const firingTeacher = TEACHER
 
-const slotToRegisterInside = {
-  day: 'wed',
-  date: now,
-  startHour: '11:00',
-  endHour: '12:00',
-  teacherSearch: 'reg',
-  teacherName: 'Regad Alexandre',
-  teacherLastName: 'Regad',
-  roomNumber: 'tg',
-  capacity: 2
+const rolesThatCanRegister = [HEADMASTER, SECRETARY, DOYEN, firingSupervisor]
+const rolesThatCannotRegister = [firingTeacher]
+
+const notifications = (registeredSlot, slotToBeFiredFrom) => {
+  return [ // TODO: test content
+    {
+      role: firingTeacher,
+      expectedThread: [{
+        sender: firingSupervisor.firstName + ' ' + firingSupervisor.lastName,
+        recipients: [firingTeacher.firstName + ' ' + firingTeacher.lastName],
+        date: '',
+        subject: 'Avis de renvoi : ' + studentToRegister.firstName + ' ' + studentToRegister.lastName + ' le ' + Cypress.dayjs(registeredSlot.startDate, 'YYYY/MM/DD HH:mm').format('DD MMMM YYYY'),
+        content: '',
+        messageIndexInThread: 0
+      }],
+      expectedActivityItem: {
+        title: 'Motivation de renvoi',
+        content: 'Pensez à motiver le renvoi de ' + studentToRegister.firstName + ' ' + studentToRegister.lastName
+      }
+    },
+    {
+      role: CLASSTEACHER,
+      expectedThread: [{
+        sender: firingSupervisor.firstName + ' ' + firingSupervisor.lastName,
+        recipients: [CLASSTEACHER.firstName + ' ' + CLASSTEACHER.lastName],
+        date: '',
+        subject: 'Avis de renvoi : ' + studentToRegister.firstName + ' ' + studentToRegister.lastName + ' le ' + Cypress.dayjs(registeredSlot.startDate, 'YYYY/MM/DD HH:mm').format('DD MMMM YYYY'),
+        content: '',
+        messageIndexInThread: 0
+      }],
+      expectedActivityItem: {
+        title: TEACHER.firstName + ' ' + TEACHER.lastName,
+        content: 'a renvoyé ' + studentToRegister.firstName + ' ' + studentToRegister.lastName + ' du cours de ' + slotToBeFiredFrom.courseName
+      }
+    },
+    {
+      role: DOYEN,
+      expectedThread: [{
+        sender: firingSupervisor.firstName + ' ' + firingSupervisor.lastName,
+        recipients: [DOYEN.firstName + ' ' + DOYEN.lastName],
+        date: '',
+        subject: 'Avis de renvoi : ' + studentToRegister.firstName + ' ' + studentToRegister.lastName + ' le ' + Cypress.dayjs(registeredSlot.startDate, 'YYYY/MM/DD HH:mm').format('DD MMMM YYYY'),
+        content: '',
+        messageIndexInThread: 0
+      }],
+      expectedActivityItem: {
+        title: TEACHER.firstName + ' ' + TEACHER.lastName,
+        content: 'a renvoyé ' + studentToRegister.firstName + ' ' + studentToRegister.lastName + ' du cours de ' + slotToBeFiredFrom.courseName
+      }
+    }
+  ]
 }
 
-const HHCSlotToBeFiredFrom = {
-  day: 'wed',
-  date: now,
-  type: 'Cercle d\'étude',
-  formattedType: 'Cercle d\'étude',
-  startHour: '08:30',
-  endHour: '09:45',
-  teacherSearch: 'reg',
-  teacherName: 'Regad Alexandre',
-  teacherLastName: 'Regad',
-  roomNumber: 'tg',
-  capacity: 2
-}
-
-const classicalSlotToBeFiredFrom = {
-  //  08:45 / 09:30 - AN1051AC
-  day: 'wed',
-  date: now,
-  type: 'AN1051AC',
-  formattedType: 'Anglais',
-  startHour: '08:45',
-  endHour: '09:30',
-  teacherSearch: 'reg',
-  teacherName: 'De Miras Serge'
-}
-
-const CLASSICAL_SLOT_TEACHER = {
-  login: 'edu-demirass',
-  password: 'pentila',
-  role: 'teacher',
-  firstName: 'Serge',
-  lastName: 'De Miras'
+const havefiringReasonNotifications = [PARENT, CLASSTEACHER, DOYEN, SOCIAL_COUNSELOR, PSYCHOLOGIST]
+const firingReasonNotifications = {
+  expectedThread: [{
+    sender: firingTeacher.firstName + ' ' + firingTeacher.lastName,
+    recipients: [DOYEN.firstName + ' ' + DOYEN.lastName],
+    date: '',
+    subject: 'Avis de renvoi',
+    content: '',
+    messageIndexInThread: 0
+  }]
 }
 
 const firingReason = "Je renvoie qui je veux d'abord!"
-const firingTeacherRecipients = 'Sandra Prevosti, Darko Jovanovic, Isabel Mendez'
-
-const studentToRegister = {
-  name: 'ALOSTA ANYA (1051AC)',
-  formattedName: 'Anya Alosta - 1051AC',
-  search: 'alo'
-}
 
 const testRegistrationModal = (slot, studentToRegister, slotToBeFiredFrom) => {
+  const slotToBeFiringDropDownLabel = Cypress.dayjs(slotToBeFiredFrom.startDate, 'YYYY/MM/DD HH:mm').format('HH:mm') +
+    ' / ' +
+    Cypress.dayjs(slotToBeFiredFrom.endDate, 'YYYY/MM/DD HH:mm').format('HH:mm')
+
   cy.get('[data-test=student-registration-modal]').within(() => {
-    cy.contains(studentToRegister.formattedName)
-    cy.contains(slot.startHour)
+    cy.contains(studentToRegister.firstName + ' ' + studentToRegister.lastName)
+    cy.contains(Cypress.dayjs(slot.startDate, 'YYYY/MM/DD HH:mm').format('[le] DD MMMM YYYY [à] HH:mm'))
     cy.get('textarea').should('not.exist')
     cy.get('.notify-parents [type="checkbox"]').should('not.exist')
-    cy.contains('Renvoyé du cours: ').parent().find('.base-dropdown').click().within(() => {
-      cy.contains(slotToBeFiredFrom.startHour + ' / ' + slotToBeFiredFrom.endHour + ' - ' + slotToBeFiredFrom.type).click()
-    })
+    cy.contains('button', 'Sélectionnez un cours').click()
+    cy.get('.base-dropdown').contains(slotToBeFiringDropDownLabel).click()
 
     cy.contains('button', 'Inscrire').click()
   })
-  utils.waitCalendarToLoad()
-  cy.get('[data-test=student-registration-modal]').should('not.exist')
-}
-
-const registerStudent = (notifyParents) => { // Just fill registration modal and submit
-  cy.get('[data-test=student-registration-modal]').within(() => {
-    if (!notifyParents) {
-      cy.get('.notify-parents [type="checkbox"]').uncheck()
-    }
-    cy.contains('button', 'Inscrire').click()
-  })
-  utils.waitCalendarToLoad()
   cy.get('[data-test=student-registration-modal]').should('not.exist')
 }
 
 // NB: Some of registration main features are already tested in study type, so here is juste a basic registration test for replayTest slots
 describe('Firing registration', () => {
   beforeEach(() => {
-    cy.clock(now.toDate().getTime())
-    cy.exec('npm run db:loadTables schoollife_tables.sql')
-    cy.clearDBCache()
-    cy.logout()
-    cy.login(url)
+    cy.fixture('hhc.json').as('hhcData').then(data => {
+      cy.clock(Cypress.dayjs(data.now, 'YYYY/MM/DD HH:mm').toDate().getTime())
+    })
+    cy.loadTables('schoollife/schoollife_tables_empty.sql')
+    cy.loadTables('messaging/messaging_tables_empty.sql') // to empty
   })
 
-  it('registration behaviour (from HHC slot)', () => {
-    // Create hhc slot to be fired from
-    cy.get('[data-test=slot-type-item-' + slotTypes.study.type + ']').click()
-    utils.createSlot(HHCSlotToBeFiredFrom)
-    // Register the student inside
-    utils.selectStudent(studentToRegister)
-    utils.openSlotPopup(HHCSlotToBeFiredFrom, '2/2')
-    cy.get('[data-test=openRegistration-option]').click()
-    registerStudent(false)
+  it(' is present for good roles', function () {
+    const slotToRegisterInside = this.hhcData.slotsTypes.fired.slotExample
 
-    // Create firing slot
-    cy.get('[data-test=slot-type-item-' + slotTypes.fired.type + ']').click()
-    utils.createSlot(slotToRegisterInside)
-
-    // Try to open registration modal
-    utils.openSlotPopup(slotToRegisterInside, '2/2')
-    cy.get('[data-test=openRegistration-option]').should('exist') // Directeur, secretery, doyen and supervoisor can register student
-
-    cy.logout()
-
-    // Check doyen and secretaire right to register students
-    cy.log('Check doyen rights to register student')
-    cy.login(url, DOYEN)
-    cy.get('[data-test=slot-type-item-' + slotTypes.fired.type + ']').click()
-    utils.selectStudent(studentToRegister)
-    // Open registration modal
-    utils.openSlotPopup(slotToRegisterInside, '2/2')
-    cy.get('[data-test=openRegistration-option]').should('exist')
-    cy.logout()
-
-    cy.log('Check secretary rights to register student')
-    cy.login(url, SECRETARY)
-    cy.get('[data-test=slot-type-item-' + slotTypes.fired.type + ']').click()
-    utils.selectStudent(studentToRegister)
-    // Open registration modal
-    utils.openSlotPopup(slotToRegisterInside, '2/2')
-    cy.get('[data-test=openRegistration-option]').should('exist')
-    cy.logout()
-
-    cy.login(url, FIRING_SUPERVISOR)
-    cy.get('[data-test=slot-type-item-' + slotTypes.fired.type + ']').click()
-    utils.selectStudent(studentToRegister)
-
-    // Open registration modal
-    utils.openSlotPopup(slotToRegisterInside, '2/2')
-    cy.get('[data-test=openRegistration-option]').click()
-
-    // Test registration modal (ends by registering student)
-    testRegistrationModal(slotToRegisterInside, studentToRegister, HHCSlotToBeFiredFrom)
-
-    // Check the HHC slot is added in grey to the student's schedule
-    cy.get('.grayed >> [data-test="' + slotToRegisterInside.date.format('MM-DD') + '_' + slotToRegisterInside.startHour + '"]').within(() => {
-      cy.contains(slotToRegisterInside.teacherLastName).first().should('exist')
+    rolesThatCannotRegister.forEach(role => {
+      cy.login(role, HHCURL)
+      selectSlotType(this.hhcData.slotsTypes.fired)
+      // Select student
+      selectStudent(studentToRegister)
+      // Open registration modal
+      getSlot(slotToRegisterInside).click()
+      cy.get('[data-test=registerStudent-option]').should('not.exist')
     })
 
-    // Check the slot's student list
-    utils.openSlotPopup(slotToRegisterInside, '1/2')
-    cy.get('[data-test=showStudentList-option]').click()
-    cy.get('[data-test=student-list-modal]').within(() => {
-      cy.contains(studentToRegister.formattedName)
+    rolesThatCanRegister.forEach(role => {
+      cy.login(role, HHCURL)
+      selectSlotType(this.hhcData.slotsTypes.fired)
+      // Select student
+      selectStudent(studentToRegister)
+      // Open registration modal
+      getSlot(slotToRegisterInside).click()
+      cy.get('[data-test=registerStudent-option]').should('exist')
     })
-    cy.get('[data-test=closeModal]').click()
-
-    // Go in Horaires service
-    cy.visit('/nero/horaires')
-
-    // Check slots for the first student
-    utils.clearSelectedUser()
-    utils.selectStudent(studentToRegister)
-    cy.contains('[data-cy="' + slotToRegisterInside.date.format('MM-DD') + '_' + slotToRegisterInside.startHour + '"]', 'Renvoi').parent().within(() => {
-      cy.contains(slotToRegisterInside.teacherLastName).first().should('exist')
-    })
-
-    // The teacher have to explain the firing
-    cy.logout()
-    cy.login(url, TEACHER)
-
-    cy.get('[data-test="pending-firing-modal"]').within(() => {
-      // Check content
-      cy.contains(studentToRegister.formattedName).should('be.visible')
-      cy.contains(HHCSlotToBeFiredFrom.formattedType).should('be.visible')
-      cy.contains(HHCSlotToBeFiredFrom.date.format('DD MMM YYYY') + ' à ' + HHCSlotToBeFiredFrom.startHour).should('be.visible')
-
-      // Set reason
-      cy.get('textarea').type(firingReason)
-
-      cy.contains('button', 'Envoyer').click()
-    })
-
-    cy.get('[data-test="pending-firing-modal"]').should('not.exist')
-
-    // Check notifications (parents + doyen + class teacher)
-    cy.log('TEST NOTIFICATION FOR PARENT')
-    cy.logout()
-    cy.login('/', PARENT)
-    cy.get('#nav_entry_messagerie').click()
-    cy.get('.message-container').first().within(() => { // have to be the last notification
-      cy.contains(TEACHER.firstName + ' ' + TEACHER.lastName)
-      cy.contains('Avis de renvoi').click()
-    })
-    cy.get('.message-details-content').should('contain', firingReason)
-
-    cy.log('TEST NOTIFICATION FOR CLASSTEACHER')
-    cy.logout()
-    cy.login('/', CLASSTEACHER)
-    cy.get('#nav_entry_messagerie').click()
-    cy.get('.message-container').first().within(() => { // have to be the last notification
-      cy.contains(TEACHER.firstName + ' ' + TEACHER.lastName)
-      cy.contains('Avis de renvoi').click()
-    })
-    cy.get('.message-details-content').should('contain', firingReason)
-
-    cy.log('TEST NOTIFICATION FOR DOYEN')
-    cy.logout()
-    cy.login('/', DOYEN)
-    cy.get('#nav_entry_messagerie').click()
-    cy.get('.message-container').first().within(() => { // have to be the last notification
-      cy.contains(TEACHER.firstName + ' ' + TEACHER.lastName)
-      cy.contains('Avis de renvoi').click()
-    })
-    // Check the message recipients (2 doyens and main teacher) and messag content
-    cy.get('#message-receivers').should('contain', firingTeacherRecipients)
-    cy.get('.message-details-content').should('contain', firingReason)
   })
 
-  it('registration behaviour (from Classical slot)', () => {
-    // Create firing slot
-    cy.get('[data-test=slot-type-item-' + slotTypes.fired.type + ']').click()
-    utils.createSlot(slotToRegisterInside)
+  it('registration behaviour', function () {
+    const slotToRegisterInside = this.hhcData.slotsTypes.fired.slotExample
+    const slotToBeFiredFrom = this.hhcData.studentSlotToBeFired
+
+    // Connect with someone who can register
+    cy.login(rolesThatCanRegister[0], HHCURL)
+    selectSlotType(this.hhcData.slotsTypes.fired)
 
     // Select student
-    utils.selectStudent(studentToRegister)
-
-    // Try to open registration modal
-    utils.openSlotPopup(slotToRegisterInside, '2/2')
-    cy.get('[data-test=openRegistration-option]').should('exist') // Directeur, secretaire, doyen and supervoisor can register student
-    cy.logout()
-
-    cy.login(url, FIRING_SUPERVISOR)
-    cy.get('[data-test=slot-type-item-' + slotTypes.fired.type + ']').click()
-    utils.selectStudent(studentToRegister)
-
+    selectStudent(studentToRegister)
     // Open registration modal
-    utils.openSlotPopup(slotToRegisterInside, '2/2')
-    cy.get('[data-test=openRegistration-option]').click()
+    getSlot(slotToRegisterInside).click()
+    cy.get('[data-test=registerStudent-option]').click()
 
     // Test registration modal (ends by registering student)
-    testRegistrationModal(slotToRegisterInside, studentToRegister, classicalSlotToBeFiredFrom)
+    testRegistrationModal(slotToRegisterInside, studentToRegister, slotToBeFiredFrom)
 
-    // Check the classical slot is added in grey to the student's schedule
-    cy.get('.grayed >> [data-test="' + slotToRegisterInside.date.format('MM-DD') + '_' + slotToRegisterInside.startHour + '"]').within(() => {
-      cy.contains(slotToRegisterInside.teacherLastName).first().should('exist')
-    })
+    // Check the HHC slot is added in grey to the student's schedule
+    getUserSlot(slotToRegisterInside).should('exist')
 
-    // Check the slot's student list
-    utils.openSlotPopup(slotToRegisterInside, '1/2')
+    // Check student has been registered
+    const capacityLabel = slotToRegisterInside.capacity - 1 + '/' + slotToRegisterInside.capacity
+    getSlot(slotToRegisterInside).should('contain', capacityLabel).click()
     cy.get('[data-test=showStudentList-option]').click()
     cy.get('[data-test=student-list-modal]').within(() => {
-      cy.contains(studentToRegister.formattedName)
+      cy.contains(studentToRegister.firstName + ' ' + studentToRegister.lastName)
     })
     cy.get('[data-test=closeModal]').click()
 
-    // Go in Horaires service
-    cy.visit('/nero/horaires')
-
-    // Check slots for the first student
-    utils.clearSelectedUser()
-    utils.selectStudent(studentToRegister)
-    cy.contains('[data-cy="' + slotToRegisterInside.date.format('MM-DD') + '_' + slotToRegisterInside.startHour + '"]', 'Renvoi').parent().within(() => {
-      cy.contains(slotToRegisterInside.teacherLastName).first().should('exist')
+    // Check notifications (messaging and dashboard activity)
+    notifications(slotToRegisterInside, slotToBeFiredFrom).forEach(notification => {
+      if (notification.expectedThread) {
+        cy.login(notification.role, messagingURL)
+        waitMessagingToBeLoaded()
+        getThread(notification.expectedThread).should('be.visible')
+      }
+      if (notification.expectedActivityItem) {
+        cy.login(notification.role, dashboardURL)
+        cy.get('[data-test=activity-widget]', { timeout: 10000 }).within(() => {
+          cy.contains(notification.expectedActivityItem.title).should('be.visible')
+          cy.contains(notification.expectedActivityItem.content).should('be.visible')
+        })
+      }
     })
+  })
 
-    // The teacher have to explain the firing
-    cy.logout()
-    cy.login(url, CLASSICAL_SLOT_TEACHER)
+  it('firingTeacher can set firing reason', function () {
+    cy.loadTables('schoollife/schoollife_tables.sql')
+    cy.login(firingTeacher, HHCURL)
 
-    cy.get('[data-test="pending-firing-modal"]').within(() => {
-      // Check content
-      cy.contains(studentToRegister.formattedName).should('be.visible')
-      cy.contains(classicalSlotToBeFiredFrom.formattedType).should('be.visible')
-      cy.contains(classicalSlotToBeFiredFrom.date.format('DD MMM YYYY') + ' à ' + classicalSlotToBeFiredFrom.startHour).should('be.visible')
-
-      // Set reason
+    cy.get('[data-test=pending-firing-modal]').within(() => {
       cy.get('textarea').type(firingReason)
-
-      cy.contains('button', 'Envoyer').click()
+      cy.contains('Envoyer').click()
     })
+    cy.get('[data-test=pending-firing-modal]').should('not.exist')
 
-    cy.get('[data-test="pending-firing-modal"]').should('not.exist')
-
-    // Check notifications (parents + doyen + class teacher)
-    cy.log('TEST NOTIFICATION FOR PARENT')
-    cy.logout()
-    cy.login('/', PARENT)
-    cy.get('#nav_entry_messagerie').click()
-    cy.get('.message-container').first().within(() => { // have to be the last notification
-      cy.contains(CLASSICAL_SLOT_TEACHER.firstName + ' ' + CLASSICAL_SLOT_TEACHER.lastName)
-      cy.contains('Avis de renvoi').click()
+    // Test notifications
+    havefiringReasonNotifications.forEach(role => {
+      cy.login(role, messagingURL)
+      waitMessagingToBeLoaded()
+      getThread(firingReasonNotifications.expectedThread).click()
+      cy.get('[data-test="message"]')
+        .should('contain', STUDENT.firstName + ' ' + STUDENT.lastName)
+        .should('contain', firingReason)
     })
-    cy.get('.message-details-content').should('contain', firingReason)
-
-    cy.logout()
-    cy.log('TEST NOTIFICATION FOR CLASSTEACHER')
-    cy.login('/', CLASSTEACHER)
-    cy.get('#nav_entry_messagerie').click()
-    cy.get('.message-container').first().within(() => { // have to be the last notification
-      cy.contains(CLASSICAL_SLOT_TEACHER.firstName + ' ' + CLASSICAL_SLOT_TEACHER.lastName)
-      cy.contains('Avis de renvoi').click()
-    })
-    cy.get('.message-details-content').should('contain', firingReason)
-
-    cy.log('TEST NOTIFICATION FOR DOYEN')
-    cy.logout()
-    cy.login('/', DOYEN)
-    cy.get('#nav_entry_messagerie').click()
-    cy.get('.message-container').first().within(() => { // have to be the last notification
-      cy.contains(CLASSICAL_SLOT_TEACHER.firstName + ' ' + CLASSICAL_SLOT_TEACHER.lastName)
-      cy.contains('Avis de renvoi').click()
-    })
-    // Check the message recipients (2 doyens and main teacher) and messag content
-    cy.get('#message-receivers').should('contain', firingTeacherRecipients)
-    cy.get('.message-details-content').should('contain', firingReason)
   })
 })

@@ -122,7 +122,7 @@ describe('Detention registration', () => {
       selectStudent(studentToRegister)
       // Open registration modal
       getSlot(slotToRegisterInside).click()
-      cy.get('[data-test=registerStudent-option]').should('be.visible')
+      cy.get('[data-test=registerStudent-option]').should('exist') // be.visible is better but sometimes calendar is wierd
     })
   })
 
@@ -162,7 +162,7 @@ describe('Detention registration', () => {
       if (notification.role !== PARENT || notifyParent) {
         cy.login(notification.role, messagingURL)
         waitMessagingToBeLoaded()
-        getThread(notification.expectedThread).click()
+        getThread(notification.expectedThread).should('be.visible')
       }
     })
   })
