@@ -4,7 +4,7 @@
     data-test="create-category-modal"
     :modal="true"
     :draggable="true"
-    :full-screen="mq.phone || mq.tablet || displayLikePhone"
+    :full-screen="mq.phone || mq.tablet"
     :width="600"
     @close="onClose"
   >
@@ -53,11 +53,6 @@ export default {
       categoryName: '',
       selectedApplication: { applicationId: 0, applicationName: 'Service' }, // TODO: Find a more satisfying way to do the dropdown placeholder
       applicationList: []
-    }
-  },
-  computed: {
-    displayLikePhone () {
-      return this.$store.state.misc.keepPhoneStatus
     }
   },
   created () {

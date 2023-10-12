@@ -4,7 +4,7 @@
     data-test="diary-event-details-modal"
     :modal="true"
     :draggable="true"
-    :full-screen="mq.phone || mq.tablet || displayLikePhone"
+    :full-screen="mq.phone || mq.tablet"
     @close="onClose"
   >
     <template #header>
@@ -58,11 +58,6 @@ export default {
   data () {
     return {
       detailedEvent: undefined
-    }
-  },
-  computed: {
-    displayLikePhone () {
-      return this.$store.state.misc.keepPhoneStatus
     }
   },
   created () {

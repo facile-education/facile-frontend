@@ -1,7 +1,7 @@
 <template>
   <header class="banner">
     <button
-      v-if="mq.phone || mq.tablet || displayLikePhone"
+      v-if="mq.phone || mq.tablet"
       :aria-label="$t('toggleMenu')"
       :title="$t('toggleMenu')"
       class="menu-icon-button"
@@ -13,7 +13,7 @@
       />
     </button>
 
-    <BannerSearch v-if="!mq.phone && !displayLikePhone" />
+    <BannerSearch v-if="!mq.phone" />
 
     <nav class="right-section">
       <BannerServices />
@@ -46,9 +46,6 @@ export default {
     }
   },
   computed: {
-    displayLikePhone () {
-      return this.$store.state.misc.keepPhoneStatus
-    },
     isMobileMenuDisplayed () {
       return this.$store.state.menu.isMobileMenuDisplayed
     },

@@ -2,7 +2,7 @@
   <PentilaWindow
     class="create-article-modal"
     data-test="create-article-modal"
-    :full-screen="mq.phone || mq.tablet || displayLikePhone"
+    :full-screen="mq.phone || mq.tablet"
     :modal="true"
     :draggable="true"
     :width="600"
@@ -69,11 +69,6 @@ export default {
       roleList: [],
       selectedLanguage: 'fr',
       languageList: []
-    }
-  },
-  computed: {
-    displayLikePhone () {
-      return this.$store.state.misc.keepPhoneStatus
     }
   },
   created () {
