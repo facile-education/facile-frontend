@@ -67,11 +67,8 @@ export default {
     }
   },
   computed: {
-    displayLikePhone () {
-      return this.$store.state.misc.keepPhoneStatus
-    },
     isMenuExpanded () {
-      return this.mq.phone || this.mq.tablet || this.displayLikePhone || this.$store.state.menu.menuExpanded
+      return this.mq.phone || this.mq.tablet || this.$store.state.menu.menuExpanded
     }
   },
   watch: {

@@ -1,10 +1,10 @@
 <template>
   <PentilaWindow
     class="edit-homework-modal"
-    :class="{'phone': mq.phone|| mq.tablet || displayLikePhone}"
+    :class="{'phone': mq.phone|| mq.tablet}"
     :modal="true"
     :draggable="true"
-    :full-screen="mq.phone || mq.tablet || displayLikePhone"
+    :full-screen="mq.phone || mq.tablet"
     @close="confirmClosure"
   >
     <template #header>
@@ -205,9 +205,6 @@ export default {
     }
   },
   computed: {
-    displayLikePhone () {
-      return this.$store.state.misc.keepPhoneStatus
-    },
     formErrorList () {
       const form = this.v$.homework.title
       if (form.$invalid && form.$dirty) {

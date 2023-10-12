@@ -5,7 +5,7 @@
     :modal="true"
     :draggable="true"
     :max-width="1000"
-    :full-screen="mq.phone || mq.tablet || displayLikePhone"
+    :full-screen="mq.phone || mq.tablet"
     @close="confirmClosure"
   >
     <template #header>
@@ -201,9 +201,6 @@ export default {
     }
   },
   computed: {
-    displayLikePhone () {
-      return this.$store.state.misc.keepPhoneStatus
-    },
     isCreation () {
       return this.initEvent === undefined
     },

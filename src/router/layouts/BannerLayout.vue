@@ -23,7 +23,7 @@
 
     <div
       class="popups-container"
-      :class="{'phone': (mq.phone || displayLikePhone)}"
+      :class="{'phone': mq.phone}"
     >
       <Popup
         v-for="popup in popupList"
@@ -39,7 +39,7 @@
     <div
       v-if="isLoadingProgressionDisplayed"
       class="background-actions-container"
-      :class="{'phone': (mq.phone || displayLikePhone)}"
+      :class="{'phone': mq.phone}"
     >
       <UploadProgression />
     </div>
@@ -152,9 +152,6 @@ export default {
     }
   },
   computed: {
-    displayLikePhone () {
-      return this.$store.state.misc.keepPhoneStatus
-    },
     isConflictModalDisplayed () {
       return this.$store.getters['conflictModal/isConflictModalDisplayed']
     },
@@ -180,7 +177,7 @@ export default {
       return this.$store.state.menu.menuExpanded
     },
     neroClasses () {
-      const phoneDisplay = this.mq.phone || this.mq.tablet || this.displayLikePhone
+      const phoneDisplay = this.mq.phone || this.mq.tablet
       return {
         mobile: phoneDisplay,
         'menu-expanded': (this.menuExpanded && !phoneDisplay),
@@ -191,7 +188,7 @@ export default {
       return this.$store.state.documents.openFiles
     },
     popupTimeout () {
-      return this.mq.phone || this.displayLikePhone ? mobilePopupDurationTime : popupDurationTime
+      return this.mq.phone ? mobilePopupDurationTime : popupDurationTime
     },
     popupList () {
       return this.$store.state.popups.currentPopupList
