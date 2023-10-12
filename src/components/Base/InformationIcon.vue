@@ -13,6 +13,7 @@
     <div
       v-if="isHovering"
       class="text"
+      :class="{'above': isAbove, 'bellow': !isAbove}"
     >
       {{ text }}
     </div>
@@ -23,6 +24,10 @@
 export default {
   name: 'InformationIcon',
   props: {
+    isAbove: {
+      type: Boolean,
+      default: false
+    },
     text: {
       type: String,
       required: true
@@ -54,7 +59,6 @@ export default {
   .text {
     cursor: default;
     position: absolute;
-    top: 0;
     left: 100%;
     width: 300px;
     padding: 5px;
@@ -62,8 +66,15 @@ export default {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     z-index: 1000;
   }
-}
 
+  .above {
+    bottom: 0;
+  }
+
+  .bellow {
+    top: 0;
+  }
+}
 </style>
 
 <i18n locale="fr" >

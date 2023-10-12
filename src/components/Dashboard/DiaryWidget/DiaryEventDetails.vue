@@ -114,7 +114,7 @@
   >
     <SaveDiaryEventModal
       :init-event="detailedEvent"
-      @updateEvent="updateEvent"
+      @update-event="updateEvent"
       @close="isUpdateModalDisplayed = false"
     />
   </teleport>
@@ -221,6 +221,19 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.diary-event-details-modal .window-body {
+  .description {
+    max-height: none;
+    overflow-y: initial;
+  }
+
+  .footer {
+    display: none;
+  }
+}
+</style>
 
 <style lang="scss" scoped>
 @import "@design";

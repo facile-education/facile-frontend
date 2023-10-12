@@ -106,6 +106,7 @@
         />
         <InformationIcon
           class="info"
+          :is-above="true"
           :text="$t('switchHelp')"
         />
       </div>
