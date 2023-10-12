@@ -19,6 +19,24 @@
         @delete="deleteEvent"
       />
     </template>
+    <template #footer>
+      <div v-if="initEvent.isEditable || initEvent.isDeletable">
+        <PentilaButton
+          v-if="initEvent.isEditable"
+          class="footer-button"
+          data-test="updateButton"
+          :label="$t('update')"
+          @click="updateEvent"
+        />
+        <PentilaButton
+          v-if="initEvent.isDeletable"
+          class="footer-button"
+          data-test="deleteButton"
+          :label="$t('delete')"
+          @click="confirmDeleteEvent"
+        />
+      </div>
+    </template>
   </PentilaWindow>
 </template>
 
@@ -51,8 +69,11 @@ export default {
     this.$store.dispatch('misc/incrementModalCount')
   },
   methods: {
-    updateEvent () {
-      this.$emit('update')
+    confirmDeleteEvent () {
+      this.$store.dispatch('warningModal/addWarning', {
+        text: this.$t('removalConfirmMessage'),
+        lastAction: { fct: this.deleteEvent, params: [] }
+      })
     },
     deleteEvent () {
       this.$emit('delete')
@@ -60,11 +81,23 @@ export default {
     onClose () {
       this.$store.dispatch('misc/decreaseModalCount')
       this.$emit('close')
+    },
+    updateEvent () {
+      this.$emit('update')
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-
+.footer-button {
+  margin-left: 1rem;
+}
 </style>
+
+<i18n locale="fr">
+{
+  "update": "Modifier",
+  "delete": "Supprimer"
+}
+</i18n>

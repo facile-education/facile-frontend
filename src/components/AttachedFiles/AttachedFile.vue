@@ -174,6 +174,7 @@ button {
 
 .file-actions {
   margin: 0 10px;
+
   img {
     cursor: pointer;
     height: 16px;
@@ -182,7 +183,7 @@ button {
   .add-to-folder {
     height: 19px;
     width: 19px;
-    margin-right: 8px;
+    margin-right: 10px;
   }
 }
 </style>

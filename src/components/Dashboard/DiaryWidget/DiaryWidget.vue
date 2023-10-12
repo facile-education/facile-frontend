@@ -41,14 +41,13 @@
           @refresh="refresh"
         />
       </div>
-    </div>
-
-    <div class="footer">
-      <button
-        v-t="'showMore'"
-        class="show-more"
-        @click="showMore"
-      />
+      <div class="footer">
+        <button
+          v-t="'showMore'"
+          class="show-more"
+          @click="showMore"
+        />
+      </div>
     </div>
   </section>
 </template>
