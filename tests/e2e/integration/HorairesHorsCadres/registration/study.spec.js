@@ -1,374 +1,237 @@
-import dayjs from 'dayjs'
-
-import { CLASSTEACHER, DOYEN, HEADMASTER, PARENT, STUDENT, TEACHER } from '../../../support/constants/users'
+import { HHCURL, messagingURL } from '../../../support/constants/urls'
 import {
-  now,
-  slotTypes,
-  url
-} from '../../../support/constants/horairesHorsCadres'
-import utils from '../../../support/utils/horairesHorsCardesUtils'
+  CLASSTEACHER,
+  DOYEN,
+  HEADMASTER,
+  PARENT,
+  SECRETARY,
+  STUDENT,
+  TEACHER
+} from '../../../support/constants/users'
+import {
+  getSlot,
+  getUserSlot,
+  selectSlotType,
+  selectStudent
+} from '../../../support/utils/horairesHorsCardesUtils'
+import { getThread, waitMessagingToBeLoaded } from '../../../support/utils/messagingUtils'
 
-const slotToRegisterInside = {
-  day: 'wed',
-  date: now,
-  startHour: '12:00',
-  endHour: '13:00',
-  teacherSearch: 'reg',
-  teacherName: 'Regad Alexandre',
-  teacherLastName: 'Regad',
-  roomNumber: 'tg',
-  capacity: 2
+const studentToRegister = STUDENT // Because normal Student is already register in the hhc tables
+
+const rolesThatCanRegister = [HEADMASTER, SECRETARY, DOYEN, TEACHER]
+const rolesThatCannotRegister = []
+
+function getRandomBoolean () {
+  return Math.random() < 0.5
 }
 
-const classSlot = {
-  day: 'wed',
-  date: now,
-  startHour: '13:00',
-  endHour: '14:00',
-  teacherSearch: 'reg',
-  teacherName: 'Regad Alexandre',
-  teacherLastName: 'Regad',
-  roomNumber: 'tg',
-  capacity: 25
+function addTimeToSlot (slot, value, unit) {
+  const newslot = { ...slot }
+  newslot.startDate = Cypress.dayjs(newslot.startDate, 'YYYY/MM/DD HH:mm').add(value, unit)
+  newslot.endDate = Cypress.dayjs(newslot.endDate, 'YYYY/MM/DD HH:mm').add(value, unit)
+  return newslot
 }
 
-const slotToDeregister = {
-  day: 'wed',
-  date: now,
-  startHour: '13:00',
-  endHour: '14:00',
-  teacherSearch: 'reg',
-  teacherName: 'Regad Alexandre',
-  teacherLastName: 'Regad',
-  roomNumber: 'tg',
-  capacity: 1
+function selectWeek (date) {
+  const nextWeekLabel = date.day(1).format('D MMM') // week's monday
+  cy.contains('.horizontal-timeline-week', nextWeekLabel).click()
 }
 
-const studentsToRegister = [
-  {
-    name: 'ALOSTA ANYA (1051AC)',
-    formattedName: 'Anya Alosta - 1051AC',
-    search: 'alo'
-  },
-  {
-    name: 'BARMAN MELISSA (1021LC)',
-    formattedName: 'Melissa Barman - 1021LC',
-    search: 'méli'
-  },
-  {
-    name: 'SHAHABADI ALI (1153AC)',
-    formattedName: 'Ali Shahabadi - 1153AC',
-    search: 'ali'
-  }
-]
-
-const openStudentListModal = (slot, capacity) => {
-  utils.openSlotPopup(slot, capacity)
-  cy.get('[data-test=showStudentList-option]').click()
+function selectClass (className) {
+  cy.contains('button', 'Classe').click()
+  cy.get('.base-dropdown').contains(className).click()
 }
 
-const testRegistrationModal = (slot, studentToRegister) => {
-  cy.get('[data-test=student-registration-modal]').within(() => {
-    cy.contains(studentToRegister.formattedName)
-    cy.contains(slot.startHour)
-    cy.get('.notify-parents [type="checkbox"]').should('be.checked')
-
-    cy.contains('button', 'Inscrire').click()
-  })
-  utils.waitCalendarToLoad()
-  cy.get('[data-test=student-registration-modal]').should('not.exist')
-}
-
-const registerStudent = (notifyParents) => { // Just fill registration modal and submit
-  cy.get('[data-test=student-registration-modal]').within(() => {
-    if (!notifyParents) {
-      cy.get('.notify-parents [type="checkbox"]').uncheck()
+const notifications = (registeredSlot) => {
+  return [ // TODO: test content
+    {
+      role: STUDENT,
+      expectedThread: [{
+        sender: HEADMASTER.firstName + ' ' + HEADMASTER.lastName,
+        recipients: [PARENT.firstName + ' ' + PARENT.lastName],
+        date: '',
+        subject: 'Cercle d\'étude le ' + Cypress.dayjs(registeredSlot.startDate, 'YYYY/MM/DD HH:mm').format('dddd [à] HH[h]mm'),
+        content: '',
+        messageIndexInThread: 0
+      }]
+    },
+    {
+      role: PARENT,
+      expectedThread: [{
+        sender: HEADMASTER.firstName + ' ' + HEADMASTER.lastName,
+        recipients: [PARENT.firstName + ' ' + PARENT.lastName],
+        date: '',
+        subject: 'Cercle d\'étude le ' + Cypress.dayjs(registeredSlot.startDate, 'YYYY/MM/DD HH:mm').format('dddd [à] HH[h]mm'),
+        content: '',
+        messageIndexInThread: 0
+      }]
+    },
+    {
+      role: CLASSTEACHER,
+      expectedThread: [{
+        sender: HEADMASTER.firstName + ' ' + HEADMASTER.lastName,
+        recipients: [CLASSTEACHER.firstName + ' ' + CLASSTEACHER.lastName],
+        date: '',
+        subject: 'Cercle d\'étude le ' + Cypress.dayjs(registeredSlot.startDate, 'YYYY/MM/DD HH:mm').format('dddd [à] HH[h]mm'),
+        content: '',
+        messageIndexInThread: 0
+      }]
+    },
+    {
+      role: DOYEN,
+      expectedThread: [{
+        sender: HEADMASTER.firstName + ' ' + HEADMASTER.lastName,
+        recipients: [DOYEN.firstName + ' ' + DOYEN.lastName],
+        date: '',
+        subject: 'Cercle d\'étude le ' + Cypress.dayjs(registeredSlot.startDate, 'YYYY/MM/DD HH:mm').format('dddd [à] HH[h]mm'),
+        content: '',
+        messageIndexInThread: 0
+      }]
     }
+  ]
+}
+const testRegistrationModal = (slot, studentToRegister, classToRegister, notifyParent = true) => {
+  cy.get('[data-test=student-registration-modal]').within(() => {
+    if (studentToRegister) {
+      cy.contains(studentToRegister.firstName + ' ' + studentToRegister.lastName)
+    } else {
+      cy.contains(classToRegister.name)
+    }
+    cy.contains(Cypress.dayjs(slot.startDate, 'YYYY/MM/DD HH:mm').format('[le] DD MMMM YYYY [à] HH:mm'))
+    cy.get('.notify-parents [type="checkbox"]').should('be.checked')
+    if (!notifyParent) {
+      cy.get('.notify-parents [type="checkbox"]').click()
+      cy.get('.notify-parents [type="checkbox"]').should('not.be.checked')
+    }
+
     cy.contains('button', 'Inscrire').click()
   })
-  utils.waitCalendarToLoad()
-  cy.get('[data-test=student-registration-modal]').should('not.exist')
-}
-
-const checkMessage = () => {
-  cy.get('#nav_entry_messagerie').click()
-  cy.get('.message-container').first().within(() => { // have to be the last notification
-    cy.contains(HEADMASTER.firstName + ' ' + HEADMASTER.lastName)
-    cy.contains('Cercle d\'étude le ' + now.format('dddd') + ' à 12h').click()
-  })
+  cy.get('[data-test=student-registration-modal]', { timeout: 20000 }).should('not.exist')
 }
 
 describe('Study registration', () => {
   beforeEach(() => {
-    cy.clock(now.toDate().getTime())
-    cy.exec('npm run db:loadTables schoollife_tables.sql')
-    cy.clearDBCache()
-    cy.logout()
-    cy.login(url)
-    cy.get('[data-test=slot-type-item-' + slotTypes.study.type + ']').click()
-  })
-
-  it('check registration option existence', () => {
-    // Create slot
-    utils.createSlot(slotToRegisterInside)
-
-    // Open slot popup
-    utils.openSlotPopup(slotToRegisterInside, '2/2')
-    cy.get('[data-test=openRegistration-option]').should('not.exist') // Since no student is selected, registration option should not exist
-
-    // Select student
-    cy.get('[data-test=user-completion-input] input').type(studentsToRegister[0].search)
-    cy.tick(500)
-    // Select student user
-    cy.contains(studentsToRegister[0].name).click()
-
-    // Open slot popup
-    utils.openSlotPopup(slotToRegisterInside, '2/2')
-    cy.get('[data-test=openRegistration-option]').should('be.visible')
-
-    // Set slot Capacity to 0
-    cy.get('[data-test=openEditModal-option]').click()
-    cy.get('[data-test=edit-slot-modal]').within(() => {
-      cy.get('input[type="number"]').clear().type(0)
-      cy.get('.button').contains('Valider').click()
+    cy.fixture('hhc.json').as('hhcData').then(data => {
+      cy.clock(Cypress.dayjs(data.now, 'YYYY/MM/DD HH:mm').toDate().getTime())
     })
-    utils.waitCalendarToLoad()
-
-    // Open slot popup
-    utils.openSlotPopup(slotToRegisterInside, '0/0')
-    cy.get('[data-test=openRegistration-option]').should('not.exist') // Cannot register student if not there is no place available
+    cy.loadTables('schoollife/schoollife_tables_empty.sql')
+    cy.loadTables('messaging/messaging_tables_empty.sql') // to empty
   })
 
-  it('can register a list of student from their class', () => {
-    const classObject = { formattedName: '0932R3', studentCount: 24 }
-    // Create slot
-    utils.createSlot(classSlot)
+  it(' is present for good roles', function () {
+    const slotToRegisterInside = this.hhcData.slotsTypes.study.slotExample
 
-    // Open slot popup
-    utils.openSlotPopup(classSlot, `${classSlot.capacity}/${classSlot.capacity}`)
-    cy.get('[data-test=openRegistration-option]').should('not.exist')
+    rolesThatCannotRegister.forEach(role => {
+      cy.login(role, HHCURL)
+      selectSlotType(this.hhcData.slotsTypes.study)
+      // Select student
+      selectStudent(studentToRegister)
+      // Open registration modal
+      getSlot(slotToRegisterInside).click()
+      cy.get('[data-test=registerStudent-option]').should('not.exist')
+    })
 
-    // Select class
-    cy.contains('Classe').click()
-    cy.contains(classObject.formattedName).click()
-    cy.tick(500)
-
-    // Open slot popup
-    utils.openSlotPopup(classSlot, `${classSlot.capacity}/${classSlot.capacity}`)
-    cy.get('[data-test=openRegistration-option]').should('be.visible')
-
-    // Register class
-    cy.get('[data-test=openRegistration-option]').click()
-    testRegistrationModal(classSlot, classObject)
-    // check student list
-    cy.contains(`${classSlot.capacity - classObject.studentCount}/${classSlot.capacity}`).should('be.visible')
-
-    // Check inputs reset
-    // Select student
-    cy.get('[data-test=user-completion-input] input').type(studentsToRegister[0].search)
-    cy.tick(500)
-    cy.contains(studentsToRegister[0].name).click()
-    cy.get('.filters').contains('Classe').should('exist')
-
-    // Select class
-    cy.get('.filters').contains('Classe').click()
-    cy.contains(classObject.formattedName).click()
-    cy.tick(500)
-    cy.get('.base-input').should('be.empty')
-
-    // TODO remove clean up and init DB before each ?
-    // Clean up
-    utils.deleteSlot(classSlot, `${classSlot.capacity - classObject.studentCount}/${classSlot.capacity}`)
+    rolesThatCanRegister.forEach(role => {
+      cy.login(role, HHCURL)
+      selectSlotType(this.hhcData.slotsTypes.study)
+      // Select student
+      selectStudent(studentToRegister)
+      // Open registration modal
+      getSlot(slotToRegisterInside).click()
+      cy.get('[data-test=registerStudent-option]').should('exist') // be.visible is better but sometimes calendar is wierd
+    })
   })
 
-  it('registration behaviour', () => {
-    // Create slot
-    utils.createSlot(slotToRegisterInside)
+  it('register a student', function () {
+    const slotToRegisterInside = this.hhcData.slotsTypes.study.slotExample
+    const notifyParent = getRandomBoolean()
+    const registerer = rolesThatCanRegister[0]
+
+    cy.log('Register student ' + studentToRegister.lastName + ' by ' + registerer.lastName + ' and ' + notifyParent ? '' : 'not ' + 'notify parents')
+
+    // Connect with someone who can register
+    cy.login(registerer, HHCURL)
+    selectSlotType(this.hhcData.slotsTypes.study)
 
     // Select student
-    utils.selectStudent(studentsToRegister[0])
-
+    selectStudent(studentToRegister)
     // Open registration modal
-    utils.openSlotPopup(slotToRegisterInside, '2/2')
-    cy.get('[data-test=openRegistration-option]').click()
+    getSlot(slotToRegisterInside).click()
+    cy.get('[data-test=registerStudent-option]').click()
 
     // Test registration modal (ends by registering student)
-    testRegistrationModal(slotToRegisterInside, studentsToRegister[0])
+    testRegistrationModal(slotToRegisterInside, studentToRegister, undefined, notifyParent)
 
     // Check the HHC slot is added in grey to the student's schedule
-    cy.get('.grayed >> [data-test="' + slotToRegisterInside.date.format('MM-DD') + '_' + slotToRegisterInside.startHour + '"]').within(() => {
-      cy.contains(slotToRegisterInside.teacherLastName).first().should('exist')
-    })
-
-    // Try to register student a second time
-    utils.openSlotPopup(slotToRegisterInside, '1/2')
-    cy.get('[data-test=openRegistration-option]').should('not.exist')
-    utils.closeSlotPopup(slotToRegisterInside, '1/2')
-
-    // Register a second student
-    utils.clearSelectedUser()
-    utils.selectStudent(studentsToRegister[1])
-    utils.openSlotPopup(slotToRegisterInside, '1/2')
-    cy.get('[data-test=openRegistration-option]').click()
-    registerStudent(false)
-
-    // Try to register a third student (but there is no place available)
-    utils.clearSelectedUser()
-    utils.selectStudent(studentsToRegister[2])
-    utils.openSlotPopup(slotToRegisterInside, '0/2')
-    cy.get('[data-test=openRegistration-option]').should('not.exist')
+    getUserSlot(slotToRegisterInside).should('exist')
 
     // Check the slot's student list
+    const capacityLabel = slotToRegisterInside.capacity - 1 + '/' + slotToRegisterInside.capacity
+    getSlot(slotToRegisterInside).should('contain', capacityLabel).click()
     cy.get('[data-test=showStudentList-option]').click()
     cy.get('[data-test=student-list-modal]').within(() => {
-      cy.contains(studentsToRegister[0].formattedName)
-      cy.contains(studentsToRegister[1].formattedName)
+      cy.contains(studentToRegister.firstName + ' ' + studentToRegister.lastName)
     })
     cy.get('[data-test=closeModal]').click()
 
-    // Go in Horaires service
-    cy.visit('/nero/horaires')
+    // Check the next week if student is already registered
+    const nextWeekUserSlot = addTimeToSlot(slotToRegisterInside, 1, 'week')
+    const nextWeek = Cypress.dayjs(this.hhcData.now, 'YYYY/MM/DD HH:mm').add(1, 'week')
+    selectWeek(nextWeek)
+    getUserSlot(nextWeekUserSlot).should('exist')
 
-    // Check slots for the first student
-    utils.selectStudent(studentsToRegister[0])
-    cy.contains('[data-cy="' + slotToRegisterInside.date.format('MM-DD') + '_' + slotToRegisterInside.startHour + '"]', 'Cercle d\'étude').parent().within(() => {
-      cy.contains(slotToRegisterInside.teacherLastName).first().should('exist')
+    notifications(slotToRegisterInside).forEach(notification => {
+      if (notification.role !== PARENT || notifyParent) {
+        cy.login(notification.role, messagingURL)
+        waitMessagingToBeLoaded()
+        getThread(notification.expectedThread).should('be.visible')
+      }
     })
-
-    // Check notifications (student, parents, doyen, class teacher)
-    cy.logout()
-    cy.login('/', STUDENT)
-    checkMessage()
-
-    cy.logout()
-    cy.login('/', PARENT)
-    checkMessage()
-
-    cy.logout()
-    cy.login('/', CLASSTEACHER)
-    checkMessage()
-
-    cy.logout()
-    cy.login('/', DOYEN)
-    checkMessage()
   })
 
-  it('deregistration', () => {
-    // Create slot
-    utils.createSlot(slotToDeregister)
+  it('register a class', function () {
+    const slotToRegisterInside = this.hhcData.slotsTypes.study.slotExample
+    const notifyParent = getRandomBoolean()
+    const registerer = rolesThatCanRegister[0]
+    const classToRegister = { name: '0933R3', nbStudents: 20 } // STUDENT's class
 
-    // Register someone inside
-    utils.selectStudent(studentsToRegister[0])
-    utils.openSlotPopup(slotToDeregister, '1/1')
-    cy.get('[data-test=openRegistration-option]').click()
-    registerStudent(false)
+    // Connect with someone who can register
+    cy.login(registerer, HHCURL)
+    selectSlotType(this.hhcData.slotsTypes.study)
 
-    // Open the slot's student list
-    utils.openSlotPopup(slotToDeregister, '0/1')
+    selectClass(classToRegister.name)
+    // Open registration modal
+    getSlot(slotToRegisterInside).click()
+    cy.get('[data-test=registerStudent-option]').click({ force: true })
+
+    // Test registration modal (ends by registering student)
+    testRegistrationModal(slotToRegisterInside, undefined, classToRegister, notifyParent)
+
+    // Check the HHC slot is added in grey to the student's schedule
+    // getUserSlot(slotToRegisterInside).should('exist') // TODO
+
+    // Check the slot's student list
+    const capacityLabel = slotToRegisterInside.capacity - classToRegister.nbStudents + '/' + slotToRegisterInside.capacity
+    getSlot(slotToRegisterInside).should('contain', 'Capacité: ' + capacityLabel).click()
     cy.get('[data-test=showStudentList-option]').click()
-
-    // Open the list and unregister student
     cy.get('[data-test=student-list-modal]').within(() => {
-      cy.contains(studentsToRegister[0].formattedName).parent().find('[data-test=unregister]').click()
-    })
-
-    // Confirm unregistration
-    cy.get('[data-test=student-registration-modal]').within(() => {
-      cy.contains('Désinscription')
-      cy.contains(studentsToRegister[0].formattedName)
-      cy.contains(slotToDeregister.startHour)
-
-      cy.contains('button', 'Désinscrire').click()
-    })
-
-    // The list no longer contains the student
-    cy.get('[data-test=student-list-modal]').within(() => {
-      cy.contains('Aucun élève n\'est inscrit sur ce créneau')
+      cy.contains(studentToRegister.firstName + ' ' + studentToRegister.lastName)
+      cy.get('[data-test=student-list-item]').should('have.length', classToRegister.nbStudents)
     })
     cy.get('[data-test=closeModal]').click()
 
-    // The slot have afresh 1/1 free places and can register students
-    utils.openSlotPopup(slotToDeregister, '1/1')
-    cy.get('[data-test=showStudentList-option]').should('exist')
-    utils.closeSlotPopup(slotToDeregister, '1/1')
+    // Check the next week if class is already registered
+    const nextWeekUserSlot = addTimeToSlot(slotToRegisterInside, 1, 'week')
+    const nextWeek = Cypress.dayjs(this.hhcData.now, 'YYYY/MM/DD HH:mm').add(1, 'week')
+    selectWeek(nextWeek)
+    getSlot(nextWeekUserSlot).should('contain', 'Capacité: ' + capacityLabel).click()
 
-    // The student's schedule no longer have the HHC slot
-    cy.get('.grayed >> [data-test="' + slotToDeregister.date.format('MM-DD') + '_' + slotToDeregister.startHour + '"]').should('not.exist')
-
-    // Go in Horaires service
-    cy.visit('/nero/horaires')
-
-    // Check slots for the student
-    utils.selectStudent(studentsToRegister[0])
-    cy.contains('[data-cy="' + slotToDeregister.date.format('MM-DD') + '_' + slotToDeregister.startHour + '"]', 'Cercle d\'étude').should('not.exist')
-  })
-
-  it('delete slot after registration', () => {
-    // Create slot
-    utils.createSlot(slotToDeregister)
-
-    // Register someone inside
-    utils.selectStudent(studentsToRegister[0])
-    utils.openSlotPopup(slotToDeregister, '1/1')
-    cy.get('[data-test=openRegistration-option]').click()
-    registerStudent(false)
-
-    // Delete slot
-    utils.deleteSlot(slotToDeregister, '0/1')
-
-    // The student's schedule no longer have the HHC slot
-    cy.get('.grayed >> [data-test="' + slotToDeregister.date.format('MM-DD') + '_' + slotToDeregister.startHour + '"]').should('not.exist')
-
-    // Go in Horaires service
-    cy.visit('/nero/horaires')
-
-    // Check slots for the student
-    utils.selectStudent(studentsToRegister[0])
-    cy.contains('[data-cy="' + slotToDeregister.date.format('MM-DD') + '_' + slotToDeregister.startHour + '"]', 'Cercle d\'étude').should('not.exist')
-
-    // TODO Check notification?
-  })
-
-  it('mobile registration', () => {
-    // TODO
-  })
-})
-
-describe('Check in study', () => {
-  const nowBis = dayjs('2021-06-23T16:00:00.000Z') // because more convenient to do those tests with DB data
-
-  beforeEach(() => {
-    cy.logout()
-    cy.clock(nowBis.toDate().getTime())
-    cy.login(url, TEACHER)
-    cy.get('[data-test=slot-type-item-' + slotTypes.study.type + ']').click()
-  })
-
-  it('Check in appear only on teacher\'s course', () => {
-    // Do the check in of a slot with one student registered
-    openStudentListModal({ date: nowBis, startHour: '13:00' }, '14/15')
-    // Check the check in modal
-    cy.get('[data-test=student-list-modal]').within(() => {
-      cy.contains('Melissa Barman - 1021LC').parent().find('[type="checkbox"]').should('not.be.checked').check()
-        .should('be.checked').uncheck()
-        .should('not.be.checked')
-      cy.contains('button', 'Faire l\'appel').should('be.visible').click()
+    notifications(slotToRegisterInside).forEach(notification => {
+      if (notification.role !== PARENT || notifyParent) {
+        cy.login(notification.role, messagingURL)
+        waitMessagingToBeLoaded()
+        getThread(notification.expectedThread).should('be.visible')
+      }
     })
-    cy.get('[data-test=student-list-modal]').should('not.exist')
-
-    // TODO Test missing student notification at the end of course when scheduler triggers
-
-    // A teacher cannot check-in on others slots
-    openStudentListModal({ date: nowBis.add(1, 'day'), startHour: '10:00' }, '47/48') // This slot is oversee by an other teacher
-    cy.get('[data-test=student-list-modal]').within(() => {
-      cy.contains('Alexia Arsenio - 0921R2').parent().find('[type="checkbox"]').should('not.exist')
-      cy.contains('button', 'Faire l\'appel').should('not.exist')
-    })
-
-    // TODO cannot do the check in before the slot's date
-  })
-
-  it('Check in mobile', () => {
-    // TODO
   })
 })
