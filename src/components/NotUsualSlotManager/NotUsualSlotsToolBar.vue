@@ -16,7 +16,7 @@
       <UserCompletion
         v-if="currentSlotType"
         user-type="student"
-        data-test="hhc-user-selector"
+        data-test="user-completion-input"
         :placeholder="$t('NotUsualSlots.studentNamePlaceHolder')"
         :model-value="queriedUser ? [queriedUser] : []"
         @update:modelValue="getUserSlots"
