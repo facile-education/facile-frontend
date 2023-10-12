@@ -52,21 +52,7 @@ CREATE TABLE `Messaging_Message` (
 
 LOCK TABLES `Messaging_Message` WRITE;
 /*!40000 ALTER TABLE `Messaging_Message` DISABLE KEYS */;
-INSERT INTO lportal_ent.Messaging_Message (messageId,folderId,threadId,sendMessageId,senderId,sendDate,messageSubject,messageContent,isNew,readDate,isAnswered,isForwarded,senderName,type_,companyId) VALUES
-	 (479206,534207,479207,0,45479,'2023-10-12 14:17:31.840','Quatrième message','En fait j''aime juste écrire',0,NULL,0,0,'Rosana NOLLI',0,20097),
-	 (479208,534205,479207,479206,45479,'2023-10-12 14:17:31.871','Quatrième message','En fait j''aime juste écrire',1,NULL,0,0,'Rosana NOLLI',0,20097),
-	 (479210,479209,479207,479206,45479,'2023-10-12 14:17:31.901','Quatrième message','En fait j''aime juste écrire',1,NULL,0,0,'Rosana NOLLI',0,20097),
-	 (534210,534207,534211,0,45479,'2023-10-05 08:51:49.401','Mon premier message','Ceci est un message de test',0,NULL,0,0,'Rosana NOLLI',0,20097),
-	 (534212,534205,534211,534210,45479,'2023-10-05 08:51:49.495','Mon premier message','Ceci est un message de test',0,'2023-10-05 09:03:03',0,0,'Rosana NOLLI',0,20097),
-	 (534213,534207,534214,0,45479,'2023-10-05 08:53:44.337','deuxième message','je vous pose une question',0,NULL,0,0,'Rosana NOLLI',0,20097),
-	 (534215,534205,534214,534213,45479,'2023-10-05 08:53:44.419','deuxième message','je vous pose une question',0,'2023-10-05 08:53:52',1,0,'Rosana NOLLI',0,20097),
-	 (534219,534216,534214,0,58811,'2023-10-05 08:54:09.390','Re: deuxième message','Je vous réponds!',0,NULL,0,0,'Orlan HUE',0,20097),
-	 (534220,534206,534214,534219,58811,'2023-10-05 08:54:09.499','Re: deuxième message','Je vous réponds!',0,'2023-10-05 08:54:17',1,0,'Orlan HUE',0,20097),
-	 (534221,534207,534214,0,45479,'2023-10-05 08:54:27.568','Re: deuxième message','Merci',0,NULL,0,0,'Rosana NOLLI',0,20097);
-INSERT INTO lportal_ent.Messaging_Message (messageId,folderId,threadId,sendMessageId,senderId,sendDate,messageSubject,messageContent,isNew,readDate,isAnswered,isForwarded,senderName,type_,companyId) VALUES
-	 (534222,534205,534214,534221,45479,'2023-10-05 08:54:27.634','Re: deuxième message','Merci',1,NULL,0,0,'Rosana NOLLI',0,20097),
-	 (534223,534207,534224,0,45479,'2023-10-05 09:01:19.210','Troisième message','J''ai encore des choses à dire!',0,NULL,0,0,'Rosana NOLLI',0,20097),
-	 (534225,534205,534224,534223,45479,'2023-10-05 09:01:19.272','Troisième message','J''ai encore des choses à dire!',1,NULL,0,0,'Rosana NOLLI',0,20097);
+INSERT INTO `Messaging_Message` (`messageId`, `folderId`, `threadId`, `sendMessageId`, `senderId`, `sendDate`, `messageSubject`, `messageContent`, `isNew`, `readDate`, `isAnswered`, `isForwarded`, `senderName`, `type_`, `companyId`) VALUES (534210,534207,534211,0,45479,'2023-10-05 08:51:49.401','Mon premier message','Ceci est un message de test',0,NULL,0,0,'Rosana NOLLI',0,20097),(534212,534205,534211,534210,45479,'2023-10-05 08:51:49.495','Mon premier message','Ceci est un message de test',0,'2023-10-05 09:03:03',0,0,'Rosana NOLLI',0,20097),(534213,534207,534214,0,45479,'2023-10-05 08:53:44.337','deuxième message','je vous pose une question',0,NULL,0,0,'Rosana NOLLI',0,20097),(534215,534205,534214,534213,45479,'2023-10-05 08:53:44.419','deuxième message','je vous pose une question',0,'2023-10-05 08:53:52',1,0,'Rosana NOLLI',0,20097),(534219,534216,534214,0,58811,'2023-10-05 08:54:09.390','Re: deuxième message','Je vous réponds!',0,NULL,0,0,'Orlan HUE',0,20097),(534220,534206,534214,534219,58811,'2023-10-05 08:54:09.499','Re: deuxième message','Je vous réponds!',0,'2023-10-05 08:54:17',1,0,'Orlan HUE',0,20097),(534221,534207,534214,0,45479,'2023-10-05 08:54:27.568','Re: deuxième message','Merci',0,NULL,0,0,'Rosana NOLLI',0,20097),(534222,534205,534214,534221,45479,'2023-10-05 08:54:27.634','Re: deuxième message','Merci',1,NULL,0,0,'Rosana NOLLI',0,20097),(534223,534207,534224,0,45479,'2023-10-05 09:01:19.210','Troisième message','J\'ai encore des choses à dire!',0,NULL,0,0,'Rosana NOLLI',0,20097),(534225,534205,534224,534223,45479,'2023-10-05 09:01:19.272','Troisième message','J\'ai encore des choses à dire!',1,NULL,0,0,'Rosana NOLLI',0,20097),(824401,534207,824402,0,45479,'2023-10-12 14:03:18.747','Mon quatrième message','Ceci est un message avec plusieurs destinataires',0,NULL,0,0,'Rosana NOLLI',0,20097),(824403,534205,824402,824401,45479,'2023-10-12 14:03:18.841','Mon quatrième message','Ceci est un message avec plusieurs destinataires',1,NULL,0,0,'Rosana NOLLI',0,20097),(824405,824404,824402,824401,45479,'2023-10-12 14:03:18.933','Mon quatrième message','Ceci est un message avec plusieurs destinataires',1,NULL,0,0,'Rosana NOLLI',0,20097);
 /*!40000 ALTER TABLE `Messaging_Message` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -115,17 +101,7 @@ CREATE TABLE `Messaging_MessageContent` (
 
 LOCK TABLES `Messaging_MessageContent` WRITE;
 /*!40000 ALTER TABLE `Messaging_MessageContent` DISABLE KEYS */;
-INSERT INTO lportal_ent.Messaging_MessageContent (messageId,messageContent) VALUES
-	 (479206,'<html><head></head><body><p>En fait j''aime juste écrire</p></body></body></html>'),
-	 (479208,'<html><head></head><body><p>En fait j''aime juste écrire</p></body></body></html>'),
-	 (479210,'<html><head></head><body><p>En fait j''aime juste écrire</p></body></body></html>'),
-	 (534210,'<html><head></head><body><p>Ceci est un message de test</p></body></html>'),
-	 (534212,'<html><head></head><body><p>Ceci est un message de test</p></body></html>'),
-	 (534213,'<html><head></head><body><p>Je vous pose une question</p></body></html>'),
-	 (534215,'<html><head></head><body><p>Je vous pose une question</p></body></html>'),
-	 (534219,'<html><head></head><body><p>Je vous réponds!</p></body></html>'),
-	 (534220,'<html><head></head><body><p>Je vous réponds!</p></body></html>'),
-	 (534221,'<html><head></head><body><p>Merci</p></body></html>');
+INSERT INTO `Messaging_MessageContent` (`messageId`, `messageContent`) VALUES (534210,'<html>\n <head></head>\n<body>\n <p>Ceci est un message de test</p>\n</body></body>\n</html>'),(534212,'<html>\n <head></head>\n<body>\n <p>Ceci est un message de test</p>\n</body></body>\n</html>'),(534213,'<html>\n <head></head>\n<body>\n <p>Je vous pose une question</p>\n</body></body>\n</html>'),(534215,'<html>\n <head></head>\n<body>\n <p>Je vous pose une question</p>\n</body></body>\n</html>'),(534219,'<html>\n <head></head>\n<body>\n <p>Je vous réponds!</p>\n</body></body>\n</html>'),(534220,'<html>\n <head></head>\n<body>\n <p>Je vous réponds!</p>\n</body></body>\n</html>'),(534221,'<html>\n <head></head>\n<body>\n <p>Merci</p>\n</body></body>\n</html>'),(534222,'<html>\n <head></head>\n<body>\n <p>Merci</p>\n</body></body>\n</html>'),(534223,'<html>\n <head></head>\n<body>\n <p>J\'ai encore des choses à dire!</p>\n</body></body>\n</html>'),(534225,'<html>\n <head></head>\n<body>\n <p>J\'ai encore des choses à dire!</p>\n</body></body>\n</html>'),(824401,'<html>\n <head></head>\n<body>\n <p>Ceci est un message avec plusieurs destinataires</p>\n</body></body>\n</html>'),(824403,'<html>\n <head></head>\n<body>\n <p>Ceci est un message avec plusieurs destinataires</p>\n</body></body>\n</html>'),(824405,'<html>\n <head></head>\n<body>\n <p>Ceci est un message avec plusieurs destinataires</p>\n</body></body>\n</html>');
 /*!40000 ALTER TABLE `Messaging_MessageContent` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -155,7 +131,7 @@ CREATE TABLE `Messaging_MessageFolder` (
 
 LOCK TABLES `Messaging_MessageFolder` WRITE;
 /*!40000 ALTER TABLE `Messaging_MessageFolder` DISABLE KEYS */;
-INSERT INTO `Messaging_MessageFolder` (`folderId`, `userId`, `folderName`, `type_`, `parentFolderId`) VALUES (534201,47362,'Boîte de réception',1,0),(534202,47362,'Envoyés',3,0),(534203,47362,'Corbeille',4,0),(534204,47362,'Brouillons',2,0),(534205,58811,'Boîte de réception',1,0),(534206,45479,'Boîte de réception',1,0),(534207,45479,'Envoyés',3,0),(534208,45479,'Corbeille',4,0),(534209,45479,'Brouillons',2,0),(534216,58811,'Envoyés',3,0),(534217,58811,'Corbeille',4,0),(534218,58811,'Brouillons',2,0),(538201,58811,'sous-dossier',5,0),(19654701,52216,'Boîte de réception',1,0),(19654702,52216,'Envoyés',3,0),(19654703,52216,'Corbeille',4,0),(19654704,52216,'Brouillons',2,0),(19662701,52216,'dossier personnel',5,0),(19662702,52216,'sous-dossier',5,19662701),(19662703,52216,'Mon autre dossier',5,0);
+INSERT INTO `Messaging_MessageFolder` (`folderId`, `userId`, `folderName`, `type_`, `parentFolderId`) VALUES (534201,47362,'Boîte de réception',1,0),(534202,47362,'Envoyés',3,0),(534203,47362,'Corbeille',4,0),(534204,47362,'Brouillons',2,0),(534205,58811,'Boîte de réception',1,0),(534206,45479,'Boîte de réception',1,0),(534207,45479,'Envoyés',3,0),(534208,45479,'Corbeille',4,0),(534209,45479,'Brouillons',2,0),(534216,58811,'Envoyés',3,0),(534217,58811,'Corbeille',4,0),(534218,58811,'Brouillons',2,0),(538201,58811,'sous-dossier',5,0),(824404,47461,'Boîte de réception',1,0),(19654701,52216,'Boîte de réception',1,0),(19654702,52216,'Envoyés',3,0),(19654703,52216,'Corbeille',4,0),(19654704,52216,'Brouillons',2,0),(19662701,52216,'dossier personnel',5,0),(19662702,52216,'sous-dossier',5,19662701),(19662703,52216,'Mon autre dossier',5,0);
 /*!40000 ALTER TABLE `Messaging_MessageFolder` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -180,24 +156,7 @@ CREATE TABLE `Messaging_MessageRecipients` (
 
 LOCK TABLES `Messaging_MessageRecipients` WRITE;
 /*!40000 ALTER TABLE `Messaging_MessageRecipients` DISABLE KEYS */;
-INSERT INTO lportal_ent.Messaging_MessageRecipients (messageId,recipients) VALUES
-	 (479206,'58811,47461,'),
-	 (479208,'58811,47461,'),
-	 (479210,'58811,47461,'),
-	 (534210,'58811,'),
-	 (534212,'58811,'),
-	 (534213,'58811,'),
-	 (534215,'58811,'),
-	 (534219,'45479,'),
-	 (534220,'45479,'),
-	 (534221,'58811,');
-INSERT INTO lportal_ent.Messaging_MessageRecipients (messageId,recipients) VALUES
-	 (534222,'58811,'),
-	 (534223,'58811,'),
-	 (534225,'58811,'),
-	 (534226,'58811,47461'),
-	 (534228,'58811,47461');
-
+INSERT INTO `Messaging_MessageRecipients` (`messageId`, `recipients`) VALUES (534210,'58811,'),(534212,'58811,'),(534213,'58811,'),(534215,'58811,'),(534219,'45479,'),(534220,'45479,'),(534221,'58811,'),(534222,'58811,'),(534223,'58811,'),(534225,'58811,'),(824401,'58811,47461,'),(824403,'58811,47461,'),(824405,'58811,47461,');
 /*!40000 ALTER TABLE `Messaging_MessageRecipients` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -226,13 +185,7 @@ CREATE TABLE `Messaging_MessagingConfig` (
 
 LOCK TABLES `Messaging_MessagingConfig` WRITE;
 /*!40000 ALTER TABLE `Messaging_MessagingConfig` DISABLE KEYS */;
-INSERT INTO lportal_ent.Messaging_MessagingConfig (userId,isForwardActive,forwardMail,isSignatureActive,signature,isAutoReplyActive,autoReplyContent) VALUES
-	 (45479,1,'rosana.nolli@etat.ge.loc',0,NULL,0,NULL),
-	 (47461,1,'penelope.rbr@eduge.loc',0,NULL,0,NULL),
-	 (58811,1,'orlan.hue@etat.ge.loc',0,NULL,0,NULL),
-	 (332442,1,'darko.jovanovic@test.ge.ch',1,'<p>My signature</p>',1,'<p>My auto reply text</p>'),
-	 (19279640,1,'fiheri@weprode.com',0,NULL,0,NULL),
-	 (19280555,1,'ciorsa@weprode.com',0,NULL,0,NULL);
+INSERT INTO `Messaging_MessagingConfig` (`userId`, `isForwardActive`, `forwardMail`, `isSignatureActive`, `signature`, `isAutoReplyActive`, `autoReplyContent`) VALUES (47461,1,'penelope.rbr@eduge.loc',0,NULL,0,NULL),(58811,1,'orlan.hue@etat.ge.loc',0,NULL,0,NULL),(332442,1,'darko.jovanovic@test.ge.ch',1,'<p>My signature</p>',1,'<p>My auto reply text</p>'),(19279640,1,'fiheri@weprode.com',0,NULL,0,NULL),(19280555,1,'ciorsa@weprode.com',0,NULL,0,NULL);
 /*!40000 ALTER TABLE `Messaging_MessagingConfig` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -245,4 +198,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-05 11:03:40
+-- Dump completed on 2023-10-12 16:05:34

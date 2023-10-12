@@ -1,6 +1,6 @@
 import { messagingURL } from '../../support/constants/urls'
 import { HEADMASTER, STUDENT, TEACHER } from '../../support/constants/users'
-import { getMessage, getThread, waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
+import { getThread, waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
 
 const userAnswer = 'Ceci est un réponse à un seul utilisateur'
 const allUserAnswer = 'Ceci est un réponse à tous les utilisateurs'
@@ -29,8 +29,10 @@ describe('Answer', () => {
       cy.login(TEACHER, messagingURL)
       waitMessagingToBeLoaded()
       getThread(existingThreads[3]).click()
-      getMessage(existingThreads[3][0]).first().contains(existingThreads[3][0].subject)
-      getMessage(existingThreads[3][0]).contains(existingThreads[3][0].subject)
+      cy.get('.message-list').within(() => {
+        cy.get('[data-test="message"]').first().contains(userAnswer)
+        cy.get('[data-test="message"]').first().contains(existingThreads[3][0].subject)
+      })
     })
 
     // Answer option button
@@ -51,12 +53,14 @@ describe('Answer', () => {
       cy.login(TEACHER, messagingURL)
       waitMessagingToBeLoaded()
       getThread(existingThreads[3]).click()
-      getMessage(existingThreads[3][0]).first().contains(existingThreads[3][0].subject)
-      getMessage(existingThreads[3][0]).contains(existingThreads[3][0].subject)
+      cy.get('.message-list').within(() => {
+        cy.get('[data-test="message"]').first().contains(userAnswer)
+        cy.get('[data-test="message"]').first().contains(existingThreads[3][0].subject)
+      })
     })
 
     // Answer all recipients thread right click
-    it('reply to all recipients', function () {
+    it('reply to all recipients thread right click', function () {
       const existingThreads = this.messagingData.existingThreads
       cy.login(HEADMASTER, messagingURL)
       waitMessagingToBeLoaded()
@@ -72,24 +76,28 @@ describe('Answer', () => {
       cy.login(TEACHER, messagingURL)
       waitMessagingToBeLoaded()
       getThread(existingThreads[3]).click()
-      getMessage(existingThreads[3][0]).first().contains(existingThreads[3][0].subject)
-      getMessage(existingThreads[3][0]).contains(existingThreads[3][0].subject)
+      cy.get('.message-list').within(() => {
+        cy.get('[data-test="message"]').first().contains(allUserAnswer)
+        cy.get('[data-test="message"]').first().contains(existingThreads[3][0].subject)
+      })
 
       // Check answer second recipients
       cy.login(STUDENT, messagingURL)
       waitMessagingToBeLoaded()
       getThread(existingThreads[3]).click()
-      getMessage(existingThreads[3][0]).first().contains(existingThreads[3][0].subject)
-      getMessage(existingThreads[3][0]).contains(existingThreads[3][0].subject)
+      cy.get('.message-list').within(() => {
+        cy.get('[data-test="message"]').first().contains(allUserAnswer)
+        cy.get('[data-test="message"]').first().contains(existingThreads[3][0].subject)
+      })
     })
 
     // Answer all recipients option button
-    it.only('reply to all recipients', function () {
+    it.only('reply to all recipients option button', function () {
       const existingThreads = this.messagingData.existingThreads
       cy.login(HEADMASTER, messagingURL)
       waitMessagingToBeLoaded()
       getThread(existingThreads[3]).click()
-      cy.get('[data-test="option_reply"]').click()
+      cy.get('[data-test="option_replyAll"]').click()
       cy.get('[data-test="createMessageModal"]').within(() => {
         cy.get('.ck-editor')
         cy.type_ckeditor(allUserAnswer)
@@ -100,15 +108,28 @@ describe('Answer', () => {
       cy.login(TEACHER, messagingURL)
       waitMessagingToBeLoaded()
       getThread(existingThreads[3]).click()
-      getMessage(existingThreads[3][0]).first().contains(existingThreads[3][0].subject)
-      getMessage(existingThreads[3][0]).contains(existingThreads[3][0].subject)
+      cy.get('.message-list').within(() => {
+        cy.get('[data-test="message"]').first().contains(allUserAnswer)
+        cy.get('[data-test="message"]').first().contains(existingThreads[3][0].subject)
+      })
 
       // Check answer second recipients
       cy.login(STUDENT, messagingURL)
       waitMessagingToBeLoaded()
       getThread(existingThreads[3]).click()
-      getMessage(existingThreads[3][0]).first().contains(existingThreads[3][0].subject)
-      getMessage(existingThreads[3][0]).contains(existingThreads[3][0].subject)
+      cy.get('.message-list').within(() => {
+        cy.get('[data-test="message"]').first().contains(allUserAnswer)
+        cy.get('[data-test="message"]').first().contains(existingThreads[3][0].subject)
+      })
+    })
+  })
+
+  context('mobile', function () {
+    beforeEach(function () {
+      cy.viewport('iphone-5')
+    })
+    it('check answer option mobile', function () {
+
     })
   })
 })

@@ -85,8 +85,8 @@
         "sender": "Rosana Nolly",
         "recipients": ["Orlan Hue", "Pénélope Ribeiro"],
         "date": "2023/10/05 09:02",
-        "subject": "Quatrième message",
-        "content": "En fait j'aime juste écrire",
+        "subject": "Mon quatrième message",
+        "content": "Ceci est un message avec plusieurs destinataires",
         "messageIndexInThread": 0,
         "read": 0
       }
