@@ -176,6 +176,14 @@ export default {
       return this.$store.state.user.isAdministrator || this.$store.state.user.isENTAdmin
     }
   },
+  watch: {
+    // This is used after creating a manual session
+    selectedGroup () {
+      if (this.$store.state.horaires.selectedGroup.groupId !== 0) {
+        this.tagsList.length = 0
+      }
+    }
+  },
   created () {
     if (this.groupList === undefined && !this.$store.state.user.isStudent && !this.$store.state.user.isParent) {
       this.getGroupList()
