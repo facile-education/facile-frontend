@@ -80,7 +80,7 @@
         </li>
         <li>
           <IconOption
-            v-if="isActionEnabled && isDraft"
+            v-if="isDraftEditionEnabled && isDraft"
             class="header-icon"
             :icon="require('@assets/icons/pencil.svg')"
             :title="$t('Messaging.editDraft')"
@@ -261,6 +261,9 @@ export default {
     },
     isActionEnabled () {
       return (this.$store.state.messaging.selectedThreads.length + this.$store.state.messaging.selectedMessages.length) > 0
+    },
+    isDraftEditionEnabled () {
+      return this.$store.state.messaging.selectedThreads.length > 0 || (this.$store.state.messaging.selectedMessages.length > 0 && this.$store.state.messaging.selectedMessages[0].isDraft)
     }
   },
   methods: {
@@ -269,7 +272,11 @@ export default {
       this.$store.dispatch('messaging/hideDetailPanel')
     },
     editDraft () {
-      messagingUtils.editDraft(this.$store.state.messaging.selectedThreads[0].mainMessageId)
+      if (this.$store.state.messaging.selectedThreads.length > 0) {
+        messagingUtils.editDraft(this.$store.state.messaging.selectedThreads[0].mainMessageId)
+      } else if (this.$store.state.messaging.selectedMessages.length > 0 && this.$store.state.messaging.selectedMessages[0].isDraft) {
+        messagingUtils.editDraft(this.$store.state.messaging.selectedMessages[0].messageId)
+      }
     },
     createNewMessage () {
       messagingUtils.newMessage()

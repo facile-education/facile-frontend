@@ -100,7 +100,7 @@ export default {
     addContacts (contacts) {
       this.$emit('addContacts', contacts)
       if (this.mq.phone || this.displayLikePhone) {
-        this.$store.dispatch('popups/pushPopup', { message: this.$t('addContacts'), type: 'success' })
+        this.$store.dispatch('popups/pushPopup', { message: this.$tc('addContacts', contacts.length), type: 'success' })
       }
     },
     removeContacts (contacts) {
@@ -166,7 +166,7 @@ export default {
 {
   "addressBook": "Carnet d'adresses",
   "advancedSearch": "Annuaire",
-  "addContacts": "Destinataire ajouté",
+  "addContacts": "Destinataire ajouté | Destinataire ajouté | {count} destinataires ajoutés",
   "removeContacts": "Destinataire retiré"
 }
 </i18n>

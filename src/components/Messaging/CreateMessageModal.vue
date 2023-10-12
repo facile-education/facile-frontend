@@ -108,6 +108,7 @@
           />
         </div>
 
+        <!-- Original message in case of reply -->
         <div
           v-if="(messageParameters.isReply || messageParameters.isReplyAll) && originMessage.content !== ''"
           class="replied-message"
@@ -566,6 +567,9 @@ export default {
 
 .replied-message {
   background-color: $neutral-20;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .error-container {
@@ -611,7 +615,7 @@ export default {
   "recipientsPlaceHolder": "Destinataires",
   "subjectPlaceHolder": "Objet",
   "draftButton": "Enregistrer en brouillon",
-  "draftSaved": "Brouillon enregistré!",
+  "draftSaved": "Brouillon enregistré",
   "successMessage": "Message envoyé",
   "required": "Champ requis",
   "missingRecipient": "Sélectionnez au moins un destinataire",
