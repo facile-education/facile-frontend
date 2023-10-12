@@ -4,15 +4,19 @@
     data-test="popover-menu"
     data-html2canvas-ignore="true"
   >
-    <ul>
-      <li>
+  <ul>
+    <li>
+        <span class="username">{{ firstName }}</span>
         <button
           v-t="'preferences'"
           data-test="openPreferencesModal"
           @click="togglePreferencesModal"
         />
       </li>
-      <li style="position: relative">
+      <li
+        class="top" 
+        style="position: relative"
+      >
         <button
           v-t="'news'"
           data-test="openVersionNotesModal"
@@ -24,6 +28,13 @@
         />
       </li>
       <li>
+        <button
+          v-t="'informations'"
+          data-test="openInformationModal"
+          @click="toggleInformationsModal"
+        />
+      </li>
+      <li class="top">
         <button
           v-t="'assistance'"
           data-test="openSupportModal"
@@ -37,14 +48,10 @@
           @click="toggleSuggestionModal"
         />
       </li>
-      <li>
-        <button
-          v-t="'informations'"
-          data-test="openInformationModal"
-          @click="toggleInformationsModal"
-        />
-      </li>
-      <li v-if="isAdministrator">
+      <li
+        v-if="isAdministrator"
+        class="top"
+      >
         <a
           v-t="'controlPanel'"
           data-test="openControl_panel"
@@ -53,7 +60,6 @@
       </li>
     </ul>
 
-    <span class="username">{{ firstName }}</span>
     <div class="logout-container">
       <a
         class="logout-link"
@@ -180,11 +186,15 @@ ul {
   list-style-type: none;
 }
 
+.top {
+  border-top: 1px solid $color-border-menu;
+}
+
 .popover-menu {
   position: absolute;
   right: 4px;
   top: 46px;
-  width: 240px;
+  width: 220px;
   background-color: white;
   padding: 16px 0;
   z-index: $popup-z-index;
@@ -195,16 +205,16 @@ ul {
   button, a {
     display: inline-block;
     margin: 0;
-    padding: 8px 1rem;
+    padding: 0.5rem 1rem;
     background-color: transparent;
     border: none;
     cursor: pointer;
     color: initial;
     text-decoration: none;
+    text-align: left;
 
     @extend %font-regular-m;
     width: 100%;
-    text-align: center;
 
     &:hover {
       background-color: $color-hover-bg;
@@ -220,11 +230,10 @@ ul {
 }
 
 .username {
-  margin-top: 0.5rem;
   display: block;
-  text-align: center;
+  margin: 0 1rem;
   color: $neutral-80;
-  @extend %font-regular-xs;
+  @extend %font-bold-l;
 }
 
 .logout-container {
@@ -244,6 +253,7 @@ a.logout-link {
 
   &:hover {
     text-decoration: underline;
+    background-color: $color-logout-button;
   }
 
   span {
