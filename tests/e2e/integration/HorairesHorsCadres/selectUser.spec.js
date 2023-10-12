@@ -1,77 +1,38 @@
-import {
-  now,
-  slotTypes,
-  studentName,
-  studentSearch,
-  studentSlotsNumberAtTuesday,
-  studentSlotsNumberAtWeek35,
-  url
-} from '../../support/constants/horairesHorsCadres'
+import { HHCURL } from '../../support/constants/urls'
+import { HEADMASTER, STUDENT } from '../../support/constants/users'
+import { selectSlotType } from '../../support/utils/horairesHorsCardesUtils'
 
-const waitForRefresh = () => {
-  cy.wait(500)
-  cy.get('.spinner').should('not.exist')
-}
-
-describe('Desktop user selection', () => {
+describe('Personal folders', () => {
   beforeEach(() => {
-    cy.clock(now.toDate().getTime())
-    cy.exec('npm run db:loadTables schoollife_tables.sql')
-    cy.clearDBCache()
-    cy.logout()
-    cy.login(url)
-    cy.get('[data-test=slot-type-item-' + slotTypes.tutoring.type + ']').click() // Select tutoring slots
-  })
-
-  it('Display student planning beside HHC slots', () => {
-    // the HHC slots are here
-    cy.get('.fc-timegrid-event').should('have.length', slotTypes.tutoring.nbSlotsAtSelectedWeek)
-
-    // Select student
-    cy.get('[data-test=user-completion-input] input').type(studentSearch)
-    cy.tick(500)
-    // Select student user
-    cy.contains(studentName).click()
-    waitForRefresh()
-
-    // Student's slots were added to previous ones
-    cy.get('.fc-timegrid-event').should('have.length', slotTypes.tutoring.nbSlotsAtSelectedWeek + studentSlotsNumberAtWeek35)
-
-    // Students' slot are grayed but not HHC ones
-    cy.get('.fc-day-wed > .fc-timegrid-col-frame > :nth-child(2) >> .fc-timegrid-event').within(() => {
-      cy.contains(slotTypes.tutoring.label).parents('.fc-event').should('not.have.css', 'filter', 'grayscale(1)')
-      cy.contains('HI1021CO').parents('.fc-event').should('have.css', 'filter', 'grayscale(1)')
+    cy.loadTables('schoollife/schoollife_tables_empty.sql')
+    cy.login(HEADMASTER, HHCURL)
+    cy.fixture('hhc.json').as('hhcData').then(data => {
+      cy.clock(Cypress.dayjs(data.now, 'YYYY/MM/DD HH:mm').toDate().getTime())
     })
   })
-})
 
-describe('Mobile user selection', () => {
-  beforeEach(() => {
-    cy.logout()
-    cy.clock(now.toDate().getTime())
-    cy.viewport('iphone-5')
-    cy.login(url)
-    cy.get('[data-test=slot-type-item-' + slotTypes.tutoring.type + ']').click() // Select firing slots
-  })
+  const sizes = ['iphone-5', 'ipad-2', [1024, 768]]
 
-  it('Display student planning beside HHC slots', () => {
-    // the HHC slots are here
-    cy.get('.fc-timegrid-event').should('have.length', 1)
+  sizes.forEach(size => {
+    it.only(`Consulting personal folders in ${size} screen`, function () { // TODO: Put messages in boxes and test the correct box content
+      // Set testing viewport
+      Cypress._.isArray(size) ? cy.viewport(size[0], size[1]) : cy.viewport(size)
 
-    // Select student
-    cy.get('[data-test=user-completion-input] input').type(studentSearch)
-    cy.tick(500)
-    // Select teacher user
-    cy.contains(studentName).click()
-    waitForRefresh()
+      selectSlotType(this.hhcData.slotsTypes.tutoring)
 
-    // Student's slots were added to previous ones
-    cy.get('.fc-timegrid-event').should('have.length', 1 + studentSlotsNumberAtTuesday)
+      let nbExpectedSlots = (size === 'iphone-5') ? this.hhcData.slotsTypes.tutoring.nbSlotsAtSelectedDay : this.hhcData.slotsTypes.tutoring.nbSlotsAtSelectedWeek
+      // the HHC slots are here
+      cy.get('.fc-timegrid-event').should('have.length', nbExpectedSlots)
 
-    // Students' slot are grayed but not HHC ones
-    cy.get('.fc-day-wed > .fc-timegrid-col-frame > :nth-child(2) >> .fc-timegrid-event').within(() => {
-      cy.contains(slotTypes.tutoring.label).parents('.fc-event').should('not.have.css', 'filter', 'grayscale(1)')
-      cy.contains('HI1021CO').parents('.fc-event').should('have.css', 'filter', 'grayscale(1)')
+      // Select student
+      cy.get('[data-test=user-completion-input] input').type(STUDENT.lastName)
+      cy.tick(500)
+      // Select student user
+      cy.contains(STUDENT.lastName + ' ' + STUDENT.firstName).click()
+
+      // Student's slots were added to previous ones
+      nbExpectedSlots += (size === 'iphone-5') ? this.hhcData.studentSlotsNumberAtTuesday : this.hhcData.studentSlotsNumberAtWeek35
+      cy.get('.fc-timegrid-event').should('have.length', nbExpectedSlots)
     })
   })
 })

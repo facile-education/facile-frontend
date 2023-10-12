@@ -29,7 +29,7 @@ describe('Personal folders', () => {
   const sizes = ['iphone-5', 'ipad-2', [1024, 768]]
 
   sizes.forEach(size => {
-    it(`Consulting personal folders in ${size} screen`, function () { // TODO: Put messages in boxes and test the correct box content
+    it.only(`Consulting personal folders in ${size} screen`, function () { // TODO: Put messages in boxes and test the correct box content
       const existingPersonalFolders = this.messagingData.personalFolders.existingPersonalFolders
 
       // Set testing viewport

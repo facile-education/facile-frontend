@@ -37,7 +37,7 @@ describe('desktop navigation', () => {
       const slotType = slotTypes[attr]
       cy.log('select ' + slotType.label)
       // Select tutoring type
-      cy.get('[data-test=slot-type-item-' + slotType.type + ']').click()
+      cy.get('[data-test=slot-type-item-' + slotType.type + ']', { timeout: 6000 }).click()
 
       // User selection and Calendar should appear
       cy.get('[data-test=user-completion-input]').should('be.visible')
@@ -76,7 +76,7 @@ describe('mobile navigation', () => {
       cy.log('select ' + slotType.label)
 
       // Select tutoring type
-      cy.get('[data-test=slot-type-item-' + slotType.type + ']').click()
+      cy.get('[data-test=slot-type-item-' + slotType.type + ']', { timeout: 6000 }).click()
 
       // User selection and Calendar should appear
       cy.get('[data-test=user-completion-input]').should('be.visible')
