@@ -182,6 +182,7 @@ button {
   .add-to-folder {
     height: 19px;
     width: 19px;
+    margin-right: 8px;
   }
 }
 </style>

@@ -135,7 +135,7 @@ import dayjs from 'dayjs'
 import _ from 'lodash'
 
 import messageService from '@/api/messaging/message.service'
-import constants from '@/constants/appConstants'
+import messagingConstants from '@/constants/messagingConstants'
 import { isInViewport } from '@/utils/commons.util'
 import messagingUtils from '@/utils/messaging.utils'
 
@@ -221,7 +221,7 @@ export default {
       return false
     },
     isDraft () {
-      return this.currentFolder.type === constants.messagingDraftFolderType
+      return this.currentFolder.type === messagingConstants.messagingDraftFolderType
     },
     isThreadSelected () {
       for (const selectedThread of this.$store.state.messaging.selectedThreads) {

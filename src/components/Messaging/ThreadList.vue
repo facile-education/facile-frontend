@@ -38,7 +38,7 @@
         v-else-if="threads && threads.length === 0 && !isLoadingThreads"
         class="placeholder"
       >
-        <div v-t="currentFolder.type === 1 ? 'emptyBox' : 'emptyFolder'" />
+        <div v-t="currentFolder.type === 1 ? (isReadOnlyToggled ? 'noNewMessage' : 'noMessage') : 'emptyFolder'" />
         <img
           src="@assets/messaging_placeholder.svg"
           alt=""
@@ -140,6 +140,9 @@ export default {
     },
     isModalOpen () {
       return this.$store.state.misc.nbOpenModals > 0
+    },
+    isReadOnlyToggled () {
+      return this.$store.state.messaging.unreadOnly
     }
   },
   watch: {
@@ -485,7 +488,8 @@ hr.hr-thread-list {
 
 <i18n locale="fr">
 {
-  "emptyBox": "Aucun message",
+  "noMessage": "Aucun message",
+  "noNewMessage": "Aucun message non lu",
   "emptyFolder": "Ce dossier est vide",
   "loadingError": "Erreur lors du chargement de la ressource",
   "permissionError": "Permission non accordée",

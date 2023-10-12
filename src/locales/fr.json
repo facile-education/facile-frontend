@@ -217,7 +217,7 @@
     "hideAllRecipients": "Masquer",
     "to": "À :",
     "noObjectWarning": "Vous vous apprétez à envoyer un message sans objet",
-    "confirmFolderDeletionWarning": "Supprimer ce dossier sera irréversible",
+    "confirmFolderDeletionWarning": "Les messages du dossier supprimé seront déplacés dans la Corbeille",
     "Parameters": {
       "header": "Paramètres de messagerie",
       "submitButton": "Enregistrer",
