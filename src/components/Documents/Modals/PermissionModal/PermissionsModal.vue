@@ -197,6 +197,6 @@ export default {
   "recursiveLabel": "Appliquer ces permissions à tous les éléments contenus dans le dossier",
   "name": "Rôle",
   "submit": "Valider",
-  "permission-success": "Permissions applquées"
+  "permission-success": "Permissions enregistrées"
 }
 </i18n>

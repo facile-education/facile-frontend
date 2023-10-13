@@ -120,7 +120,8 @@ export default {
       return `top:${this.selectedEvent.el.getBoundingClientRect().top}px; left:${this.selectedEvent.el.getBoundingClientRect().right + 7}px;`
     },
     formattedHours () {
-      return dayjs(this.selectedEvent.event.start).format('HH:mm') +
+      return 'P' + this.selectedEvent.event.extendedProps.slotNumber + ' : ' +
+        dayjs(this.selectedEvent.event.start).format('HH:mm') +
         ' - ' +
         dayjs(this.selectedEvent.event.end).format('HH:mm')
     },

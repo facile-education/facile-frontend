@@ -373,7 +373,7 @@ export default {
   "passwordPlaceholder": "Nouveau mot de passe",
   "update-password": "Changer le mot de passe",
   "password-policy": "Le mot de passe doit contenir au moins 8 caractères dont une majuscule, un chiffre et un caractère spécial",
-  "success": "Mot de passe changé avec succès",
+  "success": "Mot de passe changé",
   "error": "Erreur lors du changement de mot de passe"
 }
 </i18n>

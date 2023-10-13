@@ -196,7 +196,7 @@ export default {
   "searchPlaceholder": "Rechercher par nom",
   "passwordPlaceholder": "Nouveau mot de passe",
   "update-password": "Changer le mot de passe",
-  "success": "Mot de passe changé avec succès",
+  "success": "Mot de passe changé",
   "error": "Erreur lors du changement de mot de passe"
 }
 </i18n>
