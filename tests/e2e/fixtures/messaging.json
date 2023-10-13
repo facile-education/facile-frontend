@@ -36,7 +36,8 @@
         "date": "2023/10/05 08:51",
         "subject": "Mon premier message",
         "content": "Ceci est un message de test",
-        "messageIndexInThread": 0
+        "messageIndexInThread": 0,
+        "read": 1
       }
     ],
     [
@@ -46,7 +47,8 @@
         "date": "2023/10/05 08:53",
         "subject": "deuxième message",
         "content": "Je vous pose une question",
-        "messageIndexInThread": 0
+        "messageIndexInThread": 0,
+        "read": 0
       },
       {
         "sender": "Orlan Hue",
@@ -54,7 +56,8 @@
         "date": "2023/10/05 08:54",
         "subject": "Re: deuxième message",
         "content": "Je vous réponds!",
-        "messageIndexInThread": 1
+        "messageIndexInThread": 1,
+        "read": 1
       },
       {
         "sender": "Rosana Nolly",
@@ -62,7 +65,8 @@
         "date": "2023/10/05 08:54",
         "subject": "Re: deuxième message",
         "content": "Merci",
-        "messageIndexInThread": 2
+        "messageIndexInThread": 2,
+        "read": 1
       }
     ],
     [
@@ -72,17 +76,19 @@
         "date": "2023/10/05 09:01",
         "subject": "Troisième message",
         "content": "J'ai encore des choses à dire",
-        "messageIndexInThread": 0
+        "messageIndexInThread": 0,
+        "read": 0
       }
     ],
     [
       {
         "sender": "Rosana Nolly",
-        "recipients": ["Orlan Hue"],
+        "recipients": ["Orlan Hue", "Pénélope Ribeiro"],
         "date": "2023/10/05 09:02",
-        "subject": "Quatrième message",
-        "content": "En fait j'aime juste écrire",
-        "messageIndexInThread": 0
+        "subject": "Mon quatrième message",
+        "content": "Ceci est un message avec plusieurs destinataires",
+        "messageIndexInThread": 0,
+        "read": 0
       }
     ]
   ]

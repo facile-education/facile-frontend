@@ -25,7 +25,8 @@ describe('Delete message', () => {
 
     cy.log('delete thread by context menu')
     getThread(secondThread).rightclick()
-    cy.get('[data-test=context-menu]').contains('Supprimer').click().should('not.exist')
+    cy.get('[data-test=context-menu]').contains('Supprimer').click()
+    cy.get('[data-test=context-menu]').contains('Supprimer').should('not.exist')
     getThread(secondThread).should('not.exist')
 
     cy.log('delete thread by trash icon')

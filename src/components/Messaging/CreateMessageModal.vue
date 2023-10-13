@@ -89,6 +89,7 @@
           :class="device"
         >
           <TextContent
+            class="ck-editor"
             :content="content"
             @input="content=$event"
             @keydown.stop
