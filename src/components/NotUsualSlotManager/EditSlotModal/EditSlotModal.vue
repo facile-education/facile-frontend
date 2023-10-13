@@ -20,7 +20,10 @@
         class="update-message"
       />
 
-      <div class="time-selection">
+      <div
+        class="time-selection"
+        data-test="time-selection"
+      >
         <span class="time-selection-left">{{ slotLabel }}</span>
         <PentilaDropdown
           v-if="slotList"
@@ -35,6 +38,7 @@
 
       <div
         v-if="isEventCreation"
+        data-test="period"
         class="period"
       >
         <span
