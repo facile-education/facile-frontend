@@ -90,13 +90,6 @@ const closeSlotPopup = (slot, capacity) => {
   cy.get('[data-test=event-popup]').should('not.exist')
 }
 
-const selectHours = (startHour, endHour) => {
-  cy.get('[data-test=time-selection] > .input-section > .start').clear()
-  cy.get('[data-test=time-selection] > .input-section > .start').type(startHour)
-  cy.get('[data-test=time-selection] > .input-section > .end').clear()
-  cy.get('[data-test=time-selection] > .input-section > .end').type(endHour)
-}
-
 const submit = () => {
   cy.get('.button').contains('Valider').click()
 }
@@ -238,7 +231,6 @@ export {
   closeSlotPopup,
   getWeeksEventsNumber,
   phoneGoToDayOfMonth,
-  selectHours,
   submit,
   waitCalendarToLoad,
   formatSchoolSlotLabel

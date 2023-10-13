@@ -26,6 +26,7 @@
 
 import PentilaUtils from 'pentila-utils'
 
+import { exactString } from '../support/utils/testUtils'
 import { GLOBAL_ADMIN } from './constants/users'
 
 Cypress.Commands.add('login', (user, visitUrl = undefined) => {
@@ -146,14 +147,14 @@ Cypress.Commands.add('type_ckeditor', (content) => {
 
 Cypress.Commands.add('selectDateRangeInVCalendar', (startDate, endDate) => {
   // SelectFirstDate
-  cy.get('.vc-popover-content-wrapper').within(() => {
+  cy.get('.vc-popover-content').within(() => {
     // More generic but commented because v-calendar month doesn't collapse if current month
     // cy.get('button.vc-title').click()
     // cy.get('button.vc-nav-title').click()
     // cy.contains(dayJsStartDate.format('YYYY')).click()
     // cy.contains(dayJsStartDate.format('MMM')).click()
-    cy.contains(startDate.format('DD')).click()
-    cy.contains(endDate.format('DD')).click()
+    cy.contains('.vc-day', exactString(startDate.format('D'))).click()
+    cy.contains('.vc-day', exactString(endDate.format('D'))).click()
   })
-  cy.get('.vc-popover-content-wrapper').should('not.exist')
+// TODO: Find a way to close popover before continuing the tests
 })

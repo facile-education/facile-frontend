@@ -99,12 +99,12 @@
   "studentSlotsNumberAtWeek35": 34,
   "studentSlotsNumberAtTuesday": 7,
   "emptySlot": {
-    "day": "thu",
+    "day": "tue",
     "startHour": "12:00",
     "endHour": "13:00",
     "slotNumberOnCalendar": 6,
     "linkedSchoolSlot": {
-      "schoolSlotNumber": "P10",
+      "schoolSlotNumber": "P5",
       "startDate": "2023/10/03 11:25",
       "endDate": "2023/10/03 12:10"
     }

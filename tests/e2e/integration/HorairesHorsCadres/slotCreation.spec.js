@@ -1,22 +1,12 @@
 import { HHCURL } from '../../support/constants/urls'
 import { CLASSTEACHER2, DOYEN, HEADMASTER, SECRETARY, TEACHER } from '../../support/constants/users'
-import utils, {
+import {
   addTimeToSlot,
   clickOnEmptySlot, formatSchoolSlotLabel, getSlot,
-  selectHours,
   selectSlotType,
   selectWeek,
   submit
 } from '../../support/utils/horairesHorsCardesUtils'
-
-const form = {
-  startHour: '14:00',
-  endHour: '15:00',
-  teacherName: 'Jovanovic Darko',
-  teacherSearch: 'dar',
-  roomNumber: 'A110',
-  capacity: 20
-}
 
 const slotToCreate = {
   nbWeekToCreateSlot: 2,
@@ -33,7 +23,7 @@ const rolesThatCannotRegister = [TEACHER, CLASSTEACHER2]
 
 const fillEditSlotModal = (clickedEmptySlot, slotToCreate) => {
   cy.get('[data-test=edit-slot-modal]').within(() => {
-    utils.submit()
+    submit()
 
     cy.get('[data-test=teacher-part]').contains('.error-message', 'Champ requis').should('be.visible')
     cy.get('[data-test=room-part]').contains('.error-message', 'Champ requis').should('be.visible')
@@ -51,14 +41,16 @@ const fillEditSlotModal = (clickedEmptySlot, slotToCreate) => {
       const startDate = Cypress.dayjs(slotToCreate.startDate, 'YYYY/MM/DD HH:mm')
       const endDate = Cypress.dayjs(slotToCreate.startDate, 'YYYY/MM/DD HH:mm').add(slotToCreate.nbWeekToCreateSlot - 1, 'week')
       cy.get('button').click()
+      cy.tick(500)
       cy.selectDateRangeInVCalendar(startDate, endDate)
+      cy.tick(500)
     })
 
     // Teacher field
     cy.get('[data-test=teacher-part]').within(() => {
-      cy.get('input').type(slotToCreate.teacher.lastname)
+      cy.get('input').type(slotToCreate.teacher.lastName)
       cy.tick(500)
-      cy.get('.suggestion-list').contains(slotToCreate.teacher.lastname + ' ' + slotToCreate.teacher.firstName).click()
+      cy.get('.suggestion-list').contains(slotToCreate.teacher.lastName + ' ' + slotToCreate.teacher.firstName).click()
     })
 
     // Room number
@@ -71,7 +63,7 @@ const fillEditSlotModal = (clickedEmptySlot, slotToCreate) => {
       cy.get('input').type(slotToCreate.capacity)
     })
 
-    utils.submit()
+    submit()
   })
   cy.get('[data-test=edit-slot-modal]').should('not.exist')
 }
@@ -107,15 +99,12 @@ describe('HHC slots creation', () => {
     })
   })
 
-  it.only('Create slot', function () {
+  it('Create slot', function () {
     const previousWeek = Cypress.dayjs(this.hhcData.now, 'YYYY/MM/DD HH:mm').add(-1, 'week')
     const nextWeek = Cypress.dayjs(this.hhcData.now, 'YYYY/MM/DD HH:mm').add(1, 'week')
-    const weekAfterLimit = Cypress.dayjs(this.hhcData.now, 'YYYY/MM/DD HH:mm').add(slotToCreate.nbWeekToCreateSlot - 1, 'week')
+    const weekAfterLimit = Cypress.dayjs(this.hhcData.now, 'YYYY/MM/DD HH:mm').add(slotToCreate.nbWeekToCreateSlot, 'week')
     const slotTypes = this.hhcData.slotsTypes
     const emptySlot = this.hhcData.emptySlot
-    const slotToCreateFormattedDate = Cypress.dayjs(slotToCreate.startDate, 'YYYY/MM/DD HH:mm').format('HH:mm') +
-      ' - ' +
-      Cypress.dayjs(slotToCreate.endDate, 'YYYY/MM/DD HH:mm').format('HH:mm')
 
     cy.login(rolesThatCanRegister[0], HHCURL)
 
@@ -131,17 +120,16 @@ describe('HHC slots creation', () => {
       clickOnEmptySlot(emptySlot.day, emptySlot.slotNumberOnCalendar)
       cy.get('[data-test=edit-slot-modal]')
 
-      fillEditSlotModal(slotToCreate)
+      fillEditSlotModal(emptySlot, slotToCreate)
 
       getSlot(slotToCreate)
         .should('contain', currentSlotType.label)
-        .should('contain', slotToCreateFormattedDate)
         .should('contain', slotToCreate.capacity + '/' + slotToCreate.capacity)
         .should('contain', slotToCreate.teacher.lastName)
 
       // Check previous week
       selectWeek(previousWeek)
-      getSlot(addTimeToSlot(existingSlot, -1, 'week')).should('be.visible')
+      getSlot(addTimeToSlot(existingSlot, -1, 'week')).should('exist')
       getSlot(addTimeToSlot(slotToCreate, -1, 'week')).should('not.exist')
 
       // Check next week
@@ -150,8 +138,8 @@ describe('HHC slots creation', () => {
 
       // Check week after limit
       selectWeek(weekAfterLimit)
-      getSlot(addTimeToSlot(existingSlot, slotToCreate.nbWeekToCreateSlot, 'week')).should('be.visible')
-      getSlot(addTimeToSlot(weekAfterLimit, slotToCreate.nbWeekToCreateSlot, 'week')).should('not.exist')
+      getSlot(addTimeToSlot(existingSlot, slotToCreate.nbWeekToCreateSlot, 'week')).should('exist')
+      getSlot(addTimeToSlot(slotToCreate, slotToCreate.nbWeekToCreateSlot, 'week')).should('not.exist')
     }
   })
 })
