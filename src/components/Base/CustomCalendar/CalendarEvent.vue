@@ -7,7 +7,11 @@
       class="fc-event-title"
     >
       <span>{{ event.event.title }}</span>
-      <span class="hours"> {{ formattedStartHour }} - {{ formattedEndHour }}</span>
+      <span
+        v-if="appEvent.nbRegisteredStudents === undefined"
+        class="room"
+      >{{ appEvent.room }}
+      </span>
     </div>
     <div
       v-if="appEvent.teachers"
@@ -18,12 +22,6 @@
     </div>
     <div class="fc-event-capacity">
       {{ formattedRoomAndPlacesLabel }}
-    </div>
-    <div
-      v-if="appEvent.nbRegisteredStudents === undefined"
-      class="fc-event-room"
-    >
-      {{ appEvent.room }}
     </div>
   </div>
 </template>
@@ -47,6 +45,9 @@ export default {
     },
     currentUser () {
       return this.$store.state.user
+    },
+    formattedSlot () {
+      return 'P' + this.event.event.extendedProps.slotNumber
     },
     formattedStartHour () {
       return dayjs(this.event.event.start).format('HH:mm')
@@ -83,13 +84,21 @@ export default {
 
 .fc-event-title {
   display: flex;
+  justify-content: space-between;
   align-items: center;
+  margin-right: 10px;
+  margin-bottom : 5px;
 
   .hours {
     margin-left: 5px;
     white-space: nowrap;
     overflow-x: hidden;
     text-overflow: ellipsis;
+    font-weight: normal;
+    font-size: 0.75rem;
+  }
+  .room {
+    font-style: italic;
     font-weight: normal;
     font-size: 0.75rem;
   }

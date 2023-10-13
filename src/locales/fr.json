@@ -73,7 +73,7 @@
     "permissionException": "Vous ne disposez pas de la permission pour effectuer cette action",
     "extensionException": "Extension non supportée",
     "antivirusException": "Un virus a été détecté dans un des fichiers téléversés",
-    "uploadSuccess": " importé avec succès!",
+    "uploadSuccess": " importé",
     "uploadError": "Une erreur est survenue lors du téléversement",
     "documentFields": {
       "creationDate": "Création",

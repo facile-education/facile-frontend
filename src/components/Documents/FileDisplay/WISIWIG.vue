@@ -116,7 +116,7 @@ export default {
 
 <i18n locale="fr">
 {
-  "documentSaved": "Document sauvegardé!",
+  "documentSaved": "Document sauvegardé",
   "saveError": "Erreur lors de l'enregistrement du fichier"
 }
 </i18n>
