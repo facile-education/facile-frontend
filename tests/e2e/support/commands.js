@@ -143,3 +143,17 @@ Cypress.Commands.add('type_ckeditor', (content) => {
       win.textContent.updateContent(content)
     })
 })
+
+Cypress.Commands.add('selectDateRangeInVCalendar', (startDate, endDate) => {
+  // SelectFirstDate
+  cy.get('.vc-popover-content-wrapper').within(() => {
+    // More generic but commented because v-calendar month doesn't collapse if current month
+    // cy.get('button.vc-title').click()
+    // cy.get('button.vc-nav-title').click()
+    // cy.contains(dayJsStartDate.format('YYYY')).click()
+    // cy.contains(dayJsStartDate.format('MMM')).click()
+    cy.contains(startDate.format('DD')).click()
+    cy.contains(endDate.format('DD')).click()
+  })
+  cy.get('.vc-popover-content-wrapper').should('not.exist')
+})

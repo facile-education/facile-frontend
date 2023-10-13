@@ -1,8 +1,13 @@
-import { TEACHER } from '../../support/constants/users'
-import {
-  now, slotTypes, url
-} from '../../support/constants/horairesHorsCadres'
-import utils from '../../support/utils/horairesHorsCardesUtils'
+import { HHCURL } from '../../support/constants/urls'
+import { CLASSTEACHER2, DOYEN, HEADMASTER, SECRETARY, TEACHER } from '../../support/constants/users'
+import utils, {
+  addTimeToSlot,
+  clickOnEmptySlot, formatSchoolSlotLabel, getSlot,
+  selectHours,
+  selectSlotType,
+  selectWeek,
+  submit
+} from '../../support/utils/horairesHorsCardesUtils'
 
 const form = {
   startHour: '14:00',
@@ -13,97 +18,140 @@ const form = {
   capacity: 20
 }
 
-const testEditSlotModalForm = (form) => {
+const slotToCreate = {
+  nbWeekToCreateSlot: 2,
+  schoolSlotNumber: 'P6',
+  startDate: '2023/10/03 12:50',
+  endDate: '2023/10/03 13:35',
+  teacher: TEACHER,
+  roomNumber: 'A110',
+  capacity: 20
+}
+
+const rolesThatCanRegister = [HEADMASTER, SECRETARY, DOYEN]
+const rolesThatCannotRegister = [TEACHER, CLASSTEACHER2]
+
+const fillEditSlotModal = (clickedEmptySlot, slotToCreate) => {
   cy.get('[data-test=edit-slot-modal]').within(() => {
-    // test hours section
-    cy.get('[data-test=time-selection] > .input-section > .start').should('have.value', '14:00') // because we have clicked on column n°7
-    cy.get('[data-test=time-selection] > .input-section > .end').should('have.value', '15:00')
-    utils.selectHours(' ', ' ')
     utils.submit()
-    cy.get('[data-test=time-selection] > .error-message').should('exist')
-    utils.selectHours(form.endHour, form.startHour)
-    utils.submit()
-    cy.get('[data-test=time-selection] > .error-message').should('exist')
-    utils.selectHours(form.startHour, form.endHour)
-    utils.submit()
-    cy.get('[data-test=time-selection] > .error-message').should('not.exist')
 
-    // test Teacher field
-    cy.get('[data-test=teacher-part] > .error-message').should('exist')
-    cy.get('[data-test=user-completion-input]').type(form.teacherSearch)
-    cy.tick(500)
-    cy.contains(form.teacherName).click()
-    cy.get('[data-test=teacher-part] > .error-message').should('not.exist')
+    cy.get('[data-test=teacher-part]').contains('.error-message', 'Champ requis').should('be.visible')
+    cy.get('[data-test=room-part]').contains('.error-message', 'Champ requis').should('be.visible')
+    cy.get('[data-test=capacity-part]').contains('.error-message', 'Champ requis').should('be.visible')
 
-    // test room number
-    cy.get('[data-test=room-part] > .error-message').should('exist')
-    cy.get('[placeholder="Salle"]').type(form.roomNumber)
-    cy.get('[data-test=room-part] > .error-message').should('not.exist')
+    // Set slot
+    cy.get('[data-test=time-selection]').find('.base-dropdown').within(() => {
+      cy.get('button').should('contain', formatSchoolSlotLabel(clickedEmptySlot.linkedSchoolSlot)).click()
+      cy.get('.suggestion-list').contains(formatSchoolSlotLabel(slotToCreate)).click()
+      cy.get('.suggestion-list').should('not.exist')
+    })
 
-    // tests capacity
-    cy.get('[data-test=capacity-part] > .error-message').should('exist')
-    cy.get('input[type="number"]').type(form.capacity)
-    cy.get('[data-test=capacity-part] > .error-message').should('not.exist')
+    // Set duration
+    cy.get('[data-test=period]').within(() => {
+      const startDate = Cypress.dayjs(slotToCreate.startDate, 'YYYY/MM/DD HH:mm')
+      const endDate = Cypress.dayjs(slotToCreate.startDate, 'YYYY/MM/DD HH:mm').add(slotToCreate.nbWeekToCreateSlot - 1, 'week')
+      cy.get('button').click()
+      cy.selectDateRangeInVCalendar(startDate, endDate)
+    })
+
+    // Teacher field
+    cy.get('[data-test=teacher-part]').within(() => {
+      cy.get('input').type(slotToCreate.teacher.lastname)
+      cy.tick(500)
+      cy.get('.suggestion-list').contains(slotToCreate.teacher.lastname + ' ' + slotToCreate.teacher.firstName).click()
+    })
+
+    // Room number
+    cy.get('[data-test=room-part]').within(() => {
+      cy.get('input').type(slotToCreate.roomNumber)
+    })
+
+    // Capacity
+    cy.get('[data-test=capacity-part]').within(() => {
+      cy.get('input').type(slotToCreate.capacity)
+    })
 
     utils.submit()
   })
+  cy.get('[data-test=edit-slot-modal]').should('not.exist')
 }
 
 describe('HHC slots creation', () => {
   beforeEach(() => {
-    cy.clock(now.toDate().getTime())
-    cy.exec('npm run db:loadTables schoollife_tables.sql')
-    cy.clearDBCache()
-    cy.logout()
+    cy.fixture('hhc.json').as('hhcData').then(data => {
+      cy.clock(Cypress.dayjs(data.now, 'YYYY/MM/DD HH:mm').toDate().getTime())
+    })
+    cy.loadTables('schoollife/schoollife_tables_empty.sql')
   })
 
-  it('Teachers not allowed to create slots', () => {
-    cy.login(url, TEACHER)
-    cy.get('[data-test=slot-type-item-' + slotTypes.tutoring.type + ']').click() // Select tutoring slots
-    utils.waitCalendarToLoad()
+  it(' is present for good roles', function () {
+    const emptySlot = this.hhcData.emptySlot
+    const slotType = this.hhcData.slotsTypes.tutoring // No need to test all slot types
 
-    utils.clickOnEmptySlot('wed', 7)
-    cy.get('[data-test=edit-slot-modal]').should('not.exist')
+    rolesThatCannotRegister.forEach(role => {
+      cy.login(role, HHCURL)
+      selectSlotType(slotType)
+
+      clickOnEmptySlot(emptySlot.day, emptySlot.slotNumberOnCalendar)
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      cy.wait(500) // Modal should not be present after 500ms
+      cy.get('[data-test=edit-slot-modal]').should('not.exist')
+    })
+
+    rolesThatCanRegister.forEach(role => {
+      cy.login(role, HHCURL)
+      selectSlotType(slotType)
+
+      clickOnEmptySlot(emptySlot.day, emptySlot.slotNumberOnCalendar)
+      cy.get('[data-test=edit-slot-modal]').should('be.visible')
+    })
   })
 
-  it('Create slot', function () {
-    cy.login(url)
+  it.only('Create slot', function () {
+    const previousWeek = Cypress.dayjs(this.hhcData.now, 'YYYY/MM/DD HH:mm').add(-1, 'week')
+    const nextWeek = Cypress.dayjs(this.hhcData.now, 'YYYY/MM/DD HH:mm').add(1, 'week')
+    const weekAfterLimit = Cypress.dayjs(this.hhcData.now, 'YYYY/MM/DD HH:mm').add(slotToCreate.nbWeekToCreateSlot - 1, 'week')
+    const slotTypes = this.hhcData.slotsTypes
+    const emptySlot = this.hhcData.emptySlot
+    const slotToCreateFormattedDate = Cypress.dayjs(slotToCreate.startDate, 'YYYY/MM/DD HH:mm').format('HH:mm') +
+      ' - ' +
+      Cypress.dayjs(slotToCreate.endDate, 'YYYY/MM/DD HH:mm').format('HH:mm')
+
+    cy.login(rolesThatCanRegister[0], HHCURL)
 
     for (const attr in slotTypes) {
       const currentSlotType = slotTypes[attr]
+      const existingSlot = currentSlotType.slotExample
       cy.log('==================== Test ' + currentSlotType.label + ' creation ====================')
-      cy.get('[data-test=slot-type-item-' + currentSlotType.type + ']').click()
+
+      selectSlotType(currentSlotType)
       cy.get('.weeknumber-label').eq(2).click() // Go on current week (we don't know the date at each loop beginning)
-      utils.waitCalendarToLoad()
-      utils.getWeeksEventsNumber(true)
 
       // Create slot
-      utils.clickOnEmptySlot('wed', 7)
+      clickOnEmptySlot(emptySlot.day, emptySlot.slotNumberOnCalendar)
       cy.get('[data-test=edit-slot-modal]')
-      if (currentSlotType.type === slotTypes.tutoring.type) { // To tests form validation only once
-        testEditSlotModalForm(form)
-      } else {
-        utils.fillEditSlotModal(form)
-      }
-      utils.waitCalendarToLoad()
 
-      // Check slot creation
-      cy.get('@events').then((events) => {
-        // Check current week events
-        cy.get('.fc-timegrid-event').should('have.length', events.nbCurrentWeekEvents + 1)
-        utils.checkSlotData(now, { label: currentSlotType.label, ...form })
+      fillEditSlotModal(slotToCreate)
 
-        // Check previous week events
-        cy.get('.weeknumber-label').eq(1).click()
-        utils.waitCalendarToLoad()
-        cy.get('.fc-timegrid-event').should('have.length', events.nbPreviousWeekEvents)
+      getSlot(slotToCreate)
+        .should('contain', currentSlotType.label)
+        .should('contain', slotToCreateFormattedDate)
+        .should('contain', slotToCreate.capacity + '/' + slotToCreate.capacity)
+        .should('contain', slotToCreate.teacher.lastName)
 
-        // Check next week events
-        cy.get('.weeknumber-label').eq(3).click()
-        utils.waitCalendarToLoad()
-        cy.get('.fc-timegrid-event').should('have.length', events.nbNextWeekEvents + 1)
-        utils.checkSlotData(now.add(1, 'week'), { label: currentSlotType.label, ...form })
-      })
+      // Check previous week
+      selectWeek(previousWeek)
+      getSlot(addTimeToSlot(existingSlot, -1, 'week')).should('be.visible')
+      getSlot(addTimeToSlot(slotToCreate, -1, 'week')).should('not.exist')
+
+      // Check next week
+      selectWeek(nextWeek)
+      getSlot(addTimeToSlot(slotToCreate, 1, 'week')).should('be.visible')
+
+      // Check week after limit
+      selectWeek(weekAfterLimit)
+      getSlot(addTimeToSlot(existingSlot, slotToCreate.nbWeekToCreateSlot, 'week')).should('be.visible')
+      getSlot(addTimeToSlot(weekAfterLimit, slotToCreate.nbWeekToCreateSlot, 'week')).should('not.exist')
     }
   })
 })

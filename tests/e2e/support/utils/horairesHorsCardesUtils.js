@@ -26,16 +26,6 @@ const openStudentListModal = (slot) => {
   return cy.get('[data-test=student-list-modal]')
 }
 
-const createSlot = (slotToCreate) => {
-  // Create the slot // TODO Not pass by UI
-  cy.log('========= Create slot =========')
-  cy.get('.spinner').should('not.exist')
-  clickOnEmptySlot(slotToCreate.day, 7)
-  cy.get('[data-test=edit-slot-modal]')
-  fillEditSlotModal(slotToCreate)
-  waitCalendarToLoad()
-}
-
 const deleteSlot = (slotToDelete, capacity) => {
   cy.get('.weekly-timeline-container').should('exist') // indirectly waits for full load
   openSlotPopup(slotToDelete, capacity)
@@ -67,14 +57,19 @@ const clearSelectedUser = () => {
 }
 
 const clickOnEmptySlot = (day, slotNumber) => {
-  // cy.get('.weeknumber-label').eq(2).click() // Click on the current week (don't know why but if not, fails in some cases, even with a long wait)
-
   cy.get('.fc-timegrid-axis').first().click() // Click on the CALENDAR (don't know why but if not, fails in some cases, even with a long wait)
   cy.get('.fc-day-' + day + ' > .fc-timegrid-col-frame').then((col) => {
     cy.get(':nth-child(' + slotNumber + ') > .fc-timegrid-slot-lane').then((row) => {
-      cy.wrap(col).click(col.width() - 2, row.position().top + row.height() / 2, { force: true }) // not click on the slot's center, but on the slot's right to always select an empty part
+      cy.wait(500)
+      console.log(row.height())
+      // cy.wrap(col).click(col.width() - 2, row.position().top + row.height() / 2, { force: true }) // not click on the slot's center, but on the slot's right to always select an empty part
+      cy.wrap(row).click(col.position().left + col.width() / 2, row.height() / 2) // not click on the slot's center, but on the slot's right to always select an empty part
     })
+
+    // cy.get(':nth-child(' + slotNumber + ') > .fc-timegrid-slot-lane').click(col.position().left + (col.width() / 2), 0, { force: true })
+    // cy.get(':nth-child(' + slotNumber + ') > .fc-timegrid-slot-lane').click(col.position().left + (col.width() / 2), 10)
   })
+  // cy.get('.fc-timegrid-slot-lane[data-time=13\:00\:00]')
 }
 
 const clickOnSlot = (slot, capacity) => {
@@ -106,23 +101,6 @@ const submit = () => {
   cy.get('.button').contains('Valider').click()
 }
 
-const fillEditSlotModal = (form, isModification) => {
-  cy.get('[data-test=edit-slot-modal]').within(() => {
-    selectHours(form.startHour, form.endHour)
-    if (isModification) {
-      cy.get('.tag-item > .fa-times').click()
-      cy.get('.tag-item').should('not.exist')
-    }
-    cy.get('[data-test=user-completion-input]').type(form.teacherSearch)
-    cy.tick(500)
-    cy.contains(form.teacherName).click()
-    cy.get('[placeholder="Salle"]').type(form.roomNumber)
-    cy.get('input[type="number"]').type(form.capacity, { force: true })
-
-    submit()
-  })
-}
-
 const phoneGoToDayOfMonth = (day) => {
   cy.get('.toolbar .date-picker .svg-inline--fa').click()
   cy.tick(500)
@@ -150,6 +128,25 @@ const checkSlotData = (date, expectedSlot, checkTeachersAndStuff = true) => {
   cy.get('[data-test="' + date.format('MM-DD') + '_' + expectedSlot.startHour + '"]').within(() => {
     cy.contains(expectedSlot.label).first().click({ force: true })
   })
+}
+
+function addTimeToSlot (slot, value, unit) {
+  const newslot = { ...slot }
+  newslot.startDate = Cypress.dayjs(newslot.startDate, 'YYYY/MM/DD HH:mm').add(value, unit)
+  newslot.endDate = Cypress.dayjs(newslot.endDate, 'YYYY/MM/DD HH:mm').add(value, unit)
+  return newslot
+}
+
+function formatSchoolSlotLabel (schoolSlot) {
+  return schoolSlot.schoolSlotNumber +
+    ' (' + Cypress.dayjs(schoolSlot.startDate, 'YYYY/MM/DD HH:mm').format('HH:mm') +
+    ' / ' +
+    Cypress.dayjs(schoolSlot.endDate, 'YYYY/MM/DD HH:mm').format('HH:mm') + ')'
+}
+
+function selectWeek (date) {
+  const nextWeekLabel = date.day(1).format('D MMM') // week's monday
+  cy.contains('.horizontal-timeline-week', nextWeekLabel).click()
 }
 
 // Expose the number of events for the current, previous and next week
@@ -229,19 +226,20 @@ export {
   selectSlotType,
   getSlot,
   getUserSlot,
-  createSlot,
   deleteSlot,
   selectStudent,
   clearSelectedUser,
   checkSlotData,
+  addTimeToSlot,
+  selectWeek,
   clickOnSlot,
   clickOnEmptySlot,
   openSlotPopup,
   closeSlotPopup,
-  fillEditSlotModal,
   getWeeksEventsNumber,
   phoneGoToDayOfMonth,
   selectHours,
   submit,
-  waitCalendarToLoad
+  waitCalendarToLoad,
+  formatSchoolSlotLabel
 }

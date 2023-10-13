@@ -12,7 +12,9 @@ import {
   getSlot,
   getUserSlot,
   selectSlotType,
-  selectStudent
+  selectStudent,
+  addTimeToSlot,
+  selectWeek
 } from '../../../support/utils/horairesHorsCardesUtils'
 import { getThread, waitMessagingToBeLoaded } from '../../../support/utils/messagingUtils'
 
@@ -23,18 +25,6 @@ const rolesThatCannotRegister = []
 
 function getRandomBoolean () {
   return Math.random() < 0.5
-}
-
-function addTimeToSlot (slot, value, unit) {
-  const newslot = { ...slot }
-  newslot.startDate = Cypress.dayjs(newslot.startDate, 'YYYY/MM/DD HH:mm').add(value, unit)
-  newslot.endDate = Cypress.dayjs(newslot.endDate, 'YYYY/MM/DD HH:mm').add(value, unit)
-  return newslot
-}
-
-function selectWeek (date) {
-  const nextWeekLabel = date.day(1).format('D MMM') // week's monday
-  cy.contains('.horizontal-timeline-week', nextWeekLabel).click()
 }
 
 function selectClass (className) {

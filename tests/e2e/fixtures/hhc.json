@@ -96,11 +96,17 @@
       "lastName": "NOLLI"
     }
   },
-  "groupName": "0922R2",
-  "studentName": "BARMAN MELISSA (1021LC)",
-  "studentSearch": "mel",
   "studentSlotsNumberAtWeek35": 34,
   "studentSlotsNumberAtTuesday": 7,
-  "teacherName": "Jovanovic Darko (Maitre)",
-  "teacherSearch": "dar"
+  "emptySlot": {
+    "day": "thu",
+    "startHour": "12:00",
+    "endHour": "13:00",
+    "slotNumberOnCalendar": 6,
+    "linkedSchoolSlot": {
+      "schoolSlotNumber": "P10",
+      "startDate": "2023/10/03 11:25",
+      "endDate": "2023/10/03 12:10"
+    }
+  }
 }
