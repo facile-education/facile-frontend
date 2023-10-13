@@ -115,6 +115,8 @@ export default {
   align-items: center;
   justify-content: center;
   height: 100%;
+  margin: auto;
+  margin-top: 20px;
 }
 
 .access-popover {
@@ -128,6 +130,7 @@ export default {
   z-index: $popup-z-index;
   border: 1px solid $neutral-40;
   border-radius: 4px;
+  min-height: 60px;
   @extend %object-shadow-2;
 
   &.phone {
