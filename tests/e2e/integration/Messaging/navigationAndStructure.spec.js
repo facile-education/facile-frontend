@@ -1,10 +1,11 @@
 import { messagingURL } from '../../support/constants/urls'
 import { HEADMASTER } from '../../support/constants/users'
-import { waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
+import { getThread, waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
 
 describe('Messaging navigation and structure', () => {
-  before(() => {
+  beforeEach(() => {
     cy.loadTables('messaging/messaging_tables.sql')
+    cy.fixture('messaging.json').as('messagingData')
     cy.login(HEADMASTER, messagingURL)
     waitMessagingToBeLoaded()
   })
@@ -45,12 +46,114 @@ describe('Messaging navigation and structure', () => {
       cy.get('[data-test=option_toggleMessagingMenu]').click()
       cy.get('[data-test=messaging-menu]').should('not.be.visible')
     })
+
+    // Keyboard navigation
+    it('keyboard navigation', function () {
+      waitMessagingToBeLoaded()
+      const totalThreads = this.messagingData.existingThreads
+
+      for (let j = totalThreads.length - 1; j >= -1; j--) {
+        if (j >= 0) {
+          cy.get('body').type('{downArrow}')
+          getThread(totalThreads[j]).find('.main').should('have.class', 'theme-background-color')
+        } else {
+          cy.get('[data-test="thread-list-item"]').last().find('.main').should('have.class', 'theme-background-color')
+        }
+      }
+      for (let i = 1; i < totalThreads.length; i++) {
+        if (i <= 3) {
+          cy.get('body').type('{upArrow}')
+          getThread(totalThreads[i]).find('.main').should('have.class', 'theme-background-color')
+        } else {
+          cy.get('[data-test="thread-list-item"]').first().find('.main').should('have.class', 'theme-background-color')
+        }
+      }
+      cy.get('body').type('{del}')
+      cy.get('.scroll').find('[data-test="thread-list-item"]').should('have.length', totalThreads.length - 1)
+      cy.get('[data-test="option_toggleMessagingMenu"]').click()
+      cy.get('[data-test="messaging-menu"]').within(() => {
+        cy.contains('button', 'Corbeille').click()
+      })
+      cy.get('.scroll').find('[data-test="thread-list-item"]').should('have.length', 1)
+    })
+
+    // multiSelection ctrl
+    it('multiSelection ctrl', function () {
+      waitMessagingToBeLoaded()
+      // CTRL click
+      const totalThreads = this.messagingData.existingThreads
+      cy.get('body').type('{ctrl}', { release: false })
+      // Select all threads with ctrl click
+      for (let i = 0; i < totalThreads.length; i++) {
+        getThread(totalThreads[i]).click()
+      }
+
+      // check if all threads have class : theme-background-color
+      cy.get('[data-test="thread-list-item"]').each(() => {
+        cy.get('[data-test="thread-list-item"]').find('div').should('have.class', 'theme-background-color')
+      })
+      cy.get('[data-test="thread-list-item"]').first().click()
+      cy.get('[data-test="thread-list-item"]').first().should('not.have.class', 'theme-background-color')
+      cy.get('body').type('{ctrl}', { release: true })
+    })
+
+    // multiSelection click --> shift
+    it('multiSelection click --> shift', function () {
+      cy.get('[data-test="thread-list-item"]').first().click()
+      cy.get('body').type('{shift}', { release: false })
+
+      // Select all threads with shift click
+      cy.get('[data-test="thread-list-item"]').last().click()
+
+      // check if all threads have class : theme-background-color
+      cy.get('.scroll').within(() => {
+        cy.get('[data-test="thread-list-item"]').each(() => {
+          cy.get('[data-test="thread-list-item"]').find('div').should('have.class', 'theme-background-color')
+        })
+      })
+      cy.get('[data-test="thread-list-item"]').first().click()
+      cy.get('.scroll').within(() => {
+        cy.get('[data-test="thread-list-item"]').each(($element, index) => {
+          console.log($element)
+          if (index !== 0) { // Exclude the second element (for example)
+            cy.wrap($element).find('.main').should('not.have.class', 'theme-background-color')
+          }
+        })
+      })
+    })
+
+    // multiSelection shift --> click
+    it('multiSelection shift --> click', function () {
+      cy.get('body').type('{shift}', { release: false })
+
+      // Select all threads with shift click
+      cy.get('[data-test="thread-list-item"]').first().click()
+      cy.get('[data-test="thread-list-item"]').last().click()
+
+      // check if all threads have class : theme-background-color
+      cy.get('.scroll').within(() => {
+        cy.get('[data-test="thread-list-item"]').each(() => {
+          cy.get('[data-test="thread-list-item"]').find('div').should('have.class', 'theme-background-color')
+        })
+      })
+      cy.get('[data-test="thread-list-item"]').first().click()
+      cy.get('.scroll').within(() => {
+        cy.get('[data-test="thread-list-item"]').each(($element, index) => {
+          console.log($element)
+          if (index !== 0) { // Exclude the second element (for example)
+            cy.wrap($element).find('.main').should('not.have.class', 'theme-background-color')
+          }
+        })
+      })
+    })
   })
 
   context('mobile', function () {
     beforeEach(function () {
       cy.viewport('iphone-5')
+      cy.fixture('messaging.json').as('messagingData')
       cy.login(HEADMASTER, messagingURL)
+      waitMessagingToBeLoaded()
     })
 
     it('Check navigation', () => {
@@ -85,6 +188,23 @@ describe('Messaging navigation and structure', () => {
       cy.get('[data-test=threads-panel]').should('be.visible')
       cy.get('[data-test=messaging-menu]').should('not.be.visible')
       cy.get('[data-test=messages-panel]').should('not.exist')
+    })
+
+    // multiSelection option button
+    it('multiSelection option button', function () {
+      const totalThreads = this.messagingData.existingThreads
+
+      cy.get('[data-test="option_toggleMultiSelection"]').click()
+      for (let i = 0; i < totalThreads.length; i++) {
+        getThread(totalThreads[i]).click()
+      }
+
+      // check if all threads have class : theme-background-color
+      cy.get('[data-test="thread-list-item"]').each(() => {
+        cy.get('[data-test="thread-list-item"]').find('div').should('have.class', 'theme-background-color')
+      })
+      cy.get('[data-test="thread-list-item"]').first().click()
+      cy.get('[data-test="thread-list-item"]').first().should('not.have.class', 'theme-background-color')
     })
   })
 })

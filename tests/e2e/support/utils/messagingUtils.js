@@ -1,5 +1,6 @@
 const waitMessagingToBeLoaded = () => {
   cy.get('[data-test=threads-panel] > [data-test=thread-list-header]', { timeout: 5000 }).contains('BOÎTE DE RÉCEPTION') // That waits the current folder loading
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
   cy.wait(200)
   cy.get('[data-test=spinner]').should('not.exist')
 }
