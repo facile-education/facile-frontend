@@ -92,7 +92,7 @@ describe('Answer', () => {
     })
 
     // Answer all recipients option button
-    it.only('reply to all recipients option button', function () {
+    it('reply to all recipients option button', function () {
       const existingThreads = this.messagingData.existingThreads
       cy.login(HEADMASTER, messagingURL)
       waitMessagingToBeLoaded()
@@ -128,8 +128,18 @@ describe('Answer', () => {
     beforeEach(function () {
       cy.viewport('iphone-5')
     })
-    it('check answer option mobile', function () {
-
+    it('check answer modale on mobile', function () {
+      cy.login(HEADMASTER, messagingURL)
+      waitMessagingToBeLoaded()
+      cy.get('[data-test="thread-list-item"]').first().click()
+      // Check reply option button
+      cy.get('[data-test="option_reply"]').click()
+      cy.get('[data-test="createMessageModal"]').should('be.visible').within(() => {
+        cy.get('[data-test="closeModal"]').click()
+      })
+      // Check all reply option button
+      cy.get('[data-test="option_replyAll"]').click()
+      cy.get('[data-test="createMessageModal"]').should('be.visible')
     })
   })
 })
