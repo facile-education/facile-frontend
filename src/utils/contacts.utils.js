@@ -11,9 +11,10 @@ const addContactFieldsToContactList = (contactList, hasDetails = true) => {
         contact.text = getFullName(contact)
         if (contact.roles) {
           contact.text += ' (' + contact.roles
-          if (contact.subjects && hasDetails) {
-            contact.text += ' - ' + contact.subjects
-          }
+          // Comment because too many subjects IRL
+          // if (contact.subjects && hasDetails) {
+          //   contact.text += ' - ' + contact.subjects
+          // }
           if (contact.classes && hasDetails) {
             contact.text += ' de ' + contact.classes
           }
