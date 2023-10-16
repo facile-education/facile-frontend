@@ -115,13 +115,6 @@ import dayjs from 'dayjs'
 import { getSchoolSlotConfiguration } from '@/api/schedule.service'
 import schoolLifeService from '@/api/schoolLife-portlet.service'
 
-const moreThanRegistered = (value, vm) => {
-  if (value < 0) {
-    return false
-  }
-  return (vm.eventToEdit) ? value >= vm.eventToEdit.nbRegisteredStudents : true
-}
-
 export default {
   name: 'EditSlotModal',
   components: { DateRangePicker, UserCompletion },
@@ -139,7 +132,15 @@ export default {
       teacher: {
         teacherId: { required }
       },
-      capacity: { required, moreThanRegistered },
+      capacity: {
+        required,
+        function (value) {
+          if (value < 0) {
+            return false
+          }
+          return (this.eventToEdit) ? value >= this.eventToEdit.nbRegisteredStudents : true
+        }
+      },
       room: { required }
     }
   },
@@ -171,7 +172,7 @@ export default {
       return {
         teacher: (form.teacher.teacherId.$invalid && form.teacher.teacherId.$dirty) ? this.$t('Commons.formRequired') : '',
         capacity: (form.capacity.$invalid && form.capacity.$dirty)
-          ? (form.capacity.required.$invalid ? this.$t('Commons.formRequired') : this.$t('Commons.formMoreThanRegistered'))
+          ? (form.capacity.required.$invalid ? this.$t('Commons.formRequired') : this.$t('formMoreThanRegistered'))
           : '',
         room: (form.room.$invalid && form.room.$dirty) ? this.$t('Commons.formRequired') : ''
       }
@@ -398,6 +399,7 @@ export default {
 <i18n locale="fr">
 {
   "updateMessage": "Les modifications affecteront toutes les sessions concernées par ce créneau",
+  "formMoreThanRegistered": "La capacité de la salle doit être au moins supérieure au nombre d'inscrits",
   "all-the": "Tous les ",
   "the": "Le ",
   "on": "en",

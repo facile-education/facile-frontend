@@ -64,7 +64,7 @@ describe('HHC slots modidication', () => {
     cy.get('[data-test=event-popup]').get('[data-test=updateSlot-option]').click()
 
     // Check and change fields
-    cy.get('[data-test=edit-slot-modal]').within(() => {
+    cy.get('[data-test="edit-slot-modal"]').within(() => {
       cy.contains('.window-header', slotType.label).should('be.visible')
       cy.contains('Le ' + slotToModifyDayLabel + ' en')
 
@@ -135,5 +135,33 @@ describe('HHC slots modidication', () => {
       .should('contain', modifiedSlotExpectedFreePlaces + 1) // +1 because this week, the student is not registered
       .should('contain', modifiedSlot.teacher.lastName)
       .should('contain', modifiedSlot.room)
+  })
+
+  it('try to change room capacity beside the current registered student number', function () {
+    cy.login(rolesThatCanModify[0], HHCURL)
+    const slotType = this.hhcData.slotsTypes.tutoring
+    const slotToModify = slotType.slotExample
+    const nbStudentsRegistered = slotType.slotExample.capacity - slotType.slotExample.freePlaces
+
+    // Open updateModal
+    selectSlotType(slotType)
+    getSlot(slotToModify).click()
+    cy.get('[data-test=event-popup]').get('[data-test=updateSlot-option]').click()
+
+    // Check and change fields
+    cy.get('[data-test="edit-slot-modal"]').within(() => {
+      // Capacity
+      cy.get('[data-test=capacity-part]').within(() => {
+        cy.get('input').should('have.value', slotToModify.capacity).clear()
+        cy.get('input').type(nbStudentsRegistered - 1)
+      })
+    })
+
+    submit()
+
+    cy.get('.error-message').should('be.visible')
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(500) // Check if modal is present after 500ms
+    cy.get('[data-test="edit-slot-modal"]').should('be.visible')
   })
 })

@@ -19,7 +19,6 @@
     "formDateOrder": "La date de fin doit être supérieure à la date de début",
     "formInvalidDate": "Format de date invalide",
     "formInvalidEmail": "Format de l'adresse incorrect",
-    "formMoreThanRegistered": "La capacité de la salle doit être plus grande que le nombre d'inscrits",
     "formRequired": "Champ requis",
     "new": "Nouveau",
     "required": "Champ requis",
