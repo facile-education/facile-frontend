@@ -162,7 +162,7 @@ export default {
   }
 
   &.phone {
-    padding-left: 20px;
+    padding-left: 0px;
     height: $messaging-mobile-header-height;
 
     .header-label {
