@@ -116,7 +116,8 @@ axios.interceptors.response.use(undefined, async (error) => {
       return axios.request(error.config)
     }
 
-    // If you ever get an unauthorized, redirect to error page
+    // If you ever get an unauthorized, re-init layout and redirect to error page
+    store.commit('theme/setLayout', 'div')
     router.push({ name: 'AuthenticationRequired' })
   }
 
