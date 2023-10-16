@@ -2,7 +2,7 @@
   <RouterLink
     :to="'/' + $t('Menu.route.' + menuEntry.i18nKey)"
     class="menu-entry"
-    :class="{'router-link-active theme-text-color': $route.path.startsWith('/' + $t('Menu.route.' + menuEntry.i18nKey)), 'root-menu-entry': !isSubMenu, 'sub-menu-item': isSubMenu, 'expanded': isExpanded}"
+    :class="{'router-link-active theme-text-color': isActive, 'root-menu-entry': !isSubMenu, 'sub-menu-item': isSubMenu, 'expanded': isExpanded}"
   >
     <CustomIcon
       v-if="menuEntry.icon"
@@ -48,6 +48,10 @@ export default {
     }
   },
   computed: {
+    isActive () {
+      const entryPath = this.$t('Menu.route.' + this.menuEntry.i18nKey)
+      return this.$route.path === `/${entryPath}` || this.$route.path.startsWith(`/${entryPath}/`)
+    },
     isExpanded () {
       return this.mq.phone || this.mq.tablet || this.$store.state.menu.menuExpanded
     },
