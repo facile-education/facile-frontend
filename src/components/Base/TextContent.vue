@@ -33,10 +33,6 @@ export default {
       type: String,
       required: true
     },
-    isInProgression: {
-      type: Boolean,
-      default: false
-    },
     disabled: {
       type: Boolean,
       default: false
@@ -106,20 +102,16 @@ export default {
       }
     },
     updateContent (newValue) {
-      this.$emit('input', newValue)
-      this.$emit('update:content', newValue)
-      clearTimeout(this.timeout)
-      if (this.isInProgression) {
-        this.$store.dispatch('progression/setIsWaiting', true)
+      if (newValue !== '[object InputEvent]') {
+        this.$emit('input', newValue)
+        this.$emit('update:content', newValue)
       }
-      // 2s timeout
+
+      clearTimeout(this.timeout)
+      // Auto save for notes documents
       this.timeout = setTimeout(() => {
         const updatedContent = { contentValue: this.content }
-        if (this.isInProgression) {
-          this.$store.dispatch('progression/updateItemContent', updatedContent)
-        } else {
-          this.$emit('save', updatedContent)
-        }
+        this.$emit('save', updatedContent)
       }, 2000)
     }
   }
