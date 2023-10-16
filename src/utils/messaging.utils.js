@@ -24,12 +24,15 @@ const MessagingUtils = {
     let lastSelectedThreadIndex = -1
     let threadIndex = -1
 
-    for (let i = 0; i < threadIdArray.length && (lastSelectedThreadIndex === -1 || threadIndex === -1); i++) {
-      if (threadIdArray[i] === store.state.messaging.lastSelectedThread.threadId) {
-        lastSelectedThreadIndex = i
-      }
-      if (threadIdArray[i] === shiftSelectedThread.threadId) {
-        threadIndex = i
+    // If no previous thread selected, then behave as simple click
+    if (store.state.messaging.lastSelectedThread !== undefined) {
+      for (let i = 0; i < threadIdArray.length && (lastSelectedThreadIndex === -1 || threadIndex === -1); i++) {
+        if (threadIdArray[i] === store.state.messaging.lastSelectedThread.threadId) {
+          lastSelectedThreadIndex = i
+        }
+        if (threadIdArray[i] === shiftSelectedThread.threadId) {
+          threadIndex = i
+        }
       }
     }
     if (lastSelectedThreadIndex === -1 || threadIndex === -1) {
