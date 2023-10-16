@@ -204,9 +204,9 @@ describe('deregistration option', () => {
       rolesToBeNotifiedOfDeregistration[attr].forEach((role) => {
         if (role !== unregisterRole) { // registerer do not have notification
           cy.login(role, messagingURL)
-          const expectedThred = expectedDeregistrationThread(slotType, slotToUnregister, REGISTERED_STUDENT, unregisterRole)
+          const expectedThread = expectedDeregistrationThread(slotType, slotToUnregister, REGISTERED_STUDENT, unregisterRole)
           waitMessagingToBeLoaded()
-          getThread(expectedThred).click()
+          getThread(expectedThread).click()
           // getMessage(expectedThred[0]).should('exist') // TODO: Check message content
         }
       })

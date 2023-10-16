@@ -4,6 +4,7 @@
     :max-width="750"
     :full-screen="mq.phone || mq.tablet"
     class="delete-slot-modal"
+    data-test="delete-slot-modal"
     @close="closeModal"
   >
     <template #header>
@@ -18,6 +19,7 @@
         <div
           v-if="isLoaded"
           class="period"
+          data-test="period"
         >
           <span
             v-t="'onThePeriod'"

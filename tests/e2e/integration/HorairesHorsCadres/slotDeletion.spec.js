@@ -1,171 +1,106 @@
+import { HHCURL } from '../../support/constants/urls'
+import { CLASSTEACHER2, DOYEN, HEADMASTER, SECRETARY, TEACHER2 } from '../../support/constants/users'
 import {
-  now, slotTypes, url
-} from '../../support/constants/horairesHorsCadres'
-import utils from '../../support/utils/horairesHorsCardesUtils'
+  addTimeToSlot,
+  getSlot,
+  selectSlotType,
+  selectWeek
+} from '../../support/utils/horairesHorsCardesUtils'
 
-const slotsToDelete = { // The created slots designate to be deleted
-  1: { // fired
-    day: 'wed',
-    date: now,
-    startHour: '08:00',
-    endHour: '14:00',
-    teacherSearch: 'jau',
-    teacherName: 'Jaunait Jérôme',
-    roomNumber: 'tg',
-    capacity: 7
-  },
-  2: { // detention
-    day: 'wed',
-    date: now,
-    startHour: '11:00',
-    endHour: '12:00',
-    teacherSearch: 'alex',
-    teacherName: 'Regad Alexandre',
-    roomNumber: 'd',
-    capacity: 4
-  },
-  3: { // replayTest
-    day: 'wed',
-    date: now,
-    startHour: '08:00',
-    endHour: '10:00',
-    teacherSearch: 'dubo',
-    teacherName: 'Duboule Lionel',
-    roomNumber: 'yh',
-    capacity: 1
-  },
-  4: { // tutoring
-    day: 'wed',
-    date: now,
-    startHour: '08:00',
-    endHour: '09:00',
-    teacherSearch: 'Bonzon',
-    teacherName: 'Bonzon Francoise',
-    roomNumber: 'rt',
-    capacity: 154
-  },
-  5: { // study
-    day: 'wed',
-    date: now,
-    startHour: '13:00',
-    endHour: '14:00',
-    teacherSearch: 'dar',
-    teacherName: 'Jovanovic Darko',
-    roomNumber: '1g5',
-    capacity: 1
-  }
-}
+const rolesThatCanDelete = [HEADMASTER, SECRETARY, DOYEN]
+const rolesThatCannotDelete = [TEACHER2, CLASSTEACHER2] // Not taking the first Teacher to avoid firing justification
 
-const deleteSlot = () => {
-  cy.get('[data-test=edit-slot-modal]').within(() => {
-    cy.get('.button').contains('Supprimer').click()
-  })
-  cy.get('[data-test=warning-modal]').within(() => {
-    cy.contains('button', 'Continuer').click()
-  })
-  cy.get('[data-test=warning-modal]').should('not.exist')
-  cy.get('[data-test=edit-slot-modal]').should('not.exist')
-}
+const nbWeeksToDeleteSlots = 2 // The current week and one after
 
 describe('HHC slots deletion', () => {
   beforeEach(() => {
-    cy.clock(now.toDate().getTime())
-    cy.exec('npm run db:loadTables schoollife_tables.sql')
-    cy.clearDBCache()
-    cy.logout()
+    cy.fixture('hhc.json').as('hhcData').then(data => {
+      cy.clock(Cypress.dayjs(data.now, 'YYYY/MM/DD HH:mm').toDate().getTime())
+    })
+    cy.loadTables('schoollife/schoollife_tables.sql')
+    cy.loadTables('messaging/messaging_tables_empty.sql') // to empty
   })
 
-  it('Delete slot desktop', function () {
-    cy.login(url)
+  it(' is present for good roles', function () {
+    const slotType = this.hhcData.slotsTypes.tutoring // No need to test all slot types
+    const slotToModify = slotType.slotExample
 
-    for (const attr in slotTypes) {
-      const currentSlotType = slotTypes[attr]
-      cy.log('==================== Test ' + currentSlotType.label + ' Deletion ====================')
-      cy.get('[data-test=slot-type-item-' + currentSlotType.type + ']').click()
-      cy.get('.weeknumber-label').eq(2).click() // to go to currentDate after each for loop
-      utils.waitCalendarToLoad()
+    rolesThatCannotDelete.forEach(role => {
+      cy.login(role, HHCURL)
+      selectSlotType(slotType)
 
-      // Create the slot to modify // TODO Not pass by UI
-      cy.log('========= Create slot to delete =========')
-      utils.clickOnEmptySlot(slotsToDelete[currentSlotType.type].day, 7)
-      cy.get('[data-test=edit-slot-modal]')
-      utils.fillEditSlotModal(slotsToDelete[currentSlotType.type])
+      getSlot(slotToModify).click()
+      cy.get('[data-test=event-popup]').get('[data-test=deleteSlot-option]').should('not.exist')
+    })
 
-      // Go one week after creation
-      cy.get('.weeknumber-label').eq(3).click()
-      utils.getWeeksEventsNumber(false, 1)
+    rolesThatCanDelete.forEach(role => {
+      cy.login(role, HHCURL)
+      selectSlotType(slotType)
 
-      // Delete slot
-      cy.log('========= Delete the slot =========')
-      cy.get('[data-test="' + slotsToDelete[currentSlotType.type].date.add(1, 'week').format('MM-DD') + '_' + slotsToDelete[currentSlotType.type].startHour + '"]').within(() => {
-        cy.contains(currentSlotType.label).first().click({ force: true })
-      })
-      cy.get('[data-test=openEditModal-option]').click()
-      cy.get('[data-test=edit-slot-modal]').should('exist')
-      deleteSlot()
-      utils.waitCalendarToLoad()
-
-      cy.get('@events').then((events) => {
-        // Check current week events
-        cy.log('========= Check modified slot =========')
-        cy.get('.fc-timegrid-event').should('have.length', events.nbCurrentWeekEvents - 1)
-
-        // Check the week before: the slots isn't deleted
-        cy.get('.weeknumber-label').eq(2).click()
-        utils.waitCalendarToLoad()
-        cy.get('.fc-timegrid-event').should('have.length', events.nbPreviousWeekEvents)
-
-        // Check the week after: the slot is modified
-        cy.get('.weeknumber-label').eq(4).click()
-        utils.waitCalendarToLoad()
-        cy.get('.fc-timegrid-event').should('have.length', events.nbNextWeekEvents - 1)
-      })
-    }
+      getSlot(slotToModify).click()
+      cy.get('[data-test=event-popup]').get('[data-test=deleteSlot-option]').should('exist')
+    })
   })
 
-  it('Delete slot Mobile', function () {
-    cy.login(url)
-    cy.viewport('iphone-5')
-    const currentSlotType = slotTypes.tutoring // Only test behaviour for tutoring, assert at this point, the others type of slots were tested on desktop
+  it('Delete slot', function () { // Only test for study
+    const deleter = rolesThatCanDelete[0]
+    cy.login(deleter, HHCURL)
+    const slotType = this.hhcData.slotsTypes.study
+    const slotToDelete = slotType.slotExample
+    const previousWeek = Cypress.dayjs(this.hhcData.now, 'YYYY/MM/DD HH:mm').add(-1, 'week')
+    const nextWeek = Cypress.dayjs(this.hhcData.now, 'YYYY/MM/DD HH:mm').add(1, 'week')
+    const weekAfterLimit = Cypress.dayjs(this.hhcData.now, 'YYYY/MM/DD HH:mm').add(nbWeeksToDeleteSlots, 'week')
 
-    cy.log('==================== Test ' + currentSlotType.label + ' Deletion ====================')
-    cy.get('[data-test=slot-type-item-' + currentSlotType.type + ']').click()
-    utils.waitCalendarToLoad()
+    // Open deleteModal
+    selectSlotType(slotType)
+    getSlot(slotToDelete).click()
+    cy.get('[data-test=event-popup]').get('[data-test=deleteSlot-option]').click()
 
-    // Create the slot to modify // TODO Not pass by UI
-    cy.log('========= Create slot to delete =========')
-    utils.clickOnEmptySlot(slotsToDelete[currentSlotType.type].day, 7)
-    cy.get('[data-test=edit-slot-modal]')
-    utils.fillEditSlotModal(slotsToDelete[currentSlotType.type])
+    // Test delete Modal
+    const slotDatesLabel = Cypress.dayjs(slotToDelete.startDate, 'YYYY/MM/DD HH:mm').format('dddd [de] HH:mm') + Cypress.dayjs(slotToDelete.endDate, 'YYYY/MM/DD HH:mm').format(' [à] HH:mm')
+    cy.get('[data-test="delete-slot-modal"]')
+      .should('contain', slotType.label)
+      .should('contain', slotDatesLabel)
+      .within(() => {
+        cy.get('[data-test=period]').within(() => {
+          const startDate = Cypress.dayjs(slotToDelete.startDate, 'YYYY/MM/DD HH:mm')
+          const endDate = Cypress.dayjs(slotToDelete.startDate, 'YYYY/MM/DD HH:mm').add(nbWeeksToDeleteSlots - 1, 'week')
+          cy.get('button').click()
+          cy.tick(500)
+          cy.selectDateRangeInVCalendar(startDate, endDate)
+          cy.tick(500)
+        })
+        cy.contains('button', 'Supprimer').click()
+      })
+    cy.get('[data-test="warning-modal"]').contains('button', 'Continuer').click()
+    cy.get('[data-test="warning-modal"]').should('not.exist')
+    cy.get('[data-test="delete-slot-modal"]').should('not.exist')
 
-    // Go one week after creation
-    utils.phoneGoToDayOfMonth(slotsToDelete[currentSlotType.type].date.add(1, 'week').format('YYYY-MM-DD'))
-    utils.getWeeksEventsNumber(false, 1, true)
+    getSlot(slotToDelete).should('not.exist')
 
-    // Delete slot
-    cy.log('========= Delete the slot =========')
-    cy.get('[data-test="' + slotsToDelete[currentSlotType.type].date.add(1, 'week').format('MM-DD') + '_' + slotsToDelete[currentSlotType.type].startHour + '"]').within(() => {
-      cy.contains(currentSlotType.label).first().click({ force: true })
-    })
-    cy.get('[data-test=openEditModal-option]').click()
-    cy.get('[data-test=edit-slot-modal]').should('exist')
-    deleteSlot()
-    utils.waitCalendarToLoad()
+    // Check previous week (should not be deleted)
+    selectWeek(previousWeek)
+    getSlot(addTimeToSlot(slotToDelete, -1, 'week')).should('exist')
 
-    cy.get('@events').then((events) => {
-      // Check current week events
-      cy.log('========= Check modified slot =========')
-      cy.get('.fc-timegrid-event').should('have.length', events.nbCurrentWeekEvents - 1)
+    // Check next week
+    selectWeek(nextWeek)
+    cy.get('.fc-event') // Wait calendar events to loads
+    getSlot(addTimeToSlot(slotToDelete, 1, 'week')).should('not.exist')
 
-      // Check the week before: the slots isn't deleted
-      utils.phoneGoToDayOfMonth(slotsToDelete[currentSlotType.type].date.format('YYYY-MM-DD'))
-      utils.waitCalendarToLoad()
-      cy.get('.fc-timegrid-event').should('have.length', events.nbPreviousWeekEvents)
+    // Check week after limit
+    selectWeek(weekAfterLimit)
+    getSlot(addTimeToSlot(slotToDelete, nbWeeksToDeleteSlots, 'week')).should('exist')
 
-      // Check the week after: the slot is modified
-      utils.phoneGoToDayOfMonth(slotsToDelete[currentSlotType.type].date.add(2, 'week').format('YYYY-MM-DD'))
-      utils.waitCalendarToLoad()
-      cy.get('.fc-timegrid-event').should('have.length', events.nbNextWeekEvents - 1)
-    })
+    // // Check deregistration notif for student in deleted slot // TODO: check notifs when we make dev for send it
+    // cy.login(DOYEN, messagingURL)
+    // waitMessagingToBeLoaded()
+    // getThread([{
+    //   sender: deleter.firstName + ' ' + deleter.lastName,
+    //   recipients: [DOYEN.firstName + ' ' + DOYEN.lastName],
+    //   date: '',
+    //   subject: 'Fin du cercle d\'étude le ' + Cypress.dayjs(slotToDelete.startDate, 'YYYY/MM/DD HH:mm').format('dddd [à] H[h]mm'),
+    //   content: 'TODO',
+    //   messageIndexInThread: 0
+    // }]).should('be.visible')
   })
 })

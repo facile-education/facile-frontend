@@ -21,7 +21,7 @@ const modifiedSlot = {
 const rolesThatCanModify = [HEADMASTER, SECRETARY, DOYEN]
 const rolesThatCannotModify = [TEACHER2, CLASSTEACHER2] // Not taking the first Teacher to avoid firing justification
 
-describe('HHC slots modidication', () => {
+describe('HHC slots modidication', () => { // TODO: factorise with create and delete permission tests
   beforeEach(() => {
     cy.fixture('hhc.json').as('hhcData').then(data => {
       cy.clock(Cypress.dayjs(data.now, 'YYYY/MM/DD HH:mm').toDate().getTime())
@@ -135,6 +135,8 @@ describe('HHC slots modidication', () => {
       .should('contain', modifiedSlotExpectedFreePlaces + 1) // +1 because this week, the student is not registered
       .should('contain', modifiedSlot.teacher.lastName)
       .should('contain', modifiedSlot.room)
+
+    // No notification to test
   })
 
   it('try to change room capacity beside the current registered student number', function () {
