@@ -327,6 +327,12 @@ export default {
 }
 </script>
 
+<style lang="scss">
+  .app-edition-modal .window-body {
+    overflow: visible !important;
+  }
+</style>
+
 <style lang="scss" scoped>
 @import '@/design';
 

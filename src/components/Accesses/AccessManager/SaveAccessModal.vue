@@ -289,6 +289,12 @@ export default {
 }
 </script>
 
+<style lang="scss">
+  .save-access-modal .window-body {
+    overflow: visible !important;
+  }
+</style>
+
 <style lang="scss" scoped>
 
 .dropdown {

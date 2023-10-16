@@ -1,7 +1,7 @@
 <template>
   <PentilaWindow
     :modal="true"
-    :class="{ 'app-broadcast-modal': mq.phone || mq.tablet }"
+    class="app-broadcast-modal"
     :full-screen="mq.phone || mq.tablet"
     @close="closeModal"
   >
@@ -194,6 +194,12 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+  .app-broadcast-modal .window-body {
+    overflow: visible !important;
+  }
+</style>
 
 <style lang="scss" scoped>
 .add {

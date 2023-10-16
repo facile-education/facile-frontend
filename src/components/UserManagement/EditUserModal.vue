@@ -322,6 +322,12 @@ export default {
 }
 </script>
 
+<style lang="scss">
+  .editUserWindow .window-body {
+    overflow: visible !important;
+  }
+</style>
+
 <style lang="scss" scoped>
 .editUserWindow {
   span {
