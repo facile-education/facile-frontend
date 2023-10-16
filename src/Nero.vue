@@ -5,7 +5,7 @@
     <RouterView
       v-if="layout !== 'BannerLayout' || menu !== undefined"
       :key="$route.path"
-      @update:layout="layout = $event"
+      @update:layout="updateLayout"
     />
     <PentilaSpinner v-else />
   </component>
@@ -16,12 +16,10 @@ import { setMainColor } from '@/utils/theme.util'
 
 export default {
   inject: ['mq'],
-  data () {
-    return {
-      layout: 'div'
-    }
-  },
   computed: {
+    layout () {
+      return this.$store.state.theme.layout
+    },
     menu () {
       return this.$store.state.menu.menu
     },
@@ -57,6 +55,9 @@ export default {
     }
   },
   methods: {
+    updateLayout ($event) {
+      this.$store.commit('theme/setLayout', $event)
+    },
     addMaxScaleToViewport () {
       const el = document.querySelector('meta[name=viewport]')
 
