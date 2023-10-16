@@ -65,11 +65,11 @@ const TEACHER = { // TEACHER of STUDENT
 }
 
 const TEACHER2 = {
-  login: 'lemarchantm',
+  login: 'breydinr',
   password,
   role: 'teacher',
-  firstName: 'Mitzi',
-  lastName: 'LE MARCHANT'
+  firstName: 'Rafaello',
+  lastName: 'BREYDIN'
 }
 
 const DEPANNAGE_SUPERVISOR = { // tuesday 16:20 17:05
