@@ -8,12 +8,14 @@
       "nbSlotsAtSelectedWeek": 7,
       "nbSlotsAtSelectedDay": 2,
       "slotExample": {
+        "schoolSlotNumber": "P10",
         "startDate": "2023/10/03 16:20",
-        "endDate": "2023/10/03 17:15",
+        "endDate": "2023/10/03 17:05",
         "teacher": {
           "firstName": "Sidney",
           "lastName": "PACHECO"
         },
+        "room": "S18",
         "capacity": 20,
         "freePlaces": 19
       }
@@ -25,12 +27,14 @@
       "nbSlotsAtSelectedWeek": 3,
       "nbSlotsAtSelectedDay": 1,
       "slotExample": {
+        "schoolSlotNumber": "P10",
         "startDate": "2023/10/05 16:20",
-        "endDate": "2023/10/05 17:15",
+        "endDate": "2023/10/05 17:05",
         "teacher": {
           "firstName": "Morgan",
           "lastName": "WALLACE"
         },
+        "room": "S17",
         "capacity": 20,
         "freePlaces": 19
       }
@@ -42,12 +46,14 @@
       "nbSlotsAtSelectedWeek": 2,
       "nbSlotsAtSelectedDay": 1,
       "slotExample": {
+        "schoolSlotNumber": "P6",
         "startDate": "2023/10/05 12:50",
         "endDate": "2023/10/05 13:35",
         "teacher": {
           "firstName": "Sidney",
           "lastName": "PACHECO"
         },
+        "room": "S17",
         "capacity": 20,
         "freePlaces": 19
       }
@@ -59,8 +65,10 @@
       "nbSlotsAtSelectedWeek": 5,
       "nbSlotsAtSelectedDay": 1,
       "slotExample": {
+        "schoolSlotNumber": "P1",
         "startDate": "2023/10/02 07:55",
         "endDate": "2023/10/02 08:40",
+        "room": "S16",
         "teacher": {
           "firstName": "Jamie",
           "lastName": "TAW"
@@ -76,12 +84,14 @@
       "nbSlotsAtSelectedDay": 6,
       "nbSlotsAtSelectedWeek": 27,
       "slotExample": {
+        "schoolSlotNumber": "P4",
         "startDate": "2023/10/03 10:35",
         "endDate": "2023/10/03 11:20",
         "teacher": {
           "firstName": "Clemence",
           "lastName": "WHITEMAN"
         },
+        "room": "S59",
         "capacity": 15,
         "freePlaces": 14
       }

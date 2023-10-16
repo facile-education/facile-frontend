@@ -4,8 +4,8 @@
     data-test="popover-menu"
     data-html2canvas-ignore="true"
   >
-  <ul>
-    <li>
+    <ul>
+      <li>
         <span class="username">{{ firstName }}</span>
         <button
           v-t="'preferences'"
@@ -14,7 +14,7 @@
         />
       </li>
       <li
-        class="top" 
+        class="top"
         style="position: relative"
       >
         <button

@@ -118,7 +118,7 @@ describe('Study registration', () => {
       selectStudent(studentToRegister)
       // Open registration modal
       getSlot(slotToRegisterInside).click()
-      cy.get('[data-test=registerStudent-option]').should('not.exist')
+      cy.get('[data-test=event-popup]').get('[data-test=registerStudent-option]').should('not.exist')
     })
 
     rolesThatCanRegister.forEach(role => {
@@ -128,7 +128,7 @@ describe('Study registration', () => {
       selectStudent(studentToRegister)
       // Open registration modal
       getSlot(slotToRegisterInside).click()
-      cy.get('[data-test=registerStudent-option]').should('exist') // be.visible is better but sometimes calendar is wierd
+      cy.get('[data-test=event-popup]').get('[data-test=registerStudent-option]').should('exist') // be.visible is better but sometimes calendar is wierd
     })
   })
 
