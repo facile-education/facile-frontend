@@ -16,7 +16,7 @@ import {
 } from '../../../support/utils/horairesHorsCardesUtils'
 import { getThread, waitMessagingToBeLoaded } from '../../../support/utils/messagingUtils'
 
-const studentToRegister = STUDENT // Because normal Student is already register in the hhc tables
+const studentToRegister = STUDENT
 
 const rolesThatCanRegister = [DEPANNAGE_SUPERVISOR] // Only the slot'teacher can regiser student
 const rolesThatCannotRegister = [HEADMASTER, CLASSTEACHER, DOYEN, TEACHER] // Not exhaustive but other users do not have the HHC service available

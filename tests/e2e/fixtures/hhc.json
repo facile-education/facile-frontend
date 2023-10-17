@@ -56,6 +56,18 @@
         "room": "S17",
         "capacity": 20,
         "freePlaces": 19
+      },
+      "slotWithLimitedCapacity": {
+        "schoolSlotNumber": "P6",
+        "startDate": "2023/10/03 12:50",
+        "endDate": "2023/10/03 13:35",
+        "teacher": {
+          "firstName": "Scarface",
+          "lastName": "O'HAGIRTIE"
+        },
+        "room": "S17",
+        "capacity": 1,
+        "freePlaces": 0
       }
     },
     "detention": {
