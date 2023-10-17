@@ -43,7 +43,7 @@ const selectSlotType = (slotType) => {
 }
 
 const selectStudent = (student) => {
-  cy.get('input').type(student.lastName)
+  cy.get('input[placeholder="Nom\ d\'un\ élève"]').type(student.lastName)
   cy.tick(500)
   cy.contains(student.lastName + ' ' + student.firstName).click()
   cy.get('.suggestion-list').should('not.exist')
