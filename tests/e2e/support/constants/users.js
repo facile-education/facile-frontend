@@ -72,6 +72,22 @@ const TEACHER2 = {
   lastName: 'BREYDIN'
 }
 
+const STUDY_SUPERVISOR = {
+  login: 'wallacem',
+  password,
+  role: 'teacher',
+  firstName: 'Morgan',
+  lastName: 'WALLACE'
+}
+
+const DETENTION_SUPERVISOR = {
+  login: 'tawj',
+  password,
+  role: 'teacher',
+  firstName: 'Jamie',
+  lastName: 'TAW'
+}
+
 const DEPANNAGE_SUPERVISOR = { // tuesday 16:20 17:05
   login: 'pachecos',
   password,
@@ -144,6 +160,8 @@ export {
   TEACHER,
   TEACHER2,
   DEPANNAGE_SUPERVISOR,
+  DETENTION_SUPERVISOR,
+  STUDY_SUPERVISOR,
   CLASSTEACHER,
   CLASSTEACHER2,
   STUDENT,

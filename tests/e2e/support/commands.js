@@ -60,7 +60,6 @@ Cypress.Commands.add('login', (user, visitUrl = undefined) => {
         form: true,
         body: params
       }).then((response) => {
-        console.log(response)
         expect(response.status).to.be.oneOf([200, 304])
         expect(response.body.success).to.be.eq(true)
       })

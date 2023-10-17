@@ -9,11 +9,11 @@ import {
   TEACHER
 } from '../../../support/constants/users'
 import {
+  addTimeToSlot,
   getSlot,
   getUserSlot,
   selectSlotType,
   selectStudent,
-  addTimeToSlot,
   selectWeek
 } from '../../../support/utils/horairesHorsCardesUtils'
 import { getThread, waitMessagingToBeLoaded } from '../../../support/utils/messagingUtils'
