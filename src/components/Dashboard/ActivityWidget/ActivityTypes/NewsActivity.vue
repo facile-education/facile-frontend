@@ -277,7 +277,7 @@ button {
   "update": "Modifier cette information",
   "delete": "Supprimer cette information",
   "deleteNewsWarning": "Supprimer cette information ?",
-  "selectToConsult": "Sélectionner pour consulter",
+  "selectToConsult": "Consulter",
   "hasPublishedInfo": "a publié ",
   "hasPublishedAnnounce": "a publié l'annonce "
 }
