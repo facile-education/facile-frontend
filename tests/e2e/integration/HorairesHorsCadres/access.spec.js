@@ -15,15 +15,17 @@ describe('Service access', () => {
     it('Displays service for ' + user.role, () => {
       cy.login(user, HHCURL)
 
-      cy.get('.slot-type-selection', { timeout: 20000 }).should('be.visible')
+      cy.get('.slot-type-selection', { timeout: 10000 }).should('be.visible')
     })
   })
 
   disallowedUsers.forEach(user => {
     it('Displays error for ' + user.role, () => {
       cy.login(user, HHCURL)
+      cy.get('[data-test="menu"]').should('contain', 'Accueil') // Wait the menu to be loaded and tick 500ms to see the 404 message appear
+      cy.tick(500)
 
-      cy.contains('Oups, cette page n\'existe pas', { timeout: 20000 }) // TODO: Understand why we have a blank page instead
+      cy.contains('Oups, cette page n\'existe pas')
       cy.get('.slot-type-selection').should('not.exist')
     })
   })
@@ -32,6 +34,6 @@ describe('Service access', () => {
     cy.then(Cypress.session.clearCurrentSessionData)
     cy.visit(HHCURL)
 
-    cy.contains('Une authentification est requise pour accéder au service.', { timeout: 20000 }).should('be.visible')
+    cy.contains('Une authentification est requise pour accéder au service.').should('be.visible')
   })
 })
