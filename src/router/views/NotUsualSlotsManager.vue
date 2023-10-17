@@ -15,7 +15,6 @@
         :key="index"
         class="slot-type"
         :slot-type="slotType"
-        :tabindex="index + 1"
       />
     </div>
     <div
