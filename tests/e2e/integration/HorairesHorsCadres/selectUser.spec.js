@@ -2,7 +2,7 @@ import { HHCURL } from '../../support/constants/urls'
 import { HEADMASTER, STUDENT } from '../../support/constants/users'
 import { selectSlotType } from '../../support/utils/horairesHorsCardesUtils'
 
-describe('Personal folders', () => {
+describe('User selection on HHC', () => {
   beforeEach(() => {
     cy.loadTables('schoollife/schoollife_tables_empty.sql')
     cy.login(HEADMASTER, HHCURL)
@@ -14,7 +14,7 @@ describe('Personal folders', () => {
   const sizes = ['iphone-5', 'ipad-2', [1024, 768]]
 
   sizes.forEach(size => {
-    it.only(`Consulting personal folders in ${size} screen`, function () { // TODO: Put messages in boxes and test the correct box content
+    it(`select user in ${size} screen`, function () {
       // Set testing viewport
       Cypress._.isArray(size) ? cy.viewport(size[0], size[1]) : cy.viewport(size)
 
