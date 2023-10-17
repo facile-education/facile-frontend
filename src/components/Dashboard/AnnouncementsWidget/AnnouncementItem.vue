@@ -384,7 +384,7 @@ export default {
   "update": "Modifier",
   "delete": "Supprimer",
   "removalConfirmMessage": "Veuillez confirmer la suppression de l'annonce \"{target}\"",
-  "selectToConsult": "Sélectionner pour consulter",
+  "selectToConsult": "Consulter",
   "descriptionPlaceholder": "Aucune description"
 }
 </i18n>

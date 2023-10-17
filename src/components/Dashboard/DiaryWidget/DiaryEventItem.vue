@@ -331,6 +331,6 @@ export default {
   "delete": "Supprimer",
   "update": "Modifier",
   "removalConfirmMessage": "Veuillez confirmer la suppression de l'évènement \"{target}\"",
-  "selectToConsult": "Sélectionner pour consulter"
+  "selectToConsult": "Consulter"
 }
 </i18n>
