@@ -195,6 +195,8 @@ describe('Study registration', () => {
     cy.get('[data-test=registerStudent-option]').click({ force: true })
 
     // Test registration modal (ends by registering student)
+    cy.intercept('GET', '**/schedule.cdtsession/get-group-sessions**').as('getGroupSessions')
+
     testRegistrationModal(slotToRegisterInside, undefined, classToRegister, notifyParent)
 
     // Check the HHC slot is added in grey to the student's schedule
@@ -202,7 +204,8 @@ describe('Study registration', () => {
 
     // Check the slot's student list
     const capacityLabel = slotToRegisterInside.capacity - classToRegister.nbStudents + '/' + slotToRegisterInside.capacity
-    getSlot(slotToRegisterInside).should('contain', 'Capacité: ' + capacityLabel).click()
+    cy.wait('@getGroupSessions')
+    getSlot(slotToRegisterInside).should('contain', 'Capacité: ' + capacityLabel).click() // here
     cy.get('[data-test=showStudentList-option]').click()
     cy.get('[data-test=student-list-modal]').within(() => {
       cy.contains(studentToRegister.firstName + ' ' + studentToRegister.lastName)
@@ -214,6 +217,7 @@ describe('Study registration', () => {
     const nextWeekUserSlot = addTimeToSlot(slotToRegisterInside, 1, 'week')
     const nextWeek = Cypress.dayjs(this.hhcData.now, 'YYYY/MM/DD HH:mm').add(1, 'week')
     selectWeek(nextWeek)
+    cy.wait('@getGroupSessions')
     getSlot(nextWeekUserSlot).should('contain', 'Capacité: ' + capacityLabel).click()
 
     notifications(slotToRegisterInside).forEach(notification => {
