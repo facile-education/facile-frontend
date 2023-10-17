@@ -2,6 +2,7 @@
   <section
     :class="{'open': expanded, 'phone-menu': (mq.phone || mq.tablet), 'phone-hidden': !isMobileMenuDisplayed}"
     class="menu"
+    data-test="menu"
   >
     <MenuItemList class="menu-item-list" />
 
