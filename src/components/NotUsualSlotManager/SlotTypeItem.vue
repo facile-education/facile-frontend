@@ -1,5 +1,5 @@
 <template>
-  <div
+  <button
     :data-test="'slot-type-item-' + slotType.type"
     class="slot-type-item"
     :class="{'toolbar-display' : !mq.desktop && currentSlotType}"
@@ -11,7 +11,7 @@
       v-if="isSelected && !(!mq.desktop && currentSlotType)"
       class="is-selected"
     />
-  </div>
+  </button>
 </template>
 
 <script>
@@ -45,6 +45,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+button {
+  margin: 0;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
 
 .slot-type-item{
   position: relative;
