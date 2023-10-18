@@ -138,7 +138,7 @@ export default {
           if (value < 0) {
             return false
           }
-          return (this.eventToEdit) ? value >= this.eventToEdit.nbRegisteredStudents : true
+          return (this.eventToEdit.nbRegisteredStudents) ? value >= this.eventToEdit.nbRegisteredStudents : true
         }
       },
       room: { required }
