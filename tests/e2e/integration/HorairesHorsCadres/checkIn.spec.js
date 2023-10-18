@@ -57,29 +57,20 @@ const getAbsenceThread = (supervisor, slotType, absentStudent) => {
 describe('Check in', () => {
   beforeEach(() => {
     cy.fixture('hhc.json').as('hhcData').then(data => {
-      cy.clock(Cypress.dayjs(data.now, 'YYYY/MM/DD HH:mm').add(1, 'day').toDate().getTime()) // TODO: not manually add one day to make the things works
+      cy.clock(Cypress.dayjs(data.now, 'YYYY/MM/DD HH:mm').toDate().getTime())
     })
     cy.loadTables('schoollife/schoollife_tables.sql')
     cy.loadTables('messaging/messaging_tables_empty.sql') // to empty
   })
 
-  it.skip('setTime after clock is initialized', function () { // TODO: Understand why this test fails (remove cy.clock from before Each)
-    cy.clock(0)
-    cy.login(HEADMASTER, HHCURL)
-    cy.contains('1970/01/01 00:00') // Assume hhc interface display current browser time
-    cy.clock().invoke('setSystemTime', 60 * 60 * 1000)
-    // cy.reload()
-    cy.contains('1970/01/01 01:00')
-  })
-
   it('option is present for good roles', function () {
     const slotType = 'replayTest' // Only needed to test one one slot type
     const slotToCheckIn = this.hhcData.slotsTypes[slotType].slotExample
-    this.clock.setSystemTime(Cypress.dayjs(slotToCheckIn.endDate, 'YYYY/MM/DD HH:mm').toDate().getTime())
-
     cy.log('roles that cannot register')
+
     rolesThatCannotCheckIn.forEach(role => {
       cy.login(role, HHCURL)
+      cy.clock().invoke('setSystemTime', Cypress.dayjs(slotToCheckIn.endDate, 'YYYY/MM/DD HH:mm').toDate().getTime()) // To put after login to make it works
       selectSlotType(this.hhcData.slotsTypes[slotType])
       getSlot(slotToCheckIn).click()
       cy.get('[data-test=showStudentList-option]').click({ force: true })
@@ -93,6 +84,7 @@ describe('Check in', () => {
     cy.log('roles that can register')
     rolesThatCanCheckIn[slotType].forEach(role => {
       cy.login(role, HHCURL)
+      cy.clock().invoke('setSystemTime', Cypress.dayjs(slotToCheckIn.endDate, 'YYYY/MM/DD HH:mm').toDate().getTime())
       selectSlotType(this.hhcData.slotsTypes[slotType])
       getSlot(slotToCheckIn).click()
       cy.get('[data-test=showStudentList-option]').click({ force: true })
@@ -104,15 +96,15 @@ describe('Check in', () => {
       })
       cy.get('[data-test=student-list-modal]').should('not.exist')
 
-      // Check if check in is present before the slot start (it should'nt be) TODO when we know how to set time
-      // this.clock.setSystemTime(Cypress.dayjs(slotToCheckIn.endDate, 'YYYY/MM/DD HH:mm').add(-1, 'day').toDate().getTime())
-      // getSlot(slotToCheckIn).click()
-      // cy.get('[data-test=showStudentList-option]').click({ force: true })
-      // cy.get('[data-test=student-list-modal]').within(() => {
-      //   cy.contains('[data-test="student-list-item"]', registeredStudent.firstName + ' ' + registeredStudent.lastName)
-      //     .find('input[type="checkbox"][title="Présence"]').should('not.exist')
-      //   cy.contains('button', 'Faire l\'appel').should('not.exist')
-      // })
+      // Check if check in is present before the slot start (it should'nt be)
+      cy.clock().invoke('setSystemTime', Cypress.dayjs(slotToCheckIn.endDate, 'YYYY/MM/DD HH:mm').add(-1, 'day').toDate().getTime())
+      getSlot(slotToCheckIn).click()
+      cy.get('[data-test=showStudentList-option]').click({ force: true })
+      cy.get('[data-test=student-list-modal]').within(() => {
+        cy.contains('[data-test="student-list-item"]', registeredStudent.firstName + ' ' + registeredStudent.lastName)
+          .find('input[type="checkbox"][title="Présence"]').should('not.exist')
+        cy.contains('button', 'Faire l\'appel').should('not.exist')
+      })
     })
   })
 
@@ -122,9 +114,10 @@ describe('Check in', () => {
       const supervisor = rolesThatCanCheckIn[slotType][0]
 
       cy.log('Set time to ' + slotToCheckIn.endDate)
-      this.clock.setSystemTime(Cypress.dayjs(slotToCheckIn.endDate, 'YYYY/MM/DD HH:mm').toDate().getTime())
 
       cy.login(supervisor, HHCURL)
+      cy.clock().invoke('setSystemTime', Cypress.dayjs(slotToCheckIn.endDate, 'YYYY/MM/DD HH:mm').toDate().getTime())
+
       selectSlotType(this.hhcData.slotsTypes[slotType])
       getSlot(slotToCheckIn).click()
       cy.get('[data-test=showStudentList-option]').click({ force: true })
@@ -156,9 +149,8 @@ describe('Check in', () => {
     const slotToCheckIn = this.hhcData.slotsTypes[slotType].slotExample
     const supervisor = rolesThatCanCheckIn[slotType][0]
 
-    this.clock.setSystemTime(Cypress.dayjs(slotToCheckIn.endDate, 'YYYY/MM/DD HH:mm').toDate().getTime())
-
     cy.login(supervisor, HHCURL)
+    cy.clock().invoke('setSystemTime', Cypress.dayjs(slotToCheckIn.endDate, 'YYYY/MM/DD HH:mm').toDate().getTime())
     selectSlotType(this.hhcData.slotsTypes[slotType])
     getSlot(slotToCheckIn).click()
     cy.get('[data-test=showStudentList-option]').click({ force: true })
