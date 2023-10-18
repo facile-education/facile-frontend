@@ -39,7 +39,7 @@ const REGISTERED_STUDENT = STUDENT // Like this in database
 const REGISTERER = (slotType) => {
   return slotType === 'tutoring' ? { ...DEPANNAGE_SUPERVISOR, role: 'Registerer' } : { ...HEADMASTER, role: 'Registerer' }
 }
-const rolesToTestPermission = (slotType) => { return [REGISTERER(slotType), TEACHER, CLASSTEACHER, SCHOOL_ADMIN, DOYEN, SECRETARY] }
+const rolesToTestPermission = (slotType) => { return [REGISTERER(slotType), TEACHER, CLASSTEACHER, HEADMASTER, DOYEN, SECRETARY] }
 
 const rolesToBeNotifiedOfDeregistration = { // if differents than the unregisterer + add parents if option is checked
   tutoring: [
@@ -75,7 +75,7 @@ const haveDeregistrationPermissions = {
     [CLASSTEACHER.lastName]: false,
     [DOYEN.lastName]: false,
     [SECRETARY.lastName]: false,
-    [SCHOOL_ADMIN.lastName]: false
+    [HEADMASTER.lastName]: false
   },
   fired: {
     [REGISTERER('fired').lastName]: false,
@@ -83,7 +83,7 @@ const haveDeregistrationPermissions = {
     [CLASSTEACHER.lastName]: false,
     [DOYEN.lastName]: true,
     [SECRETARY.lastName]: true,
-    [SCHOOL_ADMIN.lastName]: true
+    [HEADMASTER.lastName]: true
   },
   study: {
     [REGISTERER('study').lastName]: true,
@@ -91,7 +91,7 @@ const haveDeregistrationPermissions = {
     [CLASSTEACHER.lastName]: true,
     [DOYEN.lastName]: true,
     [SECRETARY.lastName]: true,
-    [SCHOOL_ADMIN.lastName]: true
+    [HEADMASTER.lastName]: true
   },
   replayTest: {
     [REGISTERER('replayTest').lastName]: true,
@@ -99,7 +99,7 @@ const haveDeregistrationPermissions = {
     [CLASSTEACHER.lastName]: false,
     [DOYEN.lastName]: true,
     [SECRETARY.lastName]: true,
-    [SCHOOL_ADMIN.lastName]: true
+    [HEADMASTER.lastName]: true
   },
   detention: {
     [REGISTERER('detention').lastName]: true,
@@ -107,7 +107,7 @@ const haveDeregistrationPermissions = {
     [CLASSTEACHER.lastName]: false,
     [DOYEN.lastName]: true,
     [SECRETARY.lastName]: true,
-    [SCHOOL_ADMIN.lastName]: true
+    [HEADMASTER.lastName]: true
   }
 }
 

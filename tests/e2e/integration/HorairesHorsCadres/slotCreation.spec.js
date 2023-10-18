@@ -142,4 +142,38 @@ describe('HHC slots creation', () => {
       getSlot(addTimeToSlot(slotToCreate, slotToCreate.nbWeekToCreateSlot, 'week')).should('not.exist')
     }
   })
+
+  it('Create slot without modifying defaults dates', function () {
+    cy.login(rolesThatCanRegister[0], HHCURL)
+    const currentSlotType = this.hhcData.slotsTypes.tutoring
+    const emptySlot = this.hhcData.emptySlot
+
+    selectSlotType(currentSlotType)
+    clickOnEmptySlot(emptySlot.day, emptySlot.slotNumberOnCalendar)
+
+    cy.get('[data-test=edit-slot-modal]').within(() => {
+      // Teacher field
+      cy.get('[data-test=teacher-part]').within(() => {
+        cy.get('input').type(slotToCreate.teacher.lastName)
+        cy.tick(500)
+        cy.get('.suggestion-list').contains(slotToCreate.teacher.lastName + ' ' + slotToCreate.teacher.firstName).click()
+      })
+      // Room number
+      cy.get('[data-test=room-part]').within(() => {
+        cy.get('input').type(slotToCreate.roomNumber)
+      })
+      // Capacity
+      cy.get('[data-test=capacity-part]').within(() => {
+        cy.get('input').type(slotToCreate.capacity)
+      })
+      submit()
+    })
+    cy.get('[data-test=edit-slot-modal]').should('not.exist')
+
+    const expectedCreatedSlot = { ...slotToCreate } // because we don't change slot dates in form
+    expectedCreatedSlot.startDate = emptySlot.linkedSchoolSlot.startDate
+    expectedCreatedSlot.endDate = emptySlot.linkedSchoolSlot.endDate
+    console.log(expectedCreatedSlot)
+    getSlot(expectedCreatedSlot).should('exist')
+  })
 })

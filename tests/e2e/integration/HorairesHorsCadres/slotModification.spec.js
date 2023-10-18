@@ -14,7 +14,7 @@ const modifiedSlot = {
   startDate: '2023/10/03 12:50',
   endDate: '2023/10/03 13:35',
   teacher: TEACHER,
-  roomNumber: 'A110',
+  room: 'A110',
   capacity: 42
 }
 
@@ -88,7 +88,7 @@ describe('HHC slots modidication', () => { // TODO: factorise with create and de
       // Room number
       cy.get('[data-test=room-part]').within(() => {
         cy.get('input').should('have.value', slotToModify.room).clear()
-        cy.get('input').type(modifiedSlot.roomNumber)
+        cy.get('input').type(modifiedSlot.room)
       })
 
       // Capacity

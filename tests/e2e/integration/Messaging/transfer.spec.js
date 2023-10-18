@@ -9,7 +9,7 @@ describe('Answer', () => {
   })
   context('desktop', function () {
     // Answer thread rightclick
-    it.only('reply to a recipient thread right click', function () {
+    it('reply to a recipient thread right click', function () {
       const existingThreads = this.messagingData.existingThreads
       cy.login(HEADMASTER, messagingURL)
       waitMessagingToBeLoaded()
