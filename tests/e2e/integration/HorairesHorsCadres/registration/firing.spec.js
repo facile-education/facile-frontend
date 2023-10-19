@@ -108,7 +108,7 @@ const testRegistrationModal = (slot, studentToRegister, slotToBeFiredFrom) => {
 }
 
 // NB: Some of registration main features are already tested in study type, so here is juste a basic registration test for replayTest slots
-describe('Firing registration', () => {
+describe('HHC_Firing_Registration', () => {
   beforeEach(() => {
     cy.fixture('hhc.json').as('hhcData').then(data => {
       cy.clock(Cypress.dayjs(data.now, 'YYYY/MM/DD HH:mm').toDate().getTime())
@@ -117,7 +117,7 @@ describe('Firing registration', () => {
     cy.loadTables('messaging/messaging_tables_empty.sql') // to empty
   })
 
-  it(' is present for good roles', function () {
+  it('HHC_Firing_Registration_isPresentForGoodRoles', function () {
     const slotToRegisterInside = this.hhcData.slotsTypes.fired.slotExample
 
     rolesThatCannotRegister.forEach(role => {
@@ -141,7 +141,7 @@ describe('Firing registration', () => {
     })
   })
 
-  it('registration behaviour', function () {
+  it('HHC_Firing_Registration_Register', function () {
     const slotToRegisterInside = this.hhcData.slotsTypes.fired.slotExample
     const slotToBeFiredFrom = this.hhcData.studentSlotToBeFired
 
@@ -187,7 +187,7 @@ describe('Firing registration', () => {
     })
   })
 
-  it('firingTeacher can set firing reason', function () {
+  it('HHC_Firing_Registration_SetFiringReason', function () {
     cy.loadTables('schoollife/schoollife_tables.sql')
     cy.login(firingTeacher, HHCURL)
 

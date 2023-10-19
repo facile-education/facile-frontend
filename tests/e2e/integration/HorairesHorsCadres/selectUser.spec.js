@@ -2,7 +2,7 @@ import { HHCURL } from '../../support/constants/urls'
 import { HEADMASTER, STUDENT } from '../../support/constants/users'
 import { selectSlotType } from '../../support/utils/horairesHorsCardesUtils'
 
-describe('User selection on HHC', () => {
+describe('HHC_UserSelection', () => {
   beforeEach(() => {
     cy.loadTables('schoollife/schoollife_tables_empty.sql')
     cy.login(HEADMASTER, HHCURL)
@@ -14,7 +14,7 @@ describe('User selection on HHC', () => {
   const sizes = ['iphone-5', 'ipad-2', [1024, 768]]
 
   sizes.forEach(size => {
-    it(`select user in ${size} screen`, function () {
+    it(`HHC_UserSelection_SelectUserIn${size}Screen`, function () {
       // Set testing viewport
       Cypress._.isArray(size) ? cy.viewport(size[0], size[1]) : cy.viewport(size)
 

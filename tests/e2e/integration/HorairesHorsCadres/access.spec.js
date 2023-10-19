@@ -4,7 +4,7 @@ import { DOYEN, HEADMASTER, PARENT, SCHOOL_ADMIN, SECRETARY, STUDENT, TEACHER } 
 const allowedUsers = [HEADMASTER, DOYEN, SCHOOL_ADMIN, SECRETARY, TEACHER]
 const disallowedUsers = [STUDENT, PARENT]
 
-describe('Service access', () => {
+describe('HHC_Access', () => {
   beforeEach(() => {
     cy.fixture('hhc.json').as('hhcData').then(data => {
       cy.clock(Cypress.dayjs(data.now, 'YYYY/MM/DD HH:mm').toDate().getTime())
@@ -12,7 +12,7 @@ describe('Service access', () => {
   })
 
   allowedUsers.forEach(user => {
-    it('Displays service for ' + user.role, () => {
+    it('HHC_Access_' + user.role + '_CanAccess', () => {
       cy.login(user, HHCURL)
 
       cy.get('.slot-type-selection', { timeout: 10000 }).should('be.visible')
@@ -20,7 +20,7 @@ describe('Service access', () => {
   })
 
   disallowedUsers.forEach(user => {
-    it('Displays error for ' + user.role, () => {
+    it('HHC_Access_' + user.role + '_CanNotAccess', () => {
       cy.login(user, HHCURL)
       cy.get('[data-test="menu"]').should('contain', 'Accueil') // Wait the menu to be loaded and tick 500ms to see the 404 message appear
       cy.tick(500)
@@ -30,7 +30,7 @@ describe('Service access', () => {
     })
   })
 
-  it('Displays error for non authenticated user', () => {
+  it('HHC_Access_Unauthenticated_CanNotAccess', () => {
     cy.then(Cypress.session.clearCurrentSessionData)
     cy.visit(HHCURL)
 

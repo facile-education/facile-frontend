@@ -68,7 +68,7 @@ const fillEditSlotModal = (clickedEmptySlot, slotToCreate) => {
   cy.get('[data-test=edit-slot-modal]').should('not.exist')
 }
 
-describe('HHC slots creation', () => {
+describe('HHC_CreateSlot', () => {
   beforeEach(() => {
     cy.fixture('hhc.json').as('hhcData').then(data => {
       cy.clock(Cypress.dayjs(data.now, 'YYYY/MM/DD HH:mm').toDate().getTime())
@@ -76,7 +76,7 @@ describe('HHC slots creation', () => {
     cy.loadTables('schoollife/schoollife_tables_empty.sql')
   })
 
-  it(' is present for good roles', function () {
+  it('HHC_CreateSlot_isPresentForGoodRoles', function () {
     const emptySlot = this.hhcData.emptySlot
     const slotType = this.hhcData.slotsTypes.tutoring // No need to test all slot types
 
@@ -99,7 +99,7 @@ describe('HHC slots creation', () => {
     })
   })
 
-  it('Create slot', function () {
+  it('HHC_CreateSlot_CreateSlot', function () {
     const previousWeek = Cypress.dayjs(this.hhcData.now, 'YYYY/MM/DD HH:mm').add(-1, 'week')
     const nextWeek = Cypress.dayjs(this.hhcData.now, 'YYYY/MM/DD HH:mm').add(1, 'week')
     const weekAfterLimit = Cypress.dayjs(this.hhcData.now, 'YYYY/MM/DD HH:mm').add(slotToCreate.nbWeekToCreateSlot, 'week')
@@ -143,7 +143,7 @@ describe('HHC slots creation', () => {
     }
   })
 
-  it('Create slot without modifying defaults dates', function () {
+  it('HHC_CreateSlot_CreateSlotWithoutModifyingDefaultDates', function () {
     cy.login(rolesThatCanRegister[0], HHCURL)
     const currentSlotType = this.hhcData.slotsTypes.tutoring
     const emptySlot = this.hhcData.emptySlot

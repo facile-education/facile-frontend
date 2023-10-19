@@ -21,7 +21,7 @@ const modifiedSlot = {
 const rolesThatCanModify = [HEADMASTER, SECRETARY, DOYEN]
 const rolesThatCannotModify = [TEACHER2, CLASSTEACHER2] // Not taking the first Teacher to avoid firing justification
 
-describe('HHC slots modidication', () => { // TODO: factorise with create and delete permission tests
+describe('HHC_UpdateSlot', () => { // TODO: factorise with create and delete permission tests
   beforeEach(() => {
     cy.fixture('hhc.json').as('hhcData').then(data => {
       cy.clock(Cypress.dayjs(data.now, 'YYYY/MM/DD HH:mm').toDate().getTime())
@@ -29,7 +29,7 @@ describe('HHC slots modidication', () => { // TODO: factorise with create and de
     cy.loadTables('schoollife/schoollife_tables.sql')
   })
 
-  it(' is present for good roles', function () {
+  it('HHC_UpdateSlot_isPresentForGoodRoles', function () {
     const slotType = this.hhcData.slotsTypes.tutoring // No need to test all slot types
     const slotToModify = slotType.slotExample
 
@@ -50,7 +50,7 @@ describe('HHC slots modidication', () => { // TODO: factorise with create and de
     })
   })
 
-  it('Modify slot attributes', function () {
+  it('HHC_UpdateSlot_ModifySlotAttributes', function () {
     cy.login(rolesThatCanModify[0], HHCURL)
     const slotType = this.hhcData.slotsTypes.tutoring
     const slotToModify = slotType.slotExample
@@ -139,7 +139,7 @@ describe('HHC slots modidication', () => { // TODO: factorise with create and de
     // No notification to test
   })
 
-  it('try to change room capacity beside the current registered student number', function () {
+  it('HHC_CreateSlot_TryToChangeRoomCapacityBesideTheCurrentRegisteredStudentNumber', function () {
     cy.login(rolesThatCanModify[0], HHCURL)
     const slotType = this.hhcData.slotsTypes.tutoring
     const slotToModify = slotType.slotExample

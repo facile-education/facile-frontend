@@ -54,7 +54,7 @@ const getAbsenceThread = (supervisor, slotType, absentStudent) => {
   }]
 }
 
-describe('Check in', () => {
+describe('HHC_Checkin', () => {
   beforeEach(() => {
     cy.fixture('hhc.json').as('hhcData').then(data => {
       cy.clock(Cypress.dayjs(data.now, 'YYYY/MM/DD HH:mm').toDate().getTime())

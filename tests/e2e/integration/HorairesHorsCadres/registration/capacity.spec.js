@@ -12,7 +12,7 @@ import {
 const studentToRegister = STUDENT
 const registerer = HEADMASTER
 
-describe('Capacity check', () => {
+describe('HHC_CapacityCheck', () => {
   beforeEach(() => {
     cy.fixture('hhc.json').as('hhcData').then(data => {
       cy.clock(Cypress.dayjs(data.now, 'YYYY/MM/DD HH:mm').toDate().getTime())
@@ -20,7 +20,7 @@ describe('Capacity check', () => {
     cy.loadTables('schoollife/schoollife_tables.sql')
   })
 
-  it('prevent student to be registered if there is no free places', function () {
+  it('HHC_CapacityCheck_PreventStudentToBeRegisteredIfThereIsNoFreePlaces', function () {
     const slotToRegisterInside = this.hhcData.slotsTypes.replayTest.slotWithLimitedCapacity
 
     cy.login(registerer, HHCURL)

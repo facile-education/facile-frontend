@@ -111,7 +111,7 @@ const haveDeregistrationPermissions = {
   }
 }
 
-describe('deregistration option', () => {
+describe('HHC_Deregistration', () => {
   beforeEach(() => {
     cy.fixture('hhc.json').as('hhcData').then(data => {
       cy.clock(Cypress.dayjs(data.now, 'YYYY/MM/DD HH:mm').toDate().getTime())
@@ -119,7 +119,7 @@ describe('deregistration option', () => {
     cy.loadTables('schoollife/schoollife_tables.sql')
   })
 
-  it('is present for good roles ', function () {
+  it('HHC_Deregistration_IsPresentForGoodRoles ', function () {
     const slotTypes = this.hhcData.slotsTypes
     let hasSetFiringReason = false
     for (const attr in slotTypes) {
@@ -164,7 +164,7 @@ describe('deregistration option', () => {
     }
   })
 
-  it('Deregister student ', function () {
+  it('HHC_Deregistration_Deregister', function () {
     cy.loadTables('messaging/messaging_tables_empty.sql') // to empty
 
     const slotTypes = this.hhcData.slotsTypes

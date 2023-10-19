@@ -12,7 +12,7 @@ const rolesThatCannotDelete = [TEACHER2, CLASSTEACHER2] // Not taking the first 
 
 const nbWeeksToDeleteSlots = 2 // The current week and one after
 
-describe('HHC slots deletion', () => {
+describe('HHC_SlotDeletion', () => {
   beforeEach(() => {
     cy.fixture('hhc.json').as('hhcData').then(data => {
       cy.clock(Cypress.dayjs(data.now, 'YYYY/MM/DD HH:mm').toDate().getTime())
@@ -21,7 +21,7 @@ describe('HHC slots deletion', () => {
     cy.loadTables('messaging/messaging_tables_empty.sql') // to empty
   })
 
-  it(' is present for good roles', function () {
+  it('HHC_SlotDeletion_IsPresentForGoodRoles', function () {
     const slotType = this.hhcData.slotsTypes.tutoring // No need to test all slot types
     const slotToModify = slotType.slotExample
 
@@ -42,7 +42,7 @@ describe('HHC slots deletion', () => {
     })
   })
 
-  it('Delete slot', function () { // Only test for study
+  it('HHC_SlotDeletion_DeleteSlot', function () { // Only test for study
     const deleter = rolesThatCanDelete[0]
     cy.login(deleter, HHCURL)
     const slotType = this.hhcData.slotsTypes.study

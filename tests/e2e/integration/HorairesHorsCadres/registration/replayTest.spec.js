@@ -94,7 +94,7 @@ const testRegistrationModal = (slot, studentToRegister, notifyParent = true) => 
 }
 
 // NB: Some of registration main features are already tested in study type, so here is juste a basic registration test for replayTest slots
-describe('Replay test registration', () => {
+describe('HHC_ReplayTest_Registration', () => {
   beforeEach(() => {
     cy.fixture('hhc.json').as('hhcData').then(data => {
       cy.clock(Cypress.dayjs(data.now, 'YYYY/MM/DD HH:mm').toDate().getTime())
@@ -103,7 +103,7 @@ describe('Replay test registration', () => {
     cy.loadTables('messaging/messaging_tables_empty.sql') // to empty
   })
 
-  it(' is present for good roles', function () {
+  it('HHC_ReplayTest_Registration_isPresentForGoodRoles', function () {
     const slotToRegisterInside = this.hhcData.slotsTypes.replayTest.slotExample
 
     rolesThatCannotRegister.forEach(role => {
@@ -127,7 +127,7 @@ describe('Replay test registration', () => {
     })
   })
 
-  it('registration behaviour', function () {
+  it('HHC_ReplayTest_Registration_Register', function () {
     const slotToRegisterInside = this.hhcData.slotsTypes.replayTest.slotExample
     const notifyParent = getRandomBoolean()
     const registerer = rolesThatCanRegister[0]

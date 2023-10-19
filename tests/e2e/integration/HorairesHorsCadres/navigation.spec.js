@@ -17,7 +17,7 @@ const checkSlotSelectionMenu = (slotTypes) => {
   })
 }
 
-describe('desktop navigation', () => {
+describe('HHC_Navigation_Desktop', () => {
   beforeEach(() => {
     cy.fixture('hhc.json').as('hhcData').then(data => {
       cy.clock(Cypress.dayjs(data.now, 'YYYY/MM/DD HH:mm').toDate().getTime())
@@ -26,12 +26,12 @@ describe('desktop navigation', () => {
     cy.login(HEADMASTER, HHCURL)
   })
 
-  it('contains slot selection', function () {
+  it('HHC_Navigation_Desktop_ContainsSlotSelection', function () {
     // At the beginning (when no slot type is selected), there is no display of calendar and user selection
     checkSlotSelectionMenu(this.hhcData.slotsTypes)
   })
 
-  it('select slot type', function () {
+  it('HHC_Navigation_Desktop_SelectSlotType', function () {
     const slotTypes = this.hhcData.slotsTypes
     for (const attr in slotTypes) {
       const slotType = slotTypes[attr]
@@ -53,7 +53,7 @@ describe('desktop navigation', () => {
   })
 })
 
-describe('mobile navigation', () => {
+describe('HHC_Navigation_Mobile', () => {
   beforeEach(() => {
     cy.fixture('hhc.json').as('hhcData').then(data => {
       cy.clock(Cypress.dayjs(data.now, 'YYYY/MM/DD HH:mm').toDate().getTime())
@@ -63,12 +63,12 @@ describe('mobile navigation', () => {
     cy.login(HEADMASTER, HHCURL)
   })
 
-  it('contains slot selection', function () {
+  it('HHC_Navigation_Mobile_ContainsSlotSelection', function () {
     // At the beginning (when no slot type is selected), there is no display of calendar and user selection
     checkSlotSelectionMenu(this.hhcData.slotsTypes)
   })
 
-  it('select slot type', function () {
+  it('HHC_Navigation_Mobile_SelectSlotType', function () {
     const slotTypes = this.hhcData.slotsTypes
     const now = Cypress.dayjs(this.hhcData.now)
     for (const attr in slotTypes) {

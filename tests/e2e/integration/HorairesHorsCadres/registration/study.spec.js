@@ -99,7 +99,7 @@ const testRegistrationModal = (slot, studentToRegister, classToRegister, notifyP
   cy.get('[data-test=student-registration-modal]', { timeout: 20000 }).should('not.exist')
 }
 
-describe('Study registration', () => {
+describe('HHC_Study_Registration', () => {
   beforeEach(() => {
     cy.fixture('hhc.json').as('hhcData').then(data => {
       cy.clock(Cypress.dayjs(data.now, 'YYYY/MM/DD HH:mm').toDate().getTime())
@@ -108,7 +108,7 @@ describe('Study registration', () => {
     cy.loadTables('messaging/messaging_tables_empty.sql') // to empty
   })
 
-  it(' is present for good roles', function () {
+  it('HHC_Study_Registration_IsPresentForGoodRoles', function () {
     const slotToRegisterInside = this.hhcData.slotsTypes.study.slotExample
 
     rolesThatCannotRegister.forEach(role => {
@@ -132,7 +132,7 @@ describe('Study registration', () => {
     })
   })
 
-  it('register a student', function () {
+  it('HHC_Study_Registration_Register', function () {
     const slotToRegisterInside = this.hhcData.slotsTypes.study.slotExample
     const notifyParent = getRandomBoolean()
     const registerer = rolesThatCanRegister[0]
@@ -179,7 +179,7 @@ describe('Study registration', () => {
     })
   })
 
-  it('register a class', function () {
+  it('HHC_Study_Registration_RegisterAClass', function () {
     const slotToRegisterInside = this.hhcData.slotsTypes.study.slotExample
     const notifyParent = getRandomBoolean()
     const registerer = rolesThatCanRegister[0]
