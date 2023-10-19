@@ -70,7 +70,6 @@ export default {
 
 .schedule-tab {
   position: relative;
-  overflow: hidden;
 
   .session-details.hidden {
     display: none;
@@ -106,7 +105,6 @@ export default {
 
   .session-details {
     width: 70%;
-    height: 800px;
   }
 }
 
