@@ -9,12 +9,12 @@
       />
     </div>
     <div class="buttons">
-      <PentilaButton
+      <WeprodeButton
         ref="declineButton"
         v-t="'decline'"
         @click="declineTermsOfUse"
       />
-      <PentilaButton
+      <WeprodeButton
         v-t="'accept'"
         @click="acceptTermsOfUse"
       />
@@ -45,7 +45,7 @@ export default {
     })
   },
   mounted () {
-    this.$refs.declineButton.$el.classList.remove('theme-background-color') // TODO: Put an option to PentilaButtons to get or not the theme color
+    this.$refs.declineButton.$el.classList.remove('theme-background-color') // TODO: Put an option to WeprodeButtons to get or not the theme color
   },
   methods: {
     acceptTermsOfUse () {

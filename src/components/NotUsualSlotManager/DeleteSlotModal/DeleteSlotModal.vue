@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     :modal="true"
     :max-width="750"
     :full-screen="mq.phone || mq.tablet"
@@ -32,13 +32,13 @@
             @updateDates="updateSlotDates"
           />
         </div>
-        <PentilaSpinner v-else />
+        <WeprodeSpinner v-else />
       </div>
     </template>
 
     <template #footer>
       <div class="footer">
-        <PentilaButton
+        <WeprodeButton
           :label="$t('deleteSlot')"
           class="delete"
           :disabled="!isLoaded"
@@ -46,7 +46,7 @@
         />
       </div>
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>

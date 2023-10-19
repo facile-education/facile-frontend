@@ -5,7 +5,7 @@
       :undone-only="undoneOnly"
       @updateUndoneOnly="updateUndoneOnlyValue"
     />
-    <PentilaSpinner
+    <WeprodeSpinner
       v-if="isLoading"
       style="z-index: 1"
     />
@@ -57,8 +57,8 @@
 <script>
 import HomeworkHeader from '@components/Dashboard/HomeworksWidget/HomeworkHeader.vue'
 import HomeworkItem from '@components/Dashboard/HomeworksWidget/HomeworkItem.vue'
+import WeprodeUtils from '@utils/weprode.utils'
 import dayjs from 'dayjs'
-import PentilaUtils from 'pentila-utils'
 
 import { getStudentHomeworks } from '@/api/homework.service'
 import { CDT } from '@/constants/appConstants'
@@ -85,7 +85,7 @@ export default {
   },
   computed: {
     homeworksToDisplay () { // return the nbHomeworksInWidget firsts homeworks
-      const homeworksToDisplay = PentilaUtils.Array.sortWithString(this.homeworkList, false, 'toDate')
+      const homeworksToDisplay = WeprodeUtils.sortArrayWithString(this.homeworkList, false, 'toDate')
       return homeworksToDisplay.slice(0, nbHomeworksInWidget)
     },
     homeworksByDay () {

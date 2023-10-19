@@ -1,12 +1,12 @@
 <template>
-  <PentilaTabList>
-    <PentilaTabItem :title="$t('globalSettings')">
+  <WeprodeTabList>
+    <WeprodeTabItem :title="$t('globalSettings')">
       <GlobalScheduleSettings />
-    </PentilaTabItem>
-    <PentilaTabItem :title="$t('schoolSettings')">
+    </WeprodeTabItem>
+    <WeprodeTabItem :title="$t('schoolSettings')">
       <SchoolScheduleSettings />
-    </PentilaTabItem>
-  </PentilaTabList>
+    </WeprodeTabItem>
+  </WeprodeTabList>
 </template>
 
 <script>

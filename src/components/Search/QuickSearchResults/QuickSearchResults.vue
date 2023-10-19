@@ -1,6 +1,6 @@
 <template>
   <QuickSearchPanelHeader :nb-results="total" />
-  <PentilaSpinner v-if="isLoadingResults" />
+  <WeprodeSpinner v-if="isLoadingResults" />
   <ul
     v-if="searchResults && searchResults.length > 0"
     ref="scroll"

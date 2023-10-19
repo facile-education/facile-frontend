@@ -1,11 +1,11 @@
 <template>
   <div class="holiday-form">
     <div class="name">
-      <PentilaInput
+      <WeprodeInput
         v-model="name"
         :placeholder="$t('namePlaceHolder') + '*'"
       />
-      <PentilaErrorMessage
+      <WeprodeErrorMessage
         :error-message="formErrorList.name"
       />
     </div>
@@ -17,17 +17,17 @@
         :max-date="maxDate.toDate()"
         @updateDates="updateDates"
       />
-      <PentilaErrorMessage
+      <WeprodeErrorMessage
         :error-message="formErrorList.startDate || formErrorList.endDate"
       />
     </div>
 
     <div class="buttons">
-      <PentilaButton
+      <WeprodeButton
         v-t="'submit'"
         @click="submit"
       />
-      <PentilaButton
+      <WeprodeButton
         v-t="'cancel'"
         @click="$emit('cancel')"
       />

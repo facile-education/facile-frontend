@@ -1,6 +1,6 @@
 <template>
   <div class="version-note-selector">
-    <PentilaSpinner
+    <WeprodeSpinner
       v-if="isLoading"
       style="z-index: 1"
     />
@@ -11,7 +11,7 @@
       class="placeholder"
     />
 
-    <PentilaDropdown
+    <WeprodeDropdown
       v-if="notesList && notesList.length > 0"
       v-model="selectedNote"
       data-test="versionListDropDown"

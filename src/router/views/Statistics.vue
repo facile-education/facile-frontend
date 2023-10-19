@@ -8,7 +8,7 @@
           v-if="managedSchoolList.length > 1"
           class="school-container"
         >
-          <PentilaDropdown
+          <WeprodeDropdown
             v-model="selectedSchool"
             class="school-dropdown"
             :list="managedSchoolList"

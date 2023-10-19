@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     :modal="true"
     :draggable="true"
     :full-screen="mq.phone || mq.tablet"
@@ -30,7 +30,7 @@
               />
             <!-- @blur="v$.newEvent.extendedProps.teacher.teacherId.$touch()" -->
             </div>
-            <PentilaCheckbox
+            <WeprodeCheckbox
               v-model="teacher.allSlots"
               :label="$t('allSessions', {course: sessionEvent.groupName})"
               :disabled="teacher.substitutes.length === 0"
@@ -39,7 +39,7 @@
             />
             <div>
               <span v-t="'lastSession'" />
-              <PentilaDropdown
+              <WeprodeDropdown
                 v-if="teacher.filteredSessions.length > 0"
                 v-model="teacher.targetSession"
                 :list="teacher.filteredSessions"
@@ -55,12 +55,12 @@
 
     <template #footer>
       <!-- form="teacherform" -->
-      <PentilaButton
+      <WeprodeButton
         :label="$t('confirm')"
         @click="onConfirm"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>

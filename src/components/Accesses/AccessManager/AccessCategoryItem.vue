@@ -21,7 +21,7 @@
         @close="isNameModification = false"
       />
 
-      <PentilaButton
+      <WeprodeButton
         class="delete-button"
         cls="cancel"
         @click="confirmDeleteCategory"
@@ -33,7 +33,7 @@
           :title="$t('delete')"
         >
         <span v-t="'delete'" />
-      </PentilaButton>
+      </WeprodeButton>
     </div>
 
     <AccessesPlaceholder

@@ -5,7 +5,7 @@
     </span>
 
     <div class="permission view">
-      <PentilaCheckbox
+      <WeprodeCheckbox
         v-if="role.VIEW !== undefined"
         :model-value="role.VIEW"
         :disabled="!role.editable"
@@ -18,7 +18,7 @@
       v-if="type==='Folder'"
       class="permission add"
     >
-      <PentilaCheckbox
+      <WeprodeCheckbox
         v-if="role.ADD_OBJECT !== undefined"
         :model-value="role.ADD_OBJECT"
         :disabled="!role.editable"
@@ -31,7 +31,7 @@
       v-if="type==='File'"
       class="permission update"
     >
-      <PentilaCheckbox
+      <WeprodeCheckbox
         v-if="role.UPDATE !== undefined"
         :model-value="role.UPDATE"
         :disabled="!role.editable"
@@ -41,7 +41,7 @@
     </div>
 
     <div class="permission delete">
-      <PentilaCheckbox
+      <WeprodeCheckbox
         v-if="role.DELETE !== undefined"
         :model-value="role.DELETE"
         :disabled="!role.editable"
@@ -51,7 +51,7 @@
     </div>
 
     <div class="permission permissions">
-      <PentilaCheckbox
+      <WeprodeCheckbox
         v-if="role.PERMISSIONS !== undefined"
         :model-value="role.PERMISSIONS"
         :disabled="!role.editable"

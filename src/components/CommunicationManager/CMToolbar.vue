@@ -4,14 +4,14 @@
       appear
       name="fade"
     >
-      <PentilaDropdown
+      <WeprodeDropdown
         v-if="managedSchoolList"
         :model-value="selectedSchool"
         :list="managedSchoolList"
         display-field="schoolName"
         @update:modelValue="onSchoolSelect"
       />
-      <PentilaSpinner v-else />
+      <WeprodeSpinner v-else />
     </Transition>
   </NeroToolbar>
 </template>

@@ -4,7 +4,7 @@
     v-if="schoolList && schoolList.length > 1"
     class="school-selection"
   >
-    <PentilaDropdown
+    <WeprodeDropdown
       v-model="selectedSchool"
       :list="schoolList"
       display-field="schoolName"

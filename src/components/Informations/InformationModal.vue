@@ -3,7 +3,7 @@
     data-test="informationModal"
     class="information-modal"
   >
-    <PentilaWindow
+    <WeprodeWindow
       :modal="true"
       :draggable="true"
       :resizable="true"
@@ -16,28 +16,28 @@
       </template>
 
       <template #body>
-        <PentilaTabList ref="tabList">
-          <PentilaTabItem
+        <WeprodeTabList ref="tabList">
+          <WeprodeTabItem
             class="tab-item"
             :title="$t('termsOfUseTabLabel')"
           >
             <TermsOfUse />
-          </PentilaTabItem>
-          <PentilaTabItem
+          </WeprodeTabItem>
+          <WeprodeTabItem
             class="tab-item"
             :title="$t('privacyLabel')"
           >
             <Privacy />
-          </PentilaTabItem>
-          <PentilaTabItem
+          </WeprodeTabItem>
+          <WeprodeTabItem
             class="tab-item"
             :title="$t('accessibilityLabel')"
           >
             <Accessibility />
-          </PentilaTabItem>
-        </PentilaTabList>
+          </WeprodeTabItem>
+        </WeprodeTabList>
       </template>
-    </PentilaWindow>
+    </WeprodeWindow>
   </div>
 </template>
 

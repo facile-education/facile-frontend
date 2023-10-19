@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     class="folder-name-modal"
     data-test="folder-name-modal"
     :class="mq.phone ? 'mobile': ''"
@@ -15,9 +15,9 @@
 
     <template #body>
       <div style="position: relative">
-        <PentilaSpinner v-if="isActionInProgress" />
+        <WeprodeSpinner v-if="isActionInProgress" />
 
-        <PentilaInput
+        <WeprodeInput
           ref="folderNameInput"
           v-model="folderName"
           class="name-input"
@@ -26,21 +26,21 @@
           @input="backError=''"
           @keyup.enter="submit"
         />
-        <PentilaErrorMessage
+        <WeprodeErrorMessage
           :error-message="formErrorList"
         />
       </div>
     </template>
 
     <template #footer>
-      <PentilaButton
+      <WeprodeButton
         data-test="submitButton"
         :disabled="isActionInProgress"
         :label="submitAction==='rename' ? $t('rename') : $t('createSubmit')"
         @click="submit"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>

@@ -18,7 +18,7 @@
 
 <script>
 import AddressBookItem from '@components/ContactPicker/AddressBook/AddressBookItem.vue'
-import PentilaUtils from 'pentila-utils'
+import WeprodeUtils from '@utils/weprode.utils'
 
 export default {
   name: 'AddressBookCommunities',
@@ -44,7 +44,7 @@ export default {
   },
   computed: {
     sortedCommunities () {
-      return PentilaUtils.Array.sortWithString(this.communities, false, 'groupName')
+      return WeprodeUtils.sortArrayWithString(this.communities, false, 'groupName')
     }
   },
   methods: {

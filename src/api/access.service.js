@@ -1,5 +1,5 @@
+import WeprodeUtils from '@utils/weprode.utils'
 import axios from 'axios'
-import PentilaUtils from 'pentila-utils'
 
 import constants from '@/api/constants'
 
@@ -25,14 +25,14 @@ function getSchoolAccesses (schoolId) {
 }
 
 function saveSchoolCategory (schoolId, category) {
-  return axios.post(constants.JSON_WS_URL + ACCESS_PATH + ACCESS_CTX + 'save-school-category', PentilaUtils.URL.params({
+  return axios.post(constants.JSON_WS_URL + ACCESS_PATH + ACCESS_CTX + 'save-school-category', WeprodeUtils.params({
     schoolId,
     category: JSON.stringify(category)
   })).then(response => response.data)
 }
 
 function saveSchoolAccess (schoolId, access) {
-  return axios.post(constants.JSON_WS_URL + ACCESS_PATH + ACCESS_CTX + 'save-school-access', PentilaUtils.URL.params({
+  return axios.post(constants.JSON_WS_URL + ACCESS_PATH + ACCESS_CTX + 'save-school-access', WeprodeUtils.params({
     schoolId,
     access: JSON.stringify(access)
   })).then(response => response.data)

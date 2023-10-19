@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     :modal="true"
     :draggable="true"
     class="add-delegation-window"
@@ -16,7 +16,7 @@
 
     <template #body>
       <div class="delegates">
-        <PentilaTagsInput
+        <WeprodeTagsInput
           ref="tagsinput"
           v-model="selectedDelegates"
           :close-on-select="true"
@@ -29,18 +29,18 @@
           class="tags"
           @inputChange="searchCandidates"
         />
-        <PentilaErrorMessage :error-message="formErrorList.selectedDelegates" />
+        <WeprodeErrorMessage :error-message="formErrorList.selectedDelegates" />
       </div>
     </template>
 
     <template #footer>
-      <PentilaButton
+      <WeprodeButton
         :label="$t('add')"
         class="button"
         @click="addDelegations"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>

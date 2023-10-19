@@ -1,6 +1,6 @@
 <template>
   <QuickSearchPanelHeader :is-search-history="true" />
-  <PentilaSpinner v-if="isLoadingHistory" />
+  <WeprodeSpinner v-if="isLoadingHistory" />
   <ul v-if="sortedHistoryList.length > 0">
     <SearchHistoryItem
       v-for="(item, index) in sortedHistoryList"

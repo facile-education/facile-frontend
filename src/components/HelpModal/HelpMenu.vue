@@ -20,7 +20,7 @@
 
     <ul v-else>
       <li v-if="isAdministrator">
-        <PentilaButton
+        <WeprodeButton
           v-t="('createCategoryLabel')"
           data-test="create-category-button"
           class="create-category-button"
@@ -35,7 +35,7 @@
       />
     </ul>
 
-    <PentilaSpinner v-if="isLoadingMenu" />
+    <WeprodeSpinner v-if="isLoadingMenu" />
 
     <teleport
       v-if="isCreateCategoryModalDisplayed"

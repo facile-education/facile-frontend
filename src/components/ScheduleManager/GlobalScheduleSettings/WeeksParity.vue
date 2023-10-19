@@ -7,13 +7,13 @@
         :text="$t('weekParityInfos')"
       />
     </header>
-    <PentilaInput
+    <WeprodeInput
       class="week-input"
       :model-value="h1Weeks"
       :placeholder="$t('h1WeeksPlaceholder')"
       @update:model-value="$emit('update:h1Weeks', $event)"
     />
-    <PentilaInput
+    <WeprodeInput
       class="week-input"
       :model-value="h2Weeks"
       :placeholder="$t('h2WeeksPlaceholder')"

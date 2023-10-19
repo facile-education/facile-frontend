@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     :modal="true"
     :full-screen="mq.phone || mq.tablet"
     :hidden-footer="true"
@@ -22,13 +22,13 @@
         </li>
       </ul>
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>
 
 import ReadInfoModalPopulation from '@components/Dashboard/ReadInfos/ReadInfoModalPopulation.vue'
-import PentilaUtils from 'pentila-utils'
+import WeprodeUtils from '@utils/weprode.utils'
 
 export default {
   name: 'ReadInfoModal',
@@ -58,7 +58,7 @@ export default {
       return this.allMembers.filter(member => member.hasRead === true)
     },
     sortedPopulations () {
-      return PentilaUtils.Array.sortWithString(this.readInfos, false, 'populationName')
+      return WeprodeUtils.sortArrayWithString(this.readInfos, false, 'populationName')
     }
   },
   methods: {

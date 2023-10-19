@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     :modal="true"
     :draggable="true"
     :full-screen="mq.phone || mq.tablet"
@@ -12,14 +12,14 @@
     </template>
 
     <template #body>
-      <PentilaSpinner v-if="isLoading" />
+      <WeprodeSpinner v-if="isLoading" />
 
       <div class="title">
-        <PentilaInput
+        <WeprodeInput
           v-model="title"
           :placeholder="$t('titlePlaceholder')"
         />
-        <PentilaErrorMessage :error-message="formErrorList.title" />
+        <WeprodeErrorMessage :error-message="formErrorList.title" />
       </div>
       <div class="content">
         <div
@@ -30,16 +30,16 @@
           v-model:content="htmlContent"
           class="ck-editor"
         />
-        <PentilaErrorMessage :error-message="formErrorList.htmlContent" />
+        <WeprodeErrorMessage :error-message="formErrorList.htmlContent" />
       </div>
     </template>
     <template #footer>
-      <PentilaButton
+      <WeprodeButton
         :label="$t(isCreation ? 'create' : 'update')"
         @click="submit"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>

@@ -5,7 +5,7 @@
     @click.stop="toggleUserSelection"
   >
     <td>
-      <PentilaCheckbox
+      <WeprodeCheckbox
         :model-value="isSelected"
         label=""
         class="checkbox"

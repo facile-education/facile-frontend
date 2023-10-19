@@ -1,5 +1,5 @@
 <template>
-  <PentilaDropdown
+  <WeprodeDropdown
     v-if="userSchools.length > 1"
     v-model="selectedSchool"
     class="dropdown"

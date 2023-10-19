@@ -43,7 +43,7 @@
       class="member-list"
       :class="{'phone': mq.phone}"
     >
-      <PentilaSpinner v-if="memberLoading" />
+      <WeprodeSpinner v-if="memberLoading" />
       <div v-else>
         <div class="member-list-header">
           <img

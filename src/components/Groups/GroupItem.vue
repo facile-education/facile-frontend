@@ -6,7 +6,7 @@
     :class="{'phone': mq.phone}"
     @click="selectGroup"
   >
-    <PentilaSpinner v-if="isLoading" />
+    <WeprodeSpinner v-if="isLoading" />
 
     <div
       class="header theme-background-color theme-border-color"

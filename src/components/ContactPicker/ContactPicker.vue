@@ -7,8 +7,8 @@
       class="left"
       :class="{'contains-tabs': hasAdvancedSearchPanel}"
     >
-      <PentilaTabList v-if="hasAdvancedSearchPanel">
-        <PentilaTabItem
+      <WeprodeTabList v-if="hasAdvancedSearchPanel">
+        <WeprodeTabItem
           :title="$t('addressBook')"
           :icon="require('@assets/icons/communities.svg')"
           class="tab-item"
@@ -21,16 +21,16 @@
             @addContacts="addContacts"
             @removeContacts="removeContacts"
           />
-        </PentilaTabItem>
-        <PentilaTabItem
+        </WeprodeTabItem>
+        <WeprodeTabItem
           :title="$t('advancedSearch')"
           :icon="require('@assets/icons/contact-book.svg')"
         >
           <ContactAdvancedSearch
             :min-height="minHeight"
           />
-        </PentilaTabItem>
-      </PentilaTabList>
+        </WeprodeTabItem>
+      </WeprodeTabList>
 
       <!-- Do not display tab list if only one tab -->
       <AddressBook

@@ -4,17 +4,17 @@
     :style="'min-height: ' + minHeight"
   >
     <div class="field">
-      <PentilaInput
+      <WeprodeInput
         ref="queryInput"
         v-model="searchQuery"
         :maxlength="200"
         :placeholder="$t('queryPlaceholder')"
         @keyup.enter.stop="runSearch"
       />
-      <PentilaErrorMessage :error-message="$t(errorMessage)" />
+      <WeprodeErrorMessage :error-message="$t(errorMessage)" />
     </div>
 
-    <PentilaDropdown
+    <WeprodeDropdown
       v-model="selectedRole"
       class="field"
       :list="roleList"
@@ -22,7 +22,7 @@
       display-field="label"
     />
 
-    <PentilaDropdown
+    <WeprodeDropdown
       v-model="selectedSchool"
       class="field"
       :list="schoolList"
@@ -30,7 +30,7 @@
       display-field="schoolName"
     />
 
-    <PentilaButton
+    <WeprodeButton
       :label="$t('search')"
       @click="runSearch"
     />
@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import PentilaUtils from 'pentila-utils'
+import WeprodeUtils from '@utils/weprode.utils'
 
 import { getAllSchools } from '@/api/organization.service'
 import { getRoleList } from '@/api/role.service'
@@ -74,13 +74,13 @@ export default {
     getRoleList().then((data) => {
       if (data.success) {
         this.selectedRole = this.emptyRole
-        this.roleList = [this.emptyRole, ...PentilaUtils.Array.sortWithString(data.roles, false, 'label')]
+        this.roleList = [this.emptyRole, ...WeprodeUtils.sortArrayWithString(data.roles, false, 'label')]
       }
     })
     getAllSchools().then((data) => {
       if (data.success) {
         this.selectedSchool = this.emptySchool
-        this.schoolList = [this.emptySchool, ...PentilaUtils.Array.sortWithString(data.schools, false, 'schoolName')]
+        this.schoolList = [this.emptySchool, ...WeprodeUtils.sortArrayWithString(data.schools, false, 'schoolName')]
       }
     })
   },

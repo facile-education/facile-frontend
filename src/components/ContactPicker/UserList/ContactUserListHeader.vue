@@ -11,7 +11,7 @@
       >
     </button>
 
-    <PentilaInput
+    <WeprodeInput
       v-model="filter"
       class="filter-input"
       :placeholder="$t('searchPlaceHolder')"

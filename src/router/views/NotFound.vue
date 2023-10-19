@@ -1,6 +1,6 @@
 <template>
   <h1 :aria-label="$t('serviceTitle')" />
-  <PentilaSpinner v-if="menu === undefined" />
+  <WeprodeSpinner v-if="menu === undefined" />
   <h2
     v-else-if="showMessage"
     v-t="'message'"

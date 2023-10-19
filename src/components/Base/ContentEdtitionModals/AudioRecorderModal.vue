@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     :modal="true"
     :draggable="true"
     class="linkWindow"
@@ -12,14 +12,14 @@
 
     <template #body>
       <div class="audio-name">
-        <PentilaInput
+        <WeprodeInput
           ref="nameInput"
           v-model="audioName"
           :maxlength="200"
           :placeholder="$t('namePlaceholder')"
           @keyup.enter.stop="addRecord"
         />
-        <PentilaErrorMessage
+        <WeprodeErrorMessage
           :error-message="formErrorList.audioName"
         />
       </div>
@@ -31,13 +31,13 @@
     </template>
 
     <template #footer>
-      <PentilaButton
+      <WeprodeButton
         :label="$t('save')"
         :disabled="!isStopped || !formErrorList"
         @click="addRecord"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>

@@ -26,7 +26,7 @@
 <script>
 
 import AddressBookItem from '@components/ContactPicker/AddressBook/AddressBookItem.vue'
-import PentilaUtils from 'pentila-utils'
+import WeprodeUtils from '@utils/weprode.utils'
 
 export default {
   name: 'AddressBookCourses',
@@ -52,12 +52,12 @@ export default {
   },
   computed: {
     sortedCourses () {
-      return PentilaUtils.Array.sortWithString(this.courses.cours, false, 'groupName')
+      return WeprodeUtils.sortArrayWithString(this.courses.cours, false, 'groupName')
     }
   },
   methods: {
     sortedPopulations (course) {
-      return PentilaUtils.Array.sortWithString(course.populations, false, 'populationName')
+      return WeprodeUtils.sortArrayWithString(course.populations, false, 'populationName')
     },
     isSelected (population) {
       return this.selectedLists.map(list => list.id).indexOf(this.formatContact(population).id) !== -1

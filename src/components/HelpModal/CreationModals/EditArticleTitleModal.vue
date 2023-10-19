@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     class="edit-title-modal"
     data-test="edit-title--modal"
     :full-screen="mq.phone || mq.tablet"
@@ -13,7 +13,7 @@
     </template>
 
     <template #body>
-      <PentilaInput
+      <WeprodeInput
         ref="titleInput"
         v-model="titleInput"
         class="name-input"
@@ -22,14 +22,14 @@
     </template>
 
     <template #footer>
-      <PentilaButton
+      <WeprodeButton
         data-test="submitButton"
         :label="$t('submit')"
         :disabled="titleInput.length === 0"
         @click="submit"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
+import WeprodeUtils from '@utils/weprode.utils'
 import axios from 'axios'
-import PentilaUtils from 'pentila-utils'
 
 import constants from '@/api/constants'
 
@@ -23,7 +23,7 @@ const DELEGATION_CTX = 'newsadmin/'
 
 function addNews (title, content, isSchoolNews, isImportant, imageId, publicationDate, population, attachFiles) {
   return axios.post(constants.JSON_WS_URL + NEWS_PATH + NEWS_CTX + 'add-news',
-    PentilaUtils.URL.params({
+    WeprodeUtils.params({
       title,
       content,
       isSchoolNews,
@@ -37,7 +37,7 @@ function addNews (title, content, isSchoolNews, isImportant, imageId, publicatio
 
 function editNews (newsId, title, content, isImportant, imageId, publicationDate, population, attachFiles, markAsUnreadForAll) {
   return axios.post(constants.JSON_WS_URL + NEWS_PATH + NEWS_CTX + 'edit-news',
-    PentilaUtils.URL.params({
+    WeprodeUtils.params({
       newsId,
       title,
       content,
@@ -102,8 +102,8 @@ function deleteNews (newsId) {
 function addNewsDelegate (userId, schoolId) {
   return axios.get(constants.JSON_WS_URL + DELEGATION_PATH + DELEGATION_CTX + '/add-news-delegate', {
     params: {
-      userId: userId,
-      schoolId: schoolId
+      userId,
+      schoolId
     }
   }).then(response => response.data)
 }
@@ -111,8 +111,8 @@ function addNewsDelegate (userId, schoolId) {
 function removeNewsDelegate (userId, schoolId) {
   return axios.get(constants.JSON_WS_URL + DELEGATION_PATH + DELEGATION_CTX + '/remove-news-delegate', {
     params: {
-      userId: userId,
-      schoolId: schoolId
+      userId,
+      schoolId
     }
   }).then(response => response.data)
 }

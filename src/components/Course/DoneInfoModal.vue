@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     :modal="true"
     :full-screen="mq.phone || mq.tablet"
     :max-width="1000"
@@ -16,7 +16,7 @@
         v-if="isLoading"
         class="placeholder"
       >
-        <PentilaSpinner />
+        <WeprodeSpinner />
       </div>
       <div
         v-else-if="error === true"
@@ -53,13 +53,13 @@
         </li>
       </ul>
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>
 import InfoModalUser from '@components/Dashboard/ReadInfos/InfoModalUser.vue'
 import { getFullName } from '@utils/commons.util'
-import PentilaUtils from 'pentila-utils'
+import WeprodeUtils from '@utils/weprode.utils'
 
 import { getStudentsDoneStatus } from '@/api/homework.service'
 
@@ -89,10 +89,10 @@ export default {
       return this.studentList.filter(student => student.isDone === undefined)
     },
     sortedDoneStudents () {
-      return PentilaUtils.Array.sortWithString(this.doneStudents, false, 'fullName')
+      return WeprodeUtils.sortArrayWithString(this.doneStudents, false, 'fullName')
     },
     sortedUndoneStudents () {
-      return PentilaUtils.Array.sortWithString(this.undoneStudents, false, 'fullName')
+      return WeprodeUtils.sortArrayWithString(this.undoneStudents, false, 'fullName')
     }
   },
   created () {

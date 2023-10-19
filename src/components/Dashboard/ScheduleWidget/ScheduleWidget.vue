@@ -9,7 +9,7 @@
       @select-date="selectDate"
     />
 
-    <PentilaSpinner
+    <WeprodeSpinner
       v-if="isLoading"
       style="z-index: 1"
     />

@@ -1,6 +1,6 @@
 <template>
   <div class="calendar">
-    <PentilaSpinner v-if="isSpinnerDisplayed" />
+    <WeprodeSpinner v-if="isSpinnerDisplayed" />
     <Timeline
       v-if="mq.desktop"
       @selectWeek="onSelectWeek"

@@ -1,6 +1,6 @@
 <template>
   <div class="service-body">
-    <PentilaSpinner v-if="userId === undefined" />
+    <WeprodeSpinner v-if="userId === undefined" />
     <NotAllowed v-else-if="!isAllowed && !user.isAdministrator" />
     <slot v-else />
 

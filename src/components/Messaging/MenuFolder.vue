@@ -72,7 +72,7 @@
     </button>
 
     <!-- Input for folder name edition -->
-    <PentilaInput
+    <WeprodeInput
       v-if="displayFolderNameInput"
       ref="folderNameInput"
       v-model="currentFolder.folderName"
@@ -83,7 +83,7 @@
     />
 
     <!-- Input for subfolder name creation -->
-    <PentilaInput
+    <WeprodeInput
       v-if="displayNewFolderInput"
       ref="newFolderInput"
       v-model="newFolderName"

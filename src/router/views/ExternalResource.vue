@@ -22,7 +22,7 @@
 
     <div v-else>
       <div v-if="serviceSchoolUrls.length > 1">
-        <PentilaDropdown
+        <WeprodeDropdown
           v-model="selectedSchool"
           :list="serviceSchoolUrls"
           display-field="schoolName"

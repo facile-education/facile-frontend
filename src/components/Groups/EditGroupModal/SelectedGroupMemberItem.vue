@@ -15,7 +15,7 @@
       </button>
     </div>
     <div class="is-admin">
-      <PentilaToggleSwitch
+      <WeprodeToggleSwitch
         v-model="adminValue"
         :title="$t('admin')"
         :disabled="isCurrentMember || !isCurrentGroupAdmin"

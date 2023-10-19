@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     :modal="true"
     :full-screen="true"
     data-test="edit-group-modal"
@@ -12,17 +12,17 @@
 
     <template #body>
       <div class="group-name">
-        <PentilaInput
+        <WeprodeInput
           ref="name"
           v-model="group.groupName"
           :placeholder="$t('name')"
           :maxlength="2000"
           @blur="v$.group.groupName.$touch()"
         />
-        <PentilaErrorMessage :error-message="formErrorList.formErrorList" />
+        <WeprodeErrorMessage :error-message="formErrorList.formErrorList" />
       </div>
 
-      <PentilaTextArea
+      <WeprodeTextArea
         v-model="group.description"
         :placeholder="$t('description')"
         maxlength="75"
@@ -40,7 +40,7 @@
             class="is-educational-label"
           />
           <div class="toggle-section">
-            <PentilaToggleSwitch
+            <WeprodeToggleSwitch
               v-model="group.isPedagogical"
               :title="$t('isPedagogical')"
             />
@@ -57,20 +57,20 @@
       >
         <div class="user-list">
           <div class="search">
-            <PentilaInput
+            <WeprodeInput
               v-model="searchInput"
               :placeholder="$t('searchPlaceholder')"
               :maxlength="75"
               @input="searchTimeOut"
             />
-            <PentilaDropdown
+            <WeprodeDropdown
               v-model="selectedRole"
               :list="roleList"
               display-field="label"
               :sort="false"
               @update:modelValue="getCompletion"
             />
-            <PentilaDropdown
+            <WeprodeDropdown
               v-model="selectedSchool"
               :list="schoolList"
               :sort="false"
@@ -82,7 +82,7 @@
           <table class="table">
             <tr>
               <th>
-                <PentilaCheckbox
+                <WeprodeCheckbox
                   v-if="!editedGroup"
                   :model-value="isAllSelected"
                   label=""
@@ -103,7 +103,7 @@
             />
           </table>
 
-          <PentilaSpinner v-if="isLoadingCompletion" />
+          <WeprodeSpinner v-if="isLoadingCompletion" />
         </div>
 
         <div class="group-members">
@@ -128,7 +128,7 @@
     </template>
 
     <template #footer>
-      <PentilaButton
+      <WeprodeButton
         form="groupform"
         :label="buttonLabel"
         class="confirm-button"
@@ -136,16 +136,16 @@
         @click="onConfirm"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>
 import GroupUserItem from '@components/Groups/EditGroupModal/GroupUserItem'
 import SelectedGroupMemberItem from '@components/Groups/EditGroupModal/SelectedGroupMemberItem'
+import WeprodeUtils from '@utils/weprode.utils'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import dayjs from 'dayjs'
-import PentilaUtils from 'pentila-utils'
 import { nextTick } from 'vue'
 
 import { searchDirectory } from '@/api/contact.service'
@@ -235,10 +235,10 @@ export default {
       }
     },
     sortedGroupMembers () {
-      return PentilaUtils.Array.sortWithString(this.groupMembers, false, 'lastName')
+      return WeprodeUtils.sortArrayWithString(this.groupMembers, false, 'lastName')
     },
     sortedCompletionUsers () {
-      return PentilaUtils.Array.sortWithString(this.completionUsers, false, 'lastName')
+      return WeprodeUtils.sortArrayWithString(this.completionUsers, false, 'lastName')
     }
   },
   created () {
@@ -255,14 +255,14 @@ export default {
     getRoleList().then((data) => {
       if (data.success) {
         this.selectedRole = this.emptyRole
-        this.roleList = [this.emptyRole, ...PentilaUtils.Array.sortWithString(data.roles, false, 'label')]
+        this.roleList = [this.emptyRole, ...WeprodeUtils.sortArrayWithString(data.roles, false, 'label')]
       }
     })
 
     getAllSchools().then((data) => {
       if (data.success) {
         this.selectedSchool = this.emptySchool
-        this.schoolList = [this.emptySchool, ...PentilaUtils.Array.sortWithString(data.schools, false, 'schoolName')]
+        this.schoolList = [this.emptySchool, ...WeprodeUtils.sortArrayWithString(data.schools, false, 'schoolName')]
       }
     })
   },

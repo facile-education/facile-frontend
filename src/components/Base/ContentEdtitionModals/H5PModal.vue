@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     :modal="true"
     class="h5pWindow"
     :width="600"
@@ -26,14 +26,14 @@
         v-if="!readOnly"
         class="content-name"
       >
-        <PentilaInput
+        <WeprodeInput
           ref="nameInput"
           v-model="contentName"
           :maxlength="200"
           :placeholder="$t('namePlaceholder')"
           @keyup.enter.stop="pressEnter"
         />
-        <PentilaErrorMessage
+        <WeprodeErrorMessage
           :error-message="formErrorList.contentName"
         />
       </div>
@@ -42,13 +42,13 @@
         v-if="!readOnly"
         class="content-url"
       >
-        <PentilaInput
+        <WeprodeInput
           v-model="contentValue"
           :maxlength="2000"
           :placeholder="$t('urlPlaceholder')"
           @keyup.enter.stop="pressEnter"
         />
-        <PentilaErrorMessage
+        <WeprodeErrorMessage
           :error-message="formErrorList.embedHTMLElement || formErrorList.embedSrcAttribute || urlError"
         />
       </div>
@@ -71,20 +71,20 @@
       v-if="!readOnly"
       #footer
     >
-      <PentilaButton
+      <WeprodeButton
         v-if="isCreation"
         :label="$t('add')"
         class="button"
         @click="addH5P"
       />
-      <PentilaButton
+      <WeprodeButton
         v-else
         :label="$t('edit')"
         class="button"
         @click="editH5P"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>

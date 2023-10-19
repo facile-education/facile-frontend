@@ -19,7 +19,7 @@
         icon-height="20px"
         alt=""
       />
-      <PentilaSpinner
+      <WeprodeSpinner
         v-if="isDeleteThreads"
         data-test="spinner"
       />
@@ -70,7 +70,7 @@
           @choose-option="handleChosenOption"
           @close="isContextMenuDisplayed=false"
         />
-        <PentilaSpinner
+        <WeprodeSpinner
           v-if="isLoadingThreads || isDeleteThreads"
           data-test="spinner"
         />

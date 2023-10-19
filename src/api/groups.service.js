@@ -1,5 +1,5 @@
+import WeprodeUtils from '@utils/weprode.utils'
 import axios from 'axios'
-import PentilaUtils from 'pentila-utils'
 
 import constants from '@/api/constants'
 
@@ -32,10 +32,10 @@ const COMMUNITY_CTX = 'communityinfos/'
 function getUserGroups (schoolId, includeInstitutional, includeCommunities, pedagogicalOnly) {
   return axios.get(constants.JSON_WS_URL + GROUP_PATH + GROUP_CTX + 'get-user-groups', {
     params: {
-      schoolId: schoolId,
-      includeInstitutional: includeInstitutional,
-      includeCommunities: includeCommunities,
-      pedagogicalOnly: pedagogicalOnly
+      schoolId,
+      includeInstitutional,
+      includeCommunities,
+      pedagogicalOnly
     }
   }).then(response => response.data)
 }
@@ -74,7 +74,7 @@ function getGroupActivity (groupId, maxDate, nbResults) {
 
 function createCommunity (groupName, description, isPedagogical, members, color) {
   return axios.post(constants.JSON_WS_URL + GROUP_PATH + COMMUNITY_CTX + 'create-community',
-    PentilaUtils.URL.params({
+    WeprodeUtils.params({
       groupName,
       description,
       isPedagogical,
@@ -94,7 +94,7 @@ function checkCommunityName (communityName) {
 
 function editCommunity (groupId, groupName, description, isPedagogical, members, color) {
   return axios.post(constants.JSON_WS_URL + GROUP_PATH + COMMUNITY_CTX + 'edit-community',
-    PentilaUtils.URL.params({
+    WeprodeUtils.params({
       groupId,
       groupName,
       description,
@@ -115,7 +115,7 @@ function removeCommunity (groupId) {
 
 function extendCommunity (groupId) {
   return axios.post(constants.JSON_WS_URL + GROUP_PATH + COMMUNITY_CTX + 'extend-community',
-    PentilaUtils.URL.params({
+    WeprodeUtils.params({
       groupId
     })
   ).then(response => response.data)

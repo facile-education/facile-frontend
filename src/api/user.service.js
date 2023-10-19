@@ -1,5 +1,5 @@
+import WeprodeUtils from '@utils/weprode.utils'
 import axios from 'axios'
-import PentilaUtils from 'pentila-utils'
 
 import constants from '@/api/constants'
 
@@ -49,7 +49,7 @@ function getUserInformations () {
  * @param {*} preferences
  */
 function updateInterfacePreferences (preferences) {
-  return axios.post(constants.PREFERENCES_URL, PentilaUtils.URL.params({
+  return axios.post(constants.PREFERENCES_URL, WeprodeUtils.params({
     cmd: 'editInterface',
     lang: preferences.language,
     hideMenu: preferences.isMenuHidden,
@@ -65,7 +65,7 @@ function updateInterfacePreferences (preferences) {
 function updateThemeColor (newColor) {
   const formattedColor = newColor.replace('#', '').toLowerCase()
   return axios.post(constants.JSON_WS_URL + PREF_PATH + '/update-theme-color',
-    PentilaUtils.URL.params({
+    WeprodeUtils.params({
       color: formattedColor
     })
   ).then(response => response.data)
@@ -73,23 +73,23 @@ function updateThemeColor (newColor) {
 
 function updateReportFrequency (frequency) {
   return axios.post(constants.JSON_WS_URL + PREF_PATH + '/update-report-frequency',
-    PentilaUtils.URL.params({
-      frequency: frequency
+    WeprodeUtils.params({
+      frequency
     })
   ).then(response => response.data)
 }
 
 function updateWebdavState (isEnabled) {
   return axios.post(constants.JSON_WS_URL + PREF_PATH + '/update-webdav-state',
-    PentilaUtils.URL.params({
-      isEnabled: isEnabled
+    WeprodeUtils.params({
+      isEnabled
     })
   ).then(response => response.data)
 }
 
 function updateSideMenuState (isExpanded) {
   return axios.post(constants.JSON_WS_URL + PREF_PATH + '/update-side-menu-state',
-    PentilaUtils.URL.params({
+    WeprodeUtils.params({
       isExpanded
     })
   ).then(response => response.data)

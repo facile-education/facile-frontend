@@ -1,5 +1,5 @@
+import WeprodeUtils from '@utils/weprode.utils'
 import axios from 'axios'
-import PentilaUtils from 'pentila-utils'
 
 import constants from '@/api/constants'
 
@@ -20,7 +20,7 @@ const FOLDER_PATH = '/document.folderutils'
 function downloadFolder (folderId) {
   return axios.get(constants.JSON_WS_URL + FOLDER_PATH + '/download-folder', {
     params: {
-      folderId: folderId
+      folderId
     }
   }).then(response => response.data)
 }
@@ -30,7 +30,7 @@ function downloadFolder (folderId) {
  */
 function createFolder (targetFolderId, folderName) {
   return axios.post(constants.JSON_WS_URL + FOLDER_PATH + '/create-folder',
-    PentilaUtils.URL.params({
+    WeprodeUtils.params({
       targetFolderId,
       folderName
     })
@@ -42,7 +42,7 @@ function createFolder (targetFolderId, folderName) {
  */
 function renameFolder (folderId, folderName) {
   return axios.post(constants.JSON_WS_URL + FOLDER_PATH + '/rename-folder',
-    PentilaUtils.URL.params({
+    WeprodeUtils.params({
       folderId,
       folderName
     })
@@ -55,8 +55,8 @@ function renameFolder (folderId, folderName) {
 function getAllEntities (folderId, withDetails) {
   return axios.get(constants.JSON_WS_URL + FOLDER_PATH + '/get-all-entities', {
     params: {
-      folderId: folderId,
-      withDetails: withDetails
+      folderId,
+      withDetails
     }
   }).then(response => response.data)
 }
@@ -67,8 +67,8 @@ function getAllEntities (folderId, withDetails) {
 function getImagesEntities (folderId, withDetails) {
   return axios.get(constants.JSON_WS_URL + FOLDER_PATH + '/get-images-entities', {
     params: {
-      folderId: folderId,
-      withDetails: withDetails
+      folderId,
+      withDetails
     }
   }).then(response => response.data)
 }
@@ -79,7 +79,7 @@ function getImagesEntities (folderId, withDetails) {
 function getBreadcrumb (folderId) {
   return axios.get(constants.JSON_WS_URL + FOLDER_PATH + '/get-breadcrumb', {
     params: {
-      folderId: folderId
+      folderId
     }
   }).then(response => response.data)
 }

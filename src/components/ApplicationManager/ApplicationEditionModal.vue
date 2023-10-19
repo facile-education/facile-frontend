@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     :modal="true"
     class="app-edition-modal"
     :full-screen="mq.phone || mq.tablet"
@@ -19,7 +19,7 @@
           class="logo-panel"
           @click="toggleImagePicker"
         >
-          <PentilaButton
+          <WeprodeButton
             v-if="application.image"
             type="circle"
             class="remove-logo delete"
@@ -29,7 +29,7 @@
               src="@assets/icons/trash_white.svg"
               :alt="$t('deleteButtonTooltip')"
             >
-          </PentilaButton>
+          </WeprodeButton>
 
           <img
             v-if="application.image"
@@ -45,28 +45,28 @@
 
         <!-- App name -->
         <div class="informations">
-          <PentilaInput
+          <WeprodeInput
             v-model="application.applicationName"
             :placeholder="$t('namePlaceholder') + '*'"
             :maxlength="75"
             class="name"
             @blur="v$.application.applicationName.$touch()"
           />
-          <PentilaErrorMessage :error-message="formErrorList.applicationName" />
+          <WeprodeErrorMessage :error-message="formErrorList.applicationName" />
 
-          <PentilaInput
+          <WeprodeInput
             v-model="application.applicationKey"
             :placeholder="$t('keyPlaceholder') + '*'"
             :maxlength="75"
             @blur="v$.application.applicationKey.$touch()"
           />
-          <PentilaErrorMessage :error-message="formErrorList.applicationKey" />
+          <WeprodeErrorMessage :error-message="formErrorList.applicationKey" />
         </div>
       </div>
 
       <div class="broadcast">
         <div class="input-completion">
-          <PentilaInput
+          <WeprodeInput
             ref="category"
             v-model="application.category"
             :placeholder="$t('categoryPlaceholder') + '*'"
@@ -74,8 +74,8 @@
             @blur="v$.application.category.$touch()"
             @focus="toggleCompletion"
           />
-          <PentilaErrorMessage :error-message="formErrorList.category" />
-          <PentilaAutocomplete
+          <WeprodeErrorMessage :error-message="formErrorList.category" />
+          <WeprodeAutocomplete
             v-if="displayCategoryCompletion"
             :list="categoryList"
             :input="application.category"
@@ -83,7 +83,7 @@
             @close="toggleCompletion"
           />
         </div>
-        <PentilaTagsInput
+        <WeprodeTagsInput
           v-if="schoolList"
           v-model="application.authorizedSchools"
           :placeholder="$t('schoolsPlaceholder')"
@@ -93,7 +93,7 @@
         />
 
         <div>
-          <PentilaTagsInput
+          <WeprodeTagsInput
             v-if="roleList"
             v-model="application.defaultRoles"
             :placeholder="$t('rolesPlaceholder') + '*'"
@@ -104,7 +104,7 @@
         </div>
 
         <div class="menu-entry">
-          <PentilaInput
+          <WeprodeInput
             ref="category"
             v-model="application.menuEntryId"
             :placeholder="$t('menuEntryLabel')"
@@ -115,7 +115,7 @@
 
         <h5 v-t="'urlTypeLabel'" />
         <div class="urls">
-          <PentilaRadioButton
+          <WeprodeRadioButton
             v-model="urlType"
             :label="$t('globalUrlCombobox')"
             name="url"
@@ -123,7 +123,7 @@
             class="radio"
           />
 
-          <PentilaRadioButton
+          <WeprodeRadioButton
             v-model="urlType"
             :label="$t('customUrlCombobox')"
             name="url"
@@ -131,7 +131,7 @@
             class="radio"
           />
 
-          <PentilaRadioButton
+          <WeprodeRadioButton
             v-model="urlType"
             :label="$t('noUrlCombobox')"
             name="url"
@@ -139,7 +139,7 @@
             class="radio"
           />
         </div>
-        <PentilaInput
+        <WeprodeInput
           v-model="application.globalUrl"
           :placeholder="$t('globalUrlPlaceholder')"
           :disabled="urlType !== 'global'"
@@ -147,25 +147,25 @@
 
         <h5 v-t="'exportLabel'" />
         <div class="exports">
-          <PentilaCheckbox
+          <WeprodeCheckbox
             v-model="application.exportParent"
             :label="$t('exportParentsCheckbox')"
             class="export"
           />
 
-          <PentilaCheckbox
+          <WeprodeCheckbox
             v-model="application.exportStudent"
             :label="$t('exportStudentsCheckbox')"
             class="export"
           />
 
-          <PentilaCheckbox
+          <WeprodeCheckbox
             v-model="application.exportTeacher"
             :label="$t('exportTeachersCheckbox')"
             class="export"
           />
 
-          <PentilaCheckbox
+          <WeprodeCheckbox
             v-model="application.exportOther"
             :label="$t('exportOtherCheckbox')"
             class="export"
@@ -181,18 +181,18 @@
       </teleport>
     </template>
     <template #footer>
-      <PentilaButton
+      <WeprodeButton
         :label="$t('modalSaveButton')"
         @click="save"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>
+import WeprodeUtils from '@utils/weprode.utils'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
-import PentilaUtils from 'pentila-utils'
 
 import ImagePicker from '@/components/Nero/ImagePicker'
 import NeroIcon from '@/components/Nero/NeroIcon'
@@ -255,7 +255,7 @@ export default {
     if (this.roleList === undefined) {
       this.$store.dispatch('administration/getRoleList')
     }
-    this.application = PentilaUtils.JSON.deepCopy(this.$store.state.applicationManager.selectedApplication)
+    this.application = WeprodeUtils.deepCopy(this.$store.state.applicationManager.selectedApplication)
   },
   methods: {
     buildApplicationBeforeSave () {

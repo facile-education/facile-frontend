@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     :modal="true"
     :draggable="true"
     class="editUserWindow"
@@ -21,38 +21,38 @@
 
     <template #body>
       <div class="lastName">
-        <PentilaInput
+        <WeprodeInput
           ref="lastNameInput"
           v-model="lastName"
           :maxlength="200"
           :placeholder="$t('lastNamePlaceholder')"
           @keyup.enter.stop="pressEnter"
         />
-        <PentilaErrorMessage
+        <WeprodeErrorMessage
           :error-message="formErrorList.lastName"
         />
       </div>
       <div class="firstName">
-        <PentilaInput
+        <WeprodeInput
           ref="firstNameInput"
           v-model="firstName"
           :maxlength="200"
           :placeholder="$t('firstNamePlaceholder')"
           @keyup.enter.stop="pressEnter"
         />
-        <PentilaErrorMessage
+        <WeprodeErrorMessage
           :error-message="formErrorList.firstName"
         />
       </div>
       <div class="email">
-        <PentilaInput
+        <WeprodeInput
           ref="emailInput"
           v-model="email"
           :maxlength="200"
           :placeholder="$t('emailPlaceholder')"
           @keyup.enter.stop="pressEnter"
         />
-        <PentilaErrorMessage
+        <WeprodeErrorMessage
           :error-message="formErrorList.email"
         />
       </div>
@@ -60,7 +60,7 @@
       <!-- School -->
       <div class="school">
         <p v-t="'school'" />
-        <PentilaDropdown
+        <WeprodeDropdown
           v-if="(schoolList && schoolList.length > 1 && !isParent)"
           v-model="school"
           :list="schoolList"
@@ -77,7 +77,7 @@
         class="role"
       >
         <p v-t="'role'" />
-        <PentilaDropdown
+        <WeprodeDropdown
           v-model="selectedRole"
           :list="roleList"
           display-field="label"
@@ -107,17 +107,17 @@
         v-if="!isCreation"
         class="password"
       >
-        <PentilaInput
+        <WeprodeInput
           v-model="password"
           :placeholder="$t('passwordPlaceholder')"
           :maxlength="75"
         />
-        <PentilaButton
+        <WeprodeButton
           class="round"
           @click="updatePassword"
         >
           <span>{{ $t('update-password') }}</span>
-        </PentilaButton>
+        </WeprodeButton>
       </div>
       <p
         v-if="!isCreation"
@@ -126,26 +126,26 @@
     </template>
 
     <template #footer>
-      <PentilaButton
+      <WeprodeButton
         v-if="isCreation"
         :label="$t('add')"
         class="button"
         @click="createUser"
       />
-      <PentilaButton
+      <WeprodeButton
         v-else
         :label="$t('edit')"
         class="button"
         @click="editUser"
       />
-      <PentilaButton
+      <WeprodeButton
         v-if="!isCreation"
         :label="$t('delete')"
         class="button"
         @click="confirmUserRemoval"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>

@@ -24,33 +24,33 @@
 
   <div class="actions">
     <template v-if="isStopped">
-      <PentilaButton @click="toggleAudio">
+      <WeprodeButton @click="toggleAudio">
         <NeroIcon :name="isAudioPlaying ? 'pause' : 'play'" />
         <span>{{ isAudioPlaying ? $t('pause') : $t('listen') }}</span>
-      </PentilaButton>
-      <PentilaButton
+      </WeprodeButton>
+      <WeprodeButton
         cls="cancel"
         @click="restartRecording"
       >
         <NeroIcon name="undo" />
         <span>{{ $t('restart') }}</span>
-      </PentilaButton>
+      </WeprodeButton>
     </template>
     <template v-else>
-      <PentilaButton @click="toggleRecording">
+      <WeprodeButton @click="toggleRecording">
         <NeroIcon :name="isRecording ? 'pause' : 'play'" />
         <span>{{ isPaused ? $t('continue') : isRecording ? $t('pause') : $t('start') }}</span>
-      </PentilaButton>
-      <PentilaButton
+      </WeprodeButton>
+      <WeprodeButton
         cls="cancel"
         :disabled="!isRecording && !isPaused"
         @click="stopRecording"
       >
         <NeroIcon name="stop" />
         <span>{{ $t('stop') }}</span>
-      </PentilaButton>
+      </WeprodeButton>
     </template>
-    <PentilaErrorMessage :error-message="errorMessage" />
+    <WeprodeErrorMessage :error-message="errorMessage" />
   </div>
 </template>
 

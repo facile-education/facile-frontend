@@ -1,5 +1,5 @@
+import WeprodeUtils from '@utils/weprode.utils'
 import axios from 'axios'
-import PentilaUtils from 'pentila-utils'
 
 import constants from '@/api/constants'
 
@@ -54,7 +54,7 @@ function getGARManagerUIUrl () {
  * Add GAR admins in school
  */
 function addGARAdminList (schoolId, applyToSchoolComplex, adminId) {
-  return axios.post(constants.JSON_WS_URL + MEDIACENTER_PATH + '/save-gar-admin', PentilaUtils.URL.params({
+  return axios.post(constants.JSON_WS_URL + MEDIACENTER_PATH + '/save-gar-admin', WeprodeUtils.params({
     schoolId,
     applyToSchoolComplex,
     adminId
@@ -65,7 +65,7 @@ function addGARAdminList (schoolId, applyToSchoolComplex, adminId) {
  * Remove GAR admins in school
  */
 function deleteGARAdminList (schoolId, applyToSchoolComplex, adminId) {
-  return axios.post(constants.JSON_WS_URL + MEDIACENTER_PATH + '/remove-gar-admin', PentilaUtils.URL.params({
+  return axios.post(constants.JSON_WS_URL + MEDIACENTER_PATH + '/remove-gar-admin', WeprodeUtils.params({
     schoolId,
     applyToSchoolComplex,
     adminId

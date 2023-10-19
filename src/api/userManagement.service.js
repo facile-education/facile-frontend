@@ -1,5 +1,5 @@
+import WeprodeUtils from '@utils/weprode.utils'
 import axios from 'axios'
-import PentilaUtils from 'pentila-utils'
 
 import constants from '@/api/constants'
 
@@ -56,7 +56,7 @@ function getManualUsers (schoolId, search, pageNb, nbItemsPerPage, sort = 'lastN
 
 function createManualUser (lastName, firstName, email, roleId, schoolId) {
   return axios.post(constants.JSON_WS_URL + USER_MANAGEMENT_PATH + '/create-manual-user',
-    PentilaUtils.URL.params({
+    WeprodeUtils.params({
       lastName,
       firstName,
       email,
@@ -67,7 +67,7 @@ function createManualUser (lastName, firstName, email, roleId, schoolId) {
 
 function editManualUser (userId, lastName, firstName, email, roleId, schoolId) {
   return axios.post(constants.JSON_WS_URL + USER_MANAGEMENT_PATH + '/edit-manual-user',
-    PentilaUtils.URL.params({
+    WeprodeUtils.params({
       userId,
       lastName,
       firstName,
@@ -88,8 +88,8 @@ function removeManualUser (userId) {
 function getAffectedUsers (schoolId, filter) {
   return axios.get(constants.JSON_WS_URL + AFFECTATION_PATH + '/get-affected-users', {
     params: {
-      schoolId: schoolId,
-      filter: filter
+      schoolId,
+      filter
     }
   }).then(response => response.data)
 }
@@ -97,9 +97,9 @@ function getAffectedUsers (schoolId, filter) {
 function addUserAffectation (userId, orgId, expirationDate = '') {
   return axios.get(constants.JSON_WS_URL + AFFECTATION_PATH + '/add-user-affectation', {
     params: {
-      userId: userId,
-      orgId: orgId,
-      expirationDate: expirationDate
+      userId,
+      orgId,
+      expirationDate
     }
   }).then(response => response.data)
 }
@@ -107,8 +107,8 @@ function addUserAffectation (userId, orgId, expirationDate = '') {
 function removeUserAffectation (userId, orgId) {
   return axios.get(constants.JSON_WS_URL + AFFECTATION_PATH + '/remove-user-affectation', {
     params: {
-      userId: userId,
-      orgId: orgId
+      userId,
+      orgId
     }
   }).then(response => response.data)
 }
@@ -116,7 +116,7 @@ function removeUserAffectation (userId, orgId) {
 function getUserAffectations (userId) {
   return axios.get(constants.JSON_WS_URL + AFFECTATION_PATH + '/get-user-affectations', {
     params: {
-      userId: userId
+      userId
     }
   }).then(response => response.data)
 }
@@ -124,8 +124,8 @@ function getUserAffectations (userId) {
 function addSchoolAdmin (userId, schoolId) {
   return axios.get(constants.JSON_WS_URL + SCHOOL_ADMIN_PATH + '/add-school-admin', {
     params: {
-      userId: userId,
-      schoolId: schoolId
+      userId,
+      schoolId
     }
   }).then(response => response.data)
 }
@@ -133,8 +133,8 @@ function addSchoolAdmin (userId, schoolId) {
 function removeSchoolAdmin (userId, schoolId) {
   return axios.get(constants.JSON_WS_URL + SCHOOL_ADMIN_PATH + '/remove-school-admin', {
     params: {
-      userId: userId,
-      schoolId: schoolId
+      userId,
+      schoolId
     }
   }).then(response => response.data)
 }
@@ -142,7 +142,7 @@ function removeSchoolAdmin (userId, schoolId) {
 function getSchoolDelegates (schoolId) {
   return axios.get(constants.JSON_WS_URL + SCHOOL_ADMIN_PATH + '/get-school-delegates', {
     params: {
-      schoolId: schoolId
+      schoolId
     }
   }).then(response => response.data)
 }
@@ -150,15 +150,15 @@ function getSchoolDelegates (schoolId) {
 function getDelegationCandidates (schoolId, filter) {
   return axios.get(constants.JSON_WS_URL + SCHOOL_ADMIN_PATH + '/get-delegation-candidates', {
     params: {
-      schoolId: schoolId,
-      filter: filter
+      schoolId,
+      filter
     }
   }).then(response => response.data)
 }
 
 function updatePasswordByManager (userId, password) {
   return axios.post(constants.JSON_WS_URL + USER_MANAGEMENT_PATH + '/update-password-by-manager',
-    PentilaUtils.URL.params({
+    WeprodeUtils.params({
       userId,
       password
     })).then(response => response.data)
@@ -166,7 +166,7 @@ function updatePasswordByManager (userId, password) {
 
 function updatePasswordAfterReinitByManager (password, confirmPassword) {
   return axios.post(constants.JSON_WS_URL + USER_MANAGEMENT_PATH + '/update-password-after-reinit-by-manager',
-    PentilaUtils.URL.params({
+    WeprodeUtils.params({
       password,
       confirmPassword
     })).then(response => response.data)
@@ -174,7 +174,7 @@ function updatePasswordAfterReinitByManager (password, confirmPassword) {
 
 function updateForgottenPassword (password, confirmPassword, ticketKey) {
   return axios.post(constants.JSON_WS_URL + USER_MANAGEMENT_PATH + '/update-forgotten-password',
-    PentilaUtils.URL.params({
+    WeprodeUtils.params({
       password,
       confirmPassword,
       ticketKey

@@ -1,5 +1,5 @@
+import WeprodeUtils from '@utils/weprode.utils'
 import axios from 'axios'
-import PentilaUtils from 'pentila-utils'
 
 import constants from '@/api/constants'
 
@@ -51,14 +51,14 @@ function getSessionDetails (sessionId) {
 }
 
 function savePrivateNotes (sessionId, notes) {
-  return axios.post(constants.JSON_WS_URL + COURSE_PATH + 'save-private-notes', PentilaUtils.URL.params({
+  return axios.post(constants.JSON_WS_URL + COURSE_PATH + 'save-private-notes', WeprodeUtils.params({
     sessionId,
     notes
   })).then(response => response.data)
 }
 
 function addSessionContent (courseId, sessionId, title, blocks, publicationDate, isDraft) {
-  return axios.post(constants.JSON_WS_URL + SESSION_CONTENT_PATH + 'add-session-content', PentilaUtils.URL.params({
+  return axios.post(constants.JSON_WS_URL + SESSION_CONTENT_PATH + 'add-session-content', WeprodeUtils.params({
     courseId,
     sessionId,
     title,
@@ -69,7 +69,7 @@ function addSessionContent (courseId, sessionId, title, blocks, publicationDate,
 }
 
 function updateSessionContent (sessionId, title, blocks, publicationDate, isDraft) {
-  return axios.post(constants.JSON_WS_URL + SESSION_CONTENT_PATH + 'update-session-content', PentilaUtils.URL.params({
+  return axios.post(constants.JSON_WS_URL + SESSION_CONTENT_PATH + 'update-session-content', WeprodeUtils.params({
     sessionId,
     title,
     blocks,
@@ -103,7 +103,7 @@ function getSessionPreview (sessionId) {
 }
 
 function addBlock (itemId, blockType, blockName, blockValue, fileEntryId) {
-  return axios.post(constants.JSON_WS_URL + CONTENT_BLOCK_PATH + 'add-block', PentilaUtils.URL.params({
+  return axios.post(constants.JSON_WS_URL + CONTENT_BLOCK_PATH + 'add-block', WeprodeUtils.params({
     itemId,
     blockType,
     blockName,
@@ -113,7 +113,7 @@ function addBlock (itemId, blockType, blockName, blockValue, fileEntryId) {
 }
 
 function addFileBlock (itemId, blockType, blockName, fileName, file) {
-  return axios.post(constants.JSON_WS_URL + CONTENT_BLOCK_PATH + 'add-file-block', PentilaUtils.URL.params({
+  return axios.post(constants.JSON_WS_URL + CONTENT_BLOCK_PATH + 'add-file-block', WeprodeUtils.params({
     itemId,
     blockType,
     blockName,
@@ -123,7 +123,7 @@ function addFileBlock (itemId, blockType, blockName, fileName, file) {
 }
 
 function updateBlock (blockId, blockName, blockValue, order) {
-  return axios.post(constants.JSON_WS_URL + CONTENT_BLOCK_PATH + 'update-block', PentilaUtils.URL.params({
+  return axios.post(constants.JSON_WS_URL + CONTENT_BLOCK_PATH + 'update-block', WeprodeUtils.params({
     blockId,
     blockName,
     blockValue,

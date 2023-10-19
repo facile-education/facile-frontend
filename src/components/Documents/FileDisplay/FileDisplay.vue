@@ -59,7 +59,7 @@
       class="placeHolder"
     />
   </div>
-  <PentilaSpinner v-else />
+  <WeprodeSpinner v-else />
 </template>
 
 <script>

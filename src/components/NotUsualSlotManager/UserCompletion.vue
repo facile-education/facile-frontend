@@ -1,5 +1,5 @@
 <template>
-  <PentilaTagsInput
+  <WeprodeTagsInput
     v-if="hasDisplayName"
     :model-value="modelValue"
     data-test="user-completion-input"
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import PentilaUtils from 'pentila-utils'
+import WeprodeUtils from '@utils/weprode.utils'
 
 import { getSchoollifeAgents, getSchoolStudents } from '@/api/userSearch.service'
 import { nbCharBeforeCompletion } from '@/constants/appConstants'
@@ -61,7 +61,7 @@ export default {
   },
   created () {
     if (this.modelValue.length > 0 && this.modelValue.length <= this.maxSize) {
-      const array = PentilaUtils.JSON.deepCopy(this.modelValue)
+      const array = WeprodeUtils.deepCopy(this.modelValue)
       array.forEach((user) => {
         user.displayName = this.getUserDisplayName(user)
       })

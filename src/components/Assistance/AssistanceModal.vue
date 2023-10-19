@@ -1,6 +1,6 @@
 <template>
   <div data-test="supportModal">
-    <PentilaWindow
+    <WeprodeWindow
       class="support-message-modal"
       :modal="true"
       :draggable="true"
@@ -31,7 +31,7 @@
             class="italic"
           />
           <h5> {{ (modalType==='Assistance' ? $t('serviceLabel') : $t('serviceConcernLabel')) + '*' }} </h5>
-          <PentilaDropdown
+          <WeprodeDropdown
             v-if="applicationList"
             v-model="selected"
             data-test="servicesDropDown"
@@ -52,7 +52,7 @@
               @blur="v$.form.issueDescription.$touch()"
             />
           </div>
-          <PentilaErrorMessage :error-message="formErrorList.issueDescription" />
+          <WeprodeErrorMessage :error-message="formErrorList.issueDescription" />
         </div>
         <!-- Attached files -->
         <AttachedFiles
@@ -63,13 +63,13 @@
       </template>
 
       <template #footer>
-        <PentilaButton
+        <WeprodeButton
           data-test="submitTicket"
           :label="$t('submitButtonLabel')"
           @click="submitTicket"
         />
       </template>
-    </PentilaWindow>
+    </WeprodeWindow>
   </div>
 
   <teleport to="body">

@@ -1,6 +1,6 @@
 <template>
   <NeroToolbar class="toolbar">
-    <PentilaButton
+    <WeprodeButton
       v-if="!mq.phone && canCreateGroup"
       data-test="createGroupButton"
       class="create-button"
@@ -11,9 +11,9 @@
         name="fa-plus"
       />
       <span>{{ $t('add') }}</span>
-    </PentilaButton>
+    </WeprodeButton>
 
-    <PentilaInput
+    <WeprodeInput
       v-model="filter"
       class="filter-input"
       :placeholder="$t('SearchPlaceholder')"
@@ -21,7 +21,7 @@
       @input="updateFilter"
     />
 
-    <PentilaDropdown
+    <WeprodeDropdown
       v-if="!mq.phone && hasScopeList"
       v-model="selectedScope"
       :list="scopeList"

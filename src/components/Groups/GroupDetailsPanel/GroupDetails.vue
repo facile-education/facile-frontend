@@ -65,20 +65,20 @@
       class="body"
       :class="{phone: mq.phone}"
     >
-      <PentilaTabList>
-        <PentilaTabItem
+      <WeprodeTabList>
+        <WeprodeTabItem
           style="height: calc(100% - 37px)"
           :title="$t('details')"
         >
           <GroupDetailsTab :group="selectedGroup" />
-        </PentilaTabItem>
-        <PentilaTabItem
+        </WeprodeTabItem>
+        <WeprodeTabItem
           style="height: calc(100% - 37px)"
           :title="$t('activities')"
         >
           <GroupActivityTab :group="selectedGroup" />
-        </PentilaTabItem>
-      </PentilaTabList>
+        </WeprodeTabItem>
+      </WeprodeTabList>
     </section>
   </div>
 

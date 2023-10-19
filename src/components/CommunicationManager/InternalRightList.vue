@@ -7,8 +7,8 @@
       <div v-if="roleList">
         <h4 v-t="'CommunicationManager.InternalRightList.title'" />
         <p v-t="'CommunicationManager.InternalRightList.informations'" />
-        <PentilaTabList>
-          <PentilaTabItem
+        <WeprodeTabList>
+          <WeprodeTabItem
             v-for="role in roleList"
             :key="role.roleId"
             :title="role.label"
@@ -18,14 +18,14 @@
               :right-list="rightList"
               @input="onInput"
             />
-          </PentilaTabItem>
-        </PentilaTabList>
-        <PentilaButton
+          </WeprodeTabItem>
+        </WeprodeTabList>
+        <WeprodeButton
           :label="$t('CommunicationManager.InternalRightList.save')"
           @click="onSave"
         />
       </div>
-      <PentilaSpinner v-else />
+      <WeprodeSpinner v-else />
     </Transition>
   </div>
 </template>

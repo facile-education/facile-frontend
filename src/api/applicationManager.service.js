@@ -1,5 +1,5 @@
+import WeprodeUtils from '@utils/weprode.utils'
 import axios from 'axios'
-import PentilaUtils from 'pentila-utils'
 
 import constants from './constants'
 
@@ -38,7 +38,7 @@ const BROADCASTRULE_CTX = 'broadcastrule/'
 
 function createApplication (application) {
   return axios.post(constants.JSON_WS_URL + APP_MANAGER_PATH + APPLICATION_CTX + 'add-application',
-    PentilaUtils.URL.params({
+    WeprodeUtils.params({
       applicationName: application.applicationName,
       applicationKey: application.applicationKey,
       category: application.category,
@@ -59,7 +59,7 @@ function createApplication (application) {
 
 function updateApplication (application) {
   return axios.post(constants.JSON_WS_URL + APP_MANAGER_PATH + APPLICATION_CTX + 'edit-application',
-    PentilaUtils.URL.params({
+    WeprodeUtils.params({
       applicationId: application.applicationId,
       applicationName: application.applicationName,
       applicationKey: application.applicationKey,
@@ -120,7 +120,7 @@ function getResourceUrls (menuEntryId) {
 
 function updateBroadcastScope (applicationId, schoolId, rules) {
   return axios.post(constants.JSON_WS_URL + APP_MANAGER_PATH + BROADCASTRULE_CTX + 'update-broadcast-rules',
-    PentilaUtils.URL.params({
+    WeprodeUtils.params({
       applicationId,
       schoolId,
       rules: JSON.stringify(rules)
@@ -130,7 +130,7 @@ function updateBroadcastScope (applicationId, schoolId, rules) {
 
 function updateBroadcast (applicationId, schoolId, isBroadcasted, applicationUrl) {
   return axios.post(constants.JSON_WS_URL + APP_MANAGER_PATH + BROADCAST_CTX + 'update-broadcast',
-    PentilaUtils.URL.params({
+    WeprodeUtils.params({
       applicationId,
       schoolId,
       isBroadcasted,

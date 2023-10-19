@@ -8,7 +8,7 @@
     <h2 v-t="'authRequired'" />
     <p>{{ $t('redirected') }}</p>
     <div class="spinner-container">
-      <PentilaSpinner class="my-spinner" />
+      <WeprodeSpinner class="my-spinner" />
     </div>
   </div>
 </template>

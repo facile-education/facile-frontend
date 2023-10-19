@@ -1,4 +1,4 @@
-// import PentilaUtils from 'pentila-utils'
+// import WeprodeUtils from '@utils/weprode.utils'
 import { getFullName } from '@utils/commons.util'
 
 import { getUserApplications } from '@/api/applicationManager.service'

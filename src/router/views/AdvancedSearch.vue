@@ -1,11 +1,11 @@
 <template>
   <h1 :aria-label="$t('serviceTitle')" />
-  <PentilaInput
+  <WeprodeInput
     v-model="searchInput"
     :placeholder="$t('searchPlaceholder')"
     :maxlength="75"
   />
-  <PentilaButton
+  <WeprodeButton
     :label="$t('search')"
     class="confirm-button"
     :disabled="searchInput === ''"

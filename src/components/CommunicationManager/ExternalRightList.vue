@@ -14,12 +14,12 @@
           :current="rightList[role.roleCode]"
           @input="onInput"
         />
-        <PentilaButton
+        <WeprodeButton
           :label="$t('CommunicationManager.ExternalRightList.save')"
           @click="onSave"
         />
       </div>
-      <PentilaSpinner v-else />
+      <WeprodeSpinner v-else />
     </Transition>
   </div>
 </template>

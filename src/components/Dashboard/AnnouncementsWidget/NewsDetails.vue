@@ -4,7 +4,7 @@
       v-if="isLoading"
       class="placeholder"
     >
-      <PentilaSpinner />
+      <WeprodeSpinner />
     </div>
     <div
       v-else-if="error === true"
@@ -86,14 +86,14 @@
         v-if="!isInModal && (detailedNews.isEditable || detailedNews.isDeletable)"
         class="footer"
       >
-        <PentilaButton
+        <WeprodeButton
           v-if="detailedNews.isEditable"
           class="footer-button"
           data-test="updateButton"
           :label="$t('update')"
           @click="openUpdateModal"
         />
-        <PentilaButton
+        <WeprodeButton
           v-if="detailedNews.isDeletable"
           class="footer-button"
           data-test="deleteButton"

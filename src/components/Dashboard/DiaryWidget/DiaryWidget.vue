@@ -6,7 +6,7 @@
       @update-unread-only="updateUnreadOnlyValue"
       @create-event="refresh"
     />
-    <PentilaSpinner
+    <WeprodeSpinner
       v-if="isLoading"
       style="z-index: 1"
     />

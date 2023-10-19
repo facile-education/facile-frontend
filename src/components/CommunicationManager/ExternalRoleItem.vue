@@ -4,14 +4,14 @@
       v-t="'Nero.roles.' + role.roleCode"
       class="role-label"
     />
-    <PentilaRadioButton
+    <WeprodeRadioButton
       v-model="hasRoleExternalRight"
       :name="role.roleCode"
       :label="$t('CommunicationManager.ExternalRoleItem.yes')"
       rb-value="yes"
       class="yes"
     />
-    <PentilaRadioButton
+    <WeprodeRadioButton
       v-model="hasRoleExternalRight"
       :name="role.roleCode"
       :label="$t('CommunicationManager.ExternalRoleItem.no')"

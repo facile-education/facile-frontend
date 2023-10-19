@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="right">
-        <PentilaCheckbox
+        <WeprodeCheckbox
           v-model="isDone"
           :label="homework.isDone ? $t('done') : $t('todo')"
           :disabled="isPast"

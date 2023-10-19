@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import PentilaUtils from 'pentila-utils'
+import WeprodeUtils from '@utils/weprode.utils'
 
 import ApplicationItem from '@/components/ApplicationManager/ApplicationItem'
 
@@ -37,7 +37,7 @@ export default {
       return applicationList
     },
     sortedApplicationList () {
-      return PentilaUtils.Array.sortWithString(this.applicationList, false, 'applicationName')
+      return WeprodeUtils.sortArrayWithString(this.applicationList, false, 'applicationName')
     }
   },
   methods: {

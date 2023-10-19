@@ -32,7 +32,7 @@
           v-if="childList.length > 1"
           class="first-line"
         >
-          <PentilaDropdown
+          <WeprodeDropdown
             v-model="selectedChild"
             :list="childList"
             :sort="false"

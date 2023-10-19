@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     class="update-diary-event-modal"
     data-test="update-diary-event-modal"
     :modal="true"
@@ -13,12 +13,12 @@
     </template>
 
     <template #body>
-      <PentilaSpinner
+      <WeprodeSpinner
         v-if="isProcessingSave"
         class="save-spinner"
       />
       <div class="population-selection">
-        <PentilaTagsInput
+        <WeprodeTagsInput
           v-model="populations"
           :placeholder="$t('populationPlaceholder') + '*'"
           :list="availablePopulationsList"
@@ -27,10 +27,10 @@
           display-field="populationName"
           :disabled="isLoadingEventDetails"
         />
-        <PentilaErrorMessage
+        <WeprodeErrorMessage
           :error-message="formErrorList.populations"
         />
-        <PentilaSpinner v-if="isLoadingEventDetails" />
+        <WeprodeSpinner v-if="isLoadingEventDetails" />
       </div>
 
       <div class="dates">
@@ -45,7 +45,7 @@
             :disabled="isStartDateDisabled"
             @select-date="updateStartDate"
           />
-          <PentilaErrorMessage
+          <WeprodeErrorMessage
             :error-message="formErrorList.startDate"
           />
         </div>
@@ -60,29 +60,29 @@
             :disabled="isEndDateDisabled"
             @select-date="updateEndDate"
           />
-          <PentilaErrorMessage
+          <WeprodeErrorMessage
             :error-message="formErrorList.endDate"
           />
         </div>
       </div>
 
       <div class="input">
-        <PentilaInput
+        <WeprodeInput
           ref="nameInput"
           v-model="title"
           :placeholder="$t('namePlaceHolder') + '*'"
         />
-        <PentilaErrorMessage
+        <WeprodeErrorMessage
           :error-message="formErrorList.title"
         />
       </div>
 
       <div class="input">
-        <PentilaInput
+        <WeprodeInput
           v-model="location"
           :placeholder="$t('locationPlaceHolder')"
         />
-        <PentilaErrorMessage
+        <WeprodeErrorMessage
           :error-message="formErrorList.location"
         />
       </div>
@@ -92,7 +92,7 @@
         class="ck-editor"
         :placeholder="$t('descriptionPlaceHolder')"
       />
-      <PentilaErrorMessage
+      <WeprodeErrorMessage
         :error-message="formErrorList.description"
       />
 
@@ -101,7 +101,7 @@
         class="unread-checkbox"
       >
         <span v-t="'markAsUnreadForAll'" />
-        <PentilaToggleSwitch
+        <WeprodeToggleSwitch
           v-model="markAsUnreadForAll"
         />
         <InformationIcon
@@ -113,13 +113,13 @@
     </template>
 
     <template #footer>
-      <PentilaButton
+      <WeprodeButton
         data-test="submitButton"
         :label="isCreation? $t('creationSubmit') : $t('updateSubmit')"
         @click="submit"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>

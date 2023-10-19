@@ -7,7 +7,7 @@
       v-if="isLoadingContactTree"
       class="placeholder"
     >
-      <PentilaSpinner />
+      <WeprodeSpinner />
     </div>
     <div
       v-else-if="error"
@@ -116,7 +116,7 @@ export default {
 }
 </style>
 
-<i18n locale="fr" >
+<i18n locale="fr">
 {
   "errorPlaceholder": "Oups, une erreur est survenue..."
 }

@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     v-if="!displayGroupDetails"
     class="details-display-modal"
     :modal="true"
@@ -41,7 +41,7 @@
     </template>
 
     <template #footer />
-  </PentilaWindow>
+  </WeprodeWindow>
   <GroupDetailsModal v-else />
 </template>
 

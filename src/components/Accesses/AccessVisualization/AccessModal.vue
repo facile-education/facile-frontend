@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     class="create-link-modal"
     :class="{'phone': mq.phone || mq.tablet}"
     :full-screen="mq.phone || mq.tablet"
@@ -13,7 +13,7 @@
       <span> {{ modalTitle }}</span>
     </template>
     <template #body>
-      <PentilaSpinner
+      <WeprodeSpinner
         v-if="isLoading"
         style="z-index: 1"
       />
@@ -36,7 +36,7 @@
         </li>
       </ul>
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>

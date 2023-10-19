@@ -8,7 +8,7 @@
         @update:range="updateRange"
       />
     </div>
-    <PentilaButton
+    <WeprodeButton
       v-t="'delete'"
       @click="$emit('delete')"
     />

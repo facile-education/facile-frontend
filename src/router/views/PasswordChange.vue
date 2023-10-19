@@ -10,7 +10,7 @@
 
     <div class="passwords-section">
       <div class="password1 input-container">
-        <PentilaInput
+        <WeprodeInput
           v-model="password1"
           class="input"
           :type="password1InputType"
@@ -40,7 +40,7 @@
 
       <div class="password2">
         <div class="input-container">
-          <PentilaInput
+          <WeprodeInput
             v-model="password2"
             class="input"
             :type="password2InputType"
@@ -75,7 +75,7 @@
         :href="logoutUrl"
         class="logout-link"
       />
-      <PentilaButton
+      <WeprodeButton
         v-t="'submit'"
         class="button"
         type="submit"

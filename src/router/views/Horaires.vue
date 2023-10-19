@@ -18,7 +18,7 @@
     @event-option-clicked="handleEventOption"
   />
 
-  <PentilaSpinner v-if="isLoading" />
+  <WeprodeSpinner v-if="isLoading" />
 
   <teleport to="body">
     <SessionTeacherModal

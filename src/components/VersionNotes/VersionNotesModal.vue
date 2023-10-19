@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     :modal="true"
     :draggable="true"
     :full-screen="mq.phone || mq.tablet"
@@ -14,7 +14,7 @@
     </template>
 
     <template #body>
-      <PentilaButton
+      <WeprodeButton
         v-if="isAdministrator"
         class="create-button"
         @click="openCreateVersionNoteModal"
@@ -23,14 +23,14 @@
           name="fa-plus"
         />
         <span>{{ $t('new') }}</span>
-      </PentilaButton>
+      </WeprodeButton>
 
       <VersionNoteSelector
         class="note-selector"
         @update="openUpdateVersionNoteModal"
       />
 
-      <PentilaSpinner
+      <WeprodeSpinner
         v-if="isLoading"
         style="z-index: 1"
       />
@@ -57,7 +57,7 @@
         />
       </teleport>
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>
