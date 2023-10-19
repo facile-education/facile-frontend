@@ -16,7 +16,7 @@
       @updateFilter="updateFilter"
     />
 
-    <PentilaSpinner
+    <WeprodeSpinner
       v-if="isLoading"
       style="z-index: 1"
     />

@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     :modal="true"
     :full-screen="mq.phone || mq.tablet"
     :width="700"
@@ -11,7 +11,7 @@
 
     <template #body>
       <div class="body">
-        <PentilaSpinner
+        <WeprodeSpinner
           v-if="isLoading"
           style="z-index: 1"
         />
@@ -67,13 +67,13 @@
     </template>
 
     <template #footer>
-      <PentilaButton
+      <WeprodeButton
         v-if="result.image !== null"
         :label="$t('saveButton')"
         @click="onConfirm"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>

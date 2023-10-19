@@ -2,7 +2,7 @@
   <section>
     <header>
       <h2 v-t="'serviceActions'" />
-      <PentilaDropdown
+      <WeprodeDropdown
         v-model="selectedService"
         :list="services"
         display-field="name"
@@ -15,7 +15,7 @@
       v-if="isLoading"
       class="loading-placeholder"
     >
-      <PentilaSpinner />
+      <WeprodeSpinner />
     </div>
     <div
       v-else-if="error === true"
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import PentilaUtils from 'pentila-utils'
+import WeprodeUtils from '@utils/weprode.utils'
 
 import { getStatServices } from '@/api/applicationManager.service'
 import { getActionsCount } from '@/api/statistics.service'
@@ -108,7 +108,7 @@ export default {
               element.name = this.$t('Menu.' + element.name)
             })
 
-            this.services = PentilaUtils.Array.sortWithString(data.services, false, 'name')
+            this.services = WeprodeUtils.sortArrayWithString(data.services, false, 'name')
             // Select 'TDB' by default
             this.selectedService = data.services.find(service => service.applicationId === 0)
           }

@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     class="preferences-modal"
     :modal="true"
     :full-screen="mq.phone || mq.tablet"
@@ -11,20 +11,20 @@
     </template>
 
     <template #body>
-      <PentilaTabList ref="tabList">
-        <PentilaTabItem :title="$t('accountTabLabel')">
+      <WeprodeTabList ref="tabList">
+        <WeprodeTabItem :title="$t('accountTabLabel')">
           <AccountTab @save="updateInfoLabel" />
-        </PentilaTabItem>
-        <PentilaTabItem :title="$t('messagingTabLabel')">
+        </WeprodeTabItem>
+        <WeprodeTabItem :title="$t('messagingTabLabel')">
           <MessagingTab @save="updateInfoLabel" />
-        </PentilaTabItem>
-      </PentilaTabList>
+        </WeprodeTabItem>
+      </WeprodeTabList>
     </template>
 
     <template #footer>
       <i>{{ infoLabel }}</i>
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>

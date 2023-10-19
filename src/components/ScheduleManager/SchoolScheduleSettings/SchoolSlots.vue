@@ -1,7 +1,7 @@
 <template>
   <section>
     <h2 v-t="('schoolSlots')" />
-    <PentilaSpinner
+    <WeprodeSpinner
       v-if="isLoading"
       style="z-index: 1"
     />
@@ -23,7 +23,7 @@
           />
         </li>
       </ol>
-      <PentilaButton
+      <WeprodeButton
         v-t="'addSlot'"
         @click="addSlot"
       />
@@ -31,11 +31,11 @@
 
     <footer>
       <div class="right">
-        <PentilaButton
+        <WeprodeButton
           v-t="'submit'"
           @click="submit"
         />
-        <PentilaErrorMessage :error-message="formErrorList.slots" />
+        <WeprodeErrorMessage :error-message="formErrorList.slots" />
       </div>
     </footer>
   </section>

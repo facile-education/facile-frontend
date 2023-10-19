@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     :modal="true"
     :full-screen="mq.phone || mq.tablet"
     :hidden-footer="true"
@@ -31,7 +31,7 @@
         <HelpArticle class="help-article" />
       </div>
     </template>
-  </pentilawindow>
+  </WeprodeWindow>
 </template>
 
 <script>

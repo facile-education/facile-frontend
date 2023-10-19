@@ -1,7 +1,7 @@
 <template>
   <div class="global-schedule-settings">
     <h1 :aria-label="$t('serviceTitle')" />
-    <PentilaSpinner
+    <WeprodeSpinner
       v-if="isLoading"
       style="z-index: 1"
     />
@@ -29,7 +29,7 @@
       />
 
       <footer>
-        <PentilaButton
+        <WeprodeButton
           v-t="'submit'"
           @click="submit"
         />

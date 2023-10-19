@@ -1,5 +1,5 @@
 <template>
-  <PentilaInput
+  <WeprodeInput
     v-model="searchInput"
     class="search-input"
     :placeholder="$t('searchPlaceholder')"

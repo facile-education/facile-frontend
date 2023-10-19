@@ -15,7 +15,7 @@
         :style="'background-color: ' + homework.color"
       />
 
-      <PentilaSpinner v-if="isLoading" />
+      <WeprodeSpinner v-if="isLoading" />
 
       <span
         class="transparent-part"
@@ -31,7 +31,7 @@
           v-if="homework.type===homeworksTypes.SIMPLE_INSTRUCTION"
           class="right-section"
         >
-          <PentilaCheckbox
+          <WeprodeCheckbox
             v-model="isDoneSwitchStatus"
             :label="homework.isDone ? $t('done') : $t('todo')"
             :right-display="true"

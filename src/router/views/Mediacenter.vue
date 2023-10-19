@@ -1,7 +1,7 @@
 <template>
   <h1 :aria-label="$t('serviceTitle')" />
   <NeroToolbar v-if="(schoolList && schoolList.length > 1)">
-    <PentilaDropdown
+    <WeprodeDropdown
       v-model="selectedSchool"
       :list="schoolList"
       display-field="schoolName"

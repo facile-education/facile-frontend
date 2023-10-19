@@ -1,5 +1,5 @@
 <template>
-  <PentilaSpinner v-if="userId === undefined" />
+  <WeprodeSpinner v-if="userId === undefined" />
   <div
     v-else
     class="nero"
@@ -98,8 +98,8 @@
 <script>
 import CookiesAgreement from '@components/Nero/CookiesAgreement.vue'
 import SessionEndAdvertising from '@components/Nero/SessionEndAdvertising.vue'
+import WeprodeUtils from '@utils/weprode.utils'
 import dayjs from 'dayjs'
-import PentilaUtils from 'pentila-utils'
 import { defineAsyncComponent } from 'vue'
 import { useCookies } from 'vue3-cookies'
 
@@ -200,7 +200,7 @@ export default {
       return this.user.userId
     },
     hasConfirmCookiesAgreement () {
-      return PentilaUtils.Cookies.getCookie('cookiesAgreement') === 'true'
+      return WeprodeUtils.getCookie('cookiesAgreement') === 'true'
     },
     remainingSessionMilliseconds () {
       return this.$store.state.menu.sessionTimeout - this.inactionTime

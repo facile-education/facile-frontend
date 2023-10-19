@@ -17,7 +17,7 @@
       v-else
       :key="right"
     >
-      <PentilaCheckbox
+      <WeprodeCheckbox
         :value="getValue(right)"
         :label="$t('CommunicationManager.InternalRoleTab.' + removePrefix(right))"
         @input="onInput(right)"

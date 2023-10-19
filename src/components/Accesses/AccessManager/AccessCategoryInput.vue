@@ -1,5 +1,5 @@
 <template>
-  <PentilaInput
+  <WeprodeInput
     ref="nameInput"
     v-model="categoryName"
     :placeholder="!initialName ? $t('newCategory') : undefined"

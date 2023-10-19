@@ -1,6 +1,6 @@
 <template>
   <div class="access-create-button">
-    <PentilaButton
+    <WeprodeButton
       class="create-button"
       data-test="createMessageButton"
       @click="clickNew"
@@ -9,7 +9,7 @@
         name="fa-plus"
       />
       <span v-t="'new'" />
-    </PentilaButton>
+    </WeprodeButton>
 
     <ContextMenu
       v-if="isContextMenuDisplayed && isAContextMenuDisplayed"

@@ -3,7 +3,7 @@
     class="article"
     :class="{'phone': mq.phone}"
   >
-    <PentilaSpinner v-if="isLoadingArticle" />
+    <WeprodeSpinner v-if="isLoadingArticle" />
     <section
       v-if="article"
       class="article-content"

@@ -1,4 +1,4 @@
-import PentilaUtils from 'pentila-utils'
+import WeprodeUtils from '@utils/weprode.utils'
 
 import applicationManagerService from '@/api/applicationManager.service'
 
@@ -111,7 +111,7 @@ export const actions = {
     commit('toggleEditionModal', true)
   },
   removeApplication ({ state, commit }) {
-    const app = PentilaUtils.JSON.deepCopy(state.selectedApplication)
+    const app = WeprodeUtils.deepCopy(state.selectedApplication)
     applicationManagerService.removeApplication(state.selectedApplication.applicationId).then(
       (data) => {
         if (data.success) {

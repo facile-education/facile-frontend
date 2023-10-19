@@ -1,5 +1,5 @@
+import WeprodeUtils from '@utils/weprode.utils'
 import axios from 'axios'
-import PentilaUtils from 'pentila-utils'
 
 import constants from '@/api/constants'
 
@@ -17,9 +17,9 @@ const AGENDA_PATH = '/agenda.agenda'
 function getEvents (startIndex, nbEvents, unreadOnly) {
   return axios.get(constants.JSON_WS_URL + AGENDA_PATH + '/get-events', {
     params: {
-      startIndex: startIndex,
-      nbEvents: nbEvents,
-      unreadOnly: unreadOnly
+      startIndex,
+      nbEvents,
+      unreadOnly
     }
   }).then(response => response.data)
 }
@@ -27,14 +27,14 @@ function getEvents (startIndex, nbEvents, unreadOnly) {
 function getEventDetails (eventId) {
   return axios.get(constants.JSON_WS_URL + AGENDA_PATH + '/get-event-details', {
     params: {
-      eventId: eventId
+      eventId
     }
   }).then(response => response.data)
 }
 
 function createEvent (title, description, location, startDate, endDate, populations) {
   return axios.post(constants.JSON_WS_URL + AGENDA_PATH + '/create-event',
-    PentilaUtils.URL.params({
+    WeprodeUtils.params({
       title,
       description,
       location,
@@ -47,7 +47,7 @@ function createEvent (title, description, location, startDate, endDate, populati
 
 function modifyEvent (eventId, title, description, location, startDate, endDate, populations, markAsUnreadForAll) {
   return axios.post(constants.JSON_WS_URL + AGENDA_PATH + '/modify-event',
-    PentilaUtils.URL.params({
+    WeprodeUtils.params({
       eventId,
       title,
       description,
@@ -63,14 +63,14 @@ function modifyEvent (eventId, title, description, location, startDate, endDate,
 function deleteEvent (eventId) {
   return axios.get(constants.JSON_WS_URL + AGENDA_PATH + '/delete-event', {
     params: {
-      eventId: eventId
+      eventId
     }
   }).then(response => response.data)
 }
 
 function setEventRead (eventId, read) {
   return axios.post(constants.JSON_WS_URL + AGENDA_PATH + '/set-event-read',
-    PentilaUtils.URL.params({
+    WeprodeUtils.params({
       eventId,
       read
     })

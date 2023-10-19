@@ -13,7 +13,7 @@
       v-if="isLoadingUserList"
       class="placeholder"
     >
-      <PentilaSpinner />
+      <WeprodeSpinner />
     </div>
     <div
       v-else-if="error"
@@ -52,7 +52,7 @@
 import ContactUserListHeader from '@components/ContactPicker/UserList/ContactUserListHeader.vue'
 import ContactUserListItem from '@components/ContactPicker/UserList/ContactUserListItem.vue'
 import { getFullName } from '@utils/commons.util'
-import PentilaUtils from 'pentila-utils'
+import WeprodeUtils from '@utils/weprode.utils'
 
 export default {
   name: 'ContactUserList',
@@ -95,7 +95,7 @@ export default {
         : []
     },
     sortedUserList () {
-      return PentilaUtils.Array.sortWithString(this.filteredUserList, false, 'text')
+      return WeprodeUtils.sortArrayWithString(this.filteredUserList, false, 'text')
     },
     isAllListSelected () {
       if (this.filteredUserList.length > 0) {
@@ -177,7 +177,7 @@ ul {
 }
 </style>
 
-<i18n locale="fr" >
+<i18n locale="fr">
 {
   "addressBookEmptyPlaceholder": "Aucun contact",
   "advancedSearchEmptyPlaceholder": "Aucun contact ne correspond à la recherche",

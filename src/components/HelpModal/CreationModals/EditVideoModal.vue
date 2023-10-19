@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     class="edit-video-modal"
     data-test="edit-video-modal"
     :full-screen="mq.phone || mq.tablet"
@@ -13,27 +13,27 @@
     </template>
 
     <template #body>
-      <PentilaInput
+      <WeprodeInput
         ref="urlInput"
         v-model="videoUrlInput"
         class="url-input"
         :placeholder="$t('videoUrlPlaceHolder')"
       />
 
-      <PentilaInput
+      <WeprodeInput
         v-model="videoDescriptionInput"
         :placeholder="$t('videoDescriptionPlaceHolder')"
       />
     </template>
 
     <template #footer>
-      <PentilaButton
+      <WeprodeButton
         data-test="submitButton"
         :label="$t('submit')"
         @click="submit"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>

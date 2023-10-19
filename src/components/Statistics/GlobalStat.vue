@@ -5,7 +5,7 @@
       v-if="isLoading"
       class="loading-placeholder"
     >
-      <PentilaSpinner />
+      <WeprodeSpinner />
     </div>
     <div
       v-else-if="error === true"

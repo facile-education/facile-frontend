@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <PentilaButton
+    <WeprodeButton
       v-if="isNew"
       :class="{'phone': mq.phone}"
       class="create-button"
@@ -10,7 +10,7 @@
         name="fa-plus"
       />
       <span>{{ $t('new') }}</span>
-    </PentilaButton>
+    </WeprodeButton>
     <button
       v-else
       ref="root"
@@ -95,7 +95,7 @@ export default {
         this.isContextMenuDisplayed = true
         this.$store.dispatch('contextMenu/openContextMenu',
           {
-            event: event,
+            event,
             options: this.option.subMenu
           })
       }

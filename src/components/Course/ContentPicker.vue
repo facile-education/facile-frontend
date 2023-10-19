@@ -3,7 +3,7 @@
     v-if="documentsProperties"
     class="add-content-buttons"
   >
-    <PentilaButton
+    <WeprodeButton
       v-for="content in filteredContents"
       :key="content.name"
       :title="content.name"
@@ -20,7 +20,7 @@
         type="file"
         @change="importDocument"
       >
-    </PentilaButton>
+    </WeprodeButton>
 
     <teleport to="body">
       <FilePickerModal

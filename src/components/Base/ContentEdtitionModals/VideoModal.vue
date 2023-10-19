@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     :modal="true"
     class="videoWindow"
     :width="600"
@@ -26,14 +26,14 @@
         v-if="!readOnly"
         class="video-name"
       >
-        <PentilaInput
+        <WeprodeInput
           ref="nameInput"
           v-model="videoName"
           :maxlength="200"
           :placeholder="$t('namePlaceholder')"
           @keyup.enter.stop="pressEnter"
         />
-        <PentilaErrorMessage
+        <WeprodeErrorMessage
           :error-message="formErrorList.videoName"
         />
       </div>
@@ -41,14 +41,14 @@
         v-if="!readOnly"
         class="video-url"
       >
-        <PentilaInput
+        <WeprodeInput
           v-model="contentValue"
           :placeholder="$t('urlPlaceholder')"
           :maxlength="2000"
           :error-message="formErrorList.embedHTMLElement || formErrorList.embedSrcAttribute || urlError"
           @keyup.enter.stop="pressEnter"
         />
-        <PentilaErrorMessage
+        <WeprodeErrorMessage
           :error-message="formErrorList.embedHTMLElement || formErrorList.embedSrcAttribute || urlError"
         />
       </div>
@@ -64,20 +64,20 @@
       v-if="!readOnly"
       #footer
     >
-      <PentilaButton
+      <WeprodeButton
         v-if="isCreation"
         :label="$t('add')"
         class="button create-button"
         @click="addVideo"
       />
-      <PentilaButton
+      <WeprodeButton
         v-else
         :label="$t('edit')"
         class="button"
         @click="editVideo"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>

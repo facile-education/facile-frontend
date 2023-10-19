@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     class="filepicker-window"
     :class="{'mobile': mq.phone || mq.tablet}"
     data-test="file-picker-modal"
@@ -35,21 +35,21 @@
     </template>
 
     <template #footer>
-      <PentilaButton
+      <WeprodeButton
         v-if="folderSelection"
         data-test="submitButton"
         :label="submitLabel !== 'noSelectedFolder' ? submitLabel : $t('noSelectedFolder')"
         :disabled="submitLabel === 'noSelectedFolder'"
         @click="emitSelectedFolder"
       />
-      <PentilaButton
+      <WeprodeButton
         v-else
         data-test="submitButton"
         :label="$t('submitButton')"
         @click="addNewFiles"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>

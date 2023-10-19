@@ -27,9 +27,9 @@
         v-if="isLoadingGroups"
         class="spinner-container"
       >
-        <PentilaSpinner />
+        <WeprodeSpinner />
       </div>
-      <PentilaDropdown
+      <WeprodeDropdown
         v-else
         v-model="filter.selectedGroup"
         :list="groupList"

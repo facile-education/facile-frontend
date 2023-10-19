@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import PentilaUtils from 'pentila-utils'
+import WeprodeUtils from '@utils/weprode.utils'
 
 import ResourceList from '@/components/Mediacenter/ResourceList'
 
@@ -34,7 +34,7 @@ export default {
         }
       })
 
-      return PentilaUtils.Array.sortWithString(categoryList, false, 'name')
+      return WeprodeUtils.sortArrayWithString(categoryList, false, 'name')
     },
     resourceList () {
       return this.$store.state.mediacenter.resourceList
@@ -50,7 +50,7 @@ export default {
         }
       })
 
-      return PentilaUtils.Array.sortWithString(categoryResourceList, false, 'name')
+      return WeprodeUtils.sortArrayWithString(categoryResourceList, false, 'name')
     }
   }
 }

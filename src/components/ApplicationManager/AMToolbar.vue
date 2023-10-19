@@ -1,6 +1,6 @@
 <template>
   <NeroToolbar v-if="show">
-    <PentilaButton
+    <WeprodeButton
       v-if="isAdministrator"
       class="create-button"
       :class="{'phone': mq.phone}"
@@ -8,8 +8,8 @@
     >
       <NeroIcon name="plus" />
       NOUVEAU
-    </PentilaButton>
-    <PentilaDropdown
+    </WeprodeButton>
+    <WeprodeDropdown
       v-if="managedSchoolList"
       :model-value="selectedSchool"
       :list="managedSchoolList"
@@ -17,13 +17,13 @@
       class="school-dropdown"
       @update:modelValue="onSchoolSelect"
     />
-    <PentilaSpinner v-else />
+    <WeprodeSpinner v-else />
   </NeroToolbar>
 </template>
 
 <script>
 
-import PentilaUtils from 'pentila-utils'
+import WeprodeUtils from '@utils/weprode.utils'
 import { defineAsyncComponent } from 'vue'
 
 import NeroToolbar from '@/components/Nero/NeroToolbar'
@@ -42,7 +42,7 @@ export default {
         return []
       }
 
-      const schoolList = PentilaUtils.JSON.deepCopy(this.$store.state.administration.schoolList)
+      const schoolList = WeprodeUtils.deepCopy(this.$store.state.administration.schoolList)
       if (this.isAdministrator) {
         schoolList.push({ schoolId: 0, schoolName: this.$t('allENT') })
       }

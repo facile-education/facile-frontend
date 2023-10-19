@@ -151,8 +151,8 @@
 </template>
 
 <script>
+import WeprodeUtils from '@utils/weprode.utils'
 import axios from 'axios'
-import PentilaUtils from 'pentila-utils'
 import { useCookies } from 'vue3-cookies'
 
 import authenticationService from '@/api/authentication.service'
@@ -219,7 +219,7 @@ export default {
     }
 
     // Add LFR cookie needed for authentication
-    if (PentilaUtils.Cookies.getCookie('COOKIE_SUPPORT') === '') {
+    if (WeprodeUtils.getCookie('COOKIE_SUPPORT') === '') {
       this.setCookie('COOKIE_SUPPORT', true, 365)
     }
 

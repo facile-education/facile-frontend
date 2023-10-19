@@ -1,6 +1,6 @@
 <template>
   <div class="activity-tab">
-    <PentilaSpinner
+    <WeprodeSpinner
       v-if="activitiesLoading"
       style="z-index: 100"
     />

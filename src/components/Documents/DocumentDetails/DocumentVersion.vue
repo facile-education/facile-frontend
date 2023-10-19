@@ -44,7 +44,7 @@
       v-else
       class="options"
     >
-      <PentilaButton
+      <WeprodeButton
         class="bottom-option"
         data-test="view-button"
         @click="viewVersion"
@@ -54,8 +54,8 @@
           alt=""
         >
         {{ $t('Documents.documentDetails.viewVersion') }}
-      </PentilaButton>
-      <PentilaButton
+      </WeprodeButton>
+      <WeprodeButton
         v-t="('Documents.documentDetails.restoreVersion')"
         class="bottom-option"
         data-test="restore-button"

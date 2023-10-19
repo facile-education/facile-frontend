@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     class="news-details-modal"
     data-test="news-details-modal"
     :modal="true"
@@ -23,14 +23,14 @@
 
     <template #footer>
       <div v-if="initNews.isEditable || initNews.isDeletable">
-        <PentilaButton
+        <WeprodeButton
           v-if="initNews.isEditable"
           class="footer-button"
           data-test="updateButton"
           :label="$t('update')"
           @click="openUpdateModal"
         />
-        <PentilaButton
+        <WeprodeButton
           v-if="initNews.isDeletable"
           class="footer-button"
           data-test="deleteButton"
@@ -39,7 +39,7 @@
         />
       </div>
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     :modal="true"
     :full-screen="mq.phone || mq.tablet"
     :hidden-footer="true"
@@ -19,7 +19,7 @@
         @removeContacts="$emit('removeContacts', $event)"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>

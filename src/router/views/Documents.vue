@@ -21,7 +21,7 @@
     />
 
     <div class="body">
-      <PentilaSpinner
+      <WeprodeSpinner
         v-if="areActionsInProgress"
         class="spinner"
       />
@@ -49,7 +49,7 @@
     </div>
   </div>
   <div v-else>
-    <PentilaSpinner />
+    <WeprodeSpinner />
   </div>
 
   <ContextMenu

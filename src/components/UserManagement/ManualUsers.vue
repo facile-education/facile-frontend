@@ -2,7 +2,7 @@
   <div class="manual-users">
     <!-- Header -->
     <div class="header">
-      <PentilaButton
+      <WeprodeButton
         class="create-user"
         :label="$t('create')"
         @click="createUser"
@@ -17,7 +17,7 @@
         <span>{{ $t('over') }}</span>
         <span>{{ nbTotalResults }}</span>
       </div>
-      <PentilaInput
+      <WeprodeInput
         ref="tagsinput"
         v-model="filter"
         :maxlength="200"
@@ -27,7 +27,7 @@
     </div>
 
     <!-- Results -->
-    <PentilaSpinner v-if="isLoadingUsers" />
+    <WeprodeSpinner v-if="isLoadingUsers" />
     <div
       v-if="selectedSchool === undefined"
       class="main-label"
@@ -70,7 +70,7 @@
 <script>
 import UserFields from '@components/UserManagement/UserFields'
 import UserRow from '@components/UserManagement/UserRow'
-import PentilaUtils from 'pentila-utils'
+import WeprodeUtils from '@utils/weprode.utils'
 
 import EditUserModal from '@/components/UserManagement/EditUserModal'
 
@@ -107,7 +107,7 @@ export default {
       return this.$store.state.userManagement.isSearchLocked
     },
     userList () {
-      return this.$store.state.userManagement.manualUserList ? PentilaUtils.Array.sortWithString(this.$store.state.userManagement.manualUserList, false, 'lastName') : undefined
+      return this.$store.state.userManagement.manualUserList ? WeprodeUtils.sortArrayWithString(this.$store.state.userManagement.manualUserList, false, 'lastName') : undefined
     },
     maxIndex () {
       if (this.$store.state.userManagement.nbTotalResults < this.$store.state.userManagement.nbItemsPerPage) {

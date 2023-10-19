@@ -10,7 +10,7 @@
       class="subject"
     />
     <div class="right-section">
-      <PentilaCheckbox
+      <WeprodeCheckbox
         v-if="isPresentCheckBoxActive"
         class="is-present-checkbox"
         label=""

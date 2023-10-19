@@ -1,30 +1,30 @@
 <template>
-  <PentilaTabList class="tablist">
-    <PentilaTabItem
+  <WeprodeTabList class="tablist">
+    <WeprodeTabItem
       :title="$t('administration')"
       class="tab"
     >
       <Administration />
-    </PentilaTabItem>
-    <PentilaTabItem
+    </WeprodeTabItem>
+    <WeprodeTabItem
       :title="$t('groups')"
       class="tab"
     >
       <GroupsMaintenance />
-    </PentilaTabItem>
-    <PentilaTabItem
+    </WeprodeTabItem>
+    <WeprodeTabItem
       :title="$t('one-shot-tools')"
       class="tab"
     >
       <OneShotMaintenance />
-    </PentilaTabItem>
-    <PentilaTabItem
+    </WeprodeTabItem>
+    <WeprodeTabItem
       :title="$t('password-update')"
       class="tab"
     >
       <PasswordUpdate />
-    </PentilaTabItem>
-  </PentilaTabList>
+    </WeprodeTabItem>
+  </WeprodeTabList>
 </template>
 
 <script>

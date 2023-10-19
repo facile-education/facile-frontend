@@ -15,7 +15,7 @@
           class="icon"
         />
       </button>
-      <PentilaSpinner
+      <WeprodeSpinner
         v-if="isLoading"
         style="z-index: 1"
       />

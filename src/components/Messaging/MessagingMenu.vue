@@ -88,7 +88,7 @@
               />
             </button>
           </div>
-          <PentilaInput
+          <WeprodeInput
             v-if="displayNewFolderInput"
             ref="newFolderInput"
             v-model="newFolderName"
@@ -120,7 +120,7 @@ import BaseIcon from '@components/Base/BaseIcon'
 import MenuFolder from '@components/Messaging/MenuFolder'
 import MenuRootFolder from '@components/Messaging/MenuRootFolder'
 import messagingUtils from '@utils/messaging.utils'
-import PentilaUtils from 'pentila-utils'
+import WeprodeUtils from '@utils/weprode.utils'
 import { nextTick } from 'vue'
 
 import folderService from '@/api/messaging/folder.service'
@@ -167,7 +167,7 @@ export default {
       return this.folderList.find(folder => folder.type === constants.messagingTrashFolderType)
     },
     personalFolders () {
-      return PentilaUtils.Array.sortWithString(this.folderList.filter(folder => folder.type === constants.messagingPersonalFolderType), false, 'folderName')
+      return WeprodeUtils.sortArrayWithString(this.folderList.filter(folder => folder.type === constants.messagingPersonalFolderType), false, 'folderName')
     },
     isAPersonalFolderSelected () {
       for (let i = 0; i < this.personalFolders.length; i++) {

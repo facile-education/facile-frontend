@@ -10,7 +10,7 @@
           :is-required="true"
           @selectDate="$emit('update:startDate', dayjs($event))"
         />
-        <PentilaErrorMessage
+        <WeprodeErrorMessage
           :error-message="formErrorList.schoolYearStartDate"
         />
       </div>
@@ -22,7 +22,7 @@
           :is-required="true"
           @selectDate="$emit('update:semesterDate', dayjs($event))"
         />
-        <PentilaErrorMessage
+        <WeprodeErrorMessage
           :error-message="formErrorList.semesterDate"
         />
       </div>
@@ -34,7 +34,7 @@
           :is-required="true"
           @selectDate="$emit('update:endDate', dayjs($event))"
         />
-        <PentilaErrorMessage
+        <WeprodeErrorMessage
           :error-message="formErrorList.endDate"
         />
       </div>

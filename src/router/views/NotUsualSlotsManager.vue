@@ -21,7 +21,7 @@
       v-if="mq.desktop"
       class="filters"
     >
-      <PentilaDropdown
+      <WeprodeDropdown
         v-if="currentUser.selectedSchool && currentSlotType && currentSlotType.type === 5"
         v-model="selectedClass"
         :placeholder="$t('groupFilter')"
@@ -55,7 +55,7 @@
     </template>
   </div>
   <div v-else>
-    <PentilaSpinner v-if="areActionsInProgress" />
+    <WeprodeSpinner v-if="areActionsInProgress" />
   </div>
 </template>
 

@@ -6,7 +6,7 @@
   >
     <!-- Forward -->
     <div class="param-header">
-      <PentilaCheckbox
+      <WeprodeCheckbox
         v-model="configuration.forward.isActive"
         class="checkbox"
         label=""
@@ -18,7 +18,7 @@
         :text="$t('forwardInfo')"
       />
     </div>
-    <PentilaTagsInput
+    <WeprodeTagsInput
       v-model="configuration.forward.addresses"
       :placeholder="$t('addRedirection')"
       display-field="text"
@@ -28,11 +28,11 @@
       class="param-value"
       @update:model-value="checkForm"
     />
-    <PentilaErrorMessage :error-message="errorMessage" />
+    <WeprodeErrorMessage :error-message="errorMessage" />
 
     <!-- Signature -->
     <div class="param-header">
-      <PentilaCheckbox
+      <WeprodeCheckbox
         v-model="configuration.signature.isActive"
         class="checkbox"
         label=""
@@ -51,7 +51,7 @@
 
     <!-- Auto-reply -->
     <div class="param-header">
-      <PentilaCheckbox
+      <WeprodeCheckbox
         v-model="configuration.autoReply.isActive"
         class="checkbox"
         label=""
@@ -68,7 +68,7 @@
       @blur="checkForm"
     />
   </div>
-  <PentilaSpinner v-else />
+  <WeprodeSpinner v-else />
 </template>
 
 <script>

@@ -14,7 +14,7 @@
       v-if="displayed"
       class="content"
     >
-      <PentilaSpinner
+      <WeprodeSpinner
         v-if="isLoading"
         style="z-index: 1"
       />

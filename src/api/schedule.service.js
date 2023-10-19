@@ -1,5 +1,5 @@
+import WeprodeUtils from '@utils/weprode.utils'
 import axios from 'axios'
-import PentilaUtils from 'pentila-utils'
 
 import constants from '@/api/constants'
 
@@ -45,7 +45,7 @@ function getGlobalConfiguration () {
  * Save ENT configuration (star year date, end year date, holidays and weeks parity
  */
 function saveGlobalConfiguration (startDate, semesterDate, endDate, holidays, h1Weeks, h2Weeks) {
-  return axios.post(constants.JSON_WS_URL + CDT_PATH + 'scheduleconfiguration/save-global-configuration', PentilaUtils.URL.params({
+  return axios.post(constants.JSON_WS_URL + CDT_PATH + 'scheduleconfiguration/save-global-configuration', WeprodeUtils.params({
     startDateStr: startDate.format('YYYY-MM-DD'),
     semesterDateStr: semesterDate.format('YYYY-MM-DD'),
     endDateStr: endDate.format('YYYY-MM-DD'),
@@ -70,7 +70,7 @@ function getSchoolSlotConfiguration (schoolId) {
  * Save school slots (P1, P2, etc...)
  */
 function saveSchoolSlotConfiguration (schoolId, slots) {
-  return axios.post(constants.JSON_WS_URL + CDT_PATH + 'slotconfiguration/save-school-slot-configuration', PentilaUtils.URL.params({
+  return axios.post(constants.JSON_WS_URL + CDT_PATH + 'slotconfiguration/save-school-slot-configuration', WeprodeUtils.params({
     schoolId,
     jsonConfig: JSON.stringify(slots)
   })).then(response => response.data)
@@ -127,14 +127,14 @@ function getSessionTeachersAndSubstitutes (sessionId) {
 }
 
 function saveTeacherSubstitutes (sessionId, teacherArray) {
-  return axios.post(constants.JSON_WS_URL + CDT_PATH + 'sessionteacher/save-teacher-substitutes', PentilaUtils.URL.params({
+  return axios.post(constants.JSON_WS_URL + CDT_PATH + 'sessionteacher/save-teacher-substitutes', WeprodeUtils.params({
     sessionId,
     teacherArray: JSON.stringify(teacherArray)
   })).then(response => response.data)
 }
 
 function createSession (groupId, subject, room, dayNumber, slot, startHour, endHour, teacherIds, isRecurrent) {
-  return axios.post(constants.JSON_WS_URL + CDT_PATH + 'cdtsession/create-session', PentilaUtils.URL.params({
+  return axios.post(constants.JSON_WS_URL + CDT_PATH + 'cdtsession/create-session', WeprodeUtils.params({
     groupId,
     subject,
     room,

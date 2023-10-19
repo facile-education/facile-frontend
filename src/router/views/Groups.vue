@@ -1,5 +1,5 @@
 <template>
-  <PentilaSpinner v-if="areActionsInProgress" />
+  <WeprodeSpinner v-if="areActionsInProgress" />
 
   <GroupToolbar />
 

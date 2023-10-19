@@ -1,6 +1,6 @@
 <template>
   <div class="redirection-selector">
-    <PentilaDropdown
+    <WeprodeDropdown
       v-model="selectedType"
       :list="typeList"
       :close-on-select="true"
@@ -8,7 +8,7 @@
       :sort="false"
       @update:model-value="changeType"
     />
-    <PentilaInput
+    <WeprodeInput
       v-if="selectedType.type === types.TYPE_EXTERNAL_URL"
       v-model="url"
       class="field"
@@ -40,7 +40,7 @@
       @click="isFilePickerDisplayed = true"
     />
   </div>
-  <PentilaErrorMessage
+  <WeprodeErrorMessage
     :error-message="errorMessage"
   />
 

@@ -45,7 +45,7 @@
 import BaseIcon from '@components/Base/BaseIcon.vue'
 import InfoModalUser from '@components/Dashboard/ReadInfos/InfoModalUser.vue'
 import { getFullName } from '@utils/commons.util'
-import PentilaUtils from 'pentila-utils'
+import WeprodeUtils from '@utils/weprode.utils'
 
 export default {
   name: 'ReadInfoModalPopulation',
@@ -76,10 +76,10 @@ export default {
       return this.formattedPopulation.members.filter(member => member.hasRead === false)
     },
     sortedReadMembers () {
-      return PentilaUtils.Array.sortWithString(this.populationReadMembers, false, 'fullName')
+      return WeprodeUtils.sortArrayWithString(this.populationReadMembers, false, 'fullName')
     },
     sortedUnReadMembers () {
-      return PentilaUtils.Array.sortWithString(this.populationUnReadMembers, false, 'fullName')
+      return WeprodeUtils.sortArrayWithString(this.populationUnReadMembers, false, 'fullName')
     }
   }
 }

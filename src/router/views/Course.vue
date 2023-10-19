@@ -1,28 +1,28 @@
 <template>
-  <PentilaTabList v-if="isTeacher">
-    <PentilaTabItem
+  <WeprodeTabList v-if="isTeacher">
+    <WeprodeTabItem
       :title="$t('schedule')"
     >
       <ScheduleTab />
-    </PentilaTabItem>
-    <PentilaTabItem
+    </WeprodeTabItem>
+    <WeprodeTabItem
       :title="$t('course')"
       class="course-tab-content"
     >
       <CourseTab :user-id="selectedUser.userId" />
-    </PentilaTabItem>
-    <!--            <PentilaTabItem-->
+    </WeprodeTabItem>
+    <!--            <WeprodeTabItem-->
     <!--              :title="$t('toCorrect')"-->
     <!--            >-->
     <!--              <TeacherHomeworkTab />-->
-    <!--            </PentilaTabItem>-->
-  </PentilaTabList>
+    <!--            </WeprodeTabItem>-->
+  </WeprodeTabList>
   <div v-else>
     <div
       v-if="childList.length > 1"
       class="first-line"
     >
-      <PentilaDropdown
+      <WeprodeDropdown
         v-model="selectedChild"
         :list="childList"
         :sort="false"
@@ -32,19 +32,19 @@
       />
     </div>
 
-    <PentilaTabList ref="tabList">
-      <PentilaTabItem
+    <WeprodeTabList ref="tabList">
+      <WeprodeTabItem
         :title="$t('homework')"
         :nb-notification="nbUndoneHomeworks"
       >
         <HomeworkTab :user-id="selectedUser.userId" />
-      </PentilaTabItem>
-      <PentilaTabItem
+      </WeprodeTabItem>
+      <WeprodeTabItem
         :title="$t('course')"
       >
         <CourseTab :user-id="selectedUser.userId" />
-      </PentilaTabItem>
-    </PentilaTabList>
+      </WeprodeTabItem>
+    </WeprodeTabList>
   </div>
 </template>
 

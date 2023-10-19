@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     class="create-link-modal"
     data-test="create-link-modal"
     :full-screen="mq.phone || mq.tablet"
@@ -13,32 +13,32 @@
     </template>
 
     <template #body>
-      <PentilaInput
+      <WeprodeInput
         ref="labelInput"
         v-model="linkLabel"
         class="label-input"
         :placeholder="$t('linkLabelPlaceHolder')"
       />
 
-      <PentilaInput
+      <WeprodeInput
         v-model="linkUrl"
         :placeholder="$t('linkUrlPlaceHolder')"
       />
-      <PentilaErrorMessage
+      <WeprodeErrorMessage
         v-if="linkUrl.length > linkUrlMaxSize"
         :error-message="$t('overflowUrlSize') + linkUrlMaxSize"
       />
     </template>
 
     <template #footer>
-      <PentilaButton
+      <WeprodeButton
         data-test="submitButton"
         :label="$t('submit')"
         :disabled="!(linkLabel.length > 0 && linkUrl.length > 0 && linkUrl.length <= linkUrlMaxSize)"
         @click="submit"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>

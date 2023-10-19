@@ -5,7 +5,7 @@
     v-if="schoolList.length > 1"
     class="header"
   >
-    <PentilaDropdown
+    <WeprodeDropdown
       v-model="selectedSchool"
       class="dropdown"
       :list="schoolList"
@@ -13,26 +13,26 @@
     />
   </div>
 
-  <PentilaTabList>
-    <PentilaTabItem
+  <WeprodeTabList>
+    <WeprodeTabItem
       :title="$t('manual-users')"
       class="tab"
     >
       <ManualUsers />
-    </PentilaTabItem>
-    <PentilaTabItem
+    </WeprodeTabItem>
+    <WeprodeTabItem
       :title="$t('delegations')"
       class="tab"
     >
       <Delegations />
-    </PentilaTabItem>
-    <PentilaTabItem
+    </WeprodeTabItem>
+    <WeprodeTabItem
       :title="$t('affectations')"
       class="tab"
     >
       <Affectations />
-    </PentilaTabItem>
-  </PentilaTabList>
+    </WeprodeTabItem>
+  </WeprodeTabList>
 </template>
 
 <script>

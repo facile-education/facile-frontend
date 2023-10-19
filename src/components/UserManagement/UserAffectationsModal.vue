@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     :modal="true"
     :draggable="true"
     class="affectations-modal"
@@ -17,7 +17,7 @@
       <div class="main">
         <!-- Left panel : school tree -->
         <div class="school-classes">
-          <PentilaInput
+          <WeprodeInput
             ref="classnameInput"
             v-model="filter"
             class="class-filter"
@@ -73,7 +73,7 @@
         </div>
       </div>
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>

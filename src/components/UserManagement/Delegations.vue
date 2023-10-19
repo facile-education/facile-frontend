@@ -2,7 +2,7 @@
   <div class="delegations">
     <!-- Header -->
     <div class="header">
-      <PentilaButton
+      <WeprodeButton
         class="add-delegation"
         :label="$t('add-delegation')"
         @click="openAddDelegationModal()"
@@ -54,7 +54,7 @@
 <script>
 import UserFields from '@components/UserManagement/UserFields'
 import UserRow from '@components/UserManagement/UserRow'
-import PentilaUtils from 'pentila-utils'
+import WeprodeUtils from '@utils/weprode.utils'
 
 import { addNewsDelegate, removeNewsDelegate } from '@/api/dashboard/news.service'
 import { addSchoolAdmin, getSchoolDelegates, removeSchoolAdmin } from '@/api/userManagement.service'
@@ -87,7 +87,7 @@ export default {
       return this.$store.state.user.selectedSchool
     },
     sortedSchoolAdminList () {
-      return PentilaUtils.Array.sortWithString(this.schoolAdmins, false, 'lastName')
+      return WeprodeUtils.sortArrayWithString(this.schoolAdmins, false, 'lastName')
     }
   },
   watch: {

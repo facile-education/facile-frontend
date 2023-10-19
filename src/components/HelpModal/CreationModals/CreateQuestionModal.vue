@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     class="create-question-modal"
     data-test="create-question-modal"
     :full-screen="mq.phone || mq.tablet"
@@ -13,7 +13,7 @@
     </template>
 
     <template #body>
-      <PentilaInput
+      <WeprodeInput
         ref="questionInput"
         v-model="questionInput"
         class="question-input"
@@ -29,14 +29,14 @@
     </template>
 
     <template #footer>
-      <PentilaButton
+      <WeprodeButton
         data-test="submitButton"
         :label="$t('submit')"
         :disabled="questionInput.length === 0 || answerInput.length === 0"
         @click="submit"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>

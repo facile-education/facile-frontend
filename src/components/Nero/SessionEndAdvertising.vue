@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     :modal="true"
     :draggable="true"
     :hidden-footer="true"
@@ -13,14 +13,14 @@
       </div>
 
       <div class="button-container">
-        <PentilaButton
+        <WeprodeButton
           v-t="('keepSessionAlive')"
           class="extend-session-button"
           @click="extendSession"
         />
       </div>
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>

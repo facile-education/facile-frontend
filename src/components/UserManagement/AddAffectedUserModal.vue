@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     :modal="true"
     :draggable="true"
     class="add-affected-user-modal"
@@ -14,7 +14,7 @@
 
     <template #body>
       <div class="user">
-        <PentilaTagsInput
+        <WeprodeTagsInput
           ref="tagsinput"
           v-model="selectedUsers"
           :close-on-select="true"
@@ -27,18 +27,18 @@
           class="tags"
           @inputChange="searchMembers"
         />
-        <PentilaErrorMessage :error-message="formErrorList.selectedUsers" />
+        <WeprodeErrorMessage :error-message="formErrorList.selectedUsers" />
       </div>
     </template>
 
     <template #footer>
-      <PentilaButton
+      <WeprodeButton
         :label="$t('add')"
         class="button"
         @click="addUsers"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>

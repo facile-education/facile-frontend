@@ -19,7 +19,7 @@
 <script>
 
 import AddressBookItem from '@components/ContactPicker/AddressBook/AddressBookItem.vue'
-import PentilaUtils from 'pentila-utils'
+import WeprodeUtils from '@utils/weprode.utils'
 
 export default {
   name: 'AddressBookPersonals',
@@ -39,7 +39,7 @@ export default {
   emits: ['addContacts', 'removeContacts'],
   computed: {
     sortedPopulations () {
-      return PentilaUtils.Array.sortWithString(this.populations, false, 'groupName')
+      return WeprodeUtils.sortArrayWithString(this.populations, false, 'groupName')
     }
   },
   methods: {

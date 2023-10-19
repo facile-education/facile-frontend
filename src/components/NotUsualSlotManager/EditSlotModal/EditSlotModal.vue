@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     v-if="configuration"
     :modal="true"
     :max-width="750"
@@ -25,7 +25,7 @@
         data-test="time-selection"
       >
         <span class="time-selection-left">{{ slotLabel }}</span>
-        <PentilaDropdown
+        <WeprodeDropdown
           v-if="slotList"
           v-model="selectedSlot"
           class="slots-list"
@@ -52,7 +52,7 @@
           :max-date="schoolYearEndDate.toDate()"
           @updateDates="updateSlotDates"
         />
-        <PentilaSpinner v-else />
+        <WeprodeSpinner v-else />
       </div>
 
       <div
@@ -66,42 +66,42 @@
           @blur="v$.newEvent.teacher.teacherId.$touch()"
           @update:model-value="updateTeacher"
         />
-        <PentilaErrorMessage :error-message="formErrorList.teacher" />
+        <WeprodeErrorMessage :error-message="formErrorList.teacher" />
       </div>
 
       <div
         class="room-part"
         data-test="room-part"
       >
-        <PentilaInput
+        <WeprodeInput
           v-model="newEvent.room"
           :placeholder="$t('NotUsualSlots.EditSlotModal.roomNamePlaceHolder')"
           @blur="v$.newEvent.room.$touch()"
         />
-        <PentilaErrorMessage :error-message="formErrorList.room" />
+        <WeprodeErrorMessage :error-message="formErrorList.room" />
       </div>
 
       <div data-test="capacity-part">
-        <PentilaInput
+        <WeprodeInput
           v-model="newEvent.capacity"
           type="number"
           :placeholder="capacityLabel"
           @blur="v$.newEvent.capacity.$touch()"
         />
-        <PentilaErrorMessage :error-message="formErrorList.capacity" />
+        <WeprodeErrorMessage :error-message="formErrorList.capacity" />
       </div>
     </template>
 
     <template #footer>
       <div class="footer">
-        <PentilaButton
+        <WeprodeButton
           :label="$t('Commons.submit')"
           class="confirm"
           @click="confirm"
         />
       </div>
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>

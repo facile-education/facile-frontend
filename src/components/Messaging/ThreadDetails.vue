@@ -91,7 +91,7 @@
           />
         </li>
       </ul>
-      <PentilaButton
+      <WeprodeButton
         v-if="!(mq.phone || mq.tablet)"
         class="create-button"
         data-test="createMessageButton"
@@ -101,7 +101,7 @@
           name="fa-plus"
         />
         <span v-t="'Messaging.new'" />
-      </PentilaButton>
+      </WeprodeButton>
     </div>
     <hr>
 

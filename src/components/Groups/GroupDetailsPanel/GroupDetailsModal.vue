@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     data-test="groups-details-modal"
     :modal="true"
     :full-screen="true"
@@ -14,7 +14,7 @@
     </template>
 
     <template #footer />
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>

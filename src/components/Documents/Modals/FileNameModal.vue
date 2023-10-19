@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     class="file-name-modal"
     data-test="file-name-modal"
     :class="mq.phone ? 'mobile': ''"
@@ -15,9 +15,9 @@
 
     <template #body>
       <div style="position: relative">
-        <PentilaSpinner v-if="isActionInProgress" />
+        <WeprodeSpinner v-if="isActionInProgress" />
 
-        <PentilaInput
+        <WeprodeInput
           ref="fileNameInput"
           v-model="inputText"
           class="name-input"
@@ -27,7 +27,7 @@
           @input="backError=''"
           @keyup.enter="submit"
         />
-        <PentilaErrorMessage
+        <WeprodeErrorMessage
           :error-message="formErrorList"
         />
 
@@ -40,7 +40,7 @@
     </template>
 
     <template #footer>
-      <PentilaButton
+      <WeprodeButton
         v-if="!(submitAction==='createAudio' && !stoppedState)"
         data-test="submitButton"
         :disabled="isActionInProgress"
@@ -48,7 +48,7 @@
         @click="submit"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>

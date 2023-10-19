@@ -1,6 +1,6 @@
 <template>
   <div class="menu-item-list">
-    <PentilaSpinner
+    <WeprodeSpinner
       v-if="isLoading"
       style="z-index: 1"
     />

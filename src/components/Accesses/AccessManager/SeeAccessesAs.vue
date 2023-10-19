@@ -1,5 +1,5 @@
 <template>
-  <PentilaDropdown
+  <WeprodeDropdown
     v-model="selectedRole"
     :list="roleList"
     :placeholder="$t('seeAs')"

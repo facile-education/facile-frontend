@@ -17,7 +17,7 @@
               @click="toggleImagePicker"
             />
 
-            <PentilaButton
+            <WeprodeButton
               v-if="user.picture !== ''"
               :title="$t('deleteButtonTitle')"
               type="circle"
@@ -28,9 +28,9 @@
                 src="@/assets/icons/trash_white.svg"
                 alt="trash"
               >
-            </PentilaButton>
+            </WeprodeButton>
 
-            <PentilaButton
+            <WeprodeButton
               v-else
               :title="$t('addButtonTitle')"
               :aria-label="$t('addButtonTitle')"
@@ -42,11 +42,11 @@
                 src="@/assets/icons/photo.svg"
                 alt="plus"
               >
-            </PentilaButton>
+            </WeprodeButton>
           </div>
         </div>
 
-        <PentilaSpinner
+        <WeprodeSpinner
           v-if="isSavingProfilePicture"
           style="z-index: 1"
         />
@@ -63,7 +63,7 @@
     </section>
     <!-- <section class="activity-report">
       <h4 v-t="'activityReport'" />
-      <PentilaDropdown
+      <WeprodeDropdown
         :model-value="selectedFrequency"
         :list="frequency"
         display-field="label"
@@ -84,7 +84,7 @@
 <script>
 import UserPicture from '@components/Base/UserPicture.vue'
 import ColorPicker from '@components/Nero/ColorPicker'
-import PentilaUtils from 'pentila-utils'
+import WeprodeUtils from '@utils/weprode.utils'
 import { defineAsyncComponent } from 'vue'
 
 import userService from '@/api/user.service'
@@ -148,7 +148,7 @@ export default {
     onColorChange (newColor) {
       userService.updateThemeColor(newColor).then((data) => {
         if (data.success) {
-          PentilaUtils.Theme.updateColor(this.themeColor, newColor)
+          WeprodeUtils.updateColor(this.themeColor, newColor)
           this.$store.commit('user/updateInterfacePreferences', { themeColor: newColor })
           this.themeColor = this.$store.state.user.themeColor
           this.$emit('save')
