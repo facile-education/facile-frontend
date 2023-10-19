@@ -15,7 +15,7 @@ describe('Mobile tests', () => {
     cy.login(url)
   })
 
-  it('Displays initial view and filters', () => {
+  it('Schedule_DisplayUserSchedule_Mobile_DisplaysInitialViewAndFilters', () => {
     // User input and datepicker button should be visible
     cy.get('.toolbar .selection').should('be.visible')
     cy.get('.toolbar .search .base-input').should('be.visible')
@@ -33,7 +33,7 @@ describe('Mobile tests', () => {
     cy.get('.toolbar .base-dropdown').should('be.visible')
   })
 
-  it('Navigates on select date', () => {
+  it('Schedule_DisplayUserSchedule_Mobile_NavigatesOnSelectDate', () => {
     cy.get('.toolbar .date-picker').click()
     cy.tick(500)
 
@@ -64,7 +64,7 @@ describe('Mobile tests', () => {
   //   cy.swipeLeft('.fc')
   // })
 
-  it('Displays event list', () => {
+  it('Schedule_DisplayUserSchedule_Mobile_DisplaysEventList', () => {
     cy.get('.search .base-input').type(studentSearch)
     // Tick to throw completion timeout
     cy.tick(500)

@@ -11,7 +11,7 @@ const waitForRefresh = () => {
   cy.wait(500)
 }
 
-describe('Service access', () => {
+describe('Schedule_Access', () => {
   beforeEach(() => {
     cy.clock(now.toDate().getTime())
     cy.exec('npm run db:loadTables cdt_tables.sql')
@@ -20,7 +20,7 @@ describe('Service access', () => {
   })
 
   toolbarManagerUsers.forEach(user => {
-    it('Displays service for ' + user.role, () => {
+    it('Schedule_Access_' + user.role + '_CanAccess', () => {
       cy.login(url, user)
 
       cy.get('.toolbar .base-dropdown').should('be.visible')
@@ -43,7 +43,7 @@ describe('Service access', () => {
   })
 
   toolbarUsers.forEach(user => {
-    it('Displays service for ' + user.role, () => {
+    it('Schedule_Access_' + user.role + '_CanAccess', () => {
       cy.login(url, user)
 
       cy.get('.toolbar .base-dropdown').should('be.visible')
@@ -66,7 +66,7 @@ describe('Service access', () => {
   })
 
   noToolbarUsers.forEach(user => {
-    it('Displays limited service for ' + user.role, () => {
+    it('Schedule_Access_' + user.role + '_CanNotAccess', () => {
       cy.login(url, user)
 
       cy.get('.toolbar .base-dropdown').should('not.exist')
@@ -81,7 +81,7 @@ describe('Service access', () => {
     })
   })
 
-  it('Displays error for non authenticated user', () => {
+  it('Schedule_Access_Unauthenticated_CanNotAccess', () => {
     cy.visit(url)
 
     cy.get('.toolbar .base-dropdown').should('not.exist')

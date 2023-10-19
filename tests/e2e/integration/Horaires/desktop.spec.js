@@ -196,7 +196,7 @@ describe('Desktop tests', () => {
       })
   })
 
-  it('Initializes other filter on selection', () => {
+  it('Schedule_DisplayUserSchedule_SwitchBetweenFilters', () => {
     logAsDirection()
     // User seletion
     cy.get('.search .base-input').type(studentSearch)
@@ -224,7 +224,7 @@ describe('Desktop tests', () => {
     cy.get('.button').contains('Groupe')
   })
 
-  it('Can substitute teacher', () => {
+  it('Schedule_ReplaceTeacher_SubstituteTeacher', () => {
     logAsDirection()
 
     // Group selection
@@ -318,7 +318,7 @@ describe('Desktop tests', () => {
       .contains(subsitutedTeacher).should('be.visible')
   })
 
-  it('Displays all teachers in substitute modal', () => {
+  it('Schedule_ReplaceTeacher_DisplayAllTeacherInSubstituteModal', () => {
     logAsDirection()
 
     // Group selection
