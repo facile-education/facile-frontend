@@ -103,20 +103,23 @@ export default {
     }
   },
   computed: {
+    documentsProperties () {
+      return this.$store.state.documents.documentsProperties
+    },
     hasGeogebraBroadcasted () {
-      return this.$store.state.documents.documentsProperties.hasGeogebraBroadcasted
+      return this.documentsProperties !== undefined && this.documentsProperties.hasGeogebraBroadcasted
     },
     hasMindmapBroadcasted () {
-      return this.$store.state.documents.documentsProperties.hasMindmapBroadcasted
+      return this.documentsProperties !== undefined && this.documentsProperties.hasMindmapBroadcasted
     },
     hasScratchBroadcasted () {
-      return this.$store.state.documents.documentsProperties.hasScratchBroadcasted
+      return this.documentsProperties !== undefined && this.documentsProperties.hasScratchBroadcasted
     },
     hasLoolBroadcasted () {
-      return this.$store.state.documents.documentsProperties.hasLoolBroadcasted
+      return this.documentsProperties !== undefined && this.documentsProperties.hasLoolBroadcasted
     },
     hasH5pBroadcasted () {
-      return this.$store.state.documents.documentsProperties.hasH5pBroadcasted
+      return this.documentsProperties !== undefined && this.documentsProperties.hasH5pBroadcasted
     }
   },
   watch: {
@@ -156,6 +159,10 @@ export default {
     loadMedia () {
       const versionId = (this.file.versionId === undefined || this.file.versionId === 'latest') ? 0 : this.file.versionId // for the backend type consistency
       const readOnly = !!this.file.readOnly // To force to have boolean
+      if (this.documentsProperties === undefined) {
+        this.$store.dispatch('documents/getGlobalDocumentsProperties')
+      }
+
       fileService.getResource(this.file.id, versionId, readOnly).then((data) => {
         if (data.success) {
           if (this.file.isGroupFile) {
