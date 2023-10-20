@@ -65,6 +65,8 @@ import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
 import schoolLifeService from '@/api/schoolLife-portlet.service'
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import SelectedSchool from '@/components/NotUsualSlotManager/SelectedSchool'
 import SlotTypeItem from '@/components/NotUsualSlotManager/SlotTypeItem'
 import notUsualSlotConstants from '@/constants/notUsualSlots'
@@ -74,7 +76,7 @@ const UserCompletion = defineAsyncComponent(() => import('@/components/NotUsualS
 
 export default {
   name: 'NotUsualSlotManager',
-  components: { PendingFiringModal, SelectedSchool, UserCompletion, HHCCalendar, SlotTypeItem },
+  components: { PendingFiringModal, SelectedSchool, UserCompletion, HHCCalendar, SlotTypeItem, WeprodeDropdown, WeprodeSpinner },
   inject: ['mq'],
   emits: ['update:layout'],
   data () {

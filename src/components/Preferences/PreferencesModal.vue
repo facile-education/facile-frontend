@@ -30,14 +30,20 @@
 <script>
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
+
+import WeprodeTabItem from '@/components/Base/Weprode/WeprodeTabItem.vue'
+import WeprodeTabList from '@/components/Base/Weprode/WeprodeTabList.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 const AccountTab = defineAsyncComponent(() => import('@/components/Preferences/AccountTab'))
 const MessagingTab = defineAsyncComponent(() => import('@/components/Preferences/MessagingTab'))
-
 export default {
   name: 'PreferencesModal',
   components: {
     MessagingTab,
-    AccountTab
+    AccountTab,
+    WeprodeTabList,
+    WeprodeTabItem,
+    WeprodeWindow
   },
   inject: ['mq'],
   props: {

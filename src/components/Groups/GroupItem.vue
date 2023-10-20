@@ -90,11 +90,12 @@
 import { defineAsyncComponent } from 'vue'
 
 import { extendCommunity } from '@/api/groups.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 const EditGroupModal = defineAsyncComponent(() => import('@components/Groups/EditGroupModal/EditGroupModal'))
 
 export default {
   name: 'GroupItem',
-  components: { EditGroupModal },
+  components: { EditGroupModal, WeprodeSpinner },
   inject: ['mq'],
   props: {
     group: {

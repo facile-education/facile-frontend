@@ -35,8 +35,10 @@
 </template>
 
 <script>
+import WeprodeCheckbox from '@/components/Base/Weprode/WeprodeCheckbox.vue'
 export default {
   name: 'UserRow',
+  components: { WeprodeCheckbox },
   props: {
     fields: {
       type: Array,

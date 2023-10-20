@@ -54,9 +54,9 @@
 <script>
 import WeprodeUtils from '@utils/weprode.utils'
 
-import WeprodeAutocomplete from '@/components/WeprodeAutocomplete'
-import WeprodeInput from '@/components/WeprodeInput'
-import WeprodeTagItem from '@/components/WeprodeTagItem'
+import WeprodeAutocomplete from '@/components/Base/Weprode/WeprodeAutocomplete.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeTagItem from '@/components/Base/Weprode/WeprodeTagItem.vue'
 
 export default {
   name: 'WeprodeTagsInput',

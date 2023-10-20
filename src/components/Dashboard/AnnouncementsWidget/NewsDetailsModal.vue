@@ -45,9 +45,12 @@
 <script>
 import NewsDetails from '@components/Dashboard/AnnouncementsWidget/NewsDetails.vue'
 
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
+
 export default {
   name: 'NewsDetailsModal',
-  components: { NewsDetails },
+  components: { NewsDetails, WeprodeButton, WeprodeWindow },
   inject: ['mq'],
   props: {
     initNews: {

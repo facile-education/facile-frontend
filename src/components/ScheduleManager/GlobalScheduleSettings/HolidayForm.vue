@@ -41,9 +41,12 @@ import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import dayjs from 'dayjs'
 
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+
 export default {
   name: 'HolidayForm',
-  components: { DateRangePicker },
+  components: { DateRangePicker, WeprodeErrorMessage, WeprodeInput },
   props: {
     minDate: {
       type: Object,

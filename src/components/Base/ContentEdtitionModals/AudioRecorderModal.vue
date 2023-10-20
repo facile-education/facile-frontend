@@ -45,9 +45,14 @@ import AudioRecorder from '@components/Nero/AudioRecorder.vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
+
 export default {
   name: 'AudioRecorderModal',
-  components: { AudioRecorder },
+  components: { AudioRecorder, WeprodeButton, WeprodeErrorMessage, WeprodeInput, WeprodeWindow },
   props: {
     duration: {
       type: Number,

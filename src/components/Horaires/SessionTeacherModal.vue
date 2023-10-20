@@ -64,14 +64,18 @@
 </template>
 
 <script>
-import UserCompletion from '@components/NotUsualSlotManager/UserCompletion'
 import dayjs from 'dayjs'
 
 import { getSessionTeachersAndSubstitutes, saveTeacherSubstitutes } from '@/api/schedule.service'
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeCheckbox from '@/components/Base/Weprode/WeprodeCheckbox.vue'
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
+import UserCompletion from '@/components/NotUsualSlotManager/UserCompletion'
 
 export default {
   name: 'SessionTeacherModal',
-  components: { UserCompletion },
+  components: { UserCompletion, WeprodeButton, WeprodeCheckbox, WeprodeDropdown, WeprodeWindow },
   inject: ['mq'],
   props: {
     sessionEvent: {

@@ -61,12 +61,13 @@ import WeprodeUtils from '@utils/weprode.utils'
 import dayjs from 'dayjs'
 
 import { getStudentHomeworks } from '@/api/homework.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import { CDT } from '@/constants/appConstants'
 import { nbHomeworksInWidget } from '@/constants/dashboardConstants'
 
 export default {
   name: 'HomeworkWidget',
-  components: { HomeworkHeader, HomeworkItem },
+  components: { HomeworkHeader, HomeworkItem, WeprodeSpinner },
   props: {
     userId: {
       type: Number,

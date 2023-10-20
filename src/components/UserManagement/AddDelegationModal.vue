@@ -48,9 +48,13 @@ import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 
 import { getDelegationCandidates } from '@/api/userManagement.service'
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeTagsInput from '@/components/Base/Weprode/WeprodeTagsInput.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
   name: 'AddDelegationModal',
+  components: { WeprodeErrorMessage, WeprodeTagsInput, WeprodeWindow },
   inject: ['mq'],
   props: {
   },

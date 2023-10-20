@@ -81,15 +81,15 @@
 </template>
 
 <script>
-import { library } from '@fortawesome/fontawesome-svg-core'
+// import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import VueResizable from 'vue-resizable'
 
-library.add(
-  require('@fortawesome/free-solid-svg-icons/faTimes').definition,
-  require('@fortawesome/free-solid-svg-icons/faExpand').definition,
-  require('@fortawesome/free-solid-svg-icons/faCompress').definition
-)
+// library.add(
+//   require('@fortawesome/free-solid-svg-icons/faTimes').definition,
+//   require('@fortawesome/free-solid-svg-icons/faExpand').definition,
+//   require('@fortawesome/free-solid-svg-icons/faCompress').definition
+// )
 
 export default {
   name: 'WeprodeWindow',

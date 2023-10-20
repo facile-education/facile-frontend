@@ -97,11 +97,14 @@ import CustomIcon from '@components/Base/CustomIcon.vue'
 import GroupActivityTab from '@components/Groups/GroupDetailsPanel/ActivityTab/GroupActivityTab'
 import GroupDetailsTab from '@components/Groups/GroupDetailsPanel/DetailsTab/GroupDetailsTab'
 import { defineAsyncComponent } from 'vue'
+
+import WeprodeTabItem from '@/components/Base/Weprode/WeprodeTabItem.vue'
+import WeprodeTabList from '@/components/Base/Weprode/WeprodeTabList.vue'
 const EditGroupModal = defineAsyncComponent(() => import('@components/Groups/EditGroupModal/EditGroupModal'))
 
 export default {
   name: 'GroupDetails',
-  components: { CustomIcon, GroupActivityTab, GroupDetailsTab, EditGroupModal },
+  components: { CustomIcon, GroupActivityTab, GroupDetailsTab, EditGroupModal, WeprodeTabList, WeprodeTabItem },
   inject: ['mq'],
   data () {
     return {

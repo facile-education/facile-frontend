@@ -54,9 +54,11 @@ import DateRangePicker from '@components/Base/DateRangePicker.vue'
 import dayjs from 'dayjs'
 
 import schoolLifeService from '@/api/schoolLife-portlet.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 export default {
   name: 'DeleteSlotModal',
-  components: { DateRangePicker },
+  components: { DateRangePicker, WeprodeSpinner, WeprodeWindow },
   inject: ['mq'],
   props: {
     initEvent: {

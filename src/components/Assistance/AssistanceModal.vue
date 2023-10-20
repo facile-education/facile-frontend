@@ -91,6 +91,10 @@ import { required } from '@vuelidate/validators'
 import { defineAsyncComponent } from 'vue'
 
 import { sendAssistanceMessage } from '@/api/messaging/message.service'
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal'))
 
 export default {
@@ -98,7 +102,11 @@ export default {
   components: {
     AttachedFiles,
     FilePickerModal,
-    CKEditor: CKEditor.component
+    CKEditor: CKEditor.component,
+    WeprodeButton,
+    WeprodeDropdown,
+    WeprodeErrorMessage,
+    WeprodeWindow
   },
   inject: ['mq'],
   props: {

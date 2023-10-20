@@ -20,11 +20,13 @@
 import WeprodeUtils from '@utils/weprode.utils'
 
 import { getSchoollifeAgents, getSchoolStudents } from '@/api/userSearch.service'
+import WeprodeTagsInput from '@/components/Base/Weprode/WeprodeTagsInput.vue'
 import { nbCharBeforeCompletion } from '@/constants/appConstants'
 let timeout
 
 export default {
   name: 'UserCompletion',
+  components: { WeprodeTagsInput },
   props: {
     maxSize: {
       type: Number,

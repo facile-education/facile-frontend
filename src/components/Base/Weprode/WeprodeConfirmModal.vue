@@ -23,8 +23,8 @@
 </template>
 
 <script>
-import WeprodeButton from '@/components/WeprodeButton'
-import WeprodeWindow from '@/components/WeprodeWindow'
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
   name: 'WeprodeConfirmModal',

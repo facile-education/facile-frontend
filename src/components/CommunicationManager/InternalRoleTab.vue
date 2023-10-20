@@ -27,8 +27,10 @@
 </template>
 
 <script>
+import WeprodeCheckbox from '@/components/Base/Weprode/WeprodeCheckbox.vue'
 export default {
   name: 'InternalRoleTab',
+  components: { WeprodeCheckbox },
   props: {
     role: {
       type: Object,

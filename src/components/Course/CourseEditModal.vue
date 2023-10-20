@@ -68,6 +68,10 @@ import dayjs from 'dayjs'
 import { defineAsyncComponent, nextTick } from 'vue'
 
 import { addSessionContent, getSessionPreview, updateSessionContent } from '@/api/course.service'
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 import ContentPicker from '@/components/Course/ContentPicker.vue'
 import contentTypeConstants from '@/constants/contentTypeConstants'
 
@@ -77,7 +81,11 @@ export default {
   name: 'CourseEditModal',
   components: {
     CourseContent,
-    ContentPicker
+    ContentPicker,
+    WeprodeButton,
+    WeprodeErrorMessage,
+    WeprodeInput,
+    WeprodeWindow
   },
   inject: ['mq'],
   props: {

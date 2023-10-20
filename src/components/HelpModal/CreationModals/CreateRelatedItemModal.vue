@@ -34,10 +34,15 @@
 </template>
 
 <script>
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
+
 import { getHelpMenu, saveRelation } from '@/api/help.service'
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
   name: 'CreateRelatedItemModal',
+  components: { WeprodeButton, WeprodeDropdown, WeprodeWindow },
   inject: ['mq'],
   emits: ['close'],
   data () {

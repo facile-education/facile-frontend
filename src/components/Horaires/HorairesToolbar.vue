@@ -94,12 +94,15 @@
 </template>
 
 <script>
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import WeprodeUtils from '@utils/weprode.utils'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
 import groupService from '@/api/groups.service'
 import { getSchoolUsers } from '@/api/userSearch.service'
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeTagsInput from '@/components/Base/Weprode/WeprodeTagsInput.vue'
 import NeroIcon from '@/components/Nero/NeroIcon'
 import NeroToolbar from '@/components/Nero/NeroToolbar'
 const DatepickerNav = defineAsyncComponent(() => import('@/components/Horaires/DatepickerNav'))
@@ -109,7 +112,10 @@ export default {
   components: {
     DatepickerNav,
     NeroIcon,
-    NeroToolbar
+    NeroToolbar,
+    WeprodeButton,
+    WeprodeDropdown,
+    WeprodeTagsInput
   },
   inject: ['mq'],
   emits: ['updateSessions'],

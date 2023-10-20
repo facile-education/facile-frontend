@@ -24,9 +24,11 @@
 import ContextMenu from '@components/ContextMenu/ContextMenu.vue'
 import NeroIcon from '@components/Nero/NeroIcon.vue'
 
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+
 export default {
   name: 'AccessCreateButton',
-  components: { ContextMenu, NeroIcon },
+  components: { ContextMenu, NeroIcon, WeprodeButton },
   emits: ['createCategory', 'createAccess'],
   data () {
     return {

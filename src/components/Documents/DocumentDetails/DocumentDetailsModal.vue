@@ -49,11 +49,13 @@
 import DocumentMetaData from '@components/Documents/DocumentDetails/DocumentMetaData'
 import DocumentVersionsList from '@components/Documents/DocumentDetails/DocumentVersionsList'
 import { defineAsyncComponent } from 'vue'
+
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 const GroupDetailsModal = defineAsyncComponent(() => import('@components/Groups/GroupDetailsPanel/GroupDetailsModal'))
 
 export default {
   name: 'DocumentDetailsModal',
-  components: { GroupDetailsModal, DocumentVersionsList, DocumentMetaData },
+  components: { GroupDetailsModal, DocumentVersionsList, DocumentMetaData, WeprodeWindow },
   computed: {
     computedHeader () {
       if (this.selectedDocuments.length === 1) {

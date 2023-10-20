@@ -42,9 +42,14 @@ import WeprodeUtils from '@utils/weprode.utils'
 
 import { getAllSchools } from '@/api/organization.service'
 import { getRoleList } from '@/api/role.service'
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
 
 export default {
   name: 'ContactAdvancedSearch',
+  components: { WeprodeButton, WeprodeDropdown, WeprodeErrorMessage, WeprodeInput },
   props: {
     minHeight: {
       type: String,

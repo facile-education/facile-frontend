@@ -70,10 +70,11 @@ import BaseIcon from '@components/Base/BaseIcon'
 import dayjs from 'dayjs'
 
 import versionsService from '@/api/documents/version.service'
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
 
 export default {
   name: 'DocumentVersion',
-  components: { BaseIcon },
+  components: { BaseIcon, WeprodeButton },
   props: {
     version: {
       type: Object,

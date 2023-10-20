@@ -33,10 +33,15 @@
 </template>
 
 <script>
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
+
 import { saveItem } from '@/api/help.service'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
   name: 'EdittitleInputModal',
+  components: { WeprodeButton, WeprodeInput, WeprodeWindow },
   inject: ['mq'],
   props: {
     currentTitle: {

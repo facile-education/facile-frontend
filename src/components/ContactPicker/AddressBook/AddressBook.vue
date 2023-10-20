@@ -40,10 +40,11 @@ import AddressBookCommunities from '@components/ContactPicker/AddressBook/ItemsT
 import AddressBookSchool from '@components/ContactPicker/AddressBook/ItemsTypes/AddressBookSchool.vue'
 
 import { getContactTree } from '@/api/contact.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 
 export default {
   name: 'AddressBook',
-  components: { AddressBookSchool, AddressBookCommunities },
+  components: { AddressBookSchool, AddressBookCommunities, WeprodeSpinner },
   props: {
     selectedLists: {
       type: Array,

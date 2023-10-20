@@ -9,8 +9,10 @@
 
 <script>
 
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 export default {
   name: 'NotFound',
+  components: { WeprodeSpinner },
   emits: ['update:layout'],
   data () {
     return {

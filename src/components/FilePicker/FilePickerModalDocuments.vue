@@ -49,10 +49,11 @@ import WeprodeUtils from '@utils/weprode.utils'
 import documentsService from '@/api/documents/documents.service'
 import navigationService from '@/api/documents/folder.service'
 import groupService from '@/api/documents/group.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 
 export default {
   name: 'FilePickerModalDocumentTab',
-  components: { Breadcrumb, FilePickerFile, FilePickerFolder },
+  components: { Breadcrumb, FilePickerFile, FilePickerFolder, WeprodeSpinner },
   inject: ['mq'],
   props: {
     folderSelection: {

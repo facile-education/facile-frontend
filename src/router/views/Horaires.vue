@@ -42,6 +42,7 @@ import customParseFormat from 'dayjs/plugin/customParseFormat'
 // Lazy loading
 import { defineAsyncComponent } from 'vue'
 
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import HorairesToolbar from '@/components/Horaires/HorairesToolbar'
 const Timeline = defineAsyncComponent(() => import('@/components/Horaires/Timeline'))
 const SessionTeacherModal = defineAsyncComponent(() => import('@/components/Horaires/SessionTeacherModal'))
@@ -56,7 +57,8 @@ export default {
     HorairesToolbar,
     SessionTeacherModal,
     CreateSessionModal,
-    Timeline
+    Timeline,
+    WeprodeSpinner
   },
   inject: ['mq'],
   emits: ['update:layout'],

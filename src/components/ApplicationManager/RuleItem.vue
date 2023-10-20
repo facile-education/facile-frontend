@@ -50,8 +50,13 @@
 import { useVuelidate } from '@vuelidate/core'
 import { requiredIf } from '@vuelidate/validators'
 
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeTagsInput from '@/components/Base/Weprode/WeprodeTagsInput.vue'
+
 export default {
   name: 'RuleItem',
+  components: { WeprodeButton, WeprodeErrorMessage, WeprodeTagsInput },
   inject: ['mq'],
   props: {
     rule: {

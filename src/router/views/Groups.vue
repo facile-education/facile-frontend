@@ -19,6 +19,7 @@
 import GroupToolbar from '@components/Groups/GroupToolbar'
 import { defineAsyncComponent } from 'vue'
 
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import GroupList from '@/components/Groups/GroupList'
 
 const GroupDetails = defineAsyncComponent(() => import('@components/Groups/GroupDetailsPanel/GroupDetails'))
@@ -30,7 +31,8 @@ export default {
     GroupDetails,
     GroupToolbar,
     GroupList,
-    GroupDetailsModal
+    GroupDetailsModal,
+    WeprodeSpinner
   },
   inject: ['mq'],
   emits: ['update:layout'],

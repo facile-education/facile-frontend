@@ -59,9 +59,13 @@ import dayjs from 'dayjs'
 import { nextTick } from 'vue'
 
 import schoolLifeService from '@/api/schoolLife-portlet.service'
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeTextArea from '@/components/Base/Weprode/WeprodeTextArea.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
   name: 'PendingFiringModal',
+  components: { WeprodeErrorMessage, WeprodeTextArea, WeprodeWindow },
   inject: ['mq'],
   props: {
     pendingFiring: {

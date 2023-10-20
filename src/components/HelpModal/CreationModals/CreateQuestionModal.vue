@@ -42,12 +42,15 @@
 <script>
 import InlineEditor from '@ckeditor/ckeditor5-build-inline'
 import { component as CKEditor } from '@ckeditor/ckeditor5-vue'
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 
 import { saveItem } from '@/api/help.service'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
   name: 'CreateQuestionModal',
-  components: { CKEditor },
+  components: { CKEditor, WeprodeButton, WeprodeInput, WeprodeWindow },
   inject: ['mq'],
   emits: ['close'],
   data () {

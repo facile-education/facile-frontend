@@ -124,13 +124,15 @@ import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
 import { deleteNews, getNewsDetails } from '@/api/dashboard/news.service'
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import { defaultImagesKeys } from '@/constants/icons'
 const AttachedFile = defineAsyncComponent(() => import('@components/AttachedFiles/AttachedFile.vue'))
 const SaveNewsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/SaveNewsModal.vue'))
 
 export default {
   name: 'NewsDetails',
-  components: { AttachedFile, SaveNewsModal, ReadInfos, PopulationList },
+  components: { AttachedFile, SaveNewsModal, ReadInfos, PopulationList, WeprodeButton, WeprodeSpinner },
   props: {
     initNews: {
       type: Object,

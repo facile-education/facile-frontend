@@ -42,9 +42,15 @@
 </template>
 
 <script>
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
+
 import { saveLink } from '@/api/help.service'
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 export default {
   name: 'CreateExternalLinkModal',
+  components: { WeprodeButton, WeprodeErrorMessage, WeprodeInput, WeprodeWindow },
   inject: ['mq'],
   emits: ['close'],
   data () {

@@ -24,9 +24,11 @@
 
 <script>
 import ContactPicker from '@components/ContactPicker/ContactPicker.vue'
+
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 export default {
   name: 'ContactPickerModal',
-  components: { ContactPicker },
+  components: { ContactPicker, WeprodeWindow },
   inject: ['mq'],
   props: {
     selectedContacts: {

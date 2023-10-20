@@ -44,10 +44,12 @@ import UserAccessCategory from '@components/Accesses/AccessVisualization/UserAcc
 import { sortAccesses } from '@utils/accessUtils'
 
 import { getUserAccesses } from '@/api/access.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
   name: 'AccessModal',
-  components: { UserAccessCategory },
+  components: { UserAccessCategory, WeprodeSpinner, WeprodeWindow },
   inject: ['mq'],
   props: {
     initCategoryList: {

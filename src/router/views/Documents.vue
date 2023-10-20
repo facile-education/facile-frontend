@@ -102,6 +102,7 @@ import FilePickerModal from '@components/FilePicker/FilePickerModal'
 import { computeDocumentsOptions, deleteEntities, downloadDocument, importDocuments } from '@utils/documents.util'
 import { alertNoFile, returnAddedFiles } from '@utils/upload.util'
 
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import { DOCUMENTS } from '@/constants/appConstants'
 import { defaultFields, fieldsWithoutSize } from '@/constants/documentsConstants'
 import { documentSpaceOptions, groupOptions, mobileDocumentSpaceOptions } from '@/constants/options'
@@ -109,7 +110,7 @@ import { removeMenuOptionIfExist } from '@/utils/commons.util'
 
 export default {
   name: 'Documents',
-  components: { PermissionsModal, DocumentDetailsModal, FilePickerModal, FileNameModal, FolderNameModal, FilePickerArea, ContextMenu, DocumentDetails, DocumentList, Breadcrumb, CurrentOptions },
+  components: { PermissionsModal, DocumentDetailsModal, FilePickerModal, FileNameModal, FolderNameModal, FilePickerArea, ContextMenu, DocumentDetails, DocumentList, Breadcrumb, CurrentOptions, WeprodeSpinner },
   inject: ['mq'],
   emits: ['update:layout'],
   data () {

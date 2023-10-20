@@ -17,10 +17,11 @@ import SearchHistoryItem from '@components/Search/SearchHistory/SearchHistoryIte
 import { compare } from '@utils/commons.util'
 
 import { getLastSearchQueries } from '@/api/search.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 
 export default {
   name: 'SearchHistory',
-  components: { QuickSearchPanelHeader, SearchHistoryItem },
+  components: { QuickSearchPanelHeader, SearchHistoryItem, WeprodeSpinner },
   data () {
     return {
       historyList: [],

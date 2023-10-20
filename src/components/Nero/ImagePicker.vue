@@ -83,13 +83,17 @@ import SelectFilesButtons from '@components/FilePicker/SelectFilesButtons.vue'
 import { Cropper, Preview } from 'vue-advanced-cropper'
 
 import { getResource, uploadTmpFile } from '@/api/documents/file.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
   name: 'ImagePickerModal',
   components: {
     SelectFilesButtons,
     Cropper,
-    Preview
+    Preview,
+    WeprodeSpinner,
+    WeprodeWindow
   },
   inject: ['mq'],
   props: {

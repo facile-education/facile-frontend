@@ -40,10 +40,14 @@ import { required } from '@vuelidate/validators'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+
 dayjs.extend(customParseFormat)
 
 export default {
   name: 'TimeSelection',
+  components: { WeprodeErrorMessage, WeprodeInput },
   props: {
     range: {
       type: Object,

@@ -46,10 +46,12 @@
 import ActivityFilterItem from '@components/Dashboard/ActivityWidget/ActivityFilterItem.vue'
 
 import { getUserCommunities } from '@/api/groups.service'
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 
 export default {
   name: 'ActivityFilter',
-  components: { ActivityFilterItem },
+  components: { ActivityFilterItem, WeprodeDropdown, WeprodeSpinner },
   props: {
     initialFilter: {
       type: Object,

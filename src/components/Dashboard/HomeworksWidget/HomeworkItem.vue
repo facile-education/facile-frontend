@@ -67,11 +67,13 @@ import { getHomeworkTeacherName } from '@utils/commons.util'
 import dayjs from 'dayjs'
 
 import { setHomeworkDoneStatus } from '@/api/homework.service'
+import WeprodeCheckbox from '@/components/Base/Weprode/WeprodeCheckbox.vue'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import { CDT } from '@/constants/appConstants'
 import { homeworksTypes } from '@/constants/dashboardConstants'
 export default {
   name: 'HomeworkItem',
-  components: { BaseIcon },
+  components: { BaseIcon, WeprodeCheckbox, WeprodeSpinner },
   props: {
     homework: {
       type: Object,

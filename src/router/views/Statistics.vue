@@ -118,11 +118,11 @@ import VisitsChart from '@components/Statistics/VisitsChart'
 import dayjs from 'dayjs'
 
 import { getGlobalConfiguration } from '@/api/schedule.service'
-import Layout from '@/router/layouts/BannerLayout'
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
 
 export default {
   name: 'Statistics',
-  components: { DateRangePicker, VisitsChart, ActionsChart, StatsActivesUsers, StatsDoughnut, GlobalStat, Layout },
+  components: { DateRangePicker, VisitsChart, ActionsChart, StatsActivesUsers, StatsDoughnut, GlobalStat, WeprodeDropdown },
   inject: ['mq'],
   emits: ['update:layout'],
   data () {

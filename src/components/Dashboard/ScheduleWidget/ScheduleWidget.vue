@@ -43,10 +43,11 @@ import ScheduleItem from '@components/Dashboard/ScheduleWidget/ScheduleItem.vue'
 import dayjs from 'dayjs'
 
 import { getUserSchedule } from '@/api/dashboard.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import { SCHEDULE } from '@/constants/appConstants'
 export default {
   name: 'ScheduleWidget',
-  components: { ScheduleItem, ScheduleHeader },
+  components: { ScheduleItem, ScheduleHeader, WeprodeSpinner },
   props: {
     userId: {
       type: Number,

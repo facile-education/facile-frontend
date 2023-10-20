@@ -91,10 +91,11 @@ import MemberPack from '@components/Groups/GroupDetailsPanel/DetailsTab/MemberPa
 import dayjs from 'dayjs'
 
 import { getCommunityMembers } from '@/api/groups.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 
 export default {
   name: 'GroupDetailsTab',
-  components: { MemberPack },
+  components: { MemberPack, WeprodeSpinner },
   inject: ['mq'],
   props: {
     group: {

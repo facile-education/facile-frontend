@@ -26,13 +26,14 @@
 </template>
 
 <script>
-
 import ReadInfoModalPopulation from '@components/Dashboard/ReadInfos/ReadInfoModalPopulation.vue'
 import WeprodeUtils from '@utils/weprode.utils'
 
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
+
 export default {
   name: 'ReadInfoModal',
-  components: { ReadInfoModalPopulation },
+  components: { ReadInfoModalPopulation, WeprodeWindow },
   inject: ['mq'],
   props: {
     readInfos: {

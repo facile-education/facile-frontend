@@ -145,16 +145,22 @@
 </template>
 
 <script>
-
 import dayjs from 'dayjs'
 import { nextTick } from 'vue'
 
 import schoolLifeService from '@/api/schoolLife-portlet.service'
 import userManagementService from '@/api/userManagement.service'
+import WeprodeCheckbox from '@/components/Base/Weprode/WeprodeCheckbox.vue'
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeTextArea from '@/components/Base/Weprode/WeprodeTextArea.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 import notUsualSlotsConstants from '@/constants/notUsualSlots'
 
 export default {
   name: 'StudentRegistrationModal',
+  components: { WeprodeCheckbox, WeprodeDropdown, WeprodeErrorMessage, WeprodeInput, WeprodeTextArea, WeprodeWindow },
   inject: ['mq'],
   props: {
     event: {

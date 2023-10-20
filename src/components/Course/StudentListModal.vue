@@ -67,8 +67,14 @@
 <script>
 import _ from 'lodash'
 
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeCheckbox from '@/components/Base/Weprode/WeprodeCheckbox.vue'
+import WeprodeRadioButton from '@/components/Base/Weprode/WeprodeRadioButton.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
+
 export default {
   name: 'StudentListModal',
+  components: { WeprodeButton, WeprodeCheckbox, WeprodeRadioButton, WeprodeWindow },
   inject: ['mq'],
   props: {
     studentList: {

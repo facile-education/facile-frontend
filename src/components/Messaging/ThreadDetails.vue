@@ -162,6 +162,7 @@
 <script>
 
 import IconOption from '@components/Base/IconOption'
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import Message from '@components/Messaging/Message'
 import NeroIcon from '@components/Nero/NeroIcon.vue'
 import _ from 'lodash'
@@ -175,7 +176,8 @@ export default {
   components: {
     NeroIcon,
     IconOption,
-    Message
+    Message,
+    WeprodeButton
   },
   inject: ['mq'],
   data () {

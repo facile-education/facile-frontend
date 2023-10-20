@@ -38,9 +38,13 @@
 
 <script>
 import { saveItem } from '@/api/help.service'
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
   name: 'EditVideoModal',
+  components: { WeprodeButton, WeprodeInput, WeprodeWindow },
   inject: ['mq'],
   props: {
     videoUrl: {

@@ -71,6 +71,8 @@ import UserFields from '@components/UserManagement/UserFields'
 import UserRow from '@components/UserManagement/UserRow'
 import WeprodeUtils from '@utils/weprode.utils'
 
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import AddAffectedUserModal from '@/components/UserManagement/AddAffectedUserModal.vue'
 import UserAffectationsModal from '@/components/UserManagement/UserAffectationsModal.vue'
 
@@ -80,7 +82,9 @@ export default {
     UserRow,
     UserFields,
     UserAffectationsModal,
-    AddAffectedUserModal
+    AddAffectedUserModal,
+    WeprodeInput,
+    WeprodeSpinner
   },
   data () {
     return {

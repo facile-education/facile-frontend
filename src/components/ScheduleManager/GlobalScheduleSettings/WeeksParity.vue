@@ -25,9 +25,11 @@
 <script>
 import InformationIcon from '@components/Base/InformationIcon.vue'
 
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+
 export default {
   name: 'WeeksParity',
-  components: { InformationIcon },
+  components: { InformationIcon, WeprodeInput },
   props: {
     h1Weeks: {
       type: String,

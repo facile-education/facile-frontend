@@ -89,8 +89,13 @@ import { required } from '@vuelidate/validators'
 import { nextTick } from 'vue'
 
 import { saveSchoolAccess } from '@/api/access.service'
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeTagsInput from '@/components/Base/Weprode/WeprodeTagsInput.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 import { defaultImagesKeys } from '@/constants/icons'
-
 const inputMaxSize = 75
 const isUnderInputMaxSize = (value) => validators.isUnderMaxSize(value, inputMaxSize)
 const isNotEmpty = (list) => validators.isNotEmpty(list)
@@ -98,7 +103,7 @@ const isNotPlaceholder = (value) => value.categoryId !== -1
 
 export default {
   name: 'SaveAccessModal',
-  components: { ThumbnailSelector, AccessRedirectionSelector },
+  components: { ThumbnailSelector, AccessRedirectionSelector, WeprodeButton, WeprodeDropdown, WeprodeErrorMessage, WeprodeInput, WeprodeTagsInput, WeprodeWindow },
   inject: ['mq'],
   props: {
     initAccess: {

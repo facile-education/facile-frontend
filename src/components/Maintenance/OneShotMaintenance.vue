@@ -17,10 +17,13 @@
 
 <script>
 
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
+
 import { cleanupDropboxes } from '@/api/maintenance.service'
 
 export default {
   name: 'OneShotMaintenance',
+  components: { WeprodeButton },
   data () {
     return {
     }

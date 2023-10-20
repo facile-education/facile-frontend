@@ -75,11 +75,12 @@ import AnnouncementsHeader from '@components/Dashboard/AnnouncementsWidget/Annou
 import dayjs from 'dayjs'
 
 import { getSchoolNews } from '@/api/dashboard/news.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import { nbAnnouncementsInWidget } from '@/constants/dashboardConstants'
 
 export default {
   name: 'AnnouncementsWidget',
-  components: { AnnouncementItem, AnnouncementsHeader },
+  components: { AnnouncementItem, AnnouncementsHeader, WeprodeSpinner },
   inject: ['mq'],
   data () {
     return {

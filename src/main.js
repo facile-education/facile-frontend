@@ -50,35 +50,6 @@ app.component('BannerLayout', BannerLayout)
 app.component('GVELayout', GVELayout)
 app.component('EmptyLayout', EmptyLayout)
 
-const modules = import.meta.glob('@components/Base/Weprode/*.vue')
-for (const path in modules) {
-  modules[path]().then((mod) => {
-    console.log(path, mod)
-    const componentName = path.split('/').pop()?.replace(/\.\w+$/, '')
-    app.component(componentName, modules[path])
-  })
-}
-// // Register Weprode components globally
-// const requireComponent = require.context(
-//   // The relative path of the components folder
-//   '@components/Base/Weprode',
-//   // Whether or not to look in subfolders
-//   false,
-//   // The regular expression used to match base component filenames
-//   /Weprode[A-Z]\w+\.vue$/
-// )
-// requireComponent.keys().forEach((fileName) => {
-//   // Get component config
-//   const componentConfig = requireComponent(fileName)
-//   // Get component name
-//   const componentName = fileName.split('/').pop()?.replace(/\.\w+$/, '')
-
-//   app.component(componentName, componentConfig.default || componentConfig)
-// })
-// Object.keys(Weprode).forEach(name => {
-//   app.component(name, Weprode[name])
-// })
-
 const calendar = require('dayjs/plugin/calendar')
 dayjs.extend(calendar)
 

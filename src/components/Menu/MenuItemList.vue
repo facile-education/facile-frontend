@@ -32,12 +32,14 @@
 
 <script>
 import { defineAsyncComponent } from 'vue'
+
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 const MenuCategory = defineAsyncComponent(() => import('@components/Menu/MenuCategory.vue'))
 const MenuEntry = defineAsyncComponent(() => import('@components/Menu/MenuEntry.vue'))
 
 export default {
   name: 'MenuItemList',
-  components: { MenuCategory, MenuEntry },
+  components: { MenuCategory, MenuEntry, WeprodeSpinner },
   computed: {
     isLoading () {
       return this.$store.state.menu.isLoadingMenu

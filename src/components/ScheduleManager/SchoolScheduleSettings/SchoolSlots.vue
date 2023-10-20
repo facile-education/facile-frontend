@@ -47,10 +47,12 @@ import { useVuelidate } from '@vuelidate/core'
 import dayjs from 'dayjs'
 
 import { getSchoolSlotConfiguration, saveSchoolSlotConfiguration } from '@/api/schedule.service'
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 
 export default {
   name: 'SchoolSlots',
-  components: { SchoolSlotItem },
+  components: { SchoolSlotItem, WeprodeErrorMessage, WeprodeSpinner },
   props: {
     selectedSchool: {
       type: Object,

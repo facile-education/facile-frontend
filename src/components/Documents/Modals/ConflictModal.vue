@@ -55,12 +55,14 @@
 </template>
 
 <script>
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 import NeroIcon from '@/components/Nero/NeroIcon'
 import { conflicts } from '@/constants/documentsConstants'
 
 export default {
   name: 'ConflictModal',
-  components: { NeroIcon },
+  components: { NeroIcon, WeprodeButton, WeprodeWindow },
   computed: {
     conflict () {
       return this.$store.getters['conflictModal/firstConflict']

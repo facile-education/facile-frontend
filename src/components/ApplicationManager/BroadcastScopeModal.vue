@@ -47,12 +47,16 @@ import { required } from '@vuelidate/validators'
 
 import RuleItem from '@/components/ApplicationManager/RuleItem'
 import RuleList from '@/components/ApplicationManager/RuleList'
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
   name: 'BroadcastScopeModal',
   components: {
     RuleItem,
-    RuleList
+    RuleList,
+    WeprodeButton,
+    WeprodeWindow
   },
   inject: ['mq'],
   setup: () => ({ v$: useVuelidate() }),

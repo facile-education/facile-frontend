@@ -93,10 +93,11 @@ import RelatedItems from '@components/HelpModal/HeplArticle/RelatedItems.vue'
 import { defineAsyncComponent } from 'vue'
 
 import { getHelpItem } from '@/api/help.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 const EditArticleTitleModal = defineAsyncComponent(() => import('@components/HelpModal/CreationModals/EditArticleTitleModal.vue'))
 export default {
   name: 'HelpArticle',
-  components: { EditArticleTitleModal, BaseIcon, HelpFAQSection, HelpManualSection, HelpVideoSection, ExternalLinks, RelatedItems },
+  components: { EditArticleTitleModal, BaseIcon, HelpFAQSection, HelpManualSection, HelpVideoSection, ExternalLinks, RelatedItems, WeprodeSpinner },
   inject: ['mq'],
   data () {
     return {

@@ -35,10 +35,13 @@
 
 <script>
 
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
+
 import { runAnonymisation, startFsAnalysis, startFsAnalysisV2, startParentSynchro, startSynchro } from '@/api/maintenance.service'
 
 export default {
   name: 'Administration',
+  components: { WeprodeButton },
   data () {
     return {
     }

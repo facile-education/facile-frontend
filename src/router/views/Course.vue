@@ -49,17 +49,23 @@
 </template>
 
 <script>
+// import TeacherHomeworkTab from '@/components/Course/TeacherHomeworkTab.vue'
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeTabItem from '@/components/Base/Weprode/WeprodeTabItem.vue'
+import WeprodeTabList from '@/components/Base/Weprode/WeprodeTabList.vue'
 import CourseTab from '@/components/Course/CourseTab.vue' // TODO: async
 import HomeworkTab from '@/components/Course/HomeworkTab.vue'
 import ScheduleTab from '@/components/Course/ScheduleTab.vue'
-// import TeacherHomeworkTab from '@/components/Course/TeacherHomeworkTab.vue'
 
 export default {
   name: 'Course',
   components: {
     CourseTab,
     HomeworkTab,
-    ScheduleTab
+    ScheduleTab,
+    WeprodeTabList,
+    WeprodeTabItem,
+    WeprodeDropdown
     // TeacherHomeworkTab
   },
   inject: ['mq'],
