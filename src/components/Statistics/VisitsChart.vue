@@ -31,11 +31,12 @@ import WeprodeUtils from '@utils/weprode.utils'
 
 import { getStatServices } from '@/api/applicationManager.service'
 import { getSessionsCount } from '@/api/statistics.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import Chart from '@/components/Statistics/Chart.vue'
 
 export default {
   name: 'VisitsChart',
-  components: { Chart },
+  components: { Chart, WeprodeSpinner },
   props: {
     startTime: {
       type: Object,

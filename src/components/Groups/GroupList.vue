@@ -29,9 +29,11 @@
 import GroupItem from '@components/Groups/GroupItem'
 import WeprodeUtils from '@utils/weprode.utils'
 
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
+
 export default {
   name: 'GroupList',
-  components: { GroupItem },
+  components: { GroupItem, WeprodeSpinner },
   inject: ['mq'],
   data () {
     return {

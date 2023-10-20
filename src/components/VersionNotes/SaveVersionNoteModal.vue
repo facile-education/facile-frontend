@@ -49,10 +49,14 @@ import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 
 import { createVersionNote, updateVersionNote } from '@/api/versionNotes.service'
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
   name: 'SaveVersionNoteModal',
-  components: { TextContent },
+  components: { TextContent, WeprodeErrorMessage, WeprodeInput, WeprodeSpinner, WeprodeWindow },
   inject: ['mq'],
   props: {
     isCreation: {

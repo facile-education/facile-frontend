@@ -20,9 +20,11 @@
 <script>
 import SchoolSlots from '@components/ScheduleManager/SchoolScheduleSettings/SchoolSlots.vue'
 
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+
 export default {
   name: 'SchoolScheduleSettings',
-  components: { SchoolSlots },
+  components: { SchoolSlots, WeprodeDropdown },
   computed: {
     schoolList () {
       return this.$store.getters['user/adminSchoolList']

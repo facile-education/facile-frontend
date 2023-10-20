@@ -26,6 +26,9 @@
 import WeprodeUtils from '@utils/weprode.utils'
 import { defineAsyncComponent } from 'vue'
 
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import NeroToolbar from '@/components/Nero/NeroToolbar'
 const NeroIcon = defineAsyncComponent(() => import('@/components/Nero/NeroIcon'))
 
@@ -33,7 +36,10 @@ export default {
   name: 'AMToolbar',
   components: {
     NeroIcon,
-    NeroToolbar
+    NeroToolbar,
+    WeprodeButton,
+    WeprodeDropdown,
+    WeprodeSpinner
   },
   inject: ['mq'],
   computed: {

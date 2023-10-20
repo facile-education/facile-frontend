@@ -79,10 +79,13 @@
 import RolePermissions from '@components/Documents/Modals/PermissionModal/RolePermissions'
 
 import permissionsService from '@/api/documents/permissions.service'
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeCheckbox from '@/components/Base/Weprode/WeprodeCheckbox.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
   name: 'PermissionsModal',
-  components: { RolePermissions },
+  components: { RolePermissions, WeprodeButton, WeprodeCheckbox, WeprodeWindow },
   inject: ['mq'],
   props: {
     document: {

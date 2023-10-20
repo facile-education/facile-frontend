@@ -133,6 +133,13 @@ import dayjs from 'dayjs'
 
 import { createEvent, getEventDetails, modifyEvent } from '@/api/dashboard/agenda.service'
 import { getSchoolNewsBroadcastGroups } from '@/api/dashboard/news.service'
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
+import WeprodeTagsInput from '@/components/Base/Weprode/WeprodeTagsInput.vue'
+import WeprodeToggleSwitch from '@/components/Base/Weprode/WeprodeToggleSwitch.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 import { ckMaxSize } from '@/constants/appConstants'
 
 const inputMaxSize = 75
@@ -142,7 +149,7 @@ const isNotEmpty = (list) => validators.isNotEmpty(list)
 
 export default {
   name: 'SaveDiaryEventModal',
-  components: { TextContent, InformationIcon, CustomDatePicker },
+  components: { TextContent, InformationIcon, CustomDatePicker, WeprodeButton, WeprodeErrorMessage, WeprodeInput, WeprodeSpinner, WeprodeTagsInput, WeprodeToggleSwitch, WeprodeWindow },
   inject: ['mq'],
   props: {
     initEvent: {

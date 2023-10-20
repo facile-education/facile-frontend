@@ -20,12 +20,15 @@
 
 <script>
 import { defineAsyncComponent } from 'vue'
+
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 const ApplicationDetails = defineAsyncComponent(() => import('@/components/ApplicationManager/ApplicationDetails'))
 
 export default {
   name: 'ApplicationDetailsModal',
   components: {
-    ApplicationDetails
+    ApplicationDetails,
+    WeprodeWindow
   },
   inject: ['mq'],
   emits: ['close'],

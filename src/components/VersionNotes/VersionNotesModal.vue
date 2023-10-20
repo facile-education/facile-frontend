@@ -64,11 +64,14 @@
 import NeroIcon from '@components/Nero/NeroIcon.vue'
 import VersionNoteSelector from '@components/VersionNotes/VersionNoteSelector.vue'
 import { defineAsyncComponent } from 'vue'
+
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 const SaveVersionNoteModal = defineAsyncComponent(() => import('@components/VersionNotes/SaveVersionNoteModal.vue'))
 
 export default {
   name: 'VersionNotesModal',
-  components: { SaveVersionNoteModal, VersionNoteSelector, NeroIcon },
+  components: { SaveVersionNoteModal, VersionNoteSelector, NeroIcon, WeprodeSpinner, WeprodeWindow },
   inject: ['mq'],
   emits: ['close'],
   data () {

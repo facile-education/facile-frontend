@@ -12,12 +12,12 @@
 </template>
 
 <script>
-import { library } from '@fortawesome/fontawesome-svg-core'
+// import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(
-  require('@fortawesome/free-solid-svg-icons/faExclamationTriangle').definition
-)
+// library.add(
+//   require('@fortawesome/free-solid-svg-icons/faExclamationTriangle').definition
+// )
 
 export default {
   name: 'WeprodeErrorMessage',

@@ -54,9 +54,11 @@ import ContactUserListItem from '@components/ContactPicker/UserList/ContactUserL
 import { getFullName } from '@utils/commons.util'
 import WeprodeUtils from '@utils/weprode.utils'
 
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
+
 export default {
   name: 'ContactUserList',
-  components: { ContactUserListItem, ContactUserListHeader },
+  components: { ContactUserListItem, ContactUserListHeader, WeprodeSpinner },
   inject: ['mq'],
   props: {
     selectedUsers: {

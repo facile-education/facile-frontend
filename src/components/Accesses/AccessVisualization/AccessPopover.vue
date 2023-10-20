@@ -47,10 +47,11 @@ import CustomIcon from '@components/Base/CustomIcon.vue'
 import { sortAccesses } from '@utils/accessUtils'
 
 import { getUserAccesses } from '@/api/access.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 
 export default {
   name: 'AccessPopover',
-  components: { CustomIcon, UserAccessCategory },
+  components: { CustomIcon, UserAccessCategory, WeprodeSpinner },
   inject: ['mq'],
   emits: ['close'],
   data () {

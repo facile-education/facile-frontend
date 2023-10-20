@@ -26,8 +26,11 @@
 <script>
 import dayjs from 'dayjs'
 
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
+
 export default {
   name: 'SessionEndAdvertising',
+  components: { WeprodeWindow },
   props: {
     remainingMilliseconds: {
       type: Number,

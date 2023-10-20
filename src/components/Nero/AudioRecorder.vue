@@ -55,14 +55,16 @@
 </template>
 
 <script>
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import RecordRTC from 'recordrtc'
 import WaveSurfer from 'wavesurfer.js'
 
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
 import NeroIcon from '@/components/Nero/NeroIcon'
 
 export default {
   name: 'AudioRecorder',
-  components: { NeroIcon },
+  components: { NeroIcon, WeprodeButton, WeprodeErrorMessage },
   props: {
     duration: {
       type: Number,

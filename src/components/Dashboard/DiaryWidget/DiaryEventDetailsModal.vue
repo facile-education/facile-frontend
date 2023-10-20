@@ -44,9 +44,12 @@
 
 import DiaryEventDetails from '@components/Dashboard/DiaryWidget/DiaryEventDetails.vue'
 
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
+
 export default {
   name: 'DiaryEventDetailsModal',
-  components: { DiaryEventDetails },
+  components: { DiaryEventDetails, WeprodeButton, WeprodeWindow },
   inject: ['mq'],
   props: {
     initEvent: {

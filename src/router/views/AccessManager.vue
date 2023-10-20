@@ -66,7 +66,8 @@ import { sortAccesses } from '@utils/accessUtils'
 import { defineAsyncComponent } from 'vue'
 
 import { saveSchoolCategory } from '@/api/access.service'
-import Layout from '@/router/layouts/BannerLayout'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
+
 const SaveAccessModal = defineAsyncComponent(() => import('@components/Accesses/AccessManager/SaveAccessModal.vue'))
 
 export default {
@@ -79,7 +80,7 @@ export default {
     AccessCreateButton,
     SaveAccessModal,
     AccessCategoryList,
-    Layout
+    WeprodeSpinner
   },
   data () {
     return {

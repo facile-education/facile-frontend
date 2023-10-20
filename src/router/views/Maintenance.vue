@@ -33,6 +33,8 @@ import GroupsMaintenance from '@components/Maintenance/GroupsMaintenance.vue'
 import OneShotMaintenance from '@components/Maintenance/OneShotMaintenance.vue'
 import PasswordUpdate from '@components/Maintenance/PasswordUpdate.vue'
 
+import WeprodeTabItem from '@/components/Base/Weprode/WeprodeTabItem.vue'
+import WeprodeTabList from '@/components/Base/Weprode/WeprodeTabList.vue'
 import Administration from '@/components/Maintenance/Administration.vue'
 
 export default {
@@ -41,7 +43,9 @@ export default {
     Administration,
     GroupsMaintenance,
     OneShotMaintenance,
-    PasswordUpdate
+    PasswordUpdate,
+    WeprodeTabList,
+    WeprodeTabItem
   },
   inject: ['mq'],
   emits: ['update:layout'],

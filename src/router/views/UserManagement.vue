@@ -36,6 +36,9 @@
 </template>
 
 <script>
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeTabItem from '@/components/Base/Weprode/WeprodeTabItem.vue'
+import WeprodeTabList from '@/components/Base/Weprode/WeprodeTabList.vue'
 import Affectations from '@/components/UserManagement/Affectations.vue'
 import Delegations from '@/components/UserManagement/Delegations'
 import ManualUsers from '@/components/UserManagement/ManualUsers'
@@ -44,7 +47,10 @@ export default {
   components: {
     ManualUsers,
     Delegations,
-    Affectations
+    Affectations,
+    WeprodeTabList,
+    WeprodeTabItem,
+    WeprodeDropdown
   },
   emits: ['update:layout'],
   computed: {

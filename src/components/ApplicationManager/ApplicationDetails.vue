@@ -99,13 +99,20 @@
 
 <script>
 import RuleLabel from '@/components/ApplicationManager/RuleLabel'
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeToggleSwitch from '@/components/Base/Weprode/WeprodeToggleSwitch.vue'
 import NeroIcon from '@/components/Nero/NeroIcon'
-
 export default {
   name: 'ApplicationDetails',
   components: {
     NeroIcon,
-    RuleLabel
+    RuleLabel,
+    WeprodeButton,
+    WeprodeDropdown,
+    WeprodeInput,
+    WeprodeToggleSwitch
   },
   inject: ['mq'],
   data () {

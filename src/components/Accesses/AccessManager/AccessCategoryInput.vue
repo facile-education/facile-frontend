@@ -13,9 +13,10 @@
 import { nextTick } from 'vue'
 
 import folderService from '@/api/messaging/folder.service'
-
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
 export default {
   name: 'AccessCategoryInput',
+  components: { WeprodeInput },
   props: {
     initialName: {
       type: String,

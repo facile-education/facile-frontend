@@ -12,9 +12,11 @@
 </template>
 
 <script>
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import { setMainColor } from '@/utils/theme.util'
 
 export default {
+  components: { WeprodeSpinner },
   inject: ['mq'],
   computed: {
     layout () {

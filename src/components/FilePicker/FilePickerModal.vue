@@ -56,10 +56,12 @@
 import FilePickerModalDocuments from '@components/FilePicker/FilePickerModalDocuments'
 
 import groupService from '@/api/documents/group.service'
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
   name: 'FilePickerModal',
-  components: { FilePickerModalDocuments },
+  components: { FilePickerModalDocuments, WeprodeButton, WeprodeWindow },
   inject: ['mq'],
   props: {
     folderSelection: {

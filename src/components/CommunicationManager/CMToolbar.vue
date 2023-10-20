@@ -17,12 +17,16 @@
 </template>
 
 <script>
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import NeroToolbar from '@/components/Nero/NeroToolbar'
 
 export default {
   name: 'CMToolbar',
   components: {
-    NeroToolbar
+    NeroToolbar,
+    WeprodeDropdown,
+    WeprodeSpinner
   },
   computed: {
     managedSchoolList () {

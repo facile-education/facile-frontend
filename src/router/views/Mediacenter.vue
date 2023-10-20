@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
 import CategoryList from '@/components/Mediacenter/CategoryList'
 import NeroToolbar from '@/components/Nero/NeroToolbar'
 
@@ -20,7 +21,8 @@ export default {
   name: 'Mediacenter',
   components: {
     CategoryList,
-    NeroToolbar
+    NeroToolbar,
+    WeprodeDropdown
   },
   emits: ['update:layout'],
   data () {

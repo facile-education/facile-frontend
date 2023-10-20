@@ -49,11 +49,18 @@
 </template>
 
 <script>
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
+
 import { saveItem } from '@/api/help.service'
 import { getBroadcastRoleList } from '@/api/role.service'
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeTagsInput from '@/components/Base/Weprode/WeprodeTagsInput.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
   name: 'CreateArticleModal',
+  components: { WeprodeButton, WeprodeDropdown, WeprodeInput, WeprodeTagsInput, WeprodeWindow },
   inject: ['mq'],
   props: {
     parentCategory: {

@@ -42,8 +42,10 @@
 </template>
 
 <script>
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
 export default {
   name: 'ContactUserListHeader',
+  components: { WeprodeInput },
   inject: ['mq'],
   props: {
     userListLength: {

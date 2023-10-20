@@ -46,9 +46,13 @@ import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 
 import { getSchoolUsers } from '@/api/userSearch.service'
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeTagsInput from '@/components/Base/Weprode/WeprodeTagsInput.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
   name: 'AddAffectedUserModal',
+  components: { WeprodeErrorMessage, WeprodeTagsInput, WeprodeWindow },
   inject: ['mq'],
   emits: ['close', 'newUsers'],
   setup: () => ({ v$: useVuelidate() }),

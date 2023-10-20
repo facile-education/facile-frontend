@@ -45,11 +45,15 @@
 import NeroIcon from '@components/Nero/NeroIcon'
 import NeroToolbar from '@components/Nero/NeroToolbar'
 import { defineAsyncComponent } from 'vue'
+
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
 const EditGroupModal = defineAsyncComponent(() => import('@components/Groups/EditGroupModal/EditGroupModal'))
 
 export default {
   name: 'GroupToolbar',
-  components: { NeroIcon, NeroToolbar, EditGroupModal },
+  components: { NeroIcon, NeroToolbar, EditGroupModal, WeprodeButton, WeprodeDropdown, WeprodeInput },
   inject: ['mq'],
   data () {
     return {

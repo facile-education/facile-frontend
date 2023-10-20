@@ -31,12 +31,20 @@
 </template>
 
 <script>
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
+import WeprodeTabItem from '@/components/Base/Weprode/WeprodeTabItem.vue'
+import WeprodeTabList from '@/components/Base/Weprode/WeprodeTabList.vue'
 import InternalRoleTab from '@/components/CommunicationManager/InternalRoleTab'
 
 export default {
   name: 'InternalRightList',
   components: {
-    InternalRoleTab
+    InternalRoleTab,
+    WeprodeTabList,
+    WeprodeTabItem,
+    WeprodeButton,
+    WeprodeSpinner
   },
   data () {
     return {

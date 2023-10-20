@@ -45,14 +45,19 @@
 import Accessibility from '@components/Informations/Accessibility'
 import Privacy from '@components/Informations/Privacy'
 
+import WeprodeTabItem from '@/components/Base/Weprode/WeprodeTabItem.vue'
+import WeprodeTabList from '@/components/Base/Weprode/WeprodeTabList.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 import TermsOfUse from '@/components/Informations/TermsOfUse'
-
 export default {
   name: 'InformationModal',
   components: {
     Accessibility,
     Privacy,
-    TermsOfUse
+    TermsOfUse,
+    WeprodeTabList,
+    WeprodeTabItem,
+    WeprodeWindow
   },
   inject: ['mq'],
   props: {

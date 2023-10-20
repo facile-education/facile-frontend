@@ -104,6 +104,7 @@ import { defineAsyncComponent } from 'vue'
 import { useCookies } from 'vue3-cookies'
 
 import constants from '@/api/constants'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import { mobilePopupDurationTime, popupDurationTime } from '@/constants/appConstants'
 
 const AccessModal = defineAsyncComponent(() => import('@components/Accesses/AccessVisualization/AccessModal'))
@@ -133,7 +134,8 @@ export default {
     QuickSearchPanel,
     LayoutMenu,
     UploadProgression,
-    WarningModal
+    WarningModal,
+    WeprodeSpinner
   },
   inject: ['mq'],
   props: {

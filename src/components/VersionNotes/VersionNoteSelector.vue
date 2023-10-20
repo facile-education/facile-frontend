@@ -58,11 +58,13 @@
 import ContextMenu from '@components/ContextMenu/ContextMenu.vue'
 
 import { deleteVersionNote } from '@/api/versionNotes.service'
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import { icons } from '@/constants/icons'
 
 export default {
   name: 'VersionNoteSelector',
-  components: { ContextMenu },
+  components: { ContextMenu, WeprodeDropdown, WeprodeSpinner },
   emits: ['selectNote', 'update'],
   data () {
     return {

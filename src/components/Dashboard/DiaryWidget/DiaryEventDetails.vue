@@ -127,11 +127,13 @@ import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
 import { deleteEvent, getEventDetails } from '@/api/dashboard/agenda.service'
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 const SaveDiaryEventModal = defineAsyncComponent(() => import('@components/Dashboard/DiaryWidget/SaveDiaryEventModal.vue'))
 
 export default {
   name: 'DiaryEventDetails',
-  components: { ReadInfos, PopulationList, SaveDiaryEventModal },
+  components: { ReadInfos, PopulationList, SaveDiaryEventModal, WeprodeButton, WeprodeSpinner },
   props: {
     initEvent: {
       type: Object,

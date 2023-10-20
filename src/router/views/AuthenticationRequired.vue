@@ -15,8 +15,10 @@
 
 <script>
 
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 export default {
   name: 'AuthenticationRequired',
+  components: { WeprodeSpinner },
   emits: ['update:layout'],
   beforeCreate () {
     this.$emit('update:layout', 'GVELayout')

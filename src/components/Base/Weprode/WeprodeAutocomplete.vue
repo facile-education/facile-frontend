@@ -39,8 +39,11 @@
 import WeprodeUtils from '@utils/weprode.utils'
 import { directive } from 'vue3-click-away'
 
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+
 export default {
   name: 'WeprodeAutocomplete',
+  components: { WeprodeInput },
   directives: {
     'click-outside': directive
   },

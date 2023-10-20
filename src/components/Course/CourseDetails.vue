@@ -74,11 +74,12 @@ import WeprodeUtils from '@utils/weprode.utils'
 import { defineAsyncComponent } from 'vue'
 
 import { getCourseContent } from '@/api/course.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 const SessionDetails = defineAsyncComponent(() => import('@components/Course/SessionDetails.vue'))
 
 export default {
   name: 'CourseDetails',
-  components: { SessionDetails },
+  components: { SessionDetails, WeprodeSpinner },
   inject: ['mq'],
   props: {
     course: {

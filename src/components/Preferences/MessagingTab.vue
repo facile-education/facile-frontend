@@ -76,10 +76,14 @@ import InformationIcon from '@components/Base/InformationIcon'
 import TextContent from '@components/Base/TextContent.vue'
 
 import configurationService from '@/api/messaging/configuration.service'
+import WeprodeCheckbox from '@/components/Base/Weprode/WeprodeCheckbox.vue'
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
+import WeprodeTagsInput from '@/components/Base/Weprode/WeprodeTagsInput.vue'
 
 export default {
   name: 'MessagingTab',
-  components: { TextContent, InformationIcon },
+  components: { TextContent, InformationIcon, WeprodeCheckbox, WeprodeErrorMessage, WeprodeSpinner, WeprodeTagsInput },
   emits: ['save'],
   data () {
     return {

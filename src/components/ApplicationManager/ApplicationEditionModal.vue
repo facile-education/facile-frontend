@@ -194,12 +194,20 @@ import WeprodeUtils from '@utils/weprode.utils'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 
+import WeprodeAutocomplete from '@/components/Base/Weprode/WeprodeAutocomplete.vue'
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeCheckbox from '@/components/Base/Weprode/WeprodeCheckbox.vue'
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeRadioButton from '@/components/Base/Weprode/WeprodeRadioButton.vue'
+import WeprodeTagsInput from '@/components/Base/Weprode/WeprodeTagsInput.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 import ImagePicker from '@/components/Nero/ImagePicker'
 import NeroIcon from '@/components/Nero/NeroIcon'
 
 export default {
   name: 'ApplicationEditionModal',
-  components: { ImagePicker, NeroIcon },
+  components: { ImagePicker, NeroIcon, WeprodeAutocomplete, WeprodeButton, WeprodeCheckbox, WeprodeErrorMessage, WeprodeInput, WeprodeRadioButton, WeprodeTagsInput, WeprodeWindow },
   inject: ['mq'],
   setup: () => ({ v$: useVuelidate() }),
   data () {

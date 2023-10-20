@@ -9,8 +9,10 @@
 </template>
 
 <script>
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
 export default {
   name: 'SelectedSchool',
+  components: { WeprodeDropdown },
   computed: {
     selectedSchool: {
       get () {

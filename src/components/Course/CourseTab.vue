@@ -38,12 +38,13 @@ import WeprodeUtils from '@utils/weprode.utils'
 import { defineAsyncComponent } from 'vue'
 
 import { getCourses } from '@/api/course.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 const CourseItem = defineAsyncComponent(() => import('@components/Course/CourseItem.vue'))
 const CourseDetails = defineAsyncComponent(() => import('@components/Course/CourseDetails.vue'))
 
 export default {
   name: 'CourseTab',
-  components: { CourseDetails, CourseItem },
+  components: { CourseDetails, CourseItem, WeprodeSpinner },
   inject: ['mq'],
   props: {
     userId: {

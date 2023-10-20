@@ -82,6 +82,7 @@ import { defineAsyncComponent } from 'vue'
 import { checkDashboardParameter } from '@/api/dashboard.service'
 import { setEventRead } from '@/api/dashboard/agenda.service'
 import { setNewsRead } from '@/api/dashboard/news.service'
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
 const AnnouncementsWidget = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/AnnouncementsWidget.vue'))
 const DiaryWidget = defineAsyncComponent(() => import('@components/Dashboard/DiaryWidget/DiaryWidget.vue'))
 const ScheduleWidget = defineAsyncComponent(() => import('@components/Dashboard/ScheduleWidget/ScheduleWidget'))
@@ -93,7 +94,7 @@ const DiaryEventDetailsModal = defineAsyncComponent(() => import('@components/Da
 
 export default {
   name: 'Dashboard',
-  components: { AnnouncementsWidget, DiaryWidget, ScheduleWidget, HomeworkWidget, StatisticWidget, ActivityWidget, NewsDetailsModal, DiaryEventDetailsModal },
+  components: { AnnouncementsWidget, DiaryWidget, ScheduleWidget, HomeworkWidget, StatisticWidget, ActivityWidget, NewsDetailsModal, DiaryEventDetailsModal, WeprodeDropdown },
   emits: ['update:layout'],
   data () {
     return {

@@ -46,10 +46,11 @@ import { useVuelidate } from '@vuelidate/core'
 import dayjs from 'dayjs'
 
 import { getGlobalConfiguration, saveGlobalConfiguration } from '@/api/schedule.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 
 export default {
   name: 'GlobalScheduleSettings',
-  components: { WeeksParity, Holidays, YearDates },
+  components: { WeeksParity, Holidays, YearDates, WeprodeSpinner },
   setup: () => ({ v$: useVuelidate() }),
   data () {
     return {

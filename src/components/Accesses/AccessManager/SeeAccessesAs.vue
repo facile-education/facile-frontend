@@ -21,11 +21,13 @@
 
 <script>
 import { defineAsyncComponent } from 'vue'
+
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
 const AccessModal = defineAsyncComponent(() => import('@components/Accesses/AccessVisualization/AccessModal.vue'))
 
 export default {
   name: 'SeeAccessesAs',
-  components: { AccessModal },
+  components: { AccessModal, WeprodeDropdown },
   data () {
     return {
       selectedRole: undefined,

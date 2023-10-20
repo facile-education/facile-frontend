@@ -157,11 +157,20 @@ import {
 } from '@/api/groups.service'
 import { getAllSchools } from '@/api/organization.service'
 import { getRoleList } from '@/api/role.service'
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeCheckbox from '@/components/Base/Weprode/WeprodeCheckbox.vue'
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
+import WeprodeTextArea from '@/components/Base/Weprode/WeprodeTextArea.vue'
+import WeprodeToggleSwitch from '@/components/Base/Weprode/WeprodeToggleSwitch.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 import ColorPicker from '@/components/Nero/ColorPicker'
 
 export default {
   name: 'EditGroupModal',
-  components: { ColorPicker, GroupUserItem, SelectedGroupMemberItem },
+  components: { ColorPicker, GroupUserItem, SelectedGroupMemberItem, WeprodeButton, WeprodeCheckbox, WeprodeDropdown, WeprodeErrorMessage, WeprodeInput, WeprodeSpinner, WeprodeTextArea, WeprodeToggleSwitch, WeprodeWindow },
   inject: ['mq'],
   props: {
     editedGroup: {

@@ -28,9 +28,13 @@
 </template>
 
 <script>
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import WeprodeUtils from '@utils/weprode.utils'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
+
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
 
 const isValidJson = (value) => WeprodeUtils.isValidJson(value)
 const isVersionNameValid = (str) => {
@@ -58,6 +62,7 @@ const isJsonContentValid = (str) => {
 
 export default {
   name: 'VersionEditionForm',
+  components: { WeprodeButton, WeprodeErrorMessage, WeprodeInput },
   setup: () => ({ v$: useVuelidate() }),
   data () {
     return {

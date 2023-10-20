@@ -114,10 +114,15 @@ import dayjs from 'dayjs'
 
 import { getSchoolSlotConfiguration } from '@/api/schedule.service'
 import schoolLifeService from '@/api/schoolLife-portlet.service'
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
   name: 'EditSlotModal',
-  components: { DateRangePicker, UserCompletion },
+  components: { DateRangePicker, UserCompletion, WeprodeDropdown, WeprodeErrorMessage, WeprodeInput, WeprodeSpinner, WeprodeWindow },
   inject: ['mq'],
   props: {
     eventToEdit: {

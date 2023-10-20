@@ -140,6 +140,12 @@ import { defineAsyncComponent, nextTick } from 'vue'
 import { getSessionStudents } from '@/api/course.service'
 import { createHomework, updateHomework } from '@/api/homework.service'
 import { getNextSessions } from '@/api/schedule.service'
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeRadioButton from '@/components/Base/Weprode/WeprodeRadioButton.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 import ContentPicker from '@/components/Course/ContentPicker.vue'
 import contentTypeConstants from '@/constants/contentTypeConstants'
 
@@ -151,7 +157,13 @@ export default {
   components: {
     CourseContent,
     ContentPicker,
-    StudentListModal
+    StudentListModal,
+    WeprodeButton,
+    WeprodeDropdown,
+    WeprodeErrorMessage,
+    WeprodeInput,
+    WeprodeRadioButton,
+    WeprodeWindow
   },
   inject: ['mq'],
   props: {

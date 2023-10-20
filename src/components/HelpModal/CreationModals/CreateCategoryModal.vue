@@ -41,11 +41,17 @@
 </template>
 
 <script>
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
+
 import { getAllApplications } from '@/api/applicationManager.service'
 import { saveCategory } from '@/api/help.service'
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
   name: 'CreateCategoryModal',
+  components: { WeprodeButton, WeprodeDropdown, WeprodeInput, WeprodeWindow },
   inject: ['mq'],
   emits: ['close'],
   data () {

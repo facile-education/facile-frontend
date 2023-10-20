@@ -45,10 +45,11 @@
 
 import ContextMenu from '@components/ContextMenu/ContextMenu'
 
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
 import NeroIcon from '@/components/Nero/NeroIcon'
 export default {
   name: 'OptionItem',
-  components: { NeroIcon, ContextMenu },
+  components: { NeroIcon, ContextMenu, WeprodeButton },
   inject: ['mq'],
   props: {
     option: {

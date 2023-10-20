@@ -65,15 +65,20 @@
 
 <script>
 
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import WeprodeUtils from '@utils/weprode.utils'
 
 import { searchDirectory } from '@/api/contact.service'
 import { getAllSchools } from '@/api/organization.service'
 import { getRoleList } from '@/api/role.service'
 import { updatePasswordByManager } from '@/api/userManagement.service'
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 
 export default {
   name: 'PasswordUpdate',
+  components: { WeprodeButton, WeprodeDropdown, WeprodeInput, WeprodeSpinner },
   data () {
     return {
       password1: '',

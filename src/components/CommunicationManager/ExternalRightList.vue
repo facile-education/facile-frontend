@@ -25,12 +25,16 @@
 </template>
 
 <script>
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import ExternalRoleItem from '@/components/CommunicationManager/ExternalRoleItem'
 
 export default {
   name: 'ExternalRightList',
   components: {
-    ExternalRoleItem
+    ExternalRoleItem,
+    WeprodeButton,
+    WeprodeSpinner
   },
   data () {
     return {

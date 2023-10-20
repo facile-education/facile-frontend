@@ -34,12 +34,14 @@
 <script>
 import InlineEditor from '@ckeditor/ckeditor5-build-inline'
 import { component as CKEditor } from '@ckeditor/ckeditor5-vue'
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 
 import { saveItem } from '@/api/help.service'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
   name: 'EditManualModal',
-  components: { CKEditor },
+  components: { CKEditor, WeprodeButton, WeprodeWindow },
   inject: ['mq'],
   props: {
     htmlContent: {

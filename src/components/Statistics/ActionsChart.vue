@@ -39,11 +39,13 @@ import WeprodeUtils from '@utils/weprode.utils'
 
 import { getStatServices } from '@/api/applicationManager.service'
 import { getActionsCount } from '@/api/statistics.service'
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import Chart from '@/components/Statistics/Chart.vue'
 
 export default {
   name: 'ActionsChart',
-  components: { Chart },
+  components: { Chart, WeprodeDropdown, WeprodeSpinner },
   props: {
     startTime: {
       type: Object,

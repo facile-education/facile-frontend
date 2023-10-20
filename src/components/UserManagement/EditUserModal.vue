@@ -155,10 +155,15 @@ import { email, required } from '@vuelidate/validators'
 import { getLocalUserRoleList } from '@/api/role.service'
 import userService from '@/api/user.service'
 import { createManualUser, editManualUser, removeManualUser, updatePasswordByManager } from '@/api/userManagement.service'
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 import store from '@/store'
 
 export default {
   name: 'EditUserModal',
+  components: { WeprodeDropdown, WeprodeErrorMessage, WeprodeInput, WeprodeWindow },
   inject: ['mq'],
   props: {
     editedUser: {

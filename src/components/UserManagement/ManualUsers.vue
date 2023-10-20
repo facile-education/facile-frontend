@@ -72,6 +72,8 @@ import UserFields from '@components/UserManagement/UserFields'
 import UserRow from '@components/UserManagement/UserRow'
 import WeprodeUtils from '@utils/weprode.utils'
 
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import EditUserModal from '@/components/UserManagement/EditUserModal'
 
 let timeout
@@ -81,7 +83,9 @@ export default {
   components: {
     UserRow,
     UserFields,
-    EditUserModal
+    EditUserModal,
+    WeprodeInput,
+    WeprodeSpinner
   },
   data () {
     return {

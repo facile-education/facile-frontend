@@ -40,14 +40,12 @@
 
 <script>
 import { library } from '@fortawesome/fontawesome-svg-core'
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import WeprodeUtils from '@utils/weprode.utils'
 
-import WeprodeAutocomplete from '@/components/WeprodeAutocomplete'
-
-library.add(
-  require('@fortawesome/free-solid-svg-icons/faChevronDown').definition
-)
+import WeprodeAutocomplete from '@/components/Base/Weprode/WeprodeAutocomplete.vue'
+library.add(faChevronDown)
 
 export default {
   name: 'WeprodeDropdown',

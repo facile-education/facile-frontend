@@ -19,13 +19,15 @@
 <script>
 import QuickSearchPanelHeader from '@components/Search/QuickSearchPanelHeader'
 import { defineAsyncComponent } from 'vue'
+
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 const QuickSearchResultItem = defineAsyncComponent(() => import('@components/Search/QuickSearchResults/QuickSearchResultItem'))
 
 let oldScrollTop = 0
 
 export default {
   name: 'QuickSearchResults',
-  components: { QuickSearchResultItem, QuickSearchPanelHeader },
+  components: { QuickSearchResultItem, QuickSearchPanelHeader, WeprodeSpinner },
   data () {
     return {
       currentSelectedItem: undefined

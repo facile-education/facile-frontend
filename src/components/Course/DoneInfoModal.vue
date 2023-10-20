@@ -62,10 +62,12 @@ import { getFullName } from '@utils/commons.util'
 import WeprodeUtils from '@utils/weprode.utils'
 
 import { getStudentsDoneStatus } from '@/api/homework.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
   name: 'DoneInfoModal',
-  components: { InfoModalUser },
+  components: { InfoModalUser, WeprodeSpinner, WeprodeWindow },
   inject: ['mq'],
   props: {
     homework: {

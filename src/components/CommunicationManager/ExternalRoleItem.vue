@@ -21,8 +21,10 @@
 </template>
 
 <script>
+import WeprodeRadioButton from '@/components/Base/Weprode/WeprodeRadioButton.vue'
 export default {
   name: 'ExternalRoleItem',
+  components: { WeprodeRadioButton },
   props: {
     role: {
       type: Object,

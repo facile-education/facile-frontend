@@ -28,10 +28,11 @@
 import AnimatedCounter from '@components/Base/AnimatedCounter.vue'
 
 import { getMessagesCount, getNewsCount } from '@/api/statistics.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 
 export default {
   name: 'GlobalStat',
-  components: { AnimatedCounter },
+  components: { AnimatedCounter, WeprodeSpinner },
   props: {
     service: {
       type: String,

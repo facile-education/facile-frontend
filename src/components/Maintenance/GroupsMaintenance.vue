@@ -42,10 +42,14 @@
 
 <script>
 
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
+
 import { deleteGroup, deleteGroups, runArchiving } from '@/api/maintenance.service'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
 
 export default {
   name: 'GroupsMaintenance',
+  components: { WeprodeButton, WeprodeInput },
   data () {
     return {
       groupId: undefined,

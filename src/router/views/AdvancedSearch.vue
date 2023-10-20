@@ -15,9 +15,11 @@
 
 <script>
 import { search } from '@/api/search.service'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
 
 export default {
   name: 'Progression',
+  components: { WeprodeInput },
   emits: ['update:layout'],
   data () {
     return {

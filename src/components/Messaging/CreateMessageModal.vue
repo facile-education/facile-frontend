@@ -162,6 +162,7 @@
 <script>
 import AttachedFiles from '@components/AttachedFiles/AttachedFiles.vue'
 import TextContent from '@components/Base/TextContent.vue'
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import ContactPickerToolTip from '@components/ContactPicker/ContactPickerToolTip.vue'
 import { addContactFieldsToContactList } from '@utils/contacts.utils'
 import { useVuelidate } from '@vuelidate/core'
@@ -170,6 +171,10 @@ import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
 import messageService from '@/api/messaging/message.service'
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeTagsInput from '@/components/Base/Weprode/WeprodeTagsInput.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 import NeroIcon from '@/components/Nero/NeroIcon'
 import constants from '@/constants/messagingConstants'
 import messagingUtils from '@/utils/messaging.utils'
@@ -192,7 +197,12 @@ export default {
     ContactPickerModal,
     TextContent,
     AttachedFiles,
-    NeroIcon
+    NeroIcon,
+    WeprodeButton,
+    WeprodeErrorMessage,
+    WeprodeInput,
+    WeprodeTagsInput,
+    WeprodeWindow
   },
   inject: ['mq'],
   props: {

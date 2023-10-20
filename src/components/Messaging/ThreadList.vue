@@ -87,6 +87,7 @@ import ThreadListHeader from '@components/Messaging/ThreadListHeader'
 import NeroIcon from '@components/Nero/NeroIcon.vue'
 import { removeMenuOptionIfExist } from '@utils/commons.util'
 
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import ContextMenu from '@/components/ContextMenu/ContextMenu'
 import constants from '@/constants/appConstants'
 import contextMenus from '@/utils/contextMenus'
@@ -104,7 +105,8 @@ export default {
     IconOption,
     ThreadListHeader,
     Thread,
-    ContextMenu
+    ContextMenu,
+    WeprodeSpinner
   },
   inject: ['mq'],
   data () {

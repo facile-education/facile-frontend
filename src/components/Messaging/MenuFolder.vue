@@ -117,12 +117,14 @@ import { nextTick } from 'vue'
 
 import folderService from '@/api/messaging/folder.service'
 import messageService from '@/api/messaging/message.service'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
 import { MESSAGING } from '@/constants/appConstants'
 
 export default {
   name: 'MenuFolder',
   components: {
-    BaseIcon
+    BaseIcon,
+    WeprodeInput
   },
   inject: ['mq'],
   props: {

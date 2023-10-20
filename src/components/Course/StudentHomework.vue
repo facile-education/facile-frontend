@@ -46,12 +46,13 @@ import { defineAsyncComponent } from 'vue'
 
 import { setHomeworkDoneStatus } from '@/api/homework.service'
 import Pellet from '@/components/Base/Pellet.vue'
+import WeprodeCheckbox from '@/components/Base/Weprode/WeprodeCheckbox.vue'
 
 const CourseContent = defineAsyncComponent(() => import('@/components/Course/CourseContent'))
 
 export default {
   name: 'StudentHomework',
-  components: { CourseContent, Pellet },
+  components: { CourseContent, Pellet, WeprodeCheckbox },
   props: {
     homework: {
       type: Object,

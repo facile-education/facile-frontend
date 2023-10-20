@@ -58,11 +58,12 @@ import DiaryHeader from '@components/Dashboard/DiaryWidget/DiaryHeader.vue'
 import dayjs from 'dayjs'
 
 import { getEvents } from '@/api/dashboard/agenda.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import { nbDiaryEventInWidget } from '@/constants/dashboardConstants'
 
 export default {
   name: 'DiaryWidget',
-  components: { DiaryHeader, DiaryEventItem },
+  components: { DiaryHeader, DiaryEventItem, WeprodeSpinner },
   data () {
     return {
       unReadOnly: false,
