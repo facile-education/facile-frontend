@@ -90,9 +90,18 @@ export default {
     }
   },
   computed: {
+    sortedHomeworks () {
+      if (this.homeworks) {
+        return [...this.homeworks].sort((homeworkA, homeworkB) => {
+          return (dayjs(homeworkA.toDate, 'YYYY-MM-DD HH:mm').isAfter(dayjs(homeworkB.toDate, 'YYYY-MM-DD HH:mm'))) ? 1 : -1
+        })
+      } else {
+        return undefined
+      }
+    },
     homeworksByDay () {
       const homeworksByDay = []
-      this.homeworks.forEach((homework) => {
+      this.sortedHomeworks.forEach((homework) => {
         const homeworkDay = 366 * dayjs(homework.toDate).year() + 31 * dayjs(homework.toDate).month() + dayjs(homework.toDate).date()
         const dayIndex = homeworksByDay.map(homework => homework.dayId).indexOf(homeworkDay)
 
