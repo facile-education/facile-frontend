@@ -102,10 +102,13 @@ export default {
       }
     },
     updateContent (newValue) {
-      if (newValue !== '[object InputEvent]') {
-        this.$emit('input', newValue)
-        this.$emit('update:content', newValue)
+      if (typeof newValue !== 'string') {
+        // Prevent update if new value is an event object
+        return
       }
+
+      this.$emit('input', newValue)
+      this.$emit('update:content', newValue)
 
       clearTimeout(this.timeout)
       // Auto save for notes documents
