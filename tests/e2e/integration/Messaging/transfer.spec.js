@@ -2,14 +2,14 @@ import { messagingURL } from '../../support/constants/urls'
 import { HEADMASTER, STUDENT } from '../../support/constants/users'
 import { waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
 
-describe('Answer', () => {
+describe('Messaging_TransferMessage', () => {
   beforeEach(() => {
     cy.loadTables('messaging/messaging_tables.sql')
     cy.fixture('messaging.json').as('messagingData')
   })
   context('desktop', function () {
     // Answer thread rightclick
-    it('reply to a recipient thread right click', function () {
+    it('Messaging_TransferMessage', function () {
       const existingThreads = this.messagingData.existingThreads
       cy.login(HEADMASTER, messagingURL)
       waitMessagingToBeLoaded()

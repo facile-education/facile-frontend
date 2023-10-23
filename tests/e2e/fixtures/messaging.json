@@ -91,5 +91,15 @@
         "read": 0
       }
     ]
+  ],
+  "existingDraftThreads": [
+    [
+      {
+        "sender": "Orlan Hue",
+        "subject": "Brouillon",
+        "content": "Message enregistré en tant que brouillon",
+        "messageIndexInThread": 0
+      }
+    ]
   ]
 }

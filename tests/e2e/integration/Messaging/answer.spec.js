@@ -5,14 +5,14 @@ import { getThread, waitMessagingToBeLoaded } from '../../support/utils/messagin
 const userAnswer = 'Ceci est un réponse à un seul utilisateur'
 const allUserAnswer = 'Ceci est un réponse à tous les utilisateurs'
 
-describe('Answer', () => {
+describe('Messaging_Reply', () => {
   beforeEach(() => {
     cy.loadTables('messaging/messaging_tables.sql')
     cy.fixture('messaging.json').as('messagingData')
   })
   context('desktop', function () {
     // Answer thread rightclick
-    it('reply to a recipient thread right click', function () {
+    it('Messaging_Reply_rightClick', function () {
       const existingThreads = this.messagingData.existingThreads
       // Send answer
       cy.login(HEADMASTER, messagingURL)
@@ -36,7 +36,7 @@ describe('Answer', () => {
     })
 
     // Answer option button
-    it('reply to a recipient option reply', function () {
+    it('Messaging_Reply_optionButton', function () {
       const existingThreads = this.messagingData.existingThreads
       // Send answer
       cy.login(HEADMASTER, messagingURL)
@@ -60,7 +60,7 @@ describe('Answer', () => {
     })
 
     // Answer all recipients thread right click
-    it('reply to all recipients thread right click', function () {
+    it('Messaging_ReplyAll_rightClick', function () {
       const existingThreads = this.messagingData.existingThreads
       cy.login(HEADMASTER, messagingURL)
       waitMessagingToBeLoaded()
@@ -92,7 +92,7 @@ describe('Answer', () => {
     })
 
     // Answer all recipients option button
-    it('reply to all recipients option button', function () {
+    it('Messaging_ReplyAll_optionButton', function () {
       const existingThreads = this.messagingData.existingThreads
       cy.login(HEADMASTER, messagingURL)
       waitMessagingToBeLoaded()

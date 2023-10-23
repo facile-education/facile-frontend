@@ -78,7 +78,7 @@ describe('Messaging navigation and structure', () => {
     })
 
     // multiSelection ctrl
-    it('multiSelection ctrl', function () {
+    it('Messaging_ThreadMultiSelection_ctrl', function () {
       waitMessagingToBeLoaded()
       // CTRL click
       const totalThreads = this.messagingData.existingThreads
@@ -98,7 +98,7 @@ describe('Messaging navigation and structure', () => {
     })
 
     // multiSelection click --> shift
-    it('multiSelection click --> shift', function () {
+    it('Messaging_ThreadMultiSelection_click --> shift', function () {
       cy.get('[data-test="thread-list-item"]').first().click()
       cy.get('body').type('{shift}', { release: false })
 
@@ -123,7 +123,7 @@ describe('Messaging navigation and structure', () => {
     })
 
     // multiSelection shift --> click
-    it('multiSelection shift --> click', function () {
+    it('Messaging_ThreadMultiSelection_shift --> click', function () {
       cy.get('body').type('{shift}', { release: false })
 
       // Select all threads with shift click

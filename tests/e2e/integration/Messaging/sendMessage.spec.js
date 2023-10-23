@@ -249,4 +249,13 @@ describe('Sending message', () => {
     checkAndSelectThreadMessage(message)
     checkMessageDetails(message)
   })
+  it('check new message button / send modal', () => {
+    cy.viewport('iphone-5')
+
+    cy.login(STUDENT, messagingURL)
+    waitMessagingToBeLoaded()
+
+    cy.get('[data-test="createMessageButton"]').click()
+    cy.get('.window-container').should('be.visible')
+  })
 })

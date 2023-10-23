@@ -13,7 +13,7 @@ const getUnread = (allThread) => {
   }
 }
 
-describe('Messaging filter', () => {
+describe('Messaging_SetReadStatus', () => {
   beforeEach(() => {
     cy.loadTables('messaging/messaging_tables.sql')
     cy.fixture('messaging.json').as('messagingData')
@@ -22,7 +22,7 @@ describe('Messaging filter', () => {
   })
   context('desktop', function () {
     // filter read / unread
-    it('filter read / unread', function () {
+    it('Messaging_SetReadStatus_filter', function () {
       const totalThreads = this.messagingData.existingThreads
       getUnread(totalThreads)
       // Unread
@@ -37,7 +37,7 @@ describe('Messaging filter', () => {
     })
 
     // test count read / unread
-    it('count read / unread', function () {
+    it('Messaging_SetReadStatus_count', function () {
       unread = 0
       const totalThreads = this.messagingData.existingThreads
       getUnread(totalThreads)
