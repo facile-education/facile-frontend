@@ -12,6 +12,11 @@
         class="room"
       >{{ appEvent.room }}
       </span>
+      <span
+        v-if="appEvent.capacity"
+        class="capacity"
+      >{{ formattedCapacity }}
+      </span>
     </div>
     <div
       v-if="appEvent.teachers"
@@ -20,16 +25,11 @@
     >
       {{ formattedTeachersLabel }}
     </div>
-    <div class="fc-event-capacity">
-      {{ formattedRoomAndPlacesLabel }}
-    </div>
   </div>
 </template>
 
 <script>
 import dayjs from 'dayjs'
-
-import i18n from '@/i18n'
 
 export default {
   name: 'CalendarEvent',
@@ -65,8 +65,8 @@ export default {
       })
       return label
     },
-    formattedRoomAndPlacesLabel () {
-      return this.appEvent.capacity !== undefined ? (i18n.global.t('NotUsualSlots.capacity') + (this.appEvent.capacity - this.appEvent.nbRegisteredStudents) + '/' + this.appEvent.capacity) : ''
+    formattedCapacity () {
+      return (this.appEvent.capacity - this.appEvent.nbRegisteredStudents) + '/' + this.appEvent.capacity
     },
     cy () {
       return dayjs(this.event.event.start).format('MM-DD_HH:mm')
@@ -89,7 +89,7 @@ export default {
   margin-right: 10px;
   margin-bottom : 5px;
 
-  .hours {
+  .capacity {
     margin-left: 5px;
     white-space: nowrap;
     overflow-x: hidden;
@@ -98,7 +98,6 @@ export default {
     font-size: 0.75rem;
   }
   .room {
-    font-style: italic;
     font-weight: normal;
     font-size: 0.75rem;
   }
