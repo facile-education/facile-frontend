@@ -1,7 +1,7 @@
 import { SCHOOL_ADMIN } from '../../support/constants/users'
 import { url } from '../../support/constants/statistics'
 
-describe('preference modal', () => {
+describe('Preferences', () => {
   it('panels and closure behavior', () => {
     // Connection
     cy.login(SCHOOL_ADMIN, url)
@@ -10,7 +10,7 @@ describe('preference modal', () => {
 
     // Default tab
     cy.get('[data-test=account-tab]').should('exist')
-    // Go on term of use tab
+    // Go on messaging tab
     cy.get('.tabs > :nth-child(2)').click() // access by property
     cy.get('[data-test=messaging-tab]').should('exist')
     // Return to the default tab
@@ -22,7 +22,7 @@ describe('preference modal', () => {
     cy.get('[data-test=informationModal]').should('not.exist')
   })
 
-  context('change data', () => {
+  context('Preferences_ChangeData', () => {
     beforeEach(function () {
       cy.loadTables('preferences/preferences_tables.sql')
       cy.login(SCHOOL_ADMIN, url)
@@ -41,6 +41,7 @@ describe('preference modal', () => {
         cy.get('[data-test="closeModal"]').click()
       })
       cy.get('[data-test=account-tab]').within(() => {
+        // Theme color
         cy.get('section.theme-color').within(() => {
           cy.get('.swatch').click().should('have.css', 'background-color').and('eq', 'rgb(231, 76, 60)')
           cy.get('.popover').find('.swatch').eq(0).click()
@@ -48,6 +49,7 @@ describe('preference modal', () => {
           cy.get('.swatch').should('have.css', 'background-color').and('not.eq', 'rgb(231, 76, 60)')
         })
 
+        // Report frequecy
         cy.get('section.activity-report').within(() => {
           cy.get('.base-dropdown').should('contain', 'Quotidien').click()
           cy.get('.base-dropdown > .base-autocomplete').should('be.visible')

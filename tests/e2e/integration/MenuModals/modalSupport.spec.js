@@ -1,10 +1,10 @@
-import { GLOBAL_ADMIN } from '../../support/constants/users'
 import { url } from '../../support/constants/statistics'
+import { GLOBAL_ADMIN } from '../../support/constants/users'
 
 const adminWelcomeSentence = 'Votre demande de support sera traitée par les équipes de Pentila, vous recevrez une réponse dans votre messagerie'
 const userWelcomeSentence = "Votre demande de support sera transmise à l'administrateur"
 
-describe('admin desktop support modal', () => { // TODO remove skip when associated back service will exist
+describe('SupportModal', () => { // TODO remove skip when associated back service will exist
   function randomInt (min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min
   }
@@ -29,7 +29,7 @@ describe('admin desktop support modal', () => { // TODO remove skip when associa
       cy.get('[data-test=supportModal]').should('exist')
     })
 
-    it('send issue', () => {
+    it('SupportModal_SendMessageToDev', () => {
     // we don't test all behavior in common with user
 
       // test form
