@@ -13,6 +13,7 @@
 
     <template #body>
       <DiaryEventDetails
+        ref="diaryEventDetails"
         :init-event="initEvent"
         :is-in-modal="true"
         @update="updateEvent"
@@ -78,6 +79,7 @@ export default {
       this.$emit('close')
     },
     updateEvent () {
+      this.$refs.diaryEventDetails.openUpdateModal()
       this.$emit('update')
     }
   }
