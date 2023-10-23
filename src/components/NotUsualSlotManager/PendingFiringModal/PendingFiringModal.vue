@@ -132,6 +132,11 @@ div.non-classical-slots {
 .pending-firing-modal {
   &.modal-mask {
     position: absolute;
+
+    .resizable-component {
+      left: 50% !important;
+      transform: translateX(-50%);
+    }
   }
 
   .window-wrapper {
