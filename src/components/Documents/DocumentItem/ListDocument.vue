@@ -408,6 +408,8 @@ export default {
   }
 
   .name {
+    flex: 1;
+
     .icon-container {
       width: 30px;
       min-width: 30px;
