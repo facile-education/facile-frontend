@@ -53,7 +53,7 @@ CREATE TABLE `Messaging_Message` (
 LOCK TABLES `Messaging_Message` WRITE;
 /*!40000 ALTER TABLE `Messaging_Message` DISABLE KEYS */;
 INSERT INTO lportal_ent.Messaging_Message (messageId,folderId,threadId,sendMessageId,senderId,sendDate,messageSubject,messageContent,isNew,readDate,isAnswered,isForwarded,senderName,type_,companyId) VALUES
-	 (485606,534218,485607,0,58811,'2023-10-23 11:59:57.330','Brouilon','Message enregistré en tant que brouillon',0,NULL,0,0,'Orlan HUE',0,20097),
+	 (485621,534218,485622,0,58811,'2023-10-23 14:28:32.349','Brouillon existant','Ceci est un brouillon déjà existant',0,NULL,0,0,'Orlan HUE',0,20097),
 	 (534210,534207,534211,0,45479,'2023-10-05 08:51:49.401','Mon premier message','Ceci est un message de test',0,NULL,0,0,'Rosana NOLLI',0,20097),
 	 (534212,534205,534211,534210,45479,'2023-10-05 08:51:49.495','Mon premier message','Ceci est un message de test',0,'2023-10-05 09:03:03',0,0,'Rosana NOLLI',0,20097),
 	 (534213,534207,534214,0,45479,'2023-10-05 08:53:44.337','deuxième message','je vous pose une question',0,NULL,0,0,'Rosana NOLLI',0,20097),
@@ -117,10 +117,10 @@ CREATE TABLE `Messaging_MessageContent` (
 LOCK TABLES `Messaging_MessageContent` WRITE;
 /*!40000 ALTER TABLE `Messaging_MessageContent` DISABLE KEYS */;
 INSERT INTO lportal_ent.Messaging_MessageContent (messageId,messageContent) VALUES
-	 (485606,'<html>
+	 (485621,'<html>
  <head></head>
 <body>
- <p>Message enregistré en tant que brouillon</p>
+ <p>Ceci est un brouillon déjà existant &nbsp;</p>
 </body></body>
 </html>'),
 	 (534210,'<html>
@@ -257,7 +257,7 @@ CREATE TABLE `Messaging_MessageRecipients` (
 LOCK TABLES `Messaging_MessageRecipients` WRITE;
 /*!40000 ALTER TABLE `Messaging_MessageRecipients` DISABLE KEYS */;
 INSERT INTO lportal_ent.Messaging_MessageRecipients (messageId,recipients) VALUES
-	 (485606,'47461,'),
+	 (485621,'47461,'),
 	 (534210,'58811,'),
 	 (534212,'58811,'),
 	 (534213,'58811,'),

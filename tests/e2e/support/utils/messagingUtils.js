@@ -35,9 +35,9 @@ const getMessage = (message) => {
   return cy.get('[data-test=messages-panel]').contains('[data-test=message]', message.content)
 }
 
-const getDraft = (subject) => {
+const getDraft = (message) => {
   // Get message by content
-  return cy.contains('[data-test=thread-list-item]', subject)
+  return cy.contains('[data-test=thread-list-item]', message)
 }
 
 export {

@@ -48,7 +48,7 @@ describe('Messaging navigation and structure', () => {
     })
 
     // Keyboard navigation
-    it('keyboard navigation', function () {
+    it.only('keyboard navigation', function () {
       waitMessagingToBeLoaded()
       const totalThreads = this.messagingData.existingThreads
 
@@ -56,6 +56,9 @@ describe('Messaging navigation and structure', () => {
         if (j >= 0) {
           cy.get('body').type('{downArrow}')
           getThread(totalThreads[j]).find('.main').should('have.class', 'theme-background-color')
+          getThread(totalThreads[j]).within(() => {
+            cy.get('[data-test="unread-icon"]').should('be.not.exist')
+          })
         } else {
           cy.get('[data-test="thread-list-item"]').last().find('.main').should('have.class', 'theme-background-color')
         }

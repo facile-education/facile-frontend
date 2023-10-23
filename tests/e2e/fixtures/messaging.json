@@ -96,8 +96,28 @@
     [
       {
         "sender": "Orlan Hue",
+        "subject": "Brouillon existant",
+        "content": "Ceci est un brouillon déjà existant",
+        "messageIndexInThread": 0
+      }
+    ]
+  ],
+  "draftToCreate": [
+    [
+      {
+        "sender": "Orlan Hue",
         "subject": "Brouillon",
-        "content": "Message enregistré en tant que brouillon",
+        "content": "Ceci est un message enregistré en tant que brouillon",
+        "messageIndexInThread": 0
+      }
+    ]
+  ],
+  "ModifiedDraftContent": [
+    [
+      {
+        "sender": "Orlan Hue",
+        "subject": "Brouillon modifié",
+        "content": "Ceci est un brouillon modifié",
         "messageIndexInThread": 0
       }
     ]
