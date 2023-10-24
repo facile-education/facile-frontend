@@ -30,7 +30,7 @@ describe('Drag and drop messages', () => {
     waitMessagingToBeLoaded()
   })
 
-  it('drag and drop', function () {
+  it('Messaging_DragAndDropThread', function () {
     const dataTransfer = new DataTransfer()
     const headMasterPersonalFolder = this.messagingData.personalFolders.headMasterPersonalFolder
     const firstThread = this.messagingData.existingThreads[0]

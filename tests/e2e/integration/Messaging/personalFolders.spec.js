@@ -198,4 +198,29 @@ describe('Personal folders', () => {
     cy.get('[data-test="messaging-menu"]').contains('button', 'Corbeille').click()
     getThread(subFolderThread).should('be.exist')
   })
+
+  // Messaging_PersonalFolderBehaviour
+  it('Messaging_PersonalFolderBehaviour', function () {
+    const existingPersonalFolders = this.messagingData.personalFolders.existingPersonalFolders
+    const personalFolderToDelete = existingPersonalFolders[0]
+    const PersonalFolderThread = this.messagingData.existingDraftThreads[1]
+
+    // Click on personalFolder
+    cy.get('[data-test=messaging-menu]').within(() => {
+      toggleFolder(personalFolderToDelete)
+    })
+    // Check if content folder exist
+    cy.get('.scroll').within(() => {
+      getThread(PersonalFolderThread).should('be.exist')
+    })
+    // Check if subFolder is visible
+    cy.get('[data-test="personalSubFolder-sous-dossier"]').should('be.visible')
+
+    // Click on personalFolder
+    cy.get('[data-test=messaging-menu]').within(() => {
+      toggleFolder(personalFolderToDelete)
+    })
+    // Check if subFolder is not visible
+    cy.get('[data-test="personalSubFolder-sous-dossier"]').should('not.exist')
+  })
 })
