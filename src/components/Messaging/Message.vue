@@ -122,11 +122,15 @@ export default {
 <style lang="scss" scoped>
 @import "@design";
 
+.single-message .message {
+  padding: 10px 1em 0 1em;
+}
+
 .message {
   border-radius: 6px;
   border: 1px solid $color-border;
   box-shadow: 0 2px 14px 0 rgba(0,0,0,0.1);
-  padding: 0 1em;
+  padding: 10px 1.4em 0 1.4em;
 
   p {
     margin: 0;
@@ -154,7 +158,8 @@ export default {
       @extend %messaging-pellet;
       position: absolute;
       top: 6px;
-      left: -11px;
+      left: -0.5em;
+      transform: translateX(-50%);
     }
 
     .header-main {
@@ -162,8 +167,6 @@ export default {
       flex-grow: 1;
       .header-line1 {
         width: 100%;
-        /* Add padding if no folder */
-        margin-top: 10px;
         display: flex;
         justify-content: space-between;
 
