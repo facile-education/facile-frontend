@@ -22,16 +22,18 @@
       @click="toggleEditModalDisplay"
     />
   </div>
-  <PentilaSpinner v-else />
+  <WeprodeSpinner v-else />
 </template>
 
 <script>
 import GroupItem from '@components/Groups/GroupItem'
-import PentilaUtils from 'pentila-utils'
+import WeprodeUtils from '@utils/weprode.utils'
+
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 
 export default {
   name: 'GroupList',
-  components: { GroupItem },
+  components: { GroupItem, WeprodeSpinner },
   inject: ['mq'],
   data () {
     return {
@@ -47,7 +49,7 @@ export default {
       return this.$store.state.groups.groupList
     },
     sortedGroupList () {
-      return PentilaUtils.Array.sortWithString(this.groupList, false, 'groupName')
+      return WeprodeUtils.sortArrayWithString(this.groupList, false, 'groupName')
     }
   },
   created () {

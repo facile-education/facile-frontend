@@ -1,11 +1,11 @@
 <template>
   <div class="holiday-form">
     <div class="name">
-      <PentilaInput
+      <WeprodeInput
         v-model="name"
         :placeholder="$t('namePlaceHolder') + '*'"
       />
-      <PentilaErrorMessage
+      <WeprodeErrorMessage
         :error-message="formErrorList.name"
       />
     </div>
@@ -17,17 +17,17 @@
         :max-date="maxDate.toDate()"
         @updateDates="updateDates"
       />
-      <PentilaErrorMessage
+      <WeprodeErrorMessage
         :error-message="formErrorList.startDate || formErrorList.endDate"
       />
     </div>
 
     <div class="buttons">
-      <PentilaButton
+      <WeprodeButton
         v-t="'submit'"
         @click="submit"
       />
-      <PentilaButton
+      <WeprodeButton
         v-t="'cancel'"
         @click="$emit('cancel')"
       />
@@ -41,9 +41,12 @@ import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import dayjs from 'dayjs'
 
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+
 export default {
   name: 'HolidayForm',
-  components: { DateRangePicker },
+  components: { DateRangePicker, WeprodeErrorMessage, WeprodeInput },
   props: {
     minDate: {
       type: Object,

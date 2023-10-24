@@ -5,7 +5,7 @@
       v-if="isLoading"
       class="loading-placeholder"
     >
-      <PentilaSpinner />
+      <WeprodeSpinner />
     </div>
     <div
       v-else-if="error === true"
@@ -35,10 +35,11 @@
 import Chart from '@components/Statistics/Chart.vue'
 
 import { getFilesCount, getHomeworksCount } from '@/api/statistics.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 
 export default {
   name: 'StatsDoughnut',
-  components: { Chart },
+  components: { Chart, WeprodeSpinner },
   props: {
     service: {
       type: String,

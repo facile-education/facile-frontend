@@ -6,7 +6,7 @@
   >
     <!-- Forward -->
     <div class="param-header">
-      <PentilaCheckbox
+      <WeprodeCheckbox
         v-model="configuration.forward.isActive"
         class="checkbox"
         label=""
@@ -18,7 +18,7 @@
         :text="$t('forwardInfo')"
       />
     </div>
-    <PentilaTagsInput
+    <WeprodeTagsInput
       v-model="configuration.forward.addresses"
       :placeholder="$t('addRedirection')"
       display-field="text"
@@ -28,11 +28,11 @@
       class="param-value"
       @update:model-value="checkForm"
     />
-    <PentilaErrorMessage :error-message="errorMessage" />
+    <WeprodeErrorMessage :error-message="errorMessage" />
 
     <!-- Signature -->
     <div class="param-header">
-      <PentilaCheckbox
+      <WeprodeCheckbox
         v-model="configuration.signature.isActive"
         class="checkbox"
         label=""
@@ -51,7 +51,7 @@
 
     <!-- Auto-reply -->
     <div class="param-header">
-      <PentilaCheckbox
+      <WeprodeCheckbox
         v-model="configuration.autoReply.isActive"
         class="checkbox"
         label=""
@@ -68,7 +68,7 @@
       @blur="checkForm"
     />
   </div>
-  <PentilaSpinner v-else />
+  <WeprodeSpinner v-else />
 </template>
 
 <script>
@@ -76,10 +76,14 @@ import InformationIcon from '@components/Base/InformationIcon'
 import TextContent from '@components/Base/TextContent.vue'
 
 import configurationService from '@/api/messaging/configuration.service'
+import WeprodeCheckbox from '@/components/Base/Weprode/WeprodeCheckbox.vue'
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
+import WeprodeTagsInput from '@/components/Base/Weprode/WeprodeTagsInput.vue'
 
 export default {
   name: 'MessagingTab',
-  components: { TextContent, InformationIcon },
+  components: { TextContent, InformationIcon, WeprodeCheckbox, WeprodeErrorMessage, WeprodeSpinner, WeprodeTagsInput },
   emits: ['save'],
   data () {
     return {

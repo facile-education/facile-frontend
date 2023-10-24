@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import PentilaUtils from 'pentila-utils'
+import WeprodeUtils from '@utils/weprode.utils'
 import { defineAsyncComponent } from 'vue'
 
 import { getTeacherHomeworksToCorrect } from '@/api/homework.service'
@@ -36,7 +36,7 @@ export default {
   },
   computed: {
     sortedHomeworks () {
-      return PentilaUtils.Array.sortWithString(this.homeworks, false, 'targetDate')
+      return WeprodeUtils.sortArrayWithString(this.homeworks, false, 'targetDate')
     }
   },
   created () {

@@ -11,7 +11,7 @@
       >
     </button>
 
-    <PentilaInput
+    <WeprodeInput
       v-model="filter"
       class="filter-input"
       :placeholder="$t('searchPlaceHolder')"
@@ -42,8 +42,10 @@
 </template>
 
 <script>
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
 export default {
   name: 'ContactUserListHeader',
+  components: { WeprodeInput },
   inject: ['mq'],
   props: {
     userListLength: {

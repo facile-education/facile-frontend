@@ -59,7 +59,7 @@
       class="placeHolder"
     />
   </div>
-  <PentilaSpinner v-else />
+  <WeprodeSpinner v-else />
 </template>
 
 <script>
@@ -75,11 +75,12 @@ import WISIWIG from '@components/Documents/FileDisplay/WISIWIG'
 
 import fileService from '@/api/documents/file.service'
 import groupService from '@/api/documents/group.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import OtherDocument from '@/components/Documents/FileDisplay/OtherDocument'
 
 export default {
   name: 'FileDisplay',
-  components: { WISIWIG, Office, Scratch, MindMap, Geogebra, PDF, AudioDocument, ImageDocument, VideoDocument, OtherDocument },
+  components: { WISIWIG, Office, Scratch, MindMap, Geogebra, PDF, AudioDocument, ImageDocument, VideoDocument, OtherDocument, WeprodeSpinner },
   inject: ['mq'],
   props: {
     file: {

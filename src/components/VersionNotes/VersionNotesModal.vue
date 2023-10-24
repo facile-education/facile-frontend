@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     :modal="true"
     :draggable="true"
     :full-screen="mq.phone || mq.tablet"
@@ -14,7 +14,7 @@
     </template>
 
     <template #body>
-      <PentilaButton
+      <WeprodeButton
         v-if="isAdministrator"
         class="create-button"
         @click="openCreateVersionNoteModal"
@@ -23,14 +23,14 @@
           name="fa-plus"
         />
         <span>{{ $t('new') }}</span>
-      </PentilaButton>
+      </WeprodeButton>
 
       <VersionNoteSelector
         class="note-selector"
         @update="openUpdateVersionNoteModal"
       />
 
-      <PentilaSpinner
+      <WeprodeSpinner
         v-if="isLoading"
         style="z-index: 1"
       />
@@ -57,18 +57,21 @@
         />
       </teleport>
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>
 import NeroIcon from '@components/Nero/NeroIcon.vue'
 import VersionNoteSelector from '@components/VersionNotes/VersionNoteSelector.vue'
 import { defineAsyncComponent } from 'vue'
+
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 const SaveVersionNoteModal = defineAsyncComponent(() => import('@components/VersionNotes/SaveVersionNoteModal.vue'))
 
 export default {
   name: 'VersionNotesModal',
-  components: { SaveVersionNoteModal, VersionNoteSelector, NeroIcon },
+  components: { SaveVersionNoteModal, VersionNoteSelector, NeroIcon, WeprodeSpinner, WeprodeWindow },
   inject: ['mq'],
   emits: ['close'],
   data () {

@@ -1,5 +1,5 @@
+import WeprodeUtils from '@utils/weprode.utils'
 import axios from 'axios'
-import PentilaUtils from 'pentila-utils'
 
 import constants from '@/api/constants'
 import { conflicts } from '@/constants/documentsConstants'
@@ -97,7 +97,7 @@ function createAudioFile (folderId, name, audioFile) {
  */
 function renameFile (fileId, fileName) {
   return axios.post(constants.JSON_WS_URL + FILE_PATH + '/rename-file',
-    PentilaUtils.URL.params({
+    WeprodeUtils.params({
       fileId,
       fileName
     })
@@ -109,7 +109,7 @@ function renameFile (fileId, fileName) {
  */
 function createMindMapFile (folderId, name) {
   return axios.post(constants.JSON_WS_URL + FILE_PATH + '/create-mindmap-file',
-    PentilaUtils.URL.params({
+    WeprodeUtils.params({
       folderId,
       name
     })
@@ -121,7 +121,7 @@ function createMindMapFile (folderId, name) {
  */
 function createGeogebraFile (folderId, name) {
   return axios.post(constants.JSON_WS_URL + FILE_PATH + '/create-geogebra-file',
-    PentilaUtils.URL.params({
+    WeprodeUtils.params({
       folderId,
       name
     })
@@ -133,7 +133,7 @@ function createGeogebraFile (folderId, name) {
  */
 function createScratchFile (folderId, name) {
   return axios.post(constants.JSON_WS_URL + FILE_PATH + '/create-scratch-file',
-    PentilaUtils.URL.params({
+    WeprodeUtils.params({
       folderId,
       name
     })
@@ -145,7 +145,7 @@ function createScratchFile (folderId, name) {
  */
 function createLoolFile (folderId, name, type) {
   return axios.post(constants.JSON_WS_URL + FILE_PATH + '/create-lool-file',
-    PentilaUtils.URL.params({
+    WeprodeUtils.params({
       folderId,
       name,
       type
@@ -158,7 +158,7 @@ function createLoolFile (folderId, name, type) {
  */
 function createHtmlFile (folderId, name) {
   return axios.post(constants.JSON_WS_URL + FILE_PATH + '/create-html-file',
-    PentilaUtils.URL.params({
+    WeprodeUtils.params({
       folderId,
       name
     })
@@ -181,7 +181,7 @@ function getHtmlContent (fileVersionId) {
  */
 function saveHtmlContent (fileVersionId, content, majorVersion) {
   return axios.post(constants.JSON_WS_URL + WISIWIG_PATH + '/save-html-content',
-    PentilaUtils.URL.params({
+    WeprodeUtils.params({
       fileVersionId,
       content,
       majorVersion
@@ -194,7 +194,7 @@ function saveHtmlContent (fileVersionId, content, majorVersion) {
  */
 function addLock (fileId) {
   return axios.post(constants.JSON_WS_URL + FILE_PATH + '/add-lock',
-    PentilaUtils.URL.params({
+    WeprodeUtils.params({
       fileId
     })
   ).then(response => response.data)
@@ -228,15 +228,15 @@ function getResource (fileId, versionId, readOnly) {
  * Get the url to see the resource
  */
 function removeLoolToken (token) {
-  return axios.post(constants.JSON_WS_URL + FILE_PATH + '/remove-lool-token', PentilaUtils.URL.params({
-    token: token
+  return axios.post(constants.JSON_WS_URL + FILE_PATH + '/remove-lool-token', WeprodeUtils.params({
+    token
   })).then(response => response.data)
 }
 
 function getFileInfos (fileId) {
   return axios.get(constants.JSON_WS_URL + FILE_PATH + '/get-file-infos', {
     params: {
-      fileId: fileId
+      fileId
     }
   }).then(response => response.data)
 }

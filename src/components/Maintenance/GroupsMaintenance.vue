@@ -1,27 +1,27 @@
 <template>
   <div class="tab">
-    <PentilaButton
+    <WeprodeButton
       class="round"
       @click="runArchiving"
     >
       <span>{{ $t('archive') }}</span>
-    </PentilaButton>
+    </WeprodeButton>
 
     <p>{{ $t('group-deletion') }}</p>
 
     <div class="group-deletion">
-      <PentilaInput
+      <WeprodeInput
         v-model="groupId"
         class="groupid"
         placeholder="group id"
         :maxlength="75"
       />
-      <PentilaButton
+      <WeprodeButton
         class="round"
         @click="deleteGroup"
       >
         <span>{{ $t('delete-group') }}</span>
-      </PentilaButton>
+      </WeprodeButton>
     </div>
 
     <div>
@@ -30,22 +30,26 @@
         name="file"
         @change="fileChange($event.target.files)"
       >
-      <PentilaButton
+      <WeprodeButton
         class="round"
         @click="deleteGroups"
       >
         <span>{{ $t('delete-groups') }}</span>
-      </PentilaButton>
+      </WeprodeButton>
     </div>
   </div>
 </template>
 
 <script>
 
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
+
 import { deleteGroup, deleteGroups, runArchiving } from '@/api/maintenance.service'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
 
 export default {
   name: 'GroupsMaintenance',
+  components: { WeprodeButton, WeprodeInput },
   data () {
     return {
       groupId: undefined,

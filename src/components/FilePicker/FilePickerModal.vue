@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     class="filepicker-window"
     :class="{'mobile': mq.phone || mq.tablet}"
     data-test="file-picker-modal"
@@ -35,31 +35,33 @@
     </template>
 
     <template #footer>
-      <PentilaButton
+      <WeprodeButton
         v-if="folderSelection"
         data-test="submitButton"
         :label="submitLabel !== 'noSelectedFolder' ? submitLabel : $t('noSelectedFolder')"
         :disabled="submitLabel === 'noSelectedFolder'"
         @click="emitSelectedFolder"
       />
-      <PentilaButton
+      <WeprodeButton
         v-else
         data-test="submitButton"
         :label="$t('submitButton')"
         @click="addNewFiles"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>
 import FilePickerModalDocuments from '@components/FilePicker/FilePickerModalDocuments'
 
 import groupService from '@/api/documents/group.service'
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
   name: 'FilePickerModal',
-  components: { FilePickerModalDocuments },
+  components: { FilePickerModalDocuments, WeprodeButton, WeprodeWindow },
   inject: ['mq'],
   props: {
     folderSelection: {

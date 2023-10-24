@@ -3,7 +3,7 @@
     v-if="documentsProperties"
     class="add-content-buttons"
   >
-    <PentilaButton
+    <WeprodeButton
       v-for="content in filteredContents"
       :key="content.name"
       :title="content.name"
@@ -20,7 +20,7 @@
         type="file"
         @change="importDocument"
       >
-    </PentilaButton>
+    </WeprodeButton>
 
     <teleport to="body">
       <FilePickerModal
@@ -63,6 +63,7 @@ import { alertNoFile, returnAddedFiles } from '@utils/upload.util'
 import { defineAsyncComponent } from 'vue'
 
 import { uploadTmpFile } from '@/api/documents/file.service'
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
 
 const AudioRecorderModal = defineAsyncComponent(() => import('@components/Base/ContentEdtitionModals/AudioRecorderModal'))
 const LinkModal = defineAsyncComponent(() => import('@components/Base/ContentEdtitionModals/LinkModal'))
@@ -78,7 +79,8 @@ export default {
     LinkModal,
     FilePickerModal,
     H5PModal,
-    VideoModal
+    VideoModal,
+    WeprodeButton
   },
   emits: ['add', 'close'],
   data () {

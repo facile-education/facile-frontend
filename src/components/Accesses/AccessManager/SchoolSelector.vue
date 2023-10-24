@@ -3,7 +3,7 @@
     v-if="schoolList && schoolList.length > 1"
     class="school-selection"
   >
-    <PentilaDropdown
+    <WeprodeDropdown
       v-model="selectedSchool"
       :list="schoolList"
       display-field="schoolName"
@@ -13,8 +13,10 @@
 </template>
 
 <script>
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
 export default {
   name: 'SchoolSelector',
+  components: { WeprodeDropdown },
   emits: ['setSchool'],
   computed: {
     schoolList () {

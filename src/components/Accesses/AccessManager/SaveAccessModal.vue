@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     class="save-access-modal"
     data-test="save-access-modal"
     :full-screen="mq.phone || mq.tablet"
@@ -19,25 +19,25 @@
         />
 
         <div class="input">
-          <PentilaInput
+          <WeprodeInput
             ref="nameInput"
             v-model="title"
             :placeholder="$t('namePlaceHolder') + '*'"
           />
-          <PentilaErrorMessage
+          <WeprodeErrorMessage
             :error-message="formErrorList.title"
           />
         </div>
 
         <div class="category-selection">
-          <PentilaDropdown
+          <WeprodeDropdown
             v-model="selectedCategory"
             :list="categoryList"
             class="dropdown"
             display-field="categoryName"
             :sort="false"
           />
-          <PentilaErrorMessage
+          <WeprodeErrorMessage
             :error-message="formErrorList.category"
           />
         </div>
@@ -51,33 +51,33 @@
           @update-folder="updateFolder"
           @update-file="updateFile"
         />
-        <PentilaErrorMessage
+        <WeprodeErrorMessage
           :error-message="formErrorList.redirection"
         />
       </div>
 
       <div class="roles-selection">
-        <PentilaTagsInput
+        <WeprodeTagsInput
           v-model="roles"
           :placeholder="$t('rolesPlaceholder') + '*'"
           :list="availableRoleList"
           :close-on-select="true"
           display-field="displayText"
         />
-        <PentilaErrorMessage
+        <WeprodeErrorMessage
           :error-message="formErrorList.roles"
         />
       </div>
     </template>
 
     <template #footer>
-      <PentilaButton
+      <WeprodeButton
         data-test="submitButton"
         :label="isCreation? $t('creationSubmit') : $t('updateSubmit')"
         @click="submit"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>
@@ -89,8 +89,13 @@ import { required } from '@vuelidate/validators'
 import { nextTick } from 'vue'
 
 import { saveSchoolAccess } from '@/api/access.service'
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeTagsInput from '@/components/Base/Weprode/WeprodeTagsInput.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 import { defaultImagesKeys } from '@/constants/icons'
-
 const inputMaxSize = 75
 const isUnderInputMaxSize = (value) => validators.isUnderMaxSize(value, inputMaxSize)
 const isNotEmpty = (list) => validators.isNotEmpty(list)
@@ -98,7 +103,7 @@ const isNotPlaceholder = (value) => value.categoryId !== -1
 
 export default {
   name: 'SaveAccessModal',
-  components: { ThumbnailSelector, AccessRedirectionSelector },
+  components: { ThumbnailSelector, AccessRedirectionSelector, WeprodeButton, WeprodeDropdown, WeprodeErrorMessage, WeprodeInput, WeprodeTagsInput, WeprodeWindow },
   inject: ['mq'],
   props: {
     initAccess: {

@@ -1,6 +1,6 @@
 <template>
   <h1 :aria-label="$t('serviceTitle')" />
-  <PentilaSpinner v-if="menu === undefined" />
+  <WeprodeSpinner v-if="menu === undefined" />
   <h2
     v-else-if="showMessage"
     v-t="'message'"
@@ -9,8 +9,10 @@
 
 <script>
 
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 export default {
   name: 'NotFound',
+  components: { WeprodeSpinner },
   emits: ['update:layout'],
   data () {
     return {

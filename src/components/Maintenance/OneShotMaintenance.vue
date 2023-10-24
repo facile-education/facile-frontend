@@ -1,26 +1,29 @@
 <template>
   <div class="param-header">
-    <PentilaButton
+    <WeprodeButton
       class="round"
       @click="cleanupDropboxes"
     >
       <span>{{ $t('cleanupDropboxes') }}</span>
-    </PentilaButton>
-    <PentilaButton
+    </WeprodeButton>
+    <WeprodeButton
       class="round"
       @click="runPAuth"
     >
       <span>{{ $t('pAuth') }}</span>
-    </PentilaButton>
+    </WeprodeButton>
   </div>
 </template>
 
 <script>
 
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
+
 import { cleanupDropboxes } from '@/api/maintenance.service'
 
 export default {
   name: 'OneShotMaintenance',
+  components: { WeprodeButton },
   data () {
     return {
     }

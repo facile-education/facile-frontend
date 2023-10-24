@@ -1,5 +1,5 @@
 <template>
-  <PentilaInput
+  <WeprodeInput
     v-model="searchInput"
     class="search-input"
     :placeholder="$t('searchPlaceholder')"
@@ -9,8 +9,10 @@
 </template>
 
 <script>
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
 export default {
   name: 'HelpSearch',
+  components: { WeprodeInput },
   data () {
     return {
       searchInput: '',

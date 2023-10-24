@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     :modal="true"
     :draggable="true"
     class="warning-modal"
@@ -27,13 +27,13 @@
 
     <template #footer>
       <div class="window-footer">
-        <PentilaButton
+        <WeprodeButton
           data-test="cancelButton"
           cls="cancel"
           :label="$t('WarningModal.cancelButton')"
           @click="onClose"
         />
-        <PentilaButton
+        <WeprodeButton
           data-test="confirmButton"
           cls="delete"
           :label="$t('WarningModal.confirmButton')"
@@ -41,15 +41,16 @@
         />
       </div>
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 import NeroIcon from '@/components/Nero/NeroIcon'
 
 export default {
   name: 'WarningModal',
-  components: { NeroIcon },
+  components: { NeroIcon, WeprodeWindow },
   computed: {
     warning () {
       return this.$store.getters['warningModal/firstWarning']

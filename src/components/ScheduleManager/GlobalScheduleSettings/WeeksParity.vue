@@ -7,13 +7,13 @@
         :text="$t('weekParityInfos')"
       />
     </header>
-    <PentilaInput
+    <WeprodeInput
       class="week-input"
       :model-value="h1Weeks"
       :placeholder="$t('h1WeeksPlaceholder')"
       @update:model-value="$emit('update:h1Weeks', $event)"
     />
-    <PentilaInput
+    <WeprodeInput
       class="week-input"
       :model-value="h2Weeks"
       :placeholder="$t('h2WeeksPlaceholder')"
@@ -25,9 +25,11 @@
 <script>
 import InformationIcon from '@components/Base/InformationIcon.vue'
 
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+
 export default {
   name: 'WeeksParity',
-  components: { InformationIcon },
+  components: { InformationIcon, WeprodeInput },
   props: {
     h1Weeks: {
       type: String,

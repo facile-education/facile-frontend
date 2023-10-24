@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     :modal="true"
     :draggable="true"
     :full-screen="mq.phone || mq.tablet"
@@ -20,7 +20,7 @@
         >
           {{ $t('the') }}
         </p>
-        <PentilaDropdown
+        <WeprodeDropdown
           v-model="selectedDay"
           class="days-list"
           :list="daysList"
@@ -33,7 +33,7 @@
         >
           {{ $t('in') }}
         </p>
-        <PentilaDropdown
+        <WeprodeDropdown
           v-model="selectedSlot"
           class="slots-list"
           :list="slotList"
@@ -42,10 +42,10 @@
           :filtered="false"
         />
       </div>
-      <PentilaErrorMessage
+      <WeprodeErrorMessage
         :error-message="formErrorList.day"
       />
-      <PentilaErrorMessage
+      <WeprodeErrorMessage
         :error-message="formErrorList.time"
       />
 
@@ -54,7 +54,7 @@
         class="group"
       >
         <span class="label">{{ $t('group') }}</span>
-        <PentilaDropdown
+        <WeprodeDropdown
           v-model="selectedGroup"
           class="group-list"
           :placeholder="$t('group')"
@@ -62,7 +62,7 @@
           display-field="groupName"
         />
       </div>
-      <PentilaErrorMessage
+      <WeprodeErrorMessage
         :error-message="formErrorList.group"
       />
 
@@ -71,21 +71,21 @@
         class="subject"
       >
         <span class="label">{{ $t('subject') }}</span>
-        <PentilaDropdown
+        <WeprodeDropdown
           v-model="subject"
           class="subject-list"
           :list="subjectList"
           display-field="name"
         />
       </div>
-      <PentilaErrorMessage
+      <WeprodeErrorMessage
         :error-message="formErrorList.subject"
       />
 
       <div
         class="teachers"
       >
-        <PentilaTagsInput
+        <WeprodeTagsInput
           ref="tagsinput"
           v-model="selectedTeachers"
           :close-on-select="true"
@@ -98,7 +98,7 @@
           class="tags"
         />
       </div>
-      <PentilaErrorMessage
+      <WeprodeErrorMessage
         :error-message="formErrorList.selectedTeachers"
       />
 
@@ -106,7 +106,7 @@
       <div
         class="room"
       >
-        <PentilaInput
+        <WeprodeInput
           v-model="room"
           class="room-input"
           :placeholder="$t('roomPlaceHolder')"
@@ -115,7 +115,7 @@
 
       <!-- Recurrence -->
       <div class="recurrence">
-        <PentilaCheckbox
+        <WeprodeCheckbox
           v-model="isRecurrent"
           class="checkbox"
           label=""
@@ -125,13 +125,13 @@
     </template>
 
     <template #footer>
-      <PentilaButton
+      <WeprodeButton
         form="createsessionform"
         :label="$t('Create')"
         @click="onCreate"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>
@@ -143,6 +143,13 @@ import { getUserGroups } from '@/api/groups.service'
 import { createSession, getSchoolSlotConfiguration } from '@/api/schedule.service'
 import { getSubjects } from '@/api/userManagement.service'
 import { getSchoolTeachers } from '@/api/userSearch.service'
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeCheckbox from '@/components/Base/Weprode/WeprodeCheckbox.vue'
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeTagsInput from '@/components/Base/Weprode/WeprodeTagsInput.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 const teachersRequired = (value) => {
   return value !== undefined && value.length > 0
@@ -150,7 +157,7 @@ const teachersRequired = (value) => {
 
 export default {
   name: 'SessionTeacherModal',
-  components: {},
+  components: { WeprodeButton, WeprodeCheckbox, WeprodeDropdown, WeprodeErrorMessage, WeprodeInput, WeprodeTagsInput, WeprodeWindow },
   inject: ['mq'],
   emits: ['close'],
   setup: () => ({ v$: useVuelidate() }),

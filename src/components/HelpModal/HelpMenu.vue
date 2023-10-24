@@ -20,7 +20,7 @@
 
     <ul v-else>
       <li v-if="isAdministrator">
-        <PentilaButton
+        <WeprodeButton
           v-t="('createCategoryLabel')"
           data-test="create-category-button"
           class="create-category-button"
@@ -35,7 +35,7 @@
       />
     </ul>
 
-    <PentilaSpinner v-if="isLoadingMenu" />
+    <WeprodeSpinner v-if="isLoadingMenu" />
 
     <teleport
       v-if="isCreateCategoryModalDisplayed"
@@ -47,13 +47,16 @@
 </template>
 
 <script>
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import HelpMenuCategory from '@components/HelpModal/HelpMenuCategory.vue'
 import { defineAsyncComponent } from 'vue'
+
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 const CreateCategoryModal = defineAsyncComponent(() => import('@components/HelpModal/CreationModals/CreateCategoryModal.vue'))
 
 export default {
   name: 'HelpMenu',
-  components: { CreateCategoryModal, HelpMenuCategory },
+  components: { CreateCategoryModal, HelpMenuCategory, WeprodeButton, WeprodeSpinner },
   inject: ['mq'],
   data () {
     return {

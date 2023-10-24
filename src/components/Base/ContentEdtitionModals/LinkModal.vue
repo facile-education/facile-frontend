@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     :modal="true"
     :draggable="true"
     class="linkWindow"
@@ -20,53 +20,59 @@
 
     <template #body>
       <div class="link-name">
-        <PentilaInput
+        <WeprodeInput
           ref="nameInput"
           v-model="linkName"
           :maxlength="200"
           :placeholder="$t('namePlaceholder')"
           @keyup.enter.stop="pressEnter"
         />
-        <PentilaErrorMessage
+        <WeprodeErrorMessage
           :error-message="formErrorList.linkName"
         />
       </div>
       <div class="link-url">
-        <PentilaInput
+        <WeprodeInput
           v-model="linkUrl"
           :maxlength="250"
           :placeholder="$t('urlPlaceholder')"
           @keyup.enter.stop="pressEnter"
         />
-        <PentilaErrorMessage
+        <WeprodeErrorMessage
           :error-message="formErrorList.linkUrl"
         />
       </div>
     </template>
 
     <template #footer>
-      <PentilaButton
+      <WeprodeButton
         v-if="isCreation"
         :label="$t('add')"
         class="button"
         @click="addLink"
       />
-      <PentilaButton
+      <WeprodeButton
         v-else
         :label="$t('edit')"
         class="button"
         @click="editLink"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
+
 export default {
   name: 'LinkModal',
+  components: { WeprodeButton, WeprodeErrorMessage, WeprodeInput, WeprodeWindow },
   inject: ['mq'],
   props: {
     item: {

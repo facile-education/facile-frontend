@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <PentilaButton
+    <WeprodeButton
       v-if="isNew"
       :class="{'phone': mq.phone}"
       class="create-button"
@@ -10,7 +10,7 @@
         name="fa-plus"
       />
       <span>{{ $t('new') }}</span>
-    </PentilaButton>
+    </WeprodeButton>
     <button
       v-else
       ref="root"
@@ -45,10 +45,11 @@
 
 import ContextMenu from '@components/ContextMenu/ContextMenu'
 
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
 import NeroIcon from '@/components/Nero/NeroIcon'
 export default {
   name: 'OptionItem',
-  components: { NeroIcon, ContextMenu },
+  components: { NeroIcon, ContextMenu, WeprodeButton },
   inject: ['mq'],
   props: {
     option: {
@@ -95,7 +96,7 @@ export default {
         this.isContextMenuDisplayed = true
         this.$store.dispatch('contextMenu/openContextMenu',
           {
-            event: event,
+            event,
             options: this.option.subMenu
           })
       }

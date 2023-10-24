@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     class="edit-title-modal"
     data-test="edit-title--modal"
     :full-screen="mq.phone || mq.tablet"
@@ -13,7 +13,7 @@
     </template>
 
     <template #body>
-      <PentilaInput
+      <WeprodeInput
         ref="titleInput"
         v-model="titleInput"
         class="name-input"
@@ -22,21 +22,26 @@
     </template>
 
     <template #footer>
-      <PentilaButton
+      <WeprodeButton
         data-test="submitButton"
         :label="$t('submit')"
         :disabled="titleInput.length === 0"
         @click="submit"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
+
 import { saveItem } from '@/api/help.service'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
   name: 'EdittitleInputModal',
+  components: { WeprodeButton, WeprodeInput, WeprodeWindow },
   inject: ['mq'],
   props: {
     currentTitle: {

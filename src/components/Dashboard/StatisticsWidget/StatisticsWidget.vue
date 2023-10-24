@@ -1,7 +1,7 @@
 <template>
   <section>
     <StatisticsHeader />
-    <PentilaSpinner
+    <WeprodeSpinner
       v-if="isLoading"
       style="z-index: 1"
     />
@@ -37,11 +37,12 @@ import StatisticItem from '@components/Dashboard/StatisticsWidget/StatisticItem.
 import StatisticsHeader from '@components/Dashboard/StatisticsWidget/StatisticsHeader.vue'
 
 import { getDashboardStatistics } from '@/api/statistics.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import { STATISTICS } from '@/constants/appConstants'
 
 export default {
   name: 'StatisticsWidget',
-  components: { StatisticItem, StatisticsHeader },
+  components: { StatisticItem, StatisticsHeader, WeprodeSpinner },
   data () {
     return {
       isLoading: false,

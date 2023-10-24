@@ -8,15 +8,17 @@
     <h2 v-t="'authRequired'" />
     <p>{{ $t('redirected') }}</p>
     <div class="spinner-container">
-      <PentilaSpinner class="my-spinner" />
+      <WeprodeSpinner class="my-spinner" />
     </div>
   </div>
 </template>
 
 <script>
 
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 export default {
   name: 'AuthenticationRequired',
+  components: { WeprodeSpinner },
   emits: ['update:layout'],
   beforeCreate () {
     this.$emit('update:layout', 'GVELayout')

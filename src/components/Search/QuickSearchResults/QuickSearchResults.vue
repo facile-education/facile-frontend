@@ -1,6 +1,6 @@
 <template>
   <QuickSearchPanelHeader :nb-results="total" />
-  <PentilaSpinner v-if="isLoadingResults" />
+  <WeprodeSpinner v-if="isLoadingResults" />
   <ul
     v-if="searchResults && searchResults.length > 0"
     ref="scroll"
@@ -19,13 +19,15 @@
 <script>
 import QuickSearchPanelHeader from '@components/Search/QuickSearchPanelHeader'
 import { defineAsyncComponent } from 'vue'
+
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 const QuickSearchResultItem = defineAsyncComponent(() => import('@components/Search/QuickSearchResults/QuickSearchResultItem'))
 
 let oldScrollTop = 0
 
 export default {
   name: 'QuickSearchResults',
-  components: { QuickSearchResultItem, QuickSearchPanelHeader },
+  components: { QuickSearchResultItem, QuickSearchPanelHeader, WeprodeSpinner },
   data () {
     return {
       currentSelectedItem: undefined

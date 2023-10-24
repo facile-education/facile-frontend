@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     :modal="true"
     class="app-broadcast-modal"
     :full-screen="mq.phone || mq.tablet"
@@ -32,27 +32,31 @@
     </template>
 
     <template #footer>
-      <PentilaButton
+      <WeprodeButton
         :label="$t('updateButton')"
         @click="saveRuleList"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>
+import WeprodeUtils from '@utils/weprode.utils'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
-import PentilaUtils from 'pentila-utils'
 
 import RuleItem from '@/components/ApplicationManager/RuleItem'
 import RuleList from '@/components/ApplicationManager/RuleList'
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
   name: 'BroadcastScopeModal',
   components: {
     RuleItem,
-    RuleList
+    RuleList,
+    WeprodeButton,
+    WeprodeWindow
   },
   inject: ['mq'],
   setup: () => ({ v$: useVuelidate() }),
@@ -82,13 +86,13 @@ export default {
   },
   created () {
     if (this.$store.state.applicationManager.selectedApplication.rules !== undefined) {
-      this.ruleList = PentilaUtils.JSON.deepCopy(this.$store.state.applicationManager.selectedApplication.rules)
+      this.ruleList = WeprodeUtils.deepCopy(this.$store.state.applicationManager.selectedApplication.rules)
     }
   },
   methods: {
     addScope (rule) {
       if (rule.orgs.length && rule.roles.length) {
-        this.ruleList.push(PentilaUtils.JSON.deepCopy(rule))
+        this.ruleList.push(WeprodeUtils.deepCopy(rule))
         this.emptyRule.orgs.length = 0
         this.emptyRule.roles.length = 0
       }

@@ -3,7 +3,7 @@
     class="content"
     :class="{ phone: mq.phone }"
   >
-    <PentilaInput
+    <WeprodeInput
       v-if="application.hasCustomUrl"
       v-model="applicationURL"
       :placeholder="$t('customUrlPlaceholder')"
@@ -43,7 +43,7 @@
 
     <div v-if="hasExport">
       <p v-t="'exportLabel'" />
-      <PentilaDropdown
+      <WeprodeDropdown
         v-if="!isAdministratorMode"
         v-model="selectedExport"
         :list="exportList"
@@ -58,30 +58,30 @@
     class="action"
     :class="{ phone: mq.phone }"
   >
-    <PentilaToggleSwitch
+    <WeprodeToggleSwitch
       v-if="!isAdministratorMode"
       :model-value="application.isBroadcasted"
       :title="$t('broadcastButtonTooltip')"
       :disabled="!hasRules"
       @update:modelValue="updateBroadcast"
     />
-    <PentilaButton
+    <WeprodeButton
       v-if="isAdministrator && isAdministratorMode"
       :title="$t('editButtonTooltip')"
       type="circle"
       @click="toggleEditionModal"
     >
       <NeroIcon name="pencil-alt" />
-    </PentilaButton>
-    <PentilaButton
+    </WeprodeButton>
+    <WeprodeButton
       v-if="!isAdministratorMode"
       :title="$t('configurationButtonTooltip')"
       type="circle"
       @click="toggleBroadcastModal"
     >
       <NeroIcon name="cog" />
-    </PentilaButton>
-    <PentilaButton
+    </WeprodeButton>
+    <WeprodeButton
       v-if="isAdministrator && isAdministratorMode"
       :title="$t('deleteButtonTooltip')"
       class="delete-button"
@@ -93,19 +93,26 @@
         src="@assets/icons/trash_white.svg"
         :alt="$t('deleteButtonTooltip')"
       >
-    </PentilaButton>
+    </WeprodeButton>
   </div>
 </template>
 
 <script>
 import RuleLabel from '@/components/ApplicationManager/RuleLabel'
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeToggleSwitch from '@/components/Base/Weprode/WeprodeToggleSwitch.vue'
 import NeroIcon from '@/components/Nero/NeroIcon'
-
 export default {
   name: 'ApplicationDetails',
   components: {
     NeroIcon,
-    RuleLabel
+    RuleLabel,
+    WeprodeButton,
+    WeprodeDropdown,
+    WeprodeInput,
+    WeprodeToggleSwitch
   },
   inject: ['mq'],
   data () {

@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     class="preferences-modal"
     :modal="true"
     :full-screen="mq.phone || mq.tablet"
@@ -11,33 +11,39 @@
     </template>
 
     <template #body>
-      <PentilaTabList ref="tabList">
-        <PentilaTabItem :title="$t('accountTabLabel')">
+      <WeprodeTabList ref="tabList">
+        <WeprodeTabItem :title="$t('accountTabLabel')">
           <AccountTab @save="updateInfoLabel" />
-        </PentilaTabItem>
-        <PentilaTabItem :title="$t('messagingTabLabel')">
+        </WeprodeTabItem>
+        <WeprodeTabItem :title="$t('messagingTabLabel')">
           <MessagingTab @save="updateInfoLabel" />
-        </PentilaTabItem>
-      </PentilaTabList>
+        </WeprodeTabItem>
+      </WeprodeTabList>
     </template>
 
     <template #footer>
       <i>{{ infoLabel }}</i>
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
+
+import WeprodeTabItem from '@/components/Base/Weprode/WeprodeTabItem.vue'
+import WeprodeTabList from '@/components/Base/Weprode/WeprodeTabList.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 const AccountTab = defineAsyncComponent(() => import('@/components/Preferences/AccountTab'))
 const MessagingTab = defineAsyncComponent(() => import('@/components/Preferences/MessagingTab'))
-
 export default {
   name: 'PreferencesModal',
   components: {
     MessagingTab,
-    AccountTab
+    AccountTab,
+    WeprodeTabList,
+    WeprodeTabItem,
+    WeprodeWindow
   },
   inject: ['mq'],
   props: {

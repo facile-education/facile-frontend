@@ -4,12 +4,12 @@
   >
     <!-- Header -->
     <div class="header">
-      <PentilaButton
+      <WeprodeButton
         class="add-affected-user"
         :label="$t('add-affected-user')"
         @click="openAddAffectedUserModal()"
       />
-      <PentilaInput
+      <WeprodeInput
         ref="nameInput"
         v-model="filter"
         :maxlength="200"
@@ -18,7 +18,7 @@
       />
     </div>
 
-    <PentilaSpinner v-if="isLoadingUsers" />
+    <WeprodeSpinner v-if="isLoadingUsers" />
     <div
       v-if="selectedSchool === undefined"
       class="main-label"
@@ -69,8 +69,10 @@
 
 import UserFields from '@components/UserManagement/UserFields'
 import UserRow from '@components/UserManagement/UserRow'
-import PentilaUtils from 'pentila-utils'
+import WeprodeUtils from '@utils/weprode.utils'
 
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import AddAffectedUserModal from '@/components/UserManagement/AddAffectedUserModal.vue'
 import UserAffectationsModal from '@/components/UserManagement/UserAffectationsModal.vue'
 
@@ -80,7 +82,9 @@ export default {
     UserRow,
     UserFields,
     UserAffectationsModal,
-    AddAffectedUserModal
+    AddAffectedUserModal,
+    WeprodeInput,
+    WeprodeSpinner
   },
   data () {
     return {
@@ -104,7 +108,7 @@ export default {
       return this.$store.state.user.selectedSchool
     },
     sortedAffectedUsers () {
-      return PentilaUtils.Array.sortWithString(this.$store.state.userManagement.affectedUsers, false, 'lastName')
+      return WeprodeUtils.sortArrayWithString(this.$store.state.userManagement.affectedUsers, false, 'lastName')
     }
   },
   watch: {

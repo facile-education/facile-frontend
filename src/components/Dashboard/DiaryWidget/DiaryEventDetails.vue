@@ -4,7 +4,7 @@
       v-if="isLoading"
       class="placeholder"
     >
-      <PentilaSpinner />
+      <WeprodeSpinner />
     </div>
     <div
       v-else-if="error === true"
@@ -90,14 +90,14 @@
         v-if="detailedEvent.isEditable || detailedEvent.isDeletable"
         class="footer"
       >
-        <PentilaButton
+        <WeprodeButton
           v-if="detailedEvent.isEditable"
           class="footer-button"
           data-test="updateButton"
           :label="$t('update')"
           @click="openUpdateModal"
         />
-        <PentilaButton
+        <WeprodeButton
           v-if="detailedEvent.isDeletable"
           class="footer-button"
           data-test="deleteButton"
@@ -127,11 +127,13 @@ import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
 import { deleteEvent, getEventDetails } from '@/api/dashboard/agenda.service'
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 const SaveDiaryEventModal = defineAsyncComponent(() => import('@components/Dashboard/DiaryWidget/SaveDiaryEventModal.vue'))
 
 export default {
   name: 'DiaryEventDetails',
-  components: { ReadInfos, PopulationList, SaveDiaryEventModal },
+  components: { ReadInfos, PopulationList, SaveDiaryEventModal, WeprodeButton, WeprodeSpinner },
   props: {
     initEvent: {
       type: Object,

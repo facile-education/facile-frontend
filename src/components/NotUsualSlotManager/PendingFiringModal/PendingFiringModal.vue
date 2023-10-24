@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     :modal="true"
     :width="600"
     :full-screen="mq.phone || mq.tablet"
@@ -23,14 +23,14 @@
         <strong v-t="'NotUsualSlots.PendingFiringModal.firedTimestamp'" />
         <span>{{ formattedTimestamp }}</span>
       </div>
-      <PentilaTextArea
+      <WeprodeTextArea
         ref="comment"
         v-model="justification"
         :placeholder="$t('NotUsualSlots.PendingFiringModal.justificationPlaceholder')"
         style="height:100px;resize:none;"
         @keydown.enter.stop=""
       />
-      <PentilaErrorMessage
+      <WeprodeErrorMessage
         v-if="haveToWriteJustification"
         :error-message="$t('NotUsualSlots.PendingFiringModal.haveToWriteJustification')"
       />
@@ -45,12 +45,12 @@
     </template>
 
     <template #footer>
-      <PentilaButton
+      <WeprodeButton
         :label="$t('NotUsualSlots.PendingFiringModal.sendReason')"
         @click="submit"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>
@@ -58,9 +58,13 @@ import dayjs from 'dayjs'
 import { nextTick } from 'vue'
 
 import schoolLifeService from '@/api/schoolLife-portlet.service'
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeTextArea from '@/components/Base/Weprode/WeprodeTextArea.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
   name: 'PendingFiringModal',
+  components: { WeprodeErrorMessage, WeprodeTextArea, WeprodeWindow },
   inject: ['mq'],
   props: {
     pendingFiring: {

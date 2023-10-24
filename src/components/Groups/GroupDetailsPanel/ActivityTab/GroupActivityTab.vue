@@ -1,6 +1,6 @@
 <template>
   <div class="activity-tab">
-    <PentilaSpinner
+    <WeprodeSpinner
       v-if="activitiesLoading"
       style="z-index: 100"
     />
@@ -39,13 +39,14 @@ import dayjs from 'dayjs'
 
 import documentsService from '@/api/documents/documents.service'
 import { getGroupActivity } from '@/api/groups.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import { allActivitiesPaginationSize } from '@/constants/dashboardConstants'
 
 let oldScrollTop = 0
 
 export default {
   name: 'GroupActivityTab',
-  components: { ActivityItem },
+  components: { ActivityItem, WeprodeSpinner },
   props: {
     group: {
       type: Object,

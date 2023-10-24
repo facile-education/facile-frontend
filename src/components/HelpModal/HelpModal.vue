@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     :modal="true"
     :full-screen="mq.phone || mq.tablet"
     :hidden-footer="true"
@@ -31,19 +31,21 @@
         <HelpArticle class="help-article" />
       </div>
     </template>
-  </pentilawindow>
+  </WeprodeWindow>
 </template>
 
 <script>
 import HelpTools from '@components/HelpModal/HelpTools.vue'
 import HelpArticle from '@components/HelpModal/HeplArticle/HelpArticle.vue'
 import { defineAsyncComponent } from 'vue'
+
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 const HelpMenu = defineAsyncComponent(() => import('@components/HelpModal/HelpMenu.vue'))
 const MobileFloatingPanel = defineAsyncComponent(() => import('@components/Base/MobileFloatingPanel.vue'))
 
 export default {
   name: 'HelpModal',
-  components: { MobileFloatingPanel, HelpArticle, HelpMenu, HelpTools },
+  components: { MobileFloatingPanel, HelpArticle, HelpMenu, HelpTools, WeprodeWindow },
   inject: ['mq'],
   emits: ['close'],
   computed: {

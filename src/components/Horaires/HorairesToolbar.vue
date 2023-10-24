@@ -1,7 +1,7 @@
 <template>
   <NeroToolbar class="toolbar">
     <!-- Create session button -->
-    <PentilaButton
+    <WeprodeButton
       v-if="displayCreateButton"
       class="create-button"
       :class="{'phone': mq.phone}"
@@ -11,7 +11,7 @@
         name="fa-plus"
       />
       <span>{{ $t('add') }}</span>
-    </PentilaButton>
+    </WeprodeButton>
 
     <div class="filters">
       <!-- To switch between user selection and group selection -->
@@ -31,7 +31,7 @@
       </p>
 
       <!-- Group selector for agents -->
-      <PentilaDropdown
+      <WeprodeDropdown
         v-if="groupList && (!mq.phone || !isSingleUser) && !$store.state.user.isStudent && !$store.state.user.isParent"
         v-model="selectedGroup"
         class="group-list"
@@ -41,7 +41,7 @@
       />
 
       <!-- Name selector for agents -->
-      <PentilaTagsInput
+      <WeprodeTagsInput
         v-if="(!mq.phone || isSingleUser) && !$store.state.user.isStudent && !$store.state.user.isParent"
         v-model="tagsList"
         class="search"
@@ -65,7 +65,7 @@
         <p class="children-label">
           {{ $t('timetableOf') }}
         </p>
-        <PentilaDropdown
+        <WeprodeDropdown
           v-model="selectedChild"
           class="children-list"
           :placeholder="$t('childFilter')"
@@ -81,7 +81,7 @@
         @select-date="onSelectDate"
       />
 
-      <PentilaDropdown
+      <WeprodeDropdown
         v-if="(schoolList && schoolList.length > 1)"
         v-model="selectedSchool"
         :list="schoolList"
@@ -94,12 +94,15 @@
 </template>
 
 <script>
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
+import WeprodeUtils from '@utils/weprode.utils'
 import dayjs from 'dayjs'
-import PentilaUtils from 'pentila-utils'
 import { defineAsyncComponent } from 'vue'
 
 import groupService from '@/api/groups.service'
 import { getSchoolUsers } from '@/api/userSearch.service'
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeTagsInput from '@/components/Base/Weprode/WeprodeTagsInput.vue'
 import NeroIcon from '@/components/Nero/NeroIcon'
 import NeroToolbar from '@/components/Nero/NeroToolbar'
 const DatepickerNav = defineAsyncComponent(() => import('@/components/Horaires/DatepickerNav'))
@@ -109,7 +112,10 @@ export default {
   components: {
     DatepickerNav,
     NeroIcon,
-    NeroToolbar
+    NeroToolbar,
+    WeprodeButton,
+    WeprodeDropdown,
+    WeprodeTagsInput
   },
   inject: ['mq'],
   emits: ['updateSessions'],
@@ -192,7 +198,7 @@ export default {
     // Pre-select him if user is a teacher
     if (this.$store.state.user.isTeacher) {
       // Add displayName
-      const user = PentilaUtils.JSON.deepCopy(this.$store.state.user)
+      const user = WeprodeUtils.deepCopy(this.$store.state.user)
       user.displayName = this.$store.state.user.firstName + ' ' + this.$store.state.user.lastName
       this.tagsList.push(user)
     }

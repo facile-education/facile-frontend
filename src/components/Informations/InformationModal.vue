@@ -3,7 +3,7 @@
     data-test="informationModal"
     class="information-modal"
   >
-    <PentilaWindow
+    <WeprodeWindow
       :modal="true"
       :draggable="true"
       :resizable="true"
@@ -16,28 +16,28 @@
       </template>
 
       <template #body>
-        <PentilaTabList ref="tabList">
-          <PentilaTabItem
+        <WeprodeTabList ref="tabList">
+          <WeprodeTabItem
             class="tab-item"
             :title="$t('termsOfUseTabLabel')"
           >
             <TermsOfUse />
-          </PentilaTabItem>
-          <PentilaTabItem
+          </WeprodeTabItem>
+          <WeprodeTabItem
             class="tab-item"
             :title="$t('privacyLabel')"
           >
             <Privacy />
-          </PentilaTabItem>
-          <PentilaTabItem
+          </WeprodeTabItem>
+          <WeprodeTabItem
             class="tab-item"
             :title="$t('accessibilityLabel')"
           >
             <Accessibility />
-          </PentilaTabItem>
-        </PentilaTabList>
+          </WeprodeTabItem>
+        </WeprodeTabList>
       </template>
-    </PentilaWindow>
+    </WeprodeWindow>
   </div>
 </template>
 
@@ -45,14 +45,19 @@
 import Accessibility from '@components/Informations/Accessibility'
 import Privacy from '@components/Informations/Privacy'
 
+import WeprodeTabItem from '@/components/Base/Weprode/WeprodeTabItem.vue'
+import WeprodeTabList from '@/components/Base/Weprode/WeprodeTabList.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 import TermsOfUse from '@/components/Informations/TermsOfUse'
-
 export default {
   name: 'InformationModal',
   components: {
     Accessibility,
     Privacy,
-    TermsOfUse
+    TermsOfUse,
+    WeprodeTabList,
+    WeprodeTabItem,
+    WeprodeWindow
   },
   inject: ['mq'],
   props: {

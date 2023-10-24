@@ -4,25 +4,25 @@
       <slot />
       <!--      <span> {{ ` ${$t('the')} ${startTime.format('dddd')}s ${$t('at')} ` }}</span>-->
       <div>
-        <PentilaInput
+        <WeprodeInput
           v-model="inputStartHour"
           class="input start"
           :placeholder="'hh:mm'"
           :labelled="false"
           @blur="update"
         />
-        <PentilaErrorMessage :error-message="formErrorList.startHour" />
+        <WeprodeErrorMessage :error-message="formErrorList.startHour" />
       </div>
       <span v-t="'to'" />
       <div>
-        <PentilaInput
+        <WeprodeInput
           v-model="inputEndHour"
           class="input end"
           :placeholder="'hh:mm'"
           :labelled="false"
           @blur="update"
         />
-        <PentilaErrorMessage
+        <WeprodeErrorMessage
           v-if="formErrorList.startHour === ''"
           :error-message="formErrorList.endHour"
         />
@@ -40,10 +40,14 @@ import { required } from '@vuelidate/validators'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+
 dayjs.extend(customParseFormat)
 
 export default {
   name: 'TimeSelection',
+  components: { WeprodeErrorMessage, WeprodeInput },
   props: {
     range: {
       type: Object,

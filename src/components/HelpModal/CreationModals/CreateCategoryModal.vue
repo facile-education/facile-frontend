@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     class="create-category-modal"
     data-test="create-category-modal"
     :modal="true"
@@ -13,14 +13,14 @@
     </template>
 
     <template #body>
-      <PentilaInput
+      <WeprodeInput
         ref="nameInput"
         v-model="categoryName"
         class="name-input"
         :placeholder="$t('namePlaceHolder')"
       />
 
-      <PentilaDropdown
+      <WeprodeDropdown
         v-model="selectedApplication"
         class="dropdown"
         :list="applicationList"
@@ -30,24 +30,30 @@
     </template>
 
     <template #footer>
-      <PentilaButton
+      <WeprodeButton
         data-test="submitButton"
         :label="$t('submit')"
         :disabled="categoryName.length === 0 || selectedApplication.applicationId === 0"
         @click="submit"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
+
 import { getAllApplications } from '@/api/applicationManager.service'
 import { saveCategory } from '@/api/help.service'
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
   name: 'CreateCategoryModal',
-  emits: ['close'],
+  components: { WeprodeButton, WeprodeDropdown, WeprodeInput, WeprodeWindow },
   inject: ['mq'],
+  emits: ['close'],
   data () {
     return {
       categoryName: '',

@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     :modal="true"
     :draggable="true"
     class="affectations-modal"
@@ -17,7 +17,7 @@
       <div class="main">
         <!-- Left panel : school tree -->
         <div class="school-classes">
-          <PentilaInput
+          <WeprodeInput
             ref="classnameInput"
             v-model="filter"
             class="class-filter"
@@ -73,7 +73,7 @@
         </div>
       </div>
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>
@@ -83,12 +83,14 @@ import localizedFormat from 'dayjs/plugin/localizedFormat'
 
 import { getSchoolClassList } from '@/api/organization.service'
 import { addUserAffectation, removeUserAffectation } from '@/api/userManagement.service'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 dayjs.extend(localizedFormat)
 
 export default {
   name: 'UserAffectationsModal',
-  components: { CustomIcon },
+  components: { CustomIcon, WeprodeInput, WeprodeWindow },
   inject: ['mq'],
   props: {
     editedUser: {

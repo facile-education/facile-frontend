@@ -2,20 +2,20 @@
   <div class="main">
     <div class="banner">
       <div class="search">
-        <PentilaInput
+        <WeprodeInput
           v-model="searchInput"
           :placeholder="$t('searchPlaceholder')"
           :maxlength="75"
           @input="searchTimeOut"
         />
-        <PentilaDropdown
+        <WeprodeDropdown
           v-model="selectedRole"
           :list="roleList"
           display-field="label"
           :sort="false"
           @update:modelValue="getCompletion"
         />
-        <PentilaDropdown
+        <WeprodeDropdown
           v-model="selectedSchool"
           :list="schoolList"
           :sort="false"
@@ -24,17 +24,17 @@
         />
       </div>
       <div class="password">
-        <PentilaInput
+        <WeprodeInput
           v-model="password1"
           :placeholder="$t('passwordPlaceholder')"
           :maxlength="75"
         />
-        <PentilaButton
+        <WeprodeButton
           class="round"
           @click="updatePassword"
         >
           <span>{{ $t('update-password') }}</span>
-        </PentilaButton>
+        </WeprodeButton>
       </div>
     </div>
 
@@ -59,21 +59,26 @@
       </tr>
     </table>
 
-    <PentilaSpinner v-if="isLoadingCompletion" />
+    <WeprodeSpinner v-if="isLoadingCompletion" />
   </div>
 </template>
 
 <script>
 
-import PentilaUtils from 'pentila-utils'
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
+import WeprodeUtils from '@utils/weprode.utils'
 
 import { searchDirectory } from '@/api/contact.service'
 import { getAllSchools } from '@/api/organization.service'
 import { getRoleList } from '@/api/role.service'
 import { updatePasswordByManager } from '@/api/userManagement.service'
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 
 export default {
   name: 'PasswordUpdate',
+  components: { WeprodeButton, WeprodeDropdown, WeprodeInput, WeprodeSpinner },
   data () {
     return {
       password1: '',
@@ -96,14 +101,14 @@ export default {
     getRoleList().then((data) => {
       if (data.success) {
         this.selectedRole = this.emptyRole
-        this.roleList = [this.emptyRole, ...PentilaUtils.Array.sortWithString(data.roles, false, 'label')]
+        this.roleList = [this.emptyRole, ...WeprodeUtils.sortArrayWithString(data.roles, false, 'label')]
       }
     })
 
     getAllSchools().then((data) => {
       if (data.success) {
         this.selectedSchool = this.emptySchool
-        this.schoolList = [this.emptySchool, ...PentilaUtils.Array.sortWithString(data.schools, false, 'schoolName')]
+        this.schoolList = [this.emptySchool, ...WeprodeUtils.sortArrayWithString(data.schools, false, 'schoolName')]
       }
     })
   },

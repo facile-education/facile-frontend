@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     :modal="true"
     class="student-list-modal"
     data-test="student-list-modal"
@@ -16,7 +16,7 @@
         <div class="slot">
           <span>{{ formattedSlot }}</span>
         </div>
-        <PentilaSpinner v-if="isLoading" />
+        <WeprodeSpinner v-if="isLoading" />
         <div
           v-else-if="studentList.length > 0"
           class="student-list"
@@ -47,13 +47,13 @@
     </template>
 
     <template #footer>
-      <PentilaButton
+      <WeprodeButton
         v-if="isRollCallable"
         :label="$t('NotUsualSlots.StudentListModal.callRollButton')"
         @click="callRoll()"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>
@@ -61,11 +61,13 @@ import StudentListItem from '@components/NotUsualSlotManager/StudentListModal/St
 import dayjs from 'dayjs'
 
 import schoolLifeService from '@/api/schoolLife-portlet.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 import notUsualSlotsConstants from '@/constants/notUsualSlots'
 
 export default {
   name: 'StudentListModal',
-  components: { StudentListItem },
+  components: { StudentListItem, WeprodeSpinner, WeprodeWindow },
   inject: ['mq'],
   props: {
     event: {

@@ -1,5 +1,5 @@
+import WeprodeUtils from '@utils/weprode.utils'
 import axios from 'axios'
-import PentilaUtils from 'pentila-utils'
 
 import constants from '@/api/constants'
 
@@ -20,7 +20,7 @@ export default {
 // }
 
 function login (login, password, rememberMe) {
-  return axios.post(constants.BASE_API_URL + '/c/common/login', PentilaUtils.URL.params({
+  return axios.post(constants.BASE_API_URL + '/c/common/login', WeprodeUtils.params({
     login,
     password,
     rememberMe

@@ -6,7 +6,6 @@ import GVELayout from '@layouts/GVELayout.vue'
 import axios from 'axios'
 import dayjs from 'dayjs'
 import fr from 'dayjs/locale/fr'
-import PentilaComponents from 'pentila-components'
 import { createApp } from 'vue'
 import VueMatomo from 'vue-matomo'
 import { Vue3Mq } from 'vue3-mq'
@@ -50,10 +49,6 @@ const app = createApp(App)
 app.component('BannerLayout', BannerLayout)
 app.component('GVELayout', GVELayout)
 app.component('EmptyLayout', EmptyLayout)
-// Register Pentila components globally
-Object.keys(PentilaComponents).forEach(name => {
-  app.component(name, PentilaComponents[name])
-})
 
 const calendar = require('dayjs/plugin/calendar')
 dayjs.extend(calendar)

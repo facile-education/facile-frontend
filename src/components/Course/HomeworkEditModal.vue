@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     class="edit-homework-modal"
     :class="{'phone': mq.phone|| mq.tablet}"
     :modal="true"
@@ -14,19 +14,19 @@
     <template #body>
       <section class="left">
         <div class="title">
-          <PentilaInput
+          <WeprodeInput
             ref="titleInput"
             v-model="homework.title"
             :maxlength="250"
             :placeholder="$t('homeworkTitle')"
           />
-          <PentilaErrorMessage :error-message="formErrorList" />
+          <WeprodeErrorMessage :error-message="formErrorList" />
         </div>
         <div class="dropdowns">
           <div class="type">
             <!-- Homework type menu -->
             <label>{{ $t('homeworkType') }}</label>
-            <PentilaDropdown
+            <WeprodeDropdown
               v-model="homework.homeworkType"
               :list="homeworkTypes"
               :sort="false"
@@ -36,7 +36,7 @@
           <div class="duration">
             <!-- Homework duration -->
             <label>{{ $t('duration') }}</label>
-            <PentilaDropdown
+            <WeprodeDropdown
               v-model="homework.homeworkDuration"
               :list="homeworkDurations"
               :placeholder="$t('select')"
@@ -58,7 +58,7 @@
         <ContentPicker @add="addContent" />
       </section>
       <section class="right">
-        <!--        <PentilaButton-->
+        <!--        <WeprodeButton-->
         <!--          v-t="'preview'"-->
         <!--          @click="preview"-->
         <!--        />-->
@@ -77,7 +77,7 @@
         </div>
 
         <div class="target-session">
-          <PentilaRadioButton
+          <WeprodeRadioButton
             v-model="homework.dateType"
             :label="$t('sessionDate')"
             :disabled="isInList"
@@ -86,7 +86,7 @@
             class="radio"
             @update:model-value="updateTarget({sessionId: selectedSession.sessionId, startDate: selectedSession.startDate})"
           />
-          <PentilaRadioButton
+          <WeprodeRadioButton
             v-model="homework.dateType"
             :label="$t('futureDate')"
             name="date"
@@ -94,7 +94,7 @@
             rb-value="custom"
             class="radio future-date"
           />
-          <PentilaDropdown
+          <WeprodeDropdown
             v-if="nextSessions.length > 0"
             v-model="homework.date"
             :list="nextSessions"
@@ -109,17 +109,17 @@
     </template>
 
     <template #footer>
-      <PentilaButton
+      <WeprodeButton
         v-t="'draft'"
         class="draft-button"
         @click="onConfirm(true)"
       />
-      <PentilaButton
+      <WeprodeButton
         v-t="'post'"
         @click="onConfirm(false)"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
   <teleport to="body">
     <StudentListModal
       v-if="displayStudentModal"
@@ -131,15 +131,21 @@
 </template>
 
 <script>
+import WeprodeUtils from '@utils/weprode.utils'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import dayjs from 'dayjs'
-import PentilaUtils from 'pentila-utils'
 import { defineAsyncComponent, nextTick } from 'vue'
 
 import { getSessionStudents } from '@/api/course.service'
 import { createHomework, updateHomework } from '@/api/homework.service'
 import { getNextSessions } from '@/api/schedule.service'
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeRadioButton from '@/components/Base/Weprode/WeprodeRadioButton.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 import ContentPicker from '@/components/Course/ContentPicker.vue'
 import contentTypeConstants from '@/constants/contentTypeConstants'
 
@@ -151,7 +157,13 @@ export default {
   components: {
     CourseContent,
     ContentPicker,
-    StudentListModal
+    StudentListModal,
+    WeprodeButton,
+    WeprodeDropdown,
+    WeprodeErrorMessage,
+    WeprodeInput,
+    WeprodeRadioButton,
+    WeprodeWindow
   },
   inject: ['mq'],
   props: {
@@ -226,7 +238,7 @@ export default {
   created () {
     // this.$store.dispatch('misc/incrementModalCount')
     if (!this.isCreation) {
-      this.homework = PentilaUtils.JSON.deepCopy(this.editedHomework)
+      this.homework = WeprodeUtils.deepCopy(this.editedHomework)
       if (this.homework.targetSessionId === this.homework.sourceSessionId) {
         this.homework.dateType = 'session'
       } else {

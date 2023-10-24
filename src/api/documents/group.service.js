@@ -1,5 +1,5 @@
+import WeprodeUtils from '@utils/weprode.utils'
 import axios from 'axios'
-import PentilaUtils from 'pentila-utils'
 
 import constants from '@/api/constants'
 
@@ -42,7 +42,7 @@ function getGroupBreadcrumb (node) {
 
 function recordDownloadActivity (fileEntryId, versionId) {
   return axios.post(constants.JSON_WS_URL + GROUP_PATH + '/record-download-activity',
-    PentilaUtils.URL.params({
+    WeprodeUtils.params({
       fileEntryId,
       versionId
     })
@@ -51,7 +51,7 @@ function recordDownloadActivity (fileEntryId, versionId) {
 
 function recordViewActivity (fileEntryId, versionId) {
   return axios.post(constants.JSON_WS_URL + GROUP_PATH + '/record-view-activity',
-    PentilaUtils.URL.params({
+    WeprodeUtils.params({
       fileEntryId,
       versionId
     })

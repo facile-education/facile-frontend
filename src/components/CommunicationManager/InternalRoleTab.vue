@@ -17,7 +17,7 @@
       v-else
       :key="right"
     >
-      <PentilaCheckbox
+      <WeprodeCheckbox
         :value="getValue(right)"
         :label="$t('CommunicationManager.InternalRoleTab.' + removePrefix(right))"
         @input="onInput(right)"
@@ -27,8 +27,10 @@
 </template>
 
 <script>
+import WeprodeCheckbox from '@/components/Base/Weprode/WeprodeCheckbox.vue'
 export default {
   name: 'InternalRoleTab',
+  components: { WeprodeCheckbox },
   props: {
     role: {
       type: Object,

@@ -8,7 +8,7 @@
       :key="index"
       class="field"
     >
-      <PentilaCheckbox
+      <WeprodeCheckbox
         v-if="field === 'isSchoolAdmin'"
         :model-value="user.isSchoolAdmin"
         class="checkbox"
@@ -16,7 +16,7 @@
         label=""
         @update:modelValue="toggleSchoolAdmin"
       />
-      <PentilaCheckbox
+      <WeprodeCheckbox
         v-else-if="field === 'isNewsDelegate'"
         :model-value="user.isNewsDelegate"
         class="checkbox"
@@ -35,8 +35,10 @@
 </template>
 
 <script>
+import WeprodeCheckbox from '@/components/Base/Weprode/WeprodeCheckbox.vue'
 export default {
   name: 'UserRow',
+  components: { WeprodeCheckbox },
   props: {
     fields: {
       type: Array,

@@ -16,7 +16,7 @@
       @updateFilter="updateFilter"
     />
 
-    <PentilaSpinner
+    <WeprodeSpinner
       v-if="isLoading"
       style="z-index: 1"
     />
@@ -97,13 +97,14 @@ import ActivityItem from '@components/Dashboard/ActivityWidget/ActivityItem.vue'
 import dayjs from 'dayjs'
 
 import { getDashboardActivity } from '@/api/dashboard.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import activityConstants from '@/constants/activityConstants'
 import { allActivitiesPaginationSize, nbActivityInWidget } from '@/constants/dashboardConstants'
 let oldScrollTop = 0
 
 export default {
   name: 'ActivityWidget',
-  components: { ActivityFilter, ActivityItem, ActivityHeader },
+  components: { ActivityFilter, ActivityItem, ActivityHeader, WeprodeSpinner },
   inject: ['mq'],
   props: {
     displayAll: {
