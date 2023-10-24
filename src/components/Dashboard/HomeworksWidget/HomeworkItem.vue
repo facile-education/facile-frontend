@@ -32,12 +32,17 @@
           class="right-section"
         >
           <PentilaCheckbox
+            v-if="canUpdateStatus"
             v-model="isDoneSwitchStatus"
             :label="homework.isDone ? $t('done') : $t('todo')"
             :right-display="true"
             @update:model-value="toggleDoneStatus"
             @click.stop
             @keyup.enter.stop
+          />
+          <span
+            v-else
+            v-t="homework.isDone ? 'done' : 'todo'"
           />
         </span>
 
@@ -76,6 +81,10 @@ export default {
     homework: {
       type: Object,
       required: true
+    },
+    canUpdateStatus: {
+      type: Boolean,
+      required: true
     }
   },
   emits: ['updateDoneStatus'],
@@ -98,6 +107,9 @@ export default {
     description () {
       return this.homework.shortContent
     }
+  },
+  created () {
+    console.log(this.homework)
   },
   methods: {
     redirect () {

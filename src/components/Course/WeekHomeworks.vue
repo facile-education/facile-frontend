@@ -47,6 +47,7 @@
             >
               <StudentHomework
                 :homework="homework"
+                :can-update-status="canUpdateStatus"
                 @change-done-status="changeDoneStatus(homework, $event)"
               />
             </li>
@@ -62,10 +63,11 @@ import StudentHomework from '@components/Course/StudentHomework.vue'
 import dayjs from 'dayjs'
 
 import { getStudentHomeworks, getStudentUndoneCount } from '@/api/homework.service'
+import HomeworkItem from '@components/Dashboard/HomeworksWidget/HomeworkItem.vue'
 
 export default {
   name: 'WeekHomeworks',
-  components: { StudentHomework },
+  components: { HomeworkItem, StudentHomework },
   props: {
     label: {
       type: String,
@@ -90,6 +92,12 @@ export default {
     }
   },
   computed: {
+    currentUser () {
+      return this.$store.state.user
+    },
+    canUpdateStatus () {
+      return this.currentUser.userId === this.currentUserId
+    },
     sortedHomeworks () {
       if (this.homeworks) {
         return [...this.homeworks].sort((homeworkA, homeworkB) => {
