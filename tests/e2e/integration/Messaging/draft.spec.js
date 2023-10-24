@@ -14,6 +14,8 @@ describe('Draft', () => {
       cy.login(HEADMASTER, messagingURL)
       waitMessagingToBeLoaded()
       const draftToCreate = this.messagingData.draftToCreate[0]
+      const formattedLastName = STUDENT.lastName.charAt(0).toUpperCase() + STUDENT.lastName.slice(1).toLowerCase()
+      const formattedFirstName = STUDENT.firstName.charAt(0).toUpperCase() + STUDENT.firstName.slice(1).toLowerCase()
 
       // Open modal create message
       cy.get('[data-test="createMessageButton"]').click()
@@ -21,7 +23,7 @@ describe('Draft', () => {
       // Write message
       cy.get('[data-test="createMessageModal"]').within(() => {
         cy.get('.base-tags-input').type('penelope')
-        cy.get('.suggestion-list > li').last().click()
+        cy.get('.suggestion-list').contains(`${formattedLastName} ${formattedFirstName}`).click()
         cy.get('.group > [data-test="subject-input"]').type(draftToCreate[0].subject)
         cy.get('.ck-editor')
         cy.type_ckeditor(draftToCreate[0].content)
@@ -104,9 +106,23 @@ describe('Draft', () => {
       })
     })
   })
-  context('mobile', function () {
-    beforeEach(function () {
-      cy.viewport('iphone-5')
+  it('Check modal edit draft', () => {
+    cy.viewport('iphone-5')
+    cy.loadTables('messaging/messaging_tables.sql')
+    cy.login(HEADMASTER, messagingURL)
+    waitMessagingToBeLoaded()
+
+    // open mobile menu
+    cy.get('.open-menu').click()
+    // open draft menu
+    cy.get('[data-test="messaging-menu"]').contains('button', 'Brouillon').click()
+    // click on draft
+    cy.get('.scroll').within(() => {
+      cy.get('[data-test=thread-list-item]').first().click()
     })
+    // open edit draft modal
+    cy.get('[data-test="option_editDraft"]').click()
+    // check if message modal is visible
+    cy.get('[data-test="createMessageModal"]').should('be.visible')
   })
 })

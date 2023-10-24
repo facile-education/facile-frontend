@@ -100,37 +100,5 @@ describe('Messaging_SetReadStatus', () => {
       cy.get('[data-test="markAsUnread"]').click()
       cy.get('.nb-new-messages').contains(unread)
     })
-
-    // count read / unread Mobile multiSelection
-    // it.only('count read / unread Mobile multiSelection', function () {
-    //   unread = 0
-    //   const totalThreads = this.messagingData.existingThreads
-    //   getUnread(totalThreads)
-    //   // UnRead to read
-    //   cy.get('.scroll').within(() => {
-    //     // trigger long click
-    //     cy.get('[data-test="thread-list-item"]').first().as('first-item')
-    //     cy.get('@first-item').trigger('mousedown')
-    //     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    //     cy.wait(2000)
-    //     cy.get('@first-item').click()
-    //   })
-    //   cy.get('[data-test="option_options"]').click()
-    //   cy.get('[data-test="markAsRead"]').click()
-    //   cy.get('.nb-new-messages').contains(unread - 1)
-    //   // Read to unread
-    //   cy.get('[data-test="option_toggleMultiSelection"]').click()
-    //   cy.get('.scroll').within(() => {
-    //     // trigger long click
-    //     cy.get('[data-test="thread-list-item"]').first().as('first-item')
-    //     cy.get('@first-item').trigger('mousedown')
-    //     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    //     cy.wait(2000)
-    //     cy.get('@first-item').click()
-    //   })
-    //   cy.get('[data-test="option_options"]').click()
-    //   cy.get('[data-test="markAsUnread"]').click()
-    //   cy.get('.nb-new-messages').contains(unread)
-    // })
   })
 })

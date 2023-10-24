@@ -11,6 +11,9 @@ describe('Messaging_TransferMessage', () => {
     // Answer thread rightclick
     it('Messaging_TransferMessage', function () {
       const existingThreads = this.messagingData.existingThreads
+      const formattedLastName = STUDENT.lastName.charAt(0).toUpperCase() + STUDENT.lastName.slice(1).toLowerCase()
+      const formattedFirstName = STUDENT.firstName.charAt(0).toUpperCase() + STUDENT.firstName.slice(1).toLowerCase()
+
       cy.login(HEADMASTER, messagingURL)
       waitMessagingToBeLoaded()
       cy.get('.scroll').within(() => {
@@ -20,8 +23,7 @@ describe('Messaging_TransferMessage', () => {
       cy.get('.window-container').within(() => {
         cy.get('.base-tags-input').type('penelope')
       })
-      // cy.get('.suggestion-list').contains(`${STUDENT.lastName} ${STUDENT.firstName}`).parent()
-      cy.get('.suggestion-list > li').last().click()
+      cy.get('.suggestion-list').contains(`${formattedLastName} ${formattedFirstName}`).click()
       cy.get('.footer').contains('button', 'Envoyer').click()
 
       cy.login(STUDENT, messagingURL)
@@ -29,9 +31,15 @@ describe('Messaging_TransferMessage', () => {
     })
   })
 
-  context('mobile', function () {
-    beforeEach(function () {
-      cy.viewport('iphone-5')
-    })
+  it('Check transfer modal mobile', () => {
+    cy.viewport('iphone-5')
+    // Login
+    cy.login(HEADMASTER, messagingURL)
+    waitMessagingToBeLoaded()
+
+    // Click on first message
+    cy.get('[data-test="thread-list-item"]').first().click()
+    cy.get('[data-test="option_forward"]').click()
+    cy.get('[data-test="createMessageModal"]').should('be.visible')
   })
 })

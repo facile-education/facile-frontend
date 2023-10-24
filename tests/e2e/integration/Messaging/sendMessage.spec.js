@@ -110,7 +110,7 @@ describe('Sending message', () => {
     cy.get('@createMessageModal').should('not.exist')
   })
 
-  it('send message', () => {
+  it('Messaging_SendNewMessage', () => {
     const message = {
       sender: DOYEN.firstName + ' ' + DOYEN.lastName,
       recipients: [DOYEN.firstName + ' ' + DOYEN.lastName, TEACHER.firstName + ' ' + TEACHER.lastName, STUDENT.firstName + ' ' + STUDENT.lastName],
@@ -249,7 +249,7 @@ describe('Sending message', () => {
     checkAndSelectThreadMessage(message)
     checkMessageDetails(message)
   })
-  it('check new message button / send modal', () => {
+  it('test new message button / send modal', () => {
     cy.viewport('iphone-5')
 
     cy.login(STUDENT, messagingURL)
