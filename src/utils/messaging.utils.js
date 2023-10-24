@@ -226,6 +226,16 @@ const MessagingUtils = {
       }
     }
     return undefined
+  },
+  getNextNotSelectedThread (threadList, selectedThreads) {
+    let nextNotSelectedThreadIndex = -1
+    for (let i = threadList.length - 1; i >= 0; i--) { // Start from the end of the array
+      if (selectedThreads.map(thread => thread.threadId).indexOf(threadList[i].threadId) === -1) {
+        nextNotSelectedThreadIndex = i
+      } else {
+        return threadList[nextNotSelectedThreadIndex]
+      }
+    }
   }
 }
 
