@@ -255,7 +255,9 @@ describe('Sending message', () => {
     cy.login(STUDENT, messagingURL)
     waitMessagingToBeLoaded()
 
+    // Click in create message button
     cy.get('[data-test="createMessageButton"]').click()
-    cy.get('.window-container').should('be.visible')
+    // Check modal create message is visible
+    cy.get('[data-test=createMessageModal]').should('be.visible')
   })
 })

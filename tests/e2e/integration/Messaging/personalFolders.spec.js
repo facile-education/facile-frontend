@@ -71,7 +71,7 @@ describe('Personal folders', () => {
     })
   })
 
-  it('Messaging_UpdatePersonalFolder', function () {
+  it.only('Messaging_UpdatePersonalFolder', function () {
     const existingPersonalFolders = this.messagingData.personalFolders.existingPersonalFolders
     const personalFolderToRename = existingPersonalFolders[0]
     const personalSubFolderToRename = personalFolderToRename.subFolders[0] // Assume that the first folder in list have subFolder
@@ -99,7 +99,7 @@ describe('Personal folders', () => {
     })
   })
 
-  it.only('Messaging_DeletePersonalFolder ', function () {
+  it('Messaging_DeletePersonalFolder ', function () {
     const existingPersonalFolders = this.messagingData.personalFolders.existingPersonalFolders
     const personalFolderToDelete = existingPersonalFolders[0]
     const personalSubFolderToDelete = personalFolderToDelete.subFolders[0] // Assume that the first folder in list have subFolder

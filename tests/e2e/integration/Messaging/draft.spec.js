@@ -81,6 +81,7 @@ describe('Draft', () => {
       waitMessagingToBeLoaded()
       const existingDraftThreads = this.messagingData.existingDraftThreads[0]
       console.log(existingDraftThreads.length)
+
       // Go to draft menu
       cy.get('[data-test="option_toggleMessagingMenu"]').click()
       cy.get('[data-test="messaging-menu"]').contains('button', 'Brouillons').click()
@@ -101,14 +102,17 @@ describe('Draft', () => {
       cy.login(STUDENT, messagingURL)
       waitMessagingToBeLoaded()
 
+      // Check draft list
       cy.get('.scroll').within(() => {
         getThread(existingDraftThreads).should('be.exist')
       })
     })
   })
-  it('Check modal edit draft', () => {
+  it('Check modal edit draft mobile', () => {
     cy.viewport('iphone-5')
     cy.loadTables('messaging/messaging_tables.sql')
+
+    // Login
     cy.login(HEADMASTER, messagingURL)
     waitMessagingToBeLoaded()
 

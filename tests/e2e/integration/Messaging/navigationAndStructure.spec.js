@@ -48,7 +48,7 @@ describe('Messaging navigation and structure', () => {
     })
 
     // Keyboard navigation
-    it.only('keyboard navigation', function () {
+    it('keyboard navigation', function () {
       waitMessagingToBeLoaded()
       const totalThreads = this.messagingData.existingThreads
 

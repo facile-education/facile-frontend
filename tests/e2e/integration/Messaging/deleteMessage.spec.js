@@ -49,8 +49,43 @@ describe('Delete message', () => {
     getMessage(secondMessageInThreadToDelete).should('not.exist')
   })
 
+  // Messaging_DeleteDefinitelyMessage
+  it('Messaging_DeleteDefinitelyMessage', function () {
+    const firstThread = this.messagingData.existingThreads[0]
+
+    // delete first thread
+    getThread(firstThread).click()
+    cy.globalKeyPress('{del}')
+    // Open menu
+    cy.get('[data-test="option_toggleMessagingMenu"]').click()
+    // Click on trash
+    cy.get('[data-test="messaging-menu"]').contains('button', 'Corbeille').click()
+    // Delete Definitely first thread
+    getThread(firstThread).click()
+    cy.globalKeyPress('{del}')
+    // Check first thread not exist
+    getThread(firstThread).should('not.exist')
+  })
+
+  // Messaging_Delete two Message
+  it.only('Messaging_Delete_two_Messages', function () {
+    const firstThread = this.messagingData.existingThreads[0]
+    const secondThread = this.messagingData.existingThreads[2]
+
+    cy.get('body').type('{ctrl}', { release: false })
+    // Click on first thread
+    getThread(firstThread).click()
+    // Click on second thread
+    getThread(secondThread).click()
+    cy.get('body').type('{ctrl}', { release: true })
+    // Delete first and second thread
+    cy.globalKeyPress('{del}')
+    getThread(firstThread).should('not.exist')
+    getThread(secondThread).should('not.exist')
+  })
+
   // Option delete mobile by trash icon
-  it.only('Messaging_DeleteMessage_mobile_icon', function () {
+  it('Messaging_DeleteMessage_mobile_icon', function () {
     cy.viewport('iphone-5')
     // Click on first thread
     cy.get('[data-test="thread-list-item"]').first().click()
@@ -59,7 +94,7 @@ describe('Delete message', () => {
   })
 
   // Option delete mobile by multi-selection option
-  it.only('Messaging_DeleteMessage_mobile_multi-selection', function () {
+  it('Messaging_DeleteMessage_mobile_multi-selection', function () {
     cy.viewport('iphone-5')
     // Click on multi selection
     cy.get('[data-test="option_toggleMultiSelection"]').click()
