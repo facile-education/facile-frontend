@@ -108,9 +108,6 @@ export default {
       return this.homework.shortContent
     }
   },
-  created () {
-    console.log(this.homework)
-  },
   methods: {
     redirect () {
       this.$router.push({
