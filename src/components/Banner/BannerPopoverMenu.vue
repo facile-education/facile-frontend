@@ -60,7 +60,7 @@
       </li>
     </ul>
 
-    <div class="logout-container">
+    <div class="logout-container top">
       <a
         class="logout-link"
         data-test="logout"
@@ -237,7 +237,7 @@ ul {
 }
 
 .logout-container {
-  padding: 0 1rem;
+  padding: 1rem 1rem 0 1rem;
 }
 
 a.logout-link {

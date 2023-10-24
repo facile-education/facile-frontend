@@ -250,7 +250,7 @@ h2 {
 }
 
 .first-line {
-  --thumbnail-width: min(74px, 20vw);
+  --thumbnail-width: min(88px, 20vw);
   display: flex;
   height: 50px;
 }
@@ -341,7 +341,7 @@ h2 {
 
 .is-school-news {
   .first-line {
-    height: 74px;
+    height: 88px;
   }
 }
 </style>
