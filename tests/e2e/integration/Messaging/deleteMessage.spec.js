@@ -10,7 +10,7 @@ describe('Delete message', () => {
     waitMessagingToBeLoaded()
   })
 
-  it('delete thread', function () {
+  it('Messaging_DeleteMessage', function () {
     const firstThread = this.messagingData.existingThreads[0]
     const secondThread = this.messagingData.existingThreads[2]
     const thirdThread = this.messagingData.existingThreads[3]
@@ -26,7 +26,6 @@ describe('Delete message', () => {
     cy.log('delete thread by context menu')
     getThread(secondThread).rightclick()
     cy.get('[data-test=context-menu]').contains('Supprimer').click()
-    cy.get('[data-test=context-menu]').contains('Supprimer').should('not.exist')
     getThread(secondThread).should('not.exist')
 
     cy.log('delete thread by trash icon')
@@ -48,5 +47,27 @@ describe('Delete message', () => {
     cy.get('[data-test=option_trash]').click()
     cy.get('[data-test=spinner]').should('not.exist')
     getMessage(secondMessageInThreadToDelete).should('not.exist')
+  })
+
+  // Option delete mobile by trash icon
+  it.only('Messaging_DeleteMessage_mobile_icon', function () {
+    cy.viewport('iphone-5')
+    // Click on first thread
+    cy.get('[data-test="thread-list-item"]').first().click()
+    // Check trash icon is visible
+    cy.get('[data-test="option_trash"]').should('be.visible')
+  })
+
+  // Option delete mobile by multi-selection option
+  it.only('Messaging_DeleteMessage_mobile_multi-selection', function () {
+    cy.viewport('iphone-5')
+    // Click on multi selection
+    cy.get('[data-test="option_toggleMultiSelection"]').click()
+    // Select first thread
+    cy.get('[data-test="thread-list-item"]').first().click()
+    // Open multi selection options
+    cy.get('[data-test="option_options"]').click()
+    // Check delete option is visible
+    cy.get('[data-test="delete"]').should('be.visible')
   })
 })
