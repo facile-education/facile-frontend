@@ -20,27 +20,27 @@
       v-t="unReadOnly ? 'unReadEmptyPlaceholder' : 'emptyPlaceholder'"
       class="placeholder"
     />
-    <div
-      v-else
-      class="events-by-month"
-    >
-      <div
-        v-for="(month, index) in eventsByMonth"
-        :key="index"
-      >
-        <div class="period">
-          {{ month.monthName }}
+    <div v-else>
+      <div class="events-by-month">
+        <div
+          v-for="(month, index) in eventsByMonth"
+          :key="index"
+        >
+          <div class="period">
+            {{ month.monthName }}
+          </div>
+          <DiaryEventItem
+            v-for="myEvent in month.eventList"
+            :key="myEvent.eventId"
+            :event="myEvent"
+            @mark-as-read="markAsRead(myEvent)"
+            @update-event="refresh"
+            @delete-event="refresh"
+            @refresh="refresh"
+          />
         </div>
-        <DiaryEventItem
-          v-for="myEvent in month.eventList"
-          :key="myEvent.eventId"
-          :event="myEvent"
-          @mark-as-read="markAsRead(myEvent)"
-          @update-event="refresh"
-          @delete-event="refresh"
-          @refresh="refresh"
-        />
       </div>
+
       <div class="footer">
         <button
           v-t="'showMore'"

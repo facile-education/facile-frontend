@@ -95,7 +95,7 @@
           class="footer-button"
           data-test="updateButton"
           :label="$t('update')"
-          @click="isUpdateModalDisplayed = true"
+          @click="openUpdateModal"
         />
         <PentilaButton
           v-if="detailedEvent.isDeletable"
@@ -198,6 +198,9 @@ export default {
           console.error('Error')
         }
       })
+    },
+    openUpdateModal () {
+      this.isUpdateModalDisplayed = true
     },
     updateEvent () {
       this.getEventDetails()

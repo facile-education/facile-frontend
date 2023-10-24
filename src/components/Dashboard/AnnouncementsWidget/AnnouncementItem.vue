@@ -255,6 +255,15 @@ export default {
     min-width: $announcement-item-horizontal-min-width;
     max-width: $announcement-item-horizontal-min-width;
   }
+
+  &:not(.is-in-horizontal-scroll) {
+    .title {
+      display: block;
+      white-space: nowrap;
+      overflow-x: hidden;
+      text-overflow: ellipsis;
+    }
+  }
 }
 
 .announcement {
@@ -266,7 +275,7 @@ export default {
   font-size: 14px;
   line-height: 18px;
   display: flex;
-  --thumbnail-width: min(74px, 20vw);
+  --thumbnail-width: min(80px, 20vw);
   border: 2px solid $neutral-40;
 
   .pellet {
@@ -299,15 +308,19 @@ export default {
 
 .content {
   width: calc(100% - var(--thumbnail-width));
-  padding: 1em 1.5rem;
-  white-space: nowrap;
+  padding: 0.5em 1.5rem;
   overflow-x: hidden;
   text-overflow: ellipsis;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 
+  .title {
+    @extend %font-medium-m;
+  }
+
   .description {
+    margin-top: 4px;
     @extend %font-regular-s;
   }
 
@@ -315,15 +328,7 @@ export default {
     @extend %font-regular-xs;
   }
 
-  .title {
-    @extend %font-medium-m;
-  }
-
-  .description {
-    margin-top: 1rem;
-  }
-
-  .title, .description, .text {
+  .text {
     display: block;
     white-space: nowrap;
     overflow-x: hidden;

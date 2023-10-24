@@ -12,15 +12,15 @@
 
     <template #body>
       <div class="student">
-        <span v-t="'NotUsualSlots.PendingFiringModal.student'" />
+        <strong v-t="'NotUsualSlots.PendingFiringModal.student'" />
         <span>{{ formattedStudent }}</span>
       </div>
       <div class="slot">
-        <span v-t="'NotUsualSlots.PendingFiringModal.slot'" />
+        <strong v-t="'NotUsualSlots.PendingFiringModal.slot'" />
         <span>{{ formattedSlot }}</span>
       </div>
       <div class="slot">
-        <span v-t="'NotUsualSlots.PendingFiringModal.firedTimestamp'" />
+        <strong v-t="'NotUsualSlots.PendingFiringModal.firedTimestamp'" />
         <span>{{ formattedTimestamp }}</span>
       </div>
       <PentilaTextArea
@@ -54,7 +54,6 @@
 </template>
 
 <script>
-import { toPascalCase } from '@utils/commons.util'
 import dayjs from 'dayjs'
 import { nextTick } from 'vue'
 
@@ -78,7 +77,7 @@ export default {
   },
   computed: {
     formattedStudent () {
-      return toPascalCase(this.pendingFiring.student) + ' - ' + this.pendingFiring.className
+      return this.pendingFiring.student + ' - ' + this.pendingFiring.className
     },
     formattedSlot () {
       if (this.pendingFiring.sourceSchoollifeSessionId !== 0) {
@@ -132,6 +131,11 @@ div.non-classical-slots {
 .pending-firing-modal {
   &.modal-mask {
     position: absolute;
+
+    .resizable-component {
+      left: 50% !important;
+      transform: translateX(-50%);
+    }
   }
 
   .window-wrapper {
@@ -143,17 +147,12 @@ div.non-classical-slots {
 <style lang="scss" scoped>
 @import '@design';
 
-.student, .slot {
-  font-weight: bold;
-}
-
 .slot {
   margin: 10px 0 15px 0;
 }
 
 .information {
   margin-top: 15px;
-  font-weight: bold;
   font-style: italic;
 }
 </style>

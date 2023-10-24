@@ -17,7 +17,10 @@
     <!--              <TeacherHomeworkTab />-->
     <!--            </PentilaTabItem>-->
   </PentilaTabList>
-  <div v-else>
+  <div
+    v-else
+    style="height: 100%"
+  >
     <div
       v-if="childList.length > 1"
       class="first-line"
@@ -41,6 +44,7 @@
       </PentilaTabItem>
       <PentilaTabItem
         :title="$t('course')"
+        class="course-tab-content"
       >
         <CourseTab :user-id="selectedUser.userId" />
       </PentilaTabItem>
