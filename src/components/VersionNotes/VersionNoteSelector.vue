@@ -1,6 +1,6 @@
 <template>
   <div class="version-note-selector">
-    <PentilaSpinner
+    <WeprodeSpinner
       v-if="isLoading"
       style="z-index: 1"
     />
@@ -11,7 +11,7 @@
       class="placeholder"
     />
 
-    <PentilaDropdown
+    <WeprodeDropdown
       v-if="notesList && notesList.length > 0"
       v-model="selectedNote"
       data-test="versionListDropDown"
@@ -58,11 +58,13 @@
 import ContextMenu from '@components/ContextMenu/ContextMenu.vue'
 
 import { deleteVersionNote } from '@/api/versionNotes.service'
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import { icons } from '@/constants/icons'
 
 export default {
   name: 'VersionNoteSelector',
-  components: { ContextMenu },
+  components: { ContextMenu, WeprodeDropdown, WeprodeSpinner },
   emits: ['selectNote', 'update'],
   data () {
     return {

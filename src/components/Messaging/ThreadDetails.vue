@@ -91,7 +91,7 @@
           />
         </li>
       </ul>
-      <PentilaButton
+      <WeprodeButton
         v-if="!(mq.phone || mq.tablet)"
         class="create-button"
         data-test="createMessageButton"
@@ -101,7 +101,7 @@
           name="fa-plus"
         />
         <span v-t="'Messaging.new'" />
-      </PentilaButton>
+      </WeprodeButton>
     </div>
     <hr>
 
@@ -162,6 +162,7 @@
 <script>
 
 import IconOption from '@components/Base/IconOption'
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import Message from '@components/Messaging/Message'
 import NeroIcon from '@components/Nero/NeroIcon.vue'
 import _ from 'lodash'
@@ -175,7 +176,8 @@ export default {
   components: {
     NeroIcon,
     IconOption,
-    Message
+    Message,
+    WeprodeButton
   },
   inject: ['mq'],
   data () {

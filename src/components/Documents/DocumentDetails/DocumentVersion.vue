@@ -44,7 +44,7 @@
       v-else
       class="options"
     >
-      <PentilaButton
+      <WeprodeButton
         class="bottom-option"
         data-test="view-button"
         @click="viewVersion"
@@ -54,8 +54,8 @@
           alt=""
         >
         {{ $t('Documents.documentDetails.viewVersion') }}
-      </PentilaButton>
-      <PentilaButton
+      </WeprodeButton>
+      <WeprodeButton
         v-t="('Documents.documentDetails.restoreVersion')"
         class="bottom-option"
         data-test="restore-button"
@@ -70,10 +70,11 @@ import BaseIcon from '@components/Base/BaseIcon'
 import dayjs from 'dayjs'
 
 import versionsService from '@/api/documents/version.service'
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
 
 export default {
   name: 'DocumentVersion',
-  components: { BaseIcon },
+  components: { BaseIcon, WeprodeButton },
   props: {
     version: {
       type: Object,

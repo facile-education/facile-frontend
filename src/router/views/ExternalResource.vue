@@ -22,7 +22,7 @@
 
     <div v-else>
       <div v-if="serviceSchoolUrls.length > 1">
-        <PentilaDropdown
+        <WeprodeDropdown
           v-model="selectedSchool"
           :list="serviceSchoolUrls"
           display-field="schoolName"
@@ -87,6 +87,7 @@ import { defineAsyncComponent } from 'vue'
 import { Translation as I18n } from 'vue-i18n'
 
 import { getResourceUrls } from '@/api/applicationManager.service'
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
 
 const AssistanceModal = defineAsyncComponent(() => import('@/components/Assistance/AssistanceModal'))
 
@@ -94,7 +95,8 @@ export default {
   export: 'ExternalResource',
   components: {
     AssistanceModal,
-    I18n
+    I18n,
+    WeprodeDropdown
   },
   props: {
     resourceKey: {

@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     class="create-question-modal"
     data-test="create-question-modal"
     :full-screen="mq.phone || mq.tablet"
@@ -13,7 +13,7 @@
     </template>
 
     <template #body>
-      <PentilaInput
+      <WeprodeInput
         ref="questionInput"
         v-model="questionInput"
         class="question-input"
@@ -29,25 +29,28 @@
     </template>
 
     <template #footer>
-      <PentilaButton
+      <WeprodeButton
         data-test="submitButton"
         :label="$t('submit')"
         :disabled="questionInput.length === 0 || answerInput.length === 0"
         @click="submit"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>
 import InlineEditor from '@ckeditor/ckeditor5-build-inline'
 import { component as CKEditor } from '@ckeditor/ckeditor5-vue'
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 
 import { saveItem } from '@/api/help.service'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
   name: 'CreateQuestionModal',
-  components: { CKEditor },
+  components: { CKEditor, WeprodeButton, WeprodeInput, WeprodeWindow },
   inject: ['mq'],
   emits: ['close'],
   data () {

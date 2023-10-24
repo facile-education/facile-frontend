@@ -1,6 +1,6 @@
 <template>
   <div class="access-create-button">
-    <PentilaButton
+    <WeprodeButton
       class="create-button"
       data-test="createMessageButton"
       @click="clickNew"
@@ -9,7 +9,7 @@
         name="fa-plus"
       />
       <span v-t="'new'" />
-    </PentilaButton>
+    </WeprodeButton>
 
     <ContextMenu
       v-if="isContextMenuDisplayed && isAContextMenuDisplayed"
@@ -24,9 +24,11 @@
 import ContextMenu from '@components/ContextMenu/ContextMenu.vue'
 import NeroIcon from '@components/Nero/NeroIcon.vue'
 
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+
 export default {
   name: 'AccessCreateButton',
-  components: { ContextMenu, NeroIcon },
+  components: { ContextMenu, NeroIcon, WeprodeButton },
   emits: ['createCategory', 'createAccess'],
   data () {
     return {

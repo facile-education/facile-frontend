@@ -4,7 +4,7 @@
     v-if="schoolList && schoolList.length > 1"
     class="school-selection"
   >
-    <PentilaDropdown
+    <WeprodeDropdown
       v-model="selectedSchool"
       :list="schoolList"
       display-field="schoolName"
@@ -20,9 +20,11 @@
 <script>
 import SchoolSlots from '@components/ScheduleManager/SchoolScheduleSettings/SchoolSlots.vue'
 
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+
 export default {
   name: 'SchoolScheduleSettings',
-  components: { SchoolSlots },
+  components: { SchoolSlots, WeprodeDropdown },
   computed: {
     schoolList () {
       return this.$store.getters['user/adminSchoolList']

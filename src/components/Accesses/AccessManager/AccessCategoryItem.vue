@@ -21,7 +21,7 @@
         @close="isNameModification = false"
       />
 
-      <PentilaButton
+      <WeprodeButton
         class="delete-button"
         cls="cancel"
         @click="confirmDeleteCategory"
@@ -33,7 +33,7 @@
           :title="$t('delete')"
         >
         <span v-t="'delete'" />
-      </PentilaButton>
+      </WeprodeButton>
     </div>
 
     <AccessesPlaceholder
@@ -61,10 +61,11 @@ import AccessesPlaceholder from '@components/Accesses/AccessManager/AccessesPlac
 import AccessItem from '@components/Accesses/AccessManager/AccessItem.vue'
 
 import { removeSchoolCategory, saveSchoolCategory } from '@/api/access.service'
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
 
 export default {
   name: 'AccessCategoryItem',
-  components: { AccessesPlaceholder, AccessCategoryInput, AccessItem },
+  components: { AccessesPlaceholder, AccessCategoryInput, AccessItem, WeprodeButton },
   props: {
     category: {
       type: Object,

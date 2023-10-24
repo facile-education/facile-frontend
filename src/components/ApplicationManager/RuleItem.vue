@@ -4,7 +4,7 @@
     :class="{ phone: mq.phone }"
   >
     <div class="column">
-      <PentilaTagsInput
+      <WeprodeTagsInput
         :model-value="rule.roles"
         :placeholder="$t('rolesPlaceholder') + '*'"
         :list="roleList"
@@ -14,13 +14,13 @@
         @blur="onBlurRoles"
         @update:modelValue="updateRoles"
       />
-      <PentilaErrorMessage :error-message="formErrorList.roles" />
+      <WeprodeErrorMessage :error-message="formErrorList.roles" />
     </div>
     &nbsp;
     <p v-t="'fromLabel'" />
     &nbsp;
     <div class="column">
-      <PentilaTagsInput
+      <WeprodeTagsInput
         :model-value="rule.orgs"
         :placeholder="$t('orgsPlaceholder') + '*'"
         :list="classList"
@@ -29,9 +29,9 @@
         @blur="onBlurOrgs"
         @update:modelValue="updateOrgs"
       />
-      <PentilaErrorMessage :error-message="formErrorList.orgs" />
+      <WeprodeErrorMessage :error-message="formErrorList.orgs" />
     </div>
-    <PentilaButton
+    <WeprodeButton
       v-if="isRemoveButtonDisplayed"
       type="circle"
       cls="delete"
@@ -42,7 +42,7 @@
         src="@assets/icons/trash_white.svg"
         :alt="$t('deleteButtonTooltip')"
       >
-    </PentilaButton>
+    </WeprodeButton>
   </li>
 </template>
 
@@ -50,8 +50,13 @@
 import { useVuelidate } from '@vuelidate/core'
 import { requiredIf } from '@vuelidate/validators'
 
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeTagsInput from '@/components/Base/Weprode/WeprodeTagsInput.vue'
+
 export default {
   name: 'RuleItem',
+  components: { WeprodeButton, WeprodeErrorMessage, WeprodeTagsInput },
   inject: ['mq'],
   props: {
     rule: {

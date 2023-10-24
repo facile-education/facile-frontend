@@ -1,7 +1,7 @@
 <template>
   <div class="global-schedule-settings">
     <h1 :aria-label="$t('serviceTitle')" />
-    <PentilaSpinner
+    <WeprodeSpinner
       v-if="isLoading"
       style="z-index: 1"
     />
@@ -29,7 +29,7 @@
       />
 
       <footer>
-        <PentilaButton
+        <WeprodeButton
           v-t="'submit'"
           @click="submit"
         />
@@ -46,10 +46,11 @@ import { useVuelidate } from '@vuelidate/core'
 import dayjs from 'dayjs'
 
 import { getGlobalConfiguration, saveGlobalConfiguration } from '@/api/schedule.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 
 export default {
   name: 'GlobalScheduleSettings',
-  components: { WeeksParity, Holidays, YearDates },
+  components: { WeeksParity, Holidays, YearDates, WeprodeSpinner },
   setup: () => ({ v$: useVuelidate() }),
   data () {
     return {

@@ -12,7 +12,7 @@
       <strong>{{ holiday.endDate }}</strong>
     </span>
 
-    <PentilaButton
+    <WeprodeButton
       v-t="'delete'"
       @click="$emit('delete')"
     />

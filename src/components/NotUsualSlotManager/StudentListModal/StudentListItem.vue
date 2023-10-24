@@ -10,7 +10,7 @@
       class="subject"
     />
     <div class="right-section">
-      <PentilaCheckbox
+      <WeprodeCheckbox
         v-if="isPresentCheckBoxActive"
         class="is-present-checkbox"
         label=""
@@ -48,6 +48,7 @@
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
+import WeprodeCheckbox from '@/components/Base/Weprode/WeprodeCheckbox.vue'
 import NeroIcon from '@/components/Nero/NeroIcon'
 import notUsualSlotsConstants from '@/constants/notUsualSlots'
 import { toPascalCase } from '@/utils/commons.util'
@@ -55,7 +56,7 @@ const StudentRegistrationModal = defineAsyncComponent(() => import('@components/
 
 export default {
   name: 'StudentListItem',
-  components: { NeroIcon, StudentRegistrationModal },
+  components: { NeroIcon, StudentRegistrationModal, WeprodeCheckbox },
   inject: ['mq'],
   props: {
     student: {

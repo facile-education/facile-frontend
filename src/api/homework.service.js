@@ -1,5 +1,5 @@
+import WeprodeUtils from '@utils/weprode.utils'
 import axios from 'axios'
-import PentilaUtils from 'pentila-utils'
 
 import constants from '@/api/constants'
 
@@ -62,7 +62,7 @@ function getStudentsDoneStatus (homeworkId) {
 }
 
 function createHomework (courseId, sourceSessionId, homework, publicationDate, isDraft) {
-  return axios.post(constants.JSON_WS_URL + HOMEWORK_PATH + 'create-homework', PentilaUtils.URL.params({
+  return axios.post(constants.JSON_WS_URL + HOMEWORK_PATH + 'create-homework', WeprodeUtils.params({
     courseId,
     title: homework.title,
     sourceSessionId,
@@ -78,7 +78,7 @@ function createHomework (courseId, sourceSessionId, homework, publicationDate, i
 }
 
 function updateHomework (homework, publicationDate, isDraft) {
-  return axios.post(constants.JSON_WS_URL + HOMEWORK_PATH + 'update-homework', PentilaUtils.URL.params({
+  return axios.post(constants.JSON_WS_URL + HOMEWORK_PATH + 'update-homework', WeprodeUtils.params({
     homeworkId: homework.homeworkId,
     title: homework.title,
     targetSessionId: homework.targetSessionId,
@@ -93,7 +93,7 @@ function updateHomework (homework, publicationDate, isDraft) {
 }
 
 function deleteHomework (homeworkId) {
-  return axios.post(constants.JSON_WS_URL + HOMEWORK_PATH + 'delete-homework', PentilaUtils.URL.params({
+  return axios.post(constants.JSON_WS_URL + HOMEWORK_PATH + 'delete-homework', WeprodeUtils.params({
     homeworkId
   })).then(response => response.data)
 }

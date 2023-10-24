@@ -1,5 +1,5 @@
 <template>
-  <PentilaDropdown
+  <WeprodeDropdown
     v-if="userSchools.length > 1"
     v-model="selectedSchool"
     class="dropdown"
@@ -9,8 +9,10 @@
 </template>
 
 <script>
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
 export default {
   name: 'SelectedSchool',
+  components: { WeprodeDropdown },
   computed: {
     selectedSchool: {
       get () {

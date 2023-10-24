@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     :modal="true"
     :draggable="true"
     :width="400"
@@ -15,14 +15,14 @@
       <div
         class="class-selector"
       >
-        <PentilaRadioButton
+        <WeprodeRadioButton
           v-model="isWholeClass"
           rb-value="true"
           :label="$t('whole-class')"
           class="radio"
         />
 
-        <PentilaRadioButton
+        <WeprodeRadioButton
           v-model="isWholeClass"
           rb-value="false"
           :label="$t('specific')"
@@ -41,7 +41,7 @@
           :key="student.userId"
           class="student"
         >
-          <PentilaCheckbox
+          <WeprodeCheckbox
             :model-value="isSelected(student)"
             :disabled="isWholeClass==='true'"
             :label="student.lastName + ' ' + student.firstName"
@@ -54,21 +54,27 @@
 
     <template #footer>
       <div class="footer">
-        <PentilaButton
+        <WeprodeButton
           :label="$t('save')"
           class="button"
           @click="closeModal"
         />
       </div>
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>
 import _ from 'lodash'
 
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeCheckbox from '@/components/Base/Weprode/WeprodeCheckbox.vue'
+import WeprodeRadioButton from '@/components/Base/Weprode/WeprodeRadioButton.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
+
 export default {
   name: 'StudentListModal',
+  components: { WeprodeButton, WeprodeCheckbox, WeprodeRadioButton, WeprodeWindow },
   inject: ['mq'],
   props: {
     studentList: {

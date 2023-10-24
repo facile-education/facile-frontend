@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     class="edit-course-modal"
     :class="{'phone': mq.phone || mq.tablet}"
     :full-screen="mq.phone || mq.tablet"
@@ -14,13 +14,13 @@
     <template #body>
       <section class="left">
         <div class="title">
-          <PentilaInput
+          <WeprodeInput
             ref="titleInput"
             v-model="sessionContent.title"
             :maxlength="250"
             :placeholder="$t('courseTitle')"
           />
-          <PentilaErrorMessage :error-message="formErrorList" />
+          <WeprodeErrorMessage :error-message="formErrorList" />
         </div>
 
         <CourseContent
@@ -38,36 +38,40 @@
 
       <!-- TODO: right panel (+ mobile gesture) -->
       <!--      <section class="right">-->
-      <!--        <PentilaButton-->
+      <!--        <WeprodeButton-->
       <!--          v-t="'preview'"-->
       <!--          @click="preview"-->
       <!--        />-->
-      <!--        <PentilaButton v-t="'previousSession'" />-->
+      <!--        <WeprodeButton v-t="'previousSession'" />-->
       <!--      </section>-->
     </template>
 
     <template #footer>
-      <PentilaButton
+      <WeprodeButton
         v-t="'draft'"
         class="draft-button"
         @click="onConfirm(true)"
       />
-      <PentilaButton
+      <WeprodeButton
         v-t="'post'"
         @click="onConfirm(false)"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>
+import WeprodeUtils from '@utils/weprode.utils'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import dayjs from 'dayjs'
-import PentilaUtils from 'pentila-utils'
 import { defineAsyncComponent, nextTick } from 'vue'
 
 import { addSessionContent, getSessionPreview, updateSessionContent } from '@/api/course.service'
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 import ContentPicker from '@/components/Course/ContentPicker.vue'
 import contentTypeConstants from '@/constants/contentTypeConstants'
 
@@ -77,7 +81,11 @@ export default {
   name: 'CourseEditModal',
   components: {
     CourseContent,
-    ContentPicker
+    ContentPicker,
+    WeprodeButton,
+    WeprodeErrorMessage,
+    WeprodeInput,
+    WeprodeWindow
   },
   inject: ['mq'],
   props: {
@@ -127,7 +135,7 @@ export default {
 
     if (this.editedSession.sessionContent) {
       this.sessionContent.title = this.editedSession.sessionContent.title ? this.editedSession.sessionContent.title : ''
-      this.sessionContent.blocks = (this.editedSession.sessionContent.blocks && this.editedSession.sessionContent.blocks.length > 0) ? PentilaUtils.JSON.deepCopy(this.editedSession.sessionContent.blocks) : []
+      this.sessionContent.blocks = (this.editedSession.sessionContent.blocks && this.editedSession.sessionContent.blocks.length > 0) ? WeprodeUtils.deepCopy(this.editedSession.sessionContent.blocks) : []
 
       this.isCreation = false
     } else { // isCreation = true

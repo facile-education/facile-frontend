@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import PentilaUtils from 'pentila-utils'
+import WeprodeUtils from '@utils/weprode.utils'
 import { defineAsyncComponent } from 'vue'
 const DetailsTabMember = defineAsyncComponent(() => import('@components/Groups/GroupDetailsPanel/DetailsTab/DetailsTabMember'))
 
@@ -52,7 +52,7 @@ export default {
   },
   computed: {
     sortedMemberList () {
-      return PentilaUtils.Array.sortWithString(this.memberList, false, 'lastName')
+      return WeprodeUtils.sortArrayWithString(this.memberList, false, 'lastName')
     }
   },
   methods: {
@@ -105,7 +105,7 @@ span {
 }
 </style>
 
-<i18n locale="fr" >
+<i18n locale="fr">
 {
   "collapse": "replier",
   "unCollapse": "déplier"

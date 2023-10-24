@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     :modal="true"
     :max-width="750"
     :full-screen="mq.phone || mq.tablet"
@@ -32,13 +32,13 @@
             @updateDates="updateSlotDates"
           />
         </div>
-        <PentilaSpinner v-else />
+        <WeprodeSpinner v-else />
       </div>
     </template>
 
     <template #footer>
       <div class="footer">
-        <PentilaButton
+        <WeprodeButton
           :label="$t('deleteSlot')"
           class="delete"
           :disabled="!isLoaded"
@@ -46,7 +46,7 @@
         />
       </div>
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>
@@ -54,9 +54,11 @@ import DateRangePicker from '@components/Base/DateRangePicker.vue'
 import dayjs from 'dayjs'
 
 import schoolLifeService from '@/api/schoolLife-portlet.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 export default {
   name: 'DeleteSlotModal',
-  components: { DateRangePicker },
+  components: { DateRangePicker, WeprodeSpinner, WeprodeWindow },
   inject: ['mq'],
   props: {
     initEvent: {

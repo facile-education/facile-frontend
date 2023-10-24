@@ -24,7 +24,7 @@
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
-import PentilaUtils from 'pentila-utils'
+import WeprodeUtils from '@utils/weprode.utils'
 
 import { exactString } from '../support/utils/testUtils'
 import { GLOBAL_ADMIN } from './constants/users'
@@ -68,7 +68,7 @@ Cypress.Commands.add('login', (user, visitUrl = undefined) => {
   {
     // TODO: Review validation method (check status of get-user-info by example / check if cookie sessionId is not null...)
     validate () {
-      const IDCookie = PentilaUtils.Cookies.getCookie('ID')
+      const IDCookie = WeprodeUtils.getCookie('ID')
       assert(IDCookie !== undefined)
 
       // cy.request(Cypress.config().baseUrl + '/lfr/p_auth_token.jsp').then(response => {

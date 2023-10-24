@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     :modal="true"
     :draggable="true"
     :full-screen="mq.phone || mq.tablet"
@@ -15,17 +15,20 @@
     </template>
 
     <template #footer />
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>
 import { defineAsyncComponent } from 'vue'
+
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 const ApplicationDetails = defineAsyncComponent(() => import('@/components/ApplicationManager/ApplicationDetails'))
 
 export default {
   name: 'ApplicationDetailsModal',
   components: {
-    ApplicationDetails
+    ApplicationDetails,
+    WeprodeWindow
   },
   inject: ['mq'],
   emits: ['close'],

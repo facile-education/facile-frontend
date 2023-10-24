@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     data-test="groups-details-modal"
     :modal="true"
     :full-screen="true"
@@ -14,14 +14,16 @@
     </template>
 
     <template #footer />
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>
 import GroupDetails from '@components/Groups/GroupDetailsPanel/GroupDetails'
+
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 export default {
   name: 'GroupDetailsModal',
-  components: { GroupDetails },
+  components: { GroupDetails, WeprodeWindow },
   computed: {
     selectedGroup () {
       return this.$store.state.groups.selectedGroup

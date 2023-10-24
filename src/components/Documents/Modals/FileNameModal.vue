@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     class="file-name-modal"
     data-test="file-name-modal"
     :class="mq.phone ? 'mobile': ''"
@@ -15,9 +15,9 @@
 
     <template #body>
       <div style="position: relative">
-        <PentilaSpinner v-if="isActionInProgress" />
+        <WeprodeSpinner v-if="isActionInProgress" />
 
-        <PentilaInput
+        <WeprodeInput
           ref="fileNameInput"
           v-model="inputText"
           class="name-input"
@@ -27,7 +27,7 @@
           @input="backError=''"
           @keyup.enter="submit"
         />
-        <PentilaErrorMessage
+        <WeprodeErrorMessage
           :error-message="formErrorList"
         />
 
@@ -40,7 +40,7 @@
     </template>
 
     <template #footer>
-      <PentilaButton
+      <WeprodeButton
         v-if="!(submitAction==='createAudio' && !stoppedState)"
         data-test="submitButton"
         :disabled="isActionInProgress"
@@ -48,7 +48,7 @@
         @click="submit"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>
@@ -58,6 +58,11 @@ import { required } from '@vuelidate/validators'
 
 import apiConstants from '@/api/constants'
 import fileServices from '@/api/documents/file.service'
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 import { entityNameMaxSize } from '@/constants/appConstants'
 import validators from '@/utils/validators'
 
@@ -67,7 +72,7 @@ const isUnderMaxSize = (value) => validators.isUnderMaxSize(value, entityNameMax
 
 export default {
   name: 'FileNameModal',
-  components: { AudioRecorder },
+  components: { AudioRecorder, WeprodeButton, WeprodeErrorMessage, WeprodeInput, WeprodeSpinner, WeprodeWindow },
   inject: ['mq'],
   props: {
     initFile: {

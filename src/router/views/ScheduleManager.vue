@@ -1,16 +1,19 @@
 <template>
-  <PentilaTabList>
-    <PentilaTabItem :title="$t('globalSettings')">
+  <WeprodeTabList>
+    <WeprodeTabItem :title="$t('globalSettings')">
       <GlobalScheduleSettings />
-    </PentilaTabItem>
-    <PentilaTabItem :title="$t('schoolSettings')">
+    </WeprodeTabItem>
+    <WeprodeTabItem :title="$t('schoolSettings')">
       <SchoolScheduleSettings />
-    </PentilaTabItem>
-  </PentilaTabList>
+    </WeprodeTabItem>
+  </WeprodeTabList>
 </template>
 
 <script>
 import { defineAsyncComponent } from 'vue'
+
+import WeprodeTabItem from '@/components/Base/Weprode/WeprodeTabItem.vue'
+import WeprodeTabList from '@/components/Base/Weprode/WeprodeTabList.vue'
 
 const GlobalScheduleSettings = defineAsyncComponent(() => import('@components/ScheduleManager/GlobalScheduleSettings/GlobalScheduleSettings.vue'))
 const SchoolScheduleSettings = defineAsyncComponent(() => import('@components/ScheduleManager/SchoolScheduleSettings/SchoolScheduleSettings.vue'))
@@ -19,7 +22,9 @@ export default {
   name: 'HorairesManager',
   components: {
     SchoolScheduleSettings,
-    GlobalScheduleSettings
+    GlobalScheduleSettings,
+    WeprodeTabList,
+    WeprodeTabItem
   },
   emits: ['update:layout'],
   beforeCreate () {

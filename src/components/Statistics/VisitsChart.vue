@@ -7,7 +7,7 @@
       v-if="isLoading"
       class="loading-placeholder"
     >
-      <PentilaSpinner />
+      <WeprodeSpinner />
     </div>
     <div
       v-else-if="error === true"
@@ -27,15 +27,16 @@
 </template>
 
 <script>
-import PentilaUtils from 'pentila-utils'
+import WeprodeUtils from '@utils/weprode.utils'
 
 import { getStatServices } from '@/api/applicationManager.service'
 import { getSessionsCount } from '@/api/statistics.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import Chart from '@/components/Statistics/Chart.vue'
 
 export default {
   name: 'VisitsChart',
-  components: { Chart },
+  components: { Chart, WeprodeSpinner },
   props: {
     startTime: {
       type: Object,
@@ -103,7 +104,7 @@ export default {
               element.name = this.$t('Menu.' + element.name)
             })
 
-            this.services = [this.defaultService, ...PentilaUtils.Array.sortWithString(data.services, false, 'name')]
+            this.services = [this.defaultService, ...WeprodeUtils.sortArrayWithString(data.services, false, 'name')]
           }
         },
         (err) => {

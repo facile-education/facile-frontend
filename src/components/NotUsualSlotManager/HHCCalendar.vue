@@ -1,6 +1,6 @@
 <template>
   <div class="calendar">
-    <PentilaSpinner v-if="isSpinnerDisplayed" />
+    <WeprodeSpinner v-if="isSpinnerDisplayed" />
     <Timeline
       v-if="mq.desktop"
       @selectWeek="onSelectWeek"
@@ -55,6 +55,8 @@ import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import { defineAsyncComponent } from 'vue'
 
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
+
 const NotUsualSlotsToolBar = defineAsyncComponent(() => import('@components/NotUsualSlotManager/NotUsualSlotsToolBar'))
 const Timeline = defineAsyncComponent(() => import('@components/Horaires/Timeline')) // Needed for event creation
 const StudentRegistrationModal = defineAsyncComponent(() => import('@components/NotUsualSlotManager/StudentRegistrationModal/StudentRegistrationModal'))
@@ -73,7 +75,8 @@ export default {
     StudentRegistrationModal,
     StudentListModal,
     EditSlotModal,
-    DeleteSlotModal
+    DeleteSlotModal,
+    WeprodeSpinner
   },
   inject: ['mq'],
   props: {

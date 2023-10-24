@@ -1,6 +1,6 @@
 <template>
   <div class="service-body">
-    <PentilaSpinner v-if="userId === undefined" />
+    <WeprodeSpinner v-if="userId === undefined" />
     <NotAllowed v-else-if="!isAllowed && !user.isAdministrator" />
     <slot v-else />
 
@@ -24,13 +24,14 @@
 <script>
 import { defineAsyncComponent } from 'vue'
 
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import { popupDurationTime } from '@/constants/appConstants'
 
 const Popup = defineAsyncComponent(() => import('@components/Base/Popup'))
 const NotAllowed = defineAsyncComponent(() => import('@views/NotAllowed.vue'))
 
 export default {
-  components: { NotAllowed, Popup },
+  components: { NotAllowed, Popup, WeprodeSpinner },
   inject: ['mq'],
   props: {
     isAllowed: {

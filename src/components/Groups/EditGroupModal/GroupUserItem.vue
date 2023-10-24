@@ -5,7 +5,7 @@
     @click.stop="toggleUserSelection"
   >
     <td>
-      <PentilaCheckbox
+      <WeprodeCheckbox
         :model-value="isSelected"
         label=""
         class="checkbox"
@@ -20,8 +20,10 @@
 </template>
 
 <script>
+import WeprodeCheckbox from '@/components/Base/Weprode/WeprodeCheckbox.vue'
 export default {
   name: 'GroupUserItem',
+  components: { WeprodeCheckbox },
   props: {
     user: {
       type: Object,

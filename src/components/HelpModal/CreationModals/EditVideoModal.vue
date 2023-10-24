@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     class="edit-video-modal"
     data-test="edit-video-modal"
     :full-screen="mq.phone || mq.tablet"
@@ -13,34 +13,38 @@
     </template>
 
     <template #body>
-      <PentilaInput
+      <WeprodeInput
         ref="urlInput"
         v-model="videoUrlInput"
         class="url-input"
         :placeholder="$t('videoUrlPlaceHolder')"
       />
 
-      <PentilaInput
+      <WeprodeInput
         v-model="videoDescriptionInput"
         :placeholder="$t('videoDescriptionPlaceHolder')"
       />
     </template>
 
     <template #footer>
-      <PentilaButton
+      <WeprodeButton
         data-test="submitButton"
         :label="$t('submit')"
         @click="submit"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>
 import { saveItem } from '@/api/help.service'
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
   name: 'EditVideoModal',
+  components: { WeprodeButton, WeprodeInput, WeprodeWindow },
   inject: ['mq'],
   props: {
     videoUrl: {

@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     :modal="true"
     :draggable="true"
     :full-screen="mq.phone || mq.tablet"
@@ -45,13 +45,13 @@
       >
         <div class="arrival">
           <span v-t="'NotUsualSlots.StudentRegistrationModal.arrival'" />
-          <PentilaInput
+          <WeprodeInput
             v-model="inputStartHour"
             class="input"
             :placeholder="'hh:mm'"
             :labelled="false"
           />
-          <PentilaErrorMessage
+          <WeprodeErrorMessage
             v-if="error"
             :error-message="error"
           />
@@ -63,12 +63,12 @@
           />
           <div v-else>
             <span v-t="'NotUsualSlots.StudentRegistrationModal.sourceSlot'" />
-            <PentilaDropdown
+            <WeprodeDropdown
               v-model="selectedSession"
               :list="studentsDaySessions"
               display-field="label"
             />
-            <PentilaErrorMessage
+            <WeprodeErrorMessage
               v-if="haveToSelectSlot"
               :error-message="$t('NotUsualSlots.StudentRegistrationModal.haveToSelectSlot')"
             />
@@ -81,7 +81,7 @@
           <span v-t="'NotUsualSlots.StudentRegistrationModal.firedBy'" />
           <span v-if="selectedSession.teacher">{{ selectedSession.teacher.firstName + ' ' + selectedSession.teacher.lastName }}</span>
           <span v-else-if="selectedSession.teachers.length === 1">{{ selectedSession.teachers[0].name }}</span>
-          <PentilaDropdown
+          <WeprodeDropdown
             v-else-if="selectedSession.teachers.length > 1"
             v-model="dropdownSelectedTeacher"
             :list="selectedSession.teachers"
@@ -98,18 +98,18 @@
           v-if="availableSubjects.length === 0"
           v-t="'NotUsualSlots.StudentRegistrationModal.noSubjectsAvailable'"
         />
-        <PentilaDropdown
+        <WeprodeDropdown
           v-else
           v-model="selectedSubject"
           :list="availableSubjects"
           display-field="name"
         />
-        <PentilaErrorMessage
+        <WeprodeErrorMessage
           v-if="haveToSelectSlot"
           :error-message="$t('NotUsualSlots.StudentRegistrationModal.haveToSelectSubject')"
         />
       </div>
-      <PentilaTextArea
+      <WeprodeTextArea
         v-if="isCommentDisplayed"
         ref="commentTextarea"
         v-model="comment"
@@ -118,7 +118,7 @@
         style="height:100px;resize: none;"
         @keydown.enter.stop=""
       />
-      <PentilaCheckbox
+      <WeprodeCheckbox
         v-if="isNotifyParentsDisplayed"
         class="notify-parents"
         :label="$t('NotUsualSlots.StudentRegistrationModal.notifyParents')"
@@ -128,33 +128,39 @@
     </template>
 
     <template #footer>
-      <PentilaButton
+      <WeprodeButton
         v-if="deregistration"
         :label="$t('NotUsualSlots.StudentRegistrationModal.unregister')"
         class="register"
         @click="submit"
       />
-      <PentilaButton
+      <WeprodeButton
         v-else
         :label="$t('NotUsualSlots.StudentRegistrationModal.register')"
         class="register"
         @click="submit"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>
-
 import dayjs from 'dayjs'
 import { nextTick } from 'vue'
 
 import schoolLifeService from '@/api/schoolLife-portlet.service'
 import userManagementService from '@/api/userManagement.service'
+import WeprodeCheckbox from '@/components/Base/Weprode/WeprodeCheckbox.vue'
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeTextArea from '@/components/Base/Weprode/WeprodeTextArea.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 import notUsualSlotsConstants from '@/constants/notUsualSlots'
 
 export default {
   name: 'StudentRegistrationModal',
+  components: { WeprodeCheckbox, WeprodeDropdown, WeprodeErrorMessage, WeprodeInput, WeprodeTextArea, WeprodeWindow },
   inject: ['mq'],
   props: {
     event: {

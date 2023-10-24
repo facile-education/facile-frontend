@@ -1,7 +1,7 @@
 <template>
   <section>
     <h2 v-t="('schoolSlots')" />
-    <PentilaSpinner
+    <WeprodeSpinner
       v-if="isLoading"
       style="z-index: 1"
     />
@@ -23,7 +23,7 @@
           />
         </li>
       </ol>
-      <PentilaButton
+      <WeprodeButton
         v-t="'addSlot'"
         @click="addSlot"
       />
@@ -31,11 +31,11 @@
 
     <footer>
       <div class="right">
-        <PentilaButton
+        <WeprodeButton
           v-t="'submit'"
           @click="submit"
         />
-        <PentilaErrorMessage :error-message="formErrorList.slots" />
+        <WeprodeErrorMessage :error-message="formErrorList.slots" />
       </div>
     </footer>
   </section>
@@ -47,10 +47,12 @@ import { useVuelidate } from '@vuelidate/core'
 import dayjs from 'dayjs'
 
 import { getSchoolSlotConfiguration, saveSchoolSlotConfiguration } from '@/api/schedule.service'
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 
 export default {
   name: 'SchoolSlots',
-  components: { SchoolSlotItem },
+  components: { SchoolSlotItem, WeprodeErrorMessage, WeprodeSpinner },
   props: {
     selectedSchool: {
       type: Object,

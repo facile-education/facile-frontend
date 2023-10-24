@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     class="edit-manual-modal"
     data-test="edit-manual-modal"
     :full-screen="mq.phone || mq.tablet"
@@ -22,24 +22,26 @@
     </template>
 
     <template #footer>
-      <PentilaButton
+      <WeprodeButton
         data-test="submitButton"
         :label="$t('submit')"
         @click="submit"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>
 import InlineEditor from '@ckeditor/ckeditor5-build-inline'
 import { component as CKEditor } from '@ckeditor/ckeditor5-vue'
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 
 import { saveItem } from '@/api/help.service'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
   name: 'EditManualModal',
-  components: { CKEditor },
+  components: { CKEditor, WeprodeButton, WeprodeWindow },
   inject: ['mq'],
   props: {
     htmlContent: {

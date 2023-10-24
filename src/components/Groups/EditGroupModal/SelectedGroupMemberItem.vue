@@ -15,7 +15,7 @@
       </button>
     </div>
     <div class="is-admin">
-      <PentilaToggleSwitch
+      <WeprodeToggleSwitch
         v-model="adminValue"
         :title="$t('admin')"
         :disabled="isCurrentMember || !isCurrentGroupAdmin"
@@ -29,9 +29,11 @@
 <script>
 import CustomIcon from '@components/Base/CustomIcon.vue'
 
+import WeprodeToggleSwitch from '@/components/Base/Weprode/WeprodeToggleSwitch.vue'
+
 export default {
   name: 'SelectedGroupMemberItem',
-  components: { CustomIcon },
+  components: { CustomIcon, WeprodeToggleSwitch },
   props: {
     member: {
       type: Object,

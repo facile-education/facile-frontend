@@ -15,7 +15,7 @@
         v-if="isLoading"
         class="placeholder"
       >
-        <PentilaSpinner />
+        <WeprodeSpinner />
       </div>
       <div
         v-if="error === true"
@@ -67,16 +67,16 @@
 import AllAnnouncementsHeader from '@components/Dashboard/AnnouncementsWidget/AllAnnouncements/AllAnnouncementsHeader.vue'
 import AnnouncementItem from '@components/Dashboard/AnnouncementsWidget/AnnouncementItem.vue'
 import NewsDetails from '@components/Dashboard/AnnouncementsWidget/NewsDetails.vue'
-import Layout from '@layouts/BannerLayout.vue'
 import dayjs from 'dayjs'
 
 import { getSchoolNews } from '@/api/dashboard/news.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import { allAnnouncementsPaginationSize } from '@/constants/dashboardConstants'
 let oldScrollTop = 0
 
 export default {
   name: 'AllAnnouncements',
-  components: { NewsDetails, AllAnnouncementsHeader, AnnouncementItem },
+  components: { NewsDetails, AllAnnouncementsHeader, AnnouncementItem, WeprodeSpinner },
   inject: ['mq'],
   emits: ['update:layout'],
   data () {

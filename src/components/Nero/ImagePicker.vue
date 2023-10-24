@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     :modal="true"
     :full-screen="mq.phone || mq.tablet"
     :width="700"
@@ -11,7 +11,7 @@
 
     <template #body>
       <div class="body">
-        <PentilaSpinner
+        <WeprodeSpinner
           v-if="isLoading"
           style="z-index: 1"
         />
@@ -67,13 +67,13 @@
     </template>
 
     <template #footer>
-      <PentilaButton
+      <WeprodeButton
         v-if="result.image !== null"
         :label="$t('saveButton')"
         @click="onConfirm"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>
@@ -83,13 +83,17 @@ import SelectFilesButtons from '@components/FilePicker/SelectFilesButtons.vue'
 import { Cropper, Preview } from 'vue-advanced-cropper'
 
 import { getResource, uploadTmpFile } from '@/api/documents/file.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
   name: 'ImagePickerModal',
   components: {
     SelectFilesButtons,
     Cropper,
-    Preview
+    Preview,
+    WeprodeSpinner,
+    WeprodeWindow
   },
   inject: ['mq'],
   props: {

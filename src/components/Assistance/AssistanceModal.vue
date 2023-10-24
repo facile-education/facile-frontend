@@ -1,6 +1,6 @@
 <template>
   <div data-test="supportModal">
-    <PentilaWindow
+    <WeprodeWindow
       class="support-message-modal"
       :modal="true"
       :draggable="true"
@@ -31,7 +31,7 @@
             class="italic"
           />
           <h5> {{ (modalType==='Assistance' ? $t('serviceLabel') : $t('serviceConcernLabel')) + '*' }} </h5>
-          <PentilaDropdown
+          <WeprodeDropdown
             v-if="applicationList"
             v-model="selected"
             data-test="servicesDropDown"
@@ -52,7 +52,7 @@
               @blur="v$.form.issueDescription.$touch()"
             />
           </div>
-          <PentilaErrorMessage :error-message="formErrorList.issueDescription" />
+          <WeprodeErrorMessage :error-message="formErrorList.issueDescription" />
         </div>
         <!-- Attached files -->
         <AttachedFiles
@@ -63,13 +63,13 @@
       </template>
 
       <template #footer>
-        <PentilaButton
+        <WeprodeButton
           data-test="submitTicket"
           :label="$t('submitButtonLabel')"
           @click="submitTicket"
         />
       </template>
-    </PentilaWindow>
+    </WeprodeWindow>
   </div>
 
   <teleport to="body">
@@ -91,6 +91,10 @@ import { required } from '@vuelidate/validators'
 import { defineAsyncComponent } from 'vue'
 
 import { sendAssistanceMessage } from '@/api/messaging/message.service'
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal'))
 
 export default {
@@ -98,7 +102,11 @@ export default {
   components: {
     AttachedFiles,
     FilePickerModal,
-    CKEditor: CKEditor.component
+    CKEditor: CKEditor.component,
+    WeprodeButton,
+    WeprodeDropdown,
+    WeprodeErrorMessage,
+    WeprodeWindow
   },
   inject: ['mq'],
   props: {

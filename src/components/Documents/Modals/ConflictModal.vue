@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     :modal="true"
     :draggable="true"
     class="conflict-modal"
@@ -27,7 +27,7 @@
 
     <template #footer>
       <div class="window-footer">
-        <PentilaButton
+        <WeprodeButton
           data-test="cancelButton"
           class="button"
           cls="cancel"
@@ -35,14 +35,14 @@
           @click="cancel"
         />
         <!-- TODO check permission? >-->
-        <PentilaButton
+        <WeprodeButton
           data-test="replaceButton"
           class="button"
           cls="replace"
           :label="$t('ConflictModal.replaceButton')"
           @click="replace"
         />
-        <PentilaButton
+        <WeprodeButton
           data-test="renameButton"
           class="button"
           cls="rename"
@@ -51,16 +51,18 @@
         />
       </div>
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 import NeroIcon from '@/components/Nero/NeroIcon'
 import { conflicts } from '@/constants/documentsConstants'
 
 export default {
   name: 'ConflictModal',
-  components: { NeroIcon },
+  components: { NeroIcon, WeprodeButton, WeprodeWindow },
   computed: {
     conflict () {
       return this.$store.getters['conflictModal/firstConflict']

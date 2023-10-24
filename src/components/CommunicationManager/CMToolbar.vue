@@ -4,25 +4,29 @@
       appear
       name="fade"
     >
-      <PentilaDropdown
+      <WeprodeDropdown
         v-if="managedSchoolList"
         :model-value="selectedSchool"
         :list="managedSchoolList"
         display-field="schoolName"
         @update:modelValue="onSchoolSelect"
       />
-      <PentilaSpinner v-else />
+      <WeprodeSpinner v-else />
     </Transition>
   </NeroToolbar>
 </template>
 
 <script>
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import NeroToolbar from '@/components/Nero/NeroToolbar'
 
 export default {
   name: 'CMToolbar',
   components: {
-    NeroToolbar
+    NeroToolbar,
+    WeprodeDropdown,
+    WeprodeSpinner
   },
   computed: {
     managedSchoolList () {

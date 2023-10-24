@@ -10,7 +10,7 @@
     />
 
     <div class="documents-list">
-      <PentilaSpinner v-if="isLoadingFiles" />
+      <WeprodeSpinner v-if="isLoadingFiles" />
 
       <div
         v-if="(currentFolders && currentFiles) && allSortedDocuments.length === 0"
@@ -44,15 +44,16 @@
 import Breadcrumb from '@components/Documents/Breadcrumb'
 import FilePickerFile from '@components/FilePicker/FilePickerFile'
 import FilePickerFolder from '@components/FilePicker/FilePickerFolder'
-import PentilaUtils from 'pentila-utils'
+import WeprodeUtils from '@utils/weprode.utils'
 
 import documentsService from '@/api/documents/documents.service'
 import navigationService from '@/api/documents/folder.service'
 import groupService from '@/api/documents/group.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 
 export default {
   name: 'FilePickerModalDocumentTab',
-  components: { Breadcrumb, FilePickerFile, FilePickerFolder },
+  components: { Breadcrumb, FilePickerFile, FilePickerFolder, WeprodeSpinner },
   inject: ['mq'],
   props: {
     folderSelection: {
@@ -181,10 +182,10 @@ export default {
       if (data.success) {
         data.subFolders.forEach(subFolder => { subFolder.hasAddPermission = true }) // Add hasAddPermission = true property to all document folder for compliance with group objects
         this.currentFolders = data.subFolders ? data.subFolders : []
-        this.currentFolders = PentilaUtils.Array.sortWithString(this.currentFolders, false, 'name')
+        this.currentFolders = WeprodeUtils.sortArrayWithString(this.currentFolders, false, 'name')
 
         this.currentFiles = data.files ? data.files : []
-        this.currentFiles = PentilaUtils.Array.sortWithString(this.currentFiles, false, 'name')
+        this.currentFiles = WeprodeUtils.sortArrayWithString(this.currentFiles, false, 'name')
 
         this.selectedFolder = undefined
         this.$emit('selected-folder', undefined)
@@ -205,10 +206,10 @@ export default {
       this.isLoadingFiles = false
       if (data.success) {
         this.currentFolders = data.folders ? data.folders : []
-        this.currentFolders = PentilaUtils.Array.sortWithString(this.currentFolders, false, 'name')
+        this.currentFolders = WeprodeUtils.sortArrayWithString(this.currentFolders, false, 'name')
 
         this.currentFiles = data.files ? data.files : []
-        this.currentFiles = PentilaUtils.Array.sortWithString(this.currentFiles, false, 'name')
+        this.currentFiles = WeprodeUtils.sortArrayWithString(this.currentFiles, false, 'name')
 
         this.selectedFolder = undefined
         this.$emit('selected-folder', undefined)

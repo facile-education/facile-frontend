@@ -7,14 +7,16 @@
       :key="$route.path"
       @update:layout="updateLayout"
     />
-    <PentilaSpinner v-else />
+    <WeprodeSpinner v-else />
   </component>
 </template>
 
 <script>
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import { setMainColor } from '@/utils/theme.util'
 
 export default {
+  components: { WeprodeSpinner },
   inject: ['mq'],
   computed: {
     layout () {
@@ -82,10 +84,6 @@ export default {
 // Normalize default styles across browsers,
 // https://necolas.github.io/normalize.css/
 @import '@modules/normalize.css/normalize.css';
-
-// Pentila components library
-@import '@modules/pentila-components/dist/nero-theme.css';
-@import '@modules/pentila-components/dist/pentila-components.css';
 
 // Design variables and utilities from src/design.
 @import '@/design';

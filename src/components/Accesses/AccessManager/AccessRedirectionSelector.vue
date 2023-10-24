@@ -1,6 +1,6 @@
 <template>
   <div class="redirection-selector">
-    <PentilaDropdown
+    <WeprodeDropdown
       v-model="selectedType"
       :list="typeList"
       :close-on-select="true"
@@ -8,7 +8,7 @@
       :sort="false"
       @update:model-value="changeType"
     />
-    <PentilaInput
+    <WeprodeInput
       v-if="selectedType.type === types.TYPE_EXTERNAL_URL"
       v-model="url"
       class="field"
@@ -40,7 +40,7 @@
       @click="isFilePickerDisplayed = true"
     />
   </div>
-  <PentilaErrorMessage
+  <WeprodeErrorMessage
     :error-message="errorMessage"
   />
 
@@ -74,14 +74,16 @@ import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import { defineAsyncComponent } from 'vue'
 
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
 import Types from '@/constants/accessConstants'
 const RedirectionEntity = defineAsyncComponent(() => import('@components/Accesses/AccessManager/RedirectionEntity.vue'))
-
 const isValidURL = (value) => validators.isValidURL(value)
 
 export default {
   name: 'AccessRedirectionSelector',
-  components: { FilePickerModal, RedirectionEntity },
+  components: { FilePickerModal, RedirectionEntity, WeprodeDropdown, WeprodeErrorMessage, WeprodeInput },
   props: {
     initRedirection: {
       type: Object,

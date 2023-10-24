@@ -1,24 +1,24 @@
 <template>
   <div data-test="editVersion">
     <div>
-      <PentilaInput
+      <WeprodeInput
         v-model="form.versionNumber"
         data-test="versionNumber-input"
         :placeholder="$t('versionNumber') + '*'"
         @blur="v$.form.versionNumber.$touch()"
       />
-      <PentilaErrorMessage :error-message="formErrorList.versionNumber" />
+      <WeprodeErrorMessage :error-message="formErrorList.versionNumber" />
     </div>
     <div>
-      <PentilaInput
+      <WeprodeInput
         v-model="form.versionDetails"
         data-test="versionDetails-input"
         :placeholder="$t('jsonContent') + '*'"
         @blur="v$.form.versionDetails.$touch()"
       />
-      <PentilaErrorMessage :error-message="formErrorList.versionDetails" />
+      <WeprodeErrorMessage :error-message="formErrorList.versionDetails" />
     </div>
-    <PentilaButton
+    <WeprodeButton
       data-test="addVersion"
       :label="$t('addVersionButtonLabel')"
       :title="$t('addVersionButtonLabel')"
@@ -28,11 +28,15 @@
 </template>
 
 <script>
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
+import WeprodeUtils from '@utils/weprode.utils'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
-import PentilaUtils from 'pentila-utils'
 
-const isValidJson = (value) => PentilaUtils.JSON.isValidJson(value)
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+
+const isValidJson = (value) => WeprodeUtils.isValidJson(value)
 const isVersionNameValid = (str) => {
   try {
     const regex = /[0-9]+.[0-9]+.[0-9]+/gm
@@ -58,6 +62,7 @@ const isJsonContentValid = (str) => {
 
 export default {
   name: 'VersionEditionForm',
+  components: { WeprodeButton, WeprodeErrorMessage, WeprodeInput },
   setup: () => ({ v$: useVuelidate() }),
   data () {
     return {

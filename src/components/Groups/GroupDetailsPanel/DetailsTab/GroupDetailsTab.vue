@@ -43,7 +43,7 @@
       class="member-list"
       :class="{'phone': mq.phone}"
     >
-      <PentilaSpinner v-if="memberLoading" />
+      <WeprodeSpinner v-if="memberLoading" />
       <div v-else>
         <div class="member-list-header">
           <img
@@ -91,10 +91,11 @@ import MemberPack from '@components/Groups/GroupDetailsPanel/DetailsTab/MemberPa
 import dayjs from 'dayjs'
 
 import { getCommunityMembers } from '@/api/groups.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 
 export default {
   name: 'GroupDetailsTab',
-  components: { MemberPack },
+  components: { MemberPack, WeprodeSpinner },
   inject: ['mq'],
   props: {
     group: {

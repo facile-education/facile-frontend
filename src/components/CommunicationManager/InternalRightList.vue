@@ -7,8 +7,8 @@
       <div v-if="roleList">
         <h4 v-t="'CommunicationManager.InternalRightList.title'" />
         <p v-t="'CommunicationManager.InternalRightList.informations'" />
-        <PentilaTabList>
-          <PentilaTabItem
+        <WeprodeTabList>
+          <WeprodeTabItem
             v-for="role in roleList"
             :key="role.roleId"
             :title="role.label"
@@ -18,25 +18,33 @@
               :right-list="rightList"
               @input="onInput"
             />
-          </PentilaTabItem>
-        </PentilaTabList>
-        <PentilaButton
+          </WeprodeTabItem>
+        </WeprodeTabList>
+        <WeprodeButton
           :label="$t('CommunicationManager.InternalRightList.save')"
           @click="onSave"
         />
       </div>
-      <PentilaSpinner v-else />
+      <WeprodeSpinner v-else />
     </Transition>
   </div>
 </template>
 
 <script>
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
+import WeprodeTabItem from '@/components/Base/Weprode/WeprodeTabItem.vue'
+import WeprodeTabList from '@/components/Base/Weprode/WeprodeTabList.vue'
 import InternalRoleTab from '@/components/CommunicationManager/InternalRoleTab'
 
 export default {
   name: 'InternalRightList',
   components: {
-    InternalRoleTab
+    InternalRoleTab,
+    WeprodeTabList,
+    WeprodeTabItem,
+    WeprodeButton,
+    WeprodeSpinner
   },
   data () {
     return {

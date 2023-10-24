@@ -38,7 +38,7 @@
       class="sessions"
       :class="{'phone': mq.phone}"
     >
-      <PentilaSpinner
+      <WeprodeSpinner
         v-if="isLoading"
         style="z-index: 1"
       />
@@ -70,15 +70,16 @@
 
 <script>
 
-import PentilaUtils from 'pentila-utils'
+import WeprodeUtils from '@utils/weprode.utils'
 import { defineAsyncComponent } from 'vue'
 
 import { getCourseContent } from '@/api/course.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 const SessionDetails = defineAsyncComponent(() => import('@components/Course/SessionDetails.vue'))
 
 export default {
   name: 'CourseDetails',
-  components: { SessionDetails },
+  components: { SessionDetails, WeprodeSpinner },
   inject: ['mq'],
   props: {
     course: {
@@ -106,7 +107,7 @@ export default {
       }
     },
     sortedCourseSessions () {
-      return PentilaUtils.Array.sortWithString(this.coursesSessions, true, 'startDate')
+      return WeprodeUtils.sortArrayWithString(this.coursesSessions, true, 'startDate')
     }
   },
   created () {

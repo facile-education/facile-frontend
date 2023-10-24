@@ -1,6 +1,6 @@
 <template>
   <div ref="createMessageModal">
-    <PentilaWindow
+    <WeprodeWindow
       :modal="true"
       :draggable="true"
       :full-screen="mq.phone || mq.tablet"
@@ -35,7 +35,7 @@
           class="recipients-panel"
           data-test="recipients-section"
         >
-          <PentilaTagsInput
+          <WeprodeTagsInput
             ref="tagsinput"
             v-model="recipients"
             :close-on-select="true"
@@ -51,7 +51,7 @@
             :others-label-template="(nbOthers) => {return $t('othersLabel', {'nbOthers': nbOthers})}"
             @input="searchTimeOut"
           />
-          <PentilaButton
+          <WeprodeButton
             ref="openContactTooltipButton"
             :class="{'phone': mq.phone, 'close-contact': isContactPickerModalDisplayed}"
             class="create-button"
@@ -61,17 +61,17 @@
               name="fa-plus"
               class="icon"
             />
-          </PentilaButton>
+          </WeprodeButton>
         </div>
         <div class="error-container">
-          <PentilaErrorMessage
+          <WeprodeErrorMessage
             v-if="error==='missingRecipient'"
             :error-message="$t('missingRecipient')"
           />
         </div>
 
         <!-- Subject -->
-        <PentilaInput
+        <WeprodeInput
           id="create-message-subject-input"
           ref="createMessageSubjectInput"
           v-model="subject"
@@ -122,13 +122,13 @@
           class="footer"
           :class="device"
         >
-          <PentilaButton
+          <WeprodeButton
             data-test="draftButton"
             class="draftButton"
             :label="$t('draftButton')"
             @click="saveDraft"
           />
-          <PentilaButton
+          <WeprodeButton
             data-test="submitButton"
             class="dark"
             :label="$t('submitButton')"
@@ -136,7 +136,7 @@
           />
         </div>
       </template>
-    </PentilaWindow>
+    </WeprodeWindow>
   </div>
   <teleport to="body">
     <ContactPickerModal
@@ -162,6 +162,7 @@
 <script>
 import AttachedFiles from '@components/AttachedFiles/AttachedFiles.vue'
 import TextContent from '@components/Base/TextContent.vue'
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import ContactPickerToolTip from '@components/ContactPicker/ContactPickerToolTip.vue'
 import { addContactFieldsToContactList } from '@utils/contacts.utils'
 import { useVuelidate } from '@vuelidate/core'
@@ -170,6 +171,10 @@ import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
 import messageService from '@/api/messaging/message.service'
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeTagsInput from '@/components/Base/Weprode/WeprodeTagsInput.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 import NeroIcon from '@/components/Nero/NeroIcon'
 import constants from '@/constants/messagingConstants'
 import messagingUtils from '@/utils/messaging.utils'
@@ -192,7 +197,12 @@ export default {
     ContactPickerModal,
     TextContent,
     AttachedFiles,
-    NeroIcon
+    NeroIcon,
+    WeprodeButton,
+    WeprodeErrorMessage,
+    WeprodeInput,
+    WeprodeTagsInput,
+    WeprodeWindow
   },
   inject: ['mq'],
   props: {

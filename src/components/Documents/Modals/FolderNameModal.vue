@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     class="folder-name-modal"
     data-test="folder-name-modal"
     :class="mq.phone ? 'mobile': ''"
@@ -15,9 +15,9 @@
 
     <template #body>
       <div style="position: relative">
-        <PentilaSpinner v-if="isActionInProgress" />
+        <WeprodeSpinner v-if="isActionInProgress" />
 
-        <PentilaInput
+        <WeprodeInput
           ref="folderNameInput"
           v-model="folderName"
           class="name-input"
@@ -26,21 +26,21 @@
           @input="backError=''"
           @keyup.enter="submit"
         />
-        <PentilaErrorMessage
+        <WeprodeErrorMessage
           :error-message="formErrorList"
         />
       </div>
     </template>
 
     <template #footer>
-      <PentilaButton
+      <WeprodeButton
         data-test="submitButton"
         :disabled="isActionInProgress"
         :label="submitAction==='rename' ? $t('rename') : $t('createSubmit')"
         @click="submit"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>
@@ -48,6 +48,11 @@ import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 
 import folderServices from '@/api/documents/folder.service'
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 import { entityNameMaxSize } from '@/constants/appConstants'
 import validators from '@/utils/validators'
 
@@ -57,6 +62,7 @@ const isUnderMaxSize = (value) => validators.isUnderMaxSize(value, entityNameMax
 
 export default {
   name: 'FolderNameModal',
+  components: { WeprodeButton, WeprodeErrorMessage, WeprodeInput, WeprodeSpinner, WeprodeWindow },
   inject: ['mq'],
   props: {
     initFolder: {

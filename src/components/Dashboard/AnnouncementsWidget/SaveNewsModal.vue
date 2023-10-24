@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     class="update-news-modal"
     data-test="update-news-modal"
     :modal="true"
@@ -12,7 +12,7 @@
     </template>
 
     <template #body>
-      <PentilaSpinner
+      <WeprodeSpinner
         v-if="isProcessingSave"
         class="save-spinner"
       />
@@ -26,7 +26,7 @@
           v-if="!mq.phone && !mq.tablet"
           class="population-selection"
         >
-          <PentilaTagsInput
+          <WeprodeTagsInput
             v-model="populations"
             :placeholder="$t('populationPlaceholder') + '*'"
             :list="availablePopulationsList"
@@ -35,10 +35,10 @@
             display-field="populationName"
             :disabled="isLoadingNewsDetails"
           />
-          <PentilaErrorMessage
+          <WeprodeErrorMessage
             :error-message="formErrorList.populations"
           />
-          <PentilaSpinner v-if="isLoadingNewsDetails" />
+          <WeprodeSpinner v-if="isLoadingNewsDetails" />
         </div>
 
         <div class="release-date">
@@ -52,19 +52,19 @@
             :disabled="isReleaseDateDisabled"
             @select-date="updateReleaseDate"
           />
-          <PentilaErrorMessage
+          <WeprodeErrorMessage
             :error-message="formErrorList.releaseDate"
           />
         </div>
       </div>
 
       <div class="title">
-        <PentilaInput
+        <WeprodeInput
           ref="nameInput"
           v-model="title"
           :placeholder="$t('namePlaceHolder') + '*'"
         />
-        <PentilaErrorMessage
+        <WeprodeErrorMessage
           :error-message="formErrorList.title"
         />
       </div>
@@ -73,7 +73,7 @@
         v-if="mq.phone || mq.tablet"
         class="population-selection"
       >
-        <PentilaTagsInput
+        <WeprodeTagsInput
           v-model="populations"
           :placeholder="$t('populationPlaceholder') + '*'"
           :list="availablePopulationsList"
@@ -83,10 +83,10 @@
           display-field="populationName"
           :disabled="isLoadingNewsDetails"
         />
-        <PentilaErrorMessage
+        <WeprodeErrorMessage
           :error-message="formErrorList.populations"
         />
-        <PentilaSpinner v-if="isLoadingNewsDetails" />
+        <WeprodeSpinner v-if="isLoadingNewsDetails" />
       </div>
 
       <TextContent
@@ -96,7 +96,7 @@
         :placeholder="$t('contentPlaceHolder')"
       />
 
-      <PentilaErrorMessage
+      <WeprodeErrorMessage
         :error-message="formErrorList.content"
       />
 
@@ -112,7 +112,7 @@
         class="unread-checkbox"
       >
         <span v-t="'markAsUnreadForAll'" />
-        <PentilaToggleSwitch
+        <WeprodeToggleSwitch
           v-model="markAsUnreadForAll"
         />
         <InformationIcon
@@ -124,13 +124,13 @@
     </template>
 
     <template #footer>
-      <PentilaButton
+      <WeprodeButton
         data-test="submitButton"
         :label="isCreation? $t('creationSubmit') : $t('updateSubmit')"
         @click="submit"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 
   <teleport
     v-if="isFilePickerDisplayed"
@@ -163,6 +163,13 @@ import {
   getGroupNewsBroadcastGroups,
   getNewsDetails, getSchoolNewsBroadcastGroups
 } from '@/api/dashboard/news.service'
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
+import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
+import WeprodeTagsInput from '@/components/Base/Weprode/WeprodeTagsInput.vue'
+import WeprodeToggleSwitch from '@/components/Base/Weprode/WeprodeToggleSwitch.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 import { ckMaxSize } from '@/constants/appConstants'
 import { defaultImagesKeys } from '@/constants/icons'
 
@@ -175,7 +182,7 @@ const isNotEmpty = (list) => validators.isNotEmpty(list)
 
 export default {
   name: 'SaveNewsModal',
-  components: { TextContent, InformationIcon, ThumbnailSelector, AttachedFiles, FilePickerModal, CustomDatePicker },
+  components: { TextContent, InformationIcon, ThumbnailSelector, AttachedFiles, FilePickerModal, CustomDatePicker, WeprodeButton, WeprodeErrorMessage, WeprodeInput, WeprodeSpinner, WeprodeTagsInput, WeprodeToggleSwitch, WeprodeWindow },
   inject: ['mq'],
   props: {
     initNews: {

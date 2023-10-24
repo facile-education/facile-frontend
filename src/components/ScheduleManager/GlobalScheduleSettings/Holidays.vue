@@ -20,7 +20,7 @@
       </li>
     </ul>
 
-    <PentilaButton
+    <WeprodeButton
       v-if="!isFormDisplayed"
       v-t="'addHoliday'"
       class="add-button"

@@ -15,7 +15,7 @@
         v-if="isLoading"
         class="placeholder"
       >
-        <PentilaSpinner />
+        <WeprodeSpinner />
       </div>
       <div
         v-if="error === true"
@@ -78,12 +78,13 @@ import DiaryEventItem from '@components/Dashboard/DiaryWidget/DiaryEventItem.vue
 import dayjs from 'dayjs'
 
 import { getEvents } from '@/api/dashboard/agenda.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import { allDiaryEventsPaginationSize } from '@/constants/dashboardConstants'
 let oldScrollTop = 0
 
 export default {
   name: 'AllDiaryEvents',
-  components: { DiaryEventDetails, AllDiaryEventsHeader, DiaryEventItem },
+  components: { DiaryEventDetails, AllDiaryEventsHeader, DiaryEventItem, WeprodeSpinner },
   inject: ['mq'],
   emits: ['update:layout'],
   data () {

@@ -5,7 +5,7 @@
     v-if="schoolList.length > 1"
     class="header"
   >
-    <PentilaDropdown
+    <WeprodeDropdown
       v-model="selectedSchool"
       class="dropdown"
       :list="schoolList"
@@ -13,29 +13,32 @@
     />
   </div>
 
-  <PentilaTabList>
-    <PentilaTabItem
+  <WeprodeTabList>
+    <WeprodeTabItem
       :title="$t('manual-users')"
       class="tab"
     >
       <ManualUsers />
-    </PentilaTabItem>
-    <PentilaTabItem
+    </WeprodeTabItem>
+    <WeprodeTabItem
       :title="$t('delegations')"
       class="tab"
     >
       <Delegations />
-    </PentilaTabItem>
-    <PentilaTabItem
+    </WeprodeTabItem>
+    <WeprodeTabItem
       :title="$t('affectations')"
       class="tab"
     >
       <Affectations />
-    </PentilaTabItem>
-  </PentilaTabList>
+    </WeprodeTabItem>
+  </WeprodeTabList>
 </template>
 
 <script>
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeTabItem from '@/components/Base/Weprode/WeprodeTabItem.vue'
+import WeprodeTabList from '@/components/Base/Weprode/WeprodeTabList.vue'
 import Affectations from '@/components/UserManagement/Affectations.vue'
 import Delegations from '@/components/UserManagement/Delegations'
 import ManualUsers from '@/components/UserManagement/ManualUsers'
@@ -44,7 +47,10 @@ export default {
   components: {
     ManualUsers,
     Delegations,
-    Affectations
+    Affectations,
+    WeprodeTabList,
+    WeprodeTabItem,
+    WeprodeDropdown
   },
   emits: ['update:layout'],
   computed: {

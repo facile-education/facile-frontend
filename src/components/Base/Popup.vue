@@ -38,7 +38,6 @@
 import BaseIcon from '@components/Base/BaseIcon'
 import CustomIcon from '@components/Base/CustomIcon.vue'
 export default {
-  // TODO: export in pentilaComponents
   name: 'Popup',
   components: { CustomIcon, BaseIcon },
   props: {

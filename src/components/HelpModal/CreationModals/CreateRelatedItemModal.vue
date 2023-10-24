@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     class="create-relation-modal"
     data-test="create-relation-modal"
     :full-screen="mq.phone || mq.tablet"
@@ -13,7 +13,7 @@
     </template>
 
     <template #body>
-      <PentilaDropdown
+      <WeprodeDropdown
         v-model="selectedRelatedItem"
         class="item-list"
         :list="itemList"
@@ -23,21 +23,26 @@
     </template>
 
     <template #footer>
-      <PentilaButton
+      <WeprodeButton
         data-test="submitButton"
         :label="$t('submit')"
         :disabled="selectedRelatedItem.itemId === 0"
         @click="submit"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
+
 import { getHelpMenu, saveRelation } from '@/api/help.service'
+import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
   name: 'CreateRelatedItemModal',
+  components: { WeprodeButton, WeprodeDropdown, WeprodeWindow },
   inject: ['mq'],
   emits: ['close'],
   data () {

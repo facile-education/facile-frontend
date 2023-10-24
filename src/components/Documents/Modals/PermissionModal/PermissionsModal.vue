@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     :full-screen="mq.phone || mq.tablet"
     :modal="true"
     :draggable="true"
@@ -51,7 +51,7 @@
         :type="document.type"
         @updateMatrix="updateMatrix($event, role)"
       />
-      <PentilaCheckbox
+      <WeprodeCheckbox
         v-if="document.type==='Folder'"
         :model-value="isRecursive"
         :label="$t('recursiveLabel')"
@@ -60,29 +60,32 @@
     </template>
 
     <template #footer>
-      <PentilaButton
+      <WeprodeButton
         v-if="initialPermissionMatrix.length > 0"
         class="reset-button"
         :label="$t('reset')"
         @click="reset"
       />
-      <PentilaButton
+      <WeprodeButton
         data-test="submitButton"
         :label="$t('submit')"
         @click="submit"
       />
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>
 import RolePermissions from '@components/Documents/Modals/PermissionModal/RolePermissions'
 
 import permissionsService from '@/api/documents/permissions.service'
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import WeprodeCheckbox from '@/components/Base/Weprode/WeprodeCheckbox.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
   name: 'PermissionsModal',
-  components: { RolePermissions },
+  components: { RolePermissions, WeprodeButton, WeprodeCheckbox, WeprodeWindow },
   inject: ['mq'],
   props: {
     document: {

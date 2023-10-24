@@ -7,7 +7,7 @@
       v-if="isLoadingContactTree"
       class="placeholder"
     >
-      <PentilaSpinner />
+      <WeprodeSpinner />
     </div>
     <div
       v-else-if="error"
@@ -40,10 +40,11 @@ import AddressBookCommunities from '@components/ContactPicker/AddressBook/ItemsT
 import AddressBookSchool from '@components/ContactPicker/AddressBook/ItemsTypes/AddressBookSchool.vue'
 
 import { getContactTree } from '@/api/contact.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 
 export default {
   name: 'AddressBook',
-  components: { AddressBookSchool, AddressBookCommunities },
+  components: { AddressBookSchool, AddressBookCommunities, WeprodeSpinner },
   props: {
     selectedLists: {
       type: Array,
@@ -116,7 +117,7 @@ export default {
 }
 </style>
 
-<i18n locale="fr" >
+<i18n locale="fr">
 {
   "errorPlaceholder": "Oups, une erreur est survenue..."
 }

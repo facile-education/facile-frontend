@@ -1,5 +1,5 @@
 <template>
-  <PentilaWindow
+  <WeprodeWindow
     class="create-link-modal"
     :class="{'phone': mq.phone || mq.tablet}"
     :full-screen="mq.phone || mq.tablet"
@@ -13,7 +13,7 @@
       <span> {{ modalTitle }}</span>
     </template>
     <template #body>
-      <PentilaSpinner
+      <WeprodeSpinner
         v-if="isLoading"
         style="z-index: 1"
       />
@@ -36,7 +36,7 @@
         </li>
       </ul>
     </template>
-  </PentilaWindow>
+  </WeprodeWindow>
 </template>
 
 <script>
@@ -44,10 +44,12 @@ import UserAccessCategory from '@components/Accesses/AccessVisualization/UserAcc
 import { sortAccesses } from '@utils/accessUtils'
 
 import { getUserAccesses } from '@/api/access.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
+import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
   name: 'AccessModal',
-  components: { UserAccessCategory },
+  components: { UserAccessCategory, WeprodeSpinner, WeprodeWindow },
   inject: ['mq'],
   props: {
     initCategoryList: {

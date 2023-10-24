@@ -1,44 +1,47 @@
 <template>
   <div class="param-header">
-    <PentilaButton
+    <WeprodeButton
       class="round"
       @click="runSynchro"
     >
       <span>{{ $t('synchro') }}</span>
-    </PentilaButton>
-    <PentilaButton
+    </WeprodeButton>
+    <WeprodeButton
       class="round"
       @click="runParentSynchro"
     >
       <span>{{ $t('parentSynchro') }}</span>
-    </PentilaButton>
-    <PentilaButton
+    </WeprodeButton>
+    <WeprodeButton
       class="round"
       @click="startFsAnalysis"
     >
       <span>{{ $t('startFsAnalysis') }}</span>
-    </PentilaButton>
-    <PentilaButton
+    </WeprodeButton>
+    <WeprodeButton
       class="round"
       @click="startFsAnalysisV2"
     >
       <span>{{ $t('startFsAnalysisV2') }}</span>
-    </PentilaButton>
-    <PentilaButton
+    </WeprodeButton>
+    <WeprodeButton
       class="round"
       @click="confirmAnonymisation"
     >
       <span>{{ $t('runAnonymisation') }}</span>
-    </PentilaButton>
+    </WeprodeButton>
   </div>
 </template>
 
 <script>
 
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
+
 import { runAnonymisation, startFsAnalysis, startFsAnalysisV2, startParentSynchro, startSynchro } from '@/api/maintenance.service'
 
 export default {
   name: 'Administration',
+  components: { WeprodeButton },
   data () {
     return {
     }

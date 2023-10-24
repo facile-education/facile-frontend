@@ -1,6 +1,6 @@
 <template>
   <div class="course-tab">
-    <PentilaSpinner
+    <WeprodeSpinner
       v-if="isLoading"
       style="z-index: 1"
     />
@@ -34,16 +34,17 @@
 </template>
 
 <script>
-import PentilaUtils from 'pentila-utils'
+import WeprodeUtils from '@utils/weprode.utils'
 import { defineAsyncComponent } from 'vue'
 
 import { getCourses } from '@/api/course.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 const CourseItem = defineAsyncComponent(() => import('@components/Course/CourseItem.vue'))
 const CourseDetails = defineAsyncComponent(() => import('@components/Course/CourseDetails.vue'))
 
 export default {
   name: 'CourseTab',
-  components: { CourseDetails, CourseItem },
+  components: { CourseDetails, CourseItem, WeprodeSpinner },
   inject: ['mq'],
   props: {
     userId: {
@@ -63,7 +64,7 @@ export default {
       return this.$store.state.course.selectedCourse
     },
     sortedCourses () {
-      return PentilaUtils.Array.sortWithString(this.courses, false, 'groupName')
+      return WeprodeUtils.sortArrayWithString(this.courses, false, 'groupName')
     }
   },
   watch: {

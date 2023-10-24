@@ -14,7 +14,7 @@
       v-if="displayed"
       class="content"
     >
-      <PentilaSpinner
+      <WeprodeSpinner
         v-if="isLoading"
         style="z-index: 1"
       />
@@ -62,10 +62,11 @@ import StudentHomework from '@components/Course/StudentHomework.vue'
 import dayjs from 'dayjs'
 
 import { getStudentHomeworks, getStudentUndoneCount } from '@/api/homework.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 
 export default {
   name: 'WeekHomeworks',
-  components: { StudentHomework },
+  components: { StudentHomework, WeprodeSpinner },
   props: {
     label: {
       type: String,
