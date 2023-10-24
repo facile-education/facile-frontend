@@ -88,7 +88,7 @@ import NeroIcon from '@components/Nero/NeroIcon.vue'
 import { removeMenuOptionIfExist } from '@utils/commons.util'
 
 import ContextMenu from '@/components/ContextMenu/ContextMenu'
-import constants from '@/constants/appConstants'
+import constants, { MESSAGING } from '@/constants/appConstants'
 import contextMenus from '@/utils/contextMenus'
 import messagingUtils from '@/utils/messaging.utils'
 
@@ -241,7 +241,12 @@ export default {
       }, 500)
     },
     refresh () {
-      messagingUtils.refresh()
+      if (this.$route.params.messageId) {
+        this.$router.push({ name: MESSAGING })
+        this.$store.dispatch('messaging/setDisplayMessageFromRouting', false)
+      } else {
+        messagingUtils.refresh()
+      }
     },
     openContextMenu (e, thread) {
       // Add thread if not already selected
