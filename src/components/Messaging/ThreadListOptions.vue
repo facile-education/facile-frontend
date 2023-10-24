@@ -92,6 +92,8 @@ import ContextMenu from '@components/ContextMenu/ContextMenu'
 import contextMenus from '@utils/contextMenus'
 import messagingUtils from '@utils/messaging.utils'
 
+import { MESSAGING } from '@/constants/appConstants'
+
 export default {
   name: 'ThreadListOptions',
   components: { ContextMenu, IconOption },
@@ -177,7 +179,12 @@ export default {
       })
     },
     refresh () {
-      messagingUtils.refresh()
+      if (this.$route.params.messageId) {
+        this.$router.push({ name: MESSAGING })
+        this.$store.dispatch('messaging/setDisplayMessageFromRouting', false)
+      } else {
+        messagingUtils.refresh()
+      }
     },
     toggleUnreadOnly () {
       this.$store.dispatch('messaging/toggleUnreadOnly')
