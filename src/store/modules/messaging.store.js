@@ -240,10 +240,15 @@ export const mutations = {
     state.unreadOnly = !state.unreadOnly
   },
   deleteSelectedThreads (state) {
+    const nextNotSelectedThread = messagingUtils.getNextNotSelectedThread(state.threads, state.selectedThreads)
     state.threads = state.threads.filter(thread => !state.selectedThreads.includes(thread))
 
-    state.selectedThreads = []
-    state.currentThreadMessages = []
+    if (nextNotSelectedThread) {
+      messagingUtils.selectThread(nextNotSelectedThread)
+    } else {
+      state.selectedThreads = []
+      state.currentThreadMessages = []
+    }
   },
   deleteMessages (state, messageIds) {
     // Delete the messages in thread list
