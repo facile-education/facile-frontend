@@ -80,6 +80,11 @@ const doActionInPersonalFolder = (store, action, folderList, state, personalFold
 export const mutations = {
   setDisplayMessageFromRouting (state, payload) {
     state.displayMessageFromRouting = payload
+    if (payload === false) { // Unselect the routing message
+      state.selectedThreads = []
+      state.currentThreadMessages = []
+      state.selectedMessages = []
+    }
   },
   setLoadingThreadsError (state, payload) {
     state.loadingThreadsError = payload
@@ -432,6 +437,8 @@ export const actions = {
       if (data.success) {
         commit('setLoadingThreadsError', undefined)
         this.dispatch('currentActions/removeAction', { name: 'loadThreads' })
+
+        commit('setThreadList', [data.thread])
 
         // Select threadFolder
         const folderToSelect = messagingUtils.getFolderFromId(state.messagingFolders, data.messageFolderId)
