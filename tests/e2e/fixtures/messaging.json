@@ -100,6 +100,22 @@
         "content": "Ceci est un brouillon déjà existant",
         "messageIndexInThread": 0
       }
+    ],
+    [
+      {
+        "sender": "Stanislaus Ropkes",
+        "subject": "Message dans un dossier",
+        "content": "Contenu d'un message dans un dossier",
+        "messageIndexInThread": 0
+      }
+    ],
+    [
+      {
+        "sender": "Stanislaus Ropkes",
+        "subject": "Message dans un sous dossier",
+        "content": "Contenu d'un message dans un sous dossier",
+        "messageIndexInThread": 0
+      }
     ]
   ],
   "draftToCreate": [

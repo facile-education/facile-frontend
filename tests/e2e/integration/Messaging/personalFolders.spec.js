@@ -1,5 +1,6 @@
 import { messagingURL } from '../../support/constants/urls'
 import { SCHOOL_ADMIN } from '../../support/constants/users'
+import { getThread } from '../../support/utils/messagingUtils'
 import { exactString } from '../../support/utils/testUtils'
 
 /* =========== Local methods ============= */
@@ -50,6 +51,7 @@ describe('Personal folders', () => {
     })
   })
 
+  // Messaging_CreatePersonalFolder
   it('Messaging_CreatePersonalFolder', function () {
     const personalFoldersToCreate = this.messagingData.personalFolders.personalFoldersToCreate
 
@@ -71,24 +73,45 @@ describe('Personal folders', () => {
     })
   })
 
-  it.only('Messaging_UpdatePersonalFolder', function () {
+  // Messaging_UpdatePersonalFolder
+  it('Messaging_UpdatePersonalFolder', function () {
     const existingPersonalFolders = this.messagingData.personalFolders.existingPersonalFolders
     const personalFolderToRename = existingPersonalFolders[0]
     const personalSubFolderToRename = personalFolderToRename.subFolders[0] // Assume that the first folder in list have subFolder
     const personalFolderNewName = this.messagingData.personalFolders.modifiedFolderName
     const personalSubFolderNewName = this.messagingData.personalFolders.modifiedSubFolderName
+    const personalFolderThread = this.messagingData.existingDraftThreads[1]
 
     // Modify personal folder
+    cy.get('[data-test=messaging-menu]').within(() => {
+      // Click on folder to see the content
+      toggleFolder(personalFolderToRename)
+    })
+    // Check if content exist
+    cy.get('.scroll').within(() => {
+      getThread(personalFolderThread).should('be.exist')
+    })
+
+    // Edit personal forler name
     cy.get('[data-test=messaging-menu]').within(() => {
       triggerOptionOnFolder(personalFolderToRename, 'rename')
       cy.get('input').clear()
       cy.get('input').type(personalFolderNewName, { force: true })
       cy.get('input').blur()
       cy.get('[data-test=personal-folders]').contains(exactString(personalFolderNewName)).should('be.visible')
-      // todo: Test folder content (must be unchanged)
+    })
+    // Check if content already exist
+    cy.get('.scroll').within(() => {
+      getThread(personalFolderThread).should('be.exist')
     })
 
     // Modify personal sub folder
+    cy.get('[data-test=messaging-menu]').within(() => {
+      // Click on folder to see the content
+      cy.get('[data-test="personalSubFolder-dossier perso modifié"]').click()
+    })
+
+    // Edit sub folder name
     cy.get('[data-test=messaging-menu]').within(() => {
       toggleFolder({ name: personalFolderNewName })
       triggerOptionOnFolder(personalSubFolderToRename, 'rename')
@@ -99,31 +122,80 @@ describe('Personal folders', () => {
     })
   })
 
-  it('Messaging_DeletePersonalFolder ', function () {
+  // Messaging_DeletePersonalFolder
+  it('Messaging_DeletePersonalFolder', function () {
+    const existingPersonalFolders = this.messagingData.personalFolders.existingPersonalFolders
+    const personalFolderToDelete = existingPersonalFolders[0]
+    const PersonalFolderThread = this.messagingData.existingDraftThreads[1]
+    const PersonalSubFolderThread = this.messagingData.existingDraftThreads[2]
+
+    // Click on personalFolder to see the content
+    cy.get('[data-test=messaging-menu]').within(() => {
+      toggleFolder(personalFolderToDelete)
+    })
+    // Check if content folder exist
+    cy.get('.scroll').within(() => {
+      getThread(PersonalFolderThread).should('be.exist')
+    })
+    // Click on subFolder to see the content
+    cy.get('[data-test=messaging-menu]').within(() => {
+      cy.get('[data-test="personalSubFolder-sous-dossier"]').click()
+    })
+    // Check if content subFolder exist
+    cy.get('.scroll').within(() => {
+      getThread(PersonalSubFolderThread).should('be.exist')
+    })
+
+    // Delete personalFolder
+    cy.get('[data-test=messaging-menu]').within(() => {
+      triggerOptionOnFolder(personalFolderToDelete, 'delete')
+    })
+    // Accept warning modal
+    cy.get('[data-test=warning-modal]').within(() => {
+      cy.contains('button', 'Continuer').click()
+    })
+    // Check if personalFolder and subFolder doesn't exist
+    cy.get('[data-test=messaging-menu]').find('[data-test=personal-folders]').contains(exactString(personalFolderToDelete.name)).should('not.exist')
+    cy.get('[data-test=messaging-menu]').find('[data-test=personal-folders]').contains(exactString(personalFolderToDelete.subFolders[0].name)).should('not.exist')
+
+    // Go to trash
+    cy.get('[data-test="messaging-menu"]').contains('button', 'Corbeille').click()
+    getThread(PersonalFolderThread).should('be.exist')
+    getThread(PersonalSubFolderThread).should('be.exist')
+  })
+
+  // Messaging_DeleteSubFolder
+  it('Messaging_DeleteSubFolder', function () {
     const existingPersonalFolders = this.messagingData.personalFolders.existingPersonalFolders
     const personalFolderToDelete = existingPersonalFolders[0]
     const personalSubFolderToDelete = personalFolderToDelete.subFolders[0] // Assume that the first folder in list have subFolder
+    const subFolderThread = this.messagingData.existingDraftThreads[2]
 
     // Delete subFolder
     cy.get('[data-test=messaging-menu]').within(() => {
       toggleFolder(personalFolderToDelete)
+      cy.get('[data-test="personalSubFolder-sous-dossier"]').click()
+    })
+    // Check if content exist
+    cy.get('.scroll').within(() => {
+      getThread(subFolderThread).should('be.exist')
+    })
+    // Delete subFolder
+    cy.get('[data-test=messaging-menu]').within(() => {
       triggerOptionOnFolder(personalSubFolderToDelete, 'delete')
     })
+    // Accept in warning modal
     cy.get('[data-test=warning-modal]').within(() => {
       cy.contains('button', 'Continuer').click()
     })
+    // Check if subFolder doesn't exist
     cy.get('[data-test=messaging-menu]').find('[data-test=personal-folders]').contains(exactString(personalSubFolderToDelete.name)).should('not.exist')
-    // TODO: test content
-
-    // Delete folder
-    cy.get('[data-test=messaging-menu]').within(() => {
-      triggerOptionOnFolder(personalFolderToDelete, 'delete')
+    // Check if content doesn't exist
+    cy.get('.scroll').within(() => {
+      getThread(subFolderThread).should('not.exist')
     })
-    cy.get('[data-test=warning-modal]').within(() => {
-      cy.contains('button', 'Continuer').click()
-    })
-    cy.get('[data-test=messaging-menu]').find('[data-test=personal-folders]').contains(exactString(personalFolderToDelete.name)).should('not.exist')
-
-    // Todo: Delete folder with subFolder inside
+    // Go to trash
+    cy.get('[data-test="messaging-menu"]').contains('button', 'Corbeille').click()
+    getThread(subFolderThread).should('be.exist')
   })
 })
