@@ -72,7 +72,7 @@ export default {
   z-index: $side-menu-z-index;
   position: relative;
   background-color: $color-menu-bg;
-  border-right: $border;
+  border-right: 1px solid $neutral-40;
   @extend %no-text-highlight;
 
   &.open .menu-item-list {
