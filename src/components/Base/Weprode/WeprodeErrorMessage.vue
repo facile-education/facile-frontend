@@ -3,8 +3,8 @@
     v-if="isErrorDisplayed"
     class="error-message"
   >
-    <FontAwesomeIcon
-      icon="exclamation-triangle"
+    <NeroIcon
+      name="exclamation-triangle"
       class="icon"
     />
     <label>{{ errorMessage }}</label>
@@ -12,16 +12,12 @@
 </template>
 
 <script>
-// import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-// library.add(
-//   require('@fortawesome/free-solid-svg-icons/faExclamationTriangle').definition
-// )
+import NeroIcon from '@/components/Nero/NeroIcon.vue'
 
 export default {
   name: 'WeprodeErrorMessage',
-  components: { FontAwesomeIcon },
+  components: { NeroIcon },
   props: {
     errorMessage: {
       type: String,

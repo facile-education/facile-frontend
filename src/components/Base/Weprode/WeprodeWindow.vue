@@ -43,9 +43,9 @@
                 data-test="toggleFullScreen"
                 @click="toggleFullScreen"
               >
-                <FontAwesomeIcon
+                <NeroIcon
                   class="expand"
-                  :icon="isFullScreen ? 'compress' : 'expand'"
+                  :name="isFullScreen ? 'compress' : 'expand'"
                 />
               </button>
               <button
@@ -54,7 +54,7 @@
                 data-test="closeModal"
                 @click="$emit('close')"
               >
-                <FontAwesomeIcon icon="times" />
+                <NeroIcon name="times" />
               </button>
             </div>
           </div>
@@ -81,19 +81,14 @@
 </template>
 
 <script>
-// import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
 import VueResizable from 'vue-resizable'
 
-// library.add(
-//   require('@fortawesome/free-solid-svg-icons/faTimes').definition,
-//   require('@fortawesome/free-solid-svg-icons/faExpand').definition,
-//   require('@fortawesome/free-solid-svg-icons/faCompress').definition
-// )
+import NeroIcon from '@/components/Nero/NeroIcon.vue'
 
 export default {
   name: 'WeprodeWindow',
-  components: { FontAwesomeIcon, VueResizable },
+  components: { NeroIcon, VueResizable },
   inject: ['mq'],
   props: {
     closable: {
