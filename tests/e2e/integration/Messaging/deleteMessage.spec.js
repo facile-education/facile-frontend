@@ -49,6 +49,30 @@ describe('Delete message', () => {
     getMessage(secondMessageInThreadToDelete).should('not.exist')
   })
 
+  // Messaging_DeleteMessage_select_next_thread
+  it('Messaging_DeleteMessage_select_next_thread', function () {
+    const firstThread = this.messagingData.existingThreads[0]
+    const secondThread = this.messagingData.existingThreads[2]
+    const thirdThread = this.messagingData.existingThreads[3]
+    const threadWithMultipleMessages = this.messagingData.existingThreads[1]
+
+    // Delete first thread
+    getThread(thirdThread).click()
+    cy.globalKeyPress('{del}')
+    // Check if first thread dosen't exist
+    getThread(thirdThread).should('not.exist')
+    // Check if next thread is selected
+    getThread(secondThread).find('.main').should('have.class', 'theme-background-color')
+
+    // Delete middle thread
+    getThread(threadWithMultipleMessages).click()
+    cy.globalKeyPress('{del}')
+    // Check if middle thread dosen't exist
+    getThread(threadWithMultipleMessages).should('not.exist')
+    // Check if next thread is selected
+    getThread(firstThread).find('.main').should('have.class', 'theme-background-color')
+  })
+
   // Messaging_DeleteDefinitelyMessage
   it('Messaging_DeleteDefinitelyMessage', function () {
     const firstThread = this.messagingData.existingThreads[0]
@@ -68,7 +92,7 @@ describe('Delete message', () => {
   })
 
   // Messaging_Delete two Message
-  it.only('Messaging_Delete_two_Messages', function () {
+  it('Messaging_Delete_two_Messages', function () {
     const firstThread = this.messagingData.existingThreads[0]
     const secondThread = this.messagingData.existingThreads[2]
 

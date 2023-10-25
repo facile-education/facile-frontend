@@ -57,7 +57,7 @@ INSERT INTO lportal_ent.Messaging_Message (messageId,folderId,threadId,sendMessa
 	 (490701,19662701,490702,0,52216,'2023-10-24 16:06:16.840','Message dans un dossier','Contenu du message dans un dossier',0,NULL,0,0,'Stanislaus ROPKES',0,20097),
 	 (490706,19662702,490707,0,52216,'2023-10-24 16:07:20.354','Message dans un sous dossier','Contenu du message dans un sous dossier',0,NULL,0,0,'Stanislaus ROPKES',0,20097),
 	 (534210,534207,534211,0,45479,'2023-10-05 08:51:49.401','Mon premier message','Ceci est un message de test',0,NULL,0,0,'Rosana NOLLI',0,20097),
-	 (534212,534217,534211,534210,45479,'2023-10-05 08:51:49.495','Mon premier message','Ceci est un message de test',0,'2023-10-05 09:03:03',0,0,'Rosana NOLLI',0,20097),
+	 (534212,534205,534211,534210,45479,'2023-10-05 08:51:49.495','Mon premier message','Ceci est un message de test',0,'2023-10-05 09:03:03',0,0,'Rosana NOLLI',0,20097),
 	 (534213,534207,534214,0,45479,'2023-10-05 08:53:44.337','deuxième message','je vous pose une question',0,NULL,0,0,'Rosana NOLLI',0,20097),
 	 (534215,534205,534214,534213,45479,'2023-10-05 08:53:44.419','deuxième message','je vous pose une question',0,'2023-10-05 08:53:52',1,0,'Rosana NOLLI',0,20097),
 	 (534219,534216,534214,0,58811,'2023-10-05 08:54:09.390','Re: deuxième message','Je vous réponds!',0,NULL,0,0,'Orlan HUE',0,20097),
@@ -66,7 +66,7 @@ INSERT INTO lportal_ent.Messaging_Message (messageId,folderId,threadId,sendMessa
 INSERT INTO lportal_ent.Messaging_Message (messageId,folderId,threadId,sendMessageId,senderId,sendDate,messageSubject,messageContent,isNew,readDate,isAnswered,isForwarded,senderName,type_,companyId) VALUES
 	 (534222,534205,534214,534221,45479,'2023-10-05 08:54:27.634','Re: deuxième message','Merci',1,NULL,0,0,'Rosana NOLLI',0,20097),
 	 (534223,534207,534224,0,45479,'2023-10-05 09:01:19.210','Troisième message','J''ai encore des choses à dire!',0,NULL,0,0,'Rosana NOLLI',0,20097),
-	 (534225,534217,534224,534223,45479,'2023-10-05 09:01:19.272','Troisième message','J''ai encore des choses à dire!',1,NULL,0,0,'Rosana NOLLI',0,20097),
+	 (534225,534205,534224,534223,45479,'2023-10-05 09:01:19.272','Troisième message','J''ai encore des choses à dire!',1,NULL,0,0,'Rosana NOLLI',0,20097),
 	 (824401,534207,824402,0,45479,'2023-10-12 14:03:18.747','Mon quatrième message','Ceci est un message avec plusieurs destinataires',0,NULL,0,0,'Rosana NOLLI',0,20097),
 	 (824403,534205,824402,824401,45479,'2023-10-12 14:03:18.841','Mon quatrième message','Ceci est un message avec plusieurs destinataires',1,NULL,0,0,'Rosana NOLLI',0,20097),
 	 (824405,824404,824402,824401,45479,'2023-10-12 14:03:18.933','Mon quatrième message','Ceci est un message avec plusieurs destinataires',1,NULL,0,0,'Rosana NOLLI',0,20097);
