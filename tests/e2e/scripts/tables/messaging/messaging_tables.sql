@@ -52,7 +52,7 @@ CREATE TABLE `Messaging_Message` (
 
 LOCK TABLES `Messaging_Message` WRITE;
 /*!40000 ALTER TABLE `Messaging_Message` DISABLE KEYS */;
-INSERT INTO lportal_ent.Messaging_Message (messageId,folderId,threadId,sendMessageId,senderId,sendDate,messageSubject,messageContent,isNew,readDate,isAnswered,isForwarded,senderName,type_,companyId) VALUES
+INSERT INTO Messaging_Message (messageId,folderId,threadId,sendMessageId,senderId,sendDate,messageSubject,messageContent,isNew,readDate,isAnswered,isForwarded,senderName,type_,companyId) VALUES
 	 (485621,534218,485622,0,58811,'2023-10-23 14:28:32.349','Brouillon existant','Ceci est un brouillon déjà existant',0,NULL,0,0,'Orlan HUE',0,20097),
 	 (490701,19662701,490702,0,52216,'2023-10-24 16:06:16.840','Message dans un dossier','Contenu du message dans un dossier',0,NULL,0,0,'Stanislaus ROPKES',0,20097),
 	 (490706,19662702,490707,0,52216,'2023-10-24 16:07:20.354','Message dans un sous dossier','Contenu du message dans un sous dossier',0,NULL,0,0,'Stanislaus ROPKES',0,20097),
@@ -63,7 +63,7 @@ INSERT INTO lportal_ent.Messaging_Message (messageId,folderId,threadId,sendMessa
 	 (534219,534216,534214,0,58811,'2023-10-05 08:54:09.390','Re: deuxième message','Je vous réponds!',0,NULL,0,0,'Orlan HUE',0,20097),
 	 (534220,534206,534214,534219,58811,'2023-10-05 08:54:09.499','Re: deuxième message','Je vous réponds!',0,'2023-10-05 08:54:17',1,0,'Orlan HUE',0,20097),
 	 (534221,534207,534214,0,45479,'2023-10-05 08:54:27.568','Re: deuxième message','Merci',0,NULL,0,0,'Rosana NOLLI',0,20097);
-INSERT INTO lportal_ent.Messaging_Message (messageId,folderId,threadId,sendMessageId,senderId,sendDate,messageSubject,messageContent,isNew,readDate,isAnswered,isForwarded,senderName,type_,companyId) VALUES
+INSERT INTO Messaging_Message (messageId,folderId,threadId,sendMessageId,senderId,sendDate,messageSubject,messageContent,isNew,readDate,isAnswered,isForwarded,senderName,type_,companyId) VALUES
 	 (534222,534205,534214,534221,45479,'2023-10-05 08:54:27.634','Re: deuxième message','Merci',1,NULL,0,0,'Rosana NOLLI',0,20097),
 	 (534223,534207,534224,0,45479,'2023-10-05 09:01:19.210','Troisième message','J''ai encore des choses à dire!',0,NULL,0,0,'Rosana NOLLI',0,20097),
 	 (534225,534205,534224,534223,45479,'2023-10-05 09:01:19.272','Troisième message','J''ai encore des choses à dire!',1,NULL,0,0,'Rosana NOLLI',0,20097),
@@ -118,7 +118,7 @@ CREATE TABLE `Messaging_MessageContent` (
 
 LOCK TABLES `Messaging_MessageContent` WRITE;
 /*!40000 ALTER TABLE `Messaging_MessageContent` DISABLE KEYS */;
-INSERT INTO lportal_ent.Messaging_MessageContent (messageId,messageContent) VALUES
+INSERT INTO Messaging_MessageContent (messageId,messageContent) VALUES
 	 (485621,'<html>
  <head></head>
 <body>
@@ -179,7 +179,7 @@ INSERT INTO lportal_ent.Messaging_MessageContent (messageId,messageContent) VALU
  <p>Merci</p>
 </body></body>
 </html>');
-INSERT INTO lportal_ent.Messaging_MessageContent (messageId,messageContent) VALUES
+INSERT INTO Messaging_MessageContent (messageId,messageContent) VALUES
 	 (534222,'<html>
  <head></head>
 <body>
@@ -245,7 +245,7 @@ CREATE TABLE `Messaging_MessageFolder` (
 
 LOCK TABLES `Messaging_MessageFolder` WRITE;
 /*!40000 ALTER TABLE `Messaging_MessageFolder` DISABLE KEYS */;
-INSERT INTO lportal_ent.Messaging_MessageFolder (folderId,userId,folderName,type_,parentFolderId) VALUES
+INSERT INTO Messaging_MessageFolder (folderId,userId,folderName,type_,parentFolderId) VALUES
 	 (534201,47362,'Boîte de réception',1,0),
 	 (534202,47362,'Envoyés',3,0),
 	 (534203,47362,'Corbeille',4,0),
@@ -256,7 +256,7 @@ INSERT INTO lportal_ent.Messaging_MessageFolder (folderId,userId,folderName,type
 	 (534208,45479,'Corbeille',4,0),
 	 (534209,45479,'Brouillons',2,0),
 	 (534216,58811,'Envoyés',3,0);
-INSERT INTO lportal_ent.Messaging_MessageFolder (folderId,userId,folderName,type_,parentFolderId) VALUES
+INSERT INTO Messaging_MessageFolder (folderId,userId,folderName,type_,parentFolderId) VALUES
 	 (534217,58811,'Corbeille',4,0),
 	 (534218,58811,'Brouillons',2,0),
 	 (538201,58811,'sous-dossier',5,0),
@@ -267,7 +267,7 @@ INSERT INTO lportal_ent.Messaging_MessageFolder (folderId,userId,folderName,type
 	 (19654704,52216,'Brouillons',2,0),
 	 (19662701,52216,'dossier personnel',5,0),
 	 (19662702,52216,'sous-dossier',5,19662701);
-INSERT INTO lportal_ent.Messaging_MessageFolder (folderId,userId,folderName,type_,parentFolderId) VALUES
+INSERT INTO Messaging_MessageFolder (folderId,userId,folderName,type_,parentFolderId) VALUES
 	 (19662703,52216,'Mon autre dossier',5,0);
 /*!40000 ALTER TABLE `Messaging_MessageFolder` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -293,7 +293,7 @@ CREATE TABLE `Messaging_MessageRecipients` (
 
 LOCK TABLES `Messaging_MessageRecipients` WRITE;
 /*!40000 ALTER TABLE `Messaging_MessageRecipients` DISABLE KEYS */;
-INSERT INTO lportal_ent.Messaging_MessageRecipients (messageId,recipients) VALUES
+INSERT INTO Messaging_MessageRecipients (messageId,recipients) VALUES
 	 (485621,'47461,'),
 	 (490701,'52216,'),
 	 (490706,'52216,'),
@@ -304,7 +304,7 @@ INSERT INTO lportal_ent.Messaging_MessageRecipients (messageId,recipients) VALUE
 	 (534219,'45479,'),
 	 (534220,'45479,'),
 	 (534221,'58811,');
-INSERT INTO lportal_ent.Messaging_MessageRecipients (messageId,recipients) VALUES
+INSERT INTO Messaging_MessageRecipients (messageId,recipients) VALUES
 	 (534222,'58811,'),
 	 (534223,'58811,'),
 	 (534225,'58811,'),
