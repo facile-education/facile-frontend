@@ -73,7 +73,7 @@ header {
 
 <i18n locale="fr">
 {
-  "homeworks": "Devoirs",
+  "homeworks": "À faire",
   "unreadFilter": "Filtrer les non faits"
 }
 </i18n>

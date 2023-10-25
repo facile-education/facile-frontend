@@ -21,10 +21,15 @@
       </div>
       <div class="right">
         <WeprodeCheckbox
+          v-if="canUpdateStatus"
           v-model="isDone"
           :label="homework.isDone ? $t('done') : $t('todo')"
           :disabled="isPast"
           :right-display="true"
+        />
+        <span
+          v-else
+          v-t="homework.isDone ? 'done' : 'todo'"
         />
         <span class="date">{{ dateLabel }}</span>
       </div>
@@ -56,6 +61,10 @@ export default {
   props: {
     homework: {
       type: Object,
+      required: true
+    },
+    canUpdateStatus: {
+      type: Boolean,
       required: true
     }
   },

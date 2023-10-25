@@ -36,7 +36,8 @@
             >
               <HomeworkItem
                 :homework="homework"
-                @updateDoneStatus="updateHomeworkDoneStatus(homework, $event)"
+                :can-update-status="canUpdateStatus"
+                @update-done-status="updateHomeworkDoneStatus(homework, $event)"
               />
             </li>
           </ul>
@@ -85,6 +86,12 @@ export default {
     }
   },
   computed: {
+    currentUser () {
+      return this.$store.state.user
+    },
+    canUpdateStatus () {
+      return this.currentUser.userId === this.userId
+    },
     homeworksToDisplay () { // return the nbHomeworksInWidget firsts homeworks
       const homeworksToDisplay = WeprodeUtils.sortArrayWithString(this.homeworkList, false, 'toDate')
       return homeworksToDisplay.slice(0, nbHomeworksInWidget)
