@@ -257,7 +257,7 @@ export default {
   },
   mounted () {
     this.isThreadExpanded = false
-    if (this.isLast) {
+    if (this.isLast && !this.isDisplayMessageFromRouting) {
       if (isInViewport(this.$el)) {
         this.getNextThreads()
       }

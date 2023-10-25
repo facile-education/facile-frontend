@@ -120,6 +120,7 @@ export default {
   },
   created () {
     this.getSignature()
+    this.$store.dispatch('messaging/loadMessagingFolders')
     this.$watch(
       () => this.$route.params,
       () => {
@@ -136,7 +137,6 @@ export default {
       },
       { immediate: true }
     )
-    this.$store.dispatch('messaging/loadMessagingFolders')
   },
   methods: {
     // keyboard shortcuts management
