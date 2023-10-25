@@ -235,4 +235,4 @@ button {
     "add": "Ajouter",
     "remove": "Supprimer"
   }
-  </i18n>
+</i18n>

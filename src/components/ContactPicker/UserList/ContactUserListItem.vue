@@ -7,12 +7,14 @@
       <img
         v-if="!isSelected"
         src="@/assets/icons/add.svg"
-        alt="remove"
+        :alt="$t('add')"
+        :title="$t('add')"
       >
       <img
         v-else
         src="@/assets/icons/remove.svg"
-        alt="add"
+        :alt="$t('remove')"
+        :title="$t('remove')"
       >
     </button>
   </li>
@@ -102,3 +104,10 @@ button {
   }
 }
 </style>
+
+<i18n locale="fr" >
+  {
+    "add": "Ajouter",
+    "remove": "Supprimer"
+  }
+</i18n>
