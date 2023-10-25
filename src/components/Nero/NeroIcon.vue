@@ -9,7 +9,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faCalendarAlt, faImage } from '@fortawesome/free-regular-svg-icons'
 import {
   faBars, faCaretDown, faCaretLeft, faCaretRight, faCaretUp,
-  faCheck, faChevronCircleLeft, faChevronCircleRight, faChevronRight,
+  faCheck, faChevronCircleLeft, faChevronCircleRight, faChevronDown, faChevronRight,
   faCog, faExclamationTriangle, faGripLines, faList, faMicrophone, faPause,
   faPencilAlt, faPlay, faPlus, faPowerOff, faSearch, faSignOutAlt, faStop,
   faTimes, faTrash, faUndo, faUser, faUserPlus, faUsers
@@ -27,6 +27,7 @@ library.add(
   faCheck,
   faChevronCircleLeft,
   faChevronCircleRight,
+  faChevronDown,
   faChevronRight,
   faCog,
   faExclamationTriangle,

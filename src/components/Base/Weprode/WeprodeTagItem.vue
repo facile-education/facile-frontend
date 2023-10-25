@@ -1,8 +1,8 @@
 <template>
   <li class="tag-item theme-background-color">
     <span class="label">{{ tag }}</span>
-    <FontAwesomeIcon
-      icon="times"
+    <NeroIcon
+      name="times"
       class="icon"
       @click="onRemove"
     />
@@ -10,17 +10,13 @@
 </template>
 
 <script>
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-// import { library } from '@fortawesome/fontawesome-svg-core'
 
-// library.add(
-//   require('@fortawesome/free-solid-svg-icons/faTimes').definition
-// )
+import NeroIcon from '@/components/Nero/NeroIcon.vue'
 
 export default {
   name: 'WeprodeTagItem',
   components: {
-    FontAwesomeIcon
+    NeroIcon
   },
   props: {
     tag: {

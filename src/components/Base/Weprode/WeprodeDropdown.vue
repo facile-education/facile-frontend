@@ -17,8 +17,8 @@
       <span>
         {{ getCurrentDisplayValue() }}
       </span>
-      <FontAwesomeIcon
-        icon="chevron-down"
+      <NeroIcon
+        name="chevron-down"
         class="icon"
       />
     </button>
@@ -39,18 +39,15 @@
 </template>
 
 <script>
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import WeprodeUtils from '@utils/weprode.utils'
 
 import WeprodeAutocomplete from '@/components/Base/Weprode/WeprodeAutocomplete.vue'
-library.add(faChevronDown)
+import NeroIcon from '@/components/Nero/NeroIcon.vue'
 
 export default {
   name: 'WeprodeDropdown',
   components: {
-    FontAwesomeIcon,
+    NeroIcon,
     WeprodeAutocomplete
   },
   props: {
