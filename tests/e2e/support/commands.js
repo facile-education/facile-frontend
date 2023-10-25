@@ -24,8 +24,7 @@
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
-import WeprodeUtils from '@utils/weprode.utils'
-
+import WeprodeUtils from '../../../src/utils/weprode.utils'
 import { exactString } from '../support/utils/testUtils'
 import { GLOBAL_ADMIN } from './constants/users'
 
