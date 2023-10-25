@@ -53,60 +53,60 @@ CREATE TABLE `Messaging_Message` (
 LOCK TABLES `Messaging_Message` WRITE;
 /*!40000 ALTER TABLE `Messaging_Message` DISABLE KEYS */;
 INSERT INTO lportal_ent.Messaging_Message (messageId,folderId,threadId,sendMessageId,senderId,sendDate,messageSubject,messageContent,isNew,readDate,isAnswered,isForwarded,senderName,type_,companyId) VALUES
-	 (489705,489702,489706,0,58811,'2023-10-24 11:27:31.097','Message n°0','Contenu du message n°0',0,NULL,0,0,'Orlan HUE',0,20097),
-	 (489708,489707,489706,489705,58811,'2023-10-24 11:27:31.144','Message n°0','Contenu du message n°0',1,NULL,0,0,'Orlan HUE',0,20097),
-	 (489709,489702,489710,0,58811,'2023-10-24 11:27:32.592','Message n°1','Contenu du message n°1',0,NULL,0,0,'Orlan HUE',0,20097),
-	 (489711,489707,489710,489709,58811,'2023-10-24 11:27:32.622','Message n°1','Contenu du message n°1',1,NULL,0,0,'Orlan HUE',0,20097),
-	 (489712,489702,489713,0,58811,'2023-10-24 11:27:34.033','Message n°2','Contenu du message n°2',0,NULL,0,0,'Orlan HUE',0,20097),
-	 (489714,489707,489713,489712,58811,'2023-10-24 11:27:34.066','Message n°2','Contenu du message n°2',1,NULL,0,0,'Orlan HUE',0,20097),
-	 (489715,489702,489716,0,58811,'2023-10-24 11:27:35.695','Message n°3','Contenu du message n°3',0,NULL,0,0,'Orlan HUE',0,20097),
-	 (489717,489707,489716,489715,58811,'2023-10-24 11:27:35.732','Message n°3','Contenu du message n°3',1,NULL,0,0,'Orlan HUE',0,20097),
-	 (489718,489702,489719,0,58811,'2023-10-24 11:27:37.220','Message n°4','Contenu du message n°4',0,NULL,0,0,'Orlan HUE',0,20097),
-	 (489720,489707,489719,489718,58811,'2023-10-24 11:27:37.246','Message n°4','Contenu du message n°4',1,NULL,0,0,'Orlan HUE',0,20097);
+	 (492505,492502,492506,0,58811,'2023-10-25 10:39:10.458','Message 0','Contenu du message 0',0,NULL,0,0,'Orlan HUE',0,20097),
+	 (492508,492507,492506,492505,58811,'2023-10-25 10:39:10.517','Message 0','Contenu du message 0',1,NULL,0,0,'Orlan HUE',0,20097),
+	 (492509,492502,492510,0,58811,'2023-10-25 10:39:11.945','Message 1','Contenu du message 1',0,NULL,0,0,'Orlan HUE',0,20097),
+	 (492511,492507,492510,492509,58811,'2023-10-25 10:39:11.981','Message 1','Contenu du message 1',1,NULL,0,0,'Orlan HUE',0,20097),
+	 (492512,492502,492513,0,58811,'2023-10-25 10:39:13.309','Message 2','Contenu du message 2',0,NULL,0,0,'Orlan HUE',0,20097),
+	 (492514,492507,492513,492512,58811,'2023-10-25 10:39:13.341','Message 2','Contenu du message 2',1,NULL,0,0,'Orlan HUE',0,20097),
+	 (492515,492502,492516,0,58811,'2023-10-25 10:39:14.770','Message 3','Contenu du message 3',0,NULL,0,0,'Orlan HUE',0,20097),
+	 (492517,492507,492516,492515,58811,'2023-10-25 10:39:14.810','Message 3','Contenu du message 3',1,NULL,0,0,'Orlan HUE',0,20097),
+	 (492518,492502,492519,0,58811,'2023-10-25 10:39:16.239','Message 4','Contenu du message 4',0,NULL,0,0,'Orlan HUE',0,20097),
+	 (492520,492507,492519,492518,58811,'2023-10-25 10:39:16.286','Message 4','Contenu du message 4',1,NULL,0,0,'Orlan HUE',0,20097);
 INSERT INTO lportal_ent.Messaging_Message (messageId,folderId,threadId,sendMessageId,senderId,sendDate,messageSubject,messageContent,isNew,readDate,isAnswered,isForwarded,senderName,type_,companyId) VALUES
-	 (489721,489702,489722,0,58811,'2023-10-24 11:27:38.764','Message n°5','Contenu du message n°5',0,NULL,0,0,'Orlan HUE',0,20097),
-	 (489723,489707,489722,489721,58811,'2023-10-24 11:27:38.793','Message n°5','Contenu du message n°5',1,NULL,0,0,'Orlan HUE',0,20097),
-	 (489724,489702,489725,0,58811,'2023-10-24 11:27:40.310','Message n°6','Contenu du message n°6',0,NULL,0,0,'Orlan HUE',0,20097),
-	 (489726,489707,489725,489724,58811,'2023-10-24 11:27:40.340','Message n°6','Contenu du message n°6',1,NULL,0,0,'Orlan HUE',0,20097),
-	 (489727,489702,489728,0,58811,'2023-10-24 11:27:42.009','Message n°7','Contenu du message n°7',0,NULL,0,0,'Orlan HUE',0,20097),
-	 (489729,489707,489728,489727,58811,'2023-10-24 11:27:42.039','Message n°7','Contenu du message n°7',1,NULL,0,0,'Orlan HUE',0,20097),
-	 (489730,489702,489731,0,58811,'2023-10-24 11:27:43.651','Message n°8','Contenu du message n°8',0,NULL,0,0,'Orlan HUE',0,20097),
-	 (489732,489707,489731,489730,58811,'2023-10-24 11:27:43.682','Message n°8','Contenu du message n°8',1,NULL,0,0,'Orlan HUE',0,20097),
-	 (489733,489702,489734,0,58811,'2023-10-24 11:27:45.352','Message n°9','Contenu du message n°9',0,NULL,0,0,'Orlan HUE',0,20097),
-	 (489735,489707,489734,489733,58811,'2023-10-24 11:27:45.382','Message n°9','Contenu du message n°9',1,NULL,0,0,'Orlan HUE',0,20097);
+	 (492521,492502,492522,0,58811,'2023-10-25 10:39:17.848','Message 5','Contenu du message 5',0,NULL,0,0,'Orlan HUE',0,20097),
+	 (492523,492507,492522,492521,58811,'2023-10-25 10:39:17.892','Message 5','Contenu du message 5',1,NULL,0,0,'Orlan HUE',0,20097),
+	 (492524,492502,492525,0,58811,'2023-10-25 10:39:19.405','Message 6','Contenu du message 6',0,NULL,0,0,'Orlan HUE',0,20097),
+	 (492526,492507,492525,492524,58811,'2023-10-25 10:39:19.444','Message 6','Contenu du message 6',1,NULL,0,0,'Orlan HUE',0,20097),
+	 (492527,492502,492528,0,58811,'2023-10-25 10:39:20.982','Message 7','Contenu du message 7',0,NULL,0,0,'Orlan HUE',0,20097),
+	 (492529,492507,492528,492527,58811,'2023-10-25 10:39:21.009','Message 7','Contenu du message 7',1,NULL,0,0,'Orlan HUE',0,20097),
+	 (492530,492502,492531,0,58811,'2023-10-25 10:39:22.624','Message 8','Contenu du message 8',0,NULL,0,0,'Orlan HUE',0,20097),
+	 (492532,492507,492531,492530,58811,'2023-10-25 10:39:22.653','Message 8','Contenu du message 8',1,NULL,0,0,'Orlan HUE',0,20097),
+	 (492533,492502,492534,0,58811,'2023-10-25 10:39:24.385','Message 9','Contenu du message 9',0,NULL,0,0,'Orlan HUE',0,20097),
+	 (492535,492507,492534,492533,58811,'2023-10-25 10:39:24.417','Message 9','Contenu du message 9',1,NULL,0,0,'Orlan HUE',0,20097);
 INSERT INTO lportal_ent.Messaging_Message (messageId,folderId,threadId,sendMessageId,senderId,sendDate,messageSubject,messageContent,isNew,readDate,isAnswered,isForwarded,senderName,type_,companyId) VALUES
-	 (489736,489702,489737,0,58811,'2023-10-24 11:27:47.072','Message n°10','Contenu du message n°10',0,NULL,0,0,'Orlan HUE',0,20097),
-	 (489738,489707,489737,489736,58811,'2023-10-24 11:27:47.104','Message n°10','Contenu du message n°10',1,NULL,0,0,'Orlan HUE',0,20097),
-	 (489739,489702,489740,0,58811,'2023-10-24 11:27:48.808','Message n°11','Contenu du message n°11',0,NULL,0,0,'Orlan HUE',0,20097),
-	 (489741,489707,489740,489739,58811,'2023-10-24 11:27:48.838','Message n°11','Contenu du message n°11',1,NULL,0,0,'Orlan HUE',0,20097),
-	 (489742,489702,489743,0,58811,'2023-10-24 11:27:50.750','Message n°12','Contenu du message n°12',0,NULL,0,0,'Orlan HUE',0,20097),
-	 (489744,489707,489743,489742,58811,'2023-10-24 11:27:50.785','Message n°12','Contenu du message n°12',1,NULL,0,0,'Orlan HUE',0,20097),
-	 (489745,489702,489746,0,58811,'2023-10-24 11:27:52.604','Message n°13','Contenu du message n°13',0,NULL,0,0,'Orlan HUE',0,20097),
-	 (489747,489707,489746,489745,58811,'2023-10-24 11:27:52.632','Message n°13','Contenu du message n°13',1,NULL,0,0,'Orlan HUE',0,20097),
-	 (489748,489702,489749,0,58811,'2023-10-24 11:27:54.433','Message n°14','Contenu du message n°14',0,NULL,0,0,'Orlan HUE',0,20097),
-	 (489750,489707,489749,489748,58811,'2023-10-24 11:27:54.461','Message n°14','Contenu du message n°14',1,NULL,0,0,'Orlan HUE',0,20097);
+	 (492536,492502,492537,0,58811,'2023-10-25 10:39:26.196','Message 10','Contenu du message 10',0,NULL,0,0,'Orlan HUE',0,20097),
+	 (492538,492507,492537,492536,58811,'2023-10-25 10:39:26.232','Message 10','Contenu du message 10',1,NULL,0,0,'Orlan HUE',0,20097),
+	 (492539,492502,492540,0,58811,'2023-10-25 10:39:28.025','Message 11','Contenu du message 11',0,NULL,0,0,'Orlan HUE',0,20097),
+	 (492541,492507,492540,492539,58811,'2023-10-25 10:39:28.060','Message 11','Contenu du message 11',1,NULL,0,0,'Orlan HUE',0,20097),
+	 (492542,492502,492543,0,58811,'2023-10-25 10:39:29.905','Message 12','Contenu du message 12',0,NULL,0,0,'Orlan HUE',0,20097),
+	 (492544,492507,492543,492542,58811,'2023-10-25 10:39:29.935','Message 12','Contenu du message 12',1,NULL,0,0,'Orlan HUE',0,20097),
+	 (492545,492502,492546,0,58811,'2023-10-25 10:39:31.978','Message 13','Contenu du message 13',0,NULL,0,0,'Orlan HUE',0,20097),
+	 (492547,492507,492546,492545,58811,'2023-10-25 10:39:32.006','Message 13','Contenu du message 13',1,NULL,0,0,'Orlan HUE',0,20097),
+	 (492548,492502,492549,0,58811,'2023-10-25 10:39:33.976','Message 14','Contenu du message 14',0,NULL,0,0,'Orlan HUE',0,20097),
+	 (492550,492507,492549,492548,58811,'2023-10-25 10:39:34.008','Message 14','Contenu du message 14',1,NULL,0,0,'Orlan HUE',0,20097);
 INSERT INTO lportal_ent.Messaging_Message (messageId,folderId,threadId,sendMessageId,senderId,sendDate,messageSubject,messageContent,isNew,readDate,isAnswered,isForwarded,senderName,type_,companyId) VALUES
-	 (489751,489702,489752,0,58811,'2023-10-24 11:27:56.391','Message n°15','Contenu du message n°15',0,NULL,0,0,'Orlan HUE',0,20097),
-	 (489753,489707,489752,489751,58811,'2023-10-24 11:27:56.420','Message n°15','Contenu du message n°15',1,NULL,0,0,'Orlan HUE',0,20097),
-	 (489754,489702,489755,0,58811,'2023-10-24 11:27:58.215','Message n°16','Contenu du message n°16',0,NULL,0,0,'Orlan HUE',0,20097),
-	 (489756,489707,489755,489754,58811,'2023-10-24 11:27:58.244','Message n°16','Contenu du message n°16',1,NULL,0,0,'Orlan HUE',0,20097),
-	 (489757,489702,489758,0,58811,'2023-10-24 11:28:00.287','Message n°17','Contenu du message n°17',0,NULL,0,0,'Orlan HUE',0,20097),
-	 (489759,489707,489758,489757,58811,'2023-10-24 11:28:00.318','Message n°17','Contenu du message n°17',1,NULL,0,0,'Orlan HUE',0,20097),
-	 (489760,489702,489761,0,58811,'2023-10-24 11:28:02.303','Message n°18','Contenu du message n°18',0,NULL,0,0,'Orlan HUE',0,20097),
-	 (489762,489707,489761,489760,58811,'2023-10-24 11:28:02.329','Message n°18','Contenu du message n°18',1,NULL,0,0,'Orlan HUE',0,20097),
-	 (489763,489702,489764,0,58811,'2023-10-24 11:28:04.363','Message n°19','Contenu du message n°19',0,NULL,0,0,'Orlan HUE',0,20097),
-	 (489765,489707,489764,489763,58811,'2023-10-24 11:28:04.389','Message n°19','Contenu du message n°19',1,NULL,0,0,'Orlan HUE',0,20097);
+	 (492551,492502,492552,0,58811,'2023-10-25 10:39:35.846','Message 15','Contenu du message 15',0,NULL,0,0,'Orlan HUE',0,20097),
+	 (492553,492507,492552,492551,58811,'2023-10-25 10:39:35.876','Message 15','Contenu du message 15',1,NULL,0,0,'Orlan HUE',0,20097),
+	 (492554,492502,492555,0,58811,'2023-10-25 10:39:37.911','Message 16','Contenu du message 16',0,NULL,0,0,'Orlan HUE',0,20097),
+	 (492556,492507,492555,492554,58811,'2023-10-25 10:39:37.940','Message 16','Contenu du message 16',1,NULL,0,0,'Orlan HUE',0,20097),
+	 (492557,492502,492558,0,58811,'2023-10-25 10:39:40.022','Message 17','Contenu du message 17',0,NULL,0,0,'Orlan HUE',0,20097),
+	 (492559,492507,492558,492557,58811,'2023-10-25 10:39:40.053','Message 17','Contenu du message 17',1,NULL,0,0,'Orlan HUE',0,20097),
+	 (492560,492502,492561,0,58811,'2023-10-25 10:39:42.146','Message 18','Contenu du message 18',0,NULL,0,0,'Orlan HUE',0,20097),
+	 (492562,492507,492561,492560,58811,'2023-10-25 10:39:42.177','Message 18','Contenu du message 18',1,NULL,0,0,'Orlan HUE',0,20097),
+	 (492563,492502,492564,0,58811,'2023-10-25 10:39:44.351','Message 19','Contenu du message 19',0,NULL,0,0,'Orlan HUE',0,20097),
+	 (492565,492507,492564,492563,58811,'2023-10-25 10:39:44.385','Message 19','Contenu du message 19',1,NULL,0,0,'Orlan HUE',0,20097);
 INSERT INTO lportal_ent.Messaging_Message (messageId,folderId,threadId,sendMessageId,senderId,sendDate,messageSubject,messageContent,isNew,readDate,isAnswered,isForwarded,senderName,type_,companyId) VALUES
-	 (489766,489702,489767,0,58811,'2023-10-24 11:28:06.456','Message n°20','Contenu du message n°20',0,NULL,0,0,'Orlan HUE',0,20097),
-	 (489768,489707,489767,489766,58811,'2023-10-24 11:28:06.485','Message n°20','Contenu du message n°20',1,NULL,0,0,'Orlan HUE',0,20097),
-	 (489769,489702,489770,0,58811,'2023-10-24 11:28:08.520','Message n°21','Contenu du message n°21',0,NULL,0,0,'Orlan HUE',0,20097),
-	 (489771,489707,489770,489769,58811,'2023-10-24 11:28:08.547','Message n°21','Contenu du message n°21',1,NULL,0,0,'Orlan HUE',0,20097),
-	 (489772,489702,489773,0,58811,'2023-10-24 11:28:10.739','Message n°22','Contenu du message n°22',0,NULL,0,0,'Orlan HUE',0,20097),
-	 (489774,489707,489773,489772,58811,'2023-10-24 11:28:10.766','Message n°22','Contenu du message n°22',1,NULL,0,0,'Orlan HUE',0,20097),
-	 (489775,489702,489776,0,58811,'2023-10-24 11:28:12.863','Message n°23','Contenu du message n°23',0,NULL,0,0,'Orlan HUE',0,20097),
-	 (489777,489707,489776,489775,58811,'2023-10-24 11:28:12.892','Message n°23','Contenu du message n°23',1,NULL,0,0,'Orlan HUE',0,20097),
-	 (489778,489702,489779,0,58811,'2023-10-24 11:28:15.150','Message n°24','Contenu du message n°24',0,NULL,0,0,'Orlan HUE',0,20097),
-	 (489780,489707,489779,489778,58811,'2023-10-24 11:28:15.178','Message n°24','Contenu du message n°24',1,NULL,0,0,'Orlan HUE',0,20097);
+	 (492566,492502,492567,0,58811,'2023-10-25 10:39:46.671','Message 20','Contenu du message 20',0,NULL,0,0,'Orlan HUE',0,20097),
+	 (492568,492507,492567,492566,58811,'2023-10-25 10:39:46.708','Message 20','Contenu du message 20',1,NULL,0,0,'Orlan HUE',0,20097),
+	 (492569,492502,492570,0,58811,'2023-10-25 10:39:48.789','Message 21','Contenu du message 21',0,NULL,0,0,'Orlan HUE',0,20097),
+	 (492571,492507,492570,492569,58811,'2023-10-25 10:39:48.822','Message 21','Contenu du message 21',1,NULL,0,0,'Orlan HUE',0,20097),
+	 (492572,492502,492573,0,58811,'2023-10-25 10:39:51.097','Message 22','Contenu du message 22',0,NULL,0,0,'Orlan HUE',0,20097),
+	 (492574,492507,492573,492572,58811,'2023-10-25 10:39:51.128','Message 22','Contenu du message 22',1,NULL,0,0,'Orlan HUE',0,20097),
+	 (492575,492502,492576,0,58811,'2023-10-25 10:39:53.461','Message 23','Contenu du message 23',0,NULL,0,0,'Orlan HUE',0,20097),
+	 (492577,492507,492576,492575,58811,'2023-10-25 10:39:53.516','Message 23','Contenu du message 23',1,NULL,0,0,'Orlan HUE',0,20097),
+	 (492578,492502,492579,0,58811,'2023-10-25 10:39:55.913','Message 24','Contenu du message 24',0,NULL,0,0,'Orlan HUE',0,20097),
+	 (492580,492507,492579,492578,58811,'2023-10-25 10:39:55.942','Message 24','Contenu du message 24',1,NULL,0,0,'Orlan HUE',0,20097);
 /*!40000 ALTER TABLE `Messaging_Message` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -156,308 +156,308 @@ CREATE TABLE `Messaging_MessageContent` (
 LOCK TABLES `Messaging_MessageContent` WRITE;
 /*!40000 ALTER TABLE `Messaging_MessageContent` DISABLE KEYS */;
 INSERT INTO lportal_ent.Messaging_MessageContent (messageId,messageContent) VALUES
-	 (489705,'<html>
+	 (492505,'<html>
  <head></head>
 <body>
-  Contenu du message n°0 
+  Contenu du message 0 
 </body></body>
 </html>'),
-	 (489708,'<html>
+	 (492508,'<html>
  <head></head>
 <body>
-  Contenu du message n°0 
+  Contenu du message 0 
 </body></body>
 </html>'),
-	 (489709,'<html>
+	 (492509,'<html>
  <head></head>
 <body>
-  Contenu du message n°1 
+  Contenu du message 1 
 </body></body>
 </html>'),
-	 (489711,'<html>
+	 (492511,'<html>
  <head></head>
 <body>
-  Contenu du message n°1 
+  Contenu du message 1 
 </body></body>
 </html>'),
-	 (489712,'<html>
+	 (492512,'<html>
  <head></head>
 <body>
-  Contenu du message n°2 
+  Contenu du message 2 
 </body></body>
 </html>'),
-	 (489714,'<html>
+	 (492514,'<html>
  <head></head>
 <body>
-  Contenu du message n°2 
+  Contenu du message 2 
 </body></body>
 </html>'),
-	 (489715,'<html>
+	 (492515,'<html>
  <head></head>
 <body>
-  Contenu du message n°3 
+  Contenu du message 3 
 </body></body>
 </html>'),
-	 (489717,'<html>
+	 (492517,'<html>
  <head></head>
 <body>
-  Contenu du message n°3 
+  Contenu du message 3 
 </body></body>
 </html>'),
-	 (489718,'<html>
+	 (492518,'<html>
  <head></head>
 <body>
-  Contenu du message n°4 
+  Contenu du message 4 
 </body></body>
 </html>'),
-	 (489720,'<html>
+	 (492520,'<html>
  <head></head>
 <body>
-  Contenu du message n°4 
+  Contenu du message 4 
 </body></body>
 </html>');
 INSERT INTO lportal_ent.Messaging_MessageContent (messageId,messageContent) VALUES
-	 (489721,'<html>
+	 (492521,'<html>
  <head></head>
 <body>
-  Contenu du message n°5 
+  Contenu du message 5 
 </body></body>
 </html>'),
-	 (489723,'<html>
+	 (492523,'<html>
  <head></head>
 <body>
-  Contenu du message n°5 
+  Contenu du message 5 
 </body></body>
 </html>'),
-	 (489724,'<html>
+	 (492524,'<html>
  <head></head>
 <body>
-  Contenu du message n°6 
+  Contenu du message 6 
 </body></body>
 </html>'),
-	 (489726,'<html>
+	 (492526,'<html>
  <head></head>
 <body>
-  Contenu du message n°6 
+  Contenu du message 6 
 </body></body>
 </html>'),
-	 (489727,'<html>
+	 (492527,'<html>
  <head></head>
 <body>
-  Contenu du message n°7 
+  Contenu du message 7 
 </body></body>
 </html>'),
-	 (489729,'<html>
+	 (492529,'<html>
  <head></head>
 <body>
-  Contenu du message n°7 
+  Contenu du message 7 
 </body></body>
 </html>'),
-	 (489730,'<html>
+	 (492530,'<html>
  <head></head>
 <body>
-  Contenu du message n°8 
+  Contenu du message 8 
 </body></body>
 </html>'),
-	 (489732,'<html>
+	 (492532,'<html>
  <head></head>
 <body>
-  Contenu du message n°8 
+  Contenu du message 8 
 </body></body>
 </html>'),
-	 (489733,'<html>
+	 (492533,'<html>
  <head></head>
 <body>
-  Contenu du message n°9 
+  Contenu du message 9 
 </body></body>
 </html>'),
-	 (489735,'<html>
+	 (492535,'<html>
  <head></head>
 <body>
-  Contenu du message n°9 
+  Contenu du message 9 
 </body></body>
 </html>');
 INSERT INTO lportal_ent.Messaging_MessageContent (messageId,messageContent) VALUES
-	 (489736,'<html>
+	 (492536,'<html>
  <head></head>
 <body>
-  Contenu du message n°10 
+  Contenu du message 10 
 </body></body>
 </html>'),
-	 (489738,'<html>
+	 (492538,'<html>
  <head></head>
 <body>
-  Contenu du message n°10 
+  Contenu du message 10 
 </body></body>
 </html>'),
-	 (489739,'<html>
+	 (492539,'<html>
  <head></head>
 <body>
-  Contenu du message n°11 
+  Contenu du message 11 
 </body></body>
 </html>'),
-	 (489741,'<html>
+	 (492541,'<html>
  <head></head>
 <body>
-  Contenu du message n°11 
+  Contenu du message 11 
 </body></body>
 </html>'),
-	 (489742,'<html>
+	 (492542,'<html>
  <head></head>
 <body>
-  Contenu du message n°12 
+  Contenu du message 12 
 </body></body>
 </html>'),
-	 (489744,'<html>
+	 (492544,'<html>
  <head></head>
 <body>
-  Contenu du message n°12 
+  Contenu du message 12 
 </body></body>
 </html>'),
-	 (489745,'<html>
+	 (492545,'<html>
  <head></head>
 <body>
-  Contenu du message n°13 
+  Contenu du message 13 
 </body></body>
 </html>'),
-	 (489747,'<html>
+	 (492547,'<html>
  <head></head>
 <body>
-  Contenu du message n°13 
+  Contenu du message 13 
 </body></body>
 </html>'),
-	 (489748,'<html>
+	 (492548,'<html>
  <head></head>
 <body>
-  Contenu du message n°14 
+  Contenu du message 14 
 </body></body>
 </html>'),
-	 (489750,'<html>
+	 (492550,'<html>
  <head></head>
 <body>
-  Contenu du message n°14 
+  Contenu du message 14 
 </body></body>
 </html>');
 INSERT INTO lportal_ent.Messaging_MessageContent (messageId,messageContent) VALUES
-	 (489751,'<html>
+	 (492551,'<html>
  <head></head>
 <body>
-  Contenu du message n°15 
+  Contenu du message 15 
 </body></body>
 </html>'),
-	 (489753,'<html>
+	 (492553,'<html>
  <head></head>
 <body>
-  Contenu du message n°15 
+  Contenu du message 15 
 </body></body>
 </html>'),
-	 (489754,'<html>
+	 (492554,'<html>
  <head></head>
 <body>
-  Contenu du message n°16 
+  Contenu du message 16 
 </body></body>
 </html>'),
-	 (489756,'<html>
+	 (492556,'<html>
  <head></head>
 <body>
-  Contenu du message n°16 
+  Contenu du message 16 
 </body></body>
 </html>'),
-	 (489757,'<html>
+	 (492557,'<html>
  <head></head>
 <body>
-  Contenu du message n°17 
+  Contenu du message 17 
 </body></body>
 </html>'),
-	 (489759,'<html>
+	 (492559,'<html>
  <head></head>
 <body>
-  Contenu du message n°17 
+  Contenu du message 17 
 </body></body>
 </html>'),
-	 (489760,'<html>
+	 (492560,'<html>
  <head></head>
 <body>
-  Contenu du message n°18 
+  Contenu du message 18 
 </body></body>
 </html>'),
-	 (489762,'<html>
+	 (492562,'<html>
  <head></head>
 <body>
-  Contenu du message n°18 
+  Contenu du message 18 
 </body></body>
 </html>'),
-	 (489763,'<html>
+	 (492563,'<html>
  <head></head>
 <body>
-  Contenu du message n°19 
+  Contenu du message 19 
 </body></body>
 </html>'),
-	 (489765,'<html>
+	 (492565,'<html>
  <head></head>
 <body>
-  Contenu du message n°19 
+  Contenu du message 19 
 </body></body>
 </html>');
 INSERT INTO lportal_ent.Messaging_MessageContent (messageId,messageContent) VALUES
-	 (489766,'<html>
+	 (492566,'<html>
  <head></head>
 <body>
-  Contenu du message n°20 
+  Contenu du message 20 
 </body></body>
 </html>'),
-	 (489768,'<html>
+	 (492568,'<html>
  <head></head>
 <body>
-  Contenu du message n°20 
+  Contenu du message 20 
 </body></body>
 </html>'),
-	 (489769,'<html>
+	 (492569,'<html>
  <head></head>
 <body>
-  Contenu du message n°21 
+  Contenu du message 21 
 </body></body>
 </html>'),
-	 (489771,'<html>
+	 (492571,'<html>
  <head></head>
 <body>
-  Contenu du message n°21 
+  Contenu du message 21 
 </body></body>
 </html>'),
-	 (489772,'<html>
+	 (492572,'<html>
  <head></head>
 <body>
-  Contenu du message n°22 
+  Contenu du message 22 
 </body></body>
 </html>'),
-	 (489774,'<html>
+	 (492574,'<html>
  <head></head>
 <body>
-  Contenu du message n°22 
+  Contenu du message 22 
 </body></body>
 </html>'),
-	 (489775,'<html>
+	 (492575,'<html>
  <head></head>
 <body>
-  Contenu du message n°23 
+  Contenu du message 23 
 </body></body>
 </html>'),
-	 (489777,'<html>
+	 (492577,'<html>
  <head></head>
 <body>
-  Contenu du message n°23 
+  Contenu du message 23 
 </body></body>
 </html>'),
-	 (489778,'<html>
+	 (492578,'<html>
  <head></head>
 <body>
-  Contenu du message n°24 
+  Contenu du message 24 
 </body></body>
 </html>'),
-	 (489780,'<html>
+	 (492580,'<html>
  <head></head>
 <body>
-  Contenu du message n°24 
+  Contenu du message 24 
 </body></body>
 </html>');
 /*!40000 ALTER TABLE `Messaging_MessageContent` ENABLE KEYS */;
@@ -489,7 +489,12 @@ CREATE TABLE `Messaging_MessageFolder` (
 
 LOCK TABLES `Messaging_MessageFolder` WRITE;
 /*!40000 ALTER TABLE `Messaging_MessageFolder` DISABLE KEYS */;
-INSERT INTO `Messaging_MessageFolder` (`folderId`, `userId`, `folderName`, `type_`, `parentFolderId`) VALUES (534201,47362,'Boîte de réception',1,0),(534202,47362,'Envoyés',3,0),(534203,47362,'Corbeille',4,0),(534204,47362,'Brouillons',2,0),(534205,58811,'Boîte de réception',1,0),(534206,45479,'Boîte de réception',1,0),(534207,45479,'Envoyés',3,0),(534208,45479,'Corbeille',4,0),(534209,45479,'Brouillons',2,0),(534216,58811,'Envoyés',3,0),(534217,58811,'Corbeille',4,0),(534218,58811,'Brouillons',2,0),(538201,58811,'sous-dossier',5,0),(824404,47461,'Boîte de réception',1,0),(19654701,52216,'Boîte de réception',1,0),(19654702,52216,'Envoyés',3,0),(19654703,52216,'Corbeille',4,0),(19654704,52216,'Brouillons',2,0),(19662701,52216,'dossier personnel',5,0),(19662702,52216,'sous-dossier',5,19662701),(19662703,52216,'Mon autre dossier',5,0);
+INSERT INTO lportal_ent.Messaging_MessageFolder (folderId,userId,folderName,type_,parentFolderId) VALUES
+	 (492501,58811,'Boîte de réception',1,0),
+	 (492502,58811,'Envoyés',3,0),
+	 (492503,58811,'Corbeille',4,0),
+	 (492504,58811,'Brouillons',2,0),
+	 (492507,47461,'Boîte de réception',1,0);
 /*!40000 ALTER TABLE `Messaging_MessageFolder` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -515,60 +520,60 @@ CREATE TABLE `Messaging_MessageRecipients` (
 LOCK TABLES `Messaging_MessageRecipients` WRITE;
 /*!40000 ALTER TABLE `Messaging_MessageRecipients` DISABLE KEYS */;
 INSERT INTO lportal_ent.Messaging_MessageRecipients (messageId,recipients) VALUES
-	 (489705,'47461,'),
-	 (489708,'47461,'),
-	 (489709,'47461,'),
-	 (489711,'47461,'),
-	 (489712,'47461,'),
-	 (489714,'47461,'),
-	 (489715,'47461,'),
-	 (489717,'47461,'),
-	 (489718,'47461,'),
-	 (489720,'47461,');
+	 (492505,'47461,'),
+	 (492508,'47461,'),
+	 (492509,'47461,'),
+	 (492511,'47461,'),
+	 (492512,'47461,'),
+	 (492514,'47461,'),
+	 (492515,'47461,'),
+	 (492517,'47461,'),
+	 (492518,'47461,'),
+	 (492520,'47461,');
 INSERT INTO lportal_ent.Messaging_MessageRecipients (messageId,recipients) VALUES
-	 (489721,'47461,'),
-	 (489723,'47461,'),
-	 (489724,'47461,'),
-	 (489726,'47461,'),
-	 (489727,'47461,'),
-	 (489729,'47461,'),
-	 (489730,'47461,'),
-	 (489732,'47461,'),
-	 (489733,'47461,'),
-	 (489735,'47461,');
+	 (492521,'47461,'),
+	 (492523,'47461,'),
+	 (492524,'47461,'),
+	 (492526,'47461,'),
+	 (492527,'47461,'),
+	 (492529,'47461,'),
+	 (492530,'47461,'),
+	 (492532,'47461,'),
+	 (492533,'47461,'),
+	 (492535,'47461,');
 INSERT INTO lportal_ent.Messaging_MessageRecipients (messageId,recipients) VALUES
-	 (489736,'47461,'),
-	 (489738,'47461,'),
-	 (489739,'47461,'),
-	 (489741,'47461,'),
-	 (489742,'47461,'),
-	 (489744,'47461,'),
-	 (489745,'47461,'),
-	 (489747,'47461,'),
-	 (489748,'47461,'),
-	 (489750,'47461,');
+	 (492536,'47461,'),
+	 (492538,'47461,'),
+	 (492539,'47461,'),
+	 (492541,'47461,'),
+	 (492542,'47461,'),
+	 (492544,'47461,'),
+	 (492545,'47461,'),
+	 (492547,'47461,'),
+	 (492548,'47461,'),
+	 (492550,'47461,');
 INSERT INTO lportal_ent.Messaging_MessageRecipients (messageId,recipients) VALUES
-	 (489751,'47461,'),
-	 (489753,'47461,'),
-	 (489754,'47461,'),
-	 (489756,'47461,'),
-	 (489757,'47461,'),
-	 (489759,'47461,'),
-	 (489760,'47461,'),
-	 (489762,'47461,'),
-	 (489763,'47461,'),
-	 (489765,'47461,');
+	 (492551,'47461,'),
+	 (492553,'47461,'),
+	 (492554,'47461,'),
+	 (492556,'47461,'),
+	 (492557,'47461,'),
+	 (492559,'47461,'),
+	 (492560,'47461,'),
+	 (492562,'47461,'),
+	 (492563,'47461,'),
+	 (492565,'47461,');
 INSERT INTO lportal_ent.Messaging_MessageRecipients (messageId,recipients) VALUES
-	 (489766,'47461,'),
-	 (489768,'47461,'),
-	 (489769,'47461,'),
-	 (489771,'47461,'),
-	 (489772,'47461,'),
-	 (489774,'47461,'),
-	 (489775,'47461,'),
-	 (489777,'47461,'),
-	 (489778,'47461,'),
-	 (489780,'47461,');
+	 (492566,'47461,'),
+	 (492568,'47461,'),
+	 (492569,'47461,'),
+	 (492571,'47461,'),
+	 (492572,'47461,'),
+	 (492574,'47461,'),
+	 (492575,'47461,'),
+	 (492577,'47461,'),
+	 (492578,'47461,'),
+	 (492580,'47461,');
 /*!40000 ALTER TABLE `Messaging_MessageRecipients` ENABLE KEYS */;
 UNLOCK TABLES;
 
