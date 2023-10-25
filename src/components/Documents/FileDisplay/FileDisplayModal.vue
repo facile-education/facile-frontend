@@ -128,6 +128,9 @@ export default {
     onResize () {
       this.viewportWidth = document.documentElement.clientWidth
       this.viewportHeight = document.documentElement.clientHeight
+      if (this.isFullScreen) {
+        this.$refs.resizeComponent.setMaximize(this.isFullScreen) // Resize component to the new screen size
+      }
     },
     onKeyDown (e) {
       e = e || window.event

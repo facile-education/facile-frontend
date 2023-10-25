@@ -257,7 +257,7 @@ export default {
   },
   mounted () {
     this.isThreadExpanded = false
-    if (this.isLast) {
+    if (this.isLast && !this.isDisplayMessageFromRouting) {
       if (isInViewport(this.$el)) {
         this.getNextThreads()
       }
@@ -288,12 +288,6 @@ export default {
       }
     },
     selectThread () {
-      // Mark as read if unread
-      for (const message of this.thread.messages) {
-        if (message.messageId === this.thread.mainMessageId && message.isNew) {
-          messagingUtils.markMessagesAsReadUnread([this.thread.mainMessageId], true)
-        }
-      }
       messagingUtils.selectThread(this.thread)
     },
     toggleThreadExtension () {

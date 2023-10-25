@@ -47,6 +47,7 @@
             >
               <StudentHomework
                 :homework="homework"
+                :can-update-status="canUpdateStatus"
                 @change-done-status="changeDoneStatus(homework, $event)"
               />
             </li>
@@ -91,6 +92,12 @@ export default {
     }
   },
   computed: {
+    currentUser () {
+      return this.$store.state.user
+    },
+    canUpdateStatus () {
+      return this.currentUser.userId === this.currentUserId
+    },
     sortedHomeworks () {
       if (this.homeworks) {
         return [...this.homeworks].sort((homeworkA, homeworkB) => {
