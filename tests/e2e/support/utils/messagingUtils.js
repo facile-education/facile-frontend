@@ -36,8 +36,13 @@ const getMessage = (message) => {
 }
 
 const getDraft = (message) => {
-  // Get message by content
+  // Get draft by content
   return cy.contains('[data-test=thread-list-item]', message)
+}
+
+const setRecipient = (user) => {
+  cy.get('.base-tags-input').type(`${user.firstName}`)
+  cy.get('.suggestion-list').contains(`${user.lastName} ${user.firstName}`).click()
 }
 
 export {
@@ -45,5 +50,6 @@ export {
   reloadThreadsAndFolders,
   getThread,
   getMessage,
-  getDraft
+  getDraft,
+  setRecipient
 }
