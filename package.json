@@ -12,6 +12,7 @@
     "db:init": "./tests/e2e/scripts/initDB.sh",
     "db:revert": "./tests/e2e/scripts/revertDB.sh",
     "db:loadTables": "./tests/e2e/scripts/loadTables.sh",
+    "dl:loadDocumentLibrary": "tests/e2e/scripts/loadDocumentLibrary.sh",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src"
   },
   "dependencies": {
