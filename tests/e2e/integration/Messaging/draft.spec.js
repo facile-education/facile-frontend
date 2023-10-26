@@ -1,6 +1,6 @@
 import { messagingURL } from '../../support/constants/urls'
 import { HEADMASTER, STUDENT } from '../../support/constants/users'
-import { getThread, waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
+import { getThread, setRecipient, waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
 
 describe('Draft', () => {
   beforeEach(() => {
@@ -14,16 +14,13 @@ describe('Draft', () => {
       cy.login(HEADMASTER, messagingURL)
       waitMessagingToBeLoaded()
       const draftToCreate = this.messagingData.draftToCreate[0]
-      const formattedLastName = STUDENT.lastName.charAt(0).toUpperCase() + STUDENT.lastName.slice(1).toLowerCase()
-      const formattedFirstName = STUDENT.firstName.charAt(0).toUpperCase() + STUDENT.firstName.slice(1).toLowerCase()
 
       // Open modal create message
       cy.get('[data-test="createMessageButton"]').click()
 
       // Write message
       cy.get('[data-test="createMessageModal"]').within(() => {
-        cy.get('.base-tags-input').type('penelope')
-        cy.get('.suggestion-list').contains(`${formattedLastName} ${formattedFirstName}`).click()
+        setRecipient(STUDENT)
         cy.get('.group > [data-test="subject-input"]').type(draftToCreate[0].subject)
         cy.get('.ck-editor')
         cy.type_ckeditor(draftToCreate[0].content)
@@ -129,4 +126,5 @@ describe('Draft', () => {
     // check if message modal is visible
     cy.get('[data-test="createMessageModal"]').should('be.visible')
   })
+  // TO DO check options: forward, reply, replyAll are not visible in rightclick meuu
 })
