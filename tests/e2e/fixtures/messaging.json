@@ -83,7 +83,7 @@
     ],
     [
       {
-        "sender": "Rosana Nolly",
+        "sender": "Rosana NOLLI",
         "recipients": ["Orlan Hue", "Pénélope Ribeiro"],
         "date": "2023/10/05 09:02",
         "subject": "Mon quatrième message",
@@ -106,7 +106,7 @@
       {
         "sender": "Stanislaus Ropkes",
         "subject": "Message dans un dossier",
-        "content": "Contenu d'un message dans un dossier",
+        "content": "Contenu du message dans un dossier",
         "messageIndexInThread": 0
       }
     ],
@@ -114,7 +114,7 @@
       {
         "sender": "Stanislaus Ropkes",
         "subject": "Message dans un sous dossier",
-        "content": "Contenu d'un message dans un sous dossier",
+        "content": "Contenu du message dans un sous dossier",
         "messageIndexInThread": 0
       }
     ]
