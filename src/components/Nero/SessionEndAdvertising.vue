@@ -24,13 +24,14 @@
 </template>
 
 <script>
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import dayjs from 'dayjs'
 
 import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
   name: 'SessionEndAdvertising',
-  components: { WeprodeWindow },
+  components: { WeprodeButton, WeprodeWindow },
   props: {
     remainingMilliseconds: {
       type: Number,

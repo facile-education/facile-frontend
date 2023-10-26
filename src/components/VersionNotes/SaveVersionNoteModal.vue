@@ -45,6 +45,7 @@
 <script>
 import InlineEditor from '@ckeditor/ckeditor5-build-inline'
 import TextContent from '@components/Base/TextContent.vue'
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 
@@ -56,7 +57,7 @@ import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
   name: 'SaveVersionNoteModal',
-  components: { TextContent, WeprodeErrorMessage, WeprodeInput, WeprodeSpinner, WeprodeWindow },
+  components: { WeprodeButton, TextContent, WeprodeErrorMessage, WeprodeInput, WeprodeSpinner, WeprodeWindow },
   inject: ['mq'],
   props: {
     isCreation: {

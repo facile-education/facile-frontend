@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 
@@ -54,7 +55,7 @@ import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
   name: 'AddDelegationModal',
-  components: { WeprodeErrorMessage, WeprodeTagsInput, WeprodeWindow },
+  components: { WeprodeButton, WeprodeErrorMessage, WeprodeTagsInput, WeprodeWindow },
   inject: ['mq'],
   props: {
   },

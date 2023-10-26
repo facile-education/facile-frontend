@@ -145,6 +145,7 @@
 </template>
 
 <script>
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import dayjs from 'dayjs'
 import { nextTick } from 'vue'
 
@@ -160,7 +161,7 @@ import notUsualSlotsConstants from '@/constants/notUsualSlots'
 
 export default {
   name: 'StudentRegistrationModal',
-  components: { WeprodeCheckbox, WeprodeDropdown, WeprodeErrorMessage, WeprodeInput, WeprodeTextArea, WeprodeWindow },
+  components: { WeprodeButton, WeprodeCheckbox, WeprodeDropdown, WeprodeErrorMessage, WeprodeInput, WeprodeTextArea, WeprodeWindow },
   inject: ['mq'],
   props: {
     event: {

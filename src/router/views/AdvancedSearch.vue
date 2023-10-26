@@ -14,12 +14,14 @@
 </template>
 
 <script>
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
+
 import { search } from '@/api/search.service'
 import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
 
 export default {
   name: 'Progression',
-  components: { WeprodeInput },
+  components: { WeprodeButton, WeprodeInput },
   emits: ['update:layout'],
   data () {
     return {

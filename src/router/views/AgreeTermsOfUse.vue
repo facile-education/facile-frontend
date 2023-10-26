@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import axios from 'axios'
 
 import constants from '@/api/constants'
@@ -30,6 +31,7 @@ import userService from '@/api/user.service'
 
 export default {
   name: 'AgreeTermsOfUse',
+  components: { WeprodeButton },
   emits: ['update:layout'],
   data () {
     return {

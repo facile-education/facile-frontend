@@ -149,6 +149,7 @@
 </template>
 
 <script>
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import { useVuelidate } from '@vuelidate/core'
 import { email, required } from '@vuelidate/validators'
 
@@ -163,7 +164,7 @@ import store from '@/store'
 
 export default {
   name: 'EditUserModal',
-  components: { WeprodeDropdown, WeprodeErrorMessage, WeprodeInput, WeprodeWindow },
+  components: { WeprodeButton, WeprodeDropdown, WeprodeErrorMessage, WeprodeInput, WeprodeWindow },
   inject: ['mq'],
   props: {
     editedUser: {

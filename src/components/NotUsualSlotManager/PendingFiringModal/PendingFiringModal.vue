@@ -54,6 +54,7 @@
 </template>
 
 <script>
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import dayjs from 'dayjs'
 import { nextTick } from 'vue'
 
@@ -64,7 +65,7 @@ import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
   name: 'PendingFiringModal',
-  components: { WeprodeErrorMessage, WeprodeTextArea, WeprodeWindow },
+  components: { WeprodeButton, WeprodeErrorMessage, WeprodeTextArea, WeprodeWindow },
   inject: ['mq'],
   props: {
     pendingFiring: {
