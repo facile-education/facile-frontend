@@ -45,12 +45,14 @@
 </template>
 
 <script>
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
+
 import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 import NeroIcon from '@/components/Nero/NeroIcon'
 
 export default {
   name: 'WarningModal',
-  components: { NeroIcon, WeprodeWindow },
+  components: { WeprodeButton, NeroIcon, WeprodeWindow },
   computed: {
     warning () {
       return this.$store.getters['warningModal/firstWarning']
