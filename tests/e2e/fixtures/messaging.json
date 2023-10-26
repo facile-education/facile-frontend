@@ -138,5 +138,15 @@
         "messageIndexInThread": 0
       }
     ]
+  ],
+  "ListMessage" : [
+    [
+      {
+        "sender": "Orlan Hue",
+        "subject": "Message à une liste et une personne de cette liste",
+        "content": "Ce message est envoyé à une liste et à une personne de cette liste",
+        "messageIndexInThread": 0
+      }
+    ]
   ]
 }
