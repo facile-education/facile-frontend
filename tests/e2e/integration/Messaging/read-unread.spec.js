@@ -6,7 +6,7 @@ let unread = 0
 const getUnread = (allThread) => {
   for (let i = 0; i < allThread.length; i++) {
     for (let j = 0; j < allThread[i].length; j++) {
-      if (allThread[i][j].read !== 1) {
+      if (allThread[i][j].read !== true) {
         unread++
       }
     }
