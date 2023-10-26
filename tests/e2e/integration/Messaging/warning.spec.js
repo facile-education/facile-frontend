@@ -36,6 +36,12 @@ describe('Warning', () => {
     })
     // Check if warning modal is visible
     cy.get('[data-test="warning-modal"]').should('be.exist')
+    // Click on cancel button
+    cy.get('[data-test="cancelButton"]').click()
+    // Check if warning modal is not visible
+    cy.get('[data-test="warning-modal"]').should('not.exist')
+    // Check if modal create modal is visible
+    cy.get('[data-test="createMessageModal"]').should('be.visible')
   })
   it('Messaging_DisplayWarningMessageOnMessageEdition_Modified_thread', function () {
     // Login
@@ -61,6 +67,12 @@ describe('Warning', () => {
     })
     // Check if warning modal is visible
     cy.get('[data-test="warning-modal"]').should('be.exist')
+    // Click on validate button
+    cy.get('[data-test="confirmButton"]').click()
+    // Check if warning modal is not visible
+    cy.get('[data-test="warning-modal"]').should('not.exist')
+    // Check if modal create modal is not visible
+    cy.get('[data-test="createMessageModal"]').should('not.exist')
   })
   it('Messaging_DisplayWarningMessageOnMessageEdition_UnModified_draft', function () {
     // Login
