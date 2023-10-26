@@ -1,6 +1,6 @@
 import { messagingURL } from '../../support/constants/urls'
 import { SCHOOL_ADMIN } from '../../support/constants/users'
-import { getThread } from '../../support/utils/messagingUtils'
+import { getMessage, getThread } from '../../support/utils/messagingUtils'
 import { exactString } from '../../support/utils/testUtils'
 
 /* =========== Local methods ============= */
@@ -102,15 +102,15 @@ describe('Personal folders', () => {
     })
     // Check if content already exist
     cy.get('[data-test="threads-panel"]').within(() => {
-      getThread(personalFolderThread).should('be.exist')
+      getThread(personalFolderThread).should('be.exist').click()
     })
+    getMessage(personalFolderThread[0]).should('be.exist')
 
     // Modify personal sub folder
     cy.get('[data-test=messaging-menu]').within(() => {
       // Click on folder to see the content
       cy.get('[data-test="personalSubFolder-dossier perso modifié"]').click()
     })
-
     // Edit sub folder name
     cy.get('[data-test=messaging-menu]').within(() => {
       toggleFolder({ name: personalFolderNewName })
