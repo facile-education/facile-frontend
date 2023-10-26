@@ -57,6 +57,7 @@
 </template>
 
 <script>
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import StudentListItem from '@components/NotUsualSlotManager/StudentListModal/StudentListItem'
 import dayjs from 'dayjs'
 
@@ -67,7 +68,7 @@ import notUsualSlotsConstants from '@/constants/notUsualSlots'
 
 export default {
   name: 'StudentListModal',
-  components: { StudentListItem, WeprodeSpinner, WeprodeWindow },
+  components: { WeprodeButton, StudentListItem, WeprodeSpinner, WeprodeWindow },
   inject: ['mq'],
   props: {
     event: {

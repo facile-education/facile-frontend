@@ -61,6 +61,7 @@
 </template>
 
 <script>
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import NeroIcon from '@components/Nero/NeroIcon.vue'
 import VersionNoteSelector from '@components/VersionNotes/VersionNoteSelector.vue'
 import { defineAsyncComponent } from 'vue'
@@ -71,7 +72,7 @@ const SaveVersionNoteModal = defineAsyncComponent(() => import('@components/Vers
 
 export default {
   name: 'VersionNotesModal',
-  components: { SaveVersionNoteModal, VersionNoteSelector, NeroIcon, WeprodeSpinner, WeprodeWindow },
+  components: { WeprodeButton, SaveVersionNoteModal, VersionNoteSelector, NeroIcon, WeprodeSpinner, WeprodeWindow },
   inject: ['mq'],
   emits: ['close'],
   data () {

@@ -83,6 +83,7 @@
 
 <script>
 import UserPicture from '@components/Base/UserPicture.vue'
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import ColorPicker from '@components/Nero/ColorPicker'
 import WeprodeUtils from '@utils/weprode.utils'
 import { defineAsyncComponent } from 'vue'
@@ -93,7 +94,7 @@ const ImagePickerModal = defineAsyncComponent(() => import('@/components/Nero/Im
 
 export default {
   name: 'AccountTab',
-  components: { UserPicture, ColorPicker, ImagePickerModal, WeprodeSpinner },
+  components: { WeprodeButton, UserPicture, ColorPicker, ImagePickerModal, WeprodeSpinner },
   emits: ['save'],
   data () {
     return {

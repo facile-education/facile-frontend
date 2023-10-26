@@ -20,8 +20,11 @@
 </template>
 
 <script>
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
+
 export default {
   name: 'HolidayItem',
+  components: { WeprodeButton },
   props: {
     holiday: {
       type: Object,

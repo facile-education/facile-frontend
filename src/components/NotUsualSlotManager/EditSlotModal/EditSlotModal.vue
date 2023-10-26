@@ -106,6 +106,7 @@
 
 <script>
 import DateRangePicker from '@components/Base/DateRangePicker.vue'
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import UserCompletion from '@components/NotUsualSlotManager/UserCompletion'
 import { formatSlot } from '@utils/commons.util'
 import { useVuelidate } from '@vuelidate/core'
@@ -122,7 +123,7 @@ import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
   name: 'EditSlotModal',
-  components: { DateRangePicker, UserCompletion, WeprodeDropdown, WeprodeErrorMessage, WeprodeInput, WeprodeSpinner, WeprodeWindow },
+  components: { WeprodeButton, DateRangePicker, UserCompletion, WeprodeDropdown, WeprodeErrorMessage, WeprodeInput, WeprodeSpinner, WeprodeWindow },
   inject: ['mq'],
   props: {
     eventToEdit: {

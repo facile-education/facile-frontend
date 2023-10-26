@@ -67,6 +67,7 @@
 
 <script>
 
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import UserFields from '@components/UserManagement/UserFields'
 import UserRow from '@components/UserManagement/UserRow'
 import WeprodeUtils from '@utils/weprode.utils'
@@ -79,6 +80,7 @@ import UserAffectationsModal from '@/components/UserManagement/UserAffectationsM
 export default {
   name: 'Affectations',
   components: {
+    WeprodeButton,
     UserRow,
     UserFields,
     UserAffectationsModal,

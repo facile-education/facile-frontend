@@ -79,6 +79,7 @@
 <script>
 import 'vue-advanced-cropper/dist/style.css'
 
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import SelectFilesButtons from '@components/FilePicker/SelectFilesButtons.vue'
 import { Cropper, Preview } from 'vue-advanced-cropper'
 
@@ -89,6 +90,7 @@ import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 export default {
   name: 'ImagePickerModal',
   components: {
+    WeprodeButton,
     SelectFilesButtons,
     Cropper,
     Preview,

@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import Holidays from '@components/ScheduleManager/GlobalScheduleSettings/Holidays.vue'
 import WeeksParity from '@components/ScheduleManager/GlobalScheduleSettings/WeeksParity.vue'
 import YearDates from '@components/ScheduleManager/GlobalScheduleSettings/YearDates.vue'
@@ -50,7 +51,7 @@ import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 
 export default {
   name: 'GlobalScheduleSettings',
-  components: { WeeksParity, Holidays, YearDates, WeprodeSpinner },
+  components: { WeprodeButton, WeeksParity, Holidays, YearDates, WeprodeSpinner },
   setup: () => ({ v$: useVuelidate() }),
   data () {
     return {

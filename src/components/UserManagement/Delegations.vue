@@ -52,6 +52,7 @@
 </template>
 
 <script>
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import UserFields from '@components/UserManagement/UserFields'
 import UserRow from '@components/UserManagement/UserRow'
 import WeprodeUtils from '@utils/weprode.utils'
@@ -63,6 +64,7 @@ import AddDelegationModal from '@/components/UserManagement/AddDelegationModal'
 export default {
   name: 'Delegations',
   components: {
+    WeprodeButton,
     UserRow,
     UserFields,
     AddDelegationModal

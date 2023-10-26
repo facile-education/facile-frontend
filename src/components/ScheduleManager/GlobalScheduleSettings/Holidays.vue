@@ -39,13 +39,14 @@
 
 <script>
 import InformationIcon from '@components/Base/InformationIcon.vue'
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import HolidayForm from '@components/ScheduleManager/GlobalScheduleSettings/HolidayForm.vue'
 import HolidayItem from '@components/ScheduleManager/GlobalScheduleSettings/HolidayItem.vue'
 import dayjs from 'dayjs'
 
 export default {
   name: 'Holidays',
-  components: { InformationIcon, HolidayForm, HolidayItem },
+  components: { WeprodeButton, InformationIcon, HolidayForm, HolidayItem },
   props: {
     holidays: {
       type: Array,

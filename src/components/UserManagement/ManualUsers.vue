@@ -68,6 +68,7 @@
 </template>
 
 <script>
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import UserFields from '@components/UserManagement/UserFields'
 import UserRow from '@components/UserManagement/UserRow'
 import WeprodeUtils from '@utils/weprode.utils'
@@ -81,6 +82,7 @@ let timeout
 export default {
   name: 'ManualUsers',
   components: {
+    WeprodeButton,
     UserRow,
     UserFields,
     EditUserModal,
