@@ -72,12 +72,12 @@ describe('Messaging navigation and structure', () => {
         }
       }
       cy.get('body').type('{del}')
-      cy.get('.scroll').find('[data-test="thread-list-item"]').should('have.length', totalThreads.length - 1)
+      cy.get('[data-test="threads-panel"]').find('[data-test="thread-list-item"]').should('have.length', totalThreads.length - 1)
       cy.get('[data-test="option_toggleMessagingMenu"]').click()
       cy.get('[data-test="messaging-menu"]').within(() => {
         cy.contains('button', 'Corbeille').click()
       })
-      cy.get('.scroll').find('[data-test="thread-list-item"]').should('have.length', 1)
+      cy.get('[data-test="threads-panel"]').find('[data-test="thread-list-item"]').should('have.length', 1)
     })
 
     // multiSelection ctrl
@@ -109,13 +109,13 @@ describe('Messaging navigation and structure', () => {
       cy.get('[data-test="thread-list-item"]').last().click()
 
       // check if all threads have class : theme-background-color
-      cy.get('.scroll').within(() => {
+      cy.get('[data-test="threads-panel"]').within(() => {
         cy.get('[data-test="thread-list-item"]').each(() => {
           cy.get('[data-test="thread-list-item"]').find('div').should('have.class', 'theme-background-color')
         })
       })
       cy.get('[data-test="thread-list-item"]').first().click()
-      cy.get('.scroll').within(() => {
+      cy.get('[data-test="threads-panel"]').within(() => {
         cy.get('[data-test="thread-list-item"]').each(($element, index) => {
           console.log($element)
           if (index !== 0) { // Exclude the second element (for example)
@@ -134,13 +134,13 @@ describe('Messaging navigation and structure', () => {
       cy.get('[data-test="thread-list-item"]').last().click()
 
       // check if all threads have class : theme-background-color
-      cy.get('.scroll').within(() => {
+      cy.get('[data-test="threads-panel"]').within(() => {
         cy.get('[data-test="thread-list-item"]').each(() => {
           cy.get('[data-test="thread-list-item"]').find('div').should('have.class', 'theme-background-color')
         })
       })
       cy.get('[data-test="thread-list-item"]').first().click()
-      cy.get('.scroll').within(() => {
+      cy.get('[data-test="threads-panel"]').within(() => {
         cy.get('[data-test="thread-list-item"]').each(($element, index) => {
           console.log($element)
           if (index !== 0) { // Exclude the second element (for example)

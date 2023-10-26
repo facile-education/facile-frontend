@@ -27,13 +27,13 @@ describe('Messaging_SetReadStatus', () => {
       getUnread(totalThreads)
       // Unread
       cy.get('[data-test="option_toggleUnreadOnly"]').click()
-      cy.get('.scroll').find('[data-test="thread-list-item"]').should('have.length', unread)
+      cy.get('[data-test="threads-panel"]').find('[data-test="thread-list-item"]').should('have.length', unread)
       cy.get('[data-test="thread-list-item"]').each(() => {
         cy.get('[data-test="unread-icon"]')
       })
       // All
       cy.get('[data-test="option_toggleUnreadOnly"] > .custom-icon').click()
-      cy.get('.scroll').find('[data-test="thread-list-item"]').should('have.length', totalThreads.length)
+      cy.get('[data-test="threads-panel"]').find('[data-test="thread-list-item"]').should('have.length', totalThreads.length)
     })
 
     // test count read / unread
@@ -44,14 +44,14 @@ describe('Messaging_SetReadStatus', () => {
       // Open menu
       cy.get('[data-test="option_toggleMessagingMenu"]').click()
       // UnRead to read
-      cy.get('.scroll').within(() => {
+      cy.get('[data-test="threads-panel"]').within(() => {
         cy.get('[data-test="thread-list-item"]').first().rightclick()
       })
       cy.get('[data-test="markAsRead"]').click()
       cy.get('.nb-unread').contains(unread - 1)
       cy.get('.nb-new-messages').contains(unread - 1)
       // Read to unread
-      cy.get('.scroll').within(() => {
+      cy.get('[data-test="threads-panel"]').within(() => {
         cy.get('[data-test="thread-list-item"]').first().rightclick()
       })
       cy.get('[data-test="markAsUnread"]').click()
@@ -69,13 +69,13 @@ describe('Messaging_SetReadStatus', () => {
       getUnread(totalThreads)
       // Unread
       cy.get('[data-test="option_toggleUnreadOnly"]').click()
-      cy.get('.scroll').find('[data-test="thread-list-item"]').should('have.length', unread)
+      cy.get('[data-test="threads-panel"]').find('[data-test="thread-list-item"]').should('have.length', unread)
       cy.get('[data-test="thread-list-item"]').each(() => {
         cy.get('[data-test="unread-icon"]')
       })
       // All
       cy.get('[data-test="option_toggleUnreadOnly"] > .custom-icon').click()
-      cy.get('.scroll').find('[data-test="thread-list-item"]').should('have.length', totalThreads.length)
+      cy.get('[data-test="threads-panel"]').find('[data-test="thread-list-item"]').should('have.length', totalThreads.length)
     })
 
     // count read / unread Mobile multiSelection button
@@ -85,7 +85,7 @@ describe('Messaging_SetReadStatus', () => {
       getUnread(totalThreads)
       // UnRead to read
       cy.get('[data-test="option_toggleMultiSelection"]').click()
-      cy.get('.scroll').within(() => {
+      cy.get('[data-test="threads-panel"]').within(() => {
         cy.get('[data-test="thread-list-item"]').first().click()
       })
       cy.get('[data-test="option_options"]').click()
@@ -93,7 +93,7 @@ describe('Messaging_SetReadStatus', () => {
       cy.get('.nb-new-messages').contains(unread - 1)
       // Read to unread
       cy.get('[data-test="option_toggleMultiSelection"]').click()
-      cy.get('.scroll').within(() => {
+      cy.get('[data-test="threads-panel"]').within(() => {
         cy.get('[data-test="thread-list-item"]').first().click()
       })
       cy.get('[data-test="option_options"]').click()

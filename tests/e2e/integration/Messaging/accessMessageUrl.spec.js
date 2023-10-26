@@ -15,11 +15,11 @@ describe('Warning', () => {
     cy.login(HEADMASTER, `${messagingURL}/${messageId}`)
 
     // Check if thirdThread exist
-    cy.get('.scroll').within(() => {
+    cy.get('[data-test="threads-panel"]').within(() => {
       getThread(thirdThread).should('be.exist')
     })
     // Check if just one thread is visible
-    cy.get('.scroll').should('have.length', 1)
+    cy.get('[data-test="thread-list-item"]').should('have.length', 1)
   })
 
   // Messaging_AccessMessageViaURL on mobile
@@ -31,7 +31,7 @@ describe('Warning', () => {
     cy.login(HEADMASTER, `${messagingURL}/${messageId}`)
 
     // Check if thirdThread exist
-    cy.get('.scroll').within(() => {
+    cy.get('[data-test="threads-panel"]').within(() => {
       getThread(thirdThread).should('be.exist')
     })
     // Check if just one thread is visible

@@ -88,7 +88,7 @@ describe('Personal folders', () => {
       toggleFolder(personalFolderToRename)
     })
     // Check if content exist
-    cy.get('.scroll').within(() => {
+    cy.get('[data-test="threads-panel"]').within(() => {
       getThread(personalFolderThread).should('be.exist')
     })
 
@@ -101,7 +101,7 @@ describe('Personal folders', () => {
       cy.get('[data-test=personal-folders]').contains(exactString(personalFolderNewName)).should('be.visible')
     })
     // Check if content already exist
-    cy.get('.scroll').within(() => {
+    cy.get('[data-test="threads-panel"]').within(() => {
       getThread(personalFolderThread).should('be.exist')
     })
 
@@ -134,7 +134,7 @@ describe('Personal folders', () => {
       toggleFolder(personalFolderToDelete)
     })
     // Check if content folder exist
-    cy.get('.scroll').within(() => {
+    cy.get('[data-test="threads-panel"]').within(() => {
       getThread(PersonalFolderThread).should('be.exist')
     })
     // Click on subFolder to see the content
@@ -142,7 +142,7 @@ describe('Personal folders', () => {
       cy.get('[data-test="personalSubFolder-sous-dossier"]').click()
     })
     // Check if content subFolder exist
-    cy.get('.scroll').within(() => {
+    cy.get('[data-test="threads-panel"]').within(() => {
       getThread(PersonalSubFolderThread).should('be.exist')
     })
 
@@ -177,7 +177,7 @@ describe('Personal folders', () => {
       cy.get('[data-test="personalSubFolder-sous-dossier"]').click()
     })
     // Check if content exist
-    cy.get('.scroll').within(() => {
+    cy.get('[data-test="threads-panel"]').within(() => {
       getThread(subFolderThread).should('be.exist')
     })
     // Delete subFolder
@@ -191,7 +191,7 @@ describe('Personal folders', () => {
     // Check if subFolder doesn't exist
     cy.get('[data-test=messaging-menu]').find('[data-test=personal-folders]').contains(exactString(personalSubFolderToDelete.name)).should('not.exist')
     // Check if content doesn't exist
-    cy.get('.scroll').within(() => {
+    cy.get('[data-test="threads-panel"]').within(() => {
       getThread(subFolderThread).should('not.exist')
     })
     // Go to trash
@@ -210,7 +210,7 @@ describe('Personal folders', () => {
       toggleFolder(personalFolderToDelete)
     })
     // Check if content folder exist
-    cy.get('.scroll').within(() => {
+    cy.get('[data-test="threads-panel"]').within(() => {
       getThread(PersonalFolderThread).should('be.exist')
     })
     // Check if subFolder is visible

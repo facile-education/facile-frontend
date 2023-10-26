@@ -51,7 +51,7 @@ describe('Warning', () => {
     const ModifiedDraftContent = this.messagingData.ModifiedDraftContent[0]
 
     // Right click on first thread
-    cy.get('.scroll').within(() => {
+    cy.get('[data-test="threads-panel"]').within(() => {
       cy.get('[data-test="thread-list-item"]').first().rightclick()
     })
     // Click on reply in options menu
@@ -105,7 +105,7 @@ describe('Warning', () => {
     waitMessagingToBeLoaded()
 
     // Right click on first thread
-    cy.get('.scroll').within(() => {
+    cy.get('[data-test="threads-panel"]').within(() => {
       cy.get('[data-test="thread-list-item"]').first().rightclick()
     })
     // Click on reply in options menu

@@ -19,7 +19,7 @@ describe('Messaging_TransferMessage', () => {
       waitMessagingToBeLoaded()
 
       // Click on first thread
-      cy.get('.scroll').within(() => {
+      cy.get('[data-test="threads-panel"]').within(() => {
         cy.get('[data-test="thread-list-item"]').first().click()
       })
       // Click on forward icon
@@ -49,7 +49,7 @@ describe('Messaging_TransferMessage', () => {
       waitMessagingToBeLoaded()
 
       // Right click on first thread
-      cy.get('.scroll').within(() => {
+      cy.get('[data-test="threads-panel"]').within(() => {
         cy.get('[data-test="thread-list-item"]').first().rightclick()
       })
       // Click on forward in options menu

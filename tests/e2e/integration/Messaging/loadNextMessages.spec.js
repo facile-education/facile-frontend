@@ -30,9 +30,11 @@ describe('Load next message', () => {
         // Check if 20 threads is visible
         cy.get('[data-test="thread-list-item"]').should('have.length', 20)
         // Scroll to bottom
-        cy.get('.scroll').scrollTo('bottom')
-        // Check if all threads is visible
-        cy.get('[data-test="thread-list-item"]').should('have.length', 25)
+        cy.get('[data-test="threads-panel"]').within(() => {
+          cy.get('.scroll').scrollTo('bottom')
+          // Check if all threads is visible
+          cy.get('[data-test="thread-list-item"]').should('have.length', 25)
+        })
         }
       })
     })

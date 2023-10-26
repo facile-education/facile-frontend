@@ -35,7 +35,7 @@ describe('Draft', () => {
       // Check draft list
       cy.get('[data-test="option_toggleMessagingMenu"]').click()
       cy.get('[data-test="messaging-menu"]').contains('button', 'Brouillons').click()
-      cy.get('.scroll').within(() => {
+      cy.get('[data-test="threads-panel"]').within(() => {
         getThread(draftToCreate).should('be.exist')
       })
     })
@@ -68,7 +68,7 @@ describe('Draft', () => {
         cy.get('[data-test="draftButton"]').click()
       })
       // Check draft modified
-      cy.get('.scroll').within(() => {
+      cy.get('[data-test="threads-panel"]').within(() => {
         getThread(ModifiedDraftContent).should('be.exist')
       })
     })
@@ -103,7 +103,7 @@ describe('Draft', () => {
       waitMessagingToBeLoaded()
 
       // Check draft list
-      cy.get('.scroll').within(() => {
+      cy.get('[data-test="threads-panel"]').within(() => {
         getThread(existingDraftThreads).should('be.exist')
       })
     })
@@ -121,7 +121,7 @@ describe('Draft', () => {
     // open draft menu
     cy.get('[data-test="messaging-menu"]').contains('button', 'Brouillon').click()
     // click on draft
-    cy.get('.scroll').within(() => {
+    cy.get('[data-test="threads-panel"]').within(() => {
       cy.get('[data-test=thread-list-item]').first().click()
     })
     // open edit draft modal
