@@ -2,9 +2,9 @@ import { messagingURL } from '../../support/constants/urls'
 import { HEADMASTER, PARENT, STUDENT } from '../../support/constants/users'
 import { openContactPickerSelection, openTeachersList } from '../../support/utils/contactPickerUtils'
 
-describe('SearchUser', () => {
+describe('UserSelection_AddressBook', () => {
   beforeEach(() => {
-    cy.fixture('messaging.json').as('messagingData')
+    cy.fixture('contactPicker.json').as('contactPickerData')
   })
 
   it('UserSelection_AddressBook_SearchUser', function () {
@@ -53,5 +53,32 @@ describe('SearchUser', () => {
     })
     // Check if content is reset
     cy.get('.user-list-container').should('not.exist')
+  })
+
+  it('UserSelection_AddressBook_filterResultUser', function () {
+    const FirstTeacherInList = this.contactPickerData.firstTeacherInList
+
+    cy.login(HEADMASTER, messagingURL)
+    openTeachersList()
+
+    cy.get('.group > .filter-input').type('jack')
+    cy.get('.user-list').contains('button', FirstTeacherInList.lastName).should('be.exist')
+    cy.focused().clear()
+
+    cy.get('.group > .filter-input').type(' jack')
+    cy.get('.user-list').contains('button', FirstTeacherInList.lastName).should('be.exist')
+    cy.focused().clear()
+
+    cy.get('.group > .filter-input').type('JACK')
+    cy.get('.user-list').contains('button', FirstTeacherInList.lastName).should('be.exist')
+    cy.focused().clear()
+
+    cy.get('.group > .filter-input').type('Jack')
+    cy.get('.user-list').contains('button', FirstTeacherInList.lastName).should('be.exist')
+    cy.focused().clear()
+
+    cy.get('.group > .filter-input').type('Jàck')
+    cy.get('.user-list').contains('button', FirstTeacherInList.lastName).should('be.exist')
+    cy.focused().clear()
   })
 })
