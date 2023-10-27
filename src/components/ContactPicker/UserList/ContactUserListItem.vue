@@ -1,5 +1,5 @@
 <template>
-  <li>
+  <li data-test="UserListItem">
     <button @click="toggleUser">
       <span>
         {{ getFullName(user) }}
