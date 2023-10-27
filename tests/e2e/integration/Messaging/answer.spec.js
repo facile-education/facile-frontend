@@ -102,7 +102,7 @@ describe('Messaging_Reply', () => {
     beforeEach(function () {
       cy.viewport('iphone-5')
     })
-    it('check answer modale on mobile', function () {
+    it('Messaging_Reply_Modal_Mobile', function () {
       cy.login(HEADMASTER, messagingURL)
       waitMessagingToBeLoaded()
       cy.get('[data-test="thread-list-item"]').first().click()

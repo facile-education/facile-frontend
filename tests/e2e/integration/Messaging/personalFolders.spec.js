@@ -18,7 +18,7 @@ const triggerOptionOnFolder = (folder, action) => {
 
 /* =========== Tests ============= */
 
-describe('Personal folders', () => {
+describe('Messaging_PersonalFolder', () => {
   beforeEach(() => {
     cy.loadTables('messaging/messaging_tables.sql')
     cy.login(SCHOOL_ADMIN, messagingURL)
@@ -51,7 +51,6 @@ describe('Personal folders', () => {
     })
   })
 
-  // Messaging_CreatePersonalFolder
   it('Messaging_CreatePersonalFolder', function () {
     const personalFoldersToCreate = this.messagingData.personalFolders.personalFoldersToCreate
 
@@ -122,7 +121,6 @@ describe('Personal folders', () => {
     })
   })
 
-  // Messaging_DeletePersonalFolder
   it('Messaging_DeletePersonalFolder', function () {
     const existingPersonalFolders = this.messagingData.personalFolders.existingPersonalFolders
     const personalFolderToDelete = existingPersonalFolders[0]
@@ -164,7 +162,6 @@ describe('Personal folders', () => {
     getThread(PersonalSubFolderThread).should('be.exist')
   })
 
-  // Messaging_DeleteSubFolder
   it('Messaging_DeleteSubFolder', function () {
     const existingPersonalFolders = this.messagingData.personalFolders.existingPersonalFolders
     const personalFolderToDelete = existingPersonalFolders[0]
@@ -199,7 +196,6 @@ describe('Personal folders', () => {
     getThread(subFolderThread).should('be.exist')
   })
 
-  // Messaging_PersonalFolderBehaviour
   it('Messaging_PersonalFolderBehaviour', function () {
     const existingPersonalFolders = this.messagingData.personalFolders.existingPersonalFolders
     const personalFolderToDelete = existingPersonalFolders[0]

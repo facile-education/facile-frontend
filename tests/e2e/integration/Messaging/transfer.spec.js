@@ -59,7 +59,7 @@ describe('Messaging_TransferMessage', () => {
       cy.get('.footer').contains('button', 'Envoyer').click()
     })
 
-    it('Messaging_TransferThread', function () {
+    it('Messaging_Transfer_Thread', function () {
       const threadToTransfer = this.messagingData.existingThreads[1]
 
       // Login
@@ -88,7 +88,7 @@ describe('Messaging_TransferMessage', () => {
       getMessage(threadToTransfer[2])
     })
 
-    it.only('Messaging_TransferMessageInThread', function () {
+    it.only('Messaging_Transfer_MessageInThread', function () {
       const threadToTransfer = this.messagingData.existingThreads[1]
 
       // Login
@@ -120,7 +120,7 @@ describe('Messaging_TransferMessage', () => {
     })
   })
 
-  it('Check transfer modal mobile', () => {
+  it('Messaging_Transfer_Modal_Mobile', () => {
     cy.viewport('iphone-5')
     // Login
     cy.login(HEADMASTER, messagingURL)

@@ -41,7 +41,7 @@ describe('Warning', () => {
     cy.get('[data-test="thread-list-item"]').should('not.have.length', 1)
   })
 
-  it('Messaging_AccessMessageViaURL_Refresh', function () {
+  it('Messaging_AccessMessageViaURL_ChangeBox', function () {
     const thirdThread = this.messagingData.existingThreads[2]
     const messageId = thirdThread[0].id
     // Login
