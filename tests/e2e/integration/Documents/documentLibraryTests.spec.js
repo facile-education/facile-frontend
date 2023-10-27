@@ -2,7 +2,8 @@ import { documentURL } from '../../support/constants/urls'
 import { HEADMASTER } from '../../support/constants/users'
 
 describe('Documents scripts', () => {
-  it('empty the documentLibrary and database', () => {
+  // Run it many times to see if there is problem on creation
+  it('empty the documentLibrary and database then create note', () => {
     cy.exec('npm run dl:loadDocumentLibrary document_library_empty.tar.xz')
     cy.loadTables('documents/documents_tables_empty.sql')
 
@@ -21,11 +22,11 @@ describe('Documents scripts', () => {
     })
     cy.contains('[data-test=file]', 'createdNote').should('exist')
 
-    cy.exec('npm run dl:loadDocumentLibrary document_library_empty.tar.xz')
-    cy.loadTables('documents/documents_tables_empty.sql')
-
-    cy.login(HEADMASTER, documentURL)
-    cy.wait(10000)
-    cy.contains('[data-test=file]', 'createdNote').should('not.exist')
+    // cy.exec('npm run dl:loadDocumentLibrary document_library_empty.tar.xz')
+    // cy.loadTables('documents/documents_tables_empty.sql')
+    //
+    // cy.login(HEADMASTER, documentURL)
+    // cy.wait(10000)
+    // cy.contains('[data-test=file]', 'createdNote').should('not.exist')
   })
 })

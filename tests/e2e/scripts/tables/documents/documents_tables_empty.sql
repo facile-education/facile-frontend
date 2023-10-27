@@ -50,6 +50,93 @@ CREATE TABLE `AMImageEntry` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Only delete concern row of table `AssetEntry`
+--
+
+-- TODO: CREATE TABLE if not exist
+-- TODO: get classNameId of dlfileEntry and dlFolder dynamically with table className
+
+
+DELETE FROM AssetEntry
+WHERE classNameId = 20010;
+DELETE FROM AssetEntry
+WHERE classNameId = 20015;
+
+--
+-- Table structure for table `FriendlyURLEntry`
+--
+
+DROP TABLE IF EXISTS `FriendlyURLEntry`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `FriendlyURLEntry` (
+  `mvccVersion` bigint(20) NOT NULL DEFAULT 0,
+  `ctCollectionId` bigint(20) NOT NULL DEFAULT 0,
+  `uuid_` varchar(75) DEFAULT NULL,
+  `defaultLanguageId` varchar(75) DEFAULT NULL,
+  `friendlyURLEntryId` bigint(20) NOT NULL,
+  `groupId` bigint(20) DEFAULT NULL,
+  `companyId` bigint(20) DEFAULT NULL,
+  `createDate` datetime(6) DEFAULT NULL,
+  `modifiedDate` datetime(6) DEFAULT NULL,
+  `classNameId` bigint(20) DEFAULT NULL,
+  `classPK` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`friendlyURLEntryId`,`ctCollectionId`),
+  UNIQUE KEY `IX_D51F1A48` (`uuid_`,`groupId`,`ctCollectionId`),
+  KEY `IX_FE1EF2E9` (`groupId`,`classNameId`,`classPK`,`ctCollectionId`),
+  KEY `IX_F1E51DC6` (`uuid_`,`companyId`,`ctCollectionId`),
+  KEY `IX_3328CB1E` (`uuid_`,`ctCollectionId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `FriendlyURLEntryLocalization`
+--
+
+DROP TABLE IF EXISTS `FriendlyURLEntryLocalization`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `FriendlyURLEntryLocalization` (
+  `mvccVersion` bigint(20) NOT NULL DEFAULT 0,
+  `ctCollectionId` bigint(20) NOT NULL DEFAULT 0,
+  `friendlyURLEntryLocalizationId` bigint(20) NOT NULL,
+  `companyId` bigint(20) DEFAULT NULL,
+  `friendlyURLEntryId` bigint(20) DEFAULT NULL,
+  `languageId` varchar(75) DEFAULT NULL,
+  `urlTitle` varchar(255) DEFAULT NULL,
+  `groupId` bigint(20) DEFAULT NULL,
+  `classNameId` bigint(20) DEFAULT NULL,
+  `classPK` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`friendlyURLEntryLocalizationId`,`ctCollectionId`),
+  UNIQUE KEY `IX_BBF3E90F` (`friendlyURLEntryId`,`languageId`,`ctCollectionId`),
+  UNIQUE KEY `IX_29720B13` (`groupId`,`classNameId`,`languageId`,`urlTitle`,`ctCollectionId`),
+  KEY `IX_4F41A5C8` (`friendlyURLEntryId`,`ctCollectionId`),
+  KEY `IX_40A51197` (`groupId`,`classNameId`,`classPK`,`languageId`,`ctCollectionId`),
+  KEY `IX_C753170C` (`groupId`,`classNameId`,`urlTitle`,`ctCollectionId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `FriendlyURLEntryMapping`
+--
+
+DROP TABLE IF EXISTS `FriendlyURLEntryMapping`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `FriendlyURLEntryMapping` (
+  `mvccVersion` bigint(20) NOT NULL DEFAULT 0,
+  `ctCollectionId` bigint(20) NOT NULL DEFAULT 0,
+  `friendlyURLEntryMappingId` bigint(20) NOT NULL,
+  `companyId` bigint(20) DEFAULT NULL,
+  `classNameId` bigint(20) DEFAULT NULL,
+  `classPK` bigint(20) DEFAULT NULL,
+  `friendlyURLEntryId` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`friendlyURLEntryMappingId`,`ctCollectionId`),
+  UNIQUE KEY `IX_5BE324B9` (`classNameId`,`classPK`,`ctCollectionId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `Document_Version`
@@ -696,19 +783,6 @@ CREATE TABLE `SocialActivity` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Only delete concern row of table `AssetEntry`
---
-
--- TODO: CREATE TABLE if not exist
--- TODO: get classNameId of dlfileEntry and dlFolder dynamically with table className
-
-
-DELETE FROM AssetEntry
-WHERE classNameId = 20010;
-DELETE FROM AssetEntry
-WHERE classNameId = 20015;
-
---
 -- Only delete concern row of table `ResourcePermission` (and re-add some necessary)
 --
 
@@ -728,6 +802,114 @@ INSERT INTO `ResourcePermission` VALUES (0,0,46201,20097,'com.liferay.document.l
 /*!40000 ALTER TABLE `ResourcePermission` ENABLE KEYS */;
 UNLOCK TABLES;
 
+
+
+
+
+--
+-- Table structure for table `DDMField`
+--
+
+DROP TABLE IF EXISTS `DDMField`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `DDMField` (
+  `mvccVersion` bigint(20) NOT NULL DEFAULT 0,
+  `ctCollectionId` bigint(20) NOT NULL DEFAULT 0,
+  `fieldId` bigint(20) NOT NULL,
+  `companyId` bigint(20) DEFAULT NULL,
+  `parentFieldId` bigint(20) DEFAULT NULL,
+  `storageId` bigint(20) DEFAULT NULL,
+  `structureVersionId` bigint(20) DEFAULT NULL,
+  `fieldName` varchar(255) DEFAULT NULL,
+  `fieldType` varchar(255) DEFAULT NULL,
+  `instanceId` varchar(75) DEFAULT NULL,
+  `localizable` tinyint(4) DEFAULT NULL,
+  `priority` int(11) DEFAULT NULL,
+  PRIMARY KEY (`fieldId`,`ctCollectionId`),
+  UNIQUE KEY `IX_1BB20E75` (`storageId`,`instanceId`,`ctCollectionId`),
+  KEY `IX_5378BAAD` (`companyId`,`fieldType`,`ctCollectionId`),
+  KEY `IX_582EBFF1` (`storageId`,`ctCollectionId`),
+  KEY `IX_5C0B8AE5` (`structureVersionId`,`ctCollectionId`),
+  KEY `IX_600F8E00` (`storageId`,`fieldName`,`ctCollectionId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `DDMFieldAttribute`
+--
+
+DROP TABLE IF EXISTS `DDMFieldAttribute`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `DDMFieldAttribute` (
+  `mvccVersion` bigint(20) NOT NULL DEFAULT 0,
+  `ctCollectionId` bigint(20) NOT NULL DEFAULT 0,
+  `fieldAttributeId` bigint(20) NOT NULL,
+  `companyId` bigint(20) DEFAULT NULL,
+  `fieldId` bigint(20) DEFAULT NULL,
+  `storageId` bigint(20) DEFAULT NULL,
+  `attributeName` varchar(255) DEFAULT NULL,
+  `languageId` varchar(75) DEFAULT NULL,
+  `largeAttributeValue` longtext DEFAULT NULL,
+  `smallAttributeValue` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`fieldAttributeId`,`ctCollectionId`),
+  UNIQUE KEY `IX_22EEBF0C` (`fieldId`,`attributeName`,`languageId`,`ctCollectionId`),
+  KEY `IX_52703248` (`attributeName`,`smallAttributeValue`,`ctCollectionId`),
+  KEY `IX_EC62446F` (`storageId`,`ctCollectionId`),
+  KEY `IX_1E90C536` (`storageId`,`languageId`,`ctCollectionId`),
+  KEY `IX_36E78464` (`storageId`,`attributeName`,`ctCollectionId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `DDMStorageLink`
+--
+
+DROP TABLE IF EXISTS `DDMStorageLink`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `DDMStorageLink` (
+  `mvccVersion` bigint(20) NOT NULL DEFAULT 0,
+  `ctCollectionId` bigint(20) NOT NULL DEFAULT 0,
+  `uuid_` varchar(75) DEFAULT NULL,
+  `storageLinkId` bigint(20) NOT NULL,
+  `companyId` bigint(20) DEFAULT NULL,
+  `classNameId` bigint(20) DEFAULT NULL,
+  `classPK` bigint(20) DEFAULT NULL,
+  `structureId` bigint(20) DEFAULT NULL,
+  `structureVersionId` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`storageLinkId`,`ctCollectionId`),
+  UNIQUE KEY `IX_6979A733` (`classPK`,`ctCollectionId`),
+  KEY `IX_5BAF16EE` (`structureId`,`ctCollectionId`),
+  KEY `IX_13E12C80` (`structureVersionId`,`ctCollectionId`),
+  KEY `IX_981FDA0` (`uuid_`,`companyId`,`ctCollectionId`),
+  KEY `IX_9F994F84` (`uuid_`,`ctCollectionId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `DDMStructureLink`
+--
+
+DROP TABLE IF EXISTS `DDMStructureLink`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `DDMStructureLink` (
+  `mvccVersion` bigint(20) NOT NULL DEFAULT 0,
+  `ctCollectionId` bigint(20) NOT NULL DEFAULT 0,
+  `structureLinkId` bigint(20) NOT NULL,
+  `companyId` bigint(20) DEFAULT NULL,
+  `classNameId` bigint(20) DEFAULT NULL,
+  `classPK` bigint(20) DEFAULT NULL,
+  `structureId` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`structureLinkId`,`ctCollectionId`),
+  UNIQUE KEY `IX_C8DE7401` (`classNameId`,`classPK`,`structureId`,`ctCollectionId`),
+  KEY `IX_4C181B39` (`classNameId`,`classPK`,`ctCollectionId`),
+  KEY `IX_A2D51B64` (`ctCollectionId`),
+  KEY `IX_FD8251B6` (`structureId`,`ctCollectionId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
