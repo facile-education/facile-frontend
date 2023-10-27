@@ -1,0 +1,102 @@
+{
+    "teacherInTwoList": {
+        "firstName": "Mitchell",
+        "lastName": "BOAS"
+    },
+    "firstTeacherInList": {
+        "firstName": "Jack",
+        "lastName": "ACKWOOD"
+    },
+    "Contacts": [
+        {
+          "label": "Assistant Technique",
+          "lastName": "BETTANEY",
+          "isVisibleisVisibleStudent": true,
+          "isVisibleParent": true
+        },
+        {
+          "label": "Bibliothécaire",
+          "lastName": "ROSENFELD",
+          "isVisibleStudent": true,
+          "isVisibleParent": true
+        },
+        {
+          "label": "Caissier Comptable",
+          "lastName": "GLYNN",
+          "isVisibleStudent": true,
+          "isVisibleParent": true
+        },
+        {
+          "label": "Conseiller en Orientation",
+          "lastName": "PIDEON",
+          "isVisibleStudent": true,
+          "isVisibleParent": true
+        },
+        {
+          "label": "Conseiller Social",
+          "lastName": "GLENDINNING",
+          "isVisibleStudent": true,
+          "isVisibleParent": true
+        },
+        {
+          "label": "Directeur",
+          "lastName": "HUE",
+          "isVisibleStudent": true,
+          "isVisibleParent": true
+        },
+        {
+          "label": "Doyen",
+          "lastName": "BOAS",
+          "isVisibleStudent": true,
+          "isVisibleParent": true
+        },
+        {
+          "label": "Enseignant",
+          "lastName": "ACKWOOD",
+          "isVisibleStudent": true,
+          "isVisibleParent": true
+        },
+        {
+          "label": "Infirmier",
+          "lastName": "BELLSHAM",
+          "isVisibleStudent": true,
+          "isVisibleParent": true
+          },
+        {
+          "label": "Psychologue",
+          "lastName": "CHADWEN",
+          "isVisibleStudent": true,
+          "isVisibleParent": true
+        },
+        {
+          "label": "Secrétaire",
+          "lastName": "AGER",
+          "isVisibleStudent": true,
+          "isVisibleParent": true
+        },
+        {
+            "label": "isVisibleStudentInClass",
+            "lastName": "BATTELLI",
+            "isVisibleStudent": true,
+            "isVisibleParent": false
+        },
+        {
+            "label": "isVisibleStudentOtherClass",
+            "lastName": "ALVARADO",
+            "isVisibleStudent": false,
+            "isVisibleParent": false
+        },
+        {
+            "label": "parentChildren",
+            "lastName": "Ribeiro",
+            "isVisibleStudent": true,
+            "isVisibleParent": true
+        },
+        {
+            "label": "studentParent",
+            "lastName": "Ribeiro",
+            "isVisibleStudent": true,
+            "isVisibleParent": true
+        }
+      ]
+}
