@@ -37,7 +37,7 @@ describe('UserSelection_OpenAdressBook', () => {
   })
 
   // UserSelection_OpenAdressBook_mobile
-  it.only('UserSelection_OpenAdressBook_mobile', function () {
+  it('UserSelection_OpenAdressBook_mobile', function () {
     cy.viewport('iphone-5')
     // Open contactPicker selection
     openContactPickerSelection()
@@ -58,10 +58,10 @@ describe('UserSelection_OpenAdressBook', () => {
     // open the modal
     cy.get('[data-test="recipients-section"] > .base-button').click()
     cy.get('[data-test="contactPickerModal"]').should('be.visible').within(() => {
-      // Check if annuaire menu is visible
-      cy.get('.advanced-search').should('be.visible')
-      // Check if adressBook menu is not visible
-      cy.get('.address-book').should('not.exist')
+      // Check if annuaire menu is not visible
+      cy.get('.advanced-search').should('not.exist')
+      // Check if adressBook menu is visible
+      cy.get('.address-book').should('be.visible')
     })
   })
 })
