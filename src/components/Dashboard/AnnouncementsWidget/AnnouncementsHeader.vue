@@ -25,6 +25,7 @@
       <CreateButton
         v-if="canCreateAnnouncement"
         :title="$t('create-annouce')"
+        data-test="buttonCreateAnnouce"
         @click="isCreateModalDisplayed = true"
       />
       <button
