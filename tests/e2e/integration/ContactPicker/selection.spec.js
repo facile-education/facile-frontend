@@ -21,7 +21,7 @@ describe('Selection', () => {
     cy.get('.address-book').contains('button', 'Enseignants·tes').click()
     // Type in search bar
     cy.get('.group > .filter-input').type(TeacherInTwoList.lastName)
-    // Click on BOAS to add him in recipients
+    // Click on teacher's name to add him in recipients
     cy.get('.user-list').contains('button', TeacherInTwoList.lastName).click()
 
     // Check if this teacher is add in recipient input

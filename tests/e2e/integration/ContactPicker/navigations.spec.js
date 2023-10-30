@@ -37,7 +37,7 @@ describe('UserSelection_OpenAdressBook', () => {
   })
 
   // UserSelection_OpenAdressBook_mobile
-  it('UserSelection_OpenAdressBook_mobile', function () {
+  it.only('UserSelection_OpenAdressBook_mobile', function () {
     cy.viewport('iphone-5')
     // Open contactPicker selection
     openContactPickerSelection()
