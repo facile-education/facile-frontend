@@ -13,7 +13,7 @@ fi
 
 # Delete current doc library
 echo "Deleting current document_library..."
-rm -Rf "${PATH_TO_DOCUMENT_LIBRARY}document_library"
+rm -r "${PATH_TO_DOCUMENT_LIBRARY}/document_library"
 
 if [[ $1 ]];
 then
