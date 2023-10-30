@@ -1,5 +1,7 @@
 <template>
-  <section>
+  <section
+    data-test="schedule-widget"
+  >
     <ScheduleHeader
       v-if="currentDisplayedDate"
       :current-date="currentDisplayedDate"

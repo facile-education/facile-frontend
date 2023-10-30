@@ -1,5 +1,7 @@
 <template>
-  <section>
+  <section
+    data-test="diary-widget"
+  >
     <DiaryHeader
       :nb-new-events="nbNewEvents"
       :un-read-only="unReadOnly"

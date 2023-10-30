@@ -1,5 +1,7 @@
 <template>
-  <section>
+  <section
+    data-test="statistics-widget"
+  >
     <StatisticsHeader />
     <WeprodeSpinner
       v-if="isLoading"

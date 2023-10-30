@@ -1,5 +1,7 @@
 <template>
-  <section>
+  <section
+    data-test="homeWork-widget"
+  >
     <HomeworkHeader
       :nb-homeworks-undone="nbHomeworksUndone"
       :undone-only="undoneOnly"

@@ -1,5 +1,7 @@
 <template>
-  <section>
+  <section
+    data-test="announcement-widget"
+  >
     <AnnouncementsHeader
       :nb-new-announcements="nbUnreadAnnouncements"
       :un-read-only="unReadOnly"
