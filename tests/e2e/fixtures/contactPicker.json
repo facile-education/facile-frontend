@@ -87,7 +87,7 @@
             "isVisibleParent": false
         },
         {
-            "label": "parentChildren",
+            "label": "parentStudent",
             "lastName": "Ribeiro",
             "isVisibleStudent": true,
             "isVisibleParent": true
