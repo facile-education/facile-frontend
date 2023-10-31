@@ -1,5 +1,5 @@
 {
-    "teacherInTwoList": {
+    "userInTwoDifferentList": {
         "firstName": "Mitchell",
         "lastName": "BOAS"
     },
@@ -97,6 +97,63 @@
             "lastName": "Ribeiro",
             "isVisibleStudent": true,
             "isVisibleParent": true
+        }
+      ],
+      "Lists": [
+        {
+          "label": "Assistants·tes techniques",
+          "userInList": "BETTANEY",
+          "nbTotalUsers": 3
+        },
+        {
+          "label": "Bibliothécaires",
+          "userInList": "ROSENFELD",
+          "nbTotalUsers": 2
+        },
+        {
+          "label": "Caissiers·ères comptables",
+          "userInList": "GLYNN",
+          "nbTotalUsers": 1
+        },
+        {
+          "label": "Conseillers·ères d'orientation",
+          "userInList": "PIDEON",
+          "nbTotalUsers": 2
+        },
+        {
+          "label": "Conseillers·ères sociaux·ales",
+          "userInList": "GLENDINNING",
+          "nbTotalUsers": 3
+        },
+        {
+          "label": "Directeurs·trices",
+          "userInList": "HUE",
+          "nbTotalUsers": 3
+        },
+        {
+          "label": "Doyens·ennes",
+          "userInList": "BOAS",
+          "nbTotalUsers": 6
+        },
+        {
+          "label": "Enseignants·tes",
+          "userInList": "ACKWOOD",
+          "nbTotalUsers": 115
+        },
+        {
+          "label": "Infirmiers·ères",
+          "userInList": "BELLSHAM",
+          "nbTotalUsers": 1
+          },
+        {
+          "label": "Psychologues",
+          "userInList": "CHADWEN",
+          "nbTotalUsers": 2
+        },
+        {
+          "label": "Secrétaire",
+          "userInList": "AGER",
+          "nbTotalUsers": 6
         }
       ]
 }
