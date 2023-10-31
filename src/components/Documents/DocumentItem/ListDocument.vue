@@ -15,6 +15,7 @@
   >
     <div
       class="selection-icon"
+      data-test="selection-icon"
       tabindex="0"
       @keypress.stop.prevent.enter="ctrlSelect"
       @click.shift.stop="shiftSelect"

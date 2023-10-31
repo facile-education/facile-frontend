@@ -1,0 +1,28 @@
+{
+  "currentPersonalDocumentsStructure": {
+    "folders": [
+      {
+        "label": "Dossier",
+        "id": 545207,
+        "folders": [
+          {
+            "label": "Sous dossier",
+            "id": 545210,
+            "folders": [
+              {
+                "label": "Sous-sous dossier",
+                "id": 545213,
+                "folders": [],
+                "files": []
+              }
+            ],
+            "files": []
+          }
+        ],
+        "files": []
+      }
+    ],
+    "files": []
+  },
+  "folderOptions": ["Renommer", "Dupliquer", "Déplacer", "Supprimer", "Détails"]
+}
