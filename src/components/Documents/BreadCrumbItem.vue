@@ -8,7 +8,7 @@
     <img
       src="@assets/icon_arrow_left.svg"
       class="image"
-      alt="go back"
+      :alt="$t('goBack')"
     >
     <span class="previous-name">{{ (previousFolderName.length > 12) ? $t('Commons.back') : previousFolderName }}</span>
   </button>
@@ -389,3 +389,9 @@ export default {
 //}
 
 </style>
+
+<i18n locale="fr">
+{
+  "goBack": "Retour"
+}
+</i18n>
