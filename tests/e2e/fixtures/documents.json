@@ -22,7 +22,13 @@
         "files": []
       }
     ],
-    "files": []
+    "files": [
+      {
+        "label": "Image.png"
+      }
+    ]
   },
-  "folderOptions": ["Renommer", "Dupliquer", "Déplacer", "Supprimer", "Détails"]
+  "folderOptions": ["Renommer", "Dupliquer", "Déplacer", "Télécharger", "Supprimer", "Détails"],
+  "fileOptions": ["Ouvrir", "Renommer", "Déplacer", "Dupliquer", "Télécharger", "Supprimer", "Détails"],
+  "multiSelectionOptions": ["Déplacer", "Dupliquer", "Supprimer"]
 }
