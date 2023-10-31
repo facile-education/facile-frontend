@@ -1,18 +1,14 @@
-const openContactPickerSelection = () => {
+const openContactPicker = () => {
   cy.get('[data-test="createMessageButton"]').click()
   cy.get('[data-test="recipients-section"] > .base-button').click()
 }
 
-const openTeachersList = () => {
-  cy.get('[data-test="createMessageButton"]').click()
-  cy.get('[data-test="recipients-section"] > .base-button').click()
-  // Open list: "Personnels"
+const openList = (List) => {
   cy.get('.address-book').contains('button', 'Personnels').click()
-  // Click on teachers
-  cy.get('.address-book').contains('button', 'Enseignants·tes').click()
+  cy.get('.address-book').contains('button', `${List}`).click()
 }
 
 export {
-  openContactPickerSelection,
-  openTeachersList
+  openContactPicker,
+  openList
 }
