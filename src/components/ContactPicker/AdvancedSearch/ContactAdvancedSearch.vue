@@ -9,6 +9,7 @@
         v-model="searchQuery"
         :maxlength="200"
         :placeholder="$t('queryPlaceholder')"
+        data-test="inputSearchAdvanceSearch"
         @keyup.enter.stop="runSearch"
       />
       <WeprodeErrorMessage :error-message="$t(errorMessage)" />
