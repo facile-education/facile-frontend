@@ -1,6 +1,6 @@
 import { messagingURL } from '../../support/constants/urls'
 import { HEADMASTER, TEACHER, TEACHER2 } from '../../support/constants/users'
-import { openContactPickerSelection, openTeachersList } from '../../support/utils/contactPickerUtils'
+import { openContactPicker, openList } from '../../support/utils/contactPickerUtils'
 import { getMessage, getThread } from '../../support/utils/messagingUtils'
 
 describe('Selection', () => {
@@ -11,42 +11,39 @@ describe('Selection', () => {
     cy.login(HEADMASTER, messagingURL)
   })
   it('UserSelection_AddressBook_AddUserFromLists', function () {
-    const TeacherInTwoList = this.contactPickerData.teacherInTwoList
+    const userInTwoDifferentList = this.contactPickerData.userInTwoDifferentList
+    // Open contactPicker
+    openContactPicker()
     // Open teachers list
-    openContactPickerSelection()
-    console.log(TeacherInTwoList)
-    // Open list: "Personnels"
-    cy.get('.address-book').contains('button', 'Personnels').click()
-    // Click on teachers
-    cy.get('.address-book').contains('button', 'Enseignants·tes').click()
+    openList('Enseignants·tes')
     // Type in search bar
-    cy.get('.group > .filter-input').type(TeacherInTwoList.lastName)
-    // Click on teacher's name to add him in recipients
-    cy.get('.user-list').contains('button', TeacherInTwoList.lastName).click()
+    cy.get('.user-list').within(() => {
+      // Click on teacher's name to add him in recipients
+      cy.contains('button', userInTwoDifferentList.lastName).click()
+    })
 
     // Check if this teacher is add in recipient input
-    cy.get('.base-tags-input').within(() => {
-      cy.get('.tag-item').contains(`${TeacherInTwoList.lastName} ${TeacherInTwoList.firstName}`).should('be.exist')
+    cy.get('[data-test="recipientsInput"]').within(() => {
+      cy.get('.tag-item').contains(`${userInTwoDifferentList.lastName} ${userInTwoDifferentList.firstName}`).should('be.exist')
     })
 
     // Check if img change to remove icon
-    cy.get('.user-list').contains('button', TeacherInTwoList.lastName).within(() => {
+    cy.get('.user-list').contains('button', userInTwoDifferentList.lastName).within(() => {
       cy.get('img').should('have.attr', 'alt').should('eq', 'Supprimer')
     })
 
-    cy.get('.group > .filter-input').clear()
     // Click on "Doyens·ennes" to see this teacher in an other list
     cy.get('.address-book').contains('button', 'Doyens·ennes').click()
 
     // Check if img change
-    cy.get('.user-list').contains('button', TeacherInTwoList.lastName).within(() => {
+    cy.get('.user-list').contains('button', userInTwoDifferentList.lastName).within(() => {
       cy.get('img').should('have.attr', 'alt').should('eq', 'Supprimer')
     })
 
     // Click to remove
-    cy.get('.user-list').contains('button', TeacherInTwoList.lastName).click()
+    cy.get('.user-list').contains('button', userInTwoDifferentList.lastName).click()
     // Check if BOAS Mithchell is remove in recipient input
-    cy.get('.base-tags-input').within(() => {
+    cy.get('[data-test="recipientsInput"]').within(() => {
       cy.get('.tag-item').should('have.length', 0)
     })
 
@@ -59,13 +56,16 @@ describe('Selection', () => {
   it('UserSelection_AddressBook_AddList', function () {
     const MessageList = this.messagingData.ListMessage[0]
 
+    // Open contactPicker
+    openContactPicker()
     // Open teachers list
-    openTeachersList()
+    openList('Enseignants·tes')
 
     // Type a teacher name in search bar
-    cy.get('.group > .filter-input').type(TEACHER.lastName)
-    // Click on teacher to add him in recipients
-    cy.get('.user-list').contains('button', TEACHER.lastName).click()
+    cy.get('.user-list').within(() => {
+      // Click on teacher to add him in recipients
+      cy.contains('button', TEACHER.lastName).click()
+    })
 
     // Add teachers list in recipients
     cy.get('.address-book').contains('button', 'Enseignants·tes').within(() => {
@@ -75,10 +75,11 @@ describe('Selection', () => {
     })
 
     // Check if teacher list is visible in recipients input
-    cy.get('.base-tags-input').within(() => {
+    cy.get('[data-test="recipientsInput"]').within(() => {
       cy.get('.tag-item').contains('Enseignants·tes').should('be.exist')
     })
-    cy.get('[data-test="recipients-section"] > .base-button').click()
+    // Close contactPicker
+    cy.get('.close-contact').click()
 
     // Write message content
     cy.get('[data-test="createMessageModal"]').within(() => {
@@ -105,26 +106,29 @@ describe('Selection', () => {
 
   it('UserSelection_AddressBook_SelectAllResultUsers', function () {
     const FirstTeacherInList = this.contactPickerData.firstTeacherInList
+
+    // Open contactPicker
+    openContactPicker()
     // Open teachers list
-    openTeachersList()
+    openList('Enseignants·tes')
     // Add the first teacher
     cy.get('.user-list-container').within(() => {
       cy.get('[data-test="UserListItem"]').first().click()
     })
     // Check if this teacher his add in recipients input
-    cy.get('.base-tags-input').within(() => {
+    cy.get('[data-test="recipientsInput"]').within(() => {
       cy.get('.tag-item').contains(`${FirstTeacherInList.lastName} ${FirstTeacherInList.firstName}`).should('be.exist')
     })
     // Add all users in this list
-    cy.get('.user-list-header > button').click()
+    cy.get('[data-test="selectAllUsers"]').click()
     // Check if all users are in recipient input
-    cy.get('.base-tags-input').within(() => {
+    cy.get('[data-test="recipientsInput"]').within(() => {
       cy.get('.others').should('be.exist')
     })
     // Remove all users in this list
     cy.get('.user-list-header > button').click()
     // Check if all users and the alone teacher are remove from the recipient input
-    cy.get('.base-tags-input').within(() => {
+    cy.get('[data-test="recipientsInput"]').within(() => {
       cy.get('.others').should('not.exist')
       cy.get('.tag-item').should('not.exist')
     })
