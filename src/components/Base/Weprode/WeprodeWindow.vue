@@ -22,7 +22,6 @@
         <div
           ref="windowContainer"
           class="window-container"
-          @click.stop
           @keyup.stop
           @keydown.stop
           @submit.stop
