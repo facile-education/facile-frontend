@@ -15,5 +15,10 @@
             "title": "Deuxième annonce",
             "content": "Ceci est une deuxième annonce"
         }
-    ]
+    ],
+    "newsToEdit": {
+        "recipient": "Tous les élèves",
+        "title": "Annonce modifiée",
+        "content": "Ceci est une annonce modifié"
+    }
 }

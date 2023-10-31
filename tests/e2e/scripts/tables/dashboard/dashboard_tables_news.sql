@@ -44,6 +44,19 @@ CREATE TABLE `News_News` (
 --
 
 LOCK TABLES `News_News` WRITE;
+INSERT INTO News_News (newsId,companyId,title,content,authorId,isSchoolNews,isImportant,expirationDate,publicationDate,modificationDate,imageId) VALUES
+	 (562501,20097,'Annonce déjà existante','<html>
+ <head></head>
+<body>
+ <p>Contenu d''un annonce déjà existante destinée aux élèves</p> 
+</body></body>
+</html>',58811,1,0,'2024-06-29 23:59:59.000000','2023-10-30 16:45:00.000000','2023-10-30 15:49:49.469000',0),
+	 (562502,20097,'Deuxième annonce','<html>
+ <head></head>
+<body>
+ <p>Ceci est une deuxième annonce</p> 
+</body></body>
+</html>',58811,1,0,'2024-06-29 23:59:59.000000','2023-10-30 16:45:00.000000','2023-10-30 16:03:46.428000',0);
 /*!40000 ALTER TABLE `News_News` DISABLE KEYS */;
 /*!40000 ALTER TABLE `News_News` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -95,6 +108,9 @@ CREATE TABLE `News_NewsPopulation` (
 --
 
 LOCK TABLES `News_NewsPopulation` WRITE;
+INSERT INTO News_NewsPopulation (newsId,groupId,roleId) VALUES
+	 (562501,45407,45103),
+	 (562502,45407,45102);
 /*!40000 ALTER TABLE `News_NewsPopulation` DISABLE KEYS */;
 /*!40000 ALTER TABLE `News_NewsPopulation` ENABLE KEYS */;
 UNLOCK TABLES;
