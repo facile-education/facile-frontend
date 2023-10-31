@@ -227,9 +227,7 @@ button {
   padding: 0 20px;
 
   .title {
-    margin-top: 5px;
-    padding: 10px;
-    margin-bottom: 5px;
+    padding: 0 10px;
     font-size: 0.9375em;
     // font-weight: 600;
     letter-spacing: 0;
