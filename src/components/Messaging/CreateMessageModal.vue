@@ -36,6 +36,7 @@
           data-test="recipients-section"
         >
           <WeprodeTagsInput
+            data-test="recipientsInput"
             ref="tagsinput"
             v-model="recipients"
             :close-on-select="true"
@@ -55,6 +56,7 @@
             ref="openContactTooltipButton"
             :class="{'phone': mq.phone, 'close-contact': isContactPickerModalDisplayed}"
             class="create-button"
+            data-test="openContactPicker"
             @click="toggleContactsPicker"
           >
             <NeroIcon

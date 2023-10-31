@@ -2,6 +2,7 @@
   <div class="user-list-header">
     <button
       v-if="mq.phone"
+      data-test="backContactPicker"
       @click="closeMobileUserPanel"
     >
       <img
@@ -26,7 +27,10 @@
       <div>{{ userListLength }}</div>
     </div>
 
-    <button @click="toggleAll">
+    <button
+      data-test="selectAllUsers"
+      @click="toggleAll"
+    >
       <img
         v-if="!isAllListSelected"
         src="@/assets/icons/add_list.svg"
