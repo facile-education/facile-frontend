@@ -6,8 +6,7 @@ describe('UserSelection_Autocomplete', () => {
     cy.fixture('contactPicker.json').as('contactPickerData')
   })
 
-  it('UserSelection_Autocomplete', function () {
-    const Contacts = this.contactPickerData.Contacts
+  it('UserSelection_Autocomplete_caseSensitive', function () {
     // test autoCompletion
     cy.login(HEADMASTER, messagingURL)
     cy.get('[data-test="createMessageButton"]').click()
@@ -24,6 +23,18 @@ describe('UserSelection_Autocomplete', () => {
     cy.get('.base-tags-input').type('Pen')
     cy.get('.suggestion-list').contains(`${STUDENT.lastName} ${STUDENT.firstName}`).should('be.exist')
     cy.focused().clear()
+  })
+
+  it('UserSelection_Autocomplete_Add_List', function () {
+    cy.login(HEADMASTER, messagingURL)
+    cy.get('[data-test="createMessageButton"]').click()
+
+    cy.get('.base-tags-input').type('biblio')
+    cy.get('.suggestion-list').contains('Bibliothécaires').should('be.exist')
+  })
+
+  it('UserSelection_Autocomplete_Visibility_By_Profil', function () {
+    const Contacts = this.contactPickerData.Contacts
 
     // STUDENT
     cy.login(STUDENT, messagingURL)
