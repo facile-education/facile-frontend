@@ -88,7 +88,7 @@ describe('Messaging_TransferMessage', () => {
       getMessage(threadToTransfer[2])
     })
 
-    it.only('Messaging_Transfer_MessageInThread', function () {
+    it('Messaging_Transfer_MessageInThread', function () {
       const threadToTransfer = this.messagingData.existingThreads[1]
 
       // Login
