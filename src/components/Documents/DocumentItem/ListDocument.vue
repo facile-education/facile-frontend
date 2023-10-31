@@ -302,6 +302,10 @@ export default {
       height: 100%;
       width: calc(100% - 40px);
 
+      p {
+        margin: 0;
+      }
+
       .name-label {
         cursor: pointer;
         overflow: hidden;
@@ -309,7 +313,6 @@ export default {
         text-overflow: ellipsis;
         font-size: 0.85em;
         letter-spacing: 0;
-        margin: 2px 0 0 0;
 
         &:hover {
           text-decoration: underline;
@@ -323,7 +326,7 @@ export default {
 
         .size-label, .date-label{
           letter-spacing: 0;
-          line-height: 0.650em;
+          line-height: 1.65em;
           margin-right: 10px;
         }
       }
