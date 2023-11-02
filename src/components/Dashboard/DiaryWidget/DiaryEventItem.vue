@@ -39,6 +39,7 @@
           class="option"
           :aria-label="$t('update')"
           :title="$t('update')"
+          data-test="buttonEditEvent"
           @click.stop="isUpdateModalDisplayed = true"
         >
           <img
@@ -51,6 +52,7 @@
           class="option"
           :aria-label="$t('delete')"
           :title="$t('delete')"
+          data-test="buttonDeleteEvent"
           @click.stop="confirmDeleteEvent"
         >
           <img

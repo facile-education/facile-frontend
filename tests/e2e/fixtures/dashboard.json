@@ -8,12 +8,14 @@
         {
             "recipient": "Tous les élèves",
             "title": "Annonce déjà existante",
-            "content": "Contenu d'un annonce déjà existante destinée aux élèves"
+            "content": "Contenu d'un annonce déjà existante destinée aux élèves",
+            "publicationDate": "30/10/23"
         },
         {
             "recipient": "Tous les responsables légaux",
             "title": "Deuxième annonce",
-            "content": "Ceci est une deuxième annonce"
+            "content": "Ceci est une deuxième annonce",
+            "publicationDate": "30/10/23"
         }
     ],
     "newsToEdit": {
@@ -28,7 +30,8 @@
             "location": "Lieu de l'évènement pour tous les élèves",
             "content": "Contenu de l'évènement pour tous les élèves",
             "startDate": "2023/11/02 11:00",
-            "endDate": "2023/11/03 11:00"
+            "endDate": "2023/11/05 11:00",
+            "duration": "Du jeudi 02 novembre à 11:00 au vendredi 03 novembre à 11:00"
         },
         {
             "recipient": "Tous les personnels",
@@ -36,7 +39,8 @@
             "location": "Lieu de l'événement pour tous les personnels",
             "content": "Contenu de l'évènement pour tous les personnels",
             "startDate": "2023/11/02 11:00",
-            "endDate": "2023/11/03 11:00"
+            "endDate": "2023/11/03 11:00",
+            "duration": "Du jeudi 02 novembre à 11:00 au vendredi 03 novembre à 11:00"
         }
     ],
     "NewEvent": {
@@ -44,5 +48,11 @@
         "title": "Nouvel évènement",
         "location": "Lieu du nouvel énènement",
         "content": "Ceci est le contenu du nouvel évènement"
+    },
+    "EventToEdit": {
+        "recipient": "Tous les responsables légaux",
+        "title": "évènement modifié",
+        "location": "Lieu de l'énènement modifié",
+        "content": "Ceci est le contenu de l'évènement modifié"
     }
 }
