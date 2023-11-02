@@ -6,7 +6,8 @@ describe('UserSelection_AddressBook_DisplayCorrectLists', () => {
   beforeEach(() => {
     cy.fixture('contactPicker.json').as('contactPickerData')
   })
-  it('UserSelection_AddressBook_DisplayCorrectList_Check_Viewport', function () {
+  it.only('UserSelection_AddressBook_DisplayCorrectList_Check_Viewport', function () {
+    const Lists = this.contactPickerData.Lists
     // Login
     cy.login(HEADMASTER, messagingURL)
     // Open contactPicker
@@ -14,7 +15,7 @@ describe('UserSelection_AddressBook_DisplayCorrectLists', () => {
     // Open teachers list
     openList('Enseignants·tes')
     cy.get('.address-book').within(() => {
-      cy.get('.extended').should('be.exist')
+      cy.get('.extended').contains('li', Lists[0]).should('be.visible')
     })
     // Check if button classes is not visible in viewport
     cy.get('.address-book').contains('button', 'Classes').should('not.visible')
@@ -22,6 +23,23 @@ describe('UserSelection_AddressBook_DisplayCorrectLists', () => {
     cy.get('.address-book').scrollTo('bottom')
     // Check if button classes is visible
     cy.get('.address-book').contains('button', 'Classes').should('be.visible')
+  })
+
+  it('UserSelection_AddressBook_DisplayCorrectList_Open_Close_List', function () {
+    const Lists = this.contactPickerData.Lists
+    // Login
+    cy.login(HEADMASTER, messagingURL)
+    // Open contactPicker
+    openContactPicker()
+    // Open teachers list
+    openList('Enseignants·tes')
+    cy.get('.address-book').within(() => {
+      cy.get('.extended').contains('li', Lists[0]).should('be.visible')
+    })
+    cy.get('.address-book').contains('button', 'Personnels').click()
+    cy.get('.address-book').within(() => {
+      cy.get('.extended').contains('li', Lists[0]).should('not.visible')
+    })
   })
 
   it('UserSelection_AddressBook_DisplayCorrectList_ListContent', function () {
