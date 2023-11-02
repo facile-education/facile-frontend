@@ -204,14 +204,14 @@ const NURSE = {
   isVisiblePersonnels: true
 }
 
-const STUDENT_IN_CLASS = {
+const STUDENT_IN_CLASS = { // Student in class for student penelope
   lastName: 'BATTELLI',
   isVisibleStudent: true,
   isVisibleParent: false,
   isVisiblePersonnels: true
 }
 
-const STUDENT_NOT_IN_CLASS = {
+const STUDENT_NOT_IN_CLASS = { // Student not in class for student penelope
   lastName: 'BATTELLI',
   isVisibleStudent: false,
   isVisibleParent: false,

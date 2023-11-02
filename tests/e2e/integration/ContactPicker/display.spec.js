@@ -217,16 +217,16 @@ describe('UserSelection_AddressBook_DisplayCorrectLists', () => {
     cy.login(HEADMASTER, messagingURL)
     // Open contactPicker
     openContactPicker()
-    // Open teachers list
-    openList('Enseignants·tes')
+    // Open personnels list
+    cy.get('.address-book').contains('button', 'Personnels').click()
     cy.get('.address-book').within(() => {
       cy.get('.extended').should('be.exist')
     })
-    // Check if button classes is not visible in viewport
-    cy.get('.address-book').contains('button', 'Classes').should('not.visible')
+    // Check if button 11 is not visible in viewport
+    cy.get('.address-book').contains('button', '11').should('not.visible')
     // Scroll to bottom
     cy.get('.address-book').scrollTo('bottom')
-    // Check if button classe is visible
-    cy.get('.address-book').contains('button', 'Classes').should('be.visible')
+    // Check if button 11 is visible
+    cy.get('.address-book').contains('button', '11').should('be.visible')
   })
 })

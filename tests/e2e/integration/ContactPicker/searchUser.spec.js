@@ -38,6 +38,7 @@ describe('UserSelection_AddressBook', () => {
     const FirstTeacherInList = this.contactPickerData.firstTeacherInList
 
     cy.login(HEADMASTER, messagingURL)
+    openContactPicker()
     openList('Enseignants·tes')
 
     cy.get('.group > .filter-input').type('jack')
