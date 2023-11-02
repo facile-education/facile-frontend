@@ -313,8 +313,10 @@ export const actions = {
 
   // Selection
   selectAll () {
-    const currentDocuments = [...state.folderContent.subFolders, ...state.folderContent.files]
-    this.dispatch('documents/selectManyDocuments', currentDocuments)
+    if (state.folderContent.subFolders && state.folderContent.files) {
+      const currentDocuments = [...state.folderContent.subFolders, ...state.folderContent.files]
+      this.dispatch('documents/selectManyDocuments', currentDocuments)
+    }
   },
   selectManyDocuments ({ commit }, listDocuments) {
     commit('setSelectedEntities', listDocuments)
