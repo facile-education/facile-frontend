@@ -11,7 +11,10 @@ const HEADMASTER = {
   password,
   role: 'headmaster',
   firstName: 'Orlan',
-  lastName: 'HUE'
+  lastName: 'HUE',
+  isVisibleStudent: true,
+  isVisibleParent: true,
+  isVisiblePersonnels: true
 }
 
 const SCHOOL_ADMIN = {
@@ -28,7 +31,10 @@ const DOYEN = {
   password,
   role: 'teacher',
   firstName: 'Mitzi',
-  lastName: 'LE MARCHANT'
+  lastName: 'LE MARCHANT',
+  isVisibleStudent: true,
+  isVisibleParent: true,
+  isVisiblePersonnels: true
 }
 
 // Class teacher for the student's class (0933)
@@ -37,7 +43,10 @@ const CLASSTEACHER = {
   password,
   role: 'teacher',
   firstName: 'Mitzi',
-  lastName: 'LE MARCHANT'
+  lastName: 'LE MARCHANT',
+  isVisibleStudent: true,
+  isVisibleParent: true,
+  isVisiblePersonnels: true
 }
 
 const CLASSTEACHER2 = { // An other class teacher than LE MARCHANT (0911R1)
@@ -53,7 +62,10 @@ const SECRETARY = {
   password,
   role: 'secretary',
   firstName: 'Noelyn',
-  lastName: 'LAMINMAN'
+  lastName: 'LAMINMAN',
+  isVisibleStudent: true,
+  isVisibleParent: true,
+  isVisiblePersonnels: true
 }
 
 const TEACHER = { // TEACHER of STUDENT
@@ -101,7 +113,9 @@ const STUDENT = { // 0933R3
   password,
   role: 'student',
   firstName: 'Pénélope',
-  lastName: 'RIBEIRO'
+  lastName: 'RIBEIRO',
+  isVisibleParent: true,
+  isVisiblePersonnels: true
 }
 
 const PARENT = { // Student's parent
@@ -109,7 +123,8 @@ const PARENT = { // Student's parent
   password,
   role: 'parent',
   firstName: 'Ursula',
-  lastName: 'Ribeiro'
+  lastName: 'Ribeiro',
+  isVisibleStudent: true
 }
 
 const MULTI_STUDENT1 = { // Her parent has 2 children
@@ -136,20 +151,71 @@ const MULTI_PARENT = { // This parent has 2 children : MULTI_STUDENT1 and MULTI_
   lastName: 'Comencini'
 }
 
-const SOCIAL_COUNSELOR = { // Social councelor of student (0933)
-  login: 'krahlt',
-  password,
-  role: 'parent',
-  firstName: 'Tomasine',
-  lastName: 'KRAHL'
-}
-
 const PSYCHOLOGIST = { // psychologist of student (0933)
   login: 'glasnerd',
   password,
   role: 'parent',
   firstName: 'Donnajean',
   lastName: 'GLASNER'
+}
+
+const TECHNICAL_ASSISSTANT = {
+  lastName: 'BETTANEY',
+  isVisibleStudent: true,
+  isVisibleParent: true,
+  isVisiblePersonnels: true
+}
+
+const LIBRARIAN = {
+  lastName: 'ROSENFELD',
+  isVisibleStudent: true,
+  isVisibleParent: true,
+  isVisiblePersonnels: true
+}
+
+const ACCOUNTING_CASHIER = {
+  lastName: 'GLYNN',
+  isVisibleStudent: true,
+  isVisibleParent: true,
+  isVisiblePersonnels: true
+}
+const ORIENTATION_COUNSELOR = {
+  lastName: 'PIDEON',
+  isVisibleStudent: true,
+  isVisibleParent: true,
+  isVisiblePersonnels: true
+}
+
+const SOCIAL_COUNSELOR = { // Social councelor of student (0933)
+  login: 'krahlt',
+  password,
+  role: 'parent',
+  firstName: 'Tomasine',
+  lastName: 'KRAHL',
+  isVisibleStudent: true,
+  isVisibleParent: true,
+  isVisiblePersonnels: true
+}
+
+const NURSE = {
+  lastName: 'BELLSHAM',
+  isVisibleStudent: true,
+  isVisibleParent: true,
+  isVisiblePersonnels: true
+}
+
+const STUDENT_IN_CLASS = {
+  lastName: 'BATTELLI',
+  isVisibleStudent: true,
+  isVisibleParent: false,
+  isVisiblePersonnels: true
+}
+
+const STUDENT_NOT_IN_CLASS = {
+  lastName: 'BATTELLI',
+  isVisibleStudent: false,
+  isVisibleParent: false,
+  isVisiblePersonnels: true
 }
 
 export {
@@ -171,5 +237,12 @@ export {
   PSYCHOLOGIST,
   MULTI_STUDENT1,
   MULTI_STUDENT2,
-  MULTI_PARENT
+  MULTI_PARENT,
+  TECHNICAL_ASSISSTANT,
+  LIBRARIAN,
+  ACCOUNTING_CASHIER,
+  ORIENTATION_COUNSELOR,
+  NURSE,
+  STUDENT_IN_CLASS,
+  STUDENT_NOT_IN_CLASS
 }
