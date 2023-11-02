@@ -1,17 +1,19 @@
 import { dashboardURL } from '../../support/constants/urls'
-import { HEADMASTER, PARENT, SCHOOL_ADMIN, STUDENT, TEACHER, TEACHER2 } from '../../support/constants/users'
-import { getEventDetail, getNews, getNewsDetail } from '../../support/utils/dashboard'
+import { HEADMASTER, SCHOOL_ADMIN, STUDENT, TEACHER, TEACHER2 } from '../../support/constants/users'
+import { getEvent, getEventDetail } from '../../support/utils/dashboard'
 
 describe('Dashboard_Events', () => {
   beforeEach(() => {
-    cy.loadTables('dashboard/dashboard_tables_news.sql')
-    cy.fixture('dashboard.json').as('dashboardData')
+    cy.loadTables('dashboard/dashboard_tables_events.sql')
+    cy.fixture('dashboard.json').as('dashboardData').then(data => {
+      cy.clock(Cypress.dayjs(data.now, 'YYYY/MM/DD HH:mm').toDate().getTime())
+    })
   })
   it('Dashboard_Events_DisplayAllEvents', function () {
     const existingEvents = this.dashboardData.existingEvents
     // Login
     cy.login(HEADMASTER, dashboardURL)
-
+    cy.clock().invoke('setSystemTime', Cypress.dayjs(existingEvents[0].startDate, 'YYYY/MM/DD HH:mm').toDate().getTime()) // To put after login to make it works
     // Click on all events button
     cy.get('[data-test="diary-widget"]').within(() => {
       cy.contains('button', 'Voir tous les événements').click()
@@ -24,167 +26,53 @@ describe('Dashboard_Events', () => {
   })
 
   it('Dashboard_Events_CreateEvent', function () {
-    const NewAnnouncement = this.dashboardData.NewAnnouncement
+    const NewEvent = this.dashboardData.NewEvent
 
-    // Check if an admin can create an annoucement
+    // Check if an admin can create an event
     cy.login(SCHOOL_ADMIN, dashboardURL)
-    cy.get('[data-test="buttonCreateAnnoucement"]').click()
-    cy.get('[data-test="update-news-modal"]').should('be.visible')
+    cy.get('[data-test="buttonCreateEvent"]').click()
+    cy.get('[data-test="update-diary-event-modal"]').should('be.visible')
 
-    // Check if a delegate can create an annoucement
+    // Check if a delegate can create an event
     cy.login(TEACHER, dashboardURL)
-    cy.get('[data-test="buttonCreateAnnoucement"]').click()
-    cy.get('[data-test="update-news-modal"]').should('be.visible')
+    cy.get('[data-test="buttonCreateEvent"]').click()
+    cy.get('[data-test="update-diary-event-modal"]').should('be.visible')
 
-    // Create announcement with the headmaster for the teachers
+    // Create event with the headmaster for the teachers
     cy.login(HEADMASTER, dashboardURL)
     // Open create modal
-    cy.get('[data-test="buttonCreateAnnoucement"]').click()
+    cy.get('[data-test="buttonCreateEvent"]').click()
     // Set all informations
-    cy.get('[data-test="update-news-modal"]').within(() => {
+    cy.get('[data-test="update-diary-event-modal"]').within(() => {
       cy.get('.base-tags-input').click()
-      cy.get('.suggestion-list').contains('li', NewAnnouncement.recipient).click()
-      cy.get('.labelled').type(NewAnnouncement.title)
+      cy.get('.suggestion-list').contains('li', NewEvent.recipient).click()
+      cy.get('.group > [data-test="titleInputEvent"]').type(NewEvent.title)
+      cy.get('.group > [data-test="locationInputEvent"]').type(NewEvent.location)
       cy.get('.ck-editor')
-      cy.type_ckeditor(NewAnnouncement.content)
+      cy.type_ckeditor(NewEvent.content)
       // Create
       cy.get('[data-test="submitButton"]').click()
     })
 
-    // Check if a student don't see the annoucement
+    // Check if a student don't see the event
     cy.login(STUDENT, dashboardURL)
-    getNews(NewAnnouncement).should('not.exist')
+    getEvent(NewEvent).should('not.exist')
 
-    // Check if a teacher see the annoucement
+    // Check if a teacher see the event
     cy.login(TEACHER2, dashboardURL)
-    getNews(NewAnnouncement).should('be.exist')
+    getEvent(NewEvent).should('be.exist')
   })
 
-  it('Dashboard_Events_CreateEvent_allAnnouncement', function () {
+  it('Dashboard_Events_CreateEvent_allEvent', function () {
     // Login
     cy.login(HEADMASTER, dashboardURL)
     // Click on all event buttton
-    cy.get('[data-test="announcement-widget"]').within(() => {
-      cy.contains('button', 'Voir toutes les annonces').click()
+    cy.get('[data-test="diary-widget"]').within(() => {
+      cy.contains('button', 'Voir tous les événements').click()
     })
     // CLick on button +
     cy.get('.create-button').click()
     // Check if modal is visible
-    cy.get('[data-test="update-news-modal"]').should('be.visible')
-  })
-
-  it('Dashboard_Events_UpdateEvent_mouseover', function () {
-    const existingNews = this.dashboardData.existingNews
-    const lastNews = existingNews[existingNews.length - 1]
-    const newsToEdit = this.dashboardData.newsToEdit
-
-    // Login with student to chech if he don't see the announcement
-    cy.login(STUDENT, dashboardURL)
-    getNews(lastNews).should('not.exist')
-
-    // Login to update announcement
-    cy.login(HEADMASTER, dashboardURL)
-
-    // Mouse over on the announcement
-    getNews(lastNews).trigger('mouseover').within(() => {
-      cy.get('[data-test="buttonEditAnnouncement"]').click()
-    })
-    // Set new informations
-    cy.get('[data-test="update-news-modal"]').within(() => {
-      cy.get('.base-tags-input').click()
-      // Add all students in recipients
-      cy.get('.suggestion-list').contains('li', newsToEdit.recipient).click()
-      cy.get('.labelled').clear()
-      cy.get('.labelled').type(newsToEdit.title)
-      cy.get('.ck-editor')
-      cy.type_ckeditor(newsToEdit.content)
-      cy.get('[data-test="submitButton"]').click()
-    })
-    // Check if the modification exist
-    getNews(newsToEdit).should('be.exist')
-    cy.get('[data-test="announcement-widget"]').within(() => {
-      cy.contains('button', 'Voir toutes les annonces').click()
-    })
-    // Check the content
-    getNewsDetail(newsToEdit).should('be.exist')
-
-    // Login with a student to see if now he can see the announcement
-    cy.login(STUDENT, dashboardURL)
-    getNews(newsToEdit).should('be.exist')
-  })
-
-  it('Dashboard_Events_UpdateEvent_clickOnNews', function () {
-    const existingNews = this.dashboardData.existingNews
-    const lastNews = existingNews[existingNews.length - 1]
-    cy.login(HEADMASTER, dashboardURL)
-
-    getNews(lastNews).click()
-    cy.get('[data-test="updateButton"]').click()
-    cy.get('[data-test="update-news-modal"]').should('be.visible')
-  })
-
-  it('Dashboard_Events_UpdateEvent_allNews', function () {
-    const existingNews = this.dashboardData.existingNews
-    const lastNews = existingNews[existingNews.length - 1]
-    cy.login(HEADMASTER, dashboardURL)
-
-    cy.get('[data-test="announcement-widget"]').within(() => {
-      cy.contains('button', 'Voir toutes les annonces').click()
-    })
-    cy.get('.event-list').contains('.announcement', lastNews.title).click()
-    cy.get('[data-test="updateButton"]').click()
-    cy.get('[data-test="update-news-modal"]').should('be.visible')
-  })
-
-  it('Dashboard_Events_DeleteEvent_mouseover', function () {
-    const existingNews = this.dashboardData.existingNews
-    const lastNews = existingNews[existingNews.length - 1]
-
-    cy.login(HEADMASTER, dashboardURL)
-
-    // Mouseover and click on delete button
-    getNews(lastNews).trigger('mouseover').within(() => {
-      cy.get('[data-test="buttonDeleteAnnouncement"]').click()
-    })
-    // Confirm the delete
-    cy.get('[data-test="confirmButton"]').click()
-
-    // Check if news is delete
-    getNews(lastNews).should('not.exist')
-
-    // Check if for the parents the news is delete
-    cy.login(PARENT, dashboardURL)
-    getNews(lastNews).should('not.exist')
-  })
-
-  it('Dashboard_Events_DeleteEvent_clickOnNews', function () {
-    const existingNews = this.dashboardData.existingNews
-    const lastNews = existingNews[existingNews.length - 1]
-
-    cy.login(HEADMASTER, dashboardURL)
-
-    getNews(lastNews).click()
-    cy.get('[data-test="deleteButton"]').click()
-    // Check if in the warning modal content there is the news title
-    cy.get('[data-test="warning-modal"]').should('be.visible').within(() => {
-      cy.get('.context-message').contains(lastNews.title)
-    })
-  })
-
-  it('Dashboard_Events_DeleteEvent_allNews', function () {
-    const existingNews = this.dashboardData.existingNews
-    const lastNews = existingNews[existingNews.length - 1]
-
-    cy.login(HEADMASTER, dashboardURL)
-
-    cy.get('[data-test="announcement-widget"]').within(() => {
-      cy.contains('button', 'Voir toutes les annonces').click()
-    })
-    cy.get('.event-list').contains('.announcement', lastNews.title).click()
-    cy.get('[data-test="deleteButton"]').click()
-    // Check if in the warning modal content there is the news title
-    cy.get('[data-test="warning-modal"]').should('be.visible').within(() => {
-      cy.get('.context-message').contains(lastNews.title)
-    })
+    cy.get('[data-test="update-diary-event-modal"]').should('be.visible')
   })
 })
