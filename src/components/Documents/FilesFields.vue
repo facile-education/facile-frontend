@@ -6,6 +6,7 @@
   >
     <div
       class="selection-icon"
+      data-test="select-all-toggle"
       tabindex="0"
       @keypress.enter="toggleGlobalSelection"
       @click="toggleGlobalSelection"
