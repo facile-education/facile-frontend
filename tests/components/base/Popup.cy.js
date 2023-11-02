@@ -1,4 +1,4 @@
-import Popup from './Popup.vue'
+import Popup from '../../../src/components/Base/Popup.vue'
 
 describe('<Popup />', () => {
   it('renders', () => {
