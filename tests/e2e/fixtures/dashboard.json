@@ -20,5 +20,29 @@
         "recipient": "Tous les élèves",
         "title": "Annonce modifiée",
         "content": "Ceci est une annonce modifié"
+    },
+    "existingEvents": [
+        {
+            "recipient": "Tous les élèves",
+            "title": "Évènement pour tous les élèves",
+            "location": "Lieu de l'évènement pour tous les élèves",
+            "content": "Contenu de l'évènement pour tous les élèves",
+            "startDate": "2023/11/02 11:00",
+            "endDate": "2023/11/03 11:00"
+        },
+        {
+            "recipient": "Tous les personnels",
+            "title": "Évènement pour tous les personnels",
+            "location": "Lieu de l'événement pour tous les personnels",
+            "content": "Contenu de l'évènement pour tous les personnels",
+            "startDate": "2023/11/02 11:00",
+            "endDate": "2023/11/03 11:00"
+        }
+    ],
+    "NewEvent": {
+        "recipient": "Tous les personnels",
+        "title": "Nouvel évènement",
+        "location": "Lieu du nouvel énènement",
+        "content": "Ceci est le contenu du nouvel évènement"
     }
 }
