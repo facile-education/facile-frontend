@@ -24,6 +24,7 @@
     <CreateButton
       v-if="canCreateDiaryEvent"
       :title="$t('create-event')"
+      data-test="buttonCreateEvent"
       @click="isCreateModalDisplayed = true"
     />
   </header>

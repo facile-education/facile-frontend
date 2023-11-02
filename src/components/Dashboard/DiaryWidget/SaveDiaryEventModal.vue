@@ -70,6 +70,7 @@
         <WeprodeInput
           ref="nameInput"
           v-model="title"
+          data-test="titleInputEvent"
           :placeholder="$t('namePlaceHolder') + '*'"
         />
         <WeprodeErrorMessage
@@ -80,6 +81,7 @@
       <div class="input">
         <WeprodeInput
           v-model="location"
+          data-test="locationInputEvent"
           :placeholder="$t('locationPlaceHolder')"
         />
         <WeprodeErrorMessage
