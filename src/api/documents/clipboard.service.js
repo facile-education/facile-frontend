@@ -18,7 +18,7 @@ function copy (targetFolderId, folderIds, fileIds, mode) {
       targetFolderId,
       folderIds: JSON.stringify(folderIds),
       fileIds: JSON.stringify(fileIds),
-      mode: mode
+      mode
     }
   }).then(response => response.data)
 }
@@ -32,7 +32,7 @@ function move (targetFolderId, folderIds, fileIds, mode) {
       targetFolderId,
       folderIds: JSON.stringify(folderIds),
       fileIds: JSON.stringify(fileIds),
-      mode: mode
+      mode
     }
   }).then(response => response.data)
 }

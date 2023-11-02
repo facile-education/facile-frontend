@@ -82,7 +82,7 @@ export default {
 
 </style>
 
-<i18n locale="fr" >
+<i18n locale="fr">
   {
     "send-message": "Envoyer un message"
   }

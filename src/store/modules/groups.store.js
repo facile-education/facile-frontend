@@ -66,7 +66,7 @@ export const actions = {
   updateFilter ({ commit }, filter) {
     commit('setFilter', filter)
     // Refresh GroupList
-    this.dispatch('groups/getGroupList', { filter: filter })
+    this.dispatch('groups/getGroupList', { filter })
   },
   deleteGroup ({ commit }, group) {
     removeCommunity(group.groupId).then((data) => {

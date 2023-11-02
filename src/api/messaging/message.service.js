@@ -30,10 +30,10 @@ const MESSAGING_PATH = '/messaging.message'
 function getThreads (folderId, start, nbDisplayed, unreadOnly) {
   return axios.get(constants.JSON_WS_URL + MESSAGING_PATH + '/get-threads', {
     params: {
-      folderId: folderId,
+      folderId,
       fromDate: start,
-      nbDisplayed: nbDisplayed,
-      unreadOnly: unreadOnly
+      nbDisplayed,
+      unreadOnly
     }
   }).then(response => response.data)
 }
@@ -44,8 +44,8 @@ function getThreads (folderId, start, nbDisplayed, unreadOnly) {
 function getThreadMessages (threadId, folderId) {
   return axios.get(constants.JSON_WS_URL + MESSAGING_PATH + '/get-thread-messages', {
     params: {
-      threadId: threadId,
-      folderId: folderId
+      threadId,
+      folderId
     }
   }).then(response => response.data)
 }
@@ -53,7 +53,7 @@ function getThreadMessages (threadId, folderId) {
 function getMessageThread (messageId) {
   return axios.get(constants.JSON_WS_URL + MESSAGING_PATH + '/get-message-thread', {
     params: {
-      messageId: messageId
+      messageId
     }
   }).then(response => response.data)
 }
@@ -75,11 +75,11 @@ function getNbMessages (folderId) {
 function searchMessages (folderId, search, startIndex, nbResults, unreadOnly) {
   return axios.get(constants.JSON_WS_URL + MESSAGING_PATH + '/search-messages', {
     params: {
-      folderId: folderId,
-      search: search,
-      startIndex: startIndex,
-      nbResults: nbResults,
-      unreadOnly: unreadOnly
+      folderId,
+      search,
+      startIndex,
+      nbResults,
+      unreadOnly
     }
   }).then(response => response.data)
 }
@@ -90,7 +90,7 @@ function searchMessages (folderId, search, startIndex, nbResults, unreadOnly) {
 function getMessageRecipients (messageId) {
   return axios.get(constants.JSON_WS_URL + MESSAGING_PATH + '/get-message-recipients', {
     params: {
-      messageId: messageId
+      messageId
     }
   }).then(response => response.data)
 }
@@ -101,11 +101,11 @@ function getMessageRecipients (messageId) {
 function getMessageAnswerForwardInfos (messageId, isReply, isReplyAll, isForward, isDraft) {
   return axios.get(constants.JSON_WS_URL + MESSAGING_PATH + '/get-message-answer-forward-infos', {
     params: {
-      messageId: messageId,
-      isReply: isReply,
-      isReplyAll: isReplyAll,
-      isForward: isForward,
-      isDraft: isDraft
+      messageId,
+      isReply,
+      isReplyAll,
+      isForward,
+      isDraft
     }
   }).then(response => response.data)
 }
@@ -191,7 +191,7 @@ function deleteMessages (messageIds) {
 function getUsersCompletion (query) {
   return axios.get(constants.JSON_WS_URL + MESSAGING_PATH + '/get-users-completion', {
     params: {
-      query: query
+      query
     }
   }).then(response => response.data)
 }

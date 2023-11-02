@@ -13,9 +13,9 @@ const HOMEWORKS_CTX = 'homework/'
 function getHomeworks (studentId, minDate, undoneOnly) {
   return axios.get(constants.JSON_WS_URL + CDT_PATH + HOMEWORKS_CTX + 'get-homeworks', {
     params: {
-      studentId: studentId,
-      minDate: minDate,
-      undoneOnly: undoneOnly
+      studentId,
+      minDate,
+      undoneOnly
     }
   }).then(response => response.data)
 }

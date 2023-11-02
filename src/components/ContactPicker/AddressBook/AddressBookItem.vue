@@ -230,7 +230,7 @@ button {
 
 </style>
 
-<i18n locale="fr" >
+<i18n locale="fr">
   {
     "add": "Ajouter",
     "remove": "Supprimer"

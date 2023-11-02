@@ -62,7 +62,7 @@ export default {
       const maxDate = this.schoolYearEndDate
       return {
         minDate: dayjs().day(0).add(14, 'day'),
-        maxDate: maxDate
+        maxDate
       }
     }
   },

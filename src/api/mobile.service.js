@@ -19,7 +19,7 @@ function addMobileToken () {
 function refreshMobileToken (token) {
   return axios.get(constants.JSON_WS_URL + MOBILE_PATH + 'refresh-mobile-token', {
     params: {
-      token: token
+      token
     }
   }).then(response => response.data)
 }

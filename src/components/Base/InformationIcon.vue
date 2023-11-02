@@ -77,7 +77,7 @@ export default {
 }
 </style>
 
-<i18n locale="fr" >
+<i18n locale="fr">
 {
   "info-letter": "i"
 }

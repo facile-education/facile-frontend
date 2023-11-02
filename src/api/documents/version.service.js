@@ -17,7 +17,7 @@ const VERSION_PATH = '/document.version'
 function restoreVersion (fileVersionId) {
   return axios.get(constants.JSON_WS_URL + VERSION_PATH + '/restore-version', {
     params: {
-      fileVersionId: fileVersionId
+      fileVersionId
     }
   }).then(response => response.data)
 }
@@ -39,8 +39,8 @@ function createMajorVersion (fileId) {
 function saveVersionDescription (fileVersionId, description) {
   return axios.get(constants.JSON_WS_URL + VERSION_PATH + '/save-version-description', {
     params: {
-      fileVersionId: fileVersionId,
-      description: description
+      fileVersionId,
+      description
     }
   }).then(response => response.data)
 }
@@ -51,7 +51,7 @@ function saveVersionDescription (fileVersionId, description) {
 function getFileVersions (fileId) {
   return axios.get(constants.JSON_WS_URL + VERSION_PATH + '/get-file-versions', {
     params: {
-      fileId: fileId
+      fileId
     }
   }).then(response => response.data)
 }
