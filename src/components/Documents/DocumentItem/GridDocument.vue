@@ -146,21 +146,23 @@ export default {
       a.addEventListener('load', function () {
         // get the inner DOM of alpha.svg
         const svgDoc = a.contentDocument
-        // get the inner element by id
-        const colorPolygon = svgDoc.getElementById('color-polygon')
-        if (color) {
-          colorPolygon.setAttribute('fill', color)
+        if (svgDoc) {
+          // get the inner element by id
+          const colorPolygon = svgDoc.getElementById('color-polygon')
+          if (color) {
+            colorPolygon.setAttribute('fill', color)
+          }
+
+          // Add the behaviour we lost by the process
+          const img = svgDoc.getElementById('svg-img')
+          img.setAttribute('style', 'cursor: pointer;')
+
+          img.addEventListener('click', function () {
+            vm.triggerAction()
+          }, false)
+
+          img.addEventListener('dblclick', function () { vm.triggerAction() }, false)
         }
-
-        // Add the behaviour we lost by the process
-        const img = svgDoc.getElementById('svg-img')
-        img.setAttribute('style', 'cursor: pointer;')
-
-        img.addEventListener('click', function () {
-          vm.triggerAction()
-        }, false)
-
-        img.addEventListener('dblclick', function () { vm.triggerAction() }, false)
       }, false)
     }
   },

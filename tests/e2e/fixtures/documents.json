@@ -1,5 +1,6 @@
 {
   "currentPersonalDocumentsStructure": {
+    "label": "Personnels",
     "folders": [
       {
         "label": "Dossier",
@@ -12,7 +13,21 @@
               {
                 "label": "Sous-sous dossier",
                 "id": 545213,
-                "folders": [],
+                "folders": [
+                  {
+                    "label": "QuatrièmeNiveau",
+                    "id": 545153,
+                    "folders": [
+                      {
+                        "label": "CinqièmeNiveau",
+                        "id": 545156,
+                        "folders": [],
+                        "files": []
+                      }
+                    ],
+                    "files": []
+                  }
+                ],
                 "files": []
               }
             ],
@@ -34,6 +49,25 @@
       },
       {
         "label": "Note.html"
+      }
+    ]
+  },
+  "currentCollaborativeStructure": {
+    "label": "Collaboratifs",
+    "spaces": [
+      {
+        "label": "CO Da Vinci",
+        "id": 466936,
+        "nbMembers": 2569,
+        "folders": [
+          {
+            "label": "Dossier de groupe",
+            "id": 545161,
+            "folders": [],
+            "files": []
+          }
+        ],
+        "files": []
       }
     ]
   },

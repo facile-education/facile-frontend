@@ -50,6 +50,7 @@ describe('Documents_Display_ResponsiveDesign', () => {
       cy.get('@documentsData').then((documentsData) => {
         const currentFolder = documentsData.currentPersonalDocumentsStructure.folders[0].folders[0] // Sub folder level
         const previousFolder = documentsData.currentPersonalDocumentsStructure.folders[0]
+        const personalRootFolder = documentsData.currentPersonalDocumentsStructure
         const folderOptions = documentsData.folderOptions
 
         // Go on document service, at sub-folder level, select an entity (a folder)
@@ -68,18 +69,18 @@ describe('Documents_Display_ResponsiveDesign', () => {
           cy.contains('[data-test="folder"]', subFolder.label).should('be.visible')
         })
         currentFolder.files.forEach(file => {
-          cy.contains('[data-test="folder"]', file.label).should('be.visible')
+          cy.contains('[data-test="file"]', file.label).should('be.visible')
         })
 
         // Navigation display depending on device
         cy.get('[data-test="breadcrumb"]').within(() => {
           if (size !== desktop) {
             cy.contains('button', previousFolder.label).should('be.visible').find('img[alt="Retour"]')
-            cy.contains('button', 'Personnels').should('not.exist')
+            cy.contains('button', personalRootFolder.label).should('not.exist')
           } else {
             cy.contains('button', previousFolder.label).should('be.visible')
               .find('img[alt="Retour"]').should('not.exist')
-            cy.contains('button', 'Personnels').should('be.visible')
+            cy.contains('button', personalRootFolder.label).should('be.visible')
           }
         })
 
