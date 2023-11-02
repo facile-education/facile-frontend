@@ -104,7 +104,7 @@ export default {
   },
   computed: {
     isFile () {
-      return this.searchResult.service === searchConstants.TYPE_NEWS_FILE || this.searchResult.service === searchConstants.TYPE_MESSAGE_FILE || this.searchResult.service === searchConstants.TYPE_FILE || this.searchResult.service === searchConstants.TYPE_COLLABORATIVE_FILE || this.searchResult.service === searchConstants.TYPE_PROGRESSION_FILE
+      return this.searchResult.service === searchConstants.TYPE_NEWS_FILE || this.searchResult.service === searchConstants.TYPE_MESSAGE_FILE || this.searchResult.service === searchConstants.TYPE_FILE || this.searchResult.service === searchConstants.TYPE_COLLABORATIVE_FILE
     },
     icon () {
       switch (this.searchResult.service) {
@@ -124,14 +124,6 @@ export default {
           return require('@assets/icons/documents/icon-file.svg')
         case searchConstants.TYPE_COLLABORATIVE_FOLDER:
           return require('@assets/icons/documents/icon-folder.svg')
-        case searchConstants.TYPE_PROGRESSION:
-          return require('@assets/seance.svg') // TODO progression icon
-        case searchConstants.TYPE_PROGRESSION_COURSE:
-          return require('@assets/seance.svg')
-        case searchConstants.TYPE_PROGRESSION_HOMEWORK:
-          return require('@assets/devoir.svg')
-        case searchConstants.TYPE_PROGRESSION_FILE:
-          return require('@assets/icons/documents/icon-file.svg')
         case searchConstants.TYPE_EVENT:
           return require('@assets/icons/documents/icon-file.svg')
         default:
@@ -249,23 +241,6 @@ export default {
           } else {
             redirect = true
             this.$router.push({ name: 'GroupDocuments', params: { folderId: this.searchResult.folderId, fileId: this.searchResult.entityId } })
-          }
-          break
-        case searchConstants.TYPE_PROGRESSION:
-          redirect = true
-          this.$router.push({ name: PROGRESSION, params: { progressionId: this.searchResult.entityId } })
-          break
-        case searchConstants.TYPE_PROGRESSION_COURSE:
-        case searchConstants.TYPE_PROGRESSION_HOMEWORK:
-          redirect = true
-          this.$router.push({ name: PROGRESSION, params: { progressionId: this.searchResult.progressionId, itemId: this.searchResult.entityId } })
-          break
-        case searchConstants.TYPE_PROGRESSION_FILE:
-          if (this.searchResult.displayable) {
-            this.$store.dispatch('documents/openFile', { id: this.searchResult.entityId, name: this.searchResult.title })
-          } else {
-            redirect = true
-            this.$router.push({ name: PROGRESSION, params: { progressionId: this.searchResult.progressionId, itemId: this.searchResult.itemId, fileId: this.searchResult.entityId, fileName: this.searchResult.title, display: this.searchResult.displayable } })
           }
           break
         case searchConstants.TYPE_EVENT:

@@ -12,7 +12,6 @@
 import CMToolbar from '@/components/CommunicationManager/CMToolbar'
 import ExternalRightList from '@/components/CommunicationManager/ExternalRightList'
 import InternalRightList from '@/components/CommunicationManager/InternalRightList'
-import Layout from '@/router/layouts/BannerLayout'
 
 export default {
   name: 'CommunicationManager',
