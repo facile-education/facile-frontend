@@ -36,6 +36,7 @@
       <button
         v-if="currentOptions.length > 0 && isFirstElement"
         class="first-folder-options"
+        data-test="show-options"
         @click.stop="toggleContextMenu"
       >
         <BaseIcon
