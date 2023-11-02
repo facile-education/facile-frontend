@@ -44,7 +44,7 @@ describe('Documents_Display_ResponsiveDesign', () => {
   })
 
   sizes.forEach(size => {
-    it(`Documents_Display_DisplayServiceFor[${size}]`, function () {
+    it(`Documents_Display_DisplayServiceCorrectlyFor[${size}]`, function () {
       Cypress._.isArray(size) ? cy.viewport(size[0], size[1]) : cy.viewport(size)
 
       cy.get('@documentsData').then((documentsData) => {

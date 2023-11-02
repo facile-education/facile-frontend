@@ -1,6 +1,6 @@
 import { documentURL } from '../../support/constants/urls'
 import { HEADMASTER } from '../../support/constants/users'
-import { waitDocumentServiceToBeLoaded } from '../../support/utils/documents'
+import { selectAllEntities, unselectAllEntities, waitDocumentServiceToBeLoaded } from '../../support/utils/documents'
 
 const checkCurrentOptions = (options) => { // Assume context menu is open
   // Check document current options
@@ -21,14 +21,19 @@ const checkCurrentOptions = (options) => { // Assume context menu is open
 }
 
 describe('Documents_SelectEntities', () => {
+  const desktop = [1920, 1080]
+  const sizes = ['iphone-5', 'ipad-2', desktop]
+
   beforeEach(() => {
     // cy.exec('npm run dl:loadDocumentLibrary document_library_empty.tar.xz')
     // cy.loadTables('documents/documents_tables_empty.sql')
-    cy.fixture('documents.json').as('documentsData')
-
-    cy.viewport(1920, 1080) // Set large viewport to see all options directly
-    cy.login(HEADMASTER, documentURL)
-    waitDocumentServiceToBeLoaded()
+    cy.fixture('documents.json').as('documentsData').then(documentsData => {
+      cy.viewport(1920, 1080) // Set large viewport to see all options directly
+      cy.login(HEADMASTER, documentURL)
+      waitDocumentServiceToBeLoaded()
+      // Wait entities to be loaded
+      cy.get('[data-cy=document]').should('have.length', documentsData.currentPersonalDocumentsStructure.folders.length + documentsData.currentPersonalDocumentsStructure.files.length)
+    })
   })
 
   it('Documents_SelectEntities_CurrentOptionsMatchWithSelectedEntities', function () {
@@ -64,57 +69,155 @@ describe('Documents_SelectEntities', () => {
     cy.get('[data-test="current-options"].option-item', { timeout: 10000 }).should('have.length', 0)
   })
 
-  it('keyBoard selection', () => {
-    // Check folder content
-    cy.get('[data-cy=document]').should('have.length', 4)
+  it('Documents_SelectEntities_SelectAllEntities', function () {
+    const currentEntities = this.documentsData.currentPersonalDocumentsStructure
+    const nbEntitiesInCurrentFolder = currentEntities.folders.length + currentEntities.files.length
 
-    // CTRL + A
+    cy.get('[data-cy=document] .selected').should('have.length', 0)
+
+    // Select all with Ctrl+A
     cy.get('body').type('{ctrl}a')
-    cy.get('[data-cy=document] .selected').should('have.length', 4)
+    cy.get('[data-cy=document] .selected').should('have.length', nbEntitiesInCurrentFolder)
 
-    // Simple selection
-    cy.contains('[data-test=file]', 'fichier1_1.html').click().should('have.class', 'selected')
+    // Unselect all with toggleAll button
+    cy.get('[data-test="select-all-toggle"]').click()
+    cy.get('[data-cy=document] .selected').should('have.length', 0)
+
+    // Select one entity
+    cy.contains('[data-test=folder]', currentEntities.folders[0].label).find('[data-test="selection-icon"]').click()
     cy.get('[data-cy=document] .selected').should('have.length', 1)
+
+    // Select all with toggleAll button
+    cy.get('[data-test="select-all-toggle"]').click()
+    cy.get('[data-cy=document] .selected').should('have.length', nbEntitiesInCurrentFolder)
+  })
+
+  it('Documents_SelectEntities_KeyBoardSelection', function () {
+    const currentEntities = this.documentsData.currentPersonalDocumentsStructure
+    const nbEntitiesInCurrentFolder = currentEntities.folders.length + currentEntities.files.length
+
+    // Shift selection without first selected document select from the first one
+    cy.get('body').type('{shift}', { release: false })
+    cy.contains('[data-test=file]', currentEntities.files[0].label).as('file1').click()
+    cy.get('body').type('{shift}') // Release shift button
+    // Check selected entities
+    cy.contains('[data-test=folder]', currentEntities.folders[0].label).as('folder1').should('have.class', 'selected')
+    cy.contains('[data-test=folder]', currentEntities.folders[1].label).as('folder2').should('have.class', 'selected')
+    cy.get('@file1').should('have.class', 'selected')
+    cy.contains('[data-test=file]', currentEntities.files[1].label).as('file2').should('not.have.class', 'selected')
+
+    // Normal shift selection between two entities
+    unselectAllEntities(nbEntitiesInCurrentFolder)
+    cy.get('@file1').click()
+    cy.get('body').type('{shift}', { release: false })
+    cy.get('@folder1').click()
+    cy.get('body').type('{shift}') // Release shift button
+    // Check selected entities
+    cy.contains('[data-test=folder]', currentEntities.folders[0].label).as('folder1').should('have.class', 'selected')
+    cy.contains('[data-test=folder]', currentEntities.folders[1].label).as('folder2').should('have.class', 'selected')
+    cy.get('@file1').should('have.class', 'selected')
+    cy.contains('[data-test=file]', currentEntities.files[1].label).as('file2').should('not.have.class', 'selected')
 
     // Ctrl selection
     cy.get('body').type('{ctrl}', { release: false })
-    cy.contains('[data-test=folder]', 'dossier1_1').click().should('have.class', 'selected')
-    cy.contains('[data-test=file]', 'fichier1_1.html').should('have.class', 'selected')
-    cy.get('[data-cy=document] .selected').should('have.length', 2)
+    cy.get('@file2').click()
+    cy.get('@file2').should('have.class', 'selected')
+    cy.get('[data-cy=document] .selected').should('have.length', nbEntitiesInCurrentFolder)
     // Ctrl deselection
-    cy.contains('[data-test=file]', 'fichier1_1.html').click().should('not.have.class', 'selected')
-    cy.contains('[data-test=folder]', 'dossier1_1').should('have.class', 'selected')
-    cy.get('[data-cy=document] .selected').should('have.length', 1)
-
-    // Simple selection
+    cy.get('@file1').click()
+    cy.get('@file1').should('not.have.class', 'selected')
+    cy.get('[data-cy=document] .selected').should('have.length', nbEntitiesInCurrentFolder - 1)
     cy.get('body').type('{ctrl}') // reset ctrl release
-    cy.contains('[data-test=file]', 'fichier1_1.html').click().should('have.class', 'selected')
-    cy.get('[data-cy=document] .selected').should('have.length', 1)
-
-    // Shift selection
-    cy.get('body').type('{shift}', { release: false })
-    cy.contains('[data-test=folder]', 'dossier1_1').click().should('have.class', 'selected')
-    cy.contains('[data-test=folder]', 'dossier1_2').should('have.class', 'selected')
-    cy.contains('[data-test=file]', 'fichier1_1.html').should('have.class', 'selected')
-    cy.contains('[data-test=file]', 'fichier1_2.html').should('not.have.class', 'selected')
-    cy.get('[data-cy=document] .selected').should('have.length', 3)
 
     // Arrows
-    cy.get('body').type('{ctrl}') // reset ctrl release
-    cy.contains('[data-test=file]', 'fichier1_1.html').click().should('have.class', 'selected')
+    // Press the down arrow selects the first document
+    unselectAllEntities(nbEntitiesInCurrentFolder)
+    cy.get('body').type('{downarrow}')
+    cy.get('[data-cy=document]').eq(0).should('have.class', 'selected')
+    cy.get('[data-cy=document] .selected').should('have.length', 1)
+
+    // Press the up arrow selects the last document
+    unselectAllEntities(nbEntitiesInCurrentFolder)
+    cy.get('body').type('{uparrow}')
+    cy.get('[data-cy=document]').eq(nbEntitiesInCurrentFolder - 1).should('have.class', 'selected')
+    cy.get('[data-cy=document] .selected').should('have.length', 1)
+
+    // Select the before last document and test arrows
+    cy.get('[data-cy=document]').eq(nbEntitiesInCurrentFolder - 2).click()
+    cy.get('[data-cy=document]').eq(nbEntitiesInCurrentFolder - 2).should('have.class', 'selected')
     cy.get('[data-cy=document] .selected').should('have.length', 1)
 
     cy.get('body').type('{downarrow}')
-    cy.get('[data-cy=document]').eq(3).should('have.class', 'selected')
+    cy.get('[data-cy=document]').eq(nbEntitiesInCurrentFolder - 1).should('have.class', 'selected')
     cy.get('[data-cy=document] .selected').should('have.length', 1)
     cy.get('body').type('{downarrow}')
     cy.get('[data-cy=document]').eq(0).should('have.class', 'selected')
     cy.get('[data-cy=document] .selected').should('have.length', 1)
     cy.get('body').type('{uparrow}')
-    cy.get('[data-cy=document]').eq(3).should('have.class', 'selected')
+    cy.get('[data-cy=document]').eq(nbEntitiesInCurrentFolder - 1).should('have.class', 'selected')
     cy.get('[data-cy=document] .selected').should('have.length', 1)
     cy.get('body').type('{uparrow}')
-    cy.get('[data-cy=document]').eq(2).should('have.class', 'selected')
+    cy.get('[data-cy=document]').eq(nbEntitiesInCurrentFolder - 2).should('have.class', 'selected')
     cy.get('[data-cy=document] .selected').should('have.length', 1)
+  })
+
+  it('Documents_SelectEntities_ClickSelection', function () {
+    const currentEntities = this.documentsData.currentPersonalDocumentsStructure
+
+    // Click on empty selected list
+    cy.contains('[data-test=file]', currentEntities.files[0].label).as('file1').click()
+    cy.get('@file1').should('have.class', 'selected')
+    cy.get('[data-cy=document] .selected').should('have.length', 1)
+
+    // Click one entity selected list
+    cy.contains('[data-test=file]', currentEntities.files[1].label).as('file2').click()
+    cy.get('@file2').should('have.class', 'selected')
+    cy.get('[data-cy=document] .selected').should('have.length', 1)
+
+    // Click multiple entity selected list
+    selectAllEntities()
+    cy.get('@file2').click()
+    cy.get('@file2').should('have.class', 'selected')
+    cy.get('[data-cy=document] .selected').should('have.length', 1)
+  })
+
+  it('Documents_SelectEntities_SelectionIconBehaviour', function () {
+    const currentEntities = this.documentsData.currentPersonalDocumentsStructure
+    const nbEntitiesInCurrentFolder = currentEntities.folders.length + currentEntities.files.length
+
+    // Click on empty selected list
+    cy.contains('[data-test=file]', currentEntities.files[0].label).as('file1').find('[data-test="selection-icon"]').click()
+    cy.get('@file1').should('have.class', 'selected')
+    cy.get('[data-cy=document] .selected').should('have.length', 1)
+
+    // Click one entity selected list
+    cy.contains('[data-test=file]', currentEntities.files[1].label).as('file2').find('[data-test="selection-icon"]').click()
+    cy.get('@file1').should('have.class', 'selected')
+    cy.get('@file2').should('have.class', 'selected')
+    cy.get('[data-cy=document] .selected').should('have.length', 2)
+
+    // Click multiple entity selected list
+    selectAllEntities()
+    cy.get('@file2').find('[data-test="selection-icon"]').click()
+    cy.get('@file2').should('not.have.class', 'selected')
+    cy.get('[data-cy=document] .selected').should('have.length', nbEntitiesInCurrentFolder - 1)
+  })
+
+  sizes.forEach(size => {
+    it(`Documents_SelectEntities_SelectionIsPresentOn[${size}]`, function () {
+      Cypress._.isArray(size) ? cy.viewport(size[0], size[1]) : cy.viewport(size)
+
+      // Check toggle all option
+      cy.get('[data-test="select-all-toggle"]').should('be.visible')
+
+      // Check selection icon on document
+      if (size === desktop) {
+        cy.get('[data-cy=document]').eq(0).as('myDocument').find('[data-test="selection-icon"]>.oval').should('not.exist')
+        cy.get('@myDocument').trigger('mouseover')
+        cy.get('@myDocument').find('[data-test="selection-icon"]>.oval').should('be.visible')
+      } else {
+        cy.get('[data-cy=document]').eq(0).as('myDocument').find('[data-test="selection-icon"]>.oval').should('be.visible')
+      }
+    })
   })
 })

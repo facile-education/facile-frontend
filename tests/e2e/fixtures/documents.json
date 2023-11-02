@@ -20,11 +20,20 @@
           }
         ],
         "files": []
+      },
+      {
+        "label": "Dossier2",
+        "id": 545135,
+        "folders": [],
+        "files": []
       }
     ],
     "files": [
       {
         "label": "Image.png"
+      },
+      {
+        "label": "Note.html"
       }
     ]
   },
