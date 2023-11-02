@@ -27,7 +27,7 @@
       :list="scopeList"
       :sort="false"
       display-field="name"
-      @update:modelValue="onScopeChange"
+      @update:model-value="onScopeChange"
     />
 
     <teleport to="body">

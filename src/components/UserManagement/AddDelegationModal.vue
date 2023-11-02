@@ -27,7 +27,7 @@
           id-field="userId"
           :list="delegationCandidates"
           class="tags"
-          @inputChange="searchCandidates"
+          @input-change="searchCandidates"
         />
         <WeprodeErrorMessage :error-message="formErrorList.selectedDelegates" />
       </div>

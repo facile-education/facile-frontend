@@ -5,7 +5,7 @@
       v-model="selectedSchool"
       :list="schoolList"
       display-field="schoolName"
-      @update:modelValue="onSelectSchool"
+      @update:model-value="onSelectSchool"
     />
   </NeroToolbar>
 

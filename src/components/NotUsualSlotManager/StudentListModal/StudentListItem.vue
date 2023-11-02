@@ -16,7 +16,7 @@
         label=""
         :title="$t('NotUsualSlots.StudentListModal.present')"
         :model-value="student.isPresent"
-        @update:modelValue="handleCheck"
+        @update:model-value="handleCheck"
       />
       <NeroIcon
         v-if="isSignOut"

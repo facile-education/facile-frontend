@@ -14,7 +14,7 @@
         class="checkbox"
         :disabled="user.isDirection || user.userId === currentUser.userId"
         label=""
-        @update:modelValue="toggleSchoolAdmin"
+        @update:model-value="toggleSchoolAdmin"
       />
       <WeprodeCheckbox
         v-else-if="field === 'isNewsDelegate'"
@@ -22,7 +22,7 @@
         class="checkbox"
         :disabled="user.isDirection"
         label=""
-        @update:modelValue="toggleNewsDelegate"
+        @update:model-value="toggleNewsDelegate"
       />
       <span v-else-if="field === 'affectations'">
         {{ nbAffectations }}

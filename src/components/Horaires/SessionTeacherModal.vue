@@ -35,7 +35,7 @@
               :label="$t('allSessions', {course: sessionEvent.groupName})"
               :disabled="teacher.substitutes.length === 0"
               class="all-slots"
-              @update:modelValue="filterSessionList(teacher)"
+              @update:model-value="filterSessionList(teacher)"
             />
             <div>
               <span v-t="'lastSession'" />

@@ -24,8 +24,8 @@
         :folder="subFolder"
         :is-selected="isFolderSelected(subFolder)"
         :dark="getEntityIndex(subFolder.id) % 2 === 0"
-        @folderClicked="clickOnFolder"
-        @folderDblClicked="dblClickOnFolder"
+        @folder-clicked="clickOnFolder"
+        @folder-dbl-clicked="dblClickOnFolder"
       />
       <FilePickerFile
         v-for="file in currentFiles"
@@ -34,7 +34,7 @@
         :file="file"
         :is-selected="isSelected(file)"
         :dark="getEntityIndex(file.id) % 2 === 0"
-        @fileClicked="clickOnFile"
+        @file-clicked="clickOnFile"
       />
     </div>
   </div>

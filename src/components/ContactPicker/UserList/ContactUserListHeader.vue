@@ -16,7 +16,7 @@
       v-model="filter"
       class="filter-input"
       :placeholder="$t('searchPlaceHolder')"
-      @update:modelValue="updateFilter"
+      @update:model-value="updateFilter"
     />
 
     <div class="nb-users">

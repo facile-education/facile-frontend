@@ -19,7 +19,7 @@
         v-model="adminValue"
         :title="$t('admin')"
         :disabled="isCurrentMember || !isCurrentGroupAdmin"
-        @update:modelValue="toggleAdminStatus"
+        @update:model-value="toggleAdminStatus"
       />
       <span>{{ $t(adminValue.toString()) }}</span>
     </div>

@@ -36,8 +36,8 @@
           :fields="fields"
           :is-hoverable="false"
           :user="user"
-          @toggleSchoolAdmin="toggleSchoolAdmin(user)"
-          @toggleNewsDelegate="toggleNewsDelegate(user)"
+          @toggle-school-admin="toggleSchoolAdmin(user)"
+          @toggle-news-delegate="toggleNewsDelegate(user)"
         />
       </div>
     </div>

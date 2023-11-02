@@ -58,7 +58,7 @@
         <AttachedFiles
           v-model="attachFiles"
           :read-only="false"
-          @removeAttachedFile="removeAttachedFile"
+          @remove-attached-file="removeAttachedFile"
         />
       </template>
 

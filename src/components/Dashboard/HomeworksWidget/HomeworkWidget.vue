@@ -5,7 +5,7 @@
     <HomeworkHeader
       :nb-homeworks-undone="nbHomeworksUndone"
       :undone-only="undoneOnly"
-      @updateUndoneOnly="updateUndoneOnlyValue"
+      @update-undone-only="updateUndoneOnlyValue"
     />
     <WeprodeSpinner
       v-if="isLoading"

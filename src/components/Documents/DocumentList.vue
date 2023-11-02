@@ -5,7 +5,7 @@
       v-if="display === 'list'"
       :current-sort="sort"
       :are-all-selected="areAllSelected"
-      @handleSort="handleSort"
+      @handle-sort="handleSort"
     />
     <div
       class="entities"
@@ -19,8 +19,8 @@
         :quick-options="[]"
         :dark="getEntityIndex(folder.id) % 2 === 0"
         :is-draggable="isDraggable(folder)"
-        @shiftSelect="shiftSelect"
-        @openContextMenu="openContextMenu"
+        @shift-select="shiftSelect"
+        @open-context-menu="openContextMenu"
       />
       <File
         v-for="(file, index) in sortedFiles"
@@ -30,8 +30,8 @@
         :quick-options="[]"
         :dark="getEntityIndex(file.id) % 2 === 0"
         :is-draggable="isDraggable(file)"
-        @shiftSelect="shiftSelect"
-        @openContextMenu="openContextMenu"
+        @shift-select="shiftSelect"
+        @open-context-menu="openContextMenu"
       />
     </div>
   </div>

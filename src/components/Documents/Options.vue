@@ -9,13 +9,13 @@
       v-for="(option, index) in visibleOptions"
       :key="index"
       :option="option"
-      @addSize="addOptionSize($event, index)"
-      @optionClicked="emitOption"
+      @add-size="addOptionSize($event, index)"
+      @option-clicked="emitOption"
     />
     <HiddenItems
       v-if="hiddenOptions.length > 0"
       :items="hiddenOptions"
-      @optionClicked="emitOption"
+      @option-clicked="emitOption"
     />
   </div>
 </template>

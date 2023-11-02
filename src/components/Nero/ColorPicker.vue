@@ -24,7 +24,7 @@
       <ColorSwatches
         :model-value="modelValue"
         :color-list="colorList"
-        @update:modelValue="update"
+        @update:model-value="update"
       />
     </div>
   </div>

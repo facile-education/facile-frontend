@@ -15,7 +15,7 @@
         :initial-range="{start: startDate, end: endDate}"
         :min-date="minDate.toDate()"
         :max-date="maxDate.toDate()"
-        @updateDates="updateDates"
+        @update-dates="updateDates"
       />
       <WeprodeErrorMessage
         :error-message="formErrorList.startDate || formErrorList.endDate"

@@ -15,7 +15,7 @@
       :list="managedSchoolList"
       display-field="schoolName"
       class="school-dropdown"
-      @update:modelValue="onSchoolSelect"
+      @update:model-value="onSchoolSelect"
     />
     <WeprodeSpinner v-else />
   </NeroToolbar>

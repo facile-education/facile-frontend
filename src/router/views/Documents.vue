@@ -10,7 +10,7 @@
     <CurrentOptions
       class="currents-options"
       :options="currentOptions"
-      @optionClicked="handleOption"
+      @option-clicked="handleOption"
     />
 
     <Breadcrumb
@@ -28,7 +28,7 @@
       <FilePickerArea
         class="file-picker-area"
         :disabled="isLoadDocumentsError"
-        @fileAdded="importDocument"
+        @file-added="importDocument"
         @click.right.prevent="openContextMenu"
       >
         <div
@@ -36,7 +36,7 @@
           @click="clickOnScrollDiv"
           @click.right.prevent="rightClickOnScrollDiv"
         >
-          <DocumentList @openContextMenu="openContextMenu" />
+          <DocumentList @open-context-menu="openContextMenu" />
         </div>
       </FilePickerArea>
       <DocumentDetails
@@ -76,7 +76,7 @@
       v-if="isFileNameModalDisplayed"
       :submit-action="modalSubmitAction"
       :init-file="documentToRename"
-      @openFile="openFile"
+      @open-file="openFile"
       @close="isFileNameModalDisplayed=false"
     />
     <PermissionsModal

@@ -15,8 +15,8 @@
       <ContactPicker
         :max-height="mq.phone ? '100%' : undefined"
         :selected-contacts="selectedContacts"
-        @addContacts="$emit('addContacts', $event)"
-        @removeContacts="$emit('removeContacts', $event)"
+        @add-contacts="$emit('addContacts', $event)"
+        @remove-contacts="$emit('removeContacts', $event)"
       />
     </template>
   </WeprodeWindow>

@@ -29,7 +29,7 @@
             :max-date="maxDate"
             :min-date="minDate"
             class="range-picker"
-            @updateDates="updateDates"
+            @update-dates="updateDates"
           />
         </div>
       </div>

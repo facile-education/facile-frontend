@@ -9,7 +9,7 @@
         :model-value="selectedSchool"
         :list="managedSchoolList"
         display-field="schoolName"
-        @update:modelValue="onSchoolSelect"
+        @update:model-value="onSchoolSelect"
       />
       <WeprodeSpinner v-else />
     </Transition>

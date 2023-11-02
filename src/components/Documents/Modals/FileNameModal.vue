@@ -33,8 +33,8 @@
 
         <AudioRecorder
           v-if="submitAction==='createAudio'"
-          @audioFile="setAudioFile"
-          @stoppedState="setStoppedState"
+          @audio-file="setAudioFile"
+          @stopped-state="setStoppedState"
         />
       </div>
     </template>

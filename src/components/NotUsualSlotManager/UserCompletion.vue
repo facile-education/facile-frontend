@@ -11,8 +11,8 @@
     :sort="false"
     display-field="displayName"
     id-field="userId"
-    @inputChange="searchTimeOut"
-    @update:modelValue="update"
+    @input-change="searchTimeOut"
+    @update:model-value="update"
   />
 </template>
 

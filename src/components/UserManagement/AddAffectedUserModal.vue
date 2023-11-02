@@ -25,7 +25,7 @@
           id-field="userId"
           :list="schoolMembers"
           class="tags"
-          @inputChange="searchMembers"
+          @input-change="searchMembers"
         />
         <WeprodeErrorMessage :error-message="formErrorList.selectedUsers" />
       </div>

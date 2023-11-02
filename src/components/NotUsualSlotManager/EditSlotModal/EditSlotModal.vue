@@ -50,7 +50,7 @@
           :initial-range="{start: newEvent.firstSessionDate, end: newEvent.lastSessionDate}"
           :min-date="schoolYearStartDate.toDate()"
           :max-date="schoolYearEndDate.toDate()"
-          @updateDates="updateSlotDates"
+          @update-dates="updateSlotDates"
         />
         <WeprodeSpinner v-else />
       </div>

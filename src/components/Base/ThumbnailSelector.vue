@@ -22,7 +22,7 @@
   >
     <ImagePicker
       :initial-thumbnail-url="thumbnailUrl"
-      @createdTmpFile="$emit('selectImage', $event)"
+      @created-tmp-file="$emit('selectImage', $event)"
       @close="isImagePickerDisplayed=false"
     />
   </teleport>

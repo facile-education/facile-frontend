@@ -36,7 +36,7 @@
         :sort="false"
         class="dropdown"
         display-field="groupName"
-        @update:modelValue="$emit('updateFilter', filter)"
+        @update:model-value="$emit('updateFilter', filter)"
       />
     </div>
   </div>

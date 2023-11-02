@@ -33,7 +33,7 @@
     to="body"
   >
     <SaveDiaryEventModal
-      @createEvent="createEvent"
+      @create-event="createEvent"
       @close="isCreateModalDisplayed = false"
     />
   </teleport>

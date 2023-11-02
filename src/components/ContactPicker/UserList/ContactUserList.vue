@@ -6,7 +6,7 @@
     <ContactUserListHeader
       :user-list-length="userList ? userList.length : 0"
       :is-all-list-selected="isAllListSelected"
-      @updateFilter="updateFilter"
+      @update-filter="updateFilter"
       @toggle-all="toggleAll"
     />
     <div
@@ -40,8 +40,8 @@
           :key="user.userId"
           :selected-users="selectedUsers"
           :user="user"
-          @addContact="addContact"
-          @removeContact="removeContact"
+          @add-contact="addContact"
+          @remove-contact="removeContact"
         />
       </ul>
     </div>

@@ -9,7 +9,7 @@
         v-if="!mq.desktop"
         class="date-picker"
         :selected-date="selectedDate"
-        @selectDate="onSelectDate"
+        @select-date="onSelectDate"
       />
     </div>
     <div class="second-line">
@@ -19,7 +19,7 @@
         data-test="user-completion-input"
         :placeholder="$t('NotUsualSlots.studentNamePlaceHolder')"
         :model-value="queriedUser ? [queriedUser] : []"
-        @update:modelValue="getUserSlots"
+        @update:model-value="getUserSlots"
       />
     </div>
   </div>
