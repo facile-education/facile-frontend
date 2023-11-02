@@ -49,7 +49,7 @@
         :list="exportList"
         display-field="label"
         class="export-list"
-        @update:modelValue="exportUserList"
+        @update:model-value="exportUserList"
       />
       <p v-html="exportMessage" />
     </div>
@@ -63,7 +63,7 @@
       :model-value="application.isBroadcasted"
       :title="$t('broadcastButtonTooltip')"
       :disabled="!hasRules"
-      @update:modelValue="updateBroadcast"
+      @update:model-value="updateBroadcast"
     />
     <WeprodeButton
       v-if="isAdministrator && isAdministratorMode"

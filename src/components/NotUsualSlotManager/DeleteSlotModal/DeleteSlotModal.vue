@@ -29,7 +29,7 @@
             :initial-range="{start: deleteStartDate, end: deleteEndDate}"
             :min-date="schoolYearStartDate.toDate()"
             :max-date="schoolYearEndDate.toDate()"
-            @updateDates="updateSlotDates"
+            @update-dates="updateSlotDates"
           />
         </div>
         <WeprodeSpinner v-else />

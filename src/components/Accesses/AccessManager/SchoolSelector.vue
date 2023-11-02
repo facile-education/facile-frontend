@@ -7,7 +7,7 @@
       v-model="selectedSchool"
       :list="schoolList"
       display-field="schoolName"
-      @update:modelValue="$emit('setSchool', selectedSchool)"
+      @update:model-value="$emit('setSchool', selectedSchool)"
     />
   </div>
 </template>

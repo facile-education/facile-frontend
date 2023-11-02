@@ -6,8 +6,8 @@
       v-if="currentDisplayedDate"
       :current-date="currentDisplayedDate"
       @redirect="redirect"
-      @goBefore="goBefore"
-      @goAfter="goAfter"
+      @go-before="goBefore"
+      @go-after="goAfter"
       @select-date="selectDate"
     />
 

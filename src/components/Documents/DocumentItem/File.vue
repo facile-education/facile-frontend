@@ -7,9 +7,9 @@
     :is-draggable="isDraggable"
     :dark="dark"
     :is-last="isLast"
-    @triggerAction="openFile"
-    @shiftSelect="dispatchEvent"
-    @openContextMenu="openContextMenu"
+    @trigger-action="openFile"
+    @shift-select="dispatchEvent"
+    @open-context-menu="openContextMenu"
   />
 </template>
 

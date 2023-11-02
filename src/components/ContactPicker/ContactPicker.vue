@@ -18,8 +18,8 @@
             :max-height="maxHeight"
             :min-height="minHeight"
             class="contains-tabs"
-            @addContacts="addContacts"
-            @removeContacts="removeContacts"
+            @add-contacts="addContacts"
+            @remove-contacts="removeContacts"
           />
         </WeprodeTabItem>
         <WeprodeTabItem
@@ -38,8 +38,8 @@
         :selected-lists="selectedLists"
         :max-height="maxHeight"
         :min-height="minHeight"
-        @addContacts="addContacts"
-        @removeContacts="removeContacts"
+        @add-contacts="addContacts"
+        @remove-contacts="removeContacts"
       />
     </div>
 
@@ -48,8 +48,8 @@
       :class="{'collapsed': (mq.phone && !isMobileUserListDisplayed)}"
       :max-height="maxHeight"
       :selected-users="selectedUsers"
-      @addContacts="addContacts"
-      @removeContacts="removeContacts"
+      @add-contacts="addContacts"
+      @remove-contacts="removeContacts"
     />
   </div>
 </template>

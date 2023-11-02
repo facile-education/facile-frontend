@@ -10,7 +10,7 @@
         label=""
         class="checkbox"
         @click.stop
-        @update:modelValue="toggleUserSelection"
+        @update:model-value="toggleUserSelection"
       />
     </td>
     <td>{{ fullName }}</td>

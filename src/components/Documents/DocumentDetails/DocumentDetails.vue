@@ -43,8 +43,8 @@
     <DocumentVersionsList
       v-if="selectedDocuments.length === 1 && documentToDisplay.type === 'File'"
       :document="documentToDisplay"
-      @viewCount="updateDocumentViewCount"
-      @downloadCount="updateDocumentDownloadCount"
+      @view-count="updateDocumentViewCount"
+      @download-count="updateDocumentDownloadCount"
     />
 
     <p

@@ -8,10 +8,10 @@
       :has-arrows="hasArrows"
       :can-scroll-to-right="canScrollToRight"
       :can-scroll-to-left="canScrollToLeft"
-      @updateUnreadOnly="updateUnreadOnlyValue"
-      @createAnnouncement="refresh"
-      @goNext="goNext"
-      @goPrevious="goPrevious"
+      @update-unread-only="updateUnreadOnlyValue"
+      @create-announcement="refresh"
+      @go-next="goNext"
+      @go-previous="goPrevious"
     />
     <WeprodeSpinner
       v-if="isLoading"
@@ -47,9 +47,9 @@
             <AnnouncementItem
               :announcement="announcement"
               :is-in-horizontal-scroll="true"
-              @markAsRead="markAsRead(announcement)"
-              @updateAnnouncement="refresh"
-              @deleteAnnouncement="refresh"
+              @mark-as-read="markAsRead(announcement)"
+              @update-announcement="refresh"
+              @delete-announcement="refresh"
               @refresh="refresh"
             />
           </li>

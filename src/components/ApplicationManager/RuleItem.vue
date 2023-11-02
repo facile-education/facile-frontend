@@ -12,7 +12,7 @@
         :sort="false"
         :error-message="formErrorList.roles"
         @blur="onBlurRoles"
-        @update:modelValue="updateRoles"
+        @update:model-value="updateRoles"
       />
       <WeprodeErrorMessage :error-message="formErrorList.roles" />
     </div>
@@ -27,7 +27,7 @@
         :sort="false"
         display-field="orgName"
         @blur="onBlurOrgs"
-        @update:modelValue="updateOrgs"
+        @update:model-value="updateOrgs"
       />
       <WeprodeErrorMessage :error-message="formErrorList.orgs" />
     </div>

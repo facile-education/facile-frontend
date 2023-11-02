@@ -3,21 +3,21 @@
     <WeprodeSpinner v-if="isSpinnerDisplayed" />
     <Timeline
       v-if="mq.desktop"
-      @selectWeek="onSelectWeek"
+      @select-week="onSelectWeek"
     />
     <NotUsualSlotsToolBar
       v-if="!mq.desktop"
       :selected-date="selectedDate"
-      @selectDate="onSelectDate"
+      @select-date="onSelectDate"
     />
 
     <CustomCalendar
       :display-date="selectedDate"
       :events="eventList"
       :can-create-slots="canCreateSlots"
-      @selectDate="onSelectDate"
-      @createSlot="createSlot"
-      @eventOptionClicked="handleEventOption"
+      @select-date="onSelectDate"
+      @create-slot="createSlot"
+      @event-option-clicked="handleEventOption"
     />
   </div>
   <teleport

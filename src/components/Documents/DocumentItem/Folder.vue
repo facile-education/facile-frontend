@@ -9,12 +9,12 @@
     :is-last="isLast"
     :dark="dark"
     :is-draggable="isDraggable"
-    @triggerAction="changeDir"
-    @shiftSelect="dispatchEvent"
+    @trigger-action="changeDir"
+    @shift-select="dispatchEvent"
     @dragover="setActive"
     @dragleave="cancelActive"
     @drop="dropFile"
-    @openContextMenu="openContextMenu"
+    @open-context-menu="openContextMenu"
   />
 </template>
 

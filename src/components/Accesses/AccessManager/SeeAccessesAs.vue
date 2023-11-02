@@ -4,7 +4,7 @@
     :list="roleList"
     :placeholder="$t('seeAs')"
     display-field="displayText"
-    @update:modelValue="isAccessVisualizationOpen=true"
+    @update:model-value="isAccessVisualizationOpen=true"
   />
 
   <teleport

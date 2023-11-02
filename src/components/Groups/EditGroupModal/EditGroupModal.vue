@@ -68,14 +68,14 @@
               :list="roleList"
               display-field="label"
               :sort="false"
-              @update:modelValue="getCompletion"
+              @update:model-value="getCompletion"
             />
             <WeprodeDropdown
               v-model="selectedSchool"
               :list="schoolList"
               :sort="false"
               display-field="schoolName"
-              @update:modelValue="getCompletion"
+              @update:model-value="getCompletion"
             />
           </div>
 
@@ -87,7 +87,7 @@
                   :model-value="isAllSelected"
                   label=""
                   class="checkbox"
-                  @update:modelValue="toggleAll"
+                  @update:model-value="toggleAll"
                 />
               </th>
               <th v-t="'identity'" />
@@ -99,7 +99,7 @@
               :key="index"
               :user="user"
               :is-selected="isGroupMember(user)"
-              @toggleUserSelection="toggleGroupMember(user)"
+              @toggle-user-selection="toggleGroupMember(user)"
             />
           </table>
 
@@ -120,7 +120,7 @@
             :member="member"
             :is-current-member="member.userId === currentUser.userId"
             :is-current-group-admin="isCurrentGroupAdmin"
-            @toggleAdmin="toggleAdmin(member)"
+            @toggle-admin="toggleAdmin(member)"
             @remove="deleteGroupMember(member)"
           />
         </div>

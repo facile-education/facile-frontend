@@ -13,14 +13,14 @@
           :list="roleList"
           display-field="label"
           :sort="false"
-          @update:modelValue="getCompletion"
+          @update:model-value="getCompletion"
         />
         <WeprodeDropdown
           v-model="selectedSchool"
           :list="schoolList"
           :sort="false"
           display-field="schoolName"
-          @update:modelValue="getCompletion"
+          @update:model-value="getCompletion"
         />
       </div>
       <div class="password">

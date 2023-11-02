@@ -2,8 +2,8 @@
   <AllDiaryEventsHeader
     :nb-new-events="nbNewEvents"
     :un-read-only="unReadOnly"
-    @toggleReadOnly="toggleReadOnly"
-    @createEvent="refresh"
+    @toggle-read-only="toggleReadOnly"
+    @create-event="refresh"
   />
 
   <div
@@ -48,10 +48,10 @@
             :is-selected="selectedEvent && selectedEvent.eventId === event.eventId"
             :is-last="isLastDisplayed(event)"
             @select="selectedEvent=event"
-            @markAsRead="event.hasRead=true"
-            @updateEvent="updateList"
-            @deleteEvent="updateList"
-            @getNextEvents="loadDiaryEvents"
+            @mark-as-read="event.hasRead=true"
+            @update-event="updateList"
+            @delete-event="updateList"
+            @get-next-events="loadDiaryEvents"
           />
         </div>
       </div>

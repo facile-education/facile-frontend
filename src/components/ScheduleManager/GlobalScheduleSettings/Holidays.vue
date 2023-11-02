@@ -31,7 +31,7 @@
       class="holiday-form"
       :min-date="(schoolYearStartDate && schoolYearStartDate!==schoolYearEndDate) ? schoolYearStartDate : undefined"
       :max-date="(schoolYearEndDate && schoolYearStartDate!==schoolYearEndDate) ? schoolYearEndDate : undefined"
-      @addHoliday="addHoliday"
+      @add-holiday="addHoliday"
       @cancel="isFormDisplayed = false"
     />
   </section>

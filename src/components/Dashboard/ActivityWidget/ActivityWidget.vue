@@ -6,14 +6,14 @@
     <ActivityHeader
       :nb-new-activities="nbNewActivities"
       :display-all="displayAll"
-      @createNews="refresh"
+      @create-news="refresh"
     />
 
     <ActivityFilter
       v-if="!isParent"
       :initial-filter="filter"
       :is-filters-displayed-by-default="displayAll && !mq.phone"
-      @updateFilter="updateFilter"
+      @update-filter="updateFilter"
     />
 
     <WeprodeSpinner
@@ -47,7 +47,7 @@
             :is-unread="true"
             :is-last="activity.activityId === lastActivity.activityId"
             :is-dashboard="true"
-            @getNextActivities="getActivities"
+            @get-next-activities="getActivities"
             @refresh="refresh"
           />
         </li>
@@ -69,8 +69,8 @@
             :activity="activity"
             :is-last="activity.activityId === lastActivity.activityId"
             :is-dashboard="true"
-            @markAsRead="activity.hasRead=true"
-            @getNextActivities="getActivities"
+            @mark-as-read="activity.hasRead=true"
+            @get-next-activities="getActivities"
             @refresh="refresh"
           />
         </li>

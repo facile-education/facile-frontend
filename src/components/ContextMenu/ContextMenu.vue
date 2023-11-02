@@ -24,9 +24,9 @@
         :option="option"
         :position="{x: position.x, y: position.y + option.position*40}"
         :is-selected="selectedIndex !== undefined ? options[selectedIndex] === option : false"
-        @selectOption="emitOption(option)"
-        @isContextMenuMobileExtended="subMenuMobileManagement"
-        @emitSubOption="emitOption"
+        @select-option="emitOption(option)"
+        @is-context-menu-mobile-extended="subMenuMobileManagement"
+        @emit-sub-option="emitOption"
         @close="closeMenu"
       />
     </ul>

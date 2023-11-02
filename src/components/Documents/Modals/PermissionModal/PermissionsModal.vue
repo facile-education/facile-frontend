@@ -49,13 +49,13 @@
         :key="index"
         :role="role"
         :type="document.type"
-        @updateMatrix="updateMatrix($event, role)"
+        @update-matrix="updateMatrix($event, role)"
       />
       <WeprodeCheckbox
         v-if="document.type==='Folder'"
         :model-value="isRecursive"
         :label="$t('recursiveLabel')"
-        @update:modelValue="updateRecursive"
+        @update:model-value="updateRecursive"
       />
     </template>
 

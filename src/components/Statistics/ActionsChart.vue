@@ -8,7 +8,7 @@
         display-field="name"
         :sort="false"
         class="services"
-        @update:modelValue="onServiceSelect"
+        @update:model-value="onServiceSelect"
       />
     </header>
     <div

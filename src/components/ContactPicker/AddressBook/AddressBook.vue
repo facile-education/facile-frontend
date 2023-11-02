@@ -20,16 +20,16 @@
         :key="school.schoolOrgId"
         :school="school"
         :selected-lists="selectedLists"
-        @addContacts="$emit('addContacts', $event)"
-        @removeContacts="$emit('removeContacts', $event)"
+        @add-contacts="$emit('addContacts', $event)"
+        @remove-contacts="$emit('removeContacts', $event)"
       />
       <!-- Dedicated component for the list because this list can be folded-->
       <AddressBookCommunities
         v-if="communities.length > 0"
         :communities="communities"
         :selected-lists="selectedLists"
-        @addContacts="$emit('addContacts', $event)"
-        @removeContacts="$emit('removeContacts', $event)"
+        @add-contacts="$emit('addContacts', $event)"
+        @remove-contacts="$emit('removeContacts', $event)"
       />
     </div>
   </section>

@@ -8,22 +8,22 @@
       v-if="school.Personnels"
       :populations="school.Personnels"
       :selected-lists="selectedLists"
-      @addContacts="$emit('addContacts', $event)"
-      @removeContacts="$emit('removeContacts', $event)"
+      @add-contacts="$emit('addContacts', $event)"
+      @remove-contacts="$emit('removeContacts', $event)"
     />
     <AddressBookClasses
       v-if="school.classes"
       :classes="school.classes"
       :selected-lists="selectedLists"
-      @addContacts="$emit('addContacts', $event)"
-      @removeContacts="$emit('removeContacts', $event)"
+      @add-contacts="$emit('addContacts', $event)"
+      @remove-contacts="$emit('removeContacts', $event)"
     />
     <AddressBookCourses
       v-if="school.cours"
       :courses="school.cours"
       :selected-lists="selectedLists"
-      @addContacts="$emit('addContacts', $event)"
-      @removeContacts="$emit('removeContacts', $event)"
+      @add-contacts="$emit('addContacts', $event)"
+      @remove-contacts="$emit('removeContacts', $event)"
     />
     <!-- Students and parents have student and parents lists -->
     <AddressBookItem

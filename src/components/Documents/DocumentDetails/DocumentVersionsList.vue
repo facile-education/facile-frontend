@@ -5,8 +5,8 @@
       v-for="(version, index) in fileVersions"
       :key="index"
       :version="version"
-      @refreshVersions="getListVersions"
-      @openVersion="openVersion"
+      @refresh-versions="getListVersions"
+      @open-version="openVersion"
     />
   </div>
 </template>

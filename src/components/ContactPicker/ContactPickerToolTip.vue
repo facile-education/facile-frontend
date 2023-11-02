@@ -11,8 +11,8 @@
       :selected-contacts="selectedContacts"
       :max-height="maxHeight"
       :min-height="minHeight"
-      @addContacts="$emit('addContacts', $event)"
-      @removeContacts="$emit('removeContacts', $event)"
+      @add-contacts="$emit('addContacts', $event)"
+      @remove-contacts="$emit('removeContacts', $event)"
     />
   </div>
 </template>

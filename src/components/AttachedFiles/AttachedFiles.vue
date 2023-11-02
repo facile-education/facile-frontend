@@ -26,7 +26,7 @@
         <AttachedFile
           :read-only="readOnly"
           :attached-file="attachedFile"
-          @removeAttachedFile="$emit('removeAttachedFile', $event)"
+          @remove-attached-file="$emit('removeAttachedFile', $event)"
         />
       </li>
     </ul>
