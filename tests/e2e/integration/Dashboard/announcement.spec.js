@@ -7,6 +7,76 @@ describe('Dashboard_Announcements', () => {
     cy.loadTables('dashboard/dashboard_tables_news.sql')
     cy.fixture('dashboard.json').as('dashboardData')
   })
+
+  it('Dashboard_Announcement_DisplayAnnouncements_Read_UnRead', function () {
+    const existingNews = this.dashboardData.existingNews
+    // Login
+    cy.login(STUDENT, dashboardURL)
+    // Check if pellet is visible
+    cy.get('[data-test="announcement-widget"]').within(() => {
+      cy.get('header').contains('.pellet', 1).should('be.visible')
+    })
+    // Click on event
+    getNews(existingNews[0]).click()
+    cy.get('[data-test="closeModal"]').click()
+    // Check if pellet is not visible
+    cy.get('[data-test="announcement-widget"]').within(() => {
+      cy.get('header').contains('.pellet', 1).should('not.exist')
+    })
+    // Click on read onlyButton
+    cy.get('[data-test="ReadOnlyAnnouncementButton"]').click()
+    // Check if event is not visible
+    getNews(existingNews[0]).should('not.exist')
+  })
+
+  it('Dashboard_Annoucements_DisplayAnnouncement_Check_Content', function () {
+    const existingNews = this.dashboardData.existingNews
+    const lastNews = existingNews[existingNews.length - 1]
+
+    cy.login(HEADMASTER, dashboardURL)
+    getNews(lastNews).click()
+    cy.get('[data-test="news-details-modal"]').within(() => {
+      // Check the title
+      cy.get('.header').should('contain', lastNews.title)
+      // Chekc the recipient
+      cy.get('.lonely-population').should('contain', lastNews.recipient)
+      // Check the publication info
+      cy.get('.publication').should('contain', `${HEADMASTER.firstName} ${HEADMASTER.lastName}`)
+      cy.get('.publication').should('contain', lastNews.publicationDate)
+      // Check the content
+      cy.get('.detailed-news > .content').should('contain', lastNews.content)
+    })
+  })
+
+  it('Dashboard_Announcements_DisplayAnnouncement_Check_ReadRecipient_Info', function () {
+    const existingNews = this.dashboardData.existingNews
+    const lastNews = existingNews[existingNews.length - 1]
+
+    // Login with author
+    cy.login(HEADMASTER, dashboardURL)
+    getNews(lastNews).click()
+    cy.get('[data-test="news-details-modal"]').within(() => {
+      // No one read this event
+      cy.get('.read-infos').should('contain', '0 destinataire')
+    })
+    // Login recipient
+    cy.login(PARENT, dashboardURL)
+    // Student read this event
+    getNews(lastNews).click()
+
+    // Login with author
+    cy.login(HEADMASTER, dashboardURL)
+    getNews(lastNews).click()
+    cy.get('[data-test="news-details-modal"]').within(() => {
+      // No one read this event
+      cy.get('.read-infos').should('contain', '1 destinataire')
+      // Open recipients infos
+      cy.get('.read-infos > button').click()
+      cy.get('.population').click()
+      cy.get('.read-info-user').contains(`${PARENT.lastName} ${PARENT.firstName}`).should('not.contain', 'Non lu')
+    })
+  })
+
   it('Dashboard_Announcements_DisplayAllAnnouncements', function () {
     const existingNews = this.dashboardData.existingNews
     // Login
