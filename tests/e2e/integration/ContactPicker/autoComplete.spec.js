@@ -33,7 +33,7 @@ describe('UserSelection_Autocomplete', () => {
     cy.get('.suggestion-list').contains('Bibliothécaires').should('be.exist')
   })
 
-  it.only('UserSelection_Autocomplete_Visibility_By_Profil', function () {
+  it('UserSelection_Autocomplete_Visibility_By_Profil', function () {
     const ContactsStudent = [ACCOUNTING_CASHIER, PARENT, HEADMASTER, LIBRARIAN, NURSE, ORIENTATION_COUNSELOR, PSYCHOLOGIST, SECRETARY, SOCIAL_COUNSELOR, TECHNICAL_ASSISSTANT, STUDENT_IN_CLASS, STUDENT_NOT_IN_CLASS]
 
     // STUDENT

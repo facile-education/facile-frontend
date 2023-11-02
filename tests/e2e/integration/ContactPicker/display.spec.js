@@ -6,7 +6,7 @@ describe('UserSelection_AddressBook_DisplayCorrectLists', () => {
   beforeEach(() => {
     cy.fixture('contactPicker.json').as('contactPickerData')
   })
-  it.only('UserSelection_AddressBook_DisplayCorrectList_Check_Viewport', function () {
+  it('UserSelection_AddressBook_DisplayCorrectList_Check_Viewport', function () {
     const Lists = this.contactPickerData.Lists
     // Login
     cy.login(HEADMASTER, messagingURL)
