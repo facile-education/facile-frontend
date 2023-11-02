@@ -149,7 +149,7 @@ export default {
         this.isContextMenuDisplayed = true
         this.$store.dispatch('contextMenu/openContextMenu',
           {
-            event: event,
+            event,
             options: this.currentOptions
           })
       }

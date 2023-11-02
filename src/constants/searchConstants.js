@@ -1,4 +1,3 @@
-
 const quickSearchPaginationSize = 10
 
 const TYPE_NEWS = 1

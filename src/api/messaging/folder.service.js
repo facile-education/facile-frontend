@@ -17,8 +17,8 @@ const MESSAGING_PATH = '/messaging.messagefolder'
 function addFolder (parentFolderId, folderName) {
   return axios.get(constants.JSON_WS_URL + MESSAGING_PATH + '/add-folder', {
     params: {
-      parentFolderId: parentFolderId,
-      folderName: folderName
+      parentFolderId,
+      folderName
     }
   }).then(response => response.data)
 }
@@ -39,8 +39,8 @@ function getAllUserFolders () {
 function renameFolder (folderId, newLabel) {
   return axios.get(constants.JSON_WS_URL + MESSAGING_PATH + '/rename-folder', {
     params: {
-      folderId: folderId,
-      newLabel: newLabel
+      folderId,
+      newLabel
     }
   }).then(response => response.data)
 }
@@ -51,7 +51,7 @@ function renameFolder (folderId, newLabel) {
 function deleteFolder (folderId) {
   return axios.get(constants.JSON_WS_URL + MESSAGING_PATH + '/delete-folder', {
     params: {
-      folderId: folderId
+      folderId
     }
   }).then(response => response.data)
 }

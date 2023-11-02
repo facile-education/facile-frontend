@@ -104,7 +104,7 @@ export default {
         event.y = this.$refs.hiddenItems.getBoundingClientRect().top + this.$refs.hiddenItems.clientHeight
         this.$store.dispatch('contextMenu/openContextMenu',
           {
-            event: event,
+            event,
             options: this.items
           })
       }

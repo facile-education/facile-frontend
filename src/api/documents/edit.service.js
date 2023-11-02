@@ -15,8 +15,8 @@ const EDIT_PATH = '/document.folderutils'
 function createFolder (parentFolderId, name) {
   return axios.get(constants.JSON_WS_URL + EDIT_PATH + '/create-folder', {
     params: {
-      parentFolderId: parentFolderId,
-      name: name
+      parentFolderId,
+      name
     }
   }).then(response => response.data)
 }

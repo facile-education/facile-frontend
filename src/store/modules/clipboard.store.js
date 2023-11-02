@@ -44,7 +44,7 @@ export const actions = {
           const entitiesInConflict = [...data.foldersInConflict, ...data.filesInConflict]
           if (entitiesInConflict.length > 0) {
             this.dispatch('conflictModal/addConflict', {
-              entitiesInConflict: entitiesInConflict,
+              entitiesInConflict,
               lastAction: { fct: this.dispatch, params: { storePath: 'clipboard/duplicate', storeParams: { targetFolder, entities: entitiesInConflict, successMessage } } }
             })
           // Print error messages if any
@@ -82,7 +82,7 @@ export const actions = {
           const entitiesInConflict = [...data.foldersInConflict, ...data.filesInConflict]
           if (entitiesInConflict.length > 0) {
             this.dispatch('conflictModal/addConflict', {
-              entitiesInConflict: entitiesInConflict,
+              entitiesInConflict,
               lastAction: { fct: this.dispatch, params: { storePath: 'clipboard/move', storeParams: { targetFolder, entities: entitiesInConflict } } }
             })
             // Print error messages if any
@@ -104,7 +104,7 @@ export const actions = {
 
       // display popup
       const message = rootState.documents.selectedEntities.length === 1 ? rootState.documents.selectedEntities[0].name + ' ' + i18n.global.t('Popup.copied') : i18n.global.t('Popup.documentCopied')
-      this.dispatch('popups/pushPopup', { message: message })
+      this.dispatch('popups/pushPopup', { message })
     }
   },
   cut ({ commit, rootState }) {
@@ -115,7 +115,7 @@ export const actions = {
 
       // display popup
       const message = rootState.documents.selectedEntities.length === 1 ? rootState.documents.selectedEntities[0].name + ' ' + i18n.global.t('Popup.cut') : i18n.global.t('Popup.documentCut')
-      this.dispatch('popups/pushPopup', { message: message })
+      this.dispatch('popups/pushPopup', { message })
     }
   }
 }

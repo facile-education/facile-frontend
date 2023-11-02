@@ -29,8 +29,8 @@ function getAdministeredSchoolList () {
 function getSchoolClassList (schoolId, includeCours) {
   return axios.get(constants.JSON_WS_URL + ORG_PATH + 'orgutils/get-school-classes', {
     params: {
-      schoolId: schoolId,
-      includeCours: includeCours
+      schoolId,
+      includeCours
     }
   }).then(response => response.data)
 }

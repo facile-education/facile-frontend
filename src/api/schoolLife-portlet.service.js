@@ -31,16 +31,16 @@ const SCHOOL_LIFE_RENVOI_PATH = '/schoollife.renvoi'
 function createSlot (schoolId, startDateStr, endDateStr, day, startHour, endHour, teacherId, type, room, capacity) {
   return axios.get(constants.JSON_WS_URL + SCHOOL_LIFE_SLOT_PATH + '/create-slot', {
     params: {
-      schoolId: schoolId,
-      startDateStr: startDateStr,
-      endDateStr: endDateStr,
-      day: day,
-      startHour: startHour,
-      endHour: endHour,
-      teacherId: teacherId,
-      type: type,
-      room: room,
-      capacity: capacity
+      schoolId,
+      startDateStr,
+      endDateStr,
+      day,
+      startHour,
+      endHour,
+      teacherId,
+      type,
+      room,
+      capacity
     }
   }).then(response => response.data)
 }
@@ -52,8 +52,8 @@ function updateSlot (slotId, startDateStr, endDateStr, day, startHour, endHour, 
   return axios.get(constants.JSON_WS_URL + SCHOOL_LIFE_SLOT_PATH + '/edit-slot', {
     params: {
       schoollifeSessionId: slotId,
-      startDateStr: startDateStr,
-      endDateStr: endDateStr,
+      startDateStr,
+      endDateStr,
       newDay: day,
       newStartHour: startHour,
       newEndHour: endHour,
@@ -72,8 +72,8 @@ function deleteSlot (slotId, startDateStr, endDateStr) {
   return axios.get(constants.JSON_WS_URL + SCHOOL_LIFE_SLOT_PATH + '/delete-slot', {
     params: {
       schoollifeSessionId: slotId,
-      startDateStr: startDateStr,
-      endDateStr: endDateStr
+      startDateStr,
+      endDateStr
     }
   }).then(response => response.data)
 }
@@ -131,9 +131,9 @@ function registerClass (classId, slotId, comment, notifyParents, replayTestSubje
     params: {
       classId,
       schoollifeSessionId: slotId,
-      comment: comment,
-      notifyParents: notifyParents,
-      replayTestSubject: replayTestSubject
+      comment,
+      notifyParents,
+      replayTestSubject
     }
   }).then(response => response.data)
 }
@@ -146,9 +146,9 @@ function registerStudent (student, slotId, comment, notifyParents, replayTestSub
     params: {
       studentId: student.studentId,
       schoollifeSessionId: slotId,
-      comment: comment,
-      notifyParents: notifyParents,
-      replayTestSubject: replayTestSubject
+      comment,
+      notifyParents,
+      replayTestSubject
     }
   }).then(response => response.data)
 }
@@ -161,9 +161,9 @@ function unRegisterStudent (student, slotId, comment, notifyParents, allSessions
     params: {
       studentId: student.studentId,
       schoollifeSessionId: slotId,
-      comment: comment,
-      notifyParents: notifyParents,
-      allSessions: allSessions
+      comment,
+      notifyParents,
+      allSessions
     }
   }).then(response => response.data)
 }
@@ -176,10 +176,10 @@ function registerFiring (slotId, student, sourceSessionId, sourceTeacherId, sour
     params: {
       schoollifeSessionId: slotId,
       studentId: student.studentId,
-      sourceSessionId: sourceSessionId,
-      sourceTeacherId: sourceTeacherId,
-      sourceSchoollifeSessionId: sourceSchoollifeSessionId,
-      registrationDate: registrationDate
+      sourceSessionId,
+      sourceTeacherId,
+      sourceSchoollifeSessionId,
+      registrationDate
     }
   }).then(response => response.data)
 }
@@ -211,8 +211,8 @@ function setFiringReason (slotId, studentId, reason) {
   return axios.get(constants.JSON_WS_URL + SCHOOL_LIFE_RENVOI_PATH + '/set-renvoi-reason', {
     params: {
       schoollifeSessionId: slotId,
-      studentId: studentId,
-      reason: reason
+      studentId,
+      reason
     }
   }).then(response => response.data)
 }
@@ -224,7 +224,7 @@ function markStudentsPresent (slotId, studentsPresence) {
   return axios.get(constants.JSON_WS_URL + SCHOOL_LIFE_SESSION_STUDENT_PATH + '/mark-students-present', {
     params: {
       schoollifeSessionId: slotId,
-      studentsPresence: studentsPresence
+      studentsPresence
     }
   }).then(response => response.data)
 }

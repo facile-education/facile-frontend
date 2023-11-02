@@ -23,7 +23,7 @@ function getDashboardStatistics () {
 function getActiveUsersCount (schoolId, startDate, endDate) {
   return axios.get(constants.JSON_WS_URL + STAT_PATH + '/get-active-users-count', {
     params: {
-      schoolId: schoolId,
+      schoolId,
       startDate: startDate.format('YYYY-MM-DD HH:mm'),
       endDate: endDate.format('YYYY-MM-DD HH:mm')
     }
@@ -33,10 +33,10 @@ function getActiveUsersCount (schoolId, startDate, endDate) {
 function getSessionsCount (schoolId, startDate, endDate, comparator) {
   return axios.get(constants.JSON_WS_URL + STAT_PATH + '/get-sessions-count', {
     params: {
-      schoolId: schoolId,
+      schoolId,
       startDate: startDate.format('YYYY-MM-DD HH:mm'),
       endDate: endDate.format('YYYY-MM-DD HH:mm'),
-      comparator: comparator
+      comparator
     }
   }).then(response => response.data)
 }
@@ -56,7 +56,7 @@ function getActionsCount (schoolId, serviceId, startDate, endDate, comparator) {
 function getFilesCount (schoolId, startDate, endDate) {
   return axios.get(constants.JSON_WS_URL + STAT_PATH + '/get-files-count', {
     params: {
-      schoolId: schoolId,
+      schoolId,
       startDate: startDate.format('YYYY-MM-DD HH:mm'),
       endDate: endDate.format('YYYY-MM-DD HH:mm')
     }
@@ -66,7 +66,7 @@ function getFilesCount (schoolId, startDate, endDate) {
 function getHomeworksCount (schoolId, startDate, endDate) {
   return axios.get(constants.JSON_WS_URL + STAT_PATH + '/get-homeworks-count', {
     params: {
-      schoolId: schoolId,
+      schoolId,
       startDate: startDate.format('YYYY-MM-DD HH:mm'),
       endDate: endDate.format('YYYY-MM-DD HH:mm')
     }
@@ -76,7 +76,7 @@ function getHomeworksCount (schoolId, startDate, endDate) {
 function getNewsCount (schoolId, startDate, endDate) {
   return axios.get(constants.JSON_WS_URL + STAT_PATH + '/get-news-count', {
     params: {
-      schoolId: schoolId,
+      schoolId,
       startDate: startDate.format('YYYY-MM-DD HH:mm'),
       endDate: endDate.format('YYYY-MM-DD HH:mm')
     }
@@ -86,7 +86,7 @@ function getNewsCount (schoolId, startDate, endDate) {
 function getMessagesCount (schoolId, startDate, endDate) {
   return axios.get(constants.JSON_WS_URL + STAT_PATH + '/get-messages-count', {
     params: {
-      schoolId: schoolId,
+      schoolId,
       startDate: startDate.format('YYYY-MM-DD HH:mm'),
       endDate: endDate.format('YYYY-MM-DD HH:mm')
     }

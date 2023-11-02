@@ -36,9 +36,9 @@
           data-test="recipients-section"
         >
           <WeprodeTagsInput
-            data-test="recipientsInput"
             ref="tagsinput"
             v-model="recipients"
+            data-test="recipientsInput"
             :close-on-select="true"
             :completion-only="true"
             :min-length="1"

@@ -15,9 +15,9 @@ const SEARCH_PATH = '/search.'
 function quickSearch (query, start, end) {
   return axios.get(constants.JSON_WS_URL + SEARCH_PATH + 'searchengine/quick-search', {
     params: {
-      query: query,
-      start: start,
-      end: end
+      query,
+      start,
+      end
     }
   }).then(response => response.data)
 }
@@ -46,8 +46,8 @@ function getLastSearchQueries () {
 function getSearchResultDetails (entityId, service) {
   return axios.get(constants.JSON_WS_URL + SEARCH_PATH + 'searchengine/get-search-result-details', {
     params: {
-      entityId: entityId,
-      service: service
+      entityId,
+      service
     }
   }).then(response => response.data)
 }
