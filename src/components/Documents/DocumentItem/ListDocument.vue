@@ -4,7 +4,7 @@
     class="list-document"
     :class="{'selected': isSelected, 'hovering': !mq.phone && !mq.tablet && hoverSelection, 'phone-list-document': mq.phone || mq.tablet, 'last': isLast}"
     tabindex="-1"
-    @keypress.enter="triggerAction"
+    @keyup.enter="enterKeyPress"
     @click.ctrl.exact="ctrlSelect"
     @click.meta.exact="ctrlSelect"
     @click.shift="shiftSelect"
@@ -17,7 +17,7 @@
       class="selection-icon"
       data-test="selection-icon"
       tabindex="0"
-      @keypress.stop.prevent.enter="ctrlSelect"
+      @keyup.stop.prevent.enter="ctrlSelect"
       @click.shift.stop="shiftSelect"
       @click.exact.stop="ctrlSelect"
     >
@@ -168,9 +168,6 @@ export default {
       // TODO: find a better way to separate img and font-awesome icons
       return this.documentIcon.includes('.') || this.documentIcon.includes(':') // if icon contains extension (like folder.svg) it's not a font-awesome
     },
-    isModalOpen () {
-      return this.$store.state.misc.nbOpenModals > 0
-    },
     selectedEntities () {
       return this.$store.state.documents.selectedEntities
     },
@@ -211,10 +208,13 @@ export default {
     }
   },
   methods: {
-    triggerAction () {
-      if (!this.isModalOpen) {
-        this.$emit('triggerAction')
+    enterKeyPress () {
+      if (this.selectedEntities.length === 1) { // Do not trigger doc action if multi-selection is active
+        this.triggerAction()
       }
+    },
+    triggerAction () {
+      this.$emit('triggerAction')
     },
     select () {
       this.$emit('select')
