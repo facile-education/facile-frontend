@@ -37,11 +37,15 @@
           v-if="currentSort.type === field.sort.type && currentSort.isOrderAsc"
           class="icon"
           name="chevron-up"
+          :title="$t('ascending')"
+          :aria-label="$t('ascending')"
         />
         <BaseIcon
           v-if="currentSort.type === field.sort.type && !currentSort.isOrderAsc"
           class="icon"
           name="chevron-down"
+          :title="$t('descending')"
+          :aria-label="$t('descending')"
         />
       </div>
     </div>
@@ -195,3 +199,10 @@ export default {
 }
 
 </style>
+
+<i18n locale="fr">
+{
+  "ascending": "Croissant",
+  "descending": "Décroissant"
+}
+</i18n>

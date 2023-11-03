@@ -2,41 +2,87 @@ import { documentURL } from '../../support/constants/urls'
 import { HEADMASTER } from '../../support/constants/users'
 import { waitDocumentServiceToBeLoaded } from '../../support/utils/documents'
 
+const compare = (field, order, a, b) => {
+  if (field === 'size') {
+    return order === 'asc' ? a[field] - b[field] : b[field] - a[field]
+  } else {
+    if (order === 'asc') {
+      return a[field].toString().localeCompare(b[field].toString())
+    } else {
+      return b[field].toString().localeCompare(a[field].toString())
+    }
+  }
+}
+const sortEntities = (currentFolder, field, order) => {
+  const sortedFolders = [...currentFolder.folders].sort((a, b) => { return compare(field, order, a, b) })
+  const sortedFiles = [...currentFolder.files].sort((a, b) => { return compare(field, order, a, b) })
+  return [...sortedFolders, ...sortedFiles]
+}
+
 describe('Documents_SortDocuments', () => {
   beforeEach(() => {
-    cy.fixture('documents.json').as('documentsData').then(documentsData => {
-      // Go at sub folder level
-      cy.login(HEADMASTER, documentURL)
+    cy.fixture('documents.json').as('documentsData')
 
-      waitDocumentServiceToBeLoaded()
-    })
+    cy.login(HEADMASTER, documentURL)
+    waitDocumentServiceToBeLoaded()
   })
 
-  it.skip('Sort well', () => {
-    cy.get('[data-cy=document]').as('docs').should('have.length', 4)
-    // Initial sort: alphanumeric (asc)
-    cy.get('@docs').eq(0).should('contain', 'dossier1')
-    cy.get('@docs').eq(1).should('contain', 'dossier2')
-    cy.get('@docs').eq(2).should('contain', 'fichier1.html')
-    cy.get('@docs').eq(3).should('contain', 'fichier2.html')
+  it('Documents_SortDocuments_SortDocumentsOnFieldNameClick', function () {
+    const currentFolder = this.documentsData.currentPersonalDocumentsStructure
+    const ascNameSortedDocuments = sortEntities(currentFolder, 'label', 'asc')
+    const descNameSortedDocuments = sortEntities(currentFolder, 'label', 'desc')
+    const ascSizeSortedDocuments = sortEntities(currentFolder, 'size', 'asc')
+    const descSizeSortedDocuments = sortEntities(currentFolder, 'size', 'desc')
+    const ascDateSortedDocuments = sortEntities(currentFolder, 'lastModifiedDate', 'asc')
+    const descDateSortedDocuments = sortEntities(currentFolder, 'lastModifiedDate', 'desc')
+    const initialSortedDocuments = ascNameSortedDocuments
+
+    // Initial (Alphanumeric asc)
+    for (let i = 0; i < initialSortedDocuments.length; i++) {
+      cy.get('[data-cy=document]').eq(i).should('contain', initialSortedDocuments[i].label)
+    }
 
     // Alphanumeric (desc)
     cy.get('[data-test=fields]').contains('Nom').click()
-    cy.get('[data-cy=document]').as('docs').eq(0).should('contain', 'dossier2')
-    cy.get('@docs').eq(1).should('contain', 'dossier1')
-    cy.get('@docs').eq(2).should('contain', 'fichier2.html')
+    cy.contains('[data-test=fields] .field', 'Nom').find('.icon[aria-label="Décroissant"]').should('be.visible')
+    for (let i = 0; i < descNameSortedDocuments.length; i++) {
+      cy.get('[data-cy=document]').eq(i).should('contain', descNameSortedDocuments[i].label)
+    }
 
-    // TODO modify dump to have differents document dates
-    // // Last modif (desc)
-    // cy.get('[data-test=fields]').contains('Dernière modif.').click()
-    // cy.get('[data-cy=document]').as('docs').eq(0).should('contain', 'Dossier WEBDAV')
-    // cy.get('@docs').eq(1).should('contain', 'Icônes')
-    // cy.get('@docs').eq(2).should('contain', 'Di Dio Salvatore - Rapport d_import des parents.csv')
-    //
-    // // Last modif (asc)
-    // cy.get('[data-test=fields]').contains('Dernière modif.').click()
-    // cy.get('[data-cy=document]').as('docs').eq(0).should('contain', 'Icônes')
-    // cy.get('@docs').eq(1).should('contain', 'Dossier WEBDAV')
-    // cy.get('@docs').eq(2).should('contain', 'NOte.jpg')
+    // Alphanumeric (asc)
+    cy.get('[data-test=fields]').contains('Nom').click()
+    cy.contains('[data-test=fields] .field', 'Nom').find('.icon[aria-label="Croissant"]').should('be.visible')
+    for (let i = 0; i < ascNameSortedDocuments.length; i++) {
+      cy.get('[data-cy=document]').eq(i).should('contain', ascNameSortedDocuments[i].label)
+    }
+
+    // Size (asc)
+    console.log(ascSizeSortedDocuments, descSizeSortedDocuments)
+    cy.get('[data-test=fields]').contains('Taille').click()
+    cy.contains('[data-test=fields] .field', 'Taille').find('.icon[aria-label="Croissant"]').should('be.visible')
+    for (let i = 0; i < ascSizeSortedDocuments.length; i++) {
+      cy.get('[data-cy=document]').eq(i).should('contain', ascSizeSortedDocuments[i].label)
+    }
+
+    // Size (desc)
+    cy.get('[data-test=fields]').contains('Taille').click()
+    cy.contains('[data-test=fields] .field', 'Taille').find('.icon[aria-label="Décroissant"]').should('be.visible')
+    for (let i = 0; i < descSizeSortedDocuments.length; i++) {
+      cy.get('[data-cy=document]').eq(i).should('contain', descSizeSortedDocuments[i].label)
+    }
+
+    // Date (desc)
+    cy.get('[data-test=fields]').contains('Dernière modif.').click()
+    cy.contains('[data-test=fields] .field', 'Dernière modif.').find('.icon[aria-label="Décroissant"]').should('be.visible')
+    for (let i = 0; i < descSizeSortedDocuments.length; i++) {
+      cy.get('[data-cy=document]').eq(i).should('contain', descDateSortedDocuments[i].label)
+    }
+
+    // Date (asc)
+    cy.get('[data-test=fields]').contains('Dernière modif.').click()
+    cy.contains('[data-test=fields] .field', 'Dernière modif.').find('.icon[aria-label="Croissant"]').should('be.visible')
+    for (let i = 0; i < ascSizeSortedDocuments.length; i++) {
+      cy.get('[data-cy=document]').eq(i).should('contain', ascDateSortedDocuments[i].label)
+    }
   })
 })

@@ -27,7 +27,6 @@ describe('Documents_Navigation', () => {
 
   beforeEach(() => {
     cy.fixture('documents.json').as('documentsData').then(documentsData => {
-      // Go at sub folder level
       currentFolder = documentsData.currentPersonalDocumentsStructure
       cy.login(HEADMASTER, documentURL)
 

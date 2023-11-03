@@ -5,6 +5,9 @@
       {
         "label": "Dossier",
         "id": 545207,
+        "size": 0,
+        "sizeLabel": "0 o",
+        "lastModifiedDate": "2023-10-31 15:04",
         "folders": [
           {
             "label": "Sous dossier",
@@ -39,16 +42,25 @@
       {
         "label": "Dossier2",
         "id": 545135,
+        "size": 0,
+        "sizeLabel": "0 o",
+        "lastModifiedDate": "2023-11-02 08:38",
         "folders": [],
         "files": []
       }
     ],
     "files": [
       {
-        "label": "Image.png"
+        "label": "Image.png",
+        "size": 148731,
+        "sizeLabel": "145 ko",
+        "lastModifiedDate": "2023-10-31 16:14"
       },
       {
-        "label": "Note.html"
+        "label": "Note.html",
+        "size": 328,
+        "sizeLabel": "328 o",
+        "lastModifiedDate": "2023-11-02 08:41"
       }
     ]
   },

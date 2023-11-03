@@ -96,7 +96,18 @@ describe('Documents_Display_ResponsiveDesign', () => {
           })
         })
 
-        // TODO test displayed column and data (size, last modified date)
+        // Displayed fields
+        if (size !== desktop) {
+          cy.get('[data-test=fields]').should('contain', 'Nom')
+            .should('not.contain', 'Taille')
+            .should('not.contain', 'Dernière modif.')
+        } else {
+          cy.get('[data-test=fields]').should('contain', 'Nom')
+            .should('contain', 'Taille')
+            .should('contain', 'Dernière modif.')
+        }
+
+        // TODO test displayed entities data (size, last modified date)
       })
     })
   })
