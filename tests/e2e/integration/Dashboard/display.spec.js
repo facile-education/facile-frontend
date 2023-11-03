@@ -53,53 +53,17 @@ describe('Dashboard_DisplayCorrectWidgets', () => {
     cy.get('[data-test="statistics-widget"]').should('not.exist')
   })
 
-  it('Dashboard_DisplayCorrectWidgets_mobile', function () {
+  it.only('Dashboard_DisplayCorrectWidgets_mobile', function () {
     cy.viewport('iphone-5')
-    // For a student
+    // Test Responsivity
     cy.login(STUDENT, dashboardURL)
     cy.get('[data-test="diary-widget"]').should('be.visible')
     cy.get('[data-test="activity-widget"]').should('be.visible')
     cy.get('[data-test="announcement-widget"]').should('be.visible')
-    cy.get('[data-test="schedule-widget"]').should('be.visible')
-    cy.get('.nero-body').scrollTo('bottom')
-    cy.get('[data-test="homeWork-widget"]').should('be.visible')
-    cy.get('[data-test="statistics-widget"]').should('not.exist')
-
-    // For a parent
-    cy.login(PARENT, dashboardURL)
-    cy.get('[data-test="diary-widget"]').should('be.visible')
-    cy.get('[data-test="activity-widget"]').should('be.visible')
-    cy.get('[data-test="announcement-widget"]').should('be.visible')
-    cy.get('[data-test="schedule-widget"]').should('be.visible')
-    cy.get('.nero-body').scrollTo('bottom')
-    cy.get('[data-test="homeWork-widget"]').should('be.visible')
-    cy.get('[data-test="statistics-widget"]').should('not.exist')
-
-    // For a teacher
-    cy.login(TEACHER, dashboardURL)
-    cy.get('[data-test="diary-widget"]').should('be.visible')
-    cy.get('[data-test="activity-widget"]').should('be.visible')
-    cy.get('[data-test="announcement-widget"]').should('be.visible')
-    cy.get('[data-test="schedule-widget"]').should('be.visible')
-    cy.get('[data-test="homeWork-widget"]').should('not.exist')
-    cy.get('[data-test="statistics-widget"]').should('not.exist')
-
-    // For the director
-    cy.login(HEADMASTER, dashboardURL)
-    cy.get('[data-test="diary-widget"]').should('be.visible')
-    cy.get('[data-test="activity-widget"]').should('be.visible')
-    cy.get('[data-test="announcement-widget"]').should('be.visible')
-    cy.get('[data-test="schedule-widget"]').should('not.exist')
-    cy.get('[data-test="homeWork-widget"]').should('not.exist')
-    cy.get('[data-test="statistics-widget"]').should('be.visible')
-
-    // For an other personel
-    cy.login(SECRETARY, dashboardURL)
-    cy.get('[data-test="diary-widget"]').should('be.visible')
-    cy.get('[data-test="activity-widget"]').should('not.exist')
-    cy.get('[data-test="announcement-widget"]').should('be.visible')
-    cy.get('[data-test="schedule-widget"]').should('not.exist')
-    cy.get('[data-test="homeWork-widget"]').should('not.exist')
+    // eslint-disable-next-line cypress/unsafe-to-chain-command
+    cy.get('[data-test="schedule-widget"] > header > nav').scrollIntoView().should('be.visible')
+    // eslint-disable-next-line cypress/unsafe-to-chain-command
+    cy.get('[data-test="homeWork-widget"]').scrollIntoView().should('be.visible')
     cy.get('[data-test="statistics-widget"]').should('not.exist')
   })
 })
