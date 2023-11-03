@@ -5,9 +5,7 @@ import { getEvent, getEventDetail } from '../../support/utils/dashboard'
 describe('Dashboard_Events', () => {
   beforeEach(() => {
     cy.loadTables('dashboard/dashboard_tables_events.sql')
-    cy.fixture('dashboard.json').as('dashboardData').then(data => {
-      cy.clock(Cypress.dayjs(data.now, 'YYYY/MM/DD HH:mm').toDate().getTime())
-    })
+    cy.fixture('dashboard.json').as('dashboardData')
   })
   it('Dashboard_Events_DisplayEvents_Read_UnRead', function () {
     const existingEvents = this.dashboardData.existingEvents
@@ -18,7 +16,7 @@ describe('Dashboard_Events', () => {
       cy.get('header').contains('.pellet', 1).should('be.visible')
     })
     // Click on event
-    getEvent(existingEvents[1]).click()
+    getEvent(existingEvents[0]).click()
     cy.get('[data-test="closeModal"]').click()
     // Check if pellet is not visible
     cy.get('[data-test="diary-widget"]').within(() => {
@@ -27,12 +25,12 @@ describe('Dashboard_Events', () => {
     // Click on read onlyButton
     cy.get('[data-test="ReadOnlyEventButton"]').click()
     // Check if event is not visible
-    getEvent(existingEvents[1]).should('not.exist')
+    getEvent(existingEvents[0]).should('not.exist')
   })
 
   it('Dashboard_Events_DisplayEvent_Check_Content', function () {
     const existingEvents = this.dashboardData.existingEvents
-    const lastEvent = existingEvents[existingEvents.length - 1]
+    const lastEvent = existingEvents[0]
 
     cy.login(HEADMASTER, dashboardURL)
     getEvent(lastEvent).click()
@@ -52,7 +50,7 @@ describe('Dashboard_Events', () => {
 
   it('Dashboard_Events_DisplayEvent_Check_ReadRecipient_Info', function () {
     const existingEvents = this.dashboardData.existingEvents
-    const EventForStudents = existingEvents[0]
+    const EventForStudents = existingEvents[1]
 
     // Login with author
     cy.login(HEADMASTER, dashboardURL)
@@ -74,6 +72,8 @@ describe('Dashboard_Events', () => {
       cy.get('.read-infos').should('contain', '1 destinataire')
       // Open recipients infos
       cy.get('.read-infos > button').click()
+    })
+    cy.get('[data-test="readInfoModal"]').within(() => {
       cy.get('.population').click()
       cy.get('.read-info-user').contains(`${STUDENT.lastName} ${STUDENT.firstName}`).should('not.contain', 'Non lu')
     })
@@ -83,16 +83,15 @@ describe('Dashboard_Events', () => {
     const existingEvents = this.dashboardData.existingEvents
     // Login
     cy.login(HEADMASTER, dashboardURL)
-    cy.clock().invoke('setSystemTime', Cypress.dayjs(existingEvents[0].startDate, 'YYYY/MM/DD HH:mm').toDate().getTime()) // To put after login to make it works
     // Click on all events button
     cy.get('[data-test="diary-widget"]').within(() => {
       cy.contains('button', 'Voir tous les événements').click()
     })
     // Check if all events are visible
-    for (let i = 0; i < existingEvents.length; i++) {
-      cy.get('.diary-event').eq(i).click()
-      getEventDetail(existingEvents[i]).should('be.exist')
-    }
+    cy.get('.diary-event').eq(0).click()
+    getEventDetail(existingEvents[0]).should('be.exist')
+    cy.get('.diary-event').eq(1).click()
+    getEventDetail(existingEvents[1]).should('be.exist')
   })
 
   it('Dashboard_Events_CreateEvent', function () {
@@ -148,7 +147,7 @@ describe('Dashboard_Events', () => {
 
   it('Dashboard_Events_UpdateEvent_mouseover', function () {
     const existingEvents = this.dashboardData.existingEvents
-    const lastEvent = existingEvents[existingEvents.length - 1]
+    const lastEvent = existingEvents[0]
     const EventToEdit = this.dashboardData.EventToEdit
 
     // Login with student to chech if he don't see the announcement
@@ -191,7 +190,7 @@ describe('Dashboard_Events', () => {
 
   it('Dashboard_Events_UpdateEvent_clickOnEvent', function () {
     const existingEvents = this.dashboardData.existingEvents
-    const lastEvent = existingEvents[existingEvents.length - 1]
+    const lastEvent = existingEvents[0]
     cy.login(HEADMASTER, dashboardURL)
 
     getEvent(lastEvent).click()
@@ -201,7 +200,7 @@ describe('Dashboard_Events', () => {
 
   it('Dashboard_Events_UpdateEvent_allNews', function () {
     const existingEvents = this.dashboardData.existingEvents
-    const lastEvent = existingEvents[existingEvents.length - 1]
+    const lastEvent = existingEvents[0]
     cy.login(HEADMASTER, dashboardURL)
 
     cy.get('[data-test="diary-widget"]').within(() => {
@@ -214,7 +213,7 @@ describe('Dashboard_Events', () => {
 
   it('Dashboard_Events_UpdateEvent_CanEdit_By_Profils', function () {
     const existingEvents = this.dashboardData.existingEvents
-    const lastEvent = existingEvents[existingEvents.length - 1]
+    const lastEvent = existingEvents[0]
 
     cy.login(TEACHER2, dashboardURL)
     // Mouse over on the event
@@ -237,7 +236,7 @@ describe('Dashboard_Events', () => {
 
   it('Dashboard_Events_DeleteEvent_mouseover', function () {
     const existingEvents = this.dashboardData.existingEvents
-    const lastEvent = existingEvents[existingEvents.length - 1]
+    const lastEvent = existingEvents[0]
 
     cy.login(HEADMASTER, dashboardURL)
 
@@ -258,7 +257,7 @@ describe('Dashboard_Events', () => {
 
   it('Dashboard_Events_DeleteEvent_clickOnEvent', function () {
     const existingEvents = this.dashboardData.existingEvents
-    const lastEvent = existingEvents[existingEvents.length - 1]
+    const lastEvent = existingEvents[0]
 
     cy.login(HEADMASTER, dashboardURL)
 
@@ -270,7 +269,7 @@ describe('Dashboard_Events', () => {
 
   it('Dashboard_Events_DeleteEvent_allEvent', function () {
     const existingEvents = this.dashboardData.existingEvents
-    const lastEvent = existingEvents[existingEvents.length - 1]
+    const lastEvent = existingEvents[0]
 
     cy.login(HEADMASTER, dashboardURL)
 
@@ -285,7 +284,7 @@ describe('Dashboard_Events', () => {
 
   it('Dashboard_Events_UpdateEvent_CanDelete_By_Profils', function () {
     const existingEvents = this.dashboardData.existingEvents
-    const lastEvent = existingEvents[existingEvents.length - 1]
+    const lastEvent = existingEvents[0]
 
     cy.login(TEACHER2, dashboardURL)
     // Mouse over on the event

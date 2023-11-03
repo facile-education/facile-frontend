@@ -18,6 +18,12 @@
             "publicationDate": "30/10/23"
         }
     ],
+    "futurNews": {
+        "recipient": "Tous les élèves",
+        "title": "Annonce avec une date de parution ultérieure",
+        "content": "Contenu de l'annonce avec une date de parution ultérieure",
+        "publicationDate": "05/11/2023"
+    },
     "newsToEdit": {
         "recipient": "Tous les élèves",
         "title": "Annonce modifiée",
@@ -25,21 +31,21 @@
     },
     "existingEvents": [
         {
-            "recipient": "Tous les élèves",
-            "title": "Évènement pour tous les élèves",
-            "location": "Lieu de l'évènement pour tous les élèves",
-            "content": "Contenu de l'évènement pour tous les élèves",
-            "startDate": "2023/11/02 11:00",
-            "endDate": "2023/11/05 11:00",
-            "duration": "Du jeudi 02 novembre à 11:00 au vendredi 03 novembre à 11:00"
-        },
-        {
             "recipient": "Tous les personnels",
             "title": "Évènement pour tous les personnels",
             "location": "Lieu de l'événement pour tous les personnels",
             "content": "Contenu de l'évènement pour tous les personnels",
             "startDate": "2023/11/02 11:00",
             "endDate": "2023/11/03 11:00",
+            "duration": "Du jeudi 02 novembre à 11:00 au vendredi 03 novembre à 11:00"
+        },
+        {
+            "recipient": "Tous les élèves",
+            "title": "Évènement pour tous les élèves",
+            "location": "Lieu de l'évènement pour tous les élèves",
+            "content": "Contenu de l'évènement pour tous les élèves",
+            "startDate": "2023/11/02 11:00",
+            "endDate": "2023/11/05 11:00",
             "duration": "Du jeudi 02 novembre à 11:00 au vendredi 03 novembre à 11:00"
         }
     ],
