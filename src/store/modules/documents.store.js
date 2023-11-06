@@ -191,6 +191,9 @@ export const actions = {
     documentsService.getGlobalDocumentsProperties().then((data) => {
       this.dispatch('currentActions/removeAction', { name: 'getDocumentsProperties' })
       commit('setDocumentsProperties', data)
+    }, (err) => {
+      console.error(err)
+      this.dispatch('currentActions/removeAction', { name: 'getDocumentsProperties' })
     })
   },
   getEntities ({ commit }, folderId) {
@@ -247,6 +250,9 @@ export const actions = {
         this.dispatch('currentActions/removeAction', { name: 'getDocumentsProperties' })
         commit('setDocumentsProperties', data)
         this.dispatch('documents/changeDirectory', { folderId: data.private.id })
+      }, (err) => {
+        console.error(err)
+        this.dispatch('currentActions/removeAction', { name: 'getDocumentsProperties' })
       })
     }
   },
@@ -293,6 +299,9 @@ export const actions = {
       } else {
         console.error('Unable to get breadcrumb for folder id ' + folderId)
       }
+    }, (err) => {
+      console.error(err)
+      this.dispatch('currentActions/removeAction', { name: 'getBreadcrumb' })
     })
   },
   updateGroupBreadcrumb ({ commit }, groupFolderId) {
@@ -308,6 +317,9 @@ export const actions = {
       } else {
         console.error('Unable to get breadcrumb for folder id ' + groupFolderId)
       }
+    }, (err) => {
+      console.error(err)
+      this.dispatch('currentActions/removeAction', { name: 'getBreadcrumb' })
     })
   },
 
