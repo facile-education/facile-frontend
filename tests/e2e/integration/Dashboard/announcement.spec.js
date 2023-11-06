@@ -5,7 +5,9 @@ import { getNews, getNewsDetail } from '../../support/utils/dashboard'
 describe('Dashboard_Announcements', () => {
   beforeEach(() => {
     cy.loadTables('dashboard/dashboard_tables_news.sql')
-    cy.fixture('dashboard.json').as('dashboardData')
+    cy.fixture('dashboard.json').as('dashboardData').then(data => {
+      cy.clock(Cypress.dayjs(data.now, 'YYYY/MM/DD').toDate().getTime())
+    })
   })
 
   it('Dashboard_Announcement_DisplayAnnouncements_Read_UnRead', function () {
@@ -14,14 +16,18 @@ describe('Dashboard_Announcements', () => {
     cy.login(STUDENT, dashboardURL)
     // Check if pellet is visible
     cy.get('[data-test="announcement-widget"]').within(() => {
-      cy.get('header').contains('.pellet', 1).should('be.visible')
+      cy.get('.announcement').should('have.length', 1).within(() => {
+        cy.get('.pellet').should('be.visible')
+      })
     })
     // Click on event
     getNews(existingNews[0]).click()
     cy.get('[data-test="closeModal"]').click()
     // Check if pellet is not visible
     cy.get('[data-test="announcement-widget"]').within(() => {
-      cy.get('header').contains('.pellet', 1).should('not.exist')
+      cy.get('.announcement').should('have.length', 1).within(() => {
+        cy.get('.pellet').should('not.exist')
+      })
     })
     // Click on read onlyButton
     cy.get('[data-test="ReadOnlyAnnouncementButton"]').click()
@@ -29,7 +35,25 @@ describe('Dashboard_Announcements', () => {
     getNews(existingNews[0]).should('not.exist')
   })
 
-  it('Dashboard_Annoucements_DisplayAnnouncement_Check_Content', function () {
+  it('Dashboard_Announcement_DisplayAnnouncements_FuturRelease', function () {
+    const furturNews = this.dashboardData.futurNews
+    // Login
+    cy.login(STUDENT, dashboardURL)
+    cy.clock().invoke('setSystemTime', Cypress.dayjs(furturNews.dateBeforeRelease, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+    cy.get('[data-test="announcement-widget"]').within(() => {
+      cy.get('.announcement').should('have.length', 1)
+    })
+    getNews(furturNews).should('not.exist')
+    // Login
+    cy.login(STUDENT, dashboardURL)
+    cy.clock().invoke('setSystemTime', Cypress.dayjs(furturNews.publicationDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+    cy.get('[data-test="announcement-widget"]').within(() => {
+      cy.get('.announcement').should('have.length', 2)
+    })
+    getNews(furturNews).should('be.visible')
+  })
+
+  it('Dashboard_Annoucements_DisplayAnnouncement_Check_Content ', function () {
     const existingNews = this.dashboardData.existingNews
     const lastNews = existingNews[existingNews.length - 1]
 
@@ -38,7 +62,9 @@ describe('Dashboard_Announcements', () => {
     cy.get('[data-test="news-details-modal"]').within(() => {
       // Check the title
       cy.get('.header').should('contain', lastNews.title)
-      // Chekc the recipient
+      // Check thumnail
+      cy.get('.thumbnail').should('be.visible')
+      // check the recipient
       cy.get('.lonely-population').should('contain', lastNews.recipient)
       // Check the publication info
       cy.get('.publication').should('contain', `${HEADMASTER.firstName} ${HEADMASTER.lastName}`)
