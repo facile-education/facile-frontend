@@ -18,9 +18,14 @@ const getEventDetail = (event) => {
   })
 }
 
+const getHomework = (homework) => {
+  return cy.get('.homework-list').contains('.title', homework.title)
+}
+
 export {
   getNewsDetail,
   getNews,
   getEvent,
-  getEventDetail
+  getEventDetail,
+  getHomework
 }
