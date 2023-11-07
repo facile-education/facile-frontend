@@ -11,6 +11,7 @@
       class="read-only-button"
       :aria-label="$t('unreadFilter')"
       :title="$t('unreadFilter')"
+      data-test="doneFilter"
       @click="toggleUndoneOnly"
     >
       <CustomIcon
