@@ -93,4 +93,47 @@ describe('Dashboard_Activity', () => {
     // Check if previous day is last day before holiday
     cy.get('[data-test="date"]').should('contain', '20/10')
   })
+
+  it('Dashboard_Schedule_Redirect_MultiParent_Display_Good_ChildrenWork', function () {
+    const SessionsDate = this.dashboardData.existingSessionsLists[0].sessionsLists[1].date
+
+    // Login
+    cy.login(MULTI_PARENT, dashboardURL)
+    // Set date
+    cy.clock().invoke('setSystemTime', Cypress.dayjs(SessionsDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+
+    cy.get('.personal-widgets').within(() => {
+      // Select first child
+      cy.contains('button', MULTI_STUDENT1.firstName).click()
+      cy.get('.suggestion-list').within(() => {
+        cy.contains('li', MULTI_STUDENT1.firstName).click()
+      })
+      cy.get('[data-test="schedule-widget"]').within(() => {
+        cy.get('.redirect-button').contains('Accéder au semainier').click()
+      })
+    })
+    // Check if good children is selected
+    cy.get('.nero-body').scrollTo('top')
+    cy.get('.children').should('contain', MULTI_STUDENT1.firstName)
+
+    // Change to second Child
+    // Login
+    cy.login(MULTI_PARENT, dashboardURL)
+    // Set date before the homework's date
+    cy.clock().invoke('setSystemTime', Cypress.dayjs(SessionsDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+
+    cy.get('.personal-widgets').within(() => {
+      // Select first child
+      cy.contains('button', MULTI_STUDENT1.firstName).click()
+      cy.get('.suggestion-list').within(() => {
+        cy.contains('li', MULTI_STUDENT2.firstName).click()
+      })
+      cy.get('[data-test="schedule-widget"]').within(() => {
+        cy.get('.redirect-button').contains('Accéder au semainier').click()
+      })
+    })
+    // Check if good children is selected
+    cy.get('.nero-body').scrollTo('top')
+    cy.get('.children').should('contain', MULTI_STUDENT2.firstName)
+  })
 })
