@@ -48,6 +48,7 @@
       <button
         class="option"
         :aria-label="$t('update')"
+        data-test="buttonEditInformation"
         :title="$t('update')"
         @click.stop="isUpdateModalDisplayed = true"
       >
@@ -58,6 +59,7 @@
       </button>
       <button
         class="option"
+        data-test="buttonDeleteInformation"
         :aria-label="$t('delete')"
         :title="$t('delete')"
         @click.stop="confirmNewsDeletion"
