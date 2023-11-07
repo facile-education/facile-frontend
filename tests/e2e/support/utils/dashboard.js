@@ -38,6 +38,17 @@ const getSessions = (session) => {
   })
 }
 
+const getInformation = (information) => {
+  return cy.contains('.activity-item', information.title)
+}
+
+const getInformationDetail = (information) => {
+  return cy.get('.window-container').within(() => {
+    cy.contains(information.title)
+    cy.contains(information.content)
+  })
+}
+
 export {
   getNewsDetail,
   getNews,
@@ -45,5 +56,7 @@ export {
   getEventDetail,
   getHomework,
   getHomeworkDetails,
-  getSessions
+  getSessions,
+  getInformation,
+  getInformationDetail
 }
