@@ -34,6 +34,35 @@ describe('Dashboard_Activity', () => {
     getHomeworkDetails(existingHomework[1]).should('be.exist')
   })
 
+  it('Dashboard_Homework_DisplayHomeworks_Filter_Done_Undone', function () {
+    const existingHomework = this.dashboardData.existingHomework
+    // Login
+    cy.login(STUDENT, dashboardURL)
+    // Set date before the homework's date
+    cy.clock().invoke('setSystemTime', Cypress.dayjs(existingHomework[0].dateBefore, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+    // eslint-disable-next-line cypress/unsafe-to-chain-command
+    cy.get('[data-test="schedule-widget"] > header > nav').scrollIntoView().should('be.visible')
+    cy.get('[data-test="homeWork-widget"]').within(() => {
+      // Mark first homeWork as done
+      cy.get('.homework-list').first().within(() => {
+        cy.get('.checkmark').click()
+      })
+      // Display unDone homeworks
+      cy.get('[data-test="doneFilter"]').click()
+      // Check if juste one homeworks is visible
+      cy.get('.homework-list').should('have.length', 1)
+      cy.get('[data-test="doneFilter"]').click()
+
+      // Mark firt homeWork as unDone
+      cy.get('.homework-list').first().within(() => {
+        cy.get('.checkmark').click()
+      })
+      // Check if two homeWorks is visible
+      cy.get('[data-test="doneFilter"]').click()
+      cy.get('.homework-list').should('have.length', 2)
+    })
+  })
+
   it('Dashboard_Homework_DisplayHomeworks_Visibility_Button_AllHomeWorks', function () {
     const existingHomework = this.dashboardData.existingHomework
 
@@ -130,6 +159,51 @@ describe('Dashboard_Activity', () => {
         getHomework(existingHomework[3]).should('be.visible')
         getHomework(existingHomework[2]).should('not.exist')
       })
+    })
+  })
+
+  it('Dashboard_Homework_Redirect_MultiParent_Display_Good_ChildrenWork', function () {
+    const existingHomework = this.dashboardData.existingHomework
+
+    // Login
+    cy.login(MULTI_PARENT, dashboardURL)
+    // Set date before the homework's date
+    cy.clock().invoke('setSystemTime', Cypress.dayjs(existingHomework[2].dateBefore, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+
+    cy.get('.personal-widgets').within(() => {
+      // Select first child
+      cy.contains('button', existingHomework[2].student).click()
+      cy.get('.suggestion-list').within(() => {
+        cy.contains('li', existingHomework[2].student).click()
+      })
+      cy.get('[data-test="homeWork-widget"]').within(() => {
+        getHomework(existingHomework[2]).click()
+      })
+    })
+    // Check if good homework is visible
+    cy.get('.homeworks-day').within(() => {
+      cy.contains('.homework', existingHomework[2].title).should('be.visible')
+    })
+
+    // Change to second Child
+    // Login
+    cy.login(MULTI_PARENT, dashboardURL)
+    // Set date before the homework's date
+    cy.clock().invoke('setSystemTime', Cypress.dayjs(existingHomework[3].dateBefore, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+
+    cy.get('.personal-widgets').within(() => {
+      // Select first child
+      cy.contains('button', existingHomework[2].student).click()
+      cy.get('.suggestion-list').within(() => {
+        cy.contains('li', existingHomework[3].student).click()
+      })
+      cy.get('[data-test="homeWork-widget"]').within(() => {
+        getHomework(existingHomework[3]).click()
+      })
+    })
+    // Check if good homework is visible
+    cy.get('.homeworks-day').within(() => {
+      cy.contains('.homework', existingHomework[3].title).should('be.visible')
     })
   })
 })
