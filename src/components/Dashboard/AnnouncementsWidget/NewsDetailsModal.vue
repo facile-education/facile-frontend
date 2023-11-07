@@ -67,7 +67,6 @@ export default {
   methods: {
     openUpdateModal () {
       this.$refs.newsDetails.openUpdateModal()
-      this.$emit('update')
     },
     confirmDeleteNews () {
       this.$refs.newsDetails.confirmDeleteNews()

@@ -16,7 +16,7 @@
         ref="diaryEventDetails"
         :init-event="initEvent"
         :is-in-modal="true"
-        @update="updateEvent"
+        @update="$emit('update')"
         @delete="deleteEvent"
       />
     </template>
@@ -27,7 +27,7 @@
           class="footer-button"
           data-test="updateButton"
           :label="$t('update')"
-          @click="updateEvent"
+          @click="openUpdateModal"
         />
         <PentilaButton
           v-if="initEvent.isDeletable"
@@ -65,6 +65,9 @@ export default {
     this.$store.dispatch('misc/incrementModalCount')
   },
   methods: {
+    openUpdateModal () {
+      this.$refs.diaryEventDetails.openUpdateModal()
+    },
     confirmDeleteEvent () {
       this.$refs.diaryEventDetails.confirmDeleteEvent()
     },
@@ -75,10 +78,6 @@ export default {
     onClose () {
       this.$store.dispatch('misc/decreaseModalCount')
       this.$emit('close')
-    },
-    updateEvent () {
-      this.$refs.diaryEventDetails.openUpdateModal()
-      this.$emit('update')
     }
   }
 }
