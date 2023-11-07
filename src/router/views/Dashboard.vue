@@ -36,7 +36,7 @@
             v-model="selectedChild"
             :list="childList"
             :sort="false"
-            display-field="fullName"
+            display-field="firstName"
             class="child-selector"
           />
           <div class="line" />
