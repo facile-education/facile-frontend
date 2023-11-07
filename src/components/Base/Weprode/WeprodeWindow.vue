@@ -1,82 +1,80 @@
 <template>
-  <Transition name="window">
-    <div
-      :class="{'modal-mask': modal, 'full-screen': isFullScreen, 'fixed-height': !isFitContent}"
-      :style="{ 'z-index': zIndex ? zIndex : ''}"
+  <div
+    :class="{'modal-mask': modal, 'full-screen': isFullScreen, 'fixed-height': !isFitContent}"
+    :style="{ 'z-index': zIndex ? zIndex : ''}"
+  >
+    <vue-resizable
+      ref="resizeComponent"
+      :active="resizable && !isFullScreen ? ['r', 'rb', 'b', 'lb', 'l', 'lt', 't', 'rt'] : []"
+      :maximize="isFullScreen"
+      :width="isFullScreen ? '' : w"
+      :height="isFitContent ? 'auto' : h"
+      :max-width="maxW"
+      :max-heigth="maxH"
+      :min-width="0"
+      :min-height="0"
+      :drag-selector="(draggable && !isFullScreen) ? '.window-header' : undefined"
+      :top="!isFullScreen ? initTopValue : ''"
+      :left="!isFullScreen ? initLeftValue : ''"
+      :fit-parent="true"
     >
-      <vue-resizable
-        ref="resizeComponent"
-        :active="resizable && !isFullScreen ? ['r', 'rb', 'b', 'lb', 'l', 'lt', 't', 'rt'] : []"
-        :maximize="isFullScreen"
-        :width="isFullScreen ? '' : w"
-        :height="isFitContent ? 'auto' : h"
-        :max-width="maxW"
-        :max-heigth="maxH"
-        :min-width="0"
-        :min-height="0"
-        :drag-selector="(draggable && !isFullScreen) ? '.window-header' : undefined"
-        :top="!isFullScreen ? initTopValue : ''"
-        :left="!isFullScreen ? initLeftValue : ''"
-        :fit-parent="true"
+      <div
+        ref="windowContainer"
+        class="window-container"
+        @keyup.stop
+        @keydown.stop
+        @submit.stop
+        @drag.stop
       >
         <div
-          ref="windowContainer"
-          class="window-container"
-          @keyup.stop
-          @keydown.stop
-          @submit.stop
-          @drag.stop
+          class="window-header theme-border-color"
+          :class="{'important': important}"
         >
-          <div
-            class="window-header theme-border-color"
-            :class="{'important': important}"
-          >
-            <div class="title">
-              <slot name="header" />
-            </div>
-
-            <div class="header-options">
-              <button
-                v-if="resizable && !mq.phone"
-                class="header-option-item"
-                data-test="toggleFullScreen"
-                @click="toggleFullScreen"
-              >
-                <NeroIcon
-                  class="expand"
-                  :name="isFullScreen ? 'compress' : 'expand'"
-                />
-              </button>
-              <button
-                v-if="closable"
-                class="header-option-item"
-                data-test="closeModal"
-                @click="$emit('close')"
-              >
-                <NeroIcon name="times" />
-              </button>
-            </div>
+          <div class="title">
+            <slot name="header" />
           </div>
 
-          <div
-            class="window-body"
-            :class="{'no-footer': hiddenFooter, 'full-screen': isFullScreen}"
-          >
-            <slot name="body">
-              TODO loading body
-            </slot>
-          </div>
-
-          <div
-            v-if="!hiddenFooter"
-            class="window-footer"
-          >
-            <slot name="footer" />
+          <div class="header-options">
+            <button
+              v-if="resizable && !mq.phone"
+              class="header-option-item"
+              data-test="toggleFullScreen"
+              @click="toggleFullScreen"
+            >
+              <NeroIcon
+                class="expand"
+                :name="isFullScreen ? 'compress' : 'expand'"
+              />
+            </button>
+            <button
+              v-if="closable"
+              class="header-option-item"
+              data-test="closeModal"
+              @click="$emit('close')"
+            >
+              <NeroIcon name="times" />
+            </button>
           </div>
         </div>
-      </vue-resizable>
-    </div>
-  </Transition>
+
+        <div
+          class="window-body"
+          :class="{'no-footer': hiddenFooter, 'full-screen': isFullScreen}"
+        >
+          <slot name="body">
+            TODO loading body
+          </slot>
+        </div>
+
+        <div
+          v-if="!hiddenFooter"
+          class="window-footer"
+        >
+          <slot name="footer" />
+        </div>
+      </div>
+    </vue-resizable>
+  </div>
 </template>
 
 <script>
@@ -332,28 +330,5 @@ $modal-padding: 25px;
       text-align: right;
     }
   }
-}
-
-/*
- * The following styles are auto-applied to elements with
- * transition="window" when their visibility is toggled
- * by Vue.js.
- *
- * You can easily play with the modal transition by editing
- * these styles.
- */
-
-.window-enter {
-  opacity: 0;
-}
-
-.window-leave-active {
-  opacity: 0;
-}
-
-.window-enter .window-container,
-.window-leave-active .window-container {
-  -webkit-transform: scale(1.1);
-  transform: scale(1.1);
 }
 </style>
