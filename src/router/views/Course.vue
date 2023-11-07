@@ -178,6 +178,10 @@ export default {
 .course-tab-content {
   height: calc(100% - 40px); // 40px is tab height
 }
+
+.child-selector {
+  margin-bottom: 0.5rem;
+}
 </style>
 
 <i18n locale="fr">
