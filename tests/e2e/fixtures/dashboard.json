@@ -94,8 +94,92 @@
             "title": "Second travail à faire parent multi enfants",
             "content": "Consigne du second travail à faire parent multi enfants",
             "teacher": "PARSONS",
-            "dateBefore": "2023/11/09",
+            "dateBefore": "2023/11/27",
             "student": "COOPER Barbara"
+        }
+    ],
+    "existingSessionsLists": [
+        {
+            "sessionsLists": [
+                {
+                    "date": "2023/11/07",
+                    "sessions": [
+                        {
+                            "startHour": "08:45",
+                            "endHour": "09:30",
+                            "name": "Education Citoyenne",
+                            "classRoom": "S182",
+                            "teacher": "R. NOLLI"
+                        },
+                        {
+                            "startHour": "09:35",
+                            "endHour": "10:20",
+                            "name": "Français Lecture",
+                            "classRoom": "S182",
+                            "teacher": "K. RYTON"
+                        },
+                        {
+                            "startHour": "10:35",
+                            "endHour": "11:20",
+                            "name": "Histoire",
+                            "classRoom": "S182",
+                            "teacher": "R. NOLLI"
+                        },
+                        {
+                            "startHour": "11:25",
+                            "endHour": "12:10",
+                            "name": "Education Physique",
+                            "classRoom": "GYM2",
+                            "teacher": "C. WHITEMAN"
+                        },
+                        {
+                            "startHour": "13:45",
+                            "endHour": "14:30",
+                            "name": "LCL",
+                            "classRoom": "S182",
+                            "teacher": "K. RYTON"
+                        },
+                        {
+                            "startHour": "14:35",
+                            "endHour": "15:15",
+                            "name": "Allemand",
+                            "classRoom": "S182",
+                            "teacher": "M. LE MARCHANT"
+                        },
+                        {
+                            "startHour": "15:30",
+                            "endHour": "16:15",
+                            "name": "Français",
+                            "classRoom": "S182",
+                            "teacher": "K. RYTON"
+                        }
+                    ]
+                },
+                {
+                    "date": "2023/11/07",
+                    "sessions": [
+                        {
+                            "startHour": "08:45",
+                            "endHour": "09:30",
+                            "name": "Ed. Nutritionnelle",
+                            "classRoom": "S290",
+                            "teacher": "A. WEMYSS"
+                        }
+                    ]
+                },
+                {
+                    "date": "2023/11/07",
+                    "sessions": [
+                        {
+                            "startHour": "08:45",
+                            "endHour": "09:30",
+                            "name": "Allemand",
+                            "classRoom": "J201",
+                            "teacher": "T. SCUTTER"
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }

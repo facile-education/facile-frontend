@@ -2,6 +2,7 @@
   <nav v-if="configuration">
     <button
       class="previous"
+      data-test="PreviousDay"
       :title="$t('goPrevious')"
       :aria-label="$t('goPrevious')"
       @click="$emit('go-previous')"
@@ -23,6 +24,7 @@
         <template #default="{ togglePopover }">
           <div
             class="date"
+            data-test="date"
             :class="{'theme-text-color': isToday, 'theme-extra-light-background-color': isToday}"
             @click="togglePopover()"
           >
@@ -32,6 +34,7 @@
       </DatePicker>
     </div>
     <button
+      data-test="NextDay"
       :title="$t('goAfter')"
       :aria-label="$t('goAfter')"
       @click="$emit('go-after')"

@@ -29,11 +29,21 @@ const getHomeworkDetails = (homework) => {
   })
 }
 
+const getSessions = (session) => {
+  return cy.contains('.schedule-item', session.name).within(() => {
+    cy.contains(session.startHour)
+    cy.contains(session.endHour)
+    cy.contains(session.classRoom)
+    cy.contains(session.teacher)
+  })
+}
+
 export {
   getNewsDetail,
   getNews,
   getEvent,
   getEventDetail,
   getHomework,
-  getHomeworkDetails
+  getHomeworkDetails,
+  getSessions
 }
