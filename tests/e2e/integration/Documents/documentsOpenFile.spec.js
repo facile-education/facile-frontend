@@ -1,10 +1,14 @@
 import { documentURL } from '../../support/constants/urls'
 import { HEADMASTER } from '../../support/constants/users'
-import { waitDocumentServiceToBeLoaded } from '../../support/utils/documents'
+import { setDocumentLibraryWithContent, waitDocumentServiceToBeLoaded } from '../../support/utils/documents'
 
 const checkFileDisplayModal = (openFile) => {
   cy.get('[data-test="file-display-modal"]').should('be.visible').and('contain', openFile.label)
 }
+
+before(() => {
+  setDocumentLibraryWithContent()
+})
 
 describe('Documents_OpenFileDisplayModal', () => {
   const mobileSizes = ['iphone-5', 'ipad-2']
@@ -145,7 +149,8 @@ describe('Documents_FileDisplayModalInFullScreen', () => {
       if (size !== desktop) {
         cy.viewport(size[1], size[0])
 
-        cy.wait(200) // To let the watcher to have time to listen resize because following instructions does not trigger the following should timeout behaviour...
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(200) // To let the watcher have time to listen resize because following instructions does not trigger the following should time out behaviour...  // TODO: find an other way
 
         // Check if modal is open in fullScreen
         cy.get('@fileModal').invoke('css', 'width')
@@ -156,3 +161,5 @@ describe('Documents_FileDisplayModalInFullScreen', () => {
     })
   })
 })
+
+// TODO: Test each visionneuse

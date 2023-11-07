@@ -1,6 +1,6 @@
 import { documentURL } from '../../support/constants/urls'
 import { HEADMASTER } from '../../support/constants/users'
-import { waitDocumentServiceToBeLoaded } from '../../support/utils/documents'
+import { setDocumentLibraryWithContent, waitDocumentServiceToBeLoaded } from '../../support/utils/documents'
 
 const compare = (field, order, a, b) => {
   if (field === 'size') {
@@ -18,6 +18,10 @@ const sortEntities = (currentFolder, field, order) => {
   const sortedFiles = [...currentFolder.files].sort((a, b) => { return compare(field, order, a, b) })
   return [...sortedFolders, ...sortedFiles]
 }
+
+before(() => {
+  setDocumentLibraryWithContent()
+})
 
 describe('Documents_SortDocuments', () => {
   beforeEach(() => {

@@ -1,8 +1,13 @@
 import { documentURL } from '../../support/constants/urls'
 import { DOYEN, HEADMASTER, PARENT, SCHOOL_ADMIN, SECRETARY, STUDENT, TEACHER } from '../../support/constants/users'
+import { setDocumentLibraryWithContent } from '../../support/utils/documents'
 
 const allowedUsers = [HEADMASTER, DOYEN, SCHOOL_ADMIN, SECRETARY, TEACHER, STUDENT, PARENT]
 const disallowedUsers = []
+
+before(() => {
+  setDocumentLibraryWithContent()
+})
 
 describe('Documents_Display_Access', () => {
   allowedUsers.forEach(user => {

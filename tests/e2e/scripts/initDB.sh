@@ -12,7 +12,7 @@ DB_USER=$(grep DB_USER .env.local | cut -d '=' -f2)
 DB_PWD=$(grep DB_PWD .env.local | cut -d '=' -f2)
 DB_NAME=$(grep DB_NAME .env.local | cut -d '=' -f2)
 
-DUMP_NAME=dump_cypress_db.sql
+DUMP_NAME=tables/dump_cypress_db.sql
 BACKUP_NAME=dev_db_backup.sql
 
 # cd to script directory

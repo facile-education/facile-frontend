@@ -1,6 +1,11 @@
 import { documentURL } from '../../support/constants/urls'
 import { HEADMASTER } from '../../support/constants/users'
-import { selectAllEntities, unselectAllEntities, waitDocumentServiceToBeLoaded } from '../../support/utils/documents'
+import {
+  selectAllEntities,
+  setDocumentLibraryWithContent,
+  unselectAllEntities,
+  waitDocumentServiceToBeLoaded
+} from '../../support/utils/documents'
 
 const checkCurrentOptions = (options) => { // Assume context menu is open
   // Check document current options
@@ -19,6 +24,10 @@ const checkCurrentOptions = (options) => { // Assume context menu is open
     })
   })
 }
+
+before(() => {
+  setDocumentLibraryWithContent()
+})
 
 describe('Documents_SelectEntities', () => {
   const desktop = [1920, 1080]

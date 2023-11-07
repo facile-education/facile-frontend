@@ -1,6 +1,6 @@
 import { documentURL } from '../../support/constants/urls'
 import { HEADMASTER } from '../../support/constants/users'
-import { waitDocumentServiceToBeLoaded } from '../../support/utils/documents'
+import { setDocumentLibraryWithContent, waitDocumentServiceToBeLoaded } from '../../support/utils/documents'
 
 const checkFolderInterface = (currentFolder, isCollaborative = false) => {
   // Check url
@@ -20,6 +20,9 @@ const checkFolderInterface = (currentFolder, isCollaborative = false) => {
     cy.contains('[data-test="file"]', file.label).should('be.visible')
   })
 }
+before(() => {
+  setDocumentLibraryWithContent()
+})
 
 describe('Documents_Navigation', () => {
   const mobileSizes = ['iphone-5', 'ipad-2']

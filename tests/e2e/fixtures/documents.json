@@ -150,9 +150,43 @@
       },
       {
         "label": "Note.html",
-        "size": 328,
-        "sizeLabel": "328 o",
-        "lastModifiedDate": "2023-11-02 08:41"
+        "size": 79,
+        "sizeLabel": "79 o",
+        "lastModifiedDate": "2023-11-07 10:03",
+        "versions": [
+          {
+            "versionId": 565215,
+            "label": "4.0",
+            "isLatest": true,
+            "date": "2023-11-07 10:03",
+            "content": "Troisième version"
+          },
+          {
+            "versionId": 565208,
+            "label": "3.1",
+            "isMinorVersion": true,
+            "date": "2023-11-07 10:02",
+            "content": "Deuxième version en cours d'édition"
+          },
+          {
+            "versionId": 565201,
+            "label": "3.0",
+            "date": "2023-11-07 10:00",
+            "content": "Deuxième version"
+          },
+          {
+            "versionId": 565194,
+            "label": "2.0",
+            "date": "2023-11-07 10:00",
+            "content": "Première version"
+          },
+          {
+            "versionId": 565184,
+            "label": "1.0",
+            "date": "2023-11-07 10:00",
+            "content": ""
+          }
+        ]
       }
     ]
   },
