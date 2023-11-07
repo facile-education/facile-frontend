@@ -113,7 +113,9 @@ export default {
 
     // Assume childList is correctly loaded at this state
     if (this.childList.length > 0) {
-      this.$store.commit('user/setSelectedChild', this.childList[0])
+      if (!this.selectedChild) {
+        this.$store.commit('user/setSelectedChild', this.childList[0])
+      }
       this.selectedUser = this.selectedChild
     } else {
       this.selectedUser = this.$store.state.user
