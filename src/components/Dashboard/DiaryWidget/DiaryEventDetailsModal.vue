@@ -66,13 +66,11 @@ export default {
   },
   methods: {
     confirmDeleteEvent () {
-      this.$store.dispatch('warningModal/addWarning', {
-        text: this.$t('removalConfirmMessage'),
-        lastAction: { fct: this.deleteEvent, params: [] }
-      })
+      this.$refs.diaryEventDetails.confirmDeleteEvent()
     },
     deleteEvent () {
       this.$emit('delete')
+      this.onClose()
     },
     onClose () {
       this.$store.dispatch('misc/decreaseModalCount')
