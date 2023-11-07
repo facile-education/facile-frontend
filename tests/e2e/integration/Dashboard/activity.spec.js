@@ -37,6 +37,10 @@ describe('Dashboard_Activity', () => {
     cy.login(STUDENT, dashboardURL)
     // Check if a student the new actvity is visible
     cy.get('[data-test="activity-widget"]').within(() => {
+      // For wait to page load
+      cy.get('.activities').should('be.visible')
+      // Display all activity
+      cy.contains('button', 'Voir toutes les activités').click()
       getInformation(activityToCreate).should('be.visible').click()
     })
     getInformationDetail(activityToCreate)
@@ -100,7 +104,7 @@ describe('Dashboard_Activity', () => {
     getInformationDetail(activityToEdit).should('be.exist')
   })
 
-  it('Dashboard_Activities_UpdateActivity_clickOnNews', function () {
+  it('Dashboard_Activities_UpdateActivity_clickActivity', function () {
     const existingActivity = this.dashboardData.existingActivity
     cy.login(TEACHER, dashboardURL)
 
@@ -109,7 +113,7 @@ describe('Dashboard_Activity', () => {
     cy.get('[data-test="update-news-modal"]').should('be.visible')
   })
 
-  it('Dashboard_Activities_UpdateActivity_allNews', function () {
+  it('Dashboard_Activities_UpdateActivity_allActivity', function () {
     const existingActivity = this.dashboardData.existingActivity
     cy.login(TEACHER, dashboardURL)
 
@@ -119,5 +123,49 @@ describe('Dashboard_Activity', () => {
     getInformation(existingActivity[0]).click()
     cy.get('[data-test="updateButton"]').click()
     cy.get('[data-test="update-news-modal"]').should('be.visible')
+  })
+
+  it('Dashboard_Activities_DeleteActivity_mouseover', function () {
+    const existingActivity = this.dashboardData.existingActivity
+
+    cy.login(TEACHER, dashboardURL)
+
+    // Mouseover and click on delete button
+    getInformation(existingActivity[0]).trigger('mouseover').within(() => {
+      cy.get('[data-test="buttonDeleteInformation"]').click({ force: true })
+    })
+    // Confirm the delete
+    cy.get('[data-test="confirmButton"]').click()
+
+    // Check if news is delete
+    getInformation(existingActivity[0]).should('not.exist')
+
+    // Check if for the parents the news is delete
+    cy.login(STUDENT, dashboardURL)
+    getInformation(existingActivity[0]).should('not.exist')
+  })
+
+  it('Dashboard_Activities_DeleteActivity_clickActivity', function () {
+    const existingActivity = this.dashboardData.existingActivity
+
+    cy.login(TEACHER, dashboardURL)
+
+    getInformation(existingActivity[0]).click()
+    cy.get('[data-test="deleteButton"]').click()
+    // Check if in the warning modal content there is the news title
+    cy.get('[data-test="warning-modal"]').should('be.visible')
+  })
+
+  it('Dashboard_Activities_DeleteActivity_allActivity', function () {
+    const existingActivity = this.dashboardData.existingActivity
+
+    cy.login(TEACHER, dashboardURL)
+
+    cy.get('[data-test="activity-widget"]').within(() => {
+      cy.contains('button', 'Voir toutes les activités').click()
+    })
+    getInformation(existingActivity[0]).should('be.visible').click()
+    cy.get('[data-test="deleteButton"]').click()
+    cy.get('[data-test="warning-modal"]').should('be.visible')
   })
 })
