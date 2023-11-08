@@ -66,6 +66,79 @@ describe('Dashboard_Activity', () => {
     cy.get('[data-test="update-news-modal"]').should('be.visible')
   })
 
+  it('Dashboard_Activities_CreateActivity_Display_WarningMessage_SetInformations', function () {
+    const activityToCreate = this.dashboardData.ActivityToCreate
+
+    // Login
+    cy.login(TEACHER, dashboardURL)
+
+    // Open Create activity modale
+    cy.get('[data-test="activity-widget"]').within(() => {
+      cy.get('[data-test="CreateActivity"]').click()
+    })
+    // Set content
+    cy.get('[data-test="update-news-modal"]').within(() => {
+      cy.get('.ck-editor')
+      cy.type_ckeditor(activityToCreate.content)
+      cy.get('[data-test="closeModal"]').click()
+    })
+    // Check if warning modal is visible
+    cy.get('[data-test="warning-modal"]').should('be.visible')
+    // Click on confirm button
+    cy.get('[data-test="confirmButton"]').click()
+    // Check if warning modal is not visible
+    cy.get('[data-test="warning-modal"]').should('not.exist')
+    // Check if modal create message is not visible
+    cy.get('[data-test="update-news-modal"]').should('not.exist')
+
+    cy.get('[data-test="activity-widget"]').within(() => {
+      cy.get('[data-test="CreateActivity"]').click()
+    })
+
+    // Set recipient
+    cy.get('[data-test="update-news-modal"]').within(() => {
+      cy.get('.base-tags-input').click()
+      cy.get('.suggestion-list').contains('li', activityToCreate.recipient).click()
+      cy.get('[data-test="closeModal"]').click()
+    })
+    // Check if warning modal is visible
+    cy.get('[data-test="warning-modal"]').should('be.visible')
+    // Click on confirm button
+    cy.get('[data-test="confirmButton"]').click()
+
+    cy.get('[data-test="activity-widget"]').within(() => {
+      cy.get('[data-test="CreateActivity"]').click()
+    })
+
+    // Set title
+    cy.get('[data-test="update-news-modal"]').within(() => {
+      cy.get('.labelled').type(activityToCreate.title)
+      cy.get('[data-test="closeModal"]').click()
+    })
+    // Check if warning modal is visible
+    cy.get('[data-test="warning-modal"]').should('be.visible')
+    // Click on confirm button
+    cy.get('[data-test="confirmButton"]').click()
+  })
+
+  it('Dashboard_Activities_CreateActivity_Display_WarningMessage_Not_SetInformations', function () {
+    // Login
+    cy.login(TEACHER, dashboardURL)
+
+    // Open create activity modale
+    cy.get('[data-test="activity-widget"]').within(() => {
+      cy.get('[data-test="CreateActivity"]').click()
+    })
+    // Not set informations
+    cy.get('[data-test="update-news-modal"]').within(() => {
+      cy.get('[data-test="closeModal"]').click()
+    })
+    // Check if warning modal is not visible
+    cy.get('[data-test="warning-modal"]').should('not.exist')
+    // Check if modal create message is not visible
+    cy.get('[data-test="update-news-modal"]').should('not.exist')
+  })
+
   it('Dashboard_Activities_UpdateActivity_mouseover', function () {
     const existingActivity = this.dashboardData.existingActivity
     const activityToEdit = this.dashboardData.activityToEdit
@@ -135,6 +208,83 @@ describe('Dashboard_Activity', () => {
     cy.get('[data-test="updateButton"]').click()
     // Check if modale is visible
     cy.get('[data-test="update-news-modal"]').should('be.visible')
+  })
+
+  it('Dashboard_Activities_UpdateActivity_Display_WarningMessage_SetInformations', function () {
+    const existingActivity = this.dashboardData.existingActivity
+    const activityToEdit = this.dashboardData.activityToEdit
+    cy.login(TEACHER, dashboardURL)
+
+    // Mouse over on the information
+    getInformation(existingActivity[0]).trigger('mouseover').within(() => {
+      // Open Update modale
+      cy.get('[data-test="buttonEditInformation"]').click({ force: true })
+    })
+
+    // Set content
+    cy.get('[data-test="update-news-modal"]').within(() => {
+      cy.get('.ck-editor')
+      cy.type_ckeditor(activityToEdit.content)
+      cy.get('[data-test="closeModal"]').click()
+    })
+    // Check if warning modal is visible
+    cy.get('[data-test="warning-modal"]').should('be.visible')
+    // Click on confirm button
+    cy.get('[data-test="confirmButton"]').click()
+    // Check if warning modal is not visible
+    cy.get('[data-test="warning-modal"]').should('not.exist')
+    // Check if modal create message is not visible
+    cy.get('[data-test="update-news-modal"]').should('not.exist')
+
+    // Mouse over on the information
+    getInformation(existingActivity[0]).trigger('mouseover').within(() => {
+      // Open Activity modale
+      cy.get('[data-test="buttonEditInformation"]').click({ force: true })
+    })
+    // Set recipent
+    cy.get('[data-test="update-news-modal"]').within(() => {
+      cy.get('.base-tags-input').click()
+      cy.get('.suggestion-list').contains('li', activityToEdit.recipient).click()
+      cy.get('[data-test="closeModal"]').click()
+    })
+    // Check if warning modal is visible
+    cy.get('[data-test="warning-modal"]').should('be.visible')
+    // Click on confirm button
+    cy.get('[data-test="confirmButton"]').click()
+
+    // Mouse over on the information
+    getInformation(existingActivity[0]).trigger('mouseover').within(() => {
+      // Open activity modale
+      cy.get('[data-test="buttonEditInformation"]').click({ force: true })
+    })
+    // Set title
+    cy.get('[data-test="update-news-modal"]').within(() => {
+      cy.get('.labelled').type(activityToEdit.title)
+      cy.get('[data-test="closeModal"]').click()
+    })
+    // Check if warning modal is visible
+    cy.get('[data-test="warning-modal"]').should('be.visible')
+    // Click on confirm button
+    cy.get('[data-test="confirmButton"]').click()
+  })
+
+  it('Dashboard_Activities_UpdateActivity_Display_WarningMessage_Not_SetInformations', function () {
+    const existingActivity = this.dashboardData.existingActivity
+    cy.login(TEACHER, dashboardURL)
+
+    // Mouse over on the information
+    getInformation(existingActivity[0]).trigger('mouseover').within(() => {
+      // Open update modal
+      cy.get('[data-test="buttonEditInformation"]').click({ force: true })
+    })
+    // Not set informations
+    cy.get('[data-test="update-news-modal"]').within(() => {
+      cy.get('[data-test="closeModal"]').click()
+    })
+    // Check if warning modal is not visible
+    cy.get('[data-test="warning-modal"]').should('not.exist')
+    // Check if modal create message is not visible
+    cy.get('[data-test="update-news-modal"]').should('not.exist')
   })
 
   it('Dashboard_Activities_DeleteActivity_mouseover', function () {
