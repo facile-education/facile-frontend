@@ -9,6 +9,7 @@ export {
   getTeacherHomeworksToCorrect,
   setHomeworkDoneStatus,
   getStudentsDoneStatus,
+  getWorkLoad,
   createHomework,
   updateHomework,
   deleteHomework,
@@ -57,6 +58,17 @@ function getStudentsDoneStatus (homeworkId) {
   return axios.get(constants.JSON_WS_URL + HOMEWORK_PATH + 'get-students-done-status', {
     params: {
       homeworkId
+    }
+  }).then(response => response.data)
+}
+
+function getWorkLoad (courseId, selectedStudents, startDate, endDate) {
+  return axios.get(constants.JSON_WS_URL + HOMEWORK_PATH + 'get-work-load', {
+    params: {
+      courseId,
+      students: JSON.stringify(selectedStudents),
+      startDate: startDate.format('YYYY-MM-DD HH:mm'),
+      endDate: endDate.format('YYYY-MM-DD HH:mm')
     }
   }).then(response => response.data)
 }

@@ -58,10 +58,16 @@
         <ContentPicker @add="addContent" />
       </section>
       <section class="right">
-        <!--        <WeprodeButton-->
-        <!--          v-t="'preview'"-->
-        <!--          @click="preview"-->
-        <!--        />-->
+        <button
+          class="work-load-button"
+          @click="displayWorkLoadModal = true"
+        >
+          <img
+            src="@/assets/icons/stats.svg"
+            alt=""
+          >
+          <span v-t="'workLoad'" />
+        </button>
         <div class="target-students">
           <label v-t="'for'" />
           <button
@@ -120,12 +126,23 @@
       />
     </template>
   </WeprodeWindow>
-  <teleport to="body">
+  <teleport
+    v-if="displayStudentModal || displayWorkLoadModal"
+    to="body"
+  >
     <StudentListModal
       v-if="displayStudentModal"
       :student-list="availableStudents"
       :initial-state="{isWholeClass: homework.isWholeClass, selectedStudents: homework.selectedStudents}"
       @close="onUpdateStudents"
+    />
+    <WorkLoadModal
+      v-if="displayWorkLoadModal"
+      :course-id="courseId"
+      :course-name="courseName"
+      :selected-students="homework.isWholeClass ? [] : homework.selectedStudents"
+      :homework-date="selectedTargetDate"
+      @close="displayWorkLoadModal = false"
     />
   </teleport>
 </template>
@@ -150,11 +167,13 @@ import ContentPicker from '@/components/Course/ContentPicker.vue'
 import contentTypeConstants from '@/constants/contentTypeConstants'
 
 const StudentListModal = defineAsyncComponent(() => import('@components/Course/StudentListModal.vue'))
+const WorkLoadModal = defineAsyncComponent(() => import('@components/Course/WorkLoad/WorkLoadModal.vue'))
 const CourseContent = defineAsyncComponent(() => import('@/components/Course/CourseContent'))
 
 export default {
   name: 'HomeworkEditModal',
   components: {
+    WorkLoadModal,
     CourseContent,
     ContentPicker,
     StudentListModal,
@@ -187,6 +206,7 @@ export default {
     return {
       availableStudents: [],
       displayStudentModal: false,
+      displayWorkLoadModal: false,
       homework: {
         blocks: [{ contentId: -1, contentName: '', contentType: 1, contentValue: '', placeholder: this.$t('instructions') }],
         date: undefined,
@@ -233,6 +253,12 @@ export default {
     },
     courseId () {
       return this.isCreation ? this.selectedSession.groupId : this.editedHomework.courseId
+    },
+    courseName () {
+      return this.isCreation ? this.selectedSession.groupName : this.editedHomework.cours
+    },
+    selectedTargetDate () {
+      return dayjs(this.homework.date.startDate, 'YYYY-MM-DD HH:mm')
     }
   },
   created () {
@@ -480,28 +506,19 @@ label {
 .target-students {
   width: 100%;
 }
-.target-students-button {
+.target-students-button, .work-load-button {
   white-space: nowrap;
   display: flex;
   height: 32px;
   width: 100%;
   padding: 8px 16px;
   align-items: center;
-  text-align: left;
   gap: 8px;
   align-self: stretch;
   cursor: pointer;
   border-radius: 6px;
   border: 1px solid $neutral-60;
   background: $neutral-10;
-
-  span {
-    flex: 1;
-  }
-
-  img {
-    transform: rotate(90deg);
-  }
 
   &:hover {
     filter: brightness(115%);
@@ -510,6 +527,18 @@ label {
     -ms-transition: .2s filter linear;
     -o-transition: .2s filter linear;
     transition: .2s filter linear;
+  }
+}
+
+.target-students-button {
+  text-align: left;
+
+  span {
+    flex: 1;
+  }
+
+  img {
+    transform: rotate(90deg);
   }
 }
 
@@ -550,6 +579,7 @@ label {
   "sessionDate": "À faire pendant la séance",
   "someStudents": "Un élève sur {total} | {count} élèves sur {total}",
   "creationTitle": "Donner du travail",
-  "updateTitle": "Modifier un travail"
+  "updateTitle": "Modifier un travail",
+  "workLoad": "Charge de travail"
 }
 </i18n>
