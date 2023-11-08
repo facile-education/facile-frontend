@@ -1,5 +1,5 @@
 import { dashboardURL } from '../../support/constants/urls'
-import { HEADMASTER, PARENT, SCHOOL_ADMIN, STUDENT, TEACHER, TEACHER2 } from '../../support/constants/users'
+import { HEADMASTER, MULTI_STUDENT1, PARENT, SCHOOL_ADMIN, STUDENT, TEACHER, TEACHER2 } from '../../support/constants/users'
 import { getNews, getNewsDetail } from '../../support/utils/dashboard'
 
 describe('Dashboard_Announcements', () => {
@@ -306,6 +306,44 @@ describe('Dashboard_Announcements', () => {
       cy.get('.announcements-list').contains('.announcement', lastNews.title).click()
       cy.get('[data-test="updateButton"]').click()
       cy.get('[data-test="update-news-modal"]').should('be.visible')
+    })
+
+    it('Dashboard_Announcements_UpdateAnnouncement_markAsUnreadForAll', function () {
+      const existingNews = this.dashboardData.existingNews
+      const newsToEdit = this.dashboardData.newsToEdit
+
+      // Login with a student
+      cy.login(MULTI_STUDENT1, dashboardURL)
+      // Check if newsis read
+      getNews(existingNews[0]).within(() => {
+        cy.get('.pellet').should('not.exist')
+      })
+
+      // Updaye news
+      cy.login(HEADMASTER, dashboardURL)
+      getNews(existingNews[0]).click()
+      cy.get('[data-test="updateButton"]').click()
+      // Set new informations
+      cy.get('[data-test="update-news-modal"]').within(() => {
+        cy.get('.base-tags-input').click()
+        // Add all students in recipients
+        cy.get('.suggestion-list').contains('li', newsToEdit.recipient).click()
+        cy.get('.labelled').clear()
+        cy.get('.labelled').type(newsToEdit.title)
+        cy.get('.ck-editor')
+        cy.type_ckeditor(newsToEdit.content)
+        // Toogle markAsUnreadForAll button
+        cy.get('[data-test="markAsUnreadForAll"]').first().click()
+        // Submit
+        cy.get('[data-test="submitButton"]').click()
+      })
+
+      // Login with a student
+      cy.login(MULTI_STUDENT1, dashboardURL)
+      // Check if new is mark as unRead
+      getNews(newsToEdit).within(() => {
+        cy.get('.pellet').should('be.visible')
+      })
     })
 
     it('Dashboard_Announcements_UpdateAnnouncement_Display_WarningMessage_SetInformations', function () {
