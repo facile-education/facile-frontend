@@ -15,6 +15,7 @@ describe('Dashboard_Activity', () => {
     // Login
     cy.login(TEACHER, dashboardURL)
     cy.get('[data-test="activity-widget"]').within(() => {
+      // Click to oopen createActivity modale
       cy.get('[data-test="CreateActivity"]').click()
     })
     // Set informations
@@ -31,7 +32,8 @@ describe('Dashboard_Activity', () => {
     cy.get('[data-test="activity-widget"]').within(() => {
       getInformation(activityToCreate).should('be.visible').click()
     })
-    getInformationDetail(activityToCreate)
+    // Verify the content
+    getInformationDetail(activityToCreate).should('be.visible')
 
     // Login
     cy.login(STUDENT, dashboardURL)
@@ -41,22 +43,25 @@ describe('Dashboard_Activity', () => {
       cy.get('.activities').should('be.visible')
       // Display all activity
       cy.contains('button', 'Voir toutes les activités').click()
+      cy.get('.activities').should('be.visible')
       getInformation(activityToCreate).should('be.visible').click()
     })
+    // Verify the content
     getInformationDetail(activityToCreate)
   })
 
-  it.skip('Dashboard_Activities_CreateActivity_Button_AllActivity', function () {
+  it('Dashboard_Activities_CreateActivity_Button_AllActivity', function () {
+    const existingActivity = this.dashboardData.existingActivity
     // Login
     cy.login(TEACHER, dashboardURL)
     cy.get('[data-test="activity-widget"]').should('be.visible').within(() => {
       // For wait to page load
-      cy.get('.activities').should('be.visible')
+      getInformation(existingActivity[0]).should('be.visible')
       // Display all activity
       cy.contains('button', 'Voir toutes les activités').click()
-      // Click on button to display modal createActivity
-      cy.get('[data-test="CreateActivity"]').click()
     })
+    // Click on button to display modal createActivity
+    cy.get('[data-test="CreateActivity"]').click()
     // Check if modal is visible
     cy.get('[data-test="update-news-modal"]').should('be.visible')
   })
@@ -92,7 +97,7 @@ describe('Dashboard_Activity', () => {
     cy.get('[data-test="activity-widget"]').within(() => {
       cy.contains('button', 'Voir toutes les activités').click()
     })
-    // Check the content
+    // Check on information modified
     getInformation(activityToEdit).should('be.exist').click()
     // Check the content
     getInformationDetail(activityToEdit).should('be.exist')
@@ -108,8 +113,11 @@ describe('Dashboard_Activity', () => {
     const existingActivity = this.dashboardData.existingActivity
     cy.login(TEACHER, dashboardURL)
 
+    // Click on information
     getInformation(existingActivity[0]).click()
+    // open update modale
     cy.get('[data-test="updateButton"]').click()
+    // Check if modale is visible
     cy.get('[data-test="update-news-modal"]').should('be.visible')
   })
 
@@ -117,11 +125,15 @@ describe('Dashboard_Activity', () => {
     const existingActivity = this.dashboardData.existingActivity
     cy.login(TEACHER, dashboardURL)
 
+    // Display all activity
     cy.get('[data-test="activity-widget"]').within(() => {
       cy.contains('button', 'Voir toutes les activités').click()
     })
+    // Clicl on information
     getInformation(existingActivity[0]).click()
+    // Open update modale
     cy.get('[data-test="updateButton"]').click()
+    // Check if modale is visible
     cy.get('[data-test="update-news-modal"]').should('be.visible')
   })
 
@@ -149,8 +161,9 @@ describe('Dashboard_Activity', () => {
     const existingActivity = this.dashboardData.existingActivity
 
     cy.login(TEACHER, dashboardURL)
-
+    // Click on information to open details
     getInformation(existingActivity[0]).click()
+    // Click on delete button
     cy.get('[data-test="deleteButton"]').click()
     // Check if in the warning modal content there is the news title
     cy.get('[data-test="warning-modal"]').should('be.visible')
@@ -160,12 +173,17 @@ describe('Dashboard_Activity', () => {
     const existingActivity = this.dashboardData.existingActivity
 
     cy.login(TEACHER, dashboardURL)
-
+    // For wait to page load
+    getInformation(existingActivity[0]).should('be.visible')
+    // Display all activity
     cy.get('[data-test="activity-widget"]').within(() => {
       cy.contains('button', 'Voir toutes les activités').click()
     })
+    // Click on information
     getInformation(existingActivity[0]).should('be.visible').click()
+    // Click on delete button
     cy.get('[data-test="deleteButton"]').click()
+    // Check if modal is visible
     cy.get('[data-test="warning-modal"]').should('be.visible')
   })
 })
