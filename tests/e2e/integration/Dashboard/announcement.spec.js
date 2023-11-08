@@ -440,7 +440,7 @@ describe('Dashboard_Announcements', () => {
     })
   })
   context('mobile', function () {
-    it('Dashboard_Announcements_DisplayAllAnnouncements', function () {
+    it('Dashboard_Announcements_DisplayAllAnnouncements_mobile', function () {
       cy.viewport('iphone-5')
       const existingNews = this.dashboardData.existingNews
       // Login
@@ -466,7 +466,7 @@ describe('Dashboard_Announcements', () => {
       }
     })
 
-    it('Dashboard_Announcements_CreateAnnouncement', function () {
+    it('Dashboard_Announcements_CreateAnnouncement_mobile', function () {
       cy.viewport('iphone-5')
       // Check if an admin can create an annoucement
       cy.login(SCHOOL_ADMIN, dashboardURL)
@@ -485,7 +485,7 @@ describe('Dashboard_Announcements', () => {
       cy.get('[data-test="update-news-modal"]').should('be.visible')
     })
 
-    it('Dashboard_Announcements_CreateAnnouncement_allAnnouncement', function () {
+    it('Dashboard_Announcements_CreateAnnouncement_allAnnouncement_mobile', function () {
       cy.viewport('iphone-5')
       // Login
       cy.login(HEADMASTER, dashboardURL)
@@ -499,7 +499,7 @@ describe('Dashboard_Announcements', () => {
       cy.get('[data-test="update-news-modal"]').should('be.visible')
     })
 
-    it('Dashboard_Announcements_UpdateAnnouncement_clickOnNews', function () {
+    it('Dashboard_Announcements_UpdateAnnouncement_clickOnNews_mobile', function () {
       cy.viewport('iphone-5')
       const existingNews = this.dashboardData.existingNews
       const lastNews = existingNews[existingNews.length - 1]
@@ -510,7 +510,7 @@ describe('Dashboard_Announcements', () => {
       cy.get('[data-test="update-news-modal"]').should('be.visible')
     })
 
-    it('Dashboard_Announcements_UpdateAnnouncement_allNews', function () {
+    it('Dashboard_Announcements_UpdateAnnouncement_allNews_mobile', function () {
       cy.viewport('iphone-5')
       const existingNews = this.dashboardData.existingNews
       const lastNews = existingNews[existingNews.length - 1]
@@ -528,7 +528,7 @@ describe('Dashboard_Announcements', () => {
       cy.get('[data-test="update-news-modal"]').should('be.visible')
     })
 
-    it('Dashboard_Announcements_DeleteAnnouncement_clickOnNews', function () {
+    it('Dashboard_Announcements_DeleteAnnouncement_clickOnNews_mobile', function () {
       cy.viewport('iphone-5')
       const existingNews = this.dashboardData.existingNews
       const lastNews = existingNews[existingNews.length - 1]
@@ -543,7 +543,7 @@ describe('Dashboard_Announcements', () => {
       })
     })
 
-    it('Dashboard_Announcements_DeleteAnnouncement_allNews', function () {
+    it('Dashboard_Announcements_DeleteAnnouncement_allNews_mobile', function () {
       cy.viewport('iphone-5')
       const existingNews = this.dashboardData.existingNews
       const lastNews = existingNews[existingNews.length - 1]

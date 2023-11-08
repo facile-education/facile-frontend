@@ -387,7 +387,7 @@ describe('Dashboard_Activity', () => {
       cy.get('[data-test="update-news-modal"]').should('be.visible')
     })
 
-    it('Dashboard_Activities_UpdateActivity_clickActivity', function () {
+    it('Dashboard_Activities_UpdateActivity_clickActivity_mobile', function () {
       cy.viewport('iphone-5')
       const existingActivity = this.dashboardData.existingActivity
       cy.login(TEACHER, dashboardURL)
@@ -400,7 +400,7 @@ describe('Dashboard_Activity', () => {
       cy.get('[data-test="update-news-modal"]').should('be.visible')
     })
 
-    it('Dashboard_Activities_UpdateActivity_allActivity', function () {
+    it('Dashboard_Activities_UpdateActivity_allActivity_mobile', function () {
       cy.viewport('iphone-5')
       const existingActivity = this.dashboardData.existingActivity
       cy.login(TEACHER, dashboardURL)
@@ -418,7 +418,7 @@ describe('Dashboard_Activity', () => {
       cy.get('[data-test="update-news-modal"]').should('be.visible')
     })
 
-    it('Dashboard_Activities_DeleteActivity_clickActivity', function () {
+    it('Dashboard_Activities_DeleteActivity_clickActivity_mobile', function () {
       cy.viewport('iphone-5')
       const existingActivity = this.dashboardData.existingActivity
 
@@ -431,7 +431,7 @@ describe('Dashboard_Activity', () => {
       cy.get('[data-test="warning-modal"]').should('be.visible')
     })
 
-    it('Dashboard_Activities_DeleteActivity_allActivity', function () {
+    it('Dashboard_Activities_DeleteActivity_allActivity_mobile', function () {
       cy.viewport('iphone-5')
       const existingActivity = this.dashboardData.existingActivity
 
