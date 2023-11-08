@@ -114,6 +114,7 @@
         <span v-t="'markAsUnreadForAll'" />
         <WeprodeToggleSwitch
           v-model="markAsUnreadForAll"
+          data-test="markAsUnreadForAll"
         />
         <InformationIcon
           class="info"
