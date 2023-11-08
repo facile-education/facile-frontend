@@ -11,7 +11,7 @@ module.exports = defineConfig({
   watchForFileChanges: false,
 
   e2e: {
-    baseUrl: 'https://dev-ent-gve.com',
+    baseUrl: 'https://dev-facile.com',
     // setupNodeEvents (on, config) {
     //   // bind to the event we care about
     //   on('<event>', (arg1, arg2) => {
