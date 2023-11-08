@@ -24,7 +24,6 @@ const routes = [
   {
     path: '/agree-terms-of-use',
     name: 'AgreeTermsOfUse',
-    meta: { layout: 'GVELayout' },
     component: () => import('@/router/views/AgreeTermsOfUse')
   },
   {

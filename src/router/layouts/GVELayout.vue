@@ -3,30 +3,7 @@
     class="body"
     :class="{'authenticated': isAuthenticated}"
   >
-    <header class="theme-background-color">
-      <div>ENT République et Canton de Genève</div>
-      <div class="store-icons">
-        <i class="fa fa-apple" />
-        <i class="fa fa-android" />
-        <!-- <div class="qr-code-container">
-          <i class="fa fa-caret-up" />
-          <img
-            class="qr-code"
-            src="https://rec-ent.eduge.ch/GVEFrontPage-theme/images/app-qrcode.png"
-            alt="QRCode de l'application mobile"
-          >
-          <p class="qr-code-label">
-            Installer l'app
-          </p>
-        </div> -->
-      </div>
-    </header>
-
     <slot />
-
-    <footer class="bottom-bar theme-background-color">
-      <div>École en ligne</div>
-    </footer>
   </div>
 </template>
 

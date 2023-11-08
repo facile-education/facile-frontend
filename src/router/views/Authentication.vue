@@ -2,151 +2,130 @@
   <h1 :aria-label="$t('title')" />
   <div class="wrapper">
     <img
-      src="@assets/images/gva/logo_eel.png"
-      :alt="$t('eelImg')"
-      class="eel-img"
+      src="@assets/images/facile-logo.svg"
+      :alt="$t('facile-logo')"
+      width="140"
+      height="108"
+      class="logo"
     >
-    <a
-      id="academic"
-      v-t="'studentTeacher'"
-      :href="ssoUrl"
-      :title="$t('entLogin')"
-      class="btn"
-    />
     <div
       class="guest"
     >
-      <span
-        v-t="'parentOther'"
-        tabindex="0"
-        @click="toggleGuestForm"
-        @keyup.enter="toggleGuestForm"
-      />
-
-      <Transition name="expand">
-        <div v-if="isGuestFormDisplayed">
-          <!-- Password recovery -->
-          <form
-            v-if="showPasswordRecoveryForm"
-            @submit.prevent="sendRecoveryEmail"
+      <div>
+        <!-- Password recovery -->
+        <form
+          v-if="showPasswordRecoveryForm"
+          @submit.prevent="sendRecoveryEmail"
+        >
+          <div class="login-label">
+            <p
+              v-t="'login-label'"
+            />
+          </div>
+          <input
+            v-model="recoveryLogin"
+            :placeholder="$t('loginPlaceholder')"
+            class="input"
+            autocapitalize="none"
+            @keypress="handleKeyPressed"
           >
-            <div class="login-label">
-              <p
-                v-t="'login-label'"
-              />
-            </div>
+          <button
+            v-t="'send-recovery'"
+            class="btn"
+            :title="$t('send-recovery')"
+            type="submit"
+          />
+          <div
+            v-if="checkEmail"
+            class="check-email"
+          >
+            <span
+              v-t="'check-email'"
+            />
+          </div>
+          <div>
+            <a
+              v-t="'main-form'"
+              href="#"
+              @click="showPasswordRecoveryForm = false"
+            />
+          </div>
+        </form>
+
+        <!-- Classic login form -->
+        <form
+          v-else
+          @submit.prevent="doLogin"
+        >
+          <input
+            v-model="login"
+            :placeholder="$t('login')"
+            class="input"
+            name="unsername"
+            autocapitalize="none"
+            @keypress="handleKeyPressed"
+          >
+          <div class="input-container">
             <input
-              v-model="recoveryLogin"
-              :placeholder="$t('loginPlaceholder')"
+              v-model="password"
+              :type="passwordInputType"
+              :placeholder="$t('password')"
               class="input"
-              autocapitalize="none"
+              name="password"
               @keypress="handleKeyPressed"
             >
             <button
-              v-t="'send-recovery'"
-              class="btn"
-              :title="$t('send-recovery')"
-              type="submit"
-            />
-            <div
-              v-if="checkEmail"
-              class="check-email"
+              class="toggle-password-type"
+              type="button"
+              :aria-label="$t('showPassword')"
+              :title="$t('showPassword')"
+              @click.stop="togglePasswordType"
             >
-              <span
-                v-t="'check-email'"
-              />
-            </div>
-            <div>
-              <a
-                v-t="'main-form'"
-                href="#"
-                @click="showPasswordRecoveryForm = false"
-              />
-            </div>
-          </form>
-
-          <!-- Classic login form -->
-          <form
-            v-else
-            @submit.prevent="doLogin"
-          >
-            <input
-              v-model="login"
-              :placeholder="$t('login')"
-              class="input"
-              name="unsername"
-              autocapitalize="none"
-              @keypress="handleKeyPressed"
-            >
-            <div class="input-container">
-              <input
-                v-model="password"
-                :type="passwordInputType"
-                :placeholder="$t('password')"
-                class="input"
-                name="password"
-                @keypress="handleKeyPressed"
+              <img
+                src="@/assets/icons/eye-off.svg"
+                alt=""
               >
-              <button
-                class="toggle-password-type"
-                type="button"
-                :aria-label="$t('showPassword')"
-                :title="$t('showPassword')"
-                @click.stop="togglePasswordType"
-              >
-                <img
-                  src="@/assets/icons/eye-off.svg"
-                  alt=""
-                >
-              </button>
-            </div>
-            <div>
-              <!-- Login error -->
-              <span
-                v-show="isError && !isLocked"
-                v-t="'loginError'"
-                class="errorMessage"
-              />
-              <!-- Nb remaining tries -->
-              <span
-                v-if="isError && !isLocked && nbRemainingTries <= 2"
-                class="errorMessage"
-              >
-                {{ $t('nbRemainingTries', {nbRemainingTries: nbRemainingTries}) }}
-              </span>
-              <span
-                v-if="isError && isLocked"
-                class="errorMessage"
-              >
-                {{ $t('accountLocked', {lockoutDuration: lockoutDuration}) }}
-              </span>
-            </div>
-            <button
-              v-t="authenticateButtonLabel"
-              class="btn"
-              :class="{'disabled': isLoading}"
-              :disabled="isLoading"
-              :title="$t('authenticate')"
-              type="submit"
+            </button>
+          </div>
+          <div>
+            <!-- Login error -->
+            <span
+              v-show="isError && !isLocked"
+              v-t="'loginError'"
+              class="errorMessage"
             />
-            <div>
-              <a
-                v-t="'forgot-password'"
-                href="#"
-                @click="showPasswordRecoveryForm = true"
-              />
-            </div>
-          </form>
-        </div>
-      </Transition>
+            <!-- Nb remaining tries -->
+            <span
+              v-if="isError && !isLocked && nbRemainingTries <= 2"
+              class="errorMessage"
+            >
+              {{ $t('nbRemainingTries', {nbRemainingTries: nbRemainingTries}) }}
+            </span>
+            <span
+              v-if="isError && isLocked"
+              class="errorMessage"
+            >
+              {{ $t('accountLocked', {lockoutDuration: lockoutDuration}) }}
+            </span>
+          </div>
+          <button
+            v-t="authenticateButtonLabel"
+            class="btn"
+            :class="{'disabled': isLoading}"
+            :disabled="isLoading"
+            :title="$t('authenticate')"
+            type="submit"
+          />
+          <div>
+            <a
+              v-t="'forgot-password'"
+              href="#"
+              @click="showPasswordRecoveryForm = true"
+            />
+          </div>
+        </form>
+      </div>
     </div>
-    <img
-      src="@assets/images/gva/geneve-logo.png"
-      :alt="$t('gvaImg')"
-      width="140"
-      height="108"
-      class="gva-img"
-    >
   </div>
 </template>
 
@@ -174,7 +153,6 @@ export default {
   data () {
     return {
       isLoading: false,
-      isGuestFormDisplayed: false,
       login: '',
       password: '',
       passwordInputType: 'password',
@@ -387,9 +365,6 @@ export default {
       }
 
       document.cookie = name + '=' + (value || '') + expires + '; path=/'
-    },
-    toggleGuestForm () {
-      this.isGuestFormDisplayed = !this.isGuestFormDisplayed
     }
   }
 }
@@ -411,13 +386,10 @@ $eel-blue: #2c7bb8;
   flex-direction: column;
 }
 
-.eel-img {
-  margin-bottom: 1.5rem;
+.logo {
   width: 100%;
-}
-
-.gva-img {
   margin: 1.5rem auto 0 auto;
+  margin-bottom: 2rem;
 }
 
 .guest {
@@ -513,13 +485,10 @@ $eel-blue: #2c7bb8;
   "title": "Authentification",
   "authenticate": "Se connecter",
   "authenticationOnGoing": "Connexion en cours ...",
-  "eelImg": "Logo d'école en ligne",
   "entLogin": "Se connecter à l'ENTA",
-  "gvaImg": "Logo du Canton de Genève",
+  "facile-logo": "Logo FACILE",
   "login": "Identifiant",
-  "parentOther": "Parents / Autres profils",
   "password": "Mot de passe",
-  "studentTeacher": "Élève / Enseignant",
   "loginError": "Identifiant ou mot de passe incorrect",
   "inactiveAccount": "Votre compte est inactif.",
   "forgot-password": "Mot de passe oublié",
