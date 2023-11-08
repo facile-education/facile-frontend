@@ -5,12 +5,15 @@ import { getEvent, getEventDetail } from '../../support/utils/dashboard'
 describe('Dashboard_Events', () => {
   beforeEach(() => {
     cy.loadTables('dashboard/dashboard_tables_events.sql')
-    cy.fixture('dashboard.json').as('dashboardData')
+    cy.fixture('dashboard.json').as('dashboardData').then(data => {
+      cy.clock(Cypress.dayjs(data.existingEvents[0].endDate, 'YYYY/MM/DD HH:mm').toDate().getTime())
+    })
   })
   it('Dashboard_Events_DisplayEvents_Read_UnRead', function () {
     const existingEvents = this.dashboardData.existingEvents
     // Login
     cy.login(TEACHER2, dashboardURL)
+    // cy.clock().invoke('setSystemTime', Cypress.dayjs(existingEvents[0].endDate, 'YYYY/MM/DD HH:mm').toDate().getTime()) // To put after login to make it works
     // Check if pellet is visible
     cy.get('[data-test="diary-widget"]').within(() => {
       cy.get('header').contains('.pellet', 1).should('be.visible')
@@ -145,6 +148,83 @@ describe('Dashboard_Events', () => {
     cy.get('[data-test="update-diary-event-modal"]').should('be.visible')
   })
 
+  it('Dashboard_Events_CreateEvent_Display_WarningMessage_SetInformations', function () {
+    const NewEvent = this.dashboardData.NewEvent
+
+    // Login
+    cy.login(HEADMASTER, dashboardURL)
+
+    // Open create modal
+    cy.get('[data-test="buttonCreateEvent"]').click()
+    // Set content
+    cy.get('[data-test="update-diary-event-modal"]').within(() => {
+      cy.get('.ck-editor')
+      cy.type_ckeditor(NewEvent.content)
+      cy.get('[data-test="closeModal"]').click()
+    })
+    // Check if warning modal is visible
+    cy.get('[data-test="warning-modal"]').should('be.visible')
+    // Click on confirm button
+    cy.get('[data-test="confirmButton"]').click()
+    // Check if warning modal is not visible
+    cy.get('[data-test="warning-modal"]').should('not.exist')
+    // Check if modal create message is not visible
+    cy.get('[data-test="update-news-modal"]').should('not.exist')
+
+    // Open create modal
+    cy.get('[data-test="buttonCreateEvent"]').click()
+    // Set recipient
+    cy.get('[data-test="update-diary-event-modal"]').within(() => {
+      cy.get('.base-tags-input').click()
+      cy.get('.suggestion-list').contains('li', NewEvent.recipient).click()
+      cy.get('[data-test="closeModal"]').click()
+    })
+    // Check if warning modal is visible
+    cy.get('[data-test="warning-modal"]').should('be.visible')
+    // Click on confirm button
+    cy.get('[data-test="confirmButton"]').click()
+
+    // Open create modal
+    cy.get('[data-test="buttonCreateEvent"]').click()
+    // Set title
+    cy.get('[data-test="update-diary-event-modal"]').within(() => {
+      cy.get('.group > [data-test="titleInputEvent"]').type(NewEvent.title)
+      cy.get('[data-test="closeModal"]').click()
+    })
+    // Check if warning modal is visible
+    cy.get('[data-test="warning-modal"]').should('be.visible')
+    // Click on confirm button
+    cy.get('[data-test="confirmButton"]').click()
+
+    // Open create modal
+    cy.get('[data-test="buttonCreateEvent"]').click()
+    // Set location
+    cy.get('[data-test="update-diary-event-modal"]').within(() => {
+      cy.get('.group > [data-test="locationInputEvent"]').type(NewEvent.location)
+      cy.get('[data-test="closeModal"]').click()
+    })
+    // Check if warning modal is visible
+    cy.get('[data-test="warning-modal"]').should('be.visible')
+    // Click on confirm button
+    cy.get('[data-test="confirmButton"]').click()
+  })
+
+  it('Dashboard_Events_CreateEvent_Display_WarningMessage_Not_SetInformations', function () {
+    // Login
+    cy.login(HEADMASTER, dashboardURL)
+
+    // Open create modal
+    cy.get('[data-test="buttonCreateEvent"]').click()
+    // Not set informations
+    cy.get('[data-test="update-diary-event-modal"]').within(() => {
+      cy.get('[data-test="closeModal"]').click()
+    })
+    // Check if warning modal is not visible
+    cy.get('[data-test="warning-modal"]').should('not.exist')
+    // Check if modal create message is not visible
+    cy.get('[data-test="update-diary-event-modal"]').should('not.exist')
+  })
+
   it('Dashboard_Events_UpdateEvent_mouseover', function () {
     const existingEvents = this.dashboardData.existingEvents
     const lastEvent = existingEvents[0]
@@ -234,6 +314,97 @@ describe('Dashboard_Events', () => {
     })
   })
 
+  it('Dashboard_Events_UpdateEvent_Display_WarningMessage_SetInformations', function () {
+    const existingEvents = this.dashboardData.existingEvents
+    const lastEvent = existingEvents[0]
+    const EventToEdit = this.dashboardData.EventToEdit
+
+    // Login
+    cy.login(HEADMASTER, dashboardURL)
+
+    // Mouse over on the event
+    getEvent(lastEvent).trigger('mouseover').within(() => {
+      cy.get('[data-test="buttonEditEvent"]').click()
+    })
+    // Set content
+    cy.get('[data-test="update-diary-event-modal"]').within(() => {
+      cy.get('.ck-editor')
+      cy.type_ckeditor(EventToEdit.content)
+      cy.get('[data-test="closeModal"]').click()
+    })
+    // Check if warning modal is visible
+    cy.get('[data-test="warning-modal"]').should('be.visible')
+    // Click on confirm button
+    cy.get('[data-test="confirmButton"]').click()
+    // Check if warning modal is not visible
+    cy.get('[data-test="warning-modal"]').should('not.exist')
+    // Check if modal create message is not visible
+    cy.get('[data-test="update-news-modal"]').should('not.exist')
+
+    // Mouse over on the event
+    getEvent(lastEvent).trigger('mouseover').within(() => {
+      cy.get('[data-test="buttonEditEvent"]').click()
+    })
+    // Set recipient
+    cy.get('[data-test="update-diary-event-modal"]').within(() => {
+      cy.get('.base-tags-input').click()
+      cy.get('.suggestion-list').contains('li', EventToEdit.recipient).click()
+      cy.get('[data-test="closeModal"]').click()
+    })
+    // Check if warning modal is visible
+    cy.get('[data-test="warning-modal"]').should('be.visible')
+    // Click on confirm button
+    cy.get('[data-test="confirmButton"]').click()
+
+    // Mouse over on the event
+    getEvent(lastEvent).trigger('mouseover').within(() => {
+      cy.get('[data-test="buttonEditEvent"]').click()
+    })
+    // Set title
+    cy.get('[data-test="update-diary-event-modal"]').within(() => {
+      cy.get('.group > [data-test="titleInputEvent"]').type(EventToEdit.title)
+      cy.get('[data-test="closeModal"]').click()
+    })
+    // Check if warning modal is visible
+    cy.get('[data-test="warning-modal"]').should('be.visible')
+    // Click on confirm button
+    cy.get('[data-test="confirmButton"]').click()
+
+    // Mouse over on the event
+    getEvent(lastEvent).trigger('mouseover').within(() => {
+      cy.get('[data-test="buttonEditEvent"]').click()
+    })
+    // Set location
+    cy.get('[data-test="update-diary-event-modal"]').within(() => {
+      cy.get('.group > [data-test="locationInputEvent"]').type(EventToEdit.location)
+      cy.get('[data-test="closeModal"]').click()
+    })
+    // Check if warning modal is visible
+    cy.get('[data-test="warning-modal"]').should('be.visible')
+    // Click on confirm button
+    cy.get('[data-test="confirmButton"]').click()
+  })
+
+  it('Dashboard_Events_UpdateEvent_Display_WarningMessage_Not_SetInformations', function () {
+    const existingEvents = this.dashboardData.existingEvents
+    const lastEvent = existingEvents[0]
+    // Login
+    cy.login(HEADMASTER, dashboardURL)
+
+    // Mouse over on the event
+    getEvent(lastEvent).trigger('mouseover').within(() => {
+      cy.get('[data-test="buttonEditEvent"]').click()
+    })
+    // Not set informations
+    cy.get('[data-test="update-diary-event-modal"]').within(() => {
+      cy.get('[data-test="closeModal"]').click()
+    })
+    // Check if warning modal is not visible
+    cy.get('[data-test="warning-modal"]').should('not.exist')
+    // Check if modal update event is not visible
+    cy.get('[data-test="update-diary-event-modal"]').should('not.exist')
+  })
+
   it('Dashboard_Events_DeleteEvent_mouseover', function () {
     const existingEvents = this.dashboardData.existingEvents
     const lastEvent = existingEvents[0]
@@ -282,7 +453,7 @@ describe('Dashboard_Events', () => {
     cy.get('[data-test="warning-modal"]').should('be.visible')
   })
 
-  it('Dashboard_Events_UpdateEvent_CanDelete_By_Profils', function () {
+  it('Dashboard_Events_DeleteEvent_CanDelete_By_Profils', function () {
     const existingEvents = this.dashboardData.existingEvents
     const lastEvent = existingEvents[0]
 
