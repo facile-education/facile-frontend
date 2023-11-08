@@ -79,6 +79,13 @@
         "title": "Activité modifiée",
         "content": "Ceci est une activité modifiée"
     },
+    "futurActivity": {
+        "recipient": "Responsables légaux de EC0933",
+        "title": "Information avec une date de parution ultérieure",
+        "content": "Contenu de l'information avec une date de parution ultérieure",
+        "dateBeforeRelease": "2023/11/29",
+        "publicationDate": "2023/11/31"
+    },
     "existingHomework": [
         {
             "title": "Travail à faire",

@@ -9,13 +9,34 @@ describe('Dashboard_Activity', () => {
     cy.fixture('dashboard.json').as('dashboardData')
   })
 
+  it.only('Dashboard_Activities_DisplayActivities_FuturRelease', function () {
+    const futurActivity = this.dashboardData.futurActivity
+
+    // Login
+    cy.login(STUDENT, dashboardURL)
+    // Set date before release
+    cy.clock().invoke('setSystemTime', Cypress.dayjs(futurActivity.dateBeforeRelease, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+    cy.get('[data-test="activity-widget"]').within(() => {
+      // Check if information does not exist
+      getInformation(futurActivity).should('not.exist')
+    })
+    // Login
+    cy.login(STUDENT, dashboardURL)
+    // Set date after release
+    cy.clock().invoke('setSystemTime', Cypress.dayjs(futurActivity.publicationDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+    cy.get('[data-test="activity-widget"]').within(() => {
+      // Check if information is visible
+      getInformation(futurActivity).should('be.visible')
+    })
+  })
+
   it('Dashboard_Activities_CreateActivity_Button_HeaderActivity', function () {
     const activityToCreate = this.dashboardData.ActivityToCreate
 
     // Login
     cy.login(TEACHER, dashboardURL)
     cy.get('[data-test="activity-widget"]').within(() => {
-      // Click to oopen createActivity modale
+      // Click to oopen createActivity modal
       cy.get('[data-test="CreateActivity"]').click()
     })
     // Set informations
@@ -72,7 +93,7 @@ describe('Dashboard_Activity', () => {
     // Login
     cy.login(TEACHER, dashboardURL)
 
-    // Open Create activity modale
+    // Open Create activity modal
     cy.get('[data-test="activity-widget"]').within(() => {
       cy.get('[data-test="CreateActivity"]').click()
     })
@@ -125,7 +146,7 @@ describe('Dashboard_Activity', () => {
     // Login
     cy.login(TEACHER, dashboardURL)
 
-    // Open create activity modale
+    // Open create activity modal
     cy.get('[data-test="activity-widget"]').within(() => {
       cy.get('[data-test="CreateActivity"]').click()
     })
@@ -188,9 +209,9 @@ describe('Dashboard_Activity', () => {
 
     // Click on information
     getInformation(existingActivity[0]).click()
-    // open update modale
+    // open update modal
     cy.get('[data-test="updateButton"]').click()
-    // Check if modale is visible
+    // Check if modal is visible
     cy.get('[data-test="update-news-modal"]').should('be.visible')
   })
 
@@ -204,9 +225,9 @@ describe('Dashboard_Activity', () => {
     })
     // Clicl on information
     getInformation(existingActivity[0]).click()
-    // Open update modale
+    // Open update modal
     cy.get('[data-test="updateButton"]').click()
-    // Check if modale is visible
+    // Check if modal is visible
     cy.get('[data-test="update-news-modal"]').should('be.visible')
   })
 
@@ -217,7 +238,7 @@ describe('Dashboard_Activity', () => {
 
     // Mouse over on the information
     getInformation(existingActivity[0]).trigger('mouseover').within(() => {
-      // Open Update modale
+      // Open Update modal
       cy.get('[data-test="buttonEditInformation"]').click({ force: true })
     })
 
@@ -238,7 +259,7 @@ describe('Dashboard_Activity', () => {
 
     // Mouse over on the information
     getInformation(existingActivity[0]).trigger('mouseover').within(() => {
-      // Open Activity modale
+      // Open Activity modal
       cy.get('[data-test="buttonEditInformation"]').click({ force: true })
     })
     // Set recipent
@@ -254,7 +275,7 @@ describe('Dashboard_Activity', () => {
 
     // Mouse over on the information
     getInformation(existingActivity[0]).trigger('mouseover').within(() => {
-      // Open activity modale
+      // Open activity modal
       cy.get('[data-test="buttonEditInformation"]').click({ force: true })
     })
     // Set title
