@@ -1,0 +1,134 @@
+{
+  "now": "2023/10/05 16:00",
+  "slotsTypes": {
+    "tutoring": {
+      "type": 4,
+      "label": "Dépannage",
+      "color": "#8763CA",
+      "nbSlotsAtSelectedWeek": 7,
+      "nbSlotsAtSelectedDay": 2,
+      "slotExample": {
+        "schoolSlotNumber": "P10",
+        "startDate": "2023/10/03 16:20",
+        "endDate": "2023/10/03 17:05",
+        "teacher": {
+          "firstName": "Sidney",
+          "lastName": "PACHECO"
+        },
+        "room": "S18",
+        "capacity": 20,
+        "freePlaces": 19
+      }
+    },
+    "study": {
+      "type": 5,
+      "label": "Cercle d'étude",
+      "color": "#32AC71",
+      "nbSlotsAtSelectedWeek": 3,
+      "nbSlotsAtSelectedDay": 1,
+      "slotExample": {
+        "schoolSlotNumber": "P10",
+        "startDate": "2023/10/05 16:20",
+        "endDate": "2023/10/05 17:05",
+        "teacher": {
+          "firstName": "Morgan",
+          "lastName": "WALLACE"
+        },
+        "room": "S17",
+        "capacity": 20,
+        "freePlaces": 19
+      }
+    },
+    "replayTest": {
+      "type": 3,
+      "label": "Travaux à refaire",
+      "color": "#3694B7",
+      "nbSlotsAtSelectedWeek": 2,
+      "nbSlotsAtSelectedDay": 1,
+      "slotExample": {
+        "schoolSlotNumber": "P6",
+        "startDate": "2023/10/05 12:50",
+        "endDate": "2023/10/05 13:35",
+        "teacher": {
+          "firstName": "Sidney",
+          "lastName": "PACHECO"
+        },
+        "room": "S17",
+        "capacity": 20,
+        "freePlaces": 19
+      },
+      "slotWithLimitedCapacity": {
+        "schoolSlotNumber": "P6",
+        "startDate": "2023/10/03 12:50",
+        "endDate": "2023/10/03 13:35",
+        "teacher": {
+          "firstName": "Scarface",
+          "lastName": "O'HAGIRTIE"
+        },
+        "room": "S17",
+        "capacity": 1,
+        "freePlaces": 0
+      }
+    },
+    "detention": {
+      "type": 2,
+      "label": "Retenue",
+      "color": "#EDA12A",
+      "nbSlotsAtSelectedWeek": 5,
+      "nbSlotsAtSelectedDay": 1,
+      "slotExample": {
+        "schoolSlotNumber": "P1",
+        "startDate": "2023/10/02 07:55",
+        "endDate": "2023/10/02 08:40",
+        "room": "S16",
+        "teacher": {
+          "firstName": "Jamie",
+          "lastName": "TAW"
+        },
+        "capacity": 15,
+        "freePlaces": 14
+      }
+    },
+    "fired": {
+      "type": 1,
+      "label": "Renvoi",
+      "color": "#f00",
+      "nbSlotsAtSelectedDay": 6,
+      "nbSlotsAtSelectedWeek": 27,
+      "slotExample": {
+        "schoolSlotNumber": "P4",
+        "startDate": "2023/10/03 10:35",
+        "endDate": "2023/10/03 11:20",
+        "teacher": {
+          "firstName": "Clemence",
+          "lastName": "WHITEMAN"
+        },
+        "room": "S59",
+        "capacity": 15,
+        "freePlaces": 14
+      }
+    }
+  },
+  "studentSlotToBeFired": {
+    "startDate": "2023/10/03 08:45",
+    "endDate": "2023/10/03 09:30",
+    "courseName": "EC0933",
+    "teacher": {
+      "firstName": "Rosana",
+      "lastName": "NOLLI"
+    }
+  },
+  "studentSlotsNumberAtWeek35": 34,
+  "studentSlotsNumberAtTuesday": 7,
+  "emptySlot": {
+    "day": "tue",
+    "startHour": "12:00",
+    "endHour": "13:00",
+    "slotNumberOnCalendar": 6,
+    "linkedSchoolSlot": {
+      "schoolSlotNumber": "P5",
+      "startDate": "2023/10/03 11:25",
+      "endDate": "2023/10/03 12:10"
+    }
+  }
+}

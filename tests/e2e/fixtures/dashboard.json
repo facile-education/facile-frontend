@@ -1,0 +1,24 @@
+{
+    "NewAnnouncement": {
+        "recipient": "Tous les personnels",
+        "title": "Nouvelle annonce",
+        "content": "Ceci est le contenu de la nouvelle annonce"
+    },
+    "existingNews": [
+        {
+            "recipient": "Tous les élèves",
+            "title": "Annonce déjà existante",
+            "content": "Contenu d'un annonce déjà existante destinée aux élèves"
+        },
+        {
+            "recipient": "Tous les responsables légaux",
+            "title": "Deuxième annonce",
+            "content": "Ceci est une deuxième annonce"
+        }
+    ],
+    "newsToEdit": {
+        "recipient": "Tous les élèves",
+        "title": "Annonce modifiée",
+        "content": "Ceci est une annonce modifié"
+    }
+}

@@ -1,0 +1,152 @@
+{
+  "personalFolders": {
+    "existingPersonalFolders": [
+      {
+        "name": "dossier personnel",
+        "subFolders": [
+          {
+            "name": "sous-dossier"
+          }
+        ]
+      },
+      {
+        "name": "Mon autre dossier",
+        "subFolders": []
+      }
+    ],
+    "personalFoldersToCreate": [
+      {
+        "name": "nouveau dossier perso",
+        "subFolders": [
+          {
+            "name": "nouveau sous dossier"
+          }
+        ]
+      }
+    ],
+    "modifiedFolderName": "dossier perso modifié",
+    "modifiedSubFolderName": "sous dossier modifié",
+    "headMasterPersonalFolder": "sous-dossier"
+  },
+  "existingThreads": [
+    [
+      {
+        "sender": "Rosana Nolly",
+        "recipients": ["Orlan Hue"],
+        "date": "2023/10/05 08:51",
+        "subject": "Mon premier message",
+        "content": "Ceci est un message de test",
+        "messageIndexInThread": 0,
+        "read": true
+      }
+    ],
+    [
+      {
+        "sender": "Rosana Nolly",
+        "recipients": ["Orlan Hue"],
+        "date": "2023/10/05 08:53",
+        "subject": "deuxième message",
+        "content": "Je vous pose une question",
+        "messageIndexInThread": 0,
+        "read": false
+      },
+      {
+        "sender": "Orlan Hue",
+        "recipients": ["Rosana Nolly"],
+        "date": "2023/10/05 08:54",
+        "subject": "Re: deuxième message",
+        "content": "Je vous réponds!",
+        "messageIndexInThread": 1,
+        "read": true
+      },
+      {
+        "sender": "Rosana Nolly",
+        "recipients": ["Orlan Hue"],
+        "date": "2023/10/05 08:54",
+        "subject": "Re: deuxième message",
+        "content": "Merci",
+        "messageIndexInThread": 2,
+        "read": true
+      }
+    ],
+    [
+      {
+        "sender": "Rosana Nolly",
+        "recipients": ["Orlan Hue"],
+        "date": "2023/10/05 09:01",
+        "subject": "Troisième message",
+        "content": "J'ai encore des choses à dire",
+        "messageIndexInThread": 0,
+        "read": false,
+        "id": 534225
+      }
+    ],
+    [
+      {
+        "sender": "Rosana NOLLI",
+        "recipients": ["Orlan Hue", "Pénélope Ribeiro"],
+        "date": "2023/10/05 09:02",
+        "subject": "Mon quatrième message",
+        "content": "Ceci est un message avec plusieurs destinataires",
+        "messageIndexInThread": 0,
+        "read": false
+      }
+    ]
+  ],
+  "existingDraftThreads": [
+    [
+      {
+        "sender": "Orlan Hue",
+        "subject": "Brouillon existant",
+        "content": "Ceci est un brouillon déjà existant",
+        "messageIndexInThread": 0
+      }
+    ],
+    [
+      {
+        "sender": "Stanislaus Ropkes",
+        "subject": "Message dans un dossier",
+        "content": "Contenu du message dans un dossier",
+        "messageIndexInThread": 0
+      }
+    ],
+    [
+      {
+        "sender": "Stanislaus Ropkes",
+        "subject": "Message dans un sous dossier",
+        "content": "Contenu du message dans un sous dossier",
+        "messageIndexInThread": 0
+      }
+    ]
+  ],
+  "draftToCreate": [
+    [
+      {
+        "sender": "Orlan Hue",
+        "subject": "Brouillon",
+        "content": "Ceci est un message enregistré en tant que brouillon",
+        "messageIndexInThread": 0
+      }
+    ]
+  ],
+  "ModifiedDraftContent": [
+    [
+      {
+        "sender": "Orlan Hue",
+        "subject": "Brouillon modifié",
+        "content": "Ceci est un brouillon modifié",
+        "messageIndexInThread": 0
+      }
+    ]
+  ],
+  "ListMessage" : [
+    [
+      {
+        "sender": "Orlan Hue",
+        "subject": "Message à une liste et une personne de cette liste",
+        "content": "Ce message est envoyé à une liste et à une personne de cette liste",
+        "messageIndexInThread": 0
+      }
+    ]
+  ]
+}

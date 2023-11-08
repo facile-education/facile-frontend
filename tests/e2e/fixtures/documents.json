@@ -1,0 +1,215 @@
+{
+  "currentPersonalDocumentsStructure": {
+    "label": "Personnels",
+    "folders": [
+      {
+        "label": "Dossier",
+        "id": 545207,
+        "size": 0,
+        "sizeLabel": "0 o",
+        "lastModifiedDate": "2023-10-31 15:04",
+        "folders": [
+          {
+            "label": "Sous dossier",
+            "id": 545210,
+            "folders": [
+              {
+                "label": "Sous-sous dossier",
+                "id": 545213,
+                "folders": [
+                  {
+                    "label": "QuatrièmeNiveau",
+                    "id": 545153,
+                    "folders": [
+                      {
+                        "label": "CinqièmeNiveau",
+                        "id": 545156,
+                        "folders": [],
+                        "files": []
+                      }
+                    ],
+                    "files": []
+                  }
+                ],
+                "files": []
+              }
+            ],
+            "files": []
+          }
+        ],
+        "files": []
+      },
+      {
+        "label": "Dossier2",
+        "id": 545135,
+        "size": 2332960,
+        "sizeLabel": "2 Mo",
+        "lastModifiedDate": "2023-11-02 08:38",
+        "folders": [],
+        "files": [
+          {
+            "id": 547312,
+            "label": "Archive.zip",
+            "size": 286,
+            "sizeLabel": "286 o",
+            "lastModifiedDate": "2023-11-03 14:24"
+          },
+          {
+            "id": 547235,
+            "label": "Audio.mp3",
+            "size": 9982,
+            "sizeLabel": "9 ko",
+            "lastModifiedDate": "2023-11-03 11:07"
+          },
+          {
+            "id": 547225,
+            "label": "Carte mentale.mind",
+            "size": 78,
+            "sizeLabel": "78 o",
+            "lastModifiedDate": "2023-11-03 11:07"
+          },
+          {
+            "id": 547219,
+            "label": "Géogébra.ggb",
+            "size": 8920,
+            "sizeLabel": "8 ko",
+            "lastModifiedDate": "2023-11-03 11:07"
+          },
+          {
+            "id": 547263,
+            "label": "Image.png",
+            "size": 512596,
+            "sizeLabel": "500 ko",
+            "lastModifiedDate": "2023-11-03 14:11"
+          },
+          {
+            "id": 547141,
+            "label": "Note.html",
+            "size": 80,
+            "sizeLabel": "80 o",
+            "lastModifiedDate": "2023-11-03 10:44"
+          },
+          {
+            "id": 547205,
+            "label": "Odp.odp",
+            "size": 14265,
+            "sizeLabel": "13 ko",
+            "lastModifiedDate": "2023-11-03 11:07"
+          },
+          {
+            "id": 547199,
+            "label": "Ods.ods",
+            "size": 22590,
+            "sizeLabel": "22 ko",
+            "lastModifiedDate": "2023-11-03 11:07"
+          },
+          {
+            "id": 547245,
+            "label": "Odt.odt",
+            "size": 9388,
+            "sizeLabel": "9 ko",
+            "lastModifiedDate": "2023-11-03 11:07"
+          },
+          {
+            "id": 547275,
+            "label": "Pdf.pdf",
+            "size": 142786,
+            "sizeLabel": "139 ko",
+            "lastModifiedDate": "2023-11-03 14:11"
+          },
+          {
+            "id": 547193,
+            "label": "Scratch.sb3",
+            "size": 41951,
+            "sizeLabel": "40 ko",
+            "lastModifiedDate": "2023-11-03 11:07"
+          },
+          {
+            "id": 547255,
+            "label": "Texte.txt",
+            "size": 14,
+            "sizeLabel": "14 o",
+            "lastModifiedDate": "2023-11-03 14:10"
+          },
+          {
+            "id": 547287,
+            "label": "Vidéo.mp4",
+            "size": 1570024,
+            "sizeLabel": "1 Mo",
+            "lastModifiedDate": "2023-11-03 14:11"
+          }
+        ]
+      }
+    ],
+    "files": [
+      {
+        "label": "Image.png",
+        "size": 148731,
+        "sizeLabel": "145 ko",
+        "lastModifiedDate": "2023-10-31 16:14"
+      },
+      {
+        "label": "Note.html",
+        "size": 79,
+        "sizeLabel": "79 o",
+        "lastModifiedDate": "2023-11-07 10:03",
+        "versions": [
+          {
+            "versionId": 565215,
+            "label": "4.0",
+            "isLatest": true,
+            "date": "2023-11-07 10:03",
+            "content": "Troisième version"
+          },
+          {
+            "versionId": 565208,
+            "label": "3.1",
+            "isMinorVersion": true,
+            "date": "2023-11-07 10:02",
+            "content": "Deuxième version en cours d'édition"
+          },
+          {
+            "versionId": 565201,
+            "label": "3.0",
+            "date": "2023-11-07 10:00",
+            "content": "Deuxième version"
+          },
+          {
+            "versionId": 565194,
+            "label": "2.0",
+            "date": "2023-11-07 10:00",
+            "content": "Première version"
+          },
+          {
+            "versionId": 565184,
+            "label": "1.0",
+            "date": "2023-11-07 10:00",
+            "content": ""
+          }
+        ]
+      }
+    ]
+  },
+  "currentCollaborativeStructure": {
+    "label": "Collaboratifs",
+    "spaces": [
+      {
+        "label": "CO Da Vinci",
+        "id": 466936,
+        "nbMembers": 2569,
+        "folders": [
+          {
+            "label": "Dossier de groupe",
+            "id": 545161,
+            "folders": [],
+            "files": []
+          }
+        ],
+        "files": []
+      }
+    ]
+  },
+  "folderOptions": ["Renommer", "Dupliquer", "Déplacer", "Télécharger", "Supprimer", "Détails"],
+  "fileOptions": ["Ouvrir", "Renommer", "Déplacer", "Dupliquer", "Télécharger", "Supprimer", "Détails"],
+  "multiSelectionOptions": ["Déplacer", "Dupliquer", "Supprimer"]
+}

@@ -1,0 +1,48 @@
+
+<svg id="svg-img" width="30px" height="25px" viewBox="0 0 30 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <polygon id="path-j16n1adymn-1" points="30 0 30 24.2307692 0 24.2307692 0 0"></polygon>
+        <path d="M9.06618292,0 C9.53608104,0 9.97010418,0.25840139 10.2045728,0.677594661 L11.385436,2.33834131 C11.6199046,2.75753459 12.0539918,3.01593598 12.5238258,3.01593598 L29.999936,3.01593598 L29.999936,21.9769128 C29.999936,22.9727278 29.2157474,23.7800507 28.2484683,23.7800507 L1.75146757,23.7800507 C0.784188532,23.7800507 0,22.9727278 0,21.9769128 L0,5.119289 C0,3.89973897 0.160141127,2.68655129 0.475487945,1.51264223 L0.62012458,1.01203913 C0.770671353,0.416027557 1.29329287,0 1.89144403,0 L9.06618292,0 Z" id="path-j16n1adymn-3"></path>
+        <polygon id="path-j16n1adymn-5" points="23.059986 0 23.059986 10.0285856 0 10.0285856 0 0"></polygon>
+        <path d="M28.6863993,0 C29.4118426,0 30,0.605508719 30,1.35235337 L30,21.5260625 C30,22.5218774 29.2158114,23.3292003 28.2485324,23.3292003 L1.75146757,23.3292003 C0.784188532,23.3292003 0,22.5218774 0,21.5260625 L0,4.3682234 L17.8294785,4.3682234 C18.3436439,4.3682234 18.810531,4.05936843 19.0242434,3.57791613 L20.2614816,0.790307263 C20.4751299,0.308854953 20.9420811,0 21.4562465,0 L28.6863993,0 Z" id="path-j16n1adymn-7"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icon-folder" transform="translate(-0.000000, 0.007805)">
+            <mask id="mask-j16n1adymn-2" fill="white">
+                <use xlink:href="#path-j16n1adymn-1"></use>
+            </mask>
+            <g id="Path"></g>
+            <g id="Group" mask="url(#mask-j16n1adymn-2)">
+                <g id="Clipped">
+                    <mask id="mask-j16n1adymn-4" fill="white">
+                        <use xlink:href="#path-j16n1adymn-3"></use>
+                    </mask>
+                    <g id="Path"></g>
+                    <polygon id="Path" fill="#F6C358" fill-rule="nonzero" mask="url(#mask-j16n1adymn-4)" points="0 0 30 0 30 23.7796154 0 23.7796154"></polygon>
+                </g>
+                <g id="Clipped">
+                    <mask id="mask-j16n1adymn-6" fill="white">
+                        <use xlink:href="#path-j16n1adymn-5"></use>
+                    </mask>
+                    <g id="Path"></g>
+                    <g id="Group" mask="url(#mask-j16n1adymn-6)" fill="#EBF0F3" fill-rule="nonzero">
+                        <g transform="translate(2.730000, 2.705769)" id="color-polygon">
+                            <polygon points="0 0 23.0596154 0 23.0596154 10.0280769 0 10.0280769"></polygon>
+                        </g>
+                    </g>
+                </g>
+                <g id="Clipped">
+                    <mask id="mask-j16n1adymn-8" fill="white">
+                        <use xlink:href="#path-j16n1adymn-7"></use>
+                    </mask>
+                    <g id="Path"></g>
+                    <g id="Group" mask="url(#mask-j16n1adymn-8)" fill="#FCD361" fill-rule="nonzero">
+                        <g transform="translate(0.000000, 0.901154)" id="Path">
+                            <polygon points="0 0 30 0 30 23.3296154 0 23.3296154"></polygon>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

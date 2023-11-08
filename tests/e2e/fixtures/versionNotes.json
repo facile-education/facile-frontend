@@ -1,0 +1,21 @@
+{
+  "databaseExistingNotes": [
+    {
+      "content": "Encore et encore des nouvautées en tout genre…",
+      "date": "2023/09/28"
+    },
+    {
+      "content": "Attention les yeux, notre toute dernière version arrive!",
+      "date": "2023/09/13"
+    },
+    {
+      "content": "Enseignants: Un nouvel onglet est disponible dans Cours et devoirs!",
+      "date": "2023/09/12"
+    }
+  ],
+  "noteToCreate": {
+    "title": "1.0.5",
+    "content": "Une note de version créée de toutes pièces"
+  },
+  "modifiedText": "Ceci est un texte modifié"
+}
