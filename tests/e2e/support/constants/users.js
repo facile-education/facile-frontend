@@ -1,7 +1,7 @@
 const password = 'W€Prode73'
 
 const GLOBAL_ADMIN = {
-  login: 'pentila',
+  login: 'admin',
   password,
   role: 'admin'
 }
