@@ -66,14 +66,16 @@ describe('Dashboard_Activity', () => {
     cy.clock().invoke('setSystemTime', Cypress.dayjs(fridayDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
     // eslint-disable-next-line cypress/unsafe-to-chain-command
     cy.get('[data-test="schedule-widget"] > header > nav').scrollIntoView().should('be.visible')
+    cy.get('[data-test="schedule-widget"]').within(() => {
     // Click on button next day
-    cy.get('[data-test="NextDay"]').click()
-    // Check if next day is monday and not saturday
-    cy.get('[data-test="date"]').should('contain', 'lun')
-    // Click on previous day button
-    cy.get('[data-test="PreviousDay"]').click()
-    // Check if previous day is friday and not sunday
-    cy.get('[data-test="date"]').should('contain', 'ven')
+      cy.get('[data-test="NextDay"]').click()
+      // Check if next day is monday and not saturday
+      cy.get('[data-test="date"]').should('contain', 'lun')
+      // Click on previous day button
+      cy.get('[data-test="PreviousDay"]').click()
+      // Check if previous day is friday and not sunday
+      cy.get('[data-test="date"]').should('contain', 'ven')
+    })
   })
 
   it('Dashboard_Schedule_DisplaySessions_NextButton_After/Before_Holiday', function () {
@@ -84,14 +86,16 @@ describe('Dashboard_Activity', () => {
     cy.clock().invoke('setSystemTime', Cypress.dayjs(holidayDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
     // eslint-disable-next-line cypress/unsafe-to-chain-command
     cy.get('[data-test="schedule-widget"] > header > nav').scrollIntoView().should('be.visible')
-    // Click on button next day
-    cy.get('[data-test="NextDay"]').click()
-    // Check if next day is backToSchool day
-    cy.get('[data-test="date"]').should('contain', '30/10')
-    // Click on previous day button
-    cy.get('[data-test="PreviousDay"]').click()
-    // Check if previous day is last day before holiday
-    cy.get('[data-test="date"]').should('contain', '20/10')
+    cy.get('[data-test="schedule-widget"]').within(() => {
+      // Click on button next day
+      cy.get('[data-test="NextDay"]').click()
+      // Check if next day is backToSchool day
+      cy.get('[data-test="date"]').should('contain', '30/10')
+      // Click on previous day button
+      cy.get('[data-test="PreviousDay"]').click()
+      // Check if previous day is last day before holiday
+      cy.get('[data-test="date"]').should('contain', '20/10')
+    })
   })
 
   it('Dashboard_Schedule_Redirect_MultiParent_Display_Good_ChildrenWork', function () {
