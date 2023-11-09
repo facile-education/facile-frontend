@@ -1,5 +1,6 @@
+/* eslint-disable cypress/no-unnecessary-waiting */
 import { dashboardURL } from '../../support/constants/urls'
-import { PARENT, STUDENT, TEACHER } from '../../support/constants/users'
+import { DOYEN, PARENT, STUDENT, TEACHER } from '../../support/constants/users'
 import { getInformation, getInformationDetail } from '../../support/utils/dashboard'
 
 describe('Dashboard_Activity', () => {
@@ -59,7 +60,7 @@ describe('Dashboard_Activity', () => {
         cy.get('.detailed-news > .content').should('contain', existingActivity[0].content)
       })
     })
-    it.skip('Dashboard_Activities_DisplayAllActivities', function () {
+    it('Dashboard_Activities_DisplayAllActivities', function () {
       const existingActivity = this.dashboardData.existingActivity
       const information = existingActivity[0]
       const group = existingActivity[1]
@@ -75,7 +76,7 @@ describe('Dashboard_Activity', () => {
       })
     })
 
-    it.skip('Dashboard_Activities_DisplayActivities_Display_In_RightOrder', function () {
+    it('Dashboard_Activities_DisplayActivities_Display_In_RightOrder', function () {
       const existingActivity = this.dashboardData.existingActivity
       const newActivity = this.dashboardData.futurActivity
       const information = existingActivity[0]
@@ -92,6 +93,95 @@ describe('Dashboard_Activity', () => {
         cy.get('.activity-item').eq(1).should('contain', documentInGroup.title)
         cy.get('.activity-item').eq(2).should('contain', group.title)
         cy.get('.activity-item').eq(3).should('contain', information.title)
+      })
+    })
+
+    it('Dashboard_Activities_DisplayActivities_Renvoi_VisibilityByProfil', function () {
+      const renvoiForAuthor = this.dashboardData.existingActivity[3]
+      const renvoiForOthers = this.dashboardData.existingActivity[4]
+
+      // Login with author
+      cy.login(TEACHER, dashboardURL)
+      cy.get('[data-test="activity-widget"]').within(() => {
+        // Check the position of activities
+        cy.contains('.activity-item', renvoiForAuthor.content).should('be.exist')
+      })
+
+      // Login with class doyen
+      cy.login(DOYEN, dashboardURL)
+      cy.get('[data-test="activity-widget"]').within(() => {
+        // Check the position of activities
+        cy.contains('.activity-item', renvoiForOthers.content).should('be.exist')
+      })
+    })
+
+    it('Dashboard_Activities_DisplayActivities_Filter_In_AllActivities', function () {
+      const existingActivity = this.dashboardData.existingActivity
+      const information = existingActivity[0]
+      const group = existingActivity[1]
+      const documentInGroup = existingActivity[2]
+      const homeWork1 = existingActivity[5]
+      const homeWork2 = existingActivity[6]
+      const homeWorkDate = this.dashboardData.existingHomework[0]
+
+      cy.login(STUDENT, dashboardURL)
+      // Set date to see the homework
+      cy.clock().invoke('setSystemTime', Cypress.dayjs(homeWorkDate.dateBefore, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+      // Click to see all activities
+      cy.contains('button', 'Voir toutes les activités').click()
+      cy.get('.activities').should('have.class', 'infinite-scroll')
+      // Check if all activity are visible
+      cy.get('[data-test="activity-widget"]').within(() => {
+        cy.contains('.activity-item', information.title).should('be.visible')
+        cy.contains('.activity-item', documentInGroup.content).should('be.visible')
+        cy.contains('.activity-item', group.content).should('be.visible')
+        cy.contains('.activity-item', homeWork1.content).should('be.visible')
+        cy.contains('.activity-item', homeWork2.content).should('be.visible')
+
+        // Filtrer by informations
+        cy.get('.filters').within(() => {
+          cy.contains('button', 'Informations').click()
+        })
+        cy.wait(2000)
+        cy.contains('.activity-item', information.title).should('be.visible')
+        cy.contains('.activity-item', documentInGroup.content).should('not.exist')
+        cy.contains('.activity-item', homeWork1.content).should('not.exist')
+        cy.contains('.activity-item', homeWork2.content).should('not.exist')
+
+        // Filtrer by documents
+        cy.get('.filters').within(() => {
+          // Remove informations filter
+          cy.contains('button', 'Informations').click()
+          cy.wait(2000)
+          cy.contains('button', 'Documents').click()
+        })
+        getInformation(information).should('not.exist')
+        cy.contains('.activity-item', group.content).should('not.exist')
+        cy.contains('.activity-item', documentInGroup.content).should('be.visible')
+        cy.contains('.activity-item', homeWork1.content).should('not.exist')
+        cy.contains('.activity-item', homeWork2.content).should('not.exist')
+
+        // Filtrer by cours et devoir
+        cy.get('.filters').within(() => {
+          // Remove informations filter
+          cy.contains('button', 'Documents').click()
+          cy.wait(2000)
+          cy.contains('button', 'Cours et devoirs').click()
+        })
+        getInformation(information).should('not.exist')
+        cy.contains('.activity-item', group.content).should('not.exist')
+        cy.contains('.activity-item', documentInGroup.content).should('not.exist')
+        cy.contains('.activity-item', homeWork1.content).should('be.visible')
+        cy.contains('.activity-item', homeWork2.content).should('be.visible')
+      })
+    })
+
+    it('Dashboard_Activities_DisplayActivities_DisplayFilterMenu', function () {
+      cy.login(STUDENT, dashboardURL)
+      cy.get('[data-test="activity-widget"]').within(() => {
+        cy.get('.activity-filter').contains('button', 'Filtrer').click()
+        // Check if filter panel is visible
+        cy.get('.filters').should('be.visible')
       })
     })
 

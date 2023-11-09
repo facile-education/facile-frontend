@@ -70,11 +70,27 @@
         },
         {
             "title": "Groupe avec un élève",
-            "content": "Vous a inscrit dans cet espace"
+            "content": "vous a inscrit dans cet espace"
         },
         {
             "title": "Groupe avec un élève",
             "content": "a partagé le fichier document.odt dans l'espace Groupe avec un élève"
+        },
+        {
+            "title": "Motivation de renvoi author",
+            "content": "Pensez à motiver le renvoi de Pénélope RIBEIRO du cours de HI0933 du 03 octobre 2023 à 10:35"
+        },
+        {
+            "title": "Motivation de renvoi others",
+            "content": "a renvoyé Pénélope RIBEIRO du cours de HI0933 du 03 octobre 2023 à 10:35"
+        },
+        {
+            "class": "HI0933",
+            "content": "a donné du travail pour le cours du 14 novembre 2023"
+        },
+        {
+            "class": "HI0933",
+            "content": "a donné du travail pour le cours du 13 novembre 2023"
         }
     ],
     "ActivityToCreate": {
