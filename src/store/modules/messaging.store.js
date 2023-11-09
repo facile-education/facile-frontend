@@ -329,10 +329,12 @@ export const actions = {
     await folderService.getAllUserFolders().then((data) => {
       if (data.success) {
         commit('setMessagingFolders', data.folders)
+        const inboxFolder = data.folders.find((folder) => { return folder.type === 1 })
         if (!noSelection && !state.displayMessageFromRouting) {
-          const inboxFolder = data.folders.find((folder) => { return folder.type === 1 })
           this.dispatch('messaging/selectFolder', inboxFolder)
         } else {
+          // Set current folder so that after reading notified message, the back action displays the inbox
+          commit('setCurrentFolder', inboxFolder)
           this.dispatch('messaging/selectFolder', {})
         }
       } else {
