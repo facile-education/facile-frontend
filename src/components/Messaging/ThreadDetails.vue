@@ -270,6 +270,11 @@ export default {
     hideDetails () {
       this.$store.dispatch('messaging/setSelectedThreads', [])
       this.$store.dispatch('messaging/hideDetailPanel')
+      // Reload inbox when going back from a routing message
+      if (this.$store.state.messaging.displayMessageFromRouting) {
+        this.$store.dispatch('messaging/setDisplayMessageFromRouting', false)
+        messagingUtils.refresh()
+      }
     },
     editDraft () {
       if (this.$store.state.messaging.selectedThreads.length > 0) {
