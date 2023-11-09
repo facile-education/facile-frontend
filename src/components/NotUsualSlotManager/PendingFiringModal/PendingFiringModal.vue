@@ -131,6 +131,7 @@ export default {
 <style lang="scss">
 div.non-classical-slots {
   position: relative;
+  z-index: -1;
 }
 
 .pending-firing-modal {
