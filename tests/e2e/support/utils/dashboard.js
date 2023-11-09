@@ -49,6 +49,13 @@ const getInformationDetail = (information) => {
   })
 }
 
+const selectChild = (child1, child2) => {
+  cy.contains('button', child1).click()
+  cy.get('.suggestion-list').within(() => {
+    cy.contains('li', child2).click()
+  })
+}
+
 export {
   getNewsDetail,
   getNews,
@@ -58,5 +65,6 @@ export {
   getHomeworkDetails,
   getSessions,
   getInformation,
-  getInformationDetail
+  getInformationDetail,
+  selectChild
 }

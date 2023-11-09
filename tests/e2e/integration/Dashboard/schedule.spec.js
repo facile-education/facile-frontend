@@ -1,6 +1,6 @@
 import { dashboardURL } from '../../support/constants/urls'
 import { MULTI_PARENT, MULTI_STUDENT1, MULTI_STUDENT2, STUDENT } from '../../support/constants/users'
-import { getSessions } from '../../support/utils/dashboard'
+import { getSessions, selectChild } from '../../support/utils/dashboard'
 
 describe('Dashboard_Activity', () => {
   beforeEach(() => {
@@ -10,7 +10,6 @@ describe('Dashboard_Activity', () => {
 
   it('Dashboard_Schedule_DisplaySessions_MultiParent_ChangeStudent_DropDown', function () {
     const SessionsDate = this.dashboardData.existingSessionsLists[0].sessionsLists[1].date
-    const existingHomework = this.dashboardData.existingHomework
     const SessionsListStudent1 = this.dashboardData.existingSessionsLists[0].sessionsLists[1].sessions
     const SessionsListStudent2 = this.dashboardData.existingSessionsLists[0].sessionsLists[2].sessions
 
@@ -21,20 +20,14 @@ describe('Dashboard_Activity', () => {
 
     cy.get('.personal-widgets').within(() => {
       // Select first child
-      cy.contains('button', existingHomework[2].student).click()
-      cy.get('.suggestion-list').within(() => {
-        cy.contains('li', existingHomework[2].student).click()
-      })
+      selectChild(MULTI_STUDENT1.firstName, MULTI_STUDENT1.firstName)
       cy.get('[data-test="schedule-widget"]').within(() => {
         getSessions(SessionsListStudent1[0]).should('be.visible')
       })
 
       // Change to second child
 
-      cy.contains('button', existingHomework[2].student).click()
-      cy.get('.suggestion-list').within(() => {
-        cy.contains('li', existingHomework[3].student).click()
-      })
+      selectChild(MULTI_STUDENT1.firstName, MULTI_STUDENT2.firstName)
       cy.get('[data-test="schedule-widget"]').within(() => {
         getSessions(SessionsListStudent2[0]).should('be.visible')
       })
@@ -51,6 +44,7 @@ describe('Dashboard_Activity', () => {
     // eslint-disable-next-line cypress/unsafe-to-chain-command
     cy.get('[data-test="schedule-widget"] > header > nav').scrollIntoView().should('be.visible')
 
+    // Check session's content for this date
     cy.get('[data-test="schedule-widget"]').within(() => {
       for (let i = 0; i < SessionsList.length - 1; i++) {
         getSessions(SessionsList[i]).should('be.exist')
@@ -108,10 +102,7 @@ describe('Dashboard_Activity', () => {
 
     cy.get('.personal-widgets').within(() => {
       // Select first child
-      cy.contains('button', MULTI_STUDENT1.firstName).click()
-      cy.get('.suggestion-list').within(() => {
-        cy.contains('li', MULTI_STUDENT1.firstName).click()
-      })
+      selectChild(MULTI_STUDENT1.firstName, MULTI_STUDENT1.firstName)
       cy.get('[data-test="schedule-widget"]').within(() => {
         cy.get('.redirect-button').contains('Accéder au semainier').click()
       })
@@ -128,10 +119,7 @@ describe('Dashboard_Activity', () => {
 
     cy.get('.personal-widgets').within(() => {
       // Select first child
-      cy.contains('button', MULTI_STUDENT1.firstName).click()
-      cy.get('.suggestion-list').within(() => {
-        cy.contains('li', MULTI_STUDENT2.firstName).click()
-      })
+      selectChild(MULTI_STUDENT1.firstName, MULTI_STUDENT2.firstName)
       cy.get('[data-test="schedule-widget"]').within(() => {
         cy.get('.redirect-button').contains('Accéder au semainier').click()
       })

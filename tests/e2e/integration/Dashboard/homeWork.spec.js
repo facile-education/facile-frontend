@@ -1,6 +1,6 @@
 import { dashboardURL } from '../../support/constants/urls'
-import { MULTI_PARENT, PARENT, STUDENT } from '../../support/constants/users'
-import { getHomework, getHomeworkDetails } from '../../support/utils/dashboard'
+import { MULTI_PARENT, MULTI_STUDENT1, MULTI_STUDENT2, PARENT, STUDENT } from '../../support/constants/users'
+import { getHomework, getHomeworkDetails, selectChild } from '../../support/utils/dashboard'
 
 describe('Dashboard_Activity', () => {
   beforeEach(() => {
@@ -140,10 +140,7 @@ describe('Dashboard_Activity', () => {
 
     cy.get('.personal-widgets').within(() => {
       // Select first child
-      cy.contains('button', existingHomework[2].student).click()
-      cy.get('.suggestion-list').within(() => {
-        cy.contains('li', existingHomework[2].student).click()
-      })
+      selectChild(MULTI_STUDENT1.firstName, MULTI_STUDENT1.firstName)
       cy.get('[data-test="homeWork-widget"]').within(() => {
         getHomework(existingHomework[2]).should('be.visible')
         getHomework(existingHomework[3]).should('not.exist')
@@ -151,10 +148,7 @@ describe('Dashboard_Activity', () => {
 
       // Change to second child
 
-      cy.contains('button', existingHomework[2].student).click()
-      cy.get('.suggestion-list').within(() => {
-        cy.contains('li', existingHomework[3].student).click()
-      })
+      selectChild(MULTI_STUDENT1.firstName, MULTI_STUDENT2.firstName)
       cy.get('[data-test="homeWork-widget"]').within(() => {
         getHomework(existingHomework[3]).should('be.visible')
         getHomework(existingHomework[2]).should('not.exist')
@@ -172,10 +166,7 @@ describe('Dashboard_Activity', () => {
 
     cy.get('.personal-widgets').within(() => {
       // Select first child
-      cy.contains('button', existingHomework[2].student).click()
-      cy.get('.suggestion-list').within(() => {
-        cy.contains('li', existingHomework[2].student).click()
-      })
+      selectChild(MULTI_STUDENT1.firstName, MULTI_STUDENT1.firstName)
       cy.get('[data-test="homeWork-widget"]').within(() => {
         getHomework(existingHomework[2]).click()
       })
@@ -192,11 +183,8 @@ describe('Dashboard_Activity', () => {
     cy.clock().invoke('setSystemTime', Cypress.dayjs(existingHomework[3].dateBefore, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
 
     cy.get('.personal-widgets').within(() => {
-      // Select first child
-      cy.contains('button', existingHomework[2].student).click()
-      cy.get('.suggestion-list').within(() => {
-        cy.contains('li', existingHomework[3].student).click()
-      })
+      // Select second child
+      selectChild(MULTI_STUDENT1.firstName, MULTI_STUDENT2.firstName)
       cy.get('[data-test="homeWork-widget"]').within(() => {
         getHomework(existingHomework[3]).click()
       })
