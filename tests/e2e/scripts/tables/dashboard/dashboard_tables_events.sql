@@ -80,6 +80,34 @@ UNLOCK TABLES;
 --
 -- Table structure for table `Agenda_EventRead`
 --
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Agenda_EventPopulation` (
+  `eventId` int(11) NOT NULL,
+  `groupId` int(11) NOT NULL,
+  `roleId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`eventId`,`groupId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Agenda_EventPopulation`
+--
+
+LOCK TABLES `Agenda_EventPopulation` WRITE;
+/*!40000 ALTER TABLE `Agenda_EventPopulation` DISABLE KEYS */;
+INSERT INTO `Agenda_EventPopulation` VALUES
+(563201,45407,45302),
+(563202,45407,45103),
+(566001,45407,45302),
+(566301,45407,45302),
+(566302,45407,45103);
+/*!40000 ALTER TABLE `Agenda_EventPopulation` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Agenda_EventRead`
+--
 
 DROP TABLE IF EXISTS `Agenda_EventRead`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;

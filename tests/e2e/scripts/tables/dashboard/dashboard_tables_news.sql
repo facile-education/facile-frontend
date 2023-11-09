@@ -134,6 +134,35 @@ INSERT INTO `News_NewsRead` VALUES
 (546313,58811,'2023-11-06 10:42:46.774000');
 /*!40000 ALTER TABLE `News_NewsRead` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `User_NewsAdmin`
+--
+
+DROP TABLE IF EXISTS `User_NewsAdmin`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `User_NewsAdmin` (
+  `newsAdminId` bigint(20) NOT NULL,
+  `userId` bigint(20) DEFAULT NULL,
+  `schoolId` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`newsAdminId`),
+  KEY `IX_B15DFFF1` (`schoolId`),
+  KEY `IX_EEC00C8` (`userId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `User_NewsAdmin`
+--
+
+LOCK TABLES `User_NewsAdmin` WRITE;
+/*!40000 ALTER TABLE `User_NewsAdmin` DISABLE KEYS */;
+INSERT INTO `User_NewsAdmin` VALUES
+(466184,52216,45405),
+(546511,45479,45405);
+/*!40000 ALTER TABLE `User_NewsAdmin` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -144,4 +173,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-08 13:43:43
+-- Dump completed on 2023-11-09  9:50:27
