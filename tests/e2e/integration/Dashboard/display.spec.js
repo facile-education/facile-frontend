@@ -6,7 +6,7 @@ describe('Dashboard_DisplayCorrectWidgets', () => {
     cy.loadTables('messaging/messaging_tables.sql')
     cy.fixture('messaging.json').as('messagingData')
   })
-  it('Dashboard_DisplayCorrectWidgets_desktop', function () {
+  it('Dashboard_DisplayCorrectWidgets_ByProfil_desktop', function () {
     // For a student
     cy.login(STUDENT, dashboardURL)
     cy.get('[data-test="diary-widget"]').should('be.visible')
@@ -53,7 +53,7 @@ describe('Dashboard_DisplayCorrectWidgets', () => {
     cy.get('[data-test="statistics-widget"]').should('not.exist')
   })
 
-  it.only('Dashboard_DisplayCorrectWidgets_mobile', function () {
+  it('Dashboard_DisplayCorrectWidgets_Test_Responsivity', function () {
     cy.viewport('iphone-5')
     // Test Responsivity
     cy.login(STUDENT, dashboardURL)

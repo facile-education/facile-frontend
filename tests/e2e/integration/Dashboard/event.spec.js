@@ -14,7 +14,6 @@ describe('Dashboard_Events', () => {
       const existingEvents = this.dashboardData.existingEvents
       // Login
       cy.login(TEACHER2, dashboardURL)
-      // cy.clock().invoke('setSystemTime', Cypress.dayjs(existingEvents[0].endDate, 'YYYY/MM/DD HH:mm').toDate().getTime()) // To put after login to make it works
       // Check if pellet is visible
       cy.get('[data-test="diary-widget"]').within(() => {
         cy.get('header').contains('.pellet', 1).should('be.visible')
@@ -37,6 +36,7 @@ describe('Dashboard_Events', () => {
       const lastEvent = existingEvents[0]
 
       cy.login(HEADMASTER, dashboardURL)
+      // Open last event detail
       getEvent(lastEvent).click()
       cy.get('[data-test="diary-event-details-modal"]').within(() => {
         // Check the title
@@ -60,7 +60,7 @@ describe('Dashboard_Events', () => {
       cy.login(HEADMASTER, dashboardURL)
       getEvent(EventForStudents).click()
       cy.get('[data-test="diary-event-details-modal"]').within(() => {
-        // No one read this event
+        // Check if no one read this event
         cy.get('.read-infos').should('contain', '0 destinataire')
       })
       // Login recipient
@@ -72,13 +72,15 @@ describe('Dashboard_Events', () => {
       cy.login(HEADMASTER, dashboardURL)
       getEvent(EventForStudents).click()
       cy.get('[data-test="diary-event-details-modal"]').within(() => {
-        // No one read this event
+        // Check if one recipient read this event
         cy.get('.read-infos').should('contain', '1 destinataire')
         // Open recipients infos
         cy.get('.read-infos > button').click()
       })
+      // Open population panel
       cy.get('[data-test="readInfoModal"]').within(() => {
         cy.get('.population').click()
+        // Verify is recipient who read is mark as read
         cy.get('.read-info-user').contains(`${STUDENT.lastName} ${STUDENT.firstName}`).should('not.contain', 'Non lu')
       })
     })
@@ -98,7 +100,7 @@ describe('Dashboard_Events', () => {
       getEventDetail(existingEvents[1]).should('be.exist')
     })
 
-    it('Dashboard_Events_CreateEvent', function () {
+    it('Dashboard_Events_CreateEvent_ButtonCreate', function () {
       const NewEvent = this.dashboardData.NewEvent
 
       // Check if an admin can create an event
@@ -111,7 +113,7 @@ describe('Dashboard_Events', () => {
       cy.get('[data-test="buttonCreateEvent"]').click()
       cy.get('[data-test="update-diary-event-modal"]').should('be.visible')
 
-      // Create event with the headmaster for the teachers
+      // Create event with the headmaster for teachers
       cy.login(HEADMASTER, dashboardURL)
       // Open create modal
       cy.get('[data-test="buttonCreateEvent"]').click()
@@ -123,7 +125,7 @@ describe('Dashboard_Events', () => {
         cy.get('.group > [data-test="locationInputEvent"]').type(NewEvent.location)
         cy.get('.ck-editor')
         cy.type_ckeditor(NewEvent.content)
-        // Create
+        // Submit
         cy.get('[data-test="submitButton"]').click()
       })
 
@@ -136,7 +138,7 @@ describe('Dashboard_Events', () => {
       getEvent(NewEvent).should('be.exist')
     })
 
-    it('Dashboard_Events_CreateEvent_allEvent', function () {
+    it('Dashboard_Events_CreateEvent_AllEvent_ButtonCreate', function () {
       // Login
       cy.login(HEADMASTER, dashboardURL)
       // Click on all event buttton
@@ -226,7 +228,7 @@ describe('Dashboard_Events', () => {
       cy.get('[data-test="update-diary-event-modal"]').should('not.exist')
     })
 
-    it('Dashboard_Events_UpdateEvent_mouseover', function () {
+    it('Dashboard_Events_UpdateEvent_Mouseover', function () {
       const existingEvents = this.dashboardData.existingEvents
       const lastEvent = existingEvents[0]
       const EventToEdit = this.dashboardData.EventToEdit
@@ -244,7 +246,6 @@ describe('Dashboard_Events', () => {
       })
       // Set new informations
       cy.get('[data-test="update-diary-event-modal"]').within(() => {
-        // cy.wait(2000)
         cy.get('.base-tags-input').click()
         // Add all students in recipients
         cy.get('.suggestion-list').contains('li', EventToEdit.recipient).click()
@@ -265,30 +266,39 @@ describe('Dashboard_Events', () => {
       getEventDetail(EventToEdit).should('be.exist')
 
       // Login with a student to see if now he can see the event
-      cy.login(PARENT, dashboardURL)
+      cy.login(STUDENT, dashboardURL)
       getEvent(EventToEdit).should('be.exist')
     })
 
-    it('Dashboard_Events_UpdateEvent_clickOnEvent', function () {
+    it('Dashboard_Events_UpdateEvent_ClickOnEvent', function () {
       const existingEvents = this.dashboardData.existingEvents
       const lastEvent = existingEvents[0]
+      // Login
       cy.login(HEADMASTER, dashboardURL)
 
+      // Click on last event
       getEvent(lastEvent).click()
+      // Open updaye modal
       cy.get('[data-test="updateButton"]').click()
+      // Check if update modal is visible
       cy.get('[data-test="update-diary-event-modal"]').should('be.visible')
     })
 
-    it('Dashboard_Events_UpdateEvent_allNews', function () {
+    it('Dashboard_Events_UpdateEvent_AllEvent_UpdateButton', function () {
       const existingEvents = this.dashboardData.existingEvents
       const lastEvent = existingEvents[0]
+      // Login
       cy.login(HEADMASTER, dashboardURL)
 
+      // Click to see all events
       cy.get('[data-test="diary-widget"]').within(() => {
         cy.contains('button', 'Voir tous les événements').click()
       })
+      // Last event should be visible at first
       getEventDetail(lastEvent).should('be.visible')
+      // Click on update button
       cy.get('[data-test="updateButton"]').click()
+      // Check if update modal is visible
       cy.get('[data-test="update-diary-event-modal"]').should('be.visible')
     })
 
@@ -296,21 +306,27 @@ describe('Dashboard_Events', () => {
       const existingEvents = this.dashboardData.existingEvents
       const lastEvent = existingEvents[0]
 
+      // Login
       cy.login(TEACHER2, dashboardURL)
       // Mouse over on the event
       getEvent(lastEvent).trigger('mouseover').within(() => {
+        // Check if a teacher can't edit an event
         cy.get('[data-test="buttonEditEvent"]').should('not.exist')
       })
 
+      // Login
       cy.login(TEACHER, dashboardURL)
       // Mouse over on the event
       getEvent(lastEvent).trigger('mouseover').within(() => {
+        // Check if a delegate teacher can edit an event
         cy.get('[data-test="buttonEditEvent"]').should('be.exist')
       })
 
+      // Login
       cy.login(SCHOOL_ADMIN, dashboardURL)
       // Mouse over on the event
       getEvent(lastEvent).trigger('mouseover').within(() => {
+        // Check if an admin can edit an event
         cy.get('[data-test="buttonEditEvent"]').should('be.exist')
       })
     })
@@ -406,10 +422,11 @@ describe('Dashboard_Events', () => {
       cy.get('[data-test="update-diary-event-modal"]').should('not.exist')
     })
 
-    it('Dashboard_Events_DeleteEvent_mouseover', function () {
+    it('Dashboard_Events_DeleteEvent_Mouseover', function () {
       const existingEvents = this.dashboardData.existingEvents
       const lastEvent = existingEvents[0]
 
+      // Login
       cy.login(HEADMASTER, dashboardURL)
 
       // Mouse over on the event
@@ -422,32 +439,37 @@ describe('Dashboard_Events', () => {
       // Check if event is delete
       getEvent(lastEvent).should('not.exist')
 
-      // Check if for the parents the news is delete
+      // Check if for the parents the event is delete
       cy.login(PARENT, dashboardURL)
       getEvent(lastEvent).should('not.exist')
     })
 
-    it('Dashboard_Events_DeleteEvent_clickOnEvent', function () {
+    it('Dashboard_Events_DeleteEvent_ClickOnEvent', function () {
       const existingEvents = this.dashboardData.existingEvents
       const lastEvent = existingEvents[0]
 
+      // Login
       cy.login(HEADMASTER, dashboardURL)
 
+      // Click on last event
       getEvent(lastEvent).click()
       cy.get('[data-test="deleteButton"]').click()
       // Check if in the warning modal content there is the news title
       cy.get('[data-test="warning-modal"]')
     })
 
-    it('Dashboard_Events_DeleteEvent_allEvent', function () {
+    it('Dashboard_Events_DeleteEvent_AllEvent_ButtonDelete', function () {
       const existingEvents = this.dashboardData.existingEvents
       const lastEvent = existingEvents[0]
 
+      // Login
       cy.login(HEADMASTER, dashboardURL)
 
+      // Click to see all events
       cy.get('[data-test="diary-widget"]').within(() => {
         cy.contains('button', 'Voir tous les événements').click()
       })
+      // last event should be first
       getEventDetail(lastEvent).should('be.visible')
       cy.get('[data-test="deleteButton"]').click()
       // Check if in the warning modal content there is the news title
@@ -458,18 +480,21 @@ describe('Dashboard_Events', () => {
       const existingEvents = this.dashboardData.existingEvents
       const lastEvent = existingEvents[0]
 
+      // Login with teacher
       cy.login(TEACHER2, dashboardURL)
       // Mouse over on the event
       getEvent(lastEvent).trigger('mouseover').within(() => {
         cy.get('[data-test="buttonDeleteEvent"]').should('not.exist')
       })
 
+      // Login with delegate teacher
       cy.login(TEACHER, dashboardURL)
       // Mouse over on the event
       getEvent(lastEvent).trigger('mouseover').within(() => {
         cy.get('[data-test="buttonDeleteEvent"]').should('not.exist')
       })
 
+      // Login with admin
       cy.login(SCHOOL_ADMIN, dashboardURL)
       // Mouse over on the event
       getEvent(lastEvent).trigger('mouseover').within(() => {
@@ -478,7 +503,7 @@ describe('Dashboard_Events', () => {
     })
   })
   context('mobile', function () {
-    it('Dashboard_Events_DisplayAllEvents_mobile', function () {
+    it('Dashboard_Events_DisplayAllEvents_Mobile', function () {
       cy.viewport('iphone-5')
       const existingEvents = this.dashboardData.existingEvents
       // Login
@@ -494,17 +519,18 @@ describe('Dashboard_Events', () => {
       getEventDetail(existingEvents[1]).should('be.exist')
     })
 
-    it('Dashboard_Events_CreateEvent_mobile', function () {
+    it('Dashboard_Events_CreateEvent_DisplayModal_Mobile', function () {
       cy.viewport('iphone-5')
 
       // Create event with the headmaster for the teachers
       cy.login(HEADMASTER, dashboardURL)
       // Open create modal
       cy.get('[data-test="buttonCreateEvent"]').click()
+      // Check if update modal is visible
       cy.get('[data-test="update-diary-event-modal"]').should('be.visible')
     })
 
-    it('Dashboard_Events_CreateEvent_allEvent_mobile', function () {
+    it('Dashboard_Events_CreateEvent_AllEvent_ButtonCreate_DisplayModal_Mobile', function () {
       cy.viewport('iphone-5')
       // Login
       cy.login(HEADMASTER, dashboardURL)
@@ -518,36 +544,48 @@ describe('Dashboard_Events', () => {
       cy.get('[data-test="update-diary-event-modal"]').should('be.visible')
     })
 
-    it('Dashboard_Events_UpdateEvent_clickOnEvent_mobile', function () {
+    it('Dashboard_Events_UpdateEvent_ClickOnEvent_DisplayModal_Mobile', function () {
       cy.viewport('iphone-5')
       const existingEvents = this.dashboardData.existingEvents
       const lastEvent = existingEvents[0]
+
+      // Login
       cy.login(HEADMASTER, dashboardURL)
 
+      // Open detail last event
       getEvent(lastEvent).click()
+      // Click on update button
       cy.get('[data-test="updateButton"]').click()
+      // Check if update modal is visible
       cy.get('[data-test="update-diary-event-modal"]').should('be.visible')
     })
 
-    it('Dashboard_Events_UpdateEvent_allNews_mobile', function () {
+    it('Dashboard_Events_UpdateEvent_AllNews_ButtonUpdate_DisplayModal_Mobile', function () {
       cy.viewport('iphone-5')
       const existingEvents = this.dashboardData.existingEvents
       const lastEvent = existingEvents[0]
+
+      // Login
       cy.login(HEADMASTER, dashboardURL)
 
+      // Click to see all events
       cy.get('[data-test="diary-widget"]').within(() => {
         cy.contains('button', 'Voir tous les événements').click()
       })
+      // Last event should be first
       getEventDetail(lastEvent).should('be.visible')
+      // Click on update modal
       cy.get('[data-test="updateButton"]').click()
+      // Check if update modal is visible
       cy.get('[data-test="update-diary-event-modal"]').should('be.visible')
     })
 
-    it('Dashboard_Events_DeleteEvent_clickOnEvent_mobile', function () {
+    it('Dashboard_Events_DeleteEvent_ClickOnEvent_DisplayModal_Mobile', function () {
       cy.viewport('iphone-5')
       const existingEvents = this.dashboardData.existingEvents
       const lastEvent = existingEvents[0]
 
+      // Login
       cy.login(HEADMASTER, dashboardURL)
 
       getEvent(lastEvent).click()
@@ -556,19 +594,22 @@ describe('Dashboard_Events', () => {
       cy.get('[data-test="warning-modal"]')
     })
 
-    it('Dashboard_Events_DeleteEvent_allEvent_mobile', function () {
+    it('Dashboard_Events_DeleteEvent_AllEvent_DisplayModal_Mobile', function () {
       cy.viewport('iphone-5')
       const existingEvents = this.dashboardData.existingEvents
       const lastEvent = existingEvents[0]
 
+      // Login
       cy.login(HEADMASTER, dashboardURL)
 
+      // Click to see all events
       cy.get('[data-test="diary-widget"]').within(() => {
         cy.contains('button', 'Voir tous les événements').click()
       })
+      // Last event should be first
       getEventDetail(lastEvent).should('be.visible')
       cy.get('[data-test="deleteButton"]').click()
-      // Check if in the warning modal content there is the news title
+      // Check if modal is visible
       cy.get('[data-test="warning-modal"]').should('be.visible')
     })
   })
