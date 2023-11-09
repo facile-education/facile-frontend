@@ -67,6 +67,14 @@
             "recipient": "Elèves de EC0933",
             "title": "Information à tous les élèves",
             "content": "contenu de cette information"
+        },
+        {
+            "title": "Groupe avec un élève",
+            "content": "Vous a inscrit dans cet espace"
+        },
+        {
+            "title": "Groupe avec un élève",
+            "content": "a partagé le fichier document.odt dans l'espace Groupe avec un élève"
         }
     ],
     "ActivityToCreate": {

@@ -9,6 +9,92 @@ describe('Dashboard_Activity', () => {
     cy.fixture('dashboard.json').as('dashboardData')
   })
   context('desktop', function () {
+    it('Dashboard_Activities_DisplayActivity_Check_Infomrmation_ReadRecipient_Info', function () {
+      const existingActivity = this.dashboardData.existingActivity
+
+      // Login with author
+      cy.login(TEACHER, dashboardURL)
+
+      cy.get('[data-test="activity-widget"]').within(() => {
+        getInformation(existingActivity[0]).click()
+      })
+      cy.get('[data-test="news-details-modal"]').within(() => {
+        // No one read this event
+        cy.get('.read-infos').should('contain', '0 destinataire')
+      })
+
+      // Login recipient
+      cy.login(STUDENT, dashboardURL)
+      // Student read this event
+      getInformation(existingActivity[0]).click()
+
+      // Login with author
+      cy.login(TEACHER, dashboardURL)
+      getInformation(existingActivity[0]).click()
+      cy.get('[data-test="news-details-modal"]').within(() => {
+        // No one read this event
+        cy.get('.read-infos').should('contain', '1 destinataire')
+        // Open recipients infos
+        cy.get('.read-infos > button').click()
+      })
+      cy.get('[data-test="readInfoModal"]').within(() => {
+        cy.get('.population').click()
+        cy.get('.read-info-user').contains(`${STUDENT.lastName} ${STUDENT.firstName}`).should('not.contain', 'Non lu')
+      })
+    })
+
+    it('Dashboard_Activities_DisplayActivity_Check_InformationContent', function () {
+      const existingActivity = this.dashboardData.existingActivity
+
+      // Login recipient
+      cy.login(STUDENT, dashboardURL)
+      // Student read this event
+      getInformation(existingActivity[0]).click()
+      cy.get('[data-test="news-details-modal"]').within(() => {
+        // Check the title
+        cy.get('.header').should('contain', existingActivity[0].title)
+        // Chekc the recipient
+        cy.get('.lonely-population').should('contain', existingActivity[0].recipient)
+        // Check the content
+        cy.get('.detailed-news > .content').should('contain', existingActivity[0].content)
+      })
+    })
+    it.skip('Dashboard_Activities_DisplayAllActivities', function () {
+      const existingActivity = this.dashboardData.existingActivity
+      const information = existingActivity[0]
+      const group = existingActivity[1]
+      const documentInGroup = existingActivity[2]
+
+      cy.login(STUDENT, dashboardURL)
+      cy.get('[data-test="activity-widget"]').within(() => {
+        cy.contains('button', 'Voir toutes les activités').click()
+        cy.get('.activities').should('have.class', 'infinite-scroll')
+        getInformation(information).should('be.visible')
+        getInformation(group).should('be.visible')
+        getInformation(documentInGroup).should('be.visible')
+      })
+    })
+
+    it.skip('Dashboard_Activities_DisplayActivities_Display_In_RightOrder', function () {
+      const existingActivity = this.dashboardData.existingActivity
+      const newActivity = this.dashboardData.futurActivity
+      const information = existingActivity[0]
+      const group = existingActivity[1]
+      const documentInGroup = existingActivity[2]
+
+      cy.login(STUDENT, dashboardURL)
+      // Set Clock after new activity release to see if it is in first position
+      cy.clock().invoke('setSystemTime', Cypress.dayjs(newActivity.publicationDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+      cy.get('[data-test="activity-widget"]').within(() => {
+        // Check the position of activities
+        cy.get('.activity-item').eq(0).should('contain', newActivity.title)
+        cy.get('.separator').should('be.visible')
+        cy.get('.activity-item').eq(1).should('contain', documentInGroup.title)
+        cy.get('.activity-item').eq(2).should('contain', group.title)
+        cy.get('.activity-item').eq(3).should('contain', information.title)
+      })
+    })
+
     it('Dashboard_Activities_DisplayActivities_FuturRelease', function () {
       const futurActivity = this.dashboardData.futurActivity
 
@@ -35,6 +121,8 @@ describe('Dashboard_Activity', () => {
 
       // Login
       cy.login(TEACHER, dashboardURL)
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      cy.wait(2000)
       cy.get('[data-test="activity-widget"]').within(() => {
         // Click to oopen createActivity modal
         cy.get('[data-test="CreateActivity"]').click()
@@ -61,6 +149,7 @@ describe('Dashboard_Activity', () => {
       // Check if a student the new actvity is visible
       cy.get('[data-test="activity-widget"]').within(() => {
         // For wait to page load
+        cy.request('https://dev-ent-gve.com/tableau-de-bord')
         cy.get('.activities').should('be.visible')
         // Display all activity
         cy.contains('button', 'Voir toutes les activités').click()
@@ -218,11 +307,12 @@ describe('Dashboard_Activity', () => {
     it('Dashboard_Activities_UpdateActivity_allActivity', function () {
       const existingActivity = this.dashboardData.existingActivity
       cy.login(TEACHER, dashboardURL)
-
       // Display all activity
       cy.get('[data-test="activity-widget"]').within(() => {
         cy.contains('button', 'Voir toutes les activités').click()
       })
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      cy.wait(2000)
       // Click on information
       getInformation(existingActivity[0]).click()
       // Open update modal
