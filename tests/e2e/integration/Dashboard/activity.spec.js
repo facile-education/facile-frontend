@@ -1,5 +1,5 @@
 import { dashboardURL } from '../../support/constants/urls'
-import { DOYEN, PARENT, STUDENT, TEACHER } from '../../support/constants/users'
+import { DOYEN, PARENT, STUDENT, TEACHER, TEACHER2 } from '../../support/constants/users'
 import { getInformation, getInformationDetail } from '../../support/utils/dashboard'
 
 describe('Dashboard_Activity', () => {
@@ -60,7 +60,7 @@ describe('Dashboard_Activity', () => {
       })
     })
 
-    it.only('Dashboard_Activities_DisplayActivity_Display_Limite_Number_Activities', function () {
+    it('Dashboard_Activities_DisplayActivity_Display_Limite_Number_Activities', function () {
       const existingActivity = this.dashboardData.existingActivity
       const newActivity = this.dashboardData.futurActivity
       const information = existingActivity[0]
@@ -97,8 +97,78 @@ describe('Dashboard_Activity', () => {
       cy.get('.activity-item').contains(information.title).scrollIntoView().should('be.visible', { timeout: 10000 })
     })
 
-    it('Dashboard_Activities_DisplayActivity_Click_On_Activity_Redirection', function () {
-      // TO DO
+    it('Dashboard_Activities_DisplayActivity_Click_On_Document_Redirection', function () {
+      // Login
+      cy.login(STUDENT, dashboardURL)
+
+      // Redirection document
+      cy.get('.doc-activity').within(() => {
+        cy.contains('i', 'document.odt').click()
+      })
+      cy.get('[data-test="file-display-modal"]').should('be.visible')
+    })
+
+    it('Dashboard_Activities_DisplayActivity_Click_On_DocumentSpace_Redirection', function () {
+      const existingActivity = this.dashboardData.existingActivity
+      const DocumentSpace = existingActivity[1]
+      // Login
+      cy.login(STUDENT, dashboardURL)
+
+      // Redirection document
+      cy.get('.doc-activity').within(() => {
+        cy.contains('i', DocumentSpace.title).click()
+      })
+      cy.get('.documents').should('be.visible')
+    })
+
+    it('Dashboard_Activities_DisplayActivity_Click_On_Group_Redirection_ByProfil', function () {
+      const existingActivity = this.dashboardData.existingActivity
+      const groupStudent = existingActivity[1]
+      const groupTeacher = existingActivity[7]
+
+      // Login with teacher
+      cy.login(TEACHER2, dashboardURL)
+
+      cy.contains('.membership-activity', groupTeacher.title).within(() => {
+        cy.contains('i', groupTeacher.title).click()
+      })
+      cy.get('.group-list').should('be.visible')
+
+      // Login with student
+      cy.login(STUDENT, dashboardURL)
+
+      cy.contains('.membership-activity', groupStudent.title).within(() => {
+        cy.contains('i', groupStudent.title).click()
+      })
+      cy.get('.group-list').should('not.exist')
+    })
+
+    it('Dashboard_Activities_DisplayActivity_Click_On_Homework_Redirection', function () {
+      const existingActivity = this.dashboardData.existingActivity
+      const homeWork1 = existingActivity[5]
+      // Login
+      cy.login(STUDENT, dashboardURL)
+
+      // Redirection homework
+      cy.contains('.activity-item', homeWork1.content).click()
+      cy.get('.homework-tab').should('be.visible')
+    })
+
+    it('Dashboard_Activities_DisplayActivity_Click_On_Firing_Redirection_ByProfil', function () {
+      const renvoiForAuthor = this.dashboardData.existingActivity[3]
+      const renvoiForOthers = this.dashboardData.existingActivity[4]
+
+      // Login with author
+      cy.login(TEACHER, dashboardURL)
+      // Redirection firing for the author
+      cy.contains('.activity-item', renvoiForAuthor.content).click()
+      cy.get('.pending-firing-modal').should('be.visible')
+
+      // Login with doyen
+      cy.login(DOYEN, dashboardURL)
+      // Redirection firing for the doyen
+      cy.contains('.activity-item', renvoiForOthers.content).click()
+      cy.get('.pending-firing-modal').should('not.exist')
     })
 
     it('Dashboard_Activities_DisplayActivity_Display_Placeholder', function () {

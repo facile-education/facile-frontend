@@ -1,5 +1,5 @@
 {
-    "NewAnnouncement": {
+    "NewNews": {
         "recipient": "Tous les personnels",
         "title": "Nouvelle annonce",
         "content": "Ceci est le contenu de la nouvelle annonce"
@@ -91,6 +91,10 @@
         {
             "class": "HI0933",
             "content": "a donné du travail pour le cours du 13 novembre 2023"
+        },
+        {
+            "title": "Groupe avec un enseignant",
+            "content": "Description du groupe avec un enseignant"
         }
     ],
     "ActivityToCreate": {
