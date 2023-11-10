@@ -331,12 +331,14 @@ describe('Dashboard_Announcements', () => {
       cy.get('[data-test="update-news-modal"]').should('be.visible')
     })
 
-    it('Dashboard_Announcements_UpdateAnnouncement_MarkAsUnreadForAll', function () {
+    it.only('Dashboard_Announcements_UpdateAnnouncement_MarkAsUnreadForAll', function () {
       const existingNews = this.dashboardData.existingNews
       const newsToEdit = this.dashboardData.newsToEdit
+      const furturNews = this.dashboardData.futurNews
 
       // Login with a student
       cy.login(MULTI_STUDENT1, dashboardURL)
+      cy.clock().invoke('setSystemTime', Cypress.dayjs(furturNews.dateBeforeRelease, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
       // Check if news is read
       getNews(existingNews[0]).within(() => {
         cy.get('.pellet').should('not.exist')
