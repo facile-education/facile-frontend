@@ -269,6 +269,7 @@ describe('Dashboard_Activity', () => {
         cy.get('.filters').within(() => {
           cy.contains('button', 'Informations').click()
         })
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
         cy.wait(2000)
         cy.contains('.activity-item', information.title).should('be.visible')
         cy.contains('.activity-item', documentInGroup.content).should('not.exist')
@@ -279,6 +280,7 @@ describe('Dashboard_Activity', () => {
         cy.get('.filters').within(() => {
           // Remove informations filter
           cy.contains('button', 'Informations').click()
+          // eslint-disable-next-line cypress/no-unnecessary-waiting
           cy.wait(2000)
           cy.contains('button', 'Documents').click()
         })
@@ -292,6 +294,7 @@ describe('Dashboard_Activity', () => {
         cy.get('.filters').within(() => {
           // Remove informations filter
           cy.contains('button', 'Documents').click()
+          // eslint-disable-next-line cypress/no-unnecessary-waiting
           cy.wait(2000)
           cy.contains('button', 'Cours et devoirs').click()
         })

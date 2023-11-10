@@ -11,9 +11,12 @@ describe('Dashboard_Announcements', () => {
   })
   context('desktop', function () {
     it('Dashboard_Announcement_DisplayAnnouncements_Read_UnRead', function () {
+      const furturNews = this.dashboardData.futurNews
       const existingNews = this.dashboardData.existingNews
       // Login
       cy.login(STUDENT, dashboardURL)
+      // Set Date before release
+      cy.clock().invoke('setSystemTime', Cypress.dayjs(furturNews.dateBeforeRelease, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
       // Check if pellet is visible
       cy.get('[data-test="announcement-widget"]').within(() => {
         cy.get('.announcement').should('have.length', 1).within(() => {
@@ -137,7 +140,7 @@ describe('Dashboard_Announcements', () => {
     })
 
     it('Dashboard_Announcements_CreateAnnouncement', function () {
-      const NewAnnouncement = this.dashboardData.NewAnnouncement
+      const NewNews = this.dashboardData.NewNews
 
       // Check if an admin can create an annoucement
       cy.login(SCHOOL_ADMIN, dashboardURL)
@@ -156,21 +159,21 @@ describe('Dashboard_Announcements', () => {
       // Set all informations
       cy.get('[data-test="update-news-modal"]').within(() => {
         cy.get('.base-tags-input').click()
-        cy.get('.suggestion-list').contains('li', NewAnnouncement.recipient).click()
-        cy.get('.labelled').type(NewAnnouncement.title)
+        cy.get('.suggestion-list').contains('li', NewNews.recipient).click()
+        cy.get('.labelled').type(NewNews.title)
         cy.get('.ck-editor')
-        cy.type_ckeditor(NewAnnouncement.content)
+        cy.type_ckeditor(NewNews.content)
         // Create
         cy.get('[data-test="submitButton"]').click()
       })
 
       // Check if a student don't see the annoucement
       cy.login(STUDENT, dashboardURL)
-      getNews(NewAnnouncement).should('not.exist')
+      getNews(NewNews).should('not.exist')
 
       // Check if a teacher see the annoucement
       cy.login(TEACHER2, dashboardURL)
-      getNews(NewAnnouncement).should('be.exist')
+      getNews(NewNews).should('be.exist')
     })
 
     it('Dashboard_Announcements_CreateAnnouncement_AllAnnouncement_ButtonCreate', function () {
@@ -187,7 +190,7 @@ describe('Dashboard_Announcements', () => {
     })
 
     it('Dashboard_Announcements_CreateAnnouncement_Display_WarningMessage_SetInformations', function () {
-      const NewAnnouncement = this.dashboardData.NewAnnouncement
+      const NewNews = this.dashboardData.NewNews
 
       // Login
       cy.login(HEADMASTER, dashboardURL)
@@ -197,7 +200,7 @@ describe('Dashboard_Announcements', () => {
       // Set content
       cy.get('[data-test="update-news-modal"]').within(() => {
         cy.get('.ck-editor')
-        cy.type_ckeditor(NewAnnouncement.content)
+        cy.type_ckeditor(NewNews.content)
         cy.get('[data-test="closeModal"]').click()
       })
       // Check if warning modal is visible
@@ -214,7 +217,7 @@ describe('Dashboard_Announcements', () => {
       // Set recipient
       cy.get('[data-test="update-news-modal"]').within(() => {
         cy.get('.base-tags-input').click()
-        cy.get('.suggestion-list').contains('li', NewAnnouncement.recipient).click()
+        cy.get('.suggestion-list').contains('li', NewNews.recipient).click()
         cy.get('[data-test="closeModal"]').click()
       })
       // Check if warning modal is visible
@@ -226,7 +229,7 @@ describe('Dashboard_Announcements', () => {
       cy.get('[data-test="buttonCreateAnnoucement"]').click()
       // Set title
       cy.get('[data-test="update-news-modal"]').within(() => {
-        cy.get('.labelled').type(NewAnnouncement.title)
+        cy.get('.labelled').type(NewNews.title)
         cy.get('[data-test="closeModal"]').click()
       })
       // Check if warning modal is visible

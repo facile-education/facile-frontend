@@ -4,7 +4,6 @@ import { getSessions, selectChild } from '../../support/utils/dashboard'
 
 describe('Dashboard_Activity', () => {
   beforeEach(() => {
-    cy.loadTables('dashboard/dashboard_tables_homework.sql')
     cy.fixture('dashboard.json').as('dashboardData')
   })
 

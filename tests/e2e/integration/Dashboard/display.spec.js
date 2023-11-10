@@ -2,10 +2,6 @@ import { dashboardURL } from '../../support/constants/urls'
 import { HEADMASTER, PARENT, SECRETARY, STUDENT, TEACHER } from '../../support/constants/users'
 
 describe('Dashboard_DisplayCorrectWidgets', () => {
-  beforeEach(() => {
-    cy.loadTables('messaging/messaging_tables.sql')
-    cy.fixture('messaging.json').as('messagingData')
-  })
   it('Dashboard_DisplayCorrectWidgets_ByProfil_desktop', function () {
     // For a student
     cy.login(STUDENT, dashboardURL)

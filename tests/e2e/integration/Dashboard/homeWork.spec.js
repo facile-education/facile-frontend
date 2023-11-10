@@ -73,8 +73,10 @@ describe('Dashboard_Activity', () => {
     // eslint-disable-next-line cypress/unsafe-to-chain-command
     cy.get('[data-test="schedule-widget"] > header > nav').scrollIntoView().should('be.visible')
     cy.get('[data-test="homeWork-widget"]').within(() => {
+      // Check is no one is visible
       getHomework(existingHomework[0]).should('not.exist')
       getHomework(existingHomework[1]).should('not.exist')
+      // Check if button all homeworks is not visible
       cy.contains('button', 'Voir tous les devoirs').should('not.exist')
     })
 
@@ -85,8 +87,10 @@ describe('Dashboard_Activity', () => {
     // eslint-disable-next-line cypress/unsafe-to-chain-command
     cy.get('[data-test="schedule-widget"] > header > nav').scrollIntoView().should('be.visible')
     cy.get('[data-test="homeWork-widget"]').within(() => {
+      // Check if homework is visible
       getHomework(existingHomework[0]).should('be.visible')
       getHomework(existingHomework[1]).should('be.visible')
+      // Check if button all homeworks is visible
       cy.contains('button', 'Voir tous les devoirs').should('be.visible')
     })
   })
@@ -142,14 +146,15 @@ describe('Dashboard_Activity', () => {
       // Select first child
       selectChild(MULTI_STUDENT1.firstName, MULTI_STUDENT1.firstName)
       cy.get('[data-test="homeWork-widget"]').within(() => {
+        // Check if good homework is display for goode children
         getHomework(existingHomework[2]).should('be.visible')
         getHomework(existingHomework[3]).should('not.exist')
       })
 
       // Change to second child
-
       selectChild(MULTI_STUDENT1.firstName, MULTI_STUDENT2.firstName)
       cy.get('[data-test="homeWork-widget"]').within(() => {
+        // Check if good homework is display for goode children
         getHomework(existingHomework[3]).should('be.visible')
         getHomework(existingHomework[2]).should('not.exist')
       })
