@@ -1,4 +1,3 @@
-/* eslint-disable cypress/no-unnecessary-waiting */
 import { dashboardURL } from '../../support/constants/urls'
 import { DOYEN, PARENT, STUDENT, TEACHER } from '../../support/constants/users'
 import { getInformation, getInformationDetail } from '../../support/utils/dashboard'
@@ -60,6 +59,58 @@ describe('Dashboard_Activity', () => {
         cy.get('.detailed-news > .content').should('contain', existingActivity[0].content)
       })
     })
+
+    it.only('Dashboard_Activities_DisplayActivity_Display_Limite_Number_Activities', function () {
+      const existingActivity = this.dashboardData.existingActivity
+      const newActivity = this.dashboardData.futurActivity
+      const information = existingActivity[0]
+      const group = existingActivity[1]
+      const documentInGroup = existingActivity[2]
+      const homeWork1 = existingActivity[5]
+      const homeWork2 = existingActivity[6]
+
+      // Login
+      cy.login(STUDENT, dashboardURL)
+      // Set Clock after new activity release to see if it is in first position
+      cy.clock().invoke('setSystemTime', Cypress.dayjs(newActivity.publicationDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+      // Check if max five activities is visible
+      cy.get('.activity-item').contains(newActivity.title).should('be.visible')
+      cy.get('.activity-item').contains(group.title).should('be.visible')
+      cy.get('.activity-item').contains(documentInGroup.title).should('be.visible')
+      cy.get('.activity-item').contains(homeWork1.content).should('be.visible')
+      // eslint-disable-next-line cypress/unsafe-to-chain-command
+      cy.get('.activity-item').contains(homeWork2.content).scrollIntoView().should('be.visible', { timeout: 10000 })
+      cy.get('.activity-item').contains(information.title).should('not.exist')
+
+      // Click to see all activities
+      cy.contains('button', 'Voir toutes les activités').click()
+      cy.get('.activities').should('have.class', 'infinite-scroll')
+
+      // Check if in all activities all activities is visible
+      cy.get('.activity-item').contains(newActivity.title).should('be.visible')
+      cy.get('.activity-item').contains(group.title).should('be.visible')
+      cy.get('.activity-item').contains(documentInGroup.title).should('be.visible')
+      cy.get('.activity-item').contains(homeWork1.content).should('be.visible')
+      // eslint-disable-next-line cypress/unsafe-to-chain-command
+      cy.get('.activity-item').contains(homeWork2.content).scrollIntoView().should('be.visible', { timeout: 10000 })
+      // eslint-disable-next-line cypress/unsafe-to-chain-command
+      cy.get('.activity-item').contains(information.title).scrollIntoView().should('be.visible', { timeout: 10000 })
+    })
+
+    it('Dashboard_Activities_DisplayActivity_Click_On_Activity_Redirection', function () {
+      // TO DO
+    })
+
+    it('Dashboard_Activities_DisplayActivity_Display_Placeholder', function () {
+      // Load dump empty
+      cy.loadTables('dashboard/dashboard_tables_activity_empty.sql')
+      // Login
+      cy.login(STUDENT, dashboardURL)
+      cy.get('[data-test="activity-widget"]').within(() => {
+        cy.get('.placeholder').should('be.visible')
+      })
+    })
+
     it('Dashboard_Activities_DisplayAllActivities', function () {
       const existingActivity = this.dashboardData.existingActivity
       const information = existingActivity[0]
@@ -82,18 +133,24 @@ describe('Dashboard_Activity', () => {
       const information = existingActivity[0]
       const group = existingActivity[1]
       const documentInGroup = existingActivity[2]
+      const homeWork1 = existingActivity[5]
+      const homeWork2 = existingActivity[6]
 
+      // Login
       cy.login(STUDENT, dashboardURL)
       // Set Clock after new activity release to see if it is in first position
       cy.clock().invoke('setSystemTime', Cypress.dayjs(newActivity.publicationDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
-      cy.get('[data-test="activity-widget"]').within(() => {
-        // Check the position of activities
-        cy.get('.activity-item').eq(0).should('contain', newActivity.title)
-        cy.get('.separator').should('be.visible')
-        cy.get('.activity-item').eq(1).should('contain', documentInGroup.title)
-        cy.get('.activity-item').eq(2).should('contain', group.title)
-        cy.get('.activity-item').eq(3).should('contain', information.title)
-      })
+      // Click to see all activities
+      cy.contains('button', 'Voir toutes les activités').click()
+      cy.get('.activities').should('have.class', 'infinite-scroll')
+      // Check the position of activities
+      cy.get('.activity-item').eq(0).should('contain', newActivity.title)
+      cy.get('.separator').should('be.visible')
+      cy.get('.activity-item').eq(1).should('contain', documentInGroup.title)
+      cy.get('.activity-item').eq(2).should('contain', group.title)
+      cy.get('.activity-item').eq(3).should('contain', homeWork1.content)
+      cy.get('.activity-item').eq(4).should('contain', homeWork2.content)
+      cy.get('.activity-item').eq(5).should('contain', information.title)
     })
 
     it('Dashboard_Activities_DisplayActivities_Renvoi_VisibilityByProfil', function () {
