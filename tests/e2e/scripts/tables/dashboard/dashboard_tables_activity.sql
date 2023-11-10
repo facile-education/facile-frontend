@@ -164,94 +164,10 @@ LOCK TABLES `Group_CommunityInfos` WRITE;
 /*!40000 ALTER TABLE `Group_CommunityInfos` DISABLE KEYS */;
 INSERT INTO `Group_CommunityInfos` VALUES
 (545137,545134,0,45479,'2023-11-03 16:11:01.416000','2024-06-29 23:59:59.000000',0,1,'#99B9E9'),
-(548126,548123,0,45479,'2023-11-09 10:44:16.073000','2024-06-29 23:59:59.000000',0,1,'#99B9E9'),
-(550805,550803,0,45479,'2023-11-10 10:01:08.096000','2024-06-29 23:59:59.000000',0,1,'#99B9E9');
+(548126,548123,0,45479,'2023-11-09 10:44:16.073000','2024-06-29 23:59:59.000000',0,1,'#99B9E9');
 /*!40000 ALTER TABLE `Group_CommunityInfos` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `Course_Homework`
---
-
-DROP TABLE IF EXISTS `Course_Homework`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Course_Homework` (
-  `homeworkId` bigint(20) NOT NULL,
-  `homeworkType` int(11) DEFAULT NULL,
-  `courseId` bigint(20) DEFAULT NULL,
-  `teacherId` bigint(20) DEFAULT NULL,
-  `title` varchar(255) DEFAULT NULL,
-  `modificationDate` datetime(6) DEFAULT NULL,
-  `sourceSessionId` bigint(20) DEFAULT NULL,
-  `targetSessionId` bigint(20) DEFAULT NULL,
-  `targetDate` datetime(6) DEFAULT NULL,
-  `isCustomStudentList` tinyint(4) DEFAULT NULL,
-  `estimatedTime` int(11) DEFAULT NULL,
-  `publicationDate` datetime(6) DEFAULT NULL,
-  `isDraft` tinyint(4) DEFAULT NULL,
-  `isCorrectionSent` tinyint(4) DEFAULT NULL,
-  PRIMARY KEY (`homeworkId`),
-  KEY `IX_4066B264` (`courseId`),
-  KEY `IX_B8BB608C` (`sourceSessionId`),
-  KEY `IX_41BFF156` (`targetSessionId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Course_Homework`
---
-
-LOCK TABLES `Course_Homework` WRITE;
-/*!40000 ALTER TABLE `Course_Homework` DISABLE KEYS */;
-INSERT INTO `Course_Homework` VALUES
-(546716,1,56480,45479,'Travail à faire parent multi enfants','2023-11-06 13:11:58.897000',119357,119435,'2023-11-10 15:30:00.495000',1,30,'2023-11-06 14:11:00.000000',0,0),
-(546814,1,55840,45923,'Second travail à faire parent multi enfants','2023-11-06 13:43:32.538000',220188,220191,'2023-11-28 09:35:00.974000',1,30,'2023-11-06 14:43:00.000000',0,0),
-(547708,1,56504,45479,'Travail à faire','2023-11-06 15:30:17.466000',111909,111833,'2023-11-13 11:25:00.750000',1,15,'2023-11-06 16:30:00.000000',0,0),
-(547711,1,56504,45479,'Second travail à faire','2023-11-06 15:31:57.158000',111833,111911,'2023-11-14 10:35:00.812000',1,30,'2023-11-06 16:31:00.000000',0,0);
-/*!40000 ALTER TABLE `Course_Homework` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Course_StudentHomework`
---
-
-DROP TABLE IF EXISTS `Course_StudentHomework`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Course_StudentHomework` (
-  `studentHomeworkId` bigint(20) NOT NULL,
-  `homeworkId` bigint(20) DEFAULT NULL,
-  `studentId` bigint(20) DEFAULT NULL,
-  `isDone` tinyint(4) DEFAULT NULL,
-  `isSent` tinyint(4) DEFAULT NULL,
-  `sentDate` datetime(6) DEFAULT NULL,
-  `sentFileId` bigint(20) DEFAULT NULL,
-  `isCorrected` tinyint(4) DEFAULT NULL,
-  `comment_` longtext DEFAULT NULL,
-  `correctionDate` datetime(6) DEFAULT NULL,
-  PRIMARY KEY (`studentHomeworkId`),
-  KEY `IX_4783238C` (`homeworkId`),
-  KEY `IX_5366EAF8` (`studentId`,`homeworkId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Course_StudentHomework`
---
-
-LOCK TABLES `Course_StudentHomework` WRITE;
-/*!40000 ALTER TABLE `Course_StudentHomework` DISABLE KEYS */;
-INSERT INTO `Course_StudentHomework` VALUES
-(546708,546707,47461,0,0,NULL,0,0,NULL,NULL),
-(546717,546716,45787,0,0,NULL,0,0,NULL,NULL),
-(546741,546740,53119,0,0,NULL,0,0,NULL,NULL),
-(546796,546795,48166,0,0,NULL,0,0,NULL,NULL),
-(546815,546814,48166,0,0,NULL,0,0,NULL,NULL),
-(547709,547708,47461,0,0,NULL,0,0,NULL,NULL),
-(547712,547711,47461,0,0,NULL,0,0,NULL,NULL);
-/*!40000 ALTER TABLE `Course_StudentHomework` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `AccountGroup`
@@ -321,8 +237,7 @@ LOCK TABLES `Group_MembershipActivity` WRITE;
 /*!40000 ALTER TABLE `Group_MembershipActivity` DISABLE KEYS */;
 INSERT INTO `Group_MembershipActivity` VALUES
 (545138,545134,45479,'47461',1,'2023-11-03 16:11:01.576000'),
-(548127,548123,45479,'47461',1,'2023-11-09 10:44:16.158000'),
-(550806,550803,45479,'45567',1,'2023-11-10 10:01:08.301000');
+(548127,548123,45479,'47461',1,'2023-11-09 10:44:16.158000');
 /*!40000 ALTER TABLE `Group_MembershipActivity` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -356,9 +271,7 @@ INSERT INTO `Users_Groups` VALUES
 (20097,545134,45479,0,NULL),
 (20097,545134,47461,0,NULL),
 (20097,548123,45479,0,NULL),
-(20097,548123,47461,0,NULL),
-(20097,550803,45479,0,NULL),
-(20097,550803,45567,0,NULL);
+(20097,548123,47461,0,NULL);
 /*!40000 ALTER TABLE `Users_Groups` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -7014,8 +6927,7 @@ INSERT INTO `Group_` VALUES
 (0,0,'c78d111b-ac1d-d84d-0a03-9a1d46a20a4b',469332,20097,20101,'2023-10-17 09:44:25.940000',20043,469330,75264,0,'/45403/75264/469332/','CO Albert Einstein - MC0971G1 LFR_ORGANIZATION','<?xml version=\'1.0\' encoding=\'UTF-8\'?><root available-locales=\"fr_FR\" default-locale=\"fr_FR\"><Name language-id=\"fr_FR\">CO Albert Einstein - MC0971G1</Name></root>',NULL,3,'',0,0,'/co-albert-einstein-mc0971g1',1,0,0,1,'c78d111b-ac1d-d84d-0a03-9a1d46a20a4b'),
 (0,0,'c01d1775-9e49-1ade-3926-d74add36df02',469336,20097,20101,'2023-10-17 09:44:25.991000',20043,469334,75264,0,'/45403/75264/469336/','CO Albert Einstein - MC0971G2 LFR_ORGANIZATION','<?xml version=\'1.0\' encoding=\'UTF-8\'?><root available-locales=\"fr_FR\" default-locale=\"fr_FR\"><Name language-id=\"fr_FR\">CO Albert Einstein - MC0971G2</Name></root>',NULL,3,'',0,0,'/co-albert-einstein-mc0971g2',1,0,0,1,'c01d1775-9e49-1ade-3926-d74add36df02'),
 (1,0,'dc045f53-1568-49d7-71bc-02347ce391f0',545103,20097,545101,'2023-11-08 13:32:15.206000',20071,545101,0,0,'/545103/','545101',NULL,NULL,0,'',1,0,'/default-service-account',0,0,0,1,'dc045f53-1568-49d7-71bc-02347ce391f0'),
-(0,0,'17153762-1eed-678f-030c-02a90f9437ac',548123,20097,45479,'2023-11-09 10:44:15.433000',20030,548123,0,0,'/548123/','Groupe avec un élève','<?xml version=\'1.0\' encoding=\'UTF-8\'?><root available-locales=\"fr_FR\" default-locale=\"fr_FR\"><Name language-id=\"fr_FR\">Groupe avec un élève</Name></root>','<?xml version=\'1.0\' encoding=\'UTF-8\'?><root available-locales=\"fr_FR\" default-locale=\"fr_FR\"><Description language-id=\"fr_FR\">Description du groupe avec un élève</Description></root>',3,'',1,0,'/groupe-avec-un-%C3%A9l%C3%A8ve',1,0,0,1,'17153762-1eed-678f-030c-02a90f9437ac'),
-(0,0,'fd64af31-66cf-65ff-0321-61c66d972459',550803,20097,45479,'2023-11-10 10:01:07.488000',20030,550803,0,0,'/550803/','Groupe avec un enseignant','<?xml version=\'1.0\' encoding=\'UTF-8\'?><root available-locales=\"fr_FR\" default-locale=\"fr_FR\"><Name language-id=\"fr_FR\">Groupe avec un enseignant</Name></root>','<?xml version=\'1.0\' encoding=\'UTF-8\'?><root available-locales=\"fr_FR\" default-locale=\"fr_FR\"><Description language-id=\"fr_FR\">Description du groupe avec un enseignant</Description></root>',3,'',1,0,'/groupe-avec-un-enseignant',1,0,0,1,'fd64af31-66cf-65ff-0321-61c66d972459');
+(0,0,'17153762-1eed-678f-030c-02a90f9437ac',548123,20097,45479,'2023-11-09 10:44:15.433000',20030,548123,0,0,'/548123/','Groupe avec un élève','<?xml version=\'1.0\' encoding=\'UTF-8\'?><root available-locales=\"fr_FR\" default-locale=\"fr_FR\"><Name language-id=\"fr_FR\">Groupe avec un élève</Name></root>','<?xml version=\'1.0\' encoding=\'UTF-8\'?><root available-locales=\"fr_FR\" default-locale=\"fr_FR\"><Description language-id=\"fr_FR\">Description du groupe avec un élève</Description></root>',3,'',1,0,'/groupe-avec-un-%C3%A9l%C3%A8ve',1,0,0,1,'17153762-1eed-678f-030c-02a90f9437ac');
 /*!40000 ALTER TABLE `Group_` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -7054,6 +6966,90 @@ INSERT INTO `Course_ContentBlock` VALUES
 (547713,547711,'2023-11-06 15:31:57.159000',NULL,'<p>Consigne du second travail à faire</p>',0,1,0);
 /*!40000 ALTER TABLE `Course_ContentBlock` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `Course_Homework`
+--
+
+DROP TABLE IF EXISTS `Course_Homework`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Course_Homework` (
+  `homeworkId` bigint(20) NOT NULL,
+  `homeworkType` int(11) DEFAULT NULL,
+  `courseId` bigint(20) DEFAULT NULL,
+  `teacherId` bigint(20) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `modificationDate` datetime(6) DEFAULT NULL,
+  `sourceSessionId` bigint(20) DEFAULT NULL,
+  `targetSessionId` bigint(20) DEFAULT NULL,
+  `targetDate` datetime(6) DEFAULT NULL,
+  `isCustomStudentList` tinyint(4) DEFAULT NULL,
+  `estimatedTime` int(11) DEFAULT NULL,
+  `publicationDate` datetime(6) DEFAULT NULL,
+  `isDraft` tinyint(4) DEFAULT NULL,
+  `isCorrectionSent` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`homeworkId`),
+  KEY `IX_4066B264` (`courseId`),
+  KEY `IX_B8BB608C` (`sourceSessionId`),
+  KEY `IX_41BFF156` (`targetSessionId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Course_Homework`
+--
+
+LOCK TABLES `Course_Homework` WRITE;
+/*!40000 ALTER TABLE `Course_Homework` DISABLE KEYS */;
+INSERT INTO `Course_Homework` VALUES
+(546716,1,56480,45479,'Travail à faire parent multi enfants','2023-11-06 13:11:58.897000',119357,119435,'2023-11-10 15:30:00.495000',1,30,'2023-11-06 14:11:00.000000',0,0),
+(546814,1,55840,45923,'Second travail à faire parent multi enfants','2023-11-06 13:43:32.538000',220188,220191,'2023-11-28 09:35:00.974000',1,30,'2023-11-06 14:43:00.000000',0,0),
+(547708,1,56504,45479,'Travail à faire','2023-11-06 15:30:17.466000',111909,111833,'2023-11-13 11:25:00.750000',1,15,'2023-11-06 16:30:00.000000',0,0),
+(547711,1,56504,45479,'Second travail à faire','2023-11-06 15:31:57.158000',111833,111911,'2023-11-14 10:35:00.812000',1,30,'2023-11-06 16:31:00.000000',0,0);
+/*!40000 ALTER TABLE `Course_Homework` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Course_StudentHomework`
+--
+
+DROP TABLE IF EXISTS `Course_StudentHomework`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Course_StudentHomework` (
+  `studentHomeworkId` bigint(20) NOT NULL,
+  `homeworkId` bigint(20) DEFAULT NULL,
+  `studentId` bigint(20) DEFAULT NULL,
+  `isDone` tinyint(4) DEFAULT NULL,
+  `isSent` tinyint(4) DEFAULT NULL,
+  `sentDate` datetime(6) DEFAULT NULL,
+  `sentFileId` bigint(20) DEFAULT NULL,
+  `isCorrected` tinyint(4) DEFAULT NULL,
+  `comment_` longtext DEFAULT NULL,
+  `correctionDate` datetime(6) DEFAULT NULL,
+  PRIMARY KEY (`studentHomeworkId`),
+  KEY `IX_4783238C` (`homeworkId`),
+  KEY `IX_5366EAF8` (`studentId`,`homeworkId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Course_StudentHomework`
+--
+
+LOCK TABLES `Course_StudentHomework` WRITE;
+/*!40000 ALTER TABLE `Course_StudentHomework` DISABLE KEYS */;
+INSERT INTO `Course_StudentHomework` VALUES
+(546708,546707,47461,0,0,NULL,0,0,NULL,NULL),
+(546717,546716,45787,0,0,NULL,0,0,NULL,NULL),
+(546741,546740,53119,0,0,NULL,0,0,NULL,NULL),
+(546796,546795,48166,0,0,NULL,0,0,NULL,NULL),
+(546815,546814,48166,0,0,NULL,0,0,NULL,NULL),
+(547709,547708,47461,0,0,NULL,0,0,NULL,NULL),
+(547712,547711,47461,0,0,NULL,0,0,NULL,NULL);
+/*!40000 ALTER TABLE `Course_StudentHomework` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -7064,4 +7060,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-10 10:12:04
+-- Dump completed on 2023-11-09 14:56:44

@@ -1,5 +1,5 @@
 import { dashboardURL } from '../../support/constants/urls'
-import { DOYEN, PARENT, STUDENT, TEACHER, TEACHER2 } from '../../support/constants/users'
+import { DOYEN, MULTI_PARENT, PARENT, STUDENT, TEACHER, TEACHER2 } from '../../support/constants/users'
 import { getInformation, getInformationDetail } from '../../support/utils/dashboard'
 
 describe('Dashboard_Activity', () => {
@@ -97,13 +97,22 @@ describe('Dashboard_Activity', () => {
       cy.get('.activity-item').contains(information.title).scrollIntoView().should('be.visible', { timeout: 10000 })
     })
 
-    it('Dashboard_Activities_DisplayActivity_Click_On_Document_Redirection', function () {
-      // Login
+    it('Dashboard_Activities_DisplayActivity_Click_On_Document_Redirection_Student_Parent', function () {
+      // Login with student
       cy.login(STUDENT, dashboardURL)
 
       // Redirection document
       cy.get('.doc-activity').within(() => {
         cy.contains('i', 'document.odt').click()
+      })
+      cy.get('[data-test="file-display-modal"]').should('be.visible')
+
+      // Login with parent
+      cy.login(MULTI_PARENT, dashboardURL)
+
+      // Redirection document
+      cy.get('.doc-activity').within(() => {
+        cy.contains('i', 'note.html').click()
       })
       cy.get('[data-test="file-display-modal"]').should('be.visible')
     })
@@ -239,6 +248,15 @@ describe('Dashboard_Activity', () => {
       cy.get('[data-test="activity-widget"]').within(() => {
         // Check the position of activities
         cy.contains('.activity-item', renvoiForOthers.content).should('be.exist')
+      })
+    })
+
+    it('Dashboard_Activities_DisplayActivities_GroupActivity_Parent', function () {
+      const documentActivity = this.dashboardData.existingActivity[8]
+      // Login with author
+      cy.login(MULTI_PARENT, dashboardURL)
+      cy.get('[data-test="activity-widget"]').within(() => {
+        cy.get('.doc-activity').contains(documentActivity.document).should('be.visible')
       })
     })
 

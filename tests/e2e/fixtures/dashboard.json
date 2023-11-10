@@ -95,6 +95,10 @@
         {
             "title": "Groupe avec un enseignant",
             "content": "Description du groupe avec un enseignant"
+        },
+        {
+            "class": "0933R3",
+            "document": "note.html"
         }
     ],
     "ActivityToCreate": {
