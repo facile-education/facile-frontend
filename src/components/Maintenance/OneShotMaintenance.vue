@@ -8,6 +8,12 @@
     </WeprodeButton>
     <WeprodeButton
       class="round"
+      @click="runDataFeed"
+    >
+      <span>{{ $t('runDataFeed') }}</span>
+    </WeprodeButton>
+    <WeprodeButton
+      class="round"
       @click="runPAuth"
     >
       <span>{{ $t('pAuth') }}</span>
@@ -19,7 +25,7 @@
 
 import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 
-import { cleanupDropboxes } from '@/api/maintenance.service'
+import { cleanupDropboxes, runDataFeed } from '@/api/maintenance.service'
 
 export default {
   name: 'OneShotMaintenance',
@@ -35,6 +41,17 @@ export default {
   methods: {
     cleanupDropboxes () {
       cleanupDropboxes().then(
+        (data) => {
+          if (data.success) {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
+          } else {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+          }
+        }
+      )
+    },
+    runDataFeed () {
+      runDataFeed().then(
         (data) => {
           if (data.success) {
             this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
@@ -68,6 +85,7 @@ export default {
   "cleanupDropboxes": "Nettoyage des casiers",
   "success": "Opération terminée en succès",
   "error": "Opération terminée en erreur",
-  "pAuth": "pAuth bidon"
+  "pAuth": "pAuth bidon",
+  "runDataFeed": "Alimentation des données (intégration uniquement)"
 }
 </i18n>
