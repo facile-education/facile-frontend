@@ -56,6 +56,11 @@ const selectChild = (child1, child2) => {
   })
 }
 
+const setDocumentGroupWithContent = () => {
+  cy.loadTables('dashboard/dashboard_tables_activity.sql')
+  cy.exec('npm run dl:loadDocumentLibrary document_library_groupActivity.tar.xz')
+}
+
 export {
   getNewsDetail,
   getNews,
@@ -66,5 +71,6 @@ export {
   getSessions,
   getInformation,
   getInformationDetail,
-  selectChild
+  selectChild,
+  setDocumentGroupWithContent
 }

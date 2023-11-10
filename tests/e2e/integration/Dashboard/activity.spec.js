@@ -1,10 +1,10 @@
 import { dashboardURL } from '../../support/constants/urls'
 import { DOYEN, MULTI_PARENT, PARENT, STUDENT, TEACHER, TEACHER2 } from '../../support/constants/users'
-import { getInformation, getInformationDetail } from '../../support/utils/dashboard'
+import { getInformation, getInformationDetail, setDocumentGroupWithContent } from '../../support/utils/dashboard'
 
 describe('Dashboard_Activity', () => {
   beforeEach(() => {
-    cy.loadTables('dashboard/dashboard_tables_activity.sql')
+    setDocumentGroupWithContent()
     cy.loadTables('schoollife/schoollife_tables.sql')
     cy.fixture('dashboard.json').as('dashboardData')
   })
@@ -77,7 +77,8 @@ describe('Dashboard_Activity', () => {
       cy.get('.activity-item').contains(newActivity.title).should('be.visible')
       cy.get('.activity-item').contains(group.title).should('be.visible')
       cy.get('.activity-item').contains(documentInGroup.title).should('be.visible')
-      cy.get('.activity-item').contains(homeWork1.content).should('be.visible')
+      // eslint-disable-next-line cypress/unsafe-to-chain-command
+      cy.get('.activity-item').contains(homeWork1.content).scrollIntoView().should('be.visible')
       // eslint-disable-next-line cypress/unsafe-to-chain-command
       cy.get('.activity-item').contains(homeWork2.content).scrollIntoView().should('be.visible', { timeout: 10000 })
       cy.get('.activity-item').contains(information.title).should('not.exist')
