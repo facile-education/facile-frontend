@@ -199,7 +199,10 @@ describe('Dashboard_Activity', () => {
 
       cy.login(STUDENT, dashboardURL)
       cy.get('[data-test="activity-widget"]').within(() => {
-        cy.contains('button', 'Voir toutes les activités').click()
+        // eslint-disable-next-line cypress/unsafe-to-chain-command
+        cy.contains('button', 'Voir toutes les activités').scrollIntoView().click()
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(2000)
         cy.get('.activities').should('have.class', 'infinite-scroll')
         getInformation(information).should('be.visible')
         getInformation(group).should('be.visible')
@@ -221,7 +224,10 @@ describe('Dashboard_Activity', () => {
       // Set Clock after new activity release to see if it is in first position
       cy.clock().invoke('setSystemTime', Cypress.dayjs(newActivity.publicationDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
       // Click to see all activities
-      cy.contains('button', 'Voir toutes les activités').click()
+      // eslint-disable-next-line cypress/unsafe-to-chain-command
+      cy.contains('button', 'Voir toutes les activités').scrollIntoView().click()
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      cy.wait(2000)
       cy.get('.activities').should('have.class', 'infinite-scroll')
       // Check the position of activities
       cy.get('.activity-item').eq(0).should('contain', newActivity.title)

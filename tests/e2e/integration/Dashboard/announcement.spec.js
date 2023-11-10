@@ -331,7 +331,7 @@ describe('Dashboard_Announcements', () => {
       cy.get('[data-test="update-news-modal"]').should('be.visible')
     })
 
-    it.only('Dashboard_Announcements_UpdateAnnouncement_MarkAsUnreadForAll', function () {
+    it('Dashboard_Announcements_UpdateAnnouncement_MarkAsUnreadForAll', function () {
       const existingNews = this.dashboardData.existingNews
       const newsToEdit = this.dashboardData.newsToEdit
       const furturNews = this.dashboardData.futurNews
