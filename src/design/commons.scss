@@ -91,19 +91,19 @@ h1 {
 }
 
 %count-pellet {
-    height: 15px;
-    width: 20px;
-    border-radius: 8px;
-    display: flex;
-    padding: 4px;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    white-space: nowrap;
-    font-size: 10px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
+  height: 1rem;
+  min-width: 1rem;
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  white-space: nowrap;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
 }
 
 .tab-item-notification-pellet {
