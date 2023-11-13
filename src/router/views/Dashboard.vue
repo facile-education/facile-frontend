@@ -12,7 +12,10 @@
       />
     </div>
 
-    <div class="personal-widgets">
+    <div
+      class="personal-widgets"
+      :class="{'has-user-selection-widgets': hasEDTWidget || hasHomeworkWidget}"
+    >
       <ActivityWidget
         v-if="hasActivityThreadWidget"
         class="activities"
@@ -213,16 +216,16 @@ export default {
   gap: 0 3rem;
 
   .activities {
-    flex: 2;
+    flex: 4;
   }
 
   .statistics {
-    flex: 1;
+    flex: 2;
   }
 }
 
 .user-selection {
-  flex: 1;
+  flex: 2;
   max-width: 100%;
 
   &.has-homework-widget {
@@ -235,8 +238,12 @@ export default {
   flex-wrap: wrap;
   gap: 0 3rem;
 
-  .homework, .schedule {
+  .schedule {
     flex: 1;
+  }
+
+  .homework {
+    flex: 2;
   }
 }
 
@@ -252,8 +259,8 @@ export default {
   }
 }
 
-@media screen and (max-width: 1035px) {
-  .personal-widgets {
+@media screen and (max-width: 1260px) {
+  .personal-widgets.has-user-selection-widgets {
     flex-direction: column;
   }
 }
