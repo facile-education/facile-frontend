@@ -49,6 +49,8 @@
 </template>
 
 <script>
+import 'v-calendar/style.css'
+
 import dayjs from 'dayjs'
 import { DatePicker } from 'v-calendar'
 
