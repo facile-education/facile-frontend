@@ -103,7 +103,7 @@ const DETENTION_SUPERVISOR = {
 const DEPANNAGE_SUPERVISOR = { // tuesday 16:20 17:05
   login: 'pachecos',
   password,
-  role: 'student',
+  role: 'teacher',
   firstName: 'Sidney',
   lastName: 'PACHECO'
 }
