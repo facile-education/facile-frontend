@@ -41,7 +41,10 @@
           <WeprodeSpinner v-if="isLoadingNewsDetails" />
         </div>
 
-        <div class="release-date">
+        <div
+          class="release-date"
+          :class="{'phone': mq.phone || mq.tablet}"
+        >
           <div v-t="'releaseDateLabel'" />
           <CustomDatePicker
             :selected-date="releaseDate"
@@ -75,6 +78,7 @@
       >
         <WeprodeTagsInput
           v-model="populations"
+          class="last-population-selection"
           :placeholder="$t('populationPlaceholder') + '*'"
           :list="availablePopulationsList"
           sort-field="order"
@@ -519,11 +523,16 @@ export default {
 .first-line {
   display: flex;
   gap: 1rem;
+  align-items: center;
 }
 
 .release-date {
   color: $color-new-light-text;
   white-space: nowrap;
+
+  &:not(.phone) {
+    height: $news-thumbnail-size-in-modal;
+  }
 }
 
 .population-selection {
@@ -531,7 +540,7 @@ export default {
   flex: 1;
 }
 
-.first-line, .title, .population-selection {
+.first-line, .title, .last-population-selection {
   margin-bottom: 20px;
 }
 
