@@ -62,17 +62,6 @@
         </div>
       </div>
 
-      <div class="title">
-        <WeprodeInput
-          ref="nameInput"
-          v-model="title"
-          :placeholder="$t('namePlaceHolder') + '*'"
-        />
-        <WeprodeErrorMessage
-          :error-message="formErrorList.title"
-        />
-      </div>
-
       <div
         v-if="mq.phone || mq.tablet"
         class="population-selection"
@@ -93,6 +82,17 @@
           :error-message="formErrorList.populations"
         />
         <WeprodeSpinner v-if="isLoadingNewsDetails" />
+      </div>
+
+      <div class="title">
+        <WeprodeInput
+          ref="nameInput"
+          v-model="title"
+          :placeholder="$t('namePlaceHolder') + '*'"
+        />
+        <WeprodeErrorMessage
+          :error-message="formErrorList.title"
+        />
       </div>
 
       <TextContent
@@ -435,12 +435,10 @@ export default {
     submit () {
       if (this.v$.$invalid) {
         this.v$.$touch()
+      } else if (this.isCreation) {
+        this.createNews()
       } else {
-        if (this.isCreation) {
-          this.createNews()
-        } else {
-          this.updateNews()
-        }
+        this.updateNews()
       }
     },
     createNews () {
