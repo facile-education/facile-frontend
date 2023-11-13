@@ -88,6 +88,7 @@ header {
   }
 
   .infos {
+    height: 1.5rem;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
