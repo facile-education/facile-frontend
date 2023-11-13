@@ -128,6 +128,7 @@
       <WeprodeButton
         data-test="submitButton"
         :label="isCreation? $t('creationSubmit') : $t('updateSubmit')"
+        :disabled="isLoadingFiles"
         @click="submit"
       />
     </template>
@@ -236,6 +237,9 @@ export default {
     }
   },
   computed: {
+    isLoadingFiles () {
+      return this.$store.state.currentActions.isLoadingProgressionDisplayed
+    },
     thumbnail () {
       if (defaultImagesKeys.indexOf(this.thumbnailUrl) !== -1) {
         return new URL(`../../../assets/images/${this.thumbnailUrl}.png`, import.meta.url).href
