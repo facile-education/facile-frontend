@@ -27,6 +27,7 @@
           class="population-selection"
         >
           <WeprodeTagsInput
+            ref="tagsInput"
             v-model="populations"
             :placeholder="$t('populationPlaceholder') + '*'"
             :list="availablePopulationsList"
@@ -77,6 +78,7 @@
         class="population-selection"
       >
         <WeprodeTagsInput
+          ref="tagsInput"
           v-model="populations"
           class="last-population-selection"
           :placeholder="$t('populationPlaceholder') + '*'"
@@ -294,9 +296,14 @@ export default {
     this.setInitialForm()
   },
   mounted () {
-    const input = this.$refs.nameInput
-    input.focus()
-    input.select()
+    if (this.isCreation) {
+      const input = this.$refs.tagsInput
+      input.focus()
+    } else {
+      const input = this.$refs.nameInput
+      input.focus()
+      input.select()
+    }
   },
   methods: {
     roundMinutes () {

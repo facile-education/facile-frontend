@@ -140,6 +140,9 @@ export default {
     }
   },
   methods: {
+    focus () {
+      this.$refs.input.focus()
+    },
     addTag (tag) {
       const tags = this.modelValue.slice()
       tags.push(tag)
