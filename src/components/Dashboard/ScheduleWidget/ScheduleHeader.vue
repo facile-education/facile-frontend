@@ -3,6 +3,7 @@
     <h2 :aria-label="$t('schedule')" />
 
     <DayNavigation
+      class="day-navigation"
       :selected-date="currentDate"
       @go-previous="$emit('goBefore')"
       @go-after="$emit('goAfter')"
@@ -51,7 +52,7 @@ export default {
 @import "@design";
 
 header {
-  @extend %widget-header;
+  margin-bottom: 1rem;
 }
 
 h2 {
@@ -72,28 +73,8 @@ button:not(.redirect-button){
   border: none;
 }
 
-.date-selector {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.day-navigation {
   margin-bottom: 1rem;
-}
-
-.date-label {
-  padding: 0.5rem 1rem;
-  border-radius: 0.375rem;
-
-  text-align: center;
-  @extend %font-bold-l;
-}
-
-.arrow {
-  height: 1rem;
-}
-
-.arrow.before {
-  transform: rotate(180deg);
 }
 
 .redirect-button {
