@@ -57,6 +57,7 @@ button {
   padding: 0;
   border: none;
   cursor: pointer;
+  background-color: transparent;
 }
 
 .thumbnail-selector {
