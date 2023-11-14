@@ -3,7 +3,6 @@
     v-if="active"
     class="tab-content"
     :disabled="disabled"
-    :style="{ 'margin-top': 'calc(' + spaceUnderTab + ' - 10px)' }"
   >
     <slot />
   </div>
@@ -28,10 +27,6 @@ export default {
     nbNotification: {
       type: Number,
       default: 0
-    },
-    spaceUnderTab: {
-      type: String,
-      default: '1rem'
     }
   },
   data () {

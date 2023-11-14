@@ -389,6 +389,7 @@ export default {
 
     .scroll {
       padding: 0;
+      height: 100%;  /* 100% - (banner-height + hr-height) */
     }
 
     .thread-list-header {
@@ -418,10 +419,6 @@ export default {
         animation: rotating 1s linear infinite;
       }
     }
-
-    .scroll {
-      height: 100%;  /* 100% - (banner-height + hr-height) */
-    }
   }
 }
 
@@ -431,7 +428,7 @@ hr {
 }
 
 hr.hr-thread-list {
-  border: 0; border-top: 1px solid #e0e0e0;
+  border: 0; border-top: 1px solid $neutral-40;
 }
 
 .thread-list {

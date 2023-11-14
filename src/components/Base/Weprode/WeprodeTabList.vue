@@ -1,9 +1,12 @@
 <template>
-  <ul class="tabs">
+  <ul
+    class="tabs"
+    :style="'margin-bottom: ' + spaceUnderTab + ';'"
+  >
     <li
       v-for="(tab, index) in tabList"
       :key="index"
-      :class="{'active theme-border-color': tab.active, 'theme-hover-text-color': !tab.active, 'hoverable': !tab.disabled, 'disabled': tab.disabled}"
+      :class="{'active': tab.active, 'theme-hover-text-color': !tab.active, 'hoverable': !tab.disabled, 'disabled': tab.disabled}"
       class="base-tab"
       :tabindex="tab.disabled ? -1 : 0"
       @keyup.enter="selectTab(index)"
@@ -25,6 +28,10 @@
           {{ tab.nbNotification }}
         </div>
       </div>
+      <div
+        v-if="tab.active"
+        class="active-line theme-background-color"
+      />
     </li>
   </ul>
   <slot />
@@ -33,7 +40,12 @@
 <script>
 export default {
   name: 'WeprodeTabList',
-  props: {},
+  props: {
+    spaceUnderTab: {
+      type: String,
+      default: '1rem'
+    }
+  },
   data () {
     return {
       selectedIndex: 0,
@@ -73,21 +85,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'src/design/common';
+@import 'src/design';
 
 .tabs {
   list-style: none;
   padding: 0;
   margin: 0;
+  border-bottom: 1px solid $neutral-40;
 }
 
 .base-tab {
+  position: relative;
   display: inline-block;
-  padding: 0 1rem 8px 1rem;
   vertical-align: bottom;
-  height: 1.5rem;
-  border-bottom: 1px solid #E0E0E0;
-  margin-bottom: 10px;
 
   @extend %no-text-highlight;
 
@@ -96,9 +106,15 @@ export default {
   }
 
   &.active {
-    padding: 0 1rem 6px 1rem;
     font-weight: bolder;
-    border-bottom: 3px solid;
+  }
+
+  .active-line {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
   }
 }
 
@@ -106,6 +122,9 @@ export default {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  padding: 0 1rem;
+  height: 1.5rem;
+  margin-bottom: 8px;
 
   img {
     height: 20px;
