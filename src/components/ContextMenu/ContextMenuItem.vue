@@ -212,7 +212,7 @@ export default {
 button {
   width: 100%;
   cursor: pointer;
-  background-color: white;
+  background-color: transparent;
   border-radius: 0;
   padding: 0;
   margin: 0;

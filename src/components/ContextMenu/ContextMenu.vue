@@ -1,36 +1,34 @@
 <template>
-  <div @click.right.prevent>
-    <ul
-      id="context-menu"
-      data-test="context-menu"
-      :class="{
-        'absolute': isAbsolute,
-        'context-menu': !subMenuMobile,
-        'sub-menu-mobile': subMenuMobile,
-        'desktop-menu': !mq.phone,
-        'context-menu-mobile-extended': isContextMenuMobileExtended
-      }"
-      tabindex="-1"
-      @keydown.stop.up="onUpKey"
-      @keydown.stop.down="onDownKey"
-      @keydown.stop.esc="closeMenu"
-      @keydown.stop.enter="emitOption(options[selectedIndex])"
-    >
-      <!-- TODO pass only one argument as an object-->
-      <ContextMenuItem
-        v-for="option in options"
-        :key="option.position"
-        :data-test="option.name"
-        :option="option"
-        :position="{x: position.x, y: position.y + option.position*40}"
-        :is-selected="selectedIndex !== undefined ? options[selectedIndex] === option : false"
-        @select-option="emitOption(option)"
-        @is-context-menu-mobile-extended="subMenuMobileManagement"
-        @emit-sub-option="emitOption"
-        @close="closeMenu"
-      />
-    </ul>
-  </div>
+  <ul
+    ref="contextMenu"
+    data-test="context-menu"
+    :class="{
+      'absolute': isAbsolute,
+      'context-menu': !subMenuMobile,
+      'sub-menu-mobile': subMenuMobile,
+      'desktop-menu': !mq.phone,
+      'context-menu-mobile-extended': isContextMenuMobileExtended
+    }"
+    tabindex="-1"
+    @keydown.stop.up="onUpKey"
+    @keydown.stop.down="onDownKey"
+    @keydown.stop.esc="closeMenu"
+    @click.right.prevent
+    @keydown.stop.enter="emitOption(options[selectedIndex])"
+  >
+    <ContextMenuItem
+      v-for="option in options"
+      :key="option.position"
+      :data-test="option.name"
+      :option="option"
+      :position="{x: position.x, y: position.y + option.position*40}"
+      :is-selected="selectedIndex !== undefined ? options[selectedIndex] === option : false"
+      @select-option="emitOption(option)"
+      @is-context-menu-mobile-extended="subMenuMobileManagement"
+      @emit-sub-option="emitOption"
+      @close="closeMenu"
+    />
+  </ul>
 </template>
 
 <script>
@@ -63,10 +61,6 @@ export default {
       type: Object,
       default: function () {
         return { x: 0, y: 0 }
-      },
-      validator: function (obj) {
-        return (typeof obj.x === 'number') &&
-               (typeof obj.y === 'number')
       }
     }
   },
@@ -93,8 +87,7 @@ export default {
       }
     },
     menuHeight () { // only used when contextMenuMobile is extended
-      const menu = this.$el.querySelector('#context-menu')
-      return menu.clientHeight
+      return this.$refs.contextMenu.clientHeight
     }
   },
   created () {
@@ -103,7 +96,7 @@ export default {
     }
   },
   mounted () {
-    const menu = this.$el.querySelector('#context-menu')
+    const menu = this.$refs.contextMenu
     if (!this.isAbsolute) {
       const computedPosition = { x: this.computeXPosition(this.position.x), y: this.computeYPosition(this.position.y) }
       menu.style.left = computedPosition.x.toString() + 'px'
@@ -125,15 +118,8 @@ export default {
     }
   },
   methods: {
-    clickOutside (e) {
-      const self = this
-      if (e.type === 'contextmenu') {
-        this.closeMenu() // close the menu even if the right-click take place on the menu
-      } else {
-        if (self.$el.querySelector('#context-menu') && !self.$el.querySelector('#context-menu').contains(e.target)) {
-          this.closeMenu()
-        }
-      }
+    clickOutside () {
+      this.closeMenu() // close the menu even if the right-click take place on the menu
     },
     closeMenu () {
       this.$store.dispatch('contextMenu/closeMenus')
@@ -159,10 +145,10 @@ export default {
     },
     emitOption (option) {
       let isSubOption = true
-      for (let i = 0; i < this.options.length; ++i) { // if the option selected are not grayed
-        if (this.options[i].name === option) {
+      for (const element of this.options) { // if the option selected are not grayed
+        if (element.name === option) {
           isSubOption = false
-          if (!this.options[i].isGrayed) {
+          if (!element.isGrayed) {
             this.$emit('choose-option', option)
           }
           break
@@ -188,7 +174,7 @@ export default {
     },
     subMenuMobileManagement (isContextMenuMobileExtended) {
       this.isContextMenuMobileExtended = isContextMenuMobileExtended
-      const menu = this.$el.querySelector('#context-menu')
+      const menu = this.$refs.contextMenu
       if (isContextMenuMobileExtended) {
         menu.style.height = this.menuHeight.toString() + 'px' // hard set menu height to it previous size in pixels
       } else {
@@ -209,10 +195,11 @@ export default {
    display: flex;
    flex-direction: column;
    width: 300px;
+   border-radius: 6px;
    padding: 0;
    margin: 0;
    list-style: none;
-   background: white;
+   background-color: white;
    box-shadow: 0 2px 14px 0 rgba(0,0,0,0.1);
    color: initial;
 
