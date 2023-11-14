@@ -43,7 +43,7 @@
 import dayjs from 'dayjs'
 
 import activityConstants from '@/constants/activityConstants'
-import { CDT } from '@/constants/appConstants'
+import { COURSES } from '@/constants/appConstants'
 
 export default {
   name: 'SessionActivity',
@@ -78,7 +78,7 @@ export default {
     redirect () {
       if (this.isCourse) {
         this.$router.push({
-          name: CDT,
+          name: COURSES,
           query: {
             courseId: this.activity.groupId,
             toDate: dayjs(this.activity.targetDate, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD-HH:mm')
@@ -86,7 +86,7 @@ export default {
         })
       } else {
         this.$router.push({
-          name: CDT,
+          name: COURSES,
           query: {
             homeworkId: this.activity.homeworkId,
             toDate: dayjs(this.activity.targetDate, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD')

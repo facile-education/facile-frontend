@@ -1,7 +1,7 @@
 // The keys should match the one in fr.json "Menu"
 const ACCESS_MANAGER = 'access-admin'
 const APPLICATION_MANAGER = 'application-admin'
-const CDT = 'cdt'
+const COURSES = 'cdt'
 const CORTEX = 'cortex'
 const DASHBOARD = 'tableau-de-bord'
 const DASHBOARD_MANAGER = 'dashboard-admin'
@@ -55,7 +55,7 @@ export {
   ckMaxSize,
   ACCESS_MANAGER,
   APPLICATION_MANAGER,
-  CDT,
+  COURSES,
   CORTEX,
   DASHBOARD,
   DASHBOARD_MANAGER,

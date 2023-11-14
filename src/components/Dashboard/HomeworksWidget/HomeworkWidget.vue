@@ -65,7 +65,7 @@ import dayjs from 'dayjs'
 
 import { getStudentHomeworks } from '@/api/homework.service'
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
-import { CDT } from '@/constants/appConstants'
+import { COURSES } from '@/constants/appConstants'
 import { nbHomeworksInWidget } from '@/constants/dashboardConstants'
 
 export default {
@@ -122,7 +122,7 @@ export default {
   },
   methods: {
     redirect () {
-      this.$router.push({ name: CDT })
+      this.$router.push({ name: COURSES })
     },
     updateUndoneOnlyValue (value) {
       this.undoneOnly = value
