@@ -85,11 +85,11 @@ $modal-z-index: 100;
   &:disabled {
     @extend %nero-disable;
   }
-  
+
   &.button {
     @extend %nero-btn-like;
   }
-  
+
   &.circle {
     @extend %nero-btn-like;
     border-radius: 50%;
@@ -98,13 +98,13 @@ $modal-z-index: 100;
     padding: 0;
     line-height: 30px;
   }
-  
+
   &.button:enabled:hover,
   &.circle:enabled:hover {
     filter: brightness(115%);
     @include transition(filter, 0.2s, linear);
   }
-  
+
   &.cancel {
     background-color: $background-grey-color;
 
@@ -165,7 +165,6 @@ $modal-z-index: 100;
 // Spinner
 // Tabs
 .base-tab {
-  border-bottom: $border;
 
   &.disabled {
     @extend %nero-disable;
