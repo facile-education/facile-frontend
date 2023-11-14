@@ -30,6 +30,8 @@
 
 <script>
 import { defineAsyncComponent } from 'vue'
+
+import { CDT, MESSAGING, SCHOOL_LIFE } from '@/constants/appConstants'
 const CustomIcon = defineAsyncComponent(() => import('@components/Base/CustomIcon.vue'))
 const Pellet = defineAsyncComponent(() => import('@components/Base/Pellet.vue'))
 
@@ -57,11 +59,11 @@ export default {
     },
     notificationCount () {
       switch (this.menuEntry.i18nKey) {
-        case 'messaging':
+        case MESSAGING:
           return this.$store.state.menu.notifications.messaging
-        case 'courses':
+        case CDT:
           return this.$store.state.menu.notifications.courses
-        case 'horaires-hors-cadre':
+        case SCHOOL_LIFE:
           return this.$store.state.menu.notifications.schoollife
         default:
           return 0
