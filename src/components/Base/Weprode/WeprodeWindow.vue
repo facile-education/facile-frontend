@@ -21,6 +21,7 @@
       <div
         ref="windowContainer"
         class="window-container"
+        :class="{'full-screen': isFullScreen}"
         @keyup.stop
         @keydown.stop
         @submit.stop
@@ -225,7 +226,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'src/design/common';
+@import 'src/design';
 
 // Window padding: 50px, Header : 35 px, footer 44px:
 $body-mobile-max-height: calc(100vh - 129px);
@@ -263,6 +264,10 @@ $modal-padding: 25px;
     height: 100%;
     display: flex;
     flex-direction: column;
+
+    &:not(.full-screen) {
+      border-radius: $border-radius-nero;
+    }
 
     .window-header {
       display: flex;
