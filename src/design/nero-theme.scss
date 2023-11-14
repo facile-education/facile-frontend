@@ -15,8 +15,8 @@ $dropdown-background-color: $background-grey-color;
 $input-background-color: $background-grey-color;
 
 // Border
-$border: 1px solid #f4f4f4;
-$border-radius: 6px;
+$border-nero: 1px solid #f4f4f4;
+$border-radius-nero: 6px;
 
 // Z-indexes
 $modal-z-index: 100;
@@ -28,7 +28,7 @@ $modal-z-index: 100;
 
 %nero-btn-like {
   font-family: inherit;
-  border-radius: $border-radius;
+  border-radius: $border-radius-nero;
   padding: 15px 15px;
   text-align: center;
   border: none;
@@ -70,13 +70,13 @@ $modal-z-index: 100;
 
 // Autocomplete
 .base-autocomplete {
-  border: $border;
-  border-radius: $border-radius;
+  border: $border-nero;
+  border-radius: $border-radius-nero;
 
   @extend %item-shadow;
 
   .filter {
-    border-bottom: $border;
+    border-bottom: $border-nero;
   }
 }
 
@@ -124,7 +124,7 @@ $modal-z-index: 100;
 // Checkbox
 .base-checkbox {
   .checkmark {
-    border-radius: $border-radius;
+    border-radius: $border-radius-nero;
 
     &.disabled {
       background-color: $disabled-background-color
