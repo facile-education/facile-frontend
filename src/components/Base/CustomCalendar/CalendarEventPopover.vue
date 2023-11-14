@@ -10,19 +10,19 @@
         v-if="isPopupTop"
         name="fa-caret-down"
         class="caret-down theme-text-color"
-        :style="`color:${selectedEvent.event.backgroundColor};`"
+        :style="`color:${selectedEvent.event.backgroundColor}77;`"
       />
       <NeroIcon
         v-else-if="!isPopupLeft"
         name="fa-caret-left"
         class="caret-left theme-text-color"
-        :style="`color:${selectedEvent.event.backgroundColor};`"
+        :style="`color:${selectedEvent.event.backgroundColor}77;`"
       />
       <NeroIcon
         v-else
         name="fa-caret-right"
         class="caret-right theme-text-color"
-        :style="`color:${selectedEvent.event.backgroundColor};`"
+        :style="`color:${selectedEvent.event.backgroundColor}77;`"
       />
       <header
         :style="`background-color:${selectedEvent.event.backgroundColor};`"
