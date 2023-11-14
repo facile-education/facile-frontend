@@ -522,6 +522,7 @@ label {
 }
 
 .next-sessions-dropdown {
+  white-space: nowrap;
   margin-bottom: 5rem;
 }
 </style>
