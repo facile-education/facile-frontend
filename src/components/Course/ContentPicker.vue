@@ -230,7 +230,7 @@ export default {
 }
 
 .circle {
-  display: flex;
+  display: flex !important;
   align-items: center;
   justify-content: center;
   line-height: 15px;
