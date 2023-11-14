@@ -57,6 +57,7 @@
         <WeprodeButton
           :label="$t('save')"
           class="button"
+          :disabled="isWholeClass!=='true' && selectedStudents.length === 0"
           @click="closeModal"
         />
       </div>
