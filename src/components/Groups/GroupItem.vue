@@ -188,7 +188,7 @@ export default {
   height: 235px;
   width: 285px;
   border: 1px solid rgba(0, 0, 0, 0.2);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border-radius: $border-radius;
 
   &:hover {
     border: 1px solid grey;
@@ -207,6 +207,8 @@ export default {
 
 .header {
   border-left: 10px solid;
+  border-top-left-radius: $border-radius;
+  border-top-right-radius: $border-radius;
   height: 62px;
   min-height: 62px;
   color: inherit;
@@ -215,6 +217,7 @@ export default {
 .overlay {
   height: 100%;
   display: flex;
+  border-top-right-radius: $border-radius;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
