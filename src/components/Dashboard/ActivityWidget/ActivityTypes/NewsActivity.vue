@@ -184,9 +184,6 @@ button {
   position: relative;
 
   &:hover, &:focus-within {
-    border: 2px solid black;
-    border-radius: 5px;
-
     .options {
       opacity: 100%;
 
