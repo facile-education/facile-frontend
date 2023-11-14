@@ -129,12 +129,10 @@ export default {
 </script>
 
 <style lang="scss">
-div.non-classical-slots {
-  position: relative;
-  z-index: -1;
-}
 
 .pending-firing-modal {
+  z-index: 9 !important;
+
   &.modal-mask {
     position: absolute;
 
