@@ -75,6 +75,14 @@
             :selected-school="selectedSchool"
             service="homeworks"
           />
+
+          <StatsDoughnut
+            class="doughnut stat"
+            :start-time="selectedStartDate"
+            :end-time="selectedEndDate"
+            :selected-school="selectedSchool"
+            service="schoolLife"
+          />
         </div>
 
         <div class="general-stats">

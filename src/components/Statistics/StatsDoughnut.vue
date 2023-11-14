@@ -34,7 +34,7 @@
 <script>
 import Chart from '@components/Statistics/Chart.vue'
 
-import { getFilesCount, getHomeworksCount } from '@/api/statistics.service'
+import { getFilesCount, getHomeworksCount, getSchoolLifeStudentsCount } from '@/api/statistics.service'
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 
 export default {
@@ -71,6 +71,8 @@ export default {
         return this.$t('documentsPlaceholder')
       } else if (this.service === 'homeworks') {
         return this.$t('homeworkPlaceholder')
+      } else if (this.service === 'schoolLife') {
+        return this.$t('schoolLifePlaceholder')
       } else {
         return '0'
       }
@@ -108,6 +110,19 @@ export default {
       } else if (this.service === 'homeworks') {
         this.isLoading = true
         getHomeworksCount(this.selectedSchool.schoolId, this.startTime, this.endTime).then((data) => {
+          this.isLoading = false
+          if (data.success) {
+            this.error = false
+            this.data = data
+            this.translateLabels()
+          } else {
+            this.error = true
+            console.error('Error', data)
+          }
+        })
+      } else if (this.service === 'schoolLife') {
+        this.isLoading = true
+        getSchoolLifeStudentsCount(this.selectedSchool.schoolId, this.startTime, this.endTime).then((data) => {
           this.isLoading = false
           if (data.success) {
             this.error = false
@@ -166,11 +181,18 @@ h2 {
   "documents": "Documents",
   "error": "Oups, une erreur est survenue...",
   "homeworks": "Travail donné",
+  "schoolLife": "Horaires hors cadre",
   "documentsPlaceholder": "Aucun document mis en ligne",
   "homeworkPlaceholder": "Aucun travail donné",
+  "schoolLifePlaceholder": "Aucune donnée",
   "1": "Consigne simple",
   "2": "Doc. à compléter",
   "3": "Doc. à rendre",
+  "slot-1": "Renvoi",
+  "slot-2": "Retenue",
+  "slot-3": "Travaux à refaire",
+  "slot-4": "Dépannage",
+  "slot-5": "Cercle d'étude",
   "text": "Texte",
   "other": "Autre",
   "tab": "Tableur",
