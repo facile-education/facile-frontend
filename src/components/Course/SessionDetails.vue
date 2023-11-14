@@ -146,6 +146,7 @@
       to="body"
     >
       <ContextMenu
+        class="context-menu-with-padding"
         @choose-option="performChosenOption"
         @close="displayMenu=false"
       />
@@ -478,6 +479,10 @@ header {
   background-color: transparent;
   border: none;
   cursor: pointer;
+}
+
+.context-menu-with-padding {
+  padding: 10px 0;
 }
 </style>
 
