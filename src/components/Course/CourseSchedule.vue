@@ -38,6 +38,8 @@
       :events="eventList"
       :calendar-options="calendarOptions"
       :show-popover="false"
+      :show-selection-icon="true"
+      :select-current-event-on-load="isInit"
       @select-event="selectEvent"
     />
   </div>
@@ -113,10 +115,6 @@ export default {
       scheduleService.getUserSessions(this.$store.state.user.userId, startDate, endDate).then((data) => {
         if (data.success) {
           this.eventList = data.sessions
-
-          if (this.isInit) {
-            this.selectCurrentSession(data.sessions)
-          }
         } else {
           console.error('error while loading user sessions between ' + startDate.format('YYY-MM-DD HH:mm') + ' and ' + endDate.format('YYY-MM-DD HH:mm'))
         }
@@ -129,10 +127,6 @@ export default {
         if (data.success) {
           this.eventList = data.eventList
           this.selectedDate = dayjs(data.date, 'YYYY-MM-DD HH:mm')
-
-          if (this.isInit) {
-            this.selectCurrentSession(data.eventList)
-          }
         } else {
           console.error('Error')
         }
@@ -140,24 +134,12 @@ export default {
         console.error(err)
       })
     },
-    selectCurrentSession (eventList) {
-      eventList.forEach((event) => {
-        const now = dayjs()
-        const startDate = dayjs(event.startDate, 'YYYY-MM-DD HH:mm')
-        const endDate = dayjs(event.endDate, 'YYYY-MM-DD HH:mm')
-
-        if (now.isAfter(startDate) && now.isBefore(endDate)) {
-          this.$store.dispatch('course/selectSession', event)
-          this.selectedDate = startDate
-        }
-      })
-      this.isInit = false
-    },
     selectEvent (event) {
       this.selectedDate = dayjs(event.startDate, 'YYYY-MM-DD HH:mm')
       this.$store.dispatch('course/selectSession', event)
     },
     unselectSession () {
+      this.isInit = false
       this.$store.dispatch('course/unselectSession')
       this.unselectEvent()
     },

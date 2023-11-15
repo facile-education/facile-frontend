@@ -5,6 +5,7 @@ const statisticsURL = '/statistics'
 const messagingURL = '/messagerie'
 const groupsURL = '/groups'
 const documentURL = '/documents'
+const coursesURL = '/cours-et-devoirs'
 
 const groupDocUrl = '/documents/groups'
 
@@ -16,5 +17,6 @@ export {
   messagingURL,
   groupsURL,
   documentURL,
-  groupDocUrl
+  groupDocUrl,
+  coursesURL
 }

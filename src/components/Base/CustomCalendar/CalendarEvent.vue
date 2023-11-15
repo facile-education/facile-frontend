@@ -25,6 +25,12 @@
     >
       {{ formattedTeachersLabel }}
     </div>
+    <img
+      v-if="showSelectionIcon && isSelected"
+      class="selected-icon"
+      src="@assets/icons/check.svg"
+      alt="selected icon"
+    >
   </div>
 </template>
 
@@ -37,9 +43,20 @@ export default {
     event: {
       type: Object,
       required: true
+    },
+    selectedEvent: {
+      type: Object,
+      default: () => {}
+    },
+    showSelectionIcon: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
+    isSelected () {
+      return this.selectedEvent ? this.selectedEvent.event.extendedProps.sessionId === this.event.event.extendedProps.sessionId : false
+    },
     appEvent () {
       return this.event.event.extendedProps
     },
@@ -80,6 +97,7 @@ export default {
   font-size: 0.85rem;
   line-height: 1.1rem;
   cursor: pointer;
+  position: relative;
 }
 
 .fc-event-title {
@@ -105,5 +123,11 @@ export default {
 
 .fc-event-capacity {
   font-style: italic;
+}
+
+.selected-icon {
+  position: absolute;
+  top: 8px;
+  right: 8px;
 }
 </style>
