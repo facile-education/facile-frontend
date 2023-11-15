@@ -3,7 +3,7 @@
     class="student"
     data-test="student-list-item"
   >
-    <span> {{ formattedStudent }} </span>
+    <span class="name"> {{ formattedStudent }} </span>
     <span
       v-if="student.subject"
       v-t="formattedSubject"
@@ -93,8 +93,8 @@ export default {
     },
     isPresentCheckBoxActive () {
       return this.isCurrentTeacher &&
-        !(this.slotType.type === notUsualSlotsConstants.firedType) &&
-        !(this.slotType.type === notUsualSlotsConstants.tutoringType) &&
+        this.slotType.type !== notUsualSlotsConstants.firedType &&
+        this.slotType.type !== notUsualSlotsConstants.tutoringType &&
         dayjs().isAfter(dayjs(this.event.startDate, 'YYYY/MM/DD HH:mm'))
     },
     isRegisterer () {
@@ -130,18 +130,23 @@ export default {
 <style lang="scss" scoped>
 .student {
   display: flex;
+  align-items: center;
   margin: 10px 0;
-  justify-content: space-between;
+}
+
+.name {
+  flex: 2;
 }
 
 .subject {
+  flex: 1;
   font-size: 0.85rem;
   font-style: italic;
-  display: flex;
-  align-items: center;
+  padding: 0 0.5rem;
 }
 
 .right-section {
+  text-align: right;
   display: flex;
 }
 
@@ -151,13 +156,6 @@ export default {
 
 .icon {
   cursor: pointer;
-  margin-right: 30px;
-  // width: 25px;
-  // height: 25px;
-
-  // &:hover {
-  //   border: 1px solid grey;
-  // }
 }
 
 </style>
