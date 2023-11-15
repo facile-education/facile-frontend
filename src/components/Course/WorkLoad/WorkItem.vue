@@ -1,6 +1,7 @@
 <template>
   <div
     class="work-item"
+    :title="work.title"
     :style="'background-color: ' + work.color + '; border-color: ' + work.color"
   >
     <div class="transparent-part">
@@ -14,6 +15,9 @@
         >
           {{ formattedEstimatedTime }}
         </strong>
+      </div>
+      <div class="title">
+        {{ formattedTitle }}
       </div>
       <div class="given-date">
         {{ formattedGivenDate }}
@@ -34,7 +38,7 @@ export default {
     }
   },
   computed: {
-    formattedEstimatedTime () { // TODO: to merge with the one in StudentHomework
+    formattedEstimatedTime () {
       if (this.work.estimatedTime) {
         const nbMinutes = this.work.estimatedTime
         const nbHour = Math.floor(nbMinutes / 60)
@@ -45,6 +49,14 @@ export default {
         }
       } else {
         return undefined
+      }
+    },
+    formattedTitle () {
+      const maxLength = 60
+      if (this.work.title.length > maxLength) {
+        return this.work.title.substr(0, maxLength - 3) + '...'
+      } else {
+        return this.work.title
       }
     },
     formattedGivenDate () {
@@ -93,6 +105,11 @@ strong, .course-name, .given-date {
 
 .course-name {
   @extend %font-regular-l;
+}
+
+.title {
+  margin-bottom: 4px;
+  line-height: 1.2rem;
 }
 
 </style>
