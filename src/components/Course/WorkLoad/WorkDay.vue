@@ -64,13 +64,25 @@ export default {
 <style lang="scss" scoped>
 @import "@design";
 
+.day-works {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
 .day-label {
   text-align: center;
+  font-weight: bold;
 }
 
 .empty-placeholder {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   @extend %content-placeholder;
-  height: 100%;
 }
 
 ul {

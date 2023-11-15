@@ -54,6 +54,8 @@ export default {
 <style lang="scss" scoped>
 .work-list {
   display: flex;
+  gap: 0.5rem;
+  min-height: 20vh;
 }
 
 .day-works {
