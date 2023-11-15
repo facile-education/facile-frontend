@@ -29,6 +29,7 @@
     </div>
   </div>
 
+  <!-- Improvement: display relatively at CalendarEvent to not being fixed on scroll -->
   <CalendarEventPopover
     v-if="selectedEvent && showPopover"
     :selected-event="selectedEvent"
