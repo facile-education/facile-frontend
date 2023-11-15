@@ -4,15 +4,17 @@
     :style="'background-color: ' + work.color + '; border-color: ' + work.color"
   >
     <div class="transparent-part">
-      <div class="course-name">
-        {{ work.cours }}
+      <div class="first-line">
+        <div class="course-name">
+          {{ work.cours }}
+        </div>
+        <strong
+          v-if="work.estimatedTime"
+          class="estimated-time"
+        >
+          {{ formattedEstimatedTime }}
+        </strong>
       </div>
-      <strong
-        v-if="work.estimatedTime"
-        class="estimated-time"
-      >
-        {{ work.estimatedTime }}
-      </strong>
       <div class="given-date">
         {{ formattedGivenDate }}
       </div>
@@ -39,7 +41,7 @@ export default {
         if (nbHour > 0) {
           return nbHour + this.$t('hourLabel') + nbMinutes % 60
         } else {
-          return nbMinutes + ' ' + this.$t('minuteLabel')
+          return nbMinutes + this.$t('minuteLabel')
         }
       } else {
         return undefined
@@ -66,10 +68,21 @@ export default {
   height: 100%;
   width: 100%;
   background-color: #FFFFFFDD;
-  padding: 0.2rem 1rem;
+  padding: 0.5rem 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  position: relative;
+}
+
+.first-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.estimated-time {
+  @extend %font-bold-l;
 }
 
 strong, .course-name, .given-date {
@@ -87,7 +100,7 @@ strong, .course-name, .given-date {
 <i18n locale="fr">
 {
   "hourLabel": "h",
-  "minuteLabel": "minutes",
+  "minuteLabel": "mn",
   "givenThe": "Donné le "
 }
 </i18n>
