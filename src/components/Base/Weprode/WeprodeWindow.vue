@@ -251,10 +251,6 @@ $modal-padding: 25px;
     height: 100%;
   }
 
-  @supports(height: 100dvh) {
-
-  }
-
   .window-container {
     background-color: $background-white-color;
     box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
