@@ -260,11 +260,14 @@ export default {
       }
     },
     toggleEventSelection (event) {
-      if (this.selectedEvent) {
-        this.unselectEvent()
-      }
-
-      if (!this.isSelected(event)) {
+      if (this.isSelected(event)) {
+        if (this.showPopover) { // Unselect event only in show popover mode to hide it
+          this.unselectEvent()
+        }
+      } else {
+        if (this.selectedEvent) {
+          this.unselectEvent()
+        }
         this.selectedEvent = event
         event.el.parentNode.classList.add('selected')
         this.$emit('selectEvent', this.matchFCEventWithPropsEvents(event))
