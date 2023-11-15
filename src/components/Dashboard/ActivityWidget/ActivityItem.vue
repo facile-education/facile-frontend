@@ -2,7 +2,7 @@
   <div class="container">
     <div
       class="activity-item"
-      :class="{'theme-hover-border-color': isNewsActivity}"
+      :class="{'theme-hover-border-color': isNewsActivity || isHHCActivity || isSessionActivity}"
     >
       <div
         v-if="false"
