@@ -20,6 +20,8 @@
           <CalendarEvent
             :event="event"
             :show-popover="showPopover"
+            :show-selection-icon="showSelectionIcon"
+            :selected-event="selectedEvent"
             @unselect="unselectEvent"
           />
         </template>
@@ -62,11 +64,15 @@ export default {
       type: Boolean,
       default: true
     },
+    showSelectionIcon: {
+      type: Boolean,
+      default: false
+    },
     canCreateSlots: {
       type: Boolean,
       default: false
     },
-    selectFirstEventOnLoad: {
+    selectCurrentEventOnLoad: {
       type: Boolean,
       default: false
     },
@@ -114,7 +120,7 @@ export default {
           minute: '2-digit'
           // omitZeroMinute: true
         },
-        eventClick: this.selectEvent,
+        eventClick: this.toggleEventSelection,
         eventDidMount: this.onEventMount,
         views: {
           day: {
@@ -167,8 +173,10 @@ export default {
     }
   },
   watch: {
-    displayDate () {
-      this.goToDisplayDate()
+    displayDate (oldValue, newValue) {
+      if (!oldValue.isSame(newValue)) {
+        this.goToDisplayDate()
+      }
     },
     isMenuExpanded () {
       setTimeout(() => {
@@ -250,22 +258,19 @@ export default {
         borderColor: slot.color
       }
     },
-    selectEvent (event) {
-      // Handle event selection display
+    toggleEventSelection (event) {
       if (this.selectedEvent) {
-        const sameEvent = (this.selectedEvent.el === event.el)
         this.unselectEvent()
-        if (sameEvent) {
-          return
-        }
       }
 
-      event.el.parentNode.classList.add('selected')
-      this.selectedEvent = event
-      this.$emit('selectEvent', this.matchFCEventWithPropsEvents(event))
+      if (!this.isSelected(event)) {
+        this.selectedEvent = event
+        event.el.parentNode.classList.add('selected')
+        this.$emit('selectEvent', this.matchFCEventWithPropsEvents(event))
+      }
     },
     unselectEvent () {
-      if (this.selectedEvent && this.selectedEvent.el.parentNode != null) {
+      if (this.selectedEvent?.el.parentNode != null) {
         this.selectedEvent.el.parentNode.classList.remove('selected')
       }
       this.selectedEvent = undefined
@@ -274,6 +279,12 @@ export default {
     onEventMount (event) {
       if (event.event.extendedProps.grayed) { // Put this here because I can't find out how to access to event el from CalendarEvent component
         event.el.classList.add('grayed')
+      }
+
+      if (this.isSelected(event)) { // if the event is already selected (from previous loads for example)
+        event.el.parentNode.classList.add('selected')
+      } else if (this.selectCurrentEventOnLoad && (!event.isPast && !event.isFuture)) {
+        this.toggleEventSelection(event)
       }
     },
     matchFCEventWithPropsEvents (event) {
@@ -294,6 +305,15 @@ export default {
       } else {
         this.$emit('createSlot', { start: dayjs(selection.start), end: dayjs(selection.end) })
       }
+    },
+    isSameEvents (fcEvent1, fcEvent2) {
+      if (!fcEvent1 || !fcEvent2) { return false }
+      return fcEvent1.event.start.getTime() === fcEvent2.event.start.getTime() &&
+        fcEvent1.event.end.getTime() === fcEvent2.event.end.getTime() &&
+        fcEvent1.event.title === fcEvent2.event.title
+    },
+    isSelected (fcEvent) {
+      return this.isSameEvents(this.selectedEvent, fcEvent)
     }
   }
 }
