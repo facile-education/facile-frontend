@@ -160,7 +160,7 @@ export default {
   opacity: 1;
   transition: opacity .5s;
   border-radius: 2px;
-  position: absolute;
+  position: fixed;
   box-shadow: 0 3px 6px rgba(0,0,0,.12),0 3px 6px rgba(0,0,0,.24);
   background-color: #fff;
   z-index: 10;
