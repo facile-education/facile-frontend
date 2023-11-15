@@ -104,10 +104,6 @@ export default {
 .course-activity {
   @extend %activity-item;
   cursor: pointer;
-  &:hover, &:focus-within {
-    border: 2px solid black;
-    border-radius: 5px;
-  }
 }
 
 .img-icon {
