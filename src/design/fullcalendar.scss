@@ -16,6 +16,10 @@ $selected-background-filter-color: #FFFFFF99;
   }
 }
 
+.fc-timegrid-event .fc-event-main {
+  padding: 0;
+}
+
 .fc-timegrid-slots tr {
   border-top: 1px dotted silver;
   border-bottom: 1px dotted silver;
@@ -62,7 +66,6 @@ $selected-background-filter-color: #FFFFFF99;
 
   .fc-event-main {
     background-color: $default-background-filter-color;
-    padding-left: 4px;
     position: relative;
     line-height: 1.1rem;
   }

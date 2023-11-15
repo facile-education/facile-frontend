@@ -94,18 +94,21 @@ export default {
 
 <style lang="scss" scoped>
 .calendar-event {
+  height: 100%;
+  padding: 6px min(1rem, 1vw);
   font-size: 0.85rem;
   line-height: 1.1rem;
   cursor: pointer;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .fc-event-title {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-right: 10px;
-  margin-bottom : 5px;
 
   .capacity {
     margin-left: 5px;
@@ -127,7 +130,7 @@ export default {
 
 .selected-icon {
   position: absolute;
-  top: 8px;
+  bottom: 8px;
   right: 8px;
 }
 </style>
