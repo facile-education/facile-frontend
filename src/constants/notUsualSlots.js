@@ -30,7 +30,7 @@ const slotTypes = [
   {
     type: firedType,
     label: i18n.global.t('NotUsualSlots.fired'),
-    color: '#f00'
+    color: '#FF0000'
   }
 ]
 
