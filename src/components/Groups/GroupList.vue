@@ -19,21 +19,32 @@
       v-if="canCreateGroup"
       v-t="'addGroup'"
       href="#"
-      @click="toggleEditModalDisplay"
+      @click="isEditModalDisplayed=true"
     />
   </div>
   <WeprodeSpinner v-else />
+
+  <teleport
+    v-if="isEditModalDisplayed"
+    to="body"
+  >
+    <EditGroupModal
+      @close="isEditModalDisplayed=false"
+    />
+  </teleport>
 </template>
 
 <script>
 import GroupItem from '@components/Groups/GroupItem'
 import WeprodeUtils from '@utils/weprode.utils'
+import { defineAsyncComponent } from 'vue'
 
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
+const EditGroupModal = defineAsyncComponent(() => import('@components/Groups/EditGroupModal/EditGroupModal'))
 
 export default {
   name: 'GroupList',
-  components: { GroupItem, WeprodeSpinner },
+  components: { EditGroupModal, GroupItem, WeprodeSpinner },
   inject: ['mq'],
   data () {
     return {
@@ -60,10 +71,6 @@ export default {
     getGroupList () {
       const groupId = (this.$route.params.groupId !== undefined) ? Number(this.$route.params.groupId) : undefined
       this.$store.dispatch('groups/getGroupList', { filter: this.$store.state.groups.currentFilter, groupIdToSelect: groupId })
-    },
-    toggleEditModalDisplay (group) {
-      this.selectedGroup = group
-      this.isEditModalDisplayed = !this.isEditModalDisplayed
     }
   }
 }
@@ -88,7 +95,18 @@ export default {
 }
 
 .empty-container {
-  @extend %empty-container ;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 28vh;
+  border: 1px solid $color-border;
+  gap: 1rem;
+
+  a {
+    font-weight: bold;
+  }
 }
 </style>
 
