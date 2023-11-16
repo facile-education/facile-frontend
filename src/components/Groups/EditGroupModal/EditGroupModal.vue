@@ -11,6 +11,8 @@
     </template>
 
     <template #body>
+      <WeprodeSpinner v-if="isLoading" />
+
       <div class="group-name">
         <WeprodeInput
           ref="name"
@@ -79,7 +81,10 @@
             />
           </div>
 
-          <table class="table">
+          <table
+            class="table"
+            aria-label="result users"
+          >
             <tr>
               <th>
                 <WeprodeCheckbox
@@ -188,6 +193,7 @@ export default {
   data () {
     return {
       timeout: 0,
+      isLoading: false,
       isLoadingCompletion: false,
       group: {
         groupName: '',
@@ -354,28 +360,15 @@ export default {
     },
     submitChanges () {
       if (this.editedGroup && this.editedGroup.groupId > 0) {
-        // Update
-        const message = this.$t('edition-success')
-        editCommunity(this.group.groupId, this.group.groupName, this.group.description, this.group.isPedagogical, this.groupMembers, this.group.color).then((data) => {
-          if (data.success) {
-            this.$store.dispatch('groups/getGroupList', { filter: this.$store.state.groups.currentFilter })
-            this.$store.dispatch('popups/pushPopup', { message, type: 'success' })
-            this.closeModal()
-          }
-        })
+        this.updateGroup()
       } else {
         // Creation
         // First check if the provided name exists or not
+        this.isLoading = true
         checkCommunityName(this.group.groupName).then((data) => {
+          this.isLoading = false
           if (data.success) {
-            const message = this.$t('creation-success')
-            createCommunity(this.group.groupName, this.group.description, this.group.isPedagogical, this.groupMembers, this.group.color).then((data) => {
-              if (data.success) {
-                this.$store.dispatch('groups/getGroupList', { filter: this.$store.state.groups.currentFilter })
-                this.$store.dispatch('popups/pushPopup', { message, type: 'success' })
-                this.closeModal()
-              }
-            })
+            this.createGroup()
           } else {
             // Group already exists
             // Case 1 : community is deactivated and was created by current user -> suggest him to extend and reactivate the group
@@ -387,8 +380,41 @@ export default {
               this.$store.dispatch('popups/pushPopup', { message: this.$t('community-name-exists'), type: 'error' })
             }
           }
+        }, (err) => {
+          console.error(err)
+          this.isLoading = false
         })
       }
+    },
+    updateGroup () {
+      const message = this.$t('edition-success')
+      this.isLoading = true
+      editCommunity(this.group.groupId, this.group.groupName, this.group.description, this.group.isPedagogical, this.groupMembers, this.group.color).then((data) => {
+        this.isLoading = false
+        if (data.success) {
+          this.$store.dispatch('groups/getGroupList', { filter: this.$store.state.groups.currentFilter })
+          this.$store.dispatch('popups/pushPopup', { message, type: 'success' })
+          this.closeModal()
+        }
+      }, (err) => {
+        console.error(err)
+        this.isLoading = false
+      })
+    },
+    createGroup () {
+      const message = this.$t('creation-success')
+      this.isLoading = true
+      createCommunity(this.group.groupName, this.group.description, this.group.isPedagogical, this.groupMembers, this.group.color).then((data) => {
+        this.isLoading = false
+        if (data.success) {
+          this.$store.dispatch('groups/getGroupList', { filter: this.$store.state.groups.currentFilter })
+          this.$store.dispatch('popups/pushPopup', { message, type: 'success' })
+          this.closeModal()
+        }
+      }, (err) => {
+        console.error(err)
+        this.isLoading = false
+      })
     },
     closeModal () {
       this.$store.dispatch('misc/decreaseModalCount')
