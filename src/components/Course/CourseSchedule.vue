@@ -172,7 +172,7 @@ export default {
   cursor: pointer;
   display: flex;
   padding: 4px 8px;
-  margin-bottom: 10px;
+  margin: 10px 0;
   justify-content: center;
   align-items: center;
   align-self: stretch;
