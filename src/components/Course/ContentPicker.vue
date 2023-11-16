@@ -137,7 +137,7 @@ export default {
       return this.$store.state.documents.documentsProperties
     },
     isH5pBroadcasted () {
-      return this.documentsProperties && this.documentsProperties.hasH5pBroadcasted
+      return this.documentsProperties?.hasH5pBroadcasted
     },
     filteredContents () {
       const h5pContent = {
@@ -180,7 +180,7 @@ export default {
           this.$store.dispatch('currentActions/setImportFileList', files)
           this.$store.dispatch('currentActions/displayUploadProgression')
 
-          importDocuments(undefined, files).then((data) => {
+          importDocuments(undefined, files).then(() => {
             const tmpFiles = this.$store.state.currentActions.listUploadedFiles
             this.addContent({ contentType: 5, fileId: tmpFiles[0].id, contentName: tmpFiles[0].name })
           })
@@ -192,7 +192,7 @@ export default {
     toggleAudioRecorderModal () {
       this.isAudioRecorderModalDisplayed = !this.isAudioRecorderModalDisplayed
     },
-    toggleLinkModal (content) {
+    toggleLinkModal () {
       this.isLinkModalDisplayed = !this.isLinkModalDisplayed
     },
     toggleFilePicker () {
