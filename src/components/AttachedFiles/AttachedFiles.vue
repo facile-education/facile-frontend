@@ -31,16 +31,6 @@
       </li>
     </ul>
   </div>
-
-  <teleport to="body">
-    <!-- Picker -->
-    <FilePickerModal
-      v-if="isFilePickerModalDisplayed"
-      :multi-selection="true"
-      @added-files="addNewFiles"
-      @close="isFilePickerModalDisplayed = false"
-    />
-  </teleport>
 </template>
 
 <script>
@@ -48,15 +38,13 @@ import SelectFilesButtons from '@components/FilePicker/SelectFilesButtons.vue'
 import { importDocuments } from '@utils/documents.util'
 import { alertNoFile, returnAddedFiles } from '@utils/upload.util'
 import { defineAsyncComponent } from 'vue'
-const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal.vue'))
 const AttachedFile = defineAsyncComponent(() => import('@components/AttachedFiles/AttachedFile.vue'))
 
 export default {
   name: 'AttachedFiles',
   components: {
     SelectFilesButtons,
-    AttachedFile,
-    FilePickerModal
+    AttachedFile
   },
   inject: ['mq'],
   props: {
