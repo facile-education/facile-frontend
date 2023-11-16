@@ -7,6 +7,7 @@
       v-for="content in filteredContents"
       :key="content.name"
       :title="content.name"
+      :aria-label="content.name"
       class="circle"
       @click="content.callback()"
     >
