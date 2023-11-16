@@ -54,6 +54,32 @@
       >
     </button>
 
+    <span
+      v-else-if="typeLabel==='file'"
+      class="file-actions"
+    >
+      <button
+        :title="$t('addToFolder')"
+        @click.stop="isDepositModalDisplayed = true"
+      >
+        <img
+          class="file-action add-to-folder"
+          src="@assets/add_to_folder.svg"
+          :alt="$t('addToFolder')"
+        >
+      </button>
+      <button
+        :title="$t('download')"
+        @click.stop="downloadFile"
+      >
+        <img
+          class="file-action"
+          src="@assets/attached_file_download.svg"
+          :alt="$t('download')"
+        >
+      </button>
+    </span>
+
     <teleport to="body">
       <VideoModal
         v-if="videoModalDisplayed"
@@ -67,12 +93,21 @@
         :read-only="true"
         @close="h5pModalDisplayed=false"
       />
+      <!-- Deposit destination -->
+      <FilePickerModal
+        v-if="isDepositModalDisplayed"
+        :folder-selection="true"
+        :init-in-current-folder="false"
+        @chosen-folder="saveInFolder"
+        @close="isDepositModalDisplayed = false"
+      />
     </teleport>
   </div>
 </template>
 
 <script>
 import TextContent from '@components/Base/TextContent.vue'
+import { downloadDocument } from '@utils/documents.util'
 import { defineAsyncComponent } from 'vue'
 
 import contentTypeConstants from '@/constants/contentTypeConstants'
@@ -80,10 +115,12 @@ import { icons } from '@/constants/icons'
 import { getExtensionFromName } from '@/utils/commons.util'
 const H5PModal = defineAsyncComponent(() => import('@components/Base/ContentEdtitionModals/H5PModal'))
 const VideoModal = defineAsyncComponent(() => import('@components/Base/ContentEdtitionModals/VideoModal'))
+const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal.vue'))
 
 export default {
   name: 'CourseContent',
   components: {
+    FilePickerModal,
     H5PModal,
     VideoModal,
     TextContent
@@ -110,7 +147,8 @@ export default {
   data () {
     return {
       videoModalDisplayed: false,
-      h5pModalDisplayed: false
+      h5pModalDisplayed: false,
+      isDepositModalDisplayed: false
     }
   },
   computed: {
@@ -181,6 +219,14 @@ export default {
     },
     update (value) {
       this.$emit('update:modelValue', value)
+    },
+    downloadFile () {
+      const fileToDownload = { ...this.content, type: 'File', name: this.content.contentName, url: this.content.downloadUrl }
+      downloadDocument(fileToDownload)
+    },
+    saveInFolder (targetFolder) {
+      const fileToSave = { ...this.content, id: this.content.fileId }
+      this.$store.dispatch('clipboard/duplicate', { targetFolder, entities: [fileToSave], successMessage: this.$t('addToFolderSuccess') })
     }
   }
 }
@@ -228,6 +274,17 @@ export default {
   border: 1px solid $neutral-40;
   background: $neutral-10;
   cursor: pointer;
+  position: relative;
+
+  &:hover, &:focus-within {
+    .file-actions {
+      opacity: 100%;
+
+      button {
+        width: 40px;
+      }
+    }
+  }
 }
 
 .thumbnail {
@@ -291,6 +348,36 @@ button {
   width: 1.25rem;
   height: 1.25rem;
 }
+
+.file-actions {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  display: flex;
+  border-radius: 0 5px 5px 0;
+  overflow: hidden;
+  transition: all .3s ease;
+  opacity: 0;
+
+  button {
+    width: 0;
+    transition: all .3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+
+    img {
+      height: 1rem;
+    }
+
+    &:hover {
+      background-color: $color-hover-bg;
+    }
+  }
+}
 </style>
 
 <i18n locale="fr">
@@ -299,6 +386,7 @@ button {
   "file": "Fichier",
   "h5p": "Contenu riche",
   "link": "Lien externe",
-  "video": "Vidéo"
+  "video": "Vidéo",
+  "addToFolderSuccess": "Fichier déposé"
 }
 </i18n>
