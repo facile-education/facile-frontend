@@ -124,6 +124,9 @@ export default {
       startDate: dayjs().startOf('week'),
       endDate: dayjs().endOf('week')
     })
+    if (!this.mq.phone && !this.mq.tablet) { // Select a default slot type on desktop to not have a too much blank page
+      this.$store.dispatch('notUsualSlots/setCurrentSlotType', this.slotTypes[0])
+    }
   },
   methods: {
     getPendingFirings () {
