@@ -14,10 +14,10 @@ export {
 
 const AGENDA_PATH = '/agenda.agenda'
 
-function getEvents (startIndex, nbEvents, unreadOnly) {
+function getEvents (minDate, nbEvents, unreadOnly) {
   return axios.get(constants.JSON_WS_URL + AGENDA_PATH + '/get-events', {
     params: {
-      startIndex,
+      minDateStr: minDate.format('YYYY-MM-DD HH:mm:sss'),
       nbEvents,
       unreadOnly
     }

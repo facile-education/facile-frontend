@@ -309,15 +309,27 @@ export default {
         if (data.success) {
           // Concat all populations of all schools in one list
           this.availablePopulationsList = []
+
+          // Global
+          if (data.global) {
+            this.availablePopulationsList = [...this.availablePopulationsList, ...data.global]
+          }
+
           const schools = data.schoolsGroups
           schools.forEach((school) => {
-            this.availablePopulationsList = [...this.availablePopulationsList, ...school.populations]
-            school.classes.forEach((schoolClass) => {
-              this.availablePopulationsList = [...this.availablePopulationsList, ...schoolClass.populations]
-            })
-            school.volees.forEach((schoolVolee) => {
-              this.availablePopulationsList = [...this.availablePopulationsList, ...schoolVolee.populations]
-            })
+            if (school.populations) {
+              this.availablePopulationsList = [...this.availablePopulationsList, ...school.populations]
+            }
+            if (school.classes) {
+              school.classes.forEach((schoolClass) => {
+                this.availablePopulationsList = [...this.availablePopulationsList, ...schoolClass.populations]
+              })
+            }
+            if (school.volees) {
+              school.volees.forEach((schoolVolee) => {
+                this.availablePopulationsList = [...this.availablePopulationsList, ...schoolVolee.populations]
+              })
+            }
           })
         } else {
           console.error('Error')

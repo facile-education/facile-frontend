@@ -109,7 +109,7 @@ export default {
     },
     loadDiaryEvents () {
       this.isLoading = true
-      getEvents(0, nbDiaryEventInWidget, this.unReadOnly).then((data) => {
+      getEvents(dayjs(), nbDiaryEventInWidget, this.unReadOnly).then((data) => {
         this.isLoading = false
         this.isFirstLoad = false
         if (data.success) {
