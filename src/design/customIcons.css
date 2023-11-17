@@ -17,6 +17,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-stats:before {
+  content: "\e916";
+}
 .icon-burger:before {
   content: "\e914";
 }
