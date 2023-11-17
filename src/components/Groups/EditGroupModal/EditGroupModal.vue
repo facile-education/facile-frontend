@@ -289,7 +289,7 @@ export default {
       }, 1000)
     },
     getCompletion () {
-      if (this.searchInput.length >= 2) {
+      if (this.searchInput.length >= 2 || this.selectedRole.roleId !== 0) {
         this.isLoadingCompletion = true
         searchDirectory(this.searchInput, this.selectedRole.roleId, this.selectedSchool.schoolId).then((data) => {
           this.isLoadingCompletion = false
