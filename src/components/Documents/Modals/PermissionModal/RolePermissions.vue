@@ -1,7 +1,8 @@
 <template>
   <div class="role">
     <span class="role-name">
-      {{ $t(role.roleName.split(' ').join('')) }}
+      <!-- TODO: pass by i18N key -->
+      {{ role.roleName }}
     </span>
 
     <div class="permission view">
