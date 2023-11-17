@@ -89,6 +89,7 @@ CREATE TABLE `News_NewsPopulation` (
   `newsId` bigint(20) NOT NULL,
   `groupId` bigint(20) NOT NULL,
   `roleId` bigint(20) NOT NULL,
+  `schoolId` bigint(20) NOT NULL,
   PRIMARY KEY (`newsId`,`groupId`,`roleId`),
   KEY `IX_637D161D` (`groupId`,`roleId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -101,9 +102,9 @@ CREATE TABLE `News_NewsPopulation` (
 LOCK TABLES `News_NewsPopulation` WRITE;
 /*!40000 ALTER TABLE `News_NewsPopulation` DISABLE KEYS */;
 INSERT INTO `News_NewsPopulation` VALUES
-(562502,45407,45102),
-(546204,45407,45103),
-(546313,45407,45103);
+(562502,45407,45102,45405),
+(546204,45407,45103,45405),
+(546313,45407,45103,45405);
 /*!40000 ALTER TABLE `News_NewsPopulation` ENABLE KEYS */;
 UNLOCK TABLES;
 
