@@ -367,10 +367,20 @@ export default {
         if (data.success) {
           // Concat all populations of all schools in one list
           this.availablePopulationsList = []
+
+          // Global
+          if (data.global) {
+            this.availablePopulationsList = [...this.availablePopulationsList, ...data.global]
+          }
+
           const schools = data.schoolsGroups
           schools.forEach((school) => {
-            this.availablePopulationsList = [...this.availablePopulationsList, ...school.populations]
-            this.availablePopulationsList = [...this.availablePopulationsList, ...school.subjects]
+            if (school.populations) {
+              this.availablePopulationsList = [...this.availablePopulationsList, ...school.populations]
+            }
+            if (school.subjects) {
+              this.availablePopulationsList = [...this.availablePopulationsList, ...school.subjects]
+            }
             if (school.classes) {
               school.classes.forEach((schoolClass) => {
                 this.availablePopulationsList = [...this.availablePopulationsList, ...schoolClass.populations]
