@@ -5,7 +5,7 @@
       class="img-icon"
       :src="fileIcon"
       alt="document icon"
-      :style="'width: ' + width"
+      :style="'width: ' + width + ';min-width:' + width + ';height: ' + height"
     >
     <BaseIcon
       v-else
@@ -31,6 +31,10 @@ export default {
       required: true
     },
     width: {
+      type: String,
+      default: ''
+    },
+    height: {
       type: String,
       default: ''
     }

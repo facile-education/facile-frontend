@@ -100,13 +100,19 @@ export default {
 @import '@design';
 
 ul {
+  width: 100%;
   margin: 0;
   padding: 0;
   list-style-type: none;
+
+  li:not(:last-child) {
+    width: 100%;
+    margin-bottom: 10px;
+  }
 }
 
 .select-buttons {
-  margin-top: 10px;
+  margin: 10px 0;
 }
 
 .file-list {
@@ -128,10 +134,9 @@ button {
 
 .header {
   border-top: 1px solid $color-border;
-  padding-top: 20px;
+  padding: 20px 0 8px 0;
   font-weight: 600;
   width: 100%;
-  padding-left: 10px;
 }
 </style>
 

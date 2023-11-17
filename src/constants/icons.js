@@ -52,6 +52,7 @@ const icons = {
     openFile: require('@assets/documents.svg'),
     paste: require('@/assets/options/icon_duplicate.svg'),
     permissions: require('@/assets/options/icon_permissions.svg'),
+    save: require('@/assets/icons/messaging_folders.svg'),
     share: require('@/assets/options/icon_share.svg'),
     rename: require('@/assets/icons/pencil.svg'),
     refresh: require('@/assets/options/icon_refresh.svg'),
