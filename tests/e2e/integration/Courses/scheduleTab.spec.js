@@ -9,6 +9,7 @@ const currentSession = {
 
 describe('HHC_Checkin', () => {
   beforeEach(() => {
+    // cy.viewport('iphone-5')
     cy.clock(Cypress.dayjs(currentSession.startDate, 'YYYY/MM/DD HH:mm').add(10, 'minute').toDate().getTime())
 
     cy.login(TEACHER, coursesURL)
