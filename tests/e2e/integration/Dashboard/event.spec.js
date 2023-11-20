@@ -31,7 +31,7 @@ describe('Dashboard_Events', () => {
       getEvent(existingEvents[0]).should('not.exist')
     })
 
-    it('Dashboard_Events_DisplayEvent_Check_Content', function () {
+    it('Dashboard_Events_DisplayEventCheckContent', function () {
       const existingEvents = this.dashboardData.existingEvents
       const lastEvent = existingEvents[0]
 
@@ -88,7 +88,7 @@ describe('Dashboard_Events', () => {
       })
     })
 
-    it.only('Dashboard_Events_DisplayAllEvents', function () {
+    it('Dashboard_Events_DisplayAllEvents', function () {
       const existingEvents = this.dashboardData.existingEvents
       // Login
       cy.login(HEADMASTER, dashboardURL)
@@ -152,7 +152,7 @@ describe('Dashboard_Events', () => {
       getEvent(NewEvent).should('be.exist')
     })
 
-    it('Dashboard_Events_CreateEvent_AllEvent_ButtonCreate', function () {
+    it('Dashboard_Events_CreateEventAllEventButtonCreateVisibility', function () {
       // Login
       cy.login(HEADMASTER, dashboardURL)
       // Click on all event buttton
@@ -165,7 +165,7 @@ describe('Dashboard_Events', () => {
       cy.get('[data-test="update-diary-event-modal"]').should('be.visible')
     })
 
-    it('Dashboard_Events_CreateEvent_Display_WarningMessage_SetInformations', function () {
+    it('Dashboard_Events_CreateEventDisplayWarningMessageSetInformations', function () {
       const NewEvent = this.dashboardData.NewEvent
 
       // Login
@@ -226,7 +226,7 @@ describe('Dashboard_Events', () => {
       cy.get('[data-test="confirmButton"]').click()
     })
 
-    it('Dashboard_Events_CreateEvent_Display_WarningMessage_Not_SetInformations', function () {
+    it('Dashboard_Events_CreateEvent_DisplayWarningMessageNotSetInformations', function () {
       // Login
       cy.login(HEADMASTER, dashboardURL)
 
@@ -242,7 +242,7 @@ describe('Dashboard_Events', () => {
       cy.get('[data-test="update-diary-event-modal"]').should('not.exist')
     })
 
-    it('Dashboard_Events_UpdateEvent_Mouseover', function () {
+    it('Dashboard_Events_UpdateEventMouseover', function () {
       const existingEvents = this.dashboardData.existingEvents
       const lastEvent = existingEvents[0]
       const EventToEdit = this.dashboardData.EventToEdit
@@ -284,7 +284,7 @@ describe('Dashboard_Events', () => {
       getEvent(EventToEdit).should('be.exist')
     })
 
-    it('Dashboard_Events_UpdateEvent_ClickOnEvent', function () {
+    it('Dashboard_Events_UpdateEventClickOnEvent', function () {
       const existingEvents = this.dashboardData.existingEvents
       const lastEvent = existingEvents[0]
       // Login
@@ -298,7 +298,7 @@ describe('Dashboard_Events', () => {
       cy.get('[data-test="update-diary-event-modal"]').should('be.visible')
     })
 
-    it('Dashboard_Events_UpdateEvent_AllEvent_UpdateButton', function () {
+    it('Dashboard_Events_UpdateEventAllEventUpdateButton', function () {
       const existingEvents = this.dashboardData.existingEvents
       const lastEvent = existingEvents[0]
       // Login
@@ -316,7 +316,7 @@ describe('Dashboard_Events', () => {
       cy.get('[data-test="update-diary-event-modal"]').should('be.visible')
     })
 
-    it('Dashboard_Events_UpdateEvent_CanEdit_By_Profils', function () {
+    it('Dashboard_Events_UpdateEventCanEditByProfils', function () {
       const existingEvents = this.dashboardData.existingEvents
       const lastEvent = existingEvents[0]
 
@@ -345,7 +345,7 @@ describe('Dashboard_Events', () => {
       })
     })
 
-    it('Dashboard_Events_UpdateEvent_Display_WarningMessage_SetInformations', function () {
+    it('Dashboard_Events_UpdateEventDisplayWarningMessageSetInformations', function () {
       const existingEvents = this.dashboardData.existingEvents
       const lastEvent = existingEvents[0]
       const EventToEdit = this.dashboardData.EventToEdit
@@ -416,7 +416,7 @@ describe('Dashboard_Events', () => {
       cy.get('[data-test="confirmButton"]').click()
     })
 
-    it('Dashboard_Events_UpdateEvent_Display_WarningMessage_Not_SetInformations', function () {
+    it('Dashboard_Events_UpdateEventDisplayWarningMessageNotSetInformations', function () {
       const existingEvents = this.dashboardData.existingEvents
       const lastEvent = existingEvents[0]
       // Login
@@ -436,7 +436,7 @@ describe('Dashboard_Events', () => {
       cy.get('[data-test="update-diary-event-modal"]').should('not.exist')
     })
 
-    it('Dashboard_Events_DeleteEvent_Mouseover', function () {
+    it('Dashboard_Events_DeleteEventMouseover', function () {
       const existingEvents = this.dashboardData.existingEvents
       const lastEvent = existingEvents[0]
 
@@ -458,7 +458,7 @@ describe('Dashboard_Events', () => {
       getEvent(lastEvent).should('not.exist')
     })
 
-    it('Dashboard_Events_DeleteEvent_ClickOnEvent', function () {
+    it('Dashboard_Events_DeleteEventClickOnEvent', function () {
       const existingEvents = this.dashboardData.existingEvents
       const lastEvent = existingEvents[0]
 
@@ -472,7 +472,7 @@ describe('Dashboard_Events', () => {
       cy.get('[data-test="warning-modal"]')
     })
 
-    it('Dashboard_Events_DeleteEvent_AllEvent_ButtonDelete', function () {
+    it('Dashboard_Events_DeleteEventAllEventButtonDelete', function () {
       const existingEvents = this.dashboardData.existingEvents
       const lastEvent = existingEvents[0]
 
@@ -517,114 +517,69 @@ describe('Dashboard_Events', () => {
     })
   })
   context('mobile', function () {
-    it('Dashboard_Events_DisplayAllEvents_Mobile', function () {
+    before(() => {
       cy.viewport('iphone-5')
-      const existingEvents = this.dashboardData.existingEvents
+    })
+    it('Dashboard_Events_DisplayDetailsPanel', function () {
       // Login
       cy.login(HEADMASTER, dashboardURL)
       // Click on all events button
       cy.get('[data-test="diary-widget"]').within(() => {
         cy.contains('button', 'Voir tous les événements').click()
       })
-      // Check if all events are visible
+      cy.intercept('GET', '**/get-events**').as('allEvents')
+      cy.wait('@allEvents')
       cy.get('.diary-event').eq(0).click()
-      getEventDetail(existingEvents[0]).should('be.exist')
-      cy.get('.diary-event').eq(1).click()
-      getEventDetail(existingEvents[1]).should('be.exist')
+      cy.get('.diary-event-details-modal').should('be.visible')
+      cy.get('[data-test="closeModal"]').click()
+      cy.get('.diary-event-details-modal').should('not.exist')
     })
 
-    it('Dashboard_Events_CreateEvent_DisplayModal_Mobile', function () {
-      cy.viewport('iphone-5')
-
+    it('Dashboard_Events_CreateEventButtonsVisibility', function () {
       // Create event with the headmaster for the teachers
       cy.login(HEADMASTER, dashboardURL)
-      // Open create modal
-      cy.get('[data-test="buttonCreateEvent"]').click()
-      // Check if update modal is visible
-      cy.get('[data-test="update-diary-event-modal"]').should('be.visible')
-    })
-
-    it('Dashboard_Events_CreateEvent_AllEvent_ButtonCreate_DisplayModal_Mobile', function () {
-      cy.viewport('iphone-5')
-      // Login
-      cy.login(HEADMASTER, dashboardURL)
-      // Click on all event buttton
       cy.get('[data-test="diary-widget"]').within(() => {
+        cy.get('[data-test="buttonCreateEvent"]').should('be.visible')
         cy.contains('button', 'Voir tous les événements').click()
       })
-      // CLick on button +
-      cy.get('.create-button').click()
-      // Check if modal is visible
-      cy.get('[data-test="update-diary-event-modal"]').should('be.visible')
+      cy.get('.create-button').should('be.visible')
     })
 
-    it('Dashboard_Events_UpdateEvent_ClickOnEvent_DisplayModal_Mobile', function () {
-      cy.viewport('iphone-5')
-      const existingEvents = this.dashboardData.existingEvents
-      const lastEvent = existingEvents[0]
-
+    it('Dashboard_Events_DisplayThreePointsOptionsPanelMobile', function () {
       // Login
       cy.login(HEADMASTER, dashboardURL)
 
-      // Open detail last event
-      getEvent(lastEvent).click()
-      // Click on update button
-      cy.get('[data-test="updateButton"]').click()
-      // Check if update modal is visible
-      cy.get('[data-test="update-diary-event-modal"]').should('be.visible')
+      cy.get('[data-test="diary-widget"]').within(() => {
+        cy.get('.diary-event').eq(0).within(() => {
+          cy.get('.options-button').click()
+        })
+      })
+      cy.get('[data-test="update"]').should('be.visible')
+      cy.get('[data-test="delete"]').should('be.visible')
     })
 
-    it('Dashboard_Events_UpdateEvent_AllNews_ButtonUpdate_DisplayModal_Mobile', function () {
-      cy.viewport('iphone-5')
-      const existingEvents = this.dashboardData.existingEvents
-      const lastEvent = existingEvents[0]
+    it('Dashboard_Events_DisplayOptionsClickOnEvent', function () {
+      // Login
+      cy.login(HEADMASTER, dashboardURL)
 
+      cy.get('.diary-event').eq(0).click()
+      cy.get('[data-test="updateButton"]').should('be.visible')
+      cy.get('[data-test="deleteButton"]').should('be.visible')
+    })
+
+    it('Dashboard_Events_DisplayOptionsDetailPanelAllEvents', function () {
       // Login
       cy.login(HEADMASTER, dashboardURL)
 
       // Click to see all events
       cy.get('[data-test="diary-widget"]').within(() => {
         cy.contains('button', 'Voir tous les événements').click()
+        cy.intercept('GET', '**/get-events**').as('allEvents')
+        cy.wait('@allEvents')
       })
-      // Last event should be first
-      getEventDetail(lastEvent).should('be.visible')
-      // Click on update modal
-      cy.get('[data-test="updateButton"]').click()
-      // Check if update modal is visible
-      cy.get('[data-test="update-diary-event-modal"]').should('be.visible')
-    })
-
-    it('Dashboard_Events_DeleteEvent_ClickOnEvent_DisplayModal_Mobile', function () {
-      cy.viewport('iphone-5')
-      const existingEvents = this.dashboardData.existingEvents
-      const lastEvent = existingEvents[0]
-
-      // Login
-      cy.login(HEADMASTER, dashboardURL)
-
-      getEvent(lastEvent).click()
-      cy.get('[data-test="deleteButton"]').click()
-      // Check if in the warning modal content there is the news title
-      cy.get('[data-test="warning-modal"]')
-    })
-
-    it('Dashboard_Events_DeleteEvent_AllEvent_DisplayModal_Mobile', function () {
-      cy.viewport('iphone-5')
-      const existingEvents = this.dashboardData.existingEvents
-      const lastEvent = existingEvents[0]
-
-      // Login
-      cy.login(HEADMASTER, dashboardURL)
-
-      // Click to see all events
-      cy.get('[data-test="diary-widget"]').within(() => {
-        cy.contains('button', 'Voir tous les événements').click()
-      })
-      // Last event should be first
-      getEventDetail(lastEvent).should('be.visible')
-      cy.get('[data-test="deleteButton"]').click()
-      // Check if modal is visible
-      cy.get('[data-test="warning-modal"]').should('be.visible')
+      cy.get('.diary-event').eq(0).click()
+      cy.get('[data-test="updateButton"]').should('be.visible')
+      cy.get('[data-test="deleteButton"]').should('be.visible')
     })
   })
 })
