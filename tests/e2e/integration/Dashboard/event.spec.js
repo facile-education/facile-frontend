@@ -10,7 +10,7 @@ describe('Dashboard_Events', () => {
     })
   })
   context('desktop', function () {
-    it('Dashboard_Events_DisplayEvents_Read_UnRead', function () {
+    it('Dashboard_Events_DisplayEventsReadUnRead', function () {
       const existingEvents = this.dashboardData.existingEvents
       // Login
       cy.login(TEACHER2, dashboardURL)
@@ -52,28 +52,31 @@ describe('Dashboard_Events', () => {
       })
     })
 
-    it('Dashboard_Events_DisplayEvent_Check_ReadRecipient_Info', function () {
+    it('Dashboard_Events_DisplayEventCheckReadRecipientInfo', function () {
       const existingEvents = this.dashboardData.existingEvents
-      const EventForStudents = existingEvents[1]
+      const eventForStudents = existingEvents[1]
 
       // Login with author
       cy.login(HEADMASTER, dashboardURL)
-      getEvent(EventForStudents).click()
+      getEvent(eventForStudents).click()
       cy.get('[data-test="diary-event-details-modal"]').within(() => {
         // Check if no one read this event
-        cy.get('.read-infos').should('contain', '0 destinataire')
+        cy.get('.read-infos').should('contain', 'Lu par', '0 destinataire')
       })
       // Login recipient
       cy.login(STUDENT, dashboardURL)
       // Student read this event
-      getEvent(EventForStudents).click()
+      getEvent(eventForStudents).click()
+      cy.get('[data-test="diary-event-details-modal"]').within(() => {
+        cy.get('.read-infos').should('not.be.exist')
+      })
 
       // Login with author
       cy.login(HEADMASTER, dashboardURL)
-      getEvent(EventForStudents).click()
+      getEvent(eventForStudents).click()
       cy.get('[data-test="diary-event-details-modal"]').within(() => {
         // Check if one recipient read this event
-        cy.get('.read-infos').should('contain', '1 destinataire')
+        cy.get('.read-infos').should('contain', 'Lu par', '1 destinataire')
         // Open recipients infos
         cy.get('.read-infos > button').click()
       })
