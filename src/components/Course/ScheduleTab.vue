@@ -76,6 +76,8 @@ export default {
   }
 
   &.phone {
+    overflow: hidden;
+
     .session-details {
       position: absolute;
       top: 0;
