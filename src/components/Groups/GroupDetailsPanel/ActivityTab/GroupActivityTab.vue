@@ -66,7 +66,7 @@ export default {
     },
     lastActivityDate () {
       if (this.lastActivity) {
-        return dayjs(this.lastActivity.publicationDate, 'YYYY-MM-DD HH:mm:sss')
+        return dayjs(this.lastActivity.publicationDate, 'YYYY-MM-DD HH:mm:ss.SSS')
       } else { // if no activity, return the currentDate
         return dayjs()
       }
@@ -95,7 +95,7 @@ export default {
     getActivities () {
       if (this.group.isGroupRootFolder) {
         this.activitiesLoading = true
-        documentsService.getDocumentGroupActivity(this.group.groupId, this.lastActivityDate.format('YYYY-MM-DD HH:mm:sss'), allActivitiesPaginationSize).then((data) => {
+        documentsService.getDocumentGroupActivity(this.group.groupId, this.lastActivityDate.format('YYYY-MM-DD HH:mm:ss.SSS'), allActivitiesPaginationSize).then((data) => {
           this.activitiesLoading = false
           if (data.success) {
             this.activityList = this.activityList.concat(data.activities)
@@ -107,7 +107,7 @@ export default {
         })
       } else {
         this.activitiesLoading = true
-        getGroupActivity(this.group.groupId, this.lastActivityDate.format('YYYY-MM-DD HH:mm:sss'), allActivitiesPaginationSize).then((data) => {
+        getGroupActivity(this.group.groupId, this.lastActivityDate.format('YYYY-MM-DD HH:mm:ss.SSS'), allActivitiesPaginationSize).then((data) => {
           this.activitiesLoading = false
           if (data.success) {
             if (data.activities.length < allActivitiesPaginationSize) {

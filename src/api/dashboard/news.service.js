@@ -53,7 +53,7 @@ function editNews (newsId, title, content, isImportant, imageId, publicationDate
 function getSchoolNews (maxDate, nbNews, importantOnly, unreadOnly) {
   return axios.get(constants.JSON_WS_URL + NEWS_PATH + NEWS_CTX + 'get-school-news', {
     params: {
-      maxDateString: maxDate.format('YYYY-MM-DD HH:mm:sss'),
+      maxDateString: maxDate.format('YYYY-MM-DD HH:mm:ss.SSS'),
       nbNews,
       importantOnly,
       unreadOnly
