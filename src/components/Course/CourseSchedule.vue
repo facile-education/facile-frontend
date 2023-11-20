@@ -135,7 +135,13 @@ export default {
       })
     },
     selectEvent (event) {
-      this.selectedDate = dayjs(event.startDate, 'YYYY-MM-DD HH:mm')
+      this.isInit = false
+
+      // Update calendar date to correspond to the event Day
+      if (!dayjs(event.startDate, 'YYYY-MM-DD HH:mm').isSame(this.selectedDate, 'day')) {
+        this.selectedDate = dayjs(event.startDate, 'YYYY-MM-DD HH:mm')
+      }
+
       this.$store.dispatch('course/selectSession', event)
     },
     unselectSession () {
