@@ -2,35 +2,24 @@ import { dashboardURL } from '../../support/constants/urls'
 import { MULTI_PARENT, MULTI_STUDENT1, MULTI_STUDENT2, PARENT, STUDENT } from '../../support/constants/users'
 import { getHomework, getHomeworkDetails, selectChild } from '../../support/utils/dashboard'
 
-describe('Dashboard_Activity', () => {
+describe('Dashboard_homeWorks', () => {
   beforeEach(() => {
     cy.loadTables('dashboard/dashboard_tables_homework.sql')
     cy.fixture('dashboard.json').as('dashboardData')
   })
 
-  it('Dashboard_Homework_DisplayHomeworks_Display_In_RightOrder', function () {
+  it('Dashboard_Homework_DisplayHomeworksRightOrderAndContent', function () {
     const existingHomework = this.dashboardData.existingHomework
     // Login
     cy.login(STUDENT, dashboardURL)
     // Set date before the homework's date
     cy.clock().invoke('setSystemTime', Cypress.dayjs(existingHomework[0].dateBefore, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
-    // eslint-disable-next-line cypress/unsafe-to-chain-command
-    cy.get('[data-test="schedule-widget"] > header > nav').scrollIntoView().should('be.visible')
+    cy.get('[data-test="homeWork-widget"]').scrollIntoView()
+    cy.get('[data-test="homeWork-widget"]').should('be.visible')
     // the first homework has a date lower than the second and therefore appears before
     cy.get('.homework-list').first().should('contain', existingHomework[0].title)
-    cy.get('.homework-list').last().should('contain', existingHomework[1].title)
-  })
-
-  it('Dashboard_Homework_DisplayHomeworks_Verify_Content', function () {
-    const existingHomework = this.dashboardData.existingHomework
-    // Login
-    cy.login(STUDENT, dashboardURL)
-    // Set date before the homework's date
-    cy.clock().invoke('setSystemTime', Cypress.dayjs(existingHomework[0].dateBefore, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
-    // eslint-disable-next-line cypress/unsafe-to-chain-command
-    cy.get('[data-test="schedule-widget"] > header > nav').scrollIntoView().should('be.visible')
-    // Check if the content is good
     getHomeworkDetails(existingHomework[0]).should('be.exist')
+    cy.get('.homework-list').last().should('contain', existingHomework[1].title)
     getHomeworkDetails(existingHomework[1]).should('be.exist')
   })
 
@@ -40,9 +29,8 @@ describe('Dashboard_Activity', () => {
     cy.login(STUDENT, dashboardURL)
     // Set date before the homework's date
     cy.clock().invoke('setSystemTime', Cypress.dayjs(existingHomework[0].dateBefore, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
-    // eslint-disable-next-line cypress/unsafe-to-chain-command
-    cy.get('[data-test="schedule-widget"] > header > nav').scrollIntoView().should('be.visible')
-    cy.get('[data-test="homeWork-widget"]').within(() => {
+    cy.get('[data-test="homeWork-widget"]').scrollIntoView()
+    cy.get('[data-test="homeWork-widget"]').should('be.visible').within(() => {
       // Mark first homeWork as done
       cy.get('.homework-list').first().within(() => {
         cy.get('.checkmark').click()
@@ -63,35 +51,22 @@ describe('Dashboard_Activity', () => {
     })
   })
 
-  it('Dashboard_Homework_DisplayHomeworks_Visibility_Button_AllHomeWorks', function () {
+  it.only('Dashboard_Homework_DisplayHomeworks_Visibility_Button_AllHomeWorks', function () {
     const existingHomework = this.dashboardData.existingHomework
 
     // Login
     cy.login(STUDENT, dashboardURL)
     // Set date after the homework's date
     cy.clock().invoke('setSystemTime', Cypress.dayjs(existingHomework[0].dateAfter, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
-    // eslint-disable-next-line cypress/unsafe-to-chain-command
-    cy.get('[data-test="schedule-widget"] > header > nav').scrollIntoView().should('be.visible')
-    cy.get('[data-test="homeWork-widget"]').within(() => {
+    cy.get('[data-test="homeWork-widget"]').scrollIntoView()
+    cy.get('[data-test="homeWork-widget"]').should('be.visible').within(() => {
       // Check is no one is visible
       getHomework(existingHomework[0]).should('not.exist')
       getHomework(existingHomework[1]).should('not.exist')
       // Check if button all homeworks is not visible
       cy.contains('button', 'Voir tous les devoirs').should('not.exist')
-    })
-
-    // Login
-    cy.login(STUDENT, dashboardURL)
-    // Set date before the homework's date
-    cy.clock().invoke('setSystemTime', Cypress.dayjs(existingHomework[0].dateBefore, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
-    // eslint-disable-next-line cypress/unsafe-to-chain-command
-    cy.get('[data-test="schedule-widget"] > header > nav').scrollIntoView().should('be.visible')
-    cy.get('[data-test="homeWork-widget"]').within(() => {
-      // Check if homework is visible
-      getHomework(existingHomework[0]).should('be.visible')
-      getHomework(existingHomework[1]).should('be.visible')
-      // Check if button all homeworks is visible
-      cy.contains('button', 'Voir tous les devoirs').should('be.visible')
+      // Check if placeholder is visible
+      cy.contains('.placeholder', 'Aucun devoir à faire')
     })
   })
 
@@ -102,8 +77,8 @@ describe('Dashboard_Activity', () => {
     cy.login(STUDENT, dashboardURL)
     // Set date before the homework's date
     cy.clock().invoke('setSystemTime', Cypress.dayjs(existingHomework[0].dateBefore, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
-    // eslint-disable-next-line cypress/unsafe-to-chain-command
-    cy.get('[data-test="schedule-widget"] > header > nav').scrollIntoView().should('be.visible')
+    cy.get('[data-test="homeWork-widget"]').scrollIntoView()
+    cy.get('[data-test="homeWork-widget"]').should('be.visible')
     // Check if first homeWork is undone
     cy.get('.homework-list').first().within(() => {
       cy.get('.pellet').should('be.exist')
@@ -122,8 +97,8 @@ describe('Dashboard_Activity', () => {
     cy.login(PARENT, dashboardURL)
     // Set date before the homework's date
     cy.clock().invoke('setSystemTime', Cypress.dayjs(existingHomework[0].dateBefore, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
-    // eslint-disable-next-line cypress/unsafe-to-chain-command
-    cy.get('[data-test="schedule-widget"] > header > nav').scrollIntoView().should('be.visible')
+    cy.get('[data-test="homeWork-widget"]').scrollIntoView()
+    cy.get('[data-test="homeWork-widget"]').should('be.visible')
     // Check if first homeWork is undone
     cy.get('.homework-list').first().within(() => {
       cy.get('.pellet').should('be.exist')
