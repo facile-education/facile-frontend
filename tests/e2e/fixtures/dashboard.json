@@ -38,7 +38,7 @@
             "content": "Contenu de l'évènement pour tous les personnels",
             "startDate": "2023/11/02 11:00",
             "endDate": "2023/11/03 11:00",
-            "duration": "Du jeudi 02 novembre à 11:00 au vendredi 03 novembre à 11:00"
+            "duration": "Du jeudi 02 novembre à 11:00 au dimanche 05 novembre à 11:00"
         },
         {
             "recipient": "Tous les élèves",
@@ -47,7 +47,13 @@
             "content": "Contenu de l'évènement pour tous les élèves",
             "startDate": "2023/11/02 11:00",
             "endDate": "2023/11/03 11:00",
-            "duration": "Du jeudi 02 novembre à 11:00 au vendredi 03 novembre à 11:00"
+            "duration": "Du jeudi 02 novembre à 11:00 au dimanche 05 novembre à 11:00"
+        },
+        {
+            "recipient": "Tous les personnels",
+            "title": "Second évènement pour les enseignants",
+            "location": "Lieu du second évènement pour les enseignants",
+            "content": "Détails du second évènement pour les enseignants"
         }
     ],
     "NewEvent": {
@@ -228,8 +234,22 @@
                             "teacher": "T. SCUTTER"
                         }
                     ]
+                },
+                {
+                    "date": "2023/11/07",
+                    "sessions": [
+                        {
+                            "startHour": "08:45",
+                            "endHour": "09:30",
+                            "name": "Mathématiques",
+                            "classRoom": "S182",
+                            "teacher": "F. CABRERA"
+                        }
+                    ]
                 }
             ]
         }
-    ]
+    ],
+    "holydayStart": "20/10",
+    "holydayEnd": "30/10"
 }

@@ -16,6 +16,70 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `Agenda_EventPopulation`
+--
+
+DROP TABLE IF EXISTS `Agenda_EventPopulation`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Agenda_EventPopulation` (
+  `eventId` int(11) NOT NULL,
+  `groupId` int(11) NOT NULL,
+  `roleId` int(11) DEFAULT NULL,
+  `schoolId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`eventId`,`groupId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Agenda_EventPopulation`
+--
+
+LOCK TABLES `Agenda_EventPopulation` WRITE;
+/*!40000 ALTER TABLE `Agenda_EventPopulation` DISABLE KEYS */;
+INSERT INTO `Agenda_EventPopulation` VALUES
+(553401,45407,45104,45405),
+(563201,45407,45302,45405),
+(563202,45407,45103,45405),
+(566001,45407,45302,45405),
+(566301,45407,45302,45405),
+(566302,45407,45103,45405);
+/*!40000 ALTER TABLE `Agenda_EventPopulation` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Agenda_EventRead`
+--
+
+DROP TABLE IF EXISTS `Agenda_EventRead`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Agenda_EventRead` (
+  `eventId` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
+  `readDate` datetime DEFAULT NULL,
+  PRIMARY KEY (`eventId`,`userId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Agenda_EventRead`
+--
+
+LOCK TABLES `Agenda_EventRead` WRITE;
+/*!40000 ALTER TABLE `Agenda_EventRead` DISABLE KEYS */;
+INSERT INTO `Agenda_EventRead` VALUES
+(553401,58811,'2023-11-20 15:35:12'),
+(563201,58811,'2023-10-31 09:10:21'),
+(563202,58811,'2023-10-31 09:12:21'),
+(566001,58811,'2023-11-02 09:40:28'),
+(566301,45567,'2023-11-06 11:12:11'),
+(566301,58811,'2023-11-02 10:00:50'),
+(566302,58811,'2023-11-02 10:02:12');
+/*!40000 ALTER TABLE `Agenda_EventRead` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `Agenda_Event`
 --
 
@@ -42,99 +106,10 @@ CREATE TABLE `Agenda_Event` (
 LOCK TABLES `Agenda_Event` WRITE;
 /*!40000 ALTER TABLE `Agenda_Event` DISABLE KEYS */;
 INSERT INTO `Agenda_Event` VALUES
+(553401,20097,'2023-11-20 16:30:12','2023-11-20 17:00:00','Second évènement pour les enseignants','<html>\n <head></head>\n<body>\n <p>Détails du second évènement pour les enseignants</p> \n</body></body>\n</html>','Lieu du second évènement pour les enseignants',58811),
 (566301,20097,'2023-11-02 11:00:50','2023-11-05 11:00:00','Évènement pour tous les personnels','<html>\n <head></head>\n<body>\n <p>Contenu de l\'évènement pour tous les personnels</p> \n</body></body>\n</html>','Lieu de l\'événement pour tous les personnels',58811),
 (566302,20097,'2023-11-02 11:00:12','2023-11-05 11:00:00','Évènement pour tous les élèves','<html>\n <head></head>\n<body>\n <p>Contenu de l\'évènement pour tous les élèves</p> \n</body></body>\n</html>','Lieu de l\'évènement pour tous les élèves',58811);
 /*!40000 ALTER TABLE `Agenda_Event` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Agenda_EventPopulation`
---
-
-DROP TABLE IF EXISTS `Agenda_EventPopulation`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Agenda_EventPopulation` (
-  `eventId` int(11) NOT NULL,
-  `groupId` int(11) NOT NULL,
-  `roleId` int(11) DEFAULT NULL,
-  `schoolId` int(11) DEFAULT NULL,
-  PRIMARY KEY (`eventId`,`groupId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Agenda_EventPopulation`
---
-
-LOCK TABLES `Agenda_EventPopulation` WRITE;
-/*!40000 ALTER TABLE `Agenda_EventPopulation` DISABLE KEYS */;
-INSERT INTO `Agenda_EventPopulation` VALUES
-(563201,45407,45302,45405),
-(563202,45407,45103,45405),
-(566001,45407,45302,45405),
-(566301,45407,45302,45405),
-(566302,45407,45103,45405);
-/*!40000 ALTER TABLE `Agenda_EventPopulation` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Agenda_EventRead`
---
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Agenda_EventPopulation` (
-  `eventId` int(11) NOT NULL,
-  `groupId` int(11) NOT NULL,
-  `roleId` int(11) DEFAULT NULL,
-  PRIMARY KEY (`eventId`,`groupId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Agenda_EventPopulation`
---
-
-LOCK TABLES `Agenda_EventPopulation` WRITE;
-/*!40000 ALTER TABLE `Agenda_EventPopulation` DISABLE KEYS */;
-INSERT INTO `Agenda_EventPopulation` VALUES
-(563201,45407,45302),
-(563202,45407,45103),
-(566001,45407,45302),
-(566301,45407,45302),
-(566302,45407,45103);
-/*!40000 ALTER TABLE `Agenda_EventPopulation` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Agenda_EventRead`
---
-
-DROP TABLE IF EXISTS `Agenda_EventRead`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Agenda_EventRead` (
-  `eventId` int(11) NOT NULL,
-  `userId` int(11) NOT NULL,
-  `readDate` datetime DEFAULT NULL,
-  PRIMARY KEY (`eventId`,`userId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Agenda_EventRead`
---
-
-LOCK TABLES `Agenda_EventRead` WRITE;
-/*!40000 ALTER TABLE `Agenda_EventRead` DISABLE KEYS */;
-INSERT INTO `Agenda_EventRead` VALUES
-(563201,58811,'2023-10-31 09:10:21'),
-(563202,58811,'2023-10-31 09:12:21'),
-(566001,58811,'2023-11-02 09:40:28'),
-(566301,45567,'2023-11-06 11:12:11'),
-(566301,58811,'2023-11-02 10:00:50'),
-(566302,58811,'2023-11-02 10:02:12');
-/*!40000 ALTER TABLE `Agenda_EventRead` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -191,4 +166,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-06 11:13:11
+-- Dump completed on 2023-11-20 15:40:00

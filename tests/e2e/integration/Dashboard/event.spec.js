@@ -31,6 +31,39 @@ describe('Dashboard_Events', () => {
       getEvent(existingEvents[0]).should('not.exist')
     })
 
+    it.only('Dashboard_Events_DisplayEventsReadUnRead', function () {
+      const existingEvents = this.dashboardData.existingEvents
+      // Login
+      cy.login(TEACHER2, dashboardURL)
+
+      // Display all events
+      cy.get('[data-test="diary-widget"]').within(() => {
+        cy.contains('button', 'Voir tous les événements').click()
+      })
+      // Al: events loading
+      cy.intercept('GET', '**/get-events**').as('allEvents')
+      cy.wait('@allEvents')
+      // Check if second event is unread
+      cy.get('.diary-event').eq(1).should('have.class', 'theme-border-color')
+      // filter to display unread events
+      cy.get('[data-test="eventUnRealOnly"]').click()
+
+      // Mark second event as read
+      cy.get('.diary-event').eq(0).click()
+      // Check if is already visible
+      getEventDetail(existingEvents[2]).should('be.visible')
+
+      // Filter to display all events
+      cy.get('[data-test="eventUnRealOnly"]').click()
+      // Verifiy event length
+      cy.get('.diary-event').should('have.length', 2)
+
+      // Filter to display unread events
+      cy.get('[data-test="eventUnRealOnly"]').click()
+      // Check if no one is visible
+      cy.get('.diary-event').should('have.length', 0)
+    })
+
     it('Dashboard_Events_DisplayEventCheckContent', function () {
       const existingEvents = this.dashboardData.existingEvents
       const lastEvent = existingEvents[0]
