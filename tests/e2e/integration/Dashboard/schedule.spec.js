@@ -2,61 +2,74 @@ import { dashboardURL } from '../../support/constants/urls'
 import { MULTI_PARENT, MULTI_STUDENT1, MULTI_STUDENT2, STUDENT } from '../../support/constants/users'
 import { getSessions, selectChild } from '../../support/utils/dashboard'
 
-describe('Dashboard_Activity', () => {
+describe('Dashboard_Schedule', () => {
   beforeEach(() => {
-    cy.fixture('dashboard.json').as('dashboardData')
+    cy.fixture('dashboard.json').as('dashboardData').then(data => {
+      cy.clock(Cypress.dayjs(data.existingSessionsLists[0].sessionsLists[1].date, 'YYYY/MM/DD HH:mm').toDate().getTime())
+    })
   })
 
-  it('Dashboard_Schedule_DisplaySessions_MultiParent_ChangeStudent_DropDown', function () {
-    const SessionsDate = this.dashboardData.existingSessionsLists[0].sessionsLists[1].date
-    const SessionsListStudent1 = this.dashboardData.existingSessionsLists[0].sessionsLists[1].sessions
-    const SessionsListStudent2 = this.dashboardData.existingSessionsLists[0].sessionsLists[2].sessions
+  it('Dashboard_Schedule_DisplaySessionsMultiParentChangeStudentDropDown', function () {
+    const sessionsListStudent1 = this.dashboardData.existingSessionsLists[0].sessionsLists[1].sessions
+    const sessionsListStudent2 = this.dashboardData.existingSessionsLists[0].sessionsLists[2].sessions
 
     // Login
     cy.login(MULTI_PARENT, dashboardURL)
-    // Set date before the homework's date
-    cy.clock().invoke('setSystemTime', Cypress.dayjs(SessionsDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
 
     cy.get('.personal-widgets').within(() => {
       // Select first child
       selectChild(MULTI_STUDENT1.firstName, MULTI_STUDENT1.firstName)
       cy.get('[data-test="schedule-widget"]').within(() => {
-        getSessions(SessionsListStudent1[0]).should('be.visible')
+        getSessions(sessionsListStudent1[0]).should('be.visible')
       })
 
       // Change to second child
 
       selectChild(MULTI_STUDENT1.firstName, MULTI_STUDENT2.firstName)
       cy.get('[data-test="schedule-widget"]').within(() => {
-        getSessions(SessionsListStudent2[0]).should('be.visible')
+        getSessions(sessionsListStudent2[0]).should('be.visible')
       })
     })
   })
 
-  it('Dashboard_Schedule_DisplaySessions_Verify_Content', function () {
-    const SessionsDate = this.dashboardData.existingSessionsLists[0].sessionsLists[0].date
-    const SessionsList = this.dashboardData.existingSessionsLists[0].sessionsLists[0].sessions
+  it('Dashboard_Schedule_DisplaySessionsVerifyContent', function () {
+    const sessionsList = this.dashboardData.existingSessionsLists[0].sessionsLists[0].sessions
     // Login
     cy.login(STUDENT, dashboardURL)
-    // Set date
-    cy.clock().invoke('setSystemTime', Cypress.dayjs(SessionsDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
-    // eslint-disable-next-line cypress/unsafe-to-chain-command
-    cy.get('[data-test="schedule-widget"] > header > nav').scrollIntoView().should('be.visible')
+    cy.get('[data-test="schedule-widget"]').scrollIntoView()
+    cy.get('[data-test="schedule-widget"]').should('be.visible')
 
     // Check session's content for this date
     cy.get('[data-test="schedule-widget"]').within(() => {
-      for (let i = 0; i < SessionsList.length - 1; i++) {
-        getSessions(SessionsList[i]).should('be.exist')
+      for (let i = 0; i < sessionsList.length - 1; i++) {
+        cy.get('.schedule-item').eq(i).should('contain', sessionsList[i].name)
+        getSessions(sessionsList[i]).should('be.exist')
       }
     })
   })
 
-  it('Dashboard_Schedule_DisplaySessions_NextButton_After/Before_WeekEnd', function () {
-    const fridayDate = '2023/11/10'
+  it('Dashboard_Schedule_Navigation', function () {
+    const sessionsListCurrentDay = this.dashboardData.existingSessionsLists[0].sessionsLists[0].sessions
+    const sessionsListNextDay = this.dashboardData.existingSessionsLists[0].sessionsLists[3].sessions
+    // Login
+    cy.login(STUDENT, dashboardURL)
+    cy.get('[data-test="schedule-widget"]').scrollIntoView()
+    cy.get('[data-test="schedule-widget"]').should('be.visible').within(() => {
+      getSessions(sessionsListCurrentDay[0]).should('be.exist')
+      // Click on button next day
+      cy.get('[data-test="NextDay"]').click()
+      getSessions(sessionsListNextDay[0]).should('be.exist')
+    })
+  })
+
+  it('Dashboard_Schedule_DisplaySessionsGoForward', function () {
+    const sessionDate = this.dashboardData.existingSessionsLists[0].sessionsLists[1].date
+    const holydayStart = this.dashboardData.holydayStart
+    const holydayEnd = this.dashboardData.holydayEnd
     // Login
     cy.login(STUDENT, dashboardURL)
     // Set date
-    cy.clock().invoke('setSystemTime', Cypress.dayjs(fridayDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+    cy.clock().invoke('setSystemTime', Cypress.dayjs(sessionDate, 'YYYY/MM/DD').day(5).toDate().getTime()) // To put after login to make it works
     // eslint-disable-next-line cypress/unsafe-to-chain-command
     cy.get('[data-test="schedule-widget"] > header > nav').scrollIntoView().should('be.visible')
     cy.get('[data-test="schedule-widget"]').within(() => {
@@ -69,35 +82,28 @@ describe('Dashboard_Activity', () => {
       // Check if previous day is friday and not sunday
       cy.get('[data-test="date"]').should('contain', 'ven')
     })
-  })
 
-  it('Dashboard_Schedule_DisplaySessions_NextButton_After/Before_Holiday', function () {
-    const holidayDate = '2023/10/20'
     // Login
     cy.login(STUDENT, dashboardURL)
     // Set date
-    cy.clock().invoke('setSystemTime', Cypress.dayjs(holidayDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+    cy.clock().invoke('setSystemTime', Cypress.dayjs('2023/10/20', 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
     // eslint-disable-next-line cypress/unsafe-to-chain-command
     cy.get('[data-test="schedule-widget"] > header > nav').scrollIntoView().should('be.visible')
     cy.get('[data-test="schedule-widget"]').within(() => {
       // Click on button next day
       cy.get('[data-test="NextDay"]').click()
       // Check if next day is backToSchool day
-      cy.get('[data-test="date"]').should('contain', '30/10')
+      cy.get('[data-test="date"]').should('contain', holydayEnd)
       // Click on previous day button
       cy.get('[data-test="PreviousDay"]').click()
       // Check if previous day is last day before holiday
-      cy.get('[data-test="date"]').should('contain', '20/10')
+      cy.get('[data-test="date"]').should('contain', holydayStart)
     })
   })
 
   it('Dashboard_Schedule_Redirect_MultiParent_Display_Good_ChildrenWork', function () {
-    const SessionsDate = this.dashboardData.existingSessionsLists[0].sessionsLists[1].date
-
     // Login
     cy.login(MULTI_PARENT, dashboardURL)
-    // Set date
-    cy.clock().invoke('setSystemTime', Cypress.dayjs(SessionsDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
 
     cy.get('.personal-widgets').within(() => {
       // Select first child
@@ -113,8 +119,6 @@ describe('Dashboard_Activity', () => {
     // Change to second Child
     // Login
     cy.login(MULTI_PARENT, dashboardURL)
-    // Set date before the homework's date
-    cy.clock().invoke('setSystemTime', Cypress.dayjs(SessionsDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
 
     cy.get('.personal-widgets').within(() => {
       // Select first child
