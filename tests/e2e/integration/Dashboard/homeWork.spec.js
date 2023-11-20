@@ -5,15 +5,15 @@ import { getHomework, getHomeworkDetails, selectChild } from '../../support/util
 describe('Dashboard_homeWorks', () => {
   beforeEach(() => {
     cy.loadTables('dashboard/dashboard_tables_homework.sql')
-    cy.fixture('dashboard.json').as('dashboardData')
+    cy.fixture('dashboard.json').as('dashboardData').then(data => {
+      cy.clock(Cypress.dayjs(data.existingHomework[0].dateBefore, 'YYYY/MM/DD').toDate().getTime())
+    })
   })
 
   it('Dashboard_Homework_DisplayHomeworksRightOrderAndContent', function () {
     const existingHomework = this.dashboardData.existingHomework
     // Login
     cy.login(STUDENT, dashboardURL)
-    // Set date before the homework's date
-    cy.clock().invoke('setSystemTime', Cypress.dayjs(existingHomework[0].dateBefore, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
     cy.get('[data-test="homeWork-widget"]').scrollIntoView()
     cy.get('[data-test="homeWork-widget"]').should('be.visible')
     // the first homework has a date lower than the second and therefore appears before
@@ -24,11 +24,8 @@ describe('Dashboard_homeWorks', () => {
   })
 
   it('Dashboard_Homework_DisplayHomeworks_Filter_Done_Undone', function () {
-    const existingHomework = this.dashboardData.existingHomework
     // Login
     cy.login(STUDENT, dashboardURL)
-    // Set date before the homework's date
-    cy.clock().invoke('setSystemTime', Cypress.dayjs(existingHomework[0].dateBefore, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
     cy.get('[data-test="homeWork-widget"]').scrollIntoView()
     cy.get('[data-test="homeWork-widget"]').should('be.visible').within(() => {
       // Mark first homeWork as done
@@ -51,7 +48,7 @@ describe('Dashboard_homeWorks', () => {
     })
   })
 
-  it.only('Dashboard_Homework_DisplayHomeworks_Visibility_Button_AllHomeWorks', function () {
+  it('Dashboard_Homework_DisplayHomeworks_Visibility_Button_AllHomeWorks', function () {
     const existingHomework = this.dashboardData.existingHomework
 
     // Login
@@ -71,12 +68,8 @@ describe('Dashboard_homeWorks', () => {
   })
 
   it('Dashboard_Homework_SetHomeworkDone_WithStudent', function () {
-    const existingHomework = this.dashboardData.existingHomework
-
     // Login
     cy.login(STUDENT, dashboardURL)
-    // Set date before the homework's date
-    cy.clock().invoke('setSystemTime', Cypress.dayjs(existingHomework[0].dateBefore, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
     cy.get('[data-test="homeWork-widget"]').scrollIntoView()
     cy.get('[data-test="homeWork-widget"]').should('be.visible')
     // Check if first homeWork is undone
@@ -91,12 +84,8 @@ describe('Dashboard_homeWorks', () => {
   })
 
   it('Dashboard_Homework_SetHomeworkDone_WithParent', function () {
-    const existingHomework = this.dashboardData.existingHomework
-
     // Login
     cy.login(PARENT, dashboardURL)
-    // Set date before the homework's date
-    cy.clock().invoke('setSystemTime', Cypress.dayjs(existingHomework[0].dateBefore, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
     cy.get('[data-test="homeWork-widget"]').scrollIntoView()
     cy.get('[data-test="homeWork-widget"]').should('be.visible')
     // Check if first homeWork is undone
