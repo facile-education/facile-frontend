@@ -88,7 +88,7 @@ describe('Dashboard_Events', () => {
       })
     })
 
-    it('Dashboard_Events_DisplayAllEvents', function () {
+    it.only('Dashboard_Events_DisplayAllEvents', function () {
       const existingEvents = this.dashboardData.existingEvents
       // Login
       cy.login(HEADMASTER, dashboardURL)
@@ -97,13 +97,24 @@ describe('Dashboard_Events', () => {
         cy.contains('button', 'Voir tous les événements').click()
       })
       // Check if all events are visible
+      // Click on first event
       cy.get('.diary-event').eq(0).click()
-      getEventDetail(existingEvents[0]).should('be.exist')
-      cy.get('.diary-event').eq(1).click()
+      // Chech if detail modal is not visible
+      cy.get('[data-test="diary-event-details-modal"]').should('not.exist')
       getEventDetail(existingEvents[1]).should('be.exist')
+      // Check if event selected has right class
+      cy.get('.diary-event').eq(0).should('have.class', 'theme-light-background-color')
+      cy.get('.diary-event').eq(1).should('not.have.class', 'theme-light-background-color')
+
+      // click on second event
+      cy.get('.diary-event').eq(1).click()
+      // Check if event selected has right class
+      cy.get('.diary-event').eq(1).should('have.class', 'theme-light-background-color')
+      cy.get('.diary-event').eq(0).should('not.have.class', 'theme-light-background-color')
+      getEventDetail(existingEvents[0]).should('be.exist')
     })
 
-    it('Dashboard_Events_CreateEvent_ButtonCreate', function () {
+    it('Dashboard_Events_CreateEventClickOnButtonCreate', function () {
       const NewEvent = this.dashboardData.NewEvent
 
       // Check if an admin can create an event
