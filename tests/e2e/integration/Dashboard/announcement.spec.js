@@ -10,7 +10,7 @@ describe('Dashboard_Announcements', () => {
     })
   })
   context('desktop', function () {
-    it('Dashboard_Announcement_DisplayAnnouncements_Read_UnRead', function () {
+    it('Dashboard_Announcement_DisplayAnnouncementsReadUnRead', function () {
       const furturNews = this.dashboardData.futurNews
       const existingNews = this.dashboardData.existingNews
       // Login
@@ -38,7 +38,7 @@ describe('Dashboard_Announcements', () => {
       getNews(existingNews[0]).should('not.exist')
     })
 
-    it('Dashboard_Announcement_DisplayAnnouncements_FuturRelease', function () {
+    it('Dashboard_Announcement_DisplayAnnouncementsFuturRelease', function () {
       const furturNews = this.dashboardData.futurNews
       // Login
       cy.login(STUDENT, dashboardURL)
@@ -63,7 +63,7 @@ describe('Dashboard_Announcements', () => {
       getNews(furturNews).should('be.visible')
     })
 
-    it('Dashboard_Annoucements_DisplayAnnouncement_Check_Content ', function () {
+    it('Dashboard_Annoucements_DisplayAnnouncementCheckContent ', function () {
       const existingNews = this.dashboardData.existingNews
       const lastNews = existingNews[existingNews.length - 1]
 
@@ -84,7 +84,7 @@ describe('Dashboard_Announcements', () => {
       })
     })
 
-    it('Dashboard_Announcements_DisplayAnnouncement_Check_ReadRecipient_Info', function () {
+    it('Dashboard_Announcements_DisplayAnnouncementCheckReadRecipientInfo', function () {
       const existingNews = this.dashboardData.existingNews
       const lastNews = existingNews[existingNews.length - 1]
 
@@ -93,19 +93,23 @@ describe('Dashboard_Announcements', () => {
       getNews(lastNews).click()
       cy.get('[data-test="news-details-modal"]').within(() => {
         // No one read this event
-        cy.get('.read-infos').should('contain', '0 destinataire')
+        cy.get('.read-infos').should('contain', 'Lu par', '0 destinataire')
       })
       // Login recipient
       cy.login(PARENT, dashboardURL)
-      // Student read this event
+      // Parent read this event
       getNews(lastNews).click()
+      // Check if parent can't see the read infos
+      cy.get('[data-test="news-details-modal"]').within(() => {
+        cy.get('.read-infos').should('not.be.exist')
+      })
 
       // Login with author
       cy.login(HEADMASTER, dashboardURL)
       getNews(lastNews).click()
       cy.get('[data-test="news-details-modal"]').within(() => {
         // No one read this event
-        cy.get('.read-infos').should('contain', '1 destinataire')
+        cy.get('.read-infos').should('contain', 'Lu par', '1 destinataire')
         // Open recipients infos
         cy.get('.read-infos > button').click()
       })
@@ -120,9 +124,10 @@ describe('Dashboard_Announcements', () => {
 
     it('Dashboard_Announcements_DisplayAllAnnouncements', function () {
       const existingNews = this.dashboardData.existingNews
+      const furturNews = this.dashboardData.futurNews
       // Login
       cy.login(HEADMASTER, dashboardURL)
-
+      cy.clock().invoke('setSystemTime', Cypress.dayjs(furturNews.dateBeforeRelease, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
       // Click on all announcements button
       cy.get('[data-test="announcement-widget"]').within(() => {
         cy.contains('button', 'Voir toutes les annonces').click()
@@ -132,9 +137,14 @@ describe('Dashboard_Announcements', () => {
         if (i === existingNews.length - 1) {
           cy.get('.announcements-list').contains('.announcement', existingNews[i].title).should('be.exist')
           getNewsDetail(existingNews[i]).should('be.exist')
+          cy.get('.announcement').eq(0).should('have.class', 'theme-light-background-color')
+          cy.get('.announcement').eq(1).should('not.have.class', 'theme-light-background-color')
         } else {
           cy.get('.announcements-list').contains('.announcement', existingNews[i].title).should('be.exist').click()
+          cy.get('[data-test="news-details-modal"]').should('not.exist')
           getNewsDetail(existingNews[i]).should('be.exist')
+          cy.get('.announcement').eq(0).should('have.class', 'theme-light-background-color')
+          cy.get('.announcement').eq(1).should('not.have.class', 'theme-light-background-color')
         }
       }
     })
@@ -176,7 +186,7 @@ describe('Dashboard_Announcements', () => {
       getNews(NewNews).should('be.exist')
     })
 
-    it('Dashboard_Announcements_CreateAnnouncement_AllAnnouncement_ButtonCreate', function () {
+    it('Dashboard_Announcements_CreateAnnouncementAllAnnouncementButtonCreate', function () {
       // Login
       cy.login(HEADMASTER, dashboardURL)
       // Click on all announcements buttton
@@ -189,7 +199,7 @@ describe('Dashboard_Announcements', () => {
       cy.get('[data-test="update-news-modal"]').should('be.visible')
     })
 
-    it('Dashboard_Announcements_CreateAnnouncement_Display_WarningMessage_SetInformations', function () {
+    it('Dashboard_Announcements_CreateAnnouncementDisplayWarningMessageSetInformations', function () {
       const NewNews = this.dashboardData.NewNews
 
       // Login
@@ -238,7 +248,7 @@ describe('Dashboard_Announcements', () => {
       cy.get('[data-test="confirmButton"]').click()
     })
 
-    it('Dashboard_Announcements_CreateAnnouncement_Display_WarningMessage_Not_SetInformations', function () {
+    it('Dashboard_Announcements_CreateAnnouncementDisplayWarningMessageNotSetInformations', function () {
       // Login
       cy.login(HEADMASTER, dashboardURL)
 
@@ -254,7 +264,7 @@ describe('Dashboard_Announcements', () => {
       cy.get('[data-test="update-news-modal"]').should('not.exist')
     })
 
-    it('Dashboard_Announcements_UpdateAnnouncement_Mouseover', function () {
+    it('Dashboard_Announcements_UpdateAnnouncementMouseover', function () {
       const existingNews = this.dashboardData.existingNews
       const lastNews = existingNews[existingNews.length - 1]
       const newsToEdit = this.dashboardData.newsToEdit
@@ -297,7 +307,7 @@ describe('Dashboard_Announcements', () => {
       getNews(newsToEdit).should('be.exist')
     })
 
-    it('Dashboard_Announcements_UpdateAnnouncement_ClickOnNews', function () {
+    it('Dashboard_Announcements_UpdateAnnouncementClickOnNews', function () {
       const existingNews = this.dashboardData.existingNews
       const lastNews = existingNews[existingNews.length - 1]
 
@@ -312,7 +322,7 @@ describe('Dashboard_Announcements', () => {
       cy.get('[data-test="update-news-modal"]').should('be.visible')
     })
 
-    it('Dashboard_Announcements_UpdateAnnouncement_AllNews_UpdateButton', function () {
+    it('Dashboard_Announcements_UpdateAnnouncementAllNewsUpdateButton', function () {
       const existingNews = this.dashboardData.existingNews
       const lastNews = existingNews[existingNews.length - 1]
 
@@ -331,7 +341,7 @@ describe('Dashboard_Announcements', () => {
       cy.get('[data-test="update-news-modal"]').should('be.visible')
     })
 
-    it('Dashboard_Announcements_UpdateAnnouncement_MarkAsUnreadForAll', function () {
+    it('Dashboard_Announcements_UpdateAnnouncementMarkAsUnreadForAll', function () {
       const existingNews = this.dashboardData.existingNews
       const newsToEdit = this.dashboardData.newsToEdit
       const furturNews = this.dashboardData.futurNews
@@ -371,7 +381,7 @@ describe('Dashboard_Announcements', () => {
       })
     })
 
-    it('Dashboard_Announcements_UpdateAnnouncement_Display_WarningMessage_SetInformations', function () {
+    it('Dashboard_Announcements_UpdateAnnouncementDisplayWarningMessageSetInformations', function () {
       const existingNews = this.dashboardData.existingNews
       const lastNews = existingNews[existingNews.length - 1]
       const newsToEdit = this.dashboardData.newsToEdit
@@ -428,7 +438,7 @@ describe('Dashboard_Announcements', () => {
       cy.get('[data-test="confirmButton"]').click()
     })
 
-    it('Dashboard_Announcements_UpdateAnnouncement_Display_WarningMessage_Not_SetInformations', function () {
+    it('Dashboard_Announcements_UpdateAnnouncementDisplayWarningMessageNotSetInformations', function () {
       const existingNews = this.dashboardData.existingNews
       const lastNews = existingNews[existingNews.length - 1]
       // Login
@@ -448,7 +458,7 @@ describe('Dashboard_Announcements', () => {
       cy.get('[data-test="update-news-modal"]').should('not.exist')
     })
 
-    it('Dashboard_Announcements_DeleteAnnouncement_Mouseover', function () {
+    it('Dashboard_Announcements_DeleteAnnouncementMouseover', function () {
       const existingNews = this.dashboardData.existingNews
       const lastNews = existingNews[existingNews.length - 1]
 
@@ -469,7 +479,7 @@ describe('Dashboard_Announcements', () => {
       getNews(lastNews).should('not.exist')
     })
 
-    it('Dashboard_Announcements_DeleteAnnouncement_ClickOnNews', function () {
+    it('Dashboard_Announcements_DeleteAnnouncementClickOnNews', function () {
       const existingNews = this.dashboardData.existingNews
       const lastNews = existingNews[existingNews.length - 1]
 
@@ -486,7 +496,7 @@ describe('Dashboard_Announcements', () => {
       })
     })
 
-    it('Dashboard_Announcements_DeleteAnnouncement_AllNews_DeleteButton', function () {
+    it('Dashboard_Announcements_DeleteAnnouncementAllNewsDeleteButton', function () {
       const existingNews = this.dashboardData.existingNews
       const lastNews = existingNews[existingNews.length - 1]
 
@@ -508,142 +518,54 @@ describe('Dashboard_Announcements', () => {
     })
   })
   context('mobile', function () {
-    it('Dashboard_Announcements_DisplayAllAnnouncements_Mobile', function () {
+    before(() => {
       cy.viewport('iphone-5')
-      const existingNews = this.dashboardData.existingNews
-      // Login
+    })
+    it('Dashboard_Announcements_CreateAnnouncementButtonsVisibility', function () {
       cy.login(HEADMASTER, dashboardURL)
 
-      // Click on all announcements button
       cy.get('[data-test="announcement-widget"]').within(() => {
+        cy.get('[data-test="buttonCreateAnnoucement"]').should('be.visible')
         cy.contains('button', 'Voir toutes les annonces').click()
       })
-      // to load page
-      cy.get('.announcements-list').within(() => {
-        cy.get('.scroll').should('be.visible')
-      })
-      // Check if all news are visible
-      for (let i = 0; i < existingNews.length - 1; i++) {
-        cy.get('.announcements-list').contains('.announcement', existingNews[i].title).should('be.exist').click()
-        getNewsDetail(existingNews[i]).should('be.exist')
-      }
+      cy.get('.create-button').should('be.visible')
     })
 
-    it('Dashboard_Announcements_CreateAnnouncement_DisplayModal_Mobile', function () {
-      cy.viewport('iphone-5')
-      // Check if an admin can create an annoucement
-      cy.login(SCHOOL_ADMIN, dashboardURL)
-      cy.get('[data-test="buttonCreateAnnoucement"]').click()
-      cy.get('[data-test="update-news-modal"]').should('be.visible')
-
-      // Check if a delegate can create an annoucement
-      cy.login(TEACHER, dashboardURL)
-      cy.get('[data-test="buttonCreateAnnoucement"]').click()
-      cy.get('[data-test="update-news-modal"]').should('be.visible')
-
-      // Create announcement with the headmaster for the teachers
-      cy.login(HEADMASTER, dashboardURL)
-      // Open create modal
-      cy.get('[data-test="buttonCreateAnnoucement"]').click()
-      cy.get('[data-test="update-news-modal"]').should('be.visible')
-    })
-
-    it('Dashboard_Announcements_CreateAnnouncement_AllAnnouncement_DisplayModal_Mobile', function () {
-      cy.viewport('iphone-5')
+    it('Dashboard_Announcements_DisplayThreePointsOptionsPanelMobile', function () {
       // Login
       cy.login(HEADMASTER, dashboardURL)
-      // Click on all announcements buttton
+
+      cy.get('[data-test="announcement-widget"]').within(() => {
+        cy.get('.announcement').eq(1).within(() => {
+          cy.get('.options-button').click()
+        })
+      })
+      cy.get('[data-test="update"]').should('be.visible')
+      cy.get('[data-test="delete"]').should('be.visible')
+    })
+
+    it('Dashboard_Announcements_DisplayOptionsClickOnAnnouncements', function () {
+      // Login
+      cy.login(HEADMASTER, dashboardURL)
+
+      cy.get('.announcement').eq(1).click()
+      cy.get('[data-test="updateButton"]').should('be.visible')
+      cy.get('[data-test="deleteButton"]').should('be.visible')
+    })
+
+    it('Dashboard_Announcements_DisplayOptionsDetailPanelAllAnnouncements', function () {
+      // Login
+      cy.login(HEADMASTER, dashboardURL)
+
+      // Click to see all events
       cy.get('[data-test="announcement-widget"]').within(() => {
         cy.contains('button', 'Voir toutes les annonces').click()
+        cy.intercept('GET', '**/get-school-news**').as('allNews')
+        cy.wait('@allNews')
       })
-      // CLick on button +
-      cy.get('.create-button').click()
-      // Check if modal is visible
-      cy.get('[data-test="update-news-modal"]').should('be.visible')
-    })
-
-    it('Dashboard_Announcements_UpdateAnnouncement_ClickOnNews_DisplayModal_Mobile', function () {
-      cy.viewport('iphone-5')
-      const existingNews = this.dashboardData.existingNews
-      const lastNews = existingNews[existingNews.length - 1]
-
-      // Login
-      cy.login(HEADMASTER, dashboardURL)
-
-      // Click on last news
-      getNews(lastNews).click()
-      // Click on update button
-      cy.get('[data-test="updateButton"]').click()
-      // Check if modal is visible
-      cy.get('[data-test="update-news-modal"]').should('be.visible')
-    })
-
-    it('Dashboard_Announcements_UpdateAnnouncement_AllNews_DisplayModal_Mobile', function () {
-      cy.viewport('iphone-5')
-      const existingNews = this.dashboardData.existingNews
-      const lastNews = existingNews[existingNews.length - 1]
-
-      // Login
-      cy.login(HEADMASTER, dashboardURL)
-
-      // Click to see all news
-      cy.get('[data-test="announcement-widget"]').within(() => {
-        cy.contains('button', 'Voir toutes les annonces').click()
-      })
-      // to load page
-      cy.get('.announcements-list').within(() => {
-        cy.get('.scroll').should('be.visible')
-      })
-      // Click on last news
-      cy.get('.announcements-list').contains('.announcement', lastNews.title).click()
-      // Click on update button
-      cy.get('[data-test="updateButton"]').click()
-      // Check if modal is visible
-      cy.get('[data-test="update-news-modal"]').should('be.visible')
-    })
-
-    it('Dashboard_Announcements_DeleteAnnouncement_ClickOnNews_DisplayModal_Mobile', function () {
-      cy.viewport('iphone-5')
-      const existingNews = this.dashboardData.existingNews
-      const lastNews = existingNews[existingNews.length - 1]
-
-      // Login
-      cy.login(HEADMASTER, dashboardURL)
-
-      // Click on last news
-      getNews(lastNews).click()
-      // Click on delete modal
-      cy.get('[data-test="deleteButton"]').click()
-      // Check if in the warning modal content there is the news title
-      cy.get('[data-test="warning-modal"]').should('be.visible').within(() => {
-        cy.get('.context-message').contains(lastNews.title)
-      })
-    })
-
-    it('Dashboard_Announcements_DeleteAnnouncement_AllNews_DisplayModal_Mobile', function () {
-      cy.viewport('iphone-5')
-      const existingNews = this.dashboardData.existingNews
-      const lastNews = existingNews[existingNews.length - 1]
-
-      // Login
-      cy.login(HEADMASTER, dashboardURL)
-      getNews(lastNews).should('be.visible')
-      // Click to see all news
-      cy.get('[data-test="announcement-widget"]').within(() => {
-        cy.contains('button', 'Voir toutes les annonces').click()
-      })
-      // to load page
-      cy.get('.announcements-list').within(() => {
-        cy.get('.scroll').should('be.visible')
-      })
-      // Click on last news
-      cy.get('.announcements-list').contains('.announcement', lastNews.title).click()
-      // Click on delete button
-      cy.get('[data-test="deleteButton"]').click()
-      // Check if in the warning modal content there is the news title
-      cy.get('[data-test="warning-modal"]').should('be.visible').within(() => {
-        cy.get('.context-message').contains(lastNews.title)
-      })
+      cy.get('.announcement').eq(1).click()
+      cy.get('[data-test="updateButton"]').should('be.visible')
+      cy.get('[data-test="deleteButton"]').should('be.visible')
     })
   })
 })
