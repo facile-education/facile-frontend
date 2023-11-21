@@ -63,6 +63,11 @@ const setActivityWithContent = () => {
   cy.exec('npm run dl:loadDocumentLibrary document_library_groupActivity.tar.xz')
 }
 
+const loadActivity = request => {
+  cy.intercept('GET', `**/${request}**`).as('loadActivity')
+  return cy.wait('@loadActivity')
+}
+
 export {
   getNewsDetail,
   getNews,
@@ -74,5 +79,6 @@ export {
   getInformation,
   getInformationDetail,
   selectChild,
-  setActivityWithContent
+  setActivityWithContent,
+  loadActivity
 }
