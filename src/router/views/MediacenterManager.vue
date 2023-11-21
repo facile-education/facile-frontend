@@ -3,6 +3,7 @@
   <img
     class="icon"
     src="@/assets/images/gar.png"
+    alt="gar"
   >
   <p class="title">
     <strong

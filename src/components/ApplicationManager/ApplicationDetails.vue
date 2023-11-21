@@ -33,11 +33,12 @@
         v-if="application.isBroadcasted"
         class="list-rules"
       >
-        <RuleLabel
+        <li
           v-for="(rule, index) in application.rules"
           :key="index"
-          :rule="rule"
-        />
+        >
+          <RuleLabel :rule="rule" />
+        </li>
       </ul>
     </div>
 

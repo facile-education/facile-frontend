@@ -524,13 +524,8 @@ describe('Dashboard_Announcements', () => {
       })
       // Check if all news are visible
       for (let i = 0; i < existingNews.length - 1; i++) {
-        if (i === existingNews.length - 1) {
-          cy.get('.announcements-list').contains('.announcement', existingNews[i].title).should('be.exist').click()
-          getNewsDetail(existingNews[i]).should('be.exist')
-        } else {
-          cy.get('.announcements-list').contains('.announcement', existingNews[i].title).should('be.exist').click()
-          getNewsDetail(existingNews[i]).should('be.exist')
-        }
+        cy.get('.announcements-list').contains('.announcement', existingNews[i].title).should('be.exist').click()
+        getNewsDetail(existingNews[i]).should('be.exist')
       }
     })
 

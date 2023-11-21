@@ -1,6 +1,7 @@
 <template>
   <iframe
     :src="src"
+    title="libre office content"
     class="media"
   />
 </template>

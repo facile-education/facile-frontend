@@ -24,6 +24,7 @@
       <img
         v-if="application.image"
         :src="application.image"
+        alt="application_icon"
         class="logo"
       >
       <div

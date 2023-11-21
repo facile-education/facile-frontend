@@ -1,5 +1,5 @@
 <template>
-  <li
+  <div
     :class="{'selected': isSelected}"
     @mousedown="selectHistoryItem"
   >
@@ -9,7 +9,7 @@
     <div class="date">
       {{ formattedDate }}
     </div>
-  </li>
+  </div>
 </template>
 
 <script>

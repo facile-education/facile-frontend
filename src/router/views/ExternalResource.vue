@@ -4,6 +4,7 @@
       <img
         class="icon"
         src="@/assets/images/ExternalResource/icon-external-service.png"
+        alt=""
       >
       <h3 v-t="{path: 'noConfigLabel', args: {resourceName:serviceName}}" />
       <I18n
@@ -34,6 +35,7 @@
         <img
           class="icon"
           src="@/assets/images/ExternalResource/icon-external-service.png"
+          alt=""
         >
         <h3>{{ $t('newTabLabel', {resourceName: serviceName}) }}</h3>
         <I18n
@@ -69,6 +71,7 @@
         </I18n>
         <iframe
           :src="selectedUrl"
+          title="external resource"
           class="frame"
         />
       </div>

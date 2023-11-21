@@ -6,13 +6,16 @@
     ref="scroll"
     @scroll="handleScroll"
   >
-    <QuickSearchResultItem
+    <li
       v-for="(item, index) in searchResults"
       :key="index"
-      :search-result="item"
-      :is-selected="currentSelectedItem ? currentSelectedItem.entityId === item.entityId : false"
-      :is-last="index === searchResults.length - 1"
-    />
+    >
+      <QuickSearchResultItem
+        :search-result="item"
+        :is-selected="currentSelectedItem ? currentSelectedItem.entityId === item.entityId : false"
+        :is-last="index === searchResults.length - 1"
+      />
+    </li>
   </ul>
 </template>
 

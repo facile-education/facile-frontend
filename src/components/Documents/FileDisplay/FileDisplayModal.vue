@@ -176,7 +176,6 @@ $header-height: 50px;
   height: 100%;
   z-index: 10;
   background-color: rgba(0, 0, 0, .5);
-  z-index: 10;
 }
 
 .full-screen .body {

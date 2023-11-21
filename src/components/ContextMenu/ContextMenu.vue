@@ -16,18 +16,21 @@
     @click.right.prevent
     @keydown.stop.enter="emitOption(options[selectedIndex])"
   >
-    <ContextMenuItem
+    <li
       v-for="option in options"
       :key="option.position"
-      :data-test="option.name"
-      :option="option"
-      :position="{x: position.x, y: position.y + option.position*40}"
-      :is-selected="selectedIndex !== undefined ? options[selectedIndex] === option : false"
-      @select-option="emitOption(option)"
-      @is-context-menu-mobile-extended="subMenuMobileManagement"
-      @emit-sub-option="emitOption"
-      @close="closeMenu"
-    />
+    >
+      <ContextMenuItem
+        :data-test="option.name"
+        :option="option"
+        :position="{x: position.x, y: position.y + option.position*40}"
+        :is-selected="selectedIndex !== undefined ? options[selectedIndex] === option : false"
+        @select-option="emitOption(option)"
+        @is-context-menu-mobile-extended="subMenuMobileManagement"
+        @emit-sub-option="emitOption"
+        @close="closeMenu"
+      />
+    </li>
   </ul>
 </template>
 

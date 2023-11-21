@@ -34,6 +34,7 @@
           <img
             v-if="application.image"
             :src="application.image"
+            alt="application_icon"
             class="logo"
           >
           <NeroIcon
@@ -244,14 +245,18 @@ export default {
     },
     title () {
       let title = 'addModalTitle'
-      if (this.application && this.application.applicationId) {
+      if (this.application?.applicationId) {
         title = 'editModalTitle'
       }
       return title
     },
     urlType: {
       get () {
-        return this.application.hasGlobalUrl ? 'global' : this.application.hasCustomUrl ? 'custom' : 'none'
+        if (this.application.hasGlobalUrl) {
+          return 'global'
+        } else {
+          return this.application.hasCustomUrl ? 'custom' : 'none'
+        }
       },
       set (value) {
         this.application.hasGlobalUrl = (value === 'global')
@@ -269,12 +274,12 @@ export default {
     buildApplicationBeforeSave () {
       // Handle roleId array before saving
       this.application.roleIds = []
-      for (let idx = 0; idx < this.application.defaultRoles.length; idx++) {
-        this.application.roleIds.push(this.application.defaultRoles[idx].roleId)
+      for (const role of this.application.defaultRoles) {
+        this.application.roleIds.push(role.roleId)
       }
       this.application.schoolIds = []
-      for (let idx = 0; idx < this.application.authorizedSchools.length; idx++) {
-        this.application.schoolIds.push(this.application.authorizedSchools[idx].schoolId)
+      for (const authorizedSchool of this.application.authorizedSchools) {
+        this.application.schoolIds.push(authorizedSchool.schoolId)
       }
 
       // URL type
@@ -300,7 +305,7 @@ export default {
         this.buildApplicationBeforeSave()
 
         // Update if applicationId is defined else create new app
-        if (this.application && this.application.applicationId) {
+        if (this.application?.applicationId) {
           this.$store.dispatch('applicationManager/updateApplication', this.application)
         } else {
           const params = {
@@ -315,7 +320,7 @@ export default {
     selectCategory (category) {
       this.application.category = category
     },
-    selectImage ({ blob, fileName }) {
+    selectImage ({ blob }) {
       const reader = new FileReader()
       reader.readAsDataURL(blob)
       const vm = this
@@ -325,11 +330,7 @@ export default {
     },
     // Completion for category input
     toggleCompletion () {
-      if (this.$refs.category.$el.contains(document.activeElement)) {
-        this.displayCategoryCompletion = true
-      } else {
-        this.displayCategoryCompletion = false
-      }
+      this.displayCategoryCompletion = !!this.$refs.category.$el.contains(document.activeElement)
     }
   }
 }

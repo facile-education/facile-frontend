@@ -7,12 +7,16 @@
       @click="onClick"
     >
       <ul class="tag-list">
-        <WeprodeTagItem
+        <li
           v-for="(tag, index) in tagsToDisplay"
           :key="index"
-          :tag="getDisplayValue(tag)"
-          @remove="removeTag"
-        />
+        >
+          <WeprodeTagItem
+            :tag="getDisplayValue(tag)"
+            @remove="removeTag"
+          />
+        </li>
+
         <li
           v-if="tagsToDisplay.length < modelValue.length"
           class="others theme-background-color"
