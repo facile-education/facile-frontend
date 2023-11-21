@@ -242,24 +242,26 @@ export default {
     },
     toggleContextMenu (event) {
       this.displayMenu = true
-      this.$store.dispatch('contextMenu/openContextMenu', {
-        event,
-        options: [
-          {
-            name: 'update',
-            title: this.$t('update'),
-            icon: icons.options.rename,
-            position: 1,
-            hasSeparator: false
-          },
-          {
-            name: 'delete',
-            title: this.$t('delete'),
-            icon: icons.options.delete,
-            position: 2,
-            hasSeparator: false
-          }]
-      })
+      const options = []
+      if (this.announcement.isEditable) {
+        options.push({
+          name: 'update',
+          title: this.$t('update'),
+          icon: icons.options.rename,
+          position: 1,
+          hasSeparator: false
+        })
+      }
+      if (this.announcement.isDeletable) {
+        options.push({
+          name: 'delete',
+          title: this.$t('delete'),
+          icon: icons.options.delete,
+          position: 2,
+          hasSeparator: false
+        })
+      }
+      this.$store.dispatch('contextMenu/openContextMenu', { event, options })
     },
     performChosenOption (option) {
       switch (option.name) {
