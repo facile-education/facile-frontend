@@ -3,92 +3,58 @@
     v-if="configuration"
     class="weekly-horizontal-timeline"
   >
-    <div class="weekly-timeline-container">
-      <div class="horizontal-timeline-left">
-        <button
-          type="button"
-          :disabled="disablePrevious"
-          class="nav-btn"
-          @click="onClickPrevious()"
-        >
-          <NeroIcon
-            name="fa-chevron-circle-left"
-            class="theme-text-color"
-          />
-        </button>
-      </div>
-      <div class="horizontal-timeline-center">
-        <div class="horizontal-timeline-progress">
-          <ul class="horizontal-timeline-bg">
-            <li
-              v-for="month in monthList"
-              :key="month"
-              class="horizontal-timeline-month"
-              :style="'width: ' + (100/(nbWeeks/month.weekList.length)) + '%'"
-            >
-              <!-- <span
-                class="timeline-label"
-                :title="month.date"
-              >
-              {{ month.name }}
-              </span> -->
-              <ul>
-                <li
-                  v-for="(week, index) in month.weekList"
-                  :key="week"
-                  class="horizontal-timeline-week"
-                  :class="{ 'current-week theme-border-color': week.isCurrent, 'theme-background-color': week.isSelected }"
-                  :style="'left: ' + (index * (100/month.weekList.length)) + '%, width: ' + (100/month.weekList.length) + '%'"
-                  :title="formatWeekRange(week)"
-                  tabindex="0"
-                  @keypress.enter="onClickWeek(week)"
-                  @click="onClickWeek(week)"
-                >
-                  <div
-                    class="weeknumber-label"
-                  >
-                    S.{{ week.weekNumber }}
-                  </div>
-                  <div
-                    class="timeline-label"
-                    :class="{ 'theme-color': week.isCurrent}"
-                  >
-                    {{ week.label }}
-                  </div>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="horizontal-timeline-right">
-        <button
-          type="button"
-          class="nav-btn"
-          :disabled="disableNext"
-          @click="onClickNext()"
-        >
-          <NeroIcon
-            name="fa-chevron-circle-right"
-            class="theme-text-color"
-          />
-        </button>
-      </div>
-    </div>
+    <button
+      :disabled="disablePrevious"
+      class="nav-btn horizontal-timeline-left"
+      :title="$t('previous')"
+      :aria-label="$t('previous')"
+      @click="onClickPrevious()"
+    >
+      <img
+        class="reverse-icon"
+        src="@/assets/icons/chevron-right.svg"
+        :alt="$t('previous')"
+      >
+    </button>
+
+    <ul class="horizontal-timeline-center">
+      <li
+        v-for="week in displayedWeeks"
+        :key="week"
+      >
+        <TimeLineWeekItem
+          :week="week"
+          :is-selected="selectedWeek.weekNumber === week.weekNumber"
+          @select-week="selectWeek(week)"
+        />
+      </li>
+    </ul>
+
+    <button
+      class="nav-btn horizontal-timeline-right"
+      :disabled="disableNext"
+      :title="$t('next')"
+      :aria-label="$t('next')"
+      @click="onClickNext()"
+    >
+      <img
+        src="@/assets/icons/chevron-right.svg"
+        :alt="$t('next')"
+      >
+    </button>
   </div>
 </template>
 
 <script>
+import TimeLineWeekItem from '@components/Horaires/TimeLineWeekItem.vue'
 import dayjs from 'dayjs'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
-
-import NeroIcon from '@/components/Nero/NeroIcon'
 
 dayjs.extend(weekOfYear)
 
 export default {
   name: 'Timeline',
-  components: { NeroIcon },
+  components: { TimeLineWeekItem },
   props: {
     nbWeeksAfterCurrent: {
       type: Number,
@@ -112,14 +78,21 @@ export default {
     }
   },
   computed: {
+    displayedWeeks () {
+      let weekList = []
+      this.monthList.forEach(month => {
+        weekList = [...weekList, ...month.weekList]
+      })
+      return weekList
+    },
     configuration () {
       return this.$store.state.calendar.configuration
     },
     minDate () {
-      return this.configuration ? dayjs(this.configuration.schoolYearStartDate, 'YYYY-MM-DD') : dayjs
+      return dayjs(this.configuration.schoolYearStartDate, 'YYYY-MM-DD')
     },
     maxDate () {
-      return this.configuration ? dayjs(this.configuration.schoolYearEndDate, 'YYYY-MM-DD') : dayjs
+      return dayjs(this.configuration.schoolYearEndDate, 'YYYY-MM-DD')
     },
     disableNext () {
       if (!this.monthList || this.monthList.length === 0) return false
@@ -186,21 +159,8 @@ export default {
 
         while (lastWeekOfMonth.isAfter(firstWeekOfMonth)) {
           const week = {
-            weekNumber: (firstWeekOfMonth.diff(dayjs(this.minDate, 'YYYY-MM-DD').startOf('week'), 'week') + 1),
-            label: firstWeekOfMonth.format('D MMM'),
-            firstDayOfWeek: firstWeekOfMonth.format('YYYY-MM-DD'),
-            lastDayOfWeek: firstWeekOfMonth.endOf('week').format('YYYY-MM-DD')
-          }
-
-          if (firstWeekOfMonth.week() === dayjs().week()) {
-            week.isCurrent = true
-            if (this.selectedWeek.weekNumber === undefined && !this.initialDate) {
-              this.onClickWeek(week)
-            }
-          }
-
-          if (this.selectedWeek.weekNumber === week.weekNumber) {
-            this.setSelectedWeek(week)
+            weekNumber: this.getWeekNumber(firstWeekOfMonth),
+            firstDayOfWeek: firstWeekOfMonth.format('YYYY-MM-DD')
           }
 
           monthList[monthList.length - 1].weekList.push(week)
@@ -211,9 +171,6 @@ export default {
       }
 
       return monthList
-    },
-    nbWeeks () {
-      return this.monthList.reduce((sum, month) => sum + month.weekList.length, 0)
     },
     nbWeeksDisplayed () {
       return this.nbWeeksBeforeCurrent + 1 + this.nbWeeksAfterCurrent
@@ -234,20 +191,20 @@ export default {
     this.startDate = date.subtract(this.nbWeeksBeforeCurrent, 'week').startOf('week')
     this.endDate = date.add(this.nbWeeksAfterCurrent, 'week').endOf('week')
 
-    if (this.initialDate) {
-      const initialDisplayWeek = this.getWeekFromLocalWeekList(this.initialDate)
-      if (initialDisplayWeek !== undefined) {
-        this.onClickWeek(initialDisplayWeek)
-      }
+    const initialDisplayWeek = this.getWeekFromLocalWeekList(this.initialDate ? this.initialDate : dayjs())
+    if (initialDisplayWeek !== undefined) {
+      this.selectWeek(initialDisplayWeek)
     }
   },
   methods: {
+    getWeekNumber (date) {
+      return date.diff(dayjs(this.minDate, 'YYYY-MM-DD').startOf('week'), 'week') + 1
+    },
     getWeekFromLocalWeekList (date) {
-      for (let i = 0; i < this.monthList.length; i++) {
-        const month = this.monthList[i]
-        for (let j = 0; j < month.weekList.length; j++) {
-          if (month.weekList[j].weekNumber === date.diff(dayjs(this.minDate, 'YYYY-MM-DD').startOf('week'), 'week') + 1) {
-            return month.weekList[j]
+      for (const month of this.monthList) {
+        for (const week of month.weekList) {
+          if (week.weekNumber === date.diff(dayjs(this.minDate, 'YYYY-MM-DD').startOf('week'), 'week') + 1) {
+            return week
           }
         }
       }
@@ -257,27 +214,15 @@ export default {
       // Go n weeks to the right
       this.startDate = this.startDate.add(this.nbWeeksDisplayed, 'week')
       this.endDate = this.endDate.add(this.nbWeeksDisplayed, 'week')
-      // this.monthList.length = 0
     },
     onClickPrevious () {
       // Go n weeks to the left
       this.startDate = this.startDate.subtract(this.nbWeeksDisplayed, 'week')
       this.endDate = this.endDate.subtract(this.nbWeeksDisplayed, 'week')
-      // this.monthList.length = 0
     },
-    onClickWeek (week) {
-      if (week.weekNumber !== this.selectedWeek.weekNumber) {
-        this.$emit('selectWeek', week)
-        this.setSelectedWeek(week)
-      }
-    },
-    setSelectedWeek (week) {
-      this.selectedWeek.isSelected = false
-      week.isSelected = true
+    selectWeek (week) {
       this.selectedWeek = week
-    },
-    formatWeekRange (week) {
-      return this.$t('from') + ' ' + dayjs(week.firstDayOfWeek).format('DD MMMM YYYY') + ' ' + this.$t('to') + ' ' + dayjs(week.lastDayOfWeek).format('DD MMMM YYYY')
+      this.$emit('selectWeek', week)
     }
   }
 }
@@ -286,101 +231,55 @@ export default {
 <style lang="scss" scoped>
 @import '@/design';
 
-.weekly-timeline-container {
+.weekly-horizontal-timeline {
   display: flex;
+  padding: 1rem min(2vw, 1.5rem);
+  justify-content: space-between;
   align-items: center;
-  max-width: 50rem;
-  margin: auto;
+  border-radius: 6px;
+  background: $neutral-20;
 }
 
-.weekly-horizontal-timeline {
-  .horizontal-timeline-left button, .horizontal-timeline-right button {
-    background-color: rgba(0, 0, 0, 0);
-    border: none;
-    padding: 0;
-  }
-  .horizontal-timeline-left button {
-    &:focus, &:hover {
-      background-color: transparent;
-    }
-  }
-  .horizontal-timeline-right button {
-    &:focus, &:hover {
-      background-color: transparent;
-    }
+.nav-btn {
+  cursor: pointer;
+  height: 40px;
+  width: 40px;
+  min-width: 40px;
+  border-radius: 20px;
+  padding: 0;
+  border: none;
+  background-color: $neutral-10;
+
+  .reverse-icon {
+    transform: rotate(180deg);
   }
 
-  .nav-btn {
-    cursor: pointer;
-    font-size: 1.8rem;
-
-    &:disabled {
-      cursor: not-allowed;
-
-      svg {
-        color: grey;
-      }
-    }
+  &:disabled {
+    cursor: not-allowed;
+    background-color: $neutral-40;
   }
 }
 
 .horizontal-timeline-center {
-  width: 100%;
   display: flex;
-  align-content: center;
-
-  .horizontal-timeline-progress {
-    width: 100%;
-
-    ul {
-      display: flex;
-      align-content: center;
-      justify-content: space-around;
-      padding: 0;
-      margin-bottom: 0;
-      margin-block-start: 0;
-      margin-block-end: 0;
-    }
-  }
-}
-
-.horizontal-timeline-month {
-  display: inline-block;
-}
-
-.timeline-label {
-  text-align: center;
-  font-size: 0.8rem;
-}
-
-.horizontal-timeline-week {
-  display: flex;
-  flex-direction: column;
-  border-radius: 6px;
-  cursor: pointer;
+  align-items: center;
+  gap: 2rem;
   margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
 
-  &:hover:not(.theme-background-color) {
-    background-color: $color-hover-bg;
+@media screen and (max-width: 1000px) {
+  .horizontal-timeline-center {
+    gap: 1.5vw;
   }
 }
 
-.weeknumber-label {
-  padding: 0.2rem 1rem;
-  text-align: center;
-  font-weight: 600;
-
-  @extend %no-text-highlight;
-}
-
-.current-week {
-  border-left: solid 5px;
-}
 </style>
 
 <i18n locale="fr">
   {
-    "from": "Du",
-    "to": "au"
+    "previous": "Précédent",
+    "next": "Suivant"
   }
 </i18n>
