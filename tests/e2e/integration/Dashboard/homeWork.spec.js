@@ -108,7 +108,7 @@ describe('Dashboard_homeWorks', () => {
 
     cy.get('.personal-widgets').within(() => {
       // Select first child
-      selectChild(MULTI_STUDENT1.firstName, MULTI_STUDENT1.firstName)
+      selectChild(MULTI_STUDENT1.firstName)
       cy.get('[data-test="homeWork-widget"]').within(() => {
         // Check if good homework is display for goode children
         getHomework(existingHomework[2]).should('be.visible')
@@ -116,7 +116,7 @@ describe('Dashboard_homeWorks', () => {
       })
 
       // Change to second child
-      selectChild(MULTI_STUDENT1.firstName, MULTI_STUDENT2.firstName)
+      selectChild(MULTI_STUDENT2.firstName)
       cy.get('[data-test="homeWork-widget"]').within(() => {
         // Check if good homework is display for goode children
         getHomework(existingHomework[3]).should('be.visible')
@@ -135,7 +135,7 @@ describe('Dashboard_homeWorks', () => {
 
     cy.get('.personal-widgets').within(() => {
       // Select first child
-      selectChild(MULTI_STUDENT1.firstName, MULTI_STUDENT1.firstName)
+      selectChild(MULTI_STUDENT1.firstName)
       cy.get('[data-test="homeWork-widget"]').within(() => {
         getHomework(existingHomework[2]).click()
       })
@@ -153,7 +153,7 @@ describe('Dashboard_homeWorks', () => {
 
     cy.get('.personal-widgets').within(() => {
       // Select second child
-      selectChild(MULTI_STUDENT1.firstName, MULTI_STUDENT2.firstName)
+      selectChild(MULTI_STUDENT2.firstName)
       cy.get('[data-test="homeWork-widget"]').within(() => {
         getHomework(existingHomework[3]).click()
       })

@@ -1,6 +1,6 @@
 import { dashboardURL } from '../../support/constants/urls'
 import { MULTI_PARENT, MULTI_STUDENT1, MULTI_STUDENT2, STUDENT } from '../../support/constants/users'
-import { getSessions, selectChild } from '../../support/utils/dashboard'
+import { getSession, selectChild } from '../../support/utils/dashboard'
 
 describe('Dashboard_Schedule', () => {
   beforeEach(() => {
@@ -18,16 +18,16 @@ describe('Dashboard_Schedule', () => {
 
     cy.get('.personal-widgets').within(() => {
       // Select first child
-      selectChild(MULTI_STUDENT1.firstName, MULTI_STUDENT1.firstName)
+      selectChild(MULTI_STUDENT1.firstName)
       cy.get('[data-test="schedule-widget"]').within(() => {
-        getSessions(sessionsListStudent1[0]).should('be.visible')
+        getSession(sessionsListStudent1[0]).should('be.visible')
       })
 
       // Change to second child
 
-      selectChild(MULTI_STUDENT1.firstName, MULTI_STUDENT2.firstName)
+      selectChild(MULTI_STUDENT2.firstName)
       cy.get('[data-test="schedule-widget"]').within(() => {
-        getSessions(sessionsListStudent2[0]).should('be.visible')
+        getSession(sessionsListStudent2[0]).should('be.visible')
       })
     })
   })
@@ -43,7 +43,7 @@ describe('Dashboard_Schedule', () => {
     cy.get('[data-test="schedule-widget"]').within(() => {
       for (let i = 0; i < sessionsList.length - 1; i++) {
         cy.get('.schedule-item').eq(i).should('contain', sessionsList[i].name)
-        getSessions(sessionsList[i]).should('be.exist')
+        getSession(sessionsList[i]).should('be.exist')
       }
     })
   })
@@ -55,10 +55,10 @@ describe('Dashboard_Schedule', () => {
     cy.login(STUDENT, dashboardURL)
     cy.get('[data-test="schedule-widget"]').scrollIntoView()
     cy.get('[data-test="schedule-widget"]').should('be.visible').within(() => {
-      getSessions(sessionsListCurrentDay[0]).should('be.exist')
+      getSession(sessionsListCurrentDay[0]).should('be.exist')
       // Click on button next day
       cy.get('[data-test="NextDay"]').click()
-      getSessions(sessionsListNextDay[0]).should('be.exist')
+      getSession(sessionsListNextDay[0]).should('be.exist')
     })
   })
 
@@ -107,7 +107,7 @@ describe('Dashboard_Schedule', () => {
 
     cy.get('.personal-widgets').within(() => {
       // Select first child
-      selectChild(MULTI_STUDENT1.firstName, MULTI_STUDENT1.firstName)
+      selectChild(MULTI_STUDENT1.firstName)
       cy.get('[data-test="schedule-widget"]').within(() => {
         cy.get('.redirect-button').contains('Accéder au semainier').click()
       })
@@ -122,7 +122,7 @@ describe('Dashboard_Schedule', () => {
 
     cy.get('.personal-widgets').within(() => {
       // Select first child
-      selectChild(MULTI_STUDENT1.firstName, MULTI_STUDENT2.firstName)
+      selectChild(MULTI_STUDENT2.firstName)
       cy.get('[data-test="schedule-widget"]').within(() => {
         cy.get('.redirect-button').contains('Accéder au semainier').click()
       })

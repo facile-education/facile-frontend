@@ -1,5 +1,5 @@
 const getNewsDetail = (news) => {
-  return cy.get('.detailed-news').contains(news.content)
+  return cy.contains('.detailed-news', news.content)
 }
 
 const getNews = (news) => {
@@ -29,7 +29,7 @@ const getHomeworkDetails = (homework) => {
   })
 }
 
-const getSessions = (session) => {
+const getSession = (session) => {
   return cy.contains('.schedule-item', session.name).within(() => {
     cy.contains(session.startHour)
     cy.contains(session.endHour)
@@ -43,20 +43,22 @@ const getInformation = (information) => {
 }
 
 const getInformationDetail = (information) => {
-  return cy.get('.window-container').within(() => {
+  return cy.get('[data-test="news-details-modal"]').within(() => {
     cy.contains(information.title)
     cy.contains(information.content)
   })
 }
 
-const selectChild = (child1, child2) => {
-  cy.contains('button', child1).click()
-  cy.get('.suggestion-list').within(() => {
-    cy.contains('li', child2).click()
+const selectChild = (child) => {
+  cy.get('.child-selector').within(() => {
+    cy.get('button').click()
+    cy.get('.suggestion-list').within(() => {
+      cy.contains('li', child).click()
+    })
   })
 }
 
-const setDocumentGroupWithContent = () => {
+const setActivityWithContent = () => {
   cy.loadTables('dashboard/dashboard_tables_activity.sql')
   cy.exec('npm run dl:loadDocumentLibrary document_library_groupActivity.tar.xz')
 }
@@ -68,9 +70,9 @@ export {
   getEventDetail,
   getHomework,
   getHomeworkDetails,
-  getSessions,
+  getSession,
   getInformation,
   getInformationDetail,
   selectChild,
-  setDocumentGroupWithContent
+  setActivityWithContent
 }
