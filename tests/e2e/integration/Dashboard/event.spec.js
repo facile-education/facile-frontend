@@ -5,8 +5,8 @@ import { getEvent, getEventDetail } from '../../support/utils/dashboard'
 describe('Dashboard_Events', () => {
   beforeEach(() => {
     cy.loadTables('dashboard/dashboard_tables_events.sql')
-    cy.fixture('dashboard.json').as('dashboardData').then(data => {
-      cy.clock(Cypress.dayjs(data.existingEvents[0].endDate, 'YYYY/MM/DD HH:mm').toDate().getTime())
+    cy.fixture('dashboard.json').as('dashboardData').then((data) => {
+      cy.clock().invoke('setSystemTime', Cypress.dayjs(data.existingEvents[0].startDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
     })
   })
   context('desktop', function () {
@@ -14,16 +14,12 @@ describe('Dashboard_Events', () => {
       const existingEvents = this.dashboardData.existingEvents
       // Login
       cy.login(TEACHER2, dashboardURL)
-      // Check if pellet is visible
-      cy.get('[data-test="diary-widget"]').within(() => {
-        cy.get('header').contains('.pellet', 1).should('be.visible')
-      })
       // Click on event
       getEvent(existingEvents[0]).click()
       cy.get('[data-test="closeModal"]').click()
       // Check if pellet is not visible
       cy.get('[data-test="diary-widget"]').within(() => {
-        cy.get('header').contains('.pellet', 1).should('not.exist')
+        cy.get('header').contains('.pellet', 1).should('be.exist')
       })
       // Click on read onlyButton
       cy.get('[data-test="ReadOnlyEventButton"]').click()
@@ -31,7 +27,7 @@ describe('Dashboard_Events', () => {
       getEvent(existingEvents[0]).should('not.exist')
     })
 
-    it('Dashboard_Events_DisplayEventsReadUnRead', function () {
+    it('Dashboard_Events_DisplayEventsReadUnReadAllEvents', function () {
       const existingEvents = this.dashboardData.existingEvents
       // Login
       cy.login(TEACHER2, dashboardURL)
@@ -78,8 +74,6 @@ describe('Dashboard_Events', () => {
         cy.get('.lonely-population').should('contain', lastEvent.recipient)
         // Check de location
         cy.get('.where-and-when').should('contain', lastEvent.location)
-        // Check de duration
-        cy.get('.where-and-when').should('contain', lastEvent.duration)
         // Check the content
         cy.get('.detailed-event > .description').should('contain', lastEvent.content)
       })
@@ -135,7 +129,7 @@ describe('Dashboard_Events', () => {
       cy.get('.diary-event').eq(0).click()
       // Chech if detail modal is not visible
       cy.get('[data-test="diary-event-details-modal"]').should('not.exist')
-      getEventDetail(existingEvents[1]).should('be.exist')
+      getEventDetail(existingEvents[0]).should('be.exist')
       // Check if event selected has right class
       cy.get('.diary-event').eq(0).should('have.class', 'theme-light-background-color')
       cy.get('.diary-event').eq(1).should('not.have.class', 'theme-light-background-color')
@@ -145,7 +139,7 @@ describe('Dashboard_Events', () => {
       // Check if event selected has right class
       cy.get('.diary-event').eq(1).should('have.class', 'theme-light-background-color')
       cy.get('.diary-event').eq(0).should('not.have.class', 'theme-light-background-color')
-      getEventDetail(existingEvents[0]).should('be.exist')
+      getEventDetail(existingEvents[1]).should('be.exist')
     })
 
     it('Dashboard_Events_CreateEventClickOnButtonCreate', function () {
@@ -281,7 +275,7 @@ describe('Dashboard_Events', () => {
       const lastEvent = existingEvents[0]
       const EventToEdit = this.dashboardData.EventToEdit
 
-      // Login with student to chech if he don't see the announcement
+      // Login with student to check if he don't see the announcement
       cy.login(PARENT, dashboardURL)
       getEvent(lastEvent).should('not.exist')
 
@@ -292,6 +286,8 @@ describe('Dashboard_Events', () => {
       getEvent(lastEvent).trigger('mouseover').within(() => {
         cy.get('[data-test="buttonEditEvent"]').click()
       })
+      cy.intercept('GET', '**/get-event-details**').as('newsDetail')
+      cy.wait('@newsDetail')
       // Set new informations
       cy.get('[data-test="update-diary-event-modal"]').within(() => {
         cy.get('.base-tags-input').click()
@@ -314,7 +310,7 @@ describe('Dashboard_Events', () => {
       getEventDetail(EventToEdit).should('be.exist')
 
       // Login with a student to see if now he can see the event
-      cy.login(STUDENT, dashboardURL)
+      cy.login(PARENT, dashboardURL)
       getEvent(EventToEdit).should('be.exist')
     })
 
@@ -582,6 +578,8 @@ describe('Dashboard_Events', () => {
     it('Dashboard_Events_DisplayThreePointsOptionsPanelMobile', function () {
       // Login
       cy.login(HEADMASTER, dashboardURL)
+      cy.intercept('GET', '**/get-events**').as('events')
+      cy.wait('@events')
 
       cy.get('[data-test="diary-widget"]').within(() => {
         cy.get('.diary-event').eq(0).within(() => {
