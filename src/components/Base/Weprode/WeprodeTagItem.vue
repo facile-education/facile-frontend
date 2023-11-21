@@ -1,12 +1,12 @@
 <template>
-  <li class="tag-item theme-background-color">
+  <div class="tag-item theme-background-color">
     <span class="label">{{ tag }}</span>
     <NeroIcon
       name="times"
       class="icon"
       @click="onRemove"
     />
-  </li>
+  </div>
 </template>
 
 <script>

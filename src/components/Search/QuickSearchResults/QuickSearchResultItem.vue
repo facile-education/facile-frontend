@@ -1,5 +1,5 @@
 <template>
-  <li
+  <div
     ref="resultItem"
     :class="{'selected': isSelected}"
     @mousedown="redirect"
@@ -62,7 +62,7 @@
         @close="isEventModalDisplayed = false"
       />
     </teleport>
-  </li>
+  </div>
 </template>
 
 <script>

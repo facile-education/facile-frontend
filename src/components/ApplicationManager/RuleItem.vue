@@ -1,5 +1,5 @@
 <template>
-  <li
+  <div
     class="rule"
     :class="{ phone: mq.phone }"
   >
@@ -43,7 +43,7 @@
         :alt="$t('deleteButtonTooltip')"
       >
     </WeprodeButton>
-  </li>
+  </div>
 </template>
 
 <script>
@@ -81,12 +81,12 @@ export default {
   validations: {
     rule: {
       roles: {
-        required: requiredIf(function (form) {
+        required: requiredIf(function () {
           return !this.isDefault
         })
       },
       orgs: {
-        required: requiredIf(function (form) {
+        required: requiredIf(function () {
           return !this.isDefault
         })
       }

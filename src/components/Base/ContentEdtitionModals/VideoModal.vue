@@ -56,6 +56,7 @@
       <iframe
         v-if="embedSrcAttribute"
         :src="embedSrcAttribute"
+        title="video content"
         class="video-preview"
       />
     </template>
@@ -183,7 +184,7 @@ export default {
             if (error === 'UnauthorizedUrlException') {
               this.urlError = this.$t('UnauthorizedUrlException')
             } else {
-              // TODO popup error "Une erreur est survenue lors de l'ajout du contenu"
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
               this.closeModal()
             }
           })
@@ -210,7 +211,7 @@ export default {
             if (error === 'UnauthorizedUrlException') {
               this.urlError = this.$t('UnauthorizedUrlException')
             } else {
-              // TODO popup error "Une erreur est survenue lors de la mise à jour du contenu"
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
               this.closeModal()
             }
           })

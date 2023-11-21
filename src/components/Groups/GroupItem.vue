@@ -314,7 +314,6 @@ export default {
     background-color: transparent;
     color: rgb(79, 79, 218);
     font-weight: 600;
-    border: none;
     &:hover {
       border: 1px solid grey;
     }

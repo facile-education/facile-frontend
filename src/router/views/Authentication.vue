@@ -437,10 +437,8 @@ $eel-blue: #2c7bb8;
 }
 
 .btn {
-  border-color: $eel-blue;
   background: $eel-blue;
   color: $color-body-bg;
-  width: 300px;
   border-radius: 0;
   width: 100%;
   margin: 10px 0;

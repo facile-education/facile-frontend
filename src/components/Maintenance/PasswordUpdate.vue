@@ -38,7 +38,10 @@
       </div>
     </div>
 
-    <table class="table">
+    <table
+      class="table"
+      aria-label="result users"
+    >
       <tr>
         <th v-t="'identity'" />
         <th v-t="'profile'" />

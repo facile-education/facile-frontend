@@ -1,6 +1,7 @@
 <template>
   <iframe
     :src="src"
+    title="mindmap content"
     class="media"
   />
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <li class="menu-folder">
+  <div class="menu-folder">
     <!-- Folder icon + name + actions -->
     <button
       v-if="!displayFolderNameInput"
@@ -99,14 +99,17 @@
       v-if="isExpanded && folder.subFolders.length > 0"
       class="sub-folder-list"
     >
-      <MenuFolder
+      <li
         v-for="subFolder in sortedSubFolders"
         :key="subFolder.folderId"
-        class="sub-folder"
-        :folder="subFolder"
-      />
+      >
+        <MenuFolder
+          class="sub-folder"
+          :folder="subFolder"
+        />
+      </li>
     </ul>
-  </li>
+  </div>
 </template>
 
 <script>

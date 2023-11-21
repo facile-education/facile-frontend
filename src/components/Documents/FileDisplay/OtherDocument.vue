@@ -2,6 +2,7 @@
   <iframe
     v-if="isReady"
     :src="newUrl"
+    title="document content"
     class="media"
   />
 </template>

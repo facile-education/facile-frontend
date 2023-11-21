@@ -1,5 +1,5 @@
 <template>
-  <li data-test="UserListItem">
+  <div data-test="UserListItem">
     <button @click="toggleUser">
       <span>
         {{ getFullName(user) }}
@@ -17,7 +17,7 @@
         :title="$t('remove')"
       >
     </button>
-  </li>
+  </div>
 </template>
 
 <script>

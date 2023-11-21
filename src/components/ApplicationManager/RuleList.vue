@@ -1,14 +1,17 @@
 <template>
   <ul class="rules">
-    <RuleItem
+    <li
       v-for="(rule, index) in ruleList"
       :key="rule.ruleId"
-      :rule="rule"
-      :is-error-list-displayed="isErrorListDisplayed"
-      :is-remove-button-displayed="isRemovalAllowed"
-      @update="update($event, index)"
-      @remove="remove(index)"
-    />
+    >
+      <RuleItem
+        :rule="rule"
+        :is-error-list-displayed="isErrorListDisplayed"
+        :is-remove-button-displayed="isRemovalAllowed"
+        @update="update($event, index)"
+        @remove="remove(index)"
+      />
+    </li>
   </ul>
 </template>
 
