@@ -104,6 +104,17 @@ $news-thumbnail-size-in-modal: 90px;
   padding-right: 2rem;
   overflow: hidden;
 
+  &.phone {
+    padding-right: 0;
+
+    .date {
+      padding-top: 0;
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+  }
+
   i {
     font-style: normal;
     color: #6190E0;
