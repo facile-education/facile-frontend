@@ -101,7 +101,7 @@ describe('Dashboard_Schedule', () => {
     })
   })
 
-  it('Dashboard_Schedule_Redirect_MultiParent_Display_Good_ChildrenWork', function () {
+  it('Dashboard_Schedule_RedirectMultiParentDisplayGoodChildrenWork', function () {
     // Login
     cy.login(MULTI_PARENT, dashboardURL)
 

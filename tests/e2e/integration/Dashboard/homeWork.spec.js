@@ -23,7 +23,7 @@ describe('Dashboard_homeWorks', () => {
     getHomeworkDetails(existingHomework[1]).should('be.exist')
   })
 
-  it('Dashboard_Homework_DisplayHomeworks_Filter_Done_Undone', function () {
+  it('Dashboard_Homework_DisplayHomeworksFilterDoneUndone', function () {
     // Login
     cy.login(STUDENT, dashboardURL)
     cy.get('[data-test="homeWork-widget"]').scrollIntoView()
@@ -48,7 +48,7 @@ describe('Dashboard_homeWorks', () => {
     })
   })
 
-  it('Dashboard_Homework_DisplayHomeworks_Visibility_Button_AllHomeWorks', function () {
+  it('Dashboard_Homework_DisplayHomeworksVisibilityButtonAllHomeWorks', function () {
     const existingHomework = this.dashboardData.existingHomework
 
     // Login
@@ -67,7 +67,7 @@ describe('Dashboard_homeWorks', () => {
     })
   })
 
-  it('Dashboard_Homework_SetHomeworkDone_WithStudent', function () {
+  it('Dashboard_Homework_SetHomeworkDoneWithStudent', function () {
     // Login
     cy.login(STUDENT, dashboardURL)
     cy.get('[data-test="homeWork-widget"]').scrollIntoView()
@@ -83,7 +83,7 @@ describe('Dashboard_homeWorks', () => {
     })
   })
 
-  it('Dashboard_Homework_SetHomeworkDone_WithParent', function () {
+  it('Dashboard_Homework_SetHomeworkDoneWithParent', function () {
     // Login
     cy.login(PARENT, dashboardURL)
     cy.get('[data-test="homeWork-widget"]').scrollIntoView()
@@ -98,7 +98,7 @@ describe('Dashboard_homeWorks', () => {
     })
   })
 
-  it('Dashboard_Homework_DisplayHomeworks_MultiParent_ChangeStudent_DropDown', function () {
+  it('Dashboard_Homework_DisplayHomeworksMultiParentChangeStudentDropDown', function () {
     const existingHomework = this.dashboardData.existingHomework
 
     // Login
@@ -125,7 +125,7 @@ describe('Dashboard_homeWorks', () => {
     })
   })
 
-  it('Dashboard_Homework_Redirect_MultiParent_Display_Good_ChildrenWork', function () {
+  it('Dashboard_Homework_RedirectMultiParentDisplay_GoodChildrenWork', function () {
     const existingHomework = this.dashboardData.existingHomework
 
     // Login
