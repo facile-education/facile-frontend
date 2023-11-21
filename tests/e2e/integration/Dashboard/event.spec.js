@@ -31,7 +31,7 @@ describe('Dashboard_Events', () => {
       getEvent(existingEvents[0]).should('not.exist')
     })
 
-    it.only('Dashboard_Events_DisplayEventsReadUnRead', function () {
+    it('Dashboard_Events_DisplayEventsReadUnRead', function () {
       const existingEvents = this.dashboardData.existingEvents
       // Login
       cy.login(TEACHER2, dashboardURL)
@@ -40,7 +40,7 @@ describe('Dashboard_Events', () => {
       cy.get('[data-test="diary-widget"]').within(() => {
         cy.contains('button', 'Voir tous les événements').click()
       })
-      // Al: events loading
+      // All events loading
       cy.intercept('GET', '**/get-events**').as('allEvents')
       cy.wait('@allEvents')
       // Check if second event is unread
@@ -100,6 +100,7 @@ describe('Dashboard_Events', () => {
       cy.login(STUDENT, dashboardURL)
       // Student read this event
       getEvent(eventForStudents).click()
+      // Check if student can't see the read infos
       cy.get('[data-test="diary-event-details-modal"]').within(() => {
         cy.get('.read-infos').should('not.be.exist')
       })
