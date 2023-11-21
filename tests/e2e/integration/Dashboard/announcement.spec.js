@@ -280,6 +280,8 @@ describe('Dashboard_Announcements', () => {
       getNews(lastNews).trigger('mouseover').within(() => {
         cy.get('[data-test="buttonEditAnnouncement"]').click({ force: true })
       })
+      cy.intercept('GET', '/lfr/api/jsonws/news.news/get-news-details**').as('allEvents')
+      cy.wait('@allEvents')
       // Set new informations
       cy.get('[data-test="update-news-modal"]').within(() => {
         cy.get('.base-tags-input').click()
@@ -393,6 +395,8 @@ describe('Dashboard_Announcements', () => {
       getNews(lastNews).trigger('mouseover').within(() => {
         cy.get('[data-test="buttonEditAnnouncement"]').click({ force: true })
       })
+      cy.intercept('GET', '/lfr/api/jsonws/news.news/get-news-details**').as('newsDetail')
+      cy.wait('@newsDetail')
       // Set content
       cy.get('[data-test="update-news-modal"]').within(() => {
         cy.get('.ck-editor')
@@ -498,9 +502,11 @@ describe('Dashboard_Announcements', () => {
 
     it('Dashboard_Announcements_DeleteAnnouncementAllNewsDeleteButton', function () {
       const existingNews = this.dashboardData.existingNews
+      const furturNews = this.dashboardData.futurNews
       const lastNews = existingNews[existingNews.length - 1]
 
       cy.login(HEADMASTER, dashboardURL)
+      cy.clock().invoke('setSystemTime', Cypress.dayjs(furturNews.dateBeforeRelease, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
       getNews(lastNews).should('be.visible')
       cy.get('[data-test="announcement-widget"]').within(() => {
         cy.contains('button', 'Voir toutes les annonces').click()
@@ -518,7 +524,7 @@ describe('Dashboard_Announcements', () => {
     })
   })
   context('mobile', function () {
-    before(() => {
+    beforeEach(() => {
       cy.viewport('iphone-5')
     })
     it('Dashboard_Announcements_CreateAnnouncementButtonsVisibility', function () {
