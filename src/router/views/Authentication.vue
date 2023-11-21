@@ -85,6 +85,7 @@
                 :placeholder="$t('password')"
                 class="input"
                 name="password"
+                autocomplete="on"
                 @keypress="handleKeyPressed"
               >
               <button
