@@ -19,7 +19,10 @@
         >
       </div>
 
-      <div class="content">
+      <div
+        class="content"
+        :class="{'phone': mq.phone}"
+      >
         <div>
           <strong class="title">
             {{ announcement.title }}
@@ -38,11 +41,25 @@
             class="paper-clip"
             name="paperclip"
           />
+          <button
+            v-if="haveOptions && (mq.phone || mq.tablet)"
+            class="options-button"
+            :aria-label="$t('options')"
+            :title="$t('options')"
+            @click="toggleContextMenu"
+          >
+            <img
+              height="16"
+              width="16"
+              :src="require('@assets/icons/vertical_dots.svg')"
+              alt="options"
+            >
+          </button>
         </div>
       </div>
 
       <div
-        v-if="!isSelectionMode && (announcement.isEditable || announcement.isDeletable)"
+        v-if="haveOptions && !(mq.phone || mq.tablet)"
         class="announcement-options"
       >
         <button
@@ -103,6 +120,16 @@
       @close="closeDetailsModal"
     />
   </teleport>
+
+  <teleport
+    v-if="displayMenu"
+    to="body"
+  >
+    <ContextMenu
+      @choose-option="performChosenOption"
+      @close="displayMenu=false"
+    />
+  </teleport>
 </template>
 
 <script>
@@ -112,13 +139,15 @@ import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
 import { deleteNews, setNewsRead } from '@/api/dashboard/news.service'
-import { defaultImagesKeys } from '@/constants/icons'
+import { defaultImagesKeys, icons } from '@/constants/icons'
+const ContextMenu = defineAsyncComponent(() => import('@components/ContextMenu/ContextMenu.vue'))
 const SaveNewsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/SaveNewsModal.vue'))
 const NewsActivityDetailsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/NewsDetailsModal.vue'))
 
 export default {
   name: 'AnnouncementItem',
-  components: { NewsActivityDetailsModal, BaseIcon, SaveNewsModal },
+  components: { ContextMenu, NewsActivityDetailsModal, BaseIcon, SaveNewsModal },
+  inject: ['mq'],
   props: {
     announcement: {
       type: Object,
@@ -146,10 +175,14 @@ export default {
     return {
       isUpdateModalDisplayed: false,
       isDetailsModalDisplayed: false,
-      refreshNewsOnClose: false
+      refreshNewsOnClose: false,
+      displayMenu: false
     }
   },
   computed: {
+    haveOptions () {
+      return !this.isSelectionMode && (this.announcement.isEditable || this.announcement.isDeletable)
+    },
     announcementDay () {
       return this.$t('at') + dayjs(this.announcement.publicationDate).format('DD/MM/YY')
     },
@@ -206,6 +239,41 @@ export default {
         this.markAnnouncementAsRead()
       }
       this.isDetailsModalDisplayed = true
+    },
+    toggleContextMenu (event) {
+      this.displayMenu = true
+      this.$store.dispatch('contextMenu/openContextMenu', {
+        event,
+        options: [
+          {
+            name: 'update',
+            title: this.$t('update'),
+            icon: icons.options.rename,
+            position: 1,
+            hasSeparator: false
+          },
+          {
+            name: 'delete',
+            title: this.$t('delete'),
+            icon: icons.options.delete,
+            position: 2,
+            hasSeparator: false
+          }]
+      })
+    },
+    performChosenOption (option) {
+      switch (option.name) {
+        case 'update':
+          this.isUpdateModalDisplayed = true
+          break
+        case 'delete':
+          this.confirmDeleteAnnouncement()
+          break
+        default:
+          console.error('no option with name ' + option.name + ' exists')
+      }
+      this.displayMenu = false
+      this.$store.dispatch('contextMenu/closeMenus')
     },
     markAnnouncementAsRead () {
       setNewsRead(this.announcement.newsId, true).then((data) => {
@@ -308,6 +376,14 @@ export default {
   }
 }
 
+.options-button {
+  padding: 8px;
+  margin: 0 0 0 auto;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
 .content {
   width: calc(100% - var(--thumbnail-width));
   padding: 0.5em 1.5rem;
@@ -316,6 +392,10 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  &.phone {
+    padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+  }
 
   .title {
     @extend %font-medium-m;
@@ -327,24 +407,18 @@ export default {
   }
 
   .meta-data {
-    @extend %font-regular-xs;
-  }
-
-  .text {
-    display: block;
-    white-space: nowrap;
-    overflow-x: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .meta-data {
     display: flex;
     align-items: center;
+
+    @extend %font-regular-xs;
   }
 
   .text {
     display: inline-block;
     max-width: calc(100% - 2em);
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
   }
 
   .paper-clip {

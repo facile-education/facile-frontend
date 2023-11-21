@@ -119,13 +119,13 @@
 </template>
 
 <script>
-import ContextMenu from '@components/ContextMenu/ContextMenu.vue'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
 import { deleteEvent, setEventRead } from '@/api/dashboard/agenda.service'
 import { icons } from '@/constants/icons'
 import { isInViewport } from '@/utils/commons.util'
+const ContextMenu = defineAsyncComponent(() => import('@components/ContextMenu/ContextMenu.vue'))
 const SaveDiaryEventModal = defineAsyncComponent(() => import('@components/Dashboard/DiaryWidget/SaveDiaryEventModal.vue'))
 const DiaryEventDetailsModal = defineAsyncComponent(() => import('@components/Dashboard/DiaryWidget/DiaryEventDetailsModal.vue'))
 
