@@ -16,6 +16,64 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `Agenda_EventPopulation`
+--
+
+DROP TABLE IF EXISTS `Agenda_EventPopulation`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Agenda_EventPopulation` (
+  `eventId` bigint(20) NOT NULL,
+  `groupId` bigint(20) NOT NULL,
+  `roleId` bigint(20) NOT NULL,
+  `schoolId` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`eventId`,`groupId`,`roleId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Agenda_EventPopulation`
+--
+
+LOCK TABLES `Agenda_EventPopulation` WRITE;
+/*!40000 ALTER TABLE `Agenda_EventPopulation` DISABLE KEYS */;
+INSERT INTO `Agenda_EventPopulation` VALUES
+(553804,45407,45302,45405),
+(553805,45407,45103,45405),
+(553806,45407,45302,45405),
+(557201,55688,45103,45405),
+(557203,45407,0,45405);
+/*!40000 ALTER TABLE `Agenda_EventPopulation` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Agenda_EventRead`
+--
+
+DROP TABLE IF EXISTS `Agenda_EventRead`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Agenda_EventRead` (
+  `eventId` bigint(20) NOT NULL,
+  `userId` bigint(20) NOT NULL,
+  `readDate` datetime(6) DEFAULT NULL,
+  PRIMARY KEY (`eventId`,`userId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Agenda_EventRead`
+--
+
+LOCK TABLES `Agenda_EventRead` WRITE;
+/*!40000 ALTER TABLE `Agenda_EventRead` DISABLE KEYS */;
+INSERT INTO `Agenda_EventRead` VALUES
+(557201,58811,'2023-11-22 14:07:57.884000'),
+(557203,45479,'2023-11-22 14:10:07.242000');
+/*!40000 ALTER TABLE `Agenda_EventRead` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `Agenda_Event`
 --
 
@@ -44,61 +102,10 @@ LOCK TABLES `Agenda_Event` WRITE;
 INSERT INTO `Agenda_Event` VALUES
 (553804,20097,'2023-11-21 16:30:09.944000','2023-11-21 17:00:00.000000','Évènement pour tous les personnels','<html>\n <head></head>\n<body>\n <p>Contenu de l\'évènement pour tous les personnels</p> \n</body></body>\n</html>','Lieu de l\'événement pour tous les personnels',58811),
 (553805,20097,'2023-11-21 16:30:49.972000','2023-11-21 17:00:00.000000','Évènement pour tous les élèves','<html>\n <head></head>\n<body>\n <p>Contenu de l\'évènement pour tous les élèves</p> \n</body></body>\n</html>','Lieu de l\'évènement pour tous les élèves',58811),
-(553806,20097,'2023-11-21 16:45:42.686000','2023-11-21 17:00:00.000000','Second évènement pour les enseignants','<html>\n <head></head>\n<body>\n <p>Détails du second évènement pour les enseignants</p> \n</body></body>\n</html>','Lieu du second évènement pour les enseignants',58811);
+(553806,20097,'2023-11-21 16:45:42.686000','2023-11-21 17:00:00.000000','Second évènement pour les enseignants','<html>\n <head></head>\n<body>\n <p>Détails du second évènement pour les enseignants</p> \n</body></body>\n</html>','Lieu du second évènement pour les enseignants',58811),
+(557201,20097,'2023-11-22 15:00:57.883000','2023-11-22 16:00:00.000000','Évènement à destination d\'une volée','<html>\n <head></head>\n<body>\n <p>contenu de l\'évènement à destination d\'une volée</p> \n</body></body>\n</html>','Lieu de l\'évènement à destination d\'une volée',58811),
+(557203,20097,'2023-11-22 15:15:07.241000','2023-11-22 16:00:00.000000','Évènement à destination de l\'établissement','<html>\n <head></head>\n<body>\n <p>contenu de l\'évènement à destination de l\'établissement</p> \n</body></body>\n</html>','Lieu de l\'évènement à destination de l\'établissement',45479);
 /*!40000 ALTER TABLE `Agenda_Event` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Agenda_EventPopulation`
---
-
-DROP TABLE IF EXISTS `Agenda_EventPopulation`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Agenda_EventPopulation` (
-  `eventId` bigint(20) NOT NULL,
-  `groupId` bigint(20) NOT NULL,
-  `roleId` bigint(20) NOT NULL,
-  `schoolId` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`eventId`,`groupId`,`roleId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Agenda_EventPopulation`
---
-
-LOCK TABLES `Agenda_EventPopulation` WRITE;
-/*!40000 ALTER TABLE `Agenda_EventPopulation` DISABLE KEYS */;
-INSERT INTO `Agenda_EventPopulation` VALUES
-(553804,45407,45302,45405),
-(553805,45407,45103,45405),
-(553806,45407,45302,45405);
-/*!40000 ALTER TABLE `Agenda_EventPopulation` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Agenda_EventRead`
---
-
-DROP TABLE IF EXISTS `Agenda_EventRead`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Agenda_EventRead` (
-  `eventId` bigint(20) NOT NULL,
-  `userId` bigint(20) NOT NULL,
-  `readDate` datetime(6) DEFAULT NULL,
-  PRIMARY KEY (`eventId`,`userId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Agenda_EventRead`
---
-
-LOCK TABLES `Agenda_EventRead` WRITE;
-/*!40000 ALTER TABLE `Agenda_EventRead` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Agenda_EventRead` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -10663,4 +10670,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-21 16:21:16
+-- Dump completed on 2023-11-22 14:12:00

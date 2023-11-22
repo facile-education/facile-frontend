@@ -64,6 +64,22 @@
             "title": "Second évènement pour les enseignants",
             "location": "Lieu du second évènement pour les enseignants",
             "content": "Détails du second évènement pour les enseignants"
+        },
+        {
+            "recipient": "Elèves de la volée 09",
+            "title": "Évènement à destination d'une volée",
+            "location": "Lieu de l'évènement à destination d'une volée",
+            "content": "contenu de l'évènement à destination d'une volée",
+            "startDate": "2023/11/22 15:0",
+            "endDate": "2023/11/22 16:00"
+        },
+        {
+            "recipient": "Tous les élèves",
+            "title": "Évènement à destination de l'établissement",
+            "location": "Lieu de l'évènement à destination de l'établissement",
+            "content": "contenu de l'évènement à destination de l'établissement",
+            "startDate": "2023/11/22 15:15",
+            "endDate": "2023/11/22 16:00"
         }
     ],
     "NewEvent": {

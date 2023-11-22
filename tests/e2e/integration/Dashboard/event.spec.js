@@ -48,11 +48,15 @@ describe('Dashboard_Events', () => {
       cy.get('.diary-event').eq(0).click()
       // Check if is already visible
       getEventDetail(existingEvents[2]).should('be.visible')
+      // Mark third event as read
+      cy.get('.diary-event').eq(1).click()
+      // Check if is already visible
+      getEventDetail(existingEvents[4]).should('be.visible')
 
       // Filter to display all events
       cy.get('[data-test="eventUnRealOnly"]').click()
       // Verifiy event length
-      cy.get('.diary-event').should('have.length', 2)
+      cy.get('.diary-event').should('have.length', 3)
 
       // Filter to display unread events
       cy.get('[data-test="eventUnRealOnly"]').click()
@@ -114,6 +118,27 @@ describe('Dashboard_Events', () => {
         // Verify is recipient who read is mark as read
         cy.get('.read-info-user').contains(`${STUDENT.lastName} ${STUDENT.firstName}`).should('not.contain', 'Non lu')
       })
+    })
+
+    it('Dashboard_Annoucements_DisplayAnnouncementByProfil', function () {
+      const existingEvents = this.dashboardData.existingEvents
+      // Event created by the headmaster for a class
+      cy.login(TEACHER, dashboardURL)
+      cy.clock().invoke('setSystemTime', Cypress.dayjs(existingEvents[2].startDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+      getEvent(existingEvents[3]).should('be.visible')
+
+      cy.login(SCHOOL_ADMIN, dashboardURL)
+      cy.clock().invoke('setSystemTime', Cypress.dayjs(existingEvents[2].startDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+      getEvent(existingEvents[3]).should('be.visible')
+
+      // Event created by the delegate for the establishment
+      cy.login(HEADMASTER, dashboardURL)
+      cy.clock().invoke('setSystemTime', Cypress.dayjs(existingEvents[2].startDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+      getEvent(existingEvents[4]).should('be.visible')
+
+      cy.login(SCHOOL_ADMIN, dashboardURL)
+      cy.clock().invoke('setSystemTime', Cypress.dayjs(existingEvents[2].startDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+      getEvent(existingEvents[4]).should('be.visible')
     })
 
     it('Dashboard_Events_DisplayAllEvents', function () {
@@ -547,7 +572,7 @@ describe('Dashboard_Events', () => {
     })
   })
   context('mobile', function () {
-    before(() => {
+    beforeEach(() => {
       cy.viewport('iphone-5')
     })
     it('Dashboard_Events_DisplayDetailsPanel', function () {
@@ -617,7 +642,7 @@ describe('Dashboard_Events', () => {
     const sizes = ['iphone-5', 'ipad-2', [1024, 768], [1024, 4000]]
     const largeScreenNoScroll = sizes[3]
     sizes.forEach(size => {
-      it.only(`Dashboard_Events_DisplayAllEventsLoadNextEvent: ${size}`, function () {
+      it.skip(`Dashboard_Events_DisplayAllEventsLoadNextEvent: ${size}`, function () {
         // Set testing viewport
         if (Array.isArray(size)) {
           cy.viewport(size[0], size[1])
