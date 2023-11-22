@@ -40,8 +40,8 @@
           @click="toggleContextMenu"
         >
           <img
-            height="20"
-            width="20"
+            height="16"
+            width="16"
             :src="require('@/assets/icons/vertical_dots.svg')"
             alt="options"
           >
