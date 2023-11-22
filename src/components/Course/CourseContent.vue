@@ -54,22 +54,39 @@
       >
     </button>
 
+    <button
+      v-else-if="typeLabel==='file' && (mq.phone || mq.tablet)"
+      class="options-button"
+      :aria-label="$t('options')"
+      :title="$t('options')"
+      @click="toggleContextMenu"
+    >
+      <img
+        height="16"
+        width="16"
+        :src="require('@assets/icons/vertical_dots.svg')"
+        alt="options"
+      >
+    </button>
+
     <span
       v-else-if="typeLabel==='file'"
       class="file-actions"
     >
       <button
-        :title="$t('addToFolder')"
+        :title="$t('save')"
+        :aria-label="$t('save')"
         @click.stop="isDepositModalDisplayed = true"
       >
         <img
           class="file-action add-to-folder"
-          src="@assets/add_to_folder.svg"
-          :alt="$t('addToFolder')"
+          :src="saveIcon"
+          :alt="$t('save')"
         >
       </button>
       <button
         :title="$t('download')"
+        :aria-label="$t('download')"
         @click.stop="downloadFile"
       >
         <img
@@ -102,6 +119,17 @@
         @close="isDepositModalDisplayed = false"
       />
     </teleport>
+
+    <teleport
+      v-if="displayMenu"
+      to="body"
+    >
+      <ContextMenu
+        class="context-menu-with-padding"
+        @choose-option="performChosenOption"
+        @close="displayMenu=false"
+      />
+    </teleport>
   </div>
 </template>
 
@@ -113,6 +141,8 @@ import { defineAsyncComponent } from 'vue'
 import contentTypeConstants from '@/constants/contentTypeConstants'
 import { icons } from '@/constants/icons'
 import { getExtensionFromName } from '@/utils/commons.util'
+const ContextMenu = defineAsyncComponent(() => import('@components/ContextMenu/ContextMenu.vue'))
+
 const H5PModal = defineAsyncComponent(() => import('@components/Base/ContentEdtitionModals/H5PModal'))
 const VideoModal = defineAsyncComponent(() => import('@components/Base/ContentEdtitionModals/VideoModal'))
 const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal.vue'))
@@ -123,8 +153,10 @@ export default {
     FilePickerModal,
     H5PModal,
     VideoModal,
-    TextContent
+    TextContent,
+    ContextMenu
   },
+  inject: ['mq'],
   props: {
     content: {
       type: Object,
@@ -148,10 +180,14 @@ export default {
     return {
       videoModalDisplayed: false,
       h5pModalDisplayed: false,
-      isDepositModalDisplayed: false
+      isDepositModalDisplayed: false,
+      displayMenu: false
     }
   },
   computed: {
+    saveIcon () {
+      return icons.options.save
+    },
     icon () {
       return new URL(`../../assets/icons/contents/${this.typeLabel}.svg`, import.meta.url).href
     },
@@ -219,6 +255,41 @@ export default {
     },
     update (value) {
       this.$emit('update:modelValue', value)
+    },
+    toggleContextMenu (event) {
+      this.displayMenu = true
+      this.$store.dispatch('contextMenu/openContextMenu', {
+        event,
+        options: [
+          {
+            name: 'save',
+            title: this.$t('save'),
+            icon: icons.options.save,
+            position: 1,
+            hasSeparator: false
+          },
+          {
+            name: 'download',
+            title: this.$t('download'),
+            icon: icons.options.download,
+            position: 2,
+            hasSeparator: false
+          }]
+      })
+    },
+    performChosenOption (option) {
+      switch (option.name) {
+        case 'save':
+          this.isDepositModalDisplayed = true
+          break
+        case 'download':
+          this.downloadFile()
+          break
+        default:
+          console.error('no option with name ' + option.name + ' exists')
+      }
+      this.displayMenu = false
+      this.$store.dispatch('contextMenu/closeMenus')
     },
     downloadFile () {
       const fileToDownload = { ...this.content, type: 'File', name: this.content.contentName, url: this.content.downloadUrl }
@@ -308,6 +379,15 @@ export default {
   text-overflow: ellipsis;
 }
 
+.context-menu-with-padding {
+  padding: 10px 0;
+}
+
+.options-button {
+  height: 100%;
+  padding: 0 0.5rem;
+}
+
 .type {
   display: flex;
   align-content: center;
@@ -387,6 +467,8 @@ button {
   "h5p": "Contenu riche",
   "link": "Lien externe",
   "video": "Vidéo",
-  "addToFolderSuccess": "Fichier déposé"
+  "addToFolderSuccess": "Fichier déposé",
+  "save": "Enregistrer",
+  "download": "Télécharger"
 }
 </i18n>
