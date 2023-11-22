@@ -97,7 +97,7 @@
           <WeprodeTagsInput
             v-if="roleList"
             v-model="application.defaultRoles"
-            :placeholder="$t('rolesPlaceholder') + '*'"
+            :placeholder="$t('rolesPlaceholder')"
             :list="roleList"
             display-field="displayText"
             id-field="roleId"
@@ -274,9 +274,12 @@ export default {
     buildApplicationBeforeSave () {
       // Handle roleId array before saving
       this.application.roleIds = []
-      for (const role of this.application.defaultRoles) {
-        this.application.roleIds.push(role.roleId)
+      if (this.application.defaultRoles) {
+        for (const role of this.application.defaultRoles) {
+          this.application.roleIds.push(role.roleId)
+        }
       }
+
       this.application.schoolIds = []
       for (const authorizedSchool of this.application.authorizedSchools) {
         this.application.schoolIds.push(authorizedSchool.schoolId)
