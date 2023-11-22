@@ -48,6 +48,8 @@ LOCK TABLES `News_News` WRITE;
 INSERT INTO `News_News` VALUES
 (546204,20097,'Annonce avec une date de parution ultérieure','<html>\n <head></head>\n<body>\n <p>Contenu de l\'annonce avec une date de parution ultérieure</p> \n</body></body>\n</html>',52216,1,0,'2024-06-29 23:59:59.000000','2023-11-10 11:30:00.000000','2023-11-06 10:36:39.280000',0),
 (546313,20097,'Annonce déjà existante','<html>\n <head></head>\n<body>\n <p>Contenu d\'un annonce déjà existante destinée aux élèves</p> \n</body></body>\n</html>',58811,1,0,'2024-06-29 23:59:59.000000','2023-11-06 11:45:00.000000','2023-11-06 10:42:46.773000',0),
+(556401,20097,'Annonces à destination de l\'établissement','<html>\n <head></head>\n<body>\n <p>Annonces à destination de l\'établissement créée par un délégué</p> \n</body></body>\n</html>',45479,1,0,'2024-06-29 23:59:59.000000','2023-11-22 14:15:00.000000','2023-11-22 13:22:52.061000',0),
+(556403,20097,'Annonces à destination d\'une volée','<html>\n <head></head>\n<body>\n <p>Contenu de l\'annonce à destination d\'une volée</p> \n</body></body>\n</html>',58811,1,0,'2024-06-29 23:59:59.000000','2023-11-22 14:15:00.000000','2023-11-22 13:22:18.991000',0),
 (562502,20097,'Deuxième annonce','<html>\n <head></head>\n<body>\n <p>Ceci est une deuxième annonce</p> \n</body></body>\n</html>',58811,1,0,'2024-06-29 23:59:59.000000','2023-10-30 16:45:00.000000','2023-10-30 16:03:46.428000',0);
 /*!40000 ALTER TABLE `News_News` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -102,9 +104,11 @@ CREATE TABLE `News_NewsPopulation` (
 LOCK TABLES `News_NewsPopulation` WRITE;
 /*!40000 ALTER TABLE `News_NewsPopulation` DISABLE KEYS */;
 INSERT INTO `News_NewsPopulation` VALUES
-(562502,45407,45102,45405),
 (546204,45407,45103,45405),
-(546313,45407,45103,45405);
+(546313,45407,45103,45405),
+(556401,45407,0,45405),
+(556403,55688,45103,45405),
+(562502,45407,45102,45405);
 /*!40000 ALTER TABLE `News_NewsPopulation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -132,7 +136,9 @@ LOCK TABLES `News_NewsRead` WRITE;
 INSERT INTO `News_NewsRead` VALUES
 (546204,52216,'2023-11-06 10:36:39.282000'),
 (546313,45787,'2023-11-08 13:41:45.539000'),
-(546313,58811,'2023-11-06 10:42:46.774000');
+(546313,58811,'2023-11-06 10:42:46.774000'),
+(556401,45479,'2023-11-22 13:20:39.007000'),
+(556403,58811,'2023-11-22 13:22:18.992000');
 /*!40000 ALTER TABLE `News_NewsRead` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -174,4 +180,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-09  9:50:27
+-- Dump completed on 2023-11-22 13:29:40

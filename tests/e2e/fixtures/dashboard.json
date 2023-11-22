@@ -6,16 +6,28 @@
     },
     "existingNews": [
         {
+            "recipient": "Tous les responsables légaux",
+            "title": "Deuxième annonce",
+            "content": "Ceci est une deuxième annonce",
+            "publicationDate": "30/10/23"
+        },
+        {
             "recipient": "Tous les élèves",
             "title": "Annonce déjà existante",
             "content": "Contenu d'un annonce déjà existante destinée aux élèves",
             "publicationDate": "06/11/23"
         },
         {
-            "recipient": "Tous les responsables légaux",
-            "title": "Deuxième annonce",
-            "content": "Ceci est une deuxième annonce",
-            "publicationDate": "30/10/23"
+            "recipient": "Elèves de la volée 09",
+            "title": "Annonces à destination d'une volée",
+            "content": "Contenu de l'annonce à destination d'une volée",
+            "publicationDate": "22/11/23"
+        },
+        {
+            "recipient": "CO Da Vinci",
+            "title": "Annonces à destination de l'établissement",
+            "content": "Annonces à destination de l'établissement créée par un délégué",
+            "publicationDate": "22/11/23"
         }
     ],
     "futurNews": {

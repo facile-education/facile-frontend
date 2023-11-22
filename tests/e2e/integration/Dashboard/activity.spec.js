@@ -3,12 +3,12 @@ import { DOYEN, MULTI_PARENT, PARENT, STUDENT, TEACHER, TEACHER2 } from '../../s
 import { getInformation, getInformationDetail, loadActivity, setActivityWithContent } from '../../support/utils/dashboard'
 
 describe('Dashboard_Activity', () => {
-  beforeEach(() => {
-    cy.fixture('dashboard.json').as('dashboardData')
-    setActivityWithContent()
-    cy.loadTables('schoollife/schoollife_tables.sql')
-  })
-  context('desktop', function () {
+  context('StaticDataDumpActivities', function () {
+    beforeEach(() => {
+      setActivityWithContent()
+      cy.fixture('dashboard.json').as('dashboardData')
+      cy.loadTables('schoollife/schoollife_tables.sql')
+    })
     it('Dashboard_Activities_DisplayActivity_Display_Limite_Number_Activities', function () {
       const existingActivity = this.dashboardData.existingActivity
       const newActivity = this.dashboardData.futurActivity
@@ -81,6 +81,65 @@ describe('Dashboard_Activity', () => {
       cy.get('.documents').should('be.visible')
     })
 
+    it('Dashboard_Activities_DisplayActivity_Display_Placeholder', function () {
+      // Load dump empty
+      cy.loadTables('dashboard/dashboard_tables_activity_empty.sql')
+      // Login
+      cy.login(STUDENT, dashboardURL)
+      loadActivity('get-dashboard-activity')
+      cy.get('[data-test="activity-widget"]').within(() => {
+        cy.get('.placeholder').should('be.visible')
+      })
+    })
+
+    it('Dashboard_Activities_DisplayAllActivities', function () {
+      const existingActivity = this.dashboardData.existingActivity
+      const information = existingActivity[0]
+      const group = existingActivity[1]
+      const documentInGroup = existingActivity[2]
+
+      cy.login(STUDENT, dashboardURL)
+      loadActivity('get-dashboard-activity')
+
+      cy.get('[data-test="activity-widget"]').within(() => {
+        cy.contains('button', 'Voir toutes les activités').scrollIntoView()
+        cy.contains('button', 'Voir toutes les activités').click()
+        cy.get('.activities').should('have.class', 'infinite-scroll')
+        getInformation(information).should('be.visible')
+        getInformation(group).should('be.visible')
+        getInformation(documentInGroup).should('be.visible')
+      })
+    })
+
+    it('Dashboard_Activities_DisplayActivities_Display_In_RightOrder', function () {
+      const existingActivity = this.dashboardData.existingActivity
+      const newActivity = this.dashboardData.futurActivity
+      const information = existingActivity[0]
+      const group = existingActivity[1]
+      const documentInGroup = existingActivity[2]
+      const homeWork1 = existingActivity[5]
+      const homeWork2 = existingActivity[6]
+
+      // Login
+      cy.login(STUDENT, dashboardURL)
+
+      // Set Clock after new activity release to see if it is in first position
+      cy.clock().invoke('setSystemTime', Cypress.dayjs(newActivity.publicationDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+      loadActivity('get-dashboard-activity')
+      // Click to see all activities
+      cy.contains('button', 'Voir toutes les activités').scrollIntoView()
+      cy.contains('button', 'Voir toutes les activités').click()
+      cy.get('.activities').should('have.class', 'infinite-scroll')
+      // Check the position of activities
+      cy.get('.activity-item').eq(0).should('contain', newActivity.title)
+      cy.get('.separator').should('be.visible')
+      cy.get('.activity-item').eq(1).should('contain', documentInGroup.title)
+      cy.get('.activity-item').eq(2).should('contain', group.title)
+      cy.get('.activity-item').eq(3).should('contain', homeWork1.content)
+      cy.get('.activity-item').eq(4).should('contain', homeWork2.content)
+      cy.get('.activity-item').eq(5).should('contain', information.title)
+    })
+
     it('Dashboard_Activities_DisplayActivity_Click_On_Group_Redirection_ByProfil', function () {
       const existingActivity = this.dashboardData.existingActivity
       const groupStudent = existingActivity[1]
@@ -134,65 +193,6 @@ describe('Dashboard_Activity', () => {
       // Redirection firing for the doyen
       cy.contains('.activity-item', renvoiForOthers.content).click()
       cy.get('.pending-firing-modal').should('not.exist')
-    })
-
-    it('Dashboard_Activities_DisplayActivity_Display_Placeholder', function () {
-      // Load dump empty
-      cy.loadTables('dashboard/dashboard_tables_activity_empty.sql')
-      // Login
-      cy.login(STUDENT, dashboardURL)
-      loadActivity('get-dashboard-activity')
-      cy.get('[data-test="activity-widget"]').within(() => {
-        cy.get('.placeholder').should('be.visible')
-      })
-    })
-
-    it('Dashboard_Activities_DisplayAllActivities', function () {
-      const existingActivity = this.dashboardData.existingActivity
-      const information = existingActivity[0]
-      const group = existingActivity[1]
-      const documentInGroup = existingActivity[2]
-
-      cy.login(STUDENT, dashboardURL)
-      loadActivity('get-dashboard-activity')
-
-      cy.get('[data-test="activity-widget"]').within(() => {
-        cy.contains('button', 'Voir toutes les activités').scrollIntoView()
-        cy.contains('button', 'Voir toutes les activités').click()
-        cy.get('.activities').should('have.class', 'infinite-scroll')
-        getInformation(information).should('be.visible')
-        getInformation(group).should('be.visible')
-        getInformation(documentInGroup).should('be.visible')
-      })
-    })
-
-    it('Dashboard_Activities_DisplayActivities_Display_In_RightOrder', function () {
-      const existingActivity = this.dashboardData.existingActivity
-      const newActivity = this.dashboardData.futurActivity
-      const information = existingActivity[0]
-      const group = existingActivity[1]
-      const documentInGroup = existingActivity[2]
-      const homeWork1 = existingActivity[5]
-      const homeWork2 = existingActivity[6]
-
-      // Login
-      cy.login(STUDENT, dashboardURL)
-      loadActivity('get-dashboard-activity')
-
-      // Set Clock after new activity release to see if it is in first position
-      cy.clock().invoke('setSystemTime', Cypress.dayjs(newActivity.publicationDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
-      // Click to see all activities
-      cy.contains('button', 'Voir toutes les activités').scrollIntoView()
-      cy.contains('button', 'Voir toutes les activités').click()
-      cy.get('.activities').should('have.class', 'infinite-scroll')
-      // Check the position of activities
-      cy.get('.activity-item').eq(0).should('contain', newActivity.title)
-      cy.get('.separator').should('be.visible')
-      cy.get('.activity-item').eq(1).should('contain', documentInGroup.title)
-      cy.get('.activity-item').eq(2).should('contain', group.title)
-      cy.get('.activity-item').eq(3).should('contain', homeWork1.content)
-      cy.get('.activity-item').eq(4).should('contain', homeWork2.content)
-      cy.get('.activity-item').eq(5).should('contain', information.title)
     })
 
     it('Dashboard_Activities_DisplayActivities_Renvoi_VisibilityByProfil', function () {
@@ -296,7 +296,14 @@ describe('Dashboard_Activity', () => {
         cy.get('.filters').should('be.visible')
       })
     })
+  })
 
+  context('NewsActivity', function () {
+    beforeEach(() => {
+      cy.fixture('dashboard.json').as('dashboardData')
+      cy.loadTables('schoollife/schoollife_tables.sql')
+      cy.loadTables('dashboard/dashboard_tables_activity_News.sql')
+    })
     it('Dashboard_Activities_DisplayActivities_FuturRelease', function () {
       const futurActivity = this.dashboardData.futurActivity
 
@@ -379,6 +386,7 @@ describe('Dashboard_Activity', () => {
 
       // Login
       cy.login(TEACHER, dashboardURL)
+      loadActivity('get-dashboard-activity')
       cy.get('[data-test="activity-widget"]').within(() => {
         // Click to oopen createActivity modal
         cy.get('[data-test="CreateActivity"]').click()
@@ -536,6 +544,7 @@ describe('Dashboard_Activity', () => {
       cy.get('[data-test="activity-widget"]').within(() => {
         cy.contains('button', 'Voir toutes les activités').click()
       })
+      loadActivity('get-dashboard-activity')
       // Check on information modified
       getInformation(activityToEdit).should('be.exist').click()
       // Check the content
@@ -569,6 +578,7 @@ describe('Dashboard_Activity', () => {
       cy.get('[data-test="activity-widget"]').within(() => {
         cy.contains('button', 'Voir toutes les activités').click()
       })
+      loadActivity('get-dashboard-activity')
       // Click on information
       getInformation(existingActivity[0]).click()
       // Open update modal
@@ -699,6 +709,7 @@ describe('Dashboard_Activity', () => {
       cy.get('[data-test="activity-widget"]').within(() => {
         cy.contains('button', 'Voir toutes les activités').click()
       })
+      loadActivity('get-dashboard-activity')
       // Click on information
       getInformation(existingActivity[0]).should('be.visible').click()
       // Click on delete button
@@ -708,8 +719,12 @@ describe('Dashboard_Activity', () => {
     })
   })
   context('Mobile', function () {
-    it('Dashboard_Activities_CreateActivity_Button_HeaderActivity_Mobile', function () {
+    beforeEach(() => {
+      cy.fixture('dashboard.json').as('dashboardData')
+      cy.loadTables('dashboard/dashboard_tables_activity_News.sql')
       cy.viewport('iphone-5')
+    })
+    it('Dashboard_Activities_CreateActivity_Button_HeaderActivity_Mobile', function () {
       // Login
       cy.login(TEACHER, dashboardURL)
       loadActivity('get-dashboard-activity')
@@ -721,7 +736,6 @@ describe('Dashboard_Activity', () => {
       cy.get('[data-test="update-news-modal"]').should('be.visible')
     })
     it('Dashboard_Activities_CreateActivity_Button_AllActivity_mobile', function () {
-      cy.viewport('iphone-5')
       // Login
       cy.login(TEACHER, dashboardURL)
       loadActivity('get-dashboard-activity')
@@ -729,6 +743,7 @@ describe('Dashboard_Activity', () => {
         // Display all activity
         cy.contains('button', 'Voir toutes les activités').click()
       })
+      loadActivity('get-dashboard-activity')
       // Click on button to display modal createActivity
       cy.get('[data-test="CreateActivity"]').click()
       // Check if modal is visible
@@ -736,7 +751,6 @@ describe('Dashboard_Activity', () => {
     })
 
     it('Dashboard_Activities_UpdateActivity_clickActivity_mobile', function () {
-      cy.viewport('iphone-5')
       const existingActivity = this.dashboardData.existingActivity
       cy.login(TEACHER, dashboardURL)
       loadActivity('get-dashboard-activity')
@@ -749,7 +763,6 @@ describe('Dashboard_Activity', () => {
     })
 
     it('Dashboard_Activities_UpdateActivity_allActivity_mobile', function () {
-      cy.viewport('iphone-5')
       const existingActivity = this.dashboardData.existingActivity
       cy.login(TEACHER, dashboardURL)
       loadActivity('get-dashboard-activity')
@@ -757,6 +770,7 @@ describe('Dashboard_Activity', () => {
       cy.get('[data-test="activity-widget"]').within(() => {
         cy.contains('button', 'Voir toutes les activités').click()
       })
+      loadActivity('get-dashboard-activity')
       // Click on information
       getInformation(existingActivity[0]).click()
       // Open update modal
@@ -766,7 +780,6 @@ describe('Dashboard_Activity', () => {
     })
 
     it('Dashboard_Activities_DeleteActivity_clickActivity_mobile', function () {
-      cy.viewport('iphone-5')
       const existingActivity = this.dashboardData.existingActivity
 
       cy.login(TEACHER, dashboardURL)
@@ -780,7 +793,6 @@ describe('Dashboard_Activity', () => {
     })
 
     it('Dashboard_Activities_DeleteActivity_allActivity_mobile', function () {
-      cy.viewport('iphone-5')
       const existingActivity = this.dashboardData.existingActivity
 
       cy.login(TEACHER, dashboardURL)
