@@ -12,7 +12,8 @@ export {
   deleteGroups,
   runAnonymisation,
   cleanupDropboxes,
-  runDataFeed
+  runDataFeed,
+  setNewsPermissions
 }
 
 export default {
@@ -25,7 +26,8 @@ export default {
   deleteGroups,
   runAnonymisation,
   cleanupDropboxes,
-  runDataFeed
+  runDataFeed,
+  setNewsPermissions
 }
 
 const MAINTENANCE_PATH = '/maintenance.maintenance'
@@ -81,4 +83,8 @@ function cleanupDropboxes () {
 
 function runDataFeed () {
   return axios.post(constants.JSON_WS_URL + MAINTENANCE_PATH + '/run-data-feed').then(response => response.data)
+}
+
+function setNewsPermissions () {
+  return axios.post(constants.JSON_WS_URL + MAINTENANCE_PATH + '/set-news-permissions').then(response => response.data)
 }
