@@ -77,6 +77,7 @@
         :title="$t('save')"
         :aria-label="$t('save')"
         @click.stop="isDepositModalDisplayed = true"
+        @keyup.stop
       >
         <img
           class="file-action add-to-folder"
@@ -88,6 +89,7 @@
         :title="$t('download')"
         :aria-label="$t('download')"
         @click.stop="downloadFile"
+        @keyup.stop
       >
         <img
           class="file-action"
