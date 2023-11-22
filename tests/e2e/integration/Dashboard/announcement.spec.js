@@ -24,7 +24,7 @@ describe('Dashboard_Announcements', () => {
         })
       })
       // Click on event
-      getNews(existingNews[0]).click()
+      getNews(existingNews[1]).click()
       cy.get('[data-test="closeModal"]').click()
       // Check if pellet is not visible
       cy.get('[data-test="announcement-widget"]').within(() => {
@@ -35,7 +35,7 @@ describe('Dashboard_Announcements', () => {
       // Click on read onlyButton
       cy.get('[data-test="ReadOnlyAnnouncementButton"]').click()
       // Check if event is not visible
-      getNews(existingNews[0]).should('not.exist')
+      getNews(existingNews[1]).should('not.exist')
     })
 
     it('Dashboard_Announcement_DisplayAnnouncementsFuturRelease', function () {
@@ -63,7 +63,7 @@ describe('Dashboard_Announcements', () => {
       getNews(furturNews).should('be.visible')
     })
 
-    it('Dashboard_Annoucements_DisplayAnnouncementCheckContent ', function () {
+    it('Dashboard_Annoucements_DisplayAnnouncementCheckContent', function () {
       const existingNews = this.dashboardData.existingNews
       const lastNews = existingNews[existingNews.length - 1]
 
@@ -84,9 +84,27 @@ describe('Dashboard_Announcements', () => {
       })
     })
 
+    it('Dashboard_Annoucements_DisplayAnnouncementByProfil', function () {
+      const existingNews = this.dashboardData.existingNews
+
+      // Announcements created by the headmaster for a class
+      cy.login(TEACHER, dashboardURL)
+      getNews(existingNews[2]).should('be.visible')
+
+      cy.login(SCHOOL_ADMIN, dashboardURL)
+      getNews(existingNews[2]).should('be.visible')
+
+      // Announcements created by the delegate for the establishment
+      cy.login(HEADMASTER, dashboardURL)
+      getNews(existingNews[3]).should('be.visible')
+
+      cy.login(SCHOOL_ADMIN, dashboardURL)
+      getNews(existingNews[3]).should('be.visible')
+    })
+
     it('Dashboard_Announcements_DisplayAnnouncementCheckReadRecipientInfo', function () {
       const existingNews = this.dashboardData.existingNews
-      const lastNews = existingNews[existingNews.length - 1]
+      const lastNews = existingNews[0]
 
       // Login with author
       cy.login(HEADMASTER, dashboardURL)
@@ -132,21 +150,30 @@ describe('Dashboard_Announcements', () => {
       cy.get('[data-test="announcement-widget"]').within(() => {
         cy.contains('button', 'Voir toutes les annonces').click()
       })
-      // Check if all news are visible
-      for (let i = 0; i < existingNews.length - 1; i++) {
-        if (i === existingNews.length - 1) {
-          cy.get('.announcements-list').contains('.announcement', existingNews[i].title).should('be.exist')
-          getNewsDetail(existingNews[i]).should('be.exist')
-          cy.get('.announcement').eq(0).should('have.class', 'theme-light-background-color')
-          cy.get('.announcement').eq(1).should('not.have.class', 'theme-light-background-color')
-        } else {
-          cy.get('.announcements-list').contains('.announcement', existingNews[i].title).should('be.exist').click()
-          cy.get('[data-test="news-details-modal"]').should('not.exist')
-          getNewsDetail(existingNews[i]).should('be.exist')
-          cy.get('.announcement').eq(0).should('have.class', 'theme-light-background-color')
-          cy.get('.announcement').eq(1).should('not.have.class', 'theme-light-background-color')
-        }
-      }
+      // Check if first news is visible
+      cy.get('.announcements-list').contains('.announcement', existingNews[2].title).should('be.exist')
+      // Chech the content
+      getNewsDetail(existingNews[2]).should('be.exist')
+      // Check if news is selected with good class
+      cy.get('.announcement').eq(0).should('have.class', 'theme-light-background-color')
+      cy.get('.announcement').eq(1).should('not.have.class', 'theme-light-background-color')
+      cy.get('.announcement').eq(2).should('not.have.class', 'theme-light-background-color')
+
+      // Check if second news is visible
+      cy.get('.announcements-list').contains('.announcement', existingNews[1].title).should('be.exist').click()
+      getNewsDetail(existingNews[1]).should('be.exist')
+      // Check if news is selected with good class
+      cy.get('.announcement').eq(0).should('not.have.class', 'theme-light-background-color')
+      cy.get('.announcement').eq(1).should('have.class', 'theme-light-background-color')
+      cy.get('.announcement').eq(2).should('not.have.class', 'theme-light-background-color')
+
+      // Check if third news is visible
+      cy.get('.announcements-list').contains('.announcement', existingNews[0].title).should('be.exist').click()
+      getNewsDetail(existingNews[0]).should('be.exist')
+      // Check if news is selected with good class
+      cy.get('.announcement').eq(0).should('not.have.class', 'theme-light-background-color')
+      cy.get('.announcement').eq(1).should('not.have.class', 'theme-light-background-color')
+      cy.get('.announcement').eq(2).should('have.class', 'theme-light-background-color')
     })
 
     it('Dashboard_Announcements_CreateAnnouncement', function () {
@@ -352,13 +379,13 @@ describe('Dashboard_Announcements', () => {
       cy.login(MULTI_STUDENT1, dashboardURL)
       cy.clock().invoke('setSystemTime', Cypress.dayjs(furturNews.dateBeforeRelease, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
       // Check if news is read
-      getNews(existingNews[0]).within(() => {
+      getNews(existingNews[1]).within(() => {
         cy.get('.pellet').should('not.exist')
       })
 
       // Update news
       cy.login(HEADMASTER, dashboardURL)
-      getNews(existingNews[0]).click()
+      getNews(existingNews[1]).click()
       cy.get('[data-test="updateButton"]').click()
       // Set new informations
       cy.get('[data-test="update-news-modal"]').within(() => {

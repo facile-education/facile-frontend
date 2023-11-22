@@ -49,7 +49,7 @@ describe('Dashboard_DisplayCorrectWidgets', () => {
     cy.get('[data-test="statistics-widget"]').should('not.exist')
   })
 
-  it.only('Dashboard_DisplayCorrectWidgets_Responsivity', function () {
+  it('Dashboard_DisplayCorrectWidgets_Responsivity', function () {
     cy.viewport('iphone-5')
     // Test Responsivity
     cy.login(STUDENT, dashboardURL)
