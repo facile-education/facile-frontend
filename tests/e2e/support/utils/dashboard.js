@@ -68,6 +68,11 @@ const loadActivity = request => {
   return cy.wait('@loadActivity')
 }
 
+const ScrollToAndCheckVisibility = (widget) => {
+  cy.get(widget).scrollIntoView()
+  cy.get(widget).should('be.visible')
+}
+
 export {
   getNewsDetail,
   getNews,
@@ -80,5 +85,6 @@ export {
   getInformationDetail,
   selectChild,
   setActivityWithContent,
-  loadActivity
+  loadActivity,
+  ScrollToAndCheckVisibility
 }
