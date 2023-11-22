@@ -18,14 +18,19 @@
     >
       <span>{{ $t('pAuth') }}</span>
     </WeprodeButton>
+    <WeprodeButton
+      class="round"
+      @click="setNewsPermissions"
+    >
+      <span>{{ $t('setNewsPermissions') }}</span>
+    </WeprodeButton>
   </div>
 </template>
 
 <script>
-
 import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 
-import { cleanupDropboxes, runDataFeed } from '@/api/maintenance.service'
+import { cleanupDropboxes, runDataFeed, setNewsPermissions } from '@/api/maintenance.service'
 
 export default {
   name: 'OneShotMaintenance',
@@ -61,6 +66,17 @@ export default {
         }
       )
     },
+    setNewsPermissions () {
+      setNewsPermissions().then(
+        (data) => {
+          if (data.success) {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
+          } else {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+          }
+        }
+      )
+    },
     runPAuth () {
       this.$store.commit('user/setPAuth', 123456)
     }
@@ -86,6 +102,10 @@ export default {
   "success": "Opération terminée en succès",
   "error": "Opération terminée en erreur",
   "pAuth": "pAuth bidon",
+<<<<<<< HEAD
   "runDataFeed": "Alimentation des données (intégration uniquement)"
+=======
+  "setNewsPermissions": "Permissions des PJ de news"
+>>>>>>> 1518c811 (Create maintenance tool for news permissions)
 }
 </i18n>
