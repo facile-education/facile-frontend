@@ -1,4 +1,5 @@
 import axios from 'axios'
+import PentilaUtils from 'pentila-utils'
 
 import constants from '@/api/constants'
 
@@ -221,10 +222,8 @@ function setFiringReason (slotId, studentId, reason) {
  * StudentsPresence is a json containing all the students of a slot with a boolean 'isPresent' (fields: success)
  */
 function markStudentsPresent (slotId, studentsPresence) {
-  return axios.get(constants.JSON_WS_URL + SCHOOL_LIFE_SESSION_STUDENT_PATH + '/mark-students-present', {
-    params: {
-      schoollifeSessionId: slotId,
-      studentsPresence: studentsPresence
-    }
-  }).then(response => response.data)
+  return axios.post(constants.JSON_WS_URL + SCHOOL_LIFE_SESSION_STUDENT_PATH + '/mark-students-present', PentilaUtils.URL.params({
+    schoollifeSessionId: slotId,
+    studentsPresence
+  })).then(response => response.data)
 }
