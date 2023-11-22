@@ -1,6 +1,7 @@
 <template>
   <iframe
     :src="pdfjsSrc"
+    title="pdf content"
     class="media"
   />
 </template>

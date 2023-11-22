@@ -21,7 +21,6 @@ import { getThread, waitMessagingToBeLoaded } from '../../../support/utils/messa
 const studentToRegister = STUDENT // Because normal Student is already register in the hhc tables
 
 const rolesThatCanRegister = [HEADMASTER, SECRETARY, DOYEN, TEACHER]
-const rolesThatCannotRegister = []
 
 function getRandomBoolean () {
   return Math.random() < 0.5
@@ -111,16 +110,6 @@ describe('HHC_Study_Registration', () => {
   it('HHC_Study_Registration_IsPresentForGoodRoles', function () {
     const slotToRegisterInside = this.hhcData.slotsTypes.study.slotExample
 
-    rolesThatCannotRegister.forEach(role => {
-      cy.login(role, HHCURL)
-      selectSlotType(this.hhcData.slotsTypes.study)
-      // Select student
-      selectStudent(studentToRegister)
-      // Open registration modal
-      getSlot(slotToRegisterInside).click()
-      cy.get('[data-test=event-popup]').get('[data-test=registerStudent-option]').should('not.exist')
-    })
-
     rolesThatCanRegister.forEach(role => {
       cy.login(role, HHCURL)
       selectSlotType(this.hhcData.slotsTypes.study)
@@ -130,6 +119,8 @@ describe('HHC_Study_Registration', () => {
       getSlot(slotToRegisterInside).click()
       cy.get('[data-test=event-popup]').get('[data-test=registerStudent-option]').should('exist') // be.visible is better but sometimes calendar is wierd
     })
+
+    // There is no roles that cannot register among role that can access to HHC
   })
 
   it('HHC_Study_Registration_Register', function () {
