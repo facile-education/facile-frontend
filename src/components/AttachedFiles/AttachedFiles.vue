@@ -109,15 +109,9 @@ export default {
   margin: 0;
   padding: 0;
   list-style-type: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-
-  li {
-    flex: 1;
-    min-width: 250px;
-    margin-bottom: 0;
-  }
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(268px, 1fr));
 }
 
 button {
