@@ -15,7 +15,10 @@ describe('Dashboard_Schedule', () => {
 
     // Login
     cy.login(MULTI_PARENT, dashboardURL)
+    cy.intercept('GET', '**/get-user-schedule**').as('Schedule')
+    cy.wait('@Schedule')
 
+    cy.get('.personal-widgets').scrollIntoView()
     cy.get('.personal-widgets').within(() => {
       // Select first child
       selectChild(MULTI_STUDENT1.firstName)
@@ -36,6 +39,9 @@ describe('Dashboard_Schedule', () => {
     const sessionsList = this.dashboardData.existingSessionsLists[0].sessionsLists[0].sessions
     // Login
     cy.login(STUDENT, dashboardURL)
+    cy.intercept('GET', '**/get-user-schedule**').as('Schedule')
+    cy.wait('@Schedule')
+
     cy.get('[data-test="schedule-widget"]').scrollIntoView()
     cy.get('[data-test="schedule-widget"]').should('be.visible')
 
@@ -53,6 +59,9 @@ describe('Dashboard_Schedule', () => {
     const sessionsListNextDay = this.dashboardData.existingSessionsLists[0].sessionsLists[3].sessions
     // Login
     cy.login(STUDENT, dashboardURL)
+    cy.intercept('GET', '**/get-user-schedule**').as('Schedule')
+    cy.wait('@Schedule')
+
     cy.get('[data-test="schedule-widget"]').scrollIntoView()
     cy.get('[data-test="schedule-widget"]').should('be.visible').within(() => {
       getSession(sessionsListCurrentDay[0]).should('be.exist')
