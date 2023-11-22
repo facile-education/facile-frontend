@@ -66,6 +66,7 @@
         <PentilaButton
           data-test="submitTicket"
           :label="$t('submitButtonLabel')"
+          :disabled="isLoading"
           @click="submitTicket"
         />
       </template>
@@ -124,7 +125,8 @@ export default {
         }
       },
       attachFiles: [],
-      isFilePickerDisplayed: false
+      isFilePickerDisplayed: false,
+      isLoading: false
     }
   },
   validations: {
@@ -187,12 +189,14 @@ export default {
       if (this.v$.$invalid) { // form checking
         this.v$.$touch()
       } else {
+        this.isLoading = true
         sendAssistanceMessage(
           this.modalType === 'Suggestion',
           this.selected.applicationId,
           this.contentField,
           JSON.stringify(this.attachFiles)
         ).then((data) => {
+          this.isLoading = false
           if (data.success) {
             this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
             this.onClose()
