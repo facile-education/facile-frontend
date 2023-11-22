@@ -12,12 +12,18 @@
     >
       <span>{{ $t('pAuth') }}</span>
     </PentilaButton>
+    <PentilaButton
+      class="round"
+      @click="setNewsPermissions"
+    >
+      <span>{{ $t('setNewsPermissions') }}</span>
+    </PentilaButton>
   </div>
 </template>
 
 <script>
 
-import { cleanupDropboxes } from '@/api/maintenance.service'
+import { cleanupDropboxes, setNewsPermissions } from '@/api/maintenance.service'
 
 export default {
   name: 'OneShotMaintenance',
@@ -32,6 +38,17 @@ export default {
   methods: {
     cleanupDropboxes () {
       cleanupDropboxes().then(
+        (data) => {
+          if (data.success) {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
+          } else {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+          }
+        }
+      )
+    },
+    setNewsPermissions () {
+      setNewsPermissions().then(
         (data) => {
           if (data.success) {
             this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
@@ -65,6 +82,7 @@ export default {
   "cleanupDropboxes": "Nettoyage des casiers",
   "success": "Opération terminée en succès",
   "error": "Opération terminée en erreur",
-  "pAuth": "pAuth bidon"
+  "pAuth": "pAuth bidon",
+  "setNewsPermissions": "Permissions des PJ de news"
 }
 </i18n>
