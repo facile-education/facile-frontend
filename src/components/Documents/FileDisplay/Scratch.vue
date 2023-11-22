@@ -1,6 +1,7 @@
 <template>
   <iframe
     :src="src"
+    title="scratch content"
     class="media"
   />
 </template>
