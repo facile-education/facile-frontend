@@ -65,7 +65,7 @@ describe('Dashboard_Announcements', () => {
 
     it('Dashboard_Annoucements_DisplayAnnouncementCheckContent', function () {
       const existingNews = this.dashboardData.existingNews
-      const lastNews = existingNews[existingNews.length - 1]
+      const lastNews = existingNews[2]
 
       cy.login(HEADMASTER, dashboardURL)
       getNews(lastNews).click()
@@ -491,7 +491,7 @@ describe('Dashboard_Announcements', () => {
 
     it('Dashboard_Announcements_DeleteAnnouncementMouseover', function () {
       const existingNews = this.dashboardData.existingNews
-      const lastNews = existingNews[existingNews.length - 1]
+      const lastNews = existingNews[2]
 
       cy.login(HEADMASTER, dashboardURL)
 
@@ -512,7 +512,7 @@ describe('Dashboard_Announcements', () => {
 
     it('Dashboard_Announcements_DeleteAnnouncementClickOnNews', function () {
       const existingNews = this.dashboardData.existingNews
-      const lastNews = existingNews[existingNews.length - 1]
+      const lastNews = existingNews[2]
 
       // Login
       cy.login(HEADMASTER, dashboardURL)
@@ -530,7 +530,7 @@ describe('Dashboard_Announcements', () => {
     it('Dashboard_Announcements_DeleteAnnouncementAllNewsDeleteButton', function () {
       const existingNews = this.dashboardData.existingNews
       const furturNews = this.dashboardData.futurNews
-      const lastNews = existingNews[existingNews.length - 1]
+      const lastNews = existingNews[2]
 
       cy.login(HEADMASTER, dashboardURL)
       cy.clock().invoke('setSystemTime', Cypress.dayjs(furturNews.dateBeforeRelease, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
