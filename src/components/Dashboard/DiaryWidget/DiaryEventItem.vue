@@ -56,6 +56,7 @@
           :title="$t('update')"
           data-test="buttonEditEvent"
           @click.stop="isUpdateModalDisplayed = true"
+          @keyup.stop
         >
           <img
             src="@/assets/icons/pencil.svg"
@@ -69,6 +70,7 @@
           :title="$t('delete')"
           data-test="buttonDeleteEvent"
           @click.stop="confirmDeleteEvent"
+          @keyup.stop
         >
           <img
             src="@/assets/icons/trash.svg"

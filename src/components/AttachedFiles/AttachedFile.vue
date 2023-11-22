@@ -2,6 +2,7 @@
   <div
     :title="$t('viewFile', {target: attachedFile.name})"
     class="attached-file theme-hover-border-color"
+    :class="{'phone': mq.phone || mq.tablet}"
     tabindex="0"
     @click="viewAttachedFile"
     @keyup.enter="viewAttachedFile"
@@ -33,8 +34,9 @@
           class="icon"
         />
       </button>
+
       <button
-        v-else
+        v-else-if="mq.phone || mq.tablet"
         class="options-button"
         :aria-label="$t('options')"
         :title="$t('options')"
@@ -47,6 +49,37 @@
           alt="options"
         >
       </button>
+
+      <span
+        v-else
+        class="file-actions"
+      >
+        <button
+          :title="$t('save')"
+          :aria-label="$t('save')"
+          @click.stop="isDepositModalDisplayed = true"
+          @keyup.stop
+        >
+          <img
+            class="file-action add-to-folder"
+            :src="saveIcon"
+            :alt="$t('save')"
+          >
+        </button>
+        <button
+          class="right-button"
+          :title="$t('download')"
+          :aria-label="$t('download')"
+          @click.stop="downloadAttachedFile"
+          @keyup.stop
+        >
+          <img
+            class="file-action"
+            src="@assets/attached_file_download.svg"
+            :alt="$t('download')"
+          >
+        </button>
+      </span>
     </div>
   </div>
 
@@ -108,6 +141,9 @@ export default {
     }
   },
   computed: {
+    saveIcon () {
+      return icons.options.save
+    },
     formattedSize () {
       return this.attachedFile.size !== undefined ? formatSize(this.attachedFile.size) : '-'
     }
@@ -169,7 +205,6 @@ export default {
 
 button {
   cursor: pointer;
-  background-color: transparent;
   border-radius: 0;
   padding: 0;
   margin: 0;
@@ -195,6 +230,23 @@ button {
   align-items: center;
   border: 1px solid $color-border;
   cursor: pointer;
+  position: relative;
+
+  &:hover, &:focus-within {
+    .file-actions {
+      opacity: 100%;
+
+      button {
+        width: 40px;
+      }
+    }
+  }
+
+  &:not(.phone) {
+    .file-data {
+      width: calc(100% - (50px + 1rem));
+    }
+  }
 }
 
 .file-icon {
@@ -229,14 +281,19 @@ button {
   @extend %font-regular-xs;
 }
 
+.remove-button, .options-button {
+  background-color: transparent;
+}
+
 .remove-button {
   display: flex;
   align-items: center;
-  margin: 0 10px;
+  justify-content: center;
 
   .icon {
     font-size: 1.2rem;
     font-weight: bold;
+    width: 16px;
   }
 }
 
@@ -253,17 +310,37 @@ button {
 }
 
 .file-actions {
-  margin: 0 10px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  display: flex;
+  border-radius: 0 5px 5px 0;
+  overflow: hidden;
+  transition: all .3s ease;
+  opacity: 0;
 
-  img {
+  button {
+    width: 0;
+    transition: all .3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
     cursor: pointer;
-    height: 16px;
-    width: 16px;
+    background-color: $neutral-20;
+
+    img {
+      height: 1rem;
+    }
+
+    &:hover {
+      background-color: $color-hover-bg;
+    }
   }
-  .add-to-folder {
-    height: 19px;
-    width: 19px;
-    margin-right: 10px;
+
+  .right-button {
+    border-radius: 0 8px 8px 0;
   }
 }
 

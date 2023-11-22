@@ -68,6 +68,7 @@
         data-test="buttonEditInformation"
         :title="$t('update')"
         @click.stop="isUpdateModalDisplayed = true"
+        @keyup.stop
       >
         <img
           src="@/assets/icons/pencil.svg"
@@ -80,6 +81,7 @@
         :aria-label="$t('delete')"
         :title="$t('delete')"
         @click.stop="confirmNewsDeletion"
+        @keyup.stop
       >
         <img
           src="@/assets/icons/trash.svg"
