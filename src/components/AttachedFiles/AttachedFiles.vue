@@ -83,7 +83,7 @@ export default {
           this.$store.dispatch('currentActions/setImportFileList', files)
           this.$store.dispatch('currentActions/displayUploadProgression')
 
-          importDocuments(undefined, files).then((data) => {
+          importDocuments(undefined, files).then(() => {
             this.addNewFiles(this.$store.state.currentActions.listUploadedFiles)
             this.$store.dispatch('currentActions/hideUploadProgression')
           })
@@ -99,24 +99,25 @@ export default {
 <style lang="scss" scoped>
 @import '@design';
 
-ul {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-
-  li:not(:last-child) {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-}
-
 .select-buttons {
   margin: 10px 0;
 }
 
 .file-list {
+  width: 100%;
   overflow: auto;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  li {
+    flex: 1;
+    min-width: 250px;
+    margin-bottom: 0;
+  }
 }
 
 button {

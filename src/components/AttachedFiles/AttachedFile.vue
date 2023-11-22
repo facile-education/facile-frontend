@@ -2,7 +2,6 @@
   <div
     :title="$t('viewFile', {target: attachedFile.name})"
     class="attached-file theme-hover-border-color"
-    :class="{'phone': mq.phone}"
     tabindex="0"
     @click="viewAttachedFile"
     @keyup.enter="viewAttachedFile"
@@ -213,7 +212,7 @@ button {
 }
 
 .file-data {
-  width: calc(100% - 102px);
+  width: calc(100% - (50px + 1rem + 2rem));
   height: 100%;
   padding: 8px 0;
 }
@@ -246,6 +245,8 @@ button {
 }
 
 .options {
+  width: 2rem;
+
   button {
     padding: 0.5rem;
   }
