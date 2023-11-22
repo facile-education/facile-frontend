@@ -132,6 +132,7 @@
             data-test="submitButton"
             class="dark"
             :label="$t('submitButton')"
+            :disabled="isLoading"
             @click="checkFields"
           />
         </div>
@@ -211,6 +212,7 @@ export default {
       error: '',
       autocompleteItems: [],
       isContactPickerModalDisplayed: false,
+      isLoading: false,
       originMessage: {},
       initTooltipPosition: { x: 0, y: 0 },
       isContactPickerInitialized: false // Useful in add to v-show to not initialize component immediately
@@ -375,6 +377,7 @@ export default {
     },
     sendMessage () {
       const successMessage = this.$t('successMessage')
+      this.isLoading = true
       // In case of reply, replyAll or forward
       // previous content is added in case of forward OR (reply or replyAll AND no recipient added)
       messageService.sendMessage(
@@ -387,6 +390,8 @@ export default {
         this.messageParameters.isReply || this.messageParameters.isReplyAll,
         this.messageParameters.isForward,
         false).then((data) => {
+        this.isLoading = false
+
         if (data.success) {
           this.$store.dispatch('popups/pushPopup', { message: successMessage, type: 'success' })
           // Wait a little before refreshing because sending is done in a new thread
