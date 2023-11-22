@@ -105,7 +105,10 @@ describe('Dashboard_homeWorks', () => {
     cy.login(MULTI_PARENT, dashboardURL)
     // Set date before the homework's date
     cy.clock().invoke('setSystemTime', Cypress.dayjs(existingHomework[2].dateBefore, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+    cy.intercept('GET', '**/get-student-homeworks**').as('Homeworks')
+    cy.wait('@Homeworks')
 
+    cy.get('.personal-widgets').scrollIntoView()
     cy.get('.personal-widgets').within(() => {
       // Select first child
       selectChild(MULTI_STUDENT1.firstName)

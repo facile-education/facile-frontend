@@ -19,11 +19,11 @@ const getEventDetail = (event) => {
 }
 
 const getHomework = (homework) => {
-  return cy.contains('.homework-list', homework.title)
+  return cy.contains('.homework-item', homework.title)
 }
 
 const getHomeworkDetails = (homework) => {
-  return cy.contains('.homework-list', homework.title).within(() => {
+  return cy.contains('.homework-item', homework.title).within(() => {
     cy.contains(homework.content)
     cy.contains(homework.teacher)
   })
