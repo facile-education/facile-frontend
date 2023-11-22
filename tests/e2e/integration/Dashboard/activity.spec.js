@@ -9,7 +9,7 @@ describe('Dashboard_Activity', () => {
       cy.fixture('dashboard.json').as('dashboardData')
       cy.loadTables('schoollife/schoollife_tables.sql')
     })
-    it('Dashboard_Activities_DisplayActivity_Display_Limite_Number_Activities', function () {
+    it('Dashboard_Activities_DisplayActivityDisplayLimiteNumberActivities', function () {
       const existingActivity = this.dashboardData.existingActivity
       const newActivity = this.dashboardData.futurActivity
       const information = existingActivity[0]
@@ -47,7 +47,7 @@ describe('Dashboard_Activity', () => {
       cy.get('.activity-item').contains(information.title).scrollIntoView().should('be.visible', { timeout: 10000 })
     })
 
-    it('Dashboard_Activities_DisplayActivity_Click_On_Document_Redirection_Student_Parent', function () {
+    it('Dashboard_Activities_DisplayActivityClickOnDocumentRedirectionStudentParent', function () {
       // Login with student
       cy.login(STUDENT, dashboardURL)
       loadActivity('get-dashboard-activity')
@@ -67,7 +67,7 @@ describe('Dashboard_Activity', () => {
       cy.get('[data-test="file-display-modal"]').should('be.visible')
     })
 
-    it('Dashboard_Activities_DisplayActivity_Click_On_DocumentSpace_Redirection', function () {
+    it('Dashboard_Activities_DisplayActivityClickOnDocumentSpaceRedirection', function () {
       const existingActivity = this.dashboardData.existingActivity
       const DocumentSpace = existingActivity[1]
       // Login
@@ -81,7 +81,7 @@ describe('Dashboard_Activity', () => {
       cy.get('.documents').should('be.visible')
     })
 
-    it('Dashboard_Activities_DisplayActivity_Display_Placeholder', function () {
+    it('Dashboard_Activities_DisplayActivityDisplay_Placeholder', function () {
       // Load dump empty
       cy.loadTables('dashboard/dashboard_tables_activity_empty.sql')
       // Login
@@ -111,7 +111,7 @@ describe('Dashboard_Activity', () => {
       })
     })
 
-    it('Dashboard_Activities_DisplayActivities_Display_In_RightOrder', function () {
+    it('Dashboard_Activities_DisplayActivitiesDisplayInRightOrder', function () {
       const existingActivity = this.dashboardData.existingActivity
       const newActivity = this.dashboardData.futurActivity
       const information = existingActivity[0]
@@ -140,7 +140,7 @@ describe('Dashboard_Activity', () => {
       cy.get('.activity-item').eq(5).should('contain', information.title)
     })
 
-    it('Dashboard_Activities_DisplayActivity_Click_On_Group_Redirection_ByProfil', function () {
+    it('Dashboard_Activities_DisplayActivityClickOnGroupRedirectionByProfil', function () {
       const existingActivity = this.dashboardData.existingActivity
       const groupStudent = existingActivity[1]
       const groupTeacher = existingActivity[7]
@@ -164,7 +164,7 @@ describe('Dashboard_Activity', () => {
       cy.get('.group-list').should('not.exist')
     })
 
-    it('Dashboard_Activities_DisplayActivity_Click_On_Homework_Redirection', function () {
+    it('Dashboard_Activities_DisplayActivityClickOnHomeworkRedirection', function () {
       const existingActivity = this.dashboardData.existingActivity
       const homeWork1 = existingActivity[5]
       // Login
@@ -176,7 +176,7 @@ describe('Dashboard_Activity', () => {
       cy.get('.homework-tab').should('be.visible')
     })
 
-    it('Dashboard_Activities_DisplayActivity_Click_On_Firing_Redirection_ByProfil', function () {
+    it('Dashboard_Activities_DisplayActivityClickOnFiringRedirectionByProfil', function () {
       const renvoiForAuthor = this.dashboardData.existingActivity[3]
       const renvoiForOthers = this.dashboardData.existingActivity[4]
 
@@ -195,7 +195,7 @@ describe('Dashboard_Activity', () => {
       cy.get('.pending-firing-modal').should('not.exist')
     })
 
-    it('Dashboard_Activities_DisplayActivities_Renvoi_VisibilityByProfil', function () {
+    it('Dashboard_Activities_DisplayActivitiesRenvoiVisibilityByProfil', function () {
       const renvoiForAuthor = this.dashboardData.existingActivity[3]
       const renvoiForOthers = this.dashboardData.existingActivity[4]
 
@@ -217,7 +217,7 @@ describe('Dashboard_Activity', () => {
       })
     })
 
-    it('Dashboard_Activities_DisplayActivities_GroupActivity_Parent', function () {
+    it('Dashboard_Activities_DisplayActivitiesGroupActivityParent', function () {
       const documentActivity = this.dashboardData.existingActivity[8]
       // Login with author
       cy.login(MULTI_PARENT, dashboardURL)
@@ -227,7 +227,7 @@ describe('Dashboard_Activity', () => {
       })
     })
 
-    it('Dashboard_Activities_DisplayActivities_Filter_In_AllActivities', function () {
+    it('Dashboard_Activities_DisplayActivitiesFilterInAllActivities', function () {
       const existingActivity = this.dashboardData.existingActivity
       const information = existingActivity[0]
       const group = existingActivity[1]
@@ -287,7 +287,7 @@ describe('Dashboard_Activity', () => {
       })
     })
 
-    it('Dashboard_Activities_DisplayActivities_DisplayFilterMenu', function () {
+    it('Dashboard_Activities_DisplayActivitiesDisplayFilterMenu', function () {
       cy.login(STUDENT, dashboardURL)
       loadActivity('get-dashboard-activity')
       cy.get('[data-test="activity-widget"]').within(() => {
@@ -304,7 +304,7 @@ describe('Dashboard_Activity', () => {
       cy.loadTables('schoollife/schoollife_tables.sql')
       cy.loadTables('dashboard/dashboard_tables_activity_News.sql')
     })
-    it('Dashboard_Activities_DisplayActivities_FuturRelease', function () {
+    it('Dashboard_Activities_DisplayActivitiesFuturRelease', function () {
       const futurActivity = this.dashboardData.futurActivity
 
       // Login
@@ -325,7 +325,7 @@ describe('Dashboard_Activity', () => {
       })
     })
 
-    it('Dashboard_Activities_DisplayActivity_Check_Information_ReadRecipient_Info', function () {
+    it('Dashboard_Activities_DisplayActivityCheckInformationReadRecipientInfo', function () {
       const existingActivity = this.dashboardData.existingActivity
 
       // Login with author
@@ -363,7 +363,7 @@ describe('Dashboard_Activity', () => {
       })
     })
 
-    it('Dashboard_Activities_DisplayActivity_Check_InformationContent', function () {
+    it('Dashboard_Activities_DisplayActivityCheckInformationContent', function () {
       const existingActivity = this.dashboardData.existingActivity
 
       // Login recipient
@@ -381,7 +381,7 @@ describe('Dashboard_Activity', () => {
       })
     })
 
-    it('Dashboard_Activities_CreateActivity_Button_HeaderActivity', function () {
+    it('Dashboard_Activities_CreateActivityButtonHeaderActivity', function () {
       const activityToCreate = this.dashboardData.ActivityToCreate
 
       // Login
@@ -391,6 +391,7 @@ describe('Dashboard_Activity', () => {
         // Click to oopen createActivity modal
         cy.get('[data-test="CreateActivity"]').click()
       })
+      loadActivity('get-news-details')
       // Set informations
       cy.get('[data-test="update-news-modal"]').within(() => {
         cy.get('.base-tags-input').click()
@@ -422,7 +423,7 @@ describe('Dashboard_Activity', () => {
       getInformationDetail(activityToCreate)
     })
 
-    it('Dashboard_Activities_CreateActivity_Button_AllActivity', function () {
+    it('Dashboard_Activities_CreateActivityButtonAllActivity', function () {
       // Login
       cy.login(TEACHER, dashboardURL)
       loadActivity('get-dashboard-activity')
@@ -436,7 +437,7 @@ describe('Dashboard_Activity', () => {
       cy.get('[data-test="update-news-modal"]').should('be.visible')
     })
 
-    it('Dashboard_Activities_CreateActivity_Display_WarningMessage_SetInformations', function () {
+    it('Dashboard_Activities_CreateActivity_DisplayWarningMessageSetInformations', function () {
       const activityToCreate = this.dashboardData.ActivityToCreate
 
       // Login
@@ -447,6 +448,7 @@ describe('Dashboard_Activity', () => {
       cy.get('[data-test="activity-widget"]').within(() => {
         cy.get('[data-test="CreateActivity"]').click()
       })
+      loadActivity('get-news-details')
       // Set content
       cy.get('[data-test="update-news-modal"]').within(() => {
         cy.get('.ck-editor')
@@ -492,7 +494,7 @@ describe('Dashboard_Activity', () => {
       cy.get('[data-test="confirmButton"]').click()
     })
 
-    it('Dashboard_Activities_CreateActivity_Display_WarningMessage_Not_SetInformations', function () {
+    it('Dashboard_Activities_CreateActivityDisplayWarningMessageNotSetInformations', function () {
       // Login
       cy.login(TEACHER, dashboardURL)
       loadActivity('get-dashboard-activity')
@@ -557,7 +559,7 @@ describe('Dashboard_Activity', () => {
       getInformationDetail(activityToEdit).should('be.exist')
     })
 
-    it('Dashboard_Activities_UpdateActivity_clickActivity', function () {
+    it('Dashboard_Activities_UpdateActivityclickActivity', function () {
       const existingActivity = this.dashboardData.existingActivity
       cy.login(TEACHER, dashboardURL)
       loadActivity('get-dashboard-activity')
@@ -570,7 +572,7 @@ describe('Dashboard_Activity', () => {
       cy.get('[data-test="update-news-modal"]').should('be.visible')
     })
 
-    it('Dashboard_Activities_UpdateActivity_allActivity', function () {
+    it('Dashboard_Activities_UpdateActivityAllActivity', function () {
       const existingActivity = this.dashboardData.existingActivity
       cy.login(TEACHER, dashboardURL)
       loadActivity('get-dashboard-activity')
@@ -587,7 +589,7 @@ describe('Dashboard_Activity', () => {
       cy.get('[data-test="update-news-modal"]').should('be.visible')
     })
 
-    it('Dashboard_Activities_UpdateActivity_Display_WarningMessage_SetInformations', function () {
+    it('Dashboard_Activities_UpdateActivityDisplayWarningMessageSetInformations', function () {
       const existingActivity = this.dashboardData.existingActivity
       const activityToEdit = this.dashboardData.activityToEdit
       cy.login(TEACHER, dashboardURL)
@@ -646,7 +648,7 @@ describe('Dashboard_Activity', () => {
       cy.get('[data-test="confirmButton"]').click()
     })
 
-    it('Dashboard_Activities_UpdateActivity_Display_WarningMessage_Not_SetInformations', function () {
+    it('Dashboard_Activities_UpdateActivityDisplayWarningMessageNotSetInformations', function () {
       const existingActivity = this.dashboardData.existingActivity
       cy.login(TEACHER, dashboardURL)
       loadActivity('get-dashboard-activity')
@@ -666,7 +668,7 @@ describe('Dashboard_Activity', () => {
       cy.get('[data-test="update-news-modal"]').should('not.exist')
     })
 
-    it('Dashboard_Activities_DeleteActivity_mouseover', function () {
+    it('Dashboard_Activities_DeleteActivityMouseover', function () {
       const existingActivity = this.dashboardData.existingActivity
 
       cy.login(TEACHER, dashboardURL)
@@ -687,7 +689,7 @@ describe('Dashboard_Activity', () => {
       getInformation(existingActivity[0]).should('not.exist')
     })
 
-    it('Dashboard_Activities_DeleteActivity_clickActivity', function () {
+    it('Dashboard_Activities_DeleteActivityClickActivity', function () {
       const existingActivity = this.dashboardData.existingActivity
 
       cy.login(TEACHER, dashboardURL)
@@ -700,7 +702,7 @@ describe('Dashboard_Activity', () => {
       cy.get('[data-test="warning-modal"]').should('be.visible')
     })
 
-    it('Dashboard_Activities_DeleteActivity_allActivity', function () {
+    it('Dashboard_Activities_DeleteActivityAllActivity', function () {
       const existingActivity = this.dashboardData.existingActivity
 
       cy.login(TEACHER, dashboardURL)
@@ -724,7 +726,7 @@ describe('Dashboard_Activity', () => {
       cy.loadTables('dashboard/dashboard_tables_activity_News.sql')
       cy.viewport('iphone-5')
     })
-    it('Dashboard_Activities_CreateActivity_Button_HeaderActivity_Mobile', function () {
+    it('Dashboard_Activities_CreateActivityButtonHeaderActivityMobile', function () {
       // Login
       cy.login(TEACHER, dashboardURL)
       loadActivity('get-dashboard-activity')
@@ -735,7 +737,7 @@ describe('Dashboard_Activity', () => {
       // Check if modal is visible
       cy.get('[data-test="update-news-modal"]').should('be.visible')
     })
-    it('Dashboard_Activities_CreateActivity_Button_AllActivity_mobile', function () {
+    it('Dashboard_Activities_CreateActivityButtonAllActivityMobile', function () {
       // Login
       cy.login(TEACHER, dashboardURL)
       loadActivity('get-dashboard-activity')
@@ -750,7 +752,7 @@ describe('Dashboard_Activity', () => {
       cy.get('[data-test="update-news-modal"]').should('be.visible')
     })
 
-    it('Dashboard_Activities_UpdateActivity_clickActivity_mobile', function () {
+    it('Dashboard_Activities_UpdateActivityClickActivityMobile', function () {
       const existingActivity = this.dashboardData.existingActivity
       cy.login(TEACHER, dashboardURL)
       loadActivity('get-dashboard-activity')
@@ -762,7 +764,7 @@ describe('Dashboard_Activity', () => {
       cy.get('[data-test="update-news-modal"]').should('be.visible')
     })
 
-    it('Dashboard_Activities_UpdateActivity_allActivity_mobile', function () {
+    it('Dashboard_Activities_UpdateActivityAllActivityMobile', function () {
       const existingActivity = this.dashboardData.existingActivity
       cy.login(TEACHER, dashboardURL)
       loadActivity('get-dashboard-activity')
@@ -779,7 +781,7 @@ describe('Dashboard_Activity', () => {
       cy.get('[data-test="update-news-modal"]').should('be.visible')
     })
 
-    it('Dashboard_Activities_DeleteActivity_clickActivity_mobile', function () {
+    it('Dashboard_Activities_DeleteActivityClickActivityMobile', function () {
       const existingActivity = this.dashboardData.existingActivity
 
       cy.login(TEACHER, dashboardURL)
@@ -792,7 +794,7 @@ describe('Dashboard_Activity', () => {
       cy.get('[data-test="warning-modal"]').should('be.visible')
     })
 
-    it('Dashboard_Activities_DeleteActivity_allActivity_mobile', function () {
+    it('Dashboard_Activities_DeleteActivityAllActivityMobile', function () {
       const existingActivity = this.dashboardData.existingActivity
 
       cy.login(TEACHER, dashboardURL)

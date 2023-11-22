@@ -120,25 +120,38 @@ describe('Dashboard_Events', () => {
       })
     })
 
-    it('Dashboard_Annoucements_DisplayAnnouncementByProfil', function () {
+    it('Dashboard_Events_DisplayEventByProfil', function () {
       const existingEvents = this.dashboardData.existingEvents
       // Event created by the headmaster for a class
       cy.login(TEACHER, dashboardURL)
-      cy.clock().invoke('setSystemTime', Cypress.dayjs(existingEvents[2].startDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+      cy.clock().invoke('setSystemTime', Cypress.dayjs(existingEvents[3].startDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
       getEvent(existingEvents[3]).should('be.visible')
 
       cy.login(SCHOOL_ADMIN, dashboardURL)
-      cy.clock().invoke('setSystemTime', Cypress.dayjs(existingEvents[2].startDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+      cy.clock().invoke('setSystemTime', Cypress.dayjs(existingEvents[3].startDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
       getEvent(existingEvents[3]).should('be.visible')
 
       // Event created by the delegate for the establishment
       cy.login(HEADMASTER, dashboardURL)
-      cy.clock().invoke('setSystemTime', Cypress.dayjs(existingEvents[2].startDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+      cy.clock().invoke('setSystemTime', Cypress.dayjs(existingEvents[4].startDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
       getEvent(existingEvents[4]).should('be.visible')
 
       cy.login(SCHOOL_ADMIN, dashboardURL)
-      cy.clock().invoke('setSystemTime', Cypress.dayjs(existingEvents[2].startDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+      cy.clock().invoke('setSystemTime', Cypress.dayjs(existingEvents[4].startDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
       getEvent(existingEvents[4]).should('be.visible')
+    })
+
+    it('Dashboard_Events_DisplayEvent_Placeholder', function () {
+      const existingEvents = this.dashboardData.existingEvents
+      // Login
+      cy.login(STUDENT, dashboardURL)
+      cy.clock().invoke('setSystemTime', Cypress.dayjs(existingEvents[4].endDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+      cy.get('[data-test="diary-widget"]').within(() => {
+        cy.get('.placeholder').should('be.visible')
+        cy.get('header').within(() => {
+          cy.get('.pellet').should('not.exist')
+        })
+      })
     })
 
     it('Dashboard_Events_DisplayAllEvents', function () {
