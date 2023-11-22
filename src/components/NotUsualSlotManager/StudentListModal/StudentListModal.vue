@@ -50,6 +50,7 @@
       <WeprodeButton
         v-if="isRollCallable"
         :label="$t('NotUsualSlots.StudentListModal.callRollButton')"
+        :disabled="isRollLoading"
         @click="callRoll()"
       />
     </template>
@@ -80,7 +81,8 @@ export default {
   data () {
     return {
       studentList: [],
-      isLoading: false
+      isLoading: false,
+      isRollLoading: false
     }
   },
   computed: {
@@ -120,13 +122,17 @@ export default {
       student.isPresent = isPresent
     },
     callRoll () {
+      this.isRollLoading = true
       const jsonStudentPresence = JSON.stringify(this.studentList)
       schoolLifeService.markStudentsPresent(this.event.sessionId, jsonStudentPresence).then((data) => {
+        this.isRollLoading = false
         if (data.success) {
           this.studentList = data.members
+          this.closeModal()
+        } else {
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
         }
       })
-      this.$emit('close')
     },
     closeModal () {
       this.$emit('close')
