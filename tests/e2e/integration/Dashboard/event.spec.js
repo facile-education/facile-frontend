@@ -613,5 +613,42 @@ describe('Dashboard_Events', () => {
       cy.get('[data-test="updateButton"]').should('be.visible')
       cy.get('[data-test="deleteButton"]').should('be.visible')
     })
+
+    const sizes = ['iphone-5', 'ipad-2', [1024, 768], [1024, 4000]]
+    const largeScreenNoScroll = sizes[3]
+    sizes.forEach(size => {
+      it.only(`Dashboard_Events_DisplayAllEventsLoadNextEvent: ${size}`, function () {
+        // Set testing viewport
+        if (Array.isArray(size)) {
+          cy.viewport(size[0], size[1])
+        } else {
+          cy.viewport(size)
+        }
+        // Load tables
+        cy.loadTables('dashboard/dashboard_tables_events_full.sql')
+
+        // Login
+        cy.login(TEACHER, dashboardURL)
+        cy.clock().invoke('setSystemTime', Cypress.dayjs('2023/11/21', 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+
+        cy.get('[data-test="diary-widget"]').within(() => {
+          cy.contains('button', 'Voir tous les événements').click()
+          cy.intercept('GET', '**/get-events**').as('allEvents')
+          cy.wait('@allEvents')
+        })
+
+        // Pagination is smaller than screen size
+        if (size === largeScreenNoScroll) {
+          // Check if all threads is visible
+          cy.get('.diary-event').should('have.length', 15)
+        } else {
+        // Pagination is taller than screen size
+          cy.get('.diary-event').should('have.length', 10)
+          // Scroll to bottom
+          cy.get('.nero.body').scrollTo('bottom')
+          cy.get('.diary-event').should('have.length', 15)
+        }
+      })
+    })
   })
 })
