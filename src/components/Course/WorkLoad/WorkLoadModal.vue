@@ -1,5 +1,6 @@
 <template>
   <WeprodeWindow
+    v-if="configuration"
     :modal="true"
     :full-screen="mq.phone || mq.tablet"
     :max-width="1000"
@@ -92,7 +93,7 @@ export default {
   },
   computed: {
     configuration () {
-      return this.$store.state.calendar.configuration // TODO: do not display service until configuration is loaded
+      return this.$store.state.calendar.configuration
     },
     schoolDays () {
       return this.configuration.schoolDays
@@ -113,6 +114,10 @@ export default {
     }
   },
   created () {
+    if (!this.configuration) {
+      this.$store.dispatch('calendar/getConfiguration')
+    }
+
     this.selectDate(this.homeworkDate)
   },
   methods: {
