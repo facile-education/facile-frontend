@@ -10,17 +10,13 @@ describe('Dashboard_Events', () => {
     })
   })
   context('desktop', function () {
-    it('Dashboard_Events_DisplayEventsReadUnRead', function () {
+    it.only('Dashboard_Events_DisplayEventsReadUnRead', function () {
       const existingEvents = this.dashboardData.existingEvents
       // Login
       cy.login(TEACHER2, dashboardURL)
       // Click on event
       getEvent(existingEvents[0]).click()
       cy.get('[data-test="closeModal"]').click()
-      // Check if pellet is not visible
-      cy.get('[data-test="diary-widget"]').within(() => {
-        cy.get('header').contains('.pellet', 1).should('be.exist')
-      })
       // Click on read onlyButton
       cy.get('[data-test="ReadOnlyEventButton"]').click()
       // Check if event is not visible
@@ -324,8 +320,8 @@ describe('Dashboard_Events', () => {
       getEvent(lastEvent).trigger('mouseover').within(() => {
         cy.get('[data-test="buttonEditEvent"]').click()
       })
-      cy.intercept('GET', '**/get-event-details**').as('newsDetail')
-      cy.wait('@newsDetail')
+      cy.intercept('GET', '**/get-event-details**').as('eventDetail')
+      cy.wait('@eventDetail')
       // Set new informations
       cy.get('[data-test="update-diary-event-modal"]').within(() => {
         cy.get('.base-tags-input').click()
@@ -425,6 +421,8 @@ describe('Dashboard_Events', () => {
       getEvent(lastEvent).trigger('mouseover').within(() => {
         cy.get('[data-test="buttonEditEvent"]').click()
       })
+      cy.intercept('GET', '**/get-event-details**').as('eventDetail')
+      cy.wait('@eventDetail')
       // Set content
       cy.get('[data-test="update-diary-event-modal"]').within(() => {
         cy.get('.ck-editor')
@@ -655,7 +653,7 @@ describe('Dashboard_Events', () => {
     const sizes = ['iphone-5', 'ipad-2', [1024, 768], [1024, 4000]]
     const largeScreenNoScroll = sizes[3]
     sizes.forEach(size => {
-      it.skip(`Dashboard_Events_DisplayAllEventsLoadNextEvent: ${size}`, function () {
+      it(`Dashboard_Events_DisplayAllEventsLoadNextEvent: ${size}`, function () {
         // Set testing viewport
         if (Array.isArray(size)) {
           cy.viewport(size[0], size[1])

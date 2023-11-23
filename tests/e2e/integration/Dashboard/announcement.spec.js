@@ -176,7 +176,7 @@ describe('Dashboard_Announcements', () => {
       cy.get('.announcement').eq(2).should('have.class', 'theme-light-background-color')
     })
 
-    it.only('Dashboard_Announcements_CreateAnnouncement', function () {
+    it('Dashboard_Announcements_CreateAnnouncement', function () {
       const NewNews = this.dashboardData.NewNews
 
       setAnnouncementDocumentWithContent()
@@ -487,6 +487,8 @@ describe('Dashboard_Announcements', () => {
       getNews(lastNews).trigger('mouseover').within(() => {
         cy.get('[data-test="buttonEditAnnouncement"]').click({ force: true })
       })
+      cy.intercept('GET', '/lfr/api/jsonws/news.news/get-news-details**').as('newsDetail')
+      cy.wait('@newsDetail')
       // Set recipient
       cy.get('[data-test="update-news-modal"]').within(() => {
         cy.get('.base-tags-input').click()
@@ -502,6 +504,8 @@ describe('Dashboard_Announcements', () => {
       getNews(lastNews).trigger('mouseover').within(() => {
         cy.get('[data-test="buttonEditAnnouncement"]').click({ force: true })
       })
+      cy.intercept('GET', '/lfr/api/jsonws/news.news/get-news-details**').as('newsDetail')
+      cy.wait('@newsDetail')
       // Set title
       cy.get('[data-test="update-news-modal"]').within(() => {
         cy.get('.labelled').type(newsToEdit.title)

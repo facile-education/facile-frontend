@@ -534,7 +534,7 @@ describe('Dashboard_Activity', () => {
       cy.get('[data-test="update-news-modal"]').should('not.exist')
     })
 
-    it.only('Dashboard_Activities_UpdateActivity_mouseover', function () {
+    it('Dashboard_Activities_UpdateActivity_mouseover', function () {
       const existingActivity = this.dashboardData.existingActivity
       const activityToEdit = this.dashboardData.activityToEdit
 
