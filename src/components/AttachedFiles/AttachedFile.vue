@@ -27,12 +27,13 @@
         v-if="!readOnly"
         class="remove-button"
         :title="$t('AttachedFiles.remove')"
+        :aria-label="$t('AttachedFiles.remove')"
         @click.stop="removeAttachedFile"
       >
-        <CustomIcon
-          icon-name="icon-cross-L"
-          class="icon"
-        />
+        <img
+          :src="require('@/assets/icons/trash.svg')"
+          alt="options"
+        >
       </button>
 
       <button
@@ -284,14 +285,14 @@ button {
 }
 
 .remove-button {
+  padding: 6px !important;
   display: flex;
   align-items: center;
   justify-content: center;
 
-  .icon {
-    font-size: 1.2rem;
-    font-weight: bold;
-    width: 16px;
+  img {
+    width: 20px;
+    height: 20px;
   }
 }
 

@@ -20,7 +20,7 @@
   <div
     v-else
     class="course-content theme-hover-border-color"
-    :class="{'phone': mq.phone || mq.tablet}"
+    :class="{'has-remove-button': hasRemoveButton}"
     tabindex="0"
     :title="content.contentValue"
     @click="clickOnContent"
@@ -55,8 +55,8 @@
     </div>
 
     <button
-      v-if="isEdition && typeLabel !== 'file'"
-      class="actions"
+      v-if="hasRemoveButton"
+      class="remove-button"
       @click.stop="$emit('delete')"
     >
       <img
@@ -155,6 +155,9 @@ export default {
     }
   },
   computed: {
+    hasRemoveButton () {
+      return this.isEdition && this.typeLabel !== 'file'
+    },
     saveIcon () {
       return icons.options.save
     },
@@ -317,13 +320,9 @@ export default {
   cursor: pointer;
   position: relative;
 
-  &:hover, &:focus-within {
-    .file-actions {
-      opacity: 100%;
-
-      button {
-        width: 40px;
-      }
+  &.has-remove-button {
+    .data {
+      width: calc(100% - (50px + 0.5rem + 2rem));
     }
   }
 }
@@ -331,6 +330,7 @@ export default {
 .icon {
   height: 50px;
   width: 50px;
+  min-width: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -377,49 +377,15 @@ button {
   cursor: pointer;
 }
 
-.options-button {
-  height: 100%;
-  padding: 0 0.5rem;
-}
-
-.actions img {
-  margin-right : 1rem;
-  width: 1.25rem;
-  height: 1.25rem;
-}
-
-.file-actions {
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 100%;
+.remove-button {
+  padding: 6px !important;
   display: flex;
-  border-radius: 0 5px 5px 0;
-  overflow: hidden;
-  transition: all .3s ease;
-  opacity: 0;
+  align-items: center;
+  justify-content: center;
 
-  button {
-    width: 0;
-    transition: all .3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    cursor: pointer;
-    background-color: $neutral-20;
-
-    img {
-      height: 1rem;
-    }
-
-    &:hover {
-      background-color: $color-hover-bg;
-    }
-  }
-
-  .context-menu-with-padding {
-    padding: 10px 0;
+  img {
+    width: 20px;
+    height: 20px;
   }
 }
 </style>
