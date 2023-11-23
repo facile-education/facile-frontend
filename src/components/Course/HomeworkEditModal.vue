@@ -46,7 +46,7 @@
             />
           </div>
         </div>
-        <CourseContent
+        <CourseContentItem
           v-for="(block, index) in homework.blocks"
           :key="block.contentId"
           v-model="block.contentValue"
@@ -168,13 +168,13 @@ import contentTypeConstants from '@/constants/contentTypeConstants'
 
 const StudentListModal = defineAsyncComponent(() => import('@components/Course/StudentListModal.vue'))
 const WorkLoadModal = defineAsyncComponent(() => import('@components/Course/WorkLoad/WorkLoadModal.vue'))
-const CourseContent = defineAsyncComponent(() => import('@/components/Course/CourseContent'))
+const CourseContentItem = defineAsyncComponent(() => import('@components/Course/CourseContentItem'))
 
 export default {
   name: 'HomeworkEditModal',
   components: {
     WorkLoadModal,
-    CourseContent,
+    CourseContentItem,
     ContentPicker,
     StudentListModal,
     WeprodeButton,

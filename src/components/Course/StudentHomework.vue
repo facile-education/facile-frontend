@@ -35,12 +35,7 @@
       </div>
     </header>
 
-    <CourseContent
-      v-for="block in homework.blocks"
-      :key="block.contentId"
-      v-model="block.contentValue"
-      :content="block"
-    />
+    <CourseContentBlocks :content-blocks="homework.blocks" />
   </article>
 </template>
 
@@ -53,11 +48,11 @@ import { setHomeworkDoneStatus } from '@/api/homework.service'
 import Pellet from '@/components/Base/Pellet.vue'
 import WeprodeCheckbox from '@/components/Base/Weprode/WeprodeCheckbox.vue'
 
-const CourseContent = defineAsyncComponent(() => import('@/components/Course/CourseContent'))
+const CourseContentBlocks = defineAsyncComponent(() => import('@components/Course/CourseContentBlocks'))
 
 export default {
   name: 'StudentHomework',
-  components: { CourseContent, Pellet, WeprodeCheckbox },
+  components: { CourseContentBlocks, Pellet, WeprodeCheckbox },
   props: {
     homework: {
       type: Object,

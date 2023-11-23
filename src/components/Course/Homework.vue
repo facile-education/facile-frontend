@@ -48,12 +48,9 @@
         </button>
       </div>
     </header>
-    <CourseContent
-      v-for="block in homework.blocks"
-      :key="block.contentId"
-      v-model="block.contentValue"
+    <CourseContentBlocks
+      :content-blocks="homework.blocks"
       class="content"
-      :content="block"
     />
   </article>
   <teleport
@@ -93,14 +90,14 @@ import { defineAsyncComponent } from 'vue'
 import { deleteHomework } from '@/api/homework.service'
 import { icons } from '@/constants/icons'
 
-const CourseContent = defineAsyncComponent(() => import('@/components/Course/CourseContent'))
+const CourseContentBlocks = defineAsyncComponent(() => import('@components/Course/CourseContentBlocks'))
 const HomeworkEditModal = defineAsyncComponent(() => import('@/components/Course/HomeworkEditModal'))
 const DoneInfoModal = defineAsyncComponent(() => import('@/components/Course/DoneInfoModal'))
 const ContextMenu = defineAsyncComponent(() => import('@/components/ContextMenu/ContextMenu'))
 
 export default {
   name: 'Homework',
-  components: { CustomIcon, ContextMenu, CourseContent, HomeworkEditModal, DoneInfoModal },
+  components: { CourseContentBlocks, CustomIcon, ContextMenu, HomeworkEditModal, DoneInfoModal },
   props: {
     homework: {
       type: Object,
