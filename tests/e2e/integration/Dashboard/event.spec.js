@@ -10,7 +10,7 @@ describe('Dashboard_Events', () => {
     })
   })
   context('desktop', function () {
-    it.only('Dashboard_Events_DisplayEventsReadUnRead', function () {
+    it('Dashboard_Events_DisplayEventsReadUnRead', function () {
       const existingEvents = this.dashboardData.existingEvents
       // Login
       cy.login(TEACHER2, dashboardURL)

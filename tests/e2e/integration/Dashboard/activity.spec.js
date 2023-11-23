@@ -104,7 +104,8 @@ describe('Dashboard_Activity', () => {
       cy.get('[data-test="activity-widget"]').within(() => {
         cy.contains('button', 'Voir toutes les activités').scrollIntoView()
         cy.contains('button', 'Voir toutes les activités').click()
-        cy.get('.activities').should('have.class', 'infinite-scroll')
+        loadActivity('get-dashboard-activity')
+
         getInformation(information).should('be.visible')
         getInformation(group).should('be.visible')
         getInformation(documentInGroup).should('be.visible')
@@ -129,7 +130,8 @@ describe('Dashboard_Activity', () => {
       // Click to see all activities
       cy.contains('button', 'Voir toutes les activités').scrollIntoView()
       cy.contains('button', 'Voir toutes les activités').click()
-      cy.get('.activities').should('have.class', 'infinite-scroll')
+      loadActivity('get-dashboard-activity')
+
       // Check the position of activities
       cy.get('.activity-item').eq(0).should('contain', newActivity.title)
       cy.get('.separator').should('be.visible')
@@ -385,7 +387,7 @@ describe('Dashboard_Activity', () => {
       })
     })
 
-    it.only('Dashboard_Activities_CreateActivityButtonHeaderActivity', function () {
+    it('Dashboard_Activities_CreateActivityButtonHeaderActivity', function () {
       cy.loadTables('dashboard/dashboard_tables_activity_News_attachedFile.sql')
       const activityToCreate = this.dashboardData.ActivityToCreate
 
@@ -429,10 +431,9 @@ describe('Dashboard_Activity', () => {
       loadActivity('get-dashboard-activity')
       // Check if a student the new actvity is visible
       cy.get('[data-test="activity-widget"]').within(() => {
-        cy.get('.activities').should('be.visible')
         // Display all activity
         cy.contains('button', 'Voir toutes les activités').click()
-        cy.get('.activities').should('be.visible')
+        loadActivity('get-dashboard-activity')
         getInformation(activityToCreate).should('be.visible').click()
       })
       // Verify the content

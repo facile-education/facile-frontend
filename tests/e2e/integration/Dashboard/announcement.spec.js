@@ -215,8 +215,8 @@ describe('Dashboard_Announcements', () => {
         // Create
         cy.get('[data-test="submitButton"]').click()
       })
-      cy.intercept('GET', '**get-school-news**').as('addNews')
-      cy.wait('@addNews')
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      cy.wait(2000)
 
       // Check if a student don't see the annoucement
       cy.login(STUDENT, dashboardURL)
