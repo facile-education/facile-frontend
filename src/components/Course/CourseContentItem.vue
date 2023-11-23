@@ -19,36 +19,39 @@
 
   <div
     v-else
-    class="wrapper"
+    class="course-content theme-hover-border-color"
+    :class="{'phone': mq.phone || mq.tablet}"
     tabindex="0"
+    :title="content.contentValue"
     @click="clickOnContent"
     @keyup.enter="clickOnContent"
   >
-    <div class="thumbnail">
+    <div class="icon">
       <img
         :src="thumbnail"
         alt="type thumbnail"
       >
     </div>
-    <div class="infos">
-      <label class="type">
+    <div class="data">
+      <div class="type">
         {{ $t(typeLabel) }}
-      </label>
-      <h3 class="title">
+      </div>
+      <strong class="name">
         {{ content.contentName }}
-        <label
-          v-if="content.duration"
-          class="duration"
-        >
-          {{ content.duration }}
-        </label>
-      </h3>
-      <p
+      </strong>
+      <a
         v-if="content.contentValue"
         class="description"
+        target="_blank"
+        :href="content.contentValue"
+        @click.stop
       >
         {{ content.contentValue }}
-      </p>
+      </a>
+      <br
+        v-else
+        class="description"
+      >
     </div>
 
     <button
@@ -195,7 +198,6 @@ export default {
     clickOnContent () {
       switch (this.content.contentType) {
         case contentTypeConstants.TYPE_AUDIO_CONTENT:
-          // TODO: Test audioFile opening
           this.$store.dispatch('documents/openFile', { id: this.content.fileId, name: this.content.fileName })
           break
         case contentTypeConstants.TYPE_LINK_CONTENT:
@@ -208,7 +210,6 @@ export default {
           this.$store.dispatch('documents/openFile', { id: this.content.fileId, name: this.content.fileName, readOnly: true })
           break
         case contentTypeConstants.TYPE_H5P_CONTENT:
-          // TODO: Test with real whitelisted h5p content
           this.h5pModalDisplayed = true
           break
         default:
@@ -303,14 +304,16 @@ export default {
   }
 }
 
-.wrapper {
+.course-content {
+  height: 70px;
+  width: 100%;
+  padding: 0 0.5rem;
+  border-radius: $content-boarder-radius;
   display: flex;
-  // width: 49.8125rem;
   align-items: center;
-
-  border-radius: 0.375rem;
-  border: 1px solid $neutral-40;
-  background: $neutral-10;
+  justify-content: center;
+  border: 1px solid $color-border;
+  background-color: $neutral-10;
   cursor: pointer;
   position: relative;
 
@@ -325,61 +328,45 @@ export default {
   }
 }
 
-.thumbnail {
+.icon {
+  height: 50px;
+  width: 50px;
   display: flex;
-  padding: 0.5rem;
-  justify-content: center;
   align-items: center;
-
-  border-radius: 0.375rem;
-  //background: $neutral-20;
+  justify-content: center;
+  margin-right: 0.5rem;
 
   img {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 34px;
+    height: 34px;
   }
 }
 
-.infos {
-  flex: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.context-menu-with-padding {
-  padding: 10px 0;
-}
-
-.options-button {
-  height: 100%;
-  padding: 0 0.5rem;
+.data {
+  width: calc(100% - (50px + 0.5rem));
 }
 
 .type {
-  display: flex;
-  align-content: center;
   width: 100%;
   @extend %font-regular-xs;
 }
 
-.title {
-  margin: 1px 0;
+.name {
+  display: block;
+  width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
-  @extend %font-bold-l;
-}
-
-.duration {
-  color: $neutral-80;
-
-  @extend %font-regular-s;
+  white-space: nowrap;
+  @extend %font-bold-s;
 }
 
 .description {
-  margin: 0;
+  display: block;
+  text-decoration: none;
   overflow: hidden;
   text-overflow: ellipsis;
-  @extend %font-regular-s;
+  white-space: nowrap;
+  @extend %font-regular-xs;
 }
 
 button {
@@ -388,6 +375,11 @@ button {
   background-color: transparent;
   border: none;
   cursor: pointer;
+}
+
+.options-button {
+  height: 100%;
+  padding: 0 0.5rem;
 }
 
 .actions img {
@@ -424,6 +416,10 @@ button {
     &:hover {
       background-color: $color-hover-bg;
     }
+  }
+
+  .context-menu-with-padding {
+    padding: 10px 0;
   }
 }
 </style>

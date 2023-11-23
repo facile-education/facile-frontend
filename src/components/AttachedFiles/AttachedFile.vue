@@ -8,16 +8,16 @@
     @keyup.enter="viewAttachedFile"
   >
     <FileIcon
-      class="file-icon"
+      class="icon"
       :file="attachedFile"
-      width="36px"
-      height="36px"
+      width="34px"
+      height="34px"
     />
-    <div class="file-data">
-      <div class="file-name">
+    <div class="data">
+      <strong class="name">
         {{ attachedFile.name }}
-      </div>
-      <div class="file-size">
+      </strong>
+      <div class="size">
         {{ formattedSize }}
       </div>
     </div>
@@ -225,10 +225,11 @@ button {
   height: 70px;
   width: 100%;
   padding: 0.5rem;
-  border-radius: 8px;
+  border-radius: $content-boarder-radius;
   display: flex;
   align-items: center;
   border: 1px solid $color-border;
+  background-color: $neutral-10;
   cursor: pointer;
   position: relative;
 
@@ -243,33 +244,30 @@ button {
   }
 
   &:not(.phone) {
-    .file-data {
-      width: calc(100% - (50px + 1rem));
+    .data {
+      width: calc(100% - (50px + 0.5rem));
     }
   }
 }
 
-.file-icon {
+.icon {
   height: 50px;
   width: 50px;
+  min-width: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 1rem;
-
-  img {
-    height: 38px;
-    width: 38px;
-  }
+  margin-right: 0.5rem;
 }
 
-.file-data {
-  width: calc(100% - (50px + 1rem + 2rem));
+.data {
+  width: calc(100% - (50px + 0.5rem + 2rem));
   height: 100%;
   padding: 8px 0;
 }
 
-.file-name {
+.name {
+  display: block;
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -277,7 +275,7 @@ button {
   @extend %font-bold-s;
 }
 
-.file-size {
+.size {
   @extend %font-regular-xs;
 }
 
@@ -340,7 +338,7 @@ button {
   }
 
   .right-button {
-    border-radius: 0 8px 8px 0;
+    border-radius: 0 $content-boarder-radius $content-boarder-radius 0;
   }
 }
 
