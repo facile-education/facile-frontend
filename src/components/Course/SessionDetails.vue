@@ -411,6 +411,7 @@ header {
     border-top: 1px solid $neutral-80;
     border-left: 0;
     background-color: $neutral-10;
+    z-index: 1;
 
     h2 {
       margin: 0;
