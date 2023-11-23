@@ -50,7 +50,7 @@ INSERT INTO `News_News` VALUES
 (546313,20097,'Annonce déjà existante','<html>\n <head></head>\n<body>\n <p>Contenu d\'un annonce déjà existante destinée aux élèves</p> \n</body></body>\n</html>',58811,1,0,'2024-06-29 23:59:59.000000','2023-11-06 11:45:00.000000','2023-11-06 10:42:46.773000',0),
 (556401,20097,'Annonces à destination de l\'établissement','<html>\n <head></head>\n<body>\n <p>Annonces à destination de l\'établissement créée par un délégué</p> \n</body></body>\n</html>',45479,1,0,'2024-06-29 23:59:59.000000','2023-11-22 14:15:00.000000','2023-11-22 13:22:52.061000',0),
 (556403,20097,'Annonces à destination d\'une volée','<html>\n <head></head>\n<body>\n <p>Contenu de l\'annonce à destination d\'une volée</p> \n</body></body>\n</html>',58811,1,0,'2024-06-29 23:59:59.000000','2023-11-22 14:15:00.000000','2023-11-22 13:22:18.991000',0),
-(562502,20097,'Deuxième annonce','<html>\n <head></head>\n<body>\n <p>Ceci est une deuxième annonce</p> \n</body></body>\n</html>',58811,1,0,'2024-06-29 23:59:59.000000','2023-10-30 16:45:00.000000','2023-10-30 16:03:46.428000',0);
+(562502,20097,'Deuxième annonce','<html>\n <head></head>\n<body>\n <p>Ceci est une deuxième annonce</p> \n</body></body>\n</html>',58811,1,0,'2024-06-29 23:59:59.000000','2023-10-30 16:45:00.000000','2023-11-23 09:36:14.504000',0);
 /*!40000 ALTER TABLE `News_News` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -77,6 +77,8 @@ CREATE TABLE `News_NewsAttachedFile` (
 
 LOCK TABLES `News_NewsAttachedFile` WRITE;
 /*!40000 ALTER TABLE `News_NewsAttachedFile` DISABLE KEYS */;
+INSERT INTO `News_NewsAttachedFile` VALUES
+(554406,562502,45407,554401);
 /*!40000 ALTER TABLE `News_NewsAttachedFile` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -180,4 +182,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-22 13:29:40
+-- Dump completed on 2023-11-23  9:38:38

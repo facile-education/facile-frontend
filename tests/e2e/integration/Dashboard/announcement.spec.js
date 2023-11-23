@@ -1,6 +1,6 @@
 import { dashboardURL } from '../../support/constants/urls'
 import { HEADMASTER, MULTI_STUDENT1, PARENT, SCHOOL_ADMIN, STUDENT, TEACHER, TEACHER2 } from '../../support/constants/users'
-import { getNews, getNewsDetail } from '../../support/utils/dashboard'
+import { getNews, getNewsDetail, setAnnouncementDocumentWithContent } from '../../support/utils/dashboard'
 
 describe('Dashboard_Announcements', () => {
   beforeEach(() => {
@@ -176,9 +176,10 @@ describe('Dashboard_Announcements', () => {
       cy.get('.announcement').eq(2).should('have.class', 'theme-light-background-color')
     })
 
-    it('Dashboard_Announcements_CreateAnnouncement', function () {
+    it.only('Dashboard_Announcements_CreateAnnouncement', function () {
       const NewNews = this.dashboardData.NewNews
 
+      setAnnouncementDocumentWithContent()
       // Check if an admin can create an annoucement
       cy.login(SCHOOL_ADMIN, dashboardURL)
       cy.get('[data-test="buttonCreateAnnoucement"]').click()
@@ -200,9 +201,22 @@ describe('Dashboard_Announcements', () => {
         cy.get('.labelled').type(NewNews.title)
         cy.get('.ck-editor')
         cy.type_ckeditor(NewNews.content)
+        // Open FilePicker modal
+        cy.get('.select-files-buttons').within(() => {
+          cy.get('button').eq(0).click()
+        })
+      })
+      // Add file
+      cy.get('[data-test="file-picker-modal"]').within(() => {
+        cy.contains('.file', NewNews.document).click()
+        cy.get('[data-test="submitButton"]').click()
+      })
+      cy.get('[data-test="update-news-modal"]').within(() => {
         // Create
         cy.get('[data-test="submitButton"]').click()
       })
+      cy.intercept('GET', '**get-school-news**').as('addNews')
+      cy.wait('@addNews')
 
       // Check if a student don't see the annoucement
       cy.login(STUDENT, dashboardURL)
@@ -210,7 +224,19 @@ describe('Dashboard_Announcements', () => {
 
       // Check if a teacher see the annoucement
       cy.login(TEACHER2, dashboardURL)
-      getNews(NewNews).should('be.exist')
+      getNews(NewNews).should('be.exist').click()
+      cy.get('.news-details-modal').within(() => {
+        // Open file modal
+        cy.get('.attached-files').within(() => {
+          cy.contains('.attached-file', NewNews.document).click()
+        })
+      })
+      // Check if file modal is visible
+      cy.get('[data-test="file-display-modal"]').should('be.visible').within(() => {
+        // Check if teacher cant edit file
+        cy.get('.ck-editor').should('have.class', 'disabled')
+        cy.get('p').should('contain', NewNews.documentContent)
+      })
     })
 
     it('Dashboard_Announcements_CreateAnnouncementAllAnnouncementButtonCreate', function () {
@@ -293,16 +319,21 @@ describe('Dashboard_Announcements', () => {
 
     it('Dashboard_Announcements_UpdateAnnouncementMouseover', function () {
       const existingNews = this.dashboardData.existingNews
-      const lastNews = existingNews[existingNews.length - 1]
+      const lastNews = existingNews[0]
       const newsToEdit = this.dashboardData.newsToEdit
 
       // Login with student to chech if he don't see the announcement
       cy.login(STUDENT, dashboardURL)
+      cy.clock().invoke('setSystemTime', Cypress.dayjs(lastNews.dateBeforeRelease, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
       getNews(lastNews).should('not.exist')
 
       // Login to update announcement
       cy.login(HEADMASTER, dashboardURL)
-
+      cy.clock().invoke('setSystemTime', Cypress.dayjs(lastNews.dateBeforeRelease, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+      // Check if file icon is visible
+      getNews(lastNews).within(() => {
+        cy.get('[data-test="fileIcon"]').should('be.exist')
+      })
       // Mouse over on the announcement
       getNews(lastNews).trigger('mouseover').within(() => {
         cy.get('[data-test="buttonEditAnnouncement"]').click({ force: true })
@@ -318,18 +349,31 @@ describe('Dashboard_Announcements', () => {
         cy.get('.labelled').type(newsToEdit.title)
         cy.get('.ck-editor')
         cy.type_ckeditor(newsToEdit.content)
+        // Delete file
+        cy.get('.attached-file').within(() => {
+          cy.get('.remove-button').click()
+        })
         cy.get('[data-test="submitButton"]').click()
+      })
+      // Check if file icon is unvisible
+      getNews(lastNews).within(() => {
+        cy.get('[data-test="fileIcon"]').should('not.exist')
       })
       // Check if the modification exist
       getNews(newsToEdit).should('be.exist')
       cy.get('[data-test="announcement-widget"]').within(() => {
         cy.contains('button', 'Voir toutes les annonces').click()
       })
-      // to load page
+      // // to load page
       cy.get('.detailed-news').should('be.visible')
       cy.get('.announcements-list').contains('.announcement', newsToEdit.title).should('be.exist').click()
       // Check the content
-      getNewsDetail(newsToEdit).should('be.exist')
+      getNewsDetail(newsToEdit).should('be.exist').within(() => {
+        // Check if file is deleted
+        cy.get('.attached-files').within(() => {
+          cy.get('.attached-file').should('not.exist')
+        })
+      })
 
       // Login with a student to see if now he can see the announcement
       cy.login(STUDENT, dashboardURL)
