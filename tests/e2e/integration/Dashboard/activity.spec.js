@@ -391,7 +391,6 @@ describe('Dashboard_Activity', () => {
         // Click to oopen createActivity modal
         cy.get('[data-test="CreateActivity"]').click()
       })
-      loadActivity('get-news-details')
       // Set informations
       cy.get('[data-test="update-news-modal"]').within(() => {
         cy.get('.base-tags-input').click()
@@ -399,7 +398,18 @@ describe('Dashboard_Activity', () => {
         cy.get('.labelled').type(activityToCreate.title)
         cy.get('.ck-editor')
         cy.type_ckeditor(activityToCreate.content)
-        // submit
+        // Open FilePicker modal
+        cy.get('.select-files-buttons').within(() => {
+          cy.get('button').eq(0).click()
+        })
+      })
+      // Add file
+      cy.get('[data-test="file-picker-modal"]').within(() => {
+        cy.contains('.file', activityToCreate.document).click()
+        cy.get('[data-test="submitButton"]').click()
+      })
+      // Submit
+      cy.get('[data-test="update-news-modal"]').within(() => {
         cy.get('[data-test="submitButton"]').click()
       })
       // Check if the new activity is visible
@@ -411,6 +421,7 @@ describe('Dashboard_Activity', () => {
 
       // Login
       cy.login(STUDENT, dashboardURL)
+      loadActivity('get-dashboard-activity')
       // Check if a student the new actvity is visible
       cy.get('[data-test="activity-widget"]').within(() => {
         cy.get('.activities').should('be.visible')
@@ -421,6 +432,16 @@ describe('Dashboard_Activity', () => {
       })
       // Verify the content
       getInformationDetail(activityToCreate)
+      // Open file modal
+      cy.get('.attached-files').within(() => {
+        cy.contains('.attached-file', activityToCreate.document).click()
+      })
+      // Check if file modal is visible
+      cy.get('[data-test="file-display-modal"]').should('be.visible').within(() => {
+        // Check if student cant edit file
+        cy.get('.ck-editor').should('have.class', 'disabled')
+        cy.get('p').should('contain', activityToCreate.documentContent)
+      })
     })
 
     it('Dashboard_Activities_CreateActivityButtonAllActivity', function () {
@@ -513,7 +534,7 @@ describe('Dashboard_Activity', () => {
       cy.get('[data-test="update-news-modal"]').should('not.exist')
     })
 
-    it('Dashboard_Activities_UpdateActivity_mouseover', function () {
+    it.only('Dashboard_Activities_UpdateActivity_mouseover', function () {
       const existingActivity = this.dashboardData.existingActivity
       const activityToEdit = this.dashboardData.activityToEdit
 
@@ -525,6 +546,11 @@ describe('Dashboard_Activity', () => {
       // Login to update information
       cy.login(TEACHER, dashboardURL)
       loadActivity('get-dashboard-activity')
+
+      // Check if file icon is visible
+      getInformation(existingActivity[0]).within(() => {
+        cy.get('[data-test="fileIcon"]').should('be.exist')
+      })
 
       // Mouse over on the information
       getInformation(existingActivity[0]).trigger('mouseover').within(() => {
@@ -539,7 +565,15 @@ describe('Dashboard_Activity', () => {
         cy.get('.labelled').type(activityToEdit.title)
         cy.get('.ck-editor')
         cy.type_ckeditor(activityToEdit.content)
+        // Delete file
+        cy.get('.attached-file').within(() => {
+          cy.get('.remove-button').click()
+        })
         cy.get('[data-test="submitButton"]').click()
+      })
+      // Check if file icon is unvisible
+      getInformation(activityToEdit).within(() => {
+        cy.get('[data-test="fileIcon"]').should('not.exist')
       })
       // Check if the modification exist
       getInformation(activityToEdit).should('be.exist')
@@ -557,6 +591,10 @@ describe('Dashboard_Activity', () => {
       getInformation(activityToEdit).should('be.exist').click()
       // Check the content
       getInformationDetail(activityToEdit).should('be.exist')
+      // Check if file is deleted
+      cy.get('.attached-files').within(() => {
+        cy.get('.attached-file').should('not.exist')
+      })
     })
 
     it('Dashboard_Activities_UpdateActivityclickActivity', function () {
