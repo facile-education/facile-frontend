@@ -265,6 +265,8 @@ describe('Dashboard_Activity', () => {
         cy.get('.filters').within(() => {
           // Remove informations filter
           cy.contains('button', 'Informations').click()
+          // eslint-disable-next-line cypress/no-unnecessary-waiting
+          cy.wait(1000)
           cy.contains('button', 'Documents').click()
         })
         getInformation(information).should('not.exist')
@@ -277,6 +279,8 @@ describe('Dashboard_Activity', () => {
         cy.get('.filters').within(() => {
           // Remove informations filter
           cy.contains('button', 'Documents').click()
+          // eslint-disable-next-line cypress/no-unnecessary-waiting
+          cy.wait(1000)
           cy.contains('button', 'Cours et devoirs').click()
         })
         getInformation(information).should('not.exist')
@@ -381,7 +385,8 @@ describe('Dashboard_Activity', () => {
       })
     })
 
-    it('Dashboard_Activities_CreateActivityButtonHeaderActivity', function () {
+    it.only('Dashboard_Activities_CreateActivityButtonHeaderActivity', function () {
+      cy.loadTables('dashboard/dashboard_tables_activity_News_attachedFile.sql')
       const activityToCreate = this.dashboardData.ActivityToCreate
 
       // Login
@@ -452,6 +457,7 @@ describe('Dashboard_Activity', () => {
         // Display all activity
         cy.contains('button', 'Voir toutes les activités').click()
       })
+      loadActivity('get-dashboard-activity')
       // Click on button to display modal createActivity
       cy.get('[data-test="CreateActivity"]').click()
       // Check if modal is visible
@@ -469,7 +475,6 @@ describe('Dashboard_Activity', () => {
       cy.get('[data-test="activity-widget"]').within(() => {
         cy.get('[data-test="CreateActivity"]').click()
       })
-      loadActivity('get-news-details')
       // Set content
       cy.get('[data-test="update-news-modal"]').within(() => {
         cy.get('.ck-editor')
@@ -489,10 +494,10 @@ describe('Dashboard_Activity', () => {
         cy.get('[data-test="CreateActivity"]').click()
       })
 
-      // Set recipient
+      // Set title
+      cy.get('[data-test="update-news-modal"]').click()
       cy.get('[data-test="update-news-modal"]').within(() => {
-        cy.get('.base-tags-input').click()
-        cy.get('.suggestion-list').contains('li', activityToCreate.recipient).click()
+        cy.get('.labelled').type(activityToCreate.title)
         cy.get('[data-test="closeModal"]').click()
       })
       // Check if warning modal is visible
@@ -504,9 +509,10 @@ describe('Dashboard_Activity', () => {
         cy.get('[data-test="CreateActivity"]').click()
       })
 
-      // Set title
+      // Set recipient
       cy.get('[data-test="update-news-modal"]').within(() => {
-        cy.get('.labelled').type(activityToCreate.title)
+        cy.get('.base-tags-input').click()
+        cy.get('.suggestion-list').contains('li', activityToCreate.recipient).click()
         cy.get('[data-test="closeModal"]').click()
       })
       // Check if warning modal is visible
@@ -535,6 +541,7 @@ describe('Dashboard_Activity', () => {
     })
 
     it('Dashboard_Activities_UpdateActivity_mouseover', function () {
+      cy.loadTables('dashboard/dashboard_tables_activity_News_attachedFile.sql')
       const existingActivity = this.dashboardData.existingActivity
       const activityToEdit = this.dashboardData.activityToEdit
 

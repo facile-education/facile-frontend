@@ -3,7 +3,7 @@
         "recipient": "Tous les personnels",
         "title": "Nouvelle annonce",
         "content": "Ceci est le contenu de la nouvelle annonce",
-        "document": "note.html",
+        "document": "Note avec des caractères spéciaux_.html",
         "documentContent": "Contenu de la note"
     },
     "existingNews": [
@@ -140,7 +140,7 @@
         "recipient": "Elèves de EC0933",
         "title": "Activité créée",
         "content": "Ceci est une activité créée",
-        "document": "note.html",
+        "document": "Note avec des caractères spéciaux_.html",
         "documentContent":"Contenu de la note"
     },
     "activityToEdit": {
