@@ -28,6 +28,7 @@
           </span>
           <BaseIcon
             v-if="news.hasAttachedFiles"
+            data-test="fileIcon"
             class="paper-clip"
             name="paperclip"
           />

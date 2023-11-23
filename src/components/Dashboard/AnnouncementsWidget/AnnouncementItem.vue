@@ -37,8 +37,8 @@
             <span>{{ $t('by') + announcement.authorName }}</span>
           </span>
           <BaseIcon
-            data-test="fileIcon"
             v-if="announcement.hasAttachedFiles"
+            data-test="fileIcon"
             class="paper-clip"
             name="paperclip"
           />

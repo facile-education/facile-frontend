@@ -139,7 +139,9 @@
     "ActivityToCreate": {
         "recipient": "Elèves de EC0933",
         "title": "Activité créée",
-        "content": "Ceci est une activité créée"
+        "content": "Ceci est une activité créée",
+        "document": "note.html",
+        "documentContent":"Contenu de la note"
     },
     "activityToEdit": {
         "recipient": "Responsables légaux de EC0933",
