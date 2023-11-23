@@ -63,6 +63,11 @@ const setActivityWithContent = () => {
   cy.exec('npm run dl:loadDocumentLibrary document_library_groupActivity.tar.xz')
 }
 
+const setAnnouncementDocumentWithContent = () => {
+  cy.loadTables('dashboard/dashboard_tables_news_document.sql')
+  cy.exec('npm run dl:loadDocumentLibrary document_library_groupActivity.tar.xz')
+}
+
 const loadActivity = request => {
   cy.intercept('GET', `**/${request}**`).as('loadActivity')
   return cy.wait('@loadActivity')
@@ -86,5 +91,6 @@ export {
   selectChild,
   setActivityWithContent,
   loadActivity,
-  ScrollToAndCheckVisibility
+  ScrollToAndCheckVisibility,
+  setAnnouncementDocumentWithContent
 }

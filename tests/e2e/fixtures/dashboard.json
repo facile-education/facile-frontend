@@ -2,14 +2,17 @@
     "NewNews": {
         "recipient": "Tous les personnels",
         "title": "Nouvelle annonce",
-        "content": "Ceci est le contenu de la nouvelle annonce"
+        "content": "Ceci est le contenu de la nouvelle annonce",
+        "document": "note.html",
+        "documentContent": "Contenu de la note"
     },
     "existingNews": [
         {
             "recipient": "Tous les responsables légaux",
             "title": "Deuxième annonce",
             "content": "Ceci est une deuxième annonce",
-            "publicationDate": "30/10/23"
+            "publicationDate": "30/10/23",
+            "dateBeforeRelease": "2023/10/22"
         },
         {
             "recipient": "Tous les élèves",
