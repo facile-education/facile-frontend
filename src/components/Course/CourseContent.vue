@@ -10,6 +10,13 @@
     @update:model-value="update"
     @blur="blur"
   />
+
+  <AttachedFile
+    v-else-if="typeLabel === 'file'"
+    :read-only="!isEdition"
+    :attached-file="{...content, name: content.contentName, type: 'File', id: content.fileId, url: content.downloadUrl}"
+  />
+
   <div
     v-else
     class="wrapper"
@@ -43,8 +50,9 @@
         {{ content.contentValue }}
       </p>
     </div>
+
     <button
-      v-if="isEdition"
+      v-if="isEdition && typeLabel !== 'file'"
       class="actions"
       @click.stop="$emit('delete')"
     >
@@ -53,51 +61,6 @@
         alt="options"
       >
     </button>
-
-    <button
-      v-else-if="typeLabel==='file' && (mq.phone || mq.tablet)"
-      class="options-button"
-      :aria-label="$t('options')"
-      :title="$t('options')"
-      @click="toggleContextMenu"
-    >
-      <img
-        height="16"
-        width="16"
-        :src="require('@assets/icons/vertical_dots.svg')"
-        alt="options"
-      >
-    </button>
-
-    <span
-      v-else-if="typeLabel==='file'"
-      class="file-actions"
-    >
-      <button
-        :title="$t('save')"
-        :aria-label="$t('save')"
-        @click.stop="isDepositModalDisplayed = true"
-        @keyup.stop
-      >
-        <img
-          class="file-action add-to-folder"
-          :src="saveIcon"
-          :alt="$t('save')"
-        >
-      </button>
-      <button
-        :title="$t('download')"
-        :aria-label="$t('download')"
-        @click.stop="downloadFile"
-        @keyup.stop
-      >
-        <img
-          class="file-action"
-          src="@assets/attached_file_download.svg"
-          :alt="$t('download')"
-        >
-      </button>
-    </span>
 
     <teleport to="body">
       <VideoModal
@@ -136,6 +99,7 @@
 </template>
 
 <script>
+import AttachedFile from '@components/AttachedFiles/AttachedFile.vue'
 import TextContent from '@components/Base/TextContent.vue'
 import { downloadDocument } from '@utils/documents.util'
 import { defineAsyncComponent } from 'vue'
@@ -152,6 +116,7 @@ const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicke
 export default {
   name: 'CourseContent',
   components: {
+    AttachedFile,
     FilePickerModal,
     H5PModal,
     VideoModal,
