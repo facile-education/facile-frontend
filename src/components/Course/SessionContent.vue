@@ -1,15 +1,9 @@
 <template>
-  <ul v-if="sessionContent.blocks && sessionContent.blocks.length > 0">
-    <li
-      v-for="content in sessionContent.blocks"
-      :key="content"
-    >
-      <CourseContent
-        v-model="content.contentValue"
-        :content="content"
-      />
-    </li>
-  </ul>
+  <CourseContentBlocks
+    v-if="sessionContent.blocks && sessionContent.blocks.length > 0"
+    :content-blocks="sessionContent.blocks"
+    class="content"
+  />
   <div
     v-else
     v-t="'courseContentPlaceholder'"
@@ -18,12 +12,13 @@
 </template>
 
 <script>
-import CourseContent from '@components/Course/CourseContent.vue'
+import { defineAsyncComponent } from 'vue'
 
+const CourseContentBlocks = defineAsyncComponent(() => import('@components/Course/CourseContentBlocks'))
 export default {
   name: 'SessionContent',
   components: {
-    CourseContent
+    CourseContentBlocks
   },
   inject: ['mq'],
   props: {

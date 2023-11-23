@@ -23,7 +23,7 @@
           <WeprodeErrorMessage :error-message="formErrorList" />
         </div>
 
-        <CourseContent
+        <CourseContentItem
           v-for="(block, index) in sessionContent.blocks"
           :key="block.contentId"
           v-model="block.contentValue"
@@ -75,12 +75,12 @@ import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 import ContentPicker from '@/components/Course/ContentPicker.vue'
 import contentTypeConstants from '@/constants/contentTypeConstants'
 
-const CourseContent = defineAsyncComponent(() => import('@/components/Course/CourseContent'))
+const CourseContentItem = defineAsyncComponent(() => import('@components/Course/CourseContentItem'))
 
 export default {
   name: 'CourseEditModal',
   components: {
-    CourseContent,
+    CourseContentItem,
     ContentPicker,
     WeprodeButton,
     WeprodeErrorMessage,

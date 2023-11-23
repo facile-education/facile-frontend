@@ -114,7 +114,7 @@ const VideoModal = defineAsyncComponent(() => import('@components/Base/ContentEd
 const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal.vue'))
 
 export default {
-  name: 'CourseContent',
+  name: 'CourseContentItem',
   components: {
     AttachedFile,
     FilePickerModal,
@@ -415,6 +415,7 @@ button {
     justify-content: center;
     border: none;
     cursor: pointer;
+    background-color: $neutral-20;
 
     img {
       height: 1rem;
