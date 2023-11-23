@@ -2,9 +2,9 @@
   <div class="param-header">
     <WeprodeButton
       class="round"
-      @click="cleanupDropboxes"
+      @click="cleanupObsoleteFolders"
     >
-      <span>{{ $t('cleanupDropboxes') }}</span>
+      <span>{{ $t('cleanupObsoleteFolders') }}</span>
     </WeprodeButton>
     <WeprodeButton
       class="round"
@@ -30,7 +30,7 @@
 <script>
 import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 
-import { cleanupDropboxes, runDataFeed, setNewsPermissions } from '@/api/maintenance.service'
+import { cleanupObsoleteFolders, runDataFeed, setNewsPermissions } from '@/api/maintenance.service'
 
 export default {
   name: 'OneShotMaintenance',
@@ -44,8 +44,8 @@ export default {
   created () {
   },
   methods: {
-    cleanupDropboxes () {
-      cleanupDropboxes().then(
+    cleanupObsoleteFolders () {
+      cleanupObsoleteFolders().then(
         (data) => {
           if (data.success) {
             this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
@@ -98,7 +98,7 @@ export default {
 
 <i18n locale="fr">
 {
-  "cleanupDropboxes": "Nettoyage des casiers",
+  "cleanupObsoleteFolders": "Nettoyage des dossiers obsoletes (tmp images et sending boxes)",
   "success": "Opération terminée en succès",
   "error": "Opération terminée en erreur",
   "pAuth": "pAuth bidon",

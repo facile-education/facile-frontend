@@ -11,7 +11,7 @@ export {
   deleteGroup,
   deleteGroups,
   runAnonymisation,
-  cleanupDropboxes,
+  cleanupObsoleteFolders,
   runDataFeed,
   setNewsPermissions
 }
@@ -25,7 +25,7 @@ export default {
   deleteGroup,
   deleteGroups,
   runAnonymisation,
-  cleanupDropboxes,
+  cleanupObsoleteFolders,
   runDataFeed,
   setNewsPermissions
 }
@@ -77,8 +77,8 @@ function deleteGroups (file) {
   ).then(response => response.data)
 }
 
-function cleanupDropboxes () {
-  return axios.post(constants.JSON_WS_URL + MAINTENANCE_PATH + '/cleanup-dropboxes').then(response => response.data)
+function cleanupObsoleteFolders () {
+  return axios.post(constants.JSON_WS_URL + MAINTENANCE_PATH + '/cleanup-obsolete-folders').then(response => response.data)
 }
 
 function runDataFeed () {
