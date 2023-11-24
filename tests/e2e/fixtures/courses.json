@@ -1,0 +1,243 @@
+{
+    "CoursesListByProfil": [
+        [
+            {
+                "Course": "EC0933"
+            },
+            {
+                "Course": "HI0911"
+            },
+            {
+                "Course": "HI0933"
+            },
+            {
+                "Course": "HI0934"
+            },
+            {
+                "Course": "HI0971"
+            },
+            {
+                "Course": "HI1112"
+            },
+            {
+                "Course": "HI1123"
+            },
+            {
+                "Course": "HI1132"
+            },
+            {
+                "Course": "HI1133"
+            }
+        ],
+        [
+            {
+                "Course": "AC0933G1",
+                "teacher": "H. BLANKHORN"
+            },
+            {
+                "Course": "AL0933",
+                "teacher": "K. PARSONS, M. LE MARCHANT"
+            },
+            {
+                "Course": "AN0933",
+                "teacher": "D. NODEN"
+            },
+            {
+                "Course": "BI0933",
+                "teacher": "E. ROUBAY"
+            },
+            {
+                "Course": "EC0933",
+                "teacher": "R. NOLLI"
+            },
+            {
+                "Course": "EN0933G1",
+                "teacher": "G. PHOENIX"
+            },
+            {
+                "Course": "EO0933G1",
+                "teacher": "B. TOSKA"
+            },
+            {
+                "Course": "EP0933",
+                "teacher": "C. WHITEMAN"
+            },
+            {
+                "Course": "FL0933G1",
+                "teacher": "K. RYTON"
+            },
+            {
+                "Course": "FR0933",
+                "teacher": "K. RYTON"
+            },
+            {
+                "Course": "GE0933",
+                "teacher": "J. GOTCLIFF"
+            },
+            {
+                "Course": "HI0933",
+                "teacher": "R. NOLLI"
+            },
+            {
+                "Course": "LA0933",
+                "teacher": "K. RYTON"
+            },
+            {
+                "Course": "MA0933",
+                "teacher": "F. CABRERA"
+            },
+            {
+                "Course": "MC0933G1",
+                "teacher": "N. GARRIC"
+            },
+            {
+                "Course": "MT0933",
+                "teacher": "K. RYTON"
+            },
+            {
+                "Course": "MU0933",
+                "teacher": "D. META"
+            }
+        ],
+        [
+            {
+                "Course": "AC0911G2",
+                "teacher": "N. FEAKINS"
+            },
+            {
+                "Course": "AL0911",
+                "teacher": "K. LUKOCK, E. LE-GOOD"
+            },
+            {
+                "Course": "AN0911",
+                "teacher": "W. NEWIS"
+            },
+            {
+                "Course": "BI0911",
+                "teacher": "M. MCGOOCH"
+            },
+            {
+                "Course": "EC0911",
+                "teacher": "J. GOTCLIFF"
+            },
+            {
+                "Course": "EN0911G2",
+                "teacher": "A. WEMYSS"
+            },
+            {
+                "Course": "EO0911G2",
+                "teacher": "T. HAINS"
+            },
+            {
+                "Course": "EP0911",
+                "teacher": "C. WHITEMAN"
+            },
+            {
+                "Course": "FL0911G2",
+                "teacher": "R. BREYDIN"
+            },
+            {
+                "Course": "FR0911",
+                "teacher": "S. KILKENNY, R. BREYDIN"
+            },
+            {
+                "Course": "GE0911",
+                "teacher": "J. GOTCLIFF"
+            },
+            {
+                "Course": "HI0911",
+                "teacher": "R. NOLLI"
+            },
+            {
+                "Course": "LA0911",
+                "teacher": "E. LE-GOOD"
+            },
+            {
+                "Course": "MA0911",
+                "teacher": "W. RUSTMAN, L. DAUGHERTY"
+            },
+            {
+                "Course": "MC0911G2",
+                "teacher": "N. GARRIC"
+            },
+            {
+                "Course": "MT0911",
+                "teacher": "W. RUSTMAN"
+            },
+            {
+                "Course": "MU0911",
+                "teacher": "H. BENIESH"
+            }
+        ],
+        [
+            {
+                "Course": "AC0936G1",
+                "teacher": "H. BLANKHORN"
+            },
+            {
+                "Course": "AL0936",
+                "teacher": "K. PARSONS, T. SCUTTER"
+            },
+            {
+                "Course": "AN0936",
+                "teacher": "K. CISNEROS"
+            },
+            {
+                "Course": "BI0936",
+                "teacher": "S. O'HAGIRTIE"
+            },
+            {
+                "Course": "EC0936",
+                "teacher": "J. GOTCLIFF"
+            },
+            {
+                "Course": "EN0936G1",
+                "teacher": "A. WEMYSS"
+            },
+            {
+                "Course": "EO0936G1",
+                "teacher": "B. TOSKA"
+            },
+            {
+                "Course": "EP0936",
+                "teacher": "P. MCCANN"
+            },
+            {
+                "Course": "FL0936G1",
+                "teacher": "S. VICIOSO"
+            },
+            {
+                "Course": "FR0936",
+                "teacher": "S. VICIOSO"
+            },
+            {
+                "Course": "GE0936",
+                "teacher": "J. GOTCLIFF"
+            },
+            {
+                "Course": "HI0936",
+                "teacher": "K. CISNEROS"
+            },
+            {
+                "Course": "LA0936",
+                "teacher": "K. RYTON"
+            },
+            {
+                "Course": "MA0936",
+                "teacher": "L. DAUGHERTY"
+            },
+            {
+                "Course": "MC0936G1",
+                "teacher": "N. GARRIC"
+            },
+            {
+                "Course": "MT0936",
+                "teacher": "K. CISNEROS"
+            },
+            {
+                "Course": "MU0936",
+                "teacher": "S. COOKNEY"
+            }
+        ]
+    ]
+}
