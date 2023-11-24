@@ -90,6 +90,7 @@
       </div>
 
       <TextContent
+        v-if="description !== undefined"
         v-model:content="description"
         class="ck-editor"
         :placeholder="$t('descriptionPlaceHolder')"
