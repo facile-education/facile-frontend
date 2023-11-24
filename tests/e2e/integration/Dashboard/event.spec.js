@@ -652,8 +652,10 @@ describe('Dashboard_Events', () => {
 
     const sizes = ['iphone-5', 'ipad-2', [1024, 768], [1024, 4000]]
     const largeScreenNoScroll = sizes[3]
+    const mobile = sizes[0]
+    const ipad = sizes[1]
     sizes.forEach(size => {
-      it(`Dashboard_Events_DisplayAllEventsLoadNextEvent: ${size}`, function () {
+      it.only(`Dashboard_Events_DisplayAllEventsLoadNextEvent: ${size}`, function () {
         // Set testing viewport
         if (Array.isArray(size)) {
           cy.viewport(size[0], size[1])
@@ -677,11 +679,19 @@ describe('Dashboard_Events', () => {
         if (size === largeScreenNoScroll) {
           // Check if all threads is visible
           cy.get('.diary-event').should('have.length', 15)
-        } else {
-        // Pagination is taller than screen size
+        } else if (size === mobile) {
           cy.get('.diary-event').should('have.length', 10)
           // Scroll to bottom
-          cy.get('.nero.body').scrollTo('bottom')
+          cy.get('.nero-body').scrollTo('bottom')
+          cy.get('.diary-event').should('have.length', 15)
+        } else if (size === ipad) {
+          cy.get('.diary-event').should('have.length', 10)
+          cy.get('.diary-event').should('have.length', 15)
+        } else {
+          // Pagination is taller than screen size
+          cy.get('.diary-event').should('have.length', 10)
+          // Scroll to bottom
+          cy.get('.scroll').scrollTo('bottom')
           cy.get('.diary-event').should('have.length', 15)
         }
       })
