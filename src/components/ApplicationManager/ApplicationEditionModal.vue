@@ -35,7 +35,6 @@
             v-if="application.image"
             :src="application.image"
             alt="application_icon"
-            alt="application_icon"
             class="logo"
           >
           <NeroIcon
@@ -247,18 +246,12 @@ export default {
     title () {
       let title = 'addModalTitle'
       if (this.application?.applicationId) {
-      if (this.application?.applicationId) {
         title = 'editModalTitle'
       }
       return title
     },
     urlType: {
       get () {
-        if (this.application.hasGlobalUrl) {
-          return 'global'
-        } else {
-          return this.application.hasCustomUrl ? 'custom' : 'none'
-        }
         if (this.application.hasGlobalUrl) {
           return 'global'
         } else {
@@ -281,13 +274,13 @@ export default {
     buildApplicationBeforeSave () {
       // Handle roleId array before saving
       this.application.roleIds = []
-      for (const role of this.application.defaultRoles) {
-        this.application.roleIds.push(role.roleId)
+      if (this.application.defaultRoles) {
+        for (const role of this.application.defaultRoles) {
+          this.application.roleIds.push(role.roleId)
+        }
       }
 
       this.application.schoolIds = []
-      for (const authorizedSchool of this.application.authorizedSchools) {
-        this.application.schoolIds.push(authorizedSchool.schoolId)
       for (const authorizedSchool of this.application.authorizedSchools) {
         this.application.schoolIds.push(authorizedSchool.schoolId)
       }
@@ -316,7 +309,6 @@ export default {
 
         // Update if applicationId is defined else create new app
         if (this.application?.applicationId) {
-        if (this.application?.applicationId) {
           this.$store.dispatch('applicationManager/updateApplication', this.application)
         } else {
           const params = {
@@ -332,7 +324,6 @@ export default {
       this.application.category = category
     },
     selectImage ({ blob }) {
-    selectImage ({ blob }) {
       const reader = new FileReader()
       reader.readAsDataURL(blob)
       const vm = this
@@ -342,7 +333,6 @@ export default {
     },
     // Completion for category input
     toggleCompletion () {
-      this.displayCategoryCompletion = !!this.$refs.category.$el.contains(document.activeElement)
       this.displayCategoryCompletion = !!this.$refs.category.$el.contains(document.activeElement)
     }
   }
