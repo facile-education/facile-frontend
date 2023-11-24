@@ -1,11 +1,11 @@
 const nbDiaryEventInWidget = 3
-const allDiaryEventsPaginationSize = 4
+const allDiaryEventsPaginationSize = 10
 
 const nbAnnouncementsInWidget = 5
-const allAnnouncementsPaginationSize = 20
+const allAnnouncementsPaginationSize = 10
 
 const nbActivityInWidget = 5
-const allActivitiesPaginationSize = 20
+const allActivitiesPaginationSize = 10
 
 const homeworksTypes = {
   SIMPLE_INSTRUCTION: 1,
