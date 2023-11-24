@@ -23,6 +23,7 @@
         <WeprodeCheckbox
           v-if="canUpdateStatus"
           v-model="isDone"
+          data-test="toggleDoneUndone"
           :label="homework.isDone ? $t('done') : $t('todo')"
           :disabled="isPast"
           :right-display="true"
