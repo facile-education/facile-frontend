@@ -149,14 +149,17 @@ const MessagingUtils = {
     // Mark as read main message if unread
     for (const message of thread.messages) {
       if (message.messageId === thread.mainMessageId && message.isNew) {
-        this.markMessagesAsReadUnread([thread.mainMessageId], true)
+        this.markMessagesAsReadUnread([thread.mainMessageId], true).then(() => { // Wait message is mark as read before re-getting the thread
+          store.dispatch('messaging/setLastSelectedThread', thread)
+          store.dispatch('messaging/setSelectedThreads', [thread])
+
+          this.getThreadMessages(thread, store.state.messaging.currentFolder.folderId, messageIdToSelect)
+        })
       }
     }
-
-    store.dispatch('messaging/setLastSelectedThread', thread)
-    store.dispatch('messaging/setSelectedThreads', [thread])
-
-    messageService.getThreadMessages(thread.threadId, store.state.messaging.currentFolder.folderId).then((data) => {
+  },
+  getThreadMessages (thread, folderId, messageIdToSelect) {
+    messageService.getThreadMessages(thread.threadId, folderId).then((data) => {
       if (data.success) {
         store.dispatch('messaging/setCurrentThreadMessages', data.messages)
 
@@ -172,17 +175,26 @@ const MessagingUtils = {
     })
   },
   markMessagesAsReadUnread (messageIds, markAsRead) {
-    messageService.setMessageReadStatus(messageIds, markAsRead).then((data) => {
-      if (data.success) {
-        if (markAsRead) {
-          store.dispatch('messaging/markMessagesAsRead', messageIds)
-          store.dispatch('menu/updateMessagingNotification', messageIds.length)
+    return new Promise((resolve, reject) => {
+      messageService.setMessageReadStatus(messageIds, markAsRead).then((data) => {
+        if (data.success) {
+          if (markAsRead) {
+            store.dispatch('messaging/markMessagesAsRead', messageIds)
+            store.dispatch('menu/updateMessagingNotification', messageIds.length)
+          } else {
+            store.dispatch('messaging/markMessagesAsUnread', messageIds)
+            store.dispatch('menu/updateMessagingNotification', -messageIds.length)
+          }
+          store.dispatch('messaging/updateNbUnread', store.state.messaging.currentFolder.folderId)
+          resolve()
         } else {
-          store.dispatch('messaging/markMessagesAsUnread', messageIds)
-          store.dispatch('menu/updateMessagingNotification', -messageIds.length)
+          console.error('Error while updating message status', messageIds, markAsRead)
+          reject(new Error('Error while updating message status'))
         }
-        store.dispatch('messaging/updateNbUnread', store.state.messaging.currentFolder.folderId)
-      }
+      }, (err) => {
+        console.error(err)
+        reject(err)
+      })
     })
   },
   isDraftFolder () {
