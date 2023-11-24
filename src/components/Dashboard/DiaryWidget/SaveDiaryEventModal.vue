@@ -126,7 +126,7 @@
 </template>
 
 <script>
-import CustomDatePicker from '@components/Base/CustomDatePicker.vue' // TODO: Check time and optimise if necessary
+import CustomDatePicker from '@components/Base/CustomDatePicker.vue'
 import InformationIcon from '@components/Base/InformationIcon.vue'
 import TextContent from '@components/Base/TextContent.vue'
 import validators from '@utils/validators'
@@ -340,12 +340,10 @@ export default {
     submit () {
       if (this.v$.$invalid) {
         this.v$.$touch()
+      } else if (this.isCreation) {
+        this.createEvent()
       } else {
-        if (this.isCreation) {
-          this.createEvent()
-        } else {
-          this.updateEvent()
-        }
+        this.updateEvent()
       }
     },
     createEvent () {
