@@ -464,6 +464,10 @@ export default {
         } else {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
         }
+      }, (err) => {
+        this.isProcessingSave = false
+        console.error(err)
+        this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
       })
     },
     updateNews () {
@@ -479,6 +483,10 @@ export default {
         } else {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
         }
+      }, (err) => {
+        this.isProcessingSave = false
+        console.error(err)
+        this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
       })
     },
     confirmClosure () {
