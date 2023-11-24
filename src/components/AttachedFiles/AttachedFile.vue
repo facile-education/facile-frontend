@@ -2,7 +2,7 @@
   <div
     :title="$t('viewFile', {target: attachedFile.name})"
     class="attached-file theme-hover-border-color"
-    :class="{'phone': mq.phone || mq.tablet}"
+    :class="{'phone': mq.phone || mq.tablet, 'has-remove-button': !readOnly}"
     tabindex="0"
     @click="viewAttachedFile"
     @keyup.enter="viewAttachedFile"
@@ -243,7 +243,7 @@ button {
     }
   }
 
-  &:not(.phone) {
+  &:not(.phone):not(.has-remove-button) {
     .data {
       width: calc(100% - (50px + 0.5rem));
     }
