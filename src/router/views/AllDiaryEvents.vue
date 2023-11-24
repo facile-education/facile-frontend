@@ -224,8 +224,21 @@ export default {
   margin-top: 4px;
 }
 
-.body.details-display{
+.body {
   height: calc(100% - $all-events-header-height);
+}
+
+.event-list {
+  height: 100%;
+}
+
+.scroll {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.body.details-display{
   display: flex;
   padding-top: 20px;
 
@@ -233,11 +246,6 @@ export default {
     width: 33%;
     position: relative;
     margin-right: 20px;
-  }
-
-  .scroll {
-    height: 100%;
-    overflow-y: auto;
   }
 
   .details-placeholder {
