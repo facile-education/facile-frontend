@@ -110,7 +110,6 @@
 </template>
 
 <script>
-import CustomIcon from '@components/Base/CustomIcon.vue'
 import FileIcon from '@components/Base/FileIcon.vue'
 import { formatSize } from '@utils/commons.util'
 import { downloadDocument } from '@utils/documents.util'
@@ -122,7 +121,7 @@ const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicke
 
 export default {
   name: 'AttachedFile',
-  components: { ContextMenu, CustomIcon, FileIcon, FilePickerModal },
+  components: { ContextMenu, FileIcon, FilePickerModal },
   inject: ['mq'],
   props: {
     attachedFile: {
