@@ -43,7 +43,7 @@
           @update-announcement="refresh"
           @delete-announcement="refresh"
           @select="selectedAnnouncement=announcement"
-          @mark-as-read="announcement.hasRead=true"
+          @mark-as-read="markAnnouncementAsRead(announcement)"
           @get-next-announcements="loadAnnouncements"
         />
       </div>
@@ -102,6 +102,10 @@ export default {
     this.loadAnnouncements()
   },
   methods: {
+    markAnnouncementAsRead (announcement) {
+      announcement.hasRead = true
+      this.nbNewAnnouncements--
+    },
     isLastDisplayed (announcement) {
       return this.announcementsList[this.announcementsList.length - 1].newsId === announcement.newsId // Assume display order is the same as announcementsList order
     },
