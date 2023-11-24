@@ -37,12 +37,10 @@ const MessagingUtils = {
     }
     if (lastSelectedThreadIndex === -1 || threadIndex === -1) {
       return []
+    } else if (lastSelectedThreadIndex < threadIndex) {
+      return sortedThreads.slice(lastSelectedThreadIndex, threadIndex + 1)
     } else {
-      if (lastSelectedThreadIndex < threadIndex) {
-        return sortedThreads.slice(lastSelectedThreadIndex, threadIndex + 1)
-      } else {
-        return sortedThreads.slice(threadIndex, lastSelectedThreadIndex + 1)
-      }
+      return sortedThreads.slice(threadIndex, lastSelectedThreadIndex + 1)
     }
   },
   refresh () {
@@ -225,9 +223,7 @@ const MessagingUtils = {
     }
   },
   getFolderFromId (folderList, folderId) {
-    for (let i = 0; i < folderList.length; i++) {
-      const folder = folderList[i]
-
+    for (const folder of folderList) {
       if (folder.folderId === folderId) {
         return folder
       } else {
