@@ -48,7 +48,7 @@
             :is-selected="selectedEvent && selectedEvent.eventId === event.eventId"
             :is-last="isLastDisplayed(event)"
             @select="selectedEvent=event"
-            @mark-as-read="event.hasRead=true"
+            @mark-as-read="markEventAsRead(event)"
             @update-event="updateList"
             @delete-event="updateList"
             @get-next-events="loadDiaryEvents"
@@ -129,6 +129,10 @@ export default {
     window.removeEventListener('keydown', this.keyMonitor)
   },
   methods: {
+    markEventAsRead (event) {
+      event.hasRead = true
+      this.nbNewEvents--
+    },
     isLastDisplayed (event) {
       return this.eventList[this.eventList.length - 1].eventId === event.eventId // Assume display order is the same as eventListOrder
     },
