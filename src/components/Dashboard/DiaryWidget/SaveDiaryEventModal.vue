@@ -206,7 +206,7 @@ export default {
     endDate: { // Should be > startDate
       required,
       function (value) {
-        return value.diff(this.startDate) >= 0
+        return value.diff(this.startDate) > 0
       }
     }
   },
@@ -286,7 +286,7 @@ export default {
 
       // Update end date if needed
       if (this.startDate.isAfter(this.endDate)) {
-        this.endDate = this.startDate
+        this.endDate = this.startDate.add(1, 'hour')
       }
     },
     updateEndDate (date) {
@@ -493,7 +493,7 @@ export default {
   "sizeLimit2": " caractères",
   "selectPopulations": "Veuillez séléctionner une population cible",
   "dateInPast": "La date de début ne doit pas se situer dans le passé",
-  "dateOrder": "La date de fin doit être postérieure ou égale à celle de début",
+  "dateOrder": "La date de fin doit être postérieure à celle de début",
   "switchHelp": "Cette option permet de notifier les destinataires et l'évènement sera considéré comme non lu",
   "confirmClosure": "Souhaitez-vous fermer cette fenêtre ? (Vous perdrez son contenu)",
   "creationSuccess": "Évènement créé",
