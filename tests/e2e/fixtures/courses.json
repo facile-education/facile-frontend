@@ -239,5 +239,35 @@
                 "teacher": "S. COOKNEY"
             }
         ]
+    ],
+    "existingHomework": [
+        {
+            "title": "Travail à faire",
+            "content": "Consigne du travail à faire",
+            "teacher": "NOLLI",
+            "dateBefore": "2023/11/13",
+            "dateAfter": "2023/11/17"
+        },
+        {
+            "title": "Second travail à faire",
+            "content": "Consigne du second travail à faire",
+            "teacher": "NOLLI",
+            "dateBefore": "2023/11/13",
+            "dateAfter": "2023/11/17"
+        },
+        {
+            "title": "Travail à faire parent multi enfants",
+            "content": "Consigne du travail à faire pour parent multi enfants",
+            "teacher": "NOLLI",
+            "dateBefore": "2023/11/09",
+            "student": "Eleanora"
+        },
+        {
+            "title": "Second travail à faire parent multi enfants",
+            "content": "Consigne du second travail à faire parent multi enfants",
+            "teacher": "PARSONS",
+            "dateBefore": "2023/11/27",
+            "student": "Barbara"
+        }
     ]
 }
