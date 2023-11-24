@@ -43,6 +43,7 @@
       </Transition>
 
       <CreateButton
+        v-if="!isMobileDetailsPanelDisplayed"
         class="create-button"
         data-test="createMessageButton"
         :title="$t('Messaging.new')"
