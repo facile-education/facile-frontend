@@ -1,5 +1,5 @@
 const nbDiaryEventInWidget = 3
-const allDiaryEventsPaginationSize = 10
+const allDiaryEventsPaginationSize = 4
 
 const nbAnnouncementsInWidget = 5
 const allAnnouncementsPaginationSize = 20
