@@ -157,7 +157,7 @@ export default {
   computed: {
     thumbnail () {
       if (defaultImagesKeys.indexOf(this.news.thumbnailUrl) !== -1) {
-        return new URL(`../../../../assets/images/${this.news.thumbnailUrl}.png`, import.meta.url).href
+        return new URL(`../../../../assets/images/${this.news.thumbnailUrl}.svg`, import.meta.url).href
       } else { // Returned url is a key for local default image
         return this.news.thumbnailUrl
       }
