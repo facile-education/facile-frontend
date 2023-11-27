@@ -258,7 +258,7 @@ h5 {
 {
   "applyContextText": "Penser à expliquer le contexte de votre erreur, si besoin nous communiquer une copie d'écran et tout autre élément que vous jugez utile pour nous permettre de reproduire votre problème.",
   "addFilesButtonLabel": "Ajouter un fichier (facultatif)",
-  "adminMessage": "Votre demande de support sera traitée par les équipes de Pentila, vous recevrez une réponse dans votre messagerie",
+  "adminMessage": "Votre demande de support sera traitée par les équipes de Weprode, vous recevrez une réponse dans votre messagerie",
   "submitButtonLabel": "Envoyer",
   "issueDescription": "Description de l'incident",
   "suggestionDescription": "Description de la suggestion",
