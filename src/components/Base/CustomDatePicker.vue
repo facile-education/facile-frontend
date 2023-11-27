@@ -10,7 +10,10 @@
     :is24hr="true"
     :disabled-dates="disabledDates"
   >
-    <template #default="{ togglePopover }">
+    <template
+      v-if="buttonForm"
+      #default="{ togglePopover }"
+    >
       <button
         :disabled="disabled"
         @click="togglePopover()"
@@ -31,6 +34,7 @@
 <script>
 import 'v-calendar/style.css'
 
+import dayjs from 'dayjs'
 import { DatePicker } from 'v-calendar'
 
 import NeroIcon from '@/components/Nero/NeroIcon.vue'
@@ -42,6 +46,10 @@ export default {
     selectedDate: {
       type: Object,
       required: true
+    },
+    buttonForm: {
+      type: Boolean,
+      default: true
     },
     maxDate: {
       type: Date,
@@ -72,7 +80,7 @@ export default {
       default: false
     }
   },
-  emits: ['selectDate'],
+  emits: ['update:selectedDate'],
   computed: {
     disabledDates () {
       return this.hiddenDays.length > 0 ? [{ repeat: { weekdays: this.hiddenDays } }] : undefined
@@ -82,7 +90,7 @@ export default {
         return this.selectedDate.toDate()
       },
       set (date) {
-        this.$emit('selectDate', date)
+        this.$emit('update:selectedDate', dayjs(date))
       }
     },
     rules () {

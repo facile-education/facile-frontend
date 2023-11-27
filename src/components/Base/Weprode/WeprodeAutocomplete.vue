@@ -112,8 +112,12 @@ export default {
     const autocomplete = this.$el
 
     // Prevent autocomplete to overflow the screen height
-    const nbPixelsBeforeBottom = window.innerHeight - autocomplete.getBoundingClientRect().top
-    autocomplete.style.maxHeight = Math.min(300, nbPixelsBeforeBottom) + 'px'
+    const nbPixelsBeforeBottom = window.innerHeight - (autocomplete.getBoundingClientRect().top + autocomplete.getBoundingClientRect().height)
+    if (nbPixelsBeforeBottom <= 10) {
+      autocomplete.style.bottom = 'calc(100% + 4px)'
+    } else {
+      autocomplete.style.top = 'calc(100% + 4px)'
+    }
 
     // Prevent autocomplete to overflow the screen width
     const isRightOverflow = autocomplete.getBoundingClientRect().right > window.innerWidth - 10 // With 10px of margin

@@ -37,13 +37,13 @@
         <div class="start-date">
           <div v-t="'startDateLabel'" />
           <CustomDatePicker
-            :selected-date="startDate"
+            v-model:selected-date="startDate"
             :min-date="minDate"
             :with-hours="true"
             :is-required="true"
             :minute-increment="15"
             :disabled="isStartDateDisabled"
-            @select-date="updateStartDate"
+            @update:selected-date="updateStartDate"
           />
           <WeprodeErrorMessage
             :error-message="formErrorList.startDate"
@@ -52,13 +52,12 @@
         <div class="end-date">
           <div v-t="'endDateLabel'" />
           <CustomDatePicker
-            :selected-date="endDate"
+            v-model:selected-date="endDate"
             :min-date="startDate.toDate()"
             :with-hours="true"
             :is-required="true"
             :minute-increment="15"
             :disabled="isEndDateDisabled"
-            @select-date="updateEndDate"
           />
           <WeprodeErrorMessage
             :error-message="formErrorList.endDate"
@@ -168,7 +167,7 @@ export default {
       location: '',
       description: '',
       startDate: dayjs(),
-      endDate: dayjs().add(1, 'hour').minute(0),
+      endDate: dayjs(),
       populations: [],
       markAsUnreadForAll: false,
 
@@ -269,6 +268,7 @@ export default {
     roundMinutes () {
       // Round startDate to the nearest quarter-hour (to have a compliant behaviour with v-calendar)
       this.startDate = this.startDate.minute(Math.round(this.startDate.minute() / 15) * 15)
+      this.endDate = this.startDate.add(1, 'hour')
     },
     setInitialForm () {
       this.initialForm = {
@@ -281,16 +281,11 @@ export default {
         markAsUnreadForAll: this.markAsUnreadForAll
       }
     },
-    updateStartDate (date) {
-      this.startDate = dayjs(date)
-
+    updateStartDate (startDate) {
       // Update end date if needed
-      if (this.startDate.isAfter(this.endDate)) {
-        this.endDate = this.startDate.add(1, 'hour')
+      if (startDate.isAfter(this.endDate)) {
+        this.endDate = startDate.add(1, 'hour')
       }
-    },
-    updateEndDate (date) {
-      this.endDate = dayjs(date)
     },
     initDetails (eventId) {
       this.isLoadingEventDetails = true
