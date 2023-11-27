@@ -48,13 +48,12 @@
         >
           <div v-t="'releaseDateLabel'" />
           <CustomDatePicker
-            :selected-date="releaseDate"
+            v-model:selected-date="releaseDate"
             :min-date="minDate"
             :with-hours="true"
             :is-required="true"
             :minute-increment="15"
             :disabled="isReleaseDateDisabled"
-            @select-date="updateReleaseDate"
           />
           <WeprodeErrorMessage
             :error-message="formErrorList.releaseDate"
@@ -324,9 +323,6 @@ export default {
     selectImage (tempFile) {
       this.thumbnailId = tempFile.id
       this.thumbnailUrl = tempFile.fileUrl
-    },
-    updateReleaseDate (date) {
-      this.releaseDate = dayjs(date)
     },
     attachNewFiles (selectedFiles) {
       this.attachedFiles = [...this.attachedFiles, ...selectedFiles]

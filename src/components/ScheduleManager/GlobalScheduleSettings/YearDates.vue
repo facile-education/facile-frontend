@@ -8,7 +8,7 @@
           class="date-picker"
           :selected-date="startDate"
           :is-required="true"
-          @select-date="$emit('update:startDate', dayjs($event))"
+          @update:selected-date="$emit('update:startDate', $event)"
         />
         <WeprodeErrorMessage
           :error-message="formErrorList.schoolYearStartDate"
@@ -20,7 +20,7 @@
           class="date-picker"
           :selected-date="semesterDate"
           :is-required="true"
-          @select-date="$emit('update:semesterDate', dayjs($event))"
+          @update:select-date="$emit('update:semesterDate', $event)"
         />
         <WeprodeErrorMessage
           :error-message="formErrorList.semesterDate"
@@ -32,7 +32,7 @@
           class="date-picker"
           :selected-date="endDate"
           :is-required="true"
-          @select-date="$emit('update:endDate', dayjs($event))"
+          @update:select-date="$emit('update:endDate', $event)"
         />
         <WeprodeErrorMessage
           :error-message="formErrorList.endDate"

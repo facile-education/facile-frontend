@@ -187,10 +187,6 @@ export default {
   }
 }
 
-.base-autocomplete {
-  top: calc(36px + 1rem);
-}
-
 .icon {
   color: #646464;
   margin-left: 1rem;

@@ -115,33 +115,32 @@
     </template>
 
     <template #footer>
-      <div
-        class="footer"
-      >
-        <div class="draft">
-          <WeprodeButton
-            v-t="'draft'"
-            class="draft-button"
-            @click="onConfirm(true)"
-          />
+      <div :class="mq.phone || mq.tablet ? 'footer-phone' : 'footer-desktop'">
+        <div
+          v-if="isScheduled"
+          class="update-scheduled-date"
+        >
+          <span v-t="'scheduledOn'" />
           <CustomDatePicker
-            :selected-date="publicationDate"
+            v-model:selected-date="publicationDate"
             :min-date="minDate"
+            :max-date="maxDate"
             :with-hours="true"
             :is-required="true"
             :minute-increment="15"
-            @select-date="updateStartDate"
           />
         </div>
-        <WeprodeButton
-          v-t="'post'"
-          @click="onConfirm(false)"
+
+        <WeprodeDropdownButton
+          :options="publicationOptions"
+          :initial-option="initialPublicationOption"
+          @click="handlePublishOption"
         />
       </div>
     </template>
   </WeprodeWindow>
   <teleport
-    v-if="displayStudentModal || displayWorkLoadModal"
+    v-if="displayStudentModal || displayWorkLoadModal || displayPublicationDateModal"
     to="body"
   >
     <StudentListModal
@@ -158,10 +157,19 @@
       :homework-date="selectedTargetDate"
       @close="displayWorkLoadModal = false"
     />
+    <ChoosePublicationDateModal
+      v-if="displayPublicationDateModal"
+      :initial-date="publicationDate"
+      @choose-date="schedulePublication"
+      @close="displayPublicationDateModal = false"
+    />
   </teleport>
 </template>
 
 <script>
+import CustomDatePicker from '@components/Base/CustomDatePicker.vue'
+import WeprodeDropdownButton from '@components/Base/Weprode/WeprodeDropdownButton.vue'
+import ChoosePublicationDateModal from '@components/Course/ChoosePublicationDateModal.vue'
 import WeprodeUtils from '@utils/weprode.utils'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
@@ -171,7 +179,6 @@ import { defineAsyncComponent, nextTick } from 'vue'
 import { getSessionStudents } from '@/api/course.service'
 import { createHomework, updateHomework } from '@/api/homework.service'
 import { getNextSessions } from '@/api/schedule.service'
-import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
 import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
 import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
 import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
@@ -180,8 +187,6 @@ import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 import ContentPicker from '@/components/Course/ContentPicker.vue'
 import contentTypeConstants from '@/constants/contentTypeConstants'
 
-import CustomDatePicker from '../Base/CustomDatePicker.vue'
-
 const StudentListModal = defineAsyncComponent(() => import('@components/Course/StudentListModal.vue'))
 const WorkLoadModal = defineAsyncComponent(() => import('@components/Course/WorkLoad/WorkLoadModal.vue'))
 const CourseContentItem = defineAsyncComponent(() => import('@components/Course/CourseContentItem'))
@@ -189,17 +194,18 @@ const CourseContentItem = defineAsyncComponent(() => import('@components/Course/
 export default {
   name: 'HomeworkEditModal',
   components: {
+    CustomDatePicker,
+    ChoosePublicationDateModal,
+    WeprodeDropdownButton,
     WorkLoadModal,
     CourseContentItem,
     ContentPicker,
     StudentListModal,
-    WeprodeButton,
     WeprodeDropdown,
     WeprodeErrorMessage,
     WeprodeInput,
     WeprodeRadioButton,
-    WeprodeWindow,
-    CustomDatePicker
+    WeprodeWindow
   },
   inject: ['mq'],
   props: {
@@ -224,6 +230,8 @@ export default {
       availableStudents: [],
       displayStudentModal: false,
       displayWorkLoadModal: false,
+      displayPublicationDateModal: false,
+      initialPublicationOption: undefined,
       homework: {
         blocks: [{ contentId: -1, contentName: '', contentType: 1, contentValue: '', placeholder: this.$t('instructions') }],
         date: undefined,
@@ -251,7 +259,21 @@ export default {
         { label: '1h30', time: '90' }
       ],
       nextSessions: [],
-      publicationDate: dayjs()
+      publicationDate: dayjs(),
+      publicationOptions: [
+        {
+          name: 'publish',
+          title: this.$t('publish')
+        },
+        {
+          name: 'setPublishDate',
+          title: this.$t('setPublishDate')
+        },
+        {
+          name: 'publishLater',
+          title: this.$t('publishLater')
+        }
+      ]
     }
   },
   computed: {
@@ -266,6 +288,9 @@ export default {
     isCreation () {
       return this.editedHomework === undefined
     },
+    isScheduled () {
+      return this.publicationDate.isAfter(dayjs()) && !this.homework.isDraft
+    },
     selectedSession () {
       return this.isInList ? undefined : this.$store.state.course.selectedSession
     },
@@ -278,80 +303,29 @@ export default {
     selectedTargetDate () {
       return dayjs(this.homework.date.startDate, 'YYYY-MM-DD HH:mm')
     },
+    configuration () {
+      return this.$store.state.calendar.configuration
+    },
     minDate () {
-      return dayjs().toDate()
+      return dayjs().startOf('day').toDate()
+    },
+    maxDate () {
+      return this.configuration ? dayjs(this.configuration.schoolYearEndDate, 'YYYY-MM-DD').toDate() : undefined
     }
   },
   created () {
-    // this.$store.dispatch('misc/incrementModalCount')
     if (!this.isCreation) {
       this.homework = WeprodeUtils.deepCopy(this.editedHomework)
-      this.publicationDate = dayjs(this.homework.publicationDate, 'YYYY-MM-DD HH:mm')
-      if (this.homework.targetSessionId === this.homework.sourceSessionId) {
-        this.homework.dateType = 'session'
-      } else {
-        this.homework.dateType = 'custom'
-      }
-      // Select correct estimated time object in dropdown list
-      if (this.homework.estimatedTime) {
-        const index = this.homeworkDurations.map(object => object.time).indexOf(this.homework.estimatedTime.toString())
-        if (index !== -1) {
-          this.homework.homeworkDuration = this.homeworkDurations[index]
-        } else {
-          console.error('cannot init estimate duration')
-        }
-      }
+      this.initHomeworkType()
+      this.initEstimatedTimeDropdown()
+      this.initPublicationOption()
     } else {
       this.publicationDate = dayjs()
     }
 
-    getSessionStudents(this.courseId).then((data) => {
-      if (data.success) {
-        this.availableStudents = data.students
-      } else {
-        this.availableStudents = []
-        console.error('Cannot retrieve student list')
-      }
-    }, (err) => {
-      this.availableStudents = []
-      console.error(err)
-    })
+    this.getSessionStudents()
 
-    getNextSessions(this.isCreation ? this.selectedSession.sessionId : this.homework.sourceSessionId).then((data) => {
-      if (data.success) {
-        this.nextSessions = data.nextSessions
-        this.nextSessions.forEach(session => {
-          session.formattedStartDate = dayjs(session.startDate).format('dddd DD MMM YYYY à HH:mm')
-        })
-
-        if (!this.isCreation) {
-          if (this.homework.targetSessionId !== undefined) {
-            this.nextSessions.forEach(session => {
-              if (session.sessionId === this.homework.targetSessionId) {
-                this.homework.date = session
-              }
-            })
-          }
-        } else {
-          if (this.nextSessions.length > 0) {
-            this.homework.date = this.nextSessions[0]
-            this.updateTarget(this.nextSessions[0])
-          } else {
-            this.homework.dateType = 'session'
-            this.updateTarget({ sessionId: this.selectedSession.sessionId, startDate: this.selectedSession.startDate })
-          }
-        }
-
-        this.initialForm = JSON.stringify(this.homework)
-      } else {
-        this.$store.dispatch('popups/pushPopup', { message: this.$t('getNextSessionsError'), type: 'error' })
-        console.error('error on homework date initialisation')
-      }
-    },
-    (err) => {
-      this.$store.dispatch('popups/pushPopup', { message: this.$t('getNextSessionsError'), type: 'error' })
-      console.error(err)
-    })
+    this.getNextSessions()
   },
   mounted () {
     if (this.isCreation) {
@@ -362,6 +336,37 @@ export default {
     }
   },
   methods: {
+    initHomeworkType () {
+      if (this.homework.targetSessionId === this.homework.sourceSessionId) {
+        this.homework.dateType = 'session'
+      } else {
+        this.homework.dateType = 'custom'
+      }
+    },
+    initEstimatedTimeDropdown () {
+      if (this.homework.estimatedTime) {
+        const index = this.homeworkDurations.map(object => object.time).indexOf(this.homework.estimatedTime.toString())
+        if (index !== -1) {
+          this.homework.homeworkDuration = this.homeworkDurations[index]
+        } else {
+          console.error('cannot init estimate duration')
+        }
+      }
+    },
+    initPublicationOption () {
+      this.publicationDate = dayjs(this.homework.publicationDate, 'YYYY-MM-DD HH:mm')
+
+      if (this.homework.isDraft) {
+        this.initialPublicationOption = this.publicationOptions[2]
+      } else if (this.publicationDate.isAfter(dayjs())) {
+        this.initialPublicationOption = this.publicationOptions[1]
+        if (!this.configuration) {
+          this.$store.dispatch('calendar/getConfiguration')
+        }
+      } else {
+        this.initialPublicationOption = this.publicationOptions[0]
+      }
+    },
     addContent (content) {
       content.contentId = -1
       this.homework.blocks.push(content)
@@ -381,12 +386,34 @@ export default {
     preview () {
       console.log('todo')
     },
-    onConfirm (isDraft = false) {
+    handlePublishOption (optionClicked) {
       if (this.v$.$invalid) {
         this.v$.$touch()
       } else {
-        this.save(isDraft)
+        switch (optionClicked.name) {
+          case 'publish':
+            this.publicationDate = dayjs()
+            this.save()
+            break
+          case 'setPublishDate':
+            if (this.isScheduled) {
+              this.save()
+            } else {
+              this.displayPublicationDateModal = true
+            }
+            break
+          case 'publishLater':
+            this.publicationDate = dayjs()
+            this.save(true)
+            break
+          default:
+            console.error('unknown option', optionClicked)
+        }
       }
+    },
+    schedulePublication (date) {
+      this.publicationDate = date
+      this.save()
     },
     save (isDraft = false) {
       // Remove empty text blocks
@@ -401,8 +428,7 @@ export default {
             console.error('Cannot create homework')
             this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
           }
-        },
-        (err) => {
+        }, (err) => {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
           console.error(err)
         })
@@ -418,18 +444,56 @@ export default {
             console.error('Cannot update homework')
             this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
           }
-        },
-        (err) => {
+        }, (err) => {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
           console.error(err)
         })
       }
     },
-    updateStartDate (date) {
-      this.publicationDate = dayjs(date)
+    getSessionStudents () {
+      getSessionStudents(this.courseId).then((data) => {
+        if (data.success) {
+          this.availableStudents = data.students
+        } else {
+          this.availableStudents = []
+          console.error('Cannot retrieve student list')
+        }
+      }, (err) => {
+        this.availableStudents = []
+        console.error(err)
+      })
+    },
+    getNextSessions () {
+      getNextSessions(this.isCreation ? this.selectedSession.sessionId : this.homework.sourceSessionId).then((data) => {
+        if (data.success) {
+          this.nextSessions = data.nextSessions
+          this.nextSessions.forEach(session => {
+            session.formattedStartDate = dayjs(session.startDate).format('dddd DD MMM YYYY à HH:mm')
+
+            if (!this.isCreation && this.homework.targetSessionId !== undefined && session.sessionId === this.homework.targetSessionId) {
+              this.homework.date = session
+            }
+          })
+
+          if (this.isCreation && this.nextSessions.length > 0) {
+            this.homework.date = this.nextSessions[0]
+            this.updateTarget(this.nextSessions[0])
+          } else if (this.isCreation) {
+            this.homework.dateType = 'session'
+            this.updateTarget({ sessionId: this.selectedSession.sessionId, startDate: this.selectedSession.startDate })
+          }
+
+          this.initialForm = JSON.stringify(this.homework)
+        } else {
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('getNextSessionsError'), type: 'error' })
+          console.error('error on homework date initialisation')
+        }
+      }, (err) => {
+        this.$store.dispatch('popups/pushPopup', { message: this.$t('getNextSessionsError'), type: 'error' })
+        console.error(err)
+      })
     },
     updateTarget (value) {
-      // TODO date libre
       this.homework.targetSessionId = value.sessionId
       this.homework.toDate = value.startDate
     },
@@ -573,9 +637,17 @@ label {
   margin: 8px 0;
 }
 
-.footer {
+.footer-phone {
+  .update-scheduled-date {
+    margin-bottom: 1rem;
+  }
+}
+
+.footer-desktop, .update-scheduled-date {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
 }
 .draft {
   display: flex;
@@ -601,14 +673,16 @@ label {
   "for": "Pour",
   "getNextSessionsError": "Une erreur est survenue lors de la récupération des prochaines séances",
   "instructions": "Consigne",
-  "draft": "Publier le ",
   "duration": "Durée estimée",
   "homeworkTitle": "Titre du travail*",
   "homeworkType": "Type de travail",
   "futureDate": "À faire pour le ",
-  "post": "Publier",
+  "publish": "Publier",
+  "setPublishDate": "Programmer",
+  "publishLater": "Enregistrer en brouillon",
   "preview": "Aperçu",
   "required": "Champ requis",
+  "scheduledOn": "Programmé le",
   "select": "Sélectionner",
   "sessionDate": "À faire pendant la séance",
   "someStudents": "Un élève sur {total} | {count} élèves sur {total}",
