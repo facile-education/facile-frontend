@@ -115,15 +115,29 @@
     </template>
 
     <template #footer>
-      <WeprodeButton
-        v-t="'draft'"
-        class="draft-button"
-        @click="onConfirm(true)"
-      />
-      <WeprodeButton
-        v-t="'post'"
-        @click="onConfirm(false)"
-      />
+      <div
+        class="footer"
+      >
+        <div class="draft">
+          <WeprodeButton
+            v-t="'draft'"
+            class="draft-button"
+            @click="onConfirm(true)"
+          />
+          <CustomDatePicker
+            :selected-date="publicationDate"
+            :min-date="minDate"
+            :with-hours="true"
+            :is-required="true"
+            :minute-increment="15"
+            @select-date="updateStartDate"
+          />
+        </div>
+        <WeprodeButton
+          v-t="'post'"
+          @click="onConfirm(false)"
+        />
+      </div>
     </template>
   </WeprodeWindow>
   <teleport
@@ -166,6 +180,8 @@ import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 import ContentPicker from '@/components/Course/ContentPicker.vue'
 import contentTypeConstants from '@/constants/contentTypeConstants'
 
+import CustomDatePicker from '../Base/CustomDatePicker.vue'
+
 const StudentListModal = defineAsyncComponent(() => import('@components/Course/StudentListModal.vue'))
 const WorkLoadModal = defineAsyncComponent(() => import('@components/Course/WorkLoad/WorkLoadModal.vue'))
 const CourseContentItem = defineAsyncComponent(() => import('@components/Course/CourseContentItem'))
@@ -182,7 +198,8 @@ export default {
     WeprodeErrorMessage,
     WeprodeInput,
     WeprodeRadioButton,
-    WeprodeWindow
+    WeprodeWindow,
+    CustomDatePicker
   },
   inject: ['mq'],
   props: {
@@ -233,7 +250,8 @@ export default {
         { label: '1h15', time: '75' },
         { label: '1h30', time: '90' }
       ],
-      nextSessions: []
+      nextSessions: [],
+      publicationDate: dayjs()
     }
   },
   computed: {
@@ -259,12 +277,16 @@ export default {
     },
     selectedTargetDate () {
       return dayjs(this.homework.date.startDate, 'YYYY-MM-DD HH:mm')
+    },
+    minDate () {
+      return dayjs().toDate()
     }
   },
   created () {
     // this.$store.dispatch('misc/incrementModalCount')
     if (!this.isCreation) {
       this.homework = WeprodeUtils.deepCopy(this.editedHomework)
+      this.publicationDate = dayjs(this.homework.publicationDate, 'YYYY-MM-DD HH:mm')
       if (this.homework.targetSessionId === this.homework.sourceSessionId) {
         this.homework.dateType = 'session'
       } else {
@@ -279,6 +301,8 @@ export default {
           console.error('cannot init estimate duration')
         }
       }
+    } else {
+      this.publicationDate = dayjs()
     }
 
     getSessionStudents(this.courseId).then((data) => {
@@ -369,7 +393,7 @@ export default {
       this.homework.blocks = this.homework.blocks.filter(block => block.contentType !== contentTypeConstants.TYPE_TEXT_CONTENT || block.contentValue !== '')
 
       if (this.isCreation) {
-        createHomework(this.courseId, this.selectedSession.sessionId, this.homework, dayjs(), isDraft).then((data) => {
+        createHomework(this.courseId, this.selectedSession.sessionId, this.homework, this.publicationDate, isDraft).then((data) => {
           if (data.success) {
             this.$store.dispatch('course/updateSessionDetails')
             this.onClose()
@@ -383,7 +407,7 @@ export default {
           console.error(err)
         })
       } else {
-        updateHomework(this.homework, dayjs(), isDraft).then((data) => {
+        updateHomework(this.homework, this.publicationDate, isDraft).then((data) => {
           if (data.success) {
             if (this.isInList) {
               this.$emit('update-homework')
@@ -400,6 +424,9 @@ export default {
           console.error(err)
         })
       }
+    },
+    updateStartDate (date) {
+      this.publicationDate = dayjs(date)
     },
     updateTarget (value) {
       // TODO date libre
@@ -546,6 +573,13 @@ label {
   margin: 8px 0;
 }
 
+.footer {
+  display: flex;
+  justify-content: space-between;
+}
+.draft {
+  display: flex;
+}
 .draft-button {
   margin-right: 1.5rem;
 }
@@ -567,7 +601,7 @@ label {
   "for": "Pour",
   "getNextSessionsError": "Une erreur est survenue lors de la récupération des prochaines séances",
   "instructions": "Consigne",
-  "draft": "Publier plus tard",
+  "draft": "Publier le ",
   "duration": "Durée estimée",
   "homeworkTitle": "Titre du travail*",
   "homeworkType": "Type de travail",
