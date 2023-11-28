@@ -35,40 +35,55 @@
         />
         <ContentPicker @add="addContent" />
       </section>
-
-      <!-- TODO: right panel (+ mobile gesture) -->
-      <!--      <section class="right">-->
-      <!--        <WeprodeButton-->
-      <!--          v-t="'preview'"-->
-      <!--          @click="preview"-->
-      <!--        />-->
-      <!--        <WeprodeButton v-t="'previousSession'" />-->
-      <!--      </section>-->
     </template>
 
     <template #footer>
-      <WeprodeButton
-        v-t="'draft'"
-        class="draft-button"
-        @click="onConfirm(true)"
-      />
-      <WeprodeButton
-        v-t="'post'"
-        @click="onConfirm(false)"
-      />
+      <div :class="mq.phone || mq.tablet ? 'footer-phone' : 'footer-desktop'">
+        <div
+          v-if="isScheduled"
+          class="update-scheduled-date"
+        >
+          <span v-t="'scheduledOn'" />
+          <CustomDatePicker
+            v-model:selected-date="publicationDate"
+            :min-date="minDate"
+            :max-date="maxDate"
+            :with-hours="true"
+            :is-required="true"
+            :minute-increment="15"
+          />
+        </div>
+
+        <WeprodeDropdownButton
+          :options="publicationOptions"
+          :initial-option="initialPublicationOption"
+          @click="handlePublishOption"
+        />
+      </div>
     </template>
   </WeprodeWindow>
+
+  <teleport
+    v-if="displayPublicationDateModal"
+    to="body"
+  >
+    <ChoosePublicationDateModal
+      :initial-date="publicationDate"
+      @choose-date="schedulePublication"
+      @close="displayPublicationDateModal = false"
+    />
+  </teleport>
 </template>
 
 <script>
+import WeprodeDropdownButton from '@components/Base/Weprode/WeprodeDropdownButton.vue'
 import WeprodeUtils from '@utils/weprode.utils'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import dayjs from 'dayjs'
 import { defineAsyncComponent, nextTick } from 'vue'
 
-import { addSessionContent, getSessionPreview, updateSessionContent } from '@/api/course.service'
-import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import { addSessionContent, updateSessionContent } from '@/api/course.service'
 import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
 import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
 import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
@@ -76,13 +91,17 @@ import ContentPicker from '@/components/Course/ContentPicker.vue'
 import contentTypeConstants from '@/constants/contentTypeConstants'
 
 const CourseContentItem = defineAsyncComponent(() => import('@components/Course/CourseContentItem'))
+const CustomDatePicker = defineAsyncComponent(() => import('@components/Base/CustomDatePicker.vue'))
+const ChoosePublicationDateModal = defineAsyncComponent(() => import('@components/Course/ChoosePublicationDateModal.vue'))
 
 export default {
   name: 'CourseEditModal',
   components: {
+    ChoosePublicationDateModal,
+    WeprodeDropdownButton,
+    CustomDatePicker,
     CourseContentItem,
     ContentPicker,
-    WeprodeButton,
     WeprodeErrorMessage,
     WeprodeInput,
     WeprodeWindow
@@ -108,11 +127,31 @@ export default {
   data () {
     return {
       isCreation: true,
+      initialPublicationOption: undefined,
       sessionContent: { blocks: [], title: '' },
-      initialForm: undefined
+      initialForm: undefined,
+      publicationDate: dayjs(),
+      displayPublicationDateModal: false,
+      publicationOptions: [
+        {
+          name: 'publish',
+          title: this.$t('publish')
+        },
+        {
+          name: 'setPublishDate',
+          title: this.$t('setPublishDate')
+        },
+        {
+          name: 'publishLater',
+          title: this.$t('publishLater')
+        }
+      ]
     }
   },
   computed: {
+    isScheduled () {
+      return this.publicationDate.isAfter(dayjs()) && !this.editedSession.isDraft
+    },
     formattedTitle () {
       const sessionStartDate = dayjs(this.editedSession.startDate, 'YYYY/MM/DD HH:mm')
       return this.$t('title', {
@@ -128,20 +167,42 @@ export default {
       } else {
         return ''
       }
+    },
+    configuration () {
+      return this.$store.state.calendar.configuration
+    },
+    minDate () {
+      return dayjs().startOf('day').toDate()
+    },
+    maxDate () {
+      return this.configuration ? dayjs(this.configuration.schoolYearEndDate, 'YYYY-MM-DD').toDate() : undefined
     }
   },
   created () {
     this.$store.dispatch('misc/incrementModalCount')
 
     if (this.editedSession.sessionContent) {
+      this.isCreation = false
       this.sessionContent.title = this.editedSession.sessionContent.title ? this.editedSession.sessionContent.title : ''
       this.sessionContent.blocks = (this.editedSession.sessionContent.blocks && this.editedSession.sessionContent.blocks.length > 0) ? WeprodeUtils.deepCopy(this.editedSession.sessionContent.blocks) : []
 
-      this.isCreation = false
+      this.publicationDate = dayjs(this.editedSession.sessionContent.publicationDate, 'YYYY-MM-DD HH:mm')
+
+      if (this.editedSession.isDraft) {
+        this.initialPublicationOption = this.publicationOptions[2]
+      } else if (this.publicationDate.isAfter(dayjs())) {
+        this.initialPublicationOption = this.publicationOptions[1]
+        if (!this.configuration) {
+          this.$store.dispatch('calendar/getConfiguration')
+        }
+      } else {
+        this.initialPublicationOption = this.publicationOptions[0]
+      }
     } else { // isCreation = true
       this.sessionContent.blocks.push({
         contentType: 1, contentValue: '', contentName: '', placeholder: this.$t('description')
       })
+      this.initialPublicationOption = this.publicationOptions[0]
     }
     this.initialForm = JSON.stringify(this.sessionContent)
   },
@@ -161,32 +222,43 @@ export default {
     deleteContent (index) {
       this.sessionContent.blocks.splice(index, 1)
     },
-    preview () {
-      getSessionPreview(this.editedSession.sessionId).then((data) => {
-        if (data.success) {
-          // TODO update selectedDetails ?
-        }
-      },
-      (err) => {
-        // TODO toastr
-        console.error(err)
-      })
-    },
-    onConfirm (isDraft = false) {
+    handlePublishOption (optionClicked) {
       if (this.v$.$invalid) {
         this.v$.$touch()
       } else {
-        this.save(isDraft)
+        switch (optionClicked.name) {
+          case 'publish':
+            this.publicationDate = dayjs()
+            this.save()
+            break
+          case 'setPublishDate':
+            if (this.isScheduled) {
+              this.save()
+            } else {
+              this.displayPublicationDateModal = true
+            }
+            break
+          case 'publishLater':
+            this.publicationDate = dayjs()
+            this.save(true)
+            break
+          default:
+            console.error('unknown option', optionClicked)
+        }
       }
     },
-    save (isDraft = false) {
-      const publicationDate = dayjs().format('YYYY-MM-DD HH:mm')
-
-      // Remove empty text blocks
+    schedulePublication (date) {
+      this.publicationDate = date
+      this.save()
+    },
+    removeEmptyTextBlocs () {
       this.sessionContent.blocks = this.sessionContent.blocks.filter(block => block.contentType !== contentTypeConstants.TYPE_TEXT_CONTENT || block.contentValue !== '')
+    },
+    save (isDraft = false) {
+      this.removeEmptyTextBlocs()
 
       if (this.isCreation) {
-        addSessionContent(this.editedSession.groupId, this.editedSession.sessionId, this.sessionContent.title, JSON.stringify(this.sessionContent.blocks), publicationDate, isDraft).then((data) => {
+        addSessionContent(this.editedSession.groupId, this.editedSession.sessionId, this.sessionContent.title, JSON.stringify(this.sessionContent.blocks), this.publicationDate, isDraft).then((data) => {
           if (data.success) {
             this.$store.dispatch('course/updateSessionContent')
             this.onClose()
@@ -194,13 +266,12 @@ export default {
             console.error('Cannot create session content')
             this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
           }
-        },
-        (err) => {
+        }, (err) => {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
           console.error(err)
         })
       } else {
-        updateSessionContent(this.editedSession.sessionId, this.sessionContent.title, JSON.stringify(this.sessionContent.blocks), publicationDate, isDraft).then((data) => {
+        updateSessionContent(this.editedSession.sessionId, this.sessionContent.title, JSON.stringify(this.sessionContent.blocks), this.publicationDate, isDraft).then((data) => {
           if (data.success) {
             if (this.isInList) {
               this.$emit('update-session')
@@ -212,8 +283,7 @@ export default {
             console.error('Cannot update session content')
             this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
           }
-        },
-        (err) => {
+        }, (err) => {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
           console.error(err)
         })
@@ -270,18 +340,28 @@ export default {
   background: $neutral-20;
 }
 
-.draft-button {
-  margin-right: 1.5rem;
+.footer-phone {
+  .update-scheduled-date {
+    margin-bottom: 1rem;
+  }
+}
+
+.footer-desktop, .update-scheduled-date {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
 }
 </style>
 
 <i18n locale="fr">
 {
-  "draft": "Publier plus tard",
   "title": "Support du cours {courseName} - Séance du {day} à {hour}",
   "courseTitle": "Titre du support*",
-  "post": "Publier",
-  "preview": "Aperçu",
+  "publish": "Publier",
+  "setPublishDate": "Programmer",
+  "publishLater": "Enregistrer en brouillon",
+  "scheduledOn": "Programmé le",
   "error": "Oups, une erreur est survenue...",
   "previousSession": "Voir la séance précédente",
   "description": "Description",

@@ -145,7 +145,7 @@ export default {
       } else if (publicationDate.isAfter(dayjs())) {
         return this.$t('scheduled')
       } else {
-        return this.$t('publishedOn') + dayjs(this.homework.publicationDate).format('DD/MM/YYYY')
+        return this.$t('publishedOn') + publicationDate.format('DD/MM/YYYY')
       }
     },
     formattedEstimatedTime () {

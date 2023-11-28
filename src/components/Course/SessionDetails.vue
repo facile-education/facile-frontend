@@ -43,7 +43,11 @@
             v-else-if="canEdit && hasContent"
             class="right"
           >
-            <span class="status">{{ formattedStatus }}</span>
+            <span
+              class="status"
+              :class="{'italic': status !== 'published'}"
+              :title="status === 'scheduled' ? formattedFuturePublicationDate : ''"
+            >{{ formattedStatus }}</span>
             <button
               class="edit-button"
               :aria-label="$t('options')"
@@ -214,12 +218,28 @@ export default {
     canEdit () {
       return this.$store.state.user.isTeacher
     },
+    status () {
+      const publicationDate = dayjs(this.session.sessionContent.publicationDate, 'YYYY-MM-DD HH:mm')
+      if (this.session.sessionContent.isDraft) {
+        return 'draft'
+      } else if (publicationDate.isAfter(dayjs())) {
+        return 'scheduled'
+      } else {
+        return 'published'
+      }
+    },
     formattedStatus () {
+      const publicationDate = dayjs(this.session.sessionContent.publicationDate, 'YYYY-MM-DD HH:mm')
       if (this.session.sessionContent.isDraft) {
         return this.$t('draftStatus')
+      } else if (publicationDate.isAfter(dayjs())) {
+        return this.$t('scheduled')
       } else {
-        return this.$t('publishedOn') + dayjs(this.session.sessionContent.publicationDate).format('DD/MM/YYYY')
+        return this.$t('publishedOn') + publicationDate.format('DD/MM/YYYY')
       }
+    },
+    formattedFuturePublicationDate () {
+      return dayjs(this.session.sessionContent.publicationDate, 'YYYY-MM-DD HH:mm').format('[' + this.$t('scheduledOn') + '] YYYY-MM-DD [' + this.$t('at') + '] HH:mm')
     },
     courseTitle () {
       return (this.session.sessionContent && this.session.sessionContent.title) ? this.session.sessionContent.title : this.$t('courseContent')
@@ -451,7 +471,11 @@ header {
 
   .status {
     margin: 0 1rem;
-    @extend %font-regular-xs
+    @extend %font-regular-xs;
+
+    &.italic {
+      font-style: italic;
+    }
   }
 }
 .homeworks {
@@ -492,7 +516,7 @@ header {
   "add": "Ajouter",
   "options": "Options",
   "delete": "Supprimer",
-  "draftStatus": "Non publié",
+  "draftStatus": "Brouillon",
   "edit": "Modifier",
   "error": "Oups, une erreur est survenue...",
   "selectSessionPlaceholder": "Veuillez sélectionner une séance pour accéder à son contenu",
@@ -503,6 +527,8 @@ header {
   "notesPlaceholder": "Ma note privée",
   "publishedOn": "Publié le ",
   "workToDo": "Travaux à faire",
+  "scheduled": "Programmé",
+  "scheduledOn": "Programmé le",
   "courseContentPlaceholder": "Aucun support de cours enregistré"
 }
 </i18n>
