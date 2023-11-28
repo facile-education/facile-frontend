@@ -167,9 +167,7 @@
 </template>
 
 <script>
-import CustomDatePicker from '@components/Base/CustomDatePicker.vue'
 import WeprodeDropdownButton from '@components/Base/Weprode/WeprodeDropdownButton.vue'
-import ChoosePublicationDateModal from '@components/Course/ChoosePublicationDateModal.vue'
 import WeprodeUtils from '@utils/weprode.utils'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
@@ -189,6 +187,8 @@ import contentTypeConstants from '@/constants/contentTypeConstants'
 
 const StudentListModal = defineAsyncComponent(() => import('@components/Course/StudentListModal.vue'))
 const WorkLoadModal = defineAsyncComponent(() => import('@components/Course/WorkLoad/WorkLoadModal.vue'))
+const CustomDatePicker = defineAsyncComponent(() => import('@components/Base/CustomDatePicker.vue'))
+const ChoosePublicationDateModal = defineAsyncComponent(() => import('@components/Course/ChoosePublicationDateModal.vue'))
 const CourseContentItem = defineAsyncComponent(() => import('@components/Course/CourseContentItem'))
 
 export default {
@@ -321,6 +321,7 @@ export default {
       this.initPublicationOption()
     } else {
       this.publicationDate = dayjs()
+      this.initialPublicationOption = this.publicationOptions[0]
     }
 
     this.getSessionStudents()
@@ -648,12 +649,6 @@ label {
   align-items: center;
   justify-content: flex-end;
   gap: 1rem;
-}
-.draft {
-  display: flex;
-}
-.draft-button {
-  margin-right: 1.5rem;
 }
 
 .next-sessions-dropdown {
