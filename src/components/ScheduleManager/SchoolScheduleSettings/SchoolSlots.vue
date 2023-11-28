@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import SchoolSlotItem from '@components/ScheduleManager/SchoolScheduleSettings/SchoolSlotItem.vue'
 import { useVuelidate } from '@vuelidate/core'
 import dayjs from 'dayjs'
@@ -52,7 +53,7 @@ import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 
 export default {
   name: 'SchoolSlots',
-  components: { SchoolSlotItem, WeprodeErrorMessage, WeprodeSpinner },
+  components: { WeprodeButton, SchoolSlotItem, WeprodeErrorMessage, WeprodeSpinner },
   props: {
     selectedSchool: {
       type: Object,
