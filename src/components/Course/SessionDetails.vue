@@ -528,7 +528,7 @@ header {
   "publishedOn": "Publié le ",
   "workToDo": "Travaux à faire",
   "scheduled": "Programmé",
-  "scheduledOn": "Programmé le",
+  "scheduledOn": "Publication prévue le",
   "courseContentPlaceholder": "Aucun support de cours enregistré"
 }
 </i18n>

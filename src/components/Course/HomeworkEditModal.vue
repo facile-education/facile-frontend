@@ -316,6 +316,7 @@ export default {
   created () {
     if (!this.isCreation) {
       this.homework = WeprodeUtils.deepCopy(this.editedHomework)
+      this.publicationOptions[1].title = this.$t('schedule')
       this.initHomeworkType()
       this.initEstimatedTimeDropdown()
       this.initPublicationOption()
@@ -673,7 +674,8 @@ label {
   "homeworkType": "Type de travail",
   "futureDate": "À faire pour le ",
   "publish": "Publier",
-  "setPublishDate": "Programmer",
+  "schedule": "Programmer",
+  "setPublishDate": "Programmer la publication",
   "publishLater": "Enregistrer en brouillon",
   "preview": "Aperçu",
   "required": "Champ requis",

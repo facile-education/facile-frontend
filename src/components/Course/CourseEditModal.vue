@@ -198,6 +198,7 @@ export default {
       } else {
         this.initialPublicationOption = this.publicationOptions[0]
       }
+      this.publicationOptions[1].title = this.$t('schedule')
     } else { // isCreation = true
       this.sessionContent.blocks.push({
         contentType: 1, contentValue: '', contentName: '', placeholder: this.$t('description')
@@ -359,7 +360,8 @@ export default {
   "title": "Support du cours {courseName} - Séance du {day} à {hour}",
   "courseTitle": "Titre du support*",
   "publish": "Publier",
-  "setPublishDate": "Programmer",
+  "schedule": "Programmer",
+  "setPublishDate": "Programmer la publication",
   "publishLater": "Enregistrer en brouillon",
   "scheduledOn": "Programmé le",
   "error": "Oups, une erreur est survenue...",
