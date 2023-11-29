@@ -12,9 +12,8 @@ import { mergeContextMenus, removeMenuOptionIfExist } from '@/utils/commons.util
 function computeDocumentsOptions (documentList) {
   const listCM = []
   // for each selected file, get context menu associated and add him to list
-  for (let i = 0; i < documentList.length; ++i) {
+  for (const document of documentList) {
     let documentContextMenu
-    const document = documentList[i]
 
     if (document.type === 'Group' || document.isGroupRootFolder) {
       documentContextMenu = [...groupOptions]
@@ -127,12 +126,10 @@ function selectBetween (listSortedFiles, firstFile, secondFile) {
   if (idxLastSelectedFile === -1 || idxFile === -1) {
     console.error('error when trying to get files between ' + firstFile.name + ' and ' + secondFile.name)
     return []
+  } else if (idxLastSelectedFile < idxFile) {
+    return listSortedFiles.slice(idxLastSelectedFile, idxFile + 1)
   } else {
-    if (idxLastSelectedFile < idxFile) {
-      return listSortedFiles.slice(idxLastSelectedFile, idxFile + 1)
-    } else {
-      return listSortedFiles.slice(idxFile, idxLastSelectedFile + 1)
-    }
+    return listSortedFiles.slice(idxFile, idxLastSelectedFile + 1)
   }
 }
 
@@ -283,35 +280,6 @@ function deleteEntities (selectedEntities) {
     console.error(err)
     store.dispatch('currentActions/removeAction', { name: 'deleteDefinitely' })
   })
-}
-
-// async function importMessagingAttachFiles (documentList) {
-//   const createdFiles = []
-//   for (const doc of documentList) {
-//     await fileService.uploadFile(0, doc).then((data) => {
-//       if (data.success) {
-//         for (const createdFile of data.createdFiles) {
-//           createdFile.text = createdFile.name
-//           createdFile.value = createdFile.id
-//           createdFiles.push(createdFile)
-//         }
-//       }
-//     })
-//   }
-//   return createdFiles
-// }
-
-export default {
-  computeDocumentsOptions,
-  selectBetween,
-  ctrlSelectPreviousEntity,
-  ctrlSelectNextEntity,
-  selectPreviousEntity,
-  selectNextEntity,
-  importDocuments,
-  downloadDocument,
-  deleteEntities
-  // importMessagingAttachFiles
 }
 
 export {
