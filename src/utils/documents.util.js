@@ -1,4 +1,5 @@
 import store from '@store/index.js'
+import { formatSize } from '@utils/commons.util'
 
 import fileService from '@/api/documents/file.service'
 import folderService from '@/api/documents/folder.service'
@@ -180,8 +181,9 @@ async function importDocuments (folderId, documentList, mode) {
 function handleError (data, doc, folderId, documentList, index) {
   store.dispatch('currentActions/setUploadFileError', doc)
   if (data.error === 'fileSizeException') {
+    const formattedMaxUploadSize = formatSize(store.state.documents.documentsProperties.maxUploadSize)
     store.dispatch('popups/pushPopup', {
-      message: i18n.global.t('Documents.fileSizeException'),
+      message: i18n.global.t('Documents.fileSizeException') + formattedMaxUploadSize,
       type: 'error'
     })
   } else if (data.error === 'DuplicateFileException') {
@@ -230,12 +232,20 @@ async function downloadDocument (entity) {
           a.href = url + '&p_auth=' + this.$store.state.user.pauth
           a.click()
           resolve()
+        } else if (data.error === 'fileSizeException') {
+          const formattedMaxUploadSize = formatSize(store.state.documents.documentsProperties.maxUploadSize)
+          store.dispatch('popups/pushPopup', {
+            message: i18n.global.t('Documents.fileSizeException') + formattedMaxUploadSize,
+            type: 'error'
+          })
         } else {
           console.error('Error in getting url for folder archive download')
+          store.dispatch('popups/pushPopup', { message: i18n.global.t('Popup.error'), type: 'error' })
         }
       }, (err) => {
         console.error(err)
         store.dispatch('currentActions/removeAction', { name: 'download' })
+        store.dispatch('popups/pushPopup', { message: i18n.global.t('Popup.error'), type: 'error' })
       })
     } else { // No type analysis because default is 'file'
       if (entity.isGroupFile) {
