@@ -183,29 +183,8 @@ export default {
         }
       }
 
-      // Remove Lool, Mindmap, Geogebra and Scratch if not broadcasted to user
-      if (options !== undefined && options.length >= 1 && options[0].subMenu !== undefined &&
-          (this.documentProperties === undefined || !this.documentProperties.hasLoolBroadcasted)) {
-        removeMenuOptionIfExist(options[0].subMenu, 'newODT')
-        removeMenuOptionIfExist(options[0].subMenu, 'newODS')
-        removeMenuOptionIfExist(options[0].subMenu, 'newODP')
-      }
-      if (options !== undefined && options.length >= 1 && options[0].subMenu !== undefined &&
-          (this.documentProperties === undefined || !this.documentProperties.hasMindmapBroadcasted)) {
-        removeMenuOptionIfExist(options[0].subMenu, 'newMindMap')
-      }
-      if (options !== undefined && options.length >= 1 && options[0].subMenu !== undefined &&
-          (this.documentProperties === undefined || !this.documentProperties.hasGeogebraBroadcasted)) {
-        removeMenuOptionIfExist(options[0].subMenu, 'newGeogebra')
-      }
-      if (options !== undefined && options.length >= 1 && options[0].subMenu !== undefined &&
-          (this.documentProperties === undefined || !this.documentProperties.hasScratchBroadcasted)) {
-        removeMenuOptionIfExist(options[0].subMenu, 'newScratch')
-      }
-      // Remove CopyUrl option if local documents
-      if (options !== undefined && options.length >= 1 && !this.currentFolder.isGroupDirectory) {
-        removeMenuOptionIfExist(options, 'copyUrl')
-      }
+      this.removeOptionsDependingOnContext(options)
+
       return options
     },
     isDocumentPanelDisplayed () {
@@ -257,6 +236,31 @@ export default {
     window.removeEventListener('keydown', this.keyMonitor)
   },
   methods: {
+    removeOptionsDependingOnContext (options) {
+      // Remove Lool, Mindmap, Geogebra and Scratch if not broadcasted to user
+      if (options !== undefined && options.length >= 1 && options[0].subMenu !== undefined &&
+        (this.documentProperties === undefined || !this.documentProperties.hasLoolBroadcasted)) {
+        removeMenuOptionIfExist(options[0].subMenu, 'newODT')
+        removeMenuOptionIfExist(options[0].subMenu, 'newODS')
+        removeMenuOptionIfExist(options[0].subMenu, 'newODP')
+      }
+      if (options !== undefined && options.length >= 1 && options[0].subMenu !== undefined &&
+        (this.documentProperties === undefined || !this.documentProperties.hasMindmapBroadcasted)) {
+        removeMenuOptionIfExist(options[0].subMenu, 'newMindMap')
+      }
+      if (options !== undefined && options.length >= 1 && options[0].subMenu !== undefined &&
+        (this.documentProperties === undefined || !this.documentProperties.hasGeogebraBroadcasted)) {
+        removeMenuOptionIfExist(options[0].subMenu, 'newGeogebra')
+      }
+      if (options !== undefined && options.length >= 1 && options[0].subMenu !== undefined &&
+        (this.documentProperties === undefined || !this.documentProperties.hasScratchBroadcasted)) {
+        removeMenuOptionIfExist(options[0].subMenu, 'newScratch')
+      }
+      // Remove CopyUrl option if local documents
+      if ((options !== undefined && options.length >= 1 && !this.currentFolder.isGroupDirectory) || !navigator.clipboard || !window.isSecureContext) {
+        removeMenuOptionIfExist(options, 'copyUrl')
+      }
+    },
     getWidth () {
       if (!this.isUnderTabletSize && (this.mq.tablet || this.mq.phone)) {
         this.isUnderTabletSize = true
@@ -386,7 +390,6 @@ export default {
         case 'managePermissions':
           this.isPermissionModalDisplayed = true
           break
-        // TODO HTML, ODS, ODP
         case 'newFolder':
           this.documentToRename = undefined
           this.modalSubmitAction = 'createFolder'
@@ -431,26 +434,8 @@ export default {
       this.$store.dispatch('contextMenu/closeMenus')
     },
     copyToClipboard (textToCopy) {
-      // navigator clipboard api needs a secure context (https)
-      if (navigator.clipboard && window.isSecureContext) {
-        // navigator clipboard api method'
+      if (navigator.clipboard && window.isSecureContext) { // navigator clipboard api needs a secure context (https)
         return navigator.clipboard.writeText(textToCopy)
-      } else {
-        // text area method
-        const textArea = document.createElement('textarea')
-        textArea.value = textToCopy
-        // make the textarea out of viewport
-        textArea.style.position = 'fixed'
-        textArea.style.left = '-999999px'
-        textArea.style.top = '-999999px'
-        document.body.appendChild(textArea)
-        textArea.focus()
-        textArea.select()
-        return new Promise((resolve, reject) => {
-          // here the magic happens
-          document.execCommand('copy')
-          textArea.remove()
-        })
       }
     },
     doSelectFolderAction (targetFolder) {
