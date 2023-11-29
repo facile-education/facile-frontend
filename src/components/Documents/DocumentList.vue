@@ -135,12 +135,12 @@ export default {
     keyMonitor: function (event) {
       if (!this.isModalOpen) {
         // ctrl-arrow for multi-selection
-        if (event.ctrlKey && event.key === 'ArrowDown') {
+        if ((event.ctrlKey || event.cmdKey) && event.key === 'ArrowDown') {
           ctrlSelectNextEntity(this.allSortedDocuments, this.$store.state.documents.lastSelectedEntity)
-        } else if (event.ctrlKey && event.key === 'ArrowUp') {
+        } else if ((event.ctrlKey || event.cmdKey) && event.key === 'ArrowUp') {
           ctrlSelectPreviousEntity(this.allSortedDocuments, this.$store.state.documents.lastSelectedEntity)
           // ctrl-A for 'All' selection
-        } else if (event.ctrlKey && ((event.key === 'a') || (event.key === 'A'))) {
+        } else if ((event.ctrlKey || event.cmdKey) && ((event.key === 'a') || (event.key === 'A'))) {
           event.preventDefault()
           this.$store.dispatch('documents/selectAll')
           // Simple arrows
