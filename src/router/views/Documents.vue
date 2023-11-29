@@ -169,16 +169,20 @@ export default {
       return computeDocumentsOptions(this.selectedDocuments)
     },
     currentOptions () {
-      const options = (this.selectedDocuments.length === 0 && this.currentFolder &&
-          this.currentFolder.isGroupRootFolder && this.currentFolder.permissions && this.currentFolder.permissions.PERMISSIONS)
-        ? groupOptions
-        : (this.selectedDocuments.length > 0)
-            ? this.selectedDocumentsOptions
-            : (this.currentFolder && this.currentFolder.type !== 'Group' && (this.currentFolder.permissions && this.currentFolder.permissions.ADD_OBJECT)
-                ? (this.mq.phone || this.mq.tablet
-                    ? mobileDocumentSpaceOptions
-                    : documentSpaceOptions)
-                : [])
+      let options = []
+
+      if (this.selectedDocuments.length === 0 && this.currentFolder?.isGroupRootFolder && this.currentFolder?.permissions?.PERMISSIONS) {
+        options = [...groupOptions]
+      } else if (this.selectedDocuments.length > 0) {
+        options = this.selectedDocumentsOptions
+      } else if (this.currentFolder?.type !== 'Group' && this.currentFolder?.permissions?.ADD_OBJECT) {
+        if (this.mq.phone || this.mq.tablet) {
+          options = [...mobileDocumentSpaceOptions]
+        } else {
+          options = [...documentSpaceOptions]
+        }
+      }
+
       // Remove Lool, Mindmap, Geogebra and Scratch if not broadcasted to user
       if (options !== undefined && options.length >= 1 && options[0].subMenu !== undefined &&
           (this.documentProperties === undefined || !this.documentProperties.hasLoolBroadcasted)) {
