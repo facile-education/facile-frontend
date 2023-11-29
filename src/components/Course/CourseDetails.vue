@@ -28,12 +28,6 @@
       </div>
     </header>
 
-    <!--    <button-->
-    <!--      v-if="isTeacher"-->
-    <!--      v-t="hideTeachersDrafts ? 'showDrafts' : 'hideDrafts'"-->
-    <!--      @click="toggleDrafts"-->
-    <!--    />-->
-
     <div
       class="sessions"
       :class="{'phone': mq.phone}"
@@ -75,6 +69,7 @@ import { defineAsyncComponent } from 'vue'
 
 import { getCourseContent } from '@/api/course.service'
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
+import { COURSES } from '@/constants/appConstants'
 const SessionDetails = defineAsyncComponent(() => import('@components/Course/SessionDetails.vue'))
 
 export default {
@@ -114,12 +109,10 @@ export default {
     this.getCourseSessions()
   },
   methods: {
-    toggleDrafts () {
-      this.hideTeachersDrafts = !this.hideTeachersDrafts
-      this.getCourseSessions()
-    },
     unselectCourse () {
-      this.$store.dispatch('course/setSelectedCourse', undefined)
+      this.$router.push({ name: COURSES }).then(() => {
+        this.$store.dispatch('course/setSelectedCourse', undefined)
+      })
     },
     getCourseSessions () {
       this.isLoading = true
