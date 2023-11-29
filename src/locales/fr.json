@@ -68,7 +68,7 @@
     "group": "Groupe",
     "errorNoFiles": "Le chargement n'est pas autorisé",
     "documentDeleted": "Elément(s) supprimé(s)",
-    "fileSizeException": "Le fichier à charger dépasse la taille limite autorisée",
+    "fileSizeException": "Le fichier dépasse la taille limite autorisée de ",
     "permissionException": "Vous ne disposez pas de la permission pour effectuer cette action",
     "extensionException": "Extension non supportée",
     "antivirusException": "Un virus a été détecté dans un des fichiers téléversés",
