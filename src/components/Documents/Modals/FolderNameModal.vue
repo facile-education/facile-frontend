@@ -183,7 +183,6 @@ export default {
       })
     },
     onClose () {
-      console.log('empty')
       this.folderName = ''
       this.$store.dispatch('misc/decreaseModalCount')
       this.$emit('close')
