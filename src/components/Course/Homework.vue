@@ -318,7 +318,7 @@ button {
   "toDoHomework": "À faire pour cette séance",
   "sessionHomework": "À faire pendant la séance",
   "scheduled": "Programmé",
-  "scheduledOn": "Programmé le",
+  "scheduledOn": "Publication prévue le",
   "givenHomework": "Pour le {targetDate}"
 }
 </i18n>
