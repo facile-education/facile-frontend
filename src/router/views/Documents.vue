@@ -463,16 +463,16 @@ export default {
           if (this.openFiles.length === 0 && this.currentOptions.map(option => option.name).indexOf('delete') !== -1) {
             this.handleOption({ name: 'delete' })
           }
-        } else if (event.ctrlKey && ((event.key === 'c') || (event.key === 'C'))) {
+        } else if ((event.ctrlKey || event.cmdKey) && ((event.key === 'c') || (event.key === 'C'))) {
           this.handleOption({ name: 'copy' })
           // ctrl-X to cut
-        } else if (event.ctrlKey && ((event.key === 'x') || (event.key === 'X'))) {
+        } else if ((event.ctrlKey || event.cmdKey) && ((event.key === 'x') || (event.key === 'X'))) {
           this.handleOption({ name: 'cut' })
           // ctrl-V to paste
-        } else if (event.ctrlKey && ((event.key === 'v') || (event.key === 'V'))) {
+        } else if ((event.ctrlKey || event.cmdKey) && ((event.key === 'v') || (event.key === 'V'))) {
           this.handleOption({ name: 'paste' })
           // ctrl-D to duplicate
-        } else if (event.ctrlKey && ((event.key === 'd') || (event.key === 'D'))) {
+        } else if ((event.ctrlKey || event.cmdKey) && ((event.key === 'd') || (event.key === 'D'))) {
           this.handleOption({ name: 'duplicate' })
         }
       }
