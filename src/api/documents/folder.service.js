@@ -4,7 +4,6 @@ import axios from 'axios'
 import constants from '@/api/constants'
 
 export default {
-  downloadFolder,
   createFolder,
   renameFolder,
   getAllEntities,
@@ -13,17 +12,6 @@ export default {
 }
 
 const FOLDER_PATH = '/document.folderutils'
-
-/**
- * Create a zip containing the folderContent and download it
- */
-function downloadFolder (folderId) {
-  return axios.get(constants.JSON_WS_URL + FOLDER_PATH + '/download-folder', {
-    params: {
-      folderId
-    }
-  }).then(response => response.data)
-}
 
 /**
  * Create a folder

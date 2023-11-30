@@ -67,7 +67,6 @@ function computeDocumentsOptions (documentList) {
     removeMenuOptionIfExist(contextMenu, 'managePermissions')
     removeMenuOptionIfExist(contextMenu, 'paste')
     removeMenuOptionIfExist(contextMenu, 'open')
-    removeMenuOptionIfExist(contextMenu, 'download')
     removeMenuOptionIfExist(contextMenu, 'rename')
     removeMenuOptionIfExist(contextMenu, 'comment')
     removeMenuOptionIfExist(contextMenu, 'share')
@@ -221,35 +220,7 @@ function handleError (data, doc, folderId, documentList, index) {
 
 async function downloadDocument (entity) {
   return new Promise((resolve) => {
-    if (entity.type === 'Folder') {
-      store.dispatch('currentActions/addAction', { name: 'download' })
-      folderService.downloadFolder(entity.id).then((data) => {
-        store.dispatch('currentActions/removeAction', { name: 'download' })
-        if (data.success) {
-          const url = data.zipUrl
-
-          const a = document.createElement('a')
-          a.style.display = 'none'
-          a.download = entity.name // don't works on Internet Explorer and IOS' safari
-          a.href = url + '&p_auth=' + this.$store.state.user.pauth
-          a.click()
-          resolve()
-        } else if (data.error === 'fileSizeException') {
-          const formattedMaxUploadSize = formatSize(store.state.documents.documentsProperties.maxUploadSize)
-          store.dispatch('popups/pushPopup', {
-            message: i18n.global.t('Documents.fileSizeException') + formattedMaxUploadSize,
-            type: 'error'
-          })
-        } else {
-          console.error('Error in getting url for folder archive download')
-          store.dispatch('popups/pushPopup', { message: i18n.global.t('Popup.error'), type: 'error' })
-        }
-      }, (err) => {
-        console.error(err)
-        store.dispatch('currentActions/removeAction', { name: 'download' })
-        store.dispatch('popups/pushPopup', { message: i18n.global.t('Popup.error'), type: 'error' })
-      })
-    } else { // No type analysis because default is 'file'
+    if (entity.type === 'File') {
       if (entity.isGroupFile) {
         groupService.recordDownloadActivity(entity.id, 0)
       }

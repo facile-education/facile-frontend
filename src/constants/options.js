@@ -261,13 +261,6 @@ const folderOptions = documentSpaceOptions.concat([
     hasSeparator: true
   },
   {
-    name: 'download',
-    title: i18n.global.t('Documents.options.download'),
-    icon: icons.options.download,
-    position: 3,
-    hasSeparator: true
-  },
-  {
     name: 'delete',
     title: i18n.global.t('Documents.options.delete'),
     icon: icons.options.delete,
@@ -303,13 +296,6 @@ const currentFolderOptions = [
     title: i18n.global.t('Documents.options.rename'),
     icon: icons.options.rename,
     position: 0,
-    hasSeparator: true
-  },
-  {
-    name: 'download',
-    title: i18n.global.t('Documents.options.download'),
-    icon: icons.options.download,
-    position: 3,
     hasSeparator: true
   }
 ]
