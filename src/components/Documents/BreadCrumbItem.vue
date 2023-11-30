@@ -205,9 +205,6 @@ export default {
         case 'rename':
           this.isFolderNameModalDisplayed = true
           break
-        case 'download':
-          downloadDocument(this.folder)
-          break
         case 'documents':
           this.$emit('changeSpace', '/documents')
           break

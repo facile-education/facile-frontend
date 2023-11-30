@@ -209,7 +209,7 @@
       }
     ]
   },
-  "folderOptions": ["Renommer", "Dupliquer", "Déplacer", "Télécharger", "Supprimer", "Détails"],
+  "folderOptions": ["Renommer", "Dupliquer", "Déplacer", "Supprimer", "Détails"],
   "fileOptions": ["Ouvrir", "Renommer", "Déplacer", "Dupliquer", "Télécharger", "Supprimer", "Détails"],
   "multiSelectionOptions": ["Déplacer", "Dupliquer", "Supprimer"]
 }
