@@ -155,13 +155,9 @@ export default {
 
       this.$store.dispatch('notUsualSlots/setDisplayedDates', {
         startDate: dayjs(week.firstDayOfWeek, 'YYYY-MM-DD'),
-        endDate: dayjs(week.lastDayOfWeek, 'YYYY-MM-DD')
+        endDate: dayjs(week.firstDayOfWeek, 'YYYY-MM-DD').endOf('week')
       })
     }
   }
 }
 </script>
-
-<style lang="scss" scoped>
-
-</style>
