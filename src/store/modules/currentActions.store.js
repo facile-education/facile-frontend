@@ -37,9 +37,9 @@ export const mutations = {
     state.currentUploadingFile = payload
   },
   setUploadFileError (state, payload) {
-    for (let i = 0; i < state.listFilesToUpload.length; ++i) {
-      if (state.listFilesToUpload[i].name === payload.name) {
-        state.listFilesToUpload[i].isError = true
+    for (const file of state.listFilesToUpload) {
+      if (file.name === payload.name) {
+        file.isError = true
         break
       }
     }
