@@ -55,7 +55,7 @@ export default {
 .work-list {
   display: flex;
   gap: 0.5rem;
-  min-height: 60vh;
+  min-height: 55vh;
 }
 
 .day-works {
