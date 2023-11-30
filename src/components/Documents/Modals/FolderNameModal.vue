@@ -109,12 +109,12 @@ export default {
           console.error('Unknown validation error')
           return ''
         }
+      } else if (this.backError === 'DuplicateFileException') {
+        return this.$t('duplicateFileException')
+      } else if (this.backError) {
+        return this.$t('backError')
       } else {
-        if (this.backError) {
-          return this.$t('backError')
-        } else {
-          return ''
-        }
+        return ''
       }
     }
   },
@@ -155,6 +155,8 @@ export default {
         if (data.success) {
           this.$store.dispatch('documents/refreshCurrentFolder')
           this.onClose()
+        } else if (data.error === 'DuplicateFileException') {
+          this.backError = 'DuplicateFileException'
         } else {
           this.backError = 'createFolderError'
           console.error('An error was occurred')
@@ -172,6 +174,8 @@ export default {
         if (data.success) {
           this.$store.dispatch('documents/refreshCurrentFolder')
           this.onClose()
+        } else if (data.error === 'DuplicateFileException') {
+          this.backError = 'DuplicateFileException'
         } else {
           this.backError = 'renameFolderError'
           console.error('An error was occurred')
@@ -210,6 +214,7 @@ export default {
   "backError": "Une erreur est survenue",
   "containsNoCotes": "Ne doit pas contenir de caractères spéciaux",
   "createHeader": "Nouveau dossier",
+  "duplicateFileException": "Un dossier du même nom existe déjà",
   "createSubmit": "Créer",
   "notBeginByDot": "Ne doit pas commencer par un '.'",
   "rename": "Renommer",
