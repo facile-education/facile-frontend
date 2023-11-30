@@ -117,9 +117,6 @@ export default {
       // return this.selectedFolder ? this.$t('chooseSelectedFolder') + this.selectedFolder.name : this.$t('chooseCurrentFolder')
     }
   },
-  created () {
-    this.$store.dispatch('misc/incrementModalCount')
-  },
   methods: {
     submit () {
       groupService.getGroupEntities(this.inputText).then((data) => {
@@ -145,7 +142,6 @@ export default {
       this.close()
     },
     close () {
-      this.$store.dispatch('misc/decreaseModalCount')
       this.$emit('close')
     }
   }

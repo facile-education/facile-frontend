@@ -107,7 +107,6 @@ export default {
     }
   },
   created () {
-    this.$store.dispatch('misc/incrementModalCount')
     this.isFullScreen = this.fullScreen ? this.fullScreen : this.mq.phone
   },
   mounted () {
@@ -122,7 +121,6 @@ export default {
   },
   methods: {
     close () {
-      this.$store.dispatch('misc/decreaseModalCount')
       this.$emit('close')
     },
     onResize () {
