@@ -179,7 +179,9 @@ async function importDocuments (folderId, documentList, mode) {
 }
 
 function handleError (data, doc, folderId, documentList, index) {
-  store.dispatch('currentActions/setUploadFileError', doc)
+  if (data.error !== 'DuplicateFileException') { // Toggle conflict modal, not really an error yet
+    store.dispatch('currentActions/setUploadFileError', doc)
+  }
   if (data.error === 'fileSizeException') {
     const formattedMaxUploadSize = formatSize(store.state.documents.documentsProperties.maxUploadSize)
     store.dispatch('popups/pushPopup', {
