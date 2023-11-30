@@ -13,7 +13,7 @@
       :max-width="viewportWidth"
       :max-heigth="viewportHeight"
       :min-width="300"
-      :min-heigth="300"
+      :min-height="300"
       :drag-selector="!isFullScreen ? '.header' : undefined"
       :top="!isFullScreen ? initTopValue : ''"
       :left="!isFullScreen ? initLeftValue : ''"
