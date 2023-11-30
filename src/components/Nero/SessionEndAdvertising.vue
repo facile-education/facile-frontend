@@ -59,9 +59,6 @@ export default {
         ('0' + seconds).slice(-2)
     }
   },
-  created () {
-    this.$store.dispatch('misc/incrementModalCount')
-  },
   methods: {
     extendSession () {
       fetch('/lfr/html/portal/extend_session.jsp').then(response => response.text()).then(response => {
@@ -79,7 +76,6 @@ export default {
       })
     },
     onClose () {
-      this.$store.dispatch('misc/decreaseModalCount')
       this.$emit('close')
     }
   }

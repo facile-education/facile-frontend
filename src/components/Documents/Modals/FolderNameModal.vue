@@ -124,7 +124,6 @@ export default {
     input.select()
   },
   created () {
-    this.$store.dispatch('misc/incrementModalCount')
     if (this.initFolder !== undefined) {
       this.folderName = this.initFolder.name
     } else {
@@ -188,7 +187,6 @@ export default {
     },
     onClose () {
       this.folderName = ''
-      this.$store.dispatch('misc/decreaseModalCount')
       this.$emit('close')
     }
   }
