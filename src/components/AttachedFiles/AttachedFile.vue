@@ -112,7 +112,7 @@
 <script>
 import FileIcon from '@components/Base/FileIcon.vue'
 import { formatSize } from '@utils/commons.util'
-import { downloadDocument } from '@utils/documents.util'
+import { downloadDocuments } from '@utils/documents.util'
 import { defineAsyncComponent } from 'vue'
 
 import { icons } from '@/constants/icons'
@@ -191,7 +191,7 @@ export default {
       this.$emit('removeAttachedFile', this.attachedFile)
     },
     downloadAttachedFile () {
-      downloadDocument(this.attachedFile)
+      downloadDocuments([this.attachedFile])
     },
     saveInFolder (targetFolder) {
       this.$store.dispatch('clipboard/duplicate', { targetFolder, entities: [this.attachedFile], successMessage: this.$t('addToFolderSuccess') })

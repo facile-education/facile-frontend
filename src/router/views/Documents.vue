@@ -99,7 +99,7 @@ import PermissionsModal from '@components/Documents/Modals/PermissionModal/Permi
 import CurrentOptions from '@components/Documents/Options'
 import FilePickerArea from '@components/FilePicker/FilePickerArea'
 import FilePickerModal from '@components/FilePicker/FilePickerModal'
-import { computeDocumentsOptions, deleteEntities, downloadDocument, importDocuments } from '@utils/documents.util'
+import { computeDocumentsOptions, deleteEntities, downloadDocuments, importDocuments } from '@utils/documents.util'
 import { alertNoFile, returnAddedFiles } from '@utils/upload.util'
 
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
@@ -358,7 +358,7 @@ export default {
           })
           break
         case 'download':
-          downloadDocument(this.selectedDocuments[0])
+          downloadDocuments(this.selectedDocuments)
           break
         case 'share':
           this.$store.dispatch('post/setIndicator', undefined)
