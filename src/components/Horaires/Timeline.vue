@@ -192,8 +192,8 @@ export default {
     this.endDate = date.add(this.nbWeeksAfterCurrent, 'week').endOf('week')
 
     const initialDisplayWeek = this.getWeekFromLocalWeekList(this.initialDate ? this.initialDate : dayjs())
-    if (initialDisplayWeek !== undefined) {
-      this.selectWeek(initialDisplayWeek)
+    if (initialDisplayWeek) {
+      this.selectedWeek = initialDisplayWeek
     }
   },
   methods: {
