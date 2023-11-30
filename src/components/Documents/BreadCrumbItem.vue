@@ -78,7 +78,7 @@
 import BaseIcon from '@components/Base/BaseIcon'
 import ContextMenu from '@components/ContextMenu/ContextMenu'
 import FolderNameModal from '@components/Documents/Modals/FolderNameModal'
-import { downloadDocument } from '@utils/documents.util'
+import { downloadDocuments } from '@utils/documents.util'
 
 import { currentFolderOptions, spaceSelectionOptions } from '@/constants/options'
 

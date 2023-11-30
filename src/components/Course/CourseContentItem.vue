@@ -104,7 +104,7 @@
 <script>
 import AttachedFile from '@components/AttachedFiles/AttachedFile.vue'
 import TextContent from '@components/Base/TextContent.vue'
-import { downloadDocument } from '@utils/documents.util'
+import { downloadDocuments } from '@utils/documents.util'
 import { defineAsyncComponent } from 'vue'
 
 import contentTypeConstants from '@/constants/contentTypeConstants'
@@ -264,7 +264,7 @@ export default {
     },
     downloadFile () {
       const fileToDownload = { ...this.content, type: 'File', name: this.content.contentName, url: this.content.downloadUrl }
-      downloadDocument(fileToDownload)
+      downloadDocuments([fileToDownload])
     },
     saveInFolder (targetFolder) {
       const fileToSave = { ...this.content, id: this.content.fileId }

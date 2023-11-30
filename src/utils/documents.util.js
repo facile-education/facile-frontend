@@ -218,8 +218,8 @@ function handleError (data, doc, folderId, documentList, index) {
   return false
 }
 
-async function downloadDocument (entity) {
-  return new Promise((resolve) => {
+async function downloadDocuments (entityList) {
+  entityList.forEach(entity => {
     if (entity.type === 'File') {
       if (entity.isGroupFile) {
         groupService.recordDownloadActivity(entity.id, 0)
@@ -229,9 +229,6 @@ async function downloadDocument (entity) {
       a.download = entity.name // don't works on Internet Explorer and IOS' safari
       a.href = entity.url + '&p_auth=' + this.$store.state.user.pauth
       a.click()
-
-      // activityService.recordDownloadActivity(entity.id, 0) // Not necessary because we don't use collaborative space yet
-      resolve()
     }
   })
 }
@@ -273,6 +270,6 @@ export {
   ctrlSelectPreviousEntity,
   ctrlSelectNextEntity,
   importDocuments,
-  downloadDocument,
+  downloadDocuments,
   deleteEntities
 }
