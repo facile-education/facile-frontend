@@ -25,10 +25,6 @@ export default {
     file: {
       type: Object,
       required: true
-    },
-    haveToSave: {
-      type: Boolean,
-      default: false
     }
   },
   emits: ['saved'],
@@ -41,19 +37,12 @@ export default {
       currentContent: {}
     }
   },
-  watch: {
-    haveToSave () {
-      if (this.haveToSave) {
-        this.saveContent()
-      }
-    }
-  },
   created () {
     this.getContent()
     this.autoSave()
   },
   update () { // Additional lock to avoid data loss in case of application closure (do not use in normal behavior because of the display data update (lastModifiedDate, etc...) // doesn't seems to works in many cases... (I try beforeUnmount and unmounted without more success)
-    if (!this.haveToSave && !this.file.readOnly) {
+    if (!this.file.readOnly) {
       this.saveContent(this.content)
     }
   },

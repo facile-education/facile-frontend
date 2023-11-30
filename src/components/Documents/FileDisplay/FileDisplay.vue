@@ -39,6 +39,7 @@
     />
     <WISIWIG
       v-else-if="typeOfView === 'WISIWIG' && loadedFile"
+      ref="file"
       class="wisiwyg"
       :file="loadedFile"
       :have-to-save="haveToSaveFile"
@@ -128,7 +129,7 @@ export default {
       if (this.wantsToCloseFile) {
         if (this.loadedFile) {
           if (this.typeOfView === 'WISIWIG' && !this.loadedFile.readOnly) { // Only WISIWIG can auto-save for the moment...
-            this.haveToSaveFile = true
+            this.$refs.file.saveContent()
           } else if (!this.loadedFile.readOnly && (this.typeOfView === 'MindMap' || this.typeOfView === 'Geogebra' || this.typeOfView === 'Scratch')) {
             this.$store.dispatch('warningModal/addWarning', {
               text: this.$t('quitWithoutSaving'),
