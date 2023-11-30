@@ -230,7 +230,7 @@ async function downloadDocument (entity) {
           const a = document.createElement('a')
           a.style.display = 'none'
           a.download = entity.name // don't works on Internet Explorer and IOS' safari
-          a.href = url
+          a.href = url + '&p_auth=' + this.$store.state.user.pauth
           a.click()
           resolve()
         } else {
@@ -247,7 +247,7 @@ async function downloadDocument (entity) {
       const a = document.createElement('a')
       a.style.display = 'none'
       a.download = entity.name // don't works on Internet Explorer and IOS' safari
-      a.href = entity.url
+      a.href = entity.url + '&p_auth=' + this.$store.state.user.pauth
       a.click()
 
       // activityService.recordDownloadActivity(entity.id, 0) // Not necessary because we don't use collaborative space yet
