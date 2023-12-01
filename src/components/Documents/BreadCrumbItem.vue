@@ -78,9 +78,10 @@
 
 import BaseIcon from '@components/Base/BaseIcon'
 import ContextMenu from '@components/ContextMenu/ContextMenu'
-import FolderNameModal from '@components/Documents/Modals/FolderNameModal'
+import { defineAsyncComponent } from 'vue'
 
 import { currentFolderOptions, spaceSelectionOptions } from '@/constants/options'
+const FolderNameModal = defineAsyncComponent(() => import('@components/Documents/Modals/FolderNameModal.vue'))
 
 export default {
   name: 'BreadCrumbItem',
