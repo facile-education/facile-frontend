@@ -93,23 +93,25 @@
 <script>
 import ContextMenu from '@components/ContextMenu/ContextMenu'
 import Breadcrumb from '@components/Documents/Breadcrumb'
-import DocumentDetails from '@components/Documents/DocumentDetails/DocumentDetails'
-import DocumentDetailsModal from '@components/Documents/DocumentDetails/DocumentDetailsModal'
 import DocumentList from '@components/Documents/DocumentList'
-import FileNameModal from '@components/Documents/Modals/FileNameModal'
-import FolderNameModal from '@components/Documents/Modals/FolderNameModal'
-import PermissionsModal from '@components/Documents/Modals/PermissionModal/PermissionsModal'
 import CurrentOptions from '@components/Documents/Options'
 import FilePickerArea from '@components/FilePicker/FilePickerArea'
-import FilePickerModal from '@components/FilePicker/FilePickerModal'
 import { computeDocumentsOptions, deleteEntities, downloadDocuments, importDocuments } from '@utils/documents.util'
 import { alertNoFile, returnAddedFiles } from '@utils/upload.util'
+import { defineAsyncComponent } from 'vue'
 
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import { DOCUMENTS } from '@/constants/appConstants'
 import { defaultFields, fieldsWithoutSize } from '@/constants/documentsConstants'
 import { documentSpaceOptions, groupOptions, mobileDocumentSpaceOptions } from '@/constants/options'
 import { removeMenuOptionIfExist } from '@/utils/commons.util'
+
+const FolderNameModal = defineAsyncComponent(() => import('@components/Documents/Modals/FolderNameModal.vue'))
+const FileNameModal = defineAsyncComponent(() => import('@components/Documents/Modals/FileNameModal.vue'))
+const PermissionsModal = defineAsyncComponent(() => import('@components/Documents/Modals/PermissionModal/PermissionsModal'))
+const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal'))
+const DocumentDetails = defineAsyncComponent(() => import('@components/Documents/DocumentDetails/DocumentDetails'))
+const DocumentDetailsModal = defineAsyncComponent(() => import('@components/Documents/DocumentDetails/DocumentDetailsModal'))
 
 export default {
   name: 'Documents',
