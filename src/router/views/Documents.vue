@@ -69,7 +69,10 @@
     <FolderNameModal
       v-if="isFolderNameModalDisplayed"
       :submit-action="modalSubmitAction"
-      :init-folder="documentToRename"
+      :current-folder="currentFolder"
+      :folder-to-rename="documentToRename"
+      @create-folder="refreshCurrentFolder"
+      @rename-folder="refreshCurrentFolder"
       @close="isFolderNameModalDisplayed = false"
     />
     <FileNameModal
@@ -236,6 +239,9 @@ export default {
     window.removeEventListener('keydown', this.keyMonitor)
   },
   methods: {
+    refreshCurrentFolder () {
+      this.$store.dispatch('documents/refreshCurrentFolder')
+    },
     removeOptionsDependingOnContext (options) {
       // Remove Lool, Mindmap, Geogebra and Scratch if not broadcasted to user
       if (options !== undefined && options.length >= 1 && options[0].subMenu !== undefined &&

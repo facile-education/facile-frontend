@@ -65,7 +65,11 @@ export default {
   components: { WeprodeButton, WeprodeErrorMessage, WeprodeInput, WeprodeSpinner, WeprodeWindow },
   inject: ['mq'],
   props: {
-    initFolder: {
+    currentFolder: {
+      type: Object,
+      default: undefined
+    },
+    folderToRename: {
       type: Object,
       default: undefined
     },
@@ -74,7 +78,7 @@ export default {
       required: true
     }
   },
-  emits: ['close'],
+  emits: ['close', 'createFolder', 'renameFolder'],
   setup: () => ({ v$: useVuelidate() }),
   data () {
     return {
@@ -124,8 +128,8 @@ export default {
     input.select()
   },
   created () {
-    if (this.initFolder !== undefined) {
-      this.folderName = this.initFolder.name
+    if (this.folderToRename !== undefined) {
+      this.folderName = this.folderToRename.name
     } else {
       this.folderName = ''
     }
@@ -149,10 +153,10 @@ export default {
     },
     createFolder () {
       this.isActionInProgress = true
-      folderServices.createFolder(this.currentFolderId, this.folderName).then((data) => {
+      folderServices.createFolder(this.currentFolder.id, this.folderName).then((data) => {
         this.isActionInProgress = false
         if (data.success) {
-          this.$store.dispatch('documents/refreshCurrentFolder')
+          this.$emit('createFolder')
           this.onClose()
         } else if (data.error === 'DuplicateFileException') {
           this.backError = 'DuplicateFileException'
@@ -168,10 +172,10 @@ export default {
     },
     renameFolder () {
       this.isActionInProgress = true
-      folderServices.renameFolder(this.initFolder.id, this.folderName).then((data) => {
+      folderServices.renameFolder(this.folderToRename.id, this.folderName).then((data) => {
         this.isActionInProgress = false
         if (data.success) {
-          this.$store.dispatch('documents/refreshCurrentFolder')
+          this.$emit('renameFolder')
           this.onClose()
         } else if (data.error === 'DuplicateFileException') {
           this.backError = 'DuplicateFileException'
