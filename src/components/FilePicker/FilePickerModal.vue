@@ -21,6 +21,7 @@
 
     <template #body>
       <FilePickerModalDocuments
+        ref="documentList"
         :folder-selection="folderSelection"
         :init-in-current-folder="initInCurrentFolder"
         :multi-selection="multiSelection"
@@ -35,13 +36,25 @@
     </template>
 
     <template #footer>
-      <WeprodeButton
+      <div
         v-if="folderSelection"
-        data-test="submitButton"
-        :label="submitLabel !== 'noSelectedFolder' ? submitLabel : $t('noSelectedFolder')"
-        :disabled="submitLabel === 'noSelectedFolder'"
-        @click="emitSelectedFolder"
-      />
+        class="footer"
+      >
+        <WeprodeButton
+          v-if="canCreateFolderInCurrentFolder"
+          class="create-folder-button"
+          :label="$t('createFolder')"
+          @click="createFolder"
+        />
+        <WeprodeButton
+          data-test="submitButton"
+          class="submit-button"
+          :label="submitLabel !== 'noSelectedFolder' ? submitLabel : $t('noSelectedFolder')"
+          :disabled="submitLabel === 'noSelectedFolder'"
+          @click="emitSelectedFolder"
+        />
+      </div>
+
       <WeprodeButton
         v-else
         data-test="submitButton"
@@ -50,18 +63,32 @@
       />
     </template>
   </WeprodeWindow>
+
+  <teleport
+    v-if="isFolderNameModalDisplayed"
+    to="body"
+  >
+    <FolderNameModal
+      submit-action="createFolder"
+      :current-folder="currentFolder"
+      @create-folder="refreshCurrentFolder"
+      @close="isFolderNameModalDisplayed = false"
+    />
+  </teleport>
 </template>
 
 <script>
 import FilePickerModalDocuments from '@components/FilePicker/FilePickerModalDocuments'
+import { defineAsyncComponent } from 'vue'
 
-import groupService from '@/api/documents/group.service'
 import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
 import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
+const FolderNameModal = defineAsyncComponent(() => import('@components/Documents/Modals/FolderNameModal.vue'))
+
 export default {
   name: 'FilePickerModal',
-  components: { FilePickerModalDocuments, WeprodeButton, WeprodeWindow },
+  components: { FolderNameModal, FilePickerModalDocuments, WeprodeButton, WeprodeWindow },
   inject: ['mq'],
   props: {
     folderSelection: {
@@ -99,30 +126,37 @@ export default {
       inputText: undefined,
       currentFolder: undefined,
       selectedFolder: undefined,
-      selectedFiles: undefined
+      selectedFiles: undefined,
+      isFolderNameModalDisplayed: false
     }
   },
   computed: {
     defaultHeader () {
-      return this.imagesOnly ? this.$t('headerImagePicker') : (this.folderSelection ? this.$t('headerFolder') : this.$t('headerFile'))
+      if (this.imagesOnly) {
+        return this.$t('headerImagePicker')
+      } else {
+        return this.folderSelection ? this.$t('headerFolder') : this.$t('headerFile')
+      }
+    },
+    canCreateFolderInCurrentFolder () {
+      return this.currentFolder?.permissions.ADD_OBJECT
     },
     submitLabel () {
-      if (this.selectedFolder && this.selectedFolder.permissions.ADD_OBJECT) {
+      if (this.selectedFolder?.permissions.ADD_OBJECT) {
         return this.$t('chooseSelectedFolder') + this.selectedFolder.name
-      } else if (this.currentFolder && this.currentFolder.permissions.ADD_OBJECT) {
+      } else if (this.currentFolder?.permissions.ADD_OBJECT) {
         return this.$t('chooseCurrentFolder')
       } else {
         return 'noSelectedFolder'
       }
-      // return this.selectedFolder ? this.$t('chooseSelectedFolder') + this.selectedFolder.name : this.$t('chooseCurrentFolder')
     }
   },
   methods: {
-    submit () {
-      groupService.getGroupEntities(this.inputText).then((data) => {
-        // TODO ?
-        // console.log(data)
-      })
+    refreshCurrentFolder () {
+      this.$refs.documentList.loadFolderContent(this.currentFolder)
+    },
+    createFolder () {
+      this.isFolderNameModalDisplayed = true
     },
     updateSelectedFolder (folder) {
       this.selectedFolder = folder
@@ -155,6 +189,24 @@ export default {
 </style>
 
 <style lang="scss" scoped>
+@import "@design";
+
+.footer  {
+  display: flex;
+}
+
+.create-folder-button {
+  background-color: $neutral-40;
+  color: black;
+
+  &:hover {
+    filter: brightness(105%) !important;
+  }
+}
+
+.submit-button {
+  margin-left: auto;
+}
 
 .mobile button {
     margin-left: auto;
@@ -166,6 +218,7 @@ export default {
 
 <i18n locale="fr">
 {
+  "createFolder": "Nouveau dossier",
   "documents": "Personnels",
   "errorNoFiles": "Le chargement n'est pas autorisé",
   "groups": "Collaboratifs",

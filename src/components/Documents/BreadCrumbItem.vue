@@ -67,7 +67,8 @@
     <FolderNameModal
       v-if="isFolderNameModalDisplayed"
       submit-action="rename"
-      :init-folder="folder"
+      :folder-to-rename="folder"
+      @rename-folder="refreshCurrentFolder"
       @close="isFolderNameModalDisplayed=false"
     />
   </teleport>
@@ -78,7 +79,6 @@
 import BaseIcon from '@components/Base/BaseIcon'
 import ContextMenu from '@components/ContextMenu/ContextMenu'
 import FolderNameModal from '@components/Documents/Modals/FolderNameModal'
-import { downloadDocuments } from '@utils/documents.util'
 
 import { currentFolderOptions, spaceSelectionOptions } from '@/constants/options'
 
@@ -145,6 +145,9 @@ export default {
     }
   },
   methods: {
+    refreshCurrentFolder () {
+      this.$store.dispatch('documents/refreshCurrentFolder')
+    },
     openContextMenu (event) {
       if (!this.isAContextMenuDisplayed) {
         this.isContextMenuDisplayed = true
