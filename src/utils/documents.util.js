@@ -226,7 +226,7 @@ async function downloadDocuments (entityList) {
       const a = document.createElement('a')
       a.style.display = 'none'
       a.download = entity.name // don't works on Internet Explorer and IOS' safari
-      a.href = entity.url + '&p_auth=' + this.$store.state.user.pauth
+      a.href = entity.url + '&p_auth=' + store.state.user.pauth
       a.click()
     }
   })
