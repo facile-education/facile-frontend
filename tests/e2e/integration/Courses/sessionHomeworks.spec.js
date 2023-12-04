@@ -1,6 +1,6 @@
 import { coursesURL } from '../../support/constants/urls'
 import { MULTI_PARENT, MULTI_STUDENT2, PARENT, STUDENT } from '../../support/constants/users'
-import { getHomework } from '../../support/utils/courses'
+import { getHomework, getHomeworkDetailsContents } from '../../support/utils/courses'
 import { selectChild } from '../../support/utils/dashboard'
 
 describe('navigationAndDisplay', () => {
@@ -47,7 +47,8 @@ describe('navigationAndDisplay', () => {
     cy.login(STUDENT, coursesURL)
     cy.get('.homework-tab').within(() => {
       cy.get('.homeworks-by-day-list').within(() => {
-        getHomework(existingHomework[0]).should('be.visible')
+        getHomeworkDetailsContents(existingHomework[0]).should('be.visible')
+        getHomework(existingHomework[1]).scrollIntoView()
         getHomework(existingHomework[1]).should('be.visible')
       })
     })
@@ -55,7 +56,8 @@ describe('navigationAndDisplay', () => {
     cy.login(PARENT, coursesURL)
     cy.get('.homework-tab').within(() => {
       cy.get('.homeworks-by-day-list').within(() => {
-        getHomework(existingHomework[0]).should('be.visible')
+        getHomeworkDetailsContents(existingHomework[0]).should('be.visible')
+        getHomework(existingHomework[1]).scrollIntoView()
         getHomework(existingHomework[1]).should('be.visible')
       })
     })
