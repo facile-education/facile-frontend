@@ -8,7 +8,17 @@
                 "Course": "HI0911"
             },
             {
-                "Course": "HI0933"
+                "Course": "HI0933",
+                "courseName": "HI0933 - Histoire",
+                "courseTeacher": "Rosana NOLLI",
+                "Sessions": [
+                    {
+                        "headText": "14 novembre - P4"
+                    },
+                    {
+                        "headText": "13 novembre - P5"
+                    }
+                ]
             },
             {
                 "Course": "HI0934"
@@ -274,6 +284,18 @@
             "teacher": "PARSONS",
             "dateBefore": "2023/11/27",
             "student": "Barbara"
+        }
+    ],
+    "existingSessionsContent": [
+        {
+            "title": "Support de cours 13/11",
+            "content": "Contenu du support de cours pour la séance du 13/11",
+            "attachedFile": "note.html",
+            "additionalText": "Texte supplémentaire pour le support de cours",
+            "audio": "Audio du support de cours",
+            "link": "Lien pour le support de cours",
+            "video": "Vidéo pour le support de cours",
+            "h5p": "H5P pour le support de cours"
         }
     ]
 }
