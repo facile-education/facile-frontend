@@ -18,12 +18,25 @@
     >
       <span>{{ $t('setNewsPermissions') }}</span>
     </PentilaButton>
+    <div>
+      <input
+        type="file"
+        name="file"
+        @change="fileChange($event.target.files)"
+      >
+      <PentilaButton
+        class="round"
+        @click="deleteFolders"
+      >
+        <span>{{ $t('delete-folders') }}</span>
+      </PentilaButton>
+    </div>
   </div>
 </template>
 
 <script>
 
-import { cleanupDropboxes, setNewsPermissions } from '@/api/maintenance.service'
+import { cleanupDropboxes, deleteFolders, setNewsPermissions } from '@/api/maintenance.service'
 
 export default {
   name: 'OneShotMaintenance',
@@ -60,6 +73,20 @@ export default {
     },
     runPAuth () {
       this.$store.commit('user/setPAuth', 123456)
+    },
+    fileChange (fileList) {
+      this.files = fileList
+    },
+    deleteFolders () {
+      deleteFolders(this.files[0]).then(
+        (data) => {
+          if (data.success) {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
+          } else {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+          }
+        }
+      )
     }
   }
 }
@@ -83,6 +110,7 @@ export default {
   "success": "Opération terminée en succès",
   "error": "Opération terminée en erreur",
   "pAuth": "pAuth bidon",
-  "setNewsPermissions": "Permissions des PJ de news"
+  "setNewsPermissions": "Permissions des PJ de news",
+  "delete-folders": "Supprimer les dossiers",
 }
 </i18n>
