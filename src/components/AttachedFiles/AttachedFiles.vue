@@ -10,7 +10,7 @@
 
   <div class="attached-files">
     <div
-      v-if="readOnly"
+      v-if="readOnly && withHeader"
       class="header"
     >
       {{ modelValue.length + (modelValue.length > 1 ? $t('attachedFiles') : $t('attachedFile')) }}
@@ -55,6 +55,10 @@ export default {
     readOnly: {
       type: Boolean,
       required: true
+    },
+    withHeader: {
+      type: Boolean,
+      default: true
     },
     maxHeight: {
       type: String,
