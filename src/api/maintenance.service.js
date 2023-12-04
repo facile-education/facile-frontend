@@ -12,7 +12,8 @@ export {
   deleteGroups,
   runAnonymisation,
   cleanupDropboxes,
-  setNewsPermissions
+  setNewsPermissions,
+  deleteFolders
 }
 
 export default {
@@ -25,7 +26,8 @@ export default {
   deleteGroups,
   runAnonymisation,
   cleanupDropboxes,
-  setNewsPermissions
+  setNewsPermissions,
+  deleteFolders
 }
 
 const MAINTENANCE_PATH = '/maintenance.maintenance'
@@ -81,4 +83,15 @@ function cleanupDropboxes () {
 
 function setNewsPermissions () {
   return axios.post(constants.JSON_WS_URL + MAINTENANCE_PATH + '/set-news-permissions').then(response => response.data)
+}
+
+function deleteFolders (file) {
+  const formData = new FormData()
+  formData.append('file', file, file.name)
+
+  return axios.post(
+    constants.JSON_WS_URL + MAINTENANCE_PATH + '/delete-folders',
+    formData,
+    { headers: { 'Content-Type': 'multipart/form-data' } }
+  ).then(response => response.data)
 }
