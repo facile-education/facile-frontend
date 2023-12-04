@@ -26,9 +26,9 @@
     </WeprodeButton>
     <WeprodeButton
       class="round"
-      @click="confirmAnonymisation"
+      @click="runAbsenceNotification"
     >
-      <span>{{ $t('runAnonymisation') }}</span>
+      <span>{{ $t('runAbsenceNotification') }}</span>
     </WeprodeButton>
   </div>
 </template>
@@ -37,7 +37,7 @@
 
 import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 
-import { runAnonymisation, startFsAnalysis, startFsAnalysisV2, startParentSynchro, startSynchro } from '@/api/maintenance.service'
+import { runAbsenceNotification, startFsAnalysis, startFsAnalysisV2, startParentSynchro, startSynchro } from '@/api/maintenance.service'
 
 export default {
   name: 'Administration',
@@ -95,14 +95,8 @@ export default {
         }
       )
     },
-    confirmAnonymisation () {
-      this.$store.dispatch('warningModal/addWarning', {
-        text: this.$t('warning'),
-        lastAction: { fct: this.runAnonymisation }
-      })
-    },
-    runAnonymisation () {
-      runAnonymisation().then(
+    runAbsenceNotification () {
+      runAbsenceNotification().then(
         (data) => {
           if (data.success) {
             this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
@@ -137,7 +131,6 @@ export default {
   "error": "Opération terminée en erreur",
   "startFsAnalysis": "Explorer le Fs",
   "startFsAnalysisV2": "Explorer les fichiers en DB",
-  "runAnonymisation": "Anonymisation",
-  "warning": "Sûr sûr de lancer l'anonymisation ?"
+  "runAbsenceNotification": "Notifications des absences HHC"
 }
 </i18n>
