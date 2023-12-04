@@ -26,9 +26,9 @@
     </WeprodeButton>
     <WeprodeButton
       class="round"
-      @click="runAbsenceNotification"
+      @click="runAbsenceNotifications"
     >
-      <span>{{ $t('runAbsenceNotification') }}</span>
+      <span>{{ $t('runAbsenceNotifications') }}</span>
     </WeprodeButton>
   </div>
 </template>
@@ -37,7 +37,7 @@
 
 import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 
-import { runAbsenceNotification, startFsAnalysis, startFsAnalysisV2, startParentSynchro, startSynchro } from '@/api/maintenance.service'
+import { runAbsenceNotifications, startFsAnalysis, startFsAnalysisV2, startParentSynchro, startSynchro } from '@/api/maintenance.service'
 
 export default {
   name: 'Administration',
@@ -95,8 +95,8 @@ export default {
         }
       )
     },
-    runAbsenceNotification () {
-      runAbsenceNotification().then(
+    runAbsenceNotifications () {
+      runAbsenceNotifications().then(
         (data) => {
           if (data.success) {
             this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
@@ -131,6 +131,6 @@ export default {
   "error": "Opération terminée en erreur",
   "startFsAnalysis": "Explorer le Fs",
   "startFsAnalysisV2": "Explorer les fichiers en DB",
-  "runAbsenceNotification": "Notifications des absences HHC"
+  "runAbsenceNotifications": "Notifications des absences HHC"
 }
 </i18n>

@@ -134,7 +134,7 @@ export default {
       const image = files[0]
       getResource(image.id, 0, true).then((data) => {
         if (data.success) {
-          this.loadImageAsBase64(data.fileUrl)
+          this.loadImageAsBase64(data.fileUrl + '&p_auth=' + this.$store.state.user.pauth)
         } else {
           console.error('cannot load file in cropper')
         }

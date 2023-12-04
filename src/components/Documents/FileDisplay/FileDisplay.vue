@@ -170,7 +170,7 @@ export default {
             groupService.recordViewActivity(this.file.id, versionId)
           }
           this.typeOfView = data.typeOfView
-          this.fileUrl = data.fileUrl
+          this.fileUrl = data.fileUrl + '&p_auth=' + this.$store.state.user.pauth
           this.loadedFile = { ...this.file }
           this.loadedFile.fileVersionId = data.fileVersionId
           this.loadedFile.readOnly = data.readOnly

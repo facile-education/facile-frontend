@@ -160,7 +160,7 @@ export default {
       if (defaultImagesKeys.indexOf(this.detailedNews.thumbnailUrl) !== -1) {
         return new URL(`../../../assets/images/${this.detailedNews.thumbnailUrl}.svg`, import.meta.url).href
       } else { // Returned url is a key for local default image
-        return this.detailedNews.thumbnailUrl
+        return this.detailedNews.thumbnailUrl + '&p_auth=' + this.$store.state.user.pauth
       }
     }
   },
