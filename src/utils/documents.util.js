@@ -2,7 +2,6 @@ import store from '@store/index.js'
 import { formatSize } from '@utils/commons.util'
 
 import fileService from '@/api/documents/file.service'
-import folderService from '@/api/documents/folder.service'
 import groupService from '@/api/documents/group.service'
 import trashService from '@/api/documents/trash.service'
 import { conflicts } from '@/constants/documentsConstants'
