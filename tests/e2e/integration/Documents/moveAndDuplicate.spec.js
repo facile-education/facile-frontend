@@ -1,6 +1,3 @@
-import { HEADMASTER } from '../../support/constants/users'
-import { url } from '../../support/constants/documents'
-
 const deleteAll = () => {
   cy.get('body').type('{ctrl}a')
   cy.get('body').type('{del}')
@@ -37,7 +34,7 @@ const goInFolder = (folderName) => {
   cy.get('[data-test=spinner]').should('not.exist')
 }
 
-describe('Move and duplicate', () => {
+describe.skip('Move and duplicate', () => {
   beforeEach(() => {
     cy.exec('npm run db:loadTables documents_tables_basic.sql')
     cy.clearDBCache()

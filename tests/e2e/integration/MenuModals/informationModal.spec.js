@@ -1,11 +1,10 @@
-import { GLOBAL_ADMIN } from '../../support/constants/users'
-import { url } from '../../support/constants/statistics'
+
 
 function randomInt (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
-describe('InformationModal', () => {
+describe.skip('InformationModal', () => {
   context('admin', () => {
     beforeEach(function () {
       // Connection

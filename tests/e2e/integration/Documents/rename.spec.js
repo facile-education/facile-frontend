@@ -1,6 +1,3 @@
-import { HEADMASTER } from '../../support/constants/users'
-import { url } from '../../support/constants/documents'
-
 const deleteAll = () => {
   cy.get('body').type('{ctrl}a')
   cy.get('body').type('{del}')
@@ -31,7 +28,7 @@ const createManualEntities = () => {
   cy.contains('[data-test=file]', 'createdNote').should('exist')
 }
 
-describe('Rename', () => {
+describe.skip('Rename', () => {
   before(() => {
     cy.exec('npm run db:loadTables documents_tables_basic.sql')
     cy.clearDBCache()

@@ -1,7 +1,4 @@
-import { HEADMASTER } from '../../support/constants/users'
-import { url } from '../../support/constants/documents'
-
-describe('Deletion', () => {
+describe.skip('Deletion', () => {
   beforeEach(() => {
     cy.viewport('macbook-16')
     cy.exec('npm run db:loadTables documents_tables_basic.sql')

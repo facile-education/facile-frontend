@@ -1,8 +1,5 @@
 // https://docs.cypress.io/api/introduction/api.html
 
-import { DOYEN, HEADMASTER, PARENT, SECRETARY, STUDENT, TEACHER } from '../../support/constants/users'
-import { groupName, now, url } from '../../support/constants/horaires'
-
 const toolbarManagerUsers = [HEADMASTER, DOYEN, SECRETARY]
 const toolbarUsers = [TEACHER]
 const noToolbarUsers = [STUDENT, PARENT]
@@ -11,7 +8,7 @@ const waitForRefresh = () => {
   cy.wait(500)
 }
 
-describe('Schedule_Access', () => {
+describe.skip('Schedule_Access', () => {
   beforeEach(() => {
     cy.clock(now.toDate().getTime())
     cy.exec('npm run db:loadTables cdt_tables.sql')

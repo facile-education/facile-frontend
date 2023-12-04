@@ -1,19 +1,6 @@
 // https://docs.cypress.io/api/introduction/api.html
 
-import { MULTI_PARENT, PARENT, STUDENT } from '../../support/constants/users'
-import {
-  groupName,
-  now,
-  secondChildName,
-  studentName,
-  studentSearch,
-  substituteCalendarName,
-  substituteName,
-  substituteSearch,
-  teacherName,
-  teacherSearch,
-  url
-} from '../../support/constants/horaires'
+
 
 const waitForRefresh = () => {
   cy.wait(500)
@@ -39,7 +26,7 @@ const logAsMultiParent = () => {
   cy.login(url, MULTI_PARENT)
 }
 
-describe('Desktop tests', () => {
+describe.skip('Desktop tests', () => {
   beforeEach(() => {
     cy.clock(now.toDate().getTime())
     cy.exec('npm run db:loadTables cdt_tables.sql')

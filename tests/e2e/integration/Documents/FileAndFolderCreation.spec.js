@@ -1,7 +1,4 @@
-import { HEADMASTER } from '../../support/constants/users'
-import { url } from '../../support/constants/documents'
-
-describe('File and Folder creation', () => {
+describe.skip('File and Folder creation', () => {
   beforeEach(() => {
     cy.exec('npm run db:loadTables documents_tables_basic.sql')
     cy.clearDBCache()

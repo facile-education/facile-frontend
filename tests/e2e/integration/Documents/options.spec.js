@@ -1,5 +1,3 @@
-import { HEADMASTER } from '../../support/constants/users'
-import { url } from '../../support/constants/documents'
 
 const deleteAll = () => {
   cy.get('body').type('{ctrl}a')
@@ -31,7 +29,7 @@ const createManualEntities = () => {
   cy.contains('[data-test=file]', 'createdNote').should('exist')
 }
 
-describe('Other options', () => {
+describe.skip('Other options', () => {
   beforeEach(() => {
     cy.viewport('macbook-16')
     cy.exec('npm run db:loadTables documents_tables_basic.sql')

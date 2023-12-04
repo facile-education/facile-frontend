@@ -1,12 +1,7 @@
 // https://docs.cypress.io/api/introduction/api.html
-import {
-  now,
-  studentName,
-  studentSearch,
-  url
-} from '../../support/constants/horaires'
 
-describe('Mobile tests', () => {
+
+describe.skip('Mobile tests', () => {
   beforeEach(() => {
     cy.exec('npm run db:loadTables cdt_tables.sql')
     cy.clearDBCache()

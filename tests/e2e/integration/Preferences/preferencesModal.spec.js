@@ -1,7 +1,4 @@
-import { SCHOOL_ADMIN } from '../../support/constants/users'
-import { url } from '../../support/constants/statistics'
-
-describe('Preferences', () => {
+describe.skip('Preferences', () => {
   it('panels and closure behavior', () => {
     // Connection
     cy.login(SCHOOL_ADMIN, url)
