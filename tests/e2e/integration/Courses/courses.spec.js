@@ -1,9 +1,9 @@
 import { coursesURL } from '../../support/constants/urls'
 import { MULTI_PARENT, MULTI_STUDENT2, PARENT, STUDENT, TEACHER } from '../../support/constants/users'
-import { getCourseDetails } from '../../support/utils/courses'
+import { getCourseSessionDetails, getCourseSessionDetailsSupport } from '../../support/utils/courses'
 import { selectChild } from '../../support/utils/dashboard'
 
-describe('navigationAndDisplay', () => {
+describe('Courses', () => {
   beforeEach(() => {
     cy.fixture('courses.json').as('coursesData').then((data) => {
       cy.clock(Cypress.dayjs(data.existingHomework[0].dateBefore, 'YYYY/MM/DD').toDate().getTime())
@@ -62,10 +62,12 @@ describe('navigationAndDisplay', () => {
       }
     })
   })
-  it('Courses_DisplayCourseDetails_CheckSessionsContent', function () {
+  it.only('Courses_DisplayCourseDetails_CheckCourseContent', function () {
     const courseList = this.coursesData.CoursesListByProfil
     const teacherCourseList = courseList[0]
-    const courseDetails = teacherCourseList[2].sessions
+    const sessions = teacherCourseList[2].Sessions
+    const existingHomework = this.coursesData.existingHomework
+    const existingSessionsSupport = this.coursesData.existingSessionsSupport
     cy.login(TEACHER, coursesURL)
     cy.get('.tabs').within(() => {
       cy.contains('li', 'Cours').click()
@@ -73,8 +75,13 @@ describe('navigationAndDisplay', () => {
     cy.get('.courses').should('be.visible').within(() => {
       cy.contains('li', teacherCourseList[2].Course).click()
     })
-    for (let i = 0; i < courseDetails.length - 1; i++) {
-      getCourseDetails(courseDetails[i], i).should('be.visible')
-    }
+    cy.get('.course-details').within(() => {
+      cy.get('header').within(() => {
+        cy.contains(teacherCourseList[2].courseTeacher)
+        cy.contains(teacherCourseList[2].courseName)
+      })
+      getCourseSessionDetails(existingHomework[1], sessions[0])
+      getCourseSessionDetailsSupport(existingHomework[0], sessions[1], existingSessionsSupport[0])
+    })
   })
 })
