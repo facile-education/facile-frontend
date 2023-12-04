@@ -56,6 +56,11 @@ export default {
       window.screen.orientation.removeEventListener('change', this.handleOrientationChange, false)
     }
   },
+  beforeCreate () {
+    if (this.$route.path === '/' || this.$route.path === '/login') {
+      this.$store.commit('theme/setLayout', 'GVELayout')
+    }
+  },
   methods: {
     updateLayout ($event) {
       this.$store.commit('theme/setLayout', $event)

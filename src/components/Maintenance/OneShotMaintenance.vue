@@ -24,13 +24,26 @@
     >
       <span>{{ $t('setNewsPermissions') }}</span>
     </WeprodeButton>
+    <div>
+      <input
+        type="file"
+        name="file"
+        @change="fileChange($event.target.files)"
+      >
+      <WeprodeButton
+        class="round"
+        @click="deleteFolders"
+      >
+        <span>{{ $t('delete-folders') }}</span>
+      </WeprodeButton>
+    </div>
   </div>
 </template>
 
 <script>
 import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 
-import { cleanupObsoleteFolders, runDataFeed, setNewsPermissions } from '@/api/maintenance.service'
+import { cleanupObsoleteFolders, deleteFolders, setNewsPermissions } from '@/api/maintenance.service'
 
 export default {
   name: 'OneShotMaintenance',
@@ -55,17 +68,6 @@ export default {
         }
       )
     },
-    runDataFeed () {
-      runDataFeed().then(
-        (data) => {
-          if (data.success) {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
-          } else {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
-          }
-        }
-      )
-    },
     setNewsPermissions () {
       setNewsPermissions().then(
         (data) => {
@@ -79,6 +81,20 @@ export default {
     },
     runPAuth () {
       this.$store.commit('user/setPAuth', 123456)
+    },
+    fileChange (fileList) {
+      this.files = fileList
+    },
+    deleteFolders () {
+      deleteFolders(this.files[0]).then(
+        (data) => {
+          if (data.success) {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
+          } else {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+          }
+        }
+      )
     }
   }
 }
@@ -103,6 +119,7 @@ export default {
   "error": "Opération terminée en erreur",
   "pAuth": "pAuth bidon",
   "runDataFeed": "Alimentation des données (intégration uniquement)",
-  "setNewsPermissions": "Permissions des PJ de news"
+  "setNewsPermissions": "Permissions des PJ de news",
+  "delete-folders": "Supprimer les dossiers"
 }
 </i18n>
