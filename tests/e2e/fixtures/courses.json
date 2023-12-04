@@ -246,7 +246,13 @@
             "content": "Consigne du travail à faire",
             "teacher": "NOLLI",
             "dateBefore": "2023/11/13",
-            "dateAfter": "2023/11/17"
+            "dateAfter": "2023/11/17",
+            "attachedFile": "note.html",
+            "additionalText": "Texte supplémentaire",
+            "audio": "Audio pour ce devoir",
+            "link": "Lien pour ce devoir",
+            "video": "Vidéo pour ce devoir",
+            "h5p": "H5P pour ce devoir"
         },
         {
             "title": "Second travail à faire",
