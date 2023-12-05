@@ -31,6 +31,7 @@
           :is-edition="true"
           class="content-item"
           :focus-on-creation="isCreation && !block.placeholder"
+          :data-test="'contentItem_'+index"
           @delete="deleteContent(index)"
         />
         <ContentPicker @add="addContent" />

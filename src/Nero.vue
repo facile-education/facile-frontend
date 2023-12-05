@@ -50,6 +50,9 @@ export default {
     if (this.isIOS) {
       this.addMaxScaleToViewport()
     }
+    if (window.Cypress) {
+      window.textContent = []
+    }
   },
   beforeUnmount () {
     if (typeof window.screen.orientation !== 'undefined') {
