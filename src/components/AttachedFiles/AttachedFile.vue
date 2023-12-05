@@ -82,31 +82,31 @@
         </button>
       </span>
     </div>
+
+    <teleport
+      v-if="isDepositModalDisplayed"
+      to="body"
+    >
+      <!-- Deposit destination -->
+      <FilePickerModal
+        :folder-selection="true"
+        :init-in-current-folder="false"
+        @chosen-folder="saveInFolder"
+        @close="isDepositModalDisplayed = false"
+      />
+    </teleport>
+
+    <teleport
+      v-if="displayMenu"
+      to="body"
+    >
+      <ContextMenu
+        class="context-menu-with-padding"
+        @choose-option="performChosenOption"
+        @close="displayMenu=false"
+      />
+    </teleport>
   </div>
-
-  <teleport
-    v-if="isDepositModalDisplayed"
-    to="body"
-  >
-    <!-- Deposit destination -->
-    <FilePickerModal
-      :folder-selection="true"
-      :init-in-current-folder="false"
-      @chosen-folder="saveInFolder"
-      @close="isDepositModalDisplayed = false"
-    />
-  </teleport>
-
-  <teleport
-    v-if="displayMenu"
-    to="body"
-  >
-    <ContextMenu
-      class="context-menu-with-padding"
-      @choose-option="performChosenOption"
-      @close="displayMenu=false"
-    />
-  </teleport>
 </template>
 
 <script>
