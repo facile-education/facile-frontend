@@ -37,7 +37,7 @@ else
     echo "Copy dump to virtual machine"
     scp $DUMP_NAME $VM_USER@$VM_IP:/home/$VM_USER
 
-    echo "SSH as $VM_USER to reset progression tables."
+    echo "SSH as $VM_USER to reset tables."
     ssh $VM_USER@$VM_IP << EOF
     mariadb -u $DB_USER -p$DB_PWD $DB_NAME < $DUMP_NAME
     rm $DUMP_NAME

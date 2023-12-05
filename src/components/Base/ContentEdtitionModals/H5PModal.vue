@@ -184,20 +184,6 @@ export default {
       e.preventDefault()
       if (this.v$.$invalid) {
         this.v$.$touch()
-      } else if (this.item !== undefined) {
-        this.$store.dispatch('progression/addItemContent',
-          { itemId: this.item.itemId, contentType: 6, contentName: this.contentName, contentValue: this.embedSrcAttribute })
-          .then(() => {
-            this.closeModal()
-          })
-          .catch((error) => {
-            if (error === 'UnauthorizedUrlException') {
-              this.urlError = this.$t('UnauthorizedUrlException')
-            } else {
-              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
-              this.closeModal()
-            }
-          })
       } else {
         this.$emit('save', { contentType: 6, contentName: this.contentName, contentValue: this.embedSrcAttribute })
         this.closeModal()
@@ -207,24 +193,6 @@ export default {
       e.preventDefault()
       if (this.v$.$invalid) {
         this.v$.$touch()
-      } else if (this.item !== undefined) {
-        this.$store.dispatch('progression/updateItemContent', {
-          contentId: this.editedContent.contentId,
-          contentName: this.contentName,
-          contentValue: this.embedSrcAttribute,
-          order: this.editedContent.order
-        })
-          .then(() => {
-            this.closeModal()
-          })
-          .catch((error) => {
-            if (error === 'UnauthorizedUrlException') {
-              this.urlError = this.$t('UnauthorizedUrlException')
-            } else {
-              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
-              this.closeModal()
-            }
-          })
       } else {
         this.$emit('save', { contentType: 6, contentName: this.contentName, contentValue: this.embedSrcAttribute })
         this.closeModal()
