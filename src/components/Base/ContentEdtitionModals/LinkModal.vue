@@ -49,6 +49,7 @@
         v-if="isCreation"
         :label="$t('add')"
         class="button"
+        data-test="addLinkButton"
         @click="addLink"
       />
       <WeprodeButton

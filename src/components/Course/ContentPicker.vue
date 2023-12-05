@@ -26,29 +26,34 @@
     <teleport to="body">
       <FilePickerModal
         v-if="isFilePickerDisplayed"
+        data-test="documentFile"
         @added-files="addFile"
         @close="toggleFilePicker"
       />
       <AudioRecorderModal
         v-if="isAudioRecorderModalDisplayed"
+        data-test="audio"
         :edited-content="{}"
         @save="addAudioRecording"
         @close="toggleAudioRecorderModal"
       />
       <LinkModal
         v-if="isLinkModalDisplayed"
+        data-test="link"
         :edited-content="{}"
         @save="addContent"
         @close="toggleLinkModal"
       />
       <VideoModal
         v-if="isVideoModalDisplayed"
+        data-test="video"
         :edited-content="{}"
         @save="addContent"
         @close="toggleVideoModal"
       />
       <H5PModal
         v-if="isH5PModalDisplayed"
+        data-test="h5p"
         :edited-content="{}"
         @save="addContent"
         @close="toggleH5PModal"

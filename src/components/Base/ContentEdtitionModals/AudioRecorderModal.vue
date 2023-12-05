@@ -34,6 +34,7 @@
       <WeprodeButton
         :label="$t('save')"
         :disabled="!isStopped || !formErrorList"
+        data-test="submitRecord"
         @click="addRecord"
       />
     </template>

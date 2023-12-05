@@ -4,6 +4,7 @@
     :content="modelValue"
     :placeholder="content.placeholder"
     class="text-content"
+    data-test="additionalText"
     :disabled="!isEdition"
     :class="{'placeholder': content.placeholder}"
     :focus-on-creation="focusOnCreation"
