@@ -1,10 +1,10 @@
-const getHomework = (homework) => {
+const getSessionHomework = (homework) => {
   return cy.contains('.homework', homework.title).within(() => {
     cy.contains(homework.content)
   })
 }
 
-const getHomeworkDetailsSupport = (homework) => {
+const getSessionHomeworkWithSupport = (homework) => {
   return cy.contains('.homework', homework.title).within(() => {
     cy.contains(homework.content)
     cy.get('.attached-file').should('contain', homework.attachedFile)
@@ -16,13 +16,11 @@ const getHomeworkDetailsSupport = (homework) => {
   })
 }
 
-const getSession = (session) => {
-  return cy.contains('.session-content', session.title).within(() => {
-    cy.contains(session.content)
-  })
+const getSessionContent = (session) => {
+  return cy.get('.session-content').contains(session.title)
 }
 
-const getSessionDetailsSupport = (sessionSupport) => {
+const getSessionContentWithSupport = (sessionSupport) => {
   return cy.contains('.session-content', sessionSupport.title).within(() => {
     cy.contains(sessionSupport.content)
     cy.get('.attached-file').should('contain', sessionSupport.attachedFile)
@@ -34,24 +32,24 @@ const getSessionDetailsSupport = (sessionSupport) => {
   })
 }
 
-const getCourseSessionDetails = (homework, session) => {
+const getCourseSession = (homework, session) => {
   return cy.contains('.session-infos', session.headText).within(() => {
-    getHomework(homework)
+    getSessionHomework(homework)
   })
 }
 
-const getCourseSessionDetailsSupport = (homework, session, sessionSupport) => {
+const getCourseSessionWithSupport = (homework, session, sessionSupport) => {
   return cy.contains('.session-infos', session.headText).within(() => {
-    getHomeworkDetailsSupport(homework)
-    getSessionDetailsSupport(sessionSupport)
+    getSessionHomeworkWithSupport(homework)
+    getSessionContentWithSupport(sessionSupport)
   })
 }
 
 export {
-  getHomework,
-  getHomeworkDetailsSupport,
-  getSession,
-  getSessionDetailsSupport,
-  getCourseSessionDetails,
-  getCourseSessionDetailsSupport
+  getSessionHomework,
+  getSessionHomeworkWithSupport,
+  getSessionContent,
+  getSessionContentWithSupport,
+  getCourseSession,
+  getCourseSessionWithSupport
 }

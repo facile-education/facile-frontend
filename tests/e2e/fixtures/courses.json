@@ -295,7 +295,8 @@
             "audio": "Audio du support de cours",
             "link": "Lien pour le support de cours",
             "video": "Vidéo pour le support de cours",
-            "h5p": "H5P pour le support de cours"
+            "h5p": "H5P pour le support de cours",
+            "sessionDate": "2023/11/13"
         }
     ]
 }
