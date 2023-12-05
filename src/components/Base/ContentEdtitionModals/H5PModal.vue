@@ -77,6 +77,7 @@
         v-if="isCreation"
         :label="$t('add')"
         class="button"
+        data-test="addH5P"
         @click="addH5P"
       />
       <WeprodeButton

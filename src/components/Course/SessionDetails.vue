@@ -35,6 +35,7 @@
           <h3>{{ courseTitle }}</h3>
           <CreateButton
             v-if="canEdit && !hasContent && !isInList"
+            data-test="createSessionContent"
             :aria-label="$t('add')"
             :title="$t('add')"
             @click="openCourseEditModal"
