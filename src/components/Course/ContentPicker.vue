@@ -169,7 +169,7 @@ export default {
       setTimeout(() => this.$el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50) // 50ms to let the added block the time to be mounted...
     },
     addFile (files) {
-      this.addContent({ contentType: 5, fileId: files[0].id, contentName: files[0].name })
+      this.addContent({ ...files[0], contentType: 5, fileId: files[0].id, contentName: files[0].name })
     },
     addText () {
       this.addContent({ contentType: 1, contentValue: '', contentName: '' })
