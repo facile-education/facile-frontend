@@ -32,6 +32,17 @@ const getSessionContentWithSupport = (sessionSupport) => {
   })
 }
 
+const getSessionContentWithSupportWithoutAudio = (sessionSupport) => {
+  return cy.contains('.session-content', sessionSupport.title).within(() => {
+    cy.contains(sessionSupport.content)
+    cy.get('.attached-file').should('contain', sessionSupport.attachedFile)
+    cy.get('.ck-editor').should('contain', sessionSupport.additionalText)
+    cy.get('.course-content').eq(0).should('contain', sessionSupport.link)
+    cy.get('.course-content').eq(1).should('contain', sessionSupport.video)
+    cy.get('.course-content').eq(2).should('contain', sessionSupport.h5p)
+  })
+}
+
 const getCourseSession = (homework, session) => {
   return cy.contains('.session-infos', session.headText).within(() => {
     getSessionHomework(homework)
@@ -51,5 +62,6 @@ export {
   getSessionContent,
   getSessionContentWithSupport,
   getCourseSession,
-  getCourseSessionWithSupport
+  getCourseSessionWithSupport,
+  getSessionContentWithSupportWithoutAudio
 }
