@@ -15,6 +15,7 @@
     v-else-if="typeLabel === 'file'"
     :read-only="!isEdition"
     :attached-file="{...content, name: content.contentName, type: 'File', id: content.fileId, url: content.downloadUrl}"
+    @remove-attached-file="$emit('delete')"
   />
 
   <div
