@@ -97,7 +97,7 @@ export default {
       default: false
     }
   },
-  emits: ['close', 'keep-open', 'set-fullscreen'],
+  emits: ['close', 'keep-open', 'set-fullscreen', 'documentLoaded'],
   data () {
     return {
       hasLock: false,
@@ -178,12 +178,14 @@ export default {
           this.loadedFile = { ...this.file }
           this.loadedFile.fileVersionId = data.fileVersionId
           this.loadedFile.readOnly = data.readOnly
+          this.loadedFile.fileName = data.fileName
           if (!data.readOnly) {
             this.checkLock()
           } else {
             this.isLoaded = true
           }
           this.$emit('set-fullscreen', this.mq.phone || data.typeOfView !== 'Audio')
+          this.$emit('documentLoaded', this.loadedFile)
         } else {
           if (data.error === 'UnsupportedFileExtension') {
             this.typeOfView = 'Unsupported'
