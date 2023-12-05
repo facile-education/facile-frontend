@@ -57,6 +57,7 @@
         v-if="!readOnly"
         v-t="'h5pUrl'"
         href="https://h5p.eduge.ch/mes-ressources-h5p"
+        rel="noopener"
         target="_blank"
       />
 
