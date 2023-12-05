@@ -59,6 +59,7 @@
         v-else
         data-test="submitButton"
         :label="$t('submitButton')"
+        :disabled="!selectedFiles || selectedFiles.length === 0"
         @click="addNewFiles"
       />
     </template>
@@ -165,6 +166,7 @@ export default {
       this.selectedFiles = files
     },
     updateCurrentFolder (folder) {
+      this.selectedFiles = undefined
       this.currentFolder = folder
     },
     emitSelectedFolder () {
