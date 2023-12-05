@@ -52,7 +52,7 @@
         class="export-list"
         @update:model-value="exportUserList"
       />
-      <p v-html="exportMessage" />
+      <p>{{ exportMessage }}</p>
     </div>
   </div>
   <div
