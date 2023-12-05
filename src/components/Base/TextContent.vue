@@ -52,6 +52,10 @@ export default {
     focusOnCreation: {
       type: Boolean,
       default: false
+    },
+    dataTest: {
+      type: String,
+      default: ''
     }
   },
   emits: ['focus', 'blur', 'input', 'save', 'update:content'],
@@ -98,7 +102,9 @@ export default {
       // Make CKEditor available for tests
       if (window.Cypress) {
         this.ckeditor = e
-        window.textContent = this
+        window.textContent.push(this)
+        console.log(window.textContent)
+        console.log('on editor ready')
       }
     },
     updateContent (newValue) {

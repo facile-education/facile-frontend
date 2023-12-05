@@ -4,10 +4,10 @@
     :content="modelValue"
     :placeholder="content.placeholder"
     class="text-content"
-    data-test="additionalText"
     :disabled="!isEdition"
     :class="{'placeholder': content.placeholder}"
     :focus-on-creation="focusOnCreation"
+    :data-test="dataTest"
     @update:model-value="update"
     @blur="blur"
   />
@@ -145,6 +145,10 @@ export default {
     focusOnCreation: {
       type: Boolean,
       default: false
+    },
+    dataTest: {
+      type: String,
+      default: ''
     }
   },
   emits: ['update:modelValue', 'delete'],

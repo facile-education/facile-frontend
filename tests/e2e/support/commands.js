@@ -135,11 +135,19 @@ Cypress.Commands.add('globalKeyPress', (keyName) => {
   cy.get('body').type(keyName)
 })
 
-Cypress.Commands.add('type_ckeditor', (content) => {
+Cypress.Commands.add('type_ckeditor', (content, dataTestName = '') => {
+  // Add cy.tick after typr_ckeditor if there is a cy.clock()
+  let textContent
   cy.window()
     .then(win => {
-      win.textContent.ckeditor.setData(content) // Assume the window.ckeditor is set and correspond to the wanted ckEditor (only one ck by page)
-      win.textContent.updateContent(content)
+      if (dataTestName) {
+        textContent = win.textContent.find(element => element.dataTest === dataTestName)
+      } else {
+        // Select last textContent by default
+        textContent = win.textContent[win.textContent.length - 1]
+      }
+      textContent.ckeditor.setData(content)
+      textContent.updateContent(content)
     })
 })
 
