@@ -59,7 +59,7 @@ describe('navigationAndDisplay', () => {
     cy.url().should('eq', 'https://dev-ent-gve.com/cours-et-devoirs')
     cy.contains('h2', "Oups, cette page n'existe pas").should('be.visible')
   })
-  it.only('Courses_DisplayCourseList_DisplayGoodCourseListByProfil', function () {
+  it('Courses_DisplayCourseList_DisplayGoodCourseListByProfil', function () {
     const courseList = this.coursesData.CoursesListByProfil
     const teacherCourseList = courseList[0]
     const studentCourseList = courseList[1]

@@ -1,6 +1,6 @@
 import { coursesURL } from '../../support/constants/urls'
 import { MULTI_PARENT, MULTI_STUDENT2, PARENT, STUDENT, TEACHER } from '../../support/constants/users'
-import { getCourseSessionDetails, getCourseSessionDetailsSupport } from '../../support/utils/courses'
+import { getCourseSession, getCourseSessionWithSupport } from '../../support/utils/courses'
 import { selectChild } from '../../support/utils/dashboard'
 
 describe('Courses', () => {
@@ -62,7 +62,7 @@ describe('Courses', () => {
       }
     })
   })
-  it.only('Courses_DisplayCourseDetails_CheckCourseContent', function () {
+  it('Courses_DisplayCourseDetails_CheckCourseContent', function () {
     const courseList = this.coursesData.CoursesListByProfil
     const teacherCourseList = courseList[0]
     const sessions = teacherCourseList[2].Sessions
@@ -80,8 +80,8 @@ describe('Courses', () => {
         cy.contains(teacherCourseList[2].courseTeacher)
         cy.contains(teacherCourseList[2].courseName)
       })
-      getCourseSessionDetails(existingHomework[1], sessions[0])
-      getCourseSessionDetailsSupport(existingHomework[0], sessions[1], existingSessionsSupport[0])
+      getCourseSession(existingHomework[1], sessions[0])
+      getCourseSessionWithSupport(existingHomework[0], sessions[1], existingSessionsSupport[0])
     })
   })
 })

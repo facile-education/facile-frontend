@@ -1,6 +1,6 @@
 import { coursesURL } from '../../support/constants/urls'
 import { TEACHER } from '../../support/constants/users'
-import { getHomeworkDetailsSupport, getSessionDetailsSupport } from '../../support/utils/courses'
+import { getSessionContentWithSupport, getSessionHomeworkWithSupport } from '../../support/utils/courses'
 
 describe('Sessions', () => {
   beforeEach(() => {
@@ -24,8 +24,8 @@ describe('Sessions', () => {
       // Check if text in header is right
       cy.get('header').should('contain', currentSession.headText)
       // Check if session content and session homework is visible
-      getSessionDetailsSupport(currentSessionContent).should('be.visible')
-      getHomeworkDetailsSupport(existingHomework[0]).should('be.visible')
+      getSessionContentWithSupport(currentSessionContent).should('be.visible')
+      getSessionHomeworkWithSupport(existingHomework[0]).should('be.visible')
     })
   })
 })

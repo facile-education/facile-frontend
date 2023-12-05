@@ -1,6 +1,6 @@
 import { coursesURL } from '../../support/constants/urls'
 import { MULTI_PARENT, MULTI_STUDENT2, PARENT, STUDENT } from '../../support/constants/users'
-import { getHomework, getHomeworkDetailsSupport } from '../../support/utils/courses'
+import { getSessionHomework, getSessionHomeworkWithSupport } from '../../support/utils/courses'
 import { selectChild } from '../../support/utils/dashboard'
 
 describe('Sessions homeworks', () => {
@@ -47,18 +47,18 @@ describe('Sessions homeworks', () => {
     cy.login(STUDENT, coursesURL)
     cy.get('.homework-tab').within(() => {
       cy.get('.homeworks-by-day-list').within(() => {
-        getHomeworkDetailsSupport(existingHomework[0]).should('be.visible')
-        getHomework(existingHomework[1]).scrollIntoView()
-        getHomework(existingHomework[1]).should('be.visible')
+        getSessionHomeworkWithSupport(existingHomework[0]).should('be.visible')
+        getSessionHomework(existingHomework[1]).scrollIntoView()
+        getSessionHomework(existingHomework[1]).should('be.visible')
       })
     })
 
     cy.login(PARENT, coursesURL)
     cy.get('.homework-tab').within(() => {
       cy.get('.homeworks-by-day-list').within(() => {
-        getHomeworkDetailsSupport(existingHomework[0]).should('be.visible')
-        getHomework(existingHomework[1]).scrollIntoView()
-        getHomework(existingHomework[1]).should('be.visible')
+        getSessionHomeworkWithSupport(existingHomework[0]).should('be.visible')
+        getSessionHomework(existingHomework[1]).scrollIntoView()
+        getSessionHomework(existingHomework[1]).should('be.visible')
       })
     })
 
@@ -66,7 +66,7 @@ describe('Sessions homeworks', () => {
     cy.clock().invoke('setSystemTime', Cypress.dayjs(existingHomework[2].dateBefore, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
     cy.get('.homework-tab').within(() => {
       cy.get('.homeworks-by-day-list').within(() => {
-        getHomework(existingHomework[2]).should('be.visible')
+        getSessionHomework(existingHomework[2]).should('be.visible')
       })
     })
     cy.login(MULTI_PARENT, coursesURL)
@@ -74,7 +74,7 @@ describe('Sessions homeworks', () => {
     selectChild(MULTI_STUDENT2.firstName)
     cy.get('.homework-tab').within(() => {
       cy.get('.homeworks-by-day-list').within(() => {
-        getHomework(existingHomework[3]).should('be.visible')
+        getSessionHomework(existingHomework[3]).should('be.visible')
       })
     })
   })
