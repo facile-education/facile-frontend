@@ -1,5 +1,5 @@
 import { coursesURL } from '../../support/constants/urls'
-import { TEACHER } from '../../support/constants/users'
+import { STUDENT, TEACHER } from '../../support/constants/users'
 import { getSessionContent, getSessionContentWithSupport } from '../../support/utils/courses'
 
 describe('Sessions content', () => {
@@ -94,8 +94,12 @@ describe('Sessions content', () => {
     })
   })
 
-  it('Courses_DeleteSessionContent_DeleteFromSessionViewAndCourseView', function () {
+  it('Courses_DeleteSessionContent_DeleteFromSessionView', function () {
     const currentSessionContent = this.coursesData.existingSessionsContent[0]
+    const courseList = this.coursesData.CoursesListByProfil
+    const studentCourseList = courseList[1]
+    const teacherCourseList = courseList[0]
+    const sessions = teacherCourseList[2].Sessions
     // Login
     cy.login(TEACHER, coursesURL)
     cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionContent.sessionDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
@@ -120,6 +124,78 @@ describe('Sessions content', () => {
       getSessionContent(currentSessionContent).should('not.exist')
       // Check if placeholder is visible
       cy.contains('.placeholder', 'Aucun support de cours enregistré').should('be.visible')
+    })
+
+    // Login with student to check if session content is delete for everyone
+    cy.login(STUDENT, coursesURL)
+
+    // Open courses tab
+    cy.get('.tabs').within(() => {
+      cy.contains('li', 'Cours').click()
+    })
+    // Click on right course
+    cy.get('.courses').should('be.visible').within(() => {
+      cy.contains('li', studentCourseList[11].Course).click()
+    })
+    // Check if session content is delete within the current session
+    cy.contains('.session-infos', sessions[1].headText).within(() => {
+      cy.get('.session-content').should('not.exist')
+    })
+  })
+
+  it('Courses_DeleteSessionContent_DisplayDeleteOptionFromCourseView', function () {
+    const currentSessionContent = this.coursesData.existingSessionsContent[0]
+    const courseList = this.coursesData.CoursesListByProfil
+    const teacherCourseList = courseList[0]
+    // Login
+    cy.login(TEACHER, coursesURL)
+    cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionContent.sessionDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+
+    cy.get('.tabs').within(() => {
+      cy.contains('li', 'Cours').click()
+    })
+    cy.get('.courses').should('be.visible').within(() => {
+      cy.contains('li', teacherCourseList[2].Course).click()
+    })
+    cy.get('.course-details').within(() => {
+      cy.contains('.session-content', currentSessionContent.title).within(() => {
+        cy.get('.content-title').within(() => {
+          // Open edit session content panel
+          cy.get('.edit-button').click()
+        })
+      })
+    })
+    // Check if delete button is visible
+    cy.get('.context-menu').within(() => {
+      cy.contains('button', 'Supprimer').should('be.visible')
+    })
+  })
+
+  it('Courses_UpdateSessionContent_DisplayUpdateOptionFromCourseView', function () {
+    const currentSessionContent = this.coursesData.existingSessionsContent[0]
+    const courseList = this.coursesData.CoursesListByProfil
+    const teacherCourseList = courseList[0]
+    // Login
+    cy.login(TEACHER, coursesURL)
+    cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionContent.sessionDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+
+    cy.get('.tabs').within(() => {
+      cy.contains('li', 'Cours').click()
+    })
+    cy.get('.courses').should('be.visible').within(() => {
+      cy.contains('li', teacherCourseList[2].Course).click()
+    })
+    cy.get('.course-details').within(() => {
+      cy.contains('.session-content', currentSessionContent.title).within(() => {
+        cy.get('.content-title').within(() => {
+          // Open edit session content panel
+          cy.get('.edit-button').click()
+        })
+      })
+    })
+    // Check if delete button is visible
+    cy.get('.context-menu').within(() => {
+      cy.contains('button', 'Modifier').should('be.visible')
     })
   })
 })
