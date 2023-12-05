@@ -154,6 +154,7 @@ export default {
   background-color: $background-white-color;
   overflow-y: auto;
   position: absolute;
+  max-height: 300px;
   min-width: 100%;
   z-index: $dropdown-z-index;
 
