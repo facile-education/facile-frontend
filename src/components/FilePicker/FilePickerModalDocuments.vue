@@ -249,13 +249,11 @@ export default {
         if (this.isFolderSelected(folder)) {
           this.selectedFolder = undefined
           this.$emit('selected-folder', undefined)
-        } else {
-          if (!this.belongsToAppSelectedEntities(folder) && folder.permissions.ADD_OBJECT) { // Cannot select itself
-            this.selectedFolder = folder
-            this.$emit('selected-folder', folder)
-          }
+        } else if (!this.belongsToAppSelectedEntities(folder) && folder.permissions.ADD_OBJECT) { // Cannot select itself
+          this.selectedFolder = folder
+          this.$emit('selected-folder', folder)
         }
-      } else {
+      } else if (!this.folderSelection || (!this.belongsToAppSelectedEntities(folder) && folder.permissions.ADD_OBJECT)) {
         this.selectedFiles = []
         this.loadFolderContent(folder)
       }
