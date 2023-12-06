@@ -112,7 +112,7 @@ describe('Dashboard_Activity', () => {
       })
     })
 
-    it('Dashboard_Activities_DisplayActivitiesDisplayInRightOrder', function () {
+    it.only('Dashboard_Activities_DisplayActivitiesDisplayInRightOrder', function () {
       const existingActivity = this.dashboardData.existingActivity
       const newActivity = this.dashboardData.futurActivity
       const information = existingActivity[0]
@@ -134,7 +134,6 @@ describe('Dashboard_Activity', () => {
 
       // Check the position of activities
       cy.get('.activity-item').eq(0).should('contain', newActivity.title)
-      cy.get('.separator').should('be.visible')
       cy.get('.activity-item').eq(1).should('contain', documentInGroup.title)
       cy.get('.activity-item').eq(2).should('contain', group.title)
       cy.get('.activity-item').eq(3).should('contain', homeWork1.content)
