@@ -1,7 +1,7 @@
-// https://docs.cypress.io/api/introduction/api.html
-/*
+import { scheduleURL } from '../../support/constants/urls'
+import { DOYEN, HEADMASTER, PARENT, SCHOOL_ADMIN, SECRETARY, STUDENT, TEACHER } from '../../support/constants/users'
 
-const toolbarManagerUsers = [HEADMASTER, DOYEN, SECRETARY]
+const toolbarManagerUsers = [HEADMASTER, SCHOOL_ADMIN, DOYEN, SECRETARY]
 const toolbarUsers = [TEACHER]
 const noToolbarUsers = [STUDENT, PARENT]
 
@@ -11,15 +11,14 @@ const waitForRefresh = () => {
 
 describe.skip('Schedule_Access', () => {
   beforeEach(() => {
-    cy.clock(now.toDate().getTime())
-    cy.exec('npm run db:loadTables cdt_tables.sql')
-    cy.clearDBCache()
-    cy.logout()
+    cy.fixture('schedule.json').as('scheduleData').then(data => {
+      cy.clock(Cypress.dayjs(data.now, 'YYYY/MM/DD HH:mm').toDate().getTime())
+    })
   })
 
   toolbarManagerUsers.forEach(user => {
     it('Schedule_Access_' + user.role + '_CanAccess', () => {
-      cy.login(url, user)
+      cy.login(user, scheduleURL)
 
       cy.get('.toolbar .base-dropdown').should('be.visible')
       cy.get('.toolbar .search').should('be.visible')
@@ -30,7 +29,7 @@ describe.skip('Schedule_Access', () => {
       cy.get('.toolbar .base-dropdown').click()
       cy.get('.base-dropdown > .base-autocomplete').should('be.visible')
 
-      cy.contains(groupName).click()
+      cy.contains(this.scheduleData.groupName).click()
       waitForRefresh()
 
       // Edit button should be visible
@@ -42,7 +41,7 @@ describe.skip('Schedule_Access', () => {
 
   toolbarUsers.forEach(user => {
     it('Schedule_Access_' + user.role + '_CanAccess', () => {
-      cy.login(url, user)
+      cy.login(user, scheduleURL)
 
       cy.get('.toolbar .base-dropdown').should('be.visible')
       cy.get('.toolbar .search').should('be.visible')
@@ -53,7 +52,7 @@ describe.skip('Schedule_Access', () => {
       cy.get('.toolbar .base-dropdown').click()
       cy.get('.base-dropdown > .base-autocomplete').should('be.visible')
 
-      cy.contains(groupName).click()
+      cy.contains(this.scheduleData.groupName).click()
       waitForRefresh()
 
       // Edit button should not be visible
@@ -65,7 +64,7 @@ describe.skip('Schedule_Access', () => {
 
   noToolbarUsers.forEach(user => {
     it('Schedule_Access_' + user.role + '_CanNotAccess', () => {
-      cy.login(url, user)
+      cy.login(user, scheduleURL)
 
       cy.get('.toolbar .base-dropdown').should('not.exist')
       cy.get('.toolbar .search').should('not.exist')
@@ -80,7 +79,7 @@ describe.skip('Schedule_Access', () => {
   })
 
   it('Schedule_Access_Unauthenticated_CanNotAccess', () => {
-    cy.visit(url)
+    cy.visit(scheduleURL)
 
     cy.get('.toolbar .base-dropdown').should('not.exist')
     cy.get('.toolbar .search').should('not.exist')
@@ -89,4 +88,3 @@ describe.skip('Schedule_Access', () => {
     cy.contains('Une authentification est requise pour accéder au service.').should('exist')
   })
 })
-*/
