@@ -60,12 +60,12 @@ const selectChild = (child) => {
 
 const setActivityWithContent = () => {
   cy.loadTables('dashboard/dashboard_tables_activity.sql')
-  cy.exec('npm run dl:loadDocumentLibrary document_library_groupActivity.tar.xz')
+  cy.exec('npm run dl:loadDocumentLibrary document_library_dashboard.tar.xz')
 }
 
 const setAnnouncementDocumentWithContent = () => {
   cy.loadTables('dashboard/dashboard_tables_news_document.sql')
-  cy.exec('npm run dl:loadDocumentLibrary document_library_groupActivity.tar.xz')
+  cy.exec('npm run dl:loadDocumentLibrary document_library_dashboard.tar.xz')
 }
 
 const loadActivity = request => {
