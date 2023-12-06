@@ -44,7 +44,10 @@
     "newsToEdit": {
         "recipient": "Tous les élèves",
         "title": "Annonce modifiée",
-        "content": "Ceci est une annonce modifié"
+        "content": "Ceci est une annonce modifié",
+        "currentFile1": "Note avec des caractères spéciaux_.html",
+        "currentFile2": "note à destination des élèves.html",
+        "newFile": "Autre note.html"
     },
     "existingEvents": [
         {

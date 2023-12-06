@@ -1,7 +1,6 @@
 import { dashboardURL } from '../../support/constants/urls'
 import { HEADMASTER, MULTI_STUDENT1, PARENT, SCHOOL_ADMIN, STUDENT, TEACHER, TEACHER2 } from '../../support/constants/users'
-import { getNews, getNewsDetail, setAnnouncementDocumentWithContent } from '../../support/utils/dashboard'
-import { setDocumentLibraryEmpty } from '../../support/utils/documents'
+import { checkFileVisibilityAndClick, getNews, getNewsDetail, setAnnouncementDocumentWithContent } from '../../support/utils/dashboard'
 
 describe('Dashboard_Announcements', () => {
   beforeEach(() => {
@@ -177,8 +176,7 @@ describe('Dashboard_Announcements', () => {
       cy.get('.announcement').eq(2).should('have.class', 'theme-light-background-color')
     })
 
-    it.only('Dashboard_Announcements_CreateAnnouncement', function () {
-      setDocumentLibraryEmpty()
+    it('Dashboard_Announcements_CreateAnnouncementWithAllTypesOfAttachedFiles', function () {
       const NewNews = this.dashboardData.NewNews
 
       setAnnouncementDocumentWithContent()
@@ -250,26 +248,171 @@ describe('Dashboard_Announcements', () => {
       // Check if student see the annoucement with all attached files
       cy.login(STUDENT, dashboardURL)
       getNews(NewNews).should('be.exist').click()
-      cy.get('.news-details-modal').within(() => {
-        // Open file modal
-        cy.get('.attached-files').within(() => {
-          // Check if all files is visible
-          cy.contains('.attached-file', NewNews.personalDocument).should('be.visible')
-          cy.contains('.attached-file', NewNews.collaborativeDocument).should('be.visible')
-          cy.contains('.attached-file', NewNews.workSpaceDocument).should('be.visible')
-        })
-      })
+      // Check if all files is visible and clickable
+      checkFileVisibilityAndClick(NewNews.personalDocument)
+      checkFileVisibilityAndClick(NewNews.collaborativeDocument)
+      checkFileVisibilityAndClick(NewNews.workSpaceDocument)
 
       // Check if a teacher see the annoucement
       cy.login(TEACHER2, dashboardURL)
       getNews(NewNews).should('be.exist').click()
+      checkFileVisibilityAndClick(NewNews.personalDocument)
+      checkFileVisibilityAndClick(NewNews.collaborativeDocument)
+      checkFileVisibilityAndClick(NewNews.workSpaceDocument)
+    })
+
+    it('Dashboard_Announcements_CreateAnnouncementByHeadmasterCheckDelegateVisibility', function () {
+      setAnnouncementDocumentWithContent()
+      const newsToStudent = {
+        recipient: 'Tous les élèves',
+        title: 'Nouvelle annonce',
+        content: 'Ceci est le contenu de la nouvelle annonce',
+        personalDocument: 'Note avec des caractères spéciaux_.html'
+      }
+      // Create announcement with the headmaster for students
+      cy.login(HEADMASTER, dashboardURL)
+      // Open create modal
+      cy.get('[data-test="buttonCreateAnnoucement"]').click()
+      // Set all informations
+      cy.get('[data-test="update-news-modal"]').within(() => {
+        cy.get('.base-tags-input').click()
+        cy.get('.suggestion-list').contains('li', newsToStudent.recipient).click()
+        cy.get('.labelled').type(newsToStudent.title)
+        cy.get('.ck-editor')
+        cy.type_ckeditor(newsToStudent.content)
+        // Open FilePicker modal
+        cy.get('.select-files-buttons').within(() => {
+          cy.get('button').eq(0).click()
+        })
+      })
+      // Add file from personal document
+      cy.get('[data-test="file-picker-modal"]').within(() => {
+        cy.contains('.file', newsToStudent.personalDocument).click()
+        cy.get('[data-test="submitButton"]').click()
+      })
+
+      cy.get('[data-test="update-news-modal"]').within(() => {
+        // Create
+        cy.get('[data-test="submitButton"]').click()
+      })
+      // Check is all attached file icon is visible
+      getNews(newsToStudent).should('be.exist').within(() => {
+        cy.get('[data-test="fileIcon"]').should('be.visible')
+      })
+
+      // Check if redaction delegate see this annoucement
+      cy.login(TEACHER, dashboardURL)
+      getNews(newsToStudent).should('be.exist').click()
       cy.get('.news-details-modal').within(() => {
         // Open file modal
         cy.get('.attached-files').within(() => {
           // Check if all files is visible
-          cy.contains('.attached-file', NewNews.personalDocument).should('be.visible')
-          cy.contains('.attached-file', NewNews.collaborativeDocument).should('be.visible')
-          cy.contains('.attached-file', NewNews.workSpaceDocument).should('be.visible')
+          cy.contains('.attached-file', newsToStudent.personalDocument).should('be.visible')
+        })
+      })
+    })
+
+    it('Dashboard_Announcements_CreateAnnouncementForTwoPopulationToCheckVisibility', function () {
+      setAnnouncementDocumentWithContent()
+      const newsToTeacherAndStudent = {
+        recipient1: 'Tous les enseignants',
+        recipient2: 'Tous les élèves',
+        title: 'Nouvelle annonce',
+        content: 'Ceci est le contenu de la nouvelle annonce',
+        personalDocument: 'Note avec des caractères spéciaux_.html'
+      }
+      // Create announcement with the headmaster for teachers and students
+      cy.login(HEADMASTER, dashboardURL)
+      // Open create modal
+      cy.get('[data-test="buttonCreateAnnoucement"]').click()
+      // Set all informations
+      cy.get('[data-test="update-news-modal"]').within(() => {
+        cy.get('.base-tags-input').click()
+        cy.get('.suggestion-list').contains('li', newsToTeacherAndStudent.recipient1).click()
+        cy.get('.base-tags-input').click()
+        cy.get('.suggestion-list').contains('li', newsToTeacherAndStudent.recipient2).click()
+        cy.get('.labelled').type(newsToTeacherAndStudent.title)
+        cy.get('.ck-editor')
+        cy.type_ckeditor(newsToTeacherAndStudent.content)
+        // Open FilePicker modal
+        cy.get('.select-files-buttons').within(() => {
+          cy.get('button').eq(0).click()
+        })
+      })
+      // Add file from personal document
+      cy.get('[data-test="file-picker-modal"]').within(() => {
+        cy.contains('.file', newsToTeacherAndStudent.personalDocument).click()
+        cy.get('[data-test="submitButton"]').click()
+      })
+
+      cy.get('[data-test="update-news-modal"]').within(() => {
+        // Create
+        cy.get('[data-test="submitButton"]').click()
+      })
+      // Check is all attached files is visible and clickable
+      getNews(newsToTeacherAndStudent).should('be.exist').within(() => {
+        cy.get('[data-test="fileIcon"]').should('be.visible')
+      })
+
+      // Check if students see this annoucement
+      cy.login(STUDENT, dashboardURL)
+      getNews(newsToTeacherAndStudent).should('be.exist').click()
+      cy.get('.news-details-modal').within(() => {
+        // Open file modal
+        cy.get('.attached-files').within(() => {
+          // Check if all files is visible
+          cy.contains('.attached-file', newsToTeacherAndStudent.personalDocument).should('be.visible')
+        })
+      })
+    })
+
+    it('Dashboard_Announcements_CreateAnnouncementByDelegateCheckHeadmasterVisibility', function () {
+      setAnnouncementDocumentWithContent()
+      const newsToStudent = {
+        recipient: 'Tous les élèves',
+        title: 'Nouvelle annonce',
+        content: 'Ceci est le contenu de la nouvelle annonce',
+        personalDocument: 'Note avec des caractères spéciaux_.html'
+      }
+      // Create announcement with the headmaster for students
+      cy.login(TEACHER, dashboardURL)
+      // Open create modal
+      cy.get('[data-test="buttonCreateAnnoucement"]').click()
+      // Set all informations
+      cy.get('[data-test="update-news-modal"]').within(() => {
+        cy.get('.base-tags-input').click()
+        cy.get('.suggestion-list').contains('li', newsToStudent.recipient).click()
+        cy.get('.labelled').type(newsToStudent.title)
+        cy.get('.ck-editor')
+        cy.type_ckeditor(newsToStudent.content)
+        // Open FilePicker modal
+        cy.get('.select-files-buttons').within(() => {
+          cy.get('button').eq(0).click()
+        })
+      })
+      // Add file from personal document
+      cy.get('[data-test="file-picker-modal"]').within(() => {
+        cy.contains('.file', newsToStudent.personalDocument).click()
+        cy.get('[data-test="submitButton"]').click()
+      })
+
+      cy.get('[data-test="update-news-modal"]').within(() => {
+        // Create
+        cy.get('[data-test="submitButton"]').click()
+      })
+      // Check is all attached files is visible and clickable
+      getNews(newsToStudent).should('be.exist').within(() => {
+        cy.get('[data-test="fileIcon"]').should('be.visible')
+      })
+
+      // Check if redaction delegate see this annoucement
+      cy.login(HEADMASTER, dashboardURL)
+      getNews(newsToStudent).should('be.exist').click()
+      cy.get('.news-details-modal').within(() => {
+        // Open file modal
+        cy.get('.attached-files').within(() => {
+          // Check if all files is visible
+          cy.contains('.attached-file', newsToStudent.personalDocument).should('be.visible')
         })
       })
     })
@@ -352,10 +495,11 @@ describe('Dashboard_Announcements', () => {
       cy.get('[data-test="update-news-modal"]').should('not.exist')
     })
 
-    it('Dashboard_Announcements_UpdateAnnouncementMouseover', function () {
+    it('Dashboard_Announcements_UpdateAnnouncementMouseoverWithAllTypesOfAttachedFiles', function () {
       const existingNews = this.dashboardData.existingNews
       const lastNews = existingNews[0]
       const newsToEdit = this.dashboardData.newsToEdit
+      setAnnouncementDocumentWithContent()
 
       // Login with student to chech if he don't see the announcement
       cy.login(STUDENT, dashboardURL)
@@ -384,16 +528,27 @@ describe('Dashboard_Announcements', () => {
         cy.get('.labelled').type(newsToEdit.title)
         cy.get('.ck-editor')
         cy.type_ckeditor(newsToEdit.content)
-        // Delete file
-        cy.get('.attached-file').within(() => {
-          cy.get('.remove-button').click()
+        cy.get('.file-list').within(() => {
+          // Delete first file
+          cy.contains('.attached-file', newsToEdit.currentFile1).within(() => {
+            cy.get('.remove-button').click()
+          })
         })
+      })
+      // Open FilePicker modal
+      cy.get('.select-files-buttons').within(() => {
+        cy.get('button').eq(0).click()
+      })
+      // Add new file from personal document
+      cy.get('[data-test="file-picker-modal"]').within(() => {
+        cy.contains('.file', newsToEdit.newFile).click()
         cy.get('[data-test="submitButton"]').click()
       })
-      // Check if file icon is unvisible
-      getNews(lastNews).within(() => {
-        cy.get('[data-test="fileIcon"]').should('not.exist')
+      cy.get('[data-test="update-news-modal"]').within(() => {
+        // Submit modifications
+        cy.get('[data-test="submitButton"]').click()
       })
+
       // Check if the modification exist
       getNews(newsToEdit).should('be.exist')
       cy.get('[data-test="announcement-widget"]').within(() => {
@@ -406,7 +561,8 @@ describe('Dashboard_Announcements', () => {
       getNewsDetail(newsToEdit).should('be.exist').within(() => {
         // Check if file is deleted
         cy.get('.attached-files').within(() => {
-          cy.get('.attached-file').should('not.exist')
+          cy.contains('.attached-file', newsToEdit.currentFile2).should('be.visible')
+          cy.contains('.attached-file', newsToEdit.newFile).should('be.visible')
         })
       })
 

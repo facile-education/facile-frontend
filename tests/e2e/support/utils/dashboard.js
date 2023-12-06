@@ -78,6 +78,13 @@ const ScrollToAndCheckVisibility = (widget) => {
   cy.get(widget).should('be.visible')
 }
 
+const checkFileVisibilityAndClick = (file) => {
+  cy.contains('.attached-file', file).should('be.visible').click()
+  cy.get('[data-test="file-display-modal"]').should('be.visible').within(() => {
+    cy.get('[data-test="closeModal"]').click({ force: true })
+  })
+}
+
 export {
   getNewsDetail,
   getNews,
@@ -92,5 +99,6 @@ export {
   setActivityWithContent,
   loadActivity,
   ScrollToAndCheckVisibility,
-  setAnnouncementDocumentWithContent
+  setAnnouncementDocumentWithContent,
+  checkFileVisibilityAndClick
 }
