@@ -2,23 +2,6 @@ import { messagingURL } from '../../support/constants/urls'
 import { DOYEN, STUDENT, TEACHER } from '../../support/constants/users'
 import { reloadThreadsAndFolders, waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
 
-const lowerTextThenCapitalize = (string) => {
-  let result = string
-  result = result.toLowerCase()
-
-  const arr = result.split(' ')
-
-  // loop through each element of the array and capitalize the first letter.
-  for (let i = 0; i < arr.length; i++) {
-    arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1)
-  }
-
-  // Join all the elements of the array back into a string
-  // using a blankspace as a separator
-  result = arr.join(' ')
-  return result
-}
-
 const checkAndSelectThreadMessage = (message) => {
   cy.log('Check if the message was sent to ourself')
   cy.get('[data-test=option_refresh]').click()
@@ -85,7 +68,7 @@ describe('Sending message', () => {
       cy.get('.error-message').contains('Sélectionnez au moins un destinataire')
       // Type and select user
       cy.get('@recipients-input').clear().type(DOYEN.firstName)
-      cy.get('.suggestion-list').contains(lowerTextThenCapitalize(DOYEN.lastName + ' ' + DOYEN.firstName)).click()
+      cy.get('.suggestion-list').contains(DOYEN.lastName + ' ' + DOYEN.firstName).click()
       cy.get('@submitButton').click()
       cy.get('.error-message').should('not.exist')
     })
@@ -124,11 +107,11 @@ describe('Sending message', () => {
     // Select multiple recipients
     cy.log('Select multiple recipients')
     cy.get('[data-test=recipients-section]').find('input').as('recipients-input').type(DOYEN.firstName)
-    cy.get('.suggestion-list').contains(lowerTextThenCapitalize(DOYEN.lastName + ' ' + DOYEN.firstName)).click()
+    cy.get('.suggestion-list').contains(DOYEN.lastName + ' ' + DOYEN.firstName).click()
     cy.get('@recipients-input').type(TEACHER.lastName)
-    cy.get('.suggestion-list').contains(lowerTextThenCapitalize(TEACHER.lastName + ' ' + TEACHER.firstName)).click()
+    cy.get('.suggestion-list').contains(TEACHER.lastName + ' ' + TEACHER.firstName).click()
     cy.get('@recipients-input').type(STUDENT.lastName)
-    cy.get('.suggestion-list').contains(lowerTextThenCapitalize(STUDENT.lastName + ' ' + STUDENT.firstName)).click()
+    cy.get('.suggestion-list').contains(STUDENT.lastName + ' ' + STUDENT.firstName).click()
 
     // Enter subject
     cy.log('Enter subject')
@@ -193,11 +176,11 @@ describe('Sending message', () => {
     // Select multiple recipients
     cy.log('Select multiple recipients')
     cy.get('[data-test=recipients-section]').find('input').as('recipients-input').type(DOYEN.lastName)
-    cy.get('.suggestion-list').contains(lowerTextThenCapitalize(DOYEN.lastName + ' ' + DOYEN.firstName)).click()
+    cy.get('.suggestion-list').contains(DOYEN.lastName + ' ' + DOYEN.firstName).click()
     cy.get('@recipients-input').type(TEACHER.lastName)
-    cy.get('.suggestion-list').contains(lowerTextThenCapitalize(TEACHER.lastName + ' ' + TEACHER.firstName)).click()
+    cy.get('.suggestion-list').contains(TEACHER.lastName + ' ' + TEACHER.firstName).click()
     cy.get('@recipients-input').type(STUDENT.lastName)
-    cy.get('.suggestion-list').contains(lowerTextThenCapitalize(STUDENT.lastName + ' ' + STUDENT.firstName)).click()
+    cy.get('.suggestion-list').contains(STUDENT.lastName + ' ' + STUDENT.firstName).click()
 
     // Enter subject
     cy.log('Enter subject')

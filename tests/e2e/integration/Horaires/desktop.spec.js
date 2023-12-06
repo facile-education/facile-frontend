@@ -79,14 +79,14 @@ describe.skip('Desktop tests', () => {
     // Current week should be visible and selected
     cy.get('.horizontal-timeline-week.current-week.theme-border-color.theme-background-color').should('be.visible')
 
-    cy.get('.weeknumber-label').should('have.length', 6)
+    cy.get('.week-number-label').should('have.length', 6)
 
     // Tuesday of the current week should be visible
     cy.contains(now.weekday(1).format('ddd DD/MM')).should('exist')
 
     // Current week is the 3rd one and selected by default (index 2)
     // The 5th one should be two weeks later (index 4)
-    cy.get(':nth-child(4) > .weeknumber-label').click()
+    cy.get(':nth-child(4) > .week-number-label').click()
     waitForRefresh()
     cy.contains(now.add(2, 'week').format('ddd DD/MM')).should('exist')
 
@@ -94,14 +94,14 @@ describe.skip('Desktop tests', () => {
     // The 3rd week (index 2) should be 6 weeks before the current
     cy.get('.horizontal-timeline-left > .nav-btn').click()
     waitForRefresh()
-    cy.get('.weeknumber-label').then($elements => { cy.wrap($elements[2]).click() })
+    cy.get('.week-number-label').then($elements => { cy.wrap($elements[2]).click() })
     cy.contains(now.subtract(6, 'week').format('ddd DD/MM')).should('exist')
 
     // Click twice on timeline next button
     // The 3rd week should be 6 weeks after current one
     cy.get('.horizontal-timeline-right > .nav-btn').click().click()
     waitForRefresh()
-    cy.get('.weeknumber-label').then($elements => { cy.wrap($elements[2]).click() })
+    cy.get('.week-number-label').then($elements => { cy.wrap($elements[2]).click() })
     cy.contains(now.add(6, 'week').format('ddd DD/MM')).should('exist')
   })
 
@@ -291,7 +291,7 @@ describe.skip('Desktop tests', () => {
       .contains(substituteCalendarName).should('be.visible')
 
     // Check that the first session next week has been change too
-    cy.get(':nth-child(3) > .weeknumber-label').click()
+    cy.get(':nth-child(3) > .week-number-label').click()
     waitForRefresh()
 
     const substitutedNextSessionList = [
