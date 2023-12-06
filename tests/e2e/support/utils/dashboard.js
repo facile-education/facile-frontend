@@ -60,7 +60,12 @@ const selectChild = (child) => {
 
 const setActivityWithContent = () => {
   cy.loadTables('dashboard/dashboard_tables_activity.sql')
-  cy.exec('npm run dl:loadDocumentLibrary document_library_dashboard.tar.xz')
+  cy.exec('npm run dl:loadDocumentLibrary document_library_Activity.tar.xz')
+}
+
+const setActivityNewsWithContent = () => {
+  cy.loadTables('dashboard/dashboard_tables_activity_News_attachedFile.sql')
+  cy.exec('npm run dl:loadDocumentLibrary document_library_activity.tar.xz')
 }
 
 const setAnnouncementDocumentWithContent = () => {
@@ -100,5 +105,6 @@ export {
   loadActivity,
   ScrollToAndCheckVisibility,
   setAnnouncementDocumentWithContent,
-  checkFileVisibilityAndClick
+  checkFileVisibilityAndClick,
+  setActivityNewsWithContent
 }
