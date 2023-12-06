@@ -75,11 +75,10 @@ describe('Messaging_AccessMessageViaURL', () => {
     cy.get('[data-test=messages-panel]').should('be.visible')
     // Back to threads panel
     cy.get('[data-test="option_back"]').click()
-    // Check if thirdThread exist
+    // Check if all threads are visible
     cy.get('[data-test="threads-panel"]').within(() => {
       getThread(thirdThread).should('be.exist')
+      cy.get('[data-test="thread-list-item"]').should('have.length', 4)
     })
-    // Check if just one thread is visible
-    cy.get('[data-test="thread-list-item"]').should('have.length', 1)
   })
 })
