@@ -1,4 +1,5 @@
 // https://docs.cypress.io/api/introduction/api.html
+/*
 
 const toolbarManagerUsers = [HEADMASTER, DOYEN, SECRETARY]
 const toolbarUsers = [TEACHER]
@@ -88,3 +89,4 @@ describe.skip('Schedule_Access', () => {
     cy.contains('Une authentification est requise pour accéder au service.').should('exist')
   })
 })
+*/

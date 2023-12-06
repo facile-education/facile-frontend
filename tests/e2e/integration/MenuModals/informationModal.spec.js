@@ -34,4 +34,5 @@ describe.skip('InformationModal', () => {
         .and('include', 'www.pentilanero.com/?page_id=533') // test link?
       cy.get('[data-test=bodyCharter]').should('be.not.empty')
     })
+  })
 })

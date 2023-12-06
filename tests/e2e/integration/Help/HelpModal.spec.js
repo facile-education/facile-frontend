@@ -1,6 +1,7 @@
 // import { CLASSTEACHER, GLOBAL_ADMIN, STUDENT, SCHOOL_ADMIN } from '../../support/constants/users'
 // import { categoryToCreate, helpAdminResultMenu, helpSearchResultsMenu, helpTestMenu, url } from '../../support/constants/help'
 // import { setServiceDiffusion, testArticleContent } from '../../support/utils/helpUtils'
+/*
 
 const firstSelectedCategory = helpTestMenu[0]
 const firstSelectedItem = firstSelectedCategory.items[0]
@@ -288,3 +289,4 @@ describe.skip('HelpModal', () => {
     })
   })
 })
+*/

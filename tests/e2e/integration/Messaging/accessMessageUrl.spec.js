@@ -2,11 +2,12 @@ import { messagingURL } from '../../support/constants/urls'
 import { HEADMASTER } from '../../support/constants/users'
 import { getMessage, getThread } from '../../support/utils/messagingUtils'
 
-describe('Warning', () => {
+describe('Messaging_AccessMessageViaURL', () => {
   beforeEach(() => {
     cy.fixture('messaging.json').as('messagingData')
     cy.loadTables('messaging/messaging_tables.sql')
   })
+
   it('Messaging_AccessMessageViaURL', function () {
     const thirdThread = this.messagingData.existingThreads[2]
     const messageId = thirdThread[0].id

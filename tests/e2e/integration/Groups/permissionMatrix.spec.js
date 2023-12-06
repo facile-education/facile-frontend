@@ -1,4 +1,4 @@
-
+/*
 
 const rolesList = [
   {
@@ -81,7 +81,7 @@ describe.skip('Permission matrix', () => {
   // })
 
   rolesList.forEach((role) => {
-    it('Test ' + role.role + ' permissions', () => {
+    it.skip('Test ' + role.role + ' permissions', () => {
       cy.login(url, role)
 
       // Group creation
@@ -156,3 +156,4 @@ describe.skip('Permission matrix', () => {
     })
   })
 })
+*/
