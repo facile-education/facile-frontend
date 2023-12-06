@@ -46,7 +46,7 @@ CREATE TABLE `News_News` (
 LOCK TABLES `News_News` WRITE;
 /*!40000 ALTER TABLE `News_News` DISABLE KEYS */;
 INSERT INTO `News_News` VALUES
-(545275,20097,'Information à tous les élèves','<html>\n <head></head>\n<body>\n <p>contenu de cette information</p> \n</body></body>\n</html>',45479,0,0,'2024-06-29 23:59:59.000000','2023-11-03 15:15:00.000000','2023-11-23 11:18:18.559000',0),
+(545275,20097,'Information à tous les élèves','<html>\n <head></head>\n<body>\n <p>contenu de cette information</p> \n</body></body>\n</html>',45479,0,0,'2024-06-29 23:59:59.000000','2023-11-03 15:15:00.000000','2023-12-06 16:08:57.128000',0),
 (553401,20097,'Information avec une date de parution ultérieure','<html>\n <head></head>\n<body>\n <p>Contenu de l\'information avec une date de parution ultérieure</p> \n</body></body>\n</html>',45479,0,0,'2024-06-29 23:59:59.000000','2023-11-30 11:15:00.000000','2023-11-08 10:22:04.316000',0);
 /*!40000 ALTER TABLE `News_News` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -75,7 +75,7 @@ CREATE TABLE `News_NewsAttachedFile` (
 LOCK TABLES `News_NewsAttachedFile` WRITE;
 /*!40000 ALTER TABLE `News_NewsAttachedFile` DISABLE KEYS */;
 INSERT INTO `News_NewsAttachedFile` VALUES
-(554727,545275,55984,554722);
+(607715,545275,55984,607710);
 /*!40000 ALTER TABLE `News_NewsAttachedFile` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -131,6 +131,7 @@ LOCK TABLES `News_NewsRead` WRITE;
 /*!40000 ALTER TABLE `News_NewsRead` DISABLE KEYS */;
 INSERT INTO `News_NewsRead` VALUES
 (545275,45479,'2023-11-03 14:08:31.828000'),
+(545275,47461,'2023-12-06 16:00:15.001000'),
 (553401,45479,'2023-11-08 10:22:04.317000');
 /*!40000 ALTER TABLE `News_NewsRead` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -163,3 +164,14 @@ INSERT INTO `User_NewsAdmin` VALUES
 (546511,45479,45405);
 /*!40000 ALTER TABLE `User_NewsAdmin` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2023-12-06 16:09:16

@@ -1,6 +1,6 @@
 import { dashboardURL } from '../../support/constants/urls'
 import { DOYEN, MULTI_PARENT, PARENT, STUDENT, TEACHER, TEACHER2 } from '../../support/constants/users'
-import { getInformation, getInformationDetail, loadActivity, setActivityWithContent } from '../../support/utils/dashboard'
+import { checkFileVisibilityAndClick, getInformation, getInformationDetail, loadActivity, setActivityNewsWithContent, setActivityWithContent } from '../../support/utils/dashboard'
 
 describe('Dashboard_Activity', () => {
   context('StaticDataDumpActivities', function () {
@@ -309,6 +309,7 @@ describe('Dashboard_Activity', () => {
       cy.fixture('dashboard.json').as('dashboardData')
       cy.loadTables('schoollife/schoollife_tables.sql')
       cy.loadTables('dashboard/dashboard_tables_activity_News.sql')
+      setActivityNewsWithContent()
     })
     it('Dashboard_Activities_DisplayActivitiesFuturRelease', function () {
       const futurActivity = this.dashboardData.futurActivity
@@ -387,7 +388,7 @@ describe('Dashboard_Activity', () => {
       })
     })
 
-    it('Dashboard_Activities_CreateActivityButtonHeaderActivity', function () {
+    it('Dashboard_Activities_CreateActivityButtonHeaderActivityWithAttachedFiles', function () {
       cy.loadTables('dashboard/dashboard_tables_activity_News_attachedFile.sql')
       const activityToCreate = this.dashboardData.ActivityToCreate
 
@@ -412,9 +413,21 @@ describe('Dashboard_Activity', () => {
       })
       // Add file
       cy.get('[data-test="file-picker-modal"]').within(() => {
-        cy.contains('.file', activityToCreate.document).click()
+        cy.contains('.file', activityToCreate.personalDocument).click()
         cy.get('[data-test="submitButton"]').click()
       })
+
+      // Open FilePicker modal
+      cy.get('.select-files-buttons').within(() => {
+        // Get file in fixture
+        cy.fixture('filesToUpload/file.txt').as('myFile')
+        // Get input type file in button to get get file in workSpace
+        cy.get('button').eq(1).within(() => {
+          // Use selectFile to simulate get file in workSpace
+          cy.get('input[type=file]').selectFile('@myFile', { force: true })
+        })
+      })
+
       // Submit
       cy.get('[data-test="update-news-modal"]').within(() => {
         cy.get('[data-test="submitButton"]').click()
@@ -439,15 +452,13 @@ describe('Dashboard_Activity', () => {
       // Verify the content
       getInformationDetail(activityToCreate)
       // Open file modal
-      cy.get('.attached-files').within(() => {
-        cy.contains('.attached-file', activityToCreate.document).click()
-      })
-      // Check if file modal is visible
+      cy.contains('.attached-file', activityToCreate.document).should('be.visible').click()
       cy.get('[data-test="file-display-modal"]').should('be.visible').within(() => {
         // Check if student cant edit file
         cy.get('.ck-editor').should('have.class', 'disabled')
-        cy.get('p').should('contain', activityToCreate.documentContent)
+        cy.get('[data-test="closeModal"]').click({ force: true })
       })
+      checkFileVisibilityAndClick(activityToCreate.workSpaceDocument)
     })
 
     it('Dashboard_Activities_CreateActivityButtonAllActivity', function () {
@@ -600,9 +611,7 @@ describe('Dashboard_Activity', () => {
       // Check the content
       getInformationDetail(activityToEdit).should('be.exist')
       // Check if file is deleted
-      cy.get('.attached-files').within(() => {
-        cy.get('.attached-file').should('not.exist')
-      })
+      cy.get('.attached-files').should('not.exist')
     })
 
     it('Dashboard_Activities_UpdateActivityclickActivity', function () {

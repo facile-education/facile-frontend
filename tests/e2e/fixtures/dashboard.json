@@ -144,8 +144,8 @@
         "recipient": "Elèves de EC0933",
         "title": "Activité créée",
         "content": "Ceci est une activité créée",
-        "document": "Note avec des caractères spéciaux_.html",
-        "documentContent":"Contenu de la note"
+        "personalDocument": "Note avec des caractères spéciaux_.html",
+        "workSpaceDocument": "file.txt"
     },
     "activityToEdit": {
         "recipient": "Responsables légaux de EC0933",

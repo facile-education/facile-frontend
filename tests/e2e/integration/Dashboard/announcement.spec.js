@@ -237,7 +237,7 @@ describe('Dashboard_Announcements', () => {
         })
       })
       cy.get('[data-test="update-news-modal"]').within(() => {
-        // Create
+        // Click on createButton
         cy.get('[data-test="submitButton"]').click()
       })
       // Check is all attached files is visible and clickable
