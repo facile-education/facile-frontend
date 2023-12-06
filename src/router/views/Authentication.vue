@@ -125,8 +125,8 @@
             <button
               v-t="authenticateButtonLabel"
               class="btn"
-              :class="{'disabled': isLoading}"
-              :disabled="isLoading"
+              :class="{'running': isLoading, 'disabled': areEmptyFields}"
+              :disabled="isLoading || areEmptyFields"
               :title="$t('authenticate')"
               type="submit"
             />
@@ -208,6 +208,9 @@ export default {
     },
     authenticateButtonLabel () {
       return this.isLoading ? 'authenticationOnGoing' : 'authenticate'
+    },
+    areEmptyFields () {
+      return this.login === '' || this.password === ''
     }
   },
   beforeCreate () {
@@ -258,6 +261,10 @@ export default {
   },
   methods: {
     doLogin () {
+      // Do not call if empty login or password
+      if (this.areEmptyFields) {
+        return
+      }
       this.isLoading = true
       authenticationService.login(this.login, this.password, this.isMobileApp).then(response => {
         this.isLoading = false
@@ -446,6 +453,10 @@ $eel-blue: #2c7bb8;
   text-decoration: none;
   cursor: pointer;
   &.disabled {
+    opacity: 50;
+    background-color: grey;
+  }
+  &.running {
     opacity: 50;
     background-color: grey;
     cursor: wait;
