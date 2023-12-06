@@ -1,10 +1,11 @@
 {
     "NewNews": {
-        "recipient": "Tous les personnels",
+        "recipient": "CO Da Vinci",
         "title": "Nouvelle annonce",
         "content": "Ceci est le contenu de la nouvelle annonce",
-        "document": "Note avec des caractères spéciaux_.html",
-        "documentContent": "Contenu de la note"
+        "personalDocument": "Note avec des caractères spéciaux_.html",
+        "collaborativeDocument": "note à destination des élèves.html",
+        "workSpaceDocument": "file.txt"
     },
     "existingNews": [
         {

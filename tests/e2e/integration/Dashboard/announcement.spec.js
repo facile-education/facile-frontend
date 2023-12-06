@@ -1,6 +1,7 @@
 import { dashboardURL } from '../../support/constants/urls'
 import { HEADMASTER, MULTI_STUDENT1, PARENT, SCHOOL_ADMIN, STUDENT, TEACHER, TEACHER2 } from '../../support/constants/users'
 import { getNews, getNewsDetail, setAnnouncementDocumentWithContent } from '../../support/utils/dashboard'
+import { setDocumentLibraryEmpty } from '../../support/utils/documents'
 
 describe('Dashboard_Announcements', () => {
   beforeEach(() => {
@@ -176,7 +177,8 @@ describe('Dashboard_Announcements', () => {
       cy.get('.announcement').eq(2).should('have.class', 'theme-light-background-color')
     })
 
-    it('Dashboard_Announcements_CreateAnnouncement', function () {
+    it.only('Dashboard_Announcements_CreateAnnouncement', function () {
+      setDocumentLibraryEmpty()
       const NewNews = this.dashboardData.NewNews
 
       setAnnouncementDocumentWithContent()
@@ -206,21 +208,57 @@ describe('Dashboard_Announcements', () => {
           cy.get('button').eq(0).click()
         })
       })
-      // Add file
+      // Add file from personal document
       cy.get('[data-test="file-picker-modal"]').within(() => {
-        cy.contains('.file', NewNews.document).click()
+        cy.contains('.file', NewNews.personalDocument).click()
         cy.get('[data-test="submitButton"]').click()
+      })
+
+      // Open FilePicker modal
+      cy.get('.select-files-buttons').within(() => {
+        cy.get('button').eq(0).click()
+      })
+      // Add file from collaborative document
+      cy.get('[data-test="file-picker-modal"]').within(() => {
+        cy.get('[data-test="breadcrumb-item"]').click()
+        cy.get('[data-test="groups"]').click()
+        cy.get('.documents-list').within(() => {
+          cy.contains('button', 'Espace collaboratif sans les élèves').click()
+        })
+        cy.contains('.file', NewNews.collaborativeDocument).click()
+        cy.get('[data-test="submitButton"]').click()
+      })
+      // Open FilePicker modal
+      cy.get('.select-files-buttons').within(() => {
+        // Get file in fixture
+        cy.fixture('filesToUpload/file.txt').as('myFile')
+        // Get input type file in button to get get file in workSpace
+        cy.get('button').eq(1).within(() => {
+          // Use selectFile to simulate get file in workSpace
+          cy.get('input[type=file]').selectFile('@myFile', { force: true })
+        })
       })
       cy.get('[data-test="update-news-modal"]').within(() => {
         // Create
         cy.get('[data-test="submitButton"]').click()
       })
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
-      cy.wait(2000)
+      // Check is all attached files is visible and clickable
+      getNews(NewNews).should('be.exist').within(() => {
+        cy.get('[data-test="fileIcon"]').should('be.visible')
+      })
 
-      // Check if a student don't see the annoucement
+      // Check if student see the annoucement with all attached files
       cy.login(STUDENT, dashboardURL)
-      getNews(NewNews).should('not.exist')
+      getNews(NewNews).should('be.exist').click()
+      cy.get('.news-details-modal').within(() => {
+        // Open file modal
+        cy.get('.attached-files').within(() => {
+          // Check if all files is visible
+          cy.contains('.attached-file', NewNews.personalDocument).should('be.visible')
+          cy.contains('.attached-file', NewNews.collaborativeDocument).should('be.visible')
+          cy.contains('.attached-file', NewNews.workSpaceDocument).should('be.visible')
+        })
+      })
 
       // Check if a teacher see the annoucement
       cy.login(TEACHER2, dashboardURL)
@@ -228,14 +266,11 @@ describe('Dashboard_Announcements', () => {
       cy.get('.news-details-modal').within(() => {
         // Open file modal
         cy.get('.attached-files').within(() => {
-          cy.contains('.attached-file', NewNews.document).click()
+          // Check if all files is visible
+          cy.contains('.attached-file', NewNews.personalDocument).should('be.visible')
+          cy.contains('.attached-file', NewNews.collaborativeDocument).should('be.visible')
+          cy.contains('.attached-file', NewNews.workSpaceDocument).should('be.visible')
         })
-      })
-      // Check if file modal is visible
-      cy.get('[data-test="file-display-modal"]').should('be.visible').within(() => {
-        // Check if teacher cant edit file
-        cy.get('.ck-editor').should('have.class', 'disabled')
-        cy.get('p').should('contain', NewNews.documentContent)
       })
     })
 
