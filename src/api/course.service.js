@@ -17,7 +17,8 @@ export {
   addBlock,
   addFileBlock,
   updateBlock,
-  deleteBlock
+  deleteBlock,
+  isEmbedUrlWhitelisted
 }
 
 const COURSE_PREFIX = '/course.'
@@ -129,6 +130,14 @@ function updateBlock (blockId, blockName, blockValue, order) {
     blockValue,
     order
   })).then(response => response.data)
+}
+
+function isEmbedUrlWhitelisted (url) {
+  return axios.get(constants.JSON_WS_URL + CONTENT_BLOCK_PATH + 'is-embed-url-whitelisted', {
+    params: {
+      url
+    }
+  }).then(response => response.data)
 }
 
 function deleteBlock (blockId) {
