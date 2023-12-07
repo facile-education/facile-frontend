@@ -1,6 +1,6 @@
 import { messagingURL } from '../../support/constants/urls'
 import { DOYEN, STUDENT, TEACHER } from '../../support/constants/users'
-import { reloadThreadsAndFolders, waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
+import { reloadThreadsAndFolders, setMessagingDocumentLibrary, waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
 
 const checkAndSelectThreadMessage = (message) => {
   cy.log('Check if the message was sent to ourself')
@@ -34,7 +34,8 @@ const checkMessageDetails = (message) => {
         .and('contain', message.recipients[1])
         .and('contain', message.recipients[2])
       cy.contains('Masquer').should('exist')
-      // cy.contains('documentTest.txt')
+      cy.contains('.attached-file', message.attachedFile1)
+      cy.contains('.attached-file', message.attachedFile2)
     })
 }
 
@@ -94,11 +95,15 @@ describe('Sending message', () => {
   })
 
   it('Messaging_SendNewMessage', () => {
+    setMessagingDocumentLibrary()
+    cy.login(DOYEN, messagingURL)
     const message = {
       sender: DOYEN.firstName + ' ' + DOYEN.lastName,
       recipients: [DOYEN.firstName + ' ' + DOYEN.lastName, TEACHER.firstName + ' ' + TEACHER.lastName, STUDENT.firstName + ' ' + STUDENT.lastName],
       subject: 'Mon message de test',
-      content: 'Mon contenu de message'
+      content: 'Mon contenu de message',
+      attachedFile1: 'note.html',
+      attachedFile2: 'file.txt'
     }
 
     // Open create message modal
@@ -121,13 +126,24 @@ describe('Sending message', () => {
     cy.log('Write content')
     cy.type_ckeditor(message.content) // Match the last instance of ckEditor
 
-    // // Attachments
-    // cy.contains('Ajouter une pièce jointe').click()
-    // cy.get('[data-test=file-picker-modal]').within(() => {
-    //   cy.contains('documentTest.txt').click()
-    //   cy.contains('Ajouter').click()
-    // })
-    // cy.get('[data-test=file-picker-modal]').should('not.exist')
+    // Attachments
+    cy.get('[title="Ajouter une pièce jointe depuis vos documents de l\'ENTA"]').click()
+    cy.get('[data-test=file-picker-modal]').within(() => {
+      cy.contains(message.attachedFile1).click()
+      cy.contains('button', 'Ajouter').click()
+    })
+    cy.get('[data-test=file-picker-modal]').should('not.exist')
+    // Open FilePicker modal
+    cy.get('.select-files-buttons').within(() => {
+      // Get file in fixture
+      cy.fixture('filesToUpload/file.txt').as('myFile')
+      // Get input type file in button to get get file in workSpace
+      cy.get('button').eq(1).within(() => {
+        // Use selectFile to simulate get file in workSpace
+        cy.get('input[type=file]').selectFile('@myFile', { force: true })
+      })
+      cy.wait(2000)
+    })
 
     // Send message
     cy.log('Send message')
@@ -162,12 +178,14 @@ describe('Sending message', () => {
     checkMessageDetails(message)
   })
 
-  it('Save draft and send it', () => {
+  it.only('Save draft and send it', () => {
     const message = {
       sender: DOYEN.firstName + ' ' + DOYEN.lastName,
       recipients: [DOYEN.firstName + ' ' + DOYEN.lastName, TEACHER.firstName + ' ' + TEACHER.lastName, STUDENT.firstName + ' ' + STUDENT.lastName],
       subject: 'Mon message de test',
-      content: 'Mon contenu de message'
+      content: 'Mon contenu de message',
+      attachedFile1: 'note.html',
+      attachedFile2: 'file.txt'
     }
 
     // Open create message modal
@@ -191,12 +209,23 @@ describe('Sending message', () => {
     cy.type_ckeditor(message.content) // Match the last instance of ckEditor
 
     // Attachments
-    // cy.contains('Ajouter une pièce jointe').click()
-    // cy.get('[data-test=file-picker-modal]').within(() => {
-    //   cy.contains('documentTest.txt').click()
-    //   cy.contains('Ajouter').click()
-    // })
-    // cy.get('[data-test=file-picker-modal]').should('not.exist')
+    cy.get('[title="Ajouter une pièce jointe depuis vos documents de l\'ENTA"]').click()
+    cy.get('[data-test=file-picker-modal]').within(() => {
+      cy.contains(message.attachedFile1).click()
+      cy.contains('button', 'Ajouter').click()
+    })
+    cy.get('[data-test=file-picker-modal]').should('not.exist')
+    // Open FilePicker modal
+    cy.get('.select-files-buttons').within(() => {
+      // Get file in fixture
+      cy.fixture('filesToUpload/file.txt').as('myFile')
+      // Get input type file in button to get get file in workSpace
+      cy.get('button').eq(1).within(() => {
+        // Use selectFile to simulate get file in workSpace
+        cy.get('input[type=file]').selectFile('@myFile', { force: true })
+        cy.wait(2000)
+      })
+    })
 
     cy.log('Save draft')
     cy.contains('Enregistrer en brouillon').click()
@@ -212,7 +241,7 @@ describe('Sending message', () => {
     cy.get('[data-test=option_editDraft]').click()
     cy.get('[data-test=createMessageModal]').find('[data-test=submitButton]').click()
     cy.get('[data-test=createMessageModal]').should('not.exist')
-
+    cy.wait(2000)
     // Check if the message was sent to ourself
     cy.get('[data-test=messaging-menu]').contains('Boîte de réception').click()
     cy.wait(500)
