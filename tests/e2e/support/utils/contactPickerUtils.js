@@ -1,5 +1,5 @@
 const openContactPicker = () => {
-  cy.get('[data-test="createMessageButton"]').click()
+  cy.get('[data-test="createMessageButton"]', { timeout: 10000 }).click()
   cy.get('[data-test="recipients-section"] > .base-button').click()
 }
 
