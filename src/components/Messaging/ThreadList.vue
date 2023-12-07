@@ -61,7 +61,7 @@
             :thread="thread"
             :is-last="thread.threadId === threads[threads.length-1].threadId"
             class="thread-list-item"
-            @contextmenu.prevent="openContextMenu($event, thread)"
+            @contextmenu.prevent="askContextMenu($event, thread)"
           />
           <hr class="hr-thread-list">
         </div>
@@ -250,13 +250,18 @@ export default {
         messagingUtils.refresh()
       }
     },
-    openContextMenu (e, thread) {
-      // Add thread if not already selected
+    askContextMenu (e, thread) {
       if (!messagingUtils.isThreadSelected(thread)) {
         // thread is not selected -> select it'
-        messagingUtils.selectThread(thread)
+        messagingUtils.selectThread(thread).then(() => {
+          this.openContextMenu(e, thread)
+        })
+      } else {
+        this.openContextMenu(e, thread)
       }
-
+    },
+    openContextMenu (e, thread) {
+      // Add thread if not already selected
       let contextMenu = []
 
       if (this.$store.state.messaging.selectedThreads.length > 1) {
@@ -267,6 +272,7 @@ export default {
       // Add 'markAsRead' or 'markAsUnread' menus
       let isOneMessageRead = false
       let isOneMessageUnread = false
+      console.log(this.$store.state.messaging.selectedThreads.length)
       for (const thread of this.$store.state.messaging.selectedThreads) {
         for (const message of thread.messages) {
           if (message.isNew) {

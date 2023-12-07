@@ -143,34 +143,38 @@ const MessagingUtils = {
     }
     store.dispatch('messaging/setSelectedMessages', [message])
   },
-  selectThread (thread, messageIdToSelect) {
-    let foundMainMessage = false
-    // Mark as read main message if unread
-    for (const message of thread.messages) {
-      if (message.messageId === thread.mainMessageId) {
-        foundMainMessage = true
-        if (message.isNew) {
-          this.markMessagesAsReadUnread([thread.mainMessageId], true).then(() => { // Wait message is mark as read before re-getting the thread
+  async selectThread (thread, messageIdToSelect) {
+    return new Promise((resolve) => {
+      let foundMainMessage = false
+      // Mark as read main message if unread
+      for (const message of thread.messages) {
+        if (message.messageId === thread.mainMessageId) {
+          foundMainMessage = true
+          if (message.isNew) {
+            this.markMessagesAsReadUnread([thread.mainMessageId], true).then(() => { // Wait message is mark as read before re-getting the thread
+              store.dispatch('messaging/setLastSelectedThread', thread)
+              store.dispatch('messaging/setSelectedThreads', [thread])
+              resolve()
+
+              this.getThreadMessages(thread, store.state.messaging.currentFolder.folderId, messageIdToSelect)
+            }, (err) => {
+              console.error(err)
+              store.dispatch('popups/pushPopup', { message: i18n.global.t('Popup.error'), type: 'error' })
+            })
+          } else {
             store.dispatch('messaging/setLastSelectedThread', thread)
             store.dispatch('messaging/setSelectedThreads', [thread])
+            resolve()
 
             this.getThreadMessages(thread, store.state.messaging.currentFolder.folderId, messageIdToSelect)
-          }, (err) => {
-            console.error(err)
-            store.dispatch('popups/pushPopup', { message: i18n.global.t('Popup.error'), type: 'error' })
-          })
-        } else {
-          store.dispatch('messaging/setLastSelectedThread', thread)
-          store.dispatch('messaging/setSelectedThreads', [thread])
-
-          this.getThreadMessages(thread, store.state.messaging.currentFolder.folderId, messageIdToSelect)
+          }
         }
       }
-    }
-    if (!foundMainMessage) {
-      console.error('cannot find main thread message (to mark it as unread for example)')
-      store.dispatch('popups/pushPopup', { message: i18n.global.t('Popup.error'), type: 'error' })
-    }
+      if (!foundMainMessage) {
+        console.error('cannot find main thread message (to mark it as unread for example)')
+        store.dispatch('popups/pushPopup', { message: i18n.global.t('Popup.error'), type: 'error' })
+      }
+    })
   },
   getThreadMessages (thread, folderId, messageIdToSelect) {
     messageService.getThreadMessages(thread.threadId, folderId).then((data) => {
