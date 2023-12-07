@@ -45,11 +45,17 @@ const setRecipient = (user) => {
   cy.get('.suggestion-list').contains(`${user.lastName} ${user.firstName}`).click()
 }
 
+const setMessagingDocumentLibrary = () => {
+  cy.loadTables('messaging/messaging_tables_document.sql')
+  cy.exec('npm run dl:loadDocumentLibrary document_library.tar.xz')
+}
+
 export {
   waitMessagingToBeLoaded,
   reloadThreadsAndFolders,
   getThread,
   getMessage,
   getDraft,
-  setRecipient
+  setRecipient,
+  setMessagingDocumentLibrary
 }
