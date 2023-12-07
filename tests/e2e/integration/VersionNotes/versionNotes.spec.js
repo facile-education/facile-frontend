@@ -47,7 +47,7 @@ describe('VersionNotes_ReadNotes', () => {
   })
 
   // CHECK NOTIF
-  it('VersionNotes_Notification_NotificationBehaviour', function () {
+  it.only('VersionNotes_Notification_NotificationBehaviour', function () {
     cy.loadTables('versionNotes/version_notes_tables.sql')
     cy.login(STUDENT, scheduleURL)
 
@@ -58,10 +58,12 @@ describe('VersionNotes_ReadNotes', () => {
     cy.get('[data-test=togglePopoverMenu]').click()
     cy.get('[data-test=popover-menu]').within(() => {
       cy.contains('li', 'Nouveautés').find('.pellet').should('be.visible')
+      cy.contains('li', 'Nouveautés').click()
     })
 
     // Test if pellet doesn't exist anymore
     cy.get('[data-test="closeModal"]').click()
+    cy.get('[data-test=togglePopoverMenu]').click()
     cy.get('[data-test=popover-menu]').within(() => {
       cy.contains('li', 'Nouveautés').find('.pellet').should('not.exist')
     })
