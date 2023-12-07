@@ -63,11 +63,12 @@ describe('Courses', () => {
     })
   })
   it('Courses_DisplayCourseDetails_CheckCourseContent', function () {
+    cy.loadTables('courses/courses_tables_homework.sql')
     const courseList = this.coursesData.CoursesListByProfil
     const teacherCourseList = courseList[0]
     const sessions = teacherCourseList[2].Sessions
     const existingHomework = this.coursesData.existingHomework
-    const existingSessionsSupport = this.coursesData.existingSessionsSupport
+    const existingSessionsSupport = this.coursesData.existingSessionsContent
     cy.login(TEACHER, coursesURL)
     cy.get('.tabs').within(() => {
       cy.contains('li', 'Cours').click()
