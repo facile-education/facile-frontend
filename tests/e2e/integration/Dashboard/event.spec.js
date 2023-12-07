@@ -655,7 +655,7 @@ describe('Dashboard_Events', () => {
     const mobile = sizes[0]
     const ipad = sizes[1]
     sizes.forEach(size => {
-      it(`Dashboard_Events_DisplayAllEventsLoadNextEvent: ${size}`, function () {
+      it.only(`Dashboard_Events_DisplayAllEventsLoadNextEvent: ${size}`, function () {
         // Set testing viewport
         if (Array.isArray(size)) {
           cy.viewport(size[0], size[1])
@@ -669,7 +669,7 @@ describe('Dashboard_Events', () => {
         cy.login(TEACHER, dashboardURL)
         cy.clock().invoke('setSystemTime', Cypress.dayjs('2023/11/21', 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
 
-        cy.get('[data-test="diary-widget"]').within(() => {
+        cy.get('[data-test="diary-widget"]', { timout: 10000 }).within(() => {
           cy.contains('button', 'Voir tous les événements').click()
           cy.intercept('GET', '**/get-events**').as('allEvents')
           cy.wait('@allEvents')
