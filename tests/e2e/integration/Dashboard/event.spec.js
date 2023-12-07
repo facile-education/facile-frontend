@@ -682,7 +682,7 @@ describe('Dashboard_Events', () => {
         } else if (size === mobile) {
           cy.get('.diary-event').should('have.length', 10)
           // Scroll to bottom
-          cy.get('.nero-body').scrollTo('bottom')
+          cy.get('.scroll').scrollTo('bottom')
           cy.get('.diary-event').should('have.length', 15)
         } else if (size === ipad) {
           cy.get('.diary-event').should('have.length', 10)
