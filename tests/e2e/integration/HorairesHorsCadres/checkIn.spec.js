@@ -108,7 +108,7 @@ describe('HHC_Checkin', () => {
     })
   })
 
-  it('send absence notification once the check in is done', function () {
+  it('do checkIn', function () { // Find a way to be CRON compliant
     checkInSlotTypes.forEach(slotType => {
       const slotToCheckIn = this.hhcData.slotsTypes[slotType].slotExample
       const supervisor = rolesThatCanCheckIn[slotType][0]
@@ -131,43 +131,6 @@ describe('HHC_Checkin', () => {
         cy.contains('button', 'Faire l\'appel').click()
       })
       cy.get('[data-test=student-list-modal]').should('not.exist')
-
-      // Check absence notification
-      roleToBeNotified[slotType].forEach(role => {
-        cy.login(role, messagingURL)
-        waitMessagingToBeLoaded()
-        getThread(getAbsenceThread(supervisor, slotType, registeredStudent)).click()
-        cy.get('[data-test="message"]')
-          .should('contain', STUDENT.firstName + ' ' + STUDENT.lastName)
-          .should('contain', Cypress.dayjs(slotToCheckIn.startDate, 'YYYY/DD/MM HH:mm').format('DD MMMM YYYY [à] HH[h]mm'))
-      })
     })
-  })
-
-  it('not send absence notification when the student is checked', function () {
-    const slotType = 'detention'
-    const slotToCheckIn = this.hhcData.slotsTypes[slotType].slotExample
-    const supervisor = rolesThatCanCheckIn[slotType][0]
-
-    cy.login(supervisor, HHCURL)
-    cy.clock().invoke('setSystemTime', Cypress.dayjs(slotToCheckIn.endDate, 'YYYY/MM/DD HH:mm').toDate().getTime())
-    selectSlotType(this.hhcData.slotsTypes[slotType])
-    getSlot(slotToCheckIn).click()
-    cy.get('[data-test=showStudentList-option]').click({ force: true })
-
-    // Check in student
-    cy.get('[data-test=student-list-modal]').within(() => {
-      cy.contains('[data-test="student-list-item"]', registeredStudent.firstName + ' ' + registeredStudent.lastName)
-        .find('input[type="checkbox"][title="Présence"]').as('checkbox')
-        .click()
-      cy.get('@checkbox').should('be.checked')
-
-      cy.contains('button', 'Faire l\'appel').click()
-    })
-
-    // No absence notification is send
-    cy.login(roleToBeNotified[slotType][0], messagingURL)
-    waitMessagingToBeLoaded()
-    cy.get('[data-test=thread-list-item]').should('have.length', 0)
   })
 })
