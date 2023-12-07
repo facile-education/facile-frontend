@@ -43,20 +43,26 @@ describe('Messaging_SetReadStatus', () => {
       getUnread(totalThreads)
       // Open menu
       cy.get('[data-test="option_toggleMessagingMenu"]').click()
+      // Read to unread
+      cy.get('[data-test="threads-panel"]').within(() => {
+        cy.get('[data-test="thread-list-item"]').first().find('[data-test="unread-icon"]').should('be.visible')
+        cy.get('[data-test="thread-list-item"]').first().rightclick()
+        cy.get('[data-test="thread-list-item"]').first().find('[data-test="unread-icon"]').should('not.exist')
+      })
+      cy.get('.nb-unread').contains(unread - 1)
+      cy.get('.nb-new-messages').contains(unread - 1)
+      cy.get('[data-test="markAsUnread"]').click()
+      cy.get('.nb-unread').contains(unread)
+      cy.get('.nb-new-messages').contains(unread)
       // UnRead to read
       cy.get('[data-test="threads-panel"]').within(() => {
+        cy.get('[data-test="thread-list-item"]').first().find('[data-test="unread-icon"]').should('be.visible')
         cy.get('[data-test="thread-list-item"]').first().rightclick()
+        cy.get('[data-test="thread-list-item"]').first().find('[data-test="unread-icon"]').should('be.visible') // not pass as read because it's already open
       })
       cy.get('[data-test="markAsRead"]').click()
       cy.get('.nb-unread').contains(unread - 1)
       cy.get('.nb-new-messages').contains(unread - 1)
-      // Read to unread
-      cy.get('[data-test="threads-panel"]').within(() => {
-        cy.get('[data-test="thread-list-item"]').first().rightclick()
-      })
-      cy.get('[data-test="markAsUnread"]').click()
-      cy.get('.nb-unread').contains(unread)
-      cy.get('.nb-new-messages').contains(unread)
     })
   })
   context('mobile', function () {
