@@ -139,7 +139,7 @@ function formatSchoolSlotLabel (schoolSlot) {
 
 function selectWeek (date) {
   const nextWeekLabel = date.day(1).format('D MMM') // week's monday
-  cy.contains('.horizontal-timeline-week', nextWeekLabel).click()
+  cy.get('[data-test="weekList"]').contains('button', nextWeekLabel).click()
 }
 
 // Expose the number of events for the current, previous and next week
