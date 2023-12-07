@@ -2,6 +2,7 @@
   <div
     v-if="configuration"
     class="weekly-horizontal-timeline"
+    data-test="weekList"
   >
     <button
       :disabled="disablePrevious"
