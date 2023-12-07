@@ -112,7 +112,7 @@ describe('Dashboard_Activity', () => {
       })
     })
 
-    it.only('Dashboard_Activities_DisplayActivitiesDisplayInRightOrder', function () {
+    it('Dashboard_Activities_DisplayActivitiesDisplayInRightOrder', function () {
       const existingActivity = this.dashboardData.existingActivity
       const newActivity = this.dashboardData.futurActivity
       const information = existingActivity[0]

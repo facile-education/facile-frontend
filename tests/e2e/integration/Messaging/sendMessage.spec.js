@@ -178,7 +178,7 @@ describe('Sending message', () => {
     checkMessageDetails(message)
   })
 
-  it.only('Save draft and send it', () => {
+  it('Save draft and send it', () => {
     const message = {
       sender: DOYEN.firstName + ' ' + DOYEN.lastName,
       recipients: [DOYEN.firstName + ' ' + DOYEN.lastName, TEACHER.firstName + ' ' + TEACHER.lastName, STUDENT.firstName + ' ' + STUDENT.lastName],

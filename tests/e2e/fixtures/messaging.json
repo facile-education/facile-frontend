@@ -57,7 +57,9 @@
         "subject": "Re: deuxième message",
         "content": "Je vous réponds!",
         "messageIndexInThread": 1,
-        "read": true
+        "read": true,
+        "attachedFile1": "note.html",
+        "attachedFile2": "file.txt"
       },
       {
         "sender": "Rosana Nolly",
@@ -66,7 +68,9 @@
         "subject": "Re: deuxième message",
         "content": "Merci",
         "messageIndexInThread": 2,
-        "read": true
+        "read": true,
+        "attachedFile1": "note.html",
+        "attachedFile2": "file.txt"
       }
     ],
     [

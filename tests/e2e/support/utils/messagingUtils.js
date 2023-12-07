@@ -32,13 +32,13 @@ const getThread = (thread) => {
 
 const getMessage = (message) => {
   // Get message by content
-  return cy.get('[data-test=messages-panel]').contains('[data-test=message]', message.content)
+  return cy.get('[data-test=messages-panel]').contains('[data-test="message"]', message.content)
 }
 
 const getFileInMessage = (message, attachedFile) => {
   // Get message by content
-  return cy.get('.message-list').within(() => {
-    cy.contains('[data-test=message]', message.content).within(() => {
+  return cy.get('[data-test=messages-panel]').within(() => {
+    cy.contains('[data-test="message"]', message.content).within(() => {
       cy.contains('.attached-file', attachedFile)
     })
   })
