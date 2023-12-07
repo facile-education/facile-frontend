@@ -125,7 +125,9 @@
         "sender": "Orlan Hue",
         "subject": "Brouillon",
         "content": "Ceci est un message enregistré en tant que brouillon",
-        "messageIndexInThread": 0
+        "messageIndexInThread": 0,
+        "attachedFile1": "note.html",
+        "attachedFile2": "file.txt"
       }
     ]
   ],

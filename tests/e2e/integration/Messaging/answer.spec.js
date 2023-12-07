@@ -109,7 +109,8 @@ describe('Messaging_Reply', () => {
       cy.get('.footer').contains('button', 'Envoyer').click()
     })
 
-    it.only('Messaging_ReplyAll_rightClick', function () {
+    it('Messaging_ReplyAll_rightClick', function () {
+      setMessagingDocumentLibrary()
       const existingThreads = this.messagingData.existingThreads
       cy.login(HEADMASTER, messagingURL)
       waitMessagingToBeLoaded()
