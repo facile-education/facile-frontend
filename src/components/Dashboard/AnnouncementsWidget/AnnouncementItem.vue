@@ -65,7 +65,7 @@
       >
         <button
           v-if="announcement.isEditable"
-          class="option"
+          class="option theme-hover-extra-light-background-color"
           :aria-label="$t('update')"
           :title="$t('update')"
           data-test="buttonEditAnnouncement"
@@ -79,7 +79,7 @@
         </button>
         <button
           v-if="announcement.isDeletable"
-          class="option"
+          class="option theme-hover-extra-light-background-color"
           :aria-label="$t('delete')"
           :title="$t('delete')"
           data-test="buttonDeleteAnnouncement"
@@ -436,7 +436,7 @@ export default {
   bottom: 0;
   right: 0;
   display: flex;
-  border-radius: 0 5px 5px 0;
+  border-radius: 5px 0 0 0;
   overflow: hidden;
   transition: all .3s ease;
   opacity: 0;
@@ -455,8 +455,8 @@ export default {
       height: 1rem;
     }
 
-    &:hover {
-      background-color: $color-hover-bg;
+    &:not(:hover) {
+      background-color: white;
     }
   }
 }
