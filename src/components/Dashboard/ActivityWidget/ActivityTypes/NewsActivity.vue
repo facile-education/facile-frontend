@@ -63,7 +63,7 @@
       class="options"
     >
       <button
-        class="option"
+        class="option theme-hover-extra-light-background-color"
         :aria-label="$t('update')"
         data-test="buttonEditInformation"
         :title="$t('update')"
@@ -76,7 +76,7 @@
         >
       </button>
       <button
-        class="option"
+        class="option theme-hover-extra-light-background-color"
         data-test="buttonDeleteInformation"
         :aria-label="$t('delete')"
         :title="$t('delete')"
@@ -335,8 +335,8 @@ button {
         height: 1rem;
       }
 
-      &:hover {
-        background-color: $color-hover-bg;
+      &:not(:hover) {
+        background-color: white;
       }
     }
   }

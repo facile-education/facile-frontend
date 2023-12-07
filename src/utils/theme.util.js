@@ -9,6 +9,7 @@ const style = `.theme-text-color { color: ${mainColor}; }
     .theme-extra-light-background-color { background-color: ${mainColor}10; }
     .theme-hover-background-color:hover { color: ${fontColor}; background-color: ${mainColor}; }
     .theme-hover-light-background-color:hover { background-color: ${mainColor}27; }
+    .theme-hover-extra-light-background-color:hover { background-color: ${mainColor}10; }
     .theme-hover-text-color:hover { color: ${mainColor}; }
     .theme-border-color { border-color: ${mainColor} !important; }
     .theme-hover-border-color:hover { border-color: ${mainColor} !important; }

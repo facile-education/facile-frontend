@@ -56,6 +56,7 @@
         class="file-actions"
       >
         <button
+          class="theme-hover-extra-light-background-color"
           :title="$t('save')"
           :aria-label="$t('save')"
           @click.stop="isDepositModalDisplayed = true"
@@ -68,7 +69,7 @@
           >
         </button>
         <button
-          class="right-button"
+          class="right-button theme-hover-extra-light-background-color"
           :title="$t('download')"
           :aria-label="$t('download')"
           @click.stop="downloadAttachedFile"
@@ -332,8 +333,8 @@ button {
       height: 1rem;
     }
 
-    &:hover {
-      background-color: $color-hover-bg;
+    &:not(:hover) {
+      background-color: white;
     }
   }
 

@@ -35,7 +35,7 @@
     </div>
     <div class="options">
       <button
-        class="option"
+        class="option theme-hover-extra-light-background-color"
         @click.stop="isUpdateModalDisplayed = true"
       >
         <img
@@ -44,7 +44,7 @@
         >
       </button>
       <button
-        class="option"
+        class="option theme-hover-extra-light-background-color"
         @click.stop="confirmDeleteAccess"
       >
         <img
@@ -325,8 +325,8 @@ h3 {
     border: none;
     cursor: pointer;
 
-    &:hover {
-      background-color: $color-hover-bg;
+    &:not(:hover) {
+      background-color: white;
     }
   }
 }
