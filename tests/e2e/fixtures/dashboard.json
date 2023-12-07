@@ -5,7 +5,9 @@
         "content": "Ceci est le contenu de la nouvelle annonce",
         "personalDocument": "Note avec des caractères spéciaux_.html",
         "collaborativeDocument": "note à destination des élèves.html",
-        "workSpaceDocument": "file.txt"
+        "workSpaceDocument": "file.txt",
+        "dateToCreate": "2023/12/07",
+        "dateToRead": "2023/12/08"
     },
     "existingNews": [
         {

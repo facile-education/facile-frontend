@@ -182,6 +182,7 @@ describe('Dashboard_Announcements', () => {
       setAnnouncementDocumentWithContent()
       // Check if an admin can create an annoucement
       cy.login(SCHOOL_ADMIN, dashboardURL)
+      cy.clock().invoke('setSystemTime', Cypress.dayjs(NewNews.dataToCreate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
       cy.get('[data-test="buttonCreateAnnoucement"]').click()
       cy.get('[data-test="update-news-modal"]').should('be.visible')
 
@@ -247,6 +248,7 @@ describe('Dashboard_Announcements', () => {
 
       // Check if student see the annoucement with all attached files
       cy.login(STUDENT, dashboardURL)
+      cy.clock().invoke('setSystemTime', Cypress.dayjs(NewNews.dateToRead, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
       getNews(NewNews).should('be.exist').click()
       // Check if all files is visible and clickable
       checkFileVisibilityAndClick(NewNews.personalDocument)
@@ -255,6 +257,7 @@ describe('Dashboard_Announcements', () => {
 
       // Check if a teacher see the annoucement
       cy.login(TEACHER2, dashboardURL)
+      cy.clock().invoke('setSystemTime', Cypress.dayjs(NewNews.dateToRead, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
       getNews(NewNews).should('be.exist').click()
       checkFileVisibilityAndClick(NewNews.personalDocument)
       checkFileVisibilityAndClick(NewNews.collaborativeDocument)
@@ -264,13 +267,16 @@ describe('Dashboard_Announcements', () => {
     it('Dashboard_Announcements_CreateAnnouncementByHeadmasterCheckDelegateVisibility', function () {
       setAnnouncementDocumentWithContent()
       const newsToStudent = {
-        recipient: 'Tous les élèves',
+        recipient: 'Elèves de la volée 10',
         title: 'Nouvelle annonce',
         content: 'Ceci est le contenu de la nouvelle annonce',
-        personalDocument: 'Note avec des caractères spéciaux_.html'
+        personalDocument: 'Note avec des caractères spéciaux_.html',
+        dateToCreate: '2023/12/07',
+        dateToRead: '2023/12/08'
       }
       // Create announcement with the headmaster for students
       cy.login(HEADMASTER, dashboardURL)
+      cy.clock().invoke('setSystemTime', Cypress.dayjs(newsToStudent.dateToCreate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
       // Open create modal
       cy.get('[data-test="buttonCreateAnnoucement"]').click()
       // Set all informations
@@ -302,6 +308,7 @@ describe('Dashboard_Announcements', () => {
 
       // Check if redaction delegate see this annoucement
       cy.login(TEACHER, dashboardURL)
+      cy.clock().invoke('setSystemTime', Cypress.dayjs(newsToStudent.dateToRead, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
       getNews(newsToStudent).should('be.exist').click()
       cy.get('.news-details-modal').within(() => {
         // Open file modal
@@ -319,10 +326,13 @@ describe('Dashboard_Announcements', () => {
         recipient2: 'Tous les élèves',
         title: 'Nouvelle annonce',
         content: 'Ceci est le contenu de la nouvelle annonce',
-        personalDocument: 'Note avec des caractères spéciaux_.html'
+        personalDocument: 'Note avec des caractères spéciaux_.html',
+        dateToCreate: '2023/12/07',
+        dateToRead: '2023/12/08'
       }
       // Create announcement with the headmaster for teachers and students
       cy.login(HEADMASTER, dashboardURL)
+      cy.clock().invoke('setSystemTime', Cypress.dayjs(newsToTeacherAndStudent.dateToCreate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
       // Open create modal
       cy.get('[data-test="buttonCreateAnnoucement"]').click()
       // Set all informations
@@ -356,6 +366,7 @@ describe('Dashboard_Announcements', () => {
 
       // Check if students see this annoucement
       cy.login(STUDENT, dashboardURL)
+      cy.clock().invoke('setSystemTime', Cypress.dayjs(newsToTeacherAndStudent.dateToRead, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
       getNews(newsToTeacherAndStudent).should('be.exist').click()
       cy.get('.news-details-modal').within(() => {
         // Open file modal
@@ -369,13 +380,16 @@ describe('Dashboard_Announcements', () => {
     it('Dashboard_Announcements_CreateAnnouncementByDelegateCheckHeadmasterVisibility', function () {
       setAnnouncementDocumentWithContent()
       const newsToStudent = {
-        recipient: 'Tous les élèves',
+        recipient: 'Elèves de la volée 10',
         title: 'Nouvelle annonce',
         content: 'Ceci est le contenu de la nouvelle annonce',
-        personalDocument: 'Note avec des caractères spéciaux_.html'
+        personalDocument: 'Note avec des caractères spéciaux_.html',
+        dateToCreate: '2023/12/07',
+        dateToRead: '2023/12/07'
       }
       // Create announcement with the headmaster for students
       cy.login(TEACHER, dashboardURL)
+      cy.clock().invoke('setSystemTime', Cypress.dayjs(newsToStudent.dateToCreate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
       // Open create modal
       cy.get('[data-test="buttonCreateAnnoucement"]').click()
       // Set all informations
@@ -407,6 +421,7 @@ describe('Dashboard_Announcements', () => {
 
       // Check if redaction delegate see this annoucement
       cy.login(HEADMASTER, dashboardURL)
+      cy.clock().invoke('setSystemTime', Cypress.dayjs(newsToStudent.dateToRead, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
       getNews(newsToStudent).should('be.exist').click()
       cy.get('.news-details-modal').within(() => {
         // Open file modal
