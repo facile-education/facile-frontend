@@ -35,6 +35,15 @@ const getMessage = (message) => {
   return cy.get('[data-test=messages-panel]').contains('[data-test=message]', message.content)
 }
 
+const getFileInMessage = (message, attachedFile) => {
+  // Get message by content
+  return cy.get('.message-list').within(() => {
+    cy.contains('[data-test=message]', message.content).within(() => {
+      cy.contains('.attached-file', attachedFile)
+    })
+  })
+}
+
 const getDraft = (message) => {
   // Get draft by content
   return cy.contains('[data-test=thread-list-item]', message)
@@ -57,5 +66,6 @@ export {
   getMessage,
   getDraft,
   setRecipient,
-  setMessagingDocumentLibrary
+  setMessagingDocumentLibrary,
+  getFileInMessage
 }

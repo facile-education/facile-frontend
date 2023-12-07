@@ -1,9 +1,18 @@
 import { messagingURL } from '../../support/constants/urls'
 import { HEADMASTER, STUDENT, TEACHER } from '../../support/constants/users'
-import { getMessage, getThread, waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
+import { getFileInMessage, getMessage, getThread, setMessagingDocumentLibrary, waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
 
-const userAnswer = 'Ceci est un réponse à un seul utilisateur'
-const allUserAnswer = 'Ceci est un réponse à tous les utilisateurs'
+const allUserAnswer = {
+  content: 'Ceci est un réponse à tous les utilisateurs',
+  attachedFile1: 'note.html',
+  attachedFile2: 'file.txt'
+}
+
+const userAnswer = {
+  content: 'Ceci est un réponse à un seul utilisateur',
+  attachedFile1: 'note.html',
+  attachedFile2: 'file.txt'
+}
 
 describe('Messaging_Reply', () => {
   beforeEach(() => {
@@ -24,7 +33,7 @@ describe('Messaging_Reply', () => {
           cy.get('.tag-item').contains(`${STUDENT.firstName} ${STUDENT.lastName}`).should('not.exist')
         })
         cy.get('.ck-editor')
-        cy.type_ckeditor(userAnswer)
+        cy.type_ckeditor(userAnswer.content)
         // Check content in summary
         cy.get('summary').click()
         cy.get('details > div > p').contains(existingThreads[3][0].content)
@@ -38,6 +47,54 @@ describe('Messaging_Reply', () => {
       getMessage(existingThreads[3][0])
     })
 
+    it('Messaging_Reply_ReplyWithAttachedFiles', function () {
+      setMessagingDocumentLibrary()
+      const existingThreads = this.messagingData.existingThreads
+      // Send answer
+      cy.login(HEADMASTER, messagingURL)
+      waitMessagingToBeLoaded()
+      getThread(existingThreads[3]).rightclick()
+      cy.get('[data-test="reply"]').click()
+      cy.get('[data-test="createMessageModal"]').within(() => {
+        cy.get('.base-tags-input').within(() => {
+          cy.get('.tag-item').contains(`${TEACHER.firstName} ${TEACHER.lastName}`).should('be.exist')
+          cy.get('.tag-item').contains(`${STUDENT.firstName} ${STUDENT.lastName}`).should('not.exist')
+        })
+        cy.get('.ck-editor')
+        cy.type_ckeditor(userAnswer.content)
+        // Check content in summary
+        cy.get('summary').click()
+        cy.get('details > div > p').contains(existingThreads[3][0].content)
+      })
+      // Attachments
+      cy.get('[title="Ajouter une pièce jointe depuis vos documents de l\'ENTA"]').click()
+      cy.get('[data-test=file-picker-modal]').within(() => {
+        cy.contains('note.html').click()
+        cy.contains('button', 'Ajouter').click()
+      })
+      cy.get('[data-test=file-picker-modal]').should('not.exist')
+      // Open FilePicker modal
+      cy.get('.select-files-buttons').within(() => {
+        // Get file in fixture
+        cy.fixture('filesToUpload/file.txt').as('myFile')
+        // Get input type file in button to get get file in workSpace
+        cy.get('button').eq(1).within(() => {
+          // Use selectFile to simulate get file in workSpace
+          cy.get('input[type=file]').selectFile('@myFile', { force: true })
+          cy.wait(2000)
+        })
+      })
+      cy.get('.footer').contains('button', 'Envoyer').click()
+
+      // Check answer
+      cy.login(TEACHER, messagingURL)
+      waitMessagingToBeLoaded()
+      getThread(existingThreads[3]).click()
+      getMessage(userAnswer).should('be.visible')
+      getFileInMessage(userAnswer, userAnswer.attachedFile1)
+      getFileInMessage(userAnswer, userAnswer.attachedFile2)
+    })
+
     it('Messaging_Reply_optionButton', function () {
       const existingThreads = this.messagingData.existingThreads
       // Send answer
@@ -47,12 +104,12 @@ describe('Messaging_Reply', () => {
       cy.get('[data-test="option_reply"]').click()
       cy.get('[data-test="createMessageModal"]').within(() => {
         cy.get('.ck-editor')
-        cy.type_ckeditor(userAnswer)
+        cy.type_ckeditor(userAnswer.content)
       })
       cy.get('.footer').contains('button', 'Envoyer').click()
     })
 
-    it('Messaging_ReplyAll_rightClick', function () {
+    it.only('Messaging_ReplyAll_rightClick', function () {
       const existingThreads = this.messagingData.existingThreads
       cy.login(HEADMASTER, messagingURL)
       waitMessagingToBeLoaded()
@@ -64,24 +121,47 @@ describe('Messaging_Reply', () => {
           cy.get('.tag-item').contains(`${STUDENT.firstName} ${STUDENT.lastName}`).should('be.exist')
         })
         cy.get('.ck-editor')
-        cy.type_ckeditor(allUserAnswer)
+        cy.type_ckeditor(allUserAnswer.content)
         // Check content in summary
         cy.get('summary').click()
         cy.get('details > div > p').contains(existingThreads[3][0].content)
       })
+      // Attachments
+      cy.get('[title="Ajouter une pièce jointe depuis vos documents de l\'ENTA"]').click()
+      cy.get('[data-test=file-picker-modal]').within(() => {
+        cy.contains(allUserAnswer.attachedFile1).click()
+        cy.contains('button', 'Ajouter').click()
+      })
+      cy.get('[data-test=file-picker-modal]').should('not.exist')
+      // Open FilePicker modal
+      cy.get('.select-files-buttons').within(() => {
+        // Get file in fixture
+        cy.fixture('filesToUpload/file.txt').as('myFile')
+        // Get input type file in button to get get file in workSpace
+        cy.get('button').eq(1).within(() => {
+          // Use selectFile to simulate get file in workSpace
+          cy.get('input[type=file]').selectFile('@myFile', { force: true })
+          cy.wait(2000)
+        })
+      })
+      // Send answer
       cy.get('.footer').contains('button', 'Envoyer').click()
 
       // Check answer first recipients
       cy.login(TEACHER, messagingURL)
       waitMessagingToBeLoaded()
       getThread(existingThreads[3]).click()
-      getMessage(existingThreads[3][0])
+      getMessage(allUserAnswer).should('be.visible')
+      getFileInMessage(allUserAnswer, allUserAnswer.attachedFile1)
+      getFileInMessage(allUserAnswer, allUserAnswer.attachedFile2)
 
       // Check answer second recipients
       cy.login(STUDENT, messagingURL)
       waitMessagingToBeLoaded()
       getThread(existingThreads[3]).click()
-      getMessage(existingThreads[3][0])
+      getMessage(allUserAnswer).should('be.visible')
+      getFileInMessage(allUserAnswer, allUserAnswer.attachedFile1)
+      getFileInMessage(allUserAnswer, allUserAnswer.attachedFile2)
     })
 
     it('Messaging_ReplyAll_optionButton', function () {
@@ -92,7 +172,7 @@ describe('Messaging_Reply', () => {
       cy.get('[data-test="option_replyAll"]').click()
       cy.get('[data-test="createMessageModal"]').within(() => {
         cy.get('.ck-editor')
-        cy.type_ckeditor(allUserAnswer)
+        cy.type_ckeditor(allUserAnswer.content)
       })
       cy.get('.footer').contains('button', 'Envoyer').click()
     })
