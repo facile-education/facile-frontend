@@ -1072,6 +1072,36 @@ LOCK TABLES `Document_Version` WRITE;
 /*!40000 ALTER TABLE `Document_Version` ENABLE KEYS */;
 UNLOCK TABLES;
 
+--
+-- Table structure for table `Users_Groups` // Mandatory to empty collaborative groups root documents
+--
+
+DROP TABLE IF EXISTS `Users_Groups`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Users_Groups` (
+  `companyId` bigint(20) NOT NULL,
+  `groupId` bigint(20) NOT NULL,
+  `userId` bigint(20) NOT NULL,
+  `ctCollectionId` bigint(20) NOT NULL DEFAULT 0,
+  `ctChangeType` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`groupId`,`userId`,`ctCollectionId`),
+  KEY `IX_3499B657` (`companyId`),
+  KEY `IX_F10B6C6B` (`userId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Users_Groups`
+--
+
+LOCK TABLES `Users_Groups` WRITE;
+/*!40000 ALTER TABLE `Users_Groups` DISABLE KEYS */;
+INSERT INTO `Users_Groups` VALUES (20097,20121,20125,0,NULL);
+/*!40000 ALTER TABLE `Users_Groups` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
 
 --
 -- Only delete concern row of table `ResourcePermission` (and re-add some necessary)
