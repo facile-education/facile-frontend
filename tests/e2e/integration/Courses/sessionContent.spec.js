@@ -45,7 +45,7 @@ describe('Sessions content', () => {
     })
     // Add attached file
     cy.get('[title="Ajouter une pièce jointe depuis vos documents de l\'ENTA"]').click()
-    cy.get('[data-test="documentFile"]').within(() => {
+    cy.get('[data-test="file-picker-modal"]').within(() => {
       cy.contains('.file', sessionContentToCreate[0].attachedFile).click()
       cy.get('[data-test="submitButton"]').click()
     })
@@ -253,14 +253,10 @@ describe('Sessions content', () => {
     })
     // // Add attached file
     cy.get('[title="Ajouter une pièce jointe depuis vos documents de l\'ENTA"]').click()
-    cy.get('[data-test="documentFile"]').within(() => {
+    cy.get('[data-test="file-picker-modal"]').within(() => {
       cy.contains('.file', sessionContentToEdit[0].attachedFile).click()
       cy.get('[data-test="submitButton"]').click()
     })
-
-    cy.type_ckeditor(sessionContentToEdit[0].additionalText, 'contentItem_2')
-    // Add cy.tick beacause cy.clock()
-    cy.tick(1000)
 
     // // Skip test audio because bug cy.clock()
 
