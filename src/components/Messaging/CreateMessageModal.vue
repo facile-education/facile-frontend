@@ -416,11 +416,8 @@ export default {
                   break
                 }
               }
-            } else {
-            // Thread is selected
-              if (this.$store.state.messaging.lastSelectedThread !== undefined) {
-                messagingUtils.reloadThread(this.$store.state.messaging.lastSelectedThread)
-              }
+            } else if (this.$store.state.messaging.lastSelectedThread !== undefined) { // Thread is selected
+              messagingUtils.reloadThread(this.$store.state.messaging.lastSelectedThread)
             }
             // Refresh thread list if this is a reply, a forward or a draft
             if (this.messageParameters.isReply || this.messageParameters.isReplyAll || this.messageParameters.isForward || this.messageParameters.isDraft) {
@@ -434,10 +431,19 @@ export default {
             if (this.$store.state.messaging.currentFolder.type === constants.messagingSentFolderType) {
               this.$store.dispatch('messaging/selectFolder', this.$store.state.messaging.currentFolder)
             }
+            this.onClose()
           }, 500)
+        } else {
+          console.error('Error while sending files')
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+          this.onClose()
         }
+      }, (err) => {
+        this.isLoading = false
+        console.error(err)
+        this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+        this.onClose()
       })
-      this.onClose()
     },
     formatPreviousContent (content) {
       return '</br><details><summary>' + this.$t('at') +
