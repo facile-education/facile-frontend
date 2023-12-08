@@ -36,6 +36,7 @@
             <li
               v-for="option in appEvent.options"
               :key="option.name"
+              class="option"
             >
               <button
                 :aria-label="option.label"
@@ -43,16 +44,17 @@
                 :data-test="option.name + '-option'"
                 @click="$emit('optionClicked', option)"
               >
-                <NeroIcon
-                  :name="option.icon"
-                />
+                <img
+                  :src="option.icon"
+                  :alt="option.label"
+                >
               </button>
             </li>
           </ul>
         </div>
       </header>
       <div class="slot-content">
-        <div>
+        <div class="first-line">
           <span
             v-if="selectedEvent.event.extendedProps.teacher || selectedEvent.event.extendedProps.teachers"
             class="teacher"
@@ -154,6 +156,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
+
 .event-popup {
   min-width: 14rem;
   max-width: 350px;
@@ -200,26 +204,19 @@ export default {
   .sub-header {
     background: #FFFFFFBB;
     color: #333;
-    padding: 5px;
+    padding: 8px;
     display: flex;
     align-items: center;
 
-    .svg-inline--fa {
-      margin: 0 5px;
-      cursor: pointer;
-    }
-
     h4 {
-      margin-top: 0;
-      margin-bottom: .2rem;
+      margin: 0;
+      @extend %font-bold-s;
     }
 
     ul {
       margin: 0;
       padding: 0;
       list-style-type: none;
-      cursor: pointer;
-      display: flex;
     }
 
     button {
@@ -228,24 +225,37 @@ export default {
       background-color: transparent;
       border: none;
       cursor: pointer;
+      display: flex;
+      align-items: center;
     }
 
     .options {
       margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem
+    }
+
+    .option {
+      img {
+        width: 1rem;
+        height: 1rem;
+      }
     }
   }
 
   .slot-content {
-    border-radius: 6px;
     display: flex;
     flex-direction: column;
+    gap: 0.25rem;
     align-items: center;
     justify-content: center;
-    font-size: 0.9em;
-    padding: 10px;
+    padding: 0.5rem;
+    white-space: nowrap;
+    @extend %font-regular-xs;
 
-    .room {
-      font-style: italic;
+    .first-line {
+      @extend %font-bold-s;
     }
   }
 }
