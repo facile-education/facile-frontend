@@ -179,7 +179,8 @@ describe('HHC_Firing_Registration', () => {
       }
       if (notification.expectedActivityItem) {
         cy.login(notification.role, dashboardURL)
-        cy.get('[data-test=activity-widget]', { timeout: 10000 }).within(() => {
+        cy.get('[data-test=activity-widget]', { timeout: 10000 }).scrollIntoView()
+        cy.get('[data-test=activity-widget]').within(() => {
           cy.contains(notification.expectedActivityItem.title).should('be.visible')
           cy.contains(notification.expectedActivityItem.content).should('be.visible')
         })

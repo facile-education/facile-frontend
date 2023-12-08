@@ -40,6 +40,7 @@ const deleteSlot = (slotToDelete, capacity) => {
 }
 const selectSlotType = (slotType) => {
   cy.get('[data-test=slot-type-item-' + slotType.type + ']', { timeout: 10000 }).click()
+  cy.get('.calendar', { timeout: 10000 }).should('be.visible')
 }
 
 const selectStudent = (student) => {
