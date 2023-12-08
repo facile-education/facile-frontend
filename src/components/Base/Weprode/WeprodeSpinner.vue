@@ -2,6 +2,7 @@
   <div
     v-show="loading"
     class="v-spinner"
+    data-test="spinner"
   >
     <div
       class="spinner"
