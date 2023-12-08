@@ -147,7 +147,9 @@
         "title": "Activité créée",
         "content": "Ceci est une activité créée",
         "personalDocument": "Note avec des caractères spéciaux_.html",
-        "workSpaceDocument": "file.txt"
+        "workSpaceDocument": "file.txt",
+        "dateToCreate": "2023/11/30",
+        "dateToConsulte": "2023/11/31"
     },
     "activityToEdit": {
         "recipient": "Responsables légaux de EC0933",

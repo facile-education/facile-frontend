@@ -382,7 +382,7 @@ describe('Dashboard_Activity', () => {
         cy.get('.header').should('contain', existingActivity[0].title)
         // Chekc the recipient
         cy.get('.lonely-population').should('contain', existingActivity[0].recipient)
-        // Check the content
+        // Check the contentonlt
         cy.get('.detailed-news > .content').should('contain', existingActivity[0].content)
       })
     })
@@ -393,6 +393,7 @@ describe('Dashboard_Activity', () => {
 
       // Login
       cy.login(TEACHER, dashboardURL)
+
       loadActivity('get-dashboard-activity')
       cy.get('[data-test="activity-widget"]').within(() => {
         // Click to oopen createActivity modal
@@ -441,6 +442,7 @@ describe('Dashboard_Activity', () => {
       // Login
       cy.login(STUDENT, dashboardURL)
       loadActivity('get-dashboard-activity')
+      cy.wait(2000)
       // Check if a student the new actvity is visible
       cy.get('[data-test="activity-widget"]').within(() => {
         // Display all activity
@@ -451,7 +453,7 @@ describe('Dashboard_Activity', () => {
       // Verify the content
       getInformationDetail(activityToCreate)
       // Open file modal
-      cy.contains('.attached-file', activityToCreate.document).should('be.visible').click()
+      cy.contains('.attached-file', activityToCreate.personalDocument).should('be.visible').click()
       cy.get('[data-test="file-display-modal"]').should('be.visible').within(() => {
         // Check if student cant edit file
         cy.get('.ck-editor').should('have.class', 'disabled')
