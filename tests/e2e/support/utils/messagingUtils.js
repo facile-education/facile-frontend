@@ -56,7 +56,7 @@ const setRecipient = (user) => {
 
 const setMessagingDocumentLibrary = () => {
   cy.loadTables('messaging/messaging_tables_document.sql')
-  cy.exec('npm run dl:loadDocumentLibrary document_library.tar.xz')
+  cy.exec('npm run dl:loadDocumentLibrary document_library_messaging.tar.xz')
 }
 
 export {
