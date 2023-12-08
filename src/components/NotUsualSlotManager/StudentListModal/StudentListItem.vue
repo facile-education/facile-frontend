@@ -18,14 +18,18 @@
         :model-value="student.isPresent"
         @update:model-value="handleCheck"
       />
-      <NeroIcon
+      <button
         v-if="isSignOut"
-        name="fa-sign-out-alt"
-        class="icon"
-        data-test="unregister"
         :title="$t('NotUsualSlots.StudentListModal.unsubscribe')"
+        :aria-label="$t('NotUsualSlots.StudentListModal.unsubscribe')"
+        data-test="unregister"
         @click="isStudentDeregistrationModalDisplayed = true"
-      />
+      >
+        <img
+          src="@assets/icons/out.svg"
+          :alt="$t('NotUsualSlots.StudentListModal.unsubscribe')"
+        >
+      </button>
     </div>
 
     <teleport
@@ -154,8 +158,19 @@ export default {
   margin-right: 30px;
 }
 
-.icon {
+button {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  border: none;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+
+  img {
+    height: 20px;
+    width: 20px;
+  }
 }
 
 </style>
