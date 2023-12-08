@@ -75,10 +75,9 @@ describe('Dashboard_Activity', () => {
       loadActivity('get-dashboard-activity')
       // Redirection document
       cy.get('.doc-activity').within(() => {
-        cy.contains('i', DocumentSpace.title).click()
+        cy.contains('.content > .author', DocumentSpace.title).click()
       })
-      cy.url().should('eq', 'https://dev-ent-gve.com/documents/groups/546901')
-      cy.get('.documents').should('be.visible')
+      cy.get('.documents').should('not.exist')
     })
 
     it('Dashboard_Activities_DisplayActivityDisplay_Placeholder', function () {
@@ -308,6 +307,7 @@ describe('Dashboard_Activity', () => {
       cy.fixture('dashboard.json').as('dashboardData')
       cy.loadTables('schoollife/schoollife_tables.sql')
       cy.loadTables('dashboard/dashboard_tables_activity_News.sql')
+      cy.loadTables('dashboard/dashboard_tables_homework_empty.sql')
       setActivityNewsWithContent()
     })
     it('Dashboard_Activities_DisplayActivitiesFuturRelease', function () {

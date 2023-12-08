@@ -63,9 +63,10 @@ describe('Draft', () => {
     })
 
     // Messaging_EditDraft
-    it.only('Messaging_EditDraft', function () {
+    it('Messaging_EditDraft', function () {
       // Login
       cy.loadTables('messaging/messaging_tables.sql')
+      setMessagingDocumentLibrary()
       cy.login(HEADMASTER, messagingURL)
       waitMessagingToBeLoaded()
       const existingDraftThreads = this.messagingData.existingDraftThreads[0]

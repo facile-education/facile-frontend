@@ -131,7 +131,6 @@ LOCK TABLES `News_NewsRead` WRITE;
 /*!40000 ALTER TABLE `News_NewsRead` DISABLE KEYS */;
 INSERT INTO `News_NewsRead` VALUES
 (545275,45479,'2023-11-03 14:08:31.828000'),
-(545275,47461,'2023-12-06 16:00:15.001000'),
 (553401,45479,'2023-11-08 10:22:04.317000');
 /*!40000 ALTER TABLE `News_NewsRead` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -165,6 +164,36 @@ INSERT INTO `User_NewsAdmin` VALUES
 /*!40000 ALTER TABLE `User_NewsAdmin` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+--
+-- Table structure for table `Course_SessionContent`
+--
+
+DROP TABLE IF EXISTS `Course_SessionContent`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Course_SessionContent` (
+  `sessionId` bigint(20) NOT NULL,
+  `companyId` bigint(20) DEFAULT NULL,
+  `teacherId` bigint(20) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `modificationDate` datetime(6) DEFAULT NULL,
+  `publicationDate` datetime(6) DEFAULT NULL,
+  `isDraft` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`sessionId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Course_SessionContent`
+--
+
+LOCK TABLES `Course_SessionContent` WRITE;
+/*!40000 ALTER TABLE `Course_SessionContent` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Course_SessionContent` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
