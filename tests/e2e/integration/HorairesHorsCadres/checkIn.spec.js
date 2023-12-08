@@ -1,4 +1,4 @@
-import { HHCURL, messagingURL } from '../../support/constants/urls'
+import { HHCURL } from '../../support/constants/urls'
 import {
   DEPANNAGE_SUPERVISOR,
   DETENTION_SUPERVISOR,
@@ -12,7 +12,6 @@ import {
   getSlot,
   selectSlotType
 } from '../../support/utils/horairesHorsCardesUtils'
-import { getThread, waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
 
 const checkInSlotTypes = ['replayTest', 'study', 'detention']
 
@@ -24,35 +23,6 @@ const rolesThatCanCheckIn = {
 const rolesThatCannotCheckIn = [HEADMASTER, SECRETARY, DOYEN, TEACHER]
 
 const registeredStudent = STUDENT
-const registerer = HEADMASTER
-
-const roleToBeNotified = {
-  replayTest: [registerer, HEADMASTER, DOYEN],
-  study: [HEADMASTER, DOYEN],
-  detention: [registerer, HEADMASTER, DOYEN]
-}
-
-const getNotificationSlotLabel = (slotType) => { // Because text in notification is not exactly the same as slot label...
-  switch (slotType) {
-    case 'replayTest':
-      return 'Travail à refaire'
-    case 'study':
-      return 'Cercle d\'étude'
-    case 'detention':
-      return 'Retenue'
-  }
-}
-
-const getAbsenceThread = (supervisor, slotType, absentStudent) => {
-  return [{
-    sender: supervisor.firstName + ' ' + supervisor.lastName,
-    recipients: roleToBeNotified[slotType], // todo: to extract string
-    date: '',
-    subject: getNotificationSlotLabel(slotType) + ' - Absence de ' + absentStudent.firstName + ' ' + absentStudent.lastName,
-    content: '',
-    messageIndexInThread: 0
-  }]
-}
 
 describe('HHC_Checkin', () => {
   beforeEach(() => {
@@ -60,7 +30,6 @@ describe('HHC_Checkin', () => {
       cy.clock(Cypress.dayjs(data.now, 'YYYY/MM/DD HH:mm').toDate().getTime())
     })
     cy.loadTables('schoollife/schoollife_tables.sql')
-    cy.loadTables('messaging/messaging_tables_empty.sql') // to empty
   })
 
   it('option is present for good roles', function () {
