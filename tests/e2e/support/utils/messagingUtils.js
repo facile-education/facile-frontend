@@ -51,7 +51,7 @@ const getDraft = (message) => {
 
 const setRecipient = (user) => {
   cy.get('.base-tags-input').type(`${user.firstName}`)
-  cy.get('.suggestion-list').contains(`${user.lastName} ${user.firstName}`).click()
+  cy.get('.suggestion-list').contains(`${user.lastName} ${user.firstName}`, { timeout: 6000 }).click()
 }
 
 const setMessagingDocumentLibrary = () => {
