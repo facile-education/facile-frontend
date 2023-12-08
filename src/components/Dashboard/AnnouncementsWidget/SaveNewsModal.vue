@@ -306,8 +306,9 @@ export default {
   },
   methods: {
     roundMinutes () {
-      // Round releaseDate to the nearest quarter-hour (to have a compliant behaviour with v-calendar)
-      this.releaseDate = this.releaseDate.minute(Math.round(this.releaseDate.minute() / 15) * 15)
+      // Round releaseDate to the previous quarter-hour (to have a compliant behaviour with v-calendar 15min suggestion list)
+      const currentQuarterNumber = Math.floor(this.releaseDate.minute() / 15)
+      this.releaseDate = this.releaseDate.minute((currentQuarterNumber) * 15)
     },
     setInitialForm () {
       this.initialForm = {
