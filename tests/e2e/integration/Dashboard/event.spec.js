@@ -655,7 +655,7 @@ describe('Dashboard_Events', () => {
     const mobile = sizes[0]
     const ipad = sizes[1]
     sizes.forEach(size => {
-      it.only(`Dashboard_Events_DisplayAllEventsLoadNextEvent: ${size}`, function () {
+      it(`Dashboard_Events_DisplayAllEventsLoadNextEvent: ${size}`, function () {
         // Set testing viewport
         if (Array.isArray(size)) {
           cy.viewport(size[0], size[1])

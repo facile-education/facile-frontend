@@ -1,3 +1,5 @@
+import dayjs from 'dayjs'
+
 import { dashboardURL } from '../../support/constants/urls'
 import { DOYEN, MULTI_PARENT, PARENT, STUDENT, TEACHER, TEACHER2 } from '../../support/constants/users'
 import { checkFileVisibilityAndClick, getInformation, getInformationDetail, loadActivity, setActivityNewsWithContent, setActivityWithContent } from '../../support/utils/dashboard'
@@ -390,6 +392,7 @@ describe('Dashboard_Activity', () => {
     it('Dashboard_Activities_CreateActivityButtonHeaderActivityWithAttachedFiles', function () {
       cy.loadTables('dashboard/dashboard_tables_activity_News_attachedFile.sql')
       const activityToCreate = this.dashboardData.ActivityToCreate
+      const CurrentDate = dayjs
 
       // Login
       cy.login(TEACHER, dashboardURL)
@@ -441,8 +444,10 @@ describe('Dashboard_Activity', () => {
 
       // Login
       cy.login(STUDENT, dashboardURL)
+      cy.clock().invoke('setSystemTime', Cypress.dayjs(CurrentDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+      // Set time 15min after publication
+      cy.tick(900000)
       loadActivity('get-dashboard-activity')
-      cy.wait(2000)
       // Check if a student the new actvity is visible
       cy.get('[data-test="activity-widget"]').within(() => {
         // Display all activity
