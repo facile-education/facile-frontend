@@ -22,6 +22,7 @@
       <div
         ref="windowContainer"
         class="container"
+        :class="{'full-screen': isFullScreen}"
       >
         <div class="header theme-border-color">
           <h1 :title="file.name">
@@ -194,6 +195,10 @@ $header-height: 50px;
   width: 100%;
   display: flex;
   flex-direction: column;
+
+  &:not(.full-screen) {
+    border-radius: $border-radius-nero;
+  }
 }
 
 .header {
