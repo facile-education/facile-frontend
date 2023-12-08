@@ -527,6 +527,7 @@ describe('Dashboard_Announcements', () => {
       const existingNews = this.dashboardData.existingNews
       const lastNews = existingNews[0]
       const newsToEdit = this.dashboardData.newsToEdit
+      const CurrentDate = dayjs()
       setAnnouncementDocumentWithContent()
 
       // Login with student to chech if he don't see the announcement
@@ -596,6 +597,9 @@ describe('Dashboard_Announcements', () => {
 
       // Login with a student to see if now he can see the announcement
       cy.login(STUDENT, dashboardURL)
+      cy.clock().invoke('setSystemTime', Cypress.dayjs(CurrentDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+      // Set time 15min after publication
+      cy.tick(900000)
       getNews(newsToEdit).should('be.exist')
     })
 
@@ -637,6 +641,7 @@ describe('Dashboard_Announcements', () => {
       const existingNews = this.dashboardData.existingNews
       const newsToEdit = this.dashboardData.newsToEdit
       const furturNews = this.dashboardData.futurNews
+      const CurrentDate = dayjs()
 
       // Login with a student
       cy.login(MULTI_STUDENT1, dashboardURL)
@@ -667,6 +672,9 @@ describe('Dashboard_Announcements', () => {
 
       // Login with a student
       cy.login(MULTI_STUDENT1, dashboardURL)
+      cy.clock().invoke('setSystemTime', Cypress.dayjs(CurrentDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+      // Set time 15min after publication
+      cy.tick(900000)
       // Check if new is mark as unRead
       getNews(newsToEdit).should('be.visible').within(() => {
         cy.get('.pellet').should('be.visible')
