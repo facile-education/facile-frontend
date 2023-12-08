@@ -67,7 +67,7 @@ INSERT INTO `Messaging_Message` VALUES
 (534223,534207,534224,0,45479,'2023-10-05 09:01:19.210','Troisième message','J\'ai encore des choses à dire!',0,NULL,0,0,'Rosana NOLLI',0,20097),
 (534225,534205,534224,534223,45479,'2023-10-05 09:01:19.272','Troisième message','J\'ai encore des choses à dire!',1,NULL,0,0,'Rosana NOLLI',0,20097),
 (824401,534207,824402,0,45479,'2023-10-12 14:03:18.747','Mon quatrième message','Ceci est un message avec plusieurs destinataires',0,NULL,0,0,'Rosana NOLLI',0,20097),
-(824403,534205,824402,824401,45479,'2023-10-12 14:03:18.841','Mon quatrième message','Ceci est un message avec plusieurs destinataires',1,NULL,0,0,'Rosana NOLLI',0,20097),
+(824403,534205,824402,824401,45479,'2023-10-12 14:03:18.841','Mon quatrième message','Ceci est un message avec plusieurs destinataires',0,'2023-12-08 16:11:49',0,0,'Rosana NOLLI',0,20097),
 (824405,824404,824402,824401,45479,'2023-10-12 14:03:18.933','Mon quatrième message','Ceci est un message avec plusieurs destinataires',1,NULL,0,0,'Rosana NOLLI',0,20097);
 /*!40000 ALTER TABLE `Messaging_Message` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -94,7 +94,7 @@ CREATE TABLE `Messaging_MessageAttachFile` (
 LOCK TABLES `Messaging_MessageAttachFile` WRITE;
 /*!40000 ALTER TABLE `Messaging_MessageAttachFile` DISABLE KEYS */;
 INSERT INTO `Messaging_MessageAttachFile` VALUES
-(485621,685701);
+(485621,593712);
 /*!40000 ALTER TABLE `Messaging_MessageAttachFile` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -274,4 +274,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-07 14:19:22
+-- Dump completed on 2023-12-08 16:28:11
