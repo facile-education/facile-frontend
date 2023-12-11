@@ -84,10 +84,53 @@ const ScrollToAndCheckVisibility = (widget) => {
 }
 
 const checkFileVisibilityAndClick = (file) => {
+  cy.contains('.attached-file', file).within(() => {
+    cy.get('.size').should('be.visible')
+  })
   cy.contains('.attached-file', file).should('be.visible').click()
   cy.get('[data-test="file-display-modal"]').should('be.visible').within(() => {
     cy.get('[data-test="closeModal"]').click({ force: true })
   })
+}
+
+const addPersonalFile = (file) => {
+  cy.get('.select-files-buttons').within(() => {
+    cy.get('button').eq(0).click()
+  })
+  // Add file from personal document
+  cy.get('[data-test="file-picker-modal"]').within(() => {
+    cy.contains('.file', file).click()
+    cy.get('[data-test="submitButton"]').click()
+  })
+}
+
+const addCollaborativeFile = (file) => {
+  cy.get('.select-files-buttons').within(() => {
+    cy.get('button').eq(0).click()
+  })
+  // Add file from collaborative document
+  cy.get('[data-test="file-picker-modal"]').within(() => {
+    cy.get('[data-test="breadcrumb-item"]').click()
+    cy.get('[data-test="groups"]').click()
+    cy.get('.documents-list').within(() => {
+      cy.contains('button', 'Espace collaboratif sans les élèves').click()
+    })
+    cy.contains('.file', file).click()
+    cy.get('[data-test="submitButton"]').click()
+  })
+}
+
+const addFileFromWorkSpace = () => {
+  cy.get('.select-files-buttons').within(() => {
+    // Get file in fixture
+    cy.fixture('filesToUpload/file.txt').as('myFile')
+    // Get input type file in button to get get file in workSpace
+    cy.get('button').eq(1).within(() => {
+      // Use selectFile to simulate get file in workSpace
+      cy.get('input[type=file]').selectFile('@myFile', { force: true })
+    })
+  })
+  cy.get('.attached-file').contains('file.txt')
 }
 
 export {
@@ -106,5 +149,8 @@ export {
   ScrollToAndCheckVisibility,
   setAnnouncementDocumentWithContent,
   checkFileVisibilityAndClick,
-  setActivityNewsWithContent
+  setActivityNewsWithContent,
+  addPersonalFile,
+  addCollaborativeFile,
+  addFileFromWorkSpace
 }

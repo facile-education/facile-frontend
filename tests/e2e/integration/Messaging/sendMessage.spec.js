@@ -1,5 +1,6 @@
 import { messagingURL } from '../../support/constants/urls'
 import { DOYEN, STUDENT, TEACHER } from '../../support/constants/users'
+import { addFileFromWorkSpace, addPersonalFile } from '../../support/utils/dashboard'
 import { reloadThreadsAndFolders, setMessagingDocumentLibrary, waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
 
 const checkAndSelectThreadMessage = (message) => {
@@ -127,23 +128,8 @@ describe('Sending message', () => {
     cy.type_ckeditor(message.content) // Match the last instance of ckEditor
 
     // Attachments
-    cy.get('[title="Ajouter une pièce jointe depuis vos documents de l\'ENTA"]').click()
-    cy.get('[data-test=file-picker-modal]').within(() => {
-      cy.contains(message.attachedFile1).click()
-      cy.contains('button', 'Ajouter').click()
-    })
-    cy.get('[data-test=file-picker-modal]').should('not.exist')
-    // Open FilePicker modal
-    cy.get('.select-files-buttons').within(() => {
-      // Get file in fixture
-      cy.fixture('filesToUpload/file.txt').as('myFile')
-      // Get input type file in button to get get file in workSpace
-      cy.get('button').eq(1).within(() => {
-        // Use selectFile to simulate get file in workSpace
-        cy.get('input[type=file]').selectFile('@myFile', { force: true })
-      })
-      cy.wait(2000)
-    })
+    addPersonalFile(message.attachedFile1)
+    addFileFromWorkSpace()
 
     // Send message
     cy.log('Send message')
@@ -209,23 +195,8 @@ describe('Sending message', () => {
     cy.type_ckeditor(message.content) // Match the last instance of ckEditor
 
     // Attachments
-    cy.get('[title="Ajouter une pièce jointe depuis vos documents de l\'ENTA"]').click()
-    cy.get('[data-test=file-picker-modal]').within(() => {
-      cy.contains(message.attachedFile1).click()
-      cy.contains('button', 'Ajouter').click()
-    })
-    cy.get('[data-test=file-picker-modal]').should('not.exist')
-    // Open FilePicker modal
-    cy.get('.select-files-buttons').within(() => {
-      // Get file in fixture
-      cy.fixture('filesToUpload/file.txt').as('myFile')
-      // Get input type file in button to get get file in workSpace
-      cy.get('button').eq(1).within(() => {
-        // Use selectFile to simulate get file in workSpace
-        cy.get('input[type=file]').selectFile('@myFile', { force: true })
-        cy.wait(2000)
-      })
-    })
+    addPersonalFile(message.attachedFile1)
+    addFileFromWorkSpace()
 
     cy.log('Save draft')
     cy.contains('Enregistrer en brouillon').click()

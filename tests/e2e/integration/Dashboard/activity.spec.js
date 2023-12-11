@@ -2,7 +2,7 @@ import dayjs from 'dayjs'
 
 import { dashboardURL } from '../../support/constants/urls'
 import { DOYEN, MULTI_PARENT, PARENT, STUDENT, TEACHER, TEACHER2 } from '../../support/constants/users'
-import { checkFileVisibilityAndClick, getInformation, getInformationDetail, loadActivity, setActivityNewsWithContent, setActivityWithContent } from '../../support/utils/dashboard'
+import { addFileFromWorkSpace, addPersonalFile, checkFileVisibilityAndClick, getInformation, getInformationDetail, loadActivity, setActivityNewsWithContent, setActivityWithContent } from '../../support/utils/dashboard'
 
 describe('Dashboard_Activity', () => {
   context('StaticDataDumpActivities', function () {
@@ -409,27 +409,10 @@ describe('Dashboard_Activity', () => {
         cy.get('.labelled').type(activityToCreate.title)
         cy.get('.ck-editor')
         cy.type_ckeditor(activityToCreate.content)
-        // Open FilePicker modal
-        cy.get('.select-files-buttons').within(() => {
-          cy.get('button').eq(0).click()
-        })
       })
-      // Add file
-      cy.get('[data-test="file-picker-modal"]').within(() => {
-        cy.contains('.file', activityToCreate.personalDocument).click()
-        cy.get('[data-test="submitButton"]').click()
-      })
-
-      // Open FilePicker modal
-      cy.get('.select-files-buttons').within(() => {
-        // Get file in fixture
-        cy.fixture('filesToUpload/file.txt').as('myFile')
-        // Get input type file in button to get get file in workSpace
-        cy.get('button').eq(1).within(() => {
-          // Use selectFile to simulate get file in workSpace
-          cy.get('input[type=file]').selectFile('@myFile', { force: true })
-        })
-      })
+      // Add files
+      addPersonalFile(activityToCreate.personalDocument)
+      addFileFromWorkSpace()
 
       // Submit
       cy.get('[data-test="update-news-modal"]').within(() => {
@@ -449,6 +432,7 @@ describe('Dashboard_Activity', () => {
       cy.tick(900000)
       loadActivity('get-dashboard-activity')
       // Check if a student the new actvity is visible
+      cy.wait(2000)
       cy.get('[data-test="activity-widget"]').within(() => {
         // Display all activity
         cy.contains('button', 'Voir toutes les activités').click()

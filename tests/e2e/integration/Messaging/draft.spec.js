@@ -1,5 +1,6 @@
 import { messagingURL } from '../../support/constants/urls'
 import { HEADMASTER, STUDENT } from '../../support/constants/users'
+import { addFileFromWorkSpace, addPersonalFile } from '../../support/utils/dashboard'
 import { getFileInMessage, getMessage, getThread, setMessagingDocumentLibrary, setRecipient, waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
 
 describe('Draft', () => {
@@ -28,23 +29,8 @@ describe('Draft', () => {
         cy.type_ckeditor(draftToCreate[0].content)
       })
       // Attachments
-      cy.get('[title="Ajouter une pièce jointe depuis vos documents de l\'ENTA"]').click()
-      cy.get('[data-test=file-picker-modal]').within(() => {
-        cy.contains(draftToCreate[0].attachedFile1).click()
-        cy.contains('button', 'Ajouter').click()
-      })
-      cy.get('[data-test=file-picker-modal]').should('not.exist')
-      // Open FilePicker modal
-      cy.get('.select-files-buttons').within(() => {
-        // Get file in fixture
-        cy.fixture('filesToUpload/file.txt').as('myFile')
-        // Get input type file in button to get get file in workSpace
-        cy.get('button').eq(1).within(() => {
-          // Use selectFile to simulate get file in workSpace
-          cy.get('input[type=file]').selectFile('@myFile', { force: true })
-          cy.wait(2000)
-        })
-      })
+      addPersonalFile(draftToCreate[0].attachedFile1)
+      addFileFromWorkSpace()
       cy.get('[data-test="createMessageModal"]').within(() => {
         // Save as draft
         cy.get('[data-test="draftButton"]').click()

@@ -2,7 +2,7 @@ import dayjs from 'dayjs'
 
 import { dashboardURL } from '../../support/constants/urls'
 import { HEADMASTER, MULTI_STUDENT1, PARENT, SCHOOL_ADMIN, STUDENT, TEACHER, TEACHER2 } from '../../support/constants/users'
-import { checkFileVisibilityAndClick, getNews, getNewsDetail, setAnnouncementDocumentWithContent } from '../../support/utils/dashboard'
+import { addCollaborativeFile, addFileFromWorkSpace, addPersonalFile, checkFileVisibilityAndClick, getNews, getNewsDetail, setAnnouncementDocumentWithContent } from '../../support/utils/dashboard'
 
 describe('Dashboard_Announcements', () => {
   beforeEach(() => {
@@ -205,41 +205,10 @@ describe('Dashboard_Announcements', () => {
         cy.get('.labelled').type(NewNews.title)
         cy.get('.ck-editor')
         cy.type_ckeditor(NewNews.content)
-        // Open FilePicker modal
-        cy.get('.select-files-buttons').within(() => {
-          cy.get('button').eq(0).click()
-        })
       })
-      // Add file from personal document
-      cy.get('[data-test="file-picker-modal"]').within(() => {
-        cy.contains('.file', NewNews.personalDocument).click()
-        cy.get('[data-test="submitButton"]').click()
-      })
-
-      // Open FilePicker modal
-      cy.get('.select-files-buttons').within(() => {
-        cy.get('button').eq(0).click()
-      })
-      // Add file from collaborative document
-      cy.get('[data-test="file-picker-modal"]').within(() => {
-        cy.get('[data-test="breadcrumb-item"]').click()
-        cy.get('[data-test="groups"]').click()
-        cy.get('.documents-list').within(() => {
-          cy.contains('button', 'Espace collaboratif sans les élèves').click()
-        })
-        cy.contains('.file', NewNews.collaborativeDocument).click()
-        cy.get('[data-test="submitButton"]').click()
-      })
-      // Open FilePicker modal
-      cy.get('.select-files-buttons').within(() => {
-        // Get file in fixture
-        cy.fixture('filesToUpload/file.txt').as('myFile')
-        // Get input type file in button to get get file in workSpace
-        cy.get('button').eq(1).within(() => {
-          // Use selectFile to simulate get file in workSpace
-          cy.get('input[type=file]').selectFile('@myFile', { force: true })
-        })
-      })
+      addPersonalFile(NewNews.personalDocument)
+      addCollaborativeFile(NewNews.collaborativeDocument)
+      addFileFromWorkSpace()
       cy.get('[data-test="update-news-modal"]').within(() => {
         // Click on createButton
         cy.get('[data-test="submitButton"]').click()
@@ -291,16 +260,8 @@ describe('Dashboard_Announcements', () => {
         cy.get('.labelled').type(newsToStudent.title)
         cy.get('.ck-editor')
         cy.type_ckeditor(newsToStudent.content)
-        // Open FilePicker modal
-        cy.get('.select-files-buttons').within(() => {
-          cy.get('button').eq(0).click()
-        })
       })
-      // Add file from personal document
-      cy.get('[data-test="file-picker-modal"]').within(() => {
-        cy.contains('.file', newsToStudent.personalDocument).click()
-        cy.get('[data-test="submitButton"]').click()
-      })
+      addPersonalFile(newsToStudent.personalDocument)
 
       cy.get('[data-test="update-news-modal"]').within(() => {
         // Create
@@ -317,13 +278,7 @@ describe('Dashboard_Announcements', () => {
       // Set time 15min after publication
       cy.tick(900000)
       getNews(newsToStudent).should('be.exist').click()
-      cy.get('.news-details-modal').within(() => {
-        // Open file modal
-        cy.get('.attached-files').within(() => {
-          // Check if all files is visible
-          cy.contains('.attached-file', newsToStudent.personalDocument).should('be.visible')
-        })
-      })
+      checkFileVisibilityAndClick(newsToStudent.personalDocument)
     })
 
     it('Dashboard_Announcements_CreateAnnouncementForTwoPopulationToCheckVisibility', function () {
@@ -352,16 +307,9 @@ describe('Dashboard_Announcements', () => {
         cy.get('.labelled').type(newsToTeacherAndStudent.title)
         cy.get('.ck-editor')
         cy.type_ckeditor(newsToTeacherAndStudent.content)
-        // Open FilePicker modal
-        cy.get('.select-files-buttons').within(() => {
-          cy.get('button').eq(0).click()
-        })
       })
       // Add file from personal document
-      cy.get('[data-test="file-picker-modal"]').within(() => {
-        cy.contains('.file', newsToTeacherAndStudent.personalDocument).click()
-        cy.get('[data-test="submitButton"]').click()
-      })
+      addPersonalFile(newsToTeacherAndStudent.personalDocument)
 
       cy.get('[data-test="update-news-modal"]').within(() => {
         // Create
@@ -378,13 +326,7 @@ describe('Dashboard_Announcements', () => {
       // Set time 15min after publication
       cy.tick(900000)
       getNews(newsToTeacherAndStudent).should('be.exist').click()
-      cy.get('.news-details-modal').within(() => {
-        // Open file modal
-        cy.get('.attached-files').within(() => {
-          // Check if all files is visible
-          cy.contains('.attached-file', newsToTeacherAndStudent.personalDocument).should('be.visible')
-        })
-      })
+      checkFileVisibilityAndClick(newsToTeacherAndStudent.personalDocument)
     })
 
     it('Dashboard_Announcements_CreateAnnouncementByDelegateCheckHeadmasterVisibility', function () {
@@ -410,22 +352,15 @@ describe('Dashboard_Announcements', () => {
         cy.get('.labelled').type(newsToStudent.title)
         cy.get('.ck-editor')
         cy.type_ckeditor(newsToStudent.content)
-        // Open FilePicker modal
-        cy.get('.select-files-buttons').within(() => {
-          cy.get('button').eq(0).click()
-        })
       })
       // Add file from personal document
-      cy.get('[data-test="file-picker-modal"]').within(() => {
-        cy.contains('.file', newsToStudent.personalDocument).click()
-        cy.get('[data-test="submitButton"]').click()
-      })
+      addPersonalFile(newsToStudent.personalDocument)
 
       cy.get('[data-test="update-news-modal"]').within(() => {
         // Create
         cy.get('[data-test="submitButton"]').click()
       })
-      // Check is all attached files is visible and clickable
+      // Check if file icon is visible
       getNews(newsToStudent).should('be.exist').within(() => {
         cy.get('[data-test="fileIcon"]').should('be.visible')
       })
@@ -436,13 +371,7 @@ describe('Dashboard_Announcements', () => {
       // Set time 15min after publication
       cy.tick(900000)
       getNews(newsToStudent).should('be.exist').click()
-      cy.get('.news-details-modal').within(() => {
-        // Open file modal
-        cy.get('.attached-files').within(() => {
-          // Check if all files is visible
-          cy.contains('.attached-file', newsToStudent.personalDocument).should('be.visible')
-        })
-      })
+      checkFileVisibilityAndClick(newsToStudent.personalDocument)
     })
 
     it('Dashboard_Announcements_CreateAnnouncementAllAnnouncementButtonCreate', function () {
@@ -564,15 +493,7 @@ describe('Dashboard_Announcements', () => {
           })
         })
       })
-      // Open FilePicker modal
-      cy.get('.select-files-buttons').within(() => {
-        cy.get('button').eq(0).click()
-      })
-      // Add new file from personal document
-      cy.get('[data-test="file-picker-modal"]').within(() => {
-        cy.contains('.file', newsToEdit.newFile).click()
-        cy.get('[data-test="submitButton"]').click()
-      })
+      addPersonalFile(newsToEdit.newFile)
       cy.get('[data-test="update-news-modal"]').within(() => {
         // Submit modifications
         cy.get('[data-test="submitButton"]').click()
