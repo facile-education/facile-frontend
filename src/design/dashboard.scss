@@ -43,8 +43,8 @@ $news-thumbnail-size-in-modal: 90px;
 
 %read-only-button {
   line-height: 1;
-  height: 15px;
-  width: 15px;
+  height: 18px;
+  width: 18px;
   padding: 0;
   background-color: white;
   border: none;
@@ -54,7 +54,8 @@ $news-thumbnail-size-in-modal: 90px;
   justify-content: center;
 
   .unread-filter-icon {
-    font-size: 20px;
+    font-size: 18px;
+    line-height: 18px;
   }
 }
 
