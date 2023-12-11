@@ -40,6 +40,7 @@ describe('navigationAndDisplay', () => {
     cy.get('.homework-tab').should('be.visible')
     cy.get('.course-tab').should('not.exist')
   })
+
   it('Courses_Initialisation_UnVisibleForGoodProfil', function () {
     // Login with HEADMASTER
     cy.login(HEADMASTER, coursesURL)
@@ -59,6 +60,7 @@ describe('navigationAndDisplay', () => {
     cy.url().should('eq', 'https://dev-ent-gve.com/cours-et-devoirs')
     cy.contains('h2', "Oups, cette page n'existe pas").should('be.visible')
   })
+
   it('Courses_DisplayCourseList_DisplayGoodCourseListByProfil', function () {
     const courseList = this.coursesData.CoursesListByProfil
     const teacherCourseList = courseList[0]
