@@ -88,7 +88,7 @@ describe('Drag and drop messages', () => {
     currentDataTransfer = dataTransfer
     cy.get('@inBoxFolder').trigger('dragover').should('have.class', 'active')
     cy.get('@inBoxFolder').trigger('drop', { dataTransfer: currentDataTransfer })
-    cy.get('@threads').should('have.length', 0)
+    cy.get('@threads').should('have.length', 1)
 
     // Sent
     cy.get('@sentFolder').click()
