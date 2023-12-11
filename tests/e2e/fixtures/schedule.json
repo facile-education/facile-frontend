@@ -1,7 +1,21 @@
 {
-  "now": "2021/05/05 16:00",
-  "url": "/nero/horaires",
-  "groupName": "0922R2",
+  "now": "2023/10/05 16:00",
+  "selectedGroup": {
+    "name": "0922R2",
+    "nbSlots": 37,
+    "slotExample": {
+      "schoolSlotNumber": "P4",
+      "startDate": "2023/10/03 10:35",
+      "endDate": "2023/10/03 11:20",
+      "teacher": {
+        "firstName": "Leilah",
+        "lastName": "WILLGRASS"
+      },
+      "room": "J204",
+      "courseName": "LA0922",
+      "courseSubject": "LCL"
+    }
+  },
   "studentName": "ALOSTA ANYA (1051AC)",
   "studentSearch": "alo",
   "teacherName": "Jovanovic Darko (Maitre)",

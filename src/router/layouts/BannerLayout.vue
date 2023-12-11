@@ -9,7 +9,10 @@
 
     <LayoutMenu class="nero-menu" />
 
-    <section class="nero-body">
+    <section
+      class="nero-body"
+      data-test="body"
+    >
       <NotAllowed v-if="!isAllowed && !user.isAdministrator" />
       <slot v-else />
     </section>

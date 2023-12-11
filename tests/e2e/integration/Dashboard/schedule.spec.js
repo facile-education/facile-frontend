@@ -122,7 +122,7 @@ describe('Dashboard_Schedule', () => {
       })
     })
     // Check if good children is selected
-    cy.get('.nero-body').scrollTo('top')
+    cy.get('[data-test="body"]').scrollTo('top')
     cy.get('.children').should('contain', MULTI_STUDENT1.firstName)
 
     // Change to second Child
@@ -137,7 +137,7 @@ describe('Dashboard_Schedule', () => {
       })
     })
     // Check if good children is selected
-    cy.get('.nero-body').scrollTo('top')
+    cy.get('[data-test="body"]').scrollTo('top')
     cy.get('.children').should('contain', MULTI_STUDENT2.firstName)
   })
 })
