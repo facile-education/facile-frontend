@@ -205,15 +205,10 @@ const NURSE = {
 }
 
 const STUDENT_IN_CLASS = { // Student in class for student penelope
+  login: 'enrico.bttll',
+  password,
   lastName: 'BATTELLI',
   isVisibleStudent: true,
-  isVisibleParent: false,
-  isVisiblePersonnels: true
-}
-
-const STUDENT_NOT_IN_CLASS = { // Student not in class for student penelope
-  lastName: 'BATTELLI',
-  isVisibleStudent: false,
   isVisibleParent: false,
   isVisiblePersonnels: true
 }
@@ -243,6 +238,5 @@ export {
   ACCOUNTING_CASHIER,
   ORIENTATION_COUNSELOR,
   NURSE,
-  STUDENT_IN_CLASS,
-  STUDENT_NOT_IN_CLASS
+  STUDENT_IN_CLASS
 }

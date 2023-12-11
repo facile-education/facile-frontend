@@ -262,7 +262,9 @@
             "audio": "Audio pour ce devoir",
             "link": "Lien pour ce devoir",
             "video": "Vidéo pour ce devoir",
-            "h5p": "H5P pour ce devoir"
+            "h5p": "H5P pour ce devoir",
+            "sessionDate": "2023/11/13",
+            "estimatedTime": "15 min"
         },
         {
             "title": "Second travail à faire",
