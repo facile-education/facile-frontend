@@ -427,12 +427,8 @@ describe('Dashboard_Activity', () => {
 
       // Login
       cy.login(STUDENT, dashboardURL)
-      cy.clock().invoke('setSystemTime', Cypress.dayjs(CurrentDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
-      // Set time 15min after publication
-      cy.tick(900000)
       loadActivity('get-dashboard-activity')
       // Check if a student the new actvity is visible
-      cy.wait(2000)
       cy.get('[data-test="activity-widget"]').within(() => {
         // Display all activity
         cy.contains('button', 'Voir toutes les activités').click()
