@@ -103,8 +103,6 @@ export default {
       if (window.Cypress) {
         this.ckeditor = e
         window.textContent.push(this)
-        console.log(window.textContent)
-        console.log('on editor ready')
       }
     },
     updateContent (newValue) {

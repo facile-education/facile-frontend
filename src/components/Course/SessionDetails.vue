@@ -94,6 +94,7 @@
             v-if="canEdit"
             :aria-label="$t('add')"
             :title="$t('add')"
+            data-test="createSessionHomework"
             @click="openHomeworkEditModal"
           />
         </div>
