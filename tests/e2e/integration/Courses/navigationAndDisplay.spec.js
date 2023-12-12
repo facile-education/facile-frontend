@@ -114,4 +114,51 @@ describe('navigationAndDisplay', () => {
       }
     })
   })
+
+  it('Courses_DisplaySessionDetails_DailyScheduleSessionNavigationGoForward', function () {
+    const sessionDateBeforeHolyday = '2023/10/20'
+    const holydayStart = '20/10'
+    const holydayEnd = '30/10'
+
+    cy.loadTables('courses/courses_tables_homework.sql')
+
+    cy.login(TEACHER, coursesURL)
+    cy.clock().invoke('setSystemTime', Cypress.dayjs(sessionDateBeforeHolyday, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+
+    // Click on session
+    cy.get('[data-test="10-20_07:55"]').click()
+    cy.get('.daily-schedule').within(() => {
+      // Click on button next day
+      cy.get('[data-test="NextDay"]').click()
+      // Check if next day is backToSchool day
+      cy.get('[data-test="date"]').should('contain', holydayEnd)
+      cy.get('[data-test="date"]').should('contain', 'lun')
+      // Click on previous day button
+      cy.get('[data-test="PreviousDay"]').click()
+      // Check if previous day is last day before holiday
+      cy.get('[data-test="date"]').should('contain', holydayStart)
+      cy.get('[data-test="date"]').should('contain', 'ven')
+    })
+  })
+
+  it('Courses_DisplaySessionDetails_DailyScheduleSessionClickOnSession', function () {
+    const sessionDate = '2023/10/20'
+    const sessions = this.coursesData.sessionsLists[0].sessions
+
+    cy.loadTables('courses/courses_tables_homework.sql')
+
+    cy.login(TEACHER, coursesURL)
+    cy.clock().invoke('setSystemTime', Cypress.dayjs(sessionDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+
+    // Click on session
+    cy.get('[data-test="10-20_07:55"]').click()
+    for (let i = 0; i < sessions.length - 1; i++) {
+      cy.get('.daily-schedule').within(() => {
+        cy.get('.calendar-event').eq(i).should('contain', sessions[i].course).click()
+      })
+      cy.get('.session-infos').within(() => {
+        cy.get('.first-flex-section > header').should('contain', sessions[i].courseDetailHeadText)
+      })
+    }
+  })
 })

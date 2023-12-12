@@ -255,7 +255,7 @@
             "title": "Travail à faire",
             "content": "Consigne du travail à faire",
             "teacher": "NOLLI",
-            "dateBefore": "2023/11/13",
+            "dateBefore": "2023/11/12",
             "dateAfter": "2023/11/17",
             "attachedFile": "note.html",
             "additionalText": "Texte supplémentaire",
@@ -299,6 +299,69 @@
             "video": "Vidéo pour le support de cours",
             "h5p": "H5P pour le support de cours",
             "sessionDate": "2023/11/13"
+        }
+    ],
+    "sessionsLists": [
+        {
+            "date": "2023/10/20",
+            "sessions": [
+                {
+                    "course": "HI1112",
+                    "courseDetailHeadText": "Histoire - HI1112"
+                },
+                {
+                    "course": "HI0934",
+                    "courseDetailHeadText": "Histoire - HI0934"
+                },
+                {
+                    "course": "HI0934",
+                    "courseDetailHeadText": "Histoire - HI0934"
+                },
+                {
+                    "course": "HI1133",
+                    "courseDetailHeadText": "Histoire - HI1133"
+                },
+                {
+                    "course": "HI0971",
+                    "courseDetailHeadText": "Histoire - HI0971"
+                }
+            ]
+        },
+        {
+            "date": "2023/11/07",
+            "sessions": [
+                {
+                    "startHour": "08:45",
+                    "endHour": "09:30",
+                    "name": "Ed. Nutritionnelle",
+                    "classRoom": "S290",
+                    "teacher": "A. WEMYSS"
+                }
+            ]
+        },
+        {
+            "date": "2023/11/07",
+            "sessions": [
+                {
+                    "startHour": "08:45",
+                    "endHour": "09:30",
+                    "name": "Allemand",
+                    "classRoom": "J201",
+                    "teacher": "T. SCUTTER"
+                }
+            ]
+        },
+        {
+            "date": "2023/11/07",
+            "sessions": [
+                {
+                    "startHour": "08:45",
+                    "endHour": "09:30",
+                    "name": "Mathématiques",
+                    "classRoom": "S182",
+                    "teacher": "F. CABRERA"
+                }
+            ]
         }
     ]
 }
