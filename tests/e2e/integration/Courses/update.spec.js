@@ -1,5 +1,5 @@
 import { coursesURL } from '../../support/constants/urls'
-import { STUDENT, TEACHER } from '../../support/constants/users'
+import { STUDENT, STUDENT_IN_CLASS, TEACHER } from '../../support/constants/users'
 import { addFile, addH5P, addLink, addVideo, changetab, getSessionContentWithSupportWithoutAudio, getSessionHomework, getSessionHomeworkWithSupport, getSessionHomeworkWithSupportWithoutAudio, selectCourse } from '../../support/utils/courses'
 
 describe('Sessions homeworks', () => {
@@ -10,12 +10,13 @@ describe('Sessions homeworks', () => {
     })
   })
 
-  it.only('Courses_UpdateSessionHomework_UpdateContentFromSessionView', function () {
+  it('Courses_UpdateSessionHomework_UpdateContentFromSessionView', function () {
     const courseList = this.coursesData.CoursesListByProfil
     const studentCourseList = courseList[1]
     const currentSessionHomework = this.coursesData.existingHomework[0]
     const sessionHomeworkToEdit = [
       {
+        sessionDate: '2023/11/13',
         dateToDo: '2023/11/13',
         sessionHeadText: '13 novembre - P5',
         title: 'Travail à faire modifié',
@@ -32,7 +33,7 @@ describe('Sessions homeworks', () => {
     ]
     // Login with student to check if homework is visible before edit
     cy.login(TEACHER, coursesURL)
-    cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionHomework.dateBefore, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+    cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionHomework.sessionDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
 
     // Click on session
     cy.get('[data-test="11-13_11:25"]').click()
@@ -116,7 +117,7 @@ describe('Sessions homeworks', () => {
     cy.get('.homework').should('not.exist')
 
     cy.login(TEACHER, coursesURL)
-    cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionHomework.dateBefore, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+    cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionHomework.sessionDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
 
     // Click on session
     cy.get('[data-test="11-13_11:25"]').click()
@@ -161,6 +162,65 @@ describe('Sessions homeworks', () => {
     cy.contains('.session-infos', sessionHomeworkToEdit[0].sessionHeadText).within(() => {
       getSessionHomeworkWithSupport(currentSessionHomework).scrollIntoView().should('be.visible')
     })
+  })
+
+  it('Courses_UpdateSessionHomework_UpdateStudentListToEveryoneFromSessionView', function () {
+    const currentSessionHomework = this.coursesData.existingHomework[0]
+
+    // Login with an other student in class to see if this work is not visible
+    cy.login(STUDENT, coursesURL)
+    cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionHomework.dateBefore, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+
+    // Check if homework is visible
+    getSessionHomework(currentSessionHomework).should('be.visible')
+
+    // Login with an other student in class to see if this work is not visible
+    cy.login(STUDENT_IN_CLASS, coursesURL)
+    cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionHomework.dateBefore, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+
+    // Check if homework is not visible
+    cy.get('.homework').should('not.exist')
+
+    cy.login(TEACHER, coursesURL)
+    cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionHomework.sessionDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+
+    // Click on session
+    cy.get('[data-test="11-13_11:25"]').click()
+    cy.get('.session-details').within(() => {
+      // Get current session homeWork
+      cy.contains('.homeworks', currentSessionHomework.title).within(() => {
+        cy.get('.title').eq(0).within(() => {
+          // Open edit session content panel
+          cy.get('.edit-button').click()
+        })
+      })
+    })
+    // Click on update button
+    cy.get('.context-menu').within(() => {
+      cy.contains('button', 'Modifier').click()
+    })
+    cy.get('.edit-homework-modal').should('be.visible').within(() => {
+      // Select one student
+      cy.get('.target-students').within(() => {
+        cy.get('.target-students-button').click()
+      })
+    })
+    cy.get('.studentListWindow').within(() => {
+      // Click to choose specific student
+      cy.get('.class-selector').contains('Toute la classe').click()
+      cy.get('.footer').contains('button', 'Enregistrer').click()
+    })
+    // Click on button to update session homework
+    cy.get('.edit-homework-modal').within(() => {
+      cy.contains('button', 'Publier').click()
+    })
+
+    // Login with an other student in class to see if this work is not visible
+    cy.login(STUDENT_IN_CLASS, coursesURL)
+    cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionHomework.dateBefore, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+
+    // Check if homework is visible
+    getSessionHomework(currentSessionHomework).should('be.visible')
   })
 
   it('Courses_UpdateSessionHomework_DisplayUpdateOptionFromCourseView', function () {
