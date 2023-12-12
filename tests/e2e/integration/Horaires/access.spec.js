@@ -17,6 +17,7 @@ describe('Schedule_Access', () => {
     cy.fixture('schedule.json').as('scheduleData').then(data => {
       cy.clock(Cypress.dayjs(data.now, 'YYYY/MM/DD HH:mm').toDate().getTime())
     })
+    cy.intercept('GET', '**/schedule.cdtsession/get-user-sessions**').as('getUserSessions')
   })
 
   scheduleUsers.forEach(user => {
@@ -54,7 +55,7 @@ describe('Schedule_Access', () => {
             cy.get('.base-dropdown > .base-autocomplete').should('be.visible')
             cy.contains(scheduleData.selectedGroup.name).click()
 
-            cy.get('.fc-timegrid-event').should('have.length', scheduleData.selectedGroup.nbSlots)
+            cy.get('.fc-timegrid-event').should('have.length', scheduleData.selectedGroup.nbWeekSlots)
             getSlot(scheduleData.selectedGroup.slotExample).click()
 
             if (isInList(canSubstituteTeachers, user)) {
