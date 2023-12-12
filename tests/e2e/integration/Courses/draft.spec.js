@@ -1,8 +1,8 @@
 import { coursesURL } from '../../support/constants/urls'
 import { STUDENT, TEACHER } from '../../support/constants/users'
-import { getSessionContent, getSessionHomework } from '../../support/utils/courses'
+import { changetab, getSessionContent, getSessionHomework, selectCourse } from '../../support/utils/courses'
 
-describe('Sessions homeworks', () => {
+describe('Draft', () => {
   beforeEach(() => {
     cy.fixture('courses.json').as('coursesData')
   })
@@ -159,7 +159,12 @@ describe('Sessions homeworks', () => {
   })
 
   it('Courses_UpdateSessionContent_UpdateSessionContentAsDraft', function () {
+    cy.loadTables('courses/courses_tables_homework.sql')
     const currentSessionContent = this.coursesData.existingSessionsContent[0]
+    const courseList = this.coursesData.CoursesListByProfil
+    const studentCourseList = courseList[1]
+    const teacherCourseList = courseList[0]
+    const sessions = teacherCourseList[2].Sessions
 
     // Login
     cy.login(TEACHER, coursesURL)
@@ -200,7 +205,12 @@ describe('Sessions homeworks', () => {
     // Login with student to check if session content modified as draft is visible
     cy.login(STUDENT, coursesURL)
 
-    // Check in homeworks tab
-    getSessionContent(currentSessionContent).should('not.exist')
+    changetab('Cours')
+    selectCourse(studentCourseList[11].Course)
+
+    // Check if session content modified is visible within the current session
+    cy.contains('.session-infos', sessions[1].headText).within(() => {
+      getSessionContent(currentSessionContent).should('not.exist')
+    })
   })
 })

@@ -7,7 +7,7 @@ describe('Visibility and content', () => {
   beforeEach(() => {
     cy.loadTables('courses/courses_tables_homework.sql')
     cy.fixture('courses.json').as('coursesData').then((data) => {
-      cy.clock(Cypress.dayjs(data.existingHomework[0].dateBefore, 'YYYY/MM/DD').toDate().getTime())
+      cy.clock(Cypress.dayjs(data.existingHomework[0].sessionDate, 'YYYY/MM/DD').toDate().getTime())
     })
   })
   it('Courses_SetHomeworkDone_StudentCanMarkAsDone', function () {
