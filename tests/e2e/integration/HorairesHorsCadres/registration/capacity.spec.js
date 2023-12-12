@@ -4,7 +4,7 @@ import {
   STUDENT
 } from '../../../support/constants/users'
 import {
-  getSlot,
+  getHHCSlot,
   selectSlotType,
   selectStudent
 } from '../../../support/utils/horairesHorsCardesUtils'
@@ -28,7 +28,7 @@ describe('HHC_CapacityCheck', () => {
     // Select student
     selectStudent(studentToRegister)
     // Open registration modal
-    getSlot(slotToRegisterInside).click()
+    getHHCSlot(slotToRegisterInside).click()
     cy.get('[data-test=event-popup]').get('[data-test=registerStudent-option]').should('not.exist')
   })
 

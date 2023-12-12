@@ -1,27 +1,88 @@
 {
-  "now": "2023/10/05 16:00",
+  "now": "2023/10/02 16:00",
+  "schoolYearStartDate": "2023-08-21",
+  "schoolYearEndDate": "2024-06-29",
+  "holidayStartDate": "2023-12-25",
+  "holidayEndDate": "2024-01-08",
   "selectedGroup": {
     "name": "0922R2",
-    "nbSlots": 37,
+    "nbWeekSlots": 37,
     "slotExample": {
       "schoolSlotNumber": "P4",
-      "startDate": "2023/10/03 10:35",
-      "endDate": "2023/10/03 11:20",
+      "startDate": "2023/10/02 10:35",
+      "endDate": "2023/10/02 11:20",
       "teacher": {
-        "firstName": "Leilah",
-        "lastName": "WILLGRASS"
+        "firstName": "Lindsey",
+        "lastName": "IACIVELLI"
       },
-      "room": "J204",
-      "courseName": "LA0922",
-      "courseSubject": "LCL"
+      "room": "BP122",
+      "courseName": "GEO922",
+      "courseSubject": "Géographie"
     }
   },
-  "studentName": "ALOSTA ANYA (1051AC)",
-  "studentSearch": "alo",
-  "teacherName": "Jovanovic Darko (Maitre)",
-  "teacherSearch": "dar",
-  "secondChildName": "LISA",
-  "substituteCalendarName": "Y. Caillat",
-  "substituteName": "Caillat Yoan",
-  "substituteSearch": "cail"
+  "Orlan": {
+    "nbWeekSlots": 0
+  },
+  "Rosana": {
+    "nbWeekSlots": 17,
+    "nbDaySlots": 4,
+    "slotExample": {
+      "schoolSlotNumber": "P4",
+      "startDate": "2023/10/02 10:35",
+      "endDate": "2023/10/02 11:20",
+      "teacher": {
+        "firstName": "Rosana",
+        "lastName": "NOLLI"
+      },
+      "room": "S284",
+      "courseName": "HI0971",
+      "courseSubject": "Histoire"
+    }
+  },
+  "Pénélope": {
+    "nbWeekSlots": 38,
+    "slotExample": {
+      "schoolSlotNumber": "P4",
+      "startDate": "2023/10/02 10:35",
+      "endDate": "2023/10/02 11:20",
+      "teacher": {
+        "firstName": "Judah",
+        "lastName": "GOTCLIFF"
+      },
+      "room": "BP104",
+      "courseName": "GE0933",
+      "courseSubject": "Géographie"
+    }
+  },
+  "Eleanora": {
+    "nbWeekSlots": 33,
+    "slotExample": {
+      "schoolSlotNumber": "P9",
+      "startDate": "2023/10/02 15:30",
+      "endDate": "2023/10/02 16:15",
+      "teacher": {
+        "firstName": "Rosana",
+        "lastName": "NOLLI"
+      },
+      "room": "S284",
+      "courseName": "HI0911",
+      "courseSubject": "Histoire"
+    }
+  },
+  "Barbara": {
+    "nbWeekSlots": 33,
+    "slotExample": {
+      "schoolSlotNumber": "P2",
+      "startDate": "2023/10/02 08:45",
+      "endDate": "2023/10/02 09:30",
+      "teacher": {
+        "firstName": "L",
+        "lastName": "DAUGHERTY"
+      },
+      "room": "J201",
+      "courseName": "MA0936",
+      "courseSubject": "Mathématiques"
+    }
+  }
+
 }

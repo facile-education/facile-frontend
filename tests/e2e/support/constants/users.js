@@ -124,7 +124,8 @@ const PARENT = { // Student's parent
   role: 'parent',
   firstName: 'Ursula',
   lastName: 'Ribeiro',
-  isVisibleStudent: true
+  isVisibleStudent: true,
+  students: [STUDENT]
 }
 
 const MULTI_STUDENT1 = { // Her parent has 2 children
@@ -148,7 +149,8 @@ const MULTI_PARENT = { // This parent has 2 children : MULTI_STUDENT1 and MULTI_
   password,
   role: 'parent',
   firstName: 'Percival',
-  lastName: 'Comencini'
+  lastName: 'Comencini',
+  students: [MULTI_STUDENT1, MULTI_STUDENT2]
 }
 
 const PSYCHOLOGIST = { // psychologist of student (0933)

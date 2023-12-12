@@ -1,5 +1,8 @@
 <template>
-  <div class="tag-item theme-background-color">
+  <div
+    class="tag-item theme-background-color"
+    data-test="tag-item"
+  >
     <span class="label">{{ tag }}</span>
     <NeroIcon
       name="times"

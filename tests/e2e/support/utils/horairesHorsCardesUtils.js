@@ -9,8 +9,7 @@ const waitCalendarToLoad = () => {
 const formatEventTeacherName = (teacher) => {
   return teacher.firstName[0] + '. ' + teacher.lastName
 }
-
-const getSlot = (slot) => {
+const getHHCSlot = (slot) => {
   const startDate = dayjs(slot.startDate, 'YYYY/MM/DD HH:mm')
   return cy.contains(':not(.grayed) >> [data-test="' + startDate.format('MM-DD_HH:mm') + '"]', formatEventTeacherName(slot.teacher))
 }
@@ -21,7 +20,7 @@ const getUserSlot = (slot) => {
 }
 
 const openStudentListModal = (slot) => {
-  getSlot(slot).click()
+  getHHCSlot(slot).click()
   cy.get('[data-test=showStudentList-option]').click({ force: true })
   return cy.get('[data-test=student-list-modal]')
 }
@@ -219,7 +218,7 @@ export {
   formatEventTeacherName,
   openStudentListModal,
   selectSlotType,
-  getSlot,
+  getHHCSlot,
   getUserSlot,
   deleteSlot,
   selectStudent,

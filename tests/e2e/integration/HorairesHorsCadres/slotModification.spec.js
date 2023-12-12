@@ -2,7 +2,7 @@ import { HHCURL } from '../../support/constants/urls'
 import { CLASSTEACHER2, DOYEN, HEADMASTER, SECRETARY, TEACHER, TEACHER2 } from '../../support/constants/users'
 import {
   addTimeToSlot,
-  formatSchoolSlotLabel, getSlot,
+  formatSchoolSlotLabel, getHHCSlot,
   selectSlotType,
   selectWeek,
   submit
@@ -37,7 +37,7 @@ describe('HHC_UpdateSlot', () => { // TODO: factorise with create and delete per
       cy.login(role, HHCURL)
       selectSlotType(slotType)
 
-      getSlot(slotToModify).click()
+      getHHCSlot(slotToModify).click()
       cy.get('[data-test=event-popup]').get('[data-test=updateSlot-option]').should('not.exist')
     })
 
@@ -45,7 +45,7 @@ describe('HHC_UpdateSlot', () => { // TODO: factorise with create and delete per
       cy.login(role, HHCURL)
       selectSlotType(slotType)
 
-      getSlot(slotToModify).click()
+      getHHCSlot(slotToModify).click()
       cy.get('[data-test=event-popup]').get('[data-test=updateSlot-option]').should('exist')
     })
   })
@@ -60,7 +60,7 @@ describe('HHC_UpdateSlot', () => { // TODO: factorise with create and delete per
 
     // Open updateModal
     selectSlotType(slotType)
-    getSlot(slotToModify).click()
+    getHHCSlot(slotToModify).click()
     cy.get('[data-test=event-popup]').get('[data-test=updateSlot-option]').click()
 
     // Check and change fields
@@ -103,8 +103,8 @@ describe('HHC_UpdateSlot', () => { // TODO: factorise with create and delete per
 
     // Check slot modifications
     const modifiedSlotExpectedFreePlaces = slotToModify.freePlaces + (modifiedSlot.capacity - slotToModify.capacity)
-    getSlot(slotToModify).should('not.exist')
-    getSlot(modifiedSlot).click()
+    getHHCSlot(slotToModify).should('not.exist')
+    getHHCSlot(modifiedSlot).click()
     cy.get('[data-test=event-popup]')
       .should('contain', slotType.label)
       .should('contain', modifiedSlotExpectedFreePlaces)
@@ -114,12 +114,12 @@ describe('HHC_UpdateSlot', () => { // TODO: factorise with create and delete per
     // Check previous week (expected to not be modified)
     // TODO: currently custom tests to have the expected buggy behaviour, => to expect to have the slotToModify
     selectWeek(previousWeek)
-    getSlot(addTimeToSlot(modifiedSlot, -1, 'week')).should('not.exist')
+    getHHCSlot(addTimeToSlot(modifiedSlot, -1, 'week')).should('not.exist')
     let customPreviousExpectedSlot = { ...modifiedSlot }
     customPreviousExpectedSlot.startDate = slotToModify.startDate
     customPreviousExpectedSlot.endDate = slotToModify.endDate
     customPreviousExpectedSlot = addTimeToSlot(customPreviousExpectedSlot, -1, 'week')
-    getSlot(customPreviousExpectedSlot).click()
+    getHHCSlot(customPreviousExpectedSlot).click()
     cy.get('[data-test=event-popup]')
       .should('contain', slotType.label)
       .should('contain', modifiedSlotExpectedFreePlaces + 1 + ' places libres') // +1 because this week, the student is not registered
@@ -128,8 +128,8 @@ describe('HHC_UpdateSlot', () => { // TODO: factorise with create and delete per
 
     // Check next week
     selectWeek(nextWeek)
-    getSlot(addTimeToSlot(slotToModify, 1, 'week')).should('not.exist')
-    getSlot(addTimeToSlot(modifiedSlot, 1, 'week')).click()
+    getHHCSlot(addTimeToSlot(slotToModify, 1, 'week')).should('not.exist')
+    getHHCSlot(addTimeToSlot(modifiedSlot, 1, 'week')).click()
     cy.get('[data-test=event-popup]')
       .should('contain', slotType.label)
       .should('contain', modifiedSlotExpectedFreePlaces + 1) // +1 because this week, the student is not registered
@@ -147,7 +147,7 @@ describe('HHC_UpdateSlot', () => { // TODO: factorise with create and delete per
 
     // Open updateModal
     selectSlotType(slotType)
-    getSlot(slotToModify).click()
+    getHHCSlot(slotToModify).click()
     cy.get('[data-test=event-popup]').get('[data-test=updateSlot-option]').click()
 
     // Check and change fields

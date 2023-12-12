@@ -9,7 +9,7 @@ import {
   TEACHER
 } from '../../../support/constants/users'
 import {
-  getSlot,
+  getHHCSlot,
   getUserSlot,
   selectSlotType,
   selectStudent
@@ -90,7 +90,7 @@ describe('HHC_Tutoring_Registration', () => {
       // Select student
       selectStudent(studentToRegister)
       // Open registration modal
-      getSlot(slotToRegisterInside).click()
+      getHHCSlot(slotToRegisterInside).click()
       cy.get('[data-test=event-popup]').get('[data-test=registerStudent-option]').should('not.exist')
     })
 
@@ -100,7 +100,7 @@ describe('HHC_Tutoring_Registration', () => {
       // Select student
       selectStudent(studentToRegister)
       // Open registration modal
-      getSlot(slotToRegisterInside).click()
+      getHHCSlot(slotToRegisterInside).click()
       cy.get('[data-test=event-popup]').get('[data-test=registerStudent-option]').should('exist')
     })
   })
@@ -115,7 +115,7 @@ describe('HHC_Tutoring_Registration', () => {
     // Select student
     selectStudent(studentToRegister)
     // Open registration modal
-    getSlot(slotToRegisterInside).click()
+    getHHCSlot(slotToRegisterInside).click()
     cy.get('[data-test=registerStudent-option]').click()
 
     // Test registration modal (ends by registering student)
@@ -126,7 +126,7 @@ describe('HHC_Tutoring_Registration', () => {
 
     // Check the slot's student list
     const capacityLabel = slotToRegisterInside.capacity - 1 + '/' + slotToRegisterInside.capacity
-    getSlot(slotToRegisterInside).should('contain', capacityLabel).click()
+    getHHCSlot(slotToRegisterInside).should('contain', capacityLabel).click()
     cy.get('[data-test=showStudentList-option]').click()
     cy.get('[data-test=student-list-modal]').within(() => {
       cy.contains(studentToRegister.firstName + ' ' + studentToRegister.lastName)

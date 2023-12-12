@@ -1,12 +1,11 @@
 import { scheduleURL } from '../../support/constants/urls'
 import { DOYEN, HEADMASTER, PARENT, SCHOOL_ADMIN, SECRETARY, STUDENT, TEACHER } from '../../support/constants/users'
-import { getSlot } from '../../support/utils/horairesHorsCardesUtils'
-import { waitScheduleToBeLoaded } from '../../support/utils/scheduleUtils'
+import { getSlot, waitScheduleToBeLoaded } from '../../support/utils/scheduleUtils'
 
 const scheduleUsers = [HEADMASTER, SCHOOL_ADMIN, DOYEN, SECRETARY, TEACHER, STUDENT, PARENT]
 
 const canCreateSlotUsers = [HEADMASTER, SCHOOL_ADMIN]
-const canSubstituteTeachers = [HEADMASTER, SCHOOL_ADMIN]
+const canSubstituteTeachers = [HEADMASTER, SECRETARY, DOYEN]
 const haveSearchToolbarUsers = [HEADMASTER, SCHOOL_ADMIN, DOYEN, SECRETARY, TEACHER]
 
 const isInList = (list, user) => {

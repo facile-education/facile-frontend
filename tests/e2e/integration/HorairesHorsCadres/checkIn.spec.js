@@ -9,7 +9,7 @@ import {
   TEACHER
 } from '../../support/constants/users'
 import {
-  getSlot,
+  getHHCSlot,
   selectSlotType
 } from '../../support/utils/horairesHorsCardesUtils'
 
@@ -41,7 +41,7 @@ describe('HHC_Checkin', () => {
       cy.login(role, HHCURL)
       cy.clock().invoke('setSystemTime', Cypress.dayjs(slotToCheckIn.endDate, 'YYYY/MM/DD HH:mm').toDate().getTime()) // To put after login to make it works
       selectSlotType(this.hhcData.slotsTypes[slotType])
-      getSlot(slotToCheckIn).click()
+      getHHCSlot(slotToCheckIn).click()
       cy.get('[data-test=showStudentList-option]').click({ force: true })
       cy.get('[data-test=student-list-modal]').within(() => {
         cy.contains('[data-test="student-list-item"]', registeredStudent.firstName + ' ' + registeredStudent.lastName)
@@ -55,7 +55,7 @@ describe('HHC_Checkin', () => {
       cy.login(role, HHCURL)
       cy.clock().invoke('setSystemTime', Cypress.dayjs(slotToCheckIn.endDate, 'YYYY/MM/DD HH:mm').toDate().getTime())
       selectSlotType(this.hhcData.slotsTypes[slotType])
-      getSlot(slotToCheckIn).click()
+      getHHCSlot(slotToCheckIn).click()
       cy.get('[data-test=showStudentList-option]').click({ force: true })
       cy.get('[data-test=student-list-modal]').within(() => {
         cy.contains('[data-test="student-list-item"]', registeredStudent.firstName + ' ' + registeredStudent.lastName)
@@ -67,7 +67,7 @@ describe('HHC_Checkin', () => {
 
       // Check if check in is present before the slot start (it should'nt be)
       cy.clock().invoke('setSystemTime', Cypress.dayjs(slotToCheckIn.endDate, 'YYYY/MM/DD HH:mm').add(-1, 'day').toDate().getTime())
-      getSlot(slotToCheckIn).click()
+      getHHCSlot(slotToCheckIn).click()
       cy.get('[data-test=showStudentList-option]').click({ force: true })
       cy.get('[data-test=student-list-modal]').within(() => {
         cy.contains('[data-test="student-list-item"]', registeredStudent.firstName + ' ' + registeredStudent.lastName)
@@ -88,7 +88,7 @@ describe('HHC_Checkin', () => {
       cy.clock().invoke('setSystemTime', Cypress.dayjs(slotToCheckIn.endDate, 'YYYY/MM/DD HH:mm').toDate().getTime())
 
       selectSlotType(this.hhcData.slotsTypes[slotType])
-      getSlot(slotToCheckIn).click()
+      getHHCSlot(slotToCheckIn).click()
       cy.get('[data-test=showStudentList-option]').click({ force: true })
 
       // Do check in (without check student)
