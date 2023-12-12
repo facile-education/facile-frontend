@@ -2,7 +2,7 @@ import { coursesURL } from '../../support/constants/urls'
 import { STUDENT, STUDENT_IN_CLASS, TEACHER } from '../../support/constants/users'
 import { addFile, addH5P, addLink, addVideo, changetab, getSessionContentWithSupportWithoutAudio, getSessionHomework, getSessionHomeworkWithSupportWithoutAudio, selectCourse } from '../../support/utils/courses'
 
-describe('Sessions homeworks', () => {
+describe('Create', () => {
   beforeEach(() => {
     cy.loadTables('courses/courses_tables_homework_empty.sql')
     cy.fixture('courses.json').as('coursesData')
@@ -80,7 +80,7 @@ describe('Sessions homeworks', () => {
     // Check in courses tab
     changetab('Cours')
     selectCourse(studentCourseList[11].Course)
-    // Check if session homework modified is visible within the current session
+    // Check if session homework created is visible within the current session
     cy.contains('.session-infos', sessionHomeworkToCreate[0].sessionHeadText).within(() => {
       getSessionHomeworkWithSupportWithoutAudio(sessionHomeworkToCreate[0]).scrollIntoView().should('be.visible')
     })
@@ -114,7 +114,9 @@ describe('Sessions homeworks', () => {
       // Add cy.tick beacause cy.clock()
       cy.tick(1000)
       cy.get('.target-session').within(() => {
+        // Set homework for this session
         cy.contains('label', 'À faire pendant la séance').click()
+        // Check if set date dropdown is visible
         cy.get('.next-sessions-dropdown').within(() => {
           cy.get('.button').should('have.attr', 'disabled')
         })
@@ -139,7 +141,7 @@ describe('Sessions homeworks', () => {
     changetab('Cours')
     // Click on right course
     selectCourse(studentCourseList[11].Course)
-    // Check if session homework modified is visible within the current session
+    // Check if session homework created is visible within the current session
     cy.contains('.session-infos', sessionHomeworkToCreate[0].sessionHeadText).within(() => {
       getSessionHomework(sessionHomeworkToCreate[0]).scrollIntoView().should('be.visible')
     })
@@ -188,7 +190,7 @@ describe('Sessions homeworks', () => {
     cy.get('.edit-homework-modal').within(() => {
       cy.contains('button', 'Publier').click()
     })
-    // Check if session content is visible
+    // Check if session homework is visible
     cy.get('.session-details').within(() => {
       // Check if session homework is visible
       getSessionHomework(sessionHomeworkToCreate[0]).should('be.visible')
@@ -231,6 +233,7 @@ describe('Sessions homeworks', () => {
     // Login
     cy.login(TEACHER, coursesURL)
     cy.clock().invoke('setSystemTime', Cypress.dayjs(sessionContentToCreate[0].date, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+
     // Click on session
     cy.get('[data-test="09-11_11:25"]').click()
     cy.get('.session-content').within(() => {
@@ -245,11 +248,7 @@ describe('Sessions homeworks', () => {
       cy.tick(1000)
     })
     // Add attached file
-    cy.get('[title="Ajouter une pièce jointe depuis vos documents de l\'ENTA"]').click()
-    cy.get('[data-test="file-picker-modal"]').within(() => {
-      cy.contains('.file', sessionContentToCreate[0].attachedFile).click()
-      cy.get('[data-test="submitButton"]').click()
-    })
+    addFile(sessionContentToCreate[0].attachedFile)
 
     // Add texte
     cy.get('[title="Ajouter du texte"]').click()
@@ -257,39 +256,17 @@ describe('Sessions homeworks', () => {
     // Add cy.tick beacause cy.clock()
     cy.tick(1000)
 
-    // Skip test audio because bug cy.clock()
-
     // Add link
-    cy.get('[title="Ajouter un lien"]').click()
-    cy.get('[data-test="link"]').within(() => {
-      cy.get('.link-name').type(sessionContentToCreate[0].link)
-      cy.get('.link-url').type(sessionContentToCreate[0].linkUrl)
-      cy.get('[data-test="addLinkButton"]').click()
-    })
-
+    addLink(sessionContentToCreate[0].link, sessionContentToCreate[0].linkUrl)
     // Add video
-    cy.get('[title="Ajouter une vidéo"]').click()
-    cy.get('[data-test="video"]').within(() => {
-      cy.get('.video-name').type(sessionContentToCreate[0].video)
-      cy.get('.video-url').type(sessionContentToCreate[0].videoUrl)
-      cy.get('[data-test="addVideo"]').click()
-    })
-
+    addVideo(sessionContentToCreate[0].video, sessionContentToCreate[0].videoUrl)
     // Add H5P
-    cy.get('[title="Ajouter un élément H5P"]').click()
-    cy.get('[data-test="h5p"]').within(() => {
-      cy.get('.content-name').type(sessionContentToCreate[0].h5p)
-      cy.get('.content-url').type(sessionContentToCreate[0].h5pUrl)
-      cy.get('[data-test="addH5P"]').click()
-    })
+    addH5P(sessionContentToCreate[0].h5p, sessionContentToCreate[0].h5pUrl)
 
     // Click on button to create session content
     cy.get('.edit-course-modal').should('be.visible').within(() => {
       cy.contains('button', 'Publier').click()
     })
-    // Wait to load session content
-    cy.intercept('GET', '**/get-session-contents?**').as('loadSessionContent')
-    cy.wait('@loadSessionContent')
     // Check if session content is visible
     cy.get('.session-details').within(() => {
       // Check if session content and session homework is visible
@@ -300,15 +277,10 @@ describe('Sessions homeworks', () => {
     cy.login(STUDENT, coursesURL)
     cy.clock().invoke('setSystemTime', Cypress.dayjs(sessionContentToCreate[0].date, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
 
-    // Open courses tab
-    cy.get('.tabs').within(() => {
-      cy.contains('li', 'Cours').click()
-    })
-    // Click on right course
-    cy.get('.courses').should('be.visible').within(() => {
-      cy.contains('li', studentCourseList[11].Course).click()
-    })
-    // Check if session content modified is visible within the current session
+    changetab('Cours')
+    selectCourse(studentCourseList[11].Course)
+
+    // Check if session content created is visible within the current session
     cy.contains('.session-infos', sessionContentToCreate[0].sessionHeadText).within(() => {
       getSessionContentWithSupportWithoutAudio(sessionContentToCreate[0]).scrollIntoView().should('be.visible')
     })

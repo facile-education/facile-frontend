@@ -2,7 +2,7 @@ import { coursesURL } from '../../support/constants/urls'
 import { STUDENT, TEACHER } from '../../support/constants/users'
 import { changetab, getSessionContent, selectCourse } from '../../support/utils/courses'
 
-describe('Sessions content', () => {
+describe('Delete', () => {
   beforeEach(() => {
     cy.loadTables('courses/courses_tables_homework.sql')
     cy.fixture('courses.json').as('coursesData')
@@ -84,6 +84,7 @@ describe('Sessions content', () => {
     const studentCourseList = courseList[1]
     const teacherCourseList = courseList[0]
     const sessions = teacherCourseList[2].Sessions
+
     // Login
     cy.login(TEACHER, coursesURL)
     cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionHomework.sessionDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
@@ -103,8 +104,6 @@ describe('Sessions content', () => {
     cy.get('.context-menu').within(() => {
       cy.contains('button', 'Supprimer').click()
     })
-    cy.intercept('GET', '**/get-session-details**').as('getSessionDetails')
-    cy.wait('@getSessionDetails')
     cy.get('.session-details').within(() => {
       // Check if no session homework is visible
       cy.get('.homework').contains(currentSessionHomework.title).should('not.exist')
@@ -115,6 +114,7 @@ describe('Sessions content', () => {
 
     changetab('Cours')
     selectCourse(studentCourseList[11].Course)
+
     // Check if session homework is delete within the current session
     cy.contains('.session-infos', sessions[1].headText).within(() => {
       cy.get('.homework').should('not.exist')
@@ -125,12 +125,14 @@ describe('Sessions content', () => {
     const currentSessionHomework = this.coursesData.existingHomework[0]
     const courseList = this.coursesData.CoursesListByProfil
     const teacherCourseList = courseList[0]
+
     // Login
     cy.login(TEACHER, coursesURL)
     cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionHomework.sessionDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
 
     changetab('Cours')
-    selectCourse(teacherCourseList[2].Cours)
+    selectCourse(teacherCourseList[2].Course)
+
     cy.get('.course-details').within(() => {
       cy.contains('.homework', currentSessionHomework.title).within(() => {
         cy.get('.title').within(() => {

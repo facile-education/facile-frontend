@@ -231,10 +231,9 @@ describe('Sessions homeworks', () => {
     cy.login(TEACHER, coursesURL)
     cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionHomework.sessionDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
 
-    // Open courses tab
     changetab('Cours')
-    // Click on right course
-    selectCourse(teacherCourseList[2].Cours)
+    selectCourse(teacherCourseList[2].Course)
+
     cy.get('.course-details').within(() => {
       cy.contains('.homework', currentSessionHomework.title).within(() => {
         cy.get('.title').within(() => {
@@ -337,13 +336,10 @@ describe('Sessions homeworks', () => {
     cy.login(STUDENT, coursesURL)
 
     // Open courses tab
-    cy.get('.tabs').within(() => {
-      cy.contains('li', 'Cours').click()
-    })
+    changetab('Cours')
     // Click on right course
-    cy.get('.courses').should('be.visible').within(() => {
-      cy.contains('li', studentCourseList[11].Course).click()
-    })
+    selectCourse(studentCourseList[11].Course)
+
     // Check if session content modified is visible within the current session
     cy.contains('.session-infos', sessions[1].headText).within(() => {
       getSessionContentWithSupportWithoutAudio(sessionContentToEdit[0]).should('be.visible')
@@ -358,12 +354,11 @@ describe('Sessions homeworks', () => {
     cy.login(TEACHER, coursesURL)
     cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionContent.sessionDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
 
-    cy.get('.tabs').within(() => {
-      cy.contains('li', 'Cours').click()
-    })
-    cy.get('.courses').should('be.visible').within(() => {
-      cy.contains('li', teacherCourseList[2].Course).click()
-    })
+    // Open courses tab
+    changetab('Cours')
+    // Click on right course
+    selectCourse(teacherCourseList[2].Course)
+
     cy.get('.course-details').within(() => {
       cy.contains('.session-content', currentSessionContent.title).within(() => {
         cy.get('.content-title').within(() => {
