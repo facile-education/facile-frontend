@@ -1,6 +1,7 @@
 <template>
   <div
     class="base-dropdown"
+    data-test="dropdown"
   >
     <button
       v-if="displayDropdown"
