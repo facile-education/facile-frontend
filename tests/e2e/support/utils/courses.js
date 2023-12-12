@@ -1,5 +1,5 @@
 const getSessionHomework = (homework) => {
-  return cy.get('.homework').contains(homework.title)
+  return cy.contains('.homework', homework.title)
 }
 
 const getSessionHomeworkWithSupport = (homework) => {
@@ -32,7 +32,7 @@ const getSessionHomeworkWithSupportWithoutAudio = (homework) => {
 }
 
 const getSessionContent = (session) => {
-  return cy.get('.session-content').contains(session.title)
+  return cy.contains('.session-content', session.title)
 }
 
 const getSessionContentWithSupport = (sessionSupport) => {
