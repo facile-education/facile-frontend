@@ -75,8 +75,7 @@ Cypress.Commands.add('login', (user, visitUrl = undefined) => {
       //   const pAuth = response.body.replace(/(\r\n|\n|\r|\s)/gm, '')
       //   cy.request(Cypress.config().baseUrl + '/lfr/api/jsonws/user.userutils/get-user-infos?p_auth=' + pAuth).its('status').should('eq', 200)
       // })
-    },
-    cacheAcrossSpecs: true
+    }
   })
 
   if (visitUrl && window.location.href !== Cypress.config().baseUrl + visitUrl) {

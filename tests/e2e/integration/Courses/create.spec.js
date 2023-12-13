@@ -9,6 +9,7 @@ describe('Create', () => {
   })
 
   it('Courses_CreateSessionHomework_CreateWithAllContentsTypesForFuturSession', function () {
+    cy.loadTables('courses/courses_tables_homework.sql')
     const courseList = this.coursesData.CoursesListByProfil
     const studentCourseList = courseList[1]
     const sessionHomeworkToCreate = [
@@ -240,6 +241,7 @@ describe('Create', () => {
   })
 
   it('Courses_CreateSessionContent_CreateWithAllContentsTypes', function () {
+    cy.loadTables('courses/courses_tables_homework.sql')
     const courseList = this.coursesData.CoursesListByProfil
     const studentCourseList = courseList[1]
     const sessionContentToCreate = [
