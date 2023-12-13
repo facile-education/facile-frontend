@@ -1,5 +1,8 @@
 <template>
-  <div class="component">
+  <div
+    class="component"
+    data-test="tagsInput"
+  >
     <div
       :class="{'default-bg': (!disabled && !isInputFocused), 'theme-light-background-color theme-border-color': isInputFocused, 'disabled': disabled}"
       class="base-tags-input"
