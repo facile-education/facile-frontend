@@ -151,7 +151,7 @@ export default {
   },
   computed: {
     isScheduled () {
-      return this.publicationDate.isAfter(dayjs()) && !this.editedSession.sessionContent.isDraft
+      return this.publicationDate.isAfter(dayjs()) && !this.editedSession.sessionContent?.isDraft
     },
     formattedTitle () {
       const sessionStartDate = dayjs(this.editedSession.startDate, 'YYYY/MM/DD HH:mm')
