@@ -18,12 +18,18 @@
 
     <div class="filters">
       <!-- To switch between user selection and group selection -->
-      <NeroIcon
+      <button
         v-if="mq.phone && !$store.state.user.isStudent && !$store.state.user.isParent"
-        :name="iconClass"
-        class="selection"
+        :aria-label="$t('toggleGroupsFilter')"
+        :title="$t('toggleGroupsFilter')"
+        class="toggle-group-filter-button"
         @click="toggleSelection"
-      />
+      >
+        <NeroIcon
+          :name="iconClass"
+          class="selection"
+        />
+      </button>
 
       <!-- Parents with 1 child -->
       <p
@@ -306,6 +312,13 @@ export default {
   gap: 0.8rem;
 }
 
+.toggle-group-filter-button {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+}
+
 .create-button {
   @extend %create-button;
 }
@@ -350,12 +363,13 @@ export default {
 </style>
 
 <i18n locale="fr">
-  {
-    "add": "NOUVEAU",
-    "groupFilter": "Groupe",
-    "userInput": "Elève / Maître",
-    "childFilter": "Enfant",
-    "timetableOf": "Horaires de ",
-    "createSession": "Créer un cours"
-  }
+{
+  "add": "NOUVEAU",
+  "groupFilter": "Groupe",
+  "userInput": "Elève / Maître",
+  "childFilter": "Enfant",
+  "timetableOf": "Horaires de ",
+  "createSession": "Créer un cours",
+  "toggleGroupsFilter": "Sélectionner des classes / utilisateurs"
+}
 </i18n>

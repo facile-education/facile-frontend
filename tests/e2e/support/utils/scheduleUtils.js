@@ -12,7 +12,15 @@ const getSlot = (slot) => {
   return cy.get('[data-test="' + startDate.format('MM-DD_HH:mm') + '"]')
 }
 
+const checkScheduleSlot = (slot) => {
+  getSlot(slot).scrollIntoView()
+    .should('be.visible')
+    .should('contain', slot.courseName)
+    .should('contain', slot.room)
+}
+
 export {
   waitScheduleToBeLoaded,
-  getSlot
+  getSlot,
+  checkScheduleSlot
 }

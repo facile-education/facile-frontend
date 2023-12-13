@@ -16,7 +16,7 @@
         "lastName": "IACIVELLI"
       },
       "room": "BP122",
-      "courseName": "GEO922",
+      "courseName": "GE0922",
       "courseSubject": "Géographie"
     }
   },
@@ -51,6 +51,21 @@
       "courseSubject": "Histoire"
     }
   },
+  "Rafaello": {
+    "nbWeekSlots": 17,
+    "slotExample": {
+      "schoolSlotNumber": "P4",
+      "startDate": "2023/10/02 10:35",
+      "endDate": "2023/10/02 11:20",
+      "teacher": {
+        "firstName": "Rafaello",
+        "lastName": "BREYDIN"
+      },
+      "room": "S198",
+      "courseName": "FR1133",
+      "courseSubject": "Français"
+    }
+  },
   "Pénélope": {
     "nbWeekSlots": 38,
     "slotExample": {
@@ -76,7 +91,7 @@
         "firstName": "Rosana",
         "lastName": "NOLLI"
       },
-      "room": "S284",
+      "room": "S181",
       "courseName": "HI0911",
       "courseSubject": "Histoire"
     }
