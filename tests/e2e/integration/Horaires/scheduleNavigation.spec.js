@@ -1,6 +1,6 @@
 import { scheduleURL } from '../../support/constants/urls'
 import { TEACHER } from '../../support/constants/users'
-import { getSlot, waitScheduleToBeLoaded } from '../../support/utils/scheduleUtils'
+import { checkScheduleSlot, getSlot, waitScheduleToBeLoaded } from '../../support/utils/scheduleUtils'
 
 describe('Schedule_ScheduleNavigation', () => {
   before(() => {
@@ -32,7 +32,7 @@ describe('Schedule_ScheduleNavigation', () => {
 
       // Current week slot is displayed
       cy.get('.calendar').within(() => {
-        getSlot(currentWeekSlot).should('exist')
+        checkScheduleSlot(currentWeekSlot)
       })
 
       // Select next week
@@ -41,7 +41,7 @@ describe('Schedule_ScheduleNavigation', () => {
       })
       cy.get('.calendar').within(() => {
         getSlot(currentWeekSlot).should('not.exist')
-        getSlot(nextWeekSlot).should('exist')
+        checkScheduleSlot(nextWeekSlot)
       })
 
       // Select current week
@@ -49,8 +49,8 @@ describe('Schedule_ScheduleNavigation', () => {
         cy.contains(currentWeekLabel).click()
       })
       cy.get('.calendar').within(() => {
-        getSlot(currentWeekSlot).should('exist')
         getSlot(nextWeekSlot).should('not.exist')
+        checkScheduleSlot(currentWeekSlot)
       })
     })
 
@@ -124,7 +124,7 @@ describe('Schedule_ScheduleNavigation', () => {
 
       // Current week slot is displayed
       cy.get('.calendar').within(() => {
-        getSlot(currentDaySlot).should('exist')
+        checkScheduleSlot(currentDaySlot)
       })
 
       // Select next day week
@@ -133,7 +133,7 @@ describe('Schedule_ScheduleNavigation', () => {
       cy.selectDateInVCalendar(tomorrow)
       cy.get('.calendar').within(() => {
         getSlot(currentDaySlot).should('not.exist')
-        getSlot(nextDaySlot).should('exist')
+        checkScheduleSlot(nextDaySlot)
       })
 
       // Select current day
@@ -143,8 +143,8 @@ describe('Schedule_ScheduleNavigation', () => {
       cy.tick(500)
       cy.selectDateInVCalendar(currentDay)
       cy.get('.calendar').within(() => {
-        getSlot(currentDaySlot).should('exist')
         getSlot(nextDaySlot).should('not.exist')
+        checkScheduleSlot(currentDaySlot)
       })
     })
 

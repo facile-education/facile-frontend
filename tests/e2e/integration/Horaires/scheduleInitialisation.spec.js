@@ -1,6 +1,6 @@
 import { scheduleURL } from '../../support/constants/urls'
 import { HEADMASTER, MULTI_PARENT, PARENT, STUDENT, TEACHER } from '../../support/constants/users'
-import { getSlot, waitScheduleToBeLoaded } from '../../support/utils/scheduleUtils'
+import { checkScheduleSlot, waitScheduleToBeLoaded } from '../../support/utils/scheduleUtils'
 
 const scheduleUsers = [HEADMASTER, TEACHER, STUDENT, PARENT, MULTI_PARENT]
 const hasToolbar = (user) => {
@@ -27,7 +27,7 @@ describe('Schedule_ScheduleInitialisation', () => {
 
         waitScheduleToBeLoaded()
 
-        cy.get('[data-test="body"]').within(() => {
+        cy.get('[data-test="body"]').within((section) => {
           // Test current User selection in search input
           if (hasToolbar(user)) {
             if (user !== HEADMASTER) {
@@ -42,16 +42,18 @@ describe('Schedule_ScheduleInitialisation', () => {
           cy.get('.calendar').within(() => {
             cy.get('.fc-timegrid-event').should('have.length', scheduleData[userDisplayedSlots.firstName].nbWeekSlots)
             if (scheduleData[userDisplayedSlots.firstName].nbWeekSlots > 0) {
-              getSlot(scheduleData[userDisplayedSlots.firstName].slotExample).should('exist')
+              checkScheduleSlot(scheduleData[userDisplayedSlots.firstName].slotExample)
             }
           })
 
           // For parents, test the children dropdown content
           if (user.role === 'parent') {
             if (user.students.length === 1) {
+              cy.wrap(section).scrollTo('top')
               cy.contains('Horaires de ' + user.students[0].firstName).should('be.visible')
             } else {
               // Test multi student dropdown content
+              cy.wrap(section).scrollTo('top')
               cy.get('[data-test="dropdown"]').contains(user.students[0].firstName)
                 .should('be.visible')
                 .click()
@@ -102,7 +104,7 @@ describe('Schedule_ScheduleInitialisation', () => {
 
       // Check calendar content
       cy.get('.fc-timegrid-event').should('have.length', this.scheduleData[TEACHER.firstName].nbDaySlots)
-      getSlot(this.scheduleData[TEACHER.firstName].slotExample).should('exist')
+      checkScheduleSlot(this.scheduleData[TEACHER.firstName].slotExample)
     })
   })
 })
