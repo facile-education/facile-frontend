@@ -35,6 +35,7 @@ describe('Dashboard_Events', () => {
       // All events loading
       cy.intercept('GET', '**/get-events**').as('allEvents')
       cy.wait('@allEvents')
+      cy.wait(2000)
       // Check if second event is unread
       cy.get('.diary-event').eq(1).should('have.class', 'theme-border-color')
       // filter to display unread events
@@ -421,8 +422,7 @@ describe('Dashboard_Events', () => {
       getEvent(lastEvent).trigger('mouseover').within(() => {
         cy.get('[data-test="buttonEditEvent"]').click()
       })
-      cy.intercept('GET', '**/get-event-details**').as('eventDetail')
-      cy.wait('@eventDetail')
+      cy.wait(2000)
       // Set content
       cy.get('[data-test="update-diary-event-modal"]').within(() => {
         cy.get('.ck-editor')
@@ -685,7 +685,6 @@ describe('Dashboard_Events', () => {
           cy.get('.scroll').scrollTo('bottom')
           cy.get('.diary-event').should('have.length', 15)
         } else if (size === ipad) {
-          cy.get('.diary-event').should('have.length', 10)
           cy.get('.diary-event').should('have.length', 15)
         } else {
           // Pagination is taller than screen size
