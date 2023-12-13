@@ -381,6 +381,7 @@ describe('Dashboard_Announcements', () => {
       cy.get('[data-test="announcement-widget"]').within(() => {
         cy.contains('button', 'Voir toutes les annonces').click()
       })
+      cy.wait(4000)
       // CLick on button +
       cy.get('.create-button').click()
       // Check if modal is visible
@@ -574,7 +575,7 @@ describe('Dashboard_Announcements', () => {
 
       // Update news
       cy.login(HEADMASTER, dashboardURL)
-      getNews(existingNews[1]).click()
+      getNews(existingNews[0]).click()
       cy.get('[data-test="updateButton"]').click()
       // Set new informations
       cy.get('[data-test="update-news-modal"]').within(() => {
