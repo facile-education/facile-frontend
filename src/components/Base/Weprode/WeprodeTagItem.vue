@@ -4,11 +4,16 @@
     data-test="tag-item"
   >
     <span class="label">{{ tag }}</span>
-    <NeroIcon
-      name="times"
-      class="icon"
-      @click="onRemove"
-    />
+    <button
+      :aria-label="$t('remove')"
+      :title="$t('remove')"
+    >
+      <NeroIcon
+        name="times"
+        class="icon"
+        @click="onRemove"
+      />
+    </button>
   </div>
 </template>
 
@@ -61,9 +66,23 @@ export default {
     max-width: 95%;
   }
 
-  .icon {
-    margin-left: 5px;
-    cursor: pointer;
+  button {
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    color: white;
+
+    .icon {
+      margin-left: 5px;
+      cursor: pointer;
+    }
   }
 }
 </style>
+
+<i18n locale="fr">
+{
+  "remove": "Retirer"
+}
+</i18n>
