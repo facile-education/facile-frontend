@@ -5,6 +5,7 @@
     :full-screen="mq.phone || mq.tablet"
     :class="{'create-session': mq.phone}"
     class="create-session-modal"
+    data-test="create-session-modal"
     @close="closeModal"
   >
     <template #header>
@@ -23,6 +24,7 @@
         <WeprodeDropdown
           v-model="selectedDay"
           class="days-list"
+          data-test="day-dropdown"
           :list="daysList"
           display-field="dayName"
           :sort="false"
@@ -37,6 +39,7 @@
           v-model="selectedSlot"
           class="slots-list"
           :list="slotList"
+          data-test="slot-dropdown"
           display-field="slotLabel"
           :sort="false"
           :filtered="false"
@@ -57,6 +60,7 @@
         <WeprodeDropdown
           v-model="selectedGroup"
           class="group-list"
+          data-test="group-dropdown"
           :placeholder="$t('group')"
           :list="groupList"
           display-field="groupName"
@@ -74,6 +78,7 @@
         <WeprodeDropdown
           v-model="subject"
           class="subject-list"
+          data-test="subject-dropdown"
           :list="subjectList"
           display-field="name"
         />
@@ -195,12 +200,12 @@ export default {
   },
   created () {
     this.daysList = [
-      { dayNb: 1, dayName: 'Lundi' },
-      { dayNb: 2, dayName: 'Mardi' },
-      { dayNb: 3, dayName: 'Mercredi' },
-      { dayNb: 4, dayName: 'Jeudi' },
-      { dayNb: 5, dayName: 'Vendredi' },
-      { dayNb: 6, dayName: 'Samedi' }
+      { dayNb: 1, dayName: 'lundi' },
+      { dayNb: 2, dayName: 'mardi' },
+      { dayNb: 3, dayName: 'mercredi' },
+      { dayNb: 4, dayName: 'jeudi' },
+      { dayNb: 5, dayName: 'vendredi' },
+      { dayNb: 6, dayName: 'samedi' }
     ]
     this.selectedDay = this.daysList[0]
 
