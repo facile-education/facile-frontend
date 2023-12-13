@@ -1,6 +1,6 @@
 import { coursesURL } from '../../support/constants/urls'
 import { STUDENT, TEACHER } from '../../support/constants/users'
-import { changetab, getSessionContent, selectCourse } from '../../support/utils/courses'
+import { changetab, getSessionContent, openEditHomworkModal, openEditSessionContentModal, selectCourse } from '../../support/utils/courses'
 
 describe('Delete', () => {
   beforeEach(() => {
@@ -20,20 +20,8 @@ describe('Delete', () => {
     cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionContent.sessionDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
 
     // Click on session
-    cy.get('[data-test="11-13_11:25"]').click()
-    cy.get('.session-details').within(() => {
-      // Get current session content
-      cy.contains('.session-content', currentSessionContent.title).within(() => {
-        cy.get('.content-title').within(() => {
-          // Open edit session content panel
-          cy.get('.edit-button').click()
-        })
-      })
-    })
-    // Click on delete button
-    cy.get('.context-menu').within(() => {
-      cy.contains('button', 'Supprimer').click()
-    })
+    openEditSessionContentModal(currentSessionContent, '11-13_11:25', 'Supprimer')
+
     cy.get('.session-details').within(() => {
       // Check if no session content is visible
       getSessionContent(currentSessionContent).should('not.exist')
@@ -90,20 +78,8 @@ describe('Delete', () => {
     cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionHomework.sessionDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
 
     // Click on session
-    cy.get('[data-test="11-13_11:25"]').click()
-    cy.get('.session-details').within(() => {
-      // Get current session homeWork
-      cy.contains('.homeworks', currentSessionHomework.title).within(() => {
-        cy.get('.title').eq(0).within(() => {
-          // Open edit session content panel
-          cy.get('.edit-button').click()
-        })
-      })
-    })
-    // Click on delete button
-    cy.get('.context-menu').within(() => {
-      cy.contains('button', 'Supprimer').click()
-    })
+    openEditHomworkModal(currentSessionHomework, '11-13_11:25', 'Supprimer')
+
     cy.get('.session-details').within(() => {
       // Check if no session homework is visible
       cy.get('.homework').contains(currentSessionHomework.title).should('not.exist')

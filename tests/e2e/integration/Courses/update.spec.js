@@ -1,6 +1,6 @@
 import { coursesURL } from '../../support/constants/urls'
 import { CLASSTEACHER2, STUDENT, STUDENT_IN_CLASS, TEACHER } from '../../support/constants/users'
-import { addFile, addH5P, addLink, addVideo, changetab, getSessionContentWithSupportWithoutAudio, getSessionHomework, getSessionHomeworkWithSupport, getSessionHomeworkWithSupportWithoutAudio, getWorkInWorkload, selectCourse } from '../../support/utils/courses'
+import { addFile, addH5P, addLink, addVideo, changetab, getSessionContentWithSupportWithoutAudio, getSessionHomework, getSessionHomeworkWithSupport, getSessionHomeworkWithSupportWithoutAudio, getWorkInWorkload, openEditHomworkModal, openEditSessionContentModal, openHomeworkCreateModal, selectCourse, submitHomework, submitSessionContent } from '../../support/utils/courses'
 
 describe('Update', () => {
   beforeEach(() => {
@@ -37,20 +37,8 @@ describe('Update', () => {
     cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionHomework.sessionDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
 
     // Click on session
-    cy.get('[data-test="11-13_11:25"]').click()
-    cy.get('.session-details').within(() => {
-      // Get current session homeWork
-      cy.contains('.homeworks', currentSessionHomework.title).within(() => {
-        cy.get('.title').eq(0).within(() => {
-          // Open edit session content panel
-          cy.get('.edit-button').click()
-        })
-      })
-    })
-    // Click on update button
-    cy.get('.context-menu').within(() => {
-      cy.contains('button', 'Modifier').click()
-    })
+    openEditHomworkModal(currentSessionHomework, '11-13_11:25', 'Modifier')
+
     cy.get('.edit-homework-modal').should('be.visible').within(() => {
       // Set title
       cy.get('.labelled').clear()
@@ -76,26 +64,21 @@ describe('Update', () => {
     addH5P(sessionHomeworkToEdit[0].h5p, sessionHomeworkToEdit[0].h5pUrl)
 
     // Click on button to update session homework
-    cy.get('.edit-homework-modal').within(() => {
-      cy.contains('button', 'Publier').click()
-    })
+    submitHomework()
 
     // Check if session homework is visible
     getSessionHomeworkWithSupportWithoutAudio(sessionHomeworkToEdit[0]).should('be.visible')
 
-    // Check with other teacher if homework modified is visible in workload
+    // Login with other teacher to check if homework modified is visible in workload
     cy.login(CLASSTEACHER2, coursesURL)
     cy.clock().invoke('setSystemTime', Cypress.dayjs(sessionHomeworkToEdit[0].dateToDo, 'YYYY/MM/DD').toDate().getTime())
 
     // Click on session
-    cy.get('[data-test="11-14_11:25"]').click()
+    openHomeworkCreateModal('11-14_11:25')
+    // TO DO Remove after fix
+    cy.wait(2000)
 
-    cy.get('.homeworks').within(() => {
-      // TO DO Remove after fix
-      cy.wait(2000)
-      // Click on create homework button
-      cy.get('[data-test="createSessionHomework"]').click()
-    })
+    // Check if homework is visible
     getWorkInWorkload(sessionHomeworkToEdit[0], sessionHomeworkToEdit[0], 'be.visible')
 
     // Login with student to check if session homework modified is visible
@@ -138,20 +121,8 @@ describe('Update', () => {
     cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionHomework.sessionDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
 
     // Click on session
-    cy.get('[data-test="11-13_11:25"]').click()
-    cy.get('.session-details').within(() => {
-      // Get current session homeWork
-      cy.contains('.homeworks', currentSessionHomework.title).within(() => {
-        cy.get('.title').eq(0).within(() => {
-          // Open edit session content panel
-          cy.get('.edit-button').click()
-        })
-      })
-    })
-    // Click on update button
-    cy.get('.context-menu').within(() => {
-      cy.contains('button', 'Modifier').click()
-    })
+    openEditHomworkModal(currentSessionHomework, '11-13_11:25', 'Modifier')
+
     cy.get('.edit-homework-modal').should('be.visible').within(() => {
       cy.get('.target-session').within(() => {
         cy.get('.next-sessions-dropdown').click()
@@ -161,23 +132,18 @@ describe('Update', () => {
       })
     })
     // Click on button to update session homework
-    cy.get('.edit-homework-modal').within(() => {
-      cy.contains('button', 'Publier').click()
-    })
+    submitHomework()
 
-    // Check with other teacher if homework modified is visible in workload
+    // Login with other teacher to check if homework modified is visible in workload
     cy.login(CLASSTEACHER2, coursesURL)
     cy.clock().invoke('setSystemTime', Cypress.dayjs(sessionHomeworkToEdit[0].dateToDo, 'YYYY/MM/DD').toDate().getTime())
 
     // Click on session
-    cy.get('[data-test="11-28_11:25"]').click()
+    openHomeworkCreateModal('11-28_11:25')
+    // TO DO Remove after fix
+    cy.wait(2000)
 
-    cy.get('.homeworks').within(() => {
-      // TO DO Remove after fix
-      cy.wait(2000)
-      // Click on create homework button
-      cy.get('[data-test="createSessionHomework"]').click()
-    })
+    // Check if homework is visible
     getWorkInWorkload(currentSessionHomework, sessionHomeworkToEdit[0], 'be.visible')
 
     // Login with student to check if session homework modified is visible
@@ -218,20 +184,8 @@ describe('Update', () => {
     cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionHomework.sessionDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
 
     // Click on session
-    cy.get('[data-test="11-13_11:25"]').click()
-    cy.get('.session-details').within(() => {
-      // Get current session homeWork
-      cy.contains('.homeworks', currentSessionHomework.title).within(() => {
-        cy.get('.title').eq(0).within(() => {
-          // Open edit session content panel
-          cy.get('.edit-button').click()
-        })
-      })
-    })
-    // Click on update button
-    cy.get('.context-menu').within(() => {
-      cy.contains('button', 'Modifier').click()
-    })
+    openEditHomworkModal(currentSessionHomework, '11-13_11:25', 'Modifier')
+
     cy.get('.edit-homework-modal').should('be.visible').within(() => {
       // Select one student
       cy.get('.target-students').within(() => {
@@ -244,9 +198,7 @@ describe('Update', () => {
       cy.get('.footer').contains('button', 'Enregistrer').click()
     })
     // Click on button to update session homework
-    cy.get('.edit-homework-modal').within(() => {
-      cy.contains('button', 'Publier').click()
-    })
+    submitHomework()
 
     // Login with an other student in class to see if this work is not visible
     cy.login(STUDENT_IN_CLASS, coursesURL)
@@ -307,20 +259,7 @@ describe('Update', () => {
     cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionContent.sessionDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
 
     // Click on session
-    cy.get('[data-test="11-13_11:25"]').click()
-    cy.get('.session-details').within(() => {
-      // Get current session content
-      cy.contains('.session-content', currentSessionContent.title).within(() => {
-        cy.get('.content-title').within(() => {
-          // Open edit session content panel
-          cy.get('.edit-button').click()
-        })
-      })
-    })
-    // Click on update button
-    cy.get('.context-menu').within(() => {
-      cy.contains('button', 'Modifier').click()
-    })
+    openEditSessionContentModal(currentSessionContent, '11-13_11:25', 'Modifier')
 
     // Set new informations
     cy.get('.edit-course-modal').should('be.visible').within(() => {
@@ -353,12 +292,8 @@ describe('Update', () => {
     addH5P(sessionContentToEdit[0].h5p, sessionContentToEdit[0].h5pUrl)
 
     // Click on button to create session content
-    cy.get('.edit-course-modal').should('be.visible').within(() => {
-      cy.contains('button', 'Programmer').click()
-    })
-    // Wait to load session content
-    cy.intercept('GET', '**/get-session-contents?**').as('loadSessionContent')
-    cy.wait('@loadSessionContent')
+    submitSessionContent()
+
     // Check if session content is visible
     cy.get('.session-details').within(() => {
       // Check if session content and session homework is visible

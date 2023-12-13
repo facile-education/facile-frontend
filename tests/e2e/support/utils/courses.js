@@ -127,6 +127,67 @@ const getWorkInWorkload = (homework, session, visibility) => {
   })
 }
 
+const submitHomework = () => {
+  cy.get('.edit-homework-modal').within(() => {
+    cy.contains('button', 'Publier').click()
+  })
+}
+
+const submitSessionContent = () => {
+  cy.get('.edit-course-modal').within(() => {
+    cy.contains('button', 'Publier').click()
+  })
+}
+
+const openHomeworkCreateModal = (sessionDatatestDate) => {
+  cy.get(`[data-test="${sessionDatatestDate}"]`).click()
+  cy.get('.homeworks').within(() => {
+    // Click on create homework button
+    cy.get('[data-test="createSessionHomework"]').click()
+  })
+}
+
+const openSessionContentCreateModal = (sessionDatatestDate) => {
+  cy.get(`[data-test="${sessionDatatestDate}"]`).click()
+  cy.get('.session-details').within(() => {
+    // Click on create homework button
+    cy.get('[data-test="createSessionContent"]').click()
+  })
+}
+
+const openEditHomworkModal = (homework, sessionDatatestDate, option) => {
+  cy.get(`[data-test="${sessionDatatestDate}"]`).click()
+  cy.get('.session-details').within(() => {
+    // Get current session homeWork
+    cy.contains('.homeworks', homework.title).within(() => {
+      cy.get('.title').eq(0).within(() => {
+        // Open edit session content panel
+        cy.get('.edit-button').click()
+      })
+    })
+  })
+  // Click on update button
+  cy.get('.context-menu').within(() => {
+    cy.contains('button', `${option}`).click()
+  })
+}
+const openEditSessionContentModal = (homework, sessionDatatestDate, option) => {
+  cy.get(`[data-test="${sessionDatatestDate}"]`).click()
+  cy.get('.session-details').within(() => {
+    // Get current session homeWork
+    cy.contains('.session-content', homework.title).within(() => {
+      cy.get('.content-title').eq(0).within(() => {
+        // Open edit session content panel
+        cy.get('.edit-button').click()
+      })
+    })
+  })
+  // Click on update button
+  cy.get('.context-menu').within(() => {
+    cy.contains('button', `${option}`).click()
+  })
+}
+
 export {
   getSessionHomework,
   getSessionHomeworkWithSupport,
@@ -142,5 +203,11 @@ export {
   addVideo,
   addH5P,
   addFile,
-  getWorkInWorkload
+  getWorkInWorkload,
+  submitHomework,
+  openHomeworkCreateModal,
+  openSessionContentCreateModal,
+  submitSessionContent,
+  openEditHomworkModal,
+  openEditSessionContentModal
 }

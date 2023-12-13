@@ -1,6 +1,6 @@
 import { coursesURL } from '../../support/constants/urls'
 import { STUDENT, TEACHER } from '../../support/constants/users'
-import { changetab, getSessionContent, getSessionHomework, selectCourse } from '../../support/utils/courses'
+import { changetab, getSessionContent, getSessionHomework, openEditHomworkModal, openEditSessionContentModal, openHomeworkCreateModal, openSessionContentCreateModal, selectCourse } from '../../support/utils/courses'
 
 describe('Draft', () => {
   beforeEach(() => {
@@ -22,11 +22,8 @@ describe('Draft', () => {
     cy.clock().invoke('setSystemTime', Cypress.dayjs(sessionHomeworkToCreate[0].creationDate, 'YYYY/MM/DD').toDate().getTime())
 
     // Click on session
-    cy.get('[data-test="09-11_11:25"]').click()
-    cy.get('.homeworks').within(() => {
-      // Click on create homework button
-      cy.get('[data-test="createSessionHomework"]').click()
-    })
+    openHomeworkCreateModal('09-11_11:25')
+
     cy.get('.edit-homework-modal').should('be.visible').within(() => {
       // Set title
       cy.get('.labelled').type(sessionHomeworkToCreate[0].title)
@@ -73,20 +70,8 @@ describe('Draft', () => {
     cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionHomework.sessionDate, 'YYYY/MM/DD').toDate().getTime())
 
     // Click on session
-    cy.get('[data-test="11-13_11:25"]').click()
-    cy.get('.session-details').within(() => {
-    // Get current session homeWork
-      cy.contains('.homeworks', currentSessionHomework.title).within(() => {
-        cy.get('.title').eq(0).within(() => {
-        // Open edit session content panel
-          cy.get('.edit-button').click()
-        })
-      })
-    })
-    // Click on update button
-    cy.get('.context-menu').within(() => {
-      cy.contains('button', 'Modifier').click()
-    })
+    openEditHomworkModal(currentSessionHomework, '11-13_11:25', 'Modifier')
+
     cy.get('.edit-homework-modal').should('be.visible').within(() => {
       // Update as draft
       cy.get('.toggle-options-list-button').click()
@@ -122,10 +107,8 @@ describe('Draft', () => {
     cy.login(TEACHER, coursesURL)
     cy.clock().invoke('setSystemTime', Cypress.dayjs(sessionContentToCreate[0].Sessiondate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
     // Click on session
-    cy.get('[data-test="09-11_11:25"]').click()
-    cy.get('.session-content').within(() => {
-      cy.get('[data-test="createSessionContent"]').click()
-    })
+    openSessionContentCreateModal('09-11_11:25')
+
     cy.get('.edit-course-modal').should('be.visible').within(() => {
       // Set title
       cy.get('.labelled').type(sessionContentToCreate[0].title)
@@ -171,20 +154,7 @@ describe('Draft', () => {
     cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionContent.sessionDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
 
     // Click on session
-    cy.get('[data-test="11-13_11:25"]').click()
-    cy.get('.session-details').within(() => {
-      // Get current session content
-      cy.contains('.session-content', currentSessionContent.title).within(() => {
-        cy.get('.content-title').within(() => {
-          // Open edit session content panel
-          cy.get('.edit-button').click()
-        })
-      })
-    })
-    // Click on update button
-    cy.get('.context-menu').within(() => {
-      cy.contains('button', 'Modifier').click()
-    })
+    openEditSessionContentModal(currentSessionContent, '11-13_11:25', 'Modifier')
 
     // Set new informations
     cy.get('.edit-course-modal').should('be.visible').within(() => {
