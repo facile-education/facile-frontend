@@ -264,14 +264,16 @@
             "video": "Vidéo pour ce devoir",
             "h5p": "H5P pour ce devoir",
             "sessionDate": "2023/11/13",
-            "estimatedTime": "15 min"
+            "estimatedTime": "15 min",
+            "dateToDoWorkload": "13/11"
         },
         {
             "title": "Second travail à faire",
             "content": "Consigne du second travail à faire",
             "teacher": "NOLLI",
             "dateBefore": "2023/11/13",
-            "dateAfter": "2023/11/17"
+            "dateAfter": "2023/11/17",
+            "dateToDoWorkload": "14/11"
         },
         {
             "title": "Travail à faire parent multi enfants",

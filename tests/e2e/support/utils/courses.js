@@ -117,16 +117,6 @@ const addH5P = (h5pName, h5pUrl) => {
   })
 }
 
-const getWorkInWorkload = (homework, session, visibility) => {
-  cy.get('.work-load-button').click()
-  // Check if homework created is visible
-  cy.get('[data-test="workLoadModal"]').within(() => {
-    cy.contains('.day-works', session.dateToDoWorkload).within(() => {
-      cy.contains('.work-item', homework.title).should(`${visibility}`)
-    })
-  })
-}
-
 const submitHomework = () => {
   cy.get('.edit-homework-modal').within(() => {
     cy.contains('button', 'Publier').click()
@@ -188,6 +178,27 @@ const openEditSessionContentModal = (homework, sessionDatatestDate, option) => {
   })
 }
 
+const openWorkload = (sessionDatatestDate) => {
+  cy.get(`[data-test="${sessionDatatestDate}"]`).click()
+  cy.get('.homeworks').within(() => {
+    // Click on create homework button
+    cy.get('[data-test="createSessionHomework"]').click()
+  })
+  cy.wait(2000)
+  cy.get('.edit-homework-modal').should('be.visible').within(() => {
+    cy.get('.work-load-button').click()
+  })
+}
+
+const getWorkInWorkload = (homework, dateToDoWorkload, visibility) => {
+  // Check if homework created is visible
+  cy.get('[data-test="workLoadModal"]').within(() => {
+    cy.contains('.day-works', dateToDoWorkload).within(() => {
+      cy.contains('.work-item', homework.title).should(`${visibility}`)
+    })
+  })
+}
+
 export {
   getSessionHomework,
   getSessionHomeworkWithSupport,
@@ -209,5 +220,6 @@ export {
   openSessionContentCreateModal,
   submitSessionContent,
   openEditHomworkModal,
-  openEditSessionContentModal
+  openEditSessionContentModal,
+  openWorkload
 }

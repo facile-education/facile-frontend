@@ -78,9 +78,12 @@ describe('Create', () => {
     openHomeworkCreateModal('09-12_11:25')
     // TO DO Remove after fix
     cy.wait(2000)
+    cy.get('.edit-homework-modal').should('be.visible').within(() => {
+      cy.get('.work-load-button').click()
+    })
 
     // Check if homework is visible in workload
-    getWorkInWorkload(sessionHomeworkToCreate[0], sessionHomeworkToCreate[0], 'be.visible')
+    getWorkInWorkload(sessionHomeworkToCreate[0], sessionHomeworkToCreate[0].dateToDoWorkload, 'be.visible')
 
     // Login with student to check if session homework modified is visible
     cy.login(STUDENT, coursesURL)
@@ -223,8 +226,9 @@ describe('Create', () => {
       cy.get('li').contains(`${STUDENT_IN_CLASS.lastName} ${STUDENT_IN_CLASS.firstName}`).click()
       cy.get('.footer').contains('button', 'Enregistrer').click()
     })
+    cy.get('.work-load-button').click()
     // Check if homework not exist
-    getWorkInWorkload(sessionHomeworkToCreate[0], sessionHomeworkToCreate[0], 'not.exist')
+    getWorkInWorkload(sessionHomeworkToCreate[0], sessionHomeworkToCreate[0].dateToDoWorkload, 'not.exist')
 
     // Login with the only student who should see this homework
     cy.login(STUDENT, coursesURL)

@@ -1,6 +1,6 @@
 import { coursesURL } from '../../support/constants/urls'
 import { CLASSTEACHER2, STUDENT, STUDENT_IN_CLASS, TEACHER } from '../../support/constants/users'
-import { addFile, addH5P, addLink, addVideo, changetab, getSessionContentWithSupportWithoutAudio, getSessionHomework, getSessionHomeworkWithSupport, getSessionHomeworkWithSupportWithoutAudio, getWorkInWorkload, openEditHomworkModal, openEditSessionContentModal, openHomeworkCreateModal, selectCourse, submitHomework, submitSessionContent } from '../../support/utils/courses'
+import { addFile, addH5P, addLink, addVideo, changetab, getSessionContentWithSupportWithoutAudio, getSessionHomework, getSessionHomeworkWithSupport, getSessionHomeworkWithSupportWithoutAudio, getWorkInWorkload, openEditHomworkModal, openEditSessionContentModal, openWorkload, selectCourse, submitHomework, submitSessionContent } from '../../support/utils/courses'
 
 describe('Update', () => {
   beforeEach(() => {
@@ -74,12 +74,10 @@ describe('Update', () => {
     cy.clock().invoke('setSystemTime', Cypress.dayjs(sessionHomeworkToEdit[0].dateToDo, 'YYYY/MM/DD').toDate().getTime())
 
     // Click on session
-    openHomeworkCreateModal('11-14_11:25')
-    // TO DO Remove after fix
-    cy.wait(2000)
+    openWorkload('11-14_11:25')
 
     // Check if homework is visible
-    getWorkInWorkload(sessionHomeworkToEdit[0], sessionHomeworkToEdit[0], 'be.visible')
+    getWorkInWorkload(sessionHomeworkToEdit[0], sessionHomeworkToEdit[0].dateToDoWorkload, 'be.visible')
 
     // Login with student to check if session homework modified is visible
     cy.login(STUDENT, coursesURL)
@@ -139,12 +137,9 @@ describe('Update', () => {
     cy.clock().invoke('setSystemTime', Cypress.dayjs(sessionHomeworkToEdit[0].dateToDo, 'YYYY/MM/DD').toDate().getTime())
 
     // Click on session
-    openHomeworkCreateModal('11-28_11:25')
-    // TO DO Remove after fix
-    cy.wait(2000)
-
+    openWorkload('11-28_11:25')
     // Check if homework is visible
-    getWorkInWorkload(currentSessionHomework, sessionHomeworkToEdit[0], 'be.visible')
+    getWorkInWorkload(currentSessionHomework, sessionHomeworkToEdit[0].dateToDoWorkload, 'be.visible')
 
     // Login with student to check if session homework modified is visible
     cy.login(STUDENT, coursesURL)
