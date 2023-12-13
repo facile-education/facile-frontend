@@ -37,6 +37,18 @@
       "room": "S284",
       "courseName": "HI0971",
       "courseSubject": "Histoire"
+    },
+    "nextDaySlotExample": {
+      "schoolSlotNumber": "P4",
+      "startDate": "2023/10/03 10:35",
+      "endDate": "2023/10/03 11:20",
+      "teacher": {
+        "firstName": "Rosana",
+        "lastName": "NOLLI"
+      },
+      "room": "S182",
+      "courseName": "HI0933",
+      "courseSubject": "Histoire"
     }
   },
   "Pénélope": {

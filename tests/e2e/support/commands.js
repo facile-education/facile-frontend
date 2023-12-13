@@ -163,3 +163,18 @@ Cypress.Commands.add('selectDateRangeInVCalendar', (startDate, endDate) => {
   })
 // TODO: Find a way to close popover before continuing the tests
 })
+
+Cypress.Commands.add('selectDateInVCalendar', (date) => {
+  // SelectFirstDate
+  cy.get('.vc-popover-content').within(() => {
+    // More generic but commented because v-calendar month doesn't collapse if current month
+    // cy.get('button.vc-title').click()
+    // cy.get('button.vc-nav-title').click()
+    // cy.contains(dayJsStartDate.format('YYYY')).click()
+    // cy.contains(dayJsStartDate.format('MMM')).click()
+    cy.contains('.vc-day', exactString(date.format('D'))).click()
+  })
+
+  cy.tick(500)
+// TODO: Find a way to close popover before continuing the tests
+})
