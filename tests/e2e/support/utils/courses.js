@@ -117,6 +117,16 @@ const addH5P = (h5pName, h5pUrl) => {
   })
 }
 
+const getWorkInWorkload = (homework, session, visibility) => {
+  cy.get('.work-load-button').click()
+  // Check if homework created is visible
+  cy.get('[data-test="workLoadModal"]').within(() => {
+    cy.contains('.day-works', session.dateToDoWorkload).within(() => {
+      cy.contains('.work-item', homework.title).should(`${visibility}`)
+    })
+  })
+}
+
 export {
   getSessionHomework,
   getSessionHomeworkWithSupport,
@@ -131,5 +141,6 @@ export {
   addLink,
   addVideo,
   addH5P,
-  addFile
+  addFile,
+  getWorkInWorkload
 }

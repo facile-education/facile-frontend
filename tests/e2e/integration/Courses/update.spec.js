@@ -1,8 +1,8 @@
 import { coursesURL } from '../../support/constants/urls'
-import { STUDENT, STUDENT_IN_CLASS, TEACHER } from '../../support/constants/users'
-import { addFile, addH5P, addLink, addVideo, changetab, getSessionContentWithSupportWithoutAudio, getSessionHomework, getSessionHomeworkWithSupport, getSessionHomeworkWithSupportWithoutAudio, selectCourse } from '../../support/utils/courses'
+import { CLASSTEACHER2, STUDENT, STUDENT_IN_CLASS, TEACHER } from '../../support/constants/users'
+import { addFile, addH5P, addLink, addVideo, changetab, getSessionContentWithSupportWithoutAudio, getSessionHomework, getSessionHomeworkWithSupport, getSessionHomeworkWithSupportWithoutAudio, getWorkInWorkload, selectCourse } from '../../support/utils/courses'
 
-describe('Sessions homeworks', () => {
+describe('Update', () => {
   beforeEach(() => {
     cy.loadTables('courses/courses_tables_homework.sql')
     cy.fixture('courses.json').as('coursesData').then((data) => {
@@ -18,6 +18,7 @@ describe('Sessions homeworks', () => {
       {
         sessionDate: '2023/11/13',
         dateToDo: '2023/11/13',
+        dateToDoWorkload: '13/11',
         sessionHeadText: '13 novembre - P5',
         title: 'Travail à faire modifié',
         content: 'Consigne du travail à faire',
@@ -82,6 +83,21 @@ describe('Sessions homeworks', () => {
     // Check if session homework is visible
     getSessionHomeworkWithSupportWithoutAudio(sessionHomeworkToEdit[0]).should('be.visible')
 
+    // Check with other teacher if homework modified is visible in workload
+    cy.login(CLASSTEACHER2, coursesURL)
+    cy.clock().invoke('setSystemTime', Cypress.dayjs(sessionHomeworkToEdit[0].dateToDo, 'YYYY/MM/DD').toDate().getTime())
+
+    // Click on session
+    cy.get('[data-test="11-14_11:25"]').click()
+
+    cy.get('.homeworks').within(() => {
+      // TO DO Remove after fix
+      cy.wait(2000)
+      // Click on create homework button
+      cy.get('[data-test="createSessionHomework"]').click()
+    })
+    getWorkInWorkload(sessionHomeworkToEdit[0], sessionHomeworkToEdit[0], 'be.visible')
+
     // Login with student to check if session homework modified is visible
     cy.login(STUDENT, coursesURL)
     cy.clock().invoke('setSystemTime', Cypress.dayjs(sessionHomeworkToEdit[0].dateToDo, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
@@ -106,7 +122,9 @@ describe('Sessions homeworks', () => {
       {
         sessionHeadText: '28 novembre - P4',
         setDate: 'mardi 28 nov. 2023 à 10:35',
-        cyClockDate: '2023/11/28'
+        cyClockDate: '2023/11/28',
+        dateToDoWorkload: '28/11',
+        dateToDo: '2023/11/28'
       }
     ]
     // Login with student to check if session homework modified is not visible
@@ -146,6 +164,21 @@ describe('Sessions homeworks', () => {
     cy.get('.edit-homework-modal').within(() => {
       cy.contains('button', 'Publier').click()
     })
+
+    // Check with other teacher if homework modified is visible in workload
+    cy.login(CLASSTEACHER2, coursesURL)
+    cy.clock().invoke('setSystemTime', Cypress.dayjs(sessionHomeworkToEdit[0].dateToDo, 'YYYY/MM/DD').toDate().getTime())
+
+    // Click on session
+    cy.get('[data-test="11-28_11:25"]').click()
+
+    cy.get('.homeworks').within(() => {
+      // TO DO Remove after fix
+      cy.wait(2000)
+      // Click on create homework button
+      cy.get('[data-test="createSessionHomework"]').click()
+    })
+    getWorkInWorkload(currentSessionHomework, sessionHomeworkToEdit[0], 'be.visible')
 
     // Login with student to check if session homework modified is visible
     cy.login(STUDENT, coursesURL)

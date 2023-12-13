@@ -207,6 +207,7 @@ const NURSE = {
 const STUDENT_IN_CLASS = { // Student in class for student penelope
   login: 'enrico.bttll',
   password,
+  firstName: 'Enrico',
   lastName: 'BATTELLI',
   isVisibleStudent: true,
   isVisibleParent: false,

@@ -1,18 +1,20 @@
 import { coursesURL } from '../../support/constants/urls'
-import { STUDENT, STUDENT_IN_CLASS, TEACHER } from '../../support/constants/users'
-import { addFile, addH5P, addLink, addVideo, changetab, getSessionContentWithSupportWithoutAudio, getSessionHomework, getSessionHomeworkWithSupportWithoutAudio, selectCourse } from '../../support/utils/courses'
+import { CLASSTEACHER2, STUDENT, STUDENT_IN_CLASS, TEACHER } from '../../support/constants/users'
+import { addFile, addH5P, addLink, addVideo, changetab, getSessionContentWithSupportWithoutAudio, getSessionHomework, getSessionHomeworkWithSupportWithoutAudio, getWorkInWorkload, selectCourse } from '../../support/utils/courses'
 
 describe('Create', () => {
   beforeEach(() => {
     cy.loadTables('courses/courses_tables_homework_empty.sql')
     cy.fixture('courses.json').as('coursesData')
   })
+
   it('Courses_CreateSessionHomework_CreateWithAllContentsTypesForFuturSession', function () {
     const courseList = this.coursesData.CoursesListByProfil
     const studentCourseList = courseList[1]
     const sessionHomeworkToCreate = [
       {
         sessionHeadText: '12 septembre - P4',
+        dateToDoWorkload: '12/09',
         dateToDo: '2023/09/12',
         creationDate: '2023/09/11',
         title: 'Travail à faire créé',
@@ -70,6 +72,22 @@ describe('Create', () => {
     cy.get('.session-details').within(() => {
       getSessionHomeworkWithSupportWithoutAudio(sessionHomeworkToCreate[0]).should('be.visible')
     })
+
+    // Check visibility in workload for an other teacher in class
+    // Login
+    cy.login(CLASSTEACHER2, coursesURL)
+    cy.clock().invoke('setSystemTime', Cypress.dayjs(sessionHomeworkToCreate[0].creationDate, 'YYYY/MM/DD').toDate().getTime())
+
+    // Click on session
+    cy.get('[data-test="09-12_11:25"]').click()
+
+    cy.get('.homeworks').within(() => {
+      // TO DO Remove after fix
+      cy.wait(2000)
+      // Click on create homework button
+      cy.get('[data-test="createSessionHomework"]').click()
+    })
+    getWorkInWorkload(sessionHomeworkToCreate[0], sessionHomeworkToCreate[0], 'be.visible')
 
     // Login with student to check if session homework modified is visible
     cy.login(STUDENT, coursesURL)
@@ -153,6 +171,7 @@ describe('Create', () => {
         sessionHeadText: '12 septembre - P4',
         creationDate: '2023/09/11',
         dateToDo: '2023/09/12',
+        dateToDoWorkload: '12/09',
         title: 'Travail à faire créé pour un seul élève',
         content: 'Description du travail à faire créé pour un seul élève'
       }
@@ -195,6 +214,35 @@ describe('Create', () => {
       // Check if session homework is visible
       getSessionHomework(sessionHomeworkToCreate[0]).should('be.visible')
     })
+
+    // Check visibility in workload for an other teacher in class
+    // Login
+    cy.login(CLASSTEACHER2, coursesURL)
+    cy.clock().invoke('setSystemTime', Cypress.dayjs(sessionHomeworkToCreate[0].creationDate, 'YYYY/MM/DD').toDate().getTime())
+
+    // Click on session
+    cy.get('[data-test="09-12_11:25"]').click()
+
+    cy.get('.homeworks').within(() => {
+      // TO DO Remove after fix
+      cy.wait(2000)
+      // Click on create homework button
+      cy.get('[data-test="createSessionHomework"]').click()
+    })
+    cy.get('.edit-homework-modal').should('be.visible').within(() => {
+      // Select one student
+      cy.get('.target-students').within(() => {
+        cy.get('.target-students-button').click()
+      })
+    })
+    cy.get('.studentListWindow').within(() => {
+      // Click to choose specific student
+      cy.get('.class-selector').contains('Spécifique').click()
+      // Click on Penelope Ribeiro
+      cy.get('li').contains(`${STUDENT_IN_CLASS.lastName} ${STUDENT_IN_CLASS.firstName}`).click()
+      cy.get('.footer').contains('button', 'Enregistrer').click()
+    })
+    getWorkInWorkload(sessionHomeworkToCreate[0], sessionHomeworkToCreate[0], 'not.exist')
 
     // Login with the only student who should see this homework
     cy.login(STUDENT, coursesURL)
