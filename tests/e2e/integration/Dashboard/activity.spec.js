@@ -392,7 +392,6 @@ describe('Dashboard_Activity', () => {
     it('Dashboard_Activities_CreateActivityButtonHeaderActivityWithAttachedFiles', function () {
       cy.loadTables('dashboard/dashboard_tables_activity_News_attachedFile.sql')
       const activityToCreate = this.dashboardData.ActivityToCreate
-      const CurrentDate = dayjs
 
       // Login
       cy.login(TEACHER, dashboardURL)

@@ -25,6 +25,7 @@ describe('Visibility and content', () => {
       cy.get('.homework').eq(0).within(() => {
         cy.get('.pellet').should('not.exist')
         cy.get('[data-test="toggleDoneUndone"]').eq(0).click()
+        cy.get('.pellet').scrollIntoView()
         cy.get('.pellet').should('be.visible')
       })
     })
