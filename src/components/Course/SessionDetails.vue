@@ -41,7 +41,7 @@
             @click="openCourseEditModal"
           />
           <div
-            v-else-if="canEdit && hasContent"
+            v-else-if="isTeacher && hasContent"
             class="right"
           >
             <span
@@ -50,6 +50,7 @@
               :title="status === 'scheduled' ? formattedFuturePublicationDate : ''"
             >{{ formattedStatus }}</span>
             <button
+              v-if="canEdit"
               class="edit-button"
               :aria-label="$t('options')"
               :title="$t('options')"
@@ -218,6 +219,9 @@ export default {
   },
   computed: {
     canEdit () {
+      return this.session !== undefined && this.session.teachers.map(teacher => teacher.userId).indexOf(this.$store.state.user.userId) !== -1
+    },
+    isTeacher () {
       return this.$store.state.user.isTeacher
     },
     status () {
