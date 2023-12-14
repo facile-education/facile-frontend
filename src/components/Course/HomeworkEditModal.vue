@@ -122,9 +122,10 @@
         >
           <span v-t="'scheduledOn'" />
           <CustomDatePicker
+            v-if="selectedTargetDate"
             v-model:selected-date="publicationDate"
             :min-date="minDate"
-            :max-date="maxDate"
+            :max-date="selectedTargetDate.toDate()"
             :with-hours="true"
             :is-required="true"
             :minute-increment="15"
@@ -160,6 +161,7 @@
     <ChoosePublicationDateModal
       v-if="displayPublicationDateModal"
       :initial-date="publicationDate"
+      :limit-date="selectedTargetDate"
       @choose-date="schedulePublication"
       @close="displayPublicationDateModal = false"
     />
@@ -301,16 +303,13 @@ export default {
       return this.isCreation ? this.selectedSession.groupName : this.editedHomework.cours
     },
     selectedTargetDate () {
-      return dayjs(this.homework.date.startDate, 'YYYY-MM-DD HH:mm')
+      return this.homework.date ? dayjs(this.homework.date.startDate, 'YYYY-MM-DD HH:mm') : undefined
     },
     configuration () {
       return this.$store.state.calendar.configuration
     },
     minDate () {
       return dayjs().startOf('day').toDate()
-    },
-    maxDate () {
-      return this.configuration ? dayjs(this.configuration.schoolYearEndDate, 'YYYY-MM-DD').toDate() : undefined
     }
   },
   created () {

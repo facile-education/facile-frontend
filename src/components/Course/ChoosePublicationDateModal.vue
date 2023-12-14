@@ -48,6 +48,10 @@ export default {
     initialDate: {
       type: Object,
       default: undefined
+    },
+    limitDate: {
+      type: Object,
+      default: undefined
     }
   },
   emits: ['close', 'chooseDate'],
@@ -64,7 +68,7 @@ export default {
       return dayjs().startOf('day').toDate()
     },
     maxDate () {
-      return this.configuration ? dayjs(this.configuration.schoolYearEndDate, 'YYYY-MM-DD').toDate() : undefined
+      return this.limitDate ? this.limitDate.toDate() : (this.configuration ? dayjs(this.configuration.schoolYearEndDate, 'YYYY-MM-DD').toDate() : undefined)
     }
   },
   created () {
