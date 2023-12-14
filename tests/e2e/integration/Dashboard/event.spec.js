@@ -33,8 +33,6 @@ describe('Dashboard_Events', () => {
         cy.contains('button', 'Voir tous les événements').click()
       })
       // All events loading
-      cy.intercept('GET', '**/get-events**').as('allEvents')
-      cy.wait('@allEvents')
       cy.wait(2000)
       // Check if second event is unread
       cy.get('.diary-event').eq(1).should('have.class', 'theme-border-color')
@@ -373,6 +371,7 @@ describe('Dashboard_Events', () => {
       cy.get('[data-test="diary-widget"]').within(() => {
         cy.contains('button', 'Voir tous les événements').click()
       })
+      cy.wait(2000)
       // Last event should be visible at first
       getEventDetail(lastEvent).should('be.visible')
       // Click on update button
@@ -671,8 +670,7 @@ describe('Dashboard_Events', () => {
 
         cy.get('[data-test="diary-widget"]', { timout: 10000 }).within(() => {
           cy.contains('button', 'Voir tous les événements').click()
-          cy.intercept('GET', '**/get-events**').as('allEvents')
-          cy.wait('@allEvents')
+          cy.wait(2000)
         })
 
         // Pagination is smaller than screen size

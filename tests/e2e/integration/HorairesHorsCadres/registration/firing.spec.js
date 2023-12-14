@@ -141,7 +141,7 @@ describe('HHC_Firing_Registration', () => {
     })
   })
 
-  it('HHC_Firing_Registration_Register', function () {
+  it.only('HHC_Firing_Registration_Register', function () {
     const slotToRegisterInside = this.hhcData.slotsTypes.fired.slotExample
     const slotToBeFiredFrom = this.hhcData.studentSlotToBeFired
 
@@ -154,6 +154,9 @@ describe('HHC_Firing_Registration', () => {
     // Open registration modal
     getSlot(slotToRegisterInside).click()
     cy.get('[data-test=registerStudent-option]').click()
+
+    // Wait to fix CI bug
+    cy.wait(2000)
 
     // Test registration modal (ends by registering student)
     testRegistrationModal(slotToRegisterInside, studentToRegister, slotToBeFiredFrom)

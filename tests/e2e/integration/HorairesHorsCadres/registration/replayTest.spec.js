@@ -135,6 +135,9 @@ describe('HHC_ReplayTest_Registration', () => {
     getSlot(slotToRegisterInside).click()
     cy.get('[data-test=registerStudent-option]').click()
 
+    // Wait to fix CI bug
+    cy.wait(2000)
+
     // Test registration modal (ends by registering student)
     testRegistrationModal(slotToRegisterInside, studentToRegister, notifyParent)
 

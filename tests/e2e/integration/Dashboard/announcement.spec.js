@@ -152,6 +152,7 @@ describe('Dashboard_Announcements', () => {
       cy.get('[data-test="announcement-widget"]').within(() => {
         cy.contains('button', 'Voir toutes les annonces').click()
       })
+      cy.wait(2000)
       // Check if first news is visible
       cy.get('.announcements-list').contains('.announcement', existingNews[2].title).should('be.exist')
       // Chech the content
@@ -790,9 +791,8 @@ describe('Dashboard_Announcements', () => {
       // Click to see all events
       cy.get('[data-test="announcement-widget"]').within(() => {
         cy.contains('button', 'Voir toutes les annonces').click()
-        cy.intercept('GET', '**/get-school-news**').as('allNews')
-        cy.wait('@allNews')
       })
+      cy.wait(2000)
       cy.get('.announcement').eq(1).click()
       cy.get('[data-test="updateButton"]').should('be.visible')
       cy.get('[data-test="deleteButton"]').should('be.visible')
