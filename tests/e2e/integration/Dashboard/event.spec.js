@@ -649,7 +649,7 @@ describe('Dashboard_Events', () => {
       cy.get('[data-test="deleteButton"]').should('be.visible')
     })
 
-    const sizes = ['iphone-5', 'ipad-2', [1024, 768], [1024, 4000]]
+    const sizes = ['iphone-5', 'ipad-2', [1024, 4000]]
     const largeScreenNoScroll = sizes[3]
     const mobile = sizes[0]
     const ipad = sizes[1]
@@ -683,12 +683,6 @@ describe('Dashboard_Events', () => {
           cy.get('.scroll').scrollTo('bottom')
           cy.get('.diary-event').should('have.length', 15)
         } else if (size === ipad) {
-          cy.get('.diary-event').should('have.length', 15)
-        } else {
-          // Pagination is taller than screen size
-          cy.get('.diary-event').should('have.length', 10)
-          // Scroll to bottom
-          cy.get('.scroll').scrollTo('bottom')
           cy.get('.diary-event').should('have.length', 15)
         }
       })

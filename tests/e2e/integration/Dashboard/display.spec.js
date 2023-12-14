@@ -11,7 +11,7 @@ describe('Dashboard_DisplayCorrectWidgets', () => {
     ScrollToAndCheckVisibility('[data-test="announcement-widget"]')
     ScrollToAndCheckVisibility('[data-test="schedule-widget"]')
     ScrollToAndCheckVisibility('[data-test="homeWork-widget"]')
-    cy.get('[data-test="statistics-widget"]').should('not.exist')
+    ScrollToAndCheckVisibility('[data-test="statistics-widget"]')
 
     // For a parent
     cy.login(PARENT, dashboardURL)
@@ -20,7 +20,7 @@ describe('Dashboard_DisplayCorrectWidgets', () => {
     ScrollToAndCheckVisibility('[data-test="announcement-widget"]')
     ScrollToAndCheckVisibility('[data-test="schedule-widget"]')
     ScrollToAndCheckVisibility('[data-test="homeWork-widget"]')
-    cy.get('[data-test="statistics-widget"]').should('not.exist')
+    cy.get('[data-test="statistics-widget"]')
 
     // For a teacher
     cy.login(TEACHER, dashboardURL)
@@ -28,16 +28,16 @@ describe('Dashboard_DisplayCorrectWidgets', () => {
     ScrollToAndCheckVisibility('[data-test="activity-widget"]')
     ScrollToAndCheckVisibility('[data-test="announcement-widget"]')
     ScrollToAndCheckVisibility('[data-test="schedule-widget"]')
-    cy.get('[data-test="homeWork-widget"]').should('not.exist')
-    cy.get('[data-test="statistics-widget"]').should('not.exist')
+    ScrollToAndCheckVisibility('[data-test="homeWork-widget"]')
+    ScrollToAndCheckVisibility('[data-test="statistics-widget"]')
 
     // For the director
     cy.login(HEADMASTER, dashboardURL)
     ScrollToAndCheckVisibility('[data-test="diary-widget"]')
     ScrollToAndCheckVisibility('[data-test="activity-widget"]')
     ScrollToAndCheckVisibility('[data-test="announcement-widget"]')
-    cy.get('[data-test="schedule-widget"]').should('not.exist')
-    cy.get('[data-test="homeWork-widget"]').should('not.exist')
+    ScrollToAndCheckVisibility('[data-test="schedule-widget"]')
+    ScrollToAndCheckVisibility('[data-test="homeWork-widget"]')
     ScrollToAndCheckVisibility('[data-test="statistics-widget"]')
 
     // For an other personel
@@ -45,9 +45,9 @@ describe('Dashboard_DisplayCorrectWidgets', () => {
     ScrollToAndCheckVisibility('[data-test="diary-widget"]')
     ScrollToAndCheckVisibility('[data-test="activity-widget"]')
     ScrollToAndCheckVisibility('[data-test="announcement-widget"]')
-    cy.get('[data-test="schedule-widget"]').should('not.exist')
-    cy.get('[data-test="homeWork-widget"]').should('not.exist')
-    cy.get('[data-test="statistics-widget"]').should('not.exist')
+    ScrollToAndCheckVisibility('[data-test="schedule-widget"]')
+    ScrollToAndCheckVisibility('[data-test="homeWork-widget"]')
+    ScrollToAndCheckVisibility('[data-test="statistics-widget"]')
   })
 
   it('Dashboard_DisplayCorrectWidgets_Responsivity', function () {
@@ -57,6 +57,7 @@ describe('Dashboard_DisplayCorrectWidgets', () => {
     cy.get('[data-test="diary-widget"]').should('be.visible')
     cy.get('[data-test="activity-widget"]').should('be.visible')
     cy.get('[data-test="announcement-widget"]').should('be.visible')
+    cy.get('[data-test="schedule-widget"]').scrollIntoView()
     cy.get('[data-test="schedule-widget"]').should('be.visible')
     // Assert that homework widget is below the bottom of the viewport
     cy.get('[data-test="homeWork-widget"]').then(($homeWorkWidget) => {
