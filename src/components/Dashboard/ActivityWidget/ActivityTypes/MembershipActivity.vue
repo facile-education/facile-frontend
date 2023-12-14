@@ -10,7 +10,14 @@
 
     <div class="content">
       <div class="author">
+        <span
+          v-if="activity.readOnly"
+          class="readOnly"
+        >
+          {{ activity.groupName }}
+        </span>
         <i
+          v-else
           :title="activity.groupName"
           tabindex="0"
           @click="redirect"
