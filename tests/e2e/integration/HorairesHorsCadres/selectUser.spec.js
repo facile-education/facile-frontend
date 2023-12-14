@@ -4,6 +4,7 @@ import { selectSlotType } from '../../support/utils/horairesHorsCardesUtils'
 
 describe('HHC_UserSelection', () => {
   beforeEach(() => {
+    cy.clearAllSessionStorage()
     cy.loadTables('schoollife/schoollife_tables_empty.sql')
     cy.login(HEADMASTER, HHCURL)
     cy.fixture('hhc.json').as('hhcData').then(data => {

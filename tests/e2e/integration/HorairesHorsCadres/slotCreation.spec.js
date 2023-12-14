@@ -114,6 +114,7 @@ describe('HHC_CreateSlot', () => {
       cy.log('==================== Test ' + currentSlotType.label + ' creation ====================')
 
       selectSlotType(currentSlotType)
+      cy.get('.week-number-label').eq(2).scrollIntoView()
       cy.get('.week-number-label').eq(2).click() // Go on current week (we don't know the date at each loop beginning)
 
       // Create slot
