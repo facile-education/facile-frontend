@@ -45,6 +45,13 @@
         </div>
       </div>
       <div
+        v-if="isCollaborative"
+        class="folder"
+      >
+        <label>{{ $t('group') + ': ' }}</label>
+        <span>{{ searchResult.groupName }}</span>
+      </div>
+      <div
         v-if="searchResult && searchResult.folder"
         class="folder"
       >
@@ -269,6 +276,7 @@ export default {
 <i18n locale="fr">
 {
   "folder": "Dossier",
+  "group": "Espace",
   "news": "Annonce",
   "message": "Message",
   "1": "Actualités",
