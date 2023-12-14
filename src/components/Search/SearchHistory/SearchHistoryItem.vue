@@ -1,5 +1,6 @@
 <template>
   <div
+    class="previous-item"
     :class="{'selected': isSelected}"
     @mousedown="selectHistoryItem"
   >
@@ -55,7 +56,7 @@ export default {
 <style lang="scss" scoped>
 @import "@design";
 
-li {
+.previous-item {
   --date-width: 80px;
 
   height: 50px;
