@@ -1,5 +1,6 @@
 <template>
   <div
+    class="result"
     ref="resultItem"
     :class="{'selected': isSelected}"
     @mousedown="redirect"
@@ -280,12 +281,13 @@ export default {
 
 <style lang="scss" scoped>
 @import "@design";
+
 p {
   margin: 0;
   padding: 0;
 }
 
-li {
+.result {
   --icon-width: 40px;
   --score-width: 50px;
 
