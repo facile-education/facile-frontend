@@ -140,6 +140,7 @@ function formatSchoolSlotLabel (schoolSlot) {
 
 function selectWeek (date) {
   const nextWeekLabel = date.day(1).format('D MMM') // week's monday
+  cy.get('[data-test="weekList"]').scrollIntoView()
   cy.get('[data-test="weekList"]').contains('button', nextWeekLabel).click()
 }
 
