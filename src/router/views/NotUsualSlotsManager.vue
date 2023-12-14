@@ -119,7 +119,9 @@ export default {
     this.$emit('update:layout', 'BannerLayout')
   },
   created () {
-    this.getPendingFirings()
+    if (this.$store.state.user.isTeacher) {
+      this.getPendingFirings()
+    }
     this.$store.dispatch('notUsualSlots/setDisplayedDates', {
       startDate: dayjs().startOf('week'),
       endDate: dayjs().endOf('week')
