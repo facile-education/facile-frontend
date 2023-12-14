@@ -44,12 +44,14 @@ describe('Documents_OpenFileDisplayModal', () => {
   })
 
   mobileSizes.forEach(size => {
-    it(`Documents_OpenFile_SimpleClickOnFileOn[${size}]`, function () {
+    it.only(`Documents_OpenFile_SimpleClickOnFileOn[${size}]`, function () {
       cy.viewport(size)
 
       const fileToOpen = currentFolder.files[0]
 
-      cy.contains('[data-test=file]', fileToOpen.label).click()
+      cy.contains('[data-test=file]', fileToOpen.label).within(() => {
+        cy.contains('.name', fileToOpen.label).click()
+      })
 
       checkFileDisplayModal(fileToOpen)
     })
