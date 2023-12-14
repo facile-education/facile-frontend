@@ -90,10 +90,10 @@ export default {
       return this.$store.state.calendar.configuration
     },
     minDate () {
-      return dayjs(this.configuration.schoolYearStartDate, 'YYYY-MM-DD')
+      return this.configuration !== undefined ? dayjs(this.configuration.schoolYearStartDate, 'YYYY-MM-DD') : dayjs()
     },
     maxDate () {
-      return dayjs(this.configuration.schoolYearEndDate, 'YYYY-MM-DD')
+      return this.configuration !== undefined ? dayjs(this.configuration.schoolYearEndDate, 'YYYY-MM-DD') : dayjs()
     },
     disableNext () {
       if (!this.monthList || this.monthList.length === 0) return false
