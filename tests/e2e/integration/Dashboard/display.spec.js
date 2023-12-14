@@ -43,7 +43,7 @@ describe('Dashboard_DisplayCorrectWidgets', () => {
     // For an other personel
     cy.login(SECRETARY, dashboardURL)
     ScrollToAndCheckVisibility('[data-test="diary-widget"]')
-    cy.get('[data-test="activity-widget"]').should('not.exist')
+    ScrollToAndCheckVisibility('[data-test="activity-widget"]')
     ScrollToAndCheckVisibility('[data-test="announcement-widget"]')
     cy.get('[data-test="schedule-widget"]').should('not.exist')
     cy.get('[data-test="homeWork-widget"]').should('not.exist')
