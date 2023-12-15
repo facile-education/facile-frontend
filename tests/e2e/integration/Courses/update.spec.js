@@ -1,6 +1,6 @@
 import { coursesURL } from '../../support/constants/urls'
-import { CLASSTEACHER2, STUDENT, STUDENT_IN_CLASS, TEACHER } from '../../support/constants/users'
-import { addFile, addH5P, addLink, addVideo, changetab, getSessionContentWithSupportWithoutAudio, getSessionHomework, getSessionHomeworkWithSupport, getSessionHomeworkWithSupportWithoutAudio, getWorkInWorkload, openEditHomworkModal, openEditSessionContentModal, openWorkload, selectCourse, submitHomework, submitSessionContent } from '../../support/utils/courses'
+import { CLASSTEACHER2, SCHOOL_ADMIN, STUDENT, STUDENT_IN_CLASS, TEACHER } from '../../support/constants/users'
+import { addFile, addH5P, addLink, addVideo, changetab, clickOnContents, getSessionContent, getSessionContentWithSupportWithoutAudio, getSessionHomework, getSessionHomeworkWithSupport, getSessionHomeworkWithSupportWithoutAudio, getWorkInWorkload, openEditHomworkModal, openEditSessionContentModal, openWorkload, selectCourse, submitHomework, submitSessionContent } from '../../support/utils/courses'
 
 describe('Update', () => {
   beforeEach(() => {
@@ -85,6 +85,7 @@ describe('Update', () => {
 
     // Check if homework is visible in homeworks tab
     getSessionHomework(sessionHomeworkToEdit[0]).should('be.visible')
+    clickOnContents(sessionHomeworkToEdit[0])
 
     changetab('Cours')
     selectCourse(studentCourseList[11].Course)
@@ -228,6 +229,33 @@ describe('Update', () => {
     })
   })
 
+  it('Courses_UpdateSessionHomework_CoTeacherCanEdit', function () {
+    cy.loadTables('courses/courses_tables_coTeacher.sql')
+    const currentSessionHomework = this.coursesData.existingHomework[4]
+    const sessionHomeworkToEdit = [
+      {
+        title: 'Travail à faire modifié'
+      }
+    ]
+
+    // Login
+    cy.login(SCHOOL_ADMIN, coursesURL)
+    cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionHomework.sessionDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+
+    // Click on session
+    openEditHomworkModal(currentSessionHomework, '12-12_11:25', 'Modifier')
+
+    // Set new informations
+    cy.get('.edit-homework-modal').should('be.visible').within(() => {
+      cy.get('.labelled').clear()
+      cy.get('.labelled').type(sessionHomeworkToEdit[0].title)
+    })
+    submitHomework()
+
+    // Check if homework is modified
+    getSessionHomework(sessionHomeworkToEdit[0]).should('be.visible')
+  })
+
   it('Courses_UpdateSessionContent_UpdateFormSessionView', function () {
     const currentSessionContent = this.coursesData.existingSessionsContent[0]
     const courseList = this.coursesData.CoursesListByProfil
@@ -333,6 +361,40 @@ describe('Update', () => {
     // Check if delete button is visible
     cy.get('.context-menu').within(() => {
       cy.contains('button', 'Modifier').should('be.visible')
+    })
+  })
+
+  it('Courses_UpdateSessionContent_CoTeacherCanEdit', function () {
+    cy.loadTables('courses/courses_tables_coTeacher.sql')
+    const currentSessionContent = this.coursesData.existingSessionsContent[1]
+    const sessionContentToEdit = [
+      {
+        title: 'Contenu de cours modifié'
+      }
+    ]
+
+    // Login
+    cy.login(SCHOOL_ADMIN, coursesURL)
+    cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionContent.sessionDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+
+    // Click on session
+    openEditSessionContentModal(currentSessionContent, '12-12_11:25', 'Modifier')
+
+    // Set new informations
+    cy.get('.edit-course-modal').should('be.visible')
+    cy.get('.edit-course-modal').should('be.visible').within(() => {
+      // Set title
+      cy.get('.labelled').clear()
+      cy.get('.labelled').type(sessionContentToEdit[0].title)
+    })
+
+    // Click on button to create session content
+    submitSessionContent()
+
+    // Check if session content is visible
+    cy.get('.session-details').within(() => {
+    // Check if session content and session homework is visible
+      getSessionContent(sessionContentToEdit[0]).should('be.visible')
     })
   })
 })
