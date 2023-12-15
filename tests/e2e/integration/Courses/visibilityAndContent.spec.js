@@ -10,7 +10,16 @@ describe('Visibility and content', () => {
       cy.clock(Cypress.dayjs(data.existingHomework[0].sessionDate, 'YYYY/MM/DD').toDate().getTime())
     })
   })
-  it('Courses_SetHomeworkDone_StudentCanMarkAsDone', function () {
+  it('Courses_SetHomeworkDone_StudentCanMarkAsDoneAndCheckTeacherCount', function () {
+    const currentSessionHomework = this.coursesData.existingHomework[0]
+
+    cy.login(TEACHER, coursesURL)
+    // Click on session
+    cy.get('[data-test="11-13_11:25"]').click()
+    getSessionHomework(currentSessionHomework).within(() => {
+      cy.get('.nb-done').should('contain', 'Réalisé par 0 élève sur 1')
+    })
+
     cy.login(STUDENT, coursesURL)
     cy.get('.homework-tab').within(() => {
       cy.get('header').should('contain', '2 Travaux')
@@ -21,13 +30,13 @@ describe('Visibility and content', () => {
           cy.get('.pellet').should('not.exist')
         })
       })
-      cy.get('header').should('contain', '1 Travail')
-      cy.get('.homework').eq(0).within(() => {
-        cy.get('.pellet').should('not.exist')
-        cy.get('[data-test="toggleDoneUndone"]').eq(0).click()
-        cy.get('.pellet').scrollIntoView()
-        cy.get('.pellet').should('be.visible')
-      })
+    })
+
+    cy.login(TEACHER, coursesURL)
+    // Click on session
+    cy.get('[data-test="11-13_11:25"]').click()
+    getSessionHomework(currentSessionHomework).within(() => {
+      cy.get('.nb-done').should('contain', 'Réalisé par 1 élève sur 1')
     })
   })
 
