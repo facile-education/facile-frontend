@@ -33,21 +33,32 @@
               v-if="!mq.phone"
               class="header-option-item"
               data-test="toggleFullScreen"
+              :aria-label="$t(isFullScreen ? 'collapse' : 'expand')"
+              :title="$t(isFullScreen ? 'collapse' : 'expand')"
               @click="setFullScreen(!isFullScreen)"
             >
-              <BaseIcon
-                class="expand"
-                :title="isFullScreen ? $t('compress') : $t('expand')"
-                :name="isFullScreen ? 'compress' : 'expand'"
-              />
+              <img
+                v-if="isFullScreen"
+                src="@/assets/icons/collapse.svg"
+                :alt="$t('collapse')"
+              >
+              <img
+                v-show="!isFullScreen"
+                src="@/assets/icons/expand.svg"
+                :alt="$t('expand')"
+              >
             </button>
             <button
               class="header-option-item"
               data-test="closeModal"
               :title="$t('close')"
+              :aria-label="$t('close')"
               @click="wantsToCloseFile = true"
             >
-              <BaseIcon name="times" />
+              <img
+                src="@/assets/icons/cross.svg"
+                :alt="$t('close')"
+              >
             </button>
           </div>
         </div>
@@ -67,13 +78,12 @@
 </template>
 
 <script>
-import BaseIcon from '@components/Base/BaseIcon'
 import FileDisplay from '@components/Documents/FileDisplay/FileDisplay'
 import VueResizable from 'vue-resizable'
 
 export default {
   name: 'FileDisplayModal',
-  components: { BaseIcon, FileDisplay, VueResizable },
+  components: { FileDisplay, VueResizable },
   inject: ['mq'],
   props: {
     file: {
@@ -226,23 +236,23 @@ h1 {
   margin-left: auto;
   flex-grow: 0;
   flex-shrink: 0;
-}
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 
-.header-option-item {
-  margin-left: 5px;
-  background: none;
-  border: none;
-  height: 30px;
-  width: 30px;
-  font-size: 1.3rem;
-
-  &:hover {
+  button {
+    background: none;
+    border: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    background-color: rgba(220, 220, 220, 0.5);
-  }
 
-  &.expand {
-    font-size: 1.125rem;
+    img {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
   }
 }
 
@@ -257,7 +267,7 @@ h1 {
 
 <i18n locale="fr">
   {
-    "compress": "Réduire",
+    "collapse": "Réduire",
     "expand": "Plein écran",
     "close": "Fermer"
   }
