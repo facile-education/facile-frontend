@@ -204,6 +204,42 @@ describe('Update', () => {
     getSessionHomework(currentSessionHomework).should('be.visible')
   })
 
+  it('Courses_UpdateSessionHomework_UpdateEveryoneToStudentInListFromSessionView', function () {
+    const currentSessionHomework = this.coursesData.existingHomework[1]
+
+    cy.login(TEACHER, coursesURL)
+    cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionHomework.sessionDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+
+    // Click on session
+    openEditHomworkModal(currentSessionHomework, '11-13_11:25', 'Modifier')
+
+    cy.get('.edit-homework-modal').should('be.visible').within(() => {
+      // Select one student
+      cy.get('.target-students').within(() => {
+        cy.get('.target-students-button').click()
+      })
+    })
+    cy.get('.studentListWindow').within(() => {
+      // Click to remove specific student
+      cy.get('.class-selector').contains('Spécifique').click()
+      // Remove Penelope Ribeiro
+      cy.get('li').contains(`${STUDENT.lastName} ${STUDENT.firstName}`).click()
+      // Check if submit button is disable if no students are selected
+      cy.get('.footer').contains('button', 'Enregistrer').should('have.attr', 'disabled')
+      cy.get('.class-selector').contains('Toute la classe').click()
+      cy.get('.footer').contains('button', 'Enregistrer').click()
+    })
+    // Click on button to update session homework
+    submitHomework()
+
+    // Login with penelope to check if she not see this homework
+    cy.login(STUDENT, coursesURL)
+    cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionHomework.dateBefore, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+
+    // Check if homework is visible
+    getSessionHomework(currentSessionHomework).should('not.exist')
+  })
+
   it('Courses_UpdateSessionHomework_DisplayUpdateOptionFromCourseView', function () {
     const currentSessionHomework = this.coursesData.existingHomework[0]
     const courseList = this.coursesData.CoursesListByProfil
