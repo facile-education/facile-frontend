@@ -5,6 +5,7 @@
     :full-screen="mq.phone || mq.tablet"
     :class="{'session-teacher': mq.phone}"
     class="session-teacher-modal"
+    data-test="sessionTeacherModal"
     @close="closeModal"
   >
     <template #header>
