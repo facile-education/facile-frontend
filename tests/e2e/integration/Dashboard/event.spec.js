@@ -198,7 +198,6 @@ describe('Dashboard_Events', () => {
         cy.get('.suggestion-list').contains('li', NewEvent.recipient).click()
         cy.get('.group > [data-test="titleInputEvent"]').type(NewEvent.title)
         cy.get('.group > [data-test="locationInputEvent"]').type(NewEvent.location)
-        cy.get('.ck-editor')
         cy.type_ckeditor(NewEvent.content)
         // Submit
         cy.get('[data-test="submitButton"]').click()
@@ -236,7 +235,6 @@ describe('Dashboard_Events', () => {
       cy.get('[data-test="buttonCreateEvent"]').click()
       // Set content
       cy.get('[data-test="update-diary-event-modal"]').within(() => {
-        cy.get('.ck-editor')
         cy.type_ckeditor(NewEvent.content)
         cy.get('[data-test="closeModal"]').click()
       })
@@ -330,7 +328,6 @@ describe('Dashboard_Events', () => {
         cy.get('.group > [data-test="titleInputEvent"]').type(EventToEdit.title)
         cy.get('.group > [data-test="locationInputEvent"]').clear()
         cy.get('.group > [data-test="locationInputEvent"]').type(EventToEdit.location)
-        cy.get('.ck-editor')
         cy.type_ckeditor(EventToEdit.content)
         cy.get('[data-test="submitButton"]').click()
       })
@@ -424,7 +421,6 @@ describe('Dashboard_Events', () => {
       cy.wait(2000)
       // Set content
       cy.get('[data-test="update-diary-event-modal"]').within(() => {
-        cy.get('.ck-editor')
         cy.type_ckeditor(EventToEdit.content)
         cy.get('[data-test="closeModal"]').click()
       })

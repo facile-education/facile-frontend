@@ -4,11 +4,10 @@ import { addFile, addH5P, addLink, addVideo, changetab, clickOnContents, getSess
 
 describe('Create', () => {
   beforeEach(() => {
-    cy.loadTables('courses/courses_tables_homework_empty.sql')
     cy.fixture('courses.json').as('coursesData')
   })
 
-  it.only('Courses_CreateSessionHomework_CreateWithAllContentsTypesForFuturSession', function () {
+  it('Courses_CreateSessionHomework_CreateWithAllContentsTypesForFuturSession', function () {
     cy.loadTables('courses/courses_tables_homework.sql')
     const courseList = this.coursesData.CoursesListByProfil
     const studentCourseList = courseList[1]
@@ -39,75 +38,77 @@ describe('Create', () => {
     openHomeworkCreateModal('09-11_11:25')
 
     cy.get('.edit-homework-modal').should('be.visible').within(() => {
-      // // Set title
-      // cy.get('.labelled').type(sessionHomeworkToCreate[0].title)
-      // // Set description
+      // Set title
+      cy.get('.labelled').type(sessionHomeworkToCreate[0].title)
+      // Set description
       cy.type_ckeditor(sessionHomeworkToCreate[0].content, 'contentItem_0')
       // Add cy.tick beacause cy.clock()
-      // cy.tick(1000)
-      // // Set estimated time
-      // cy.get('.duration').within(() => {
-      //   cy.get('.base-dropdown').click()
-      // })
-      // cy.get('.suggestion-list').within(() => {
-      //   cy.get('li').contains(sessionHomeworkToCreate[0].estimatedTime).click()
-      // })
+      cy.tick(1000)
+      // Set estimated time
+      cy.get('.duration').within(() => {
+        cy.get('.base-dropdown').click()
+      })
+      cy.get('.suggestion-list').within(() => {
+        cy.get('li').contains(sessionHomeworkToCreate[0].estimatedTime).click()
+      })
     })
-    // Add texte
-    // cy.get('[title="Ajouter du texte"]').click()
-    // cy.type_ckeditor(sessionHomeworkToCreate[0].additionalText, 'contentItem_1')
-    // // Add cy.tick beacause cy.clock()
-    // cy.tick(1000)
 
-    // // Add attached file
-    // addFile(sessionHomeworkToCreate[0].attachedFile)
-    // // Add link
-    // addLink(sessionHomeworkToCreate[0].link, sessionHomeworkToCreate[0].linkUrl)
-    // // Add video
-    // addVideo(sessionHomeworkToCreate[0].video, sessionHomeworkToCreate[0].videoUrl)
-    // // Add H5P
-    // addH5P(sessionHomeworkToCreate[0].h5p, sessionHomeworkToCreate[0].h5pUrl)
+    // Add text
+    cy.get('[title="Ajouter du texte"]').click()
+    cy.type_ckeditor(sessionHomeworkToCreate[0].additionalText, 'contentItem_1')
+    // Add cy.tick beacause cy.clock()
+    cy.tick(1000)
 
-    // // Click on button to create session homework
-    // submitHomework()
+    // Add attached file
+    addFile(sessionHomeworkToCreate[0].attachedFile)
+    // Add link
+    addLink(sessionHomeworkToCreate[0].link, sessionHomeworkToCreate[0].linkUrl)
+    // Add video
+    addVideo(sessionHomeworkToCreate[0].video, sessionHomeworkToCreate[0].videoUrl)
+    // Add H5P
+    addH5P(sessionHomeworkToCreate[0].h5p, sessionHomeworkToCreate[0].h5pUrl)
 
-    // // Check if session homework is visible
-    // cy.get('.session-details').within(() => {
-    //   getSessionHomeworkWithSupportWithoutAudio(sessionHomeworkToCreate[0]).should('be.visible')
-    // })
+    // Click on button to create session homework
+    submitHomework()
 
-    // // Login with other teacher in class to check if homework is visible in worload
-    // cy.login(CLASSTEACHER2, coursesURL)
-    // cy.clock().invoke('setSystemTime', Cypress.dayjs(sessionHomeworkToCreate[0].creationDate, 'YYYY/MM/DD').toDate().getTime())
+    // Check if session homework is visible
+    cy.get('.session-details').within(() => {
+      getSessionHomeworkWithSupportWithoutAudio(sessionHomeworkToCreate[0]).should('be.visible')
+    })
 
-    // // Click on session
-    // openHomeworkCreateModal('09-12_11:25')
-    // // TO DO Remove after fix
-    // cy.wait(2000)
-    // cy.get('.edit-homework-modal').should('be.visible').within(() => {
-    //   cy.get('.work-load-button').click()
-    // })
+    // Login with other teacher in class to check if homework is visible in worload
+    cy.login(CLASSTEACHER2, coursesURL)
+    cy.clock().invoke('setSystemTime', Cypress.dayjs(sessionHomeworkToCreate[0].creationDate, 'YYYY/MM/DD').toDate().getTime())
 
-    // // Check if homework is visible in workload
-    // getWorkInWorkload(sessionHomeworkToCreate[0], sessionHomeworkToCreate[0].dateToDoWorkload, 'be.visible')
+    // Click on session
+    openHomeworkCreateModal('09-12_11:25')
+    // TO DO Remove after fix
+    cy.wait(2000)
+    cy.get('.edit-homework-modal').should('be.visible').within(() => {
+      cy.get('.work-load-button').click()
+    })
 
-    // // Login with student to check if session homework modified is visible
-    // cy.login(STUDENT, coursesURL)
-    // cy.clock().invoke('setSystemTime', Cypress.dayjs(sessionHomeworkToCreate[0].dateToDo, 'YYYY/MM/DD').toDate().getTime())
-    // // Check in homeworks tab
-    // getSessionHomework(sessionHomeworkToCreate[0]).should('be.visible')
-    // clickOnContents(sessionHomeworkToCreate[0])
+    // Check if homework is visible in workload
+    getWorkInWorkload(sessionHomeworkToCreate[0], sessionHomeworkToCreate[0].dateToDoWorkload, 'be.visible')
 
-    // // Check in courses tab
-    // changetab('Cours')
-    // selectCourse(studentCourseList[11].Course)
-    // // Check if session homework created is visible within the current session
-    // cy.contains('.session-infos', sessionHomeworkToCreate[0].sessionHeadText).within(() => {
-    //   getSessionHomeworkWithSupportWithoutAudio(sessionHomeworkToCreate[0]).scrollIntoView().should('be.visible')
-    // })
+    // Login with student to check if session homework modified is visible
+    cy.login(STUDENT, coursesURL)
+    cy.clock().invoke('setSystemTime', Cypress.dayjs(sessionHomeworkToCreate[0].dateToDo, 'YYYY/MM/DD').toDate().getTime())
+    // Check in homeworks tab
+    getSessionHomework(sessionHomeworkToCreate[0]).should('be.visible')
+    clickOnContents(sessionHomeworkToCreate[0])
+
+    // Check in courses tab
+    changetab('Cours')
+    selectCourse(studentCourseList[11].Course)
+    // Check if session homework created is visible within the current session
+    cy.contains('.session-infos', sessionHomeworkToCreate[0].sessionHeadText).within(() => {
+      getSessionHomeworkWithSupportWithoutAudio(sessionHomeworkToCreate[0]).scrollIntoView().should('be.visible')
+    })
   })
 
   it('Courses_CreateSessionHomework_CreateForCurrentSession', function () {
+    cy.loadTables('courses/courses_tables_homework_empty.sql')
     const courseList = this.coursesData.CoursesListByProfil
     const studentCourseList = courseList[1]
     const sessionHomeworkToCreate = [
@@ -165,6 +166,7 @@ describe('Create', () => {
   })
 
   it('Courses_CreateSessionHomework_CreateForOneStudent', function () {
+    cy.loadTables('courses/courses_tables_homework_empty.sql')
     const sessionHomeworkToCreate = [
       {
         sessionHeadText: '12 septembre - P4',
@@ -287,41 +289,41 @@ describe('Create', () => {
       // Add cy.tick beacause cy.clock()
       cy.tick(1000)
     })
-    // // Add attached file
-    // addFile(sessionContentToCreate[0].attachedFile)
+    // Add attached file
+    addFile(sessionContentToCreate[0].attachedFile)
 
-    // // Add texte
-    // cy.get('[title="Ajouter du texte"]').click()
-    // cy.type_ckeditor(sessionContentToCreate[0].additionalText, 'contentItem_2')
-    // // Add cy.tick beacause cy.clock()
-    // cy.tick(1000)
+    // Add texte
+    cy.get('[title="Ajouter du texte"]').click()
+    cy.type_ckeditor(sessionContentToCreate[0].additionalText, 'contentItem_2')
+    // Add cy.tick beacause cy.clock()
+    cy.tick(1000)
 
-    // // Add link
-    // addLink(sessionContentToCreate[0].link, sessionContentToCreate[0].linkUrl)
-    // // Add video
-    // addVideo(sessionContentToCreate[0].video, sessionContentToCreate[0].videoUrl)
-    // // Add H5P
-    // addH5P(sessionContentToCreate[0].h5p, sessionContentToCreate[0].h5pUrl)
+    // Add link
+    addLink(sessionContentToCreate[0].link, sessionContentToCreate[0].linkUrl)
+    // Add video
+    addVideo(sessionContentToCreate[0].video, sessionContentToCreate[0].videoUrl)
+    // Add H5P
+    addH5P(sessionContentToCreate[0].h5p, sessionContentToCreate[0].h5pUrl)
 
-    // // Click on button to create session content
-    // submitSessionContent()
+    // Click on button to create session content
+    submitSessionContent()
 
-    // // Check if session content is visible
-    // cy.get('.session-details').within(() => {
-    //   // Check if session content and session homework is visible
-    //   getSessionContentWithSupportWithoutAudio(sessionContentToCreate[0]).should('be.visible')
-    // })
+    // Check if session content is visible
+    cy.get('.session-details').within(() => {
+      // Check if session content and session homework is visible
+      getSessionContentWithSupportWithoutAudio(sessionContentToCreate[0]).should('be.visible')
+    })
 
-    // // Login with student to check if session content modified is visible
-    // cy.login(STUDENT, coursesURL)
-    // cy.clock().invoke('setSystemTime', Cypress.dayjs(sessionContentToCreate[0].date, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+    // Login with student to check if session content modified is visible
+    cy.login(STUDENT, coursesURL)
+    cy.clock().invoke('setSystemTime', Cypress.dayjs(sessionContentToCreate[0].date, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
 
-    // changetab('Cours')
-    // selectCourse(studentCourseList[11].Course)
+    changetab('Cours')
+    selectCourse(studentCourseList[11].Course)
 
-    // // Check if session content created is visible within the current session
-    // cy.contains('.session-infos', sessionContentToCreate[0].sessionHeadText).within(() => {
-    //   getSessionContentWithSupportWithoutAudio(sessionContentToCreate[0]).scrollIntoView().should('be.visible')
-    // })
+    // Check if session content created is visible within the current session
+    cy.contains('.session-infos', sessionContentToCreate[0].sessionHeadText).within(() => {
+      getSessionContentWithSupportWithoutAudio(sessionContentToCreate[0]).scrollIntoView().should('be.visible')
+    })
   })
 })

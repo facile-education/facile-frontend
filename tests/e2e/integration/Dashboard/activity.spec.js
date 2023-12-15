@@ -406,7 +406,6 @@ describe('Dashboard_Activity', () => {
         cy.get('.base-tags-input').click()
         cy.get('.suggestion-list').contains('li', activityToCreate.recipient).click()
         cy.get('.labelled').type(activityToCreate.title)
-        cy.get('.ck-editor')
         cy.type_ckeditor(activityToCreate.content)
       })
       // Add files
@@ -474,7 +473,6 @@ describe('Dashboard_Activity', () => {
       })
       // Set content
       cy.get('[data-test="update-news-modal"]').within(() => {
-        cy.get('.ck-editor')
         cy.type_ckeditor(activityToCreate.content)
         cy.get('[data-test="closeModal"]').click()
       })
@@ -567,7 +565,6 @@ describe('Dashboard_Activity', () => {
         cy.get('.suggestion-list').contains('li', activityToEdit.recipient).click()
         cy.get('.labelled').clear()
         cy.get('.labelled').type(activityToEdit.title)
-        cy.get('.ck-editor')
         cy.type_ckeditor(activityToEdit.content)
         // Delete file
         cy.get('.attached-file').within(() => {
@@ -643,7 +640,6 @@ describe('Dashboard_Activity', () => {
 
       // Set content
       cy.get('[data-test="update-news-modal"]').within(() => {
-        cy.get('.ck-editor')
         cy.type_ckeditor(activityToEdit.content)
         cy.get('[data-test="closeModal"]').click()
       })

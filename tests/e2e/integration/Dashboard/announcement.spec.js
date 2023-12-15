@@ -204,7 +204,6 @@ describe('Dashboard_Announcements', () => {
         cy.get('.base-tags-input').click()
         cy.get('.suggestion-list').contains('li', NewNews.recipient).click()
         cy.get('.labelled').type(NewNews.title)
-        cy.get('.ck-editor')
         cy.type_ckeditor(NewNews.content)
       })
       addPersonalFile(NewNews.personalDocument)
@@ -259,7 +258,6 @@ describe('Dashboard_Announcements', () => {
         cy.get('.base-tags-input').click()
         cy.get('.suggestion-list').contains('li', newsToStudent.recipient).click()
         cy.get('.labelled').type(newsToStudent.title)
-        cy.get('.ck-editor')
         cy.type_ckeditor(newsToStudent.content)
       })
       addPersonalFile(newsToStudent.personalDocument)
@@ -306,7 +304,6 @@ describe('Dashboard_Announcements', () => {
         cy.get('.base-tags-input').click()
         cy.get('.suggestion-list').contains('li', newsToTeacherAndStudent.recipient2).click()
         cy.get('.labelled').type(newsToTeacherAndStudent.title)
-        cy.get('.ck-editor')
         cy.type_ckeditor(newsToTeacherAndStudent.content)
       })
       // Add file from personal document
@@ -351,7 +348,6 @@ describe('Dashboard_Announcements', () => {
         cy.get('.base-tags-input').click()
         cy.get('.suggestion-list').contains('li', newsToStudent.recipient).click()
         cy.get('.labelled').type(newsToStudent.title)
-        cy.get('.ck-editor')
         cy.type_ckeditor(newsToStudent.content)
       })
       // Add file from personal document
@@ -399,7 +395,6 @@ describe('Dashboard_Announcements', () => {
       cy.get('[data-test="buttonCreateAnnoucement"]').click()
       // Set content
       cy.get('[data-test="update-news-modal"]').within(() => {
-        cy.get('.ck-editor')
         cy.type_ckeditor(NewNews.content)
         cy.get('[data-test="closeModal"]').click()
       })
@@ -486,7 +481,6 @@ describe('Dashboard_Announcements', () => {
         cy.get('.suggestion-list').contains('li', newsToEdit.recipient).click()
         cy.get('.labelled').clear()
         cy.get('.labelled').type(newsToEdit.title)
-        cy.get('.ck-editor')
         cy.type_ckeditor(newsToEdit.content)
         cy.get('.file-list').within(() => {
           // Delete first file
@@ -585,7 +579,6 @@ describe('Dashboard_Announcements', () => {
         cy.get('.suggestion-list').contains('li', newsToEdit.recipient).click()
         cy.get('.labelled').clear()
         cy.get('.labelled').type(newsToEdit.title)
-        cy.get('.ck-editor')
         cy.type_ckeditor(newsToEdit.content)
         // Toogle markAsUnreadForAll button
         cy.get('[data-test="markAsUnreadForAll"]').first().click()
@@ -620,7 +613,6 @@ describe('Dashboard_Announcements', () => {
       cy.wait('@newsDetail')
       // Set content
       cy.get('[data-test="update-news-modal"]').within(() => {
-        cy.get('.ck-editor')
         cy.type_ckeditor(newsToEdit.content)
         cy.get('[data-test="closeModal"]').click()
       })

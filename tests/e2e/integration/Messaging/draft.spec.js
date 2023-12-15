@@ -25,7 +25,6 @@ describe('Draft', () => {
       cy.get('[data-test="createMessageModal"]').within(() => {
         setRecipient(STUDENT)
         cy.get('.group > [data-test="subject-input"]').type(draftToCreate[0].subject)
-        cy.get('.ck-editor')
         cy.type_ckeditor(draftToCreate[0].content)
       })
       // Attachments
@@ -70,7 +69,6 @@ describe('Draft', () => {
       cy.get('[data-test="createMessageModal"]').within(() => {
         cy.get('.group > [data-test="subject-input"]').clear()
         cy.get('.group > [data-test="subject-input"]').type(ModifiedDraftContent[0].subject)
-        cy.get('.ck-editor')
         cy.type_ckeditor(ModifiedDraftContent[0].content)
         // Delete attached file
         cy.get('[data-test="attached-files-section"]').within(() => {

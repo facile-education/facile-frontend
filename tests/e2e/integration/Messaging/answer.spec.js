@@ -33,7 +33,6 @@ describe('Messaging_Reply', () => {
           cy.get('.tag-item').contains(`${TEACHER.firstName} ${TEACHER.lastName}`).should('be.exist')
           cy.get('.tag-item').contains(`${STUDENT.firstName} ${STUDENT.lastName}`).should('not.exist')
         })
-        cy.get('.ck-editor')
         cy.type_ckeditor(userAnswer.content)
         // Check content in summary
         cy.get('summary').click()
@@ -61,7 +60,6 @@ describe('Messaging_Reply', () => {
           cy.get('.tag-item').contains(`${TEACHER.firstName} ${TEACHER.lastName}`).should('be.exist')
           cy.get('.tag-item').contains(`${STUDENT.firstName} ${STUDENT.lastName}`).should('not.exist')
         })
-        cy.get('.ck-editor')
         cy.type_ckeditor(userAnswer.content)
         // Check content in summary
         cy.get('summary').click()
@@ -89,7 +87,6 @@ describe('Messaging_Reply', () => {
       getThread(existingThreads[3]).click()
       cy.get('[data-test="option_reply"]').click()
       cy.get('[data-test="createMessageModal"]').within(() => {
-        cy.get('.ck-editor')
         cy.type_ckeditor(userAnswer.content)
       })
       cy.get('.footer').contains('button', 'Envoyer').click()
@@ -107,7 +104,6 @@ describe('Messaging_Reply', () => {
           cy.get('.tag-item').contains(`${TEACHER.firstName} ${TEACHER.lastName}`).should('be.exist')
           cy.get('.tag-item').contains(`${STUDENT.firstName} ${STUDENT.lastName}`).should('be.exist')
         })
-        cy.get('.ck-editor')
         cy.type_ckeditor(allUserAnswer.content)
         // Check content in summary
         cy.get('summary').click()
@@ -143,7 +139,6 @@ describe('Messaging_Reply', () => {
       getThread(existingThreads[3]).click()
       cy.get('[data-test="option_replyAll"]').click()
       cy.get('[data-test="createMessageModal"]').within(() => {
-        cy.get('.ck-editor')
         cy.type_ckeditor(allUserAnswer.content)
       })
       cy.get('.footer').contains('button', 'Envoyer').click()

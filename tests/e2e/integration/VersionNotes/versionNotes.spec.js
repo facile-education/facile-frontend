@@ -127,7 +127,6 @@ describe('VersionNotes_ReadNotes', () => {
     cy.get('[data-test="buttonToggleOptions"]').click()
     cy.contains('button', 'Modifier').click()
     cy.get('[data-test="saveVersionNoteModal"]').within(() => {
-      cy.get('.ck-editor')
       cy.type_ckeditor(noteModified)
       cy.contains('button', 'Modifier').click()
     })
