@@ -1,7 +1,7 @@
 <template>
   <div
     class="statistic-item"
-    :title="(evolution >= 0 ? '+ ' : '- ') + Math.abs(evolution) + $t('compareLabel')"
+    :title="title"
   >
     <div class="content">
       <div class="left">
@@ -50,6 +50,7 @@
 
 <script>
 import AnimatedCounter from '@components/Base/AnimatedCounter.vue'
+
 export default {
   name: 'StatisticItem',
   components: { AnimatedCounter },
@@ -75,6 +76,10 @@ export default {
       } else {
         return this.statistic.current > 0 ? 100 : 0
       }
+    },
+    title () {
+      return (this.evolution >= 0 ? '+ ' : '- ') + Math.abs(this.evolution) + this.$t('compareLabel') +
+        (this.statistic.type === 3 ? this.$t('activity-details') : '')
     }
   }
 }
@@ -150,6 +155,7 @@ export default {
 <i18n locale="fr">
 {
   "compareLabel": " par rapport aux 7 derniers jours précedents",
-  "evolution": "Evolution"
+  "evolution": "Evolution",
+  "activity-details": ". Les activités comptent les informations, les créations de documents, les supports de cours et les devoirs"
 }
 </i18n>
