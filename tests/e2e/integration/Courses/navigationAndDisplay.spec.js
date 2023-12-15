@@ -1,5 +1,6 @@
 import { coursesURL } from '../../support/constants/urls'
 import { HEADMASTER, MULTI_PARENT, MULTI_STUDENT2, PARENT, PSYCHOLOGIST, STUDENT, TEACHER } from '../../support/constants/users'
+import { openHomeworkCreateModal } from '../../support/utils/courses'
 import { selectChild } from '../../support/utils/dashboard'
 
 describe('navigationAndDisplay', () => {
@@ -160,5 +161,21 @@ describe('navigationAndDisplay', () => {
         cy.get('.first-flex-section > header').should('contain', sessions[i].courseDetailHeadText)
       })
     }
+  })
+
+  it('Courses_Initialisation_HomeworkEditModalLastSessionOfYear', function () {
+    const lastDayOfYear = '2024/06/24'
+
+    cy.login(TEACHER, coursesURL)
+    cy.clock().invoke('setSystemTime', Cypress.dayjs(lastDayOfYear, 'YYYY/MM/DD').toDate().getTime())
+
+    openHomeworkCreateModal('06-28_15:30')
+    cy.get('.target-session').within(() => {
+      cy.contains('.base-radio', 'À faire pour le').should('have.class', 'disabled')
+    })
+    cy.get('.work-load-button').click()
+    cy.get('.edit-homework-modal').should('be.visible').within(() => {
+      cy.get('.horizontal-timeline-right').should('have.attr', 'disabled')
+    })
   })
 })
