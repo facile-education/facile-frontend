@@ -40,12 +40,20 @@
               v-if="resizable && !mq.phone"
               class="header-option-item"
               data-test="toggleFullScreen"
+              :aria-label="$t(isFullScreen ? 'collapse' : 'expand')"
+              :title="$t(isFullScreen ? 'collapse' : 'expand')"
               @click="toggleFullScreen"
             >
-              <NeroIcon
-                class="expand"
-                :name="isFullScreen ? 'compress' : 'expand'"
-              />
+              <img
+                v-if="isFullScreen"
+                src="@/assets/icons/collapse.svg"
+                :alt="$t('collapse')"
+              >
+              <img
+                v-show="!isFullScreen"
+                src="@/assets/icons/expand.svg"
+                :alt="$t('expand')"
+              >
             </button>
             <button
               v-if="closable"
@@ -241,8 +249,6 @@ $modal-padding: 25px;
   left: 0;
   width: 100%;
   height: 100%;
-  //display: flex;
-  //justify-content: center;
   background-color: rgba(0, 0, 0, .5);
   transition: opacity .3s ease;
 
@@ -293,7 +299,22 @@ $modal-padding: 25px;
       .header-options {
         display: flex;
         align-items: center;
-        gap: 4px;
+        gap: 1rem;
+
+        button {
+          background: none;
+          border: none;
+          padding: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+
+          img {
+            width: 1.5rem;
+            height: 1.5rem;
+          }
+        }
 
         .header-option-item {
           background: none;
