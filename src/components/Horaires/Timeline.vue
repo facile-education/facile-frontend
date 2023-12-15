@@ -182,7 +182,7 @@ export default {
       this.$store.dispatch('calendar/getConfiguration')
     }
 
-    let date = dayjs()
+    let date = this.initialDate ? this.initialDate : dayjs()
     if (date.isAfter(this.maxDate)) {
       date = this.maxDate.clone()
     } else if (date.isBefore(this.minDate)) {
@@ -192,7 +192,7 @@ export default {
     this.startDate = date.subtract(this.nbWeeksBeforeCurrent, 'week').startOf('week')
     this.endDate = date.add(this.nbWeeksAfterCurrent, 'week').endOf('week')
 
-    const initialDisplayWeek = this.getWeekFromLocalWeekList(this.initialDate ? this.initialDate : dayjs())
+    const initialDisplayWeek = this.getWeekFromLocalWeekList(date)
     if (initialDisplayWeek) {
       this.selectedWeek = initialDisplayWeek
     }
@@ -209,6 +209,7 @@ export default {
           }
         }
       }
+      console.error('cannot fink week for day ' + date.format('YYYY/MM/DD') + ' in list ', this.monthList)
       return undefined
     },
     onClickNext () {
