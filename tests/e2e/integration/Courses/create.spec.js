@@ -1,6 +1,6 @@
 import { coursesURL } from '../../support/constants/urls'
 import { CLASSTEACHER2, STUDENT, STUDENT_IN_CLASS, TEACHER } from '../../support/constants/users'
-import { addFile, addH5P, addLink, addVideo, changetab, getSessionContentWithSupportWithoutAudio, getSessionHomework, getSessionHomeworkWithSupportWithoutAudio, getWorkInWorkload, openHomeworkCreateModal, openSessionContentCreateModal, selectCourse, submitHomework, submitSessionContent } from '../../support/utils/courses'
+import { addFile, addH5P, addLink, addVideo, changetab, clickOnContents, getSessionContentWithSupportWithoutAudio, getSessionHomework, getSessionHomeworkWithSupportWithoutAudio, getWorkInWorkload, openHomeworkCreateModal, openSessionContentCreateModal, selectCourse, submitHomework, submitSessionContent } from '../../support/utils/courses'
 
 describe('Create', () => {
   beforeEach(() => {
@@ -90,6 +90,7 @@ describe('Create', () => {
     cy.clock().invoke('setSystemTime', Cypress.dayjs(sessionHomeworkToCreate[0].dateToDo, 'YYYY/MM/DD').toDate().getTime())
     // Check in homeworks tab
     getSessionHomework(sessionHomeworkToCreate[0]).should('be.visible')
+    clickOnContents(sessionHomeworkToCreate[0])
 
     // Check in courses tab
     changetab('Cours')
@@ -165,7 +166,8 @@ describe('Create', () => {
         dateToDo: '2023/09/12',
         dateToDoWorkload: '12/09',
         title: 'Travail à faire créé pour un seul élève',
-        content: 'Description du travail à faire créé pour un seul élève'
+        content: 'Description du travail à faire créé pour un seul élève',
+        estimatedTime: '1h30'
       }
     ]
     // Login
@@ -235,7 +237,6 @@ describe('Create', () => {
     cy.clock().invoke('setSystemTime', Cypress.dayjs(sessionHomeworkToCreate[0].dateToDo, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
     // Chech if homework created is visible
     getSessionHomework(sessionHomeworkToCreate[0]).should('be.visible')
-
     // Login with other student in class to check if not see this homework
     cy.login(STUDENT_IN_CLASS, coursesURL)
     cy.clock().invoke('setSystemTime', Cypress.dayjs(sessionHomeworkToCreate[0].dateToDo, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
