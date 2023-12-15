@@ -141,7 +141,7 @@ describe('HHC_Firing_Registration', () => {
     })
   })
 
-  it.only('HHC_Firing_Registration_Register', function () {
+  it('HHC_Firing_Registration_Register', function () {
     const slotToRegisterInside = this.hhcData.slotsTypes.fired.slotExample
     const slotToBeFiredFrom = this.hhcData.studentSlotToBeFired
 
