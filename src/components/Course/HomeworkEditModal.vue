@@ -303,7 +303,7 @@ export default {
       return this.isCreation ? this.selectedSession.groupName : this.editedHomework.cours
     },
     selectedTargetDate () {
-      return this.homework.date ? dayjs(this.homework.date.startDate, 'YYYY-MM-DD HH:mm') : undefined
+      return this.homework.toDate ? dayjs(this.homework.toDate, 'YYYY-MM-DD HH:mm') : undefined
     },
     configuration () {
       return this.$store.state.calendar.configuration
