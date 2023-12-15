@@ -1,6 +1,7 @@
 <template>
   <CKEditor
     class="ck-editor"
+    :data-test="dataTest"
     :class="{'maximised' : maximised , 'disabled': disabled && ready}"
     :model-value="content"
     :editor-id="editorId"
