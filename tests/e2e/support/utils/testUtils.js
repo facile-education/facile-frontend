@@ -2,19 +2,34 @@ const exactString = (string) => {
   return new RegExp('^' + string + '$', 'g') // to use with "contain" assertion to fetch the entire string
 }
 
-const selectDropdownItem = (dropdownSelector, itemName) => {
-  cy.get(dropdownSelector + ' > button').click()
-  cy.get(dropdownSelector).contains('.suggestion-list > li', itemName).click()
+const isInList = (list, item) => {
+  return list.indexOf(item) !== -1
 }
 
-const selectAutocompleteItem = (autocompleteSelector, itemName) => {
-  cy.get(autocompleteSelector).find('input').clear()
-  cy.get(autocompleteSelector).find('input').type(itemName)
-  cy.get(autocompleteSelector).contains('.suggestion-list > li', itemName).click()
+const selectDropdownItem = (wrappedDropdown, itemName) => {
+  wrappedDropdown.within(() => {
+    cy.get('button').click()
+    cy.contains('.suggestion-list > li', itemName).click()
+  })
+}
+
+const selectAutocompleteItem = (wrappedAutocomplete, itemName, timeOut = undefined, requestToWait = undefined) => {
+  wrappedAutocomplete.within(() => {
+    cy.get('input').clear()
+    cy.get('input').type(itemName)
+    if (timeOut) {
+      cy.tick(timeOut)
+    }
+    if (requestToWait) {
+      cy.wait(requestToWait)
+    }
+    cy.contains('.suggestion-list > li', itemName).click()
+  })
 }
 
 export {
   exactString,
+  isInList,
   selectDropdownItem,
   selectAutocompleteItem
 }

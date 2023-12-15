@@ -1,6 +1,11 @@
 import { scheduleURL } from '../../support/constants/urls'
 import { TEACHER } from '../../support/constants/users'
-import { checkScheduleSlot, getSlot, waitScheduleToBeLoaded } from '../../support/utils/scheduleUtils'
+import { addTimeToSlot, checkScheduleSlot, getSlot, selectVisibleWeekInTimeLine, waitScheduleToBeLoaded } from '../../support/utils/scheduleUtils'
+
+const loadWeekSlots = (day) => {
+  selectVisibleWeekInTimeLine(day)
+  cy.wait('@getUserSessions')
+}
 
 describe('Schedule_ScheduleNavigation', () => {
   before(() => {
@@ -16,15 +21,9 @@ describe('Schedule_ScheduleNavigation', () => {
 
   context('desktop', function () {
     it('Schedule_Navigation_WeekSelection', function () {
+      const now = Cypress.dayjs(this.scheduleData.now, 'YYYY/MM/DD HH:mm')
       const currentWeekSlot = this.scheduleData[TEACHER.firstName].slotExample
-      const nextWeekSlot = {
-        ...currentWeekSlot,
-        startDate: Cypress.dayjs(currentWeekSlot.startDate, 'YYYY/MM/DD HH:mm').add(1, 'week'),
-        endDate: Cypress.dayjs(currentWeekSlot.endDate, 'YYYY/MM/DD HH:mm').add(1, 'week')
-      }
-      const weekListFormat = 'D MMM'
-      const currentWeekLabel = Cypress.dayjs(this.scheduleData.now, 'YYYY/MM/DD HH:mm').startOf('week').format(weekListFormat)
-      const nextWeekLabel = Cypress.dayjs(this.scheduleData.now, 'YYYY/MM/DD HH:mm').add(1, 'week').startOf('week').format(weekListFormat)
+      const nextWeekSlot = addTimeToSlot(currentWeekSlot, 1, 'week')
 
       cy.login(TEACHER, scheduleURL)
 
@@ -36,18 +35,14 @@ describe('Schedule_ScheduleNavigation', () => {
       })
 
       // Select next week
-      cy.get('[data-test="weekList"]').within(() => {
-        cy.contains(nextWeekLabel).click()
-      })
+      loadWeekSlots(now.add(1, 'week'))
       cy.get('.calendar').within(() => {
         getSlot(currentWeekSlot).should('not.exist')
         checkScheduleSlot(nextWeekSlot)
       })
 
       // Select current week
-      cy.get('[data-test="weekList"]').within(() => {
-        cy.contains(currentWeekLabel).click()
-      })
+      loadWeekSlots(now)
       cy.get('.calendar').within(() => {
         getSlot(nextWeekSlot).should('not.exist')
         checkScheduleSlot(currentWeekSlot)

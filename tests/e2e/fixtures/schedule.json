@@ -8,16 +8,65 @@
     "name": "0922R2",
     "nbWeekSlots": 37,
     "slotExample": {
-      "schoolSlotNumber": "P4",
-      "startDate": "2023/10/02 10:35",
-      "endDate": "2023/10/02 11:20",
+      "schoolSlotNumber": "P1",
+      "startDate": "2023/10/02 8:45",
+      "endDate": "2023/10/02 09:30",
       "teacher": {
-        "firstName": "Lindsey",
-        "lastName": "IACIVELLI"
+        "firstName": "Elisabet",
+        "lastName": "ROUBAY"
       },
-      "room": "BP122",
-      "courseName": "GE0922",
-      "courseSubject": "Géographie"
+      "room": "S190",
+      "courseName": "BI0922",
+      "courseSubject": "Biologie",
+      "nextCourseSlot": {
+        "schoolSlotNumber": "P2",
+        "startDate": "2023/10/02 9:35",
+        "endDate": "2023/10/02 10:20",
+        "teacher": {
+          "firstName": "Elisabet",
+          "lastName": "ROUBAY"
+        },
+        "room": "S190",
+        "courseName": "BI0922",
+        "courseSubject": "Biologie"
+      }
+    },
+    "coTeachingSlotExample": {
+      "schoolSlotNumber": "P8",
+      "startDate": "2023/10/02 14:35",
+      "endDate": "2023/10/02 15:15",
+      "teachers": [
+        {
+          "firstName": "Jamie",
+          "lastName": "TAW"
+        },
+        {
+          "firstName": "Leilah",
+          "lastName": "WILLGRASS"
+        }
+      ],
+      "room": "J204",
+      "courseName": "FR0922",
+      "courseSubject": "Français Co-Enseignement"
+    },
+    "substitute": {
+      "nbWeekOfSubstitution": 2,
+      "baseTeacher": {
+        "firstName": "Joseph",
+        "lastName": "BREWER"
+      },
+      "substituteTeacher": {
+        "firstName": "Rosana",
+        "lastName": "NOLLI"
+      },
+      "concernSlot": {
+        "schoolSlotNumber": "P5",
+        "startDate": "2023/10/02 11:25",
+        "endDate": "2023/10/02 12:10",
+        "room": "L049",
+        "courseName": "MU0922",
+        "courseSubject": "Musique"
+      }
     }
   },
   "Orlan": {

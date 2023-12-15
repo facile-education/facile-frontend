@@ -1,34 +1,29 @@
 import { scheduleURL } from '../../support/constants/urls'
 import { DOYEN, HEADMASTER, PARENT, SCHOOL_ADMIN, SECRETARY, STUDENT, TEACHER } from '../../support/constants/users'
 import { checkScheduleSlot, getSlot, waitScheduleToBeLoaded } from '../../support/utils/scheduleUtils'
-import { selectAutocompleteItem, selectDropdownItem } from '../../support/utils/testUtils'
+import { isInList, selectAutocompleteItem, selectDropdownItem } from '../../support/utils/testUtils'
 
 const scheduleUsers = [HEADMASTER, SCHOOL_ADMIN, DOYEN, SECRETARY, TEACHER, STUDENT, PARENT]
 const canCreateSlotUsers = [HEADMASTER, SCHOOL_ADMIN]
-
-const isInList = (list, user) => {
-  return list.indexOf(user) !== -1
-}
-
 const fillSessionModal = (slotToCreate) => {
   const slotStartDate = Cypress.dayjs(slotToCreate.startDate, 'YYYY/MM/DD HH:mm')
 
   // Slot day
-  selectDropdownItem('[data-test="day-dropdown"]', slotStartDate.format('dddd'))
+  selectDropdownItem(cy.get('[data-test="day-dropdown"]'), slotStartDate.format('dddd'))
 
   // Slot slot
-  selectDropdownItem('[data-test="slot-dropdown"]', slotToCreate.schoolSlotNumber)
+  selectDropdownItem(cy.get('[data-test="slot-dropdown"]'), slotToCreate.schoolSlotNumber)
 
   // Slot group
-  selectDropdownItem('[data-test="group-dropdown"]', slotToCreate.groupName)
+  selectDropdownItem(cy.get('[data-test="group-dropdown"]'), slotToCreate.groupName)
 
   // Slot subject
-  selectDropdownItem('[data-test="subject-dropdown"]', slotToCreate.courseSubject)
+  selectDropdownItem(cy.get('[data-test="subject-dropdown"]'), slotToCreate.courseSubject)
 
   // Slot teacher
   slotToCreate.teachers.forEach(teacher => {
-    cy.get('[data-test="tagsInput"]').as('teacherTagsInput') // TODO: Change selector to get the tags input that contain [placeholder="Enseignants"] property
-    selectAutocompleteItem('@teacherTagsInput', slotToCreate.teacher.lastName + ' ' + slotToCreate.teacher.firstName)
+    cy.get('[data-test="tagsInput"]').as('teacherTagsInput') // Change selector to get the tags input that contain [placeholder="Enseignants"] property
+    selectAutocompleteItem(cy.get('@teacherTagsInput'), teacher.lastName + ' ' + teacher.firstName)
   })
 
   // Slot room
@@ -168,13 +163,15 @@ describe('Schedule_CreateSlot', () => {
       startDate: Cypress.dayjs(secondSlotToCreate.startDate, 'YYYY/MM/DD HH:mm').add(1, 'week'),
       endDate: Cypress.dayjs(secondSlotToCreate.endDate, 'YYYY/MM/DD HH:mm').add(1, 'week')
     })
+
+    // Go to previous week to not see the created slots
   })
 
   it.skip('Schedule_CreateSlot_CreateSlotWithConflicts', function () {
     // Create new slot at the same moment as an other slot with same teachers or same room
   })
 
-  it.only('Schedule_CreateSlot_CheckModalInitialisationAndValidation', function () {
+  it('Schedule_CreateSlot_CheckModalInitialisationAndValidation', function () {
     cy.intercept('GET', '**/schedule.cdtsession/get-group-sessions**').as('getGroupSessions')
 
     cy.login(canCreateSlotUsers[0], scheduleURL)

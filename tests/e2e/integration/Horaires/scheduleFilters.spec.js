@@ -1,14 +1,11 @@
 import { scheduleURL } from '../../support/constants/urls'
 import { DOYEN, HEADMASTER, MULTI_PARENT, MULTI_STUDENT1, PARENT, SCHOOL_ADMIN, SECRETARY, TEACHER } from '../../support/constants/users'
 import { checkScheduleSlot, waitScheduleToBeLoaded } from '../../support/utils/scheduleUtils'
+import { isInList, selectDropdownItem } from '../../support/utils/testUtils'
 
 const scheduleUsers = [HEADMASTER, SCHOOL_ADMIN, DOYEN, SECRETARY, TEACHER, MULTI_STUDENT1, PARENT]
 const haveFiltersUsers = [HEADMASTER, SCHOOL_ADMIN, DOYEN, SECRETARY, TEACHER]
 const UsersInFilterSuggestion = [SCHOOL_ADMIN, DOYEN, TEACHER, MULTI_STUDENT1] // SCHOOL_ADMIN and DOYEN are teachers
-
-const isInList = (list, user) => {
-  return list.indexOf(user) !== -1
-}
 
 describe('Schedule_Filters', () => {
   beforeEach(() => {
@@ -45,7 +42,7 @@ describe('Schedule_Filters', () => {
     checkScheduleSlot(this.scheduleData[TEACHER.firstName].slotExample)
 
     cy.get('[data-test="user-completion-input"]').within(() => {
-      cy.get('[data-test="tag-item"]').find('button[aria-label="Retirer"]').click()
+      cy.contains('[data-test="tag-item"]', TEACHER.lastName).find('button[aria-label="Retirer"]').click()
       cy.get('[data-test="tag-item"]').should('not.exist')
       cy.get('input').type(MULTI_STUDENT1.firstName)
       cy.tick(500)
@@ -66,8 +63,10 @@ describe('Schedule_Filters', () => {
     checkScheduleSlot(this.scheduleData[TEACHER.firstName].slotExample)
 
     // Select group
-    cy.contains('[data-test="dropdown"]', 'Groupe').click()
-    cy.contains('.suggestion-list > li', this.scheduleData.selectedGroup.name).click()
+    selectDropdownItem(
+      cy.contains('[data-test="dropdown"]', 'Groupe'),
+      this.scheduleData.selectedGroup.name
+    )
     cy.wait('@getGroupSessions')
 
     // User tag is removed
@@ -91,8 +90,10 @@ describe('Schedule_Filters', () => {
     checkScheduleSlot(this.scheduleData[firstChild.firstName].slotExample)
 
     // Select the other child
-    cy.contains('[data-test="dropdown"]', firstChild.firstName).click()
-    cy.contains('.suggestion-list > li', secondChild.firstName).click()
+    selectDropdownItem(
+      cy.contains('[data-test="dropdown"]', firstChild.firstName),
+      secondChild.firstName
+    )
     cy.wait('@getUserSessions')
 
     // The other child schedule is displayed
