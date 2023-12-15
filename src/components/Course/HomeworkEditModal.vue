@@ -52,6 +52,7 @@
           v-model="block.contentValue"
           :content="block"
           :is-edition="true"
+          :data-test="'contentItem_'+index"
           :focus-on-creation="isCreation && !block.placeholder"
           @delete="deleteContent(index)"
         />

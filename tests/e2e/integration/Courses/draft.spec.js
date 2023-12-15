@@ -1,6 +1,6 @@
 import { coursesURL } from '../../support/constants/urls'
-import { STUDENT, TEACHER } from '../../support/constants/users'
-import { changetab, getSessionContent, getSessionHomework, openEditHomworkModal, openEditSessionContentModal, openHomeworkCreateModal, openSessionContentCreateModal, selectCourse } from '../../support/utils/courses'
+import { CLASSTEACHER2, STUDENT, TEACHER } from '../../support/constants/users'
+import { changetab, getSessionContent, getSessionHomework, getWorkInWorkload, openEditHomworkModal, openEditSessionContentModal, openHomeworkCreateModal, openSessionContentCreateModal, selectCourse } from '../../support/utils/courses'
 
 describe('Draft', () => {
   beforeEach(() => {
@@ -14,7 +14,8 @@ describe('Draft', () => {
         dateToDo: '2023/09/12',
         creationDate: '2023/09/11',
         title: 'Travail à faire enregistrer en tant que brouillon',
-        content: 'Description du travail à faire enregistrer en tant que brouillon'
+        content: 'Description du travail à faire enregistrer en tant que brouillon',
+        dateToDoWorkload: '12/09'
       }
     ]
     // Login
@@ -46,6 +47,20 @@ describe('Draft', () => {
         cy.get('.status').should('contain', 'Brouillon')
       })
     })
+
+    // Login with other teacher in class to check if homework is visible in worload
+    cy.login(CLASSTEACHER2, coursesURL)
+    cy.clock().invoke('setSystemTime', Cypress.dayjs(sessionHomeworkToCreate[0].creationDate, 'YYYY/MM/DD').toDate().getTime())
+
+    // Click on session
+    openHomeworkCreateModal('09-12_11:25')
+    // TO DO Remove after fix
+    cy.wait(2000)
+    cy.get('.edit-homework-modal').should('be.visible').within(() => {
+      cy.get('.work-load-button').click()
+    })
+    // Check if homework is visible in workload
+    getWorkInWorkload(sessionHomeworkToCreate[0], sessionHomeworkToCreate[0].dateToDoWorkload, 'not.exist')
 
     // Login with student to check if session homework save as draft is not visible
     cy.login(STUDENT, coursesURL)

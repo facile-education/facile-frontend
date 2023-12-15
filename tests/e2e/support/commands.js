@@ -140,7 +140,12 @@ Cypress.Commands.add('type_ckeditor', (content, dataTestName = '') => {
   cy.window()
     .then(win => {
       if (dataTestName) {
-        textContent = win.textContent.find(element => element.dataTest === dataTestName)
+        console.log(win.textContent, dataTestName)
+        textContent = win.textContent.find((element) => {
+          console.log(element.dataTest)
+          return element.dataTest === dataTestName
+        })
+        console.log(textContent)
       } else {
         // Select last textContent by default
         textContent = win.textContent[win.textContent.length - 1]

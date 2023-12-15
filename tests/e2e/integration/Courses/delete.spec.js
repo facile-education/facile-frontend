@@ -1,5 +1,5 @@
 import { coursesURL } from '../../support/constants/urls'
-import { STUDENT, TEACHER } from '../../support/constants/users'
+import { CLASSTEACHER, SCHOOL_ADMIN, STUDENT, TEACHER } from '../../support/constants/users'
 import { changetab, getSessionContent, openEditHomworkModal, openEditSessionContentModal, selectCourse } from '../../support/utils/courses'
 
 describe('Delete', () => {
@@ -97,6 +97,21 @@ describe('Delete', () => {
     })
   })
 
+  it('Courses_UpdateSessionHomework_CoTeacherCanDelete', function () {
+    cy.loadTables('courses/courses_tables_coTeacher.sql')
+    const currentSessionHomework = this.coursesData.existingHomework[4]
+
+    // Login
+    cy.login(SCHOOL_ADMIN, coursesURL)
+    cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionHomework.sessionDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+
+    // Click on session
+    openEditHomworkModal(currentSessionHomework, '12-12_11:25', 'Supprimer')
+
+    // Check if homework is delete
+    cy.get('.homework').should('not.exist')
+  })
+
   it('Courses_DeleteSessionHomework_DisplayDeleteOptionFromCourseView', function () {
     const currentSessionHomework = this.coursesData.existingHomework[0]
     const courseList = this.coursesData.CoursesListByProfil
@@ -120,6 +135,22 @@ describe('Delete', () => {
     // Check if delete button is visible
     cy.get('.context-menu').within(() => {
       cy.contains('button', 'Supprimer').should('be.visible')
+    })
+  })
+
+  it('Courses_UpdateSessionContent_CoTeacherCanEdit', function () {
+    cy.loadTables('courses/courses_tables_coTeacher.sql')
+    const currentSessionContent = this.coursesData.existingSessionsContent[1]
+
+    // Login
+    cy.login(CLASSTEACHER, coursesURL)
+    cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionContent.sessionDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+
+    // Click on session
+    openEditSessionContentModal(currentSessionContent, '12-12_11:25', 'Supprimer')
+    // Check if session content is delete
+    cy.get('.session-details').within(() => {
+      getSessionContent(currentSessionContent).should('not.exist')
     })
   })
 })

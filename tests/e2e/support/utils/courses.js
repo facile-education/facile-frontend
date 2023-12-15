@@ -58,6 +58,24 @@ const getSessionContentWithSupportWithoutAudio = (sessionSupport) => {
   })
 }
 
+const clickOnContents = (sessionSupport) => {
+  cy.get('.attached-file').should('contain', sessionSupport.attachedFile).click()
+  cy.get('[data-test="file-display-modal"]').should('be.visible').within(() => {
+    cy.get('.header').should('contain', sessionSupport.attachedFile)
+    cy.get('[data-test="closeModal"]').click({ force: true })
+  })
+  cy.get('.course-content').eq(1).should('contain', sessionSupport.video).click()
+  cy.get('.videoWindow').should('be.visible').within(() => {
+    cy.get('.title').should('contain', sessionSupport.video)
+    cy.get('[data-test="closeModal"]').click()
+  })
+  cy.get('.course-content').eq(2).should('contain', sessionSupport.h5p).click()
+  cy.get('.h5pWindow').should('be.visible').within(() => {
+    cy.get('.title').should('contain', sessionSupport.h5p)
+    cy.get('[data-test="closeModal"]').click()
+  })
+}
+
 const getCourseSession = (homework, session) => {
   return cy.contains('.session-infos', session.headText).within(() => {
     getSessionHomework(homework)
@@ -195,6 +213,11 @@ const getWorkInWorkload = (homework, dateToDoWorkload, visibility) => {
   cy.get('[data-test="workLoadModal"]').within(() => {
     cy.contains('.day-works', dateToDoWorkload).within(() => {
       cy.contains('.work-item', homework.title).should(`${visibility}`)
+      if (visibility === 'be.visible') {
+        cy.contains('.work-item', homework.title).within(() => {
+          cy.get('.estimated-time').should('contain', homework.estimatedTime)
+        })
+      }
     })
   })
 }
@@ -221,5 +244,6 @@ export {
   submitSessionContent,
   openEditHomworkModal,
   openEditSessionContentModal,
-  openWorkload
+  openWorkload,
+  clickOnContents
 }

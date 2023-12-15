@@ -273,7 +273,8 @@
             "teacher": "NOLLI",
             "dateBefore": "2023/11/13",
             "dateAfter": "2023/11/17",
-            "dateToDoWorkload": "14/11"
+            "dateToDoWorkload": "14/11",
+            "sessionDate": "2023/11/13"
         },
         {
             "title": "Travail à faire parent multi enfants",
@@ -288,6 +289,12 @@
             "teacher": "PARSONS",
             "dateBefore": "2023/11/27",
             "student": "Barbara"
+        },
+        {
+            "title": "Travail pour un cours avec des co enseignants",
+            "content": "Contenu de ce travail",
+            "dateBefore": "2023/11/09",
+            "sessionDate": "2023/12/12"
         }
     ],
     "existingSessionsContent": [
@@ -301,6 +308,11 @@
             "video": "Vidéo pour le support de cours",
             "h5p": "H5P pour le support de cours",
             "sessionDate": "2023/11/13"
+        },
+        {
+            "title":"Support pour un cours avec des co enseignants",
+            "content": "Contenu de ce cours avec des co enseignants",
+            "sessionDate": "2023/12/12"
         }
     ],
     "sessionsLists": [
