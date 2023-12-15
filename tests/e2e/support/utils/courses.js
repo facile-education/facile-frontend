@@ -148,7 +148,7 @@ const submitSessionContent = () => {
 }
 
 const openHomeworkCreateModal = (sessionDatatestDate) => {
-  cy.get(`[data-test="${sessionDatatestDate}"]`).click()
+  cy.get(`[data-test="${sessionDatatestDate}"]`, { timeout: 10000 }).click()
   cy.get('.homeworks').within(() => {
     // Click on create homework button
     cy.get('[data-test="createSessionHomework"]').click()
@@ -156,7 +156,7 @@ const openHomeworkCreateModal = (sessionDatatestDate) => {
 }
 
 const openSessionContentCreateModal = (sessionDatatestDate) => {
-  cy.get(`[data-test="${sessionDatatestDate}"]`).click()
+  cy.get(`[data-test="${sessionDatatestDate}"]`, { timeout: 10000 }).click()
   cy.get('.session-details').within(() => {
     // Click on create homework button
     cy.get('[data-test="createSessionContent"]').click()

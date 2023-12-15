@@ -135,17 +135,15 @@ Cypress.Commands.add('globalKeyPress', (keyName) => {
 })
 
 Cypress.Commands.add('type_ckeditor', (content, dataTestName = '') => {
+  // Assure the ck editor is present on the interface
+  cy.get('.ck-editor' + (dataTestName ? '[data-test="' + dataTestName + '"]' : ''))
+
   // Add cy.tick after typr_ckeditor if there is a cy.clock()
   let textContent
   cy.window()
     .then(win => {
       if (dataTestName) {
-        console.log(win.textContent, dataTestName)
-        textContent = win.textContent.find((element) => {
-          console.log(element.dataTest)
-          return element.dataTest === dataTestName
-        })
-        console.log(textContent)
+        textContent = win.textContent.find(element => element.dataTest === dataTestName)
       } else {
         // Select last textContent by default
         textContent = win.textContent[win.textContent.length - 1]

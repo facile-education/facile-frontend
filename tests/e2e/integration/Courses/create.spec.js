@@ -44,7 +44,7 @@ describe('Create', () => {
       // // Set description
       cy.type_ckeditor(sessionHomeworkToCreate[0].content, 'contentItem_0')
       // Add cy.tick beacause cy.clock()
-      cy.tick(1000)
+      // cy.tick(1000)
       // // Set estimated time
       // cy.get('.duration').within(() => {
       //   cy.get('.base-dropdown').click()
