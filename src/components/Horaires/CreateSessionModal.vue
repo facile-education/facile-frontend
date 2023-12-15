@@ -102,10 +102,10 @@
           :list="teacherList"
           class="tags"
         />
+        <WeprodeErrorMessage
+          :error-message="formErrorList.selectedTeachers"
+        />
       </div>
-      <WeprodeErrorMessage
-        :error-message="formErrorList.selectedTeachers"
-      />
 
       <!-- Room -->
       <div
@@ -115,6 +115,9 @@
           v-model="room"
           class="room-input"
           :placeholder="$t('roomPlaceHolder')"
+        />
+        <WeprodeErrorMessage
+          :error-message="formErrorList.room"
         />
       </div>
 
@@ -170,7 +173,8 @@ export default {
     selectedGroup: { required },
     selectedDay: { required },
     selectedTeachers: { teachersRequired },
-    subject: { required }
+    subject: { required },
+    room: { required }
   },
   data () {
     return {
@@ -194,7 +198,8 @@ export default {
         day: (this.v$.selectedDay.$invalid && this.v$.selectedDay.$dirty) ? this.$t('Validation.day') : '',
         group: (this.v$.selectedGroup.$invalid && this.v$.selectedGroup.$dirty) ? this.$t('Validation.group') : '',
         selectedTeachers: (this.v$.selectedTeachers.$invalid && this.v$.selectedTeachers.$dirty) ? this.$t('Validation.teachers') : '',
-        subject: (this.v$.subject.$invalid && this.v$.subject.$dirty) ? this.$t('Validation.required') : ''
+        subject: (this.v$.subject.$invalid && this.v$.subject.$dirty) ? this.$t('Validation.required') : '',
+        room: (this.v$.room.$invalid && this.v$.room.$dirty) ? this.$t('Validation.required') : ''
       }
     }
   },
