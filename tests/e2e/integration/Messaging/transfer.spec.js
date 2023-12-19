@@ -125,6 +125,8 @@ describe('Messaging_TransferMessage', () => {
 
       // Login recipient
       cy.login(STUDENT, messagingURL)
+      waitMessagingToBeLoaded()
+
       // Check if thread is exist
       cy.get('[data-test="thread-list-item"]').contains(`Tr: ${threadToTransfer[1].subject}`).should('be.exist').click()
       getMessage(threadToTransfer[1])
