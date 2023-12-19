@@ -23,6 +23,7 @@ then
   echo "DB_PWD = $DB_PWD"
   echo "DB_NAME = $DB_NAME"
   echo "DUMP_NAME = $DUMP_NAME"
+  exit 1;
 else
   # cd to script directory
   cd "$(dirname "$(realpath "$0")")" || exit;
