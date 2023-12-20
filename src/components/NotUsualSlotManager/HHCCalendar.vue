@@ -37,13 +37,11 @@
     <StudentRegistrationModal
       v-if="isRegistrationModalDisplayed"
       :event="eventToEdit"
-      :full-screen="mq.phone"
       @close="isRegistrationModalDisplayed = false"
     />
     <StudentListModal
       v-if="isListModalDisplayed"
       :event="eventToEdit"
-      :full-screen="mq.phone"
       @close="isListModalDisplayed = false"
     />
   </teleport>

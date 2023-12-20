@@ -175,19 +175,21 @@ describe('HHC_Study_Registration', () => {
     const notifyParent = getRandomBoolean()
     const registerer = rolesThatCanRegister[0]
     const classToRegister = { name: '0933R3', nbStudents: 20 } // STUDENT's class
+    cy.intercept('GET', '**/schedule.cdtsession/get-group-sessions**').as('getGroupSessions')
 
     // Connect with someone who can register
     cy.login(registerer, HHCURL)
     selectSlotType(this.hhcData.slotsTypes.study)
 
+    // Load class schedule
     selectClass(classToRegister.name)
+    cy.wait('@getGroupSessions')
+
     // Open registration modal
-    getHHCSlot(slotToRegisterInside).click()
-    cy.get('[data-test=registerStudent-option]').click({ force: true })
+    getHHCSlot(slotToRegisterInside).scrollIntoView().click()
+    cy.get('[data-test=registerStudent-option]').click()
 
     // Test registration modal (ends by registering student)
-    cy.intercept('GET', '**/schedule.cdtsession/get-group-sessions**').as('getGroupSessions')
-
     testRegistrationModal(slotToRegisterInside, undefined, classToRegister, notifyParent)
 
     // Check the HHC slot is added in grey to the student's schedule

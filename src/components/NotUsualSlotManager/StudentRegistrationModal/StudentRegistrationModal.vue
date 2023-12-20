@@ -22,7 +22,7 @@
     <template #body>
       <WeprodeSpinner v-if="isLoading" />
 
-      <h3>{{ slotType.label }}</h3>
+      <h3>{{ slotType?.label }}</h3>
       <div
         v-if="student"
         class="student"
@@ -35,7 +35,7 @@
         class="class"
       >
         <span v-t="'NotUsualSlots.StudentRegistrationModal.class'" />
-        <span>{{ selectedClass.orgName }}</span>
+        <span>{{ selectedClass?.orgName }}</span>
       </div>
       <div class="slot">
         <span v-t="'NotUsualSlots.StudentRegistrationModal.slot'" />
@@ -84,7 +84,7 @@
           <span v-if="selectedSession.teacher">{{ selectedSession.teacher.firstName + ' ' + selectedSession.teacher.lastName }}</span>
           <span v-else-if="selectedSession.teachers.length === 1">{{ selectedSession.teachers[0].name }}</span>
           <WeprodeDropdown
-            v-else-if="selectedSession.teachers.length > 1"
+            v-else-if="selectedSession?.teachers.length > 1"
             v-model="dropdownSelectedTeacher"
             :list="selectedSession.teachers"
             display-field="name"
@@ -117,7 +117,6 @@
         v-model="comment"
         :placeholder="$t('NotUsualSlots.StudentRegistrationModal.commentPlaceholder')"
         class="comment"
-        style="height:100px;resize: none;"
         @keydown.enter.stop=""
       />
       <WeprodeCheckbox
@@ -218,9 +217,6 @@ export default {
     },
     isReplayTest () {
       return !this.deregistration && this.slotType.type === notUsualSlotsConstants.replayTestType
-    },
-    arrivalTime () {
-      return this.$t('Moment.the') + ' ' + dayjs().format('DD MMMM YYYY ' + this.$t('Moment.at') + ' HH:mm')
     },
     selectedClass () {
       return this.$store.state.notUsualSlots.selectedClass
@@ -430,6 +426,7 @@ h3 {
 
 .comment {
   height: 100px;
+  resize: none;
   margin-bottom: 15px;
 }
 
