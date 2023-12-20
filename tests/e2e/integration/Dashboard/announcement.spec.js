@@ -181,12 +181,10 @@ describe('Dashboard_Announcements', () => {
 
     it('Dashboard_Announcements_CreateAnnouncementWithAllTypesOfAttachedFiles', function () {
       const NewNews = this.dashboardData.NewNews
-      const CurrentDate = dayjs()
 
       setAnnouncementDocumentWithContent()
       // Check if an admin can create an annoucement
       cy.login(SCHOOL_ADMIN, dashboardURL)
-      cy.clock().invoke('setSystemTime', Cypress.dayjs(CurrentDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
       cy.get('[data-test="buttonCreateAnnoucement"]').click()
       cy.get('[data-test="update-news-modal"]').should('be.visible')
 
@@ -213,16 +211,17 @@ describe('Dashboard_Announcements', () => {
         // Click on createButton
         cy.get('[data-test="submitButton"]').click()
       })
+      cy.get('[data-test="update-news-modal"]').should('not.exist')
+
       // Check is all attached files is visible and clickable
-      getNews(NewNews).should('be.exist').within(() => {
+      getNews(NewNews).should('be.exist').scrollIntoView().within(() => {
         cy.get('[data-test="fileIcon"]').should('be.visible')
       })
+      // Set time 15min after publication
+      cy.tick(900000)
 
       // Check if student see the annoucement with all attached files
       cy.login(STUDENT, dashboardURL)
-      cy.clock().invoke('setSystemTime', Cypress.dayjs(CurrentDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
-      // Set time 15min after publication
-      cy.tick(900000)
       getNews(NewNews, { timeout: 10000 }).should('be.exist').click()
       // Check if all files is visible and clickable
       checkFileVisibilityAndClick(NewNews.personalDocument)
@@ -231,9 +230,6 @@ describe('Dashboard_Announcements', () => {
 
       // Check if a teacher see the annoucement
       cy.login(TEACHER2, dashboardURL)
-      cy.clock().invoke('setSystemTime', Cypress.dayjs(CurrentDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
-      // Set time 15min after publication
-      cy.tick(900000)
       getNews(NewNews).should('be.exist').click()
       checkFileVisibilityAndClick(NewNews.personalDocument)
       checkFileVisibilityAndClick(NewNews.collaborativeDocument)
