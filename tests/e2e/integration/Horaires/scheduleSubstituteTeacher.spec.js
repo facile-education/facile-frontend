@@ -264,41 +264,6 @@ describe('Schedule_SubstituteTeacher', () => {
         .should('contain', substitution.substituteTeacher.lastName)
     })
 
-    it.skip('Schedule_SubstituteTeacher_UpdateSubstituteDate', function () {
-      const now = Cypress.dayjs(this.scheduleData.now, 'YYYY/MM/DD HH:mm')
-      const substitution = this.scheduleData.selectedGroup.substitute
-      const currentWeekSlot = substitution.concernSlot
-      const nextWeekSlot = addTimeToSlot(currentWeekSlot, 1, 'week')
-
-      openSlotSubstituteModal(substitution.concernSlot)
-
-      cy.get('[data-test=sessionTeacherModal]').within(() => {
-        // Current substitute
-        cy.get('[data-test="user-completion-input"]').should('contain', substitution.substituteTeacher.lastName)
-
-        // Set the last concern slot as the current week slot
-        const lastConcernSlotDate = Cypress.dayjs(currentWeekSlot.startDate, 'YYYY/MM/DD HH:mm')
-        selectDropdownItem(cy.get('[data-test="dropdown"]'), lastConcernSlotDate.format(lastAffectedDateFormat))
-
-        // Form validation
-        cy.contains('button', 'Valider').click()
-      })
-
-      cy.get('[data-test=sessionTeacherModal]').should('not.exist')
-      cy.wait('@getGroupSessions')
-
-      // Check the current week slot is not updated
-      getSlotPopover(currentWeekSlot)
-        .should('not.contain', substitution.baseTeacher.lastName)
-        .should('contain', substitution.substituteTeacher.lastName)
-
-      // Check the next week slot is updated (the base teacher is here)
-      loadWeekSlots(now.add(1, 'week'))
-      getSlotPopover(nextWeekSlot)
-        .should('contain', substitution.baseTeacher.lastName)
-        .should('not.contain', substitution.substituteTeacher.lastName)
-    })
-
     it('Schedule_SubstituteTeacher_SubstituteASubstituteTeacher', function () {
       const now = Cypress.dayjs(this.scheduleData.now, 'YYYY/MM/DD HH:mm')
       const substitution = this.scheduleData.selectedGroup.substitute
