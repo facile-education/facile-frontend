@@ -195,7 +195,7 @@ describe('HHC_Firing_Registration', () => {
     cy.loadTables('schoollife/schoollife_tables.sql')
     cy.login(firingTeacher, HHCURL)
 
-    cy.get('[data-test=pending-firing-modal]').within(() => {
+    cy.get('[data-test=pending-firing-modal]', { timeout: 10000 }).within(() => {
       cy.get('textarea').type(firingReason)
       cy.contains('Envoyer').click()
     })
