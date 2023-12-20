@@ -73,6 +73,7 @@ export default {
   emits: ['selectWeek'],
   data () {
     return {
+      date: undefined,
       startDate: undefined,
       endDate: undefined,
       selectedWeek: {}
@@ -177,27 +178,37 @@ export default {
       return this.nbWeeksBeforeCurrent + 1 + this.nbWeeksAfterCurrent
     }
   },
+  watch: {
+    configuration () {
+      this.initSelectedWeek()
+    }
+  },
   created () {
     if (!this.configuration) {
       this.$store.dispatch('calendar/getConfiguration')
     }
 
-    let date = this.initialDate ? this.initialDate : dayjs()
-    if (date.isAfter(this.maxDate)) {
-      date = this.maxDate.clone()
-    } else if (date.isBefore(this.minDate)) {
-      date = this.minDate.clone()
+    this.date = this.initialDate ? this.initialDate : dayjs()
+    if (this.date.isAfter(this.maxDate)) {
+      this.date = this.maxDate.clone()
+    } else if (this.date.isBefore(this.minDate)) {
+      this.date = this.minDate.clone()
     }
 
-    this.startDate = date.subtract(this.nbWeeksBeforeCurrent, 'week').startOf('week')
-    this.endDate = date.add(this.nbWeeksAfterCurrent, 'week').endOf('week')
+    this.startDate = this.date.subtract(this.nbWeeksBeforeCurrent, 'week').startOf('week')
+    this.endDate = this.date.add(this.nbWeeksAfterCurrent, 'week').endOf('week')
 
-    const initialDisplayWeek = this.getWeekFromLocalWeekList(date)
-    if (initialDisplayWeek) {
-      this.selectedWeek = initialDisplayWeek
+    if (this.configuration) {
+      this.initSelectedWeek()
     }
   },
   methods: {
+    initSelectedWeek () { // Need a valid minDate (schoolYearStartDate)
+      const initialDisplayWeek = this.getWeekFromLocalWeekList(this.date)
+      if (initialDisplayWeek) {
+        this.selectedWeek = initialDisplayWeek
+      }
+    },
     getWeekNumber (date) {
       return date.diff(dayjs(this.minDate, 'YYYY-MM-DD').startOf('week'), 'week') + 1
     },
