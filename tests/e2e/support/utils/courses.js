@@ -8,7 +8,7 @@ const getSessionHomeworkWithSupport = (homework) => {
     cy.get('.attached-file').should('contain', homework.attachedFile)
     cy.get('.ck-editor').should('contain', homework.additionalText)
     if (cy.get('.estimated-time').length > 0) {
-      cy.get('.estimated-time').should('contain', homework.estimatedTime)
+      cy.get('.estimated-time').should('contain', formatWorkLoadEstimatedTime(homework.estimatedTime))
     }
     cy.get('.course-content').eq(0).should('contain', homework.audio)
     cy.get('.course-content').eq(1).should('contain', homework.link)
@@ -21,7 +21,7 @@ const getSessionHomeworkWithSupportWithoutAudio = (homework) => {
   return cy.contains('.homework', homework.title).within(() => {
     cy.contains(homework.content)
     if (cy.get('.estimated-time').length > 0) {
-      cy.get('.estimated-time').should('contain', homework.estimatedTime)
+      cy.get('.estimated-time').should('contain', formatEstimatedTime(homework.estimatedTime))
     }
     cy.get('.attached-file').should('contain', homework.attachedFile)
     // cy.get('.ck-editor').should('contain', homework.additionalText)
@@ -215,11 +215,29 @@ const getWorkInWorkload = (homework, dateToDoWorkload, visibility) => {
       cy.contains('.work-item', homework.title).should(`${visibility}`)
       if (visibility === 'be.visible') {
         cy.contains('.work-item', homework.title).within(() => {
-          cy.get('.estimated-time').should('contain', homework.estimatedTime)
+          cy.get('.estimated-time').should('contain', formatWorkLoadEstimatedTime(homework.estimatedTime))
         })
       }
     })
   })
+}
+
+const formatEstimatedTime = (nbMinutes) => {
+  const nbHour = Math.floor(nbMinutes / 60)
+  if (nbHour > 0) {
+    return nbHour + 'h' + nbMinutes % 60
+  } else {
+    return nbMinutes + ' ' + 'min'
+  }
+}
+
+const formatWorkLoadEstimatedTime = (nbMinutes) => {
+  const nbHour = Math.floor(nbMinutes / 60)
+  if (nbHour > 0) {
+    return nbHour + 'h' + nbMinutes % 60
+  } else {
+    return nbMinutes + 'min'
+  }
 }
 
 export {
