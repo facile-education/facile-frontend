@@ -217,8 +217,6 @@ describe('Dashboard_Announcements', () => {
       getNews(NewNews).should('be.exist').scrollIntoView().within(() => {
         cy.get('[data-test="fileIcon"]').should('be.visible')
       })
-      // Set time 15min after publication
-      cy.tick(900000)
 
       // Check if student see the annoucement with all attached files
       cy.login(STUDENT, dashboardURL)
@@ -270,8 +268,6 @@ describe('Dashboard_Announcements', () => {
       // Check if redaction delegate see this annoucement
       cy.login(TEACHER, dashboardURL)
       cy.clock().invoke('setSystemTime', Cypress.dayjs(CurrentDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
-      // Set time 15min after publication
-      cy.tick(900000)
       getNews(newsToStudent).should('be.exist').click()
       checkFileVisibilityAndClick(newsToStudent.personalDocument)
     })
@@ -317,8 +313,6 @@ describe('Dashboard_Announcements', () => {
       // Check if students see this annoucement
       cy.login(STUDENT, dashboardURL)
       cy.clock().invoke('setSystemTime', Cypress.dayjs(CurrentDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
-      // Set time 15min after publication
-      cy.tick(900000)
       getNews(newsToTeacherAndStudent).should('be.exist').click()
       checkFileVisibilityAndClick(newsToTeacherAndStudent.personalDocument)
     })
@@ -361,8 +355,6 @@ describe('Dashboard_Announcements', () => {
       // Check if redaction delegate see this annoucement
       cy.login(HEADMASTER, dashboardURL)
       cy.clock().invoke('setSystemTime', Cypress.dayjs(CurrentDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
-      // Set time 15min after publication
-      cy.tick(900000)
       getNews(newsToStudent).should('be.exist').click()
       checkFileVisibilityAndClick(newsToStudent.personalDocument)
     })
@@ -511,8 +503,6 @@ describe('Dashboard_Announcements', () => {
       // Login with a student to see if now he can see the announcement
       cy.login(STUDENT, dashboardURL)
       cy.clock().invoke('setSystemTime', Cypress.dayjs(CurrentDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
-      // Set time 15min after publication
-      cy.tick(900000)
       getNews(newsToEdit).should('be.exist')
     })
 
@@ -585,8 +575,6 @@ describe('Dashboard_Announcements', () => {
       // Login with a student
       cy.login(MULTI_STUDENT1, dashboardURL)
       cy.clock().invoke('setSystemTime', Cypress.dayjs(CurrentDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
-      // Set time 15min after publication
-      cy.tick(900000)
       // Check if new is mark as unRead
       getNews(newsToEdit).should('be.visible').within(() => {
         cy.get('.pellet').should('be.visible')
