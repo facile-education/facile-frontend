@@ -206,7 +206,6 @@ const openWorkload = (sessionDatatestDate) => {
     // Click on create homework button
     cy.get('[data-test="createSessionHomework"]').click()
   })
-  cy.wait(2000)
   cy.get('.edit-homework-modal').should('be.visible').within(() => {
     cy.get('.work-load-button').click()
   })
