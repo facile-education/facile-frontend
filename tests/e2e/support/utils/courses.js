@@ -1,3 +1,7 @@
+const waitCourseServiceToBeLoaded = () => {
+  cy.get('h1[aria-label="Cours & Devoirs"]', { timeout: 10000 }).should('exist')
+}
+
 const getSessionHomework = (homework) => {
   return cy.contains('.homework', homework.title)
 }
@@ -241,6 +245,7 @@ const formatWorkLoadEstimatedTime = (nbMinutes) => {
 }
 
 export {
+  waitCourseServiceToBeLoaded,
   getSessionHomework,
   getSessionHomeworkWithSupport,
   getSessionContent,

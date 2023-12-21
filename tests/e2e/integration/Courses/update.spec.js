@@ -1,6 +1,6 @@
 import { coursesURL } from '../../support/constants/urls'
 import { CLASSTEACHER2, SCHOOL_ADMIN, STUDENT, STUDENT_IN_CLASS, TEACHER } from '../../support/constants/users'
-import { addFile, addH5P, addLink, addVideo, changetab, clickOnContents, getSessionContent, getSessionContentWithSupportWithoutAudio, getSessionHomework, getSessionHomeworkWithSupport, getSessionHomeworkWithSupportWithoutAudio, getWorkInWorkload, openEditHomworkModal, openEditSessionContentModal, openWorkload, selectCourse, submitHomework, submitSessionContent } from '../../support/utils/courses'
+import { addFile, addH5P, addLink, addVideo, changetab, clickOnContents, getSessionContent, getSessionContentWithSupportWithoutAudio, getSessionHomework, getSessionHomeworkWithSupport, getSessionHomeworkWithSupportWithoutAudio, getWorkInWorkload, openEditHomworkModal, openEditSessionContentModal, openWorkload, selectCourse, submitHomework, submitSessionContent, waitCourseServiceToBeLoaded } from '../../support/utils/courses'
 
 describe('Update', () => {
   beforeEach(() => {
@@ -35,6 +35,7 @@ describe('Update', () => {
     // Login with student to check if homework is visible before edit
     cy.login(TEACHER, coursesURL)
     cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionHomework.sessionDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+    waitCourseServiceToBeLoaded()
 
     // Click on session
     openEditHomworkModal(currentSessionHomework, '11-13_11:25', 'Modifier')
@@ -72,6 +73,7 @@ describe('Update', () => {
     // Login with other teacher to check if homework modified is visible in workload
     cy.login(CLASSTEACHER2, coursesURL)
     cy.clock().invoke('setSystemTime', Cypress.dayjs(sessionHomeworkToEdit[0].dateToDo, 'YYYY/MM/DD').toDate().getTime())
+    waitCourseServiceToBeLoaded()
 
     // Click on session
     openWorkload('11-14_11:25')
@@ -82,6 +84,7 @@ describe('Update', () => {
     // Login with student to check if session homework modified is visible
     cy.login(STUDENT, coursesURL)
     cy.clock().invoke('setSystemTime', Cypress.dayjs(sessionHomeworkToEdit[0].dateToDo, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+    waitCourseServiceToBeLoaded()
 
     // Check if homework is visible in homeworks tab
     getSessionHomework(sessionHomeworkToEdit[0]).should('be.visible')
@@ -96,7 +99,7 @@ describe('Update', () => {
     })
   })
 
-  it('Courses_UpdateSessionHomework_UpdateDatetFromSessionView', function () {
+  it('Courses_UpdateSessionHomework_UpdateDateFromSessionView', function () {
     const currentSessionHomework = this.coursesData.existingHomework[0]
     const courseList = this.coursesData.CoursesListByProfil
     const studentCourseList = courseList[1]
@@ -112,12 +115,14 @@ describe('Update', () => {
     // Login with student to check if session homework modified is not visible
     cy.login(STUDENT, coursesURL)
     cy.clock().invoke('setSystemTime', Cypress.dayjs(sessionHomeworkToEdit[0].cyClockDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+    waitCourseServiceToBeLoaded()
 
     // Check if homework is visible
     cy.get('.homework').should('not.exist')
 
     cy.login(TEACHER, coursesURL)
     cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionHomework.sessionDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+    waitCourseServiceToBeLoaded()
 
     // Click on session
     openEditHomworkModal(currentSessionHomework, '11-13_11:25', 'Modifier')
@@ -136,6 +141,7 @@ describe('Update', () => {
     // Login with other teacher to check if homework modified is visible in workload
     cy.login(CLASSTEACHER2, coursesURL)
     cy.clock().invoke('setSystemTime', Cypress.dayjs(sessionHomeworkToEdit[0].dateToDo, 'YYYY/MM/DD').toDate().getTime())
+    waitCourseServiceToBeLoaded()
 
     // Click on session
     openWorkload('11-28_11:25')
@@ -145,6 +151,7 @@ describe('Update', () => {
     // Login with student to check if session homework modified is visible
     cy.login(STUDENT, coursesURL)
     cy.clock().invoke('setSystemTime', Cypress.dayjs(sessionHomeworkToEdit[0].cyClockDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+    waitCourseServiceToBeLoaded()
 
     // Check if homework is visible in homeworks tab
     getSessionHomework(currentSessionHomework).should('be.visible')
@@ -165,19 +172,21 @@ describe('Update', () => {
     // Login with an other student in class to see if this work is not visible
     cy.login(STUDENT, coursesURL)
     cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionHomework.dateBefore, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
-
+    waitCourseServiceToBeLoaded()
     // Check if homework is visible
     getSessionHomework(currentSessionHomework).should('be.visible')
 
     // Login with an other student in class to see if this work is not visible
     cy.login(STUDENT_IN_CLASS, coursesURL)
     cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionHomework.dateBefore, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+    waitCourseServiceToBeLoaded()
 
     // Check if homework is not visible
     cy.get('.homework').should('not.exist')
 
     cy.login(TEACHER, coursesURL)
     cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionHomework.sessionDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+    waitCourseServiceToBeLoaded()
 
     // Click on session
     openEditHomworkModal(currentSessionHomework, '11-13_11:25', 'Modifier')
@@ -199,6 +208,7 @@ describe('Update', () => {
     // Login with an other student in class to see if this work is not visible
     cy.login(STUDENT_IN_CLASS, coursesURL)
     cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionHomework.dateBefore, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+    waitCourseServiceToBeLoaded()
 
     // Check if homework is visible
     getSessionHomework(currentSessionHomework).should('be.visible')
@@ -209,6 +219,7 @@ describe('Update', () => {
 
     cy.login(TEACHER, coursesURL)
     cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionHomework.sessionDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+    waitCourseServiceToBeLoaded()
 
     // Click on session
     openEditHomworkModal(currentSessionHomework, '11-13_11:25', 'Modifier')
@@ -235,6 +246,7 @@ describe('Update', () => {
     // Login with penelope to check if she not see this homework
     cy.login(STUDENT, coursesURL)
     cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionHomework.dateBefore, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+    waitCourseServiceToBeLoaded()
 
     // Check if homework is visible
     getSessionHomework(currentSessionHomework).should('not.exist')
@@ -247,6 +259,7 @@ describe('Update', () => {
     // Login
     cy.login(TEACHER, coursesURL)
     cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionHomework.sessionDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+    waitCourseServiceToBeLoaded()
 
     changetab('Cours')
     selectCourse(teacherCourseList[2].Course)
@@ -277,6 +290,7 @@ describe('Update', () => {
     // Login
     cy.login(SCHOOL_ADMIN, coursesURL)
     cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionHomework.sessionDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+    waitCourseServiceToBeLoaded()
 
     // Click on session
     openEditHomworkModal(currentSessionHomework, '12-12_11:25', 'Modifier')
@@ -316,6 +330,7 @@ describe('Update', () => {
     // Login
     cy.login(TEACHER, coursesURL)
     cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionContent.sessionDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+    waitCourseServiceToBeLoaded()
 
     // Click on session
     openEditSessionContentModal(currentSessionContent, '11-13_11:25', 'Modifier')
@@ -361,6 +376,7 @@ describe('Update', () => {
 
     // Login with student to check if session content modified is visible
     cy.login(STUDENT, coursesURL)
+    waitCourseServiceToBeLoaded()
 
     // Open courses tab
     changetab('Cours')
@@ -380,6 +396,7 @@ describe('Update', () => {
     // Login
     cy.login(TEACHER, coursesURL)
     cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionContent.sessionDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+    waitCourseServiceToBeLoaded()
 
     // Open courses tab
     changetab('Cours')
@@ -412,6 +429,7 @@ describe('Update', () => {
     // Login
     cy.login(SCHOOL_ADMIN, coursesURL)
     cy.clock().invoke('setSystemTime', Cypress.dayjs(currentSessionContent.sessionDate, 'YYYY/MM/DD').toDate().getTime()) // To put after login to make it works
+    waitCourseServiceToBeLoaded()
 
     // Click on session
     openEditSessionContentModal(currentSessionContent, '12-12_11:25', 'Modifier')

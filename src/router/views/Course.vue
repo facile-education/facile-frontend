@@ -1,4 +1,5 @@
 <template>
+  <h1 :aria-label="$t('serviceTitle')" />
   <WeprodeTabList v-if="isTeacher">
     <WeprodeTabItem
       :title="$t('schedule')"
