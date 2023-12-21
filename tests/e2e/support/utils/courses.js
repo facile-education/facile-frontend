@@ -240,7 +240,7 @@ const formatWorkLoadEstimatedTime = (nbMinutes) => {
   if (nbHour > 0) {
     return nbHour + 'h' + nbMinutes % 60
   } else {
-    return nbMinutes + 'min'
+    return nbMinutes + 'mn'
   }
 }
 
