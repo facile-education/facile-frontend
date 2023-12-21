@@ -174,8 +174,8 @@ describe('navigationAndDisplay', () => {
       cy.contains('.base-radio', 'À faire pour le').should('have.class', 'disabled')
     })
     cy.get('.work-load-button').click()
-    cy.get('.edit-homework-modal').should('be.visible').within(() => {
-      cy.get('.horizontal-timeline-right').should('have.attr', 'disabled')
+    cy.get('[data-test="workLoadModal"]').should('be.visible').within(() => {
+      cy.get('[data-test="weekList"]').find('button[aria-label="Suivant"]').should('be.disabled')
     })
   })
 })
