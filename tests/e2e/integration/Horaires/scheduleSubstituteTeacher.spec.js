@@ -224,7 +224,7 @@ describe('Schedule_SubstituteTeacher', () => {
         .should('contain', currentWeekSlot.nextCourseSlot.teacher.lastName)
     })
 
-    it('Schedule_SubstituteTeacher_deleteSubstitute', function () {
+    it('Schedule_SubstituteTeacher_DeleteSubstitute', function () {
       const now = Cypress.dayjs(this.scheduleData.now, 'YYYY/MM/DD HH:mm')
       const substitution = this.scheduleData.selectedGroup.substitute
       const currentWeekSlot = substitution.concernSlot

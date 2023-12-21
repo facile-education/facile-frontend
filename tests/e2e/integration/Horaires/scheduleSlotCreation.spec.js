@@ -49,7 +49,7 @@ describe('Schedule_CreateSlot', () => {
   })
 
   context('Check display', function () {
-    it('Schedule_CreateSlot_CheckDisplayForRole', () => {
+    it('Schedule_CreateSlot_CheckOptionForRole', () => {
       scheduleUsers.forEach(user => {
         cy.log('Check display for role ' + user.role)
         cy.login(user, scheduleURL)
