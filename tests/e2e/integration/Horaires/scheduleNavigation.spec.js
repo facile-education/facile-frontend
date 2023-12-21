@@ -160,15 +160,15 @@ describe('Schedule_ScheduleNavigation', () => {
         // Check min date
         for (let i = 0; i < nbMonthFromSchoolYearStartDate + 1; i++) {
           cy.get('button.vc-prev').click()
+          cy.tick(500)
         }
-        cy.tick(500)
         cy.get('.vc-day-content.vc-disabled').should('have.length.greaterThan', 10) // 10 is the max disabled date in a month du to weekends
 
         // Check max date
-        for (let i = 0; i < nbMonthFromSchoolYearStartDate + nbMonthToSchoolYearEndDate + 2; i++) {
+        for (let i = 0; i < nbMonthFromSchoolYearStartDate + nbMonthToSchoolYearEndDate + 1; i++) {
           cy.get('button.vc-next').click()
+          cy.tick(500)
         }
-        cy.tick(500)
         cy.get('.vc-day-content.vc-disabled').should('have.length.greaterThan', 10) // 10 is the max disabled date in a month du to weekends
       })
     })
