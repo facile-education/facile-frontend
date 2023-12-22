@@ -4,12 +4,11 @@ import { selectSlotType } from '../../support/utils/horairesHorsCardesUtils'
 
 describe('HHC_UserSelection', () => {
   beforeEach(() => {
-    cy.clearAllSessionStorage()
     cy.loadTables('schoollife/schoollife_tables_empty.sql')
-    cy.login(HEADMASTER, HHCURL)
     cy.fixture('hhc.json').as('hhcData').then(data => {
       cy.clock(Cypress.dayjs(data.now, 'YYYY/MM/DD HH:mm').toDate().getTime())
     })
+    cy.login(HEADMASTER, HHCURL)
   })
 
   const sizes = ['iphone-5', 'ipad-2', [1024, 768]]
