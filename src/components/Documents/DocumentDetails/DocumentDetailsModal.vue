@@ -2,6 +2,7 @@
   <WeprodeWindow
     v-if="!displayGroupDetails"
     class="details-display-modal"
+    data-test="details-panel"
     :modal="true"
     :full-screen="true"
     @close="onClose"
