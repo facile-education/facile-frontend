@@ -1,6 +1,7 @@
 import { documentURL } from '../../support/constants/urls'
 import { HEADMASTER } from '../../support/constants/users'
 import { setDocumentLibraryWithContent, waitDocumentServiceToBeLoaded } from '../../support/utils/documents'
+import { selectContextMenuOption } from '../../support/utils/testUtils'
 
 const checkFileDisplayModal = (openFile) => {
   cy.get('[data-test="file-display-modal"]').should('be.visible').and('contain', openFile.label)
@@ -91,6 +92,7 @@ describe('Documents_OpenFileDisplayModal', () => {
 
     cy.contains('[data-test="file"]', fileToOpen.label).rightclick()
     cy.get('[data-test="context-menu"]').contains('li', 'Ouvrir').click()
+    selectContextMenuOption('Ouvrir')
 
     checkFileDisplayModal(fileToOpen)
   })

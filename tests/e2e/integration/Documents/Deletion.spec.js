@@ -1,3 +1,5 @@
+import { selectContextMenuOption } from '../../support/utils/testUtils'
+
 describe.skip('Deletion', () => {
   beforeEach(() => {
     cy.viewport('macbook-16')
@@ -8,7 +10,7 @@ describe.skip('Deletion', () => {
 
   it('Delete one file', () => {
     cy.contains('[data-test=file]', 'fichier1_1.html').rightclick()
-    cy.get('[data-test="context-menu"]').contains('Supprimer').click() // By context menu
+    selectContextMenuOption('Supprimer')
     cy.get('[data-test="warning-modal"]').get('[data-test="cancelButton"]').click()
     cy.wait(500)
     cy.contains('[data-test=file]', 'fichier1_1.html').should('exist').click().should('have.class', 'selected')

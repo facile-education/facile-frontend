@@ -1,6 +1,7 @@
 import { messagingURL } from '../../support/constants/urls'
 import { HEADMASTER } from '../../support/constants/users'
 import { getMessage, getThread, waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
+import { selectContextMenuOption } from '../../support/utils/testUtils'
 
 describe('Delete message', () => {
   beforeEach(() => {
@@ -25,7 +26,7 @@ describe('Delete message', () => {
 
     cy.log('delete thread by context menu')
     getThread(secondThread).rightclick()
-    cy.get('[data-test=context-menu]').contains('Supprimer').click()
+    selectContextMenuOption('Supprimer')
     getThread(secondThread).should('not.exist')
 
     cy.log('delete thread by trash icon')
