@@ -2,6 +2,7 @@
   <div
     v-if="!displayGroupDetails"
     class="details-panel"
+    data-test="details-panel"
   >
     <div class="header">
       <div

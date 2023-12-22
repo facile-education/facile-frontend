@@ -13,6 +13,10 @@ const selectDropdownItem = (wrappedDropdown, itemName) => {
   })
 }
 
+const selectContextMenuOption = (optionName) => {
+  cy.get('[data-test="context-menu"]').contains('li', optionName).click()
+}
+
 const selectAutocompleteItem = (wrappedAutocomplete, itemName, timeOut = undefined, requestToWait = undefined) => {
   wrappedAutocomplete.within(() => {
     cy.get('input').clear()
@@ -31,5 +35,6 @@ export {
   exactString,
   isInList,
   selectDropdownItem,
-  selectAutocompleteItem
+  selectAutocompleteItem,
+  selectContextMenuOption
 }
