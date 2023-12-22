@@ -3,6 +3,7 @@
     "label": "Personnels",
     "folders": [
       {
+        "type": "Dossier",
         "label": "Dossier",
         "id": 545207,
         "size": 0,
@@ -40,6 +41,7 @@
         "files": []
       },
       {
+        "type": "Dossier",
         "label": "Dossier2",
         "id": 545135,
         "size": 2332960,
@@ -212,11 +214,13 @@
         "nbMembers": 2569,
         "folders": [
           {
+            "type": "Dossier",
             "label": "Dossier de groupe",
             "id": 545161,
             "lastModifiedDate": "2023-11-02 14:25",
             "folders": [
               {
+                "type": "Dossier",
                 "label": "Sous-dossier de groupe",
                 "id": 1161717,
                 "lastModifiedDate": "2023-12-22 11:42",

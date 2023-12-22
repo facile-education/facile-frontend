@@ -24,10 +24,52 @@ const unselectAllEntities = (nbEntitiesInCurrentFolder) => {
   cy.get('[data-cy=document] .selected').should('have.length', 0)
 }
 
+const getFormattedSize = (size) => {
+  if (Math.trunc(size / 1024) === 0) {
+    return size + ' o'
+  } else if ((Math.trunc(size / (1024 * 1024)) === 0)) {
+    return Math.trunc(size / 1024) + ' ko'
+  } else if ((Math.trunc(size / (1024 * 1024 * 1024)) === 0)) {
+    return Math.trunc(size / (1024 * 1024)) + ' Mo'
+  } else {
+    return Math.trunc(size / (1024 * 1024 * 1024)) + ' Go'
+  }
+}
+
+const goInFolder = (folder) => {
+  cy.intercept('GET', '**/document.folderutils/get-all-entities**').as('getFolderContent')
+
+  cy.contains('[data-test=folder]', folder.label).dblclick()
+
+  cy.wait('@getFolderContent')
+
+  cy.get('[data-cy=document]')
+    .should('have.length', folder.folders.length + folder.files.length)
+}
+
+const goInCollaborativeFolder = (folder) => {
+  cy.intercept('GET', '**/document.groups/get-group-entities**').as('getGroupFolderContent')
+
+  cy.contains('[data-test=folder]', folder.label).dblclick()
+
+  cy.wait('@getGroupFolderContent')
+
+  cy.get('[data-cy=document]')
+    .should('have.length', folder.folders.length + folder.files.length)
+}
+
+const toggleSelectionOnDocument = (document) => {
+  cy.contains('[data-cy=document]', document.label).find('[data-test="selection-icon"]').click()
+}
+
 export {
+  getFormattedSize,
   setDocumentLibraryEmpty,
   setDocumentLibraryWithContent,
   selectAllEntities,
   unselectAllEntities,
-  waitDocumentServiceToBeLoaded
+  waitDocumentServiceToBeLoaded,
+  goInFolder,
+  goInCollaborativeFolder,
+  toggleSelectionOnDocument
 }
