@@ -651,12 +651,8 @@ describe('Dashboard_Events', () => {
     const ipad = sizes[1]
     sizes.forEach(size => {
       it(`Dashboard_Events_DisplayAllEventsLoadNextEvent: ${size}`, function () {
-        // Set testing viewport
-        if (Array.isArray(size)) {
-          cy.viewport(size[0], size[1])
-        } else {
-          cy.viewport(size)
-        }
+        cy.viewport(size)
+
         // Load tables
         cy.loadTables('dashboard/dashboard_tables_events_full.sql')
 

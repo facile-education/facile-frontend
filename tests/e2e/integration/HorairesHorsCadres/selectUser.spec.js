@@ -16,7 +16,7 @@ describe('HHC_UserSelection', () => {
   sizes.forEach(size => {
     it(`HHC_UserSelection_SelectUserIn${size}Screen`, function () {
       // Set testing viewport
-      Cypress._.isArray(size) ? cy.viewport(size[0], size[1]) : cy.viewport(size)
+      cy.viewport(size)
 
       selectSlotType(this.hhcData.slotsTypes.tutoring)
 

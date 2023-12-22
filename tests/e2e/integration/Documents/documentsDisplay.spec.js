@@ -39,7 +39,7 @@ describe('Documents_Display_ResponsiveDesign', () => {
 
   sizes.forEach(size => {
     it(`Documents_Display_DisplayServiceCorrectlyFor[${size}]`, function () {
-      Cypress._.isArray(size) ? cy.viewport(size[0], size[1]) : cy.viewport(size)
+      cy.viewport(size)
 
       cy.get('@documentsData').then((documentsData) => {
         const currentFolder = documentsData.currentPersonalDocumentsStructure.folders[0].folders[0] // Sub folder level

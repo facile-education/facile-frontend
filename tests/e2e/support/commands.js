@@ -181,3 +181,7 @@ Cypress.Commands.add('selectDateInVCalendar', (date) => {
   cy.tick(500)
 // TODO: Find a way to close popover before continuing the tests
 })
+
+Cypress.Commands.overwrite('viewport', (originalFn, size) => {
+  return Array.isArray(size) ? originalFn(size[0], size[1]) : originalFn(size)
+})
