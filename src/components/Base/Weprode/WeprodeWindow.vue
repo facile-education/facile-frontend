@@ -27,7 +27,7 @@
         @submit.stop
         @drag.stop
       >
-        <div
+        <header
           class="window-header theme-border-color"
           :class="{'important': important}"
         >
@@ -59,12 +59,14 @@
               v-if="closable"
               class="header-option-item"
               data-test="closeModal"
+              :aria-label="$t('close')"
+              :title="$t('close')"
               @click="$emit('close')"
             >
               <NeroIcon name="times" />
             </button>
           </div>
-        </div>
+        </header>
 
         <div
           class="window-body"
@@ -354,3 +356,9 @@ $modal-padding: 25px;
   }
 }
 </style>
+
+<i18n locale="fr">
+{
+  "close": "Fermer"
+}
+</i18n>
