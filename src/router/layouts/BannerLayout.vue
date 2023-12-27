@@ -107,6 +107,7 @@ import { defineAsyncComponent } from 'vue'
 import { useCookies } from 'vue3-cookies'
 
 import constants from '@/api/constants'
+import userService from '@/api/user.service'
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import { mobilePopupDurationTime, popupDurationTime } from '@/constants/appConstants'
 
@@ -216,15 +217,24 @@ export default {
     }
   },
   created () {
-    if (this.userId === undefined) {
-      this.$store.dispatch('user/initUserInformations')
-    } else if (!this.user.agreedTermsOfUse) {
-      this.$router.push({ name: 'AgreeTermsOfUse' })
-    } else if (this.user.passwordChange) {
-      this.$router.push({ name: 'PasswordChange' })
-    }
-    if (this.$store.state.menu.menu === undefined) {
-      this.$store.dispatch('menu/initUserMenu')
+    const { cookies } = useCookies()
+    if (this.userId === undefined && this.$store.state.menu.menu === undefined && cookies.get('REMEMBER_ME') === 'true') {
+      // Case of session timeout reached
+      userService.getUserInformations().then(
+        (data) => {
+          this.$store.dispatch('menu/initUserMenu')
+        })
+    } else {
+      if (this.userId === undefined) {
+        this.$store.dispatch('user/initUserInformations')
+      } else if (!this.user.agreedTermsOfUse) {
+        this.$router.push({ name: 'AgreeTermsOfUse' })
+      } else if (this.user.passwordChange) {
+        this.$router.push({ name: 'PasswordChange' })
+      }
+      if (this.$store.state.menu.menu === undefined) {
+        this.$store.dispatch('menu/initUserMenu')
+      }
     }
   },
   mounted () {
