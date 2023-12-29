@@ -10,7 +10,7 @@
 
   <div class="attached-files">
     <div
-      v-if="readOnly"
+      v-if="readOnly && withHeader"
       class="header"
     >
       {{ modelValue.length + (modelValue.length > 1 ? $t('attachedFiles') : $t('attachedFile')) }}
@@ -31,16 +31,6 @@
       </li>
     </ul>
   </div>
-
-  <teleport to="body">
-    <!-- Picker -->
-    <FilePickerModal
-      v-if="isFilePickerModalDisplayed"
-      :multi-selection="true"
-      @added-files="addNewFiles"
-      @close="isFilePickerModalDisplayed = false"
-    />
-  </teleport>
 </template>
 
 <script>
@@ -48,15 +38,13 @@ import SelectFilesButtons from '@components/FilePicker/SelectFilesButtons.vue'
 import { importDocuments } from '@utils/documents.util'
 import { alertNoFile, returnAddedFiles } from '@utils/upload.util'
 import { defineAsyncComponent } from 'vue'
-const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal.vue'))
 const AttachedFile = defineAsyncComponent(() => import('@components/AttachedFiles/AttachedFile.vue'))
 
 export default {
   name: 'AttachedFiles',
   components: {
     SelectFilesButtons,
-    AttachedFile,
-    FilePickerModal
+    AttachedFile
   },
   inject: ['mq'],
   props: {
@@ -67,6 +55,10 @@ export default {
     readOnly: {
       type: Boolean,
       required: true
+    },
+    withHeader: {
+      type: Boolean,
+      default: true
     },
     maxHeight: {
       type: String,
@@ -95,7 +87,7 @@ export default {
           this.$store.dispatch('currentActions/setImportFileList', files)
           this.$store.dispatch('currentActions/displayUploadProgression')
 
-          importDocuments(undefined, files).then((data) => {
+          importDocuments(undefined, files).then(() => {
             this.addNewFiles(this.$store.state.currentActions.listUploadedFiles)
             this.$store.dispatch('currentActions/hideUploadProgression')
           })
@@ -111,18 +103,19 @@ export default {
 <style lang="scss" scoped>
 @import '@design';
 
-ul {
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-}
-
 .select-buttons {
-  margin-top: 10px;
+  margin: 10px 0;
 }
 
 .file-list {
+  width: 100%;
   overflow: auto;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(268px, 1fr));
 }
 
 button {
@@ -140,10 +133,9 @@ button {
 
 .header {
   border-top: 1px solid $color-border;
-  padding-top: 20px;
+  padding: 20px 0 8px 0;
   font-weight: 600;
   width: 100%;
-  padding-left: 10px;
 }
 </style>
 

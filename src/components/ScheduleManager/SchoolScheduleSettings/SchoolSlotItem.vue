@@ -16,11 +16,12 @@
 </template>
 
 <script>
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import TimeSelection from '@components/NotUsualSlotManager/EditSlotModal/TimeSelection.vue'
 
 export default {
   name: 'SchoolSlotItem',
-  components: { TimeSelection },
+  components: { WeprodeButton, TimeSelection },
   props: {
     slot: {
       type: Object,

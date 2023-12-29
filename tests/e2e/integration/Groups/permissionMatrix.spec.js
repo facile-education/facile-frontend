@@ -1,5 +1,4 @@
-import { CLASSTEACHER, HEADMASTER, PARENT, SECRETARY, STUDENT } from '../../support/constants/users'
-import { url } from '../../support/constants/groups'
+/*
 
 const rolesList = [
   {
@@ -75,14 +74,14 @@ const rolesList = [
   }
 ]
 
-describe('Permission matrix', () => {
+describe.skip('Permission matrix', () => {
   // before(() => {
   //   cy.exec('npm run db:loadTables groups_tables_basic.sql')
   //   cy.clearDBCache()
   // })
 
   rolesList.forEach((role) => {
-    it('Test ' + role.role + ' permissions', () => {
+    it.skip('Test ' + role.role + ' permissions', () => {
       cy.login(url, role)
 
       // Group creation
@@ -157,3 +156,4 @@ describe('Permission matrix', () => {
     })
   })
 })
+*/

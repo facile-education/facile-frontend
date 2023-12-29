@@ -23,6 +23,32 @@ import fr from 'dayjs/locale/fr'
 import LocalizedFormat from 'dayjs/plugin/localizedFormat'
 
 const dayjs = require('dayjs')
+const calendar = require('dayjs/plugin/calendar')
+const updateLocale = require('dayjs/plugin/updateLocale')
+dayjs.extend(calendar)
+dayjs.extend(updateLocale)
+
+dayjs.updateLocale('en', {
+  calendar: {
+    lastDay: '[Yesterday at] h:mm A',
+    sameDay: '[Today at] h:mm A',
+    nextDay: '[Tomorrow at] LT',
+    lastWeek: '[last] dddd [at] LT',
+    nextWeek: 'dddd [at] LT',
+    sameElse: 'L'
+  }
+})
+
+dayjs.updateLocale('fr', {
+  calendar: {
+    sameDay: 'HH:mm', // The same day ( 2:30 AM )
+    nextDay: '[Demain]', // The next day ( Tomorrow at 2:30 AM )
+    nextWeek: 'dddd', // The next week ( Sunday at 2:30 AM )
+    lastDay: '[Hier]', // The day before ( Yesterday at 2:30 AM )
+    lastWeek: 'dddd [dernier]', // Last week ( Last Monday at 2:30 AM )
+    sameElse: 'DD/MM/YYYY' // Everything else ( 7/10/2011 )
+  }
+})
 
 dayjs.extend(LocalizedFormat)
 dayjs.locale(fr)

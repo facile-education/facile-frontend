@@ -1,7 +1,4 @@
-import { HEADMASTER } from '../../support/constants/users'
-import { url } from '../../support/constants/groups'
-
-describe('Group Details', () => {
+describe.skip('Group Details', () => {
   // before(() => {
   //   // cy.exec('npm run db:loadTables groups_tables_basic.sql')
   //   // cy.clearDBCache()

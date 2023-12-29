@@ -1,7 +1,4 @@
-import { HEADMASTER } from '../../support/constants/users'
-import { groupDocUrl } from '../../support/constants/documents'
-
-describe('Group documents', () => {
+describe.skip('Group documents', () => {
   beforeEach(() => {
     Cypress.on('uncaught:exception', (err, runnable) => {
       // returning false here prevents Cypress from

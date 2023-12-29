@@ -35,14 +35,17 @@
       class="user-list-container"
     >
       <ul :style="'max-height: ' + maxHeight">
-        <ContactUserListItem
+        <li
           v-for="user in sortedUserList"
           :key="user.userId"
-          :selected-users="selectedUsers"
-          :user="user"
-          @add-contact="addContact"
-          @remove-contact="removeContact"
-        />
+        >
+          <ContactUserListItem
+            :selected-users="selectedUsers"
+            :user="user"
+            @add-contact="addContact"
+            @remove-contact="removeContact"
+          />
+        </li>
       </ul>
     </div>
   </section>
@@ -101,8 +104,7 @@ export default {
     },
     isAllListSelected () {
       if (this.filteredUserList.length > 0) {
-        for (let i = 0; i < this.filteredUserList.length; i++) {
-          const filteredUser = this.filteredUserList[i]
+        for (const filteredUser of this.filteredUserList) {
           if (this.selectedUsers.map(user => user.userId).indexOf(filteredUser.userId) === -1) {
             return false
           }
@@ -122,8 +124,7 @@ export default {
         this.$emit('removeContacts', this.filteredUserList)
       } else {
         const contactsToAdd = []
-        for (let i = 0; i < this.filteredUserList.length; i++) {
-          const filteredUser = this.filteredUserList[i]
+        for (const filteredUser of this.filteredUserList) {
           if (this.selectedUsers.map(user => user.userId).indexOf(filteredUser.userId) === -1) { // if user is not selected
             contactsToAdd.push(filteredUser)
           }

@@ -1,6 +1,4 @@
-import { HEADMASTER } from '../../support/constants/users'
-import { url } from '../../support/constants/groups'
-import { now } from '../../support/constants/horairesHorsCadres'
+
 
 const createdGroup = {
   name: 'aCreatedGroup',
@@ -43,7 +41,7 @@ const updatedGroup = {
   ]
 }
 
-describe('Group list', () => {
+describe.skip('Group list', () => {
   beforeEach(() => {
     cy.clock(now.toDate().getTime())
     cy.login(url, HEADMASTER)

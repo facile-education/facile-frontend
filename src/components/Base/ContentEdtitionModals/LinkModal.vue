@@ -39,7 +39,7 @@
           @keyup.enter.stop="pressEnter"
         />
         <WeprodeErrorMessage
-          :error-message="formErrorList.linkUrl"
+          :error-message="formErrorList.linkUrl || urlError"
         />
       </div>
     </template>
@@ -49,6 +49,7 @@
         v-if="isCreation"
         :label="$t('add')"
         class="button"
+        data-test="addLinkButton"
         @click="addLink"
       />
       <WeprodeButton
@@ -65,6 +66,7 @@
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 
+import { isValidUrl } from '@/api/course.service'
 import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
 import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
 import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
@@ -93,7 +95,8 @@ export default {
   data () {
     return {
       linkName: '',
-      linkUrl: ''
+      linkUrl: '',
+      urlError: ''
     }
   },
   computed: {
@@ -105,6 +108,11 @@ export default {
         linkName: (this.v$.linkName.$invalid && this.v$.linkName.$dirty) ? this.$t('Commons.required') : '',
         linkUrl: (this.v$.linkUrl.$invalid && this.v$.linkUrl.$dirty) ? this.$t('Commons.required') : ''
       }
+    }
+  },
+  watch: {
+    linkUrl () {
+      this.urlError = '' // Reset URL error when url change
     }
   },
   mounted () {
@@ -129,31 +137,46 @@ export default {
       e.preventDefault()
       if (this.v$.$invalid) {
         this.v$.$touch()
-      } else if (this.item !== undefined) {
-        this.$store.dispatch('progression/addItemContent',
-          { itemId: this.item.itemId, contentType: 3, contentName: this.linkName, contentValue: this.linkUrl })
-        this.closeModal()
       } else {
-        this.$emit('save', { contentType: 3, contentName: this.linkName, contentValue: this.linkUrl })
-        this.closeModal()
+        isValidUrl(this.linkUrl).then((data) => {
+          if (data.success) {
+            if (data.isValid) {
+              this.$emit('save', { contentType: 3, contentName: this.linkName, contentValue: this.linkUrl })
+              this.closeModal()
+            } else {
+              this.urlError = this.$t('UnauthorizedUrlException')
+            }
+          } else {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+            console.error('Error')
+          }
+        }, (err) => {
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+          console.error(err)
+        })
       }
     },
     editLink (e) {
       e.preventDefault()
       if (this.v$.$invalid) {
         this.v$.$touch()
-      } else if (this.item !== undefined) {
-        this.$store.dispatch('progression/updateItemContent', {
-          contentId: this.editedContent.contentId,
-          contentName: this.linkName,
-          contentValue: this.linkUrl,
-          order: this.editedContent.order
-        })
-        this.closeModal()
       } else {
-        // TODO content id for edition ?
-        this.$emit('save', { contentType: 3, contentName: this.linkName, contentValue: this.linkUrl })
-        this.closeModal()
+        isValidUrl(this.linkUrl).then((data) => {
+          if (data.success) {
+            if (data.isValid) {
+              this.$emit('save', { contentType: 3, contentName: this.linkName, contentValue: this.linkUrl })
+              this.closeModal()
+            } else {
+              this.urlError = this.$t('UnauthorizedUrlException')
+            }
+          } else {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+            console.error('Error')
+          }
+        }, (err) => {
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+          console.error(err)
+        })
       }
     }
   }
@@ -180,6 +203,7 @@ export default {
   "add": "Ajouter",
   "edit": "Modifier",
   "namePlaceholder": "Titre",
-  "urlPlaceholder": "https://www.monlien.com"
+  "urlPlaceholder": "https://www.monlien.com",
+  "UnauthorizedUrlException": "Url non valide"
 }
 </i18n>

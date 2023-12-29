@@ -1,7 +1,7 @@
 <template>
-  <li>
+  <div>
     {{ label }}
-  </li>
+  </div>
 </template>
 
 <script>
@@ -26,7 +26,7 @@ export default {
               label += ', '
             }
             label += role.displayText
-          };
+          }
         }
         if (this.rule.orgs.length === 1 && this.rule.orgs[0].orgId === 0) {
           label += ' ' + this.$t('allSchoolLabel')

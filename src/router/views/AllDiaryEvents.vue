@@ -48,7 +48,7 @@
             :is-selected="selectedEvent && selectedEvent.eventId === event.eventId"
             :is-last="isLastDisplayed(event)"
             @select="selectedEvent=event"
-            @mark-as-read="event.hasRead=true"
+            @mark-as-read="markEventAsRead(event)"
             @update-event="updateList"
             @delete-event="updateList"
             @get-next-events="loadDiaryEvents"
@@ -129,6 +129,10 @@ export default {
     window.removeEventListener('keydown', this.keyMonitor)
   },
   methods: {
+    markEventAsRead (event) {
+      event.hasRead = true
+      this.nbNewEvents--
+    },
     isLastDisplayed (event) {
       return this.eventList[this.eventList.length - 1].eventId === event.eventId // Assume display order is the same as eventListOrder
     },
@@ -152,7 +156,7 @@ export default {
     },
     loadDiaryEvents () {
       this.isLoading = true
-      getEvents(this.eventList.length, allDiaryEventsPaginationSize, this.unReadOnly).then((data) => {
+      getEvents(dayjs(), this.eventList.length, allDiaryEventsPaginationSize, this.unReadOnly).then((data) => {
         this.isLoading = false
         if (data.success) {
           this.error = false
@@ -224,8 +228,21 @@ export default {
   margin-top: 4px;
 }
 
-.body.details-display{
+.body {
   height: calc(100% - $all-events-header-height);
+}
+
+.event-list {
+  height: 100%;
+}
+
+.scroll {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.body.details-display{
   display: flex;
   padding-top: 20px;
 
@@ -233,11 +250,6 @@ export default {
     width: 33%;
     position: relative;
     margin-right: 20px;
-  }
-
-  .scroll {
-    height: 100%;
-    overflow-y: auto;
   }
 
   .details-placeholder {

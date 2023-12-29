@@ -1,23 +1,7 @@
 import { messagingURL } from '../../support/constants/urls'
 import { DOYEN, STUDENT, TEACHER } from '../../support/constants/users'
-import { reloadThreadsAndFolders, waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
-
-const lowerTextThenCapitalize = (string) => {
-  let result = string
-  result = result.toLowerCase()
-
-  const arr = result.split(' ')
-
-  // loop through each element of the array and capitalize the first letter.
-  for (let i = 0; i < arr.length; i++) {
-    arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1)
-  }
-
-  // Join all the elements of the array back into a string
-  // using a blankspace as a separator
-  result = arr.join(' ')
-  return result
-}
+import { addFileFromWorkSpace, addPersonalFile } from '../../support/utils/dashboard'
+import { reloadThreadsAndFolders, setMessagingDocumentLibrary, waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
 
 const checkAndSelectThreadMessage = (message) => {
   cy.log('Check if the message was sent to ourself')
@@ -51,7 +35,8 @@ const checkMessageDetails = (message) => {
         .and('contain', message.recipients[1])
         .and('contain', message.recipients[2])
       cy.contains('Masquer').should('exist')
-      // cy.contains('documentTest.txt')
+      cy.contains('.attached-file', message.attachedFile1)
+      cy.contains('.attached-file', message.attachedFile2)
     })
 }
 
@@ -85,7 +70,7 @@ describe('Sending message', () => {
       cy.get('.error-message').contains('Sélectionnez au moins un destinataire')
       // Type and select user
       cy.get('@recipients-input').clear().type(DOYEN.firstName)
-      cy.get('.suggestion-list').contains(lowerTextThenCapitalize(DOYEN.lastName + ' ' + DOYEN.firstName)).click()
+      cy.get('.suggestion-list').contains(DOYEN.lastName + ' ' + DOYEN.firstName).click()
       cy.get('@submitButton').click()
       cy.get('.error-message').should('not.exist')
     })
@@ -111,11 +96,15 @@ describe('Sending message', () => {
   })
 
   it('Messaging_SendNewMessage', () => {
+    setMessagingDocumentLibrary()
+    cy.login(DOYEN, messagingURL)
     const message = {
       sender: DOYEN.firstName + ' ' + DOYEN.lastName,
       recipients: [DOYEN.firstName + ' ' + DOYEN.lastName, TEACHER.firstName + ' ' + TEACHER.lastName, STUDENT.firstName + ' ' + STUDENT.lastName],
       subject: 'Mon message de test',
-      content: 'Mon contenu de message'
+      content: 'Mon contenu de message',
+      attachedFile1: 'note.html',
+      attachedFile2: 'file.txt'
     }
 
     // Open create message modal
@@ -124,11 +113,11 @@ describe('Sending message', () => {
     // Select multiple recipients
     cy.log('Select multiple recipients')
     cy.get('[data-test=recipients-section]').find('input').as('recipients-input').type(DOYEN.firstName)
-    cy.get('.suggestion-list').contains(lowerTextThenCapitalize(DOYEN.lastName + ' ' + DOYEN.firstName)).click()
+    cy.get('.suggestion-list').contains(DOYEN.lastName + ' ' + DOYEN.firstName).click()
     cy.get('@recipients-input').type(TEACHER.lastName)
-    cy.get('.suggestion-list').contains(lowerTextThenCapitalize(TEACHER.lastName + ' ' + TEACHER.firstName)).click()
+    cy.get('.suggestion-list').contains(TEACHER.lastName + ' ' + TEACHER.firstName).click()
     cy.get('@recipients-input').type(STUDENT.lastName)
-    cy.get('.suggestion-list').contains(lowerTextThenCapitalize(STUDENT.lastName + ' ' + STUDENT.firstName)).click()
+    cy.get('.suggestion-list').contains(STUDENT.lastName + ' ' + STUDENT.firstName).click()
 
     // Enter subject
     cy.log('Enter subject')
@@ -138,13 +127,9 @@ describe('Sending message', () => {
     cy.log('Write content')
     cy.type_ckeditor(message.content) // Match the last instance of ckEditor
 
-    // // Attachments
-    // cy.contains('Ajouter une pièce jointe').click()
-    // cy.get('[data-test=file-picker-modal]').within(() => {
-    //   cy.contains('documentTest.txt').click()
-    //   cy.contains('Ajouter').click()
-    // })
-    // cy.get('[data-test=file-picker-modal]').should('not.exist')
+    // Attachments
+    addPersonalFile(message.attachedFile1)
+    addFileFromWorkSpace()
 
     // Send message
     cy.log('Send message')
@@ -184,7 +169,9 @@ describe('Sending message', () => {
       sender: DOYEN.firstName + ' ' + DOYEN.lastName,
       recipients: [DOYEN.firstName + ' ' + DOYEN.lastName, TEACHER.firstName + ' ' + TEACHER.lastName, STUDENT.firstName + ' ' + STUDENT.lastName],
       subject: 'Mon message de test',
-      content: 'Mon contenu de message'
+      content: 'Mon contenu de message',
+      attachedFile1: 'note.html',
+      attachedFile2: 'file.txt'
     }
 
     // Open create message modal
@@ -193,11 +180,11 @@ describe('Sending message', () => {
     // Select multiple recipients
     cy.log('Select multiple recipients')
     cy.get('[data-test=recipients-section]').find('input').as('recipients-input').type(DOYEN.lastName)
-    cy.get('.suggestion-list').contains(lowerTextThenCapitalize(DOYEN.lastName + ' ' + DOYEN.firstName)).click()
+    cy.get('.suggestion-list').contains(DOYEN.lastName + ' ' + DOYEN.firstName).click()
     cy.get('@recipients-input').type(TEACHER.lastName)
-    cy.get('.suggestion-list').contains(lowerTextThenCapitalize(TEACHER.lastName + ' ' + TEACHER.firstName)).click()
+    cy.get('.suggestion-list').contains(TEACHER.lastName + ' ' + TEACHER.firstName).click()
     cy.get('@recipients-input').type(STUDENT.lastName)
-    cy.get('.suggestion-list').contains(lowerTextThenCapitalize(STUDENT.lastName + ' ' + STUDENT.firstName)).click()
+    cy.get('.suggestion-list').contains(STUDENT.lastName + ' ' + STUDENT.firstName).click()
 
     // Enter subject
     cy.log('Enter subject')
@@ -208,12 +195,8 @@ describe('Sending message', () => {
     cy.type_ckeditor(message.content) // Match the last instance of ckEditor
 
     // Attachments
-    // cy.contains('Ajouter une pièce jointe').click()
-    // cy.get('[data-test=file-picker-modal]').within(() => {
-    //   cy.contains('documentTest.txt').click()
-    //   cy.contains('Ajouter').click()
-    // })
-    // cy.get('[data-test=file-picker-modal]').should('not.exist')
+    addPersonalFile(message.attachedFile1)
+    addFileFromWorkSpace()
 
     cy.log('Save draft')
     cy.contains('Enregistrer en brouillon').click()
@@ -229,7 +212,7 @@ describe('Sending message', () => {
     cy.get('[data-test=option_editDraft]').click()
     cy.get('[data-test=createMessageModal]').find('[data-test=submitButton]').click()
     cy.get('[data-test=createMessageModal]').should('not.exist')
-
+    cy.wait(2000)
     // Check if the message was sent to ourself
     cy.get('[data-test=messaging-menu]').contains('Boîte de réception').click()
     cy.wait(500)

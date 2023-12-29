@@ -161,13 +161,14 @@ export const actions = {
             if (data.themeColor !== rootState.theme.mainColor && data.themeColor !== 'FFFFFF') {
               dispatch('theme/updateMainColor', data.themeColor, { root: true })
             }
-            if (!data.agreedTermsOfUse) {
-              router.push({ name: 'AgreeTermsOfUse' })
-            } else if (data.passwordChange) {
-              router.push({ name: 'PasswordChange' })
-            }
           } else {
             data.themeColor = '#' + rootState.theme.mainColor
+          }
+
+          if (!data.agreedTermsOfUse) {
+            router.push({ name: 'AgreeTermsOfUse' })
+          } else if (data.passwordChange) {
+            router.push({ name: 'PasswordChange' })
           }
           commit('initUserInformations', data)
         } else {
@@ -175,7 +176,6 @@ export const actions = {
         }
       },
       (err) => {
-        // TODO toastr
         console.error(err)
         this.dispatch('currentActions/removeAction', { name: 'getUserInformations' })
       })
@@ -239,13 +239,6 @@ export const actions = {
 }
 
 export const getters = {
-  homeSchool (state) {
-    for (let index = 0; index < state.schoolList.length; ++index) {
-      if (state.schoolList[index].homeSchool) {
-        return state.schoolList[index]
-      }
-    }
-  },
   adminSchoolList (state) {
     const adminSchoolList = []
     state.schoolList.forEach(school => {

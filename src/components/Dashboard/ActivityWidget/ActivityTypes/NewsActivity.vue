@@ -1,6 +1,7 @@
 <template>
   <div
     class="news-activity"
+    :class="{'phone': mq.phone || mq.tablet}"
     tabindex="0"
     :title="$t('selectToConsult')"
     @click="showDetails"
@@ -27,6 +28,7 @@
           </span>
           <BaseIcon
             v-if="news.hasAttachedFiles"
+            data-test="fileIcon"
             class="paper-clip"
             name="paperclip"
           />
@@ -41,15 +43,32 @@
       {{ formattedDate }}
     </div>
 
+    <button
+      v-if="news.isEditable && (mq.phone || mq.tablet)"
+      class="options-button"
+      :aria-label="$t('options')"
+      :title="$t('options')"
+      @click="toggleContextMenu"
+    >
+      <img
+        height="16"
+        width="16"
+        :src="require('@assets/icons/vertical_dots.svg')"
+        alt="options"
+      >
+    </button>
+
     <div
-      v-if="news.isEditable"
+      v-else-if="news.isEditable"
       class="options"
     >
       <button
-        class="option"
+        class="option theme-hover-extra-light-background-color"
         :aria-label="$t('update')"
+        data-test="buttonEditInformation"
         :title="$t('update')"
         @click.stop="isUpdateModalDisplayed = true"
+        @keyup.stop
       >
         <img
           src="@/assets/icons/pencil.svg"
@@ -57,10 +76,12 @@
         >
       </button>
       <button
-        class="option"
+        class="option theme-hover-extra-light-background-color"
+        data-test="buttonDeleteInformation"
         :aria-label="$t('delete')"
         :title="$t('delete')"
         @click.stop="confirmNewsDeletion"
+        @keyup.stop
       >
         <img
           src="@/assets/icons/trash.svg"
@@ -92,6 +113,16 @@
       @close="isUpdateModalDisplayed = false"
     />
   </teleport>
+
+  <teleport
+    v-if="displayMenu"
+    to="body"
+  >
+    <ContextMenu
+      @choose-option="performChosenOption"
+      @close="displayMenu=false"
+    />
+  </teleport>
 </template>
 
 <script>
@@ -100,13 +131,15 @@ import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
 import { deleteNews, setNewsRead } from '@/api/dashboard/news.service'
-import { defaultImagesKeys } from '@/constants/icons'
+import { defaultImagesKeys, icons } from '@/constants/icons'
+const ContextMenu = defineAsyncComponent(() => import('@components/ContextMenu/ContextMenu.vue'))
 const SaveNewsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/SaveNewsModal.vue'))
 const NewsActivityDetailsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/NewsDetailsModal.vue'))
 
 export default {
   name: 'NewsActivity',
-  components: { BaseIcon, SaveNewsModal, NewsActivityDetailsModal },
+  components: { BaseIcon, SaveNewsModal, NewsActivityDetailsModal, ContextMenu },
+  inject: ['mq'],
   props: {
     news: {
       type: Object,
@@ -117,13 +150,14 @@ export default {
   data () {
     return {
       isDetailsModalDisplayed: false,
-      isUpdateModalDisplayed: false
+      isUpdateModalDisplayed: false,
+      displayMenu: false
     }
   },
   computed: {
     thumbnail () {
       if (defaultImagesKeys.indexOf(this.news.thumbnailUrl) !== -1) {
-        return new URL(`../../../../assets/images/${this.news.thumbnailUrl}.png`, import.meta.url).href
+        return new URL(`../../../../assets/images/${this.news.thumbnailUrl}.svg`, import.meta.url).href
       } else { // Returned url is a key for local default image
         return this.news.thumbnailUrl
       }
@@ -149,6 +183,41 @@ export default {
       } else {
         this.isDetailsModalDisplayed = true
       }
+    },
+    toggleContextMenu (event) {
+      this.displayMenu = true
+      this.$store.dispatch('contextMenu/openContextMenu', {
+        event,
+        options: [
+          {
+            name: 'update',
+            title: this.$t('update'),
+            icon: icons.options.rename,
+            position: 1,
+            hasSeparator: false
+          },
+          {
+            name: 'delete',
+            title: this.$t('delete'),
+            icon: icons.options.delete,
+            position: 2,
+            hasSeparator: false
+          }]
+      })
+    },
+    performChosenOption (option) {
+      switch (option.name) {
+        case 'update':
+          this.isUpdateModalDisplayed = true
+          break
+        case 'delete':
+          this.confirmNewsDeletion()
+          break
+        default:
+          console.error('no option with name ' + option.name + ' exists')
+      }
+      this.displayMenu = false
+      this.$store.dispatch('contextMenu/closeMenus')
     },
     confirmNewsDeletion () {
       this.$store.dispatch('warningModal/addWarning', {
@@ -182,9 +251,6 @@ button {
   position: relative;
 
   &:hover, &:focus-within {
-    border: 2px solid black;
-    border-radius: 5px;
-
     .options {
       opacity: 100%;
 
@@ -233,6 +299,16 @@ button {
     }
   }
 
+  .options-button {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
   .options {
     position: absolute;
     top: 0;
@@ -259,8 +335,8 @@ button {
         height: 1rem;
       }
 
-      &:hover {
-        background-color: $color-hover-bg;
+      &:not(:hover) {
+        background-color: white;
       }
     }
   }
@@ -274,8 +350,8 @@ button {
   "at": "à",
   "see": "Voir",
   "groups-activity": "Fil d'activité de mes groupes",
-  "update": "Modifier cette information",
-  "delete": "Supprimer cette information",
+  "update": "Modifier",
+  "delete": "Supprimer",
   "deleteNewsWarning": "Supprimer cette information ?",
   "selectToConsult": "Consulter",
   "hasPublishedInfo": "a publié ",

@@ -84,7 +84,6 @@ describe('Selection', () => {
     // Write message content
     cy.get('[data-test="createMessageModal"]').within(() => {
       cy.get('.group > [data-test="subject-input"]').type(MessageList[0].subject)
-      cy.get('.ck-editor')
       cy.type_ckeditor(MessageList[0].content)
       // Send message
       cy.get('[data-test="submitButton"]').click()

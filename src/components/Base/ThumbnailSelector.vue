@@ -52,17 +52,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
+
 button {
   margin: 0;
   padding: 0;
   border: none;
   cursor: pointer;
+  background-color: transparent;
 }
 
 .thumbnail-selector {
   position: relative;
-  height: 90px;
-  width: 90px;
+  height: $news-thumbnail-size-in-modal;
+  width: $news-thumbnail-size-in-modal;
   cursor: pointer;
   display: flex;
   justify-content: center;

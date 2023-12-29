@@ -99,7 +99,7 @@ export default {
 
 <style lang="scss" scoped>
 .tab-item {
-  height: calc(100% - 43px);
+  height: calc(100% - 50px);
   overflow: auto;
 }
 

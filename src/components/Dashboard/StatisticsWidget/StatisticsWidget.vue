@@ -67,17 +67,20 @@ export default {
           const nbUsers = {
             label: this.$t('nbUsers'),
             current: data.activeUsersCount,
-            previous: data.previousActiveUsersCount
+            previous: data.previousActiveUsersCount,
+            type: 1
           }
           const nbConnexions = {
             label: this.$t('nbConnexions'),
             current: data.nbConnexions,
-            previous: data.previousNbConnexions
+            previous: data.previousNbConnexions,
+            type: 2
           }
           const nbActivities = {
             label: this.$t('nbActivities'),
-            current: data.groupNewsCount,
-            previous: data.previousGroupNewsCount
+            current: data.nbActivities,
+            previous: data.nbPreviousActivities,
+            type: 3
           }
           this.statistics.push(nbUsers)
           this.statistics.push(nbConnexions)

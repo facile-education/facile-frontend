@@ -144,7 +144,7 @@ export default {
           (data) => {
             if (data.success) {
               this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.added'), type: 'success' })
-              this.$store.dispatch('userManagement/addUserAffectation', { userId: this.editedUser.userId, orgId, orgName })
+              this.$store.dispatch('userManagement/setUserAffectations', { userId: this.editedUser.userId, affectations: data.affectations })
             }
           }
         )
@@ -155,7 +155,7 @@ export default {
         (data) => {
           if (data.success) {
             this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.removed'), type: 'success' })
-            this.$store.dispatch('userManagement/removeUserAffectation', { userId: this.editedUser.userId, orgId: removedAffectation.orgId })
+            this.$store.dispatch('userManagement/setUserAffectations', { userId: this.editedUser.userId, affectations: data.affectations })
           }
         }
       )

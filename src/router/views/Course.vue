@@ -1,4 +1,5 @@
 <template>
+  <h1 :aria-label="$t('serviceTitle')" />
   <WeprodeTabList v-if="isTeacher">
     <WeprodeTabItem
       :title="$t('schedule')"
@@ -178,7 +179,7 @@ export default {
 
 <style lang="scss" scoped>
 .course-tab-content {
-  height: calc(100% - 40px); // 40px is tab height
+  height: calc(100% - calc(33px + 1rem)); // 33px +1rem is tab height
 }
 
 .child-selector {

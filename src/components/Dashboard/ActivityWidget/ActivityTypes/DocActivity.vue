@@ -31,7 +31,14 @@
           {{ activity.target }}
         </i>
         <span v-t="'inGroup'" />
+        <span
+          v-if="activity.readOnly"
+          class="readOnly"
+        >
+          {{ activity.groupName }}
+        </span>
         <i
+          v-else
           :title="activity.groupName"
           tabindex="0"
           @click.stop="redirectInGroup"
@@ -139,6 +146,10 @@ export default {
 
 .doc-activity {
   @extend %activity-item;
+
+  .readOnly {
+    font-style: italic;
+  }
 }
 
 </style>

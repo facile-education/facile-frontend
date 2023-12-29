@@ -101,12 +101,15 @@
 
           <!-- Sub folders -->
           <ul v-if="isPersonalFoldersExpanded">
-            <MenuFolder
+            <li
               v-for="folder in personalFolders"
               :key="folder.folderId"
-              class="personal-sub-folder"
-              :folder="folder"
-            />
+            >
+              <MenuFolder
+                class="personal-sub-folder"
+                :folder="folder"
+              />
+            </li>
           </ul>
         </li>
       </ul>

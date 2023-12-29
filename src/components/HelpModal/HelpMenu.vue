@@ -28,11 +28,12 @@
           @click="isCreateCategoryModalDisplayed=true"
         />
       </li>
-      <HelpMenuCategory
+      <li
         v-for="(category, index) in helpMenu"
         :key="index"
-        :category="category"
-      />
+      >
+        <HelpMenuCategory :category="category" />
+      </li>
     </ul>
 
     <WeprodeSpinner v-if="isLoadingMenu" />

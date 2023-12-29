@@ -3,10 +3,11 @@
     "label": "Personnels",
     "folders": [
       {
+        "type": "Dossier",
         "label": "Dossier",
         "id": 545207,
         "size": 0,
-        "sizeLabel": "0 o",
+        "creationDate": "2023-10-31 15:04",
         "lastModifiedDate": "2023-10-31 15:04",
         "folders": [
           {
@@ -40,10 +41,11 @@
         "files": []
       },
       {
+        "type": "Dossier",
         "label": "Dossier2",
         "id": 545135,
         "size": 2332960,
-        "sizeLabel": "2 Mo",
+        "creationDate": "2023-11-02 08:38",
         "lastModifiedDate": "2023-11-02 08:38",
         "folders": [],
         "files": [
@@ -51,91 +53,102 @@
             "id": 547312,
             "label": "Archive.zip",
             "size": 286,
-            "sizeLabel": "286 o",
+            "creationDate": "2023-11-03 14:24",
             "lastModifiedDate": "2023-11-03 14:24"
           },
           {
+            "type": "Audio",
             "id": 547235,
             "label": "Audio.mp3",
             "size": 9982,
-            "sizeLabel": "9 ko",
+            "creationDate": "2023-11-03 11:07",
             "lastModifiedDate": "2023-11-03 11:07"
           },
           {
+            "type": "Mindmap",
             "id": 547225,
             "label": "Carte mentale.mind",
             "size": 78,
-            "sizeLabel": "78 o",
+            "creationDate": "2023-11-03 11:07",
             "lastModifiedDate": "2023-11-03 11:07"
           },
           {
+            "type": "Géogébra",
             "id": 547219,
             "label": "Géogébra.ggb",
             "size": 8920,
-            "sizeLabel": "8 ko",
+            "creationDate": "2023-11-03 11:07",
             "lastModifiedDate": "2023-11-03 11:07"
           },
           {
+            "type": "Image",
             "id": 547263,
             "label": "Image.png",
             "size": 512596,
-            "sizeLabel": "500 ko",
+            "creationDate": "2023-11-03 14:11",
             "lastModifiedDate": "2023-11-03 14:11"
           },
           {
+            "type": "Note",
             "id": 547141,
             "label": "Note.html",
             "size": 80,
-            "sizeLabel": "80 o",
+            "creationDate": "2023-11-03 10:44",
             "lastModifiedDate": "2023-11-03 10:44"
           },
           {
+            "type": "Office",
             "id": 547205,
             "label": "Odp.odp",
             "size": 14265,
-            "sizeLabel": "13 ko",
+            "creationDate": "2023-11-03 11:07",
             "lastModifiedDate": "2023-11-03 11:07"
           },
           {
+            "type": "Office",
             "id": 547199,
             "label": "Ods.ods",
             "size": 22590,
-            "sizeLabel": "22 ko",
+            "creationDate": "2023-11-03 11:07",
             "lastModifiedDate": "2023-11-03 11:07"
           },
           {
+            "type": "Office",
             "id": 547245,
             "label": "Odt.odt",
             "size": 9388,
-            "sizeLabel": "9 ko",
+            "creationDate": "2023-11-03 11:07",
             "lastModifiedDate": "2023-11-03 11:07"
           },
           {
+            "type": "pdf",
             "id": 547275,
             "label": "Pdf.pdf",
             "size": 142786,
-            "sizeLabel": "139 ko",
+            "creationDate": "2023-11-03 14:11",
             "lastModifiedDate": "2023-11-03 14:11"
           },
           {
+            "type": "Scratch",
             "id": 547193,
             "label": "Scratch.sb3",
             "size": 41951,
-            "sizeLabel": "40 ko",
+            "creationDate": "2023-11-03 11:07",
             "lastModifiedDate": "2023-11-03 11:07"
           },
           {
             "id": 547255,
             "label": "Texte.txt",
             "size": 14,
-            "sizeLabel": "14 o",
+            "creationDate": "2023-11-03 14:10",
             "lastModifiedDate": "2023-11-03 14:10"
           },
           {
+            "type": "Film",
             "id": 547287,
             "label": "Vidéo.mp4",
             "size": 1570024,
-            "sizeLabel": "1 Mo",
+            "creationDate": "2023-11-03 14:11",
             "lastModifiedDate": "2023-11-03 14:11"
           }
         ]
@@ -143,15 +156,17 @@
     ],
     "files": [
       {
+        "type": "Image",
         "label": "Image.png",
         "size": 148731,
-        "sizeLabel": "145 ko",
+        "creationDate": "2023-10-31 16:14",
         "lastModifiedDate": "2023-10-31 16:14"
       },
       {
+        "type": "Note",
         "label": "Note.html",
         "size": 79,
-        "sizeLabel": "79 o",
+        "creationDate": "2023-11-07 10:00",
         "lastModifiedDate": "2023-11-07 10:03",
         "versions": [
           {
@@ -199,17 +214,44 @@
         "nbMembers": 2569,
         "folders": [
           {
+            "type": "Dossier",
             "label": "Dossier de groupe",
             "id": 545161,
-            "folders": [],
-            "files": []
+            "lastModifiedDate": "2023-11-02 14:25",
+            "folders": [
+              {
+                "type": "Dossier",
+                "label": "Sous-dossier de groupe",
+                "id": 1161717,
+                "lastModifiedDate": "2023-12-22 11:42",
+                "folders": [],
+                "files": []
+              }
+            ],
+            "files": [
+              {
+                "type": "Note",
+                "label": "sous-fichier.html",
+                "size": 104,
+                "creationDate": "2023-12-22 11:42",
+                "lastModifiedDate": "2023-12-22 11:43"
+              }
+            ]
           }
         ],
-        "files": []
+        "files": [
+          {
+            "type": "Note",
+            "label": "NoteDeGroupe.html",
+            "size": 79,
+            "creationDate": "2023-12-22 11:41",
+            "lastModifiedDate": "2023-12-22 11:42"
+          }
+        ]
       }
     ]
   },
-  "folderOptions": ["Renommer", "Dupliquer", "Déplacer", "Télécharger", "Supprimer", "Détails"],
+  "folderOptions": ["Renommer", "Dupliquer", "Déplacer", "Supprimer", "Détails"],
   "fileOptions": ["Ouvrir", "Renommer", "Déplacer", "Dupliquer", "Télécharger", "Supprimer", "Détails"],
   "multiSelectionOptions": ["Déplacer", "Dupliquer", "Supprimer"]
 }

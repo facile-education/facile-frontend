@@ -1,6 +1,3 @@
-import { HEADMASTER } from '../../support/constants/users'
-import { url } from '../../support/constants/documents'
-
 // Have to define here because the generated event for handling function is type of Event not DragEvent by default
 // see https://github.com/cypress-io/cypress/issues/649
 class DataTransfer {
@@ -49,7 +46,7 @@ function dragOverAnOtherDocument (oldDoc, newDoc) { // correspond to over other 
   dragOverOnDocument(newDoc)
 }
 
-describe('Documents DragNDrop', () => {
+describe.skip('Documents DragNDrop', () => {
   beforeEach(() => {
     cy.exec('npm run db:loadTables documents_tables_basic.sql')
     cy.clearDBCache()

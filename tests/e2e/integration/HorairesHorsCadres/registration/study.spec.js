@@ -10,7 +10,7 @@ import {
 } from '../../../support/constants/users'
 import {
   addTimeToSlot,
-  getSlot,
+  getHHCSlot,
   getUserSlot,
   selectSlotType,
   selectStudent,
@@ -21,7 +21,6 @@ import { getThread, waitMessagingToBeLoaded } from '../../../support/utils/messa
 const studentToRegister = STUDENT // Because normal Student is already register in the hhc tables
 
 const rolesThatCanRegister = [HEADMASTER, SECRETARY, DOYEN, TEACHER]
-const rolesThatCannotRegister = []
 
 function getRandomBoolean () {
   return Math.random() < 0.5
@@ -111,25 +110,17 @@ describe('HHC_Study_Registration', () => {
   it('HHC_Study_Registration_IsPresentForGoodRoles', function () {
     const slotToRegisterInside = this.hhcData.slotsTypes.study.slotExample
 
-    rolesThatCannotRegister.forEach(role => {
-      cy.login(role, HHCURL)
-      selectSlotType(this.hhcData.slotsTypes.study)
-      // Select student
-      selectStudent(studentToRegister)
-      // Open registration modal
-      getSlot(slotToRegisterInside).click()
-      cy.get('[data-test=event-popup]').get('[data-test=registerStudent-option]').should('not.exist')
-    })
-
     rolesThatCanRegister.forEach(role => {
       cy.login(role, HHCURL)
       selectSlotType(this.hhcData.slotsTypes.study)
       // Select student
       selectStudent(studentToRegister)
       // Open registration modal
-      getSlot(slotToRegisterInside).click()
+      getHHCSlot(slotToRegisterInside).click()
       cy.get('[data-test=event-popup]').get('[data-test=registerStudent-option]').should('exist') // be.visible is better but sometimes calendar is wierd
     })
+
+    // There is no roles that cannot register among role that can access to HHC
   })
 
   it('HHC_Study_Registration_Register', function () {
@@ -146,7 +137,7 @@ describe('HHC_Study_Registration', () => {
     // Select student
     selectStudent(studentToRegister)
     // Open registration modal
-    getSlot(slotToRegisterInside).click()
+    getHHCSlot(slotToRegisterInside).click()
     cy.get('[data-test=registerStudent-option]').click()
 
     // Test registration modal (ends by registering student)
@@ -157,7 +148,7 @@ describe('HHC_Study_Registration', () => {
 
     // Check the slot's student list
     const capacityLabel = slotToRegisterInside.capacity - 1 + '/' + slotToRegisterInside.capacity
-    getSlot(slotToRegisterInside).should('contain', capacityLabel).click()
+    getHHCSlot(slotToRegisterInside).should('contain', capacityLabel).click()
     cy.get('[data-test=showStudentList-option]').click()
     cy.get('[data-test=student-list-modal]').within(() => {
       cy.contains(studentToRegister.firstName + ' ' + studentToRegister.lastName)
@@ -184,19 +175,21 @@ describe('HHC_Study_Registration', () => {
     const notifyParent = getRandomBoolean()
     const registerer = rolesThatCanRegister[0]
     const classToRegister = { name: '0933R3', nbStudents: 20 } // STUDENT's class
+    cy.intercept('GET', '**/schedule.cdtsession/get-group-sessions**').as('getGroupSessions')
 
     // Connect with someone who can register
     cy.login(registerer, HHCURL)
     selectSlotType(this.hhcData.slotsTypes.study)
 
+    // Load class schedule
     selectClass(classToRegister.name)
+    cy.wait('@getGroupSessions')
+
     // Open registration modal
-    getSlot(slotToRegisterInside).click()
-    cy.get('[data-test=registerStudent-option]').click({ force: true })
+    getHHCSlot(slotToRegisterInside).scrollIntoView().click()
+    cy.get('[data-test=registerStudent-option]').click()
 
     // Test registration modal (ends by registering student)
-    cy.intercept('GET', '**/schedule.cdtsession/get-group-sessions**').as('getGroupSessions')
-
     testRegistrationModal(slotToRegisterInside, undefined, classToRegister, notifyParent)
 
     // Check the HHC slot is added in grey to the student's schedule
@@ -205,7 +198,7 @@ describe('HHC_Study_Registration', () => {
     // Check the slot's student list
     const capacityLabel = slotToRegisterInside.capacity - classToRegister.nbStudents + '/' + slotToRegisterInside.capacity
     cy.wait('@getGroupSessions')
-    getSlot(slotToRegisterInside).should('contain', capacityLabel).click() // here
+    getHHCSlot(slotToRegisterInside).should('contain', capacityLabel).click() // here
     cy.get('[data-test=showStudentList-option]').click()
     cy.get('[data-test=student-list-modal]').within(() => {
       cy.contains(studentToRegister.firstName + ' ' + studentToRegister.lastName)
@@ -218,7 +211,7 @@ describe('HHC_Study_Registration', () => {
     const nextWeek = Cypress.dayjs(this.hhcData.now, 'YYYY/MM/DD HH:mm').add(1, 'week')
     selectWeek(nextWeek)
     cy.wait('@getGroupSessions')
-    getSlot(nextWeekUserSlot).should('contain', capacityLabel).click()
+    getHHCSlot(nextWeekUserSlot).should('contain', capacityLabel).click()
 
     notifications(slotToRegisterInside).forEach(notification => {
       if (notification.role !== PARENT || notifyParent) {

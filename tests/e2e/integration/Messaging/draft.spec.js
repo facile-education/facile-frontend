@@ -1,6 +1,7 @@
 import { messagingURL } from '../../support/constants/urls'
 import { HEADMASTER, STUDENT } from '../../support/constants/users'
-import { getThread, setRecipient, waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
+import { addFileFromWorkSpace, addPersonalFile } from '../../support/utils/dashboard'
+import { getFileInMessage, getMessage, getThread, setMessagingDocumentLibrary, setRecipient, waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
 
 describe('Draft', () => {
   beforeEach(() => {
@@ -10,6 +11,8 @@ describe('Draft', () => {
   context('desktop', function () {
     // Messaging_SaveAsDraft
     it('Messaging_SaveAsDraft', function () {
+      cy.loadTables('messaging/messaging_tables_empty.sql')
+      setMessagingDocumentLibrary()
       // Login
       cy.login(HEADMASTER, messagingURL)
       waitMessagingToBeLoaded()
@@ -22,9 +25,12 @@ describe('Draft', () => {
       cy.get('[data-test="createMessageModal"]').within(() => {
         setRecipient(STUDENT)
         cy.get('.group > [data-test="subject-input"]').type(draftToCreate[0].subject)
-        cy.get('.ck-editor')
         cy.type_ckeditor(draftToCreate[0].content)
-
+      })
+      // Attachments
+      addPersonalFile(draftToCreate[0].attachedFile1)
+      addFileFromWorkSpace()
+      cy.get('[data-test="createMessageModal"]').within(() => {
         // Save as draft
         cy.get('[data-test="draftButton"]').click()
       })
@@ -33,14 +39,19 @@ describe('Draft', () => {
       cy.get('[data-test="option_toggleMessagingMenu"]').click()
       cy.get('[data-test="messaging-menu"]').contains('button', 'Brouillons').click()
       cy.get('[data-test="threads-panel"]').within(() => {
-        getThread(draftToCreate).should('be.exist')
+        getThread(draftToCreate).should('be.exist').click()
       })
+      getMessage(draftToCreate[0])
+      // getMessage(draftToCreate).should('be.visible')
+      getFileInMessage(draftToCreate[0], draftToCreate[0].attachedFile1)
+      getFileInMessage(draftToCreate[0], draftToCreate[0].attachedFile2)
     })
 
     // Messaging_EditDraft
     it('Messaging_EditDraft', function () {
       // Login
       cy.loadTables('messaging/messaging_tables.sql')
+      setMessagingDocumentLibrary()
       cy.login(HEADMASTER, messagingURL)
       waitMessagingToBeLoaded()
       const existingDraftThreads = this.messagingData.existingDraftThreads[0]
@@ -58,8 +69,13 @@ describe('Draft', () => {
       cy.get('[data-test="createMessageModal"]').within(() => {
         cy.get('.group > [data-test="subject-input"]').clear()
         cy.get('.group > [data-test="subject-input"]').type(ModifiedDraftContent[0].subject)
-        cy.get('.ck-editor')
         cy.type_ckeditor(ModifiedDraftContent[0].content)
+        // Delete attached file
+        cy.get('[data-test="attached-files-section"]').within(() => {
+          cy.get('.attached-file').within(() => {
+            cy.get('.remove-button').click()
+          })
+        })
 
         // Save as draft
         cy.get('[data-test="draftButton"]').click()
@@ -67,6 +83,10 @@ describe('Draft', () => {
       // Check draft modified
       cy.get('[data-test="threads-panel"]').within(() => {
         getThread(ModifiedDraftContent).should('be.exist')
+      })
+      cy.contains('[data-test="message"]', ModifiedDraftContent[0].content).within(() => {
+        // Check if attachedFile is delete
+        cy.contains('.attached-file').should('not.exist')
       })
     })
 

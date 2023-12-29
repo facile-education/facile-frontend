@@ -1,6 +1,7 @@
 <template>
   <div
     class="base-dropdown"
+    data-test="dropdown"
   >
     <button
       v-if="displayDropdown"
@@ -185,10 +186,6 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
   }
-}
-
-.base-autocomplete {
-  top: calc(36px + 1rem);
 }
 
 .icon {

@@ -39,6 +39,7 @@
     />
     <WISIWIG
       v-else-if="typeOfView === 'WISIWIG' && loadedFile"
+      ref="file"
       class="wisiwyg"
       :file="loadedFile"
       :have-to-save="haveToSaveFile"
@@ -72,11 +73,15 @@ import PDF from '@components/Documents/FileDisplay/PDF'
 import Scratch from '@components/Documents/FileDisplay/Scratch'
 import VideoDocument from '@components/Documents/FileDisplay/VideoDocument.vue'
 import WISIWIG from '@components/Documents/FileDisplay/WISIWIG'
+import dayjs from 'dayjs'
 
 import fileService from '@/api/documents/file.service'
 import groupService from '@/api/documents/group.service'
+import versionsService from '@/api/documents/version.service'
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import OtherDocument from '@/components/Documents/FileDisplay/OtherDocument'
+
+const timeBeforeAskSaveConfirmation = 30000 // 30s
 
 export default {
   name: 'FileDisplay',
@@ -92,7 +97,7 @@ export default {
       default: false
     }
   },
-  emits: ['close', 'keep-open', 'set-fullscreen'],
+  emits: ['close', 'keep-open', 'set-fullscreen', 'documentLoaded'],
   data () {
     return {
       hasLock: false,
@@ -100,7 +105,8 @@ export default {
       fileUrl: undefined,
       isLoaded: false,
       loadedFile: undefined,
-      typeOfView: undefined
+      typeOfView: undefined,
+      loadDate: undefined
     }
   },
   computed: {
@@ -128,13 +134,9 @@ export default {
       if (this.wantsToCloseFile) {
         if (this.loadedFile) {
           if (this.typeOfView === 'WISIWIG' && !this.loadedFile.readOnly) { // Only WISIWIG can auto-save for the moment...
-            this.haveToSaveFile = true
+            this.$refs.file.saveContent()
           } else if (!this.loadedFile.readOnly && (this.typeOfView === 'MindMap' || this.typeOfView === 'Geogebra' || this.typeOfView === 'Scratch')) {
-            this.$store.dispatch('warningModal/addWarning', {
-              text: this.$t('quitWithoutSaving'),
-              lastAction: { fct: this.emitCloseEvent }
-            })
-            this.$emit('keep-open') // In case of canceling the closure
+            this.askToSaveContent()
           } else {
             this.$emit('close')
           }
@@ -158,6 +160,8 @@ export default {
   },
   methods: {
     loadMedia () {
+      this.loadDate = dayjs()
+
       const versionId = (this.file.versionId === undefined || this.file.versionId === 'latest') ? 0 : this.file.versionId // for the backend type consistency
       const readOnly = !!this.file.readOnly // To force to have boolean
       if (this.documentsProperties === undefined) {
@@ -170,16 +174,18 @@ export default {
             groupService.recordViewActivity(this.file.id, versionId)
           }
           this.typeOfView = data.typeOfView
-          this.fileUrl = data.fileUrl
+          this.fileUrl = data.fileUrl + '&p_auth=' + this.$store.state.user.pauth
           this.loadedFile = { ...this.file }
           this.loadedFile.fileVersionId = data.fileVersionId
           this.loadedFile.readOnly = data.readOnly
+          this.loadedFile.fileName = data.fileName
           if (!data.readOnly) {
             this.checkLock()
           } else {
             this.isLoaded = true
           }
           this.$emit('set-fullscreen', this.mq.phone || data.typeOfView !== 'Audio')
+          this.$emit('documentLoaded', this.loadedFile)
         } else {
           if (data.error === 'UnsupportedFileExtension') {
             this.typeOfView = 'Unsupported'
@@ -223,6 +229,36 @@ export default {
       } else {
         this.isLoaded = true
       }
+    },
+    askToSaveContent () {
+      // If file is open for more than 30 seconds and last version is older than 30 seconds, ask quit confirmation
+      if (dayjs().isAfter(this.loadDate.add(timeBeforeAskSaveConfirmation, 'ms'))) {
+        versionsService.getFileVersions(this.file.id).then((data) => {
+          if (data.success) {
+            const lastVersion = data.fileVersions.find(version => version.isCurrentVersion !== undefined)
+            const lastVersionDate = dayjs(lastVersion.date, 'YYYY-MM-DD HH:mm')
+            if (dayjs().isAfter(lastVersionDate.add(timeBeforeAskSaveConfirmation, 'ms'))) {
+              this.openWarningModal()
+            } else {
+              this.emitCloseEvent()
+            }
+          } else {
+            this.emitCloseEvent()
+          }
+        }, (err) => {
+          console.error(err)
+          this.emitCloseEvent()
+        })
+      } else {
+        this.emitCloseEvent()
+      }
+    },
+    openWarningModal () {
+      this.$store.dispatch('warningModal/addWarning', {
+        text: this.$t('quitWithoutSaving'),
+        lastAction: { fct: this.emitCloseEvent }
+      })
+      this.$emit('keep-open') // In case of canceling the closure
     },
     emitCloseEvent () {
       this.$emit('close')

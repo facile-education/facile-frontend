@@ -21,12 +21,13 @@
       <div
         ref="windowContainer"
         class="window-container"
+        :class="{'full-screen': isFullScreen}"
         @keyup.stop
         @keydown.stop
         @submit.stop
         @drag.stop
       >
-        <div
+        <header
           class="window-header theme-border-color"
           :class="{'important': important}"
         >
@@ -39,23 +40,33 @@
               v-if="resizable && !mq.phone"
               class="header-option-item"
               data-test="toggleFullScreen"
+              :aria-label="$t(isFullScreen ? 'collapse' : 'expand')"
+              :title="$t(isFullScreen ? 'collapse' : 'expand')"
               @click="toggleFullScreen"
             >
-              <NeroIcon
-                class="expand"
-                :name="isFullScreen ? 'compress' : 'expand'"
-              />
+              <img
+                v-if="isFullScreen"
+                src="@/assets/icons/collapse.svg"
+                :alt="$t('collapse')"
+              >
+              <img
+                v-show="!isFullScreen"
+                src="@/assets/icons/expand.svg"
+                :alt="$t('expand')"
+              >
             </button>
             <button
               v-if="closable"
               class="header-option-item"
               data-test="closeModal"
+              :aria-label="$t('close')"
+              :title="$t('close')"
               @click="$emit('close')"
             >
               <NeroIcon name="times" />
             </button>
           </div>
-        </div>
+        </header>
 
         <div
           class="window-body"
@@ -225,7 +236,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'src/design/common';
+@import 'src/design';
 
 // Window padding: 50px, Header : 35 px, footer 44px:
 $body-mobile-max-height: calc(100vh - 129px);
@@ -240,18 +251,12 @@ $modal-padding: 25px;
   left: 0;
   width: 100%;
   height: 100%;
-  //display: flex;
-  //justify-content: center;
   background-color: rgba(0, 0, 0, .5);
   transition: opacity .3s ease;
 
   &.fixed-height .window-container,
   &.full-screen .window-container {
     height: 100%;
-  }
-
-  @supports(height: 100dvh) {
-
   }
 
   .window-container {
@@ -263,6 +268,10 @@ $modal-padding: 25px;
     height: 100%;
     display: flex;
     flex-direction: column;
+
+    &:not(.full-screen) {
+      border-radius: $border-radius-nero;
+    }
 
     .window-header {
       display: flex;
@@ -292,7 +301,22 @@ $modal-padding: 25px;
       .header-options {
         display: flex;
         align-items: center;
-        gap: 4px;
+        gap: 1rem;
+
+        button {
+          background: none;
+          border: none;
+          padding: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+
+          img {
+            width: 1.5rem;
+            height: 1.5rem;
+          }
+        }
 
         .header-option-item {
           background: none;
@@ -332,3 +356,9 @@ $modal-padding: 25px;
   }
 }
 </style>
+
+<i18n locale="fr">
+{
+  "close": "Fermer"
+}
+</i18n>

@@ -17,7 +17,9 @@ export {
   addBlock,
   addFileBlock,
   updateBlock,
-  deleteBlock
+  deleteBlock,
+  isEmbedUrlWhitelisted,
+  isValidUrl
 }
 
 const COURSE_PREFIX = '/course.'
@@ -63,7 +65,7 @@ function addSessionContent (courseId, sessionId, title, blocks, publicationDate,
     sessionId,
     title,
     blocks,
-    publicationDate,
+    publicationDate: publicationDate.format('YYYY-MM-DD HH:mm'),
     isDraft
   })).then(response => response.data)
 }
@@ -73,7 +75,7 @@ function updateSessionContent (sessionId, title, blocks, publicationDate, isDraf
     sessionId,
     title,
     blocks,
-    publicationDate,
+    publicationDate: publicationDate.format('YYYY-MM-DD HH:mm'),
     isDraft
   })).then(response => response.data)
 }
@@ -129,6 +131,22 @@ function updateBlock (blockId, blockName, blockValue, order) {
     blockValue,
     order
   })).then(response => response.data)
+}
+
+function isEmbedUrlWhitelisted (url) {
+  return axios.get(constants.JSON_WS_URL + CONTENT_BLOCK_PATH + 'is-embed-url-whitelisted', {
+    params: {
+      url
+    }
+  }).then(response => response.data)
+}
+
+function isValidUrl (url) {
+  return axios.get(constants.JSON_WS_URL + CONTENT_BLOCK_PATH + 'is-valid-url', {
+    params: {
+      url
+    }
+  }).then(response => response.data)
 }
 
 function deleteBlock (blockId) {

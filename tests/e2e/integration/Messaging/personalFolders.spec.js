@@ -33,8 +33,7 @@ describe('Messaging_PersonalFolder', () => {
     it(`Consulting personal folders in ${size} screen`, function () { // TODO: Put messages in boxes and test the correct box content
       const existingPersonalFolders = this.messagingData.personalFolders.existingPersonalFolders
 
-      // Set testing viewport
-      Cypress._.isArray(size) ? cy.viewport(size[0], size[1]) : cy.viewport(size)
+      cy.viewport(size)
 
       cy.get('[data-test=messaging-menu]').within(() => {
         cy.get('[data-test=personal-folders]').find('li').should('have.length', existingPersonalFolders.length)

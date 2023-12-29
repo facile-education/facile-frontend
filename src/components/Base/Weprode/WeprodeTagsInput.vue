@@ -1,5 +1,8 @@
 <template>
-  <div class="component">
+  <div
+    class="component"
+    data-test="tagsInput"
+  >
     <div
       :class="{'default-bg': (!disabled && !isInputFocused), 'theme-light-background-color theme-border-color': isInputFocused, 'disabled': disabled}"
       class="base-tags-input"
@@ -7,12 +10,16 @@
       @click="onClick"
     >
       <ul class="tag-list">
-        <WeprodeTagItem
+        <li
           v-for="(tag, index) in tagsToDisplay"
           :key="index"
-          :tag="getDisplayValue(tag)"
-          @remove="removeTag"
-        />
+        >
+          <WeprodeTagItem
+            :tag="getDisplayValue(tag)"
+            @remove="removeTag"
+          />
+        </li>
+
         <li
           v-if="tagsToDisplay.length < modelValue.length"
           class="others theme-background-color"
@@ -140,6 +147,9 @@ export default {
     }
   },
   methods: {
+    focus () {
+      this.$refs.input.focus()
+    },
     addTag (tag) {
       const tags = this.modelValue.slice()
       tags.push(tag)

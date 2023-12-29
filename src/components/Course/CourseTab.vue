@@ -17,7 +17,6 @@
     <ul
       v-else-if="courses && !selectedCourse"
       class="courses"
-      :class="{'phone': mq.phone}"
     >
       <li
         v-for="course in sortedCourses"
@@ -45,7 +44,6 @@ const CourseDetails = defineAsyncComponent(() => import('@components/Course/Cour
 export default {
   name: 'CourseTab',
   components: { CourseDetails, CourseItem, WeprodeSpinner },
-  inject: ['mq'],
   props: {
     userId: {
       type: Number,
@@ -103,6 +101,7 @@ export default {
 .course-tab {
   min-height: 200px;
   height: 100%;
+  position: relative;
 }
 
 .placeholder {
@@ -110,15 +109,9 @@ export default {
 }
 
 .courses {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-
-  &:not(.phone) {
-    display: grid;
-    grid-gap: 1.5rem;
-    grid-template-columns: repeat(auto-fill, 268px);
-  }
+  display: grid;
+  grid-gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(268px, 1fr));
 }
 
 ul {
@@ -126,10 +119,6 @@ ul {
   padding: 0;
   list-style-type: none;
   overflow: auto;
-}
-
-.course-tab {
-  position: relative;
 }
 </style>
 

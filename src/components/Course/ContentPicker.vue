@@ -7,6 +7,7 @@
       v-for="content in filteredContents"
       :key="content.name"
       :title="content.name"
+      :aria-label="content.name"
       class="circle"
       @click="content.callback()"
     >
@@ -25,29 +26,34 @@
     <teleport to="body">
       <FilePickerModal
         v-if="isFilePickerDisplayed"
+        data-test="documentFile"
         @added-files="addFile"
         @close="toggleFilePicker"
       />
       <AudioRecorderModal
         v-if="isAudioRecorderModalDisplayed"
+        data-test="audio"
         :edited-content="{}"
         @save="addAudioRecording"
         @close="toggleAudioRecorderModal"
       />
       <LinkModal
         v-if="isLinkModalDisplayed"
+        data-test="link"
         :edited-content="{}"
         @save="addContent"
         @close="toggleLinkModal"
       />
       <VideoModal
         v-if="isVideoModalDisplayed"
+        data-test="video"
         :edited-content="{}"
         @save="addContent"
         @close="toggleVideoModal"
       />
       <H5PModal
         v-if="isH5PModalDisplayed"
+        data-test="h5p"
         :edited-content="{}"
         @save="addContent"
         @close="toggleH5PModal"
@@ -136,7 +142,7 @@ export default {
       return this.$store.state.documents.documentsProperties
     },
     isH5pBroadcasted () {
-      return this.documentsProperties && this.documentsProperties.hasH5pBroadcasted
+      return this.documentsProperties?.hasH5pBroadcasted
     },
     filteredContents () {
       const h5pContent = {
@@ -168,7 +174,7 @@ export default {
       setTimeout(() => this.$el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50) // 50ms to let the added block the time to be mounted...
     },
     addFile (files) {
-      this.addContent({ contentType: 5, fileId: files[0].id, contentName: files[0].name })
+      this.addContent({ ...files[0], contentType: 5, fileId: files[0].id, contentName: files[0].name })
     },
     addText () {
       this.addContent({ contentType: 1, contentValue: '', contentName: '' })
@@ -179,7 +185,7 @@ export default {
           this.$store.dispatch('currentActions/setImportFileList', files)
           this.$store.dispatch('currentActions/displayUploadProgression')
 
-          importDocuments(undefined, files).then((data) => {
+          importDocuments(undefined, files).then(() => {
             const tmpFiles = this.$store.state.currentActions.listUploadedFiles
             this.addContent({ contentType: 5, fileId: tmpFiles[0].id, contentName: tmpFiles[0].name })
           })
@@ -191,7 +197,7 @@ export default {
     toggleAudioRecorderModal () {
       this.isAudioRecorderModalDisplayed = !this.isAudioRecorderModalDisplayed
     },
-    toggleLinkModal (content) {
+    toggleLinkModal () {
       this.isLinkModalDisplayed = !this.isLinkModalDisplayed
     },
     toggleFilePicker () {
@@ -230,7 +236,7 @@ export default {
 }
 
 .circle {
-  display: flex;
+  display: flex !important;
   align-items: center;
   justify-content: center;
   line-height: 15px;

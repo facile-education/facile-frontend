@@ -98,11 +98,6 @@ export default {
       hasArrows: false
     }
   },
-  computed: {
-    fromDate () {
-      return dayjs()
-    }
-  },
   created () {
     this.loadAnnouncements()
   },
@@ -165,7 +160,7 @@ export default {
     },
     loadAnnouncements () {
       this.isLoading = true
-      getSchoolNews(this.fromDate, nbAnnouncementsInWidget, false, this.unReadOnly).then((data) => {
+      getSchoolNews(dayjs(), 0, nbAnnouncementsInWidget, false, this.unReadOnly).then((data) => {
         this.isLoading = false
         this.isFirstLoad = false
         if (data.success) {

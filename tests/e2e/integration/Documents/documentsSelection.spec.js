@@ -214,7 +214,7 @@ describe('Documents_SelectEntities', () => {
 
   sizes.forEach(size => {
     it(`Documents_SelectEntities_SelectionIsPresentOn[${size}]`, function () {
-      Cypress._.isArray(size) ? cy.viewport(size[0], size[1]) : cy.viewport(size)
+      cy.viewport(size)
 
       // Check toggle all option
       cy.get('[data-test="select-all-toggle"]').should('be.visible')

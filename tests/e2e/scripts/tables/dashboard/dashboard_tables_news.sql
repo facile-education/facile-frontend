@@ -1,8 +1,8 @@
--- MariaDB dump 10.19  Distrib 10.6.12-MariaDB, for debian-linux-gnu (x86_64)
+-- MariaDB dump 10.19-11.1.2-MariaDB, for debian-linux-gnu (x86_64)
 --
--- Host: 127.0.0.1    Database: ent_gve
+-- Host: localhost    Database: lportal_ent
 -- ------------------------------------------------------
--- Server version	10.6.12-MariaDB-0ubuntu0.22.04.1
+-- Server version	11.1.2-MariaDB-1:11.1.2+maria~ubu2204
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -44,20 +44,13 @@ CREATE TABLE `News_News` (
 --
 
 LOCK TABLES `News_News` WRITE;
-INSERT INTO News_News (newsId,companyId,title,content,authorId,isSchoolNews,isImportant,expirationDate,publicationDate,modificationDate,imageId) VALUES
-	 (562501,20097,'Annonce déjà existante','<html>
- <head></head>
-<body>
- <p>Contenu d''un annonce déjà existante destinée aux élèves</p> 
-</body></body>
-</html>',58811,1,0,'2024-06-29 23:59:59.000000','2023-10-30 16:45:00.000000','2023-10-30 15:49:49.469000',0),
-	 (562502,20097,'Deuxième annonce','<html>
- <head></head>
-<body>
- <p>Ceci est une deuxième annonce</p> 
-</body></body>
-</html>',58811,1,0,'2024-06-29 23:59:59.000000','2023-10-30 16:45:00.000000','2023-10-30 16:03:46.428000',0);
 /*!40000 ALTER TABLE `News_News` DISABLE KEYS */;
+INSERT INTO `News_News` VALUES
+(546204,20097,'Annonce avec une date de parution ultérieure','<html>\n <head></head>\n<body>\n <p>Contenu de l\'annonce avec une date de parution ultérieure</p> \n</body></body>\n</html>',52216,1,0,'2024-06-29 23:59:59.000000','2023-11-10 11:30:00.000000','2023-11-06 10:36:39.280000',0),
+(546313,20097,'Annonce déjà existante','<html>\n <head></head>\n<body>\n <p>Contenu d\'un annonce déjà existante destinée aux élèves</p> \n</body></body>\n</html>',58811,1,0,'2024-06-29 23:59:59.000000','2023-11-06 11:45:00.000000','2023-11-06 10:42:46.773000',0),
+(556401,20097,'Annonces à destination de l\'établissement','<html>\n <head></head>\n<body>\n <p>Annonces à destination de l\'établissement créée par un délégué</p> \n</body></body>\n</html>',45479,1,0,'2024-06-29 23:59:59.000000','2023-11-22 14:15:00.000000','2023-11-22 13:22:52.061000',0),
+(556403,20097,'Annonces à destination d\'une volée','<html>\n <head></head>\n<body>\n <p>Contenu de l\'annonce à destination d\'une volée</p> \n</body></body>\n</html>',58811,1,0,'2024-06-29 23:59:59.000000','2023-11-22 14:15:00.000000','2023-11-22 13:22:18.991000',0),
+(562502,20097,'Deuxième annonce','<html>\n <head></head>\n<body>\n <p>Ceci est une deuxième annonce</p> \n</body></body>\n</html>',58811,1,0,'2024-06-29 23:59:59.000000','2023-10-30 16:45:00.000000','2023-12-06 11:13:56.487000',0);
 /*!40000 ALTER TABLE `News_News` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -84,6 +77,9 @@ CREATE TABLE `News_NewsAttachedFile` (
 
 LOCK TABLES `News_NewsAttachedFile` WRITE;
 /*!40000 ALTER TABLE `News_NewsAttachedFile` DISABLE KEYS */;
+INSERT INTO `News_NewsAttachedFile` VALUES
+(769718,562502,45407,769713),
+(769724,562502,45407,769719);
 /*!40000 ALTER TABLE `News_NewsAttachedFile` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -98,6 +94,7 @@ CREATE TABLE `News_NewsPopulation` (
   `newsId` bigint(20) NOT NULL,
   `groupId` bigint(20) NOT NULL,
   `roleId` bigint(20) NOT NULL,
+  `schoolId` bigint(20) NOT NULL,
   PRIMARY KEY (`newsId`,`groupId`,`roleId`),
   KEY `IX_637D161D` (`groupId`,`roleId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -108,10 +105,13 @@ CREATE TABLE `News_NewsPopulation` (
 --
 
 LOCK TABLES `News_NewsPopulation` WRITE;
-INSERT INTO News_NewsPopulation (newsId,groupId,roleId) VALUES
-	 (562501,45407,45103),
-	 (562502,45407,45102);
 /*!40000 ALTER TABLE `News_NewsPopulation` DISABLE KEYS */;
+INSERT INTO `News_NewsPopulation` VALUES
+(546204,45407,45103,45405),
+(546313,45407,45103,45405),
+(556401,45407,0,45405),
+(556403,55688,45103,45405),
+(562502,45407,45102,45405);
 /*!40000 ALTER TABLE `News_NewsPopulation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -136,7 +136,43 @@ CREATE TABLE `News_NewsRead` (
 
 LOCK TABLES `News_NewsRead` WRITE;
 /*!40000 ALTER TABLE `News_NewsRead` DISABLE KEYS */;
+INSERT INTO `News_NewsRead` VALUES
+(546204,52216,'2023-11-06 10:36:39.282000'),
+(546313,45787,'2023-11-08 13:41:45.539000'),
+(546313,58811,'2023-11-06 10:42:46.774000'),
+(556401,45479,'2023-11-22 13:20:39.007000'),
+(556403,58811,'2023-11-22 13:22:18.992000'),
+(562502,58811,'2023-12-06 11:06:29.931000');
 /*!40000 ALTER TABLE `News_NewsRead` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `User_NewsAdmin`
+--
+
+DROP TABLE IF EXISTS `User_NewsAdmin`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `User_NewsAdmin` (
+  `newsAdminId` bigint(20) NOT NULL,
+  `userId` bigint(20) DEFAULT NULL,
+  `schoolId` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`newsAdminId`),
+  KEY `IX_B15DFFF1` (`schoolId`),
+  KEY `IX_EEC00C8` (`userId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `User_NewsAdmin`
+--
+
+LOCK TABLES `User_NewsAdmin` WRITE;
+/*!40000 ALTER TABLE `User_NewsAdmin` DISABLE KEYS */;
+INSERT INTO `User_NewsAdmin` VALUES
+(466184,52216,45405),
+(546511,45479,45405);
+/*!40000 ALTER TABLE `User_NewsAdmin` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -148,4 +184,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-30 17:30:31
+-- Dump completed on 2023-12-06 11:14:14

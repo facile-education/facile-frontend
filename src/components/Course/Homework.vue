@@ -31,7 +31,11 @@
         </button>
       </div>
       <div class="right">
-        <span class="status">{{ formattedStatus }}</span>
+        <span
+          class="status"
+          :class="{'italic': status !== 'published'}"
+          :title="status === 'scheduled' ? formattedFuturePublicationDate : ''"
+        >{{ formattedStatus }}</span>
         <button
           v-if="canEdit"
           class="edit-button"
@@ -40,20 +44,17 @@
           @click="toggleContextMenu"
         >
           <img
-            height="20"
-            width="20"
+            height="16"
+            width="16"
             :src="require('@/assets/icons/vertical_dots.svg')"
             alt="options"
           >
         </button>
       </div>
     </header>
-    <CourseContent
-      v-for="block in homework.blocks"
-      :key="block.contentId"
-      v-model="block.contentValue"
+    <CourseContentBlocks
+      :content-blocks="homework.blocks"
       class="content"
-      :content="block"
     />
   </article>
   <teleport
@@ -93,14 +94,14 @@ import { defineAsyncComponent } from 'vue'
 import { deleteHomework } from '@/api/homework.service'
 import { icons } from '@/constants/icons'
 
-const CourseContent = defineAsyncComponent(() => import('@/components/Course/CourseContent'))
+const CourseContentBlocks = defineAsyncComponent(() => import('@components/Course/CourseContentBlocks'))
 const HomeworkEditModal = defineAsyncComponent(() => import('@/components/Course/HomeworkEditModal'))
 const DoneInfoModal = defineAsyncComponent(() => import('@/components/Course/DoneInfoModal'))
 const ContextMenu = defineAsyncComponent(() => import('@/components/ContextMenu/ContextMenu'))
 
 export default {
   name: 'Homework',
-  components: { CustomIcon, ContextMenu, CourseContent, HomeworkEditModal, DoneInfoModal },
+  components: { CourseContentBlocks, CustomIcon, ContextMenu, HomeworkEditModal, DoneInfoModal },
   props: {
     homework: {
       type: Object,
@@ -127,11 +128,24 @@ export default {
     canEdit () {
       return this.$store.state.user.isTeacher
     },
+    status () {
+      const publicationDate = dayjs(this.homework.publicationDate, 'YYYY-MM-DD HH:mm')
+      if (this.homework.isDraft) {
+        return 'draft'
+      } else if (publicationDate.isAfter(dayjs())) {
+        return 'scheduled'
+      } else {
+        return 'published'
+      }
+    },
     formattedStatus () {
+      const publicationDate = dayjs(this.homework.publicationDate, 'YYYY-MM-DD HH:mm')
       if (this.homework.isDraft) {
         return this.$t('draftStatus')
+      } else if (publicationDate.isAfter(dayjs())) {
+        return this.$t('scheduled')
       } else {
-        return this.$t('publishedOn') + dayjs(this.homework.publicationDate).format('DD/MM/YYYY')
+        return this.$t('publishedOn') + publicationDate.format('DD/MM/YYYY')
       }
     },
     formattedEstimatedTime () {
@@ -145,6 +159,9 @@ export default {
     },
     formattedToDate () {
       return dayjs(this.homework.toDate, 'YYYY-MM-DD HH:mm').format('DD/MM')
+    },
+    formattedFuturePublicationDate () {
+      return dayjs(this.homework.publicationDate, 'YYYY-MM-DD HH:mm').format('[' + this.$t('scheduledOn') + '] YYYY-MM-DD [' + this.$t('at') + '] HH:mm')
     },
     formattedDoneStatus () {
       return this.$tc('doneStatus', { nbDone: this.homework.doneStudents.length, nbStudents: this.homework.selectedStudents.length })
@@ -272,6 +289,10 @@ h3 {
 
   .status {
     @extend %font-regular-xs;
+
+    &.italic {
+      font-style: italic;
+    }
   }
 }
 
@@ -286,15 +307,18 @@ button {
 
 <i18n locale="fr">
 {
+  "at": "à",
   "delete": "Supprimer",
   "doneStatus": "Réalisé par {nbDone} élève sur {nbStudents} | Réalisé par {nbDone} élève sur {nbStudents} | Réalisé par {nbDone} élèves sur {nbStudents}",
   "edit": "Modifier",
   "hourLabel": "h",
   "minuteLabel": "min",
   "publishedOn": "Publié le ",
-  "draftStatus": "Non publié",
+  "draftStatus": "Brouillon",
   "toDoHomework": "À faire pour cette séance",
   "sessionHomework": "À faire pendant la séance",
+  "scheduled": "Programmé",
+  "scheduledOn": "Publication prévue le",
   "givenHomework": "Pour le {targetDate}"
 }
 </i18n>

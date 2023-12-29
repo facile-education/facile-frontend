@@ -12,6 +12,7 @@
         class="read-only-button"
         :aria-label="$t('unreadFilter')"
         :title="$t('unreadFilter')"
+        data-test="ReadOnlyEventButton"
         @click="toggleReadOnly"
       >
         <CustomIcon
@@ -24,6 +25,7 @@
     <CreateButton
       v-if="canCreateDiaryEvent"
       :title="$t('create-event')"
+      data-test="buttonCreateEvent"
       @click="isCreateModalDisplayed = true"
     />
   </header>

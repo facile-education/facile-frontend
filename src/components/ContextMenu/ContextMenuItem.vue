@@ -1,5 +1,5 @@
 <template>
-  <li>
+  <div>
     <button
       class="context-menu-item"
       :class="{'has-separator': option.hasSeparator,
@@ -52,7 +52,7 @@
       @choose-option="emitSubOption"
       @close="emitCloseOrder"
     />
-  </li>
+  </div>
 </template>
 
 <script>
@@ -117,14 +117,14 @@ export default {
     }
   },
   watch: {
-    isaSubMenuDisplayed (value, oldValue) {
+    isaSubMenuDisplayed (value) {
       if (!value && this.wantsToDeploy) {
         this.wantsToDeploy = false
         this.$store.dispatch('contextMenu/setAskForDeploySubMenu', false)
         this.deploySubMenu()
       }
     },
-    isAskingForDeploySubMenu (value, oldValue) {
+    isAskingForDeploySubMenu (value) {
       if (value && this.isSubMenuDisplay) {
         this.isSubMenuDisplay = false
         this.$store.dispatch('contextMenu/setIsSubMenuDisplay', false)
@@ -212,7 +212,7 @@ export default {
 button {
   width: 100%;
   cursor: pointer;
-  background-color: white;
+  background-color: transparent;
   border-radius: 0;
   padding: 0;
   margin: 0;

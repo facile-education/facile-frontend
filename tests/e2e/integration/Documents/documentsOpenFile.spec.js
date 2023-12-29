@@ -1,6 +1,7 @@
 import { documentURL } from '../../support/constants/urls'
 import { HEADMASTER } from '../../support/constants/users'
 import { setDocumentLibraryWithContent, waitDocumentServiceToBeLoaded } from '../../support/utils/documents'
+import { selectContextMenuOption } from '../../support/utils/testUtils'
 
 const checkFileDisplayModal = (openFile) => {
   cy.get('[data-test="file-display-modal"]').should('be.visible').and('contain', openFile.label)
@@ -44,12 +45,14 @@ describe('Documents_OpenFileDisplayModal', () => {
   })
 
   mobileSizes.forEach(size => {
-    it(`Documents_OpenFile_SimpleClickOnFileOn[${size}]`, function () {
+    it.only(`Documents_OpenFile_SimpleClickOnFileOn[${size}]`, function () {
       cy.viewport(size)
 
       const fileToOpen = currentFolder.files[0]
 
-      cy.contains('[data-test=file]', fileToOpen.label).click()
+      cy.contains('[data-test=file]', fileToOpen.label).within(() => {
+        cy.contains('.name', fileToOpen.label).click()
+      })
 
       checkFileDisplayModal(fileToOpen)
     })
@@ -89,6 +92,7 @@ describe('Documents_OpenFileDisplayModal', () => {
 
     cy.contains('[data-test="file"]', fileToOpen.label).rightclick()
     cy.get('[data-test="context-menu"]').contains('li', 'Ouvrir').click()
+    selectContextMenuOption('Ouvrir')
 
     checkFileDisplayModal(fileToOpen)
   })

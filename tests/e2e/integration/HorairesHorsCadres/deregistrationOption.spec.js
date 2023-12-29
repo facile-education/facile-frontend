@@ -10,7 +10,7 @@ import {
   TEACHER
 } from '../../support/constants/users'
 import {
-  getSlot, getUserSlot,
+  getHHCSlot, getUserSlot,
   openStudentListModal, selectSlotType,
   selectStudent,
   waitCalendarToLoad
@@ -144,7 +144,7 @@ describe('HHC_Deregistration', () => {
         }
 
         selectSlotType(slotType)
-        getSlot(slotType.slotExample).click()
+        getHHCSlot(slotType.slotExample).click()
         cy.get('[data-test=showStudentList-option]').click({ force: true }) // Because sometimes calendars is slow to render and element can pop everywhere
 
         // Open the list and unregister student

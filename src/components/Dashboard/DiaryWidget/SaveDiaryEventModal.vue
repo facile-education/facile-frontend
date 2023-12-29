@@ -37,13 +37,13 @@
         <div class="start-date">
           <div v-t="'startDateLabel'" />
           <CustomDatePicker
-            :selected-date="startDate"
+            v-model:selected-date="startDate"
             :min-date="minDate"
             :with-hours="true"
             :is-required="true"
             :minute-increment="15"
             :disabled="isStartDateDisabled"
-            @select-date="updateStartDate"
+            @update:selected-date="updateStartDate"
           />
           <WeprodeErrorMessage
             :error-message="formErrorList.startDate"
@@ -52,13 +52,12 @@
         <div class="end-date">
           <div v-t="'endDateLabel'" />
           <CustomDatePicker
-            :selected-date="endDate"
+            v-model:selected-date="endDate"
             :min-date="startDate.toDate()"
             :with-hours="true"
             :is-required="true"
             :minute-increment="15"
             :disabled="isEndDateDisabled"
-            @select-date="updateEndDate"
           />
           <WeprodeErrorMessage
             :error-message="formErrorList.endDate"
@@ -70,6 +69,7 @@
         <WeprodeInput
           ref="nameInput"
           v-model="title"
+          data-test="titleInputEvent"
           :placeholder="$t('namePlaceHolder') + '*'"
         />
         <WeprodeErrorMessage
@@ -80,6 +80,7 @@
       <div class="input">
         <WeprodeInput
           v-model="location"
+          data-test="locationInputEvent"
           :placeholder="$t('locationPlaceHolder')"
         />
         <WeprodeErrorMessage
@@ -88,6 +89,7 @@
       </div>
 
       <TextContent
+        v-if="description !== undefined"
         v-model:content="description"
         class="ck-editor"
         :placeholder="$t('descriptionPlaceHolder')"
@@ -123,7 +125,7 @@
 </template>
 
 <script>
-import CustomDatePicker from '@components/Base/CustomDatePicker.vue' // TODO: Check time and optimise if necessary
+import CustomDatePicker from '@components/Base/CustomDatePicker.vue'
 import InformationIcon from '@components/Base/InformationIcon.vue'
 import TextContent from '@components/Base/TextContent.vue'
 import validators from '@utils/validators'
@@ -165,7 +167,7 @@ export default {
       location: '',
       description: '',
       startDate: dayjs(),
-      endDate: dayjs().add(1, 'hour').minute(0),
+      endDate: dayjs(),
       populations: [],
       markAsUnreadForAll: false,
 
@@ -203,7 +205,7 @@ export default {
     endDate: { // Should be > startDate
       required,
       function (value) {
-        return value.diff(this.startDate) >= 0
+        return value.diff(this.startDate) > 0
       }
     }
   },
@@ -266,6 +268,7 @@ export default {
     roundMinutes () {
       // Round startDate to the nearest quarter-hour (to have a compliant behaviour with v-calendar)
       this.startDate = this.startDate.minute(Math.round(this.startDate.minute() / 15) * 15)
+      this.endDate = this.startDate.add(1, 'hour')
     },
     setInitialForm () {
       this.initialForm = {
@@ -278,16 +281,11 @@ export default {
         markAsUnreadForAll: this.markAsUnreadForAll
       }
     },
-    updateStartDate (date) {
-      this.startDate = dayjs(date)
-
+    updateStartDate (startDate) {
       // Update end date if needed
-      if (this.startDate.isAfter(this.endDate)) {
-        this.endDate = this.startDate
+      if (startDate.isAfter(this.endDate)) {
+        this.endDate = startDate.add(1, 'hour')
       }
-    },
-    updateEndDate (date) {
-      this.endDate = dayjs(date)
     },
     initDetails (eventId) {
       this.isLoadingEventDetails = true
@@ -307,15 +305,27 @@ export default {
         if (data.success) {
           // Concat all populations of all schools in one list
           this.availablePopulationsList = []
+
+          // Global
+          if (data.global) {
+            this.availablePopulationsList = [...this.availablePopulationsList, ...data.global]
+          }
+
           const schools = data.schoolsGroups
           schools.forEach((school) => {
-            this.availablePopulationsList = [...this.availablePopulationsList, ...school.populations]
-            school.classes.forEach((schoolClass) => {
-              this.availablePopulationsList = [...this.availablePopulationsList, ...schoolClass.populations]
-            })
-            school.volees.forEach((schoolVolee) => {
-              this.availablePopulationsList = [...this.availablePopulationsList, ...schoolVolee.populations]
-            })
+            if (school.populations) {
+              this.availablePopulationsList = [...this.availablePopulationsList, ...school.populations]
+            }
+            if (school.classes) {
+              school.classes.forEach((schoolClass) => {
+                this.availablePopulationsList = [...this.availablePopulationsList, ...schoolClass.populations]
+              })
+            }
+            if (school.volees) {
+              school.volees.forEach((schoolVolee) => {
+                this.availablePopulationsList = [...this.availablePopulationsList, ...schoolVolee.populations]
+              })
+            }
           })
         } else {
           console.error('Error')
@@ -325,12 +335,10 @@ export default {
     submit () {
       if (this.v$.$invalid) {
         this.v$.$touch()
+      } else if (this.isCreation) {
+        this.createEvent()
       } else {
-        if (this.isCreation) {
-          this.createEvent()
-        } else {
-          this.updateEvent()
-        }
+        this.updateEvent()
       }
     },
     createEvent () {
@@ -346,6 +354,10 @@ export default {
         } else {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
         }
+      }, (err) => {
+        this.isProcessingSave = false
+        console.error(err)
+        this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
       })
     },
     updateEvent () {
@@ -361,6 +373,10 @@ export default {
         } else {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
         }
+      }, (err) => {
+        this.isProcessingSave = false
+        console.error(err)
+        this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
       })
     },
     confirmClosure () {
@@ -472,7 +488,7 @@ export default {
   "sizeLimit2": " caractères",
   "selectPopulations": "Veuillez séléctionner une population cible",
   "dateInPast": "La date de début ne doit pas se situer dans le passé",
-  "dateOrder": "La date de fin doit être postérieure ou égale à celle de début",
+  "dateOrder": "La date de fin doit être postérieure à celle de début",
   "switchHelp": "Cette option permet de notifier les destinataires et l'évènement sera considéré comme non lu",
   "confirmClosure": "Souhaitez-vous fermer cette fenêtre ? (Vous perdrez son contenu)",
   "creationSuccess": "Évènement créé",

@@ -23,6 +23,7 @@ then
   echo "DB_PWD = $DB_PWD"
   echo "DB_NAME = $DB_NAME"
   echo "DUMP_NAME = $DUMP_NAME"
+  exit 1;
 else
   # cd to script directory
   cd "$(dirname "$(realpath "$0")")" || exit;
@@ -37,7 +38,7 @@ else
     echo "Copy dump to virtual machine"
     scp $DUMP_NAME $VM_USER@$VM_IP:/home/$VM_USER
 
-    echo "SSH as $VM_USER to reset progression tables."
+    echo "SSH as $VM_USER to reset tables."
     ssh $VM_USER@$VM_IP << EOF
     mariadb -u $DB_USER -p$DB_PWD $DB_NAME < $DUMP_NAME
     rm $DUMP_NAME

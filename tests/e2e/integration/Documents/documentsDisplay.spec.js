@@ -3,7 +3,6 @@ import { DOYEN, HEADMASTER, PARENT, SCHOOL_ADMIN, SECRETARY, STUDENT, TEACHER } 
 import { setDocumentLibraryWithContent } from '../../support/utils/documents'
 
 const allowedUsers = [HEADMASTER, DOYEN, SCHOOL_ADMIN, SECRETARY, TEACHER, STUDENT, PARENT]
-const disallowedUsers = []
 
 before(() => {
   setDocumentLibraryWithContent()
@@ -16,18 +15,8 @@ describe('Documents_Display_Access', () => {
 
       cy.get('h1[aria-label="Mes documents"]', { timeout: 10000 }).should('exist')
     })
-  })
 
-  disallowedUsers.forEach(user => {
-    it('Documents_Display_NotAccessFor[' + user.role + ']', () => {
-      cy.login(user, documentURL)
-      cy.get('[data-test="menu"]').should('contain', 'Accueil') // Wait the menu to be loaded and tick 500ms to see the 404 message appear
-      cy.tick(500)
-
-      cy.contains('Oups, cette page n\'existe pas')
-      cy.get('[data-test="menu"]').should('not.contain', 'Documents') // Wait the menu to be loaded and tick 500ms to see the 404 message appear
-      cy.get('h1[aria-label="Mes documents"]').should('not.exist')
-    })
+    // ATM there is no disallowed users to test for document service
   })
 
   it('Documents_Display_UnauthenticatedCanNotAccess', () => {
@@ -50,7 +39,7 @@ describe('Documents_Display_ResponsiveDesign', () => {
 
   sizes.forEach(size => {
     it(`Documents_Display_DisplayServiceCorrectlyFor[${size}]`, function () {
-      Cypress._.isArray(size) ? cy.viewport(size[0], size[1]) : cy.viewport(size)
+      cy.viewport(size)
 
       cy.get('@documentsData').then((documentsData) => {
         const currentFolder = documentsData.currentPersonalDocumentsStructure.folders[0].folders[0] // Sub folder level

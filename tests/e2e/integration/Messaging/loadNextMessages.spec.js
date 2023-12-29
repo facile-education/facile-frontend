@@ -8,12 +8,8 @@ describe('Load next message', () => {
     const largeScreenNoScroll = sizes[3]
     sizes.forEach(size => {
       it(`Messaging_LoadNextMessages_on: ${size}`, function () {
-        // Set testing viewport
-        if (Array.isArray(size)) {
-          cy.viewport(size[0], size[1])
-        } else {
-          cy.viewport(size)
-        }
+        cy.viewport(size)
+
         // Load tables
         cy.loadTables('messaging/messaging_tables_full.sql')
 

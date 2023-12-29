@@ -91,10 +91,6 @@ export default {
 
   &.pending {
     cursor: pointer;
-    &:hover, &:focus-within {
-      border: 2px solid black;
-      border-radius: 5px;
-    }
   }
 }
 

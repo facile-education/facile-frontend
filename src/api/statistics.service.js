@@ -10,7 +10,8 @@ export {
   getHomeworksCount,
   getNewsCount,
   getMessagesCount,
-  getActionsCount
+  getActionsCount,
+  getSchoolLifeStudentsCount
 }
 
 const STAT_PATH = '/statistic.generalstat'
@@ -85,6 +86,16 @@ function getNewsCount (schoolId, startDate, endDate) {
 
 function getMessagesCount (schoolId, startDate, endDate) {
   return axios.get(constants.JSON_WS_URL + STAT_PATH + '/get-messages-count', {
+    params: {
+      schoolId,
+      startDate: startDate.format('YYYY-MM-DD HH:mm'),
+      endDate: endDate.format('YYYY-MM-DD HH:mm')
+    }
+  }).then(response => response.data)
+}
+
+function getSchoolLifeStudentsCount (schoolId, startDate, endDate) {
+  return axios.get(constants.JSON_WS_URL + STAT_PATH + '/get-school-life-students-count', {
     params: {
       schoolId,
       startDate: startDate.format('YYYY-MM-DD HH:mm'),

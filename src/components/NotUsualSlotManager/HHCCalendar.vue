@@ -37,13 +37,11 @@
     <StudentRegistrationModal
       v-if="isRegistrationModalDisplayed"
       :event="eventToEdit"
-      :full-screen="mq.phone"
       @close="isRegistrationModalDisplayed = false"
     />
     <StudentListModal
       v-if="isListModalDisplayed"
       :event="eventToEdit"
-      :full-screen="mq.phone"
       @close="isListModalDisplayed = false"
     />
   </teleport>
@@ -155,13 +153,9 @@ export default {
 
       this.$store.dispatch('notUsualSlots/setDisplayedDates', {
         startDate: dayjs(week.firstDayOfWeek, 'YYYY-MM-DD'),
-        endDate: dayjs(week.lastDayOfWeek, 'YYYY-MM-DD')
+        endDate: dayjs(week.firstDayOfWeek, 'YYYY-MM-DD').endOf('week')
       })
     }
   }
 }
 </script>
-
-<style lang="scss" scoped>
-
-</style>

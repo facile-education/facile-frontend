@@ -2,12 +2,15 @@
   <QuickSearchPanelHeader :is-search-history="true" />
   <WeprodeSpinner v-if="isLoadingHistory" />
   <ul v-if="sortedHistoryList.length > 0">
-    <SearchHistoryItem
+    <li
       v-for="(item, index) in sortedHistoryList"
       :key="index"
-      :item="item"
-      :is-selected="currentSelectedItem ? currentSelectedItem.historyId === item.historyId : false"
-    />
+    >
+      <SearchHistoryItem
+        :item="item"
+        :is-selected="currentSelectedItem ? currentSelectedItem.historyId === item.historyId : false"
+      />
+    </li>
   </ul>
 </template>
 

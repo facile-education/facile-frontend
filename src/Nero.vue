@@ -50,10 +50,18 @@ export default {
     if (this.isIOS) {
       this.addMaxScaleToViewport()
     }
+    if (window.Cypress) {
+      window.textContent = []
+    }
   },
   beforeUnmount () {
     if (typeof window.screen.orientation !== 'undefined') {
       window.screen.orientation.removeEventListener('change', this.handleOrientationChange, false)
+    }
+  },
+  beforeCreate () {
+    if (this.$route.path === '/' || this.$route.path === '/login') {
+      this.$store.commit('theme/setLayout', 'GVELayout')
     }
   },
   methods: {

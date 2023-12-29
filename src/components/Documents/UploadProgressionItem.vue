@@ -15,16 +15,15 @@
         <span v-if="count % 3 === 1">.</span>
         <span v-if="count % 3 === 2">..</span>
       </div>
-      <BaseIcon
-        v-else-if="status==='uploaded'"
-        class="uploaded"
-        name="check"
-      />
-      <BaseIcon
-        v-else-if="status==='not-uploaded'"
-        class="error"
-        name="times"
-      />
+      <div
+        v-else-if="status!=='not-uploaded'"
+        class="icon-container"
+      >
+        <BaseIcon
+          :class="status==='uploaded'? 'uploaded' : 'error'"
+          :name="status==='uploaded' ? 'check' : 'times'"
+        />
+      </div>
       <div v-else />
     </div>
   </div>
@@ -58,6 +57,9 @@ export default {
       if (this.currentUploadingFile && this.document.name.split('/').at(-1) === this.currentUploadingFile.name.split('/').at(-1)) {
         return 'uploading'
       } else {
+        if (this.document.isError) {
+          return 'error'
+        }
         let find = false
         this.listUploadedFiles.forEach((uploadedFile) => {
           if (uploadedFile.name.split('/').at(-1) === this.document.name.split('/').at(-1)) {
@@ -100,6 +102,14 @@ export default {
     white-space: nowrap;
     text-overflow: ellipsis;
     line-height: 40px;
+  }
+
+  .icon-container {
+    height: 100%;
+    width: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .status {

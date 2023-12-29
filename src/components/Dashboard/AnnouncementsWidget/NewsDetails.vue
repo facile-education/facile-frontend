@@ -70,17 +70,12 @@
         class="content-placeholder"
       />
 
-      <ul class="attached-files">
-        <li
-          v-for="attachedFile in detailedNews.attachedFiles"
-          :key="attachedFile.fileId"
-        >
-          <AttachedFile
-            :read-only="true"
-            :attached-file="attachedFile"
-          />
-        </li>
-      </ul>
+      <AttachedFiles
+        v-if="detailedNews.attachedFiles.length > 0"
+        :model-value="detailedNews.attachedFiles"
+        :read-only="true"
+        :with-header="false"
+      />
 
       <div
         v-if="!isInModal && (detailedNews.isEditable || detailedNews.isDeletable)"
@@ -127,12 +122,12 @@ import { deleteNews, getNewsDetails } from '@/api/dashboard/news.service'
 import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import { defaultImagesKeys } from '@/constants/icons'
-const AttachedFile = defineAsyncComponent(() => import('@components/AttachedFiles/AttachedFile.vue'))
+const AttachedFiles = defineAsyncComponent(() => import('@components/AttachedFiles/AttachedFiles.vue'))
 const SaveNewsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/SaveNewsModal.vue'))
 
 export default {
   name: 'NewsDetails',
-  components: { AttachedFile, SaveNewsModal, ReadInfos, PopulationList, WeprodeButton, WeprodeSpinner },
+  components: { AttachedFiles, SaveNewsModal, ReadInfos, PopulationList, WeprodeButton, WeprodeSpinner },
   props: {
     initNews: {
       type: Object,
@@ -158,9 +153,9 @@ export default {
     },
     thumbnail () {
       if (defaultImagesKeys.indexOf(this.detailedNews.thumbnailUrl) !== -1) {
-        return new URL(`../../../assets/images/${this.detailedNews.thumbnailUrl}.png`, import.meta.url).href
+        return new URL(`../../../assets/images/${this.detailedNews.thumbnailUrl}.svg`, import.meta.url).href
       } else { // Returned url is a key for local default image
-        return this.detailedNews.thumbnailUrl
+        return this.detailedNews.thumbnailUrl + '&p_auth=' + this.$store.state.user.pauth
       }
     }
   },

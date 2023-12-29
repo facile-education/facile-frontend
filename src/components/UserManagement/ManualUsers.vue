@@ -35,10 +35,16 @@
       <p>{{ $t('please-select-school') }}</p>
     </div>
     <div
-      v-else-if="userList && userList.length === 0"
+      v-else-if="userList && userList.length === 0 && filter === ''"
       class="main-label"
     >
       <p>{{ $t('no-users') }}</p>
+    </div>
+    <div
+      v-else-if="userList && userList.length === 0 && filter !== ''"
+      class="main-label"
+    >
+      <p>{{ $t('no-users-for-filter', { filter: filter}) }}</p>
     </div>
     <div
       v-else-if="userList"
@@ -234,6 +240,7 @@ export default {
   "over": "sur un total de",
   "create": "Ajouter un utilisateur",
   "no-users" : "Aucun compte manuel pour cet établissement",
+  "no-users-for-filter" : "Aucun compte manuel avec le filtre '{filter}'",
   "please-select-school": "Veuillez sélectionner un établissement",
   "email": "E-mail",
   "firstName": "Prénom",

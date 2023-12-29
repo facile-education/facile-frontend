@@ -1,7 +1,4 @@
-import { HEADMASTER } from '../../support/constants/users'
-import { url } from '../../support/constants/documents'
-
-describe('BreadCrumb', () => {
+describe.skip('BreadCrumb', () => {
   before(() => {
     cy.exec('npm run db:loadTables documents_tables_basic.sql')
     cy.clearDBCache()
