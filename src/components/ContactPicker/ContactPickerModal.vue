@@ -5,6 +5,7 @@
     :hidden-footer="true"
     :draggable="true"
     data-test="contactPickerModal"
+    class="contactPickerModal"
     @close="onClose"
   >
     <template #header>
@@ -57,6 +58,14 @@ h1 {
   line-height: 1.25em;
 }
 
+</style>
+
+<style lang="scss">
+  .contactPickerModal {
+    .window-body{
+      overflow: hidden !important;
+    }
+  }
 </style>
 
 <i18n locale="fr">

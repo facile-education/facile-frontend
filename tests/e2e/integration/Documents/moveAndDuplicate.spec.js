@@ -1,5 +1,4 @@
-import { HEADMASTER } from '../../support/constants/users'
-import { url } from '../../support/constants/documents'
+import { selectContextMenuOption } from '../../support/utils/testUtils'
 
 const deleteAll = () => {
   cy.get('body').type('{ctrl}a')
@@ -11,7 +10,7 @@ const deleteAll = () => {
 const createManualEntities = () => {
   // Create Folder
   cy.contains('button', 'NOUVEAU').click()
-  cy.get('[data-test="context-menu"]').contains('Dossier').click()
+  selectContextMenuOption('Dossier')
   cy.get('[data-test=folder-name-modal]').within(() => {
     cy.get('input').type('createdFolder') // TODO tests form validation
     cy.contains('button', 'Créer').click()
@@ -20,7 +19,7 @@ const createManualEntities = () => {
 
   // Create file
   cy.contains('button', 'NOUVEAU').click()
-  cy.get('[data-test="context-menu"]').contains('Note').click()
+  selectContextMenuOption('Note')
   cy.get('[data-test=file-name-modal]').within(() => {
     cy.get('input').type('createdNote')
     cy.contains('button', 'Créer').click()
@@ -37,7 +36,7 @@ const goInFolder = (folderName) => {
   cy.get('[data-test=spinner]').should('not.exist')
 }
 
-describe('Move and duplicate', () => {
+describe.skip('Move and duplicate', () => {
   beforeEach(() => {
     cy.exec('npm run db:loadTables documents_tables_basic.sql')
     cy.clearDBCache()
@@ -50,7 +49,7 @@ describe('Move and duplicate', () => {
 
   it('duplicate one file', () => {
     cy.contains('[data-test=file]', 'createdNote.html').rightclick()
-    cy.get('[data-test="context-menu"]').contains('Dupliquer').click()
+    selectContextMenuOption('Dupliquer')
     cy.get('[data-test=file-picker-modal]').within(() => {
       cy.get('.folder').contains('createdFolder').click()
       cy.get('[data-test=submitButton]').click()

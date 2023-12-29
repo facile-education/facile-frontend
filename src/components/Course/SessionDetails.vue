@@ -35,24 +35,30 @@
           <h3>{{ courseTitle }}</h3>
           <CreateButton
             v-if="canEdit && !hasContent && !isInList"
+            data-test="createSessionContent"
             :aria-label="$t('add')"
             :title="$t('add')"
             @click="openCourseEditModal"
           />
           <div
-            v-else-if="canEdit && hasContent"
+            v-else-if="isTeacher && hasContent"
             class="right"
           >
-            <span class="status">{{ formattedStatus }}</span>
+            <span
+              class="status"
+              :class="{'italic': status !== 'published'}"
+              :title="status === 'scheduled' ? formattedFuturePublicationDate : ''"
+            >{{ formattedStatus }}</span>
             <button
+              v-if="canEdit"
               class="edit-button"
               :aria-label="$t('options')"
               :title="$t('options')"
               @click="toggleContextMenu"
             >
               <img
-                height="20"
-                width="20"
+                height="16"
+                width="16"
                 :src="require('@/assets/icons/vertical_dots.svg')"
                 alt="options"
               >
@@ -89,6 +95,7 @@
             v-if="canEdit"
             :aria-label="$t('add')"
             :title="$t('add')"
+            data-test="createSessionHomework"
             @click="openHomeworkEditModal"
           />
         </div>
@@ -146,6 +153,7 @@
       to="body"
     >
       <ContextMenu
+        class="context-menu-with-padding"
         @choose-option="performChosenOption"
         @close="displayMenu=false"
       />
@@ -211,14 +219,33 @@ export default {
   },
   computed: {
     canEdit () {
+      return this.session !== undefined && this.session.teachers.map(teacher => teacher.userId).indexOf(this.$store.state.user.userId) !== -1
+    },
+    isTeacher () {
       return this.$store.state.user.isTeacher
     },
+    status () {
+      const publicationDate = dayjs(this.session.sessionContent.publicationDate, 'YYYY-MM-DD HH:mm')
+      if (this.session.sessionContent.isDraft) {
+        return 'draft'
+      } else if (publicationDate.isAfter(dayjs())) {
+        return 'scheduled'
+      } else {
+        return 'published'
+      }
+    },
     formattedStatus () {
+      const publicationDate = dayjs(this.session.sessionContent.publicationDate, 'YYYY-MM-DD HH:mm')
       if (this.session.sessionContent.isDraft) {
         return this.$t('draftStatus')
+      } else if (publicationDate.isAfter(dayjs())) {
+        return this.$t('scheduled')
       } else {
-        return this.$t('publishedOn') + dayjs(this.session.sessionContent.publicationDate).format('DD/MM/YYYY')
+        return this.$t('publishedOn') + publicationDate.format('DD/MM/YYYY')
       }
+    },
+    formattedFuturePublicationDate () {
+      return dayjs(this.session.sessionContent.publicationDate, 'YYYY-MM-DD HH:mm').format('[' + this.$t('scheduledOn') + '] YYYY-MM-DD [' + this.$t('at') + '] HH:mm')
     },
     courseTitle () {
       return (this.session.sessionContent && this.session.sessionContent.title) ? this.session.sessionContent.title : this.$t('courseContent')
@@ -410,6 +437,7 @@ header {
     border-top: 1px solid $neutral-80;
     border-left: 0;
     background-color: $neutral-10;
+    z-index: 1;
 
     h2 {
       margin: 0;
@@ -449,7 +477,11 @@ header {
 
   .status {
     margin: 0 1rem;
-    @extend %font-regular-xs
+    @extend %font-regular-xs;
+
+    &.italic {
+      font-style: italic;
+    }
   }
 }
 .homeworks {
@@ -479,6 +511,10 @@ header {
   border: none;
   cursor: pointer;
 }
+
+.context-menu-with-padding {
+  padding: 10px 0;
+}
 </style>
 
 <i18n locale="fr">
@@ -486,7 +522,7 @@ header {
   "add": "Ajouter",
   "options": "Options",
   "delete": "Supprimer",
-  "draftStatus": "Non publié",
+  "draftStatus": "Brouillon",
   "edit": "Modifier",
   "error": "Oups, une erreur est survenue...",
   "selectSessionPlaceholder": "Veuillez sélectionner une séance pour accéder à son contenu",
@@ -497,6 +533,8 @@ header {
   "notesPlaceholder": "Ma note privée",
   "publishedOn": "Publié le ",
   "workToDo": "Travaux à faire",
+  "scheduled": "Programmé",
+  "scheduledOn": "Publication prévue le",
   "courseContentPlaceholder": "Aucun support de cours enregistré"
 }
 </i18n>

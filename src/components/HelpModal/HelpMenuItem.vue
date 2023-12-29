@@ -1,5 +1,5 @@
 <template>
-  <li
+  <div
     class="menu-item"
     @mouseover="isHovering = true"
     @mouseleave="isHovering = false"
@@ -27,7 +27,7 @@
         >
       </span>
     </a>
-  </li>
+  </div>
 </template>
 
 <script>

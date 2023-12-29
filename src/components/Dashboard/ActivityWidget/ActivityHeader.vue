@@ -33,6 +33,7 @@
       class="right"
     >
       <CreateButton
+        data-test="CreateActivity"
         :title="$t('create-news')"
         @click="isCreateModalDisplayed = true"
       />

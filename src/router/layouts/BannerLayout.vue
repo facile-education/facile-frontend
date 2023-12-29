@@ -9,7 +9,10 @@
 
     <LayoutMenu class="nero-menu" />
 
-    <section class="nero-body">
+    <section
+      class="nero-body"
+      data-test="body"
+    >
       <NotAllowed v-if="!isAllowed && !user.isAdministrator" />
       <slot v-else />
     </section>
@@ -319,6 +322,7 @@ export default {
   height: 100%;
   overflow: auto;
   padding: 10px;
+  position: relative;
   //padding: 2rem 40px;
 }
 

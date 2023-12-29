@@ -1,6 +1,6 @@
 import { HHCURL } from '../../support/constants/urls'
 import { HEADMASTER } from '../../support/constants/users'
-import { formatEventTeacherName, getSlot } from '../../support/utils/horairesHorsCardesUtils'
+import { formatEventTeacherName, getHHCSlot } from '../../support/utils/horairesHorsCardesUtils'
 
 const checkSlotSelectionMenu = (slotTypes) => {
   cy.get('[data-test=user-completion-input]').should('not.exist')
@@ -45,7 +45,7 @@ describe('HHC_Navigation_Desktop', () => {
       // Check events number
       cy.get('.fc-timegrid-event').should('have.length', slotType.nbSlotsAtSelectedWeek)
       // Check the good event type an it teacher is displayed
-      getSlot(slotType.slotExample).within(() => {
+      getHHCSlot(slotType.slotExample).within(() => {
         cy.contains(slotType.label).should('exist')
         cy.contains(formatEventTeacherName(slotType.slotExample.teacher)).should('exist')
       })

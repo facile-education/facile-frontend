@@ -1,7 +1,5 @@
 <template>
-  <li
-    class="help-menu-category"
-  >
+  <div class="help-menu-category">
     <button
       :class="{'selected': containsTheSelectedHelpItem, 'admin': isAdministrator}"
       :title="category.categoryName"
@@ -27,12 +25,15 @@
       :class="isCategoryExtended ? 'extended' : 'collapsed'"
     >
       <ul>
-        <HelpMenuItem
+        <li
           v-for="(item, index) in category.items"
           :key="index"
-          :item="item"
-          @update-item-position="updateItemPosition"
-        />
+        >
+          <HelpMenuItem
+            :item="item"
+            @update-item-position="updateItemPosition"
+          />
+        </li>
       </ul>
     </nav>
 
@@ -45,7 +46,7 @@
         @close="isCreateArticleModalDisplayed=false"
       />
     </teleport>
-  </li>
+  </div>
 </template>
 
 <script>

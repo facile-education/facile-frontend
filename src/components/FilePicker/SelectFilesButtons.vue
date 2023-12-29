@@ -1,24 +1,28 @@
 <template>
   <div class="select-files-buttons">
     <label v-if="label">{{ label }}</label>
-    <button
-      :title="$t('selectFromApp')"
-      :aria-label="$t('selectFromApp')"
-      class="button add-local-button"
-      @click="isFilePickerDisplayed = true"
+
+    <WeprodeButton
+      v-for="button in fileButtons"
+      :key="button.name"
+      :title="button.name"
+      :aria-label="button.name"
+      class="circle"
+      @click="button.callback()"
     >
-      <img
-        class="icon"
-        src="@assets/options/dossier-pj.svg"
-        alt="select"
+      <CustomIcon
+        :icon-name="button.icon"
+        :style="'font-size: ' + button.fontSize"
+      />
+      <input
+        v-if="button.hasInput"
+        ref="file"
+        :accept="imagesOnly? 'image/*' : '*/*'"
+        :multiple="allowMultiple"
+        type="file"
+        @change="$emit('load', $event)"
       >
-    </button>
-    <FilePickerButton
-      class="button"
-      :allow-multiple="allowMultiple"
-      :accept="imagesOnly? 'image/*' : '*/*'"
-      @change="$emit('load', $event)"
-    />
+    </WeprodeButton>
 
     <teleport
       v-if="isFilePickerDisplayed"
@@ -36,14 +40,16 @@
 
 <script>
 
-import FilePickerButton from '@components/FilePicker/FilePickerButton.vue'
+import CustomIcon from '@components/Base/CustomIcon.vue'
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import { defineAsyncComponent } from 'vue'
 const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal'))
 
 export default {
   name: 'SelectFilesButtons',
   components: {
-    FilePickerButton,
+    WeprodeButton,
+    CustomIcon,
     FilePickerModal
   },
   props: {
@@ -63,26 +69,40 @@ export default {
   emits: ['load', 'selectFiles'],
   data () {
     return {
-      isFilePickerDisplayed: false
+      isFilePickerDisplayed: false,
+      fileButtons: [
+        {
+          icon: 'icon-folder',
+          fontSize: '1.25rem',
+          name: this.$t('addFile'),
+          callback: this.toggleFilePicker
+        },
+        {
+          icon: 'icon-upload',
+          fontSize: '1rem',
+          name: this.$t('addOSFile'),
+          callback: this.toggleOSFilePicker,
+          hasInput: true
+        }
+      ]
+    }
+  },
+  methods: {
+    toggleFilePicker () {
+      this.isFilePickerDisplayed = !this.isFilePickerDisplayed
+    },
+    toggleOSFilePicker () {
+      this.$refs.file[0].click()
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-button {
-  cursor: pointer;
-  background-color: transparent;
-  border-radius: 0;
-  padding: 0;
-  margin: 0;
-  border: none;
-}
-
 .select-files-buttons {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .add-local-button {
@@ -94,10 +114,22 @@ button {
     height: 20px;
   }
 }
+
+.circle {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  line-height: 15px;
+}
+
+input {
+  display: none;
+}
 </style>
 
 <i18n locale="fr">
 {
-  "selectFromApp": "importer depuis l'application"
+  "addFile": "Ajouter une pièce jointe depuis vos documents de l'ENTA",
+  "addOSFile": "Ajouter une pièce jointe depuis le poste de travail"
 }
 </i18n>

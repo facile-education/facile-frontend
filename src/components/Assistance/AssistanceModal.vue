@@ -66,6 +66,7 @@
         <WeprodeButton
           data-test="submitTicket"
           :label="$t('submitButtonLabel')"
+          :disabled="isLoading"
           @click="submitTicket"
         />
       </template>
@@ -132,7 +133,8 @@ export default {
         }
       },
       attachFiles: [],
-      isFilePickerDisplayed: false
+      isFilePickerDisplayed: false,
+      isLoading: false
     }
   },
   validations: {
@@ -195,12 +197,14 @@ export default {
       if (this.v$.$invalid) { // form checking
         this.v$.$touch()
       } else {
+        this.isLoading = true
         sendAssistanceMessage(
           this.modalType === 'Suggestion',
           this.selected.applicationId,
           this.contentField,
           JSON.stringify(this.attachFiles)
         ).then((data) => {
+          this.isLoading = false
           if (data.success) {
             this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
             this.onClose()
@@ -254,7 +258,7 @@ h5 {
 {
   "applyContextText": "Penser à expliquer le contexte de votre erreur, si besoin nous communiquer une copie d'écran et tout autre élément que vous jugez utile pour nous permettre de reproduire votre problème.",
   "addFilesButtonLabel": "Ajouter un fichier (facultatif)",
-  "adminMessage": "Votre demande de support sera traitée par les équipes de Pentila, vous recevrez une réponse dans votre messagerie",
+  "adminMessage": "Votre demande de support sera traitée par les équipes de Weprode, vous recevrez une réponse dans votre messagerie",
   "submitButtonLabel": "Envoyer",
   "issueDescription": "Description de l'incident",
   "suggestionDescription": "Description de la suggestion",

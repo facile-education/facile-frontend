@@ -2,8 +2,9 @@
   <div
     v-if="!displayGroupDetails"
     class="details-panel"
+    data-test="details-panel"
   >
-    <div class="header">
+    <header>
       <div
         v-if="selectedDocuments.length === 1"
         class="document-name"
@@ -22,10 +23,12 @@
         v-else
         class="document-name"
       >
-        {{ selectedDocuments.length + '  ' + $t('selectedDocuments') }}
+        {{ selectedDocuments.length + ' ' + $t('selectedDocuments') }}
       </h3>
       <button
         class="close-option"
+        :aria-label="$t('close')"
+        :title="$t('close')"
         @click="closePanel"
       >
         <CustomIcon
@@ -33,7 +36,7 @@
           class="icon"
         />
       </button>
-    </div>
+    </header>
 
     <DocumentMetaData
       v-if="selectedDocuments.length === 1"
@@ -102,7 +105,7 @@ export default {
   border-left: 1px solid $color-border;
   height: 100%;
 
-  .header {
+  header {
     display: flex;
     align-items: center;
     height: 60px;
@@ -149,8 +152,9 @@ export default {
 
 <i18n locale="fr">
 {
+  "close": "Fermer",
   "noData": "Il n'y a aucune information à afficher",
   "noDocumentSelected": "Aucun document sélectionné",
-  "selectedDocuments": " documents sélectionnés"
+  "selectedDocuments": "documents sélectionnés"
 }
 </i18n>

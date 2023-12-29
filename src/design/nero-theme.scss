@@ -15,11 +15,8 @@ $dropdown-background-color: $background-grey-color;
 $input-background-color: $background-grey-color;
 
 // Border
-$border: 1px solid #f4f4f4;
-$border-radius: 6px;
-
-// Z-indexes
-$modal-z-index: 100;
+$border-nero: 1px solid #f4f4f4;
+$border-radius-nero: 6px;
 
 // Global classes extends
 %item-shadow {
@@ -28,7 +25,7 @@ $modal-z-index: 100;
 
 %nero-btn-like {
   font-family: inherit;
-  border-radius: $border-radius;
+  border-radius: $border-radius-nero;
   padding: 15px 15px;
   text-align: center;
   border: none;
@@ -42,7 +39,6 @@ $modal-z-index: 100;
   background-image: none;
   box-shadow: none;
   width: 100%;
-  padding: 0;
   outline: none;
   border: 0;
   border-bottom: 1px solid $text-disabled-color;
@@ -70,13 +66,13 @@ $modal-z-index: 100;
 
 // Autocomplete
 .base-autocomplete {
-  border: $border;
-  border-radius: $border-radius;
+  border: $border-nero;
+  border-radius: $border-radius-nero;
 
   @extend %item-shadow;
 
   .filter {
-    border-bottom: $border;
+    border-bottom: $border-nero;
   }
 }
 
@@ -85,11 +81,11 @@ $modal-z-index: 100;
   &:disabled {
     @extend %nero-disable;
   }
-  
+
   &.button {
     @extend %nero-btn-like;
   }
-  
+
   &.circle {
     @extend %nero-btn-like;
     border-radius: 50%;
@@ -98,13 +94,13 @@ $modal-z-index: 100;
     padding: 0;
     line-height: 30px;
   }
-  
+
   &.button:enabled:hover,
   &.circle:enabled:hover {
     filter: brightness(115%);
     @include transition(filter, 0.2s, linear);
   }
-  
+
   &.cancel {
     background-color: $background-grey-color;
 
@@ -124,7 +120,7 @@ $modal-z-index: 100;
 // Checkbox
 .base-checkbox {
   .checkmark {
-    border-radius: $border-radius;
+    border-radius: $border-radius-nero;
 
     &.disabled {
       background-color: $disabled-background-color
@@ -165,7 +161,6 @@ $modal-z-index: 100;
 // Spinner
 // Tabs
 .base-tab {
-  border-bottom: $border;
 
   &.disabled {
     @extend %nero-disable;

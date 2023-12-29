@@ -9,7 +9,7 @@ import {
   TEACHER
 } from '../../../support/constants/users'
 import {
-  getSlot,
+  getHHCSlot,
   getUserSlot,
   selectSlotType,
   selectStudent
@@ -19,7 +19,6 @@ import { getThread, waitMessagingToBeLoaded } from '../../../support/utils/messa
 const studentToRegister = STUDENT // Because normal Student is already register in the hhc tables
 
 const rolesThatCanRegister = [TEACHER, HEADMASTER, SECRETARY, DOYEN]
-const rolesThatCannotRegister = []
 const courseTypeToReplay = 'Histoire'
 
 function getRandomBoolean () {
@@ -106,25 +105,17 @@ describe('HHC_ReplayTest_Registration', () => {
   it('HHC_ReplayTest_Registration_isPresentForGoodRoles', function () {
     const slotToRegisterInside = this.hhcData.slotsTypes.replayTest.slotExample
 
-    rolesThatCannotRegister.forEach(role => {
-      cy.login(role, HHCURL)
-      selectSlotType(this.hhcData.slotsTypes.replayTest)
-      // Select student
-      selectStudent(studentToRegister)
-      // Open registration modal
-      getSlot(slotToRegisterInside).click()
-      cy.get('[data-test=event-popup]').get('[data-test=registerStudent-option]').should('not.exist')
-    })
-
     rolesThatCanRegister.forEach(role => {
       cy.login(role, HHCURL)
       selectSlotType(this.hhcData.slotsTypes.replayTest)
       // Select student
       selectStudent(studentToRegister)
       // Open registration modal
-      getSlot(slotToRegisterInside).click()
+      getHHCSlot(slotToRegisterInside).click()
       cy.get('[data-test=event-popup]').get('[data-test=registerStudent-option]').should('exist') // be.visible is better but sometimes calendar is wierd
     })
+
+    // There is no roles that cannot register among role that can access to HHC
   })
 
   it('HHC_ReplayTest_Registration_Register', function () {
@@ -141,8 +132,11 @@ describe('HHC_ReplayTest_Registration', () => {
     // Select student
     selectStudent(studentToRegister)
     // Open registration modal
-    getSlot(slotToRegisterInside).click()
+    getHHCSlot(slotToRegisterInside).click()
     cy.get('[data-test=registerStudent-option]').click()
+
+    // Wait to fix CI bug
+    cy.wait(2000)
 
     // Test registration modal (ends by registering student)
     testRegistrationModal(slotToRegisterInside, studentToRegister, notifyParent)
@@ -152,7 +146,7 @@ describe('HHC_ReplayTest_Registration', () => {
 
     // Check the slot's student list
     const capacityLabel = slotToRegisterInside.capacity - 1 + '/' + slotToRegisterInside.capacity
-    getSlot(slotToRegisterInside).should('contain', capacityLabel).click()
+    getHHCSlot(slotToRegisterInside).should('contain', capacityLabel).click()
     cy.get('[data-test=showStudentList-option]').click()
     cy.get('[data-test=student-list-modal]').within(() => {
       cy.contains(studentToRegister.firstName + ' ' + studentToRegister.lastName)

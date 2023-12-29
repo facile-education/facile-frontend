@@ -57,12 +57,14 @@
         v-if="!readOnly"
         v-t="'h5pUrl'"
         href="https://h5p.eduge.ch/mes-ressources-h5p"
+        rel="noopener"
         target="_blank"
       />
 
       <iframe
         v-if="embedSrcAttribute"
         :src="embedSrcAttribute"
+        title="h5p content"
         class="h5p-preview"
       />
     </template>
@@ -75,6 +77,7 @@
         v-if="isCreation"
         :label="$t('add')"
         class="button"
+        data-test="addH5P"
         @click="addH5P"
       />
       <WeprodeButton
@@ -92,6 +95,7 @@
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 
+import { isEmbedUrlWhitelisted } from '@/api/course.service'
 import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
 import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
 import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
@@ -182,50 +186,46 @@ export default {
       e.preventDefault()
       if (this.v$.$invalid) {
         this.v$.$touch()
-      } else if (this.item !== undefined) {
-        this.$store.dispatch('progression/addItemContent',
-          { itemId: this.item.itemId, contentType: 6, contentName: this.contentName, contentValue: this.embedSrcAttribute })
-          .then(() => {
-            this.closeModal()
-          })
-          .catch((error) => {
-            if (error === 'UnauthorizedUrlException') {
-              this.urlError = this.$t('UnauthorizedUrlException')
-            } else {
-              // TODO popup error "Une erreur est survenue lors de l'ajout du contenu"
-              this.closeModal()
-            }
-          })
       } else {
-        this.$emit('save', { contentType: 6, contentName: this.contentName, contentValue: this.embedSrcAttribute })
-        this.closeModal()
+        isEmbedUrlWhitelisted(this.embedSrcAttribute).then((data) => {
+          if (data.success) {
+            if (data.isAllowed) {
+              this.$emit('save', { contentType: 6, contentName: this.contentName, contentValue: this.embedSrcAttribute })
+              this.closeModal()
+            } else {
+              this.urlError = this.$t('UnauthorizedUrlException')
+            }
+          } else {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+            console.error('Error')
+          }
+        }, (err) => {
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+          console.error(err)
+        })
       }
     },
     editH5P (e) {
       e.preventDefault()
       if (this.v$.$invalid) {
         this.v$.$touch()
-      } else if (this.item !== undefined) {
-        this.$store.dispatch('progression/updateItemContent', {
-          contentId: this.editedContent.contentId,
-          contentName: this.contentName,
-          contentValue: this.embedSrcAttribute,
-          order: this.editedContent.order
-        })
-          .then(() => {
-            this.closeModal()
-          })
-          .catch((error) => {
-            if (error === 'UnauthorizedUrlException') {
-              this.urlError = this.$t('UnauthorizedUrlException')
-            } else {
-              // TODO popup error "Une erreur est survenue lors de l'ajout du contenu"
-              this.closeModal()
-            }
-          })
       } else {
-        this.$emit('save', { contentType: 6, contentName: this.contentName, contentValue: this.embedSrcAttribute })
-        this.closeModal()
+        isEmbedUrlWhitelisted(this.embedSrcAttribute).then((data) => {
+          if (data.success) {
+            if (data.isAllowed) {
+              this.$emit('save', { contentType: 6, contentName: this.contentName, contentValue: this.embedSrcAttribute })
+              this.closeModal()
+            } else {
+              this.urlError = this.$t('UnauthorizedUrlException')
+            }
+          } else {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+            console.error('Error')
+          }
+        }, (err) => {
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+          console.error(err)
+        })
       }
     }
   }

@@ -11,7 +11,11 @@ export {
   deleteGroup,
   deleteGroups,
   runAnonymisation,
-  cleanupDropboxes
+  cleanupObsoleteFolders,
+  runDataFeed,
+  setNewsPermissions,
+  runAbsenceNotifications,
+  deleteFolders
 }
 
 export default {
@@ -23,7 +27,11 @@ export default {
   deleteGroup,
   deleteGroups,
   runAnonymisation,
-  cleanupDropboxes
+  cleanupObsoleteFolders,
+  runDataFeed,
+  setNewsPermissions,
+  runAbsenceNotifications,
+  deleteFolders
 }
 
 const MAINTENANCE_PATH = '/maintenance.maintenance'
@@ -73,6 +81,29 @@ function deleteGroups (file) {
   ).then(response => response.data)
 }
 
-function cleanupDropboxes () {
-  return axios.post(constants.JSON_WS_URL + MAINTENANCE_PATH + '/cleanup-dropboxes').then(response => response.data)
+function cleanupObsoleteFolders () {
+  return axios.post(constants.JSON_WS_URL + MAINTENANCE_PATH + '/cleanup-obsolete-folders').then(response => response.data)
+}
+
+function runDataFeed () {
+  return axios.post(constants.JSON_WS_URL + MAINTENANCE_PATH + '/run-data-feed').then(response => response.data)
+}
+
+function setNewsPermissions () {
+  return axios.post(constants.JSON_WS_URL + MAINTENANCE_PATH + '/set-news-permissions').then(response => response.data)
+}
+
+function runAbsenceNotifications () {
+  return axios.post(constants.JSON_WS_URL + MAINTENANCE_PATH + '/run-absence-otifications').then(response => response.data)
+}
+
+function deleteFolders (file) {
+  const formData = new FormData()
+  formData.append('file', file, file.name)
+
+  return axios.post(
+    constants.JSON_WS_URL + MAINTENANCE_PATH + '/delete-folders',
+    formData,
+    { headers: { 'Content-Type': 'multipart/form-data' } }
+  ).then(response => response.data)
 }

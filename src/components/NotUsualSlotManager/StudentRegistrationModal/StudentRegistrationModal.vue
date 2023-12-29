@@ -20,7 +20,9 @@
     </template>
 
     <template #body>
-      <h3>{{ slotType.label }}</h3>
+      <WeprodeSpinner v-if="isLoading" />
+
+      <h3>{{ slotType?.label }}</h3>
       <div
         v-if="student"
         class="student"
@@ -33,7 +35,7 @@
         class="class"
       >
         <span v-t="'NotUsualSlots.StudentRegistrationModal.class'" />
-        <span>{{ selectedClass.orgName }}</span>
+        <span>{{ selectedClass?.orgName }}</span>
       </div>
       <div class="slot">
         <span v-t="'NotUsualSlots.StudentRegistrationModal.slot'" />
@@ -82,7 +84,7 @@
           <span v-if="selectedSession.teacher">{{ selectedSession.teacher.firstName + ' ' + selectedSession.teacher.lastName }}</span>
           <span v-else-if="selectedSession.teachers.length === 1">{{ selectedSession.teachers[0].name }}</span>
           <WeprodeDropdown
-            v-else-if="selectedSession.teachers.length > 1"
+            v-else-if="selectedSession?.teachers.length > 1"
             v-model="dropdownSelectedTeacher"
             :list="selectedSession.teachers"
             display-field="name"
@@ -115,7 +117,6 @@
         v-model="comment"
         :placeholder="$t('NotUsualSlots.StudentRegistrationModal.commentPlaceholder')"
         class="comment"
-        style="height:100px;resize: none;"
         @keydown.enter.stop=""
       />
       <WeprodeCheckbox
@@ -155,13 +156,14 @@ import WeprodeCheckbox from '@/components/Base/Weprode/WeprodeCheckbox.vue'
 import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
 import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
 import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import WeprodeTextArea from '@/components/Base/Weprode/WeprodeTextArea.vue'
 import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 import notUsualSlotsConstants from '@/constants/notUsualSlots'
 
 export default {
   name: 'StudentRegistrationModal',
-  components: { WeprodeButton, WeprodeCheckbox, WeprodeDropdown, WeprodeErrorMessage, WeprodeInput, WeprodeTextArea, WeprodeWindow },
+  components: { WeprodeSpinner, WeprodeButton, WeprodeCheckbox, WeprodeDropdown, WeprodeErrorMessage, WeprodeInput, WeprodeTextArea, WeprodeWindow },
   inject: ['mq'],
   props: {
     event: {
@@ -180,6 +182,7 @@ export default {
   emits: ['close', 'deregister'],
   data () {
     return {
+      isLoading: false,
       comment: '',
       notifyParents: true,
       studentsDaySessions: [],
@@ -215,9 +218,6 @@ export default {
     isReplayTest () {
       return !this.deregistration && this.slotType.type === notUsualSlotsConstants.replayTestType
     },
-    arrivalTime () {
-      return this.$t('Moment.the') + ' ' + dayjs().format('DD MMMM YYYY ' + this.$t('Moment.at') + ' HH:mm')
-    },
     selectedClass () {
       return this.$store.state.notUsualSlots.selectedClass
     },
@@ -251,7 +251,8 @@ export default {
       (err) => {
         console.error(err)
       })
-    } if (this.isReplayTest) {
+    }
+    if (this.isReplayTest) {
       userManagementService.getSubjects().then((data) => {
         if (data.success) {
           this.availableSubjects = data.subjects
@@ -283,70 +284,98 @@ export default {
     submit () {
       if (this.deregistration) {
         this.slotType.type === notUsualSlotsConstants.firedType ? this.deregisterFiring() : this.confirmDeregistration()
-      } else {
-        if (this.isFired) {
-          if (this.selectedSession.sessionId === -1) {
-            this.haveToSelectSlot = true
-          } else {
-            this.registerFiring()
-          }
-        } else if (this.isReplayTest) {
-          if (this.selectedSubject.subjectId === -1) {
-            this.haveToSelectSlot = true
-          } else {
-            this.confirmRegistration()
-          }
+      } else if (this.isFired) {
+        if (this.selectedSession.sessionId === -1) {
+          this.haveToSelectSlot = true
+        } else {
+          this.registerFiring()
+        }
+      } else if (this.isReplayTest) {
+        if (this.selectedSubject.subjectId === -1) {
+          this.haveToSelectSlot = true
         } else {
           this.confirmRegistration()
         }
+      } else {
+        this.confirmRegistration()
       }
     },
     confirmRegistration () {
       const subjectName = this.selectedSubject.subjectId !== -1 ? this.selectedSubject.name : ''
 
       if (this.student) {
+        this.isLoading = true
         schoolLifeService.registerStudent(this.student, this.event.sessionId, this.comment, this.notifyParents, subjectName).then((data) => {
+          this.isLoading = false
           if (data.success) {
             this.$store.dispatch('notUsualSlots/refreshCalendar')
             this.closeModal()
           }
+        }, (err) => {
+          this.isLoading = false
+          console.error(err)
         })
       } else if (this.selectedClass.orgId > 0) {
+        this.isLoading = true
         schoolLifeService.registerClass(this.selectedClass.orgId, this.event.sessionId, this.comment, this.notifyParents, subjectName).then((data) => {
+          this.isLoading = false
           if (data.success) {
             this.$store.dispatch('notUsualSlots/refreshCalendar')
             this.closeModal()
           }
+        }, (err) => {
+          this.isLoading = false
+          console.error(err)
         })
       }
     },
     confirmDeregistration () {
       const allSession = this.slotType.type === notUsualSlotsConstants.studyType
+      this.isLoading = true
       schoolLifeService.unRegisterStudent(this.student, this.event.sessionId, this.comment, this.notifyParents, allSession).then((data) => {
+        this.isLoading = false
         if (data.success) {
           this.$store.dispatch('notUsualSlots/refreshCalendar')
           this.$emit('deregister')
           this.closeModal()
         }
+      }, (err) => {
+        this.isLoading = false
+        console.error(err)
       })
     },
     registerFiring () {
-      const sourceTeacherId = this.selectedSession.teacher ? this.selectedSession.teacher.teacherId : this.selectedSession.teachers.length > 1 ? this.dropdownSelectedTeacher.teacherId : this.selectedSession.teachers[0].teacherId
+      let sourceTeacherId
+      if (this.selectedSession.teacher) {
+        sourceTeacherId = this.selectedSession.teacher.teacherId
+      } else {
+        sourceTeacherId = this.selectedSession.teachers.length > 1 ? this.dropdownSelectedTeacher.teacherId : this.selectedSession.teachers[0].teacherId
+      }
       const sourceSchoollifeSessionId = (this.selectedSession.sessionId === undefined) ? 0 : this.selectedSession.sessionId
+      this.isLoading = true
       schoolLifeService.registerFiring(this.event.sessionId, this.student, this.selectedSession.sessionId, sourceTeacherId, sourceSchoollifeSessionId, this.registrationDate.format('YYYY-MM-DD HH:mm')).then((data) => {
+        this.isLoading = false
         if (data.success) {
           this.$store.dispatch('notUsualSlots/refreshCalendar')
           this.closeModal()
         }
+      }, (err) => {
+        this.isLoading = false
+        console.error(err)
       })
     },
     deregisterFiring () {
+      this.isLoading = true
       schoolLifeService.unRegisterFiring(this.event.sessionId, this.student).then((data) => {
+        this.isLoading = false
         if (data.success) {
           this.$store.dispatch('notUsualSlots/refreshCalendar')
           this.$emit('deregister')
           this.closeModal()
         }
+      }, (err) => {
+        this.isLoading = false
+        console.error(err)
       })
     },
     handleCheck (check) {
@@ -397,6 +426,7 @@ h3 {
 
 .comment {
   height: 100px;
+  resize: none;
   margin-bottom: 15px;
 }
 

@@ -69,7 +69,10 @@
     <FolderNameModal
       v-if="isFolderNameModalDisplayed"
       :submit-action="modalSubmitAction"
-      :init-folder="documentToRename"
+      :current-folder="currentFolder"
+      :folder-to-rename="documentToRename"
+      @create-folder="refreshCurrentFolder"
+      @rename-folder="refreshCurrentFolder"
       @close="isFolderNameModalDisplayed = false"
     />
     <FileNameModal
@@ -90,23 +93,25 @@
 <script>
 import ContextMenu from '@components/ContextMenu/ContextMenu'
 import Breadcrumb from '@components/Documents/Breadcrumb'
-import DocumentDetails from '@components/Documents/DocumentDetails/DocumentDetails'
-import DocumentDetailsModal from '@components/Documents/DocumentDetails/DocumentDetailsModal'
 import DocumentList from '@components/Documents/DocumentList'
-import FileNameModal from '@components/Documents/Modals/FileNameModal'
-import FolderNameModal from '@components/Documents/Modals/FolderNameModal'
-import PermissionsModal from '@components/Documents/Modals/PermissionModal/PermissionsModal'
 import CurrentOptions from '@components/Documents/Options'
 import FilePickerArea from '@components/FilePicker/FilePickerArea'
-import FilePickerModal from '@components/FilePicker/FilePickerModal'
-import { computeDocumentsOptions, deleteEntities, downloadDocument, importDocuments } from '@utils/documents.util'
+import { computeDocumentsOptions, deleteEntities, downloadDocuments, importDocuments } from '@utils/documents.util'
 import { alertNoFile, returnAddedFiles } from '@utils/upload.util'
+import { defineAsyncComponent } from 'vue'
 
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import { DOCUMENTS } from '@/constants/appConstants'
 import { defaultFields, fieldsWithoutSize } from '@/constants/documentsConstants'
 import { documentSpaceOptions, groupOptions, mobileDocumentSpaceOptions } from '@/constants/options'
 import { removeMenuOptionIfExist } from '@/utils/commons.util'
+
+const FolderNameModal = defineAsyncComponent(() => import('@components/Documents/Modals/FolderNameModal.vue'))
+const FileNameModal = defineAsyncComponent(() => import('@components/Documents/Modals/FileNameModal.vue'))
+const PermissionsModal = defineAsyncComponent(() => import('@components/Documents/Modals/PermissionModal/PermissionsModal'))
+const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal'))
+const DocumentDetails = defineAsyncComponent(() => import('@components/Documents/DocumentDetails/DocumentDetails'))
+const DocumentDetailsModal = defineAsyncComponent(() => import('@components/Documents/DocumentDetails/DocumentDetailsModal'))
 
 export default {
   name: 'Documents',
@@ -169,39 +174,22 @@ export default {
       return computeDocumentsOptions(this.selectedDocuments)
     },
     currentOptions () {
-      const options = (this.selectedDocuments.length === 0 && this.currentFolder &&
-          this.currentFolder.isGroupRootFolder && this.currentFolder.permissions && this.currentFolder.permissions.PERMISSIONS)
-        ? groupOptions
-        : (this.selectedDocuments.length > 0)
-            ? this.selectedDocumentsOptions
-            : (this.currentFolder && this.currentFolder.type !== 'Group' && (this.currentFolder.permissions && this.currentFolder.permissions.ADD_OBJECT)
-                ? (this.mq.phone || this.mq.tablet
-                    ? mobileDocumentSpaceOptions
-                    : documentSpaceOptions)
-                : [])
-      // Remove Lool, Mindmap, Geogebra and Scratch if not broadcasted to user
-      if (options !== undefined && options.length >= 1 && options[0].subMenu !== undefined &&
-          (this.documentProperties === undefined || !this.documentProperties.hasLoolBroadcasted)) {
-        removeMenuOptionIfExist(options[0].subMenu, 'newODT')
-        removeMenuOptionIfExist(options[0].subMenu, 'newODS')
-        removeMenuOptionIfExist(options[0].subMenu, 'newODP')
+      let options = []
+
+      if (this.selectedDocuments.length === 0 && this.currentFolder?.isGroupRootFolder && this.currentFolder?.permissions?.PERMISSIONS) {
+        options = [...groupOptions]
+      } else if (this.selectedDocuments.length > 0) {
+        options = this.selectedDocumentsOptions
+      } else if (this.currentFolder?.type !== 'Group' && this.currentFolder?.permissions?.ADD_OBJECT) {
+        if (this.mq.phone || this.mq.tablet) {
+          options = [...mobileDocumentSpaceOptions]
+        } else {
+          options = [...documentSpaceOptions]
+        }
       }
-      if (options !== undefined && options.length >= 1 && options[0].subMenu !== undefined &&
-          (this.documentProperties === undefined || !this.documentProperties.hasMindmapBroadcasted)) {
-        removeMenuOptionIfExist(options[0].subMenu, 'newMindMap')
-      }
-      if (options !== undefined && options.length >= 1 && options[0].subMenu !== undefined &&
-          (this.documentProperties === undefined || !this.documentProperties.hasGeogebraBroadcasted)) {
-        removeMenuOptionIfExist(options[0].subMenu, 'newGeogebra')
-      }
-      if (options !== undefined && options.length >= 1 && options[0].subMenu !== undefined &&
-          (this.documentProperties === undefined || !this.documentProperties.hasScratchBroadcasted)) {
-        removeMenuOptionIfExist(options[0].subMenu, 'newScratch')
-      }
-      // Remove CopyUrl option if local documents
-      if (options !== undefined && options.length >= 1 && !this.currentFolder.isGroupDirectory) {
-        removeMenuOptionIfExist(options, 'copyUrl')
-      }
+
+      this.removeOptionsDependingOnContext(options)
+
       return options
     },
     isDocumentPanelDisplayed () {
@@ -253,6 +241,34 @@ export default {
     window.removeEventListener('keydown', this.keyMonitor)
   },
   methods: {
+    refreshCurrentFolder () {
+      this.$store.dispatch('documents/refreshCurrentFolder')
+    },
+    removeOptionsDependingOnContext (options) {
+      // Remove Lool, Mindmap, Geogebra and Scratch if not broadcasted to user
+      if (options !== undefined && options.length >= 1 && options[0].subMenu !== undefined &&
+        (this.documentProperties === undefined || !this.documentProperties.hasLoolBroadcasted)) {
+        removeMenuOptionIfExist(options[0].subMenu, 'newODT')
+        removeMenuOptionIfExist(options[0].subMenu, 'newODS')
+        removeMenuOptionIfExist(options[0].subMenu, 'newODP')
+      }
+      if (options !== undefined && options.length >= 1 && options[0].subMenu !== undefined &&
+        (this.documentProperties === undefined || !this.documentProperties.hasMindmapBroadcasted)) {
+        removeMenuOptionIfExist(options[0].subMenu, 'newMindMap')
+      }
+      if (options !== undefined && options.length >= 1 && options[0].subMenu !== undefined &&
+        (this.documentProperties === undefined || !this.documentProperties.hasGeogebraBroadcasted)) {
+        removeMenuOptionIfExist(options[0].subMenu, 'newGeogebra')
+      }
+      if (options !== undefined && options.length >= 1 && options[0].subMenu !== undefined &&
+        (this.documentProperties === undefined || !this.documentProperties.hasScratchBroadcasted)) {
+        removeMenuOptionIfExist(options[0].subMenu, 'newScratch')
+      }
+      // Remove CopyUrl option if local documents
+      if ((options !== undefined && options.length >= 1 && !this.currentFolder.isGroupDirectory) || !navigator.clipboard || !window.isSecureContext) {
+        removeMenuOptionIfExist(options, 'copyUrl')
+      }
+    },
     getWidth () {
       if (!this.isUnderTabletSize && (this.mq.tablet || this.mq.phone)) {
         this.isUnderTabletSize = true
@@ -350,7 +366,7 @@ export default {
           })
           break
         case 'download':
-          downloadDocument(this.selectedDocuments[0])
+          downloadDocuments(this.selectedDocuments)
           break
         case 'share':
           this.$store.dispatch('post/setIndicator', undefined)
@@ -382,7 +398,6 @@ export default {
         case 'managePermissions':
           this.isPermissionModalDisplayed = true
           break
-        // TODO HTML, ODS, ODP
         case 'newFolder':
           this.documentToRename = undefined
           this.modalSubmitAction = 'createFolder'
@@ -427,26 +442,8 @@ export default {
       this.$store.dispatch('contextMenu/closeMenus')
     },
     copyToClipboard (textToCopy) {
-      // navigator clipboard api needs a secure context (https)
-      if (navigator.clipboard && window.isSecureContext) {
-        // navigator clipboard api method'
+      if (navigator.clipboard && window.isSecureContext) { // navigator clipboard api needs a secure context (https)
         return navigator.clipboard.writeText(textToCopy)
-      } else {
-        // text area method
-        const textArea = document.createElement('textarea')
-        textArea.value = textToCopy
-        // make the textarea out of viewport
-        textArea.style.position = 'fixed'
-        textArea.style.left = '-999999px'
-        textArea.style.top = '-999999px'
-        document.body.appendChild(textArea)
-        textArea.focus()
-        textArea.select()
-        return new Promise((resolve, reject) => {
-          // here the magic happens
-          document.execCommand('copy')
-          textArea.remove()
-        })
       }
     },
     doSelectFolderAction (targetFolder) {
@@ -474,16 +471,16 @@ export default {
           if (this.openFiles.length === 0 && this.currentOptions.map(option => option.name).indexOf('delete') !== -1) {
             this.handleOption({ name: 'delete' })
           }
-        } else if (event.ctrlKey && ((event.key === 'c') || (event.key === 'C'))) {
+        } else if ((event.ctrlKey || event.cmdKey) && ((event.key === 'c') || (event.key === 'C'))) {
           this.handleOption({ name: 'copy' })
           // ctrl-X to cut
-        } else if (event.ctrlKey && ((event.key === 'x') || (event.key === 'X'))) {
+        } else if ((event.ctrlKey || event.cmdKey) && ((event.key === 'x') || (event.key === 'X'))) {
           this.handleOption({ name: 'cut' })
           // ctrl-V to paste
-        } else if (event.ctrlKey && ((event.key === 'v') || (event.key === 'V'))) {
+        } else if ((event.ctrlKey || event.cmdKey) && ((event.key === 'v') || (event.key === 'V'))) {
           this.handleOption({ name: 'paste' })
           // ctrl-D to duplicate
-        } else if (event.ctrlKey && ((event.key === 'd') || (event.key === 'D'))) {
+        } else if ((event.ctrlKey || event.cmdKey) && ((event.key === 'd') || (event.key === 'D'))) {
           this.handleOption({ name: 'duplicate' })
         }
       }

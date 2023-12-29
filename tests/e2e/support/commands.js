@@ -75,8 +75,7 @@ Cypress.Commands.add('login', (user, visitUrl = undefined) => {
       //   const pAuth = response.body.replace(/(\r\n|\n|\r|\s)/gm, '')
       //   cy.request(Cypress.config().baseUrl + '/lfr/api/jsonws/user.userutils/get-user-infos?p_auth=' + pAuth).its('status').should('eq', 200)
       // })
-    },
-    cacheAcrossSpecs: true
+    }
   })
 
   if (visitUrl && window.location.href !== Cypress.config().baseUrl + visitUrl) {
@@ -135,11 +134,22 @@ Cypress.Commands.add('globalKeyPress', (keyName) => {
   cy.get('body').type(keyName)
 })
 
-Cypress.Commands.add('type_ckeditor', (content) => {
+Cypress.Commands.add('type_ckeditor', (content, dataTestName = '') => {
+  // Assure the ck editor is present on the interface
+  cy.get('.ck-editor' + (dataTestName ? '[data-test="' + dataTestName + '"]' : ''))
+
+  // Add cy.tick after typr_ckeditor if there is a cy.clock()
+  let textContent
   cy.window()
     .then(win => {
-      win.textContent.ckeditor.setData(content) // Assume the window.ckeditor is set and correspond to the wanted ckEditor (only one ck by page)
-      win.textContent.updateContent(content)
+      if (dataTestName) {
+        textContent = win.textContent.find((element) => element.dataTest === dataTestName)
+      } else {
+        // Select last textContent by default
+        textContent = win.textContent[win.textContent.length - 1]
+      }
+      textContent.ckeditor.setData(content)
+      textContent.updateContent(content)
     })
 })
 
@@ -155,4 +165,23 @@ Cypress.Commands.add('selectDateRangeInVCalendar', (startDate, endDate) => {
     cy.contains('.vc-day', exactString(endDate.format('D'))).click()
   })
 // TODO: Find a way to close popover before continuing the tests
+})
+
+Cypress.Commands.add('selectDateInVCalendar', (date) => {
+  // SelectFirstDate
+  cy.get('.vc-popover-content').within(() => {
+    // More generic but commented because v-calendar month doesn't collapse if current month
+    // cy.get('button.vc-title').click()
+    // cy.get('button.vc-nav-title').click()
+    // cy.contains(dayJsStartDate.format('YYYY')).click()
+    // cy.contains(dayJsStartDate.format('MMM')).click()
+    cy.contains('.vc-day', exactString(date.format('D'))).click()
+  })
+
+  cy.tick(500)
+// TODO: Find a way to close popover before continuing the tests
+})
+
+Cypress.Commands.overwrite('viewport', (originalFn, size) => {
+  return Array.isArray(size) ? originalFn(size[0], size[1]) : originalFn(size)
 })

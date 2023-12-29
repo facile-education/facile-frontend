@@ -2,7 +2,7 @@ import { HHCURL } from '../../support/constants/urls'
 import { CLASSTEACHER2, DOYEN, HEADMASTER, SECRETARY, TEACHER2 } from '../../support/constants/users'
 import {
   addTimeToSlot,
-  getSlot,
+  getHHCSlot,
   selectSlotType,
   selectWeek
 } from '../../support/utils/horairesHorsCardesUtils'
@@ -29,7 +29,7 @@ describe('HHC_SlotDeletion', () => {
       cy.login(role, HHCURL)
       selectSlotType(slotType)
 
-      getSlot(slotToModify).click()
+      getHHCSlot(slotToModify).click()
       cy.get('[data-test=event-popup]').get('[data-test=deleteSlot-option]').should('not.exist')
     })
 
@@ -37,7 +37,7 @@ describe('HHC_SlotDeletion', () => {
       cy.login(role, HHCURL)
       selectSlotType(slotType)
 
-      getSlot(slotToModify).click()
+      getHHCSlot(slotToModify).click()
       cy.get('[data-test=event-popup]').get('[data-test=deleteSlot-option]').should('exist')
     })
   })
@@ -53,7 +53,7 @@ describe('HHC_SlotDeletion', () => {
 
     // Open deleteModal
     selectSlotType(slotType)
-    getSlot(slotToDelete).click()
+    getHHCSlot(slotToDelete).click()
     cy.get('[data-test=event-popup]').get('[data-test=deleteSlot-option]').click()
 
     // Test delete Modal
@@ -76,20 +76,20 @@ describe('HHC_SlotDeletion', () => {
     cy.get('[data-test="warning-modal"]').should('not.exist')
     cy.get('[data-test="delete-slot-modal"]').should('not.exist')
 
-    getSlot(slotToDelete).should('not.exist')
+    getHHCSlot(slotToDelete).should('not.exist')
 
     // Check previous week (should not be deleted)
     selectWeek(previousWeek)
-    getSlot(addTimeToSlot(slotToDelete, -1, 'week')).should('exist')
+    getHHCSlot(addTimeToSlot(slotToDelete, -1, 'week')).should('exist')
 
     // Check next week
     selectWeek(nextWeek)
     cy.get('.fc-event') // Wait calendar events to loads
-    getSlot(addTimeToSlot(slotToDelete, 1, 'week')).should('not.exist')
+    getHHCSlot(addTimeToSlot(slotToDelete, 1, 'week')).should('not.exist')
 
     // Check week after limit
     selectWeek(weekAfterLimit)
-    getSlot(addTimeToSlot(slotToDelete, nbWeeksToDeleteSlots, 'week')).should('exist')
+    getHHCSlot(addTimeToSlot(slotToDelete, nbWeeksToDeleteSlots, 'week')).should('exist')
 
     // // Check deregistration notif for student in deleted slot // TODO: check notifs when we make dev for send it
     // cy.login(DOYEN, messagingURL)

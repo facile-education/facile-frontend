@@ -2,7 +2,7 @@ import { HHCURL } from '../../support/constants/urls'
 import { CLASSTEACHER2, DOYEN, HEADMASTER, SECRETARY, TEACHER } from '../../support/constants/users'
 import {
   addTimeToSlot,
-  clickOnEmptySlot, formatSchoolSlotLabel, getSlot,
+  clickOnEmptySlot, formatSchoolSlotLabel, getHHCSlot,
   selectSlotType,
   selectWeek,
   submit
@@ -114,7 +114,8 @@ describe('HHC_CreateSlot', () => {
       cy.log('==================== Test ' + currentSlotType.label + ' creation ====================')
 
       selectSlotType(currentSlotType)
-      cy.get('.weeknumber-label').eq(2).click() // Go on current week (we don't know the date at each loop beginning)
+      cy.get('.week-number-label').eq(2).scrollIntoView()
+      cy.get('.week-number-label').eq(2).click() // Go on current week (we don't know the date at each loop beginning)
 
       // Create slot
       clickOnEmptySlot(emptySlot.day, emptySlot.slotNumberOnCalendar)
@@ -122,24 +123,24 @@ describe('HHC_CreateSlot', () => {
 
       fillEditSlotModal(emptySlot, slotToCreate)
 
-      getSlot(slotToCreate)
+      getHHCSlot(slotToCreate)
         .should('contain', currentSlotType.label)
         .should('contain', slotToCreate.capacity + '/' + slotToCreate.capacity)
         .should('contain', slotToCreate.teacher.lastName)
 
       // Check previous week
       selectWeek(previousWeek)
-      getSlot(addTimeToSlot(existingSlot, -1, 'week')).should('exist')
-      getSlot(addTimeToSlot(slotToCreate, -1, 'week')).should('not.exist')
+      getHHCSlot(addTimeToSlot(existingSlot, -1, 'week')).should('exist')
+      getHHCSlot(addTimeToSlot(slotToCreate, -1, 'week')).should('not.exist')
 
       // Check next week
       selectWeek(nextWeek)
-      getSlot(addTimeToSlot(slotToCreate, 1, 'week')).should('be.visible')
+      getHHCSlot(addTimeToSlot(slotToCreate, 1, 'week')).should('be.visible')
 
       // Check week after limit
       selectWeek(weekAfterLimit)
-      getSlot(addTimeToSlot(existingSlot, slotToCreate.nbWeekToCreateSlot, 'week')).should('exist')
-      getSlot(addTimeToSlot(slotToCreate, slotToCreate.nbWeekToCreateSlot, 'week')).should('not.exist')
+      getHHCSlot(addTimeToSlot(existingSlot, slotToCreate.nbWeekToCreateSlot, 'week')).should('exist')
+      getHHCSlot(addTimeToSlot(slotToCreate, slotToCreate.nbWeekToCreateSlot, 'week')).should('not.exist')
     }
   })
 
@@ -173,7 +174,6 @@ describe('HHC_CreateSlot', () => {
     const expectedCreatedSlot = { ...slotToCreate } // because we don't change slot dates in form
     expectedCreatedSlot.startDate = emptySlot.linkedSchoolSlot.startDate
     expectedCreatedSlot.endDate = emptySlot.linkedSchoolSlot.endDate
-    console.log(expectedCreatedSlot)
-    getSlot(expectedCreatedSlot).should('exist')
+    getHHCSlot(expectedCreatedSlot).should('exist')
   })
 })

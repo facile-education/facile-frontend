@@ -65,7 +65,11 @@ export default {
   components: { WeprodeButton, WeprodeErrorMessage, WeprodeInput, WeprodeSpinner, WeprodeWindow },
   inject: ['mq'],
   props: {
-    initFolder: {
+    currentFolder: {
+      type: Object,
+      default: undefined
+    },
+    folderToRename: {
       type: Object,
       default: undefined
     },
@@ -74,7 +78,7 @@ export default {
       required: true
     }
   },
-  emits: ['close'],
+  emits: ['close', 'createFolder', 'renameFolder'],
   setup: () => ({ v$: useVuelidate() }),
   data () {
     return {
@@ -109,12 +113,12 @@ export default {
           console.error('Unknown validation error')
           return ''
         }
+      } else if (this.backError === 'DuplicateFileException') {
+        return this.$t('duplicateFileException')
+      } else if (this.backError) {
+        return this.$t('backError')
       } else {
-        if (this.backError) {
-          return this.$t('backError')
-        } else {
-          return ''
-        }
+        return ''
       }
     }
   },
@@ -124,9 +128,8 @@ export default {
     input.select()
   },
   created () {
-    this.$store.dispatch('misc/incrementModalCount')
-    if (this.initFolder !== undefined) {
-      this.folderName = this.initFolder.name
+    if (this.folderToRename !== undefined) {
+      this.folderName = this.folderToRename.name
     } else {
       this.folderName = ''
     }
@@ -150,11 +153,13 @@ export default {
     },
     createFolder () {
       this.isActionInProgress = true
-      folderServices.createFolder(this.currentFolderId, this.folderName).then((data) => {
+      folderServices.createFolder(this.currentFolder.id, this.folderName).then((data) => {
         this.isActionInProgress = false
         if (data.success) {
-          this.$store.dispatch('documents/refreshCurrentFolder')
+          this.$emit('createFolder')
           this.onClose()
+        } else if (data.error === 'DuplicateFileException') {
+          this.backError = 'DuplicateFileException'
         } else {
           this.backError = 'createFolderError'
           console.error('An error was occurred')
@@ -167,11 +172,13 @@ export default {
     },
     renameFolder () {
       this.isActionInProgress = true
-      folderServices.renameFolder(this.initFolder.id, this.folderName).then((data) => {
+      folderServices.renameFolder(this.folderToRename.id, this.folderName).then((data) => {
         this.isActionInProgress = false
         if (data.success) {
-          this.$store.dispatch('documents/refreshCurrentFolder')
+          this.$emit('renameFolder')
           this.onClose()
+        } else if (data.error === 'DuplicateFileException') {
+          this.backError = 'DuplicateFileException'
         } else {
           this.backError = 'renameFolderError'
           console.error('An error was occurred')
@@ -183,9 +190,7 @@ export default {
       })
     },
     onClose () {
-      console.log('empty')
       this.folderName = ''
-      this.$store.dispatch('misc/decreaseModalCount')
       this.$emit('close')
     }
   }
@@ -211,6 +216,7 @@ export default {
   "backError": "Une erreur est survenue",
   "containsNoCotes": "Ne doit pas contenir de caractères spéciaux",
   "createHeader": "Nouveau dossier",
+  "duplicateFileException": "Un dossier du même nom existe déjà",
   "createSubmit": "Créer",
   "notBeginByDot": "Ne doit pas commencer par un '.'",
   "rename": "Renommer",

@@ -1,5 +1,8 @@
 <template>
-  <NeroToolbar class="toolbar">
+  <div
+    class="toolbar"
+    :class="{'phone': mq.phone}"
+  >
     <!-- Create session button -->
     <WeprodeButton
       v-if="displayCreateButton"
@@ -15,12 +18,18 @@
 
     <div class="filters">
       <!-- To switch between user selection and group selection -->
-      <NeroIcon
+      <button
         v-if="mq.phone && !$store.state.user.isStudent && !$store.state.user.isParent"
-        :name="iconClass"
-        class="selection"
+        :aria-label="$t('toggleGroupsFilter')"
+        :title="$t('toggleGroupsFilter')"
+        class="toggle-group-filter-button"
         @click="toggleSelection"
-      />
+      >
+        <NeroIcon
+          :name="iconClass"
+          class="selection"
+        />
+      </button>
 
       <!-- Parents with 1 child -->
       <p
@@ -90,7 +99,7 @@
         @update:model-value="onSelectSchool"
       />
     </div>
-  </NeroToolbar>
+  </div>
 </template>
 
 <script>
@@ -104,7 +113,6 @@ import { getSchoolUsers } from '@/api/userSearch.service'
 import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
 import WeprodeTagsInput from '@/components/Base/Weprode/WeprodeTagsInput.vue'
 import NeroIcon from '@/components/Nero/NeroIcon'
-import NeroToolbar from '@/components/Nero/NeroToolbar'
 const DatepickerNav = defineAsyncComponent(() => import('@/components/Horaires/DatepickerNav'))
 
 export default {
@@ -112,7 +120,6 @@ export default {
   components: {
     DatepickerNav,
     NeroIcon,
-    NeroToolbar,
     WeprodeButton,
     WeprodeDropdown,
     WeprodeTagsInput
@@ -174,8 +181,8 @@ export default {
       }
     },
     displayCreateButton () {
-      for (let index = 0; index < this.$store.state.user.schoolList.length; ++index) {
-        if (this.$store.state.user.schoolList[index].schoolId === this.$store.state.user.selectedSchool.schoolId && this.$store.state.user.schoolList[index].isAdmin) {
+      for (const school of this.$store.state.user.schoolList) {
+        if (school.schoolId === this.$store.state.user.selectedSchool.schoolId && school.isAdmin) {
           return true
         }
       }
@@ -282,10 +289,34 @@ export default {
 <style lang="scss" scoped>
 @import "@design";
 
+.toolbar {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 0.8rem;
+
+  z-index: $toolbar-z-index;
+
+  &.phone {
+    flex-direction: column;
+
+    .search {
+      flex: 1;
+      max-width: none;
+    }
+  }
+}
+
 .filters {
   display: flex;
   align-items: center;
   gap: 0.8rem;
+}
+
+.toggle-group-filter-button {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  border: none;
 }
 
 .create-button {
@@ -332,12 +363,13 @@ export default {
 </style>
 
 <i18n locale="fr">
-  {
-    "add": "NOUVEAU",
-    "groupFilter": "Groupe",
-    "userInput": "Elève / Maître",
-    "childFilter": "Enfant",
-    "timetableOf": "Horaires de ",
-    "createSession": "Créer un cours"
-  }
+{
+  "add": "NOUVEAU",
+  "groupFilter": "Groupe",
+  "userInput": "Elève / Maître",
+  "childFilter": "Enfant",
+  "timetableOf": "Horaires de ",
+  "createSession": "Créer un cours",
+  "toggleGroupsFilter": "Sélectionner des classes / utilisateurs"
+}
 </i18n>

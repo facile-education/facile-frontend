@@ -30,16 +30,33 @@
         </strong>
       </div>
 
+      <button
+        v-if="haveOptions && (mq.phone || mq.tablet)"
+        class="options-button"
+        :aria-label="$t('options')"
+        :title="$t('options')"
+        @click="toggleContextMenu"
+      >
+        <img
+          height="16"
+          width="16"
+          :src="require('@assets/icons/vertical_dots.svg')"
+          alt="options"
+        >
+      </button>
+
       <div
-        v-if="!isSelectionMode && (event.isEditable || event.isDeletable)"
+        v-else-if="haveOptions"
         class="event-options"
       >
         <button
           v-if="event.isEditable"
-          class="option"
+          class="option theme-hover-extra-light-background-color"
           :aria-label="$t('update')"
           :title="$t('update')"
+          data-test="buttonEditEvent"
           @click.stop="isUpdateModalDisplayed = true"
+          @keyup.stop
         >
           <img
             src="@/assets/icons/pencil.svg"
@@ -48,10 +65,12 @@
         </button>
         <button
           v-if="event.isDeletable"
-          class="option"
+          class="option theme-hover-extra-light-background-color"
           :aria-label="$t('delete')"
           :title="$t('delete')"
+          data-test="buttonDeleteEvent"
           @click.stop="confirmDeleteEvent"
+          @keyup.stop
         >
           <img
             src="@/assets/icons/trash.svg"
@@ -89,6 +108,16 @@
       @close="closeDetailsModal"
     />
   </teleport>
+
+  <teleport
+    v-if="displayMenu"
+    to="body"
+  >
+    <ContextMenu
+      @choose-option="performChosenOption"
+      @close="displayMenu=false"
+    />
+  </teleport>
 </template>
 
 <script>
@@ -96,13 +125,16 @@ import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
 import { deleteEvent, setEventRead } from '@/api/dashboard/agenda.service'
+import { icons } from '@/constants/icons'
 import { isInViewport } from '@/utils/commons.util'
+const ContextMenu = defineAsyncComponent(() => import('@components/ContextMenu/ContextMenu.vue'))
 const SaveDiaryEventModal = defineAsyncComponent(() => import('@components/Dashboard/DiaryWidget/SaveDiaryEventModal.vue'))
 const DiaryEventDetailsModal = defineAsyncComponent(() => import('@components/Dashboard/DiaryWidget/DiaryEventDetailsModal.vue'))
 
 export default {
   name: 'DiaryEventItem',
-  components: { DiaryEventDetailsModal, SaveDiaryEventModal },
+  components: { ContextMenu, DiaryEventDetailsModal, SaveDiaryEventModal },
+  inject: ['mq'],
   props: {
     event: {
       type: Object,
@@ -126,10 +158,14 @@ export default {
     return {
       isUpdateModalDisplayed: false,
       isDetailsModalDisplayed: false,
-      refreshEventsOnClose: false
+      refreshEventsOnClose: false,
+      displayMenu: false
     }
   },
   computed: {
+    haveOptions () {
+      return !this.isSelectionMode && (this.event.isEditable || this.event.isDeletable)
+    },
     eventDay () {
       const string = dayjs(this.event.startDate).format('ddd')
       return string.substring(0, string.length - 1) // To remove the last '.' with 'ddd' formatting
@@ -206,6 +242,43 @@ export default {
         lastAction: { fct: this.deleteEvent, params: [] }
       })
     },
+    toggleContextMenu (event) {
+      this.displayMenu = true
+      const options = []
+      if (this.event.isEditable) {
+        options.push({
+          name: 'update',
+          title: this.$t('update'),
+          icon: icons.options.rename,
+          position: 1,
+          hasSeparator: false
+        })
+      }
+      if (this.event.isDeletable) {
+        options.push({
+          name: 'delete',
+          title: this.$t('delete'),
+          icon: icons.options.delete,
+          position: 2,
+          hasSeparator: false
+        })
+      }
+      this.$store.dispatch('contextMenu/openContextMenu', { event, options })
+    },
+    performChosenOption (option) {
+      switch (option.name) {
+        case 'update':
+          this.isUpdateModalDisplayed = true
+          break
+        case 'delete':
+          this.confirmDeleteEvent()
+          break
+        default:
+          console.error('no option with name ' + option.name + ' exists')
+      }
+      this.displayMenu = false
+      this.$store.dispatch('contextMenu/closeMenus')
+    },
     deleteEvent () {
       deleteEvent(this.event.eventId).then((data) => {
         if (data.success) {
@@ -257,6 +330,14 @@ export default {
       }
     }
   }
+}
+
+.options-button {
+  padding: 0 10px;
+  margin: 0;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }
 
 .date{
@@ -318,8 +399,8 @@ export default {
       height: 1rem;
     }
 
-    &:hover {
-      background-color: $color-hover-bg;
+    &:not(:hover) {
+      background-color: white;
     }
   }
 }

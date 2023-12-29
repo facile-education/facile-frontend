@@ -34,7 +34,7 @@ export default {
       if (defaultImagesKeys.indexOf(this.access.thumbnailUrl) !== -1) {
         return new URL(`../../../assets/images/${this.access.thumbnailUrl}.png`, import.meta.url).href
       } else { // Returned url is a key for local default image
-        return this.access.thumbnailUrl
+        return this.access.thumbnailUrl + '&p_auth=' + this.$store.state.user.pauth
       }
     }
   },

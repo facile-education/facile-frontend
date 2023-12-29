@@ -2,6 +2,7 @@
   <nav v-if="configuration">
     <button
       class="previous"
+      data-test="PreviousDay"
       :title="$t('goPrevious')"
       :aria-label="$t('goPrevious')"
       @click="$emit('go-previous')"
@@ -12,17 +13,20 @@
         :alt="$t('goPrevious')"
       >
     </button>
+
     <div class="middle-section">
       <DatePicker
         v-if="configuration"
-        v-model="formattedDate"
+        :value="formattedDate"
         :min-date="minDate"
         :max-date="maxDate"
         :disabled-dates="disabledDates"
+        @dayclick="onDayClick"
       >
         <template #default="{ togglePopover }">
           <div
             class="date"
+            data-test="date"
             :class="{'theme-text-color': isToday, 'theme-extra-light-background-color': isToday}"
             @click="togglePopover()"
           >
@@ -31,7 +35,9 @@
         </template>
       </DatePicker>
     </div>
+
     <button
+      data-test="NextDay"
       :title="$t('goAfter')"
       :aria-label="$t('goAfter')"
       @click="$emit('go-after')"
@@ -46,6 +52,8 @@
 </template>
 
 <script>
+import 'v-calendar/style.css'
+
 import dayjs from 'dayjs'
 import { DatePicker } from 'v-calendar'
 
@@ -69,15 +77,8 @@ export default {
     maxDate () {
       return dayjs(this.configuration.schoolYearEndDate).toDate()
     },
-    formattedDate: {
-      get () {
-        return this.selectedDate.toDate()
-      },
-      set (date) {
-        if (date !== null) {
-          this.$emit('select-date', dayjs(date))
-        }
-      }
+    formattedDate () {
+      return this.selectedDate.toDate()
     },
     isToday () {
       return this.selectedDate.isSame(dayjs(), 'day')
@@ -111,6 +112,11 @@ export default {
       } else if (this.selectedDate.isBefore(this.minDate)) {
         this.$emit('select-date', this.minDate)
       }
+    }
+  },
+  methods: {
+    onDayClick (date) {
+      this.$emit('select-date', dayjs(date.startDate))
     }
   }
 }

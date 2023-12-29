@@ -27,6 +27,7 @@
           class="population-selection"
         >
           <WeprodeTagsInput
+            ref="tagsInput"
             v-model="populations"
             :placeholder="$t('populationPlaceholder') + '*'"
             :list="availablePopulationsList"
@@ -41,16 +42,18 @@
           <WeprodeSpinner v-if="isLoadingNewsDetails" />
         </div>
 
-        <div class="release-date">
+        <div
+          class="release-date"
+          :class="{'phone': mq.phone || mq.tablet}"
+        >
           <div v-t="'releaseDateLabel'" />
           <CustomDatePicker
-            :selected-date="releaseDate"
+            v-model:selected-date="releaseDate"
             :min-date="minDate"
             :with-hours="true"
             :is-required="true"
             :minute-increment="15"
             :disabled="isReleaseDateDisabled"
-            @select-date="updateReleaseDate"
           />
           <WeprodeErrorMessage
             :error-message="formErrorList.releaseDate"
@@ -58,23 +61,14 @@
         </div>
       </div>
 
-      <div class="title">
-        <WeprodeInput
-          ref="nameInput"
-          v-model="title"
-          :placeholder="$t('namePlaceHolder') + '*'"
-        />
-        <WeprodeErrorMessage
-          :error-message="formErrorList.title"
-        />
-      </div>
-
       <div
         v-if="mq.phone || mq.tablet"
         class="population-selection"
       >
         <WeprodeTagsInput
+          ref="tagsInput"
           v-model="populations"
+          class="last-population-selection"
           :placeholder="$t('populationPlaceholder') + '*'"
           :list="availablePopulationsList"
           sort-field="order"
@@ -87,6 +81,17 @@
           :error-message="formErrorList.populations"
         />
         <WeprodeSpinner v-if="isLoadingNewsDetails" />
+      </div>
+
+      <div class="title">
+        <WeprodeInput
+          ref="nameInput"
+          v-model="title"
+          :placeholder="$t('namePlaceHolder') + '*'"
+        />
+        <WeprodeErrorMessage
+          :error-message="formErrorList.title"
+        />
       </div>
 
       <TextContent
@@ -114,6 +119,7 @@
         <span v-t="'markAsUnreadForAll'" />
         <WeprodeToggleSwitch
           v-model="markAsUnreadForAll"
+          data-test="markAsUnreadForAll"
         />
         <InformationIcon
           class="info"
@@ -127,6 +133,7 @@
       <WeprodeButton
         data-test="submitButton"
         :label="isCreation? $t('creationSubmit') : $t('updateSubmit')"
+        :disabled="isLoadingFiles"
         @click="submit"
       />
     </template>
@@ -235,9 +242,12 @@ export default {
     }
   },
   computed: {
+    isLoadingFiles () {
+      return this.$store.state.currentActions.isLoadingProgressionDisplayed
+    },
     thumbnail () {
       if (defaultImagesKeys.indexOf(this.thumbnailUrl) !== -1) {
-        return new URL(`../../../assets/images/${this.thumbnailUrl}.png`, import.meta.url).href
+        return new URL(`../../../assets/images/${this.thumbnailUrl}.svg`, import.meta.url).href
       } else { // Returned url is a key for local default image
         return this.thumbnailUrl
       }
@@ -285,14 +295,20 @@ export default {
     this.setInitialForm()
   },
   mounted () {
-    const input = this.$refs.nameInput
-    input.focus()
-    input.select()
+    if (this.isCreation) {
+      const input = this.$refs.tagsInput
+      input.focus()
+    } else {
+      const input = this.$refs.nameInput
+      input.focus()
+      input.select()
+    }
   },
   methods: {
     roundMinutes () {
-      // Round releaseDate to the nearest quarter-hour (to have a compliant behaviour with v-calendar)
-      this.releaseDate = this.releaseDate.minute(Math.round(this.releaseDate.minute() / 15) * 15)
+      // Round releaseDate to the previous quarter-hour (to have a compliant behaviour with v-calendar 15min suggestion list)
+      const currentQuarterNumber = Math.floor(this.releaseDate.minute() / 15)
+      this.releaseDate = this.releaseDate.minute((currentQuarterNumber) * 15)
     },
     setInitialForm () {
       this.initialForm = {
@@ -308,9 +324,6 @@ export default {
     selectImage (tempFile) {
       this.thumbnailId = tempFile.id
       this.thumbnailUrl = tempFile.fileUrl
-    },
-    updateReleaseDate (date) {
-      this.releaseDate = dayjs(date)
     },
     attachNewFiles (selectedFiles) {
       this.attachedFiles = [...this.attachedFiles, ...selectedFiles]
@@ -351,10 +364,20 @@ export default {
         if (data.success) {
           // Concat all populations of all schools in one list
           this.availablePopulationsList = []
+
+          // Global
+          if (data.global) {
+            this.availablePopulationsList = [...this.availablePopulationsList, ...data.global]
+          }
+
           const schools = data.schoolsGroups
           schools.forEach((school) => {
-            this.availablePopulationsList = [...this.availablePopulationsList, ...school.populations]
-            this.availablePopulationsList = [...this.availablePopulationsList, ...school.subjects]
+            if (school.populations) {
+              this.availablePopulationsList = [...this.availablePopulationsList, ...school.populations]
+            }
+            if (school.subjects) {
+              this.availablePopulationsList = [...this.availablePopulationsList, ...school.subjects]
+            }
             if (school.classes) {
               school.classes.forEach((schoolClass) => {
                 this.availablePopulationsList = [...this.availablePopulationsList, ...schoolClass.populations]
@@ -419,12 +442,10 @@ export default {
     submit () {
       if (this.v$.$invalid) {
         this.v$.$touch()
+      } else if (this.isCreation) {
+        this.createNews()
       } else {
-        if (this.isCreation) {
-          this.createNews()
-        } else {
-          this.updateNews()
-        }
+        this.updateNews()
       }
     },
     createNews () {
@@ -440,6 +461,10 @@ export default {
         } else {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
         }
+      }, (err) => {
+        this.isProcessingSave = false
+        console.error(err)
+        this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
       })
     },
     updateNews () {
@@ -455,6 +480,10 @@ export default {
         } else {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
         }
+      }, (err) => {
+        this.isProcessingSave = false
+        console.error(err)
+        this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
       })
     },
     confirmClosure () {
@@ -514,11 +543,16 @@ export default {
 .first-line {
   display: flex;
   gap: 1rem;
+  align-items: center;
 }
 
 .release-date {
   color: $color-new-light-text;
   white-space: nowrap;
+
+  &:not(.phone) {
+    height: $news-thumbnail-size-in-modal;
+  }
 }
 
 .population-selection {
@@ -526,7 +560,7 @@ export default {
   flex: 1;
 }
 
-.first-line, .title, .population-selection {
+.first-line, .title, .last-population-selection {
   margin-bottom: 20px;
 }
 

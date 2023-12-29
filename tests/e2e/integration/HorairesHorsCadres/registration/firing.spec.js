@@ -11,7 +11,7 @@ import {
   TEACHER
 } from '../../../support/constants/users'
 import {
-  getSlot,
+  getHHCSlot,
   getUserSlot,
   selectSlotType,
   selectStudent
@@ -126,7 +126,7 @@ describe('HHC_Firing_Registration', () => {
       // Select student
       selectStudent(studentToRegister)
       // Open registration modal
-      getSlot(slotToRegisterInside).click()
+      getHHCSlot(slotToRegisterInside).click()
       cy.get('[data-test=event-popup]').get('[data-test=registerStudent-option]').should('not.exist')
     })
 
@@ -136,7 +136,7 @@ describe('HHC_Firing_Registration', () => {
       // Select student
       selectStudent(studentToRegister)
       // Open registration modal
-      getSlot(slotToRegisterInside).click()
+      getHHCSlot(slotToRegisterInside).click()
       cy.get('[data-test=event-popup]').get('[data-test=registerStudent-option]').should('exist')
     })
   })
@@ -152,8 +152,11 @@ describe('HHC_Firing_Registration', () => {
     // Select student
     selectStudent(studentToRegister)
     // Open registration modal
-    getSlot(slotToRegisterInside).click()
+    getHHCSlot(slotToRegisterInside).click()
     cy.get('[data-test=registerStudent-option]').click()
+
+    // Wait to fix CI bug
+    cy.wait(2000)
 
     // Test registration modal (ends by registering student)
     testRegistrationModal(slotToRegisterInside, studentToRegister, slotToBeFiredFrom)
@@ -163,7 +166,7 @@ describe('HHC_Firing_Registration', () => {
 
     // Check student has been registered
     const capacityLabel = slotToRegisterInside.capacity - 1 + '/' + slotToRegisterInside.capacity
-    getSlot(slotToRegisterInside).should('contain', capacityLabel).click()
+    getHHCSlot(slotToRegisterInside).should('contain', capacityLabel).click()
     cy.get('[data-test=showStudentList-option]').click()
     cy.get('[data-test=student-list-modal]').within(() => {
       cy.contains(studentToRegister.firstName + ' ' + studentToRegister.lastName)
@@ -179,7 +182,8 @@ describe('HHC_Firing_Registration', () => {
       }
       if (notification.expectedActivityItem) {
         cy.login(notification.role, dashboardURL)
-        cy.get('[data-test=activity-widget]', { timeout: 10000 }).within(() => {
+        cy.get('[data-test=activity-widget]', { timeout: 10000 }).scrollIntoView()
+        cy.get('[data-test=activity-widget]').within(() => {
           cy.contains(notification.expectedActivityItem.title).should('be.visible')
           cy.contains(notification.expectedActivityItem.content).should('be.visible')
         })
@@ -191,7 +195,7 @@ describe('HHC_Firing_Registration', () => {
     cy.loadTables('schoollife/schoollife_tables.sql')
     cy.login(firingTeacher, HHCURL)
 
-    cy.get('[data-test=pending-firing-modal]').within(() => {
+    cy.get('[data-test=pending-firing-modal]', { timeout: 10000 }).within(() => {
       cy.get('textarea').type(firingReason)
       cy.contains('Envoyer').click()
     })

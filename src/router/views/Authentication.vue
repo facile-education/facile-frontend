@@ -185,6 +185,9 @@ export default {
     },
     authenticateButtonLabel () {
       return this.isLoading ? 'authenticationOnGoing' : 'authenticate'
+    },
+    areEmptyFields () {
+      return this.login === '' || this.password === ''
     }
   },
   beforeCreate () {
@@ -235,6 +238,10 @@ export default {
   },
   methods: {
     doLogin () {
+      // Do not call if empty login or password
+      if (this.areEmptyFields) {
+        return
+      }
       this.isLoading = true
       authenticationService.login(this.login, this.password, this.isMobileApp).then(response => {
         this.isLoading = false
@@ -408,10 +415,8 @@ $eel-blue: #2c7bb8;
 }
 
 .btn {
-  border-color: $eel-blue;
   background: $eel-blue;
   color: $color-body-bg;
-  width: 300px;
   border-radius: 0;
   width: 100%;
   margin: 10px 0;
@@ -419,6 +424,10 @@ $eel-blue: #2c7bb8;
   text-decoration: none;
   cursor: pointer;
   &.disabled {
+    opacity: 50;
+    background-color: grey;
+  }
+  &.running {
     opacity: 50;
     background-color: grey;
     cursor: wait;

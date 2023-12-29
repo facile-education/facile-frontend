@@ -3,7 +3,7 @@
     class="student"
     data-test="student-list-item"
   >
-    <span> {{ formattedStudent }} </span>
+    <span class="name"> {{ formattedStudent }} </span>
     <span
       v-if="student.subject"
       v-t="formattedSubject"
@@ -18,14 +18,18 @@
         :model-value="student.isPresent"
         @update:model-value="handleCheck"
       />
-      <NeroIcon
+      <button
         v-if="isSignOut"
-        name="fa-sign-out-alt"
-        class="icon"
-        data-test="unregister"
         :title="$t('NotUsualSlots.StudentListModal.unsubscribe')"
+        :aria-label="$t('NotUsualSlots.StudentListModal.unsubscribe')"
+        data-test="unregister"
         @click="isStudentDeregistrationModalDisplayed = true"
-      />
+      >
+        <img
+          src="@assets/icons/out.svg"
+          :alt="$t('NotUsualSlots.StudentListModal.unsubscribe')"
+        >
+      </button>
     </div>
 
     <teleport
@@ -49,14 +53,13 @@ import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
 import WeprodeCheckbox from '@/components/Base/Weprode/WeprodeCheckbox.vue'
-import NeroIcon from '@/components/Nero/NeroIcon'
 import notUsualSlotsConstants from '@/constants/notUsualSlots'
 import { toPascalCase } from '@/utils/commons.util'
 const StudentRegistrationModal = defineAsyncComponent(() => import('@components/NotUsualSlotManager/StudentRegistrationModal/StudentRegistrationModal'))
 
 export default {
   name: 'StudentListItem',
-  components: { NeroIcon, StudentRegistrationModal, WeprodeCheckbox },
+  components: { StudentRegistrationModal, WeprodeCheckbox },
   inject: ['mq'],
   props: {
     student: {
@@ -93,8 +96,8 @@ export default {
     },
     isPresentCheckBoxActive () {
       return this.isCurrentTeacher &&
-        !(this.slotType.type === notUsualSlotsConstants.firedType) &&
-        !(this.slotType.type === notUsualSlotsConstants.tutoringType) &&
+        this.slotType.type !== notUsualSlotsConstants.firedType &&
+        this.slotType.type !== notUsualSlotsConstants.tutoringType &&
         dayjs().isAfter(dayjs(this.event.startDate, 'YYYY/MM/DD HH:mm'))
     },
     isRegisterer () {
@@ -130,18 +133,23 @@ export default {
 <style lang="scss" scoped>
 .student {
   display: flex;
+  align-items: center;
   margin: 10px 0;
-  justify-content: space-between;
+}
+
+.name {
+  flex: 2;
 }
 
 .subject {
+  flex: 1;
   font-size: 0.85rem;
   font-style: italic;
-  display: flex;
-  align-items: center;
+  padding: 0 0.5rem;
 }
 
 .right-section {
+  text-align: right;
   display: flex;
 }
 
@@ -149,15 +157,19 @@ export default {
   margin-right: 30px;
 }
 
-.icon {
+button {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  border: none;
   cursor: pointer;
-  margin-right: 30px;
-  // width: 25px;
-  // height: 25px;
+  display: flex;
+  align-items: center;
 
-  // &:hover {
-  //   border: 1px solid grey;
-  // }
+  img {
+    height: 20px;
+    width: 20px;
+  }
 }
 
 </style>

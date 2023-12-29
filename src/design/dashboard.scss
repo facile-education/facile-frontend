@@ -24,8 +24,6 @@
 }
 
 %dashboard-header-pellet {
-  height: 20px;
-  width: 20px;
   margin-left: 10px;
 }
 
@@ -41,11 +39,12 @@ $announcement-item-min-height: 152px;
 $activity-item-height: 80px;
 $announcement-item-min-width: min(323px, 80vw);
 $announcement-item-horizontal-min-width: min(450px, 80vw);
+$news-thumbnail-size-in-modal: 90px;
 
 %read-only-button {
   line-height: 1;
-  height: 15px;
-  width: 15px;
+  height: 18px;
+  width: 18px;
   padding: 0;
   background-color: white;
   border: none;
@@ -55,7 +54,8 @@ $announcement-item-horizontal-min-width: min(450px, 80vw);
   justify-content: center;
 
   .unread-filter-icon {
-    font-size: 20px;
+    font-size: 18px;
+    line-height: 18px;
   }
 }
 
@@ -104,6 +104,17 @@ $announcement-item-horizontal-min-width: min(450px, 80vw);
   display: flex;
   padding-right: 2rem;
   overflow: hidden;
+
+  &.phone {
+    padding-right: 0;
+
+    .date {
+      padding-top: 0;
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+  }
 
   i {
     font-style: normal;

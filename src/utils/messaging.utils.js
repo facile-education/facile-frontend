@@ -37,12 +37,10 @@ const MessagingUtils = {
     }
     if (lastSelectedThreadIndex === -1 || threadIndex === -1) {
       return []
+    } else if (lastSelectedThreadIndex < threadIndex) {
+      return sortedThreads.slice(lastSelectedThreadIndex, threadIndex + 1)
     } else {
-      if (lastSelectedThreadIndex < threadIndex) {
-        return sortedThreads.slice(lastSelectedThreadIndex, threadIndex + 1)
-      } else {
-        return sortedThreads.slice(threadIndex, lastSelectedThreadIndex + 1)
-      }
+      return sortedThreads.slice(threadIndex, lastSelectedThreadIndex + 1)
     }
   },
   refresh () {
@@ -145,18 +143,41 @@ const MessagingUtils = {
     }
     store.dispatch('messaging/setSelectedMessages', [message])
   },
-  selectThread (thread, messageIdToSelect) {
-    // Mark as read main message if unread
-    for (const message of thread.messages) {
-      if (message.messageId === thread.mainMessageId && message.isNew) {
-        this.markMessagesAsReadUnread([thread.mainMessageId], true)
+  async selectThread (thread, messageIdToSelect) {
+    return new Promise((resolve) => {
+      let foundMainMessage = false
+      // Mark as read main message if unread
+      for (const message of thread.messages) {
+        if (message.messageId === thread.mainMessageId) {
+          foundMainMessage = true
+          if (message.isNew) {
+            this.markMessagesAsReadUnread([thread.mainMessageId], true).then(() => { // Wait message is mark as read before re-getting the thread
+              store.dispatch('messaging/setLastSelectedThread', thread)
+              store.dispatch('messaging/setSelectedThreads', [thread])
+              resolve()
+
+              this.getThreadMessages(thread, store.state.messaging.currentFolder.folderId, messageIdToSelect)
+            }, (err) => {
+              console.error(err)
+              store.dispatch('popups/pushPopup', { message: i18n.global.t('Popup.error'), type: 'error' })
+            })
+          } else {
+            store.dispatch('messaging/setLastSelectedThread', thread)
+            store.dispatch('messaging/setSelectedThreads', [thread])
+            resolve()
+
+            this.getThreadMessages(thread, store.state.messaging.currentFolder.folderId, messageIdToSelect)
+          }
+        }
       }
-    }
-
-    store.dispatch('messaging/setLastSelectedThread', thread)
-    store.dispatch('messaging/setSelectedThreads', [thread])
-
-    messageService.getThreadMessages(thread.threadId, store.state.messaging.currentFolder.folderId).then((data) => {
+      if (!foundMainMessage) {
+        console.error('cannot find main thread message (to mark it as unread for example)')
+        store.dispatch('popups/pushPopup', { message: i18n.global.t('Popup.error'), type: 'error' })
+      }
+    })
+  },
+  getThreadMessages (thread, folderId, messageIdToSelect) {
+    messageService.getThreadMessages(thread.threadId, folderId).then((data) => {
       if (data.success) {
         store.dispatch('messaging/setCurrentThreadMessages', data.messages)
 
@@ -172,17 +193,26 @@ const MessagingUtils = {
     })
   },
   markMessagesAsReadUnread (messageIds, markAsRead) {
-    messageService.setMessageReadStatus(messageIds, markAsRead).then((data) => {
-      if (data.success) {
-        if (markAsRead) {
-          store.dispatch('messaging/markMessagesAsRead', messageIds)
-          store.dispatch('menu/updateMessagingNotification', messageIds.length)
+    return new Promise((resolve, reject) => {
+      messageService.setMessageReadStatus(messageIds, markAsRead).then((data) => {
+        if (data.success) {
+          if (markAsRead) {
+            store.dispatch('messaging/markMessagesAsRead', messageIds)
+            store.dispatch('menu/updateMessagingNotification', messageIds.length)
+          } else {
+            store.dispatch('messaging/markMessagesAsUnread', messageIds)
+            store.dispatch('menu/updateMessagingNotification', -messageIds.length)
+          }
+          store.dispatch('messaging/updateNbUnread', store.state.messaging.currentFolder.folderId)
+          resolve()
         } else {
-          store.dispatch('messaging/markMessagesAsUnread', messageIds)
-          store.dispatch('menu/updateMessagingNotification', -messageIds.length)
+          console.error('Error while updating message status', messageIds, markAsRead)
+          reject(new Error('Error while updating message status'))
         }
-        store.dispatch('messaging/updateNbUnread', store.state.messaging.currentFolder.folderId)
-      }
+      }, (err) => {
+        console.error(err)
+        reject(err)
+      })
     })
   },
   isDraftFolder () {
@@ -213,9 +243,7 @@ const MessagingUtils = {
     }
   },
   getFolderFromId (folderList, folderId) {
-    for (let i = 0; i < folderList.length; i++) {
-      const folder = folderList[i]
-
+    for (const folder of folderList) {
       if (folder.folderId === folderId) {
         return folder
       } else {

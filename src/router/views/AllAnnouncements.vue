@@ -43,7 +43,7 @@
           @update-announcement="refresh"
           @delete-announcement="refresh"
           @select="selectedAnnouncement=announcement"
-          @mark-as-read="announcement.hasRead=true"
+          @mark-as-read="markAnnouncementAsRead(announcement)"
           @get-next-announcements="loadAnnouncements"
         />
       </div>
@@ -87,7 +87,6 @@ export default {
       nbNewAnnouncements: 0,
       error: undefined,
       announcementsList: [],
-      fromDate: dayjs(),
       selectedAnnouncement: undefined
     }
   },
@@ -103,6 +102,10 @@ export default {
     this.loadAnnouncements()
   },
   methods: {
+    markAnnouncementAsRead (announcement) {
+      announcement.hasRead = true
+      this.nbNewAnnouncements--
+    },
     isLastDisplayed (announcement) {
       return this.announcementsList[this.announcementsList.length - 1].newsId === announcement.newsId // Assume display order is the same as announcementsList order
     },
@@ -112,7 +115,6 @@ export default {
     },
     refresh () {
       this.ended = false
-      this.fromDate = dayjs()
       this.announcementsList = []
       this.loadAnnouncements()
     },
@@ -138,7 +140,7 @@ export default {
         return
       }
       this.isLoading = true
-      getSchoolNews(this.fromDate, allAnnouncementsPaginationSize, false, this.unReadOnly).then((data) => {
+      getSchoolNews(dayjs(), this.announcementsList.length, allAnnouncementsPaginationSize, false, this.unReadOnly).then((data) => {
         this.isLoading = false
         if (data.success) {
           if (data.news.length < allAnnouncementsPaginationSize) {
@@ -147,10 +149,7 @@ export default {
           this.error = false
           this.announcementsList = this.announcementsList.concat(data.news)
           this.nbNewAnnouncements = data.nbUnreadNews
-          // Update pagination
-          if (data.news.length > 0) {
-            this.fromDate = dayjs(data.news[data.news.length - 1].publicationDate) // Assume they are sorted by date, so take the last announcement date
-          }
+
           // Handle selection
           if (this.isDetailsPanelDisplayed && this.selectedEvent === undefined && this.announcementsList.length > 0 && !this.unReadOnly) {
             this.selectedAnnouncement = this.announcementsList[0]
@@ -168,8 +167,21 @@ export default {
 <style lang="scss" scoped>
 @import "@design";
 
-.body.details-display{
+.body {
   height: calc(100% - $all-events-header-height);
+}
+
+.announcements-list {
+  height: 100%;
+}
+
+.scroll {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.body.details-display{
   display: flex;
   padding-top: 20px;
 
@@ -178,11 +190,6 @@ export default {
     width: 33%;
     position: relative;
     margin-right: 20px;
-  }
-
-  .scroll {
-    height: 100%;
-    overflow-y: auto;
   }
 
   .details-placeholder {

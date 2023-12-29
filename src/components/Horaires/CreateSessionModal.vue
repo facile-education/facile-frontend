@@ -5,6 +5,7 @@
     :full-screen="mq.phone || mq.tablet"
     :class="{'create-session': mq.phone}"
     class="create-session-modal"
+    data-test="create-session-modal"
     @close="closeModal"
   >
     <template #header>
@@ -23,6 +24,7 @@
         <WeprodeDropdown
           v-model="selectedDay"
           class="days-list"
+          data-test="day-dropdown"
           :list="daysList"
           display-field="dayName"
           :sort="false"
@@ -37,6 +39,7 @@
           v-model="selectedSlot"
           class="slots-list"
           :list="slotList"
+          data-test="slot-dropdown"
           display-field="slotLabel"
           :sort="false"
           :filtered="false"
@@ -57,6 +60,7 @@
         <WeprodeDropdown
           v-model="selectedGroup"
           class="group-list"
+          data-test="group-dropdown"
           :placeholder="$t('group')"
           :list="groupList"
           display-field="groupName"
@@ -74,6 +78,7 @@
         <WeprodeDropdown
           v-model="subject"
           class="subject-list"
+          data-test="subject-dropdown"
           :list="subjectList"
           display-field="name"
         />
@@ -97,10 +102,10 @@
           :list="teacherList"
           class="tags"
         />
+        <WeprodeErrorMessage
+          :error-message="formErrorList.selectedTeachers"
+        />
       </div>
-      <WeprodeErrorMessage
-        :error-message="formErrorList.selectedTeachers"
-      />
 
       <!-- Room -->
       <div
@@ -110,6 +115,9 @@
           v-model="room"
           class="room-input"
           :placeholder="$t('roomPlaceHolder')"
+        />
+        <WeprodeErrorMessage
+          :error-message="formErrorList.room"
         />
       </div>
 
@@ -165,7 +173,8 @@ export default {
     selectedGroup: { required },
     selectedDay: { required },
     selectedTeachers: { teachersRequired },
-    subject: { required }
+    subject: { required },
+    room: { required }
   },
   data () {
     return {
@@ -189,18 +198,19 @@ export default {
         day: (this.v$.selectedDay.$invalid && this.v$.selectedDay.$dirty) ? this.$t('Validation.day') : '',
         group: (this.v$.selectedGroup.$invalid && this.v$.selectedGroup.$dirty) ? this.$t('Validation.group') : '',
         selectedTeachers: (this.v$.selectedTeachers.$invalid && this.v$.selectedTeachers.$dirty) ? this.$t('Validation.teachers') : '',
-        subject: (this.v$.subject.$invalid && this.v$.subject.$dirty) ? this.$t('Validation.required') : ''
+        subject: (this.v$.subject.$invalid && this.v$.subject.$dirty) ? this.$t('Validation.required') : '',
+        room: (this.v$.room.$invalid && this.v$.room.$dirty) ? this.$t('Validation.required') : ''
       }
     }
   },
   created () {
     this.daysList = [
-      { dayNb: 1, dayName: 'Lundi' },
-      { dayNb: 2, dayName: 'Mardi' },
-      { dayNb: 3, dayName: 'Mercredi' },
-      { dayNb: 4, dayName: 'Jeudi' },
-      { dayNb: 5, dayName: 'Vendredi' },
-      { dayNb: 6, dayName: 'Samedi' }
+      { dayNb: 1, dayName: 'lundi' },
+      { dayNb: 2, dayName: 'mardi' },
+      { dayNb: 3, dayName: 'mercredi' },
+      { dayNb: 4, dayName: 'jeudi' },
+      { dayNb: 5, dayName: 'vendredi' },
+      { dayNb: 6, dayName: 'samedi' }
     ]
     this.selectedDay = this.daysList[0]
 

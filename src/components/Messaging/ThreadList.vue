@@ -61,7 +61,7 @@
             :thread="thread"
             :is-last="thread.threadId === threads[threads.length-1].threadId"
             class="thread-list-item"
-            @contextmenu.prevent="openContextMenu($event, thread)"
+            @contextmenu.prevent="askContextMenu($event, thread)"
           />
           <hr class="hr-thread-list">
         </div>
@@ -250,13 +250,18 @@ export default {
         messagingUtils.refresh()
       }
     },
-    openContextMenu (e, thread) {
-      // Add thread if not already selected
+    askContextMenu (e, thread) {
       if (!messagingUtils.isThreadSelected(thread)) {
         // thread is not selected -> select it'
-        messagingUtils.selectThread(thread)
+        messagingUtils.selectThread(thread).then(() => {
+          this.openContextMenu(e, thread)
+        })
+      } else {
+        this.openContextMenu(e, thread)
       }
-
+    },
+    openContextMenu (e, thread) {
+      // Add thread if not already selected
       let contextMenu = []
 
       if (this.$store.state.messaging.selectedThreads.length > 1) {
@@ -267,6 +272,7 @@ export default {
       // Add 'markAsRead' or 'markAsUnread' menus
       let isOneMessageRead = false
       let isOneMessageUnread = false
+      console.log(this.$store.state.messaging.selectedThreads.length)
       for (const thread of this.$store.state.messaging.selectedThreads) {
         for (const message of thread.messages) {
           if (message.isNew) {
@@ -389,6 +395,7 @@ export default {
 
     .scroll {
       padding: 0;
+      height: 100%;  /* 100% - (banner-height + hr-height) */
     }
 
     .thread-list-header {
@@ -418,10 +425,6 @@ export default {
         animation: rotating 1s linear infinite;
       }
     }
-
-    .scroll {
-      height: 100%;  /* 100% - (banner-height + hr-height) */
-    }
   }
 }
 
@@ -431,7 +434,7 @@ hr {
 }
 
 hr.hr-thread-list {
-  border: 0; border-top: 1px solid #e0e0e0;
+  border: 0; border-top: 1px solid $neutral-40;
 }
 
 .thread-list {

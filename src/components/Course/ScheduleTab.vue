@@ -1,7 +1,7 @@
 <template>
   <div
     class="schedule-tab"
-    :class="{'split-view': !mq.phone && selectedSession, 'phone': mq.phone}"
+    :class="{'split-view': !mq.phone && selectedSession, 'phone': mq.phone, 'not-overflow': mq.phone && !selectedSession}"
   >
     <CourseSchedule
       v-show="!mq.phone || !isMobileSessionDetailsDisplayed"
@@ -75,6 +75,10 @@ export default {
     display: none;
   }
 
+  &.not-overflow  {
+    overflow-x: hidden;
+  }
+
   &.phone {
     .session-details {
       position: absolute;
@@ -84,7 +88,7 @@ export default {
       min-height: 100%;
       background-color: white;
       z-index: 1;
-      transition: all 0.5s ease-in-out;
+      transition: transform 0.5s ease-in-out;
 
       &.hidden {
         display: unset;

@@ -24,8 +24,13 @@
 
   <div class="actions">
     <template v-if="isStopped">
-      <WeprodeButton @click="toggleAudio">
-        <NeroIcon :name="isAudioPlaying ? 'pause' : 'play'" />
+      <WeprodeButton
+        data-test="play"
+        @click="toggleAudio"
+      >
+        <NeroIcon
+          :name="isAudioPlaying ? 'pause' : 'play'"
+        />
         <span>{{ isAudioPlaying ? $t('pause') : $t('listen') }}</span>
       </WeprodeButton>
       <WeprodeButton
@@ -44,9 +49,12 @@
       <WeprodeButton
         cls="cancel"
         :disabled="!isRecording && !isPaused"
+        data-test="stop"
         @click="stopRecording"
       >
-        <NeroIcon name="stop" />
+        <NeroIcon
+          name="stop"
+        />
         <span>{{ $t('stop') }}</span>
       </WeprodeButton>
     </template>

@@ -1,24 +1,295 @@
 {
-    "NewAnnouncement": {
-        "recipient": "Tous les personnels",
+    "now": "2023/10/02 16:00",
+    "NewNews": {
+        "recipient": "CO Da Vinci",
         "title": "Nouvelle annonce",
-        "content": "Ceci est le contenu de la nouvelle annonce"
+        "content": "Ceci est le contenu de la nouvelle annonce",
+        "personalDocument": "Note avec des caractères spéciaux_.html",
+        "collaborativeDocument": "note à destination des élèves.html",
+        "workSpaceDocument": "file.txt",
+        "dateToCreate": "2023/12/07",
+        "dateToRead": "2023/12/08"
     },
     "existingNews": [
         {
-            "recipient": "Tous les élèves",
-            "title": "Annonce déjà existante",
-            "content": "Contenu d'un annonce déjà existante destinée aux élèves"
-        },
-        {
             "recipient": "Tous les responsables légaux",
             "title": "Deuxième annonce",
-            "content": "Ceci est une deuxième annonce"
+            "content": "Ceci est une deuxième annonce",
+            "publicationDate": "30/10/23",
+            "dateBeforeRelease": "2023/10/22"
+        },
+        {
+            "recipient": "Tous les élèves",
+            "title": "Annonce déjà existante",
+            "content": "Contenu d'un annonce déjà existante destinée aux élèves",
+            "publicationDate": "06/11/23"
+        },
+        {
+            "recipient": "Elèves de la volée 09",
+            "title": "Annonces à destination d'une volée",
+            "content": "Contenu de l'annonce à destination d'une volée",
+            "publicationDate": "22/11/23"
+        },
+        {
+            "recipient": "CO Da Vinci",
+            "title": "Annonces à destination de l'établissement",
+            "content": "Annonces à destination de l'établissement créée par un délégué",
+            "publicationDate": "22/11/23"
         }
     ],
+    "futurNews": {
+        "recipient": "Tous les élèves",
+        "title": "Annonce avec une date de parution ultérieure",
+        "content": "Contenu de l'annonce avec une date de parution ultérieure",
+        "dateBeforeRelease": "2023/11/9",
+        "publicationDate": "2023/11/11"
+    },
     "newsToEdit": {
         "recipient": "Tous les élèves",
         "title": "Annonce modifiée",
-        "content": "Ceci est une annonce modifié"
-    }
+        "content": "Ceci est une annonce modifié",
+        "currentFile1": "Note avec des caractères spéciaux_.html",
+        "currentFile2": "note à destination des élèves.html",
+        "newFile": "Autre note.html"
+    },
+    "existingEvents": [
+        {
+            "recipient": "Tous les personnels",
+            "title": "Évènement pour tous les personnels",
+            "location": "Lieu de l'événement pour tous les personnels",
+            "content": "Contenu de l'évènement pour tous les personnels",
+            "startDate": "2023/11/21 16:30",
+            "endDate": "2023/11/21 17:00"
+        },
+        {
+            "recipient": "Tous les élèves",
+            "title": "Évènement pour tous les élèves",
+            "location": "Lieu de l'évènement pour tous les élèves",
+            "content": "Contenu de l'évènement pour tous les élèves",
+            "startDate": "2023/11/21 16:30",
+            "endDate": "2023/11/21 17:00"
+        },
+        {
+            "recipient": "Tous les personnels",
+            "title": "Second évènement pour les enseignants",
+            "location": "Lieu du second évènement pour les enseignants",
+            "content": "Détails du second évènement pour les enseignants"
+        },
+        {
+            "recipient": "Elèves de la volée 09",
+            "title": "Évènement à destination d'une volée",
+            "location": "Lieu de l'évènement à destination d'une volée",
+            "content": "contenu de l'évènement à destination d'une volée",
+            "startDate": "2023/11/22 15:0",
+            "endDate": "2023/11/22 16:00"
+        },
+        {
+            "recipient": "Tous les élèves",
+            "title": "Évènement à destination de l'établissement",
+            "location": "Lieu de l'évènement à destination de l'établissement",
+            "content": "contenu de l'évènement à destination de l'établissement",
+            "startDate": "2023/11/22 15:15",
+            "endDate": "2023/11/23 16:00"
+        }
+    ],
+    "NewEvent": {
+        "recipient": "Tous les personnels",
+        "title": "Nouvel évènement",
+        "location": "Lieu du nouvel énènement",
+        "content": "Ceci est le contenu du nouvel évènement"
+    },
+    "EventToEdit": {
+        "recipient": "Tous les responsables légaux",
+        "title": "évènement modifié",
+        "location": "Lieu de l'énènement modifié",
+        "content": "Ceci est le contenu de l'évènement modifié"
+    },
+    "existingActivity": [
+        {
+            "recipient": "Elèves de EC0933",
+            "title": "Information à tous les élèves",
+            "content": "contenu de cette information"
+        },
+        {
+            "title": "Groupe avec un élève",
+            "content": "vous a inscrit dans cet espace"
+        },
+        {
+            "title": "Groupe avec un élève",
+            "content": "a partagé le fichier document.odt dans l'espace Groupe avec un élève"
+        },
+        {
+            "title": "Motivation de renvoi author",
+            "content": "Pensez à motiver le renvoi de Pénélope RIBEIRO du cours de HI0933 du 03 octobre 2023 à 10:35"
+        },
+        {
+            "title": "Motivation de renvoi others",
+            "content": "a renvoyé Pénélope RIBEIRO du cours de HI0933 du 03 octobre 2023 à 10:35"
+        },
+        {
+            "class": "HI0933",
+            "content": "a donné du travail pour le cours du 14 novembre 2023"
+        },
+        {
+            "class": "HI0933",
+            "content": "a donné du travail pour le cours du 13 novembre 2023"
+        },
+        {
+            "title": "Groupe avec un enseignant",
+            "content": "Description du groupe avec un enseignant"
+        },
+        {
+            "class": "0933R3",
+            "document": "note.html"
+        }
+    ],
+    "ActivityToCreate": {
+        "recipient": "Elèves de EC0933",
+        "title": "Activité créée",
+        "content": "Ceci est une activité créée",
+        "personalDocument": "Note avec des caractères spéciaux_.html",
+        "workSpaceDocument": "file.txt",
+        "dateToCreate": "2023/11/30",
+        "dateToConsulte": "2023/11/31"
+    },
+    "activityToEdit": {
+        "recipient": "Responsables légaux de EC0933",
+        "title": "Activité modifiée",
+        "content": "Ceci est une activité modifiée"
+    },
+    "futurActivity": {
+        "recipient": "Responsables légaux de EC0933",
+        "title": "Information avec une date de parution ultérieure",
+        "content": "Contenu de l'information avec une date de parution ultérieure",
+        "dateBeforeRelease": "2023/11/29",
+        "publicationDate": "2023/11/31"
+    },
+    "existingHomework": [
+        {
+            "title": "Travail à faire",
+            "content": "Consigne du travail à faire",
+            "teacher": "NOLLI",
+            "dateBefore": "2023/11/13",
+            "dateAfter": "2023/11/17"
+        },
+        {
+            "title": "Second travail à faire",
+            "content": "Consigne du second travail à faire",
+            "teacher": "NOLLI",
+            "dateBefore": "2023/11/13",
+            "dateAfter": "2023/11/17"
+        },
+        {
+            "title": "Travail à faire parent multi enfants",
+            "content": "Consigne du travail à faire pour parent multi enfants",
+            "teacher": "NOLLI",
+            "dateBefore": "2023/11/09",
+            "student": "Eleanora"
+        },
+        {
+            "title": "Second travail à faire parent multi enfants",
+            "content": "Consigne du second travail à faire parent multi enfants",
+            "teacher": "PARSONS",
+            "dateBefore": "2023/11/27",
+            "student": "Barbara"
+        }
+    ],
+    "existingSessionsLists": [
+        {
+            "sessionsLists": [
+                {
+                    "date": "2023/11/07",
+                    "sessions": [
+                        {
+                            "startHour": "08:45",
+                            "endHour": "09:30",
+                            "name": "Education Citoyenne",
+                            "classRoom": "S182",
+                            "teacher": "R. NOLLI"
+                        },
+                        {
+                            "startHour": "09:35",
+                            "endHour": "10:20",
+                            "name": "Français Lecture",
+                            "classRoom": "S182",
+                            "teacher": "K. RYTON"
+                        },
+                        {
+                            "startHour": "10:35",
+                            "endHour": "11:20",
+                            "name": "Histoire",
+                            "classRoom": "S182",
+                            "teacher": "R. NOLLI"
+                        },
+                        {
+                            "startHour": "11:25",
+                            "endHour": "12:10",
+                            "name": "Education Physique",
+                            "classRoom": "GYM2",
+                            "teacher": "C. WHITEMAN"
+                        },
+                        {
+                            "startHour": "13:45",
+                            "endHour": "14:30",
+                            "name": "LCL",
+                            "classRoom": "S182",
+                            "teacher": "K. RYTON"
+                        },
+                        {
+                            "startHour": "14:35",
+                            "endHour": "15:15",
+                            "name": "Allemand",
+                            "classRoom": "S182",
+                            "teacher": "M. LE MARCHANT"
+                        },
+                        {
+                            "startHour": "15:30",
+                            "endHour": "16:15",
+                            "name": "Français",
+                            "classRoom": "S182",
+                            "teacher": "K. RYTON"
+                        }
+                    ]
+                },
+                {
+                    "date": "2023/11/07",
+                    "sessions": [
+                        {
+                            "startHour": "08:45",
+                            "endHour": "09:30",
+                            "name": "Ed. Nutritionnelle",
+                            "classRoom": "S290",
+                            "teacher": "A. WEMYSS"
+                        }
+                    ]
+                },
+                {
+                    "date": "2023/11/07",
+                    "sessions": [
+                        {
+                            "startHour": "08:45",
+                            "endHour": "09:30",
+                            "name": "Allemand",
+                            "classRoom": "J201",
+                            "teacher": "T. SCUTTER"
+                        }
+                    ]
+                },
+                {
+                    "date": "2023/11/07",
+                    "sessions": [
+                        {
+                            "startHour": "08:45",
+                            "endHour": "09:30",
+                            "name": "Mathématiques",
+                            "classRoom": "S182",
+                            "teacher": "F. CABRERA"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "holydayStart": "20/10",
+    "holydayEnd": "30/10"
 }

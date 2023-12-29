@@ -9,8 +9,7 @@ const waitCalendarToLoad = () => {
 const formatEventTeacherName = (teacher) => {
   return teacher.firstName[0] + '. ' + teacher.lastName
 }
-
-const getSlot = (slot) => {
+const getHHCSlot = (slot) => {
   const startDate = dayjs(slot.startDate, 'YYYY/MM/DD HH:mm')
   return cy.contains(':not(.grayed) >> [data-test="' + startDate.format('MM-DD_HH:mm') + '"]', formatEventTeacherName(slot.teacher))
 }
@@ -21,7 +20,7 @@ const getUserSlot = (slot) => {
 }
 
 const openStudentListModal = (slot) => {
-  getSlot(slot).click()
+  getHHCSlot(slot).click()
   cy.get('[data-test=showStudentList-option]').click({ force: true })
   return cy.get('[data-test=student-list-modal]')
 }
@@ -40,6 +39,7 @@ const deleteSlot = (slotToDelete, capacity) => {
 }
 const selectSlotType = (slotType) => {
   cy.get('[data-test=slot-type-item-' + slotType.type + ']', { timeout: 10000 }).click()
+  cy.get('.calendar', { timeout: 10000 }).should('be.visible')
 }
 
 const selectStudent = (student) => {
@@ -139,7 +139,8 @@ function formatSchoolSlotLabel (schoolSlot) {
 
 function selectWeek (date) {
   const nextWeekLabel = date.day(1).format('D MMM') // week's monday
-  cy.contains('.horizontal-timeline-week', nextWeekLabel).click()
+  cy.get('[data-test="weekList"]').scrollIntoView()
+  cy.get('[data-test="weekList"]').contains('button', nextWeekLabel).click()
 }
 
 // Expose the number of events for the current, previous and next week
@@ -152,7 +153,7 @@ const getWeeksEventsNumber = (now, expectNoEventAtPreviousWeek = false, nbWeekSh
     if (isMobile) {
       phoneGoToDayOfMonth(now.add(-1 + nbWeekShift, 'week').format('YYYY-MM-DD'))
     } else {
-      cy.get('.weeknumber-label').eq(1 + nbWeekShift).click() // Select the previous week
+      cy.get('.week-number-label').eq(1 + nbWeekShift).click() // Select the previous week
     }
     waitCalendarToLoad()
     if (expectNoEventAtPreviousWeek) { // TODO: find a proper way to retrieve events length, whether they exists or not (0 or > 0)
@@ -162,7 +163,7 @@ const getWeeksEventsNumber = (now, expectNoEventAtPreviousWeek = false, nbWeekSh
         if (isMobile) {
           phoneGoToDayOfMonth(now.add(1 + nbWeekShift, 'week').format('YYYY-MM-DD'))
         } else {
-          cy.get('.weeknumber-label').eq(3 + nbWeekShift).click() // Select the week after
+          cy.get('.week-number-label').eq(3 + nbWeekShift).click() // Select the week after
         }
         waitCalendarToLoad()
         cy.get('.fc-timegrid-event').then((nextEvents) => {
@@ -178,7 +179,7 @@ const getWeeksEventsNumber = (now, expectNoEventAtPreviousWeek = false, nbWeekSh
           if (isMobile) {
             phoneGoToDayOfMonth(now.add(nbWeekShift, 'week').format('YYYY-MM-DD'))
           } else {
-            cy.get('.weeknumber-label').eq(2 + nbWeekShift).click()
+            cy.get('.week-number-label').eq(2 + nbWeekShift).click()
           }
           waitCalendarToLoad()
         })
@@ -189,7 +190,7 @@ const getWeeksEventsNumber = (now, expectNoEventAtPreviousWeek = false, nbWeekSh
         if (isMobile) {
           phoneGoToDayOfMonth(now.add(1 + nbWeekShift, 'week').format('YYYY-MM-DD'))
         } else {
-          cy.get('.weeknumber-label').eq(3 + nbWeekShift).click() // Select the week after
+          cy.get('.week-number-label').eq(3 + nbWeekShift).click() // Select the week after
         }
         waitCalendarToLoad()
         cy.get('.fc-timegrid-event').then((nextEvents) => {
@@ -204,7 +205,7 @@ const getWeeksEventsNumber = (now, expectNoEventAtPreviousWeek = false, nbWeekSh
           if (isMobile) {
             phoneGoToDayOfMonth(now.add(nbWeekShift, 'week').format('YYYY-MM-DD'))
           } else {
-            cy.get('.weeknumber-label').eq(2 + nbWeekShift).click()
+            cy.get('.week-number-label').eq(2 + nbWeekShift).click()
           }
           waitCalendarToLoad()
         })
@@ -217,7 +218,7 @@ export {
   formatEventTeacherName,
   openStudentListModal,
   selectSlotType,
-  getSlot,
+  getHHCSlot,
   getUserSlot,
   deleteSlot,
   selectStudent,

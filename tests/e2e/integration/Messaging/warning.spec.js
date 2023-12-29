@@ -28,7 +28,6 @@ describe('Warning', () => {
 
     // content modified
     cy.get('[data-test="createMessageModal"]').within(() => {
-      cy.get('.ck-editor')
       cy.type_ckeditor(ModifiedDraft[0].content)
 
       // Close modal

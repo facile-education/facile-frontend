@@ -1,5 +1,5 @@
 const waitMessagingToBeLoaded = () => {
-  cy.get('[data-test=threads-panel] > [data-test=thread-list-header]', { timeout: 6000 }).contains('BOÎTE DE RÉCEPTION') // That waits the current folder loading
+  cy.get('[data-test=threads-panel] > [data-test=thread-list-header]', { timeout: 10000 }).contains('BOÎTE DE RÉCEPTION') // That waits the current folder loading
   cy.wait(200)
   cy.get('[data-test=spinner]').should('not.exist')
 }
@@ -32,7 +32,16 @@ const getThread = (thread) => {
 
 const getMessage = (message) => {
   // Get message by content
-  return cy.get('[data-test=messages-panel]').contains('[data-test=message]', message.content)
+  return cy.get('[data-test=messages-panel]').contains('[data-test="message"]', message.content)
+}
+
+const getFileInMessage = (message, attachedFile) => {
+  // Get message by content
+  return cy.get('[data-test=messages-panel]').within(() => {
+    cy.contains('[data-test="message"]', message.content).within(() => {
+      cy.contains('.attached-file', attachedFile)
+    })
+  })
 }
 
 const getDraft = (message) => {
@@ -42,7 +51,12 @@ const getDraft = (message) => {
 
 const setRecipient = (user) => {
   cy.get('.base-tags-input').type(`${user.firstName}`)
-  cy.get('.suggestion-list').contains(`${user.lastName} ${user.firstName}`).click()
+  cy.get('.suggestion-list').contains(`${user.lastName} ${user.firstName}`, { timeout: 6000 }).click()
+}
+
+const setMessagingDocumentLibrary = () => {
+  cy.loadTables('messaging/messaging_tables_document.sql')
+  cy.exec('npm run dl:loadDocumentLibrary document_library_messaging.tar.xz')
 }
 
 export {
@@ -51,5 +65,7 @@ export {
   getThread,
   getMessage,
   getDraft,
-  setRecipient
+  setRecipient,
+  setMessagingDocumentLibrary,
+  getFileInMessage
 }

@@ -4,9 +4,7 @@
     class="pellet theme-background-color"
     :class="{'show-count': showCount}"
   >
-    <div v-if="showCount">
-      {{ text }}
-    </div>
+    {{ showCount ? text : '' }}
   </div>
 </template>
 
@@ -31,11 +29,6 @@ export default {
       default: 99
     }
   },
-  data () {
-    return {
-      fontSize: 20
-    }
-  },
   computed: {
     text () {
       if (this.count > this.maxValue) {
@@ -52,12 +45,17 @@ export default {
 @import "@design";
 
 .pellet {
-  height: 0.75em;
-  width: 0.75em;
-  border-radius: 50%;
+  padding: 4px;
+  border-radius: 4px;
 
   &.show-count {
     @extend %count-pellet;
+  }
+
+  &:not(.show-count) {
+    height: 0.75em;
+    width: 0.75em;
+    border-radius: 50%;
   }
 }
 

@@ -1,7 +1,7 @@
 import store from '@store/index.js'
+import { formatSize } from '@utils/commons.util'
 
 import fileService from '@/api/documents/file.service'
-import folderService from '@/api/documents/folder.service'
 import groupService from '@/api/documents/group.service'
 import trashService from '@/api/documents/trash.service'
 import { conflicts } from '@/constants/documentsConstants'
@@ -12,9 +12,8 @@ import { mergeContextMenus, removeMenuOptionIfExist } from '@/utils/commons.util
 function computeDocumentsOptions (documentList) {
   const listCM = []
   // for each selected file, get context menu associated and add him to list
-  for (let i = 0; i < documentList.length; ++i) {
+  for (const document of documentList) {
     let documentContextMenu
-    const document = documentList[i]
 
     if (document.type === 'Group' || document.isGroupRootFolder) {
       documentContextMenu = [...groupOptions]
@@ -67,7 +66,6 @@ function computeDocumentsOptions (documentList) {
     removeMenuOptionIfExist(contextMenu, 'managePermissions')
     removeMenuOptionIfExist(contextMenu, 'paste')
     removeMenuOptionIfExist(contextMenu, 'open')
-    removeMenuOptionIfExist(contextMenu, 'download')
     removeMenuOptionIfExist(contextMenu, 'rename')
     removeMenuOptionIfExist(contextMenu, 'comment')
     removeMenuOptionIfExist(contextMenu, 'share')
@@ -127,12 +125,10 @@ function selectBetween (listSortedFiles, firstFile, secondFile) {
   if (idxLastSelectedFile === -1 || idxFile === -1) {
     console.error('error when trying to get files between ' + firstFile.name + ' and ' + secondFile.name)
     return []
+  } else if (idxLastSelectedFile < idxFile) {
+    return listSortedFiles.slice(idxLastSelectedFile, idxFile + 1)
   } else {
-    if (idxLastSelectedFile < idxFile) {
-      return listSortedFiles.slice(idxLastSelectedFile, idxFile + 1)
-    } else {
-      return listSortedFiles.slice(idxFile, idxLastSelectedFile + 1)
-    }
+    return listSortedFiles.slice(idxFile, idxLastSelectedFile + 1)
   }
 }
 
@@ -181,10 +177,13 @@ async function importDocuments (folderId, documentList, mode) {
 }
 
 function handleError (data, doc, folderId, documentList, index) {
-  store.dispatch('currentActions/setUploadFileError', doc)
+  if (data.error !== 'DuplicateFileException') { // Toggle conflict modal, not really an error yet
+    store.dispatch('currentActions/setUploadFileError', doc)
+  }
   if (data.error === 'fileSizeException') {
+    const formattedMaxUploadSize = formatSize(store.state.documents.documentsProperties.maxUploadSize)
     store.dispatch('popups/pushPopup', {
-      message: i18n.global.t('Documents.fileSizeException'),
+      message: i18n.global.t('Documents.fileSizeException') + formattedMaxUploadSize,
       type: 'error'
     })
   } else if (data.error === 'DuplicateFileException') {
@@ -218,40 +217,17 @@ function handleError (data, doc, folderId, documentList, index) {
   return false
 }
 
-async function downloadDocument (entity) {
-  return new Promise((resolve) => {
-    if (entity.type === 'Folder') {
-      store.dispatch('currentActions/addAction', { name: 'download' })
-      folderService.downloadFolder(entity.id).then((data) => {
-        store.dispatch('currentActions/removeAction', { name: 'download' })
-        if (data.success) {
-          const url = data.zipUrl
-
-          const a = document.createElement('a')
-          a.style.display = 'none'
-          a.download = entity.name // don't works on Internet Explorer and IOS' safari
-          a.href = url
-          a.click()
-          resolve()
-        } else {
-          console.error('Error in getting url for folder archive download')
-        }
-      }, (err) => {
-        console.error(err)
-        store.dispatch('currentActions/removeAction', { name: 'download' })
-      })
-    } else { // No type analysis because default is 'file'
+async function downloadDocuments (entityList) {
+  entityList.forEach(entity => {
+    if (entity.type === 'File') {
       if (entity.isGroupFile) {
         groupService.recordDownloadActivity(entity.id, 0)
       }
       const a = document.createElement('a')
       a.style.display = 'none'
       a.download = entity.name // don't works on Internet Explorer and IOS' safari
-      a.href = entity.url
+      a.href = entity.url + '&p_auth=' + store.state.user.pauth
       a.click()
-
-      // activityService.recordDownloadActivity(entity.id, 0) // Not necessary because we don't use collaborative space yet
-      resolve()
     }
   })
 }
@@ -285,35 +261,6 @@ function deleteEntities (selectedEntities) {
   })
 }
 
-// async function importMessagingAttachFiles (documentList) {
-//   const createdFiles = []
-//   for (const doc of documentList) {
-//     await fileService.uploadFile(0, doc).then((data) => {
-//       if (data.success) {
-//         for (const createdFile of data.createdFiles) {
-//           createdFile.text = createdFile.name
-//           createdFile.value = createdFile.id
-//           createdFiles.push(createdFile)
-//         }
-//       }
-//     })
-//   }
-//   return createdFiles
-// }
-
-export default {
-  computeDocumentsOptions,
-  selectBetween,
-  ctrlSelectPreviousEntity,
-  ctrlSelectNextEntity,
-  selectPreviousEntity,
-  selectNextEntity,
-  importDocuments,
-  downloadDocument,
-  deleteEntities
-  // importMessagingAttachFiles
-}
-
 export {
   computeDocumentsOptions,
   selectBetween,
@@ -322,6 +269,6 @@ export {
   ctrlSelectPreviousEntity,
   ctrlSelectNextEntity,
   importDocuments,
-  downloadDocument,
+  downloadDocuments,
   deleteEntities
 }

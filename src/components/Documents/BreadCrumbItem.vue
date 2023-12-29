@@ -67,7 +67,8 @@
     <FolderNameModal
       v-if="isFolderNameModalDisplayed"
       submit-action="rename"
-      :init-folder="folder"
+      :folder-to-rename="folder"
+      @rename-folder="refreshCurrentFolder"
       @close="isFolderNameModalDisplayed=false"
     />
   </teleport>
@@ -77,10 +78,10 @@
 
 import BaseIcon from '@components/Base/BaseIcon'
 import ContextMenu from '@components/ContextMenu/ContextMenu'
-import FolderNameModal from '@components/Documents/Modals/FolderNameModal'
-import { downloadDocument } from '@utils/documents.util'
+import { defineAsyncComponent } from 'vue'
 
 import { currentFolderOptions, spaceSelectionOptions } from '@/constants/options'
+const FolderNameModal = defineAsyncComponent(() => import('@components/Documents/Modals/FolderNameModal.vue'))
 
 export default {
   name: 'BreadCrumbItem',
@@ -145,6 +146,9 @@ export default {
     }
   },
   methods: {
+    refreshCurrentFolder () {
+      this.$store.dispatch('documents/refreshCurrentFolder')
+    },
     openContextMenu (event) {
       if (!this.isAContextMenuDisplayed) {
         this.isContextMenuDisplayed = true
@@ -204,9 +208,6 @@ export default {
       switch (option.name) {
         case 'rename':
           this.isFolderNameModalDisplayed = true
-          break
-        case 'download':
-          downloadDocument(this.folder)
           break
         case 'documents':
           this.$emit('changeSpace', '/documents')

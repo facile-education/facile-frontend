@@ -13,12 +13,7 @@ describe('DisplayOnDevice', () => {
 
   sizes.forEach(size => {
     it(`Messaging_DisplayMenuOnDevice: ${size}`, function () {
-      // Set testing viewport
-      if (Array.isArray(size)) {
-        cy.viewport(size[0], size[1])
-      } else {
-        cy.viewport(size)
-      }
+      cy.viewport(size)
 
       if (size === sizes[2]) {
         cy.get('[data-test="option_toggleMessagingMenu"]').click()
@@ -29,12 +24,7 @@ describe('DisplayOnDevice', () => {
       cy.get('[data-test="messaging-menu"]').should('be.visible')
     })
     it(`Messaging_DisplayMessagePanelOnMobile: ${size}`, () => {
-      // Set testing viewport
-      if (Array.isArray(size)) {
-        cy.viewport(size[0], size[1])
-      } else {
-        cy.viewport(size)
-      }
+      cy.viewport(size)
       if (size === mobile) {
         cy.get('[data-test="messages-panel"]').should('not.be.visible')
       }

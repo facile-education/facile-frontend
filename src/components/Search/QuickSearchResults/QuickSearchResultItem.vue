@@ -1,5 +1,6 @@
 <template>
-  <li
+  <div
+    class="result"
     ref="resultItem"
     :class="{'selected': isSelected}"
     @mousedown="redirect"
@@ -62,7 +63,7 @@
         @close="isEventModalDisplayed = false"
       />
     </teleport>
-  </li>
+  </div>
 </template>
 
 <script>
@@ -109,7 +110,7 @@ export default {
     icon () {
       switch (this.searchResult.service) {
         case searchConstants.TYPE_NEWS:
-          return require('@assets/images/default_school_news_0.png')
+          return require('@assets/images/default_school_news_0.svg')
         case searchConstants.TYPE_NEWS_FILE:
           return require('@assets/icons/documents/icon-file.svg')
         case searchConstants.TYPE_MESSAGE:
@@ -280,12 +281,13 @@ export default {
 
 <style lang="scss" scoped>
 @import "@design";
+
 p {
   margin: 0;
   padding: 0;
 }
 
-li {
+.result {
   --icon-width: 40px;
   --score-width: 50px;
 

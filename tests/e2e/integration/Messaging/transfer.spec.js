@@ -1,6 +1,7 @@
 import { messagingURL } from '../../support/constants/urls'
 import { HEADMASTER, STUDENT } from '../../support/constants/users'
-import { getMessage, getThread, setRecipient, waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
+import { addFileFromWorkSpace, addPersonalFile } from '../../support/utils/dashboard'
+import { getFileInMessage, getMessage, getThread, setMessagingDocumentLibrary, setRecipient, waitMessagingToBeLoaded } from '../../support/utils/messagingUtils'
 
 describe('Messaging_TransferMessage', () => {
   beforeEach(() => {
@@ -60,6 +61,7 @@ describe('Messaging_TransferMessage', () => {
     })
 
     it('Messaging_Transfer_Thread', function () {
+      setMessagingDocumentLibrary()
       const threadToTransfer = this.messagingData.existingThreads[1]
 
       // Login
@@ -77,6 +79,9 @@ describe('Messaging_TransferMessage', () => {
       cy.get('[data-test="createMessageModal"]').within(() => {
         setRecipient(STUDENT)
       })
+      // Attachments
+      addPersonalFile(threadToTransfer[2].attachedFile1)
+      addFileFromWorkSpace()
 
       // Send
       cy.get('.footer').contains('button', 'Envoyer').click()
@@ -86,6 +91,8 @@ describe('Messaging_TransferMessage', () => {
       // Check if thread is exist
       cy.get('[data-test="thread-list-item"]').contains(`Tr: ${threadToTransfer[2].subject}`).should('be.exist').click()
       getMessage(threadToTransfer[2])
+      getFileInMessage(threadToTransfer[2], threadToTransfer[2].attachedFile1)
+      getFileInMessage(threadToTransfer[2], threadToTransfer[2].attachedFile2)
     })
 
     it('Messaging_Transfer_MessageInThread', function () {
@@ -109,14 +116,22 @@ describe('Messaging_TransferMessage', () => {
         setRecipient(STUDENT)
       })
 
+      // Attachments
+      addPersonalFile(threadToTransfer[1].attachedFile1)
+      addFileFromWorkSpace()
+
       // Send
       cy.get('.footer').contains('button', 'Envoyer').click()
 
       // Login recipient
       cy.login(STUDENT, messagingURL)
+      waitMessagingToBeLoaded()
+
       // Check if thread is exist
       cy.get('[data-test="thread-list-item"]').contains(`Tr: ${threadToTransfer[1].subject}`).should('be.exist').click()
       getMessage(threadToTransfer[1])
+      getFileInMessage(threadToTransfer[1], threadToTransfer[1].attachedFile1)
+      getFileInMessage(threadToTransfer[1], threadToTransfer[1].attachedFile2)
     })
   })
 

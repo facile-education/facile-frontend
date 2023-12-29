@@ -19,7 +19,10 @@
         >
       </div>
 
-      <div class="content">
+      <div
+        class="content"
+        :class="{'phone': mq.phone}"
+      >
         <div>
           <strong class="title">
             {{ announcement.title }}
@@ -35,23 +38,39 @@
           </span>
           <BaseIcon
             v-if="announcement.hasAttachedFiles"
+            data-test="fileIcon"
             class="paper-clip"
             name="paperclip"
           />
+          <button
+            v-if="haveOptions && (mq.phone || mq.tablet)"
+            class="options-button"
+            :aria-label="$t('options')"
+            :title="$t('options')"
+            @click="toggleContextMenu"
+          >
+            <img
+              height="16"
+              width="16"
+              :src="require('@assets/icons/vertical_dots.svg')"
+              alt="options"
+            >
+          </button>
         </div>
       </div>
 
       <div
-        v-if="!isSelectionMode && (announcement.isEditable || announcement.isDeletable)"
+        v-if="haveOptions && !(mq.phone || mq.tablet)"
         class="announcement-options"
       >
         <button
           v-if="announcement.isEditable"
-          class="option"
+          class="option theme-hover-extra-light-background-color"
           :aria-label="$t('update')"
           :title="$t('update')"
           data-test="buttonEditAnnouncement"
           @click.stop="isUpdateModalDisplayed = true"
+          @keyup.stop
         >
           <img
             src="@/assets/icons/pencil.svg"
@@ -60,11 +79,12 @@
         </button>
         <button
           v-if="announcement.isDeletable"
-          class="option"
+          class="option theme-hover-extra-light-background-color"
           :aria-label="$t('delete')"
           :title="$t('delete')"
           data-test="buttonDeleteAnnouncement"
           @click.stop="confirmDeleteAnnouncement"
+          @keyup.stop
         >
           <img
             src="@/assets/icons/trash.svg"
@@ -103,6 +123,16 @@
       @close="closeDetailsModal"
     />
   </teleport>
+
+  <teleport
+    v-if="displayMenu"
+    to="body"
+  >
+    <ContextMenu
+      @choose-option="performChosenOption"
+      @close="displayMenu=false"
+    />
+  </teleport>
 </template>
 
 <script>
@@ -112,13 +142,15 @@ import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
 import { deleteNews, setNewsRead } from '@/api/dashboard/news.service'
-import { defaultImagesKeys } from '@/constants/icons'
+import { defaultImagesKeys, icons } from '@/constants/icons'
+const ContextMenu = defineAsyncComponent(() => import('@components/ContextMenu/ContextMenu.vue'))
 const SaveNewsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/SaveNewsModal.vue'))
 const NewsActivityDetailsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/NewsDetailsModal.vue'))
 
 export default {
   name: 'AnnouncementItem',
-  components: { NewsActivityDetailsModal, BaseIcon, SaveNewsModal },
+  components: { ContextMenu, NewsActivityDetailsModal, BaseIcon, SaveNewsModal },
+  inject: ['mq'],
   props: {
     announcement: {
       type: Object,
@@ -146,10 +178,14 @@ export default {
     return {
       isUpdateModalDisplayed: false,
       isDetailsModalDisplayed: false,
-      refreshNewsOnClose: false
+      refreshNewsOnClose: false,
+      displayMenu: false
     }
   },
   computed: {
+    haveOptions () {
+      return !this.isSelectionMode && (this.announcement.isEditable || this.announcement.isDeletable)
+    },
     announcementDay () {
       return this.$t('at') + dayjs(this.announcement.publicationDate).format('DD/MM/YY')
     },
@@ -158,9 +194,9 @@ export default {
     },
     thumbnail () {
       if (defaultImagesKeys.indexOf(this.announcement.thumbnailUrl) !== -1) {
-        return new URL(`../../../assets/images/${this.announcement.thumbnailUrl}.png`, import.meta.url).href
+        return new URL(`../../../assets/images/${this.announcement.thumbnailUrl}.svg`, import.meta.url).href
       } else { // Returned url is a key for local default image
-        return this.announcement.thumbnailUrl
+        return this.announcement.thumbnailUrl + '&p_auth=' + this.$store.state.user.pauth
       }
     }
   },
@@ -206,6 +242,43 @@ export default {
         this.markAnnouncementAsRead()
       }
       this.isDetailsModalDisplayed = true
+    },
+    toggleContextMenu (event) {
+      this.displayMenu = true
+      const options = []
+      if (this.announcement.isEditable) {
+        options.push({
+          name: 'update',
+          title: this.$t('update'),
+          icon: icons.options.rename,
+          position: 1,
+          hasSeparator: false
+        })
+      }
+      if (this.announcement.isDeletable) {
+        options.push({
+          name: 'delete',
+          title: this.$t('delete'),
+          icon: icons.options.delete,
+          position: 2,
+          hasSeparator: false
+        })
+      }
+      this.$store.dispatch('contextMenu/openContextMenu', { event, options })
+    },
+    performChosenOption (option) {
+      switch (option.name) {
+        case 'update':
+          this.isUpdateModalDisplayed = true
+          break
+        case 'delete':
+          this.confirmDeleteAnnouncement()
+          break
+        default:
+          console.error('no option with name ' + option.name + ' exists')
+      }
+      this.displayMenu = false
+      this.$store.dispatch('contextMenu/closeMenus')
     },
     markAnnouncementAsRead () {
       setNewsRead(this.announcement.newsId, true).then((data) => {
@@ -308,6 +381,14 @@ export default {
   }
 }
 
+.options-button {
+  padding: 8px;
+  margin: 0 0 0 auto;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
 .content {
   width: calc(100% - var(--thumbnail-width));
   padding: 0.5em 1.5rem;
@@ -316,6 +397,10 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  &.phone {
+    padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+  }
 
   .title {
     @extend %font-medium-m;
@@ -327,24 +412,18 @@ export default {
   }
 
   .meta-data {
-    @extend %font-regular-xs;
-  }
-
-  .text {
-    display: block;
-    white-space: nowrap;
-    overflow-x: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .meta-data {
     display: flex;
     align-items: center;
+
+    @extend %font-regular-xs;
   }
 
   .text {
     display: inline-block;
     max-width: calc(100% - 2em);
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
   }
 
   .paper-clip {
@@ -357,7 +436,7 @@ export default {
   bottom: 0;
   right: 0;
   display: flex;
-  border-radius: 0 5px 5px 0;
+  border-radius: 5px 0 0 0;
   overflow: hidden;
   transition: all .3s ease;
   opacity: 0;
@@ -376,8 +455,8 @@ export default {
       height: 1rem;
     }
 
-    &:hover {
-      background-color: $color-hover-bg;
+    &:not(:hover) {
+      background-color: white;
     }
   }
 }

@@ -23,22 +23,11 @@ export const mutations = {
   emptyAffectedUserList (state) {
     state.affectedUsers.length = 0
   },
-  addUserAffectation (state, payload) {
-    const affectation = { orgId: payload.orgId, orgName: payload.orgName }
+  setUserAffectations (state, payload) {
     // Search user in affectedUsers
     const user = state.affectedUsers.find(affectedUser => affectedUser.userId === payload.userId)
     if (user !== undefined) {
-      user.affectations = user.affectations.concat(affectation)
-    }
-  },
-  removeUserAffectation (state, payload) {
-    // Search user in affectedUsers
-    const user = state.affectedUsers.find(affectedUser => affectedUser.userId === payload.userId)
-    if (user !== undefined) {
-      const affectationIndex = user.affectations.findIndex(affectation => affectation.orgId === payload.orgId)
-      if (affectationIndex !== -1) {
-        user.affectations.splice(affectationIndex, 1)
-      }
+      user.affectations = payload.affectations
     }
   },
   setManualUserList (state, users) {
@@ -128,11 +117,8 @@ export const actions = {
   addAffectedUsers ({ commit }, users) {
     commit('addAffectedUsers', users)
   },
-  addUserAffectation ({ commit }, { userId, orgId, orgName }) {
-    commit('addUserAffectation', { userId, orgId, orgName })
-  },
-  removeUserAffectation ({ commit }, { userId, orgId }) {
-    commit('removeUserAffectation', { userId, orgId })
+  setUserAffectations ({ commit }, { userId, affectations }) {
+    commit('setUserAffectations', { userId, affectations })
   },
   toggleExpandedSchool ({ commit }, { schoolId }) {
     commit('toggleExpandedSchool', schoolId)

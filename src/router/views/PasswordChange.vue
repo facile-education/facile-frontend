@@ -87,13 +87,15 @@
 
 <script>
 
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
+
 import constants from '@/api/constants'
 import userManagement from '@/api/userManagement.service'
 import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
 
 export default {
   name: 'PasswordChange',
-  components: { WeprodeInput },
+  components: { WeprodeButton, WeprodeInput },
   emits: ['update:layout'],
   data () {
     return {

@@ -168,6 +168,7 @@ import NeroIcon from '@components/Nero/NeroIcon.vue'
 import _ from 'lodash'
 
 import messageService from '@/api/messaging/message.service'
+import { MESSAGING } from '@/constants/appConstants'
 import messagingConstants from '@/constants/messagingConstants'
 import messagingUtils from '@/utils/messaging.utils'
 
@@ -272,6 +273,11 @@ export default {
     hideDetails () {
       this.$store.dispatch('messaging/setSelectedThreads', [])
       this.$store.dispatch('messaging/hideDetailPanel')
+      // Reload inbox when going back from a routing message
+      if (this.$store.state.messaging.displayMessageFromRouting) {
+        this.$router.push({ name: MESSAGING })
+        this.$store.dispatch('messaging/setDisplayMessageFromRouting', false)
+      }
     },
     editDraft () {
       if (this.$store.state.messaging.selectedThreads.length > 0) {

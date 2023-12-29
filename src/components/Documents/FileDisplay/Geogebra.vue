@@ -1,6 +1,7 @@
 <template>
   <iframe
     :src="src"
+    title="geogebra content"
     class="media"
   />
 </template>

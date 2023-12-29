@@ -1,0 +1,381 @@
+{
+    "CoursesListByProfil": [
+        [
+            {
+                "Course": "EC0933"
+            },
+            {
+                "Course": "HI0911"
+            },
+            {
+                "Course": "HI0933",
+                "courseName": "HI0933 - Histoire",
+                "courseTeacher": "Rosana NOLLI",
+                "Sessions": [
+                    {
+                        "headText": "14 novembre - P4"
+                    },
+                    {
+                        "headText": "13 novembre - P5"
+                    }
+                ]
+            },
+            {
+                "Course": "HI0934"
+            },
+            {
+                "Course": "HI0971"
+            },
+            {
+                "Course": "HI1112"
+            },
+            {
+                "Course": "HI1123"
+            },
+            {
+                "Course": "HI1132"
+            },
+            {
+                "Course": "HI1133"
+            }
+        ],
+        [
+            {
+                "Course": "AC0933G1",
+                "teacher": "H. BLANKHORN"
+            },
+            {
+                "Course": "AL0933",
+                "teacher": "K. PARSONS, M. LE MARCHANT"
+            },
+            {
+                "Course": "AN0933",
+                "teacher": "D. NODEN"
+            },
+            {
+                "Course": "BI0933",
+                "teacher": "E. ROUBAY"
+            },
+            {
+                "Course": "EC0933",
+                "teacher": "R. NOLLI"
+            },
+            {
+                "Course": "EN0933G1",
+                "teacher": "G. PHOENIX"
+            },
+            {
+                "Course": "EO0933G1",
+                "teacher": "B. TOSKA"
+            },
+            {
+                "Course": "EP0933",
+                "teacher": "C. WHITEMAN"
+            },
+            {
+                "Course": "FL0933G1",
+                "teacher": "K. RYTON"
+            },
+            {
+                "Course": "FR0933",
+                "teacher": "K. RYTON"
+            },
+            {
+                "Course": "GE0933",
+                "teacher": "J. GOTCLIFF"
+            },
+            {
+                "Course": "HI0933",
+                "teacher": "R. NOLLI"
+            },
+            {
+                "Course": "LA0933",
+                "teacher": "K. RYTON"
+            },
+            {
+                "Course": "MA0933",
+                "teacher": "F. CABRERA"
+            },
+            {
+                "Course": "MC0933G1",
+                "teacher": "N. GARRIC"
+            },
+            {
+                "Course": "MT0933",
+                "teacher": "K. RYTON"
+            },
+            {
+                "Course": "MU0933",
+                "teacher": "D. META"
+            }
+        ],
+        [
+            {
+                "Course": "AC0911G2",
+                "teacher": "N. FEAKINS"
+            },
+            {
+                "Course": "AL0911",
+                "teacher": "K. LUKOCK, E. LE-GOOD"
+            },
+            {
+                "Course": "AN0911",
+                "teacher": "W. NEWIS"
+            },
+            {
+                "Course": "BI0911",
+                "teacher": "M. MCGOOCH"
+            },
+            {
+                "Course": "EC0911",
+                "teacher": "J. GOTCLIFF"
+            },
+            {
+                "Course": "EN0911G2",
+                "teacher": "A. WEMYSS"
+            },
+            {
+                "Course": "EO0911G2",
+                "teacher": "T. HAINS"
+            },
+            {
+                "Course": "EP0911",
+                "teacher": "C. WHITEMAN"
+            },
+            {
+                "Course": "FL0911G2",
+                "teacher": "R. BREYDIN"
+            },
+            {
+                "Course": "FR0911",
+                "teacher": "S. KILKENNY, R. BREYDIN"
+            },
+            {
+                "Course": "GE0911",
+                "teacher": "J. GOTCLIFF"
+            },
+            {
+                "Course": "HI0911",
+                "teacher": "R. NOLLI"
+            },
+            {
+                "Course": "LA0911",
+                "teacher": "E. LE-GOOD"
+            },
+            {
+                "Course": "MA0911",
+                "teacher": "W. RUSTMAN, L. DAUGHERTY"
+            },
+            {
+                "Course": "MC0911G2",
+                "teacher": "N. GARRIC"
+            },
+            {
+                "Course": "MT0911",
+                "teacher": "W. RUSTMAN"
+            },
+            {
+                "Course": "MU0911",
+                "teacher": "H. BENIESH"
+            }
+        ],
+        [
+            {
+                "Course": "AC0936G1",
+                "teacher": "H. BLANKHORN"
+            },
+            {
+                "Course": "AL0936",
+                "teacher": "K. PARSONS, T. SCUTTER"
+            },
+            {
+                "Course": "AN0936",
+                "teacher": "K. CISNEROS"
+            },
+            {
+                "Course": "BI0936",
+                "teacher": "S. O'HAGIRTIE"
+            },
+            {
+                "Course": "EC0936",
+                "teacher": "J. GOTCLIFF"
+            },
+            {
+                "Course": "EN0936G1",
+                "teacher": "A. WEMYSS"
+            },
+            {
+                "Course": "EO0936G1",
+                "teacher": "B. TOSKA"
+            },
+            {
+                "Course": "EP0936",
+                "teacher": "P. MCCANN"
+            },
+            {
+                "Course": "FL0936G1",
+                "teacher": "S. VICIOSO"
+            },
+            {
+                "Course": "FR0936",
+                "teacher": "S. VICIOSO"
+            },
+            {
+                "Course": "GE0936",
+                "teacher": "J. GOTCLIFF"
+            },
+            {
+                "Course": "HI0936",
+                "teacher": "K. CISNEROS"
+            },
+            {
+                "Course": "LA0936",
+                "teacher": "K. RYTON"
+            },
+            {
+                "Course": "MA0936",
+                "teacher": "L. DAUGHERTY"
+            },
+            {
+                "Course": "MC0936G1",
+                "teacher": "N. GARRIC"
+            },
+            {
+                "Course": "MT0936",
+                "teacher": "K. CISNEROS"
+            },
+            {
+                "Course": "MU0936",
+                "teacher": "S. COOKNEY"
+            }
+        ]
+    ],
+    "existingHomework": [
+        {
+            "title": "Travail à faire",
+            "content": "Consigne du travail à faire",
+            "teacher": "NOLLI",
+            "dateBefore": "2023/11/12",
+            "dateAfter": "2023/11/17",
+            "attachedFile": "note.html",
+            "additionalText": "Texte supplémentaire",
+            "audio": "Audio pour ce devoir",
+            "link": "Lien pour ce devoir",
+            "video": "Vidéo pour ce devoir",
+            "h5p": "H5P pour ce devoir",
+            "sessionDate": "2023/11/13",
+            "estimatedTime": "15",
+            "dateToDoWorkload": "13/11"
+        },
+        {
+            "title": "Second travail à faire",
+            "content": "Consigne du second travail à faire",
+            "teacher": "NOLLI",
+            "dateBefore": "2023/11/13",
+            "dateAfter": "2023/11/17",
+            "dateToDoWorkload": "14/11",
+            "sessionDate": "2023/11/13"
+        },
+        {
+            "title": "Travail à faire parent multi enfants",
+            "content": "Consigne du travail à faire pour parent multi enfants",
+            "teacher": "NOLLI",
+            "dateBefore": "2023/11/09",
+            "student": "Eleanora"
+        },
+        {
+            "title": "Second travail à faire parent multi enfants",
+            "content": "Consigne du second travail à faire parent multi enfants",
+            "teacher": "PARSONS",
+            "dateBefore": "2023/11/27",
+            "student": "Barbara"
+        },
+        {
+            "title": "Travail pour un cours avec des co enseignants",
+            "content": "Contenu de ce travail",
+            "dateBefore": "2023/11/09",
+            "sessionDate": "2023/12/12"
+        }
+    ],
+    "existingSessionsContent": [
+        {
+            "title": "Support de cours 13/11",
+            "content": "Contenu du support de cours pour la séance du 13/11",
+            "attachedFile": "note.html",
+            "additionalText": "Texte supplémentaire pour le support de cours",
+            "audio": "Audio du support de cours",
+            "link": "Lien pour le support de cours",
+            "video": "Vidéo pour le support de cours",
+            "h5p": "H5P pour le support de cours",
+            "sessionDate": "2023/11/13"
+        },
+        {
+            "title":"Support pour un cours avec des co enseignants",
+            "content": "Contenu de ce cours avec des co enseignants",
+            "sessionDate": "2023/12/12"
+        }
+    ],
+    "sessionsLists": [
+        {
+            "date": "2023/10/20",
+            "sessions": [
+                {
+                    "course": "HI1112",
+                    "courseDetailHeadText": "Histoire - HI1112"
+                },
+                {
+                    "course": "HI0934",
+                    "courseDetailHeadText": "Histoire - HI0934"
+                },
+                {
+                    "course": "HI0934",
+                    "courseDetailHeadText": "Histoire - HI0934"
+                },
+                {
+                    "course": "HI1133",
+                    "courseDetailHeadText": "Histoire - HI1133"
+                },
+                {
+                    "course": "HI0971",
+                    "courseDetailHeadText": "Histoire - HI0971"
+                }
+            ]
+        },
+        {
+            "date": "2023/11/07",
+            "sessions": [
+                {
+                    "startHour": "08:45",
+                    "endHour": "09:30",
+                    "name": "Ed. Nutritionnelle",
+                    "classRoom": "S290",
+                    "teacher": "A. WEMYSS"
+                }
+            ]
+        },
+        {
+            "date": "2023/11/07",
+            "sessions": [
+                {
+                    "startHour": "08:45",
+                    "endHour": "09:30",
+                    "name": "Allemand",
+                    "classRoom": "J201",
+                    "teacher": "T. SCUTTER"
+                }
+            ]
+        },
+        {
+            "date": "2023/11/07",
+            "sessions": [
+                {
+                    "startHour": "08:45",
+                    "endHour": "09:30",
+                    "name": "Mathématiques",
+                    "classRoom": "S182",
+                    "teacher": "F. CABRERA"
+                }
+            ]
+        }
+    ]
+}

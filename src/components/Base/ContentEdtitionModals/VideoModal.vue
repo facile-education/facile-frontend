@@ -45,7 +45,6 @@
           v-model="contentValue"
           :placeholder="$t('urlPlaceholder')"
           :maxlength="2000"
-          :error-message="formErrorList.embedHTMLElement || formErrorList.embedSrcAttribute || urlError"
           @keyup.enter.stop="pressEnter"
         />
         <WeprodeErrorMessage
@@ -56,6 +55,7 @@
       <iframe
         v-if="embedSrcAttribute"
         :src="embedSrcAttribute"
+        title="video content"
         class="video-preview"
       />
     </template>
@@ -68,6 +68,7 @@
         v-if="isCreation"
         :label="$t('add')"
         class="button create-button"
+        data-test="addVideo"
         @click="addVideo"
       />
       <WeprodeButton
@@ -84,6 +85,7 @@
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 
+import { isEmbedUrlWhitelisted } from '@/api/course.service'
 import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
 import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
 import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
@@ -174,49 +176,46 @@ export default {
       e.preventDefault()
       if (this.v$.$invalid) {
         this.v$.$touch()
-      } else if (this.item !== undefined) {
-        this.$store.dispatch('progression/addItemContent', { itemId: this.item.itemId, contentType: 4, contentName: this.videoName, contentValue: this.embedSrcAttribute })
-          .then(() => {
-            this.closeModal()
-          })
-          .catch((error) => {
-            if (error === 'UnauthorizedUrlException') {
-              this.urlError = this.$t('UnauthorizedUrlException')
-            } else {
-              // TODO popup error "Une erreur est survenue lors de l'ajout du contenu"
-              this.closeModal()
-            }
-          })
       } else {
-        this.$emit('save', { contentType: 4, contentName: this.videoName, contentValue: this.embedSrcAttribute })
-        this.closeModal()
+        isEmbedUrlWhitelisted(this.embedSrcAttribute).then((data) => {
+          if (data.success) {
+            if (data.isAllowed) {
+              this.$emit('save', { contentType: 4, contentName: this.videoName, contentValue: this.embedSrcAttribute })
+              this.closeModal()
+            } else {
+              this.urlError = this.$t('UnauthorizedUrlException')
+            }
+          } else {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+            console.error('Error')
+          }
+        }, (err) => {
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+          console.error(err)
+        })
       }
     },
     editVideo (e) {
       e.preventDefault()
       if (this.v$.$invalid) {
         this.v$.$touch()
-      } else if (this.item !== undefined) {
-        this.$store.dispatch('progression/updateItemContent', {
-          contentId: this.editedContent.contentId,
-          contentName: this.videoName,
-          contentValue: this.embedSrcAttribute,
-          order: this.editedContent.order
-        })
-          .then(() => {
-            this.closeModal()
-          })
-          .catch((error) => {
-            if (error === 'UnauthorizedUrlException') {
-              this.urlError = this.$t('UnauthorizedUrlException')
-            } else {
-              // TODO popup error "Une erreur est survenue lors de la mise à jour du contenu"
-              this.closeModal()
-            }
-          })
       } else {
-        this.$emit('save', { contentType: 4, contentName: this.videoName, contentValue: this.embedSrcAttribute })
-        this.closeModal()
+        isEmbedUrlWhitelisted(this.embedSrcAttribute).then((data) => {
+          if (data.success) {
+            if (data.isAllowed) {
+              this.$emit('save', { contentType: 4, contentName: this.videoName, contentValue: this.embedSrcAttribute })
+              this.closeModal()
+            } else {
+              this.urlError = this.$t('UnauthorizedUrlException')
+            }
+          } else {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+            console.error('Error')
+          }
+        }, (err) => {
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+          console.error(err)
+        })
       }
     }
   }

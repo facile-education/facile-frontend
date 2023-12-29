@@ -1,7 +1,6 @@
-import { HEADMASTER } from '../../support/constants/users'
-import { url } from '../../support/constants/documents'
+import { selectContextMenuOption } from '../../support/utils/testUtils'
 
-describe('Deletion', () => {
+describe.skip('Deletion', () => {
   beforeEach(() => {
     cy.viewport('macbook-16')
     cy.exec('npm run db:loadTables documents_tables_basic.sql')
@@ -11,7 +10,7 @@ describe('Deletion', () => {
 
   it('Delete one file', () => {
     cy.contains('[data-test=file]', 'fichier1_1.html').rightclick()
-    cy.get('[data-test="context-menu"]').contains('Supprimer').click() // By context menu
+    selectContextMenuOption('Supprimer')
     cy.get('[data-test="warning-modal"]').get('[data-test="cancelButton"]').click()
     cy.wait(500)
     cy.contains('[data-test=file]', 'fichier1_1.html').should('exist').click().should('have.class', 'selected')

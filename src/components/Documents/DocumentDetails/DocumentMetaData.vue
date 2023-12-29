@@ -1,5 +1,8 @@
 <template>
-  <div class="meta-data">
+  <div
+    class="meta-data"
+    data-test="document-meta-data"
+  >
     <!-- Size -->
     <div class="field">
       <span

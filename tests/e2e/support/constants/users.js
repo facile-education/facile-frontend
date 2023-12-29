@@ -1,7 +1,7 @@
 const password = 'W€Prode73'
 
 const GLOBAL_ADMIN = {
-  login: 'pentila',
+  login: 'admin',
   password,
   role: 'admin'
 }
@@ -103,7 +103,7 @@ const DETENTION_SUPERVISOR = {
 const DEPANNAGE_SUPERVISOR = { // tuesday 16:20 17:05
   login: 'pachecos',
   password,
-  role: 'student',
+  role: 'teacher',
   firstName: 'Sidney',
   lastName: 'PACHECO'
 }
@@ -124,7 +124,8 @@ const PARENT = { // Student's parent
   role: 'parent',
   firstName: 'Ursula',
   lastName: 'Ribeiro',
-  isVisibleStudent: true
+  isVisibleStudent: true,
+  students: [STUDENT]
 }
 
 const MULTI_STUDENT1 = { // Her parent has 2 children
@@ -148,7 +149,8 @@ const MULTI_PARENT = { // This parent has 2 children : MULTI_STUDENT1 and MULTI_
   password,
   role: 'parent',
   firstName: 'Percival',
-  lastName: 'Comencini'
+  lastName: 'Comencini',
+  students: [MULTI_STUDENT1, MULTI_STUDENT2]
 }
 
 const PSYCHOLOGIST = { // psychologist of student (0933)
@@ -205,15 +207,11 @@ const NURSE = {
 }
 
 const STUDENT_IN_CLASS = { // Student in class for student penelope
+  login: 'enrico.bttll',
+  password,
+  firstName: 'Enrico',
   lastName: 'BATTELLI',
   isVisibleStudent: true,
-  isVisibleParent: false,
-  isVisiblePersonnels: true
-}
-
-const STUDENT_NOT_IN_CLASS = { // Student not in class for student penelope
-  lastName: 'BATTELLI',
-  isVisibleStudent: false,
   isVisibleParent: false,
   isVisiblePersonnels: true
 }
@@ -243,6 +241,5 @@ export {
   ACCOUNTING_CASHIER,
   ORIENTATION_COUNSELOR,
   NURSE,
-  STUDENT_IN_CLASS,
-  STUDENT_NOT_IN_CLASS
+  STUDENT_IN_CLASS
 }

@@ -26,10 +26,16 @@
       <p>{{ $t('please-select-school') }}</p>
     </div>
     <div
-      v-else-if="sortedAffectedUsers.length === 0"
+      v-else-if="sortedAffectedUsers.length === 0 && filter === ''"
       class="main-label"
     >
       <p>{{ $t('no-affectation') }}</p>
+    </div>
+    <div
+      v-else-if="sortedAffectedUsers.length === 0 && filter !== ''"
+      class="main-label"
+    >
+      <p>{{ $t('no-affectation-for-filter', { filter: filter}) }}</p>
     </div>
     <div
       v-else
@@ -184,6 +190,7 @@ export default {
   "add-affected-user": "Ajouter une affectation",
   "please-select-school": "Veuillez sélectionner un établissement",
   "no-affectation": "Aucune affectation pour cet établissement",
+  "no-affectation-for-filter": "Aucune affectation avec le filtre '{filter}''",
   "lastName": "Nom",
   "firstName": "Prénom",
   "role": "Profil",
