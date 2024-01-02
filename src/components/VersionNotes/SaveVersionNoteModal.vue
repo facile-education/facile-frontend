@@ -29,6 +29,7 @@
         <TextContent
           v-model:content="htmlContent"
           class="ck-editor"
+          :has-admin-options="true"
         />
         <WeprodeErrorMessage :error-message="formErrorList.htmlContent" />
       </div>
@@ -97,19 +98,17 @@ export default {
   created () {
     if (!this.isCreation) {
       this.title = this.selectedNote.title
-      // this.htmlContent = this.$store.state.versionNotes.versionNoteDetails
+      this.htmlContent = this.$store.state.versionNotes.versionNoteDetails
     }
   },
   methods: {
     submit () {
       if (this.v$.$invalid) {
         this.v$.$touch()
+      } else if (this.isCreation) {
+        this.createVersionNote()
       } else {
-        if (this.isCreation) {
-          this.createVersionNote()
-        } else {
-          this.updateVersionNote()
-        }
+        this.updateVersionNote()
       }
     },
     createVersionNote () {
