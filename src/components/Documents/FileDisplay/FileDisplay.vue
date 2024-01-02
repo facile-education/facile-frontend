@@ -280,7 +280,8 @@ export default {
   align-items: center;
 }
 .wisiwyg {
-  margin-top: 40px;
+  margin-top: 20px;
+  height: calc(100% - 20px);
 }
 </style>
 

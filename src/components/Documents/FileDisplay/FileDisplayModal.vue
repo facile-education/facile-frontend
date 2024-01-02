@@ -23,6 +23,10 @@
         ref="windowContainer"
         class="container"
         :class="{'full-screen': isFullScreen}"
+        @keyup.stop
+        @keydown.stop
+        @submit.stop
+        @drag.stop
       >
         <div class="header theme-border-color">
           <h1 :title="file.name">
