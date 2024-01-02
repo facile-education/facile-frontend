@@ -1,5 +1,5 @@
 <template>
-  <div class="version-list">
+  <section class="version-list">
     <h4 v-t="'Documents.documentDetails.versions'" />
     <DocumentVersion
       v-for="(version, index) in fileVersions"
@@ -8,7 +8,7 @@
       @refresh-versions="getListVersions"
       @open-version="openVersion"
     />
-  </div>
+  </section>
 </template>
 
 <script>

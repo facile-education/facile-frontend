@@ -1,5 +1,8 @@
 <template>
-  <div class="version">
+  <div
+    class="version"
+    data-test="file-version"
+  >
     <div class="header">
       <h4>{{ version.name }}</h4>
       <div
