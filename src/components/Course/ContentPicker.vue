@@ -44,16 +44,17 @@
         @save="addContent"
         @close="toggleLinkModal"
       />
-      <VideoModal
+      <EmbedContentModal
         v-if="isVideoModalDisplayed"
         data-test="video"
         :edited-content="{}"
         @save="addContent"
         @close="toggleVideoModal"
       />
-      <H5PModal
+      <EmbedContentModal
         v-if="isH5PModalDisplayed"
         data-test="h5p"
+        :is-h5p="true"
         :edited-content="{}"
         @save="addContent"
         @close="toggleH5PModal"
@@ -74,8 +75,7 @@ import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
 const AudioRecorderModal = defineAsyncComponent(() => import('@components/Base/ContentEdtitionModals/AudioRecorderModal'))
 const LinkModal = defineAsyncComponent(() => import('@components/Base/ContentEdtitionModals/LinkModal'))
 const FilePickerModal = defineAsyncComponent(() => import('@/components/FilePicker/FilePickerModal'))
-const H5PModal = defineAsyncComponent(() => import('@components/Base/ContentEdtitionModals/H5PModal'))
-const VideoModal = defineAsyncComponent(() => import('@components/Base/ContentEdtitionModals/VideoModal'))
+const EmbedContentModal = defineAsyncComponent(() => import('@components/Base/ContentEdtitionModals/EmbedContentModal'))
 
 export default {
   name: 'ContentPicker',
@@ -84,8 +84,7 @@ export default {
     AudioRecorderModal,
     LinkModal,
     FilePickerModal,
-    H5PModal,
-    VideoModal,
+    EmbedContentModal,
     WeprodeButton
   },
   emits: ['add', 'close'],

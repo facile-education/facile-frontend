@@ -68,15 +68,17 @@
     </button>
 
     <teleport to="body">
-      <VideoModal
+      <EmbedContentModal
         v-if="videoModalDisplayed"
         :edited-content="content"
         :read-only="true"
         @close="videoModalDisplayed=false"
       />
-      <H5PModal
+
+      <EmbedContentModal
         v-if="h5pModalDisplayed"
         :edited-content="content"
+        :is-h5p="true"
         :read-only="true"
         @close="h5pModalDisplayed=false"
       />
@@ -113,18 +115,15 @@ import contentTypeConstants from '@/constants/contentTypeConstants'
 import { icons } from '@/constants/icons'
 import { getExtensionFromName } from '@/utils/commons.util'
 const ContextMenu = defineAsyncComponent(() => import('@components/ContextMenu/ContextMenu.vue'))
-
-const H5PModal = defineAsyncComponent(() => import('@components/Base/ContentEdtitionModals/H5PModal'))
-const VideoModal = defineAsyncComponent(() => import('@components/Base/ContentEdtitionModals/VideoModal'))
 const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal.vue'))
+const EmbedContentModal = defineAsyncComponent(() => import('@components/Base/ContentEdtitionModals/EmbedContentModal'))
 
 export default {
   name: 'CourseContentItem',
   components: {
     AttachedFile,
     FilePickerModal,
-    H5PModal,
-    VideoModal,
+    EmbedContentModal,
     TextContent,
     ContextMenu
   },

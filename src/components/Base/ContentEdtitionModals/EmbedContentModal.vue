@@ -1,7 +1,7 @@
 <template>
   <WeprodeWindow
     :modal="true"
-    class="h5pWindow"
+    data-test="embed-content-modal"
     :width="600"
     :class="{'mobile': mq.phone, 'readOnly': readOnly}"
     :full-screen="readOnly"
@@ -13,11 +13,11 @@
       </span>
       <span
         v-else-if="isCreation"
-        v-t="'creation-title'"
+        v-t="isH5P? 'creation-title-h5p' : 'creation-title'"
       />
       <span
         v-else
-        v-t="'edition-title'"
+        v-t="isH5P? 'edition-title-h5p' : 'edition-title'"
       />
     </template>
 
@@ -31,7 +31,7 @@
           v-model="contentName"
           :maxlength="200"
           :placeholder="$t('namePlaceholder')"
-          @keyup.enter.stop="pressEnter"
+          @keyup.enter.stop="submit"
         />
         <WeprodeErrorMessage
           :error-message="formErrorList.contentName"
@@ -45,8 +45,8 @@
         <WeprodeInput
           v-model="contentValue"
           :maxlength="2000"
-          :placeholder="$t('urlPlaceholder')"
-          @keyup.enter.stop="pressEnter"
+          :placeholder="$t(isH5P ? 'urlPlaceholder-h5p' : 'urlPlaceholder')"
+          @keyup.enter.stop="submit"
         />
         <WeprodeErrorMessage
           :error-message="formErrorList.embedHTMLElement || formErrorList.embedSrcAttribute || urlError"
@@ -54,7 +54,7 @@
       </div>
 
       <a
-        v-if="!readOnly"
+        v-if="!readOnly && isH5P"
         v-t="'h5pUrl'"
         href="https://h5p.eduge.ch/mes-ressources-h5p"
         rel="noopener"
@@ -64,8 +64,8 @@
       <iframe
         v-if="embedSrcAttribute"
         :src="embedSrcAttribute"
-        title="h5p content"
-        class="h5p-preview"
+        title="embed content"
+        class="embed-preview"
       />
     </template>
 
@@ -75,16 +75,9 @@
     >
       <WeprodeButton
         v-if="isCreation"
-        :label="$t('add')"
+        :label="isCreation ? $t('add') : $t('edit')"
         class="button"
-        data-test="addH5P"
-        @click="addH5P"
-      />
-      <WeprodeButton
-        v-else
-        :label="$t('edit')"
-        class="button"
-        @click="editH5P"
+        @click="submit"
       />
     </template>
   </WeprodeWindow>
@@ -102,7 +95,7 @@ import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
 import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
-  name: 'H5PModal',
+  name: 'EmbedContentModal',
   components: { WeprodeButton, WeprodeErrorMessage, WeprodeInput, WeprodeWindow },
   inject: ['mq'],
   props: {
@@ -115,6 +108,10 @@ export default {
       required: true
     },
     readOnly: {
+      type: Boolean,
+      default: false
+    },
+    isH5P: {
       type: Boolean,
       default: false
     }
@@ -140,7 +137,7 @@ export default {
     formErrorList () {
       return {
         contentName: (this.v$.contentName.$invalid && this.v$.contentName.$dirty) ? this.$t('Commons.required') : '',
-        embedHTMLElement: (this.v$.embedHTMLElement.$invalid && this.v$.embedHTMLElement.$dirty) ? this.$t('embedElementCheckFailed') : '',
+        embedHTMLElement: (this.v$.embedHTMLElement.$invalid && this.v$.embedHTMLElement.$dirty) ? this.$t(this.isH5P ? 'embedElementCheckFailed-h5p' : 'embedElementCheckFailed') : '',
         embedSrcAttribute: (this.v$.embedSrcAttribute.$invalid && this.v$.embedSrcAttribute.$dirty) ? this.$t('srcRequired') : ''
       }
     },
@@ -179,41 +176,14 @@ export default {
     closeModal () {
       this.$emit('close')
     },
-    pressEnter (e) {
-      this.isCreation ? this.addH5P(e) : this.editH5P(e)
-    },
-    addH5P (e) {
-      e.preventDefault()
+    submit () {
       if (this.v$.$invalid) {
         this.v$.$touch()
       } else {
         isEmbedUrlWhitelisted(this.embedSrcAttribute).then((data) => {
           if (data.success) {
             if (data.isAllowed) {
-              this.$emit('save', { contentType: 6, contentName: this.contentName, contentValue: this.embedSrcAttribute })
-              this.closeModal()
-            } else {
-              this.urlError = this.$t('UnauthorizedUrlException')
-            }
-          } else {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
-            console.error('Error')
-          }
-        }, (err) => {
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
-          console.error(err)
-        })
-      }
-    },
-    editH5P (e) {
-      e.preventDefault()
-      if (this.v$.$invalid) {
-        this.v$.$touch()
-      } else {
-        isEmbedUrlWhitelisted(this.embedSrcAttribute).then((data) => {
-          if (data.success) {
-            if (data.isAllowed) {
-              this.$emit('save', { contentType: 6, contentName: this.contentName, contentValue: this.embedSrcAttribute })
+              this.$emit('save', { contentType: this.isH5P ? 6 : 4, contentName: this.contentName, contentValue: this.embedSrcAttribute })
               this.closeModal()
             } else {
               this.urlError = this.$t('UnauthorizedUrlException')
@@ -233,43 +203,47 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.h5pWindow {
   span {
     text-align: center;
     margin: 10px;
   }
+
   .content-url {
     margin: 20px 0;
   }
-  .h5p-preview {
+
+  .embed-preview {
     margin-top: 20px;
     border: none;
     width: 100%;
     height: 300px
   }
 
-  &.readOnly {
-    .h5p-preview {
+  .readOnly {
+    .embed-preview {
       border: none;
       width: 100%;
       height: 100%
     }
   }
-}
 </style>
 
 <i18n locale="fr">
 {
   "add": "Ajouter",
   "cancel": "Annuler",
-  "creation-title": "Ajouter un contenu H5P",
+  "creation-title": "Ajouter une vidéo",
+  "creation-title-h5p": "Ajouter un contenu H5P",
   "edit": "Modifier",
-  "edition-title": "Editer un contenu H5P",
-  "embedElementCheckFailed": "Ce type de contenu n'est pas un contenu embarqué valide",
+  "edition-title": "Modifier une video",
+  "edition-title-h5p": "Editer un contenu H5P",
+  "embedElementCheckFailed": "Ceci n'est pas un code d'intégration valide (par exemple {embedText} )",
+  "embedElementCheckFailed-h5p": "Ce type de contenu n'est pas un contenu embarqué valide",
   "h5pUrl": "Récupérer une activité depuis h5p.eduge.ch",
   "namePlaceholder": "Titre",
   "srcRequired": "Le contenu embarqué doit comprendre un attribut \"src\" non vide",
   "UnauthorizedUrlException": "Ce nom de domaine n'est pas autorisé pour ce type de contenu",
-  "urlPlaceholder": "Coller ici le code d'intégration H5P"
+  "urlPlaceholder": "Coller ici le code d'intégration de la vidéo",
+  "urlPlaceholder-h5p": "Coller ici le code d'intégration H5P"
 }
 </i18n>

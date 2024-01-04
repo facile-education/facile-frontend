@@ -25,7 +25,7 @@
           v-model="linkName"
           :maxlength="200"
           :placeholder="$t('namePlaceholder')"
-          @keyup.enter.stop="pressEnter"
+          @keyup.enter.stop="submit"
         />
         <WeprodeErrorMessage
           :error-message="formErrorList.linkName"
@@ -36,7 +36,7 @@
           v-model="linkUrl"
           :maxlength="250"
           :placeholder="$t('urlPlaceholder')"
-          @keyup.enter.stop="pressEnter"
+          @keyup.enter.stop="submit"
         />
         <WeprodeErrorMessage
           :error-message="formErrorList.linkUrl || urlError"
@@ -47,16 +47,9 @@
     <template #footer>
       <WeprodeButton
         v-if="isCreation"
-        :label="$t('add')"
+        :label="isCreation ? $t('add') : $t('edit')"
         class="button"
-        data-test="addLinkButton"
-        @click="addLink"
-      />
-      <WeprodeButton
-        v-else
-        :label="$t('edit')"
-        class="button"
-        @click="editLink"
+        @click="submit"
       />
     </template>
   </WeprodeWindow>
@@ -130,34 +123,7 @@ export default {
     closeModal () {
       this.$emit('close')
     },
-    pressEnter (e) {
-      this.isCreation ? this.addLink(e) : this.editLink(e)
-    },
-    addLink (e) {
-      e.preventDefault()
-      if (this.v$.$invalid) {
-        this.v$.$touch()
-      } else {
-        isValidUrl(this.linkUrl).then((data) => {
-          if (data.success) {
-            if (data.isValid) {
-              this.$emit('save', { contentType: 3, contentName: this.linkName, contentValue: this.linkUrl })
-              this.closeModal()
-            } else {
-              this.urlError = this.$t('UnauthorizedUrlException')
-            }
-          } else {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
-            console.error('Error')
-          }
-        }, (err) => {
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
-          console.error(err)
-        })
-      }
-    },
-    editLink (e) {
-      e.preventDefault()
+    submit () {
       if (this.v$.$invalid) {
         this.v$.$touch()
       } else {
