@@ -4,6 +4,7 @@
     <DocumentVersion
       v-for="(version, index) in fileVersions"
       :key="index"
+      :document="document"
       :version="version"
       @refresh-versions="getListVersions"
       @open-version="openVersion"

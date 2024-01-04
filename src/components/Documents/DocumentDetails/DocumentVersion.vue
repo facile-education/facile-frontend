@@ -59,6 +59,7 @@
         {{ $t('Documents.documentDetails.viewVersion') }}
       </WeprodeButton>
       <WeprodeButton
+        v-if="document.permissions.UPDATE"
         v-t="('Documents.documentDetails.restoreVersion')"
         class="bottom-option"
         data-test="restore-button"
@@ -79,6 +80,10 @@ export default {
   name: 'DocumentVersion',
   components: { BaseIcon, WeprodeButton },
   props: {
+    document: {
+      type: Object,
+      required: true
+    },
     version: {
       type: Object,
       required: true
