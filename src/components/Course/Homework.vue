@@ -88,11 +88,11 @@
 
 <script>
 import CustomIcon from '@components/Base/CustomIcon.vue'
+import { updateDeleteContextMenu } from '@utils/contextMenus'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
 import { deleteHomework } from '@/api/homework.service'
-import { icons } from '@/constants/icons'
 
 const CourseContentBlocks = defineAsyncComponent(() => import('@components/Course/CourseContentBlocks'))
 const HomeworkEditModal = defineAsyncComponent(() => import('@/components/Course/HomeworkEditModal'))
@@ -173,28 +173,11 @@ export default {
     },
     toggleContextMenu (event) {
       this.displayMenu = true
-      this.$store.dispatch('contextMenu/openContextMenu', {
-        event,
-        options: [
-          {
-            name: 'edit',
-            title: this.$t('edit'),
-            icon: icons.options.rename,
-            position: 1,
-            hasSeparator: false
-          },
-          {
-            name: 'delete',
-            title: this.$t('delete'),
-            icon: icons.options.delete,
-            position: 2,
-            hasSeparator: false
-          }]
-      })
+      this.$store.dispatch('contextMenu/openContextMenu', { event, options: updateDeleteContextMenu })
     },
     performChosenOption (option) {
       switch (option.name) {
-        case 'edit':
+        case 'update':
           this.openHomeworkEditModal()
           break
         case 'delete':

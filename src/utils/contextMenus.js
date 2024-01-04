@@ -91,4 +91,22 @@ const contextMenus = {
   ]
 }
 
+const updateDeleteContextMenu = [
+  {
+    name: 'update',
+    title: i18n.global.t('update'),
+    icon: icons.options.rename,
+    position: 1,
+    hasSeparator: false
+  },
+  {
+    name: 'delete',
+    title: i18n.global.t('delete'),
+    icon: icons.options.delete,
+    position: 2,
+    hasSeparator: false
+  }
+]
+
 export default contextMenus
+export { updateDeleteContextMenu }

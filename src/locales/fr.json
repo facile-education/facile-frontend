@@ -23,7 +23,8 @@
     "new": "Nouveau",
     "required": "Champ requis",
     "size": "Taille",
-    "type": "Type"
+    "type": "Type",
+    "update": "Modifier"
   },
   "CommunicationManager": {
     "InternalRightList": {

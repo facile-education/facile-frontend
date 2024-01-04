@@ -127,11 +127,12 @@
 
 <script>
 import BaseIcon from '@components/Base/BaseIcon.vue'
+import { updateDeleteContextMenu } from '@utils/contextMenus'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
 import { deleteNews, setNewsRead } from '@/api/dashboard/news.service'
-import { defaultImagesKeys, icons } from '@/constants/icons'
+import { defaultImagesKeys } from '@/constants/icons'
 const ContextMenu = defineAsyncComponent(() => import('@components/ContextMenu/ContextMenu.vue'))
 const SaveNewsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/SaveNewsModal.vue'))
 const NewsActivityDetailsModal = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/NewsDetailsModal.vue'))
@@ -186,24 +187,7 @@ export default {
     },
     toggleContextMenu (event) {
       this.displayMenu = true
-      this.$store.dispatch('contextMenu/openContextMenu', {
-        event,
-        options: [
-          {
-            name: 'update',
-            title: this.$t('update'),
-            icon: icons.options.rename,
-            position: 1,
-            hasSeparator: false
-          },
-          {
-            name: 'delete',
-            title: this.$t('delete'),
-            icon: icons.options.delete,
-            position: 2,
-            hasSeparator: false
-          }]
-      })
+      this.$store.dispatch('contextMenu/openContextMenu', { event, options: updateDeleteContextMenu })
     },
     performChosenOption (option) {
       switch (option.name) {
