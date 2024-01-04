@@ -344,40 +344,35 @@ export default {
     createEvent () {
       this.isProcessingSave = true
       createEvent(this.title, this.description, this.location, this.startDate, this.endDate, this.populations).then((data) => {
-        this.isProcessingSave = false
-        if (data.success) {
-          if (this.startDate.isAfter(dayjs())) {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('creationSuccess'), type: 'success' })
-          }
-          this.$emit('createEvent')
-          this.onClose()
-        } else {
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
-        }
+        this.handleWSResponse(data, true)
       }, (err) => {
-        this.isProcessingSave = false
-        console.error(err)
-        this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+        this.handleWSError(err)
       })
     },
     updateEvent () {
       this.isProcessingSave = true
       modifyEvent(this.initEvent.eventId, this.title, this.description, this.location, this.startDate, this.endDate, this.populations, this.markAsUnreadForAll).then((data) => {
-        this.isProcessingSave = false
-        if (data.success) {
-          if (this.startDate.isAfter(dayjs())) {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('updateSuccess'), type: 'success' })
-          }
-          this.$emit('updateEvent')
-          this.onClose()
-        } else {
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
-        }
+        this.handleWSResponse(data, false)
       }, (err) => {
-        this.isProcessingSave = false
-        console.error(err)
-        this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+        this.handleWSError(err)
       })
+    },
+    handleWSResponse (data, isCreation) {
+      this.isProcessingSave = false
+      if (data.success) {
+        if (this.startDate.isAfter(dayjs())) {
+          this.$store.dispatch('popups/pushPopup', { message: this.$t(isCreation ? 'creationSuccess' : 'updateSuccess'), type: 'success' })
+        }
+        this.$emit(isCreation ? 'createEvent' : 'updateEvent')
+        this.onClose()
+      } else {
+        this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+      }
+    },
+    handleWSError (err) {
+      this.isProcessingSave = false
+      console.error(err)
+      this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
     },
     confirmClosure () {
       const actualForm = {
