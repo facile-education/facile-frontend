@@ -204,7 +204,7 @@ function addLock (fileId) {
  * Remove lock for targeted file
  */
 function removeLock (fileId) {
-  return axios.get(constants.JSON_WS_URL + FILE_PATH + '/remove-lock', {
+  return axios.delete(constants.JSON_WS_URL + FILE_PATH + '/remove-lock', {
     params: {
       fileId
     }
@@ -228,7 +228,7 @@ function getResource (fileId, versionId, readOnly) {
  * Get the url to see the resource
  */
 function removeLoolToken (token) {
-  return axios.post(constants.JSON_WS_URL + FILE_PATH + '/remove-lool-token', WeprodeUtils.params({
+  return axios.delete(constants.JSON_WS_URL + FILE_PATH + '/remove-lool-token', WeprodeUtils.params({
     token
   })).then(response => response.data)
 }

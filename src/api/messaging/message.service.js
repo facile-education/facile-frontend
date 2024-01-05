@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 import constants from '@/api/constants'
+import WeprodeUtils from '@/utils/weprode.utils'
 
 export default {
   getThreads,
@@ -197,12 +198,10 @@ function getUsersCompletion (query) {
 }
 
 function sendAssistanceMessage (isSuggestion, applicationId, content, attachFiles) {
-  return axios.get(constants.JSON_WS_URL + MESSAGING_PATH + '/send-assistance-message', {
-    params: {
-      isSuggestion,
-      applicationId,
-      content,
-      attachFiles
-    }
-  }).then(response => response.data)
+  return axios.post(constants.JSON_WS_URL + MESSAGING_PATH + '/send-assistance-message', WeprodeUtils.params({
+    isSuggestion,
+    applicationId,
+    content,
+    attachFiles
+  })).then(response => response.data)
 }

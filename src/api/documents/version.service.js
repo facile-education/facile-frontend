@@ -37,7 +37,7 @@ function createMajorVersion (fileId) {
  * Save a description for a given version
  */
 function saveVersionDescription (fileVersionId, description) {
-  return axios.get(constants.JSON_WS_URL + VERSION_PATH + '/save-version-description', {
+  return axios.post(constants.JSON_WS_URL + VERSION_PATH + '/save-version-description', {
     params: {
       fileVersionId,
       description

@@ -62,7 +62,7 @@ function modifyEvent (eventId, title, description, location, startDate, endDate,
 }
 
 function deleteEvent (eventId) {
-  return axios.get(constants.JSON_WS_URL + AGENDA_PATH + '/delete-event', {
+  return axios.delete(constants.JSON_WS_URL + AGENDA_PATH + '/delete-event', {
     params: {
       eventId
     }

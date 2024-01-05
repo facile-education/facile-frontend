@@ -93,7 +93,7 @@ function getNewsDetails (newsId) {
 }
 
 function deleteNews (newsId) {
-  return axios.get(constants.JSON_WS_URL + NEWS_PATH + NEWS_CTX + 'delete-news', {
+  return axios.delete(constants.JSON_WS_URL + NEWS_PATH + NEWS_CTX + 'delete-news', {
     params: {
       newsId
     }
@@ -110,7 +110,7 @@ function addNewsDelegate (userId, schoolId) {
 }
 
 function removeNewsDelegate (userId, schoolId) {
-  return axios.get(constants.JSON_WS_URL + DELEGATION_PATH + DELEGATION_CTX + '/remove-news-delegate', {
+  return axios.delete(constants.JSON_WS_URL + DELEGATION_PATH + DELEGATION_CTX + '/remove-news-delegate', {
     params: {
       userId,
       schoolId

@@ -106,7 +106,7 @@ function editCommunity (groupId, groupName, description, isPedagogical, members,
 }
 
 function removeCommunity (groupId) {
-  return axios.get(constants.JSON_WS_URL + GROUP_PATH + COMMUNITY_CTX + 'remove-community', {
+  return axios.delete(constants.JSON_WS_URL + GROUP_PATH + COMMUNITY_CTX + 'remove-community', {
     params: {
       groupId
     }

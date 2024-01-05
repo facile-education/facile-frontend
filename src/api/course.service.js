@@ -150,7 +150,7 @@ function isValidUrl (url) {
 }
 
 function deleteBlock (blockId) {
-  return axios.del(constants.JSON_WS_URL + SESSION_CONTENT_PATH + 'delete-block', {
+  return axios.delete(constants.JSON_WS_URL + SESSION_CONTENT_PATH + 'delete-block', {
     params: {
       blockId
     }

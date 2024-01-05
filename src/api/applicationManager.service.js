@@ -80,7 +80,7 @@ function updateApplication (application) {
 }
 
 function removeApplication (applicationId) {
-  return axios.get(constants.JSON_WS_URL + APP_MANAGER_PATH + APPLICATION_CTX + 'remove-application', {
+  return axios.delete(constants.JSON_WS_URL + APP_MANAGER_PATH + APPLICATION_CTX + 'remove-application', {
     params: {
       applicationId
     }

@@ -332,7 +332,7 @@ export default {
     confirmDeregistration () {
       const allSession = this.slotType.type === notUsualSlotsConstants.studyType
       this.isLoading = true
-      schoolLifeService.unRegisterStudent(this.student, this.event.sessionId, this.comment, this.notifyParents, allSession).then((data) => {
+      schoolLifeService.unRegisterStudent(this.student, this.event.sessionId, allSession).then((data) => {
         this.isLoading = false
         if (data.success) {
           this.$store.dispatch('notUsualSlots/refreshCalendar')

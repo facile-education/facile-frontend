@@ -78,7 +78,7 @@ function editManualUser (userId, lastName, firstName, email, roleId, schoolId) {
 }
 
 function removeManualUser (userId) {
-  return axios.get(constants.JSON_WS_URL + USER_MANAGEMENT_PATH + '/delete-manual-user', {
+  return axios.delete(constants.JSON_WS_URL + USER_MANAGEMENT_PATH + '/delete-manual-user', {
     params: {
       userId
     }
@@ -105,7 +105,7 @@ function addUserAffectation (userId, orgId, expirationDate = '') {
 }
 
 function removeUserAffectation (userId, orgId) {
-  return axios.get(constants.JSON_WS_URL + AFFECTATION_PATH + '/remove-user-affectation', {
+  return axios.delete(constants.JSON_WS_URL + AFFECTATION_PATH + '/remove-user-affectation', {
     params: {
       userId,
       orgId
@@ -131,7 +131,7 @@ function addSchoolAdmin (userId, schoolId) {
 }
 
 function removeSchoolAdmin (userId, schoolId) {
-  return axios.get(constants.JSON_WS_URL + SCHOOL_ADMIN_PATH + '/remove-school-admin', {
+  return axios.delete(constants.JSON_WS_URL + SCHOOL_ADMIN_PATH + '/remove-school-admin', {
     params: {
       userId,
       schoolId

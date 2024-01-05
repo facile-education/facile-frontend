@@ -1,7 +1,6 @@
 import store from '@store/index.js'
 
 import documentsService from '@/api/documents/documents.service'
-import editService from '@/api/documents/edit.service'
 import navigationService from '@/api/documents/folder.service'
 import groupService from '@/api/documents/group.service'
 import i18n from '@/i18n'
@@ -272,19 +271,6 @@ export const actions = {
         this.dispatch('documents/getEntities', state.currentFolderId)
       }
     }
-  },
-  renameEntity ({ commit, getters }, { entity, name }) {
-    return new Promise((resolve) => {
-      editService.renameEntity(entity, name).then((data) => {
-        if (data.success) {
-          this.dispatch('documents/refreshCurrentFolder')
-          resolve()
-        } else {
-          console.error('Error when trying to rename entity ' + name)
-        }
-        resolve()
-      })
-    })
   },
   updateBreadcrumb ({ commit }, folderId) {
     this.dispatch('currentActions/addAction', { name: 'getBreadcrumb' })

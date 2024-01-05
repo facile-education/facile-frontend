@@ -1,3 +1,4 @@
+import WeprodeUtils from '@utils/weprode.utils'
 import axios from 'axios'
 
 import constants from '@/api/constants'
@@ -15,12 +16,10 @@ const MESSAGING_PATH = '/messaging.messagefolder'
  * Add a personal folder
  */
 function addFolder (parentFolderId, folderName) {
-  return axios.get(constants.JSON_WS_URL + MESSAGING_PATH + '/add-folder', {
-    params: {
-      parentFolderId,
-      folderName
-    }
-  }).then(response => response.data)
+  return axios.post(constants.JSON_WS_URL + MESSAGING_PATH + '/add-folder', WeprodeUtils.params({
+    parentFolderId,
+    folderName
+  })).then(response => response.data)
 }
 
 /**
@@ -37,19 +36,17 @@ function getAllUserFolders () {
  * Rename a personal folder
  */
 function renameFolder (folderId, newLabel) {
-  return axios.get(constants.JSON_WS_URL + MESSAGING_PATH + '/rename-folder', {
-    params: {
-      folderId,
-      newLabel
-    }
-  }).then(response => response.data)
+  return axios.post(constants.JSON_WS_URL + MESSAGING_PATH + '/rename-folder', WeprodeUtils.params({
+    folderId,
+    newLabel
+  })).then(response => response.data)
 }
 
 /**
  * Get all user messaging folders
  */
 function deleteFolder (folderId) {
-  return axios.get(constants.JSON_WS_URL + MESSAGING_PATH + '/delete-folder', {
+  return axios.delete(constants.JSON_WS_URL + MESSAGING_PATH + '/delete-folder', {
     params: {
       folderId
     }

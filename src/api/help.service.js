@@ -47,7 +47,7 @@ function saveLink (itemId, linkLabel, linkUrl) {
 }
 
 function deleteLink (linkId) {
-  return axios.get(constants.JSON_WS_URL + HELP_PATH + 'helplink/delete-link', {
+  return axios.delete(constants.JSON_WS_URL + HELP_PATH + 'helplink/delete-link', {
     params: {
       linkId
     }
@@ -61,7 +61,7 @@ function saveRelation (itemId, relatedItemId) {
 }
 
 function deleteRelation (relationId) {
-  return axios.get(constants.JSON_WS_URL + HELP_PATH + 'helprelation/delete-relation', {
+  return axios.delete(constants.JSON_WS_URL + HELP_PATH + 'helprelation/delete-relation', {
     params: {
       relationId
     }
@@ -76,7 +76,7 @@ function saveCategory (categoryName, serviceId) {
 }
 
 function deleteCategory (categoryId) {
-  return axios.get(constants.JSON_WS_URL + HELP_PATH + 'helpcategory/delete-category', {
+  return axios.delete(constants.JSON_WS_URL + HELP_PATH + 'helpcategory/delete-category', {
     params: {
       categoryId
     }
@@ -98,7 +98,7 @@ function saveHelpItemPosition (categoryId, item) {
 }
 
 function deleteItem (itemId) {
-  return axios.post(constants.JSON_WS_URL + HELP_PATH + 'helpitem/delete-item', WeprodeUtils.params({
+  return axios.delete(constants.JSON_WS_URL + HELP_PATH + 'helpitem/delete-item', WeprodeUtils.params({
     itemId
   })).then(response => response.data)
 }

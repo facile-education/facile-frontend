@@ -30,47 +30,43 @@ const SCHOOL_LIFE_RENVOI_PATH = '/schoollife.renvoi'
  * Create a slot of a given type in the school. (return only success field)
  */
 function createSlot (schoolId, startDateStr, endDateStr, day, startHour, endHour, teacherId, type, room, capacity) {
-  return axios.get(constants.JSON_WS_URL + SCHOOL_LIFE_SLOT_PATH + '/create-slot', {
-    params: {
-      schoolId,
-      startDateStr,
-      endDateStr,
-      day,
-      startHour,
-      endHour,
-      teacherId,
-      type,
-      room,
-      capacity
-    }
-  }).then(response => response.data)
+  return axios.post(constants.JSON_WS_URL + SCHOOL_LIFE_SLOT_PATH + '/create-slot', WeprodeUtils.params({
+    schoolId,
+    startDateStr,
+    endDateStr,
+    day,
+    startHour,
+    endHour,
+    teacherId,
+    type,
+    room,
+    capacity
+  })).then(response => response.data)
 }
 
 /**
  * Update a slot based on it id
  */
 function updateSlot (slotId, startDateStr, endDateStr, day, startHour, endHour, teacherId, type, room, capacity) {
-  return axios.get(constants.JSON_WS_URL + SCHOOL_LIFE_SLOT_PATH + '/edit-slot', {
-    params: {
-      schoollifeSessionId: slotId,
-      startDateStr,
-      endDateStr,
-      newDay: day,
-      newStartHour: startHour,
-      newEndHour: endHour,
-      newTeacherId: teacherId,
-      newType: type,
-      newRoom: room,
-      newCapacity: capacity
-    }
-  }).then(response => response.data)
+  return axios.get(constants.JSON_WS_URL + SCHOOL_LIFE_SLOT_PATH + '/edit-slot', WeprodeUtils.params({
+    schoollifeSessionId: slotId,
+    startDateStr,
+    endDateStr,
+    newDay: day,
+    newStartHour: startHour,
+    newEndHour: endHour,
+    newTeacherId: teacherId,
+    newType: type,
+    newRoom: room,
+    newCapacity: capacity
+  })).then(response => response.data)
 }
 
 /**
  * Delete a slot and all the sessions concerns by a slot after a given date
  */
 function deleteSlot (slotId, startDateStr, endDateStr) {
-  return axios.get(constants.JSON_WS_URL + SCHOOL_LIFE_SLOT_PATH + '/delete-slot', {
+  return axios.delete(constants.JSON_WS_URL + SCHOOL_LIFE_SLOT_PATH + '/delete-slot', {
     params: {
       schoollifeSessionId: slotId,
       startDateStr,
@@ -128,73 +124,61 @@ function getSessionMembers (slotId) {
  * Register class in a not usual slot (fields: success)
  */
 function registerClass (classId, slotId, comment, notifyParents, replayTestSubject) {
-  return axios.get(constants.JSON_WS_URL + SCHOOL_LIFE_SESSION_STUDENT_PATH + '/register-class', {
-    params: {
-      classId,
-      schoollifeSessionId: slotId,
-      comment,
-      notifyParents,
-      replayTestSubject
-    }
-  }).then(response => response.data)
+  return axios.post(constants.JSON_WS_URL + SCHOOL_LIFE_SESSION_STUDENT_PATH + '/register-class', WeprodeUtils.params({
+    classId,
+    schoollifeSessionId: slotId,
+    comment,
+    notifyParents,
+    replayTestSubject
+  })).then(response => response.data)
 }
 
 /**
  * Register student in a not usual slot (fields: success)
  */
 function registerStudent (student, slotId, comment, notifyParents, replayTestSubject) {
-  return axios.get(constants.JSON_WS_URL + SCHOOL_LIFE_SESSION_STUDENT_PATH + '/register-student', {
-    params: {
-      studentId: student.studentId,
-      schoollifeSessionId: slotId,
-      comment,
-      notifyParents,
-      replayTestSubject
-    }
-  }).then(response => response.data)
+  return axios.post(constants.JSON_WS_URL + SCHOOL_LIFE_SESSION_STUDENT_PATH + '/register-student', WeprodeUtils.params({
+    studentId: student.studentId,
+    schoollifeSessionId: slotId,
+    comment,
+    notifyParents,
+    replayTestSubject
+  })).then(response => response.data)
 }
 
 /**
  * UnRegister student from a not usual slot (fields: success)
  */
-function unRegisterStudent (student, slotId, comment, notifyParents, allSessions) {
-  return axios.get(constants.JSON_WS_URL + SCHOOL_LIFE_SESSION_STUDENT_PATH + '/unregister-student', {
-    params: {
-      studentId: student.studentId,
-      schoollifeSessionId: slotId,
-      comment,
-      notifyParents,
-      allSessions
-    }
-  }).then(response => response.data)
+function unRegisterStudent (student, slotId, allSessions) {
+  return axios.post(constants.JSON_WS_URL + SCHOOL_LIFE_SESSION_STUDENT_PATH + '/unregister-student', WeprodeUtils.params({
+    studentId: student.studentId,
+    schoollifeSessionId: slotId,
+    allSessions
+  })).then(response => response.data)
 }
 
 /**
  * Register student firing (fields: success)
  */
 function registerFiring (slotId, student, sourceSessionId, sourceTeacherId, sourceSchoollifeSessionId, registrationDate) {
-  return axios.get(constants.JSON_WS_URL + SCHOOL_LIFE_RENVOI_PATH + '/register-student-renvoi', {
-    params: {
-      schoollifeSessionId: slotId,
-      studentId: student.studentId,
-      sourceSessionId,
-      sourceTeacherId,
-      sourceSchoollifeSessionId,
-      registrationDate
-    }
-  }).then(response => response.data)
+  return axios.post(constants.JSON_WS_URL + SCHOOL_LIFE_RENVOI_PATH + '/register-student-renvoi', WeprodeUtils.params({
+    schoollifeSessionId: slotId,
+    studentId: student.studentId,
+    sourceSessionId,
+    sourceTeacherId,
+    sourceSchoollifeSessionId,
+    registrationDate
+  })).then(response => response.data)
 }
 
 /**
  * unRegisterFiring student firing (fields: success)
  */
 function unRegisterFiring (slotId, student) {
-  return axios.get(constants.JSON_WS_URL + SCHOOL_LIFE_RENVOI_PATH + '/unregister-student-renvoi', {
-    params: {
-      schoollifeSessionId: slotId,
-      studentId: student.studentId
-    }
-  }).then(response => response.data)
+  return axios.post(constants.JSON_WS_URL + SCHOOL_LIFE_RENVOI_PATH + '/unregister-student-renvoi', WeprodeUtils.params({
+    schoollifeSessionId: slotId,
+    studentId: student.studentId
+  })).then(response => response.data)
 }
 
 /**
@@ -209,13 +193,11 @@ function getPendingFirings () {
  * Updates the awareness
  */
 function setFiringReason (slotId, studentId, reason) {
-  return axios.get(constants.JSON_WS_URL + SCHOOL_LIFE_RENVOI_PATH + '/set-renvoi-reason', {
-    params: {
-      schoollifeSessionId: slotId,
-      studentId,
-      reason
-    }
-  }).then(response => response.data)
+  return axios.post(constants.JSON_WS_URL + SCHOOL_LIFE_RENVOI_PATH + '/set-renvoi-reason', WeprodeUtils.params({
+    schoollifeSessionId: slotId,
+    studentId,
+    reason
+  })).then(response => response.data)
 }
 
 /**
