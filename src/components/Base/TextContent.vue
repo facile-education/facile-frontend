@@ -54,6 +54,10 @@ export default {
       type: Boolean,
       default: false
     },
+    hasAdminOptions: {
+      type: Boolean,
+      default: false
+    },
     dataTest: {
       type: String,
       default: ''
@@ -65,27 +69,29 @@ export default {
       timeout: undefined,
       editor: InlineEditor,
       ready: false, // Mandatory to not set the 'disable' class too earlier and prevent bad class toggle on editor focus
-      editorOptions: {
-        removePlugins: [
-          'CKFinder',
-          'CKFinderUploadAdapter',
-          'CKBox',
-          'CKBoxEditing',
-          'CloudServicesUploadAdapter',
-          'CloudServices',
-          'EasyImage',
-          'Image',
-          'ImageCaption',
-          'ImageStyle',
-          'ImageToolbar',
-          'ImageUpload',
-          'MediaEmbed'
-        ],
-        toolbar: ['heading', '|', 'bold', 'italic', 'link', 'numberedList', 'bulletedList', '|', 'outdent', 'indent', '|', 'blockQuote', 'insertTable', 'undo', 'redo'],
-        language: 'fr',
-        placeholder: this.placeholder,
-        ckeditor: undefined
-      }
+      editorOptions: this.hasAdminOptions
+        ? {}
+        : {
+            removePlugins: [
+              'CKFinder',
+              'CKFinderUploadAdapter',
+              'CKBox',
+              'CKBoxEditing',
+              'CloudServicesUploadAdapter',
+              'CloudServices',
+              'EasyImage',
+              'Image',
+              'ImageCaption',
+              'ImageStyle',
+              'ImageToolbar',
+              'ImageUpload',
+              'MediaEmbed'
+            ],
+            toolbar: ['heading', '|', 'bold', 'italic', 'link', 'numberedList', 'bulletedList', '|', 'outdent', 'indent', '|', 'blockQuote', 'insertTable', 'undo', 'redo'],
+            language: 'fr',
+            placeholder: this.placeholder,
+            ckeditor: undefined
+          }
     }
   },
   methods: {
