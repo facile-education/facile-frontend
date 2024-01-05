@@ -28,6 +28,7 @@
           <!-- Password recovery -->
           <form
             v-if="showPasswordRecoveryForm"
+            data-test="passwordRecoveryForm"
             @submit.prevent="sendRecoveryEmail"
           >
             <div class="login-label">
@@ -68,6 +69,7 @@
           <!-- Classic login form -->
           <form
             v-else
+            data-test="classicForm"
             @submit.prevent="doLogin"
           >
             <input
