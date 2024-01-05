@@ -75,6 +75,7 @@
               :placeholder="$t('login')"
               class="input"
               name="unsername"
+              data-test="inputUsername"
               autocapitalize="none"
               @keypress="handleKeyPressed"
             >
@@ -85,6 +86,7 @@
                 :placeholder="$t('password')"
                 class="input"
                 name="password"
+                data-test="inputPassword"
                 autocomplete="on"
                 @keypress="handleKeyPressed"
               >
@@ -101,7 +103,9 @@
                 >
               </button>
             </div>
-            <div>
+            <div
+              data-test="loginError"
+            >
               <!-- Login error -->
               <span
                 v-show="isError && !isLocked"
