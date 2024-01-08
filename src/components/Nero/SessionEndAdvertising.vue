@@ -1,5 +1,6 @@
 <template>
   <WeprodeWindow
+    data-test="SessionEndModal"
     :modal="true"
     :draggable="true"
     :hidden-footer="true"
