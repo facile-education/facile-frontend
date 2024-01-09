@@ -187,7 +187,7 @@ export default {
 
           importDocuments(undefined, files).then(() => {
             const tmpFiles = this.$store.state.currentActions.listUploadedFiles
-            this.addContent({ contentType: 5, fileId: tmpFiles[0].id, contentName: tmpFiles[0].name })
+            this.addContent({ ...tmpFiles[0], contentType: 5, fileId: tmpFiles[0].id, contentName: tmpFiles[0].name })
           })
         } else {
           alertNoFile()
