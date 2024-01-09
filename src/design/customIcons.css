@@ -17,6 +17,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-download:before {
+  content: "\e917";
+}
+.icon-upload:before {
+  content: "\e909";
+}
 .icon-stats:before {
   content: "\e916";
 }
@@ -49,9 +55,6 @@
 }
 .icon-admin:before {
   content: "\e908";
-}
-.icon-upload:before {
-  content: "\e909";
 }
 .icon-Aa:before {
   content: "\e90a";

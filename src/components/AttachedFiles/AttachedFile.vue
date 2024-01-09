@@ -13,6 +13,7 @@
       width="34px"
       height="34px"
     />
+
     <div class="data">
       <strong class="name">
         {{ attachedFile.name }}
@@ -55,32 +56,30 @@
         v-else
         class="file-actions"
       >
-        <button
-          class="theme-hover-extra-light-background-color"
+        <WeprodeButton
           :title="$t('save')"
           :aria-label="$t('save')"
+          class="circle"
           @click.stop="isDepositModalDisplayed = true"
           @keyup.stop
         >
-          <img
-            class="file-action add-to-folder"
-            :src="saveIcon"
-            :alt="$t('save')"
-          >
-        </button>
-        <button
-          class="right-button theme-hover-extra-light-background-color"
+          <CustomIcon
+            icon-name="icon-folder"
+            :style="'font-size: 1rem'"
+          />
+        </WeprodeButton>
+        <WeprodeButton
           :title="$t('download')"
           :aria-label="$t('download')"
+          class="circle"
           @click.stop="downloadAttachedFile"
           @keyup.stop
         >
-          <img
-            class="file-action"
-            src="@assets/attached_file_download.svg"
-            :alt="$t('download')"
-          >
-        </button>
+          <CustomIcon
+            icon-name="icon-download"
+            :style="'font-size: 1rem'"
+          />
+        </WeprodeButton>
       </span>
     </div>
 
@@ -111,7 +110,9 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import FileIcon from '@components/Base/FileIcon.vue'
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import { formatSize } from '@utils/commons.util'
 import { downloadDocuments } from '@utils/documents.util'
 import { defineAsyncComponent } from 'vue'
@@ -122,7 +123,7 @@ const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicke
 
 export default {
   name: 'AttachedFile',
-  components: { ContextMenu, FileIcon, FilePickerModal },
+  components: { WeprodeButton, CustomIcon, ContextMenu, FileIcon, FilePickerModal },
   inject: ['mq'],
   props: {
     attachedFile: {
@@ -212,17 +213,8 @@ button {
   border: none;
 }
 
-.file-list {
-  padding-left: 10px;
-  display: flex;
-  justify-content: flex-start;
-  width: 100%;
-  flex-wrap: wrap;
-  max-height: 150px;
-  overflow-y: auto;
-}
-
 .attached-file {
+  --icon-width: 50px;
   height: 70px;
   width: 100%;
   padding: 0.5rem;
@@ -234,27 +226,27 @@ button {
   cursor: pointer;
   position: relative;
 
-  &:hover, &:focus-within {
-    .file-actions {
-      opacity: 100%;
-
-      button {
-        width: 40px;
-      }
-    }
+  &.has-remove-button {
+    --option-length: 2rem;
   }
 
-  &:not(.phone):not(.has-remove-button) {
-    .data {
-      width: calc(100% - (50px + 0.5rem));
-    }
+  &:not(.has-remove-button).phone {
+    --option-length: 2rem;
+  }
+
+  &:not(.has-remove-button):not(.phone) {
+    --option-length: calc(2*30px + 0.25rem + 0.5rem);
+  }
+
+  .data {
+    width: calc(100% - (var(--icon-width) + var(--option-length) + 0.5rem));
   }
 }
 
 .icon {
-  height: 50px;
-  width: 50px;
-  min-width: 50px;
+  height: var(--icon-width);
+  width: var(--icon-width);
+  min-width: var(--icon-width);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -262,7 +254,6 @@ button {
 }
 
 .data {
-  width: calc(100% - (50px + 0.5rem + 2rem));
   height: 100%;
   padding: 8px 0;
 }
@@ -301,45 +292,24 @@ button {
 }
 
 .options {
-  width: 2rem;
-
   button {
     padding: 0.5rem;
   }
 }
 
 .file-actions {
-  position: absolute;
-  top: 0;
-  right: 0;
+  margin-left: 0.5rem;
   height: 100%;
   display: flex;
+  gap: 0.25rem;
   border-radius: 0 5px 5px 0;
   overflow: hidden;
   transition: all .3s ease;
-  opacity: 0;
 
-  button {
-    width: 0;
-    transition: all .3s ease;
+  .circle{
     display: flex;
     align-items: center;
     justify-content: center;
-    border: none;
-    cursor: pointer;
-    background-color: $neutral-20;
-
-    img {
-      height: 1rem;
-    }
-
-    &:not(:hover) {
-      background-color: white;
-    }
-  }
-
-  .right-button {
-    border-radius: 0 $content-boarder-radius $content-boarder-radius 0;
   }
 }
 

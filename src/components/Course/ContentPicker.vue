@@ -99,7 +99,7 @@ export default {
         },
         {
           icon: 'icon-upload',
-          fontSize: '1rem',
+          fontSize: '1.25rem',
           name: this.$t('addOSFile'),
           callback: this.toggleOSFilePicker,
           hasInput: true
