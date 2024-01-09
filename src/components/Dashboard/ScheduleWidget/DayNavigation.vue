@@ -1,17 +1,13 @@
 <template>
   <nav v-if="configuration">
     <button
-      class="previous"
+      class="arrow-button previous"
       data-test="PreviousDay"
       :title="$t('goPrevious')"
       :aria-label="$t('goPrevious')"
       @click="$emit('go-previous')"
     >
-      <img
-        class="arrow"
-        src="@assets/arrow-right.svg"
-        :alt="$t('goPrevious')"
-      >
+      <CustomIcon icon-name="icon-chevron-left" />
     </button>
 
     <div class="middle-section">
@@ -37,16 +33,13 @@
     </div>
 
     <button
+      class="arrow-button after"
       data-test="NextDay"
       :title="$t('goAfter')"
       :aria-label="$t('goAfter')"
       @click="$emit('go-after')"
     >
-      <img
-        class="arrow after"
-        src="@assets/arrow-right.svg"
-        :alt="$t('goAfter')"
-      >
+      <CustomIcon icon-name="icon-chevron-left" />
     </button>
   </nav>
 </template>
@@ -54,12 +47,13 @@
 <script>
 import 'v-calendar/style.css'
 
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import dayjs from 'dayjs'
 import { DatePicker } from 'v-calendar'
 
 export default {
   name: 'DayNavigation',
-  components: { DatePicker },
+  components: { CustomIcon, DatePicker },
   props: {
     selectedDate: {
       type: Object,
@@ -106,12 +100,10 @@ export default {
   created () {
     if (!this.configuration) {
       this.$store.dispatch('calendar/getConfiguration')
-    } else {
-      if (this.selectedDate.isAfter(this.maxDate)) {
-        this.$emit('select-date', this.maxDate)
-      } else if (this.selectedDate.isBefore(this.minDate)) {
-        this.$emit('select-date', this.minDate)
-      }
+    } else if (this.selectedDate.isAfter(this.maxDate)) {
+      this.$emit('select-date', this.maxDate)
+    } else if (this.selectedDate.isBefore(this.minDate)) {
+      this.$emit('select-date', this.minDate)
     }
   },
   methods: {
@@ -131,13 +123,13 @@ nav {
   align-items: center;
   align-self: stretch;
 
-  button {
+  .arrow-button {
     display: flex;
-    width: 2rem;
-    height: 2.5rem;
-    justify-content: flex-end;
     align-items: center;
-    padding: 0 4px 0 0;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
     cursor: pointer;
     border: none;
     background: $neutral-10;
@@ -166,7 +158,7 @@ nav {
   @extend %font-bold-l;
 }
 
-.previous {
+.after {
   transform: rotate(180deg);
 }
 

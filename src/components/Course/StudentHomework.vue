@@ -152,7 +152,7 @@ export default {
   top: -8px;
   border: 3px solid $neutral-10;
 
-  @extend %dashboard-header-pellet;
+  margin-left: 10px;
 }
 
 header {

@@ -62,10 +62,6 @@ header {
   @extend %widget-header;
 }
 
-.header-pellet {
-  @extend %dashboard-header-pellet;
-}
-
 .read-only-button {
   margin-left: 10px;
   @extend %read-only-button;

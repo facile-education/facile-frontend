@@ -23,10 +23,6 @@
   @extend %font-medium-m;
 }
 
-%dashboard-header-pellet {
-  margin-left: 10px;
-}
-
 $diary-widget-min-width: 355px;
 $announcements-widget-min-width: 500px;
 $homework-widget-min-width: 255px;
@@ -78,15 +74,14 @@ $news-thumbnail-size-in-modal: 90px;
 }
 
 %show-more-button {
-  height: 2rem;
   border: 1px solid $neutral-60;
   border-radius: 6px;
   background-color: $neutral-10;
   cursor: pointer;
-  padding: 6px 1rem;
+  padding: 0.25rem 1rem;
   display: flex;
   align-items: center;
-  @extend %font-regular-m;
+  @extend %font-medium-s;
 }
 
 // Activities common css

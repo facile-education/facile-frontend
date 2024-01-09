@@ -17,6 +17,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-chevron-left:before {
+  content: "\e918";
+}
 .icon-download:before {
   content: "\e917";
 }

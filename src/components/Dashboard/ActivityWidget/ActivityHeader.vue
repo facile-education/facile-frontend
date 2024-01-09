@@ -107,6 +107,7 @@ header {
   .left, .right {
     display: flex;
     align-items: center;
+    gap: 0.5rem;
   }
 }
 
@@ -117,10 +118,6 @@ h1 {
 
 h2 {
   @extend %widget-h2;
-}
-
-.header-pellet {
-  @extend %dashboard-header-pellet;
 }
 
 .back {

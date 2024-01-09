@@ -24,33 +24,6 @@
     </div>
     <div class="right">
       <button
-        v-if="hasArrows"
-        class="arrow-button"
-        :class="{'disabled': !canScrollToLeft}"
-        :disabled="!canScrollToLeft"
-        @click="$emit('goPrevious')"
-      >
-        <BaseIcon
-          class="left-arrow"
-          :class="{'disabled': !canScrollToLeft}"
-          name="chevron-up"
-        />
-      </button>
-      <button
-        v-if="hasArrows"
-        class="arrow-button"
-        :class="{'disabled': !canScrollToRight}"
-        :disabled="!canScrollToRight"
-        @click="$emit('goNext')"
-      >
-        <BaseIcon
-          class="right-arrow"
-          :class="{'disabled': !canScrollToRight}"
-          name="chevron-up"
-        />
-      </button>
-
-      <button
         v-t="'showMore'"
         class="show-more"
         @click="showMore"
@@ -62,6 +35,27 @@
         data-test="buttonCreateAnnoucement"
         @click="isCreateModalDisplayed = true"
       />
+
+      <div class="arrows">
+        <button
+          v-if="hasArrows"
+          class="arrow-button left-arrow"
+          :class="{'disabled': !canScrollToLeft}"
+          :disabled="!canScrollToLeft"
+          @click="$emit('goPrevious')"
+        >
+          <CustomIcon icon-name="icon-chevron-left" />
+        </button>
+        <button
+          v-if="hasArrows"
+          class="arrow-button right-arrow"
+          :class="{'disabled': !canScrollToRight}"
+          :disabled="!canScrollToRight"
+          @click="$emit('goNext')"
+        >
+          <CustomIcon icon-name="icon-chevron-left" />
+        </button>
+      </div>
     </div>
   </header>
 
@@ -78,7 +72,6 @@
 </template>
 
 <script>
-import BaseIcon from '@components/Base/BaseIcon.vue'
 import CreateButton from '@components/Base/CreateButton.vue'
 import CustomIcon from '@components/Base/CustomIcon.vue'
 import Pellet from '@components/Base/Pellet.vue'
@@ -87,7 +80,7 @@ const SaveNewsModal = defineAsyncComponent(() => import('@components/Dashboard/A
 
 export default {
   name: 'AnnouncementsHeader',
-  components: { CustomIcon, BaseIcon, SaveNewsModal, CreateButton, Pellet },
+  components: { CustomIcon, SaveNewsModal, CreateButton, Pellet },
   props: {
     nbNewAnnouncements: {
       type: Number,
@@ -142,12 +135,7 @@ h2 {
   @extend %widget-h2;
 }
 
-.header-pellet {
-  @extend %dashboard-header-pellet;
-}
-
 .read-only-button {
-  margin-left: 10px;
   @extend %read-only-button;
 }
 
@@ -155,41 +143,40 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: 100%;
   @extend %widget-header;
 
   .left, .right {
     display: flex;
     align-items: center;
+    gap: 0.5rem;
+    height: 100%;
   }
 }
 
-.arrow-button {
-  width: 2rem;
+.arrows {
+  margin-left: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
   height: 100%;
+}
+
+.arrow-button {
+  height: 100%;
+  width: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   background-color: transparent;
   border-radius: 0;
   padding: 0;
-  margin: 0 0 0 1rem;
   border: none;
 }
 
-.left-arrow, .right-arrow {
-  font-size: 1.3rem;
-  color: $color-new-light-text;
-
-  &.disabled {
-    color: $color-border;
-    background-color: transparent;
-  }
-}
-
-.left-arrow {
-  transform: rotate(-90deg);
-}
-
 .right-arrow {
-  transform: rotate(90deg);
+  transform: rotate(180deg);
 }
 
 .show-more {

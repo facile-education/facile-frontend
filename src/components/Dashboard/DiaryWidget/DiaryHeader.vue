@@ -109,15 +109,11 @@ header {
   .left, .right{
     display: flex;
     align-items: center;
+    gap: 0.5rem;
   }
 }
 
-.header-pellet {
-  @extend %dashboard-header-pellet;
-}
-
 .read-only-button {
-  margin-left: 10px;
   @extend %read-only-button;
 }
 
