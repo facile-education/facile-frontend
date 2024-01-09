@@ -10,7 +10,7 @@
       <Homework
         :homework="homework"
         :homework-type="homeworkType"
-        :is-in-list="true"
+        :is-in-list="isInList"
         @update-homework="$emit('update-homework')"
       />
     </li>
@@ -33,6 +33,10 @@ export default {
     homeworkList: {
       type: Array,
       required: true
+    },
+    isInList: {
+      type: Boolean,
+      default: false
     }
   },
   emits: ['update-homework']
