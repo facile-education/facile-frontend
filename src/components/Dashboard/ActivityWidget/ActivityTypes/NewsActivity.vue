@@ -63,7 +63,7 @@
       class="options"
     >
       <button
-        class="option theme-hover-extra-light-background-color"
+        class="option"
         :aria-label="$t('update')"
         data-test="buttonEditInformation"
         :title="$t('update')"
@@ -76,7 +76,7 @@
         >
       </button>
       <button
-        class="option theme-hover-extra-light-background-color"
+        class="option"
         data-test="buttonDeleteInformation"
         :aria-label="$t('delete')"
         :title="$t('delete')"
@@ -237,10 +237,8 @@ button {
   &:hover, &:focus-within {
     .options {
       opacity: 100%;
-
-      .option {
-        width: 40px;
-      }
+      right: 8px;
+      transform: translateX(0);
     }
   }
 
@@ -297,30 +295,35 @@ button {
     position: absolute;
     top: 0;
     right: 0;
+    opacity: 0;
+    transform: translateX(100%);
     height: 100%;
     overflow: hidden;
-    opacity: 0;
     display: flex;
+    gap: 4px;
     flex-direction: column;
+    justify-content: center;
     border-radius: 0 5px 5px 0;
-    transition: all .3s ease;
+    transition: all .4s ease;
 
     .option {
-      flex: 1;
-      width: 0;
-      transition: all .3s ease;
+      padding: 0;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 1rem;
       display: flex;
       align-items: center;
       justify-content: center;
       border: none;
       cursor: pointer;
+      background-color: $neutral-20;
 
       img {
-        height: 1rem;
+        height: 15px;
       }
 
-      &:not(:hover) {
-        background-color: white;
+      &:hover {
+        background-color: $color-hover-bg;
       }
     }
   }

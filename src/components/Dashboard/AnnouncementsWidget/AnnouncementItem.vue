@@ -6,6 +6,11 @@
     :title="$t('selectToConsult')"
   >
     <div
+      v-if="!announcement.hasRead"
+      class="pellet theme-background-color"
+    />
+
+    <div
       class="announcement"
       :class="{'theme-border-color': !announcement.hasRead, 'theme-light-background-color': isSelected, 'theme-hover-light-background-color': isSelectionMode}"
       tabindex="0"
@@ -65,7 +70,7 @@
       >
         <button
           v-if="announcement.isEditable"
-          class="option theme-hover-extra-light-background-color"
+          class="option"
           :aria-label="$t('update')"
           :title="$t('update')"
           data-test="buttonEditAnnouncement"
@@ -79,7 +84,7 @@
         </button>
         <button
           v-if="announcement.isDeletable"
-          class="option theme-hover-extra-light-background-color"
+          class="option"
           :aria-label="$t('delete')"
           :title="$t('delete')"
           data-test="buttonDeleteAnnouncement"
@@ -92,11 +97,6 @@
           >
         </button>
       </div>
-
-      <div
-        v-if="!announcement.hasRead"
-        class="pellet theme-background-color"
-      />
     </div>
   </div>
 
@@ -319,6 +319,7 @@ export default {
 @import "@design";
 
 .container {
+  position: relative;
   padding-right: 4px;
   padding-top: 4px;
   min-height: $announcement-item-min-height;
@@ -339,12 +340,18 @@ export default {
       text-overflow: ellipsis;
     }
   }
+
+  .pellet {
+    @extend %item-pellet;
+    transform: translate(-88%, -15%);
+    z-index: 1;
+  }
 }
 
 .announcement {
   position: relative;
   cursor: pointer;
-  height: calc(100% - 4px);
+  height: 100%;
   width: 100%;
   border-radius: 10px;
   font-size: 14px;
@@ -352,18 +359,13 @@ export default {
   display: flex;
   --thumbnail-width: min(80px, 20vw);
   border: 2px solid $neutral-40;
-
-  .pellet {
-    @extend %item-pellet;
-  }
+  overflow: hidden;
 
   &:hover, &:focus-within {
     .announcement-options {
       opacity: 100%;
-
-      .option {
-        height: 50px;
-      }
+      bottom: 14px;
+      transform: translateY(0);
     }
   }
 }
@@ -384,9 +386,9 @@ export default {
 .options-button {
   padding: 8px;
   margin: 0 0 0 auto;
-  background-color: transparent;
   border: none;
   cursor: pointer;
+  background-color: transparent;
 }
 
 .content {
@@ -434,29 +436,33 @@ export default {
 .announcement-options {
   position: absolute;
   bottom: 0;
-  right: 0;
+  right: 16px;
+  transform: translateY(100%);
   display: flex;
+  opacity: 0;
+  gap: 4px;
   border-radius: 5px 0 0 0;
   overflow: hidden;
-  transition: all .3s ease;
-  opacity: 0;
+  transition: all .4s ease;
 
   .option {
-    height: 0;
-    width: 40px;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 1rem;
     transition: all .3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
     border: none;
     cursor: pointer;
+    background-color: $neutral-20;
 
     img {
-      height: 1rem;
+      height: 15px;
     }
 
-    &:not(:hover) {
-      background-color: white;
+    &:hover {
+      background-color: $color-hover-bg;
     }
   }
 }

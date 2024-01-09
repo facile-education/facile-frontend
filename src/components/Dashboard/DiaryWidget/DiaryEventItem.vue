@@ -4,6 +4,11 @@
     class="container"
   >
     <div
+      v-if="!event.hasRead"
+      class="pellet theme-background-color"
+    />
+
+    <div
       class="diary-event"
       :class="{'theme-border-color': !event.hasRead, 'theme-light-background-color': isSelected, 'theme-hover-light-background-color': isSelectionMode, 'theme-extra-light-background-color': (!isSelected && !isSelectionMode && event.hasRead)}"
       tabindex="0"
@@ -51,7 +56,7 @@
       >
         <button
           v-if="event.isEditable"
-          class="option theme-hover-extra-light-background-color"
+          class="option"
           :aria-label="$t('update')"
           :title="$t('update')"
           data-test="buttonEditEvent"
@@ -65,7 +70,7 @@
         </button>
         <button
           v-if="event.isDeletable"
-          class="option theme-hover-extra-light-background-color"
+          class="option"
           :aria-label="$t('delete')"
           :title="$t('delete')"
           data-test="buttonDeleteEvent"
@@ -78,11 +83,6 @@
           >
         </button>
       </div>
-
-      <div
-        v-if="!event.hasRead"
-        class="pellet theme-background-color"
-      />
     </div>
   </div>
 
@@ -296,10 +296,17 @@ export default {
 @import "@design";
 
 .container {
+  position: relative;
   padding-right: 4px;
   padding-top: 4px;
   height: 52px;
   width: 99%;
+
+  .pellet {
+    @extend %item-pellet;
+    transform: translate(-88%, -15%);
+    z-index: 1;
+  }
 }
 
 .diary-event {
@@ -312,22 +319,17 @@ export default {
   --date-width: 41px;
   font-size: 14px;
   line-height: 18px;
+  overflow: hidden;
 
   &.theme-border-color {
     border: 2px solid;
   }
 
-  .pellet {
-    @extend %item-pellet;
-  }
-
   &:hover, &:focus-within {
     .event-options {
       opacity: 100%;
-
-      .option {
-        width: 40px;
-      }
+      right: 8px;
+      transform: translateX(0);
     }
   }
 }
@@ -379,28 +381,35 @@ export default {
   position: absolute;
   top: 0;
   right: 0;
+  opacity: 0;
+  transform: translateX(100%);
   height: 100%;
   display: flex;
+  gap: 4px;
+  align-items: center;
   border-radius: 0 5px 5px 0;
   overflow: hidden;
-  transition: all .3s ease;
-  opacity: 0;
+  transition: all .4s ease;
 
   .option {
-    width: 0;
+    padding: 0;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 1rem;
     transition: all .3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
     border: none;
     cursor: pointer;
+    background-color: $neutral-20;
 
     img {
-      height: 1rem;
+      height: 15px;
     }
 
-    &:not(:hover) {
-      background-color: white;
+    &:hover {
+      background-color: $color-hover-bg;
     }
   }
 }

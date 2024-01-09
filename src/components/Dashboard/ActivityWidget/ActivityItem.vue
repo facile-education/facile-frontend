@@ -4,10 +4,6 @@
       class="activity-item"
       :class="{'theme-hover-border-color': isNewsActivity || isHHCActivity || isSessionActivity}"
     >
-      <div
-        v-if="false"
-        class="pellet theme-background-color"
-      />
       <NewsActivity
         v-if="isNewsActivity"
         :news="activity"
