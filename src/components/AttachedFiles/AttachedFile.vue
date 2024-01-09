@@ -268,6 +268,7 @@ button {
 }
 
 .size {
+  margin-top: 4px;
   @extend %font-regular-xs;
 }
 
