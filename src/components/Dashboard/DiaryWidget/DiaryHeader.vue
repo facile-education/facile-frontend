@@ -22,12 +22,19 @@
         />
       </button>
     </div>
-    <CreateButton
-      v-if="canCreateDiaryEvent"
-      :title="$t('create-event')"
-      data-test="buttonCreateEvent"
-      @click="isCreateModalDisplayed = true"
-    />
+    <div class="right">
+      <button
+        v-t="'showMore'"
+        class="show-more"
+        @click="showMore"
+      />
+      <CreateButton
+        v-if="canCreateDiaryEvent"
+        :title="$t('create-event')"
+        data-test="buttonCreateEvent"
+        @click="isCreateModalDisplayed = true"
+      />
+    </div>
   </header>
 
   <teleport
@@ -78,6 +85,9 @@ export default {
     },
     createEvent () {
       this.$emit('createEvent')
+    },
+    showMore () {
+      this.$router.push({ name: 'AllEvents' })
     }
   }
 }
@@ -96,7 +106,7 @@ header {
   justify-content: space-between;
   @extend %widget-header;
 
-  .left {
+  .left, .right{
     display: flex;
     align-items: center;
   }
@@ -111,12 +121,17 @@ header {
   @extend %read-only-button;
 }
 
+.show-more {
+  @extend %show-more-button;
+}
+
 </style>
 
 <i18n locale="fr">
 {
   "diary": "Agenda",
   "unreadFilter": "Filtrer les non lus",
-  "create-event": "Créer un évènement"
+  "create-event": "Créer un évènement",
+  "showMore": "Voir plus"
 }
 </i18n>

@@ -60,13 +60,6 @@
           :class="{'hidden' : !canScrollToRight}"
         />
       </div>
-      <div class="footer">
-        <button
-          v-t="'showMore'"
-          class="show-more"
-          @click="showMore"
-        />
-      </div>
     </div>
   </section>
 </template>
@@ -178,9 +171,6 @@ export default {
         console.error(err)
       })
     },
-    showMore () {
-      this.$router.push({ name: 'AllAnnouncements' })
-    },
     markAsRead (announcement) {
       announcement.hasRead = true
       if (this.nbUnreadAnnouncements >= 1) {
@@ -282,17 +272,12 @@ ul {
     transform: translateX(-100%);
   }
 }
-
-.footer {
-  @extend %widget-footer;
-}
 </style>
 
 <i18n locale="fr">
 {
   "errorPlaceholder": "Oups, une erreur est survenue...",
   "emptyPlaceholder": "Aucune annonce",
-  "unReadEmptyPlaceholder": "Aucune nouvelle annonce",
-  "showMore": "Voir toutes les annonces"
+  "unReadEmptyPlaceholder": "Aucune nouvelle annonce"
 }
 </i18n>

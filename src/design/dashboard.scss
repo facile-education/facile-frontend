@@ -77,23 +77,16 @@ $news-thumbnail-size-in-modal: 90px;
   transform: translate(-65%, -40%);
 }
 
-%widget-footer {
-  margin-top: 8px;
+%show-more-button {
+  height: 2rem;
+  border: 1px solid $neutral-60;
+  border-radius: 6px;
+  background-color: $neutral-10;
+  cursor: pointer;
+  padding: 6px 1rem;
   display: flex;
-  justify-content: flex-end;
-
-  button {
-    margin-right: 4px;
-    height: 2rem;
-    border: 1px solid $neutral-60;
-    border-radius: 6px;
-    background-color: $neutral-10;
-    cursor: pointer;
-    padding: 6px 1rem;
-    display: flex;
-    align-items: center;
-    @extend %font-regular-m;
-  }
+  align-items: center;
+  @extend %font-regular-m;
 }
 
 // Activities common css

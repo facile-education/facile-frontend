@@ -42,14 +42,6 @@
           />
         </div>
       </div>
-
-      <div class="footer">
-        <button
-          v-t="'showMore'"
-          class="show-more"
-          @click="showMore"
-        />
-      </div>
     </div>
   </section>
 </template>
@@ -126,9 +118,6 @@ export default {
         console.error(err)
       })
     },
-    showMore () {
-      this.$router.push({ name: 'AllEvents' })
-    },
     markAsRead (event) {
       event.hasRead = true
       this.nbNewEvents--
@@ -163,17 +152,12 @@ section {
   font-size: 0.875em;
   margin-top: 4px;
 }
-
-.footer {
-  @extend %widget-footer;
-}
 </style>
 
 <i18n locale="fr">
 {
   "errorPlaceholder": "Oups, une erreur est survenue...",
   "emptyPlaceholder": "Aucun événement à venir",
-  "unReadEmptyPlaceholder": "Aucun nouvel événement",
-  "showMore": "Voir tous les événements"
+  "unReadEmptyPlaceholder": "Aucun nouvel événement"
 }
 </i18n>

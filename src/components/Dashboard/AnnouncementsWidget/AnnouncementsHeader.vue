@@ -23,12 +23,6 @@
       </button>
     </div>
     <div class="right">
-      <CreateButton
-        v-if="canCreateAnnouncement"
-        :title="$t('create-annouce')"
-        data-test="buttonCreateAnnoucement"
-        @click="isCreateModalDisplayed = true"
-      />
       <button
         v-if="hasArrows"
         class="arrow-button"
@@ -55,6 +49,19 @@
           name="chevron-up"
         />
       </button>
+
+      <button
+        v-t="'showMore'"
+        class="show-more"
+        @click="showMore"
+      />
+
+      <CreateButton
+        v-if="canCreateAnnouncement"
+        :title="$t('create-annouce')"
+        data-test="buttonCreateAnnoucement"
+        @click="isCreateModalDisplayed = true"
+      />
     </div>
   </header>
 
@@ -120,6 +127,9 @@ export default {
     },
     createAnnouncement () {
       this.$emit('createAnnouncement')
+    },
+    showMore () {
+      this.$router.push({ name: 'AllAnnouncements' })
     }
   }
 }
@@ -182,12 +192,17 @@ header {
   transform: rotate(90deg);
 }
 
+.show-more {
+  @extend %show-more-button;
+}
+
 </style>
 
 <i18n locale="fr">
 {
   "announcements": "Annonces",
   "unreadFilter": "Filtrer les non lues",
-  "create-annouce": "Créer une annonce"
+  "create-annouce": "Créer une annonce",
+  "showMore": "Voir plus"
 }
 </i18n>

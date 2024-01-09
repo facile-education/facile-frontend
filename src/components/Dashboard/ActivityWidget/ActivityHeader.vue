@@ -32,6 +32,12 @@
       v-if="canCreateNews"
       class="right"
     >
+      <button
+        v-if="!displayAll"
+        v-t="'showMore'"
+        class="show-more"
+        @click="$router.push({ name: 'AllActivities' })"
+      />
       <CreateButton
         data-test="CreateActivity"
         :title="$t('create-news')"
@@ -98,7 +104,7 @@ header {
   align-items: center;
   justify-content: space-between;
 
-  .left {
+  .left, .right {
     display: flex;
     align-items: center;
   }
@@ -130,6 +136,11 @@ h2 {
     height: 20px;
   }
 }
+
+.show-more {
+  @extend %show-more-button;
+}
+
 </style>
 
 <i18n locale="fr">
@@ -137,6 +148,7 @@ h2 {
   "activities": "Activités",
   "allActivities": "Toutes les activités",
   "dashboard": "Tableau de bord",
-  "create-news": "Partager une information"
+  "create-news": "Partager une information",
+  "showMore": "Voir plus"
 }
 </i18n>

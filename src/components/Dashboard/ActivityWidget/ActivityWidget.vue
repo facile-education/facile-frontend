@@ -75,17 +75,6 @@
           />
         </li>
       </ul>
-
-      <div
-        v-if="!displayAll"
-        class="footer"
-      >
-        <button
-          v-t="'showMore'"
-          class="show-more"
-          @click="$router.push({ name: 'AllActivities' })"
-        />
-      </div>
     </div>
   </section>
 </template>
@@ -313,17 +302,12 @@ ul {
 .placeholder {
   @extend %widget-placeholder;
 }
-
-.footer {
-  @extend %widget-footer;
-}
 </style>
 
 <i18n locale="fr">
 {
   "errorPlaceholder": "Oups, une erreur est survenue...",
   "emptyPlaceholder": "Aucune activité à afficher",
-  "newsSince": "Nouveautés depuis ",
-  "showMore": "Voir toutes les activités"
+  "newsSince": "Nouveautés depuis "
 }
 </i18n>
