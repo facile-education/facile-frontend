@@ -85,6 +85,7 @@ import { getSchoolClassList } from '@/api/organization.service'
 import { addUserAffectation, removeUserAffectation } from '@/api/userManagement.service'
 import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
 import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
+import WeprodeUtils from '@/utils/weprode.utils'
 
 dayjs.extend(localizedFormat)
 
@@ -110,7 +111,9 @@ export default {
       return this.$store.state.user.selectedSchool
     },
     filteredOrgs () {
-      return this.schoolOrgs.filter(org => this.filter === '' || org.orgName.toLowerCase().indexOf(this.filter.toLowerCase()) !== -1)
+      // Filter and sort by ascending org name
+      const filteredList = this.schoolOrgs.filter(org => this.filter === '' || org.orgName.toLowerCase().indexOf(this.filter.toLowerCase()) !== -1)
+      return WeprodeUtils.sortArrayWithString(filteredList, false, 'orgName')
     },
     noAffectation () {
       return this.editedUser.affectations === undefined || this.editedUser.affectations.length === 0
