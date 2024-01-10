@@ -57,7 +57,6 @@ import dayjs from 'dayjs'
 
 import { getStudentHomeworks } from '@/api/homework.service'
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
-import { COURSES } from '@/constants/appConstants'
 import { nbHomeworksInWidget } from '@/constants/dashboardConstants'
 
 export default {
