@@ -41,17 +41,10 @@
         </div>
         <div class="issue-description">
           <h5> {{ (modalType==='Assistance' ? $t('issueDescription') : $t('suggestionDescription')) + '*' }} </h5>
-          <div
+          <TextContent
+            v-model:content="form.issueDescription"
             class="ck-editor"
-            data-test="ck-editor"
-          >
-            <CKEditor
-              v-model="form.issueDescription"
-              :editor="editor"
-              :config="editorConfig"
-              @blur="v$.form.issueDescription.$touch()"
-            />
-          </div>
+          />
           <WeprodeErrorMessage :error-message="formErrorList.issueDescription" />
         </div>
         <!-- Attached files -->
@@ -84,9 +77,8 @@
 </template>
 
 <script>
-import InlineEditor from '@ckeditor/ckeditor5-build-inline'
-import CKEditor from '@ckeditor/ckeditor5-vue'
 import AttachedFiles from '@components/AttachedFiles/AttachedFiles.vue'
+import TextContent from '@components/Base/TextContent.vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import { defineAsyncComponent } from 'vue'
@@ -103,7 +95,7 @@ export default {
   components: {
     AttachedFiles,
     FilePickerModal,
-    CKEditor: CKEditor.component,
+    TextContent,
     WeprodeButton,
     WeprodeDropdown,
     WeprodeErrorMessage,
@@ -124,14 +116,6 @@ export default {
         issueDescription: ''
       },
       selected: undefined,
-      editor: InlineEditor,
-      editorConfig: {
-        // TODO find a good configuration to prevent issues
-        toolbar: {
-          // items: [ 'bold', 'italic', '|', 'link' ],
-          // viewportTopOffset: 500
-        }
-      },
       attachFiles: [],
       isFilePickerDisplayed: false,
       isLoading: false
@@ -241,7 +225,7 @@ h5 {
 }
 
 .ck-editor{
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0.15) !important;
 }
 
 .ck-editor__editable {
