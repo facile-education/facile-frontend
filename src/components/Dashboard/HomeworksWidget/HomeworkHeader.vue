@@ -1,31 +1,41 @@
 <template>
   <header>
-    <h2 v-t="'homeworks'" />
-    <Pellet
-      v-if="nbHomeworksUndone > 0"
-      class="header-pellet"
-      :count="nbHomeworksUndone"
-      :show-count="true"
-    />
-    <button
-      class="read-only-button"
-      :aria-label="$t('unreadFilter')"
-      :title="$t('unreadFilter')"
-      data-test="doneFilter"
-      @click="toggleUndoneOnly"
-    >
-      <CustomIcon
-        :icon-name="undoneOnly ? 'icon-filter-plain' : 'icon-filter'"
-        class="unread-filter-icon"
-        :class="{'theme-text-color': undoneOnly}"
+    <div class="left">
+      <h2 v-t="'homeworks'" />
+      <Pellet
+        v-if="nbHomeworksUndone > 0"
+        class="header-pellet"
+        :count="nbHomeworksUndone"
+        :show-count="true"
       />
-    </button>
+      <button
+        class="read-only-button"
+        :aria-label="$t('unreadFilter')"
+        :title="$t('unreadFilter')"
+        data-test="doneFilter"
+        @click="toggleUndoneOnly"
+      >
+        <CustomIcon
+          :icon-name="undoneOnly ? 'icon-filter-plain' : 'icon-filter'"
+          class="unread-filter-icon"
+          :class="{'theme-text-color': undoneOnly}"
+        />
+      </button>
+    </div>
+
+    <button
+      v-t="'showMore'"
+      class="show-more"
+      @click="redirect"
+    />
   </header>
 </template>
 
 <script>
 import CustomIcon from '@components/Base/CustomIcon.vue'
 import Pellet from '@components/Base/Pellet.vue'
+
+import { COURSES } from '@/constants/appConstants'
 
 export default {
   name: 'HomeworkHeader',
@@ -44,6 +54,9 @@ export default {
   methods: {
     toggleUndoneOnly () {
       this.$emit('updateUndoneOnly', !this.undoneOnly)
+    },
+    redirect () {
+      this.$router.push({ name: COURSES })
     }
   }
 }
@@ -59,18 +72,29 @@ h2 {
 header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   @extend %widget-header;
+
+  .left{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
 }
 
 .read-only-button {
-  margin-left: 10px;
   @extend %read-only-button;
+}
+
+.show-more {
+  @extend %show-more-button;
 }
 </style>
 
 <i18n locale="fr">
 {
   "homeworks": "À faire",
-  "unreadFilter": "Filtrer les non faits"
+  "unreadFilter": "Filtrer les non faits",
+  "showMore": "Voir plus"
 }
 </i18n>

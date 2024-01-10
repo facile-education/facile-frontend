@@ -45,14 +45,6 @@
           </ul>
         </li>
       </ul>
-
-      <div class="footer">
-        <button
-          v-t="'showMore'"
-          class="show-more"
-          @click="redirect"
-        />
-      </div>
     </div>
   </section>
 </template>
@@ -121,9 +113,6 @@ export default {
     this.getHomeworks()
   },
   methods: {
-    redirect () {
-      this.$router.push({ name: COURSES })
-    },
     updateUndoneOnlyValue (value) {
       this.undoneOnly = value
       this.getHomeworks()
@@ -184,17 +173,12 @@ ul {
 .period {
   font-size: 0.875em;
 }
-
-.footer {
-  @extend %widget-footer;
-}
 </style>
 
 <i18n locale="fr">
 {
   "errorPlaceholder": "Oups, une erreur est survenue...",
   "emptyPlaceholder": "Aucun devoir à faire",
-  "for": "Pour",
-  "showMore": "Voir tous les devoirs"
+  "for": "Pour"
 }
 </i18n>
