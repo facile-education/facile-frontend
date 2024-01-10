@@ -31,7 +31,7 @@
     <WeprodeErrorMessage :error-message="errorMessage" />
 
     <!-- Signature -->
-    <div class="param-header">
+    <div class="param-header signature">
       <WeprodeCheckbox
         v-model="configuration.signature.isActive"
         class="checkbox"
@@ -42,7 +42,7 @@
     </div>
     <TextContent
       class="ck"
-      data-test="signature-input"
+      data-test="contentItem_0"
       :content="signatureContent"
       :disabled="!configuration.signature.isActive"
       @input="updateSignature"
@@ -50,7 +50,7 @@
     />
 
     <!-- Auto-reply -->
-    <div class="param-header">
+    <div class="param-header autoReply">
       <WeprodeCheckbox
         v-model="configuration.autoReply.isActive"
         class="checkbox"
@@ -61,7 +61,7 @@
     </div>
     <TextContent
       class="ck"
-      data-test="autoReply-input"
+      data-test="contentItem_1"
       :content="autoReplyContent"
       :disabled="!configuration.autoReply.isActive"
       @input="updateAutoReply"
