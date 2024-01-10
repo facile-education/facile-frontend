@@ -148,37 +148,42 @@ export const actions = {
     })
   },
   initUserInformations ({ rootState, commit, dispatch }) {
-    this.dispatch('currentActions/addAction', { name: 'getUserInformations' })
-    userService.getUserInformations().then(
-      (data) => {
-        this.dispatch('currentActions/removeAction', { name: 'getUserInformations' })
-        if (data.success) {
+    return new Promise((resolve, reject) => {
+      this.dispatch('currentActions/addAction', { name: 'getUserInformations' })
+      userService.getUserInformations().then(
+        (data) => {
+          this.dispatch('currentActions/removeAction', { name: 'getUserInformations' })
+          if (data.success) {
           // Handle theme color
-          if (data.themeColor && data.themeColor !== '') {
-            if (data.themeColor.indexOf('#') === -1) {
-              data.themeColor = '#' + data.themeColor
+            if (data.themeColor && data.themeColor !== '') {
+              if (data.themeColor.indexOf('#') === -1) {
+                data.themeColor = '#' + data.themeColor
+              }
+              if (data.themeColor !== rootState.theme.mainColor && data.themeColor !== 'FFFFFF') {
+                dispatch('theme/updateMainColor', data.themeColor, { root: true })
+              }
+            } else {
+              data.themeColor = '#' + rootState.theme.mainColor
             }
-            if (data.themeColor !== rootState.theme.mainColor && data.themeColor !== 'FFFFFF') {
-              dispatch('theme/updateMainColor', data.themeColor, { root: true })
-            }
-          } else {
-            data.themeColor = '#' + rootState.theme.mainColor
-          }
 
-          if (!data.agreedTermsOfUse) {
-            router.push({ name: 'AgreeTermsOfUse' })
-          } else if (data.passwordChange) {
-            router.push({ name: 'PasswordChange' })
+            if (!data.agreedTermsOfUse) {
+              router.push({ name: 'AgreeTermsOfUse' })
+            } else if (data.passwordChange) {
+              router.push({ name: 'PasswordChange' })
+            }
+            commit('initUserInformations', data)
+            resolve()
+          } else {
+            reject(data.error.message)
+            console.error(data.error.message)
           }
-          commit('initUserInformations', data)
-        } else {
-          console.error(data.error.message)
-        }
-      },
-      (err) => {
-        console.error(err)
-        this.dispatch('currentActions/removeAction', { name: 'getUserInformations' })
-      })
+        },
+        (err) => {
+          console.error(err)
+          reject(err)
+          this.dispatch('currentActions/removeAction', { name: 'getUserInformations' })
+        })
+    })
   },
   setSelectedSchool ({ commit }, school) {
     commit('setSelectedSchool', school)
