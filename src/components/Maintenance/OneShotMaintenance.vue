@@ -37,13 +37,19 @@
         <span>{{ $t('delete-folders') }}</span>
       </WeprodeButton>
     </div>
+    <WeprodeButton
+      class="round"
+      @click="setCoursePermissions"
+    >
+      <span>{{ $t('setCoursePermissions') }}</span>
+    </WeprodeButton>
   </div>
 </template>
 
 <script>
 import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 
-import { cleanupObsoleteFolders, deleteFolders, setNewsPermissions } from '@/api/maintenance.service'
+import { cleanupObsoleteFolders, deleteFolders, setCoursePermissions, setNewsPermissions } from '@/api/maintenance.service'
 
 export default {
   name: 'OneShotMaintenance',
@@ -95,6 +101,17 @@ export default {
           }
         }
       )
+    },
+    setCoursePermissions () {
+      setCoursePermissions().then(
+        (data) => {
+          if (data.success) {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
+          } else {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+          }
+        }
+      )
     }
   }
 }
@@ -120,6 +137,7 @@ export default {
   "pAuth": "pAuth bidon",
   "runDataFeed": "Alimentation des données (intégration uniquement)",
   "setNewsPermissions": "Permissions des PJ de news",
-  "delete-folders": "Supprimer les dossiers"
+  "delete-folders": "Supprimer les dossiers",
+  "setCoursePermissions": "Permissions des supports de cours et devoirs"
 }
 </i18n>

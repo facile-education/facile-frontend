@@ -15,7 +15,8 @@ export {
   runDataFeed,
   setNewsPermissions,
   runAbsenceNotifications,
-  deleteFolders
+  deleteFolders,
+  setCoursePermissions
 }
 
 export default {
@@ -31,7 +32,8 @@ export default {
   runDataFeed,
   setNewsPermissions,
   runAbsenceNotifications,
-  deleteFolders
+  deleteFolders,
+  setCoursePermissions
 }
 
 const MAINTENANCE_PATH = '/maintenance.maintenance'
@@ -106,4 +108,8 @@ function deleteFolders (file) {
     formData,
     { headers: { 'Content-Type': 'multipart/form-data' } }
   ).then(response => response.data)
+}
+
+function setCoursePermissions () {
+  return axios.post(constants.JSON_WS_URL + MAINTENANCE_PATH + '/set-course-permissions').then(response => response.data)
 }
