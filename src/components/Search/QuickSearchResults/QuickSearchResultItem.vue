@@ -1,7 +1,7 @@
 <template>
   <div
-    class="result"
     ref="resultItem"
+    class="result"
     :class="{'selected': isSelected}"
     @mousedown="redirect"
     @mouseover="onHover"
