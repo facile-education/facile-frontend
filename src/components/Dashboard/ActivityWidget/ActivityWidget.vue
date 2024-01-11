@@ -214,7 +214,7 @@ export default {
       this.isLoading = true
       getDashboardActivity( // TODO call with memberShip boolean
         this.filter.selectedGroup ? this.filter.selectedGroup.groupId : 0,
-        this.displayAll ? this.lastActivityDate.format('YYYY-MM-DD HH:mm:ss.SSS') : dayjs().format('YYYY-MM-DD HH:mm:ss.SSS'),
+        this.displayAll && this.lastActivityDate !== undefined ? this.lastActivityDate.format('YYYY-MM-DD HH:mm:ss.SSS') : dayjs().format('YYYY-MM-DD HH:mm:ss.SSS'),
         this.displayAll ? allActivitiesPaginationSize : nbActivityInWidget,
         this.filterBooleans.withNews,
         this.filterBooleans.withDocs,
