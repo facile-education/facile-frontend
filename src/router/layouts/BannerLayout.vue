@@ -106,9 +106,7 @@ import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 import { useCookies } from 'vue3-cookies'
 
-import authenticationService from '@/api/authentication.service'
 import constants from '@/api/constants'
-import userService from '@/api/user.service'
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import { mobilePopupDurationTime, popupDurationTime } from '@/constants/appConstants'
 
