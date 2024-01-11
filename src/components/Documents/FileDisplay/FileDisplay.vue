@@ -75,6 +75,7 @@ import VideoDocument from '@components/Documents/FileDisplay/VideoDocument.vue'
 import WISIWIG from '@components/Documents/FileDisplay/WISIWIG'
 import dayjs from 'dayjs'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import fileService from '@/api/documents/file.service'
 import groupService from '@/api/documents/group.service'
 import versionsService from '@/api/documents/version.service'
@@ -236,7 +237,7 @@ export default {
         versionsService.getFileVersions(this.file.id).then((data) => {
           if (data.success) {
             const lastVersion = data.fileVersions.find(version => version.isCurrentVersion !== undefined)
-            const lastVersionDate = dayjs(lastVersion.date, 'YYYY-MM-DD HH:mm')
+            const lastVersionDate = dayjs(lastVersion.date, DATE_EXCHANGE_FORMAT)
             if (dayjs().isAfter(lastVersionDate.add(timeBeforeAskSaveConfirmation, 'ms'))) {
               this.openWarningModal()
             } else {

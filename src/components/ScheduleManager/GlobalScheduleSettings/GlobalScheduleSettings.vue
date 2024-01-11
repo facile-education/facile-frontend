@@ -46,6 +46,7 @@ import YearDates from '@components/ScheduleManager/GlobalScheduleSettings/YearDa
 import { useVuelidate } from '@vuelidate/core'
 import dayjs from 'dayjs'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import { getGlobalConfiguration, saveGlobalConfiguration } from '@/api/schedule.service'
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 
@@ -76,9 +77,9 @@ export default {
         this.isLoading = false
         if (data.success) {
           this.error = false
-          this.schoolYearStartDate = dayjs(data.configuration.schoolYearStartDate, 'YYYY-MM-DD')
-          this.schoolYearSemesterDate = dayjs(data.configuration.schoolYearSemesterDate, 'YYYY-MM-DD')
-          this.schoolYearEndDate = dayjs(data.configuration.schoolYearEndDate, 'YYYY-MM-DD')
+          this.schoolYearStartDate = dayjs(data.configuration.schoolYearStartDate, DATE_EXCHANGE_FORMAT)
+          this.schoolYearSemesterDate = dayjs(data.configuration.schoolYearSemesterDate, DATE_EXCHANGE_FORMAT)
+          this.schoolYearEndDate = dayjs(data.configuration.schoolYearEndDate, DATE_EXCHANGE_FORMAT)
           this.holidays = data.configuration.holidays
           this.h1Weeks = data.configuration.h1Weeks
           this.h2Weeks = data.configuration.h2Weeks

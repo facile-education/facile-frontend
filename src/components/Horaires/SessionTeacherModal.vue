@@ -67,6 +67,7 @@
 <script>
 import dayjs from 'dayjs'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import { getSessionTeachersAndSubstitutes, saveTeacherSubstitutes } from '@/api/schedule.service'
 import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
 import WeprodeCheckbox from '@/components/Base/Weprode/WeprodeCheckbox.vue'
@@ -93,13 +94,13 @@ export default {
   },
   computed: {
     sessionDate () {
-      return dayjs(this.sessionEvent.startDate, 'YYYY-MM-DD HH:mm').format('DD/MM/YYYY')
+      return dayjs(this.sessionEvent.startDate, DATE_EXCHANGE_FORMAT).format('DD/MM/YYYY')
     },
     sessionEnd () {
-      return dayjs(this.sessionEvent.endDate, 'YYYY-MM-DD HH:mm').format('HH:mm')
+      return dayjs(this.sessionEvent.endDate, DATE_EXCHANGE_FORMAT).format('HH:mm')
     },
     sessionStart () {
-      return dayjs(this.sessionEvent.startDate, 'YYYY-MM-DD HH:mm').format('HH:mm')
+      return dayjs(this.sessionEvent.startDate, DATE_EXCHANGE_FORMAT).format('HH:mm')
     }
   },
   created () {
@@ -113,7 +114,7 @@ export default {
             teacher.substitutes = (teacher.substitute) ? [teacher.substitute] : []
 
             teacher.nextSessions.forEach((session) => {
-              session.displayDate = dayjs(session.startDate).format('DD/MM/YYYY HH:mm')
+              session.displayDate = dayjs(session.startDate, DATE_EXCHANGE_FORMAT).format(DATE_EXCHANGE_FORMAT)
             })
           })
 

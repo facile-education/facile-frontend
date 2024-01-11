@@ -1,7 +1,7 @@
 import WeprodeUtils from '@utils/weprode.utils'
 import axios from 'axios'
 
-import constants from '@/api/constants'
+import constants, { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 
 export {
   addNews,
@@ -29,7 +29,7 @@ function addNews (title, content, isSchoolNews, isImportant, imageId, publicatio
       isSchoolNews,
       isImportant,
       imageId,
-      publicationDate: publicationDate.format('YYYY-MM-DD HH:mm'),
+      publicationDate: publicationDate.format(DATE_EXCHANGE_FORMAT),
       population: JSON.stringify(population),
       attachFiles: JSON.stringify(attachFiles)
     })).then(response => response.data)
@@ -43,7 +43,7 @@ function editNews (newsId, title, content, isImportant, imageId, publicationDate
       content,
       isImportant,
       imageId,
-      publicationDate: publicationDate.format('YYYY-MM-DD HH:mm'),
+      publicationDate: publicationDate.format(DATE_EXCHANGE_FORMAT),
       population: JSON.stringify(population),
       attachFiles: JSON.stringify(attachFiles),
       markAsUnreadForAll
@@ -53,7 +53,7 @@ function editNews (newsId, title, content, isImportant, imageId, publicationDate
 function getSchoolNews (currentDate, startIndex, nbNews, importantOnly, unreadOnly) {
   return axios.get(constants.JSON_WS_URL + NEWS_PATH + NEWS_CTX + 'get-school-news', {
     params: {
-      currentDateString: currentDate.format('YYYY-MM-DD HH:mm:ss.SSS'),
+      currentDateString: currentDate.format(DATE_EXCHANGE_FORMAT),
       startIndex,
       nbNews,
       importantOnly,

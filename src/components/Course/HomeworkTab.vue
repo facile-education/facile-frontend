@@ -29,6 +29,8 @@
 import WeekHomeworks from '@components/Course/WeekHomeworks.vue'
 import dayjs from 'dayjs'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
+
 export default {
   name: 'HomeworkTab',
   components: { WeekHomeworks },
@@ -56,7 +58,7 @@ export default {
   },
   computed: {
     schoolYearEndDate () {
-      return this.$store.state.calendar.configuration ? dayjs(this.$store.state.calendar.configuration.schoolYearEndDate, 'YYYY-MM-DD') : undefined
+      return this.$store.state.calendar.configuration ? dayjs(this.$store.state.calendar.configuration.schoolYearEndDate, DATE_EXCHANGE_FORMAT) : undefined
     },
     laterDates () {
       const maxDate = this.schoolYearEndDate

@@ -84,6 +84,7 @@ import { required } from '@vuelidate/validators'
 import dayjs from 'dayjs'
 import { defineAsyncComponent, nextTick } from 'vue'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import { addSessionContent, updateSessionContent } from '@/api/course.service'
 import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
 import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
@@ -154,7 +155,7 @@ export default {
       return this.publicationDate.isAfter(dayjs()) && !this.editedSession.sessionContent?.isDraft
     },
     formattedTitle () {
-      const sessionStartDate = dayjs(this.editedSession.startDate, 'YYYY/MM/DD HH:mm')
+      const sessionStartDate = dayjs(this.editedSession.startDate, DATE_EXCHANGE_FORMAT)
       return this.$t('title', {
         courseName: this.editedSession.groupName,
         day: sessionStartDate.format('DD/MM'),
@@ -176,7 +177,7 @@ export default {
       return dayjs().startOf('day').toDate()
     },
     maxDate () {
-      return this.configuration ? dayjs(this.configuration.schoolYearEndDate, 'YYYY-MM-DD').toDate() : undefined
+      return this.configuration ? dayjs(this.configuration.schoolYearEndDate, DATE_EXCHANGE_FORMAT).toDate() : undefined
     }
   },
   created () {
@@ -187,7 +188,7 @@ export default {
       this.sessionContent.title = this.editedSession.sessionContent.title ? this.editedSession.sessionContent.title : ''
       this.sessionContent.blocks = (this.editedSession.sessionContent.blocks && this.editedSession.sessionContent.blocks.length > 0) ? WeprodeUtils.deepCopy(this.editedSession.sessionContent.blocks) : []
 
-      this.publicationDate = dayjs(this.editedSession.sessionContent.publicationDate, 'YYYY-MM-DD HH:mm')
+      this.publicationDate = dayjs(this.editedSession.sessionContent.publicationDate, DATE_EXCHANGE_FORMAT)
 
       if (this.editedSession.sessionContent.isDraft) {
         this.initialPublicationOption = this.publicationOptions[2]

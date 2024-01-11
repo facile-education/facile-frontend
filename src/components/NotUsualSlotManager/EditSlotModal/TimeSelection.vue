@@ -28,9 +28,6 @@
         />
       </div>
     </div>
-    <!--    <div class="from-date">-->
-    <!--      {{ $t('fromThe') + startTime.format('DD MMMM YYYY') }}-->
-    <!--    </div>-->
   </div>
 </template>
 

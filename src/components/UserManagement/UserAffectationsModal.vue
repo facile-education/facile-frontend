@@ -81,6 +81,7 @@ import CustomIcon from '@components/Base/CustomIcon.vue'
 import dayjs from 'dayjs'
 import localizedFormat from 'dayjs/plugin/localizedFormat'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import { getSchoolClassList } from '@/api/organization.service'
 import { addUserAffectation, removeUserAffectation } from '@/api/userManagement.service'
 import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
@@ -133,7 +134,7 @@ export default {
       return this.editedUser.affectations === undefined ? false : this.editedUser.affectations.find(affectation => affectation.orgId === orgId) !== undefined
     },
     buildTooltip (affectation) {
-      return this.$t('affected-by') + ' ' + affectation.adminName + this.$t('the') + dayjs(affectation.expirationDate, 'yyyy-MM-dd').format('L')
+      return this.$t('affected-by') + ' ' + affectation.adminName + this.$t('the') + dayjs(affectation.expirationDate, DATE_EXCHANGE_FORMAT).format('L')
     },
     closeModal () {
       this.$emit('close')

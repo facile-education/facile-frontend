@@ -52,6 +52,7 @@ import CustomCalendar from '@components/Base/CustomCalendar/CustomCalendar.vue'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import { getUserSchedule } from '@/api/dashboard.service'
 import scheduleService from '@/api/schedule.service'
 const Timeline = defineAsyncComponent(() => import('@/components/Horaires/Timeline'))
@@ -126,7 +127,7 @@ export default {
       getUserSchedule(this.$store.state.user.userId, targetDate, goForward).then((data) => {
         if (data.success) {
           this.eventList = data.eventList
-          this.selectedDate = dayjs(data.date, 'YYYY-MM-DD HH:mm')
+          this.selectedDate = dayjs(data.date, DATE_EXCHANGE_FORMAT)
         } else {
           console.error('Error')
         }
@@ -138,8 +139,8 @@ export default {
       this.isInit = false
 
       // Update calendar date to correspond to the event Day
-      if (!dayjs(event.startDate, 'YYYY-MM-DD HH:mm').isSame(this.selectedDate, 'day')) {
-        this.selectedDate = dayjs(event.startDate, 'YYYY-MM-DD HH:mm')
+      if (!dayjs(event.startDate, DATE_EXCHANGE_FORMAT).isSame(this.selectedDate, 'day')) {
+        this.selectedDate = dayjs(event.startDate, DATE_EXCHANGE_FORMAT)
       }
 
       this.$store.dispatch('course/selectSession', event)

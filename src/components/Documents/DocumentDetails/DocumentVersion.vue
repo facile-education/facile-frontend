@@ -73,6 +73,7 @@
 import BaseIcon from '@components/Base/BaseIcon'
 import dayjs from 'dayjs'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import versionsService from '@/api/documents/version.service'
 import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
 
@@ -92,7 +93,7 @@ export default {
   emits: ['refreshVersions', 'openVersion'],
   computed: {
     formattedDate () {
-      return dayjs(this.version.date, 'YYYY-MM-DD HH:mm:ss').calendar()
+      return dayjs(this.version.date, DATE_EXCHANGE_FORMAT).calendar()
     }
   },
   methods: {

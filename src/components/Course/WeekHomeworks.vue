@@ -62,6 +62,7 @@
 import StudentHomework from '@components/Course/StudentHomework.vue'
 import dayjs from 'dayjs'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import { getStudentHomeworks, getStudentUndoneCount } from '@/api/homework.service'
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 
@@ -101,7 +102,7 @@ export default {
     sortedHomeworks () {
       if (this.homeworks) {
         return [...this.homeworks].sort((homeworkA, homeworkB) => {
-          return (dayjs(homeworkA.toDate, 'YYYY-MM-DD HH:mm').isAfter(dayjs(homeworkB.toDate, 'YYYY-MM-DD HH:mm'))) ? 1 : -1
+          return (dayjs(homeworkA.toDate, DATE_EXCHANGE_FORMAT).isAfter(dayjs(homeworkB.toDate, DATE_EXCHANGE_FORMAT))) ? 1 : -1
         })
       } else {
         return undefined
@@ -149,8 +150,8 @@ export default {
     getNbUndone () {
       getStudentUndoneCount(
         this.params.userId,
-        this.params.dates.minDate.format('YYYY-MM-DD HH:mm'),
-        this.params.dates.maxDate.format('YYYY-MM-DD HH:mm')
+        this.params.dates.minDate.format(DATE_EXCHANGE_FORMAT),
+        this.params.dates.maxDate.format(DATE_EXCHANGE_FORMAT)
       ).then((data) => {
         if (data.success) {
           this.nbUndone = data.nbUndoneHomeworks
@@ -161,8 +162,8 @@ export default {
       this.isLoading = true
       getStudentHomeworks(
         this.params.userId,
-        this.params.dates.minDate.format('YYYY-MM-DD HH:mm'),
-        this.params.dates.maxDate.format('YYYY-MM-DD HH:mm'),
+        this.params.dates.minDate.format(DATE_EXCHANGE_FORMAT),
+        this.params.dates.maxDate.format(DATE_EXCHANGE_FORMAT),
         false
       ).then((data) => {
         this.isLoading = false

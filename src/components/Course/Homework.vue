@@ -92,6 +92,7 @@ import { updateDeleteContextMenu } from '@utils/contextMenus'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import { deleteHomework } from '@/api/homework.service'
 
 const CourseContentBlocks = defineAsyncComponent(() => import('@components/Course/CourseContentBlocks'))
@@ -129,7 +130,7 @@ export default {
       return this.$store.state.user.isTeacher
     },
     status () {
-      const publicationDate = dayjs(this.homework.publicationDate, 'YYYY-MM-DD HH:mm')
+      const publicationDate = dayjs(this.homework.publicationDate, DATE_EXCHANGE_FORMAT)
       if (this.homework.isDraft) {
         return 'draft'
       } else if (publicationDate.isAfter(dayjs())) {
@@ -139,7 +140,7 @@ export default {
       }
     },
     formattedStatus () {
-      const publicationDate = dayjs(this.homework.publicationDate, 'YYYY-MM-DD HH:mm')
+      const publicationDate = dayjs(this.homework.publicationDate, DATE_EXCHANGE_FORMAT)
       if (this.homework.isDraft) {
         return this.$t('draftStatus')
       } else if (publicationDate.isAfter(dayjs())) {
@@ -158,10 +159,10 @@ export default {
       }
     },
     formattedToDate () {
-      return dayjs(this.homework.toDate, 'YYYY-MM-DD HH:mm').format('DD/MM')
+      return dayjs(this.homework.toDate, DATE_EXCHANGE_FORMAT).format('DD/MM')
     },
     formattedFuturePublicationDate () {
-      return dayjs(this.homework.publicationDate, 'YYYY-MM-DD HH:mm').format('[' + this.$t('scheduledOn') + '] YYYY-MM-DD [' + this.$t('at') + '] HH:mm')
+      return dayjs(this.homework.publicationDate, DATE_EXCHANGE_FORMAT).format('[' + this.$t('scheduledOn') + '] YYYY-MM-DD [' + this.$t('at') + '] HH:mm')
     },
     formattedDoneStatus () {
       return this.$tc('doneStatus', { nbDone: this.homework.doneStudents.length, nbStudents: this.homework.selectedStudents.length })

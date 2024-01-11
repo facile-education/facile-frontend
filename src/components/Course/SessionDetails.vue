@@ -178,6 +178,7 @@ import { updateDeleteContextMenu } from '@utils/contextMenus'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import { savePrivateNotes } from '@/api/course.service'
 
 const CourseEditModal = defineAsyncComponent(() => import('@/components/Course/CourseEditModal'))
@@ -228,7 +229,7 @@ export default {
       return this.$store.state.user.isTeacher
     },
     status () {
-      const publicationDate = dayjs(this.session.sessionContent.publicationDate, 'YYYY-MM-DD HH:mm')
+      const publicationDate = dayjs(this.session.sessionContent.publicationDate, DATE_EXCHANGE_FORMAT)
       if (this.session.sessionContent.isDraft) {
         return 'draft'
       } else if (publicationDate.isAfter(dayjs())) {
@@ -238,7 +239,7 @@ export default {
       }
     },
     formattedStatus () {
-      const publicationDate = dayjs(this.session.sessionContent.publicationDate, 'YYYY-MM-DD HH:mm')
+      const publicationDate = dayjs(this.session.sessionContent.publicationDate, DATE_EXCHANGE_FORMAT)
       if (this.session.sessionContent.isDraft) {
         return this.$t('draftStatus')
       } else if (publicationDate.isAfter(dayjs())) {
@@ -248,16 +249,16 @@ export default {
       }
     },
     formattedFuturePublicationDate () {
-      return dayjs(this.session.sessionContent.publicationDate, 'YYYY-MM-DD HH:mm').format('[' + this.$t('scheduledOn') + '] YYYY-MM-DD [' + this.$t('at') + '] HH:mm')
+      return dayjs(this.session.sessionContent.publicationDate, DATE_EXCHANGE_FORMAT).format('[' + this.$t('scheduledOn') + '] YYYY-MM-DD [' + this.$t('at') + '] HH:mm')
     },
     courseTitle () {
       return (this.session.sessionContent && this.session.sessionContent.title) ? this.session.sessionContent.title : this.$t('courseContent')
     },
     dateLabel () {
-      return dayjs(this.session.startDate, 'YYYY-MM-DD HH:mm').format('dddd DD MMMM') + (this.session.slotNumber ? ' - P' + this.session.slotNumber : '')
+      return dayjs(this.session.startDate, DATE_EXCHANGE_FORMAT).format('dddd DD MMMM') + (this.session.slotNumber ? ' - P' + this.session.slotNumber : '')
     },
     listDateLabel () {
-      return this.$t('sessionOf') + dayjs(this.session.startDate, 'YYYY-MM-DD HH:mm').format('DD MMMM') + (this.session.slotNumber ? ' - P' + this.session.slotNumber : '')
+      return this.$t('sessionOf') + dayjs(this.session.startDate, DATE_EXCHANGE_FORMAT).format('DD MMMM') + (this.session.slotNumber ? ' - P' + this.session.slotNumber : '')
     },
     eventList () {
       return this.$store.state.course.sessionList
@@ -283,7 +284,7 @@ export default {
     if (
       this.session &&
       this.isInList &&
-      (this.$route.query.toDate === dayjs(this.session.startDate, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD-HH:mm'))
+      (this.$route.query.toDate === dayjs(this.session.startDate, DATE_EXCHANGE_FORMAT).format('YYYY-MM-DD-HH:mm'))
     ) {
       this.$el.scrollIntoView({ behavior: 'smooth', block: 'start' })
     }

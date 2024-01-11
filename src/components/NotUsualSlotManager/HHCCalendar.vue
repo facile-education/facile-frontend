@@ -53,6 +53,7 @@ import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import { defineAsyncComponent } from 'vue'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 
 const NotUsualSlotsToolBar = defineAsyncComponent(() => import('@components/NotUsualSlotManager/NotUsualSlotsToolBar'))
@@ -134,7 +135,7 @@ export default {
       }
     },
     createSlot (slot) {
-      this.eventToEdit = { startDate: slot.start.format('YYYY/MM/DD HH:mm'), endDate: slot.end.format('YYYY/MM/DD HH:mm') }
+      this.eventToEdit = { startDate: slot.start.format(DATE_EXCHANGE_FORMAT), endDate: slot.end.format(DATE_EXCHANGE_FORMAT) }
       this.isEditSlotModalDisplayed = true
     },
     onSelectDate (date) {

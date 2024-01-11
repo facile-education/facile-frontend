@@ -177,6 +177,7 @@ import { required } from '@vuelidate/validators'
 import dayjs from 'dayjs'
 import { defineAsyncComponent, nextTick } from 'vue'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import { getSessionStudents } from '@/api/course.service'
 import { createHomework, updateHomework } from '@/api/homework.service'
 import { getNextSessions } from '@/api/schedule.service'
@@ -304,7 +305,7 @@ export default {
       return this.isCreation ? this.selectedSession.groupName : this.editedHomework.cours
     },
     selectedTargetDate () {
-      return this.homework.toDate ? dayjs(this.homework.toDate, 'YYYY-MM-DD HH:mm') : undefined
+      return this.homework.toDate ? dayjs(this.homework.toDate, DATE_EXCHANGE_FORMAT) : undefined
     },
     configuration () {
       return this.$store.state.calendar.configuration
@@ -356,7 +357,7 @@ export default {
       }
     },
     initPublicationOption () {
-      this.publicationDate = dayjs(this.homework.publicationDate, 'YYYY-MM-DD HH:mm')
+      this.publicationDate = dayjs(this.homework.publicationDate, DATE_EXCHANGE_FORMAT)
 
       if (this.homework.isDraft) {
         this.initialPublicationOption = this.publicationOptions[2]

@@ -55,6 +55,7 @@ import HomeworkItem from '@components/Dashboard/HomeworksWidget/HomeworkItem.vue
 import WeprodeUtils from '@utils/weprode.utils'
 import dayjs from 'dayjs'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import { getStudentHomeworks } from '@/api/homework.service'
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import { nbHomeworksInWidget } from '@/constants/dashboardConstants'
@@ -118,7 +119,7 @@ export default {
     },
     getHomeworks () {
       this.isLoading = true
-      getStudentHomeworks(this.userId, dayjs().format('YYYY-MM-DD HH:mm'), dayjs().add(1, 'year').format('YYYY-MM-DD HH:mm'), this.undoneOnly).then((data) => {
+      getStudentHomeworks(this.userId, dayjs().format(DATE_EXCHANGE_FORMAT), dayjs().add(1, 'year').format(DATE_EXCHANGE_FORMAT), this.undoneOnly).then((data) => {
         this.isLoading = false
         this.isFirstLoad = false
         if (data.success) {

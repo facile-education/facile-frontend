@@ -70,6 +70,8 @@
 import { formatSize } from '@utils/commons.util'
 import dayjs from 'dayjs'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
+
 export default {
   name: 'DocumentMetaData',
   props: {
@@ -80,10 +82,10 @@ export default {
   },
   computed: {
     formattedCreationDate () {
-      return this.document.creationDate !== undefined ? dayjs(this.document.creationDate, 'YYYY-MM-DD HH:mm:ss').calendar() : '-'
+      return this.document.creationDate !== undefined ? dayjs(this.document.creationDate, DATE_EXCHANGE_FORMAT).calendar() : '-'
     },
     formattedModificationDate () {
-      return this.document.lastModifiedDate !== undefined ? dayjs(this.document.lastModifiedDate, 'YYYY-MM-DD HH:mm:ss').calendar() : '-'
+      return this.document.lastModifiedDate !== undefined ? dayjs(this.document.lastModifiedDate, DATE_EXCHANGE_FORMAT).calendar() : '-'
     },
     formattedSize () {
       return this.document.size !== undefined ? formatSize(this.document.size) : '-'

@@ -2,6 +2,7 @@ import dayjs from 'dayjs'
 
 import { getVersionNoteContent, getVersionNotesList } from '@/api/versionNotes.service'
 import i18n from '@/i18n'
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 
 export const state = {
   versionNotesList: undefined,
@@ -45,7 +46,7 @@ export const actions = {
       if (data.success) {
         commit('setVersionNotesListError', false)
         data.versionNotes.forEach(versionNote => {
-          versionNote.versionNoteLabel = i18n.global.t('VersionNotes.updateOf') + dayjs(versionNote.creationDate, 'YYYY-MM-DD HH:mm').format('DD MMMM YYYY')
+          versionNote.versionNoteLabel = i18n.global.t('VersionNotes.updateOf') + dayjs(versionNote.creationDate, DATE_EXCHANGE_FORMAT).format('DD MMMM YYYY')
         })
         commit('setVersionNotesList', data.versionNotes)
 

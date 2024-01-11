@@ -46,6 +46,8 @@
 import BaseIcon from '@components/Base/BaseIcon'
 import dayjs from 'dayjs'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
+
 export default {
   name: 'MessageRecipients',
   components: { BaseIcon },
@@ -91,7 +93,7 @@ export default {
       if (readDate === undefined) {
         return ''
       }
-      return dayjs(readDate, 'YYYY/MM/DD HH:mm:ss')
+      return dayjs(readDate, DATE_EXCHANGE_FORMAT)
         .format('[ ' + this.$t('Moment.the') + '] DD/MM/YYYY [' + this.$t('Moment.at') + '] HH:mm')
     }
   }

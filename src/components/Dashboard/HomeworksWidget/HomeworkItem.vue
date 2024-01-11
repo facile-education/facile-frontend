@@ -71,6 +71,7 @@ import BaseIcon from '@components/Base/BaseIcon.vue'
 import { getHomeworkTeacherName } from '@utils/commons.util'
 import dayjs from 'dayjs'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import { setHomeworkDoneStatus } from '@/api/homework.service'
 import WeprodeCheckbox from '@/components/Base/Weprode/WeprodeCheckbox.vue'
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
@@ -116,7 +117,7 @@ export default {
         name: COURSES,
         query: {
           homeworkId: this.homework.homeworkId,
-          toDate: dayjs(this.homework.toDate, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD')
+          toDate: dayjs(this.homework.toDate, DATE_EXCHANGE_FORMAT).format('YYYY-MM-DD')
         }
       })
     },

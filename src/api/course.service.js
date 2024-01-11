@@ -1,7 +1,7 @@
 import WeprodeUtils from '@utils/weprode.utils'
 import axios from 'axios'
 
-import constants from '@/api/constants'
+import constants, { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 
 export {
   getCourses,
@@ -65,7 +65,7 @@ function addSessionContent (courseId, sessionId, title, blocks, publicationDate,
     sessionId,
     title,
     blocks,
-    publicationDate: publicationDate.format('YYYY-MM-DD HH:mm'),
+    publicationDate: publicationDate.format(DATE_EXCHANGE_FORMAT),
     isDraft
   })).then(response => response.data)
 }
@@ -75,7 +75,7 @@ function updateSessionContent (sessionId, title, blocks, publicationDate, isDraf
     sessionId,
     title,
     blocks,
-    publicationDate: publicationDate.format('YYYY-MM-DD HH:mm'),
+    publicationDate: publicationDate.format(DATE_EXCHANGE_FORMAT),
     isDraft
   })).then(response => response.data)
 }

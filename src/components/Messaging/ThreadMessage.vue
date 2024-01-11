@@ -63,6 +63,7 @@
 
 import dayjs from 'dayjs'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import messagingUtils from '@/utils/messaging.utils'
 
 export default {
@@ -104,7 +105,7 @@ export default {
       }
     },
     formatSentDate () {
-      const sendDate = dayjs(this.message.sendDate, 'YYYY/MM/DD HH:mm:ss')
+      const sendDate = dayjs(this.message.sendDate, DATE_EXCHANGE_FORMAT)
       const today = dayjs().startOf('day')
       const yesterday = dayjs().subtract(1, 'days').startOf('day')
 

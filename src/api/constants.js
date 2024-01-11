@@ -16,6 +16,8 @@ const LOGOUT_URL = BASE_API_URL + '/c/portal/logout'
 const P_AUTH_URL = BASE_API_URL + '/p_auth_token.jsp'
 
 const MOBILE_TOKEN_URL = BASE_API_URL + '/mobile_token.jsp'
+const DATE_EXCHANGE_FORMAT = 'YYYY-MM-DD HH:mm:ss.SSS'
+const LOCAL_STORAGE_DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss'
 
 export default {
   BASE_API_URL,
@@ -31,4 +33,9 @@ export default {
   GEOGEBRA_TYPE,
   SCRATCH_TYPE,
   MOBILE_TOKEN_URL
+}
+
+export {
+  DATE_EXCHANGE_FORMAT,
+  LOCAL_STORAGE_DATE_FORMAT
 }

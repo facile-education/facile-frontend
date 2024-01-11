@@ -127,6 +127,8 @@ import BaseIcon from '@components/Base/BaseIcon'
 import { formatSize } from '@utils/commons.util'
 import dayjs from 'dayjs'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
+
 export default {
   name: 'ListDocument',
   components: { BaseIcon },
@@ -187,7 +189,7 @@ export default {
       return fieldsToDisplay
     },
     formattedDate () {
-      return this.document.lastModifiedDate !== undefined ? dayjs(this.document.lastModifiedDate, 'YYYY-MM-DD HH:mm').calendar() : '-'
+      return this.document.lastModifiedDate !== undefined ? dayjs(this.document.lastModifiedDate, DATE_EXCHANGE_FORMAT).calendar() : '-'
     },
     formattedSize () {
       return this.document.size !== undefined ? formatSize(this.document.size) : '-'

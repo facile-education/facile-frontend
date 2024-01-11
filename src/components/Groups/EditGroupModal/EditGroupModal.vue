@@ -153,6 +153,7 @@ import { required } from '@vuelidate/validators'
 import dayjs from 'dayjs'
 import { nextTick } from 'vue'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import { searchDirectory } from '@/api/contact.service'
 import {
   checkCommunityName,
@@ -373,7 +374,7 @@ export default {
             // Group already exists
             // Case 1 : community is deactivated and was created by current user -> suggest him to extend and reactivate the group
             if (data.errorCode === 1) {
-              this.$store.dispatch('popups/pushPopup', { message: this.$t('reactivate-community', { creationDate: dayjs(data.creationDate).format('DD MMM YYYY'), expirationDate: dayjs(data.expirationDate).format('DD MMM YYYY') }), type: 'error' })
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('reactivate-community', { creationDate: dayjs(data.creationDate, DATE_EXCHANGE_FORMAT).format('DD MMM YYYY'), expirationDate: dayjs(data.expirationDate, DATE_EXCHANGE_FORMAT).format('DD MMM YYYY') }), type: 'error' })
             }
             // Case 2 : else, display warning
             if (data.errorCode === 2) {

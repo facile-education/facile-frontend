@@ -173,6 +173,7 @@ import { required } from '@vuelidate/validators'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import messageService from '@/api/messaging/message.service'
 import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
 import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
@@ -447,7 +448,7 @@ export default {
     },
     formatPreviousContent (content) {
       return '</br><details><summary>' + this.$t('at') +
-        dayjs(this.originMessage.sendDate, 'YYYY/MM/DD HH:mm:ss').format('DD/MM/YYYY HH:mm') +
+        dayjs(this.originMessage.sendDate, DATE_EXCHANGE_FORMAT).format('DD/MM/YYYY HH:mm') +
         ' ' + this.originMessage.senderName + this.$t('wrote') + '</summary>' +
         '</br> ' + "<div style='border-left:1px solid #000; padding-left:20px'>" +
         content +

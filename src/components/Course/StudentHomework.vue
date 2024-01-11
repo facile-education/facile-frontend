@@ -45,6 +45,7 @@ import { getHomeworkTeacherName } from '@utils/commons.util'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import { setHomeworkDoneStatus } from '@/api/homework.service'
 import Pellet from '@/components/Base/Pellet.vue'
 import WeprodeCheckbox from '@/components/Base/Weprode/WeprodeCheckbox.vue'
@@ -75,7 +76,7 @@ export default {
       return label
     },
     givenDate () {
-      return dayjs(this.homework.publicationDate, 'YYYY-MM-DD HH:mm')
+      return dayjs(this.homework.publicationDate, DATE_EXCHANGE_FORMAT)
     },
     isDone: {
       get () {
@@ -98,10 +99,10 @@ export default {
       }
     },
     isPast () {
-      return dayjs(this.homework.toDate, 'YYYY-MM-DD HH:mm').isBefore(dayjs())
+      return dayjs(this.homework.toDate, DATE_EXCHANGE_FORMAT).isBefore(dayjs())
     },
     modifiedDate () {
-      return dayjs(this.homework.modificationDate, 'YYYY-MM-DD HH:mm')
+      return dayjs(this.homework.modificationDate, DATE_EXCHANGE_FORMAT)
     },
     teacherName () {
       return getHomeworkTeacherName(this.homework)

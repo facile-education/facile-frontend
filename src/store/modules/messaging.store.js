@@ -4,11 +4,12 @@ import dayjs from 'dayjs'
 import folderService from '@/api/messaging/folder.service'
 import messageService from '@/api/messaging/message.service'
 import messagingConstants from '@/constants/messagingConstants'
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 
 const sortThreads = (threads) => {
   return threads.sort((a, b) => {
-    const dateA = dayjs(a.lastSendDate, 'YYYY-MM-DD HH:mm:ss') // note that lastModifiedDate might be is sending date
-    const dateB = dayjs(b.lastSendDate, 'YYYY-MM-DD HH:mm:ss')
+    const dateA = dayjs(a.lastSendDate, DATE_EXCHANGE_FORMAT) // note that lastModifiedDate might be is sending date
+    const dateB = dayjs(b.lastSendDate, DATE_EXCHANGE_FORMAT)
     return dateB.diff(dateA)
   })
 }

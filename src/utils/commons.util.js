@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 
 function toPascalCase (string) {
   return string.replace(/(\w)(\w*)/g,
@@ -121,9 +122,9 @@ function compare (sortType, isOrderAsc) {
       sortType === 'creationDate' ||
       sortType === 'date' ||
       sortType === 'deleteDate') {
-      // return (a[sortType]).localeCompare(b[sortType]) // works because date are at format YYYY-MM-DD HH:mm:ss
-      const dateA = dayjs(a[sortType], 'YYYY-MM-DD HH:mm:ss') // note that lastModifiedDate might be is sending date
-      const dateB = dayjs(b[sortType], 'YYYY-MM-DD HH:mm:ss')
+      // return (a[sortType]).localeCompare(b[sortType]) // works because date are at format YYYY-MM-DD HH:mm:ss.sss
+      const dateA = dayjs(a[sortType], DATE_EXCHANGE_FORMAT) // note that lastModifiedDate might be is sending date
+      const dateB = dayjs(b[sortType], DATE_EXCHANGE_FORMAT)
       if (isOrderAsc) {
         return dateA.diff(dateB)
       } else {

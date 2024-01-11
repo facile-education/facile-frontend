@@ -51,6 +51,8 @@ import TimeLineWeekItem from '@components/Horaires/TimeLineWeekItem.vue'
 import dayjs from 'dayjs'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
+
 dayjs.extend(weekOfYear)
 
 export default {
@@ -91,10 +93,10 @@ export default {
       return this.$store.state.calendar.configuration
     },
     minDate () {
-      return this.configuration !== undefined ? dayjs(this.configuration.schoolYearStartDate, 'YYYY-MM-DD') : dayjs()
+      return this.configuration !== undefined ? dayjs(this.configuration.schoolYearStartDate, DATE_EXCHANGE_FORMAT) : dayjs()
     },
     maxDate () {
-      return this.configuration !== undefined ? dayjs(this.configuration.schoolYearEndDate, 'YYYY-MM-DD') : dayjs()
+      return this.configuration !== undefined ? dayjs(this.configuration.schoolYearEndDate, DATE_EXCHANGE_FORMAT) : dayjs()
     },
     disableNext () {
       if (!this.monthList || this.monthList.length === 0) return false
@@ -114,7 +116,7 @@ export default {
 
       let firstMonday = this.startDate.clone()
       if (firstMonday.isBefore(dayjs(this.minDate, 'YYYY-MM-DD'))) {
-        firstMonday = dayjs(this.minDate, 'YYYY-MM-DD').startOf('week')
+        firstMonday = this.minDate.startOf('week')
       }
       return firstMonday
     },
@@ -122,8 +124,8 @@ export default {
       if (this.endDate === undefined) return undefined
 
       let lastSunday = this.endDate.clone()
-      if (lastSunday.isAfter(dayjs(this.maxDate, 'YYYY-MM-DD'))) {
-        lastSunday = dayjs(this.maxDate, 'YYYY-MM-DD').endOf('week')
+      if (lastSunday.isAfter(this.maxDate)) {
+        lastSunday = this.maxDate.endOf('week')
       }
       return lastSunday
     },
@@ -210,12 +212,12 @@ export default {
       }
     },
     getWeekNumber (date) {
-      return date.diff(dayjs(this.minDate, 'YYYY-MM-DD').startOf('week'), 'week') + 1
+      return date.diff(this.minDate.startOf('week'), 'week') + 1
     },
     getWeekFromLocalWeekList (date) {
       for (const month of this.monthList) {
         for (const week of month.weekList) {
-          if (week.weekNumber === date.diff(dayjs(this.minDate, 'YYYY-MM-DD').startOf('week'), 'week') + 1) {
+          if (week.weekNumber === date.diff(this.minDate.startOf('week'), 'week') + 1) {
             return week
           }
         }

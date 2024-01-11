@@ -52,6 +52,7 @@
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import WeprodeCheckbox from '@/components/Base/Weprode/WeprodeCheckbox.vue'
 import notUsualSlotsConstants from '@/constants/notUsualSlots'
 import { toPascalCase } from '@/utils/commons.util'
@@ -98,7 +99,7 @@ export default {
       return this.isCurrentTeacher &&
         this.slotType.type !== notUsualSlotsConstants.firedType &&
         this.slotType.type !== notUsualSlotsConstants.tutoringType &&
-        dayjs().isAfter(dayjs(this.event.startDate, 'YYYY/MM/DD HH:mm'))
+        dayjs().isAfter(dayjs(this.event.startDate, DATE_EXCHANGE_FORMAT))
     },
     isRegisterer () {
       return this.student.registererId === this.currentUser.userId

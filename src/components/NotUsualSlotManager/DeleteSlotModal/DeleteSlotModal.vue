@@ -54,6 +54,7 @@ import DateRangePicker from '@components/Base/DateRangePicker.vue'
 import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import dayjs from 'dayjs'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import schoolLifeService from '@/api/schoolLife-portlet.service'
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
@@ -82,10 +83,10 @@ export default {
       return this.$store.state.calendar.configuration
     },
     schoolYearStartDate () {
-      return dayjs(this.configuration.schoolYearStartDate, 'YYYY-MM-DD')
+      return dayjs(this.configuration.schoolYearStartDate, DATE_EXCHANGE_FORMAT)
     },
     schoolYearEndDate () {
-      return dayjs(this.configuration.schoolYearEndDate, 'YYYY-MM-DD')
+      return dayjs(this.configuration.schoolYearEndDate, DATE_EXCHANGE_FORMAT)
     },
     currentSlotType () {
       return this.$store.state.notUsualSlots.currentSlotType
@@ -93,9 +94,9 @@ export default {
     formattedMessage () {
       return this.$t('message', {
         slotType: this.currentSlotType.label,
-        dayLabel: dayjs(this.initEvent.startDate, 'YYYY-MM-DD HH:mm').format('dddd'),
-        startHour: dayjs(this.initEvent.startDate, 'YYYY-MM-DD HH:mm').format('HH:mm'),
-        endHour: dayjs(this.initEvent.endDate, 'YYYY-MM-DD HH:mm').format('HH:mm')
+        dayLabel: dayjs(this.initEvent.startDate, DATE_EXCHANGE_FORMAT).format('dddd'),
+        startHour: dayjs(this.initEvent.startDate, DATE_EXCHANGE_FORMAT).format('HH:mm'),
+        endHour: dayjs(this.initEvent.endDate, DATE_EXCHANGE_FORMAT).format('HH:mm')
       })
     }
   },
@@ -112,13 +113,13 @@ export default {
     }
   },
   created () {
-    this.deleteStartDate = dayjs(this.initEvent.startDate, 'YYYY/MM/DD HH:mm')
+    this.deleteStartDate = dayjs(this.initEvent.startDate, DATE_EXCHANGE_FORMAT)
   },
   methods: {
     getLastSessionDate () {
       schoolLifeService.getSessionLimitSlotDate(this.initEvent.sessionId).then((data) => {
         if (data.success) {
-          this.deleteEndDate = dayjs(data.lastSessionDate, 'YYYY/MM/DD HH:mm')
+          this.deleteEndDate = dayjs(data.lastSessionDate, DATE_EXCHANGE_FORMAT)
         }
       }, (err) => {
         console.error(err)
@@ -133,8 +134,8 @@ export default {
     deleteSlot () {
       schoolLifeService.deleteSlot(
         this.initEvent.sessionId,
-        this.deleteStartDate.format('YYYY-MM-DD HH:mm'), // convert from calendar format to back-end format
-        this.deleteEndDate.format('YYYY-MM-DD HH:mm')
+        this.deleteStartDate.format(DATE_EXCHANGE_FORMAT), // convert from calendar format to back-end format
+        this.deleteEndDate.format(DATE_EXCHANGE_FORMAT)
       ).then((data) => {
         if (data.success) {
           this.$store.dispatch('notUsualSlots/refreshCalendar')

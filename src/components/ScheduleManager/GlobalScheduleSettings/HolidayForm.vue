@@ -41,6 +41,7 @@ import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import dayjs from 'dayjs'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
 import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
 
@@ -106,8 +107,8 @@ export default {
       } else {
         this.$emit('addHoliday', {
           name: this.name,
-          startDate: this.startDate.format('YYYY-MM-DD'),
-          endDate: this.endDate.format('YYYY-MM-DD')
+          startDate: this.startDate.format(DATE_EXCHANGE_FORMAT),
+          endDate: this.endDate.format(DATE_EXCHANGE_FORMAT)
         })
       }
     }

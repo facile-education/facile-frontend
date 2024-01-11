@@ -16,6 +16,8 @@
 <script>
 import dayjs from 'dayjs'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
+
 export default {
   name: 'SearchHistoryItem',
   props: {
@@ -30,7 +32,7 @@ export default {
   },
   computed: {
     formattedDate () {
-      return dayjs(this.item.date, 'YYYY-MM-DD HH:mm:ss').calendar()
+      return dayjs(this.item.date, DATE_EXCHANGE_FORMAT).calendar()
     }
   },
   mounted () {

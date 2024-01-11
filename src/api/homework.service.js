@@ -1,7 +1,7 @@
 import WeprodeUtils from '@utils/weprode.utils'
 import axios from 'axios'
 
-import constants from '@/api/constants'
+import constants, { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 
 export {
   getStudentHomeworks,
@@ -67,8 +67,8 @@ function getWorkLoad (courseId, selectedStudents, startDate, endDate) {
     params: {
       courseId,
       students: JSON.stringify(selectedStudents),
-      startDate: startDate.format('YYYY-MM-DD HH:mm'),
-      endDate: endDate.format('YYYY-MM-DD HH:mm')
+      startDate: startDate.format(DATE_EXCHANGE_FORMAT),
+      endDate: endDate.format(DATE_EXCHANGE_FORMAT)
     }
   }).then(response => response.data)
 }
@@ -84,7 +84,7 @@ function createHomework (courseId, sourceSessionId, homework, publicationDate, i
     estimatedTime: homework.homeworkDuration ? homework.homeworkDuration.time : 0,
     students: homework.isWholeClass ? '' : JSON.stringify(homework.selectedStudents),
     blocks: JSON.stringify(homework.blocks),
-    publicationDateStr: publicationDate.format('YYYY-MM-DD HH:mm'),
+    publicationDateStr: publicationDate.format(DATE_EXCHANGE_FORMAT),
     isDraft
   })).then(response => response.data)
 }
@@ -99,7 +99,7 @@ function updateHomework (homework, publicationDate, isDraft) {
     homeworkType: homework.homeworkType.type,
     students: homework.isWholeClass ? '' : JSON.stringify(homework.selectedStudents),
     blocks: JSON.stringify(homework.blocks),
-    publicationDateStr: publicationDate.format('YYYY-MM-DD HH:mm'),
+    publicationDateStr: publicationDate.format(DATE_EXCHANGE_FORMAT),
     isDraft
   })).then(response => response.data)
 }

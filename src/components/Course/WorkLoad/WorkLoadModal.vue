@@ -56,6 +56,7 @@ import DayNavigation from '@components/Dashboard/ScheduleWidget/DayNavigation.vu
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import { getWorkLoad } from '@/api/homework.service'
 const Timeline = defineAsyncComponent(() => import('@components/Horaires/Timeline.vue'))
 const WorkList = defineAsyncComponent(() => import('@components/Course/WorkLoad/WorkList.vue'))
@@ -145,7 +146,7 @@ export default {
       })
     },
     goBefore () {
-      const minDate = dayjs(this.configuration.schoolYearStartDate, 'YYYY-MM-DD')
+      const minDate = dayjs(this.configuration.schoolYearStartDate, DATE_EXCHANGE_FORMAT)
       let dateToGo = this.selectedDate.add(-1, 'day')
 
       while ((!this.isInSchoolDays(dateToGo) || this.isInHolidays(dateToGo)) && dateToGo.isAfter(minDate)) { // Skip Weekend and holidays
@@ -155,7 +156,7 @@ export default {
       this.selectDate(dateToGo)
     },
     goAfter () {
-      const maxDate = dayjs(this.configuration.schoolYearEndDate, 'YYYY-MM-DD')
+      const maxDate = dayjs(this.configuration.schoolYearEndDate, DATE_EXCHANGE_FORMAT)
       let dateToGo = this.selectedDate.add(1, 'day')
 
       while ((!this.isInSchoolDays(dateToGo) || this.isInHolidays(dateToGo)) && dateToGo.isBefore(maxDate)) { // Skip Weekend and holidays
@@ -172,8 +173,8 @@ export default {
     },
     isInHolidays (date) {
       for (const holiday of this.configuration.holidays) {
-        const holidayStartDate = dayjs(holiday.startDate, 'YYYY-MM-DD')
-        const holidayEndDate = dayjs(holiday.endDate, 'YYYY-MM-DD')
+        const holidayStartDate = dayjs(holiday.startDate, DATE_EXCHANGE_FORMAT)
+        const holidayEndDate = dayjs(holiday.endDate, DATE_EXCHANGE_FORMAT)
 
         if (date.isAfter(holidayStartDate) && date.isBefore(holidayEndDate)) {
           return true

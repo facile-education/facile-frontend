@@ -113,6 +113,7 @@ import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import dayjs from 'dayjs'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import { getSchoolSlotConfiguration } from '@/api/schedule.service'
 import schoolLifeService from '@/api/schoolLife-portlet.service'
 import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
@@ -213,10 +214,10 @@ export default {
       return this.$store.state.calendar.configuration
     },
     schoolYearStartDate () {
-      return dayjs(this.configuration.schoolYearStartDate, 'YYYY-MM-DD')
+      return dayjs(this.configuration.schoolYearStartDate, DATE_EXCHANGE_FORMAT)
     },
     schoolYearEndDate () {
-      return dayjs(this.configuration.schoolYearEndDate, 'YYYY-MM-DD')
+      return dayjs(this.configuration.schoolYearEndDate, DATE_EXCHANGE_FORMAT)
     }
   },
   watch: {
@@ -224,7 +225,7 @@ export default {
       immediate: true,
       handler () {
         if (this.configuration) {
-          this.newEvent.lastSessionDate = dayjs(this.configuration.schoolYearEndDate, 'YYYY-MM-DD')
+          this.newEvent.lastSessionDate = dayjs(this.configuration.schoolYearEndDate, DATE_EXCHANGE_FORMAT)
         } else {
           this.$store.dispatch('calendar/getConfiguration')
         }
@@ -233,8 +234,8 @@ export default {
   },
   created () {
     this.getSlotList()
-    this.newEvent.startDate = dayjs(this.eventToEdit.startDate, 'YYYY/MM/DD HH:mm')
-    this.newEvent.firstSessionDate = dayjs(this.eventToEdit.startDate, 'YYYY/MM/DD HH:mm')
+    this.newEvent.startDate = dayjs(this.eventToEdit.startDate, DATE_EXCHANGE_FORMAT)
+    this.newEvent.firstSessionDate = dayjs(this.eventToEdit.startDate, DATE_EXCHANGE_FORMAT)
 
     if (this.isEventCreation) {
       this.newEvent.title = this.currentSlotType.label
@@ -261,7 +262,7 @@ export default {
           })
 
           // Select the right slot
-          this.selectCloserSlot(dayjs(this.eventToEdit.startDate, 'YYYY/MM/DD HH:mm'))
+          this.selectCloserSlot(dayjs(this.eventToEdit.startDate, DATE_EXCHANGE_FORMAT))
         }
       })
     },
@@ -299,8 +300,8 @@ export default {
         if (this.isEventCreation) {
           schoolLifeService.createSlot(
             this.selectedSchool.schoolId,
-            this.newEvent.firstSessionDate.format('YYYY-MM-DD HH:mm'), // convert from calendar format to back-end format
-            this.newEvent.lastSessionDate.format('YYYY-MM-DD HH:mm'),
+            this.newEvent.firstSessionDate.format(DATE_EXCHANGE_FORMAT),
+            this.newEvent.lastSessionDate.format(DATE_EXCHANGE_FORMAT),
             this.newEvent.startDate.day(),
             this.selectedSlot.slotStartHour,
             this.selectedSlot.slotEndHour,
@@ -319,8 +320,8 @@ export default {
         } else {
           schoolLifeService.updateSlot(
             this.newEvent.sessionId,
-            this.newEvent.firstSessionDate.format('YYYY-MM-DD HH:mm'), // convert from calendar format to back-end format
-            this.newEvent.lastSessionDate.format('YYYY-MM-DD HH:mm'),
+            this.newEvent.firstSessionDate.format(DATE_EXCHANGE_FORMAT), // convert from calendar format to back-end format
+            this.newEvent.lastSessionDate.format(DATE_EXCHANGE_FORMAT),
             this.newEvent.startDate.day(),
             this.selectedSlot.slotStartHour,
             this.selectedSlot.slotEndHour,

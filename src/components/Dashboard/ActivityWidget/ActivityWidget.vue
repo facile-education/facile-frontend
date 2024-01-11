@@ -85,6 +85,7 @@ import ActivityHeader from '@components/Dashboard/ActivityWidget/ActivityHeader.
 import ActivityItem from '@components/Dashboard/ActivityWidget/ActivityItem.vue'
 import dayjs from 'dayjs'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import { getDashboardActivity } from '@/api/dashboard.service'
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import activityConstants from '@/constants/activityConstants'
@@ -124,7 +125,7 @@ export default {
       return this.$store.state.user.isParent
     },
     separatorLabel () {
-      return this.$t('newsSince') + dayjs(this.lastDashboardAccessDate, 'YYYY-MM-DD HH:mm').calendar()
+      return this.$t('newsSince') + dayjs(this.lastDashboardAccessDate, DATE_EXCHANGE_FORMAT).calendar()
     },
     filterBooleans () {
       if (this.filter.activityTypes.length === 0) { // If no filter selected, return all activity types
@@ -150,7 +151,7 @@ export default {
       const oldestRead = this.readActivities.length > 0 ? this.readActivities[this.readActivities.length - 1] : undefined
       const oldestUnread = this.unreadActivities.length > 0 ? this.unreadActivities[this.unreadActivities.length - 1] : undefined
 
-      return oldestRead !== undefined && oldestUnread !== undefined && dayjs(oldestUnread.modificationDate, 'YYYY-MM-DD HH:mm:ss.SSS').isBefore(dayjs(oldestRead.modificationDate, 'YYYY-MM-DD HH:mm:ss.SSS'))
+      return oldestRead !== undefined && oldestUnread !== undefined && dayjs(oldestUnread.modificationDate, DATE_EXCHANGE_FORMAT).isBefore(dayjs(oldestRead.modificationDate, DATE_EXCHANGE_FORMAT))
         ? oldestUnread
         : oldestRead !== undefined
           ? oldestRead
@@ -158,7 +159,7 @@ export default {
     },
     lastActivityDate () {
       if (this.lastActivity) {
-        return dayjs(this.lastActivity.modificationDate, 'YYYY-MM-DD HH:mm:ss.SSS')
+        return dayjs(this.lastActivity.modificationDate, DATE_EXCHANGE_FORMAT)
       } else { // if no activity, return the currentDate
         return dayjs()
       }
@@ -203,7 +204,7 @@ export default {
       this.isLoading = true
       getDashboardActivity( // TODO call with memberShip boolean
         this.filter.selectedGroup ? this.filter.selectedGroup.groupId : 0,
-        this.displayAll ? this.lastActivityDate.format('YYYY-MM-DD HH:mm:ss.SSS') : dayjs().format('YYYY-MM-DD HH:mm:ss.SSS'),
+        this.displayAll ? this.lastActivityDate.format(DATE_EXCHANGE_FORMAT) : dayjs().format(DATE_EXCHANGE_FORMAT),
         this.displayAll ? allActivitiesPaginationSize : nbActivityInWidget,
         this.filterBooleans.withNews,
         this.filterBooleans.withDocs,
@@ -244,7 +245,7 @@ export default {
       })
     },
     isUnread (activity) {
-      return dayjs(activity.modificationDate, 'YYYY-MM-DD HH:mm').isAfter(dayjs(this.lastDashboardAccessDate, 'YYYY-MM-DD HH:mm'))
+      return dayjs(activity.modificationDate, DATE_EXCHANGE_FORMAT).isAfter(dayjs(this.lastDashboardAccessDate, DATE_EXCHANGE_FORMAT))
     }
   }
 }

@@ -69,6 +69,7 @@
 <script>
 import dayjs from 'dayjs'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import activityConstants from '@/constants/activityConstants'
 import { GROUPS } from '@/constants/appConstants'
 
@@ -86,10 +87,10 @@ export default {
   },
   computed: {
     formattedDate () {
-      return dayjs(this.activity.modificationDate, 'YYYY-MM-DD HH:mm').calendar()
+      return dayjs(this.activity.modificationDate, DATE_EXCHANGE_FORMAT).calendar()
     },
     formattedDateLong () {
-      return dayjs(this.activity.modificationDate, 'YYYY-MM-DD HH:mm').format(this.$t('on') + ' DD MMMM YYYY ' + this.$t('at') + ' HH:mm')
+      return dayjs(this.activity.modificationDate, DATE_EXCHANGE_FORMAT).format(this.$t('on') + ' DD MMMM YYYY ' + this.$t('at') + ' HH:mm')
     },
     isDeactivation () {
       return this.activity.type === activityConstants.TYPE_EXPIRED_GROUP

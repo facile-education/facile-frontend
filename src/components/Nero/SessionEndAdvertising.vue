@@ -28,6 +28,7 @@
 import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import dayjs from 'dayjs'
 
+import { LOCAL_STORAGE_DATE_FORMAT } from '@/api/constants'
 import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
@@ -68,7 +69,7 @@ export default {
         if (extendSessionResult === '0') { // extend_session.jsp has been modified to return custom success code
           this.$store.dispatch('user/setLastActionDate', dayjs())
           // Share last action date to other tabs that share locale storage
-          localStorage.setItem('lastActionDate', dayjs().format('YYYY/MM/DD HH:mm:ss'))
+          localStorage.setItem('lastActionDate', dayjs().format(LOCAL_STORAGE_DATE_FORMAT))
 
           this.onClose()
         } else {

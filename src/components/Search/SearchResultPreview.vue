@@ -98,6 +98,7 @@ import { formatSize } from '@utils/commons.util'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import { getSearchResultDetails } from '@/api/search.service'
 import { DOCUMENTS } from '@/constants/appConstants'
 import searchConstants from '@/constants/searchConstants'
@@ -132,7 +133,7 @@ export default {
   },
   computed: {
     formattedDate () {
-      return dayjs(this.searchResult.date, 'YYYY-MM-DD HH:mm').format('DD/MM/YYYY')
+      return dayjs(this.searchResult.date, DATE_EXCHANGE_FORMAT).format('DD/MM/YYYY')
     },
     isCollaborative () {
       return this.searchResult.service === searchConstants.TYPE_COLLABORATIVE_FILE || this.searchResult.service === searchConstants.TYPE_COLLABORATIVE_FOLDER

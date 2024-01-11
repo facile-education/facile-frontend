@@ -1,7 +1,7 @@
 import WeprodeUtils from '@utils/weprode.utils'
 import axios from 'axios'
 
-import constants from '@/api/constants'
+import constants, { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 
 export {
   getNextSessions,
@@ -46,9 +46,9 @@ function getGlobalConfiguration () {
  */
 function saveGlobalConfiguration (startDate, semesterDate, endDate, holidays, h1Weeks, h2Weeks) {
   return axios.post(constants.JSON_WS_URL + CDT_PATH + 'scheduleconfiguration/save-global-configuration', WeprodeUtils.params({
-    startDateStr: startDate.format('YYYY-MM-DD'),
-    semesterDateStr: semesterDate.format('YYYY-MM-DD'),
-    endDateStr: endDate.format('YYYY-MM-DD'),
+    startDateStr: startDate.format(DATE_EXCHANGE_FORMAT),
+    semesterDateStr: semesterDate.format(DATE_EXCHANGE_FORMAT),
+    endDateStr: endDate.format(DATE_EXCHANGE_FORMAT),
     holidays: JSON.stringify(holidays),
     h1Weeks,
     h2Weeks
@@ -83,8 +83,8 @@ function getUserSessions (userId, minDate, maxDate) {
   return axios.get(constants.JSON_WS_URL + CDT_PATH + 'cdtsession/get-user-sessions', {
     params: {
       userId,
-      minDateStr: minDate.format('YYYY-MM-DD HH:mm'),
-      maxDateStr: maxDate.format('YYYY-MM-DD HH:mm')
+      minDateStr: minDate.format(DATE_EXCHANGE_FORMAT),
+      maxDateStr: maxDate.format(DATE_EXCHANGE_FORMAT)
     }
   }).then(response => response.data)
 }
@@ -96,8 +96,8 @@ function getGroupSessions (groupId, minDate, maxDate) {
   return axios.get(constants.JSON_WS_URL + CDT_PATH + 'cdtsession/get-group-sessions', {
     params: {
       groupId,
-      minDateStr: minDate.format('YYYY-MM-DD HH:mm'),
-      maxDateStr: maxDate.format('YYYY-MM-DD HH:mm')
+      minDateStr: minDate.format(DATE_EXCHANGE_FORMAT),
+      maxDateStr: maxDate.format(DATE_EXCHANGE_FORMAT)
     }
   }).then(response => response.data)
 }

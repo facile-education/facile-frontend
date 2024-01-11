@@ -106,7 +106,7 @@ import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 import { useCookies } from 'vue3-cookies'
 
-import constants from '@/api/constants'
+import constants, { LOCAL_STORAGE_DATE_FORMAT } from '@/api/constants'
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import { mobilePopupDurationTime, popupDurationTime } from '@/constants/appConstants'
 
@@ -267,7 +267,7 @@ export default {
       // Update last action date if it was updated by another tab
       if (event.key === 'lastActionDate') {
         const lastActionDate = event.newValue
-        this.$store.dispatch('user/setLastActionDate', dayjs(lastActionDate, 'YYYY/MM/DD HH:mm:ss'))
+        this.$store.dispatch('user/setLastActionDate', dayjs(lastActionDate, LOCAL_STORAGE_DATE_FORMAT))
         this.isSessionWarningDisplayed = false
       }
     },

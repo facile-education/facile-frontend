@@ -80,6 +80,8 @@
 
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
+
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 const BaseIcon = defineAsyncComponent(() => import('@components/Base/BaseIcon'))
 
 export default {
@@ -124,7 +126,7 @@ export default {
       return this.selectedEntities.indexOf(this.document) !== -1
     },
     formattedDate () {
-      return this.document.lastModifiedDate !== undefined ? dayjs(this.document.lastModifiedDate, 'YYYY-MM-DD HH:mm').calendar() : '-'
+      return this.document.lastModifiedDate !== undefined ? dayjs(this.document.lastModifiedDate, DATE_EXCHANGE_FORMAT).calendar() : '-'
     }
   },
   mounted () {

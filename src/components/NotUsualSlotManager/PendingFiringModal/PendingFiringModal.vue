@@ -58,6 +58,7 @@ import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import dayjs from 'dayjs'
 import { nextTick } from 'vue'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import schoolLifeService from '@/api/schoolLife-portlet.service'
 import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
 import WeprodeTextArea from '@/components/Base/Weprode/WeprodeTextArea.vue'
@@ -87,14 +88,14 @@ export default {
     formattedSlot () {
       if (this.pendingFiring.sourceSchoollifeSessionId !== 0) {
         return this.pendingFiring.subject + ' ' +
-          this.$t('Moment.of') + ' ' + dayjs(this.pendingFiring.sessionDate, 'YYYY-MM-DD HH:mm').format('DD MMMM YYYY ' + this.$t('Moment.at') + ' HH:mm')
+          this.$t('Moment.of') + ' ' + dayjs(this.pendingFiring.sessionDate, DATE_EXCHANGE_FORMAT).format('DD MMMM YYYY ' + this.$t('Moment.at') + ' HH:mm')
       } else {
         return this.$t('NotUsualSlots.PendingFiringModal.courseOf') + this.pendingFiring.subject + ' ' +
-          this.$t('Moment.of') + ' ' + dayjs(this.pendingFiring.sessionDate, 'YYYY-MM-DD HH:mm').format('DD MMMM YYYY ' + this.$t('Moment.at') + ' HH:mm')
+          this.$t('Moment.of') + ' ' + dayjs(this.pendingFiring.sessionDate, DATE_EXCHANGE_FORMAT).format('DD MMMM YYYY ' + this.$t('Moment.at') + ' HH:mm')
       }
     },
     formattedTimestamp () {
-      return this.$t('Moment.the') + ' ' + dayjs(this.pendingFiring.renvoiDate, 'YYYY-MM-DD HH:mm').format('DD MMMM YYYY ' + this.$t('Moment.at') + ' HH:mm')
+      return this.$t('Moment.the') + ' ' + dayjs(this.pendingFiring.renvoiDate, DATE_EXCHANGE_FORMAT).format('DD MMMM YYYY ' + this.$t('Moment.at') + ' HH:mm')
     }
   },
   created () {

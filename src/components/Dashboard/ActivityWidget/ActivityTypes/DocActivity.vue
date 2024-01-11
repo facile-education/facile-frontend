@@ -62,6 +62,7 @@
 import FileIcon from '@components/Base/FileIcon.vue'
 import dayjs from 'dayjs'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import activityConstants from '@/constants/activityConstants'
 import { icons } from '@/constants/icons'
 import { getExtensionFromName } from '@/utils/commons.util'
@@ -89,10 +90,10 @@ export default {
       return this.activity.type === activityConstants.TYPE_FILE_DELETION || this.activity.type === activityConstants.TYPE_FOLDER_DELETION
     },
     formattedDate () {
-      return dayjs(this.activity.modificationDate, 'YYYY-MM-DD HH:mm').calendar()
+      return dayjs(this.activity.modificationDate, DATE_EXCHANGE_FORMAT).calendar()
     },
     formattedDateLong () {
-      return dayjs(this.activity.modificationDate, 'YYYY-MM-DD HH:mm').format(this.$t('on') + ' DD MMMM YYYY ' + this.$t('at') + ' HH:mm')
+      return dayjs(this.activity.modificationDate, DATE_EXCHANGE_FORMAT).format(this.$t('on') + ' DD MMMM YYYY ' + this.$t('at') + ' HH:mm')
     },
     description () {
       switch (this.activity.type) {

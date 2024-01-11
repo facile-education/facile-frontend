@@ -134,6 +134,7 @@ import ThreadMessage from '@components/Messaging/ThreadMessage'
 import dayjs from 'dayjs'
 import _ from 'lodash'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import messageService from '@/api/messaging/message.service'
 import messagingConstants from '@/constants/messagingConstants'
 import { isInViewport } from '@/utils/commons.util'
@@ -318,7 +319,7 @@ export default {
     },
 
     formatSentDate (message) {
-      const sendDate = dayjs(message.sendDate, 'YYYY/MM/DD HH:mm:ss')
+      const sendDate = dayjs(message.sendDate, DATE_EXCHANGE_FORMAT)
       const today = dayjs().startOf('day')
       const yesterday = dayjs().subtract(1, 'days').startOf('day')
 

@@ -42,6 +42,7 @@
 <script>
 import dayjs from 'dayjs'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import activityConstants from '@/constants/activityConstants'
 import { COURSES } from '@/constants/appConstants'
 
@@ -55,10 +56,10 @@ export default {
   },
   computed: {
     formattedDate () {
-      return dayjs(this.activity.modificationDate, 'YYYY-MM-DD HH:mm').calendar()
+      return dayjs(this.activity.modificationDate, DATE_EXCHANGE_FORMAT).calendar()
     },
     formattedDateLong () {
-      return dayjs(this.activity.modificationDate, 'YYYY-MM-DD HH:mm').format(this.$t('on') + ' DD MMMM YYYY ' + this.$t('at') + ' HH:mm')
+      return dayjs(this.activity.modificationDate, DATE_EXCHANGE_FORMAT).format(this.$t('on') + ' DD MMMM YYYY ' + this.$t('at') + ' HH:mm')
     },
     isCourse () {
       return this.activity.type === activityConstants.TYPE_SESSION
@@ -66,9 +67,9 @@ export default {
     description () {
       switch (this.activity.type) {
         case activityConstants.TYPE_SESSION:
-          return this.$t('TYPE_SESSION', { courseDate: dayjs(this.activity.targetDate, 'YYYY-MM-DD HH:mm').format('DD MMMM YYYY') })
+          return this.$t('TYPE_SESSION', { courseDate: dayjs(this.activity.targetDate, DATE_EXCHANGE_FORMAT).format('DD MMMM YYYY') })
         case activityConstants.TYPE_HOMEWORK:
-          return this.$t('TYPE_HOMEWORK', { homeworkDate: dayjs(this.activity.targetDate, 'YYYY-MM-DD HH:mm').format('DD MMMM YYYY') })
+          return this.$t('TYPE_HOMEWORK', { homeworkDate: dayjs(this.activity.targetDate, DATE_EXCHANGE_FORMAT).format('DD MMMM YYYY') })
         default:
           return this.$t('unknown-activity')
       }
@@ -81,7 +82,7 @@ export default {
           name: COURSES,
           query: {
             courseId: this.activity.groupId,
-            toDate: dayjs(this.activity.targetDate, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD-HH:mm')
+            toDate: dayjs(this.activity.targetDate, DATE_EXCHANGE_FORMAT).format('YYYY-MM-DD-HH:mm')
           }
         })
       } else {
@@ -89,7 +90,7 @@ export default {
           name: COURSES,
           query: {
             homeworkId: this.activity.homeworkId,
-            toDate: dayjs(this.activity.targetDate, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD')
+            toDate: dayjs(this.activity.targetDate, DATE_EXCHANGE_FORMAT).format('YYYY-MM-DD')
           }
         })
       }

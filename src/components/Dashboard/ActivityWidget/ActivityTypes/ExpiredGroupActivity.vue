@@ -48,6 +48,7 @@
 <script>
 import dayjs from 'dayjs'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import { extendCommunity } from '@/api/groups.service'
 import { GROUPS } from '@/constants/appConstants'
 
@@ -62,10 +63,10 @@ export default {
   emits: ['refresh'],
   computed: {
     formattedDate () {
-      return dayjs(this.activity.modificationDate, 'YYYY-MM-DD HH:mm').calendar()
+      return dayjs(this.activity.modificationDate, DATE_EXCHANGE_FORMAT).calendar()
     },
     formattedDateLong () {
-      return dayjs(this.activity.modificationDate, 'YYYY-MM-DD HH:mm').format(this.$t('on') + ' DD MMMM YYYY ' + this.$t('at') + ' HH:mm')
+      return dayjs(this.activity.modificationDate, DATE_EXCHANGE_FORMAT).format(this.$t('on') + ' DD MMMM YYYY ' + this.$t('at') + ' HH:mm')
     },
     description () {
       return this.$t('space-is-deactivated')

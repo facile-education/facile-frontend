@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import constants from '@/api/constants'
+import constants, { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 
 export {
   initDashboard,
@@ -23,7 +23,7 @@ function getUserSchedule (userId, targetDate, goForward) {
   return axios.get(constants.JSON_WS_URL + DASHBOARD_PATH + DASHBOARD_CTX + 'get-user-schedule', {
     params: {
       userId,
-      date: targetDate.format('YYYY-MM-DD HH:mm'),
+      date: targetDate.format(DATE_EXCHANGE_FORMAT),
       goForward
     }
   }).then(response => response.data)

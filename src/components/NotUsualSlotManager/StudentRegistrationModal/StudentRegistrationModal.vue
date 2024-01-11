@@ -150,6 +150,7 @@ import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import dayjs from 'dayjs'
 import { nextTick } from 'vue'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import schoolLifeService from '@/api/schoolLife-portlet.service'
 import userManagementService from '@/api/userManagement.service'
 import WeprodeCheckbox from '@/components/Base/Weprode/WeprodeCheckbox.vue'
@@ -275,10 +276,10 @@ export default {
     formatSession (session) {
       if (session.type !== undefined) {
         // HHC slot
-        session.label = dayjs(session.startDate, 'YYYY/MM/DD HH:mm').format('HH:mm') + ' / ' + dayjs(session.endDate, 'YYYY/MM/DD HH:mm').format('HH:mm') + ' - ' + notUsualSlotsConstants.getSlotTypeByNumber(session.type).label
+        session.label = dayjs(session.startDate, DATE_EXCHANGE_FORMAT).format('HH:mm') + ' / ' + dayjs(session.endDate, 'YYYY/MM/DD HH:mm').format('HH:mm') + ' - ' + notUsualSlotsConstants.getSlotTypeByNumber(session.type).label
       } else {
         // Classic session slot
-        session.label = dayjs(session.startDate, 'YYYY/MM/DD HH:mm').format('HH:mm') + ' / ' + dayjs(session.endDate, 'YYYY/MM/DD HH:mm').format('HH:mm') + ' - ' + session.groupName
+        session.label = dayjs(session.startDate, DATE_EXCHANGE_FORMAT).format('HH:mm') + ' / ' + dayjs(session.endDate, 'YYYY/MM/DD HH:mm').format('HH:mm') + ' - ' + session.groupName
       }
     },
     submit () {

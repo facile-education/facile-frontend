@@ -29,6 +29,8 @@
 <script>
 import dayjs from 'dayjs'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
+
 export default {
   name: 'WorkItem',
   props: {
@@ -60,7 +62,7 @@ export default {
       }
     },
     formattedGivenDate () {
-      return this.$t('givenThe') + dayjs(this.work.sourceSessionDate, 'YYYY-MM-DD HH:mm').format('DD/MM')
+      return this.$t('givenThe') + dayjs(this.work.sourceSessionDate, DATE_EXCHANGE_FORMAT).format('DD/MM')
     }
   }
 }

@@ -62,6 +62,7 @@ import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import StudentListItem from '@components/NotUsualSlotManager/StudentListModal/StudentListItem'
 import dayjs from 'dayjs'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import schoolLifeService from '@/api/schoolLife-portlet.service'
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
@@ -102,7 +103,7 @@ export default {
       return this.isCurrentTeacher &&
         !(this.slotType.type === notUsualSlotsConstants.firedType) &&
         !(this.slotType.type === notUsualSlotsConstants.tutoringType) &&
-        dayjs().isAfter(dayjs(this.event.startDate, 'YYYY/MM/DD HH:mm'))
+        dayjs().isAfter(dayjs(this.event.startDate, DATE_EXCHANGE_FORMAT))
     }
   },
   created () {

@@ -46,6 +46,8 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import FullCalendar from '@fullcalendar/vue3'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
+
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 const CalendarEventPopover = defineAsyncComponent(() => import('@components/Base/CustomCalendar/CalendarEventPopover.vue'))
 
 export default {
@@ -253,8 +255,8 @@ export default {
       return {
         extendedProps: { ...slot, ...{ eventPosition } },
         title: slot.title || slot.groupName,
-        start: dayjs(slot.startDate, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DDTHH:mm'),
-        end: dayjs(slot.endDate, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DDTHH:mm'),
+        start: dayjs(slot.startDate, DATE_EXCHANGE_FORMAT).format('YYYY-MM-DDTHH:mm'),
+        end: dayjs(slot.endDate, DATE_EXCHANGE_FORMAT).format('YYYY-MM-DDTHH:mm'),
         backgroundColor: slot.color,
         borderColor: slot.color
       }

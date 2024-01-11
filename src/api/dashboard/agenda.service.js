@@ -1,7 +1,7 @@
 import WeprodeUtils from '@utils/weprode.utils'
 import axios from 'axios'
 
-import constants from '@/api/constants'
+import constants, { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 
 export {
   getEvents,
@@ -17,7 +17,7 @@ const AGENDA_PATH = '/agenda.agenda'
 function getEvents (minDate, startIndex, nbEvents, unreadOnly) {
   return axios.get(constants.JSON_WS_URL + AGENDA_PATH + '/get-events', {
     params: {
-      minDateStr: minDate.format('YYYY-MM-DD HH:mm:ss.SSS'),
+      minDateStr: minDate.format(DATE_EXCHANGE_FORMAT),
       startIndex,
       nbEvents,
       unreadOnly
@@ -39,8 +39,8 @@ function createEvent (title, description, location, startDate, endDate, populati
       title,
       description,
       location,
-      startDate: startDate.format('YYYY-MM-DD HH:mm'),
-      endDate: endDate.format('YYYY-MM-DD HH:mm'),
+      startDate: startDate.format(DATE_EXCHANGE_FORMAT),
+      endDate: endDate.format(DATE_EXCHANGE_FORMAT),
       populations: JSON.stringify(populations)
     })
   ).then(response => response.data)
@@ -53,8 +53,8 @@ function modifyEvent (eventId, title, description, location, startDate, endDate,
       title,
       description,
       location,
-      startDate: startDate.format('YYYY-MM-DD HH:mm'),
-      endDate: endDate.format('YYYY-MM-DD HH:mm'),
+      startDate: startDate.format(DATE_EXCHANGE_FORMAT),
+      endDate: endDate.format(DATE_EXCHANGE_FORMAT),
       populations: JSON.stringify(populations),
       markAsUnreadForAll
     })

@@ -90,6 +90,7 @@
 import MemberPack from '@components/Groups/GroupDetailsPanel/DetailsTab/MemberPack'
 import dayjs from 'dayjs'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import { getCommunityMembers } from '@/api/groups.service'
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 
@@ -119,7 +120,7 @@ export default {
       return '/documents/groups/' + this.group.rootFolderId
     },
     formattedDate () {
-      return dayjs(this.group.expirationDate).format('DD MMM YYYY')
+      return dayjs(this.group.expirationDate, DATE_EXCHANGE_FORMAT).format('DD MMM YYYY')
     }
   },
   watch: {

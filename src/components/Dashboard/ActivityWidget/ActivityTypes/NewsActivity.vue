@@ -131,6 +131,7 @@ import { updateDeleteContextMenu } from '@utils/contextMenus'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import { deleteNews, setNewsRead } from '@/api/dashboard/news.service'
 import { defaultImagesKeys } from '@/constants/icons'
 const ContextMenu = defineAsyncComponent(() => import('@components/ContextMenu/ContextMenu.vue'))
@@ -164,10 +165,10 @@ export default {
       }
     },
     formattedDate () {
-      return dayjs(this.news.publicationDate, 'YYYY-MM-DD HH:mm').calendar()
+      return dayjs(this.news.publicationDate, DATE_EXCHANGE_FORMAT).calendar()
     },
     formattedDateLong () {
-      return dayjs(this.news.publicationDate, 'YYYY-MM-DD HH:mm').format(this.$t('on') + ' DD MMMM YYYY ' + this.$t('at') + ' HH:mm')
+      return dayjs(this.news.publicationDate, DATE_EXCHANGE_FORMAT).format(this.$t('on') + ' DD MMMM YYYY ' + this.$t('at') + ' HH:mm')
     }
   },
   methods: {

@@ -70,6 +70,8 @@
 import MessageRecipients from '@components/Messaging/MessageRecipients'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
+
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 const AttachedFiles = defineAsyncComponent(() => import('@components/AttachedFiles/AttachedFiles.vue'))
 
 export default {
@@ -113,7 +115,7 @@ export default {
   },
   methods: {
     formatSentDate () {
-      return dayjs(this.message.sendDate, 'YYYY/MM/DD HH:mm:ss').format('DD/MM/YYYY HH:mm')
+      return dayjs(this.message.sendDate, DATE_EXCHANGE_FORMAT).format('DD/MM/YYYY HH:mm')
     }
   }
 }

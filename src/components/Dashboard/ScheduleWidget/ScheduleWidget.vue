@@ -44,6 +44,7 @@ import ScheduleHeader from '@components/Dashboard/ScheduleWidget/ScheduleHeader.
 import ScheduleItem from '@components/Dashboard/ScheduleWidget/ScheduleItem.vue'
 import dayjs from 'dayjs'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import { getUserSchedule } from '@/api/dashboard.service'
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import { SCHEDULE } from '@/constants/appConstants'
@@ -70,7 +71,7 @@ export default {
     sortedSessionList () {
       const sortedSessionList = [...this.sessionList]
       return sortedSessionList.sort((sessionA, sessionB) => {
-        return (dayjs(sessionA.startDate, 'YYYY-MM-DD HH:mm').isAfter(dayjs(sessionB.startDate, 'YYYY-MM-DD HH:mm'))) ? 1 : -1
+        return (dayjs(sessionA.startDate, DATE_EXCHANGE_FORMAT).isAfter(dayjs(sessionB.startDate, DATE_EXCHANGE_FORMAT))) ? 1 : -1
       })
     }
   },
@@ -103,7 +104,7 @@ export default {
         if (data.success) {
           this.error = false
           this.sessionList = data.eventList
-          this.currentDisplayedDate = dayjs(data.date, 'YYYY-MM-DD HH:mm')
+          this.currentDisplayedDate = dayjs(data.date, DATE_EXCHANGE_FORMAT)
         } else {
           this.error = true
           console.error('Error')

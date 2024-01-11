@@ -11,7 +11,7 @@ import VueMatomo from 'vue-matomo'
 import { Vue3Mq } from 'vue3-mq'
 import Vue3TouchEvents from 'vue3-touch-events'
 
-import constants from '@/api/constants'
+import constants, { LOCAL_STORAGE_DATE_FORMAT } from '@/api/constants'
 import i18n from '@/i18n'
 import router from '@/router'
 import store from '@/store'
@@ -82,7 +82,7 @@ axios.interceptors.request.use(async (config) => {
   // Store the last webservice call date
   store.dispatch('user/setLastActionDate', dayjs())
   // Share last action date to other tabs that share locale storage
-  localStorage.setItem('lastActionDate', dayjs().format('YYYY/MM/DD HH:mm:ss'))
+  localStorage.setItem('lastActionDate', dayjs().format(LOCAL_STORAGE_DATE_FORMAT))
 
   if (store.state.user.pauth === undefined) {
     await fetch(constants.P_AUTH_URL).then(response => response.text()).then(response => { store.commit('user/setPAuth', response.trim()) })

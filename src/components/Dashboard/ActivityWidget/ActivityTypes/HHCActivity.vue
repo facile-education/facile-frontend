@@ -38,6 +38,7 @@
 <script>
 import dayjs from 'dayjs'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import activityConstants from '@/constants/activityConstants'
 import { SCHOOL_LIFE } from '@/constants/appConstants'
 
@@ -51,10 +52,10 @@ export default {
   },
   computed: {
     formattedDate () {
-      return dayjs(this.activity.modificationDate, 'YYYY-MM-DD HH:mm').calendar()
+      return dayjs(this.activity.modificationDate, DATE_EXCHANGE_FORMAT).calendar()
     },
     formattedDateLong () {
-      return dayjs(this.activity.modificationDate, 'YYYY-MM-DD HH:mm').format(this.$t('on') + ' DD MMMM YYYY ' + this.$t('at') + ' HH:mm')
+      return dayjs(this.activity.modificationDate, DATE_EXCHANGE_FORMAT).format(this.$t('on') + ' DD MMMM YYYY ' + this.$t('at') + ' HH:mm')
     },
     isPendingFiring () {
       return this.activity.type === activityConstants.TYPE_PENDING_RENVOI
@@ -77,7 +78,7 @@ export default {
       }
     },
     formatDate (date) {
-      return dayjs(date, 'YYYY-MM-DD HH:mm').format(' DD MMMM YYYY ' + this.$t('at') + ' HH:mm')
+      return dayjs(date, DATE_EXCHANGE_FORMAT).format(' DD MMMM YYYY ' + this.$t('at') + ' HH:mm')
     }
   }
 }

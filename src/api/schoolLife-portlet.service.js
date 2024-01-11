@@ -1,7 +1,7 @@
 import WeprodeUtils from '@utils/weprode.utils'
 import axios from 'axios'
 
-import constants from '@/api/constants'
+import constants, { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 
 export default {
   createSlot,
@@ -104,7 +104,7 @@ function getWeekSession (schoolId, slotType, currentDate) {
     params: {
       schoolId,
       type: slotType,
-      currentDateStr: currentDate.format('YYYY-MM-DD HH:mm')
+      currentDateStr: currentDate.format(DATE_EXCHANGE_FORMAT)
     }
   }).then(response => response.data)
 }

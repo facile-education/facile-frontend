@@ -27,6 +27,8 @@
 import WorkItem from '@components/Course/WorkLoad/WorkItem.vue'
 import dayjs from 'dayjs'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
+
 export default {
   name: 'WorkDay',
   components: { WorkItem },
@@ -53,7 +55,7 @@ export default {
     },
     dayWorks () {
       return this.workList.filter(work => {
-        const workDate = dayjs(work.toDate, 'YYYY-MM-DD HH:mm')
+        const workDate = dayjs(work.toDate, DATE_EXCHANGE_FORMAT)
         return workDate.isAfter(this.date.startOf('day')) && workDate.isBefore(this.date.endOf('day'))
       })
     }
