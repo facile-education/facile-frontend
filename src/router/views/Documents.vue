@@ -27,7 +27,7 @@
       />
       <FilePickerArea
         class="file-picker-area"
-        :disabled="isLoadDocumentsError"
+        :disabled="isLoadDocumentsError || !canUploadFilesInCurrentFolder"
         @file-added="importDocument"
         @click.right.prevent="openContextMenu"
       >
@@ -169,6 +169,9 @@ export default {
     },
     currentFolder () {
       return this.$store.getters['documents/currentFolder']
+    },
+    canUploadFilesInCurrentFolder () {
+      return this.currentFolder?.permissions.ADD_OBJECT
     },
     selectedDocumentsOptions () {
       return computeDocumentsOptions(this.selectedDocuments)
