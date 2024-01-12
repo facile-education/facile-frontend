@@ -114,7 +114,7 @@ export default {
             teacher.substitutes = (teacher.substitute) ? [teacher.substitute] : []
 
             teacher.nextSessions.forEach((session) => {
-              session.displayDate = dayjs(session.startDate, DATE_EXCHANGE_FORMAT).format(DATE_EXCHANGE_FORMAT)
+              session.displayDate = dayjs(session.startDate, DATE_EXCHANGE_FORMAT).format('DD/MM/YYYY HH:mm')
             })
           })
 
