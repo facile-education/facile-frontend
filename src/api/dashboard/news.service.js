@@ -13,7 +13,8 @@ export {
   getNewsDetails,
   deleteNews,
   addNewsDelegate,
-  removeNewsDelegate
+  removeNewsDelegate,
+  getUnreadGroupNews
 }
 
 const NEWS_PATH = '/news.'
@@ -58,6 +59,16 @@ function getSchoolNews (currentDate, startIndex, nbNews, importantOnly, unreadOn
       nbNews,
       importantOnly,
       unreadOnly
+    }
+  }).then(response => response.data)
+}
+
+function getUnreadGroupNews (groupId, maxDate, nbResults) {
+  return axios.get(constants.JSON_WS_URL + NEWS_PATH + NEWS_CTX + 'get-unread-group-news', {
+    params: {
+      groupId,
+      maxDate,
+      nbResults
     }
   }).then(response => response.data)
 }

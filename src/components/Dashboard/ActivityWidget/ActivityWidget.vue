@@ -60,9 +60,9 @@
         {{ separatorLabel }}
       </div>
 
-      <ul v-if="readActivities.length !== 0">
+      <ul v-if="readActivitiesToDisplay.length !== 0">
         <li
-          v-for="activity in readActivities"
+          v-for="activity in readActivitiesToDisplay"
           :key="activity.activityId"
         >
           <ActivityItem
@@ -87,6 +87,7 @@ import dayjs from 'dayjs'
 
 import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import { getDashboardActivity } from '@/api/dashboard.service'
+import { getUnreadGroupNews } from '@/api/dashboard/news.service'
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import activityConstants from '@/constants/activityConstants'
 import { allActivitiesPaginationSize, nbActivityInWidget } from '@/constants/dashboardConstants'
@@ -125,7 +126,8 @@ export default {
       return this.$store.state.user.isParent
     },
     separatorLabel () {
-      return this.$t('newsSince') + dayjs(this.lastDashboardAccessDate, DATE_EXCHANGE_FORMAT).calendar()
+      // return this.$t('newsSince') + dayjs(this.lastDashboardAccessDate, DATE_EXCHANGE_FORMAT).calendar()
+      return this.$t('newsSince')
     },
     filterBooleans () {
       if (this.filter.activityTypes.length === 0) { // If no filter selected, return all activity types
@@ -146,6 +148,17 @@ export default {
         }
       }
     },
+    readActivitiesToDisplay () {
+      if (this.unreadActivities.length >= this.paginationNumber) {
+        return []
+      } else {
+        // Return the remaining number of unread activities (the newest)
+        return this.readActivities.slice(this.unreadActivities.length - this.paginationNumber)
+      }
+    },
+    paginationNumber () {
+      return this.displayAll ? allActivitiesPaginationSize : nbActivityInWidget
+    },
     lastActivity () {
       // Return the last activity between read Activities and unRead Activities, assume each of them are sorted by date in their respective array
       const oldestRead = this.readActivities.length > 0 ? this.readActivities[this.readActivities.length - 1] : undefined
@@ -157,10 +170,17 @@ export default {
           ? oldestRead
           : oldestUnread
     },
-    lastActivityDate () {
-      if (this.lastActivity) {
-        return dayjs(this.lastActivity.modificationDate, DATE_EXCHANGE_FORMAT)
-      } else { // if no activity, return the currentDate
+    lastUnreadNewsDate () {
+      if (this.unreadActivities.length > 0) {
+        return dayjs(this.unreadActivities[this.unreadActivities.length - 1].modificationDate, DATE_EXCHANGE_FORMAT)
+      } else { // if no unread news date, return the currentDate
+        return dayjs()
+      }
+    },
+    lastReadNewsDate () {
+      if (this.readActivities.length > 0) {
+        return dayjs(this.readActivities[this.readActivities.length - 1].modificationDate, DATE_EXCHANGE_FORMAT)
+      } else { // if no read news date, return the currentDate
         return dayjs()
       }
     },
@@ -202,38 +222,64 @@ export default {
     },
     getActivities () {
       this.isLoading = true
-      getDashboardActivity( // TODO call with memberShip boolean
+      // First fetch unread news
+      getUnreadGroupNews(
         this.filter.selectedGroup ? this.filter.selectedGroup.groupId : 0,
-        this.displayAll && this.lastActivityDate !== undefined ? this.lastActivityDate.format(DATE_EXCHANGE_FORMAT) : dayjs().format(DATE_EXCHANGE_FORMAT),
-        this.displayAll ? allActivitiesPaginationSize : nbActivityInWidget,
-        this.filterBooleans.withNews,
-        this.filterBooleans.withDocs,
-        this.filterBooleans.withMemberShip,
-        this.filterBooleans.withSchoolLife,
-        this.filterBooleans.withSession
+        this.lastUnreadNewsDate.format(DATE_EXCHANGE_FORMAT),
+        this.paginationNumber
       ).then((data) => {
-        this.isLoading = false
-        this.isFirstLoad = false
         if (data.success) {
           this.error = false
-          this.nbNewActivities = data.nbNewActivities
-          this.lastDashboardAccessDate = data.lastDashboardAccessDate
-
-          data.activities.forEach((activity) => {
-            if (activity.type === activityConstants.TYPE_NEWS) {
-              activity.modificationDate = activity.publicationDate
-            }
-
-            if (this.isUnread(activity)) {
-              this.unreadActivities.push(activity)
-            } else {
-              this.readActivities.push(activity)
-            }
+          this.nbNewActivities = data.nbUnreadGroupNews
+          data.news.forEach((news) => {
+            news.modificationDate = news.publicationDate
+            this.unreadActivities.push(news)
           })
+          // If unread news do not fill the activities, fetch the others activities
+          if (this.unreadActivities.length < this.paginationNumber) {
+            getDashboardActivity(
+              this.filter.selectedGroup ? this.filter.selectedGroup.groupId : 0,
+              this.displayAll && this.lastReadNewsDate !== undefined ? this.lastReadNewsDate.format(DATE_EXCHANGE_FORMAT) : dayjs().format(DATE_EXCHANGE_FORMAT),
+              this.paginationNumber,
+              this.filterBooleans.withNews,
+              this.filterBooleans.withDocs,
+              this.filterBooleans.withMemberShip,
+              this.filterBooleans.withSchoolLife,
+              this.filterBooleans.withSession
+            ).then((data) => {
+              this.isLoading = false
+              this.isFirstLoad = false
+              if (data.success) {
+                this.error = false
+                this.nbNewActivities += data.nbNewActivities
+                this.lastDashboardAccessDate = data.lastDashboardAccessDate
 
-          if (this.isAuthorOfAllNewsActivities) {
-            this.readActivities = [...this.unreadActivities, ...this.readActivities]
-            this.unreadActivities = []
+                data.activities.forEach((activity) => {
+                  if (activity.type === activityConstants.TYPE_NEWS) {
+                    activity.modificationDate = activity.publicationDate
+                  }
+
+                  if (this.isUnread(activity)) {
+                    this.unreadActivities.push(activity)
+                  } else {
+                    this.readActivities.push(activity)
+                  }
+                })
+
+                if (this.isAuthorOfAllNewsActivities) {
+                  this.readActivities = [...this.unreadActivities, ...this.readActivities]
+                  this.unreadActivities = []
+                }
+              } else {
+                this.error = true
+              }
+            }, (err) => {
+              this.isLoading = false
+              this.error = true
+              console.error(err)
+            })
+          } else {
+            this.isLoading = false
           }
         } else {
           this.error = true
@@ -309,6 +355,6 @@ ul {
 {
   "errorPlaceholder": "Oups, une erreur est survenue...",
   "emptyPlaceholder": "Aucune activité à afficher",
-  "newsSince": "Nouveautés depuis "
+  "newsSince": "Nouveautés"
 }
 </i18n>

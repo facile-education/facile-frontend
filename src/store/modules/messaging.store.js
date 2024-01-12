@@ -1,10 +1,10 @@
 import messagingUtils from '@utils/messaging.utils'
 import dayjs from 'dayjs'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import folderService from '@/api/messaging/folder.service'
 import messageService from '@/api/messaging/message.service'
 import messagingConstants from '@/constants/messagingConstants'
-import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 
 const sortThreads = (threads) => {
   return threads.sort((a, b) => {

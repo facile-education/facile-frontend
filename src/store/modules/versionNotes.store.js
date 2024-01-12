@@ -1,8 +1,8 @@
 import dayjs from 'dayjs'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import { getVersionNoteContent, getVersionNotesList } from '@/api/versionNotes.service'
 import i18n from '@/i18n'
-import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 
 export const state = {
   versionNotesList: undefined,

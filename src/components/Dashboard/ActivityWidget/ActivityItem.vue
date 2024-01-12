@@ -2,8 +2,13 @@
   <div class="container">
     <div
       class="activity-item"
-      :class="{'theme-hover-border-color': isNewsActivity || isHHCActivity || isSessionActivity}"
+      :class="{'theme-border-color': !isActivityRead, 'is-unread': !isActivityRead, 'theme-hover-border-color': isNewsActivity || isHHCActivity || isSessionActivity}"
     >
+      <div
+        v-if="!isActivityRead"
+        class="pellet theme-background-color"
+      />
+
       <NewsActivity
         v-if="isNewsActivity"
         :news="activity"
@@ -76,6 +81,9 @@ export default {
   },
   emits: ['getNextActivities', 'refresh', 'markAsRead'],
   computed: {
+    isActivityRead () {
+      return this.activity.type !== activityConstants.TYPE_NEWS || this.activity.hasRead
+    },
     isNewsActivity () {
       return this.activity.type === activityConstants.TYPE_NEWS
     },
@@ -133,6 +141,9 @@ export default {
   border: 1px solid $color-border;
 }
 
+.is-unread {
+  border: 2px solid $color-border;
+}
 .pellet {
   @extend %item-pellet;
 }

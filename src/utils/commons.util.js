@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+
 import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 
 function toPascalCase (string) {

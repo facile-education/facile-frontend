@@ -29,7 +29,6 @@
       />
     </div>
     <div
-      v-if="canCreateNews"
       class="right"
     >
       <button
@@ -39,6 +38,7 @@
         @click="$router.push({ name: 'AllActivities' })"
       />
       <CreateButton
+        v-if="canCreateNews"
         data-test="CreateActivity"
         :title="$t('create-news')"
         @click="isCreateModalDisplayed = true"

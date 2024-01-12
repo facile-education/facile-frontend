@@ -32,7 +32,7 @@ $statistics-widget-max-width: 355px;
 $activity-widget-min-width: 355px;
 
 $announcement-item-min-height: 152px;
-$activity-item-height: 80px;
+$activity-item-height: 60px;
 $announcement-item-min-width: min(323px, 80vw);
 $announcement-item-horizontal-min-width: min(450px, 80vw);
 $news-thumbnail-size-in-modal: 90px;
@@ -127,7 +127,7 @@ $news-thumbnail-size-in-modal: 90px;
     min-width: 150px;
     position: relative;
     font-size: 0.8rem;
-    padding-top: 1rem;
+    padding-top: 0.5rem;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
