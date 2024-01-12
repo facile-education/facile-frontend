@@ -1,5 +1,5 @@
 <template>
-  <ul>
+  <ul class="category-list">
     <li
       v-for="category in categoryList"
       :key="category.categoryId"

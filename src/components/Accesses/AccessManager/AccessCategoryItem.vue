@@ -23,6 +23,7 @@
 
       <WeprodeButton
         class="delete-button"
+        data-test="deleteCategory"
         cls="cancel"
         @click="confirmDeleteCategory"
       >

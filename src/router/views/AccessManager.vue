@@ -35,6 +35,7 @@
     <AccessCategoryInput
       v-if="isCreateCategoryInputDisplayed"
       class="category-input"
+      data-test="category-input"
       @submit-name="createCategory"
       @close="isCreateCategoryInputDisplayed = false"
     />

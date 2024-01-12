@@ -25,6 +25,7 @@
     <!--    </button>-->
     <button
       class="close-option"
+      data-test="CloseQuickSearchPanel"
       @click="closePanel"
     >
       <CustomIcon

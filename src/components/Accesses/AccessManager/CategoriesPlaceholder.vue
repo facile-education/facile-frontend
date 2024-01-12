@@ -3,6 +3,7 @@
     <span v-t="'noAccess'" />
     <em
       v-t="'createCategory'"
+      data-test="buttonAddCategoryPlaceholder"
       @click="$emit('createCategory')"
     />
   </div>
