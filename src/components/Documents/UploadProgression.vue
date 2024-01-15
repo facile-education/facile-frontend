@@ -21,16 +21,18 @@
             name="chevron-up"
           />
         </div>
-        <div
-          v-if="!cancelStatus"
+        <button
+          v-if="!isUploadFinished && !cancelStatus"
           v-t="'cancel'"
-          class="cancel"
+          class="cancel-button"
           @click="cancel"
         />
 
         <button
           v-else
           class="close-button"
+          :title="$t('close')"
+          :aria-label="$t('close')"
           @click="close"
         >
           <CustomIcon
@@ -76,11 +78,11 @@ export default {
       return this.listUploadedFiles.length >= this.listFilesToUpload.length
     },
     cancelStatus () {
-      return this.$store.state.currentActions.cancelUpload || !this.isUploadFinished
+      return this.$store.state.currentActions.cancelUpload
     },
     headerText () {
       let text = ''
-      if (!this.cancelStatus) {
+      if (!this.isUploadFinished && !this.cancelStatus) {
         text = this.$tc('uploadOn', this.listUploadedFiles.length, { done: this.listUploadedFiles.length, total: this.listFilesToUpload.length })
       } else {
         text = this.$tc('uploadfinished', this.listUploadedFiles.length, { nb: this.listUploadedFiles.length })
@@ -141,12 +143,12 @@ export default {
         cursor: pointer;
       }
 
-      .cancel {
-        cursor: pointer;
+      .cancel-button {
         color: #E74B3B;
       }
 
-      .close-button {
+      .close-button, .cancel-button {
+        height: 100%;
         margin: 0;
         padding: 0;
         border: none;
@@ -175,6 +177,7 @@ export default {
 <i18n locale="fr">
 {
   "cancel": "Annuler",
+  "close": "Fermer",
   "uploadOn": "{done} chargement sur {total} | {done} chargement sur {total} | {done} chargements sur {total}",
   "uploadfinished": "{nb} chargement terminé | {nb} chargements terminés"
 }
