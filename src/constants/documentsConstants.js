@@ -58,7 +58,8 @@ const conflicts = {
   MODE_NORMAL: 0,
   MODE_RENAME: 1,
   MODE_REPLACE: 2,
-  MODE_MERGE: 3
+  MODE_MERGE: 3,
+  MODE_IGNORE: 4
 }
 
 export { defaultFields, fieldsWithoutSize, conflicts }

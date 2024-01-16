@@ -52,16 +52,25 @@ const WISIWIG_PATH = '/document.wysiwyg'
  * -> it will be more easily to update current loaded tree, and it will allow the creation of empty folder
  */
 function uploadFile (folderId, file, mode = conflicts.MODE_NORMAL) {
-  const formData = new FormData()
-  formData.append('folderId', folderId)
-  formData.append('fileName', file.name)
-  formData.append('file', file, file.name)
-  formData.append('mode', mode)
+  if (mode === conflicts.MODE_IGNORE) {
+    return new Promise((resolve) => { // doesn't make the request if the call is processed for an ignored file
+      resolve({
+        success: false,
+        error: 'ignored'
+      })
+    })
+  } else {
+    const formData = new FormData()
+    formData.append('folderId', folderId)
+    formData.append('fileName', file.name)
+    formData.append('file', file, file.name)
+    formData.append('mode', mode)
 
-  return axios.post(
-    constants.JSON_WS_URL + FILE_PATH + '/upload-file?',
-    formData
-  ).then(response => response.data)
+    return axios.post(
+      constants.JSON_WS_URL + FILE_PATH + '/upload-file?',
+      formData
+    ).then(response => response.data)
+  }
 }
 
 /**

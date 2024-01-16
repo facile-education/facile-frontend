@@ -28,26 +28,23 @@
     <template #footer>
       <div class="window-footer">
         <WeprodeButton
-          data-test="cancelButton"
           class="button"
           cls="cancel"
           :label="$t('ConflictModal.cancelButton')"
-          @click="cancel"
+          @click="handleChoice(modes.ignore)"
         />
         <!-- TODO check permission? >-->
         <WeprodeButton
-          data-test="replaceButton"
           class="button"
           cls="replace"
           :label="$t('ConflictModal.replaceButton')"
-          @click="replace"
+          @click="handleChoice(modes.replace)"
         />
         <WeprodeButton
-          data-test="renameButton"
           class="button"
           cls="rename"
           :label="$t('ConflictModal.renameButton')"
-          @click="rename"
+          @click="handleChoice(modes.rename)"
         />
       </div>
     </template>
@@ -55,6 +52,8 @@
 </template>
 
 <script>
+import store from '@store'
+
 import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
 import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 import NeroIcon from '@/components/Nero/NeroIcon'
@@ -64,6 +63,13 @@ export default {
   name: 'ConflictModal',
   components: { NeroIcon, WeprodeButton, WeprodeWindow },
   computed: {
+    modes () {
+      return {
+        replace: conflicts.MODE_REPLACE,
+        rename: conflicts.MODE_RENAME,
+        ignore: conflicts.MODE_IGNORE
+      }
+    },
     conflict () {
       return this.$store.getters['conflictModal/firstConflict']
     },
@@ -90,49 +96,15 @@ export default {
     }
   },
   methods: {
-    replace () {
+    handleChoice (mode) {
       let parameters
       if (this.lastAction.params.storePath) { // Handle case that last action is a store action and not a 'normal' parametrized method
-        parameters = [this.lastAction.params.storePath, { ...this.lastAction.params.storeParams, mode: conflicts.MODE_REPLACE }]
+        parameters = [this.lastAction.params.storePath, { ...this.lastAction.params.storeParams, mode }]
       } else {
-        parameters = [...this.lastAction.params, conflicts.MODE_REPLACE]
+        parameters = [...this.lastAction.params, mode]
       }
 
       this.lastAction.fct.apply(this, parameters)
-      this.onClose()
-    },
-    rename () {
-      let parameters
-      if (this.lastAction.params.storePath) { // Handle case that last action is a store action and not a 'normal' parametrized method
-        parameters = [this.lastAction.params.storePath, { ...this.lastAction.params.storeParams, mode: conflicts.MODE_RENAME }]
-      } else {
-        parameters = [...this.lastAction.params, conflicts.MODE_RENAME]
-      }
-
-      this.lastAction.fct.apply(this, parameters)
-      this.onClose()
-    },
-    cancel () {
-      let parameters
-      if (!this.lastAction.params.storePath) { // (Upload only) Remove entities in conflicts for the next call
-        const listRemainingFiles = [...this.lastAction.params[1]]
-
-        // Remove entities concern by the conflict
-        for (let i = 0; i < listRemainingFiles.length; i++) {
-          const remainingFileParts = listRemainingFiles[i].name.split('/')
-          const conflictFileParts = this.entitiesInConflict[0].name.split('/')
-          if (remainingFileParts[0] === conflictFileParts[0]) {
-            this.$store.dispatch('currentActions/removeFileToUpload', listRemainingFiles[i])
-            listRemainingFiles.splice(i, 1)
-            i--
-          }
-        }
-
-        // Call method
-        parameters = [this.lastAction.params[0], listRemainingFiles, conflicts.MODE_NORMAL]
-        this.lastAction.fct.apply(this, parameters)
-      }
-
       this.onClose()
     },
     onClose () {

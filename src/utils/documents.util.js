@@ -207,7 +207,7 @@ function handleError (data, doc, folderId, documentList, index) {
       message: i18n.global.t('Documents.antivirusException'),
       type: 'error'
     })
-  } else {
+  } else if (data.error !== 'ignored') {
     store.dispatch('popups/pushPopup', {
       message: i18n.global.t('Documents.uploadError'),
       type: 'error'
