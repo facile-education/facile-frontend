@@ -6,6 +6,7 @@ export const state = {
   cancelUpload: false,
   listFilesToUpload: [],
   listUploadedFiles: [],
+  listFilesInError: [],
   currentBackgroundActionList: []
 }
 
@@ -37,11 +38,9 @@ export const mutations = {
     state.currentUploadingFile = payload
   },
   setUploadFileError (state, payload) {
-    for (const file of state.listFilesToUpload) {
-      if (file.name === payload.name) {
-        file.isError = true
-        break
-      }
+    const fileInError = state.listFilesToUpload.find(file => file.name === payload.name)
+    if (fileInError) {
+      state.listFilesInError.push(fileInError)
     }
   },
   removeFileToUpload (state, file) {
@@ -57,6 +56,9 @@ export const mutations = {
   },
   setUploadedFiles (state, payload) {
     state.listUploadedFiles = payload
+  },
+  setFilesInError (state, payload) {
+    state.listFilesInError = payload
   }
 }
 
@@ -90,6 +92,7 @@ export const actions = {
     commit('setCancelUpload', false)
     commit('setImportFileList', fileList)
     commit('setUploadedFiles', [])
+    commit('setFilesInError', [])
   },
   addImportFileList ({ commit }, fileList) {
     commit('setCancelUpload', false)

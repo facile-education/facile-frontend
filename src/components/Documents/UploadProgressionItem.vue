@@ -53,11 +53,17 @@ export default {
     listUploadedFiles () {
       return this.$store.state.currentActions.listUploadedFiles
     },
+    listFilesInError () {
+      return this.$store.state.currentActions.listFilesInError
+    },
+    isInError () {
+      return this.listFilesInError.find(file => file === this.document)
+    },
     status () {
       if (this.currentUploadingFile && this.document.name.split('/').at(-1) === this.currentUploadingFile.name.split('/').at(-1)) {
         return 'uploading'
       } else {
-        if (this.document.isError) {
+        if (this.isInError) {
           return 'error'
         }
         let find = false

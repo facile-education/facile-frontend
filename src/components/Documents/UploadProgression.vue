@@ -74,8 +74,11 @@ export default {
     listUploadedFiles () {
       return this.$store.state.currentActions.listUploadedFiles
     },
+    listOfFailedUploadFiles () {
+      return this.$store.state.currentActions.listFilesInError
+    },
     isUploadFinished () {
-      return this.listUploadedFiles.length >= this.listFilesToUpload.length
+      return this.listUploadedFiles.length + this.listOfFailedUploadFiles.length >= this.listFilesToUpload.length
     },
     cancelStatus () {
       return this.$store.state.currentActions.cancelUpload
@@ -92,8 +95,8 @@ export default {
   },
   watch: {
     isUploadFinished (value) {
-      // When upload is finished, remove Progression after 5s
-      if (value) {
+      // If upload is finished without any problems, remove Progression after 5s
+      if (value && this.listOfFailedUploadFiles.length === 0) {
         setTimeout(() => {
           this.close()
         }, 5000)
