@@ -5,7 +5,7 @@
     class="conflict-modal"
     data-test="conflict-modal"
     :width="600"
-    @close="onClose"
+    @close="handleChoice(modes.ignore)"
   >
     <template #header>
       <span v-t="'ConflictModal.header'" />
