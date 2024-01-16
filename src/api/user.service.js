@@ -11,7 +11,6 @@ export default {
   updateInterfacePreferences,
   updateThemeColor,
   updateReportFrequency,
-  updateWebdavState,
   acceptTermsOfUse,
   getParentInfos
 }
@@ -75,14 +74,6 @@ function updateReportFrequency (frequency) {
   return axios.post(constants.JSON_WS_URL + PREF_PATH + '/update-report-frequency',
     WeprodeUtils.params({
       frequency
-    })
-  ).then(response => response.data)
-}
-
-function updateWebdavState (isEnabled) {
-  return axios.post(constants.JSON_WS_URL + PREF_PATH + '/update-webdav-state',
-    WeprodeUtils.params({
-      isEnabled
     })
   ).then(response => response.data)
 }

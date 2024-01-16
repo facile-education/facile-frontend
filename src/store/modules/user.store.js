@@ -25,7 +25,6 @@ export const state = {
   isStudent: false,
   isTeacher: false,
   isParent: false,
-  hasWebdavEnabled: false,
   schoolList: [],
   details: {},
   selectedSchool: undefined,
@@ -53,7 +52,6 @@ export const mutations = {
     state.fullName = getFullName(payload)
     state.picture = payload.picture
     state.themeColor = payload.themeColor
-    state.hasWebdavEnabled = payload.hasWebdavEnabled
 
     state.isAdministrator = payload.isAdministrator
     state.isLocalAdmin = payload.isLocalAdmin
@@ -103,10 +101,6 @@ export const mutations = {
     state.details.smsPhoneNumber = payload.SMSPhone
     state.details.isLocalUser = payload.isLocalUser
     state.details.reportFrequency = payload.reportFrequency
-    state.details.webdavUrl = payload.webdavUrl
-  },
-  updateWebdavState (state, payload) {
-    state.hasWebdavEnabled = payload
   },
   setAgreedTermsOfUse (state, payload) {
     state.agreedTermsOfUse = true
