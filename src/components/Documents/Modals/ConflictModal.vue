@@ -143,6 +143,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
+
+.conflict-modal {
+  z-index: calc(#{$popup-z-index} + 1); /* To be over the upload progression popover */
+}
+
 .body {
   display: flex;
   align-items: center;
