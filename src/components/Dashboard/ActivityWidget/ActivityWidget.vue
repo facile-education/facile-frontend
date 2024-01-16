@@ -37,9 +37,9 @@
       :class="{'infinite-scroll' : displayAll}"
       @scroll="handleScroll"
     >
-      <ul v-if="unreadActivities.length !== 0">
+      <ul v-if="unreadActivities.length !== 0 && isAllLoaded">
         <li
-          v-for="activity in unreadActivities"
+          v-for="activity in sortedUnreadActivities"
           :key="activity.activityId"
         >
           <ActivityItem
@@ -47,6 +47,7 @@
             :is-unread="true"
             :is-last="activity.activityId === lastActivity.activityId"
             :is-dashboard="true"
+            @mark-as-read="activity.hasRead=true"
             @get-next-activities="getActivities"
             @refresh="refresh"
           />
@@ -60,7 +61,7 @@
         {{ separatorLabel }}
       </div>
 
-      <ul v-if="readActivitiesToDisplay.length !== 0">
+      <ul v-if="readActivitiesToDisplay.length !== 0 && isAllLoaded">
         <li
           v-for="activity in readActivitiesToDisplay"
           :key="activity.activityId"
@@ -69,7 +70,6 @@
             :activity="activity"
             :is-last="activity.activityId === lastActivity.activityId"
             :is-dashboard="true"
-            @mark-as-read="activity.hasRead=true"
             @get-next-activities="getActivities"
             @refresh="refresh"
           />
@@ -115,7 +115,9 @@ export default {
       nbNewActivities: 0,
       lastDashboardAccessDate: undefined,
       readActivities: [],
-      unreadActivities: []
+      unreadActivities: [],
+      isAllLoaded: false,
+      pageNumber: 0
     }
   },
   computed: {
@@ -148,27 +150,40 @@ export default {
         }
       }
     },
+    sortedUnreadActivities () {
+      // Unread news first then sort by publication date
+      const activities = this.unreadActivities
+      activities.sort((a1, a2) => {
+        if (a1.type === activityConstants.TYPE_NEWS && a2.type !== activityConstants.TYPE_NEWS) {
+          return 1
+        } else {
+          return dayjs(a1.modificationDate).isBefore(dayjs(a2.modificationDate))
+        }
+      })
+      return activities.slice(0, this.nbActivitiesPerPage * this.pageNumber)
+    },
     readActivitiesToDisplay () {
-      if (this.unreadActivities.length >= this.paginationNumber) {
+      if (this.unreadActivities.length >= this.nbActivitiesPerPage * this.pageNumber) {
         return []
       } else {
         // Return the remaining number of unread activities (the newest)
-        return this.readActivities.slice(this.unreadActivities.length - this.paginationNumber)
+        return this.readActivities.slice(0, this.nbActivitiesPerPage * this.pageNumber - this.unreadActivities.length)
       }
     },
-    paginationNumber () {
+    nbActivitiesPerPage () {
       return this.displayAll ? allActivitiesPaginationSize : nbActivityInWidget
     },
     lastActivity () {
-      // Return the last activity between read Activities and unRead Activities, assume each of them are sorted by date in their respective array
-      const oldestRead = this.readActivities.length > 0 ? this.readActivities[this.readActivities.length - 1] : undefined
+      // For infinite scroll
+      // If only unread activities, this is the latest unread activity
+      // Else this is the latest read activity
+      const oldestRead = this.readActivitiesToDisplay.length > 0 ? this.readActivitiesToDisplay[this.readActivitiesToDisplay.length - 1] : undefined
       const oldestUnread = this.unreadActivities.length > 0 ? this.unreadActivities[this.unreadActivities.length - 1] : undefined
-
-      return oldestRead !== undefined && oldestUnread !== undefined && dayjs(oldestUnread.modificationDate, DATE_EXCHANGE_FORMAT).isBefore(dayjs(oldestRead.modificationDate, DATE_EXCHANGE_FORMAT))
-        ? oldestUnread
-        : oldestRead !== undefined
-          ? oldestRead
-          : oldestUnread
+      if (oldestRead === undefined && oldestUnread !== undefined) {
+        return oldestUnread
+      } else {
+        return oldestRead
+      }
     },
     lastUnreadNewsDate () {
       if (this.unreadActivities.length > 0) {
@@ -223,63 +238,64 @@ export default {
     getActivities () {
       this.isLoading = true
       // First fetch unread news
-      getUnreadGroupNews(
+      if (this.filter.activityTypes.length === 0 || this.filterBooleans.withNews) {
+        getUnreadGroupNews(
+          this.filter.selectedGroup ? this.filter.selectedGroup.groupId : 0,
+          this.lastUnreadNewsDate.format(DATE_EXCHANGE_FORMAT),
+          this.nbActivitiesPerPage
+        ).then((data) => {
+          if (data.success) {
+            this.error = false
+            this.nbNewActivities = data.nbUnreadGroupNews
+            data.news.forEach((news) => {
+              news.modificationDate = news.publicationDate
+              this.unreadActivities.push(news)
+            })
+            this.isLoading = false
+          } else {
+            this.error = true
+          }
+        }, (err) => {
+          this.isLoading = false
+          this.error = true
+          console.error(err)
+        })
+      }
+      // Then fetch other activities
+      getDashboardActivity(
         this.filter.selectedGroup ? this.filter.selectedGroup.groupId : 0,
-        this.lastUnreadNewsDate.format(DATE_EXCHANGE_FORMAT),
-        this.paginationNumber
+        this.displayAll && this.lastReadNewsDate !== undefined ? this.lastReadNewsDate.format(DATE_EXCHANGE_FORMAT) : dayjs().format(DATE_EXCHANGE_FORMAT),
+        this.nbActivitiesPerPage,
+        this.filterBooleans.withNews,
+        this.filterBooleans.withDocs,
+        this.filterBooleans.withMemberShip,
+        this.filterBooleans.withSchoolLife,
+        this.filterBooleans.withSession
       ).then((data) => {
+        this.isLoading = false
+        this.isFirstLoad = false
+        this.isAllLoaded = true
         if (data.success) {
           this.error = false
-          this.nbNewActivities = data.nbUnreadGroupNews
-          data.news.forEach((news) => {
-            news.modificationDate = news.publicationDate
-            this.unreadActivities.push(news)
+          this.pageNumber += 1
+          this.nbNewActivities += data.nbNewActivities
+          this.lastDashboardAccessDate = data.lastDashboardAccessDate
+
+          data.activities.forEach((activity) => {
+            if (activity.type === activityConstants.TYPE_NEWS) {
+              activity.modificationDate = activity.publicationDate
+            }
+
+            if (this.isUnread(activity)) {
+              this.unreadActivities.push(activity)
+            } else {
+              this.readActivities.push(activity)
+            }
           })
-          // If unread news do not fill the activities, fetch the others activities
-          if (this.unreadActivities.length < this.paginationNumber) {
-            getDashboardActivity(
-              this.filter.selectedGroup ? this.filter.selectedGroup.groupId : 0,
-              this.displayAll && this.lastReadNewsDate !== undefined ? this.lastReadNewsDate.format(DATE_EXCHANGE_FORMAT) : dayjs().format(DATE_EXCHANGE_FORMAT),
-              this.paginationNumber,
-              this.filterBooleans.withNews,
-              this.filterBooleans.withDocs,
-              this.filterBooleans.withMemberShip,
-              this.filterBooleans.withSchoolLife,
-              this.filterBooleans.withSession
-            ).then((data) => {
-              this.isLoading = false
-              this.isFirstLoad = false
-              if (data.success) {
-                this.error = false
-                this.nbNewActivities += data.nbNewActivities
-                this.lastDashboardAccessDate = data.lastDashboardAccessDate
 
-                data.activities.forEach((activity) => {
-                  if (activity.type === activityConstants.TYPE_NEWS) {
-                    activity.modificationDate = activity.publicationDate
-                  }
-
-                  if (this.isUnread(activity)) {
-                    this.unreadActivities.push(activity)
-                  } else {
-                    this.readActivities.push(activity)
-                  }
-                })
-
-                if (this.isAuthorOfAllNewsActivities) {
-                  this.readActivities = [...this.unreadActivities, ...this.readActivities]
-                  this.unreadActivities = []
-                }
-              } else {
-                this.error = true
-              }
-            }, (err) => {
-              this.isLoading = false
-              this.error = true
-              console.error(err)
-            })
-          } else {
-            this.isLoading = false
+          if (this.isAuthorOfAllNewsActivities) {
+            this.readActivities = [...this.unreadActivities, ...this.readActivities]
+            this.unreadActivities = []
           }
         } else {
           this.error = true
@@ -288,6 +304,13 @@ export default {
         this.isLoading = false
         this.error = true
         console.error(err)
+      })
+      // Sort both activities array by modificationDate
+      this.readActivities.sort((a, b) => {
+        return dayjs(b.modificationDate) - dayjs(a.modificationDate)
+      })
+      this.unreadActivities.sort((a, b) => {
+        return dayjs(b.modificationDate) - dayjs(a.modificationDate)
       })
     },
     isUnread (activity) {

@@ -41,6 +41,14 @@
       :title="formattedDateLong"
     >
       {{ formattedDate }}
+      <button
+        v-if="!news.hasRead"
+        v-t="'show'"
+        class="show"
+        :aria-label="$t('show')"
+        :title="$t('show')"
+        @click="showDetails"
+      />
     </div>
 
     <button
@@ -328,6 +336,14 @@ button {
       }
     }
   }
+
+  .date {
+    margin: auto;
+  }
+  .show {
+    @extend %show-more-button;
+    margin: auto;
+  }
 }
 
 </style>
@@ -343,6 +359,7 @@ button {
   "deleteNewsWarning": "Supprimer cette information ?",
   "selectToConsult": "Consulter",
   "hasPublishedInfo": "a publié ",
-  "hasPublishedAnnounce": "a publié l'annonce "
+  "hasPublishedAnnounce": "a publié l'annonce ",
+  "show": "Voir"
 }
 </i18n>
