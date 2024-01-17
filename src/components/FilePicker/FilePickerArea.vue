@@ -3,6 +3,7 @@
     class="file-picker-area"
     @dragover="setActive"
   >
+    <!-- transform deposit zone in input? -->
     <div
       v-if="isActive"
       class="deposit-zone"
@@ -52,12 +53,6 @@ export default {
     }
   },
   computed: {
-    requiresTypeCheck: function () {
-      return this.accept !== '*/*'
-    },
-    acceptedTypes: function () {
-      return this.accept.split(',')
-    },
     isThereInternDocumentDrag () {
       return this.$store.state.misc.isThereDocumentDrag
     }

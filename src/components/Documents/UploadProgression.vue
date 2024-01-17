@@ -1,5 +1,8 @@
 <template>
-  <div class="container">
+  <div
+    class="container"
+    data-test="fileUploadProgressionPopover"
+  >
     <div class="header">
       <div class="text">
         {{ headerText }}

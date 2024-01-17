@@ -1,5 +1,8 @@
 <template>
-  <div class="upload-progression-item">
+  <div
+    class="upload-progression-item"
+    data-test="upload-progression-item"
+  >
     <div
       class="name"
       :title="document.name"
@@ -20,6 +23,7 @@
         class="icon-container"
       >
         <BaseIcon
+          :data-test="status==='uploaded' ? 'check-icon' : 'cross-icon'"
           :class="status==='uploaded'? 'uploaded' : 'error'"
           :name="status==='uploaded' ? 'check' : 'times'"
         />

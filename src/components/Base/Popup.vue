@@ -1,6 +1,7 @@
 <template>
   <div
     class="popup"
+    data-test="popup"
     :style="'background-color: ' + backgroundColor + ';'"
   >
     <div class="icon">
@@ -93,7 +94,7 @@ export default {
     this.waitBeforeClosure(this.timeout)
   },
   methods: {
-    // TODO maybe pause the timer if the popup is hovered (or clicked on mobile) + add progress bar to show timer status?
+    // TODO maybe pause the timer if the popup is hovered (or clicked on mobile)
     waitBeforeClosure (time) {
       setTimeout(() => {
         this.closePopup()

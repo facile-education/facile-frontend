@@ -98,8 +98,7 @@ function returnAddedFiles (e, store, allowMultiple = true, requiresTypeCheck = f
     let entry
     if (wasDropped) {
       const items = e.dataTransfer.items
-      for (let i = 0; i < items.length; ++i) {
-        const item = items[i]
+      for (const item of items) {
         // If is a folder
         if ((item.webkitGetAsEntry != null) && (entry = item.webkitGetAsEntry()) && entry.isDirectory) {
           addFilesFromDirectory(entry, entry.name).then(() => {

@@ -508,8 +508,11 @@ export default {
           } else {
             alertNoFile()
           }
+          input.parentNode.removeChild(input)
         })
       }
+
+      this.$refs.documents.appendChild(input) // To make it accessible for the tests
 
       // Click it
       input.click()
