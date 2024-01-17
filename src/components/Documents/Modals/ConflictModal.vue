@@ -20,7 +20,7 @@
         <p
           class="context-message"
         >
-          {{ entityNamesToDisplay + $t('ConflictModal.text') }}
+          {{ entityNamesToDisplay + $t(conflict.canReplaceOriginalDoc ? 'ConflictModal.text': 'ConflictModal.textWithoutReplaceOption') }}
         </p>
       </div>
     </template>
@@ -33,8 +33,8 @@
           :label="$t('ConflictModal.cancelButton')"
           @click="handleChoice(modes.ignore)"
         />
-        <!-- TODO check permission? >-->
         <WeprodeButton
+          v-if="conflict.canReplaceOriginalDoc"
           class="button"
           cls="replace"
           :label="$t('ConflictModal.replaceButton')"
@@ -52,8 +52,6 @@
 </template>
 
 <script>
-import store from '@store'
-
 import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
 import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 import NeroIcon from '@/components/Nero/NeroIcon'

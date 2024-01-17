@@ -325,7 +325,8 @@
     "cancelButton": "Annuler",
     "renameButton": "Conserver",
     "replaceButton": "Remplacer",
-    "text": " existe déjà à cet emplacement. Voulez-vous remplacer l'existant par une nouvelle version ou conserver les deux ? "
+    "text": " existe déjà à cet emplacement. Voulez-vous remplacer l'existant par une nouvelle version ou conserver les deux documents?",
+    "textWithoutReplaceOption": " existe déjà à cet emplacement. Voulez-vous continuer en conservant les deux documents?"
   },
   "VersionNotes": {
     "updateOf": "Mise à jour du "

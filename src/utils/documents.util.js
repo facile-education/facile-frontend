@@ -189,6 +189,7 @@ function handleError (data, doc, folderId, documentList, index) {
   } else if (data.error === 'DuplicateFileException') {
     store.dispatch('conflictModal/addConflict', {
       entitiesInConflict: [doc],
+      canReplaceOriginalDoc: data.hasUpdatePermission,
       lastAction: { fct: importDocuments, params: [folderId, documentList.slice(index)] }
     })
     return true
