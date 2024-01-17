@@ -256,7 +256,6 @@ h4 {
   "homePhoneNumberLabel": "Téléphone maison: ",
   "mobilePhoneNumberLabel": "Téléphone mobile: ",
   "officePhoneNumberLabel": "Téléphone bureau: ",
-  "smsPhoneNumberLabel": "Téléphone SMS: ",
   "activityReport": "Rapport d'activités",
   "reportChange": "Signaler un changement",
   "themeColor": "Couleur du thème",

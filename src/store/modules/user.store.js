@@ -98,7 +98,6 @@ export const mutations = {
     state.details.emailAddress = payload.mail
     state.details.mobilePhoneNumber = payload.mobilePhone
     state.details.officePhoneNumber = payload.proPhone
-    state.details.smsPhoneNumber = payload.SMSPhone
     state.details.isLocalUser = payload.isLocalUser
     state.details.reportFrequency = payload.reportFrequency
   },

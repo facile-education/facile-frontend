@@ -6,7 +6,7 @@ export default {
   getContactTree,
   getOrgMembers,
   searchDirectory,
-  getContactDetails,
+  getUserCard,
   getMyStudents,
   getMyRelatives
 }
@@ -15,7 +15,7 @@ export {
   getContactTree,
   getOrgMembers,
   searchDirectory,
-  getContactDetails,
+  getUserCard,
   getMyStudents,
   getMyRelatives
 }
@@ -49,14 +49,6 @@ function searchDirectory (query, roleId, schoolId) {
   }).then(response => response.data)
 }
 
-function getContactDetails (contactUserId) {
-  return axios.get(constants.JSON_WS_URL + CONTACT_PATH + CONTACT_CTX + 'get-contact-details', {
-    params: {
-      contactUserId
-    }
-  }).then(response => response.data)
-}
-
 function getMyStudents () {
   return axios.get(constants.JSON_WS_URL + CONTACT_PATH + CONTACT_CTX + 'get-my-students', {
     params: {
@@ -67,6 +59,14 @@ function getMyStudents () {
 function getMyRelatives () {
   return axios.get(constants.JSON_WS_URL + CONTACT_PATH + CONTACT_CTX + 'get-my-relatives', {
     params: {
+    }
+  }).then(response => response.data)
+}
+
+function getUserCard (contactUserId) {
+  return axios.get(constants.JSON_WS_URL + CONTACT_PATH + CONTACT_CTX + 'get-user-card', {
+    params: {
+      contactUserId
     }
   }).then(response => response.data)
 }
