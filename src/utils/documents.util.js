@@ -166,8 +166,8 @@ async function importDocuments (folderId, documentList) {
                 if (oldFolderNameIndex !== -1) {
                   parts[i] = data.firstCreatedFolder.name
                   documentList[j] = new File([fileToUpload], parts.join('/'))
-                  documentList[j].mode = conflicts.MODE_MERGE
                 }
+                documentList[j].mode = conflicts.MODE_MERGE
               }
             }
           } else {
