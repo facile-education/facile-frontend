@@ -220,14 +220,12 @@ export default {
     if (this.userId === undefined && this.$store.state.menu.menu === undefined && cookies.get('REMEMBER_ME') === 'true') {
       // Case of session timeout reached
       // userService.getUserInformations()
-      console.log('banner')
       this.$store.dispatch('user/initUserInformations').then(
         (data) => {
           this.$store.dispatch('menu/initUserMenu')
         })
     } else {
       if (this.userId === undefined) {
-        console.log('banner else')
         this.$store.dispatch('user/initUserInformations').catch(() => {
           // Catch promise exception to prevent cypress crash
         })
