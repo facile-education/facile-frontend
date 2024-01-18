@@ -132,10 +132,13 @@ function selectBetween (listSortedFiles, firstFile, secondFile) {
   }
 }
 
-async function importDocuments (folderId, documentList, mode) {
+async function importDocuments (folderId, documentList) {
   let stop = false
   for (let i = 0; i < documentList.length && !stop; i++) {
     const doc = documentList[i]
+    if (!doc.mode) {
+      doc.mode = conflicts.MODE_NORMAL
+    }
     if (!store.state.currentActions.cancelUpload) {
       store.dispatch('currentActions/setCurrentUploadFile', doc)
 
@@ -149,18 +152,21 @@ async function importDocuments (folderId, documentList, mode) {
           }
         })
       } else {
-        await fileService.uploadFile(folderId, doc, i === 0 ? mode : conflicts.MODE_MERGE).then((data) => {
+        // TODO remove unnecessary parameter
+        await fileService.uploadFile(folderId, doc, doc.mode).then((data) => {
           store.dispatch('currentActions/removeCurrentUploadFile')
           if (data.success) {
             store.dispatch('currentActions/addUploadedFile', doc)
             store.dispatch('documents/refreshCurrentFolder')
-            if (data.firstCreatedFolder && mode === conflicts.MODE_RENAME) { // If we previously have created a new folder, change the followings file paths to place it in th new folder
+            if (data.firstCreatedFolder) { // If we previously have created a new folder, change the followings file paths to place it in th new folder
               for (let j = i + 1; j < documentList.length; j++) {
                 const fileToUpload = documentList[j]
                 const parts = fileToUpload.name.split('/')
-                if (parts.length > 1) { // rename the root folder part of the name
-                  parts[0] = data.firstCreatedFolder.name
+                const oldFolderNameIndex = parts.indexOf(data.oldFolderName)
+                if (oldFolderNameIndex !== -1) {
+                  parts[i] = data.firstCreatedFolder.name
                   documentList[j] = new File([fileToUpload], parts.join('/'))
+                  documentList[j].mode = conflicts.MODE_MERGE
                 }
               }
             }
@@ -177,7 +183,7 @@ async function importDocuments (folderId, documentList, mode) {
 }
 
 function handleError (data, doc, folderId, documentList, index) {
-  if (data.error !== 'DuplicateFileException') { // Toggle conflict modal, not really an error yet
+  if (data.error !== 'DuplicateFileException' && data.error !== 'DuplicateFolderException') { // Toggle conflict modal, not really an error yet
     store.dispatch('currentActions/setUploadFileError', doc)
   }
   if (data.error === 'fileSizeException') {
@@ -189,6 +195,14 @@ function handleError (data, doc, folderId, documentList, index) {
   } else if (data.error === 'DuplicateFileException') {
     store.dispatch('conflictModal/addConflict', {
       entitiesInConflict: [doc],
+      canReplaceOriginalDoc: data.hasUpdatePermission,
+      lastAction: { fct: importDocuments, params: [folderId, documentList.slice(index)] }
+    })
+    return true
+  } else if (data.error === 'DuplicateFolderException') {
+    store.dispatch('conflictModal/addConflict', {
+      entitiesInConflict: [doc],
+      folderNameInConflict: data.folderName,
       canReplaceOriginalDoc: data.hasUpdatePermission,
       lastAction: { fct: importDocuments, params: [folderId, documentList.slice(index)] }
     })

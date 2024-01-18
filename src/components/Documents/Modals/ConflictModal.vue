@@ -77,33 +77,65 @@ export default {
     entitiesInConflict () {
       return this.conflict.entitiesInConflict
     },
+    isFolderInConflict () {
+      return this.conflict.folderNameInConflict !== undefined
+    },
     entityNamesToDisplay () {
-      let namesToDisplay = ''
-      let nbConflictRemaining = this.entitiesInConflict.length
-      for (let i = 0; i < this.entitiesInConflict.length && i < 3; i++) {
-        namesToDisplay = namesToDisplay + '"' + this.entitiesInConflict[i].name.split('/')[0] + '" '
-        nbConflictRemaining--
+      if (this.isFolderInConflict) {
+        return this.conflict.folderNameInConflict
+      } else {
+        return this.entitiesInConflict[0].name
       }
-      if (nbConflictRemaining === 1) {
-        namesToDisplay = namesToDisplay + '"' + this.entitiesInConflict[this.entitiesInConflict.length - 1].name.split('/')[0] + '" '
-      } else if (nbConflictRemaining > 2) {
-        // TODO: translation
-        namesToDisplay = namesToDisplay + 'et ' + nbConflictRemaining + ' autres'
-      }
-      return namesToDisplay
+
+      // let namesToDisplay = ''
+      // let nbConflictRemaining = this.entitiesInConflict.length
+      // for (let i = 0; i < this.entitiesInConflict.length && i < 3; i++) {
+      //   namesToDisplay = namesToDisplay + '"' + this.entitiesInConflict[i].name.split('/')[0] + '" '
+      //   nbConflictRemaining--
+      // }
+      // if (nbConflictRemaining === 1) {
+      //   namesToDisplay = namesToDisplay + '"' + this.entitiesInConflict[this.entitiesInConflict.length - 1].name.split('/')[0] + '" '
+      // } else if (nbConflictRemaining > 2) {
+      //   // TODO: translation
+      //   namesToDisplay = namesToDisplay + 'et ' + nbConflictRemaining + ' autres'
+      // }
+      // return namesToDisplay
     }
   },
   methods: {
     handleChoice (mode) {
+      let remainingDocumentListToUpload
+
       let parameters
       if (this.lastAction.params.storePath) { // Handle case that last action is a store action and not a 'normal' parametrized method
-        parameters = [this.lastAction.params.storePath, { ...this.lastAction.params.storeParams, mode }]
+        parameters = [this.lastAction.params.storePath, this.lastAction.params.storeParams]
+        remainingDocumentListToUpload = this.lastAction.params.storeParams[1]
       } else {
-        parameters = [...this.lastAction.params, mode]
+        parameters = [...this.lastAction.params]
+        remainingDocumentListToUpload = this.lastAction.params[1] // the document list
+      }
+
+      if (this.isFolderInConflict) {
+        this.applyChosenModeToAllFolderFilesInTheUploadList(remainingDocumentListToUpload, mode)
+      } else {
+        remainingDocumentListToUpload[0].mode = mode // upload mode for the entity in conflict only
       }
 
       this.lastAction.fct.apply(this, parameters)
       this.onClose()
+    },
+    applyChosenModeToAllFolderFilesInTheUploadList (remainingDocumentListToUpload, mode) {
+      remainingDocumentListToUpload.forEach(documentToUpload => {
+        const parts = documentToUpload.name.split('/')
+        if (parts.indexOf(this.conflict.folderNameInConflict) !== -1) {
+          if (mode === conflicts.MODE_IGNORE) {
+            documentToUpload.mode = conflicts.MODE_IGNORE
+          } else {
+            documentToUpload.mode = conflicts.MODE_MERGE
+          }
+        }
+      })
+      remainingDocumentListToUpload[0].mode = mode
     },
     onClose () {
       this.$store.dispatch('conflictModal/removeFirstConflict')
