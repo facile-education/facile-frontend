@@ -172,9 +172,8 @@ export const actions = {
           }
         },
         (err) => {
-          console.error(err)
-          reject(err)
           this.dispatch('currentActions/removeAction', { name: 'getUserInformations' })
+          reject(err)
         })
     })
   },

@@ -220,13 +220,17 @@ export default {
     if (this.userId === undefined && this.$store.state.menu.menu === undefined && cookies.get('REMEMBER_ME') === 'true') {
       // Case of session timeout reached
       // userService.getUserInformations()
+      console.log('banner')
       this.$store.dispatch('user/initUserInformations').then(
         (data) => {
           this.$store.dispatch('menu/initUserMenu')
         })
     } else {
       if (this.userId === undefined) {
-        this.$store.dispatch('user/initUserInformations')
+        console.log('banner else')
+        this.$store.dispatch('user/initUserInformations').catch(() => {
+          // Catch promise exception to prevent cypress crash
+        })
       } else if (!this.user.agreedTermsOfUse) {
         this.$router.push({ name: 'AgreeTermsOfUse' })
       } else if (this.user.passwordChange) {
