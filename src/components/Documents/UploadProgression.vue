@@ -185,6 +185,6 @@ export default {
   "cancel": "Annuler",
   "close": "Fermer",
   "uploadOn": "{done} chargement sur {total} | {done} chargement sur {total} | {done} chargements sur {total}",
-  "uploadfinished": "{nb} chargement terminé | {nb} chargements terminés"
+  "uploadfinished": "{nb} chargement terminé | {nb} chargement terminé | {nb} chargements terminés"
 }
 </i18n>
