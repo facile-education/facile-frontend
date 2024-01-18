@@ -354,7 +354,7 @@ export default {
       }
       const sourceSchoollifeSessionId = (this.selectedSession.sessionId === undefined) ? 0 : this.selectedSession.sessionId
       this.isLoading = true
-      schoolLifeService.registerFiring(this.event.sessionId, this.student, this.selectedSession.sessionId, sourceTeacherId, sourceSchoollifeSessionId, this.registrationDate.format('YYYY-MM-DD HH:mm')).then((data) => {
+      schoolLifeService.registerFiring(this.event.sessionId, this.student, this.selectedSession.sessionId, sourceTeacherId, sourceSchoollifeSessionId, this.registrationDate.format(DATE_EXCHANGE_FORMAT)).then((data) => {
         this.isLoading = false
         if (data.success) {
           this.$store.dispatch('notUsualSlots/refreshCalendar')
