@@ -169,6 +169,8 @@ async function importDocuments (folderId, documentList) {
                 }
                 documentList[j].mode = conflicts.MODE_MERGE
               }
+              // Upload store document list
+              store.dispatch('currentActions/updateImportFileList', documentList)
             }
           } else {
             stop = handleError(data, doc, folderId, documentList, i)

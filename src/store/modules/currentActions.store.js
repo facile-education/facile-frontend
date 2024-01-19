@@ -94,6 +94,9 @@ export const actions = {
     commit('setUploadedFiles', [])
     commit('setFilesInError', [])
   },
+  updateImportFileList ({ commit, state }, fileList) { // In case conflict rename file names in fileList
+    commit('setImportFileList', fileList)
+  },
   addImportFileList ({ commit }, fileList) {
     commit('setCancelUpload', false)
     commit('addFilesToImport', fileList)
