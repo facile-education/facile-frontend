@@ -196,7 +196,7 @@ export default {
       if (this.readActivities.length > 0) {
         return dayjs(this.readActivities[this.readActivities.length - 1].modificationDate, DATE_EXCHANGE_FORMAT)
       } else { // if no read news date, return the currentDate
-        return dayjs()
+        return undefined
       }
     },
     isAuthorOfAllNewsActivities () {
@@ -264,7 +264,7 @@ export default {
       // Then fetch other activities
       getDashboardActivity(
         this.filter.selectedGroup ? this.filter.selectedGroup.groupId : 0,
-        this.displayAll && this.lastReadNewsDate !== undefined ? this.lastReadNewsDate.format(DATE_EXCHANGE_FORMAT) : dayjs().format(DATE_EXCHANGE_FORMAT),
+        this.displayAll && this.lastReadNewsDate !== undefined ? this.lastReadNewsDate.format(DATE_EXCHANGE_FORMAT) : '',
         this.nbActivitiesPerPage,
         this.filterBooleans.withNews,
         this.filterBooleans.withDocs,
