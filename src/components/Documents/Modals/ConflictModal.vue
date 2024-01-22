@@ -20,7 +20,7 @@
         <p
           class="context-message"
         >
-          {{ '"' + entityNamesToDisplay + '"' + $t(conflict.canReplaceOriginalDoc ? 'ConflictModal.text': 'ConflictModal.textWithoutReplaceOption') }}
+          {{ '"' + entityNamesToDisplay + '"' + $t(canReplaceOriginalDoc ? 'ConflictModal.text': 'ConflictModal.textWithoutReplaceOption') }}
         </p>
       </div>
     </template>
@@ -34,7 +34,7 @@
           @click="handleChoice(modes.ignore)"
         />
         <WeprodeButton
-          v-if="conflict.canReplaceOriginalDoc"
+          v-if="canReplaceOriginalDoc"
           class="button"
           cls="replace"
           :label="$t('ConflictModal.replaceButton')"
@@ -74,8 +74,11 @@ export default {
     lastAction () {
       return this.conflict.lastAction
     },
-    entitiesInConflict () {
-      return this.conflict.entitiesInConflict
+    docInParametersThatCauseConflict () {
+      return this.conflict.docInParametersThatCauseConflict
+    },
+    canReplaceOriginalDoc () {
+      return this.docInParametersThatCauseConflict.canReplaceOriginalDoc
     },
     isFolderInConflict () {
       return this.conflict.folderNameInConflict !== undefined
@@ -84,41 +87,24 @@ export default {
       if (this.isFolderInConflict) {
         return this.conflict.folderNameInConflict
       } else {
-        return this.entitiesInConflict[0].name
+        return this.docInParametersThatCauseConflict.name
       }
-
-      // let namesToDisplay = ''
-      // let nbConflictRemaining = this.entitiesInConflict.length
-      // for (let i = 0; i < this.entitiesInConflict.length && i < 3; i++) {
-      //   namesToDisplay = namesToDisplay + '"' + this.entitiesInConflict[i].name.split('/')[0] + '" '
-      //   nbConflictRemaining--
-      // }
-      // if (nbConflictRemaining === 1) {
-      //   namesToDisplay = namesToDisplay + '"' + this.entitiesInConflict[this.entitiesInConflict.length - 1].name.split('/')[0] + '" '
-      // } else if (nbConflictRemaining > 2) {
-      //   // TODO: translation
-      //   namesToDisplay = namesToDisplay + 'et ' + nbConflictRemaining + ' autres'
-      // }
-      // return namesToDisplay
     }
   },
   methods: {
     handleChoice (mode) {
-      let remainingDocumentListToUpload
-
       let parameters
-      if (this.lastAction.params.storePath) { // Handle case that last action is a store action and not a 'normal' parametrized method
-        parameters = [this.lastAction.params.storePath, this.lastAction.params.storeParams]
-        remainingDocumentListToUpload = this.lastAction.params.storeParams[1]
-      } else {
-        parameters = [...this.lastAction.params]
-        remainingDocumentListToUpload = this.lastAction.params[1] // the document list
-      }
 
-      if (this.isFolderInConflict) {
-        this.applyChosenModeToAllFolderFilesInTheUploadList(remainingDocumentListToUpload, mode)
-      } else {
-        remainingDocumentListToUpload[0].mode = mode // upload mode for the entity in conflict only
+      if (this.conflict.isUploadConflict) {
+        parameters = [...this.lastAction.params]
+        const nextDocumentListToUpload = parameters[1]
+        if (this.conflict.folderNameInConflict) {
+          this.applyChosenModeToAllFolderFilesInTheUploadList(nextDocumentListToUpload, mode)
+        } else {
+          nextDocumentListToUpload[0].mode = mode // upload mode for the entity in conflict only
+        }
+      } else if (this.conflict.isClipboardConflict) {
+        parameters = [this.lastAction.params.storePath, { ...this.lastAction.params.storeParams, mode }] // Normally contains only one element
       }
 
       this.lastAction.fct.apply(this, parameters)

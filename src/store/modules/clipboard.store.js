@@ -26,11 +26,11 @@ export const actions = {
     if (entities.length > 0) {
       const folderIds = []
       const fileIds = []
-      for (let i = 0; i < entities.length; ++i) {
-        if (entities[i].type === 'Folder') {
-          folderIds.push(entities[i].id)
+      for (const entity of entities) {
+        if (entity.type === 'Folder') {
+          folderIds.push(entity.id)
         } else {
-          fileIds.push(entities[i].id)
+          fileIds.push(entity.id)
         }
       }
 
@@ -42,13 +42,16 @@ export const actions = {
           this.dispatch('popups/pushPopup', { message: successMessage, type: 'success' })
         } else {
           const entitiesInConflict = [...data.foldersInConflict, ...data.filesInConflict]
-          if (entitiesInConflict.length > 0) {
+          entitiesInConflict.forEach(conflict => {
+            const matchingEntityInParam = entities.find(entity => entity.id === conflict.id.toString())
             this.dispatch('conflictModal/addConflict', {
-              entitiesInConflict,
-              lastAction: { fct: this.dispatch, params: { storePath: 'clipboard/duplicate', storeParams: { targetFolder, entities: entitiesInConflict, successMessage } } }
+              isClipboardConflict: true,
+              docInParametersThatCauseConflict: { ...conflict, canReplaceOriginalDoc: conflict.hasUpdatePermission },
+              lastAction: { fct: this.dispatch, params: { storePath: 'clipboard/duplicate', storeParams: { targetFolder, entities: [matchingEntityInParam], successMessage } } } // Retry with the conflict entity in the chosen mode
             })
+          })
           // Print error messages if any
-          } else if (data.errorMessages !== undefined && data.errorMessages.length > 0) {
+          if (data.errorMessages !== undefined && data.errorMessages.length > 0) {
             alert('Erreurs:' + data.errorMessages)
           }
         }
@@ -62,8 +65,7 @@ export const actions = {
     if (entities.length !== 0) {
       const folderIds = []
       const fileIds = []
-      for (let i = 0; i < entities.length; ++i) {
-        const entity = entities[i]
+      for (const entity of entities) {
         if (entity.type === 'Folder') {
           folderIds.push(entity.id)
         } else {
@@ -80,13 +82,16 @@ export const actions = {
           this.dispatch('popups/pushPopup', { message: i18n.global.t('Popup.moved'), type: 'success' })
         } else {
           const entitiesInConflict = [...data.foldersInConflict, ...data.filesInConflict]
-          if (entitiesInConflict.length > 0) {
+          entitiesInConflict.forEach(conflict => {
+            const matchingEntityInParam = entities.find(entity => entity.id === conflict.id.toString())
             this.dispatch('conflictModal/addConflict', {
-              entitiesInConflict,
-              lastAction: { fct: this.dispatch, params: { storePath: 'clipboard/move', storeParams: { targetFolder, entities: entitiesInConflict } } }
+              isClipboardConflict: true,
+              docInParametersThatCauseConflict: { ...conflict, canReplaceOriginalDoc: conflict.hasUpdatePermission },
+              lastAction: { fct: this.dispatch, params: { storePath: 'clipboard/move', storeParams: { targetFolder, entities: [matchingEntityInParam] } } }
             })
-            // Print error messages if any
-          } else if (data.errorMessages !== undefined && data.errorMessages.length > 0) {
+          })
+          // Print error messages if any
+          if (data.errorMessages !== undefined && data.errorMessages.length > 0) {
             alert('Erreurs:' + data.errorMessages)
           }
         }

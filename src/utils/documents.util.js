@@ -195,17 +195,19 @@ function handleError (data, doc, folderId, documentList, index) {
       type: 'error'
     })
   } else if (data.error === 'DuplicateFileException') {
+    doc.canReplaceOriginalDoc = data.hasUpdatePermission
     store.dispatch('conflictModal/addConflict', {
-      entitiesInConflict: [doc],
-      canReplaceOriginalDoc: data.hasUpdatePermission,
+      isUploadConflict: true,
+      docInParametersThatCauseConflict: doc,
       lastAction: { fct: importDocuments, params: [folderId, documentList.slice(index)] }
     })
     return true
   } else if (data.error === 'DuplicateFolderException') {
+    doc.canReplaceOriginalDoc = data.hasUpdatePermission
     store.dispatch('conflictModal/addConflict', {
-      entitiesInConflict: [doc],
+      isUploadConflict: true,
+      docInParametersThatCauseConflict: doc,
       folderNameInConflict: data.folderName,
-      canReplaceOriginalDoc: data.hasUpdatePermission,
       lastAction: { fct: importDocuments, params: [folderId, documentList.slice(index)] }
     })
     return true
