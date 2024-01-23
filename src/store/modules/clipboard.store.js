@@ -23,6 +23,9 @@ export const mutations = {
 
 export const actions = {
   duplicate ({ commit, rootState }, { targetFolder, entities, mode = conflicts.MODE_NORMAL, successMessage = i18n.global.t('Popup.duplicated') }) {
+    if (mode === conflicts.MODE_IGNORE) {
+      return
+    }
     if (entities.length > 0) {
       const folderIds = []
       const fileIds = []
@@ -62,6 +65,9 @@ export const actions = {
     }
   },
   move ({ commit, rootState }, { targetFolder, entities, mode = conflicts.MODE_NORMAL }) {
+    if (mode === conflicts.MODE_IGNORE) {
+      return
+    }
     if (entities.length !== 0) {
       const folderIds = []
       const fileIds = []
