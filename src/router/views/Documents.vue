@@ -356,10 +356,15 @@ export default {
           this.isFilePickerModalDisplayed = true
           break
         case 'paste':
-          if (this.$store.state.clipboard.action === 'copy') {
-            this.$store.dispatch('clipboard/duplicate', { targetFolder: this.currentFolder, entities: this.$store.state.clipboard.documentList })
-          } else if (this.$store.state.clipboard.action === 'cut') {
-            this.$store.dispatch('clipboard/move', { targetFolder: this.currentFolder, entities: this.$store.state.clipboard.documentList })
+          if (this.currentFolder.permissions.ADD_OBJECT) {
+            if (this.$store.state.clipboard.action === 'copy') {
+              this.$store.dispatch('clipboard/duplicate', { targetFolder: this.currentFolder, entities: this.$store.state.clipboard.documentList })
+            } else if (this.$store.state.clipboard.action === 'cut') {
+              this.$store.dispatch('clipboard/move', { targetFolder: this.currentFolder, entities: this.$store.state.clipboard.documentList })
+            }
+          } else {
+            console.error('Missing ADD_OBJECT permission in current folder')
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('missingPastePermissions'), type: 'error' })
           }
           break
         case 'delete':
@@ -618,6 +623,7 @@ export default {
   "deletionWarning": "Ce document sera définitivement perdu",
   "moveInCurrentFolder": "Le dossier de destination est le même que celui de départ!",
   "serviceTitle": "Mes documents",
-  "rootCollaborativeUploadForbidden": "Il n'est pas autorisé d'ajouter un document ici"
+  "rootCollaborativeUploadForbidden": "Il n'est pas autorisé d'ajouter un document ici",
+  "missingPastePermissions": "Dépose non autorisée ici"
 }
 </i18n>
