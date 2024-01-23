@@ -18,24 +18,34 @@
         class="placeholder"
       />
 
-      <FilePickerFolder
-        v-for="subFolder in currentFolders"
-        :key="subFolder.id"
-        :folder="subFolder"
-        :is-selected="isFolderSelected(subFolder)"
-        :dark="getEntityIndex(subFolder.id) % 2 === 0"
-        @folder-clicked="clickOnFolder"
-        @folder-dbl-clicked="dblClickOnFolder"
-      />
-      <FilePickerFile
-        v-for="file in currentFiles"
-        :key="file.id"
-        :grayed="folderSelection"
-        :file="file"
-        :is-selected="isSelected(file)"
-        :dark="getEntityIndex(file.id) % 2 === 0"
-        @file-clicked="clickOnFile"
-      />
+      <ul>
+        <li
+          v-for="subFolder in currentFolders"
+          :key="subFolder.id"
+        >
+          <FilePickerFolder
+            data-test="document-item"
+            :folder="subFolder"
+            :is-selected="isFolderSelected(subFolder)"
+            :dark="getEntityIndex(subFolder.id) % 2 === 0"
+            @folder-clicked="clickOnFolder"
+            @folder-dbl-clicked="dblClickOnFolder"
+          />
+        </li>
+        <li
+          v-for="file in currentFiles"
+          :key="file.id"
+        >
+          <FilePickerFile
+            data-test="document-item"
+            :grayed="folderSelection"
+            :file="file"
+            :is-selected="isSelected(file)"
+            :dark="getEntityIndex(file.id) % 2 === 0"
+            @file-clicked="clickOnFile"
+          />
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -264,8 +274,8 @@ export default {
       }
     },
     isSelected (file) {
-      for (let i = 0; i < this.selectedFiles.length; ++i) {
-        if (file.id === this.selectedFiles[i].id) {
+      for (const selectedFile of this.selectedFiles) {
+        if (file.id === selectedFile.id) {
           return true
         }
       }
@@ -275,8 +285,8 @@ export default {
       return this.selectedFolder ? folder.id === this.selectedFolder.id : false
     },
     belongsToAppSelectedEntities (entity) {
-      for (let i = 0; i < this.appSelectedEntities.length; ++i) {
-        if (entity.id === this.appSelectedEntities[i].id) {
+      for (const selectedEntity of this.appSelectedEntities) {
+        if (entity.id === selectedEntity.id) {
           return true
         }
       }
@@ -327,6 +337,12 @@ export default {
     overflow-y: auto;
     position: relative;
     min-height: 100px;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
   }
 
   .upload {
