@@ -63,14 +63,13 @@ function getStudentsDoneStatus (homeworkId) {
 }
 
 function getWorkLoad (courseId, selectedStudents, startDate, endDate) {
-  return axios.get(constants.JSON_WS_URL + HOMEWORK_PATH + 'get-work-load', {
-    params: {
-      courseId,
-      students: JSON.stringify(selectedStudents),
-      startDate: startDate.format(DATE_EXCHANGE_FORMAT),
-      endDate: endDate.format(DATE_EXCHANGE_FORMAT)
-    }
-  }).then(response => response.data)
+  // return axios.get(constants.JSON_WS_URL + HOMEWORK_PATH + 'get-work-load', {
+  return axios.post(constants.JSON_WS_URL + HOMEWORK_PATH + 'get-work-load', WeprodeUtils.params({
+    courseId,
+    students: JSON.stringify(selectedStudents),
+    startDate: startDate.format(DATE_EXCHANGE_FORMAT),
+    endDate: endDate.format(DATE_EXCHANGE_FORMAT)
+  })).then(response => response.data)
 }
 
 function createHomework (courseId, sourceSessionId, homework, publicationDate, isDraft) {

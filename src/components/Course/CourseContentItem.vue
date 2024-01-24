@@ -8,7 +8,7 @@
     :class="{'placeholder': content.placeholder}"
     :focus-on-creation="focusOnCreation"
     :data-test="dataTest"
-    @update:model-value="update"
+    @update:content="update"
     @blur="blur"
   />
 
