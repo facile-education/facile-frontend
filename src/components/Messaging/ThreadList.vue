@@ -147,16 +147,6 @@ export default {
       return this.$store.state.messaging.unreadOnly
     }
   },
-  watch: {
-    isDisplayMessageFromRouting: {
-      immediate: true,
-      handler () {
-        if (this.isDisplayMessageFromRouting) {
-          this.$store.dispatch('messaging/getMessageThread', this.$route.params.messageId)
-        }
-      }
-    }
-  },
   mounted () {
     window.addEventListener('keydown', this.keyMonitor)
   },
