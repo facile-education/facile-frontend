@@ -314,6 +314,8 @@
     "documentCopied": "Éléments copiés",
     "documentCut": "Éléments coupés",
     "duplicated": "Élément(s) dupliqué(s)",
+    "duplicationFailure": "Erreur lors de la copie de ",
+    "moveFailure": "Erreur lors du déplacement de ",
     "error": "Une erreur est survenue",
     "moved": "Élément(s) déplacé(s)",
     "success": "Succès"

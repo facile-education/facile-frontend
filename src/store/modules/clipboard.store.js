@@ -53,6 +53,10 @@ export const actions = {
               lastAction: { fct: this.dispatch, params: { storePath: 'clipboard/duplicate', storeParams: { targetFolder, entities: [matchingEntityInParam], successMessage } } } // Retry with the conflict entity in the chosen mode
             })
           })
+          data.failedEntitiesList.forEach(failedEntity => {
+            const sourceFailedEntity = entities.find(entity => entity.id === failedEntity.id.toString())
+            this.dispatch('popups/pushPopup', { message: i18n.global.t('Popup.duplicationFailure') + sourceFailedEntity.name, type: 'error' })
+          })
           // Print error messages if any
           if (data.errorMessages !== undefined && data.errorMessages.length > 0) {
             alert('Erreurs:' + data.errorMessages)
@@ -95,6 +99,11 @@ export const actions = {
               docInParametersThatCauseConflict: { ...conflict, canReplaceOriginalDoc: conflict.hasUpdatePermission },
               lastAction: { fct: this.dispatch, params: { storePath: 'clipboard/move', storeParams: { targetFolder, entities: [matchingEntityInParam] } } }
             })
+          })
+          data.failedEntitiesList.forEach(failedEntity => {
+            const sourceFailedEntity = entities.find(entity => entity.id === failedEntity.id.toString())
+            console.error(failedEntity.error)
+            this.dispatch('popups/pushPopup', { message: i18n.global.t('Popup.moveFailure') + sourceFailedEntity.name, type: 'error' })
           })
           // Print error messages if any
           if (data.errorMessages !== undefined && data.errorMessages.length > 0) {
