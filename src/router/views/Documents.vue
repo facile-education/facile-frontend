@@ -239,7 +239,7 @@ export default {
     window.addEventListener('resize', this.getWidth)
     window.addEventListener('keydown', this.keyMonitor)
   },
-  beforeUnmount () {
+  unmounted () {
     window.removeEventListener('resize', this.getWidth)
     window.removeEventListener('keydown', this.keyMonitor)
   },
