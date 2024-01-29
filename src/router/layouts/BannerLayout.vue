@@ -64,7 +64,7 @@
     </teleport>
 
     <teleport
-      v-if="isHelpModalDisplayed || isAccessModalDisplayed || isConflictModalDisplayed || isWarningModalDisplayed"
+      v-if="isHelpModalDisplayed || isAccessModalDisplayed || isConflictModalDisplayed || isWarningModalDisplayed || userToDisplay"
       to="body"
     >
       <HelpModal
@@ -81,6 +81,10 @@
       />
       <WarningModal
         v-if="isWarningModalDisplayed"
+        win-width="500px"
+      />
+      <UserCardModal
+        v-if="userToDisplay"
         win-width="500px"
       />
     </teleport>
@@ -108,6 +112,7 @@ import { useCookies } from 'vue3-cookies'
 
 import constants, { LOCAL_STORAGE_DATE_FORMAT } from '@/api/constants'
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
+import UserCardModal from '@/components/UserCard/UserCardModal.vue'
 import { mobilePopupDurationTime, popupDurationTime } from '@/constants/appConstants'
 
 const AccessModal = defineAsyncComponent(() => import('@components/Accesses/AccessVisualization/AccessModal'))
@@ -138,7 +143,8 @@ export default {
     LayoutMenu,
     UploadProgression,
     WarningModal,
-    WeprodeSpinner
+    WeprodeSpinner,
+    UserCardModal
   },
   inject: ['mq'],
   props: {
@@ -177,6 +183,9 @@ export default {
     },
     isWarningModalDisplayed () {
       return this.$store.getters['warningModal/isWarningModalDisplayed']
+    },
+    userToDisplay () {
+      return this.$store.state.userCard.userToDisplay
     },
     menuExpanded () {
       return this.$store.state.menu.menuExpanded

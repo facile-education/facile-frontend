@@ -4,18 +4,25 @@
       <span>
         {{ getFullName(user) }}
       </span>
-      <img
-        v-if="!isSelected"
-        src="@/assets/icons/add.svg"
-        :alt="$t('add')"
-        :title="$t('add')"
-      >
-      <img
-        v-else
-        src="@/assets/icons/remove.svg"
-        :alt="$t('remove')"
-        :title="$t('remove')"
-      >
+      <div class="optionsContainer">
+        <button
+          @click="openUserCardModal"
+        >
+          UserCard
+        </button>
+        <img
+          v-if="!isSelected"
+          src="@/assets/icons/add.svg"
+          :alt="$t('add')"
+          :title="$t('add')"
+        >
+        <img
+          v-else
+          src="@/assets/icons/remove.svg"
+          :alt="$t('remove')"
+          :title="$t('remove')"
+        >
+      </div>
     </button>
   </div>
 </template>
@@ -65,6 +72,9 @@ export default {
       this.timeout = setTimeout(() => {
         this.clickDelayPassed = true
       }, 300)
+    },
+    openUserCardModal () {
+      this.$store.dispatch('userCard/initUserCard', this.user)
     }
   }
 }
@@ -90,6 +100,11 @@ button {
 
   &:hover {
     background-color: $color-hover-bg;
+  }
+
+  .optionsContainer{
+    display: flex;
+    align-items: center;
   }
 
   span {
