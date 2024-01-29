@@ -316,6 +316,7 @@
     "duplicated": "Élément(s) dupliqué(s)",
     "duplicationFailure": "Erreur lors de la copie de ",
     "moveFailure": "Erreur lors du déplacement de ",
+    "unauthorizedCut": "Vous n'avez pas la permission de déplacer ",
     "error": "Une erreur est survenue",
     "moved": "Élément(s) déplacé(s)",
     "success": "Succès"

@@ -129,6 +129,12 @@ export const actions = {
   },
   cut ({ commit, rootState }) {
     if (rootState.documents.selectedEntities.length !== 0) {
+      const unAuthorizedCutEntity = rootState.documents.selectedEntities.find(entity => !entity.permissions.DELETE)
+      if (unAuthorizedCutEntity) {
+        this.dispatch('popups/pushPopup', { message: i18n.global.t('Popup.unauthorizedCut') + unAuthorizedCutEntity.name, type: 'error' })
+        return
+      }
+
       commit('updateAction', 'cut')
       commit('updateSourceFolderId', rootState.documents.currentFolderId)
       commit('updateDocumentList', rootState.documents.selectedEntities)
