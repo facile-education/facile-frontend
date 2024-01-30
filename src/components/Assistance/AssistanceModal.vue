@@ -22,7 +22,7 @@
           v-else
           class="italic"
         >
-          {{ (modalType==='Assistance' ? $t('nonAdminAssistanceMessage') : $t('nonAdminSuggestionMessage')) }}
+          {{ topLabel }}
         </p>
         <div class="service">
           <p
@@ -160,6 +160,13 @@ export default {
       return '<p>Service affecté : ' + this.selected.applicationName + '</p>' +
              '<p>Description : ' + this.form.issueDescription + '</p>' // + // issue description in html format
       //        'Type de navigateur : ' + platform.description
+    },
+    topLabel () {
+      if (this.modalType === 'Assistance') {
+        return this.$store.state.user.isLocalAdmin ? this.$t('adminAssistanceMessage') : this.$t('nonAdminAssistanceMessage')
+      } else {
+        return this.$store.state.user.isLocalAdmin ? this.$t('adminSuggestionMessage') : this.$t('nonAdminSuggestionMessage')
+      }
     }
   },
   created () {
@@ -242,14 +249,15 @@ h5 {
 {
   "applyContextText": "Penser à expliquer le contexte de votre erreur, si besoin nous communiquer une copie d'écran et tout autre élément que vous jugez utile pour nous permettre de reproduire votre problème.",
   "addFilesButtonLabel": "Ajouter un fichier (facultatif)",
-  "adminMessage": "Votre demande de support sera traitée par les équipes de Weprode, vous recevrez une réponse dans votre messagerie",
   "submitButtonLabel": "Envoyer",
   "issueDescription": "Description de l'incident",
   "suggestionDescription": "Description de la suggestion",
   "assistanceHeaderLabel": "Signaler un problème",
   "suggestionHeaderLabel": "Proposer une amélioration",
-  "nonAdminAssistanceMessage": "Votre demande de support sera transmise à l'administrateur",
-  "nonAdminSuggestionMessage": "Votre suggestion sera transmise à l'administrateur",
+  "nonAdminAssistanceMessage": "Votre demande de support sera transmise à l'administrateur de votre établissement.",
+  "nonAdminSuggestionMessage": "Votre suggestion sera transmise à l'administrateur de votre établissement.",
+  "adminAssistanceMessage": "Votre demande de support sera traitée par les équipes de Weprode, vous recevrez une réponse dans votre messagerie.",
+  "adminSuggestionMessage": "Votre suggestion sera transmise aux équipes de Weprode, vous recevrez une réponse dans votre messagerie.",
   "serviceLabel": "Service affecté",
   "serviceConcernLabel": "Service concerné",
   "success": "Demande envoyée"
