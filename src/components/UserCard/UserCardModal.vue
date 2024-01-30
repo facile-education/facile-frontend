@@ -19,10 +19,9 @@ import UserCard from '@/components/UserCard/UserCard.vue'
 export default {
   name: 'UserCardModal',
   components: { WeprodeWindow, UserCard },
-  emits: ['close'],
   methods: {
     onClose () {
-      this.$emit('close')
+      this.$store.dispatch('userCard/initUserCard', undefined)
     }
   }
 }

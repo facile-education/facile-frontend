@@ -1,6 +1,6 @@
 <template>
   <div class="schedule-item">
-    <div class="hours">
+    <div class="hours" v-if="displayHours">
       <div class="hour">
         {{ formatHour(session.startDate) }}
       </div>
@@ -55,6 +55,10 @@ export default {
     session: {
       type: Object,
       required: true
+    },
+    displayHours: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {

@@ -6,7 +6,7 @@
       </span>
       <div class="optionsContainer">
         <button
-          @click="openUserCardModal"
+          @click.stop="openUserCardModal"
         >
           UserCard
         </button>
