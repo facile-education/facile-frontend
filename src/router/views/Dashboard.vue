@@ -83,8 +83,8 @@
 import { defineAsyncComponent } from 'vue'
 
 import { checkDashboardParameter } from '@/api/dashboard.service'
-import { setEventRead } from '@/api/dashboard/agenda.service'
-import { setNewsRead } from '@/api/dashboard/news.service'
+import { getEventDetails, setEventRead } from '@/api/dashboard/agenda.service'
+import { getNewsDetails, setNewsRead } from '@/api/dashboard/news.service'
 import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
 const AnnouncementsWidget = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/AnnouncementsWidget.vue'))
 const DiaryWidget = defineAsyncComponent(() => import('@components/Dashboard/DiaryWidget/DiaryWidget.vue'))
@@ -169,7 +169,14 @@ export default {
                       }
                     })
                     this.isNewsDisplayed = true
-                    this.announcement.newsId = dashboardId
+                    // Fetch the whole announce to get its title
+                    getNewsDetails(dashboardId).then((data) => {
+                      if (data.success) {
+                        this.announcement = data.news
+                      } else {
+                        console.error('Error while getting news details')
+                      }
+                    })
                   } else if (data.isEvent) {
                     setEventRead(dashboardId, true).then((data) => {
                       if (data.success) {
@@ -177,7 +184,14 @@ export default {
                       }
                     })
                     this.isEventDisplayed = true
-                    this.event.eventId = dashboardId
+                    // Fetch the whole event to get its title
+                    getEventDetails(dashboardId).then((data) => {
+                      if (data.success) {
+                        this.event = data.event
+                      } else {
+                        console.error('Error while getting news details')
+                      }
+                    })
                   }
                 }
               }
