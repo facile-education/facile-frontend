@@ -212,11 +212,14 @@ export default {
 button {
   width: 100%;
   cursor: pointer;
-  background-color: transparent;
   border-radius: 0;
   padding: 0;
   margin: 0;
   border: none;
+
+  &:not(.active) {
+    background-color: transparent;
+  }
 }
 
 .context-menu-item {
@@ -229,7 +232,6 @@ button {
   .title {
     padding: 0 10px;
     font-size: 0.9375em;
-    // font-weight: 600;
     letter-spacing: 0;
     line-height: 23px;
     overflow: hidden;

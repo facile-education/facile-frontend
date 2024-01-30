@@ -80,14 +80,12 @@ export default {
       return this.$store.state.documents.currentDisplay
     },
     computeClass () {
-      if (this.isDragged) {
-        return 'theme-text-color'
+      if (this.isDraggable && this.isDragged) {
+        return 'dragged theme-text-color'
+      } else if (this.isSelected) {
+        return 'selected'
       } else {
-        if (this.isSelected) {
-          return 'selected'
-        } else {
-          return 'document'
-        }
+        return 'document'
       }
     },
     selectedEntities () {
@@ -121,10 +119,7 @@ export default {
     onDragEnd () {
       this.$store.dispatch('misc/removeDraggedEntities')
     },
-    handleChosenOption (option) {
-      // TODO handle quickOptions
-      // console.log('quickOptionClicked!', option)
-    },
+    handleChosenOption (option) {},
     triggerAction () {
       this.$emit('triggerAction')
     },

@@ -1,4 +1,4 @@
-// TODO LocalStorage to persist on reload ?
+// Use LocalStorage to persist on reload ?
 import clipboardService from '@/api/documents/clipboard.service'
 import { conflicts } from '@/constants/documentsConstants'
 import i18n from '@/i18n'
@@ -69,6 +69,12 @@ export const actions = {
     }
   },
   move ({ commit, rootState }, { targetFolder, entities, mode = conflicts.MODE_NORMAL }) {
+    const unAuthorizedMoveEntity = entities.find(entity => !entity.permissions.DELETE)
+    if (unAuthorizedMoveEntity) {
+      this.dispatch('popups/pushPopup', { message: i18n.global.t('Popup.unauthorizedCut') + unAuthorizedMoveEntity.name, type: 'error' })
+      return
+    }
+
     if (mode === conflicts.MODE_IGNORE) {
       return
     }
