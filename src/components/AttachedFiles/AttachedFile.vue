@@ -2,6 +2,7 @@
   <div
     :title="$t('viewFile', {target: attachedFile.name})"
     class="attached-file theme-hover-border-color"
+    data-test="attached-file"
     :class="{'phone': mq.phone || mq.tablet, 'has-remove-button': !readOnly}"
     tabindex="0"
     @click="viewAttachedFile"
