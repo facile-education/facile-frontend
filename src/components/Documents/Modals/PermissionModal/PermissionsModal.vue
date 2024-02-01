@@ -4,6 +4,7 @@
     :modal="true"
     :draggable="true"
     :width="700"
+    data-test="permissions-modal"
     @close="onClose"
     @keydown.exact.enter.stop=""
     @keydown.exact.backspace.stop=""
@@ -123,8 +124,8 @@ export default {
   },
   methods: {
     updateMatrix (action, role) {
-      for (let i = 0; i < this.permissionMatrix.length; i++) {
-        const row = this.permissionMatrix[i]
+      for (const element of this.permissionMatrix) {
+        const row = element
         if (row.roleId === role.roleId) {
           row[action.actionName] = action.value
         }

@@ -263,8 +263,18 @@ function deleteEntities (selectedEntities) {
     if (data.success) {
       if (data.failedEntitiesList.length !== 0) {
         console.error('Unable to delete entities from trash:', data.failedEntitiesList)
-        store.dispatch('error/setErrorType', 'deleteEntities')
-        store.dispatch('error/setListFilesConcerns', data.failedEntitiesList)
+        data.failedEntitiesList.forEach(failedEntity => {
+          if (failedEntity.subEntityInFailure) {
+            if (failedEntity.subEntityInFailure.id === -1) {
+              store.dispatch('popups/pushPopup', { message: i18n.global.t('Documents.unKnownSubEntityFailedDelete'), type: 'error' })
+            } else {
+              store.dispatch('popups/pushPopup', { message: i18n.global.t('Documents.subEntityFailedDelete', { entityName: failedEntity.subEntityInFailure.name }), type: 'error' })
+            }
+          } else {
+            const failedEntity = selectedEntities.find(entity => entity.id === failedEntity.id)
+            store.dispatch('popups/pushPopup', { message: i18n.global.t('Documents.failedDelete', { entityName: failedEntity.name }), type: 'error' })
+          }
+        })
       } else {
         this.$store.dispatch('popups/pushPopup', { message: i18n.global.t('Documents.documentDeleted'), type: 'success' })
       }
