@@ -49,9 +49,8 @@
 <script>
 import { defineAsyncComponent } from 'vue'
 
+import UserCardContact from '@/components/UserCard/Responsability/UserCardContact.vue'
 import messagingUtils from '@/utils/messaging.utils'
-
-import UserCardContact from '../Contact/UserCardContact.vue'
 
 const CreateMessageModal = defineAsyncComponent(() => import('@components/Messaging/CreateMessageModal'))
 
