@@ -28,6 +28,7 @@
     <template #footer>
       <WeprodeButton
         v-t="'schedule'"
+        data-test="futurePublication"
         @click="chooseDate"
       />
     </template>
