@@ -124,11 +124,9 @@ export default {
   },
   methods: {
     updateMatrix (action, role) {
-      for (const element of this.permissionMatrix) {
-        const row = element
-        if (row.roleId === role.roleId) {
-          row[action.actionName] = action.value
-        }
+      const concernRow = this.permissionMatrix.find(row => row.roleId === role.roleId)
+      if (concernRow) {
+        concernRow[action.actionName] = action.value
       }
     },
     updateRecursive (value) {

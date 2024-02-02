@@ -80,12 +80,14 @@ export default {
   },
   emits: ['updateMatrix'],
   methods: {
-    updateMatrix (event, action) {
-      this.$emit('updateMatrix', { actionName: action, value: event })
-      if (action === 'VIEW' && !event) { // Unselect other permissions if the view permission is set to "false"
+    updateMatrix (value, action) {
+      this.$emit('updateMatrix', { actionName: action, value })
+      if (action === 'VIEW' && !value) { // Unselect other permissions if the view permission is set to "false"
         this.$emit('updateMatrix', { actionName: 'DELETE', value: false })
         this.$emit('updateMatrix', { actionName: 'PERMISSIONS', value: false })
         this.type === 'Folder' ? this.$emit('updateMatrix', { actionName: 'ADD_OBJECT', value: false }) : this.$emit('updateMatrix', { actionName: 'UPDATE', value: false })
+      } else if (value) { // Other permissions require the VIEW permission to be active
+        this.$emit('updateMatrix', { actionName: 'VIEW', value: true })
       }
     }
   }
