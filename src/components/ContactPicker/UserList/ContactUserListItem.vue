@@ -7,6 +7,7 @@
       <div class="optionsContainer">
         <button
           @click.stop="openUserCardModal"
+          data-test="openUserCard"
         >
           UserCard
         </button>

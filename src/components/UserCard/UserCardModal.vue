@@ -26,11 +26,3 @@ export default {
   }
 }
 </script>
-
-  <style lang="scss">
-  .userCardModal {
-    .window-body {
-      overflow: hidden !important;
-    }
-  }
-  </style>

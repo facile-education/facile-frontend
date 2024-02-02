@@ -6,38 +6,45 @@
     />
     <UserCardMain
       v-if="userDetails"
-      :userDetails="userDetails"
+      :user-details="userDetails"
     />
-    <UserCardResponsability
+    <UserCardResponsibility
       v-if="userDetails && (userDetails.isParent || userDetails.isStudent)"
-      :userDetails="userDetails"
+      :user-details="userDetails"
     />
     <UserCardClasses
-      v-if="userDetails && (userDetails.isTeacher || userDetails.roles === 'Psychologue' || userDetails.roles === 'Conseiller•ère social•ale')"
-      :userDetails="userDetails"
+      v-if="userDetails && (userDetails.isTeacher || (userDetails.isPersonal && userDetails.classes))"
+      :user-details="userDetails"
     />
     <UserCardCurrentSchedule
       v-if="userDetails && (userDetails.isTeacher || userDetails.isStudent)"
-      :userDetails="userDetails"
+      :user-details="userDetails"
+    />
+    <div
+      v-if="error === true"
+      v-t="'errorPlaceholder'"
+      class="placeholder"
     />
   </div>
 </template>
 
 <script>
+import { defineAsyncComponent } from 'vue'
+
 import { getUserCard } from '@/api/contact.service'
-import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
-import UserCardClasses from '@/components/UserCard/Classes/UserCardClasses.vue'
-import UserCardMain from '@/components/UserCard/Main/UserCardMain.vue'
-import UserCardResponsability from '@/components/UserCard/Responsability/UserCardResponsability.vue'
-import UserCardCurrentSchedule from '@/components/UserCard/Schedule/UserCardCurrentSchedule.vue'
+const WeprodeSpinner = defineAsyncComponent(() => import('@/components/Base/Weprode/WeprodeSpinner.vue'))
+const UserCardClasses = defineAsyncComponent(() => import('@/components/UserCard/Classes/UserCardClasses.vue'))
+const UserCardMain = defineAsyncComponent(() => import('@/components/UserCard/Main/UserCardMain.vue'))
+const UserCardResponsibility = defineAsyncComponent(() => import('@/components/UserCard/Responsibility/UserCardResponsibility.vue'))
+const UserCardCurrentSchedule = defineAsyncComponent(() => import('@/components/UserCard/Schedule/UserCardCurrentSchedule.vue'))
 
 export default {
   name: 'UserCard',
-  components: { UserCardMain, WeprodeSpinner, UserCardResponsability, UserCardCurrentSchedule, UserCardClasses },
+  components: { UserCardMain, WeprodeSpinner, UserCardResponsibility, UserCardCurrentSchedule, UserCardClasses },
   data () {
     return {
       userDetails: undefined,
-      isLoading: true,
+      isLoading: false,
       error: false
     }
   },
@@ -49,7 +56,6 @@ export default {
   watch: {
     userToDisplay: {
       handler () {
-        this.isLoading = true
         this.fetchUserCardData()
       }
     }
@@ -59,11 +65,13 @@ export default {
   },
   methods: {
     fetchUserCardData () {
+      this.isLoading = true
       getUserCard(this.userToDisplay.userId).then((data) => {
         this.isLoading = false
         if (data.success) {
           this.error = false
           this.userDetails = data.contactDetails
+          this.userDetails = Object.assign({}, this.userDetails, { userId: this.userToDisplay.userId })
           console.log(this.userDetails)
         } else {
           this.error = true
@@ -83,7 +91,11 @@ export default {
 .container {
   position: relative;
   overflow: visible;
-  height: 100%;
-  overflow-y: auto;
 }
 </style>
+
+<i18n locale="fr">
+  {
+    "errorPlaceholder": "Oups, une erreur est survenue...",
+  }
+  </i18n>

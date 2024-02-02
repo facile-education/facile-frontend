@@ -1,5 +1,8 @@
 <template>
-  <div class="containerUserCardSchedule">
+  <section
+    class="container-userCard-schedule"
+    data-test="UserCardSchedule"
+  >
     <h2>
       <img
         src="@/assets/icons/calendar.svg"
@@ -11,19 +14,20 @@
     <ScheduleItem
       v-if="userDetails.currentCourse"
       :session="userDetails.currentCourse"
-      :displayHours="false"
+      :display-hours="false"
     />
     <p
       v-else
       class="placeholder"
     >
-    {{ $t('noClass') }}
+      {{ $t('noClass') }}
     </p>
-  </div>
+  </section>
 </template>
 
 <script>
-import ScheduleItem from '../../Dashboard/ScheduleWidget/ScheduleItem.vue'
+import ScheduleItem from '@components/Dashboard/ScheduleWidget/ScheduleItem.vue'
+import dayjs from 'dayjs'
 
 export default {
   name: 'UserCardCurrentSchedule',
@@ -36,19 +40,17 @@ export default {
   },
   computed: {
     formatedStartHour () {
-      const dateObject = new Date(this.userDetails.currentCourse.startDate)
-      return dateObject.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
+      return dayjs(this.userDetails.currentCourse.startDate).format('HH:mm')
     },
     formatedEndHour () {
-      const dateObject = new Date(this.userDetails.currentCourse.endDate)
-      return dateObject.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
+      return dayjs(this.userDetails.currentCourse.endDate).format('HH:mm')
     }
   }
 }
 </script>
 <style lang="scss" scoped>
 @import "@design";
-.containerUserCardSchedule {
+.container-userCard-schedule {
   h2 {
     display: flex;
     align-items: center;

@@ -1,26 +1,28 @@
 <template>
-  <div
-    class="containerUserCardMain"
+  <section
+    class="container-userCard-main"
     :class="{'phone': mq.phone}"
+    data-test="UserCardMain"
   >
     <UserPicture
-      class="UserPicture"
+      class="user-picture"
       :user="userDetails"
       size="90px"
     />
-    <div class="userInfos">
-      <div class="globalInfos">
+    <div class="user-infos">
+      <div class="global-infos">
         <div
-          class="name_buttonContact"
+          class="container-name_button-contact"
           :class="{'phone': mq.phone}"
         >
           <h2>{{ `${userDetails.firstName} ${userDetails.lastName}` }}</h2>
           <WeprodeButton
             class="contact-button"
+            data-test="SendMessage"
             :class="{'phone': mq.phone}"
             :cls="''"
             :title="$t('contact')"
-            @click="createNewMessage([{ type: 1, text: userDetails.lastName + ' ' + userDetails.firstName, userId: userToDisplay.userId }])"
+            @click="createNewMessage([{ type: 1, text: userDetails.lastName + ' ' + userDetails.firstName, userId: userDetails.userId }])"
           >
             <img
               class="contact-icon"
@@ -34,12 +36,13 @@
         <p v-if="!userDetails.isParent">
           {{ school }}
         </p>
-        <p class="email">{{ userDetails.email }}</p>
+        <p class="email">
+          {{ userDetails.email }}
+        </p>
       </div>
     </div>
-  </div>
+  </section>
   <teleport to="body">
-    <!-- Create message modal -->
     <CreateMessageModal
       v-if="isCreateMessageModalDisplayed && isMessagingModalDisplayed"
       @close="closeModal"
@@ -108,70 +111,71 @@ export default {
 <style lang="scss" scoped>
 
 @import "@design";
-  .containerUserCardMain{
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 16px;
-    margin-bottom: 32px;
-    &.phone{
-      flex-direction: column;
-    }
-    .UserPicture{
-        width: 90px;
-        height: 90px;
-        border-radius: 50%;
-        overflow: hidden;
-    }
-    .userInfos{
-        flex: 1;
-        .globalInfos{
-          .name_buttonContact{
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            &.phone{
-              flex-direction: column;
-              margin-bottom: 16px;
-            }
-          }
-            h2{
-                @extend %font-heading-s;
-                margin: 0;
-                margin-bottom: 4px
-            }
-            .contact-button {
-              margin-left: 1rem;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              border: 1px solid var(--Neutral-60, #9E9E9E);
-              padding: 6px 8px;
-              &.phone{
-                margin-left: 0;
-                margin-top: 10px;
-              }
-              span {
-                  margin: 0 8px;
-                  @extend %font-regular-m
-              }
-              .contact-icon {
-                  width: 15px;
-                  height: 15px;
-              }
-            }
-            p{
-                @extend %font-medium-m;
-                margin: 0;
-            }
-            .email{
-              margin: 0;
-              margin-top: 10px;
-              @extend %font-regular-m
-            }
-        }
-    }
+.container-userCard-main{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 32px;
+  &.phone{
+    flex-direction: column;
   }
+}
+.user-picture{
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.user-infos{
+  flex: 1;
+}
+
+.global-infos{
+  h2{
+    @extend %font-heading-s;
+    margin: 0;
+    margin-bottom: 4px
+  }
+  p{
+  @extend %font-medium-m;
+  margin: 0;
+  }
+}
+.container-name_button-contact{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  &.phone{
+    flex-direction: column;
+    margin-bottom: 16px;
+  }
+  .contact-button {
+  margin-left: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid $neutral-60;
+  padding: 6px 8px;
+  &.phone{
+    margin-left: 0;
+    margin-top: 10px;
+  }
+  span {
+    margin: 0 8px;
+    @extend %font-regular-m
+  }
+  .contact-icon {
+    width: 15px;
+    height: 15px;
+  }
+}
+}
+.email{
+  margin: 0;
+  margin-top: 10px;
+  @extend %font-regular-m
+}
 </style>
 
 <i18n locale="fr">
