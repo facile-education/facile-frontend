@@ -1,12 +1,13 @@
 <template>
-  <div
-    class="containerUserCardResponsability"
-    data-test="UserCardResponsability">
+  <section
+    class="container-userCard-responsibility"
+    data-test="UserCardResponsability"
+  >
     <h2 v-if="userDetails.isStudent">
-      <img
-        src="@/assets/icons/legalGuardians.svg"
-        alt="legalGuardians icon"
-      >
+      <CustomIcon
+        class="legalGuardians-icon"
+        :icon-name="'icon-collab-workspace'"
+      />
       <span>{{ $t('relativeTitle') }} :</span>
     </h2>
     <div class="content">
@@ -14,18 +15,21 @@
         <div
           v-for="parent in userDetails.parents"
           :key="parent.userId"
-          class="legualGardiansContainer"
+          class="legalGuardians-container"
         >
           <UserCardContact
-            :userInfos.="parent"
+            :user-infos="parent"
             @contact="createNewMessage([{ type: 1, text: parent.lastName + ' ' + parent.firstName, userId: parent.userId }])"
           />
         </div>
       </template>
       <template v-if="userDetails.children && userDetails.children.length > 0">
-        <p class="childrenContainer">
-          {{ $t('responsability') }}
-          <span v-for="(child, index) in userDetails.children" :key="index">
+        <p class="children-container">
+          {{ $t('responsibility') }}
+          <span
+            v-for="(child, index) in userDetails.children"
+            :key="index"
+          >
             <a
               class="theme-text-color"
               @click="updateUserCardModal(child)"
@@ -38,9 +42,8 @@
         </p>
       </template>
     </div>
-  </div>
+  </section>
   <teleport to="body">
-    <!-- Create message modal -->
     <CreateMessageModal
       v-if="isCreateMessageModalDisplayed && isMessagingModalDisplayed"
       @close="closeModal"
@@ -51,14 +54,15 @@
 <script>
 import { defineAsyncComponent } from 'vue'
 
-import UserCardContact from '@/components/UserCard/Responsability/UserCardContact.vue'
+import UserCardContact from '@/components/UserCard/Responsibility/UserCardContact.vue'
 import messagingUtils from '@/utils/messaging.utils'
 
+const CustomIcon = defineAsyncComponent(() => import('@components/Base/CustomIcon.vue'))
 const CreateMessageModal = defineAsyncComponent(() => import('@components/Messaging/CreateMessageModal'))
 
 export default {
-  name: 'UserCardResponsability',
-  components: { UserCardContact, CreateMessageModal },
+  name: 'UserCardResponsibility',
+  components: { UserCardContact, CreateMessageModal, CustomIcon },
   props: {
     userDetails: {
       type: Object,
@@ -91,51 +95,54 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "@design";
-.containerUserCardResponsability {
+.container-userCard-responsibility {
   margin-bottom: 32px;
-    h2 {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+
+  h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  margin-bottom: 24px;
+  @extend %font-regular-l;
+  }
+  .legalGuardians-icon{
+  }
+}
+.legalGuardians-container{
+  margin-bottom: 16px;
+
+  h3{
+    @extend %font-bold-s;
+    text-transform: uppercase;
     margin: 0;
-    margin-bottom: 24px;
-    @extend %font-regular-l;
-    }
-    .content{
-        .legualGardiansContainer{
-            margin-bottom: 16px;
-          h3{
-            @extend %font-bold-s;
-            text-transform: uppercase;
-            margin: 0;
-            font-size: 14px;
-          }
-          a{
-            font-size: 14px;
-            font-style: normal;
-            font-weight: 400;
-            text-decoration-line: underline;
-            cursor: pointer;
-          }
-        }
-        .childrenContainer{
-          @extend %font-regular-m;
-          margin: 0;
-          a{
-            font-size: 14px;
-            font-style: normal;
-            font-weight: 400;
-            text-decoration-line: underline;
-            cursor: pointer;
-          }
-        }
-    }
+    font-size: 14px;
+  }
+  a{
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    text-decoration-line: underline;
+    cursor: pointer;
+  }
+}
+.children-container{
+  @extend %font-regular-m;
+  margin: 0;
+
+  a{
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    text-decoration-line: underline;
+    cursor: pointer;
+  }
 }
 </style>
 
 <i18n locale="fr">
   {
     "relativeTitle": "Responsable(s) légal(aux) ",
-    "responsability": "En responsabilité de "
+    "responsibility": "En responsabilité de "
   }
 </i18n>
