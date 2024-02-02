@@ -83,7 +83,7 @@ export default {
 .container {
   position: relative;
   overflow: visible;
-  height: 100%;
+  max-height: 70vh;
   overflow-y: auto;
 }
 </style>

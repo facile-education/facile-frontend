@@ -1,5 +1,8 @@
 <template>
-  <div class="containerClasses">
+  <div
+    class="containerClasses"
+    data-test="UserCardClasses"
+  >
     <UserCardListItem
       v-if="userDetails.classes"
       :items="userDetails.classes"

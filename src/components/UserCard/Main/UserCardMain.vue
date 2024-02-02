@@ -2,6 +2,7 @@
   <div
     class="containerUserCardMain"
     :class="{'phone': mq.phone}"
+    data-test="UserCardMain"
   >
     <UserPicture
       class="UserPicture"
@@ -17,6 +18,7 @@
           <h2>{{ `${userDetails.firstName} ${userDetails.lastName}` }}</h2>
           <WeprodeButton
             class="contact-button"
+            data-test="SendMessage"
             :class="{'phone': mq.phone}"
             :cls="''"
             :title="$t('contact')"

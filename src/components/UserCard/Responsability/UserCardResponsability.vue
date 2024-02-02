@@ -1,5 +1,7 @@
 <template>
-  <div class="containerUserCardResponsability">
+  <div
+    class="containerUserCardResponsability"
+    data-test="UserCardResponsability">
     <h2 v-if="userDetails.isStudent">
       <img
         src="@/assets/icons/legalGuardians.svg"

@@ -1,5 +1,8 @@
 <template>
-  <div class="containerUserCardSchedule">
+  <div
+    class="containerUserCardSchedule"
+    data-test="UserCardSchedule"
+  >
     <h2>
       <img
         src="@/assets/icons/calendar.svg"

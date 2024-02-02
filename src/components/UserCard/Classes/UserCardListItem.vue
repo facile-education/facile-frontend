@@ -6,7 +6,9 @@
         <span>{{ title }}</span>
       </h2>
       <div class="list">
-        <span class="item" v-for="(item, index) in items" :key="index">{{ item }}<span v-if="index < items.length - 1">,</span></span>
+        <!-- <span class="item" v-for="(item, index) in items" :key="index">{{ item }}<span v-if="index < items.length - 1">,</span></span> -->
+        <!-- For items with backgroundColor -->
+        <span class="item" v-for="(item, index) in items" :key="index">{{ item }}</span>
       </div>
     </template>
   </div>
@@ -48,6 +50,12 @@ h2 {
     gap: 5px;
     @extend %font-regular-m;
     margin: 0;
+    // For items with backgroundColor
+    .item{
+      padding: 6px 8px;
+      background-color: rgba(25, 118, 210, 0.33333333);
+      border-radius: 6px;
+    }
 }
 
 }
