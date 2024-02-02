@@ -94,7 +94,7 @@ export default {
       required: true
     }
   },
-  emits: ['close'],
+  emits: ['close', 'saveEntityPermissions'],
   data () {
     return {
       initialPermissionMatrix: [],
@@ -142,6 +142,7 @@ export default {
         permissionsService.saveFilePermissionMatrix(this.document.id, this.permissionMatrix).then((data) => {
           if (data.success) {
             this.$store.dispatch('popups/pushPopup', { message: this.$t('permission-success'), type: 'success' })
+            this.$emit('saveEntityPermissions')
             this.onClose()
           }
         })
@@ -149,6 +150,7 @@ export default {
         permissionsService.saveFolderPermissionMatrix(this.document.id, this.permissionMatrix, this.isRecursive).then((data) => {
           if (data.success) {
             this.$store.dispatch('popups/pushPopup', { message: this.$t('permission-success'), type: 'success' })
+            this.$emit('saveEntityPermissions')
             this.onClose()
           }
         })

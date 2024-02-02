@@ -85,6 +85,7 @@
     <PermissionsModal
       v-if="isPermissionModalDisplayed"
       :document="selectedDocuments[0] || currentFolder"
+      @save-entity-permissions="refreshCurrentFolder"
       @close="isPermissionModalDisplayed=false"
     />
   </teleport>
