@@ -107,6 +107,7 @@ export default {
   @extend %font-regular-l;
   }
   .legalGuardians-icon{
+    font-size: 1.5rem;
   }
 }
 .legalGuardians-container{

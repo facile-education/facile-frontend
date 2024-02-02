@@ -1,5 +1,8 @@
 <template>
-  <div class="schedule-item">
+  <div
+    class="schedule-item"
+    @click="$emit('click')"
+  >
     <div class="hours" v-if="displayHours">
       <div class="hour">
         {{ formatHour(session.startDate) }}
@@ -61,6 +64,7 @@ export default {
       default: true
     }
   },
+  emits: ['click'],
   computed: {
     isTeacher () {
       return this.$store.state.user.isTeacher

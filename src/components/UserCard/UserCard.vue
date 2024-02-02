@@ -72,7 +72,6 @@ export default {
           this.error = false
           this.userDetails = data.contactDetails
           this.userDetails = Object.assign({}, this.userDetails, { userId: this.userToDisplay.userId })
-          console.log(this.userDetails)
         } else {
           this.error = true
           console.error('Failed to user details')

@@ -4,18 +4,25 @@
     data-test="UserCardSchedule"
   >
     <h2>
-      <img
-        src="@/assets/icons/calendar.svg"
-        alt="Calendar icon"
-      >
+      <CustomIcon
+        class="calendar-icon"
+        :icon-name="'icon-calendar'"
+      />
       <span v-if="userDetails.currentCourse">{{ $t('currentlyClass', {startHour: formatedStartHour, endHour: formatedEndHour}) }}</span>
       <span v-else>{{ $t('currently') }}</span>
     </h2>
-    <ScheduleItem
+    <RouterLink
       v-if="userDetails.currentCourse"
-      :session="userDetails.currentCourse"
-      :display-hours="false"
-    />
+      :to="'/Horaires'"
+    >
+      <ScheduleItem
+        :session="userDetails.currentCourse"
+        :display-hours="false"
+        :title="'Voir ses horaires'"
+        class="schedule-item"
+        @click="scheduleItemRedirect"
+      />
+    </RouterLink>
     <p
       v-else
       class="placeholder"
@@ -28,10 +35,14 @@
 <script>
 import ScheduleItem from '@components/Dashboard/ScheduleWidget/ScheduleItem.vue'
 import dayjs from 'dayjs'
+import { defineAsyncComponent } from 'vue'
+
+import { SCHEDULE } from '@/constants/appConstants'
+const CustomIcon = defineAsyncComponent(() => import('@components/Base/CustomIcon.vue'))
 
 export default {
   name: 'UserCardCurrentSchedule',
-  components: { ScheduleItem },
+  components: { ScheduleItem, CustomIcon },
   props: {
     userDetails: {
       type: Object,
@@ -44,6 +55,11 @@ export default {
     },
     formatedEndHour () {
       return dayjs(this.userDetails.currentCourse.endDate).format('HH:mm')
+    }
+  },
+  methods: {
+    scheduleItemRedirect () {
+      this.$router.push({ name: SCHEDULE, query: { initialDisplayDate: this.userDetails.currentCourse.startDate.format('YYYY/MM/DD') } })
     }
   }
 }
@@ -59,9 +75,15 @@ export default {
     margin-bottom: 24px;
     @extend %font-regular-l;
     }
+    .calendar-icon{
+      font-size: 24px;
+    }
     .placeholder{
       @extend %font-medium-m
     }
+}
+.schedule-item{
+  cursor: pointer;
 }
 </style>
 
