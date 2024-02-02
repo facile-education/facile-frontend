@@ -61,7 +61,7 @@
               data-test="closeModal"
               :aria-label="$t('close')"
               :title="$t('close')"
-              @click.stop="$emit('close')"
+              @click="$emit('close')"
             >
               <NeroIcon name="times" />
             </button>
