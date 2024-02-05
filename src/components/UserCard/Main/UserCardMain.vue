@@ -32,7 +32,7 @@
             <span v-t="'Contacter'" />
           </WeprodeButton>
         </div>
-        <p>{{ role }}</p>
+        <p class="role">{{ role }}</p>
         <p v-if="!userDetails.isParent">
           {{ school }}
         </p>

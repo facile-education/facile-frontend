@@ -9,7 +9,7 @@
       :user-details="userDetails"
     />
     <UserCardResponsibility
-      v-if="userDetails && (userDetails.isParent || userDetails.isStudent) && userDetails.parents"
+      v-if="userDetails && (userDetails.isParent || userDetails.isStudent) && (userDetails.parents || userDetails.children)"
       :user-details="userDetails"
     />
     <UserCardClasses
@@ -17,7 +17,7 @@
       :user-details="userDetails"
     />
     <UserCardCurrentSchedule
-      v-if="userDetails && (userDetails.isTeacher || userDetails.isStudent) && userDetails.currentCourse"
+      v-if="userDetails && (userDetails.isTeacher || userDetails.isStudent)"
       :user-details="userDetails"
     />
     <div

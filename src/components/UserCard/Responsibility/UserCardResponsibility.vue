@@ -1,7 +1,7 @@
 <template>
   <section
     class="container-userCard-responsibility"
-    data-test="UserCardResponsability"
+    data-test="UserCardResponsibility"
   >
     <h2 v-if="userDetails.isStudent">
       <CustomIcon
