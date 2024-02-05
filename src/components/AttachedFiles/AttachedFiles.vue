@@ -87,7 +87,7 @@ export default {
           this.$store.dispatch('currentActions/setImportFileList', result.listFiles)
           this.$store.dispatch('currentActions/displayUploadProgression')
 
-          importDocuments(undefined, result.files).then(() => {
+          importDocuments(undefined, result.listFiles).then(() => {
             this.addNewFiles(this.$store.state.currentActions.listUploadedFiles)
             this.$store.dispatch('currentActions/hideUploadProgression')
           })
