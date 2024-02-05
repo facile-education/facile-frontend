@@ -12,8 +12,11 @@
 </template>
 
 <script>
+import { config } from '@fortawesome/fontawesome-svg-core'
+
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import { setMainColor } from '@/utils/theme.util'
+config.autoAddCss = false
 
 export default {
   components: { WeprodeSpinner },
@@ -92,6 +95,7 @@ export default {
 // Normalize default styles across browsers,
 // https://necolas.github.io/normalize.css/
 @import '@modules/normalize.css/normalize.css';
+@import '@modules/@fortawesome/fontawesome-svg-core/styles.css';
 
 // Design variables and utilities from src/design.
 @import '@/design';
