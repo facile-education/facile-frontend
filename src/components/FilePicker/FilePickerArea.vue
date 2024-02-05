@@ -80,10 +80,10 @@ export default {
     fileAdded (e) {
       if (!this.isThereInternDocumentDrag) {
         this.cancelActive(e)
-        returnAddedFiles(e, this.$store).then((files) => {
-          if (files.length !== 0) {
-            this.$emit('fileAdded', files)
-          } else {
+        returnAddedFiles(e, this.$store).then((result) => {
+          if (result.listFiles.length !== 0) {
+            this.$emit('fileAdded', result.listFiles)
+          } else if (!result.sizeException) {
             this.$store.dispatch('popups/pushPopup', { message: this.$t('errorNoFiles'), type: 'error' })
           }
         })

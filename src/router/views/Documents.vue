@@ -508,10 +508,10 @@ export default {
         input.multiple = true
       }
       input.onchange = e => {
-        returnAddedFiles(e, this.$store).then((files) => {
-          if (files.length !== 0) {
-            this.importDocument(files)
-          } else {
+        returnAddedFiles(e, this.$store).then((result) => {
+          if (result.listFiles.length !== 0) {
+            this.importDocument(result.listFiles)
+          } else if (!result.sizeException) {
             alertNoFile()
           }
           input.parentNode.removeChild(input)

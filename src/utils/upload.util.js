@@ -1,6 +1,8 @@
 import i18n from '@/i18n'
 import store from '@/store'
 
+import { formatSize } from './commons.util'
+
 let listFiles = []
 
 function checkFilesType (allowMultiple, requiresTypeCheck, acceptedTypes) {
@@ -31,11 +33,11 @@ function checkFilesSize (currentListFiles, store) {
   }
 
   if (invalidFilesList.length !== 0) {
-    // TODO Handle error
-    // store.dispatch('error/setErrorType', 'reachMaxSize')
-    // store.dispatch('error/setListFilesConcerns', invalidFilesList)
-    // store.dispatch('monDrive/openErrorModal')
+    const formattedMaxUploadSize = formatSize(store.state.documents.documentsProperties.maxUploadSize)
+    store.dispatch('popups/pushPopup', { message: i18n.global.t('Documents.fileSizeException') + formattedMaxUploadSize, type: 'error' })
+    return true
   }
+  return false
 }
 
 function alertNoFile () {
@@ -103,8 +105,8 @@ function returnAddedFiles (e, store, allowMultiple = true, requiresTypeCheck = f
         if ((item.webkitGetAsEntry != null) && (entry = item.webkitGetAsEntry()) && entry.isDirectory) {
           addFilesFromDirectory(entry, entry.name).then(() => {
             checkFilesType(allowMultiple, requiresTypeCheck, acceptedTypes)
-            checkFilesSize(listFiles, store)
-            resolve(listFiles)
+            const sizeException = checkFilesSize(listFiles, store)
+            resolve({ listFiles, sizeException })
           })
         } else {
           if (item.getAsFile != null) {
@@ -117,8 +119,8 @@ function returnAddedFiles (e, store, allowMultiple = true, requiresTypeCheck = f
             listFiles.push(undefined)
           }
           checkFilesType(allowMultiple, requiresTypeCheck, acceptedTypes)
-          checkFilesSize(listFiles, store)
-          resolve(listFiles)
+          const sizeException = checkFilesSize(listFiles, store)
+          resolve({ listFiles, sizeException })
         }
       }
     } else {
@@ -132,8 +134,8 @@ function returnAddedFiles (e, store, allowMultiple = true, requiresTypeCheck = f
         }
       }
       checkFilesType(allowMultiple, requiresTypeCheck, acceptedTypes)
-      checkFilesSize(listFiles, store)
-      resolve(listFiles)
+      const sizeException = checkFilesSize(listFiles, store)
+      resolve({ listFiles, sizeException })
     }
   })
 }

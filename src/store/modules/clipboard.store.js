@@ -123,7 +123,8 @@ export const actions = {
     }
   },
   copy ({ commit, rootState }) {
-    if (rootState.documents.selectedEntities.length !== 0) {
+    // Check that the copied entity is not a group root folder
+    if (rootState.documents.selectedEntities.length !== 0 && !rootState.documents.selectedEntities[0].isGroupRootFolder) {
       commit('updateAction', 'copy')
       commit('updateSourceFolderId', rootState.documents.currentFolderId)
       commit('updateDocumentList', rootState.documents.selectedEntities)
@@ -134,7 +135,8 @@ export const actions = {
     }
   },
   cut ({ commit, rootState }) {
-    if (rootState.documents.selectedEntities.length !== 0) {
+    // Check that the cut entity is not a group root folder
+    if (rootState.documents.selectedEntities.length !== 0 && !rootState.documents.selectedEntities[0].isGroupRootFolder) {
       const unAuthorizedCutEntity = rootState.documents.selectedEntities.find(entity => !entity.permissions.DELETE)
       if (unAuthorizedCutEntity) {
         this.dispatch('popups/pushPopup', { message: i18n.global.t('Popup.unauthorizedCut') + unAuthorizedCutEntity.name, type: 'error' })

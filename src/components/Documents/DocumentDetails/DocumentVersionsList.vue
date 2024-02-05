@@ -74,7 +74,6 @@ export default {
 <style lang="scss" scoped>
 .version-list {
   margin-top: auto;
-  max-height: 50%;
   overflow: auto;
 
   h4 {

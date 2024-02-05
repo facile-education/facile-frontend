@@ -258,7 +258,6 @@ export default {
   padding: 5px 10px;
 
   &.phone {
-    height: 100%;
     padding: 0;
   }
 }

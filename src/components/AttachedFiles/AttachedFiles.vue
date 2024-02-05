@@ -82,16 +82,16 @@ export default {
       this.$emit('update:modelValue', [...this.modelValue, ...newFiles])
     },
     importDocument (event) {
-      returnAddedFiles(event, this.$store).then((files) => {
-        if (files.length !== 0) {
-          this.$store.dispatch('currentActions/setImportFileList', files)
+      returnAddedFiles(event, this.$store).then((result) => {
+        if (result.listFiles.length !== 0) {
+          this.$store.dispatch('currentActions/setImportFileList', result.listFiles)
           this.$store.dispatch('currentActions/displayUploadProgression')
 
-          importDocuments(undefined, files).then(() => {
+          importDocuments(undefined, result.files).then(() => {
             this.addNewFiles(this.$store.state.currentActions.listUploadedFiles)
             this.$store.dispatch('currentActions/hideUploadProgression')
           })
-        } else {
+        } else if (!result.sizeException) {
           alertNoFile()
         }
       })

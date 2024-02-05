@@ -179,16 +179,16 @@ export default {
       this.addContent({ contentType: 1, contentValue: '', contentName: '' })
     },
     importDocument (event) {
-      returnAddedFiles(event, this.$store).then((files) => {
-        if (files.length !== 0) {
-          this.$store.dispatch('currentActions/setImportFileList', files)
+      returnAddedFiles(event, this.$store).then((result) => {
+        if (result.listFiles.length !== 0) {
+          this.$store.dispatch('currentActions/setImportFileList', result.listFiles)
           this.$store.dispatch('currentActions/displayUploadProgression')
 
-          importDocuments(undefined, files).then(() => {
+          importDocuments(undefined, result.listFiles).then(() => {
             const tmpFiles = this.$store.state.currentActions.listUploadedFiles
             this.addContent({ ...tmpFiles[0], contentType: 5, fileId: tmpFiles[0].id, contentName: tmpFiles[0].name })
           })
-        } else {
+        } else if (!result.sizeException) {
           alertNoFile()
         }
       })

@@ -104,6 +104,8 @@ export default {
 .details-panel {
   border-left: 1px solid $color-border;
   height: 100%;
+  display: flex;
+  flex-direction: column;
 
   header {
     display: flex;
