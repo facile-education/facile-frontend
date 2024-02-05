@@ -36,9 +36,11 @@
         @click="isCreateModalDisplayed = true"
       />
 
-      <div class="arrows">
+      <div
+        v-if="hasArrows"
+        class="arrows"
+      >
         <button
-          v-if="hasArrows"
           class="arrow-button left-arrow"
           :class="{'disabled': !canScrollToLeft}"
           :disabled="!canScrollToLeft"
@@ -47,7 +49,6 @@
           <CustomIcon icon-name="icon-chevron-left" />
         </button>
         <button
-          v-if="hasArrows"
           class="arrow-button right-arrow"
           :class="{'disabled': !canScrollToRight}"
           :disabled="!canScrollToRight"
@@ -143,14 +144,12 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 100%;
   @extend %widget-header;
 
   .left, .right {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    height: 100%;
   }
 }
 
@@ -158,13 +157,12 @@ header {
   margin-left: 0.5rem;
   display: flex;
   align-items: center;
-  gap: 1.5rem;
-  height: 100%;
+  gap: 1rem;
 }
 
 .arrow-button {
-  height: 100%;
-  width: 1rem;
+  height: 1.3rem;
+  width: 1.3rem;
   display: flex;
   align-items: center;
   justify-content: center;
