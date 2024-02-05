@@ -9,15 +9,15 @@
       :user-details="userDetails"
     />
     <UserCardResponsibility
-      v-if="userDetails && (userDetails.isParent || userDetails.isStudent)"
+      v-if="userDetails && (userDetails.isParent || userDetails.isStudent) && userDetails.parents"
       :user-details="userDetails"
     />
     <UserCardClasses
-      v-if="userDetails && (userDetails.isTeacher || (userDetails.isPersonal && userDetails.classes))"
+      v-if="userDetails && ((userDetails.isTeacher && userDetails.schools) || (userDetails.isPersonal && userDetails.classes))"
       :user-details="userDetails"
     />
     <UserCardCurrentSchedule
-      v-if="userDetails && (userDetails.isTeacher || userDetails.isStudent)"
+      v-if="userDetails && (userDetails.isTeacher || userDetails.isStudent) && userDetails.currentCourse"
       :user-details="userDetails"
     />
     <div
@@ -72,6 +72,7 @@ export default {
           this.error = false
           this.userDetails = data.contactDetails
           this.userDetails = Object.assign({}, this.userDetails, { userId: this.userToDisplay.userId })
+          console.log(this.userDetails)
         } else {
           this.error = true
           console.error('Failed to user details')

@@ -98,7 +98,9 @@ export default {
     }
     this.$store.dispatch('horaires/setSelectedDate', dateToGo)
 
-    if (this.$store.state.user.isParent && this.$store.state.user.selectedChild !== undefined) {
+    if (this.$route.query.fromUserCard) {
+      this.$store.dispatch('horaires/setSelectedUser', this.$store.state.userCard.userToDisplay)
+    } else if (this.$store.state.user.isParent && this.$store.state.user.selectedChild !== undefined) {
       this.$store.dispatch('horaires/setSelectedUser', this.$store.state.user.selectedChild)
     } else {
       this.$store.dispatch('horaires/setSelectedUser', this.$store.state.user)

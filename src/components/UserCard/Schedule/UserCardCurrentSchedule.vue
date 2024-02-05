@@ -11,18 +11,14 @@
       <span v-if="userDetails.currentCourse">{{ $t('currentlyClass', {startHour: formatedStartHour, endHour: formatedEndHour}) }}</span>
       <span v-else>{{ $t('currently') }}</span>
     </h2>
-    <RouterLink
+    <ScheduleItem
       v-if="userDetails.currentCourse"
-      :to="'/Horaires'"
-    >
-      <ScheduleItem
-        :session="userDetails.currentCourse"
-        :display-hours="false"
-        :title="'Voir ses horaires'"
-        class="schedule-item"
-        @click="scheduleItemRedirect"
-      />
-    </RouterLink>
+      :session="userDetails.currentCourse"
+      :display-hours="false"
+      :title="'Voir ses horaires'"
+      class="schedule-item"
+      @click="scheduleItemRedirect"
+    />
     <p
       v-else
       class="placeholder"
@@ -59,7 +55,7 @@ export default {
   },
   methods: {
     scheduleItemRedirect () {
-      this.$router.push({ name: SCHEDULE, query: { initialDisplayDate: this.userDetails.currentCourse.startDate.format('YYYY/MM/DD') } })
+      this.$router.push({ name: SCHEDULE, query: { initialDisplayDate: dayjs(this.userDetails.currentCourse.startDate).format('YYYY/MM/DD'), fromUserCard: true } })
     }
   }
 }
@@ -81,6 +77,10 @@ export default {
     .placeholder{
       @extend %font-medium-m
     }
+}
+.schedule-link{
+  color: black;
+  text-decoration: none;
 }
 .schedule-item{
   cursor: pointer;

@@ -201,9 +201,11 @@ export default {
     if (this.groupList === undefined && !this.$store.state.user.isStudent && !this.$store.state.user.isParent) {
       this.getGroupList()
     }
-
-    // Pre-select him if user is a teacher
-    if (this.$store.state.user.isTeacher) {
+    if (this.$route.query.fromUserCard) {
+      const user = { ...this.$store.state.userCard.userToDisplay, displayName: this.$store.state.userCard.userToDisplay.firstName + ' ' + this.$store.state.userCard.userToDisplay.lastName }
+      this.tagsList.push(user)
+      this.$store.dispatch('userCard/initUserCard', undefined)
+    } else if (this.$store.state.user.isTeacher) {
       // Add displayName
       const user = WeprodeUtils.deepCopy(this.$store.state.user)
       user.displayName = this.$store.state.user.firstName + ' ' + this.$store.state.user.lastName
