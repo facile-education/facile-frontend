@@ -4,8 +4,8 @@ import vue from '@vitejs/plugin-vue'
 import { defineConfig } from 'vite'
 import dynamicImport from 'vite-plugin-dynamic-import'
 import vitePluginRequire from 'vite-plugin-require'
+import path from 'path';
 
-const path = require('path')
 // https://vitejs.dev/config/
 export default defineConfig({
   esbuild: {
@@ -16,16 +16,7 @@ export default defineConfig({
   },
   plugins: [
     vue(),
-    vitePluginRequire({
-      // @fileRegex RegExp
-      // optional：default file processing rules are as follows
-      // fileRegex:/(.jsx?|.tsx?|.vue)$/
-
-      // Conversion mode. The default mode is import
-      // importMetaUrl | import
-      // importMetaUrl see https://vitejs.cn/guide/assets.html#new-url-url-import-meta-url
-      // translateType: "importMetaUrl" | "import";
-    }),
+    vitePluginRequire.default(),
     VueI18nPlugin({
       compositionOnly: false,
       include: [path.resolve(__dirname, './src/locales/**')]
