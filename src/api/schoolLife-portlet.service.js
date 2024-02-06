@@ -47,8 +47,8 @@ function createSlot (schoolId, startDateStr, endDateStr, day, startHour, endHour
 /**
  * Update a slot based on it id
  */
-function updateSlot (slotId, startDateStr, endDateStr, day, startHour, endHour, teacherId, type, room, capacity) {
-  return axios.get(constants.JSON_WS_URL + SCHOOL_LIFE_SLOT_PATH + '/edit-slot', WeprodeUtils.params({
+function updateSlot (slotId, startDateStr, endDateStr, day, startHour, endHour, teacherId, room, capacity) {
+  return axios.post(constants.JSON_WS_URL + SCHOOL_LIFE_SLOT_PATH + '/edit-slot', WeprodeUtils.params({
     schoollifeSessionId: slotId,
     startDateStr,
     endDateStr,
@@ -56,7 +56,6 @@ function updateSlot (slotId, startDateStr, endDateStr, day, startHour, endHour, 
     newStartHour: startHour,
     newEndHour: endHour,
     newTeacherId: teacherId,
-    newType: type,
     newRoom: room,
     newCapacity: capacity
   })).then(response => response.data)

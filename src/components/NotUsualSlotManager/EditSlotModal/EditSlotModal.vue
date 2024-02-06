@@ -326,7 +326,6 @@ export default {
             this.selectedSlot.slotStartHour,
             this.selectedSlot.slotEndHour,
             this.newEvent.teacher.teacherId,
-            this.currentSlotType.type,
             this.newEvent.room,
             this.newEvent.capacity
           ).then((data) => {
