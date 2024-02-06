@@ -2,7 +2,7 @@
   <div class="access-create-button">
     <WeprodeButton
       class="create-button"
-      data-test="createMessageButton"
+      data-test="createAccessButton"
       @click="clickNew"
     >
       <NeroIcon
