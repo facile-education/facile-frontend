@@ -5,11 +5,15 @@
   >
     <UserCardList
       v-if="userDetails.classes"
+      data-test="assignment"
       :items="userDetails.classes"
       :title="$t('assignment')"
     />
     <template v-if="userDetails.isTeacher">
-      <div class="container-subject">
+      <div
+        class="container-subject"
+        data-test="containerSubject"
+      >
         <h2>
           <span>{{ $t('discipline') }}</span>
         </h2>
@@ -21,60 +25,66 @@
         <div class="schools-infos">
           <WeprodeTabList>
             <WeprodeTabItem
+              data-test="classesTab"
               :title="'Classes'"
             >
               <div
                 v-for="(school, index) in userDetails.schools"
                 :key="index"
+                data-test="schoolContainer"
               >
-                <UserCardList
+                <UserCardListClasses
                   :items="school.classes"
                   :title="school.schoolName"
                   class="school-item"
+                  data-test="schoolClasses"
                 >
                   <img
                     src="@/assets/icons/school.svg"
                     alt="school icon"
                   >
-                </UserCardList>
-                <UserCardList
+                </UserCardListClasses>
+                <UserCardListClasses
                   v-if="school.doyenClasses"
                   :items="school.doyenClasses"
                   :title="''"
                   class="school-item"
+                  data-test="doyenClasses"
                 >
                   <h2 class="theme-text-color">
                     {{ $t('doyenClassesLabel') }}:
                   </h2>
-                </UserCardList>
-                <UserCardList
+                </UserCardListClasses>
+                <UserCardListClasses
                   v-if="school.mainTeacherClasses"
                   :items="school.mainTeacherClasses"
                   :title="''"
                   class="school-item"
+                  data-test="mainTeacherClasses"
                 >
                   <h2 class="theme-text-color">
                     {{ $t('mainTeacherClassesLabel') }}:
                   </h2>
-                </UserCardList>
+                </UserCardListClasses>
               </div>
             </WeprodeTabItem>
             <WeprodeTabItem
               :title="'Cours'"
-              class="tab-item"
+              data-test="coursesTab"
             >
-              <UserCardList
+              <UserCardListCourses
                 v-for="(school, index) in userDetails.schools"
                 :key="index"
                 :items="school.cours"
                 :title="school.schoolName"
                 class="school-item"
+                data-test="schoolCourses"
               >
                 <img
                   src="@/assets/icons/school.svg"
                   alt="school icon"
                 >
-              </UserCardList>
+              </UserCardListCourses>
             </WeprodeTabItem>
           </WeprodeTabList>
         </div>
@@ -86,12 +96,14 @@
 <script>
 import WeprodeTabItem from '@/components/Base/Weprode/WeprodeTabItem.vue'
 import WeprodeTabList from '@/components/Base/Weprode/WeprodeTabList.vue'
-import UserCardList from '@/components/UserCard/Classes/UserCardList.vue'
+import UserCardListClasses from '@/components/UserCard/Classes/UserCardListClasses.vue'
+import UserCardListCourses from '@/components/UserCard/Classes/UserCardListCourses.vue'
 
 export default {
   name: 'UserCardClasses',
   components: {
-    UserCardList,
+    UserCardListCourses,
+    UserCardListClasses,
     WeprodeTabItem,
     WeprodeTabList
   },

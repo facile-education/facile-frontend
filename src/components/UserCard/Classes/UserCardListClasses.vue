@@ -6,13 +6,12 @@
         <span>{{ title }}</span>
       </h2>
       <ul class="list">
-        <!-- <li class="item" v-for="(item, index) in items" :key="index">{{ item }}<span v-if="index < items.length - 1">,</span></li> -->
-        <!-- For items with backgroundColor -->
         <li
           v-for="(item, index) in items"
           :key="index"
-          class="item"
-        >{{ item }}</li>
+        >
+          <span>{{ item }}</span>
+        </li>
       </ul>
     </template>
   </div>
@@ -20,7 +19,7 @@
 
 <script>
 export default {
-  name: 'UserCardListItem',
+  name: 'UserCardListClasses',
   props: {
     items: {
       type: Array,
@@ -55,12 +54,15 @@ h2 {
   @extend %font-regular-m;
   margin: 0;
   padding: 0;
-  // For items with backgroundColor
-  .item{
-    padding: 6px 8px;
-    background-color: rgba(25, 118, 210, 0.33333333);
-    border-radius: 6px;
+  li{
+    display: flex;
     list-style: none;
+    border-radius: 6px;
+    span{
+      border-radius: 6px;
+      padding: 6px 8px;
+      background-color: rgba(210, 1, 19, 0.4); border-color: rgba(210, 1, 19, 0.4)
+  }
   }
 }
 
