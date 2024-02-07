@@ -6,8 +6,8 @@
       </span>
       <div class="optionsContainer">
         <button
-          @click.stop="openUserCardModal"
           data-test="openUserCard"
+          @click.stop="openUserCardModal"
         >
           UserCard
         </button>
