@@ -41,6 +41,24 @@
         <p class="email">
           {{ userDetails.email }}
         </p>
+        <p
+          v-if="userDetails.mobilePhone"
+          class="mainPhone"
+        >
+          {{ userDetails.mobilePhone }} (perso)
+        </p>
+        <p
+          v-if="userDetails.proPhone"
+          class="mainPhone"
+        >
+          {{ userDetails.proPhone }} (pro)
+        </p>
+        <p
+          v-if="userDetails.homePhone"
+          class="mainPhone"
+        >
+          {{ userDetails.homePhone }} {{ `(${$t('homePhone')})` }}
+        </p>
       </div>
     </div>
   </section>
@@ -140,8 +158,17 @@ export default {
     margin-bottom: 4px
   }
   p{
-  @extend %font-medium-m;
-  margin: 0;
+    @extend %font-medium-m;
+    margin: 0;
+  }
+  .email{
+    margin: 0;
+    margin-top: 10px;
+    @extend %font-regular-m;
+  }
+  .mainPhone{
+    margin: 0;
+    @extend %font-regular-m;
   }
 }
 .container-name_button-contact{
@@ -173,17 +200,13 @@ export default {
   }
 }
 }
-.email{
-  margin: 0;
-  margin-top: 10px;
-  @extend %font-regular-m
-}
 </style>
 
 <i18n locale="fr">
   {
     "contact": "Contacter cet utilisateur",
     "relative": "Responsable légal",
-    "studentLabel": "Élève de {volee}ème"
+    "studentLabel": "Élève de {volee}ème",
+    "homePhone": "maison"
   }
 </i18n>
