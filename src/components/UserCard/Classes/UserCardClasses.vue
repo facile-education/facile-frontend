@@ -3,7 +3,7 @@
     class="container-classes"
     data-test="UserCardClasses"
   >
-    <UserCardListClasses
+    <UserCardList
       v-if="userDetails.classes"
       data-test="assignment"
       :items="userDetails.classes"
@@ -15,10 +15,10 @@
         data-test="containerSubject"
       >
         <h2>
-          <span>{{ $t('discipline') }}</span>
+          <span>{{ $tc('discipline', userDetails.subjects.length) }}</span>
         </h2>
         <p class="subjects">
-          {{ userDetails.subjects }}
+          {{ subject }}
         </p>
       </div>
       <div class="container-schools">
@@ -33,7 +33,7 @@
                 :key="index"
                 data-test="schoolContainer"
               >
-                <UserCardListClasses
+                <UserCardList
                   :items="school.classes"
                   :title="school.schoolName"
                   class="school-item"
@@ -43,8 +43,8 @@
                     src="@/assets/icons/school.svg"
                     alt="school icon"
                   >
-                </UserCardListClasses>
-                <UserCardListClasses
+                </UserCardList>
+                <UserCardList
                   v-if="school.doyenClasses"
                   :items="school.doyenClasses"
                   :title="''"
@@ -54,8 +54,8 @@
                   <h2 class="theme-text-color">
                     {{ $t('doyenClassesLabel') }}:
                   </h2>
-                </UserCardListClasses>
-                <UserCardListClasses
+                </UserCardList>
+                <UserCardList
                   v-if="school.mainTeacherClasses"
                   :items="school.mainTeacherClasses"
                   :title="''"
@@ -65,14 +65,14 @@
                   <h2 class="theme-text-color">
                     {{ $t('mainTeacherClassesLabel') }}:
                   </h2>
-                </UserCardListClasses>
+                </UserCardList>
               </div>
             </WeprodeTabItem>
             <WeprodeTabItem
               :title="'Cours'"
               data-test="coursesTab"
             >
-              <UserCardListCourses
+              <UserCardList
                 v-for="(school, index) in userDetails.schools"
                 :key="index"
                 :items="school.cours"
@@ -84,7 +84,7 @@
                   src="@/assets/icons/school.svg"
                   alt="school icon"
                 >
-              </UserCardListCourses>
+              </UserCardList>
             </WeprodeTabItem>
           </WeprodeTabList>
         </div>
@@ -96,14 +96,12 @@
 <script>
 import WeprodeTabItem from '@/components/Base/Weprode/WeprodeTabItem.vue'
 import WeprodeTabList from '@/components/Base/Weprode/WeprodeTabList.vue'
-import UserCardListClasses from '@/components/UserCard/Classes/UserCardListClasses.vue'
-import UserCardListCourses from '@/components/UserCard/Classes/UserCardListCourses.vue'
+import UserCardList from '@/components/UserCard/Classes/UserCardList.vue'
 
 export default {
   name: 'UserCardClasses',
   components: {
-    UserCardListCourses,
-    UserCardListClasses,
+    UserCardList,
     WeprodeTabItem,
     WeprodeTabList
   },
@@ -111,6 +109,11 @@ export default {
     userDetails: {
       type: Object,
       required: true
+    }
+  },
+  computed: {
+    subject () {
+      return this.userDetails.subjects.join(', ')
     }
   }
 }
@@ -138,6 +141,7 @@ export default {
   p{
     @extend %font-regular-m;
     margin: 0;
+    margin-left: 16px;
   }
 }
 .container-schools{
@@ -163,7 +167,7 @@ export default {
 <i18n locale="fr">
   {
     "assignment": "Affectation",
-    "discipline": "Discipline",
+    "discipline": "Discipline | Disciplines",
     "mainTeacherClassesLabel": "Maître de classe de",
     "doyenClassesLabel": "Doyen de"
   }
