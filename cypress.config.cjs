@@ -11,6 +11,7 @@ module.exports = defineConfig({
   screenshotsFolder: 'tests/e2e/screenshots',
   videosFolder: 'tests/e2e/videos',
   watchForFileChanges: false,
+  video: false,
 
   e2e: {
     baseUrl: 'https://dev-ent-gve.com',
