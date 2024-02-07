@@ -112,6 +112,7 @@ export default {
 }
 .legalGuardians-container{
   margin-bottom: 16px;
+  margin-left: 16px;
 
   h3{
     @extend %font-bold-s;

@@ -68,14 +68,16 @@ export default {
     align-items: center;
     gap: 8px;
     margin: 0;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
     @extend %font-regular-l;
     }
     .calendar-icon{
       font-size: 24px;
     }
     .placeholder{
-      @extend %font-medium-m
+      @extend %font-medium-m;
+      margin: 0;
+      margin-left: 16px;
     }
 }
 .schedule-link{
@@ -83,6 +85,8 @@ export default {
   text-decoration: none;
 }
 .schedule-item{
+  width: calc(100% - 16px) !important;
+  margin-left: 16px;
   cursor: pointer;
 }
 </style>

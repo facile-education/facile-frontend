@@ -3,7 +3,10 @@
     class="schedule-item"
     @click="$emit('click')"
   >
-    <div class="hours" v-if="displayHours">
+    <div
+      v-if="displayHours"
+      class="hours"
+    >
       <div class="hour">
         {{ formatHour(session.startDate) }}
       </div>
@@ -13,7 +16,7 @@
     </div>
     <div
       class="session"
-      :style="'background-color: ' + session.color + '; border-color: ' + session.color"
+      :style="{ backgroundColor: session.color, borderColor: session.color, width: !displayHours ? '100%' : 'calc(100% - var(--hour-width))' }"
     >
       <div class="transparent-part">
         <!-- Teacher: course, room and subject -->
@@ -108,7 +111,6 @@ export default {
 
 .session {
   height: 100%;
-  width: calc(100% - var(--hour-width));
   border-left: 5px solid;
   border-radius: 3px;
   font-size: 0.8rem;

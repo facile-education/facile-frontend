@@ -54,6 +54,7 @@ h2 {
   @extend %font-regular-m;
   margin: 0;
   padding: 0;
+  margin-left: 16px;
   li{
     display: flex;
     list-style: none;

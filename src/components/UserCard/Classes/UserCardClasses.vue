@@ -3,7 +3,7 @@
     class="container-classes"
     data-test="UserCardClasses"
   >
-    <UserCardList
+    <UserCardListClasses
       v-if="userDetails.classes"
       data-test="assignment"
       :items="userDetails.classes"
