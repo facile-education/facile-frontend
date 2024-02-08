@@ -233,13 +233,12 @@ function getResource (fileId, versionId, readOnly) {
   }).then(response => response.data)
 }
 
-/**
- * Get the url to see the resource
- */
 function removeLoolToken (token) {
-  return axios.delete(constants.JSON_WS_URL + FILE_PATH + '/remove-lool-token', WeprodeUtils.params({
-    token
-  })).then(response => response.data)
+  return axios.delete(constants.JSON_WS_URL + FILE_PATH + '/remove-lool-token', {
+    params: {
+      token
+    }
+  }).then(response => response.data)
 }
 
 function getFileInfos (fileId) {
