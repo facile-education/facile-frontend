@@ -22,6 +22,7 @@
           <WeprodeInput
             ref="nameInput"
             v-model="title"
+            data-test="title"
             :placeholder="$t('namePlaceHolder') + '*'"
           />
           <WeprodeErrorMessage

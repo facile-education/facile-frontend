@@ -13,6 +13,7 @@
 
     <ContextMenu
       v-if="isContextMenuDisplayed && isAContextMenuDisplayed"
+      data-test="containerCreateAccessButtons"
       :is-absolute="true"
       @choose-option="optionClicked"
       @close="isContextMenuDisplayed=false"

@@ -9,6 +9,7 @@
     <span v-t="'noAccess'" />
     <em
       v-t="'createAccess'"
+      data-test="createAccess"
       @click="isSaveAccessModalDisplayed=true"
     />
   </div>
