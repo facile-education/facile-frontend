@@ -163,7 +163,7 @@ ul {
   padding-left: 0;
 }
 
-.delete-button {
+.button.delete-button {
   margin-left: 1rem;
   display: flex;
   justify-content: center;
