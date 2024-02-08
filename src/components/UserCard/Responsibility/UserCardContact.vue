@@ -85,12 +85,14 @@ export default {
     cursor: pointer;
   }
   .contact-button {
-  margin-left: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid $neutral-60;
-  padding: 6px 8px;
+    margin-left: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid $neutral-60;
+    padding: 6px 8px;
+    background-color: #FFF;
+    margin-right: 16px;
   &.phone{
     margin-top: 8px;
     margin-bottom: 8px;

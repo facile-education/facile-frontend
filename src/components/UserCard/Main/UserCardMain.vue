@@ -36,7 +36,7 @@
           {{ role }}
         </p>
         <p v-if="!userDetails.isParent">
-          {{ school }}
+          {{ school }} - {{ userDetails.isStudent && userDetails.class }}
         </p>
         <p class="email">
           {{ userDetails.email }}
@@ -186,6 +186,7 @@ export default {
   align-items: center;
   border: 1px solid $neutral-60;
   padding: 6px 8px;
+  background-color: #FFF;
   &.phone{
     margin-left: 0;
     margin-top: 10px;

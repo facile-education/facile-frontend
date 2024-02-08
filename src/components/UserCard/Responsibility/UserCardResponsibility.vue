@@ -103,12 +103,17 @@ export default {
   align-items: center;
   gap: 8px;
   margin: 0;
-  margin-bottom: 24px;
+  margin-bottom: 8px;
   @extend %font-regular-l;
   }
   .legalGuardians-icon{
     font-size: 1.5rem;
   }
+}
+.content {
+  padding: 16px 0;
+  border-radius: 6px;
+  background-color: $neutral-20;
 }
 .legalGuardians-container{
   margin-bottom: 16px;
