@@ -12,7 +12,6 @@ node_modules
 /tests/e2e/downloads/
 /tests/unit/coverage/
 dev_db_backup.sql
-jsconfig.json
 package-lock.json
 
 # local env files
