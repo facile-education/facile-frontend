@@ -180,7 +180,7 @@ h2 {
 {
   "documents": "Documents",
   "error": "Oups, une erreur est survenue...",
-  "homeworks": "Travail donné",
+  "homeworks": "Travaux donnés",
   "schoolLife": "Horaires hors cadre",
   "documentsPlaceholder": "Aucun document mis en ligne",
   "homeworkPlaceholder": "Aucun travail donné",
@@ -190,7 +190,7 @@ h2 {
   "3": "Doc. à rendre",
   "slot-1": "Renvoi",
   "slot-2": "Retenue",
-  "slot-3": "Travaux à refaire",
+  "slot-3": "Travail à refaire",
   "slot-4": "Dépannage",
   "slot-5": "Cercle d'étude",
   "text": "Texte",
