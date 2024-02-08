@@ -72,7 +72,7 @@ export default {
   computed: {
     modalTitle () {
       if (this.concernedRole) {
-        return this.$t('AccessesOf', { roleLabel: this.concernedRole.displayText })
+        return this.$t('AccessesOf', { roleLabel: this.concernedRole.displayText.toLowerCase() })
       } else {
         return this.$t('myAccesses')
       }
@@ -135,7 +135,7 @@ ul {
 <i18n locale="fr">
 {
   "myAccesses": "Mes accès",
-  "AccessesOf": "Accès des {roleLabel}",
+  "AccessesOf": "Accès d'un.e {roleLabel}",
   "errorPlaceholder": "Oups, une erreur est survenue...",
   "emptyPlaceholder": "Aucun accès"
 }

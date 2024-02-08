@@ -100,7 +100,7 @@ export default {
         saveSchoolCategory(this.selectedSchool.schoolId, { ...this.category, categoryName: name }).then((data) => {
           if (data.success) {
             this.$store.dispatch('popups/pushPopup', { message: this.$t('saveSuccess'), type: 'success' })
-            this.$store.dispatch('accessManager/getSchoolAccesses') // Reload changes to assure to have the backend-data
+            this.$store.dispatch('accessManager/getSchoolAccesses') // Reload changes to ensure to have the backend-data
           } else {
             this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
           }
@@ -110,8 +110,8 @@ export default {
     deleteCategory () {
       removeSchoolCategory(this.selectedSchool.schoolId, this.category.categoryId).then((data) => {
         if (data.success) {
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('saveSuccess'), type: 'success' })
-          this.$store.dispatch('accessManager/getSchoolAccesses') // Reload changes to assure to have the backend-data
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('deleteSuccess'), type: 'success' })
+          this.$store.dispatch('accessManager/getSchoolAccesses') // Reload changes to ensure to have the backend-data
         } else {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
         }
@@ -184,6 +184,7 @@ ul {
 {
   "delete": "Supprimer cette catégorie",
   "deleteCategoryWarning": "Souhaitez-vous supprimer la catégorie {categoryName} et ses accès?",
-  "saveSuccess": "Catégorie enregistrée"
+  "saveSuccess": "Catégorie enregistrée",
+  "deleteSuccess": "Catégorie supprimée"
 }
 </i18n>

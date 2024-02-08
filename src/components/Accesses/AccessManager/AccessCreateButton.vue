@@ -110,7 +110,7 @@ export default {
 
 <i18n locale="fr">
 {
-  "category": "Categorie",
+  "category": "Catégorie",
   "access": "Accès",
   "new": "Nouveau"
 }
