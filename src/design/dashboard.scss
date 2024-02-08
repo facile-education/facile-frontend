@@ -13,16 +13,6 @@
   margin-bottom: 0.3em;
 }
 
-%widget-placeholder {
-  height: 45px;
-  margin-top: 0.5rem;
-  background-color: $color-not-white-bg;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  @extend %font-medium-m;
-}
-
 $diary-widget-min-width: 355px;
 $announcements-widget-min-width: 500px;
 $homework-widget-min-width: 255px;

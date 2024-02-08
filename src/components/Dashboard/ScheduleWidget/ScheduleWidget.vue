@@ -130,7 +130,7 @@ section {
 }
 
 .placeholder {
-  @extend %widget-placeholder;
+  @extend %content-placeholder;
 }
 
 ol {

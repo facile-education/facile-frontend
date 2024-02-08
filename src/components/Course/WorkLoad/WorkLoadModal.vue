@@ -195,7 +195,7 @@ export default {
 }
 
 .placeholder {
-  @extend %widget-placeholder;
+  @extend %content-placeholder;
 }
 </style>
 

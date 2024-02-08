@@ -75,9 +75,7 @@ export default {
       font-size: 24px;
     }
     .placeholder{
-      @extend %font-medium-m;
-      margin: 0;
-      margin-left: 16px;
+      @extend %content-placeholder;
     }
 }
 .schedule-link{

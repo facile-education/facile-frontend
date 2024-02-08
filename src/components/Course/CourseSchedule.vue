@@ -192,7 +192,7 @@ export default {
 }
 
 .instructions {
-  @extend %widget-placeholder
+  @extend %content-placeholder;
 }
 </style>
 

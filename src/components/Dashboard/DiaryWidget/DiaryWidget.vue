@@ -137,7 +137,7 @@ section {
 }
 
 .placeholder {
-  @extend %widget-placeholder;
+  @extend %content-placeholder;
 }
 
 @media screen and (min-width: calc($diary-widget-min-width + $announcements-widget-min-width + 3rem + $side-menu-width)) {
