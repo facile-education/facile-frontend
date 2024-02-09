@@ -58,16 +58,22 @@ export default {
     return {
       activitiesLoading: false,
       activityList: [],
-      hasEnded: true
+      hasEnded: false
     }
   },
   computed: {
+    sortedActivities () {
+      let sortedActivities = this.activityList
+      sortedActivities = sortedActivities.sort((a, b) => a.modificationDate - b.modificationDate)
+      return sortedActivities
+    },
     lastActivity () {
-      return this.activityList[this.activityList.length - 1]
+      // Last activity is the one with the oldest modificationDate
+      return this.sortedActivities[this.activityList.length - 1]
     },
     lastActivityDate () {
       if (this.lastActivity) {
-        return dayjs(this.lastActivity.publicationDate, DATE_EXCHANGE_FORMAT)
+        return dayjs(this.lastActivity.modificationDate, DATE_EXCHANGE_FORMAT)
       } else { // if no activity, return the currentDate
         return dayjs()
       }
@@ -77,14 +83,12 @@ export default {
     group: {
       handler () {
         this.activityList.length = 0
-        this.maxDate = dayjs().add(1, 'day')
         this.hasEnded = false
         this.getActivities()
       }
     }
   },
   created () {
-    this.maxDate = dayjs().add(1, 'day')
     this.getActivities()
   },
   methods: {
@@ -99,11 +103,10 @@ export default {
         documentsService.getDocumentGroupActivity(this.group.groupId, this.lastActivityDate.format(DATE_EXCHANGE_FORMAT), allActivitiesPaginationSize).then((data) => {
           this.activitiesLoading = false
           if (data.success) {
-            this.activityList = this.activityList.concat(data.activities)
-            // Update maxDate
-            if (this.activityList.length > 1) {
-              this.maxDate = dayjs(this.activityList[this.activityList.length - 1].modificationDate) // /!\ Assume the returned list is already sorted by date
+            if (data.activities.length < allActivitiesPaginationSize) {
+              this.hasEnded = true
             }
+            this.activityList = this.activityList.concat(data.activities)
           }
         })
       } else {
@@ -114,12 +117,7 @@ export default {
             if (data.activities.length < allActivitiesPaginationSize) {
               this.hasEnded = true
             }
-
             this.activityList = this.activityList.concat(data.activities)
-            // Update maxDate
-            if (this.activityList.length > 1) {
-              this.maxDate = dayjs(this.activityList[this.activityList.length - 1].modificationDate) // /!\ Assume the returned list is already sorted by date
-            }
           }
         })
       }
@@ -158,8 +156,9 @@ ul {
   padding: 3px;
 
   .activities {
-    overflow: auto;
     flex: 1;
+    overflow: auto;
+    margin-bottom: 10px;;
   }
 }
 
