@@ -36,6 +36,7 @@
     <div class="options">
       <button
         class="option theme-hover-extra-light-background-color"
+        data-test="editAccess"
         @click.stop="isUpdateModalDisplayed = true"
       >
         <img
@@ -45,6 +46,7 @@
       </button>
       <button
         class="option theme-hover-extra-light-background-color"
+        data-test="deleteAccess"
         @click.stop="confirmDeleteAccess"
       >
         <img
