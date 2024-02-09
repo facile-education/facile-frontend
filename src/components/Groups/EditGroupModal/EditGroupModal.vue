@@ -455,6 +455,7 @@ export default {
 .group-is-educational {
   .is-educational-label {
     margin-bottom: 5px;
+    margin-right: 20px;
   }
   .toggle-section {
     display: flex;
@@ -506,6 +507,7 @@ hr {
       align-items: center;
       font-size: 12px;
       height: 30px;
+      margin-right: 20px;
     }
   }
 }

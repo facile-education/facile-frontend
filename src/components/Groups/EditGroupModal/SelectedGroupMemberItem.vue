@@ -98,7 +98,7 @@ export default {
     padding: 10px;
 
     div {
-      width: 200px;
+      width: 300px;
       font-weight: 600;
     }
 
@@ -122,6 +122,7 @@ export default {
   .is-admin {
     display: flex;
     align-items: center;
+    margin-right: 20px;
 
     span {
       width: 30px;
