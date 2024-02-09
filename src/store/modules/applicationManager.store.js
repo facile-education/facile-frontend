@@ -71,14 +71,6 @@ export const actions = {
         console.error(err)
       })
   },
-  exportApplicationUserList ({ state }, { school, type }) {
-    return applicationManagerService.exportApplicationUserList(school.schoolId,
-      state.selectedApplication.applicationId, type).then((data) => {
-      if (data.success) {
-        return data.message
-      }
-    })
-  },
   getSchoolApplicationList ({ commit }, school) {
     applicationManagerService.getSchoolApplications(school.schoolId).then(
       (data) => {

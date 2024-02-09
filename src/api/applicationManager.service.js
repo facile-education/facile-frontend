@@ -139,7 +139,7 @@ function updateBroadcast (applicationId, schoolId, isBroadcasted, applicationUrl
   ).then(response => response.data)
 }
 
-function exportApplicationUserList (schoolId, applicationId, roleName) {
+function exportApplicationUserList (applicationId, schoolId, roleName) {
   return axios.get(constants.JSON_WS_URL + APP_MANAGER_PATH + APPLICATION_CTX + 'export', {
     params: {
       applicationId,

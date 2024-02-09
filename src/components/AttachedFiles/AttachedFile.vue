@@ -216,7 +216,7 @@ button {
 
 .attached-file {
   --icon-width: 50px;
-  height: 70px;
+  height: 60px;
   width: 100%;
   padding: 0.5rem;
   border-radius: $content-boarder-radius;
@@ -256,7 +256,7 @@ button {
 
 .data {
   height: 100%;
-  padding: 8px 0;
+  padding: 5px 0;
 }
 
 .name {

@@ -50,8 +50,13 @@
         :list="exportList"
         display-field="label"
         class="export-list"
-        @update:model-value="exportUserList"
       />
+      <WeprodeButton
+        :title="$t('export')"
+        @click="exportUserList"
+      >
+        <span>{{ $t('export') }}</span>
+      </WeprodeButton>
       <p>{{ exportMessage }}</p>
     </div>
   </div>
@@ -99,12 +104,14 @@
 </template>
 
 <script>
+import { exportApplicationUserList } from '@/api/applicationManager.service'
 import RuleLabel from '@/components/ApplicationManager/RuleLabel'
 import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
 import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
 import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
 import WeprodeToggleSwitch from '@/components/Base/Weprode/WeprodeToggleSwitch.vue'
 import NeroIcon from '@/components/Nero/NeroIcon'
+
 export default {
   name: 'ApplicationDetails',
   components: {
@@ -168,13 +175,16 @@ export default {
         lastAction: { fct: this.removeApplication, params: [] }
       })
     },
-    exportUserList (type) {
-      this.$store.dispatch('applicationManager/exportApplicationUserList', {
-        school: this.$store.state.administration.selectedSchool,
-        type: type.key
-      }).then((msg) => {
-        this.exportMessage = msg
-      })
+    exportUserList () {
+      exportApplicationUserList(this.$store.state.applicationManager.selectedApplication.applicationId, this.$store.state.administration.selectedSchool.schoolId, this.selectedExport.key)
+        .then((data) => {
+          if (data.success) {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('exportSuccess'), type: 'success' })
+            this.exportMessage = data.msg
+          } else {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('exportError'), type: 'error' })
+          }
+        })
     },
     toggleBroadcastModal () {
       this.$store.dispatch('applicationManager/openBroadcastModal')
@@ -259,6 +269,7 @@ p {
 
 .export-list {
   margin-bottom: 10px 0;
+  margin-right: 10px;
 }
 
 .action {
@@ -300,6 +311,9 @@ p {
   "removalConfirmMessage": "Souhaitez-vous vraiment supprimer cette application ?",
   "removalConfirmTitle": "Suppression",
   "studentsExportButton": "Elèves",
-  "teachersExportButton": "Enseignants"
+  "teachersExportButton": "Enseignants",
+  "export": "Exporter",
+  "exportSuccess": "Export terminé",
+  "exportError": "Une erreur s'est produite lors de l'export"
 }
 </i18n>
