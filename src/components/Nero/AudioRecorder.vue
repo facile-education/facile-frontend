@@ -329,7 +329,7 @@ $red: rgb(230, 109, 109);
   "browserError": "Votre navigateur ne permet pas l'enregistrement de contenu media.",
   "continue": "Reprendre",
   "deniedError": "Une erreur est survenue lors de l'accès aux ressources de l'ordinateur (Accès refusé)",
-  "listen": "Ecouter",
+  "listen": "Écouter",
   "namePlaceholder": "Titre",
   "title": "Enregistrement audio",
   "pause": "Interrompre",
