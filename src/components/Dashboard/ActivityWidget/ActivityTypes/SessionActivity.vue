@@ -21,7 +21,7 @@
       @keyup.enter="redirect"
     >
       <div class="author">
-        {{ activity.groupName + " - " + activity.author }}
+        {{ getHeader(activity) }}
       </div>
       <div class="description">
         <span>
@@ -52,6 +52,10 @@ export default {
     activity: {
       type: Object,
       required: true
+    },
+    isDashboard: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {
@@ -94,6 +98,9 @@ export default {
           }
         })
       }
+    },
+    getHeader (activity) {
+      return (this.isDashboard ? activity.groupName + ' - ' : '') + activity.author
     }
   }
 }

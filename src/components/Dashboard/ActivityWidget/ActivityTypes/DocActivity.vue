@@ -16,7 +16,7 @@
 
     <div class="content">
       <div class="author">
-        {{ activity.groupName + ' - ' + activity.author }}
+        {{ getHeader(activity) }}
       </div>
       <div class="description">
         <span>
@@ -29,22 +29,6 @@
           @keyup.enter="open"
         >
           {{ activity.target }}
-        </i>
-        <span v-t="'inGroup'" />
-        <span
-          v-if="activity.readOnly"
-          class="readOnly"
-        >
-          {{ activity.groupName }}
-        </span>
-        <i
-          v-else
-          :title="activity.groupName"
-          tabindex="0"
-          @click.stop="redirectInGroup"
-          @keyup.enter.stop="redirectInGroup"
-        >
-          {{ activity.groupName }}
         </i>
       </div>
     </div>
@@ -74,6 +58,10 @@ export default {
     activity: {
       type: Object,
       required: true
+    },
+    isDashboard: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {
@@ -128,15 +116,11 @@ export default {
         }
       }
     },
-    redirectInGroup () {
-      if (this.isFolder) {
-        this.$router.push('/documents/groups/' + this.activity.folderId)
-      } else {
-        this.$router.push('/documents/groups/' + this.activity.parentFolderId)
-      }
-    },
     getExtension (activity) {
       return getExtensionFromName(activity.fileName)
+    },
+    getHeader (activity) {
+      return (this.isDashboard ? activity.groupName + ' - ' : '') + activity.author
     }
   }
 }
@@ -165,7 +149,6 @@ export default {
   "TYPE_FOLDER_MODIFICATION": "a renommé le dossier ",
   "TYPE_FOLDER_MOVE": "a déplacé le dossier ",
   "TYPE_FOLDER_DELETION": "a supprimé le dossier",
-  "inGroup": " dans l'espace ",
   "on": "Le",
   "at": "à"
 }

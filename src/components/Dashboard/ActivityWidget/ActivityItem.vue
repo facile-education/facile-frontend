@@ -18,6 +18,7 @@
       />
       <DocActivity
         v-else-if="isDocActivity"
+        :is-dashboard="isDashboard"
         :activity="activity"
       />
       <MembershipActivity
@@ -33,6 +34,7 @@
       <SessionActivity
         v-else-if="isCourseActivity"
         :activity="activity"
+        :is-dashboard="isDashboard"
       />
       <ExpiredGroupActivity
         v-else-if="isExpiredGroupActivity"
