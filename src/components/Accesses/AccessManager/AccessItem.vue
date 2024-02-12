@@ -72,10 +72,10 @@
 
 <script>
 import NeroIcon from '@components/Nero/NeroIcon.vue'
+import { getThumbnailUrl } from '@utils/accessUtils'
 import { defineAsyncComponent } from 'vue'
 
 import { removeSchoolAccess, saveSchoolAccess } from '@/api/access.service'
-import { defaultImagesKeys } from '@/constants/icons'
 const SaveAccessModal = defineAsyncComponent(() => import('@components/Accesses/AccessManager/SaveAccessModal.vue'))
 
 export default {
@@ -118,11 +118,7 @@ export default {
       return this.$store.state.accessManager.selectedSchool
     },
     thumbnail () {
-      if (defaultImagesKeys.indexOf(this.access.thumbnailUrl) !== -1) {
-        return new URL(`../../../assets/images/${this.access.thumbnailUrl}.png`, import.meta.url).href
-      } else { // Returned url is a key for local default image
-        return this.access.thumbnailUrl
-      }
+      return getThumbnailUrl(this.access, this.$store)
     }
   },
   methods: {

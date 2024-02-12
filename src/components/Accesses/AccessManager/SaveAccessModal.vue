@@ -83,6 +83,7 @@
 <script>
 import AccessRedirectionSelector from '@components/Accesses/AccessManager/AccessRedirectionSelector.vue'
 import ThumbnailSelector from '@components/Base/ThumbnailSelector.vue'
+import { getThumbnailUrl } from '@utils/accessUtils'
 import validators from '@utils/validators'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
@@ -95,7 +96,7 @@ import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.v
 import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
 import WeprodeTagsInput from '@/components/Base/Weprode/WeprodeTagsInput.vue'
 import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
-import { defaultImagesKeys } from '@/constants/icons'
+
 const inputMaxSize = 75
 const isUnderInputMaxSize = (value) => validators.isUnderMaxSize(value, inputMaxSize)
 const isNotEmpty = (list) => validators.isNotEmpty(list)
@@ -130,7 +131,7 @@ export default {
       fileId: undefined,
       fileName: '',
       thumbnailId: 0,
-      thumbnailUrl: 'default_access_0'
+      thumbnailUrl: ''
     }
   },
   validations: {
@@ -148,11 +149,7 @@ export default {
   },
   computed: {
     thumbnail () {
-      if (defaultImagesKeys.indexOf(this.thumbnailUrl) !== -1) {
-        return new URL(`../../../assets/images/${this.thumbnailUrl}.svg`, import.meta.url).href
-      } else { // Returned url is a key for local default image
-        return this.thumbnailUrl
-      }
+      return getThumbnailUrl({ type: this.selectedType, thumbnailUrl: this.thumbnailUrl }, this.$store)
     },
     categoryList () {
       return this.$store.state.accessManager.categoryList

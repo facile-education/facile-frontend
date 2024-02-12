@@ -63,8 +63,7 @@ const icons = {
 
 const defaultImagesKeys = [
   'default_news_0',
-  'default_school_news_0',
-  'default_access_0'
+  'default_school_news_0'
 ]
 
 export {

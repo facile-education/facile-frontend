@@ -7,7 +7,7 @@
     </h2>
     <ul v-if="category.accessList.length > 0">
       <li
-        v-for="access in category.accessList"
+        v-for="access in sortedAccesses"
         :key="access.title"
       >
         <UserAccess :access="access" />
@@ -18,6 +18,7 @@
 
 <script>
 import UserAccess from '@components/Accesses/AccessVisualization/UserAccess.vue'
+import _ from 'lodash'
 
 export default {
   name: 'UserAccessCategory',
@@ -26,6 +27,11 @@ export default {
     category: {
       type: Object,
       required: true
+    }
+  },
+  computed: {
+    sortedAccesses () {
+      return _.orderBy(this.category.accessList, 'position', 'asc')
     }
   }
 }

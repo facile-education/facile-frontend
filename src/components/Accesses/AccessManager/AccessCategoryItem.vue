@@ -44,7 +44,7 @@
 
     <ul v-else>
       <li
-        v-for="access in category.accessList"
+        v-for="access in sortedAccesses"
         :key="access.title"
       >
         <AccessItem
@@ -60,6 +60,7 @@
 import AccessCategoryInput from '@components/Accesses/AccessManager/AccessCategoryInput.vue'
 import AccessesPlaceholder from '@components/Accesses/AccessManager/AccessesPlaceholder.vue'
 import AccessItem from '@components/Accesses/AccessManager/AccessItem.vue'
+import _ from 'lodash'
 
 import { removeSchoolCategory, saveSchoolCategory } from '@/api/access.service'
 import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
@@ -84,6 +85,9 @@ export default {
     },
     selectedSchool () {
       return this.$store.state.accessManager.selectedSchool
+    },
+    sortedAccesses () {
+      return _.orderBy(this.category.accessList, 'position', 'asc')
     }
   },
   methods: {

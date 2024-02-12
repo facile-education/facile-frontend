@@ -18,8 +18,9 @@
 </template>
 
 <script>
+import { getThumbnailUrl } from '@utils/accessUtils'
+
 import Types from '@/constants/accessConstants'
-import { defaultImagesKeys } from '@/constants/icons'
 
 export default {
   name: 'UserAccess',
@@ -31,11 +32,7 @@ export default {
   },
   computed: {
     thumbnail () {
-      if (defaultImagesKeys.indexOf(this.access.thumbnailUrl) !== -1) {
-        return new URL(`../../../assets/images/${this.access.thumbnailUrl}.png`, import.meta.url).href
-      } else { // Returned url is a key for local default image
-        return this.access.thumbnailUrl + '&p_auth=' + this.$store.state.user.pauth
-      }
+      return getThumbnailUrl(this.access, this.$store)
     }
   },
   methods: {
@@ -48,7 +45,7 @@ export default {
           this.$router.push('/documents/groups/' + this.access.folderId)
           break
         case Types.TYPE_SHARED_FILE:
-          this.$store.dispatch('documents/openFile', { id: this.access.fileId + '', name: this.access.fileName, readOnly: true })
+          this.$store.dispatch('documents/openFile', { id: this.access.fileId + '', name: this.access.fileName, readOnly: false })
           break
         default:
           console.error('Unknown type: ' + this.access.type)
