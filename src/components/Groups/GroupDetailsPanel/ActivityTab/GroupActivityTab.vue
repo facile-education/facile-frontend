@@ -5,12 +5,12 @@
       style="z-index: 100"
     />
     <p
-      v-else-if="activityList.length === 0"
+      v-if="activityList.length === 0 && !activitiesLoading"
       v-t="('noActivity')"
       class="placeholder"
     />
     <div
-      v-else
+      v-else-if="activityList.length > 1"
       ref="scroll"
       class="activities"
       @scroll="handleScroll"
