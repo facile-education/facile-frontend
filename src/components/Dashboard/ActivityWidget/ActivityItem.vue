@@ -3,6 +3,7 @@
     <div
       class="activity-item"
       :class="{'theme-border-color': !isActivityRead, 'is-unread': !isActivityRead, 'theme-hover-border-color': isNewsActivity || isHHCActivity || isSessionActivity}"
+      data-test="activity-item"
     >
       <div
         v-if="!isActivityRead"
