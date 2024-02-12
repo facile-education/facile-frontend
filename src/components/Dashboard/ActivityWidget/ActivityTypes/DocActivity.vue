@@ -90,7 +90,7 @@ export default {
         case activityConstants.TYPE_FILE_MODIFICATION:
           return this.$t('TYPE_FILE_MODIFICATION')
         case activityConstants.TYPE_FILE_MOVE:
-          return this.$t('TYPE_FILE_CREATION')
+          return this.$t('TYPE_FILE_MOVE')
         case activityConstants.TYPE_FILE_DELETION:
           return this.$t('TYPE_FILE_DELETION')
         case activityConstants.TYPE_FOLDER_CREATION:
