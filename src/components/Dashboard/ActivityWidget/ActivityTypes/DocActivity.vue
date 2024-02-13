@@ -142,7 +142,7 @@ export default {
 <i18n locale="fr">
 {
   "TYPE_FILE_CREATION": "a partagé le fichier ",
-  "TYPE_FILE_MODIFICATION": "a modifié le fichier ",
+  "TYPE_FILE_MODIFICATION": "a renommé le fichier ",
   "TYPE_FILE_MOVE": "a déplacé le fichier ",
   "TYPE_FILE_DELETION": "a supprimé le fichier",
   "TYPE_FOLDER_CREATION": "a partagé le dossier ",
