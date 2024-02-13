@@ -20,9 +20,9 @@ function getThumbnailUrl (access, store) {
       case Types.TYPE_EXTERNAL_URL:
         return require('@assets/icons/documents/link.svg')
       case Types.TYPE_COLLABORATIVE_FOLDER:
-        return require('@assets/icons/documents/folder.svg')
+        return require('@assets/icons/documents/icon-folder.svg')
       case Types.TYPE_SHARED_FILE:
-        return require('@assets/icons/documents/file.svg')
+        return require('@assets/icons/documents/icon-file.svg')
       default:
         console.error('Unknown type: ' + access.type)
         break
