@@ -12,6 +12,7 @@ module.exports = defineConfig({
   videosFolder: 'tests/e2e/videos',
   watchForFileChanges: false,
   video: false,
+  chromeWebSecurity: false,
 
   e2e: {
     baseUrl: 'https://dev-ent-gve.com',
