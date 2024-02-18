@@ -5,12 +5,12 @@
         {{ getFullName(user) }}
       </span>
       <div class="optionsContainer">
-        <button
+        <!-- <button
           data-test="openUserCard"
           @click.stop="openUserCardModal"
         >
           UserCard
-        </button>
+        </button> -->
         <img
           v-if="!isSelected"
           src="@/assets/icons/add.svg"
