@@ -27,6 +27,8 @@
 
 <script>
 import { defineAsyncComponent } from 'vue'
+
+import { saveSchoolAccess } from '@/api/access.service'
 const SaveAccessModal = defineAsyncComponent(() => import('@components/Accesses/AccessManager/SaveAccessModal.vue'))
 
 export default {
@@ -52,6 +54,9 @@ export default {
     },
     draggedAccess () {
       return this.$store.state.accessManager.draggedAccess
+    },
+    selectedSchool () {
+      return this.$store.state.accessManager.selectedSchool
     }
   },
   methods: {
@@ -68,13 +73,15 @@ export default {
           oldCategory.accessList[index].position = index
         }
 
-        // Insert him in the good place in new category
-        const newCategory = newCategoryList[this.parentCategory.position]
-        newCategory.accessList.splice(0, 0, { ...this.draggedAccess })
-        // Recompute new category positions
-        for (let index = 0; index < newCategory.accessList.length; index++) {
-          newCategory.accessList[index].position = index
-        }
+        saveSchoolAccess(this.selectedSchool.schoolId, { ...this.draggedAccess, categoryId: this.parentCategory.categoryId, position: 0 }).then((data) => {
+          if (data.success) {
+            console.log(this.parentCategory)
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('saveSuccess'), type: 'success' })
+            this.$store.dispatch('accessManager/getSchoolAccesses') // Reload changes to assure to have the backend-data
+          } else {
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+          }
+        })
 
         // Save the new categoryList
         this.$store.commit('accessManager/setDraggedAccess', undefined)
