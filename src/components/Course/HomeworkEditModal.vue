@@ -77,7 +77,7 @@
           >
             <span v-t="homework.isWholeClass ? 'allStudents' : { path: 'someStudents', args: { count: homework.selectedStudents.length, total: availableStudents.length } }" />
             <img
-              src="@/assets/icons/chevron-right.svg"
+              src="@assets/icons/chevron_right2.svg"
               alt=""
             >
           </button>

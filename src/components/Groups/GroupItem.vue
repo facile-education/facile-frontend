@@ -39,7 +39,7 @@
       <img
         v-if="hasEditionRights"
         class="button"
-        src="@assets/edit.svg"
+        src="@assets/icons/pen.svg"
         data-test="edit-group-icon"
         :alt="$t('edit')"
         :title="$t('edit')"
@@ -52,7 +52,7 @@
       <img
         v-if="hasEditionRights"
         class="button"
-        src="@assets/trash.svg"
+        src="@/assets/icons/trash2.svg"
         data-test="delete-group-icon"
         :alt="$t('delete')"
         :title="$t('delete')"

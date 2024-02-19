@@ -25,7 +25,7 @@
               @click="removePicture"
             >
               <img
-                src="@/assets/icons/trash_white.svg"
+                src="@assets/icons/trash3.svg"
                 alt="trash"
               >
             </WeprodeButton>
@@ -39,7 +39,7 @@
               @click="toggleImagePicker"
             >
               <img
-                src="@/assets/icons/photo.svg"
+                src="@assets/icons/camera.svg"
                 alt="plus"
               >
             </WeprodeButton>

@@ -1,7 +1,7 @@
 <template>
   <button class="theme-background-color">
     <img
-      src="@/assets/icons/icon_plus_white.svg"
+      src="@assets/icons/add3.svg"
       alt="plus"
     >
   </button>

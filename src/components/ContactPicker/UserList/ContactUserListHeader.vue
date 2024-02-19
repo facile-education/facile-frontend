@@ -7,7 +7,7 @@
     >
       <img
         class="back-arrow"
-        src="@/assets/arrow_right.svg"
+        src="@assets/icons/chevron_right.svg"
         alt="back"
       >
     </button>

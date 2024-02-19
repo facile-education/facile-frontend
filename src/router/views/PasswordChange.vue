@@ -2,7 +2,7 @@
   <div class="password-change">
     <img
       class="lock-open"
-      src="@/assets/icons/lock-open.svg"
+      src="@assets/icons/lock2.svg"
       alt=""
     >
 
@@ -27,7 +27,7 @@
           @click="togglePassword1Type"
         >
           <img
-            src="@/assets/icons/eye-off.svg"
+            src="@assets/icons/eye_off.svg"
             alt=""
           >
         </button>
@@ -57,7 +57,7 @@
             @click="togglePassword2Type"
           >
             <img
-              src="@/assets/icons/eye-off.svg"
+              src="@assets/icons/eye_off.svg"
               alt=""
             >
           </button>

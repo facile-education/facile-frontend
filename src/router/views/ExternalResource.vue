@@ -3,7 +3,7 @@
     <div v-if="serviceSchoolUrls.length == 0 && selectedUrl === undefined">
       <img
         class="icon"
-        src="@/assets/images/ExternalResource/icon-external-service.png"
+        src="@/assets/images/icon-external-service.png"
         alt=""
       >
       <h3 v-t="{path: 'noConfigLabel', args: {resourceName:serviceName}}" />
@@ -34,7 +34,7 @@
       <div v-if="!isHttps">
         <img
           class="icon"
-          src="@/assets/images/ExternalResource/icon-external-service.png"
+          src="../../assets/images/icon-external-service.png"
           alt=""
         >
         <h3>{{ $t('newTabLabel', {resourceName: serviceName}) }}</h3>

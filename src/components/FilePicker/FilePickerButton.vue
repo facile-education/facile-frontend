@@ -7,7 +7,7 @@
   >
     <img
       class="icon"
-      src="@assets/options/icon_upload.svg"
+      src="@assets/icons/upload.svg"
       alt="upload"
     >
     <input

@@ -40,7 +40,7 @@
             >
               <img
                 class="button"
-                src="@assets/edit.svg"
+                src="@assets/icons/pen.svg"
                 :alt="$t('edit')"
               >
             </button>
@@ -52,7 +52,7 @@
             >
               <img
                 class="button"
-                src="@assets/trash.svg"
+                src="@/assets/icons/trash2.svg"
                 :alt="$t('delete')"
               >
             </button>

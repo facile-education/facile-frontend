@@ -20,7 +20,7 @@
         v-if="displayFolderRootIcon"
         ref="docIcon"
         class="img-icon"
-        :data="require('@assets/icons/documents/icon-folder.svg')"
+        :data="require('@assets/icons/folder3.svg')"
         type="image/svg+xml"
       />
 
@@ -53,7 +53,7 @@
         <img
           v-if="mq.phone || mq.tablet || hoverSelection"
           class="button"
-          src="@assets/options/icon_details.svg"
+          src="@assets/icons/details.svg"
           data-test="open-details-icon"
           :alt="$t('details')"
           :title="$t('details')"

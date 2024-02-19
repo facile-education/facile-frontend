@@ -24,7 +24,7 @@
       </span>
       <img
         v-if="mq.desktop"
-        src="@/assets/icons/chevron-up-white.svg"
+        src="@assets/icons/chevron_up.svg"
         alt=""
         class="chevron"
         :class="{'reverse': !isPopoverMenuDisplayed}"

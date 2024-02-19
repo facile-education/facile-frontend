@@ -27,7 +27,7 @@
       <img
         v-show="(!mq.phone && !mq.tablet) && index < (displayableBreadcrumb.length - 1)"
         class="chevron"
-        src="@assets/icon_big_arrow.svg"
+        src="@assets/icons/chevron_right3.svg"
         alt="right arrow"
       >
     </template>

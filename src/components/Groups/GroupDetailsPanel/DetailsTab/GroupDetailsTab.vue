@@ -18,21 +18,11 @@
       v-if="!group.isExpired && !group.isGroupRootFolder"
       class="actions"
     >
-      <!--a
-        href="#"
-        @click="publishNews"
-      >
-        <img
-          src="@assets/publish_news.svg"
-          alt=""
-        >
-        <span v-t="'publishNew'" />
-      </a-->
       <RouterLink
         :to="documentRoute"
       >
         <img
-          src="@assets/documents.svg"
+          src="@assets/icons/folder.svg"
           alt="image"
         >
         <span v-t="'accessToDocuments'" />

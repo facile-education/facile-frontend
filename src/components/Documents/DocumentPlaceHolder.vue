@@ -7,13 +7,13 @@
       <img
         v-if="isLoadDocumentsError"
         class="icon"
-        src="@/assets/options/loadingErrorPlaceholder.svg"
+        src="@assets/icons/alert_file.svg"
         alt=""
       >
       <img
         v-else
         class="icon"
-        src="@/assets/options/emptyFolderPlaceholder.svg"
+        src="@assets/icons/add_file.svg"
         alt=""
       >
       <div

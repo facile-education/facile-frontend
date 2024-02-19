@@ -19,7 +19,7 @@
       <li v-if="!mq.tablet && !mq.phone">
         <IconOption
           class="button"
-          :icon="require('@assets/icon_engrenage.svg')"
+          :icon="require('@assets/icons/parameters.svg')"
           :title="$t('Messaging.Parameters.header')"
           name="toggleParameters"
           icon-height="18px"
@@ -30,7 +30,7 @@
       <li v-if="!mq.tablet && !mq.phone">
         <IconOption
           class="button"
-          :icon="require('@/assets/options/icon_menu_lateral.svg')"
+          :icon="require('@assets/icons/side_menu.svg')"
           :title="isMenuPanelDisplayed ? $t('hideMenuPanel') : $t('displayMenuPanel')"
           name="toggleMessagingMenu"
           icon-height="18px"
@@ -41,7 +41,7 @@
       <li v-if="!mq.tablet && !mq.phone">
         <IconOption
           class="button"
-          :icon="require('@/assets/options/icon_refresh.svg')"
+          :icon="require('@assets/icons/refresh.svg')"
           :title="$t('refresh')"
           name="refresh"
           icon-height="18px"
@@ -52,7 +52,7 @@
       <li v-if="mq.tablet || mq.phone">
         <IconOption
           class="button"
-          :icon="require('@assets/icon_list.svg')"
+          :icon="require('@assets/icons/burger2.svg')"
           :title="$t('Messaging.multiSelection')"
           name="toggleMultiSelection"
           icon-height="15px"
@@ -64,7 +64,7 @@
         <IconOption
           v-if="selectedThreads.length > 0 && isMultiSelectionActive"
           class="button"
-          :icon="require('@/assets/icons/vertical_dots.svg')"
+          :icon="require('@assets/icons/dots.svg')"
           title="options"
           name="options"
           icon-height="18px"

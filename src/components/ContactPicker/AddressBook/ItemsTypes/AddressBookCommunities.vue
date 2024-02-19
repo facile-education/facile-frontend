@@ -1,7 +1,7 @@
 <template>
   <AddressBookItem
     :title="$t('communities')"
-    :icon="require('@assets/icons/communities.svg')"
+    :icon="require('@assets/icons/users.svg')"
   >
     <AddressBookItem
       v-for="community in sortedCommunities"

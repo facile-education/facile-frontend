@@ -9,7 +9,7 @@
         @click="unselectCourse"
       >
         <img
-          src="@/assets/icons/chevron-right.svg"
+          src="@assets/icons/chevron_right2.svg"
           alt=""
         >
         <span v-t="'back'" />

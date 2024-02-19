@@ -11,7 +11,7 @@
         @click="toggleSideMenuPanel"
       >
         <img
-          :src="require('@assets/arrow_right.svg')"
+          :src="require('@assets/icons/chevron_right.svg')"
           alt="open menu"
         >
         <span v-t="'Messaging.boxes'" />

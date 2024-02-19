@@ -15,13 +15,13 @@ const formatNonUsualSlot = (sessions) => {
     event.options.push({
       name: 'showStudentList',
       label: i18n.global.t('CalendarEventOptions.showStudentList'),
-      icon: require('@assets/icons/list.svg')
+      icon: require('@assets/icons/burger3.svg')
     })
     if (event.canUpdateSlot) {
       event.options.push({
         name: 'updateSlot',
         label: i18n.global.t('CalendarEventOptions.update'),
-        icon: require('@assets/icons/pencil.svg')
+        icon: require('@assets/icons/pen2.svg')
       })
       event.options.push({
         name: 'deleteSlot',
@@ -149,7 +149,7 @@ export const mutations = {
           event.options.unshift({
             name: 'registerStudent',
             label: i18n.global.t('CalendarEventOptions.registerStudent'),
-            icon: require('@assets/icons/add-user.svg')
+            icon: require('@assets/icons/add_user.svg')
           })
         }
       })

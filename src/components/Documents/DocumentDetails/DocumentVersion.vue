@@ -16,7 +16,7 @@
           <div>{{ version.viewCount }}</div>
           <img
             class="icon"
-            src="@/assets/options/icon_see.svg"
+            src="@assets/icons/eye.svg"
             alt=""
           >
         </div>
@@ -53,7 +53,7 @@
         @click="viewVersion"
       >
         <img
-          src="@/assets/options/icon_see.svg"
+          src="../../../assets/icons/eye.svg"
           alt=""
         >
         {{ $t('Documents.documentDetails.viewVersion') }}

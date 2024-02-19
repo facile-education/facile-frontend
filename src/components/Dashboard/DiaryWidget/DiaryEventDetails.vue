@@ -66,7 +66,7 @@
             </span>
             <span>
               <img
-                src="@/assets/history.svg"
+                src="@/assets/icons/history.svg"
                 alt=""
               >
               {{ formattedRangeDate }}

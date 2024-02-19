@@ -279,7 +279,7 @@ export const actions = {
 
       if (data.breadcrumb) {
         for (let i = 0; i < data.breadcrumb.length; ++i) { // Because all documents in breadcrumb are folders, add folder icon
-          data.breadcrumb[i].icon = require('@assets/icons/documents/icon-folder.svg')
+          data.breadcrumb[i].icon = require('@assets/icons/folder3.svg')
         }
         commit('setBreadcrumb', data.breadcrumb)
       } else {
@@ -296,7 +296,7 @@ export const actions = {
       this.dispatch('currentActions/removeAction', { name: 'getBreadcrumb' })
       if (data.success && data.breadCrumb) {
         for (let i = 0; i < data.breadCrumb.length; ++i) { // Because all documents in breadcrumb are folders, add folder icon
-          data.breadCrumb[i].icon = require('@assets/icons/documents/icon-folder.svg')
+          data.breadCrumb[i].icon = require('@assets/icons/folder3.svg')
           data.breadCrumb[i].isGroupDirectory = true
         }
         commit('setBreadcrumb', data.breadCrumb)

@@ -28,7 +28,7 @@
       <img
         v-if="option.subMenu"
         class="arrow-down"
-        src="@assets/arrow-down.svg"
+        src="@assets/icons/chevron_down.svg"
         alt=""
       >
     </button>

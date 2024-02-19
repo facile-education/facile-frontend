@@ -26,7 +26,7 @@
           >
             <img
               class="contact-icon"
-              src="@/assets/icons/messaging_sent.svg"
+              src="@assets/icons/sent2.svg"
               :alt="$t('contact')"
             >
             <span v-t="'Contacter'" />

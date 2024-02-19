@@ -5,7 +5,7 @@
       class="search-history-text"
     >
       <img
-        src="@/assets/history.svg"
+        src="@/assets/icons/history.svg"
         alt=""
       >
       <span>{{ $t('history') }} </span>

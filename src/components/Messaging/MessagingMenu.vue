@@ -21,7 +21,7 @@
             ref="inboxFolder"
             class="base-folder"
             :folder="inboxFolder"
-            :icon="require('@assets/icon_reception.svg')"
+            :icon="require('@assets/icons/inbox.svg')"
             :drop-allowed="true"
             icon-width="21px"
             alt="icon reception"
@@ -32,7 +32,7 @@
           <MenuRootFolder
             class="base-folder"
             :folder="draftFolder"
-            :icon="require('@assets/icons/messaging_draft.svg')"
+            :icon="require('@assets/icons/draft2.svg')"
             :drop-allowed="true"
             icon-width="16px"
             alt="icon draft"
@@ -43,7 +43,7 @@
           <MenuRootFolder
             class="base-folder"
             :folder="sentFolder"
-            :icon="require('@assets/icons/messaging_sent.svg')"
+            :icon="require('@assets/icons/sent2.svg')"
             :drop-allowed="true"
             icon-width="19px"
             alt="icon sent"
@@ -68,7 +68,7 @@
           >
             <div class="icon-container">
               <img
-                src="@assets/icons/messaging_folders.svg"
+                src="@assets/icons/folder5.svg"
                 alt=""
                 class="folder-icon"
               >

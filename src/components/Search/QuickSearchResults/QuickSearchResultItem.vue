@@ -110,23 +110,23 @@ export default {
     icon () {
       switch (this.searchResult.service) {
         case searchConstants.TYPE_NEWS:
-          return require('@assets/images/default_school_news_0.svg')
+          return require('@assets/images/defaultImages/default_school_news_0.svg')
         case searchConstants.TYPE_NEWS_FILE:
-          return require('@assets/icons/documents/icon-file.svg')
+          return require('@assets/icons/file.svg')
         case searchConstants.TYPE_MESSAGE:
-          return require('@assets/menu_messaging_black.svg') // TODO mail icon
+          return require('@assets/icons/message.svg') // TODO mail icon
         case searchConstants.TYPE_MESSAGE_FILE:
-          return require('@assets/icons/documents/icon-file.svg')
+          return require('@assets/icons/file.svg')
         case searchConstants.TYPE_FOLDER:
-          return require('@assets/icons/documents/icon-folder.svg')
+          return require('@assets/icons/folder3.svg')
         case searchConstants.TYPE_FILE:
-          return require('@assets/icons/documents/icon-file.svg')
+          return require('@assets/icons/file.svg')
         case searchConstants.TYPE_COLLABORATIVE_FILE:
-          return require('@assets/icons/documents/icon-file.svg')
+          return require('@assets/icons/file.svg')
         case searchConstants.TYPE_COLLABORATIVE_FOLDER:
-          return require('@assets/icons/documents/icon-folder.svg')
+          return require('@assets/icons/folder3.svg')
         case searchConstants.TYPE_EVENT:
-          return require('@assets/icons/documents/icon-file.svg')
+          return require('@assets/icons/file.svg')
         default:
           console.warn('Unknown entity type', this.searchResult)
           return undefined

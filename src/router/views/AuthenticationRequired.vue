@@ -2,7 +2,7 @@
   <h1 :aria-label="$t('title')" />
   <div class="error">
     <img
-      src="@/assets/user.svg"
+      src="@/assets/icons/user.svg"
       alt=""
     >
     <h2 v-t="'authRequired'" />

@@ -45,7 +45,7 @@
         <img
           height="16"
           width="16"
-          :src="require('@assets/icons/vertical_dots.svg')"
+          :src="require('@assets/icons/dots.svg')"
           alt="options"
         >
       </button>
@@ -64,7 +64,7 @@
           @keyup.stop
         >
           <img
-            src="@/assets/icons/pencil.svg"
+            src="@assets/icons/pen2.svg"
             alt="edit"
           >
         </button>

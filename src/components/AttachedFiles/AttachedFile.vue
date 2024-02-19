@@ -48,7 +48,7 @@
         <img
           height="16"
           width="16"
-          :src="require('@/assets/icons/vertical_dots.svg')"
+          :src="require('@assets/icons/dots.svg')"
           alt="options"
         >
       </button>

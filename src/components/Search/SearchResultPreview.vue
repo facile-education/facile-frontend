@@ -83,7 +83,7 @@
         >
           <img
             class="img-icon"
-            src="@assets/icons/documents/icon-file.svg"
+            src="@assets/icons/file.svg"
             alt="file icon"
           >
           {{ attachedFile }}

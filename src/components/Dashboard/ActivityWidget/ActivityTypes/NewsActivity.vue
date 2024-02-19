@@ -61,7 +61,7 @@
       <img
         height="16"
         width="16"
-        :src="require('@assets/icons/vertical_dots.svg')"
+        :src="require('@assets/icons/dots.svg')"
         alt="options"
       >
     </button>
@@ -79,7 +79,7 @@
         @keyup.stop
       >
         <img
-          src="@/assets/icons/pencil.svg"
+          src="@assets/icons/pen2.svg"
           alt="edit"
         >
       </button>
@@ -167,7 +167,7 @@ export default {
   computed: {
     thumbnail () {
       if (defaultImagesKeys.indexOf(this.news.thumbnailUrl) !== -1) {
-        return new URL(`../../../../assets/images/${this.news.thumbnailUrl}.svg`, import.meta.url).href
+        return new URL(`../../../../assets/images/defaultImages/${this.news.thumbnailUrl}.svg`, import.meta.url).href
       } else { // Returned url is a key for local default image
         return this.news.thumbnailUrl
       }

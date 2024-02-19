@@ -8,7 +8,7 @@
       <span>{{ ' ' + title }}</span>
       <img
         :class="isCollapsed ? 'extend': 'collapse'"
-        src="@assets/arrow-right.svg"
+        src="@assets/icons/chevron_right.svg"
         :alt="isCollapsed ? $t('unCollapse') : $t('collapse')"
         :title="isCollapsed ? $t('unCollapse') : $t('collapse')"
       >

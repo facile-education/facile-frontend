@@ -4,13 +4,13 @@
       <img
         v-if="isCourse"
         class="img-icon"
-        src="@/assets/seance.svg"
+        src="@assets/icons/course_content.svg"
         alt="group icon"
       >
       <img
         v-else
         class="img-icon"
-        src="@/assets/devoir.svg"
+        src="@assets/icons/homework.svg"
         alt="group icon"
       >
     </div>

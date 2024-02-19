@@ -15,21 +15,21 @@
       <img
         v-if="message.hasAttachFiles"
         class="icon attached-file-icon"
-        :src="require('@assets/icon_pj.svg')"
+        :src="require('@assets/icons/paperclip.svg')"
         alt="has attached files"
         :title="$t('Messaging.hasAttachedFiles')"
       >
       <img
         v-if="message.isAnswered"
         class="icon answered-icon"
-        :src="require('@assets/options/icon_answer.svg')"
+        :src="require('@assets/icons/answer.svg')"
         alt="is answered"
         :title="$t('Messaging.answered')"
       >
       <img
         v-if="message.isForwarded"
         class="icon forwarded-icon"
-        :src="require('@assets/options/icon_share.svg')"
+        :src="require('@assets/icons/share.svg')"
         alt="is forwarded"
         :title="$t('Messaging.forwarded')"
       >

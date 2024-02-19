@@ -95,15 +95,15 @@ export default {
     folderIcon () {
       switch (this.message.folderName) { // TODO use a kee which deserve this name
         case 'Boîte de réception':
-          return require('@/assets/icon_reception.svg')
+          return require('@assets/icons/inbox.svg')
         case 'Brouillons':
-          return require('@/assets/icon_fichier.svg')
+          return require('@assets/icons/draft.svg')
         case 'Envoyés':
-          return require('@/assets/icon_envoyes.svg')
+          return require('@assets/icons/sent.svg')
         case 'Corbeille':
           return require('@/assets/icons/trash.svg')
         default:
-          return require('@/assets/icon_messaging_folder.svg')
+          return require('@assets/icons/folder4.svg')
       }
     }
   },

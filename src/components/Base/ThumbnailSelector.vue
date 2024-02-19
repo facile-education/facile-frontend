@@ -10,7 +10,7 @@
     >
     <span class="update-icon-container">
       <img
-        src="@/assets/icons/pencil.svg"
+        src="@assets/icons/pen2.svg"
         alt=""
       >
     </span>

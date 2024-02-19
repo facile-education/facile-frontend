@@ -18,11 +18,11 @@ function getThumbnailUrl (access, store) {
     // Pick default image depending on accesse's type
     switch (access.type) {
       case Types.TYPE_EXTERNAL_URL:
-        return require('@assets/icons/documents/link.svg')
+        return require('@assets/icons/link.svg')
       case Types.TYPE_COLLABORATIVE_FOLDER:
-        return require('@assets/icons/documents/icon-folder.svg')
+        return require('@assets/icons/folder3.svg')
       case Types.TYPE_SHARED_FILE:
-        return require('@assets/icons/documents/icon-file.svg')
+        return require('@assets/icons/file.svg')
       default:
         console.error('Unknown type: ' + access.type)
         break

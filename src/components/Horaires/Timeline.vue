@@ -13,7 +13,7 @@
     >
       <img
         class="reverse-icon"
-        src="@/assets/icons/chevron-right.svg"
+        src="@assets/icons/chevron_right2.svg"
         :alt="$t('previous')"
       >
     </button>
@@ -39,7 +39,7 @@
       @click="onClickNext()"
     >
       <img
-        src="@/assets/icons/chevron-right.svg"
+        src="@assets/icons/chevron_right2.svg"
         :alt="$t('next')"
       >
     </button>

@@ -6,7 +6,7 @@
         :to="'/' + $t('Menu.route.dashboard')"
       >
         <img
-          src="@assets/arrow-left.svg"
+          src="@assets/icons/chevron_left.svg"
           :alt="$t('dashboard')"
           :title="$t('dashboard')"
         >

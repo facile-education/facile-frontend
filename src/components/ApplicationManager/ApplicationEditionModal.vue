@@ -26,7 +26,7 @@
             @click.stop="removeLogo"
           >
             <img
-              src="@assets/icons/trash_white.svg"
+              src="@/assets/icons/trash3.svg"
               :alt="$t('deleteButtonTooltip')"
             >
           </WeprodeButton>

@@ -100,7 +100,7 @@
                 @click.stop="togglePasswordType"
               >
                 <img
-                  src="@/assets/icons/eye-off.svg"
+                  src="@assets/icons/eye_off.svg"
                   alt=""
                 >
               </button>

@@ -13,7 +13,7 @@
         ref="PTRIcon"
         class="pull-to-refresh-icon"
         :class="{'is-waiting': isWaiting}"
-        :icon="require('@/assets/options/icon_refresh.svg')"
+        :icon="require('@assets/icons/refresh.svg')"
         :title="$t('refresh')"
         name="refresh"
         icon-height="20px"
@@ -40,7 +40,7 @@
       >
         <div v-t="currentFolder.type === 1 ? (isReadOnlyToggled ? 'noNewMessage' : 'noMessage') : 'emptyFolder'" />
         <img
-          src="@assets/messaging_placeholder.svg"
+          src="@/assets/icons/messaging_placeholder.svg"
           alt=""
         >
       </div>

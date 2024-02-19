@@ -25,13 +25,13 @@
         <div class="evolution">
           <img
             v-if="isIncreasing"
-            src="@/assets/images/stat_increase_arrow.svg"
+            src="@/assets/icons/stat_increase_arrow.svg"
             alt=""
             class="evolution-icon"
           >
           <img
             v-if="isDecreasing"
-            src="@/assets/images/stat_decrease_arrow.svg"
+            src="@/assets/icons/stat_decrease_arrow.svg"
             alt=""
             class="evolution-icon"
           >

@@ -11,7 +11,7 @@
       <IconOption
         v-if="mq.phone || mq.tablet"
         class="header-icon back-arrow"
-        :icon="require('@assets/arrow_right.svg')"
+        :icon="require('@assets/icons/chevron_right.svg')"
         name="back"
         icon-height="20px"
         alt="back"
@@ -38,7 +38,7 @@
           <IconOption
             v-if="isActionEnabled && !isDraft && !isSenderDeleted"
             class="header-icon"
-            :icon="require('@assets/options/icon_answer.svg')"
+            :icon="require('@assets/icons/answer.svg')"
             :title="$t('Messaging.reply')"
             name="reply"
             icon-height="18px"
@@ -54,7 +54,7 @@
           <IconOption
             v-if="isActionEnabled && !isDraft && !isSenderDeleted"
             class="header-icon"
-            :icon="require('@assets/options/icon_answer_all.svg')"
+            :icon="require('@assets/icons/answer_all.svg')"
             :title="$t('Messaging.replyAll')"
             name="replyAll"
             icon-height="18px"
@@ -70,7 +70,7 @@
           <IconOption
             v-if="isActionEnabled && !isDraft"
             class="header-icon"
-            :icon="require('@assets/options/icon_share.svg')"
+            :icon="require('@assets/icons/share.svg')"
             :title="$t('Messaging.forward')"
             name="forward"
             icon-height="18px"
@@ -82,7 +82,7 @@
           <IconOption
             v-if="isDraftEditionEnabled && isDraft"
             class="header-icon"
-            :icon="require('@assets/icons/pencil.svg')"
+            :icon="require('@assets/icons/pen2.svg')"
             :title="$t('Messaging.editDraft')"
             name="editDraft"
             icon-height="18px"
@@ -121,7 +121,7 @@
       >
         <div v-t="'noSelectedMessage'" />
         <img
-          src="@assets/messaging_placeholder.svg"
+          src="@/assets/icons/messaging_placeholder.svg"
           alt=""
         >
       </div>

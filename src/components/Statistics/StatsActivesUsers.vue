@@ -2,7 +2,7 @@
   <section v-if="nbUsers !== undefined">
     <span class="theme-text-color">
       <img
-        src="@/assets/user.svg"
+        src="@/assets/icons/user.svg"
         alt=""
       >
       <AnimatedCounter

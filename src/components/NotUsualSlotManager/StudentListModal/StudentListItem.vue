@@ -26,7 +26,7 @@
         @click="isStudentDeregistrationModalDisplayed = true"
       >
         <img
-          src="@assets/icons/out.svg"
+          src="@assets/icons/leave2.svg"
           :alt="$t('NotUsualSlots.StudentListModal.unsubscribe')"
         >
       </button>

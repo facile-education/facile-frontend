@@ -6,7 +6,7 @@
     @click="clickBack"
   >
     <img
-      src="@assets/icon_arrow_left.svg"
+      src="@assets/icons/chevron_left2.svg"
       class="image"
       :alt="$t('goBack')"
     >
