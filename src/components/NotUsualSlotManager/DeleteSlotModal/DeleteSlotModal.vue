@@ -134,7 +134,7 @@ export default {
     deleteSlot () {
       schoolLifeService.deleteSlot(
         this.initEvent.sessionId,
-        this.deleteStartDate.format(DATE_EXCHANGE_FORMAT), // convert from calendar format to back-end format
+        this.deleteStartDate.hour(4).format(DATE_EXCHANGE_FORMAT), // Set hour early in the morning
         this.deleteEndDate.format(DATE_EXCHANGE_FORMAT)
       ).then((data) => {
         if (data.success) {
