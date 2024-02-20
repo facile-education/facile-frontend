@@ -36,17 +36,17 @@
       type="circle"
       cls="delete"
       class="delete-button"
+      :aria-label="$t('deleteButtonTooltip')"
+      :title="$t('deleteButtonTooltip')"
       @click="remove"
     >
-      <img
-        src="@/assets/icons/trash3.svg"
-        :alt="$t('deleteButtonTooltip')"
-      >
+      <CustomIcon :icon-name="'icon-trash'" />
     </WeprodeButton>
   </div>
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import { useVuelidate } from '@vuelidate/core'
 import { requiredIf } from '@vuelidate/validators'
 
@@ -56,7 +56,7 @@ import WeprodeTagsInput from '@/components/Base/Weprode/WeprodeTagsInput.vue'
 
 export default {
   name: 'RuleItem',
-  components: { WeprodeButton, WeprodeErrorMessage, WeprodeTagsInput },
+  components: { CustomIcon, WeprodeButton, WeprodeErrorMessage, WeprodeTagsInput },
   inject: ['mq'],
   props: {
     rule: {
@@ -168,14 +168,14 @@ export default {
   margin: auto;
 }
 
+.icon-trash {
+  color: white;
+}
+
 .delete-button {
   display: flex;
   align-items: center;
   justify-content: center;
-
-  img {
-    height: 18px;
-  }
 }
 
 .phone {

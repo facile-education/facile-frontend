@@ -114,7 +114,7 @@ export default {
         case searchConstants.TYPE_NEWS_FILE:
           return require('@assets/icons/file.svg')
         case searchConstants.TYPE_MESSAGE:
-          return require('@assets/icons/message.svg') // TODO mail icon
+          return require('@assets/icons/message.svg')
         case searchConstants.TYPE_MESSAGE_FILE:
           return require('@assets/icons/file.svg')
         case searchConstants.TYPE_FOLDER:

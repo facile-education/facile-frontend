@@ -40,7 +40,7 @@
         @click.stop="isUpdateModalDisplayed = true"
       >
         <img
-          src="@/assets/icons/pen2.svg"
+          src="@assets/icons/pen.svg"
           alt="edit"
         >
       </button>

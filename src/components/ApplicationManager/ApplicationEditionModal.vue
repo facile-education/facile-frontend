@@ -23,12 +23,11 @@
             v-if="application.image"
             type="circle"
             class="remove-logo delete"
+            :title="$t('deleteButtonTooltip')"
+            :aria-label="$t('deleteButtonTooltip')"
             @click.stop="removeLogo"
           >
-            <img
-              src="@/assets/icons/trash3.svg"
-              :alt="$t('deleteButtonTooltip')"
-            >
+            <CustomIcon :icon-name="'icon-trash'" />
           </WeprodeButton>
 
           <img
@@ -191,6 +190,7 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import WeprodeUtils from '@utils/weprode.utils'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
@@ -208,7 +208,7 @@ import NeroIcon from '@/components/Nero/NeroIcon'
 
 export default {
   name: 'ApplicationEditionModal',
-  components: { ImagePicker, NeroIcon, WeprodeAutocomplete, WeprodeButton, WeprodeCheckbox, WeprodeErrorMessage, WeprodeInput, WeprodeRadioButton, WeprodeTagsInput, WeprodeWindow },
+  components: { CustomIcon, ImagePicker, NeroIcon, WeprodeAutocomplete, WeprodeButton, WeprodeCheckbox, WeprodeErrorMessage, WeprodeInput, WeprodeRadioButton, WeprodeTagsInput, WeprodeWindow },
   inject: ['mq'],
   setup: () => ({ v$: useVuelidate() }),
   data () {
@@ -374,6 +374,10 @@ export default {
   position: absolute;
   top: 0;
   right: 0;
+}
+
+.icon-trash {
+  color: white;
 }
 
 .logo {

@@ -9,7 +9,7 @@ const manageSessionsOptions = (sessions) => {
       event.options.push({
         name: 'saveTeacherSubstitute',
         label: i18n.global.t('CalendarEventOptions.saveTeacherSubstitute'),
-        icon: require('@assets/icons/pen2.svg')
+        icon: require('@assets/icons/pen.svg')
       })
     }
   })

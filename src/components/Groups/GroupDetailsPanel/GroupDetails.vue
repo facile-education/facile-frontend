@@ -48,13 +48,10 @@
               class="option"
               data-test="delete-group-option"
               :title="$t('Groups.GroupDetails.delete')"
+              :aria-label="$t('Groups.GroupDetails.delete')"
               @click="confirmGroupDeletion"
             >
-              <img
-                class="button"
-                src="@/assets/icons/trash2.svg"
-                :alt="$t('Groups.GroupDetails.delete')"
-              >
+              <CustomIcon :icon-name="'icon-trash'" />
             </button>
           </div>
         </div>
@@ -241,9 +238,13 @@ export default {
       padding: 5px;
       cursor: pointer;
       background-color: transparent;
+      height: 32px;
+      display: flex;
+      align-items: center;
 
       img {
         border: 1px solid transparent;
+          height: 16px;
       }
 
       &:hover {

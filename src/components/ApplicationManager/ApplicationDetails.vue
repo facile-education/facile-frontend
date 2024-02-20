@@ -90,20 +90,20 @@
     <WeprodeButton
       v-if="isAdministrator && isAdministratorMode"
       :title="$t('ApplicationManager.ApplicationDetails.deleteButtonTooltip')"
+      :aria-label="$t('ApplicationManager.ApplicationDetails.deleteButtonTooltip')"
       class="delete-button"
       type="circle"
       cls="delete"
       @click="confirmRemoval"
     >
-      <img
-        src="@/assets/icons/trash3.svg"
-        :alt="$t('ApplicationManager.ApplicationDetails.deleteButtonTooltip')"
-      >
+      <CustomIcon :icon-name="'icon-trash'" />
     </WeprodeButton>
   </div>
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
+
 import { exportApplicationUserList } from '@/api/applicationManager.service'
 import RuleLabel from '@/components/ApplicationManager/RuleLabel'
 import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
@@ -115,6 +115,7 @@ import NeroIcon from '@/components/Nero/NeroIcon'
 export default {
   name: 'ApplicationDetails',
   components: {
+    CustomIcon,
     NeroIcon,
     RuleLabel,
     WeprodeButton,
@@ -268,7 +269,7 @@ p {
 }
 
 .export-list {
-  margin-bottom: 10px 0;
+  margin-bottom: 10px;
   margin-right: 10px;
 }
 
@@ -281,6 +282,10 @@ p {
   border-radius: $light-radius-size;
 }
 
+.icon-trash {
+  color: white;
+}
+
 .phone {
   &.action {
     flex-direction: row;
@@ -288,7 +293,6 @@ p {
 
   &.content {
     margin-left: 0;
-    /*overflow: ;*/
     border: none;
   }
 }

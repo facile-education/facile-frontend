@@ -8,7 +8,7 @@
     <img
       v-if="isHovering"
       data-test="send-message"
-      src="@assets/icons/message2.svg"
+      src="@assets/icons/message.svg"
       :alt="$t('Groups.DetailsTabMember.send-message')"
       :title="$t('Groups.DetailsTabMember.send-message')"
       @click="openCreateMessageModal"

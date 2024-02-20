@@ -1,15 +1,15 @@
 <template>
   <button class="theme-background-color">
-    <img
-      src="@assets/icons/add3.svg"
-      alt="plus"
-    >
+    <CustomIcon :icon-name="'icon-plus'" />
   </button>
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
+
 export default {
-  name: 'CreateButton'
+  name: 'CreateButton',
+  components: { CustomIcon }
 }
 </script>
 

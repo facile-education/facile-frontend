@@ -24,10 +24,7 @@
               cls="cancel delete"
               @click="removePicture"
             >
-              <img
-                src="@assets/icons/trash3.svg"
-                alt="trash"
-              >
+              <CustomIcon :icon-name="'icon-trash'" />
             </WeprodeButton>
 
             <WeprodeButton
@@ -82,6 +79,7 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import UserPicture from '@components/Base/UserPicture.vue'
 import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import ColorPicker from '@components/Nero/ColorPicker'
@@ -94,7 +92,7 @@ const ImagePickerModal = defineAsyncComponent(() => import('@/components/Nero/Im
 
 export default {
   name: 'AccountTab',
-  components: { WeprodeButton, UserPicture, ColorPicker, ImagePickerModal, WeprodeSpinner },
+  components: { CustomIcon, WeprodeButton, UserPicture, ColorPicker, ImagePickerModal, WeprodeSpinner },
   emits: ['save'],
   data () {
     return {
@@ -236,6 +234,9 @@ h4 {
 
           img {
             height: 16px;
+          }
+          .icon-trash {
+            color: white;
           }
         }
       }

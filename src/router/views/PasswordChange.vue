@@ -2,7 +2,7 @@
   <div class="password-change">
     <img
       class="lock-open"
-      src="@assets/icons/lock2.svg"
+      src="@assets/icons/lock.svg"
       alt=""
     >
 

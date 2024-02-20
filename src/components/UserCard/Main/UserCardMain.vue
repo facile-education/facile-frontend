@@ -26,7 +26,7 @@
           >
             <img
               class="contact-icon"
-              src="@assets/icons/sent2.svg"
+              src="@assets/icons/sent.svg"
               :alt="$t('UserCard.UserCardMain.contact')"
             >
             <span v-t="'Contacter'" />

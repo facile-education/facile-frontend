@@ -78,7 +78,7 @@
           @keyup.stop
         >
           <img
-            src="@assets/icons/pen2.svg"
+            src="@assets/icons/pen.svg"
             alt="edit"
           >
         </button>

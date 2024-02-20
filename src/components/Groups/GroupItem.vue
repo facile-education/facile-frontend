@@ -36,28 +36,33 @@
         v-if="hasEditionRights"
         class="separator"
       />
-      <img
+      <button
         v-if="hasEditionRights"
         class="button"
-        src="@assets/icons/pen.svg"
         data-test="edit-group-icon"
-        :alt="$t('Groups.GroupItem.edit')"
         :title="$t('Groups.GroupItem.edit')"
+        :aria-label="$t('Groups.GroupItem.edit')"
         @click.stop="editGroup()"
       >
+        <img
+          src="@assets/icons/pen.svg"
+          :alt="$t('edit')"
+        >
+      </button>
       <div
         v-if="hasEditionRights"
         class="separator"
       />
-      <img
+      <button
         v-if="hasEditionRights"
         class="button"
-        src="@/assets/icons/trash2.svg"
         data-test="delete-group-icon"
-        :alt="$t('Groups.GroupItem.delete')"
         :title="$t('Groups.GroupItem.delete')"
+        :aria-label="$t('Groups.GroupItem.delete')"
         @click.stop="confirmGroupDeletion()"
       >
+        <CustomIcon :icon-name="'icon-trash'" />
+      </button>
     </div>
 
     <div
@@ -87,6 +92,7 @@
 
 <script>
 
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import { defineAsyncComponent } from 'vue'
 
 import { extendCommunity } from '@/api/groups.service'
@@ -95,7 +101,7 @@ const EditGroupModal = defineAsyncComponent(() => import('@components/Groups/Edi
 
 export default {
   name: 'GroupItem',
-  components: { EditGroupModal, WeprodeSpinner },
+  components: { CustomIcon, EditGroupModal, WeprodeSpinner },
   inject: ['mq'],
   props: {
     group: {
@@ -278,9 +284,15 @@ export default {
     border-radius: 5px;
     padding: 5px;
     cursor: pointer;
+    background-color: transparent;
+    display: flex;
 
     &:hover {
       border: 1px solid grey;
+    }
+
+    img {
+      height: 16px;
     }
   }
 

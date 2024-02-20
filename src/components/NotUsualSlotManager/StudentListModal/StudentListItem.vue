@@ -26,7 +26,7 @@
         @click="isStudentDeregistrationModalDisplayed = true"
       >
         <img
-          src="@assets/icons/leave2.svg"
+          src="@assets/icons/leave.svg"
           :alt="$t('NotUsualSlots.StudentListModal.unsubscribe')"
         >
       </button>
@@ -168,8 +168,8 @@ button {
   align-items: center;
 
   img {
-    height: 20px;
-    width: 20px;
+    height: 24px;
+    width: 24px;
   }
 }
 

@@ -32,7 +32,7 @@
           <MenuRootFolder
             class="base-folder"
             :folder="draftFolder"
-            :icon="require('@assets/icons/draft2.svg')"
+            :icon="require('@assets/icons/draft.svg')"
             :drop-allowed="true"
             icon-width="16px"
             alt="icon draft"
@@ -43,7 +43,7 @@
           <MenuRootFolder
             class="base-folder"
             :folder="sentFolder"
-            :icon="require('@assets/icons/sent2.svg')"
+            :icon="require('@assets/icons/sent.svg')"
             :drop-allowed="true"
             icon-width="19px"
             alt="icon sent"

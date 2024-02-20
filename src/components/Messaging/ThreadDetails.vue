@@ -82,7 +82,7 @@
           <IconOption
             v-if="isDraftEditionEnabled && isDraft"
             class="header-icon"
-            :icon="require('@assets/icons/pen2.svg')"
+            :icon="require('@assets/icons/pen.svg')"
             :title="$t('Messaging.editDraft')"
             name="editDraft"
             icon-height="18px"

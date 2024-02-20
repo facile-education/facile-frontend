@@ -21,7 +21,7 @@ const formatNonUsualSlot = (sessions) => {
       event.options.push({
         name: 'updateSlot',
         label: i18n.global.t('CalendarEventOptions.update'),
-        icon: require('@assets/icons/pen2.svg')
+        icon: require('@assets/icons/pen.svg')
       })
       event.options.push({
         name: 'deleteSlot',

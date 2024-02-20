@@ -42,7 +42,7 @@
           @click.stop="toggleFolderNameInput"
         >
           <img
-            src="@assets/icons/pen2.svg"
+            src="@assets/icons/pen.svg"
             alt="edit folder"
             class="folder-action edit"
           >
