@@ -15,7 +15,7 @@ const formatNonUsualSlot = (sessions) => {
     event.options.push({
       name: 'showStudentList',
       label: i18n.global.t('CalendarEventOptions.showStudentList'),
-      icon: require('@assets/icons/burger3.svg')
+      icon: require('@assets/icons/list.svg')
     })
     if (event.canUpdateSlot) {
       event.options.push({

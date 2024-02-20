@@ -1,10 +1,7 @@
 <template>
   <h1 :aria-label="$t('AuthenticationRequired.title')" />
   <div class="error">
-    <img
-      src="@/assets/icons/user.svg"
-      alt=""
-    >
+    <CustomIcon :icon-name="'icon-user'" />
     <h2 v-t="'AuthenticationRequired.authRequired'" />
     <p>{{ $t('AuthenticationRequired.redirected') }}</p>
     <div class="spinner-container">
@@ -15,10 +12,12 @@
 
 <script>
 
+import CustomIcon from '@components/Base/CustomIcon.vue'
+
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 export default {
   name: 'AuthenticationRequired',
-  components: { WeprodeSpinner },
+  components: { CustomIcon, WeprodeSpinner },
   emits: ['update:layout'],
   beforeCreate () {
     this.$emit('update:layout', 'GVELayout')
@@ -39,8 +38,8 @@ export default {
   text-align: center;
 }
 
-img {
-  height: 24px;
+.icon-user {
+  font-size: 24px;
 }
 
 .spinner-container {

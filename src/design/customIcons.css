@@ -17,8 +17,29 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-chevron-left:before {
+.icon-chevron-right-m:before {
   content: "\e918";
+}
+.icon-chevron-right-s:before {
+  content: "\e919";
+}
+.icon-plus:before {
+  content: "\e91a";
+}
+.icon-cross-L:before {
+  content: "\e915";
+}
+.icon-cross-M:before {
+  content: "\e91b";
+}
+.icon-cross-s:before {
+  content: "\e91c";
+}
+.icon-logout:before {
+  content: "\e91d";
+}
+.icon-trash:before {
+  content: "\e91e";
 }
 .icon-download:before {
   content: "\e917";
@@ -32,8 +53,8 @@
 .icon-burger:before {
   content: "\e914";
 }
-.icon-cross-L:before {
-  content: "\e915";
+.icon-filter:before {
+  content: "\e901";
 }
 .icon-filter-plain:before {
   content: "\e913";
@@ -83,12 +104,12 @@
 .icon-collab-workspace:before {
   content: "\e911";
 }
+.icon-user:before {
+  content: "\e91f";
+}
 .icon-double-arrow:before {
   content: "\e912";
 }
 .icon-school-life:before {
   content: "\e902";
-}
-.icon-filter:before {
-  content: "\e901";
 }

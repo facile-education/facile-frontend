@@ -1,10 +1,7 @@
 <template>
   <section v-if="nbUsers !== undefined">
     <span class="theme-text-color">
-      <img
-        src="@/assets/icons/user.svg"
-        alt=""
-      >
+      <CustomIcon :icon-name="'icon-user'" />
       <AnimatedCounter
         v-if="nbUsers > 0"
         :target="nbUsers"
@@ -28,12 +25,13 @@
 
 <script>
 import AnimatedCounter from '@components/Base/AnimatedCounter.vue'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 
 import { getActiveUsersCount } from '@/api/statistics.service'
 
 export default {
   name: 'StatsActivesUsers',
-  components: { AnimatedCounter },
+  components: { CustomIcon, AnimatedCounter },
   inject: ['mq'],
   props: {
     startTime: {
@@ -99,13 +97,11 @@ export default {
 
   img {
     height: 25px;
-    margin-bottom: 3px;
   }
 }
 
-img {
-  margin-right: 15px;
-  margin-bottom: 6px;
+.icon-user {
+  margin-right: 8px;
 }
 
 .label {

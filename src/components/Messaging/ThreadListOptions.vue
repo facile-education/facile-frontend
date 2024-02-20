@@ -52,7 +52,7 @@
       <li v-if="mq.tablet || mq.phone">
         <IconOption
           class="button"
-          :icon="require('@assets/icons/burger2.svg')"
+          :icon="require('@assets/icons/list.svg')"
           :title="$t('Messaging.multiSelection')"
           name="toggleMultiSelection"
           icon-height="15px"

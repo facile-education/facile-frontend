@@ -20,10 +20,7 @@
     />
 
     <div class="nb-users">
-      <img
-        src="@/assets/icons/user_2.svg"
-        alt="user"
-      >
+      <CustomIcon :icon-name="'icon-user'" />
       <div>{{ userListLength }}</div>
     </div>
 
@@ -46,10 +43,12 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
+
 import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
 export default {
   name: 'ContactUserListHeader',
-  components: { WeprodeInput },
+  components: { CustomIcon, WeprodeInput },
   inject: ['mq'],
   props: {
     userListLength: {
@@ -112,7 +111,7 @@ button {
   justify-content: center;
   line-height: 1rem;
 
-  img {
+  .icon-user {
     width: 0.875rem;
     margin: 3px 0;
   }
