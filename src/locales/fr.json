@@ -614,8 +614,8 @@
       "sizeLimit1": "Ne doit pas dépasser ",
       "sizeLimit2": " caractères",
       "saveSuccess": "Accès mis à jour",
-      "selectRoles": "Veuillez séléctionner au moins un profil cible",
-      "selectCategory": "Veuillez séléctionner une catégorie",
+      "selectRoles": "Veuillez sélectionner au moins un profil cible",
+      "selectCategory": "Veuillez sélectionner une catégorie",
       "selectFolder": "Sélectionnez un dossier collaboratif",
       "selectFile": "Sélectionnez un fichier collaboratif"
     },
@@ -828,7 +828,7 @@
     },
     "ContactAdvancedSearch": {
       "queryPlaceholder": "Nom/prénom",
-      "emptyRequest": "Veuillez renseigner au moins 2 caractères pour la recherche ou séléctionnez un élément dans une des liste déroulantes",
+      "emptyRequest": "Veuillez renseigner au moins 2 caractères pour la recherche ou sélectionnez un élément dans une des listes déroulantes",
       "rolesPlaceHolder": "Tous les profils",
       "schoolsPlaceHolder": "Tous les établissements",
       "search": "Rechercher"
@@ -1161,7 +1161,7 @@
       "updateSubmit": "Modifier",
       "sizeLimit1": "Ne doit pas dépasser ",
       "sizeLimit2": " caractères",
-      "selectPopulations": "Veuillez séléctionner une population cible",
+      "selectPopulations": "Veuillez sélectionner une population cible",
       "dateInPast": "La date de parution ne doit pas se situer dans le passé",
       "switchHelp": "Cette option permet de notifier les destinataires et l'annonce sera considérée comme non lue",
       "confirmClosure": "Souhaitez-vous fermer cette fenêtre ? (Vous perdrez son contenu)",
@@ -1225,7 +1225,7 @@
       "updateSubmit": "Modifier",
       "sizeLimit1": "Ne doit pas dépasser ",
       "sizeLimit2": " caractères",
-      "selectPopulations": "Veuillez séléctionner une population cible",
+      "selectPopulations": "Veuillez sélectionner une population cible",
       "dateInPast": "La date de début ne doit pas se situer dans le passé",
       "dateOrder": "La date de fin doit être postérieure à celle de début",
       "switchHelp": "Cette option permet de notifier les destinataires et l'évènement sera considéré comme non lu",
@@ -2018,12 +2018,12 @@
   "AllAnnouncements": {
     "errorPlaceholder": "Oups, une erreur est survenue...",
     "emptyPlaceholder": "Aucune annonce publiée",
-    "detailsPlaceholder": "Veuillez séléctionner une annonce"
+    "detailsPlaceholder": "Veuillez sélectionner une annonce"
   },
   "AllDiaryEvents": {
     "errorPlaceholder": "Oups, une erreur est survenue...",
     "emptyPlaceholder": "Aucun événement à venir",
-    "detailsPlaceholder": "Veuillez séléctionner un événement"
+    "detailsPlaceholder": "Veuillez sélectionner un événement"
   },
   "AuthenticationRequired": {
     "title": "Authentification requise",

@@ -71,9 +71,9 @@ export default {
     description () {
       switch (this.activity.type) {
         case activityConstants.TYPE_SESSION:
-          return this.$t('TYPE_SESSION', { courseDate: dayjs(this.activity.targetDate, DATE_EXCHANGE_FORMAT).format('DD MMMM YYYY') })
+          return this.$t('Dashboard.SessionActivity.TYPE_SESSION', { courseDate: dayjs(this.activity.targetDate, DATE_EXCHANGE_FORMAT).format('DD MMMM YYYY') })
         case activityConstants.TYPE_HOMEWORK:
-          return this.$t('TYPE_HOMEWORK', { homeworkDate: dayjs(this.activity.targetDate, DATE_EXCHANGE_FORMAT).format('DD MMMM YYYY') })
+          return this.$t('Dashboard.SessionActivity.TYPE_HOMEWORK', { homeworkDate: dayjs(this.activity.targetDate, DATE_EXCHANGE_FORMAT).format('DD MMMM YYYY') })
         default:
           return this.$t('Dashboard.SessionActivity.unknown-activity')
       }

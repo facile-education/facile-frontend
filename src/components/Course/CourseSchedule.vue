@@ -111,7 +111,7 @@ export default {
       }
     },
     getWeekSessions () {
-      const startDate = this.selectedDate.startOf('week')
+      const startDate = this.selectedDate.startOf('week').hour(6)
       const endDate = this.selectedDate.endOf('week')
       scheduleService.getUserSessions(this.$store.state.user.userId, startDate, endDate).then((data) => {
         if (data.success) {

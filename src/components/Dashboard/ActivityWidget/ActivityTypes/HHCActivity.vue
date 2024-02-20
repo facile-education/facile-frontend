@@ -63,9 +63,9 @@ export default {
     description () {
       switch (this.activity.type) {
         case activityConstants.TYPE_PENDING_RENVOI:
-          return this.$t('TYPE_PENDING_RENVOI', { firedUser: this.activity.target, courseName: this.activity.sessionName, courseDate: this.formatDate(this.activity.sessionDate) })
+          return this.$t('Dashboard.HHCActivity.TYPE_PENDING_RENVOI', { firedUser: this.activity.target, courseName: this.activity.sessionName, courseDate: this.formatDate(this.activity.sessionDate) })
         case activityConstants.TYPE_SCHOOL_RENVOI:
-          return this.$t('TYPE_SCHOOL_RENVOI', { firedUser: this.activity.target, courseName: this.activity.sessionName, courseDate: this.formatDate(this.activity.sessionDate) })
+          return this.$t('Dashboard.HHCActivity.TYPE_SCHOOL_RENVOI', { firedUser: this.activity.target, courseName: this.activity.sessionName, courseDate: this.formatDate(this.activity.sessionDate) })
         default:
           return 'Unknown activity type'
       }
