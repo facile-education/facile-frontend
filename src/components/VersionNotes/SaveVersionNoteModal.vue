@@ -36,7 +36,7 @@
     </template>
     <template #footer>
       <WeprodeButton
-        :label="$t(isCreation ? 'create' : 'update')"
+        :label="$t(isCreation ? 'VersionNotes.SaveVersionNoteModal.create' : 'VersionNotes.SaveVersionNoteModal.update')"
         @click="submit"
       />
     </template>

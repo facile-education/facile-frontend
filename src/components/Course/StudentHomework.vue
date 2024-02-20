@@ -30,7 +30,7 @@
         />
         <span
           v-else
-          v-t="homework.isDone ? 'done' : 'todo'"
+          v-t="homework.isDone ? 'Course.StudentHomework.done' : 'Course.StudentHomework.todo'"
         />
         <span class="date">{{ dateLabel }}</span>
       </div>
@@ -68,9 +68,9 @@ export default {
   emits: ['change-done-status'],
   computed: {
     dateLabel () {
-      let label = this.$t('given', { date: this.givenDate.format('DD MMMM') })
+      let label = this.$t('Course.StudentHomework.given', { date: this.givenDate.format('DD MMMM') })
       if (this.givenDate.isBefore(this.modifiedDate)) {
-        label += `(${this.$t('modified', { date: this.modifiedDate.format('DD MMMM à HH:mm') })})`
+        label += `(${this.$t('Course.StudentHomework.modified', { date: this.modifiedDate.format('DD MMMM à HH:mm') })})`
       }
 
       return label

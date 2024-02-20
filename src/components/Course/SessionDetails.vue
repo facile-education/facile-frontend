@@ -106,19 +106,19 @@
           class="placeholder"
         />
         <HomeworkList
-          :homework-type="'toDoHomework'"
+          :homework-type="'Course.Homework.toDoHomework'"
           :homework-list="session.toDoHomeworks"
           :is-in-list="isInList"
           @update-homework="$emit('update-session')"
         />
         <HomeworkList
-          :homework-type="'sessionHomework'"
+          :homework-type="'Course.Homework.sessionHomework'"
           :homework-list="session.sessionHomeworks"
           :is-in-list="isInList"
           @update-homework="$emit('update-session')"
         />
         <HomeworkList
-          :homework-type="'givenHomework'"
+          :homework-type="'Course.Homework.givenHomework'"
           :homework-list="session.givenHomeworks"
           :is-in-list="isInList"
           @update-homework="$emit('update-session')"

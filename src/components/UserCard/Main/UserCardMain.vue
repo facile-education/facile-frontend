@@ -99,7 +99,7 @@ export default {
       } else if (this.userDetails.isPersonal || this.userDetails.isTeacher) {
         return this.userDetails.roles
       } else {
-        return this.$t('studentLabel', { volee: this.userDetails.volee })
+        return this.$t('UserCard.UserCardMain.studentLabel', { volee: this.userDetails.volee })
       }
     },
     school () {

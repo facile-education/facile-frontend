@@ -156,7 +156,7 @@ export default {
     },
     formattedTitle () {
       const sessionStartDate = dayjs(this.editedSession.startDate, DATE_EXCHANGE_FORMAT)
-      return this.$t('title', {
+      return this.$t('Course.CourseEditModal.title', {
         courseName: this.editedSession.groupName,
         day: sessionStartDate.format('DD/MM'),
         hour: sessionStartDate.format('HH:mm')

@@ -119,13 +119,13 @@
                 v-if="isError && !isLocked && nbRemainingTries <= 2"
                 class="errorMessage"
               >
-                {{ $t('nbRemainingTries', {nbRemainingTries: nbRemainingTries}) }}
+                {{ $t('Authentication.nbRemainingTries', {nbRemainingTries: nbRemainingTries}) }}
               </span>
               <span
                 v-if="isError && isLocked"
                 class="errorMessage"
               >
-                {{ $t('accountLocked', {lockoutDuration: lockoutDuration}) }}
+                {{ $t('Authentication.accountLocked', {lockoutDuration: lockoutDuration}) }}
               </span>
             </div>
             <button

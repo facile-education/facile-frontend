@@ -14,7 +14,7 @@
 
     <template #body>
       <div id="teacherform">
-        <p v-t="{ path: 'firstSession', args: { date: sessionDate, start: sessionStart, end: sessionEnd }}" />
+        <p v-t="{ path: 'Horaires.SessionTeacherModal.firstSession', args: { date: sessionDate, start: sessionStart, end: sessionEnd }}" />
         <ul>
           <li
             v-for="teacher in teacherList"
@@ -33,7 +33,7 @@
             </div>
             <WeprodeCheckbox
               v-model="teacher.allSlots"
-              :label="$t('allSessions', {course: sessionEvent.groupName})"
+              :label="$t('Horaires.SessionTeacherModal.allSessions', {course: sessionEvent.groupName})"
               :disabled="teacher.substitutes.length === 0"
               class="all-slots"
               @update:model-value="filterSessionList(teacher)"

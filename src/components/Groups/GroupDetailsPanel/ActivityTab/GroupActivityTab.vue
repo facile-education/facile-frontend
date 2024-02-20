@@ -10,7 +10,7 @@
       class="placeholder"
     />
     <div
-      v-else-if="activityList.length > 1"
+      v-else-if="activityList.length >= 1"
       ref="scroll"
       class="activities"
       @scroll="handleScroll"
@@ -118,6 +118,7 @@ export default {
               this.hasEnded = true
             }
             this.activityList = this.activityList.concat(data.activities)
+            console.log('activities = ', this.activityList)
           }
         })
       }

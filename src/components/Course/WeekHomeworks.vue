@@ -3,7 +3,7 @@
     <header>
       <h2>{{ label }}</h2>
       <a
-        v-t="{ path: 'works', args: { count: nbUndone } }"
+        v-t="{ path: 'Course.WeekHomeworks.works', args: { count: nbUndone } }"
         href="#"
         class="theme-text-color"
         @click="$emit('display')"
