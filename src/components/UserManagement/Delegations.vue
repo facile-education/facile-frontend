@@ -120,7 +120,7 @@ export default {
             if (data.success) {
               user.isSchoolAdmin = !user.isSchoolAdmin
             } else {
-              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
             }
           }
         )
@@ -130,7 +130,7 @@ export default {
             if (data.success) {
               user.isSchoolAdmin = !user.isSchoolAdmin
             } else {
-              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
             }
           }
         )
@@ -143,7 +143,7 @@ export default {
             if (data.success) {
               user.isNewsDelegate = !user.isNewsDelegate
             } else {
-              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
             }
           }
         )
@@ -153,7 +153,7 @@ export default {
             if (data.success) {
               user.isNewsDelegate = !user.isNewsDelegate
             } else {
-              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
             }
           }
         )
@@ -202,8 +202,6 @@ export default {
   "no-delegation": "Aucune délégation pour cet établissement",
   "please-select-school": "Veuillez sélectionner un établissement",
   "warning": "La suppression de cet administrateur est définitive.",
-  "Popup": {
-    "error": "Erreur lors de l'enregistrement de la délégation"
-  }
+  "error": "Erreur lors de l'enregistrement de la délégation"
 }
 </i18n>

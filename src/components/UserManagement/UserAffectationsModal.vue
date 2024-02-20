@@ -147,7 +147,7 @@ export default {
         addUserAffectation(this.editedUser.userId, orgId).then(
           (data) => {
             if (data.success) {
-              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.added'), type: 'success' })
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('added'), type: 'success' })
               this.$store.dispatch('userManagement/setUserAffectations', { userId: this.editedUser.userId, affectations: data.affectations })
             }
           }
@@ -158,7 +158,7 @@ export default {
       removeUserAffectation(this.editedUser.userId, removedAffectation.orgId).then(
         (data) => {
           if (data.success) {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.removed'), type: 'success' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('removed'), type: 'success' })
             this.$store.dispatch('userManagement/setUserAffectations', { userId: this.editedUser.userId, affectations: data.affectations })
           }
         }
@@ -271,9 +271,7 @@ export default {
   "classnameFilterPlaceholder": "Filtrer",
   "affected-by": "Affectation ajoutée par ",
   "the": " le ",
-  "Popup": {
-    "added": "Affectation enregistrée",
-    "removed": "Affectation supprimée"
-  }
+  "added": "Affectation enregistrée",
+  "removed": "Affectation supprimée"
 }
 </i18n>

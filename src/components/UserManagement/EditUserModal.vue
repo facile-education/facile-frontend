@@ -265,12 +265,12 @@ export default {
           (data) => {
             if (data.success) {
               this.$store.dispatch('userManagement/addManualUser', data.user)
-              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.userAdded'), type: 'success' })
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('userAdded'), type: 'success' })
               this.closeModal()
             } else if (data.errorCode === 'email') {
-              store.dispatch('popups/pushPopup', { type: 'error', message: this.$t('Popup.existingEmail') })
+              store.dispatch('popups/pushPopup', { type: 'error', message: this.$t('existingEmail') })
             } else {
-              store.dispatch('popups/pushPopup', { type: 'error', message: this.$t('Popup.error') })
+              store.dispatch('popups/pushPopup', { type: 'error', message: this.$t('popupError') })
             }
           }
         )
@@ -287,12 +287,12 @@ export default {
           (data) => {
             if (data.success) {
               this.$store.dispatch('userManagement/editManualUser', data.user)
-              this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.userEdited'), type: 'success' })
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('userEdited'), type: 'success' })
               this.closeModal()
             } else if (data.errorCode === 'email') {
-              store.dispatch('popups/pushPopup', { type: 'error', message: this.$t('Popup.existingEmail') })
+              store.dispatch('popups/pushPopup', { type: 'error', message: this.$t('existingEmail') })
             } else {
-              store.dispatch('popups/pushPopup', { type: 'error', message: this.$t('Popup.error') })
+              store.dispatch('popups/pushPopup', { type: 'error', message: this.$t('popupError') })
             }
           }
         )
@@ -309,7 +309,7 @@ export default {
         (data) => {
           if (data.success) {
             this.$store.dispatch('userManagement/removeManualUser', user)
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.userRemoved'), type: 'success' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('userRemoved'), type: 'success' })
             this.closeModal()
           }
         }
@@ -375,13 +375,11 @@ export default {
   "parent-account": "Identifiant: {0}",
   "email-warning": "NB: Un e-mail contenant les informations d'authentification sera envoyé à l'utilisateur créé.",
   "delete-warning": "La suppression de cet utilisateur est définitive.",
-  "Popup": {
-    "userAdded": "Utilisateur créé",
-    "userEdited": "Utilisateur modifié",
-    "userRemoved": "Utilisateur supprimé",
-    "error": "Une erreur est survenue. Merci de réessayer",
-    "existingEmail": "L'adresse e-mail existe déjà. Vous pouvez utiliser le service affectation pour affecter l'utilisateur à votre établissement."
-  },
+  "userAdded": "Utilisateur créé",
+  "userEdited": "Utilisateur modifié",
+  "userRemoved": "Utilisateur supprimé",
+  "popupError": "Une erreur est survenue. Merci de réessayer",
+  "existingEmail": "L'adresse e-mail existe déjà. Vous pouvez utiliser le service affectation pour affecter l'utilisateur à votre établissement.",
   "passwordPlaceholder": "Nouveau mot de passe",
   "update-password": "Changer le mot de passe",
   "password-policy": "Le mot de passe doit contenir au moins 8 caractères dont une majuscule, un chiffre et un caractère spécial",

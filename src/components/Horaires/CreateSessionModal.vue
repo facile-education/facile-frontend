@@ -195,11 +195,11 @@ export default {
   computed: {
     formErrorList () {
       return {
-        day: (this.v$.selectedDay.$invalid && this.v$.selectedDay.$dirty) ? this.$t('Validation.day') : '',
-        group: (this.v$.selectedGroup.$invalid && this.v$.selectedGroup.$dirty) ? this.$t('Validation.group') : '',
-        selectedTeachers: (this.v$.selectedTeachers.$invalid && this.v$.selectedTeachers.$dirty) ? this.$t('Validation.teachers') : '',
-        subject: (this.v$.subject.$invalid && this.v$.subject.$dirty) ? this.$t('Validation.required') : '',
-        room: (this.v$.room.$invalid && this.v$.room.$dirty) ? this.$t('Validation.required') : ''
+        day: (this.v$.selectedDay.$invalid && this.v$.selectedDay.$dirty) ? this.$t('day') : '',
+        group: (this.v$.selectedGroup.$invalid && this.v$.selectedGroup.$dirty) ? this.$t('groupError') : '',
+        selectedTeachers: (this.v$.selectedTeachers.$invalid && this.v$.selectedTeachers.$dirty) ? this.$t('teachers') : '',
+        subject: (this.v$.subject.$invalid && this.v$.subject.$dirty) ? this.$t('required') : '',
+        room: (this.v$.room.$invalid && this.v$.room.$dirty) ? this.$t('required') : ''
       }
     }
   },
@@ -336,13 +336,11 @@ export default {
   "roomPlaceHolder": "Salle",
   "recurrence": "Chaque semaine jusqu'à la fin de l'année scolaire",
   "Create": "Créer",
-  "Validation": {
-    "day": "Veuillez sélectionner le jour",
-    "time": "Veuillez saisir une plage d'horaires valide (hh:mm)",
-    "startBeforeAfter": "L'heure de début doit être antérieure à l'heure de fin",
-    "group": "Veuillez sélectionner un groupe",
-    "teachers" : "Veuillez sélectionner au moins un enseignant",
-    "required": "Champ requis"
-  }
+  "day": "Veuillez sélectionner le jour",
+  "time": "Veuillez saisir une plage d'horaires valide (hh:mm)",
+  "startBeforeAfter": "L'heure de début doit être antérieure à l'heure de fin",
+  "groupError": "Veuillez sélectionner un groupe",
+  "teachers" : "Veuillez sélectionner au moins un enseignant",
+  "required": "Champ requis"
 }
 </i18n>
