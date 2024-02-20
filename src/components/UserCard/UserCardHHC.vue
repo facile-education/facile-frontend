@@ -1,7 +1,7 @@
 <template>
   <section
     class="containerUserCardHHC"
-    data-test="userCardHHC"
+    data-test="UserCardHHC"
   >
     <h2>
       <CustomIcon
@@ -15,7 +15,7 @@
         v-for="(item, index) in userSchoolLifeStats"
         :key="index"
       >
-        {{ slotType(item.type).label }}: {{ item.number }}
+        {{ item.number }} {{ slotType(item.type).label }}
       </li>
     </ul>
   </section>
